@@ -63,7 +63,7 @@
 - type: entity
   id: CrateServiceCustomSmokable
   name: DIY smokeables crate
-  description: Want to get a little creative with what you use to destroy your lungs? Then this crate is for you! Has everything you need to roll your own Cigarettes.
+  description: Want to get a little creative with what you use to destroy your lungs? Then this crate is for you! Has everything you need to roll your own cigarettes.
   parent: CrateGenericSteel
   components:
   - type: StorageFill

@@ -1,10 +1,10 @@
-using Content.Server.Tools.Components;
 using Content.Shared.Interaction;
 using Content.Shared.Interaction.Events;
 using Content.Shared.Item;
 using Content.Shared.Light;
 using Content.Shared.Light.Component;
 using Content.Shared.Toggleable;
+using Content.Shared.Tools.Components;
 using Robust.Shared.Audio;
 using Robust.Shared.Player;
 using Robust.Shared.Random;

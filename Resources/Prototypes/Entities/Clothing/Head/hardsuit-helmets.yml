@@ -45,7 +45,20 @@
       - state: inhand-right
       - state: inhand-right-unshaded
         shader: unshaded
-
+  - type: PressureProtection
+    highPressureMultiplier: 0.08
+    lowPressureMultiplier: 10000
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.90
+        Slash: 0.90
+        Piercing: 0.95
+        Heat: 0.2
+        Radiation: 0.5
+  - type: TemperatureProtection
+    coefficient: 0.005
+ 
 - type: entity
   parent: ClothingHeadHardsuitBase
   id: ClothingHeadHelmetHardsuitCap
@@ -56,6 +69,9 @@
     sprite: Clothing/Head/Hardsuits/capspace.rsi
   - type: Clothing
     sprite: Clothing/Head/Hardsuits/capspace.rsi
+  - type: PressureProtection
+    highPressureMultiplier: 0.3
+    lowPressureMultiplier: 1000
 
 - type: entity
   parent: HatBase
@@ -67,6 +83,9 @@
     sprite: Clothing/Head/Hardsuits/deathsquad.rsi
   - type: Clothing
     sprite: Clothing/Head/Hardsuits/deathsquad.rsi
+  - type: PressureProtection
+    highPressureMultiplier: 0.27
+    lowPressureMultiplier: 1000
 
 - type: entity
   parent: ClothingHeadHardsuitWithLightBase
@@ -79,8 +98,8 @@
   - type: Clothing
     sprite: Clothing/Head/Hardsuits/engineering.rsi
   - type: PressureProtection
-    highPressureMultiplier: 0.40
-    lowPressureMultiplier: 100
+    highPressureMultiplier: 0.26
+    lowPressureMultiplier: 1000
 
 - type: entity
   parent: ClothingHeadHardsuitWithLightBase
@@ -92,6 +111,9 @@
     sprite: Clothing/Head/Hardsuits/engineering-white.rsi
   - type: Clothing
     sprite: Clothing/Head/Hardsuits/engineering-white.rsi
+  - type: PressureProtection
+    highPressureMultiplier: 0.24
+    lowPressureMultiplier: 1000
 
 - type: entity
   parent: HatBase
@@ -104,8 +126,8 @@
   - type: Clothing
     sprite: Clothing/Head/Hardsuits/ihsvoid.rsi
   - type: PressureProtection
-    highPressureMultiplier: 0.60
-    lowPressureMultiplier: 100
+    highPressureMultiplier: 0.3
+    lowPressureMultiplier: 10000
 
 - type: entity
   parent: ClothingHeadHardsuitWithLightBase
@@ -118,8 +140,8 @@
   - type: Clothing
     sprite: Clothing/Head/Hardsuits/medical.rsi
   - type: PressureProtection
-    highPressureMultiplier: 0.80
-    lowPressureMultiplier: 55
+    highPressureMultiplier: 0.6
+    lowPressureMultiplier: 5500
   - type: DiseaseProtection
     protection: 0.15
 
@@ -134,8 +156,8 @@
   - type: Clothing
     sprite: Clothing/Head/Hardsuits/rd.rsi
   - type: PressureProtection
-    highPressureMultiplier: 0.80
-    lowPressureMultiplier: 55
+    highPressureMultiplier: 0.60
+    lowPressureMultiplier: 5500
 
 - type: entity
   parent: ClothingHeadHardsuitWithLightBase
@@ -148,8 +170,8 @@
   - type: Clothing
     sprite: Clothing/Head/Hardsuits/salvage.rsi
   - type: PressureProtection
-    highPressureMultiplier: 0.70
-    lowPressureMultiplier: 100
+    highPressureMultiplier: 0.525
+    lowPressureMultiplier: 10000
 
 - type: entity
   parent: ClothingHeadHardsuitWithLightBase
@@ -162,8 +184,8 @@
   - type: Clothing
     sprite: Clothing/Head/Hardsuits/security.rsi
   - type: PressureProtection
-    highPressureMultiplier: 0.70
-    lowPressureMultiplier: 100
+    highPressureMultiplier: 0.525
+    lowPressureMultiplier: 10000
 
 - type: entity
   parent: ClothingHeadHardsuitWithLightBase
@@ -176,8 +198,8 @@
   - type: Clothing
     sprite: Clothing/Head/Hardsuits/security-red.rsi
   - type: PressureProtection
-    highPressureMultiplier: 0.60
-    lowPressureMultiplier: 100
+    highPressureMultiplier: 0.45
+    lowPressureMultiplier: 10000
 
 - type: entity
   parent: ClothingHeadHardsuitWithLightBase
@@ -191,6 +213,9 @@
     sprite: Clothing/Head/Hardsuits/syndicate.rsi
   - type: PointLight
     color: green
+  - type: PressureProtection
+    highPressureMultiplier: 0.27
+    lowPressureMultiplier: 1000
 
 - type: entity
   parent: ClothingHeadHardsuitWithLightBase
@@ -202,6 +227,9 @@
     sprite: Clothing/Head/Hardsuits/wizard.rsi
   - type: Clothing
     sprite: Clothing/Head/Hardsuits/wizard.rsi
+  - type: PressureProtection
+    highPressureMultiplier: 0.27
+    lowPressureMultiplier: 1000
 
 - type: entity
   parent: ClothingHeadHardsuitBase
@@ -214,5 +242,54 @@
   - type: Clothing
     sprite: Clothing/Head/Hardsuits/lingspacehelmet.rsi
   - type: PressureProtection
-    highPressureMultiplier: 0.5
-    lowPressureMultiplier: 100
+    highPressureMultiplier: 0.225
+    lowPressureMultiplier: 10000
+    
+- type: entity
+  parent: ClothingHeadHardsuitWithLightBase
+  id: ClothingHeadHelmetHardsuitSpatio
+  name: spationaut hardsuit helmet
+  description: A sturdy helmet designed for complex industrial operations in space. 
+  components:
+  - type: Sprite
+    netsync: false
+    sprite: Clothing/Head/Hardsuits/spatiohelm.rsi
+    layers:
+    - state: icon
+    - state: icon-unshaded
+      shader: unshaded
+    - state: light-overlay
+      visible: false
+      shader: unshaded
+      map: [ "light" ]
+  - type: HandheldLight
+    addPrefix: false
+    inhandVisuals:
+      left:
+      - state: inhand-left-light
+        shader: unshaded
+      right:
+      - state: inhand-right-light
+        shader: unshaded
+    clothingVisuals:
+      head:
+      - state: equipped-head-light
+        shader: unshaded
+  - type: Clothing
+    clothingVisuals:
+      head:
+      - state: equipped-head
+      - state: equipped-head-unshaded
+        shader: unshaded
+    inhandVisuals:
+      left:
+      - state: inhand-left
+      - state: inhand-left-unshaded
+        shader: unshaded
+      right:
+      - state: inhand-right
+      - state: inhand-right-unshaded
+        shader: unshaded   
+  - type: PressureProtection
+    highPressureMultiplier: 0.72
+    lowPressureMultiplier: 10000

@@ -110,7 +110,7 @@ public abstract partial class InventorySystem
         if (held != null && itemUid != null)
         {
             _interactionSystem.InteractUsing(actor, held.Value, itemUid.Value,
-                new EntityCoordinates(), predicted: true);
+                new EntityCoordinates());
             return;
         }
 

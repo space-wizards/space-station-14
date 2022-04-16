@@ -2,7 +2,6 @@ using System;
 using Robust.Shared.IoC;
 using Robust.Shared.Serialization.Manager;
 using Robust.Shared.Serialization.Manager.Attributes;
-using Robust.Shared.Serialization.Manager.Result;
 using Robust.Shared.Serialization.Markdown.Mapping;
 using Robust.Shared.Serialization.Markdown.Validation;
 using Robust.Shared.Serialization.Markdown.Value;
@@ -30,17 +29,17 @@ namespace Content.Shared.Sound
             return typeof(SoundPathSpecifier);
         }
 
-        public DeserializationResult Read(ISerializationManager serializationManager, MappingDataNode node,
-            IDependencyCollection dependencies, bool skipHook, ISerializationContext? context = null)
+        public SoundSpecifier Read(ISerializationManager serializationManager, MappingDataNode node,
+            IDependencyCollection dependencies, bool skipHook, ISerializationContext? context = null, SoundSpecifier? _ = null)
         {
             var type = GetType(node);
-            return serializationManager.Read(type, node, context, skipHook);
+            return (SoundSpecifier) serializationManager.Read(type, node, context, skipHook)!;
         }
 
-        public DeserializationResult Read(ISerializationManager serializationManager, ValueDataNode node,
-            IDependencyCollection dependencies, bool skipHook, ISerializationContext? context = null)
+        public SoundSpecifier Read(ISerializationManager serializationManager, ValueDataNode node,
+            IDependencyCollection dependencies, bool skipHook, ISerializationContext? context = null, SoundSpecifier? _ = null)
         {
-            return new DeserializedValue<SoundSpecifier>(new SoundPathSpecifier(node.Value));
+            return new SoundPathSpecifier(node.Value);
         }
 
         public ValidationNode Validate(ISerializationManager serializationManager, MappingDataNode node,

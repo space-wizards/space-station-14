@@ -70,7 +70,7 @@ public sealed class IntrinsicUISystem : EntitySystem
 }
 
 [UsedImplicitly]
-public sealed class ToggleIntrinsicUIEvent : PerformActionEvent
+public sealed class ToggleIntrinsicUIEvent : InstantActionEvent
 {
     [ViewVariables]
     public Enum? Key { get; set; }

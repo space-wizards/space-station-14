@@ -170,6 +170,9 @@ namespace Content.Shared.Containers.ItemSlots
 
             foreach (var slot in itemSlots.Slots.Values)
             {
+                if (!slot.InsertOnInteract)
+                    continue;
+
                 if (!CanInsert(uid, args.Used, slot, swap: slot.Swap, popup: args.User))
                     continue;
 
@@ -180,7 +183,7 @@ namespace Content.Shared.Containers.ItemSlots
                 if (slot.Item != null)
                     _handsSystem.TryPickupAnyHand(args.User, slot.Item.Value, handsComp: hands);
 
-                Insert(uid, slot, args.Used, args.User, excludeUserAudio: args.Predicted);
+                Insert(uid, slot, args.Used, args.User, excludeUserAudio: true);
                 args.Handled = true;
                 return;
             }

@@ -62,6 +62,8 @@ namespace Content.Shared.Buckle.Components
     public sealed class BuckleChangeEvent : EntityEventArgs
     {
         public EntityUid Strap;
+
+        public EntityUid BuckledEntity;
         public bool Buckling;
     }
 

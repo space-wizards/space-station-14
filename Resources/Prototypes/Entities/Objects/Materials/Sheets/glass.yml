@@ -14,6 +14,9 @@
     tags:
     - Sheet
     - DroneUsable
+  - type: Damageable
+    damageContainer: Inorganic
+    damageModifierSet: Glass
   - type: Destructible
     thresholds:
     - trigger:

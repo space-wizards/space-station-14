@@ -49,11 +49,11 @@ public sealed class GamePrototypeLoadManager : IGamePrototypeLoadManager
     private void LoadPrototypeData(string prototypeData)
     {
         LoadedPrototypes.Add(prototypeData);
-        var msg = _netManager.CreateNetMessage<GamePrototypeLoadMessage>();
+        var msg = new GamePrototypeLoadMessage();
         msg.PrototypeData = prototypeData;
         _netManager.ServerSendToAll(msg); // everyone load it up!
         _prototypeManager.LoadString(prototypeData, true); // server needs it too.
-        _prototypeManager.Resync();
+        _prototypeManager.ResolveResults();
         _localizationManager.ReloadLocalizations();
         GamePrototypeLoaded?.Invoke();
     }
@@ -63,7 +63,7 @@ public sealed class GamePrototypeLoadManager : IGamePrototypeLoadManager
         // Just dump all the prototypes on connect, before them missing could be an issue.
         foreach (var prototype in LoadedPrototypes)
         {
-            var msg = _netManager.CreateNetMessage<GamePrototypeLoadMessage>();
+            var msg = new GamePrototypeLoadMessage();
             msg.PrototypeData = prototype;
             e.Channel.SendMessage(msg);
         }

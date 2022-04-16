@@ -198,3 +198,14 @@
     sprite: Clothing/OuterClothing/Misc/skubbody.rsi
   - type: Clothing
     sprite: Clothing/OuterClothing/Misc/skubbody.rsi
+
+- type: entity
+  parent: ClothingOuterBase
+  id: ClothingOuterPlagueSuit
+  name: plague doctor suit
+  description: A bad omen.
+  components:
+  - type: Sprite
+    sprite: Clothing/OuterClothing/Misc/plaguedoctorsuit.rsi
+  - type: Clothing
+    sprite: Clothing/OuterClothing/Misc/plaguedoctorsuit.rsi

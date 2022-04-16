@@ -51,9 +51,16 @@
     range: 1.5
     arcwidth: 0
     arc: bite
+    hitSound:
+      path: /Audio/Effects/bite.ogg
     damage:
       groups:
         Brute: 20
+  - type: GhostTakeoverAvailable
+    makeSentient: true
+    name: space carp
+    description: Wreak havoc on the station's inhabitants, and disrupt salvage!
+
 
 - type: entity
   name: magicarp
@@ -67,6 +74,8 @@
     - map: ["enum.DamageStateVisualLayers.Base"]
       state: alive
       sprite: Mobs/Aliens/Carps/magic.rsi
+  - type: GhostTakeoverAvailable
+    name: magicarp
 
 - type: entity
   name: holocarp
@@ -93,3 +102,5 @@
         - SmallImpassable
       layer:
         - Opaque
+  - type: GhostTakeoverAvailable
+    name: holocarp

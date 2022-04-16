@@ -42,7 +42,8 @@ namespace Content.Server.Voting.Managers
                 default:
                     throw new ArgumentOutOfRangeException(nameof(voteType), voteType, null);
             }
-
+            var ticker = EntitySystem.Get<GameTicker>();
+            ticker.UpdateInfoText();
             TimeoutStandardVote(voteType);
         }
 
