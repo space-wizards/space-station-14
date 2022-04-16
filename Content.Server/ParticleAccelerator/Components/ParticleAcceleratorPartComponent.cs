@@ -30,7 +30,11 @@ namespace Content.Server.ParticleAccelerator.Components
 
         private void RescanIfPossible()
         {
-            Master?.RescanParts();
+            if (Master == null || IoCManager.Resolve<IEntityManager>()
+                    .TryGetComponent<MetaDataComponent>(Master.Owner, out var meta) ||
+                meta.EntityLifeStage >= EntityLifeStage.Terminating) return;
+
+            Master.RescanParts();
         }
 
         public virtual void Rotated()

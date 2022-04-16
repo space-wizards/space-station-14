@@ -325,11 +325,13 @@ namespace Content.Server.ParticleAccelerator.Components
             _partEmitterCenter = null;
             _partEmitterRight = null;
 
+            var xform = _entMan.GetComponent<TransformComponent>(Owner);
+
             // Find fuel chamber first by scanning cardinals.
-            if (_entMan.GetComponent<TransformComponent>(Owner).Anchored)
+            if (xform.Anchored && _mapManager.TryGetGrid(xform.GridID, out var grid))
             {
-                var grid = _mapManager.GetGrid(_entMan.GetComponent<TransformComponent>(Owner).GridID);
-                var coords = _entMan.GetComponent<TransformComponent>(Owner).Coordinates;
+                var coords = xform.Coordinates;
+
                 foreach (var maybeFuel in grid.GetCardinalNeighborCells(coords))
                 {
                     if (_entMan.TryGetComponent(maybeFuel, out _partFuelChamber))
@@ -348,7 +350,7 @@ namespace Content.Server.ParticleAccelerator.Components
             // Align ourselves to match fuel chamber orientation.
             // This means that if you mess up the orientation of the control box it's not a big deal,
             // because the sprite is far from obvious about the orientation.
-            _entMan.GetComponent<TransformComponent>(Owner).LocalRotation = _entMan.GetComponent<TransformComponent>(_partFuelChamber.Owner).LocalRotation;
+            xform.LocalRotation = _entMan.GetComponent<TransformComponent>(_partFuelChamber.Owner).LocalRotation;
 
             var offsetEndCap = RotateOffset((1, 1));
             var offsetPowerBox = RotateOffset((1, -1));
@@ -394,7 +396,7 @@ namespace Content.Server.ParticleAccelerator.Components
 
             Vector2i RotateOffset(in Vector2i vec)
             {
-                var rot = new Angle(_entMan.GetComponent<TransformComponent>(Owner).LocalRotation);
+                var rot = new Angle(xform.LocalRotation);
                 return (Vector2i) rot.RotateVec(vec);
             }
         }
