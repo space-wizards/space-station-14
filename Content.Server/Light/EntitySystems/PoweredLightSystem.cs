@@ -244,13 +244,13 @@ namespace Content.Server.Light.EntitySystems
             }
             else
             {
-                powerReceiver.Load = (light.On && lightBulb.State == LightBulbState.Normal) ? lightBulb.PowerUse : 0;
 
                 switch (lightBulb.State)
                 {
                     case LightBulbState.Normal:
                         if (powerReceiver.Powered && light.On)
                         {
+                            powerReceiver.Load = (light.On && lightBulb.State == LightBulbState.Normal) ? lightBulb.PowerUse : 0;
                             SetLight(uid, true, lightBulb.Color, light, lightBulb.LightRadius, lightBulb.LightEnergy, lightBulb.LightSoftness);
                             appearance?.SetData(PoweredLightVisuals.BulbState, PoweredLightState.On);
                             var time = _gameTiming.CurTime;
