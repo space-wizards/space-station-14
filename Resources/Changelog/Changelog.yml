@@ -1,11 +1,6 @@
 Entries:
 - author: ElectroJr
   changes:
-  - {message: PAIs can no longer run around on their little robot legs., type: Fix}
-  id: 839
-  time: '2022-01-07T11:57:20.0000000+00:00'
-- author: ElectroJr
-  changes:
   - {message: 'Station staff should once again spawn with their "outer clothing" (lab
       coats, vests, etc) equipped.', type: Fix}
   id: 840
@@ -3028,3 +3023,9 @@ Entries:
     type: Add}
   id: 1338
   time: '2022-04-15T22:56:05.0000000+00:00'
+- author: mirrorcult
+  changes:
+  - {message: 'Giant spiders, space ticks, space bears, and space carp can now be
+      inhabited as ghost roles by default. Have fun!', type: Add}
+  id: 1339
+  time: '2022-04-16T00:39:47.0000000+00:00'
