@@ -10,7 +10,6 @@ using Robust.Shared.Audio;
 using Robust.Shared.Player;
 using Robust.Shared.Timing;
 
-
 namespace Content.Server.Bible
 {
     public sealed class BibleSystem : EntitySystem
