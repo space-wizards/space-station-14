@@ -1,13 +1,4 @@
 Entries:
-- author: Rane
-  changes:
-  - {message: 'Botanists now spawn with a botanical belt, which has some tools and
-      a bottle of Robust Harvest. Now all Botanists should become more familiar with
-      the core of the enthralling botanist gameplay loop; increasing potency.', type: Add}
-  - {message: 'Doctors now have medikits removed from their satchels and duffles too,
-      not just backpacks.', type: Fix}
-  id: 845
-  time: '2022-01-09T02:49:49.0000000+00:00'
 - author: BubblegumBlue
   changes:
   - {message: YouTool vending machines now start with 3 utility belts and actual cable
@@ -3029,3 +3020,8 @@ Entries:
       newest morale-increasing technology is here: Hugging!', type: Add}
   id: 1344
   time: '2022-04-16T18:16:20.0000000+00:00'
+- author: DrSmugleaf
+  changes:
+  - {message: Added admin notes., type: Add}
+  id: 1345
+  time: '2022-04-16T18:57:50.0000000+00:00'
