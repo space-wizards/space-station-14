@@ -55,7 +55,7 @@ namespace Content.Server.Headset
 
                 var playerChannel = actor.PlayerSession.ConnectedClient;
 
-                var msg = _netManager.CreateNetMessage<MsgChatMessage>();
+                var msg = new MsgChatMessage();
 
                 msg.Channel = ChatChannel.Radio;
                 msg.Message = message;

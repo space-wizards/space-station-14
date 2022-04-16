@@ -1,15 +1,10 @@
-using System;
-using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
-using System.Threading.Tasks;
 using Content.Server.DoAfter;
 using Content.Server.Hands.Components;
-using Content.Server.Tools;
 using Content.Server.UserInterface;
 using Content.Server.VendingMachines;
 using Content.Shared.Interaction;
-using Content.Shared.Interaction.Helpers;
 using Content.Shared.Popups;
 using Content.Shared.Sound;
 using Content.Shared.Tools;
@@ -17,24 +12,16 @@ using Content.Shared.Tools.Components;
 using Content.Shared.Wires;
 using Robust.Server.GameObjects;
 using Robust.Server.Player;
-using Robust.Shared.Audio;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Localization;
-using Robust.Shared.Player;
 using Robust.Shared.Random;
-using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
-using Robust.Shared.ViewVariables;
 
 namespace Content.Server.WireHacking
 {
     [RegisterComponent]
-    public sealed class WiresComponent : SharedWiresComponent, IInteractUsing
+    public sealed class WiresComponent : SharedWiresComponent
     {
         [Dependency] private readonly IRobustRandom _random = default!;
         [Dependency] private readonly IEntityManager _entities = default!;
-
         private bool _isPanelOpen;
 
         [DataField("cuttingTime")] public float CuttingTime = 1f;
@@ -169,10 +156,10 @@ namespace Content.Server.WireHacking
         [DataField("pulseSound")] public SoundSpecifier PulseSound = new SoundPathSpecifier("/Audio/Effects/multitool_pulse.ogg");
 
         [DataField("screwdriverOpenSound")]
-        private SoundSpecifier _screwdriverOpenSound = new SoundPathSpecifier("/Audio/Machines/screwdriveropen.ogg");
+        public SoundSpecifier ScrewdriverOpenSound = new SoundPathSpecifier("/Audio/Machines/screwdriveropen.ogg");
 
         [DataField("screwdriverCloseSound")]
-        private SoundSpecifier _screwdriverCloseSound = new SoundPathSpecifier("/Audio/Machines/screwdriverclose.ogg");
+        public SoundSpecifier ScrewdriverCloseSound = new SoundPathSpecifier("/Audio/Machines/screwdriverclose.ogg");
 
         [ViewVariables] private BoundUserInterface? UserInterface => Owner.GetUIOrNull(WiresUiKey.Key);
 
@@ -500,47 +487,6 @@ namespace Content.Server.WireHacking
                     WireSeed));
         }
 
-        async Task<bool> IInteractUsing.InteractUsing(InteractUsingEventArgs eventArgs)
-        {
-            if (!_entities.TryGetComponent<ToolComponent?>(eventArgs.Using, out var tool))
-            {
-                return false;
-            }
-
-            var toolSystem = EntitySystem.Get<ToolSystem>();
-
-            // opens the wires ui if using a tool with cutting or multitool quality on it
-            if (IsPanelOpen &&
-               (tool.Qualities.Contains(CuttingQuality) ||
-                tool.Qualities.Contains(PulsingQuality)))
-            {
-                if (_entities.TryGetComponent(eventArgs.User, out ActorComponent? actor))
-                {
-                    OpenInterface(actor.PlayerSession);
-                    return true;
-                }
-            }
-
-            // screws the panel open if the tool can do so
-            else if (await toolSystem.UseTool(tool.Owner, eventArgs.User, Owner,
-                0f, WireHackingSystem.ScrewTime, ScrewingQuality, toolComponent:tool))
-            {
-                IsPanelOpen = !IsPanelOpen;
-                if (IsPanelOpen)
-                {
-                    SoundSystem.Play(Filter.Pvs(Owner), _screwdriverOpenSound.GetSound(), Owner);
-                }
-                else
-                {
-                    SoundSystem.Play(Filter.Pvs(Owner), _screwdriverCloseSound.GetSound(), Owner);
-                }
-
-                return true;
-            }
-
-            return false;
-        }
-
         public void SetStatus(object statusIdentifier, object status)
         {
             if (_statuses.TryGetValue(statusIdentifier, out var storedMessage))
@@ -553,6 +499,11 @@ namespace Content.Server.WireHacking
 
             _statuses[statusIdentifier] = status;
             UpdateUserInterface();
+        }
+        /// Just opens/closes the panel state in the right namespace
+        public void InvertPanel()
+        {
+            IsPanelOpen = !IsPanelOpen;
         }
     }
 }

@@ -1,17 +1,13 @@
-using System;
-using System.Collections.Generic;
 using Content.Server.Tools;
 using Content.Server.VendingMachines;
-using Content.Shared.ActionBlocker;
+using Content.Shared.Interaction;
 using Content.Shared.Examine;
+using Content.Shared.Tools.Components;
 using Content.Shared.GameTicking;
+using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Localization;
 using Robust.Shared.Player;
 using Robust.Shared.Random;
-using Robust.Shared.ViewVariables;
 using static Content.Shared.Wires.SharedWiresComponent;
 
 namespace Content.Server.WireHacking
@@ -33,6 +29,7 @@ namespace Content.Server.WireHacking
             SubscribeLocalEvent<WiresComponent, ComponentStartup>(OnWiresStartup);
             SubscribeLocalEvent<WiresComponent, MapInitEvent>(OnWiresMapInit);
             SubscribeLocalEvent<WiresComponent, ExaminedEvent>(OnWiresExamine);
+            SubscribeLocalEvent<WiresComponent, InteractUsingEvent>(OnInteractUsing);
 
             // Hacking DoAfters
             SubscribeLocalEvent<WiresComponent, WiresComponent.WiresCutEvent>(OnWiresCut);
@@ -107,6 +104,39 @@ namespace Content.Server.WireHacking
             args.PushMarkup(Loc.GetString(component.IsPanelOpen
                 ? "wires-component-on-examine-panel-open"
                 : "wires-component-on-examine-panel-closed"));
+        }
+
+        private async void OnInteractUsing(EntityUid uid, WiresComponent component, InteractUsingEvent args)
+        {
+            if (!TryComp<ToolComponent?>(args.Used, out var tool))
+                return;
+
+            // opens the wires ui if using a tool with cutting or multitool quality on it
+            if (component.IsPanelOpen &&
+               (tool.Qualities.Contains(component.CuttingQuality) ||
+                tool.Qualities.Contains(component.PulsingQuality)))
+            {
+                if (TryComp(args.User, out ActorComponent? actor))
+                {
+                    component.OpenInterface(actor.PlayerSession);
+                    return;
+                }
+            }
+
+            // screws the panel open if the tool can do so
+            else if (await _tools.UseTool(tool.Owner, args.User, uid,
+                0f, WireHackingSystem.ScrewTime, component.ScrewingQuality, toolComponent:tool))
+            {
+                component.InvertPanel();
+                if (component.IsPanelOpen)
+                {
+                    SoundSystem.Play(Filter.Pvs(uid), component.ScrewdriverOpenSound.GetSound(), uid);
+                }
+                else
+                {
+                    SoundSystem.Play(Filter.Pvs(uid), component.ScrewdriverCloseSound.GetSound(), uid);
+                }
+            }
         }
 
         private void OnWiresStartup(EntityUid uid, WiresComponent component, ComponentStartup args)

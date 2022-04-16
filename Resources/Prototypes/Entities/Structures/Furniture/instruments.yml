@@ -29,6 +29,16 @@
     interfaces:
     - key: enum.InstrumentUiKey.Key
       type: InstrumentBoundUserInterface
+  - type: Fixtures
+    fixtures:
+      - shape:
+          !type:PhysShapeCircle
+          radius: 0.45
+        mass: 50
+        layer:
+          - SmallImpassable
+        mask:
+          - VaultImpassable
 
 - type: entity
   parent: BasePlaceableInstrument

@@ -183,8 +183,18 @@ namespace Content.Server.Electrocution
 
             var targets = new List<(EntityUid entity, int depth)>();
             GetChainedElectrocutionTargets(targetUid, targets);
-            if (!electrified.RequirePower)
+            if (!electrified.RequirePower || electrified.UsesApcPower)
             {
+                // Does it use APC power for its electrification check? Check if it's powered, and then
+                // attempt an electrocution if all the checks succeed.
+
+                if (electrified.UsesApcPower &&
+                    (!TryComp(uid, out ApcPowerReceiverComponent? power)
+                     || !power.Powered))
+                {
+                    return false;
+                }
+
                 var lastRet = true;
                 for (var i = targets.Count - 1; i >= 0; i--)
                 {

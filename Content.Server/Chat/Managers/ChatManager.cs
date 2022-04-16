@@ -229,7 +229,7 @@ namespace Content.Server.Chat.Managers
 
         public void ChatMessageToOne(ChatChannel channel, string message, string messageWrap, EntityUid source, bool hideChat, INetChannel client)
         {
-            var msg = _netManager.CreateNetMessage<MsgChatMessage>();
+            var msg = new MsgChatMessage();
             msg.Channel = channel;
             msg.Message = message;
             msg.MessageWrap = messageWrap;
@@ -240,7 +240,7 @@ namespace Content.Server.Chat.Managers
 
         public void ChatMessageToMany(ChatChannel channel, string message, string messageWrap, EntityUid source, bool hideChat, List<INetChannel> clients)
         {
-            var msg = _netManager.CreateNetMessage<MsgChatMessage>();
+            var msg = new MsgChatMessage();
             msg.Channel = channel;
             msg.Message = message;
             msg.MessageWrap = messageWrap;
@@ -251,7 +251,7 @@ namespace Content.Server.Chat.Managers
 
         public void ChatMessageToAll(ChatChannel channel, string message, string messageWrap, Color? colorOverride = null)
         {
-            var msg = _netManager.CreateNetMessage<MsgChatMessage>();
+            var msg = new MsgChatMessage();
             msg.Channel = channel;
             msg.Message = message;
             msg.MessageWrap = messageWrap;

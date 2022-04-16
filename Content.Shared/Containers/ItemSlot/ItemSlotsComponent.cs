@@ -117,6 +117,13 @@ namespace Content.Shared.Containers.ItemSlots
         public bool Locked = false;
 
         /// <summary>
+        ///     Whether the item slots system will attempt to insert item from the user's hands into this slot when interacted with.
+        ///     It doesn't block other insertion methods, like verbs.
+        /// </summary>
+        [DataField("insertOnInteract")]
+        public bool InsertOnInteract = true;
+
+        /// <summary>
         ///     Whether the item slots system will attempt to eject this item to the user's hands when interacted with.
         /// </summary>
         /// <remarks>

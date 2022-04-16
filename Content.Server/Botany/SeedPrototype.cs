@@ -61,8 +61,9 @@ public struct SeedChemQuantity
     [DataField("PotencyDivisor")] public int PotencyDivisor;
 }
 
+// TODO reduce the number of friends to a reasonable level. Requires ECS-ing things like plant holder component.
 [Virtual, DataDefinition]
-[Friend(typeof(BotanySystem), typeof(PlantHolderComponent), typeof(SeedExtractorSystem))]
+[Friend(typeof(BotanySystem), typeof(PlantHolderSystem), typeof(SeedExtractorSystem), typeof(PlantHolderComponent))]
 public class SeedData
 {
     #region Tracking
