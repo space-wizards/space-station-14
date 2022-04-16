@@ -1122,7 +1122,7 @@
       autoPopulate: false
       name: action-name-disarm
   - type: ReplacementAccent
-    accent: Xeno
+    accent: xeno
   - type: InteractionPopup
     successChance: 0.5
     interactSuccessString: petting-success-tarantula
