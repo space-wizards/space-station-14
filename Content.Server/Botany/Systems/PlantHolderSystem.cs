@@ -98,12 +98,12 @@ namespace Content.Server.Botany.Systems
             {
                 if (component.Seed == null)
                 {
-                    if (!_prototypeManager.TryIndex<SeedPrototype>(seeds.SeedName, out var seed))
-                        return;
-
+                    if (!_botanySystem.TryGetSeed(seeds, out var seed))
+                        return ;
+                    
                     _popupSystem.PopupCursor(Loc.GetString("plant-holder-component-plant-success-message",
-                        ("seedName", seed.SeedName),
-                        ("seedNoun", seed.SeedNoun)), Filter.Entities(args.User));
+                        ("seedName", seed.Name),
+                        ("seedNoun", seed.Noun)), Filter.Entities(args.User));
 
                     component.Seed = seed;
                     component.Dead = false;
@@ -215,6 +215,7 @@ namespace Content.Server.Botany.Systems
                     return;
                 }
 
+                component.Seed.Unique = false;
                 var seed = _botanySystem.SpawnSeedPacket(component.Seed, Transform(args.User).Coordinates);
                 seed.RandomOffset(0.25f);
                 _popupSystem.PopupCursor(Loc.GetString("plant-holder-component-take-sample-message",

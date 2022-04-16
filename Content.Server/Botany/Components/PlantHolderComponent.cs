@@ -87,7 +87,7 @@ namespace Content.Server.Botany.Components
         public float WeedCoefficient { get; set; } = 1f;
 
         [ViewVariables(VVAccess.ReadWrite)]
-        public SeedPrototype? Seed { get; set; }
+        public SeedData? Seed { get; set; }
 
         [ViewVariables(VVAccess.ReadWrite)]
         public bool ImproperHeat { get; set; }
@@ -613,15 +613,14 @@ namespace Content.Server.Botany.Components
             appearanceComponent.SetData(PlantHolderVisuals.HarvestLight, Harvest);
         }
 
-        public void CheckForDivergence(bool modified)
+        /// <summary>
+        ///     Check if the currently contained seed is unique. If it is not, clone it so that we have a unique seed.
+        ///     Necessary to avoid modifying global seeds.
+        /// </summary>
+        public void EnsureUniqueSeed()
         {
-            // Make sure we're not modifying a "global" seed.
-            // If this seed is not in the global seed list, then no products of this line have been harvested yet.
-            // It is then safe to assume it's restricted to this tray.
-            if (Seed == null) return;
-            var plantSystem = EntitySystem.Get<BotanySystem>();
-            if (plantSystem.Seeds.ContainsKey(Seed.Uid))
-                Seed = Seed.Diverge(modified);
+            if (Seed != null && !Seed.Unique)
+                Seed = Seed.Clone();
         }
 
         public void ForceUpdateByExternalCause()
