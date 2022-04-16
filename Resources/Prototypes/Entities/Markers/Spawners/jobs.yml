@@ -8,15 +8,17 @@
   components:
   - type: SpawnPoint
     spawn_type: Job
+  - type: StationSpawnerManager
   - type: Sprite
     sprite: Markers/jobs.rsi
 
 - type: entity
   name: observer spawn point
   id: SpawnPointObserver
-  parent: SpawnPointJobBase
+  parent: MarkerBase
   components:
   - type: Sprite
+    sprite: Markers/jobs.rsi
     layers:
       - state: green
       - texture: Mobs/Ghosts/ghost_human.rsi/icon.png

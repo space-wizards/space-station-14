@@ -137,6 +137,15 @@ public sealed class StationSpawningSystem : EntitySystem
             stationSpawning.SpawnersByGrid.Remove(previousGrid);
     }
 
+    /// <summary>
+    /// Attempts to spawn a player character onto the given station.
+    /// </summary>
+    /// <param name="station">Station to spawn onto.</param>
+    /// <param name="job">The job to assign, if any.</param>
+    /// <param name="profile">The character profile to use, if any.</param>
+    /// <param name="stationSpawning">Resolve pattern, the station spawning component for the station.</param>
+    /// <returns>The resulting player character, if any.</returns>
+    /// <exception cref="ArgumentException">Thrown when the given station is not a station.</exception>
     public EntityUid? SpawnPlayerCharacterOnStation(EntityUid station, Job? job, HumanoidCharacterProfile? profile, StationSpawningComponent? stationSpawning = null)
     {
         if (!Resolve(station, ref stationSpawning))
@@ -227,25 +236,6 @@ public sealed class StationSpawningSystem : EntitySystem
 
     #endregion Player spawning helpers
 }
-
-/// <summary>
-/// Event fired when a new grid is added to a station, to find all spawners on station.
-/// Handlers should add themselves to the SpawnerEntities hashset.
-/// </summary>
-[PublicAPI]
-public sealed class StationSpawningRollCallEvent : EntityEventArgs
-{
-    public readonly GridId GridId;
-    public readonly EntityUid ExpectedParent;
-    public readonly HashSet<EntityUid> SpawnerEntities = new();
-
-    public StationSpawningRollCallEvent(GridId gridId, IMapManager mapManager)
-    {
-        GridId = gridId;
-        ExpectedParent = mapManager.GetGridEuid(gridId);
-    }
-}
-
 
 /// <summary>
 /// Event fired on any spawner eligible to attempt to spawn a player.

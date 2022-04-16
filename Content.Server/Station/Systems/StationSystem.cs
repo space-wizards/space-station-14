@@ -146,7 +146,7 @@ public sealed class StationSystem : EntitySystem
     /// <param name="mapPrototype">The game map prototype used, if any.</param>
     /// <param name="gridIds">All grids that should be added to the station.</param>
     /// <param name="name">Optional override for the station name.</param>
-    /// <returns></returns>
+    /// <returns>The initialized station.</returns>
     public EntityUid InitializeNewStation(GameMapPrototype? mapPrototype, IEnumerable<GridId>? gridIds, string? name = null)
     {
         var station = Spawn(null, EntityCoordinates.Invalid);
