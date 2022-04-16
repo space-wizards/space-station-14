@@ -258,6 +258,7 @@ namespace Content.Server.Botany.Systems
                 EntityManager.QueueDeleteEntity(args.Used);
             }
         }
+
         private void OnInteractHand(EntityUid uid, PlantHolderComponent component, InteractHandEvent args)
         {
             component.DoHarvest(args.User);
