@@ -16,6 +16,13 @@
   - type: Physics
     bodyType: Static
   - type: Fixtures
+    fixtures:
+    - shape:
+        !type:PhysShapeAabb
+        bounds: "-0.25,-0.5,0.25,0.5"
+      mask:
+      - Impassable
+      - LowImpassable
   - type: Transform
     anchored: true
   - type: Anchorable
@@ -60,15 +67,6 @@
     drawdepth: ThickPipe
     sprite: Structures/Piping/disposal.rsi
     state: pipe-b
-  - type: Physics
-  - type: Fixtures
-    fixtures:
-    - shape:
-        !type:PhysShapeAabb
-          bounds: "-0.25,-0.5,0.25,0.5"
-      mask:
-      - Impassable
-      - LowImpassable
   - type: Construction
     graph: DisposalPipe
     node: broken
@@ -89,15 +87,6 @@
     - type: DisposalVisualizer
       state_free: conpipe-s
       state_anchored: pipe-s
-  - type: Physics
-  - type: Fixtures
-    fixtures:
-    - shape:
-        !type:PhysShapeAabb
-          bounds: "-0.25,-0.5,0.25,0.5"
-      mask:
-      - Impassable
-      - LowImpassable
   - type: Construction
     graph: DisposalPipe
     node: pipe
@@ -124,15 +113,6 @@
     interfaces:
     - key: enum.DisposalTaggerUiKey.Key
       type: DisposalTaggerBoundUserInterface
-  - type: Physics
-  - type: Fixtures
-    fixtures:
-    - shape:
-        !type:PhysShapeAabb
-          bounds: "-0.25,-0.5,0.25,0.5"
-      mask:
-      - Impassable
-      - LowImpassable
   - type: Construction
     graph: DisposalPipe
     node: tagger
@@ -153,7 +133,6 @@
     - type: DisposalVisualizer
       state_free: conpipe-t
       state_anchored: pipe-t
-  - type: Physics
   - type: Fixtures
     fixtures:
     - shape:
@@ -194,7 +173,6 @@
     interfaces:
     - key: enum.DisposalRouterUiKey.Key
       type: DisposalRouterBoundUserInterface
-  - type: Physics
   - type: Fixtures
     fixtures:
     - shape:
@@ -228,7 +206,6 @@
       state_anchored: pipe-j2s
   - type: Flippable
     mirrorEntity: DisposalRouter
-  - type: Physics
   - type: Fixtures
     fixtures:
     - shape:
@@ -260,7 +237,6 @@
       state_anchored: pipe-j1
   - type: Flippable
     mirrorEntity: DisposalJunctionFlipped
-  - type: Physics
   - type: Fixtures
     fixtures:
     - shape:
@@ -294,7 +270,6 @@
       state_anchored: pipe-j2
   - type: Flippable
     mirrorEntity: DisposalJunction
-  - type: Physics
   - type: Fixtures
     fixtures:
     - shape:
@@ -324,7 +299,6 @@
     - type: DisposalVisualizer
       state_free: conpipe-y
       state_anchored: pipe-y
-  - type: Physics
   - type: Fixtures
     fixtures:
     - shape:
@@ -353,7 +327,6 @@
     - type: DisposalVisualizer
       state_free: conpipe-c
       state_anchored: pipe-c
-  - type: Physics
   - type: Fixtures
     fixtures:
     - shape:
