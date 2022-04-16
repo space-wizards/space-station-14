@@ -85,7 +85,7 @@
   components:
     - type: Sprite
       sprite: Objects/Devices/payload.rsi
-      state: payload-explosive-armed
+      state: payload-flash-armed
     - type: DeleteOnTrigger
     - type: FlashOnTrigger
       range: 6
