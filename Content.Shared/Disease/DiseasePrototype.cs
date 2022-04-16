@@ -18,7 +18,7 @@ namespace Content.Shared.Disease
         [DataField("name")]
         public string Name { get; } = string.Empty;
 
-        [ParentDataFieldAttribute(typeof(PrototypeIdSerializer<DiseasePrototype>))]
+        [ParentDataFieldAttribute(typeof(AbstractPrototypeIdSerializer<DiseasePrototype>))]
         public string? Parent { get; private set; }
 
         [NeverPushInheritance]
@@ -28,6 +28,7 @@ namespace Content.Shared.Disease
         /// <summary>
         /// Controls how often a disease ticks.
         /// </summary>
+        [ViewVariables]
         public float TickTime = 1f;
 
         /// <summary>

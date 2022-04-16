@@ -21,6 +21,8 @@
     visuals:
     - type: AirlockVisualizer
     - type: WiresVisualizer
+  - type: PaintableAirlock
+    group: External
 
 - type: entity
   parent: AirlockExternal
@@ -31,3 +33,5 @@
     enabled: false
   - type: Sprite
     sprite: Structures/Doors/Airlocks/Glass/external.rsi
+  - type: PaintableAirlock
+    group: ExternalGlass

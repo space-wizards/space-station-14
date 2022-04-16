@@ -173,7 +173,7 @@ namespace Content.Shared.CCVar
         ///     Whether a random rotation will be applied to the station on roundstart.
         /// </summary>
         public static readonly CVarDef<bool> StationRotation =
-            CVarDef.Create("game.station_rotation", false);
+            CVarDef.Create("game.station_rotation", true);
 
         /// <summary>
         ///     When enabled, guests will be assigned permanent UIDs and will have their preferences stored.
@@ -428,7 +428,7 @@ namespace Content.Shared.CCVar
         /// <remarks>
         ///     Large nukes tend to generate a lot of shrapnel that flies through space. This can functionally cripple
         ///     the server TPS for a while after an explosion (or even during, if the explosion is processed
-        ///     incrementally. 
+        ///     incrementally.
         /// </remarks>
         public static readonly CVarDef<int> ExplosionThrowLimit =
             CVarDef.Create("explosion.throw_limit", 400, CVar.SERVERONLY);

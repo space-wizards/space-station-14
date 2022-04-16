@@ -6,10 +6,12 @@
   components:
   - type: Transform
     anchored: true
+    noRot: true
   - type: Clickable
   - type: InteractionOutline
   - type: Physics
     bodyType: Static
+    fixedRotation: false
   - type: Fixtures
     fixtures:
     - shape:

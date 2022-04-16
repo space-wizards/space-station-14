@@ -57,7 +57,6 @@
     damage:
       groups:
         Brute: 2
-
   - type: MeleeChemicalInjector
   - type: SolutionContainerManager
     solutions:
@@ -71,3 +70,7 @@
     solution: melee
   - type: SolutionTransfer
     maxTransferAmount: 5
+  - type: GhostTakeoverAvailable
+    makeSentient: true
+    name: space tick
+    description: Wreak havoc on the station's inhabitants, and disrupt salvage!
