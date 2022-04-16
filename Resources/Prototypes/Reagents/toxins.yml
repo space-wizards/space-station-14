@@ -19,7 +19,7 @@
             Poison: 2
 
 - type: reagent
-  id: CarpToxin
+  id: Carpotoxin
   name: Carpotoxin
   group: Toxins
   desc: Toxic secretions of a space carp, causes a painful burning sensation.
