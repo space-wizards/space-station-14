@@ -127,6 +127,7 @@ namespace Content.Server.Hands.Systems
             _logSystem.Add(LogType.Pickup, LogImpact.Low, $"{uid} picked up {entity}");
         }
 
+
         public override void PickupAnimation(EntityUid item, EntityCoordinates initialPosition, Vector2 finalPosition,
             EntityUid? exclude)
         {
