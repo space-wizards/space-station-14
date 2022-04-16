@@ -39,5 +39,3 @@ comp-window-knock = *knock knock*
 ## Hugging players
 
 hugging-success-generic = You hug {THE($target)}.
-
-hugging-failure-generic = As you try to hug {THE($target)}, you accidentally raise your arm too high and hit them in the head. Clumsy!
