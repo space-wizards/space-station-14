@@ -30,7 +30,6 @@ using Content.Shared.Pulling.Components;
 using Content.Server.Pulling;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Throwing;
-using Content.Server.Resist;
 
 namespace Content.Server.Hands.Systems
 {
@@ -59,9 +58,9 @@ namespace Content.Server.Hands.Systems
             SubscribeLocalEvent<HandsComponent, PullStartedMessage>(HandlePullStarted);
             SubscribeLocalEvent<HandsComponent, PullStoppedMessage>(HandlePullStopped);
 
-            SubscribeLocalEvent<HandsComponent, ComponentGetState>(GetComponentState);
-            SubscribeLocalEvent<HandsComponent, EntInsertedIntoContainerMessage>(HandleEntityInserted);
             SubscribeLocalEvent<HandsComponent, EntRemovedFromContainerMessage>(HandleEntityRemoved);
+
+            SubscribeLocalEvent<HandsComponent, ComponentGetState>(GetComponentState);
 
             CommandBinds.Builder
                 .Bind(ContentKeyFunctions.ThrowItemInHand, new PointerInputCmdHandler(HandleThrowItem))
@@ -105,23 +104,7 @@ namespace Content.Server.Hands.Systems
 
             args.Handled = true; // no shove/stun.
         }
-        private void HandleEntityInserted(EntityUid uid, HandsComponent component, EntInsertedIntoContainerMessage args)
-        {
-            if (HasComp<CanEscapeInventoryComponent>(args.Entity))
-                _actionBlockerSystem.UpdateCanMove(args.Entity);
-        }
 
-        private void HandleEntityRemoved(EntityUid uid, SharedHandsComponent component, EntRemovedFromContainerMessage args)
-        {
-            if (Deleted(args.Entity))
-                return;
-
-            if (!Deleted(args.Entity) && TryComp(args.Entity, out HandVirtualItemComponent? @virtual))
-                _virtualSystem.Delete(@virtual, uid);
-
-            if (HasComp<CanEscapeInventoryComponent>(args.Entity))
-                _actionBlockerSystem.UpdateCanMove(args.Entity);
-        }
         #region EntityInsertRemove
         public override void DoDrop(EntityUid uid, Hand hand, bool doDropInteraction = true, SharedHandsComponent? hands = null)
         {
@@ -156,6 +139,12 @@ namespace Content.Server.Hands.Systems
                 filter = filter.RemoveWhereAttachedEntity(entity => entity == exclude);
 
             RaiseNetworkEvent(new PickupAnimationEvent(item, initialPosition, finalPosition), filter);
+        }
+
+        private void HandleEntityRemoved(EntityUid uid, SharedHandsComponent component, EntRemovedFromContainerMessage args)
+        {
+            if (!Deleted(args.Entity) && TryComp(args.Entity, out HandVirtualItemComponent? @virtual))
+                _virtualSystem.Delete(@virtual, uid);
         }
         #endregion
 
