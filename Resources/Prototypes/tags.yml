@@ -226,6 +226,9 @@
   id: Payload # for grenade/bomb crafting
 
 - type: Tag
+  id: PaintableAirlock
+
+- type: Tag
   id: PercussionInstrument
 
 - type: Tag
