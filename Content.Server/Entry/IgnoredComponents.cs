@@ -20,6 +20,7 @@ namespace Content.Server.Entry
             "ItemCabinetVisuals",
             "DiseaseMachineVisuals",
             "HandheldGPS",
+            "ToggleableLightVisuals",
             "PotencyVisuals",
             "PaperVisuals"
         };
