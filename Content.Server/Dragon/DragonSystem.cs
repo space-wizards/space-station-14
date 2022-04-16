@@ -60,7 +60,7 @@ namespace Content.Server.Dragon
         /// <summary>
         /// On a sucsessful devour attempt
         /// </summary>
-        private void OnDevourSucsessful(TargetDevourSuccessfulEvent args)
+        private void OnDevourSuccessful(TargetDevourSuccessfulEvent args)
         {
             //TODO: Figure out a better way of removing structures via devour that still entails standing still and waiting for a DoAfter. Somehow.
             EntityManager.QueueDeleteEntity(args.Target);
