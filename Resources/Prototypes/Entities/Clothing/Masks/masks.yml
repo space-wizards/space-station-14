@@ -45,7 +45,7 @@
   - type: Armor
     modifiers:
       coefficients:
-        Heat: 0.20
+        Heat: 0.80
 
 - type: entity
   parent: ClothingMaskGasAtmos
@@ -94,10 +94,10 @@
   - type: Armor
     modifiers:
       coefficients:
-        Blunt: 0.10
-        Slash: 0.10
-        Piercing: 0.05
-        Heat: 0.05
+        Blunt: 0.40
+        Slash: 0.40
+        Piercing: 0.20
+        Heat: 0.20
 
 - type: entity
   parent: ClothingMaskBase
