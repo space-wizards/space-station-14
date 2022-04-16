@@ -33,7 +33,7 @@ public sealed class ListStationJobsCommand : IConsoleCommand
             return;
         }
 
-        foreach (var (job, amount) in _entityManager.GetComponent<StationJobsComponent>(new EntityUid(station)).JobList)
+        foreach (var (job, amount) in stationJobs.GetJobs(new EntityUid(station)))
         {
             shell.WriteLine($"{job}: {amount}");
         }

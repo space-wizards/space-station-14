@@ -7,6 +7,7 @@ using Content.Shared.Roles;
 using JetBrains.Annotations;
 using Robust.Shared.Configuration;
 using Robust.Shared.Player;
+using Robust.Shared.Utility;
 
 namespace Content.Server.Station.Systems;
 
@@ -263,8 +264,17 @@ public sealed class StationJobsSystem : EntitySystem
         if (!Resolve(station, ref stationJobs))
             throw new ArgumentException("Tried to use a non-station entity as a station!", nameof(station));
 
-        return stationJobs.OverflowJobs;
+        return stationJobs.OverflowJobs.ToHashSet(); // Be sure to clone to avoid ref shenanigans.
     }
+
+    public IReadOnlyDictionary<string, uint?> GetJobs(EntityUid station, StationJobsComponent? stationJobs = null)
+    {
+        if (!Resolve(station, ref stationJobs))
+            throw new ArgumentException("Tried to use a non-station entity as a station!", nameof(station));
+
+        return stationJobs.JobList.ShallowClone(); // Be sure to clone to avoid ref shenanigans.
+    }
+
     #endregion Public API
 
     #region Latejoin job management
