@@ -20,12 +20,7 @@ namespace Content.Server.Bible.Components
         [DataField("damageOnUntrainedUse", required: true)]
         [ViewVariables(VVAccess.ReadWrite)]
         public DamageSpecifier DamageOnUntrainedUse = default!;
-        /// <summary>
-        /// Used for a special item only the Chaplain can summon. Usually a mob, but supports regular items too.
-        /// </summary>
-        [DataField("specialItem", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
-        public string? SpecialItemPrototype = null;
-        public bool AlreadySummoned = false;
+
         //Chance the bible will fail to heal someone with no helmet
         [DataField("failChance")]
         [ViewVariables(VVAccess.ReadWrite)]

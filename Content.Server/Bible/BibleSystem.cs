@@ -31,7 +31,7 @@ namespace Content.Server.Bible
             base.Initialize();
 
             SubscribeLocalEvent<BibleComponent, AfterInteractEvent>(OnAfterInteract);
-            SubscribeLocalEvent<BibleComponent, GetVerbsEvent<AlternativeVerb>>(AddSummonVerb);
+            SubscribeLocalEvent<SummonableComponent, GetVerbsEvent<AlternativeVerb>>(AddSummonVerb);
         }
 
         private void OnAfterInteract(EntityUid uid, BibleComponent component, AfterInteractEvent args)
@@ -90,9 +90,12 @@ namespace Content.Server.Bible
             _damageableSystem.TryChangeDamage(args.Target.Value, component.Damage, true);
         }
 
-        private void AddSummonVerb(EntityUid uid, BibleComponent component, GetVerbsEvent<AlternativeVerb> args)
+        private void AddSummonVerb(EntityUid uid, SummonableComponent component, GetVerbsEvent<AlternativeVerb> args)
         {
-            if (!args.CanInteract || !args.CanAccess || !HasComp<BibleUserComponent>(args.User) || component.AlreadySummoned || component.SpecialItemPrototype == null)
+            if (!args.CanInteract || !args.CanAccess || component.AlreadySummoned || component.SpecialItemPrototype == null)
+                return;
+
+            if (component.RequiresBibleUser && !HasComp<BibleUserComponent>(args.User))
                 return;
 
             AlternativeVerb verb = new()
@@ -108,9 +111,11 @@ namespace Content.Server.Bible
             args.Verbs.Add(verb);
         }
 
-        private void AttemptSummon(BibleComponent component, EntityUid user, TransformComponent? position)
+        private void AttemptSummon(SummonableComponent component, EntityUid user, TransformComponent? position)
         {
-            if (!HasComp<BibleUserComponent>(user) || component.AlreadySummoned || component.SpecialItemPrototype == null)
+            if (component.AlreadySummoned || component.SpecialItemPrototype == null)
+                return;
+            if (component.RequiresBibleUser && !HasComp<BibleUserComponent>(user))
                 return;
             if (!Resolve(user, ref position))
                 return;
