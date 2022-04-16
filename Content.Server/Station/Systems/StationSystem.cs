@@ -16,6 +16,7 @@ namespace Content.Server.Station.Systems;
 /// A station is, by default, just a name, optional map prototype, and optional grids.
 /// For jobs, look at StationJobSystem. For SIDBs (Station IDentification Beacons) look at StationBeaconSystem.
 /// </summary>
+[PublicAPI]
 public sealed class StationSystem : EntitySystem
 {
     [Dependency] private readonly IChatManager _chatManager = default!;
@@ -33,7 +34,6 @@ public sealed class StationSystem : EntitySystem
     /// <summary>
     /// All stations that currently exist.
     /// </summary>
-    [PublicAPI]
     public IReadOnlySet<EntityUid> Stations => _stations;
 
     private bool _randomStationOffset;
@@ -147,7 +147,6 @@ public sealed class StationSystem : EntitySystem
     /// <param name="gridIds">All grids that should be added to the station.</param>
     /// <param name="name">Optional override for the station name.</param>
     /// <returns></returns>
-    [PublicAPI]
     public EntityUid InitializeNewStation(GameMapPrototype? mapPrototype, IEnumerable<GridId>? gridIds, string? name = null)
     {
         var station = Spawn(null, EntityCoordinates.Invalid);
@@ -173,16 +172,14 @@ public sealed class StationSystem : EntitySystem
         return station;
     }
 
-
     /// <summary>
-    /// Adds the given grid to the given station.
+    /// Adds the given grid to a station.
     /// </summary>
     /// <param name="mapGrid">Grid to attach.</param>
     /// <param name="station">Station to attach the grid to.</param>
     /// <param name="gridComponent">Resolve pattern, grid component of mapGrid.</param>
     /// <param name="stationData">Resolve pattern, station data component of station.</param>
     /// <exception cref="ArgumentException">Thrown when mapGrid or station are not a grid or station, respectively.</exception>
-    [PublicAPI]
     public void AddGridToStation(EntityUid station, EntityUid mapGrid, IMapGridComponent? gridComponent = null, StationDataComponent? stationData = null)
     {
         if (!Resolve(mapGrid, ref gridComponent))
@@ -200,13 +197,13 @@ public sealed class StationSystem : EntitySystem
     }
 
     /// <summary>
-    ///
+    /// Removes the given grid from a station.
     /// </summary>
     /// <param name="station">Station to remove the grid from.</param>
     /// <param name="mapGrid">Grid to remove</param>
     /// <param name="gridComponent">Resolve pattern, grid component of mapGrid.</param>
     /// <param name="stationData">Resolve pattern, station data component of station.</param>
-    [PublicAPI]
+    /// <exception cref="ArgumentException">Thrown when mapGrid or station are not a grid or station, respectively.</exception>
     public void RemoveGridFromStation(EntityUid station, EntityUid mapGrid, IMapGridComponent? gridComponent = null, StationDataComponent? stationData = null)
     {
         if (!Resolve(mapGrid, ref gridComponent))
@@ -221,7 +218,15 @@ public sealed class StationSystem : EntitySystem
         _sawmill.Info($"Removing grid {mapGrid}:{gridComponent.GridIndex} from station {Name(station)} ({station})");
     }
 
-    [PublicAPI]
+    /// <summary>
+    /// Renames the given station.
+    /// </summary>
+    /// <param name="station">Station to rename.</param>
+    /// <param name="name">The new name to apply.</param>
+    /// <param name="loud">Whether or not to announce the rename.</param>
+    /// <param name="stationData">Resolve pattern, station data component of station.</param>
+    /// <param name="metaData">Resolve pattern, metadata component of station.</param>
+    /// <exception cref="ArgumentException">Thrown when the given station is not a station.</exception>
     public void RenameStation(EntityUid station, string name, bool loud = true, StationDataComponent? stationData = null, MetaDataComponent? metaData = null)
     {
         if (!Resolve(station, ref stationData, ref metaData))
@@ -239,6 +244,20 @@ public sealed class StationSystem : EntitySystem
 
         // Make sure lobby gets the memo.
         _gameTicker.UpdateJobsAvailable();
+    }
+
+    /// <summary>
+    /// Deletes the given station.
+    /// </summary>
+    /// <param name="station">Station to delete.</param>
+    /// <param name="stationData">Resolve pattern, station data component of station.</param>
+    /// <exception cref="ArgumentException">Thrown when the given station is not a station.</exception>
+    public void DeleteStation(EntityUid station, StationDataComponent? stationData = null)
+    {
+        if (!Resolve(station, ref stationData))
+            throw new ArgumentException("Tried to use a non-station entity as a station!", nameof(station));
+
+        Del(station);
     }
 }
 
@@ -297,6 +316,10 @@ public sealed class StationGridRemovedEvent : EntityEventArgs
     }
 }
 
+/// <summary>
+/// Event fired when a station has been renamed.
+/// </summary>
+[PublicAPI]
 public sealed class StationRenamedEvent : EntityEventArgs
 {
     /// <summary>
