@@ -107,7 +107,7 @@ namespace Content.Server.Hands.Systems
         }
         private void HandleEntityInserted(EntityUid uid, HandsComponent component, EntInsertedIntoContainerMessage args)
         {
-            if (HasComp<CanResistInventoryComponent>(args.Entity))
+            if (HasComp<CanEscapeInventoryComponent>(args.Entity))
                 _actionBlockerSystem.UpdateCanMove(args.Entity);
         }
 
@@ -119,7 +119,7 @@ namespace Content.Server.Hands.Systems
             if (!Deleted(args.Entity) && TryComp(args.Entity, out HandVirtualItemComponent? @virtual))
                 _virtualSystem.Delete(@virtual, uid);
 
-            if (HasComp<CanResistInventoryComponent>(args.Entity))
+            if (HasComp<CanEscapeInventoryComponent>(args.Entity))
                 _actionBlockerSystem.UpdateCanMove(args.Entity);
         }
         #region EntityInsertRemove

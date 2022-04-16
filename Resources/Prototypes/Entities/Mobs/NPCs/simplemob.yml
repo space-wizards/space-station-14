@@ -145,7 +145,6 @@
     safe: false
   - type: StandingState
   - type: Alerts
-  - type: CanResistInventory
 
 - type: entity
   save: false

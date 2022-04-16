@@ -327,8 +327,7 @@ namespace Content.Client.Entry
             "DoorRemote",
             "InteractionPopup",
             "HealthAnalyzer",
-            "CanEscapeInventory",
-            "CanResistInventory"
+            "CanEscapeInventory"
         };
     }
 }
