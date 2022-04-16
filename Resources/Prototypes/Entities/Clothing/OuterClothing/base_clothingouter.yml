@@ -14,7 +14,7 @@
         slotTexture: suit_storage
         slotFlags: SUITSTORAGE
         uiContainer: BottomLeft
-        uiWindowPos: 2,0
+        uiWindowPos: 2,3
         displayName: Suit Storage
   - type: ContainerContainer
 
