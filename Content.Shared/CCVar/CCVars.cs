@@ -22,23 +22,40 @@ namespace Content.Shared.CCVar
          */
 
         /// <summary>
-        ///     Whether the basic 'hum' ambience will be enabled.
-        /// </summary>
-        public static readonly CVarDef<bool> AmbienceBasicEnabled =
-            CVarDef.Create("ambience.basic_enabled", true, CVar.ARCHIVE | CVar.CLIENTONLY);
-
-        /// <summary>
-        /// How long we'll wait until re-sampling nearby objects for ambience.
+        /// How long we'll wait until re-sampling nearby objects for ambience. Should be pretty fast, but doesn't have to match the tick rate.
         /// </summary>
         public static readonly CVarDef<float> AmbientCooldown =
-            CVarDef.Create("ambience.cooldown", 0.1f, CVar.REPLICATED | CVar.SERVER);
+            CVarDef.Create("ambience.cooldown", 0.1f, CVar.ARCHIVE | CVar.CLIENTONLY);
 
+        /// <summary>
+        /// How large of a range to sample for ambience.
+        /// </summary>
         public static readonly CVarDef<float> AmbientRange =
             CVarDef.Create("ambience.range", 5f, CVar.REPLICATED | CVar.SERVER);
 
+        /// <summary>
+        /// Maximum simultaneous ambient sounds.
+        /// </summary>
         public static readonly CVarDef<int> MaxAmbientSources =
-            CVarDef.Create("ambience.max_sounds", 64, CVar.REPLICATED | CVar.SERVER);
+            CVarDef.Create("ambience.max_sounds", 16, CVar.ARCHIVE | CVar.CLIENTONLY);
 
+        /// <summary>
+        /// The minimum value the user can set for ambience.max_sounds
+        /// </summary>
+        public static readonly CVarDef<int> MinMaxAmbientSourcesConfigured =
+            CVarDef.Create("ambience.min_max_sounds_configured", 16, CVar.REPLICATED | CVar.SERVER | CVar.CHEAT);
+
+        /// <summary>
+        /// The maximum value the user can set for ambience.max_sounds
+        /// </summary>
+        public static readonly CVarDef<int> MaxMaxAmbientSourcesConfigured =
+            CVarDef.Create("ambience.max_max_sounds_configured", 64, CVar.REPLICATED | CVar.SERVER | CVar.CHEAT);
+
+        /// <summary>
+        /// Ambience volume.
+        /// </summary>
+        public static readonly CVarDef<float> AmbienceVolume =
+            CVarDef.Create("ambience.volume", 0.0f, CVar.ARCHIVE | CVar.CLIENTONLY);
         /*
          * Status
          */
@@ -156,7 +173,7 @@ namespace Content.Shared.CCVar
         ///     Whether a random rotation will be applied to the station on roundstart.
         /// </summary>
         public static readonly CVarDef<bool> StationRotation =
-            CVarDef.Create("game.station_rotation", false);
+            CVarDef.Create("game.station_rotation", true);
 
         /// <summary>
         ///     When enabled, guests will be assigned permanent UIDs and will have their preferences stored.
@@ -390,6 +407,106 @@ namespace Content.Shared.CCVar
 
         public static readonly CVarDef<bool> AdminAnnounceLogout =
             CVarDef.Create("admin.announce_logout", true, CVar.SERVERONLY);
+
+        /*
+         * Explosions
+         */
+
+        /// <summary>
+        ///     How many tiles the explosion system will process per tick
+        /// </summary>
+        /// <remarks>
+        ///     Setting this too high will put a large load on a single tick. Setting this too low will lead to
+        ///     unnaturally "slow" explosions.
+        /// </remarks>
+        public static readonly CVarDef<int> ExplosionTilesPerTick =
+            CVarDef.Create("explosion.tiles_per_tick", 100, CVar.SERVERONLY);
+
+        /// <summary>
+        ///     Upper limit on the size of an explosion before physics-throwing is disabled.
+        /// </summary>
+        /// <remarks>
+        ///     Large nukes tend to generate a lot of shrapnel that flies through space. This can functionally cripple
+        ///     the server TPS for a while after an explosion (or even during, if the explosion is processed
+        ///     incrementally.
+        /// </remarks>
+        public static readonly CVarDef<int> ExplosionThrowLimit =
+            CVarDef.Create("explosion.throw_limit", 400, CVar.SERVERONLY);
+
+        /// <summary>
+        ///     If this is true, explosion processing will pause the NodeGroupSystem to pause updating.
+        /// </summary>
+        /// <remarks>
+        ///     This only takes effect if an explosion needs more than one tick to process (i.e., covers more than <see
+        ///     cref="ExplosionTilesPerTick"/> tiles). If this is not enabled, the node-system will rebuild its graph
+        ///     every tick as the explosion shreds the station, causing significant slowdown.
+        /// </remarks>
+        public static readonly CVarDef<bool> ExplosionSleepNodeSys =
+            CVarDef.Create("explosion.node_sleep", true, CVar.SERVERONLY);
+
+        /// <summary>
+        ///     Upper limit on the total area that an explosion can affect before the neighbor-finding algorithm just
+        ///     stops. Defaults to a 60-rile radius explosion.
+        /// </summary>
+        /// <remarks>
+        ///     Actual area may be larger, as it currently doesn't terminate mid neighbor finding. I.e., area may be that of a ~51 tile radius circle instead.
+        /// </remarks>
+        public static readonly CVarDef<int> ExplosionMaxArea =
+            CVarDef.Create("explosion.max_area", (int) 3.14f * 50 * 50, CVar.SERVERONLY);
+
+        /// <summary>
+        ///     Upper limit on the number of neighbor finding steps for the explosion system neighbor-finding algorithm.
+        /// </summary>
+        /// <remarks>
+        ///     Effectively places an upper limit on the range that any explosion can have. In the vast majority of
+        ///     instances, <see cref="ExplosionMaxArea"/> will likely be hit before this becomes a limiting factor.
+        /// </remarks>
+        public static readonly CVarDef<int> ExplosionMaxIterations =
+            CVarDef.Create("explosion.max_iterations", 150, CVar.SERVERONLY);
+
+        /// <summary>
+        ///     Max Time in milliseconds to spend processing explosions every tick.
+        /// </summary>
+        /// <remarks>
+        ///     This time limiting is not perfectly implemented. Firstly, a significant chunk of processing time happens
+        ///     due to queued entity deletions, which happen outside of the system update code. Secondly, explosion
+        ///     spawning cannot currently be interrupted & resumed, and may lead to exceeding this time limit.
+        /// </remarks>
+        public static readonly CVarDef<float> ExplosionMaxProcessingTime =
+            CVarDef.Create("explosion.max_tick_time", 7f, CVar.SERVERONLY);
+
+        /// <summary>
+        ///     If the explosion is being processed incrementally over several ticks, this variable determines whether
+        ///     updating the grid tiles should be done incrementally at the end of every tick, or only once the explosion has finished processing.
+        /// </summary>
+        /// <remarks>
+        ///     The most notable consequence of this change is that explosions will only punch a hole in the station &
+        ///     create a vacumm once they have finished exploding. So airlocks will no longer slam shut as the explosion
+        ///     expands, just suddenly at the end.
+        /// </remarks>
+        public static readonly CVarDef<bool> ExplosionIncrementalTileBreaking =
+            CVarDef.Create("explosion.incremental_tile", false, CVar.SERVERONLY);
+
+        /// <summary>
+        ///     Client-side explosion visuals: for how many seconds should an explosion stay on-screen once it has
+        ///     finished expanding?
+        /// </summary>
+        public static readonly CVarDef<float> ExplosionPersistence =
+            CVarDef.Create("explosion.persistence", 0.3f, CVar.REPLICATED);
+
+        /// <summary>
+        ///     If an explosion covers a larger area than this number, the damaging/processing will always start during
+        ///     the next tick, instead of during the same tick that the explosion was generated in.
+        /// </summary>
+        /// <remarks>
+        ///     This value can be used to ensure that for large explosions the area/tile calculation and the explosion
+        ///     processing/damaging occurs in separate ticks. This helps reduce the single-tick lag if both <see
+        ///     cref="ExplosionMaxProcessingTime"/> and <see cref="ExplosionTilesPerTick"/> are large. I.e., instead of
+        ///     a single tick explosion, this cvar allows for a configuration that results in a two-tick explosion,
+        ///     though most of the computational cost is still in the second tick.
+        /// </remarks>
+        public static readonly CVarDef<int> ExplosionSingleTickAreaLimit =
+            CVarDef.Create("explosion.single_tick_area_limit", 400, CVar.SERVERONLY);
 
         /*
          * Admin logs
@@ -720,5 +837,47 @@ namespace Content.Shared.CCVar
 
         public static readonly CVarDef<string> DestinationFile =
             CVarDef.Create("autogen.destination_file", "", CVar.SERVER | CVar.SERVERONLY);
+
+        /*
+         * Network Resource Manager
+         */
+
+        /// <summary>
+        /// Controls whether new resources can be uploaded by admins.
+        /// Does not prevent already uploaded resources from being sent.
+        /// </summary>
+        public static readonly CVarDef<bool> ResourceUploadingEnabled =
+            CVarDef.Create("netres.enabled", true, CVar.REPLICATED | CVar.SERVER);
+
+        /// <summary>
+        /// Controls the data size limit in megabytes for uploaded resources. If they're too big, they will be dropped.
+        /// Set to zero or a negative value to disable limit.
+        /// </summary>
+        public static readonly CVarDef<float> ResourceUploadingLimitMb =
+            CVarDef.Create("netres.limit", 3f, CVar.REPLICATED | CVar.SERVER);
+
+        /// <summary>
+        /// Whether uploaded files will be stored in the server's database.
+        /// This is useful to keep "logs" on what files admins have uploaded in the past.
+        /// </summary>
+        public static readonly CVarDef<bool> ResourceUploadingStoreEnabled =
+            CVarDef.Create("netres.store_enabled", true, CVar.SERVER | CVar.SERVERONLY);
+
+        /// <summary>
+        /// Numbers of days before stored uploaded files are deleted. Set to zero or negative to disable auto-delete.
+        /// This is useful to free some space automatically. Auto-deletion runs only on server boot.
+        /// </summary>
+        public static readonly CVarDef<int> ResourceUploadingStoreDeletionDays =
+            CVarDef.Create("netres.store_deletion_days", 30, CVar.SERVER | CVar.SERVERONLY);
+
+        /*
+         * Controls
+         */
+
+        /// <summary>
+        /// Deadzone for drag-drop interactions.
+        /// </summary>
+        public static readonly CVarDef<float> DragDropDeadZone =
+            CVarDef.Create("control.drag_dead_zone", 12f, CVar.CLIENTONLY | CVar.ARCHIVE);
     }
 }

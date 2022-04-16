@@ -69,9 +69,10 @@
       dead: dead
   - type: Puller
   - type: Butcherable
-    spawned: FoodMeatXeno
     butcheringType: Spike
-    pieces: 5
+    spawned:
+    - id: FoodMeatXeno
+      amount: 5
   - type: GhostTakeoverAvailable
     makeSentient: true
     name: xeno
@@ -83,9 +84,12 @@
     heatDamageThreshold: 360
     coldDamageThreshold: -150
     currentTemperature: 310.15
+  - type: Tag
+    tags:
+      - CannotSuicide
 
 - type: entity
-  name: purple snake
+  name: space adder
   parent: SimpleSpaceMobBase
   id: MobPurpleSnake
   description: A menacing purple snake from Kepler-283c.
@@ -106,10 +110,37 @@
     attributes:
       proper: true
       gender: male
+  - type: UtilityAI
+    behaviorSets:
+    - Idle
+    - UnarmedAttackHostiles
+  - type: AiFactionTag
+    factions:
+    - Xeno
+  - type: UnarmedCombat
+    range: 1.5
+    arcwidth: 0
+    arc: bite
+    damage:
+      types:
+        Piercing: 5
+  - type: MeleeChemicalInjector
+  - type: SolutionContainerManager
+    solutions:
+      melee:
+        reagents:
+        - ReagentId: Toxin
+          Quantity: 50
+  - type: RefillableSolution
+    solution: melee
+  - type: InjectableSolution
+    solution: melee
+  - type: SolutionTransfer
+    maxTransferAmount: 3
 
 - type: entity
-  name: purple snake
-  parent: SimpleSpaceMobBase
+  name: space adder
+  parent: MobPurpleSnake
   id: MobSmallPurpleSnake
   suffix: small
   description: A smaller version of the menacing purple snake from Kepler-283c.
@@ -126,7 +157,5 @@
       normal: purple_snake
       crit: dead_small_purple_snake
       dead: dead_small_purple_snake
-  - type: Grammar
-    attributes:
-      proper: true
-      gender: male
+  - type: SolutionTransfer
+    maxTransferAmount: 1

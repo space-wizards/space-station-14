@@ -9,12 +9,22 @@
     - Flashlight
     - DroneUsable
   - type: HandheldLight
+    addPrefix: false
     toggleAction:
       name: action-name-toggle-light
       description: action-description-toggle-light
       icon: Objects/Tools/flashlight.rsi/flashlight.png
       iconOn: Objects/Tools/flashlight.rsi/flashlight-on.png
       event: !type:ToggleActionEvent
+  - type: ToggleableLightVisuals
+    spriteLayer: light
+    inhandVisuals:
+      left:
+      - state: inhand-left-light
+        shader: unshaded
+      right:
+      - state: inhand-right-light
+        shader: unshaded
   - type: PowerCellSlot
     cellSlot:
       startingItem: PowerCellSmallHigh
@@ -26,10 +36,11 @@
       - state: flashlight-overlay
         shader: unshaded
         visible: false
+        map: [ "light" ]
   - type: Item
     sprite: Objects/Tools/flashlight.rsi
-    HeldPrefix: off
   - type: PointLight
+    netsync: false
     enabled: false
     mask: /Textures/Effects/LightMasks/cone.png
     autoRot: true
@@ -47,6 +58,15 @@
   - type: PowerCellSlot
     cellSlot:
       startingItem: PowerCellSmallSuper
+  - type: HandheldLight
+    addPrefix: false
+    inhandVisuals:
+      left:
+      - state: inhand-left-light
+        shader: unshaded
+      right:
+      - state: inhand-right-light
+        shader: unshaded
   - type: Sprite
     sprite: Objects/Tools/seclite.rsi
     layers:
@@ -54,6 +74,7 @@
       - state: seclite-overlay
         shader: unshaded
         visible: false
+        map: [ "light" ]
   - type: Item
     sprite: Objects/Tools/seclite.rsi
   - type: PointLight

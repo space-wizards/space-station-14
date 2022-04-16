@@ -11,7 +11,7 @@ namespace Content.Shared.VendingMachines
     public sealed class VendingMachineInventoryPrototype : IPrototype
     {
         [ViewVariables]
-        [DataField("id", required: true)]
+        [IdDataFieldAttribute]
         public string ID { get; } = default!;
 
         [DataField("name")]

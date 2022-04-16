@@ -17,7 +17,7 @@ namespace Content.Shared.Buckle
             SubscribeLocalEvent<SharedBuckleComponent, DownAttemptEvent>(HandleDown);
             SubscribeLocalEvent<SharedBuckleComponent, StandAttemptEvent>(HandleStand);
             SubscribeLocalEvent<SharedBuckleComponent, ThrowPushbackAttemptEvent>(HandleThrowPushback);
-            SubscribeLocalEvent<SharedBuckleComponent, MovementAttemptEvent>(HandleMove);
+            SubscribeLocalEvent<SharedBuckleComponent, UpdateCanMoveEvent>(HandleMove);
             SubscribeLocalEvent<SharedBuckleComponent, ChangeDirectionAttemptEvent>(OnBuckleChangeDirectionAttempt);
         }
 
@@ -27,8 +27,11 @@ namespace Content.Shared.Buckle
                 args.Cancel();
         }
 
-        private void HandleMove(EntityUid uid, SharedBuckleComponent component, MovementAttemptEvent args)
+        private void HandleMove(EntityUid uid, SharedBuckleComponent component, UpdateCanMoveEvent args)
         {
+            if (component.LifeStage > ComponentLifeStage.Running)
+                return;
+
             if (component.Buckled)
                 args.Cancel();
         }

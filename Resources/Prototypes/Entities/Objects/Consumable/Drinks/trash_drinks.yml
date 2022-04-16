@@ -4,7 +4,7 @@
   id: DrinkBottleBaseEmpty
   parent: BaseItem
   abstract: true
-  description: That's an empty bottle.
+  description: An empty bottle.
   components:
   - type: Sprite
     state: icon

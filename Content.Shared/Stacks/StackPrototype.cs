@@ -10,7 +10,7 @@ namespace Content.Shared.Stacks
     public sealed class StackPrototype : IPrototype
     {
         [ViewVariables]
-        [DataField("id", required: true)]
+        [IdDataFieldAttribute]
         public string ID { get; } = default!;
 
         /// <summary>

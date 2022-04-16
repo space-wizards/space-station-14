@@ -55,7 +55,7 @@ namespace Content.Shared.Damage
                 }
             }
 
-            component.DamagePerGroup = component.Damage.GetDamagePerGroup();
+            component.DamagePerGroup = component.Damage.GetDamagePerGroup(_prototypeManager);
             component.TotalDamage = component.Damage.Total;
         }
 
@@ -82,13 +82,13 @@ namespace Content.Shared.Damage
         public void DamageChanged(DamageableComponent component, DamageSpecifier? damageDelta = null,
             bool interruptsDoAfters = true)
         {
-            component.DamagePerGroup = component.Damage.GetDamagePerGroup();
+            component.DamagePerGroup = component.Damage.GetDamagePerGroup(_prototypeManager);
             component.TotalDamage = component.Damage.Total;
             Dirty(component);
 
             if (EntityManager.TryGetComponent<AppearanceComponent>(component.Owner, out var appearance) && damageDelta != null)
             {
-                var data = new DamageVisualizerGroupData(damageDelta.GetDamagePerGroup().Keys.ToList());
+                var data = new DamageVisualizerGroupData(damageDelta.GetDamagePerGroup(_prototypeManager).Keys.ToList());
                 appearance.SetData(DamageVisualizerKeys.DamageUpdateGroups, data);
             }
             RaiseLocalEvent(component.Owner, new DamageChangedEvent(component, damageDelta, interruptsDoAfters), false);
@@ -107,9 +107,9 @@ namespace Content.Shared.Damage
         ///     null if the user had no applicable components that can take damage.
         /// </returns>
         public DamageSpecifier? TryChangeDamage(EntityUid? uid, DamageSpecifier damage, bool ignoreResistances = false,
-            bool interruptsDoAfters = true)
+            bool interruptsDoAfters = true, DamageableComponent? damageable = null)
         {
-            if (!EntityManager.TryGetComponent<DamageableComponent>(uid, out var damageable))
+            if (!uid.HasValue || !Resolve(uid.Value, ref damageable, false))
             {
                 // TODO BODY SYSTEM pass damage onto body system
                 return null;

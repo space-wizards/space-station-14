@@ -38,6 +38,7 @@ namespace Content.Server.Body.Systems
 
             // We want to process lung reagents before we inhale new reagents.
             UpdatesAfter.Add(typeof(MetabolizerSystem));
+            SubscribeLocalEvent<RespiratorComponent, ApplyMetabolicMultiplierEvent>(OnApplyMetabolicMultiplier);
         }
 
         public override void Update(float frameTime)
@@ -93,13 +94,12 @@ namespace Content.Server.Body.Systems
                 respirator.SuffocationCycles = 0;
             }
         }
-
         public void Inhale(EntityUid uid, SharedBodyComponent? body=null)
         {
             if (!Resolve(uid, ref body, false))
                 return;
 
-            var organs = _bodySystem.GetComponentsOnMechanisms<LungComponent>(uid, body).ToArray();
+            var organs = _bodySystem.GetComponentsOnMechanisms<LungComponent>(uid, body);
 
             // Inhale gas
             var ev = new InhaleLocationEvent();
@@ -114,8 +114,8 @@ namespace Content.Server.Body.Systems
             var ratio = (Atmospherics.BreathVolume / ev.Gas.Volume);
             var actualGas = ev.Gas.RemoveRatio(ratio);
 
-            var lungRatio = 1.0f / organs.Length;
-            var gas = organs.Length == 1 ? actualGas : actualGas.RemoveRatio(lungRatio);
+            var lungRatio = 1.0f / organs.Count;
+            var gas = organs.Count == 1 ? actualGas : actualGas.RemoveRatio(lungRatio);
             foreach (var (lung, _) in organs)
             {
                 // Merge doesn't remove gas from the giver.
@@ -188,6 +188,26 @@ namespace Content.Server.Body.Systems
             respirator.Saturation += amount;
             respirator.Saturation =
                 Math.Clamp(respirator.Saturation, respirator.MinSaturation, respirator.MaxSaturation);
+        }
+
+        private void OnApplyMetabolicMultiplier(EntityUid uid, RespiratorComponent component, ApplyMetabolicMultiplierEvent args)
+        {
+            if (args.Apply)
+            {
+                component.CycleDelay *= args.Multiplier;
+                component.Saturation *= args.Multiplier;
+                component.MaxSaturation *= args.Multiplier;
+                component.MinSaturation *= args.Multiplier;
+                return;
+            }
+            // This way we don't have to worry about it breaking if the stasis bed component is destroyed
+            component.CycleDelay /= args.Multiplier;
+            component.Saturation /= args.Multiplier;
+            component.MaxSaturation /= args.Multiplier;
+            component.MinSaturation /= args.Multiplier;
+            // Reset the accumulator properly
+            if (component.AccumulatedFrametime >= component.CycleDelay)
+                component.AccumulatedFrametime = component.CycleDelay;
         }
     }
 }

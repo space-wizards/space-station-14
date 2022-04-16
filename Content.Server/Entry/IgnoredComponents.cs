@@ -7,6 +7,7 @@ namespace Content.Server.Entry
             "ConstructionGhost",
             "IconSmooth",
             "ReinforcedWall",
+            "StasisBedVisuals",
             "InteractionOutline",
             "MeleeWeaponArcAnimation",
             "AnimationsTest",
@@ -19,7 +20,9 @@ namespace Content.Server.Entry
             "ItemCabinetVisuals",
             "DiseaseMachineVisuals",
             "HandheldGPS",
-            "PotencyVisuals"
+            "ToggleableLightVisuals",
+            "PotencyVisuals",
+            "PaperVisuals"
         };
     }
 }

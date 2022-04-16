@@ -12,7 +12,7 @@ namespace Content.Shared.Damage.Prototypes
     [Serializable, NetSerializable]
     public sealed class DamageTypePrototype : IPrototype
     {
-        [DataField("id", required: true)]
+        [IdDataFieldAttribute]
         public string ID { get; } = default!;
     }
 }
