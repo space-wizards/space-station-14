@@ -10,11 +10,11 @@ namespace Content.Server.Resist;
 public sealed class CanEscapeInventoryComponent : Component
 {
     /// <summary>
-    /// How long it takes to break out of storage. Default at 20 seconds.
+    /// How long it takes to break out of storage. Default at 5 seconds.
     /// </summary>
     [ViewVariables]
     [DataField("resistTime")]
-    public float ResistTime = 20f;
+    public float ResistTime = 5f;
 
     /// <summary>
     /// For quick exit if the player attempts to move while already resisting

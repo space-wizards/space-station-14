@@ -3,6 +3,7 @@ using Content.Server.DoAfter;
 using Robust.Shared.Containers;
 using Content.Server.Popups;
 using Content.Shared.Movement.EntitySystems;
+using Robust.Shared.Player;
 
 namespace Content.Server.Resist;
 
@@ -18,11 +19,15 @@ public sealed class EscapeInventorySystem : EntitySystem
 
         SubscribeLocalEvent<CanEscapeInventoryComponent, RelayMoveInputEvent>(OnRelayMovement);
         SubscribeLocalEvent<CanEscapeInventoryComponent, UpdateCanMoveEvent>(OnMoveAttempt);
-        SubscribeLocalEvent<CanEscapeInventoryComponent, EscapeDoAfterComplete>(OnEscape);
+        SubscribeLocalEvent<CanEscapeInventoryComponent, EscapeDoAfterComplete>(OnEscapeComplete);
     }
 
     private void OnRelayMovement(EntityUid uid, CanEscapeInventoryComponent component, RelayMoveInputEvent args)
     {
+        //Prevents the user from creating multiple DoAfters if they're already resisting.
+        if (component.IsResisting == true)
+            return;
+
         if (_containerSystem.IsEntityOrParentInContainer(uid))
         {
             if (_containerSystem.TryGetContainingContainer(uid, out var container))
@@ -51,13 +56,16 @@ public sealed class EscapeInventorySystem : EntitySystem
             UserFinishedEvent = new EscapeDoAfterComplete(user),
         };
 
+        component.IsResisting = true;
+        _popupSystem.PopupEntity(Loc.GetString("escape-inventory-component-start-resisting"), user, Filter.Entities(user));
         _doAfterSystem.DoAfter(doAfterEventArgs);
     }
 
-    private void OnEscape(EntityUid user, CanEscapeInventoryComponent component, EscapeDoAfterComplete ev)
+    private void OnEscapeComplete(EntityUid uid, CanEscapeInventoryComponent component, EscapeDoAfterComplete ev)
     {
         //Drops the mob on the tile below the container
-        Transform(user).AttachParentToContainerOrGrid(EntityManager);
+        Transform(uid).AttachParentToContainerOrGrid(EntityManager);
+        component.IsResisting = false;
     }
 
     private sealed class EscapeDoAfterComplete : EntityEventArgs
@@ -68,10 +76,5 @@ public sealed class EscapeInventorySystem : EntitySystem
         {
             User = userUid;
         }
-    }
-
-    private sealed class EscapeDoAfterCancelled : EntityEventArgs
-    {
-
     }
 }
