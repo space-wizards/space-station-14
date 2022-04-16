@@ -165,6 +165,10 @@ public sealed class StationSystem : EntitySystem
         {
             metaData.EntityName = name;
         }
+        else
+        {
+            metaData.EntityName = "How did we get here?";
+        }
 
         RaiseLocalEvent(new StationInitializedEvent(station));
         _sawmill.Info($"Set up station {metaData.EntityName} ({station}) with prototype {mapPrototype?.ID}");
