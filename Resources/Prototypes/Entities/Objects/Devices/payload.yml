@@ -87,4 +87,4 @@
       state: payload-explosive-armed
     - type: DeleteOnTrigger
     - type: FlashOnTrigger
-      range: 4 #a bit weaker then the standered flashbang
+      range: 6
