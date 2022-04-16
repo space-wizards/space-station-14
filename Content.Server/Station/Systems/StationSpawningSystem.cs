@@ -121,7 +121,7 @@ public sealed class StationSpawningSystem : EntitySystem
         if (!Resolve(station, ref stationSpawning))
             throw new ArgumentException("Tried to use a non-station entity as a station!", nameof(station));
 
-        DebugTools.Assert(stationSpawning.Spawners.Contains(spawner));
+        DebugTools.Assert(!stationSpawning.Spawners.Contains(spawner));
 
         var grid = spawnerTransform.GridID;
 
@@ -139,7 +139,9 @@ public sealed class StationSpawningSystem : EntitySystem
         if (!Resolve(station, ref stationSpawning))
             throw new ArgumentException("Tried to use a non-station entity as a station!", nameof(station));
 
-        DebugTools.Assert(!stationSpawning.Spawners.Contains(spawner));
+        // We may be getting destructed after the grid is already removed.
+        if (stationSpawning.SpawnersByGrid.ContainsKey(previousGrid))
+            return;
 
         stationSpawning.Spawners.Remove(spawner);
 
