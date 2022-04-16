@@ -59,3 +59,7 @@
     damage:
       groups:
         Brute: 15
+  - type: GhostTakeoverAvailable
+    makeSentient: true
+    name: space bear
+    description: Wreak havoc on the station's inhabitants, and disrupt salvage!
