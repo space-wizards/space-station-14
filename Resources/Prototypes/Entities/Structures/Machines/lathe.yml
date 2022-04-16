@@ -66,6 +66,7 @@
       - CableStack
       - HandheldGPSBasic
       - HandheldHealthAnalyzer
+      - AirlockPainter
   - type: Appearance
     visuals:
     - type: AutolatheVisualizer
