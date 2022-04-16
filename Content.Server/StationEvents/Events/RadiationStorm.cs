@@ -1,6 +1,7 @@
 using System.Linq;
 using Content.Server.Radiation;
 using Content.Server.Station.Components;
+using Content.Server.Station.Systems;
 using Content.Shared.Coordinates;
 using JetBrains.Annotations;
 using Robust.Shared.Map;
@@ -14,7 +15,10 @@ namespace Content.Server.StationEvents.Events
         // Based on Goonstation style radiation storm with some TG elements (announcer, etc.)
 
         [Dependency] private readonly IEntityManager _entityManager = default!;
+        [Dependency] private readonly IMapManager _mapManager = default!;
         [Dependency] private readonly IRobustRandom _robustRandom = default!;
+
+        private StationSystem _stationSystem = default!;
 
         public override string Name => "RadiationStorm";
         public override string StartAnnouncement => Loc.GetString("station-event-radiation-storm-start-announcement");
@@ -41,14 +45,17 @@ namespace Content.Server.StationEvents.Events
 
         public override void Startup()
         {
+            _entityManager.EntitySysManager.Resolve(ref _stationSystem);
             ResetTimeUntilPulse();
-            _target = _robustRandom.Pick(_entityManager.EntityQuery<StationMemberComponent>().ToArray()).Station;
-            base.Startup();
-        }
 
-        public override void Shutdown()
-        {
-            base.Shutdown();
+            if (_stationSystem.Stations.Count == 0)
+            {
+                Running = false;
+                return;
+            }
+
+            _target = _robustRandom.Pick(_stationSystem.Stations);
+            base.Startup();
         }
 
         public override void Update(float frameTime)
@@ -56,6 +63,11 @@ namespace Content.Server.StationEvents.Events
             base.Update(frameTime);
 
             if (!Started || !Running) return;
+            if (_target.Valid == false)
+            {
+                Running = false;
+                return;
+            }
 
             _timeUntilPulse -= frameTime;
 
@@ -63,10 +75,14 @@ namespace Content.Server.StationEvents.Events
             {
                 var mapManager = IoCManager.Resolve<IMapManager>();
                 // Account for split stations by just randomly picking a piece of it.
-                var possibleTargets = _entityManager.EntityQuery<StationMemberComponent>()
-                    .Where(x => x.Station == _target).ToArray();
-                StationMemberComponent tempQualifier = _robustRandom.Pick(possibleTargets);
-                var stationEnt = (tempQualifier).Owner;
+                var possibleTargets = _entityManager.GetComponent<StationDataComponent>(_target).Grids;
+                if (possibleTargets.Count == 0)
+                {
+                    Running = false;
+                    return;
+                }
+
+                var stationEnt = _mapManager.GetGridEuid(_robustRandom.Pick(possibleTargets));
 
                 if (!_entityManager.TryGetComponent<IMapGridComponent>(stationEnt, out var grid))
                     return;
