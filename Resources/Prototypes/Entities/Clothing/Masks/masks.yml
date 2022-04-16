@@ -42,9 +42,13 @@
   - type: IngestionBlocker
   - type: DiseaseProtection
     protection: 0.05
+  - type: Armor
+    modifiers:
+      coefficients:
+        Heat: 0.20
 
 - type: entity
-  parent: ClothingMaskBase
+  parent: ClothingMaskGasAtmos
   id: ClothingMaskGasCaptain
   name: captain's gas mask
   description: Nanotrasen cut corners and repainted a spare atmospheric gas mask, but don't tell anyone.
@@ -59,7 +63,7 @@
     protection: 0.05
 
 - type: entity
-  parent: ClothingMaskBase
+  parent: ClothingMaskGasAtmos
   id: ClothingMaskGasCentcom
   name: centcom gas mask
   description: Oooh, gold and green. Fancy! This should help as you sit in your office.
@@ -87,6 +91,13 @@
   - type: IngestionBlocker
   - type: DiseaseProtection
     protection: 0.05
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.10
+        Slash: 0.10
+        Piercing: 0.05
+        Heat: 0.05
 
 - type: entity
   parent: ClothingMaskBase
