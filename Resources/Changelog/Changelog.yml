@@ -1,9 +1,4 @@
 Entries:
-- author: Rane
-  changes:
-  - {message: Removed the Z8 Bulldog bundle until it works as advertised., type: Remove}
-  id: 843
-  time: '2022-01-08T23:21:51.0000000+00:00'
 - author: moony
   changes:
   - {message: Support for picking a species to play as in the character editor has
@@ -3032,3 +3027,9 @@ Entries:
     type: Tweak}
   id: 1342
   time: '2022-04-16T05:31:12.0000000+00:00'
+- author: ElectroJr
+  changes:
+  - {message: Fixed botany seeds created using the seed extractor not inheriting traits.,
+    type: Fix}
+  id: 1343
+  time: '2022-04-16T05:32:35.0000000+00:00'
