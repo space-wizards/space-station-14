@@ -70,3 +70,7 @@
     solution: melee
   - type: SolutionTransfer
     maxTransferAmount: 5
+  - type: GhostTakeoverAvailable
+    makeSentient: true
+    name: space tick
+    description: Wreak havoc on the station's inhabitants, and disrupt salvage!

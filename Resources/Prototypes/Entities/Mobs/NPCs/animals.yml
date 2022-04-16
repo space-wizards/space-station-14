@@ -1134,6 +1134,10 @@
       behaviorSets:
         - Idle
         - UnarmedAttackHostiles
+    - type: GhostTakeoverAvailable
+      makeSentient: true
+      name: giant spider
+      description: Wreak havoc on the station's inhabitants!
 
 - type: entity
   name: possum
