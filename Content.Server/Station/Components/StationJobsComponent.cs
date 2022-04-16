@@ -39,4 +39,9 @@ public sealed class StationJobsComponent : Component
     /// </summary>
     /// <remarks>This should not be mutated or used directly, go through StationJobsSystem.</remarks>
     public Dictionary<string, int> JobList = new();
+
+    /// <summary>
+    /// Overflow jobs that roundstart can spawn infinitely many of.
+    /// </summary>
+    public HashSet<string> OverflowJobs = new();
 }

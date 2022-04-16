@@ -30,6 +30,7 @@ public sealed class BureaucraticError : StationEvent
     public override void Startup()
     {
         base.Startup();
+        /*
         var chosenStation = _random.Pick(EntitySystem.Get<StationSystem>().Stations.ToList());
         var jobList = chosenStation.JobList.Keys.Where(x => !_prototypeManager.Index<JobPrototype>(x).IsHead).ToList();
 
@@ -59,6 +60,7 @@ public sealed class BureaucraticError : StationEvent
                 chosenStation.AdjustJobAmount(chosenJob, adj);
             }
         }
+        */
     }
 
 }

@@ -17,8 +17,8 @@ namespace Content.Client.GameTicking.Managers
     {
         [Dependency] private readonly IStateManager _stateManager = default!;
         [ViewVariables] private bool _initialized;
-        private Dictionary<StationId, Dictionary<string, int>>  _jobsAvailable = new();
-        private Dictionary<StationId, string> _stationNames = new();
+        private Dictionary<EntityUid, Dictionary<string, int>>  _jobsAvailable = new();
+        private Dictionary<EntityUid, string> _stationNames = new();
 
         [ViewVariables] public bool AreWeReady { get; private set; }
         [ViewVariables] public bool IsGameStarted { get; private set; }
@@ -29,14 +29,14 @@ namespace Content.Client.GameTicking.Managers
         [ViewVariables] public TimeSpan StartTime { get; private set; }
         [ViewVariables] public new bool Paused { get; private set; }
         [ViewVariables] public Dictionary<NetUserId, LobbyPlayerStatus> Status { get; private set; } = new();
-        [ViewVariables] public IReadOnlyDictionary<StationId, Dictionary<string, int>> JobsAvailable => _jobsAvailable;
-        [ViewVariables] public IReadOnlyDictionary<StationId, string> StationNames => _stationNames;
+        [ViewVariables] public IReadOnlyDictionary<EntityUid, Dictionary<string, int>> JobsAvailable => _jobsAvailable;
+        [ViewVariables] public IReadOnlyDictionary<EntityUid, string> StationNames => _stationNames;
 
         public event Action? InfoBlobUpdated;
         public event Action? LobbyStatusUpdated;
         public event Action? LobbyReadyUpdated;
         public event Action? LobbyLateJoinStatusUpdated;
-        public event Action<IReadOnlyDictionary<StationId, Dictionary<string, int>>>? LobbyJobsAvailableUpdated;
+        public event Action<IReadOnlyDictionary<EntityUid, Dictionary<string, int>>>? LobbyJobsAvailableUpdated;
 
         public override void Initialize()
         {

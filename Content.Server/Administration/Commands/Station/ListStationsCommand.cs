@@ -1,4 +1,6 @@
 using Content.Server.Station;
+using Content.Server.Station.Components;
+using Content.Server.Station.Systems;
 using Content.Shared.Administration;
 using Robust.Shared.Console;
 using Robust.Shared.GameObjects;
@@ -8,6 +10,8 @@ namespace Content.Server.Administration.Commands.Station;
 [AdminCommand(AdminFlags.Admin)]
 public sealed class ListStationsCommand : IConsoleCommand
 {
+    [Dependency] private readonly IEntityManager _entityManager = default!;
+
     public string Command => "lsstations";
 
     public string Description => "List all active stations";
@@ -16,9 +20,11 @@ public sealed class ListStationsCommand : IConsoleCommand
 
     public void Execute(IConsoleShell shell, string argStr, string[] args)
     {
-        foreach (var (id, station) in EntitySystem.Get<StationSystem>().StationInfo)
+        foreach (var station in EntitySystem.Get<StationSystem>().Stations)
         {
-            shell.WriteLine($"{id.Id, -2} | {station.Name} | {station.MapPrototype.ID}");
+            var name = _entityManager.GetComponent<MetaDataComponent>(station).EntityName;
+            var mapProto = _entityManager.GetComponent<StationDataComponent>(station).MapPrototype?.ID;
+            shell.WriteLine($"{station, -10} | {name} | {mapProto}");
         }
     }
 }

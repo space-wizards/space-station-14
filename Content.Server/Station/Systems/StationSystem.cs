@@ -125,9 +125,6 @@ public sealed class StationSystem : EntitySystem
         }
     }
 
-    /// <summary>
-    /// Cleans up station info.
-    /// </summary>
     private void OnRoundEnd(GameRunLevelChangedEvent eventArgs)
     {
         if (eventArgs.New != GameRunLevel.PreRoundLobby) return;
@@ -149,7 +146,7 @@ public sealed class StationSystem : EntitySystem
     /// <returns>The initialized station.</returns>
     public EntityUid InitializeNewStation(GameMapPrototype? mapPrototype, IEnumerable<GridId>? gridIds, string? name = null)
     {
-        var station = Spawn(null, EntityCoordinates.Invalid);
+        var station = Spawn(null, EntityCoordinates.FromMap(_mapManager, MapCoordinates.Nullspace));
         var data = AddComp<StationDataComponent>(station);
         var metaData = MetaData(station);
         data.MapPrototype = mapPrototype;

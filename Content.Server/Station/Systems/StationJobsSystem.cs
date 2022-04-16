@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.Collections.Immutable;
+using System.Linq;
 using Content.Server.Station.Components;
 using Content.Shared.Roles;
 using JetBrains.Annotations;
@@ -29,6 +30,7 @@ public sealed class StationJobsSystem : EntitySystem
         stationJobs.RoundStartTotalJobs = mapJobList.Values.Select(x => x[0]).Where(x => x > 0).Sum();
         stationJobs.MidRoundTotalJobs = mapJobList.Values.Select(x => x[1]).Where(x => x > 0).Sum();
         stationJobs.JobList = mapJobList.ToDictionary(x => x.Key, x => x.Value[1]);
+        stationJobs.OverflowJobs = stationData.MapPrototype.OverflowJobs.ToHashSet(); // Careful to clone it and not keep a ref.
     }
 
     /// <inheritdoc cref="TryAssignJob(Robust.Shared.GameObjects.EntityUid,Content.Shared.Roles.JobPrototype,Content.Server.Station.Components.StationJobsComponent?)"/>
@@ -201,5 +203,21 @@ public sealed class StationJobsSystem : EntitySystem
         {
             return null;
         }
+    }
+
+    public IReadOnlySet<string> GetAvailableJobs(EntityUid station, StationJobsComponent? stationJobs = null)
+    {
+        if (!Resolve(station, ref stationJobs))
+            throw new ArgumentException("Tried to use a non-station entity as a station!", nameof(station));
+
+        return stationJobs.JobList.Where(x => x.Value > 0).Select(x => x.Key).ToHashSet();
+    }
+
+    public IReadOnlySet<string> GetOverflowJobs(EntityUid station, StationJobsComponent? stationJobs = null)
+    {
+        if (!Resolve(station, ref stationJobs))
+            throw new ArgumentException("Tried to use a non-station entity as a station!", nameof(station));
+
+        return stationJobs.OverflowJobs;
     }
 }

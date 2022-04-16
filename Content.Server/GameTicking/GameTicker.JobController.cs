@@ -1,6 +1,7 @@
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
+using Content.Server.Station.Components;
 using Content.Shared.GameTicking;
 using Content.Shared.Preferences;
 using Content.Shared.Roles;
@@ -22,10 +23,10 @@ namespace Content.Server.GameTicking
         [ViewVariables]
         private readonly Dictionary<string, int> _spawnedPositions = new();
 
-        private Dictionary<IPlayerSession, (string, StationId)> AssignJobs(List<IPlayerSession> availablePlayers,
+        private Dictionary<IPlayerSession, (string, EntityUid)> AssignJobs(List<IPlayerSession> availablePlayers,
             Dictionary<NetUserId, HumanoidCharacterProfile> profiles)
         {
-            var assigned = new Dictionary<IPlayerSession, (string, StationId)>();
+            var assigned = new Dictionary<IPlayerSession, (string, EntityUid)>();
 
             List<(IPlayerSession, List<string>)> GetPlayersJobCandidates(bool heads, JobPriority i)
             {
@@ -61,7 +62,7 @@ namespace Content.Server.GameTicking
                     .ToList();
             }
 
-            void ProcessJobs(bool heads, Dictionary<string, int> availablePositions, StationId id, JobPriority i)
+            void ProcessJobs(bool heads, Dictionary<string, int> availablePositions, EntityUid id, JobPriority i)
             {
                 var candidates = GetPlayersJobCandidates(heads, i);
 
@@ -88,17 +89,20 @@ namespace Content.Server.GameTicking
             }
 
             // Current strategy is to fill each station one by one.
-            foreach (var (id, station) in _stationSystem.StationInfo)
+            foreach (var station in _stationSystem.Stations)
             {
                 // Get the ROUND-START job list.
-                var availablePositions = station.MapPrototype.AvailableJobs.ToDictionary(x => x.Key, x => x.Value[0]);
+                var availablePositions = Comp<StationDataComponent>(station).MapPrototype?.AvailableJobs.ToDictionary(x => x.Key, x => x.Value[0]);
+
+                if (availablePositions is null)
+                    continue;
 
                 for (var i = JobPriority.High; i > JobPriority.Never; i--)
                 {
                     // Process jobs possible for heads...
-                    ProcessJobs(true, availablePositions, id, i);
+                    ProcessJobs(true, availablePositions, station, i);
                     // and then jobs that are not heads.
-                    ProcessJobs(false, availablePositions, id, i);
+                    ProcessJobs(false, availablePositions, station, i);
                 }
             }
 
@@ -106,12 +110,12 @@ namespace Content.Server.GameTicking
         }
 
         private string? PickBestAvailableJob(IPlayerSession playerSession, HumanoidCharacterProfile profile,
-            StationId station)
+            EntityUid station)
         {
-            if (station == StationId.Invalid)
+            if (station == EntityUid.Invalid)
                 return null;
 
-            var available = _stationSystem.StationInfo[station].JobList;
+            var available = _stationJobs.GetAvailableJobs(station);
 
             bool TryPick(JobPriority priority, [NotNullWhen(true)] out string? jobId)
             {
@@ -122,15 +126,10 @@ namespace Content.Server.GameTicking
                     .Select(p => p.Key)
                     .ToList();
 
-                while (filtered.Count != 0)
+                if (filtered.Count != 0)
                 {
                     jobId = _robustRandom.Pick(filtered);
-                    if (available.GetValueOrDefault(jobId, 0) > 0)
-                    {
-                        return true;
-                    }
-
-                    filtered.Remove(jobId);
+                    return true;
                 }
 
                 jobId = default;
@@ -152,7 +151,7 @@ namespace Content.Server.GameTicking
                 return picked;
             }
 
-            var overflows = _stationSystem.StationInfo[station].MapPrototype.OverflowJobs.Clone().ToList();
+            var overflows = _stationJobs.GetOverflowJobs(station);
             return overflows.Count != 0 ? _robustRandom.Pick(overflows) : null;
         }
 
@@ -174,16 +173,16 @@ namespace Content.Server.GameTicking
         {
             // If late join is disallowed, return no available jobs.
             if (DisallowLateJoin)
-                return new TickerJobsAvailableEvent(new Dictionary<StationId, string>(), new Dictionary<StationId, Dictionary<string, int>>());
+                return new TickerJobsAvailableEvent(new Dictionary<EntityUid, string>(), new Dictionary<EntityUid, Dictionary<string, int>>());
 
-            var jobs = new Dictionary<StationId, Dictionary<string, int>>();
-            var stationNames = new Dictionary<StationId, string>();
+            var jobs = new Dictionary<EntityUid, Dictionary<string, int>>();
+            var stationNames = new Dictionary<EntityUid, string>();
 
-            foreach (var (id, station) in _stationSystem.StationInfo)
+            foreach (var station in _stationSystem.Stations)
             {
-                var list = station.JobList.ToDictionary(x => x.Key, x => x.Value);
-                jobs.Add(id, list);
-                stationNames.Add(id, station.Name);
+                var list = Comp<StationJobsComponent>(station).JobList.ToDictionary(x => x.Key, x => x.Value);
+                jobs.Add(station, list);
+                stationNames.Add(station, Name(station));
             }
             return new TickerJobsAvailableEvent(stationNames, jobs);
         }

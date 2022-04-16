@@ -26,10 +26,10 @@ namespace Content.Client.LateJoin
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
         [Dependency] private readonly IClientConsoleHost _consoleHost = default!;
 
-        public event Action<(StationId, string)> SelectedId;
+        public event Action<(EntityUid, string)> SelectedId;
 
-        private readonly Dictionary<StationId, Dictionary<string, JobButton>> _jobButtons = new();
-        private readonly Dictionary<StationId, Dictionary<string, BoxContainer>> _jobCategories = new();
+        private readonly Dictionary<EntityUid, Dictionary<string, JobButton>> _jobButtons = new();
+        private readonly Dictionary<EntityUid, Dictionary<string, BoxContainer>> _jobCategories = new();
         private readonly List<ScrollContainer> _jobLists = new();
 
         private readonly Control _base;
@@ -57,7 +57,7 @@ namespace Content.Client.LateJoin
             {
                 var (station, jobId) = x;
                 Logger.InfoS("latejoin", $"Late joining as ID: {jobId}");
-                _consoleHost.ExecuteCommand($"joingame {CommandParsing.Escape(jobId)} {station.Id}");
+                _consoleHost.ExecuteCommand($"joingame {CommandParsing.Escape(jobId)} {station}");
                 Close();
             };
 
@@ -234,7 +234,7 @@ namespace Content.Client.LateJoin
             }
         }
 
-        private void JobsAvailableUpdated(IReadOnlyDictionary<StationId, Dictionary<string, int>> _)
+        private void JobsAvailableUpdated(IReadOnlyDictionary<EntityUid, Dictionary<string, int>> _)
         {
             RebuildUI();
         }

@@ -112,7 +112,7 @@ namespace Content.Server.GameTicking
             async void SpawnWaitPrefs()
             {
                 await _prefsManager.WaitPreferencesLoaded(session);
-                SpawnPlayer(session, StationId.Invalid);
+                SpawnPlayer(session, EntityUid.Invalid);
             }
 
             async void AddPlayerToDb(Guid id)

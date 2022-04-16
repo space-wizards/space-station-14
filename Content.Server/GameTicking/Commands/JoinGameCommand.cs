@@ -40,6 +40,7 @@ namespace Content.Server.GameTicking.Commands
 
             var ticker = EntitySystem.Get<GameTicker>();
             var stationSystem = EntitySystem.Get<StationSystem>();
+            var stationJobs = EntitySystem.Get<StationJobsSystem>();
 
             if (!ticker.PlayersInLobby.ContainsKey(player) || ticker.PlayersInLobby[player] == LobbyPlayerStatus.Observer)
             {
@@ -57,23 +58,23 @@ namespace Content.Server.GameTicking.Commands
             {
                 string id = args[0];
 
-                if (!uint.TryParse(args[1], out var sid))
+                if (!int.TryParse(args[1], out var sid))
                 {
                     shell.WriteError(Loc.GetString("shell-argument-must-be-number"));
                 }
 
-                var EntityUid = new EntityUid(sid);
+                var station = new EntityUid(sid);
                 var jobPrototype = _prototypeManager.Index<JobPrototype>(id);
-                if(!stationSystem.IsJobAvailableOnStation(stationId, jobPrototype))
+                if(stationJobs.GetJobSlot(station, jobPrototype) is 0 or null)
                 {
                     shell.WriteLine($"{jobPrototype.Name} has no available slots.");
                     return;
                 }
-                ticker.MakeJoinGame(player, stationId, id);
+                ticker.MakeJoinGame(player, station, id);
                 return;
             }
 
-            ticker.MakeJoinGame(player, StationId.Invalid);
+            ticker.MakeJoinGame(player, EntityUid.Invalid);
         }
     }
 }

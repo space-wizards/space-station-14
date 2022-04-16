@@ -1,10 +1,14 @@
 ﻿using System.Linq;
+using Content.Server.Access.Systems;
 using Content.Server.CharacterAppearance.Systems;
 using Content.Server.Hands.Components;
 using Content.Server.Hands.Systems;
+using Content.Server.PDA;
 using Content.Server.Roles;
 using Content.Server.Station.Components;
+using Content.Shared.Access.Components;
 using Content.Shared.Inventory;
+using Content.Shared.PDA;
 using Content.Shared.Preferences;
 using Content.Shared.Roles;
 using Content.Shared.Species;
@@ -28,7 +32,9 @@ public sealed class StationSpawningSystem : EntitySystem
     [Dependency] private readonly IRobustRandom _robustRandom = default!;
     [Dependency] private readonly HandsSystem _handsSystem = default!;
     [Dependency] private readonly HumanoidAppearanceSystem _humanoidAppearanceSystem = default!;
+    [Dependency] private readonly IdCardSystem _cardSystem = default!;
     [Dependency] private readonly InventorySystem _inventorySystem = default!;
+    [Dependency] private readonly PDASystem _pdaSystem = default!;
 
     public override void Initialize()
     {
@@ -88,7 +94,7 @@ public sealed class StationSpawningSystem : EntitySystem
         }
     }
 
-    private void OnSpawnerParentChanged(EntityUid uid, StationSpawnerManagerComponent component, EntParentChangedMessage args)
+    private void OnSpawnerParentChanged(EntityUid uid, StationSpawnerManagerComponent component, ref EntParentChangedMessage args)
     {
         if (component.PreviousGrid != null && component.PreviousStation != null)
         {
@@ -96,6 +102,9 @@ public sealed class StationSpawningSystem : EntitySystem
         }
 
         var grid = args.Transform.GridID;
+        if (grid == GridId.Invalid)
+            return;
+
         if (!TryComp<StationMemberComponent>(_mapManager.GetGridEuid(grid), out var stationMember))
             return; // Not part of a station.
 
@@ -190,6 +199,8 @@ public sealed class StationSpawningSystem : EntitySystem
         {
             var startingGear = _prototypeManager.Index<StartingGearPrototype>(job.StartingGear);
             EquipStartingGear(entity, startingGear, profile);
+            if (profile != null)
+                EquipIdCard(entity, profile.Name, job.Prototype);
         }
 
         if (profile != null)
@@ -198,15 +209,20 @@ public sealed class StationSpawningSystem : EntitySystem
             EntityManager.GetComponent<MetaDataComponent>(entity).EntityName = profile.Name;
         }
 
+        foreach (var jobSpecial in job?.Prototype.Special ?? Array.Empty<JobSpecial>())
+        {
+            jobSpecial.AfterEquip(entity);
+        }
+
         return entity;
     }
 
     /// <summary>
     /// Equips starting gear onto the given entity.
     /// </summary>
-    /// <param name="entity"></param>
-    /// <param name="startingGear"></param>
-    /// <param name="profile"></param>
+    /// <param name="entity">Entity to load out.</param>
+    /// <param name="startingGear">Starting gear to use.</param>
+    /// <param name="profile">Character profile to use, if any.</param>
     public void EquipStartingGear(EntityUid entity, StartingGearPrototype startingGear, HumanoidCharacterProfile? profile)
     {
         if (_inventorySystem.TryGetSlots(entity, out var slotDefinitions))
@@ -233,6 +249,31 @@ public sealed class StationSpawningSystem : EntitySystem
             _handsSystem.TryPickup(entity, inhandEntity, hand, checkActionBlocker: false, handsComp: handsComponent);
         }
     }
+
+    /// <summary>
+    /// Equips an ID card and PDA onto the given entity.
+    /// </summary>
+    /// <param name="entity">Entity to load out.</param>
+    /// <param name="characterName">Character name to use for the ID.</param>
+    /// <param name="jobPrototype">Job prototype to use for the PDA and ID.</param>
+    public void EquipIdCard(EntityUid entity, string characterName, JobPrototype jobPrototype)
+    {
+        if (!_inventorySystem.TryGetSlotEntity(entity, "id", out var idUid))
+            return;
+
+        if (!EntityManager.TryGetComponent(idUid, out PDAComponent? pdaComponent) || pdaComponent.ContainedID == null)
+            return;
+
+        var card = pdaComponent.ContainedID;
+        _cardSystem.TryChangeFullName(card.Owner, characterName, card);
+        _cardSystem.TryChangeJobTitle(card.Owner, jobPrototype.Name, card);
+
+        var access = EntityManager.GetComponent<AccessComponent>(card.Owner);
+        var accessTags = access.Tags;
+        accessTags.UnionWith(jobPrototype.Access);
+        _pdaSystem.SetOwner(pdaComponent, characterName);
+    }
+
 
     #endregion Player spawning helpers
 }
