@@ -1,9 +1,4 @@
 Entries:
-- author: Peptide90
-  changes:
-  - {message: Drinking welder fuel now does toxin damage. Tasty., type: Fix}
-  id: 841
-  time: '2022-01-08T02:44:14.0000000+00:00'
 - author: the maintainer team
   changes:
   - {message: Running speed has been lowered by two meters per second. Walking speed
@@ -3028,3 +3023,11 @@ Entries:
   - {message: Gas tile overlays should no longer appear unshaded., type: Tweak}
   id: 1340
   time: '2022-04-16T00:51:05.0000000+00:00'
+- author: ElectroJr
+  changes:
+  - {message: Fixed energy sword blade colors not being properly applied to player
+      sprites., type: Fix}
+  - {message: The light emitted by hacked energy swords now update along with the
+      blade color., type: Tweak}
+  id: 1341
+  time: '2022-04-16T05:11:48.0000000+00:00'
