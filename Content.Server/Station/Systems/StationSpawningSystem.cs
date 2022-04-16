@@ -4,7 +4,6 @@ using Content.Server.Hands.Components;
 using Content.Server.Hands.Systems;
 using Content.Server.Roles;
 using Content.Server.Station.Components;
-using Content.Shared.CharacterAppearance;
 using Content.Shared.Inventory;
 using Content.Shared.Preferences;
 using Content.Shared.Roles;
@@ -155,7 +154,7 @@ public sealed class StationSpawningSystem : EntitySystem
             if (ev.SpawnResult != null)
                 break;
 
-            curr = (startAt + 1) % options.Count;
+            curr = (curr + 1) % options.Count;
         } while (curr != startAt);
 
         return ev.SpawnResult;

@@ -14,7 +14,7 @@ namespace Content.Server.Station.Systems;
 /// <summary>
 /// System that manages stations.
 /// A station is, by default, just a name, optional map prototype, and optional grids.
-/// For jobs, look at StationJobSystem. For SIDBs (Station IDentification Beacons) look at StationBeaconSystem.
+/// For jobs, look at StationJobSystem. For spawning, look at StationSpawningSystem.
 /// </summary>
 [PublicAPI]
 public sealed class StationSystem : EntitySystem
