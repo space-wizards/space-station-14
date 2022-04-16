@@ -1,5 +1,6 @@
 ﻿using System.Linq;
 using Content.Server.Station;
+using Content.Server.Station.Systems;
 using Content.Shared.Roles;
 using JetBrains.Annotations;
 using Robust.Shared.Prototypes;
@@ -29,7 +30,7 @@ public sealed class BureaucraticError : StationEvent
     public override void Startup()
     {
         base.Startup();
-        var chosenStation = _random.Pick(EntitySystem.Get<StationSystem>().StationInfo.Values.ToList());
+        var chosenStation = _random.Pick(EntitySystem.Get<StationSystem>().Stations.ToList());
         var jobList = chosenStation.JobList.Keys.Where(x => !_prototypeManager.Index<JobPrototype>(x).IsHead).ToList();
 
         // Low chance to completely change up the late-join landscape by closing all positions except infinite slots.

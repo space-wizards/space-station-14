@@ -9,6 +9,7 @@ using Content.Server.Roles;
 using Content.Server.Spawners.Components;
 using Content.Server.Speech.Components;
 using Content.Server.Station;
+using Content.Server.Station.Components;
 using Content.Shared.Access.Components;
 using Content.Shared.Database;
 using Content.Shared.GameTicking;
@@ -67,7 +68,7 @@ namespace Content.Server.GameTicking
             RaiseLocalEvent(new RulePlayerJobsAssignedEvent(assignedJobs.Keys.ToArray(), profiles, force));
         }
 
-        private void AssignOverflowJobs(IDictionary<IPlayerSession, (string, StationId)> assignedJobs,
+        private void AssignOverflowJobs(IDictionary<IPlayerSession, (string, EntityUid)> assignedJobs,
             IPlayerSession[] origReadyPlayers, IReadOnlyDictionary<NetUserId, HumanoidCharacterProfile> profiles)
         {
             // For players without jobs, give them the overflow job if they have that set...
@@ -83,11 +84,11 @@ namespace Content.Server.GameTicking
                     continue;
 
                 // Pick a random station
-                var stations = _stationSystem.StationInfo.Keys.ToList();
+                var stations = _stationSystem.Stations.ToList();
 
                 if (stations.Count == 0)
                 {
-                    assignedJobs.Add(player, (FallbackOverflowJob, StationId.Invalid));
+                    assignedJobs.Add(player, (FallbackOverflowJob, EntityUid.Invalid));
                     continue;
                 }
 
@@ -367,7 +368,7 @@ namespace Content.Server.GameTicking
             foreach (var (point, transform) in EntityManager.EntityQuery<SpawnPointComponent, TransformComponent>(true))
             {
                 var matchingStation =
-                    EntityManager.TryGetComponent<StationComponent>(transform.ParentUid, out var stationComponent) &&
+                    EntityManager.TryGetComponent<StationMemberComponent>(transform.ParentUid, out var stationComponent) &&
                     stationComponent.Station == station;
                 DebugTools.Assert(EntityManager.TryGetComponent<IMapGridComponent>(transform.ParentUid, out _));
 
@@ -392,7 +393,7 @@ namespace Content.Server.GameTicking
             foreach (var (point, transform) in EntityManager.EntityQuery<SpawnPointComponent, TransformComponent>(true))
             {
                 var matchingStation =
-                    EntityManager.TryGetComponent<StationComponent>(transform.ParentUid, out var stationComponent) &&
+                    EntityManager.TryGetComponent<StationMemberComponent>(transform.ParentUid, out var stationComponent) &&
                     stationComponent.Station == station;
                 DebugTools.Assert(EntityManager.TryGetComponent<IMapGridComponent>(transform.ParentUid, out _));
 

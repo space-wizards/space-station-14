@@ -61,7 +61,7 @@ namespace Content.Server.StationEvents.Events
 
         // Event variables
 
-        private StationId _targetStation;
+        private EntityUid _targetStation;
 
         private EntityUid _targetGrid;
 

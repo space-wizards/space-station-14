@@ -1,6 +1,7 @@
 using System.Linq;
 using Content.Server.Radiation;
 using Content.Server.Station;
+using Content.Server.Station.Components;
 using Content.Shared.Coordinates;
 using Content.Shared.Station;
 using JetBrains.Annotations;
@@ -31,7 +32,7 @@ namespace Content.Server.StationEvents.Events
         private float _timeUntilPulse;
         private const float MinPulseDelay = 0.2f;
         private const float MaxPulseDelay = 0.8f;
-        private StationId _target = StationId.Invalid;
+        private EntityUid _target = EntityUid.Invalid;
 
         private void ResetTimeUntilPulse()
         {
@@ -47,7 +48,7 @@ namespace Content.Server.StationEvents.Events
         public override void Startup()
         {
             ResetTimeUntilPulse();
-            _target = _robustRandom.Pick(_entityManager.EntityQuery<StationComponent>().ToArray()).Station;
+            _target = _robustRandom.Pick(_entityManager.EntityQuery<StationMemberComponent>().ToArray()).Station;
             base.Startup();
         }
 
@@ -68,9 +69,9 @@ namespace Content.Server.StationEvents.Events
             {
                 var mapManager = IoCManager.Resolve<IMapManager>();
                 // Account for split stations by just randomly picking a piece of it.
-                var possibleTargets = _entityManager.EntityQuery<StationComponent>()
+                var possibleTargets = _entityManager.EntityQuery<StationMemberComponent>()
                     .Where(x => x.Station == _target).ToArray();
-                StationComponent tempQualifier = _robustRandom.Pick(possibleTargets);
+                StationMemberComponent tempQualifier = _robustRandom.Pick(possibleTargets);
                 var stationEnt = (tempQualifier).Owner;
 
                 if (!_entityManager.TryGetComponent<IMapGridComponent>(stationEnt, out var grid))

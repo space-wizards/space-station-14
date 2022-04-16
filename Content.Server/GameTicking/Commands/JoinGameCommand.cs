@@ -1,4 +1,5 @@
 using Content.Server.Station;
+using Content.Server.Station.Systems;
 using Content.Shared.Administration;
 using Content.Shared.GameTicking;
 using Content.Shared.Roles;
@@ -61,7 +62,7 @@ namespace Content.Server.GameTicking.Commands
                     shell.WriteError(Loc.GetString("shell-argument-must-be-number"));
                 }
 
-                var stationId = new StationId(sid);
+                var EntityUid = new EntityUid(sid);
                 var jobPrototype = _prototypeManager.Index<JobPrototype>(id);
                 if(!stationSystem.IsJobAvailableOnStation(stationId, jobPrototype))
                 {

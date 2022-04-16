@@ -3,6 +3,7 @@ using Content.Server.Administration.Logs;
 using Content.Server.Atmos.EntitySystems;
 using Content.Server.Chat.Managers;
 using Content.Server.Station;
+using Content.Server.Station.Components;
 using Content.Shared.Database;
 using Content.Shared.Station;
 using Robust.Shared.Audio;
@@ -188,16 +189,16 @@ namespace Content.Server.StationEvents.Events
         }
 
 
-        public static bool TryFindRandomTile(out Vector2i tile, out StationId targetStation, out EntityUid targetGrid, out EntityCoordinates targetCoords, IRobustRandom? robustRandom = null, IEntityManager? entityManager = null)
+        public static bool TryFindRandomTile(out Vector2i tile, out EntityUid targetStation, out EntityUid targetGrid, out EntityCoordinates targetCoords, IRobustRandom? robustRandom = null, IEntityManager? entityManager = null)
         {
             tile = default;
             robustRandom ??= IoCManager.Resolve<IRobustRandom>();
             entityManager ??= IoCManager.Resolve<IEntityManager>();
 
             targetCoords = EntityCoordinates.Invalid;
-            targetStation = robustRandom.Pick(entityManager.EntityQuery<StationComponent>().ToArray()).Station;
+            targetStation = robustRandom.Pick(entityManager.EntityQuery<StationMemberComponent>().ToArray()).Station;
             var t = targetStation; // thanks C#
-            var possibleTargets = entityManager.EntityQuery<StationComponent>()
+            var possibleTargets = entityManager.EntityQuery<StationMemberComponent>()
                 .Where(x => x.Station == t).ToArray();
             targetGrid = robustRandom.Pick(possibleTargets).Owner;
 
