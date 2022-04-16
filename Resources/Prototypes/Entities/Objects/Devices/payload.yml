@@ -81,6 +81,7 @@
   name: flash payload
   parent: BasePayload
   id: FlashPayload
+  description: a flash payload , it only have one use
   components:
     - type: Sprite
       sprite: Objects/Devices/payload.rsi
@@ -88,3 +89,6 @@
     - type: DeleteOnTrigger
     - type: FlashOnTrigger
       range: 6
+    - type: EmitSoundOnTrigger
+      sound:
+        path: "/Audio/Effects/flash_bang.ogg"
