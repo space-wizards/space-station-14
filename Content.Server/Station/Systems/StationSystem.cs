@@ -169,6 +169,12 @@ public sealed class StationSystem : EntitySystem
         RaiseLocalEvent(new StationInitializedEvent(station));
         _sawmill.Info($"Set up station {metaData.EntityName} ({station}) with prototype {mapPrototype?.ID}");
 
+
+        foreach (var grid in gridIds ?? Array.Empty<GridId>())
+        {
+            RaiseLocalEvent(station, new StationGridAddedEvent(grid, true));
+        }
+
         return station;
     }
 
@@ -261,6 +267,10 @@ public sealed class StationSystem : EntitySystem
     }
 }
 
+/// <summary>
+/// Event fired when a station is first set up.
+/// This is the ideal point to add components to it.
+/// </summary>
 [PublicAPI]
 public sealed class StationInitializedEvent : EntityEventArgs
 {

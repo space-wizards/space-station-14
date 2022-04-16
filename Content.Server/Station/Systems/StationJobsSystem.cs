@@ -5,6 +5,9 @@ using JetBrains.Annotations;
 
 namespace Content.Server.Station.Systems;
 
+/// <summary>
+/// Manages job slots for stations.
+/// </summary>
 [PublicAPI]
 public sealed class StationJobsSystem : EntitySystem
 {
