@@ -3,6 +3,7 @@ using Content.Server.Administration.Logs;
 using Content.Server.Atmos.EntitySystems;
 using Content.Server.Chat.Managers;
 using Content.Server.Station.Components;
+using Content.Server.Station.Systems;
 using Content.Shared.Database;
 using Robust.Shared.Audio;
 using Robust.Shared.Map;
@@ -184,18 +185,22 @@ namespace Content.Server.StationEvents.Events
         }
 
 
-        public static bool TryFindRandomTile(out Vector2i tile, out EntityUid targetStation, out EntityUid targetGrid, out EntityCoordinates targetCoords, IRobustRandom? robustRandom = null, IEntityManager? entityManager = null)
+        public static bool TryFindRandomTile(out Vector2i tile, out EntityUid targetStation, out EntityUid targetGrid, out EntityCoordinates targetCoords, IRobustRandom? robustRandom = null, IEntityManager? entityManager = null, IMapManager? mapManager = null, StationSystem? stationSystem = null)
         {
             tile = default;
-            robustRandom ??= IoCManager.Resolve<IRobustRandom>();
-            entityManager ??= IoCManager.Resolve<IEntityManager>();
+            IoCManager.Resolve(ref robustRandom, ref entityManager, ref mapManager);
+            entityManager.EntitySysManager.Resolve(ref stationSystem);
 
             targetCoords = EntityCoordinates.Invalid;
-            targetStation = robustRandom.Pick(entityManager.EntityQuery<StationMemberComponent>().ToArray()).Station;
-            var t = targetStation; // thanks C#
-            var possibleTargets = entityManager.EntityQuery<StationMemberComponent>()
-                .Where(x => x.Station == t).ToArray();
-            targetGrid = robustRandom.Pick(possibleTargets).Owner;
+            targetStation = robustRandom.Pick(stationSystem.Stations);
+            var possibleTargets = entityManager.GetComponent<StationDataComponent>(targetStation).Grids;
+            if (possibleTargets.Count == 0)
+            {
+                targetGrid = EntityUid.Invalid;
+                return false;
+            }
+
+            targetGrid = mapManager.GetGridEuid(robustRandom.Pick(possibleTargets));
 
             if (!entityManager.TryGetComponent<IMapGridComponent>(targetGrid!, out var gridComp))
                 return false;
