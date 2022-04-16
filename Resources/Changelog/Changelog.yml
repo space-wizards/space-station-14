@@ -1,10 +1,4 @@
 Entries:
-- author: ElectroJr
-  changes:
-  - {message: 'Station staff should once again spawn with their "outer clothing" (lab
-      coats, vests, etc) equipped.', type: Fix}
-  id: 840
-  time: '2022-01-07T15:58:55.0000000+00:00'
 - author: Peptide90
   changes:
   - {message: Drinking welder fuel now does toxin damage. Tasty., type: Fix}
@@ -3029,3 +3023,8 @@ Entries:
       inhabited as ghost roles by default. Have fun!', type: Add}
   id: 1339
   time: '2022-04-16T00:39:47.0000000+00:00'
+- author: mirrorcult
+  changes:
+  - {message: Gas tile overlays should no longer appear unshaded., type: Tweak}
+  id: 1340
+  time: '2022-04-16T00:51:05.0000000+00:00'
