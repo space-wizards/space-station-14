@@ -1,12 +1,4 @@
 Entries:
-- author: BubblegumBlue
-  changes:
-  - {message: YouTool vending machines now start with 3 utility belts and actual cable
-      supplies., type: Tweak}
-  - {message: 'Salvage crates spawn with a utility belt and wirecutters, and have
-      been removed from Cargo''s ordering list.', type: Tweak}
-  id: 846
-  time: '2022-01-09T03:20:30.0000000+00:00'
 - author: Lamrr
   changes:
   - {message: The construction classic has returned! Wearable warning cones can now
@@ -3025,3 +3017,12 @@ Entries:
   - {message: Added admin notes., type: Add}
   id: 1345
   time: '2022-04-16T18:57:50.0000000+00:00'
+- author: Rane
+  changes:
+  - {message: Fixed a broken message when someone else removes a plant., type: Fix}
+  - {message: Stasis beds now behave like other machines when it comes to unanchoring
+      them and powering them., type: Fix}
+  - {message: 'Beds now additionally require cloth, medical beds now additionally
+      require durathread.', type: Tweak}
+  id: 1346
+  time: '2022-04-16T23:04:16.0000000+00:00'
