@@ -88,26 +88,13 @@ namespace Content.Server.Administration.Commands
             }
 
             var invSystem = EntitySystem.Get<InventorySystem>();
-            if (invSystem.TryGetSlotEnumerator(target, out var slotDefinitions, inventoryComponent: inventoryComponent))
-            {
-                while (slotDefinitions.MoveNext(out var slot))
-                {
-                    invSystem.TryUnequip(target, slot.Name, true, true, inventoryComponent);
-                    var gearStr = startingGear.GetGear(slot.Name, profile);
-                    if (gearStr == string.Empty)
-                    {
-                        continue;
-                    }
-                    var equipmentEntity = entityManager.SpawnEntity(gearStr, entityManager.GetComponent<TransformComponent>(target).Coordinates);
-                    if (slot.Name == "id" &&
-                        entityManager.TryGetComponent<PDAComponent?>(equipmentEntity, out var pdaComponent) &&
-                        pdaComponent.ContainedID != null)
-                    {
-                        pdaComponent.ContainedID.FullName = entityManager.GetComponent<MetaDataComponent>(target).EntityName;
-                    }
+            startingGear.EquipStartingGear(target, profile, StartingGearPrototype.UnequipMethod.Strip, inventorySystem: invSystem, entityManager: entityManager);
 
-                    invSystem.TryEquip(target, equipmentEntity, slot.Name, true, inventory: inventoryComponent);
-                }
+            if (invSystem.TryGetSlotEntity(target, "id", out var idEntityUid) &&
+                entityManager.TryGetComponent<PDAComponent?>(idEntityUid, out var pdaComponent) &&
+                pdaComponent.ContainedID != null)
+            {
+                pdaComponent.ContainedID.FullName = entityManager.GetComponent<MetaDataComponent>(target).EntityName;
             }
         }
     }

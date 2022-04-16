@@ -1,4 +1,5 @@
 using System.Linq;
+using Content.Client.Hands;
 using Content.Client.HUD.UI;
 using Content.Client.Inventory;
 using Content.Client.Preferences;
@@ -144,30 +145,18 @@ namespace Content.Client.Lobby.UI
             var protoMan = IoCManager.Resolve<IPrototypeManager>();
             var entMan = IoCManager.Resolve<IEntityManager>();
             var invSystem = EntitySystem.Get<ClientInventorySystem>();
+            var handsSystem = EntitySystem.Get<HandsSystem>();
 
             var highPriorityJob = profile.JobPriorities.FirstOrDefault(p => p.Value == JobPriority.High).Key;
 
             // ReSharper disable once ConstantNullCoalescingCondition
             var job = protoMan.Index<JobPrototype>(highPriorityJob ?? SharedGameTicker.FallbackOverflowJob);
 
-            if (job.StartingGear != null && invSystem.TryGetSlotEnumerator(dummy, out var slotEnumerator))
+            if (job.StartingGear != null)
             {
                 var gear = protoMan.Index<StartingGearPrototype>(job.StartingGear);
-
-                while (slotEnumerator.MoveNext(out var slot))
-                {
-                    var itemType = gear.GetGear(slot.Name, profile);
-                    if (invSystem.TryUnequip(dummy, slot.Name, out var unequippedItem, true, true))
-                    {
-                        entMan.DeleteEntity(unequippedItem.Value);
-                    }
-
-                    if (itemType != string.Empty)
-                    {
-                        var item = entMan.SpawnEntity(itemType, MapCoordinates.Nullspace);
-                        invSystem.TryEquip(dummy, item, slot.Name, true, true);
-                    }
-                }
+                gear.EquipStartingGear(dummy, profile, StartingGearPrototype.UnequipMethod.StripDelete, true, invSystem,
+                    handsSystem, entMan);
             }
         }
     }

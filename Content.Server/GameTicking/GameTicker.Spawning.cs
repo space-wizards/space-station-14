@@ -286,7 +286,7 @@ namespace Content.Server.GameTicking
             if (job.StartingGear != null)
             {
                 var startingGear = _prototypeManager.Index<StartingGearPrototype>(job.StartingGear);
-                EquipStartingGear(entity, startingGear, profile);
+                startingGear.EquipStartingGear(entity, profile, inventorySystem: _inventorySystem, handsSystem: _handsSystem, entityManager: EntityManager);
             }
 
             if (profile != null)
@@ -306,32 +306,6 @@ namespace Content.Server.GameTicking
         #endregion
 
         #region Equip Helpers
-        public void EquipStartingGear(EntityUid entity, StartingGearPrototype startingGear, HumanoidCharacterProfile? profile)
-        {
-            if (_inventorySystem.TryGetSlotEnumerator(entity, out var enumerator))
-            {
-                while (enumerator.MoveNext(out var slot))
-                {
-                    var equipmentStr = startingGear.GetGear(slot.Name, profile);
-                    if (!string.IsNullOrEmpty(equipmentStr))
-                    {
-                        var equipmentEntity = EntityManager.SpawnEntity(equipmentStr, EntityManager.GetComponent<TransformComponent>(entity).Coordinates);
-                        _inventorySystem.TryEquip(entity, equipmentEntity, slot.Name, true);
-                    }
-                }
-            }
-
-            if (!TryComp(entity, out HandsComponent? handsComponent))
-                return;
-
-            var inhand = startingGear.Inhand;
-            var coords = EntityManager.GetComponent<TransformComponent>(entity).Coordinates;
-            foreach (var (hand, prototype) in inhand)
-            {
-                var inhandEntity = EntityManager.SpawnEntity(prototype, coords);
-                _handsSystem.TryPickup(entity, inhandEntity, hand, checkActionBlocker: false, handsComp: handsComponent);
-            }
-        }
 
         public void EquipIdCard(EntityUid entity, string characterName, JobPrototype jobPrototype)
         {
