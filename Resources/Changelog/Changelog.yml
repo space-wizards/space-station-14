@@ -1,10 +1,4 @@
 Entries:
-- author: Lamrr
-  changes:
-  - {message: The construction classic has returned! Wearable warning cones can now
-      be found in maintenance tunnels near you., type: Add}
-  id: 847
-  time: '2022-01-09T05:34:46.0000000+00:00'
 - author: DubiousDoggo
   changes:
   - {message: Added crafting recipe for substations, type: Add}
@@ -3026,3 +3020,12 @@ Entries:
       require durathread.', type: Tweak}
   id: 1346
   time: '2022-04-16T23:04:16.0000000+00:00'
+- author: mirrorcult
+  changes:
+  - {message: Space bears are no longer valid ghost roles., type: Remove}
+  - {message: Modified the rules slightly for salvage mob ghost roles., type: Tweak}
+  - {message: 'Space carps/ticks/etc can no longer disarm, and they''re worse at pulling
+      things.', type: Tweak}
+  - {message: 'Carp, ticks, spiders, and bears now have replacement accents.', type: Tweak}
+  id: 1347
+  time: '2022-04-16T23:08:52.0000000+00:00'
