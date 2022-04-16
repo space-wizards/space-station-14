@@ -211,8 +211,6 @@ namespace Content.Server.GameTicking
             SendStatusToAll();
             ReqWindowAttentionAll();
             UpdateLateJoinStatus();
-            UpdateJobsAvailable();
-
 #if EXCEPTION_TOLERANCE
             }
             catch (Exception e)

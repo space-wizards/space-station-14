@@ -113,7 +113,6 @@ namespace Content.Server.GameTicking
             if (jobBans == null || (jobId != null && jobBans.Contains(jobId)))
                 return;
             SpawnPlayer(player, character, station, jobId, lateJoin);
-            UpdateJobsAvailable();
         }
 
         private void SpawnPlayer(IPlayerSession player, HumanoidCharacterProfile character, EntityUid station, string? jobId = null, bool lateJoin = true)

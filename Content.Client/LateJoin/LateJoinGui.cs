@@ -201,7 +201,7 @@ namespace Content.Client.LateJoin
 
                         var jobLabel = new Label
                         {
-                            Text = job.Value >= 0 ?
+                            Text = job.Value != null ?
                                 Loc.GetString("late-join-gui-job-slot-capped", ("jobName", prototype.Name), ("amount", job.Value)) :
                                 Loc.GetString("late-join-gui-job-slot-uncapped", ("jobName", prototype.Name))
                         };
@@ -226,8 +226,9 @@ namespace Content.Client.LateJoin
             }
         }
 
-        private void JobsAvailableUpdated(IReadOnlyDictionary<EntityUid, Dictionary<string, int>> _)
+        private void JobsAvailableUpdated(IReadOnlyDictionary<EntityUid, Dictionary<string, uint?>> _)
         {
+            Logger.Debug("UI rebuilt.");
             RebuildUI();
         }
 
@@ -247,9 +248,9 @@ namespace Content.Client.LateJoin
     sealed class JobButton : ContainerButton
     {
         public string JobId { get; }
-        public int Amount { get; }
+        public uint? Amount { get; }
 
-        public JobButton(string jobId, int amount)
+        public JobButton(string jobId, uint? amount)
         {
             JobId = jobId;
             Amount = amount;

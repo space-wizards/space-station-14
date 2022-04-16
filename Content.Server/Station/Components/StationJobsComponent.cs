@@ -33,9 +33,12 @@ public sealed class StationJobsComponent : Component
     /// <summary>
     /// The current list of jobs.
     /// </summary>
-    /// <remarks>This should not be mutated or used directly, go through StationJobsSystem.</remarks>
+    /// <remarks>
+    /// This should not be mutated or used directly unless you really know what you're doing, go through StationJobsSystem.
+    ///
+    /// </remarks>
     [ViewVariables]
-    public Dictionary<string, int> JobList = new();
+    public Dictionary<string, uint?> JobList = new();
 
     /// <summary>
     /// Overflow jobs that roundstart can spawn infinitely many of.

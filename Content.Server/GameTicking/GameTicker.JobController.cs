@@ -167,28 +167,5 @@ namespace Content.Server.GameTicking
         {
             _spawnedPositions[jobId] = _spawnedPositions.GetValueOrDefault(jobId, 0) + 1;
         }
-
-        private TickerJobsAvailableEvent GetJobsAvailable()
-        {
-            // If late join is disallowed, return no available jobs.
-            if (DisallowLateJoin)
-                return new TickerJobsAvailableEvent(new Dictionary<EntityUid, string>(), new Dictionary<EntityUid, Dictionary<string, int>>());
-
-            var jobs = new Dictionary<EntityUid, Dictionary<string, int>>();
-            var stationNames = new Dictionary<EntityUid, string>();
-
-            foreach (var station in _stationSystem.Stations)
-            {
-                var list = Comp<StationJobsComponent>(station).JobList.ToDictionary(x => x.Key, x => x.Value);
-                jobs.Add(station, list);
-                stationNames.Add(station, Name(station));
-            }
-            return new TickerJobsAvailableEvent(stationNames, jobs);
-        }
-
-        public void UpdateJobsAvailable()
-        {
-            RaiseNetworkEvent(GetJobsAvailable(), Filter.Empty().AddPlayers(_playersInLobby.Keys));
-        }
     }
 }

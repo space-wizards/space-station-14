@@ -145,12 +145,22 @@ namespace Content.Server.GameTicking
             RaiseNetworkEvent(GetStatusMsg(session), client);
             RaiseNetworkEvent(GetInfoMsg(), client);
             RaiseNetworkEvent(GetPlayerStatus(), client);
-            RaiseNetworkEvent(GetJobsAvailable(), client);
+            RaiseLocalEvent(new PlayerJoinedLobbyEvent(session));
         }
 
         private void ReqWindowAttentionAll()
         {
             RaiseNetworkEvent(new RequestWindowAttentionEvent());
+        }
+    }
+
+    public sealed class PlayerJoinedLobbyEvent : EntityEventArgs
+    {
+        public readonly IPlayerSession PlayerSession;
+
+        public PlayerJoinedLobbyEvent(IPlayerSession playerSession)
+        {
+            PlayerSession = playerSession;
         }
     }
 }

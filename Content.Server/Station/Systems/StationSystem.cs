@@ -251,9 +251,6 @@ public sealed class StationSystem : EntitySystem
         }
 
         RaiseLocalEvent(station, new StationRenamedEvent(oldName, name));
-
-        // Make sure lobby gets the memo.
-        _gameTicker.UpdateJobsAvailable();
     }
 
     /// <summary>

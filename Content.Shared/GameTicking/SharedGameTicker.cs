@@ -107,10 +107,10 @@ namespace Content.Shared.GameTicking
         /// <summary>
         /// The Status of the Player in the lobby (ready, observer, ...)
         /// </summary>
-        public Dictionary<EntityUid, Dictionary<string, int>> JobsAvailableByStation { get; }
+        public Dictionary<EntityUid, Dictionary<string, uint?>> JobsAvailableByStation { get; }
         public Dictionary<EntityUid, string> StationNames { get; }
 
-        public TickerJobsAvailableEvent(Dictionary<EntityUid, string> stationNames, Dictionary<EntityUid, Dictionary<string, int>> jobsAvailableByStation)
+        public TickerJobsAvailableEvent(Dictionary<EntityUid, string> stationNames, Dictionary<EntityUid, Dictionary<string, uint?>> jobsAvailableByStation)
         {
             StationNames = stationNames;
             JobsAvailableByStation = jobsAvailableByStation;
