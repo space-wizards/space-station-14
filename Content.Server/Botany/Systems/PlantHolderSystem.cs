@@ -32,6 +32,7 @@ namespace Content.Server.Botany.Systems
             base.Initialize();
             SubscribeLocalEvent<PlantHolderComponent, ExaminedEvent>(OnExamine);
             SubscribeLocalEvent<PlantHolderComponent, InteractUsingEvent>(OnInteractUsing);
+            SubscribeLocalEvent<PlantHolderComponent, InteractHandEvent>(OnInteractHand);
         }
 
         private void OnExamine(EntityUid uid, PlantHolderComponent component, ExaminedEvent args)
@@ -100,7 +101,7 @@ namespace Content.Server.Botany.Systems
                 {
                     if (!_botanySystem.TryGetSeed(seeds, out var seed))
                         return ;
-                    
+
                     _popupSystem.PopupCursor(Loc.GetString("plant-holder-component-plant-success-message",
                         ("seedName", seed.Name),
                         ("seedNoun", seed.Noun)), Filter.Entities(args.User));
@@ -256,6 +257,10 @@ namespace Content.Server.Botany.Systems
 
                 EntityManager.QueueDeleteEntity(args.Used);
             }
+        }
+        private void OnInteractHand(EntityUid uid, PlantHolderComponent component, InteractHandEvent args)
+        {
+            component.DoHarvest(args.User);
         }
     }
 }
