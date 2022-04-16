@@ -1,14 +1,4 @@
 Entries:
-- author: moony
-  changes:
-  - {message: Support for picking a species to play as in the character editor has
-      been upstreamed from Outer Rim 14., type: Add}
-  - {message: 'Dwarves have been added, a shorter race that.. well you know what a
-      dwarf is, don''t you?', type: Add}
-  - {message: 'Slimes have been made playable, with enhancements such as hair actually
-      working.', type: Add}
-  id: 844
-  time: '2022-01-09T01:53:14.0000000+00:00'
 - author: Rane
   changes:
   - {message: 'Botanists now spawn with a botanical belt, which has some tools and
@@ -3033,3 +3023,9 @@ Entries:
     type: Fix}
   id: 1343
   time: '2022-04-16T05:32:35.0000000+00:00'
+- author: Mirino97
+  changes:
+  - {message: 'Nanotrasen has spent billions of credits in morale research, and the
+      newest morale-increasing technology is here: Hugging!', type: Add}
+  id: 1344
+  time: '2022-04-16T18:16:20.0000000+00:00'
