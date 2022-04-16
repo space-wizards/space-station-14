@@ -147,7 +147,8 @@ public sealed class StationSystem : EntitySystem
     /// <returns>The initialized station.</returns>
     public EntityUid InitializeNewStation(GameMapPrototype? mapPrototype, IEnumerable<GridId>? gridIds, string? name = null)
     {
-        var station = Spawn(null, new MapCoordinates(0, 0, new MapId(1)));
+        //HACK: This needs to go in nullspace but that crashes currently.
+        var station = Spawn(null, new MapCoordinates(0, 0, _gameTicker.DefaultMap));
         var data = AddComp<StationDataComponent>(station);
         var metaData = MetaData(station);
         data.MapPrototype = mapPrototype;
