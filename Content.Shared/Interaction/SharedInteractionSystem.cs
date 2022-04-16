@@ -272,8 +272,6 @@ namespace Content.Shared.Interaction
             if (message.Handled)
                 return;
 
-            var interactHandEventArgs = new InteractHandEventArgs(user, target);
-
             // Else we run Activate.
             InteractionActivate(user, target,
                 checkCanInteract: false,
