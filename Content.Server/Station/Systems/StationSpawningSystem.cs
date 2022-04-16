@@ -98,7 +98,7 @@ public sealed class StationSpawningSystem : EntitySystem
 
     private void OnSpawnerParentChanged(EntityUid uid, StationSpawnerManagerComponent component, ref EntParentChangedMessage args)
     {
-        if (component.PreviousGrid != null && component.PreviousStation != null)
+        if (component.PreviousGrid != null && component.PreviousStation != null && Exists(component.PreviousStation))
         {
             RemoveSpawnerFromStation(uid, component.PreviousStation.Value, component.PreviousGrid.Value);
         }
