@@ -1,3 +1,4 @@
+using System.Linq;
 using Content.Client.Eui;
 using Content.Shared.Eui;
 using Content.Shared.Ghost.Roles;
@@ -16,7 +17,7 @@ namespace Content.Client.Ghost.Roles.UI
         {
             _window = new GhostRolesWindow();
 
-            _window.RoleRequested += info =>
+            _window.OnRoleRequested += info =>
             {
                 if (_windowRules != null)
                     _windowRules.Close();
@@ -30,6 +31,11 @@ namespace Content.Client.Ghost.Roles.UI
                     _windowRules = null;
                 };
                 _windowRules.OpenCentered();
+            };
+
+            _window.OnRoleFollow += info =>
+            {
+                SendMessage(new GhostRoleFollowRequestMessage(info.Identifier));
             };
 
             _window.OnClose += () =>
@@ -56,20 +62,19 @@ namespace Content.Client.Ghost.Roles.UI
             base.HandleState(state);
 
             if (state is not GhostRolesEuiState ghostState) return;
-
-            var closeRulesWindow = true;
-
             _window.ClearEntries();
 
-            foreach (var info in ghostState.GhostRoles)
+            var groupedRoles = ghostState.GhostRoles.GroupBy(
+                role => (role.Name, role.Description));
+            foreach (var group in groupedRoles)
             {
-                _window.AddEntry(info);
-                if (info.Identifier == _windowRulesId)
-                {
-                    closeRulesWindow = false;
-                }
+                var name = group.Key.Name;
+                var description = group.Key.Description;
+
+                _window.AddEntry(name, description, group);
             }
 
+            var closeRulesWindow = ghostState.GhostRoles.All(role => role.Identifier != _windowRulesId);
             if (closeRulesWindow)
             {
                 _windowRules?.Close();

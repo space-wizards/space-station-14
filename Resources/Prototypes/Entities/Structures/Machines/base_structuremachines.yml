@@ -8,6 +8,8 @@
     delay: 2
   - type: Physics
     bodyType: Static
+  - type: Transform
+    noRot: true
   - type: Fixtures
     fixtures:
     - shape:

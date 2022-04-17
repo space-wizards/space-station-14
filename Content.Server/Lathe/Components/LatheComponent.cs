@@ -1,44 +1,51 @@
-using System.Linq;
-using System.Threading.Tasks;
-using Content.Server.Materials;
-using Content.Server.Power.Components;
-using Content.Server.Research.Components;
-using Content.Server.Stack;
 using Content.Server.UserInterface;
-using Content.Shared.Interaction;
 using Content.Shared.Lathe;
-using Content.Shared.Power;
 using Content.Shared.Research.Prototypes;
 using Content.Shared.Whitelist;
 using Robust.Server.GameObjects;
-using Robust.Server.Player;
+using Content.Shared.Sound;
 
 namespace Content.Server.Lathe.Components
 {
     [RegisterComponent]
-    public sealed class LatheComponent : SharedLatheComponent, IInteractUsing
+    public sealed class LatheComponent : SharedLatheComponent
     {
+<<<<<<< HEAD
         [Dependency] private readonly IEntityManager _entMan = default!;
 
         [DataField("whitelist")] private EntityWhitelist? _whitelist = null;
 
+=======
+        /// <summary>
+        /// How much volume in cm^3 each sheet of material adds
+        /// </summary>
+        public int VolumePerSheet = 100;
+
+        /// <summary>
+        /// The lathe's construction queue
+        /// </summary>
+>>>>>>> d0a3044edd0e367ec199daa1a7f88bb6b94d2525
         [ViewVariables]
         public Queue<LatheRecipePrototype> Queue { get; } = new();
-
+        /// <summary>
+        /// The recipe the lathe is currently producing
+        /// </summary>
         [ViewVariables]
-        public bool Producing { get; private set; }
-
-        private LatheState _state = LatheState.Base;
-
-        private LatheState State
-        {
-            get => _state;
-            set => _state = value;
-        }
-
+        public LatheRecipePrototype? ProducingRecipe;
+        /// <summary>
+        /// How long the inserting animation will play
+        /// </summary>
         [ViewVariables]
-        private LatheRecipePrototype? _producingRecipe;
+        public float InsertionTime = 0.79f; // 0.01 off for animation timing
+        /// <summary>
+        /// Update accumulator for the insertion time
+        /// </suummary>
+        public float InsertionAccumulator = 0f;
+        /// <summary>
+        /// Production accumulator for the production time.
+        /// </summary>
         [ViewVariables]
+<<<<<<< HEAD
         private bool Powered => !_entMan.TryGetComponent(Owner, out ApcPowerReceiverComponent? receiver) || receiver.Powered;
 
         private static readonly TimeSpan InsertionTime = TimeSpan.FromSeconds(0.9f);
@@ -216,5 +223,19 @@ namespace Content.Server.Lathe.Components
             Inserting,
             Producing
         }
+=======
+        public float ProducingAccumulator = 0f;
+
+        /// <summary>
+        /// The sound that plays when the lathe is producing an item, if any
+        /// </summary>
+        [DataField("producingSound")]
+        public SoundSpecifier? ProducingSound;
+
+        /// <summmary>
+        /// The lathe's UI.
+        /// </summary>
+        [ViewVariables] public BoundUserInterface? UserInterface;
+>>>>>>> d0a3044edd0e367ec199daa1a7f88bb6b94d2525
     }
 }

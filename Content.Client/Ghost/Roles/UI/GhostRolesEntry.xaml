@@ -7,7 +7,10 @@
     <PanelContainer StyleClasses="HighDivider" />
     <RichTextLabel Name="Description"
                    Margin="0 4"/>
-    <Button Name="RequestButton"
-            Text="{Loc 'ghost-roles-window-request-role-button'}"
-            HorizontalAlignment="Left"/>
+    <BoxContainer Name="Buttons"
+                  HorizontalAlignment="Left"
+                  Orientation="Vertical"
+                  SeparationOverride="5">
+        <!-- Buttons are added here by code -->
+    </BoxContainer>
 </BoxContainer>

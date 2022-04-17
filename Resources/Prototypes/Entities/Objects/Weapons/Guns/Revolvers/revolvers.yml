@@ -26,16 +26,20 @@
       map: ["enum.RangedBarrelVisualLayers.MagUnshaded"]
       shader: unshaded
   - type: Item
-    size: 24
+    size: 12
     sprite: Objects/Weapons/Guns/Revolvers/deckard.rsi
   - type: RangedWeapon
-  - type: BoltActionBarrel
+  - type: RevolverBarrel
     currentSelector: Single
     allSelectors:
     - Single
     fillPrototype: CartridgeMagnum
     caliber: Magnum
     capacity: 5
+    minAngle: 0
+    maxAngle: 60
+    angleIncrease: 20
+    angleDecay: 15
     autoCycle: true
     soundGunshot:
       path: /Audio/Weapons/Guns/Gunshots/revolver.ogg
@@ -60,7 +64,7 @@
   - type: Sprite
     sprite: Objects/Weapons/Guns/Revolvers/inspector.rsi
   - type: Item
-    size: 24
+    size: 12
     sprite: Objects/Weapons/Guns/Revolvers/inspector.rsi
   - type: RangedWeapon
   - type: RevolverBarrel
@@ -70,6 +74,10 @@
     fillPrototype: CartridgeMagnum
     caliber: Magnum
     capacity: 6
+    minAngle: 0
+    maxAngle: 60
+    angleIncrease: 20
+    angleDecay: 15
     soundEmpty:
       path: /Audio/Weapons/Guns/Empty/empty.ogg
     soundGunshot:
@@ -88,7 +96,7 @@
   - type: Sprite
     sprite: Objects/Weapons/Guns/Revolvers/mateba.rsi
   - type: Item
-    size: 24
+    size: 12
     sprite: Objects/Weapons/Guns/Revolvers/mateba.rsi
   - type: RangedWeapon
   - type: RevolverBarrel
@@ -98,6 +106,10 @@
     fillPrototype: CartridgeMagnum
     caliber: Magnum
     capacity: 7
+    minAngle: 0
+    maxAngle: 60
+    angleIncrease: 20
+    angleDecay: 15
     soundEmpty:
       path: /Audio/Weapons/Guns/Empty/empty.ogg
     soundGunshot:
@@ -116,7 +128,7 @@
   - type: Sprite
     sprite: Objects/Weapons/Guns/Revolvers/predator.rsi
   - type: Item
-    size: 24
+    size: 12
     sprite: Objects/Weapons/Guns/Revolvers/predator.rsi
   - type: RangedWeapon
   - type: RevolverBarrel
@@ -126,6 +138,10 @@
     fillPrototype: CartridgeMagnum
     caliber: Magnum
     capacity: 7
+    minAngle: 0
+    maxAngle: 60
+    angleIncrease: 20
+    angleDecay: 15
     soundEmpty:
       path: /Audio/Weapons/Guns/Empty/empty.ogg
     soundGunshot:
@@ -144,7 +160,7 @@
   - type: Sprite
     sprite: Objects/Weapons/Guns/Revolvers/pirate_revolver.rsi
   - type: Item
-    size: 24
+    size: 12
     sprite: Objects/Weapons/Guns/Revolvers/pirate_revolver.rsi
   - type: RangedWeapon
   - type: RevolverBarrel
@@ -152,9 +168,13 @@
     currentSelector: Single
     allSelectors:
     - Single
-    fillPrototype: CartridgePistol  
+    fillPrototype: CartridgePistol
     caliber: Pistol
     capacity: 5
+    minAngle: 0
+    maxAngle: 60
+    angleIncrease: 20
+    angleDecay: 15
     soundEmpty:
       path: /Audio/Weapons/Guns/Empty/empty.ogg
     soundGunshot:

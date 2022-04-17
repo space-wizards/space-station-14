@@ -44,7 +44,7 @@ namespace Content.Server.Storage.Components
     [ComponentReference(typeof(IActivate))]
     [ComponentReference(typeof(IStorageComponent))]
     [ComponentReference(typeof(SharedStorageComponent))]
-    public sealed class ServerStorageComponent : SharedStorageComponent, IInteractUsing, IActivate, IStorageComponent, IDestroyAct, IExAct, IAfterInteract
+    public sealed class ServerStorageComponent : SharedStorageComponent, IInteractUsing, IActivate, IStorageComponent, IDestroyAct, IAfterInteract
     {
         [Dependency] private readonly IEntityManager _entityManager = default!;
         [Dependency] private readonly IEntitySystemManager _sysMan = default!;
@@ -71,6 +71,15 @@ namespace Content.Server.Storage.Components
 
         [DataField("whitelist")]
         private EntityWhitelist? _whitelist = null;
+        [DataField("blacklist")]
+        public EntityWhitelist? Blacklist = null;
+
+        /// <summary>
+        ///     If true, storage will show popup messages to the player after failed interactions.
+        ///     Usually this is message that item doesn't fit inside container.
+        /// </summary>
+        [DataField("popup")]
+        public bool ShowPopup = true;
 
         private bool _storageInitialCalculated;
         public int StorageUsed;
@@ -161,6 +170,11 @@ namespace Content.Server.Storage.Components
             }
 
             if (_whitelist != null && !_whitelist.IsValid(entity))
+            {
+                return false;
+            }
+
+            if (Blacklist != null && Blacklist.IsValid(entity))
             {
                 return false;
             }
@@ -256,14 +270,14 @@ namespace Content.Server.Storage.Components
 
             if (!handSys.TryDrop(player, toInsert.Value, handsComp: hands))
             {
-                Owner.PopupMessage(player, Loc.GetString("comp-storage-cant-insert"));
+                Popup(player, "comp-storage-cant-insert");
                 return false;
             }
 
             if (!Insert(toInsert.Value))
             {
                 handSys.PickupOrDrop(player, toInsert.Value, handsComp: hands);
-                Owner.PopupMessage(player, Loc.GetString("comp-storage-cant-insert"));
+                Popup(player, "comp-storage-cant-insert");
                 return false;
             }
 
@@ -282,7 +296,7 @@ namespace Content.Server.Storage.Components
 
             if (!Insert(toInsert))
             {
-                Owner.PopupMessage(player, Loc.GetString("comp-storage-cant-insert"));
+                Popup(player, "comp-storage-cant-insert");
                 return false;
             }
             return true;
@@ -302,9 +316,7 @@ namespace Content.Server.Storage.Components
             Logger.DebugS(LoggerName, $"Storage (UID {Owner}) \"used\" by player session (UID {userSession.AttachedEntity}).");
 
             SubscribeSession(userSession);
-#pragma warning disable 618
-            SendNetworkMessage(new OpenStorageUIMessage(), userSession.ConnectedClient);
-#pragma warning restore 618
+            _entityManager.EntityNetManager?.SendSystemNetworkMessage(new OpenStorageUIEvent(Owner), userSession.ConnectedClient);
             UpdateClientInventory(userSession);
         }
 
@@ -349,9 +361,7 @@ namespace Content.Server.Storage.Components
 
             var stored = StoredEntities.Select(e => e).ToArray();
 
-#pragma warning disable 618
-            SendNetworkMessage(new StorageHeldItemsMessage(stored, StorageUsed, StorageCapacityMax), session.ConnectedClient);
-#pragma warning restore 618
+            _entityManager.EntityNetManager?.SendSystemNetworkMessage(new StorageHeldItemsEvent(Owner, StorageCapacityMax,StorageUsed, stored), session.ConnectedClient);
         }
 
         /// <summary>
@@ -370,6 +380,7 @@ namespace Content.Server.Storage.Components
                 SubscribedSessions.Add(session);
             }
 
+            _entityManager.EnsureComponent<ActiveStorageComponent>(Owner);
             if (SubscribedSessions.Count == 1)
                 UpdateStorageVisualization();
         }
@@ -385,15 +396,21 @@ namespace Content.Server.Storage.Components
                 Logger.DebugS(LoggerName, $"Storage (UID {Owner}) unsubscribed player session (UID {session.AttachedEntity}).");
 
                 SubscribedSessions.Remove(session);
-#pragma warning disable 618
-                SendNetworkMessage(new CloseStorageUIMessage(), session.ConnectedClient);
-#pragma warning restore 618
+                _entityManager.EntityNetManager?.SendSystemNetworkMessage(new CloseStorageUIEvent(Owner),
+                    session.ConnectedClient);
             }
 
             CloseNestedInterfaces(session);
 
             if (SubscribedSessions.Count == 0)
+            {
                 UpdateStorageVisualization();
+
+                if (_entityManager.HasComponent<ActiveStorageComponent>(Owner))
+                {
+                    _entityManager.RemoveComponent<ActiveStorageComponent>(Owner);
+                }
+            }
         }
 
         /// <summary>
@@ -444,73 +461,57 @@ namespace Content.Server.Storage.Components
             EnsureInitialCalculated();
         }
 
-        [Obsolete("Component Messages are deprecated, use Entity Events instead.")]
-        public override void HandleNetworkMessage(ComponentMessage message, INetChannel channel, ICommonSession? session = null)
+        public void HandleRemoveEntity(RemoveEntityEvent remove, ICommonSession session)
         {
-            base.HandleNetworkMessage(message, channel, session);
+            EnsureInitialCalculated();
 
-            if (session == null)
+            if (session.AttachedEntity is not {Valid: true} player)
             {
-                throw new ArgumentException(nameof(session));
+                return;
             }
 
-            switch (message)
+            var ownerTransform = _entityManager.GetComponent<TransformComponent>(Owner);
+            var playerTransform = _entityManager.GetComponent<TransformComponent>(player);
+
+            if (!playerTransform.Coordinates.InRange(_entityManager, ownerTransform.Coordinates, 2) ||
+                Owner.IsInContainer() && !playerTransform.ContainsEntity(ownerTransform))
             {
-                case RemoveEntityMessage remove:
-                {
-                    EnsureInitialCalculated();
-
-                    if (session.AttachedEntity is not {Valid: true} player)
-                    {
-                        break;
-                    }
-
-                    var ownerTransform = _entityManager.GetComponent<TransformComponent>(Owner);
-                    var playerTransform = _entityManager.GetComponent<TransformComponent>(player);
-
-                    if (!playerTransform.Coordinates.InRange(_entityManager, ownerTransform.Coordinates, 2) ||
-                        Owner.IsInContainer() && !playerTransform.ContainsEntity(ownerTransform))
-                    {
-                        break;
-                    }
-
-                    if (!remove.EntityUid.Valid || Storage?.Contains(remove.EntityUid) == false)
-                    {
-                        break;
-                    }
-
-                    _sysMan.GetEntitySystem<SharedHandsSystem>().TryPickupAnyHand(player, remove.EntityUid);
-                    break;
-                }
-                case InsertEntityMessage _:
-                {
-                    EnsureInitialCalculated();
-
-                    if (session.AttachedEntity is not {Valid: true} player)
-                    {
-                        break;
-                    }
-
-                    if (!EntitySystem.Get<SharedInteractionSystem>().InRangeUnobstructed(player, Owner, popup: true))
-                    {
-                        break;
-                    }
-
-                    PlayerInsertHeldEntity(player);
-
-                    break;
-                }
-                case CloseStorageUIMessage _:
-                {
-                    if (session is not IPlayerSession playerSession)
-                    {
-                        break;
-                    }
-
-                    UnsubscribeSession(playerSession);
-                    break;
-                }
+                return;
             }
+
+            if (!remove.EntityUid.Valid || Storage?.Contains(remove.EntityUid) == false)
+            {
+                return;
+            }
+
+            _sysMan.GetEntitySystem<SharedHandsSystem>().TryPickupAnyHand(player, remove.EntityUid);
+        }
+
+        public void HandleInsertEntity(ICommonSession session)
+        {
+            EnsureInitialCalculated();
+
+            if (session.AttachedEntity is not {Valid: true} player)
+            {
+                return;
+            }
+
+            if (!EntitySystem.Get<SharedInteractionSystem>().InRangeUnobstructed(player, Owner, popup: ShowPopup))
+            {
+                return;
+            }
+
+            PlayerInsertHeldEntity(player);
+        }
+
+        public void HandleCloseUI(ICommonSession session)
+        {
+            if (session is not IPlayerSession playerSession)
+            {
+                return;
+            }
+
+            UnsubscribeSession(playerSession);
         }
 
         /// <summary>
@@ -604,14 +605,8 @@ namespace Content.Server.Storage.Components
                 if (successfullyInserted.Count > 0)
                 {
                     PlaySoundCollection();
-#pragma warning disable 618
-                    SendNetworkMessage(
-#pragma warning restore 618
-                        new AnimateInsertingEntitiesMessage(
-                            successfullyInserted,
-                            successfullyInsertedPositions
-                        )
-                    );
+                    _entityManager.EntityNetManager?.SendSystemNetworkMessage(
+                        new AnimateInsertingEntitiesEvent(Owner, successfullyInserted, successfullyInsertedPositions));
                 }
                 return true;
             }
@@ -632,12 +627,9 @@ namespace Content.Server.Storage.Components
                     _entityManager.GetComponent<TransformComponent>(target).MapPosition);
                 if (PlayerInsertEntityInWorld(eventArgs.User, target))
                 {
-#pragma warning disable 618
-                    SendNetworkMessage(new AnimateInsertingEntitiesMessage(
-#pragma warning restore 618
-                        new List<EntityUid> {target},
-                        new List<EntityCoordinates> {position}
-                    ));
+                    _entityManager.EntityNetManager?.SendSystemNetworkMessage(new AnimateInsertingEntitiesEvent(Owner,
+                        new List<EntityUid> { target },
+                        new List<EntityCoordinates> { position }));
                     return true;
                 }
                 return true;
@@ -660,28 +652,11 @@ namespace Content.Server.Storage.Components
             }
         }
 
-        void IExAct.OnExplosion(ExplosionEventArgs eventArgs)
+        private void Popup(EntityUid player, string message)
         {
-            if (eventArgs.Severity < ExplosionSeverity.Heavy)
-            {
-                return;
-            }
+            if (!ShowPopup) return;
 
-            var storedEntities = StoredEntities?.ToList();
-
-            if (storedEntities == null)
-            {
-                return;
-            }
-
-            foreach (var entity in storedEntities)
-            {
-                var exActs = _entityManager.GetComponents<IExAct>(entity).ToArray();
-                foreach (var exAct in exActs)
-                {
-                    exAct.OnExplosion(eventArgs);
-                }
-            }
+            Owner.PopupMessage(player, Loc.GetString(message));
         }
 
         private void PlaySoundCollection()
@@ -689,4 +664,7 @@ namespace Content.Server.Storage.Components
             SoundSystem.Play(Filter.Pvs(Owner), StorageSoundCollection.GetSound(), Owner, AudioParams.Default);
         }
     }
+
+    [RegisterComponent]
+    public sealed class ActiveStorageComponent : Component {}
 }

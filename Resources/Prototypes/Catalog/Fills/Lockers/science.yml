@@ -6,10 +6,6 @@
   - type: StorageFill
     contents:
       - id: ClothingHandsGlovesLatex
-        prob: 1
       - id: ClothingHeadsetScience
-        prob: 1
       - id: ClothingMaskSterile
-        prob: 1
       - id: ClothingOuterCoatLab
-        prob: 1

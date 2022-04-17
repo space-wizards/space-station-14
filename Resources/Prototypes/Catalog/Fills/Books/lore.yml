@@ -4,6 +4,7 @@
   name: demonomicon
   parent: BookBase
   id: BookDemonomicon
+  noSpawn: true
   description: 'Who knows what dark spells may be contained in these horrid pages?'
   components:
   - type: Sprite
@@ -27,7 +28,6 @@
 - type: entity
   parent: BookDemonomicon
   id: BookDemonomicon1
-  abstract: true
   suffix: 1
   components:
   - type: Paper
@@ -40,7 +40,6 @@
 - type: entity
   parent: BookDemonomicon
   id: BookDemonomicon2
-  abstract: true
   suffix: 2
   components:
   - type: Paper
@@ -54,7 +53,6 @@
 - type: entity
   parent: BookDemonomicon
   id: BookDemonomicon3
-  abstract: true
   suffix: 3
   components:
   - type: Paper

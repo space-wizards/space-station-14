@@ -1,8 +1,8 @@
 ﻿using Content.Server.Power.Components;
 using Content.Server.Power.Events;
-using Content.Server.Tools.Components;
 using Content.Server.Xenoarchaeology.XenoArtifacts.Triggers.Components;
 using Content.Shared.Interaction;
+using Content.Shared.Tools.Components;
 
 namespace Content.Server.Xenoarchaeology.XenoArtifacts.Triggers.Systems;
 

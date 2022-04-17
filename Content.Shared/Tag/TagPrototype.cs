@@ -13,7 +13,7 @@ namespace Content.Shared.Tag
     public sealed class TagPrototype : IPrototype
     {
         [ViewVariables]
-        [DataField("id", required: true)]
+        [IdDataFieldAttribute]
         public string ID { get; } = default!;
     }
 }
