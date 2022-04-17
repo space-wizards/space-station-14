@@ -1,3 +1,3 @@
-ent-C4 = composition C-4
-    .desc = Used to put holes in specific areas without too much extra hole. A saboteur's favorite.
+ent-C4 = взрывчатка C-4
+    .desc = Используется для проделывания аккуратных, не слишком больших, брешей в местах закладки. Любимое средство диверсантов.
     .suffix = { "" }

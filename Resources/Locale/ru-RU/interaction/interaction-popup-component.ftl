@@ -3,34 +3,34 @@
 
 ## Petting animals
 
-petting-success-generic = You pet { THE($target) } on { POSS-ADJ($target) } head.
-petting-success-soft-floofy = You pet { THE($target) } on { POSS-ADJ($target) } soft floofy head.
-petting-success-bird = You pet { THE($target) } on { POSS-ADJ($target) } cute feathery head.
-petting-success-cat = You pet { THE($target) } on { POSS-ADJ($target) } fuzzy little head.
-petting-success-corrupted-corgi = In an act of hubris, you pet { THE($target) } on { POSS-ADJ($target) } cursed little head.
-petting-success-crab = You pet { THE($target) } on { POSS-ADJ($target) } smooth little head.
-petting-success-dog = You pet { THE($target) } on { POSS-ADJ($target) } soft floofy head.
-petting-success-frog = You pet { THE($target) } on { POSS-ADJ($target) } slippery little head.
-petting-success-goat = You pet { THE($target) } on { POSS-ADJ($target) } horned floofy head.
-petting-success-goose = Against all odds, you manage to pet { THE($target) } on { POSS-ADJ($target) } horrible little head.
-petting-success-possum = You pet { THE($target) } on { POSS-ADJ($target) } horrible little head.
-petting-success-reptile = You pet { THE($target) } on { POSS-ADJ($target) } scaly little head.
-petting-success-sloth = You pet { THE($target) } on { POSS-ADJ($target) } slow moving head.
-petting-success-space-cat = You pet { THE($target) } on { POSS-ADJ($target) } glass domed head.
-petting-success-tarantula = You pet { THE($target) } on { POSS-ADJ($target) } hairy little head.
-petting-success-holo = You pet { THE($target) } on { POSS-ADJ($target) } metallic spiky head.
-petting-failure-generic = You reach out to pet { THE($target) }, but { SUBJECT($target) } { CONJUGATE-BE($target) } aloof towards you.
-petting-failure-bat = You reach out to pet { THE($target) }, but { SUBJECT($target) } { CONJUGATE-BE($target) } too hard to catch!
-petting-failure-corrupted-corgi = You reach out to pet { THE($target) }, but think better of it.
-petting-failure-crab = You reach out to pet { THE($target) }, but { SUBJECT($target) } snaps { POSS-ADJ($target) } claws in your general direction!
-petting-failure-goat = You reach out to pet { THE($target) }, but { SUBJECT($target) } stubbornly refuses!
-petting-failure-goose = You reach out to pet { THE($target) }, but { SUBJECT($target) } { CONJUGATE-BE($target) } too horrible!
-petting-failure-possum = You reach out to pet { THE($target) }, but are met with hisses and snarls!
-petting-failure-sloth = You reach out to pet { THE($target) }, but { SUBJECT($target) } somehow dodge with ludicrous speed!
-petting-failure-holo = You reach out to pet { THE($target) }, but { POSS-ADJ($target) } spikes almost impale your hand!
+petting-success-generic = Вы гладите { $target } по голове.
+petting-success-soft-floofy = Вы гладите { $target } по мягкой пушистой голове.
+petting-success-bird = Вы гладите { $target } по её милой пернатой голове.
+petting-success-cat = Вы гладите { $target } по её маленькой пушистой голове.
+petting-success-corrupted-corgi = В порыве самонадеянности, вы гладите { $target } по его маленькой проклятой голове.
+petting-success-crab = Вы гладите { $target } по его маленькой гладкой голове.
+petting-success-dog = Вы гладите { $target } по его мягкой пушистой голове.
+petting-success-frog = Вы гладите { $target } по её маленькой скользкой голове.
+petting-success-goat = Вы гладите { $target } по её рогатой пушистой голове.
+petting-success-goose = Вопреки всему, вам удаётся погладить { $target } по его маленькой ужасающей голове.
+petting-success-possum = Вы гладите { $target } по его маленькой ужасной голове.
+petting-success-reptile = Вы гладите { $target } по её маленькой чешуйчатой голове.
+petting-success-sloth = Вы гладите { $target } по его медленной голове.
+petting-success-space-cat = Вы гладите { $target } по её куполообразному стеклянному шлему.
+petting-success-tarantula = Вы гладите { $target } по его маленькой волосатой голове.
+petting-success-holo = Вы гладите { $target } по его металлической шипастой голове.
+petting-failure-generic = Вы тянетесь погладить { $target }, но { $target } настороженно уклоняется от вас.
+petting-failure-bat = Вы тянетесь погладить { $target }, но { $target } очень трудно поймать!
+petting-failure-corrupted-corgi = Вы тянетесь погладить { $target }, но решаете, что лучше не надо.
+petting-failure-crab = Вы тянетесь погладить { $target }, но { $target } щёлкает клешнями в вашу сторону!
+petting-failure-goat = Вы тянетесь погладить { $target }, но { $target } упорно отказывается!
+petting-failure-goose = Вы тянетесь погладить { $target }, но { $target } слишком ужасен!
+petting-failure-possum = Вы тянетесь погладить { $target }, но на вас шипят и рычат.
+petting-failure-sloth = Вы тянетесь погладить { $target }, но { $target } с невероятной скоростью уклоняется!
+petting-failure-holo = Вы тянетесь погладить { $target }, но { $target } едва не пронзает шипами вашу руку!
 
 ## Knocking on windows
 
 # Shown when knocking on a window
 comp-window-knock = *тук-тук*
-hugging-success-generic = You hug { THE($target) }.
+hugging-success-generic = Вы обнимаете { $target }.

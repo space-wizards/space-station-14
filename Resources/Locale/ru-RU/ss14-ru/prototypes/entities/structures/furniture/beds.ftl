@@ -1,9 +1,9 @@
-ent-Bed = bed
-    .desc = This is used to lie in, sleep in or strap on.
+ent-Bed = кровать
+    .desc = На ней можно лежать или спать пристёгнутым.
     .suffix = { "" }
-ent-MedicalBed = medical bed
-    .desc = A hospital bed for patients to recover in. Resting here provides fairly slow healing.
+ent-MedicalBed = больничная койка
+    .desc = Больничная койка для реабилитации пациентов. Отдых в ней обеспечивает медленное исцеление.
     .suffix = { "" }
-ent-DogBed = dog bed
-    .desc = A comfy-looking dog bed. You can even strap your pet in, in case the gravity turns off.
+ent-DogBed = собачья лежанка
+    .desc = Удобная лежанка для собак. Вы даже можете пристегнуть своего питомца в случае, отключения гравитации.
     .suffix = { "" }

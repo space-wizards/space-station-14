@@ -1,3 +1,3 @@
-airlock-painter-style-not-available = Cannot apply the selected style to this type of airlock
-airlock-painter-window-title = Airlock painter
-airlock-painter-selected-style = Selected style
+airlock-painter-style-not-available = Невозможно применить выбранный стиль к данному типу шлюза
+airlock-painter-window-title = Покрасчик шлюзов
+airlock-painter-selected-style = Выбранный стиль
