@@ -102,7 +102,9 @@ namespace Content.Server.Lathe
         /// </summary>
         private void OnInteractUsing(EntityUid uid, LatheComponent component, InteractUsingEvent args)
         {
-            if (!TryComp<MaterialStorageComponent>(uid, out var storage) || !TryComp<MaterialComponent>(args.Used, out var material))
+            if (!TryComp<MaterialStorageComponent>(uid, out var storage) 
+                || !TryComp<MaterialComponent>(args.Used, out var material)
+                || component.LatheWhitelist != null && !component.LatheWhitelist.IsValid(args.Used))
                 return;
 
             var multiplier = 1;
@@ -115,10 +117,8 @@ namespace Content.Server.Lathe
             // Check if it can insert all materials.
             foreach (var mat in material.MaterialIds)
             {
-                // TODO: Change how MaterialComponent works so this is not hard-coded.
-                if (!storage.CanInsertMaterial(mat, component.VolumePerSheet * multiplier))
-                    return;
-                totalAmount += component.VolumePerSheet * multiplier;
+                if (!storage.CanInsertMaterial(mat, material.volume * multiplier)) return;
+                totalAmount += material.volume * multiplier;
             }
 
             // Check if it can take ALL of the material's volume.
@@ -127,10 +127,11 @@ namespace Content.Server.Lathe
             var lastMat = string.Empty;
             foreach (var mat in material.MaterialIds)
             {
-                storage.InsertMaterial(mat, component.VolumePerSheet * multiplier);
+                storage.InsertMaterial(mat, material.volume * multiplier);
                 lastMat = mat;
             }
-            /// We need the prototype to get the color
+            
+            // We need the prototype to get the color
             _prototypeManager.TryIndex(lastMat, out MaterialPrototype? matProto);
 
             EntityManager.QueueDeleteEntity(args.Used);
