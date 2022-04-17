@@ -1,9 +1,4 @@
 Entries:
-- author: DubiousDoggo
-  changes:
-  - {message: 'Added SMES construction - no more easy power crippling :)', type: Add}
-  id: 849
-  time: '2022-01-09T07:31:07.0000000+00:00'
 - author: Efruit
   changes:
   - {message: 'The Syndicate has gotten smarter. Now, only traitors can access the
@@ -3029,3 +3024,10 @@ Entries:
   - {message: You can no longer heal people out of death., type: Tweak}
   id: 1348
   time: '2022-04-17T06:29:31.0000000+00:00'
+- author: Rane
+  changes:
+  - {message: Chaplains can now summon a familiar from their bible., type: Add}
+  - {message: Evil chaplains can now emag the Pietyvend for some goodies., type: Add}
+  - {message: You can now draw blood from most mobs., type: Fix}
+  id: 1349
+  time: '2022-04-17T07:16:03.0000000+00:00'
