@@ -31,6 +31,8 @@ namespace Content.Client.Atmos.Overlays
             var mapId = args.Viewport.Eye!.Position.MapId;
             var worldBounds = args.WorldBounds;
 
+            drawHandle.UseShader(null);
+
             foreach (var mapGrid in _mapManager.FindGridsIntersecting(mapId, worldBounds))
             {
                 if (!_gasTileOverlaySystem.HasData(mapGrid.Index))

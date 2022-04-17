@@ -1,10 +1,9 @@
-using System;
 using System.Linq;
 using Content.Client.Message;
 using Content.Shared.GameTicking;
 using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.CustomControls;
-using Robust.Shared.Localization;
+using Robust.Shared.Utility;
 using static Robust.Client.UserInterface.Controls.BoxContainer;
 
 namespace Content.Client.RoundEnd
@@ -12,7 +11,8 @@ namespace Content.Client.RoundEnd
     public sealed class RoundEndSummaryWindow : DefaultWindow
     {
 
-        public RoundEndSummaryWindow(int roundId, string gm, string roundEnd, TimeSpan roundTimeSpan, RoundEndMessageEvent.RoundEndPlayerInfo[] info)
+        public RoundEndSummaryWindow(string gm, string roundEnd, TimeSpan roundTimeSpan, int roundId,
+            RoundEndMessageEvent.RoundEndPlayerInfo[] info)
         {
             MinSize = SetSize = (520, 580);
 
@@ -25,7 +25,7 @@ namespace Content.Client.RoundEnd
             // Also good for serious info.
 
             var roundEndTabs = new TabContainer();
-            roundEndTabs.AddChild(MakeRoundEndSummaryTab(roundId, gm, roundEnd, roundTimeSpan));
+            roundEndTabs.AddChild(MakeRoundEndSummaryTab(gm, roundEnd, roundTimeSpan, roundId));
             roundEndTabs.AddChild(MakePlayerManifestoTab(info));
 
             Contents.AddChild(roundEndTabs);
@@ -34,7 +34,7 @@ namespace Content.Client.RoundEnd
             MoveToFront();
         }
 
-        private BoxContainer MakeRoundEndSummaryTab(int roundId, string gamemode, string roundEnd, TimeSpan roundDuration)
+        private BoxContainer MakeRoundEndSummaryTab(string gamemode, string roundEnd, TimeSpan roundDuration, int roundId)
         {
             var roundEndSummaryTab = new BoxContainer
             {
@@ -53,9 +53,11 @@ namespace Content.Client.RoundEnd
 
             //Gamemode Name
             var gamemodeLabel = new RichTextLabel();
-            gamemodeLabel.SetMarkup(Loc.GetString("round-end-summary-window-gamemode-name-label",
-                ("id", roundId),
-                ("gamemode", gamemode)));
+            var gamemodeMessage = new FormattedMessage();
+            gamemodeMessage.AddMarkup(Loc.GetString("round-end-summary-window-round-id-label", ("roundId", roundId)));
+            gamemodeMessage.AddText(" ");
+            gamemodeMessage.AddMarkup(Loc.GetString("round-end-summary-window-gamemode-name-label", ("gamemode", gamemode)));
+            gamemodeLabel.SetMessage(gamemodeMessage);
             roundEndSummaryContainer.AddChild(gamemodeLabel);
 
             //Duration

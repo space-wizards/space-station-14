@@ -1,6 +1,5 @@
 using Content.Server.Power.NodeGroups;
 using Content.Server.Power.Pow3r;
-using Content.Shared.Power;
 
 namespace Content.Server.Power.Components
 {
@@ -11,8 +10,6 @@ namespace Content.Server.Power.Components
     [RegisterComponent]
     public sealed class ApcPowerReceiverComponent : Component
     {
-        [Dependency] private readonly IEntityManager _entMan = default!;
-
         [ViewVariables]
         public bool Powered => (MathHelper.CloseToPercent(NetworkLoad.ReceivingPower, Load) || !NeedsPower) && !PowerDisabled;
 
@@ -36,7 +33,7 @@ namespace Content.Server.Power.Components
             {
                 _needsPower = value;
                 // Reset this so next tick will do a power update.
-                LastPowerReceived = float.NaN;
+                PoweredLastUpdate = null;
             }
         }
 
@@ -50,7 +47,7 @@ namespace Content.Server.Power.Components
         [DataField("powerDisabled")]
         public bool PowerDisabled { get => !NetworkLoad.Enabled; set => NetworkLoad.Enabled = !value; }
 
-        public float LastPowerReceived = float.NaN;
+        public bool? PoweredLastUpdate;
 
         [ViewVariables]
         public PowerState.Load NetworkLoad { get; } = new PowerState.Load
@@ -65,16 +62,6 @@ namespace Content.Server.Power.Components
             Provider?.RemoveReceiver(this);
 
             base.OnRemove();
-        }
-
-        public void ApcPowerChanged()
-        {
-            _entMan.EventBus.RaiseLocalEvent(Owner, new PowerChangedEvent(Powered, NetworkLoad.ReceivingPower));
-
-            if (_entMan.TryGetComponent<AppearanceComponent?>(Owner, out var appearance))
-            {
-                appearance.SetData(PowerDeviceVisuals.Powered, Powered);
-            }
         }
     }
 

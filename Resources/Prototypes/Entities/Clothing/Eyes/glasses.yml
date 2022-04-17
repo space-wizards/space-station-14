@@ -130,6 +130,10 @@
     sprite: Clothing/Eyes/Glasses/thermal.rsi
   - type: Clothing
     sprite: Clothing/Eyes/Glasses/thermal.rsi
+  - type: Armor
+    modifiers:
+      coefficients:
+        Heat: 0.95
 
 - type: entity
   parent: ClothingEyesBase

@@ -11,6 +11,8 @@
       state: ano01
     - type: Physics
       bodyType: Dynamic
+    - type: Transform
+      noRot: true
     - type: Fixtures
       fixtures:
         - shape:

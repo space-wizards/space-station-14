@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Content.Server.Body.Components;
@@ -7,8 +6,6 @@ using Content.Server.Mind.Components;
 using Content.Shared.Body.Components;
 using Content.Shared.MobState.Components;
 using Content.Shared.Movement.EntitySystems;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
 using Robust.Shared.Timing;
 
 namespace Content.Server.Body.Systems
@@ -22,6 +19,7 @@ namespace Content.Server.Body.Systems
         {
             base.Initialize();
             SubscribeLocalEvent<BodyComponent, RelayMoveInputEvent>(OnRelayMoveInput);
+            SubscribeLocalEvent<BodyComponent, ApplyMetabolicMultiplierEvent>(OnApplyMetabolicMultiplier);
         }
 
         private void OnRelayMoveInput(EntityUid uid, BodyComponent component, RelayMoveInputEvent args)
@@ -37,6 +35,15 @@ namespace Content.Server.Body.Systems
                 }
 
                 _ticker.OnGhostAttempt(mind.Mind!, true);
+            }
+        }
+
+        private void OnApplyMetabolicMultiplier(EntityUid uid, BodyComponent component, ApplyMetabolicMultiplierEvent args)
+        {
+            foreach (var (part, _) in component.Parts)
+            foreach (var mechanism in part.Mechanisms)
+            {
+                RaiseLocalEvent(mechanism.Owner, args, false);
             }
         }
 

@@ -7,3 +7,6 @@ ent-MopBucket = mop bucket
 ent-WetFloorSign = wet floor sign
     .desc = Caution! Wet Floor!
     .suffix = { "" }
+ent-JanitorialTrolley = janitorial trolley
+    .desc = This is the alpha and omega of sanitation.
+    .suffix = { "" }

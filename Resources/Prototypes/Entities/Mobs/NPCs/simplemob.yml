@@ -79,7 +79,7 @@
         Heat: 1 #per second, scales with number of fire 'stacks'
   - type: Temperature
     heatDamageThreshold: 360
-    coldDamageThreshold: 260
+    coldDamageThreshold: 0
     currentTemperature: 310.15
     coldDamage:
       types:
@@ -95,20 +95,6 @@
       100: !type:DeadMobState {}
   - type: HeatResistance
   - type: CombatMode
-    disarmAction:
-      name: action-name-disarm
-      description: action-description-disarm
-      icon: Interface/Actions/disarmOff.png
-      iconOn: Interface/Actions/disarm.png
-      repeat: true
-      useDelay: 1.5
-      interactOnMiss: true
-      event: !type:DisarmActionEvent
-      canTargetSelf: false
-      whitelist:
-        components:
-        - Hands
-        - StatusEffects
   - type: Internals
   - type: StatusEffects
     allowed:

@@ -1,9 +1,9 @@
 ent-MobXeno = Xeno
     .desc = They mostly come at night. Mostly.
     .suffix = { "" }
-ent-MobPurpleSnake = purple snake
+ent-MobPurpleSnake = space adder
     .desc = A menacing purple snake from Kepler-283c.
     .suffix = { "" }
-ent-MobSmallPurpleSnake = purple snake
+ent-MobSmallPurpleSnake = space adder
     .desc = A smaller version of the menacing purple snake from Kepler-283c.
     .suffix = small

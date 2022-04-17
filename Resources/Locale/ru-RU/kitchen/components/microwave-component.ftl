@@ -2,7 +2,6 @@
 
 microwave-component-interact-using-no-power = У неё нет электричества!
 microwave-component-interact-using-broken = Она сломана!
-microwave-component-interact-using-no-active-hand = У вас нет активной руки!
 microwave-component-interact-using-container-full = Контейнер заполнен
 microwave-component-interact-using-transfer-success = Перенесено { $amount } ю
 microwave-component-interact-using-transfer-fail = Это не сработает!

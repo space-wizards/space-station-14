@@ -1,16 +1,9 @@
-using System;
 using System.Linq;
-using System.Threading.Tasks;
-using Content.Server.Hands.Components;
 using Content.Server.NodeContainer;
 using Content.Server.Power.Components;
 using Content.Server.UserInterface;
-using Content.Shared.ActionBlocker;
 using Content.Shared.AME;
 using Content.Shared.Hands.EntitySystems;
-using Content.Shared.Interaction;
-using Content.Shared.Item;
-using Content.Shared.Popups;
 using Content.Shared.Sound;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
@@ -20,8 +13,7 @@ using Robust.Shared.Player;
 namespace Content.Server.AME.Components
 {
     [RegisterComponent]
-    [ComponentReference(typeof(IInteractUsing))]
-    public sealed class AMEControllerComponent : SharedAMEControllerComponent, IInteractUsing
+    public sealed class AMEControllerComponent : SharedAMEControllerComponent
     {
         [Dependency] private readonly IEntityManager _entities = default!;
         [Dependency] private readonly IEntitySystemManager _sysMan = default!;
@@ -41,8 +33,8 @@ namespace Content.Server.AME.Components
         [ViewVariables]
         private int _stability = 100;
 
-        private ContainerSlot _jarSlot = default!;
-        [ViewVariables] private bool HasJar => _jarSlot.ContainedEntity != null;
+        public ContainerSlot JarSlot = default!;
+        [ViewVariables] public bool HasJar => JarSlot.ContainedEntity != null;
 
         protected override void Initialize()
         {
@@ -59,7 +51,7 @@ namespace Content.Server.AME.Components
 
             _injecting = false;
             InjectionAmount = 2;
-            _jarSlot = ContainerHelpers.EnsureContainer<ContainerSlot>(Owner, $"{Name}-fuelJarContainer");
+            JarSlot = ContainerHelpers.EnsureContainer<ContainerSlot>(Owner, $"{Name}-fuelJarContainer");
         }
 
         internal void OnUpdate(float frameTime)
@@ -76,7 +68,7 @@ namespace Content.Server.AME.Components
                 return;
             }
 
-            if (_jarSlot.ContainedEntity is not {Valid: true} jar)
+            if (JarSlot.ContainedEntity is not {Valid: true} jar)
                 return;
 
             _entities.TryGetComponent<AMEFuelContainerComponent?>(jar, out var fuelJar);
@@ -105,7 +97,7 @@ namespace Content.Server.AME.Components
 
         private AMEControllerBoundUserInterfaceState GetUserInterfaceState()
         {
-            if (_jarSlot.ContainedEntity is not {Valid: true} jar)
+            if (JarSlot.ContainedEntity is not {Valid: true} jar)
             {
                 return new AMEControllerBoundUserInterfaceState(Powered, IsMasterController(), false, HasJar, 0, InjectionAmount, GetCoreCount());
             }
@@ -187,10 +179,10 @@ namespace Content.Server.AME.Components
             if (!HasJar || _injecting)
                 return;
 
-            if (_jarSlot.ContainedEntity is not {Valid: true} jar)
+            if (JarSlot.ContainedEntity is not {Valid: true} jar)
                 return;
 
-            _jarSlot.Remove(jar);
+            JarSlot.Remove(jar);
             UpdateUserInterface();
 
             _sysMan.GetEntitySystem<SharedHandsSystem>().PickupOrDrop(user, jar);
@@ -276,43 +268,6 @@ namespace Content.Server.AME.Components
         private void InjectSound(bool overloading)
         {
             SoundSystem.Play(Filter.Pvs(Owner), _injectSound.GetSound(), Owner, AudioParams.Default.WithVolume(overloading ? 10f : 0f));
-        }
-
-        async Task<bool> IInteractUsing.InteractUsing(InteractUsingEventArgs args)
-        {
-            if (!_entities.TryGetComponent(args.User, out HandsComponent? hands))
-            {
-                Owner.PopupMessage(args.User, Loc.GetString("ame-controller-component-interact-using-no-hands-text"));
-                return true;
-            }
-
-            if (hands.ActiveHandEntity == null)
-            {
-                Owner.PopupMessage(args.User, Loc.GetString("ame-controller-component-interact-using-nothing-in-hands-text"));
-                return false;
-            }
-
-            var activeHandEntity = hands.ActiveHandEntity;
-            if (_entities.HasComponent<AMEFuelContainerComponent?>(activeHandEntity))
-            {
-                if (HasJar)
-                {
-                    Owner.PopupMessage(args.User, Loc.GetString("ame-controller-component-interact-using-already-has-jar"));
-                }
-
-                else
-                {
-                    _jarSlot.Insert(activeHandEntity.Value);
-                    Owner.PopupMessage(args.User, Loc.GetString("ame-controller-component-interact-using-success"));
-                    UpdateUserInterface();
-                }
-            }
-            else
-            {
-                Owner.PopupMessage(args.User, Loc.GetString("ame-controller-component-interact-using-fail"));
-            }
-
-            return true;
         }
     }
 

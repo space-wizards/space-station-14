@@ -121,7 +121,7 @@
   id: stationstation
   name: "StationStation"
   mapPath: /Maps/Salvage/stationstation.yml
-  size: 16
+  size: 24
 
 - type: salvageMap
   id: asteroidBase
