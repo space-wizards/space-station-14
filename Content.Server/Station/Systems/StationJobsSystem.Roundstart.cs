@@ -176,8 +176,9 @@ public sealed partial class StationJobsSystem
     /// <param name="allPlayersToAssign">All players that might need an overflow assigned.</param>
     /// <param name="profiles">Player character profiles.</param>
     public void AssignOverflowJobs(ref Dictionary<NetUserId, (string, EntityUid)> assignedJobs,
-        IEnumerable<NetUserId> allPlayersToAssign, IReadOnlyDictionary<NetUserId, HumanoidCharacterProfile> profiles)
+        IEnumerable<NetUserId> allPlayersToAssign, IReadOnlyDictionary<NetUserId, HumanoidCharacterProfile> profiles, IReadOnlyList<EntityUid> stations)
     {
+        var givenStations = stations.ToList();
         // For players without jobs, give them the overflow job if they have that set...
         foreach (var player in allPlayersToAssign)
         {
@@ -190,18 +191,15 @@ public sealed partial class StationJobsSystem
             if (profile.PreferenceUnavailable != PreferenceUnavailableMode.SpawnAsOverflow)
                 continue;
 
-            // Pick a random station
-            var stations = _stationSystem.Stations.ToList();
-
-            if (stations.Count == 0)
+            if (givenStations.Count == 0)
             {
                 assignedJobs.Add(player, (SharedGameTicker.FallbackOverflowJob, EntityUid.Invalid));
                 continue;
             }
 
-            _random.Shuffle(stations);
+            _random.Shuffle(givenStations);
 
-            foreach (var station in stations)
+            foreach (var station in givenStations)
             {
                 // Pick a random overflow job from that station
                 var overflows = GetOverflowJobs(station).ToList();
@@ -212,7 +210,7 @@ public sealed partial class StationJobsSystem
                     continue;
 
                 // If the overflow exists, put them in as it.
-                assignedJobs.Add(player, (overflows[0], stations[0]));
+                assignedJobs.Add(player, (overflows[0], givenStations[0]));
                 break;
             }
         }
