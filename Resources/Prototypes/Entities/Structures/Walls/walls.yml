@@ -363,7 +363,7 @@
         node: girder
       - !type:DoActsBehavior
         acts: ["Destruction"]
-  - type: IconSmooth
+  - type: ReinforcedWall
     key: walls
     base: solid
     reinforcedBase: reinf_over

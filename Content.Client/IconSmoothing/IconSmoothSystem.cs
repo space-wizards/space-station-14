@@ -31,7 +31,7 @@ namespace Content.Client.IconSmoothing
             SubscribeLocalEvent<ReinforcedWallComponent, ComponentStartup>(OnReinforcedStartup);
         }
 
-        private void OnSmoothStartup(EntityUid uid, IconSmoothComponent component, ComponentStartup args)
+        private void UpdateSmoothPos(EntityUid uid, IconSmoothComponent component)
         {
             if (Transform(uid).Anchored)
             {
@@ -40,6 +40,11 @@ namespace Content.Client.IconSmoothing
                 UpdateLastPosition(component);
                 UpdateSmoothing(uid, component);
             }
+        }
+
+        private void OnSmoothStartup(EntityUid uid, IconSmoothComponent component, ComponentStartup args)
+        {
+            UpdateSmoothPos(uid, component);
 
             if (TryComp<SpriteComponent>(uid, out var sprite) && component.Mode == IconSmoothingMode.Corners)
             {
@@ -121,18 +126,19 @@ namespace Content.Client.IconSmoothing
             // Yes, we updates ALL smoothing entities surrounding us even if they would never smooth with us.
             // This is simpler to implement. If you want to optimize it be my guest.
             var smoothQuery = GetEntityQuery<IconSmoothComponent>();
+            var reinforcedQuery = GetEntityQuery<ReinforcedWallComponent>();
 
-            AddValidEntities(grid.GetAnchoredEntitiesEnumerator(pos + new Vector2i(1, 0)), smoothQuery);
-            AddValidEntities(grid.GetAnchoredEntitiesEnumerator(pos + new Vector2i(-1, 0)), smoothQuery);
-            AddValidEntities(grid.GetAnchoredEntitiesEnumerator(pos + new Vector2i(0, 1)), smoothQuery);
-            AddValidEntities(grid.GetAnchoredEntitiesEnumerator(pos + new Vector2i(0, -1)), smoothQuery);
+            AddValidEntities(grid.GetAnchoredEntitiesEnumerator(pos + new Vector2i(1, 0)), smoothQuery, reinforcedQuery);
+            AddValidEntities(grid.GetAnchoredEntitiesEnumerator(pos + new Vector2i(-1, 0)), smoothQuery, reinforcedQuery);
+            AddValidEntities(grid.GetAnchoredEntitiesEnumerator(pos + new Vector2i(0, 1)), smoothQuery, reinforcedQuery);
+            AddValidEntities(grid.GetAnchoredEntitiesEnumerator(pos + new Vector2i(0, -1)), smoothQuery, reinforcedQuery);
 
             if (comp.Mode == IconSmoothingMode.Corners)
             {
-                AddValidEntities(grid.GetAnchoredEntitiesEnumerator(pos + new Vector2i(1, 1)), smoothQuery);
-                AddValidEntities(grid.GetAnchoredEntitiesEnumerator(pos + new Vector2i(-1, -1)), smoothQuery);
-                AddValidEntities(grid.GetAnchoredEntitiesEnumerator(pos + new Vector2i(-1, 1)), smoothQuery);
-                AddValidEntities(grid.GetAnchoredEntitiesEnumerator(pos + new Vector2i(1, -1)), smoothQuery);
+                AddValidEntities(grid.GetAnchoredEntitiesEnumerator(pos + new Vector2i(1, 1)), smoothQuery, reinforcedQuery);
+                AddValidEntities(grid.GetAnchoredEntitiesEnumerator(pos + new Vector2i(-1, -1)), smoothQuery, reinforcedQuery);
+                AddValidEntities(grid.GetAnchoredEntitiesEnumerator(pos + new Vector2i(-1, 1)), smoothQuery, reinforcedQuery);
+                AddValidEntities(grid.GetAnchoredEntitiesEnumerator(pos + new Vector2i(1, -1)), smoothQuery, reinforcedQuery);
             }
         }
 
@@ -141,11 +147,12 @@ namespace Content.Client.IconSmoothing
             UpdateSmoothing(uid, component);
         }
 
-        private void AddValidEntities(AnchoredEntitiesEnumerator enumerator, EntityQuery<IconSmoothComponent> smoothQuery)
+        private void AddValidEntities(AnchoredEntitiesEnumerator enumerator, EntityQuery<IconSmoothComponent> smoothQuery, EntityQuery<ReinforcedWallComponent> reinforcedQuery)
         {
             while (enumerator.MoveNext(out var ent))
             {
-                if (!smoothQuery.HasComponent(ent.Value)) continue;
+                if (!smoothQuery.HasComponent(ent.Value) &&
+                    !reinforcedQuery.HasComponent(ent.Value)) continue;
                 _dirtyEntities.Enqueue(ent.Value);
             }
         }
@@ -163,7 +170,6 @@ namespace Content.Client.IconSmoothing
             }
 
             CalculateNewSprite(smoothing);
-
             smoothing.UpdateGeneration = _generation;
         }
 
@@ -188,6 +194,17 @@ namespace Content.Client.IconSmoothing
 
         private void CalculateNewGridSprite(IconSmoothComponent component, IMapGrid? grid)
         {
+            if (component is ReinforcedWallComponent reinforced && TryComp<SpriteComponent>(component.Owner, out var sprite))
+            {
+                var (cornerNE, cornerNW, cornerSW, cornerSE) = CalculateCornerFill(component, grid);
+
+                sprite.LayerSetState(ReinforcedCornerLayers.NE, $"{reinforced.ReinforcedStateBase}{(int) cornerNE}");
+                sprite.LayerSetState(ReinforcedCornerLayers.SE, $"{reinforced.ReinforcedStateBase}{(int) cornerSE}");
+                sprite.LayerSetState(ReinforcedCornerLayers.SW, $"{reinforced.ReinforcedStateBase}{(int) cornerSW}");
+                sprite.LayerSetState(ReinforcedCornerLayers.NW, $"{reinforced.ReinforcedStateBase}{(int) cornerNW}");
+                return;
+            }
+
             switch (component.Mode)
             {
                 case IconSmoothingMode.Corners:
@@ -200,16 +217,6 @@ namespace Content.Client.IconSmoothing
                     break;
                 default:
                     throw new ArgumentOutOfRangeException();
-            }
-
-            if (component is ReinforcedWallComponent reinforced && TryComp<SpriteComponent>(component.Owner, out var sprite))
-            {
-                var (cornerNE, cornerNW, cornerSW, cornerSE) = CalculateCornerFill(component, grid);
-
-                sprite.LayerSetState(ReinforcedCornerLayers.NE, $"{reinforced.ReinforcedStateBase}{(int) cornerNE}");
-                sprite.LayerSetState(ReinforcedCornerLayers.SE, $"{reinforced.ReinforcedStateBase}{(int) cornerSE}");
-                sprite.LayerSetState(ReinforcedCornerLayers.SW, $"{reinforced.ReinforcedStateBase}{(int) cornerSW}");
-                sprite.LayerSetState(ReinforcedCornerLayers.NW, $"{reinforced.ReinforcedStateBase}{(int) cornerNW}");
             }
         }
 
@@ -231,14 +238,15 @@ namespace Content.Client.IconSmoothing
             var xform = Transform(component.Owner);
             var gridPos = grid.CoordinatesToTile(xform.Coordinates);
             var smoothQuery = GetEntityQuery<IconSmoothComponent>();
+            var reinforcedQuery = GetEntityQuery<ReinforcedWallComponent>();
 
-            if (MatchingEntity(component.SmoothKey, grid.GetAnchoredEntitiesEnumerator(gridPos + new Vector2i(0, 1)), smoothQuery))
+            if (MatchingEntity(component.SmoothKey, grid.GetAnchoredEntitiesEnumerator(gridPos + new Vector2i(0, 1)), smoothQuery, reinforcedQuery))
                 dirs |= CardinalConnectDirs.North;
-            if (MatchingEntity(component.SmoothKey, grid.GetAnchoredEntitiesEnumerator(gridPos + new Vector2i(0, -1)), smoothQuery))
+            if (MatchingEntity(component.SmoothKey, grid.GetAnchoredEntitiesEnumerator(gridPos + new Vector2i(0, -1)), smoothQuery, reinforcedQuery))
                 dirs |= CardinalConnectDirs.South;
-            if (MatchingEntity(component.SmoothKey, grid.GetAnchoredEntitiesEnumerator(gridPos + new Vector2i(1, 0)), smoothQuery))
+            if (MatchingEntity(component.SmoothKey, grid.GetAnchoredEntitiesEnumerator(gridPos + new Vector2i(1, 0)), smoothQuery, reinforcedQuery))
                 dirs |= CardinalConnectDirs.East;
-            if (MatchingEntity(component.SmoothKey, grid.GetAnchoredEntitiesEnumerator(gridPos + new Vector2i(-1, 0)), smoothQuery))
+            if (MatchingEntity(component.SmoothKey, grid.GetAnchoredEntitiesEnumerator(gridPos + new Vector2i(-1, 0)), smoothQuery, reinforcedQuery))
                 dirs |= CardinalConnectDirs.West;
 
             sprite.LayerSetState(0, $"{component.StateBase}{(int) dirs}");
@@ -266,15 +274,16 @@ namespace Content.Client.IconSmoothing
             var xform = Transform(component.Owner);
             var gridPos = grid.CoordinatesToTile(xform.Coordinates);
             var smoothQuery = GetEntityQuery<IconSmoothComponent>();
+            var reinforcedQuery = GetEntityQuery<ReinforcedWallComponent>();
 
-            var n = MatchingEntity(component.SmoothKey, grid.GetAnchoredEntitiesEnumerator(gridPos + new Vector2i(0, 1)), smoothQuery);
-            var ne = MatchingEntity(component.SmoothKey, grid.GetAnchoredEntitiesEnumerator(gridPos + new Vector2i(1, 1)), smoothQuery);
-            var e = MatchingEntity(component.SmoothKey, grid.GetAnchoredEntitiesEnumerator(gridPos + new Vector2i(1, 0)), smoothQuery);
-            var se = MatchingEntity(component.SmoothKey, grid.GetAnchoredEntitiesEnumerator(gridPos + new Vector2i(1, -1)), smoothQuery);
-            var s = MatchingEntity(component.SmoothKey, grid.GetAnchoredEntitiesEnumerator(gridPos + new Vector2i(0, -1)), smoothQuery);
-            var sw = MatchingEntity(component.SmoothKey, grid.GetAnchoredEntitiesEnumerator(gridPos + new Vector2i(-1, -1)), smoothQuery);
-            var w = MatchingEntity(component.SmoothKey, grid.GetAnchoredEntitiesEnumerator(gridPos + new Vector2i(-1, 0)), smoothQuery);
-            var nw = MatchingEntity(component.SmoothKey, grid.GetAnchoredEntitiesEnumerator(gridPos + new Vector2i(-1, 1)), smoothQuery);
+            var n = MatchingEntity(component.SmoothKey, grid.GetAnchoredEntitiesEnumerator(gridPos + new Vector2i(0, 1)), smoothQuery, reinforcedQuery);
+            var ne = MatchingEntity(component.SmoothKey, grid.GetAnchoredEntitiesEnumerator(gridPos + new Vector2i(1, 1)), smoothQuery, reinforcedQuery);
+            var e = MatchingEntity(component.SmoothKey, grid.GetAnchoredEntitiesEnumerator(gridPos + new Vector2i(1, 0)), smoothQuery, reinforcedQuery);
+            var se = MatchingEntity(component.SmoothKey, grid.GetAnchoredEntitiesEnumerator(gridPos + new Vector2i(1, -1)), smoothQuery, reinforcedQuery);
+            var s = MatchingEntity(component.SmoothKey, grid.GetAnchoredEntitiesEnumerator(gridPos + new Vector2i(0, -1)), smoothQuery, reinforcedQuery);
+            var sw = MatchingEntity(component.SmoothKey, grid.GetAnchoredEntitiesEnumerator(gridPos + new Vector2i(-1, -1)), smoothQuery, reinforcedQuery);
+            var w = MatchingEntity(component.SmoothKey, grid.GetAnchoredEntitiesEnumerator(gridPos + new Vector2i(-1, 0)), smoothQuery, reinforcedQuery);
+            var nw = MatchingEntity(component.SmoothKey, grid.GetAnchoredEntitiesEnumerator(gridPos + new Vector2i(-1, 1)), smoothQuery, reinforcedQuery);
 
             // ReSharper disable InconsistentNaming
             var cornerNE = CornerFill.None;
@@ -341,12 +350,14 @@ namespace Content.Client.IconSmoothing
             }
         }
 
-        private bool MatchingEntity(string? smoothKey, AnchoredEntitiesEnumerator enumerator, EntityQuery<IconSmoothComponent> smoothQuery)
+        private bool MatchingEntity(string? smoothKey, AnchoredEntitiesEnumerator enumerator, EntityQuery<IconSmoothComponent> smoothQuery, EntityQuery<ReinforcedWallComponent> reinforcedQuery)
         {
             while (enumerator.MoveNext(out var ent))
             {
-                if (!smoothQuery.TryGetComponent(ent.Value, out var smooth) ||
-                    smooth.SmoothKey != smoothKey) continue;
+                if ((!smoothQuery.TryGetComponent(ent.Value, out var smooth) ||
+                    smooth.SmoothKey != smoothKey) &&
+                    (!reinforcedQuery.TryGetComponent(ent.Value, out var reinforced) ||
+                     reinforced.SmoothKey != smoothKey)) continue;
 
                 return true;
             }

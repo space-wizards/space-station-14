@@ -8,7 +8,7 @@ public sealed partial class IconSmoothSystem
 {
     private void OnReinforcedStartup(EntityUid uid, ReinforcedWallComponent component, ComponentStartup args)
     {
-        OnSmoothStartup(uid, component, args);
+        UpdateSmoothPos(uid, component);
 
         if (TryComp<SpriteComponent>(uid, out var sprite))
         {
