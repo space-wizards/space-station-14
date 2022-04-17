@@ -144,7 +144,11 @@
         solution: beaker
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
-        
+  - type: Tag
+    tags:
+    - GlassBeaker
+    - Cryobeaker
+
 - type: entity
   name: bluespace beaker
   parent: BaseBeaker
