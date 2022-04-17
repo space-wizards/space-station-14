@@ -371,6 +371,8 @@
     successChance: 0.9
     interactSuccessString: petting-success-sloth
     interactFailureString: petting-failure-sloth
+    interactSuccessSound:
+      path: /Audio/Animals/sloth_squeak.ogg
   - type: Grammar
     attributes:
       gender: epicene

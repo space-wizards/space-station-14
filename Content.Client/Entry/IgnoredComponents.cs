@@ -5,6 +5,7 @@ namespace Content.Client.Entry
     {
         public static string[] List => new[]
         {
+            "AirlockPainter",
             "AmmoBox",
             "Pickaxe",
             "IngestionBlocker",
@@ -64,6 +65,7 @@ namespace Content.Client.Entry
             "DiseaseSwab",
             "FloorTile",
             "RandomInsulation",
+            "AgentIDCard",
             "Electrified",
             "Electrocution",
             "Paper",
@@ -271,6 +273,8 @@ namespace Content.Client.Entry
             "BeingCloned",
             "Advertise",
             "Bible",
+            "HealOnBuckle",
+            "StasisBed",
             "PowerNetworkBattery",
             "BatteryCharger",
             "UnpoweredFlashlight",
