@@ -23,6 +23,9 @@
       stickPopupSuccess: comp-sticky-success-stick-bomb
       unstickPopupStart: comp-sticky-start-unstick-bomb
       unstickPopupSuccess: comp-sticky-success-unstick-bomb
+      blacklist: # can't stick it to other items
+        components:
+          - Item
     - type: Explosive # Powerful explosion in a very small radius. Doesn't break underplating.
       explosionType: Default
       maxIntensity: 300
