@@ -1,7 +1,7 @@
 - type: job
   id: Quartermaster
   name: "quartermaster"
-  head: true
+  weight: 10
   startingGear: QuartermasterGear
   departments:
   - Cargo
