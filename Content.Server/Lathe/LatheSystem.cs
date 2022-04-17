@@ -131,6 +131,12 @@ namespace Content.Server.Lathe
                 lastMat = mat;
             }
             
+            // Play a sound when inserting, if any
+            if (component.InsertingSound != null)
+            {
+                SoundSystem.Play(Filter.Pvs(component.Owner), component.InsertingSound.GetSound(), component.Owner);
+            }
+            
             // We need the prototype to get the color
             _prototypeManager.TryIndex(lastMat, out MaterialPrototype? matProto);
 

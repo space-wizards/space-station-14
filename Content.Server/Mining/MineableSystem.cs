@@ -14,7 +14,6 @@ public sealed class MineableSystem : EntitySystem
 {
     [Dependency] private readonly DoAfterSystem _doAfterSystem = default!;
     [Dependency] private readonly DamageableSystem _damageableSystem = default!;
-
     [Dependency] private readonly IRobustRandom _random = null!;
 
 
@@ -69,7 +68,7 @@ public sealed class MineableSystem : EntitySystem
         var spawnOre = EntitySpawnCollection.GetSpawns(component.Ores, _random);
         foreach (var item in spawnOre)
         {
-            entityManager.SpawnEntity(item, entityManager.GetComponent<TransformComponent>(ev.Player).MapPosition);
+            entityManager.SpawnEntity(item, entityManager.GetComponent<TransformComponent>(ev.Player).Coordinates);
         }
     }
 
