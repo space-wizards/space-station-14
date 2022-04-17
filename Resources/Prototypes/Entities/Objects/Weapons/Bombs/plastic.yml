@@ -39,10 +39,11 @@
       thresholds:
         - trigger:
             !type:DamageTrigger
-            damage: 10
+            damage: 50
           behaviors:
             - !type:DoActsBehavior
               acts: ["Destruction"]
+            - !type:ExplodeBehavior
     - type: StickyVisualizer
     - type: Appearance
       visuals:
