@@ -48,7 +48,7 @@ namespace Content.Server.GameTicking
 
             var assignedJobs = _stationJobs.AssignJobs(profiles, _stationSystem.Stations.ToList());
 
-            _stationJobs.AssignOverflowJobs(ref assignedJobs, origReadyPlayers, profiles);
+            _stationJobs.AssignOverflowJobs(ref assignedJobs, origReadyPlayers, profiles, _stationSystem.Stations.ToList());
 
             // Spawn everybody in!
             foreach (var (player, (job, station)) in assignedJobs)
