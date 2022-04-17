@@ -181,7 +181,7 @@
   parent: ClothingOuterBase
   id: ClothingOuterArmorChangeling
   name: chitinous armor
-  description: Inflates the changeling's body into an all-consuming chitinous mass of armor. Provides extensive protection against physical damage, but less against other types. Its mass slows the changeling's movement, and maintaining its shape slows chemical generation.
+  description: Inflates the changeling's body into an all-consuming chitinous mass of armor.
   components:
   - type: Sprite
     sprite: Clothing/OuterClothing/Armor/lingarmor.rsi
