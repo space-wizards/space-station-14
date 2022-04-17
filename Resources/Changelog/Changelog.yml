@@ -1,12 +1,6 @@
 Entries:
 - author: ElectroJr
   changes:
-  - {message: Fixed the charge indicators on tasers and laser weapons not properly
-      updating after charging., type: Fix}
-  id: 851
-  time: '2022-01-09T12:48:59.0000000+00:00'
-- author: ElectroJr
-  changes:
   - {message: Insulated gloves and galoshes no longer work when in your pockets. You
       actually have to wear them., type: Fix}
   id: 852
@@ -3036,3 +3030,9 @@ Entries:
       half a second to 2 seconds in most cases.', type: Tweak}
   id: 1350
   time: '2022-04-17T07:34:14.0000000+00:00'
+- author: PJB3005
+  changes:
+  - {message: Made lobby art look less choppy if you aren't playing on exactly 1080p
+      fullscreen., type: Tweak}
+  id: 1351
+  time: '2022-04-17T11:14:53.0000000+00:00'
