@@ -32,6 +32,8 @@ public sealed partial class StationJobsSystem : EntitySystem
         SubscribeLocalEvent<StationJobsComponent, ComponentShutdown>(OnStationDeletion);
         SubscribeLocalEvent<PlayerJoinedLobbyEvent>(OnPlayerJoinedLobby);
         _configurationManager.OnValueChanged(CCVars.GameDisallowLateJoins, _ => UpdateJobsAvailable(), true);
+
+        InitializeRoundStart();
     }
 
     private void OnStationDeletion(EntityUid uid, StationJobsComponent component, ComponentShutdown args)
@@ -275,7 +277,7 @@ public sealed partial class StationJobsSystem : EntitySystem
         if (!Resolve(station, ref stationJobs))
             throw new ArgumentException("Tried to use a non-station entity as a station!", nameof(station));
 
-        return stationJobs.OverflowJobs.ToHashSet(); // Be sure to clone to avoid ref shenanigans.
+        return stationJobs.OverflowJobs.ToHashSet();
     }
 
     /// <summary>
@@ -290,7 +292,7 @@ public sealed partial class StationJobsSystem : EntitySystem
         if (!Resolve(station, ref stationJobs))
             throw new ArgumentException("Tried to use a non-station entity as a station!", nameof(station));
 
-        return stationJobs.JobList.ShallowClone(); // Be sure to clone to avoid ref shenanigans.
+        return stationJobs.JobList;
     }
 
     /// <summary>

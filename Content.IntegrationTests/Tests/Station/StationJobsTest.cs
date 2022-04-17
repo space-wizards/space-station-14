@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Content.Server.Administration.Managers;
 using Content.Server.Maps;
 using Content.Server.Station.Systems;
 using Content.Shared.Preferences;
@@ -12,6 +13,7 @@ using Robust.Shared.Log;
 using Robust.Shared.Map;
 using Robust.Shared.Network;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Timing;
 
 namespace Content.IntegrationTests.Tests.Station;
 
@@ -44,9 +46,9 @@ public sealed class StationJobsTest : ContentIntegrationTest
   weight: 10
 ";
 
-    private const int StationCount = 3;
+    private const int StationCount = 100;
     private const int CaptainCount = StationCount;
-    private const int PlayerCount = 10;
+    private const int PlayerCount = 2000;
     private const int TotalPlayers = PlayerCount + CaptainCount;
 
     [Test]
@@ -59,6 +61,7 @@ public sealed class StationJobsTest : ContentIntegrationTest
 
         var prototypeManager = server.ResolveDependency<IPrototypeManager>();
         var mapManager = server.ResolveDependency<IMapManager>();
+        var roleBanManager = server.ResolveDependency<RoleBanManager>();
         var fooStationProto = prototypeManager.Index<GameMapPrototype>("FooStation");
         var entSysMan = server.ResolveDependency<IEntityManager>().EntitySysManager;
         var stationJobs = entSysMan.GetEntitySystem<StationJobsSystem>();
@@ -76,6 +79,7 @@ public sealed class StationJobsTest : ContentIntegrationTest
 
         await server.WaitAssertion(() =>
         {
+
             var fakePlayers = new Dictionary<NetUserId, HumanoidCharacterProfile>()
                 .AddJob("TAssistant", JobPriority.Medium, PlayerCount)
                 .AddPreference("TClown", JobPriority.Low)
@@ -84,7 +88,11 @@ public sealed class StationJobsTest : ContentIntegrationTest
                     .AddJob("TCaptain", JobPriority.High, CaptainCount)
                 );
 
+            var start = new Stopwatch();
+            start.Start();
             var assigned = stationJobs.AssignJobs(fakePlayers, stations);
+            var time = start.Elapsed.TotalMilliseconds;
+            Logger.Info($"Took {time}ms to distribute {TotalPlayers} players.");
 
             foreach (var station in stations)
             {

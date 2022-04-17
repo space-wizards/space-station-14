@@ -16,8 +16,31 @@ public sealed partial class StationJobsSystem
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
     [Dependency] private readonly RoleBanManager _roleBanManager = default!;
 
-    // TODO: make this not alloc out the ass.
+    private Dictionary<int, HashSet<string>> _jobsByWeight = default!;
+    private List<int> _orderedWeights = default!;
+
+    private void InitializeRoundStart()
+    {
+        _jobsByWeight = new Dictionary<int, HashSet<string>>();
+        foreach (var job in _prototypeManager.EnumeratePrototypes<JobPrototype>())
+        {
+            if (!_jobsByWeight.ContainsKey(job.Weight))
+                _jobsByWeight.Add(job.Weight, new HashSet<string>());
+
+            _jobsByWeight[job.Weight].Add(job.ID);
+        }
+
+        _orderedWeights = _jobsByWeight.Keys.OrderByDescending(i => i).ToList();
+    }
+
     // TODO: CLEAN THIS SHIT UP NERD
+    /// <summary>
+    /// Assigns jobs based on the given preferences and list of stations to assign for.
+    /// This does NOT change the slots on the station, only figures out where each player should go.
+    /// </summary>
+    /// <param name="profiles">The profiles to use for selection.</param>
+    /// <param name="stations">List of stations to assign for.</param>
+    /// <returns>List of players and their assigned jobs.</returns>
     public Dictionary<NetUserId, (string, EntityUid)> AssignJobs(Dictionary<NetUserId, HumanoidCharacterProfile> profiles, IReadOnlyList<EntityUid> stations)
     {
         DebugTools.Assert(stations.Count > 0);
@@ -25,24 +48,23 @@ public sealed partial class StationJobsSystem
         profiles = profiles.ShallowClone();
 
         // Player <-> (job, station)
-        var assigned = new Dictionary<NetUserId, (string, EntityUid)>();
+        var assigned = new Dictionary<NetUserId, (string, EntityUid)>(profiles.Count);
 
-        // Find all jobs and group them up by their weight.
-        var jobsByWeight = new Dictionary<int, HashSet<string>>();
-        foreach (var job in _prototypeManager.EnumeratePrototypes<JobPrototype>())
+        // We reuse this collection.
+        var stationSlots = new Dictionary<EntityUid, Dictionary<string, uint?>>(stations.Count);
+        foreach (var station in stations)
         {
-            if (!jobsByWeight.ContainsKey(job.Weight))
-                jobsByWeight.Add(job.Weight, new HashSet<string>());
-
-            jobsByWeight[job.Weight].Add(job.ID);
+            stationSlots.Add(station, new Dictionary<string, uint?>());
         }
-
-        var orderedWeights = jobsByWeight.Keys.OrderByDescending(i => i).ToList();
+        // And these.
+        var jobPlayerOptions = new Dictionary<string, HashSet<NetUserId>>();
+        var stationTotalSlots = new Dictionary<EntityUid, int>(stations.Count);
+        var stationShares = new Dictionary<EntityUid, int>(stations.Count);
 
         // Ok so the general algorithm:
         // We start with the highest weight jobs and work our way down.
         // Weight > Priority > Station.
-        foreach (var weight in orderedWeights)
+        foreach (var weight in _orderedWeights)
         {
             for (var selectedPriority = JobPriority.High; selectedPriority > JobPriority.Never; selectedPriority--)
             {
@@ -50,7 +72,7 @@ public sealed partial class StationJobsSystem
                     goto endFunc;
 
                 var candidates = GetPlayersJobCandidates(weight, selectedPriority, profiles);
-                var jobPlayerOptions = new Dictionary<string, HashSet<NetUserId>>();
+                jobPlayerOptions.Clear(); // We reuse this collection.
                 var optionsRemaining = 0;
 
                 void AssignPlayer(NetUserId player, string job, EntityUid station)
@@ -79,48 +101,54 @@ public sealed partial class StationJobsSystem
                     optionsRemaining++;
                 }
 
-                var stationSlots = new Dictionary<EntityUid, Dictionary<string, uint?>>(stations.Count);
+                // We reuse this collection.
+                foreach (var slots in stationSlots)
+                {
+                    slots.Value.Clear();
+                }
+
                 // Go through every station..
                 foreach (var station in stations)
                 {
-                    var slots = new Dictionary<string, uint?>();
+                    var slots = stationSlots[station];
 
                     // Get all of the jobs in the selected weight category.
                     foreach (var (job, slot) in GetJobs(station))
                     {
-                        if (jobsByWeight[weight].Contains(job))
+                        if (_jobsByWeight[weight].Contains(job))
                             slots.Add(job, slot);
                     }
-
-                    stationSlots.Add(station, slots);
                 }
 
                 // Intentionally discounts the value of uncapped slots! They're only a single slot when deciding a station's share.
-                var stationTotalSlots = new Dictionary<EntityUid, long>();
+                // Clear for reuse.
+                stationTotalSlots.Clear();
                 foreach (var (station, jobs) in stationSlots)
                 {
                     stationTotalSlots.Add(
                         station,
-                        jobs.Values.Sum(x => x ?? 1)
+                        (int)jobs.Values.Sum(x => x ?? 1)
                         );
                 }
 
-                var totalSlots = stationTotalSlots.Select(x => x.Value).Sum();
+                var totalSlots = 0;
+
+                foreach (var (_, slot) in stationTotalSlots)
+                {
+                    totalSlots += slot;
+                }
 
                 if (totalSlots == 0)
                     continue; // No slots so just leave.
 
-                // Percent share of players each station gets.
-                var stationSharesPercent = stationTotalSlots.ToDictionary(
-                    x => x.Key,
-                    x => ((float) x.Value) / totalSlots
-                );
-
-                var stationShares = new Dictionary<EntityUid, int>();
+                // Clear for reuse.
+                stationShares.Clear();
                 var distributed = 0;
+
                 foreach (var station in stations)
                 {
-                    stationShares[station] = (int)Math.Floor(stationSharesPercent[station] * candidates.Count);
+                    // Calculates the percent share then multiplies.
+                    stationShares[station] = (int)Math.Floor(((float)stationTotalSlots[station] / totalSlots) * candidates.Count);
                     distributed += stationShares[station];
                 }
 
@@ -137,19 +165,24 @@ public sealed partial class StationJobsSystem
                     if (stationShares[station] == 0)
                         continue;
 
-                    var allJobs = stationSlots[station].Keys.ToList();
+                    var slots = stationSlots[station];
+                    var allJobs = slots.Keys.ToList();
                     _random.Shuffle(allJobs);
                     // And iterates through all it's jobs in a random order until the count settles.
                     // No, AFAIK it cannot be done any saner than this. I hate "shaking" collections as much
                     // as you do but it's what seems to be the absolute best option here.
-                    var priorCount = 0;
+                    int priorCount;
                     do
                     {
                         priorCount = stationShares[station];
+
                         foreach (var job in allJobs)
                         {
                             if (stationShares[station] == 0)
                                 break;
+
+                            if (slots[job] != null && slots[job] == 0)
+                                continue; // Can't assign this job.
 
                             if (!jobPlayerOptions.ContainsKey(job))
                                 continue;
@@ -158,6 +191,9 @@ public sealed partial class StationJobsSystem
                             var player = _random.Pick(jobPlayerOptions[job]);
                             AssignPlayer(player, job, station);
                             stationShares[station]--;
+
+                            if (slots[job] != null)
+                                slots[job]--;
 
                             if (optionsRemaining == 0)
                                 goto done;
@@ -219,37 +255,39 @@ public sealed partial class StationJobsSystem
         }
     }
 
-    private IReadOnlyDictionary<NetUserId, IReadOnlyList<string>> GetPlayersJobCandidates(int? weight, JobPriority? selectedPriority, Dictionary<NetUserId, HumanoidCharacterProfile> profiles)
+    private Dictionary<NetUserId, List<string>> GetPlayersJobCandidates(int? weight, JobPriority? selectedPriority, Dictionary<NetUserId, HumanoidCharacterProfile> profiles)
     {
-        return profiles.Keys.Select(player =>
+        var outputDict = new Dictionary<NetUserId, List<string>>(profiles.Count);
+
+        foreach (var (player, profile) in profiles)
+        {
+            var roleBans = _roleBanManager.GetJobBans(player);
+
+            List<string>? availableJobs = null;
+
+            foreach (var (jobId, priority) in profile.JobPriorities)
             {
-                var profile = profiles[player];
+                if (!(priority == selectedPriority || selectedPriority is null))
+                    continue;
 
-                var roleBans = _roleBanManager.GetJobBans(player);
-                var availableJobs = profile.JobPriorities
-                    .Where(j =>
-                    {
-                        var (jobId, priority) = j;
-                        if (!_prototypeManager.TryIndex(jobId, out JobPrototype? job))
-                        {
-                            // Job doesn't exist, probably old data?
-                            return false;
-                        }
+                if (!_prototypeManager.TryIndex(jobId, out JobPrototype? job))
+                    continue;
 
-                        if (weight is not null && job.Weight != weight.Value)
-                        {
-                            return false;
-                        }
+                if (weight is not null && job.Weight != weight.Value)
+                    continue;
 
-                        return priority == selectedPriority || selectedPriority is null;
-                    })
-                    .Where(p => roleBans == null || !roleBans.Contains(p.Key))
-                    .Select(j => j.Key)
-                    .ToList();
+                if (!(roleBans == null || !roleBans.Contains(jobId)))
+                    continue;
 
-                return (player, availableJobs: (IReadOnlyList<string>)availableJobs);
-            })
-            .Where(p => p.availableJobs.Count != 0)
-            .ToDictionary(x => x.player, x => x.availableJobs);
+                availableJobs ??= new List<string>(profile.JobPriorities.Count);
+
+                availableJobs.Add(jobId);
+            }
+
+            if (availableJobs is not null)
+                outputDict.Add(player, availableJobs);
+        }
+
+        return outputDict;
     }
 }
