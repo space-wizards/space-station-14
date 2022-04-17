@@ -9,7 +9,7 @@
   components:
   - type: MovementSpeedModifier
     baseWalkSpeed : 6
-    baseSprintSpeed : 6
+    baseSprintSpeed : 3
   - type: Sprite
     drawdepth: Mobs
     layers:
@@ -51,6 +51,13 @@
     bloodMaxVolume: 50
   - type: ReplacementAccent
     accent: mouse
+  - type: UnarmedCombat
+    range: 1.5
+    arcwidth: 0
+    arc: bite
+    damage:
+      types:
+        Piercing: 5
 
 - type: entity
   name: bee

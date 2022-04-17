@@ -228,6 +228,13 @@
   - type: Access
     tags:
     - Chapel
+  - type: UnarmedCombat
+    range: 1.5
+    arcwidth: 0
+    arc: bite
+    damage:
+      types:
+        Piercing: 5
 
 - type: entity
   name: Lisa
