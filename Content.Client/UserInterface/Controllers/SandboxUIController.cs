@@ -239,6 +239,7 @@ public sealed class SandboxUIController : UIController
         if (CanSandbox() && _window?.IsOpen != true)
             OpenWindow();
         else
+            // TODO hud refactor BEFORE MERGE fix this and other ui controllers not calling CloseWindow to unset the button
             _window?.Close();
     }
 }

@@ -81,6 +81,6 @@ public sealed class EscapeUIController : UIController
         if (_window?.IsOpen != true)
             OpenWindow();
         else
-            _window?.Close();
+            CloseWindow();
     }
 }
