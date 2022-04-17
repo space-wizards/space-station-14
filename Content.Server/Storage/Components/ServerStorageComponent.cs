@@ -470,11 +470,13 @@ namespace Content.Server.Storage.Components
                 return;
             }
 
-            var ownerTransform = _entityManager.GetComponent<TransformComponent>(Owner);
-            var playerTransform = _entityManager.GetComponent<TransformComponent>(player);
+            var xformQuery = _entityManager.GetEntityQuery<TransformComponent>();
+            var ownerTransform = xformQuery.GetComponent(Owner);
+            var playerTransform = xformQuery.GetComponent(player);
 
             if (!playerTransform.Coordinates.InRange(_entityManager, ownerTransform.Coordinates, 2) ||
-                Owner.IsInContainer() && !playerTransform.ContainsEntity(ownerTransform))
+                Owner.IsInContainer() &&
+                !_entityManager.EntitySysManager.GetEntitySystem<SharedTransformSystem>().ContainsEntity(playerTransform, ownerTransform, xformQuery))
             {
                 return;
             }
