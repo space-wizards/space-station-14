@@ -27,10 +27,10 @@
         components:
           - Item
     - type: Explosive # Powerful explosion in a very small radius. Doesn't break underplating.
-      explosionType: Default
-      maxIntensity: 300
-      intensitySlope: 100
-      totalIntensity: 300
+      explosionType: DemolitionCharge
+      totalIntensity: 60
+      intensitySlope: 5
+      maxIntensity: 30
       canCreateVacuum: false
     - type: ExplodeOnTrigger
     - type: Damageable

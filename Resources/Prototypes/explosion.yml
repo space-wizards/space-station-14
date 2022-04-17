@@ -18,10 +18,10 @@
   id: DemolitionCharge
   damagePerIntensity:
     types:
-      Heat: 5
-      Blunt: 5
-      Piercing: 5
-      Structural: 20
+      Heat: 3
+      Blunt: 3
+      Piercing: 3
+      Structural: 50
   tileBreakChance: [ 0, 0.5, 1 ]
   tileBreakIntensity: [ 0, 10, 30 ]
   tileBreakRerollReduction: 20
