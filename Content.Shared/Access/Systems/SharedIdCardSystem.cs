@@ -41,7 +41,7 @@ public abstract class SharedIdCardSystem : EntitySystem
     public bool TryFindIdCard(EntityUid uid, [NotNullWhen(true)] out IdCardComponent? idCard)
     {
         // check held item?
-        if (EntityManager.TryGetComponent(uid, out SharedHandsComponent? hands) &&
+        if (TryComp(uid, out SharedHandsComponent? hands) &&
             hands.TryGetActiveHeldEntity(out var heldItem) &&
             TryGetIdCard(heldItem.Value, out idCard))
         {
@@ -67,10 +67,10 @@ public abstract class SharedIdCardSystem : EntitySystem
     /// </summary>
     public bool TryGetIdCard(EntityUid uid, [NotNullWhen(true)] out IdCardComponent? idCard)
     {
-        if (EntityManager.TryGetComponent(uid, out idCard))
+        if (TryComp(uid, out idCard))
             return true;
 
-        if (EntityManager.TryGetComponent(uid, out PDAComponent? pda)
+        if (TryComp<PDAComponent>(uid, out var pda)
             && TryComp<IdCardComponent>(pda.IdSlot.Item, out var id))
         {
             idCard = id;
