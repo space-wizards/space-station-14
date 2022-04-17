@@ -47,6 +47,7 @@ public sealed class StationSystem : EntitySystem
         SubscribeLocalEvent<GameRunLevelChangedEvent>(OnRoundEnd);
         SubscribeLocalEvent<PreGameMapLoad>(OnPreGameMapLoad);
         SubscribeLocalEvent<PostGameMapLoad>(OnPostGameMapLoad);
+        SubscribeLocalEvent<StationDataComponent, ComponentAdd>(OnStationStartup);
         SubscribeLocalEvent<StationDataComponent, ComponentShutdown>(OnStationDeleted);
 
         _configurationManager.OnValueChanged(CCVars.StationOffset, x => _randomStationOffset = x, true);
@@ -55,6 +56,11 @@ public sealed class StationSystem : EntitySystem
     }
 
     #region Event handlers
+
+    private void OnStationStartup(EntityUid uid, StationDataComponent component, ComponentAdd args)
+    {
+        _stations.Add(uid);
+    }
 
     private void OnStationDeleted(EntityUid uid, StationDataComponent component, ComponentShutdown args)
     {
@@ -186,8 +192,6 @@ public sealed class StationSystem : EntitySystem
         {
             metaData.EntityName = "How did we get here?";
         }
-
-        _stations.Add(station);
 
         RaiseLocalEvent(new StationInitializedEvent(station));
         _sawmill.Info($"Set up station {metaData.EntityName} ({station}).");
