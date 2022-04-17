@@ -95,22 +95,25 @@ public sealed partial class StationJobsSystem
                     stationSlots.Add(station, slots);
                 }
 
-                // Intentionally discounts the value of uncapped slots! They're not considered when deciding on a station's share.
+                // Intentionally discounts the value of uncapped slots! They're only a single slot when deciding a station's share.
                 var stationTotalSlots = new Dictionary<EntityUid, long>();
                 foreach (var (station, jobs) in stationSlots)
                 {
                     stationTotalSlots.Add(
                         station,
-                        jobs.Values.Where(u => u is not null).Sum(x => x!.Value)
+                        jobs.Values.Sum(x => x ?? 1)
                         );
                 }
 
                 var totalSlots = stationTotalSlots.Select(x => x.Value).Sum();
 
+                if (totalSlots == 0)
+                    continue; // No slots so just leave.
+
                 // Percent share of players each station gets.
                 var stationSharesPercent = stationTotalSlots.ToDictionary(
                     x => x.Key,
-                    x => (float) x.Value / totalSlots
+                    x => ((float) x.Value) / totalSlots
                 );
 
                 var stationShares = new Dictionary<EntityUid, int>();
@@ -139,10 +142,10 @@ public sealed partial class StationJobsSystem
                     // And iterates through all it's jobs in a random order until the count settles.
                     // No, AFAIK it cannot be done any saner than this. I hate "shaking" collections as much
                     // as you do but it's what seems to be the absolute best option here.
-                    var priorCount = stationShares[station];
-
+                    var priorCount = 0;
                     do
                     {
+                        priorCount = stationShares[station];
                         foreach (var job in allJobs)
                         {
                             if (stationShares[station] == 0)
@@ -233,14 +236,14 @@ public sealed partial class StationJobsSystem
                             return false;
                         }
 
-                        if (job.Weight != weight && weight is not null)
+                        if (weight is not null && job.Weight != weight.Value)
                         {
                             return false;
                         }
 
                         return priority == selectedPriority || selectedPriority is null;
                     })
-                    .Where(p => roleBans != null && !roleBans.Contains(p.Key))
+                    .Where(p => roleBans == null || !roleBans.Contains(p.Key))
                     .Select(j => j.Key)
                     .ToList();
 

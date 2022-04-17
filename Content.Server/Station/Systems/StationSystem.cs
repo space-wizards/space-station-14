@@ -29,6 +29,8 @@ public sealed class StationSystem : EntitySystem
 
     private ISawmill _sawmill = default!;
 
+    private MapId _stationMap;
+
     private readonly HashSet<EntityUid> _stations = new();
 
     /// <summary>
@@ -146,8 +148,11 @@ public sealed class StationSystem : EntitySystem
     /// <returns>The initialized station.</returns>
     public EntityUid InitializeNewStation(GameMapPrototype? mapPrototype, IEnumerable<GridId>? gridIds, string? name = null)
     {
+        if (_stationMap == MapId.Nullspace)
+            _stationMap = _mapManager.CreateMap();
+
         //HACK: This needs to go in nullspace but that crashes currently.
-        var station = Spawn(null, new MapCoordinates(0, 0, _gameTicker.DefaultMap));
+        var station = Spawn(null, new MapCoordinates(0, 0, _stationMap));
         var data = AddComp<StationDataComponent>(station);
         var metaData = MetaData(station);
         data.MapPrototype = mapPrototype;

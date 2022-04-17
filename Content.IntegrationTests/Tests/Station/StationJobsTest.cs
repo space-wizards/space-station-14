@@ -1,0 +1,142 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using Content.Server.Maps;
+using Content.Server.Station.Systems;
+using Content.Shared.Preferences;
+using NUnit.Framework;
+using Robust.Server;
+using Robust.Shared.GameObjects;
+using Robust.Shared.Log;
+using Robust.Shared.Map;
+using Robust.Shared.Network;
+using Robust.Shared.Prototypes;
+
+namespace Content.IntegrationTests.Tests.Station;
+
+[TestFixture]
+[TestOf(typeof(StationJobsSystem))]
+public sealed class StationJobsTest : ContentIntegrationTest
+{
+    private const string Prototypes = @"
+- type: gameMap
+  id: FooStation
+  minPlayers: 0
+  mapName: FooStation
+  mapPath: Maps/Tests/empty.yml
+  overflowJobs:
+  - Assistant
+  availableJobs:
+    TAssistant: [-1, -1]
+    TCaptain: [5, 5]
+    TClown: [5, 6]
+
+- type: job
+  id: TAssistant
+
+- type: job
+  id: TClown
+  weight: -10
+
+- type: job
+  id: TCaptain
+  weight: 10
+";
+
+    private const int StationCount = 3;
+    private const int CaptainCount = StationCount;
+    private const int PlayerCount = 10;
+    private const int TotalPlayers = PlayerCount + CaptainCount;
+
+    [Test]
+    public async Task AssignJobsTest()
+    {
+        var options = new ServerContentIntegrationOption {ExtraPrototypes = Prototypes, Options = new ServerOptions() { LoadContentResources = false }};
+        var server = StartServer(options);
+
+        await server.WaitIdleAsync();
+
+        var prototypeManager = server.ResolveDependency<IPrototypeManager>();
+        var mapManager = server.ResolveDependency<IMapManager>();
+        var fooStationProto = prototypeManager.Index<GameMapPrototype>("FooStation");
+        var entSysMan = server.ResolveDependency<IEntityManager>().EntitySysManager;
+        var stationJobs = entSysMan.GetEntitySystem<StationJobsSystem>();
+        var stationSystem = entSysMan.GetEntitySystem<StationSystem>();
+
+        List<EntityUid> stations = new();
+        await server.WaitPost(() =>
+        {
+            mapManager.CreateNewMapEntity(MapId.Nullspace);
+            for (var i = 0; i < StationCount; i++)
+            {
+                stations.Add(stationSystem.InitializeNewStation(fooStationProto, null, $"Foo {StationCount}"));
+            }
+        });
+
+        await server.WaitAssertion(() =>
+        {
+            var fakePlayers = new Dictionary<NetUserId, HumanoidCharacterProfile>()
+                .AddJob("TAssistant", JobPriority.Medium, PlayerCount)
+                .AddPreference("TClown", JobPriority.Low)
+                .WithPlayers(
+                    new Dictionary<NetUserId, HumanoidCharacterProfile>()
+                    .AddJob("TCaptain", JobPriority.High, CaptainCount)
+                );
+
+            var assigned = stationJobs.AssignJobs(fakePlayers, stations);
+
+            foreach (var station in stations)
+            {
+                var assignedHere = assigned
+                    .Where(x => x.Value.Item2 == station)
+                    .ToDictionary(x => x.Key, x => x.Value);
+
+                // Each station should have SOME players.
+                Assert.That(assignedHere, Is.Not.Empty);
+                // And it should have at least the minimum players to be considered a "fair" share, as they're all the same.
+                Assert.That(assignedHere, Has.Count.GreaterThanOrEqualTo(TotalPlayers/stations.Count), "Station has too few players.");
+                // And it shouldn't have ALL the players, either.
+                Assert.That(assignedHere, Has.Count.LessThan(TotalPlayers), "Station has too many players.");
+                // And there should be *A* captain, as there's one player with captain enabled per station.
+                Assert.That(assignedHere.Where(x => x.Value.Item1 == "TCaptain").ToList(), Has.Count.EqualTo(1));
+            }
+
+            // All clown players have assistant as a higher priority.
+            Assert.That(assigned.Values.Select(x => x.Item1).ToList(), Does.Not.Contain("TClown"));
+            // All players have slots they can fill.
+            Assert.That(assigned.Values, Has.Count.EqualTo(TotalPlayers), $"Expected {TotalPlayers} players.");
+            // There must be assistants present.
+            Assert.That(assigned.Values.Select(x => x.Item1).ToList(), Does.Contain("TAssistant"));
+            // There must be captains present, too.
+        });
+    }
+}
+
+public static class JobExtensions
+{
+    public static Dictionary<NetUserId, HumanoidCharacterProfile> AddJob(
+        this Dictionary<NetUserId, HumanoidCharacterProfile> inp, string jobId, JobPriority prio = JobPriority.Medium,
+        int amount = 1)
+    {
+        for (var i = 0; i < amount; i++)
+        {
+            inp.Add(new NetUserId(Guid.NewGuid()), HumanoidCharacterProfile.Random().WithJobPriority(jobId, prio));
+        }
+
+        return inp;
+    }
+
+    public static Dictionary<NetUserId, HumanoidCharacterProfile> AddPreference(
+        this Dictionary<NetUserId, HumanoidCharacterProfile> inp, string jobId, JobPriority prio = JobPriority.Medium)
+    {
+        return inp.ToDictionary(x => x.Key, x => x.Value.WithJobPriority(jobId, prio));
+    }
+
+    public static Dictionary<NetUserId, HumanoidCharacterProfile> WithPlayers(
+        this Dictionary<NetUserId, HumanoidCharacterProfile> inp,
+        Dictionary<NetUserId, HumanoidCharacterProfile> second)
+    {
+        return new[] {inp, second}.SelectMany(x => x).ToDictionary(x => x.Key, x => x.Value);
+    }
+}

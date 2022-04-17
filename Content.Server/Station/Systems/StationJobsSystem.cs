@@ -52,7 +52,12 @@ public sealed partial class StationJobsSystem : EntitySystem
         stationJobs.RoundStartTotalJobs = mapJobList.Values.Select(x => x[0]).Where(x => x > 0).Sum();
         stationJobs.MidRoundTotalJobs = mapJobList.Values.Select(x => x[1]).Where(x => x > 0).Sum();
         stationJobs.TotalJobs = stationJobs.MidRoundTotalJobs;
-        stationJobs.JobList = mapJobList.ToDictionary(x => x.Key, x => x.Value[1] < 0 ? null : (uint?)x.Value[1]);
+        stationJobs.JobList = mapJobList.ToDictionary(x => x.Key, x =>
+        {
+            if (x.Value[1] <= -1)
+                return null;
+            return (uint?) x.Value[1];
+        });
         stationJobs.OverflowJobs = stationData.MapPrototype.OverflowJobs.ToHashSet();
         UpdateJobsAvailable();
     }
@@ -201,7 +206,9 @@ public sealed partial class StationJobsSystem : EntitySystem
         if (!Resolve(station, ref stationJobs))
             throw new ArgumentException("Tried to use a non-station entity as a station!", nameof(station));
 
-        return stationJobs.JobList.TryGetValue(jobPrototypeId, out var job) && job == null;
+
+        var res = stationJobs.JobList.TryGetValue(jobPrototypeId, out var job) && job == null;
+        return res;
     }
 
     /// <inheritdoc cref="TryGetJobSlot(Robust.Shared.GameObjects.EntityUid,Content.Shared.Roles.JobPrototype,out System.Nullable{uint},Content.Server.Station.Components.StationJobsComponent?)"/>
