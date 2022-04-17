@@ -37,7 +37,7 @@ namespace Content.Shared.Cloning.CloningConsole
         }
 
         [Serializable, NetSerializable]
-        public enum ClonerStatus
+        public enum ClonerStatus : byte
         {
             Ready,
             ScannerEmpty,
@@ -49,13 +49,13 @@ namespace Content.Shared.Cloning.CloningConsole
         }
 
         [Serializable, NetSerializable]
-        public enum CloningConsoleUiKey
+        public enum CloningConsoleUiKey : byte
         {
             Key
         }
 
         [Serializable, NetSerializable]
-        public enum UiButton
+        public enum UiButton : byte
         {
             Clone,
             Eject
