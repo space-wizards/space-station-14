@@ -119,6 +119,7 @@
   - type: Stack
     count: 1
 
+# Following not used currently
 - type: entity
   parent: MaterialBase
   id: MaterialHideBear
@@ -132,3 +133,24 @@
     HeldPrefix: bear
     Slots:
       - HEAD
+
+- type: entity
+  parent: MaterialBase
+  id: MaterialDiamond
+  name: refined diamond
+  suffix: Full
+  components:
+    - type: Stack
+      stackType: Diamond
+    - type: Sprite
+      state: diamond
+    - type: Item
+      HeldPrefix: diamond
+
+- type: entity
+  parent: MaterialDiamond
+  id: MaterialDiamond1
+  suffix: Single
+  components:
+    - type: Stack
+      count: 1
