@@ -46,6 +46,9 @@ public sealed partial class StationJobsSystem
         {
             for (var selectedPriority = JobPriority.High; selectedPriority > JobPriority.Never; selectedPriority--)
             {
+                if (profiles.Count == 0)
+                    goto endFunc;
+
                 var candidates = GetPlayersJobCandidates(weight, selectedPriority, profiles);
                 var jobPlayerOptions = new Dictionary<string, HashSet<NetUserId>>();
                 var optionsRemaining = 0;
@@ -125,7 +128,7 @@ public sealed partial class StationJobsSystem
                     stationShares[choice] += candidates.Count - distributed;
                 }
 
-                // Actual meat, goes through each station.
+                // Actual meat, goes through each station and shakes the tree until everyone has a job.
                 foreach (var station in stations)
                 {
                     if (stationShares[station] == 0)
@@ -137,6 +140,7 @@ public sealed partial class StationJobsSystem
                     // No, AFAIK it cannot be done any saner than this. I hate "shaking" collections as much
                     // as you do but it's what seems to be the absolute best option here.
                     var priorCount = stationShares[station];
+
                     do
                     {
                         foreach (var job in allJobs)
@@ -149,7 +153,6 @@ public sealed partial class StationJobsSystem
 
                             // Picking players it finds that have the job set.
                             var player = _random.Pick(jobPlayerOptions[job]);
-                            Logger.Debug($"{player}");
                             AssignPlayer(player, job, station);
                             stationShares[station]--;
 
@@ -162,6 +165,7 @@ public sealed partial class StationJobsSystem
             }
         }
 
+        endFunc:
         return assigned;
     }
 
