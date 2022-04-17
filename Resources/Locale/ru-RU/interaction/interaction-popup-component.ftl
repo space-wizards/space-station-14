@@ -33,3 +33,4 @@ petting-failure-holo = You reach out to pet { THE($target) }, but { POSS-ADJ($ta
 
 # Shown when knocking on a window
 comp-window-knock = *тук-тук*
+hugging-success-generic = You hug { THE($target) }.

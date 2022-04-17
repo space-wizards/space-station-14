@@ -55,3 +55,6 @@ ent-GeneratorUraniumMachineCircuitboard = generator (uranium) machine board
 ent-ReagentGrinderMachineCircuitboard = reagent grinder machine board
     .desc = A machine printed circuit board for a reagent grinder
     .suffix = { "" }
+ent-StasisBedMachineCircuitboard = Stasis Bed (Machine Board)
+    .desc = { ent-BaseMachineCircuitboard.desc }
+    .suffix = { "" }

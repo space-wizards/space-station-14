@@ -7,3 +7,6 @@ ent-MopBucket = ведро для швабры
 ent-WetFloorSign = знак "мокрый пол"
     .desc = Осторожно! Мокрый пол!
     .suffix = { "" }
+ent-JanitorialTrolley = janitorial trolley
+    .desc = This is the alpha and omega of sanitation.
+    .suffix = { "" }
