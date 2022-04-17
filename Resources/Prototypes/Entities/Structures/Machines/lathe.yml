@@ -388,6 +388,8 @@
   name: ore processor
   description: It produces sheets and ingots using ores.
   components:
+  - type: LatheVisuals
+    ignoreColor: true
   - type: Sprite
     sprite: Structures/Machines/ore_processor.rsi
     netsync: false

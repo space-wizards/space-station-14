@@ -26,7 +26,8 @@ namespace Content.Client.Lathe
                 }
                 if (args.Component.TryGetData(LatheVisuals.IsInserting, out bool isInserting))
                 {
-                    if (args.Component.TryGetData(LatheVisuals.InsertingColor, out Color color))
+                    if (args.Component.TryGetData(LatheVisuals.InsertingColor, out Color color)
+                        && component.IgnoreColor == false)
                         sprite.LayerSetColor(LatheVisualLayers.IsInserting, color);
 
                     sprite.LayerSetAnimationTime(LatheVisualLayers.IsInserting, 0f);
