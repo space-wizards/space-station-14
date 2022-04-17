@@ -119,9 +119,14 @@ public sealed class StationSystem : EntitySystem
             AddGrid(partOfStation.Id, grid);
         }
 
-        foreach (var (_, gridIds) in dict)
+        foreach (var (id, gridIds) in dict)
         {
-            InitializeNewStation(ev.GameMap, gridIds, ev.StationName);
+            StationConfig? stationConfig = null;
+            if (ev.GameMap.Stations.ContainsKey(id))
+                stationConfig = ev.GameMap.Stations[id];
+            else
+                _sawmill.Error($"The station {id} in map {ev.GameMap.ID} does not have an associated station config!");
+            InitializeNewStation(stationConfig, gridIds, ev.StationName);
         }
     }
 
@@ -137,27 +142,41 @@ public sealed class StationSystem : EntitySystem
 
     #endregion Event handlers
 
+
+    /// <summary>
+    /// Generates a station name from the given config.
+    /// </summary>
+    /// <param name="config"></param>
+    /// <returns></returns>
+    public string GenerateStationName(StationConfig config)
+    {
+        if (config.NameGenerator is not null)
+            return config.NameGenerator.FormatName(config.StationNameTemplate);
+        else
+            return config.StationNameTemplate;
+    }
+
     /// <summary>
     /// Initializes a new station with the given information.
     /// </summary>
-    /// <param name="mapPrototype">The game map prototype used, if any.</param>
+    /// <param name="stationConfig">The game map prototype used, if any.</param>
     /// <param name="gridIds">All grids that should be added to the station.</param>
     /// <param name="name">Optional override for the station name.</param>
     /// <returns>The initialized station.</returns>
-    public EntityUid InitializeNewStation(GameMapPrototype? mapPrototype, IEnumerable<GridId>? gridIds, string? name = null)
+    public EntityUid InitializeNewStation(StationConfig? stationConfig, IEnumerable<GridId>? gridIds, string? name = null)
     {
         //HACK: This needs to go in nullspace but that crashes currently.
         var station = Spawn(null, new MapCoordinates(0, 0, _gameTicker.DefaultMap));
         var data = AddComp<StationDataComponent>(station);
         var metaData = MetaData(station);
-        data.MapPrototype = mapPrototype;
+        data.StationConfig = stationConfig;
 
         if (gridIds is not null)
             data.Grids.UnionWith(gridIds);
 
-        if (mapPrototype is not null && name is null)
+        if (stationConfig is not null && name is null)
         {
-            metaData.EntityName = _gameMapManager.GenerateMapName(mapPrototype);
+            metaData.EntityName = GenerateStationName(stationConfig);
         }
         else if (name is not null)
         {
@@ -171,7 +190,7 @@ public sealed class StationSystem : EntitySystem
         _stations.Add(station);
 
         RaiseLocalEvent(new StationInitializedEvent(station));
-        _sawmill.Info($"Set up station {metaData.EntityName} ({station}) with prototype {mapPrototype?.ID}");
+        _sawmill.Info($"Set up station {metaData.EntityName} ({station}).");
 
         foreach (var grid in gridIds ?? Array.Empty<GridId>())
         {

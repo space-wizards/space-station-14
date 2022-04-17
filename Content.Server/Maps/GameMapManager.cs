@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Content.Server.Chat.Managers;
+using Content.Server.Station;
 using Content.Shared.CCVar;
 using Robust.Server.Maps;
 using Robust.Server.Player;
@@ -156,14 +157,6 @@ public sealed class GameMapManager : IGameMapManager
     private bool TryLookupMap(string gameMap, [NotNullWhen(true)] out GameMapPrototype? map)
     {
         return _prototypeManager.TryIndex(gameMap, out map);
-    }
-
-    public string GenerateMapName(GameMapPrototype gameMap)
-    {
-        if (gameMap.NameGenerator is not null && gameMap.MapNameTemplate is not null)
-            return gameMap.NameGenerator.FormatName(gameMap.MapNameTemplate);
-        else
-            return gameMap.MapName;
     }
 
     public int GetMapQueuePriority(string gameMapProtoName)

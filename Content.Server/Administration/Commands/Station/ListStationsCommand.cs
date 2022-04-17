@@ -23,8 +23,7 @@ public sealed class ListStationsCommand : IConsoleCommand
         foreach (var station in EntitySystem.Get<StationSystem>().Stations)
         {
             var name = _entityManager.GetComponent<MetaDataComponent>(station).EntityName;
-            var mapProto = _entityManager.GetComponent<StationDataComponent>(station).MapPrototype?.ID;
-            shell.WriteLine($"{station, -10} | {name} | {mapProto}");
+            shell.WriteLine($"{station, -10} | {name}");
         }
     }
 }

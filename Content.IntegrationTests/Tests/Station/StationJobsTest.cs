@@ -27,12 +27,15 @@ public sealed class StationJobsTest : ContentIntegrationTest
   minPlayers: 0
   mapName: FooStation
   mapPath: Maps/Tests/empty.yml
-  overflowJobs:
-  - Assistant
-  availableJobs:
-    TAssistant: [-1, -1]
-    TCaptain: [5, 5]
-    TClown: [5, 6]
+  stations:
+    Station:
+      mapNameTemplate: FooStation
+      overflowJobs:
+      - Assistant
+      availableJobs:
+        TAssistant: [-1, -1]
+        TCaptain: [5, 5]
+        TClown: [5, 6]
 
 - type: job
   id: TAssistant
@@ -73,7 +76,7 @@ public sealed class StationJobsTest : ContentIntegrationTest
             mapManager.CreateNewMapEntity(MapId.Nullspace);
             for (var i = 0; i < StationCount; i++)
             {
-                stations.Add(stationSystem.InitializeNewStation(fooStationProto, null, $"Foo {StationCount}"));
+                stations.Add(stationSystem.InitializeNewStation(fooStationProto.Stations["Station"], null, $"Foo {StationCount}"));
             }
         });
 

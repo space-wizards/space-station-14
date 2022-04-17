@@ -12,7 +12,7 @@ public sealed class StationDataComponent : Component
     /// The game map prototype, if any, associated with this station.
     /// </summary>
     [ViewVariables]
-    public GameMapPrototype? MapPrototype = null;
+    public StationConfig? StationConfig = null;
 
     /// <summary>
     /// List of all grids this station is part of.

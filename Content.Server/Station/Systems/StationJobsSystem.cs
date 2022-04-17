@@ -46,13 +46,13 @@ public sealed partial class StationJobsSystem : EntitySystem
         var stationJobs = AddComp<StationJobsComponent>(msg.Station);
         var stationData = Comp<StationDataComponent>(msg.Station);
 
-        if (stationData.MapPrototype == null)
+        if (stationData.StationConfig == null)
             return;
 
-        var mapJobList = stationData.MapPrototype.AvailableJobs;
+        var mapJobList = stationData.StationConfig.AvailableJobs;
 
-        stationJobs.RoundStartTotalJobs = mapJobList.Values.Select(x => x[0]).Where(x => x > 0).Sum();
-        stationJobs.MidRoundTotalJobs = mapJobList.Values.Select(x => x[1]).Where(x => x > 0).Sum();
+        stationJobs.RoundStartTotalJobs = mapJobList.Values.Where(x => x[0] is not null).Select(x => x[0]).Where(x => x > 0).Sum(x => x!.Value);
+        stationJobs.MidRoundTotalJobs = mapJobList.Values.Where(x => x[1] is not null).Select(x => x[1]).Where(x => x > 0).Sum(x => x!.Value);
         stationJobs.TotalJobs = stationJobs.MidRoundTotalJobs;
         stationJobs.JobList = mapJobList.ToDictionary(x => x.Key, x =>
         {
@@ -60,7 +60,7 @@ public sealed partial class StationJobsSystem : EntitySystem
                 return null;
             return (uint?) x.Value[1];
         });
-        stationJobs.OverflowJobs = stationData.MapPrototype.OverflowJobs.ToHashSet();
+        stationJobs.OverflowJobs = stationData.StationConfig.OverflowJobs.ToHashSet();
         UpdateJobsAvailable();
     }
 

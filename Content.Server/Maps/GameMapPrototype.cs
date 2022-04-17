@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using Content.Server.Maps.NameGenerators;
+using Content.Server.Station;
 using Content.Shared.Roles;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.Manager.Attributes;
@@ -38,18 +39,6 @@ public sealed class GameMapPrototype : IPrototype
     public string MapName { get; } = default!;
 
     /// <summary>
-    /// Name of the given map.
-    /// </summary>
-    [DataField("mapNameTemplate")]
-    public string? MapNameTemplate { get; } = default!;
-
-    /// <summary>
-    /// Name generator to use for the map, if any.
-    /// </summary>
-    [DataField("nameGenerator")]
-    public GameMapNameGenerator? NameGenerator { get; } = default!;
-
-    /// <summary>
     /// Relative directory path to the given map, i.e. `Maps/saltern.yml`
     /// </summary>
     [DataField("mapPath", required: true)]
@@ -70,17 +59,11 @@ public sealed class GameMapPrototype : IPrototype
     [DataField("conditions")]
     public List<GameMapCondition> Conditions { get; } = new();
 
-    /// <summary>
-    /// Jobs used at round start should the station run out of job slots.
-    /// Doesn't necessarily mean the station has infinite slots for the given jobs midround!
-    /// </summary>
-    [DataField("overflowJobs", required: true, customTypeSerializer:typeof(PrototypeIdListSerializer<JobPrototype>))]
-    public List<string> OverflowJobs { get; } = default!;
+    [DataField("stations")]
+    private Dictionary<string, StationConfig> _stations = new();
 
     /// <summary>
-    /// Index of all jobs available on the station, of form
-    ///  jobname: [roundstart, midround]
+    /// The stations this map contains. The names should match with the BecomesStation components.
     /// </summary>
-    [DataField("availableJobs", required: true, customTypeSerializer:typeof(PrototypeIdDictionarySerializer<List<int>, JobPrototype>))]
-    public Dictionary<string, List<int>> AvailableJobs { get; } = default!;
+    public IReadOnlyDictionary<string, StationConfig> Stations => _stations;
 }
