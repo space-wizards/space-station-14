@@ -439,8 +439,6 @@
   - type: ClothingSpeedModifier
     walkModifier: 0.9
     sprintModifier: 0.9
-  - type: Clothing
-    size: 30
   - type: DiseaseProtection
     protection: 0.15
   - type: TemperatureProtection
