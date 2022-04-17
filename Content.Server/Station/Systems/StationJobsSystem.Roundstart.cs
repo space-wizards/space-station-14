@@ -171,6 +171,7 @@ public sealed partial class StationJobsSystem
                     // And iterates through all it's jobs in a random order until the count settles.
                     // No, AFAIK it cannot be done any saner than this. I hate "shaking" collections as much
                     // as you do but it's what seems to be the absolute best option here.
+                    // It doesn't seem to show up on the chart, perf-wise, anyway, so it's likely fine.
                     int priorCount;
                     do
                     {
