@@ -1,11 +1,6 @@
 Entries:
 - author: DubiousDoggo
   changes:
-  - {message: Added crafting recipe for substations, type: Add}
-  id: 848
-  time: '2022-01-09T06:05:54.0000000+00:00'
-- author: DubiousDoggo
-  changes:
   - {message: 'Added SMES construction - no more easy power crippling :)', type: Add}
   id: 849
   time: '2022-01-09T07:31:07.0000000+00:00'
@@ -3029,3 +3024,8 @@ Entries:
   - {message: 'Carp, ticks, spiders, and bears now have replacement accents.', type: Tweak}
   id: 1347
   time: '2022-04-16T23:08:52.0000000+00:00'
+- author: mirrorcult
+  changes:
+  - {message: You can no longer heal people out of death., type: Tweak}
+  id: 1348
+  time: '2022-04-17T06:29:31.0000000+00:00'
