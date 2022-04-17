@@ -1,10 +1,4 @@
 Entries:
-- author: mirrorcult
-  changes:
-  - {message: Ghosts can now automatically follow entities by using a right click
-      Follow verb., type: Add}
-  id: 853
-  time: '2022-01-10T05:47:38.0000000+00:00'
 - author: Zyme
   changes:
   - {message: Added ritual and cursed chair, type: Add}
@@ -3039,3 +3033,8 @@ Entries:
   - {message: Familiars now accurately show when they are dead when examined., type: Fix}
   id: 1352
   time: '2022-04-17T21:43:00.0000000+00:00'
+- author: Rane
+  changes:
+  - {message: Fixed security techfab visuals, type: Fix}
+  id: 1353
+  time: '2022-04-17T21:55:23.0000000+00:00'
