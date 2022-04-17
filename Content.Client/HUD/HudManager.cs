@@ -44,8 +44,6 @@ public interface IHudManager
     //a nullsafe version of get UI widget that doesn't throw exceptions
     public T? GetUIWidgetOrNull<T>() where T : HudWidget;
     public bool HasWidget<T>() where T : HudWidget;
-    public bool EscapeMenuVisible { get; set; }
-    public Options.UI.EscapeMenu? EscapeMenu { get; }
     public IUIControllerManager UIControllerManager { get; }
 
     //Do Not abuse these or I will eat you
@@ -75,19 +73,6 @@ public sealed class HudManager  : IHudManager
 
     private readonly Dictionary<System.Type, HudPreset?> _hudPresets = new();
     public LayoutContainer? StateRoot => _userInterfaceManager.StateRoot;
-    public bool EscapeMenuVisible
-    {
-        get => _escapeMenu is {Visible: true};
-        set
-        {
-            if (_escapeMenu == null) return;
-            _escapeMenu.Visible = value;
-        }
-    }
-    private Options.UI.EscapeMenu? _escapeMenu;
-
-    //if escape menu is null create a new escape menu
-    public Options.UI.EscapeMenu? EscapeMenu => _escapeMenu ?? new Options.UI.EscapeMenu(_consoleHost);
 
     public HudManager()
     {
@@ -128,13 +113,10 @@ public sealed class HudManager  : IHudManager
         LoadAllPresets();
         SetDefaultHudPreset<DefaultHud>();
         _activeHudPreset = _defaultHudPreset;
-        _escapeMenu = new Options.UI.EscapeMenu(_consoleHost);
-        EscapeMenuVisible = false;
     }
 
     public void Shutdown()
     {
-        _escapeMenu?.Dispose();
         foreach (var preset in _hudPresets)
         {
             preset.Value?.Dispose();
