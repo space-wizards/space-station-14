@@ -202,7 +202,7 @@ namespace Content.Server.GameTicking
             // MapInitialize *before* spawning players, our codebase is too shit to do it afterwards...
             _mapManager.DoMapInitialize(DefaultMap);
 
-            SpawnPlayers(readyPlayers, origReadyPlayers, profiles, force);
+            SpawnPlayers(readyPlayers, origReadyPlayers.Select(x => x.UserId), profiles, force);
 
             _roundStartDateTime = DateTime.UtcNow;
             RunLevel = GameRunLevel.InRound;
@@ -419,8 +419,6 @@ namespace Content.Server.GameTicking
             // So clients' entity systems can clean up too...
             RaiseNetworkEvent(ev, Filter.Broadcast());
 
-            _spawnedPositions.Clear();
-            _manifest.Clear();
             DisallowLateJoin = false;
         }
 

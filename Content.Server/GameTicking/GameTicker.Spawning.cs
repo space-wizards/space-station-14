@@ -40,69 +40,26 @@ namespace Content.Server.GameTicking
         // Mainly to avoid allocations.
         private readonly List<EntityCoordinates> _possiblePositions = new();
 
-        private void SpawnPlayers(List<IPlayerSession> readyPlayers, IPlayerSession[] origReadyPlayers,
+        private void SpawnPlayers(List<IPlayerSession> readyPlayers, IEnumerable<NetUserId> origReadyPlayers,
             Dictionary<NetUserId, HumanoidCharacterProfile> profiles, bool force)
         {
             // Allow game rules to spawn players by themselves if needed. (For example, nuke ops or wizard)
             RaiseLocalEvent(new RulePlayerSpawningEvent(readyPlayers, profiles, force));
 
-            var assignedJobs = AssignJobs(readyPlayers, profiles);
+            var assignedJobs = _stationJobs.AssignJobs(profiles, _stationSystem.Stations.ToList());
 
-            AssignOverflowJobs(assignedJobs, origReadyPlayers, profiles);
+            _stationJobs.AssignOverflowJobs(ref assignedJobs, origReadyPlayers, profiles);
 
             // Spawn everybody in!
             foreach (var (player, (job, station)) in assignedJobs)
             {
-                SpawnPlayer(player, profiles[player.UserId], station, job, false);
+                SpawnPlayer(_playerManager.GetSessionByUserId(player), profiles[player], station, job, false);
             }
 
             RefreshLateJoinAllowed();
 
             // Allow rules to add roles to players who have been spawned in. (For example, on-station traitors)
-            RaiseLocalEvent(new RulePlayerJobsAssignedEvent(assignedJobs.Keys.ToArray(), profiles, force));
-        }
-
-        private void AssignOverflowJobs(IDictionary<IPlayerSession, (string, EntityUid)> assignedJobs,
-            IPlayerSession[] origReadyPlayers, IReadOnlyDictionary<NetUserId, HumanoidCharacterProfile> profiles)
-        {
-            // For players without jobs, give them the overflow job if they have that set...
-            foreach (var player in origReadyPlayers)
-            {
-                if (assignedJobs.ContainsKey(player))
-                {
-                    continue;
-                }
-
-                var profile = profiles[player.UserId];
-                if (profile.PreferenceUnavailable != PreferenceUnavailableMode.SpawnAsOverflow)
-                    continue;
-
-                // Pick a random station
-                var stations = _stationSystem.Stations.ToList();
-
-                if (stations.Count == 0)
-                {
-                    assignedJobs.Add(player, (FallbackOverflowJob, EntityUid.Invalid));
-                    continue;
-                }
-
-                _robustRandom.Shuffle(stations);
-
-                foreach (var station in stations)
-                {
-                    // Pick a random overflow job from that station
-                    var overflows = _stationJobs.GetOverflowJobs(station).ToList();
-                    _robustRandom.Shuffle(overflows);
-
-                    // Stations with no overflow slots should simply get skipped over.
-                    if (overflows.Count == 0)
-                        continue;
-
-                    // If the overflow exists, put them in as it.
-                    assignedJobs.Add(player, (overflows[0], stations[0]));
-                    break;
-                }
-            }
+            RaiseLocalEvent(new RulePlayerJobsAssignedEvent(assignedJobs.Keys.Select(x => _playerManager.GetSessionByUserId(x)).ToArray(), profiles, force));
         }
 
         private void SpawnPlayer(IPlayerSession player, EntityUid station, string? jobId = null, bool lateJoin = true)
@@ -149,7 +106,8 @@ namespace Content.Server.GameTicking
             }
 
             // Pick best job best on prefs.
-            jobId ??= PickBestAvailableJob(player, character, station);
+            jobId ??= _stationJobs.PickBestAvailableJobWithPriority(station, character.JobPriorities, true,
+                _roleBanManager.GetJobBans(player.UserId));
             // If no job available, stay in lobby, or if no lobby spawn as observer
             if (jobId is null)
             {
@@ -198,9 +156,6 @@ namespace Content.Server.GameTicking
             {
                 EntityManager.AddComponent<OwOAccentComponent>(mob);
             }
-
-            AddManifestEntry(character.Name, jobId);
-            AddSpawnedPosition(jobId);
 
             _stationJobs.TryAssignJob(station, jobPrototype);
 
@@ -302,11 +257,6 @@ namespace Content.Server.GameTicking
             }
         }
         #endregion
-
-        private void AddManifestEntry(string characterName, string jobId)
-        {
-            _manifest.Add(new ManifestEntry(characterName, jobId));
-        }
 
         #region Spawn Points
         public EntityCoordinates GetObserverSpawnPoint()

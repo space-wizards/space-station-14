@@ -25,11 +25,11 @@ namespace Content.Server.Station.Systems;
 /// Also provides helpers for spawning in the player's mob.
 /// </summary>
 [PublicAPI]
-public sealed class StationSpawningSystem : EntitySystem
+public sealed partial class StationSpawningSystem : EntitySystem
 {
     [Dependency] private readonly IMapManager _mapManager = default!;
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
-    [Dependency] private readonly IRobustRandom _robustRandom = default!;
+    [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly HandsSystem _handsSystem = default!;
     [Dependency] private readonly HumanoidAppearanceSystem _humanoidAppearanceSystem = default!;
     [Dependency] private readonly IdCardSystem _cardSystem = default!;
@@ -171,7 +171,7 @@ public sealed class StationSpawningSystem : EntitySystem
         if (options.Count == 0)
             return null;
 
-        var startAt = _robustRandom.Next(0, options.Count);
+        var startAt = _random.Next(0, options.Count);
         var curr = startAt;
         var ev = new SpawnPlayerEvent(job, profile);
         do

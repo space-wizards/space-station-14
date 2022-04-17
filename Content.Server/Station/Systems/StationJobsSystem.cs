@@ -1,12 +1,15 @@
-﻿using System.Linq;
+﻿using System.Diagnostics.CodeAnalysis;
+using System.Linq;
 using Content.Server.GameTicking;
 using Content.Server.Station.Components;
 using Content.Shared.CCVar;
 using Content.Shared.GameTicking;
+using Content.Shared.Preferences;
 using Content.Shared.Roles;
 using JetBrains.Annotations;
 using Robust.Shared.Configuration;
 using Robust.Shared.Player;
+using Robust.Shared.Random;
 using Robust.Shared.Utility;
 
 namespace Content.Server.Station.Systems;
@@ -15,11 +18,12 @@ namespace Content.Server.Station.Systems;
 /// Manages job slots for stations.
 /// </summary>
 [PublicAPI]
-public sealed class StationJobsSystem : EntitySystem
+public sealed partial class StationJobsSystem : EntitySystem
 {
+    [Dependency] private readonly IConfigurationManager _configurationManager = default!;
+    [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly GameTicker _gameTicker = default!;
     [Dependency] private readonly StationSystem _stationSystem = default!;
-    [Dependency] private readonly IConfigurationManager _configurationManager = default!;
 
     public override void Initialize()
     {
@@ -267,12 +271,74 @@ public sealed class StationJobsSystem : EntitySystem
         return stationJobs.OverflowJobs.ToHashSet(); // Be sure to clone to avoid ref shenanigans.
     }
 
+    /// <summary>
+    /// Returns a readonly dictionary of all jobs and their slot info.
+    /// </summary>
+    /// <param name="station">Station to get jobs for</param>
+    /// <param name="stationJobs">Resolve pattern, station jobs component of the station.</param>
+    /// <returns></returns>
+    /// <exception cref="ArgumentException"></exception>
     public IReadOnlyDictionary<string, uint?> GetJobs(EntityUid station, StationJobsComponent? stationJobs = null)
     {
         if (!Resolve(station, ref stationJobs))
             throw new ArgumentException("Tried to use a non-station entity as a station!", nameof(station));
 
         return stationJobs.JobList.ShallowClone(); // Be sure to clone to avoid ref shenanigans.
+    }
+
+    /// <summary>
+    /// Looks at the given priority list, and picks the best available job (optionally with the given exclusions)
+    /// </summary>
+    /// <param name="station">Station to pick from.</param>
+    /// <param name="jobPriorities">The priority list to use for selecting a job.</param>
+    /// <param name="pickOverflows">Whether or not to pick from the overflow list.</param>
+    /// <param name="disallowedJobs">A set of disallowed jobs, if any.</param>
+    /// <returns>The selected job, if any.</returns>
+    public string? PickBestAvailableJobWithPriority(EntityUid station, IReadOnlyDictionary<string, JobPriority> jobPriorities, bool pickOverflows, IReadOnlySet<string>? disallowedJobs = null)
+    {
+        if (station == EntityUid.Invalid)
+            return null;
+
+        var available = GetAvailableJobs(station);
+        bool TryPick(JobPriority priority, [NotNullWhen(true)] out string? jobId)
+        {
+            var filtered = jobPriorities
+                .Where(p => p.Value == priority)
+                .Where(p => disallowedJobs != null && !disallowedJobs.Contains(p.Key))
+                .Where(p => available.Contains(p.Key))
+                .Select(p => p.Key)
+                .ToList();
+
+            if (filtered.Count != 0)
+            {
+                jobId = _random.Pick(filtered);
+                return true;
+            }
+
+            jobId = default;
+            return false;
+        }
+
+        if (TryPick(JobPriority.High, out var picked))
+        {
+            return picked;
+        }
+
+        if (TryPick(JobPriority.Medium, out picked))
+        {
+            return picked;
+        }
+
+        if (TryPick(JobPriority.Low, out picked))
+        {
+            return picked;
+        }
+
+        if (!pickOverflows)
+            return null;
+
+        var overflows = GetOverflowJobs(station);
+        return overflows.Count != 0 ? _random.Pick(overflows) : null;
     }
 
     #endregion Public API
