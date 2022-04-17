@@ -9,14 +9,18 @@
     netsync: false
     layers:
     - state: icon
-      map: ["enum.AutolatheVisualLayers.Base"]
+      map: ["enum.LatheVisualLayers.IsRunning"]
     - state: unlit
       shader: unshaded
-      map: ["enum.AutolatheVisualLayers.BaseUnlit"]
-    - state: building
-      map: ["enum.AutolatheVisualLayers.AnimationLayer"]
+      map: ["enum.PowerDeviceVisualLayers.Powered"]
+    - state: inserting
+      map: ["enum.LatheVisualLayers.IsInserting"]
     - state: panel
       map: ["enum.WiresVisualLayers.MaintenancePanel"]
+  - type: Appearance
+  - type: LatheVisuals
+    idleState: icon
+    runningState: building
   - type: Physics
     bodyType: Static
   - type: Fixtures
@@ -66,10 +70,6 @@
       - CableStack
       - HandheldGPSBasic
       - HandheldHealthAnalyzer
-  - type: Appearance
-    visuals:
-    - type: AutolatheVisualizer
-    - type: WiresVisualizer
   - type: ActivatableUI
     key: enum.LatheUiKey.Key
   - type: ActivatableUIRequiresPower
@@ -93,14 +93,18 @@
     netsync: false
     layers:
     - state: icon
-      map: ["enum.ProtolatheVisualLayers.Base"]
+      map: ["enum.LatheVisualLayers.IsRunning"]
     - state: unlit
       shader: unshaded
-      map: ["enum.ProtolatheVisualLayers.BaseUnlit"]
-    - state: building
-      map: ["enum.ProtolatheVisualLayers.AnimationLayer"]
+      map: ["enum.PowerDeviceVisualLayers.Powered"]
+    - state: inserting
+      map: ["enum.LatheVisualLayers.IsInserting"]
     - state: panel
       map: ["enum.WiresVisualLayers.MaintenancePanel"]
+  - type: Appearance
+  - type: LatheVisuals
+    idleState: icon
+    runningState: building
   - type: Physics
     bodyType: Static
   - type: Fixtures
@@ -196,10 +200,6 @@
       type: LatheBoundUserInterface
     - key: enum.ResearchClientUiKey.Key
       type: ResearchClientBoundUserInterface
-  - type: Appearance
-    visuals:
-    - type: ProtolatheVisualizer
-    - type: WiresVisualizer
   - type: Transform
     anchored: true
   - type: Pullable
@@ -216,12 +216,10 @@
     sprite: Structures/Machines/circuit_imprinter.rsi
     layers:
     - state: icon
-      map: ["enum.ProtolatheVisualLayers.Base"]
+      map: ["enum.LatheVisualLayers.IsRunning"]
     - state: unlit
       shader: unshaded
-      map: ["enum.ProtolatheVisualLayers.BaseUnlit"]
-    - state: building
-      map: ["enum.ProtolatheVisualLayers.AnimationLayer"]
+      map: ["enum.PowerDeviceVisualLayers.Powered"]
     - state: panel
       map: ["enum.WiresVisualLayers.MaintenancePanel"]
   - type: ProtolatheDatabase
@@ -248,6 +246,8 @@
       - StasisBedMachineCircuitboard
   - type: Machine
     board: CircuitImprinterMachineCircuitboard
+  - type: Lathe
+    producingSound: /Audio/Machines/circuitprinter.ogg
 
 - type: entity
   parent: Protolathe
@@ -260,14 +260,16 @@
     sprite: Structures/Machines/security_techfab.rsi
     layers:
     - state: icon
-      map: ["enum.ProtolatheVisualLayers.Base"]
+      map: ["enum.LatheVisualLayers.IsRunning"]
     - state: unlit
       shader: unshaded
-      map: ["enum.ProtolatheVisualLayers.BaseUnlit"]
-    - state: icon
-      map: ["enum.ProtolatheVisualLayers.AnimationLayer"]
+      map: ["enum.PowerDeviceVisualLayers.Powered"]
+    - state: inserting
+      map: ["enum.LatheVisualLayers.IsInserting"]
     - state: panel
       map: ["enum.WiresVisualLayers.MaintenancePanel"]
+    idleState: icon
+    runningState: icon
   - type: ProtolatheDatabase
     protolatherecipes:
       - Flash
@@ -375,13 +377,8 @@
     netsync: false
     layers:
     - state: icon
-      map: ["enum.AutolatheVisualLayers.Base"]
-    - state: unlit
-      shader: unshaded
-      map: ["enum.AutolatheVisualLayers.BaseUnlit"]
-    - state: building
-      map: ["enum.AutolatheVisualLayers.AnimationLayer"]
-    - state: panel
-      map: ["enum.WiresVisualLayers.MaintenancePanel"]
+      map: ["enum.LatheVisualLayers.IsRunning"]
   - type: Machine
     board: UniformPrinterMachineCircuitboard
+  - type: Lathe
+    producingSound: /Audio/Machines/uniformprinter.ogg
