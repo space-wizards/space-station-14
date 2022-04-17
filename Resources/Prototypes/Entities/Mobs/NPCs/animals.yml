@@ -8,8 +8,8 @@
   description: Some cultures find them terrifying, others crunchy on the teeth.
   components:
   - type: MovementSpeedModifier
-    baseWalkSpeed : 6
-    baseSprintSpeed : 3
+    baseWalkSpeed : 3
+    baseSprintSpeed : 6
   - type: Sprite
     drawdepth: Mobs
     layers:
