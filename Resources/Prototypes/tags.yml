@@ -336,3 +336,6 @@
 
 - type: Tag
   id: Drone
+
+- type: Tag
+  id: RawMaterial
