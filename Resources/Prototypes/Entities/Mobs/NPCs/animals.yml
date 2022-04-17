@@ -43,10 +43,14 @@
     successChance: 0.2
     interactSuccessString: petting-success-soft-floofy
     interactFailureString: petting-failure-bat
+    interactSuccessSound:
+      path: /Audio/Animals/fox_squeak.ogg
   - type: SentienceTarget
     flavorKind: organic
   - type: Bloodstream
     bloodMaxVolume: 50
+  - type: ReplacementAccent
+    accent: mouse
 
 - type: entity
   name: bee
@@ -114,6 +118,7 @@
   - type: UtilityAI
     behaviorSets:
     - UnarmedAttackHostiles
+    - Idle
   - type: AiFactionTag
     factions:
     - SimpleHostile
@@ -349,8 +354,11 @@
       gender: female # Here because of UdderComponent
   - type: InteractionPopup
     successChance: 0.7
+    interactDelay: 2 # Avoids overlapping SFX due to spam - these SFX are a little longer than the typical 1 second.
     interactSuccessString: petting-success-soft-floofy
     interactFailureString: petting-failure-generic
+    interactSuccessSound:
+      path: /Audio/Animals/cow_moo.ogg
 
 
 - type: entity
@@ -437,6 +445,8 @@
     successChance: 0.2
     interactSuccessString: petting-success-goat
     interactFailureString: petting-failure-goat
+    interactSuccessSound:
+      path: /Audio/Animals/goat_bah.ogg
 
 # Note that we gotta make this bitch vomit someday when you feed it anthrax or sumthin. Needs to be a small item thief too and aggressive if attacked.
 - type: entity
@@ -465,6 +475,8 @@
     successChance: 0.1 # Yeah, good luck with that.
     interactSuccessString: petting-success-goose
     interactFailureString: petting-failure-goose
+    interactSuccessSound:
+      path: /Audio/Animals/goose_honk.ogg
   - type: Bloodstream
     bloodMaxVolume: 100
 
@@ -705,6 +717,7 @@
     # mice are gender neutral who cares
     maleScream: /Audio/Animals/mouse_squeak.ogg
     femaleScream: /Audio/Animals/mouse_squeak.ogg
+    wilhelmProbability: 0.001
   # TODO: Remove CombatMode when Prototype Composition is added
   - type: CombatMode
     combatToggleAction:
@@ -808,6 +821,8 @@
     successChance: 0.3
     interactSuccessString: petting-success-reptile
     interactFailureString: petting-failure-generic
+    interactSuccessSound:
+      path: /Audio/Animals/lizard_happy.ogg
   - type: Bloodstream
     bloodMaxVolume: 50
   - type: Damageable
@@ -856,6 +871,8 @@
     successChance: 0.6
     interactSuccessString: petting-success-frog
     interactFailureString: petting-failure-generic
+    interactSuccessSound:
+      path: /Audio/Animals/frog_ribbit.ogg
   - type: Bloodstream
     bloodMaxVolume: 50
 
@@ -902,6 +919,8 @@
     successChance: 0.6
     interactSuccessString: petting-success-bird
     interactFailureString: petting-failure-generic
+    interactSuccessSound:
+      path: /Audio/Animals/parrot_raught.ogg
   - type: Bloodstream
     bloodMaxVolume: 50
 
@@ -944,6 +963,8 @@
     successChance: 0.5
     interactSuccessString: petting-success-bird
     interactFailureString: petting-failure-generic
+    interactSuccessSound:
+      path: /Audio/Animals/penguin_squawk.ogg
 
 - type: entity
   name: grenade penguin
@@ -1011,6 +1032,7 @@
     totalIntensity: 120
   - type: ExplodeOnTrigger
 
+  # I have included a snake_hiss.ogg sound file so if you want to use that be my guest
 - type: entity
   name: snake
   parent: SimpleMobBase
@@ -1096,6 +1118,13 @@
     spawned:
     - id: FoodMeatSpider
       amount: 2
+  - type: CombatMode
+    disarmAction:
+      enabled: false
+      autoPopulate: false
+      name: action-name-disarm
+  - type: ReplacementAccent
+    accent: xeno
   - type: InteractionPopup
     successChance: 0.5
     interactSuccessString: petting-success-tarantula
@@ -1105,6 +1134,7 @@
   name: tarantula
   parent: MobGiantSpider
   id: MobGiantSpiderAngry
+  suffix: Angry
   components:
     - type: AiFactionTag
       factions:
@@ -1113,6 +1143,10 @@
       behaviorSets:
         - Idle
         - UnarmedAttackHostiles
+    - type: GhostTakeoverAvailable
+      makeSentient: true
+      name: giant spider
+      description: Wreak havoc on the station's inhabitants!
 
 - type: entity
   name: possum
@@ -1213,6 +1247,8 @@
     successChance: 0.2 # Low when undomesticated.
     interactSuccessString: petting-success-soft-floofy
     interactFailureString: petting-failure-generic
+    interactSuccessSound:
+      path: /Audio/Animals/raccoon_chatter.ogg
   - type: Grammar
     attributes:
       gender: epicene
@@ -1270,6 +1306,8 @@
     successChance: 0.5
     interactSuccessString: petting-success-soft-floofy
     interactFailureString: petting-failure-generic
+    interactSuccessSound:
+      path: /Audio/Animals/fox_squeak.ogg
   - type: Grammar
     attributes:
       gender: epicene

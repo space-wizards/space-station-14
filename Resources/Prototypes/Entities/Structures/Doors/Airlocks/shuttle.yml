@@ -50,6 +50,8 @@
   - type: Tag
     tags:
       - ForceNoFixRotations
+  - type: PaintableAirlock
+    group: Shuttle
 
 - type: entity
   id: AirlockGlassShuttle
@@ -80,3 +82,5 @@
       map: ["enum.WiresVisualLayers.MaintenancePanel"]
   - type: Occluder
     enabled: false
+  - type: PaintableAirlock
+    group: ShuttleGlass
