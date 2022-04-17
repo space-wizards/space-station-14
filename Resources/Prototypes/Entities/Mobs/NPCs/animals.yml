@@ -49,6 +49,8 @@
     flavorKind: organic
   - type: Bloodstream
     bloodMaxVolume: 50
+  - type: ReplacementAccent
+    accent: mouse
 
 - type: entity
   name: bee
