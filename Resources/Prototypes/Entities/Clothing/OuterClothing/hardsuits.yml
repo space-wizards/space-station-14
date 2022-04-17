@@ -430,9 +430,9 @@
   description: A void suit made for paramedics.
   components:
   - type: Sprite
-    sprite: Clothing/OuterClothing/Hardsuits/Paramed.rsi
+    sprite: Clothing/OuterClothing/Hardsuits/paramed.rsi
   - type: Clothing
-    sprite: Clothing/OuterClothing/Hardsuits/Paramed.rsi
+    sprite: Clothing/OuterClothing/Hardsuits/paramed.rsi
   - type: PressureProtection
     highPressureMultiplier: 0.5
     lowPressureMultiplier: 1000
