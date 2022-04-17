@@ -25,6 +25,7 @@ public sealed partial class StationJobsSystem : EntitySystem
     [Dependency] private readonly GameTicker _gameTicker = default!;
     [Dependency] private readonly StationSystem _stationSystem = default!;
 
+    /// <inheritdoc/>
     public override void Initialize()
     {
         SubscribeLocalEvent<StationInitializedEvent>(OnStationInitialized);
@@ -356,6 +357,11 @@ public sealed partial class StationJobsSystem : EntitySystem
 
     private TickerJobsAvailableEvent _cachedAvailableJobs = new TickerJobsAvailableEvent(new Dictionary<EntityUid, string>(), new Dictionary<EntityUid, Dictionary<string, uint?>>());
 
+    /// <summary>
+    /// Assembles an event from the current available-to-play jobs.
+    /// This is moderately expensive to construct.
+    /// </summary>
+    /// <returns>The event.</returns>
     private TickerJobsAvailableEvent GenerateJobsAvailableEvent()
     {
         // If late join is disallowed, return no available jobs.

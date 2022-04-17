@@ -6,6 +6,10 @@ using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototy
 
 namespace Content.Server.Station;
 
+/// <summary>
+/// A config for a station. Specifies name and job slots.
+/// This is the only part of stations a downstream should ideally need to modify directly.
+/// </summary>
 [DataDefinition, PublicAPI]
 public sealed class StationConfig
 {
@@ -20,18 +24,18 @@ public sealed class StationConfig
     /// Name generator to use for the station, if any.
     /// </summary>
     [DataField("nameGenerator")]
-    public StationNameGenerator? NameGenerator { get; } = default!;
+    public StationNameGenerator? NameGenerator { get; }
 
     /// <summary>
     /// Jobs used at round start should the station run out of job slots.
-    /// Doesn't necessarily mean the station has infinite slots for the given jobs midround!
+    /// Doesn't necessarily mean the station has infinite slots for the given jobs mid-round!
     /// </summary>
     [DataField("overflowJobs", required: true, customTypeSerializer:typeof(PrototypeIdListSerializer<JobPrototype>))]
     public List<string> OverflowJobs { get; } = default!;
 
     /// <summary>
     /// Index of all jobs available on the station, of form
-    ///   jobname: [roundstart, midround]
+    ///   job name: [round-start, mid-round]
     /// </summary>
     [DataField("availableJobs", required: true, customTypeSerializer:typeof(PrototypeIdDictionarySerializer<List<int?>, JobPrototype>))]
     public Dictionary<string, List<int?>> AvailableJobs { get; } = default!;

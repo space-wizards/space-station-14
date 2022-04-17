@@ -33,7 +33,6 @@ public sealed partial class StationJobsSystem
         _orderedWeights = _jobsByWeight.Keys.OrderByDescending(i => i).ToList();
     }
 
-    // TODO: CLEAN THIS SHIT UP NERD
     /// <summary>
     /// Assigns jobs based on the given preferences and list of stations to assign for.
     /// This does NOT change the slots on the station, only figures out where each player should go.
@@ -215,6 +214,7 @@ public sealed partial class StationJobsSystem
     /// <param name="assignedJobs">All assigned jobs.</param>
     /// <param name="allPlayersToAssign">All players that might need an overflow assigned.</param>
     /// <param name="profiles">Player character profiles.</param>
+    /// <param name="stations">The stations to consider for spawn location.</param>
     public void AssignOverflowJobs(ref Dictionary<NetUserId, (string, EntityUid)> assignedJobs,
         IEnumerable<NetUserId> allPlayersToAssign, IReadOnlyDictionary<NetUserId, HumanoidCharacterProfile> profiles, IReadOnlyList<EntityUid> stations)
     {
@@ -256,6 +256,13 @@ public sealed partial class StationJobsSystem
         }
     }
 
+    /// <summary>
+    /// Gets all jobs that the input players have that match the given weight and priority.
+    /// </summary>
+    /// <param name="weight">Weight to find, if any.</param>
+    /// <param name="selectedPriority">Priority to find, if any.</param>
+    /// <param name="profiles">Profiles to look in.</param>
+    /// <returns>Players and a list of their matching jobs.</returns>
     private Dictionary<NetUserId, List<string>> GetPlayersJobCandidates(int? weight, JobPriority? selectedPriority, Dictionary<NetUserId, HumanoidCharacterProfile> profiles)
     {
         var outputDict = new Dictionary<NetUserId, List<string>>(profiles.Count);

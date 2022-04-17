@@ -10,6 +10,14 @@ namespace Content.Server.Station.Components;
 [RegisterComponent, Friend(typeof(StationSpawningSystem))]
 public sealed class StationSpawnerManagerComponent : Component
 {
+    /// <summary>
+    /// The last grid this entity was parented to.
+    /// This is for bookkeeping, and you shouldn't use this.
+    /// </summary>
     public GridId? PreviousGrid;
+    /// <summary>
+    /// The last station this entity was a member of.
+    /// This is for bookkeeping, and you shouldn't use this.
+    /// </summary>
     public EntityUid? PreviousStation;
 }

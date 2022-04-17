@@ -36,6 +36,7 @@ public sealed partial class StationSpawningSystem : EntitySystem
     [Dependency] private readonly InventorySystem _inventorySystem = default!;
     [Dependency] private readonly PDASystem _pdaSystem = default!;
 
+    /// <inheritdoc/>
     public override void Initialize()
     {
         SubscribeLocalEvent<StationInitializedEvent>(OnStationInitialized);
@@ -294,8 +295,17 @@ public sealed partial class StationSpawningSystem : EntitySystem
 [PublicAPI, ByRefEvent]
 public sealed class SpawnPlayerEvent : EntityEventArgs
 {
+    /// <summary>
+    /// The entity spawned, if any. You should set this if you succeed at spawning the character.
+    /// </summary>
     public EntityUid? SpawnResult;
+    /// <summary>
+    /// The job to use, if any.
+    /// </summary>
     public readonly Job? Job;
+    /// <summary>
+    /// The profile to use, if any.
+    /// </summary>
     public readonly HumanoidCharacterProfile? HumanoidCharacterProfile;
 
     public SpawnPlayerEvent(Job? job, HumanoidCharacterProfile? humanoidCharacterProfile)

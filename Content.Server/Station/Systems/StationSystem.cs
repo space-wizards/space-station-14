@@ -34,12 +34,16 @@ public sealed class StationSystem : EntitySystem
     /// <summary>
     /// All stations that currently exist.
     /// </summary>
+    /// <remarks>
+    /// I'd have this just invoke an entity query, but I want this to be a hashset for convenience and it allocating on use would be lame.
+    /// </remarks>
     public IReadOnlySet<EntityUid> Stations => _stations;
 
     private bool _randomStationOffset;
     private bool _randomStationRotation;
     private float _maxRandomStationOffset;
 
+    /// <inheritdoc/>
     public override void Initialize()
     {
         _sawmill = _logManager.GetSawmill("station");
@@ -154,12 +158,11 @@ public sealed class StationSystem : EntitySystem
     /// </summary>
     /// <param name="config"></param>
     /// <returns></returns>
-    public string GenerateStationName(StationConfig config)
+    public static string GenerateStationName(StationConfig config)
     {
-        if (config.NameGenerator is not null)
-            return config.NameGenerator.FormatName(config.StationNameTemplate);
-        else
-            return config.StationNameTemplate;
+        return config.NameGenerator is not null
+            ? config.NameGenerator.FormatName(config.StationNameTemplate)
+            : config.StationNameTemplate;
     }
 
     /// <summary>
@@ -171,7 +174,7 @@ public sealed class StationSystem : EntitySystem
     /// <returns>The initialized station.</returns>
     public EntityUid InitializeNewStation(StationConfig? stationConfig, IEnumerable<GridId>? gridIds, string? name = null)
     {
-        //HACK: This needs to go in nullspace but that crashes currently.
+        //HACK: This needs to go in null-space but that crashes currently.
         var station = Spawn(null, new MapCoordinates(0, 0, _gameTicker.DefaultMap));
         var data = AddComp<StationDataComponent>(station);
         var metaData = MetaData(station);
@@ -302,7 +305,7 @@ public sealed class StationInitializedEvent : EntityEventArgs
     /// Station this event is for.
     /// </summary>
     public EntityUid Station;
-
+    
     public StationInitializedEvent(EntityUid station)
     {
         Station = station;

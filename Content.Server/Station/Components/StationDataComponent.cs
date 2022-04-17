@@ -4,7 +4,10 @@ using Robust.Shared.Map;
 
 namespace Content.Server.Station.Components;
 
-
+/// <summary>
+/// Stores core information about a station, namely it's config and associated grids.
+/// All station entities will have this component.
+/// </summary>
 [RegisterComponent, Friend(typeof(StationSystem))]
 public sealed class StationDataComponent : Component
 {

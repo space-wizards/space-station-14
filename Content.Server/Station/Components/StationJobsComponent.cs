@@ -3,6 +3,9 @@ using JetBrains.Annotations;
 
 namespace Content.Server.Station.Components;
 
+/// <summary>
+/// Stores information about a station's job selection.
+/// </summary>
 [RegisterComponent, Friend(typeof(StationJobsSystem)), PublicAPI]
 public sealed class StationJobsComponent : Component
 {
