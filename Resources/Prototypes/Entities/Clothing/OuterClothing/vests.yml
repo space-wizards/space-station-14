@@ -15,7 +15,9 @@
         Slash: 0.7
         Piercing: 0.5
         Heat: 0.9
-
+  - type: ExplosionResistance
+    resistance: 0.9
+    
 - type: entity
   parent: ClothingOuterBase
   id: ClothingOuterVestWeb
@@ -33,6 +35,8 @@
         Slash: 0.6
         Piercing: 0.3
         Heat: 0.9
+  - type: ExplosionResistance
+    resistance: 0.9
 
 - type: entity
   parent: ClothingOuterBase
@@ -51,6 +55,8 @@
         Slash: 0.9
         Piercing: 0.4
         Heat: 0.9
+  - type: ExplosionResistance
+    resistance: 0.9
 
 - type: entity
   parent: ClothingOuterBase
@@ -69,6 +75,8 @@
         Slash: 0.8
         Piercing: 0.85
         Heat: 0.9
+  - type: ExplosionResistance
+    resistance: 0.9
 
 - type: entity
   parent: ClothingOuterBase
