@@ -16,3 +16,8 @@
   icon: /Textures/Objects/Materials/materials.rsi/durathread.png
   spawn: MaterialDurathread1
 
+- type: stack
+  id: Diamond
+  name: diamond
+  icon: /Textures/Objects/Materials/materials.rsi/diamond.png
+  spawn: MaterialDiamond1
