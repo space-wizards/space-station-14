@@ -264,6 +264,7 @@
     - FireExtinguisher
     - AutolatheMachineCircuitboard
     - ProtolatheMachineCircuitboard
+    - OreProcessorMachineCircuitboard
     - CircuitImprinterMachineCircuitboard
     - UniformPrinterMachineCircuitboard
     - AirAlarmElectronics

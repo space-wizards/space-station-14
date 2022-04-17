@@ -244,6 +244,7 @@
       - CircuitImprinterMachineCircuitboard
       - DawInstrumentMachineCircuitboard
       - StasisBedMachineCircuitboard
+      - OreProcessorMachineCircuitboard
   - type: Machine
     board: CircuitImprinterMachineCircuitboard
   - type: Lathe

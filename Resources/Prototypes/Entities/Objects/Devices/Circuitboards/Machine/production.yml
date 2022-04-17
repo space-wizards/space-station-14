@@ -338,7 +338,7 @@
 - type: entity
   id: OreProcessorMachineCircuitboard
   parent: BaseMachineCircuitboard
-  name: Ore Processor (Machine Board)
+  name: ore processor machine board
   components:
     - type: MachineBoard
       prototype: OreProcessor
