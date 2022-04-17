@@ -14,3 +14,14 @@
   supportedTypes:
     - Heat
     - Shock
+
+# Same as inorganic, but has Structural damage.
+# Use it for walls, airlocks and other structures.
+- type: damageContainer
+  id: Structures
+  supportedGroups:
+    - Brute
+  supportedTypes:
+    - Heat
+    - Shock
+    - Structural

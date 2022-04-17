@@ -36,3 +36,8 @@
 
 - type: damageType
   id: Cellular
+
+# Damage represent structures internal integrity.
+# Exclusive for structures such as walls, airlocks and others.
+- type: damageType
+  id: Structural
