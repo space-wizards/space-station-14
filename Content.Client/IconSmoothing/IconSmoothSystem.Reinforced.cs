@@ -24,4 +24,9 @@ public sealed partial class IconSmoothSystem
             sprite.LayerMapSet(ReinforcedWallVisualLayers.Deconstruction, sprite.AddBlankLayer());
         }
     }
+
+    private void OnReinforcedShutdown(EntityUid uid, ReinforcedWallComponent component, ComponentShutdown args)
+    {
+        UpdateSmoothing(uid, component);
+    }
 }

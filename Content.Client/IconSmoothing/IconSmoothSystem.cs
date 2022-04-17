@@ -29,6 +29,7 @@ namespace Content.Client.IconSmoothing
             SubscribeLocalEvent<IconSmoothComponent, ComponentStartup>(OnSmoothStartup);
             SubscribeLocalEvent<IconSmoothComponent, ComponentShutdown>(OnSmoothShutdown);
             SubscribeLocalEvent<ReinforcedWallComponent, ComponentStartup>(OnReinforcedStartup);
+            SubscribeLocalEvent<ReinforcedWallComponent, ComponentShutdown>(OnReinforcedShutdown);
         }
 
         private void UpdateSmoothPos(EntityUid uid, IconSmoothComponent component)
