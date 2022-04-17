@@ -5,13 +5,6 @@
   icon: Objects/Materials/Sheets/metal.rsi/steel.png
 
 - type: material
-  id: Adamantine
-  stack: Adamantine
-  name: adamantine
-  icon: Objects/Materials/ingots.rsi/adamantine.png
-  color: "#7dc37f"
-
-- type: material
   id: Gold
   stack: Gold
   name: gold
