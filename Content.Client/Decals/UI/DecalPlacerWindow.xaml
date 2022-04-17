@@ -11,7 +11,7 @@
             </GridContainer>
         </ScrollContainer>
 
-        <ui:AlphaColorPicker Name="ColorPicker"/>
+        <ColorSelectorSliders Name="ColorPicker" IsAlphaVisible="True" />
         <CheckBox Name="EnableColor" Text="{Loc 'decal-placer-window-use-color'}" />
         <CheckBox Name="EnableSnap" Text="{Loc 'decal-placer-window-enable-snap'}" />
         <CheckBox Name="EnableCleanable" Text="{Loc 'decal-placer-window-enable-cleanable'}" />

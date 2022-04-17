@@ -245,6 +245,7 @@
       - ShuttleConsoleCircuitboard
       - CircuitImprinterMachineCircuitboard
       - DawInstrumentMachineCircuitboard
+      - StasisBedMachineCircuitboard
   - type: Machine
     board: CircuitImprinterMachineCircuitboard
 

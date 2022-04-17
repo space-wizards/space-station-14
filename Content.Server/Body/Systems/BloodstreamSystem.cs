@@ -39,6 +39,7 @@ public sealed class BloodstreamSystem : EntitySystem
         SubscribeLocalEvent<BloodstreamComponent, DamageChangedEvent>(OnDamageChanged);
         SubscribeLocalEvent<BloodstreamComponent, HealthBeingExaminedEvent>(OnHealthBeingExamined);
         SubscribeLocalEvent<BloodstreamComponent, BeingGibbedEvent>(OnBeingGibbed);
+        SubscribeLocalEvent<BloodstreamComponent, ApplyMetabolicMultiplierEvent>(OnApplyMetabolicMultiplier);
         SubscribeLocalEvent<BloodstreamComponent, ReactionAttemptEvent>(OnReactionAttempt);
     }
 
@@ -191,6 +192,19 @@ public sealed class BloodstreamSystem : EntitySystem
     private void OnBeingGibbed(EntityUid uid, BloodstreamComponent component, BeingGibbedEvent args)
     {
         SpillAllSolutions(uid, component);
+    }
+
+    private void OnApplyMetabolicMultiplier(EntityUid uid, BloodstreamComponent component, ApplyMetabolicMultiplierEvent args)
+    {
+        if (args.Apply)
+        {
+            component.UpdateInterval *= args.Multiplier;
+            return;
+        }
+        component.UpdateInterval /= args.Multiplier;
+        // Reset the accumulator properly
+        if (component.AccumulatedFrametime >= component.UpdateInterval)
+            component.AccumulatedFrametime = component.UpdateInterval;
     }
 
     /// <summary>

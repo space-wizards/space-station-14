@@ -45,7 +45,6 @@
     - Hiss.
     - Hisssss!
     - Hisssuuu...
-    - Sssss~
     - Hiss...!
 
 - type: accent
@@ -55,3 +54,11 @@
     - Mmuaaaa..
     - Braainnssss...
     - Grrrrr...
+
+- type: accent
+  id: genericAggressive
+  words:
+  - Grr!
+  - Rrrr!
+  - Grr...
+  - Grrow!!

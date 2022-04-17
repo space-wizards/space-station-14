@@ -38,6 +38,7 @@ namespace Content.Server.GameTicking.Commands
 
             ticker.SetGamePreset(type, true);
             shell.WriteLine($"Forced the game to start with preset {name}.");
+            ticker.UpdateInfoText();
         }
     }
 }

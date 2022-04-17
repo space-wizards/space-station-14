@@ -9,8 +9,8 @@
   - type: Clothing
     sprite: Clothing/OuterClothing/Hardsuits/atmospherics.rsi
   - type: PressureProtection
-    highPressureMultiplier: 0.2
-    lowPressureMultiplier: 100
+    highPressureMultiplier: 0.08
+    lowPressureMultiplier: 10000
   - type: ClothingSpeedModifier
     walkModifier: 0.65
     sprintModifier: 0.7 
@@ -36,8 +36,8 @@
   - type: Clothing
     sprite: Clothing/OuterClothing/Hardsuits/capspace.rsi
   - type: PressureProtection
-    highPressureMultiplier: 0.5
-    lowPressureMultiplier: 100
+    highPressureMultiplier: 0.3
+    lowPressureMultiplier: 1000
   - type: ClothingSpeedModifier
     walkModifier: 0.8
     sprintModifier: 0.8
@@ -61,8 +61,8 @@
   - type: Clothing
     sprite: Clothing/OuterClothing/Hardsuits/deathsquad.rsi
   - type: PressureProtection
-    highPressureMultiplier: 0.45
-    lowPressureMultiplier: 100
+    highPressureMultiplier: 0.27
+    lowPressureMultiplier: 1000
   - type: ClothingSpeedModifier
     walkModifier: 1.0
     sprintModifier: 1.0
@@ -86,8 +86,8 @@
   - type: Clothing
     sprite: Clothing/OuterClothing/Hardsuits/engineering.rsi
   - type: PressureProtection
-    highPressureMultiplier: 0.65
-    lowPressureMultiplier: 100
+    highPressureMultiplier: 0.26
+    lowPressureMultiplier: 1000
   - type: ClothingSpeedModifier
     walkModifier: 0.65
     sprintModifier: 0.65 
@@ -111,8 +111,8 @@
   - type: Clothing
     sprite: Clothing/OuterClothing/Hardsuits/engineering-white.rsi
   - type: PressureProtection
-    highPressureMultiplier: 0.4
-    lowPressureMultiplier: 100
+    highPressureMultiplier: 0.24
+    lowPressureMultiplier: 1000
   - type: ClothingSpeedModifier
     walkModifier: 0.75
     sprintModifier: 0.8 
@@ -136,10 +136,12 @@
     sprite: Clothing/OuterClothing/Hardsuits/ihsvoid.rsi
   - type: Clothing
     sprite: Clothing/OuterClothing/Hardsuits/ihsvoid.rsi
-  - type: PressureProtection
   - type: ClothingSpeedModifier
     walkModifier: 0.8
     sprintModifier: 0.8
+  - type: PressureProtection
+    highPressureMultiplier: 0.3
+    lowPressureMultiplier: 10000
 
 - type: entity
   parent: ClothingOuterEVASuitBase
@@ -187,8 +189,8 @@
   - type: Clothing
     sprite: Clothing/OuterClothing/Hardsuits/medical.rsi
   - type: PressureProtection
-    highPressureMultiplier: 0.75
-    lowPressureMultiplier: 100
+    highPressureMultiplier: 0.6
+    lowPressureMultiplier: 5500
   - type: DiseaseProtection
     protection: 0.2
   - type: ClothingSpeedModifier
@@ -211,8 +213,8 @@
   - type: Clothing
     sprite: Clothing/OuterClothing/Hardsuits/rd.rsi
   - type: PressureProtection
-    highPressureMultiplier: 0.75
-    lowPressureMultiplier: 100
+    highPressureMultiplier: 0.60
+    lowPressureMultiplier: 5500
   - type: Armor
     modifiers:
       coefficients:
@@ -236,8 +238,8 @@
   - type: Clothing
     sprite: Clothing/OuterClothing/Hardsuits/salvage.rsi
   - type: PressureProtection
-    highPressureMultiplier: 0.75
-    lowPressureMultiplier: 100
+    highPressureMultiplier: 0.525
+    lowPressureMultiplier: 10000
   - type: ClothingSpeedModifier
     walkModifier: 0.6 #changing these values around so its only a tiny bit faster so less salvages get stuck floating in space
     sprintModifier: 0.65
@@ -261,8 +263,8 @@
   - type: Clothing
     sprite: Clothing/OuterClothing/Hardsuits/security.rsi
   - type: PressureProtection
-    highPressureMultiplier: 0.75
-    lowPressureMultiplier: 100
+    highPressureMultiplier: 0.525
+    lowPressureMultiplier: 10000
   - type: Armor
     modifiers:
       coefficients:
@@ -283,8 +285,8 @@
   - type: Clothing
     sprite: Clothing/OuterClothing/Hardsuits/security-red.rsi
   - type: PressureProtection
-    highPressureMultiplier: 0.75
-    lowPressureMultiplier: 100
+    highPressureMultiplier: 0.45
+    lowPressureMultiplier: 10000
   - type: ClothingSpeedModifier
     walkModifier: 0.7 
     sprintModifier: 0.7
@@ -308,8 +310,8 @@
   - type: Clothing
     sprite: Clothing/OuterClothing/Hardsuits/syndicate.rsi
   - type: PressureProtection
-    highPressureMultiplier: 0.45
-    lowPressureMultiplier: 100
+    highPressureMultiplier: 0.27
+    lowPressureMultiplier: 1000
   - type: ClothingSpeedModifier
     walkModifier: 1.0
     sprintModifier: 1.0
@@ -333,8 +335,8 @@
   - type: Clothing
     sprite: Clothing/OuterClothing/Hardsuits/wizard.rsi
   - type: PressureProtection
-    highPressureMultiplier: 0.45
-    lowPressureMultiplier: 100
+    highPressureMultiplier: 0.27
+    lowPressureMultiplier: 1000
   - type: ClothingSpeedModifier
     walkModifier: 0.8
     sprintModifier: 0.8
@@ -358,8 +360,8 @@
   - type: Clothing
     sprite: Clothing/OuterClothing/Hardsuits/lingspacesuit.rsi
   - type: PressureProtection
-    highPressureMultiplier: 0.45
-    lowPressureMultiplier: 100
+    highPressureMultiplier: 0.225
+    lowPressureMultiplier: 10000
   - type: ClothingSpeedModifier
     walkModifier: .8
     sprintModifier: .8
@@ -383,8 +385,8 @@
   - type: Clothing
     sprite: Clothing/OuterClothing/Hardsuits/spatio.rsi
   - type: PressureProtection
-    highPressureMultiplier: 0.9
-    lowPressureMultiplier: 100
+    highPressureMultiplier: 0.72
+    lowPressureMultiplier: 10000
   - type: ClothingSpeedModifier
     walkModifier: 0.9 #mildly better than eva, might adjust this down if its heavily abused but want to see how it plays out in game first 
     sprintModifier: 0.8
