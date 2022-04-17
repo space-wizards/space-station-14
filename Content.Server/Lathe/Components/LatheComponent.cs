@@ -11,11 +11,6 @@ namespace Content.Server.Lathe.Components
     public sealed class LatheComponent : SharedLatheComponent
     {
         /// <summary>
-        /// How much volume in cm^3 each sheet of material adds
-        /// </summary>
-        public int VolumePerSheet = 100;
-        
-        /// <summary>
         /// Whitelist for specifying the kind of materials that can be insert into the lathe
         /// </summary>
         [DataField("whitelist")] 

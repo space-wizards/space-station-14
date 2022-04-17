@@ -81,6 +81,10 @@
     anchored: true
   - type: Pullable
   - type: Lathe
+    whitelist:
+      tags:
+        - Sheet
+        - RawMaterial
 
 - type: entity
   parent: BaseMachinePowered
@@ -204,6 +208,10 @@
     anchored: true
   - type: Pullable
   - type: Lathe
+    whitelist:
+      tags:
+        - Sheet
+        - RawMaterial
 
 - type: entity
   parent: Protolathe
@@ -249,6 +257,10 @@
     board: CircuitImprinterMachineCircuitboard
   - type: Lathe
     producingSound: /Audio/Machines/circuitprinter.ogg
+    whitelist:
+      tags:
+        - Sheet
+        - RawMaterial
 
 - type: entity
   parent: Protolathe
@@ -301,6 +313,11 @@
       - CableMVStack
       - CableHVStack
       - TimerTrigger
+  - type: Lathe
+    whitelist:
+      tags:
+        - Sheet
+        - RawMaterial
 
 - type: entity
   parent: Autolathe
@@ -382,6 +399,10 @@
     board: UniformPrinterMachineCircuitboard
   - type: Lathe
     producingSound: /Audio/Machines/uniformprinter.ogg
+    whitelist:
+      tags:
+        - Sheet
+        - RawMaterial
 
 - type: entity
   parent: Autolathe
