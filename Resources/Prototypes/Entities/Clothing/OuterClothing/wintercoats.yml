@@ -15,6 +15,8 @@
       coefficients:
         Slash: 0.95
         Heat: 0.75
+  - type: Storage
+    capacity: 10
 
 - type: entity
   parent: ClothingOuterWinterCoat
