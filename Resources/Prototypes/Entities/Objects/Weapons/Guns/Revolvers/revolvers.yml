@@ -26,10 +26,10 @@
       map: ["enum.RangedBarrelVisualLayers.MagUnshaded"]
       shader: unshaded
   - type: Item
-    size: 24
+    size: 12
     sprite: Objects/Weapons/Guns/Revolvers/deckard.rsi
   - type: RangedWeapon
-  - type: BoltActionBarrel
+  - type: RevolverBarrel
     currentSelector: Single
     allSelectors:
     - Single
@@ -64,7 +64,7 @@
   - type: Sprite
     sprite: Objects/Weapons/Guns/Revolvers/inspector.rsi
   - type: Item
-    size: 24
+    size: 12
     sprite: Objects/Weapons/Guns/Revolvers/inspector.rsi
   - type: RangedWeapon
   - type: RevolverBarrel
@@ -96,7 +96,7 @@
   - type: Sprite
     sprite: Objects/Weapons/Guns/Revolvers/mateba.rsi
   - type: Item
-    size: 24
+    size: 12
     sprite: Objects/Weapons/Guns/Revolvers/mateba.rsi
   - type: RangedWeapon
   - type: RevolverBarrel
@@ -128,7 +128,7 @@
   - type: Sprite
     sprite: Objects/Weapons/Guns/Revolvers/predator.rsi
   - type: Item
-    size: 24
+    size: 12
     sprite: Objects/Weapons/Guns/Revolvers/predator.rsi
   - type: RangedWeapon
   - type: RevolverBarrel
@@ -160,7 +160,7 @@
   - type: Sprite
     sprite: Objects/Weapons/Guns/Revolvers/pirate_revolver.rsi
   - type: Item
-    size: 24
+    size: 12
     sprite: Objects/Weapons/Guns/Revolvers/pirate_revolver.rsi
   - type: RangedWeapon
   - type: RevolverBarrel

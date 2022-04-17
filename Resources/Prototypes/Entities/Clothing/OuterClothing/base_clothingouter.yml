@@ -16,8 +16,8 @@
   name: base hardsuit
   components:
   - type: PressureProtection
-    highPressureMultiplier: 0.5
-    lowPressureMultiplier: 100
+    highPressureMultiplier: 0.3
+    lowPressureMultiplier: 1000
   - type: TemperatureProtection
     coefficient: 0.001 # yes it needs to be this low, fires are fucking deadly apparently!!!!
   - type: ClothingSpeedModifier
@@ -42,8 +42,8 @@
   name: base EVA Suit
   components:
   - type: PressureProtection
-    highPressureMultiplier: 1
-    lowPressureMultiplier: 100
+    highPressureMultiplier: 0.6
+    lowPressureMultiplier: 1000
   - type: TemperatureProtection
     coefficient: 0.01 # Not complete protection from fire
   - type: ClothingSpeedModifier

@@ -1,4 +1,3 @@
-using System;
 using Content.Server.Administration.Logs;
 using Content.Server.Atmos.Components;
 using Content.Shared.Alert;
@@ -6,8 +5,8 @@ using Content.Shared.Atmos;
 using Content.Shared.Damage;
 using Content.Shared.Database;
 using Content.Shared.FixedPoint;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
+using Content.Shared.Inventory;
+using Robust.Shared.Containers;
 
 namespace Content.Server.Atmos.EntitySystems
 {
@@ -17,6 +16,7 @@ namespace Content.Server.Atmos.EntitySystems
         [Dependency] private readonly DamageableSystem _damageableSystem = default!;
         [Dependency] private readonly AlertsSystem _alertsSystem = default!;
         [Dependency] private readonly AdminLogSystem _logSystem = default!;
+        [Dependency] private readonly InventorySystem _inventorySystem = default!;
 
         private const float UpdateTimer = 1f;
         private float _timer;
@@ -39,27 +39,72 @@ namespace Content.Server.Atmos.EntitySystems
             args.Multiplier *= component.LowPressureMultiplier;
         }
 
-        private float CalculateFeltPressure(float environmentPressure, PressureEvent pressureEvent)
+        public float GetFeltLowPressure(BarotraumaComponent baro, float environmentPressure)
         {
-            environmentPressure += pressureEvent.Modifier;
-            environmentPressure *= pressureEvent.Multiplier;
-            return environmentPressure;
-        }
+            var modifier = float.MaxValue;
+            var multiplier = float.MaxValue;
 
-        public float GetFeltLowPressure(EntityUid uid, float environmentPressure)
-        {
+            TryComp(baro.Owner, out InventoryComponent? inv);
+            TryComp(baro.Owner, out ContainerManagerComponent? contMan);
+
+            // TODO: cache this & update when equipment changes?
+            // This continuously raises events for every player in space.
+
+            // First, check if for protective equipment
+            foreach (var slot in baro.ProtectionSlots)
+            {
+                if (!_inventorySystem.TryGetSlotEntity(baro.Owner, slot, out var equipment, inv, contMan)
+                    || ! TryComp(equipment, out PressureProtectionComponent? protection))
+                {
+                    // Missing protection, skin is exposed.
+                    modifier = 0;
+                    multiplier = 1;
+                    break;
+                }
+
+                modifier = Math.Min(protection.LowPressureModifier, modifier);
+                multiplier = Math.Min(protection.LowPressureMultiplier, multiplier);
+            }
+
+            // Then apply any generic, non-clothing related modifiers.
             var lowPressureEvent = new LowPressureEvent(environmentPressure);
-            RaiseLocalEvent(uid, lowPressureEvent, false);
+            RaiseLocalEvent(baro.Owner, lowPressureEvent, false);
 
-            return CalculateFeltPressure(environmentPressure, lowPressureEvent);
+            return (environmentPressure + modifier + lowPressureEvent.Modifier) * (multiplier * lowPressureEvent.Multiplier);
         }
 
-        public float GetFeltHighPressure(EntityUid uid, float environmentPressure)
+        public float GetFeltHighPressure(BarotraumaComponent baro, float environmentPressure)
         {
-            var highPressureEvent = new HighPressureEvent(environmentPressure);
-            RaiseLocalEvent(uid, highPressureEvent, false);
+            var modifier = float.MinValue;
+            var multiplier = float.MinValue;
 
-            return CalculateFeltPressure(environmentPressure, highPressureEvent);
+            TryComp(baro.Owner, out InventoryComponent? inv);
+            TryComp(baro.Owner, out ContainerManagerComponent? contMan);
+
+            // TODO: cache this & update when equipment changes?
+            // Not as import and as low-pressure, but probably still useful.
+
+            // First, check if for protective equipment
+            foreach (var slot in baro.ProtectionSlots)
+            {
+                if (!_inventorySystem.TryGetSlotEntity(baro.Owner, slot, out var equipment, inv, contMan)
+                    || !TryComp(equipment, out PressureProtectionComponent? protection))
+                {
+                    // Missing protection, skin is exposed.
+                    modifier = 0;
+                    multiplier = 1;
+                    break;
+                }
+
+                modifier = Math.Max(protection.LowPressureModifier, modifier);
+                multiplier = Math.Max(protection.LowPressureMultiplier, multiplier);
+            }
+
+            // Then apply any generic, non-clothing related modifiers.
+            var highPressureEvent = new HighPressureEvent(environmentPressure);
+            RaiseLocalEvent(baro.Owner, highPressureEvent, false);
+
+            return (environmentPressure + modifier + highPressureEvent.Modifier) * (multiplier * highPressureEvent.Multiplier);
         }
 
         public override void Update(float frameTime)
@@ -94,7 +139,7 @@ namespace Content.Server.Atmos.EntitySystems
                 {
                     // Low pressure.
                     case <= Atmospherics.WarningLowPressure:
-                        pressure = GetFeltLowPressure(barotrauma.Owner, pressure);
+                        pressure = GetFeltLowPressure(barotrauma, pressure);
 
                         if (pressure > Atmospherics.WarningLowPressure)
                             goto default;
@@ -119,7 +164,7 @@ namespace Content.Server.Atmos.EntitySystems
 
                     // High pressure.
                     case >= Atmospherics.WarningHighPressure:
-                        pressure = GetFeltHighPressure(barotrauma.Owner, pressure);
+                        pressure = GetFeltHighPressure(barotrauma, pressure);
 
                         if(pressure < Atmospherics.WarningHighPressure)
                             goto default;
