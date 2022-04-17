@@ -134,6 +134,8 @@
         Slash: 0.4
         Piercing: 0.9
         Heat: 0.9
+  - type: ExplosionResistance
+    resistance: 0.9
 
 - type: entity
   parent: ClothingOuterBase
@@ -152,6 +154,8 @@
         Slash: 0.7
         Piercing: 0.4
         Heat: 0.9
+  - type: ExplosionResistance
+    resistance: 0.8
 
 - type: entity
   parent: ClothingOuterBase
@@ -170,7 +174,9 @@
         Slash: 0.5
         Piercing: 0.6
         Heat: 0.5
-
+  - type: ExplosionResistance
+    resistance: 0.65
+    
 - type: entity
   parent: ClothingOuterBase
   id: ClothingOuterArmorChangeling
@@ -192,4 +198,5 @@
   - type: ClothingSpeedModifier
     walkModifier: 0.7
     sprintModifier: 0.65 
-    
+  - type: ExplosionResistance
+    resistance: 0.5
