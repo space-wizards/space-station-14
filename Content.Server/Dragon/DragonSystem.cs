@@ -33,8 +33,8 @@ namespace Content.Server.Dragon
             SubscribeLocalEvent<DragonComponent, DevourActionEvent>(OnDevourAction);
             SubscribeLocalEvent<DragonComponent, CarpBirthEvent>(OnCarpBirthAction);
 
-            SubscribeLocalEvent<TargetDevourSuccessfulEvent>(OnDevourSucsessful);
-            SubscribeLocalEvent<TargetDevourCancelledEvent>(OnDevourCancelled);
+            SubscribeLocalEvent<TargetDevourSuccessfulEvent>(OnBuildingDevourSuccessful);
+            SubscribeLocalEvent<TargetDevourCancelledEvent>(OnBuildingDevourCancelled);
             SubscribeLocalEvent<DragonComponent, MobStateChangedEvent>(OnMobStateChanged);
         }
 
@@ -50,17 +50,17 @@ namespace Content.Server.Dragon
         }
 
         /// <summary>
-        /// On cancellation of a devour attempt
-        /// </summary>
-        private void OnDevourCancelled(TargetDevourCancelledEvent args)
+        /// On cancellation of a non-alive entity devour attempt
+        /// </summary> 
+        private void OnBuildingDevourCancelled(TargetDevourCancelledEvent args)
         {
             args.DragonComponent.CancelToken = null;
         }
 
         /// <summary>
-        /// On a sucsessful devour attempt
+        /// On a sucsessful non-alive entity devour attempt
         /// </summary>
-        private void OnDevourSuccessful(TargetDevourSuccessfulEvent args)
+        private void OnBuildingDevourSuccessful(TargetDevourSuccessfulEvent args)
         {
             //TODO: Figure out a better way of removing structures via devour that still entails standing still and waiting for a DoAfter. Somehow.
             EntityManager.QueueDeleteEntity(args.Target);

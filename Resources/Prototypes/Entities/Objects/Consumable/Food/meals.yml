@@ -177,7 +177,7 @@
         reagents:
         - ReagentId: Nutriment
           Quantity: 6
-        - ReagentId: CarpToxin
+        - ReagentId: CarpoToxin
           Quantity: 3
 # Tastes like fish, batter, hot peppers.
 
@@ -382,7 +382,7 @@
         reagents:
         - ReagentId: Nutriment
           Quantity: 6
-        - ReagentId: CarpToxin
+        - ReagentId: CarpoToxin
           Quantity: 15
 # tastes exotic
 

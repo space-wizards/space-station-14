@@ -69,12 +69,12 @@
     solutions:
       food:
         reagents:
-        - ReagentId: CarpToxin
+        - ReagentId: CarpoToxin
           Quantity: 5
   - type: Extractable
     juiceSolution:
       reagents:
-      - ReagentId: CarpToxin
+      - ReagentId: CarpoToxin
         Quantity: 5
 
 - type: entity
