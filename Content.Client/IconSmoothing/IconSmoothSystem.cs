@@ -1,3 +1,4 @@
+using Content.Client.Wall.Components;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
 using Robust.Shared.Map;
@@ -8,7 +9,7 @@ namespace Content.Client.IconSmoothing
     ///     Entity system implementing the logic for <see cref="IconSmoothComponent"/>
     /// </summary>
     [UsedImplicitly]
-    internal sealed class IconSmoothSystem : EntitySystem
+    public sealed partial class IconSmoothSystem : EntitySystem
     {
         [Dependency] private readonly IMapManager _mapManager = default!;
         private ISawmill _sawmill = default!;
@@ -27,6 +28,7 @@ namespace Content.Client.IconSmoothing
             SubscribeLocalEvent<IconSmoothComponent, AnchorStateChangedEvent>(OnAnchorChanged);
             SubscribeLocalEvent<IconSmoothComponent, ComponentStartup>(OnSmoothStartup);
             SubscribeLocalEvent<IconSmoothComponent, ComponentShutdown>(OnSmoothShutdown);
+            SubscribeLocalEvent<ReinforcedWallComponent, ComponentStartup>(OnReinforcedStartup);
         }
 
         private void OnSmoothStartup(EntityUid uid, IconSmoothComponent component, ComponentStartup args)
@@ -198,6 +200,16 @@ namespace Content.Client.IconSmoothing
                     break;
                 default:
                     throw new ArgumentOutOfRangeException();
+            }
+
+            if (component is ReinforcedWallComponent reinforced && TryComp<SpriteComponent>(component.Owner, out var sprite))
+            {
+                var (cornerNE, cornerNW, cornerSW, cornerSE) = CalculateCornerFill(component, grid);
+
+                sprite.LayerSetState(ReinforcedCornerLayers.NE, $"{reinforced.ReinforcedStateBase}{(int) cornerNE}");
+                sprite.LayerSetState(ReinforcedCornerLayers.SE, $"{reinforced.ReinforcedStateBase}{(int) cornerSE}");
+                sprite.LayerSetState(ReinforcedCornerLayers.SW, $"{reinforced.ReinforcedStateBase}{(int) cornerSW}");
+                sprite.LayerSetState(ReinforcedCornerLayers.NW, $"{reinforced.ReinforcedStateBase}{(int) cornerNW}");
             }
         }
 
