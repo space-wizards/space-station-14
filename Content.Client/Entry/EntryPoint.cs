@@ -118,6 +118,7 @@ namespace Content.Client.Entry
             _prototypeManager.RegisterIgnore("aiFaction");
             _prototypeManager.RegisterIgnore("gameMap");
             _prototypeManager.RegisterIgnore("behaviorSet");
+            _prototypeManager.RegisterIgnore("lobbyBackground");
             _prototypeManager.RegisterIgnore("advertisementsPack");
             _prototypeManager.RegisterIgnore("metabolizerType");
             _prototypeManager.RegisterIgnore("metabolismGroup");

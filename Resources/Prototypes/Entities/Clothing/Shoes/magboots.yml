@@ -19,7 +19,7 @@
         event: !type:ToggleActionEvent
     - type: ClothingSpeedModifier
       walkModifier: 0.85
-      sprintModifier: 0.65
+      sprintModifier: 0.8
       enabled: false
 
 - type: entity

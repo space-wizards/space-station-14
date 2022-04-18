@@ -5,6 +5,7 @@ namespace Content.Client.Entry
     {
         public static string[] List => new[]
         {
+            "AirlockPainter",
             "AmmoBox",
             "Pickaxe",
             "IngestionBlocker",
@@ -17,6 +18,7 @@ namespace Content.Client.Entry
             "Explosive",
             "ExplosionResistance",
             "Vocal",
+            "Summonable",
             "OnUseTimerTrigger",
             "WarpPoint",
             "EmitSoundOnUse",
@@ -64,6 +66,7 @@ namespace Content.Client.Entry
             "DiseaseSwab",
             "FloorTile",
             "RandomInsulation",
+            "AgentIDCard",
             "Electrified",
             "Electrocution",
             "Paper",
@@ -201,6 +204,7 @@ namespace Content.Client.Entry
             "GasAnalyzable",
             "GasCanister",
             "GasPort",
+            "Sticky",
             "GasPortable",
             "AtmosPipeColor",
             "AtmosUnsafeUnanchor",
@@ -270,6 +274,8 @@ namespace Content.Client.Entry
             "BeingCloned",
             "Advertise",
             "Bible",
+            "HealOnBuckle",
+            "StasisBed",
             "PowerNetworkBattery",
             "BatteryCharger",
             "UnpoweredFlashlight",

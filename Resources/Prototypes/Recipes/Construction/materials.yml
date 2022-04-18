@@ -38,3 +38,14 @@
   category: Materials
   icon: Objects/Materials/Sheets/glass.rsi/rpglass.png
   objectType: Item
+
+- type: construction
+  name: durathread
+  id: MaterialDurathread
+  graph: Durathread
+  startNode: start
+  targetNode: MaterialDurathread
+  category: Materials
+  description: A high-quality thread used to make durable clothes.
+  icon: Objects/Materials/materials.rsi/durathread.png
+  objectType: Item

@@ -1,0 +1,51 @@
+- type: entity
+  id: StasisBed
+  name: stasis bed
+  parent: BaseMachinePowered
+  description: A bed that massively slows down the patient's metabolism, allowing more time to administer a proper treatment for stabilization.
+  components:
+  - type: StasisBed
+    multiplier: 10
+  - type: Sprite
+    sprite: Structures/Machines/stasis_bed.rsi
+    netsync: false
+    layers:
+    - state: icon
+    - state: unlit
+      shader: unshaded
+      map: ["enum.StasisBedVisualLayers.IsOn"]
+  - type: StasisBedVisuals
+  - type: Appearance
+  - type: ApcPowerReceiver
+    powerLoad: 1000
+  - type: ExtensionCableReceiver
+  - type: Damageable
+    damageContainer: Inorganic
+    damageModifierSet: Metallic
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 75
+      behaviors:
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          SheetSteel1:
+            min: 1
+            max: 2
+  - type: Strap
+    position: Down
+    rotation: -90
+  - type: Physics
+    bodyType: Static
+  - type: Fixtures
+    fixtures:
+    - shape:
+        !type:PhysShapeAabb
+          bounds: "-0.45,-0.45,0.45,0.05"
+      mass: 25
+      mask:
+      - SmallImpassable
+
