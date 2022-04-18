@@ -357,8 +357,6 @@
       - CableStack
       - CableMVStack
       - CableHVStack
-      - TimerTrigger
-
 
 - type: entity
   parent: Autolathe
