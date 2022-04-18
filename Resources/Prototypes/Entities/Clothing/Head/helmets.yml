@@ -16,7 +16,7 @@
       coefficients:
         Blunt: 0.5
         Slash: 0.8
-        Piercing: 0.8    
+        Piercing: 0.8
 
 - type: entity
   parent: ClothingHeadEVAHelmetBase
@@ -41,6 +41,13 @@
   - type: Clothing
     sprite: Clothing/Head/Helmets/cult.rsi
   - type: IngestionBlocker
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.8
+        Slash: 0.8
+        Piercing: 0.9
+        Heat: 0.8
 
 - type: entity
   parent: ClothingHeadEVAHelmetBase
@@ -248,4 +255,3 @@
         Slash: 0.5
         Piercing: 0.5
         Heat: 0.9
-

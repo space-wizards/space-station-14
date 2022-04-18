@@ -1,53 +1,4 @@
 Entries:
-- author: BubblegumBlue
-  changes:
-  - {message: YouTool vending machines now start with 3 utility belts and actual cable
-      supplies., type: Tweak}
-  - {message: 'Salvage crates spawn with a utility belt and wirecutters, and have
-      been removed from Cargo''s ordering list.', type: Tweak}
-  id: 846
-  time: '2022-01-09T03:20:30.0000000+00:00'
-- author: Lamrr
-  changes:
-  - {message: The construction classic has returned! Wearable warning cones can now
-      be found in maintenance tunnels near you., type: Add}
-  id: 847
-  time: '2022-01-09T05:34:46.0000000+00:00'
-- author: DubiousDoggo
-  changes:
-  - {message: Added crafting recipe for substations, type: Add}
-  id: 848
-  time: '2022-01-09T06:05:54.0000000+00:00'
-- author: DubiousDoggo
-  changes:
-  - {message: 'Added SMES construction - no more easy power crippling :)', type: Add}
-  id: 849
-  time: '2022-01-09T07:31:07.0000000+00:00'
-- author: Efruit
-  changes:
-  - {message: 'The Syndicate has gotten smarter. Now, only traitors can access the
-      Uplink menu.', type: Tweak}
-  - {message: Removed PDA checks., type: Remove}
-  id: 850
-  time: '2022-01-09T08:02:07.0000000+00:00'
-- author: ElectroJr
-  changes:
-  - {message: Fixed the charge indicators on tasers and laser weapons not properly
-      updating after charging., type: Fix}
-  id: 851
-  time: '2022-01-09T12:48:59.0000000+00:00'
-- author: ElectroJr
-  changes:
-  - {message: Insulated gloves and galoshes no longer work when in your pockets. You
-      actually have to wear them., type: Fix}
-  id: 852
-  time: '2022-01-10T04:37:21.0000000+00:00'
-- author: mirrorcult
-  changes:
-  - {message: Ghosts can now automatically follow entities by using a right click
-      Follow verb., type: Add}
-  id: 853
-  time: '2022-01-10T05:47:38.0000000+00:00'
 - author: Zyme
   changes:
   - {message: Added ritual and cursed chair, type: Add}
@@ -3025,3 +2976,65 @@ Entries:
   - {message: Added admin notes., type: Add}
   id: 1345
   time: '2022-04-16T18:57:50.0000000+00:00'
+- author: Rane
+  changes:
+  - {message: Fixed a broken message when someone else removes a plant., type: Fix}
+  - {message: Stasis beds now behave like other machines when it comes to unanchoring
+      them and powering them., type: Fix}
+  - {message: 'Beds now additionally require cloth, medical beds now additionally
+      require durathread.', type: Tweak}
+  id: 1346
+  time: '2022-04-16T23:04:16.0000000+00:00'
+- author: mirrorcult
+  changes:
+  - {message: Space bears are no longer valid ghost roles., type: Remove}
+  - {message: Modified the rules slightly for salvage mob ghost roles., type: Tweak}
+  - {message: 'Space carps/ticks/etc can no longer disarm, and they''re worse at pulling
+      things.', type: Tweak}
+  - {message: 'Carp, ticks, spiders, and bears now have replacement accents.', type: Tweak}
+  id: 1347
+  time: '2022-04-16T23:08:52.0000000+00:00'
+- author: mirrorcult
+  changes:
+  - {message: You can no longer heal people out of death., type: Tweak}
+  id: 1348
+  time: '2022-04-17T06:29:31.0000000+00:00'
+- author: Rane
+  changes:
+  - {message: Chaplains can now summon a familiar from their bible., type: Add}
+  - {message: Evil chaplains can now emag the Pietyvend for some goodies., type: Add}
+  - {message: You can now draw blood from most mobs., type: Fix}
+  id: 1349
+  time: '2022-04-17T07:16:03.0000000+00:00'
+- author: Rane
+  changes:
+  - {message: The lathe visualizer now works., type: Fix}
+  - {message: Lathes now correctly let you produce something when you have the exact
+      amount of materials required., type: Fix}
+  - {message: Some lathes now have sounds that play., type: Add}
+  - {message: Lathes with inserting animations will dynamically color them based on
+      the color of the material., type: Add}
+  - {message: 'Increased most lathe production times between 4x and 10x. So, from
+      half a second to 2 seconds in most cases.', type: Tweak}
+  id: 1350
+  time: '2022-04-17T07:34:14.0000000+00:00'
+- author: PJB3005
+  changes:
+  - {message: Made lobby art look less choppy if you aren't playing on exactly 1080p
+      fullscreen., type: Tweak}
+  id: 1351
+  time: '2022-04-17T11:14:53.0000000+00:00'
+- author: Rane
+  changes:
+  - {message: The bible's Summon Familiar now appears in the action bar in addition
+      to being an alternative verb., type: Tweak}
+  - {message: Familiars can now open public and chapel doors by walking into them.,
+    type: Tweak}
+  - {message: Familiars now accurately show when they are dead when examined., type: Fix}
+  id: 1352
+  time: '2022-04-17T21:43:00.0000000+00:00'
+- author: Rane
+  changes:
+  - {message: Fixed security techfab visuals, type: Fix}
+  id: 1353
+  time: '2022-04-17T21:55:23.0000000+00:00'

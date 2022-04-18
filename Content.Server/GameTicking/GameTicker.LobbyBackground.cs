@@ -22,8 +22,6 @@ public sealed partial class GameTicker
 
     private static readonly string[] WhitelistedBackgroundExtensions = new string[] {"png", "jpg", "jpeg"};
 
-    private const string LobbyScreenPath = "/Textures/LobbyScreens";
-
     private void InitializeLobbyBackground()
     {
         _lobbyBackgrounds = _prototypeManager.EnumeratePrototypes<LobbyBackgroundPrototype>()
@@ -31,7 +29,11 @@ public sealed partial class GameTicker
             .Where(x => WhitelistedBackgroundExtensions.Contains(x.Extension))
             .ToList();
 
-        LobbyBackground = _lobbyBackgrounds.Any() ? _robustRandom.Pick(_lobbyBackgrounds).ToString() : null;
+        RandomizeLobbyBackground();
     }
 
+
+    private void RandomizeLobbyBackground() {
+        LobbyBackground = _lobbyBackgrounds!.Any() ? _robustRandom.Pick(_lobbyBackgrounds!).ToString() : null;
+    }
 }
