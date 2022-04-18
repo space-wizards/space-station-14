@@ -620,15 +620,12 @@
     fixtures:
     - shape:
         !type:PhysShapeAabb
-          bounds: "-0.4,-0.4,0.4,0.29"
+        bounds: "-0.4,-0.4,0.4,0.29"
       mass: 75
       mask:
-      - Impassable
-      - LowImpassable
+      - LargeMobMask
       layer:
-      - Opaque
-      - MidImpassable
-      - LowImpassable
+      - LargeMobLayer
   - type: Construction
     graph: CrateLivestock
     node: cratelivestock

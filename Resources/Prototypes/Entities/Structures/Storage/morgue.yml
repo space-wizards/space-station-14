@@ -21,18 +21,12 @@
     fixtures:
     - shape:
         !type:PhysShapeAabb
-          bounds: "-0.5,-0.5,0.5,0.5"
+        bounds: "-0.5,-0.5,0.5,0.5"
       mass: 25
       mask:
-       - Impassable
-       - MidImpassable
-       - HighImpassable
-       - LowImpassable
+      - MachineMask
       layer:
-       - Opaque
-       - MidImpassable
-       - HighImpassable
-       - LowImpassable
+      - WallLayer
   - type: MorgueEntityStorage
     CanWeldShut: false
     IsCollidableWhenOpen: true
@@ -62,15 +56,12 @@
     bodyType: Static
   - type: Fixtures
     fixtures:
-      - shape:
-          !type:PhysShapeAabb
-          bounds: "-0.5,-0.5,0.5,0.5"
-        mass: 25
-        mask:
-          - Impassable
-          - MidImpassable
-          - HighImpassable
-          - LowImpassable
+    - shape:
+        !type:PhysShapeAabb
+        bounds: "-0.5,-0.5,0.5,0.5"
+      mass: 25
+      mask:
+      - Impassable
   - type: Sprite
     netsync: false
     sprite: Structures/Storage/morgue.rsi
@@ -103,18 +94,12 @@
     fixtures:
     - shape:
         !type:PhysShapeAabb
-          bounds: "-0.5,-0.5,0.5,0.5"
+        bounds: "-0.5,-0.5,0.5,0.5"
       mass: 25
       mask:
-       - Impassable
-       - MidImpassable
-       - HighImpassable
-       - LowImpassable
+      - MachineMask
       layer:
-       - Opaque
-       - MidImpassable
-       - HighImpassable
-       - LowImpassable
+      - MachineLayer
   - type: CrematoriumEntityStorage
     CanWeldShut: false
     IsCollidableWhenOpen: true

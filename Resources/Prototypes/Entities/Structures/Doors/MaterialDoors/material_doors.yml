@@ -20,13 +20,9 @@
         bounds: "-0.49,-0.49,0.49,0.49"
       mass: 100
       mask:
-      - MidImpassable
+      - FullTileMask
       layer:
-      - Opaque
-      - Impassable
-      - MidImpassable
-      - HighImpassable
-      - LowImpassable
+      - AirlockLayer
   - type: Door
     bumpOpen: false
     clickOpen: true

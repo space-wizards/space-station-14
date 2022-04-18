@@ -13,13 +13,11 @@
         !type:PhysShapeAabb
         bounds: "-0.49,-0.49,0.49,-0.3"
       mass: 50
-      layer:
-      - Impassable
-      - MidImpassable
-      - HighImpassable
-      - LowImpassable
       mask:
+      - Impassable
       - HighImpassable
+      layer:
+      - GlassAirlockLayer
   - type: Sprite
     netsync: false
     sprite: Structures/Doors/Windoors/windoor.rsi

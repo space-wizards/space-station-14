@@ -17,13 +17,12 @@
     fixtures:
     - shape:
         !type:PhysShapeAabb
-          bounds: "-0.25,-0.25,0.25,0.25"
+        bounds: "-0.25,-0.25,0.25,0.25"
       mass: 25
       mask:
-      - LowImpassable
+      - MachineMask
       layer:
-      - Opaque
-      - MidImpassable
+      - MachineLayer
   - type: TraitorDeathMatchRedemption
   placement:
     mode: AlignTileAny

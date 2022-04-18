@@ -25,11 +25,9 @@
         radius: 0.40
       mass: 20
       mask:
-      - Impassable
-      - MidImpassable
-      - LowImpassable
+      - MobMask
       layer:
-      - Opaque
+      - MobLayer
   - type: MobState
     thresholds:
       0: !type:NormalMobState {}
@@ -105,10 +103,8 @@
         radius: 0.40
       mass: 5
       mask:
-        - Impassable
-        - MidImpassable
-        - LowImpassable
+      - MobMask
       layer:
-        - Opaque
+      - Opaque
   - type: GhostTakeoverAvailable
     name: holocarp

@@ -10,19 +10,6 @@
     drawdepth: SmallObjects
     state: soda
     netsync: false
-  - type: Fixtures
-    fixtures:
-    - shape:
-        !type:PhysShapeAabb
-          bounds: "-0.4,-0.3,0.4,0.3"
-      mass: 25
-      mask:
-        - Impassable
-        - HighImpassable
-      layer:
-        - Opaque
-        - MidImpassable
-        - LowImpassable
   - type: ReagentDispenser
     pack: SodaDispenserInventory
     emagPack: SodaDispenserEmagInventory

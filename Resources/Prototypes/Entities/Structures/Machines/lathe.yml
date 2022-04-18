@@ -27,15 +27,12 @@
     fixtures:
     - shape:
         !type:PhysShapeAabb
-          bounds: "-0.4,-0.4,0.4,0.4"
+        bounds: "-0.4,-0.4,0.4,0.4"
       mass: 25
       mask:
-      - Impassable
-      - HighImpassable
-      - LowImpassable
+      - MachineMask
       layer:
-      - Opaque
-      - MidImpassable
+      - MachineLayer
   - type: Construction
     graph: Machine
     node: machine
@@ -112,15 +109,12 @@
     fixtures:
     - shape:
         !type:PhysShapeAabb
-          bounds: "-0.4,-0.4,0.4,0.4"
+        bounds: "-0.4,-0.4,0.4,0.4"
       mass: 25
       mask:
-      - Impassable
-      - HighImpassable
-      - LowImpassable
+      - MachineMask
       layer:
-      - Opaque
-      - MidImpassable
+      - MachineLayer
   - type: ResearchClient
   - type: Construction
     graph: Machine

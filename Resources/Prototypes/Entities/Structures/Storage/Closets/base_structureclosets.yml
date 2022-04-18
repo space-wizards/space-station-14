@@ -31,15 +31,12 @@
     fixtures:
     - shape:
         !type:PhysShapeAabb
-          bounds: "-0.25,-0.48,0.25,0.48"
+        bounds: "-0.25,-0.48,0.25,0.48"
       mass: 70
       mask:
-      - Impassable
-      - LowImpassable
+      - MachineMask
       layer:
-      - Opaque
-      - MidImpassable
-      - LowImpassable
+      - MachineLayer
   - type: EntityStorage
   - type: PlaceableSurface
     placeCentered: true

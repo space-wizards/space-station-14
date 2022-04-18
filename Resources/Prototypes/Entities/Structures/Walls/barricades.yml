@@ -15,12 +15,10 @@
     fixtures:
     - shape:
         !type:PhysShapeAabb {}
+      mask:
+      - FullTileMask
       layer:
-      - Opaque
-      - Impassable
-      - MidImpassable
-      - HighImpassable
-      - LowImpassable
+      - WallLayer
   - type: Tag
     tags:
     - Wooden

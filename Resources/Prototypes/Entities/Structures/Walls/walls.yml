@@ -501,14 +501,10 @@
           - "-0.5,-0.5"
           - "0.5,0.5"
           - "0.5,-0.5"
-      layer:
-      - Opaque
-      - Impassable
-      - MidImpassable
-      - HighImpassable
-      - LowImpassable
       mask:
-      - Impassable
+      - FullTileMask
+      layer:
+      - WallLayer
   - type: Destructible
     thresholds:
     - trigger:

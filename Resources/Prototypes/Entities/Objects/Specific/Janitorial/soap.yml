@@ -33,7 +33,7 @@
         bounds: "-0.4,-0.3,0.4,0.3"
       mass: 5
       mask:
-      - LowImpassable
+      - ItemMask
 
 - type: entity
   name: soap

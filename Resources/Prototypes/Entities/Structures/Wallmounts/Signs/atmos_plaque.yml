@@ -9,7 +9,7 @@
     fixtures:
     - shape:
         !type:PhysShapeAabb
-          bounds: "-0.3,-0.3,0.3,0.3"
+        bounds: "-0.3,-0.3,0.3,0.3"
       layer:
       - MidImpassable
   - type: Sprite

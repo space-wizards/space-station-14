@@ -48,9 +48,11 @@
     - hard: false
       shape:
         !type:PhysShapeAabb
-          bounds: "-0.4,-0.4,0.4,0.4"
+        bounds: "-0.4,-0.4,0.4,0.4"
       layer:
-      - MidImpassable
+      - LowImpassable
+      mask:
+      - LowImpassable
   - type: FoamSolutionAreaEffect
   - type: SolutionContainerManager
     solutions:
@@ -70,15 +72,6 @@
     layers:
     - state: mfoam
       map: ["enum.FoamVisualLayers.Base"]
-  - type: Physics
-  - type: Fixtures
-    fixtures:
-    - hard: true
-      shape:
-        !type:PhysShapeAabb
-        bounds: "-0.4,-0.4,0.4,0.4"
-      layer:
-      - MidImpassable
   - type: Appearance
     visuals:
     - type: FoamVisualizer
@@ -98,15 +91,6 @@
     layers:
       - state: mfoam
         map: ["enum.FoamVisualLayers.Base"]
-  - type: Physics
-  - type: Fixtures
-    fixtures:
-    - hard: true
-      shape:
-        !type:PhysShapeAabb
-        bounds: "-0.4,-0.4,0.4,0.4"
-      layer:
-      - MidImpassable
   - type: Appearance
     visuals:
       - type: FoamVisualizer
@@ -138,11 +122,9 @@
     - shape:
         !type:PhysShapeAabb {}
       layer:
-        - Opaque
-        - Impassable
-        - MidImpassable
-        - HighImpassable
-        - LowImpassable
+      - WallLayer
+      mask:
+      - WallLayer
   - type: Occluder
     sizeX: 32
     sizeY: 32

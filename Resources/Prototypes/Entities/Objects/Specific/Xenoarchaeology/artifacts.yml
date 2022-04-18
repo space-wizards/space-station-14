@@ -15,14 +15,14 @@
       noRot: true
     - type: Fixtures
       fixtures:
-        - shape:
-            !type:PhysShapeCircle
-            radius: 0.45
-          mass: 150
-          layer:
-            - LowImpassable
-          mask:
-            - HighImpassable
+      - shape:
+          !type:PhysShapeCircle
+          radius: 0.45
+        mass: 150
+        layer:
+        - WallLayer
+        mask:
+        - MachineMask
     - type: InteractionOutline
     - type: Artifact
     - type: RandomArtifactSprite

@@ -13,19 +13,17 @@
       fixedRotation: false
     - type: Fixtures
       fixtures:
-        - shape:
-            !type:PhysShapeAabb
-            bounds: "-0.25,-0.4,0.25,0.4"
-          mass: 25
-          layer:
-            - Impassable
-            - MidImpassable
-            - HighImpassable
-            - Opaque
-          mask:
-            - Impassable
-            - MidImpassable
-            - HighImpassable
+      - shape:
+          !type:PhysShapeAabb
+          bounds: "-0.25,-0.4,0.25,0.4"
+        mass: 25
+        mask:
+        - MachineMask
+        layer:
+        - Opaque
+        - MidImpassable
+        - LowImpassable
+        - BulletImpassable
     - type: Clickable
     - type: InteractionOutline
     - type: Anchorable

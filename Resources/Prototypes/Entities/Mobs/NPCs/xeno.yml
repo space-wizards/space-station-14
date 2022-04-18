@@ -32,12 +32,9 @@
         radius: 0.35
       mass: 120
       mask:
-      - Impassable
-      - MidImpassable
-      - HighImpassable
-      - LowImpassable
+      - MobMask
       layer:
-      - Opaque
+      - MobLayer
   - type: MobState
     thresholds:
       0: !type:NormalMobState {}

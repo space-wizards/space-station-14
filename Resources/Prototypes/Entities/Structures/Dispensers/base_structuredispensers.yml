@@ -16,16 +16,12 @@
     fixtures:
     - shape:
         !type:PhysShapeAabb
-          bounds: "-0.4,-0.3,0.4,0.3"
+        bounds: "-0.4,-0.3,0.4,0.3"
       mass: 25
       mask:
-        - Impassable
-        - HighImpassable
-        - LowImpassable
+      - TabletopMachineMask
       layer:
-        - Opaque
-        - MidImpassable
-        - LowImpassable
+      - TabletopMachineLayer
   - type: ApcPowerReceiver
   - type: ExtensionCableReceiver
   - type: ActivatableUI

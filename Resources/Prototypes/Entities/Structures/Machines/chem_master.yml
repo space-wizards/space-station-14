@@ -28,13 +28,12 @@
     fixtures:
     - shape:
         !type:PhysShapeAabb
-          bounds: "-0.25,-0.4,0.25,0.4"
+        bounds: "-0.25,-0.4,0.25,0.4"
       mass: 25
       mask:
-      - LowImpassable
+      - MachineMask
       layer:
-      - Opaque
-      - MidImpassable
+      - MachineLayer
   - type: Destructible
     thresholds:
     - trigger:

@@ -31,12 +31,9 @@
     fixtures:
     - shape:
         !type:PhysShapeAabb
-          bounds: "-0.5,-0.5,0.5,0.5"
+        bounds: "-0.5,-0.5,0.5,0.5"
       mass: 100
       mask:
-      - Impassable
+      - FullTileMask
       layer:
-      - Opaque
-      - Impassable
-      - HighImpassable
-      - LowImpassable
+      - WallLayer

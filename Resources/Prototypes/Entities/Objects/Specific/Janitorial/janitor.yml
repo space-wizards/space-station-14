@@ -58,12 +58,12 @@
     fixtures:
     - shape:
         !type:PhysShapeAabb
-          bounds: "-0.25,-0.40,0.25,0.25"
+        bounds: "-0.25,-0.40,0.25,0.25"
       mass: 20
       mask:
-      - Impassable
+      - MobMask
       layer:
-      - Opaque
+      - MobLayer
   - type: Pullable
 
 - type: entity
@@ -120,14 +120,14 @@
               - TrashBag
     - type: Fixtures
       fixtures:
-        - shape:
-            !type:PhysShapeCircle
-            radius: 0.3
-          layer:
-            - LowImpassable
-          mask:
-            - HighImpassable
-          mass: 100
+      - shape:
+          !type:PhysShapeCircle
+          radius: 0.3
+        mass: 100
+        layer:
+        - MobLayer
+        mask:
+        - MobMask
     - type: SolutionContainerManager
       solutions:
         bucket:

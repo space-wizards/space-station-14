@@ -27,7 +27,7 @@
           !type:PhysShapeAabb
           bounds: "-0.5,-0.5,0.5,0.5"
         layer:
-          - MidImpassable
+        - MidImpassable
     - type: Damageable
       damageModifierSet: Wood
     - type: Destructible

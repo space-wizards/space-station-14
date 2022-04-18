@@ -23,15 +23,12 @@
     fixtures:
     - shape:
         !type:PhysShapeAabb
-          bounds: "-0.4,-0.4,0.4,0.29"
+        bounds: "-0.4,-0.4,0.4,0.29"
       mass: 25
       mask:
-      - Impassable
-      - LowImpassable
+      - MachineMask
       layer:
-      - Opaque
-      - MidImpassable
-      - LowImpassable
+      - MachineLayer
   - type: EntityStorage
     Capacity: 500
     CanWeldShut: true
@@ -86,15 +83,12 @@
     fixtures:
     - shape:
         !type:PhysShapeAabb
-          bounds: "-0.4,-0.4,0.4,0.29"
+        bounds: "-0.4,-0.4,0.4,0.29"
       mass: 25
       mask:
-      - Impassable
-      - LowImpassable
+      - MachineMask
       layer:
-      - Opaque
-      - MidImpassable
-      - LowImpassable
+      - MachineLayer
   - type: EntityStorage
     Capacity: 500
     CanWeldShut: true
