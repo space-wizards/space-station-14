@@ -49,6 +49,11 @@
       prob: 0.3
   - type: Bloodstream
     bloodMaxVolume: 500
+  - type: CombatMode
+    disarmAction:
+      enabled: false
+      autoPopulate: false
+      name: action-name-disarm
   - type: Temperature
     heatDamageThreshold: 500
     coldDamageThreshold: 0
@@ -59,7 +64,5 @@
     damage:
       groups:
         Brute: 15
-  - type: GhostTakeoverAvailable
-    makeSentient: true
-    name: space bear
-    description: Wreak havoc on the station's inhabitants, and disrupt salvage!
+  - type: ReplacementAccent
+    accent: genericAggressive

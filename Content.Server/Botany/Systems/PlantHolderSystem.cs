@@ -100,7 +100,7 @@ namespace Content.Server.Botany.Systems
                 {
                     if (!_botanySystem.TryGetSeed(seeds, out var seed))
                         return ;
-                    
+
                     _popupSystem.PopupCursor(Loc.GetString("plant-holder-component-plant-success-message",
                         ("seedName", seed.Name),
                         ("seedNoun", seed.Noun)), Filter.Entities(args.User));
@@ -150,7 +150,7 @@ namespace Content.Server.Botany.Systems
                     _popupSystem.PopupCursor(Loc.GetString("plant-holder-component-remove-plant-message",
                         ("name", Comp<MetaDataComponent>(uid).EntityName)), Filter.Entities(args.User));
                     _popupSystem.PopupEntity(Loc.GetString("plant-holder-component-remove-plant-others-message",
-                        ("otherName", Comp<MetaDataComponent>(args.User).EntityName)), uid, Filter.Pvs(args.User).RemoveWhereAttachedEntity(puid => puid == args.User));
+                        ("name", Comp<MetaDataComponent>(args.User).EntityName)), uid, Filter.Pvs(args.User).RemoveWhereAttachedEntity(puid => puid == args.User));
                     component.RemovePlant();
                 }
                 else

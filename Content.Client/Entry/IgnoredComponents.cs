@@ -18,6 +18,7 @@ namespace Content.Client.Entry
             "Explosive",
             "ExplosionResistance",
             "Vocal",
+            "Summonable",
             "OnUseTimerTrigger",
             "WarpPoint",
             "EmitSoundOnUse",
