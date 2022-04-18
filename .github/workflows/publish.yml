@@ -4,28 +4,12 @@ concurrency:
   group: publish
 
 on:
+  workflow_dispatch:
   schedule:
     - cron: '0 1 * * *'
-  workflow_dispatch:
 
 jobs:
-  check_commits:
-    runs-on: ubuntu-latest
-
-    outputs:
-      can_run: ${{ steps.check_changes.outputs.has-new-commits }}
-
-    steps:
-    - id: check_changes
-      uses: adriangl/check-new-commits-action@v1
-      with:
-        token: ${{ github.token }}
-        seconds: 86400 # 24h
-
   build:
-    needs: check_commits
-    if: needs.check_commits.outputs.can_run == 'true'
-
     runs-on: ubuntu-latest
 
     steps:
