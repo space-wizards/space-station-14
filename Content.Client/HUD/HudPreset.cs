@@ -1,6 +1,5 @@
 ﻿using Robust.Client.State;
 using Robust.Client.UserInterface;
-using Robust.Client.UserInterface.Controls;
 using Robust.Shared.Sandboxing;
 
 namespace Content.Client.HUD;
@@ -87,11 +86,7 @@ public abstract class HudPreset
     //get a hud widget from this preset by type
     public T? GetWidgetOrNull<T>() where T : HudWidget
     {
-        if (_widgets.TryGetValue(typeof(T),out var widget))
-        {
-            return (T)widget;
-        }
-        return null;
+        return (T?) _widgets.GetValueOrDefault(typeof(T));
     }
 
     //get a hud widget from this preset by type

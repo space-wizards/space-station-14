@@ -1,6 +1,5 @@
 ﻿using System.Linq;
 using Content.Client.HUD.Presets;
-using Content.Client.Options.UI;
 using Content.Client.Resources;
 using Content.Shared.CCVar;
 using Content.Shared.HUD;
@@ -228,6 +227,6 @@ public sealed class HudManager  : IHudManager
 
     public T? GetUIWidgetOrNull<T>() where T : HudWidget
     {
-        return _activeHudPreset!.GetWidget<T>();
+        return _activeHudPreset!.GetWidgetOrNull<T>();
     }
 }
