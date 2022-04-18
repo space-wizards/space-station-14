@@ -20,6 +20,7 @@ public sealed class EscapeInventorySystem : EntitySystem
         SubscribeLocalEvent<CanEscapeInventoryComponent, RelayMoveInputEvent>(OnRelayMovement);
         SubscribeLocalEvent<CanEscapeInventoryComponent, UpdateCanMoveEvent>(OnMoveAttempt);
         SubscribeLocalEvent<CanEscapeInventoryComponent, EscapeDoAfterComplete>(OnEscapeComplete);
+        SubscribeLocalEvent<CanEscapeInventoryComponent, EscapeDoAfterCancel>(OnEscapeFail);
     }
 
     private void OnRelayMovement(EntityUid uid, CanEscapeInventoryComponent component, RelayMoveInputEvent args)
@@ -51,10 +52,12 @@ public sealed class EscapeInventorySystem : EntitySystem
             BreakOnStun = true,
             NeedHand = false,
             UserFinishedEvent = new EscapeDoAfterComplete(user),
+            UserCancelledEvent = new EscapeDoAfterCancel(user),
         };
 
         component.IsResisting = true;
         _popupSystem.PopupEntity(Loc.GetString("escape-inventory-component-start-resisting"), user, Filter.Entities(user));
+        _popupSystem.PopupEntity(Loc.GetString("escape-inventory-component-start-resisting-target"), container, Filter.Entities(container));
         _doAfterSystem.DoAfter(doAfterEventArgs);
     }
 
@@ -65,11 +68,26 @@ public sealed class EscapeInventorySystem : EntitySystem
         component.IsResisting = false;
     }
 
+    private void OnEscapeFail(EntityUid uid, CanEscapeInventoryComponent component, EscapeDoAfterCancel ev)
+    {
+        component.IsResisting = false;
+    }
+
     private sealed class EscapeDoAfterComplete : EntityEventArgs
     {
         public readonly EntityUid User;
 
         public EscapeDoAfterComplete(EntityUid userUid)
+        {
+            User = userUid;
+        }
+    }
+
+    private sealed class EscapeDoAfterCancel : EntityEventArgs
+    {
+        public readonly EntityUid User;
+
+        public EscapeDoAfterCancel(EntityUid userUid)
         {
             User = userUid;
         }
