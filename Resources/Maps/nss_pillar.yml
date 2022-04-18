@@ -137095,7 +137095,6 @@ entities:
     changeAirtight: False
     state: Opening
     type: Door
-  - fixtures:
 - uid: 12249
   type: AirlockShuttle
   components:
