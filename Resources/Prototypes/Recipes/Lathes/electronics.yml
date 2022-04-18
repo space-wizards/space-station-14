@@ -2,7 +2,7 @@
   id: FirelockElectronics
   icon: Objects/Misc/module.rsi/mainboard.png
   result: FirelockElectronics
-  completetime: 500
+  completetime: 2
   materials:
      Steel: 50
      Plastic: 50
@@ -11,7 +11,7 @@
   id: DoorElectronics
   icon: Objects/Misc/module.rsi/door_electronics.png
   result: DoorElectronics
-  completetime: 500
+  completetime: 2
   materials:
      Steel: 50
      Plastic: 50
@@ -20,7 +20,7 @@
   id: AirAlarmElectronics
   icon: Objects/Misc/module.rsi/airalarm_electronics.png
   result: AirAlarmElectronics
-  completetime: 500
+  completetime: 2
   materials:
      Steel: 50
      Plastic: 50
@@ -29,7 +29,7 @@
   id: FireAlarmElectronics
   icon: Objects/Misc/module.rsi/door_electronics.png
   result: FireAlarmElectronics
-  completetime: 500
+  completetime: 2
   materials:
      Steel: 50
      Plastic: 50
@@ -38,7 +38,7 @@
   id: CloningPodMachineCircuitboard
   icon: Objects/Misc/module.rsi/id_mod.png
   result: CloningPodMachineCircuitboard
-  completetime: 1000
+  completetime: 4
   materials:
      Steel: 100
      Glass: 900
@@ -48,7 +48,7 @@
   id: ThermomachineFreezerMachineCircuitBoard
   icon: Objects/Misc/module.rsi/id_mod.png
   result: ThermomachineFreezerMachineCircuitBoard
-  completetime: 1000
+  completetime: 4
   materials:
     Steel: 150
     Glass: 900
@@ -58,7 +58,7 @@
   id: MedicalScannerMachineCircuitboard
   icon: Objects/Misc/module.rsi/id_mod.png
   result: MedicalScannerMachineCircuitboard
-  completetime: 1000
+  completetime: 4
   materials:
      Steel: 100
      Glass: 900
@@ -67,7 +67,7 @@
   id: ChemMasterMachineCircuitboard
   icon: Objects/Misc/module.rsi/id_mod.png
   result: ChemMasterMachineCircuitboard
-  completetime: 1000
+  completetime: 4
   materials:
      Steel: 100
      Glass: 900
@@ -76,7 +76,7 @@
   id: ChemDispenserMachineCircuitboard
   icon: Objects/Misc/module.rsi/id_mod.png
   result: ChemDispenserMachineCircuitboard
-  completetime: 1000
+  completetime: 4
   materials:
      Steel: 100
      Glass: 900
@@ -86,7 +86,7 @@
   id: HydroponicsTrayMachineCircuitboard
   icon: Objects/Misc/module.rsi/id_mod.png
   result: HydroponicsTrayMachineCircuitboard
-  completetime: 1000
+  completetime: 4
   materials:
      Steel: 100
      Glass: 900
@@ -95,7 +95,7 @@
   id: AutolatheMachineCircuitboard
   icon: Objects/Misc/module.rsi/id_mod.png
   result: AutolatheMachineCircuitboard
-  completetime: 1000
+  completetime: 4
   materials:
      Steel: 100
      Glass: 900
@@ -104,7 +104,7 @@
   id: ProtolatheMachineCircuitboard
   icon: Objects/Misc/module.rsi/id_mod.png
   result: ProtolatheMachineCircuitboard
-  completetime: 1000
+  completetime: 4
   materials:
      Steel: 100
      Glass: 900
@@ -113,7 +113,7 @@
   id: CircuitImprinterMachineCircuitboard
   icon: Objects/Misc/module.rsi/id_mod.png
   result: CircuitImprinterMachineCircuitboard
-  completetime: 1000
+  completetime: 4
   materials:
      Steel: 100
      Glass: 900
@@ -122,7 +122,7 @@
   id: UniformPrinterMachineCircuitboard
   icon: Objects/Misc/module.rsi/id_mod.png
   result: UniformPrinterMachineCircuitboard
-  completetime: 1000
+  completetime: 4
   materials:
      Steel: 100
      Glass: 900
@@ -131,7 +131,7 @@
   id: VaccinatorMachineCircuitboard
   icon: Objects/Misc/module.rsi/id_mod.png
   result: VaccinatorMachineCircuitboard
-  completetime: 100
+  completetime: 4
   materials:
      Steel: 100
      Glass: 900
@@ -141,7 +141,7 @@
   id: DiagnoserMachineCircuitboard
   icon: Objects/Misc/module.rsi/id_mod.png
   result: DiagnoserMachineCircuitboard
-  completetime: 100
+  completetime: 4
   materials:
      Steel: 100
      Glass: 900
@@ -152,7 +152,7 @@
   id: ReagentGrinderMachineCircuitboard
   icon: Objects/Misc/module.rsi/id_mod.png
   result: ReagentGrinderMachineCircuitboard
-  completetime: 1000
+  completetime: 4
   materials:
      Steel: 100
      Glass: 900
@@ -161,7 +161,7 @@
   id: CrewMonitoringComputerCircuitboard
   icon: Objects/Misc/module.rsi/id_mod.png
   result: CrewMonitoringComputerCircuitboard
-  completetime: 1000
+  completetime: 4
   materials:
      Steel: 100
      Glass: 900
@@ -170,7 +170,7 @@
   id: ShuttleConsoleCircuitboard
   icon: Objects/Misc/module.rsi/id_mod.png
   result: ShuttleConsoleCircuitboard
-  completetime: 1000
+  completetime: 4
   materials:
      Steel: 100
      Glass: 900
@@ -180,7 +180,7 @@
   id: DawInstrumentMachineCircuitboard
   icon: Objects/Misc/module.rsi/id_mod.png
   result: DawInstrumentMachineCircuitboard
-  completetime: 1000
+  completetime: 4
   materials:
     Steel: 100
     Glass: 900
@@ -199,7 +199,7 @@
   id: APCElectronics
   icon: Objects/Misc/module.rsi/charger_APC.png
   result: APCElectronics
-  completetime: 500
+  completetime: 2
   materials:
      Steel: 50
      Glass: 100
@@ -208,7 +208,7 @@
   id: SubstationMachineCircuitboard
   icon: Objects/Misc/module.rsi/id_mod.png
   result: SubstationMachineCircuitboard
-  completetime: 1000
+  completetime: 4
   materials:
      Steel: 50
      Glass: 450
@@ -217,7 +217,7 @@
   id: WallmountSubstationElectronics
   icon: Objects/Misc/module.rsi/id_mod.png
   result: WallmountSubstationElectronics
-  completetime: 1000
+  completetime: 4
   materials:
      Steel: 50
      Glass: 350
@@ -226,7 +226,7 @@
   id: SMESMachineCircuitboard
   icon: Objects/Misc/module.rsi/power_mod.png
   result: SMESMachineCircuitboard
-  completetime: 1000
+  completetime: 4
   materials:
      Steel: 100
      Glass: 900
@@ -235,7 +235,7 @@
   id: GeneratorPlasmaMachineCircuitboard
   icon: Objects/Misc/module.rsi/id_mod.png
   result: GeneratorPlasmaMachineCircuitboard
-  completetime: 1000
+  completetime: 4
   materials:
      Steel: 50
      Glass: 350
@@ -244,7 +244,7 @@
   id: GeneratorUraniumMachineCircuitboard
   icon: Objects/Misc/module.rsi/id_mod.png
   result: GeneratorUraniumMachineCircuitboard
-  completetime: 1000
+  completetime: 4
   materials:
      Steel: 50
      Glass: 350
@@ -253,7 +253,7 @@
   id: WallmountGeneratorElectronics
   icon: Objects/Misc/module.rsi/id_mod.png
   result: WallmountGeneratorElectronics
-  completetime: 1000
+  completetime: 4
   materials:
      Steel: 50
      Glass: 350
@@ -262,7 +262,7 @@
   id: WallmountGeneratorAPUElectronics
   icon: Objects/Misc/module.rsi/id_mod.png
   result: WallmountGeneratorAPUElectronics
-  completetime: 1000
+  completetime: 4
   materials:
      Steel: 50
      Glass: 350
@@ -271,7 +271,7 @@
   id: SolarControlComputerCircuitboard
   icon: Objects/Misc/module.rsi/id_mod.png
   result: SolarControlComputerCircuitboard
-  completetime: 1000
+  completetime: 4
   materials:
      Steel: 100
      Glass: 900

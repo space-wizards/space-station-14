@@ -13,6 +13,9 @@
             - material: Steel
               amount: 2
               doAfter: 1
+            - material: Cloth
+              amount: 2
+              doAfter: 1
         - to: dogbed
           completed:
             - !type:SnapToGrid { }
@@ -25,6 +28,9 @@
             - !type:SnapToGrid { }
           steps:
             - material: Plasteel
+              amount: 2
+              doAfter: 1
+            - material: Durathread
               amount: 2
               doAfter: 1
     - node: bed
