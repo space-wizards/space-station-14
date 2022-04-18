@@ -1,9 +1,4 @@
 Entries:
-- author: Zyme
-  changes:
-  - {message: Added ritual and cursed chair, type: Add}
-  id: 854
-  time: '2022-01-11T02:17:22.0000000+00:00'
 - author: Peptide90
   changes:
   - {message: Some Autolathe recipes now require plastic instead of glass., type: Fix}
@@ -3038,3 +3033,8 @@ Entries:
   - {message: Fixed security techfab visuals, type: Fix}
   id: 1353
   time: '2022-04-17T21:55:23.0000000+00:00'
+- author: ElectroJr
+  changes:
+  - {message: Fixed docking airlocks not having proper collision., type: Fix}
+  id: 1354
+  time: '2022-04-18T03:25:19.0000000+00:00'
