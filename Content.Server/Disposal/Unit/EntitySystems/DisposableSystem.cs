@@ -1,16 +1,11 @@
 using System.Linq;
- using Content.Server.Atmos;
 using Content.Server.Atmos.EntitySystems;
 using Content.Server.Disposal.Tube.Components;
 using Content.Server.Disposal.Tube;
 using Content.Server.Disposal.Unit.Components;
 using JetBrains.Annotations;
 using Robust.Shared.Containers;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
 using Robust.Shared.Map;
-using Robust.Shared.Log;
-using Robust.Shared.Maths;
 using Robust.Shared.Physics;
 
 namespace Content.Server.Disposal.Unit.EntitySystems
@@ -21,6 +16,7 @@ namespace Content.Server.Disposal.Unit.EntitySystems
         [Dependency] private readonly IMapManager _mapManager = default!;
         [Dependency] private readonly DisposalUnitSystem _disposalUnitSystem = default!;
         [Dependency] private readonly DisposalTubeSystem _disposalTubeSystem = default!;
+        [Dependency] private readonly AtmosphereSystem _atmosphereSystem = default!;
 
         public void ExitDisposals(EntityUid uid, DisposalHolderComponent? holder = null, TransformComponent? holderTransform = null)
         {
@@ -36,39 +32,41 @@ namespace Content.Server.Disposal.Unit.EntitySystems
             // Check for a disposal unit to throw them into and then eject them from it.
             // *This ejection also makes the target not collide with the unit.*
             // *This is on purpose.*
-            var grid = _mapManager.GetGrid(holderTransform.GridID);
-            var gridTileContents = grid.GetLocal(holderTransform.Coordinates);
+
             DisposalUnitComponent? duc = null;
-            foreach (var contentUid in gridTileContents)
+            if (_mapManager.TryGetGrid(holderTransform.GridID, out var grid))
             {
-                if (EntityManager.TryGetComponent(contentUid, out duc))
-                    break;
+                foreach (var contentUid in grid.GetLocal(holderTransform.Coordinates))
+                {
+                    if (EntityManager.TryGetComponent(contentUid, out duc))
+                        break;
+                }
             }
 
             foreach (var entity in holder.Container.ContainedEntities.ToArray())
             {
-                if (HasComp<BeingDisposedComponent>(entity))
-                    RemComp <BeingDisposedComponent>(entity);
+                RemComp<BeingDisposedComponent>(entity);
 
                 if (EntityManager.TryGetComponent(entity, out IPhysBody? physics))
                 {
                     physics.CanCollide = true;
                 }
 
-                holder.Container.ForceRemove(entity);
+                holder.Container.ForceRemove(entity, EntityManager);
 
-                if (EntityManager.GetComponent<TransformComponent>(entity).Parent == holderTransform)
+                var xform = EntityManager.GetComponent<TransformComponent>(entity);
+                if (xform.Parent != holderTransform)
+                    continue;
+
+                if (duc != null)
                 {
-                    if (duc != null)
-                    {
-                        // Insert into disposal unit
-                        EntityManager.GetComponent<TransformComponent>(entity).Coordinates = new EntityCoordinates((duc).Owner, Vector2.Zero);
-                        duc.Container.Insert(entity);
-                    }
-                    else
-                    {
-                        EntityManager.GetComponent<TransformComponent>(entity).AttachParentToContainerOrGrid();
-                    }
+                    // Insert into disposal unit
+                    xform.Coordinates = new EntityCoordinates((duc).Owner, Vector2.Zero);
+                    duc.Container.Insert(entity);
+                }
+                else
+                {
+                    xform.AttachParentToContainerOrGrid();
                 }
             }
 
@@ -77,11 +75,9 @@ namespace Content.Server.Disposal.Unit.EntitySystems
                 _disposalUnitSystem.TryEjectContents(duc);
             }
 
-            var atmosphereSystem = EntitySystem.Get<AtmosphereSystem>();
-
-            if (atmosphereSystem.GetTileMixture(holderTransform.Coordinates, true) is {} environment)
+            if (_atmosphereSystem.GetTileMixture(holderTransform.Coordinates, true) is {} environment)
             {
-                atmosphereSystem.Merge(environment, holder.Air);
+                _atmosphereSystem.Merge(environment, holder.Air);
                 holder.Air.Clear();
             }
 
