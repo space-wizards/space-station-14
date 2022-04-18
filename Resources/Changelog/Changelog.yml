@@ -1,9 +1,4 @@
 Entries:
-- author: TaralGit
-  changes:
-  - {message: Increased laser damage, type: Tweak}
-  id: 856
-  time: '2022-01-11T04:11:47.0000000+00:00'
 - author: ElectroJr
   changes:
   - {message: Bodies once again fit in body bags., type: Fix}
@@ -3038,3 +3033,8 @@ Entries:
   - {message: Fixed most hardsuit helmets not having working lights., type: Fix}
   id: 1355
   time: '2022-04-18T06:56:37.0000000+00:00'
+- author: ElectroJr
+  changes:
+  - {message: Fixed lamps and lanterns not having working lights., type: Fix}
+  id: 1356
+  time: '2022-04-18T13:23:21.0000000+00:00'
