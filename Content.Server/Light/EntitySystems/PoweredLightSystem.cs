@@ -263,18 +263,18 @@ namespace Content.Server.Light.EntitySystems
                         else
                         {
                             SetLight(uid, false, light: light);
-                            powerReceiver.Load = lightBulb.PowerUse;
+                            powerReceiver.Load = 0;
                             appearance?.SetData(PoweredLightVisuals.BulbState, PoweredLightState.Off);
                         }
                         break;
                     case LightBulbState.Broken:
                         SetLight(uid, false, light: light);
-                        powerReceiver.Load = lightBulb.PowerUse;
+                        powerReceiver.Load = 0;
                         appearance?.SetData(PoweredLightVisuals.BulbState, PoweredLightState.Broken);
                         break;
                     case LightBulbState.Burned:
                         SetLight(uid, false, light: light);
-                        powerReceiver.Load = lightBulb.PowerUse;
+                        powerReceiver.Load = 0;
                         appearance?.SetData(PoweredLightVisuals.BulbState, PoweredLightState.Burned);
                         break;
                 }
