@@ -1,9 +1,4 @@
 Entries:
-- author: ElectroJr
-  changes:
-  - {message: Bodies once again fit in body bags., type: Fix}
-  id: 857
-  time: '2022-01-11T04:55:27.0000000+00:00'
 - author: Rane
   changes:
   - {message: Saltern now has all the latest & greatest objects from the past 2 months.,
@@ -3038,3 +3033,10 @@ Entries:
   - {message: Fixed lamps and lanterns not having working lights., type: Fix}
   id: 1356
   time: '2022-04-18T13:23:21.0000000+00:00'
+- author: 20kdc
+  changes:
+  - {message: You should be less likely to be phased through walls., type: Fix}
+  - {message: When pushed by high pressure differences ("space wind") you should be
+      pushed in the direction of the pressure difference again., type: Fix}
+  id: 1357
+  time: '2022-04-18T14:42:32.0000000+00:00'
