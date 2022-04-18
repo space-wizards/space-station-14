@@ -1,11 +1,6 @@
 Entries:
 - author: metalgearsloth
   changes:
-  - {message: You can now toggle shuttle modes via the console., type: Add}
-  id: 861
-  time: '2022-01-11T07:17:55.0000000+00:00'
-- author: metalgearsloth
-  changes:
   - {message: Docking ports can now be saved to and loaded from maps, type: Add}
   id: 862
   time: '2022-01-11T13:47:13.0000000+00:00'
@@ -3038,3 +3033,9 @@ Entries:
   - {message: 'Bees cannot disarm anymore, so no more bee stunning!', type: Tweak}
   id: 1360
   time: '2022-04-18T22:41:07.0000000+00:00'
+- author: CrzyPotato
+  changes:
+  - {message: 'Airlock Painter now has a lathe recipe and can be found in tool closets,
+      and tool vendors', type: Add}
+  id: 1361
+  time: '2022-04-18T22:43:19.0000000+00:00'
