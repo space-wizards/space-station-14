@@ -1,15 +1,4 @@
 Entries:
-- author: Pancake
-  changes:
-  - {message: The singularity will no longer vaporize engineers in 2 seconds., type: Fix}
-  id: 859
-  time: '2022-01-11T06:30:17.0000000+00:00'
-- author: Lamrr
-  changes:
-  - {message: The captain's sabre has returned! Cut down the enemies of the station
-      with wonderful bourgeois excellence!, type: Add}
-  id: 860
-  time: '2022-01-11T06:50:11.0000000+00:00'
 - author: metalgearsloth
   changes:
   - {message: You can now toggle shuttle modes via the console., type: Add}
@@ -3039,3 +3028,13 @@ Entries:
       new life by unknown forces.', type: Add}
   id: 1358
   time: '2022-04-18T22:30:22.0000000+00:00'
+- author: UKNOWH
+  changes:
+  - {message: You can grind pills to test for its substance, type: Add}
+  id: 1359
+  time: '2022-04-18T22:40:35.0000000+00:00'
+- author: Mirino97
+  changes:
+  - {message: 'Bees cannot disarm anymore, so no more bee stunning!', type: Tweak}
+  id: 1360
+  time: '2022-04-18T22:41:07.0000000+00:00'
