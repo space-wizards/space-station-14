@@ -64,17 +64,13 @@
       - Wrench
       - Crowbar
       - Multitool
+      - AirlockPainter
       - MiniHoe
       - Shovel
       - Spade
       - CableStack
       - HandheldGPSBasic
       - HandheldHealthAnalyzer
-      - AirlockPainter
-  - type: Appearance
-    visuals:
-    - type: AutolatheVisualizer
-    - type: WiresVisualizer
   - type: ActivatableUI
     key: enum.LatheUiKey.Key
   - type: ActivatableUIRequiresPower

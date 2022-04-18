@@ -148,7 +148,7 @@
   id: AirlockPainter
   icon: /Textures/Objects/Tools/airlock_painter.rsi/airlock_painter.png
   result: AirlockPainter
-  completetime: 500
+  completetime: 2
   materials:
     Steel: 300
     Plastic: 100
