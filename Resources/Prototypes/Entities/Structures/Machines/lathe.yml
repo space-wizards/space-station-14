@@ -258,7 +258,7 @@
     netsync: false
     sprite: Structures/Machines/techfab.rsi
     layers:
-    - state: icon-sec
+    - state: icon
       map: ["enum.LatheVisualLayers.IsRunning"]
     - state: unlit
       shader: unshaded
@@ -268,8 +268,8 @@
     - state: panel
       map: ["enum.WiresVisualLayers.MaintenancePanel"]
   - type: LatheVisuals
-    idleState: icon-sec
-    runningState: icon-sec
+    idleState: icon
+    runningState: icon
   - type: ProtolatheDatabase
     protolatherecipes:
       - Flash
@@ -311,8 +311,9 @@
     netsync: false
     sprite: Structures/Machines/techfab.rsi
     layers:
-    - state: icon-med
+    - state: icon
       map: ["enum.LatheVisualLayers.IsRunning"]
+    - state: med
     - state: unlit
       shader: unshaded
       map: ["enum.PowerDeviceVisualLayers.Powered"]
@@ -321,8 +322,8 @@
     - state: panel
       map: ["enum.WiresVisualLayers.MaintenancePanel"]
   - type: LatheVisuals
-    idleState: icon-med
-    runningState: icon-med
+    idleState: icon
+    runningState: icon
   - type: ProtolatheDatabase
     protolatherecipes:
       - HandheldHealthAnalyzer

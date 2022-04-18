@@ -8,10 +8,10 @@
   },
   "states": [
     {
-      "name": "icon-sec"
+      "name": "icon"
     },
     {
-      "name": "icon-med"
+      "name": "med"
     },
     {
       "name": "panel"
