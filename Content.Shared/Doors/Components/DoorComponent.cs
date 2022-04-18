@@ -249,6 +249,7 @@ public enum DoorVisuals
     Powered,
     BoltLights,
     EmergencyLights,
+    BaseRSI,
 }
 
 [Serializable, NetSerializable]

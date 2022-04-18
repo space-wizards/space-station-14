@@ -348,7 +348,6 @@
   id: GasCanisterBrokenBase
   name: broken gas canister
   description: A broken gas canister. Not useless yet, as it can be salvaged for high quality materials.
-  abstract: true
   components:
     - type: Destructible
       thresholds:

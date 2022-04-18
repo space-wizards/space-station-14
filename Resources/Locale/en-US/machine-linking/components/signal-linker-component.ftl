@@ -8,3 +8,10 @@ signal-linker-component-max-connections-transmitter = Maximum connections reache
 signal-linker-component-type-mismatch = The port's type does not match the type of the saved port!
 
 signal-linker-component-out-of-range = Connection is out of range!
+
+# Verbs
+signal-linking-verb-text-link-default = Link default ports
+signal-linking-verb-success = Connected all default {$machine} links.
+signal-linking-verb-fail = Failed to connect all default {$machine} links.
+signal-linking-verb-disabled-no-transmitter = You first need to interact with a transmitter.
+signal-linking-verb-disabled-no-receiver = You first need to interact with a receiver.

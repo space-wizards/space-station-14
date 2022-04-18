@@ -21,6 +21,7 @@ using Robust.Shared.Maths;
 using Robust.Shared.Physics;
 using Robust.Shared.Random;
 using Robust.Shared.Serialization;
+using Content.Shared.MobState.Components;
 
 namespace Content.Shared.Interaction
 {
@@ -45,7 +46,7 @@ namespace Content.Shared.Interaction
 
         public bool TryFaceAngle(EntityUid user, Angle diffAngle)
         {
-            if (_actionBlockerSystem.CanChangeDirection(user))
+            if (_actionBlockerSystem.CanChangeDirection(user) && TryComp(user, out MobStateComponent? mob) && !mob.IsIncapacitated())
             {
                 EntityManager.GetComponent<TransformComponent>(user).WorldRotation = diffAngle;
                 return true;
