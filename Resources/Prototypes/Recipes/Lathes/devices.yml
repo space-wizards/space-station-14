@@ -26,7 +26,7 @@
     sprite: Objects/Devices/payload.rsi
     state: payload-flash-armed
   result: FlashPayload
-  completetime: 200
+  completetime: 1
   materials:
     Steel: 25
     Plastic: 50
