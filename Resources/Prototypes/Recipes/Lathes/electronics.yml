@@ -8,6 +8,15 @@
      Plastic: 50
 
 - type: latheRecipe
+  id: MailingUnitElectronics
+  icon: Objects/Misc/module.rsi/net_wired.png
+  result: MailingUnitElectronics
+  completetime: 500
+  materials:
+    Steel: 50
+    Plastic: 50
+
+- type: latheRecipe
   id: DoorElectronics
   icon: Objects/Misc/module.rsi/door_electronics.png
   result: DoorElectronics
@@ -203,7 +212,7 @@
   materials:
      Steel: 50
      Glass: 450
-     
+
 - type: latheRecipe
   id: WallmountSubstationElectronics
   icon: Objects/Misc/module.rsi/id_mod.png
@@ -221,7 +230,7 @@
   materials:
      Steel: 100
      Glass: 900
-     
+
 - type: latheRecipe
   id: GeneratorPlasmaMachineCircuitboard
   icon: Objects/Misc/module.rsi/id_mod.png
@@ -230,7 +239,7 @@
   materials:
      Steel: 50
      Glass: 350
-     
+
 - type: latheRecipe
   id: GeneratorUraniumMachineCircuitboard
   icon: Objects/Misc/module.rsi/id_mod.png
@@ -239,7 +248,7 @@
   materials:
      Steel: 50
      Glass: 350
-     
+
 - type: latheRecipe
   id: WallmountGeneratorElectronics
   icon: Objects/Misc/module.rsi/id_mod.png
@@ -248,7 +257,7 @@
   materials:
      Steel: 50
      Glass: 350
-     
+
 - type: latheRecipe
   id: WallmountGeneratorAPUElectronics
   icon: Objects/Misc/module.rsi/id_mod.png
@@ -257,7 +266,7 @@
   materials:
      Steel: 50
      Glass: 350
-     
+
 - type: latheRecipe
   id: SolarControlComputerCircuitboard
   icon: Objects/Misc/module.rsi/id_mod.png

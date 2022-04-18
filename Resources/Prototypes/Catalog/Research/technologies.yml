@@ -254,6 +254,7 @@
     - UniformPrinterMachineCircuitboard
     - AirAlarmElectronics
     - FireAlarmElectronics
+    - MailingUnitElectronics
 
 - type: technology
   name: material sheet printing
@@ -328,7 +329,7 @@
     - SolarControlComputerCircuitboard
     - GeneratorPlasmaMachineCircuitboard
     - GeneratorUraniumMachineCircuitboard
-    
+
 - type: technology
   name: "compact power technology"
   id: CompactPowerTechnology

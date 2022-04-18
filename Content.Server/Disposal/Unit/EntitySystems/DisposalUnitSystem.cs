@@ -243,7 +243,7 @@ namespace Content.Server.Disposal.Unit.EntitySystems
             {
                 return;
             }
-            
+
             if (!CanInsert(component, args.Used) || !_handsSystem.TryDropIntoContainer(args.User, args.Used, component.Container))
             {
                 return;
@@ -384,6 +384,7 @@ namespace Content.Server.Disposal.Unit.EntitySystems
             if (oldPressure < 1 && state == SharedDisposalUnitComponent.PressureState.Ready)
             {
                 UpdateVisualState(component);
+                UpdateInterface(component, component.Powered);
 
                 if (component.Engaged)
                 {
@@ -472,6 +473,7 @@ namespace Content.Server.Disposal.Unit.EntitySystems
 
             if (beforeFlushArgs.Cancelled)
             {
+                Disengage(component);
                 return false;
             }
 
@@ -517,6 +519,9 @@ namespace Content.Server.Disposal.Unit.EntitySystems
             var stateString = Loc.GetString($"{component.State}");
             var state = new SharedDisposalUnitComponent.DisposalUnitBoundUserInterfaceState(EntityManager.GetComponent<MetaDataComponent>(component.Owner).EntityName, stateString, EstimatedFullPressure(component), powered, component.Engaged);
             component.Owner.GetUIOrNull(SharedDisposalUnitComponent.DisposalUnitUiKey.Key)?.SetState(state);
+
+            var stateUpdatedEvent = new DisposalUnitUIStateUpdatedEvent(state);
+            RaiseLocalEvent(component.Owner, stateUpdatedEvent, false);
         }
 
         private TimeSpan EstimatedFullPressure(DisposalUnitComponent component)
@@ -679,7 +684,21 @@ namespace Content.Server.Disposal.Unit.EntitySystems
         /// </summary>
         public sealed class BeforeDisposalFlushEvent : CancellableEntityEventArgs
         {
-            public IEnumerable<string>? Tags;
+            public List<string> Tags = new();
+        }
+
+        /// <summary>
+        /// Sent before the disposal unit flushes it's contents.
+        /// Allows adding tags for sorting and preventing the disposal unit from flushing.
+        /// </summary>
+        public sealed class DisposalUnitUIStateUpdatedEvent : EntityEventArgs
+        {
+            public SharedDisposalUnitComponent.DisposalUnitBoundUserInterfaceState State;
+
+            public DisposalUnitUIStateUpdatedEvent(SharedDisposalUnitComponent.DisposalUnitBoundUserInterfaceState state)
+            {
+                State = state;
+            }
         }
     }
 }

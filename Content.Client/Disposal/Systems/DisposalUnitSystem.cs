@@ -51,6 +51,12 @@ namespace Content.Client.Disposal.Systems
                 {
                     return disposals.Window?.UpdateState(state) != false;
                 }
+
+                //Bandaid to get the pressure ui to work on mailing units
+                if (inter is MailingUnitBoundUserInterface mailing)
+                {
+                    return mailing.Window?.UpdatePressure(state.FullPressureTime) != false;
+                }
             }
 
             return true;

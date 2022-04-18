@@ -178,6 +178,7 @@
       - APCElectronics
       - AirAlarmElectronics
       - FireAlarmElectronics
+      - MailingUnitElectronics
       - Bucket
       - MopItem
       - SprayBottle
@@ -361,14 +362,14 @@
       - ClothingUniformJumpskirtSec
       - ClothingUniformJumpsuitWarden
       - ClothingUniformJumpskirtWarden
-      - ClothingOuterWinterCap 
+      - ClothingOuterWinterCap
       - ClothingOuterWinterCE
       - ClothingOuterWinterCMO
       - ClothingOuterWinterHoP
       - ClothingOuterWinterHoS
       - ClothingOuterWinterQM
       - ClothingOuterWinterRD
-      
+
   - type: Sprite
     sprite: Structures/Machines/uniform_printer.rsi
     netsync: false

@@ -196,6 +196,9 @@
   id: Matchstick
 
 - type: Tag
+  id: MailingUnitElectronics
+
+- type: Tag
   id: Metal
 
 - type: Tag
@@ -221,7 +224,7 @@
 
 - type: Tag
   id: Payload # for grenade/bomb crafting
-  
+
 - type: Tag
   id: PercussionInstrument
 
