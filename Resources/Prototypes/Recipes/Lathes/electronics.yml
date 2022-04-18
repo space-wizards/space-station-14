@@ -189,7 +189,7 @@
   id: StasisBedMachineCircuitboard
   icon: Objects/Misc/module.rsi/id_mod.png
   result: StasisBedMachineCircuitboard
-  completetime: 1000
+  completetime: 4
   materials:
     Steel: 100
     Glass: 900

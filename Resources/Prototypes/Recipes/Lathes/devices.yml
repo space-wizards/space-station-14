@@ -4,7 +4,7 @@
     sprite: Objects/Devices/timer.rsi
     state: timer
   result: TimerTrigger
-  completetime: 500
+  completetime: 2
   materials:
     Steel: 300
     Plastic: 200
@@ -15,7 +15,7 @@
     sprite: Objects/Devices/payload.rsi
     state: payload-empty
   result: ChemicalPayload
-  completetime: 500
+  completetime: 2
   materials:
     Steel: 200
     Plastic: 300
