@@ -81,10 +81,6 @@
     anchored: true
   - type: Pullable
   - type: Lathe
-    whitelist:
-      tags:
-        - Sheet
-        - RawMaterial
 
 - type: entity
   parent: BaseMachinePowered
@@ -208,10 +204,6 @@
     anchored: true
   - type: Pullable
   - type: Lathe
-    whitelist:
-      tags:
-        - Sheet
-        - RawMaterial
 
 - type: entity
   parent: Protolathe
@@ -252,15 +244,10 @@
       - CircuitImprinterMachineCircuitboard
       - DawInstrumentMachineCircuitboard
       - StasisBedMachineCircuitboard
-      - OreProcessorMachineCircuitboard
   - type: Machine
     board: CircuitImprinterMachineCircuitboard
   - type: Lathe
     producingSound: /Audio/Machines/circuitprinter.ogg
-    whitelist:
-      tags:
-        - Sheet
-        - RawMaterial
 
 - type: entity
   parent: Protolathe
@@ -281,6 +268,7 @@
       map: ["enum.LatheVisualLayers.IsInserting"]
     - state: panel
       map: ["enum.WiresVisualLayers.MaintenancePanel"]
+  - type: LatheVisuals
     idleState: icon
     runningState: icon
   - type: ProtolatheDatabase
@@ -313,11 +301,6 @@
       - CableMVStack
       - CableHVStack
       - TimerTrigger
-  - type: Lathe
-    whitelist:
-      tags:
-        - Sheet
-        - RawMaterial
 
 - type: entity
   parent: Autolathe
@@ -382,13 +365,14 @@
       - ClothingUniformJumpskirtSec
       - ClothingUniformJumpsuitWarden
       - ClothingUniformJumpskirtWarden
-      - ClothingOuterWinterCap 
+      - ClothingOuterWinterCap
       - ClothingOuterWinterCE
       - ClothingOuterWinterCMO
       - ClothingOuterWinterHoP
       - ClothingOuterWinterHoS
       - ClothingOuterWinterQM
       - ClothingOuterWinterRD
+
   - type: Sprite
     sprite: Structures/Machines/uniform_printer.rsi
     netsync: false
@@ -399,46 +383,3 @@
     board: UniformPrinterMachineCircuitboard
   - type: Lathe
     producingSound: /Audio/Machines/uniformprinter.ogg
-    whitelist:
-      tags:
-        - Sheet
-        - RawMaterial
-
-- type: entity
-  parent: Autolathe
-  id: OreProcessor
-  name: ore processor
-  description: It produces sheets and ingots using ores.
-  components:
-  - type: LatheVisuals
-    ignoreColor: true
-  - type: Sprite
-    sprite: Structures/Machines/ore_processor.rsi
-    netsync: false
-    layers:
-      - state: icon
-        map: ["enum.LatheVisualLayers.IsRunning"]
-      - state: unlit
-        shader: unshaded
-        map: ["enum.PowerDeviceVisualLayers.Powered"]
-      - state: inserting
-        map: ["enum.LatheVisualLayers.IsInserting"]
-      - state: panel
-        map: ["enum.WiresVisualLayers.MaintenancePanel"]
-  - type: Machine
-    board: AutolatheMachineCircuitboard
-  - type: LatheDatabase
-    static: true
-    recipes:
-      - SheetSteel5
-      - SheetGlass5
-      - SheetPlasma5
-      - SheetPGlass5
-      - SheetRPGlass5
-      - SheetUranium1
-      - IngotGold1
-      - IngotSilver1
-  - type: Lathe
-    whitelist:
-      tags: 
-      - Ore

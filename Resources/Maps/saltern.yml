@@ -6985,13 +6985,6 @@ entities:
     pos: -41.5,8.5
     parent: 857
     type: Transform
-  - fixtures:
-    - shape: !type:PhysShapeCircle
-        position: 0,-0.5
-        radius: 0.2
-      hard: False
-      id: docking
-    type: Fixtures
   - containers:
       board: !type:Container
         ents: []
@@ -7042,13 +7035,6 @@ entities:
     pos: -41.5,4.5
     parent: 857
     type: Transform
-  - fixtures:
-    - shape: !type:PhysShapeCircle
-        position: 0,-0.5
-        radius: 0.2
-      hard: False
-      id: docking
-    type: Fixtures
   - containers:
       board: !type:Container
         ents: []
