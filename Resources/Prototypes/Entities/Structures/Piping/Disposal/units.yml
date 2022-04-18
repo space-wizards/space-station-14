@@ -111,6 +111,8 @@
     node: disposal_unit
   - type: DisposalUnit
     flushTime: 2
+    autoEngageEnabled: false
+    mobsCanEnter: false
   - type: MailingUnit
   - type: DeviceNetwork
     deviceNetId: Wired

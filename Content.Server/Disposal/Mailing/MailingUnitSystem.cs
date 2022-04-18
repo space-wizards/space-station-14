@@ -120,7 +120,7 @@ public sealed class MailingUnitSystem : EntitySystem
     /// </summary>
     private void UpdateTargetList(EntityUid uid, MailingUnitComponent component, DeviceNetworkComponent? device = null)
     {
-        if (!Resolve(uid, ref device))
+        if (!Resolve(uid, ref device, false))
             return;
 
         var payload = new NetworkPayload
