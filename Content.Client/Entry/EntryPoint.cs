@@ -95,6 +95,7 @@ namespace Content.Client.Entry
             prototypes.RegisterIgnore("aiFaction");
             prototypes.RegisterIgnore("gameMap");
             prototypes.RegisterIgnore("behaviorSet");
+            prototypes.RegisterIgnore("lobbyBackground");
             prototypes.RegisterIgnore("advertisementsPack");
             prototypes.RegisterIgnore("metabolizerType");
             prototypes.RegisterIgnore("metabolismGroup");
@@ -194,6 +195,7 @@ namespace Content.Client.Entry
             IoCManager.Resolve<EuiManager>().Initialize();
             IoCManager.Resolve<IVoteManager>().Initialize();
             IoCManager.Resolve<IGamePrototypeLoadManager>().Initialize();
+            IoCManager.Resolve<NetworkResourceManager>().Initialize();
 
             _baseClient.RunLevelChanged += (_, args) =>
             {

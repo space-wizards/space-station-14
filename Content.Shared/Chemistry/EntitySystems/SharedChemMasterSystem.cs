@@ -21,7 +21,7 @@ namespace Content.Shared.Chemistry.EntitySystems
 
         private void OnComponentInit(EntityUid uid, SharedChemMasterComponent component, ComponentInit args)
         {
-            _itemSlotsSystem.AddItemSlot(uid, $"{component.Name}-beaker", component.BeakerSlot);
+            _itemSlotsSystem.AddItemSlot(uid, SharedChemMasterComponent.BeakerSlotId, component.BeakerSlot);
         }
 
         private void OnComponentRemove(EntityUid uid, SharedChemMasterComponent component, ComponentRemove args)

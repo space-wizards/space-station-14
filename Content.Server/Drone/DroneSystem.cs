@@ -19,6 +19,10 @@ using Content.Server.Ghost.Roles.Components;
 using Content.Server.Hands.Components;
 using Content.Server.UserInterface;
 using Robust.Shared.Player;
+using Content.Shared.Hands.EntitySystems;
+using Content.Shared.Storage;
+using Robust.Shared.Map;
+using Robust.Shared.Random;
 using Robust.Shared.Timing;
 
 namespace Content.Server.Drone
@@ -28,8 +32,10 @@ namespace Content.Server.Drone
         [Dependency] private readonly PopupSystem _popupSystem = default!;
         [Dependency] private readonly TagSystem _tagSystem = default!;
         [Dependency] private readonly EntityLookupSystem _lookup = default!;
+        [Dependency] private readonly SharedHandsSystem _handsSystem = default!;
         [Dependency] private readonly SharedActionsSystem _actionsSystem = default!;
         [Dependency] private readonly IGameTiming _gameTiming = default!;
+        [Dependency] private readonly IRobustRandom _robustRandom = default!;
 
         public override void Initialize()
         {
@@ -70,16 +76,13 @@ namespace Content.Server.Drone
 
         private void OnExamined(EntityUid uid, DroneComponent component, ExaminedEvent args)
         {
-            if (args.IsInDetailsRange)
+            if (TryComp<MindComponent>(uid, out var mind) && mind.HasMind)
             {
-                if (TryComp<MindComponent>(uid, out var mind) && mind.HasMind)
-                {
-                    args.PushMarkup(Loc.GetString("drone-active"));
-                }
-                else
-                {
-                    args.PushMarkup(Loc.GetString("drone-dormant"));
-                }
+                args.PushMarkup(Loc.GetString("drone-active"));
+            }
+            else
+            {
+                args.PushMarkup(Loc.GetString("drone-dormant"));
             }
         }
 
@@ -118,13 +121,19 @@ namespace Content.Server.Drone
 
                 if (TryComp<HandsComponent>(uid, out var hands) && hands.Count >= drone.Tools.Count)
                 {
-                   foreach (var entry in drone.Tools)
-                   {
-                       var item = EntityManager.SpawnEntity(entry.PrototypeId, spawnCoord);
-                       AddComp<UnremoveableComponent>(item);
-                       hands.PutInHand(item);
-                       drone.ToolUids.Add(item);
-                   }
+                    var items = EntitySpawnCollection.GetSpawns(drone.Tools, _robustRandom);
+                    foreach (var entry in items)
+                    {
+                        var item = EntityManager.SpawnEntity(entry, spawnCoord);
+                        AddComp<UnremoveableComponent>(item);
+                        if (!_handsSystem.TryPickupAnyHand(uid, item, checkActionBlocker: false))
+                        {
+                            QueueDel(item);
+                            Logger.Error($"Drone ({ToPrettyString(uid)}) failed to pick up innate item ({ToPrettyString(item)})");
+                            continue;
+                        }
+                        drone.ToolUids.Add(item);
+                    }
                 }
 
                 if (TryComp<ActionsComponent>(uid, out var actions) && TryComp<UnpoweredFlashlightComponent>(uid, out var flashlight))
@@ -164,7 +173,7 @@ namespace Content.Server.Drone
         private bool NonDronesInRange(EntityUid uid, DroneComponent component)
         {
             var xform = Comp<TransformComponent>(uid);
-            foreach (var entity in _lookup.GetEntitiesInRange(xform.MapID, xform.WorldPosition, component.InteractionBlockRange))
+            foreach (var entity in _lookup.GetEntitiesInRange(xform.MapPosition, component.InteractionBlockRange))
             {
                 if (HasComp<MindComponent>(entity) && !HasComp<DroneComponent>(entity) && !HasComp<GhostComponent>(entity))
                 {

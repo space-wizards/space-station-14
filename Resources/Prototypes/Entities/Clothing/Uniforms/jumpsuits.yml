@@ -57,7 +57,7 @@
   parent: ClothingUniformBase
   id: ClothingUniformJumpsuitSalvageSpecialist
   name: salvage specialist's jumpsuit
-  description: It's a snappy jumpsuit with a sturdy set of overalls. It is very dirty.
+  description: It's a snappy jumpsuit with a sturdy set of overalls. It's very dirty.
   components:
   - type: Sprite
     sprite: Clothing/Uniforms/Jumpsuit/salvage.rsi
@@ -712,3 +712,47 @@
     sprite: Clothing/Uniforms/Jumpsuit/nanotrasen.rsi
   - type: Clothing
     sprite: Clothing/Uniforms/Jumpsuit/nanotrasen.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: ClothingUniformJumpsuitCapFormal
+  name: captain's formal suit
+  description: A suit for special occasions.
+  components:
+  - type: Sprite
+    sprite: Clothing/Uniforms/Jumpsuit/capformal.rsi
+  - type: Clothing
+    sprite: Clothing/Uniforms/Jumpsuit/capformal.rsi
+    
+- type: entity
+  parent: ClothingUniformBase
+  id: ClothingUniformJumpsuitCentcomFormal
+  name: central command formal suit
+  description: A suit for special occasions.
+  components:
+  - type: Sprite
+    sprite: Clothing/Uniforms/Jumpsuit/centcomformal.rsi
+  - type: Clothing
+    sprite: Clothing/Uniforms/Jumpsuit/centcomformal.rsi 
+    
+- type: entity
+  parent: ClothingUniformBase
+  id: ClothingUniformJumpsuitHosFormal
+  name: hos's formal suit
+  description: A suit for special occasions.
+  components:
+  - type: Sprite
+    sprite: Clothing/Uniforms/Jumpsuit/hosformal.rsi
+  - type: Clothing
+    sprite: Clothing/Uniforms/Jumpsuit/hosformal.rsi 
+     
+- type: entity
+  parent: ClothingUniformBase
+  id: ClothingUniformJumpsuitOperative
+  name: operative jumpsuit
+  description: Uniform for elite syndicate operatives performing tactical operations in deep space.
+  components:
+  - type: Sprite
+    sprite: Clothing/Uniforms/Jumpsuit/operative.rsi
+  - type: Clothing
+    sprite: Clothing/Uniforms/Jumpsuit/operative.rsi

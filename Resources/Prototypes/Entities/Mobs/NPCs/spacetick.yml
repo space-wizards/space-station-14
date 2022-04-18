@@ -27,7 +27,7 @@
     - shape:
         !type:PhysShapeCircle
         radius: 0.20
-      mass: 5
+      mass: 2.5
       mask:
       - Impassable
       - MobImpassable
@@ -45,10 +45,16 @@
       normal: alive
       dead: dead
   - type: Butcherable
-    spawned: FoodMeatXeno
-    pieces: 1
+    spawned:
+    - id: FoodMeatXeno
+      amount: 1
   - type: Bloodstream
     bloodMaxVolume: 50
+  - type: CombatMode
+    disarmAction:
+      enabled: false
+      autoPopulate: false
+      name: action-name-disarm
   - type: UnarmedCombat
     range: 0.5
     arcwidth: 0
@@ -56,7 +62,6 @@
     damage:
       groups:
         Brute: 2
-
   - type: MeleeChemicalInjector
   - type: SolutionContainerManager
     solutions:
@@ -70,3 +75,11 @@
     solution: melee
   - type: SolutionTransfer
     maxTransferAmount: 5
+  - type: GhostTakeoverAvailable
+    makeSentient: true
+    name: space tick
+    description: |
+      If you're a salvage spawn, defend the loot inside!
+      Otherwise, wreak havoc on the station!
+  - type: ReplacementAccent
+    accent: genericAggressive

@@ -43,6 +43,9 @@
   id: CanPilot
 
 - type: Tag
+  id: CannotSuicide
+
+- type: Tag
   id: CaptainSabre
 
 - type: Tag
@@ -88,6 +91,9 @@
   id: CrowbarRed
 
 - type: Tag
+  id: Cryobeaker
+
+- type: Tag
   id: ConveyorAssembly
 
 - type: Tag
@@ -130,6 +136,9 @@
   id: ExplosivePassable
 
 - type: Tag
+  id: Familiar
+
+- type: Tag
   id: FireAlarmElectronics
 
 - type: Tag
@@ -167,7 +176,7 @@
 
 - type: Tag
   id: HidesHair # for headwear.
-  
+
 - type: Tag
   id: Hoe
 
@@ -211,13 +220,16 @@
   id: NoSpinOnThrow
 
 - type: Tag
-  id: NukeDisk
-
-- type: Tag
   id: Ointment
 
 - type: Tag
   id: Ore
+
+- type: Tag
+  id: Payload # for grenade/bomb crafting
+
+- type: Tag
+  id: PaintableAirlock
 
 - type: Tag
   id: PercussionInstrument
@@ -294,6 +306,9 @@
 
 - type: Tag
   id: TrashBag
+
+- type: Tag
+  id: WetFloorSign
 
 - type: Tag
   id: Wall

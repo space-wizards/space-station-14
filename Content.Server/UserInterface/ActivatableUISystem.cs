@@ -138,7 +138,7 @@ namespace Content.Server.UserInterface
             ui.Toggle(actor.PlayerSession);
 
             //Let the component know a user opened it so it can do whatever it needs to do
-            var aae = new AfterActivatableUIOpenEvent(user);
+            var aae = new AfterActivatableUIOpenEvent(user, actor.PlayerSession);
             RaiseLocalEvent((aui).Owner, aae, false);
 
             return true;
@@ -186,9 +186,12 @@ namespace Content.Server.UserInterface
     public sealed class AfterActivatableUIOpenEvent : EntityEventArgs
     {
         public EntityUid User { get; }
-        public AfterActivatableUIOpenEvent(EntityUid who)
+        public readonly IPlayerSession Session;
+
+        public AfterActivatableUIOpenEvent(EntityUid who, IPlayerSession session)
         {
             User = who;
+            Session = session;
         }
     }
 

@@ -43,7 +43,8 @@
   - type: Tool
     qualities:
     - Screwing
-    useSoundCollection: Screwdriver
+    useSound: 
+      collection: Screwdriver
     speed: 0.05
 
 - type: entity

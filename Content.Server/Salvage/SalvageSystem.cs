@@ -78,7 +78,6 @@ namespace Content.Server.Salvage
                     {
                         magnet.AttachedEntity = null;
                         magnet.MagnetState = MagnetState.Inactive;
-                        Report("salvage-system-announcement-lost");
                         return;
                     }
                 }
@@ -277,26 +276,31 @@ namespace Content.Server.Salvage
                 Report("salvage-system-announcement-spawn-no-debris-available");
                 return false;
             }
-            var bp = _mapLoader.LoadBlueprint(spl.MapId, map.MapPath.ToString());
-            if (bp == null)
+
+            var opts = new MapLoadOptions
+            {
+                Offset = spl.Position
+            };
+
+            var (_, gridId) = _mapLoader.LoadBlueprint(spl.MapId, map.MapPath.ToString(), opts);
+            if (gridId == null)
             {
                 Report("salvage-system-announcement-spawn-debris-disintegrated");
                 return false;
             }
-            var salvageEntityId = bp.GridEntityId;
+            var salvageEntityId = _mapManager.GetGridEuid(gridId.Value);
             component.AttachedEntity = salvageEntityId;
 
             var pulledTransform = EntityManager.GetComponent<TransformComponent>(salvageEntityId);
-            pulledTransform.Coordinates = EntityCoordinates.FromMap(_mapManager, spl);
             pulledTransform.WorldRotation = spAngle;
 
             Report("salvage-system-announcement-arrived", ("timeLeft", HoldTime.TotalSeconds));
             return true;
         }
         private void Report(string messageKey) =>
-            _chatManager.DispatchStationAnnouncement(Loc.GetString(messageKey), Loc.GetString("salvage-system-announcement-source"), colorOverride: Color.Orange);
+            _chatManager.DispatchStationAnnouncement(Loc.GetString(messageKey), Loc.GetString("salvage-system-announcement-source"), colorOverride: Color.Orange, playDefaultSound: false);
         private void Report(string messageKey, params (string, object)[] args) =>
-            _chatManager.DispatchStationAnnouncement(Loc.GetString(messageKey, args), Loc.GetString("salvage-system-announcement-source"), colorOverride: Color.Orange);
+            _chatManager.DispatchStationAnnouncement(Loc.GetString(messageKey, args), Loc.GetString("salvage-system-announcement-source"), colorOverride: Color.Orange, playDefaultSound: false);
 
         private void Transition(SalvageMagnetComponent magnet, TimeSpan currentTime)
         {

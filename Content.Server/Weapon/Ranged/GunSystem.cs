@@ -11,6 +11,7 @@ using Content.Shared.ActionBlocker;
 using Content.Shared.Camera;
 using Content.Shared.Damage;
 using Content.Shared.Examine;
+using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Interaction;
 using Content.Shared.Interaction.Events;
 using Content.Shared.Popups;
@@ -47,6 +48,7 @@ public sealed partial class GunSystem : EntitySystem
     [Dependency] private readonly SharedPhysicsSystem _physics = default!;
     [Dependency] private readonly SharedPopupSystem _popup = default!;
     [Dependency] private readonly StunSystem _stun = default!;
+    [Dependency] private readonly SharedHandsSystem _handsSystem = default!;
 
     /// <summary>
     /// How many sounds are allowed to be played on ejecting multiple casings.
@@ -141,7 +143,7 @@ public sealed partial class GunSystem : EntitySystem
             return;
 
         // TODO: Not exactly robust
-        var gun = handsComponent.GetActiveHand()?.HeldEntity;
+        var gun = handsComponent.ActiveHand?.HeldEntity;
 
         if (gun == null || !TryComp(gun, out ServerRangedWeaponComponent? weapon))
             return;

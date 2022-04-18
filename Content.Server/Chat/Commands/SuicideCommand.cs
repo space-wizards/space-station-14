@@ -12,12 +12,14 @@ using Content.Shared.Damage.Prototypes;
 using Content.Shared.Database;
 using Content.Shared.Item;
 using Content.Shared.Popups;
+using Content.Shared.Tag;
 using Robust.Server.Player;
 using Robust.Shared.Console;
 using Robust.Shared.Enums;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
+using Robust.Shared.Map;
 using Robust.Shared.Prototypes;
 
 namespace Content.Server.Chat.Commands
@@ -81,6 +83,17 @@ namespace Content.Server.Chat.Commands
                 return;
             }
 
+            //Checks to see if the CannotSuicide tag exits, ghosts instead.
+            if(EntitySystem.Get<TagSystem>().HasTag(owner, "CannotSuicide"))
+            {
+                if (!EntitySystem.Get<GameTicker>().OnGhostAttempt(mind, true))
+                {
+                    shell?.WriteLine("You can't ghost right now.");
+                    return;
+                }
+                return;
+            }
+
             //TODO: needs to check if the mob is actually alive
             //TODO: maybe set a suicided flag to prevent resurrection?
 
@@ -89,9 +102,9 @@ namespace Content.Server.Chat.Commands
 
             // Held item suicide
             if (_entities.TryGetComponent(owner, out HandsComponent handsComponent)
-                && handsComponent.GetActiveHandItem is {} itemComponent)
+                && handsComponent.ActiveHandEntity is EntityUid item)
             {
-                var suicide = _entities.GetComponents<ISuicideAct>(itemComponent.Owner).FirstOrDefault();
+                var suicide = _entities.GetComponents<ISuicideAct>(item).FirstOrDefault();
 
                 if (suicide != null)
                 {
@@ -101,7 +114,7 @@ namespace Content.Server.Chat.Commands
             }
 
             // Get all entities in range of the suicider
-            var entities = EntitySystem.Get<EntityLookupSystem>().GetEntitiesInRange(owner, 1, LookupFlags.Approximate | LookupFlags.IncludeAnchored).ToArray();
+            var entities = EntitySystem.Get<EntityLookupSystem>().GetEntitiesInRange(owner, 1, LookupFlags.Approximate | LookupFlags.Anchored).ToArray();
 
             if (entities.Length > 0)
             {

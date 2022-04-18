@@ -19,3 +19,15 @@
     variation: 0.125
   - type: UseDelay
     delay: 0.5
+  - type: EmitSoundOnTrigger
+    sound:
+      collection: BikeHorn
+  - type: Tag
+    tags:
+    - Payload # yes, you can make re-usable prank grenades
+  - type: MeleeWeapon
+    hitSound:
+      collection: BikeHorn
+    damage:
+      types:
+        Blunt: 0

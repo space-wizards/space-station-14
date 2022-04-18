@@ -9,9 +9,10 @@ using Content.Shared.VendingMachines;
 using Robust.Server.GameObjects;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
-using Content.Server.Throwing;
 using Content.Shared.Acts;
+using Content.Shared.Emag.Systems;
 using static Content.Shared.VendingMachines.SharedVendingMachineComponent;
+using Content.Shared.Throwing;
 
 namespace Content.Server.VendingMachines.systems
 {
@@ -20,7 +21,8 @@ namespace Content.Server.VendingMachines.systems
         [Dependency] private readonly IRobustRandom _random = default!;
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
         [Dependency] private readonly AccessReaderSystem _accessReader = default!;
-        [Dependency] private readonly PopupSystem _popupSystem = default!;
+        [Dependency] private readonly PopupSystem _popupSystem = default!; 
+        [Dependency] private readonly ThrowingSystem _throwingSystem = default!;
 
         public override void Initialize()
         {
@@ -30,6 +32,7 @@ namespace Content.Server.VendingMachines.systems
             SubscribeLocalEvent<VendingMachineComponent, InventorySyncRequestMessage>(OnInventoryRequestMessage);
             SubscribeLocalEvent<VendingMachineComponent, VendingMachineEjectMessage>(OnInventoryEjectMessage);
             SubscribeLocalEvent<VendingMachineComponent, BreakageEventArgs>(OnBreak);
+            SubscribeLocalEvent<VendingMachineComponent, GotEmaggedEvent>(OnEmagged);
         }
 
         private void OnComponentInit(EntityUid uid, VendingMachineComponent component, ComponentInit args)
@@ -72,6 +75,16 @@ namespace Content.Server.VendingMachines.systems
         {
             vendComponent.Broken = true;
             TryUpdateVisualState(uid, VendingMachineVisualState.Broken, vendComponent);
+        }
+
+        private void OnEmagged(EntityUid uid, VendingMachineComponent component, GotEmaggedEvent args)
+        {
+            if (component.Emagged || component.EmagPackPrototypeId == string.Empty)
+                return;
+
+            AddVendEntries(component, component.EmagPackPrototypeId);
+            component.Emagged = true;
+            args.Handled = true;
         }
 
         public bool IsPowered(EntityUid uid, VendingMachineComponent? vendComponent = null)
@@ -118,6 +131,27 @@ namespace Content.Server.VendingMachines.systems
                 inventory.Add(new VendingMachineInventoryEntry(id, amount));
             }
             vendComponent.Inventory = inventory;
+        }
+
+        /// <summary>
+        /// Add more entries for any reason AFTER initialization (emag, machine upgrades, etc)
+        /// </summary>
+        public void AddVendEntries(VendingMachineComponent component, string pack)
+        {
+            if (!_prototypeManager.TryIndex(pack, out VendingMachineInventoryPrototype? packPrototype))
+            {
+                Logger.Error($"Pack has no valid inventory prototype: {pack}");
+                return;
+            }
+
+            foreach (var (id, amount) in packPrototype.StartingInventory)
+            {
+                if (!_prototypeManager.TryIndex(id, out EntityPrototype? prototype))
+                {
+                    continue;
+                }
+                component.Inventory.Add(new VendingMachineInventoryEntry(id, amount));
+            }
         }
 
         public void Deny(EntityUid uid, VendingMachineComponent? vendComponent = null)
@@ -197,7 +231,7 @@ namespace Content.Server.VendingMachines.systems
                 {
                     float range = vendComponent.NonLimitedEjectRange;
                     Vector2 direction = new Vector2(_random.NextFloat(-range, range), _random.NextFloat(-range, range));
-                    ent.TryThrow(direction, vendComponent.NonLimitedEjectForce);
+                    _throwingSystem.TryThrow(ent, direction, vendComponent.NonLimitedEjectForce);
                 }
             });
             SoundSystem.Play(Filter.Pvs(vendComponent.Owner), vendComponent.SoundVend.GetSound(), vendComponent.Owner, AudioParams.Default.WithVolume(-2f));

@@ -23,7 +23,7 @@
     - shape:
         !type:PhysShapeCircle
         radius: 0.40
-      mass: 50
+      mass: 20
       mask:
       - Impassable
       - MobImpassable
@@ -43,15 +43,32 @@
       crit: crit
       dead: dead
   - type: Butcherable
-    spawned: FoodMeat # TODO: CrapMeat or FishMeat # - 2022-02-17 LMAO crap meat
-    pieces: 2
+    # TODO: CrapMeat or FishMeat # - 2022-02-17 LMAO crap meat
+    spawned:
+    - id: FoodMeat
+      amount: 2
   - type: UnarmedCombat
     range: 1.5
     arcwidth: 0
     arc: bite
+    hitSound:
+      path: /Audio/Effects/bite.ogg
     damage:
       groups:
-        Brute: 20
+        Brute: 16
+  - type: CombatMode
+    disarmAction:
+      enabled: false
+      autoPopulate: false
+      name: action-name-disarm
+  - type: GhostTakeoverAvailable
+    makeSentient: true
+    name: space carp
+    description: |
+      If you're a salvage spawn, defend the loot inside!
+      Otherwise, wreak havoc on the station!
+  - type: ReplacementAccent
+    accent: genericAggressive
 
 - type: entity
   name: magicarp
@@ -65,6 +82,8 @@
     - map: ["enum.DamageStateVisualLayers.Base"]
       state: alive
       sprite: Mobs/Aliens/Carps/magic.rsi
+  - type: GhostTakeoverAvailable
+    name: magicarp
 
 - type: entity
   name: holocarp
@@ -91,3 +110,5 @@
         - SmallImpassable
       layer:
         - Opaque
+  - type: GhostTakeoverAvailable
+    name: holocarp

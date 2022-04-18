@@ -7,7 +7,6 @@
   - type: MedicalScanner
   - type: Sprite
     netsync: false
-    noRot: true
     sprite: Structures/Machines/scanner.rsi
     layers:
     - state: open

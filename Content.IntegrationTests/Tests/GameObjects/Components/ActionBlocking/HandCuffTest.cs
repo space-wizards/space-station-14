@@ -81,7 +81,7 @@ namespace Content.IntegrationTests.Tests.GameObjects.Components.ActionBlocking
                 AddHand(cuffed.Owner);
 
                 Assert.That(cuffed.CuffedHandCount, Is.EqualTo(2));
-                Assert.That(hands.HandNames.Count(), Is.EqualTo(4));
+                Assert.That(hands.SortedHands.Count(), Is.EqualTo(4));
 
                 // Test to give a player with 4 hands 2 sets of cuffs
                 cuffed.TryAddNewCuffs(human, secondCuffs);

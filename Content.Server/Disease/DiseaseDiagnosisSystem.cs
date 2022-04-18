@@ -1,7 +1,6 @@
 using System.Threading;
 using Content.Server.Disease.Components;
 using Content.Shared.Disease;
-using Content.Shared.Disease.Components;
 using Content.Shared.Interaction;
 using Content.Shared.Inventory;
 using Content.Shared.Examine;
@@ -10,12 +9,12 @@ using Content.Server.Popups;
 using Content.Server.Hands.Components;
 using Content.Server.Nutrition.EntitySystems;
 using Content.Server.Paper;
-using Content.Server.Tools.Components;
 using Content.Server.Power.Components;
 using Robust.Shared.Random;
 using Robust.Shared.Player;
 using Robust.Shared.Audio;
 using Robust.Shared.Utility;
+using Content.Shared.Tools.Components;
 
 namespace Content.Server.Disease
 {
@@ -27,6 +26,7 @@ namespace Content.Server.Disease
         [Dependency] private readonly PopupSystem _popupSystem = default!;
         [Dependency] private readonly IRobustRandom _random = default!;
         [Dependency] private readonly InventorySystem _inventorySystem = default!;
+        [Dependency] private readonly PaperSystem _paperSystem = default!;
 
         public override void Initialize()
         {
@@ -150,7 +150,7 @@ namespace Content.Server.Disease
                 _popupSystem.PopupEntity(Loc.GetString("diagnoser-cant-use-swab", ("machine", uid), ("swab", args.Used)), uid, Filter.Entities(args.User));
                 return;
             }
-            _popupSystem.PopupEntity(Loc.GetString("diagnoser-insert-swab", ("machine", uid), ("swab", args.Used)), uid, Filter.Entities(args.User));
+            _popupSystem.PopupEntity(Loc.GetString("machine-insert-item", ("machine", uid), ("item", args.Used)), uid, Filter.Entities(args.User));
 
 
             machine.Disease = swab.Disease;
@@ -182,7 +182,7 @@ namespace Content.Server.Disease
                 _popupSystem.PopupEntity(Loc.GetString("diagnoser-cant-use-swab", ("machine", uid), ("swab", args.Used)), uid, Filter.Entities(args.User));
                 return;
             }
-            _popupSystem.PopupEntity(Loc.GetString("diagnoser-insert-swab", ("machine", uid), ("swab", args.Used)), uid, Filter.Entities(args.User));
+            _popupSystem.PopupEntity(Loc.GetString("machine-insert-item", ("machine", uid), ("item", args.Used)), uid, Filter.Entities(args.User));
             var machine = Comp<DiseaseMachineComponent>(uid);
             machine.Disease = swab.Disease;
             EntityManager.DeleteEntity(args.Used);
@@ -344,7 +344,7 @@ namespace Content.Server.Disease
             }
             MetaData(printed).EntityName = reportTitle;
 
-            paper.SetContent(contents.ToMarkup());
+            _paperSystem.SetContent(printed, contents.ToMarkup(), paper);
         }
 
         /// <summary>

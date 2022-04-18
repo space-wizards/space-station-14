@@ -18,6 +18,16 @@
   - type: Tag
     tags:
       - DroneUsable
+  - type: Damageable
+    damageContainer: Inorganic
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 100
+      behaviors:
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
 
 - type: entity
   name: steel tile
@@ -190,6 +200,8 @@
     outputs:
       - plating
       - floor_elevator_shaft
+  - type: Stack
+    stackType: FloorTileElevatorShaft
 
 - type: entity
   name: rock vault tile
@@ -204,6 +216,8 @@
     outputs:
       - plating
       - floor_rock_vault
+  - type: Stack
+    stackType: FloorTileRockVault
 
 - type: entity
   name: blue tile
@@ -218,6 +232,8 @@
     outputs:
       - plating
       - floor_blue
+  - type: Stack
+    stackType: FloorTileBlue
 
 # Departamental
 - type: entity
@@ -281,6 +297,8 @@
     outputs:
       - plating
       - floor_bar
+  - type: Stack
+    stackType: FloorTileBar
 
 - type: entity
   name: clown tile
@@ -295,6 +313,8 @@
     outputs:
       - plating
       - floor_clown
+  - type: Stack
+    stackType: FloorTileClown
 
 - type: entity
   name: mime tile
@@ -309,6 +329,8 @@
     outputs:
       - plating
       - floor_mime
+  - type: Stack
+    stackType: FloorTileMime
 
 - type: entity
   name: kitchen tile
@@ -323,6 +345,8 @@
     outputs:
       - plating
       - floor_kitchen
+  - type: Stack
+    stackType: FloorTileKitchen
 
 - type: entity
   name: laundry tile
@@ -337,6 +361,8 @@
     outputs:
       - plating
       - floor_laundry
+  - type: Stack
+    stackType: FloorTileLaundry
 
 # Carpets
 - type: entity
@@ -498,6 +524,8 @@
     outputs:
       - plating
       - floor_silver
+  - type: Stack
+    stackType: FloorTileSilver
 
 # Circuits
 - type: entity
@@ -513,6 +541,8 @@
     outputs:
       - plating
       - floor_green_circuit
+  - type: Stack
+    stackType: FloorTileGCircuit
 
 - type: entity
   name: blue circuit floor
@@ -527,6 +557,8 @@
     outputs:
       - plating
       - floor_blue_circuit
+  - type: Stack
+    stackType: FloorTileBCircuit
 
 # Terrain
 - type: entity
@@ -542,6 +574,8 @@
     outputs:
       - plating
       - floor_grass
+  - type: Stack
+    stackType: FloorTileGrass
 
 - type: entity
   name: jungle grass tile
@@ -556,6 +590,8 @@
     outputs:
       - plating
       - FloorGrassJungle
+  - type: Stack
+    stackType: FloorTileGrassJungle
 
 - type: entity
   name: snow tile
@@ -570,3 +606,5 @@
     outputs:
       - plating
       - floor_snow
+  - type: Stack
+    stackType: FloorTileSnow

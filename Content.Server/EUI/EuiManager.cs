@@ -70,7 +70,7 @@ namespace Content.Server.EUI
 
             data.OpenUIs.Add(newId, eui);
 
-            var msg = _net.CreateNetMessage<MsgEuiCtl>();
+            var msg = new MsgEuiCtl();
             msg.Id = newId;
             msg.Type = MsgEuiCtl.CtlType.Open;
             msg.OpenType = eui.GetType().Name;
@@ -83,7 +83,7 @@ namespace Content.Server.EUI
             eui.Shutdown();
             _playerData[eui.Player].OpenUIs.Remove(eui.Id);
 
-            var msg = _net.CreateNetMessage<MsgEuiCtl>();
+            var msg = new MsgEuiCtl();
             msg.Id = eui.Id;
             msg.Type = MsgEuiCtl.CtlType.Close;
             _net.ServerSendMessage(msg, eui.Player.ConnectedClient);

@@ -1,9 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using Content.Shared.Pulling;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Maths;
+﻿using Content.Shared.Pulling;
+using Content.Shared.Pulling.Components;
+using Content.Shared.Rotatable;
 using Robust.Shared.Physics;
 using Robust.Shared.Physics.Controllers;
 
@@ -23,7 +20,7 @@ namespace Content.Server.Physics.Controllers
         private const float AccelModifierLowMass = 5.0f; // roundstart saltern emergency crowbar
         // Used to control settling (turns off pulling).
         private const float MaximumSettleVelocity = 0.1f;
-        private const float MaximumSettleDistance = 0.01f;
+        private const float MaximumSettleDistance = 0.1f;
         // Settle shutdown control.
         // Mustn't be too massive, as that causes severe mispredicts *and can prevent it ever resolving*.
         // Exists to bleed off "I pulled my crowbar" overshoots.
@@ -36,11 +33,73 @@ namespace Content.Server.Physics.Controllers
 
         [Dependency] private readonly SharedPullingSystem _pullableSystem = default!;
 
+        // TODO: Move this stuff to pullingsystem
+        /// <summary>
+        ///     If distance between puller and pulled entity lower that this threshold,
+        ///     pulled entity will not change its rotation.
+        ///     Helps with small distance jittering
+        /// </summary>
+        private const float ThresholdRotDistance = 1;
+
+        /// <summary>
+        ///     If difference between puller and pulled angle  lower that this threshold,
+        ///     pulled entity will not change its rotation.
+        ///     Helps with diagonal movement jittering
+        ///     As of further adjustments, should divide cleanly into 90 degrees
+        /// </summary>
+        private const float ThresholdRotAngle = 22.5f;
+
         public override void Initialize()
         {
             UpdatesAfter.Add(typeof(MoverController));
+            SubscribeLocalEvent<SharedPullerComponent, MoveEvent>(OnPullerMove);
 
             base.Initialize();
+        }
+
+        private void OnPullerMove(EntityUid uid, SharedPullerComponent component, ref MoveEvent args)
+        {
+            if (component.Pulling == null ||
+                !TryComp<SharedPullableComponent>(component.Pulling.Value, out var pullable)) return;
+
+            UpdatePulledRotation(uid, pullable.Owner);
+
+            if (TryComp<PhysicsComponent>(pullable.Owner, out var physics))
+                physics.WakeBody();
+
+            _pullableSystem.StopMoveTo(pullable);
+        }
+
+        private void UpdatePulledRotation(EntityUid puller, EntityUid pulled)
+        {
+            // TODO: update once ComponentReference works with directed event bus.
+            if (!TryComp(pulled, out RotatableComponent? rotatable))
+                return;
+
+            if (!rotatable.RotateWhilePulling)
+                return;
+
+            var pulledXform = Transform(pulled);
+
+            var dir = Transform(puller).WorldPosition - pulledXform.WorldPosition;
+            if (dir.LengthSquared > ThresholdRotDistance * ThresholdRotDistance)
+            {
+                var oldAngle = pulledXform.WorldRotation;
+                var newAngle = Angle.FromWorldVec(dir);
+
+                var diff = newAngle - oldAngle;
+                if (Math.Abs(diff.Degrees) > (ThresholdRotAngle / 2f))
+                {
+                    // Ok, so this bit is difficult because ideally it would look like it's snapping to sane angles.
+                    // Otherwise PIANO DOOR STUCK! happens.
+                    // But it also needs to work with station rotation / align to the local parent.
+                    // So...
+                    var baseRotation = pulledXform.Parent?.WorldRotation ?? 0f;
+                    var localRotation = newAngle - baseRotation;
+                    var localRotationSnapped = Angle.FromDegrees(Math.Floor((localRotation.Degrees / ThresholdRotAngle) + 0.5f) * ThresholdRotAngle);
+                    pulledXform.LocalRotation = localRotationSnapped;
+                }
+            }
         }
 
         public override void UpdateBeforeSolve(bool prediction, float frameTime)
