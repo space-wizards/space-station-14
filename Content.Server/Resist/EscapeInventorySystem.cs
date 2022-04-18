@@ -28,12 +28,9 @@ public sealed class EscapeInventorySystem : EntitySystem
         if (component.IsResisting == true)
             return;
 
-        if (_containerSystem.IsEntityOrParentInContainer(uid))
+        if (_containerSystem.TryGetContainingContainer(uid, out var container))
         {
-            if (_containerSystem.TryGetContainingContainer(uid, out var container))
-            {
-                AttemptEscape(uid, container.Owner, component);
-            }
+            AttemptEscape(uid, container.Owner, component);
         }
     }
 
