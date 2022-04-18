@@ -52,22 +52,17 @@ namespace Content.Server.Disposal.Unit.EntitySystems
                     physics.CanCollide = true;
                 }
 
-                holder.Container.ForceRemove(entity, EntityManager);
+                var meta = MetaData(entity);
+                holder.Container.ForceRemove(entity, EntityManager, meta);
 
                 var xform = EntityManager.GetComponent<TransformComponent>(entity);
                 if (xform.Parent != holderTransform)
                     continue;
 
                 if (duc != null)
-                {
-                    // Insert into disposal unit
-                    xform.Coordinates = new EntityCoordinates((duc).Owner, Vector2.Zero);
-                    duc.Container.Insert(entity);
-                }
+                    duc.Container.Insert(entity, EntityManager, xform, meta: meta);
                 else
-                {
-                    xform.AttachParentToContainerOrGrid();
-                }
+                    xform.AttachParentToContainerOrGrid(EntityManager);
             }
 
             if (duc != null)
