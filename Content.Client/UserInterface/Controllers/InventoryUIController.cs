@@ -25,6 +25,7 @@ public sealed partial class InventoryUIController : UIController, IOnStateChange
     private readonly Dictionary<string, ItemSlotButtonContainer> _slotGroups = new();
     private InventoryWindow? _inventoryWindow;
     private readonly Dictionary<(string group, string slot), (ISpriteComponent sprite, bool showStorage)> _sprites = new();
+    private MenuButton InventoryButton => _hud.GetUIWidget<MenuBar>().InventoryButton;
 
     public void OnStateChanged(GameplayState state)
     {
@@ -62,6 +63,8 @@ public sealed partial class InventoryUIController : UIController, IOnStateChange
             var update = new SlotSpriteUpdate(data.SlotGroup, data.SlotName, tuple.sprite, tuple.showStorage);
             SpriteUpdated(update);
         }
+
+        InventoryButton.Pressed = true;
     }
     public void ToggleInventoryMenu()
     {
@@ -69,8 +72,10 @@ public sealed partial class InventoryUIController : UIController, IOnStateChange
         {
             _inventoryWindow.Dispose();
             _inventoryWindow = null;
+            InventoryButton.Pressed = false;
             return;
         }
+
         CreateInventoryWindow(_playerInventory);
     }
 

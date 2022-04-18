@@ -128,6 +128,12 @@ public sealed class SandboxUIController : UIController, IOnStateChanged<Gameplay
         SandboxButton.Pressed = true;
     }
 
+    private void CloseWindow()
+    {
+        _window?.Close();
+        SandboxButton.Pressed = false;
+    }
+
     private void CheckStatus()
     {
         if (!CanSandbox())
@@ -136,8 +142,7 @@ public sealed class SandboxUIController : UIController, IOnStateChanged<Gameplay
 
     private void CloseAll()
     {
-        _window?.Close();
-        _window = null;
+        CloseWindow();
         EntitySpawningController.CloseWindow();
         TileSpawningController.CloseWindow();
         DecalPlacerController.CloseWindow();
@@ -227,15 +232,9 @@ public sealed class SandboxUIController : UIController, IOnStateChanged<Gameplay
     // TODO: These should check for command perms + be reset if the round is over.
     private void ToggleWindow()
     {
-        UpdateWindowVisibility();
-    }
-
-    private void UpdateWindowVisibility()
-    {
         if (CanSandbox() && _window?.IsOpen != true)
             OpenWindow();
         else
-            // TODO hud refactor BEFORE MERGE fix this and other ui controllers not calling CloseWindow to unset the button
-            _window?.Close();
+            CloseWindow();
     }
 }
