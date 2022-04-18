@@ -1,11 +1,6 @@
-using System;
-using System.Collections.Generic;
 using Content.Shared.Instruments;
 using Robust.Client.Audio.Midi;
 using Robust.Shared.Audio.Midi;
-using Robust.Shared.GameObjects;
-using Robust.Shared.Serialization.Manager.Attributes;
-using Robust.Shared.ViewVariables;
 
 namespace Content.Client.Instruments;
 
@@ -14,21 +9,26 @@ public sealed class InstrumentComponent : SharedInstrumentComponent
 {
     public event Action? OnMidiPlaybackEnded;
 
+    [ViewVariables]
     public IMidiRenderer? Renderer;
 
+    [ViewVariables]
     public uint SequenceDelay;
 
+    [ViewVariables]
     public uint SequenceStartTick;
 
+    [ViewVariables]
     public TimeSpan LastMeasured = TimeSpan.MinValue;
 
+    [ViewVariables]
     public int SentWithinASec;
 
     /// <summary>
     ///     A queue of MidiEvents to be sent to the server.
     /// </summary>
     [ViewVariables]
-    public readonly List<MidiEvent> MidiEventBuffer = new();
+    public readonly List<RobustMidiEvent> MidiEventBuffer = new();
 
     /// <summary>
     ///     Whether a midi song will loop or not.

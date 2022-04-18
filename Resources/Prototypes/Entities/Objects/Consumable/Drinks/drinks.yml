@@ -455,7 +455,7 @@
   parent: DrinkGlassBase
   id: DrinkCarrotJuice
   name: carrot juice
-  description: It is just like a carrot but without crunching.
+  description: It's just like a carrot but without crunching.
   components:
   - type: Drink
   - type: SolutionContainerManager
@@ -2090,7 +2090,7 @@
   parent: DrinkGlassBase
   id: DrinkRamen
   name: cup ramen
-  description: Just add 10ml water, self heats! A taste that reminds you of your school years
+  description: Just add 10ml water, self heats! A taste that reminds you of your school years.
   components:
   - type: SolutionContainerManager
     solutions:

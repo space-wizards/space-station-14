@@ -71,6 +71,15 @@ namespace Content.Server.Storage.Components
 
         [DataField("whitelist")]
         private EntityWhitelist? _whitelist = null;
+        [DataField("blacklist")]
+        public EntityWhitelist? Blacklist = null;
+
+        /// <summary>
+        ///     If true, storage will show popup messages to the player after failed interactions.
+        ///     Usually this is message that item doesn't fit inside container.
+        /// </summary>
+        [DataField("popup")]
+        public bool ShowPopup = true;
 
         private bool _storageInitialCalculated;
         public int StorageUsed;
@@ -161,6 +170,11 @@ namespace Content.Server.Storage.Components
             }
 
             if (_whitelist != null && !_whitelist.IsValid(entity))
+            {
+                return false;
+            }
+
+            if (Blacklist != null && Blacklist.IsValid(entity))
             {
                 return false;
             }
@@ -256,14 +270,14 @@ namespace Content.Server.Storage.Components
 
             if (!handSys.TryDrop(player, toInsert.Value, handsComp: hands))
             {
-                Owner.PopupMessage(player, Loc.GetString("comp-storage-cant-insert"));
+                Popup(player, "comp-storage-cant-insert");
                 return false;
             }
 
             if (!Insert(toInsert.Value))
             {
                 handSys.PickupOrDrop(player, toInsert.Value, handsComp: hands);
-                Owner.PopupMessage(player, Loc.GetString("comp-storage-cant-insert"));
+                Popup(player, "comp-storage-cant-insert");
                 return false;
             }
 
@@ -282,7 +296,7 @@ namespace Content.Server.Storage.Components
 
             if (!Insert(toInsert))
             {
-                Owner.PopupMessage(player, Loc.GetString("comp-storage-cant-insert"));
+                Popup(player, "comp-storage-cant-insert");
                 return false;
             }
             return true;
@@ -366,6 +380,7 @@ namespace Content.Server.Storage.Components
                 SubscribedSessions.Add(session);
             }
 
+            _entityManager.EnsureComponent<ActiveStorageComponent>(Owner);
             if (SubscribedSessions.Count == 1)
                 UpdateStorageVisualization();
         }
@@ -388,7 +403,14 @@ namespace Content.Server.Storage.Components
             CloseNestedInterfaces(session);
 
             if (SubscribedSessions.Count == 0)
+            {
                 UpdateStorageVisualization();
+
+                if (_entityManager.HasComponent<ActiveStorageComponent>(Owner))
+                {
+                    _entityManager.RemoveComponent<ActiveStorageComponent>(Owner);
+                }
+            }
         }
 
         /// <summary>
@@ -474,7 +496,7 @@ namespace Content.Server.Storage.Components
                 return;
             }
 
-            if (!EntitySystem.Get<SharedInteractionSystem>().InRangeUnobstructed(player, Owner, popup: true))
+            if (!EntitySystem.Get<SharedInteractionSystem>().InRangeUnobstructed(player, Owner, popup: ShowPopup))
             {
                 return;
             }
@@ -630,9 +652,19 @@ namespace Content.Server.Storage.Components
             }
         }
 
+        private void Popup(EntityUid player, string message)
+        {
+            if (!ShowPopup) return;
+
+            Owner.PopupMessage(player, Loc.GetString(message));
+        }
+
         private void PlaySoundCollection()
         {
             SoundSystem.Play(Filter.Pvs(Owner), StorageSoundCollection.GetSound(), Owner, AudioParams.Default);
         }
     }
+
+    [RegisterComponent]
+    public sealed class ActiveStorageComponent : Component {}
 }

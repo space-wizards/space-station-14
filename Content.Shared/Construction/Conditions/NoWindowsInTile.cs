@@ -16,7 +16,7 @@ namespace Content.Shared.Construction.Conditions
         public bool Condition(EntityUid user, EntityCoordinates location, Direction direction)
         {
             var tagSystem = EntitySystem.Get<TagSystem>();
-            foreach (var entity in location.GetEntitiesInTile(LookupFlags.Approximate | LookupFlags.IncludeAnchored))
+            foreach (var entity in location.GetEntitiesInTile(LookupFlags.Approximate | LookupFlags.Anchored))
             {
                 if (tagSystem.HasTag(entity, "Window"))
                     return false;

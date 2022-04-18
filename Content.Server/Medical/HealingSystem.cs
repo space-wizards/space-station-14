@@ -9,6 +9,7 @@ using Content.Shared.Damage;
 using Content.Shared.Database;
 using Content.Shared.Interaction;
 using Content.Shared.Interaction.Events;
+using Content.Shared.MobState.Components;
 using Content.Shared.Stacks;
 using Robust.Shared.Audio;
 using Robust.Shared.Player;
@@ -35,6 +36,9 @@ public sealed class HealingSystem : EntitySystem
 
     private void OnHealingComplete(EntityUid uid, DamageableComponent component, HealingCompleteEvent args)
     {
+        if (TryComp<MobStateComponent>(uid, out var state) && state.IsDead())
+            return;
+
         if (TryComp<StackComponent>(args.Component.Owner, out var stack) && stack.Count < 1) return;
 
         if (component.DamageContainerID is not null &&
@@ -94,6 +98,9 @@ public sealed class HealingSystem : EntitySystem
             component.CancelToken = null;
             return;
         }
+
+        if (TryComp<MobStateComponent>(target, out var state) && state.IsDead())
+            return;
 
         if (!TryComp<DamageableComponent>(target, out var targetDamage))
             return;

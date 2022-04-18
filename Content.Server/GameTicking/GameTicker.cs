@@ -71,7 +71,7 @@ namespace Content.Server.GameTicking
 
         private void SendServerMessage(string message)
         {
-            var msg = _netManager.CreateNetMessage<MsgChatMessage>();
+            var msg = new MsgChatMessage();
             msg.Channel = ChatChannel.Server;
             msg.Message = message;
             IoCManager.Resolve<IServerNetManager>().ServerSendToAll(msg);

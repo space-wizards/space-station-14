@@ -21,7 +21,7 @@
     minAngle: 0
     maxAngle: 45
     angleIncrease: 20
-    angleDecay: 90
+    angleDecay: 20
     soundGunshot:
       path: /Audio/Weapons/Guns/Gunshots/batrifle.ogg
     soundEmpty:
@@ -66,7 +66,7 @@
     minAngle: 0
     maxAngle: 45
     angleIncrease: 20
-    angleDecay: 90
+    angleDecay: 20
     soundGunshot:
       path: /Audio/Weapons/Guns/Gunshots/rifle2.ogg
     soundRack:
@@ -112,7 +112,7 @@
     minAngle: 0
     maxAngle: 60
     angleIncrease: 15
-    angleDecay: 60
+    angleDecay: 20
     soundGunshot:
       path: /Audio/Weapons/Guns/Gunshots/rifle2.ogg
     soundRack:
@@ -159,7 +159,7 @@
     minAngle: 0
     maxAngle: 45
     angleIncrease: 15
-    angleDecay: 60
+    angleDecay: 20
     soundGunshot:
       path: /Audio/Weapons/Guns/Gunshots/batrifle.ogg
     soundRack:
@@ -204,7 +204,7 @@
     minAngle: 10
     maxAngle: 60
     angleIncrease: 10
-    angleDecay: 60
+    angleDecay: 20
     soundGunshot:
       path: /Audio/Weapons/Guns/Gunshots/m41.ogg
     soundRack:
@@ -249,7 +249,7 @@
     minAngle: 0
     maxAngle: 45
     angleIncrease: 15
-    angleDecay: 60
+    angleDecay: 20
     soundGunshot:
       path: /Audio/Weapons/Guns/Gunshots/ltrifle.ogg
     soundRack:
@@ -296,7 +296,7 @@
     minAngle: 0
     maxAngle: 45
     angleIncrease: 15
-    angleDecay: 60
+    angleDecay: 20
   - type: Appearance
     visuals:
     - type: BarrelBoltVisualizer
@@ -336,7 +336,7 @@
     minAngle: 0
     maxAngle: 45
     angleIncrease: 15
-    angleDecay: 60
+    angleDecay: 20
     soundGunshot:
       path: /Audio/Weapons/Guns/Gunshots/ltrifle.ogg
     soundRack:
@@ -381,7 +381,7 @@
     minAngle: 0
     maxAngle: 25
     angleIncrease: 15
-    angleDecay: 25
+    angleDecay: 20
     soundGunshot:
       path: /Audio/Weapons/Guns/Gunshots/rifle2.ogg
     soundRack:

@@ -21,6 +21,7 @@
       - id: CigPackGreen
         prob: 0.50
       - id: DoorRemoteCargo
+      - id: RubberStampQm
 
 - type: entity
   id: LockerCaptainFilled
@@ -53,6 +54,7 @@
       - id: ClothingUniformJumpskirtCapFormalDress
       - id: ClothingNeckBronzeheart
       - id: ClothingNeckGoldmedal
+      - id: RubberStampCaptain
 
 - type: entity
   id: LockerHeadOfPersonnelFilled
@@ -79,6 +81,7 @@
         # Fuck the HoP they don't deserve fucking cigars.
       - id: DoorRemoteService
       - id: ClothingNeckGoldmedal
+      - id: RubberStampHop
 
 - type: entity
   id: LockerChiefEngineerFilled
@@ -124,6 +127,7 @@
       - id: Hypospray
       - id: HandheldCrewMonitor
       - id: DoorRemoteMedical
+      - id: RubberStampCMO
 
 - type: entity
   id: LockerResearchDirectorFilled
@@ -142,6 +146,7 @@
       - id: PlushieSlime
         prob: 0.1
       - id: DoorRemoteResearch
+      - id: RubberStampRd
 
 - type: entity
   id: LockerHeadOfSecurityFilled
@@ -180,3 +185,4 @@
       - id: DoorRemoteSecurity
       - id: ClothingUniformJumpskirtHosFormal
       - id: ClothingUniformJumpsuitHosFormal
+      - id: RubberStampHos

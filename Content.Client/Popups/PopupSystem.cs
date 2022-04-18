@@ -19,6 +19,8 @@ namespace Content.Client.Popups
 
         private readonly List<PopupLabel> _aliveLabels = new();
 
+        public const float PopupLifetime = 3f;
+
         public override void Initialize()
         {
             SubscribeNetworkEvent<PopupCursorEvent>(OnPopupCursorEvent);
@@ -128,7 +130,7 @@ namespace Content.Client.Popups
         {
             foreach (var l in _aliveLabels)
             {
-                if (l.TimeLeft > 3f)
+                if (l.TotalTime > PopupLifetime)
                     l.Dispose();
             }
 
@@ -140,7 +142,7 @@ namespace Content.Client.Popups
             private readonly IEyeManager _eyeManager;
             private readonly IEntityManager _entityManager;
 
-            public float TimeLeft { get; private set; }
+            public float TotalTime { get; private set; }
             public Vector2 InitialPos { get; set; }
             public EntityUid? Entity { get; set; }
 
@@ -155,17 +157,26 @@ namespace Content.Client.Popups
 
             protected override void FrameUpdate(FrameEventArgs eventArgs)
             {
-                TimeLeft += eventArgs.DeltaSeconds;
+                TotalTime += eventArgs.DeltaSeconds;
 
-                var position = Entity == null
-                    ? InitialPos
-                    : (_eyeManager.CoordinatesToScreen(_entityManager.GetComponent<TransformComponent>(Entity.Value).Coordinates).Position / UIScale) - DesiredSize / 2;
-
-                LayoutContainer.SetPosition(this, position - (0, 20 * (TimeLeft * TimeLeft + TimeLeft)));
-
-                if (TimeLeft > 0.5f)
+                Vector2 position;
+                if (Entity == null)
+                    position = InitialPos;
+                else if (_entityManager.TryGetComponent(Entity.Value, out TransformComponent xform))
+                    position = (_eyeManager.CoordinatesToScreen(xform.Coordinates).Position / UIScale) - DesiredSize / 2;
+                else
                 {
-                    Modulate = Color.White.WithAlpha(1f - 0.2f * (float)Math.Pow(TimeLeft - 0.5f, 3f));
+                    // Entity has probably been deleted.
+                    Visible = false;
+                    TotalTime += PopupLifetime;
+                    return;
+                }
+
+                LayoutContainer.SetPosition(this, position - (0, 20 * (TotalTime * TotalTime + TotalTime)));
+
+                if (TotalTime > 0.5f)
+                {
+                    Modulate = Color.White.WithAlpha(1f - 0.2f * (float)Math.Pow(TotalTime - 0.5f, 3f));
                 }
             }
         }

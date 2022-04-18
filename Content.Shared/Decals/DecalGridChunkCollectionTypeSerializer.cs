@@ -3,7 +3,6 @@ using Robust.Shared.IoC;
 using Robust.Shared.Maths;
 using Robust.Shared.Serialization.Manager;
 using Robust.Shared.Serialization.Manager.Attributes;
-using Robust.Shared.Serialization.Manager.Result;
 using Robust.Shared.Serialization.Markdown;
 using Robust.Shared.Serialization.Markdown.Mapping;
 using Robust.Shared.Serialization.Markdown.Validation;
@@ -20,12 +19,10 @@ namespace Content.Shared.Decals
             return serializationManager.ValidateNode<Dictionary<Vector2i, Dictionary<uint, Decal>>>(node, context);
         }
 
-        public DeserializationResult Read(ISerializationManager serializationManager, MappingDataNode node,
-            IDependencyCollection dependencies, bool skipHook, ISerializationContext? context = null)
+        public DecalGridComponent.DecalGridChunkCollection Read(ISerializationManager serializationManager, MappingDataNode node,
+            IDependencyCollection dependencies, bool skipHook, ISerializationContext? context = null, DecalGridComponent.DecalGridChunkCollection? _ = null)
         {
-            //todo this read method does not support pushing inheritance
-            var dictionary =
-                serializationManager.ReadValueOrThrow<Dictionary<Vector2i, Dictionary<uint, Decal>>>(node, context, skipHook);
+            var dictionary = serializationManager.Read<Dictionary<Vector2i, Dictionary<uint, Decal>>>(node, context, skipHook: skipHook);
 
             var uids = new SortedSet<uint>();
             var uidChunkMap = new Dictionary<uint, Vector2i>();
@@ -54,8 +51,7 @@ namespace Content.Shared.Decals
                 newDict[indices][newUid] = dictionary[indices][oldUid];
             }
 
-            return new DeserializedValue<DecalGridComponent.DecalGridChunkCollection>(
-                new DecalGridComponent.DecalGridChunkCollection(newDict){NextUid = nextIndex});
+            return new DecalGridComponent.DecalGridChunkCollection(newDict){NextUid = nextIndex};
         }
 
         public DataNode Write(ISerializationManager serializationManager, DecalGridComponent.DecalGridChunkCollection value, bool alwaysWrite = false,
