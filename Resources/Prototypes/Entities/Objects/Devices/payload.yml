@@ -81,7 +81,7 @@
   name: flash payload
   parent: BasePayload
   id: FlashPayload
-  description: a flash payload , it only have one use
+  description: A single-use flash payload.
   components:
     - type: Sprite
       sprite: Objects/Devices/payload.rsi
