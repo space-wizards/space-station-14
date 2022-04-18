@@ -1,9 +1,4 @@
 Entries:
-- author: metalgearsloth
-  changes:
-  - {message: Docking ports can now be saved to and loaded from maps, type: Add}
-  id: 862
-  time: '2022-01-11T13:47:13.0000000+00:00'
 - author: MeltedPixel
   changes:
   - {message: Added Whisper chat functionality, type: Add}
@@ -3039,3 +3034,8 @@ Entries:
       and tool vendors', type: Add}
   id: 1361
   time: '2022-04-18T22:43:19.0000000+00:00'
+- author: Mirino97
+  changes:
+  - {message: Replaced light bulbs in fixtures will no longer remain off!, type: Fix}
+  id: 1362
+  time: '2022-04-18T22:47:04.0000000+00:00'
