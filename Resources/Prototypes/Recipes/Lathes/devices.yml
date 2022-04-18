@@ -28,7 +28,7 @@
   result: FlashPayload
   completetime: 1
   materials:
-    Steel: 25
-    Plastic: 50
-    Glass: 25
+    Steel: 50
+    Plastic: 100
+    Glass: 50
     #one fourth of what making a flash would cost
