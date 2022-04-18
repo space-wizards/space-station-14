@@ -48,7 +48,7 @@ namespace Content.Server.Lathe.Components
         public SoundSpecifier? ProducingSound;
         
         /// <summary>
-        /// The sound that plays when the lathe is producing an item, if any
+        /// The sound that plays when inserting an item into the lathe, if any
         /// </summary>
         [DataField("insertingSound")]
         public SoundSpecifier? InsertingSound;
