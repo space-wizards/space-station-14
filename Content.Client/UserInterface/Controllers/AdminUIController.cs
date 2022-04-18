@@ -9,7 +9,6 @@ using Content.Client.Verbs;
 using Content.Shared.Input;
 using Robust.Client.Console;
 using Robust.Client.Input;
-using Robust.Client.State;
 using Robust.Client.UserInterface;
 using Robust.Shared.Input;
 using Robust.Shared.Input.Binding;
@@ -18,7 +17,7 @@ using static Robust.Client.UserInterface.Controls.BaseButton;
 
 namespace Content.Client.UserInterface.Controllers;
 
-public sealed class AdminUIController : UIController
+public sealed class AdminUIController : UIController, IOnStateChanged<GameplayState>
 {
     [Dependency] private readonly IClientAdminManager _admin = default!;
     [Dependency] private readonly IClientConGroupController _conGroups = default!;
@@ -33,20 +32,17 @@ public sealed class AdminUIController : UIController
 
     private MenuButton AdminButton => _hud.GetUIWidget<MenuBar>().AdminButton;
 
-    public override void OnStateChanged(StateChangedEventArgs args)
+    public void OnStateChanged(GameplayState state)
     {
-        if (args.NewState is GameplayState)
-        {
-            // Reset the AdminMenu Window on disconnect
-            _net.Disconnect += (_, _) => ResetWindow();
+        // Reset the AdminMenu Window on disconnect
+        _net.Disconnect += (_, _) => ResetWindow();
 
-            _input.SetInputCommand(ContentKeyFunctions.OpenAdminMenu,
-                InputCmdHandler.FromDelegate(_ => Toggle()));
+        _input.SetInputCommand(ContentKeyFunctions.OpenAdminMenu,
+            InputCmdHandler.FromDelegate(_ => Toggle()));
 
-            _admin.AdminStatusUpdated += AdminStatusUpdated;
-            AdminButton.OnPressed += AdminButtonPressed;
-            AdminStatusUpdated();
-        }
+        _admin.AdminStatusUpdated += AdminStatusUpdated;
+        AdminButton.OnPressed += AdminButtonPressed;
+        AdminStatusUpdated();
     }
 
     private void AdminStatusUpdated()

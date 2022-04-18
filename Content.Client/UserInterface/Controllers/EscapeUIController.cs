@@ -1,11 +1,11 @@
 ﻿using Content.Client.Gameplay;
 using Content.Client.HUD;
 using Content.Client.HUD.Widgets;
+using Content.Client.MainMenu;
 using Content.Client.Options.UI;
 using Content.Client.UserInterface.Controls;
 using Robust.Client.Console;
 using Robust.Client.Input;
-using Robust.Client.State;
 using Robust.Client.UserInterface;
 using Robust.Shared.Input;
 using Robust.Shared.Input.Binding;
@@ -13,7 +13,7 @@ using static Robust.Client.UserInterface.Controls.BaseButton;
 
 namespace Content.Client.UserInterface.Controllers;
 
-public sealed class EscapeUIController : UIController
+public sealed class EscapeUIController : UIController, IOnStateChanged<GameplayState>, IOnStateChanged<MainScreen>
 {
     [Dependency] private readonly IClientConsoleHost _console = default!;
     [Dependency] private readonly IHudManager _hud = default!;
@@ -21,15 +21,18 @@ public sealed class EscapeUIController : UIController
 
     private EscapeMenu? _window;
 
-    private MenuButton EscapeButton => _hud.GetUIWidget<MenuBar>().EscapeButton;
+    private MenuButton? EscapeButton => _hud.GetUIWidgetOrNull<MenuBar>()?.EscapeButton;
 
-    public override void OnStateChanged(StateChangedEventArgs args)
+    public void OnStateChanged(GameplayState state)
     {
-        if (args.NewState is GameplayState)
+        if (EscapeButton != null)
         {
             EscapeButton.OnPressed += EscapeButtonPressed;
         }
+    }
 
+    public void OnStateChanged(MainScreen state)
+    {
         _input.SetInputCommand(EngineKeyFunctions.EscapeMenu,
             InputCmdHandler.FromDelegate(_ => ToggleWindow()));
     }
@@ -67,13 +70,17 @@ public sealed class EscapeUIController : UIController
         };
 
         _window.OpenCentered();
-        EscapeButton.Pressed = true;
+
+        if (EscapeButton != null)
+            EscapeButton.Pressed = true;
     }
 
     private void CloseWindow()
     {
         _window?.Close();
-        EscapeButton.Pressed = false;
+
+        if (EscapeButton != null)
+            EscapeButton.Pressed = false;
     }
 
     private void ToggleWindow()

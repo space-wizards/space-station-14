@@ -3,7 +3,6 @@ using Content.Client.HUD;
 using Content.Client.Info;
 using Content.Client.UserInterface.Controls;
 using Content.Shared.Input;
-using Robust.Client.State;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Shared.Input.Binding;
@@ -11,7 +10,7 @@ using MenuBar = Content.Client.HUD.Widgets.MenuBar;
 
 namespace Content.Client.UserInterface.Controllers;
 
-public sealed class InfoUIController : UIController
+public sealed class InfoUIController : UIController, IOnStateChanged<GameplayState>
 {
     [Dependency] private readonly IHudManager _hud = default!;
     [Dependency] private readonly IUIWindowManager _uiWindows = default!;
@@ -19,17 +18,14 @@ public sealed class InfoUIController : UIController
     private RulesAndInfoWindow? _window;
     private MenuButton InfoButton => _hud.GetUIWidget<MenuBar>().InfoButton;
 
-    public override void OnStateChanged(StateChangedEventArgs args)
+    public void OnStateChanged(GameplayState state)
     {
-        if (args.NewState is GameplayState)
-        {
-            InfoButton.OnPressed += InfoButtonPressed;
+        InfoButton.OnPressed += InfoButtonPressed;
 
-            CommandBinds.Builder
-                .Bind(ContentKeyFunctions.OpenInfo,
-                    InputCmdHandler.FromDelegate(_ => ToggleWindow()))
-                .Register<CharacterUIController>();
-        }
+        CommandBinds.Builder
+            .Bind(ContentKeyFunctions.OpenInfo,
+                InputCmdHandler.FromDelegate(_ => ToggleWindow()))
+            .Register<CharacterUIController>();
     }
 
     private void InfoButtonPressed(BaseButton.ButtonEventArgs args)

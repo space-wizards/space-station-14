@@ -7,7 +7,6 @@ using Content.Client.UserInterface.Controls;
 using Content.Client.UserInterface.UIWindows;
 using Content.Shared.Input;
 using Robust.Client.GameObjects;
-using Robust.Client.State;
 using Robust.Client.UserInterface;
 using Robust.Shared.Input;
 using Robust.Shared.Input.Binding;
@@ -16,7 +15,7 @@ using static Robust.Client.UserInterface.Controls.BaseButton;
 
 namespace Content.Client.UserInterface.Controllers;
 
-public sealed partial class InventoryUIController : UIController
+public sealed partial class InventoryUIController : UIController, IOnStateChanged<GameplayState>
 {
     [UISystemDependency] private readonly ClientInventorySystem _inventorySystem = default!;
     [Dependency] private readonly IUIWindowManager _uiWindowManager = default!;
@@ -27,17 +26,14 @@ public sealed partial class InventoryUIController : UIController
     private InventoryWindow? _inventoryWindow;
     private readonly Dictionary<(string group, string slot), (ISpriteComponent sprite, bool showStorage)> _sprites = new();
 
-    public override void OnStateChanged(StateChangedEventArgs args)
+    public void OnStateChanged(GameplayState state)
     {
-        if (args.NewState is GameplayState)
-        {
-            //bind open inventory key to OpenInventoryMenu;
-            CommandBinds.Builder
-                .Bind(ContentKeyFunctions.OpenInventoryMenu, InputCmdHandler.FromDelegate(_ => ToggleInventoryMenu()))
-                .Register<ClientInventorySystem>();
+        //bind open inventory key to OpenInventoryMenu;
+        CommandBinds.Builder
+            .Bind(ContentKeyFunctions.OpenInventoryMenu, InputCmdHandler.FromDelegate(_ => ToggleInventoryMenu()))
+            .Register<ClientInventorySystem>();
 
-            _hud.GetUIWidget<MenuBar>().InventoryButton.OnPressed += InventoryButtonPressed;
-        }
+        _hud.GetUIWidget<MenuBar>().InventoryButton.OnPressed += InventoryButtonPressed;
     }
 
     private void InventoryButtonPressed(ButtonEventArgs args)

@@ -11,7 +11,6 @@ using Content.Shared.Input;
 using Robust.Client.Debugging;
 using Robust.Client.Graphics;
 using Robust.Client.Input;
-using Robust.Client.State;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controllers;
 using Robust.Shared.Input.Binding;
@@ -20,7 +19,7 @@ using static Robust.Client.UserInterface.Controls.BaseButton;
 namespace Content.Client.UserInterface.Controllers;
 
 // TODO hud refactor should part of this be in engine?
-public sealed class SandboxUIController : UIController
+public sealed class SandboxUIController : UIController, IOnStateChanged<GameplayState>
 {
     [Dependency] private readonly IClientAdminManager _admin = default!;
     [Dependency] private readonly IEyeManager _eye = default!;
@@ -43,11 +42,8 @@ public sealed class SandboxUIController : UIController
 
     private MenuButton SandboxButton => _hud.GetUIWidget<MenuBar>().SandboxButton;
 
-    public override void OnStateChanged(StateChangedEventArgs args)
+    public void OnStateChanged(GameplayState state)
     {
-        if (args.NewState is not GameplayState)
-            return;
-
         SandboxButton.OnPressed += SandboxButtonPressed;
         _admin.AdminStatusUpdated += CheckStatus;
 

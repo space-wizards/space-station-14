@@ -8,14 +8,13 @@ using Content.Client.UserInterface.UIWindows;
 using Content.Shared.Actions;
 using Content.Shared.Actions.ActionTypes;
 using Content.Shared.Input;
-using Robust.Client.State;
 using Robust.Client.UserInterface;
 using Robust.Shared.Input.Binding;
 using static Robust.Client.UserInterface.Controls.BaseButton;
 
 namespace Content.Client.UserInterface.Controllers;
 
-public sealed class ActionUIController : UIController
+public sealed class ActionUIController : UIController, IOnStateChanged<GameplayState>
 {
     [Dependency] private readonly IHudManager _hud = default!;
     [Dependency] private readonly IUIWindowManager _uiWindows = default!;
@@ -30,17 +29,14 @@ public sealed class ActionUIController : UIController
     private ActionsWindow? _window;
     private MenuButton ActionButton => _hud.GetUIWidget<MenuBar>().ActionButton;
 
-    public override void OnStateChanged(StateChangedEventArgs args)
+    public void OnStateChanged(GameplayState state)
     {
-        if (args.NewState is GameplayState)
-        {
-            ActionButton.OnPressed += ActionButtonPressed;
+        ActionButton.OnPressed += ActionButtonPressed;
 
-            CommandBinds.Builder
-                .Bind(ContentKeyFunctions.OpenActionsMenu,
-                    InputCmdHandler.FromDelegate(_ => ToggleWindow()))
-                .Register<ActionUIController>();
-        }
+        CommandBinds.Builder
+            .Bind(ContentKeyFunctions.OpenActionsMenu,
+                InputCmdHandler.FromDelegate(_ => ToggleWindow()))
+            .Register<ActionUIController>();
     }
 
     private void ActionButtonPressed(ButtonEventArgs args)

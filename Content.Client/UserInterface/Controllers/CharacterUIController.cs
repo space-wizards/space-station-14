@@ -4,7 +4,6 @@ using Content.Client.HUD;
 using Content.Client.UserInterface.Controls;
 using Content.Client.UserInterface.UIWindows;
 using Content.Shared.Input;
-using Robust.Client.State;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Client.Utility;
@@ -15,7 +14,7 @@ using MenuBar = Content.Client.HUD.Widgets.MenuBar;
 
 namespace Content.Client.UserInterface.Controllers;
 
-public sealed class CharacterUIController : UIController
+public sealed class CharacterUIController : UIController, IOnStateChanged<GameplayState>
 {
     [Dependency] private readonly IHudManager _hud = default!;
     [Dependency] private readonly IUIWindowManager _uiWindows = default!;
@@ -25,17 +24,14 @@ public sealed class CharacterUIController : UIController
     private CharacterWindow? _window;
     private MenuButton CharacterButton => _hud.GetUIWidget<MenuBar>().CharacterButton;
 
-    public override void OnStateChanged(StateChangedEventArgs args)
+    public void OnStateChanged(GameplayState state)
     {
-        if (args.NewState is GameplayState)
-        {
-            CharacterButton.OnPressed += CharacterButtonPressed;
+        CharacterButton.OnPressed += CharacterButtonPressed;
 
-            CommandBinds.Builder
-                .Bind(ContentKeyFunctions.OpenCharacterMenu,
-                    InputCmdHandler.FromDelegate(_ => ToggleWindow()))
-                .Register<CharacterUIController>();
-        }
+        CommandBinds.Builder
+            .Bind(ContentKeyFunctions.OpenCharacterMenu,
+                InputCmdHandler.FromDelegate(_ => ToggleWindow()))
+            .Register<CharacterUIController>();
     }
 
     public override void OnSystemLoaded(IEntitySystem system)
