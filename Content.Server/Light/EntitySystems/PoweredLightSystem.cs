@@ -250,7 +250,6 @@ namespace Content.Server.Light.EntitySystems
                     case LightBulbState.Normal:
                         if (powerReceiver.Powered && light.On)
                         {
-                            powerReceiver.Load = lightBulb.PowerUse;
                             SetLight(uid, true, lightBulb.Color, light, lightBulb.LightRadius, lightBulb.LightEnergy, lightBulb.LightSoftness);
                             appearance?.SetData(PoweredLightVisuals.BulbState, PoweredLightState.On);
                             var time = _gameTiming.CurTime;
@@ -263,21 +262,20 @@ namespace Content.Server.Light.EntitySystems
                         else
                         {
                             SetLight(uid, false, light: light);
-                            powerReceiver.Load = 0;
                             appearance?.SetData(PoweredLightVisuals.BulbState, PoweredLightState.Off);
                         }
                         break;
                     case LightBulbState.Broken:
                         SetLight(uid, false, light: light);
-                        powerReceiver.Load = 0;
                         appearance?.SetData(PoweredLightVisuals.BulbState, PoweredLightState.Broken);
                         break;
                     case LightBulbState.Burned:
                         SetLight(uid, false, light: light);
-                        powerReceiver.Load = 0;
                         appearance?.SetData(PoweredLightVisuals.BulbState, PoweredLightState.Burned);
                         break;
                 }
+
+                powerReceiver.Load = (light.On && lightBulb.State == LightBulbState.Normal) ? lightBulb.PowerUse : 0;
             }
         }
 
