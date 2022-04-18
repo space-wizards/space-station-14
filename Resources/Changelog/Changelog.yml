@@ -1,9 +1,4 @@
 Entries:
-- author: Peptide90
-  changes:
-  - {message: Some Autolathe recipes now require plastic instead of glass., type: Fix}
-  id: 855
-  time: '2022-01-11T02:20:35.0000000+00:00'
 - author: TaralGit
   changes:
   - {message: Increased laser damage, type: Tweak}
@@ -3038,3 +3033,8 @@ Entries:
   - {message: Fixed docking airlocks not having proper collision., type: Fix}
   id: 1354
   time: '2022-04-18T03:25:19.0000000+00:00'
+- author: ElectroJr
+  changes:
+  - {message: Fixed most hardsuit helmets not having working lights., type: Fix}
+  id: 1355
+  time: '2022-04-18T06:56:37.0000000+00:00'
