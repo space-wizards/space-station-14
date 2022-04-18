@@ -69,7 +69,6 @@
       - Spade
       - CableStack
       - HandheldGPSBasic
-      - HandheldHealthAnalyzer
   - type: ActivatableUI
     key: enum.LatheUiKey.Key
   - type: ActivatableUIRequiresPower
@@ -257,9 +256,9 @@
   components:
   - type: Sprite
     netsync: false
-    sprite: Structures/Machines/security_techfab.rsi
+    sprite: Structures/Machines/techfab.rsi
     layers:
-    - state: icon
+    - state: icon-sec
       map: ["enum.LatheVisualLayers.IsRunning"]
     - state: unlit
       shader: unshaded
@@ -269,8 +268,8 @@
     - state: panel
       map: ["enum.WiresVisualLayers.MaintenancePanel"]
   - type: LatheVisuals
-    idleState: icon
-    runningState: icon
+    idleState: icon-sec
+    runningState: icon-sec
   - type: ProtolatheDatabase
     protolatherecipes:
       - Flash
@@ -301,6 +300,65 @@
       - CableMVStack
       - CableHVStack
       - TimerTrigger
+
+- type: entity
+  parent: Protolathe
+  id: MedicalTechFab
+  name: Medical TechFab
+  description: Prints equipment for use by the medbay.
+  components:
+  - type: Sprite
+    netsync: false
+    sprite: Structures/Machines/techfab.rsi
+    layers:
+    - state: icon-med
+      map: ["enum.LatheVisualLayers.IsRunning"]
+    - state: unlit
+      shader: unshaded
+      map: ["enum.PowerDeviceVisualLayers.Powered"]
+    - state: inserting
+      map: ["enum.LatheVisualLayers.IsInserting"]
+    - state: panel
+      map: ["enum.WiresVisualLayers.MaintenancePanel"]
+  - type: LatheVisuals
+    idleState: icon-med
+    runningState: icon-med
+  - type: ProtolatheDatabase
+    protolatherecipes:
+      - HandheldHealthAnalyzer
+      - ClothingHandsGlovesLatex
+      - ClothingHandsGlovesNitrile
+      - ClothingMaskSterile
+      - DiseaseSwab
+      - HandheldCrewMonitor
+      - Scalpel
+      - Retractor
+      - Cautery
+      - Drill
+      - Saw
+      - Hemostat
+      - Beaker
+      - LargeBeaker
+      - CryostasisBeaker
+      - Dropper
+      - Syringe
+      - PillCanister #Everything below this is shared with other lathes
+      - FlashlightLantern
+      - Bucket
+      - MopItem
+      - SprayBottle
+      - FireExtinguisher
+      - LightTube
+      - LightBulb
+      - SheetSteel
+      - SheetGlass1
+      - SheetRGlass
+      - SheetPlastic
+      - CableStack
+      - CableMVStack
+      - CableHVStack
+      - TimerTrigger
+
 
 - type: entity
   parent: Autolathe
@@ -372,7 +430,6 @@
       - ClothingOuterWinterHoS
       - ClothingOuterWinterQM
       - ClothingOuterWinterRD
-
   - type: Sprite
     sprite: Structures/Machines/uniform_printer.rsi
     netsync: false

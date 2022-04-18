@@ -45,6 +45,11 @@
     - HydroponicsToolScythe
     - HydroponicsToolHatchet
     - KitchenKnife
+    - HandheldHealthAnalyzer
+    - ClothingHandsGlovesLatex
+    - ClothingHandsGlovesNitrile
+    - ClothingMaskSterile
+    - DiseaseSwab
 
 - type: technology
   name: "advanced botany"
