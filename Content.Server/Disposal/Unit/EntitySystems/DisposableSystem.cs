@@ -55,8 +55,8 @@ namespace Content.Server.Disposal.Unit.EntitySystems
                 var meta = MetaData(entity);
                 holder.Container.ForceRemove(entity, EntityManager, meta);
 
-                var xform = EntityManager.GetComponent<TransformComponent>(entity);
-                if (xform.Parent != holderTransform)
+                var xform = Transform(entity);
+                if (xform.ParentUid != uid)
                     continue;
 
                 if (duc != null)
