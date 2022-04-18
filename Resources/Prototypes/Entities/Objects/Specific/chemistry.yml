@@ -275,6 +275,7 @@
         maxVol: 50
   - type: Extractable
     grindableSolutionName: food
+
 - type: entity
   name: pill canister
   id: PillCanister
