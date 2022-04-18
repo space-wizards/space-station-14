@@ -36,6 +36,9 @@ namespace Content.Server.Bible
             SubscribeLocalEvent<SummonableComponent, SummonActionEvent>(OnSummon);
             SubscribeLocalEvent<FamiliarComponent, MobStateChangedEvent>(OnFamiliarDeath);
         }
+        /// <summary>
+        /// This handles familiar respawning.
+        /// </summary>
         public override void Update(float frameTime)
         {
             base.Update(frameTime);
@@ -152,6 +155,10 @@ namespace Content.Server.Bible
             AttemptSummon(component, args.Performer, Transform(args.Performer));
         }
 
+        /// <summary>
+        /// Starts up the respawn stuff when
+        /// the chaplain's familiar dies.
+        /// </summary>
         private void OnFamiliarDeath(EntityUid uid, FamiliarComponent component, MobStateChangedEvent args)
         {
             if (!args.Component.IsDead() || component.Source == null)
@@ -160,10 +167,11 @@ namespace Content.Server.Bible
             var source = component.Source;
             if (source != null && TryComp<SummonableComponent>(source, out var summonable))
             {
-                summonable.ResidentDead = true;
                 AddComp<SummonableRespawningComponent>(summonable.Owner);
             }
         }
+
+
         private void AttemptSummon(SummonableComponent component, EntityUid user, TransformComponent? position)
         {
             if (component.AlreadySummoned || component.SpecialItemPrototype == null)
@@ -179,12 +187,15 @@ namespace Content.Server.Bible
 
             // Make this familiar the component's summon
             var familiar = EntityManager.SpawnEntity(component.SpecialItemPrototype, position.Coordinates);
-            component.Summon = familiar;
+                            component.Summon = familiar;
 
-            /// Make this Summon the familiar's source
-            var familiarComp = AddComp<FamiliarComponent>(familiar);
-            familiarComp.Source = component.Owner;
-
+            /// We only want to add the familiar component to mobs
+            if (HasComp<MobStateComponent>(familiar))
+            {
+                /// Make this Summon the familiar's source
+                var familiarComp = AddComp<FamiliarComponent>(familiar);
+                familiarComp.Source = component.Owner;
+            }
             component.AlreadySummoned = true;
             _actionsSystem.RemoveAction(user, component.SummonAction);
         }

@@ -35,9 +35,8 @@ namespace Content.Server.Bible.Components
             Description = "bible-summon-verb-desc",
             Event = new SummonActionEvent(),
         };
-        /// used for respawning
-        public bool ResidentDead = false;
 
+        /// Used for respawning
         [ViewVariables]
         public float Accumulator = 0f;
         [ViewVariables]
