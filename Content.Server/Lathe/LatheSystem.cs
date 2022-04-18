@@ -104,7 +104,7 @@ namespace Content.Server.Lathe
         {
             if (!TryComp<MaterialStorageComponent>(uid, out var storage) 
                 || !TryComp<MaterialComponent>(args.Used, out var material)
-                || component.LatheWhitelist != null && !component.LatheWhitelist.IsValid(args.Used))
+                || component.LatheWhitelist?.IsValid(args.Used) == false)
                 return;
 
             var multiplier = 1;
