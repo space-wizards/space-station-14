@@ -122,11 +122,12 @@ namespace Content.Server.Shuttles.EntitySystems
                         if (!EntityManager.TryGetComponent(ent, out ThrusterComponent? thruster) || !thruster.RequireSpace) continue;
 
                         // Work out if the thruster is facing this direction
-                        var direction = EntityManager.GetComponent<TransformComponent>(ent).LocalRotation.ToWorldVec();
+                        var xform = Transform(ent);
+                        var direction = xform.LocalRotation.ToWorldVec();
 
                         if (new Vector2i((int) direction.X, (int) direction.Y) != new Vector2i(x, y)) continue;
 
-                        DisableThruster(ent, thruster);
+                        DisableThruster(ent, thruster, xform.GridID);
                     }
                 }
             }
@@ -198,7 +199,7 @@ namespace Content.Server.Shuttles.EntitySystems
 
         private void OnThrusterReAnchor(EntityUid uid, ThrusterComponent component, ref ReAnchorEvent args)
         {
-            DisableThruster(uid, component);
+            DisableThruster(uid, component, args.OldGrid);
 
             if (CanEnable(uid, component))
                 EnableThruster(uid, component);
@@ -301,14 +302,20 @@ namespace Content.Server.Shuttles.EntitySystems
             _ambient.SetAmbience(uid, true);
         }
 
+        public void DisableThruster(EntityUid uid, ThrusterComponent component, TransformComponent? xform = null, Angle? angle = null)
+        {
+            if (!Resolve(uid, ref xform)) return;
+            DisableThruster(uid, component, xform.GridID, xform);
+        }
+
         /// <summary>
         /// Tries to disable the thruster.
         /// </summary>
-        public void DisableThruster(EntityUid uid, ThrusterComponent component, TransformComponent? xform = null, Angle? angle = null)
+        public void DisableThruster(EntityUid uid, ThrusterComponent component, GridId gridId, TransformComponent? xform = null, Angle? angle = null)
         {
             if (!component.IsOn ||
                 !Resolve(uid, ref xform) ||
-                !_mapManager.TryGetGrid(xform.GridID, out var grid)) return;
+                !_mapManager.TryGetGrid(gridId, out var grid)) return;
 
             component.IsOn = false;
 
