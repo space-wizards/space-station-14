@@ -22,6 +22,7 @@ namespace Content.Server.Atmos.EntitySystems
             SubscribeLocalEvent<AirtightComponent, ComponentInit>(OnAirtightInit);
             SubscribeLocalEvent<AirtightComponent, ComponentShutdown>(OnAirtightShutdown);
             SubscribeLocalEvent<AirtightComponent, AnchorStateChangedEvent>(OnAirtightPositionChanged);
+            SubscribeLocalEvent<AirtightComponent, ReAnchorEvent>(OnAirtightReAnchor);
             SubscribeLocalEvent<AirtightComponent, RotateEvent>(OnAirtightRotated);
         }
 
@@ -57,7 +58,7 @@ namespace Content.Server.Atmos.EntitySystems
 
         private void OnAirtightPositionChanged(EntityUid uid, AirtightComponent airtight, ref AnchorStateChangedEvent args)
         {
-            var xform = EntityManager.GetComponent<TransformComponent>(uid);
+            var xform = Transform(uid);
 
             var gridId = xform.GridID;
             var coords = xform.Coordinates;
@@ -68,6 +69,16 @@ namespace Content.Server.Atmos.EntitySystems
             // Update and invalidate new position.
             airtight.LastPosition = (gridId, tilePos);
             InvalidatePosition(gridId, tilePos);
+        }
+
+        private void OnAirtightReAnchor(EntityUid uid, AirtightComponent airtight, ref ReAnchorEvent args)
+        {
+            foreach (var gridId in new[] { args.OldGrid, args.GridId })
+            {
+                // Update and invalidate new position.
+                airtight.LastPosition = (gridId, args.TilePos);
+                InvalidatePosition(gridId, args.TilePos);
+            }
         }
 
         private void OnAirtightRotated(EntityUid uid, AirtightComponent airtight, ref RotateEvent ev)
