@@ -15,6 +15,7 @@ namespace Content.Server.StationEvents.Events
         [Dependency] private readonly IChatManager _chatManager = default!;
 
         public override string Name => "ZombieOutbreak";
+        public override int EarliestStart => 50;
         public override float Weight => WeightLow / 2;
 
         public override string? StartAudio => "/Audio/Announcements/bloblarm.ogg";
