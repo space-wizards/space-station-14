@@ -26,6 +26,7 @@ namespace Content.Client.Parallax.Data
         /// <summary>
         /// A position relative to the centre of a ParallaxControl that this parallax should be drawn at, in pixels.
         /// Used for menus.
+        /// Note that this is ignored if the parallax layer is tiled - in that event a random pixel offset is used and slowness is applied.
         /// </summary>
         [DataField("controlHomePos")]
         public Vector2 ControlHomePosition { get; set; }

@@ -1,12 +1,12 @@
 using System;
 using Robust.Client.Graphics;
+using Content.Client.Parallax;
 
 namespace Content.Client.Parallax.Managers
 {
     public interface IParallaxManager
     {
-        event Action<Texture>? OnTextureLoaded;
-        Texture? ParallaxTexture { get; }
+        ParallaxLayerPrepared[] ParallaxLayers { get; }
         void LoadParallax();
     }
 }

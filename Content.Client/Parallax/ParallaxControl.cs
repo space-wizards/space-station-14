@@ -28,10 +28,11 @@ namespace Content.Client.Parallax
 
         protected override void Draw(DrawingHandleScreen handle)
         {
-            var tex = _parallaxManager.ParallaxTexture;
-            if (tex == null)
+            var layers = _parallaxManager.ParallaxLayers;
+            if (layers == null)
                 return;
 
+            /*
             var size = tex.Size;
             var ourSize = PixelSize;
 
@@ -42,6 +43,7 @@ namespace Content.Client.Parallax
                     handle.DrawTexture(tex, (x, y));
                 }
             }
+            */
         }
     }
 }

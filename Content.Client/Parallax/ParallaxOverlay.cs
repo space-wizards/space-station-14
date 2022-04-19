@@ -15,8 +15,6 @@ namespace Content.Client.Parallax
 
         private const float Slowness = 0.5f;
 
-        private Texture? _parallaxTexture;
-
         public override OverlaySpace Space => OverlaySpace.WorldSpaceBelowWorld;
         private readonly ShaderInstance _shader;
 
@@ -24,20 +22,11 @@ namespace Content.Client.Parallax
         {
             IoCManager.InjectDependencies(this);
             _shader = _prototypeManager.Index<ShaderPrototype>("unshaded").Instance();
-
-            if (_parallaxManager.ParallaxTexture == null)
-            {
-                _parallaxManager.OnTextureLoaded += texture => _parallaxTexture = texture;
-            }
-            else
-            {
-                _parallaxTexture = _parallaxManager.ParallaxTexture;
-            }
         }
 
         protected override void Draw(in OverlayDrawArgs args)
         {
-            if (_parallaxTexture == null || args.Viewport.Eye == null)
+            if (args.Viewport.Eye == null)
             {
                 return;
             }
@@ -45,6 +34,7 @@ namespace Content.Client.Parallax
             var screenHandle = args.WorldHandle;
             screenHandle.UseShader(_shader);
 
+            /*
             var (sizeX, sizeY) = _parallaxTexture.Size / (float) EyeManager.PixelsPerMeter;
             var (posX, posY) = args.Viewport.Eye.Position;
             var o = new Vector2(posX * Slowness, posY * Slowness);
@@ -67,6 +57,7 @@ namespace Content.Client.Parallax
                     screenHandle.DrawTexture(_parallaxTexture, (x, y));
                 }
             }
+            */
         }
     }
 }
