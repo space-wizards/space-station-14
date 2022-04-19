@@ -33,6 +33,7 @@
         Magboots,
         Toxins,
         VowOfSilence,
+        VowBroken,
         Debug1,
         Debug2,
         Debug3,
