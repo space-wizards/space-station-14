@@ -114,7 +114,7 @@ namespace Content.Server.Disease.Zombie
                     var chatMgr = IoCManager.Resolve<IChatManager>();
                     chatMgr.DispatchServerMessage(session, Loc.GetString("zombie-infection-greeting"));
                 }
-
+                uid.PopupMessageEveryone(Loc.GetString("zombie-transform", ("target", uid)));
                 if (TryComp<MetaDataComponent>(uid, out var metacomp))
                 {
                     metacomp.EntityName = Loc.GetString("zombie-name-prefix", ("target", metacomp.EntityName));
@@ -128,7 +128,6 @@ namespace Content.Server.Disease.Zombie
                     }
                 }
             }
-            uid.PopupMessageEveryone(Loc.GetString("zombie-transform", ("target", uid)));
         }
 
         private void OnRefreshMovementSpeedModifiers(EntityUid uid, DiseaseZombieComponent component, RefreshMovementSpeedModifiersEvent args)
