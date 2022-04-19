@@ -16,6 +16,8 @@
     damageOnUntrainedUse: ## What a non-chaplain takes when attempting to heal someone
       groups:
         Burn: 30
+  - type: Summonable
+    specialItem: MobBatRemilia
   - type: ItemCooldown
   - type: Sprite
     netsync: false
@@ -30,3 +32,34 @@
     storageSoundCollection:
       collection: storageRustle
 
+- type: entity
+  parent: Bible
+  name: necronomicon
+  description: "There's a note: Klatuu, Verata, Nikto -- Don't forget it again!"
+  id: BibleNecronomicon
+  components:
+  - type: Bible
+    damage:
+      groups:
+        Caustic: 20 ## ~15 dps
+    damageOnFail:
+      groups:
+        Brute: 15
+        Airloss: 25
+    damageOnUntrainedUse:
+      groups:
+        Caustic: 50
+    failChance: 0
+    locPrefix: "necro"
+    healSound: "/Audio/Effects/lightburn.ogg"
+    cooldownTime: 1.3
+  - type: Summonable
+    specialItem: MobCorgiCerberus
+  - type: Sprite
+    netsync: false
+    sprite: Objects/Specific/Chapel/necronomicon.rsi
+    state: icon
+  - type: Item
+    size: 15
+    sprite: Objects/Specific/Chapel/necronomicon.rsi
+    prefix: inhand

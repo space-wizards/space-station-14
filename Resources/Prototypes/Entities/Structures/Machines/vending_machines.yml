@@ -924,6 +924,7 @@
   components:
   - type: VendingMachine
     pack: PietyVendInventory
+    emagPack: PietyVendEmagInventory
   - type: Sprite
     sprite: Structures/Machines/VendingMachines/chapdrobe.rsi
     layers:

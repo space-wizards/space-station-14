@@ -127290,13 +127290,6 @@ entities:
   - pos: 0.5,-81.5
     parent: 61
     type: Transform
-  - fixtures:
-    - shape: !type:PhysShapeCircle
-        position: 0,-0.5
-        radius: 0.2
-      hard: False
-      id: docking
-    type: Fixtures
   - containers:
       board: !type:Container
         ents: []
@@ -146801,13 +146794,6 @@ entities:
     pos: 53.5,11.5
     parent: 61
     type: Transform
-  - fixtures:
-    - shape: !type:PhysShapeCircle
-        position: 0,-0.5
-        radius: 0.2
-      hard: False
-      id: docking
-    type: Fixtures
 - uid: 13115
   type: TableWood
   components:
@@ -174387,13 +174373,6 @@ entities:
     pos: 53.5,6.5
     parent: 61
     type: Transform
-  - fixtures:
-    - shape: !type:PhysShapeCircle
-        position: 0,-0.5
-        radius: 0.2
-      hard: False
-      id: docking
-    type: Fixtures
 - uid: 16226
   type: SignCargoDock
   components:
@@ -195113,13 +195092,6 @@ entities:
     pos: 34.5,42.5
     parent: 61
     type: Transform
-  - fixtures:
-    - shape: !type:PhysShapeCircle
-        position: 0,-0.5
-        radius: 0.2
-      hard: False
-      id: docking
-    type: Fixtures
 - uid: 18631
   type: AirlockExternalLocked
   components:
@@ -195133,13 +195105,6 @@ entities:
     pos: 34.5,33.5
     parent: 61
     type: Transform
-  - fixtures:
-    - shape: !type:PhysShapeCircle
-        position: 0,-0.5
-        radius: 0.2
-      hard: False
-      id: docking
-    type: Fixtures
 - uid: 18633
   type: AirlockExternalLocked
   components:
@@ -195153,13 +195118,6 @@ entities:
     pos: 42.5,33.5
     parent: 61
     type: Transform
-  - fixtures:
-    - shape: !type:PhysShapeCircle
-        position: 0,-0.5
-        radius: 0.2
-      hard: False
-      id: docking
-    type: Fixtures
 - uid: 18635
   type: AirlockExternalShuttleLocked
   components:
@@ -195167,13 +195125,6 @@ entities:
     pos: 42.5,42.5
     parent: 61
     type: Transform
-  - fixtures:
-    - shape: !type:PhysShapeCircle
-        position: 0,-0.5
-        radius: 0.2
-      hard: False
-      id: docking
-    type: Fixtures
 - uid: 18636
   type: AirlockExternalLocked
   components:

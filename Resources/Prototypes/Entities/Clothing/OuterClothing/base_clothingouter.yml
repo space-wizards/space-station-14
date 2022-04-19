@@ -34,6 +34,7 @@
         Heat: 0.90
         Radiation: 0.25
   - type: DiseaseProtection
+    protection: 0.05
 
 - type: entity
   abstract: true
@@ -52,3 +53,4 @@
   - type: Clothing
     size: 30
   - type: DiseaseProtection
+    protection: 0.05

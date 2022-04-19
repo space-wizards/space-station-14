@@ -86,6 +86,7 @@
       map: [ "light" ]
   - type: Clothing
     HeldPrefix: off
+  - type: ToggleableLightVisuals
   - type: PointLight
     netsync: false
     enabled: false
