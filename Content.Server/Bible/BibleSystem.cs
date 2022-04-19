@@ -9,7 +9,6 @@ using Content.Shared.Actions;
 using Content.Server.Cooldown;
 using Content.Server.Bible.Components;
 using Content.Server.Popups;
-using Content.Server.Disease.Zombie.Components;
 using Robust.Shared.Random;
 using Robust.Shared.Audio;
 using Robust.Shared.Player;
@@ -70,7 +69,7 @@ namespace Content.Server.Bible
 
             if (!_invSystem.TryGetSlotEntity(args.Target.Value, "head", out var entityUid) && !_tagSystem.HasTag(args.Target.Value, "Familiar"))
             {
-                if (_random.Prob(component.FailChance) || HasComp<DiseaseZombieComponent>(args.Target))
+                if (_random.Prob(component.FailChance))
                 {
                 var othersFailMessage = Loc.GetString(component.LocPrefix + "-heal-fail-others", ("user", args.User),("target", args.Target),("bible", uid));
                 _popupSystem.PopupEntity(othersFailMessage, args.User, Filter.Pvs(args.User).RemoveWhereAttachedEntity(puid => puid == args.User));
