@@ -12,7 +12,6 @@ namespace Content.Client.Actions
     [UsedImplicitly]
     public sealed class ActionsSystem : SharedActionsSystem
     {
-
         [Dependency] private readonly IPlayerManager _playerManager = default!;
         [Dependency] private readonly InteractionOutlineSystem _interactionOutline = default!;
         [Dependency] private readonly TargetOutlineSystem _targetOutline = default!;
@@ -23,8 +22,6 @@ namespace Content.Client.Actions
         public Action? OnUnlinkActions = null;
         private ActionsComponent? _playerActions = null;
         public ActionsComponent? PlayerActions => _playerActions;
-
-
         public override void Initialize()
         {
             base.Initialize();
@@ -32,7 +29,6 @@ namespace Content.Client.Actions
             SubscribeLocalEvent<ActionsComponent, PlayerDetachedEvent>(OnPlayerDetached);
             SubscribeLocalEvent<ActionsComponent, ComponentHandleState>(HandleComponentState);
         }
-
         private void HandleComponentState(EntityUid uid, ActionsComponent component, ref ComponentHandleState args)
         {
             //Check if player is local
@@ -83,5 +79,32 @@ namespace Content.Client.Actions
             base.Shutdown();
             CommandBinds.Unregister<ActionsSystem>();
         }
+        internal void OnActionTriggered(ActionType? actionType)
+        {
+            if (_playerActions == null || actionType == null || _playerManager.LocalPlayer?.ControlledEntity is not EntityUid user)
+                return;
+
+            if (actionType.Provider != null && Deleted(actionType.Provider))
+                return;
+
+            if (actionType is not InstantAction instantAction)
+            {
+                return;
+            }
+
+            if (actionType.ClientExclusive)
+            {
+                if (instantAction.Event != null)
+                    instantAction.Event.Performer = user;
+
+                PerformAction(_playerActions, instantAction, instantAction.Event, GameTiming.CurTime);
+            }
+            else
+            {
+                var request = new RequestPerformActionEvent(instantAction);
+                EntityManager.RaisePredictiveEvent(request);
+            }
+        }
+
     }
 }
