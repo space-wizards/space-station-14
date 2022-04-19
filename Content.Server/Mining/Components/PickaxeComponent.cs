@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Threading;
 using Content.Shared.Damage;
 using Content.Shared.Sound;
 using Robust.Shared.GameObjects;
@@ -29,5 +30,7 @@ namespace Content.Server.Mining.Components
         public int MaxMiningEntities = 1;
 
         public HashSet<EntityUid> MiningEntities = new();
+        
+        public CancellationTokenSource? CancelToken;
     }
 }

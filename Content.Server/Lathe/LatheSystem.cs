@@ -134,7 +134,7 @@ namespace Content.Server.Lathe
             // Play a sound when inserting, if any
             if (component.InsertingSound != null)
             {
-                SoundSystem.Play(Filter.Pvs(component.Owner), component.InsertingSound.GetSound(), component.Owner);
+                SoundSystem.Play(Filter.Pvs(component.Owner, entityManager: EntityManager), component.InsertingSound.GetSound(), component.Owner);
             }
             
             // We need the prototype to get the color

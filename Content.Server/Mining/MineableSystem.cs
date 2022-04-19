@@ -40,8 +40,8 @@ public sealed class MineableSystem : EntitySystem
         if (!pickaxe.MiningEntities.Add(uid))
             return;
 
-        component.CancelToken = new CancellationTokenSource();
-        var doAfter = new DoAfterEventArgs(args.User, component.BaseMineTime * pickaxe.MiningTimeMultiplier, component.CancelToken.Token, uid)
+        pickaxe.CancelToken = new CancellationTokenSource();
+        var doAfter = new DoAfterEventArgs(args.User, component.BaseMineTime * pickaxe.MiningTimeMultiplier, pickaxe.CancelToken.Token, uid)
         {
             BreakOnDamage = true,
             BreakOnStun = true,
@@ -57,7 +57,6 @@ public sealed class MineableSystem : EntitySystem
 
     private void OnDoafterSuccess(EntityUid uid, MineableComponent component, MiningDoafterSuccess ev)
     {
-        var entityManager = IoCManager.Resolve<IEntityManager>();
         if (!TryComp(ev.Pickaxe, out PickaxeComponent? pickaxe))
             return;
 
@@ -66,10 +65,7 @@ public sealed class MineableSystem : EntitySystem
         pickaxe.MiningEntities.Remove(ev.Rock);
         
         var spawnOre = EntitySpawnCollection.GetSpawns(component.Ores, _random);
-        foreach (var item in spawnOre)
-        {
-            entityManager.SpawnEntity(item, entityManager.GetComponent<TransformComponent>(ev.Player).Coordinates);
-        }
+        EntityManager.SpawnEntity(spawnOre[0], EntityManager.GetComponent<TransformComponent>(ev.Player).Coordinates);
     }
 
     private void OnDoafterCancel(MiningDoafterCancel ev)
@@ -77,8 +73,8 @@ public sealed class MineableSystem : EntitySystem
         if (!TryComp<PickaxeComponent>(ev.Pickaxe, out var pickaxe))
             return;
         
+        pickaxe.CancelToken = null;
         pickaxe.MiningEntities.Remove(ev.Rock);
-        ev.Component.CancelToken = null;
     }
     
     private sealed class MiningDoafterCancel : EntityEventArgs
