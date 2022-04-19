@@ -39,6 +39,7 @@
   parent: BoxCardboard
   id: BoxSurvivalSecurity
   description: It's a box with basic internals inside.
+  suffix: Security
   components:
   - type: StorageFill
     contents:
@@ -57,6 +58,7 @@
   parent: BoxCardboard
   id: BoxSurvivalMedical
   description: It's a box with basic internals inside.
+  suffix: Medical
   components:
   - type: StorageFill
     contents:
