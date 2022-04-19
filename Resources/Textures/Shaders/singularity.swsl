@@ -5,7 +5,7 @@
 
 uniform sampler2D SCREEN_TEXTURE;
 uniform highp vec2 renderScale;
-uniform highp float[5] falloff;
+uniform highp float[5] falloffPower;
 uniform highp float[5] intensity;
 uniform highp vec2[5] position;
 uniform int count;
@@ -22,7 +22,7 @@ void fragment() {
         delta = FRAGCOORD.xy - position[i];
 	    distanceToCenter = length(delta / renderScale);
 
-        deformation = (pow(intensity[i], 2.0)*500.0) / pow(distanceToCenter, pow(falloff[i], 0.5));
+        deformation = intensity[i] / pow(distanceToCenter, falloffPower[i]);
 
         if(deformation > 0.8)
             deformation = pow(deformation, 0.3);

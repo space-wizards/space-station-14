@@ -54,7 +54,7 @@ namespace Content.Client.Singularity
 
             var position = new Vector2[MaxCount];
             var intensity = new float[MaxCount];
-            var falloff = new float[MaxCount];
+            var falloffPower = new float[MaxCount];
             int index = 0;
             foreach (var instance in _singularities.Values)
             {
@@ -65,7 +65,7 @@ namespace Content.Client.Singularity
 
                 position[index] = tempCoords;
                 intensity[index] = instance.Intensity;
-                falloff[index] = instance.Falloff;
+                falloffPower[index] = instance.FalloffPower;
                 index++;
 
                 if (index == MaxCount)
@@ -75,7 +75,7 @@ namespace Content.Client.Singularity
             _shader?.SetParameter("count", index);
             _shader?.SetParameter("position", position);
             _shader?.SetParameter("intensity", intensity);
-            _shader?.SetParameter("falloff", falloff);
+            _shader?.SetParameter("falloffPower", falloffPower);
             _shader?.SetParameter("SCREEN_TEXTURE", ScreenTexture);
 
             var worldHandle = args.WorldHandle;
@@ -102,7 +102,7 @@ namespace Content.Client.Singularity
 
                 if (!_singularities.Keys.Contains(singuloEntity) && SinguloQualifies(singuloEntity, currentEyeLoc))
                 {
-                    _singularities.Add(singuloEntity, new SingularityShaderInstance(_entityManager.GetComponent<TransformComponent>(singuloEntity).MapPosition.Position, distortion.Intensity, distortion.Falloff));
+                    _singularities.Add(singuloEntity, new SingularityShaderInstance(_entityManager.GetComponent<TransformComponent>(singuloEntity).MapPosition.Position, distortion.Intensity, distortion.FalloffPower));
                 }
             }
 
@@ -126,7 +126,7 @@ namespace Content.Client.Singularity
                             var shaderInstance = _singularities[activeSingulo];
                             shaderInstance.CurrentMapCoords = _entityManager.GetComponent<TransformComponent>(activeSingulo).MapPosition.Position;
                             shaderInstance.Intensity = distortion.Intensity;
-                            shaderInstance.Falloff = distortion.Falloff;
+                            shaderInstance.FalloffPower = distortion.FalloffPower;
                         }
                     }
 
@@ -148,13 +148,13 @@ namespace Content.Client.Singularity
         {
             public Vector2 CurrentMapCoords;
             public float Intensity;
-            public float Falloff;
+            public float FalloffPower;
 
-            public SingularityShaderInstance(Vector2 mapCoords, float intensity, float falloff)
+            public SingularityShaderInstance(Vector2 mapCoords, float intensity, float falloffPower)
             {
                 CurrentMapCoords = mapCoords;
                 Intensity = intensity;
-                Falloff = falloff;
+                FalloffPower = falloffPower;
             }
         }
     }
