@@ -192,6 +192,12 @@
   description: You're severely thirsty. The thirst makes moving around a chore.
 
 - type: alert
+  id: VowOfSilence
+  icon: /Textures/Interface/Alerts/Abilities/silenced.png
+  name: Vow of Silence
+  description: You have taken a vow of silence as part of initiation into the Mystiko Tagma Mimon.
+
+- type: alert
   id: Pulled
   icon: /Textures/Interface/Alerts/Pull/pulled.png
   onClick: !type:StopBeingPulled  { }

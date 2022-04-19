@@ -32,6 +32,7 @@
         Pulling,
         Magboots,
         Toxins,
+        VowOfSilence,
         Debug1,
         Debug2,
         Debug3,
