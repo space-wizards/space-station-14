@@ -52,6 +52,7 @@ namespace Content.Server.Shuttles.EntitySystems
             SubscribeLocalEvent<ThrusterComponent, ComponentShutdown>(OnThrusterShutdown);
             SubscribeLocalEvent<ThrusterComponent, PowerChangedEvent>(OnPowerChange);
             SubscribeLocalEvent<ThrusterComponent, AnchorStateChangedEvent>(OnAnchorChange);
+            SubscribeLocalEvent<ThrusterComponent, ReAnchorEvent>(OnThrusterReAnchor);
             SubscribeLocalEvent<ThrusterComponent, RotateEvent>(OnRotate);
             SubscribeLocalEvent<ThrusterComponent, IsHotEvent>(OnIsHotEvent);
             SubscribeLocalEvent<ThrusterComponent, StartCollideEvent>(OnStartCollide);
@@ -193,6 +194,14 @@ namespace Content.Server.Shuttles.EntitySystems
             {
                 DisableThruster(uid, component);
             }
+        }
+
+        private void OnThrusterReAnchor(EntityUid uid, ThrusterComponent component, ref ReAnchorEvent args)
+        {
+            DisableThruster(uid, component);
+
+            if (CanEnable(uid, component))
+                EnableThruster(uid, component);
         }
 
         private void OnThrusterInit(EntityUid uid, ThrusterComponent component, ComponentInit args)
@@ -351,7 +360,7 @@ namespace Content.Server.Shuttles.EntitySystems
         {
             if (!component.Enabled) return false;
 
-            var xform = EntityManager.GetComponent<TransformComponent>(uid);
+            var xform = Transform(uid);
 
             if (!xform.Anchored ||
                 EntityManager.TryGetComponent(uid, out ApcPowerReceiverComponent? receiver) && !receiver.Powered)
