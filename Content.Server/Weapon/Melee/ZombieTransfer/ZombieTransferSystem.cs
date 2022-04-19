@@ -37,7 +37,7 @@ namespace Content.Server.Weapons.Melee.ZombieTransfer
                 if (args.User == entity)
                     continue;
 
-                if (!HasComp<MobStateComponent>(entity))
+                if (!HasComp<MobStateComponent>(entity) || HasComp<DroneComponent>(entity))
                     continue;
 
                 if (_robustRandom.Prob(diseaseZombieComp.Probability) && HasComp<DiseaseCarrierComponent>(entity))
@@ -55,7 +55,7 @@ namespace Content.Server.Weapons.Melee.ZombieTransfer
                     dspec.DamageDict.TryAdd("Piercing", -7);
                     args.BonusDamage += dspec;
                 }
-                else if (mobState.IsAlive() && !HasComp<DroneComponent>(entity)) //heals when zombies bite live entities
+                else if (mobState.IsAlive()) //heals when zombies bite live entities
                 {
                     var healingSolution = new Solution();
                     healingSolution.AddReagent("Bicaridine", 1.00); //if OP, reduce/change chem
