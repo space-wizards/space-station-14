@@ -16,6 +16,12 @@ namespace Content.Client.Singularity
         [Dependency] private readonly IEntityManager _entityManager = default!;
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
 
+        /// <summary>
+        ///     Maximum number of distortions that can be shown on screen at a time.
+        ///     If this value is changed, the shader itself also needs to be updated.
+        /// </summary>
+        public const int MaxCount = 5;
+
         private const float MaxDist = 15.0f;
 
         public override OverlaySpace Space => OverlaySpace.WorldSpace;
@@ -37,41 +43,45 @@ namespace Content.Client.Singularity
 
         protected override void Draw(in OverlayDrawArgs args)
         {
+            if (ScreenTexture == null)
+                return;
+
             SingularityQuery(args.Viewport.Eye);
 
             var viewportWB = args.WorldAABB;
             // Has to be correctly handled because of the way intensity/falloff transform works so just do it.
             _shader?.SetParameter("renderScale", args.Viewport.RenderScale);
 
-            var positions = new float[6];
+            var position = new Vector2[MaxCount];
+            var intensity = new float[MaxCount];
+            var falloff = new float[MaxCount];
             int index = 0;
-            float a = 0;
-            float b = 0;
             foreach (var instance in _singularities.Values)
             {
                 // To be clear, this needs to use "inside-viewport" pixels.
                 // In other words, specifically NOT IViewportControl.WorldToScreen (which uses outer coordinates).
                 var tempCoords = args.Viewport.WorldToLocal(instance.CurrentMapCoords);
+                tempCoords.Y = args.Viewport.Size.Y - tempCoords.Y;
 
-                positions[index++] = tempCoords.X;
-                positions[index++] = args.Viewport.Size.Y - tempCoords.Y;
+                position[index] = tempCoords;
+                intensity[index] = instance.Intensity;
+                falloff[index] = instance.Falloff;
+                index++;
 
-                a = instance.Intensity;
-                b = instance.Falloff;
+                if (index == MaxCount)
+                    break;
             }
 
-            _shader?.SetParameter("positions", positions);
-            _shader?.SetParameter("count", _singularities.Count);
-
-            if (ScreenTexture != null)
-                _shader?.SetParameter("SCREEN_TEXTURE", ScreenTexture);
-            _shader?.SetParameter("intensity", a);
-            _shader?.SetParameter("falloff", b);
+            _shader?.SetParameter("count", index);
+            _shader?.SetParameter("position", position);
+            _shader?.SetParameter("intensity", intensity);
+            _shader?.SetParameter("falloff", falloff);
+            _shader?.SetParameter("SCREEN_TEXTURE", ScreenTexture);
 
             var worldHandle = args.WorldHandle;
             worldHandle.UseShader(_shader);
             worldHandle.DrawRect(viewportWB, Color.White);
-
+            worldHandle.UseShader(null);
         }
 
         //Queries all singulos on the map and either adds or removes them from the list of rendered singulos based on whether they should be drawn (in range? on the same z-level/map? singulo entity still exists?)

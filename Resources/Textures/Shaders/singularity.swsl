@@ -1,27 +1,33 @@
 //Gravitational lensing effect. Edited from https://unionassets.com/blog/the-effect-of-the-gravitational-lens-195 to be Clyde based (based on what)
 
+// the `5`s here correspond to the upper limit on the simultaneous distortion sources that can be present on screen at a time. If you want to change this, make sure to change all of them, including in whatever overlay assigns the uniforms
+// Apparently #define is an unknown preprocessor directive
+
 uniform sampler2D SCREEN_TEXTURE;
 uniform highp vec2 renderScale;
-uniform highp float falloff;
-uniform highp float intensity;
-uniform highp float[6] positions;
+uniform highp float[5] falloff;
+uniform highp float[5] intensity;
+uniform highp vec2[5] position;
 uniform int count;
 
 void fragment() {
 
     highp vec2 offset = vec2(0,0);
+    highp vec2 delta;
+    highp float distanceToCenter;
+    highp float deformation ;
     
-    for (int i = 0; i < count; i++) {
+    for (int i = 0; i < 5 && i < count; i++) {
     
-        highp vec2 positionInput = vec2(positions[i*2], positions[i*2+1]);
-	    highp float distanceToCenter = length((FRAGCOORD.xy - positionInput) / renderScale);
+        delta = FRAGCOORD.xy - position[i];
+	    distanceToCenter = length(delta / renderScale);
 
-        highp float deformation = (pow(intensity, 2.0)*500.0) / pow(distanceToCenter, pow(falloff, 0.5));
+        deformation = (pow(intensity[i], 2.0)*500.0) / pow(distanceToCenter, pow(falloff[i], 0.5));
 
-        if(deformation > 0.8) //Edit this for inward effect
-          deformation = pow(deformation, 0.3);
+        if(deformation > 0.8)
+            deformation = pow(deformation, 0.3);
 
-        offset -= deformation*(FRAGCOORD.xy - positionInput);
+        offset -= deformation * delta;
     }
     
     COLOR = zTextureSpec(SCREEN_TEXTURE, (FRAGCOORD.xy + offset)*SCREEN_PIXEL_SIZE);
