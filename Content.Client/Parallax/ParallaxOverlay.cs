@@ -34,30 +34,40 @@ public sealed class ParallaxOverlay : Overlay
         var screenHandle = args.WorldHandle;
         screenHandle.UseShader(_shader);
 
-        /*
-        var (sizeX, sizeY) = _parallaxTexture.Size / (float) EyeManager.PixelsPerMeter;
-        var (posX, posY) = args.Viewport.Eye.Position;
-        var o = new Vector2(posX * Slowness, posY * Slowness);
-
-        // Remove offset so we can floor.
-        var (l, b) = args.WorldAABB.BottomLeft - o;
-
-        // Floor to background size.
-        l = sizeX * MathF.Floor(l / sizeX);
-        b = sizeY * MathF.Floor(b / sizeY);
-
-        // Re-offset.
-        l += o.X;
-        b += o.Y;
-
-        for (var x = l; x < args.WorldAABB.Right; x += sizeX)
+        foreach (var layer in _parallaxManager.ParallaxLayers)
         {
-            for (var y = b; y < args.WorldAABB.Top; y += sizeY)
+            var tex = layer.Texture;
+
+            var (sizeX, sizeY) = tex.Size / (float) EyeManager.PixelsPerMeter;
+            var (posX, posY) = args.Viewport.Eye.Position.Position - layer.Config.WorldHomePosition;
+            var o = new Vector2(posX * layer.Config.Slowness, posY * layer.Config.Slowness);
+
+            if (layer.Config.Tiled)
             {
-                screenHandle.DrawTexture(_parallaxTexture, (x, y));
+                // Remove offset so we can floor.
+                var (l, b) = args.WorldAABB.BottomLeft - o;
+
+                // Floor to background size.
+                l = sizeX * MathF.Floor(l / sizeX);
+                b = sizeY * MathF.Floor(b / sizeY);
+
+                // Re-offset.
+                l += o.X;
+                b += o.Y;
+
+                for (var x = l; x < args.WorldAABB.Right; x += sizeX)
+                {
+                    for (var y = b; y < args.WorldAABB.Top; y += sizeY)
+                    {
+                        screenHandle.DrawTexture(tex, (x, y));
+                    }
+                }
+            }
+            else
+            {
+                screenHandle.DrawTexture(tex, o);
             }
         }
-        */
     }
 }
 

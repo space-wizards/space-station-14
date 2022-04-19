@@ -28,22 +28,29 @@ public sealed class ParallaxControl : Control
 
     protected override void Draw(DrawingHandleScreen handle)
     {
-        var layers = _parallaxManager.ParallaxLayers;
-        if (layers == null)
-            return;
-
-        /*
-        var size = tex.Size;
-        var ourSize = PixelSize;
-
-        for (var x = -size.X + Offset.X; x < ourSize.X; x += size.X)
+        foreach (var layer in _parallaxManager.ParallaxLayers)
         {
-            for (var y = -size.Y + Offset.Y; y < ourSize.Y; y += size.Y)
+            var tex = layer.Texture;
+            var ourSize = PixelSize;
+
+            if (layer.Config.Tiled)
             {
-                handle.DrawTexture(tex, (x, y));
+                var scaledOffset = (Offset * layer.Config.Slowness).Floored();
+                var size = tex.Size;
+
+                for (var x = -size.X + scaledOffset.X; x < ourSize.X; x += size.X)
+                {
+                    for (var y = -size.Y + scaledOffset.Y; y < ourSize.Y; y += size.Y)
+                    {
+                        handle.DrawTexture(tex, (x, y));
+                    }
+                }
+            }
+            else
+            {
+                handle.DrawTexture(tex, (ourSize / 2) + layer.Config.ControlHomePosition);
             }
         }
-        */
     }
 }
 
