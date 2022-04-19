@@ -18,10 +18,11 @@
     - texture:
         !type:ImageParallaxTextureSource
         path: "/Textures/Objects/Power/AME/ame_part.rsi/box.png"
-      slowness: 0.9
+      slowness: 0.995
       tiled: false
       controlHomePosition: "-128, -128"
       worldHomePosition: "0, 0"
+      worldAdjustPosition: "4, 4"
       scale: "8, 8"
     - texture:
         !type:ImageParallaxTextureSource

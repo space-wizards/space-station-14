@@ -39,12 +39,24 @@ public sealed class ParallaxOverlay : Overlay
             // Size of the texture in world units.
             var size = (tex.Size / (float) EyeManager.PixelsPerMeter) * layer.Config.Scale;
 
-            // Origin
-            var originBL = args.Viewport.Eye.Position.Position * layer.Config.Slowness;
-
-            // Centre around (WorldHomePosition + ParallaxAnchor).
+            // The "home" position is the effective origin of this layer.
+            // Parallax shifting is relative to the home, and shifts away from the home and towards the Eye centre.
+            // The effects of this are such that a slowness of 1 anchors the layer to the centre of the screen, while a slowness of 0 anchors the layer to the world.
+            // (For values 0.0 to 1.0 this is in effect a lerp, but it's deliberately unclamped.)
             // The ParallaxAnchor adapts the parallax for station positioning and possibly map-specific tweaks.
-            originBL += (layer.Config.WorldHomePosition + _parallaxManager.ParallaxAnchor) - (size / 2);
+            var home = layer.Config.WorldHomePosition + _parallaxManager.ParallaxAnchor;
+
+            // Origin - start with the parallax shift itself.
+            var originBL = (args.Viewport.Eye.Position.Position - home) * layer.Config.Slowness;
+
+            // Place at the home.
+            originBL += home;
+
+            // Adjust.
+            originBL += layer.Config.WorldAdjustPosition;
+
+            // Centre the image.
+            originBL -= size / 2;
 
             if (layer.Config.Tiled)
             {

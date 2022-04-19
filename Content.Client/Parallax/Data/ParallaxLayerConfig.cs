@@ -40,15 +40,25 @@ public sealed class ParallaxLayerConfig
     public Vector2 ControlHomePosition { get; set; }
 
     /// <summary>
-    /// A world position such that if an Eye were positioned there, this parallax would be centred in the screen.
+    /// The "relative to ParallaxAnchor" starting world position for this layer.
+    /// Essentially, an unclamped lerp occurs between here and the eye position, with Slowness as the factor.
     /// Used for in-game.
     /// </summary>
     [DataField("worldHomePosition")]
     public Vector2 WorldHomePosition { get; set; }
 
     /// <summary>
-    /// Multiplier based on eye world position for this parallax layer.
-    /// It's worth noting if you want to anchor a layer to the world, you use a slowness of 0.0f.
+    /// An adjustment performed to the world position of this layer after parallax shifting.
+    /// Used for in-game.
+    /// Useful for moving around Slowness = 1.0 objects (which can't otherwise be moved from screen centre).
+    /// </summary>
+    [DataField("worldAdjustPosition")]
+    public Vector2 WorldAdjustPosition { get; set; }
+
+    /// <summary>
+    /// Multiplier of parallax shift.
+    /// A slowness of 0.0f anchors this layer to the world.
+    /// A slowness of 1.0f anchors this layer to the camera.
     /// </summary>
     [DataField("slowness")]
     public float Slowness { get; set; } = 0.5f;
