@@ -1,0 +1,9 @@
+- type: parallax
+  id: default
+  layers:
+    - texture:
+        !type:GeneratedParallaxTextureSource
+        id: ""
+        configPath: "/parallax_config.toml"
+      slowness: 0.5
+
