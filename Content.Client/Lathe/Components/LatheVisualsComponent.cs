@@ -13,7 +13,7 @@ public sealed class LatheVisualsComponent : Component
     [DataField("runningState", required: true)]
     public string RunningState = default!;
     
-    [ViewVariables(VVAccess.ReadWrite)]
+    [ViewVariables]
     [DataField("ignoreColor")]
     public bool IgnoreColor;
 }

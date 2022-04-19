@@ -13,6 +13,7 @@ namespace Content.Server.Lathe.Components
         /// <summary>
         /// Whitelist for specifying the kind of materials that can be insert into the lathe
         /// </summary>
+        [ViewVariables]
         [DataField("whitelist")] 
         public EntityWhitelist? LatheWhitelist;
 
