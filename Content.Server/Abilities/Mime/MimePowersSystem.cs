@@ -1,4 +1,3 @@
-using System;
 using Content.Server.Popups;
 using Content.Server.Coordinates.Helpers;
 using Content.Shared.Speech;
@@ -7,8 +6,8 @@ using Content.Shared.Alert;
 using Content.Shared.Maps;
 using Content.Shared.MobState.Components;
 using Content.Shared.Tag;
+using Content.Shared.Doors.Components;
 using Robust.Shared.Player;
-using Robust.Shared.Timing;
 
 namespace Content.Server.Abilities.Mime
 {
@@ -89,7 +88,8 @@ namespace Content.Server.Abilities.Mime
             /// Check there are no walls or mobs there
             foreach (var entity in coords.GetEntitiesInTile())
             {
-                if (_tagSystem.HasTag(entity, "Wall") ||(HasComp<MobStateComponent>(entity) && entity != uid))
+                if (_tagSystem.HasTag(entity, "Wall") ||(HasComp<MobStateComponent>(entity) && entity != uid) ||
+                    (TryComp<DoorComponent>(entity, out var door) && door.State == DoorState.Closed))
                 {
                     _popupSystem.PopupEntity(Loc.GetString("mime-invisible-wall-failed"), uid, Filter.Entities(uid));
                     return;
@@ -99,7 +99,7 @@ namespace Content.Server.Abilities.Mime
             /// Make sure we set the invisible wall to despawn properly
             var wall = EntityManager.SpawnEntity(component.WallPrototype, coords);
             var invisWall = EnsureComp<InvisibleWallComponent>(wall);
-            /// Handle args so cooldown words
+            /// Handle args so cooldown works
             args.Handled = true;
         }
 
