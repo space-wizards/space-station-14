@@ -2,6 +2,7 @@
 
 namespace Content.Server.Disposal.Mailing;
 
+[Friend(typeof(MailingUnitSystem))]
 [RegisterComponent]
 public sealed class MailingUnitComponent : Component
 {
@@ -10,12 +11,14 @@ public sealed class MailingUnitComponent : Component
     /// Each target is just a disposal routing tag
     /// </summary>
     [ViewVariables]
+    [DataField("targetList")]
     public readonly List<string> TargetList = new();
 
     /// <summary>
     /// The target that gets attached to the disposal holders tag list on flush
     /// </summary>
     [ViewVariables]
+    [DataField("target")]
     public string? Target;
 
     /// <summary>
