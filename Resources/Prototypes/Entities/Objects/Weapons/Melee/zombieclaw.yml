@@ -8,6 +8,7 @@
       sprite: Objects/Weapons/Melee/zombie_claw.rsi
       state: icon
     - type: Item
+    - type: Sharp
     - type: ZombieTransfer
     - type: Unremoveable
     - type: MeleeWeapon
