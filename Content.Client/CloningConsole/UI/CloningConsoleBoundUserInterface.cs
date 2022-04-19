@@ -18,7 +18,7 @@ namespace Content.Client.CloningConsole.UI
             base.Open();
             _window = new CloningConsoleWindow
             {
-                Title = IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(Owner.Owner).EntityName,
+                Title = Loc.GetString("cloning-console-window-title")
             };
             _window.OnClose += Close;
             _window.CloneButton.OnPressed += _ => SendMessage(new UiButtonPressedMessage(UiButton.Clone));

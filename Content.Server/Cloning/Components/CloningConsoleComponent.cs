@@ -8,8 +8,6 @@ namespace Content.Server.Cloning.CloningConsole
     public sealed class CloningConsoleComponent : Component
     {
         [ViewVariables]
-        public BoundUserInterface? UserInterface => Owner.GetUIOrNull(CloningConsoleUiKey.Key);
-        [ViewVariables]
         public EntityUid? GeneticScanner = null;
         [ViewVariables]
         public EntityUid? CloningPod = null;
