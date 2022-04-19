@@ -66,6 +66,7 @@ public sealed class MineableSystem : EntitySystem
         
         var spawnOre = EntitySpawnCollection.GetSpawns(component.Ores, _random);
         EntityManager.SpawnEntity(spawnOre[0], EntityManager.GetComponent<TransformComponent>(ev.Player).Coordinates);
+        pickaxe.CancelToken = null;
     }
 
     private void OnDoafterCancel(MiningDoafterCancel ev)
