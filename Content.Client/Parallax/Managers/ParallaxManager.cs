@@ -15,15 +15,15 @@ using Robust.Shared.Utility;
 using SixLabors.ImageSharp;
 using SixLabors.ImageSharp.PixelFormats;
 
-namespace Content.Client.Parallax.Managers
-{
-    internal sealed class ParallaxManager : IParallaxManager
-    {
-        public ParallaxLayerPrepared[] ParallaxLayers { get; private set; } = {};
+namespace Content.Client.Parallax.Managers;
 
-        public async void LoadParallax()
-        {
-            // nyi
-        }
+internal sealed class ParallaxManager : IParallaxManager
+{
+    public ParallaxLayerPrepared[] ParallaxLayers { get; private set; } = {};
+
+    public async void LoadParallax()
+    {
+        // nyi
     }
 }
+
