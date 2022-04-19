@@ -3,7 +3,7 @@ using Robust.Shared.Prototypes;
 using Content.Shared.Actions.ActionTypes;
 using Robust.Shared.Utility;
 
-namespace Content.Shared.Abilities.Mime
+namespace Content.Server.Abilities.Mime
 {
     /// <summary>
     /// Lets its owner entity use mime powers, like placing invisible walls.
