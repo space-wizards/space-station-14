@@ -9,14 +9,14 @@
     Steel: 100
     
 - type: latheRecipe
-  id: SheetSteel5
+  id: SheetSteel30
   icon:
     sprite: Objects/Materials/Sheets/metal.rsi
-    state: steel
-  result: SheetSteel5
+    state: steel_3
+  result: SheetSteel
   completetime: 2
   materials:
-    Steel: 500
+    Steel: 3000
 
 - type: latheRecipe
   id: SheetGlass1
@@ -29,14 +29,14 @@
     Glass: 100
     
 - type: latheRecipe
-  id: SheetGlass5
+  id: SheetGlass30
   icon:
     sprite: Objects/Materials/Sheets/glass.rsi
-    state: glass
-  result: SheetGlass5
+    state: glass_3
+  result: SheetGlass
   completetime: 2
   materials:
-    Glass: 500
+    Glass: 3000
 
 - type: latheRecipe
   id: SheetRGlass
@@ -50,48 +50,48 @@
     Steel: 50
     
 - type: latheRecipe
-  id: SheetRGlass5
+  id: SheetRGlass30
   icon:
     sprite: Objects/Materials/Sheets/glass.rsi
-    state: rglass
-  result: SheetRGlass5
+    state: rglass_3
+  result: SheetRGlass
   completetime: 2
   materials:
-    Glass: 500
-    Steel: 250
+    Glass: 3000
+    Steel: 1500
 
 - type: latheRecipe
-  id: SheetPGlass5
+  id: SheetPGlass30
   icon:
     sprite: Objects/Materials/Sheets/glass.rsi
-    state: pglass
-  result: SheetPGlass5
+    state: pglass_3
+  result: SheetPGlass
   completetime: 2
   materials:
-    Glass: 500
-    Plasma: 500
+    Glass: 3000
+    Plasma: 3000
     
 - type: latheRecipe
-  id: SheetRPGlass5
+  id: SheetRPGlass30
   icon:
     sprite: Objects/Materials/Sheets/glass.rsi
-    state: rpglass
-  result: SheetRPGlass5
+    state: rpglass_3
+  result: SheetRPGlass
   completetime: 2
   materials:
-    Glass: 500
-    Plasma: 500
-    Steel: 250
+    Glass: 3000
+    Plasma: 3000
+    Steel: 1500
     
 - type: latheRecipe
-  id: SheetPlasma5
+  id: SheetPlasma30
   icon:
     sprite: Objects/Materials/Sheets/other.rsi
-    state: plasma
-  result: SheetPlasma5
+    state: plasma_3
+  result: SheetPlasma
   completetime: 2
   materials:
-    Plasma: 500
+    Plasma: 3000
 
 - type: latheRecipe
   id: SheetUranium1

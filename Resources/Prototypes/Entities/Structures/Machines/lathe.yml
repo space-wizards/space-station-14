@@ -432,11 +432,12 @@
     - type: LatheDatabase
       static: true
       recipes:
-        - SheetSteel5
-        - SheetGlass5
-        - SheetPlasma5
-        - SheetPGlass5
-        - SheetRPGlass5
+        - SheetSteel30
+        - SheetGlass30
+        - SheetRGlass30
+        - SheetPlasma30
+        - SheetPGlass30
+        - SheetRPGlass30
         - SheetUranium1
         - IngotGold1
         - IngotSilver1

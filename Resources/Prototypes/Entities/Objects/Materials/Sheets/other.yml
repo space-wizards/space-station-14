@@ -100,17 +100,6 @@
     state: plasma
   - type: Stack
     count: 1
-    
-- type: entity
-  parent: SheetPlasma
-  id: SheetPlasma5
-  name: plasma
-  suffix: Five
-  components:
-    - type: Sprite
-      state: plasma
-    - type: Stack
-      count: 5
 
 - type: entity
   parent: SheetOtherBase
@@ -150,17 +139,6 @@
     count: 1
 
 - type: entity
-  parent: SheetPlastic
-  id: SheetPlastic5
-  name: plastic
-  suffix: Five
-  components:
-    - type: Sprite
-      state: plastic
-    - type: Stack
-      count: 5
-
-- type: entity
   parent: SheetOtherBase
   id: SheetUranium
   name: uranium
@@ -181,12 +159,3 @@
   components:
   - type: Stack
     count: 1
-
-- type: entity
-  parent: SheetUranium
-  id: SheetUranium5
-  name: uranium
-  suffix: Five
-  components:
-    - type: Stack
-      count: 5
