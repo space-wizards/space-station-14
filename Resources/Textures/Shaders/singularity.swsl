@@ -14,27 +14,32 @@ uniform highp vec2[5] position;
 
 void fragment() {
 
-    highp vec2 offset = vec2(0,0);
+    highp vec2 finalCoords = FRAGCOORD.xy;
     highp vec2 delta;
-    highp float distanceToCenter;
-    highp float deformation ;
+    highp float distance;
+    highp float deformation;
     
     for (int i = 0; i < 5 && i < count; i++) {
     
         delta = FRAGCOORD.xy - position[i];
-	    distanceToCenter = length(delta / renderScale);
+	    distance = length(delta / renderScale);
 
-        deformation = intensity[i] / pow(distanceToCenter, falloffPower[i]);
+        deformation = intensity[i] / pow(distance, falloffPower[i]);
         
         // ensure deformation goes to zero at max distance
         // avoids long-range single-pixel shifts that are noticeable when leaving PVS.
-        deformation *= (1 - pow(distance/maxDistance, 4));
-
+        
+        if (distance >= maxDistance) {
+            deformation = 0;
+        } else {
+            deformation *= (1 - pow(distance/maxDistance, 4));
+        }
+        
         if(deformation > 0.8)
             deformation = pow(deformation, 0.3);
 
-        offset -= deformation * delta;
+        finalCoords -= deformation * delta;
     }
     
-    COLOR = zTextureSpec(SCREEN_TEXTURE, (FRAGCOORD.xy + offset)*SCREEN_PIXEL_SIZE);
+    COLOR = zTextureSpec(SCREEN_TEXTURE, finalCoords*SCREEN_PIXEL_SIZE );
 }
