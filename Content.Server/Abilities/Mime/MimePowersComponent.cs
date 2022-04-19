@@ -18,9 +18,16 @@ namespace Content.Server.Abilities.Mime
         [DataField("enabled")]
         public bool Enabled = true;
 
+        /// <summary>
+        /// The wall prototype to use.
+        /// </summary>
+        [DataField("wallPrototype")]
+        public string WallPrototype = "WallInvisible";
+
         [DataField("invisibleWallAction")]
         public InstantAction InvisibleWallAction = new()
         {
+            UseDelay = TimeSpan.FromSeconds(30),
             Name = "mime-invisible-wall",
             Description = "mime-invisible-wall-desc",
             Event = new InvisibleWallActionEvent(),
