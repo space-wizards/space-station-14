@@ -1,8 +1,6 @@
-using System.Linq;
 using Content.Shared.Singularity.Components;
 using Robust.Client.Graphics;
 using Robust.Shared.Enums;
-using Robust.Shared.Map;
 using Robust.Shared.Prototypes;
 
 namespace Content.Client.Singularity
@@ -31,12 +29,6 @@ namespace Content.Client.Singularity
             _shader = _prototypeManager.Index<ShaderPrototype>("Singularity").Instance().Duplicate();
         }
 
-        public override bool OverwriteTargetFrameBuffer()
-        {
-            //aaaaaaa
-            return true;
-        }
-
         protected override void Draw(in OverlayDrawArgs args)
         {
             if (ScreenTexture == null || args.Viewport.Eye == null)
@@ -48,7 +40,7 @@ namespace Content.Client.Singularity
             var position = new Vector2[MaxCount];
             var intensity = new float[MaxCount];
             var falloffPower = new float[MaxCount];
-            int index = 0;
+            int count = 0;
 
             var mapId = args.Viewport.Eye.Position.MapId;
 
@@ -67,16 +59,19 @@ namespace Content.Client.Singularity
                 var tempCoords = args.Viewport.WorldToLocal(mapPos.Position);
                 tempCoords.Y = args.Viewport.Size.Y - tempCoords.Y;
 
-                position[index] = tempCoords;
-                intensity[index] = distortion.Intensity;
-                falloffPower[index] = distortion.FalloffPower;
-                index++;
+                position[count] = tempCoords;
+                intensity[count] = distortion.Intensity;
+                falloffPower[count] = distortion.FalloffPower;
+                count++;
 
-                if (index == MaxCount)
+                if (count == MaxCount)
                     break;
             }
 
-            _shader?.SetParameter("count", index);
+            if (count == 0)
+                return;
+
+            _shader?.SetParameter("count", count);
             _shader?.SetParameter("position", position);
             _shader?.SetParameter("intensity", intensity);
             _shader?.SetParameter("falloffPower", falloffPower);
