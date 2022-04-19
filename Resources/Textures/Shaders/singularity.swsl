@@ -1,14 +1,16 @@
-//Gravitational lensing effect. Edited from https://unionassets.com/blog/the-effect-of-the-gravitational-lens-195 to be Clyde based (based on what)
-
-// the `5`s here correspond to the upper limit on the simultaneous distortion sources that can be present on screen at a time. If you want to change this, make sure to change all of them, including in whatever overlay assigns the uniforms
-// Apparently #define is an unknown preprocessor directive
+//Gravitational lensing effect. Loosely inspired by https://unionassets.com/blog/the-effect-of-the-gravitational-lens-195 to be Clyde based (based on what)
 
 uniform sampler2D SCREEN_TEXTURE;
 uniform highp vec2 renderScale;
+uniform highp float maxDistance;
+uniform int count;
+
 uniform highp float[5] falloffPower;
 uniform highp float[5] intensity;
 uniform highp vec2[5] position;
-uniform int count;
+// the `5`s in the array lengths correspond to the upper limit on the simultaneous distortion sources that can be present on screen at a time. 
+// If you want to change this, make sure to change all of them here, in the for loop, and, in whatever overlay assigns the uniforms
+// (apparently #define is an unknown preprocessor directive)
 
 void fragment() {
 
@@ -23,6 +25,10 @@ void fragment() {
 	    distanceToCenter = length(delta / renderScale);
 
         deformation = intensity[i] / pow(distanceToCenter, falloffPower[i]);
+        
+        // ensure deformation goes to zero at max distance
+        // avoids long-range single-pixel shifts that are noticeable when leaving PVS.
+        deformation *= (1 - pow(distance/maxDistance, 4));
 
         if(deformation > 0.8)
             deformation = pow(deformation, 0.3);
