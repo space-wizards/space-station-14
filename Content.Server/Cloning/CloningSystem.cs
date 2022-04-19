@@ -2,9 +2,8 @@ using Content.Server.Cloning.Components;
 using Content.Server.Mind.Components;
 using Content.Server.Power.Components;
 using Content.Shared.GameTicking;
-using Content.Shared.Preferences;
-using Content.Server.Climbing;
 using Content.Shared.CharacterAppearance.Systems;
+using Content.Shared.CharacterAppearance.Components;
 using Content.Shared.MobState.Components;
 using Content.Shared.Species;
 using Robust.Server.Player;
@@ -23,8 +22,8 @@ namespace Content.Server.Cloning
         [Dependency] private readonly IPrototypeManager _prototype = default!;
         [Dependency] private readonly EuiManager _euiManager = null!;
         [Dependency] private readonly CloningSystem _cloningSystem = default!;
-        [Dependency] private readonly ClimbSystem _climbSystem = default!;
         [Dependency] private readonly IMapManager _mapManager = default!;
+        [Dependency] private readonly SharedHumanoidAppearanceSystem _appearanceSystem = default!;
         public readonly Dictionary<Mind.Mind, EntityUid> ClonesWaitingForMind = new();
 
         public override void Initialize()
@@ -135,12 +134,9 @@ namespace Content.Server.Cloning
             return receiver.Powered;
         }
 
-        public bool TryCloning(EntityUid uid, Mind.Mind mind, HumanoidCharacterProfile hcp, CloningPodComponent? clonePod)
+        public bool TryCloning(EntityUid uid, EntityUid bodyToClone, Mind.Mind mind, CloningPodComponent? clonePod)
         {
-            if (!Resolve(uid, ref clonePod))
-                return false;
-
-            if (clonePod.BodyContainer.ContainedEntity != null)
+            if (!Resolve(uid, ref clonePod) || bodyToClone == null)
                 return false;
 
             if (_cloningSystem.ClonesWaitingForMind.TryGetValue(mind, out var clone))
@@ -167,17 +163,16 @@ namespace Content.Server.Cloning
             if (!TryComp<TransformComponent>(clonePod.Owner, out var transform))
                 return false;
 
-            // Get species from player profile, this needs to get it from entity getting cloned instead
-            // This is currently the reason that someone can get scanned after being changed/chose ghost role and will be cloned
-            // as the one from their player profile.
-            // CHANGE THIS IN THE FUTURE TO GRAB DETAILS FROM SCANNED MOB
-            var speciesProto = _prototype.Index<SpeciesPrototype>(hcp.Species).Prototype;
+            if (!TryComp<HumanoidAppearanceComponent>(bodyToClone, out var humanoid))
+                return false; // whatever body was to be cloned, was not a humanoid
+
+            var speciesProto = _prototype.Index<SpeciesPrototype>(humanoid.Species).Prototype;
             var mob = Spawn(speciesProto, transform.MapPosition);
-            EntitySystem.Get<SharedHumanoidAppearanceSystem>().UpdateFromProfile(mob, hcp);
+            _appearanceSystem.UpdateAppearance(mob, humanoid.Appearance, humanoid.Sex, humanoid.Gender, humanoid.Species);
 
             // set name if they have it
-            if (TryComp<MetaDataComponent>(mob, out var meta))
-                meta.EntityName = hcp.Name;
+            if (TryComp<MetaDataComponent>(mob, out var meta) && TryComp<MetaDataComponent>(bodyToClone, out var bodyMeta))
+                meta.EntityName = bodyMeta.EntityName;
 
             var cloneMindReturn = EntityManager.AddComponent<BeingClonedComponent>(mob);
             cloneMindReturn.Mind = mind;
@@ -229,7 +224,6 @@ namespace Content.Server.Cloning
             clonePod.CapturedMind = null;
             clonePod.CloningProgress = 0f;
             UpdateStatus(CloningPodStatus.Idle, clonePod);
-            _climbSystem.ForciblySetClimbing(entity);
         }
 
         public void Reset(RoundRestartCleanupEvent ev)

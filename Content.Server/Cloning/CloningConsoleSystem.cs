@@ -8,9 +8,7 @@ using Content.Server.Mind.Components;
 using Content.Server.Preferences.Managers;
 using Content.Shared.Interaction;
 using Content.Shared.MobState.Components;
-using Content.Shared.Preferences;
 using Robust.Server.GameObjects;
-using Robust.Shared.Network;
 using Robust.Server.Player;
 using Content.Shared.ActionBlocker;
 using Content.Shared.Cloning.CloningConsole;
@@ -71,10 +69,11 @@ namespace Content.Server.Cloning.CloningConsole
             {
                 case UiButton.Clone:
                     if (consoleComponent.GeneticScanner != null && consoleComponent.CloningPod != null)
-                    TryClone(uid, consoleComponent.GeneticScanner.Value, consoleComponent.CloningPod.Value, consoleComponent: consoleComponent);
+                        TryClone(uid, consoleComponent.CloningPod.Value, consoleComponent.GeneticScanner.Value, consoleComponent: consoleComponent);
                     break;
                 case UiButton.Eject:
-                    TryEject(uid, consoleComponent);
+                    if (consoleComponent.CloningPod != null)
+                        TryEject(uid, consoleComponent.CloningPod.Value, consoleComponent: consoleComponent);
                     break;
             }
         }
@@ -147,21 +146,12 @@ namespace Content.Server.Cloning.CloningConsole
             return;
         }
 
-        public void TryEject(EntityUid uid, CloningConsoleComponent? consoleComponent = null)
+        public void TryEject(EntityUid uid, EntityUid clonePodUid, CloningPodComponent? cloningPod = null, CloningConsoleComponent? consoleComponent = null)
         {
-            if (!Resolve(uid, ref consoleComponent))
+            if (!Resolve(uid, ref consoleComponent) || !Resolve(clonePodUid, ref cloningPod))
                 return;
 
-            if (consoleComponent.CloningPod == null)
-                return;
-
-            if (!TryComp<CloningPodComponent>(consoleComponent.CloningPod, out var cloningPod))
-            {
-                consoleComponent.CloningPod = null;
-                return;
-            }
-
-            _cloningSystem.Eject(consoleComponent.CloningPod.Value, cloningPod);
+            _cloningSystem.Eject(clonePodUid, cloningPod);
         }
 
         public void TryClone(EntityUid uid, EntityUid cloningPodUid, EntityUid scannerUid, CloningPodComponent? cloningPod = null, MedicalScannerComponent? scannerComp = null, CloningConsoleComponent? consoleComponent = null)
@@ -172,15 +162,15 @@ namespace Content.Server.Cloning.CloningConsole
             if (scannerComp.BodyContainer.ContainedEntity is null)
                 return;
 
-            if (!TryComp<MindComponent>(scannerComp.BodyContainer.ContainedEntity.Value, out var mindComp) || mindComp.Mind == null)
+            if (!TryComp<MindComponent>(scannerComp.BodyContainer.ContainedEntity.Value, out var mindComp))
                 return;
 
-            var mind = mindComp.Mind!;
-            var mindUser = mind.UserId;
-            if (mindUser.HasValue == false || mind.Session == null)
+            var mind = mindComp.Mind;
+
+            if (mind == null || mind.UserId.HasValue == false || mind.Session == null)
                 return;
-            var profile = GetPlayerProfileAsync(mindUser.Value);
-            bool cloningSuccessful = _cloningSystem.TryCloning(cloningPodUid, mind, profile, cloningPod);
+
+            bool cloningSuccessful = _cloningSystem.TryCloning(cloningPodUid, scannerComp.BodyContainer.ContainedEntity.Value, mind, cloningPod);
         }
 
         private CloningConsoleBoundUserInterfaceState GetUserInterfaceState(CloningConsoleComponent consoleComponent)
@@ -276,12 +266,6 @@ namespace Content.Server.Cloning.CloningConsole
             consoleComponent.CloningPod = null;
             consoleComponent.GeneticScanner = null;
         }
-
-        private HumanoidCharacterProfile GetPlayerProfileAsync(NetUserId userId)
-        {
-            return (HumanoidCharacterProfile)  _prefsManager.GetPreferences(userId).SelectedCharacter;
-        }
-
 
         public override void Update(float frameTime)
         {
