@@ -46,6 +46,7 @@ namespace Content.Server.Fluids.Components
         /// <summary>
         ///     The time accumulated since the start.
         /// </summary>
+        [DataField("accumulator")]
         public float Accumulator = 0f;
     }
 }

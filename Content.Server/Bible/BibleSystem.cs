@@ -36,6 +36,10 @@ namespace Content.Server.Bible
             SubscribeLocalEvent<SummonableComponent, SummonActionEvent>(OnSummon);
             SubscribeLocalEvent<FamiliarComponent, MobStateChangedEvent>(OnFamiliarDeath);
         }
+
+        private Queue<EntityUid> AddQueue = new();
+        private Queue<EntityUid> RemQueue = new();
+
         /// <summary>
         /// This handles familiar respawning.
         /// </summary>
@@ -43,7 +47,19 @@ namespace Content.Server.Bible
         {
             base.Update(frameTime);
 
-            foreach (var (summonableComp, respawning) in EntityQuery<SummonableComponent, SummonableRespawningComponent>())
+            foreach(var entity in AddQueue)
+            {
+                EnsureComp<SummonableRespawningComponent>(entity);
+            }
+            AddQueue.Clear();
+
+            foreach(var entity in RemQueue)
+            {
+                RemComp<SummonableRespawningComponent>(entity);
+            }
+            RemQueue.Clear();
+
+            foreach (var (respawning, summonableComp) in EntityQuery<SummonableRespawningComponent, SummonableComponent>())
             {
                 summonableComp.Accumulator += frameTime;
                 if (summonableComp.Accumulator < summonableComp.RespawnTime)
@@ -61,7 +77,7 @@ namespace Content.Server.Bible
                 SoundSystem.Play(Filter.Pvs(summonableComp.Owner), "/Audio/Effects/radpulse9.ogg", summonableComp.Owner, AudioParams.Default.WithVolume(-4f));
                 /// Clean up the accumulator and respawn tracking component
                 summonableComp.Accumulator = 0;
-                RemComp<SummonableRespawningComponent>(summonableComp.Owner);
+                RemQueue.Enqueue(respawning.Owner);
             }
         }
 
@@ -167,7 +183,7 @@ namespace Content.Server.Bible
             var source = component.Source;
             if (source != null && TryComp<SummonableComponent>(source, out var summonable))
             {
-                AddComp<SummonableRespawningComponent>(summonable.Owner);
+                AddQueue.Enqueue(summonable.Owner);
             }
         }
 
