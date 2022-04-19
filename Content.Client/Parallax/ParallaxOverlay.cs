@@ -13,8 +13,6 @@ public sealed class ParallaxOverlay : Overlay
     [Dependency] private readonly IParallaxManager _parallaxManager = default!;
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
 
-    private const float Slowness = 0.5f;
-
     public override OverlaySpace Space => OverlaySpace.WorldSpaceBelowWorld;
     private readonly ShaderInstance _shader;
 
@@ -38,34 +36,38 @@ public sealed class ParallaxOverlay : Overlay
         {
             var tex = layer.Texture;
 
-            var (sizeX, sizeY) = tex.Size / (float) EyeManager.PixelsPerMeter;
-            var (posX, posY) = args.Viewport.Eye.Position.Position - layer.Config.WorldHomePosition;
-            var o = new Vector2(posX * layer.Config.Slowness, posY * layer.Config.Slowness);
+            // Size of the texture in world units.
+            var size = (tex.Size / (float) EyeManager.PixelsPerMeter) * layer.Config.Scale;
+
+            // Origin
+            var originBL = args.Viewport.Eye.Position.Position * layer.Config.Slowness;
+
+            // Centre around (WorldHomePosition + ParallaxAnchor).
+            // The ParallaxAnchor adapts the parallax for station positioning and possibly map-specific tweaks.
+            originBL += (layer.Config.WorldHomePosition + _parallaxManager.ParallaxAnchor) - (size / 2);
 
             if (layer.Config.Tiled)
             {
                 // Remove offset so we can floor.
-                var (l, b) = args.WorldAABB.BottomLeft - o;
+                var flooredBL = args.WorldAABB.BottomLeft - originBL;
 
                 // Floor to background size.
-                l = sizeX * MathF.Floor(l / sizeX);
-                b = sizeY * MathF.Floor(b / sizeY);
+                flooredBL = (flooredBL / size).Floored() * size;
 
                 // Re-offset.
-                l += o.X;
-                b += o.Y;
+                flooredBL += originBL;
 
-                for (var x = l; x < args.WorldAABB.Right; x += sizeX)
+                for (var x = flooredBL.X; x < args.WorldAABB.Right; x += size.X)
                 {
-                    for (var y = b; y < args.WorldAABB.Top; y += sizeY)
+                    for (var y = flooredBL.Y; y < args.WorldAABB.Top; y += size.Y)
                     {
-                        screenHandle.DrawTexture(tex, (x, y));
+                        screenHandle.DrawTextureRect(tex, Box2.FromDimensions((x, y), size));
                     }
                 }
             }
             else
             {
-                screenHandle.DrawTexture(tex, o);
+                screenHandle.DrawTextureRect(tex, Box2.FromDimensions(originBL, size));
             }
         }
     }

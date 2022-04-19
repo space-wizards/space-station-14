@@ -24,16 +24,30 @@ internal sealed class ParallaxManager : IParallaxManager
 {
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
 
+    private string _parallaxName = "";
+    public string ParallaxName
+    {
+        get => _parallaxName;
+        set
+        {
+            LoadParallaxByName(value);
+        }
+    }
+
+    public Vector2 ParallaxAnchor { get; set; }
+
     public ParallaxLayerPrepared[] ParallaxLayers { get; private set; } = {};
 
     public async void LoadParallax()
     {
-        ParallaxLayers = await LoadParallaxByName("default");
+        await LoadParallaxByName("default");
     }
 
-    private async Task<ParallaxLayerPrepared[]> LoadParallaxByName(string name)
+    private async Task LoadParallaxByName(string name)
     {
+        _parallaxName = name;
         Logger.InfoS("parallax", $"Loading parallax {name}");
+
         var parallaxPrototype = _prototypeManager.Index<ParallaxPrototype>(name);
         // just in case the length were to change during loading
         var layersIn = parallaxPrototype.Layers.ToArray();
@@ -42,8 +56,16 @@ internal sealed class ParallaxManager : IParallaxManager
         {
             layers[i] = await LoadParallaxLayer(layersIn[i]);
         }
-        Logger.InfoS("parallax", $"Loaded parallax {name}");
-        return layers;
+
+        if (_parallaxName == name)
+        {
+            ParallaxLayers = layers;
+            Logger.InfoS("parallax", $"Loaded parallax {name}");
+        }
+        else
+        {
+            Logger.InfoS("parallax", $"Loaded parallax {name}, but the target changed while it was being loaded.");
+        }
     }
 
     private async Task<ParallaxLayerPrepared> LoadParallaxLayer(ParallaxLayerConfig config)

@@ -18,6 +18,13 @@ public sealed class ParallaxLayerConfig
     public IParallaxTextureSource Texture { get; set; } = default!;
 
     /// <summary>
+    /// A scaling factor for the texture.
+    /// In the interest of simplifying maths, this is rounded down to integer for ParallaxControl, so be careful.
+    /// </summary>
+    [DataField("scale")]
+    public Vector2 Scale { get; set; } = Vector2.One;
+
+    /// <summary>
     /// If true, this layer is tiled as the camera scrolls around.
     /// If false, this layer only shows up around it's home position.
     /// </summary>
@@ -29,18 +36,19 @@ public sealed class ParallaxLayerConfig
     /// Used for menus.
     /// Note that this is ignored if the parallax layer is tiled - in that event a random pixel offset is used and slowness is applied.
     /// </summary>
-    [DataField("controlHomePos")]
+    [DataField("controlHomePosition")]
     public Vector2 ControlHomePosition { get; set; }
 
     /// <summary>
     /// A world position such that if an Eye were positioned there, this parallax would be centred in the screen.
     /// Used for in-game.
     /// </summary>
-    [DataField("worldHomePos")]
+    [DataField("worldHomePosition")]
     public Vector2 WorldHomePosition { get; set; }
 
     /// <summary>
     /// Multiplier based on eye world position for this parallax layer.
+    /// It's worth noting if you want to anchor a layer to the world, you use a slowness of 0.0f.
     /// </summary>
     [DataField("slowness")]
     public float Slowness { get; set; } = 0.5f;

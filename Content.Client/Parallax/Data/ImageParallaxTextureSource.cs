@@ -20,9 +20,9 @@ public sealed class ImageParallaxTextureSource : IParallaxTextureSource
     [DataField("path", required: true)]
     public ResourcePath Path { get; } = default!;
 
-    Task<Texture> IParallaxTextureSource.GenerateTexture()
+    async Task<Texture> IParallaxTextureSource.GenerateTexture()
     {
-        return new Task<Texture>(() => StaticIoC.ResC.GetTexture(Path));
+        return StaticIoC.ResC.GetTexture(Path);
     }
 }
 

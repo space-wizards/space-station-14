@@ -31,24 +31,33 @@ public sealed class ParallaxControl : Control
         foreach (var layer in _parallaxManager.ParallaxLayers)
         {
             var tex = layer.Texture;
+            var texSize = tex.Size * layer.Config.Scale.Floored();
             var ourSize = PixelSize;
 
             if (layer.Config.Tiled)
             {
+                // Multiply offset by slowness to match normal parallax
                 var scaledOffset = (Offset * layer.Config.Slowness).Floored();
-                var size = tex.Size;
 
-                for (var x = -size.X + scaledOffset.X; x < ourSize.X; x += size.X)
+                // Then modulo the scaled offset by the size to prevent drawing a bunch of offscreen tiles for really small images.
+                scaledOffset.X %= texSize.X;
+                scaledOffset.Y %= texSize.Y;
+
+                // Note: scaledOffset must never be below 0 or there will be visual issues.
+                // It could be allowed to be >= texSize on a given axis but that would be wasteful.
+
+                for (var x = -scaledOffset.X; x < ourSize.X; x += texSize.X)
                 {
-                    for (var y = -size.Y + scaledOffset.Y; y < ourSize.Y; y += size.Y)
+                    for (var y = -scaledOffset.Y; y < ourSize.Y; y += texSize.Y)
                     {
-                        handle.DrawTexture(tex, (x, y));
+                        handle.DrawTextureRect(tex, UIBox2.FromDimensions((x, y), texSize));
                     }
                 }
             }
             else
             {
-                handle.DrawTexture(tex, (ourSize / 2) + layer.Config.ControlHomePosition);
+                var origin = ((ourSize - texSize) / 2) + layer.Config.ControlHomePosition;
+                handle.DrawTextureRect(tex, UIBox2.FromDimensions(origin, texSize));
             }
         }
     }
