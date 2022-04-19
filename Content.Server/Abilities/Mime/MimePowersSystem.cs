@@ -35,7 +35,7 @@ namespace Content.Server.Abilities.Mime
                 RemComp<VowbreakerComponent>(entity);
             }
             RemQueue.Clear();
-
+            /// Queue to despawn invis walls
             foreach (var invisWall in EntityQuery<InvisibleWallComponent>())
             {
                 invisWall.Accumulator += frameTime;
@@ -45,7 +45,7 @@ namespace Content.Server.Abilities.Mime
                 }
                 EntityManager.QueueDeleteEntity(invisWall.Owner);
             }
-
+            /// Queue to track whether mimes can retake vows yet
             foreach (var (vowbreaker, mime) in EntityQuery<VowbreakerComponent, MimePowersComponent>())
             {
                 vowbreaker.Accumulator += frameTime;
@@ -88,7 +88,7 @@ namespace Content.Server.Abilities.Mime
             /// Check there are no walls or mobs there
             foreach (var entity in coords.GetEntitiesInTile())
             {
-                if (_tagSystem.HasTag(entity, "Wall") ||(HasComp<MobStateComponent>(entity) && entity != uid) ||
+                if (_tagSystem.HasTag(entity, "Wall") || (HasComp<MobStateComponent>(entity) && entity != uid) ||
                     (TryComp<DoorComponent>(entity, out var door) && door.State == DoorState.Closed))
                 {
                     _popupSystem.PopupEntity(Loc.GetString("mime-invisible-wall-failed"), uid, Filter.Entities(uid));
@@ -103,6 +103,9 @@ namespace Content.Server.Abilities.Mime
             args.Handled = true;
         }
 
+        /// <summary>
+        /// Break this mime's vow to not speak.
+        /// </summary>
         public void BreakVow(EntityUid uid, MimePowersComponent? mimePowers = null)
         {
             if (!Resolve(uid, ref mimePowers))
@@ -115,6 +118,9 @@ namespace Content.Server.Abilities.Mime
             _actionsSystem.RemoveAction(uid, mimePowers.InvisibleWallAction);
         }
 
+        /// <summary>
+        /// Retake this mime's vow to not speak.
+        /// </summary>
         public void RetakeVow(EntityUid uid, MimePowersComponent? mimePowers = null)
         {
             if (!Resolve(uid, ref mimePowers))

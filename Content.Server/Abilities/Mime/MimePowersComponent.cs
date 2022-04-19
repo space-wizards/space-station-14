@@ -1,3 +1,5 @@
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
+using Robust.Shared.Prototypes;
 using Content.Shared.Actions.ActionTypes;
 using Robust.Shared.Utility;
 
@@ -19,7 +21,7 @@ namespace Content.Server.Abilities.Mime
         /// <summary>
         /// The wall prototype to use.
         /// </summary>
-        [DataField("wallPrototype")]
+        [DataField("wallPrototype", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
         public string WallPrototype = "WallInvisible";
 
         [DataField("invisibleWallAction")]
