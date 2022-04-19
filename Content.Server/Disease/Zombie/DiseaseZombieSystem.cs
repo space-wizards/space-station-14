@@ -114,21 +114,21 @@ namespace Content.Server.Disease.Zombie
                     var chatMgr = IoCManager.Resolve<IChatManager>();
                     chatMgr.DispatchServerMessage(session, Loc.GetString("zombie-infection-greeting"));
                 }
-            }
 
-            uid.PopupMessageEveryone(Loc.GetString("zombie-transform", ("target", uid)));
-            if (TryComp<MetaDataComponent>(uid, out var metacomp))
-            {
-                metacomp.EntityName = Loc.GetString("zombie-name-prefix", ("target", metacomp.EntityName));
-
-                if (!HasComp<GhostRoleMobSpawnerComponent>(uid)) //this specific component gives build test trouble so pop off, ig
+                if (TryComp<MetaDataComponent>(uid, out var metacomp))
                 {
-                    EntityManager.EnsureComponent<GhostTakeoverAvailableComponent>(uid, out var ghostcomp);
-                    ghostcomp.RoleName = metacomp.EntityName;
-                    ghostcomp.RoleDescription = Loc.GetString("zombie-role-desc");
-                    ghostcomp.RoleRules = Loc.GetString("zombie-role-rules");
+                    metacomp.EntityName = Loc.GetString("zombie-name-prefix", ("target", metacomp.EntityName));
+
+                    if (!HasComp<GhostRoleMobSpawnerComponent>(uid) && !mindcomp.HasMind) //this specific component gives build test trouble so pop off, ig
+                    {
+                        EntityManager.EnsureComponent<GhostTakeoverAvailableComponent>(uid, out var ghostcomp);
+                        ghostcomp.RoleName = Loc.GetString("zombie-generic");
+                        ghostcomp.RoleDescription = Loc.GetString("zombie-role-desc");
+                        ghostcomp.RoleRules = Loc.GetString("zombie-role-rules");
+                    }
                 }
             }
+            uid.PopupMessageEveryone(Loc.GetString("zombie-transform", ("target", uid)));
         }
 
         private void OnRefreshMovementSpeedModifiers(EntityUid uid, DiseaseZombieComponent component, RefreshMovementSpeedModifiersEvent args)
