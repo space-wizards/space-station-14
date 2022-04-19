@@ -1,11 +1,6 @@
 Entries:
 - author: MeltedPixel
   changes:
-  - {message: Added Whisper chat functionality, type: Add}
-  id: 863
-  time: '2022-01-11T14:48:18.0000000+00:00'
-- author: MeltedPixel
-  changes:
   - {message: Ghost's now see unobfuscated messages when whispered., type: Fix}
   id: 864
   time: '2022-01-11T23:51:49.0000000+00:00'
@@ -3039,3 +3034,9 @@ Entries:
   - {message: Replaced light bulbs in fixtures will no longer remain off!, type: Fix}
   id: 1362
   time: '2022-04-18T22:47:04.0000000+00:00'
+- author: ShadowCommander
+  changes:
+  - {message: Firelocks and airlocks now close when there are static entities in the
+      way (e.g. anchored tables)., type: Fix}
+  id: 1363
+  time: '2022-04-19T13:45:37.0000000+00:00'
