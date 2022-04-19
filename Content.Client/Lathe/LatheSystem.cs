@@ -14,11 +14,11 @@ namespace Content.Client.Lathe
             if (TryComp(uid, out SpriteComponent? sprite))
             {
                 if (args.Component.TryGetData(PowerDeviceVisuals.Powered, out bool powered)
-                    && sprite.LayerMapTryGet(PowerDeviceVisuals.Powered, out _))
-                    sprite.LayerSetVisible(PowerDeviceVisualLayers.Powered, powered);
+                    && sprite.LayerMapTryGet(PowerDeviceVisualLayers.Powered, out var poweredLayer))
+                    sprite.LayerSetVisible(poweredLayer, powered);
                 if (args.Component.TryGetData(SharedWiresComponent.WiresVisuals.MaintenancePanelState, out bool panel)
-                    && sprite.LayerMapTryGet(SharedWiresComponent.WiresVisuals.MaintenancePanelState, out _))
-                    sprite.LayerSetVisible(WiresVisualizer.WiresVisualLayers.MaintenancePanel, panel);
+                    && sprite.LayerMapTryGet(WiresVisualizer.WiresVisualLayers.MaintenancePanel, out var panelLayer))
+                    sprite.LayerSetVisible(panelLayer, panel);
                 // Lathe specific stuff
                 if (args.Component.TryGetData(LatheVisuals.IsRunning, out bool isRunning))
                 {
@@ -27,13 +27,13 @@ namespace Content.Client.Lathe
                     sprite.LayerSetState(LatheVisualLayers.IsRunning, state);
                 }
                 if (args.Component.TryGetData(LatheVisuals.IsInserting, out bool isInserting)
-                    && sprite.LayerMapTryGet(LatheVisuals.IsInserting, out _))
+                    && sprite.LayerMapTryGet(LatheVisualLayers.IsInserting, out var isInsertingLayer))
                 {
                     if (args.Component.TryGetData(LatheVisuals.InsertingColor, out Color color))
-                        sprite.LayerSetColor(LatheVisualLayers.IsInserting, color);
+                        sprite.LayerSetColor(isInsertingLayer, color);
 
-                    sprite.LayerSetAnimationTime(LatheVisualLayers.IsInserting, 0f);
-                    sprite.LayerSetVisible(LatheVisualLayers.IsInserting, isInserting);
+                    sprite.LayerSetAnimationTime(isInsertingLayer, 0f);
+                    sprite.LayerSetVisible(isInsertingLayer, isInserting);
                 }
             }
         }
