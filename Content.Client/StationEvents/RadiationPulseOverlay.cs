@@ -54,7 +54,7 @@ namespace Content.Client.StationEvents
                 var tempCoords = viewport.WorldToLocal(instance.CurrentMapCoords);
                 tempCoords.Y = viewport.Size.Y - tempCoords.Y;
                 shd?.SetParameter("renderScale", viewport.RenderScale);
-                shd?.SetParameter("positionInput", tempCoords);
+                //shd?.SetParameter("positionInput", tempCoords);
                 shd?.SetParameter("range", instance.Range);
                 var life = (_lastTick - instance.Start) / (instance.End - instance.Start);
                 shd?.SetParameter("life", (float) life);

@@ -42,22 +42,35 @@ namespace Content.Client.Singularity
             var viewportWB = args.WorldAABB;
             // Has to be correctly handled because of the way intensity/falloff transform works so just do it.
             _shader?.SetParameter("renderScale", args.Viewport.RenderScale);
+
+            var positions = new float[6];
+            int index = 0;
+            float a = 0;
+            float b = 0;
             foreach (var instance in _singularities.Values)
             {
                 // To be clear, this needs to use "inside-viewport" pixels.
                 // In other words, specifically NOT IViewportControl.WorldToScreen (which uses outer coordinates).
                 var tempCoords = args.Viewport.WorldToLocal(instance.CurrentMapCoords);
-                tempCoords.Y = args.Viewport.Size.Y - tempCoords.Y;
-                _shader?.SetParameter("positionInput", tempCoords);
-                if (ScreenTexture != null)
-                    _shader?.SetParameter("SCREEN_TEXTURE", ScreenTexture);
-                _shader?.SetParameter("intensity", instance.Intensity);
-                _shader?.SetParameter("falloff", instance.Falloff);
 
-                var worldHandle = args.WorldHandle;
-                worldHandle.UseShader(_shader);
-                worldHandle.DrawRect(viewportWB, Color.White);
+                positions[index++] = tempCoords.X;
+                positions[index++] = args.Viewport.Size.Y - tempCoords.Y;
+
+                a = instance.Intensity;
+                b = instance.Falloff;
             }
+
+            _shader?.SetParameter("positions", positions);
+            _shader?.SetParameter("count", _singularities.Count);
+
+            if (ScreenTexture != null)
+                _shader?.SetParameter("SCREEN_TEXTURE", ScreenTexture);
+            _shader?.SetParameter("intensity", a);
+            _shader?.SetParameter("falloff", b);
+
+            var worldHandle = args.WorldHandle;
+            worldHandle.UseShader(_shader);
+            worldHandle.DrawRect(viewportWB, Color.White);
 
         }
 
