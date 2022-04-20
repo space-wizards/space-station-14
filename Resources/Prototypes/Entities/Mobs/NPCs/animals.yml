@@ -663,6 +663,7 @@
       state: mouse-0
       sprite: Mobs/Animals/mouse.rsi
   - type: Clothing
+    size: 5
     quickEquip: false
     sprite: Mobs/Animals/mouse.rsi
     HeldPrefix: 0

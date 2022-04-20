@@ -1,29 +1,4 @@
 Entries:
-- author: MeltedPixel
-  changes:
-  - {message: Added Whisper chat functionality, type: Add}
-  id: 863
-  time: '2022-01-11T14:48:18.0000000+00:00'
-- author: MeltedPixel
-  changes:
-  - {message: Ghost's now see unobfuscated messages when whispered., type: Fix}
-  id: 864
-  time: '2022-01-11T23:51:49.0000000+00:00'
-- author: mirrorcult
-  changes:
-  - {message: Mining entities with pickaxes now has a delay., type: Tweak}
-  id: 865
-  time: '2022-01-12T02:12:08.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - {message: Remove duplicate ghost takeovers when an admin controls a mob., type: Fix}
-  id: 866
-  time: '2022-01-12T07:25:05.0000000+00:00'
-- author: Peptide90
-  changes:
-  - {message: Fixed trashbag so now only trash can be picked up., type: Fix}
-  id: 867
-  time: '2022-01-13T12:53:14.0000000+00:00'
 - author: ElectroJr
   changes:
   - {message: 'Makes smoking even cooler (visuals fixed, but hopefully properly this
@@ -3039,3 +3014,32 @@ Entries:
   - {message: Replaced light bulbs in fixtures will no longer remain off!, type: Fix}
   id: 1362
   time: '2022-04-18T22:47:04.0000000+00:00'
+- author: ShadowCommander
+  changes:
+  - {message: Firelocks and airlocks now close when there are static entities in the
+      way (e.g. anchored tables)., type: Fix}
+  id: 1363
+  time: '2022-04-19T13:45:37.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Zombie names no longer spam fill the ghost role menu and only appear
+      when able to be taken over., type: Fix}
+  - {message: Probability adjustments for zombie outbreak event., type: Tweak}
+  id: 1364
+  time: '2022-04-20T01:54:11.0000000+00:00'
+- author: UKNOWH
+  changes:
+  - {message: You can now put stuff in the chef hat, type: Add}
+  id: 1365
+  time: '2022-04-20T05:17:03.0000000+00:00'
+- author: UKNOWH
+  changes:
+  - {message: Added a Flash payload that allows players to make modular flashbangs,
+    type: Add}
+  id: 1366
+  time: '2022-04-20T06:08:57.0000000+00:00'
+- author: UKNOWH
+  changes:
+  - {message: mouse size changed form 0 to 5, type: Add}
+  id: 1367
+  time: '2022-04-20T07:19:33.0000000+00:00'

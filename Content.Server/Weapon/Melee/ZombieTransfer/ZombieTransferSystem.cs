@@ -10,12 +10,14 @@ using Content.Shared.Damage;
 using Content.Shared.MobState.Components;
 using Content.Server.Disease;
 using Content.Server.Weapons.Melee.ZombieTransfer.Components;
+using Content.Server.Body.Components;
 
 namespace Content.Server.Weapons.Melee.ZombieTransfer
 {
     public sealed class ZombieTransferSystem : EntitySystem
     {
         [Dependency] private readonly DiseaseSystem _disease = default!;
+        [Dependency] private readonly BodySystem _body = default!;
         [Dependency] private readonly BloodstreamSystem _bloodstream = default!;
         [Dependency] private readonly IRobustRandom _robustRandom = default!;
         public override void Initialize()
@@ -37,7 +39,7 @@ namespace Content.Server.Weapons.Melee.ZombieTransfer
                 if (args.User == entity)
                     continue;
 
-                if (!HasComp<MobStateComponent>(entity))
+                if (!HasComp<MobStateComponent>(entity) || HasComp<DroneComponent>(entity))
                     continue;
 
                 if (_robustRandom.Prob(diseaseZombieComp.Probability) && HasComp<DiseaseCarrierComponent>(entity))
@@ -55,7 +57,7 @@ namespace Content.Server.Weapons.Melee.ZombieTransfer
                     dspec.DamageDict.TryAdd("Piercing", -7);
                     args.BonusDamage += dspec;
                 }
-                else if (mobState.IsAlive() && !HasComp<DroneComponent>(entity)) //heals when zombies bite live entities
+                else if (mobState.IsAlive()) //heals when zombies bite live entities
                 {
                     var healingSolution = new Solution();
                     healingSolution.AddReagent("Bicaridine", 1.00); //if OP, reduce/change chem
