@@ -1,4 +1,4 @@
-using Robust.Shared.Containers;
+using Robust.Shared.Player;
 using Content.Server.Speech.Components;
 using Content.Server.Ghost.Roles.Components;
 using Content.Server.Disease.Components;
@@ -11,6 +11,7 @@ using Content.Server.Hands.Components;
 using Content.Server.Nutrition.Components;
 using Content.Server.Mind.Components;
 using Content.Server.Chat.Managers;
+using Content.Server.Inventory;
 using Content.Shared.Damage;
 using Content.Shared.MobState.Components;
 using Content.Shared.Hands.EntitySystems;
@@ -27,6 +28,8 @@ namespace Content.Server.Disease.Zombie
     public sealed class DiseaseZombieSystem : EntitySystem
     {
         [Dependency] private readonly DamageableSystem _damageable = default!;
+        [Dependency] private readonly ServerInventorySystem _serverInventory = default!;
+        [Dependency] private readonly PopupSystem _popupSystem = default!;
         [Dependency] private readonly BloodstreamSystem _bloodstream = default!;
         [Dependency] private readonly MovementSpeedModifierSystem _movementSpeedModifier = default!;
         [Dependency] private readonly SharedHandsSystem _sharedHands = default!;
@@ -59,6 +62,7 @@ namespace Content.Server.Disease.Zombie
             _bloodstream.SetBloodLossThreshold(uid, 0f, bloodstream);
             _bloodstream.TryModifyBleedAmount(uid, -bloodstream.BleedAmount, bloodstream);
             _movementSpeedModifier.RefreshMovementSpeedModifiers(uid);
+
             EntityManager.EnsureComponent<ReplacementAccentComponent>(uid).Accent = "zombie";
 
             if (TryComp<DamageableComponent>(uid, out var comp))
@@ -84,8 +88,8 @@ namespace Content.Server.Disease.Zombie
                     _sharedHands.TryDrop(uid);
 
                     var pos = EntityManager.GetComponent<TransformComponent>(uid).Coordinates;
-                    var virtualItem = EntityManager.SpawnEntity("ZombieClaw", pos);
-                    _sharedHands.DoPickup(uid, hand.Value, virtualItem);
+                    var claw = EntityManager.SpawnEntity("ZombieClaw", pos);
+                    _sharedHands.DoPickup(uid, hand.Value, claw);
                 }
             }
             else
@@ -93,41 +97,28 @@ namespace Content.Server.Disease.Zombie
                 EnsureComp<ZombieTransferComponent>(uid);
             }
 
-            if (TryComp<ContainerManagerComponent>(uid, out var cmcomp))
-            {
-                foreach (var container in cmcomp.Containers)
-                {
-                    if (container.Value.ID == "gloves")
-                    {
-                        foreach (var entity in container.Value.ContainedEntities)
-                        {
-                            container.Value.Remove(entity);
-                        }
-                    }
-                }
-            }
+            if (TryComp<ServerInventoryComponent>(uid, out var servInvComp))
+                _serverInventory.TryUnequip(uid, "gloves", true, true, servInvComp);
 
-            if (TryComp<MindComponent>(uid, out var mindcomp))
-            {
-                if (mindcomp.Mind != null && mindcomp.Mind.TryGetSession(out var session))
-                {
-                    var chatMgr = IoCManager.Resolve<IChatManager>();
-                    chatMgr.DispatchServerMessage(session, Loc.GetString("zombie-infection-greeting"));
-                }
-            }
+            _popupSystem.PopupEntity(Loc.GetString("zombie-transform", ("target", uid)), uid, Filter.Pvs(uid));
 
-            uid.PopupMessageEveryone(Loc.GetString("zombie-transform", ("target", uid)));
             if (TryComp<MetaDataComponent>(uid, out var metacomp))
-            {
                 metacomp.EntityName = Loc.GetString("zombie-name-prefix", ("target", metacomp.EntityName));
 
-                if (!HasComp<GhostRoleMobSpawnerComponent>(uid)) //this specific component gives build test trouble so pop off, ig
-                {
-                    EntityManager.EnsureComponent<GhostTakeoverAvailableComponent>(uid, out var ghostcomp);
-                    ghostcomp.RoleName = metacomp.EntityName;
-                    ghostcomp.RoleDescription = Loc.GetString("zombie-role-desc");
-                    ghostcomp.RoleRules = Loc.GetString("zombie-role-rules");
-                }
+            var mindcomp = EnsureComp<MindComponent>(uid);
+
+            if (mindcomp.Mind != null && mindcomp.Mind.TryGetSession(out var session))
+            {
+                var chatMgr = IoCManager.Resolve<IChatManager>();
+                chatMgr.DispatchServerMessage(session, Loc.GetString("zombie-infection-greeting"));
+            }
+
+            if (!HasComp<GhostRoleMobSpawnerComponent>(uid) && !mindcomp.HasMind) //this specific component gives build test trouble so pop off, ig
+            {
+                EntityManager.EnsureComponent<GhostTakeoverAvailableComponent>(uid, out var ghostcomp);
+                ghostcomp.RoleName = Loc.GetString("zombie-generic");
+                ghostcomp.RoleDescription = Loc.GetString("zombie-role-desc");
+                ghostcomp.RoleRules = Loc.GetString("zombie-role-rules");
             }
         }
 
