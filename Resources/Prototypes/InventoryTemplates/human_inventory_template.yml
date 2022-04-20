@@ -69,6 +69,13 @@
       uiWindowPos: 2,3
       dependsOn: jumpsuit
       displayName: Pocket 2
+    - name: suitstorage
+      slotTexture: suit_storage
+      slotFlags:   SUITSTORAGE
+      uiContainer: BottomLeft
+      uiWindowPos: 2,0
+      dependsOn: outerClothing
+      displayName: Suit Storage
     - name: id
       slotTexture: id
       slotFlags: IDCARD

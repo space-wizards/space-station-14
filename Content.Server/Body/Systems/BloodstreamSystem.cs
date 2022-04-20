@@ -39,6 +39,7 @@ public sealed class BloodstreamSystem : EntitySystem
         SubscribeLocalEvent<BloodstreamComponent, DamageChangedEvent>(OnDamageChanged);
         SubscribeLocalEvent<BloodstreamComponent, HealthBeingExaminedEvent>(OnHealthBeingExamined);
         SubscribeLocalEvent<BloodstreamComponent, BeingGibbedEvent>(OnBeingGibbed);
+        SubscribeLocalEvent<BloodstreamComponent, ApplyMetabolicMultiplierEvent>(OnApplyMetabolicMultiplier);
         SubscribeLocalEvent<BloodstreamComponent, ReactionAttemptEvent>(OnReactionAttempt);
     }
 
@@ -193,6 +194,19 @@ public sealed class BloodstreamSystem : EntitySystem
         SpillAllSolutions(uid, component);
     }
 
+    private void OnApplyMetabolicMultiplier(EntityUid uid, BloodstreamComponent component, ApplyMetabolicMultiplierEvent args)
+    {
+        if (args.Apply)
+        {
+            component.UpdateInterval *= args.Multiplier;
+            return;
+        }
+        component.UpdateInterval /= args.Multiplier;
+        // Reset the accumulator properly
+        if (component.AccumulatedFrametime >= component.UpdateInterval)
+            component.AccumulatedFrametime = component.UpdateInterval;
+    }
+
     /// <summary>
     ///     Attempt to transfer provided solution to internal solution.
     /// </summary>
@@ -210,6 +224,14 @@ public sealed class BloodstreamSystem : EntitySystem
             return 0.0f;
 
         return (component.BloodSolution.CurrentVolume / component.BloodSolution.MaxVolume).Float();
+    }
+
+    public void SetBloodLossThreshold(EntityUid uid, float threshold, BloodstreamComponent? comp = null)
+    {
+        if (!Resolve(uid, ref comp))
+            return;
+
+        comp.BloodlossThreshold = threshold;
     }
 
     /// <summary>

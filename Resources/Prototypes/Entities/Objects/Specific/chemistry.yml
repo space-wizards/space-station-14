@@ -144,6 +144,10 @@
         solution: beaker
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
+  - type: Tag
+    tags:
+    - GlassBeaker
+    - Cryobeaker
 
 - type: entity
   name: bluespace beaker
@@ -269,6 +273,8 @@
     solutions:
       food:
         maxVol: 50
+  - type: Extractable
+    grindableSolutionName: food
 
 - type: entity
   name: pill canister

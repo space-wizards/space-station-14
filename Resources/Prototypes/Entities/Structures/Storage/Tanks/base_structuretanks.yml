@@ -54,3 +54,5 @@
   - type: DrainableSolution
     solution: tank
   - type: ReagentTank
+  - type: Transform
+    noRot: true

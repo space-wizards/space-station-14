@@ -3,6 +3,10 @@
   parent: MobSlimePersonBase
   id: MobSlimePerson
   components:
+    - type: InteractionPopup
+      successChance: 1
+      interactSuccessString: hugging-success-generic
+      interactSuccessSound: /Audio/Effects/hug.ogg
     - type: Mind
       showExamineInfo: true
     - type: Input

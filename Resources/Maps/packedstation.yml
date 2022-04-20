@@ -14552,13 +14552,6 @@ entities:
   - pos: -10.5,-8.5
     parent: 2
     type: Transform
-  - fixtures:
-    - shape: !type:PhysShapeCircle
-        position: 0,-0.5
-        radius: 0.2
-      hard: False
-      id: docking
-    type: Fixtures
 - uid: 39
   type: CableApcExtension
   components:
@@ -14970,13 +14963,6 @@ entities:
   - pos: -6.5,-13.5
     parent: 2
     type: Transform
-  - fixtures:
-    - shape: !type:PhysShapeCircle
-        position: 0,-0.5
-        radius: 0.2
-      hard: False
-      id: docking
-    type: Fixtures
 - uid: 97
   type: Grille
   components:
@@ -16561,13 +16547,6 @@ entities:
     pos: -1.5,10.5
     parent: 2
     type: Transform
-  - fixtures:
-    - shape: !type:PhysShapeCircle
-        position: 0,-0.5
-        radius: 0.2
-      hard: False
-      id: docking
-    type: Fixtures
 - uid: 324
   type: AirlockExternalGlass
   components:
@@ -16587,13 +16566,6 @@ entities:
     pos: -1.5,4.5
     parent: 2
     type: Transform
-  - fixtures:
-    - shape: !type:PhysShapeCircle
-        position: 0,-0.5
-        radius: 0.2
-      hard: False
-      id: docking
-    type: Fixtures
 - uid: 327
   type: Chair
   components:
@@ -28644,13 +28616,6 @@ entities:
     pos: 4.5,24.5
     parent: 2
     type: Transform
-  - fixtures:
-    - shape: !type:PhysShapeCircle
-        position: 0,-0.5
-        radius: 0.2
-      hard: False
-      id: docking
-    type: Fixtures
 - uid: 2002
   type: AirlockExternalGlass
   components:
@@ -28670,13 +28635,6 @@ entities:
     pos: 4.5,26.5
     parent: 2
     type: Transform
-  - fixtures:
-    - shape: !type:PhysShapeCircle
-        position: 0,-0.5
-        radius: 0.2
-      hard: False
-      id: docking
-    type: Fixtures
 - uid: 2005
   type: Grille
   components:
@@ -128259,13 +128217,6 @@ entities:
   - pos: -11.5,-1.5
     parent: 2
     type: Transform
-  - fixtures:
-    - shape: !type:PhysShapeCircle
-        position: 0,-0.5
-        radius: 0.2
-      hard: False
-      id: docking
-    type: Fixtures
 - uid: 12126
   type: WallShuttle
   components:
