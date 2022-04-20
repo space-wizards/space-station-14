@@ -19,3 +19,16 @@
   materials:
     Steel: 200
     Plastic: 300
+
+- type: latheRecipe
+  id: FlashPayload
+  icon:
+    sprite: Objects/Devices/payload.rsi
+    state: payload-flash-armed
+  result: FlashPayload
+  completetime: 1
+  materials:
+    Steel: 50
+    Plastic: 100
+    Glass: 50
+    #one fourth of what making a flash would cost
