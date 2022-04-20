@@ -31,7 +31,9 @@
   - type: Sprite
     sprite: Structures/Wallmounts/switch.rsi
     state: dead
-  - type: SignalButton
+  - type: SignalSwitch
+    onPort: Pressed
+    offPort: Pressed
   - type: Rotatable
   placement:
     mode: SnapgridCenter
