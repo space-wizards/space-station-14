@@ -696,7 +696,6 @@
       crit: dead-0
       dead: splat-0
   - type: Food
-    size: 5
   - type: Hunger
     baseDecayRate: 0.5 # I'm very hungry! Give me. The cheese.
   - type: Extractable
