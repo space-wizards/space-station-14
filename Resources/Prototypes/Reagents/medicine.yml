@@ -527,7 +527,7 @@
   group: Medicine
   desc: A mysterious chemical which is able to make an entity sentient.
   physicalDesc: enigmatic
-  color: "#fcd66a"
+  color: "#b50ee8"
   metabolisms:
     Medicine:
       effects:
