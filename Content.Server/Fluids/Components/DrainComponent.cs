@@ -12,7 +12,7 @@ namespace Content.Server.Fluids.Components
         /// This will stay fixed to 1 second no matter what DrainFrequency is.
         /// </summary>
         [DataField("unitsPerSecond")]
-        public float UnitsPerSecond = 10f;
+        public float UnitsPerSecond = 6f;
 
         /// <summary>
         /// How many (unobstructed) tiles away the drain will

@@ -2,7 +2,7 @@ using Content.Server.Fluids.Components;
 using Content.Server.Chemistry.EntitySystems;
 using Content.Shared.FixedPoint;
 using Content.Shared.Interaction;
-using Robust.Shared.GameObjects;
+using Content.Shared.Audio;
 
 namespace Content.Server.Fluids.EntitySystems
 {
@@ -10,7 +10,9 @@ namespace Content.Server.Fluids.EntitySystems
     {
         [Dependency] private readonly EntityLookupSystem _lookup = default!;
         [Dependency] private readonly SolutionContainerSystem _solutionSystem = default!;
-        [Dependency] private readonly SharedInteractionSystem _interactionSystem = default!;
+        [Dependency] private readonly SharedAmbientSoundSystem _ambientSoundSystem = default!;
+
+
         public override void Update(float frameTime)
         {
             base.Update(frameTime);
@@ -39,8 +41,11 @@ namespace Content.Server.Fluids.EntitySystems
 
                 if (puddles.Count == 0)
                 {
+                    _ambientSoundSystem.SetAmbience(drain.Owner, false);
                     continue;
                 }
+
+                _ambientSoundSystem.SetAmbience(drain.Owner, true);
 
                 amount /= puddles.Count;
 
