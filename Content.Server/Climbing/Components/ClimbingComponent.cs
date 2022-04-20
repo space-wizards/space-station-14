@@ -1,4 +1,5 @@
 using Content.Shared.Climbing;
+using Robust.Shared.Physics.Dynamics;
 using Robust.Shared.Timing;
 
 namespace Content.Server.Climbing.Components;
@@ -46,6 +47,9 @@ public sealed class ClimbingComponent : SharedClimbingComponent
             Dirty();
         }
     }
+
+    public List<string> DisabledFixtures { get; set; } = new();
+    public Dictionary<string, Fixture> Fixtures { get; set; } = new();
 
     /// <summary>
     /// Make the owner climb from one point to another
