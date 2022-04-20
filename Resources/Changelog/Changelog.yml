@@ -1,9 +1,4 @@
 Entries:
-- author: Peptide90
-  changes:
-  - {message: Fixed trashbag so now only trash can be picked up., type: Fix}
-  id: 867
-  time: '2022-01-13T12:53:14.0000000+00:00'
 - author: ElectroJr
   changes:
   - {message: 'Makes smoking even cooler (visuals fixed, but hopefully properly this
@@ -3043,3 +3038,8 @@ Entries:
     type: Add}
   id: 1366
   time: '2022-04-20T06:08:57.0000000+00:00'
+- author: UKNOWH
+  changes:
+  - {message: mouse size changed form 0 to 5, type: Add}
+  id: 1367
+  time: '2022-04-20T07:19:33.0000000+00:00'
