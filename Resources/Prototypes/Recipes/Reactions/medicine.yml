@@ -310,3 +310,21 @@
       amount: 1
   products:
     Spaceacillin: 2
+    
+- type: reaction
+  id: Conscizine
+  reactants:
+    Epinephrine:
+      amount: 1
+    Tricordrazine:
+      amount: 1
+    MindbreakerToxin:
+      amount: 1
+    Theobromine:
+      amount: 1
+    Spaceacillin:
+      amount: 1
+    Clonexadone:
+      amount: 1
+  products:
+    Conscizine: 1

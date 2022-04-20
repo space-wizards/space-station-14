@@ -520,3 +520,23 @@
           min: 1
         reagent: Ultravasculine
         amount: 0.5
+             
+- type: reagent
+  id: Conscizine
+  name: conscizine
+  group: Medicine
+  desc: A mysterious chemical which is able to make an entity sentient.
+  physicalDesc: enigmatic
+  color: "#fcd66a"
+  metabolisms:
+    Medicine:
+      effects:
+      - !type:HealthChange
+        damage:
+          groups:
+            Burn: -1
+            Toxin: -1
+            Airloss: -1
+            Brute: -1
+      - !type:MakeSentient
+      
