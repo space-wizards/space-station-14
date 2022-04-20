@@ -8,7 +8,7 @@
   description: Some cultures find them terrifying, others crunchy on the teeth.
   components:
   - type: MovementSpeedModifier
-    baseWalkSpeed : 6
+    baseWalkSpeed : 3
     baseSprintSpeed : 6
   - type: Sprite
     drawdepth: Mobs
@@ -51,6 +51,13 @@
     bloodMaxVolume: 50
   - type: ReplacementAccent
     accent: mouse
+  - type: UnarmedCombat
+    range: 1.5
+    arcwidth: 0
+    arc: bite
+    damage:
+      types:
+        Piercing: 5
 
 - type: entity
   name: bee
@@ -58,6 +65,11 @@
   id: MobBee
   description: Nice to have, but you can't build a civilization on a foundation of honey alone.
   components:
+  - type: CombatMode
+    disarmAction:
+      enabled: false
+      autoPopulate: false
+      name: action-name-disarm
   - type: MovementSpeedModifier
     baseWalkSpeed : 7
     baseSprintSpeed : 7
@@ -107,6 +119,11 @@
   id: MobAngryBee
   description: How nice a bee. Oh no, it looks angry and wants my pizza.
   components:
+  - type: CombatMode
+    disarmAction:
+      enabled: false
+      autoPopulate: false
+      name: action-name-disarm
   - type: UnarmedCombat
     range: 0.3
     arcwidth: 0

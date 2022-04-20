@@ -64,6 +64,7 @@
       - Wrench
       - Crowbar
       - Multitool
+      - AirlockPainter
       - MiniHoe
       - Shovel
       - Spade
@@ -268,6 +269,7 @@
       map: ["enum.LatheVisualLayers.IsInserting"]
     - state: panel
       map: ["enum.WiresVisualLayers.MaintenancePanel"]
+  - type: LatheVisuals
     idleState: icon
     runningState: icon
   - type: ProtolatheDatabase
@@ -364,14 +366,14 @@
       - ClothingUniformJumpskirtSec
       - ClothingUniformJumpsuitWarden
       - ClothingUniformJumpskirtWarden
-      - ClothingOuterWinterCap 
+      - ClothingOuterWinterCap
       - ClothingOuterWinterCE
       - ClothingOuterWinterCMO
       - ClothingOuterWinterHoP
       - ClothingOuterWinterHoS
       - ClothingOuterWinterQM
       - ClothingOuterWinterRD
-      
+
   - type: Sprite
     sprite: Structures/Machines/uniform_printer.rsi
     netsync: false

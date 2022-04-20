@@ -190,6 +190,16 @@
     Phalanximine: 3
 
 - type: reaction
+  id: Romerol
+  reactants:
+    Phalanximine:
+      amount: 1
+    Tricordrazine:
+      amount: 1
+  products:
+    Romerol: 2
+
+- type: reaction
   id: Synaptizine
   reactants:
     Lithium:
