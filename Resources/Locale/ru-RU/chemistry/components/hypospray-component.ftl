@@ -10,4 +10,4 @@ hypospray-component-inject-self-clumsy-message = Ой! Вы сделали се�
 hypospray-component-empty-message = Он пустой!
 hypospray-component-feel-prick-message = Вы чувствуете небольшой укольчик!
 hypospray-component-transfer-already-full-message = { $owner } уже заполнен!
-hypospray-cant-inject = Нельзя сделать инъекцию в ${ target }!
+hypospray-cant-inject = Нельзя сделать инъекцию в { $target }!
