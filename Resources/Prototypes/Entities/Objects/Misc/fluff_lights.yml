@@ -12,6 +12,15 @@
     netsync: false
   - type: Item
     sprite: Objects/Misc/Lights/lights.rsi
+  - type: PointLight
+    netsync: false
+    enabled: false
+    radius: 3
+    energy: 2
+  - type: ToggleableLightVisuals
+  - type: Appearance
+    visuals:
+    - type: FlashLightVisualizer # todo move to light visuals component.
 
 - type: entity
   name: lamp
@@ -29,13 +38,6 @@
         map: [ "light" ]
   - type: Item
     sprite: Objects/Misc/Lights/lamp.rsi
-  - type: PointLight
-    enabled: false
-    radius: 3
-    energy: 2
-  - type: Appearance
-    visuals:
-      - type: FlashLightVisualizer
 
 - type: entity
   name: banana lamp
@@ -50,13 +52,6 @@
         shader: unshaded
         visible: false
         map: [ "light" ]
-  - type: PointLight
-    enabled: false
-    radius: 3
-    energy: 2
-  - type: Appearance
-    visuals:
-      - type: FlashLightVisualizer
 
 - type: entity
   name: desk lamp
@@ -74,13 +69,6 @@
         map: [ "light" ]
   - type: Item
     sprite: Objects/Misc/Lights/lampgreen.rsi
-  - type: PointLight
-    enabled: false
-    radius: 3
-    energy: 2
-  - type: Appearance
-    visuals:
-      - type: FlashLightVisualizer
 
 - type: entity
   name: floodlight
@@ -131,9 +119,6 @@
             max: 1
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
-  - type: Appearance
-    visuals:
-      - type: FlashLightVisualizer
 
 - type: entity
   name: broken floodlight

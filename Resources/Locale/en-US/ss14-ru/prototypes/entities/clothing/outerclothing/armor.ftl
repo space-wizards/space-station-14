@@ -32,5 +32,5 @@ ent-ClothingOuterArmorCaptainCarapace = captain's carapace
     .desc = An armored chestpiece that provides protection whilst still offering maximum mobility and flexibility. Issued only to the station's finest.
     .suffix = { "" }
 ent-ClothingOuterArmorChangeling = chitinous armor
-    .desc = Inflates the changeling's body into an all-consuming chitinous mass of armor. Provides extensive protection against physical damage, but less against other types. Its mass slows the changeling's movement, and maintaining its shape slows chemical generation.
+    .desc = Inflates the changeling's body into an all-consuming chitinous mass of armor.
     .suffix = { "" }

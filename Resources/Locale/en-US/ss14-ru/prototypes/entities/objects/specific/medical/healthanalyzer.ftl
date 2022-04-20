@@ -7,3 +7,6 @@ ent-HandheldHealthAnalyzerGigacancer = { ent-HandheldHealthAnalyzer }
 ent-HandheldHealthAnalyzerOwOnavirus = OwOnavirus analyzer
     .suffix = admin abuse
     .desc = { ent-HandheldHealthAnalyzer.desc }
+ent-HandheldHealthAnalyzerZombie = Zombie Infector
+    .suffix = DEBUG
+    .desc = { ent-HandheldHealthAnalyzer.desc }
