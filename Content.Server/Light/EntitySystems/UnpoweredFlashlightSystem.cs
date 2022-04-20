@@ -19,7 +19,7 @@ namespace Content.Server.Light.EntitySystems
             base.Initialize();
 
             SubscribeLocalEvent<UnpoweredFlashlightComponent, GetVerbsEvent<ActivationVerb>>(AddToggleLightVerbs);
-            SubscribeLocalEvent<UnpoweredFlashlightComponent, GetActionsEvent>(OnGetActions);
+            SubscribeLocalEvent<UnpoweredFlashlightComponent, GetItemActionsEvent>(OnGetActions);
             SubscribeLocalEvent<UnpoweredFlashlightComponent, ToggleActionEvent>(OnToggleAction);
         }
 
@@ -33,7 +33,7 @@ namespace Content.Server.Light.EntitySystems
             args.Handled = true;
         }
 
-        private void OnGetActions(EntityUid uid, UnpoweredFlashlightComponent component, GetActionsEvent args)
+        private void OnGetActions(EntityUid uid, UnpoweredFlashlightComponent component, GetItemActionsEvent args)
         {
             args.Actions.Add(component.ToggleAction);
         }

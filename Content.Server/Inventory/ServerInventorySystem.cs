@@ -15,8 +15,6 @@ namespace Content.Server.Inventory
         {
             base.Initialize();
 
-            SubscribeLocalEvent<InventoryComponent, HighPressureEvent>(RelayInventoryEvent);
-            SubscribeLocalEvent<InventoryComponent, LowPressureEvent>(RelayInventoryEvent);
             SubscribeLocalEvent<InventoryComponent, ModifyChangedTemperatureEvent>(RelayInventoryEvent);
 
             SubscribeLocalEvent<ClothingComponent, UseInHandEvent>(OnUseInHand);

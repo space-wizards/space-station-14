@@ -4,6 +4,7 @@ using Content.Shared.Disease;
 using Content.Shared.Disease.Components;
 using Content.Server.Disease.Components;
 using Content.Server.Clothing.Components;
+using Content.Server.Body.Systems;
 using Content.Shared.MobState.Components;
 using Content.Shared.Examine;
 using Content.Shared.Inventory;
@@ -47,6 +48,8 @@ namespace Content.Server.Disease
             SubscribeLocalEvent<DiseaseProtectionComponent, GotUnequippedEvent>(OnUnequipped);
             SubscribeLocalEvent<DiseaseVaccineComponent, AfterInteractEvent>(OnAfterInteract);
             SubscribeLocalEvent<DiseaseVaccineComponent, ExaminedEvent>(OnExamined);
+            // Handling stuff from other systems
+            SubscribeLocalEvent<DiseaseCarrierComponent, ApplyMetabolicMultiplierEvent>(OnApplyMetabolicMultiplier);
             // Private events stuff
             SubscribeLocalEvent<TargetVaxxSuccessfulEvent>(OnTargetVaxxSuccessful);
             SubscribeLocalEvent<VaxxCancelledEvent>(OnVaxxCancelled);
@@ -189,6 +192,17 @@ namespace Content.Server.Disease
             _popupSystem.PopupEntity(Loc.GetString("disease-cured"), carrier.Owner, Filter.Entities(carrier.Owner));
         }
 
+        public void CureAllDiseases(EntityUid uid, DiseaseCarrierComponent? carrier = null)
+        {
+            if (!Resolve(uid, ref carrier))
+                return;
+
+            foreach (var disease in carrier.Diseases)
+            {
+                CureDisease(carrier, disease);
+            }
+        }
+
         /// <summary>
         /// Called when someone interacts with a diseased person with an empty hand
         /// to check if they get infected
@@ -273,6 +287,26 @@ namespace Content.Server.Disease
                     args.PushMarkup(Loc.GetString("vaxx-unused"));
             }
         }
+
+
+    private void OnApplyMetabolicMultiplier(EntityUid uid, DiseaseCarrierComponent component, ApplyMetabolicMultiplierEvent args)
+    {
+        if (args.Apply)
+        {
+            foreach (var disease in component.Diseases)
+            {
+                disease.TickTime *= args.Multiplier;
+                return;
+            }
+        }
+        foreach (var disease in component.Diseases)
+        {
+            disease.TickTime /= args.Multiplier;
+            if (disease.Accumulator >= disease.TickTime)
+                disease.Accumulator = disease.TickTime;
+        }
+    }
+
 
         ///
         /// Helper functions

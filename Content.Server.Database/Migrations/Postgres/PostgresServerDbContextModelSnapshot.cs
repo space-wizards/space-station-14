@@ -184,6 +184,79 @@ namespace Content.Server.Database.Migrations.Postgres
                     b.ToTable("admin_log_player", (string)null);
                 });
 
+            modelBuilder.Entity("Content.Server.Database.AdminNote", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasColumnName("admin_notes_id");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("created_at");
+
+                    b.Property<Guid>("CreatedById")
+                        .HasColumnType("uuid")
+                        .HasColumnName("created_by_id");
+
+                    b.Property<bool>("Deleted")
+                        .HasColumnType("boolean")
+                        .HasColumnName("deleted");
+
+                    b.Property<DateTime?>("DeletedAt")
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("deleted_at");
+
+                    b.Property<Guid?>("DeletedById")
+                        .HasColumnType("uuid")
+                        .HasColumnName("deleted_by_id");
+
+                    b.Property<DateTime>("LastEditedAt")
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("last_edited_at");
+
+                    b.Property<Guid>("LastEditedById")
+                        .HasColumnType("uuid")
+                        .HasColumnName("last_edited_by_id");
+
+                    b.Property<string>("Message")
+                        .IsRequired()
+                        .HasMaxLength(4096)
+                        .HasColumnType("character varying(4096)")
+                        .HasColumnName("message");
+
+                    b.Property<Guid>("PlayerUserId")
+                        .HasColumnType("uuid")
+                        .HasColumnName("player_user_id");
+
+                    b.Property<int?>("RoundId")
+                        .HasColumnType("integer")
+                        .HasColumnName("round_id");
+
+                    b.Property<bool>("ShownToPlayer")
+                        .HasColumnType("boolean")
+                        .HasColumnName("shown_to_player");
+
+                    b.HasKey("Id")
+                        .HasName("PK_admin_notes");
+
+                    b.HasIndex("CreatedById");
+
+                    b.HasIndex("DeletedById");
+
+                    b.HasIndex("LastEditedById");
+
+                    b.HasIndex("PlayerUserId")
+                        .HasDatabaseName("IX_admin_notes_player_user_id");
+
+                    b.HasIndex("RoundId")
+                        .HasDatabaseName("IX_admin_notes_round_id");
+
+                    b.ToTable("admin_notes", (string)null);
+                });
+
             modelBuilder.Entity("Content.Server.Database.AdminRank", b =>
                 {
                     b.Property<int>("Id")
@@ -932,6 +1005,54 @@ namespace Content.Server.Database.Migrations.Postgres
                     b.Navigation("Player");
                 });
 
+            modelBuilder.Entity("Content.Server.Database.AdminNote", b =>
+                {
+                    b.HasOne("Content.Server.Database.Player", "CreatedBy")
+                        .WithMany("AdminNotesCreated")
+                        .HasForeignKey("CreatedById")
+                        .HasPrincipalKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired()
+                        .HasConstraintName("FK_admin_notes_player_created_by_id");
+
+                    b.HasOne("Content.Server.Database.Player", "DeletedBy")
+                        .WithMany("AdminNotesDeleted")
+                        .HasForeignKey("DeletedById")
+                        .HasPrincipalKey("UserId")
+                        .HasConstraintName("FK_admin_notes_player_deleted_by_id");
+
+                    b.HasOne("Content.Server.Database.Player", "LastEditedBy")
+                        .WithMany("AdminNotesLastEdited")
+                        .HasForeignKey("LastEditedById")
+                        .HasPrincipalKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired()
+                        .HasConstraintName("FK_admin_notes_player_last_edited_by_id");
+
+                    b.HasOne("Content.Server.Database.Player", "Player")
+                        .WithMany("AdminNotesReceived")
+                        .HasForeignKey("PlayerUserId")
+                        .HasPrincipalKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired()
+                        .HasConstraintName("FK_admin_notes_player_player_user_id");
+
+                    b.HasOne("Content.Server.Database.Round", "Round")
+                        .WithMany()
+                        .HasForeignKey("RoundId")
+                        .HasConstraintName("FK_admin_notes_round_round_id");
+
+                    b.Navigation("CreatedBy");
+
+                    b.Navigation("DeletedBy");
+
+                    b.Navigation("LastEditedBy");
+
+                    b.Navigation("Player");
+
+                    b.Navigation("Round");
+                });
+
             modelBuilder.Entity("Content.Server.Database.AdminRankFlag", b =>
                 {
                     b.HasOne("Content.Server.Database.AdminRank", "Rank")
@@ -1081,6 +1202,14 @@ namespace Content.Server.Database.Migrations.Postgres
             modelBuilder.Entity("Content.Server.Database.Player", b =>
                 {
                     b.Navigation("AdminLogs");
+
+                    b.Navigation("AdminNotesCreated");
+
+                    b.Navigation("AdminNotesDeleted");
+
+                    b.Navigation("AdminNotesLastEdited");
+
+                    b.Navigation("AdminNotesReceived");
                 });
 
             modelBuilder.Entity("Content.Server.Database.Preference", b =>

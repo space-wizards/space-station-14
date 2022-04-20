@@ -93,8 +93,8 @@ public sealed class InstrumentSystem : SharedInstrumentSystem
 
         if (!instrument.AllowProgramChange)
         {
-            instrument.Renderer.MidiProgram = instrument.InstrumentProgram;
             instrument.Renderer.MidiBank = instrument.InstrumentBank;
+            instrument.Renderer.MidiProgram = instrument.InstrumentProgram;
         }
 
         instrument.Renderer.LoopMidi = instrument.LoopMidi;

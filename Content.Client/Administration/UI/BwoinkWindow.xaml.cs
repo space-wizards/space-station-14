@@ -72,6 +72,12 @@ namespace Content.Client.Administration.UI
                 return bch!.LastMessage.CompareTo(ach!.LastMessage);
             };
 
+            Notes.OnPressed += _ =>
+            {
+                if (_currentPlayer is not null)
+                    _console.ExecuteCommand($"adminnotes \"{_currentPlayer.SessionId}\"");
+            };
+
             // ew
             Ban.OnPressed += _ =>
             {
@@ -138,6 +144,9 @@ namespace Content.Client.Administration.UI
 
         private void FixButtons()
         {
+            Notes.Visible = _adminManager.HasFlag(AdminFlags.ViewNotes);
+            Notes.Disabled = !Notes.Visible;
+
             Ban.Visible = _adminManager.HasFlag(AdminFlags.Ban);
             Ban.Disabled = !Ban.Visible;
 
