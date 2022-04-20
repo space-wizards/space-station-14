@@ -997,7 +997,6 @@
     - UnarmedAttackHostiles
   - type: AiFactionTag
     factions:
-    - SimpleHostile
     - Syndicate
   - type: Sprite
     drawdepth: Mobs
@@ -1042,11 +1041,11 @@
     beepSound:
       path: /Audio/Weapons/Guns/MagOut/pistol_magout.ogg #funny sfx use
     beepInterval: 1
-  - type: Explosive
+  - type: Explosive #meant to be a bit weaker and smaller radius than minibomb
     explosionType: Default
     maxIntensity: 15
-    intensitySlope: 5
-    totalIntensity: 120
+    intensitySlope: 20
+    totalIntensity: 225
   - type: ExplodeOnTrigger
 
   # I have included a snake_hiss.ogg sound file so if you want to use that be my guest
