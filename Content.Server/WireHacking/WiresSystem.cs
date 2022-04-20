@@ -515,7 +515,7 @@ public sealed class WiresSystem : EntitySystem
                 }
 
                 _toolSystem.PlayToolSound(toolEntity, tool);
-                if (wire.Action.Cut(used, user, wire))
+                if (wire.Action.Cut(user, wire))
                 {
                     wire.IsCut = true;
                 }
@@ -530,7 +530,7 @@ public sealed class WiresSystem : EntitySystem
                 }
 
                 _toolSystem.PlayToolSound(toolEntity, tool);
-                if (wire.Action.Mend(used, user, wire))
+                if (wire.Action.Mend(user, wire))
                 {
                     wire.IsCut = false;
                 }
@@ -550,7 +550,7 @@ public sealed class WiresSystem : EntitySystem
                     return;
                 }
 
-                wire.Action.Pulse(used, user, wire);
+                wire.Action.Pulse(user, wire);
                 SoundSystem.Play(Filter.Pvs(used), wires.PulseSound.GetSound(), used);
                 break;
         }
