@@ -1,7 +1,7 @@
 - type: gameMap
-  id: atlasship
-  mapName: 'Atlas Ship'
-  mapNameTemplate: '{0} Atlas Ship {1}'
+  id: atlas
+  mapName: 'Atlas'
+  mapNameTemplate: '{0} Atlas {1}'
   nameGenerator:
     !type:NanotrasenNameGenerator
     prefixCreator: 'R4' # R4407/Goon. GS isn't as cool sounding.
