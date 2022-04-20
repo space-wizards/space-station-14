@@ -190,7 +190,7 @@
       id: "slips"
       hard: false
       layer:
-      - LowImpassable
+      - SlipLayer
     - shape:
         !type:PhysShapeAabb
         bounds: "-0.2,-0.2,0.2,0.2"

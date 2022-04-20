@@ -21,10 +21,10 @@
     - shape:
         !type:PhysShapeAabb
         bounds: "-0.4,-0.4,0.4,0.4"
-      layer:
-      - LowImpassable
       mask:
-      - LowImpassable
+      - ItemMask
+      layer:
+      - SlipLayer
       hard: false
   - type: Appearance
     visuals:

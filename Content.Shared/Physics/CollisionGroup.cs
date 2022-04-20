@@ -24,6 +24,7 @@ namespace Content.Shared.Physics
         BulletImpassable = 1 << 6, // 64 Can be hit by bullets
         MapGrid          = MapGridHelpers.CollisionGroup, // Map grids, like shuttles. This is the actual grid itself, not the walls or other entities connected to the grid.
         // 32 possible groups
+        AllMask = -1,
 
         MobMask = Impassable | MidImpassable | LowImpassable,
         MobLayer = Opaque | BulletImpassable,
@@ -47,13 +48,12 @@ namespace Content.Shared.Physics
         GlassAirlockLayer = HighImpassable | MidImpassable | BulletImpassable,
         AirlockLayer = Opaque | GlassAirlockLayer,
 
+        SlipLayer = MidImpassable | LowImpassable,
         ItemMask = Impassable | HighImpassable,
         ThrownItem = Impassable | HighImpassable,
         WallLayer = Opaque | Impassable | HighImpassable | MidImpassable | LowImpassable | BulletImpassable,
         GlassLayer = HighImpassable | MidImpassable | LowImpassable | BulletImpassable,
         HalfWallLayer = MidImpassable | LowImpassable,
         FullTileMask = Impassable | HighImpassable | MidImpassable | LowImpassable,
-
-        AllMask = -1,
     }
 }
