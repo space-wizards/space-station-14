@@ -558,7 +558,7 @@
     sprite: Clothing/OuterClothing/WinterCoats/coatcap.rsi
     state: icon
   result: ClothingOuterWinterCap
-  completetime: 800
+  completetime: 3.2
   materials:
     Cloth: 300
     Durathread: 300
@@ -569,7 +569,7 @@
     sprite: Clothing/OuterClothing/WinterCoats/coatce.rsi
     state: icon
   result: ClothingOuterWinterCE
-  completetime: 800
+  completetime: 3.2
   materials:
     Cloth: 300
     Durathread: 300
@@ -580,7 +580,7 @@
     sprite: Clothing/OuterClothing/WinterCoats/coatcmo.rsi
     state: icon
   result: ClothingOuterWinterCMO
-  completetime: 800
+  completetime: 3.2
   materials:
     Cloth: 300
     Durathread: 300
@@ -591,7 +591,7 @@
     sprite: Clothing/OuterClothing/WinterCoats/coathop.rsi
     state: icon
   result: ClothingOuterWinterHoP
-  completetime: 800
+  completetime: 3.2
   materials:
     Cloth: 300
     Durathread: 300
@@ -602,7 +602,7 @@
     sprite: Clothing/OuterClothing/WinterCoats/coathos.rsi
     state: icon
   result: ClothingOuterWinterHoS
-  completetime: 800
+  completetime: 3.2
   materials:
     Cloth: 300
     Durathread: 300
@@ -613,7 +613,7 @@
     sprite: Clothing/OuterClothing/WinterCoats/coatqm.rsi
     state: icon
   result: ClothingOuterWinterQM
-  completetime: 800
+  completetime: 3.2
   materials:
     Cloth: 300
     Durathread: 300
@@ -624,7 +624,7 @@
     sprite: Clothing/OuterClothing/WinterCoats/coatrd.rsi
     state: icon
   result: ClothingOuterWinterRD
-  completetime: 800
+  completetime: 3.2
   materials:
     Cloth: 300
     Durathread: 300

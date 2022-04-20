@@ -74161,13 +74161,6 @@ entities:
     pos: -55.5,0.5
     parent: 33
     type: Transform
-  - fixtures:
-    - shape: !type:PhysShapeCircle
-        position: 0,-0.5
-        radius: 0.2
-      hard: False
-      id: docking
-    type: Fixtures
 - uid: 7115
   type: AirlockExternalLocked
   components:
@@ -74187,13 +74180,6 @@ entities:
     pos: -63.5,0.5
     parent: 33
     type: Transform
-  - fixtures:
-    - shape: !type:PhysShapeCircle
-        position: 0,-0.5
-        radius: 0.2
-      hard: False
-      id: docking
-    type: Fixtures
 - uid: 7118
   type: Poweredlight
   components:

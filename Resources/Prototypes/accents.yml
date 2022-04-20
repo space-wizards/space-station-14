@@ -48,6 +48,14 @@
     - Hiss...!
 
 - type: accent
+  id: zombie
+  words:
+    - Gruaahhhh...
+    - Mmuaaaa..
+    - Braainnssss...
+    - Grrrrr...
+
+- type: accent
   id: genericAggressive
   words:
   - Grr!
