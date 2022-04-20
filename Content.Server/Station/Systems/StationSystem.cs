@@ -201,6 +201,8 @@ public sealed class StationSystem : EntitySystem
 
         foreach (var grid in gridIds ?? Array.Empty<GridId>())
         {
+            var stationMember = AddComp<StationMemberComponent>(grid);
+            stationMember.Station = station;
             RaiseLocalEvent(station, new StationGridAddedEvent(grid, true));
         }
 
@@ -292,6 +294,37 @@ public sealed class StationSystem : EntitySystem
         _stations.Remove(station);
         Del(station);
     }
+
+    /// <summary>
+    /// Gets the station that "owns" the given entity (essentially, the station the grid it's on is attached to)
+    /// </summary>
+    /// <param name="entity">Entity to find the owner of.</param>
+    /// <param name="xform">Resolve pattern, transform of the entity.</param>
+    /// <returns>The owning station, if any.</returns>
+    /// <remarks>
+    /// This does not remember what station an entity started on, it simply checks where it is currently located.
+    /// </remarks>
+    public EntityUid? GetOwningStation(EntityUid entity, TransformComponent? xform = null)
+    {
+        if (!Resolve(entity, ref xform))
+            throw new ArgumentException("Tried to use an abstract entity!", nameof(entity));
+
+        if (TryComp<IMapGridComponent>(entity, out _))
+        {
+            // We are the station, just check ourselves.
+            return CompOrNull<StationMemberComponent>(entity)?.Station;
+        }
+
+        if (xform.GridID == GridId.Invalid)
+        {
+            Logger.Debug("A");
+            return null;
+        }
+
+        var grid = _mapManager.GetGridEuid(xform.GridID);
+
+        return CompOrNull<StationMemberComponent>(grid)?.Station;
+    }
 }
 
 /// <summary>
@@ -305,7 +338,7 @@ public sealed class StationInitializedEvent : EntityEventArgs
     /// Station this event is for.
     /// </summary>
     public EntityUid Station;
-    
+
     public StationInitializedEvent(EntityUid station)
     {
         Station = station;

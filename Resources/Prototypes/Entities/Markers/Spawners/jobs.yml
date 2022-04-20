@@ -8,7 +8,6 @@
   components:
   - type: SpawnPoint
     spawn_type: Job
-  - type: StationSpawnerManager
   - type: Sprite
     sprite: Markers/jobs.rsi
 

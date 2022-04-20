@@ -25,7 +25,7 @@ namespace Content.Server.Station.Systems;
 /// Also provides helpers for spawning in the player's mob.
 /// </summary>
 [PublicAPI]
-public sealed partial class StationSpawningSystem : EntitySystem
+public sealed class StationSpawningSystem : EntitySystem
 {
     [Dependency] private readonly IMapManager _mapManager = default!;
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
@@ -40,118 +40,12 @@ public sealed partial class StationSpawningSystem : EntitySystem
     public override void Initialize()
     {
         SubscribeLocalEvent<StationInitializedEvent>(OnStationInitialized);
-        SubscribeLocalEvent<StationSpawningComponent, StationGridAddedEvent>(OnStationGridAdded);
-        SubscribeLocalEvent<StationSpawningComponent, StationGridRemovedEvent>(OnStationGridRemoved);
-        SubscribeLocalEvent<StationSpawnerManagerComponent, EntParentChangedMessage>(OnSpawnerParentChanged);
-        SubscribeLocalEvent<StationSpawnerManagerComponent, ComponentShutdown>(OnSpawnerShutdown);
     }
-
-    #region Spawner management
 
     private void OnStationInitialized(StationInitializedEvent ev)
     {
         AddComp<StationSpawningComponent>(ev.Station);
     }
-
-    private void OnStationGridAdded(EntityUid uid, StationSpawningComponent component,  StationGridAddedEvent ev)
-    {
-        var spawnerEntities = new HashSet<EntityUid>(128); // Somewhat arbitrary magic number.
-        foreach (var (manager, xform) in EntityQuery<StationSpawnerManagerComponent, TransformComponent>(true))
-        {
-            if (!(xform.GridID == ev.GridId))
-                continue;
-            spawnerEntities.Add(manager.Owner);
-            manager.PreviousGrid = ev.GridId;
-            manager.PreviousStation = uid;
-        }
-        component.Spawners.UnionWith(spawnerEntities);
-        component.SpawnersByGrid[ev.GridId] = spawnerEntities;
-    }
-
-    private void OnStationGridRemoved(EntityUid uid, StationSpawningComponent component, StationGridRemovedEvent args)
-    {
-        if (component.SpawnersByGrid.ContainsKey(args.GridId))
-        {
-            component.Spawners.ExceptWith(component.SpawnersByGrid[args.GridId]);
-
-            var query = EntityManager.GetEntityQuery<StationSpawnerManagerComponent>();
-
-            foreach (var spawner in component.SpawnersByGrid[args.GridId])
-            {
-                if (!query.TryGetComponent(spawner, out var spawnerManager))
-                    continue;
-
-                spawnerManager.PreviousGrid = null;
-                spawnerManager.PreviousStation = null;
-            }
-        }
-
-        component.SpawnersByGrid.Remove(args.GridId);
-    }
-
-    private void OnSpawnerShutdown(EntityUid uid, StationSpawnerManagerComponent component, ComponentShutdown args)
-    {
-        if (component.PreviousGrid != null && component.PreviousStation != null && Exists(component.PreviousStation))
-        {
-            RemoveSpawnerFromStation(uid, component.PreviousStation.Value, component.PreviousGrid.Value);
-        }
-    }
-
-    private void OnSpawnerParentChanged(EntityUid uid, StationSpawnerManagerComponent component, ref EntParentChangedMessage args)
-    {
-        if (component.PreviousGrid != null && component.PreviousStation != null && Exists(component.PreviousStation))
-        {
-            RemoveSpawnerFromStation(uid, component.PreviousStation.Value, component.PreviousGrid.Value);
-        }
-
-        var grid = args.Transform.GridID;
-        if (grid == GridId.Invalid)
-            return;
-
-        if (!TryComp<StationMemberComponent>(_mapManager.GetGridEuid(grid), out var stationMember))
-            return; // Not part of a station.
-
-        AddSpawnerToStation(uid, stationMember.Station, args.Transform);
-    }
-
-    private void AddSpawnerToStation(EntityUid spawner, EntityUid station,
-        TransformComponent? spawnerTransform = null, StationSpawningComponent? stationSpawning = null)
-    {
-        if (!Resolve(spawner, ref spawnerTransform))
-            throw new ArgumentException("Given spawner does not have a transform!", nameof(spawner));
-        if (!Resolve(station, ref stationSpawning))
-            throw new ArgumentException("Tried to use a non-station entity as a station!", nameof(station));
-
-        DebugTools.Assert(!stationSpawning.Spawners.Contains(spawner));
-
-        var grid = spawnerTransform.GridID;
-
-        stationSpawning.Spawners.Add(spawner);
-
-        if (!stationSpawning.SpawnersByGrid.ContainsKey(grid))
-            stationSpawning.SpawnersByGrid[grid] = new HashSet<EntityUid> {spawner};
-        else
-            stationSpawning.SpawnersByGrid[grid].Add(spawner);
-    }
-
-    private void RemoveSpawnerFromStation(EntityUid spawner, EntityUid station, GridId previousGrid,
-        StationSpawningComponent? stationSpawning = null)
-    {
-        if (!Resolve(station, ref stationSpawning))
-            throw new ArgumentException("Tried to use a non-station entity as a station!", nameof(station));
-
-        // We may be getting destructed after the grid is already removed.
-        if (stationSpawning.SpawnersByGrid.ContainsKey(previousGrid))
-            return;
-
-        stationSpawning.Spawners.Remove(spawner);
-
-        stationSpawning.SpawnersByGrid[previousGrid].Remove(spawner);
-        if (stationSpawning.SpawnersByGrid[previousGrid].Count == 0)
-            stationSpawning.SpawnersByGrid.Remove(previousGrid);
-    }
-
-    #endregion
 
     /// <summary>
     /// Attempts to spawn a player character onto the given station.
@@ -162,27 +56,18 @@ public sealed partial class StationSpawningSystem : EntitySystem
     /// <param name="stationSpawning">Resolve pattern, the station spawning component for the station.</param>
     /// <returns>The resulting player character, if any.</returns>
     /// <exception cref="ArgumentException">Thrown when the given station is not a station.</exception>
-    public EntityUid? SpawnPlayerCharacterOnStation(EntityUid station, Job? job, HumanoidCharacterProfile? profile, StationSpawningComponent? stationSpawning = null)
+    /// <remarks>
+    /// This only spawns the character, and does none of the mind-related setup you'd need for it to be playable.
+    /// </remarks>
+    public EntityUid? SpawnPlayerCharacterOnStation(EntityUid? station, Job? job, HumanoidCharacterProfile? profile, StationSpawningComponent? stationSpawning = null)
     {
-        if (!Resolve(station, ref stationSpawning))
+        if (station != null && !Resolve(station.Value, ref stationSpawning))
             throw new ArgumentException("Tried to use a non-station entity as a station!", nameof(station));
 
-        // TODO: Cache this list.
-        var options = stationSpawning.Spawners.ToList();
-        if (options.Count == 0)
-            return null;
+        var ev = new SpawnPlayerEvent(job, profile, station);
+        RaiseLocalEvent(ev);
 
-        var startAt = _random.Next(0, options.Count);
-        var curr = startAt;
-        var ev = new SpawnPlayerEvent(job, profile);
-        do
-        {
-            RaiseLocalEvent(options[curr], ref ev);
-            if (ev.SpawnResult != null)
-                break;
-
-            curr = (curr + 1) % options.Count;
-        } while (curr != startAt);
+        DebugTools.Assert(ev.SpawnResult is {Valid: true} or null);
 
         return ev.SpawnResult;
     }
@@ -291,12 +176,13 @@ public sealed partial class StationSpawningSystem : EntitySystem
 /// Event fired on any spawner eligible to attempt to spawn a player.
 /// This event's success is measured by if SpawnResult is not null.
 /// You should not make this event's success rely on random chance.
+/// This event is designed to use ordered handling. You probably want SpawnPointSystem to be the last handler.
 /// </summary>
-[PublicAPI, ByRefEvent]
+[PublicAPI]
 public sealed class SpawnPlayerEvent : EntityEventArgs
 {
     /// <summary>
-    /// The entity spawned, if any. You should set this if you succeed at spawning the character.
+    /// The entity spawned, if any. You should set this if you succeed at spawning the character, and leave it alone if it's not null.
     /// </summary>
     public EntityUid? SpawnResult;
     /// <summary>
@@ -307,10 +193,15 @@ public sealed class SpawnPlayerEvent : EntityEventArgs
     /// The profile to use, if any.
     /// </summary>
     public readonly HumanoidCharacterProfile? HumanoidCharacterProfile;
+    /// <summary>
+    /// The target station, if any.
+    /// </summary>
+    public readonly EntityUid? Station;
 
-    public SpawnPlayerEvent(Job? job, HumanoidCharacterProfile? humanoidCharacterProfile)
+    public SpawnPlayerEvent(Job? job, HumanoidCharacterProfile? humanoidCharacterProfile, EntityUid? station)
     {
         Job = job;
         HumanoidCharacterProfile = humanoidCharacterProfile;
+        Station = station;
     }
 }
