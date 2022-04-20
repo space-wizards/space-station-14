@@ -215,8 +215,8 @@
     - type: Sprite
       netsync: false
       drawdepth: FloorObjects
-      sprite: Structures/Piping/Atmospherics/scrubber.rsi
-      state: scrub_off
+      sprite: Objects/Specific/Janitorial/drain.rsi
+      state: icon
     - type: Physics
       bodyType: Static
     - type: Drain
