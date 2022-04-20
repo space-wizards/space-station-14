@@ -211,7 +211,7 @@
         Radiation: 1
   - type: PressureProtection
     highPressureMultiplier: 0.65
-    lowPressureMultiplier: 25
+    lowPressureMultiplier: 1000
 
 - type: entity
   parent: ClothingHeadHardsuitWithLightBase # hardsuitlight base for light and protection
@@ -236,13 +236,13 @@
         Radiation: .95
   - type: PressureProtection
     highPressureMultiplier: 0.45
-    lowPressureMultiplier: 25
+    lowPressureMultiplier: 1000
 
 - type: entity
   parent: ClothingHeadBase
   id: ClothingHeadHelmetLing
   name: chitinous helmet
-  description: Inflates the changeling's body into an all-consuming chitinous mass of armor. Provides extensive protection against physical damage, but less against other types. Its mass slows the changeling's movement, and maintaining its shape slows chemical generation.
+  description: Inflates the changeling's body into an all-consuming chitinous mass of armor.
   components:
   - type: Sprite
     sprite: Clothing/Head/Helmets/linghelmet.rsi
@@ -255,3 +255,25 @@
         Slash: 0.5
         Piercing: 0.5
         Heat: 0.9
+
+- type: entity
+  parent: ClothingHeadEVAHelmetBase
+  id: ClothingHeadHelmetVoidParamed
+  name: Paramedic Void Helmet
+  description: A void helmet made for paramedics.
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/Helmets/paramedhelm.rsi
+  - type: Clothing
+    sprite: Clothing/Head/Helmets/paramedhelm.rsi
+  - type: IngestionBlocker
+  - type: DiseaseProtection
+    protection: 0.15
+  - type: TemperatureProtection
+    coefficient: 0.1
+  - type: Armor
+    modifiers:
+      coefficients:
+        Slash: 0.95
+        Heat: 0.90
+        Radiation: 0.75

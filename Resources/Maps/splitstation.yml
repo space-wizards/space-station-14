@@ -24325,13 +24325,6 @@ entities:
     pos: 11.5,14.5
     parent: 112
     type: Transform
-  - fixtures:
-    - shape: !type:PhysShapeCircle
-        position: 0,-0.5
-        radius: 0.2
-      hard: False
-      id: docking
-    type: Fixtures
 - uid: 539
   type: WallSolid
   components:
@@ -29334,13 +29327,6 @@ entities:
     changeAirtight: False
     state: Opening
     type: Door
-  - fixtures:
-    - shape: !type:PhysShapeCircle
-        position: 0,-0.5
-        radius: 0.2
-      hard: False
-      id: docking
-    type: Fixtures
 - uid: 1203
   type: WallReinforced
   components:
@@ -29642,13 +29628,6 @@ entities:
     pos: -21.5,6.5
     parent: 112
     type: Transform
-  - fixtures:
-    - shape: !type:PhysShapeCircle
-        position: 0,-0.5
-        radius: 0.2
-      hard: False
-      id: docking
-    type: Fixtures
   - containers:
       board: !type:Container
         ents: []
@@ -35838,13 +35817,6 @@ entities:
     pos: 17.5,14.5
     parent: 112
     type: Transform
-  - fixtures:
-    - shape: !type:PhysShapeCircle
-        position: 0,-0.5
-        radius: 0.2
-      hard: False
-      id: docking
-    type: Fixtures
 - uid: 1958
   type: WallSolid
   components:
@@ -36359,13 +36331,6 @@ entities:
     changeAirtight: False
     state: Opening
     type: Door
-  - fixtures:
-    - shape: !type:PhysShapeCircle
-        position: 0,-0.5
-        radius: 0.2
-      hard: False
-      id: docking
-    type: Fixtures
 - uid: 2019
   type: WallReinforced
   components:
@@ -41116,13 +41081,6 @@ entities:
     pos: -51.5,14.5
     parent: 112
     type: Transform
-  - fixtures:
-    - shape: !type:PhysShapeCircle
-        position: 0,-0.5
-        radius: 0.2
-      hard: False
-      id: docking
-    type: Fixtures
 - uid: 2556
   type: WallReinforced
   components:
@@ -83079,52 +83037,24 @@ entities:
   - pos: 18.5,-135.5
     parent: 112
     type: Transform
-  - fixtures:
-    - shape: !type:PhysShapeCircle
-        position: 0,-0.5
-        radius: 0.2
-      hard: False
-      id: docking
-    type: Fixtures
 - uid: 7403
   type: AirlockExternalGlassShuttleLocked
   components:
   - pos: 17.5,-135.5
     parent: 112
     type: Transform
-  - fixtures:
-    - shape: !type:PhysShapeCircle
-        position: 0,-0.5
-        radius: 0.2
-      hard: False
-      id: docking
-    type: Fixtures
 - uid: 7404
   type: AirlockExternalGlassShuttleLocked
   components:
   - pos: 12.5,-135.5
     parent: 112
     type: Transform
-  - fixtures:
-    - shape: !type:PhysShapeCircle
-        position: 0,-0.5
-        radius: 0.2
-      hard: False
-      id: docking
-    type: Fixtures
 - uid: 7405
   type: AirlockExternalGlassShuttleLocked
   components:
   - pos: 13.5,-135.5
     parent: 112
     type: Transform
-  - fixtures:
-    - shape: !type:PhysShapeCircle
-        position: 0,-0.5
-        radius: 0.2
-      hard: False
-      id: docking
-    type: Fixtures
 - uid: 7406
   type: AirlockCargoGlassLocked
   components:
@@ -83485,26 +83415,12 @@ entities:
   - pos: 2.5,-135.5
     parent: 112
     type: Transform
-  - fixtures:
-    - shape: !type:PhysShapeCircle
-        position: 0,-0.5
-        radius: 0.2
-      hard: False
-      id: docking
-    type: Fixtures
 - uid: 7466
   type: AirlockExternalGlassShuttleLocked
   components:
   - pos: 3.5,-135.5
     parent: 112
     type: Transform
-  - fixtures:
-    - shape: !type:PhysShapeCircle
-        position: 0,-0.5
-        radius: 0.2
-      hard: False
-      id: docking
-    type: Fixtures
 - uid: 7467
   type: Catwalk
   components:
@@ -84416,52 +84332,24 @@ entities:
   - pos: -11.5,-135.5
     parent: 112
     type: Transform
-  - fixtures:
-    - shape: !type:PhysShapeCircle
-        position: 0,-0.5
-        radius: 0.2
-      hard: False
-      id: docking
-    type: Fixtures
 - uid: 7589
   type: AirlockExternalGlassShuttleLocked
   components:
   - pos: -10.5,-135.5
     parent: 112
     type: Transform
-  - fixtures:
-    - shape: !type:PhysShapeCircle
-        position: 0,-0.5
-        radius: 0.2
-      hard: False
-      id: docking
-    type: Fixtures
 - uid: 7590
   type: AirlockExternalGlassShuttleLocked
   components:
   - pos: -3.5,-135.5
     parent: 112
     type: Transform
-  - fixtures:
-    - shape: !type:PhysShapeCircle
-        position: 0,-0.5
-        radius: 0.2
-      hard: False
-      id: docking
-    type: Fixtures
 - uid: 7591
   type: AirlockExternalGlassShuttleLocked
   components:
   - pos: -2.5,-135.5
     parent: 112
     type: Transform
-  - fixtures:
-    - shape: !type:PhysShapeCircle
-        position: 0,-0.5
-        radius: 0.2
-      hard: False
-      id: docking
-    type: Fixtures
 - uid: 7592
   type: AirlockExternalGlass
   components:
@@ -84775,13 +84663,6 @@ entities:
     pos: -22.5,-131.5
     parent: 112
     type: Transform
-  - fixtures:
-    - shape: !type:PhysShapeCircle
-        position: 0,-0.5
-        radius: 0.2
-      hard: False
-      id: docking
-    type: Fixtures
 - uid: 7644
   type: AirlockExternalGlassShuttleLocked
   components:
@@ -84789,13 +84670,6 @@ entities:
     pos: -22.5,-130.5
     parent: 112
     type: Transform
-  - fixtures:
-    - shape: !type:PhysShapeCircle
-        position: 0,-0.5
-        radius: 0.2
-      hard: False
-      id: docking
-    type: Fixtures
 - uid: 7645
   type: Catwalk
   components:
@@ -115529,13 +115403,6 @@ entities:
     pos: 45.5,-31.5
     parent: 112
     type: Transform
-  - fixtures:
-    - shape: !type:PhysShapeCircle
-        position: 0,-0.5
-        radius: 0.2
-      hard: False
-      id: docking
-    type: Fixtures
 - uid: 11293
   type: AsteroidRock
   components:
@@ -203986,13 +203853,6 @@ entities:
     pos: -45.5,14.5
     parent: 112
     type: Transform
-  - fixtures:
-    - shape: !type:PhysShapeCircle
-        position: 0,-0.5
-        radius: 0.2
-      hard: False
-      id: docking
-    type: Fixtures
 - uid: 20452
   type: Rack
   components:

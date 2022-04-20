@@ -320,6 +320,21 @@
             Radiation: 1
 
 - type: reagent
+  id: Romerol
+  name: romerol
+  group: Medicine
+  desc: A difficult to procure chemical used in the reversal of the zombification process. Tastes like death.
+  physicalDesc: acrid
+  color: "#7e916e"
+  metabolisms:
+    Medicine:
+      effects:
+      - !type:HealthChange
+        damage:
+          types:
+            Poison: 2
+
+- type: reagent
   id: PulpedBananaPeel
   name: pulped banana peel
   group: Medicine

@@ -5,6 +5,7 @@ using Content.Shared.Damage;
 using Content.Shared.Verbs;
 using Content.Shared.Tag;
 using Content.Shared.ActionBlocker;
+using Content.Shared.Actions;
 using Content.Server.Cooldown;
 using Content.Server.Bible.Components;
 using Content.Server.Popups;
@@ -12,7 +13,6 @@ using Robust.Shared.Random;
 using Robust.Shared.Audio;
 using Robust.Shared.Player;
 using Robust.Shared.Timing;
-
 
 namespace Content.Server.Bible
 {
@@ -25,6 +25,7 @@ namespace Content.Server.Bible
         [Dependency] private readonly PopupSystem _popupSystem = default!;
         [Dependency] private readonly TagSystem _tagSystem = default!;
         [Dependency] private readonly ActionBlockerSystem _blocker = default!;
+        [Dependency] private readonly SharedActionsSystem _actionsSystem = default!;
 
         public override void Initialize()
         {
@@ -32,6 +33,8 @@ namespace Content.Server.Bible
 
             SubscribeLocalEvent<BibleComponent, AfterInteractEvent>(OnAfterInteract);
             SubscribeLocalEvent<SummonableComponent, GetVerbsEvent<AlternativeVerb>>(AddSummonVerb);
+            SubscribeLocalEvent<SummonableComponent, GetItemActionsEvent>(GetSummonAction);
+            SubscribeLocalEvent<SummonableComponent, SummonActionEvent>(OnSummon);
         }
 
         private void OnAfterInteract(EntityUid uid, BibleComponent component, AfterInteractEvent args)
@@ -111,6 +114,17 @@ namespace Content.Server.Bible
             args.Verbs.Add(verb);
         }
 
+        private void GetSummonAction(EntityUid uid, SummonableComponent component, GetItemActionsEvent args)
+        {
+            if (component.AlreadySummoned)
+                return;
+
+            args.Actions.Add(component.SummonAction);
+        }
+        private void OnSummon(EntityUid uid, SummonableComponent component, SummonActionEvent args)
+        {
+            AttemptSummon(component, args.Performer, Transform(args.Performer));
+        }
         private void AttemptSummon(SummonableComponent component, EntityUid user, TransformComponent? position)
         {
             if (component.AlreadySummoned || component.SpecialItemPrototype == null)
@@ -126,6 +140,10 @@ namespace Content.Server.Bible
 
             EntityManager.SpawnEntity(component.SpecialItemPrototype, position.Coordinates);
             component.AlreadySummoned = true;
+            _actionsSystem.RemoveAction(user, component.SummonAction);
         }
     }
+
+    public sealed class SummonActionEvent : InstantActionEvent
+    {}
 }
