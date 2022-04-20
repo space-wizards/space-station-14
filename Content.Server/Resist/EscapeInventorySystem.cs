@@ -4,6 +4,9 @@ using Robust.Shared.Containers;
 using Content.Server.Popups;
 using Content.Shared.Movement.EntitySystems;
 using Robust.Shared.Player;
+using Content.Shared.Storage;
+using Content.Shared.Inventory;
+using Content.Shared.Hands.Components;
 
 namespace Content.Server.Resist;
 
@@ -31,7 +34,10 @@ public sealed class EscapeInventorySystem : EntitySystem
 
         if (_containerSystem.TryGetContainingContainer(uid, out var container))
         {
-            AttemptEscape(uid, container.Owner, component);
+            if(HasComp<SharedStorageComponent>(container.Owner) || HasComp<InventoryComponent>(container.Owner) || HasComp<SharedHandsComponent>(container.Owner))
+            {
+                AttemptEscape(uid, container.Owner, component);
+            }
         }
     }
 
