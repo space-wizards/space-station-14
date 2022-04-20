@@ -187,7 +187,6 @@ namespace Content.Client.Entry
             "SignalReceiver",
             "SignalSwitch",
             "SignalTransmitter",
-            "SignalButton",
             "SignalLinker",
             "ItemCabinet",
             "FireExtinguisher",
