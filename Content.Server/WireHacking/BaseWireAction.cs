@@ -9,7 +9,6 @@ namespace Content.Server.Wires;
 public abstract class BaseWireAction : IWireAction
 {
     public IEntityManager EntityManager = default!;
-    public DoAfterSystem DoAfterSystem = default!;
     public WiresSystem WiresSystem = default!;
 
     public BaseWireAction()
@@ -24,16 +23,15 @@ public abstract class BaseWireAction : IWireAction
     public abstract object StatusKey { get; }
 
     // ugly, but IoC doesn't work during deserialization
-    public virtual void Initialize(EntityUid uid, Wire wire)
+    public virtual void Initialize(Wire wire)
     {
         EntityManager = IoCManager.Resolve<IEntityManager>();
 
         WiresSystem = EntitySystem.Get<WiresSystem>();
-        DoAfterSystem = EntitySystem.Get<DoAfterSystem>();
     }
 
-    public abstract bool Cut(EntityUid used, EntityUid user, Wire wire);
-    public abstract bool Mend(EntityUid used, EntityUid user, Wire wire);
-    public abstract bool Pulse(EntityUid used, EntityUid user, Wire wire);
+    public abstract bool Cut(EntityUid user, Wire wire);
+    public abstract bool Mend(EntityUid user, Wire wire);
+    public abstract bool Pulse(EntityUid user, Wire wire);
     public abstract StatusLightData GetStatusLightData(Wire wire);
 }

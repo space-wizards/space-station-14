@@ -38,7 +38,7 @@ public class AccessWireAction : BaseWireAction
 
     public override object StatusKey { get; } = AccessWireActionKey.Status;
 
-    public override bool Cut(EntityUid used, EntityUid user, Wire wire)
+    public override bool Cut(EntityUid user, Wire wire)
     {
         if (!EntityManager.TryGetComponent<AccessReaderComponent>(wire.Owner, out var access))
         {
@@ -50,7 +50,7 @@ public class AccessWireAction : BaseWireAction
         return true;
     }
 
-    public override bool Mend(EntityUid used, EntityUid user, Wire wire)
+    public override bool Mend(EntityUid user, Wire wire)
     {
         if (!EntityManager.TryGetComponent<AccessReaderComponent>(wire.Owner, out var access))
         {
@@ -62,7 +62,7 @@ public class AccessWireAction : BaseWireAction
         return true;
     }
 
-    public override bool Pulse(EntityUid used, EntityUid user, Wire wire)
+    public override bool Pulse(EntityUid user, Wire wire)
     {
 
         return true;

@@ -98,16 +98,16 @@ public class PowerWireAction : BaseWireAction
     }
 
     /// <returns>false if failed, true otherwise</returns>
-    private bool TrySetElectrocution(EntityUid used, EntityUid user, Wire wire, bool timed = false)
+    private bool TrySetElectrocution(EntityUid user, Wire wire, bool timed = false)
     {
-        if (EntityManager.TryGetComponent<ApcPowerReceiverComponent>(used, out var power)
-            && EntityManager.TryGetComponent<ElectrifiedComponent>(used, out var electrified))
+        if (EntityManager.TryGetComponent<ApcPowerReceiverComponent>(wire.Owner, out var power)
+            && EntityManager.TryGetComponent<ElectrifiedComponent>(wire.Owner, out var electrified))
         {
             // always set this to true
-            SetElectrified(used, true, electrified);
+            SetElectrified(wire.Owner, true, electrified);
 
             // if we were electrified, then return false
-            var electrifiedAttempt = _electrocutionSystem.TryDoElectrifiedAct(used, user);
+            var electrifiedAttempt = _electrocutionSystem.TryDoElectrifiedAct(wire.Owner, user);
 
             // if this is timed, we set up a doAfter so that the
             // electrocution continues - unless cancelled
@@ -117,7 +117,7 @@ public class PowerWireAction : BaseWireAction
             {
                 var newToken = new CancellationTokenSource();
                 var doAfter = new DoAfterEventArgs(
-                    used,
+                    wire.Owner,
                     _pulseTimeout,
                     newToken.Token)
                 {
@@ -125,12 +125,12 @@ public class PowerWireAction : BaseWireAction
                     UserFinishedEvent = new WireDoAfterEvent(AwaitElectrifiedCancel, wire)
                 };
 
-                WiresSystem.SetData(used, PowerWireActionKey.ElectrifiedCancel, newToken);
+                WiresSystem.SetData(wire.Owner, PowerWireActionKey.ElectrifiedCancel, newToken);
                 WiresSystem.StartWireAction(doAfter);
             }
             else
             {
-                SetElectrified(used, false, electrified);
+                SetElectrified(wire.Owner, false, electrified);
             }
 
             return !electrifiedAttempt;
@@ -139,54 +139,54 @@ public class PowerWireAction : BaseWireAction
         return false;
     }
 
-    public override void Initialize(EntityUid uid, Wire wire)
+    public override void Initialize(Wire wire)
     {
-        base.Initialize(uid, wire);
+        base.Initialize(wire);
 
         _electrocutionSystem = EntitySystem.Get<ElectrocutionSystem>();
     }
 
-    public override bool Cut(EntityUid used, EntityUid user, Wire wire)
+    public override bool Cut(EntityUid user, Wire wire)
     {
-        if (!TrySetElectrocution(used, user, wire))
+        if (!TrySetElectrocution(user, wire))
             return false;
 
-        WiresSystem.TryCancelWireAction(used, PowerWireActionKey.PulseCancel);
-        WiresSystem.TryCancelWireAction(used, PowerWireActionKey.ElectrifiedCancel);
+        WiresSystem.TryCancelWireAction(wire.Owner, PowerWireActionKey.PulseCancel);
+        WiresSystem.TryCancelWireAction(wire.Owner, PowerWireActionKey.ElectrifiedCancel);
 
         wire.IsCut = true;
 
         return true;
     }
 
-    public override bool Mend(EntityUid used, EntityUid user, Wire wire)
+    public override bool Mend(EntityUid user, Wire wire)
     {
-        if (!TrySetElectrocution(used, user, wire))
+        if (!TrySetElectrocution(user, wire))
             return false;
 
         wire.IsCut = false;
         return true;
     }
 
-    public override bool Pulse(EntityUid used, EntityUid user, Wire wire)
+    public override bool Pulse(EntityUid user, Wire wire)
     {
-        WiresSystem.TryCancelWireAction(used, PowerWireActionKey.ElectrifiedCancel);
+        WiresSystem.TryCancelWireAction(wire.Owner, PowerWireActionKey.ElectrifiedCancel);
 
-        if (!TrySetElectrocution(used, user, wire, true))
+        if (!TrySetElectrocution(user, wire, true))
             return false;
 
         // disrupted power shouldn't re-disrupt
-        if (WiresSystem.TryGetData(used, PowerWireActionKey.Pulsed, out var pulsedKey)
+        if (WiresSystem.TryGetData(wire.Owner, PowerWireActionKey.Pulsed, out var pulsedKey)
             && (bool) pulsedKey)
         {
             return false;
         }
 
-        WiresSystem.SetData(used, PowerWireActionKey.Pulsed, true);
+        WiresSystem.SetData(wire.Owner, PowerWireActionKey.Pulsed, true);
 
         var newPulseToken = new CancellationTokenSource();
         var doAfter = new DoAfterEventArgs(
-            used,
+            wire.Owner,
             _pulseTimeout,
             newPulseToken.Token)
         {
@@ -196,22 +196,22 @@ public class PowerWireAction : BaseWireAction
 
         WiresSystem.StartWireAction(doAfter);
 
-        // AwaitPulseCancel(used, wire, _doAfterSystem.WaitDoAfter(doAfter));
+        // AwaitPulseCancel(wire.Owner, wire, _doAfterSystem.WaitDoAfter(doAfter));
 
-        WiresSystem.SetData(used, PowerWireActionKey.PulseCancel, newPulseToken);
+        WiresSystem.SetData(wire.Owner, PowerWireActionKey.PulseCancel, newPulseToken);
 
         return true;
     }
 
-    private void AwaitElectrifiedCancel(EntityUid used, Wire wire)
+    private void AwaitElectrifiedCancel(Wire wire)
     {
-        WiresSystem.SetData(used, PowerWireActionKey.Electrified, false);
-        SetElectrified(used, false);
+        WiresSystem.SetData(wire.Owner, PowerWireActionKey.Electrified, false);
+        SetElectrified(wire.Owner, false);
     }
 
-    private void AwaitPulseCancel(EntityUid used, Wire wire)
+    private void AwaitPulseCancel(Wire wire)
     {
-        WiresSystem.SetData(used, PowerWireActionKey.Pulsed, false);
-        WiresSystem.UpdateUserInterface(used);
+        WiresSystem.SetData(wire.Owner, PowerWireActionKey.Pulsed, false);
+        WiresSystem.UpdateUserInterface(wire.Owner);
     }
 }

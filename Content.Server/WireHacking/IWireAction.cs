@@ -39,13 +39,13 @@ public interface IWireAction
 
     public object StatusKey { get; }
 
-    public void Initialize(EntityUid uid, Wire wire);
+    public void Initialize(Wire wire);
 
-    public bool Cut(EntityUid used, EntityUid user, Wire wire);
+    public bool Cut(EntityUid user, Wire wire);
 
-    public bool Mend(EntityUid used, EntityUid user, Wire wire);
+    public bool Mend(EntityUid user, Wire wire);
 
-    public bool Pulse(EntityUid used, EntityUid user, Wire wire);
+    public bool Pulse(EntityUid user, Wire wire);
 
     public StatusLightData GetStatusLightData(Wire wire);
 }
