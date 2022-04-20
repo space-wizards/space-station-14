@@ -125,7 +125,7 @@ public sealed class WiresSystem : EntitySystem
         foreach (var wire in wires.WiresList)
         {
             wire.Id = ++id;
-            wire.Action.Initialize(uid, wire);
+            wire.Action.Initialize(wire);
         }
     }
 
@@ -194,7 +194,7 @@ public sealed class WiresSystem : EntitySystem
     #region DoAfters
     private void OnWireDoAfter(EntityUid uid, WiresComponent component, WireDoAfterEvent args)
     {
-        args.Delegate(uid, args.Wire);
+        args.Delegate(args.Wire);
     }
 
     public void TryCancelWireAction(EntityUid owner, object key)
@@ -320,7 +320,7 @@ public sealed class WiresSystem : EntitySystem
         }
 
         // we only need the active hand
-        var activeHand = handsComponent.GetActiveHand();
+        var activeHand = handsComponent.ActiveHand;
 
         if (activeHand == null)
             return;
@@ -551,6 +551,8 @@ public sealed class WiresSystem : EntitySystem
                 }
 
                 wire.Action.Pulse(user, wire);
+
+                UpdateUserInterface(used);
                 SoundSystem.Play(Filter.Pvs(used), wires.PulseSound.GetSound(), used);
                 break;
         }
@@ -687,7 +689,7 @@ public class Wire
 // WiresSystem can call the action in question after the
 // doafter is finished (either through cancellation
 // or completion - this is implementation dependent)
-public delegate void WireActionDelegate(EntityUid used, Wire wire);
+public delegate void WireActionDelegate(Wire wire);
 
 // callbacks over the event bus,
 // because async is banned

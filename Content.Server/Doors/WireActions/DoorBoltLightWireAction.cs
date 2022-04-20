@@ -5,6 +5,7 @@ using Content.Shared.Wires;
 
 namespace Content.Server.Doors;
 
+[DataDefinition]
 public class DoorBoltLightWireAction : BaseWireAction
 {
     [DataField("color")]
@@ -21,6 +22,10 @@ public class DoorBoltLightWireAction : BaseWireAction
             lightState = (bool) lightStatus
                 ? StatusLightState.On
                 : StatusLightState.Off;
+        }
+        else
+        {
+            lightState = StatusLightState.On;
         }
 
         return new StatusLightData(

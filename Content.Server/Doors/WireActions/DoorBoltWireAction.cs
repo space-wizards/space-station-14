@@ -5,6 +5,7 @@ using Content.Shared.Wires;
 
 namespace Content.Server.Doors;
 
+[DataDefinition]
 public class DoorBoltWireAction : BaseWireAction
 {
     [DataField("color")]
@@ -18,7 +19,7 @@ public class DoorBoltWireAction : BaseWireAction
         StatusLightState lightState = StatusLightState.Off;
         if (EntityManager.TryGetComponent<AirlockComponent>(wire.Owner, out var door))
         {
-            if (door.IsBolted())
+            if (door.BoltsDown)
             {
                 lightState = StatusLightState.On;
             }
@@ -38,7 +39,7 @@ public class DoorBoltWireAction : BaseWireAction
     {
         if (EntityManager.TryGetComponent<AirlockComponent>(wire.Owner, out var door))
         {
-            if (!door.IsBolted())
+            if (!door.BoltsDown)
             {
                 door.BoltsDown = true;
             }
@@ -57,7 +58,7 @@ public class DoorBoltWireAction : BaseWireAction
     {
         if (EntityManager.TryGetComponent<AirlockComponent>(wire.Owner, out var door))
         {
-            door.BoltsDown = !door.IsBolted();
+            door.BoltsDown = !door.BoltsDown;
         }
 
         return true;

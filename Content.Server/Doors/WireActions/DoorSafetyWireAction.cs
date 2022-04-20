@@ -4,6 +4,7 @@ using Content.Shared.Wires;
 
 namespace Content.Server.Doors;
 
+[DataDefinition]
 public class DoorSafetyWireAction : BaseWireAction
 {
     [DataField("color")]
