@@ -326,7 +326,7 @@ namespace Content.Client.Markings
             var stateNames = GetMarkingStateNames(prototype);
             _currentMarkingColors.Clear();
             CMarkingColors.DisposeAllChildren();
-            List<List<ColorSlider>> colorSliders = new();
+            List<ColorSelectorSliders> colorSliders = new();
             for (int i = 0; i < prototype.Sprites.Count; i++)
             {
                 var colorContainer = new BoxContainer
@@ -336,41 +336,28 @@ namespace Content.Client.Markings
 
                 CMarkingColors.AddChild(colorContainer);
 
-                List<ColorSlider> sliders = new();
-                ColorSlider colorSliderR = new ColorSlider(StyleNano.StyleClassSliderRed);
-                ColorSlider colorSliderG = new ColorSlider(StyleNano.StyleClassSliderGreen);
-                ColorSlider colorSliderB = new ColorSlider(StyleNano.StyleClassSliderBlue);
+                ColorSelectorSliders colorSelector = new ColorSelectorSliders();
+                colorSliders.Add(colorSelector);
 
                 colorContainer.AddChild(new Label { Text = $"{stateNames[i]} color:" });
-                colorContainer.AddChild(colorSliderR);
-                colorContainer.AddChild(colorSliderG);
-                colorContainer.AddChild(colorSliderB);
+                colorContainer.AddChild(colorSelector);
 
                 var currentColor = new Color(
                     _currentMarkings[_currentMarkings.Count - 1 - item.ItemIndex].MarkingColors[i].RByte,
                     _currentMarkings[_currentMarkings.Count - 1 - item.ItemIndex].MarkingColors[i].GByte,
                     _currentMarkings[_currentMarkings.Count - 1 - item.ItemIndex].MarkingColors[i].BByte
                 );
+                colorSelector.Color = currentColor;
                 _currentMarkingColors.Add(currentColor);
                 int colorIndex = _currentMarkingColors.IndexOf(currentColor);
 
-                colorSliderR.ColorValue = currentColor.RByte;
-                colorSliderG.ColorValue = currentColor.GByte;
-                colorSliderB.ColorValue = currentColor.BByte;
-
-                Action colorChanged = delegate()
+                Action<Color> colorChanged = delegate(Color color)
                 {
-                    _currentMarkingColors[colorIndex] = new Color(
-                        colorSliderR.ColorValue,
-                        colorSliderG.ColorValue,
-                        colorSliderB.ColorValue
-                    );
+                    _currentMarkingColors[colorIndex] = colorSelector.Color;
 
                     ColorChanged(colorIndex);
                 };
-                colorSliderR.OnValueChanged += colorChanged;
-                colorSliderG.OnValueChanged += colorChanged;
-                colorSliderB.OnValueChanged += colorChanged;
+                colorSelector.OnColorChanged += colorChanged;
             }
 
             CMarkingColors.Visible = true;

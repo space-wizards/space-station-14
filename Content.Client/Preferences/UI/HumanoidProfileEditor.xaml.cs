@@ -93,9 +93,7 @@ namespace Content.Client.Preferences.UI
         private SpriteView? _previewSpriteSide;
 
         private BoxContainer _rgbSkinColorContainer => CRgbSkinColorContainer;
-        private ColorSlider _rSkinColor;
-        private ColorSlider _gSkinColor;
-        private ColorSlider _bSkinColor;
+        private ColorSelectorSliders _rgbSkinColorSelector;
 
         private bool _isDirty;
         private bool _needUpdatePreview;
@@ -220,21 +218,8 @@ namespace Content.Client.Preferences.UI
                 OnSkinColorOnValueChanged();
             };
 
-            _rgbSkinColorContainer.AddChild(_rSkinColor = new ColorSlider(StyleNano.StyleClassSliderRed));
-            _rgbSkinColorContainer.AddChild(_gSkinColor = new ColorSlider(StyleNano.StyleClassSliderGreen));
-            _rgbSkinColorContainer.AddChild(_bSkinColor = new ColorSlider(StyleNano.StyleClassSliderBlue));
-
-            _rSkinColor.OnValueChanged += () =>
-            {
-                OnSkinColorOnValueChanged();
-            };
-
-            _gSkinColor.OnValueChanged += () =>
-            {
-                OnSkinColorOnValueChanged();
-            };
-
-            _bSkinColor.OnValueChanged += () =>
+            _rgbSkinColorContainer.AddChild(_rgbSkinColorSelector = new ColorSelectorSliders());
+            _rgbSkinColorSelector.OnColorChanged += _ =>
             {
                 OnSkinColorOnValueChanged();
             };
@@ -551,7 +536,7 @@ namespace Content.Client.Preferences.UI
                         _rgbSkinColorContainer.Visible = true;
                     }
 
-                    var color = new Color(_rSkinColor.ColorValue, _gSkinColor.ColorValue, _bSkinColor.ColorValue);
+                    var color = new Color(_rgbSkinColorSelector.Color.R, _rgbSkinColorSelector.Color.G, _rgbSkinColorSelector.Color.B);
                     Profile = Profile.WithCharacterAppearance(Profile.Appearance.WithSkinColor(color));
                     break;
                 }
@@ -773,9 +758,7 @@ namespace Content.Client.Preferences.UI
                     }
 
                     // set the RGB values to the direct values otherwise
-                    _rSkinColor.ColorValue = Profile.Appearance.SkinColor.RByte;
-                    _gSkinColor.ColorValue = Profile.Appearance.SkinColor.GByte;
-                    _bSkinColor.ColorValue = Profile.Appearance.SkinColor.BByte;
+                    _rgbSkinColorSelector.Color = Profile.Appearance.SkinColor;
                     break;
                 }
             }
