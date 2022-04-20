@@ -1,9 +1,4 @@
 Entries:
-- author: mirrorcult
-  changes:
-  - {message: Mining entities with pickaxes now has a delay., type: Tweak}
-  id: 865
-  time: '2022-01-12T02:12:08.0000000+00:00'
 - author: metalgearsloth
   changes:
   - {message: Remove duplicate ghost takeovers when an admin controls a mob., type: Fix}
@@ -3042,3 +3037,8 @@ Entries:
   - {message: Probability adjustments for zombie outbreak event., type: Tweak}
   id: 1364
   time: '2022-04-20T01:54:11.0000000+00:00'
+- author: UKNOWH
+  changes:
+  - {message: You can now put stuff in the chef hat, type: Add}
+  id: 1365
+  time: '2022-04-20T05:17:03.0000000+00:00'
