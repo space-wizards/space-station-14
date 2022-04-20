@@ -1,24 +1,29 @@
 using Content.Server.Wires;
+using Content.Shared.Doors;
 using Content.Shared.Wires;
 
 namespace Content.Server.Doors;
 
-public class DoorBoltWireAction : BaseWireAction
+public class DoorTimingWireAction : BaseWireAction
 {
     [DataField("color")]
     private Color _statusColor;
 
     [DataField("name")]
-    private string _text = "BLT";
+    private string _text = "TIMR";
 
     public override StatusLightData GetStatusLightData(Wire wire)
     {
-
+        var lightState = StatusLightState.Off;
+        return new StatusLightData(
+            _statusColor,
+            lightState,
+            _text);
     }
 
-    public override object Identifier { get; }
+    public override object Identifier { get; } = AirlockWireIdentifier.Timing;
 
-    public override object StatusKey { get; }
+    public override object StatusKey { get; } = AirlockWireStatus.TimingIndicator;
 
     public override bool Cut(EntityUid user, Wire wire)
     {
@@ -37,4 +42,11 @@ public class DoorBoltWireAction : BaseWireAction
 
         return true;
     }
+
+    // timing timer??? ???
+    private void AwaitTimingTimerFinish(Wire wire)
+    {
+        WiresSystem.SetData(wire.Owner, "", false);
+    }
+
 }

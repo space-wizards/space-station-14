@@ -11,13 +11,6 @@ public abstract class BaseWireAction : IWireAction
     public IEntityManager EntityManager = default!;
     public WiresSystem WiresSystem = default!;
 
-    public BaseWireAction()
-    {
-        // IoCManager.InjectDependencies(this);
-
-
-    }
-
     public abstract object Identifier { get; }
 
     public abstract object StatusKey { get; }
