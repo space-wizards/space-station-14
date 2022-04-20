@@ -748,6 +748,8 @@
   - type: Bloodstream
     bloodMaxVolume: 50
   - type: DiseaseCarrier #The other class lab animal and disease vector
+  - type: Item #I used item because I am unsure how to code in animal
+    size: 5
 
 
 - type: entity
