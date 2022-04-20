@@ -1,6 +1,5 @@
 ﻿using System.Linq;
 using Content.Server.Administration.Managers;
-using Content.Shared.GameTicking;
 using Content.Shared.Preferences;
 using Content.Shared.Roles;
 using Robust.Shared.Network;
@@ -239,6 +238,8 @@ public sealed partial class StationJobsSystem
         IEnumerable<NetUserId> allPlayersToAssign, IReadOnlyDictionary<NetUserId, HumanoidCharacterProfile> profiles, IReadOnlyList<EntityUid> stations)
     {
         var givenStations = stations.ToList();
+        if (givenStations.Count == 0)
+            return; // Don't attempt to assign them if there are no stations.
         // For players without jobs, give them the overflow job if they have that set...
         foreach (var player in allPlayersToAssign)
         {
@@ -250,12 +251,6 @@ public sealed partial class StationJobsSystem
             var profile = profiles[player];
             if (profile.PreferenceUnavailable != PreferenceUnavailableMode.SpawnAsOverflow)
                 continue;
-
-            if (givenStations.Count == 0)
-            {
-                assignedJobs.Add(player, (SharedGameTicker.FallbackOverflowJob, EntityUid.Invalid));
-                continue;
-            }
 
             _random.Shuffle(givenStations);
 

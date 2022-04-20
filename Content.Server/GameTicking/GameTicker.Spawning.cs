@@ -1,9 +1,7 @@
 using System.Globalization;
 using System.Linq;
-using Content.Server.Access.Systems;
 using Content.Server.Ghost;
 using Content.Server.Ghost.Components;
-using Content.Server.Hands.Components;
 using Content.Server.Players;
 using Content.Server.Roles;
 using Content.Server.Spawners.Components;
@@ -11,10 +9,9 @@ using Content.Server.Speech.Components;
 using Content.Shared.Database;
 using Content.Shared.GameTicking;
 using Content.Shared.Ghost;
-using Content.Shared.Hands.EntitySystems;
-using Content.Shared.Inventory;
 using Content.Shared.Preferences;
 using Content.Shared.Roles;
+using JetBrains.Annotations;
 using Robust.Server.Player;
 using Robust.Shared.Map;
 using Robust.Shared.Network;
@@ -26,10 +23,6 @@ namespace Content.Server.GameTicking
     public sealed partial class GameTicker
     {
         private const string ObserverPrototypeName = "MobObserver";
-
-        [Dependency] private readonly IdCardSystem _cardSystem = default!;
-        [Dependency] private readonly InventorySystem _inventorySystem = default!;
-        [Dependency] private readonly SharedHandsSystem _handsSystem = default!;
 
         /// <summary>
         /// Can't yet be removed because every test ever seems to depend on it. I'll make removing this a different PR.
@@ -229,35 +222,6 @@ namespace Content.Server.GameTicking
         }
         #endregion
 
-        #region Equip Helpers
-        public void EquipStartingGear(EntityUid entity, StartingGearPrototype startingGear, HumanoidCharacterProfile? profile)
-        {
-            if (_inventorySystem.TryGetSlots(entity, out var slotDefinitions))
-            {
-                foreach (var slot in slotDefinitions)
-                {
-                    var equipmentStr = startingGear.GetGear(slot.Name, profile);
-                    if (!string.IsNullOrEmpty(equipmentStr))
-                    {
-                        var equipmentEntity = EntityManager.SpawnEntity(equipmentStr, EntityManager.GetComponent<TransformComponent>(entity).Coordinates);
-                        _inventorySystem.TryEquip(entity, equipmentEntity, slot.Name, true);
-                    }
-                }
-            }
-
-            if (!TryComp(entity, out HandsComponent? handsComponent))
-                return;
-
-            var inhand = startingGear.Inhand;
-            var coords = EntityManager.GetComponent<TransformComponent>(entity).Coordinates;
-            foreach (var (hand, prototype) in inhand)
-            {
-                var inhandEntity = EntityManager.SpawnEntity(prototype, coords);
-                _handsSystem.TryPickup(entity, inhandEntity, hand, checkActionBlocker: false, handsComp: handsComponent);
-            }
-        }
-        #endregion
-
         #region Spawn Points
         public EntityCoordinates GetObserverSpawnPoint()
         {
@@ -284,6 +248,7 @@ namespace Content.Server.GameTicking
     ///     You can use this event to spawn a player off-station on late-join but also at round start.
     ///     When this event is handled, the GameTicker will not perform its own player-spawning logic.
     /// </summary>
+    [PublicAPI]
     public sealed class PlayerBeforeSpawnEvent : HandledEntityEventArgs
     {
         public IPlayerSession Player { get; }
@@ -307,6 +272,7 @@ namespace Content.Server.GameTicking
     ///     You can use this to handle people late-joining, or to handle people being spawned at round start.
     ///     Can be used to give random players a role, modify their equipment, etc.
     /// </summary>
+    [PublicAPI]
     public sealed class PlayerSpawnCompleteEvent : EntityEventArgs
     {
         public EntityUid Mob { get; }
