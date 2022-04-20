@@ -319,15 +319,8 @@ public sealed class WiresSystem : EntitySystem
             return;
         }
 
-        var enumerator = _handsSystem.EnumerateHands(player, handsComponent).GetEnumerator();
-
-        if (!enumerator.MoveNext())
-        {
-            return;
-        }
-
         // we only need the active hand
-        var activeHand = enumerator.Current;
+        var activeHand = handsComponent.GetActiveHand();
 
         if (activeHand == null)
             return;
