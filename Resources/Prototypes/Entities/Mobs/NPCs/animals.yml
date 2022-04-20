@@ -695,6 +695,7 @@
       crit: dead-0
       dead: splat-0
   - type: Food
+    size: 5
   - type: Hunger
     baseDecayRate: 0.5 # I'm very hungry! Give me. The cheese.
   - type: Extractable
@@ -748,8 +749,7 @@
   - type: Bloodstream
     bloodMaxVolume: 50
   - type: DiseaseCarrier #The other class lab animal and disease vector
-  - type: Item #I used item because I am unsure how to code in animal
-    size: 5
+
 
 
 - type: entity
