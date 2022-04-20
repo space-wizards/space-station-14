@@ -98,7 +98,7 @@
   parent: ClothingMaskBase
   id: ClothingMaskPlague
   name: plague doctor mask
-  description: A bad omen
+  description: A bad omen.
   components:
   - type: Sprite
     sprite: Clothing/Mask/plaguedoctormask.rsi

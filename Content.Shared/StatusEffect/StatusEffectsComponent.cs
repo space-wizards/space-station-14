@@ -24,6 +24,9 @@ namespace Content.Shared.StatusEffect
         public List<string> AllowedEffects = default!;
     }
 
+    [RegisterComponent]
+    public sealed class ActiveStatusEffectsComponent : Component {}
+
     /// <summary>
     ///     Holds information about an active status effect.
     /// </summary>

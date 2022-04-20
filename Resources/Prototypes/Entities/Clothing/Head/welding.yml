@@ -5,6 +5,7 @@
   abstract: true
   components:
   - type: IngestionBlocker
+  - type: FlashImmunity
 
 - type: entity
   parent: WeldingMaskBase

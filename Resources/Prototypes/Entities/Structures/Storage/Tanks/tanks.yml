@@ -5,7 +5,7 @@
   parent: StorageTank
   name: fuel tank
   suffix: Empty
-  description: A fuel tank. It is used to store high amounts of fuel.
+  description: A fuel tank. It's used to store high amounts of fuel.
   components:
   - type: Sprite
     sprite: Structures/Storage/tanks.rsi
@@ -43,7 +43,7 @@
   parent: StorageTank
   name: water tank
   suffix: Empty
-  description: "A water tank. It is used to store high amounts of water."
+  description: "A water tank. It's used to store high amounts of water."
   components:
   - type: Sprite
     sprite: Structures/Storage/tanks.rsi
@@ -79,7 +79,7 @@
 #         This is *100, 000* on /tg/
           Quantity: 10000
         maxVol: 10000
-#   It is pressurized...
+#   It's pressurized...
   - type: ReagentTank
     transferAmount: 100
 

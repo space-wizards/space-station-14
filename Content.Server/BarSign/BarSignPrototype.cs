@@ -12,7 +12,7 @@ namespace Content.Server.BarSign
         private string _name = string.Empty;
 
         [ViewVariables]
-        [DataField("id", required: true)]
+        [IdDataFieldAttribute]
         public string ID { get; } = default!;
 
 

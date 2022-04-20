@@ -13,6 +13,8 @@
   - type: Tag
     tags:
       - DroneUsable
+  - type: Damageable
+    damageContainer: Inorganic
   - type: Destructible
     thresholds:
     - trigger:
@@ -146,6 +148,9 @@
       - durathread
       - durathread_2
       - durathread_3
+  - type: Construction
+    graph: Durathread
+    node: MaterialDurathread
 
 - type: entity
   parent: MaterialDurathread

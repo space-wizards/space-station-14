@@ -9,6 +9,7 @@
     bodyType: Static
   - type: Transform
     anchored: true
+    noRot: true
   - type: Fixtures
     fixtures:
     - shape:
@@ -17,6 +18,8 @@
       mass: 25
       layer:
       - Passable
+      mask:
+      - VaultImpassable
   - type: Sprite
     netsync: false
     sprite: Structures/cargo_telepad.rsi

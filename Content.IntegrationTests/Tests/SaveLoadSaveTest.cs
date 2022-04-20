@@ -28,8 +28,8 @@ namespace Content.IntegrationTests.Tests
                 // TODO: Un-hardcode the grid Id for this test.
                 mapLoader.SaveBlueprint(new GridId(1), "save load save 1.yml");
                 var mapId = mapManager.CreateMap();
-                var grid = mapLoader.LoadBlueprint(mapId, "save load save 1.yml");
-                mapLoader.SaveBlueprint(grid!.Index, "save load save 2.yml");
+                var grid = mapLoader.LoadBlueprint(mapId, "save load save 1.yml").gridId;
+                mapLoader.SaveBlueprint(grid!.Value, "save load save 2.yml");
             });
 
             await server.WaitIdleAsync();
@@ -83,7 +83,7 @@ namespace Content.IntegrationTests.Tests
             var mapLoader = server.ResolveDependency<IMapLoader>();
             var mapManager = server.ResolveDependency<IMapManager>();
 
-            IMapGrid grid = default;
+            GridId? grid = default;
 
             // Load saltern.yml as uninitialized map, and save it to ensure it's up to date.
             server.Post(() =>
@@ -91,8 +91,8 @@ namespace Content.IntegrationTests.Tests
                 var mapId = mapManager.CreateMap();
                 mapManager.AddUninitializedMap(mapId);
                 mapManager.SetMapPaused(mapId, true);
-                grid = mapLoader.LoadBlueprint(mapId, "Maps/saltern.yml");
-                mapLoader.SaveBlueprint(grid.Index, "load save ticks save 1.yml");
+                grid = mapLoader.LoadBlueprint(mapId, "Maps/saltern.yml").gridId;
+                mapLoader.SaveBlueprint(grid!.Value, "load save ticks save 1.yml");
             });
 
             // Run 5 ticks.
@@ -100,7 +100,7 @@ namespace Content.IntegrationTests.Tests
 
             server.Post(() =>
             {
-                mapLoader.SaveBlueprint(grid.Index, "/load save ticks save 2.yml");
+                mapLoader.SaveBlueprint(grid!.Value, "/load save ticks save 2.yml");
             });
 
             await server.WaitIdleAsync();

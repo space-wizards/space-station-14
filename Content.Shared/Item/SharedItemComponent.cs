@@ -64,23 +64,6 @@ namespace Content.Shared.Item
         [DataField("EquipSound")]
         public SoundSpecifier? EquipSound { get; set; } = default!;
 
-        // TODO REMOVE. Currently nonfunctional and only used by RGB system. #6253 Fixes this but requires #6252
-        /// <summary>
-        ///     Color of the sprite shown on the player when this item is in their hands.
-        /// </summary>
-        [ViewVariables(VVAccess.ReadWrite)]
-        public Color Color
-        {
-            get => _color;
-            set
-            {
-                _color = value;
-                Dirty();
-            }
-        }
-        [DataField("color")]
-        private Color _color = Color.White;
-
         /// <summary>
         ///     Rsi of the sprite shown on the player when this item is in their hands. Used to generate a default entry for <see cref="InhandVisuals"/>
         /// </summary>

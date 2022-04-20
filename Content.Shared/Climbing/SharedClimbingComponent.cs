@@ -1,12 +1,8 @@
-using System;
 using Content.Shared.ActionBlocker;
 using Content.Shared.Physics;
-using Robust.Shared.GameObjects;
 using Robust.Shared.GameStates;
-using Robust.Shared.IoC;
 using Robust.Shared.Physics;
 using Robust.Shared.Serialization;
-using Robust.Shared.ViewVariables;
 
 namespace Content.Shared.Climbing
 {
@@ -14,6 +10,14 @@ namespace Content.Shared.Climbing
     public abstract class SharedClimbingComponent : Component
     {
         [Dependency] private readonly IEntityManager _entMan = default!;
+        [Dependency] private readonly IEntitySystemManager _sysMan = default!;
+
+        /// <summary>
+        ///     List of fixtures that had vault-impassable prior to an entity being downed. Required when re-adding the
+        ///     collision mask.
+        /// </summary>
+        [DataField("vaultImpassableFixtures")]
+        public List<string> VaultImpassableFixtures = new();
 
         protected bool IsOnClimbableThisFrame
         {
@@ -47,6 +51,8 @@ namespace Content.Shared.Climbing
                 {
                     physicsComponent.BodyType = BodyType.KinematicController;
                 }
+
+                _sysMan.GetEntitySystem<ActionBlockerSystem>().UpdateCanMove(Owner);
             }
         }
 
@@ -79,17 +85,25 @@ namespace Content.Shared.Climbing
             // Hope the mob has one fixture
             if (!_entMan.TryGetComponent<FixturesComponent>(Owner, out var fixturesComponent) || fixturesComponent.Deleted) return;
 
-            foreach (var fixture in fixturesComponent.Fixtures.Values)
+            if (value)
             {
-                if (value)
+                foreach (var (key, fixture) in fixturesComponent.Fixtures)
                 {
+                    if ((fixture.CollisionMask & (int) CollisionGroup.VaultImpassable) == 0)
+                        continue;
+
+                    VaultImpassableFixtures.Add(key);
                     fixture.CollisionMask &= ~(int) CollisionGroup.VaultImpassable;
                 }
-                else
-                {
-                    fixture.CollisionMask |= (int) CollisionGroup.VaultImpassable;
-                }
+                return;
             }
+
+            foreach (var key in VaultImpassableFixtures)
+            {
+                if (fixturesComponent.Fixtures.TryGetValue(key, out var fixture))
+                    fixture.CollisionMask |= (int) CollisionGroup.VaultImpassable;
+            }
+            VaultImpassableFixtures.Clear();
         }
 
         [Serializable, NetSerializable]

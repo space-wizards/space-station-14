@@ -104,23 +104,37 @@
 - type: technology
   name: "medical machinery"
   id: MedicalMachinery
-  description: More machine power for more healing efficiency.
+  description: Machines any self-respecting medbay would need.
   icon:
-    sprite: Structures/Machines/cloning.rsi
-    state: pod_0
-  requiredPoints: 15000
+    sprite: Structures/dispensers.rsi
+    state: industrial-working
+  requiredPoints: 10000
   requiredTechnologies:
     - BiologicalTechnology
     - ChemistryTechnology
   unlockedRecipes:
-    - CloningPodMachineCircuitboard
-    - MedicalScannerMachineCircuitboard
     - ChemMasterMachineCircuitboard
     - ChemDispenserMachineCircuitboard
     - CrewMonitoringComputerCircuitboard
     - VaccinatorMachineCircuitboard
     - DiagnoserMachineCircuitboard
     - HandheldCrewMonitor
+
+- type: technology
+  name: "advanced life support systems"
+  id: AdvancedLifeSupport
+  description: The cutting edge of life and death.
+  icon:
+    sprite: Structures/Machines/cloning.rsi
+    state: pod_0
+  requiredPoints: 20000
+  requiredTechnologies:
+    - MedicalMachinery
+    - AdvancedSugery
+  unlockedRecipes:
+    - CloningPodMachineCircuitboard
+    - MedicalScannerMachineCircuitboard
+    - StasisBedMachineCircuitboard
 
 # Security Technology Tree
 
@@ -328,7 +342,7 @@
     - SolarControlComputerCircuitboard
     - GeneratorPlasmaMachineCircuitboard
     - GeneratorUraniumMachineCircuitboard
-    
+
 - type: technology
   name: "compact power technology"
   id: CompactPowerTechnology

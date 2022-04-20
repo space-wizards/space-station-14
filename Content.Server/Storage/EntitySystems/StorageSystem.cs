@@ -13,6 +13,7 @@ using Robust.Server.Player;
 using Robust.Shared.Containers;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;
+using Robust.Shared.Utility;
 
 namespace Content.Server.Storage.EntitySystems
 {
@@ -22,8 +23,6 @@ namespace Content.Server.Storage.EntitySystems
         [Dependency] private readonly IGameTiming _gameTiming = default!;
         [Dependency] private readonly IRobustRandom _random = default!;
         [Dependency] private readonly DisposalUnitSystem _disposalSystem = default!;
-
-        private readonly List<IPlayerSession> _sessionCache = new();
 
         /// <inheritdoc />
         public override void Initialize()
@@ -88,7 +87,7 @@ namespace Content.Server.Storage.EntitySystems
         /// <inheritdoc />
         public override void Update(float frameTime)
         {
-            foreach (var component in EntityManager.EntityQuery<ServerStorageComponent>())
+            foreach (var (_, component) in EntityManager.EntityQuery<ActiveStorageComponent, ServerStorageComponent>())
             {
                 CheckSubscribedEntities(component);
             }
@@ -261,31 +260,32 @@ namespace Content.Server.Storage.EntitySystems
 
         private void CheckSubscribedEntities(ServerStorageComponent storageComp)
         {
+            var xform = Transform(storageComp.Owner);
+            var storagePos = xform.WorldPosition;
+            var storageMap = xform.MapID;
 
-            // We have to cache the set of sessions because Unsubscribe modifies the original.
-            _sessionCache.Clear();
-            _sessionCache.AddRange(storageComp.SubscribedSessions);
+            var remove = new RemQueue<IPlayerSession>();
 
-            if (_sessionCache.Count == 0)
-                return;
-
-            var storagePos = EntityManager.GetComponent<TransformComponent>(storageComp.Owner).WorldPosition;
-            var storageMap = EntityManager.GetComponent<TransformComponent>(storageComp.Owner).MapID;
-
-            foreach (var session in _sessionCache)
+            foreach (var session in storageComp.SubscribedSessions)
             {
                 // The component manages the set of sessions, so this invalid session should be removed soon.
                 if (session.AttachedEntity is not {} attachedEntity || !EntityManager.EntityExists(attachedEntity))
                     continue;
 
-                if (storageMap != EntityManager.GetComponent<TransformComponent>(attachedEntity).MapID)
+                var attachedXform = Transform(attachedEntity);
+                if (storageMap != attachedXform.MapID)
                     continue;
 
-                var distanceSquared = (storagePos - EntityManager.GetComponent<TransformComponent>(attachedEntity).WorldPosition).LengthSquared;
+                var distanceSquared = (storagePos - attachedXform.WorldPosition).LengthSquared;
                 if (distanceSquared > SharedInteractionSystem.InteractionRangeSquared)
                 {
-                    storageComp.UnsubscribeSession(session);
+                    remove.Add(session);
                 }
+            }
+
+            foreach (var session in remove)
+            {
+                storageComp.UnsubscribeSession(session);
             }
         }
     }
