@@ -24,7 +24,7 @@ public sealed class GameMapManager : IGameMapManager
     [Dependency] private readonly IChatManager _chatManager = default!;
 
     [ViewVariables]
-    private readonly Queue<string> _previousMaps = new Queue<string>();
+    private readonly Queue<string> _previousMaps = new();
     [ViewVariables]
     private GameMapPrototype _currentMap = default!;
     [ViewVariables]
@@ -138,7 +138,7 @@ public sealed class GameMapManager : IGameMapManager
         var map = GetSelectedMap();
 
         if (markAsPlayed)
-            _previousMaps.Enqueue(map.ID);
+            EnqueueMap(map.ID);
         return map;
     }
 
