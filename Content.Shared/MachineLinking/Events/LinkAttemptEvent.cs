@@ -1,21 +1,20 @@
-using Content.Server.MachineLinking.Components;
-using Robust.Shared.GameObjects;
-
-namespace Content.Server.MachineLinking.Events
+namespace Content.Shared.MachineLinking.Events
 {
     public sealed class LinkAttemptEvent : CancellableEntityEventArgs
     {
-        public readonly SignalTransmitterComponent TransmitterComponent;
+        public readonly EntityUid Transmitter;
+        public readonly EntityUid Receiver;
+        public readonly EntityUid User;
         public readonly string TransmitterPort;
-        public readonly SignalReceiverComponent ReceiverComponent;
         public readonly string ReceiverPort;
 
-        public LinkAttemptEvent(SignalTransmitterComponent transmitterComponent, string transmitterPort, SignalReceiverComponent receiverComponent, string receiverPort)
+        public LinkAttemptEvent(EntityUid user, EntityUid transmitter, string transmitterPort, EntityUid receiver, string receiverPort)
         {
-            TransmitterComponent = transmitterComponent;
-            this.TransmitterPort = transmitterPort;
-            ReceiverComponent = receiverComponent;
-            this.ReceiverPort = receiverPort;
+            User = user;
+            Transmitter = transmitter;
+            TransmitterPort = transmitterPort;
+            Receiver = receiver;
+            ReceiverPort = receiverPort;
         }
     }
 }
