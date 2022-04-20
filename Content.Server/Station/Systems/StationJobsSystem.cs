@@ -61,6 +61,12 @@ public sealed partial class StationJobsSystem : EntitySystem
                 return null;
             return (uint?) x.Value[1];
         });
+        stationJobs.RoundStartJobList = mapJobList.ToDictionary(x => x.Key, x =>
+        {
+            if (x.Value[0] <= -1)
+                return null;
+            return (uint?) x.Value[0];
+        });
         stationJobs.OverflowJobs = stationData.StationConfig.OverflowJobs.ToHashSet();
         UpdateJobsAvailable();
     }
@@ -286,14 +292,29 @@ public sealed partial class StationJobsSystem : EntitySystem
     /// </summary>
     /// <param name="station">Station to get jobs for</param>
     /// <param name="stationJobs">Resolve pattern, station jobs component of the station.</param>
-    /// <returns></returns>
-    /// <exception cref="ArgumentException"></exception>
+    /// <returns>List of all jobs on the station.</returns>
+    /// <exception cref="ArgumentException">Thrown when the given station is not a station.</exception>
     public IReadOnlyDictionary<string, uint?> GetJobs(EntityUid station, StationJobsComponent? stationJobs = null)
     {
         if (!Resolve(station, ref stationJobs))
             throw new ArgumentException("Tried to use a non-station entity as a station!", nameof(station));
 
         return stationJobs.JobList;
+    }
+
+    /// <summary>
+    /// Returns a readonly dictionary of all round-start jobs and their slot info.
+    /// </summary>
+    /// <param name="station">Station to get jobs for</param>
+    /// <param name="stationJobs">Resolve pattern, station jobs component of the station.</param>
+    /// <returns>List of all round-start jobs.</returns>
+    /// <exception cref="ArgumentException">Thrown when the given station is not a station.</exception>
+    public IReadOnlyDictionary<string, uint?> GetRoundStartJobs(EntityUid station, StationJobsComponent? stationJobs = null)
+    {
+        if (!Resolve(station, ref stationJobs))
+            throw new ArgumentException("Tried to use a non-station entity as a station!", nameof(station));
+
+        return stationJobs.RoundStartJobList;
     }
 
     /// <summary>

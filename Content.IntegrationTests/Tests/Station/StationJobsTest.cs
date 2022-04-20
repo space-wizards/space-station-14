@@ -33,12 +33,17 @@ public sealed class StationJobsTest : ContentIntegrationTest
       overflowJobs:
       - Assistant
       availableJobs:
+        TMime: [0, -1]
         TAssistant: [-1, -1]
         TCaptain: [5, 5]
         TClown: [5, 6]
 
 - type: job
   id: TAssistant
+
+- type: job
+  id: TMime
+  weight: 20
 
 - type: job
   id: TClown
@@ -64,7 +69,6 @@ public sealed class StationJobsTest : ContentIntegrationTest
 
         var prototypeManager = server.ResolveDependency<IPrototypeManager>();
         var mapManager = server.ResolveDependency<IMapManager>();
-        var roleBanManager = server.ResolveDependency<RoleBanManager>();
         var fooStationProto = prototypeManager.Index<GameMapPrototype>("FooStation");
         var entSysMan = server.ResolveDependency<IEntityManager>().EntitySysManager;
         var stationJobs = entSysMan.GetEntitySystem<StationJobsSystem>();
@@ -86,6 +90,7 @@ public sealed class StationJobsTest : ContentIntegrationTest
             var fakePlayers = new Dictionary<NetUserId, HumanoidCharacterProfile>()
                 .AddJob("TAssistant", JobPriority.Medium, PlayerCount)
                 .AddPreference("TClown", JobPriority.Low)
+                .AddPreference("TMime", JobPriority.High)
                 .WithPlayers(
                     new Dictionary<NetUserId, HumanoidCharacterProfile>()
                     .AddJob("TCaptain", JobPriority.High, CaptainCount)
@@ -115,6 +120,8 @@ public sealed class StationJobsTest : ContentIntegrationTest
 
             // All clown players have assistant as a higher priority.
             Assert.That(assigned.Values.Select(x => x.Item1).ToList(), Does.Not.Contain("TClown"));
+            // Mime isn't an open job-slot at round-start.
+            Assert.That(assigned.Values.Select(x => x.Item1).ToList(), Does.Not.Contain("TMime"));
             // All players have slots they can fill.
             Assert.That(assigned.Values, Has.Count.EqualTo(TotalPlayers), $"Expected {TotalPlayers} players.");
             // There must be assistants present.
@@ -124,7 +131,7 @@ public sealed class StationJobsTest : ContentIntegrationTest
     }
 }
 
-public static class JobExtensions
+internal static class JobExtensions
 {
     public static Dictionary<NetUserId, HumanoidCharacterProfile> AddJob(
         this Dictionary<NetUserId, HumanoidCharacterProfile> inp, string jobId, JobPriority prio = JobPriority.Medium,

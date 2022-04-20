@@ -39,8 +39,13 @@ public sealed partial class StationJobsSystem
     /// </summary>
     /// <param name="profiles">The profiles to use for selection.</param>
     /// <param name="stations">List of stations to assign for.</param>
+    /// <param name="useRoundStartJobs">Whether or not to use the round-start jobs for the stations instead of their current jobs.</param>
     /// <returns>List of players and their assigned jobs.</returns>
-    public Dictionary<NetUserId, (string, EntityUid)> AssignJobs(Dictionary<NetUserId, HumanoidCharacterProfile> profiles, IReadOnlyList<EntityUid> stations)
+    /// <remarks>
+    /// You probably shouldn't use useRoundStartJobs mid-round if the station has been available to join,
+    /// as there may end up being more round-start slots than available slots, which can cause weird behavior.
+    /// </remarks>
+    public Dictionary<NetUserId, (string, EntityUid)> AssignJobs(Dictionary<NetUserId, HumanoidCharacterProfile> profiles, IReadOnlyList<EntityUid> stations, bool useRoundStartJobs = true)
     {
         DebugTools.Assert(stations.Count > 0);
         DebugTools.Assert(profiles.Count > 0);
@@ -48,6 +53,20 @@ public sealed partial class StationJobsSystem
 
         // Player <-> (job, station)
         var assigned = new Dictionary<NetUserId, (string, EntityUid)>(profiles.Count);
+
+        var stationJobs = new Dictionary<EntityUid, Dictionary<string, uint?>>();
+        foreach (var station in stations)
+        {
+            if (useRoundStartJobs)
+            {
+                stationJobs.Add(station, GetRoundStartJobs(station).ToDictionary(x => x.Key, x => x.Value));
+            }
+            else
+            {
+                stationJobs.Add(station, GetJobs(station).ToDictionary(x => x.Key, x => x.Value));
+            }
+        }
+
 
         // We reuse this collection.
         var stationSlots = new Dictionary<EntityUid, Dictionary<string, uint?>>(stations.Count);
@@ -81,6 +100,7 @@ public sealed partial class StationJobsSystem
                         players.Remove(player);
                     }
 
+                    stationJobs[station][job]--;
                     profiles.Remove(player);
                     assigned.Add(player, (job, station));
 
@@ -112,7 +132,7 @@ public sealed partial class StationJobsSystem
                     var slots = stationSlots[station];
 
                     // Get all of the jobs in the selected weight category.
-                    foreach (var (job, slot) in GetJobs(station))
+                    foreach (var (job, slot) in stationJobs[station])
                     {
                         if (_jobsByWeight[weight].Contains(job))
                             slots.Add(job, slot);
