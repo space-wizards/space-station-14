@@ -203,3 +203,20 @@
           maxFillLevels: 3
           fillBaseName: cart_water_
           changeColor: false
+
+
+- type: entity
+  id: FloorDrain
+  name: drain
+  description: Drains puddles around it. Useful for dumping mop buckets or keeping certain rooms clean.
+  placement:
+    mode: SnapgridCenter
+  components:
+    - type: Sprite
+      netsync: false
+      drawdepth: FloorObjects
+      sprite: Structures/Piping/Atmospherics/scrubber.rsi
+      state: scrub_off
+    - type: Physics
+      bodyType: Static
+    - type: Drain

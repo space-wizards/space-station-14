@@ -63,6 +63,7 @@ namespace Content.Client.Entry
             "AtmosFixMarker",
             "CablePlacer",
             "Drink",
+            "Drain",
             "Food",
             "DeployableBarrier",
             "MagicMirror",
