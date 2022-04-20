@@ -29,7 +29,7 @@ public sealed class ClimbSystem : SharedClimbSystem
     {
         base.OnCanDragDropOn(uid, component, args);
 
-        if (!args.Handled)
+        if (!args.CanDrop)
             return;
 
         var user = args.User;
@@ -39,7 +39,8 @@ public sealed class ClimbSystem : SharedClimbSystem
 
         var sys = Get<SharedInteractionSystem>();
 
-        args.Handled = sys.InRangeUnobstructed(user, target, component.Range, predicate: Ignored)
+        args.CanDrop = sys.InRangeUnobstructed(user, target, component.Range, predicate: Ignored)
                        && sys.InRangeUnobstructed(user, dragged, component.Range, predicate: Ignored);
+        args.Handled = true;
     }
 }
