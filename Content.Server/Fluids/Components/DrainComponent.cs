@@ -3,6 +3,8 @@ namespace Content.Server.Fluids.Components
     [RegisterComponent]
     public sealed class DrainComponent : Component
     {
+        public const string SolutionName = "drainBuffer";
+
         [DataField("accumulator")]
         public float Accumulator = 0f;
 
@@ -13,6 +15,11 @@ namespace Content.Server.Fluids.Components
         /// </summary>
         [DataField("unitsPerSecond")]
         public float UnitsPerSecond = 6f;
+
+        /// <summary>
+        /// How many units are ejected from the buffer per second.
+        /// </summary>
+        public float UnitsDestroyedPerSecond = 3f;
 
         /// <summary>
         /// How many (unobstructed) tiles away the drain will

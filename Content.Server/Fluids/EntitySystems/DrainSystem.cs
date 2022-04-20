@@ -24,6 +24,16 @@ namespace Content.Server.Fluids.EntitySystems
                     continue;
                 }
                 drain.Accumulator -= drain.DrainFrequency;
+
+                /// Best to do this one every second rather than once every tick...
+                _solutionSystem.TryGetSolution(drain.Owner, DrainComponent.SolutionName, out var drainSolution);
+
+                if (drainSolution is null)
+                    return;
+
+                /// Remove a bit from the buffer
+                _solutionSystem.SplitSolution(drain.Owner, drainSolution, (drain.UnitsDestroyedPerSecond * drain.DrainFrequency));
+
                 /// This will ensure that UnitsPerSecond is per second...
                 var amount = drain.UnitsPerSecond * drain.DrainFrequency;
                 var xform = Transform(drain.Owner);
@@ -53,18 +63,22 @@ namespace Content.Server.Fluids.EntitySystems
                 {
                     /// Queue the solution deletion if it's empty. EvaporationSystem might also do this
                     /// but queuedelete should be pretty safe.
-                    if (!_solutionSystem.TryGetSolution(puddle.Owner, puddle.SolutionName, out var solution))
+                    if (!_solutionSystem.TryGetSolution(puddle.Owner, puddle.SolutionName, out var puddleSolution))
                     {
                         EntityManager.QueueDeleteEntity(puddle.Owner);
                         continue;
                     }
 
-                    /// Removes the adjusted equilvalent of DrainComponent.UnitsPerSecond, or just cleanly
-                    /// removes everything if the current volume is less than that.
-                    _solutionSystem.SplitSolution(puddle.Owner, solution,
-                        FixedPoint2.Min(FixedPoint2.New(amount), solution.CurrentVolume));
+                    /// Removes the lowest of:
+                    /// the drain component's units per second adjusted for # of puddles
+                    /// the puddle's remaining volume (making it cleanly zero)
+                    /// the drain's remaining volume in its buffer.
+                    var transferSolution = _solutionSystem.SplitSolution(puddle.Owner, puddleSolution,
+                        FixedPoint2.Min(FixedPoint2.New(amount), puddleSolution.CurrentVolume, drainSolution.AvailableVolume));
 
-                    if (solution.CurrentVolume <= 0)
+                    _solutionSystem.TryAddSolution(drain.Owner, drainSolution, transferSolution);
+
+                    if (puddleSolution.CurrentVolume <= 0)
                     {
                         EntityManager.QueueDeleteEntity(puddle.Owner);
                     }

@@ -18,7 +18,7 @@
         maxVol: 50
   - type: Tag
     tags:
-      - DroneUsable #No bucket because it holds chems, they can drag the thing around instead
+      - DroneUsable #No bucket because it holds chems, they can drag the cart or use a drain
       - Mop
 
 - type: entity
@@ -226,3 +226,7 @@
       range: 5
       sound:
         path: /Audio/Ambience/Objects/drain.ogg
+    - type: SolutionContainerManager
+      solutions:
+        drainBuffer:
+          maxVol: 500
