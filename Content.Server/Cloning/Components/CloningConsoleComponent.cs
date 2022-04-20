@@ -1,8 +1,4 @@
-using Content.Server.UserInterface;
-using Robust.Server.GameObjects;
-using Content.Shared.Cloning.CloningConsole;
-
-namespace Content.Server.Cloning.CloningConsole
+namespace Content.Server.Cloning.Components
 {
     [RegisterComponent]
     public sealed class CloningConsoleComponent : Component

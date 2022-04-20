@@ -5,7 +5,6 @@ using Robust.Shared.Map;
 using Content.Server.Cloning.Components;
 using Content.Server.Power.Components;
 using Content.Server.Mind.Components;
-using Content.Server.Preferences.Managers;
 using Content.Shared.Interaction;
 using Content.Shared.MobState.Components;
 using Robust.Server.GameObjects;
@@ -14,15 +13,14 @@ using Content.Shared.ActionBlocker;
 using Content.Shared.Cloning.CloningConsole;
 using Content.Shared.Cloning;
 
-namespace Content.Server.Cloning.CloningConsole
+namespace Content.Server.Cloning.Systems
 {
     [UsedImplicitly]
-    internal sealed class CloningConsoleSystem : EntitySystem
+    public sealed partial class CloningConsoleSystem : EntitySystem
     {
         [Dependency] private readonly IMapManager _mapManager = default!;
         [Dependency] private readonly IPlayerManager _playerManager = default!;
         [Dependency] private readonly IGameTiming _gameTiming = default!;
-        [Dependency] private readonly IServerPreferencesManager _prefsManager = null!;
         [Dependency] private readonly CloningSystem _cloningSystem = default!;
         [Dependency] private readonly ActionBlockerSystem _actionBlockerSystem = default!;
         [Dependency] private readonly UserInterfaceSystem _uiSystem = default!;

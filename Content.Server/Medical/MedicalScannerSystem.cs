@@ -9,7 +9,7 @@ using Content.Shared.Movement;
 using Content.Shared.Verbs;
 using Robust.Shared.Containers;
 using Robust.Shared.Map;
-using Content.Server.Cloning.CloningConsole;
+using Content.Server.Cloning.Components;
 
 using static Content.Shared.MedicalScanner.SharedMedicalScannerComponent;
 

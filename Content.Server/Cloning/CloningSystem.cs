@@ -12,9 +12,8 @@ using Content.Server.EUI;
 using Robust.Shared.Containers;
 using Content.Shared.Cloning;
 using Robust.Shared.Map;
-using Content.Server.Cloning.CloningConsole;
 
-namespace Content.Server.Cloning
+namespace Content.Server.Cloning.Systems
 {
     internal sealed class CloningSystem : EntitySystem
     {
