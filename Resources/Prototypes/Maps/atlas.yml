@@ -4,7 +4,7 @@
   mapNameTemplate: '{0} Atlas Ship {1}'
   nameGenerator:
     !type:NanotrasenNameGenerator
-    prefixCreator: '14'
+    prefixCreator: 'R4' # R4407/Goon. GS isn't as cool sounding.
   mapPath: /Maps/atlas.yml
   minPlayers: 0
   maxPlayers: 29
