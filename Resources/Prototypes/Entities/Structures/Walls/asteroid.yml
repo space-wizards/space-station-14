@@ -15,10 +15,10 @@
       prob: 0.05
       orGroup: Asteroid
     - id: SpaceCrystal1
-      prob: 0.10
+      prob: 0.20
       orGroup: Asteroid
     - id: PlasmaOre1
-      prob: 0.05
+      prob: 0.10
       orGroup: Asteroid
     - id: SilverOre1
       prob: 0.025
