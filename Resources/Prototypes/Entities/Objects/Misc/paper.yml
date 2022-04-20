@@ -413,8 +413,8 @@
   components:
   - type: Stamp
     stampedName: stamp-component-stamped-name-syndicate
-    stampState: "paper_stamp-warden" #Definitely not laziness. The color scheme is close enough anyway.
+    stampState: "paper_stamp-syndicate" #Definitely not laziness. The color scheme is close enough anyway.
   - type: Sprite
     sprite: Objects/Misc/bureaucracy.rsi
-    state: stamp-warden
+    state: stamp-syndicate
     netsync: false
