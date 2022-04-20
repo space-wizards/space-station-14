@@ -51,8 +51,8 @@ public sealed class EscapeInventorySystem : EntitySystem
             BreakOnDamage = true,
             BreakOnStun = true,
             NeedHand = false,
-            UserFinishedEvent = new EscapeDoAfterComplete(user),
-            UserCancelledEvent = new EscapeDoAfterCancel(user),
+            UserFinishedEvent = new EscapeDoAfterComplete(),
+            UserCancelledEvent = new EscapeDoAfterCancel(),
         };
 
         component.IsResisting = true;
@@ -73,23 +73,7 @@ public sealed class EscapeInventorySystem : EntitySystem
         component.IsResisting = false;
     }
 
-    private sealed class EscapeDoAfterComplete : EntityEventArgs
-    {
-        public readonly EntityUid User;
+    private sealed class EscapeDoAfterComplete : EntityEventArgs { }
 
-        public EscapeDoAfterComplete(EntityUid userUid)
-        {
-            User = userUid;
-        }
-    }
-
-    private sealed class EscapeDoAfterCancel : EntityEventArgs
-    {
-        public readonly EntityUid User;
-
-        public EscapeDoAfterCancel(EntityUid userUid)
-        {
-            User = userUid;
-        }
-    }
+    private sealed class EscapeDoAfterCancel : EntityEventArgs { }
 }
