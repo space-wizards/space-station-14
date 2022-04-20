@@ -107,6 +107,8 @@
     sprite: Clothing/Head/Hats/chefhat.rsi
   - type: Clothing
     sprite: Clothing/Head/Hats/chefhat.rsi
+  - type: Storage
+    capacity: 5
 
 - type: entity
   parent: ClothingHeadBase

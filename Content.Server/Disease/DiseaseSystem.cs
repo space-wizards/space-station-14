@@ -94,8 +94,10 @@ namespace Content.Server.Disease
                     continue;
                 }
 
-                foreach (var disease in carrierComp.Diseases)
+                for (var i = 0; i < carrierComp.Diseases.Count; i++) //this is a for-loop so that it doesn't break when new diseases are added
                 {
+                    var disease = carrierComp.Diseases[i];
+
                     var args = new DiseaseEffectArgs(carrierComp.Owner, disease, EntityManager);
                     disease.Accumulator += frameTime;
                     if (disease.Accumulator >= disease.TickTime)
