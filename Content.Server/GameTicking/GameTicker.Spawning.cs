@@ -24,10 +24,7 @@ namespace Content.Server.GameTicking
     {
         private const string ObserverPrototypeName = "MobObserver";
 
-        /// <summary>
-        /// Can't yet be removed because every test ever seems to depend on it. I'll make removing this a different PR.
-        /// </summary>
-        [ViewVariables(VVAccess.ReadWrite)]
+        [ViewVariables(VVAccess.ReadWrite), Obsolete("Due for removal when observer spawning is refactored.")]
         private EntityCoordinates _spawnPoint;
 
         // Mainly to avoid allocations.

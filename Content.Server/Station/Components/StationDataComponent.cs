@@ -14,13 +14,13 @@ public sealed class StationDataComponent : Component
     /// <summary>
     /// The game map prototype, if any, associated with this station.
     /// </summary>
-    [ViewVariables]
+    [DataField("stationConfig")]
     public StationConfig? StationConfig = null;
 
     /// <summary>
     /// List of all grids this station is part of.
     /// You shouldn't mutate this.
     /// </summary>
-    [ViewVariables]
+    [DataField("grids")] // Can this even be serialized or does it need to be a list of entities
     public readonly HashSet<GridId> Grids = new();
 }

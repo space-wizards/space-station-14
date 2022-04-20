@@ -12,17 +12,17 @@ public sealed class StationJobsComponent : Component
     /// <summary>
     /// Total *round-start* jobs at station start.
     /// </summary>
-    [ViewVariables] public int RoundStartTotalJobs;
+    [DataField("roundStartTotalJobs")] public int RoundStartTotalJobs;
 
     /// <summary>
     /// Total *mid-round* jobs at station start.
     /// </summary>
-    [ViewVariables] public int MidRoundTotalJobs;
+    [DataField("midRoundTotalJobs")] public int MidRoundTotalJobs;
 
     /// <summary>
     /// Current total jobs.
     /// </summary>
-    [ViewVariables] public int TotalJobs;
+    [DataField("totalJobs")] public int TotalJobs;
 
     /// <summary>
     /// The percentage of jobs remaining.
@@ -39,7 +39,7 @@ public sealed class StationJobsComponent : Component
     /// <remarks>
     /// This should not be mutated or used directly unless you really know what you're doing, go through StationJobsSystem.
     /// </remarks>
-    [ViewVariables] public Dictionary<string, uint?> JobList = new();
+    [DataField("jobList")] public Dictionary<string, uint?> JobList = new();
 
     /// <summary>
     /// The round-start list of jobs.
@@ -47,10 +47,10 @@ public sealed class StationJobsComponent : Component
     /// <remarks>
     /// This should not be mutated, ever.
     /// </remarks>
-    [ViewVariables] public Dictionary<string, uint?> RoundStartJobList = new();
+    [DataField("roundStartJobList")] public Dictionary<string, uint?> RoundStartJobList = new();
 
     /// <summary>
     /// Overflow jobs that round-start can spawn infinitely many of.
     /// </summary>
-    [ViewVariables] public HashSet<string> OverflowJobs = new();
+    [DataField("overflowJobs")] public HashSet<string> OverflowJobs = new();
 }
