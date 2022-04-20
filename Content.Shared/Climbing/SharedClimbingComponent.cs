@@ -107,7 +107,7 @@ public abstract class SharedClimbingComponent : Component
     }
 
     [Serializable, NetSerializable]
-    protected sealed class ClimbModeComponentState : ComponentState
+    public sealed class ClimbModeComponentState : ComponentState
     {
         public ClimbModeComponentState(bool climbing, bool isTransitioning)
         {

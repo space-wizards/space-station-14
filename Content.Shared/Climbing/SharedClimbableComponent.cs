@@ -1,21 +1,13 @@
 ﻿using Content.Shared.DragDrop;
 using Content.Shared.Interaction;
 
-namespace Content.Shared.Climbing;
-
-public interface IClimbable { }
-
-public abstract class SharedClimbableComponent : Component, IClimbable, IDragDropOn
+namespace Content.Shared.Climbing
 {
-    /// <summary>
-    ///     The range from which this entity can be climbed.
-    /// </summary>
-    [ViewVariables] [DataField("range")] protected float Range = SharedInteractionSystem.InteractionRange / 1.4f;
-
-    public virtual bool CanDragDropOn(DragDropEvent eventArgs)
+    public abstract class SharedClimbableComponent : Component
     {
-        return IoCManager.Resolve<IEntityManager>().HasComponent<SharedClimbingComponent>(eventArgs.Dragged);
+        /// <summary>
+        ///     The range from which this entity can be climbed.
+        /// </summary>
+        [ViewVariables] [DataField("range")] public float Range = SharedInteractionSystem.InteractionRange / 1.4f;
     }
-
-    public abstract bool DragDropOn(DragDropEvent eventArgs);
 }
