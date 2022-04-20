@@ -7,3 +7,6 @@ ent-ExplosivePayload = разрывной заряд
 ent-ChemicalPayload = химический заряд
     .desc = Химический заряд. Имеется место для двух мензурок. В сочетании с запалом и корпусом может использоваться для запуска химических реакций.
     .suffix = { "" }
+ent-FlashPayload = flash payload
+    .desc = A single-use flash payload.
+    .suffix = { "" }

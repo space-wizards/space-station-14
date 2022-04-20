@@ -52,3 +52,6 @@ ent-ClothingOuterHardsuitLing = organic space suit
 ent-ClothingOuterHardsuitSpatio = spationaut hardsuit
     .desc = A lightweight hardsuit designed for industrial eva activies in zero grav.
     .suffix = { "" }
+ent-ClothingOuterHardsuitVoidParamed = Paramedic Void Suit
+    .desc = A void suit made for paramedics.
+    .suffix = { "" }

@@ -46,3 +46,6 @@ ent-ClothingHeadHelmetAtmosFire = atmos fire helmet
 ent-ClothingHeadHelmetLing = chitinous helmet
     .desc = Inflates the changeling's body into an all-consuming chitinous mass of armor. Provides extensive protection against physical damage, but less against other types. Its mass slows the changeling's movement, and maintaining its shape slows chemical generation.
     .suffix = { "" }
+ent-ClothingHeadHelmetVoidParamed = Paramedic Void Helmet
+    .desc = A void helmet made for paramedics.
+    .suffix = { "" }
