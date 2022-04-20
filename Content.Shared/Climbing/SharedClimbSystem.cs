@@ -1,23 +1,21 @@
 using Content.Shared.Movement;
-using Robust.Shared.GameObjects;
 
-namespace Content.Shared.Climbing
+namespace Content.Shared.Climbing;
+
+public abstract class SharedClimbSystem : EntitySystem
 {
-    public abstract class SharedClimbSystem : EntitySystem
+    public override void Initialize()
     {
-        public override void Initialize()
-        {
-            base.Initialize();
-            SubscribeLocalEvent<SharedClimbingComponent, UpdateCanMoveEvent>(HandleMoveAttempt);
-        }
+        base.Initialize();
+        SubscribeLocalEvent<SharedClimbingComponent, UpdateCanMoveEvent>(HandleMoveAttempt);
+    }
 
-        private void HandleMoveAttempt(EntityUid uid, SharedClimbingComponent component, UpdateCanMoveEvent args)
-        {
-            if (component.LifeStage > ComponentLifeStage.Running)
-                return;
+    private void HandleMoveAttempt(EntityUid uid, SharedClimbingComponent component, UpdateCanMoveEvent args)
+    {
+        if (component.LifeStage > ComponentLifeStage.Running)
+            return;
 
-            if (component.OwnerIsTransitioning)
-                args.Cancel();
-        }
+        if (component.OwnerIsTransitioning)
+            args.Cancel();
     }
 }
