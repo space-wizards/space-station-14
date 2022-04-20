@@ -22,16 +22,12 @@ public sealed class SpawnPointSystem : EntitySystem
     {
         // TODO: Cache all this if it ends up important.
         var points = EntityQuery<SpawnPointComponent>().ToList();
-        Logger.Debug($"B {args.Station}");
         _random.Shuffle(points);
         foreach (var spawnPoint in points)
         {
             var xform = Transform(spawnPoint.Owner);
-            Logger.Debug($"Owner: {_stationSystem.GetOwningStation(spawnPoint.Owner, xform)}");
             if (args.Station != null && _stationSystem.GetOwningStation(spawnPoint.Owner, xform) != args.Station)
                 continue;
-
-            Logger.Debug($"A {spawnPoint.Job?.ID}");
 
             if (_gameTicker.RunLevel == GameRunLevel.InRound && spawnPoint.SpawnType == SpawnPointType.LateJoin)
             {

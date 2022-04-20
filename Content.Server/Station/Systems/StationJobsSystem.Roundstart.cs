@@ -47,7 +47,10 @@ public sealed partial class StationJobsSystem
     public Dictionary<NetUserId, (string, EntityUid)> AssignJobs(Dictionary<NetUserId, HumanoidCharacterProfile> profiles, IReadOnlyList<EntityUid> stations, bool useRoundStartJobs = true)
     {
         DebugTools.Assert(stations.Count > 0);
-        DebugTools.Assert(profiles.Count > 0);
+
+        if (profiles.Count == 0)
+            return new Dictionary<NetUserId, (string, EntityUid)>();
+
         profiles = profiles.ShallowClone();
 
         // Player <-> (job, station)
