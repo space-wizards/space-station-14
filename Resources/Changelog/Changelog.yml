@@ -1,9 +1,4 @@
 Entries:
-- author: metalgearsloth
-  changes:
-  - {message: Remove duplicate ghost takeovers when an admin controls a mob., type: Fix}
-  id: 866
-  time: '2022-01-12T07:25:05.0000000+00:00'
 - author: Peptide90
   changes:
   - {message: Fixed trashbag so now only trash can be picked up., type: Fix}
@@ -3042,3 +3037,9 @@ Entries:
   - {message: You can now put stuff in the chef hat, type: Add}
   id: 1365
   time: '2022-04-20T05:17:03.0000000+00:00'
+- author: UKNOWH
+  changes:
+  - {message: Added a Flash payload that allows players to make modular flashbangs,
+    type: Add}
+  id: 1366
+  time: '2022-04-20T06:08:57.0000000+00:00'
