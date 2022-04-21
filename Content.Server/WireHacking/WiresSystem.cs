@@ -210,26 +210,23 @@ public sealed class WiresSystem : EntitySystem
         }
     }
 
-    // lifting DoAfterEventArgs for now because i cba to actually
-    // write up an arg set
-    //
-    // TODO: actually write the arg set
-    //
-    // JANKY, FIX LATER
-    public void StartWireAction(DoAfterEventArgs args)
+    public void StartWireAction(EntityUid owner, float delay, object key, WireDoAfterEvent onFinish)
     {
-        if (!_activeWires.ContainsKey((EntityUid) args.User!))
+        if (!_activeWires.ContainsKey(owner))
         {
-            _activeWires.Add((EntityUid) args.User!, new());
+            _activeWires.Add(owner, new());
         }
 
-        _activeWires[(EntityUid) args.User!].Add(new ActiveWireAction
+        CancellationTokenSource tokenSource = new();
+
+        SetData(owner, key, tokenSource);
+
+        _activeWires[owner].Add(new ActiveWireAction
         (
-            args.User,
-            args.Delay,
-            args.CancelToken,
-            (WireDoAfterEvent) args.UserFinishedEvent!,
-            (WireDoAfterEvent) args.UserCancelledEvent!
+            owner,
+            delay,
+            tokenSource.Token,
+            onFinish
         ));
 
     }
@@ -245,7 +242,7 @@ public sealed class WiresSystem : EntitySystem
             {
                 if (wire.CancelToken.IsCancellationRequested)
                 {
-                    RaiseLocalEvent(owner, wire.OnCancel);
+                    RaiseLocalEvent(owner, wire.OnFinish);
                     _finishedWires.Add((owner, wire));
                 }
                 else
@@ -283,15 +280,13 @@ public sealed class WiresSystem : EntitySystem
         public float TimeLeft;
         public CancellationToken CancelToken;
         public WireDoAfterEvent OnFinish;
-        public WireDoAfterEvent OnCancel;
 
-        public ActiveWireAction(object identifier, float time, CancellationToken cancelToken, WireDoAfterEvent onFinish, WireDoAfterEvent onCancel)
+        public ActiveWireAction(object identifier, float time, CancellationToken cancelToken, WireDoAfterEvent onFinish)
         {
             Id = identifier;
             TimeLeft = time;
             CancelToken = cancelToken;
             OnFinish = onFinish;
-            OnCancel = onCancel;
         }
     }
 

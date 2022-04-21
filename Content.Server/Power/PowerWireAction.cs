@@ -73,13 +73,12 @@ public class PowerWireAction : BaseWireAction
 
             }
 
-            if (power.PowerDisabled
-                && WiresSystem.TryGetData(wire.Owner, PowerWireActionKey.ElectrifiedCancel, out var electrifiedObject)
-                && electrifiedObject is CancellationTokenSource electrifiedToken)
+            /* is this behavior the same in SS13?
+            if (power.PowerDisabled)
             {
-                electrifiedToken.Cancel();
+                WiresSystem.TryCancelWireAction(wire.Owner, PowerWireActionKey.ElectrifiedCancel);
             }
-
+            */
         }
 
         return new StatusLightData(
@@ -115,18 +114,7 @@ public class PowerWireAction : BaseWireAction
             // if the power is disabled however, just don't bother
             if (timed && !power.PowerDisabled)
             {
-                var newToken = new CancellationTokenSource();
-                var doAfter = new DoAfterEventArgs(
-                    wire.Owner,
-                    _pulseTimeout,
-                    newToken.Token)
-                {
-                    UserCancelledEvent = new WireDoAfterEvent(AwaitElectrifiedCancel, wire),
-                    UserFinishedEvent = new WireDoAfterEvent(AwaitElectrifiedCancel, wire)
-                };
-
-                WiresSystem.SetData(wire.Owner, PowerWireActionKey.ElectrifiedCancel, newToken);
-                WiresSystem.StartWireAction(doAfter);
+                WiresSystem.StartWireAction(wire.Owner, _pulseTimeout, PowerWireActionKey.ElectrifiedCancel, new WireDoAfterEvent(AwaitElectrifiedCancel, wire));
             }
             else
             {
@@ -184,21 +172,9 @@ public class PowerWireAction : BaseWireAction
 
         WiresSystem.SetData(wire.Owner, PowerWireActionKey.Pulsed, true);
 
-        var newPulseToken = new CancellationTokenSource();
-        var doAfter = new DoAfterEventArgs(
-            wire.Owner,
-            _pulseTimeout,
-            newPulseToken.Token)
-        {
-            UserCancelledEvent = new WireDoAfterEvent(AwaitPulseCancel, wire),
-            UserFinishedEvent = new WireDoAfterEvent(AwaitPulseCancel, wire)
-        };
-
-        WiresSystem.StartWireAction(doAfter);
+        WiresSystem.StartWireAction(wire.Owner, _pulseTimeout, PowerWireActionKey.PulseCancel, new WireDoAfterEvent(AwaitPulseCancel, wire));
 
         // AwaitPulseCancel(wire.Owner, wire, _doAfterSystem.WaitDoAfter(doAfter));
-
-        WiresSystem.SetData(wire.Owner, PowerWireActionKey.PulseCancel, newPulseToken);
 
         return true;
     }
