@@ -1,4 +1,3 @@
-using System.Linq;
 using Content.Server.Climbing.Components;
 using Content.Server.DoAfter;
 using Content.Server.Popups;
@@ -25,10 +24,8 @@ using Robust.Shared.Player;
 namespace Content.Server.Climbing;
 
 [UsedImplicitly]
-internal sealed class ClimbSystem : SharedClimbSystem
+public sealed class ClimbSystem : SharedClimbSystem
 {
-    private readonly HashSet<ClimbingComponent> _activeClimbers = new();
-
     [Dependency] private readonly ActionBlockerSystem _actionBlockerSystem = default!;
     [Dependency] private readonly StunSystem _stunSystem = default!;
     [Dependency] private readonly DamageableSystem _damageableSystem = default!;
@@ -36,6 +33,11 @@ internal sealed class ClimbSystem : SharedClimbSystem
     [Dependency] private readonly DoAfterSystem _doAfterSystem = default!;
     [Dependency] private readonly SharedInteractionSystem _interactionSystem = default!;
     [Dependency] private readonly FixtureSystem _fixtureSystem = default!;
+
+    private const string ClimbingFixtureName = "climb";
+
+    private readonly HashSet<ClimbingComponent> _activeClimbers = new();
+    private readonly Dictionary<EntityUid, List<Fixture>> _fixtureRemoveQueue = new();
 
     public override void Initialize()
     {
@@ -48,43 +50,80 @@ internal sealed class ClimbSystem : SharedClimbSystem
         SubscribeLocalEvent<ClimbableComponent, DragDropEvent>(OnDragDrop);
         SubscribeLocalEvent<ClimbableComponent, ComponentInit>(OnClimbableInit);
         SubscribeLocalEvent<ClimbingComponent, ClimbFinishedEvent>(OnClimbFinished);
+        SubscribeLocalEvent<ClimbingComponent, EndCollideEvent>(OnClimbEndCollide);
     }
 
-    private void OnClimbFinished(EntityUid uid, ClimbingComponent component, ClimbFinishedEvent args)
+    private void OnClimbEndCollide(EntityUid uid, ClimbingComponent component, EndCollideEvent args)
     {
-        if (!TryComp<PhysicsComponent>(uid, out var physics) || !TryComp<FixturesComponent>(uid, out var fixtures))
+        if (args.OurFixture.ID != ClimbingFixtureName || !component.IsClimbing
+            || !TryComp<TransformComponent>(uid, out var transformComp)
+            || !TryComp<PhysicsComponent>(uid, out var physicsComp)
+            || !TryComp<FixturesComponent>(uid, out var fixturesComp))
             return;
 
-        foreach (var (name, fixture) in fixtures.Fixtures)
+        foreach (var fixture in component.DisabledFixtures)
         {
-            if (component.Fixtures.ContainsKey(name))
+            _fixtureSystem.CreateFixture(physicsComp, fixture, true, fixturesComp, transformComp);
+        }
+        component.DisabledFixtures.Clear();
+
+        if (!_fixtureRemoveQueue.TryGetValue(uid, out var removeQueue))
+        {
+            removeQueue = new List<Fixture>();
+            _fixtureRemoveQueue.Add(uid, removeQueue);
+        }
+
+        foreach (var name in component.Fixtures)
+        {
+            if (!fixturesComp.Fixtures.TryGetValue(name, out var fixture))
                 continue;
-            if (fixture.Hard == false || (fixture.CollisionMask & (int) CollisionGroup.MobImpassable) == 0)
+            removeQueue.Add(fixture);
+        }
+        component.Fixtures.Clear();
+
+        if (fixturesComp.Fixtures.TryGetValue(ClimbingFixtureName, out var climbingFixture))
+            removeQueue.Add(climbingFixture);
+
+        component.IsClimbing = false;
+    }
+
+    private void OnClimbFinished(EntityUid uid, ClimbingComponent climbingComp, ClimbFinishedEvent args)
+    {
+        if (!TryComp<PhysicsComponent>(uid, out var physicsComp) || !TryComp<FixturesComponent>(uid, out var fixturesComp))
+            return;
+
+        var toAdd = new List<Fixture>();
+        foreach (var (name, fixture) in fixturesComp.Fixtures)
+        {
+            if (climbingComp.Fixtures.Contains(name)
+                || climbingComp.Fixtures.Contains($"{ClimbingFixtureName}-{name}")
+                || fixture.Hard == false || (fixture.CollisionMask & (int) CollisionGroup.MobImpassable) == 0)
                 continue;
-            component.DisabledFixtures.Add(name);
-            if (!component.Fixtures.ContainsKey($"vault-{name}"))
-            {
-                var vaultFixture = new Fixture(fixture.Shape, fixture.CollisionLayer,
+
+            climbingComp.DisabledFixtures.Add(fixture);
+
+            var climbFixture = new Fixture(fixture.Shape, fixture.CollisionLayer,
                     fixture.CollisionMask & ~(int)(CollisionGroup.MobImpassable | CollisionGroup.VaultImpassable), true)
-                    { ID = $"vault-{name}" };
-                component.Fixtures.Add(vaultFixture.ID, vaultFixture);
-            }
-
-            fixture.Hard = false;
+                { ID = $"{ClimbingFixtureName}-{name}" };
+            toAdd.Add(climbFixture);
+            climbingComp.Fixtures.Add(climbFixture.ID);
         }
 
-        if (!_fixtureSystem.TryCreateFixture(physics,
-                new Fixture(new PhysShapeCircle(), (int) CollisionGroup.None,
-                    (int) CollisionGroup.MobImpassable, false) { ID = "climbCancel" },
-                manager: fixtures))
-            return;
-
-        foreach (var (name, fixture) in component.Fixtures)
+        foreach (var fixture in climbingComp.DisabledFixtures)
         {
-            if (fixtures.Fixtures.ContainsKey(name))
-                continue;
-            _fixtureSystem.TryCreateFixture(physics, fixture, manager:fixtures);
+            _fixtureSystem.DestroyFixture(physicsComp, fixture, manager:fixturesComp);
         }
+
+        foreach (var fixture in toAdd)
+        {
+            _fixtureSystem.TryCreateFixture(physicsComp, fixture, manager:fixturesComp);
+        }
+
+        if (!_fixtureSystem.TryCreateFixture(physicsComp,
+                new Fixture(new PhysShapeCircle(), (int) CollisionGroup.None,
+                    (int) CollisionGroup.MobImpassable, false) { ID = ClimbingFixtureName},
+                manager: fixturesComp))
+            return;
 
         var entityPos = Transform(uid).WorldPosition;
 
@@ -99,7 +138,7 @@ internal sealed class ClimbSystem : SharedClimbSystem
         else if (MathF.Abs(y) < 0.6f) // user climbed mostly horizontally so lets make it a clean straight line
             endPoint = new Vector2(endPoint.X, entityPos.Y);
 
-        climbMode.TryMoveTo(entityPos, endPoint);
+        TryMoveTo(uid, climbingComp, entityPos, endPoint);
         // we may potentially need additional logic since we're forcing a player onto a climbable
         // there's also the cases where the user might collide with the person they are forcing onto the climbable that i haven't accounted for
 
@@ -317,19 +356,51 @@ internal sealed class ClimbSystem : SharedClimbSystem
     {
         if (!Resolve(uid, ref component, false))
             return;
-        component.Owner.SpawnTimer((int) (SharedClimbingComponent.BufferTime * 1000), () =>
-        {
-            if (component.Deleted) return;
-            component.OwnerIsTransitioning = false;
-        });
+        // component.Owner.SpawnTimer((int) (SharedClimbingComponent.BufferTime * 1000), () =>
+        // {
+        //     if (component.Deleted) return;
+        //     component.OwnerIsTransitioning = false;
+        // });
+    }
+
+    /// <summary>
+    /// Make the owner climb from one point to another
+    /// </summary>
+    public void TryMoveTo(EntityUid uid, ClimbingComponent component, Vector2 from, Vector2 to)
+    {
+        if (!TryComp<PhysicsComponent>(uid, out var physicsComponent)) return;
+
+        var velocity = (to - from).Length;
+
+        if (velocity <= 0.0f) return;
+
+        // Since there are bodies with different masses:
+        // mass * 5 seems enough to move entity
+        // instead of launching cats like rockets against the walls with constant impulse value.
+        physicsComponent.ApplyLinearImpulse((to - from).Normalized * velocity * physicsComponent.Mass * 5);
+        // OwnerIsTransitioning = true;
+
+        // UnsetTransitionBoolAfterBufferTime(uid, component);
     }
 
     public override void Update(float frameTime)
     {
-        foreach (var climber in _activeClimbers.ToArray())
+        foreach (var (uid, fixtures) in _fixtureRemoveQueue)
         {
-            climber.Update();
+            if (!TryComp<PhysicsComponent>(uid, out var physicsComp)
+                || !TryComp<FixturesComponent>(uid, out var fixturesComp))
+                continue;
+            foreach (var fixture in fixtures)
+            {
+                _fixtureSystem.DestroyFixture(physicsComp, fixture, true, fixturesComp);
+            }
         }
+        _fixtureRemoveQueue.Clear();
+
+        // foreach (var climber in _activeClimbers.ToArray())
+        // {
+        //     climber.Update();
+        // }
     }
 
     public void Reset(RoundRestartCleanupEvent ev)

@@ -8,9 +8,7 @@ namespace Content.Server.Climbing.Components;
 [ComponentReference(typeof(SharedClimbingComponent))]
 public sealed class ClimbingComponent : SharedClimbingComponent
 {
-    [Dependency] private readonly IGameTiming _gameTiming = default!;
-    [Dependency] private readonly IEntityManager _entityManager = default!;
-
+    [ViewVariables(VVAccess.ReadWrite)]
     public override bool IsClimbing
     {
         get => base.IsClimbing;
@@ -25,12 +23,12 @@ public sealed class ClimbingComponent : SharedClimbingComponent
             {
                 StartClimbTime = IoCManager.Resolve<IGameTiming>().CurTime;
                 EntitySystem.Get<ClimbSystem>().AddActiveClimber(this);
-                OwnerIsTransitioning = true;
+                // OwnerIsTransitioning = true;
             }
             else
             {
                 EntitySystem.Get<ClimbSystem>().RemoveActiveClimber(this);
-                OwnerIsTransitioning = false;
+                // OwnerIsTransitioning = false;
             }
 
             Dirty();
@@ -48,39 +46,11 @@ public sealed class ClimbingComponent : SharedClimbingComponent
         }
     }
 
-    public List<string> DisabledFixtures { get; set; } = new();
-    public Dictionary<string, Fixture> Fixtures { get; set; } = new();
+    [ViewVariables]
+    public List<Fixture> DisabledFixtures { get; } = new();
 
-    /// <summary>
-    /// Make the owner climb from one point to another
-    /// </summary>
-    public void TryMoveTo(Vector2 from, Vector2 to)
-    {
-        if (!_entityManager.TryGetComponent<PhysicsComponent>(Owner, out var physicsComponent)) return;
-
-        var velocity = (to - from).Length;
-
-        if (velocity <= 0.0f) return;
-
-        // Since there are bodies with different masses:
-        // mass * 5 seems enough to move entity
-        // instead of launching cats like rockets against the walls with constant impulse value.
-        physicsComponent.ApplyLinearImpulse((to - from).Normalized * velocity * physicsComponent.Mass * 5);
-        OwnerIsTransitioning = true;
-
-        EntitySystem.Get<ClimbSystem>().UnsetTransitionBoolAfterBufferTime(Owner, this);
-    }
-
-    public void Update()
-    {
-        if (!IsClimbing || _gameTiming.CurTime < TimeSpan.FromSeconds(BufferTime) + StartClimbTime)
-        {
-            return;
-        }
-
-        if (!IsOnClimbableThisFrame && IsClimbing)
-            IsClimbing = false;
-    }
+    [ViewVariables]
+    public List<string> Fixtures { get; } = new();
 
     public override ComponentState GetComponentState()
     {

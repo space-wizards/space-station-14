@@ -12,28 +12,6 @@ public abstract class SharedClimbingComponent : Component
     [Dependency] private readonly IEntityManager _entMan = default!;
     [Dependency] private readonly IEntitySystemManager _sysMan = default!;
 
-    /// <summary>
-    ///     List of fixtures that had vault-impassable prior to an entity being downed. Required when re-adding the
-    ///     collision mask.
-    /// </summary>
-    [DataField("vaultImpassableFixtures")]
-    public List<string> VaultImpassableFixtures = new();
-
-    protected bool IsOnClimbableThisFrame
-    {
-        get
-        {
-            if (!_entMan.TryGetComponent<PhysicsComponent>(Owner, out var physicsComponent)) return false;
-
-            foreach (var entity in physicsComponent.GetBodiesIntersecting())
-            {
-                if ((entity.CollisionLayer & (int) CollisionGroup.VaultImpassable) != 0) return true;
-            }
-
-            return false;
-        }
-    }
-
     [ViewVariables]
     public virtual bool OwnerIsTransitioning
     {
