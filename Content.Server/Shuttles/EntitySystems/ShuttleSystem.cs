@@ -14,7 +14,7 @@ namespace Content.Server.Shuttles.EntitySystems
     {
         [Dependency] private readonly FixtureSystem _fixtures = default!;
 
-        public const float TileMassMultiplier = 4f;
+        public const float TileMassMultiplier = 0.5f;
 
         public float ShuttleMaxLinearSpeed;
 
