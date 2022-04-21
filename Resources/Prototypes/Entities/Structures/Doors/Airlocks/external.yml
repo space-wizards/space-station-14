@@ -29,6 +29,17 @@
   id: AirlockExternalGlass
   suffix: Glass, External
   components:
+  - type: Door
+    occludes: false
+    crushDamage:
+      types:
+        Blunt: 15
+    openSound:
+      path: /Audio/Machines/airlock_ext_open.ogg
+    closeSound:
+      path: /Audio/Machines/airlock_ext_close.ogg
+    denySound:
+      path: /Audio/Machines/airlock_deny.ogg
   - type: Occluder
     enabled: false
   - type: Sprite
