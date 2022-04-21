@@ -204,7 +204,7 @@
       delay: 5
     - type: ClusterGrenade
       fillPrototype: MobHumanFeralClown
-      maxGrenadesCount: 50
+      maxGrenadesCount: 20
       delay: 5
     - type: Damageable
       damageContainer: Inorganic
