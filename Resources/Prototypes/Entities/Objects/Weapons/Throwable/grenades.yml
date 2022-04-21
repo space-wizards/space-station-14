@@ -194,7 +194,7 @@
   id: ClownBomb
   components:
     - type: Sprite
-      sprite: Objects/Weapons/Grenades/syndgrenade.rsi #TODO: Replace the sprite (can't use tg's because it's bad)
+      sprite: Objects/Weapons/Grenades/clownbomb.rsi
       layers:
         - state: icon
           map: ["enum.TriggerVisualLayers.Base"]
