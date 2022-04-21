@@ -56,6 +56,7 @@ namespace Content.Shared.Decals
             Comp<DecalGridComponent>(gridEuid).ChunkCollection;
         protected DecalGridComponent.DecalGridChunkCollection DecalGridChunkCollection(GridId gridId) =>
             Comp<DecalGridComponent>(MapManager.GetGridEuid(gridId)).ChunkCollection;
+        protected Dictionary<Vector2i, Dictionary<uint, Decal>> ChunkCollection(EntityUid gridEuid) => DecalGridChunkCollection(gridEuid).ChunkCollection;
         protected Dictionary<Vector2i, Dictionary<uint, Decal>> ChunkCollection(GridId gridId) => DecalGridChunkCollection(gridId).ChunkCollection;
 
         protected virtual void DirtyChunk(GridId id, Vector2i chunkIndices) {}

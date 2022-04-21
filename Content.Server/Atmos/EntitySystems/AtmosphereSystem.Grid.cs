@@ -76,9 +76,11 @@ namespace Content.Server.Atmos.EntitySystems
                     newGridAtmos = AddComp<GridAtmosphereComponent>(entity);
 
                 // We assume the tiles on the new grid have the same coordinates as they did on the old grid...
-                foreach (var tile in mapGrid.GetAllTiles())
+                var enumerator = mapGrid.GetAllTilesEnumerator();
+
+                while (enumerator.MoveNext(out var tile))
                 {
-                    var indices = tile.GridIndices;
+                    var indices = tile.Value.GridIndices;
 
                     // This split event happens *before* the spaced tiles have been invalidated, therefore we can still
                     // access their gas data. On the next atmos update tick, these tiles will be spaced. Poof!
@@ -266,10 +268,11 @@ namespace Content.Server.Atmos.EntitySystems
         private AtmosDirection GetBlockedDirections(IMapGrid mapGrid, Vector2i indices)
         {
             var value = AtmosDirection.Invalid;
+            var enumerator = GetObstructingComponentsEnumerator(mapGrid, indices);
 
-            foreach (var airtightComponent in GetObstructingComponents(mapGrid, indices))
+            while (enumerator.MoveNext(out var airtightComponent))
             {
-                if(airtightComponent.AirBlocked)
+                if (airtightComponent.AirBlocked)
                     value |= airtightComponent.AirBlockedDirection;
             }
 
