@@ -1,11 +1,9 @@
 ﻿using Content.Client.Cooldown;
-using Content.Client.HUD;
 using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Shared.Input;
-using Robust.Shared.Utility;
 
 namespace Content.Client.UserInterface.Controls
 {
@@ -89,9 +87,11 @@ namespace Content.Client.UserInterface.Controls
                 HighlightRect.Texture = Theme.ResolveTexture(_highlightTexturePath);
             }
         }
-        public Action<GUIBoundKeyEventArgs, SlotControl>? OnPressed { get; set; }
-        public Action<GUIBoundKeyEventArgs, SlotControl>? OnStoragePressed { get; set; }
-        public Action<GUIMouseHoverEventArgs, SlotControl>? OnHover { get; set; }
+
+        public event Action<GUIBoundKeyEventArgs, SlotControl>? Pressed;
+        public event Action<GUIBoundKeyEventArgs, SlotControl>? Unpressed;
+        public event Action<GUIBoundKeyEventArgs, SlotControl>? StoragePressed;
+        public event Action<GUIMouseHoverEventArgs, SlotControl>? Hover;
 
         public bool EntityHover => HoverSpriteView.Sprite != null;
         public bool MouseIsHovering;
@@ -114,6 +114,7 @@ namespace Content.Client.UserInterface.Controls
             });
 
             ButtonRect.OnKeyBindDown += OnButtonPressed;
+            ButtonRect.OnKeyBindUp += OnButtonUnpressed;
 
             AddChild(SpriteView = new SpriteView
             {
@@ -186,31 +187,37 @@ namespace Content.Client.UserInterface.Controls
 
         private void OnButtonPressed(GUIBoundKeyEventArgs args)
         {
-            OnPressed?.Invoke(args, this);
+            Pressed?.Invoke(args, this);
+        }
+
+        private void OnButtonUnpressed(GUIBoundKeyEventArgs args)
+        {
+            Unpressed?.Invoke(args, this);
         }
 
         private void OnStorageButtonPressed(BaseButton.ButtonEventArgs args)
         {
             if (args.Event.Function == EngineKeyFunctions.UIClick)
             {
-                OnStoragePressed?.Invoke(args.Event, this);
+                StoragePressed?.Invoke(args.Event, this);
             }
             else
             {
-                OnPressed?.Invoke(args.Event, this);
+                Pressed?.Invoke(args.Event, this);
             }
         }
 
         private void OnButtonHover(GUIMouseHoverEventArgs args)
         {
-            OnHover?.Invoke(args, this);
+            Hover?.Invoke(args, this);
         }
 
         public void ClearButtonData()
         {
-            OnPressed = null;
-            OnHover = null;
-            OnStoragePressed = null;
+            Pressed = null;
+            Unpressed = null;
+            Hover = null;
+            StoragePressed = null;
             Highlight = false;
             Blocked = false;
             HoverSpriteView.Sprite = null;

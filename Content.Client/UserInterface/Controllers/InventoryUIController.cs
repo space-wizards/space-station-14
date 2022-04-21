@@ -56,8 +56,8 @@ public sealed partial class InventoryUIController : UIController, IOnStateChange
                 continue;
 
             var button = new SlotButton(data);
-            button.OnPressed += OnItemPressed;
-            button.OnStoragePressed += OnStoragePressed;
+            button.Pressed += ItemPressed;
+            button.StoragePressed += StoragePressed;
 
             _inventoryWindow.InventoryButtons.AddButton(button, data.ButtonOffset);
 
@@ -134,7 +134,7 @@ public sealed partial class InventoryUIController : UIController, IOnStateChange
         _inventorySystem.OnSpriteUpdate -= SpriteUpdated;
     }
 
-    private void OnItemPressed(GUIBoundKeyEventArgs args, SlotControl control)
+    private void ItemPressed(GUIBoundKeyEventArgs args, SlotControl control)
     {
         var slot = control.SlotName;
 
@@ -173,7 +173,7 @@ public sealed partial class InventoryUIController : UIController, IOnStateChange
         }
     }
 
-    private void OnStoragePressed(GUIBoundKeyEventArgs args, SlotControl control)
+    private void StoragePressed(GUIBoundKeyEventArgs args, SlotControl control)
     {
         _inventorySystem.UIInventoryStorageActivate(control.SlotName);
     }
@@ -182,8 +182,8 @@ public sealed partial class InventoryUIController : UIController, IOnStateChange
     {
         if(!_slotGroups.TryGetValue(data.SlotGroup, out var slotGroup)) return;
         var button = new SlotButton(data);
-        button.OnPressed += OnItemPressed;
-        button.OnStoragePressed += OnStoragePressed;
+        button.Pressed += ItemPressed;
+        button.StoragePressed += StoragePressed;
         slotGroup.AddButton(button);
         button.SlotName = data.SlotName;
     }

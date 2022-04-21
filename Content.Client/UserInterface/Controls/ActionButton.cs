@@ -36,6 +36,7 @@ public sealed class ActionButton : SlotControl
     public ActionType? Action { get; private set; }
 
     public event Action<GUIBoundKeyEventArgs, ActionButton>? ActionPressed;
+    public event Action<GUIBoundKeyEventArgs, ActionButton>? ActionUnpressed;
 
     public ActionButton()
     {
@@ -56,10 +57,16 @@ public sealed class ActionButton : SlotControl
         _label.FontColorOverride = Theme.ResolveColorOrSpecified("whiteText");
         AddChild(_label);
 
-        OnPressed += Pressed;
+        Pressed += OnPressed;
+        Unpressed += OnUnpressed;
     }
 
-    private void Pressed(GUIBoundKeyEventArgs args, SlotControl control)
+    private void OnPressed(GUIBoundKeyEventArgs args, SlotControl control)
+    {
+        ActionPressed?.Invoke(args, this);
+    }
+
+    private void OnUnpressed(GUIBoundKeyEventArgs args, SlotControl control)
     {
         ActionPressed?.Invoke(args, this);
     }

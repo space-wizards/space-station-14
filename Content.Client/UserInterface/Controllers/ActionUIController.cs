@@ -3,7 +3,6 @@ using Content.Client.Actions;
 using Content.Client.DragDrop;
 using Content.Client.Gameplay;
 using Content.Client.HUD;
-using Content.Client.Outline;
 using Content.Client.UserInterface.Controls;
 using Content.Client.UserInterface.UIWindows;
 using Content.Shared.Actions;
@@ -13,6 +12,7 @@ using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Shared.Input;
 using Robust.Shared.Input.Binding;
+using Robust.Shared.Timing;
 using static Content.Client.UserInterface.UIWindows.ActionsWindow;
 using static Robust.Client.UserInterface.Controls.BaseButton;
 using static Robust.Client.UserInterface.Controls.LineEdit;
@@ -29,14 +29,12 @@ public sealed class ActionUIController : UIController, IOnStateChanged<GameplayS
     [Dependency] private readonly IUserInterfaceManager _ui = default!;
 
     [UISystemDependency] private readonly ActionsSystem _actionsSystem = default!;
-    [UISystemDependency] private readonly InteractionOutlineSystem _interactionOutlineSystem = default!;
-    [UISystemDependency] private readonly TargetOutlineSystem _targetOutlineSystem = default!;
 
     private ActionButtonContainer? _container;
     private ActionPage? _defaultPage;
     private List<ActionPage> _actionPages = new();
-    private DragDropHelper<ActionButton> _dragDropHelper;
-    private TextureRect _dragShadow;
+    private readonly DragDropHelper<ActionButton> _dragDropHelper;
+    private readonly TextureRect _dragShadow;
 
     private ActionsWindow? _window;
     private MenuButton ActionButton => _hud.GetUIWidget<MenuBar>().ActionButton;
@@ -141,15 +139,19 @@ public sealed class ActionUIController : UIController, IOnStateChanged<GameplayS
 
     private void PopulateActions(IEnumerable<ActionType> actions)
     {
+        if (_window == null)
+            return;
+
         ClearList();
 
         foreach (var action in actions)
         {
             var actionItem = new ActionButton();
             actionItem.UpdateButtonData(_entities, action);
-            actionItem.OnKeyBindDown += args => ActionKeyBindDown(args, actionItem);
-            actionItem.OnKeyBindUp += ActionKeyBindUp;
-            actionItem.ActionPressed += OnActionPressed;
+            actionItem.ActionPressed += OnWindowActionPressed;
+            actionItem.ActionUnpressed += OnWindowActionUnPressed;
+
+            _window.ResultsGrid.AddChild(actionItem);
         }
     }
 
@@ -221,9 +223,17 @@ public sealed class ActionUIController : UIController, IOnStateChanged<GameplayS
         SearchAndDisplay();
     }
 
-    private void ActionKeyBindUp(GUIBoundKeyEventArgs args)
+    private void OnWindowActionPressed(GUIBoundKeyEventArgs args, ActionButton action)
     {
-        if (args.Function != EngineKeyFunctions.UIClick)
+        if (args.Function != EngineKeyFunctions.UIClick && args.Function != EngineKeyFunctions.Use)
+            return;
+
+        _dragDropHelper.MouseDown(action);
+    }
+
+    private void OnWindowActionUnPressed(GUIBoundKeyEventArgs args, ActionButton action)
+    {
+        if (args.Function != EngineKeyFunctions.UIClick && args.Function != EngineKeyFunctions.Use)
             return;
 
         if (_ui.CurrentlyHovered is ActionButton button)
@@ -238,14 +248,6 @@ public sealed class ActionUIController : UIController, IOnStateChanged<GameplayS
         }
 
         _dragDropHelper.EndDrag();
-    }
-
-    private void ActionKeyBindDown(GUIBoundKeyEventArgs args, ActionButton action)
-    {
-        if (args.Function != EngineKeyFunctions.UIClick)
-            return;
-
-        _dragDropHelper.MouseDown(action);
     }
 
     private void OnActionPressed(GUIBoundKeyEventArgs args, ActionButton button)
@@ -311,6 +313,11 @@ public sealed class ActionUIController : UIController, IOnStateChanged<GameplayS
         {
             ActionSystemShutdown();
         }
+    }
+
+    public override void FrameUpdate(FrameEventArgs args)
+    {
+        _dragDropHelper.Update(args.DeltaSeconds);
     }
 
     private void ActionSystemStart()

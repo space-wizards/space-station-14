@@ -12,6 +12,7 @@ public class ActionButtonContainer : GridContainer
     [Dependency] private readonly IUIControllerManager _uiControllerManager = default!;
 
     public event Action<GUIBoundKeyEventArgs, ActionButton>? ActionPressed;
+    public event Action<GUIBoundKeyEventArgs, ActionButton>? ActionUnpressed;
 
     public ActionButtonContainer()
     {
@@ -27,6 +28,7 @@ public class ActionButtonContainer : GridContainer
             AddChild(value);
             value.SetPositionInParent(index);
             value.ActionPressed += ActionPressed;
+            value.ActionUnpressed += ActionUnpressed;
         }
     }
 
@@ -55,6 +57,7 @@ public class ActionButtonContainer : GridContainer
         if (newChild is ActionButton button)
         {
             button.ActionPressed += ActionPressed;
+            button.ActionUnpressed += ActionUnpressed;
         }
     }
 

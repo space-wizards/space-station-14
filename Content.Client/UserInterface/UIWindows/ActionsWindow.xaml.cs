@@ -21,7 +21,6 @@ public sealed partial class ActionsWindow : FancyWindow
         foreach (var filter in Enum.GetValues<Filters>())
         {
             FilterButton.AddItem(filter.ToString(), filter);
-            FilterButton.SelectKey(filter);
         }
     }
 

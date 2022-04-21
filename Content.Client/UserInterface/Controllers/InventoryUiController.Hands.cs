@@ -42,7 +42,7 @@ public sealed partial class InventoryUIController
         _handsSystem.OnHandUnblocked -= HandUnblocked;
     }
 
-    private void OnHandPressed(GUIBoundKeyEventArgs args, SlotControl hand)
+    private void HandPressed(GUIBoundKeyEventArgs args, SlotControl hand)
     {
         if (_playerHandsComponent == null)
         {
@@ -190,8 +190,8 @@ public sealed partial class InventoryUIController
     private void AddHand(string handName, HandLocation location)
     {
         var newHandButton = new HandButton(this, handName, location);
-        newHandButton.OnStoragePressed += StorageActivate;
-        newHandButton.OnPressed += OnHandPressed;
+        newHandButton.StoragePressed += StorageActivate;
+        newHandButton.Pressed += HandPressed;
         if (!_handLookup.TryAdd(handName, newHandButton))
             throw new Exception("Tried to add hand with duplicate name to UI. Name:" + handName);
         GetFirstAvailableContainer().AddButton(newHandButton);
