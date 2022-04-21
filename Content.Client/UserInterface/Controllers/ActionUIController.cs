@@ -3,7 +3,6 @@ using Content.Client.Actions;
 using Content.Client.DragDrop;
 using Content.Client.Gameplay;
 using Content.Client.HUD;
-using Content.Client.HUD.Widgets;
 using Content.Client.Outline;
 using Content.Client.UserInterface.Controls;
 using Content.Client.UserInterface.UIWindows;
@@ -11,28 +10,33 @@ using Content.Shared.Actions;
 using Content.Shared.Actions.ActionTypes;
 using Content.Shared.Input;
 using Robust.Client.UserInterface;
+using Robust.Client.UserInterface.Controls;
 using Robust.Shared.Input;
 using Robust.Shared.Input.Binding;
+using static Content.Client.UserInterface.UIWindows.ActionsWindow;
 using static Robust.Client.UserInterface.Controls.BaseButton;
 using static Robust.Client.UserInterface.Controls.LineEdit;
-using static Robust.Client.UserInterface.Controls.MultiselectOptionButton<string>;
+using static Robust.Client.UserInterface.Controls.MultiselectOptionButton<Content.Client.UserInterface.UIWindows.ActionsWindow.Filters>;
+using MenuBar = Content.Client.HUD.Widgets.MenuBar;
 
 namespace Content.Client.UserInterface.Controllers;
 
-public sealed class ActionUIController : UIController, IOnStateChanged<GameplayState>
+public sealed class ActionUIController : UIController, IOnStateChanged<GameplayState>, IPostInjectInit
 {
     [Dependency] private readonly IEntityManager _entities = default!;
     [Dependency] private readonly IHudManager _hud = default!;
     [Dependency] private readonly IUIWindowManager _uiWindows = default!;
+    [Dependency] private readonly IUserInterfaceManager _ui = default!;
 
     [UISystemDependency] private readonly ActionsSystem _actionsSystem = default!;
     [UISystemDependency] private readonly InteractionOutlineSystem _interactionOutlineSystem = default!;
     [UISystemDependency] private readonly TargetOutlineSystem _targetOutlineSystem = default!;
 
-    private ActionButtonContainer? actionContainer;
+    private ActionButtonContainer? _container;
     private ActionPage? _defaultPage;
     private List<ActionPage> _actionPages = new();
     private DragDropHelper<ActionButton> _dragDropHelper;
+    private TextureRect _dragShadow;
 
     private ActionsWindow? _window;
     private MenuButton ActionButton => _hud.GetUIWidget<MenuBar>().ActionButton;
@@ -40,6 +44,13 @@ public sealed class ActionUIController : UIController, IOnStateChanged<GameplayS
     public ActionUIController()
     {
         _dragDropHelper = new DragDropHelper<ActionButton>(OnBeginDrag, OnContinueDrag, OnEndDrag);
+        _dragShadow = new TextureRect
+        {
+            MinSize = (64, 64),
+            Stretch = TextureRect.StretchMode.Scale,
+            Visible = false,
+            SetSize = (64, 64)
+        };
     }
 
     public void OnStateChanged(GameplayState state)
@@ -72,6 +83,7 @@ public sealed class ActionUIController : UIController, IOnStateChanged<GameplayS
         _window.OpenCentered();
 
         UpdateFilterLabel();
+        SearchAndDisplay();
 
         ActionButton.Pressed = true;
     }
@@ -137,7 +149,7 @@ public sealed class ActionUIController : UIController, IOnStateChanged<GameplayS
             actionItem.UpdateButtonData(_entities, action);
             actionItem.OnKeyBindDown += args => ActionKeyBindDown(args, actionItem);
             actionItem.OnKeyBindUp += ActionKeyBindUp;
-            actionItem.OnPressed += ActionPressed;
+            actionItem.ActionPressed += OnActionPressed;
         }
     }
 
@@ -147,8 +159,8 @@ public sealed class ActionUIController : UIController, IOnStateChanged<GameplayS
             return;
 
         var search = _window.SearchBar.Text;
-        var filters = _window.FilterButton.SelectedKeys.Select(Enum.Parse<Filters>).ToArray();
-        if (filters.Length == 0 && string.IsNullOrWhiteSpace(search))
+        var filters = _window.FilterButton.SelectedKeys;
+        if (filters.Count == 0 && string.IsNullOrWhiteSpace(search))
         {
             ClearList();
             return;
@@ -162,7 +174,7 @@ public sealed class ActionUIController : UIController, IOnStateChanged<GameplayS
 
         actions = actions.Where(action =>
         {
-            if (filters.Length > 0 && filters.Any(filter => !MatchesFilter(action, filter)))
+            if (filters.Count > 0 && filters.Any(filter => !MatchesFilter(action, filter)))
                 return false;
 
             if (action.Keywords.Any(keyword => search.Contains(keyword, StringComparison.OrdinalIgnoreCase)))
@@ -200,17 +212,32 @@ public sealed class ActionUIController : UIController, IOnStateChanged<GameplayS
 
     private void OnSearchChanged(LineEditEventArgs args)
     {
-        throw new NotImplementedException();
+        SearchAndDisplay();
     }
 
     private void OnFilterSelected(ItemPressedEventArgs args)
     {
-        throw new NotImplementedException();
+        UpdateFilterLabel();
+        SearchAndDisplay();
     }
 
     private void ActionKeyBindUp(GUIBoundKeyEventArgs args)
     {
-        throw new NotImplementedException();
+        if (args.Function != EngineKeyFunctions.UIClick)
+            return;
+
+        if (_ui.CurrentlyHovered is ActionButton button)
+        {
+            if (!_dragDropHelper.IsDragging || _dragDropHelper.Dragged?.Action == null)
+            {
+                _dragDropHelper.EndDrag();
+                return;
+            }
+
+            button.UpdateButtonData(_entities, _dragDropHelper.Dragged.Action);
+        }
+
+        _dragDropHelper.EndDrag();
     }
 
     private void ActionKeyBindDown(GUIBoundKeyEventArgs args, ActionButton action)
@@ -221,43 +248,55 @@ public sealed class ActionUIController : UIController, IOnStateChanged<GameplayS
         _dragDropHelper.MouseDown(action);
     }
 
-    private void ActionPressed(GUIBoundKeyEventArgs args, SlotControl control)
+    private void OnActionPressed(GUIBoundKeyEventArgs args, ActionButton button)
     {
-        throw new NotImplementedException();
+        if (args.Function != EngineKeyFunctions.UIClick)
+            return;
+
+        _actionsSystem.TriggerAction(button.Action);
     }
 
     private bool OnBeginDrag()
     {
-        throw new NotImplementedException();
+        _dragShadow.Texture = _dragDropHelper.Dragged?.IconTexture;
+        LayoutContainer.SetPosition(_dragShadow, _ui.MousePositionScaled.Position - (32, 32));
+        return true;
     }
 
-    private bool OnContinueDrag(float frametime)
+    private bool OnContinueDrag(float frameTime)
     {
-        throw new NotImplementedException();
+        LayoutContainer.SetPosition(_dragShadow, _ui.MousePositionScaled.Position - (32, 32));
+        _dragShadow.Visible = true;
+        return true;
     }
 
     private void OnEndDrag()
     {
-        throw new NotImplementedException();
+        _dragShadow.Visible = false;
     }
 
-    public void RegisterActionContainer(ActionButtonContainer actionBar)
+    public void RegisterActionContainer(ActionButtonContainer container)
     {
-        if (actionContainer != null)
+        if (_container != null)
         {
             Logger.Warning("Action container already defined for UI controller");
             return;
         }
-        actionContainer = actionBar;
+
+        _container = container;
+        _container.ActionPressed += OnActionPressed;
     }
+
     public void ClearActionContainer()
     {
-        actionContainer = null;
+        _container = null;
     }
+
     public void ClearActionBars()
     {
-        actionContainer = null;
+        _container = null;
     }
+
     public override void OnSystemLoaded(IEntitySystem system)
     {
         if (system is ActionsSystem)
@@ -289,17 +328,15 @@ public sealed class ActionUIController : UIController, IOnStateChanged<GameplayS
     private void OnComponentUnlinked()
     {
         _defaultPage = null;
-        actionContainer?.ClearActionData();
+        _container?.ClearActionData();
         //TODO: Clear button data
     }
 
     private void OnComponentLinked(ActionsComponent component)
     {
         LoadDefaultActions(component);
-        if (_defaultPage != null) actionContainer?.LoadActionData(_defaultPage);
+        if (_defaultPage != null) _container?.LoadActionData(_defaultPage);
     }
-
-
 
     private void LoadDefaultActions(ActionsComponent component)
     {
@@ -313,8 +350,6 @@ public sealed class ActionUIController : UIController, IOnStateChanged<GameplayS
         }
         _defaultPage = new ActionPage(actionsToadd.ToArray());
     }
-
-
 
     //TODO: Serialize this shit
     private sealed class ActionPage
@@ -342,12 +377,8 @@ public sealed class ActionUIController : UIController, IOnStateChanged<GameplayS
         }
     }
 
-    public enum Filters
+    void IPostInjectInit.PostInject()
     {
-        Enabled,
-        Item,
-        Innate,
-        Instant,
-        Targeted
+        _ui.PopupRoot.AddChild(_dragShadow);
     }
 }

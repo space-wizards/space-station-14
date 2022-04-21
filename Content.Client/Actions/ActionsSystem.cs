@@ -79,20 +79,21 @@ namespace Content.Client.Actions
             base.Shutdown();
             CommandBinds.Unregister<ActionsSystem>();
         }
-        internal void OnActionTriggered(ActionType? actionType)
+
+        public void TriggerAction(ActionType? action)
         {
-            if (_playerActions == null || actionType == null || _playerManager.LocalPlayer?.ControlledEntity is not EntityUid user)
+            if (_playerActions == null || action == null || _playerManager.LocalPlayer?.ControlledEntity is not { Valid: true } user)
                 return;
 
-            if (actionType.Provider != null && Deleted(actionType.Provider))
+            if (action.Provider != null && Deleted(action.Provider))
                 return;
 
-            if (actionType is not InstantAction instantAction)
+            if (action is not InstantAction instantAction)
             {
                 return;
             }
 
-            if (actionType.ClientExclusive)
+            if (action.ClientExclusive)
             {
                 if (instantAction.Event != null)
                     instantAction.Event.Performer = user;

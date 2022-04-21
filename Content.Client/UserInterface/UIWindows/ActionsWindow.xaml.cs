@@ -7,29 +7,30 @@ namespace Content.Client.UserInterface.UIWindows;
 [GenerateTypedNameReferences]
 public sealed partial class ActionsWindow : FancyWindow
 {
-    private TextureRect _dragShadow;
-
-    public MultiselectOptionButton<string> FilterButton { get; private set; }
+    public MultiselectOptionButton<Filters> FilterButton { get; private set; }
 
     public ActionsWindow()
     {
         RobustXamlLoader.Load(this);
 
-        SearchContainer.AddChild(FilterButton = new MultiselectOptionButton<string>
+        SearchContainer.AddChild(FilterButton = new MultiselectOptionButton<Filters>
         {
             Label = Loc.GetString("ui-actionmenu-filter-button")
         });
 
-        // _filterButton.AddItem();
-
-        _dragShadow = new TextureRect
+        foreach (var filter in Enum.GetValues<Filters>())
         {
-            MinSize = (64, 64),
-            Stretch = TextureRect.StretchMode.Scale,
-            Visible = false,
-            SetSize = (64, 64)
-        };
+            FilterButton.AddItem(filter.ToString(), filter);
+            FilterButton.SelectKey(filter);
+        }
+    }
 
-        UserInterfaceManager.PopupRoot.AddChild(_dragShadow);
+    public enum Filters
+    {
+        Enabled,
+        Item,
+        Innate,
+        Instant,
+        Targeted
     }
 }

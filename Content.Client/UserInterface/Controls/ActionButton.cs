@@ -1,9 +1,6 @@
-﻿using Content.Client.HUD;
-using Content.Client.Stylesheets;
-using Content.Shared.Actions.ActionTypes;
+﻿using Content.Shared.Actions.ActionTypes;
 using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
-using Robust.Client.Input;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Client.Utility;
@@ -29,7 +26,17 @@ public sealed class ActionButton : SlotControl
     }
 
     private BoundKeyFunction? _keybind;
-    private Texture? IconTexture { get => Icon.Texture; set => Icon.Texture = value;}
+
+    public Texture? IconTexture
+    {
+        get => Icon.Texture;
+        private set => Icon.Texture = value;
+    }
+
+    public ActionType? Action { get; private set; }
+
+    public event Action<GUIBoundKeyEventArgs, ActionButton>? ActionPressed;
+
     public ActionButton()
     {
         ButtonRect.Modulate = new(255, 255, 255, 150);
@@ -48,10 +55,19 @@ public sealed class ActionButton : SlotControl
 
         _label.FontColorOverride = Theme.ResolveColorOrSpecified("whiteText");
         AddChild(_label);
+
+        OnPressed += Pressed;
+    }
+
+    private void Pressed(GUIBoundKeyEventArgs args, SlotControl control)
+    {
+        ActionPressed?.Invoke(args, this);
     }
 
     public void UpdateButtonData(IEntityManager entityManager, ActionType action)
     {
+        Action = action;
+
         if (action.Provider == null || !entityManager.TryGetComponent(action.Provider.Value, out SpriteComponent sprite))
         {
             if (action.Icon != null)
@@ -64,6 +80,5 @@ public sealed class ActionButton : SlotControl
         {
             SpriteView.Sprite = sprite;
         }
-
     }
 }
