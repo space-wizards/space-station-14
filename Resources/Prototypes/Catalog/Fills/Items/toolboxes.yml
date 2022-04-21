@@ -71,7 +71,7 @@
     contents:
       - id: Screwdriver
       - id: Wrench
-      - id: WelderExperimental
+      - id: Welder
       - id: Crowbar
       - id: Multitool
       - id: Wirecutter
