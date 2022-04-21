@@ -14,16 +14,16 @@ namespace Content.Server.Explosion.EntitySystems
 
         private void OnSignalReceived(EntityUid uid, SignalTriggerComponent component, SignalReceivedEvent args)
         {
-            if (args.Port != "Trigger")
+            if (args.Port != SignalTriggerComponent.Port)
                 return;
 
             Trigger(uid);
         }
         private void OnInit(EntityUid uid, SignalTriggerComponent component, ComponentInit args)
         {
-            var receiver = EnsureComp<SignalReceiverComponent>(uid);
-            if (!receiver.Inputs.ContainsKey("Trigger"))
-                receiver.AddPort("Trigger");
+            var receiver = AddComp<SignalReceiverComponent>(uid);
+            if (!receiver.Inputs.ContainsKey(SignalTriggerComponent.Port))
+                receiver.AddPort(SignalTriggerComponent.Port);
         }
     }
 }

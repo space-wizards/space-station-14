@@ -20,13 +20,15 @@ namespace Content.Server.MachineLinking.System
         private void OnInit(EntityUid uid, SignallerComponent component, ComponentInit args)
         {
             var transmitter = EnsureComp<SignalTransmitterComponent>(uid);
-            if (!transmitter.Outputs.ContainsKey("Pressed"))
-                transmitter.AddPort("Pressed");
+            if (!transmitter.Outputs.ContainsKey(SignallerComponent.Port))
+                transmitter.AddPort(SignallerComponent.Port);
         }
 
         private void OnUseInHand(EntityUid uid, SignallerComponent component, UseInHandEvent args)
         {
-            RaiseLocalEvent(uid, new InvokePortEvent("Pressed"), false);
+            if (args.Handled)
+                return;
+            RaiseLocalEvent(uid, new InvokePortEvent(SignallerComponent.Port), false);
             args.Handled = true;
         }   
     }

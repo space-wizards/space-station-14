@@ -3,10 +3,11 @@ using Robust.Shared.GameObjects;
 namespace Content.Server.Explosion.Components
 {
     /// <summary>
-    /// Explodes when signal is received.
+    /// Sends a trigger when signal is received.
     /// </summary>
     [RegisterComponent]
     public sealed class SignalTriggerComponent : Component
     {
+        public const string Port = "Trigger";
     }
 }
