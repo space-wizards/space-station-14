@@ -42,6 +42,7 @@
         reagents:
         - ReagentId: Water
           Quantity: 250 # half-full at roundstart to leave room for puddles
+  - type: Spillable
   - type: DrainableSolution
     solution: bucket
   - type: RefillableSolution
@@ -128,6 +129,7 @@
           mask:
             - VaultImpassable
           mass: 100
+    - type: Spillable
     - type: SolutionContainerManager
       solutions:
         bucket:
@@ -217,6 +219,8 @@
       drawdepth: FloorObjects
       sprite: Objects/Specific/Janitorial/drain.rsi
       state: icon
+    - type: InteractionOutline
+    - type: Clickable
     - type: Physics
       bodyType: Static
     - type: Drain
