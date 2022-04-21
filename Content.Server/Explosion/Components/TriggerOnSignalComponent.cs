@@ -6,7 +6,7 @@ namespace Content.Server.Explosion.Components
     /// Sends a trigger when signal is received.
     /// </summary>
     [RegisterComponent]
-    public sealed class SignalTriggerComponent : Component
+    public sealed class TriggerOnSignalComponent : Component
     {
         public const string Port = "Trigger";
     }

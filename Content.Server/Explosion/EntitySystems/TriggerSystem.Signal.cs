@@ -8,22 +8,22 @@ namespace Content.Server.Explosion.EntitySystems
     {
         private void InitializeSignal()
         {
-            SubscribeLocalEvent<SignalTriggerComponent,SignalReceivedEvent>(OnSignalReceived);
-            SubscribeLocalEvent<SignalTriggerComponent,ComponentInit>(OnInit);
+            SubscribeLocalEvent<TriggerOnSignalComponent,SignalReceivedEvent>(OnSignalReceived);
+            SubscribeLocalEvent<TriggerOnSignalComponent,ComponentInit>(OnInit);
         }
 
-        private void OnSignalReceived(EntityUid uid, SignalTriggerComponent component, SignalReceivedEvent args)
+        private void OnSignalReceived(EntityUid uid, TriggerOnSignalComponent component, SignalReceivedEvent args)
         {
-            if (args.Port != SignalTriggerComponent.Port)
+            if (args.Port != TriggerOnSignalComponent.Port)
                 return;
 
             Trigger(uid);
         }
-        private void OnInit(EntityUid uid, SignalTriggerComponent component, ComponentInit args)
+        private void OnInit(EntityUid uid, TriggerOnSignalComponent component, ComponentInit args)
         {
             var receiver = AddComp<SignalReceiverComponent>(uid);
-            if (!receiver.Inputs.ContainsKey(SignalTriggerComponent.Port))
-                receiver.AddPort(SignalTriggerComponent.Port);
+            if (!receiver.Inputs.ContainsKey(TriggerOnSignalComponent.Port))
+                receiver.AddPort(TriggerOnSignalComponent.Port);
         }
     }
 }

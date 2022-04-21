@@ -37,5 +37,5 @@
     state: signaltrigger
   - type: PayloadTrigger
     components:
-    - type: SignalTrigger
+    - type: TriggerOnSignal
     - type: SignalReceiver
