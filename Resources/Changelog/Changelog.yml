@@ -1,17 +1,4 @@
 Entries:
-- author: BubblegumBlue
-  changes:
-  - {message: 'Added circuit boards for the Shuttle Console and Syndicate Shuttle
-      Console. Cargonia can now truly secede the station, hooray!', type: Add}
-  - {message: New research category that adds the Shuttle Console Board to the Protolathe's
-      menu., type: Tweak}
-  id: 871
-  time: '2022-01-13T14:21:41.0000000+00:00'
-- author: Macoron
-  changes:
-  - {message: Filled bucket will spill player when it is worn on their head., type: Tweak}
-  id: 872
-  time: '2022-01-13T14:22:19.0000000+00:00'
 - author: MeltedPixel
   changes:
   - {message: Fixed issue where players couldn't smile into the radio, type: Fix}
@@ -3045,3 +3032,15 @@ Entries:
   - {message: Split Station massive update!, type: Add}
   id: 1370
   time: '2022-04-21T13:19:44.0000000+00:00'
+- author: Peptide90
+  changes:
+  - {message: Added a number identifier to all mobs. Now it's easier to report rule
+      breaking ghost roles such as ticks and carp., type: Add}
+  id: 1371
+  time: '2022-04-21T22:32:23.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Grenade Penguin's explosion now does more damage., type: Tweak}
+  - {message: Grenade Penguin AI should be less buggy., type: Fix}
+  id: 1372
+  time: '2022-04-21T22:32:44.0000000+00:00'
