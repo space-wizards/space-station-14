@@ -18,7 +18,7 @@
   completetime: 2
   materials:
     Steel: 300
-    Plastic: 200    
+    Plastic: 200
 
 - type: latheRecipe
   id: ChemicalPayload
