@@ -380,3 +380,45 @@
       behaviors:
       - !type:DoActsBehavior
         acts: ["Destruction"]
+
+# counters
+
+- type: entity
+  id: TableCounterWood
+  parent: TableBase
+  name: wood counter
+  description: Do not apply fire to this. Rumour says it burns easily.
+  components:
+  - type: Sprite
+    sprite: Structures/Furniture/Tables/counterwood.rsi
+  - type: Icon
+    sprite: Structures/Furniture/Tables/counterwood.rsi
+  - type: Fixtures
+    fixtures:
+    - shape:
+        !type:PhysShapeAabb
+        bounds: "-0.40,-0.30,0.40,0.45"
+      mass: 50
+      layer:
+      - VaultImpassable
+      mask:
+      - Impassable
+      - VaultImpassable # tables should collide with other tables
+      - SmallImpassable
+  - type: Construction
+    graph: Table
+    node: CounterWood
+      
+- type: entity
+  id: TableCounterMetal
+  parent: TableBase
+  name: metal counter
+  description: Looks like a good place to put a drink down.
+  components:
+  - type: Sprite
+    sprite: Structures/Furniture/Tables/countermetal.rsi
+  - type: Icon
+    sprite: Structures/Furniture/Tables/countermetal.rsi
+  - type: Construction
+    graph: Table
+    node: CounterMetal
