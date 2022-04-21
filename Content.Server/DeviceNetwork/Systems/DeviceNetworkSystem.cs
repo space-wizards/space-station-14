@@ -186,6 +186,8 @@ namespace Content.Server.DeviceNetwork.Systems
             {
                 // Broadcast to all listening devices
                 recipients = GetListeningDevices(packet.NetId, packet.Frequency);
+                if (!CheckRecipientsList(packet, ref recipients))
+                    return;
             }
             else
             {
@@ -198,6 +200,27 @@ namespace Content.Server.DeviceNetwork.Systems
             }
 
             SendToConnections(recipients, packet);
+        }
+
+        /// <summary>
+        /// Sends the <see cref="BeforeBroadcastAttemptEvent"/> to the sending entity if the packets SendBeforeBroadcastAttemptEvent field is set to true.
+        /// The recipients is set to the modified recipient list.
+        /// </summary>
+        /// <returns>false if the broadcast was canceled</returns>
+        private bool CheckRecipientsList(DeviceNetworkPacketEvent packet, ref HashSet<DeviceNetworkComponent> recipients)
+        {
+            var sender = _networks[packet.NetId].Devices[packet.SenderAddress];
+            if (!sender.SendBroadcastAttemptEvent)
+                return true;
+
+            var beforeBroadcastAttemptEvent = new BeforeBroadcastAttemptEvent(recipients);
+            RaiseLocalEvent(packet.Sender, beforeBroadcastAttemptEvent);
+
+            if (beforeBroadcastAttemptEvent.Cancelled)
+                return false;
+
+            recipients = beforeBroadcastAttemptEvent.Recipients;
+            return true;
         }
 
         private void SendToConnections(HashSet<DeviceNetworkComponent> connections, DeviceNetworkPacketEvent packet)
@@ -308,6 +331,19 @@ namespace Content.Server.DeviceNetwork.Systems
             Sender = sender;
             SenderTransform = xform;
             SenderPosition = senderPosition;
+        }
+    }
+
+    /// <summary>
+    /// Sent to the sending entity before broadcasting network packets to recipients
+    /// </summary>
+    public sealed class BeforeBroadcastAttemptEvent : CancellableEntityEventArgs
+    {
+        public HashSet<DeviceNetworkComponent> Recipients;
+
+        public BeforeBroadcastAttemptEvent(HashSet<DeviceNetworkComponent> recipients)
+        {
+            Recipients = recipients;
         }
     }
 

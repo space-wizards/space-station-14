@@ -89,5 +89,13 @@ namespace Content.Server.DeviceNetwork.Components
         [ViewVariables(VVAccess.ReadWrite)]
         [DataField("autoConnect")]
         public bool AutoConnect = true;
+
+        /// <summary>
+        ///     Whether to send the broadcast recipients list to the sender so it can be filtered.
+        /// <see cref="DeviceListSystem"/>
+        /// </summary>
+        [ViewVariables(VVAccess.ReadWrite)]
+        [DataField("sendBroadcastAttemptEvent")]
+        public bool SendBroadcastAttemptEvent = false;
     }
 }

@@ -181,10 +181,15 @@
     qualities:
       - Pulsing
   - type: SignalLinker
+  - type: NetworkConfigurator
   - type: UserInterface
     interfaces:
     - key: enum.SignalLinkerUiKey.Key
       type: SignalPortSelectorBoundUserInterface
+    - key: enum.NetworkConfiguratorUiKey.List
+      type: NetworkConfiguratorBoundUserInterface
+    - key: enum.NetworkConfiguratorUiKey.Configure
+      type: NetworkConfiguratorBoundUserInterface
   - type: Tag
     tags:
       - DroneUsable

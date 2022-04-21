@@ -26,6 +26,8 @@ namespace Content.Client.Entry
             "EmitSoundOnTrigger",
             "EmitSoundOnActivate",
             "EmitSoundOnUIOpen",
+            "DeviceList",
+            "NetworkConfigurator",
             "NameIdentifier",
             "HeatResistance",
             "EntityStorage",
