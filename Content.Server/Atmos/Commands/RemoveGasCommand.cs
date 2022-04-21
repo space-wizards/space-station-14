@@ -1,4 +1,5 @@
-﻿using Content.Server.Administration;
+﻿using System.Diagnostics;
+using Content.Server.Administration;
 using Content.Server.Atmos.EntitySystems;
 using Content.Shared.Administration;
 using Robust.Shared.Console;
@@ -11,6 +12,8 @@ namespace Content.Server.Atmos.Commands
     [AdminCommand(AdminFlags.Debug)]
     public sealed class RemoveGasCommand : IConsoleCommand
     {
+        [Dependency] private readonly IMapManager _mapManager = default!;
+
         public string Command => "removegas";
         public string Description => "Removes an amount of gases.";
         public string Help => "removegas <X> <Y> <GridId> <amount> <ratio>\nIf <ratio> is true, amount will be treated as the ratio of gas to be removed.";
@@ -26,9 +29,15 @@ namespace Content.Server.Atmos.Commands
 
             var gridId = new GridId(id);
 
+            if (!_mapManager.TryGetGrid(gridId, out var grid))
+            {
+                shell.WriteError("Invalid grid.");
+                return;
+            }
+
             var atmosphereSystem = EntitySystem.Get<AtmosphereSystem>();
             var indices = new Vector2i(x, y);
-            var tile = atmosphereSystem.GetTileMixture(gridId, indices, true);
+            var tile = atmosphereSystem.GetTileMixture(grid.GridEntityId, null, indices, true);
 
             if (tile == null)
             {

@@ -16,6 +16,7 @@ using Content.Shared.Database;
 using Content.Shared.Examine;
 using Content.Shared.Popups;
 using Content.Shared.Weapons.Ranged.Components;
+using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Localization;
@@ -29,6 +30,8 @@ namespace Content.Server.Weapon.Ranged;
 
 public sealed partial class GunSystem
 {
+    [Dependency] private readonly TransformSystem _transformSystem = default!;
+
     /// <summary>
     /// Tries to fire a round of ammo out of the weapon.
     /// </summary>
@@ -54,7 +57,8 @@ public sealed partial class GunSystem
         // TODO: Clumsy should be eventbus I think?
 
         gun.LastFireTime = curTime;
-        var coordinates = Transform(gun.Owner).Coordinates;
+        var transform = Transform(gun.Owner);
+        var coordinates = transform.Coordinates;
 
         if (gun.ClumsyCheck && EntityManager.TryGetComponent<ClumsyComponent>(user, out var clumsyComponent) && ClumsyComponent.TryRollClumsy(user, gun.ClumsyExplodeChance))
         {
@@ -79,8 +83,8 @@ public sealed partial class GunSystem
 
         // Firing confirmed
 
-        if (gun.CanHotspot)
-            _atmos.HotspotExpose(coordinates, 700, 50);
+        if (gun.CanHotspot && transform.GridUid != null)
+            _atmos.HotspotExpose(transform.GridUid.Value, _transformSystem.GetGridOrMapTilePosition(gun.Owner, transform), 700, 50);
 
         EntityManager.EventBus.RaiseLocalEvent(gun.Owner, new GunShotEvent());
         Fire(user, barrel, targetCoords);

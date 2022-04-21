@@ -25,6 +25,7 @@ namespace Content.Server.Atmos.Piping.Binary.EntitySystems
         [Dependency] private readonly UserInterfaceSystem _userInterfaceSystem = default!;
         [Dependency] private readonly AdminLogSystem _adminLogSystem = default!;
         [Dependency] private readonly SharedAmbientSoundSystem _ambientSoundSystem = default!;
+        [Dependency] private readonly TransformSystem _transformSystem = default!;
 
         public override void Initialize()
         {
@@ -61,8 +62,8 @@ namespace Content.Server.Atmos.Piping.Binary.EntitySystems
                 || !nodeContainer.TryGetNode(pump.OutletName, out PipeNode? outlet))
             {
                 appearance?.SetData(PumpVisuals.Enabled, false);
-                _ambientSoundSystem.SetAmbience(pump.Owner, false);
-                _ambientSoundSystem.SetAmbience(pump.Owner, false);
+                _ambientSoundSystem.SetAmbience(uid, false);
+                _ambientSoundSystem.SetAmbience(uid, false);
                 return;
             }
 
@@ -78,7 +79,7 @@ namespace Content.Server.Atmos.Piping.Binary.EntitySystems
                 return;
 
             appearance?.SetData(PumpVisuals.Enabled, true);
-            _ambientSoundSystem.SetAmbience(pump.Owner, true);
+            _ambientSoundSystem.SetAmbience(uid, true);
 
             // We multiply the transfer rate in L/s by the seconds passed since the last process to get the liters.
             var transferRatio = (float)(pump.TransferRate * (_gameTiming.CurTime - device.LastProcess).TotalSeconds) / inlet.Air.Volume;
@@ -88,7 +89,8 @@ namespace Content.Server.Atmos.Piping.Binary.EntitySystems
             // Some of the gas from the mixture leaks when overclocked.
             if (pump.Overclocked)
             {
-                var tile = _atmosphereSystem.GetTileMixture(EntityManager.GetComponent<TransformComponent>(pump.Owner).Coordinates, true);
+                var transform = Transform(pump.Owner);
+                var tile = _atmosphereSystem.GetContainingMixture(uid, true, true, transform);
 
                 if (tile != null)
                 {
@@ -102,10 +104,10 @@ namespace Content.Server.Atmos.Piping.Binary.EntitySystems
 
         private void OnPumpInteractHand(EntityUid uid, GasVolumePumpComponent component, InteractHandEvent args)
         {
-            if (!EntityManager.TryGetComponent(args.User, out ActorComponent? actor))
+            if (!TryComp(args.User, out ActorComponent? actor))
                 return;
 
-            if (EntityManager.GetComponent<TransformComponent>(component.Owner).Anchored)
+            if (Transform(component.Owner).Anchored)
             {
                 _userInterfaceSystem.TryOpen(uid, GasVolumePumpUiKey.Key, actor.PlayerSession);
                 DirtyUI(uid, component);

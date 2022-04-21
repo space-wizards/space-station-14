@@ -118,14 +118,21 @@ namespace Content.Server.StationEvents.Events
 
             if (!_foundTile ||
                 _targetGrid == default ||
-                _entityManager.Deleted(_targetGrid) ||
-                !atmosphereSystem.IsSimulatedGrid(_entityManager.GetComponent<TransformComponent>(_targetGrid).GridID))
+                _entityManager.Deleted(_targetGrid))
             {
                 Running = false;
                 return;
             }
 
-            var environment = atmosphereSystem.GetTileMixture(_entityManager.GetComponent<TransformComponent>(_targetGrid).GridID, _targetTile, true);
+            var transform = _entityManager.GetComponent<TransformComponent>(_targetGrid);
+
+            if (transform.GridUid is not { } gridUid || !atmosphereSystem.IsSimulatedGrid(gridUid))
+            {
+                Running = false;
+                return;
+            }
+
+            var environment = atmosphereSystem.GetTileMixture(gridUid, transform.MapUid!.Value, _targetTile, true);
 
             environment?.AdjustMoles(_leakGas, LeakCooldown * _molesPerSecond);
         }

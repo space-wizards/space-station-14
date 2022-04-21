@@ -13,6 +13,7 @@ using Content.Shared.Database;
 using Content.Shared.Interaction;
 using Content.Shared.Popups;
 using Content.Shared.Temperature;
+using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
@@ -30,6 +31,7 @@ namespace Content.Server.Atmos.EntitySystems
         [Dependency] private readonly DamageableSystem _damageableSystem = default!;
         [Dependency] private readonly AlertsSystem _alertsSystem = default!;
         [Dependency] private readonly AdminLogSystem _logSystem = default!;
+        [Dependency] private readonly TransformSystem _transformSystem = default!;
 
         private const float MinimumFireStacks = -10f;
         private const float MaximumFireStacks = 20f;
@@ -248,7 +250,7 @@ namespace Content.Server.Atmos.EntitySystems
                 {
                     // TODO FLAMMABLE: further balancing
                     var damageScale = Math.Min((int)flammable.FireStacks, 5);
-                    
+
                     if(TryComp(uid, out TemperatureComponent? temp))
                         _temperatureSystem.ChangeHeat(uid, 12500 * damageScale, false, temp);
 
@@ -262,7 +264,7 @@ namespace Content.Server.Atmos.EntitySystems
                     continue;
                 }
 
-                var air = _atmosphereSystem.GetTileMixture(transform.Coordinates);
+                var air = _atmosphereSystem.GetContainingMixture(uid);
 
                 // If we're in an oxygenless environment, put the fire out.
                 if (air == null || air.GetMoles(Gas.Oxygen) < 1f)
@@ -271,7 +273,13 @@ namespace Content.Server.Atmos.EntitySystems
                     continue;
                 }
 
-                _atmosphereSystem.HotspotExpose(transform.Coordinates, 700f, 50f, true);
+                if(transform.GridUid != null)
+                {
+                    _atmosphereSystem.HotspotExpose(transform.GridUid.Value,
+                        _transformSystem.GetGridOrMapTilePosition(uid, transform),
+                        700f, 50f, true);
+
+                }
 
                 foreach (var otherUid in flammable.Collided.ToArray())
                 {

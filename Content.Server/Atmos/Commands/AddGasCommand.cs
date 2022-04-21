@@ -12,6 +12,8 @@ namespace Content.Server.Atmos.Commands
     [AdminCommand(AdminFlags.Debug)]
     public sealed class AddGasCommand : IConsoleCommand
     {
+        [Dependency] private readonly IMapManager _mapManager = default!;
+
         public string Command => "addgas";
         public string Description => "Adds gas at a certain position.";
         public string Help => "addgas <X> <Y> <GridId> <Gas> <moles>";
@@ -27,9 +29,15 @@ namespace Content.Server.Atmos.Commands
 
             var gridId = new GridId(id);
 
+            if (!_mapManager.TryGetGrid(gridId, out var grid))
+            {
+                shell.WriteError($"Invalid grid.");
+                return;
+            }
+
             var atmosphereSystem = EntitySystem.Get<AtmosphereSystem>();
             var indices = new Vector2i(x, y);
-            var tile = atmosphereSystem.GetTileMixture(gridId, indices, true);
+            var tile = atmosphereSystem.GetTileMixture(grid.GridEntityId, null, indices, true);
 
             if (tile == null)
             {

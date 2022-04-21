@@ -320,6 +320,35 @@ namespace Content.Server.Atmos.EntitySystems
         }
 
         /// <summary>
+        ///     Checks whether a gas mixture is probably safe.
+        ///     This only checks temperature and pressure, not gas composition.
+        /// </summary>
+        /// <param name="air">Mixture to be checked.</param>
+        /// <returns>Whether the mixture is probably safe.</returns>
+        public bool IsMixtureProbablySafe(GasMixture? air)
+        {
+            // Note that oxygen mix isn't checked, but survival boxes make that not necessary.
+            if (air == null)
+                return false;
+
+            switch (air.Pressure)
+            {
+                case <= Atmospherics.WarningLowPressure:
+                case >= Atmospherics.WarningHighPressure:
+                    return false;
+            }
+
+            switch (air.Temperature)
+            {
+                case <= 260:
+                case >= 360:
+                    return false;
+            }
+
+            return true;
+        }
+
+        /// <summary>
         ///     Performs reactions for a given gas mixture on an optional holder.
         /// </summary>
         public ReactionResult React(GasMixture mixture, IGasMixtureHolder? holder)

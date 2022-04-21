@@ -16,12 +16,11 @@ namespace Content.Server.Atmos.Components
     /// <summary>
     ///     Internal Atmos class. Use <see cref="AtmosphereSystem"/> to interact with atmos instead.
     /// </summary>
-    [ComponentReference(typeof(IAtmosphereComponent))]
-    [RegisterComponent, Serializable]
-    [Virtual]
-    public class GridAtmosphereComponent : Component, IAtmosphereComponent, ISerializationHooks
+    [RegisterComponent, Serializable, Friend(typeof(AtmosphereSystem), typeof(GasTileOverlaySystem), typeof(AtmosDebugOverlaySystem))]
+    public sealed class GridAtmosphereComponent : Component, ISerializationHooks
     {
-        public virtual bool Simulated => true;
+        [ViewVariables(VVAccess.ReadWrite)]
+        public bool Simulated { get; set; } = true;
 
         [ViewVariables]
         public bool ProcessingPaused { get; set; } = false;
@@ -102,7 +101,7 @@ namespace Content.Server.Atmos.Components
         public long EqualizationQueueCycleControl { get; set; }
 
         [ViewVariables]
-        public AtmosphereProcessingState State { get; set; } = AtmosphereProcessingState.TileEqualize;
+        public AtmosphereProcessingState State { get; set; } = AtmosphereProcessingState.Revalidate;
 
         void ISerializationHooks.BeforeSerialization()
         {

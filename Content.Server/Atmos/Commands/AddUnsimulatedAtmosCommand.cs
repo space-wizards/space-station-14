@@ -1,5 +1,6 @@
 ﻿using Content.Server.Administration;
 using Content.Server.Atmos.Components;
+using Content.Server.Atmos.EntitySystems;
 using Content.Shared.Administration;
 using Robust.Shared.Console;
 using Robust.Shared.GameObjects;
@@ -47,13 +48,14 @@ namespace Content.Server.Atmos.Commands
                 return;
             }
 
-            if (entMan.HasComponent<IAtmosphereComponent>(gridComp.GridEntityId))
+            var atmosphere = entMan.EntitySysManager.GetEntitySystem<AtmosphereSystem>();
+
+            if (!atmosphere.HasAtmosphere(gridComp.GridEntityId))
             {
-                shell.WriteLine("Grid already has an atmosphere.");
-                return;
+                entMan.AddComponent<GridAtmosphereComponent>(gridComp.GridEntityId);
             }
 
-            entMan.AddComponent<UnsimulatedGridAtmosphereComponent>(gridComp.GridEntityId);
+            atmosphere.SetSimulatedGrid(gridComp.GridEntityId, false);
 
             shell.WriteLine($"Added unsimulated atmosphere to grid {id}.");
         }

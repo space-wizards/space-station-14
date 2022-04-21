@@ -11,6 +11,7 @@ using Content.Shared.Chemistry.Reagent;
 using Content.Shared.FixedPoint;
 using Content.Shared.Smoking;
 using Content.Shared.Temperature;
+using Robust.Server.GameObjects;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
@@ -23,6 +24,7 @@ namespace Content.Server.Nutrition.EntitySystems
         [Dependency] private readonly SolutionContainerSystem _solutionContainerSystem = default!;
         [Dependency] private readonly BloodstreamSystem _bloodstreamSystem = default!;
         [Dependency] private readonly AtmosphereSystem _atmos = default!;
+        [Dependency] private readonly TransformSystem _transformSystem = default!;
 
         private const float UpdateTimer = 3f;
 
@@ -80,6 +82,7 @@ namespace Content.Server.Nutrition.EntitySystems
             if (_timer < UpdateTimer)
                 return;
 
+            // TODO Use an "active smoke" component instead, EntityQuery over that.
             foreach (var uid in _active.ToArray())
             {
                 if (!TryComp(uid, out SmokableComponent? smokable))
@@ -97,7 +100,12 @@ namespace Content.Server.Nutrition.EntitySystems
                 if (smokable.ExposeTemperature > 0 && smokable.ExposeVolume > 0)
                 {
                     var transform = Transform(uid);
-                    _atmos.HotspotExpose(transform.Coordinates, smokable.ExposeTemperature, smokable.ExposeVolume, true);
+
+                    if (transform.GridUid is {} gridUid)
+                    {
+                        var position = _transformSystem.GetGridOrMapTilePosition(uid, transform);
+                        _atmos.HotspotExpose(gridUid, position, smokable.ExposeTemperature, smokable.ExposeVolume, true);
+                    }
                 }
 
                 var inhaledSolution = _solutionContainerSystem.SplitSolution(uid, solution, smokable.InhaleAmount * _timer);

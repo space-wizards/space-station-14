@@ -5,6 +5,7 @@ using Content.Server.Atmos.Piping.Components;
 using Content.Server.Atmos.Piping.Other.Components;
 using Content.Shared.Atmos;
 using JetBrains.Annotations;
+using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 
@@ -14,6 +15,7 @@ namespace Content.Server.Atmos.Piping.Other.EntitySystems
     public sealed class GasMinerSystem : EntitySystem
     {
         [Dependency] private readonly AtmosphereSystem _atmosphereSystem = default!;
+        [Dependency] private readonly TransformSystem _transformSystem = default!;
 
         public override void Initialize()
         {
@@ -37,10 +39,14 @@ namespace Content.Server.Atmos.Piping.Other.EntitySystems
 
         private bool CheckMinerOperation(GasMinerComponent miner, [NotNullWhen(true)] out GasMixture? environment)
         {
-            environment = _atmosphereSystem.GetTileMixture(EntityManager.GetComponent<TransformComponent>(miner.Owner).Coordinates, true);
+            var uid = miner.Owner;
+            environment = _atmosphereSystem.GetContainingMixture(uid, true, true);
+
+            var transform = Transform(uid);
+            var position = _transformSystem.GetGridOrMapTilePosition(uid, transform);
 
             // Space.
-            if (_atmosphereSystem.IsTileSpace(EntityManager.GetComponent<TransformComponent>(miner.Owner).Coordinates))
+            if (_atmosphereSystem.IsTileSpace(transform.GridUid, transform.MapUid, position))
             {
                 miner.Broken = true;
                 return false;

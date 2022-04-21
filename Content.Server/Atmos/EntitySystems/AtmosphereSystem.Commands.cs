@@ -100,7 +100,7 @@ public sealed partial class AtmosphereSystem
                Merge(tile, mixture);
                tile.Temperature = mixture.Temperature;
 
-               InvalidateTile(gridAtmosphere, indices);
+               gridAtmosphere.InvalidatedCoords.Add(indices);
            }
        }
     }

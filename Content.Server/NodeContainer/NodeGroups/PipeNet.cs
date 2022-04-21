@@ -25,14 +25,21 @@ namespace Content.Server.NodeContainer.NodeGroups
 
         [ViewVariables] private AtmosphereSystem? _atmosphereSystem;
 
+        [Dependency] private readonly IMapManager _mapManager = default!;
+
         public GridId Grid => GridId;
 
         public override void Initialize(Node sourceNode)
         {
             base.Initialize(sourceNode);
 
+            IoCManager.InjectDependencies(this);
+
+            if (!_mapManager.TryGetGrid(Grid, out var grid))
+                return;
+
             _atmosphereSystem = EntitySystem.Get<AtmosphereSystem>();
-            _atmosphereSystem.AddPipeNet(this);
+            _atmosphereSystem.AddPipeNet(grid.GridEntityId, this);
         }
 
         public void Update()
@@ -87,7 +94,12 @@ namespace Content.Server.NodeContainer.NodeGroups
         private void RemoveFromGridAtmos()
         {
             DebugTools.AssertNotNull(_atmosphereSystem);
-            _atmosphereSystem?.RemovePipeNet(this);
+            DebugTools.AssertNotNull(_mapManager);
+
+            if (!_mapManager.TryGetGrid(Grid, out var grid))
+                return;
+
+            _atmosphereSystem?.RemovePipeNet(grid.GridEntityId, this);
         }
 
         public override string GetDebugData()

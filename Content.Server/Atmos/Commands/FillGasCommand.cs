@@ -27,7 +27,7 @@ namespace Content.Server.Atmos.Commands
 
             var mapMan = IoCManager.Resolve<IMapManager>();
 
-            if (!gridId.IsValid() || !mapMan.TryGetGrid(gridId, out _))
+            if (!mapMan.TryGetGrid(gridId, out var grid))
             {
                 shell.WriteLine("Invalid grid ID.");
                 return;
@@ -35,7 +35,7 @@ namespace Content.Server.Atmos.Commands
 
             var atmosphereSystem = EntitySystem.Get<AtmosphereSystem>();
 
-            foreach (var tile in atmosphereSystem.GetAllTileMixtures(gridId, true))
+            foreach (var tile in atmosphereSystem.GetAllMixtures(grid.GridEntityId, true))
             {
                 tile.AdjustMoles(gasId, moles);
             }

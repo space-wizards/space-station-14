@@ -40,7 +40,7 @@ public sealed class GasArtifactSystem : EntitySystem
 
         var transform = Transform(uid);
 
-        var environment = _atmosphereSystem.GetTileMixture(transform.Coordinates, true);
+        var environment = _atmosphereSystem.GetContainingMixture(uid, false, true);
         if (environment == null)
             return;
 

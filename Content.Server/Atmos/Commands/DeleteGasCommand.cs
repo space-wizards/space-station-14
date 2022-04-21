@@ -131,7 +131,7 @@ namespace Content.Server.Atmos.Commands
 
             var mapManager = IoCManager.Resolve<IMapManager>();
 
-            if (!mapManager.TryGetGrid(gridId, out _))
+            if (!mapManager.TryGetGrid(gridId, out var grid))
             {
                 shell.WriteLine($"No grid exists with id {gridId}");
                 return;
@@ -144,7 +144,7 @@ namespace Content.Server.Atmos.Commands
 
             if (gas == null)
             {
-                foreach (var tile in atmosphereSystem.GetAllTileMixtures(gridId, true))
+                foreach (var tile in atmosphereSystem.GetAllMixtures(grid.GridEntityId, true))
                 {
                     if (tile.Immutable) continue;
 
@@ -156,7 +156,7 @@ namespace Content.Server.Atmos.Commands
             }
             else
             {
-                foreach (var tile in atmosphereSystem.GetAllTileMixtures(gridId, true))
+                foreach (var tile in atmosphereSystem.GetAllMixtures(grid.GridEntityId, true))
                 {
                     if (tile.Immutable) continue;
 

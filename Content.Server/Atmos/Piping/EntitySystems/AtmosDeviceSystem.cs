@@ -43,8 +43,12 @@ namespace Content.Server.Atmos.Piping.EntitySystems
                 return;
             }
 
+            // TODO: low-hanging fruit for perf improvements around here
+            var transform = Transform(component.Owner);
+
+            // GridUid is not null because we can join atmosphere.
             // We try to add the device to a valid atmosphere, and if we can't, try to add it to the entity system.
-            if (!_atmosphereSystem.AddAtmosDevice(component))
+            if (!_atmosphereSystem.AddAtmosDevice(transform.GridUid!.Value, component))
             {
                 if (component.JoinSystem)
                 {
@@ -66,7 +70,7 @@ namespace Content.Server.Atmos.Piping.EntitySystems
         public void LeaveAtmosphere(AtmosDeviceComponent component)
         {
             // Try to remove the component from an atmosphere, and if not
-            if (component.JoinedGrid != null && !_atmosphereSystem.RemoveAtmosDevice(component))
+            if (component.JoinedGrid != null && !_atmosphereSystem.RemoveAtmosDevice(component.JoinedGrid.Value, component))
             {
                 // The grid might have been removed but not us... This usually shouldn't happen.
                 component.JoinedGrid = null;

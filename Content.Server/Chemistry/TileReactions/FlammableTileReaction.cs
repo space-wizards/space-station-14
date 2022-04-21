@@ -24,14 +24,20 @@ namespace Content.Server.Chemistry.TileReactions
             if (reactVolume <= FixedPoint2.Zero || tile.Tile.IsEmpty)
                 return FixedPoint2.Zero;
 
-            var atmosphereSystem = EntitySystem.Get<AtmosphereSystem>();
+            var entities = IoCManager.Resolve<IEntityManager>();
+            var atmosphereSystem = entities.EntitySysManager.GetEntitySystem<AtmosphereSystem>();
 
-            var environment = atmosphereSystem.GetTileMixture(tile.GridIndex, tile.GridIndices, true);
-            if (environment == null || !atmosphereSystem.IsHotspotActive(tile.GridIndex, tile.GridIndices))
+            var transform = entities.GetComponent<TransformComponent>(tile.GridUid);
+
+            if (transform.MapUid is not { } mapUid)
+                return FixedPoint2.Zero;
+
+            var environment = atmosphereSystem.GetTileMixture(tile.GridUid, mapUid, tile.GridIndices, true);
+            if (environment == null || !atmosphereSystem.IsHotspotActive(tile.GridUid, tile.GridIndices))
                 return FixedPoint2.Zero;
 
             environment.Temperature *= MathF.Max(_temperatureMultiplier * reactVolume.Float(), 1f);
-            atmosphereSystem.React(tile.GridIndex, tile.GridIndices);
+            atmosphereSystem.ReactTile(tile.GridUid, tile.GridIndices);
 
             return reactVolume;
         }

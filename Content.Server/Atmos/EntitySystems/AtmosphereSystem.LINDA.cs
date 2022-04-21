@@ -134,5 +134,39 @@ namespace Content.Server.Atmos.EntitySystems
                     break;
             }
         }
+
+        /// <summary>
+        ///     Makes a tile become active and start processing. Does NOT check if the tile belongs to the grid atmos.
+        /// </summary>
+        /// <param name="gridAtmosphere">Grid Atmosphere where to get the tile.</param>
+        /// <param name="tile">Tile Atmosphere to be activated.</param>
+        private void AddActiveTile(GridAtmosphereComponent gridAtmosphere, TileAtmosphere tile)
+        {
+            if (tile.Air == null)
+                return;
+
+            tile.Excited = true;
+            gridAtmosphere.ActiveTiles.Add(tile);
+        }
+
+        /// <summary>
+        ///     Makes a tile become inactive and stop processing.
+        /// </summary>
+        /// <param name="gridAtmosphere">Grid Atmosphere where to get the tile.</param>
+        /// <param name="tile">Tile Atmosphere to be deactivated.</param>
+        /// <param name="disposeExcitedGroup">Whether to dispose of the tile's <see cref="ExcitedGroup"/></param>
+        private void RemoveActiveTile(GridAtmosphereComponent gridAtmosphere, TileAtmosphere tile, bool disposeExcitedGroup = true)
+        {
+            tile.Excited = false;
+            gridAtmosphere.ActiveTiles.Remove(tile);
+
+            if (tile.ExcitedGroup == null)
+                return;
+
+            if (disposeExcitedGroup)
+                ExcitedGroupDispose(gridAtmosphere, tile.ExcitedGroup);
+            else
+                ExcitedGroupRemoveTile(tile.ExcitedGroup, tile);
+        }
     }
 }
