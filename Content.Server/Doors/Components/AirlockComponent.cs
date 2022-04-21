@@ -83,16 +83,26 @@ namespace Content.Server.Doors.Components
             }
         }
 
-        private bool _boltLightsWirePulsed = true;
+        private bool _boltLightsEnabled = true;
+
+        public bool BoltLightsEnabled
+        {
+            get => _boltLightsEnabled;
+            set
+            {
+                _boltLightsEnabled = value;
+                UpdateBoltLightStatus();
+            }
+        }
 
         [ViewVariables(VVAccess.ReadWrite)]
         public bool BoltLightsVisible
         {
-            get => _boltLightsWirePulsed && BoltsDown && IsPowered()
+            get => _boltLightsEnabled && BoltsDown && IsPowered()
                 && _entityManager.TryGetComponent<DoorComponent>(Owner, out var doorComponent) && doorComponent.State == DoorState.Closed;
             set
             {
-                _boltLightsWirePulsed = value;
+                _boltLightsEnabled = value;
                 UpdateBoltLightStatus();
             }
         }

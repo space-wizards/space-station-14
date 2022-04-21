@@ -20,7 +20,8 @@ public class AccessWireAction : BaseWireAction
     public override StatusLightData GetStatusLightData(Wire wire)
     {
         StatusLightState lightState = StatusLightState.Off;
-        if (EntityManager.TryGetComponent<AccessReaderComponent>(wire.Owner, out var access))
+        if (IsPowered(wire.Owner)
+            && EntityManager.TryGetComponent<AccessReaderComponent>(wire.Owner, out var access))
         {
             if (access.Enabled)
             {
