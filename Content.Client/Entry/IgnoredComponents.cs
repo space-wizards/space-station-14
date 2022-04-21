@@ -108,6 +108,8 @@ namespace Content.Client.Entry
             "SolarControlConsole",
             "Thruster",
             "FlashOnTrigger",
+            "SignalTrigger",
+            "Signaller",
             "TriggerOnCollide",
             "DeleteOnTrigger",
             "EmptyOnMachineDeconstruct",
