@@ -136,7 +136,7 @@ public sealed class StationSystem : EntitySystem
                 stationConfig = ev.GameMap.Stations[id];
             else
                 _sawmill.Error($"The station {id} in map {ev.GameMap.ID} does not have an associated station config!");
-            InitializeNewStation(stationConfig, gridIds, ev.StationName);
+            InitializeNewStation(stationConfig, gridIds.Select(x => _mapManager.GetGridEuid(x)), ev.StationName);
         }
     }
 
@@ -172,16 +172,13 @@ public sealed class StationSystem : EntitySystem
     /// <param name="gridIds">All grids that should be added to the station.</param>
     /// <param name="name">Optional override for the station name.</param>
     /// <returns>The initialized station.</returns>
-    public EntityUid InitializeNewStation(StationConfig? stationConfig, IEnumerable<GridId>? gridIds, string? name = null)
+    public EntityUid InitializeNewStation(StationConfig? stationConfig, IEnumerable<EntityUid>? gridIds, string? name = null)
     {
         //HACK: This needs to go in null-space but that crashes currently.
         var station = Spawn(null, new MapCoordinates(0, 0, _gameTicker.DefaultMap));
         var data = AddComp<StationDataComponent>(station);
         var metaData = MetaData(station);
         data.StationConfig = stationConfig;
-
-        if (gridIds is not null)
-            data.Grids.UnionWith(gridIds);
 
         if (stationConfig is not null && name is null)
         {
@@ -199,11 +196,9 @@ public sealed class StationSystem : EntitySystem
         RaiseLocalEvent(new StationInitializedEvent(station));
         _sawmill.Info($"Set up station {metaData.EntityName} ({station}).");
 
-        foreach (var grid in gridIds ?? Array.Empty<GridId>())
+        foreach (var grid in gridIds ?? Array.Empty<EntityUid>())
         {
-            var stationMember = AddComp<StationMemberComponent>(grid);
-            stationMember.Station = station;
-            RaiseLocalEvent(station, new StationGridAddedEvent(grid, true));
+            AddGridToStation(station, grid, null, data);
         }
 
         return station;

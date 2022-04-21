@@ -200,9 +200,9 @@ namespace Content.Server.StationEvents.Events
                 return false;
             }
 
-            targetGrid = mapManager.GetGridEuid(robustRandom.Pick(possibleTargets));
+            targetGrid = robustRandom.Pick(possibleTargets);
 
-            if (!entityManager.TryGetComponent<IMapGridComponent>(targetGrid!, out var gridComp))
+            if (!entityManager.TryGetComponent<IMapGridComponent>(targetGrid, out var gridComp))
                 return false;
             var grid = gridComp.Grid;
 

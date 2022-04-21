@@ -82,7 +82,7 @@ namespace Content.Server.StationEvents.Events
                     return;
                 }
 
-                var stationEnt = _mapManager.GetGridEuid(_robustRandom.Pick(possibleTargets));
+                var stationEnt = _robustRandom.Pick(possibleTargets);
 
                 if (!_entityManager.TryGetComponent<IMapGridComponent>(stationEnt, out var grid))
                     return;
