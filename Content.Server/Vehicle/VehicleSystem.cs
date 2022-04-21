@@ -34,7 +34,6 @@ namespace Content.Server.Vehicle
             SubscribeLocalEvent<VehicleComponent, BuckleChangeEvent>(OnBuckleChange);
             SubscribeLocalEvent<VehicleComponent, ComponentInit>(OnComponentInit);
             SubscribeLocalEvent<VehicleComponent, MoveEvent>(OnMove);
-            SubscribeLocalEvent<VehicleComponent, StorageChangedEvent>(OnStorageChanged);
             SubscribeLocalEvent<VehicleComponent, EntInsertedIntoContainerMessage>(OnEntInserted);
             SubscribeLocalEvent<VehicleComponent, EntRemovedFromContainerMessage>(OnEntRemoved);
         }
@@ -59,18 +58,12 @@ namespace Content.Server.Vehicle
         private void OnComponentInit(EntityUid uid, VehicleComponent component, ComponentInit args)
         {
             UpdateAppearance(uid, 2);
-            if (HasComp<ServerStorageComponent>(uid))
-                UpdateStorageUsed(uid, false);
             _ambientSound.SetAmbience(uid, false);
             if (!TryComp<StrapComponent>(uid, out var strap))
                 return;
 
             component.BaseBuckleOffset = strap.BuckleOffset;
             strap.BuckleOffsetUnclamped = Vector2.Zero; //You're going to align these facing east, so...
-
-            // Add key slot
-            component.KeySlot.Whitelist = component.KeyWhitelist;
-            _itemSlotsSystem.AddItemSlot(uid, component.Name, component.KeySlot);
         }
         /// <summary>
         /// Give the user the rider component if they're buckling to the vehicle,
@@ -93,7 +86,7 @@ namespace Content.Server.Vehicle
                 /// Add a virtual item to rider's hand
                 _virtualItemSystem.TrySpawnVirtualItemInHand(uid, args.BuckledEntity);
                 /// Let this open doors if it has the key in it
-                if (component.KeySlot.HasItem)
+                if (component.HasKey)
                 {
                     _tagSystem.AddTag(uid, "DoorBumpOpener");
                 }
@@ -140,7 +133,7 @@ namespace Content.Server.Vehicle
                 return;
             }
             /// The random check means the vehicle will stop after a few tiles without a key or without a rider
-            if ((!component.HasRider || !component.KeySlot.HasItem) && _random.Prob(0.015f))
+            if ((!component.HasRider || !component.HasKey) && _random.Prob(0.015f))
             {
                 RemComp<SharedPlayerInputMoverComponent>(uid);
                 UpdateAutoAnimate(uid, false);
@@ -150,30 +143,23 @@ namespace Content.Server.Vehicle
         }
 
         /// <summary>
-        /// This is used for the janicart having its bag inserted / removed
-        /// </summary>
-        private void OnStorageChanged(EntityUid uid, VehicleComponent component, StorageChangedEvent args)
-        {
-            UpdateStorageUsed(uid, args.Added);
-        }
-
-        /// <summary>
         /// Handle adding keys to the ignition
         /// </summary>
         private void OnEntInserted(EntityUid uid, VehicleComponent component, EntInsertedIntoContainerMessage args)
         {
-            if (!_tagSystem.HasTag(args.Entity, "VehicleKey"))
-                return;
+            if (_tagSystem.HasTag(args.Entity, "VehicleKey"))
+            {
+                /// This lets the vehicle move
+                EnsureComp<SharedPlayerInputMoverComponent>(uid);
+                /// This lets the vehicle open doors
+                if (component.HasRider)
+                    _tagSystem.AddTag(uid, "DoorBumpOpener");
 
-            /// This lets the vehicle move
-            EnsureComp<SharedPlayerInputMoverComponent>(uid);
-            /// This lets the vehicle open doors
-            if (component.HasRider)
-                _tagSystem.AddTag(uid, "DoorBumpOpener");
+                component.HasKey = true;
 
-            // Audiovisual feedback
-            SoundSystem.Play(Filter.Pvs(uid), component.StartupSound.GetSound(), uid, AudioParams.Default.WithVolume(1f));
-            _ambientSound.SetAmbience(uid, true);
+                // Audiovisual feedback
+                _ambientSound.SetAmbience(uid, true);
+            }
         }
 
         /// <summary>
@@ -181,11 +167,11 @@ namespace Content.Server.Vehicle
         /// </summary>
         private void OnEntRemoved(EntityUid uid, VehicleComponent component, EntRemovedFromContainerMessage args)
         {
-            /// We have 3 containers or maybe even more so
-            if (!_tagSystem.HasTag(args.Entity, "VehicleKey"))
-                return;
-
-            _ambientSound.SetAmbience(uid, false);
+            if (_tagSystem.HasTag(args.Entity, "VehicleKey"))
+            {
+                component.HasKey = false;
+                _ambientSound.SetAmbience(uid, false);
+            }
         }
 
         /// <summary>
@@ -260,16 +246,6 @@ namespace Content.Server.Vehicle
             if (!TryComp<AppearanceComponent>(uid, out var appearance))
                 return;
             appearance.SetData(VehicleVisuals.AutoAnimate, autoAnimate);
-        }
-
-        /// <summary>
-        /// Toggle visibility of e.g. the trash bag on the janicart
-        /// </summary>
-        private void UpdateStorageUsed(EntityUid uid, bool storageUsed)
-        {
-            if (!TryComp<AppearanceComponent>(uid, out var appearance))
-                return;
-            appearance.SetData(VehicleVisuals.StorageUsed, storageUsed);
         }
     }
 }

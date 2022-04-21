@@ -54,6 +54,15 @@
         sound:
           path: /Audio/Effects/metalbreak.ogg
       - !type:ExplodeBehavior
+  - type: ItemSlots
+    slots:
+      key_slot:
+        name: Keys
+        whitelist:
+          requireAll: true
+          tags:
+          - VehicleKey
+        insertSound: /Audio/Effects/Vehicle/vehiclestartup.ogg
 
 - type: entity
   id: VehiclePussyWagon
@@ -64,28 +73,17 @@
   - type: Vehicle
     northOverride: -0.15
     southOverride: 0.22
-    keyWhitelist:
-      tags:
-      - PussyWagonKeys
   - type: Sprite
     sprite: Objects/Vehicles/pussywagon.rsi
     layers:
     - state: vehicle
       map: ["enum.VehicleVisualLayers.AutoAnimate"]
-    - state: storage
-      map: ["enum.VehicleVisualLayers.StorageUsed"]
     netsync: false
     noRot: true
   - type: Access
     tags:
     - Maintenance
     - Janitor
-  - type: Storage
-    capacity: 126 ## See ServerStorageComponent.cs Line 152
-    popup: false
-    whitelist:
-      tags:
-        - TrashBag
   - type: UnpoweredFlashlight
     toggleAction:
       name: action-name-toggle-light
@@ -116,6 +114,31 @@
           VehiclePussyWagonDestroyed:
             min: 1
             max: 1
+  - type: ItemSlots
+    slots:
+      key_slot:
+        name: Keys
+        whitelist:
+          requireAll: true
+          tags:
+          - VehicleKey
+          - PussyWagonKeys
+        insertSound: /Audio/Effects/Vehicle/vehiclestartup.ogg
+      trashbag_slot:
+        name: Bag
+        whitelist:
+          tags:
+            - TrashBag
+  - type: ItemMapper
+    mapLayers:
+      storage:
+        whitelist:
+          tags:
+            - TrashBag
+  - type: Appearance
+    visuals:
+      - type: MappedItemVisualizer
+        sprite: Objects/Vehicles/pussywagon.rsi
 
 - type: entity
   id: VehiclePussyWagonDestroyed
@@ -147,9 +170,6 @@
       iconOn: Objects/Fun/bikehorn.rsi/icon.png
       event: !type:ToggleActionEvent
     hornIsSiren: true
-    keyWhitelist:
-      tags:
-      - SecwayKeys
   - type: Sprite
     sprite: Objects/Vehicles/secway.rsi
     layers:
@@ -175,6 +195,16 @@
         Blunt: 0.8
         Slash: 0.6
         Piercing: 0.85
+  - type: ItemSlots
+    slots:
+      key_slot:
+        name: Keys
+        whitelist:
+          requireAll: true
+          tags:
+          - VehicleKey
+          - SecwayKeys
+        insertSound: /Audio/Effects/Vehicle/vehiclestartup.ogg
 
 - type: entity
   parent: VehicleBase
@@ -185,9 +215,6 @@
   - type: Vehicle
     northOverride: -0.1
     southOverride: 0.1
-    keyWhitelist:
-      tags:
-      - ATVKeys
   - type: Sprite
     sprite: Objects/Vehicles/atv.rsi
     layers:
@@ -218,3 +245,13 @@
     softness: 2
     mask: /Textures/Effects/LightMasks/cone.png
     autoRot: true
+  - type: ItemSlots
+    slots:
+      key_slot:
+        name: Keys
+        whitelist:
+          requireAll: true
+          tags:
+          - VehicleKey
+          - ATVKeys
+        insertSound: /Audio/Effects/Vehicle/vehiclestartup.ogg

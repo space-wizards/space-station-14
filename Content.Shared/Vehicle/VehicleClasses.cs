@@ -21,11 +21,7 @@ namespace Content.Shared.Vehicle
         /// <summary>
         /// Whether the wheels should be turning
         /// </summary>
-        AutoAnimate,
-        /// <summary>
-        /// Whether the trash bag or similar should be visible
-        /// </summary>
-        StorageUsed
+        AutoAnimate
     }
     /// <summary>
     /// Raised when someone honks a vehicle horn

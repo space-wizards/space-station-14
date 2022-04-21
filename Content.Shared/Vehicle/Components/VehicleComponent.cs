@@ -68,11 +68,6 @@ namespace Content.Shared.Vehicle.Components
         public bool SirenPlaying = false;
 
         public IPlayingAudioStream? SirenPlayingStream;
-        /// <summary>
-        /// The sound that the vehicle makes with a key inserted
-        /// </summary>
-        [DataField("startupSound")]
-        public SoundSpecifier StartupSound = new SoundPathSpecifier("/Audio/Effects/Vehicle/vehiclestartup.ogg");
 
         /// Use ambient sound component for the idle sound.
 
@@ -96,9 +91,8 @@ namespace Content.Shared.Vehicle.Components
         public ItemSlot KeySlot = new();
 
         /// <summary>
-        /// What entities can be inserted into the KeySlot
+        /// Whether the vehicle has a key currently inside it or not.
         /// </summary>
-        [DataField("keyWhitelist")]
-        public EntityWhitelist? KeyWhitelist = null;
+        public bool HasKey = false;
     }
 }

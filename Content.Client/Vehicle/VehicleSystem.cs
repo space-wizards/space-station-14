@@ -22,18 +22,11 @@ namespace Content.Client.Vehicle
             {
                 sprite?.LayerSetAutoAnimated(VehicleVisualLayers.AutoAnimate, autoAnimate);
             }
-            /// Make the janicart's bag, or analogous storage sprite layer on other vehicles visible/invisible
-            if (args.Component.TryGetData(VehicleVisuals.StorageUsed, out bool storageUsed))
-            {
-                sprite?.LayerSetVisible(VehicleVisualLayers.StorageUsed, storageUsed);
-            }
         }
     }
 }
 public enum VehicleVisualLayers : byte
 {
-    /// Layer for the vehicle itself
+    /// Layer for the vehicle's wheels
     AutoAnimate,
-    /// Layer for trash bag or similar
-    StorageUsed
 }
