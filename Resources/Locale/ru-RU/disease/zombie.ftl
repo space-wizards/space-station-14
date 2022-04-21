@@ -1,4 +1,4 @@
-zombie-transform = { CAPITALIZE(THE($target)) } обратился в зомби!
+zombie-transform = { CAPITALIZE($target) } теперь зомби!
 zombie-infection-greeting = Вы стали зомби. Ваша задача - искать живых и пытаться их заразить. Работайте сообща со своими коллегами-зомби, чтобы одолеть оставшихся членов экипажа.
 zombie-generic = зомби
 zombie-name-prefix = зомби { $target }
