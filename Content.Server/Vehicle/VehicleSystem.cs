@@ -36,17 +36,12 @@ namespace Content.Server.Vehicle
         public override void Initialize()
         {
             base.Initialize();
-            SubscribeLocalEvent<VehicleComponent, HonkActionEvent>(OnHonk);
-            SubscribeLocalEvent<VehicleComponent, ToggleActionEvent>(OnSirenToggle);
             SubscribeLocalEvent<VehicleComponent, BuckleChangeEvent>(OnBuckleChange);
             SubscribeLocalEvent<VehicleComponent, ComponentInit>(OnComponentInit);
             SubscribeLocalEvent<VehicleComponent, MoveEvent>(OnMove);
             SubscribeLocalEvent<VehicleComponent, StorageChangedEvent>(OnStorageChanged);
             SubscribeLocalEvent<VehicleComponent, EntInsertedIntoContainerMessage>(OnEntInserted);
             SubscribeLocalEvent<VehicleComponent, EntRemovedFromContainerMessage>(OnEntRemoved);
-            SubscribeLocalEvent<RiderComponent, VirtualItemDeletedEvent>(OnVirtualItemDeleted);
-            SubscribeLocalEvent<RiderComponent, GotParalyzedEvent>(OnParalyzed);
-            SubscribeLocalEvent<RiderComponent, MobStateChangedEvent>(OnMobStateChanged);
         }
         /// <summary>
         /// This just controls whether the wheels are turning.
@@ -235,41 +230,6 @@ namespace Content.Server.Vehicle
             {
                 buckle.TryUnbuckle(uid, true);
             }
-        }
-
-        /// <summary>
-        /// This fires when the rider presses the honk action
-        /// </summary>
-        private void OnHonk(EntityUid uid, VehicleComponent vehicle, HonkActionEvent args)
-        {
-            if (args.Handled)
-                return;
-            if (vehicle.HornSound != null)
-            {
-                SoundSystem.Play(Filter.Pvs(uid), vehicle.HornSound.GetSound(), uid, AudioHelpers.WithVariation(0.1f).WithVolume(8f));
-                args.Handled = true;
-            }
-        }
-
-        /// <summary>
-        /// For vehicles with horn sirens (like the secway) this uses different logic that makes the siren
-        /// loop instead of using a normal honk.
-        /// </summary>
-        private void OnSirenToggle(EntityUid uid, VehicleComponent vehicle, ToggleActionEvent args)
-        {
-            if (args.Handled || !vehicle.HornIsSiren)
-                return;
-
-            if (!vehicle.SirenPlaying)
-            {
-                vehicle.SirenPlayingStream?.Stop();
-                vehicle.SirenPlaying = true;
-                if (vehicle.HornSound != null)
-                    vehicle.SirenPlayingStream = SoundSystem.Play(Filter.Pvs(uid), vehicle.HornSound.GetSound(), uid, AudioParams.Default.WithLoop(true).WithVolume(1.8f));
-                return;
-            }
-            vehicle.SirenPlayingStream?.Stop();
-            vehicle.SirenPlaying = false;
         }
 
         /// <summary>
