@@ -13,6 +13,7 @@ public class ActionButtonContainer : GridContainer
 
     public event Action<GUIBoundKeyEventArgs, ActionButton>? ActionPressed;
     public event Action<GUIBoundKeyEventArgs, ActionButton>? ActionUnpressed;
+    public event Action<ActionButton>? ActionFocusExited;
 
     public ActionButtonContainer()
     {
@@ -29,6 +30,7 @@ public class ActionButtonContainer : GridContainer
             value.SetPositionInParent(index);
             value.ActionPressed += ActionPressed;
             value.ActionUnpressed += ActionUnpressed;
+            value.ActionFocusExited += ActionFocusExited;
         }
     }
 
@@ -58,6 +60,7 @@ public class ActionButtonContainer : GridContainer
         {
             button.ActionPressed += ActionPressed;
             button.ActionUnpressed += ActionUnpressed;
+            button.ActionFocusExited += ActionFocusExited;
         }
     }
 

@@ -37,6 +37,7 @@ public sealed class ActionButton : SlotControl
 
     public event Action<GUIBoundKeyEventArgs, ActionButton>? ActionPressed;
     public event Action<GUIBoundKeyEventArgs, ActionButton>? ActionUnpressed;
+    public event Action<ActionButton>? ActionFocusExited;
 
     public ActionButton()
     {
@@ -68,7 +69,12 @@ public sealed class ActionButton : SlotControl
 
     private void OnUnpressed(GUIBoundKeyEventArgs args, SlotControl control)
     {
-        ActionPressed?.Invoke(args, this);
+        ActionUnpressed?.Invoke(args, this);
+    }
+
+    protected override void ControlFocusExited()
+    {
+        ActionFocusExited?.Invoke(this);
     }
 
     public void UpdateButtonData(IEntityManager entityManager, ActionType action)

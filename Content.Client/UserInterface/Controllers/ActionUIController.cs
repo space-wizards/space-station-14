@@ -21,7 +21,7 @@ using MenuBar = Content.Client.HUD.Widgets.MenuBar;
 
 namespace Content.Client.UserInterface.Controllers;
 
-public sealed class ActionUIController : UIController, IOnStateChanged<GameplayState>, IPostInjectInit
+public sealed class ActionUIController : UIController, IOnStateChanged<GameplayState>
 {
     [Dependency] private readonly IEntityManager _entities = default!;
     [Dependency] private readonly IHudManager _hud = default!;
@@ -53,6 +53,7 @@ public sealed class ActionUIController : UIController, IOnStateChanged<GameplayS
 
     public void OnStateChanged(GameplayState state)
     {
+        _ui.PopupRoot.AddChild(_dragShadow);
         ActionButton.OnPressed += ActionButtonPressed;
 
         CommandBinds.Builder
@@ -150,6 +151,7 @@ public sealed class ActionUIController : UIController, IOnStateChanged<GameplayS
             actionItem.UpdateButtonData(_entities, action);
             actionItem.ActionPressed += OnWindowActionPressed;
             actionItem.ActionUnpressed += OnWindowActionUnPressed;
+            actionItem.ActionFocusExited += OnWindowActionFocusExisted;
 
             _window.ResultsGrid.AddChild(actionItem);
         }
@@ -247,6 +249,11 @@ public sealed class ActionUIController : UIController, IOnStateChanged<GameplayS
             button.UpdateButtonData(_entities, _dragDropHelper.Dragged.Action);
         }
 
+        _dragDropHelper.EndDrag();
+    }
+
+    private void OnWindowActionFocusExisted(ActionButton button)
+    {
         _dragDropHelper.EndDrag();
     }
 
@@ -382,10 +389,5 @@ public sealed class ActionUIController : UIController, IOnStateChanged<GameplayS
         {
             return p.Data.ToArray();
         }
-    }
-
-    void IPostInjectInit.PostInject()
-    {
-        _ui.PopupRoot.AddChild(_dragShadow);
     }
 }
