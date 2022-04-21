@@ -34,8 +34,6 @@
     storageSoundCollection:
       collection: storageRustle
   
-
-
 - type: entity
   parent: Bible
   name: necronomicon
@@ -69,4 +67,3 @@
     prefix: inhand
     Slots:
     - Belt
-  
