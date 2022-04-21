@@ -1,5 +1,7 @@
-using Robust.Shared.Serialization;
+using Content.Shared.Vehicle.Components;
 using Content.Shared.Actions;
+using Content.Shared.Item;
+using Robust.Shared.Serialization;
 
 /// <summary>
 /// Stores the VehicleVisuals and shared event
@@ -8,6 +10,25 @@ using Content.Shared.Actions;
 /// </summary>
 namespace Content.Shared.Vehicle
 {
+    public sealed class SharedVehicleSystem : EntitySystem
+    {
+        public override void Initialize()
+        {
+            base.Initialize();
+            SubscribeLocalEvent<InVehicleComponent, GettingPickedUpAttemptEvent>(OnPickupAttempt);
+        }
+
+        private void OnPickupAttempt(EntityUid uid, InVehicleComponent component, GettingPickedUpAttemptEvent args)
+        {
+            if (component.Vehicle == null || !component.Vehicle.HasRider)
+                return;
+
+            if (component.Vehicle.Rider != args.User)
+                args.Cancel();
+        }
+    }
+
+
     /// <summary>
     /// Stores the vehicle's draw depth mostly
     /// </summary>

@@ -8,13 +8,9 @@ using Content.Shared.Audio;
 using Content.Shared.Pulling.Components;
 using Content.Server.Light.Components;
 using Content.Server.Buckle.Components;
-using Content.Server.Storage.EntitySystems;
-using Content.Server.Storage.Components;
 using Content.Server.Hands.Systems;
 using Content.Shared.Tag;
 using Robust.Shared.Random;
-using Robust.Shared.Audio;
-using Robust.Shared.Player;
 using Robust.Shared.Containers;
 
 namespace Content.Server.Vehicle
@@ -143,10 +139,14 @@ namespace Content.Server.Vehicle
         }
 
         /// <summary>
-        /// Handle adding keys to the ignition
+        /// Handle adding keys to the ignition, give stuff the InVehicleComponent so it can't be picked
+        /// up by people not in the vehicle.
         /// </summary>
         private void OnEntInserted(EntityUid uid, VehicleComponent component, EntInsertedIntoContainerMessage args)
         {
+            var inVehicle = AddComp<InVehicleComponent>(args.Entity);
+            inVehicle.Vehicle = component;
+
             if (_tagSystem.HasTag(args.Entity, "VehicleKey"))
             {
                 /// This lets the vehicle move
@@ -167,6 +167,8 @@ namespace Content.Server.Vehicle
         /// </summary>
         private void OnEntRemoved(EntityUid uid, VehicleComponent component, EntRemovedFromContainerMessage args)
         {
+            RemComp<InVehicleComponent>(args.Entity);
+
             if (_tagSystem.HasTag(args.Entity, "VehicleKey"))
             {
                 component.HasKey = false;
