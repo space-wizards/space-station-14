@@ -13,7 +13,6 @@
     - type: DeviceNetwork
       deviceNetId: Apc
       receiveFrequencyId: AtmosMonitor
-    - type: ApcNetworkConnection
     - type: InteractionOutline
     - type: Damageable
       damageContainer: Inorganic

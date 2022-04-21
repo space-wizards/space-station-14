@@ -31,7 +31,6 @@
       receiveFrequencyId: AtmosMonitor
       transmitFrequencyId: AtmosMonitor
       prefix: device-address-prefix-vent
-    - type: ApcNetworkConnection
     - type: AtmosAlarmable
       alarmedBy:
       - AirAlarm
@@ -103,7 +102,6 @@
       receiveFrequencyId: AtmosMonitor
       transmitFrequencyId: AtmosMonitor
       prefix: device-address-prefix-scrubber
-    - type: ApcNetworkConnection
     - type: AtmosAlarmable
       alarmedBy:
       - AirAlarm
