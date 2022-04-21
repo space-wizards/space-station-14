@@ -21,7 +21,7 @@ namespace Content.Server.Explosion.EntitySystems
         }
         private void OnInit(EntityUid uid, TriggerOnSignalComponent component, ComponentInit args)
         {
-            var receiver = AddComp<SignalReceiverComponent>(uid);
+            var receiver = EnsureComp<SignalReceiverComponent>(uid);
             if (!receiver.Inputs.ContainsKey(TriggerOnSignalComponent.Port))
                 receiver.AddPort(TriggerOnSignalComponent.Port);
         }
