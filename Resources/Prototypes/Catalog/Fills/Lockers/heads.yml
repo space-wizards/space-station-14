@@ -38,6 +38,7 @@
       - id: ClothingNeckCloakCap
       - id: ClothingHandsGlovesCaptain
       - id: ClothingOuterHardsuitCap
+      - id: ClothingMaskGasCaptain
       - id: TaserGun
       - id: ClothingHeadHelmetHardsuitCap
       - id: CommsComputerCircuitboard
@@ -172,6 +173,7 @@
         prob: 0.1
       - id: ClothingHeadHelmetHardsuitSecurityRed
       - id: ClothingOuterHardsuitSecurityRed
+      - id: ClothingMaskGasSecurity
       - id: ClothingShoeSlippersDuck
         prob: 0.2
       - id: DrinkVacuumFlask

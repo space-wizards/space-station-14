@@ -1,15 +1,4 @@
 Entries:
-- author: moonheart08
-  changes:
-  - {message: 'Magboots now allow you to ignore a lack of gravity, as they should.',
-    type: Add}
-  id: 869
-  time: '2022-01-13T14:13:26.0000000+00:00'
-- author: Zumorica
-  changes:
-  - {message: Atmos fires now play a sound effect., type: Tweak}
-  id: 870
-  time: '2022-01-13T14:18:17.0000000+00:00'
 - author: BubblegumBlue
   changes:
   - {message: 'Added circuit boards for the Shuttle Console and Syndicate Shuttle
@@ -3044,3 +3033,15 @@ Entries:
     type: Add}
   id: 1368
   time: '2022-04-20T21:08:43.0000000+00:00'
+- author: Daemon
+  changes:
+  - {message: Added several gas mask variants, type: Add}
+  - {message: Tweaked Survival Boxes, type: Tweak}
+  - {message: Tweaked Locker Fills, type: Tweak}
+  id: 1369
+  time: '2022-04-21T12:11:26.0000000+00:00'
+- author: Peptide90
+  changes:
+  - {message: Split Station massive update!, type: Add}
+  id: 1370
+  time: '2022-04-21T13:19:44.0000000+00:00'
