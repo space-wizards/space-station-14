@@ -152,6 +152,7 @@
     - Flash
     - Handcuffs
     - Stunbaton
+    - FlashPayload
 
 - type: technology
   name: "non-lethal technology"
