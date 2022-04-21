@@ -8,7 +8,7 @@ namespace Content.Server.Doors;
 public class DoorTimingWireAction : BaseWireAction
 {
     [DataField("color")]
-    private Color _statusColor;
+    private Color _statusColor = Color.Orange;
 
     [DataField("name")]
     private string _text = "TIMR";

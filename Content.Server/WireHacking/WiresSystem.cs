@@ -6,6 +6,7 @@ using System.Threading;
 using Content.Server.DoAfter;
 using Content.Server.Hands.Systems;
 using Content.Server.Hands.Components;
+using Content.Server.Power.Components;
 using Content.Server.Tools;
 using Content.Shared.Examine;
 using Content.Shared.GameTicking;
@@ -58,6 +59,7 @@ public sealed class WiresSystem : EntitySystem
         SubscribeLocalEvent<WiresComponent, ExaminedEvent>(OnExamine);
         SubscribeLocalEvent<WiresComponent, MapInitEvent>(OnMapInit);
         SubscribeLocalEvent<WiresComponent, WireDoAfterEvent>(OnWireDoAfter);
+        SubscribeLocalEvent<WiresComponent, PowerChangedEvent>(OnWiresPowered);
     }
 
     private void SetOrCreateWireLayout(EntityUid uid, WiresComponent? wires = null)
@@ -296,6 +298,11 @@ public sealed class WiresSystem : EntitySystem
     #endregion
 
     #region Event Handling
+    private void OnWiresPowered(EntityUid uid, WiresComponent component, PowerChangedEvent args)
+    {
+        UpdateUserInterface(uid);
+    }
+
     private void OnWiresActionMessage(EntityUid uid, WiresComponent component, WiresActionMessage args)
     {
         // var wire = component.WiresList.Find(x => x.Id == args.Id);

@@ -17,7 +17,8 @@ public class DoorBoltWireAction : BaseWireAction
     public override StatusLightData GetStatusLightData(Wire wire)
     {
         StatusLightState lightState = StatusLightState.Off;
-        if (EntityManager.TryGetComponent<AirlockComponent>(wire.Owner, out var door))
+        if (IsPowered(wire.Owner)
+            && EntityManager.TryGetComponent<AirlockComponent>(wire.Owner, out var door))
         {
             if (door.BoltsDown)
             {
@@ -41,7 +42,7 @@ public class DoorBoltWireAction : BaseWireAction
         {
             if (!door.BoltsDown)
             {
-                door.BoltsDown = true;
+                door.SetBoltsWithAudio(true);
             }
         }
 
@@ -58,7 +59,7 @@ public class DoorBoltWireAction : BaseWireAction
     {
         if (EntityManager.TryGetComponent<AirlockComponent>(wire.Owner, out var door))
         {
-            door.BoltsDown = !door.BoltsDown;
+            door.SetBoltsWithAudio(!door.BoltsDown);
         }
 
         return true;

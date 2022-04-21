@@ -8,7 +8,7 @@ namespace Content.Server.Doors;
 public class DoorSafetyWireAction : BaseWireAction
 {
     [DataField("color")]
-    private Color _statusColor;
+    private Color _statusColor = Color.Red;
 
     [DataField("name")]
     private string _text = "SAFE";

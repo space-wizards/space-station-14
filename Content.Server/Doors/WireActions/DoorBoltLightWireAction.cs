@@ -1,3 +1,4 @@
+using Content.Server.Doors.Components;
 using Content.Server.Wires;
 using Content.Shared.Doors;
 using Content.Shared.Doors.Components;
@@ -9,7 +10,7 @@ namespace Content.Server.Doors;
 public class DoorBoltLightWireAction : BaseWireAction
 {
     [DataField("color")]
-    private Color _statusColor = Color.Red;
+    private Color _statusColor = Color.Lime;
 
     [DataField("name")]
     private string _text = "BLIT";
@@ -17,15 +18,14 @@ public class DoorBoltLightWireAction : BaseWireAction
     public override StatusLightData GetStatusLightData(Wire wire)
     {
         StatusLightState lightState = StatusLightState.Off;
-        if (WiresSystem.TryGetData(wire.Owner, DoorVisuals.BoltLights, out var lightStatus))
+        if (IsPowered(wire.Owner) && EntityManager.HasComponent<AirlockComponent>(wire.Owner))
         {
-            lightState = (bool) lightStatus
-                ? StatusLightState.On
-                : StatusLightState.Off;
-        }
-        else
-        {
-            lightState = StatusLightState.On;
+            if (WiresSystem.TryGetData(wire.Owner, DoorVisuals.BoltLights, out var lightStatus))
+            {
+                lightState = (bool) lightStatus
+                    ? StatusLightState.On
+                    : StatusLightState.Off;
+            }
         }
 
         return new StatusLightData(
@@ -34,21 +34,33 @@ public class DoorBoltLightWireAction : BaseWireAction
             _text);
     }
 
+    public override void Initialize(Wire wire)
+    {
+        base.Initialize(wire);
+
+        /*
+        if (EntityManager.TryGetComponent<AirlockComponent>(wire.Owner, out var door))
+        {
+            WiresSystem.SetData(wire.Owner, DoorVisuals.BoltLights, door.BoltLightsVisible);
+        }
+        */
+    }
+
     public override object Identifier { get; } = AirlockWireIdentifier.BoltLight;
 
     public override object StatusKey { get; } = AirlockWireStatus.BoltLightIndicator;
 
     public override bool Cut(EntityUid user, Wire wire)
     {
-        if (!WiresSystem.TryGetData(wire.Owner, DoorVisuals.BoltLights, out var lightStatus));
+        if (EntityManager.TryGetComponent<AirlockComponent>(wire.Owner, out var door))
         {
-            WiresSystem.SetData(wire.Owner, DoorVisuals.BoltLights, false);
-            lightStatus = false;
-        }
+            if (!WiresSystem.TryGetData(wire.Owner, DoorVisuals.BoltLights, out var lightStatus))
+            {
+                WiresSystem.SetData(wire.Owner, DoorVisuals.BoltLights, false);
+                lightStatus = false;
+            }
 
-        if (EntityManager.TryGetComponent<AppearanceComponent>(wire.Owner, out var appearance))
-        {
-            appearance.SetData(DoorVisuals.BoltLights, false);
+            door.BoltLightsVisible = false;
         }
 
         return true;
@@ -56,16 +68,15 @@ public class DoorBoltLightWireAction : BaseWireAction
 
     public override bool Mend(EntityUid user, Wire wire)
     {
-        if (!WiresSystem.TryGetData(wire.Owner, DoorVisuals.BoltLights, out var lightStatus))
+        if (EntityManager.TryGetComponent<AirlockComponent>(wire.Owner, out var door))
         {
-            lightStatus = true;
-        }
+            if (!WiresSystem.TryGetData(wire.Owner, DoorVisuals.BoltLights, out var lightStatus))
+            {
+                lightStatus = true;
+            }
 
-        if (EntityManager.TryGetComponent<AppearanceComponent>(wire.Owner, out var appearance))
-        {
-            appearance.SetData(DoorVisuals.BoltLights, lightStatus);
+            door.BoltLightsVisible = true;
         }
-
 
         return true;
     }
@@ -73,16 +84,17 @@ public class DoorBoltLightWireAction : BaseWireAction
     public override bool Pulse(EntityUid user, Wire wire)
     {
         // TODO: GENERICS, IMMEDIATELY
-        bool lightStatus = true;
-        if (WiresSystem.TryGetData(wire.Owner, DoorVisuals.BoltLights, out var lightObject))
+        if (EntityManager.TryGetComponent<AirlockComponent>(wire.Owner, out var door))
         {
-            lightStatus = (bool) lightObject;
-        }
+            bool lightStatus = true;
+            if (WiresSystem.TryGetData(wire.Owner, DoorVisuals.BoltLights, out var lightObject))
+            {
+                lightStatus = (bool) lightObject;
+            }
 
-        WiresSystem.SetData(wire.Owner, DoorVisuals.BoltLights, !lightStatus);
-        if (EntityManager.TryGetComponent<AppearanceComponent>(wire.Owner, out var appearance))
-        {
-            appearance.SetData(DoorVisuals.BoltLights, !lightStatus);
+            WiresSystem.SetData(wire.Owner, DoorVisuals.BoltLights, !lightStatus);
+
+            door.BoltLightsVisible = !lightStatus;
         }
 
         return true;

@@ -86,7 +86,7 @@ namespace Content.Server.Doors.Components
         private bool _boltLightsWirePulsed = true;
 
         [ViewVariables(VVAccess.ReadWrite)]
-        private bool BoltLightsVisible
+        public bool BoltLightsVisible
         {
             get => _boltLightsWirePulsed && BoltsDown && IsPowered()
                 && _entityManager.TryGetComponent<DoorComponent>(Owner, out var doorComponent) && doorComponent.State == DoorState.Closed;
