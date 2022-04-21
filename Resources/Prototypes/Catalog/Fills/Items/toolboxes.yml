@@ -71,11 +71,12 @@
     contents:
       - id: Screwdriver
       - id: Wrench
-      - id: Welder
+      - id: WelderExperimental
       - id: Crowbar
       - id: Multitool
       - id: Wirecutter
       - id: ClothingHandsGlovesCombat
+      - id: ClothingBeltMilitaryWebbing
 
 - type: entity
   id: ToolboxGoldFilled
