@@ -202,7 +202,11 @@
       size: 5
     - type: OnUseTimerTrigger
       delay: 5
-    # TODO: Spawn a fuckton of clowns
+    - type: ClusterGrenade
+      fillPrototype: MobHumanFeralClown
+      maxGrenadesCount: 50
+      delay: 0.2
+      countdown: 5
     - type: ExplodeOnTrigger
     - type: Damageable
       damageContainer: Inorganic
