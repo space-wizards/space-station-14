@@ -130,6 +130,9 @@
   id: Egg
 
 - type: Tag
+  id: EmagImmune
+
+- type: Tag
   id: EmitterBolt
 
 - type: Tag
