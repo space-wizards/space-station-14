@@ -48,3 +48,29 @@
     description: Inspect the station, jot down performance reviews for heads of staff, bug the Captain.
   - type: UtilityAI
     startingGear: CentcomGear
+
+- type: entity
+  name: feral clown
+  parent: MobHuman
+  id: MobHumanFeralClown
+  components:
+    - type: Icon
+      sprite: Markers/jobs.rsi
+      state: clown
+    - type: UtilityAI
+        startingGear: ClownGear
+        behaviorSets:
+          - Idle
+          - UnarmedAttackHostiles
+    - type: AiFactionTag
+        factions:
+          - SimpleHostile
+    - type: UnarmedCombat
+        range: 1.5
+        arcwidth: 0
+        arc: bite
+        hitSound:
+          collection: BikeHorn
+        damage:
+          groups:
+            Brute: 0

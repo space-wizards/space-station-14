@@ -116,6 +116,7 @@
     - type: TimerTriggerVisualizer
       countdown_sound:
         path: /Audio/Effects/countdown.ogg
+
 - type: entity
   name: the nuclear option
   description: Please don't throw it, think of the children.
@@ -185,3 +186,36 @@
       states:
         enum.Trigger.TriggerVisualState.Primed: primed
         enum.Trigger.TriggerVisualState.Unprimed: complete
+
+- type: entity
+  name: clown bomb
+  description: HONK!
+  parent: BaseItem
+  id: ClownBomb
+  components:
+    - type: Sprite
+      sprite: Objects/Weapons/Grenades/syndgrenade.rsi #TODO: Replace the sprite (can't use tg's because it's bad)
+      layers:
+        - state: icon
+          map: ["enum.TriggerVisualLayers.Base"]
+    - type: Item
+      size: 5
+    - type: OnUseTimerTrigger
+      delay: 5
+    # TODO: Spawn a fuckton of clowns
+    - type: ExplodeOnTrigger
+    - type: Damageable
+      damageContainer: Inorganic
+    - type: Destructible
+      thresholds:
+        - trigger:
+            !type:DamageTrigger
+            damage: 10
+          behaviors:
+            - !type:DoActsBehavior
+              acts: ["Destruction"]
+    - type: Appearance
+      visuals:
+        - type: TimerTriggerVisualizer
+          countdown_sound:
+            collection: BikeHorn
