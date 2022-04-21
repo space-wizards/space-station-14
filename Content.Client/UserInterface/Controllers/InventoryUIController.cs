@@ -45,7 +45,11 @@ public sealed partial class InventoryUIController : UIController, IOnStateChange
     private void CreateInventoryWindow(ClientInventoryComponent? clientInv)
     {
         if (clientInv == null) return;
+
         _inventoryWindow = _uiWindowManager.CreateNamedWindow<InventoryWindow>("Inventory");
+        if (_inventoryWindow == null)
+            return;
+
         foreach (var (_,data) in clientInv.SlotData)
         {
             if (!data.ShowInWindow)
@@ -55,7 +59,7 @@ public sealed partial class InventoryUIController : UIController, IOnStateChange
             button.OnPressed += OnItemPressed;
             button.OnStoragePressed += OnStoragePressed;
 
-            _inventoryWindow!.InventoryButtons.AddButton(button, data.ButtonOffset);
+            _inventoryWindow.InventoryButtons.AddButton(button, data.ButtonOffset);
 
             if (!_sprites.TryGetValue((data.SlotGroup, data.SlotName), out var tuple))
                 continue;
@@ -64,21 +68,26 @@ public sealed partial class InventoryUIController : UIController, IOnStateChange
             SpriteUpdated(update);
         }
 
+        _inventoryWindow.OnClose += OnInventoryClosed;
         InventoryButton.Pressed = true;
     }
+
     public void ToggleInventoryMenu()
     {
         if (_inventoryWindow != null)
         {
-            _inventoryWindow.Dispose();
-            _inventoryWindow = null;
-            InventoryButton.Pressed = false;
+            _inventoryWindow.Close();
             return;
         }
 
         CreateInventoryWindow(_playerInventory);
     }
 
+    private void OnInventoryClosed()
+    {
+        _inventoryWindow = null;
+        InventoryButton.Pressed = false;
+    }
 
     //Neuron Activation
     public override void OnSystemLoaded(IEntitySystem system)
