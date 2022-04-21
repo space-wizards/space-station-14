@@ -336,7 +336,7 @@ namespace Content.Client.Entry
             "DoorRemote",
             "InteractionPopup",
             "HealthAnalyzer",
-            "CanEscapeInventory"
+            "CanEscapeInventory",
         };
     }
 }

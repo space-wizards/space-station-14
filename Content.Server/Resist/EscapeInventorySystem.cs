@@ -32,12 +32,10 @@ public sealed class EscapeInventorySystem : EntitySystem
         if (component.IsResisting == true)
             return;
 
-        if (_containerSystem.TryGetContainingContainer(uid, out var container))
+        if (_containerSystem.TryGetContainingContainer(uid, out var container)
+            && (HasComp<SharedStorageComponent>(container.Owner) || HasComp<InventoryComponent>(container.Owner) || HasComp<SharedHandsComponent>(container.Owner)))
         {
-            if(HasComp<SharedStorageComponent>(container.Owner) || HasComp<InventoryComponent>(container.Owner) || HasComp<SharedHandsComponent>(container.Owner))
-            {
-                AttemptEscape(uid, container.Owner, component);
-            }
+            AttemptEscape(uid, container.Owner, component);
         }
     }
 
