@@ -135,12 +135,12 @@ namespace Content.Server.Stack
                 return;
             }
 
-///            if (EntityManager.HasComponent<StickyComponent>(uid))
-///            {
-///                var msg = Loc.GetString("cannot-split-due-to-sticky");
-///                PopupSystem.PopupEntity(msg, userUid, Filter.Entities(userUid));
-///                return;
-///            }
+//            if (EntityManager.HasComponent<StickyComponent>(uid))
+//            {
+//                var msg = Loc.GetString("cannot-split-due-to-sticky");
+//                PopupSystem.PopupEntity(msg, userUid, Filter.Entities(userUid));
+//                return;
+//            }
 
             if (Split(uid, amount, userTransform.Coordinates ,stack) is not {} split)
                 return;
