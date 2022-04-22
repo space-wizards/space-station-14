@@ -34,10 +34,10 @@ public sealed class StickySystem : EntitySystem
     {
         if (args.Handled || !args.CanReach || args.Target == null)
             return;
-        if (EntityManager.TryGetComponent(uid , out HasEntityStuckOn? _)
-            || EntityManager.TryGetComponent(args.Target , out HasEntityStuckOn? _)
-            || EntityManager.TryGetComponent(uid , out IsStuckOnEntity? _)
-            || EntityManager.TryGetComponent(args.Target , out IsStuckOnEntity? _))
+        if (EntityManager.HasComponent<HasEntityStuckOn>(uid)
+            || EntityManager.HasComponent<HasEntityStuckOn>(args.Target)
+            || EntityManager.HasComponent<HasEntityStuckOn>(uid)
+            || EntityManager.HasComponent<HasEntityStuckOn>(args.Target))
             return;
             // try stick object to a clicked target entity
         args.Handled = StartSticking(uid, args.User, args.Target.Value, component);
@@ -149,11 +149,11 @@ public sealed class StickySystem : EntitySystem
         UnstickFromEntity(ev.Uid, ev.User, component);
 
 
-        if(EntityManager.TryGetComponent(ev.Uid , out IsStuckOnEntity? _))
+        if(EntityManager.HasComponent<IsStuckOnEntity>(ev.Uid))
             EntityManager.RemoveComponent<IsStuckOnEntity>(ev.Uid);
         else { Log.Warning("stuck-on-entity-without-stuck-comp");}
 
-        if(EntityManager.TryGetComponent(ev.Target , out HasEntityStuckOn? _))
+        if(EntityManager.HasComponent<HasEntityStuckOn>(ev.Target))
             EntityManager.RemoveComponent<HasEntityStuckOn>(ev.Target);
         else { Log.Warning("has-entity-stuck-on-without-stuck-comp");}
     }
