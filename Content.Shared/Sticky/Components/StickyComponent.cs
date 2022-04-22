@@ -1,6 +1,6 @@
 ﻿using Content.Shared.Whitelist;
 
-namespace Content.Server.Sticky.Components;
+namespace Content.Shared.Sticky.Components;
 
 /// <summary>
 ///     Items that can be stick to other structures or entities.
@@ -73,4 +73,5 @@ public sealed class StickyComponent : Component
     /// </summary>
     [ViewVariables(VVAccess.ReadOnly)]
     public EntityUid? StuckTo;
+
 }

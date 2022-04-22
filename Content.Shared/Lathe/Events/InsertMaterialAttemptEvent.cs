@@ -1,8 +1,7 @@
 using JetBrains.Annotations;
 using Robust.Shared.Map;
-using Robust.Shared.Utility;
 
-namespace Content.Shared.Interaction.Events;
+namespace Content.Shared.Lathe.Events;
 
 
 /// <summary>

@@ -84,8 +84,9 @@ namespace Content.Shared.Stacks
             transfered = 0;
 
             //you need this check otherwise the merge would break sticky component
+
             if (EntityManager.HasComponent<IsStuckOnEntityComponent>(donor)
-                || EntityManager.HasComponent<HasEntityStuckOnComponent>(donor)
+                ||EntityManager.HasComponent<HasEntityStuckOnComponent>(donor)
                 || EntityManager.HasComponent<IsStuckOnEntityComponent>(recipient)
                 || EntityManager.HasComponent<HasEntityStuckOnComponent>(recipient))
             {

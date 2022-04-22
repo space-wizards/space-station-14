@@ -1,10 +1,9 @@
 ﻿using Content.Server.DoAfter;
 using Content.Server.Popups;
-using Content.Server.Sticky.Components;
+using Content.Shared.Sticky.Components;
 using Content.Server.Sticky.Events;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Interaction;
-using Content.Shared.Sticky.Components;
 using Content.Shared.Verbs;
 using Robust.Shared.Containers;
 using Robust.Shared.Player;
@@ -103,10 +102,6 @@ public sealed class StickySystem : EntitySystem
             return;
 
         StickToEntity(ev.Uid, ev.Target, ev.User, component);
-
-        //adds a component to the target and entity that is stuck to to use for identification
-        EntityManager.AddComponent<HasEntityStuckOnComponent>(ev.Target);
-        EntityManager.AddComponent<IsStuckOnEntityComponent>(ev.Uid);
     }
 
     private void StartUnsticking(EntityUid uid, EntityUid user, EntityUid target ,StickyComponent? component = null)
@@ -186,6 +181,11 @@ public sealed class StickySystem : EntitySystem
         {
             appearance.SetData(StickyVisuals.IsStuck, true);
         }
+
+
+        //adds a component to the target and entity that is stuck to to use for identification
+        EntityManager.AddComponent<HasEntityStuckOnComponent>(target);
+        EntityManager.AddComponent<IsStuckOnEntityComponent>(uid);
 
         component.StuckTo = target;
         RaiseLocalEvent(uid, new EntityStuckEvent(target, user));

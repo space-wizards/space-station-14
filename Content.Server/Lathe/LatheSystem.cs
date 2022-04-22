@@ -10,6 +10,7 @@ using Content.Server.Power.Components;
 using Content.Server.Stack;
 using Content.Server.UserInterface;
 using Content.Shared.Interaction.Events;
+using Content.Shared.Lathe.Events;
 using Content.Shared.Sticky.Components;
 using Robust.Server.GameObjects;
 using Robust.Shared.Prototypes;
