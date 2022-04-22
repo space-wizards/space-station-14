@@ -1,7 +1,7 @@
 namespace Content.Server.Sticky.Components;
 
 [RegisterComponent]
-public sealed class IsStuckOnEntity : Component
+public sealed class IsStuckOnEntityComponent : Component
 {
 
 }

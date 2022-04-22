@@ -34,10 +34,10 @@ public sealed class StickySystem : EntitySystem
     {
         if (args.Handled || !args.CanReach || args.Target == null)
             return;
-        if (EntityManager.HasComponent<HasEntityStuckOn>(uid)
-            || EntityManager.HasComponent<HasEntityStuckOn>(args.Target)
-            || EntityManager.HasComponent<HasEntityStuckOn>(uid)
-            || EntityManager.HasComponent<HasEntityStuckOn>(args.Target))
+        if (EntityManager.HasComponent<HasEntityStuckOnComponent>(uid)
+            || EntityManager.HasComponent<HasEntityStuckOnComponent>(args.Target)
+            || EntityManager.HasComponent<HasEntityStuckOnComponent>(uid)
+            || EntityManager.HasComponent<HasEntityStuckOnComponent>(args.Target))
             return;
             // try stick object to a clicked target entity
         args.Handled = StartSticking(uid, args.User, args.Target.Value, component);
@@ -102,8 +102,8 @@ public sealed class StickySystem : EntitySystem
         StickToEntity(ev.Uid, ev.Target, ev.User, component);
 
         //adds a component to the target and entity that is stuck to to use for identification
-        EntityManager.AddComponent<HasEntityStuckOn>(ev.Target);
-        EntityManager.AddComponent<IsStuckOnEntity>(ev.Uid);
+        EntityManager.AddComponent<HasEntityStuckOnComponent>(ev.Target);
+        EntityManager.AddComponent<IsStuckOnEntityComponent>(ev.Uid);
     }
 
     private void StartUnsticking(EntityUid uid, EntityUid user, EntityUid target ,StickyComponent? component = null)
@@ -149,12 +149,12 @@ public sealed class StickySystem : EntitySystem
         UnstickFromEntity(ev.Uid, ev.User, component);
 
 
-        if(EntityManager.HasComponent<IsStuckOnEntity>(ev.Uid))
-            EntityManager.RemoveComponent<IsStuckOnEntity>(ev.Uid);
+        if(EntityManager.HasComponent<IsStuckOnEntityComponent>(ev.Uid))
+            EntityManager.RemoveComponent<IsStuckOnEntityComponent>(ev.Uid);
         else { Log.Warning("stuck-on-entity-without-stuck-comp");}
 
-        if(EntityManager.HasComponent<HasEntityStuckOn>(ev.Target))
-            EntityManager.RemoveComponent<HasEntityStuckOn>(ev.Target);
+        if(EntityManager.HasComponent<HasEntityStuckOnComponent>(ev.Target))
+            EntityManager.RemoveComponent<HasEntityStuckOnComponent>(ev.Target);
         else { Log.Warning("has-entity-stuck-on-without-stuck-comp");}
     }
 
