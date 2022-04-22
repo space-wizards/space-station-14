@@ -30,3 +30,11 @@
   wires:
   - !type:PowerWireAction
   - !type:AccessWireAction
+
+- type: wireLayout
+  id: Arcade
+  wires:
+  - !type:PowerWireAction
+  - !type:ArcadeOverflowWireAction
+  - !type:ArcadePlayerInvincibleWireAction
+  - !type:ArcadeEnemyInvincibleWireAction

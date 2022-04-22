@@ -13,7 +13,8 @@ public abstract class BaseWireAction : IWireAction
 
     public abstract object Identifier { get; }
 
-    public abstract object StatusKey { get; }
+    // not virtual so implementors are aware that they need a nullable here
+    public abstract object? StatusKey { get; }
 
     // ugly, but IoC doesn't work during deserialization
     public virtual void Initialize(Wire wire)

@@ -24,9 +24,9 @@ namespace Content.Server.Arcade.Components
         private bool Powered => _entityManager.TryGetComponent<ApcPowerReceiverComponent>(Owner, out var powerReceiverComponent) && powerReceiverComponent.Powered;
 
         [ViewVariables] private BoundUserInterface? UserInterface => Owner.GetUIOrNull(SpaceVillainArcadeUiKey.Key);
-        [ViewVariables] private bool _overflowFlag;
-        [ViewVariables] private bool _playerInvincibilityFlag;
-        [ViewVariables] private bool _enemyInvincibilityFlag;
+        [ViewVariables] public bool OverflowFlag;
+        [ViewVariables] public bool PlayerInvincibilityFlag;
+        [ViewVariables] public bool EnemyInvincibilityFlag;
         [ViewVariables] public SpaceVillainGame Game = null!;
 
         [DataField("newGameSound")] private SoundSpecifier _newGameSound = new SoundPathSpecifier("/Audio/Effects/Arcade/newgame.ogg");
@@ -144,13 +144,13 @@ namespace Content.Server.Arcade.Components
             switch (wire)
             {
                 case Wires.Overflow:
-                    _overflowFlag = value;
+                    OverflowFlag = value;
                     break;
                 case Wires.PlayerInvincible:
-                    _playerInvincibilityFlag = value;
+                    PlayerInvincibilityFlag = value;
                     break;
                 case Wires.EnemyInvincible:
-                    _enemyInvincibilityFlag = value;
+                    EnemyInvincibilityFlag = value;
                     break;
             }
 
@@ -163,13 +163,13 @@ namespace Content.Server.Arcade.Components
 
             wiresComponent.SetStatus(Indicators.HealthManager,
                 new SharedWiresComponent.StatusLightData(Color.Purple,
-                    _playerInvincibilityFlag || _enemyInvincibilityFlag
+                    PlayerInvincibilityFlag || EnemyInvincibilityFlag
                         ? SharedWiresComponent.StatusLightState.BlinkingSlow
                         : SharedWiresComponent.StatusLightState.On,
                     "MNGR"));
             wiresComponent.SetStatus(Indicators.HealthLimiter,
                 new SharedWiresComponent.StatusLightData(Color.Red,
-                    _overflowFlag
+                    OverflowFlag
                         ? SharedWiresComponent.StatusLightState.BlinkingSlow
                         : SharedWiresComponent.StatusLightState.On,
                     "LIMT"));
@@ -248,7 +248,7 @@ namespace Content.Server.Arcade.Components
             /// </summary>
             private void ValidateVars()
             {
-                if (_owner._overflowFlag) return;
+                if (_owner.OverflowFlag) return;
 
                 if (_playerHp > _playerHpMax) _playerHp = _playerHpMax;
                 if (_playerMp > _playerMpMax) _playerMp = _playerMpMax;
@@ -272,7 +272,7 @@ namespace Content.Server.Arcade.Components
                                                                    ("enemyName", _enemyName),
                                                                    ("attackAmount", attackAmount));
                         SoundSystem.Play(Filter.Pvs(_owner.Owner), _owner._playerAttackSound.GetSound(), _owner.Owner, AudioParams.Default.WithVolume(-4f));
-                        if (!_owner._enemyInvincibilityFlag)
+                        if (!_owner.EnemyInvincibilityFlag)
                             _enemyHp -= attackAmount;
                         _turtleTracker -= _turtleTracker > 0 ? 1 : 0;
                         break;
@@ -283,7 +283,7 @@ namespace Content.Server.Arcade.Components
                                                                     ("magicPointAmount", pointAmount),
                                                                     ("healAmount", healAmount));
                         SoundSystem.Play(Filter.Pvs(_owner.Owner), _owner._playerHealSound.GetSound(), _owner.Owner, AudioParams.Default.WithVolume(-4f));
-                        if (!_owner._playerInvincibilityFlag)
+                        if (!_owner.PlayerInvincibilityFlag)
                             _playerMp -= pointAmount;
                         _playerHp += healAmount;
                         _turtleTracker++;
@@ -381,7 +381,7 @@ namespace Content.Server.Arcade.Components
                     _latestEnemyActionMessage = Loc.GetString("space-villain-game-enemy-throws-bomb-message",
                                                               ("enemyName", _enemyName),
                                                               ("damageReceived", boomAmount));
-                    if (_owner._playerInvincibilityFlag) return;
+                    if (_owner.PlayerInvincibilityFlag) return;
                     _playerHp -= boomAmount;
                     _turtleTracker--;
                 }
@@ -391,7 +391,7 @@ namespace Content.Server.Arcade.Components
                     _latestEnemyActionMessage = Loc.GetString("space-villain-game-enemy-steals-player-power-message",
                                                               ("enemyName", _enemyName),
                                                               ("stolenAmount", stealAmount));
-                    if (_owner._playerInvincibilityFlag) return;
+                    if (_owner.PlayerInvincibilityFlag) return;
                     _playerMp -= stealAmount;
                     _enemyMp += stealAmount;
                 }
@@ -410,7 +410,7 @@ namespace Content.Server.Arcade.Components
                         Loc.GetString("space-villain-game-enemy-attacks-message",
                                       ("enemyName", _enemyName),
                                       ("damageDealt", attackAmount));
-                    if (_owner._playerInvincibilityFlag) return;
+                    if (_owner.PlayerInvincibilityFlag) return;
                     _playerHp -= attackAmount;
                 }
             }

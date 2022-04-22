@@ -478,7 +478,7 @@ public sealed class WiresSystem : EntitySystem
                 entry.Letter));
 
             var statusData = entry.Action.GetStatusLightData(entry);
-            if (statusData != null)
+            if (statusData != null && entry.Action.StatusKey != null)
             {
                 wires.Statuses[entry.Action.StatusKey] = statusData;
             }

@@ -1,0 +1,57 @@
+namespace Content.Server.Wires;
+
+// Some wire actions are literally just toggles
+public abstract class BaseToggleWireAction : BaseWireAction
+{
+    public abstract void ToggleValue(EntityUid owner, bool setting);
+    public abstract bool GetValue(EntityUid owner);
+    public virtual object? TimeoutKey { get; } = null;
+    public virtual int Delay { get; } = 30;
+
+    public override bool Cut(EntityUid user, Wire wire)
+    {
+        ToggleValue(wire.Owner, false);
+
+        if (TimeoutKey != null)
+        {
+            WiresSystem.TryCancelWireAction(wire.Owner, TimeoutKey);
+        }
+
+        return true;
+    }
+
+    public override bool Mend(EntityUid user, Wire wire)
+    {
+        ToggleValue(wire.Owner, true);
+
+        return true;
+    }
+
+    public override bool Pulse(EntityUid user, Wire wire)
+    {
+        ToggleValue(wire.Owner, !GetValue(wire.Owner));
+
+        if (TimeoutKey != null)
+        {
+            WiresSystem.StartWireAction(wire.Owner, Delay, TimeoutKey, new WireDoAfterEvent(AwaitPulseCancel, wire));
+        }
+
+        return true;
+    }
+
+    public override void Update(Wire wire)
+    {
+        if (TimeoutKey != null && !IsPowered(wire.Owner))
+        {
+            WiresSystem.TryCancelWireAction(wire.Owner, TimeoutKey);
+        }
+    }
+
+    private void AwaitPulseCancel(Wire wire)
+    {
+        if (!wire.IsCut)
+        {
+            ToggleValue(wire.Owner, !GetValue(wire.Owner));
+        }
+    }
+}

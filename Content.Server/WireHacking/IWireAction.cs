@@ -37,7 +37,11 @@ public interface IWireAction
     // while checking the type of action inside.
     public object Identifier { get; }
 
-    public object StatusKey { get; }
+    // This is to link the wire's status with
+    // its corresponding UI key. If this is null,
+    // GetStatusLightData MUST also return null,
+    // otherwise nothing happens.
+    public object? StatusKey { get; }
 
     public void Initialize(Wire wire);
 
