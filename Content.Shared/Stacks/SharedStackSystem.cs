@@ -81,13 +81,6 @@ namespace Content.Shared.Stacks
             SharedStackComponent? donorStack = null,
             SharedStackComponent? recipientStack = null)
         {
-            transfered = 0;
-            if (!Resolve(recipient, ref recipientStack, false) || !Resolve(donor, ref donorStack, false))
-                return false;
-
-            if (!recipientStack.StackTypeId.Equals(donorStack.StackTypeId))
-                return false;
-
             //you need this check otherwise the merge would break sticky component
             if (EntityManager.HasComponent<IsStuckOnEntityComponent>(donor)
                 || EntityManager.HasComponent<HasEntityStuckOnComponent>(donor)
@@ -98,6 +91,13 @@ namespace Content.Shared.Stacks
                 PopupSystem.PopupEntity(msg, user, Filter.Entities(user));
                 return false;
             }
+
+            transfered = 0;
+            if (!Resolve(recipient, ref recipientStack, false) || !Resolve(donor, ref donorStack, false))
+                return false;
+
+            if (!recipientStack.StackTypeId.Equals(donorStack.StackTypeId))
+                return false;
 
             transfered = Math.Min(donorStack.Count, recipientStack.AvailableSpace);
             SetCount(donor, donorStack.Count - transfered, donorStack);
