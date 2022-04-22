@@ -5,7 +5,7 @@
         <BoxContainer Orientation="Horizontal" HorizontalExpand="True" Margin="8 8 8 1">
             <Button Name="Set" Text="Set" Access="Public" ToolTip="{Loc 'network-configurator-tooltip-set'}" HorizontalExpand="True" StyleClasses="ButtonSquare"/>
             <Button Name="Add" Text="Add" Access="Public" ToolTip="{Loc 'network-configurator-tooltip-add'}" HorizontalExpand="True" StyleClasses="ButtonSquare"/>
-            <!-- Edit might not be needed -->
+            <!-- Edit might not be needed  -->
             <!--<Button Name="Edit" Text="Edit" Access="Public" ToolTip="{Loc 'network-configurator-tooltip-edit'}" HorizontalExpand="True" StyleClasses="ButtonSquare"/>-->
             <Button Name="Clear" Text="Clear" Access="Public" ToolTip="{Loc 'network-configurator-tooltip-clear'}" HorizontalExpand="True"/>
         </BoxContainer>
