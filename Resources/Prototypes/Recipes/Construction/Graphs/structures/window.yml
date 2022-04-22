@@ -59,10 +59,14 @@
               amount: 2
             - !type:DeleteEntity {}
           steps:
+            - tool: Welding
+              doAfter: 5
             - tool: Screwing
               doAfter: 1
             - tool: Prying
               doAfter: 2
+            - tool: Welding
+              doAfter: 5
             - tool: Screwing
               doAfter: 1
             - tool: Anchoring
@@ -116,10 +120,14 @@
               amount: 2
             - !type:DeleteEntity {}
           steps:
+            - tool: Welding
+              doAfter: 5
             - tool: Screwing
               doAfter: 2
             - tool: Prying
               doAfter: 3
+            - tool: Welding
+              doAfter: 5
             - tool: Screwing
               doAfter: 2
             - tool: Anchoring

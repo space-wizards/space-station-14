@@ -44,7 +44,7 @@
   parent: ClothingHeadset
   id: ClothingHeadsetEngineering
   name: engineering headset
-  description: When the engineers wish to chat like girls.
+  description: A headset for engineers to chat while the station burns around them.
   components:
   - type: Sprite
     sprite: Clothing/Ears/Headsets/engineering.rsi

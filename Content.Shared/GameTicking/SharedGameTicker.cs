@@ -1,8 +1,4 @@
-﻿
-using System;
-using System.Collections.Generic;
-using Content.Shared.Station;
-using Robust.Shared.GameObjects;
+﻿using Content.Shared.Station;
 using Robust.Shared.Network;
 using Robust.Shared.Serialization;
 
@@ -139,15 +135,17 @@ namespace Content.Shared.GameTicking
         public string GamemodeTitle { get; }
         public string RoundEndText { get; }
         public TimeSpan RoundDuration { get; }
+        public int RoundId { get; }
         public int PlayerCount { get; }
         public RoundEndPlayerInfo[] AllPlayersEndInfo { get; }
 
-        public RoundEndMessageEvent(string gamemodeTitle, string roundEndText, TimeSpan roundDuration, int playerCount,
-            RoundEndPlayerInfo[] allPlayersEndInfo)
+        public RoundEndMessageEvent(string gamemodeTitle, string roundEndText, TimeSpan roundDuration, int roundId,
+            int playerCount, RoundEndPlayerInfo[] allPlayersEndInfo)
         {
             GamemodeTitle = gamemodeTitle;
             RoundEndText = roundEndText;
             RoundDuration = roundDuration;
+            RoundId = roundId;
             PlayerCount = playerCount;
             AllPlayersEndInfo = allPlayersEndInfo;
         }

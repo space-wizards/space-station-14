@@ -84,7 +84,7 @@ public sealed partial class InstrumentSystem : SharedInstrumentSystem
     {
         if (args.UiKey is not InstrumentUiKey)
             return;
-        
+
         EnsureComp<ActiveInstrumentComponent>(uid);
         Clean(uid, component);
     }
@@ -110,7 +110,7 @@ public sealed partial class InstrumentSystem : SharedInstrumentSystem
     {
         var uid = msg.Uid;
 
-        if (!EntityManager.TryGetComponent(uid, out InstrumentComponent? instrument))
+        if (!TryComp(uid, out InstrumentComponent? instrument))
             return;
 
         if (!instrument.Playing
@@ -121,7 +121,20 @@ public sealed partial class InstrumentSystem : SharedInstrumentSystem
 
         var send = true;
 
-        var minTick = msg.MidiEvent.Min(x => x.Tick);
+        var minTick = uint.MaxValue;
+        var maxTick = uint.MinValue;
+
+        for (var i = 0; i < msg.MidiEvent.Length; i++)
+        {
+            var tick = msg.MidiEvent[i].Tick;
+
+            if (tick < minTick)
+                minTick = tick;
+
+            if (tick > maxTick)
+                maxTick = tick;
+        }
+
         if (instrument.LastSequencerTick > minTick)
         {
             instrument.LaggedBatches++;
@@ -158,7 +171,6 @@ public sealed partial class InstrumentSystem : SharedInstrumentSystem
             RaiseNetworkEvent(msg);
         }
 
-        var maxTick = msg.MidiEvent.Max(x => x.Tick);
         instrument.LastSequencerTick = Math.Max(maxTick, minTick);
     }
 

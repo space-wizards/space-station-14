@@ -18,6 +18,8 @@
   - type: Tag
     tags:
       - DroneUsable
+  - type: Damageable
+    damageContainer: Inorganic
   - type: Destructible
     thresholds:
     - trigger:

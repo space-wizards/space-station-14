@@ -182,8 +182,7 @@ public sealed partial class ExplosionSystem : EntitySystem
         string id,
         EntityQuery<TransformComponent> xformQuery,
         EntityQuery<DamageableComponent> damageQuery,
-        EntityQuery<PhysicsComponent> physicsQuery,
-        EntityQuery<MetaDataComponent> metaQuery)
+        EntityQuery<PhysicsComponent> physicsQuery)
     {
         var gridBox = new Box2(tile * grid.TileSize, (tile + 1) * grid.TileSize);
 
@@ -191,27 +190,21 @@ public sealed partial class ExplosionSystem : EntitySystem
         // enumerator-changed-while-enumerating errors.
         List<(EntityUid, TransformComponent?) > list = new();
 
-        EntityUidQueryCallback callback = uid =>
+        void AddIntersecting(List<(EntityUid, TransformComponent?)> listy)
         {
-            if (processed.Contains(uid))
-                return;
-
-            if (!xformQuery.TryGetComponent(uid, out var xform))
-                return;
-
-            if (xform.ParentUid != grid.GridEntityId)
+            foreach (var uid in _entityLookup.GetLocalEntitiesIntersecting(lookup, ref gridBox, LookupFlags.None))
             {
-                if (!metaQuery.TryGetComponent(uid, out var meta))
-                    return;
-                // Not parented to grid. Likely in a container.
-                if (_containerSystem.IsEntityInContainer(uid, meta))
-                    return;
+                if (processed.Contains(uid))
+                    continue;
+
+                if (!xformQuery.TryGetComponent(uid, out var xform))
+                    continue;
+
+                listy.Add((uid, xform));
             }
+        }
 
-            list.Add((uid, xform));
-        };
-
-        _entityLookup.FastEntitiesIntersecting(lookup, ref gridBox, callback);
+        AddIntersecting(list);
 
         // process those entities
         foreach (var (entity, xform) in list)
@@ -222,11 +215,23 @@ public sealed partial class ExplosionSystem : EntitySystem
 
         // process anchored entities
         var tileBlocked = false;
-        foreach (var entity in grid.GetAnchoredEntities(tile).ToList())
+        var anchoredList = grid.GetAnchoredEntities(tile).ToList();
+        foreach (var entity in anchoredList)
         {
             processed.Add(entity);
             ProcessEntity(entity, epicenter, damage, throwForce, id, damageQuery, physicsQuery);
-            tileBlocked |= IsBlockingTurf(entity, physicsQuery);
+        }
+
+        // Walls and reinforced walls will break into girders. These girders will also be considered turf-blocking for
+        // the purposes of destroying floors. Again, ideally the process of damaging an entity should somehow return
+        // information about the entities that were spawned as a result, but without that information we just have to
+        // re-check for new anchored entities. Compared to entity spawning & deleting, this should still be relatively minor.
+        if (anchoredList.Count > 0)
+        {
+            foreach (var entity in grid.GetAnchoredEntities(tile))
+            {
+                tileBlocked |= IsBlockingTurf(entity, physicsQuery);
+            }
         }
 
         // Next, we get the intersecting entities AGAIN, but purely for throwing. This way, glass shards spawned from
@@ -241,7 +246,7 @@ public sealed partial class ExplosionSystem : EntitySystem
             return !tileBlocked;
 
         list.Clear();
-        _entityLookup.FastEntitiesIntersecting(lookup, ref gridBox, callback);
+        AddIntersecting(list);
 
         foreach (var (entity, xform) in list)
         {
@@ -267,45 +272,40 @@ public sealed partial class ExplosionSystem : EntitySystem
         string id,
         EntityQuery<TransformComponent> xformQuery,
         EntityQuery<DamageableComponent> damageQuery,
-        EntityQuery<PhysicsComponent> physicsQuery,
-        EntityQuery<MetaDataComponent> metaQuery)
+        EntityQuery<PhysicsComponent> physicsQuery)
     {
         var gridBox = new Box2(tile * DefaultTileSize, (DefaultTileSize, DefaultTileSize));
         var worldBox = spaceMatrix.TransformBox(gridBox);
         List<(EntityUid, TransformComponent)> list = new();
 
-        EntityUidQueryCallback callback = uid =>
+        void AddIntersecting(List<(EntityUid, TransformComponent)> listy)
         {
-            if (processed.Contains(uid))
-                return;
-
-            var xform  = xformQuery.GetComponent(uid);
-
-            if (xform.ParentUid == lookup.Owner)
+            foreach (var uid in _entityLookup.GetEntitiesIntersecting(lookup, ref worldBox, LookupFlags.None))
             {
-                // parented directly to the map, use local position
-                if (gridBox.Contains(invSpaceMatrix.Transform(xform.LocalPosition)))
-                    list.Add((uid, xform));
+                if (processed.Contains(uid))
+                    return;
 
-                return;
+                var xform = xformQuery.GetComponent(uid);
+
+                if (xform.ParentUid == lookup.Owner)
+                {
+                    // parented directly to the map, use local position
+                    if (gridBox.Contains(invSpaceMatrix.Transform(xform.LocalPosition)))
+                        listy.Add((uid, xform));
+
+                    return;
+                }
+
+                // "worldPos" should be the space/map local position.
+                var worldPos = _transformSystem.GetWorldPosition(xform, xformQuery);
+
+                // finally check if it intersects our tile
+                if (gridBox.Contains(invSpaceMatrix.Transform(worldPos)))
+                    listy.Add((uid, xform));
             }
+        }
 
-            if (!metaQuery.TryGetComponent(uid, out var meta))
-                return;
-
-            // Not parented to map. Likely in a container.
-            if (_containerSystem.IsEntityInContainer(uid, meta))
-                return;
-
-            // "worldPos" should be the space/map local position.
-            var worldPos = _transformSystem.GetWorldPosition(xform, xformQuery);
-
-            // finally check if it intersects our tile
-            if (gridBox.Contains(invSpaceMatrix.Transform(worldPos)))
-                list.Add((uid, xform));
-        };
-
-        _entityLookup.FastEntitiesIntersecting(lookup, ref worldBox, callback);
+        AddIntersecting(list);
 
         foreach (var (entity, xform) in list)
         {
@@ -319,7 +319,7 @@ public sealed partial class ExplosionSystem : EntitySystem
         // Also, throw any entities that were spawned as shrapnel. Compared to entity spawning & destruction, this extra
         // lookup is relatively minor computational cost, and throwing is disabled for nukes anyways.
         list.Clear();
-        _entityLookup.FastEntitiesIntersecting(lookup, ref worldBox, callback);
+        AddIntersecting(list);
         foreach (var (entity, xform) in list)
         {
             ProcessEntity(entity, epicenter, null, throwForce, id, damageQuery, physicsQuery, xform);
@@ -380,10 +380,15 @@ public sealed partial class ExplosionSystem : EntitySystem
     public void DamageFloorTile(TileRef tileRef,
         float effectiveIntensity,
         int maxTileBreak,
+        bool canCreateVacuum,
         List<(Vector2i GridIndices, Tile Tile)> damagedTiles,
         ExplosionPrototype type)
     {
-        var tileDef = _tileDefinitionManager[tileRef.Tile.TypeId];
+        if (_tileDefinitionManager[tileRef.Tile.TypeId] is not ContentTileDefinition tileDef)
+            return;
+
+        if (tileDef.IsSpace)
+            canCreateVacuum = true; // is already a vacuum.
 
         int tileBreakages = 0;
         while (maxTileBreak > tileBreakages && _robustRandom.Prob(type.TileBreakChance(effectiveIntensity)))
@@ -391,14 +396,17 @@ public sealed partial class ExplosionSystem : EntitySystem
             tileBreakages++;
             effectiveIntensity -= type.TileBreakRerollReduction;
 
-            if (tileDef is not ContentTileDefinition contentTileDef)
-                break;
-
             // does this have a base-turf that we can break it down to?
-            if (contentTileDef.BaseTurfs.Count == 0)
+            if (tileDef.BaseTurfs.Count == 0)
                 break;
 
-            tileDef = _tileDefinitionManager[contentTileDef.BaseTurfs[^1]];
+            if (_tileDefinitionManager[tileDef.BaseTurfs[^1]] is not ContentTileDefinition newDef)
+                break;
+
+            if (newDef.IsSpace && !canCreateVacuum)
+                break;
+
+            tileDef = newDef;
         }
 
         if (tileDef.TileId == tileRef.Tile.TypeId)
@@ -455,7 +463,7 @@ sealed class Explosion
     public readonly HashSet<EntityUid> ProcessedEntities = new();
 
     /// <summary>
-    ///     This integer tracks how much of this explosion has been processed. 
+    ///     This integer tracks how much of this explosion has been processed.
     /// </summary>
     public int CurrentIteration { get; private set; } = 0;
 
@@ -503,7 +511,6 @@ sealed class Explosion
     private readonly EntityQuery<TransformComponent> _xformQuery;
     private readonly EntityQuery<PhysicsComponent> _physicsQuery;
     private readonly EntityQuery<DamageableComponent> _damageQuery;
-    private readonly EntityQuery<MetaDataComponent> _metaQuery;
 
     /// <summary>
     ///     Total area that the explosion covers.
@@ -519,6 +526,11 @@ sealed class Explosion
     ///     Maximum number of times that an explosion will break a single tile.
     /// </summary>
     private readonly int _maxTileBreak;
+
+    /// <summary>
+    ///     Whether this explosion can turn non-vacuum tiles into vacuum-tiles.
+    /// </summary>
+    private readonly bool _canCreateVacuum;
 
     private readonly IEntityManager _entMan;
     private readonly ExplosionSystem _system;
@@ -536,6 +548,7 @@ sealed class Explosion
         int area,
         float tileBreakScale,
         int maxTileBreak,
+        bool canCreateVacuum,
         IEntityManager entMan,
         IMapManager mapMan)
     {
@@ -547,12 +560,12 @@ sealed class Explosion
 
         _tileBreakScale = tileBreakScale;
         _maxTileBreak = maxTileBreak;
+        _canCreateVacuum = canCreateVacuum;
         _entMan = entMan;
 
         _xformQuery = entMan.GetEntityQuery<TransformComponent>();
         _physicsQuery = entMan.GetEntityQuery<PhysicsComponent>();
         _damageQuery = entMan.GetEntityQuery<DamageableComponent>();
-        _metaQuery = entMan.GetEntityQuery<MetaDataComponent>();
 
         if (spaceData != null)
         {
@@ -652,7 +665,7 @@ sealed class Explosion
     }
 
     /// <summary>
-    ///     Attempt to process (i.e., damage entities) some number of grid tiles. 
+    ///     Attempt to process (i.e., damage entities) some number of grid tiles.
     /// </summary>
     public int Process(int processingTarget)
     {
@@ -692,12 +705,11 @@ sealed class Explosion
                     ExplosionType.ID,
                     _xformQuery,
                     _damageQuery,
-                    _physicsQuery,
-                    _metaQuery);
+                    _physicsQuery);
 
                 // If the floor is not blocked by some dense object, damage the floor tiles.
                 if (canDamageFloor)
-                    _system.DamageFloorTile(tileRef, _currentIntensity * _tileBreakScale, _maxTileBreak, tileUpdateList, ExplosionType);
+                    _system.DamageFloorTile(tileRef, _currentIntensity * _tileBreakScale, _maxTileBreak, _canCreateVacuum, tileUpdateList, ExplosionType);
             }
             else
             {
@@ -713,8 +725,7 @@ sealed class Explosion
                     ExplosionType.ID,
                     _xformQuery,
                     _damageQuery,
-                    _physicsQuery,
-                    _metaQuery);
+                    _physicsQuery);
             }
 
             if (!MoveNext())
