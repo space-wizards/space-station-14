@@ -99,14 +99,15 @@ namespace Content.Server.Lathe
 
         /// <summary>
         /// When someone tries to use an item on the lathe,
-        /// insert it if it's a stack and fits inside
+        /// insert it if it's a stack and fits inside and don't have anything stuck to it
         /// </summary>
         private void OnInteractUsing(EntityUid uid, LatheComponent component, InteractUsingEvent args)
         {
             if (!TryComp<MaterialStorageComponent>(uid, out var storage) || !TryComp<MaterialComponent>(args.Used, out var material))
                 return;
 
-            if (EntityManager.HasComponent<IsStuckOnEntityComponent>(uid) || EntityManager.HasComponent<HasEntityStuckOnComponent>(uid))  return;
+            if (EntityManager.HasComponent<IsStuckOnEntityComponent>(args.Used) || EntityManager.HasComponent<HasEntityStuckOnComponent>(args.Used))
+                return;
 
             var multiplier = 1;
 
