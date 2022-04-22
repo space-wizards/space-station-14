@@ -116,6 +116,14 @@ namespace Content.Client.Stylesheets
 
         public const string StyleClassItemStatus = "ItemStatus";
 
+        //Background
+        public const string StyleClassBackgroundBaseDark = "PanelBackgroundBaseDark";
+
+        //Buttons
+        public const string StyleClassCrossButtonRed = "CrossButtonRed";
+        public const string StyleClassButtonColorRed = "ButtonColorRed";
+        public const string StyleClassButtonColorGreen = "ButtonColorGreen";
+
         public override Stylesheet Stylesheet { get; }
 
         public StyleNano(IResourceCache resCache) : base(resCache)
