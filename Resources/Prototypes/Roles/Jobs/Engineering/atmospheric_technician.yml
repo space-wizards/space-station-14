@@ -6,6 +6,7 @@
   - Engineering
   icon: "AtmosphericTechnician"
   supervisors: "the chief engineer"
+  canBeAntag: false 
   access:
   - Maintenance
   - Engineering
