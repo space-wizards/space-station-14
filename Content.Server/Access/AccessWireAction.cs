@@ -41,31 +41,54 @@ public class AccessWireAction : BaseWireAction
 
     public override bool Cut(EntityUid user, Wire wire)
     {
-        if (!EntityManager.TryGetComponent<AccessReaderComponent>(wire.Owner, out var access))
+        if (EntityManager.TryGetComponent<AccessReaderComponent>(wire.Owner, out var access))
         {
-            return false;
+            WiresSystem.TryCancelWireAction(wire.Owner, PulseTimeoutKey.Key);
+            access.Enabled = false;
         }
-
-        access.Enabled = false;
 
         return true;
     }
 
     public override bool Mend(EntityUid user, Wire wire)
     {
-        if (!EntityManager.TryGetComponent<AccessReaderComponent>(wire.Owner, out var access))
+        if (EntityManager.TryGetComponent<AccessReaderComponent>(wire.Owner, out var access))
         {
-            return false;
+            access.Enabled = true;
         }
-
-        access.Enabled = true;
 
         return true;
     }
 
     public override bool Pulse(EntityUid user, Wire wire)
     {
+        if (EntityManager.TryGetComponent<AccessReaderComponent>(wire.Owner, out var access))
+        {
+            access.Enabled = false;
+            WiresSystem.StartWireAction(wire.Owner, _pulseTimeout, PulseTimeoutKey.Key, new WireDoAfterEvent(AwaitPulseCancel, wire));
+        }
 
         return true;
+    }
+
+    public override void Update(Wire wire)
+    {
+        if (!IsPowered(wire.Owner))
+        {
+            WiresSystem.TryCancelWireAction(wire.Owner, PulseTimeoutKey.Key);
+        }
+    }
+
+    private void AwaitPulseCancel(Wire wire)
+    {
+        if (EntityManager.TryGetComponent<AccessReaderComponent>(wire.Owner, out var access))
+        {
+            access.Enabled = true;
+        }
+    }
+
+    private enum PulseTimeoutKey : byte
+    {
+        Key
     }
 }

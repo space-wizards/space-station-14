@@ -24,3 +24,9 @@
   wires:
   - !type:PowerWireAction
   - !type:AccessWireAction
+
+- type: wireLayout
+  id: AirAlarm
+  wires:
+  - !type:PowerWireAction
+  - !type:AccessWireAction

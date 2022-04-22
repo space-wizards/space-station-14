@@ -228,11 +228,16 @@ public sealed class WiresSystem : EntitySystem
 
         CancellationTokenSource tokenSource = new();
 
+        if (HasData(owner, key))
+        {
+            return;
+        }
+
         SetData(owner, key, tokenSource);
 
         _activeWires[owner].Add(new ActiveWireAction
         (
-            owner,
+            key,
             delay,
             tokenSource.Token,
             onFinish
@@ -277,6 +282,8 @@ public sealed class WiresSystem : EntitySystem
                 {
                     _activeWires.Remove(owner);
                 }
+
+                RemoveData(owner, wireAction.Id);
             }
 
             _finishedWires.Clear();
@@ -600,6 +607,22 @@ public sealed class WiresSystem : EntitySystem
 
         wires.StateData[identifier] = data;
         UpdateUserInterface(uid, wires);
+    }
+
+    public bool HasData(EntityUid uid, object identifier, WiresComponent? wires = null)
+    {
+        if (!Resolve(uid, ref wires))
+            return false;
+
+        return wires.StateData.ContainsKey(identifier);
+    }
+
+    public void RemoveData(EntityUid uid, object identifier, WiresComponent? wires = null)
+    {
+        if (!Resolve(uid, ref wires))
+            return;
+
+        wires.StateData.Remove(identifier);
     }
 
 
