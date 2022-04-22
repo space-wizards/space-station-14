@@ -9,6 +9,7 @@ using Content.Server.Popups;
 using Content.Server.Power.Components;
 using Content.Server.Stack;
 using Content.Server.UserInterface;
+using Content.Shared.Sticky.Components;
 using Robust.Server.GameObjects;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Player;
@@ -104,6 +105,8 @@ namespace Content.Server.Lathe
         {
             if (!TryComp<MaterialStorageComponent>(uid, out var storage) || !TryComp<MaterialComponent>(args.Used, out var material))
                 return;
+
+            if (EntityManager.HasComponent<IsStuckOnEntityComponent>(uid) || EntityManager.HasComponent<HasEntityStuckOnComponent>(uid))  return;
 
             var multiplier = 1;
 
