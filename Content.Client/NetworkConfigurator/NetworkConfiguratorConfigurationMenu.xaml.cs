@@ -15,9 +15,6 @@ public sealed partial class NetworkConfiguratorConfigurationMenu : FancyWindow
     {
         RobustXamlLoader.Load(this);
 
-        //For some reason only the hover color works for buttons so I guess no colored buttons then
-        Set.StyleClasses.Add("ButtonSquare");
-        Set.StyleClasses.Add("ButtonColorGreen");
         Clear.StyleClasses.Add("OpenLeft");
         Clear.StyleClasses.Add("ButtonColorRed");
     }

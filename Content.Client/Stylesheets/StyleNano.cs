@@ -1322,12 +1322,18 @@ namespace Content.Client.Stylesheets
                 Element<Button>().Class("ButtonColorRed")
                     .Prop(Control.StylePropertyModulateSelf, ButtonColorDefaultRed),
 
+                Element<Button>().Class("ButtonColorRed").Pseudo(ContainerButton.StylePseudoClassNormal)
+                    .Prop(Control.StylePropertyModulateSelf, ButtonColorDefaultRed),
+
                 Element<Button>().Class("ButtonColorRed").Pseudo(ContainerButton.StylePseudoClassHover)
                     .Prop(Control.StylePropertyModulateSelf, ButtonColorHoveredRed),
                 // ---
 
                 // Green Button ---
                 Element<Button>().Class("ButtonColorGreen")
+                    .Prop(Control.StylePropertyModulateSelf, ButtonColorGoodDefault),
+
+                Element<Button>().Class("ButtonColorGreen").Pseudo(ContainerButton.StylePseudoClassNormal)
                     .Prop(Control.StylePropertyModulateSelf, ButtonColorGoodDefault),
 
                 Element<Button>().Class("ButtonColorGreen").Pseudo(ContainerButton.StylePseudoClassHover)
