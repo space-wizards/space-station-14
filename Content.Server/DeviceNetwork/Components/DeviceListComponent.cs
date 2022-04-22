@@ -9,7 +9,6 @@ public sealed class DeviceListComponent : Component
     /// <summary>
     /// The list of devices can or can't connect to, depending on the <see cref="IsAllowList"/> field.
     /// </summary>
-    [ViewVariables]
     [DataField("devices")]
     public HashSet<EntityUid> Devices = new();
 

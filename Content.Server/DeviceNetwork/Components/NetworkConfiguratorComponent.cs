@@ -9,7 +9,6 @@ public sealed class NetworkConfiguratorComponent : Component
     /// <summary>
     /// The list of devices stored in the configurator-
     /// </summary>
-    [ViewVariables]
     [DataField("devices")]
     public Dictionary<string, EntityUid> Devices = new();
 

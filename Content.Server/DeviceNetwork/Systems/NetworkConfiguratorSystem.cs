@@ -174,10 +174,23 @@ public sealed class NetworkConfiguratorSystem : EntitySystem
     private void UpdateUiState(EntityUid uid, NetworkConfiguratorComponent component)
     {
         HashSet<(string address, string name)> devices = new();
+        HashSet<string> invalidDevices = new();
 
         foreach (var pair in component.Devices)
         {
+            if (!Exists(pair.Value))
+            {
+                invalidDevices.Add(pair.Key);
+                continue;
+            }
+
             devices.Add((pair.Key, Name(pair.Value)));
+        }
+
+        //Remove saved entities that don't exist anymore
+        foreach (var invalidDevice in invalidDevices)
+        {
+            component.Devices.Remove(invalidDevice);
         }
 
         _uiSystem.GetUiOrNull(uid, NetworkConfiguratorUiKey.List)?.SetState(new NetworkConfiguratorUserInterfaceState(devices));
