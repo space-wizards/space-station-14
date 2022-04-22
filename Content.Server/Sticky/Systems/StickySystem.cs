@@ -38,8 +38,8 @@ public sealed class StickySystem : EntitySystem
         //makes sure that neither the target nor the host have entities stuck to them or is stuck to entities
         if (EntityManager.HasComponent<HasEntityStuckOnComponent>(uid)
             || EntityManager.HasComponent<HasEntityStuckOnComponent>(args.Target)
-            || EntityManager.HasComponent<HasEntityStuckOnComponent>(uid)
-            || EntityManager.HasComponent<HasEntityStuckOnComponent>(args.Target))
+            || EntityManager.HasComponent<IsStuckOnEntityComponent>(uid)
+            || EntityManager.HasComponent<IsStuckOnEntityComponent>(args.Target))
             return;
 
             // try stick object to a clicked target entity
