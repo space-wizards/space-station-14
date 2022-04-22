@@ -18,7 +18,8 @@ namespace Content.Server.DeviceNetwork.Components
             Private,
             Wired,
             Wireless,
-            Apc
+            Apc,
+            AtmosDevices
         }
         // TODO allow devices to join more than one network?
 
