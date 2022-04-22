@@ -2,7 +2,10 @@
   id: Airlock
   wires:
   - !type:PowerWireAction
-  - !type:AccessWireAction
+  - !type:DoorBoltWireAction
+  - !type:DoorBoltLightWireAction
+  - !type:DoorTimingWireAction
+  - !type:DoorSafetyWireAction
 
 - type: wireLayout
   parent: Airlock
