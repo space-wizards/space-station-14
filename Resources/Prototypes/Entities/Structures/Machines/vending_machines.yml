@@ -55,7 +55,7 @@
   - type: DoAfter
   - type: Electrified
     enabled: false
-    requirePower: false
+    usesApcPower: true
   - type: PointLight
     enabled: false
     castShadows: false

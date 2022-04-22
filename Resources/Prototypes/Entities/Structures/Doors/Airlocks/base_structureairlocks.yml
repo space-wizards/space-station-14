@@ -58,7 +58,7 @@
   - type: ExtensionCableReceiver
   - type: Electrified
     enabled: false
-    requirePower: false
+    usesApcPower: true
   - type: Wires
     BoardName: "Airlock Control"
     LayoutId: Airlock

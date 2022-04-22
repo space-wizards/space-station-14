@@ -15,7 +15,7 @@ namespace Content.Client.Lathe
             {
                 if (args.Component.TryGetData(PowerDeviceVisuals.Powered, out bool powered))
                     sprite.LayerSetVisible(PowerDeviceVisualLayers.Powered, powered);
-                if (args.Component.TryGetData(SharedWiresComponent.WiresVisuals.MaintenancePanelState, out bool panel))
+                if (args.Component.TryGetData(WiresVisuals.MaintenancePanelState, out bool panel))
                     sprite.LayerSetVisible(WiresVisualizer.WiresVisualLayers.MaintenancePanel, panel);
                 // Lathe specific stuff
                 if (args.Component.TryGetData(LatheVisuals.IsRunning, out bool isRunning))
