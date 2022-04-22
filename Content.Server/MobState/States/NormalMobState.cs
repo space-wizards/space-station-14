@@ -28,9 +28,9 @@ namespace Content.Server.MobState.States
 
             if (stateComponent.TryGetEarliestIncapacitatedState(threshold, out _, out var earliestThreshold) && damageable.TotalDamage>0)
             {
-                modifier = (short) (damageable.TotalDamage / (earliestThreshold / 6f));
+                modifier = (short) (damageable.TotalDamage / (earliestThreshold / 6f)); //6 hurt states including the first one and crit state
                 if (modifier < 1)
-                {
+                { //this is here so if this comes up with a decimal between 0 and 1 we just use the first "hurt" state by default
                     modifier = 1;
                 }
             }
