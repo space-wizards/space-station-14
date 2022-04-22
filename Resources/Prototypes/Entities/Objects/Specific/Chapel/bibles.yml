@@ -27,11 +27,13 @@
     size: 15
     sprite: Objects/Specific/Chapel/bible.rsi
     prefix: inhand
+    Slots:
+    - Belt
   - type: Storage
     capacity: 10
     storageSoundCollection:
       collection: storageRustle
-
+  
 - type: entity
   parent: Bible
   name: necronomicon
@@ -63,3 +65,5 @@
     size: 15
     sprite: Objects/Specific/Chapel/necronomicon.rsi
     prefix: inhand
+    Slots:
+    - Belt
