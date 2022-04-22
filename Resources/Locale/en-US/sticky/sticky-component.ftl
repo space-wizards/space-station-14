@@ -7,3 +7,6 @@ comp-sticky-success-unstick-bomb = You removed the bomb
 
 # General strings
 comp-sticky-unstick-verb-text = Unstick
+
+#split stack fail message
+cannot-split-due-to-sticky = It is too sticky !
