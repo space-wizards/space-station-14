@@ -216,6 +216,11 @@ public sealed class WiresSystem : EntitySystem
 
     public void StartWireAction(EntityUid owner, float delay, object key, WireDoAfterEvent onFinish)
     {
+        if (!HasComp<WiresComponent>(owner))
+        {
+            return;
+        }
+
         if (!_activeWires.ContainsKey(owner))
         {
             _activeWires.Add(owner, new());
@@ -300,6 +305,7 @@ public sealed class WiresSystem : EntitySystem
     private void OnWiresPowered(EntityUid uid, WiresComponent component, PowerChangedEvent args)
     {
         UpdateUserInterface(uid);
+        // TODO: wire action on power changed or something
     }
 
     private void OnWiresActionMessage(EntityUid uid, WiresComponent component, WiresActionMessage args)
