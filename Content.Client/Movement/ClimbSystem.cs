@@ -17,9 +17,7 @@ public sealed class ClimbSystem : SharedClimbSystem
     private static void OnClimbingState(EntityUid uid, ClimbingComponent component, ref ComponentHandleState args)
     {
         if (args.Current is not SharedClimbingComponent.ClimbModeComponentState climbModeState)
-        {
             return;
-        }
 
         component.IsClimbing = climbModeState.Climbing;
         component.OwnerIsTransitioning = climbModeState.IsTransitioning;

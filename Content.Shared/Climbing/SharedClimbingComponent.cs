@@ -9,6 +9,15 @@ public abstract class SharedClimbingComponent : Component
     [Dependency] private readonly IEntityManager _entMan = default!;
     [Dependency] private readonly IEntitySystemManager _sysMan = default!;
 
+    /// <summary>
+    /// Whether the owner is climbing on a climbable entity.
+    /// </summary>
+    [ViewVariables]
+    public virtual bool IsClimbing { get; set; }
+
+    /// <summary>
+    /// Whether the owner is being moved onto the climbed entity.
+    /// </summary>
     [ViewVariables]
     public virtual bool OwnerIsTransitioning { get; set; }
 
@@ -16,9 +25,6 @@ public abstract class SharedClimbingComponent : Component
     ///     We'll launch the mob onto the table and give them at least this amount of time to be on it.
     /// </summary>
     public const float BufferTime = 0.3f;
-
-    [ViewVariables(VVAccess.ReadWrite)]
-    public virtual bool IsClimbing { get; set; }
 
     [Serializable, NetSerializable]
     public sealed class ClimbModeComponentState : ComponentState

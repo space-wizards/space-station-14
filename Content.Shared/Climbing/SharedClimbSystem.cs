@@ -12,7 +12,7 @@ public abstract class SharedClimbSystem : EntitySystem
         SubscribeLocalEvent<SharedClimbableComponent, CanDragDropOnEvent>(OnCanDragDropOn);
     }
 
-    private void HandleMoveAttempt(EntityUid uid, SharedClimbingComponent component, UpdateCanMoveEvent args)
+    private static void HandleMoveAttempt(EntityUid uid, SharedClimbingComponent component, UpdateCanMoveEvent args)
     {
         if (component.LifeStage > ComponentLifeStage.Running)
             return;
