@@ -9,6 +9,7 @@ using Content.Server.Popups;
 using Content.Server.Power.Components;
 using Content.Server.Stack;
 using Content.Server.UserInterface;
+using Content.Shared.Interaction.Events;
 using Content.Shared.Sticky.Components;
 using Robust.Server.GameObjects;
 using Robust.Shared.Prototypes;
@@ -27,7 +28,7 @@ namespace Content.Server.Lathe
         public override void Initialize()
         {
             base.Initialize();
-            SubscribeLocalEvent<LatheComponent, InteractUsingEvent>(OnInteractUsing);
+            SubscribeLocalEvent<LatheComponent, InsertMaterialAttemptEvent>(OnInsertMaterialAttemptEvent);
             SubscribeLocalEvent<LatheComponent, ComponentInit>(OnComponentInit);
         }
 
@@ -101,17 +102,17 @@ namespace Content.Server.Lathe
         /// When someone tries to use an item on the lathe,
         /// insert it if it's a stack and fits inside and don't have anything stuck to it
         /// </summary>
-        private void OnInteractUsing(EntityUid uid, LatheComponent component, InteractUsingEvent args)
+        private void OnInsertMaterialAttemptEvent(EntityUid uid, LatheComponent component, InsertMaterialAttemptEvent args)
         {
-            if (!TryComp<MaterialStorageComponent>(uid, out var storage) || !TryComp<MaterialComponent>(args.Used, out var material))
+            if (!TryComp<MaterialStorageComponent>(uid, out var storage) || !TryComp<MaterialComponent>(args.Inserted, out var material))
                 return;
 
-            if (EntityManager.HasComponent<IsStuckOnEntityComponent>(args.Used) || EntityManager.HasComponent<HasEntityStuckOnComponent>(args.Used))
+            if (EntityManager.HasComponent<IsStuckOnEntityComponent>(args.Inserted) || EntityManager.HasComponent<HasEntityStuckOnComponent>(args.Inserted))
                 return;
 
             var multiplier = 1;
 
-            if (TryComp<StackComponent>(args.Used, out var stack))
+            if (TryComp<StackComponent>(args.Inserted, out var stack))
                 multiplier = stack.Count;
 
             var totalAmount = 0;
@@ -137,10 +138,10 @@ namespace Content.Server.Lathe
             /// We need the prototype to get the color
             _prototypeManager.TryIndex(lastMat, out MaterialPrototype? matProto);
 
-            EntityManager.QueueDeleteEntity(args.Used);
+            EntityManager.QueueDeleteEntity(args.Inserted);
             InsertingAddQueue.Enqueue(uid);
             _popupSystem.PopupEntity(Loc.GetString("machine-insert-item", ("machine", uid),
-                ("item", args.Used)), uid, Filter.Entities(args.User));
+                ("item", args.Inserted)), uid, Filter.Entities(args.User));
             if (matProto != null)
             {
                 UpdateInsertingAppearance(uid, true, matProto.Color);
