@@ -81,6 +81,8 @@ namespace Content.Shared.Stacks
             SharedStackComponent? donorStack = null,
             SharedStackComponent? recipientStack = null)
         {
+            transfered = 0;
+
             //you need this check otherwise the merge would break sticky component
             if (EntityManager.HasComponent<IsStuckOnEntityComponent>(donor)
                 || EntityManager.HasComponent<HasEntityStuckOnComponent>(donor)
@@ -92,7 +94,6 @@ namespace Content.Shared.Stacks
                 return false;
             }
 
-            transfered = 0;
             if (!Resolve(recipient, ref recipientStack, false) || !Resolve(donor, ref donorStack, false))
                 return false;
 
