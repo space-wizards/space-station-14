@@ -3,6 +3,7 @@ using Content.Shared.Hands.Components;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Interaction;
 using Content.Shared.Popups;
+using Content.Shared.Sticky.Components;
 using JetBrains.Annotations;
 using Robust.Shared.GameStates;
 using Robust.Shared.Player;
@@ -36,7 +37,7 @@ namespace Content.Shared.Stacks
             if (!TryComp(args.Used, out SharedStackComponent? recipientStack))
                 return;
 
-            if (!TryMergeStacks(uid, args.Used, out var transfered, stack, recipientStack))
+            if (!TryMergeStacks( args.User, uid, args.Used, out var transfered, stack, recipientStack))
                 return;
 
             args.Handled = true;
@@ -73,6 +74,7 @@ namespace Content.Shared.Stacks
         }
 
         private bool TryMergeStacks(
+            EntityUid user,
             EntityUid donor,
             EntityUid recipient,
             out int transfered,
@@ -85,6 +87,17 @@ namespace Content.Shared.Stacks
 
             if (!recipientStack.StackTypeId.Equals(donorStack.StackTypeId))
                 return false;
+
+            //you need this check otherwise the merge would break sticky component
+            if (EntityManager.HasComponent<IsStuckOnEntityComponent>(donor)
+                || EntityManager.HasComponent<HasEntityStuckOnComponent>(donor)
+                || EntityManager.HasComponent<IsStuckOnEntityComponent>(recipient)
+                || EntityManager.HasComponent<HasEntityStuckOnComponent>(recipient))
+            {
+                var msg = Loc.GetString("cannot-merge-due-to-things-stuck");
+                PopupSystem.PopupEntity(msg, user, Filter.Entities(user));
+                return false;
+            }
 
             transfered = Math.Min(donorStack.Count, recipientStack.AvailableSpace);
             SetCount(donor, donorStack.Count - transfered, donorStack);
@@ -118,7 +131,7 @@ namespace Content.Shared.Stacks
             // This is shit code until hands get fixed and give an easy way to enumerate over items, starting with the currently active item.
             foreach (var held in HandsSystem.EnumerateHeld(user, hands))
             {
-                TryMergeStacks(item, held, out _, donorStack: itemStack);
+                TryMergeStacks(user, item, held, out _, donorStack: itemStack);
 
                 if (itemStack.Count == 0)
                     return;
