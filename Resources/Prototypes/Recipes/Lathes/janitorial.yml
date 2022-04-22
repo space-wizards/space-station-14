@@ -1,10 +1,10 @@
 - type: latheRecipe
   id: MopItem
-  icon: 
+  icon:
     sprite: Objects/Specific/Janitorial/mop.rsi
     state: mop
   result: MopItem
-  completetime: 500
+  completetime: 2
   materials:
     Plastic: 100
 
@@ -12,7 +12,7 @@
   id: MopBucket
   icon: Objects/Specific/Janitorial/janitorial.rsi
   result: MopBucket
-  completetime: 500
+  completetime: 2
   materials:
     Steel: 100
     Plastic: 100
@@ -23,7 +23,7 @@
     sprite: Objects/Tools/bucket.rsi
     state: icon
   result: Bucket
-  completetime: 500
+  completetime: 2
   materials:
     Steel: 100
 
@@ -31,7 +31,7 @@
   id: WetFloorSign
   icon: Objects/Specific/Janitorial/wet_floor_sign.rsi
   result: WetFloorSign
-  completetime: 500
+  completetime: 2
   materials:
     Plastic: 100
 
@@ -41,7 +41,7 @@
     sprite: Objects/Specific/Janitorial/janitorial.rsi
     state: cleaner
   result: SprayBottle
-  completetime: 500
+  completetime: 2
   materials:
     Plastic: 100
 
@@ -49,7 +49,7 @@
   id: TrashBag
   icon: Objects/Specific/Janitorial/trashbag.rsi
   result: TrashBag
-  completetime: 300
+  completetime: 1.2
   materials:
     Plastic: 100
 
@@ -57,7 +57,7 @@
   id: LightReplacer
   icon: Objects/Specific/Janitorial/light_replacer.rsi
   result: LightReplacer
-  completetime: 600
+  completetime: 2.4
   materials:
     Steel: 100
     Glass: 1000

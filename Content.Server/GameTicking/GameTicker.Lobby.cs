@@ -28,7 +28,7 @@ namespace Content.Server.GameTicking
         public IReadOnlyDictionary<IPlayerSession, LobbyPlayerStatus> PlayersInLobby => _playersInLobby;
         public IReadOnlySet<NetUserId> PlayersInGame => _playersInGame;
 
-        private void UpdateInfoText()
+        public void UpdateInfoText()
         {
             RaiseNetworkEvent(GetInfoMsg(), Filter.Empty().AddPlayers(_playersInLobby.Keys));
         }

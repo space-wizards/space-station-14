@@ -3,6 +3,7 @@ using Content.Server.MachineLinking.Events;
 using Content.Shared.Interaction;
 using JetBrains.Annotations;
 using Robust.Shared.GameObjects;
+using Content.Shared.Interaction.Events;
 
 namespace Content.Server.MachineLinking.System
 {

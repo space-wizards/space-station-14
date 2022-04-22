@@ -33,7 +33,7 @@
     size: 10
   - type: PressureProtection
     highPressureMultiplier: 0.6
-    lowPressureMultiplier: 10
+    lowPressureMultiplier: 1000
   - type: TemperatureProtection
     coefficient: 0.2
   - type: IngestionBlocker
@@ -58,8 +58,8 @@
     canPickup: false # attached to suit.
     quickEquip: false
   - type: PressureProtection
-    highPressureMultiplier: 0.6
-    lowPressureMultiplier: 10
+    highPressureMultiplier: 0.3
+    lowPressureMultiplier: 1000
   - type: TemperatureProtection
     coefficient: 0.1
   - type: Armor
@@ -93,6 +93,7 @@
       map: [ "light" ]
   - type: Clothing
     HeldPrefix: off
+  - type: ToggleableLightVisuals
   - type: PointLight
     netsync: false
     enabled: false
