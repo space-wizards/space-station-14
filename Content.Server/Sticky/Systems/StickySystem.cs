@@ -8,6 +8,7 @@ using Content.Shared.Sticky.Components;
 using Content.Shared.Verbs;
 using Robust.Shared.Containers;
 using Robust.Shared.Player;
+using Serilog;
 
 namespace Content.Server.Sticky.Systems;
 
@@ -33,8 +34,12 @@ public sealed class StickySystem : EntitySystem
     {
         if (args.Handled || !args.CanReach || args.Target == null)
             return;
-
-        // try stick object to a clicked target entity
+        if (EntityManager.TryGetComponent(uid , out HasEntityStuckOn? _)
+            || EntityManager.TryGetComponent(args.Target , out HasEntityStuckOn? _)
+            || EntityManager.TryGetComponent(uid , out IsStuckOnEntity? _)
+            || EntityManager.TryGetComponent(args.Target , out IsStuckOnEntity? _))
+            return;
+            // try stick object to a clicked target entity
         args.Handled = StartSticking(uid, args.User, args.Target.Value, component);
     }
 
@@ -47,7 +52,7 @@ public sealed class StickySystem : EntitySystem
         {
             Text = Loc.GetString("comp-sticky-unstick-verb-text"),
             IconTexture = "/Textures/Interface/VerbIcons/eject.svg.192dpi.png",
-            Act = () => StartUnsticking(uid, args.User, component)
+            Act = () => StartUnsticking(uid, args.User,args.Target ,component)
         });
     }
 
@@ -95,9 +100,13 @@ public sealed class StickySystem : EntitySystem
             return;
 
         StickToEntity(ev.Uid, ev.Target, ev.User, component);
+
+        //adds a component to the target and entity that is stuck to to use for identification
+        EntityManager.AddComponent<HasEntityStuckOn>(ev.Target);
+        EntityManager.AddComponent<IsStuckOnEntity>(ev.Uid);
     }
 
-    private void StartUnsticking(EntityUid uid, EntityUid user, StickyComponent? component = null)
+    private void StartUnsticking(EntityUid uid, EntityUid user, EntityUid target ,StickyComponent? component = null)
     {
         if (!Resolve(uid, ref component))
             return;
@@ -115,7 +124,7 @@ public sealed class StickySystem : EntitySystem
             // start unsticking object
             _doAfterSystem.DoAfter(new DoAfterEventArgs(user, delay, target: uid)
             {
-                BroadcastFinishedEvent = new UnstickSuccessfulEvent(uid, user),
+                BroadcastFinishedEvent = new UnstickSuccessfulEvent(uid, user , target),
                 BreakOnStun = true,
                 BreakOnTargetMove = true,
                 BreakOnUserMove = true,
@@ -138,6 +147,15 @@ public sealed class StickySystem : EntitySystem
             return;
 
         UnstickFromEntity(ev.Uid, ev.User, component);
+
+
+        if(EntityManager.TryGetComponent(ev.Uid , out IsStuckOnEntity? _))
+            EntityManager.RemoveComponent<IsStuckOnEntity>(ev.Uid);
+        else { Log.Warning("stuck-on-entity-without-stuck-comp");}
+
+        if(EntityManager.TryGetComponent(ev.Target , out HasEntityStuckOn? _))
+            EntityManager.RemoveComponent<HasEntityStuckOn>(ev.Target);
+        else { Log.Warning("has-entity-stuck-on-without-stuck-comp");}
     }
 
     public void StickToEntity(EntityUid uid, EntityUid target, EntityUid user, StickyComponent? component = null)
@@ -221,11 +239,13 @@ public sealed class StickySystem : EntitySystem
     {
         public readonly EntityUid Uid;
         public readonly EntityUid User;
+        public readonly EntityUid Target;
 
-        public UnstickSuccessfulEvent(EntityUid uid, EntityUid user)
+        public UnstickSuccessfulEvent(EntityUid uid, EntityUid user , EntityUid target)
         {
             Uid = uid;
             User = user;
+            Target = target;
         }
     }
 }
