@@ -17,7 +17,7 @@ public class AccessWireAction : BaseWireAction
     [DataField("pulseTimeout")]
     private int _pulseTimeout = 30;
 
-    public override StatusLightData GetStatusLightData(Wire wire)
+    public override StatusLightData? GetStatusLightData(Wire wire)
     {
         StatusLightState lightState = StatusLightState.Off;
         if (IsPowered(wire.Owner)

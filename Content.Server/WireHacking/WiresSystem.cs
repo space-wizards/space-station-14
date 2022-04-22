@@ -305,7 +305,10 @@ public sealed class WiresSystem : EntitySystem
     private void OnWiresPowered(EntityUid uid, WiresComponent component, PowerChangedEvent args)
     {
         UpdateUserInterface(uid);
-        // TODO: wire action on power changed or something
+        foreach (var wire in component.WiresList)
+        {
+            wire.Action.Update(wire);
+        }
     }
 
     private void OnWiresActionMessage(EntityUid uid, WiresComponent component, WiresActionMessage args)
@@ -467,7 +470,10 @@ public sealed class WiresSystem : EntitySystem
                 entry.Letter));
 
             var statusData = entry.Action.GetStatusLightData(entry);
-            wires.Statuses[entry.Action.StatusKey] = statusData;
+            if (statusData != null)
+            {
+                wires.Statuses[entry.Action.StatusKey] = statusData;
+            }
         }
 
         _uiSystem.GetUiOrNull(uid, WiresUiKey.Key)?.SetState(

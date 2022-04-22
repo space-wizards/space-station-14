@@ -14,7 +14,7 @@ public class DoorBoltWireAction : BaseWireAction
     [DataField("name")]
     private string _text = "BOLT";
 
-    public override StatusLightData GetStatusLightData(Wire wire)
+    public override StatusLightData? GetStatusLightData(Wire wire)
     {
         StatusLightState lightState = StatusLightState.Off;
         if (IsPowered(wire.Owner)
@@ -57,7 +57,8 @@ public class DoorBoltWireAction : BaseWireAction
 
     public override bool Pulse(EntityUid user, Wire wire)
     {
-        if (EntityManager.TryGetComponent<AirlockComponent>(wire.Owner, out var door))
+        if (IsPowered(wire.Owner)
+            && EntityManager.TryGetComponent<AirlockComponent>(wire.Owner, out var door))
         {
             door.SetBoltsWithAudio(!door.BoltsDown);
         }

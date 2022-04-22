@@ -38,7 +38,7 @@ public class PowerWireAction : BaseWireAction
 
     public override object StatusKey { get; } = PowerWireActionKey.Status;
 
-    public override StatusLightData GetStatusLightData(Wire wire)
+    public override StatusLightData? GetStatusLightData(Wire wire)
     {
         StatusLightState lightState = StatusLightState.Off;
         if (EntityManager.TryGetComponent<ApcPowerReceiverComponent>(wire.Owner, out var power))
@@ -47,7 +47,6 @@ public class PowerWireAction : BaseWireAction
 
             if (pulsed is bool pulseCast)
             {
-                power.PowerDisabled = wire.IsCut || pulseCast;
                 if (pulseCast)
                 {
                     lightState = StatusLightState.BlinkingSlow;
@@ -61,26 +60,27 @@ public class PowerWireAction : BaseWireAction
             }
             else
             {
-                power.PowerDisabled = wire.IsCut;
-
                 lightState = (wire.IsCut == true)
                     ? StatusLightState.Off
                     : StatusLightState.On;
-
             }
-
-            /* is this behavior the same in SS13?
-            if (power.PowerDisabled)
-            {
-                WiresSystem.TryCancelWireAction(wire.Owner, PowerWireActionKey.ElectrifiedCancel);
-            }
-            */
         }
 
         return new StatusLightData(
             _statusColor,
             lightState,
             _text);
+    }
+
+    private void DisablePower(EntityUid owner, bool setting, ApcPowerReceiverComponent? power = null)
+    {
+        if (power == null
+            && !EntityManager.TryGetComponent(owner, out power))
+        {
+            return;
+        }
+
+        power.PowerDisabled = setting;
     }
 
     private void SetElectrified(EntityUid used, bool setting, ElectrifiedComponent? electrified = null)
@@ -108,7 +108,7 @@ public class PowerWireAction : BaseWireAction
             // electrocution continues - unless cancelled
             //
             // if the power is disabled however, just don't bother
-            if (timed && !power.PowerDisabled)
+            if (timed && (!power.PowerDisabled || !power.Powered))
             {
                 WiresSystem.StartWireAction(wire.Owner, _pulseTimeout, PowerWireActionKey.ElectrifiedCancel, new WireDoAfterEvent(AwaitElectrifiedCancel, wire));
             }
@@ -138,7 +138,7 @@ public class PowerWireAction : BaseWireAction
         WiresSystem.TryCancelWireAction(wire.Owner, PowerWireActionKey.PulseCancel);
         WiresSystem.TryCancelWireAction(wire.Owner, PowerWireActionKey.ElectrifiedCancel);
 
-        wire.IsCut = true;
+        DisablePower(wire.Owner, true);
 
         return true;
     }
@@ -148,7 +148,8 @@ public class PowerWireAction : BaseWireAction
         if (!TrySetElectrocution(user, wire))
             return false;
 
-        wire.IsCut = false;
+        DisablePower(wire.Owner, false);
+
         return true;
     }
 
@@ -170,9 +171,25 @@ public class PowerWireAction : BaseWireAction
 
         WiresSystem.StartWireAction(wire.Owner, _pulseTimeout, PowerWireActionKey.PulseCancel, new WireDoAfterEvent(AwaitPulseCancel, wire));
 
+        DisablePower(wire.Owner, true);
+
         // AwaitPulseCancel(wire.Owner, wire, _doAfterSystem.WaitDoAfter(doAfter));
 
         return true;
+    }
+
+    public override void Update(Wire wire)
+    {
+        if (!IsPowered(wire.Owner))
+        {
+            if (!WiresSystem.TryGetData(wire.Owner, PowerWireActionKey.Pulsed, out var pulsedObject)
+                || pulsedObject is not bool pulsed
+                || !pulsed)
+            {
+                WiresSystem.TryCancelWireAction(wire.Owner, PowerWireActionKey.ElectrifiedCancel);
+                WiresSystem.TryCancelWireAction(wire.Owner, PowerWireActionKey.PulseCancel);
+            }
+        }
     }
 
     private void AwaitElectrifiedCancel(Wire wire)
@@ -184,6 +201,9 @@ public class PowerWireAction : BaseWireAction
     private void AwaitPulseCancel(Wire wire)
     {
         WiresSystem.SetData(wire.Owner, PowerWireActionKey.Pulsed, false);
-        WiresSystem.UpdateUserInterface(wire.Owner);
+        if (!wire.IsCut)
+        {
+            DisablePower(wire.Owner, false);
+        }
     }
 }

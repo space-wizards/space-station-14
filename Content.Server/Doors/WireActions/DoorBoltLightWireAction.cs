@@ -15,7 +15,7 @@ public class DoorBoltLightWireAction : BaseWireAction
     [DataField("name")]
     private string _text = "BLIT";
 
-    public override StatusLightData GetStatusLightData(Wire wire)
+    public override StatusLightData? GetStatusLightData(Wire wire)
     {
         StatusLightState lightState = StatusLightState.Off;
         if (IsPowered(wire.Owner) && EntityManager.TryGetComponent<AirlockComponent>(wire.Owner, out var door))

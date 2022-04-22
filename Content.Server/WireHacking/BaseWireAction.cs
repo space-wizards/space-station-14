@@ -26,17 +26,24 @@ public abstract class BaseWireAction : IWireAction
     public abstract bool Cut(EntityUid user, Wire wire);
     public abstract bool Mend(EntityUid user, Wire wire);
     public abstract bool Pulse(EntityUid user, Wire wire);
-    public abstract StatusLightData GetStatusLightData(Wire wire);
+    public virtual void Update(Wire wire)
+    {
+        return;
+    }
+    public abstract StatusLightData? GetStatusLightData(Wire wire);
 
     // most things that use wires are powered by *something*, so
+    //
+    // this isn't required by any wire system methods though, so whatever inherits it here
+    // can use it
     public bool IsPowered(EntityUid uid)
     {
         if (!EntityManager.TryGetComponent<ApcPowerReceiverComponent>(uid, out var power)
-            || !power.Powered) // there's some kind of race condition here?
+            || power.PowerDisabled) // there's some kind of race condition here?
         {
             return false;
         }
 
-        return true;
+        return power.Powered;
     }
 }

@@ -47,5 +47,7 @@ public interface IWireAction
 
     public bool Pulse(EntityUid user, Wire wire);
 
-    public StatusLightData GetStatusLightData(Wire wire);
+    public void Update(Wire wire);
+
+    public StatusLightData? GetStatusLightData(Wire wire);
 }

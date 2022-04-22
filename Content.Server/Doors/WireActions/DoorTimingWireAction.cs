@@ -17,7 +17,7 @@ public class DoorTimingWireAction : BaseWireAction
     [DataField("timeout")]
     private int _timeout = 30;
 
-    public override StatusLightData GetStatusLightData(Wire wire)
+    public override StatusLightData? GetStatusLightData(Wire wire)
     {
         var lightState = StatusLightState.Off;
         if (IsPowered(wire.Owner)
@@ -78,6 +78,14 @@ public class DoorTimingWireAction : BaseWireAction
 
 
         return true;
+    }
+
+    public override void Update(Wire wire)
+    {
+        if (!IsPowered(wire.Owner))
+        {
+            WiresSystem.TryCancelWireAction(wire.Owner, PulseTimeoutKey.Key);
+        }
     }
 
     // timing timer??? ???
