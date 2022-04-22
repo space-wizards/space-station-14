@@ -34,11 +34,14 @@ public sealed class StickySystem : EntitySystem
     {
         if (args.Handled || !args.CanReach || args.Target == null)
             return;
+
+        //makes sure that neither the target nor the host have entities stuck to them or is stuck to entities
         if (EntityManager.HasComponent<HasEntityStuckOnComponent>(uid)
             || EntityManager.HasComponent<HasEntityStuckOnComponent>(args.Target)
             || EntityManager.HasComponent<HasEntityStuckOnComponent>(uid)
             || EntityManager.HasComponent<HasEntityStuckOnComponent>(args.Target))
             return;
+
             // try stick object to a clicked target entity
         args.Handled = StartSticking(uid, args.User, args.Target.Value, component);
     }

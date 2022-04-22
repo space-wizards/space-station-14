@@ -1,3 +1,4 @@
+using Content.Server.Sticky.Components;
 using Content.Shared.Stacks;
 using Content.Shared.Verbs;
 using JetBrains.Annotations;
@@ -44,6 +45,7 @@ namespace Content.Server.Stack
         {
             if (!Resolve(uid, ref stack))
                 return null;
+
 
             // Get a prototype ID to spawn the new entity. Null is also valid, although it should rarely be picked...
             var prototype = _prototypeManager.TryIndex<StackPrototype>(stack.StackTypeId, out var stackType)
@@ -133,7 +135,14 @@ namespace Content.Server.Stack
                 return;
             }
 
-            if (Split(uid, amount, userTransform.Coordinates, stack) is not {} split)
+            if (EntityManager.HasComponent<StickyComponent>(uid))
+            {
+                var msg = Loc.GetString("cannot-split-due-to-sticky");
+                PopupSystem.PopupEntity(msg, userUid, Filter.Entities(userUid));
+                return;
+            }
+
+            if (Split(uid, amount, userTransform.Coordinates ,stack) is not {} split)
                 return;
 
             HandsSystem.PickupOrDrop(userUid, split);
