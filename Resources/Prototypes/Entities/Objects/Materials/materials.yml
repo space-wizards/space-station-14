@@ -154,3 +154,31 @@
   components:
     - type: Stack
       count: 1
+
+- type: entity
+  parent: MaterialBase
+  id: MaterialCotton
+  name: cotton
+  suffix: Full
+  components:
+    - type: Stack
+      stackType: Cotton
+    - type: Sprite
+      state: cotton_3
+    - type: Appearance
+      visuals:
+        - type: StackVisualizer
+          stackLayers:
+            - cotton
+            - cotton_2
+            - cotton_3
+
+- type: entity
+  parent: MaterialCotton
+  id: MaterialCotton1
+  suffix: Single
+  components:
+    - type: Sprite
+      state: cotton
+    - type: Stack
+      count: 1

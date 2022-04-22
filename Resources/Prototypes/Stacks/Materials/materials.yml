@@ -21,3 +21,9 @@
   name: diamond
   icon: /Textures/Objects/Materials/materials.rsi/diamond.png
   spawn: MaterialDiamond1
+  
+- type: stack
+  id: Cotton
+  name: cotton
+  icon: /Textures/Objects/Materials/materials.rsi/cotton.png
+  spawn: MaterialCotton1
