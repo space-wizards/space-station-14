@@ -10,4 +10,4 @@ comp-sticky-unstick-verb-text = Unstick
 
 #split stack fail message
 cannot-split-due-to-sticky = It is too sticky !
-cannot-merge-due-to-things-stuck = It has things stuck to it !
+cannot-merge-or-split-due-to-things-stuck = It has things stuck to it !

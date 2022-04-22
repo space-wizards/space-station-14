@@ -89,7 +89,7 @@ namespace Content.Shared.Stacks
                 || EntityManager.HasComponent<IsStuckOnEntityComponent>(recipient)
                 || EntityManager.HasComponent<HasEntityStuckOnComponent>(recipient))
             {
-                var msg = Loc.GetString("cannot-merge-due-to-things-stuck");
+                var msg = Loc.GetString("cannot-merge-or-split-due-to-things-stuck");
                 PopupSystem.PopupEntity(msg, user, Filter.Entities(user));
                 return false;
             }

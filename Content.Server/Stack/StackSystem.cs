@@ -1,5 +1,6 @@
 using Content.Server.Sticky.Components;
 using Content.Shared.Stacks;
+using Content.Shared.Sticky.Components;
 using Content.Shared.Verbs;
 using JetBrains.Annotations;
 using Robust.Shared.Map;
@@ -135,12 +136,19 @@ namespace Content.Server.Stack
                 return;
             }
 
-//            if (EntityManager.HasComponent<StickyComponent>(uid))
-//            {
-//                var msg = Loc.GetString("cannot-split-due-to-sticky");
-//                PopupSystem.PopupEntity(msg, userUid, Filter.Entities(userUid));
-//                return;
-//            }
+            if (EntityManager.HasComponent<HasEntityStuckOnComponent>(uid))
+            {
+                var msg = Loc.GetString("cannot-merge-or-split-due-to-things-stuck");
+                PopupSystem.PopupEntity(msg, userUid, Filter.Entities(userUid));
+                return;
+            }
+
+            if (EntityManager.HasComponent<IsStuckOnEntityComponent>(uid))
+            {
+                var msg = Loc.GetString("cannot-merge-or-split-due-to-stuck-on-things");
+                PopupSystem.PopupEntity(msg, userUid, Filter.Entities(userUid));
+                return;
+            }
 
             if (Split(uid, amount, userTransform.Coordinates ,stack) is not {} split)
                 return;
