@@ -10,6 +10,7 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
 using Content.Server.VendingMachines.systems;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
 namespace Content.Server.VendingMachines
 {
@@ -17,9 +18,10 @@ namespace Content.Server.VendingMachines
     public sealed class VendingMachineComponent : SharedVendingMachineComponent
     {
         public bool Ejecting;
+        public bool Emagged = false;
         public TimeSpan AnimationDuration = TimeSpan.Zero;
-        [DataField("pack")]
-        public string PackPrototypeId = string.Empty;
+        [ViewVariables] [DataField("pack", customTypeSerializer:typeof(PrototypeIdSerializer<VendingMachineInventoryPrototype>))]   public string PackPrototypeId = string.Empty;
+        [ViewVariables] [DataField("emagPack", customTypeSerializer:typeof(PrototypeIdSerializer<VendingMachineInventoryPrototype>))]   public string EmagPackPrototypeId = string.Empty;
         public string SpriteName = "";
         public bool Broken;
         /// <summary>

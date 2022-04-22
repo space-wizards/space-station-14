@@ -64,7 +64,7 @@ namespace Content.IntegrationTests.Tests.Body
             MetabolizerSystem metaSys = default;
 
             MapId mapId;
-            IMapGrid grid = null;
+            GridId? grid = null;
             SharedBodyComponent body = default;
             EntityUid human = default;
             GridAtmosphereComponent relevantAtmos = default;
@@ -75,7 +75,7 @@ namespace Content.IntegrationTests.Tests.Body
             await server.WaitPost(() =>
             {
                 mapId = mapManager.CreateMap();
-                grid = mapLoader.LoadBlueprint(mapId, testMapName);
+                grid = mapLoader.LoadBlueprint(mapId, testMapName).gridId;
             });
 
             Assert.NotNull(grid, $"Test blueprint {testMapName} not found.");
@@ -94,11 +94,12 @@ namespace Content.IntegrationTests.Tests.Body
             await server.WaitAssertion(() =>
             {
                 var coords = new Vector2(0.5f, -1f);
-                var coordinates = new EntityCoordinates(grid.GridEntityId, coords);
+                var geid = mapManager.GetGridEuid(grid.Value);
+                var coordinates = new EntityCoordinates(geid, coords);
                 human = entityManager.SpawnEntity("HumanBodyDummy", coordinates);
                 respSys = EntitySystem.Get<RespiratorSystem>();
                 metaSys = EntitySystem.Get<MetabolizerSystem>();
-                relevantAtmos = entityManager.GetComponent<GridAtmosphereComponent>(grid.GridEntityId);
+                relevantAtmos = entityManager.GetComponent<GridAtmosphereComponent>(geid);
                 startingMoles = GetMapMoles();
 
                 Assert.True(entityManager.TryGetComponent(human, out body));
@@ -140,7 +141,7 @@ namespace Content.IntegrationTests.Tests.Body
             var entityManager = server.ResolveDependency<IEntityManager>();
 
             MapId mapId;
-            IMapGrid grid = null;
+            GridId? grid = null;
             RespiratorComponent respirator = null;
             EntityUid human = default;
 
@@ -149,7 +150,7 @@ namespace Content.IntegrationTests.Tests.Body
             await server.WaitPost(() =>
             {
                 mapId = mapManager.CreateMap();
-                grid = mapLoader.LoadBlueprint(mapId, testMapName);
+                grid = mapLoader.LoadBlueprint(mapId, testMapName).gridId;
             });
 
             Assert.NotNull(grid, $"Test blueprint {testMapName} not found.");
@@ -157,7 +158,8 @@ namespace Content.IntegrationTests.Tests.Body
             await server.WaitAssertion(() =>
             {
                 var center = new Vector2(0.5f, -1.5f);
-                var coordinates = new EntityCoordinates(grid.GridEntityId, center);
+                var geid = mapManager.GetGridEuid(grid.Value);
+                var coordinates = new EntityCoordinates(geid, center);
                 human = entityManager.SpawnEntity("HumanBodyDummy", coordinates);
 
                 Assert.True(entityManager.HasComponent<SharedBodyComponent>(human));

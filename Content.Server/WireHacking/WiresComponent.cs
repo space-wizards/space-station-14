@@ -1,9 +1,4 @@
-using System.Collections.Generic;
 using Content.Shared.Sound;
-using Robust.Shared.Audio;
-using Robust.Shared.GameObjects;
-using Robust.Shared.ViewVariables;
-using Robust.Shared.Serialization.Manager.Attributes;
 
 namespace Content.Server.Wires;
 

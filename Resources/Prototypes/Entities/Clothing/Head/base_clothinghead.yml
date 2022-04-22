@@ -33,7 +33,7 @@
     size: 10
   - type: PressureProtection
     highPressureMultiplier: 0.6
-    lowPressureMultiplier: 10
+    lowPressureMultiplier: 1000
   - type: TemperatureProtection
     coefficient: 0.2
   - type: IngestionBlocker
@@ -52,8 +52,8 @@
   - type: Clothing
     size: 15
   - type: PressureProtection
-    highPressureMultiplier: 0.6
-    lowPressureMultiplier: 10
+    highPressureMultiplier: 0.3
+    lowPressureMultiplier: 1000
   - type: TemperatureProtection
     coefficient: 0.1
   - type: Armor
@@ -86,6 +86,7 @@
       map: [ "light" ]
   - type: Clothing
     HeldPrefix: off
+  - type: ToggleableLightVisuals
   - type: PointLight
     netsync: false
     enabled: false
@@ -98,12 +99,6 @@
     - type: FlashLightVisualizer
   - type: HandheldLight
     addPrefix: true
-    toggleAction:
-      name: action-name-toggle-light
-      description: action-description-toggle-light
-      icon: Objects/Tools/flashlight.rsi/flashlight.png
-      iconOn: Objects/Tools/flashlight.rsi/flashlight-on.png
-      event: !type:ToggleActionEvent
   - type: PowerCellSlot
     cellSlot:
       startingItem: PowerCellHardsuitHelmet # self recharging

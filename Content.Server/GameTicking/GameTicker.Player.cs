@@ -106,6 +106,8 @@ namespace Content.Server.GameTicking
                     break;
                 }
             }
+            //When the status of a player changes, update the server info text
+            UpdateInfoText();
 
             async void SpawnWaitPrefs()
             {

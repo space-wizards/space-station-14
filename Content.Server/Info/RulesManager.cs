@@ -33,7 +33,7 @@ public sealed class RulesManager : SharedRulesManager
             return;
         }
 
-        var message = _netManager.CreateNetMessage<ShouldShowRulesPopupMessage>();
+        var message = new ShouldShowRulesPopupMessage();
         _netManager.ServerSendMessage(message, e.Channel);
     }
 

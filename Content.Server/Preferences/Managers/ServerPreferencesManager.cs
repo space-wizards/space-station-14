@@ -198,7 +198,7 @@ namespace Content.Server.Preferences.Managers
                     var prefs = await GetOrCreatePreferencesAsync(session.UserId);
                     prefsData.Prefs = prefs;
 
-                    var msg = _netManager.CreateNetMessage<MsgPreferencesAndSettings>();
+                    var msg = new MsgPreferencesAndSettings();
                     msg.Preferences = prefs;
                     msg.Settings = new GameSettings
                     {
