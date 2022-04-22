@@ -16,6 +16,8 @@
       initialBeepDelay: 0
       beepSound: /Audio/Machines/Nuke/general_beep.ogg
       startOnStick: true
+    - type: TriggerOnSignal
+    - type: SignalReceiver
     - type: Sticky
       stickDelay: 5
       unstickDelay: 5
