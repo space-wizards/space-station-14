@@ -34,7 +34,7 @@ public sealed class ClimbSystem : SharedClimbSystem
     [Dependency] private readonly StunSystem _stunSystem = default!;
     
     private const string ClimbingFixtureName = "climb";
-    private const int ClimbingCollisionGroup = (int) CollisionGroup.MobImpassable;
+    private const int ClimbingCollisionGroup = (int) CollisionGroup.VaultImpassable;
     
     private readonly Dictionary<EntityUid, List<Fixture>> _fixtureRemoveQueue = new();
 
@@ -192,7 +192,7 @@ public sealed class ClimbSystem : SharedClimbSystem
         }
 
         if (!_fixtureSystem.TryCreateFixture(physicsComp,
-            new Fixture(new PhysShapeCircle(), (int) CollisionGroup.None, ClimbingCollisionGroup, false)
+            new Fixture(new PhysShapeCircle { Radius = 0.35f }, (int) CollisionGroup.None, ClimbingCollisionGroup, false)
                 {ID = ClimbingFixtureName}, manager: fixturesComp))
             return false;
         return true;
@@ -207,6 +207,14 @@ public sealed class ClimbSystem : SharedClimbSystem
             || !TryComp<PhysicsComponent>(uid, out var physicsComp)
             || !TryComp<FixturesComponent>(uid, out var fixturesComp))
             return;
+
+        foreach (var (fixture, _) in args.OurFixture.Contacts)
+        {
+            if (fixture == args.OtherFixture)
+                continue;
+            if (HasComp<ClimbableComponent>(fixture.Body.Owner))
+                return;
+        }
 
         foreach (var fixture in component.DisabledFixtures)
         {
