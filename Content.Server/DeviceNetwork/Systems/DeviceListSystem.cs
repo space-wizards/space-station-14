@@ -80,7 +80,7 @@ public sealed class DeviceListSystem : EntitySystem
             if (component.Devices.Contains(recipient.Owner) == component.IsAllowList) filteredRecipients.Add(recipient);
         }
 
-        args.Recipients = filteredRecipients;
+        args.ModifiedRecipients = filteredRecipients;
     }
 
     /// <summary>

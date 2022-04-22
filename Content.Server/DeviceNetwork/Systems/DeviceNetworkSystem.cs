@@ -216,10 +216,10 @@ namespace Content.Server.DeviceNetwork.Systems
             var beforeBroadcastAttemptEvent = new BeforeBroadcastAttemptEvent(recipients);
             RaiseLocalEvent(packet.Sender, beforeBroadcastAttemptEvent);
 
-            if (beforeBroadcastAttemptEvent.Cancelled)
+            if (beforeBroadcastAttemptEvent.Cancelled || beforeBroadcastAttemptEvent.ModifiedRecipients == null)
                 return false;
 
-            recipients = beforeBroadcastAttemptEvent.Recipients;
+            recipients = beforeBroadcastAttemptEvent.ModifiedRecipients;
             return true;
         }
 
@@ -339,9 +339,10 @@ namespace Content.Server.DeviceNetwork.Systems
     /// </summary>
     public sealed class BeforeBroadcastAttemptEvent : CancellableEntityEventArgs
     {
-        public HashSet<DeviceNetworkComponent> Recipients;
+        public readonly IReadOnlySet<DeviceNetworkComponent> Recipients;
+        public HashSet<DeviceNetworkComponent>? ModifiedRecipients;
 
-        public BeforeBroadcastAttemptEvent(HashSet<DeviceNetworkComponent> recipients)
+        public BeforeBroadcastAttemptEvent(IReadOnlySet<DeviceNetworkComponent> recipients)
         {
             Recipients = recipients;
         }
