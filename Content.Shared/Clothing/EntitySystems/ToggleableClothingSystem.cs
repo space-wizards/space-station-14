@@ -1,4 +1,5 @@
 using Content.Shared.Actions;
+using Content.Shared.Actions.ActionTypes;
 using Content.Shared.Clothing.Components;
 using Content.Shared.Interaction;
 using Content.Shared.Inventory;
@@ -6,6 +7,7 @@ using Content.Shared.Inventory.Events;
 using Content.Shared.Popups;
 using Robust.Shared.Containers;
 using Robust.Shared.Player;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
 
 namespace Content.Shared.Clothing.EntitySystems;
@@ -16,6 +18,7 @@ public sealed class ToggleableClothingSystem : EntitySystem
     [Dependency] private readonly SharedActionsSystem _actionsSystem = default!;
     [Dependency] private readonly InventorySystem _inventorySystem = default!;
     [Dependency] private readonly SharedPopupSystem _popupSystem = default!;
+    [Dependency] private readonly IPrototypeManager _proto = default!;
 
     private Queue<EntityUid> _toInsert = new();
 
@@ -80,7 +83,7 @@ public sealed class ToggleableClothingSystem : EntitySystem
         // automatically be deleted.
 
         // remove action.
-        if (component.ToggleAction.AttachedEntity != null)
+        if (component.ToggleAction?.AttachedEntity != null)
             _actionsSystem.RemoveAction(component.ToggleAction.AttachedEntity.Value, component.ToggleAction);
 
         if (component.ClothingUid != null)
@@ -101,10 +104,10 @@ public sealed class ToggleableClothingSystem : EntitySystem
             return;
 
         // remove action.
-        if (toggleComp.ToggleAction.AttachedEntity != null)
+        if (toggleComp.ToggleAction?.AttachedEntity != null)
             _actionsSystem.RemoveAction(toggleComp.ToggleAction.AttachedEntity.Value, toggleComp.ToggleAction);
 
-        EntityManager.RemoveComponent(component.AttachedUid, toggleComp);
+        RemComp(component.AttachedUid, toggleComp);
     }
 
     /// <summary>
@@ -150,7 +153,10 @@ public sealed class ToggleableClothingSystem : EntitySystem
 
     private void OnGetActions(EntityUid uid, ToggleableClothingComponent component, GetItemActionsEvent args)
     {
-        if (component.ClothingUid != null && args.SlotFlags == SlotFlags.OUTERCLOTHING)
+        if (component.ClothingUid == null || (args.SlotFlags & component.RequiredFlags) != component.RequiredFlags)
+            return;
+
+        if (component.ToggleAction != null)
             args.Actions.Add(component.ToggleAction);
     }
 
@@ -171,22 +177,31 @@ public sealed class ToggleableClothingSystem : EntitySystem
             return;
         }
 
-        if (component.ClothingUid != null)
+        if (component.ToggleAction == null
+            && _proto.TryIndex(component.ActionId, out InstantActionPrototype? act))
+        {
+            component.ToggleAction = new(act);
+        }
+
+        if (component.ClothingUid != null && component.ToggleAction != null)
         {
             DebugTools.Assert(Exists(component.ClothingUid), "Toggleable clothing is missing expected entity.");
             DebugTools.Assert(TryComp(component.ClothingUid, out AttachedClothingComponent? comp), "Toggleable clothing is missing an attached component");
             DebugTools.Assert(comp?.AttachedUid == uid, "Toggleable clothing uid mismatch");
-            component.ToggleAction.EntityIcon = component.ClothingUid;
-            _actionsSystem.Dirty(component.ToggleAction);
-            return;
+        }
+        else
+        {
+            var xform = Transform(uid);
+            component.ClothingUid = Spawn(component.ClothingPrototype, xform.Coordinates);
+            EnsureComp<AttachedClothingComponent>(component.ClothingUid.Value).AttachedUid = uid;
+            component.Container.Insert(component.ClothingUid.Value, EntityManager, ownerTransform: xform);
         }
 
-        var xform = Transform(uid);
-        component.ClothingUid = Spawn(component.ClothingPrototype, xform.Coordinates);
-        EnsureComp<AttachedClothingComponent>(component.ClothingUid.Value).AttachedUid = uid;
-        component.Container.Insert(component.ClothingUid.Value, EntityManager, ownerTransform: xform);
-        component.ToggleAction.EntityIcon = component.ClothingUid;
-        _actionsSystem.Dirty(component.ToggleAction);
+        if (component.ToggleAction != null)
+        {
+            component.ToggleAction.EntityIcon = component.ClothingUid;
+            _actionsSystem.Dirty(component.ToggleAction);
+        }
     }
 }
 

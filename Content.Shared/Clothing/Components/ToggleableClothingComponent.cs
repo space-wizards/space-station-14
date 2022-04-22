@@ -1,5 +1,6 @@
 using Content.Shared.Actions.ActionTypes;
 using Content.Shared.Clothing.EntitySystems;
+using Content.Shared.Inventory;
 using Robust.Shared.Containers;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
@@ -19,8 +20,9 @@ public sealed class ToggleableClothingComponent : Component
     /// <summary>
     ///     Action used to toggle the clothing on or off.
     /// </summary>
-    [DataField("toggleAction", required: true)]
-    public InstantAction ToggleAction = new();
+    [DataField("actionId", customTypeSerializer: typeof(PrototypeIdSerializer<InstantActionPrototype>))]
+    public string ActionId = "ToggleSuitHelmet";
+    public InstantAction? ToggleAction = null;
 
     /// <summary>
     ///     Default clothing entity prototype to spawn into the clothing container.
@@ -33,6 +35,12 @@ public sealed class ToggleableClothingComponent : Component
     /// </summary>
     [DataField("slot")]
     public string Slot = "head";
+
+    /// <summary>
+    ///     The inventory slot flags required for this component to function.
+    /// </summary>
+    [DataField("requiredSlot")]
+    public SlotFlags RequiredFlags = SlotFlags.OUTERCLOTHING;
 
     /// <summary>
     ///     The container that the clothing is stored in when not equipped.
