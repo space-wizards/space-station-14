@@ -1,6 +1,6 @@
 - type: gameMap
   id: splitstation
-  mapName: 'Split Station v2.1'
+  mapName: 'Split Station'
   mapNameTemplate: '{0} Split Station {1}'
   nameGenerator:
     !type:NanotrasenNameGenerator

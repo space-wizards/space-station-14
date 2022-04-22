@@ -65,6 +65,11 @@
   id: MobBee
   description: Nice to have, but you can't build a civilization on a foundation of honey alone.
   components:
+  - type: CombatMode
+    disarmAction:
+      enabled: false
+      autoPopulate: false
+      name: action-name-disarm
   - type: MovementSpeedModifier
     baseWalkSpeed : 7
     baseSprintSpeed : 7
@@ -114,6 +119,11 @@
   id: MobAngryBee
   description: How nice a bee. Oh no, it looks angry and wants my pizza.
   components:
+  - type: CombatMode
+    disarmAction:
+      enabled: false
+      autoPopulate: false
+      name: action-name-disarm
   - type: UnarmedCombat
     range: 0.3
     arcwidth: 0
@@ -653,6 +663,7 @@
       state: mouse-0
       sprite: Mobs/Animals/mouse.rsi
   - type: Clothing
+    size: 5
     quickEquip: false
     sprite: Mobs/Animals/mouse.rsi
     HeldPrefix: 0
@@ -987,7 +998,6 @@
     - UnarmedAttackHostiles
   - type: AiFactionTag
     factions:
-    - SimpleHostile
     - Syndicate
   - type: Sprite
     drawdepth: Mobs
@@ -1034,9 +1044,9 @@
     beepInterval: 1
   - type: Explosive
     explosionType: Default
-    maxIntensity: 15
-    intensitySlope: 5
-    totalIntensity: 120
+    maxIntensity: 20
+    intensitySlope: 20
+    totalIntensity: 225
   - type: ExplodeOnTrigger
 
   # I have included a snake_hiss.ogg sound file so if you want to use that be my guest
