@@ -87,7 +87,7 @@ namespace Content.Server.Chat.Commands
             //Checks to see if the player is dead.
             if(_entities.TryGetComponent<MobStateComponent>(owner, out var mobState) && mobState.IsDead())
             {
-                shell?.WriteLine("You can't suicide, you're dead.");
+                shell.WriteLine(Loc.GetString("suicide-command-already-dead"));
                 return;
             }
 
