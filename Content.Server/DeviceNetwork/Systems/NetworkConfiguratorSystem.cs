@@ -20,7 +20,8 @@ public sealed class NetworkConfiguratorSystem : EntitySystem
 {
     [Dependency] private readonly DeviceListSystem _deviceListSystem = default!;
     [Dependency] private readonly SharedPopupSystem _popupSystem = default!;
-    [Dependency] private readonly SharedHandsSystem _handsSystem = default!;
+    [Dependency] private readonly UserInterfaceSystem _uiSystem = default!;
+
 
     public override void Initialize()
     {
@@ -84,7 +85,7 @@ public sealed class NetworkConfiguratorSystem : EntitySystem
         if (!TryComp(args.User, out ActorComponent? actor))
             return;
 
-        uid.GetUIOrNull(NetworkConfiguratorUiKey.List)?.Open(actor.PlayerSession);
+        _uiSystem.GetUiOrNull(uid, NetworkConfiguratorUiKey.List)?.Open(actor.PlayerSession);
         UpdateUiState(uid, component);
     }
 
@@ -114,7 +115,7 @@ public sealed class NetworkConfiguratorSystem : EntitySystem
     /// </summary>
     private void OnAddInteractVerb(EntityUid uid, NetworkConfiguratorComponent component, GetVerbsEvent<UtilityVerb> args)
     {
-        if (!args.CanAccess || !args.CanInteract || !args.Using.HasValue || !HasComp<NetworkConfiguratorComponent>(args.Using.Value))
+        if (!args.CanAccess || !args.CanInteract || !args.Using.HasValue)
             return;
 
         var isDeviceList = HasComp<DeviceListComponent>(args.Target);
@@ -164,7 +165,7 @@ public sealed class NetworkConfiguratorSystem : EntitySystem
             return;
 
         configurator.ActiveDeviceList = targetUid;
-        configurator.Owner.GetUIOrNull(NetworkConfiguratorUiKey.Configure)?.Open(actor.PlayerSession);
+        _uiSystem.GetUiOrNull(configurator.Owner, NetworkConfiguratorUiKey.Configure)?.Open(actor.PlayerSession);
     }
 
     /// <summary>
@@ -179,7 +180,7 @@ public sealed class NetworkConfiguratorSystem : EntitySystem
             devices.Add((pair.Key, Name(pair.Value)));
         }
 
-        uid.GetUIOrNull(NetworkConfiguratorUiKey.List)?.SetState(new NetworkConfiguratorUserInterfaceState(devices));
+        _uiSystem.GetUiOrNull(uid, NetworkConfiguratorUiKey.List)?.SetState(new NetworkConfiguratorUserInterfaceState(devices));
     }
 
     /// <summary>
@@ -230,6 +231,7 @@ public sealed class NetworkConfiguratorSystem : EntitySystem
                 break;
             case NetworkConfiguratorButtonKey.Copy:
                 component.Devices = _deviceListSystem.GetDeviceList(component.ActiveDeviceList.Value);
+                UpdateUiState(uid, component);
                 break;
             case NetworkConfiguratorButtonKey.Show:
                 _deviceListSystem.ToggleVisualization(component.ActiveDeviceList.Value);
