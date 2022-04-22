@@ -34,10 +34,6 @@ public class PowerWireAction : BaseWireAction
 
     private ElectrocutionSystem _electrocutionSystem = default!;
 
-    public PowerWireAction()
-    {
-    }
-
     public override object Identifier { get; } = PowerWireActionKey.Key;
 
     public override object StatusKey { get; } = PowerWireActionKey.Status;

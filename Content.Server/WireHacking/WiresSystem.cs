@@ -197,17 +197,21 @@ public sealed class WiresSystem : EntitySystem
     private void OnWireDoAfter(EntityUid uid, WiresComponent component, WireDoAfterEvent args)
     {
         args.Delegate(args.Wire);
+        UpdateUserInterface(uid);
     }
 
-    public void TryCancelWireAction(EntityUid owner, object key)
+    public bool TryCancelWireAction(EntityUid owner, object key)
     {
         if (TryGetData(owner, key, out var cancelObject))
         {
             if (cancelObject is CancellationTokenSource token)
             {
                 token.Cancel();
+                return true;
             }
         }
+
+        return false;
     }
 
     public void StartWireAction(EntityUid owner, float delay, object key, WireDoAfterEvent onFinish)

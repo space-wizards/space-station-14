@@ -31,18 +31,6 @@ public class DoorBoltLightWireAction : BaseWireAction
             _text);
     }
 
-    public override void Initialize(Wire wire)
-    {
-        base.Initialize(wire);
-
-        /*
-        if (EntityManager.TryGetComponent<AirlockComponent>(wire.Owner, out var door))
-        {
-            WiresSystem.SetData(wire.Owner, DoorVisuals.BoltLights, door.BoltLightsVisible);
-        }
-        */
-    }
-
     public override object Identifier { get; } = AirlockWireIdentifier.BoltLight;
 
     public override object StatusKey { get; } = AirlockWireStatus.BoltLightIndicator;
@@ -69,7 +57,6 @@ public class DoorBoltLightWireAction : BaseWireAction
 
     public override bool Pulse(EntityUid user, Wire wire)
     {
-        // TODO: GENERICS, IMMEDIATELY
         if (EntityManager.TryGetComponent<AirlockComponent>(wire.Owner, out var door))
         {
             door.BoltLightsVisible = !door.BoltLightsEnabled;
