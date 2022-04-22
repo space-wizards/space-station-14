@@ -57,7 +57,16 @@ public sealed class InteractionPopupSystem : EntitySystem
         }
 
         if (component.PopupPerceivedByOthers)
-            _popupSystem.PopupEntity(msg, uid, Filter.Pvs(uid)); //play for everyone in range
+        {
+            if (component.MessagePerceivedByOthers != null)
+            {
+                string msgOthers = Loc.GetString(component.MessagePerceivedByOthers,("user", args.User), ("target", uid));
+                _popupSystem.PopupEntity(msg, uid, Filter.Entities(args.User));
+                args.User.PopupMessageOtherClients(msgOthers);
+            }
+            else
+                _popupSystem.PopupEntity(msg, uid, Filter.Pvs(uid)); //play for everyone in range
+        }
         else
             _popupSystem.PopupEntity(msg, uid, Filter.Entities(args.User)); //play only for the initiating entity.
 

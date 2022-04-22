@@ -57,6 +57,12 @@ namespace Content.Server.Interaction.Components;
         public bool PopupPerceivedByOthers = false;
 
         /// <summary>
+        /// If the popup is perceived by others, which will it be?
+        /// </summary>
+        [DataField("messagePerceivedByOthers")]
+        public string? MessagePerceivedByOthers;
+
+        /// <summary>
         /// Will the sound effect be perceived by entities not involved in the interaction?
         /// </summary>
         [DataField("soundPerceivedByOthers")]
