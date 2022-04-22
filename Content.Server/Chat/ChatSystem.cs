@@ -334,6 +334,10 @@ public sealed class ChatSystem : EntitySystem
     {
         if (message.StartsWith(';'))
         {
+            // Special case for ";" messages
+            if (message.Length == 1)
+                return "";
+
             // Remove semicolon
             message = message.Substring(1).TrimStart();
 

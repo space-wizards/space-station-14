@@ -80,7 +80,7 @@
     contents:
       - id: ClothingHeadHelmetHardsuitAtmos
       - id: ClothingOuterHardsuitAtmos
-      - id: ClothingMaskBreath
+      - id: ClothingMaskGasAtmos
       - id: OxygenTankFilled
       - id: ClothingOuterSuitAtmosFire
       - id: ClothingHeadHelmetAtmosFire
@@ -96,7 +96,7 @@
       - id: ClothingHeadHelmetHardsuitEngineering
       - id: ClothingOuterHardsuitEngineering
       - id: ClothingHandsGlovesColorYellow
-      - id: ClothingMaskBreath
+      - id: ClothingMaskGas
       - id: OxygenTankFilled
       - id: ClothingShoesBootsMag
 
