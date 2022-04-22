@@ -91,9 +91,12 @@ public class DoorTimingWireAction : BaseWireAction
     // timing timer??? ???
     private void AwaitTimingTimerFinish(Wire wire)
     {
-        if (EntityManager.TryGetComponent<AirlockComponent>(wire.Owner, out var door))
+        if (!wire.IsCut)
         {
-            door.AutoCloseDelayModifier = 1f;
+            if (EntityManager.TryGetComponent<AirlockComponent>(wire.Owner, out var door))
+            {
+                door.AutoCloseDelayModifier = 1f;
+            }
         }
     }
 

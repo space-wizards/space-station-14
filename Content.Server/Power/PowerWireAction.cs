@@ -108,7 +108,7 @@ public class PowerWireAction : BaseWireAction
             // electrocution continues - unless cancelled
             //
             // if the power is disabled however, just don't bother
-            if (timed && (!power.PowerDisabled || !power.Powered))
+            if (timed && IsPowered(wire.Owner))
             {
                 WiresSystem.StartWireAction(wire.Owner, _pulseTimeout, PowerWireActionKey.ElectrifiedCancel, new WireDoAfterEvent(AwaitElectrifiedCancel, wire));
             }

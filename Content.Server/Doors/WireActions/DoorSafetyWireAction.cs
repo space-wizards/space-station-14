@@ -80,9 +80,12 @@ public class DoorSafetyWireAction : BaseWireAction
 
     private void AwaitSafetyTimerFinish(Wire wire)
     {
-        if (EntityManager.TryGetComponent<AirlockComponent>(wire.Owner, out var door))
+        if (!wire.IsCut)
         {
-            door.Safety = true;
+            if (EntityManager.TryGetComponent<AirlockComponent>(wire.Owner, out var door))
+            {
+                door.Safety = true;
+            }
         }
     }
 

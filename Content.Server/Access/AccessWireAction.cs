@@ -81,9 +81,12 @@ public class AccessWireAction : BaseWireAction
 
     private void AwaitPulseCancel(Wire wire)
     {
-        if (EntityManager.TryGetComponent<AccessReaderComponent>(wire.Owner, out var access))
+        if (!wire.IsCut)
         {
-            access.Enabled = true;
+            if (EntityManager.TryGetComponent<AccessReaderComponent>(wire.Owner, out var access))
+            {
+                access.Enabled = true;
+            }
         }
     }
 

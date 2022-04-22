@@ -228,6 +228,7 @@ public sealed class WiresSystem : EntitySystem
 
         CancellationTokenSource tokenSource = new();
 
+        // Starting an already started action will do nothing.
         if (HasData(owner, key))
         {
             return;
