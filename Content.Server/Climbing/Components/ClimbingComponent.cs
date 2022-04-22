@@ -1,6 +1,5 @@
 using Content.Shared.Climbing;
 using Robust.Shared.Physics.Dynamics;
-using Robust.Shared.Timing;
 
 namespace Content.Server.Climbing.Components;
 
@@ -14,23 +13,8 @@ public sealed class ClimbingComponent : SharedClimbingComponent
         get => base.IsClimbing;
         set
         {
-            if (base.IsClimbing == value)
-                return;
-
+            if (base.IsClimbing == value) return;
             base.IsClimbing = value;
-
-            if (value)
-            {
-                StartClimbTime = IoCManager.Resolve<IGameTiming>().CurTime;
-                EntitySystem.Get<ClimbSystem>().AddActiveClimber(this);
-                // OwnerIsTransitioning = true;
-            }
-            else
-            {
-                EntitySystem.Get<ClimbSystem>().RemoveActiveClimber(this);
-                // OwnerIsTransitioning = false;
-            }
-
             Dirty();
         }
     }

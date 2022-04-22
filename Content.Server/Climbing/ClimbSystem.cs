@@ -36,7 +36,6 @@ public sealed class ClimbSystem : SharedClimbSystem
 
     private const string ClimbingFixtureName = "climb";
 
-    private readonly HashSet<ClimbingComponent> _activeClimbers = new();
     private readonly Dictionary<EntityUid, List<Fixture>> _fixtureRemoveQueue = new();
 
     public override void Initialize()
@@ -55,7 +54,7 @@ public sealed class ClimbSystem : SharedClimbSystem
 
     private void OnClimbEndCollide(EntityUid uid, ClimbingComponent component, EndCollideEvent args)
     {
-        if (args.OurFixture.ID != ClimbingFixtureName || !component.IsClimbing
+        if (args.OurFixture.ID != ClimbingFixtureName || !component.IsClimbing || component.OwnerIsTransitioning
             || !TryComp<TransformComponent>(uid, out var transformComp)
             || !TryComp<PhysicsComponent>(uid, out var physicsComp)
             || !TryComp<FixturesComponent>(uid, out var fixturesComp))
@@ -92,6 +91,7 @@ public sealed class ClimbSystem : SharedClimbSystem
         if (!TryComp<PhysicsComponent>(uid, out var physicsComp) || !TryComp<FixturesComponent>(uid, out var fixturesComp))
             return;
 
+        // Swap fixtures
         var toAdd = new List<Fixture>();
         foreach (var (name, fixture) in fixturesComp.Fixtures)
         {
@@ -125,6 +125,7 @@ public sealed class ClimbSystem : SharedClimbSystem
                 manager: fixturesComp))
             return;
 
+        // Calculate moveTo
         var entityPos = Transform(uid).WorldPosition;
 
         var endPoint = Transform(args.Climbable).WorldPosition;
@@ -234,6 +235,7 @@ public sealed class ClimbSystem : SharedClimbSystem
     /// <summary>
     /// Checks if the user can vault the dragged entity onto the the target
     /// </summary>
+    /// <param name="component">The climbable component of the object being vaulted onto</param>
     /// <param name="user">The user that wants to vault the entity</param>
     /// <param name="dragged">The entity that is being vaulted</param>
     /// <param name="target">The object that is being vaulted onto</param>
@@ -342,25 +344,17 @@ public sealed class ClimbSystem : SharedClimbSystem
             Filter.Pvs(uid).RemoveWhereAttachedEntity(puid => puid == args.Climber));
     }
 
-    public void AddActiveClimber(ClimbingComponent climbingComponent)
+    private void UnsetTransitionBoolAfterBufferTime(EntityUid uid, ClimbingComponent? climbing = null, PhysicsComponent? physics = null)
     {
-        _activeClimbers.Add(climbingComponent);
-    }
-
-    public void RemoveActiveClimber(ClimbingComponent climbingComponent)
-    {
-        _activeClimbers.Remove(climbingComponent);
-    }
-
-    public void UnsetTransitionBoolAfterBufferTime(EntityUid uid, ClimbingComponent? component = null)
-    {
-        if (!Resolve(uid, ref component, false))
+        if (!Resolve(uid, ref climbing, ref physics, false))
             return;
-        // component.Owner.SpawnTimer((int) (SharedClimbingComponent.BufferTime * 1000), () =>
-        // {
-        //     if (component.Deleted) return;
-        //     component.OwnerIsTransitioning = false;
-        // });
+        climbing.Owner.SpawnTimer((int) (SharedClimbingComponent.BufferTime * 1000), () =>
+        {
+            if (climbing.Deleted) return;
+            physics.BodyType = BodyType.KinematicController;
+            climbing.OwnerIsTransitioning = false;
+            _actionBlockerSystem.UpdateCanMove(uid);
+        });
     }
 
     /// <summary>
@@ -377,10 +371,12 @@ public sealed class ClimbSystem : SharedClimbSystem
         // Since there are bodies with different masses:
         // mass * 5 seems enough to move entity
         // instead of launching cats like rockets against the walls with constant impulse value.
-        physicsComponent.ApplyLinearImpulse((to - from).Normalized * velocity * physicsComponent.Mass * 5);
-        // OwnerIsTransitioning = true;
+        physicsComponent.ApplyLinearImpulse((to - from).Normalized * velocity * physicsComponent.Mass * 10);
+        physicsComponent.BodyType = BodyType.Dynamic;
+        component.OwnerIsTransitioning = true;
+        _actionBlockerSystem.UpdateCanMove(uid);
 
-        // UnsetTransitionBoolAfterBufferTime(uid, component);
+        UnsetTransitionBoolAfterBufferTime(uid, component);
     }
 
     public override void Update(float frameTime)
@@ -403,9 +399,9 @@ public sealed class ClimbSystem : SharedClimbSystem
         // }
     }
 
-    public void Reset(RoundRestartCleanupEvent ev)
+    private void Reset(RoundRestartCleanupEvent ev)
     {
-        _activeClimbers.Clear();
+        _fixtureRemoveQueue.Clear();
     }
 }
 
