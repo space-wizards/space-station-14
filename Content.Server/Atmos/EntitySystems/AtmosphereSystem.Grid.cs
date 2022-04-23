@@ -28,6 +28,7 @@ namespace Content.Server.Atmos.EntitySystems
         private void InitializeGrid()
         {
             SubscribeLocalEvent<GridAtmosphereComponent, ComponentInit>(OnGridAtmosphereInit);
+            SubscribeLocalEvent<GridAtmosphereComponent, GridSplitEvent>(OnGridSplit);
         }
 
         private void OnGridAtmosphereInit(EntityUid uid, GridAtmosphereComponent gridAtmosphere, ComponentInit args)
@@ -58,6 +59,56 @@ namespace Content.Server.Atmos.EntitySystems
             }
 
             GridRepopulateTiles(mapGrid.Grid, gridAtmosphere);
+        }
+
+        private void OnGridSplit(EntityUid uid, GridAtmosphereComponent originalGridAtmos, ref GridSplitEvent args)
+        {
+            foreach (var newGrid in args.NewGrids)
+            {
+                // Make extra sure this is a valid grid.
+                if (!_mapManager.TryGetGrid(newGrid, out var mapGrid))
+                    continue;
+
+                var entity = mapGrid.GridEntityId;
+
+                // If the new split grid has an atmosphere already somehow, use that. Otherwise, add a new one.
+                if (!TryComp(entity, out GridAtmosphereComponent? newGridAtmos))
+                    newGridAtmos = AddComp<GridAtmosphereComponent>(entity);
+
+                // We assume the tiles on the new grid have the same coordinates as they did on the old grid...
+                var enumerator = mapGrid.GetAllTilesEnumerator();
+
+                while (enumerator.MoveNext(out var tile))
+                {
+                    var indices = tile.Value.GridIndices;
+
+                    // This split event happens *before* the spaced tiles have been invalidated, therefore we can still
+                    // access their gas data. On the next atmos update tick, these tiles will be spaced. Poof!
+                    if (!originalGridAtmos.Tiles.TryGetValue(indices, out var tileAtmosphere))
+                        continue;
+
+                    // The new grid atmosphere has been initialized, meaning it has all the needed TileAtmospheres...
+                    if (!newGridAtmos.Tiles.TryGetValue(indices, out var newTileAtmosphere))
+                        // Let's be honest, this is really not gonna happen, but just in case...!
+                        continue;
+
+                    // Copy a bunch of data over... Not great, maybe put this in TileAtmosphere?
+                    newTileAtmosphere.Air = tileAtmosphere.Air?.Clone() ?? null;
+                    newTileAtmosphere.Hotspot = tileAtmosphere.Hotspot;
+                    newTileAtmosphere.HeatCapacity = tileAtmosphere.HeatCapacity;
+                    newTileAtmosphere.Temperature = tileAtmosphere.Temperature;
+                    newTileAtmosphere.PressureDifference = tileAtmosphere.PressureDifference;
+                    newTileAtmosphere.PressureDirection = tileAtmosphere.PressureDirection;
+
+                    // TODO ATMOS: Somehow force GasTileOverlaySystem to perform an update *right now, right here.*
+                    // The reason why is that right now, gas will flicker until the next GasTileOverlay update.
+                    // That looks bad, of course. We want to avoid that! Anyway that's a bit more complicated so out of scope.
+
+                    // Invalidate the tile, it's redundant but redundancy is good! Also HashSet so really, no duplicates.
+                    InvalidateTile(originalGridAtmos, indices);
+                    InvalidateTile(newGridAtmos, indices);
+                }
+            }
         }
 
         #region Grid Is Simulated
@@ -217,10 +268,11 @@ namespace Content.Server.Atmos.EntitySystems
         private AtmosDirection GetBlockedDirections(IMapGrid mapGrid, Vector2i indices)
         {
             var value = AtmosDirection.Invalid;
+            var enumerator = GetObstructingComponentsEnumerator(mapGrid, indices);
 
-            foreach (var airtightComponent in GetObstructingComponents(mapGrid, indices))
+            while (enumerator.MoveNext(out var airtightComponent))
             {
-                if(airtightComponent.AirBlocked)
+                if (airtightComponent.AirBlocked)
                     value |= airtightComponent.AirBlockedDirection;
             }
 
