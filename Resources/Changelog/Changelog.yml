@@ -1,12 +1,6 @@
 Entries:
 - author: Peptide90
   changes:
-  - {message: Antimatter Engine Shielding can now be deconstructed with a welder.,
-    type: Tweak}
-  id: 878
-  time: '2022-01-13T15:06:43.0000000+00:00'
-- author: Peptide90
-  changes:
   - {message: Added librarian and lawyer roles to the game and all associated clothing
       to the clothing vendor., type: Add}
   id: 879
@@ -3043,3 +3037,8 @@ Entries:
       an action., type: Tweak}
   id: 1377
   time: '2022-04-23T03:31:45.0000000+00:00'
+- author: ElectroJr
+  changes:
+  - {message: Fixed magboots not properly applying wind/pressure immunity., type: Fix}
+  id: 1378
+  time: '2022-04-23T03:47:30.0000000+00:00'
