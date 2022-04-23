@@ -1,10 +1,4 @@
 Entries:
-- author: Rane
-  changes:
-  - {message: The Syndicate will now assign some agents to ensure the survival of
-      other agents., type: Add}
-  id: 876
-  time: '2022-01-13T14:53:51.0000000+00:00'
 - author: Peptide90
   changes:
   - {message: Added Personnel Crate to cargo. Includes a box of spare PDAs and ID
@@ -3043,3 +3037,9 @@ Entries:
   - {message: You can rotate the salvage magnet and PA parts again., type: Fix}
   id: 1375
   time: '2022-04-23T01:14:28.0000000+00:00'
+- author: moony
+  changes:
+  - {message: The game no longer pretends only one salvage magnet can exist at a time.,
+    type: Fix}
+  id: 1376
+  time: '2022-04-23T01:28:22.0000000+00:00'
