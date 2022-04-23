@@ -186,7 +186,7 @@
   - type: IngestionBlocker
 
 - type: entity
-  parent: ClothingHeadHardsuitWithLightBase # hardsuitlight base for light and protection
+  parent: ClothingHeadHatHardhatBase
   id: ClothingHeadHelmetFire
   name: fire helmet
   description: An atmos techs best friend. Provides some heat resistance and looks cool.
@@ -214,7 +214,7 @@
     lowPressureMultiplier: 1000
 
 - type: entity
-  parent: ClothingHeadHardsuitWithLightBase # hardsuitlight base for light and protection
+  parent: ClothingHeadHatHardhatBase
   id: ClothingHeadHelmetAtmosFire
   name: atmos fire helmet
   description: An atmos fire helmet, able to keep the user cool in any situation.
