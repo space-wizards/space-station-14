@@ -1,0 +1,29 @@
+﻿- type: entity
+  id: CrateArtifactContainer
+  name: artifact container
+  description: Used to safely contain and move artifacts.
+  parent: CrateBaseSecure
+  components:
+    - type: AccessReader
+      access: [["Research"], ["Salvage"]]
+    - type: Lock
+    - type: Sprite
+      sprite: Structures/Storage/Crates/artifact.rsi
+      layers:
+        - state: artifact_container
+        - state: artifact_container_door
+          map: ["enum.StorageVisualLayers.Door"]
+        - state: welded
+          visible: false
+          map: ["enum.StorageVisualLayers.Welded"]
+        - state: locked
+          map: ["enum.StorageVisualLayers.Lock"]
+          shader: unshaded
+    - type: Icon
+      sprite: Structures/Storage/Crates/artifact.rsi
+      state: artifact_container_icon
+    - type: Appearance
+      visuals:
+        - type: StorageVisualizer
+          state_open: artifact_container_open
+          state_closed: artifact_container_door
