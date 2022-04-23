@@ -39,7 +39,7 @@ namespace Content.Server.Atmos.Piping.Unary.Components
         }
 
         private float _externalPressureBound = Atmospherics.OneAtmosphere;
-        
+
         [ViewVariables(VVAccess.ReadWrite)]
         [DataField("internalPressureBound")]
         public float InternalPressureBound
@@ -74,8 +74,6 @@ namespace Content.Server.Atmos.Piping.Unary.Components
 
         public GasVentPumpData ToAirAlarmData()
         {
-            if (!IsDirty) return new GasVentPumpData { Dirty = IsDirty };
-
             return new GasVentPumpData
             {
                 Enabled = Enabled,
@@ -91,10 +89,10 @@ namespace Content.Server.Atmos.Piping.Unary.Components
         {
             Enabled = data.Enabled;
             IsDirty = data.Dirty;
-            PumpDirection = (VentPumpDirection) data.PumpDirection!;
-            PressureChecks = (VentPressureBound) data.PressureChecks!;
-            ExternalPressureBound = (float) data.ExternalPressureBound!;
-            InternalPressureBound = (float) data.InternalPressureBound!;
+            PumpDirection = data.PumpDirection;
+            PressureChecks = data.PressureChecks;
+            ExternalPressureBound = data.ExternalPressureBound;
+            InternalPressureBound = data.InternalPressureBound;
         }
     }
 }
