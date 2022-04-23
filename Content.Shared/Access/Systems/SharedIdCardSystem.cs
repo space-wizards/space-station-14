@@ -41,8 +41,8 @@ public abstract class SharedIdCardSystem : EntitySystem
     {
         // check held item?
         if (TryComp(uid, out SharedHandsComponent? hands) &&
-            hands.ActiveHand?.HeldEntity != null &&
-            TryGetIdCard(hands.ActiveHand.HeldEntity.Value, out idCard))
+            hands.ActiveHandEntity is { } heldItem &&
+            TryGetIdCard(heldItem, out idCard))
         {
             return true;
         }
