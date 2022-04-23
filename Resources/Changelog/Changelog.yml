@@ -1,21 +1,4 @@
 Entries:
-- author: Daemon
-  changes:
-  - {message: Fixed dummy on lobby screen, type: Fix}
-  id: 881
-  time: '2022-01-14T18:19:07.0000000+00:00'
-- author: Peptide90
-  changes:
-  - {message: HoP locker now has a box of spare IDs., type: Add}
-  id: 882
-  time: '2022-01-14T18:42:01.0000000+00:00'
-- author: Peptide90
-  changes:
-  - {message: You now take slightly less pressure damage from space so /might/ survive
-      depressurisation., type: Fix}
-  - {message: Xenos can now survive in space. One less way to kill them., type: Fix}
-  id: 883
-  time: '2022-01-15T00:18:37.0000000+00:00'
 - author: ElectroJr
   changes:
   - {message: Wires now only shock when cut or attacked. You can now safely place
@@ -3040,3 +3023,19 @@ Entries:
   - {message: 'Added a new station, NT Barratry, NT''s un-finest ship.', type: Add}
   id: 1380
   time: '2022-04-23T19:44:07.0000000+00:00'
+- author: Saakra
+  changes:
+  - {message: Can now drink liquids from the right-click context menu, type: Add}
+  id: 1381
+  time: '2022-04-23T23:38:21.0000000+00:00'
+- author: Veritius
+  changes:
+  - {message: Fix hypopen being named 'pen' in uplink, type: Fix}
+  id: 1382
+  time: '2022-04-23T23:38:31.0000000+00:00'
+- author: Peptide90
+  changes:
+  - {message: Added the water cooler. Go stand by it and plot the downfall of the
+      corporations through petty theft., type: Add}
+  id: 1383
+  time: '2022-04-23T23:39:01.0000000+00:00'
