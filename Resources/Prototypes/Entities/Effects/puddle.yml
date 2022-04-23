@@ -12,7 +12,8 @@
     spillSound:
       path: /Audio/Effects/Fluids/splat.ogg
     recolor: true
-  - type: Clickable
+  - type: Clickable  
+  - type: Slippery
   - type: Evaporation
   - type: Physics
   - type: Fixtures
