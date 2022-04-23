@@ -43,7 +43,7 @@ namespace Content.Client.Atmos.Monitor.UI.Widgets
                 PumpDataChanged?.Invoke(_address, _data);
             };
 
-            _internalBound.Value = (float) _data.InternalPressureBound!;
+            _internalBound.Value = (float) _data.InternalPressureBound;
             _internalBound.OnValueChanged += _ =>
             {
                 _data.InternalPressureBound = _internalBound.Value;
@@ -51,7 +51,7 @@ namespace Content.Client.Atmos.Monitor.UI.Widgets
             };
             _internalBound.IsValid += value => value >= 0;
 
-            _externalBound.Value = (float) _data.ExternalPressureBound!;
+            _externalBound.Value = (float) _data.ExternalPressureBound;
             _externalBound.OnValueChanged += _ =>
             {
                 _data.ExternalPressureBound = _externalBound.Value;
@@ -88,10 +88,10 @@ namespace Content.Client.Atmos.Monitor.UI.Widgets
             _enabled.Pressed = _data.Enabled;
 
             _data.PumpDirection = data.PumpDirection;
-            _pumpDirection.SelectId((int) _data.PumpDirection!);
+            _pumpDirection.SelectId((int) _data.PumpDirection);
 
             _data.PressureChecks = data.PressureChecks;
-            _pressureCheck.SelectId((int) _data.PressureChecks!);
+            _pressureCheck.SelectId((int) _data.PressureChecks);
 
             _data.ExternalPressureBound = data.ExternalPressureBound;
             _externalBound.Value = _data.ExternalPressureBound;
