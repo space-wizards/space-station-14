@@ -259,7 +259,7 @@ namespace Content.Server.Administration.Managers
         // NOTE: Also sends commands list for non admins..
         private void UpdateAdminStatus(IPlayerSession session)
         {
-            var msg = _netMgr.CreateNetMessage<MsgUpdateAdminStatus>();
+            var msg = new MsgUpdateAdminStatus();
 
             var commands = new List<string>(_anyCommands);
 

@@ -20,6 +20,8 @@
         mass: 150
         layer:
         - SmallImpassable
+        mask:
+        - VaultImpassable
     - type: Nuke
       # ~50 tile radius in open space
       # close to defaulkt max cap.
@@ -65,6 +67,8 @@
         mass: 150
         layer:
         - SmallImpassable
+        mask:
+        - VaultImpassable
     - type: SolutionContainerManager
       solutions:
         tank:

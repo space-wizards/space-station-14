@@ -86,5 +86,7 @@
   - type: IconSmooth
     key: walls
     mode: NoSprite
+  - type: PaintableAirlock
+    group: Standard
   placement:
     mode: SnapgridCenter

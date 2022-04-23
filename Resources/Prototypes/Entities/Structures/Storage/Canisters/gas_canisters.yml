@@ -6,6 +6,8 @@
   description: A canister that can contain any type of gas. It can be attached to connector ports using a wrench.
   components:
     - type: InteractionOutline
+    - type: Transform
+      noRot: true
     - type: Sprite
       netsync: false
       sprite: Structures/Storage/canister.rsi
@@ -346,7 +348,6 @@
   id: GasCanisterBrokenBase
   name: broken gas canister
   description: A broken gas canister. Not useless yet, as it can be salvaged for high quality materials.
-  abstract: true
   components:
     - type: Destructible
       thresholds:

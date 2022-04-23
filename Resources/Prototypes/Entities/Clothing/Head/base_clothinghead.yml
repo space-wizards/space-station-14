@@ -33,7 +33,7 @@
     size: 10
   - type: PressureProtection
     highPressureMultiplier: 0.6
-    lowPressureMultiplier: 10
+    lowPressureMultiplier: 1000
   - type: TemperatureProtection
     coefficient: 0.2
   - type: IngestionBlocker
@@ -48,12 +48,18 @@
   parent: ClothingHeadBase
   id: ClothingHeadHardsuitBase
   name: base hardsuit helmet
+  noSpawn: true
   components:
   - type: Clothing
+    #Apparently the hardsuit helmet equip sound is from a walking mech?
+    equipSound: /Audio/Mecha/mechmove03.ogg
+    unequipSound: /Audio/Mecha/mechmove03.ogg
     size: 15
+    canPickup: false # attached to suit.
+    quickEquip: false
   - type: PressureProtection
-    highPressureMultiplier: 0.6
-    lowPressureMultiplier: 10
+    highPressureMultiplier: 0.3
+    lowPressureMultiplier: 1000
   - type: TemperatureProtection
     coefficient: 0.1
   - type: Armor
@@ -76,6 +82,7 @@
   parent: ClothingHeadHardsuitBase
   id: ClothingHeadHardsuitWithLightBase
   name: base hardsuit helmet with light
+  noSpawn: true
   components:
   - type: Sprite
     netsync: false
@@ -86,6 +93,7 @@
       map: [ "light" ]
   - type: Clothing
     HeldPrefix: off
+  - type: ToggleableLightVisuals
   - type: PointLight
     netsync: false
     enabled: false
@@ -98,12 +106,6 @@
     - type: FlashLightVisualizer
   - type: HandheldLight
     addPrefix: true
-    toggleAction:
-      name: action-name-toggle-light
-      description: action-description-toggle-light
-      icon: Objects/Tools/flashlight.rsi/flashlight.png
-      iconOn: Objects/Tools/flashlight.rsi/flashlight-on.png
-      event: !type:ToggleActionEvent
   - type: PowerCellSlot
     cellSlot:
       startingItem: PowerCellHardsuitHelmet # self recharging

@@ -253,7 +253,12 @@ namespace Content.Server.Ghost
             {
                 if (player.AttachedEntity is {Valid: true} attached)
                 {
-                    players.Add(attached, EntityManager.GetComponent<MetaDataComponent>(attached).EntityName);
+                    TryComp<MindComponent>(attached, out var mind);
+
+                    string playerInfo = $"{EntityManager.GetComponent<MetaDataComponent>(attached).EntityName} ({mind?.Mind?.CurrentJob?.Name ?? "Unknown"})";
+
+                    if (TryComp<MobStateComponent>(attached, out var state) && !state.IsDead())
+                        players.Add(attached, playerInfo);
                 }
             }
 

@@ -1,5 +1,7 @@
-﻿using Content.Server.Power.Components;
+using Content.Server.Power.Components;
 using Content.Shared.Examine;
+using Content.Shared.Power;
+
 namespace Content.Server.Power.EntitySystems
 {
     public sealed class PowerReceiverSystem : EntitySystem
@@ -72,10 +74,14 @@ namespace Content.Server.Power.EntitySystems
             }
         }
 
-        private static void ProviderChanged(ApcPowerReceiverComponent receiver)
+        private void ProviderChanged(ApcPowerReceiverComponent receiver)
         {
             receiver.NetworkLoad.LinkedNetwork = default;
-            receiver.ApcPowerChanged();
+
+            RaiseLocalEvent(receiver.Owner, new PowerChangedEvent(receiver.Powered, receiver.NetworkLoad.ReceivingPower));
+
+            if (TryComp(receiver.Owner, out AppearanceComponent? appearance))
+                appearance.SetData(PowerDeviceVisuals.Powered, receiver.Powered);
         }
     }
 }
