@@ -40,5 +40,5 @@
   tileReactions:
     - !type:SpillTileReaction
       paralyzeTime: 3
-      launchForwardsMultiplier: 2
+      launchForwardsMultiplier: 3
       requiredSlipSpeed: 1
