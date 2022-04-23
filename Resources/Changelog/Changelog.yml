@@ -1,12 +1,6 @@
 Entries:
 - author: Peptide90
   changes:
-  - {message: Added Personnel Crate to cargo. Includes a box of spare PDAs and ID
-      cards., type: Add}
-  id: 877
-  time: '2022-01-13T15:04:30.0000000+00:00'
-- author: Peptide90
-  changes:
   - {message: Antimatter Engine Shielding can now be deconstructed with a welder.,
     type: Tweak}
   id: 878
@@ -3043,3 +3037,9 @@ Entries:
     type: Fix}
   id: 1376
   time: '2022-04-23T01:28:22.0000000+00:00'
+- author: ElectroJr
+  changes:
+  - {message: Hardsuit helmets are now part of a hardsuit. They can be toggled via
+      an action., type: Tweak}
+  id: 1377
+  time: '2022-04-23T03:31:45.0000000+00:00'
