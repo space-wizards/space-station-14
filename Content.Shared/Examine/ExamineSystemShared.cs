@@ -1,6 +1,5 @@
 using System.Linq;
 using Content.Shared.DragDrop;
-using Content.Shared.Identity.Systems;
 using Content.Shared.Interaction;
 using Content.Shared.MobState.Components;
 using JetBrains.Annotations;

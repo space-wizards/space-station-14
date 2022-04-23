@@ -101,6 +101,8 @@
     sprite: Clothing/Mask/medical.rsi
   - type: Clothing
     sprite: Clothing/Mask/medical.rsi
+  - type: BreathMask
+  - type: IngestionBlocker
   - type: DiseaseProtection
     protection: 0.10
 

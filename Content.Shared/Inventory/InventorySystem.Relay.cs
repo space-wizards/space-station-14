@@ -1,7 +1,6 @@
 ﻿using Content.Shared.Damage;
 using Content.Shared.Electrocution;
 using Content.Shared.Explosion;
-using Content.Shared.Identity;
 using Content.Shared.Identity.Systems;
 using Content.Shared.Movement.EntitySystems;
 using Content.Shared.Slippery;
