@@ -1,10 +1,4 @@
 Entries:
-- author: ElectroJr
-  changes:
-  - {message: Wires now only shock when cut or attacked. You can now safely place
-      floor tiles over them., type: Tweak}
-  id: 884
-  time: '2022-01-15T02:34:43.0000000+00:00'
 - author: Daemon
   changes:
   - {message: Increased the size of the Ahelp window, type: Tweak}
@@ -3039,3 +3033,10 @@ Entries:
       corporations through petty theft., type: Add}
   id: 1383
   time: '2022-04-23T23:39:01.0000000+00:00'
+- author: Daemon
+  changes:
+  - {message: 'Added blood red magboots, and made them available to purchase in the
+      uplink', type: Add}
+  - {message: Added syndicate operative outfits for admin ran events, type: Add}
+  id: 1384
+  time: '2022-04-23T23:41:59.0000000+00:00'
