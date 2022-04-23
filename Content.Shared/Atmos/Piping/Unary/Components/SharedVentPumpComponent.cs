@@ -10,10 +10,10 @@ namespace Content.Shared.Atmos.Piping.Unary.Components
         public bool Enabled { get; set; }
         public bool Dirty { get; set; }
         public bool IgnoreAlarms { get; set; } = false;
-        public VentPumpDirection? PumpDirection { get; set; }
-        public VentPressureBound? PressureChecks { get; set; }
-        public float? ExternalPressureBound { get; set; }
-        public float? InternalPressureBound { get; set; }
+        public VentPumpDirection PumpDirection { get; set; } = VentPumpDirection.Releasing;
+        public VentPressureBound PressureChecks { get; set; } = VentPressureBound.ExternalBound;
+        public float ExternalPressureBound { get; set; } = Atmospherics.OneAtmosphere;
+        public float InternalPressureBound { get; set; } = 0f;
 
         // Presets for 'dumb' air alarm modes
 
