@@ -35,7 +35,6 @@ namespace Content.Server.Atmos.Monitor.Components
 
         public HashSet<NetUserId> ActivePlayers = new();
 
-        public bool FullAccess = false;
         public bool CanSync = true;
 
         // <-- Wires -->

@@ -30,6 +30,15 @@
   wires:
   - !type:PowerWireAction
   - !type:AccessWireAction
+  - !type:AirAlarmPanicWire
+  - !type:AtmosMonitorDeviceNetWire
+
+- type: wireLayout
+  id: FireAlarm
+  wires:
+  - !type:PowerWireAction
+  - !type:AtmosMonitorDeviceNetWire
+    alarmOnPulse: true
 
 - type: wireLayout
   id: Arcade
