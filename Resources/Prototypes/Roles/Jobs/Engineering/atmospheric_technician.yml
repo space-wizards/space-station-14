@@ -1,6 +1,6 @@
 - type: job
   id: AtmosphericTechnician
-  name: "Atmospheric Technician"
+  name: "atmos tech"
   startingGear: AtmosphericTechnicianGear
   departments:
   - Engineering
