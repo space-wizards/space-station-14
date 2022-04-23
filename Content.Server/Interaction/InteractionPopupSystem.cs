@@ -62,10 +62,10 @@ public sealed class InteractionPopupSystem : EntitySystem
             {
                 string msgOthers = Loc.GetString(component.MessagePerceivedByOthers,("user", args.User), ("target", uid));
                 _popupSystem.PopupEntity(msg, uid, Filter.Entities(args.User));
-                args.User.PopupMessageOtherClients(msgOthers);
+                _popupSystem.PopupEntity(msgOthers, args.User, Filter.Pvs(uid).RemoveWhereAttachedEntity(puid => puid == args.User));
             }
             else
-                _popupSystem.PopupEntity(msg, uid, Filter.Pvs(uid)); //play for everyone in range
+                _popupSystem.PopupEntity(msg, uid, Filter.Pvs(uid,2F, EntityManager)); //play for everyone in range
         }
         else
             _popupSystem.PopupEntity(msg, uid, Filter.Entities(args.User)); //play only for the initiating entity.
