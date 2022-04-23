@@ -28,7 +28,7 @@ namespace Content.Shared.Throwing
         public override void Initialize()
         {
             base.Initialize();
-            SubscribeLocalEvent<ThrownItemComponent, PhysicsSleepEvent>(OnSleep);
+            SubscribeLocalEvent<ThrownItemComponent, PhysicsSleepMessage>(HandleSleep);
             SubscribeLocalEvent<ThrownItemComponent, StartCollideEvent>(HandleCollision);
             SubscribeLocalEvent<ThrownItemComponent, PreventCollideEvent>(PreventCollision);
             SubscribeLocalEvent<ThrownItemComponent, ThrownEvent>(ThrowItem);
@@ -87,7 +87,7 @@ namespace Content.Shared.Throwing
             }
         }
 
-        private void OnSleep(EntityUid uid, ThrownItemComponent thrownItem, ref PhysicsSleepEvent @event)
+        private void HandleSleep(EntityUid uid, ThrownItemComponent thrownItem, PhysicsSleepMessage message)
         {
             StopThrow(uid, thrownItem);
         }
