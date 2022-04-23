@@ -1,16 +1,15 @@
-﻿using System.Collections.Immutable;
-using Content.Server.DeviceNetwork.Components;
-using Content.Server.UserInterface;
+﻿using Content.Server.DeviceNetwork.Components;
+using Content.Shared.Access.Components;
+using Content.Shared.Access.Systems;
 using Content.Shared.Database;
 using Content.Shared.DeviceNetwork;
-using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Interaction;
 using Content.Shared.Interaction.Events;
 using Content.Shared.Popups;
 using Content.Shared.Verbs;
 using JetBrains.Annotations;
-using Robust.Server.Console;
 using Robust.Server.GameObjects;
+using Robust.Shared.Audio;
 using Robust.Shared.Player;
 
 namespace Content.Server.DeviceNetwork.Systems;
@@ -21,6 +20,7 @@ public sealed class NetworkConfiguratorSystem : EntitySystem
     [Dependency] private readonly DeviceListSystem _deviceListSystem = default!;
     [Dependency] private readonly SharedPopupSystem _popupSystem = default!;
     [Dependency] private readonly UserInterfaceSystem _uiSystem = default!;
+    [Dependency] private readonly AccessReaderSystem _accessSystem = default!;
 
 
     public override void Initialize()
@@ -74,6 +74,21 @@ public sealed class NetworkConfiguratorSystem : EntitySystem
 
         UpdateUiState(configurator.Owner, configurator);
     }
+
+    private bool AccessCheck(EntityUid target, EntityUid? user, NetworkConfiguratorComponent component)
+    {
+        if (!TryComp(target, out AccessReaderComponent? reader) || user == null)
+            return false;
+
+        if (_accessSystem.IsAllowed(reader, user.Value))
+            return true;
+
+        SoundSystem.Play(Filter.Pvs(user.Value), component.SoundNoAccess.GetSound(), target, AudioParams.Default.WithVolume(-2f).WithPitchScale(1.2f));
+        _popupSystem.PopupEntity(Loc.GetString("network-configurator-device-access-denied"), target, Filter.Entities(user.Value));
+
+        return false;
+    }
+
 
     #region Interactions
 
@@ -161,7 +176,7 @@ public sealed class NetworkConfiguratorSystem : EntitySystem
     /// </summary>
     private void OpenDeviceListUi(EntityUid? targetUid, EntityUid userUid, NetworkConfiguratorComponent configurator)
     {
-        if (!targetUid.HasValue || !TryComp(userUid, out ActorComponent? actor))
+        if (!targetUid.HasValue || !TryComp(userUid, out ActorComponent? actor) || !AccessCheck(targetUid.Value, userUid, configurator))
             return;
 
         configurator.ActiveDeviceList = targetUid;

@@ -3,6 +3,7 @@
 network-configurator-device-saved = Successfully saved network device {$device} with address {$address}!
 network-configurator-device-failed = Failed to save network device {$device}! No address assigned!
 network-configurator-device-already-saved = {$device} is already saved.
+network-configurator-device-access-denied = Access denied!
 
 # Verbs
 network-configurator-save-device = Save device

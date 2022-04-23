@@ -1,4 +1,5 @@
 ﻿using Content.Server.DeviceNetwork.Systems;
+using Content.Shared.Sound;
 
 namespace Content.Server.DeviceNetwork.Components;
 
@@ -17,4 +18,7 @@ public sealed class NetworkConfiguratorComponent : Component
     /// </summary>
     [DataField("activeDeviceList")]
     public EntityUid? ActiveDeviceList = null;
+
+    [DataField("soundNoAccess")]
+    public SoundSpecifier SoundNoAccess = new SoundPathSpecifier("/Audio/Machines/custom_deny.ogg");
 }
