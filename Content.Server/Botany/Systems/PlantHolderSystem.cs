@@ -32,6 +32,7 @@ namespace Content.Server.Botany.Systems
             base.Initialize();
             SubscribeLocalEvent<PlantHolderComponent, ExaminedEvent>(OnExamine);
             SubscribeLocalEvent<PlantHolderComponent, InteractUsingEvent>(OnInteractUsing);
+            SubscribeLocalEvent<PlantHolderComponent, InteractHandEvent>(OnInteractHand);
         }
 
         private void OnExamine(EntityUid uid, PlantHolderComponent component, ExaminedEvent args)
@@ -256,6 +257,11 @@ namespace Content.Server.Botany.Systems
 
                 EntityManager.QueueDeleteEntity(args.Used);
             }
+        }
+
+        private void OnInteractHand(EntityUid uid, PlantHolderComponent component, InteractHandEvent args)
+        {
+            component.DoHarvest(args.User);
         }
     }
 }
