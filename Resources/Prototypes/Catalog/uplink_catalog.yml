@@ -170,6 +170,7 @@
   id: UplinkHypopen
   category: Utility
   itemId: Hypopen
+  listingName: Hypopen
   description: A chemical hypospray disguised as a pen, capable of instantly injecting up to 15u of reagents. Starts empty.
   price: 4
 
