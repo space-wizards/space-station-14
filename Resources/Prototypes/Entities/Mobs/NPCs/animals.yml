@@ -1044,7 +1044,7 @@
     beepInterval: 1
   - type: Explosive #meant to be a bit weaker and smaller radius than minibomb
     explosionType: Default
-    maxIntensity: 15
+    maxIntensity: 20
     intensitySlope: 20
     totalIntensity: 225
   - type: ExplodeOnTrigger

@@ -343,6 +343,8 @@
     - SolarControlComputerCircuitboard
     - GeneratorPlasmaMachineCircuitboard
     - GeneratorUraniumMachineCircuitboard
+    - Signaller
+    - SignalTrigger
 
 - type: technology
   name: "compact power technology"

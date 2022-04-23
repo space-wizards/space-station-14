@@ -21,6 +21,7 @@ using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Map;
 using Robust.Shared.Prototypes;
+using Content.Shared.MobState.Components;
 
 namespace Content.Server.Chat.Commands
 {
@@ -80,6 +81,13 @@ namespace Content.Server.Chat.Commands
             if (mind?.OwnedComponent?.Owner is not {Valid: true} owner)
             {
                 shell.WriteLine("You don't have a mind!");
+                return;
+            }
+
+            //Checks to see if the player is dead.
+            if(_entities.TryGetComponent<MobStateComponent>(owner, out var mobState) && mobState.IsDead())
+            {
+                shell.WriteLine(Loc.GetString("suicide-command-already-dead"));
                 return;
             }
 
