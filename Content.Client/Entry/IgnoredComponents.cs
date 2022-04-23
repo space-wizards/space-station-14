@@ -288,6 +288,7 @@ namespace Content.Client.Entry
             "AmbientOnPowered",
             "DoorSignalControl",
             "Wieldable",
+            "ArtifactStorage",
             "IncreaseDamageOnWield",
             "TabletopGame",
             "LitOnPowered",
