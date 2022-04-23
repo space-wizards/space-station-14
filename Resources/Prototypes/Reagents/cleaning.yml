@@ -36,7 +36,9 @@
   physicalDesc: shiny
   color: "#77b58e"
   boilingPoint: 290.0 # Glycerin
-  meltingPoint: 18.2
+  meltingPoint: 18.2 
+  - type: Puddle
+    slipThreshold: 20
   tileReactions:
     - !type:SpillTileReaction
       paralyzeTime: 3
