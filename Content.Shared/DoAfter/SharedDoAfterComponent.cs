@@ -59,8 +59,10 @@ namespace Content.Shared.DoAfter
 
         public float MovementThreshold { get; }
 
+        public float UserDamageThreshold { get; }
+
         public ClientDoAfter(byte id, EntityCoordinates userGrid, EntityCoordinates targetGrid, TimeSpan startTime,
-            float delay, bool breakOnUserMove, bool breakOnTargetMove, float movementThreshold, EntityUid? target = null)
+            float delay, bool breakOnUserMove, bool breakOnTargetMove, float movementThreshold, float damageThreshold, EntityUid? target = null)
         {
             ID = id;
             UserGrid = userGrid;
@@ -70,6 +72,7 @@ namespace Content.Shared.DoAfter
             BreakOnUserMove = breakOnUserMove;
             BreakOnTargetMove = breakOnTargetMove;
             MovementThreshold = movementThreshold;
+            UserDamageThreshold = damageThreshold;
             Target = target;
         }
     }
