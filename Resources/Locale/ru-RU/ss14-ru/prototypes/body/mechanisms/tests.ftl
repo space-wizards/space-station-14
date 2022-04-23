@@ -1,6 +1,6 @@
-ent-MechanismEMPStriker = EMP striker
-    .desc = When activated, this arm implant will apply a small EMP on the target of a physical strike for 10 watts per use.
+ent-MechanismEMPStriker = ударный ЭМИ
+    .desc = Когда активирован, этот наручный имплант при касании цели высвобождает небольшой ЭМ-импульс, мощностью 10 ватт за использование.
     .suffix = { "" }
-ent-MechanismHonkModule = HONK module 3000
-    .desc = Mandatory implant for all clowns after the Genevo Convention of 2459.
+ent-MechanismHonkModule = модуль ХОНК 3000
+    .desc = После Женевской конвенции 2459 года - обязательный имплант для всех клоунов.
     .suffix = { "" }

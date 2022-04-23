@@ -1,3 +1,3 @@
-ent-SentientSlimeCore = sentient slime core
-    .desc = The source of incredible, unending gooeyness.
+ent-SentientSlimeCore = разумное ядро слайма
+    .desc = Источник невероятной, бесконечной липкости.
     .suffix = { "" }
