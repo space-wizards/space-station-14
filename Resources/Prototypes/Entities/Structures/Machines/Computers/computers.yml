@@ -373,6 +373,7 @@
       - LivestockDuck
       - LivestockGoat
       - FoodPizza
+      - FoodMRE
       - ServiceJanitorial
       - ServiceLightsReplacement
       - ServiceSmokeables

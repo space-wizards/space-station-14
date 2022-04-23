@@ -154,6 +154,23 @@
       - state: writing
 
 - type: entity
+  name: M.R.E.
+  parent: BoxCardboard
+  id: BoxMRE
+  description: A high quality Meal Rarely Enjoyed.
+  components:
+  - type: StorageFill
+    contents:
+      - id: DrinkMREFlask
+      - id: FoodSnackNutribrick
+      - id: FoodSnackMREBrownie
+      - id: FoodCondimentPacketKetchup
+  - type: Sprite
+    layers:
+      - state: box_olive
+      - state: writing
+
+- type: entity
   name: box of hugs
   parent: BoxCardboard
   id: BoxHug
