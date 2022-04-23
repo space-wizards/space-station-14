@@ -1,20 +1,4 @@
 Entries:
-- author: Daemon
-  changes:
-  - {message: Increased the size of the Ahelp window, type: Tweak}
-  id: 885
-  time: '2022-01-15T03:55:31.0000000+00:00'
-- author: ElectroJr
-  changes:
-  - {message: Fixed airlock hacking/wiring not working., type: Fix}
-  id: 886
-  time: '2022-01-15T04:10:06.0000000+00:00'
-- author: Rane
-  changes:
-  - {message: Most traitor steal objectives are now considered more difficult., type: Tweak}
-  - {message: Removed HOS Hardsuit Helmet steal objective., type: Remove}
-  id: 887
-  time: '2022-01-15T05:02:17.0000000+00:00'
 - author: wrexbe
   changes:
   - {message: 'Manual valves change appearance when you open, or close them.', type: Add}
@@ -3040,3 +3024,18 @@ Entries:
   - {message: Added syndicate operative outfits for admin ran events, type: Add}
   id: 1384
   time: '2022-04-23T23:41:59.0000000+00:00'
+- author: Mirino97
+  changes:
+  - {message: You will now see when someone hugs you!, type: Tweak}
+  id: 1385
+  time: '2022-04-23T23:43:12.0000000+00:00'
+- author: keronshb
+  changes:
+  - {message: Space Carps can no longer slip, type: Add}
+  id: 1386
+  time: '2022-04-23T23:43:20.0000000+00:00'
+- author: Rane
+  changes:
+  - {message: Agent ID cards now only show a popup for their user., type: Tweak}
+  id: 1387
+  time: '2022-04-23T23:43:34.0000000+00:00'
