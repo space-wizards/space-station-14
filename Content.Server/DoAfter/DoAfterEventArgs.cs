@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Threading;
+using Content.Shared.FixedPoint;
 using Robust.Shared.GameObjects;
 
 namespace Content.Server.DoAfter
@@ -53,7 +54,7 @@ namespace Content.Server.DoAfter
         /// <summary>
         ///     Threshold for user damage
         /// </summary>
-        public float DamageThreshold { get; set; }
+        public FixedPoint2 DamageThreshold { get; set; }
         public bool BreakOnStun { get; set; }
 
         /// <summary>
@@ -110,7 +111,7 @@ namespace Content.Server.DoAfter
             CancelToken = cancelToken;
             Target = target;
             MovementThreshold = 0.1f;
-            DamageThreshold = 1.0f;
+            DamageThreshold = 0;
 
             if (Target == null)
             {

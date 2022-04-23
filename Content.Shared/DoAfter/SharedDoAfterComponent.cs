@@ -1,3 +1,4 @@
+using Content.Shared.FixedPoint;
 using Robust.Shared.GameStates;
 using Robust.Shared.Map;
 using Robust.Shared.Serialization;
@@ -59,10 +60,10 @@ namespace Content.Shared.DoAfter
 
         public float MovementThreshold { get; }
 
-        public float UserDamageThreshold { get; }
+        public FixedPoint2 DamageThreshold { get; }
 
         public ClientDoAfter(byte id, EntityCoordinates userGrid, EntityCoordinates targetGrid, TimeSpan startTime,
-            float delay, bool breakOnUserMove, bool breakOnTargetMove, float movementThreshold, float damageThreshold, EntityUid? target = null)
+            float delay, bool breakOnUserMove, bool breakOnTargetMove, float movementThreshold, FixedPoint2 damageThreshold, EntityUid? target = null)
         {
             ID = id;
             UserGrid = userGrid;
@@ -72,7 +73,7 @@ namespace Content.Shared.DoAfter
             BreakOnUserMove = breakOnUserMove;
             BreakOnTargetMove = breakOnTargetMove;
             MovementThreshold = movementThreshold;
-            UserDamageThreshold = damageThreshold;
+            DamageThreshold = damageThreshold;
             Target = target;
         }
     }
