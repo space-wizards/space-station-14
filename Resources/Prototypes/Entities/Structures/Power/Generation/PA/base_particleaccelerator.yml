@@ -22,5 +22,6 @@
         - MachineLayer
     - type: Transform
       anchored: true
+      noRot: false
     - type: Pullable
     - type: Clickable
