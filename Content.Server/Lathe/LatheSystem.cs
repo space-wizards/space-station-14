@@ -109,8 +109,7 @@ namespace Content.Server.Lathe
             if (!TryComp<MaterialStorageComponent>(uid, out var storage) || !TryComp<MaterialComponent>(args.Inserted, out var material))
                 return;
 
-            if (!StickySystem.StickyCheck(args.Inserted))
-                return;
+            RaiseLocalEvent(uid, new InsertMaterialAttemptEvent(args.User , args.Inserted , args.Target ,args.ClickLocation ));
 
             var multiplier = 1;
 

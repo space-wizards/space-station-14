@@ -4,6 +4,7 @@ using Content.Shared.Sticky.Components;
 using Content.Server.Sticky.Events;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Interaction;
+using Content.Shared.Lathe.Events;
 using Content.Shared.Verbs;
 using Robust.Shared.Containers;
 using Robust.Shared.Player;
@@ -25,8 +26,17 @@ public sealed class StickySystem : EntitySystem
         base.Initialize();
         SubscribeLocalEvent<StickSuccessfulEvent>(OnStickSuccessful);
         SubscribeLocalEvent<UnstickSuccessfulEvent>(OnUnstickSuccessful);
+        SubscribeLocalEvent<InsertMaterialAttemptEvent>(OnInsertMaterialAttemptEvent);
         SubscribeLocalEvent<StickyComponent, AfterInteractEvent>(OnAfterInteract);
         SubscribeLocalEvent<StickyComponent, GetVerbsEvent<Verb>>(AddUnstickVerb);
+    }
+
+    private void OnInsertMaterialAttemptEvent(InsertMaterialAttemptEvent ev)
+    {
+        if (!(!EntityManager.HasComponent<StickyComponent>(ev.Inserted)
+             || EntityManager.GetComponent<StickyComponent>(ev.Inserted).StuckTo == null)
+            && !EntityManager.HasComponent<HasEntityStuckOnComponent>(ev.Inserted))
+            ev.Cancel();
     }
 
     private void OnAfterInteract(EntityUid uid, StickyComponent component, AfterInteractEvent args)
@@ -252,12 +262,5 @@ public sealed class StickySystem : EntitySystem
             User = user;
             Target = target;
         }
-    }
-
-    public bool StickyCheck(EntityUid inserted)
-    {
-        return (!EntityManager.HasComponent<StickyComponent>(inserted)
-                || EntityManager.GetComponent<StickyComponent>(inserted).StuckTo == null)
-               && !EntityManager.HasComponent<HasEntityStuckOnComponent>(inserted);
     }
 }

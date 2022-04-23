@@ -37,5 +37,6 @@ public sealed class InsertMaterialAttemptEvent : CancellableEntityEventArgs
         Target = target;
         ClickLocation = clickLocation;
     }
+
 }
 
