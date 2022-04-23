@@ -38,7 +38,6 @@ namespace Content.Server.Shuttles.EntitySystems
             SubscribeLocalEvent<DockingComponent, ComponentShutdown>(OnShutdown);
             SubscribeLocalEvent<DockingComponent, PowerChangedEvent>(OnPowerChange);
             SubscribeLocalEvent<DockingComponent, AnchorStateChangedEvent>(OnAnchorChange);
-            SubscribeLocalEvent<DockingComponent, ReAnchorEvent>(OnDockingReAnchor);
 
             SubscribeLocalEvent<DockingComponent, GetVerbsEvent<InteractionVerb>>(OnVerb);
             SubscribeLocalEvent<DockingComponent, BeforeDoorAutoCloseEvent>(OnAutoClose);
@@ -255,16 +254,6 @@ namespace Content.Server.Shuttles.EntitySystems
             {
                 DisableDocking(uid, component);
             }
-        }
-
-        private void OnDockingReAnchor(EntityUid uid, DockingComponent component, ref ReAnchorEvent args)
-        {
-            if (!component.Docked) return;
-
-            var other = Comp<DockingComponent>(component.DockedWith!.Value);
-
-            Undock(component);
-            Dock(component, other);
         }
 
         private void OnPowerChange(EntityUid uid, DockingComponent component, PowerChangedEvent args)

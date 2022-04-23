@@ -11,7 +11,6 @@ namespace Content.Server.Atmos
     ///     Internal Atmos class that stores data about the atmosphere in a grid.
     ///     You shouldn't use this directly, use <see cref="AtmosphereSystem"/> instead.
     /// </summary>
-    [Friend(typeof(AtmosphereSystem))]
     public sealed class TileAtmosphere : IGasMixtureHolder
     {
         [ViewVariables]

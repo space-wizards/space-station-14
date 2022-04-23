@@ -40,7 +40,7 @@ public sealed class TrayScannerSystem : EntitySystem
             return;
 
         scanner.Enabled = enabled;
-        Dirty(scanner);
+        scanner.Dirty();
 
         if (scanner.Enabled)
             _activeScanners.Add(uid);
