@@ -7,7 +7,6 @@
   components:
   - type: StorageFill
     contents:
-      - id: ClothingHeadHelmetHardsuitSalvage
       - id: ClothingOuterHardsuitSalvage
       - id: ClothingMaskBreath
       - id: OxygenTankFilled

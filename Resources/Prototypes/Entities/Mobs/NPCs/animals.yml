@@ -1042,9 +1042,9 @@
     beepSound:
       path: /Audio/Weapons/Guns/MagOut/pistol_magout.ogg #funny sfx use
     beepInterval: 1
-  - type: Explosive #meant to be a bit weaker and smaller radius than minibomb
+  - type: Explosive
     explosionType: Default
-    maxIntensity: 15
+    maxIntensity: 20
     intensitySlope: 20
     totalIntensity: 225
   - type: ExplodeOnTrigger

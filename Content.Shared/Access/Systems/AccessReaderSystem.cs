@@ -6,6 +6,7 @@ using Content.Shared.PDA;
 using Content.Shared.Access.Components;
 using Robust.Shared.Prototypes;
 using Content.Shared.Hands.EntitySystems;
+using Content.Shared.MachineLinking.Events;
 
 namespace Content.Shared.Access.Systems
 {
@@ -20,6 +21,13 @@ namespace Content.Shared.Access.Systems
             base.Initialize();
             SubscribeLocalEvent<AccessReaderComponent, ComponentInit>(OnInit);
             SubscribeLocalEvent<AccessReaderComponent, GotEmaggedEvent>(OnEmagged);
+            SubscribeLocalEvent<AccessReaderComponent, LinkAttemptEvent>(OnLinkAttempt);
+        }
+
+        private void OnLinkAttempt(EntityUid uid, AccessReaderComponent component, LinkAttemptEvent args)
+        {
+            if (component.Enabled && !IsAllowed(component, args.User))
+                args.Cancel();
         }
 
         private void OnInit(EntityUid uid, AccessReaderComponent reader, ComponentInit args)

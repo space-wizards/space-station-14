@@ -1,0 +1,40 @@
+- type: gameMap
+  id: atlas
+  mapName: 'Atlas'
+  mapNameTemplate: '{0} Atlas {1}'
+  nameGenerator:
+    !type:NanotrasenNameGenerator
+    prefixCreator: 'R4' # R4407/Goon. GS isn't as cool sounding.
+  mapPath: /Maps/atlas.yml
+  minPlayers: 0
+  maxPlayers: 29
+  overflowJobs:
+    - Assistant
+  availableJobs:
+    CargoTechnician: [ 1, 2 ]
+    Assistant: [ -1, -1 ]
+    Bartender: [ 1, 1 ]
+    Botanist: [ 2, 2]
+    Chef: [ 1, 1 ]
+    Clown: [ 1, 1 ]
+    Janitor: [ 1, 1 ]
+    Mime: [ 1, 1 ]
+    Captain: [ 1, 1 ]
+    HeadOfPersonnel: [ 1, 1 ]
+    ChiefEngineer: [ 1, 1 ]
+    StationEngineer: [ 3, 4 ]
+    ChiefMedicalOfficer: [ 1, 1 ]
+    MedicalDoctor: [ 2, 2 ]
+    Chemist: [ 2, 2 ]
+    ResearchDirector: [ 1, 1 ]
+    Scientist: [ 1, 3 ]
+    HeadOfSecurity: [ 1, 1 ]
+    SecurityOfficer: [ 2, 2 ]
+    Chaplain: [ 1, 1 ]
+    Warden: [ 1, 1 ]
+    Librarian: [ 1, 1 ]
+    Lawyer: [ 1, 1 ]
+    Quartermaster: [ 1, 1 ]
+    SalvageSpecialist: [ 2, 2 ]
+    Musician: [ 1, 1 ]
+    AtmosphericTechnician: [ 1, 2 ]

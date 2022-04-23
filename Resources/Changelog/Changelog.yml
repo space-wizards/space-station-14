@@ -1,74 +1,4 @@
 Entries:
-- author: ElectroJr
-  changes:
-  - {message: 'Makes smoking even cooler (visuals fixed, but hopefully properly this
-      time)', type: Fix}
-  id: 868
-  time: '2022-01-13T14:09:46.0000000+00:00'
-- author: moonheart08
-  changes:
-  - {message: 'Magboots now allow you to ignore a lack of gravity, as they should.',
-    type: Add}
-  id: 869
-  time: '2022-01-13T14:13:26.0000000+00:00'
-- author: Zumorica
-  changes:
-  - {message: Atmos fires now play a sound effect., type: Tweak}
-  id: 870
-  time: '2022-01-13T14:18:17.0000000+00:00'
-- author: BubblegumBlue
-  changes:
-  - {message: 'Added circuit boards for the Shuttle Console and Syndicate Shuttle
-      Console. Cargonia can now truly secede the station, hooray!', type: Add}
-  - {message: New research category that adds the Shuttle Console Board to the Protolathe's
-      menu., type: Tweak}
-  id: 871
-  time: '2022-01-13T14:21:41.0000000+00:00'
-- author: Macoron
-  changes:
-  - {message: Filled bucket will spill player when it is worn on their head., type: Tweak}
-  id: 872
-  time: '2022-01-13T14:22:19.0000000+00:00'
-- author: MeltedPixel
-  changes:
-  - {message: Fixed issue where players couldn't smile into the radio, type: Fix}
-  id: 873
-  time: '2022-01-13T14:26:58.0000000+00:00'
-- author: MeltedPixel
-  changes:
-  - {message: Changed Smart Fridge Sprite, type: Tweak}
-  id: 874
-  time: '2022-01-13T14:32:17.0000000+00:00'
-- author: weaver
-  changes:
-  - {message: Deconstructing complex tiles (like reinforced windows and walls) now
-      correctly show each step rather than breaking after the first step, type: Fix}
-  id: 875
-  time: '2022-01-13T14:33:39.0000000+00:00'
-- author: Rane
-  changes:
-  - {message: The Syndicate will now assign some agents to ensure the survival of
-      other agents., type: Add}
-  id: 876
-  time: '2022-01-13T14:53:51.0000000+00:00'
-- author: Peptide90
-  changes:
-  - {message: Added Personnel Crate to cargo. Includes a box of spare PDAs and ID
-      cards., type: Add}
-  id: 877
-  time: '2022-01-13T15:04:30.0000000+00:00'
-- author: Peptide90
-  changes:
-  - {message: Antimatter Engine Shielding can now be deconstructed with a welder.,
-    type: Tweak}
-  id: 878
-  time: '2022-01-13T15:06:43.0000000+00:00'
-- author: Peptide90
-  changes:
-  - {message: Added librarian and lawyer roles to the game and all associated clothing
-      to the clothing vendor., type: Add}
-  id: 879
-  time: '2022-01-13T15:11:09.0000000+00:00'
 - author: Rane
   changes:
   - {message: Added Syndicate Smokes to the uplink; a cool but very slow way to trade
@@ -3043,3 +2973,71 @@ Entries:
   - {message: mouse size changed form 0 to 5, type: Add}
   id: 1367
   time: '2022-04-20T07:19:33.0000000+00:00'
+- author: Emisse
+  changes:
+  - {message: 'Atlas, a low-pop ship map adapted from Goonstation (SS13). Major credit
+      goes to all those who worked on the original layout of Atlas on Goonstation.',
+    type: Add}
+  id: 1368
+  time: '2022-04-20T21:08:43.0000000+00:00'
+- author: Daemon
+  changes:
+  - {message: Added several gas mask variants, type: Add}
+  - {message: Tweaked Survival Boxes, type: Tweak}
+  - {message: Tweaked Locker Fills, type: Tweak}
+  id: 1369
+  time: '2022-04-21T12:11:26.0000000+00:00'
+- author: Peptide90
+  changes:
+  - {message: Split Station massive update!, type: Add}
+  id: 1370
+  time: '2022-04-21T13:19:44.0000000+00:00'
+- author: Peptide90
+  changes:
+  - {message: Added a number identifier to all mobs. Now it's easier to report rule
+      breaking ghost roles such as ticks and carp., type: Add}
+  id: 1371
+  time: '2022-04-21T22:32:23.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Grenade Penguin's explosion now does more damage., type: Tweak}
+  - {message: Grenade Penguin AI should be less buggy., type: Fix}
+  id: 1372
+  time: '2022-04-21T22:32:44.0000000+00:00'
+- author: Saakra
+  changes:
+  - {message: Bibles and Necronomicons can now be worn in the belt slot, type: Add}
+  id: 1373
+  time: '2022-04-22T01:20:07.0000000+00:00'
+- author: keronshb
+  changes:
+  - {message: Players can't suicide if they're already dead., type: Add}
+  id: 1374
+  time: '2022-04-22T05:37:49.0000000+00:00'
+- author: moonheart08
+  changes:
+  - {message: You can rotate the salvage magnet and PA parts again., type: Fix}
+  id: 1375
+  time: '2022-04-23T01:14:28.0000000+00:00'
+- author: moony
+  changes:
+  - {message: The game no longer pretends only one salvage magnet can exist at a time.,
+    type: Fix}
+  id: 1376
+  time: '2022-04-23T01:28:22.0000000+00:00'
+- author: ElectroJr
+  changes:
+  - {message: Hardsuit helmets are now part of a hardsuit. They can be toggled via
+      an action., type: Tweak}
+  id: 1377
+  time: '2022-04-23T03:31:45.0000000+00:00'
+- author: ElectroJr
+  changes:
+  - {message: Fixed magboots not properly applying wind/pressure immunity., type: Fix}
+  id: 1378
+  time: '2022-04-23T03:47:30.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Grids (AKA shuttles / stations) can now split, type: Add}
+  id: 1379
+  time: '2022-04-23T14:59:39.0000000+00:00'
