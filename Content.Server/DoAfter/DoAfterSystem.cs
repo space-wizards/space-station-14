@@ -109,7 +109,7 @@ namespace Content.Server.DoAfter
         /// <param name="args"></param>
         public void OnDamage(EntityUid _, DoAfterComponent component, DamageChangedEvent args)
         {
-            if (!args.InterruptsDoAfters || !args.DamageIncreased)
+            if (!args.InterruptsDoAfters || !args.DamageIncreased || args.DamageDelta == null)
                 return;
 
             foreach (var (doAfter, _) in component.DoAfters)
