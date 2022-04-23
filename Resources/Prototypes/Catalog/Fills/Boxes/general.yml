@@ -157,7 +157,7 @@
   name: M.R.E.
   parent: BoxCardboard
   id: BoxMRE
-  description: A high quality Meal Rarely Enjoyed.
+  description: A box of decades old military surplus rations. It is surprisingly not rotten.
   components:
   - type: StorageFill
     contents:
