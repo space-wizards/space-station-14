@@ -35,6 +35,7 @@
         Radiation: 0.25
   - type: DiseaseProtection
     protection: 0.05
+  - type: ToggleableClothing
 
 - type: entity
   abstract: true

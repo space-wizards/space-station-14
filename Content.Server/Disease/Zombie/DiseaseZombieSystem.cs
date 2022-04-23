@@ -98,7 +98,7 @@ namespace Content.Server.Disease.Zombie
             }
 
             if (TryComp<ServerInventoryComponent>(uid, out var servInvComp))
-                _serverInventory.TryUnequip(uid, "gloves", true, true, servInvComp);
+                _serverInventory.TryUnequip(uid, "gloves", true, true, predicted: false, servInvComp);
 
             _popupSystem.PopupEntity(Loc.GetString("zombie-transform", ("target", uid)), uid, Filter.Pvs(uid));
 

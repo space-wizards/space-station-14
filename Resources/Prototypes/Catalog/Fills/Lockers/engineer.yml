@@ -78,13 +78,13 @@
   components:
   - type: StorageFill
     contents:
-      - id: ClothingHeadHelmetHardsuitAtmos
       - id: ClothingOuterHardsuitAtmos
       - id: ClothingMaskGasAtmos
-      - id: OxygenTankFilled
+      - id: YellowOxygenTankFilled
       - id: ClothingOuterSuitAtmosFire
       - id: ClothingHeadHelmetAtmosFire
       - id: GasAnalyzer
+      - id: MedkitOxygenFilled
 
 - type: entity
   id: LockerEngineerFilled
