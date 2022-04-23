@@ -12,7 +12,6 @@
   - type: Tag
     tags:
     - Wall
-    - RCDDeconstructWhitelist
   - type: Sprite
     netsync: false
     drawdepth: Walls
