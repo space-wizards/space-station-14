@@ -22,4 +22,16 @@ public sealed class ParallaxPrototype : IPrototype
     /// </summary>
     [DataField("layers")]
     public List<ParallaxLayerConfig> Layers { get; } = new();
+
+    /// <summary>
+    /// Parallax layers, low-quality.
+    /// </summary>
+    [DataField("layersLQ")]
+    public List<ParallaxLayerConfig> LayersLQ { get; } = new();
+
+    /// <summary>
+    /// If low-quality layers don't exist for this parallax and high-quality should be used instead.
+    /// </summary>
+    [DataField("layersLQUseHQ")]
+    public bool LayersLQUseHQ { get; } = true;
 }

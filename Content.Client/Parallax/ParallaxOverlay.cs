@@ -1,6 +1,8 @@
 using System;
 using Content.Client.Parallax.Managers;
+using Content.Shared.CCVar;
 using Robust.Client.Graphics;
+using Robust.Shared.Configuration;
 using Robust.Shared.Enums;
 using Robust.Shared.IoC;
 using Robust.Shared.Maths;
@@ -12,6 +14,7 @@ public sealed class ParallaxOverlay : Overlay
 {
     [Dependency] private readonly IParallaxManager _parallaxManager = default!;
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
+    [Dependency] private readonly IConfigurationManager _configurationManager = default!;
 
     public override OverlaySpace Space => OverlaySpace.WorldSpaceBelowWorld;
     private readonly ShaderInstance _shader;
@@ -25,6 +28,11 @@ public sealed class ParallaxOverlay : Overlay
     protected override void Draw(in OverlayDrawArgs args)
     {
         if (args.Viewport.Eye == null)
+        {
+            return;
+        }
+
+        if (!_configurationManager.GetCVar(CCVars.ParallaxEnabled))
         {
             return;
         }

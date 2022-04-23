@@ -23,6 +23,7 @@ namespace Content.Client.Parallax.Managers;
 internal sealed class ParallaxManager : IParallaxManager
 {
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
+    [Dependency] private readonly IConfigurationManager _configurationManager = default!;
 
     private string _parallaxName = "";
     public string ParallaxName
@@ -36,7 +37,10 @@ internal sealed class ParallaxManager : IParallaxManager
 
     public Vector2 ParallaxAnchor { get; set; }
 
-    public ParallaxLayerPrepared[] ParallaxLayers { get; private set; } = {};
+    private ParallaxLayerPrepared[] _parallaxLayersHQ = {};
+    private ParallaxLayerPrepared[] _parallaxLayersLQ = {};
+
+    public ParallaxLayerPrepared[] ParallaxLayers => _configurationManager.GetCVar(CCVars.ParallaxLowQuality) ? _parallaxLayersLQ : _parallaxLayersHQ;
 
     public async void LoadParallax()
     {
@@ -49,23 +53,30 @@ internal sealed class ParallaxManager : IParallaxManager
         Logger.InfoS("parallax", $"Loading parallax {name}");
 
         var parallaxPrototype = _prototypeManager.Index<ParallaxPrototype>(name);
-        // just in case the length were to change during loading
-        var layersIn = parallaxPrototype.Layers.ToArray();
-        var layers = new ParallaxLayerPrepared[layersIn.Length];
-        for (var i = 0; i < layers.Length; i++)
-        {
-            layers[i] = await LoadParallaxLayer(layersIn[i]);
-        }
+
+        var hq = await LoadParallaxLayers(parallaxPrototype.Layers.ToArray());
+        var lq = parallaxPrototype.LayersLQUseHQ ? hq : await LoadParallaxLayers(parallaxPrototype.LayersLQ.ToArray());
 
         if (_parallaxName == name)
         {
-            ParallaxLayers = layers;
+            _parallaxLayersHQ = hq;
+            _parallaxLayersLQ = lq;
             Logger.InfoS("parallax", $"Loaded parallax {name}");
         }
         else
         {
             Logger.InfoS("parallax", $"Loaded parallax {name}, but the target changed while it was being loaded.");
         }
+    }
+
+    private async Task<ParallaxLayerPrepared[]> LoadParallaxLayers(ParallaxLayerConfig[] layersIn)
+    {
+        var layers = new ParallaxLayerPrepared[layersIn.Length];
+        for (var i = 0; i < layers.Length; i++)
+        {
+            layers[i] = await LoadParallaxLayer(layersIn[i]);
+        }
+        return layers;
     }
 
     private async Task<ParallaxLayerPrepared> LoadParallaxLayer(ParallaxLayerConfig config)

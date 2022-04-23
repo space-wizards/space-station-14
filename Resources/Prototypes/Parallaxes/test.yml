@@ -44,4 +44,11 @@
       controlHomePosition: "0, 32"
       worldHomePosition: "0, 1"
       scale: "2, 2"
+  layersLQ:
+    - texture:
+        !type:ImageParallaxTextureSource
+        path: "/Textures/Decals/dirty.rsi/rust.png"
+      slowness: 3.0
+      scale: "3, 3"
+  layersLQUseHQ: false
 
