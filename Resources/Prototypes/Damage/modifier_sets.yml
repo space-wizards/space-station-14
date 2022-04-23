@@ -57,7 +57,7 @@
 - type: damageModifierSet
   id: RGlass
   coefficients:
-    Blunt: 0.8
+    Blunt: 1.0
     Slash: 0.3
     Piercing: 0.6
     Heat: 0
