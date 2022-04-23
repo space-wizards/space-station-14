@@ -1,10 +1,4 @@
 Entries:
-- author: Peptide90
-  changes:
-  - {message: Added librarian and lawyer roles to the game and all associated clothing
-      to the clothing vendor., type: Add}
-  id: 879
-  time: '2022-01-13T15:11:09.0000000+00:00'
 - author: Rane
   changes:
   - {message: Added Syndicate Smokes to the uplink; a cool but very slow way to trade
@@ -3042,3 +3036,8 @@ Entries:
   - {message: Fixed magboots not properly applying wind/pressure immunity., type: Fix}
   id: 1378
   time: '2022-04-23T03:47:30.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Grids (AKA shuttles / stations) can now split, type: Add}
+  id: 1379
+  time: '2022-04-23T14:59:39.0000000+00:00'
