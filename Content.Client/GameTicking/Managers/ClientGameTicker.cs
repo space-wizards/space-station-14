@@ -1,5 +1,3 @@
-using System;
-using System.Collections.Generic;
 using Content.Client.Lobby;
 using Content.Client.RoundEnd;
 using Content.Client.Viewport;
@@ -9,19 +7,15 @@ using Content.Shared.Station;
 using JetBrains.Annotations;
 using Robust.Client.Graphics;
 using Robust.Client.State;
-using Robust.Shared.IoC;
-using Robust.Shared.Log;
 using Robust.Shared.Network;
 using Robust.Shared.Utility;
-using Robust.Shared.ViewVariables;
 
 namespace Content.Client.GameTicking.Managers
 {
     [UsedImplicitly]
-    public class ClientGameTicker : SharedGameTicker
+    public sealed class ClientGameTicker : SharedGameTicker
     {
         [Dependency] private readonly IStateManager _stateManager = default!;
-
         [ViewVariables] private bool _initialized;
         private Dictionary<StationId, Dictionary<string, int>>  _jobsAvailable = new();
         private Dictionary<StationId, string> _stationNames = new();
@@ -29,6 +23,7 @@ namespace Content.Client.GameTicking.Managers
         [ViewVariables] public bool AreWeReady { get; private set; }
         [ViewVariables] public bool IsGameStarted { get; private set; }
         [ViewVariables] public string? LobbySong { get; private set; }
+        [ViewVariables] public string? LobbyBackground { get; private set; }
         [ViewVariables] public bool DisallowedLateJoin { get; private set; }
         [ViewVariables] public string? ServerInfoBlob { get; private set; }
         [ViewVariables] public TimeSpan StartTime { get; private set; }
@@ -89,6 +84,7 @@ namespace Content.Client.GameTicking.Managers
             IsGameStarted = message.IsRoundStarted;
             AreWeReady = message.YouAreReady;
             LobbySong = message.LobbySong;
+            LobbyBackground = message.LobbyBackground;
             Paused = message.Paused;
             if (IsGameStarted)
                 Status.Clear();
@@ -127,7 +123,7 @@ namespace Content.Client.GameTicking.Managers
         private void RoundEnd(RoundEndMessageEvent message)
         {
             //This is not ideal at all, but I don't see an immediately better fit anywhere else.
-            var roundEnd = new RoundEndSummaryWindow(message.GamemodeTitle, message.RoundEndText, message.RoundDuration, message.AllPlayersEndInfo);
+            var roundEnd = new RoundEndSummaryWindow(message.GamemodeTitle, message.RoundEndText, message.RoundDuration, message.RoundId, message.AllPlayersEndInfo);
         }
     }
 }

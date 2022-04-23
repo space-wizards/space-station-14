@@ -13,7 +13,7 @@ namespace Content.Server.Doors.Components
     /// and not being openable on open-hand click.
     /// </summary>
     [RegisterComponent]
-    public class FirelockComponent : Component
+    public sealed class FirelockComponent : Component
     {
         [Dependency] private readonly IEntityManager _entMan = default!;
 

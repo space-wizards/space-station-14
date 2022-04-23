@@ -20,7 +20,7 @@ namespace Content.Shared.Containers.ItemSlots
     /// </summary>
     [RegisterComponent]
     [Friend(typeof(ItemSlotsSystem))]
-    public class ItemSlotsComponent : Component
+    public sealed class ItemSlotsComponent : Component
     {
         /// <summary>
         ///     The dictionary that stores all of the item slots whose interactions will be managed by the <see
@@ -67,7 +67,7 @@ namespace Content.Shared.Containers.ItemSlots
     /// </summary>
     [DataDefinition]
     [Friend(typeof(ItemSlotsSystem))]
-    public class ItemSlot
+    public sealed class ItemSlot
     {
         [DataField("whitelist")]
         public EntityWhitelist? Whitelist;
@@ -115,6 +115,13 @@ namespace Content.Shared.Containers.ItemSlots
         [DataField("locked", readOnly: true)]
         [ViewVariables(VVAccess.ReadWrite)]
         public bool Locked = false;
+
+        /// <summary>
+        ///     Whether the item slots system will attempt to insert item from the user's hands into this slot when interacted with.
+        ///     It doesn't block other insertion methods, like verbs.
+        /// </summary>
+        [DataField("insertOnInteract")]
+        public bool InsertOnInteract = true;
 
         /// <summary>
         ///     Whether the item slots system will attempt to eject this item to the user's hands when interacted with.

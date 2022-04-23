@@ -6,7 +6,7 @@ namespace Content.Shared.Doors
     /// <summary>
     /// Raised when the door's State variable is changed to a new variable that it was not equal to before.
     /// </summary>
-    public class DoorStateChangedEvent : EntityEventArgs
+    public sealed class DoorStateChangedEvent : EntityEventArgs
     {
         public readonly DoorState State;
 
@@ -20,28 +20,35 @@ namespace Content.Shared.Doors
     /// Raised when the door is determining whether it is able to open.
     /// Cancel to stop the door from being opened.
     /// </summary>
-    public class BeforeDoorOpenedEvent : CancellableEntityEventArgs
+    public sealed class BeforeDoorOpenedEvent : CancellableEntityEventArgs
     {
     }
 
     /// <summary>
-    /// Raised when the door is determining whether it is able to close.
-    /// Cancel to stop the door from being closed.
+    /// Raised when the door is determining whether it is able to close. If the event is canceled, the door will not
+    /// close. Additionally this event also has a bool that determines whether or not the door should perform a
+    /// safety/collision check before closing. This check has to be proactively disabled by things like hacked airlocks.
     /// </summary>
     /// <remarks>
     /// This event is raised both when the door is initially closed, and when it is just about to become "partially"
-    /// closed (opaque & collidable). If canceled while partially closing, it will start opening again. Useful for
-    /// things like airlock anti-crush safety features.
+    /// closed (opaque & collidable). If canceled while partially closing, it will start opening again. Useful in case
+    /// an entity entered the door just as it was about to become "solid".
     /// </remarks>
-    public class BeforeDoorClosedEvent : CancellableEntityEventArgs
+    public sealed class BeforeDoorClosedEvent : CancellableEntityEventArgs
     {
+        public bool PerformCollisionCheck;
+
+        public BeforeDoorClosedEvent(bool performCollisionCheck)
+        {
+            PerformCollisionCheck = performCollisionCheck;
+        }
     }
 
     /// <summary>
     /// Called when the door is determining whether it is able to deny.
     /// Cancel to stop the door from being able to deny.
     /// </summary>
-    public class BeforeDoorDeniedEvent : CancellableEntityEventArgs
+    public sealed class BeforeDoorDeniedEvent : CancellableEntityEventArgs
     {
     }
 
@@ -52,7 +59,7 @@ namespace Content.Shared.Doors
     /// <remarks>
     /// This is called when a door decides whether it SHOULD auto close, not when it actually closes.
     /// </remarks>
-    public class BeforeDoorAutoCloseEvent : CancellableEntityEventArgs
+    public sealed class BeforeDoorAutoCloseEvent : CancellableEntityEventArgs
     {
     }
 
@@ -60,7 +67,7 @@ namespace Content.Shared.Doors
     /// Raised to determine how long the door's pry time should be modified by.
     /// Multiply PryTimeModifier by the desired amount.
     /// </summary>
-    public class DoorGetPryTimeModifierEvent : EntityEventArgs
+    public sealed class DoorGetPryTimeModifierEvent : EntityEventArgs
     {
         public float PryTimeModifier = 1.0f;
     }
@@ -69,7 +76,7 @@ namespace Content.Shared.Doors
     /// Raised when an attempt to pry open the door is made.
     /// Cancel to stop the door from being pried open.
     /// </summary>
-    public class BeforeDoorPryEvent : CancellableEntityEventArgs
+    public sealed class BeforeDoorPryEvent : CancellableEntityEventArgs
     {
         public readonly EntityUid User;
 

@@ -1,11 +1,11 @@
-﻿using Content.Shared.Medical.CrewMonitoring;
+using Content.Shared.Medical.CrewMonitoring;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
 using Robust.Shared.GameObjects;
 
 namespace Content.Client.Medical.CrewMonitoring
 {
-    public class CrewMonitoringBoundUserInterface : BoundUserInterface
+    public sealed class CrewMonitoringBoundUserInterface : BoundUserInterface
     {
         private CrewMonitoringWindow? _menu;
 
@@ -27,7 +27,7 @@ namespace Content.Client.Medical.CrewMonitoring
             switch (state)
             {
                 case CrewMonitoringState st:
-                    _menu?.ShowSensors(st.Sensors);
+                    _menu?.ShowSensors(st.Sensors, st.WorldPosition, st.WorldRotation, st.Snap, st.Precision);
                     break;
             }
         }

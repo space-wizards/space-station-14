@@ -43,7 +43,7 @@
 
 - type: entity
   id: DisposalHolder
-  abstract: true
+  noSpawn: true
   name: disposal holder
   components:
   - type: DisposalHolder
@@ -60,10 +60,6 @@
     drawdepth: ThickPipe
     sprite: Structures/Piping/disposal.rsi
     state: pipe-b
-  - type: Appearance
-    visuals:
-    - type: TrayScannerSubFloorVisualizer
-    - type: SubFloorShowLayerVisualizer
   - type: Physics
   - type: Fixtures
     fixtures:
@@ -88,8 +84,6 @@
   - type: DisposalTransit
   - type: Appearance
     visuals:
-    - type: TrayScannerSubFloorVisualizer
-    - type: SubFloorShowLayerVisualizer
     - type: DisposalVisualizer
       state_free: conpipe-s
       state_anchored: pipe-s
@@ -117,11 +111,11 @@
   - type: DisposalTagger
   - type: Appearance
     visuals:
-    - type: TrayScannerSubFloorVisualizer
-    - type: SubFloorShowLayerVisualizer
     - type: DisposalVisualizer
       state_free: conpipe-tagger
       state_anchored: pipe-tagger
+  - type: ActivatableUI
+    key: enum.DisposalTaggerUiKey.Key
   - type: UserInterface
     interfaces:
     - key: enum.DisposalTaggerUiKey.Key
@@ -150,8 +144,6 @@
   - type: DisposalEntry
   - type: Appearance
     visuals:
-    - type: TrayScannerSubFloorVisualizer
-    - type: SubFloorShowLayerVisualizer
     - type: DisposalVisualizer
       state_free: conpipe-t
       state_anchored: pipe-t
@@ -183,13 +175,13 @@
     - 180
   - type: Appearance
     visuals:
-    - type: TrayScannerSubFloorVisualizer
-    - type: SubFloorShowLayerVisualizer
     - type: DisposalVisualizer
       state_free: conpipe-j1s
       state_anchored: pipe-j1s
   - type: Flippable
     mirrorEntity: DisposalRouterFlipped
+  - type: ActivatableUI
+    key: enum.DisposalRouterUiKey.Key
   - type: UserInterface
     interfaces:
     - key: enum.DisposalRouterUiKey.Key
@@ -221,8 +213,6 @@
     - 180
   - type: Appearance
     visuals:
-    - type: TrayScannerSubFloorVisualizer
-    - type: SubFloorShowLayerVisualizer
     - type: DisposalVisualizer
       state_free: conpipe-j2s
       state_anchored: pipe-j2s
@@ -253,8 +243,6 @@
     - 180
   - type: Appearance
     visuals:
-    - type: TrayScannerSubFloorVisualizer
-    - type: SubFloorShowLayerVisualizer
     - type: DisposalVisualizer
       state_free: conpipe-j1
       state_anchored: pipe-j1
@@ -287,8 +275,6 @@
     - 180
   - type: Appearance
     visuals:
-    - type: TrayScannerSubFloorVisualizer
-    - type: SubFloorShowLayerVisualizer
     - type: DisposalVisualizer
       state_free: conpipe-j2
       state_anchored: pipe-j2
@@ -319,8 +305,6 @@
     - -90
   - type: Appearance
     visuals:
-    - type: TrayScannerSubFloorVisualizer
-    - type: SubFloorShowLayerVisualizer
     - type: DisposalVisualizer
       state_free: conpipe-y
       state_anchored: pipe-y
@@ -348,8 +332,6 @@
   - type: DisposalBend
   - type: Appearance
     visuals:
-    - type: TrayScannerSubFloorVisualizer
-    - type: SubFloorShowLayerVisualizer
     - type: DisposalVisualizer
       state_free: conpipe-c
       state_anchored: pipe-c

@@ -6,8 +6,10 @@
   components:
   - type: Instrument
   - type: ActivatableUI
+    allowSpectator: false # otherwise they can play client-side music
     inHandsOnly: false
     singleUser: true
+    verbText: verb-instrument-openui
     key: enum.InstrumentUiKey.Key
   - type: InteractionOutline
   - type: Sprite
@@ -27,6 +29,16 @@
     interfaces:
     - key: enum.InstrumentUiKey.Key
       type: InstrumentBoundUserInterface
+  - type: Fixtures
+    fixtures:
+      - shape:
+          !type:PhysShapeCircle
+          radius: 0.45
+        mass: 50
+        layer:
+          - SmallImpassable
+        mask:
+          - VaultImpassable
 
 - type: entity
   parent: BasePlaceableInstrument
@@ -50,6 +62,18 @@
   - type: Climbable
 
 - type: entity
+  name: upright piano
+  parent: BasePlaceableInstrumentRotatable
+  id: UprightPianoInstrument
+  description: I said Piannie!
+  components:
+  - type: Instrument
+    program: 3
+  - type: Sprite
+    state: piano-upright
+  - type: Climbable
+
+- type: entity
   name: minimoog
   parent: BasePlaceableInstrumentRotatable
   id: MinimoogInstrument
@@ -67,9 +91,21 @@
   description: This thing really blows!
   components:
   - type: Instrument
-    program: 20
+    program: 19
   - type: Sprite
     state: church-organ
+
+- type: entity
+  name: tuba
+  parent: BasePlaceableInstrumentRotatable
+  id: TubaInstrument
+  description: The big daddy of the brass family. Standing next to its majesty makes you feel insecure.
+  components:
+  - type: Instrument
+    program: 58
+  - type: Sprite
+    state: tuba
+
 
 - type: entity
   parent: BasePlaceableInstrument

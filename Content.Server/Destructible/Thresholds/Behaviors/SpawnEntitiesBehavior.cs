@@ -1,22 +1,18 @@
-using System;
-using System.Collections.Generic;
 using Content.Server.Stack;
 using Content.Shared.Prototypes;
-using Content.Shared.Random.Helpers;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Serialization.Manager.Attributes;
+using Robust.Shared.Prototypes;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.Dictionary;
 
 namespace Content.Server.Destructible.Thresholds.Behaviors
 {
     [Serializable]
     [DataDefinition]
-    public class SpawnEntitiesBehavior : IThresholdBehavior
+    public sealed class SpawnEntitiesBehavior : IThresholdBehavior
     {
         /// <summary>
         ///     Entities spawned on reaching this threshold, from a min to a max.
         /// </summary>
-        [DataField("spawn")]
+        [DataField("spawn", customTypeSerializer:typeof(PrototypeIdDictionarySerializer<MinMax, EntityPrototype>))]
         public Dictionary<string, MinMax> Spawn { get; set; } = new();
 
         [DataField("offset")]
@@ -26,6 +22,8 @@ namespace Content.Server.Destructible.Thresholds.Behaviors
         {
             var position = system.EntityManager.GetComponent<TransformComponent>(owner).MapPosition;
 
+            var getRandomVector = () => new Vector2(system.Random.NextFloat(-Offset, Offset), system.Random.NextFloat(-Offset, Offset));
+
             foreach (var (entityId, minMax) in Spawn)
             {
                 var count = minMax.Min >= minMax.Max
@@ -34,19 +32,16 @@ namespace Content.Server.Destructible.Thresholds.Behaviors
 
                 if (count == 0) continue;
 
-                if (EntityPrototypeHelpers.HasComponent<StackComponent>(entityId))
+                if (EntityPrototypeHelpers.HasComponent<StackComponent>(entityId, system.PrototypeManager, system.ComponentFactory))
                 {
-                    var spawned = system.EntityManager.SpawnEntity(entityId, position);
-                    var stack = IoCManager.Resolve<IEntityManager>().GetComponent<StackComponent>(spawned);
-                    EntitySystem.Get<StackSystem>().SetCount(spawned, count, stack);
-                    spawned.RandomOffset(Offset);
+                    var spawned = system.EntityManager.SpawnEntity(entityId, position.Offset(getRandomVector()));
+                    system.StackSystem.SetCount(spawned, count);
                 }
                 else
                 {
                     for (var i = 0; i < count; i++)
                     {
-                        var spawned = system.EntityManager.SpawnEntity(entityId, position);
-                        spawned.RandomOffset(Offset);
+                        system.EntityManager.SpawnEntity(entityId, position.Offset(getRandomVector()));
                     }
                 }
             }

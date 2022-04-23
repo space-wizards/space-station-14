@@ -21,6 +21,7 @@ using Robust.Shared.Maths;
 using Robust.Shared.Physics;
 using Robust.Shared.Random;
 using Robust.Shared.Serialization;
+using Content.Shared.MobState.Components;
 
 namespace Content.Shared.Interaction
 {
@@ -31,7 +32,7 @@ namespace Content.Shared.Interaction
     /// Doesn't really fit with SharedInteractionSystem so it's not there.
     /// </summary>
     [UsedImplicitly]
-    public class RotateToFaceSystem : EntitySystem
+    public sealed class RotateToFaceSystem : EntitySystem
     {
         [Dependency] private readonly ActionBlockerSystem _actionBlockerSystem = default!;
         public bool TryFaceCoordinates(EntityUid user, Vector2 coordinates)
@@ -45,7 +46,7 @@ namespace Content.Shared.Interaction
 
         public bool TryFaceAngle(EntityUid user, Angle diffAngle)
         {
-            if (_actionBlockerSystem.CanChangeDirection(user))
+            if (_actionBlockerSystem.CanChangeDirection(user) && TryComp(user, out MobStateComponent? mob) && !mob.IsIncapacitated())
             {
                 EntityManager.GetComponent<TransformComponent>(user).WorldRotation = diffAngle;
                 return true;

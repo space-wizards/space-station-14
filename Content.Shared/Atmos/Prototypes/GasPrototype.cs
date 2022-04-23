@@ -7,7 +7,7 @@ using Robust.Shared.ViewVariables;
 namespace Content.Shared.Atmos.Prototypes
 {
     [Prototype("gas")]
-    public class GasPrototype : IPrototype
+    public sealed class GasPrototype : IPrototype
     {
         [DataField("name")] public string Name { get; } = string.Empty;
 
@@ -15,7 +15,7 @@ namespace Content.Shared.Atmos.Prototypes
         // TODO: Add interfaces for gas behaviours e.g. breathing, burning
 
         [ViewVariables]
-        [DataField("id", required: true)]
+        [IdDataFieldAttribute]
         public string ID { get; } = default!;
 
         /// <summary>

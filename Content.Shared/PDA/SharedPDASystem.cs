@@ -26,8 +26,8 @@ namespace Content.Shared.PDA
             if (pda.IdCard != null)
                 pda.IdSlot.StartingItem = pda.IdCard;
 
-            ItemSlotsSystem.AddItemSlot(uid, $"{pda.Name}-id", pda.IdSlot);
-            ItemSlotsSystem.AddItemSlot(uid, $"{pda.Name}-pen", pda.PenSlot);
+            ItemSlotsSystem.AddItemSlot(uid, PDAComponent.PDAIdSlotId, pda.IdSlot);
+            ItemSlotsSystem.AddItemSlot(uid, PDAComponent.PDAPenSlotId, pda.PenSlot);
 
             UpdatePDAAppearance(pda);
         }

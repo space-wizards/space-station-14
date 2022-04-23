@@ -9,7 +9,7 @@ namespace Content.Server.Lathe.Components
 {
     [RegisterComponent]
     [ComponentReference(typeof(SharedLatheDatabaseComponent))]
-    public class LatheDatabaseComponent : SharedLatheDatabaseComponent
+    public sealed class LatheDatabaseComponent : SharedLatheDatabaseComponent
     {
         /// <summary>
         ///     Whether new recipes can be added to this database or not.

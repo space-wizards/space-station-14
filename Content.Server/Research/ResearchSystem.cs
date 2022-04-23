@@ -1,18 +1,21 @@
-using System.Collections.Generic;
 using Content.Server.Research.Components;
 using JetBrains.Annotations;
-using Robust.Shared.GameObjects;
 
 namespace Content.Server.Research
 {
     [UsedImplicitly]
-    public class ResearchSystem : EntitySystem
+    public sealed class ResearchSystem : EntitySystem
     {
         private const float ResearchConsoleUIUpdateTime = 30f;
 
         private float _timer = ResearchConsoleUIUpdateTime;
         private readonly List<ResearchServerComponent> _servers = new();
         public IReadOnlyList<ResearchServerComponent> Servers => _servers;
+
+        public override void Initialize()
+        {
+            base.Initialize();
+        }
 
         public bool RegisterServer(ResearchServerComponent server)
         {

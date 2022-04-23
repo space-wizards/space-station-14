@@ -17,8 +17,6 @@
       mass: 100
       mask:
       - Impassable
-      - MobImpassable
-      - VaultImpassable
       - SmallImpassable
       layer:
       - Opaque
@@ -56,3 +54,5 @@
   - type: DrainableSolution
     solution: tank
   - type: ReagentTank
+  - type: Transform
+    noRot: true

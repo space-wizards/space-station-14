@@ -33,7 +33,7 @@ using Range = Robust.Client.UserInterface.Controls.Range;
 
 namespace Content.Client.Preferences.UI
 {
-    public class HighlightedContainer : PanelContainer
+    public sealed class HighlightedContainer : PanelContainer
     {
         public HighlightedContainer()
         {
@@ -49,7 +49,7 @@ namespace Content.Client.Preferences.UI
     }
 
     [GenerateTypedNameReferences]
-    public partial class HumanoidProfileEditor : Control
+    public sealed partial class HumanoidProfileEditor : Control
     {
         private LineEdit _ageEdit => CAgeEdit;
         private LineEdit _nameEdit => CNameEdit;
@@ -79,9 +79,15 @@ namespace Content.Client.Preferences.UI
         private readonly List<SpeciesPrototype> _speciesList;
         private readonly List<AntagPreferenceSelector> _antagPreferences;
 
-        private EntityUid _previewDummy;
         private Control _previewSpriteControl => CSpriteViewFront;
         private Control _previewSpriteSideControl => CSpriteViewSide;
+
+        private EntityUid? _previewDummy;
+
+        /// <summary>
+        /// Used to avoid unnecessarily re-creating the entity.
+        /// </summary>
+        private string? _lastSpecies;
         private SpriteView? _previewSprite;
         private SpriteView? _previewSpriteSide;
 
@@ -177,7 +183,7 @@ namespace Content.Client.Preferences.UI
 
             #region Species
 
-            _speciesList = prototypeManager.EnumeratePrototypes<SpeciesPrototype>().ToList();
+            _speciesList = prototypeManager.EnumeratePrototypes<SpeciesPrototype>().Where(o => o.RoundStart).ToList();
             for (var i = 0; i < _speciesList.Count; i++)
             {
                 CSpeciesButton.AddItem(_speciesList[i].Name, i);
@@ -487,42 +493,63 @@ namespace Content.Client.Preferences.UI
             if (!disposing)
                 return;
 
-            _entMan.DeleteEntity(_previewDummy);
+            if (_previewDummy != null)
+                _entMan.DeleteEntity(_previewDummy.Value);
+
             _preferencesManager.OnServerDataLoaded -= LoadServerData;
         }
 
         private void RebuildSpriteView()
         {
-            var dollProto = _prototypeManager.Index<SpeciesPrototype>(Profile?.Species ?? SpeciesManager.DefaultSpecies).DollPrototype;
-            _previewDummy = _entMan.SpawnEntity(dollProto, MapCoordinates.Nullspace);
+            var species = Profile?.Species ?? SpeciesManager.DefaultSpecies;
 
-            var sprite = _entMan.GetComponent<SpriteComponent>(_previewDummy);
-
-            _previewSpriteControl.DisposeAllChildren();
-
-            // Front
-            _previewSprite = new SpriteView
+            if (_lastSpecies != species)
             {
-                Sprite = sprite,
-                Scale = (6, 6),
-                OverrideDirection = Direction.South,
-                VerticalAlignment = VAlignment.Center,
-                SizeFlagsStretchRatio = 1
-            };
-            _previewSpriteControl.AddChild(_previewSprite);
+                var dollProto = _prototypeManager.Index<SpeciesPrototype>(species).DollPrototype;
 
-            _previewSpriteSideControl.DisposeAllChildren();
+                if (_previewDummy != null)
+                    _entMan.DeleteEntity(_previewDummy!.Value);
 
-            // Side
-            _previewSpriteSide = new SpriteView
+                _previewDummy = _entMan.SpawnEntity(dollProto, MapCoordinates.Nullspace);
+                _lastSpecies = species;
+            }
+
+            var sprite = _entMan.GetComponent<SpriteComponent>(_previewDummy!.Value);
+
+            if (_previewSprite == null)
             {
-                Sprite = sprite,
-                Scale = (6, 6),
-                OverrideDirection = Direction.East,
-                VerticalAlignment = VAlignment.Center,
-                SizeFlagsStretchRatio = 1
-            };
-            _previewSpriteSideControl.AddChild(_previewSpriteSide);
+                // Front
+                _previewSprite = new SpriteView
+                {
+                    Sprite = sprite,
+                    Scale = (6, 6),
+                    OverrideDirection = Direction.South,
+                    VerticalAlignment = VAlignment.Center,
+                    SizeFlagsStretchRatio = 1
+                };
+                _previewSpriteControl.AddChild(_previewSprite);
+            }
+            else
+            {
+                _previewSprite.Sprite = sprite;
+            }
+
+            if (_previewSpriteSide == null)
+            {
+                _previewSpriteSide = new SpriteView
+                {
+                    Sprite = sprite,
+                    Scale = (6, 6),
+                    OverrideDirection = Direction.East,
+                    VerticalAlignment = VAlignment.Center,
+                    SizeFlagsStretchRatio = 1
+                };
+                _previewSpriteSideControl.AddChild(_previewSpriteSide);
+            }
+            else
+            {
+                _previewSpriteSide.Sprite = sprite;
+            }
         }
 
         private void LoadServerData()
@@ -732,8 +759,8 @@ namespace Content.Client.Preferences.UI
                 return;
             RebuildSpriteView();
 
-            EntitySystem.Get<SharedHumanoidAppearanceSystem>().UpdateFromProfile(_previewDummy, Profile);
-            LobbyCharacterPreviewPanel.GiveDummyJobClothes(_previewDummy, Profile);
+            EntitySystem.Get<SharedHumanoidAppearanceSystem>().UpdateFromProfile(_previewDummy!.Value, Profile);
+            LobbyCharacterPreviewPanel.GiveDummyJobClothes(_previewDummy!.Value, Profile);
         }
 
         public void UpdateControls()
@@ -782,7 +809,7 @@ namespace Content.Client.Preferences.UI
             }
         }
 
-        private class JobPrioritySelector : Control
+        private sealed class JobPrioritySelector : Control
         {
             public JobPrototype Job { get; }
             private readonly RadioOptions<int> _optionButton;
@@ -855,7 +882,7 @@ namespace Content.Client.Preferences.UI
             }
         }
 
-        private class AntagPreferenceSelector : Control
+        private sealed class AntagPreferenceSelector : Control
         {
             public AntagPrototype Antag { get; }
             private readonly CheckBox _checkBox;

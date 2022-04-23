@@ -13,12 +13,12 @@ namespace Content.Shared.Roles
     ///     Describes information for a single job on the station.
     /// </summary>
     [Prototype("job")]
-    public class JobPrototype : IPrototype
+    public sealed class JobPrototype : IPrototype
     {
         private string _name = string.Empty;
 
         [ViewVariables]
-        [DataField("id", required: true)]
+        [IdDataFieldAttribute]
         public string ID { get; } = default!;
 
         [DataField("supervisors")]
@@ -62,5 +62,8 @@ namespace Content.Shared.Roles
 
         [DataField("access", customTypeSerializer: typeof(PrototypeIdListSerializer<AccessLevelPrototype>))]
         public IReadOnlyCollection<string> Access { get; } = Array.Empty<string>();
+
+        [DataField("accessGroups", customTypeSerializer: typeof(PrototypeIdListSerializer<AccessGroupPrototype>))]
+        public IReadOnlyCollection<string> AccessGroups { get; } = Array.Empty<string>();
     }
 }

@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using Content.Server.Access.Systems;
 using Content.Server.DeviceNetwork;
 using Content.Server.DeviceNetwork.Components;
@@ -22,16 +22,15 @@ using Robust.Shared.Timing;
 
 namespace Content.Server.Medical.SuitSensors
 {
-    public class SuitSensorSystem : EntitySystem
+    public sealed class SuitSensorSystem : EntitySystem
     {
-        [Dependency] private readonly ActionBlockerSystem _actionBlockerSystem = default!;
         [Dependency] private readonly PopupSystem _popupSystem = default!;
         [Dependency] private readonly IRobustRandom _random = default!;
         [Dependency] private readonly IdCardSystem _idCardSystem = default!;
         [Dependency] private readonly DeviceNetworkSystem _deviceNetworkSystem = default!;
         [Dependency] private readonly IGameTiming _gameTiming = default!;
 
-        private const float UpdateRate = 0.5f;
+        private const float UpdateRate = 1f;
         private float _updateDif;
 
         public override void Initialize()
@@ -59,8 +58,11 @@ namespace Content.Server.Medical.SuitSensors
             var sensors = EntityManager.EntityQuery<SuitSensorComponent, DeviceNetworkComponent>();
             foreach (var (sensor, device) in sensors)
             {
+                if (device.TransmitFrequency is not uint frequency)
+                    continue;
+
                 // check if sensor is ready to update
-                if (curTime - sensor.LastUpdate < TimeSpan.FromSeconds(sensor.UpdateRate))
+                if (curTime - sensor.LastUpdate < sensor.UpdateRate)
                     continue;
                 sensor.LastUpdate = curTime;
 
@@ -71,7 +73,7 @@ namespace Content.Server.Medical.SuitSensors
 
                 // broadcast it to device network
                 var payload = SuitSensorToPacket(status);
-                _deviceNetworkSystem.QueuePacket(sensor.Owner, DeviceNetworkConstants.NullAddress, device.Frequency, payload, true);
+                _deviceNetworkSystem.QueuePacket(sensor.Owner, null, payload, device: device);
             }
         }
 
@@ -142,7 +144,7 @@ namespace Content.Server.Medical.SuitSensors
                 return;
 
             // standard interaction checks
-            if (!args.CanAccess || !args.CanInteract || !_actionBlockerSystem.CanDrop(args.User))
+            if (!args.CanAccess || !args.CanInteract)
                 return;
 
             args.Verbs.UnionWith(new[]

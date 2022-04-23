@@ -1,20 +1,21 @@
-using Content.Server.Tools.Components;
-using Content.Shared.ActionBlocker;
 using Content.Shared.Interaction;
+using Content.Shared.Interaction.Events;
 using Content.Shared.Item;
-using Content.Shared.Weapons.Melee;
+using Content.Shared.Light;
+using Content.Shared.Light.Component;
+using Content.Shared.Toggleable;
+using Content.Shared.Tools.Components;
 using Robust.Shared.Audio;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
 using Robust.Shared.Player;
 using Robust.Shared.Random;
 
 namespace Content.Server.Weapon.Melee.EnergySword
 {
-    internal class EnergySwordSystem : EntitySystem
+    public sealed class EnergySwordSystem : EntitySystem
     {
-        [Dependency] private readonly ActionBlockerSystem _blockerSystem = default!;
         [Dependency] private readonly IRobustRandom _random = default!;
+        [Dependency] private readonly SharedRgbLightControllerSystem _rgbSystem = default!;
+
         public override void Initialize()
         {
             base.Initialize();
@@ -44,9 +45,6 @@ namespace Content.Server.Weapon.Melee.EnergySword
         {
             if (args.Handled) return;
 
-            if (!_blockerSystem.CanUse(args.User))
-                return;
-
             args.Handled = true;
 
             if (comp.Activated)
@@ -57,6 +55,8 @@ namespace Content.Server.Weapon.Melee.EnergySword
             {
                 TurnOn(comp);
             }
+
+            UpdateAppearance(comp);
         }
 
         private void TurnOff(EnergySwordComponent comp)
@@ -69,10 +69,9 @@ namespace Content.Server.Weapon.Melee.EnergySword
                 item.Size = 5;
             }
 
-            SoundSystem.Play(Filter.Pvs(comp.Owner), comp.DeActivateSound.GetSound(), comp.Owner);
+            SoundSystem.Play(Filter.Pvs(comp.Owner, entityManager: EntityManager), comp.DeActivateSound.GetSound(), comp.Owner);
 
             comp.Activated = false;
-            UpdateAppearance(comp, item);
         }
 
         private void TurnOn(EnergySwordComponent comp)
@@ -85,43 +84,36 @@ namespace Content.Server.Weapon.Melee.EnergySword
                 item.Size = 9999;
             }
 
-            SoundSystem.Play(Filter.Pvs(comp.Owner), comp.ActivateSound.GetSound(), comp.Owner);
+            SoundSystem.Play(Filter.Pvs(comp.Owner, entityManager: EntityManager), comp.ActivateSound.GetSound(), comp.Owner);
 
             comp.Activated = true;
-            UpdateAppearance(comp, item);
         }
 
-        private void UpdateAppearance(EnergySwordComponent component, SharedItemComponent? itemComponent = null)
+        private void UpdateAppearance(EnergySwordComponent component)
         {
-            if (!EntityManager.TryGetComponent(component.Owner, out AppearanceComponent? appearanceComponent)) return;
+            if (!TryComp(component.Owner, out AppearanceComponent? appearanceComponent))
+                return;
 
-            appearanceComponent.SetData(EnergySwordVisuals.Color, component.BladeColor);
-
-            var status = component.Activated ? EnergySwordStatus.On : EnergySwordStatus.Off;
-            if (component.Hacked)
-                status |= EnergySwordStatus.Hacked;
-
-            appearanceComponent.SetData(EnergySwordVisuals.State, status);
-            // wew itemcomp
-            if (Resolve(component.Owner, ref itemComponent, false))
-            {
-                itemComponent.EquippedPrefix = component.Activated ? "on" : "off";
-                itemComponent.Color = component.BladeColor;
-            }
+            appearanceComponent.SetData(ToggleableLightVisuals.Enabled, component.Activated);
+            appearanceComponent.SetData(ToggleableLightVisuals.Color, component.BladeColor);
         }
 
         private void OnInteractUsing(EntityUid uid, EnergySwordComponent comp, InteractUsingEvent args)
         {
             if (args.Handled) return;
 
-            if (comp.Hacked || !_blockerSystem.CanInteract(args.User))
-                return;
-
             if (!TryComp(args.Used, out ToolComponent? tool) || !tool.Qualities.ContainsAny("Pulsing")) return;
 
             args.Handled = true;
-            comp.Hacked = true;
-            UpdateAppearance(comp);
+            comp.Hacked = !comp.Hacked;
+
+            if (comp.Hacked)
+            {
+                var rgb = EnsureComp<RgbLightControllerComponent>(uid);
+                _rgbSystem.SetCycleRate(uid, comp.CycleRate, rgb);
+            }
+            else
+                RemComp<RgbLightControllerComponent>(uid);
         }
     }
 }

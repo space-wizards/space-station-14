@@ -3,7 +3,6 @@ using Content.Shared.Access.Components;
 using Content.Shared.Hands.Components;
 using Content.Shared.Inventory;
 using Content.Shared.PDA;
-using Robust.Shared.GameObjects;
 using Robust.Shared.GameStates;
 
 namespace Content.Shared.Access.Systems;
@@ -42,8 +41,8 @@ public abstract class SharedIdCardSystem : EntitySystem
     {
         // check held item?
         if (TryComp(uid, out SharedHandsComponent? hands) &&
-            hands.TryGetActiveHeldEntity(out var heldItem) &&
-            TryGetIdCard(heldItem.Value, out idCard))
+            hands.ActiveHand?.HeldEntity != null &&
+            TryGetIdCard(hands.ActiveHand.HeldEntity.Value, out idCard))
         {
             return true;
         }

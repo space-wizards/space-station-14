@@ -11,7 +11,7 @@ using Robust.Shared.Maths;
 namespace Content.Client.Buckle
 {
     [UsedImplicitly]
-    public class BuckleVisualizer : AppearanceVisualizer
+    public sealed class BuckleVisualizer : AppearanceVisualizer
     {
         public override void OnChangeData(AppearanceComponent component)
         {

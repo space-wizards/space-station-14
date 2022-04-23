@@ -4,18 +4,22 @@
   parent: BaseVox
   id: Vox
   components:
+    - type: InteractionPopup
+      successChance: 1
+      interactSuccessString: hugging-success-generic
+      interactSuccessSound: /Audio/Effects/hug.ogg
     - type: Mind
       showExamineInfo: true
     - type: Input
       context: "human"
     - type: Alerts
     - type: Actions
-      innateActions:
-        - VoxScream
-        - Disarm
     - type: Eye
     - type: CameraRecoil
     - type: Examiner
+    - type: Vocal
+      maleScream: /Audio/Voice/Vox/shriek1.ogg
+      femaleScream: /Audio/Voice/Vox/shriek1.ogg
     - type: AiFactionTag
       factions:
         - NanoTrasen

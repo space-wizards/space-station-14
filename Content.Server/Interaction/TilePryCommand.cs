@@ -14,7 +14,7 @@ namespace Content.Server.Interaction
     /// <see cref="TilePryingComponent.TryPryTile"/>
     /// </summary>
     [AdminCommand(AdminFlags.Debug)]
-    class TilePryCommand : IConsoleCommand
+    sealed class TilePryCommand : IConsoleCommand
     {
         [Dependency] private readonly IEntityManager _entities = default!;
 

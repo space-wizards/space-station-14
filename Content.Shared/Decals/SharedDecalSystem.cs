@@ -1,12 +1,7 @@
-using System;
-using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using Robust.Shared;
 using Robust.Shared.Configuration;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
 using Robust.Shared.Map;
-using Robust.Shared.Maths;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 
@@ -88,39 +83,17 @@ namespace Content.Shared.Decals
 
         protected virtual bool RemoveDecalHook(GridId gridId, uint uid) => true;
 
-        private (Box2 view, MapId mapId) CalcViewBounds(in EntityUid euid)
+        protected (Box2 view, MapId mapId) CalcViewBounds(in EntityUid euid, TransformComponent xform)
         {
-            var xform = EntityManager.GetComponent<TransformComponent>(euid);
-
             var view = Box2.UnitCentered.Scale(_viewSize).Translated(xform.WorldPosition);
             var map = xform.MapID;
 
             return (view, map);
         }
-
-        protected Dictionary<GridId, HashSet<Vector2i>> GetChunksForViewers(HashSet<EntityUid> viewers)
-        {
-            var chunks = new Dictionary<GridId, HashSet<Vector2i>>();
-            foreach (var viewerUid in viewers)
-            {
-                var (bounds, mapId) = CalcViewBounds(viewerUid);
-                MapManager.FindGridsIntersectingEnumerator(mapId, bounds, out var gridsEnumerator, true);
-                while(gridsEnumerator.MoveNext(out var grid))
-                {
-                    if(!chunks.ContainsKey(grid.Index))
-                        chunks[grid.Index] = new();
-                    var enumerator = new ChunkIndicesEnumerator(grid.InvWorldMatrix.TransformBox(bounds), ChunkSize);
-                    while (enumerator.MoveNext(out var indices))
-                    {
-                        chunks[grid.Index].Add(indices.Value);
-                    }
-                }
-            }
-            return chunks;
-        }
     }
 
-    internal struct ChunkIndicesEnumerator
+    // TODO: Pretty sure paul was moving this somewhere but just so people know
+    public struct ChunkIndicesEnumerator
     {
         private Vector2i _chunkLB;
         private Vector2i _chunkRT;
@@ -128,7 +101,7 @@ namespace Content.Shared.Decals
         private int _xIndex;
         private int _yIndex;
 
-        internal ChunkIndicesEnumerator(Box2 localAABB, int chunkSize)
+        public ChunkIndicesEnumerator(Box2 localAABB, int chunkSize)
         {
             _chunkLB = new Vector2i((int)Math.Floor(localAABB.Left / chunkSize), (int)Math.Floor(localAABB.Bottom / chunkSize));
             _chunkRT = new Vector2i((int)Math.Floor(localAABB.Right / chunkSize), (int)Math.Floor(localAABB.Top / chunkSize));

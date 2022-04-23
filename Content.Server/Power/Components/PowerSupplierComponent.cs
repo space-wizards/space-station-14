@@ -7,7 +7,7 @@ using Robust.Shared.ViewVariables;
 namespace Content.Server.Power.Components
 {
     [RegisterComponent]
-    public class PowerSupplierComponent : BasePowerNetComponent
+    public sealed class PowerSupplierComponent : BasePowerNetComponent
     {
         [ViewVariables(VVAccess.ReadWrite)]
         [DataField("supplyRate")]

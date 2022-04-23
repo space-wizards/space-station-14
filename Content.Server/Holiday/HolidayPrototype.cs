@@ -10,12 +10,12 @@ using Robust.Shared.ViewVariables;
 namespace Content.Server.Holiday
 {
     [Prototype("holiday")]
-    public class HolidayPrototype : IPrototype
+    public sealed class HolidayPrototype : IPrototype
     {
         [ViewVariables] [DataField("name")] public string Name { get; private set; } = string.Empty;
 
         [ViewVariables]
-        [DataField("id", required: true)]
+        [IdDataFieldAttribute]
         public string ID { get; } = default!;
 
         [ViewVariables]

@@ -1,8 +1,8 @@
-﻿using Robust.Shared.GameObjects;
+using Robust.Shared.GameObjects;
 
 namespace Content.Shared.Inventory.Events;
 
-public class EquippedEventBase : EntityEventArgs
+public abstract class EquippedEventBase : EntityEventArgs
 {
     /// <summary>
     /// The entity equipping.
@@ -33,14 +33,14 @@ public class EquippedEventBase : EntityEventArgs
     }
 }
 
-public class DidEquipEvent : EquippedEventBase
+public sealed class DidEquipEvent : EquippedEventBase
 {
     public DidEquipEvent(EntityUid equipee, EntityUid equipment, SlotDefinition slotDefinition) : base(equipee, equipment, slotDefinition)
     {
     }
 }
 
-public class GotEquippedEvent : EquippedEventBase
+public sealed class GotEquippedEvent : EquippedEventBase
 {
     public GotEquippedEvent(EntityUid equipee, EntityUid equipment, SlotDefinition slotDefinition) : base(equipee, equipment, slotDefinition)
     {

@@ -18,13 +18,13 @@ using static Content.Shared.Wires.SharedWiresComponent.WiresAction;
 namespace Content.Server.Atmos.Monitor.Components
 {
     [RegisterComponent]
-    public class AirAlarmComponent : Component, IWires
+    public sealed class AirAlarmComponent : Component, IWires
     {
         [Dependency] private readonly IEntityManager _entMan = default!;
 
         private AirAlarmSystem? _airAlarmSystem;
 
-        [ViewVariables] public AirAlarmMode CurrentMode { get; set; }
+        [ViewVariables] public AirAlarmMode CurrentMode { get; set; } = AirAlarmMode.Filtering;
 
         // Remember to null this afterwards.
         [ViewVariables] public IAirAlarmModeUpdate? CurrentModeUpdater { get; set; }

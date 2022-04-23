@@ -17,7 +17,7 @@ using Robust.Shared.Utility;
 namespace Content.Server.GameTicking
 {
     [UsedImplicitly]
-    public partial class GameTicker
+    public sealed partial class GameTicker
     {
         [Dependency] private readonly IPlayerManager _playerManager = default!;
 
@@ -106,6 +106,8 @@ namespace Content.Server.GameTicking
                     break;
                 }
             }
+            //When the status of a player changes, update the server info text
+            UpdateInfoText();
 
             async void SpawnWaitPrefs()
             {

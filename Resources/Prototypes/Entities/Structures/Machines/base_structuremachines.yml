@@ -8,6 +8,8 @@
     delay: 2
   - type: Physics
     bodyType: Static
+  - type: Transform
+    noRot: true
   - type: Fixtures
     fixtures:
     - shape:
@@ -40,4 +42,5 @@
   id: BaseMachinePowered
   components:
   - type: ApcPowerReceiver
+    powerLoad: 1000
   - type: ExtensionCableReceiver

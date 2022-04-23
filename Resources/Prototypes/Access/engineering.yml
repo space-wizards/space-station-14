@@ -1,0 +1,12 @@
+- type: accessLevel
+  id: ChiefEngineer
+  name: Chief Engineer
+
+- type: accessLevel
+  id: Engineering
+
+- type: accessGroup
+  id: Engineering
+  tags:
+  - ChiefEngineer
+  - Engineering

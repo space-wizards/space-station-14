@@ -10,13 +10,10 @@ using Robust.Shared.ViewVariables;
 namespace Content.Shared.Instruments;
 
 [NetworkedComponent, Friend(typeof(SharedInstrumentSystem))]
-public class SharedInstrumentComponent : Component
+public abstract class SharedInstrumentComponent : Component
 {
     [ViewVariables]
     public bool Playing { get; set; }
-
-    [ViewVariables]
-    public uint LastSequencerTick { get; set; }
 
     [DataField("program"), ViewVariables(VVAccess.ReadWrite)]
     public byte InstrumentProgram { get; set; }
@@ -42,7 +39,7 @@ public class SharedInstrumentComponent : Component
 ///     This message is sent to the client to completely stop midi input and midi playback.
 /// </summary>
 [Serializable, NetSerializable]
-public class InstrumentStopMidiEvent : EntityEventArgs
+public sealed class InstrumentStopMidiEvent : EntityEventArgs
 {
     public EntityUid Uid { get; }
 
@@ -56,7 +53,7 @@ public class InstrumentStopMidiEvent : EntityEventArgs
 ///     This message is sent to the client to start the synth.
 /// </summary>
 [Serializable, NetSerializable]
-public class InstrumentStartMidiEvent : EntityEventArgs
+public sealed class InstrumentStartMidiEvent : EntityEventArgs
 {
     public EntityUid Uid { get; }
 
@@ -70,12 +67,12 @@ public class InstrumentStartMidiEvent : EntityEventArgs
 ///     This message carries a MidiEvent to be played on clients.
 /// </summary>
 [Serializable, NetSerializable]
-public class InstrumentMidiEventEvent : EntityEventArgs
+public sealed class InstrumentMidiEventEvent : EntityEventArgs
 {
     public EntityUid Uid { get; }
-    public MidiEvent[] MidiEvent { get; }
+    public RobustMidiEvent[] MidiEvent { get; }
 
-    public InstrumentMidiEventEvent(EntityUid uid, MidiEvent[] midiEvent)
+    public InstrumentMidiEventEvent(EntityUid uid, RobustMidiEvent[] midiEvent)
     {
         Uid = uid;
         MidiEvent = midiEvent;
@@ -83,7 +80,7 @@ public class InstrumentMidiEventEvent : EntityEventArgs
 }
 
 [Serializable, NetSerializable]
-public class InstrumentState : ComponentState
+public sealed class InstrumentState : ComponentState
 {
     public bool Playing { get; }
     public byte InstrumentProgram { get; }
@@ -92,7 +89,7 @@ public class InstrumentState : ComponentState
     public bool AllowProgramChange { get; }
     public bool RespectMidiLimits { get; }
 
-    public InstrumentState(bool playing, byte instrumentProgram, byte instrumentBank, bool allowPercussion, bool allowProgramChange, bool respectMidiLimits, uint sequencerTick = 0)
+    public InstrumentState(bool playing, byte instrumentProgram, byte instrumentBank, bool allowPercussion, bool allowProgramChange, bool respectMidiLimits)
     {
         Playing = playing;
         InstrumentProgram = instrumentProgram;

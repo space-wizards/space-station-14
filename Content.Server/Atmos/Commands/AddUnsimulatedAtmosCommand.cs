@@ -9,7 +9,7 @@ using Robust.Shared.Map;
 namespace Content.Server.Atmos.Commands
 {
     [AdminCommand(AdminFlags.Debug)]
-    public class AddUnsimulatedAtmosCommand : IConsoleCommand
+    public sealed class AddUnsimulatedAtmosCommand : IConsoleCommand
     {
         public string Command => "addunsimulatedatmos";
         public string Description => "Adds unimulated atmos support to a grid.";

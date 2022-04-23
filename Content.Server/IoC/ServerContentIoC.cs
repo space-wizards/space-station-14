@@ -1,5 +1,6 @@
 using Content.Server.Administration;
 using Content.Server.Administration.Managers;
+using Content.Server.Administration.Notes;
 using Content.Server.Afk;
 using Content.Server.AI.Utility;
 using Content.Server.AI.Utility.Considerations;
@@ -16,13 +17,10 @@ using Content.Server.NodeContainer.NodeGroups;
 using Content.Server.Objectives;
 using Content.Server.Objectives.Interfaces;
 using Content.Server.Preferences.Managers;
-using Content.Server.Sandbox;
 using Content.Server.Voting.Managers;
-using Content.Shared.Actions;
 using Content.Shared.Administration;
 using Content.Shared.Kitchen;
 using Content.Shared.Module;
-using Robust.Shared.IoC;
 
 namespace Content.Server.IoC
 {
@@ -33,12 +31,10 @@ namespace Content.Server.IoC
             IoCManager.Register<IChatManager, ChatManager>();
             IoCManager.Register<IChatSanitizationManager, ChatSanitizationManager>();
             IoCManager.Register<IMoMMILink, MoMMILink>();
-            IoCManager.Register<ISandboxManager, SandboxManager>();
             IoCManager.Register<IModuleManager, ServerModuleManager>();
             IoCManager.Register<IServerPreferencesManager, ServerPreferencesManager>();
             IoCManager.Register<IServerDbManager, ServerDbManager>();
             IoCManager.Register<RecipeManager, RecipeManager>();
-            IoCManager.Register<ActionManager, ActionManager>();
             IoCManager.Register<INodeGroupFactory, NodeGroupFactory>();
             IoCManager.Register<BlackboardManager, BlackboardManager>();
             IoCManager.Register<ConsiderationsManager, ConsiderationsManager>();
@@ -53,6 +49,9 @@ namespace Content.Server.IoC
             IoCManager.Register<IGameMapManager, GameMapManager>();
             IoCManager.Register<IGamePrototypeLoadManager, GamePrototypeLoadManager>();
             IoCManager.Register<RulesManager, RulesManager>();
+            IoCManager.Register<RoleBanManager, RoleBanManager>();
+            IoCManager.Register<NetworkResourceManager>();
+            IoCManager.Register<IAdminNotesManager, AdminNotesManager>();
         }
     }
 }

@@ -12,9 +12,9 @@ namespace Content.Shared.Atmos.Monitor
     // except for the range boundaries
     [Prototype("alarmThreshold")]
     [Serializable, NetSerializable]
-    public class AtmosAlarmThreshold : IPrototype, ISerializationHooks
+    public sealed class AtmosAlarmThreshold : IPrototype, ISerializationHooks
     {
-        [DataField("id", required: true)]
+        [IdDataFieldAttribute]
         public string ID { get; } = default!;
         [ViewVariables]
         [DataField("ignore")]

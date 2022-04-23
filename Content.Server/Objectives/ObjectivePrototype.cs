@@ -8,10 +8,10 @@ using Robust.Shared.ViewVariables;
 namespace Content.Server.Objectives
 {
     [Prototype("objective")]
-    public class ObjectivePrototype : IPrototype
+    public sealed class ObjectivePrototype : IPrototype
     {
         [ViewVariables]
-        [DataField("id", required: true)]
+        [IdDataFieldAttribute]
         public string ID { get; } = default!;
 
         [ViewVariables] [DataField("issuer")] public string Issuer { get; private set; } = "Unknown";

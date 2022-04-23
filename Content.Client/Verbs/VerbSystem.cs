@@ -30,7 +30,7 @@ namespace Content.Client.Verbs
         [Dependency] private readonly ExamineSystem _examineSystem = default!;
         [Dependency] private readonly TagSystem _tagSystem = default!;
         [Dependency] private readonly IStateManager _stateManager = default!;
-        [Dependency] private readonly IEntityLookup _entityLookup = default!;
+        [Dependency] private readonly EntityLookupSystem _entityLookup = default!;
         [Dependency] private readonly IPlayerManager _playerManager = default!;
 
         /// <summary>
@@ -114,7 +114,7 @@ namespace Content.Client.Verbs
             }
 
             // Get entities
-            var entities = _entityLookup.GetEntitiesInRange(targetPos.MapId, targetPos.Position, EntityMenuLookupSize)
+            var entities = _entityLookup.GetEntitiesInRange(targetPos, EntityMenuLookupSize)
                 .ToList();
 
             if (entities.Count == 0)
@@ -175,6 +175,14 @@ namespace Content.Client.Verbs
 
             result = entities;
             return true;
+        }
+
+        /// <summary>
+        ///     Asks the server to send back a list of server-side verbs, for the given verb type.
+        /// </summary>
+        public SortedSet<Verb> GetVerbs(EntityUid target, EntityUid user, Type type, bool force = false)
+        {
+            return GetVerbs(target, user, new List<Type>() { type }, force);
         }
 
         /// <summary>

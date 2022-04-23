@@ -1,8 +1,7 @@
 using Content.Shared.Chemistry.Dispenser;
+using Content.Shared.Containers.ItemSlots;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
-using Robust.Shared.GameObjects;
-using Robust.Shared.Localization;
 using static Content.Shared.Chemistry.Components.SharedChemMasterComponent;
 
 namespace Content.Client.Chemistry.UI
@@ -11,7 +10,7 @@ namespace Content.Client.Chemistry.UI
     /// Initializes a <see cref="ChemMasterWindow"/> and updates it when new server messages are received.
     /// </summary>
     [UsedImplicitly]
-    public class ChemMasterBoundUserInterface : BoundUserInterface
+    public sealed class ChemMasterBoundUserInterface : BoundUserInterface
     {
         private ChemMasterWindow? _window;
 
@@ -38,7 +37,7 @@ namespace Content.Client.Chemistry.UI
             _window.OnClose += Close;
 
             //Setup static button actions.
-            _window.EjectButton.OnPressed += _ => PrepareData(UiAction.Eject, null, null, null, null, null);
+            _window.EjectButton.OnPressed += _ => SendMessage(new ItemSlotButtonPressedEvent(BeakerSlotId));
             _window.BufferTransferButton.OnPressed += _ => PrepareData(UiAction.Transfer, null, null, null, null, null);
             _window.BufferDiscardButton.OnPressed += _ => PrepareData(UiAction.Discard, null, null, null, null, null);
             _window.CreatePillButton.OnPressed += _ => PrepareData(UiAction.CreatePills, null, _window.LabelLine, null, _window.PillAmount.Value, null);
@@ -76,7 +75,7 @@ namespace Content.Client.Chemistry.UI
                 SendMessage(new UiActionMessage(action, button.Amount, button.Id, button.IsBuffer, null, null, null, null));
             }
             else
-            { 
+            {
                 SendMessage(new UiActionMessage(action, null, null, null, label, pillType, pillAmount, bottleAmount));
             }
         }

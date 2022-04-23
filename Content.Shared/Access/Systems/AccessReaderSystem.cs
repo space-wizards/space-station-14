@@ -1,27 +1,33 @@
-using System;
-using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
-using Content.Shared.Hands.Components;
 using Content.Shared.Inventory;
+using Content.Shared.Emag.Systems;
 using Content.Shared.PDA;
 using Content.Shared.Access.Components;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Log;
 using Robust.Shared.Prototypes;
+using Content.Shared.Hands.EntitySystems;
+using Content.Shared.MachineLinking.Events;
 
 namespace Content.Shared.Access.Systems
 {
-    public class AccessReaderSystem : EntitySystem
+    public sealed class AccessReaderSystem : EntitySystem
     {
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
         [Dependency] private readonly InventorySystem _inventorySystem = default!;
+        [Dependency] private readonly SharedHandsSystem _handsSystem = default!;
 
         public override void Initialize()
         {
             base.Initialize();
             SubscribeLocalEvent<AccessReaderComponent, ComponentInit>(OnInit);
+            SubscribeLocalEvent<AccessReaderComponent, GotEmaggedEvent>(OnEmagged);
+            SubscribeLocalEvent<AccessReaderComponent, LinkAttemptEvent>(OnLinkAttempt);
+        }
+
+        private void OnLinkAttempt(EntityUid uid, AccessReaderComponent component, LinkAttemptEvent args)
+        {
+            if (component.Enabled && !IsAllowed(component, args.User))
+                args.Cancel();
         }
 
         private void OnInit(EntityUid uid, AccessReaderComponent reader, ComponentInit args)
@@ -36,6 +42,15 @@ namespace Content.Shared.Access.Systems
             }
         }
 
+        private void OnEmagged(EntityUid uid, AccessReaderComponent reader, GotEmaggedEvent args)
+        {
+            if (reader.Enabled == true)
+            {
+                reader.Enabled = false;
+                args.Handled = true;
+            }
+        }
+
         /// <summary>
         /// Searches an <see cref="AccessComponent"/> in the entity itself, in its active hand or in its ID slot.
         /// Then compares the found access with the configured access lists to see if it is allowed.
@@ -43,7 +58,7 @@ namespace Content.Shared.Access.Systems
         /// <remarks>
         ///     If no access is found, an empty set is used instead.
         /// </remarks>
-        /// <param name="entity">The entity to be searched for access.</param>
+        /// <param name="entity">The entity to bor access.</param>
         public bool IsAllowed(AccessReaderComponent reader, EntityUid entity)
         {
             var tags = FindAccessTags(entity);
@@ -67,14 +82,10 @@ namespace Content.Shared.Access.Systems
             if (FindAccessTagsItem(uid, out var tags))
                 return tags;
 
-            // maybe access component inside its hands?
-            if (EntityManager.TryGetComponent(uid, out SharedHandsComponent? hands))
+            foreach (var item in _handsSystem.EnumerateHeld(uid))
             {
-                if (hands.TryGetActiveHeldEntity(out var heldItem) &&
-                    FindAccessTagsItem(heldItem.Value, out tags))
-                {
+                if (FindAccessTagsItem(item, out tags))
                     return tags;
-                }
             }
 
             // maybe its inside an inventory slot?

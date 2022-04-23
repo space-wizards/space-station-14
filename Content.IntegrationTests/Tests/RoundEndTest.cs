@@ -12,7 +12,7 @@ using Robust.Shared.IoC;
 namespace Content.IntegrationTests.Tests
 {
     [TestFixture]
-    public class RoundEndTest : ContentIntegrationTest, IEntityEventSubscriber
+    public sealed class RoundEndTest : ContentIntegrationTest, IEntityEventSubscriber
     {
         [Test]
         public async Task Test()
@@ -46,7 +46,7 @@ namespace Content.IntegrationTests.Tests
                 Assert.That(roundEndSystem.ExpectedCountdownEnd, Is.Not.Null, "Shuttle was called, but countdown time was not set");
                 Assert.That(roundEndSystem.CanCall(), Is.False, "Started the shuttle, but didn't have to wait cooldown to press cancel button");
                 // Check that we can't recall the shuttle yet
-                roundEndSystem.CancelRoundEndCountdown(); 
+                roundEndSystem.CancelRoundEndCountdown();
                 Assert.That(roundEndSystem.ExpectedCountdownEnd, Is.Not.Null, "Shuttle was cancelled, even though the button was on cooldown");
             });
 

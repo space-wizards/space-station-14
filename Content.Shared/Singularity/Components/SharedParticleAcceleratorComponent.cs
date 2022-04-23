@@ -49,7 +49,7 @@ namespace Content.Shared.Singularity.Components
     }
 
     [NetSerializable, Serializable]
-    public class ParticleAcceleratorUIState : BoundUserInterfaceState
+    public sealed class ParticleAcceleratorUIState : BoundUserInterfaceState
     {
         public bool Assembled;
         public bool Enabled;
@@ -89,7 +89,7 @@ namespace Content.Shared.Singularity.Components
     }
 
     [NetSerializable, Serializable]
-    public class ParticleAcceleratorSetEnableMessage : BoundUserInterfaceMessage
+    public sealed class ParticleAcceleratorSetEnableMessage : BoundUserInterfaceMessage
     {
         public readonly bool Enabled;
         public ParticleAcceleratorSetEnableMessage(bool enabled)
@@ -99,7 +99,7 @@ namespace Content.Shared.Singularity.Components
     }
 
     [NetSerializable, Serializable]
-    public class ParticleAcceleratorRescanPartsMessage : BoundUserInterfaceMessage
+    public sealed class ParticleAcceleratorRescanPartsMessage : BoundUserInterfaceMessage
     {
         public ParticleAcceleratorRescanPartsMessage()
         {
@@ -107,7 +107,7 @@ namespace Content.Shared.Singularity.Components
     }
 
     [NetSerializable, Serializable]
-    public class ParticleAcceleratorSetPowerStateMessage : BoundUserInterfaceMessage
+    public sealed class ParticleAcceleratorSetPowerStateMessage : BoundUserInterfaceMessage
     {
         public readonly ParticleAcceleratorPowerState State;
 

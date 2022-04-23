@@ -18,7 +18,7 @@ using InventoryComponent = Content.Shared.Inventory.InventoryComponent;
 namespace Content.Server.Administration.Commands
 {
     [AdminCommand(AdminFlags.Admin)]
-    class SetOutfitCommand : IConsoleCommand
+    sealed class SetOutfitCommand : IConsoleCommand
     {
         public string Command => "setoutfit";
 
@@ -92,7 +92,7 @@ namespace Content.Server.Administration.Commands
             {
                 foreach (var slot in slotDefinitions)
                 {
-                    invSystem.TryUnequip(target, slot.Name, true, true, inventoryComponent);
+                    invSystem.TryUnequip(target, slot.Name, true, true, false, inventoryComponent);
                     var gearStr = startingGear.GetGear(slot.Name, profile);
                     if (gearStr == string.Empty)
                     {

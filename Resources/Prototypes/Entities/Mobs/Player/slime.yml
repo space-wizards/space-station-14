@@ -3,6 +3,10 @@
   parent: MobSlimePersonBase
   id: MobSlimePerson
   components:
+    - type: InteractionPopup
+      successChance: 1
+      interactSuccessString: hugging-success-generic
+      interactSuccessSound: /Audio/Effects/hug.ogg
     - type: Mind
       showExamineInfo: true
     - type: Input
@@ -11,10 +15,6 @@
     - type: PlayerInputMover
     - type: Alerts
     - type: Actions
-      innateActions:
-        - CombatMode
-        - Disarm
-        - HumanScream
     - type: Eye
     - type: CameraRecoil
     - type: Examiner

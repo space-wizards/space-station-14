@@ -9,6 +9,7 @@
   - type: InteractionOutline
   - type: Physics
     bodyType: Static
+    fixedRotation: false
   - type: Fixtures
     fixtures:
     - shape:
@@ -28,6 +29,7 @@
     anchored: true
   - type: Sprite
     sprite: Structures/Power/Generation/Singularity/emitter.rsi
+    netsync: false
     layers:
     - state: emitter2
     - state: beam

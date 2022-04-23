@@ -37,6 +37,8 @@
         prob: 0.3
       - id: CableApcStack
         prob: 0.3
+      - id: AirlockPainter
+        prob: 0.7
 
 - type: entity
   id: LockerElectricalSuppliesFilled
@@ -64,7 +66,6 @@
   - type: StorageFill
     contents:
       - id: WelderMini
-        prob: 1
       - id: Welder
         prob: 0.1
       - id: ClothingHeadHatWelding
@@ -77,10 +78,13 @@
   components:
   - type: StorageFill
     contents:
-      - id: ClothingHeadHelmetHardsuitAtmos
       - id: ClothingOuterHardsuitAtmos
-      - id: ClothingMaskBreath
-      - id: OxygenTankFilled
+      - id: ClothingMaskGasAtmos
+      - id: YellowOxygenTankFilled
+      - id: ClothingOuterSuitAtmosFire
+      - id: ClothingHeadHelmetAtmosFire
+      - id: GasAnalyzer
+      - id: MedkitOxygenFilled
 
 - type: entity
   id: LockerEngineerFilled
@@ -92,7 +96,7 @@
       - id: ClothingHeadHelmetHardsuitEngineering
       - id: ClothingOuterHardsuitEngineering
       - id: ClothingHandsGlovesColorYellow
-      - id: ClothingMaskBreath
+      - id: ClothingMaskGas
       - id: OxygenTankFilled
       - id: ClothingShoesBootsMag
 

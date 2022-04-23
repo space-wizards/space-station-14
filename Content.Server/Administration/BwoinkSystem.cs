@@ -22,16 +22,19 @@ using Robust.Shared.Log;
 using Robust.Shared.Network;
 using Robust.Shared.Utility;
 using System.Text.Json.Serialization;
+using Content.Server.GameTicking.Events;
+using Content.Server.GameTicking;
 
 namespace Content.Server.Administration
 {
     [UsedImplicitly]
-    public class BwoinkSystem : SharedBwoinkSystem
+    public sealed class BwoinkSystem : SharedBwoinkSystem
     {
         [Dependency] private readonly IPlayerManager _playerManager = default!;
         [Dependency] private readonly IAdminManager _adminManager = default!;
         [Dependency] private readonly IConfigurationManager _config = default!;
         [Dependency] private readonly IPlayerLocator _playerLocator = default!;
+        [Dependency] private readonly GameTicker _gameTicker = default!;
 
         private ISawmill _sawmill = default!;
         private readonly HttpClient _httpClient = new();
@@ -50,6 +53,13 @@ namespace Content.Server.Administration
             _config.OnValueChanged(CVars.GameHostName, OnServerNameChanged, true);
             _sawmill = IoCManager.Resolve<ILogManager>().GetSawmill("AHELP");
             _maxAdditionalChars = GenerateAHelpMessage("", "", true, true).Length + Header("").Length;
+
+            SubscribeLocalEvent<RoundStartingEvent>(RoundStarting);
+        }
+
+        private void RoundStarting(RoundStartingEvent ev)
+        {
+            _relayMessages.Clear();
         }
 
         private void OnServerNameChanged(string obj)
@@ -94,7 +104,7 @@ namespace Content.Server.Administration
 
             var payload = new WebhookPayload()
             {
-                Username = oldMessage.username,
+                Username = $"R:{_gameTicker.RoundId}|N:{oldMessage.username}",
                 Content = oldMessage.content
             };
 
@@ -254,6 +264,8 @@ namespace Content.Server.Administration
                 {
                     { "parse", Array.Empty<string>() }
                 };
+
+            public WebhookPayload() {}
         }
     }
 }

@@ -9,7 +9,7 @@ namespace Content.IntegrationTests.Tests.Access
 {
     [TestFixture]
     [TestOf(typeof(AccessReaderComponent))]
-    public class AccessReaderTest : ContentIntegrationTest
+    public sealed class AccessReaderTest : ContentIntegrationTest
     {
         [Test]
         public async Task TestTags()

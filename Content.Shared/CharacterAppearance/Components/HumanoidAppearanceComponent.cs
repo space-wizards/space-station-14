@@ -2,6 +2,7 @@ using System;
 using Content.Shared.CharacterAppearance;
 using Content.Shared.CharacterAppearance.Systems;
 using Content.Shared.Preferences;
+using Content.Shared.Species;
 using Robust.Shared.Analyzers;
 using Robust.Shared.Enums;
 using Robust.Shared.GameObjects;
@@ -15,7 +16,7 @@ namespace Content.Shared.CharacterAppearance.Components
     [RegisterComponent]
     [Friend(typeof(SharedHumanoidAppearanceSystem), typeof(SharedMagicMirrorComponent))]
     [NetworkedComponent]
-    public class HumanoidAppearanceComponent : Component
+    public sealed class HumanoidAppearanceComponent : Component
     {
         [ViewVariables]
         public HumanoidCharacterAppearance Appearance { get; set; } = HumanoidCharacterAppearance.Default();
@@ -25,6 +26,9 @@ namespace Content.Shared.CharacterAppearance.Components
 
         [ViewVariables(VVAccess.ReadWrite)]
         public Gender Gender { get; set; } = default!;
+
+        [ViewVariables]
+        public string Species { get; set; } = SpeciesManager.DefaultSpecies;
 
         [ViewVariables(VVAccess.ReadWrite)]
         public int Age { get; set; } = HumanoidCharacterProfile.MinimumAge;
@@ -60,16 +64,19 @@ namespace Content.Shared.CharacterAppearance.Components
         public HumanoidCharacterAppearance Appearance { get; }
         public Sex Sex { get; }
         public Gender Gender { get; }
+        public string Species { get; }
         public int Age { get; }
 
         public HumanoidAppearanceComponentState(HumanoidCharacterAppearance appearance,
             Sex sex,
             Gender gender,
+            string species,
             int age)
         {
             Appearance = appearance;
             Sex = sex;
             Gender = gender;
+            Species = species;
             Age = age;
         }
     }

@@ -12,7 +12,7 @@ namespace Content.Server.Ghost.Components
 {
     [RegisterComponent]
     [ComponentReference(typeof(IRadio))]
-    public class GhostRadioComponent : Component, IRadio
+    public sealed class GhostRadioComponent : Component, IRadio
     {
         [Dependency] private readonly IServerNetManager _netManager = default!;
         [Dependency] private readonly IEntityManager _entMan = default!;
@@ -29,7 +29,7 @@ namespace Content.Server.Ghost.Components
 
             var playerChannel = actor.PlayerSession.ConnectedClient;
 
-            var msg = _netManager.CreateNetMessage<MsgChatMessage>();
+            var msg = new MsgChatMessage();
 
             msg.Channel = ChatChannel.Radio;
             msg.Message = message;

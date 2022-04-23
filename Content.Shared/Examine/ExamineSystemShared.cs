@@ -1,35 +1,17 @@
-using System;
-using System.Collections.Generic;
 using System.Linq;
 using Content.Shared.DragDrop;
 using Content.Shared.Identity.Systems;
 using Content.Shared.Interaction;
-using Content.Shared.Interaction.Helpers;
 using Content.Shared.MobState.Components;
 using JetBrains.Annotations;
 using Robust.Shared.Containers;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Log;
 using Robust.Shared.Map;
-using Robust.Shared.Maths;
 using Robust.Shared.Physics;
 using Robust.Shared.Utility;
 using static Content.Shared.Interaction.SharedInteractionSystem;
 
 namespace Content.Shared.Examine
 {
-    [Obsolete("Use ExaminedEvent instead.")]
-    public interface IExamine
-    {
-        /// <summary>
-        /// Returns a status examine value for components appended to the end of the description of the entity
-        /// </summary>
-        /// <param name="message">The message to append to which will be displayed.</param>
-        /// <param name="inDetailsRange">Whether the examiner is within the 'Details' range, allowing you to show information logically only availabe when close to the examined entity.</param>
-        void Examine(FormattedMessage message, bool inDetailsRange);
-    }
-
     public abstract class ExamineSystemShared : EntitySystem
     {
         [Dependency] private readonly SharedContainerSystem _containerSystem = default!;
@@ -55,13 +37,18 @@ namespace Content.Shared.Examine
         public const float ExamineRange = 16f;
         protected const float ExamineDetailsRange = 3f;
 
-        private bool IsInDetailsRange(EntityUid examiner, EntityUid entity)
+        /// <summary>
+        ///     Creates a new examine tooltip with arbitrary info.
+        /// </summary>
+        public abstract void SendExamineTooltip(EntityUid player, EntityUid target, FormattedMessage message, bool getVerbs, bool centerAtCursor);
+
+        public bool IsInDetailsRange(EntityUid examiner, EntityUid entity)
         {
             // check if the mob is in ciritcal or dead
             if (EntityManager.TryGetComponent(examiner, out MobStateComponent mobState) && mobState.IsIncapacitated())
                 return false;
 
-            if (!_interactionSystem.InRangeUnobstructed(examiner, entity, ExamineDetailsRange, ignoreInsideBlocker: true))
+            if (!_interactionSystem.InRangeUnobstructed(examiner, entity, ExamineDetailsRange))
                 return false;
 
             // Is the target hidden in a opaque locker or something? Currently this check allows players to examine
@@ -116,7 +103,18 @@ namespace Content.Shared.Examine
             return ExamineRange;
         }
 
-        public static bool InRangeUnOccluded(MapCoordinates origin, MapCoordinates other, float range, Ignored? predicate, bool ignoreInsideBlocker = true)
+        public static bool InRangeUnOccluded(MapCoordinates origin, MapCoordinates other, float range, Ignored? predicate, bool ignoreInsideBlocker = true, IEntityManager? entMan = null)
+        {
+            // No, rider. This is better.
+            // ReSharper disable once ConvertToLocalFunction
+            var wrapped = (EntityUid uid, Ignored? wrapped)
+                => wrapped != null && wrapped(uid);
+
+            return InRangeUnOccluded(origin, other, range, predicate, wrapped, ignoreInsideBlocker, entMan);
+        }
+
+        public static bool InRangeUnOccluded<TState>(MapCoordinates origin, MapCoordinates other, float range,
+            TState state, Func<EntityUid, TState, bool> predicate, bool ignoreInsideBlocker = true, IEntityManager? entMan = null)
         {
             if (other.MapId != origin.MapId ||
                 other.MapId == MapId.Nullspace) return false;
@@ -136,13 +134,11 @@ namespace Content.Shared.Examine
             }
 
             var occluderSystem = Get<OccluderSystem>();
-            var entMan = IoCManager.Resolve<IEntityManager>();
-
-            predicate ??= _ => false;
+            IoCManager.Resolve(ref entMan);
 
             var ray = new Ray(origin.Position, dir.Normalized);
             var rayResults = occluderSystem
-                .IntersectRayWithPredicate(origin.MapId, ray, length, predicate.Invoke, false).ToList();
+                .IntersectRayWithPredicate(origin.MapId, ray, length, state, predicate, false).ToList();
 
             if (rayResults.Count == 0) return true;
 
@@ -256,21 +252,6 @@ namespace Content.Shared.Examine
             var examinedEvent = new ExaminedEvent(message, entity, examiner.Value, isInDetailsRange, doNewline);
             RaiseLocalEvent(entity, examinedEvent);
 
-            //Add component statuses from components that report one
-            foreach (var examineComponent in EntityManager.GetComponents<IExamine>(entity))
-            {
-                var subMessage = new FormattedMessage();
-                examineComponent.Examine(subMessage, isInDetailsRange);
-                if (subMessage.Tags.Count == 0)
-                    continue;
-
-                if (doNewline)
-                    message.AddText("\n");
-
-                message.AddMessage(subMessage);
-                doNewline = true;
-            }
-
             message.Pop();
 
             return message;
@@ -280,7 +261,7 @@ namespace Content.Shared.Examine
     /// <summary>
     ///     Raised when an entity is examined.
     /// </summary>
-    public class ExaminedEvent : EntityEventArgs
+    public sealed class ExaminedEvent : EntityEventArgs
     {
         /// <summary>
         ///     The message that will be displayed as the examine text.

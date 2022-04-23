@@ -1,6 +1,6 @@
 - type: entity
   id: SolarPanelBasePhysSprite
-  abstract: true
+  noSpawn: true
   name: solar panel
   placement:
     mode: SnapgridCenter
@@ -11,6 +11,7 @@
     anchored: true
   - type: Physics
     bodyType: Static
+    fixedRotation: false
   - type: Fixtures
     fixtures:
     - shape:
@@ -30,6 +31,7 @@
   - type: Sprite
     sprite: Structures/Power/Generation/solar_panel.rsi
     state: normal
+    netsync: false
   - type: NodeContainer
     examinable: true
     nodes:
@@ -110,6 +112,7 @@
   - type: InteractionOutline
   - type: Physics
     bodyType: Static
+    fixedRotation: false
   - type: Fixtures
     fixtures:
     - shape:
@@ -125,6 +128,7 @@
     state: solar_assembly
   - type: Transform
     anchored: true
+    noRot: true
   - type: Damageable
     damageContainer: Inorganic
     damageModifierSet: Metallic
@@ -152,6 +156,7 @@
   - type: InteractionOutline
   - type: Physics
     bodyType: Static
+    fixedRotation: false
   - type: Fixtures
     fixtures:
     - shape:
@@ -170,8 +175,10 @@
   - type: Sprite
     sprite: Structures/Power/Generation/solar_panel.rsi
     state: solar_tracker
+    netsync: false
   - type: Transform
     anchored: true
+    noRot: true
   - type: Damageable
     damageContainer: Inorganic
     damageModifierSet: Metallic

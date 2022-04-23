@@ -1,11 +1,6 @@
-using System;
-using System.Collections.Generic;
 using Content.Server.Administration.Managers;
 using Content.Shared.Administration;
 using Robust.Server.Player;
-using Robust.Shared.IoC;
-using Robust.Shared.Localization;
-using Robust.Shared.Log;
 using Robust.Shared.Network;
 using Robust.Shared.Prototypes;
 
@@ -14,7 +9,7 @@ namespace Content.Server.Administration;
 /// <summary>
 ///     Manages sending runtime-loaded prototypes from game staff to clients.
 /// </summary>
-public class GamePrototypeLoadManager : IGamePrototypeLoadManager
+public sealed class GamePrototypeLoadManager : IGamePrototypeLoadManager
 {
     [Dependency] private readonly IServerNetManager _netManager = default!;
     [Dependency] private readonly IAdminManager _adminManager = default!;
@@ -54,11 +49,11 @@ public class GamePrototypeLoadManager : IGamePrototypeLoadManager
     private void LoadPrototypeData(string prototypeData)
     {
         LoadedPrototypes.Add(prototypeData);
-        var msg = _netManager.CreateNetMessage<GamePrototypeLoadMessage>();
+        var msg = new GamePrototypeLoadMessage();
         msg.PrototypeData = prototypeData;
         _netManager.ServerSendToAll(msg); // everyone load it up!
-        _prototypeManager.LoadString(prototypeData); // server needs it too.
-        _prototypeManager.Resync();
+        _prototypeManager.LoadString(prototypeData, true); // server needs it too.
+        _prototypeManager.ResolveResults();
         _localizationManager.ReloadLocalizations();
         GamePrototypeLoaded?.Invoke();
     }
@@ -68,7 +63,7 @@ public class GamePrototypeLoadManager : IGamePrototypeLoadManager
         // Just dump all the prototypes on connect, before them missing could be an issue.
         foreach (var prototype in LoadedPrototypes)
         {
-            var msg = _netManager.CreateNetMessage<GamePrototypeLoadMessage>();
+            var msg = new GamePrototypeLoadMessage();
             msg.PrototypeData = prototype;
             e.Channel.SendMessage(msg);
         }

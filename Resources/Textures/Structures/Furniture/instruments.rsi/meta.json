@@ -24,6 +24,10 @@
       "directions": 4
     },
     {
+      "name": "piano-upright",
+      "directions": 4
+    },
+    {
       "name": "piano-broken",
       "directions": 4
     },
@@ -34,6 +38,10 @@
     {
       "name": "xylophone-broken",
       "directions": 4
+    },
+    {
+      "name": "tuba",
+      "directions": 1
     },
     {
       "name": "daw-base",

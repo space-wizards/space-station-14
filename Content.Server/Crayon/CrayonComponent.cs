@@ -25,6 +25,10 @@ namespace Content.Server.Crayon
         [DataField("capacity")]
         public int Capacity { get; set; } = 30;
 
+        [ViewVariables(VVAccess.ReadWrite)]
+        [DataField("deleteEmpty")]
+        public bool DeleteEmpty = true;
+
         [ViewVariables] public BoundUserInterface? UserInterface => Owner.GetUIOrNull(CrayonUiKey.Key);
 
         void ISerializationHooks.AfterDeserialization()

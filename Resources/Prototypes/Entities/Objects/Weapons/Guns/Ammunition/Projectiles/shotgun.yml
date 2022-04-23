@@ -1,7 +1,7 @@
 ﻿- type: entity
   id: PelletShotgunSlug
   name: pellet (.50 slug)
-  abstract: true
+  noSpawn: true
   parent: BulletBase
   components:
   - type: Sprite
@@ -15,7 +15,7 @@
 - type: entity
   id: PelletShotgunBeanbag
   name: beanbag (.50)
-  abstract: true
+  noSpawn: true
   parent: BulletBase
   components:
   - type: Sprite
@@ -32,7 +32,7 @@
 - type: entity
   id: PelletShotgun
   name: pellet (.50)
-  abstract: true
+  noSpawn: true
   parent: BulletBase
   components:
   - type: Sprite
@@ -46,7 +46,7 @@
 - type: entity
   id: PelletShotgunFlash
   name: pellet (.50 flash)
-  abstract: true
+  noSpawn: true
   parent: BulletBaseFlash
   components:
   - type: Sprite
@@ -60,7 +60,7 @@
 - type: entity
   id: PelletShotgunIncendiary
   name: pellet (.50 incendiary)
-  abstract: true
+  noSpawn: true
   parent: BulletBase
   components:
   - type: Sprite
@@ -71,17 +71,17 @@
       groups:
         Burn: 10
   - type: PointLight
-    enabled: true   
+    enabled: true
     color: "#ff4300"
     radius: 2.0
     energy: 7.0
   - type: IgniteOnCollide
     fireStacks: 1
-    
+
 - type: entity
   id: PelletShotgunPractice
   name: pellet (.50 practice)
-  abstract: true
+  noSpawn: true
   parent: BulletBasePractice
   components:
   - type: Sprite
@@ -95,7 +95,7 @@
 - type: entity
   id: PelletShotgunTranquilizer
   name: pellet (.50 tranquilizer)
-  abstract: true
+  noSpawn: true
   parent: BulletBasePractice
   components:
   - type: Sprite
@@ -121,7 +121,7 @@
 - type: entity
   id: PelletShotgunFlare
   name: pellet (.50 flare)
-  abstract: true
+  noSpawn: true
   parent: BulletBase
   components:
   - type: Sprite
@@ -132,7 +132,7 @@
       groups:
         Burn: 20
   - type: PointLight
-    enabled: true   
+    enabled: true
     color: "#FF8080"
     radius: 15.0
     energy: 9.0

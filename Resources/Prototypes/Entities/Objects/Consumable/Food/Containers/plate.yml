@@ -42,6 +42,11 @@
             max: 1
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
+  - type: Tag
+    tags:
+    - Recyclable
+    - Trash
+  - type: Recyclable
 
 - type: entity
   name: broken plate
@@ -55,7 +60,9 @@
     netsync: false
   - type: Tag
     tags:
+    - Recyclable
     - Trash
+  - type: Recyclable
 
 # Small Plate
 
@@ -125,9 +132,13 @@
   name: pie tin
   parent: BaseItem
   id: FoodPlateTin
-  description: A cheap, foil tin for pies.
+  description: A cheap foil tin for pies.
   components:
   - type: Sprite
     sprite: Objects/Consumable/Food/plates.rsi
     state: tin
     netsync: false
+  - type: Tag
+    tags:
+    - Trash
+  - type: Recyclable

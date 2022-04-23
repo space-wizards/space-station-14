@@ -23,7 +23,7 @@
   - type: Construction
     graph: CrateGenericSteel
     node: crategenericsteel
-      
+
 
 - type: entity
   id: CratePlastic
@@ -431,7 +431,7 @@
     - type: StorageVisualizer
       state_open: scicratesecure_open
       state_closed: scicratesecure_door
-    
+
 - type: entity
   id: CratePlasma
   name: plasma crate
@@ -517,7 +517,7 @@
     - type: StorageVisualizer
       state_open: hydrocratesecure_open
       state_closed: hydrocratesecure_door
-    
+
 - type: entity
   id: CrateWeaponSecure
   name: secure weapon crate
@@ -543,7 +543,7 @@
     - type: StorageVisualizer
       state_open: weaponcrate_open
       state_closed: weaponcrate_door
-      
+
 - type: entity
   id: CrateCommandSecure
   name: command crate
@@ -624,7 +624,6 @@
       mass: 75
       mask:
       - Impassable
-      - VaultImpassable
       - SmallImpassable
       layer:
       - Opaque

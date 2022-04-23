@@ -8,6 +8,9 @@
     - HEAD
   - type: Sprite
     state: icon
+  - type: Tag
+    tags:
+      - DroneUsable
 
 - type: entity
   abstract: true
@@ -23,14 +26,40 @@
 - type: entity
   abstract: true
   parent: ClothingHeadBase
-  id: ClothingHeadHardsuitBase
-  name: base hardsuit helmet
+  id: ClothingHeadEVAHelmetBase
+  name: base space helmet
   components:
   - type: Clothing
+    size: 10
+  - type: PressureProtection
+    highPressureMultiplier: 0.6
+    lowPressureMultiplier: 1000
+  - type: TemperatureProtection
+    coefficient: 0.2
+  - type: IngestionBlocker
+  - type: Tag
+    tags:
+    - HidesHair
+  - type: DiseaseProtection
+    protection: 0.05
+
+- type: entity
+  abstract: true
+  parent: ClothingHeadBase
+  id: ClothingHeadHardsuitBase
+  name: base hardsuit helmet
+  noSpawn: true
+  components:
+  - type: Clothing
+    #Apparently the hardsuit helmet equip sound is from a walking mech?
+    equipSound: /Audio/Mecha/mechmove03.ogg
+    unequipSound: /Audio/Mecha/mechmove03.ogg
     size: 15
+    canPickup: false # attached to suit.
+    quickEquip: false
   - type: PressureProtection
     highPressureMultiplier: 0.3
-    lowPressureMultiplier: 100
+    lowPressureMultiplier: 1000
   - type: TemperatureProtection
     coefficient: 0.1
   - type: Armor
@@ -42,6 +71,11 @@
         Heat: 0.90
         Radiation: 0.25
   - type: IngestionBlocker
+  - type: Tag
+    tags:
+    - HidesHair
+  - type: DiseaseProtection
+    protection: 0.05
   - type: IdentityBlocker
 
 - type: entity
@@ -49,27 +83,30 @@
   parent: ClothingHeadHardsuitBase
   id: ClothingHeadHardsuitWithLightBase
   name: base hardsuit helmet with light
+  noSpawn: true
   components:
   - type: Sprite
-    netsync: true
+    netsync: false
     layers:
     - state: icon
     - state: icon-flash
       visible: false
+      map: [ "light" ]
   - type: Clothing
     HeldPrefix: off
+  - type: ToggleableLightVisuals
   - type: PointLight
+    netsync: false
     enabled: false
-    radius: 3
+    radius: 6
+    energy: 2
+    mask: /Textures/Effects/LightMasks/cone.png
+    autoRot: true
   - type: Appearance
     visuals:
     - type: FlashLightVisualizer
-  - type: ItemActions
-    actions:
-    - actionType: ToggleLight
-    # right now there is no power system for hardsuits
-    # so hardsuit helmet just have small battery inside
   - type: HandheldLight
+    addPrefix: true
   - type: PowerCellSlot
     cellSlot:
       startingItem: PowerCellHardsuitHelmet # self recharging

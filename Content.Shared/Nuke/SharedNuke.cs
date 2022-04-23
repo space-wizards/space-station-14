@@ -15,15 +15,17 @@ namespace Content.Shared.Nuke
         AWAIT_DISK,
         AWAIT_CODE,
         AWAIT_ARM,
-        ARMED
+        ARMED,
+        COOLDOWN
     }
 
     [Serializable, NetSerializable]
-    public class NukeUiState : BoundUserInterfaceState
+    public sealed class NukeUiState : BoundUserInterfaceState
     {
         public bool DiskInserted;
         public NukeStatus Status;
         public int RemainingTime;
+        public int CooldownTime;
         public bool IsAnchored;
         public int EnteredCodeLength;
         public int MaxCodeLength;

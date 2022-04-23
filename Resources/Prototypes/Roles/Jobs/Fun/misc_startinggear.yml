@@ -52,7 +52,6 @@
   equipment:
     jumpsuit: ClothingUniformJumpsuitColorBlack
     back: ClothingBackpackDuffelSyndicateAmmo
-    head: ClothingHeadHelmetHardsuitDeathsquad
     mask: ClothingMaskBreath
     eyes: ClothingEyesGlassesSecurity
     ears: ClothingHeadsetCentCom

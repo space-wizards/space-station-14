@@ -1,3 +1,4 @@
+using Content.Shared.ActionBlocker;
 using Content.Shared.Damage;
 using Content.Shared.DragDrop;
 using Content.Shared.Emoting;
@@ -15,8 +16,10 @@ using Robust.Shared.GameObjects;
 
 namespace Content.Shared.MobState.EntitySystems
 {
-    public class MobStateSystem : EntitySystem
+    public sealed class MobStateSystem : EntitySystem
     {
+        [Dependency] private readonly ActionBlockerSystem _blocker = default!;
+
         public override void Initialize()
         {
             base.Initialize();
@@ -29,17 +32,21 @@ namespace Content.Shared.MobState.EntitySystems
             SubscribeLocalEvent<MobStateComponent, IsEquippingAttemptEvent>(OnEquipAttempt);
             SubscribeLocalEvent<MobStateComponent, EmoteAttemptEvent>(OnEmoteAttempt);
             SubscribeLocalEvent<MobStateComponent, IsUnequippingAttemptEvent>(OnUnequipAttempt);
-            SubscribeLocalEvent<MobStateComponent, AttackAttemptEvent>(OnAttackAttempt);
             SubscribeLocalEvent<MobStateComponent, DropAttemptEvent>(OnDropAttempt);
             SubscribeLocalEvent<MobStateComponent, PickupAttemptEvent>(OnPickupAttempt);
             SubscribeLocalEvent<MobStateComponent, StartPullAttemptEvent>(OnStartPullAttempt);
             SubscribeLocalEvent<MobStateComponent, DamageChangedEvent>(UpdateState);
-            SubscribeLocalEvent<MobStateComponent, MovementAttemptEvent>(OnMoveAttempt);
+            SubscribeLocalEvent<MobStateComponent, UpdateCanMoveEvent>(OnMoveAttempt);
             SubscribeLocalEvent<MobStateComponent, StandAttemptEvent>(OnStandAttempt);
+            SubscribeLocalEvent<MobStateChangedEvent>(OnStateChanged);
             // Note that there's no check for Down attempts because if a mob's in crit or dead, they can be downed...
         }
 
         #region ActionBlocker
+        private void OnStateChanged(MobStateChangedEvent ev)
+        {
+            _blocker.UpdateCanMove(ev.Entity);
+        }
 
         private void CheckAct(EntityUid uid, MobStateComponent component, CancellableEntityEventArgs args)
         {
@@ -96,11 +103,6 @@ namespace Content.Shared.MobState.EntitySystems
                 CheckAct(uid, component, args);
         }
 
-        private void OnAttackAttempt(EntityUid uid, MobStateComponent component, AttackAttemptEvent args)
-        {
-            CheckAct(uid, component, args);
-        }
-
         private void OnDropAttempt(EntityUid uid, MobStateComponent component, DropAttemptEvent args)
         {
             CheckAct(uid, component, args);
@@ -124,7 +126,7 @@ namespace Content.Shared.MobState.EntitySystems
             component.UpdateState(args.Damageable.TotalDamage);
         }
 
-        private void OnMoveAttempt(EntityUid uid, MobStateComponent component, MovementAttemptEvent args)
+        private void OnMoveAttempt(EntityUid uid, MobStateComponent component, UpdateCanMoveEvent args)
         {
             switch (component.CurrentState)
             {

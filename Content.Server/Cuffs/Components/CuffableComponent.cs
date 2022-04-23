@@ -3,8 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using Content.Server.DoAfter;
 using Content.Server.Hands.Components;
+using Content.Shared.ActionBlocker;
 using Content.Shared.Alert;
 using Content.Shared.Cuffs.Components;
+using Content.Shared.Hands.EntitySystems;
+using Content.Shared.Interaction;
 using Content.Shared.Interaction.Helpers;
 using Content.Shared.Popups;
 using Robust.Server.GameObjects;
@@ -22,9 +25,10 @@ namespace Content.Server.Cuffs.Components
 {
     [RegisterComponent]
     [ComponentReference(typeof(SharedCuffableComponent))]
-    public class CuffableComponent : SharedCuffableComponent
+    public sealed class CuffableComponent : SharedCuffableComponent
     {
         [Dependency] private readonly IEntityManager _entMan = default!;
+        [Dependency] private readonly IEntitySystemManager _sysMan = default!;
 
         /// <summary>
         /// How many of this entity's hands are currently cuffed.
@@ -32,7 +36,7 @@ namespace Content.Server.Cuffs.Components
         [ViewVariables]
         public int CuffedHandCount => Container.ContainedEntities.Count * 2;
 
-        protected EntityUid LastAddedCuffs => Container.ContainedEntities[^1];
+        private EntityUid LastAddedCuffs => Container.ContainedEntities[^1];
 
         public IReadOnlyList<EntityUid> StoredEntities => Container.ContainedEntities;
 
@@ -96,21 +100,20 @@ namespace Content.Server.Cuffs.Components
                 return false;
             }
 
-            if (!handcuff.InRangeUnobstructed(Owner))
+            if (!EntitySystem.Get<SharedInteractionSystem>().InRangeUnobstructed(handcuff, Owner))
             {
                 Logger.Warning("Handcuffs being applied to player are obstructed or too far away! This should not happen!");
                 return true;
             }
 
+            var sys = _sysMan.GetEntitySystem<SharedHandsSystem>();
+
             // Success!
-            if (_entMan.TryGetComponent(user, out HandsComponent? handsComponent) && handsComponent.IsHolding(handcuff))
-            {
-                // Good lord handscomponent is scuffed, I hope some smug person will fix it someday
-                handsComponent.Drop(handcuff);
-            }
+            sys.TryDrop(user, handcuff);
 
             Container.Insert(handcuff);
-            CanStillInteract = _entMan.TryGetComponent(Owner, out HandsComponent? ownerHands) && ownerHands.HandNames.Count() > CuffedHandCount;
+            CanStillInteract = _entMan.TryGetComponent(Owner, out HandsComponent? ownerHands) && ownerHands.Hands.Count() > CuffedHandCount;
+            _sysMan.GetEntitySystem<ActionBlockerSystem>().UpdateCanMove(Owner);
 
             OnCuffedStateChanged?.Invoke();
             UpdateAlert();
@@ -132,23 +135,22 @@ namespace Content.Server.Cuffs.Components
         {
             if (!_entMan.TryGetComponent(Owner, out HandsComponent? handsComponent)) return;
 
-            var itemCount = handsComponent.GetAllHeldItems().Count();
-            var freeHandCount = handsComponent.HandNames.Count() - CuffedHandCount;
+            var sys = _sysMan.GetEntitySystem<SharedHandsSystem>();
 
-            if (freeHandCount < itemCount)
+            var freeHandCount = handsComponent.Hands.Count() - CuffedHandCount;
+
+            foreach (var hand in handsComponent.Hands.Values)
             {
-                foreach (var item in handsComponent.GetAllHeldItems())
+                if (hand.IsEmpty)
+                    continue;
+
+                if (freeHandCount > 0)
                 {
-                    if (freeHandCount < itemCount)
-                    {
-                        freeHandCount++;
-                        handsComponent.Drop(item.Owner, false);
-                    }
-                    else
-                    {
-                        break;
-                    }
+                    freeHandCount--;
+                    continue;
                 }
+
+                sys.TryDrop(Owner, hand, checkActionBlocker: false, handsComp: handsComponent);
             }
         }
 
@@ -210,7 +212,7 @@ namespace Content.Server.Cuffs.Components
                 return;
             }
 
-            if (!isOwner && !user.InRangeUnobstructed(Owner))
+            if (!isOwner && !EntitySystem.Get<SharedInteractionSystem>().InRangeUnobstructed(user, Owner))
             {
                 user.PopupMessage(Loc.GetString("cuffable-component-cannot-remove-cuffs-too-far-message"));
                 return;
@@ -266,7 +268,8 @@ namespace Content.Server.Cuffs.Components
                     }
                 }
 
-                CanStillInteract = _entMan.TryGetComponent(Owner, out HandsComponent? handsComponent) && handsComponent.HandNames.Count() > CuffedHandCount;
+                CanStillInteract = _entMan.TryGetComponent(Owner, out HandsComponent? handsComponent) && handsComponent.SortedHands.Count() > CuffedHandCount;
+                _sysMan.GetEntitySystem<ActionBlockerSystem>().UpdateCanMove(Owner);
                 OnCuffedStateChanged?.Invoke();
                 UpdateAlert();
                 Dirty();

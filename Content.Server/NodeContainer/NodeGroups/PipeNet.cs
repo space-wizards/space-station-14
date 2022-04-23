@@ -1,16 +1,10 @@
-using System;
-using System.Collections.Generic;
 using System.Linq;
 using Content.Server.Atmos;
-using Content.Server.Atmos.Components;
 using Content.Server.Atmos.EntitySystems;
 using Content.Server.NodeContainer.Nodes;
 using Content.Shared.Atmos;
-using Robust.Shared.GameObjects;
 using Robust.Shared.Map;
-using Robust.Shared.Maths;
 using Robust.Shared.Utility;
-using Robust.Shared.ViewVariables;
 
 namespace Content.Server.NodeContainer.NodeGroups
 {
@@ -23,7 +17,7 @@ namespace Content.Server.NodeContainer.NodeGroups
     }
 
     [NodeGroup(NodeGroupID.Pipe)]
-    public class PipeNet : BaseNodeGroup, IPipeNet
+    public sealed class PipeNet : BaseNodeGroup, IPipeNet
     {
         [ViewVariables] public GasMixture Air { get; set; } = new() {Temperature = Atmospherics.T20C};
 
@@ -94,6 +88,13 @@ namespace Content.Server.NodeContainer.NodeGroups
         {
             DebugTools.AssertNotNull(_atmosphereSystem);
             _atmosphereSystem?.RemovePipeNet(this);
+        }
+
+        public override string GetDebugData()
+        {
+            return @$"Pressure: { Air.Pressure:G3}
+Temperature: {Air.Temperature:G3}
+Volume: {Air.Volume:G3}";
         }
     }
 }

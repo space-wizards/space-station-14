@@ -8,7 +8,7 @@
   description: Some cultures find them terrifying, others crunchy on the teeth.
   components:
   - type: MovementSpeedModifier
-    baseWalkSpeed : 6
+    baseWalkSpeed : 3
     baseSprintSpeed : 6
   - type: Sprite
     drawdepth: Mobs
@@ -26,7 +26,6 @@
       mask:
       - Impassable
       - MobImpassable #Bullets?!
-      - VaultImpassable
       - SmallImpassable
       layer:
       - Opaque
@@ -37,8 +36,28 @@
       crit: dead
       dead: dead
   - type: Butcherable
-    meat: FoodMeat
-    pieces: 1
+    spawned:
+    - id: FoodMeat
+      amount: 1
+  - type: InteractionPopup
+    successChance: 0.2
+    interactSuccessString: petting-success-soft-floofy
+    interactFailureString: petting-failure-bat
+    interactSuccessSound:
+      path: /Audio/Animals/fox_squeak.ogg
+  - type: SentienceTarget
+    flavorKind: organic
+  - type: Bloodstream
+    bloodMaxVolume: 50
+  - type: ReplacementAccent
+    accent: mouse
+  - type: UnarmedCombat
+    range: 1.5
+    arcwidth: 0
+    arc: bite
+    damage:
+      types:
+        Piercing: 5
 
 - type: entity
   name: bee
@@ -46,6 +65,11 @@
   id: MobBee
   description: Nice to have, but you can't build a civilization on a foundation of honey alone.
   components:
+  - type: CombatMode
+    disarmAction:
+      enabled: false
+      autoPopulate: false
+      name: action-name-disarm
   - type: MovementSpeedModifier
     baseWalkSpeed : 7
     baseSprintSpeed : 7
@@ -68,7 +92,6 @@
       mask:
       - Impassable
       - MobImpassable #Bullets?!
-      - VaultImpassable
       - SmallImpassable
       layer:
       - Opaque
@@ -86,6 +109,8 @@
   - type: Tag
     tags:
     - Bee
+  - type: Bloodstream
+    bloodMaxVolume: 0.1
 
 - type: entity
   name: bee
@@ -94,6 +119,11 @@
   id: MobAngryBee
   description: How nice a bee. Oh no, it looks angry and wants my pizza.
   components:
+  - type: CombatMode
+    disarmAction:
+      enabled: false
+      autoPopulate: false
+      name: action-name-disarm
   - type: UnarmedCombat
     range: 0.3
     arcwidth: 0
@@ -105,9 +135,13 @@
   - type: UtilityAI
     behaviorSets:
     - UnarmedAttackHostiles
+    - Idle
   - type: AiFactionTag
     factions:
     - SimpleHostile
+  - type: Bloodstream
+    bloodMaxVolume: 0.1
+
 
 - type: entity
   name: chicken
@@ -128,8 +162,17 @@
       crit: dead-0
       dead: dead-0
   - type: Butcherable
-    meat: FoodMeatChicken
-    pieces: 1
+    spawned:
+    - id: FoodMeatChicken
+      amount: 1
+  - type: InteractionPopup
+    successChance: 0.8
+    interactSuccessString: petting-success-bird
+    interactFailureString: petting-failure-generic
+    interactSuccessSound:
+      path: /Audio/Animals/chicken_cluck_happy.ogg
+  - type: Bloodstream
+    bloodMaxVolume: 100
 
 - type: entity
   name: mallard duck #Quack
@@ -150,8 +193,17 @@
       crit: dead-0
       dead: dead-0
   - type: Butcherable
-    meat: FoodMeatDuck
-    pieces: 1
+    spawned:
+    - id: FoodMeatDuck
+      amount: 1
+  - type: InteractionPopup
+    successChance: 0.9
+    interactSuccessString: petting-success-bird
+    interactFailureString: petting-failure-generic
+    interactSuccessSound:
+      path: /Audio/Animals/duck_quack_happy.ogg
+  - type: Bloodstream
+    bloodMaxVolume: 100
 
 - type: entity
   name: white duck #Quack
@@ -172,8 +224,17 @@
       crit: dead-1
       dead: dead-1
   - type: Butcherable
-    meat: FoodMeatDuck
-    pieces: 1
+    spawned:
+    - id: FoodMeatDuck
+      amount: 1
+  - type: InteractionPopup
+    successChance: 0.9
+    interactSuccessString: petting-success-bird
+    interactFailureString: petting-failure-generic
+    interactSuccessSound:
+      path: /Audio/Animals/duck_quack_happy.ogg
+  - type: Bloodstream
+    bloodMaxVolume: 100
 
 - type: entity
   name: brown duck #Quack
@@ -194,8 +255,17 @@
       crit: dead-2
       dead: dead-2
   - type: Butcherable
-    meat: FoodMeatDuck
-    pieces: 1
+    spawned:
+    - id: FoodMeatDuck
+      amount: 1
+  - type: InteractionPopup
+    successChance: 0.9
+    interactSuccessString: petting-success-bird
+    interactFailureString: petting-failure-generic
+    interactSuccessSound:
+      path: /Audio/Animals/duck_quack_happy.ogg
+  - type: Bloodstream
+    bloodMaxVolume: 100
 
 - type: entity
   name: butterfly
@@ -222,7 +292,6 @@
       mask:
       - Impassable
       - MobImpassable #Bullets?!
-      - VaultImpassable
       - SmallImpassable
       layer:
       - Opaque
@@ -247,6 +316,8 @@
       normal: butterfly
       crit: dead
       dead: dead
+  - type: Bloodstream
+    bloodMaxVolume: 0.1
 
 - type: entity
   name: cow
@@ -270,7 +341,6 @@
       mask:
       - Impassable
       - MobImpassable
-      - VaultImpassable
       - SmallImpassable
       layer:
       - Opaque
@@ -293,8 +363,20 @@
     quantity: 25
     updateRate: 30
   - type: Butcherable
-    meat: FoodMeat
-    pieces: 5
+    spawned:
+    - id: FoodMeat
+      amount: 5
+  - type: Grammar
+    attributes:
+      gender: female # Here because of UdderComponent
+  - type: InteractionPopup
+    successChance: 0.7
+    interactDelay: 2 # Avoids overlapping SFX due to spam - these SFX are a little longer than the typical 1 second.
+    interactSuccessString: petting-success-soft-floofy
+    interactFailureString: petting-failure-generic
+    interactSuccessSound:
+      path: /Audio/Animals/cow_moo.ogg
+
 
 - type: entity
   name: crab
@@ -318,7 +400,6 @@
       mask:
       - Impassable
       - MobImpassable #Bullets!?
-      - VaultImpassable
       - SmallImpassable
       layer:
       - Opaque
@@ -330,14 +411,21 @@
       dead: dead
     - type: AsteroidRockVisualizer
   - type: Butcherable
-    meat: FoodMeatCrab
-    pieces: 2
+    spawned:
+    - id: FoodMeatCrab
+      amount: 2
+  - type: InteractionPopup
+    successChance: 0.5
+    interactSuccessString: petting-success-crab
+    interactFailureString: petting-failure-crab
+  - type: Bloodstream
+    bloodMaxVolume: 50
 
 - type: entity
   name: goat
   parent: SimpleMobBase
   id: MobGoat
-  description: His spine consists of long sharp segments, no wonder he is so grumpy.
+  description: Her spine consists of long sharp segments, no wonder she is so grumpy.
   components:
   - type: Sprite
     drawdepth: Mobs
@@ -364,8 +452,18 @@
     quantity: 25
     updateRate: 20
   - type: Butcherable
-    meat: FoodMeat
-    pieces: 4
+    spawned:
+    - id: FoodMeat
+      amount: 4
+  - type: Grammar
+    attributes:
+      gender: female # Here because of UdderComponent
+  - type: InteractionPopup
+    successChance: 0.2
+    interactSuccessString: petting-success-goat
+    interactFailureString: petting-failure-goat
+    interactSuccessSound:
+      path: /Audio/Animals/goat_bah.ogg
 
 # Note that we gotta make this bitch vomit someday when you feed it anthrax or sumthin. Needs to be a small item thief too and aggressive if attacked.
 - type: entity
@@ -387,8 +485,17 @@
       crit: dead
       dead: dead
   - type: Butcherable
-    meat: FoodMeatChicken
-    pieces: 2
+    spawned:
+    - id: FoodMeatChicken
+      amount: 2
+  - type: InteractionPopup # TODO: Make it so there's a separate chance to make certain animals outright hostile towards you.
+    successChance: 0.1 # Yeah, good luck with that.
+    interactSuccessString: petting-success-goose
+    interactFailureString: petting-failure-goose
+    interactSuccessSound:
+      path: /Audio/Animals/goose_honk.ogg
+  - type: Bloodstream
+    bloodMaxVolume: 100
 
 - type: entity
   name: gorilla
@@ -412,7 +519,6 @@
       mask:
       - Impassable
       - MobImpassable
-      - VaultImpassable
       - SmallImpassable
       layer:
       - Opaque
@@ -423,8 +529,11 @@
       crit: dead
       dead: dead
   - type: Butcherable
-    meat: FoodMeat
-    pieces: 4
+    spawned:
+    - id: FoodMeat
+      amount: 4
+  - type: Bloodstream
+    bloodMaxVolume: 300
 
 - type: entity
   name: kangaroo
@@ -434,7 +543,7 @@
   components:
   - type: MovementSpeedModifier
     baseWalkSpeed: 4
-    baseSprintSpeed: 7
+    baseSprintSpeed: 6
   - type: Sprite
     drawdepth: Mobs
     layers:
@@ -451,7 +560,6 @@
         mask:
           - Impassable
           - MobImpassable #Bullets?!
-          - VaultImpassable
           - SmallImpassable
         layer:
           - Opaque
@@ -501,13 +609,17 @@
   parent: SimpleMobBase
   description: New church of neo-darwinists actually believe that EVERY animal evolved from a monkey. Tastes like pork, and killing them is both fun and relaxing.
   components:
-  - type: GhostTakeoverAvailable
-    makeSentient: true
-    name: monkey
-    description: Ook ook!
-    rules: |
-      Being a monkey does NOT give you a free pass to kill, RDM or self-antag.
-
+  - type: NameIdentifier
+    group: Monkey
+  - type: SentienceTarget
+    flavorKind: primate
+  - type: Inventory
+    templateId: monkey
+  - type: Strippable
+  - type: UserInterface
+    interfaces:
+    - key: enum.StrippingUiKey.Key
+      type: StrippableBoundUserInterface
   - type: Sprite
     drawdepth: Mobs
     layers:
@@ -524,13 +636,14 @@
       normal: monkey
       crit: dead
       dead: dead
-    - type: HandsVisualizer
     - type: FireVisualizer
       sprite: Mobs/Effects/onfire.rsi
       normalState: Monkey_burning
   - type: Butcherable
-    meat: FoodMeat
-    pieces: 3
+    butcheringType: Spike
+    spawned:
+    - id: FoodMeat
+      amount: 3
   - type: MonkeyAccent
 
 - type: entity
@@ -542,15 +655,16 @@
   - type: GhostTakeoverAvailable
     makeSentient: true
     name: mouse
-    description: A mouse in maint.
+    description: A hungry and mischievous mouse.
   - type: Sprite
-    drawdepth: Mobs
+    drawdepth: FloorObjects
     layers:
     - map: ["enum.DamageStateVisualLayers.Base"]
       state: mouse-0
       sprite: Mobs/Animals/mouse.rsi
   - type: Clothing
-    QuickEquip: false
+    size: 5
+    quickEquip: false
     sprite: Mobs/Animals/mouse.rsi
     HeldPrefix: 0
     Slots:
@@ -563,10 +677,8 @@
         radius: 0.2
       mass: 10
       mask:
-      - Impassable
-      - MobImpassable #Bullets?!
-      - VaultImpassable
       - SmallImpassable
+      - MobImpassable
       layer:
       - Opaque
   - type: MobState
@@ -584,6 +696,8 @@
       crit: dead-0
       dead: splat-0
   - type: Food
+  - type: Hunger
+    baseDecayRate: 0.5 # I'm very hungry! Give me. The cheese.
   - type: Extractable
     grindableSolutionName: food
   - type: SolutionContainerManager
@@ -592,14 +706,49 @@
         reagents:
         - ReagentId: Nutriment
           Quantity: 5
+        - ReagentId: Blood
+          Quantity: 50
   - type: Butcherable
-    meat: FoodMeat
-    pieces: 1
+    spawned:
+    - id: FoodMeat
+      amount: 1
   - type: ReplacementAccent
     accent: mouse
   - type: Tag
     tags:
     - Trash
+    - CannotSuicide
+  - type: Recyclable
+  - type: Respirator
+    damage:
+      types:
+        Asphyxiation: 0.25
+    damageRecovery:
+      types:
+        Asphyxiation: -0.25
+  - type: Barotrauma
+    damage:
+      types:
+        Blunt: 0.1
+  - type: HumanoidAppearance # no this doesnt make sense but its needed for vocal
+  - type: Vocal
+    # mice are gender neutral who cares
+    maleScream: /Audio/Animals/mouse_squeak.ogg
+    femaleScream: /Audio/Animals/mouse_squeak.ogg
+    wilhelmProbability: 0.001
+  # TODO: Remove CombatMode when Prototype Composition is added
+  - type: CombatMode
+    combatToggleAction:
+      enabled: false
+      autoPopulate: false
+      name: action-name-combat
+    disarmAction:
+      enabled: false
+      autoPopulate: false
+      name: action-name-disarm
+  - type: Bloodstream
+    bloodMaxVolume: 50
+  - type: DiseaseCarrier #The other class lab animal and disease vector
 
 
 - type: entity
@@ -620,6 +769,10 @@
       normal: mouse-1
       crit: dead-1
       dead: splat-1
+  - type: Bloodstream
+    bloodMaxVolume: 50
+  - type: DiseaseCarrier #Why doesn't this save if it's only on the parent wtf
+
 
 - type: entity
   parent: MobMouse
@@ -639,10 +792,13 @@
       normal: mouse-2
       crit: dead-2
       dead: splat-2
+  - type: Bloodstream
+    bloodMaxVolume: 50
+  - type: DiseaseCarrier
 
 
 - type: entity
-  name: lizard
+  name: lizard #Weh
   parent: SimpleMobBase
   id: MobLizard
   description: I think it's lost.
@@ -666,7 +822,6 @@
       mask:
       - Impassable
       - MobImpassable #Bullets?!
-      - VaultImpassable
       - SmallImpassable
       layer:
       - Opaque
@@ -677,8 +832,20 @@
       crit: dead
       dead: dead
   - type: Butcherable
-    meat: FoodMeat
-    pieces: 1
+    spawned:
+    - id: FoodMeat
+      amount: 1
+  - type: InteractionPopup
+    successChance: 0.3
+    interactSuccessString: petting-success-reptile
+    interactFailureString: petting-failure-generic
+    interactSuccessSound:
+      path: /Audio/Animals/lizard_happy.ogg
+  - type: Bloodstream
+    bloodMaxVolume: 50
+  - type: Damageable
+    damageContainer: Biological
+    damageModifierSet: Scale
 
 - type: entity
   name: frog
@@ -705,7 +872,6 @@
       mask:
       - Impassable
       - MobImpassable #Bullets?!
-      - VaultImpassable
       - SmallImpassable
       layer:
       - Opaque
@@ -716,8 +882,17 @@
       crit: dead
       dead: dead
   - type: Butcherable
-    meat: FoodMeat
-    pieces: 1
+    spawned:
+    - id: FoodMeat
+      amount: 1
+  - type: InteractionPopup
+    successChance: 0.6
+    interactSuccessString: petting-success-frog
+    interactFailureString: petting-failure-generic
+    interactSuccessSound:
+      path: /Audio/Animals/frog_ribbit.ogg
+  - type: Bloodstream
+    bloodMaxVolume: 50
 
 # Would be cool to have some functionality for the parrot to be able to sit on stuff
 - type: entity
@@ -745,7 +920,6 @@
       mask:
       - Impassable
       - MobImpassable #Bullets?!
-      - VaultImpassable
       - SmallImpassable
       layer:
       - Opaque
@@ -756,8 +930,17 @@
       crit: dead
       dead: dead
   - type: Butcherable
-    meat: FoodMeat
-    pieces: 1
+    spawned:
+    - id: FoodMeat
+      amount: 1
+  - type: InteractionPopup
+    successChance: 0.6
+    interactSuccessString: petting-success-bird
+    interactFailureString: petting-failure-generic
+    interactSuccessSound:
+      path: /Audio/Animals/parrot_raught.ogg
+  - type: Bloodstream
+    bloodMaxVolume: 50
 
 - type: entity
   name: penguin
@@ -781,7 +964,6 @@
       mask:
       - Impassable
       - MobImpassable #Bullets?!
-      - VaultImpassable
       - SmallImpassable
       layer:
       - Opaque
@@ -792,9 +974,82 @@
       crit: penguin_dead
       dead: penguin_dead
   - type: Butcherable
-    meat: FoodMeatPenguin
-    pieces: 3
+    spawned:
+    - id: FoodMeatPenguin
+      amount: 3
+  - type: InteractionPopup
+    successChance: 0.5
+    interactSuccessString: petting-success-bird
+    interactFailureString: petting-failure-generic
+    interactSuccessSound:
+      path: /Audio/Animals/penguin_squawk.ogg
 
+- type: entity
+  name: grenade penguin
+  parent: SimpleMobBase
+  id: MobGrenadePenguin
+  description: A small penguin with a grenade strapped around its neck. Harvested by the Syndicate from icy shit-hole planets.
+  components:
+  - type: MovementSpeedModifier
+    baseWalkSpeed : 7
+    baseSprintSpeed : 7
+  - type: UtilityAI
+    behaviorSets:
+    - UnarmedAttackHostiles
+  - type: AiFactionTag
+    factions:
+    - Syndicate
+  - type: Sprite
+    drawdepth: Mobs
+    layers:
+    - map: ["enum.DamageStateVisualLayers.Base"]
+      state: penguin
+      sprite: Mobs/Animals/grenadepenguin.rsi
+  - type: Physics
+  - type: Fixtures
+    fixtures:
+    - shape:
+        !type:PhysShapeCircle
+        radius: 0.25
+      mass: 10
+      mask:
+      - Impassable
+      - MobImpassable #Bullets?!
+      - SmallImpassable
+      layer:
+      - Opaque
+  - type: Appearance
+    visuals:
+    - type: DamageStateVisualizer
+      normal: penguin
+      crit: dead
+      dead: dead
+  - type: Butcherable
+    spawned:
+    - id: FoodMeatPenguin
+      amount: 3
+  - type: UnarmedCombat
+    range: 0.5
+    arcwidth: 0
+    arc: bite
+    damage:
+      groups:
+        Brute: 5
+  - type: Item
+    size: 80
+  - type: OnUseTimerTrigger
+    delay: 10
+    beepSound:
+      path: /Audio/Weapons/Guns/MagOut/pistol_magout.ogg #funny sfx use
+    beepInterval: 1
+  - type: Explosive
+    explosionType: Default
+    maxIntensity: 20
+    intensitySlope: 20
+    totalIntensity: 225
+  - type: ExplodeOnTrigger
+
+  # I have included a snake_hiss.ogg sound file so if you want to use that be my guest
 - type: entity
   name: snake
   parent: SimpleMobBase
@@ -817,7 +1072,6 @@
       mask:
       - Impassable
       - MobImpassable #Bullets?!
-      - VaultImpassable
       - SmallImpassable
       layer:
       - Opaque
@@ -831,8 +1085,18 @@
      # dead: dead
      # crit: dead
   - type: Butcherable
-    meat: FoodMeat
-    pieces: 1
+    spawned:
+    - id: FoodMeat
+      amount: 1
+  - type: InteractionPopup
+    successChance: 0.6
+    interactSuccessString: petting-success-reptile
+    interactFailureString: petting-failure-generic
+  - type: Bloodstream
+    bloodMaxVolume: 50
+  - type: Damageable
+    damageContainer: Biological
+    damageModifierSet: Scale
 
 # Code unique spider prototypes or combine them all into one spider and get a
 # random sprite state when you spawn it.
@@ -858,7 +1122,6 @@
       mask:
       - Impassable
       - MobImpassable #Bullets?!
-      - VaultImpassable
       - SmallImpassable
       layer:
       - Opaque
@@ -869,5 +1132,214 @@
       crit: tarantula_dead
       dead: tarantula_dead
   - type: Butcherable
-    meat: FoodMeatSpider
-    pieces: 2
+    spawned:
+    - id: FoodMeatSpider
+      amount: 2
+  - type: CombatMode
+    disarmAction:
+      enabled: false
+      autoPopulate: false
+      name: action-name-disarm
+  - type: ReplacementAccent
+    accent: xeno
+  - type: InteractionPopup
+    successChance: 0.5
+    interactSuccessString: petting-success-tarantula
+    interactFailureString: petting-failure-generic
+
+- type: entity
+  name: tarantula
+  parent: MobGiantSpider
+  id: MobGiantSpiderAngry
+  suffix: Angry
+  components:
+    - type: AiFactionTag
+      factions:
+        - Xeno
+    - type: UtilityAI
+      behaviorSets:
+        - Idle
+        - UnarmedAttackHostiles
+    - type: GhostTakeoverAvailable
+      makeSentient: true
+      name: giant spider
+      description: Wreak havoc on the station's inhabitants!
+
+- type: entity
+  name: possum
+  parent: SimpleMobBase
+  id: MobPossum
+  description: '"O Possum! My Possum!" -- Walt Whitman, 1865'
+  components:
+  - type: Sprite
+    drawdepth: Mobs
+    sprite: Mobs/Animals/possum.rsi
+    layers:
+    - map: ["enum.DamageStateVisualLayers.Base"]
+      state: possum
+  - type: Physics
+  - type: Fixtures
+    fixtures:
+    - shape:
+        !type:PhysShapeCircle
+        radius: 0.35
+      mass: 10
+      mask:
+      - Impassable
+      - MobImpassable
+      - VaultImpassable
+      - SmallImpassable
+      layer:
+      - Opaque
+  - type: Appearance
+    visuals:
+    - type: DamageStateVisualizer
+      normal: possum
+      crit: possum_dead # TODO: Make it so possums can "play dead." Probably need AI changes
+      dead: possum_dead
+  - type: Butcherable
+    spawned:
+    - id: FoodMeat
+      amount: 3
+  - type: InteractionPopup
+    successChance: 0.2 # Low when undomesticated.
+    interactSuccessString: petting-success-possum # Possums don't really make much noise when they're happy. They make clicking noises as a mating call, but that is NOT the same thing!
+    interactFailureString: petting-failure-possum
+    interactFailureSound:
+      path: /Audio/Animals/cat_hiss.ogg # This sound effect is intended for generic hissing. For easy reference it's named after the animal it came from IRL.
+  - type: Grammar
+    attributes:
+      gender: epicene
+
+- type: entity
+  name: Morty
+  parent: MobPossum
+  id: MobPossumMorty
+  description: The station's resident Didelphis virginiana. A sensitive but resilient kind of guy.
+  components:
+  - type: InteractionPopup
+    successChance: 1.0 # Hey, c'mon, this is Morty we're talking about here.
+  - type: Grammar
+    attributes:
+      proper: true
+      gender: male
+
+- type: entity
+  name: raccoon
+  parent: SimpleMobBase
+  id: MobRaccoon
+  description: Trash panda!
+  components:
+  - type: Sprite
+    drawdepth: Mobs
+    sprite: Mobs/Animals/raccoon.rsi
+    layers:
+    - map: ["enum.DamageStateVisualLayers.Base"]
+      state: raccoon
+  - type: Physics
+  - type: Fixtures
+    fixtures:
+    - shape:
+        !type:PhysShapeCircle
+        radius: 0.35
+      mass: 10
+      mask:
+      - Impassable
+      - MobImpassable
+      - VaultImpassable
+      - SmallImpassable
+      layer:
+      - Opaque
+  - type: Appearance
+    visuals:
+    - type: DamageStateVisualizer
+      normal: raccoon
+      crit: raccoon_dead
+      dead: raccoon_dead
+  - type: Butcherable
+    spawned:
+    - id: FoodMeat
+      amount: 3
+  - type: InteractionPopup
+    successChance: 0.2 # Low when undomesticated.
+    interactSuccessString: petting-success-soft-floofy
+    interactFailureString: petting-failure-generic
+    interactSuccessSound:
+      path: /Audio/Animals/raccoon_chatter.ogg
+  - type: Grammar
+    attributes:
+      gender: epicene
+
+- type: entity
+  name: Morticia
+  parent: MobRaccoon
+  id: MobRaccoonMorticia
+  description: A powerful creature of the night. Her eyeshadow is always on point.
+  components:
+  - type: InteractionPopup
+    successChance: 0.7
+  - type: Grammar
+    attributes:
+      proper: true
+      gender: female
+
+- type: entity
+  name: fox
+  parent: SimpleMobBase
+  id: MobFox
+  description: They're a fox.
+  components:
+  - type: Sprite
+    drawdepth: Mobs
+    sprite: Mobs/Animals/fox.rsi
+    layers:
+    - map: ["enum.DamageStateVisualLayers.Base"]
+      state: fox
+  - type: Physics
+  - type: Fixtures
+    fixtures:
+    - shape:
+        !type:PhysShapeCircle
+        radius: 0.35
+      mass: 10
+      mask:
+      - Impassable
+      - MobImpassable
+      - VaultImpassable
+      - SmallImpassable
+      layer:
+      - Opaque
+  - type: Appearance
+    visuals:
+    - type: DamageStateVisualizer
+      normal: fox
+      crit: fox_dead
+      dead: fox_dead
+  - type: Butcherable
+    spawned:
+    - id: FoodMeat
+      amount: 3
+  - type: InteractionPopup
+    successChance: 0.5
+    interactSuccessString: petting-success-soft-floofy
+    interactFailureString: petting-failure-generic
+    interactSuccessSound:
+      path: /Audio/Animals/fox_squeak.ogg
+  - type: Grammar
+    attributes:
+      gender: epicene
+  - type: Bloodstream
+    bloodMaxVolume: 100
+
+- type: entity
+  name: Renault
+  parent: MobFox
+  id: MobFoxRenault
+  description: The captain's trustworthy fox.
+  components:
+  - type: InteractionPopup
+    successChance: 1
+  - type: Grammar
+    attributes:
+      proper: true
+      gender: female

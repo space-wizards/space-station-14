@@ -8,7 +8,7 @@ namespace Content.Server.Chemistry.ReagentEffects;
 /// <summary>
 ///     Ignites a mob.
 /// </summary>
-public class Ignite : ReagentEffect
+public sealed class Ignite : ReagentEffect
 {
     public override bool ShouldLog => true;
     public override LogImpact LogImpact => LogImpact.Medium;

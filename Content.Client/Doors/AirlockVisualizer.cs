@@ -4,6 +4,7 @@ using Content.Shared.Doors.Components;
 using JetBrains.Annotations;
 using Robust.Client.Animations;
 using Robust.Client.GameObjects;
+using Robust.Client.ResourceManagement;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Serialization;
@@ -13,10 +14,11 @@ using Robust.Shared.Timing;
 namespace Content.Client.Doors
 {
     [UsedImplicitly]
-    public class AirlockVisualizer : AppearanceVisualizer, ISerializationHooks
+    public sealed class AirlockVisualizer : AppearanceVisualizer, ISerializationHooks
     {
         [Dependency] private readonly IEntityManager _entMan = default!;
         [Dependency] private readonly IGameTiming _gameTiming = default!;
+        [Dependency] private readonly IResourceCache _resourceCache = default!;
 
         private const string AnimationKey = "airlock_animation";
 
@@ -25,6 +27,10 @@ namespace Content.Client.Doors
 
         [DataField("denyAnimationTime")]
         private float _denyDelay = 0.3f;
+
+
+        [DataField("emagAnimationTime")]
+        private float _delayEmag = 1.5f;
 
         /// <summary>
         ///     Whether the maintenance panel is animated or stays static.
@@ -55,12 +61,13 @@ namespace Content.Client.Doors
         private Animation CloseAnimation = default!;
         private Animation OpenAnimation = default!;
         private Animation DenyAnimation = default!;
+        private Animation EmaggingAnimation = default!;
 
         void ISerializationHooks.AfterDeserialization()
         {
             IoCManager.InjectDependencies(this);
 
-            CloseAnimation = new Animation {Length = TimeSpan.FromSeconds(_delay)};
+            CloseAnimation = new Animation { Length = TimeSpan.FromSeconds(_delay) };
             {
                 var flick = new AnimationTrackSpriteFlick();
                 CloseAnimation.AnimationTracks.Add(flick);
@@ -84,7 +91,7 @@ namespace Content.Client.Doors
                 }
             }
 
-            OpenAnimation = new Animation {Length = TimeSpan.FromSeconds(_delay)};
+            OpenAnimation = new Animation { Length = TimeSpan.FromSeconds(_delay) };
             {
                 var flick = new AnimationTrackSpriteFlick();
                 OpenAnimation.AnimationTracks.Add(flick);
@@ -107,10 +114,17 @@ namespace Content.Client.Doors
                     }
                 }
             }
+            EmaggingAnimation = new Animation { Length = TimeSpan.FromSeconds(_delay) };
+            {
+                var flickUnlit = new AnimationTrackSpriteFlick();
+                EmaggingAnimation.AnimationTracks.Add(flickUnlit);
+                flickUnlit.LayerKey = DoorVisualLayers.BaseUnlit;
+                flickUnlit.KeyFrames.Add(new AnimationTrackSpriteFlick.KeyFrame("sparks", 0f));
+            }
 
             if (!_simpleVisuals)
             {
-                DenyAnimation = new Animation {Length = TimeSpan.FromSeconds(_denyDelay)};
+                DenyAnimation = new Animation { Length = TimeSpan.FromSeconds(_denyDelay) };
                 {
                     var flick = new AnimationTrackSpriteFlick();
                     DenyAnimation.AnimationTracks.Add(flick);
@@ -149,6 +163,18 @@ namespace Content.Client.Doors
             var weldedVisible = false;
             var emergencyLightsVisible = false;
 
+            if (component.TryGetData(DoorVisuals.BaseRSI, out string baseRsi))
+            {
+                if (!_resourceCache.TryGetResource<RSIResource>(SharedSpriteComponent.TextureRoot / baseRsi, out var res))
+                {
+                    Logger.Error("Unable to load RSI '{0}'. Trace:\n{1}", baseRsi, Environment.StackTrace);
+                }
+                foreach (ISpriteLayer layer in sprite.AllLayers)
+                {
+                    layer.Rsi = res?.RSI;
+                }
+            }
+
             if (animPlayer.HasRunningAnimation(AnimationKey))
             {
                 animPlayer.Stop(AnimationKey);
@@ -186,6 +212,9 @@ namespace Content.Client.Doors
                 case DoorState.Welded:
                     weldedVisible = true;
                     break;
+                case DoorState.Emagging:
+                    animPlayer.Play(EmaggingAnimation, AnimationKey);
+                    break;
                 default:
                     throw new ArgumentOutOfRangeException();
             }
@@ -211,10 +240,10 @@ namespace Content.Client.Doors
                 sprite.LayerSetVisible(DoorVisualLayers.BaseBolted, unlitVisible && boltedVisible);
                 if (_emergencyAccessLayer)
                 {
-                    sprite.LayerSetVisible(DoorVisualLayers.BaseEmergencyAccess, 
-                            emergencyLightsVisible 
-                            && state != DoorState.Open 
-                            && state != DoorState.Opening 
+                    sprite.LayerSetVisible(DoorVisualLayers.BaseEmergencyAccess,
+                            emergencyLightsVisible
+                            && state != DoorState.Open
+                            && state != DoorState.Opening
                             && state != DoorState.Closing
                             && unlitVisible);
                 }

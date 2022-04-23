@@ -258,7 +258,7 @@ namespace Content.Server.Weapon.Melee
                 var castAngle = new Angle(baseAngle + increment * i);
                 var res = Get<SharedPhysicsSystem>().IntersectRay(mapId,
                     new CollisionRay(position, castAngle.ToWorldVec(),
-                        (int) (CollisionGroup.Impassable | CollisionGroup.MobImpassable)), range, ignore).ToList();
+                        (int) (CollisionGroup.MobMask | CollisionGroup.Opaque)), range, ignore).ToList();
 
                 if (res.Count != 0)
                 {
@@ -295,7 +295,7 @@ namespace Content.Server.Weapon.Melee
             foreach (var bloodstream in hitBloodstreams)
             {
                 var individualInjection = solutionToInject.SplitSolution(volPerBloodstream);
-                _bloodstreamSystem.TryAddToBloodstream((bloodstream).Owner, individualInjection, bloodstream);
+                _bloodstreamSystem.TryAddToChemicals((bloodstream).Owner, individualInjection, bloodstream);
             }
         }
 
@@ -315,7 +315,7 @@ namespace Content.Server.Weapon.Melee
     ///     Raised directed on the melee weapon entity used to attack something in combat mode,
     ///     whether through a click attack or wide attack.
     /// </summary>
-    public class MeleeHitEvent : HandledEntityEventArgs
+    public sealed class MeleeHitEvent : HandledEntityEventArgs
     {
         /// <summary>
         ///     Modifier sets to apply to the hit event when it's all said and done.
@@ -358,7 +358,7 @@ namespace Content.Server.Weapon.Melee
     ///     Raised directed on the melee weapon entity used to attack something in combat mode,
     ///     whether through a click attack or wide attack.
     /// </summary>
-    public class MeleeInteractEvent : EntityEventArgs
+    public sealed class MeleeInteractEvent : EntityEventArgs
     {
         /// <summary>
         ///     The entity interacted with.

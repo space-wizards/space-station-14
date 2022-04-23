@@ -5,22 +5,20 @@ using Content.Server.DeviceNetwork.Systems;
 using Content.Server.Ghost;
 using Content.Server.Light.Components;
 using Content.Server.MachineLinking.Events;
+using Content.Server.MachineLinking.Components;
 using Content.Server.Power.Components;
 using Content.Server.Temperature.Components;
 using Content.Shared.Audio;
 using Content.Shared.Damage;
 using Content.Shared.Database;
 using Content.Shared.Hands.Components;
+using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Interaction;
 using Content.Shared.Light;
 using Content.Shared.Popups;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.Containers;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Localization;
-using Robust.Shared.Maths;
 using Robust.Shared.Player;
 using Robust.Shared.Timing;
 
@@ -29,7 +27,7 @@ namespace Content.Server.Light.EntitySystems
     /// <summary>
     ///     System for the PoweredLightComponens
     /// </summary>
-    public class PoweredLightSystem : EntitySystem
+    public sealed class PoweredLightSystem : EntitySystem
     {
         [Dependency] private readonly IGameTiming _gameTiming = default!;
         [Dependency] private readonly DamageableSystem _damageableSystem = default!;
@@ -37,6 +35,7 @@ namespace Content.Server.Light.EntitySystems
         [Dependency] private readonly LightBulbSystem _bulbSystem = default!;
         [Dependency] private readonly SharedPopupSystem _popupSystem = default!;
         [Dependency] private readonly AdminLogSystem _logSystem = default!;
+        [Dependency] private readonly SharedHandsSystem _handsSystem = default!;
 
         private static readonly TimeSpan ThunkDelay = TimeSpan.FromSeconds(2);
 
@@ -52,7 +51,7 @@ namespace Content.Server.Light.EntitySystems
             SubscribeLocalEvent<PoweredLightComponent, DamageChangedEvent>(HandleLightDamaged);
 
             SubscribeLocalEvent<PoweredLightComponent, SignalReceivedEvent>(OnSignalReceived);
-            SubscribeLocalEvent<PoweredLightComponent, PacketSentEvent>(OnPacketReceived);
+            SubscribeLocalEvent<PoweredLightComponent, DeviceNetworkPacketEvent>(OnPacketReceived);
 
             SubscribeLocalEvent<PoweredLightComponent, PowerChangedEvent>(OnPowerChanged);
         }
@@ -60,6 +59,11 @@ namespace Content.Server.Light.EntitySystems
         private void OnInit(EntityUid uid, PoweredLightComponent light, ComponentInit args)
         {
             light.LightBulbContainer = light.Owner.EnsureContainer<ContainerSlot>("light_bulb");
+
+            var receiver = EnsureComp<SignalReceiverComponent>(uid);
+            foreach (string port in new[] { "On", "Off", "Toggle" })
+                if (!receiver.Inputs.ContainsKey(port))
+                    receiver.AddPort(port);
         }
 
         private void OnMapInit(EntityUid uid, PoweredLightComponent light, MapInitEvent args)
@@ -163,7 +167,7 @@ namespace Content.Server.Light.EntitySystems
                 return null;
 
             // check if light has bulb
-            if (GetBulb(uid, light) is not {Valid: true} bulb)
+            if (GetBulb(uid, light) is not { Valid: true } bulb)
                 return null;
 
             // try to remove bulb from container
@@ -171,11 +175,7 @@ namespace Content.Server.Light.EntitySystems
                 return null;
 
             // try to place bulb in hands
-            if (userUid != null)
-            {
-                if (EntityManager.TryGetComponent(userUid.Value, out SharedHandsComponent? hands))
-                    hands.PutInHand(bulb);
-            }
+            _handsSystem.PickupOrDrop(userUid, bulb);
 
             UpdateLight(uid, light);
             return bulb;
@@ -244,7 +244,6 @@ namespace Content.Server.Light.EntitySystems
             }
             else
             {
-                powerReceiver.Load = (light.On && lightBulb.State == LightBulbState.Normal) ? lightBulb.PowerUse : 0;
 
                 switch (lightBulb.State)
                 {
@@ -275,6 +274,8 @@ namespace Content.Server.Light.EntitySystems
                         appearance?.SetData(PoweredLightVisuals.BulbState, PoweredLightState.Burned);
                         break;
                 }
+
+                powerReceiver.Load = (light.On && lightBulb.State == LightBulbState.Normal) ? lightBulb.PowerUse : 0;
             }
         }
 
@@ -336,17 +337,17 @@ namespace Content.Server.Light.EntitySystems
         {
             switch (args.Port)
             {
-                case "state":
-                    ToggleLight(uid, component);
-                    break;
+                case "On": SetState(uid, true, component); break;
+                case "Off": SetState(uid, false, component); break;
+                case "Toggle": ToggleLight(uid, component); break;
             }
         }
 
         /// <summary>
         /// Turns the light on or of when receiving a <see cref="DeviceNetworkConstants.CmdSetState"/> command.
         /// The light is turned on or of according to the <see cref="DeviceNetworkConstants.StateEnabled"/> value
-         /// </summary>
-        private void OnPacketReceived(EntityUid uid, PoweredLightComponent component, PacketSentEvent args)
+        /// </summary>
+        private void OnPacketReceived(EntityUid uid, PoweredLightComponent component, DeviceNetworkPacketEvent args)
         {
             if (!args.Data.TryGetValue(DeviceNetworkConstants.Command, out string? command) || command != DeviceNetworkConstants.CmdSetState) return;
             if (!args.Data.TryGetValue(DeviceNetworkConstants.StateEnabled, out bool enabled)) return;
@@ -354,7 +355,7 @@ namespace Content.Server.Light.EntitySystems
             SetState(uid, enabled, component);
         }
 
-        private void SetLight(EntityUid uid, bool value, Color? color = null, PoweredLightComponent? light = null, float? radius = null, float? energy = null, float? softness=null)
+        private void SetLight(EntityUid uid, bool value, Color? color = null, PoweredLightComponent? light = null, float? radius = null, float? energy = null, float? softness = null)
         {
             if (!Resolve(uid, ref light))
                 return;

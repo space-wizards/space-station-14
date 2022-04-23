@@ -7,7 +7,7 @@ namespace Content.Server.Electrocution
     ///     Component for things that shock users on touch.
     /// </summary>
     [RegisterComponent]
-    public class ElectrifiedComponent : Component
+    public sealed class ElectrifiedComponent : Component
     {
         [DataField("enabled")]
         public bool Enabled { get; set; } = true;
@@ -29,6 +29,9 @@ namespace Content.Server.Electrocution
 
         [DataField("requirePower")]
         public bool RequirePower { get; } = true;
+
+        [DataField("usesApcPower")]
+        public bool UsesApcPower { get; } = false;
 
         [DataField("highVoltageNode")]
         public string? HighVoltageNode { get; }

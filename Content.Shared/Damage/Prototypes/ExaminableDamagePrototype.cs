@@ -7,9 +7,9 @@ namespace Content.Shared.Damage.Prototypes;
 ///     Prototype for examinable damage messages.
 /// </summary>
 [Prototype("examinableDamage")]
-public class ExaminableDamagePrototype : IPrototype
+public sealed class ExaminableDamagePrototype : IPrototype
 {
-    [DataField("id", required: true)]
+    [IdDataFieldAttribute]
     public string ID { get; } = default!;
 
     /// <summary>
