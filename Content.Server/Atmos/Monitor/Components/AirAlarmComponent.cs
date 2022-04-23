@@ -24,7 +24,7 @@ namespace Content.Server.Atmos.Monitor.Components
 
         private AirAlarmSystem? _airAlarmSystem;
 
-        [ViewVariables] public AirAlarmMode CurrentMode { get; set; }
+        [ViewVariables] public AirAlarmMode CurrentMode { get; set; } = AirAlarmMode.Filtering;
 
         // Remember to null this afterwards.
         [ViewVariables] public IAirAlarmModeUpdate? CurrentModeUpdater { get; set; }

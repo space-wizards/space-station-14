@@ -111,3 +111,7 @@
   - type: ExaminableSolution
     solution: hypospray
   - type: Hypospray
+  - type: Tag
+    tags:
+    - Write
+    

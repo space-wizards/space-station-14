@@ -23,7 +23,7 @@
     - shape:
         !type:PhysShapeCircle
         radius: 0.40
-      mass: 50
+      mass: 20
       mask:
       - Impassable
       - MobImpassable
@@ -57,11 +57,19 @@
       types:
         Piercing: 5
         Slash: 10
+  - type: CombatMode
+    disarmAction:
+      enabled: false
+      autoPopulate: false
+      name: action-name-disarm
   - type: GhostTakeoverAvailable
     makeSentient: true
     name: space carp
-    description: Wreak havoc on the station's inhabitants, and disrupt salvage!
-
+    description: |
+      If you're a salvage spawn, defend the loot inside!
+      Otherwise, wreak havoc on the station!
+  - type: ReplacementAccent
+    accent: genericAggressive
 
 - type: entity
   name: magicarp

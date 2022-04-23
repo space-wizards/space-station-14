@@ -216,7 +216,7 @@
   id: UplinkToolbox
   category: Tools
   itemId: ToolboxSyndicateFilled
-  price: 5
+  price: 2
 
 - type: uplinkListing
   id: UplinkSyndicateJawsOfLife

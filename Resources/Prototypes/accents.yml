@@ -45,5 +45,20 @@
     - Hiss.
     - Hisssss!
     - Hisssuuu...
-    - Sssss~
     - Hiss...!
+
+- type: accent
+  id: zombie
+  words:
+    - Gruaahhhh...
+    - Mmuaaaa..
+    - Braainnssss...
+    - Grrrrr...
+
+- type: accent
+  id: genericAggressive
+  words:
+  - Grr!
+  - Rrrr!
+  - Grr...
+  - Grrow!!

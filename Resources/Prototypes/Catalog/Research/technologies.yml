@@ -152,6 +152,7 @@
     - Flash
     - Handcuffs
     - Stunbaton
+    - FlashPayload
 
 - type: technology
   name: "non-lethal technology"
@@ -342,6 +343,8 @@
     - SolarControlComputerCircuitboard
     - GeneratorPlasmaMachineCircuitboard
     - GeneratorUraniumMachineCircuitboard
+    - Signaller
+    - SignalTrigger
 
 - type: technology
   name: "compact power technology"
