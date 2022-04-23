@@ -1,10 +1,4 @@
 Entries:
-- author: weaver
-  changes:
-  - {message: Deconstructing complex tiles (like reinforced windows and walls) now
-      correctly show each step rather than breaking after the first step, type: Fix}
-  id: 875
-  time: '2022-01-13T14:33:39.0000000+00:00'
 - author: Rane
   changes:
   - {message: The Syndicate will now assign some agents to ensure the survival of
@@ -3044,3 +3038,8 @@ Entries:
   - {message: Players can't suicide if they're already dead., type: Add}
   id: 1374
   time: '2022-04-22T05:37:49.0000000+00:00'
+- author: moonheart08
+  changes:
+  - {message: You can rotate the salvage magnet and PA parts again., type: Fix}
+  id: 1375
+  time: '2022-04-23T01:14:28.0000000+00:00'
