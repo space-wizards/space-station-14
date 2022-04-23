@@ -253,4 +253,11 @@ public sealed class StickySystem : EntitySystem
             Target = target;
         }
     }
+
+    public bool StickyCheck(EntityUid inserted)
+    {
+        return (!EntityManager.HasComponent<StickyComponent>(inserted)
+                || EntityManager.GetComponent<StickyComponent>(inserted).StuckTo == null)
+               && !EntityManager.HasComponent<HasEntityStuckOnComponent>(inserted);
+    }
 }

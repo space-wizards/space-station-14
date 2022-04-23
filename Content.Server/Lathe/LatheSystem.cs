@@ -8,6 +8,7 @@ using Content.Server.Materials;
 using Content.Server.Popups;
 using Content.Server.Power.Components;
 using Content.Server.Stack;
+using Content.Server.Sticky.Systems;
 using Content.Server.UserInterface;
 using Content.Shared.Interaction.Events;
 using Content.Shared.Lathe.Events;
@@ -108,7 +109,7 @@ namespace Content.Server.Lathe
             if (!TryComp<MaterialStorageComponent>(uid, out var storage) || !TryComp<MaterialComponent>(args.Inserted, out var material))
                 return;
 
-            if (EntityManager.HasComponent<IsStuckOnEntityComponent>(args.Inserted) || EntityManager.HasComponent<HasEntityStuckOnComponent>(args.Inserted))
+            if (!StickySystem.StickyCheck(args.Inserted))
                 return;
 
             var multiplier = 1;
@@ -249,8 +250,8 @@ namespace Content.Server.Lathe
                             component.Queue.Enqueue(recipe);
                             component.UserInterface?.SendMessage(new LatheFullQueueMessage(GetIdQueue(component)));
                         }
-                        if (!HasComp<LatheProducingComponent>(component.Owner) && component.Queue.Count > 0)
-                            Produce(component, component.Queue.Dequeue());
+                    if (!HasComp<LatheProducingComponent>(component.Owner) && component.Queue.Count > 0)
+                        Produce(component, component.Queue.Dequeue());
 
                     break;
                 case LatheSyncRequestMessage _:
