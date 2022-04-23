@@ -34,7 +34,6 @@ namespace Content.Server.Nuke
             // anchoring logic
             SubscribeLocalEvent<NukeComponent, AnchorAttemptEvent>(OnAnchorAttempt);
             SubscribeLocalEvent<NukeComponent, UnanchorAttemptEvent>(OnUnanchorAttempt);
-            // Shouldn't need re-anchoring.
             SubscribeLocalEvent<NukeComponent, AnchorStateChangedEvent>(OnAnchorChanged);
 
             // ui events

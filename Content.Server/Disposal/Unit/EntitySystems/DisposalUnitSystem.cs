@@ -46,7 +46,6 @@ namespace Content.Server.Disposal.Unit.EntitySystems
         {
             base.Initialize();
 
-            // Shouldn't need re-anchoring.
             SubscribeLocalEvent<DisposalUnitComponent, AnchorStateChangedEvent>(OnAnchorChanged);
             // TODO: Predict me when hands predicted
             SubscribeLocalEvent<DisposalUnitComponent, RelayMovementEntityEvent>(HandleMovement);
@@ -245,7 +244,7 @@ namespace Content.Server.Disposal.Unit.EntitySystems
             {
                 return;
             }
-
+            
             if (!CanInsert(component, args.Used) || !_handsSystem.TryDropIntoContainer(args.User, args.Used, component.Container))
             {
                 return;
