@@ -69,6 +69,7 @@
       Otherwise, wreak havoc on the station!
   - type: ReplacementAccent
     accent: genericAggressive
+  - type: NoSlip
 
 - type: entity
   name: magicarp
