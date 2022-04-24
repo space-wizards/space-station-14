@@ -356,3 +356,9 @@
   itemId: NocturineChemistryBottle
   description: A chemical that makes it very hard for your target to stand up.
   price: 5
+
+- type: uplinkListing
+  id: UplinkSyndicateStamp
+  category: Misc
+  itemId: RubberStampSyndicate
+  price: 2
