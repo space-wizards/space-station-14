@@ -1,3 +1,5 @@
+
+
 using System;
 using Content.Shared.Movement.Components;
 using Robust.Shared.GameObjects;
@@ -11,7 +13,7 @@ namespace Content.Shared.Nutrition.Components
     public abstract class SharedThirstComponent : Component
     {
         [ViewVariables]
-        public abstract ThirstThreshold CurrentThirstThreshold { get; }
+        public abstract ThirstThreshold CurrentThirstThreshold { get; set; }
 
         [Serializable, NetSerializable]
         protected sealed class ThirstComponentState : ComponentState
@@ -37,3 +39,4 @@ namespace Content.Shared.Nutrition.Components
         Dead,
     }
 }
+
