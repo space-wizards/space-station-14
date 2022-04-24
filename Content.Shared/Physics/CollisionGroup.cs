@@ -54,7 +54,7 @@ namespace Content.Shared.Physics
         ItemMask = Impassable | HighImpassable,
         ThrownItem = Impassable | HighImpassable,
         WallLayer = Opaque | Impassable | HighImpassable | MidImpassable | LowImpassable | BulletImpassable,
-        GlassLayer = HighImpassable | MidImpassable | LowImpassable | BulletImpassable,
+        GlassLayer = Impassable | HighImpassable | MidImpassable | LowImpassable | BulletImpassable,
         HalfWallLayer = MidImpassable | LowImpassable,
         FullTileMask = Impassable | HighImpassable | MidImpassable | LowImpassable,
         
