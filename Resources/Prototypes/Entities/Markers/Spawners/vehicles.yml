@@ -3,7 +3,6 @@
   id: SpawnVehicleSecway
   parent: MarkerBase
   components:
-  - type: MetaData #Crashes on load without this (idk either)
   - type: Sprite
     layers:
       - state: green
@@ -17,7 +16,6 @@
   id: SpawnVehiclePussywagon
   parent: MarkerBase
   components:
-  - type: MetaData
   - type: Sprite
     layers:
       - state: green
@@ -31,7 +29,6 @@
   id: SpawnVehicleATV
   parent: MarkerBase
   components:
-  - type: MetaData
   - type: Sprite
     layers:
       - state: green
