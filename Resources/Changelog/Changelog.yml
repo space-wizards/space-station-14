@@ -1,14 +1,4 @@
 Entries:
-- author: metalgearsloth
-  changes:
-  - {message: Nerf holoparasite damage from 40 to 22., type: Tweak}
-  id: 891
-  time: '2022-01-17T18:45:01.0000000+00:00'
-- author: Zyme
-  changes:
-  - {message: Added brown briefcase, type: Add}
-  id: 892
-  time: '2022-01-17T19:21:28.0000000+00:00'
 - author: Lamrr
   changes:
   - {message: 'New pAI models have arrived, hopefully they won''t confused with PDAs
@@ -3040,3 +3030,17 @@ Entries:
       purchasable through the Uplink.', type: Add}
   id: 1390
   time: '2022-04-24T00:00:54.0000000+00:00'
+- author: 20kdc
+  changes:
+  - {message: Access readers now merge access from all places you could have an ID.,
+    type: Tweak}
+  id: 1391
+  time: '2022-04-24T00:21:17.0000000+00:00'
+- author: Macoron
+  changes:
+  - {message: C4 can't be stuck to any other items (including pills). Mobs and structures
+      are still valid targets for sticking., type: Tweak}
+  - {message: 'C4 damage was significantly reduced for all organic mobs. It should
+      be enough to crit a player, not gib them.', type: Tweak}
+  id: 1392
+  time: '2022-04-24T00:22:14.0000000+00:00'
