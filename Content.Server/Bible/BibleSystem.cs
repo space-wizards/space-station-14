@@ -209,7 +209,7 @@ namespace Content.Server.Bible
             if (HasComp<MobStateComponent>(familiar))
             {
                 /// Make this Summon the familiar's source
-                var familiarComp = AddComp<FamiliarComponent>(familiar);
+                var familiarComp = EnsureComp<FamiliarComponent>(familiar);
                 familiarComp.Source = component.Owner;
             }
             component.AlreadySummoned = true;
