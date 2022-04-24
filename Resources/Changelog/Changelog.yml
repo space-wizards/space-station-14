@@ -1,9 +1,4 @@
 Entries:
-- author: mirrorcult
-  changes:
-  - {message: Your view will now zoom out when piloting a shuttle., type: Tweak}
-  id: 890
-  time: '2022-01-16T20:07:15.0000000+00:00'
 - author: metalgearsloth
   changes:
   - {message: Nerf holoparasite damage from 40 to 22., type: Tweak}
@@ -3039,3 +3034,9 @@ Entries:
   - {message: Space carp can no longer destroy reinforced windows., type: Tweak}
   id: 1389
   time: '2022-04-23T23:46:25.0000000+00:00'
+- author: Veritius
+  changes:
+  - {message: 'The Syndicate has distributed a special stamp to their operatives,
+      purchasable through the Uplink.', type: Add}
+  id: 1390
+  time: '2022-04-24T00:00:54.0000000+00:00'
