@@ -19,7 +19,7 @@ namespace Content.Server.Fluids.Components
         /// <summary>
         /// How many units are ejected from the buffer per second.
         /// </summary>
-        [DataField("UnitsDestroyedPerSecond")]
+        [DataField("unitsDestroyedPerSecond")]
         public float UnitsDestroyedPerSecond = 1f;
 
         /// <summary>
