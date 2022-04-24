@@ -207,7 +207,6 @@ namespace Content.Client.Entry
             "GasAnalyzable",
             "GasCanister",
             "GasPort",
-            "Sticky",
             "GasPortable",
             "AtmosPipeColor",
             "AtmosUnsafeUnanchor",
