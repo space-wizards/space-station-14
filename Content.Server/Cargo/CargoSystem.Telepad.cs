@@ -20,7 +20,6 @@ public sealed partial class CargoSystem
     private void InitializeTelepad()
     {
         SubscribeLocalEvent<CargoTelepadComponent, ComponentInit>(OnInit);
-        SubscribeLocalEvent<CargoTelepadComponent, SignalReceivedEvent>(OnSignalReceived);
         SubscribeLocalEvent<CargoTelepadComponent, PowerChangedEvent>(OnTelepadPowerChange);
         // Shouldn't need re-anchored event
         SubscribeLocalEvent<CargoTelepadComponent, AnchorStateChangedEvent>(OnTelepadAnchorChange);
@@ -60,12 +59,6 @@ public sealed partial class CargoSystem
             appearance?.SetData(CargoTelepadVisuals.State, CargoTelepadState.Teleporting);
             comp.Accumulator = comp.Delay;
         }
-    }
-    private void OnSignalReceived(EntityUid uid, CargoTelepadComponent telepad, SignalReceivedEvent args)
-    {
-        if (!TryComp(uid, out CargoConsoleComponent? console)) return;
-
-        Console.WriteLine(uid + " " + telepad + " " + console);
     }
 
     private void OnInit(EntityUid uid, CargoTelepadComponent telepad, ComponentInit args)
