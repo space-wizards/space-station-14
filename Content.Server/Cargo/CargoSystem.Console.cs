@@ -52,25 +52,14 @@ namespace Content.Server.Cargo
         private void InitializeConsole()
         {
             SubscribeLocalEvent<CargoConsoleComponent, ComponentInit>(OnInit);
-            SubscribeLocalEvent<CargoConsoleComponent, SignalReceivedEvent>(OnSignalReceived);
             SubscribeLocalEvent<RoundRestartCleanupEvent>(Reset);
             Reset();
         }
-        
-        private void OnSignalReceived(EntityUid uid, CargoConsoleComponent component, SignalReceivedEvent args)
-        {
-            switch (args.Port)
-            {
-                case "On": Console.WriteLine(uid + " " + component); break;
-            }
-        }
-        
         private void OnInit(EntityUid uid, CargoConsoleComponent console, ComponentInit args)
         {
-            var receiver = EnsureComp<SignalReceiverComponent>(uid);
-            foreach (string port in new[] { "Order Sender" })
-                if (!receiver.Inputs.ContainsKey(port))
-                    receiver.AddPort(port);
+            var receiver = EnsureComp<SignalTransmitterComponent>(uid);
+            if (!receiver.Outputs.ContainsKey("Order Sender"))
+                receiver.AddPort("Order Sender");
         }
 
         private void Reset(RoundRestartCleanupEvent ev)
@@ -218,6 +207,8 @@ namespace Content.Server.Cargo
 
             if (!database.ApproveOrder(approverName, orderNumber))
                 return false;
+            
+            //RaiseLocalEvent(uid, new InvokePortEvent("Order Sender"), false);
 
             SyncComponentsWithId(id);
             return true;

@@ -1,20 +1,14 @@
-using System.Collections.Generic;
 using System.Linq;
-using Content.Server.Coordinates.Helpers;
 using Content.Server.Power.Components;
 using Content.Server.UserInterface;
 using Content.Shared.Cargo;
 using Content.Shared.Cargo.Components;
 using Content.Shared.Sound;
+using Content.Server.MachineLinking.Components;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
 using Robust.Shared.Map;
-using Robust.Shared.Maths;
 using Robust.Shared.Player;
-using Robust.Shared.Serialization.Manager.Attributes;
-using Robust.Shared.ViewVariables;
 
 namespace Content.Server.Cargo.Components
 {
@@ -170,15 +164,31 @@ namespace Content.Server.Cargo.Components
                     var lookup = EntitySystem.Get<EntityLookupSystem>();
                     var gridId = _entMan.GetComponent<TransformComponent>(Owner).GridID;
 
+                    _entMan.TryGetComponent<SignalTransmitterComponent>(Owner, out var transmitter);
+                    if (transmitter.Outputs.TryGetValue("Order Sender", out var telepad) &&
+                        telepad.Any())
+                    {
+                        cargoTelepad = telepad[0].Uid;
+                    }
+                    
+
+                    /*
                     // TODO: Should use anchoring.
                     foreach (var entity in lookup.GetEntitiesIntersecting(gridId, offsets.Select(o => o + indices)))
                     {
-                        if (_entMan.HasComponent<CargoTelepadComponent>(entity) && _entMan.TryGetComponent<ApcPowerReceiverComponent?>(entity, out var powerReceiver) && powerReceiver.Powered)
+                        if (_entMan.HasComponent<CargoTelepadComponent>(entity) && 
+                            _entMan.TryGetComponent<ApcPowerReceiverComponent?>(entity, out var powerReceiver) && 
+                            powerReceiver.Powered &&
+                            _entMan.TryGetComponent<SignalReceiverComponent>(entity, out var telepad) &&
+                            telepad.Inputs.TryGetValue("Order Receiver", out var transmitters) &&
+                            transmitters.Any()  &&
+                            Owner == transmitters[0].Uid)
                         {
                             cargoTelepad = entity;
                             break;
                         }
                     }
+                    */
 
                     if (cargoTelepad != null)
                     {

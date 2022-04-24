@@ -28,6 +28,7 @@ namespace Content.Server.MachineLinking.System
             new [] { ("Left", "On"), ("Right", "On"), ("Middle", "Off") },
             new [] { ("Left", "Open"), ("Right", "Open"), ("Middle", "Close") },
             new [] { ("Left", "Forward"), ("Right", "Reverse"), ("Middle", "Off") },
+            new [] { ("Order Sender", "Order Receiver") }
         };
 
         public override void Initialize()

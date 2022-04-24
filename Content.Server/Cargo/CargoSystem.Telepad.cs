@@ -2,7 +2,10 @@ using Content.Server.Cargo.Components;
 using Content.Server.Labels.Components;
 using Content.Server.Paper;
 using Content.Server.Power.Components;
+using Content.Server.MachineLinking.Components;
+using Content.Server.MachineLinking.Events;
 using Content.Shared.Cargo;
+using Content.Shared.Cargo.Components;
 using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Localization;
@@ -15,6 +18,8 @@ public sealed partial class CargoSystem
     [Dependency] private readonly PaperSystem _paperSystem = default!;
     private void InitializeTelepad()
     {
+        SubscribeLocalEvent<CargoTelepadComponent, ComponentInit>(OnInit);
+        SubscribeLocalEvent<CargoTelepadComponent, SignalReceivedEvent>(OnSignalReceived);
         SubscribeLocalEvent<CargoTelepadComponent, PowerChangedEvent>(OnTelepadPowerChange);
         SubscribeLocalEvent<CargoTelepadComponent, AnchorStateChangedEvent>(OnTelepadAnchorChange);
     }
@@ -53,6 +58,19 @@ public sealed partial class CargoSystem
             appearance?.SetData(CargoTelepadVisuals.State, CargoTelepadState.Teleporting);
             comp.Accumulator = comp.Delay;
         }
+    }
+    private void OnSignalReceived(EntityUid uid, CargoTelepadComponent telepad, SignalReceivedEvent args)
+    {
+        if (!TryComp(uid, out CargoConsoleComponent? console)) return;
+
+        Console.WriteLine(uid + " " + telepad + " " + console);
+    }
+
+    private void OnInit(EntityUid uid, CargoTelepadComponent telepad, ComponentInit args)
+    {
+        var receiver = EnsureComp<SignalReceiverComponent>(uid);
+        if (!receiver.Inputs.ContainsKey("Order Receiver")) 
+            receiver.AddPort("Order Receiver");
     }
 
     private void SetEnabled(CargoTelepadComponent component, ApcPowerReceiverComponent? receiver = null,
