@@ -254,6 +254,8 @@
     sprite: Objects/Consumable/Food/snacks.rsi
     HeldPrefix: packet
     size: 1
+  - type: Food
+    trash: FoodCookieFortune
 
 # Trash
 
@@ -414,6 +416,18 @@
   name: empty dan dan box
   components:
   - type: Sprite
-    state: chinese1
+    state: chinese2
+  - type: Item
+    color: white
+    
+- type: entity
+  noSpawn: true
+  parent: FoodPacketTrash
+  id: FoodCookieFortune
+  name: cookie fortune
+  description: "The fortune reads: The end is near...and it's all your fault."
+  components:
+  - type: Sprite
+    state: fortune
   - type: Item
     color: white
