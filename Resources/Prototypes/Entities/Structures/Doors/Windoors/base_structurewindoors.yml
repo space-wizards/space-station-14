@@ -14,8 +14,7 @@
         bounds: "-0.49,-0.49,0.49,-0.3"
       mass: 50
       mask:
-      - Impassable
-      - HighImpassable
+      - TabletopMachineMask
       layer:
       - GlassAirlockLayer
   - type: Sprite

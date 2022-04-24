@@ -47,6 +47,8 @@ namespace Content.Shared.Physics
 
         GlassAirlockLayer = HighImpassable | MidImpassable | BulletImpassable,
         AirlockLayer = Opaque | GlassAirlockLayer,
+        
+        HumanoidBlockLayer = HighImpassable | MidImpassable,
 
         SlipLayer = MidImpassable | LowImpassable,
         ItemMask = Impassable | HighImpassable,
@@ -55,5 +57,7 @@ namespace Content.Shared.Physics
         GlassLayer = HighImpassable | MidImpassable | LowImpassable | BulletImpassable,
         HalfWallLayer = MidImpassable | LowImpassable,
         FullTileMask = Impassable | HighImpassable | MidImpassable | LowImpassable,
+        
+        SubfloorMask = Impassable | LowImpassable,
     }
 }

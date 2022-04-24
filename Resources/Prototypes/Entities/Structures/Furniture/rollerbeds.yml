@@ -27,9 +27,7 @@
           radius: 0.35
         mass: 30
         mask:
-        - Impassable
-        - LowImpassable
-        - MidImpassable
+        - MobMask
     - type: Damageable
     - type: Destructible
       thresholds:

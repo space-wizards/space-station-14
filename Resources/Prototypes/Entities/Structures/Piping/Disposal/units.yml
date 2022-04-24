@@ -29,10 +29,7 @@
       mask:
       - MachineMask
       layer:
-      - Opaque
-      - MidImpassable
-      - LowImpassable
-      - BulletImpassable
+      - MachineLayer
   - type: Destructible
     thresholds:
     - trigger:

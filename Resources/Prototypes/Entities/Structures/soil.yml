@@ -18,7 +18,6 @@
       mask:
       - FullTileMask
       layer:
-      - Opaque
       - FullTileMask
   - type: Damageable
     damageContainer: Inorganic

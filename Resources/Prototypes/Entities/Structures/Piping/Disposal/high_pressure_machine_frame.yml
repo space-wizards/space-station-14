@@ -20,10 +20,7 @@
         mask:
         - MachineMask
         layer:
-        - Opaque
-        - MidImpassable
-        - LowImpassable
-        - BulletImpassable
+        - MachineLayer
     - type: Clickable
     - type: InteractionOutline
     - type: Anchorable

@@ -20,8 +20,7 @@
       mask:
       - FullTileMask
       layer:
-      - HighImpassable
-      - MidImpassable
+      - HumanoidBlockLayer
   - type: Anchorable
     delay: 2
   - type: Pullable
