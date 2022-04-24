@@ -1,4 +1,3 @@
-using System.Linq;
 using Content.Server.Power.Components;
 using Content.Server.UserInterface;
 using Content.Shared.Cargo;
@@ -159,7 +158,7 @@ namespace Content.Server.Cargo.Components
 
                     _entMan.TryGetComponent<SignalTransmitterComponent>(Owner, out var transmitter);
                     if (transmitter.Outputs.TryGetValue("Order Sender", out var telepad) &&
-                        telepad.Any())
+                        telepad.Count > 0)
                     {
                         // use most recent link
                         var pad = telepad[^1].Uid;
