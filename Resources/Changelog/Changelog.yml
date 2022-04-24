@@ -1,26 +1,4 @@
 Entries:
-- author: Peptide90
-  changes:
-  - {message: Quartermaster now have their own access level and airlocks., type: Add}
-  id: 898
-  time: '2022-01-17T19:31:58.0000000+00:00'
-- author: ShadowCommander
-  changes:
-  - {message: Click dragging onto tables now fully works again. You don't have to
-      aim for the lower right corner anymore., type: Fix}
-  id: 899
-  time: '2022-01-18T02:02:20.0000000+00:00'
-- author: Zumorica
-  changes:
-  - {message: Lit cigars and cigarettes cause fires now., type: Tweak}
-  id: 900
-  time: '2022-01-18T06:35:17.0000000+00:00'
-- author: Schiene
-  changes:
-  - {message: 'Fixed Power issues on both Reach and Dart, Reach has more thrusters.',
-    type: Add}
-  id: 901
-  time: '2022-01-18T06:50:21.0000000+00:00'
 - author: ElectroJr
   changes:
   - {message: The Syndicate have discovered the concept of proximity fuzes. On-collide
@@ -3040,3 +3018,37 @@ Entries:
   - {message: Added vehicles!, type: Add}
   id: 1397
   time: '2022-04-24T01:05:02.0000000+00:00'
+- author: TimrodDX
+  changes:
+  - {message: 'Delta Station now has vehicles for Security, Cargo, and the Janitor.',
+    type: Add}
+  id: 1398
+  time: '2022-04-24T02:26:50.0000000+00:00'
+- author: Rane
+  changes:
+  - {message: Minibomb radius massively reduced., type: Tweak}
+  - {message: Minibomb timer increased to 10 seconds., type: Tweak}
+  - {message: 'Minibombs have a new, distinctive timer sound.', type: Add}
+  - {message: 'Minibomb will reliably destroy the tile under it, including gibbing
+      dead bodies (but not living people.)', type: Tweak}
+  - {message: Grenades can no longer space tiles., type: Tweak}
+  - {message: TC cost of uplink explosives has been adjusted based on their relative
+      strength., type: Tweak}
+  id: 1399
+  time: '2022-04-24T02:27:02.0000000+00:00'
+- author: Rane
+  changes:
+  - {message: 'Medbay now has their own techfab, pending mapping.', type: Add}
+  - {message: 'Printing latex and nitrile gloves, sterile masks, mouth swabs, and
+      health analyzers now requires a Medical Techfab and Biological Technology unlocked.',
+    type: Tweak}
+  - {message: Beds now give back the cloth/durathread too when you deconstruct them.,
+    type: Fix}
+  id: 1400
+  time: '2022-04-24T02:27:13.0000000+00:00'
+- author: Rane
+  changes:
+  - {message: 'The chaplain''s familiars can be resummoned now after they die. 3 minutes
+      for Remilia, 5 minutes for Cerberus.', type: Add}
+  id: 1401
+  time: '2022-04-24T02:27:19.0000000+00:00'
