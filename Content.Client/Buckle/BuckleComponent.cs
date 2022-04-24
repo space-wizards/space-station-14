@@ -41,7 +41,7 @@ namespace Content.Client.Buckle
                 return;
             }
 
-            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner, out RiderComponent? rider))
+            if (!_entMan.TryGetComponent(Owner, out RiderComponent? rider))
             {
                 return;
             }

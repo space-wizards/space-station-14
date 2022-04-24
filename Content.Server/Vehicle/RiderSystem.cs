@@ -1,7 +1,7 @@
 using Content.Server.Buckle.Components;
 using Content.Shared.Vehicle.Components;
 using Content.Shared.MobState;
-using Content.Shared.Stunnable;
+using Content.Server.Standing;
 using Content.Shared.Hands;
 
 namespace Content.Server.Vehicle
@@ -12,7 +12,7 @@ namespace Content.Server.Vehicle
         {
             base.Initialize();
             SubscribeLocalEvent<RiderComponent, VirtualItemDeletedEvent>(OnVirtualItemDeleted);
-            SubscribeLocalEvent<RiderComponent, GotParalyzedEvent>(OnParalyzed);
+            SubscribeLocalEvent<RiderComponent, FellDownEvent>(OnFallDown);
             SubscribeLocalEvent<RiderComponent, MobStateChangedEvent>(OnMobStateChanged);
         }
 
@@ -23,22 +23,16 @@ namespace Content.Server.Vehicle
         {
             if (args.BlockingEntity == component.Vehicle?.Owner)
             {
-                if (!TryComp<BuckleComponent>(uid, out var buckle))
-                    return;
-
-                buckle.TryUnbuckle(uid, true);
+                UnbuckleFromVehicle(uid);
             }
         }
 
         /// <summary>
         /// Kick the rider off the vehicle if they get stunned
         /// </summary>
-        private void OnParalyzed(EntityUid uid, RiderComponent rider, GotParalyzedEvent args)
+        private void OnFallDown(EntityUid uid, RiderComponent rider, FellDownEvent args)
         {
-            if (!TryComp<BuckleComponent>(uid, out var buckle))
-                return;
-
-            buckle.TryUnbuckle(uid, true);
+           UnbuckleFromVehicle(uid);
         }
 
         /// <summary>
@@ -46,13 +40,18 @@ namespace Content.Server.Vehicle
         /// </summary>
         private void OnMobStateChanged(EntityUid uid, RiderComponent rider, MobStateChangedEvent args)
         {
+            if (args.Component.IsCritical() || args.Component.IsDead())
+            {
+                UnbuckleFromVehicle(uid);
+            }
+        }
+
+        private void UnbuckleFromVehicle(EntityUid uid)
+        {
             if (!TryComp<BuckleComponent>(uid, out var buckle))
                 return;
 
-            if (args.Component.IsCritical() || args.Component.IsDead())
-            {
-                buckle.TryUnbuckle(uid, true);
-            }
+            buckle.TryUnbuckle(uid, true);
         }
     }
 }

@@ -155,7 +155,6 @@ namespace Content.Shared.Stunnable
 
         /// <summary>
         ///     Applies knockdown and stun to the entity temporarily.
-        ///     Raises GotParalyzedEvent if successful.
         /// </summary>
         public bool TryParalyze(EntityUid uid, TimeSpan time, bool refresh,
             StatusEffectsComponent? status = null)
@@ -163,15 +162,7 @@ namespace Content.Shared.Stunnable
             if (!Resolve(uid, ref status, false))
                 return false;
 
-            bool paralyzed = (TryKnockdown(uid, time, refresh, status) && TryStun(uid, time, refresh, status));
-
-            if (paralyzed)
-            {
-                var ev = new GotParalyzedEvent(uid);
-                RaiseLocalEvent(uid, ev, false);
-            }
-
-            return paralyzed;
+            return TryKnockdown(uid, time, refresh, status) && TryStun(uid, time, refresh, status);
         }
 
         /// <summary>
@@ -273,17 +264,5 @@ namespace Content.Shared.Stunnable
 
         #endregion
 
-    }
-
-    /// <summary>
-    /// Raised after an entity gets paralyzed.
-    /// <summary>
-    public sealed class GotParalyzedEvent : EntityEventArgs
-    {
-        public EntityUid Uid { get; }
-        public GotParalyzedEvent(EntityUid uid)
-        {
-            Uid = uid;
-        }
     }
 }

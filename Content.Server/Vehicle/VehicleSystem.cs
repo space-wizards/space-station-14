@@ -53,7 +53,7 @@ namespace Content.Server.Vehicle
         /// </summary>
         private void OnComponentInit(EntityUid uid, VehicleComponent component, ComponentInit args)
         {
-            UpdateAppearance(uid, 2);
+            UpdateDrawDepth(uid, 2);
             _ambientSound.SetAmbience(uid, false);
             if (!TryComp<StrapComponent>(uid, out var strap))
                 return;
@@ -88,7 +88,7 @@ namespace Content.Server.Vehicle
                 }
                 /// Update appearance stuff, add actions
                 UpdateBuckleOffset(Transform(uid), component);
-                UpdateAppearance(uid, GetDrawDepth(Transform(uid), component.NorthOnly));
+                UpdateDrawDepth(uid, GetDrawDepth(Transform(uid), component.NorthOnly));
                 if (TryComp<ActionsComponent>(args.BuckledEntity, out var actions) && TryComp<UnpoweredFlashlightComponent>(uid, out var flashlight))
                 {
                     _actionsSystem.AddAction(args.BuckledEntity, flashlight.ToggleAction, uid, actions);
@@ -135,7 +135,7 @@ namespace Content.Server.Vehicle
                 UpdateAutoAnimate(uid, false);
             }
             UpdateBuckleOffset(args.Component, component);
-            UpdateAppearance(uid, GetDrawDepth(args.Component, component.NorthOnly));
+            UpdateDrawDepth(uid, GetDrawDepth(args.Component, component.NorthOnly));
         }
 
         /// <summary>
@@ -149,6 +149,13 @@ namespace Content.Server.Vehicle
 
             if (_tagSystem.HasTag(args.Entity, "VehicleKey"))
             {
+                /// Return if the slot is not the key slot
+                /// That slot ID should be inherited from basevehicle in the .yml
+                if (args.Container.ID != "key_slot")
+                {
+                    return;
+                }
+
                 /// This lets the vehicle move
                 EnsureComp<SharedPlayerInputMoverComponent>(uid);
                 /// This lets the vehicle open doors
@@ -185,23 +192,19 @@ namespace Content.Server.Vehicle
         {
             if (northOnly)
             {
-                int norfDrawDepth = xform.LocalRotation.Degrees switch
+                return xform.LocalRotation.Degrees switch
                 {
-                < 135f => 10,
-                <= 225f => 2,
-                _ => 10
+                    < 135f => 10,
+                    <= 225f => 2,
+                    _ => 10
                 };
-
-            return norfDrawDepth;
             }
-            int drawDepth = xform.LocalRotation.Degrees switch
+            return xform.LocalRotation.Degrees switch
             {
-              < 45f => 10,
-              <= 315f => 2,
-              _ => 10
+                < 45f => 10,
+                <= 315f => 2,
+                _ => 10
             };
-
-            return drawDepth;
         }
 
         /// <summary>
@@ -215,11 +218,11 @@ namespace Content.Server.Vehicle
                 return;
             strap.BuckleOffsetUnclamped = xform.LocalRotation.Degrees switch
             {
-              < 45f => (0, component.SouthOverride),
-              <= 135f => component.BaseBuckleOffset,
-              < 225f  => (0, component.NorthOverride),
-              <= 315f => (component.BaseBuckleOffset.X * -1, component.BaseBuckleOffset.Y),
-              _ => (0, component.SouthOverride)
+                < 45f => (0, component.SouthOverride),
+                <= 135f => component.BaseBuckleOffset,
+                < 225f  => (0, component.NorthOverride),
+                <= 315f => (component.BaseBuckleOffset.X * -1, component.BaseBuckleOffset.Y),
+                _ => (0, component.SouthOverride)
             };
 
             foreach (var buckledEntity in strap.BuckledEntities)
@@ -232,7 +235,7 @@ namespace Content.Server.Vehicle
         /// <summary>
         /// Set the draw depth for the sprite.
         /// </summary>
-        private void UpdateAppearance(EntityUid uid, int drawDepth)
+        private void UpdateDrawDepth(EntityUid uid, int drawDepth)
         {
             if (!TryComp<AppearanceComponent>(uid, out var appearance))
                 return;

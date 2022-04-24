@@ -56,7 +56,7 @@
       - !type:ExplodeBehavior
   - type: ItemSlots
     slots:
-      key_slot:
+      key_slot: #this slot name is important
         name: Keys
         whitelist:
           requireAll: true
