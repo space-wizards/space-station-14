@@ -5,8 +5,9 @@
   spriteName: cigs
   startingInventory:
     FoodCondimentPacketSoy: 5
-    DrinkRamen: 2
-    DrinkHellRamen: 2
-    FoodSnackChowMein: 2
-    FoodSnackCookieFortune: 1
+    FoodSnackCookieFortune: 5
+    DrinkRamen: 3
+    DrinkHellRamen: 3
+    FoodSnackChowMein: 3
+    FoodSnackDanDanNoodles: 3
 # rice?
