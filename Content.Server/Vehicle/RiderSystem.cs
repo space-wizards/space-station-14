@@ -46,7 +46,7 @@ namespace Content.Server.Vehicle
             }
         }
 
-        private void UnbuckleFromVehicle(EntityUid uid)
+        public void UnbuckleFromVehicle(EntityUid uid)
         {
             if (!TryComp<BuckleComponent>(uid, out var buckle))
                 return;
