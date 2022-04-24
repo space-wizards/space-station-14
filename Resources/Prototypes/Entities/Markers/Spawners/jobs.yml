@@ -258,7 +258,19 @@
     layers:
       - state: green
       - state: engineer
-
+      
+- type: entity
+  id: SpawnPointAtmos
+  parent: SpawnPointJobBase
+  name: atmospherics
+  components:
+    - type: SpawnPoint
+      job_id: AtmosphericTechnician
+    - type: Sprite
+      layers:
+        - state: green
+        - state: atmospherics
+        
 # Medical
 
 - type: entity

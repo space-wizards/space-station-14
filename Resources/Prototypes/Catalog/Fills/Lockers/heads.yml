@@ -40,7 +40,6 @@
       - id: ClothingOuterHardsuitCap
       - id: ClothingMaskGasCaptain
       - id: TaserGun
-      - id: ClothingHeadHelmetHardsuitCap
       - id: CommsComputerCircuitboard
       - id: ClothingHeadsetAltCommand
       - id: SpaceCash1000
@@ -91,7 +90,6 @@
   components:
   - type: StorageFill
     contents:
-      - id: ClothingHeadHelmetHardsuitEngineeringWhite
       - id: ClothingOuterHardsuitEngineeringWhite
       - id: ClothingMaskBreath
       - id: OxygenTankFilled
@@ -120,7 +118,6 @@
       - id: ClothingBackpackDuffelSurgeryFilled
       - id: ClothingOuterCoatLabCmo
       - id: ClothingMaskSterile
-      - id: ClothingHeadHelmetHardsuitMedical
       - id: ClothingOuterHardsuitMedical
       - id: DiagnoserMachineCircuitboard
       - id: VaccinatorMachineCircuitboard
@@ -142,7 +139,6 @@
       - id: CircuitImprinterMachineCircuitboard
       - id: ClothingNeckCloakRd
       - id: ClothingHeadsetMedicalScience
-      - id: ClothingHeadHelmetHardsuitRd
       - id: ClothingOuterHardsuitRd
       - id: PlushieSlime
         prob: 0.1
@@ -171,7 +167,6 @@
         prob: 0.1
       - id: ClothingUniformJumpskirtHoSParadeMale
         prob: 0.1
-      - id: ClothingHeadHelmetHardsuitSecurityRed
       - id: ClothingOuterHardsuitSecurityRed
       - id: ClothingMaskGasSecurity
       - id: ClothingShoeSlippersDuck
