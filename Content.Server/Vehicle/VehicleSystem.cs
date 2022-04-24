@@ -23,7 +23,6 @@ namespace Content.Server.Vehicle
         [Dependency] private readonly SharedAmbientSoundSystem _ambientSound = default!;
         [Dependency] private readonly TagSystem _tagSystem = default!;
         [Dependency] private readonly ItemSlotsSystem _itemSlotsSystem = default!;
-        [Dependency] private readonly RiderSystem _riderSystem = default!;
 
         public override void Initialize()
         {
@@ -70,12 +69,6 @@ namespace Content.Server.Vehicle
         {
             if (args.Buckling)
             {
-                /// Add a virtual item to rider's hand, unbuckle if we can't.
-                if (!_virtualItemSystem.TrySpawnVirtualItemInHand(uid, args.BuckledEntity))
-                {
-                    _riderSystem.UnbuckleFromVehicle(args.BuckledEntity);
-                    return;
-                }
                 /// Set up the rider and vehicle with each other
                 EnsureComp<SharedPlayerInputMoverComponent>(uid);
                 var rider = EnsureComp<RiderComponent>(args.BuckledEntity);
@@ -86,7 +79,8 @@ namespace Content.Server.Vehicle
                 /// Handle pulling
                 RemComp<SharedPullableComponent>(args.BuckledEntity);
                 RemComp<SharedPullableComponent>(uid);
-
+                /// Add a virtual item to rider's hand
+                _virtualItemSystem.TrySpawnVirtualItemInHand(uid, args.BuckledEntity);
                 /// Let this open doors if it has the key in it
                 if (component.HasKey)
                 {
