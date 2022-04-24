@@ -336,10 +336,16 @@ namespace Content.Shared.Containers.ItemSlots
         {
             item = null;
 
+            /// This handles logic with the slot itself
             if (!CanEject(slot))
                 return false;
 
             item = slot.Item;
+
+            /// This handles user logic
+            if (user != null && item != null && !_actionBlockerSystem.CanPickup(user.Value, item.Value))
+                return false;
+
             Eject(uid, slot, item!.Value, user, excludeUserAudio);
             return true;
         }
