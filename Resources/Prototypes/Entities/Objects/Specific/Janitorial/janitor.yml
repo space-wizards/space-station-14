@@ -18,7 +18,7 @@
         maxVol: 50
   - type: Tag
     tags:
-      - DroneUsable #No bucket because it holds chems, they can drag the thing around instead
+      - DroneUsable #No bucket because it holds chems, they can drag the cart or use a drain
       - Mop
 
 - type: entity
@@ -42,6 +42,7 @@
         reagents:
         - ReagentId: Water
           Quantity: 250 # half-full at roundstart to leave room for puddles
+  - type: Spillable
   - type: DrainableSolution
     solution: bucket
   - type: RefillableSolution
@@ -128,6 +129,7 @@
           mask:
             - VaultImpassable
           mass: 100
+    - type: Spillable
     - type: SolutionContainerManager
       solutions:
         bucket:
@@ -203,3 +205,37 @@
           maxFillLevels: 3
           fillBaseName: cart_water_
           changeColor: false
+
+
+- type: entity
+  id: FloorDrain
+  name: drain
+  description: Drains puddles around it. Useful for dumping mop buckets or keeping certain rooms clean.
+  placement:
+    mode: SnapgridCenter
+  components:
+    - type: Sprite
+      netsync: false
+      drawdepth: FloorObjects
+      sprite: Objects/Specific/Janitorial/drain.rsi
+      state: icon
+    - type: InteractionOutline
+    - type: Clickable
+    - type: Transform
+      anchored: true
+    - type: Physics
+      bodyType: Static
+    - type: Drain
+    - type: AmbientSound
+      enabled: false
+      volume: -8
+      range: 8
+      sound:
+        path: /Audio/Ambience/Objects/drain.ogg
+    - type: SolutionContainerManager
+      solutions:
+        drainBuffer:
+          maxVol: 500
+    - type: DrainableSolution
+      solution: drainBuffer
+

@@ -22,4 +22,6 @@ smoke.ogg taken from https://github.com/tgstation/tgstation/blob/a5d362ce84e4f0c
 
 voteding.ogg taken from "Bike, Bell Ding, Single, 01-01.wav" by InspectorJ (www.jshaw.co.uk) of Freesound.org at https://freesound.org/people/InspectorJ/sounds/484344/ under CC BY 3.0. The volume has been reduced.
 
+minibombcountdown.ogg taken from Thomas Evdokimoff at https://freesound.org/people/thomas_evdokimoff/sounds/202193/
+
 bite.ogg take from https://github.com/tgstation/tgstation/commit/d4f678a1772007ff8d7eddd21cf7218c8e07bfc0

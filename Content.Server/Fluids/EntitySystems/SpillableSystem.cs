@@ -184,7 +184,7 @@ public sealed class SpillableSystem : EntitySystem
 
         // Get normalized co-ordinate for spill location and spill it in the centre
         // TODO: Does SnapGrid or something else already do this?
-        var spillGridCoords = mapGrid.GridTileToWorld(tileRef.GridIndices);
+        var spillGridCoords = mapGrid.GridTileToLocal(tileRef.GridIndices);
         var startEntity = EntityUid.Invalid;
         PuddleComponent? puddleComponent = null;
 
