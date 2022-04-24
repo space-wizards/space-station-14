@@ -24,7 +24,8 @@ namespace Content.Server.BarSign.Systems
 
         private void UpdateBarSignVisuals(EntityUid owner, BarSignComponent component, PowerChangedEvent args)
         {
-            if (component.LifeStage is < ComponentLifeStage.Initialized or > ComponentLifeStage.Running) return;
+            var lifestage = MetaData(owner).EntityLifeStage;
+            if (lifestage is < EntityLifeStage.Initialized or >= EntityLifeStage.Terminating) return;
 
             if (!TryComp(owner, out SpriteComponent? sprite))
             {

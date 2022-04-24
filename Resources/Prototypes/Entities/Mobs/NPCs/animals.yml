@@ -58,6 +58,7 @@
     damage:
       types:
         Piercing: 5
+  - type: NoSlip
 
 - type: entity
   name: bee
@@ -111,6 +112,7 @@
     - Bee
   - type: Bloodstream
     bloodMaxVolume: 0.1
+  - type: NoSlip
 
 - type: entity
   name: bee
@@ -318,6 +320,7 @@
       dead: dead
   - type: Bloodstream
     bloodMaxVolume: 0.1
+  - type: NoSlip
 
 - type: entity
   name: cow
@@ -941,6 +944,7 @@
       path: /Audio/Animals/parrot_raught.ogg
   - type: Bloodstream
     bloodMaxVolume: 50
+  - type: NoSlip
 
 - type: entity
   name: penguin
@@ -998,7 +1002,6 @@
     - UnarmedAttackHostiles
   - type: AiFactionTag
     factions:
-    - SimpleHostile
     - Syndicate
   - type: Sprite
     drawdepth: Mobs
@@ -1045,9 +1048,9 @@
     beepInterval: 1
   - type: Explosive
     explosionType: Default
-    maxIntensity: 15
-    intensitySlope: 5
-    totalIntensity: 120
+    maxIntensity: 20
+    intensitySlope: 20
+    totalIntensity: 225
   - type: ExplodeOnTrigger
 
   # I have included a snake_hiss.ogg sound file so if you want to use that be my guest

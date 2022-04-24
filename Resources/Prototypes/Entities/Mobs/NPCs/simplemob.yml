@@ -133,6 +133,8 @@
     safe: false
   - type: StandingState
   - type: Alerts
+  - type: NameIdentifier
+    group: GenericNumber
 
 - type: entity
   save: false

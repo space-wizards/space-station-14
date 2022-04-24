@@ -45,6 +45,11 @@
     - HydroponicsToolScythe
     - HydroponicsToolHatchet
     - KitchenKnife
+    - HandheldHealthAnalyzer
+    - ClothingHandsGlovesLatex
+    - ClothingHandsGlovesNitrile
+    - ClothingMaskSterile
+    - DiseaseSwab
 
 - type: technology
   name: "advanced botany"
@@ -343,6 +348,8 @@
     - SolarControlComputerCircuitboard
     - GeneratorPlasmaMachineCircuitboard
     - GeneratorUraniumMachineCircuitboard
+    - Signaller
+    - SignalTrigger
 
 - type: technology
   name: "compact power technology"

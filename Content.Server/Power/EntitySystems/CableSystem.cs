@@ -26,6 +26,7 @@ public sealed partial class CableSystem : EntitySystem
 
         SubscribeLocalEvent<CableComponent, InteractUsingEvent>(OnInteractUsing);
         SubscribeLocalEvent<CableComponent, CuttingFinishedEvent>(OnCableCut);
+        // Shouldn't need re-anchoring.
         SubscribeLocalEvent<CableComponent, AnchorStateChangedEvent>(OnAnchorChanged);
     }
 
