@@ -1,10 +1,4 @@
 Entries:
-- author: Lamrr
-  changes:
-  - {message: 'New pAI models have arrived, hopefully they won''t confused with PDAs
-      now.', type: Tweak}
-  id: 893
-  time: '2022-01-17T19:21:40.0000000+00:00'
 - author: keronshb
   changes:
   - {message: 'Added bolas, which includes the sprite, sound on throw/land, and crafting
@@ -3044,3 +3038,9 @@ Entries:
       be enough to crit a player, not gib them.', type: Tweak}
   id: 1392
   time: '2022-04-24T00:22:14.0000000+00:00'
+- author: Rane
+  changes:
+  - {message: Emags no longer force open bolted or unpowered doors., type: Tweak}
+  - {message: Emags no longer work on the ID console., type: Tweak}
+  id: 1393
+  time: '2022-04-24T00:37:49.0000000+00:00'
