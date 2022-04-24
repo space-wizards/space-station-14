@@ -10,3 +10,6 @@ ent-WetFloorSign = wet floor sign
 ent-JanitorialTrolley = janitorial trolley
     .desc = This is the alpha and omega of sanitation.
     .suffix = { "" }
+ent-FloorDrain = drain
+    .desc = Drains puddles around it. Useful for dumping mop buckets or keeping certain rooms clean.
+    .suffix = { "" }

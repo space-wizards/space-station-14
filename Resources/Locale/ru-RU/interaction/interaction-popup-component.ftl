@@ -34,3 +34,5 @@ petting-failure-holo = Вы тянетесь погладить { $target }, н�
 # Shown when knocking on a window
 comp-window-knock = *тук-тук*
 hugging-success-generic = Вы обнимаете { $target }.
+hugging-success-generic-others = { CAPITALIZE(THE($user)) } hugs { THE($target) }.
+hugging-success-generic-target = { CAPITALIZE(THE($user)) } hugs you.

@@ -76,3 +76,6 @@ ent-RubberStampWarden = warden's rubber stamp
 ent-RubberStampTrader = trader's rubber stamp
     .desc = { ent-RubberStampMime.desc }
     .suffix = { "" }
+ent-RubberStampSyndicate = syndicate rubber stamp
+    .desc = { ent-RubberStampMime.desc }
+    .suffix = { "" }

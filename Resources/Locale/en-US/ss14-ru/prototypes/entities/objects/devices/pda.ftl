@@ -82,3 +82,6 @@ ent-CentcomPDA = centcom PDA
 ent-MusicianPDA = musician PDA
     .desc = It fills you with inspiration.
     .suffix = { "" }
+ent-AtmosPDA = atmos PDA
+    .desc = Still smells like plasma.
+    .suffix = { "" }
