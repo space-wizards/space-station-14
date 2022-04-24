@@ -1,0 +1,12 @@
+- type: vendingMachineInventory
+  id: ChangInventory
+  name: Mr. Chang
+  animationDuration: 2.1
+  spriteName: cigs
+  startingInventory:
+    FoodCondimentPacketSoy: 5
+    DrinkRamen: 2
+    DrinkHellRamen: 2
+    FoodSnackChowMein: 2
+    FoodSnackCookieFortune: 1
+# rice?
