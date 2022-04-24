@@ -155,41 +155,20 @@ namespace Content.Server.Cargo.Components
                     //orders.Database.ClearOrderCapacity();
 
                     // TODO replace with shuttle code
-                    // TEMPORARY loop for spawning stuff on telepad (looks for a telepad adjacent to the console)
                     EntityUid? cargoTelepad = null;
-                    var indices = _entMan.GetComponent<TransformComponent>(Owner).Coordinates.ToVector2i(_entMan, _mapManager);
-                    var offsets = new Vector2i[] { new Vector2i(0, 1), new Vector2i(1, 1), new Vector2i(1, 0), new Vector2i(1, -1),
-                                                   new Vector2i(0, -1), new Vector2i(-1, -1), new Vector2i(-1, 0), new Vector2i(-1, 1), };
-
-                    var lookup = EntitySystem.Get<EntityLookupSystem>();
-                    var gridId = _entMan.GetComponent<TransformComponent>(Owner).GridID;
 
                     _entMan.TryGetComponent<SignalTransmitterComponent>(Owner, out var transmitter);
                     if (transmitter.Outputs.TryGetValue("Order Sender", out var telepad) &&
                         telepad.Any())
                     {
-                        cargoTelepad = telepad[0].Uid;
+                        // use most recent link
+                        var pad = telepad[^1].Uid;
+                        if (_entMan.HasComponent<CargoTelepadComponent>(pad) && 
+                            _entMan.TryGetComponent<ApcPowerReceiverComponent?>(pad, out var powerReceiver) && 
+                            powerReceiver.Powered)
+                            cargoTelepad = pad;
                     }
                     
-
-                    /*
-                    // TODO: Should use anchoring.
-                    foreach (var entity in lookup.GetEntitiesIntersecting(gridId, offsets.Select(o => o + indices)))
-                    {
-                        if (_entMan.HasComponent<CargoTelepadComponent>(entity) && 
-                            _entMan.TryGetComponent<ApcPowerReceiverComponent?>(entity, out var powerReceiver) && 
-                            powerReceiver.Powered &&
-                            _entMan.TryGetComponent<SignalReceiverComponent>(entity, out var telepad) &&
-                            telepad.Inputs.TryGetValue("Order Receiver", out var transmitters) &&
-                            transmitters.Any()  &&
-                            Owner == transmitters[0].Uid)
-                        {
-                            cargoTelepad = entity;
-                            break;
-                        }
-                    }
-                    */
-
                     if (cargoTelepad != null)
                     {
                         if (_entMan.TryGetComponent<CargoTelepadComponent?>(cargoTelepad.Value, out var telepadComponent))
