@@ -1,4 +1,4 @@
-﻿namespace Content.Server.Radiation.Events;
+﻿namespace Content.Shared.Radiation.Events;
 
 /// <summary>
 ///     Raised on entity when it was irradiated

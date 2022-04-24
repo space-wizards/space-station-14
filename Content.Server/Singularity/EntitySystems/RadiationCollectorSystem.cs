@@ -3,7 +3,7 @@ using Content.Shared.Interaction;
 using Content.Shared.Singularity.Components;
 using Content.Server.Popups;
 using Content.Server.Power.Components;
-using Content.Server.Radiation.Events;
+using Content.Shared.Radiation.Events;
 using Robust.Shared.Timing;
 using Robust.Shared.Player;
 
