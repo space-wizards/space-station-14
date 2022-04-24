@@ -1,9 +1,6 @@
-using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using Content.Server.Audio;
-using Content.Server.Damage.Systems;
 using Content.Server.Power.Components;
 using Content.Server.Shuttles.Components;
 using Content.Shared.Damage;
@@ -14,11 +11,7 @@ using Content.Shared.Physics;
 using Content.Shared.Temperature;
 using Content.Shared.Shuttles.Components;
 using Robust.Server.GameObjects;
-using Robust.Shared.GameObjects;
-using Robust.Shared.Localization;
-using Robust.Shared.Log;
 using Robust.Shared.Map;
-using Robust.Shared.Maths;
 using Robust.Shared.Physics;
 using Robust.Shared.Physics.Collision.Shapes;
 using Robust.Shared.Physics.Dynamics;
@@ -29,6 +22,7 @@ namespace Content.Server.Shuttles.EntitySystems
     public sealed class ThrusterSystem : EntitySystem
     {
         [Robust.Shared.IoC.Dependency] private readonly IMapManager _mapManager = default!;
+        [Robust.Shared.IoC.Dependency] private readonly ITileDefinitionManager _tileDefManager = default!;
         [Robust.Shared.IoC.Dependency] private readonly AmbientSoundSystem _ambient = default!;
         [Robust.Shared.IoC.Dependency] private readonly FixtureSystem _fixtureSystem = default!;
         [Robust.Shared.IoC.Dependency] private readonly DamageableSystem _damageable = default!;
@@ -52,6 +46,7 @@ namespace Content.Server.Shuttles.EntitySystems
             SubscribeLocalEvent<ThrusterComponent, ComponentShutdown>(OnThrusterShutdown);
             SubscribeLocalEvent<ThrusterComponent, PowerChangedEvent>(OnPowerChange);
             SubscribeLocalEvent<ThrusterComponent, AnchorStateChangedEvent>(OnAnchorChange);
+            SubscribeLocalEvent<ThrusterComponent, ReAnchorEvent>(OnThrusterReAnchor);
             SubscribeLocalEvent<ThrusterComponent, RotateEvent>(OnRotate);
             SubscribeLocalEvent<ThrusterComponent, IsHotEvent>(OnIsHotEvent);
             SubscribeLocalEvent<ThrusterComponent, StartCollideEvent>(OnStartCollide);
@@ -104,9 +99,12 @@ namespace Content.Server.Shuttles.EntitySystems
         private void OnTileChange(object? sender, TileChangedEventArgs e)
         {
             // If the old tile was space but the new one isn't then disable all adjacent thrusters
-            if (e.NewTile.IsSpace() || !e.OldTile.IsSpace()) return;
+            if (e.NewTile.IsSpace(_tileDefManager) || !e.OldTile.IsSpace(_tileDefManager)) return;
 
             var tilePos = e.NewTile.GridIndices;
+            var grid = _mapManager.GetGrid(e.NewTile.GridIndex);
+            var xformQuery = GetEntityQuery<TransformComponent>();
+            var thrusterQuery = GetEntityQuery<ThrusterComponent>();
 
             for (var x = -1; x <= 1; x++)
             {
@@ -115,17 +113,19 @@ namespace Content.Server.Shuttles.EntitySystems
                     if (x != 0 && y != 0) continue;
 
                     var checkPos = tilePos + new Vector2i(x, y);
+                    var enumerator = grid.GetAnchoredEntitiesEnumerator(checkPos);
 
-                    foreach (var ent in _mapManager.GetGrid(e.NewTile.GridIndex).GetAnchoredEntities(checkPos))
+                    while (enumerator.MoveNext(out var ent))
                     {
-                        if (!EntityManager.TryGetComponent(ent, out ThrusterComponent? thruster) || !thruster.RequireSpace) continue;
+                        if (!thrusterQuery.TryGetComponent(ent.Value, out var thruster) || !thruster.RequireSpace) continue;
 
                         // Work out if the thruster is facing this direction
-                        var direction = EntityManager.GetComponent<TransformComponent>(ent).LocalRotation.ToWorldVec();
+                        var xform = xformQuery.GetComponent(ent.Value);
+                        var direction = xform.LocalRotation.ToWorldVec();
 
                         if (new Vector2i((int) direction.X, (int) direction.Y) != new Vector2i(x, y)) continue;
 
-                        DisableThruster(ent, thruster);
+                        DisableThruster(ent.Value, thruster, xform.GridID);
                     }
                 }
             }
@@ -193,6 +193,14 @@ namespace Content.Server.Shuttles.EntitySystems
             {
                 DisableThruster(uid, component);
             }
+        }
+
+        private void OnThrusterReAnchor(EntityUid uid, ThrusterComponent component, ref ReAnchorEvent args)
+        {
+            DisableThruster(uid, component, args.OldGrid);
+
+            if (CanEnable(uid, component))
+                EnableThruster(uid, component);
         }
 
         private void OnThrusterInit(EntityUid uid, ThrusterComponent component, ComponentInit args)
@@ -292,14 +300,20 @@ namespace Content.Server.Shuttles.EntitySystems
             _ambient.SetAmbience(uid, true);
         }
 
+        public void DisableThruster(EntityUid uid, ThrusterComponent component, TransformComponent? xform = null, Angle? angle = null)
+        {
+            if (!Resolve(uid, ref xform)) return;
+            DisableThruster(uid, component, xform.GridID, xform);
+        }
+
         /// <summary>
         /// Tries to disable the thruster.
         /// </summary>
-        public void DisableThruster(EntityUid uid, ThrusterComponent component, TransformComponent? xform = null, Angle? angle = null)
+        public void DisableThruster(EntityUid uid, ThrusterComponent component, GridId gridId, TransformComponent? xform = null, Angle? angle = null)
         {
             if (!component.IsOn ||
                 !Resolve(uid, ref xform) ||
-                !_mapManager.TryGetGrid(xform.GridID, out var grid)) return;
+                !_mapManager.TryGetGrid(gridId, out var grid)) return;
 
             component.IsOn = false;
 
@@ -351,7 +365,7 @@ namespace Content.Server.Shuttles.EntitySystems
         {
             if (!component.Enabled) return false;
 
-            var xform = EntityManager.GetComponent<TransformComponent>(uid);
+            var xform = Transform(uid);
 
             if (!xform.Anchored ||
                 EntityManager.TryGetComponent(uid, out ApcPowerReceiverComponent? receiver) && !receiver.Powered)

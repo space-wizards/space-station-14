@@ -56,6 +56,7 @@
     damage:
       types:
         Piercing: 5
+  - type: NoSlip
 
 - type: entity
   name: bee
@@ -107,6 +108,7 @@
     - Bee
   - type: Bloodstream
     bloodMaxVolume: 0.1
+  - type: NoSlip
 
 - type: entity
   name: bee
@@ -312,6 +314,7 @@
       dead: dead
   - type: Bloodstream
     bloodMaxVolume: 0.1
+  - type: NoSlip
 
 - type: entity
   name: cow
@@ -920,6 +923,7 @@
       path: /Audio/Animals/parrot_raught.ogg
   - type: Bloodstream
     bloodMaxVolume: 50
+  - type: NoSlip
 
 - type: entity
   name: penguin

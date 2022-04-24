@@ -189,3 +189,15 @@
   - type: StorageFill
     contents:
       - id: ClothingOuterHardsuitSyndie
+
+- type: entity
+  parent: ClothingBackpackDuffelSyndicate
+  id: ClothingBackpackDuffelSyndicateOperative
+  name: operative duffelbag
+  components:
+  - type: StorageFill
+    contents:
+      - id: BoxSurvivalSyndicate
+      - id: SurvivalKnife
+      - id: PistolClarissa
+      - id: BaseUplinkRadio40TC

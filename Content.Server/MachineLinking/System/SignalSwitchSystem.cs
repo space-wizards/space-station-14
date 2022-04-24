@@ -11,7 +11,7 @@ namespace Content.Server.MachineLinking.System
         {
             base.Initialize();
             SubscribeLocalEvent<SignalSwitchComponent, ComponentInit>(OnInit);
-            SubscribeLocalEvent<SignalSwitchComponent, InteractHandEvent>(OnInteracted);
+            SubscribeLocalEvent<SignalSwitchComponent, ActivateInWorldEvent>(OnActivated);
         }
 
         private void OnInit(EntityUid uid, SignalSwitchComponent component, ComponentInit args)
@@ -23,7 +23,7 @@ namespace Content.Server.MachineLinking.System
 
         }
 
-        private void OnInteracted(EntityUid uid, SignalSwitchComponent component, InteractHandEvent args)
+        private void OnActivated(EntityUid uid, SignalSwitchComponent component, ActivateInWorldEvent args)
         {
             component.State = !component.State;
             RaiseLocalEvent(uid, new InvokePortEvent(component.State ? "On" : "Off"), false);
