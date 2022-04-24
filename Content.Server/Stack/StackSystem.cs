@@ -1,4 +1,4 @@
-using Content.Server.Sticky.Components;
+
 using Content.Shared.Stacks;
 using Content.Shared.Sticky.Components;
 using Content.Shared.Verbs;
