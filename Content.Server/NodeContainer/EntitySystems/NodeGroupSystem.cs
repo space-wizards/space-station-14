@@ -157,8 +157,8 @@ namespace Content.Server.NodeContainer.EntitySystems
 
             var sw = Stopwatch.StartNew();
 
-            var xformQuery = EntityManager.GetEntityQuery<TransformComponent>();
-            var nodeQuery = EntityManager.GetEntityQuery<NodeContainerComponent>();
+            var xformQuery = GetEntityQuery<TransformComponent>();
+            var nodeQuery = GetEntityQuery<NodeContainerComponent>();
 
             foreach (var toRemove in _toRemove)
             {
