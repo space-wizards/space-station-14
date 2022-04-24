@@ -1,18 +1,4 @@
 Entries:
-- author: keronshb
-  changes:
-  - {message: 'Added bolas, which includes the sprite, sound on throw/land, and crafting
-      recipe.', type: Add}
-  - {message: Tweaked Stun system to allow for stun/knockdown on thrown items that
-      have the attribute, type: Tweak}
-  - {message: Also fixes the ability for stun baton to work when thrown., type: Fix}
-  id: 894
-  time: '2022-01-17T19:21:57.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - {message: Ghost warp locations are now sorted alphabetically., type: Tweak}
-  id: 895
-  time: '2022-01-17T19:22:17.0000000+00:00'
 - author: scaly-chimp
   changes:
   - {message: the amount of characters you can write into a single piece of paper
@@ -3044,3 +3030,13 @@ Entries:
   - {message: Emags no longer work on the ID console., type: Tweak}
   id: 1393
   time: '2022-04-24T00:37:49.0000000+00:00'
+- author: keronshb
+  changes:
+  - {message: Do afters will break after a specific minimum threshold is set, type: Add}
+  id: 1394
+  time: '2022-04-24T00:41:48.0000000+00:00'
+- author: Saakra
+  changes:
+  - {message: 'Bats, bees, butterflies, and parrots no longer slip', type: Add}
+  id: 1395
+  time: '2022-04-24T00:42:24.0000000+00:00'
