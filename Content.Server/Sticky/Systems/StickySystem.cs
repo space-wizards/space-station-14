@@ -26,9 +26,11 @@ public sealed class StickySystem : EntitySystem
         base.Initialize();
         SubscribeLocalEvent<StickSuccessfulEvent>(OnStickSuccessful);
         SubscribeLocalEvent<UnstickSuccessfulEvent>(OnUnstickSuccessful);
-        SubscribeLocalEvent<InsertMaterialAttemptEvent>(OnInsertMaterialAttemptEvent);
+
         SubscribeLocalEvent<StickyComponent, AfterInteractEvent>(OnAfterInteract);
         SubscribeLocalEvent<StickyComponent, GetVerbsEvent<Verb>>(AddUnstickVerb);
+
+        SubscribeLocalEvent<InsertMaterialAttemptEvent>(OnInsertMaterialAttemptEvent);
     }
 
     private void OnInsertMaterialAttemptEvent(InsertMaterialAttemptEvent ev)
@@ -44,14 +46,7 @@ public sealed class StickySystem : EntitySystem
         if (args.Handled || !args.CanReach || args.Target == null)
             return;
 
-        //makes sure that neither the target nor the host have entities stuck to them or is stuck to entities
-        if (EntityManager.HasComponent<HasEntityStuckOnComponent>(uid)
-            || EntityManager.HasComponent<HasEntityStuckOnComponent>(args.Target)
-            || EntityManager.HasComponent<IsStuckOnEntityComponent>(uid)
-            || EntityManager.HasComponent<IsStuckOnEntityComponent>(args.Target))
-            return;
-
-            // try stick object to a clicked target entity
+        // try stick object to a clicked target entity
         args.Handled = StartSticking(uid, args.User, args.Target.Value, component);
     }
 
@@ -73,6 +68,15 @@ public sealed class StickySystem : EntitySystem
         if (!Resolve(uid, ref component))
             return false;
         if (component.Whitelist != null && !component.Whitelist.IsValid(target))
+            return false;
+        //makes sure that neither the target nor the host have entities stuck to them or is stuck to entities
+        if (
+            EntityManager.HasComponent<HasEntityStuckOnComponent>(uid)
+            || EntityManager.HasComponent<HasEntityStuckOnComponent>(target)
+            || EntityManager.GetComponent<StickyComponent>(uid).StuckTo != null
+            || (EntityManager.HasComponent<StickyComponent>(target)
+            && EntityManager.GetComponent<StickyComponent>(target).StuckTo != null)
+            )
             return false;
 
         // check if delay is not zero to start do after

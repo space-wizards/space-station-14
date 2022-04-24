@@ -30,7 +30,7 @@ namespace Content.Server.Lathe
         public override void Initialize()
         {
             base.Initialize();
-            SubscribeLocalEvent<LatheComponent, InsertMaterialAttemptEvent>(OnInsertMaterialAttemptEvent);
+            SubscribeLocalEvent<LatheComponent, InteractUsingEvent>(OnInteractUsing);
             SubscribeLocalEvent<LatheComponent, ComponentInit>(OnComponentInit);
         }
 
@@ -104,16 +104,16 @@ namespace Content.Server.Lathe
         /// When someone tries to use an item on the lathe,
         /// insert it if it's a stack and fits inside and don't have anything stuck to it
         /// </summary>
-        private void OnInsertMaterialAttemptEvent(EntityUid uid, LatheComponent component, InsertMaterialAttemptEvent args)
+        private void OnInteractUsing(EntityUid uid, LatheComponent component, InteractUsingEvent args)
         {
-            if (!TryComp<MaterialStorageComponent>(uid, out var storage) || !TryComp<MaterialComponent>(args.Inserted, out var material))
+            if (!TryComp<MaterialStorageComponent>(uid, out var storage) || !TryComp<MaterialComponent>(args.Used, out var material))
                 return;
 
-            RaiseLocalEvent(uid, new InsertMaterialAttemptEvent(args.User , args.Inserted , args.Target ,args.ClickLocation ));
+            RaiseLocalEvent(uid, new InsertMaterialAttemptEvent(args.User , args.Used , args.Target ,args.ClickLocation ));
 
             var multiplier = 1;
 
-            if (TryComp<StackComponent>(args.Inserted, out var stack))
+            if (TryComp<StackComponent>(args.Used, out var stack))
                 multiplier = stack.Count;
 
             var totalAmount = 0;
@@ -139,10 +139,10 @@ namespace Content.Server.Lathe
             /// We need the prototype to get the color
             _prototypeManager.TryIndex(lastMat, out MaterialPrototype? matProto);
 
-            EntityManager.QueueDeleteEntity(args.Inserted);
+            EntityManager.QueueDeleteEntity(args.Used);
             InsertingAddQueue.Enqueue(uid);
             _popupSystem.PopupEntity(Loc.GetString("machine-insert-item", ("machine", uid),
-                ("item", args.Inserted)), uid, Filter.Entities(args.User));
+                ("item", args.Used)), uid, Filter.Entities(args.User));
             if (matProto != null)
             {
                 UpdateInsertingAppearance(uid, true, matProto.Color);
