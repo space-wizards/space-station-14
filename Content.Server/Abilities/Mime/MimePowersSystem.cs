@@ -3,11 +3,13 @@ using Content.Server.Coordinates.Helpers;
 using Content.Shared.Speech;
 using Content.Shared.Actions;
 using Content.Shared.Alert;
+using Content.Shared.Physics;
+using Content.Shared.Doors.Components;
 using Content.Shared.Maps;
 using Content.Shared.MobState.Components;
 using Content.Shared.Tag;
-using Content.Shared.Doors.Components;
 using Robust.Shared.Player;
+using Robust.Shared.Physics;
 
 namespace Content.Server.Abilities.Mime
 {
@@ -24,38 +26,32 @@ namespace Content.Server.Abilities.Mime
             SubscribeLocalEvent<MimePowersComponent, SpeakAttemptEvent>(OnSpeakAttempt);
             SubscribeLocalEvent<MimePowersComponent, InvisibleWallActionEvent>(OnInvisibleWall);
         }
-
-        private Queue<EntityUid> RemQueue = new();
-
         public override void Update(float frameTime)
         {
             base.Update(frameTime);
-            foreach (var entity in RemQueue)
-            {
-                RemComp<VowbreakerComponent>(entity);
-            }
-            RemQueue.Clear();
             /// Queue to despawn invis walls
             foreach (var invisWall in EntityQuery<InvisibleWallComponent>())
             {
                 invisWall.Accumulator += frameTime;
-                if (invisWall.Accumulator < invisWall.DespawnTime)
+                if (invisWall.Accumulator < invisWall.DespawnTime.TotalSeconds)
                 {
                     continue;
                 }
                 EntityManager.QueueDeleteEntity(invisWall.Owner);
             }
             /// Queue to track whether mimes can retake vows yet
-            foreach (var (vowbreaker, mime) in EntityQuery<VowbreakerComponent, MimePowersComponent>())
+            foreach (var mime in EntityQuery<MimePowersComponent>())
             {
-                vowbreaker.Accumulator += frameTime;
-                if (vowbreaker.Accumulator < vowbreaker.VowCooldown)
+                if (!mime.VowBroken || mime.ReadyToRepent)
+                    return;
+
+                mime.Accumulator += frameTime;
+                if (mime.Accumulator < mime.VowCooldown.TotalSeconds)
                 {
                     continue;
                 }
                 mime.ReadyToRepent = true;
                 _popupSystem.PopupEntity(Loc.GetString("mime-ready-to-repent"), mime.Owner, Filter.Entities(mime.Owner));
-                RemQueue.Enqueue(vowbreaker.Owner);
             }
         }
 
@@ -88,8 +84,10 @@ namespace Content.Server.Abilities.Mime
             /// Check there are no walls or mobs there
             foreach (var entity in coords.GetEntitiesInTile())
             {
-                if (_tagSystem.HasTag(entity, "Wall") || (HasComp<MobStateComponent>(entity) && entity != uid) ||
-                    (TryComp<DoorComponent>(entity, out var door) && door.State == DoorState.Closed))
+                IPhysBody? physics = null; /// We use this to check if it's impassable
+                if ((HasComp<MobStateComponent>(entity) && entity != uid) || /// Is it a mob?
+                    ((Resolve(entity, ref physics, false) && (physics.CollisionLayer & (int) CollisionGroup.Impassable) != 0) // Is it impassable?
+                    &&  !(TryComp<DoorComponent>(entity, out var door) && door.State != DoorState.Closed))) // Is it a door that's open and so not actually impassable?
                 {
                     _popupSystem.PopupEntity(Loc.GetString("mime-invisible-wall-failed"), uid, Filter.Entities(uid));
                     return;
@@ -98,7 +96,7 @@ namespace Content.Server.Abilities.Mime
             _popupSystem.PopupEntity(Loc.GetString("mime-invisible-wall-popup", ("mime", uid)), uid, Filter.Pvs(uid));
             /// Make sure we set the invisible wall to despawn properly
             var wall = EntityManager.SpawnEntity(component.WallPrototype, coords);
-            var invisWall = EnsureComp<InvisibleWallComponent>(wall);
+            EnsureComp<InvisibleWallComponent>(wall);
             /// Handle args so cooldown works
             args.Handled = true;
         }
@@ -111,8 +109,11 @@ namespace Content.Server.Abilities.Mime
             if (!Resolve(uid, ref mimePowers))
                 return;
 
+            if (mimePowers.VowBroken)
+                return;
+
             mimePowers.Enabled = false;
-            EnsureComp<VowbreakerComponent>(uid);
+            mimePowers.VowBroken = true;
             _alertsSystem.ClearAlert(uid, AlertType.VowOfSilence);
             _alertsSystem.ShowAlert(uid, AlertType.VowBroken);
             _actionsSystem.RemoveAction(uid, mimePowers.InvisibleWallAction);
@@ -134,6 +135,8 @@ namespace Content.Server.Abilities.Mime
 
             mimePowers.Enabled = true;
             mimePowers.ReadyToRepent = false;
+            mimePowers.VowBroken = false;
+            mimePowers.Accumulator = 0f;
             _alertsSystem.ClearAlert(uid, AlertType.VowBroken);
             _alertsSystem.ShowAlert(uid, AlertType.VowOfSilence);
             _actionsSystem.AddAction(uid, mimePowers.InvisibleWallAction, uid);

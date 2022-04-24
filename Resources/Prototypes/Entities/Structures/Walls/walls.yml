@@ -670,3 +670,4 @@
       - SmallImpassable
       mask:
       - Impassable
+  - type: Airtight

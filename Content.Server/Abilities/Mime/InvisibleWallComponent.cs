@@ -6,7 +6,7 @@ namespace Content.Server.Abilities.Mime
     {
         [DataField("accumulator")]
         public float Accumulator = 0f;
-
-        public float DespawnTime = 30f;
+        [DataField("despawnTime")]
+        public TimeSpan DespawnTime = TimeSpan.FromSeconds(30);
     }
 }
