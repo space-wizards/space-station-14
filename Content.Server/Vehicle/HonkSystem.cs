@@ -39,19 +39,19 @@ namespace Content.Server.Vehicle
         /// </summary>
         private void OnSirenToggle(EntityUid uid, VehicleComponent vehicle, ToggleActionEvent args)
         {
-            if (args.Handled || !vehicle.HornIsSiren)
+            if (args.Handled || !vehicle.HornIsLooping)
                 return;
 
-            if (!vehicle.SirenPlaying)
+            if (!vehicle.LoopingHornIsPlaying)
             {
                 vehicle.SirenPlayingStream?.Stop();
-                vehicle.SirenPlaying = true;
+                vehicle.LoopingHornIsPlaying = true;
                 if (vehicle.HornSound != null)
                     vehicle.SirenPlayingStream = SoundSystem.Play(Filter.Pvs(uid), vehicle.HornSound.GetSound(), uid, AudioParams.Default.WithLoop(true).WithVolume(1.8f));
                 return;
             }
             vehicle.SirenPlayingStream?.Stop();
-            vehicle.SirenPlaying = false;
+            vehicle.LoopingHornIsPlaying = false;
         }
     }
 }

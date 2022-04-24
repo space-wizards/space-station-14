@@ -60,12 +60,12 @@ namespace Content.Shared.Vehicle.Components
         /// Whether the horn is a siren or not.
         /// </summary>
         [DataField("hornIsSiren")]
-        public bool HornIsSiren = false;
+        public bool HornIsLooping = false;
 
         /// <summary>
         /// If this vehicle has a siren currently playing.
         /// </summary>
-        public bool SirenPlaying = false;
+        public bool LoopingHornIsPlaying = false;
 
         public IPlayingAudioStream? SirenPlayingStream;
 

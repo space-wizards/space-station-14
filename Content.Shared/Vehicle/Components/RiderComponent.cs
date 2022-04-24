@@ -11,6 +11,6 @@ namespace Content.Shared.Vehicle.Components
         /// The vehicle this rider is currently riding.
         /// </summary>
         [ViewVariables]
-        public VehicleComponent? Vehicle;
+        public VehicleComponent Vehicle = default!;
     }
 }
