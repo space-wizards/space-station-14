@@ -27,10 +27,10 @@
 # Switching
 - type: construction
   name: two-way lever
-  id: TwoWayLever
+  id: TwoWayLeverRecipe
   graph: LeverGraph
   startNode: start
-  targetNode: lever
+  targetNode: LeverNode
   category: Machines
   description: A lever to control machines. It has 3 modes.
   objectType: Structure
@@ -44,9 +44,9 @@
 - type: construction
   name: light switch
   id: LightSwitchRecipe
-  graph: LightSwitch
+  graph: LightSwitchGraph
   startNode: start
-  targetNode: lightSwitch
+  targetNode: LightSwitchNode
   category: Machines
   description: A switch for toggling lights that are connected to the same apc.
   icon:
@@ -62,9 +62,9 @@
 - type: construction
   name: signal switch
   id: SignalSwitchRecipe
-  graph: SignalSwitch
+  graph: SignalSwitchGraph
   startNode: start
-  targetNode: SignalSwitch
+  targetNode: SignalSwitchNode
   category: Machines
   description: It's a switch for toggling power to things.
   icon:
@@ -80,9 +80,9 @@
 - type: construction
   name: signal button
   id: SignalButtonRecipe
-  graph: SignalButton
+  graph: SignalButtonGraph
   startNode: start
-  targetNode: SignalButton
+  targetNode: SignalButtonNode
   category: Machines
   description: It's a button for activating something.
   icon:

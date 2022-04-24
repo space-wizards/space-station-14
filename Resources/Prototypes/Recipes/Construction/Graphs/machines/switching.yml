@@ -10,14 +10,14 @@
         amount: 2
       - !type:DeleteEntity {}
     edges:
-      - to: lever
+      - to: LeverNode
         completed:
           - !type:SnapToGrid {}
         steps:
           - material: Steel
             amount: 2
             doAfter: 1
-  - node: lever
+  - node: LeverNode
     entity: TwoWayLever
     edges:
       - to: start
@@ -27,17 +27,17 @@
 
 # Switches
 - type: constructionGraph
-  id: LightSwitch
+  id: LightSwitchGraph
   start: start
   graph:
     - node: start
       edges:
-        - to: LightSwitch
+        - to: LightSwitchNode
           steps:
             - material: Steel
               amount: 1
               doAfter: 2.0
-    - node: LightSwitch
+    - node: LightSwitchNode
       entity: ApcNetSwitch
       edges:
         - to: start
@@ -51,17 +51,17 @@
             - !type:DeleteEntity {}
 
 - type: constructionGraph
-  id: SignalSwitch
+  id: SignalSwitchGraph
   start: start
   graph:
     - node: start
       edges:
-        - to: SignalSwitch
+        - to: SignalSwitchNode
           steps:
             - material: Steel
               amount: 1
               doAfter: 2.0
-    - node: SignalSwitch
+    - node: SignalSwitchNode
       entity: SignalSwitch
       edges:
         - to: start
@@ -75,17 +75,17 @@
             - !type:DeleteEntity {}
             
 - type: constructionGraph
-  id: SignalButton
+  id: SignalButtonGraph
   start: start
   graph:
     - node: start
       edges:
-        - to: SignalButton
+        - to: SignalButtonNode
           steps:
             - material: Steel
               amount: 1
               doAfter: 2.0
-    - node: SignalButton
+    - node: SignalButtonNode
       entity: SignalButton
       edges:
         - to: start

@@ -1,7 +1,11 @@
 - type: entity
   id: SignalSwitch
-  name: "signal switch"
-  description: "It's a switch for toggling power to things."
+  name: signal switch
+  description: It's a switch for toggling power to things.
+  placement:
+    mode: SnapgridCenter
+    snap:
+    - Wallmount
   components:
   - type: WallMount
     arc: 360
@@ -14,17 +18,17 @@
   - type: SignalSwitch
   - type: Rotatable
   - type: Construction
-    graph: SignalSwitch
-    node: SignalSwitch
+    graph: SignalSwitchGraph
+    node: SignalSwitchNode
+
+- type: entity
+  id: SignalButton
+  name: signal button
+  description: It's a button for activating something.
   placement:
     mode: SnapgridCenter
     snap:
     - Wallmount
-
-- type: entity
-  id: SignalButton
-  name: "signal button"
-  description: "It's a button for activating something."
   components:
   - type: WallMount
     arc: 360
@@ -37,17 +41,17 @@
   - type: SignalButton
   - type: Rotatable
   - type: Construction
-    graph: SignalButton
-    node: SignalButton
-  placement:
-    mode: SnapgridCenter
-    snap:
-    - Wallmount
+    graph: SignalButtonGraph
+    node: SignalButtonNode
 
 - type: entity
   id: ApcNetSwitch
   name: apc net switch
   description: Its a switch for toggling lights that are connected to the same apc.
+  placement:
+    mode: SnapgridCenter
+    snap:
+      - Wallmount
   components:
     - type: WallMount
       arc: 360
@@ -60,18 +64,14 @@
       sprite: Structures/Wallmounts/switch.rsi
       state: on
     - type: Rotatable
-    - type: Construction
-      graph: LightSwitch
-      node: LightSwitch
     - type: ExtensionCableReceiver
-    - type: DeviceNetworkComponent
+    - type: DeviceNetwork
       deviceNetId: Apc
     - type: ApcNetworkConnection
     - type: ApcNetSwitch
-  placement:
-    mode: SnapgridCenter
-    snap:
-      - Wallmount
+    - type: Construction
+      graph: LightSwitchGraph
+      node: LightSwitchNode
 
 - type: entity
   id: TwoWayLever
@@ -93,9 +93,6 @@
           state_forward: switch-fwd
           state_off: switch-off
           state_reversed: switch-rev
-    - type: Construction
-      graph: LeverGraph
-      node: lever
     - type: Destructible
       thresholds:
       - trigger:
@@ -104,4 +101,6 @@
         behaviors:
         - !type:DoActsBehavior
           acts: [ "Destruction" ]
-
+    - type: Construction
+      graph: LeverGraph
+      node: LeverNode
