@@ -48,7 +48,7 @@ public sealed class SuspicionRuleSystem : GameRuleSystem
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
     [Dependency] private readonly ITileDefinitionManager _tileDefMan = default!;
     [Dependency] private readonly SharedDoorSystem _doorSystem = default!;
-    [Dependency] private readonly SharedPhysicsSystem _physicsSystem = default!;
+    [Dependency] private readonly EntityLookupSystem _lookupSystem = default!;
 
     public override string Prototype => "Suspicion";
 
@@ -253,7 +253,7 @@ public sealed class SuspicionRuleSystem : GameRuleSystem
                     var tile = _random.Pick(tiles);
 
                     // Let's not spawn things on top of walls.
-                    if (tile.IsBlockedTurf(false, _physicsSystem) || tile.IsSpace(_tileDefMan))
+                    if (tile.IsBlockedTurf(false, _lookupSystem) || tile.IsSpace(_tileDefMan))
                         continue;
 
                     var uid = Spawn(item, tile.GridPosition(_mapManager));
