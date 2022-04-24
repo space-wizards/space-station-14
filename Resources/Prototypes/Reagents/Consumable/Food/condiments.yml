@@ -61,6 +61,13 @@
   desc: A salty soy-based flavoring.
   physicalDesc: salty
   color: saddlebrown
+  metabolisms:
+    Food:
+      effects:
+      - !type:SatiateHunger
+        factor: 0.5
+      - !type:SatiateThirst
+        factor: -0.5 # high salt content
 
 - type: reagent
   id: TableSalt
