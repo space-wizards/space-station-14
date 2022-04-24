@@ -813,7 +813,7 @@
     pack: ChangAds
   - type: Speech
   - type: Sprite
-    sprite: Structures/Machines/VendingMachines/c.rsi
+    sprite: Structures/Machines/VendingMachines/changs.rsi
     layers:
     - state: "off"
       map: ["enum.VendingMachineVisualLayers.Unlit"]
