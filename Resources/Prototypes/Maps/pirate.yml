@@ -1,0 +1,13 @@
+- type: gameMap
+  id: pirate
+  mapName: 'Pirate Ship'
+  mapNameTemplate: '{0} Pirate {1}'
+  nameGenerator:
+    !type:NanotrasenNameGenerator
+    prefixCreator: '14'
+  mapPath: /Maps/pirate.yml
+  minPlayers: 0
+  votable: false
+  overflowJobs: []
+  availableJobs:
+    Captain: [ 1, 1 ]
