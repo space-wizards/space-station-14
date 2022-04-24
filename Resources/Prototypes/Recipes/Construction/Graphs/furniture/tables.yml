@@ -14,6 +14,23 @@
             - material: MetalRod
               amount: 2
               doAfter: 1
+        - to: CounterWoodFrame
+          completed:
+            - !type:SnapToGrid
+              southRotation: true
+          steps:
+            - material: WoodPlank
+              amount: 1
+              doAfter: 1
+        - to: CounterMetalFrame
+          completed:
+            - !type:SnapToGrid
+              southRotation: true
+          steps:
+            - material: Steel
+              amount: 1
+              doAfter: 1
+              
 
     - node: TableFrame
       entity: TableFrame
@@ -63,17 +80,38 @@
               amount: 1
               doAfter: 1
 
+
+    - node: CounterWoodFrame
+      entity: CounterWoodFrame
+      edges:
+        - to: start
+          completed:
+            - !type:SpawnPrototype
+                prototype: WoodPlank
+                amount: 1
+          steps:
+            - tool: Anchoring
+              doAfter: 1
         - to: CounterWood
           steps:
             - material: WoodPlank
               amount: 1
               doAfter: 1
-              
+
+    - node: CounterMetalFrame
+      entity: CounterMetalFrame
+      edges:
+        - to: start
+          completed:
+            - !type:SpawnPrototype
+                prototype: Steel
+                amount: 1
         - to: CounterMetal
           steps:
             - material: Steel
               amount: 1
               doAfter: 1
+
 
     - node: Table
       entity: Table
@@ -168,7 +206,7 @@
     - node: CounterMetal
       entity: TableCounterMetal
       edges:
-        - to: TableFrame
+        - to: CounterMetalFrame
           completed:
             - !type:SpawnPrototype
               prototype: SheetSteel1
@@ -180,7 +218,7 @@
     - node: CounterWood
       entity: TableCounterWood
       edges:
-        - to: TableFrame
+        - to: CounterWoodFrame
           completed:
             - !type:SpawnPrototype
               prototype: MaterialWoodPlank1
