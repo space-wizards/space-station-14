@@ -998,7 +998,6 @@
     - UnarmedAttackHostiles
   - type: AiFactionTag
     factions:
-    - SimpleHostile
     - Syndicate
   - type: Sprite
     drawdepth: Mobs
@@ -1045,9 +1044,9 @@
     beepInterval: 1
   - type: Explosive
     explosionType: Default
-    maxIntensity: 15
-    intensitySlope: 5
-    totalIntensity: 120
+    maxIntensity: 20
+    intensitySlope: 20
+    totalIntensity: 225
   - type: ExplodeOnTrigger
 
   # I have included a snake_hiss.ogg sound file so if you want to use that be my guest

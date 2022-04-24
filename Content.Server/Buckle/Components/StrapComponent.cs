@@ -1,24 +1,17 @@
-using System.Collections.Generic;
 using System.Linq;
 using Content.Shared.Acts;
 using Content.Shared.Alert;
 using Content.Shared.Buckle.Components;
 using Content.Shared.DragDrop;
-using Content.Shared.Interaction;
 using Content.Shared.Sound;
-using Robust.Server.GameObjects;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Maths;
 using Robust.Shared.Serialization;
-using Robust.Shared.Serialization.Manager.Attributes;
-using Robust.Shared.ViewVariables;
+
 
 namespace Content.Server.Buckle.Components
 {
     [RegisterComponent]
     [ComponentReference(typeof(SharedStrapComponent))]
-    public sealed class StrapComponent : SharedStrapComponent, IInteractHand, ISerializationHooks, IDestroyAct
+    public sealed class StrapComponent : SharedStrapComponent, ISerializationHooks, IDestroyAct
     {
         [Dependency] private readonly IEntityManager _entityManager = default!;
 
@@ -214,18 +207,6 @@ namespace Content.Server.Buckle.Components
         public override ComponentState GetComponentState()
         {
             return new StrapComponentState(Position);
-        }
-
-        bool IInteractHand.InteractHand(InteractHandEventArgs eventArgs)
-        {
-            var entManager = IoCManager.Resolve<IEntityManager>();
-
-            if (!entManager.TryGetComponent<BuckleComponent>(eventArgs.User, out var buckle))
-            {
-                return false;
-            }
-
-            return buckle.ToggleBuckle(eventArgs.User, Owner);
         }
 
         public override bool DragDropOn(DragDropEvent eventArgs)

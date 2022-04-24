@@ -56,8 +56,12 @@ public sealed class InteractionPopupSystem : EntitySystem
                 sfx = component.InteractFailureSound.GetSound();
         }
 
-        if (component.PopupPerceivedByOthers)
-            _popupSystem.PopupEntity(msg, uid, Filter.Pvs(uid)); //play for everyone in range
+        if (component.MessagePerceivedByOthers != null)
+        {
+            string msgOthers = Loc.GetString(component.MessagePerceivedByOthers,("user", args.User), ("target", uid));
+            _popupSystem.PopupEntity(msg, uid, Filter.Entities(args.User));
+            _popupSystem.PopupEntity(msgOthers, uid, Filter.Pvs(uid, 2F, EntityManager).RemoveWhereAttachedEntity(puid => puid == args.User));
+        }
         else
             _popupSystem.PopupEntity(msg, uid, Filter.Entities(args.User)); //play only for the initiating entity.
 

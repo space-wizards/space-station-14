@@ -118,7 +118,7 @@ namespace Content.Client.Actions
             SubscribeLocalEvent<ActionsComponent, ComponentHandleState>(HandleState);
         }
 
-        protected override void Dirty(ActionType action)
+        public override void Dirty(ActionType action)
         {
             // Should only ever receive component states for attached player's component.
             // --> lets not bother unnecessarily dirtying and prediction-resetting actions for other players.

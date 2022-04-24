@@ -1,66 +1,34 @@
-using System;
 using Content.Server.Power.Components;
-using Content.Shared.Interaction;
-using Content.Shared.Popups;
 using Content.Shared.Radiation;
 using Content.Shared.Singularity.Components;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Localization;
-using Robust.Shared.Timing;
-using Robust.Shared.ViewVariables;
 
 namespace Content.Server.Singularity.Components
 {
     [RegisterComponent]
-    public sealed class RadiationCollectorComponent : Component, IInteractHand, IRadiationAct
+    public sealed class RadiationCollectorComponent : Component, IRadiationAct
     {
-        [Dependency] private readonly IGameTiming _gameTiming = default!;
         [Dependency] private readonly IEntityManager _entMan = default!;
 
-        private bool _enabled;
-        private TimeSpan _coolDownEnd;
+        public bool Enabled;
+        public TimeSpan CoolDownEnd;
 
         [ViewVariables(VVAccess.ReadWrite)]
         public bool Collecting {
-            get => _enabled;
+            get => Enabled;
             set
             {
-                if (_enabled == value) return;
-                _enabled = value;
-                SetAppearance(_enabled ? RadiationCollectorVisualState.Activating : RadiationCollectorVisualState.Deactivating);
+                if (Enabled == value) return;
+                Enabled = value;
+                SetAppearance(Enabled ? RadiationCollectorVisualState.Activating : RadiationCollectorVisualState.Deactivating);
             }
         }
 
         [ViewVariables(VVAccess.ReadWrite)]
         public float ChargeModifier = 30000f;
 
-        bool IInteractHand.InteractHand(InteractHandEventArgs eventArgs)
-        {
-            var curTime = _gameTiming.CurTime;
-
-            if(curTime < _coolDownEnd)
-                return true;
-
-            if (!_enabled)
-            {
-                Owner.PopupMessage(eventArgs.User, Loc.GetString("radiation-collector-component-use-on"));
-                Collecting = true;
-            }
-            else
-            {
-                Owner.PopupMessage(eventArgs.User, Loc.GetString("radiation-collector-component-use-off"));
-                Collecting = false;
-            }
-
-            _coolDownEnd = curTime + TimeSpan.FromSeconds(0.81f);
-
-            return true;
-        }
-
         void IRadiationAct.RadiationAct(float frameTime, SharedRadiationPulseComponent radiation)
         {
-            if (!_enabled) return;
+            if (!Enabled) return;
 
             // No idea if this is even vaguely accurate to the previous logic.
             // The maths is copied from that logic even though it works differently.
@@ -73,7 +41,7 @@ namespace Content.Server.Singularity.Components
             }
         }
 
-        private void SetAppearance(RadiationCollectorVisualState state)
+        public void SetAppearance(RadiationCollectorVisualState state)
         {
             if (IoCManager.Resolve<IEntityManager>().TryGetComponent<AppearanceComponent?>(Owner, out var appearance))
             {
