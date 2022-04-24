@@ -34,6 +34,12 @@ namespace Content.Server.Cloning
                 return;
 
             mind.TransferTo(entity, ghostCheckOverride: true);
+            //if job isn't null then add prototype jobspecials
+            if (mind.CurrentJob != null)
+            foreach (var jobSpecial in mind.CurrentJob.Prototype.Special)
+            {
+                jobSpecial.AfterEquip(entity);
+            }
             mind.UnVisit();
             ClonesWaitingForMind.Remove(mind);
         }
