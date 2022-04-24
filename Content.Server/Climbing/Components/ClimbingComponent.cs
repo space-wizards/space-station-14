@@ -35,9 +35,4 @@ public sealed class ClimbingComponent : SharedClimbingComponent
 
     [ViewVariables]
     public List<string> Fixtures { get; } = new();
-
-    public override ComponentState GetComponentState()
-    {
-        return new ClimbModeComponentState(base.IsClimbing, OwnerIsTransitioning);
-    }
 }

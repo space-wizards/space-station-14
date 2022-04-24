@@ -15,6 +15,7 @@ using Content.Shared.Physics;
 using Content.Shared.Popups;
 using Content.Shared.Verbs;
 using JetBrains.Annotations;
+using Robust.Shared.GameStates;
 using Robust.Shared.Physics;
 using Robust.Shared.Physics.Collision.Shapes;
 using Robust.Shared.Physics.Dynamics;
@@ -43,20 +44,15 @@ public sealed class ClimbSystem : SharedClimbSystem
         base.Initialize();
 
         SubscribeLocalEvent<RoundRestartCleanupEvent>(Reset);
-        SubscribeLocalEvent<ClimbableComponent, ComponentInit>(OnClimbableInit);
         SubscribeLocalEvent<ClimbableComponent, GetVerbsEvent<AlternativeVerb>>(AddClimbableVerb);
         SubscribeLocalEvent<ClimbableComponent, DragDropEvent>(OnClimbableDragDrop);
 
         SubscribeLocalEvent<ClimbingComponent, ClimbFinishedEvent>(OnClimbFinished);
         SubscribeLocalEvent<ClimbingComponent, EndCollideEvent>(OnClimbEndCollide);
         SubscribeLocalEvent<ClimbingComponent, BuckleChangeEvent>(OnBuckleChange);
+        SubscribeLocalEvent<ClimbingComponent, ComponentGetState>(OnClimbingGetState);
 
         SubscribeLocalEvent<GlassTableComponent, ClimbedOnEvent>(OnGlassClimbed);
-    }
-
-    private void OnClimbableInit(EntityUid uid, ClimbableComponent component, ComponentInit args)
-    {
-        EntityManager.EnsureComponent<PhysicsComponent>(uid);
     }
 
     protected override void OnCanDragDropOn(EntityUid uid, SharedClimbableComponent component, CanDragDropOnEvent args)
@@ -327,6 +323,11 @@ public sealed class ClimbSystem : SharedClimbSystem
             return;
         component.IsClimbing = false;
         component.OwnerIsTransitioning = false;
+    }
+
+    private static void OnClimbingGetState(EntityUid uid, ClimbingComponent component, ref ComponentGetState args)
+    {
+        args.State = new SharedClimbingComponent.ClimbModeComponentState(component.IsClimbing, component.OwnerIsTransitioning);
     }
 
     private void OnGlassClimbed(EntityUid uid, GlassTableComponent component, ClimbedOnEvent args)
