@@ -11,6 +11,8 @@ namespace Content.Shared.Emag.Components
 
         [DataField("rechargeTime"), ViewVariables(VVAccess.ReadWrite)]
         public float RechargeTime = 90f;
+
+        [DataField("accumulator")]
         public float Accumulator = 0f;
     }
 }
