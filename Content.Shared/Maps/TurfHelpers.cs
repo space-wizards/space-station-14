@@ -191,10 +191,14 @@ namespace Content.Shared.Maps
         /// <summary>
         /// Checks if a turf has something dense on it.
         /// </summary>
-        public static bool IsBlockedTurf(this TileRef turf, bool filterMobs, SharedPhysicsSystem? physics = null, IEntitySystemManager? entSysMan = null)
+        public static bool IsBlockedTurf(this TileRef turf, bool filterMobs, EntityLookupSystem? physics = null, IEntitySystemManager? entSysMan = null)
         {
             // TODO: Deprecate this with entitylookup.
-            var physics = EntitySystem.Get<EntityLookupSystem>();
+            if (physics == null)
+            {
+                IoCManager.Resolve(ref entSysMan);
+                physics = entSysMan.GetEntitySystem<EntityLookupSystem>();
+            }
 
             if (!GetWorldTileBox(turf, out var worldBox))
                 return false;
