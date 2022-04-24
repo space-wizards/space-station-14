@@ -29,6 +29,18 @@
       "name": "cheesiehonkers-trash"
     },
     {
+      "name": "chinese1"
+    },
+    {
+      "name": "chinese2"
+    },
+    {
+      "name": "chinese3"
+    },
+    {
+      "name": "chinese4"
+    },
+    {
       "name": "chips"
     },
     {
@@ -50,6 +62,9 @@
     {
       "name": "chocolatebar-inhand-left",
       "directions": 4
+    },
+    {
+      "name": "cookie_fortune"
     },
     {
       "name": "energybar"
