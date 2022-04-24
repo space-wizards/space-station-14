@@ -7,7 +7,10 @@
 public sealed class OnIrradiatedEvent : EntityEventArgs
 {
     public readonly float FrameTime;
+
     public readonly float RadsPerSecond;
+
+    public float TotalRads => RadsPerSecond * FrameTime;
 
     public OnIrradiatedEvent(float frameTime, float radsPerSecond)
     {

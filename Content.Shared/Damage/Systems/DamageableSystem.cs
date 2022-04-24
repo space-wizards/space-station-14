@@ -205,7 +205,7 @@ namespace Content.Shared.Damage
 
         private void OnIrradiated(EntityUid uid, DamageableComponent component, OnIrradiatedEvent args)
         {
-            var damageValue = FixedPoint2.New(MathF.Max((args.FrameTime * args.RadsPerSecond), 1));
+            var damageValue = FixedPoint2.New(MathF.Max((args.TotalRads), 1));
 
             // Radiation should really just be a damage group instead of a list of types.
             DamageSpecifier damage = new();

@@ -42,7 +42,7 @@ namespace Content.Server.Singularity.EntitySystems
             // This still won't stop things being potentially hilariously unbalanced though.
             if (TryComp<BatteryComponent>(uid, out var batteryComponent))
             {
-                var charge = args.FrameTime * args.RadsPerSecond * component.ChargeModifier;
+                var charge = args.TotalRads * component.ChargeModifier;
                 batteryComponent.CurrentCharge += charge;
             }
         }
