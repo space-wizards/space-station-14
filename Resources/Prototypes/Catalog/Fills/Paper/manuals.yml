@@ -1,7 +1,7 @@
 - type: entity
   id: PaperWrittenAMEScribbles
   suffix: "AME scribbles"
-  parent: PaperWritten
+  parent: Paper
   components:
   - type: Paper
     content: |

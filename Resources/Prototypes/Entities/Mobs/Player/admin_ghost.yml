@@ -12,20 +12,6 @@
   - type: Hands
   - type: DoAfter
   - type: CombatMode
-    disarmAction:
-      name: action-name-disarm
-      description: action-description-disarm
-      icon: Interface/Actions/disarmOff.png
-      iconOn: Interface/Actions/disarm.png
-      repeat: true
-      useDelay: 1.5
-      interactOnMiss: true
-      event: !type:DisarmActionEvent
-      canTargetSelf: false
-      whitelist:
-        components:
-        - Hands
-        - StatusEffects
   - type: Actions
   - type: PlayerInputMover
   - type: MovementSpeedModifier
@@ -159,6 +145,7 @@
       - FunArtSupplies
       - FunInstruments
       - FunBoardGames
+      - FunATV
       - MaterialSteel
       - MaterialGlass
       - MaterialPlastic
@@ -176,7 +163,10 @@
       - AtmosphericsNitrogen
       - AtmosphericsCarbonDioxide
   - type: CrewMonitoringConsole
-  - type: DeviceNetworkComponent
+    snap: false
+    precision: 3
+  - type: DeviceNetwork
     deviceNetId: Wireless
+    receiveFrequencyId: SuitSensor
   - type: WirelessNetworkConnection
     range: 500

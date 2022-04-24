@@ -40,7 +40,7 @@
   parent: ClothingOuterBase
   id: ClothingOuterArmorCult
   name: acolyte armor
-  description: An evil-looking cult armor, made of bones.
+  description: An evil-looking piece of cult armor, made of bones.
   components:
   - type: Sprite
     sprite: Clothing/OuterClothing/Armor/cult_armour.rsi
@@ -134,6 +134,8 @@
         Slash: 0.4
         Piercing: 0.9
         Heat: 0.9
+  - type: ExplosionResistance
+    resistance: 0.9
 
 - type: entity
   parent: ClothingOuterBase
@@ -152,6 +154,8 @@
         Slash: 0.7
         Piercing: 0.4
         Heat: 0.9
+  - type: ExplosionResistance
+    resistance: 0.8
 
 - type: entity
   parent: ClothingOuterBase
@@ -170,12 +174,14 @@
         Slash: 0.5
         Piercing: 0.6
         Heat: 0.5
-
+  - type: ExplosionResistance
+    resistance: 0.65
+    
 - type: entity
   parent: ClothingOuterBase
   id: ClothingOuterArmorChangeling
   name: chitinous armor
-  description: Inflates the changeling's body into an all-consuming chitinous mass of armor. Provides extensive protection against physical damage, but less against other types. Its mass slows the changeling's movement, and maintaining its shape slows chemical generation.
+  description: Inflates the changeling's body into an all-consuming chitinous mass of armor.
   components:
   - type: Sprite
     sprite: Clothing/OuterClothing/Armor/lingarmor.rsi
@@ -192,4 +198,5 @@
   - type: ClothingSpeedModifier
     walkModifier: 0.7
     sprintModifier: 0.65 
-    
+  - type: ExplosionResistance
+    resistance: 0.5

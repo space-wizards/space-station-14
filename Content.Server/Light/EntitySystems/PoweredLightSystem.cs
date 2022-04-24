@@ -51,7 +51,7 @@ namespace Content.Server.Light.EntitySystems
             SubscribeLocalEvent<PoweredLightComponent, DamageChangedEvent>(HandleLightDamaged);
 
             SubscribeLocalEvent<PoweredLightComponent, SignalReceivedEvent>(OnSignalReceived);
-            SubscribeLocalEvent<PoweredLightComponent, PacketSentEvent>(OnPacketReceived);
+            SubscribeLocalEvent<PoweredLightComponent, DeviceNetworkPacketEvent>(OnPacketReceived);
 
             SubscribeLocalEvent<PoweredLightComponent, PowerChangedEvent>(OnPowerChanged);
         }
@@ -244,7 +244,6 @@ namespace Content.Server.Light.EntitySystems
             }
             else
             {
-                powerReceiver.Load = (light.On && lightBulb.State == LightBulbState.Normal) ? lightBulb.PowerUse : 0;
 
                 switch (lightBulb.State)
                 {
@@ -275,6 +274,8 @@ namespace Content.Server.Light.EntitySystems
                         appearance?.SetData(PoweredLightVisuals.BulbState, PoweredLightState.Burned);
                         break;
                 }
+
+                powerReceiver.Load = (light.On && lightBulb.State == LightBulbState.Normal) ? lightBulb.PowerUse : 0;
             }
         }
 
@@ -346,7 +347,7 @@ namespace Content.Server.Light.EntitySystems
         /// Turns the light on or of when receiving a <see cref="DeviceNetworkConstants.CmdSetState"/> command.
         /// The light is turned on or of according to the <see cref="DeviceNetworkConstants.StateEnabled"/> value
         /// </summary>
-        private void OnPacketReceived(EntityUid uid, PoweredLightComponent component, PacketSentEvent args)
+        private void OnPacketReceived(EntityUid uid, PoweredLightComponent component, DeviceNetworkPacketEvent args)
         {
             if (!args.Data.TryGetValue(DeviceNetworkConstants.Command, out string? command) || command != DeviceNetworkConstants.CmdSetState) return;
             if (!args.Data.TryGetValue(DeviceNetworkConstants.StateEnabled, out bool enabled)) return;

@@ -4,6 +4,7 @@ using Content.Shared.Disease;
 using Content.Shared.Disease.Components;
 using Content.Server.Disease.Components;
 using Content.Server.Clothing.Components;
+using Content.Server.Body.Systems;
 using Content.Shared.MobState.Components;
 using Content.Shared.Examine;
 using Content.Shared.Inventory;
@@ -16,6 +17,7 @@ using Robust.Shared.Random;
 using Robust.Shared.Serialization.Manager;
 using Content.Shared.Inventory.Events;
 using Content.Server.Nutrition.EntitySystems;
+using Robust.Shared.Map;
 using Robust.Shared.Utility;
 
 namespace Content.Server.Disease
@@ -46,6 +48,8 @@ namespace Content.Server.Disease
             SubscribeLocalEvent<DiseaseProtectionComponent, GotUnequippedEvent>(OnUnequipped);
             SubscribeLocalEvent<DiseaseVaccineComponent, AfterInteractEvent>(OnAfterInteract);
             SubscribeLocalEvent<DiseaseVaccineComponent, ExaminedEvent>(OnExamined);
+            // Handling stuff from other systems
+            SubscribeLocalEvent<DiseaseCarrierComponent, ApplyMetabolicMultiplierEvent>(OnApplyMetabolicMultiplier);
             // Private events stuff
             SubscribeLocalEvent<TargetVaxxSuccessfulEvent>(OnTargetVaxxSuccessful);
             SubscribeLocalEvent<VaxxCancelledEvent>(OnVaxxCancelled);
@@ -90,8 +94,10 @@ namespace Content.Server.Disease
                     continue;
                 }
 
-                foreach (var disease in carrierComp.Diseases)
+                for (var i = 0; i < carrierComp.Diseases.Count; i++) //this is a for-loop so that it doesn't break when new diseases are added
                 {
+                    var disease = carrierComp.Diseases[i];
+
                     var args = new DiseaseEffectArgs(carrierComp.Owner, disease, EntityManager);
                     disease.Accumulator += frameTime;
                     if (disease.Accumulator >= disease.TickTime)
@@ -188,6 +194,17 @@ namespace Content.Server.Disease
             _popupSystem.PopupEntity(Loc.GetString("disease-cured"), carrier.Owner, Filter.Entities(carrier.Owner));
         }
 
+        public void CureAllDiseases(EntityUid uid, DiseaseCarrierComponent? carrier = null)
+        {
+            if (!Resolve(uid, ref carrier))
+                return;
+
+            foreach (var disease in carrier.Diseases)
+            {
+                CureDisease(carrier, disease);
+            }
+        }
+
         /// <summary>
         /// Called when someone interacts with a diseased person with an empty hand
         /// to check if they get infected
@@ -272,6 +289,26 @@ namespace Content.Server.Disease
                     args.PushMarkup(Loc.GetString("vaxx-unused"));
             }
         }
+
+
+    private void OnApplyMetabolicMultiplier(EntityUid uid, DiseaseCarrierComponent component, ApplyMetabolicMultiplierEvent args)
+    {
+        if (args.Apply)
+        {
+            foreach (var disease in component.Diseases)
+            {
+                disease.TickTime *= args.Multiplier;
+                return;
+            }
+        }
+        foreach (var disease in component.Diseases)
+        {
+            disease.TickTime /= args.Multiplier;
+            if (disease.Accumulator >= disease.TickTime)
+                disease.Accumulator = disease.TickTime;
+        }
+    }
+
 
         ///
         /// Helper functions
@@ -369,7 +406,7 @@ namespace Content.Server.Disease
 
             var carrierQuery = GetEntityQuery<DiseaseCarrierComponent>();
 
-            foreach (var entity in _lookup.GetEntitiesInRange(xform.MapID, xform.WorldPosition, 2f))
+            foreach (var entity in _lookup.GetEntitiesInRange(xform.MapPosition, 2f))
             {
                 if (!carrierQuery.TryGetComponent(entity, out var carrier) ||
                     !_interactionSystem.InRangeUnobstructed(uid, entity)) continue;

@@ -17,8 +17,10 @@ using Content.Shared.FixedPoint;
 using Content.Shared.Interaction;
 using Content.Shared.Interaction.Events;
 using Content.Shared.Interaction.Helpers;
+using Content.Shared.MobState.Components;
 using Content.Shared.Nutrition.Components;
 using Content.Shared.Throwing;
+using Content.Shared.Verbs;
 using JetBrains.Annotations;
 using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
@@ -53,7 +55,9 @@ namespace Content.Server.Nutrition.EntitySystems
             SubscribeLocalEvent<DrinkComponent, LandEvent>(HandleLand);
             SubscribeLocalEvent<DrinkComponent, UseInHandEvent>(OnUse);
             SubscribeLocalEvent<DrinkComponent, AfterInteractEvent>(AfterInteract);
+            SubscribeLocalEvent<DrinkComponent, GetVerbsEvent<AlternativeVerb>>(AddDrinkVerb);
             SubscribeLocalEvent<DrinkComponent, ExaminedEvent>(OnExamined);
+            SubscribeLocalEvent<DrinkComponent, SolutionTransferAttemptEvent>(OnTransferAttempt);
             SubscribeLocalEvent<SharedBodyComponent, DrinkEvent>(OnDrink);
             SubscribeLocalEvent<DrinkCancelledEvent>(OnDrinkCancelled);
         }
@@ -93,17 +97,6 @@ namespace Content.Server.Nutrition.EntitySystems
             if (EntityManager.TryGetComponent<AppearanceComponent>(uid, out var appearance))
             {
                 appearance.SetData(DrinkCanStateVisual.Opened, opened);
-            }
-
-            if (opened)
-            {
-                EntityManager.EnsureComponent<RefillableSolutionComponent>(uid).Solution= component.SolutionName;
-                EntityManager.EnsureComponent<DrainableSolutionComponent>(uid).Solution= component.SolutionName;
-            }
-            else
-            {
-                EntityManager.RemoveComponent<RefillableSolutionComponent>(uid);
-                EntityManager.RemoveComponent<DrainableSolutionComponent>(uid);
             }
         }
 
@@ -163,6 +156,10 @@ namespace Content.Server.Nutrition.EntitySystems
             }
 
             UpdateAppearance(component);
+
+            // Synchronize solution in drink
+            EnsureComp<RefillableSolutionComponent>(uid).Solution = component.SolutionName;
+            EnsureComp<DrainableSolutionComponent>(uid).Solution = component.SolutionName;
         }
 
         private void OnSolutionChange(EntityUid uid, DrinkComponent component, SolutionChangedEvent args)
@@ -181,6 +178,15 @@ namespace Content.Server.Nutrition.EntitySystems
             var drainAvailable = _solutionContainerSystem.DrainAvailable((component).Owner);
             appearance.SetData(FoodVisuals.Visual, drainAvailable.Float());
             appearance.SetData(DrinkCanStateVisual.Opened, component.Opened);
+        }
+
+        private void OnTransferAttempt(EntityUid uid, DrinkComponent component, SolutionTransferAttemptEvent args)
+        {
+            if (!component.Opened)
+            {
+                args.Cancel(Loc.GetString("drink-component-try-use-drink-not-open",
+                    ("owner", EntityManager.GetComponent<MetaDataComponent>(component.Owner).EntityName)));
+            }
         }
 
         private bool TryDrink(EntityUid user, EntityUid target, DrinkComponent drink)
@@ -324,6 +330,35 @@ namespace Content.Server.Nutrition.EntitySystems
         private static void OnDrinkCancelled(DrinkCancelledEvent args)
         {
             args.Drink.CancelToken = null;
+        }
+
+        private void AddDrinkVerb(EntityUid uid, DrinkComponent component, GetVerbsEvent<AlternativeVerb> ev)
+        {
+            if (component.CancelToken != null)
+                return;
+
+            if (uid == ev.User ||
+                !ev.CanInteract ||
+                !ev.CanAccess ||
+                !EntityManager.TryGetComponent(ev.User, out SharedBodyComponent? body) ||
+                !_bodySystem.TryGetComponentsOnMechanisms<StomachComponent>(ev.User, out var stomachs, body))
+                return;
+
+            if (EntityManager.TryGetComponent<MobStateComponent>(uid, out var mobState) && mobState.IsAlive())
+                return;
+
+            AlternativeVerb verb = new()
+            {
+                Act = () =>
+                {
+                    TryDrink(ev.User, ev.User, component);
+                },
+                IconTexture = "/Textures/Interface/VerbIcons/drink.svg.192dpi.png",
+                Text = Loc.GetString("drink-system-verb-drink"),
+                Priority = -1
+            };
+
+            ev.Verbs.Add(verb);
         }
     }
 }

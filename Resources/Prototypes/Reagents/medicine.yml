@@ -66,7 +66,7 @@
   id: Bicaridine
   name: bicaridine
   group: Medicine
-  desc: An analgesic which is highly effective at treating brute damage. It is useful for stabilizing people who have been severely beaten, as well as treating less life-threatening injuries. In the case of bleeding (internal or external), bicaridine will slow down the bleeding heavily. If the dosage exceeds the overdose limit, it'll stop it outright.
+  desc: An analgesic which is highly effective at treating brute damage. It's useful for stabilizing people who have been severely beaten, as well as treating less life-threatening injuries. In the case of bleeding (internal or external), bicaridine will slow down the bleeding heavily. If the dosage exceeds the overdose limit, it'll stop it outright.
   physicalDesc: opaque
   color: "#ffaa00"
   metabolisms:
@@ -320,6 +320,21 @@
             Radiation: 1
 
 - type: reagent
+  id: Romerol
+  name: romerol
+  group: Medicine
+  desc: A difficult to procure chemical used in the reversal of the zombification process. Tastes like death.
+  physicalDesc: acrid
+  color: "#7e916e"
+  metabolisms:
+    Medicine:
+      effects:
+      - !type:HealthChange
+        damage:
+          types:
+            Poison: 2
+
+- type: reagent
   id: PulpedBananaPeel
   name: pulped banana peel
   group: Medicine
@@ -430,7 +445,7 @@
   id: Tricordrazine
   name: tricordrazine
   group: Medicine
-  desc: A wide-spectrum stimulant, originally derived from Cordrazine. It is capable of healing most common damage types simultaneously, however only at about half the rate of other medications. Because of its low potency, it's best used as a supplement to other medicines.
+  desc: A wide-spectrum stimulant, originally derived from Cordrazine. It's capable of healing most common damage types simultaneously, however only at about half the rate of other medications. Because of its low potency, it's best used as a supplement to other medicines.
   physicalDesc: opaque
   color: "#00e5ff"
   metabolisms:

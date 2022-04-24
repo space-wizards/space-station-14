@@ -728,6 +728,14 @@
 
 - type: entity
   parent: BaseSign
+  id: SignZomlab
+  name: zombie lab sign
+  components:
+  - type: Sprite
+    state: zomlab
+
+- type: entity
+  parent: BaseSign
   id: SignSecureMedRed
   name: red secure sign
   components:

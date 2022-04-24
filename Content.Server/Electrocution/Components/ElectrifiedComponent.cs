@@ -30,6 +30,9 @@ namespace Content.Server.Electrocution
         [DataField("requirePower")]
         public bool RequirePower { get; } = true;
 
+        [DataField("usesApcPower")]
+        public bool UsesApcPower { get; } = false;
+
         [DataField("highVoltageNode")]
         public string? HighVoltageNode { get; }
 

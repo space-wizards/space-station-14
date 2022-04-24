@@ -191,12 +191,12 @@ namespace Content.Server.Singularity.EntitySystems
             {
                 // I tried having it so level 6 can de-anchor. BAD IDEA, MASSIVE LAG.
                 if (entity == component.Owner ||
-                    !EntityManager.TryGetComponent<PhysicsComponent?>(entity, out var collidableComponent) ||
+                    !TryComp<PhysicsComponent?>(entity, out var collidableComponent) ||
                     collidableComponent.BodyType == BodyType.Static) continue;
 
                 if (!CanPull(entity)) continue;
 
-                var vec = worldPos - EntityManager.GetComponent<TransformComponent>(entity).WorldPosition;
+                var vec = worldPos - Transform(entity).WorldPosition;
 
                 if (vec.Length < destroyRange - 0.01f) continue;
 

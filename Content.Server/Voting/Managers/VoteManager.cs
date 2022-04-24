@@ -229,7 +229,7 @@ namespace Content.Server.Voting.Managers
 
         private void SendSingleUpdate(VoteReg v, IPlayerSession player)
         {
-            var msg = _netManager.CreateNetMessage<MsgVoteData>();
+            var msg = new MsgVoteData();
 
             msg.VoteId = v.Id;
             msg.VoteActive = !v.Finished;
@@ -272,7 +272,7 @@ namespace Content.Server.Voting.Managers
 
         private void SendUpdateCanCallVote(IPlayerSession player)
         {
-            var msg = _netManager.CreateNetMessage<MsgVoteCanCall>();
+            var msg = new MsgVoteCanCall();
             msg.CanCall = CanCallVote(player, null, out var isAdmin, out var timeSpan);
             msg.WhenCanCallVote = timeSpan;
 
