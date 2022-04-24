@@ -1,18 +1,24 @@
 ﻿using Content.Shared.Access.Systems;
+using Content.Shared.Administration.Logs;
 using Content.Shared.CharacterAppearance.Components;
+using Content.Shared.Database;
 using Content.Shared.Ghost;
 using Content.Shared.Inventory;
 using Content.Shared.Preferences;
 using Robust.Shared.Enums;
+using Robust.Shared.Network;
+using Robust.Shared.Serialization;
 
 namespace Content.Shared.Identity.Systems;
 
 /// <summary>
 ///     Handles getting an entity's 'identity', essentially an IC version of <see cref="MetaDataComponent.EntityName"/>
 /// </summary>
-public sealed partial class IdentitySystem : EntitySystem
+public abstract partial class SharedIdentitySystem : EntitySystem
 {
     [Dependency] private readonly SharedIdCardSystem _sharedIdCardSystem = default!;
+    [Dependency] protected readonly SharedAdminLogSystem _adminLogs = default!;
+    [Dependency] private readonly INetManager _net = default!;
 
     /// <summary>
     ///     Gets an 'identity string' representing an entity's name from the viewer's perspective.
@@ -20,9 +26,10 @@ public sealed partial class IdentitySystem : EntitySystem
     /// <param name="target">The entity to get an identity string for.</param>
     /// <param name="viewer">The "viewer" of the identity.</param>
     /// <param name="useTrueName">Should we get the entity's true name, if it's known?</param>
+    /// <param name="log">Should this instance be logged?</param>
     /// <param name="inventory">Resolve comp</param>
     /// <param name="appearance">Resolve comp</param>
-    public string GetIdentityString(EntityUid target, EntityUid? viewer=null, bool useTrueName=false,
+    public string GetIdentityString(EntityUid target, EntityUid? viewer=null, bool useTrueName=false, bool log=true,
         InventoryComponent? inventory=null,
         HumanoidAppearanceComponent? appearance=null)
     {
@@ -58,9 +65,11 @@ public sealed partial class IdentitySystem : EntitySystem
         if ((AlwaysKnowsIdentity(target, viewer) || trueName)
             && presumedString != representation.ToStringKnown(true))
         {
-            return presumedString + $" ({representation.ToStringKnown(true)})";
+            presumedString += $" ({representation.ToStringKnown(true)})";
         }
 
+        if (log)
+            LogIdentity(viewer, target, presumedString);
         return presumedString;
     }
 
@@ -119,6 +128,22 @@ public sealed partial class IdentitySystem : EntitySystem
 
         return false;
     }
+
+    private void LogIdentity(EntityUid? viewer, EntityUid target, string identity)
+    {
+        if (_net.IsClient)
+        {
+            RaiseNetworkEvent(new ReportedEntityIdentityNetworkEvent(viewer, target, identity));
+        }
+        else if (viewer == null)
+        {
+            _adminLogs.Add(LogType.Identity, LogImpact.Low, $"{ToPrettyString(target)} was viewed as \"{identity}\"");
+        }
+        else
+        {
+            _adminLogs.Add(LogType.Identity, LogImpact.Low, $"{ToPrettyString(viewer.Value)} viewed {ToPrettyString(target)} as \"{identity}\"");
+        }
+    }
 }
 
 public abstract class IdentityAttemptEventBase : CancellableEntityEventArgs
@@ -158,6 +183,21 @@ public sealed class CanKnowIdentityAttemptEvent : IdentityAttemptEventBase, IInv
     public CanKnowIdentityAttemptEvent(EntityUid? viewer)
     {
         Viewer = viewer;
+    }
+}
+
+[Serializable, NetSerializable]
+public sealed class ReportedEntityIdentityNetworkEvent : EntityEventArgs
+{
+    public EntityUid? Viewer;
+    public EntityUid Target;
+    public string ReportedIdentity;
+
+    public ReportedEntityIdentityNetworkEvent(EntityUid? viewer, EntityUid target, string reportedIdentity)
+    {
+        Viewer = viewer;
+        Target = target;
+        ReportedIdentity = reportedIdentity;
     }
 }
 

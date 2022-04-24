@@ -17,7 +17,7 @@ namespace Content.Client.ContextMenu.UI
         [Dependency] private IEntityManager _entityManager = default!;
         [Dependency] private IPlayerManager _playerManager = default!;
 
-        private IdentitySystem _identitySystem = default!;
+        private SharedIdentitySystem _sharedIdentitySystem = default!;
 
         /// <summary>
         ///     The entity that can be accessed by interacting with this element.
@@ -39,7 +39,7 @@ namespace Content.Client.ContextMenu.UI
         {
             IoCManager.InjectDependencies(this);
 
-            _identitySystem = EntitySystem.Get<IdentitySystem>();
+            _sharedIdentitySystem = EntitySystem.Get<SharedIdentitySystem>();
 
             CountLabel = new Label { StyleClasses = { StyleClassEntityMenuCountText } };
             Icon.AddChild(new LayoutContainer() { Children = { EntityIcon, CountLabel } });
@@ -87,7 +87,7 @@ namespace Content.Client.ContextMenu.UI
             if (admin.HasFlag(AdminFlags.Admin | AdminFlags.Debug))
                 Text = _entityManager.ToPrettyString(entity.Value);
             else
-                Text = _identitySystem.GetIdentityString(entity.Value, _playerManager.LocalPlayer!.ControlledEntity!.Value);
+                Text = _sharedIdentitySystem.GetIdentityString(entity.Value, _playerManager.LocalPlayer!.ControlledEntity!.Value);
         }
     }
 }

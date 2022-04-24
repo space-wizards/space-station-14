@@ -42,7 +42,7 @@ public sealed class ChatSystem : EntitySystem
     [Dependency] private readonly ListeningSystem _listener = default!;
     [Dependency] private readonly InventorySystem _inventory = default!;
     [Dependency] private readonly PopupSystem _popup = default!;
-    [Dependency] private readonly IdentitySystem _identity = default!;
+    [Dependency] private readonly SharedIdentitySystem _sharedIdentity = default!;
 
     private const int VoiceRange = 7; // how far voice goes in world units
     private const int WhisperRange = 2; // how far whisper goes in world units
@@ -149,7 +149,7 @@ public sealed class ChatSystem : EntitySystem
 
         _listener.PingListeners(source, message);
         var messageWrap = Loc.GetString("chat-manager-entity-say-wrap-message",
-            ("entityName", _identity.GetIdentityString(source)));
+            ("entityName", _sharedIdentity.GetIdentityString(source)));
 
         SendInVoiceRange(ChatChannel.Local, message, messageWrap, source, hideChat);
 
@@ -169,7 +169,7 @@ public sealed class ChatSystem : EntitySystem
         var transformSource = Transform(source);
         var sourceCoords = transformSource.Coordinates;
         var messageWrap = Loc.GetString("chat-manager-entity-whisper-wrap-message",
-            ("entityName", _identity.GetIdentityString(source)));
+            ("entityName", _sharedIdentity.GetIdentityString(source)));
 
         var xforms = GetEntityQuery<TransformComponent>();
         var ghosts = GetEntityQuery<GhostComponent>();
@@ -207,7 +207,7 @@ public sealed class ChatSystem : EntitySystem
         if (!_actionBlocker.CanEmote(source)) return;
 
         var messageWrap = Loc.GetString("chat-manager-entity-me-wrap-message",
-            ("entityName", _identity.GetIdentityString(source)));
+            ("entityName", _sharedIdentity.GetIdentityString(source)));
 
         SendInVoiceRange(ChatChannel.Emotes, action, messageWrap, source, hideChat);
         _logs.Add(LogType.Chat, LogImpact.Low, $"Emote from {ToPrettyString(source):user}: {action}");
@@ -222,7 +222,7 @@ public sealed class ChatSystem : EntitySystem
         }
         else if (!_loocEnabled) return;
         var messageWrap = Loc.GetString("chat-manager-entity-looc-wrap-message",
-            ("entityName", _identity.GetIdentityString(source)));
+            ("entityName", _sharedIdentity.GetIdentityString(source)));
 
         SendInVoiceRange(ChatChannel.LOOC, message, messageWrap, source, hideChat);
         _logs.Add(LogType.Chat, LogImpact.Low, $"LOOC from {player:Player}: {message}");
@@ -231,7 +231,7 @@ public sealed class ChatSystem : EntitySystem
     private void SendDeadChat(EntityUid source, IPlayerSession player, string message, bool hideChat)
     {
         var clients = GetDeadChatClients();
-        var playerName = _identity.GetIdentityString(source);
+        var playerName = _sharedIdentity.GetIdentityString(source);
         string messageWrap;
         if (_adminManager.IsAdmin(player))
         {

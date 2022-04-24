@@ -1,6 +1,6 @@
 ﻿namespace Content.Shared.Identity.Systems;
 
-public partial class IdentitySystem
+public partial class SharedIdentitySystem
 {
     public override void Initialize()
     {

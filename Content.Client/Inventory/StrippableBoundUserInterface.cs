@@ -29,7 +29,7 @@ namespace Content.Client.Inventory
         {
             base.Open();
 
-            var idSys = EntitySystem.Get<IdentitySystem>();
+            var idSys = EntitySystem.Get<SharedIdentitySystem>();
             _strippingMenu = new StrippingMenu(Loc.GetString("strippable-bound-user-interface-stripping-menu-title",("ownerName", idSys.GetIdentityString(Owner.Owner))));
 
             _strippingMenu.OnClose += Close;

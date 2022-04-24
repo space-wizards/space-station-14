@@ -26,7 +26,7 @@ namespace Content.Client.Examine
         [Dependency] private readonly IPlayerManager _playerManager = default!;
         [Dependency] private readonly IEyeManager _eyeManager = default!;
         [Dependency] private readonly VerbSystem _verbSystem = default!;
-        [Dependency] private readonly IdentitySystem _identitySystem = default!;
+        [Dependency] private readonly SharedIdentitySystem _sharedIdentitySystem = default!;
 
         public const string StyleClassEntityTooltip = "entity-tooltip";
 
@@ -194,7 +194,7 @@ namespace Content.Client.Examine
 
             hBox.AddChild(new Label
             {
-                Text = _identitySystem.GetIdentityString(target, _playerManager.LocalPlayer!.ControlledEntity!.Value),
+                Text = _sharedIdentitySystem.GetIdentityString(target, _playerManager.LocalPlayer!.ControlledEntity!.Value),
                 HorizontalExpand = true,
             });
 
