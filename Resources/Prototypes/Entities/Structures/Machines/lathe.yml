@@ -207,7 +207,7 @@
 - type: entity
   parent: Protolathe
   id: CircuitImprinter
-  name: Circuit Imprinter
+  name: circuit imprinter
   description: Prints circuit boards for machines.
   components:
   - type: Sprite
@@ -251,7 +251,7 @@
 - type: entity
   parent: Protolathe
   id: SecurityTechFab
-  name: Security TechFab
+  name: security techfab
   description: Prints equipment for use by security crew.
   components:
   - type: Sprite
@@ -304,7 +304,7 @@
 - type: entity
   parent: Protolathe
   id: MedicalTechFab
-  name: Medical TechFab
+  name: medical techfab
   description: Prints equipment for use by the medbay.
   components:
   - type: Sprite
