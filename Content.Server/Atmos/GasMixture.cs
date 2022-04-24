@@ -18,7 +18,7 @@ namespace Content.Server.Atmos
     /// </summary>
     [Serializable]
     [DataDefinition]
-    public sealed class GasMixture : IEquatable<GasMixture>, ICloneable, ISerializationHooks
+    public sealed class GasMixture : IEquatable<GasMixture>, ISerializationHooks
     {
         public static GasMixture SpaceGas => new() {Volume = Atmospherics.CellVolume, Temperature = Atmospherics.TCMB, Immutable = true};
 
@@ -296,7 +296,7 @@ namespace Content.Server.Atmos
             return hashCode.ToHashCode();
         }
 
-        public object Clone()
+        public GasMixture Clone()
         {
             var newMixture = new GasMixture()
             {

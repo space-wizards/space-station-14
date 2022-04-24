@@ -55,7 +55,11 @@ public sealed class StickySystem : EntitySystem
     {
         if (!Resolve(uid, ref component))
             return false;
+
+        // check whitelist and blacklist
         if (component.Whitelist != null && !component.Whitelist.IsValid(target))
+            return false;
+        if (component.Blacklist != null && component.Blacklist.IsValid(target))
             return false;
 
         // check if delay is not zero to start do after
