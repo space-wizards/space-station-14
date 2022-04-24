@@ -1,10 +1,4 @@
 Entries:
-- author: ElectroJr
-  changes:
-  - {message: The Syndicate have discovered the concept of proximity fuzes. On-collide
-      explosives will no longer embed themselves in the wall before exploding., type: Tweak}
-  id: 902
-  time: '2022-01-18T08:26:21.0000000+00:00'
 - author: sewerpig
   changes:
   - {message: Wooden Mosin and Heavy Sniper inhand sprites displays properly now,
@@ -3052,3 +3046,9 @@ Entries:
       for Remilia, 5 minutes for Cerberus.', type: Add}
   id: 1401
   time: '2022-04-24T02:27:19.0000000+00:00'
+- author: Peptide90
+  changes:
+  - {message: Splitstation fixes and QoL improvements. See Github PR for details.,
+    type: Add}
+  id: 1402
+  time: '2022-04-24T13:10:44.0000000+00:00'
