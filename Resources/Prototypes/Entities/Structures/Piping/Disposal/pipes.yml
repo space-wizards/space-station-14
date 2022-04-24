@@ -138,8 +138,7 @@
         !type:PhysShapeAabb
         bounds: "-0.25,-0.5,0.25,0.4"
       mask:
-      - Impassable
-      - LowImpassable
+      - SubfloorMask
   - type: Construction
     graph: DisposalPipe
     node: trunk
@@ -178,8 +177,7 @@
         !type:PhysShapeAabb
         bounds: "-0.5,-0.5,0.25,0.5"
       mask:
-      - Impassable
-      - LowImpassable
+      - SubfloorMask
   - type: Construction
     graph: DisposalPipe
     node: router
@@ -211,8 +209,7 @@
         !type:PhysShapeAabb
         bounds: "-0.25,-0.5,0.5,0.5"
       mask:
-      - Impassable
-      - LowImpassable
+      - SubfloorMask
 
 - type: entity
   id: DisposalJunction
@@ -242,8 +239,7 @@
         !type:PhysShapeAabb
         bounds: "-0.5,-0.5,0.25,0.5"
       mask:
-      - Impassable
-      - LowImpassable
+      - SubfloorMask
   - type: Construction
     graph: DisposalPipe
     node: junction
@@ -275,8 +271,7 @@
         !type:PhysShapeAabb
         bounds: "-0.25,-0.5,0.5,0.5"
       mask:
-      - Impassable
-      - LowImpassable
+      - SubfloorMask
 
 - type: entity
   id: DisposalYJunction
@@ -304,8 +299,7 @@
         !type:PhysShapeAabb
         bounds: "-0.5,-0.5,0.5,0.25"
       mask:
-      - Impassable
-      - LowImpassable
+      - SubfloorMask
   - type: Construction
     graph: DisposalPipe
     node: yJunction
@@ -332,8 +326,7 @@
         !type:PhysShapeAabb
         bounds: "-0.5,-0.5,0.25,0.25"
       mask:
-      - Impassable
-      - LowImpassable
+      - SubfloorMask
   - type: Construction
     graph: DisposalPipe
     node: bend
