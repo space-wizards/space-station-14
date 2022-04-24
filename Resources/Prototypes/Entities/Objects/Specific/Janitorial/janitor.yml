@@ -221,16 +221,21 @@
       state: icon
     - type: InteractionOutline
     - type: Clickable
+    - type: Transform
+      anchored: true
     - type: Physics
       bodyType: Static
     - type: Drain
     - type: AmbientSound
       enabled: false
-      volume: -10
-      range: 5
+      volume: -8
+      range: 8
       sound:
         path: /Audio/Ambience/Objects/drain.ogg
     - type: SolutionContainerManager
       solutions:
         drainBuffer:
           maxVol: 500
+    - type: DrainableSolution
+      solution: drainBuffer
+
