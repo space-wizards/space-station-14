@@ -9030,23 +9030,6 @@ entities:
   - pos: 26.5,6.5
     parent: 51
     type: Transform
-  - fixtures:
-    - shape: !type:PolygonShape
-        vertices:
-        - 0.25,-0.48
-        - 0.25,0.48
-        - -0.25,0.48
-        - -0.25,-0.48
-      mask:
-      - Impassable
-      - SmallImpassable
-      layer:
-      - MobImpassable
-      - ThrownItem
-      - SmallImpassable
-      - Opaque
-      mass: 70
-    type: Fixtures
   - isPlaceable: False
     type: PlaceableSurface
   - containers:
@@ -12881,23 +12864,6 @@ entities:
   - pos: 13.5,18.5
     parent: 51
     type: Transform
-  - fixtures:
-    - shape: !type:PolygonShape
-        vertices:
-        - 0.25,-0.48
-        - 0.25,0.48
-        - -0.25,0.48
-        - -0.25,-0.48
-      mask:
-      - Impassable
-      - SmallImpassable
-      layer:
-      - MobImpassable
-      - ThrownItem
-      - SmallImpassable
-      - Opaque
-      mass: 70
-    type: Fixtures
   - isPlaceable: False
     type: PlaceableSurface
   - containers:
@@ -17829,23 +17795,6 @@ entities:
   - pos: -2.5,24.5
     parent: 51
     type: Transform
-  - fixtures:
-    - shape: !type:PolygonShape
-        vertices:
-        - 0.25,-0.48
-        - 0.25,0.48
-        - -0.25,0.48
-        - -0.25,-0.48
-      mask:
-      - Impassable
-      - SmallImpassable
-      layer:
-      - MobImpassable
-      - ThrownItem
-      - SmallImpassable
-      - Opaque
-      mass: 70
-    type: Fixtures
   - isPlaceable: False
     type: PlaceableSurface
   - containers:
