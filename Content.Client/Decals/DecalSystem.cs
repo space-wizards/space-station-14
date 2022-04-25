@@ -61,6 +61,7 @@ namespace Content.Client.Decals
         protected override bool RemoveDecalHook(GridId gridId, uint uid)
         {
             RemoveDecalFromRenderIndex(gridId, uid);
+            ChunkIndex[gridId].Remove(uid);
 
             return base.RemoveDecalHook(gridId, uid);
         }
@@ -90,8 +91,14 @@ namespace Content.Client.Decals
                         removedUids.ExceptWith(newChunkData.Keys);
                         foreach (var removedUid in removedUids)
                         {
-                            RemoveDecalFromRenderIndex(gridId, removedUid);
+                            RemoveDecalHook(gridId, removedUid);
                         }
+
+                        chunkCollection[indices] = newChunkData;
+                    }
+                    else
+                    {
+                        chunkCollection.Add(indices, newChunkData);
                     }
 
                     foreach (var (uid, decal) in newChunkData)
@@ -107,25 +114,25 @@ namespace Content.Client.Decals
 
                         DecalRenderIndex[gridId][decal.ZIndex][uid] = decal;
                         DecalZIndexIndex[gridId][uid] = decal.ZIndex;
-
                         ChunkIndex[gridId][uid] = indices;
                     }
-
-                    chunkCollection[indices] = newChunkData;
                 }
+            }
 
-                // Now we'll cull old chunks out of range as the server will send them to us anyway.
-                var toRemove = new RemQueue<Vector2i>();
+            // Now we'll cull old chunks out of range as the server will send them to us anyway.
+            foreach (var (gridId, chunks) in ev.RemovedChunks)
+            {
+                var chunkCollection = ChunkCollection(gridId);
 
-                foreach (var (index, _) in chunkCollection)
+                foreach (var index in chunks)
                 {
-                    if (gridChunks.ContainsKey(index)) continue;
+                    if (!chunkCollection.TryGetValue(index, out var chunk)) continue;
 
-                    toRemove.Add(index);
-                }
+                    foreach (var (uid, _) in chunk)
+                    {
+                        RemoveDecalHook(gridId, uid);
+                    }
 
-                foreach (var index in toRemove)
-                {
                     chunkCollection.Remove(index);
                 }
             }

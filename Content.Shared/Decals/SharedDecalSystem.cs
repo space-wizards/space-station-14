@@ -79,7 +79,7 @@ namespace Content.Shared.Decals
             if (chunkCollection[indices].Count == 0)
                 chunkCollection.Remove(indices);
 
-            ChunkIndex[gridId]?.Remove(uid);
+            ChunkIndex[gridId].Remove(uid);
             DirtyChunk(gridId, indices);
             return true;
         }
