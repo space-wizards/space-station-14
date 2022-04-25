@@ -48,21 +48,23 @@ namespace Content.Server.Decals
 
         private void OnGridSplit(ref PostGridSplitEvent ev)
         {
-            // Decals will already be cleaned up on old grid by the tile emptying.
-            // We just need to worry about transferring / creating the new ones.
+            // Transfer decals over to the new grid.
             var enumerator = MapManager.GetGrid(ev.Grid).GetAllTilesEnumerator();
             var oldChunkCollection = DecalGridChunkCollection(ev.OldGrid);
             var chunkCollection = DecalGridChunkCollection(ev.Grid);
+            var chunksSeen = new HashSet<Vector2i>();
 
             while (enumerator.MoveNext(out var tile))
             {
                 var chunkIndices = GetChunkIndices(tile.Value.GridIndices);
 
-                if (!oldChunkCollection.ChunkCollection.TryGetValue(chunkIndices, out var oldChunk)) continue;
+                if (!chunksSeen.Add(chunkIndices) ||
+                    !oldChunkCollection.ChunkCollection.TryGetValue(chunkIndices, out var oldChunk)) continue;
 
                 var bounds = new Box2(tile.Value.GridIndices, tile.Value.GridIndices + 1);
+                var toRemove = new RemQueue<uint>();
 
-                foreach (var (_, decal) in oldChunk)
+                foreach (var (oldUid, decal) in oldChunk)
                 {
                     if (!bounds.Contains(decal.Coordinates)) continue;
 
@@ -72,7 +74,21 @@ namespace Content.Server.Decals
                     chunk[uid] = decal;
                     ChunkIndex[ev.Grid][uid] = chunkIndices;
                     DirtyChunk(ev.Grid, chunkIndices);
+
+                    toRemove.Add(oldUid);
+                    ChunkIndex[ev.OldGrid].Remove(oldUid);
                 }
+
+                foreach (var uid in toRemove)
+                {
+                    oldChunk.Remove(uid);
+                }
+
+                if (oldChunk.Count == 0)
+                    oldChunkCollection.ChunkCollection.Remove(chunkIndices);
+
+                if (toRemove.List?.Count > 0)
+                    DirtyChunk(ev.OldGrid, chunkIndices);
             }
         }
 
