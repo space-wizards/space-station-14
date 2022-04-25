@@ -85,10 +85,12 @@ namespace Content.Shared.Stacks
 
             //you need this check otherwise the merge would break sticky component
 
-            if (EntityManager.HasComponent<IsStuckOnEntityComponent>(donor)
-                ||EntityManager.HasComponent<HasEntityStuckOnComponent>(donor)
-                || EntityManager.HasComponent<IsStuckOnEntityComponent>(recipient)
-                || EntityManager.HasComponent<HasEntityStuckOnComponent>(recipient))
+            if (EntityManager.HasComponent<HasEntityStuckOnComponent>(recipient)
+                || EntityManager.HasComponent<HasEntityStuckOnComponent>(donor)
+                || EntityManager.TryGetComponent(recipient , out StickyComponent recipientStickyComp)
+                && recipientStickyComp.StuckTo != null
+                || EntityManager.TryGetComponent(donor , out StickyComponent donorStickyComp)
+                && donorStickyComp.StuckTo != null)
             {
                 var msg = Loc.GetString("cannot-merge-or-split-due-to-things-stuck");
                 PopupSystem.PopupEntity(msg, user, Filter.Entities(user));

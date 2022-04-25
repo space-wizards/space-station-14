@@ -142,7 +142,8 @@ namespace Content.Server.Stack
                 return;
             }
 
-            if (EntityManager.HasComponent<IsStuckOnEntityComponent>(uid))
+            if (EntityManager.TryGetComponent(uid , out StickyComponent targetComp)
+                && targetComp.StuckTo != null)
             {
                 var msg = Loc.GetString("cannot-merge-or-split-due-to-stuck-on-things");
                 PopupSystem.PopupEntity(msg, userUid, Filter.Entities(userUid));

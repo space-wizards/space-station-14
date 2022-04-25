@@ -35,9 +35,11 @@ public sealed class StickySystem : EntitySystem
 
     private void OnInsertMaterialAttemptEvent(InsertMaterialAttemptEvent ev)
     {
-        if (!(!EntityManager.HasComponent<StickyComponent>(ev.Inserted)
-             || EntityManager.GetComponent<StickyComponent>(ev.Inserted).StuckTo == null)
-            && !EntityManager.HasComponent<HasEntityStuckOnComponent>(ev.Inserted))
+        if (
+            EntityManager.TryGetComponent(ev.Inserted , out StickyComponent inserted)
+            && inserted.StuckTo != null
+            || EntityManager.HasComponent<HasEntityStuckOnComponent>(ev.Inserted)
+            )
             ev.Cancel();
     }
 
@@ -73,9 +75,9 @@ public sealed class StickySystem : EntitySystem
         if (
             EntityManager.HasComponent<HasEntityStuckOnComponent>(uid)
             || EntityManager.HasComponent<HasEntityStuckOnComponent>(target)
-            || EntityManager.GetComponent<StickyComponent>(uid).StuckTo != null
-            || (EntityManager.HasComponent<StickyComponent>(target)
-            && EntityManager.GetComponent<StickyComponent>(target).StuckTo != null)
+            || EntityManager.TryGetComponent(uid , out StickyComponent stuckComp)
+            || stuckComp.StuckTo != null
+            && EntityManager.GetComponent<StickyComponent>(target).StuckTo != null
             )
             return false;
 
@@ -160,12 +162,6 @@ public sealed class StickySystem : EntitySystem
 
         UnstickFromEntity(ev.Uid, ev.User, component);
 
-
-        if (EntityManager.HasComponent<IsStuckOnEntityComponent>(ev.Uid))
-            EntityManager.RemoveComponent<IsStuckOnEntityComponent>(ev.Uid);
-        else
-            Log.Warning("stuck-on-entity-without-stuck-comp");
-
         if (EntityManager.HasComponent<HasEntityStuckOnComponent>(ev.Target))
             EntityManager.RemoveComponent<HasEntityStuckOnComponent>(ev.Target);
         else
@@ -196,10 +192,8 @@ public sealed class StickySystem : EntitySystem
             appearance.SetData(StickyVisuals.IsStuck, true);
         }
 
-
-        //adds a component to the target and entity that is stuck to to use for identification
+        //adds HasEntityStuckOnComponent to the entity that is stuck to use for identification
         EntityManager.AddComponent<HasEntityStuckOnComponent>(target);
-        EntityManager.AddComponent<IsStuckOnEntityComponent>(uid);
 
         component.StuckTo = target;
         RaiseLocalEvent(uid, new EntityStuckEvent(target, user));
