@@ -53,7 +53,6 @@ public sealed class StickySystem : EntitySystem
 
     private void OnInsertMaterialAttemptEvent(InsertMaterialAttemptEvent ev)
     {
-        _popupSystem.PopupCursor( "cannot-split-due-to-sticky" , Filter.Entities(ev.User));
         //Check if the inserted material has anything stuck on it
         if (
             EntityManager.TryGetComponent(ev.Inserted , out StickyComponent inserted)
@@ -61,7 +60,6 @@ public sealed class StickySystem : EntitySystem
             || EntityManager.HasComponent<HasEntityStuckOnComponent>(ev.Inserted)
             )
             ev.Cancel();
-            //
     }
 
     private void OnAfterInteract(EntityUid uid, StickyComponent component, AfterInteractEvent args)
