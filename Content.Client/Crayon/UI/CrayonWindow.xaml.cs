@@ -30,6 +30,16 @@ namespace Content.Client.Crayon.UI
             Owner = owner;
 
             Search.OnTextChanged += _ => RefreshList();
+            ColorSelector.OnColorChanged += SelectColor;
+        }
+
+        private void SelectColor(Color color)
+        {
+            _color = color;
+
+            Owner.SelectColor(color.ToHex());
+
+            RefreshList();
         }
 
         private void RefreshList()
@@ -86,7 +96,23 @@ namespace Content.Client.Crayon.UI
         public void UpdateState(CrayonBoundUserInterfaceState state)
         {
             _selected = state.Selected;
-            _color = state.Color;
+            ColorSelector.Visible = state.SelectableColor;
+
+            if (Color.TryFromName(state.Color, out var namedColor))
+            {
+                _color = state.Color;
+                ColorSelector.Color = namedColor;
+            }
+            else
+            {
+                Color hexColor = Color.TryFromHex(_color);
+                if (hexColor != null)
+                {
+                    _color = state.Color;
+                    ColorSelector.Color = hexColor;
+                }
+            }
+
             RefreshList();
         }
 
