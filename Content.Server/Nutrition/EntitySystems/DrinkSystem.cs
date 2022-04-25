@@ -17,8 +17,10 @@ using Content.Shared.FixedPoint;
 using Content.Shared.Interaction;
 using Content.Shared.Interaction.Events;
 using Content.Shared.Interaction.Helpers;
+using Content.Shared.MobState.Components;
 using Content.Shared.Nutrition.Components;
 using Content.Shared.Throwing;
+using Content.Shared.Verbs;
 using JetBrains.Annotations;
 using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
@@ -53,6 +55,7 @@ namespace Content.Server.Nutrition.EntitySystems
             SubscribeLocalEvent<DrinkComponent, LandEvent>(HandleLand);
             SubscribeLocalEvent<DrinkComponent, UseInHandEvent>(OnUse);
             SubscribeLocalEvent<DrinkComponent, AfterInteractEvent>(AfterInteract);
+            SubscribeLocalEvent<DrinkComponent, GetVerbsEvent<AlternativeVerb>>(AddDrinkVerb);
             SubscribeLocalEvent<DrinkComponent, ExaminedEvent>(OnExamined);
             SubscribeLocalEvent<DrinkComponent, SolutionTransferAttemptEvent>(OnTransferAttempt);
             SubscribeLocalEvent<SharedBodyComponent, DrinkEvent>(OnDrink);
@@ -327,6 +330,35 @@ namespace Content.Server.Nutrition.EntitySystems
         private static void OnDrinkCancelled(DrinkCancelledEvent args)
         {
             args.Drink.CancelToken = null;
+        }
+
+        private void AddDrinkVerb(EntityUid uid, DrinkComponent component, GetVerbsEvent<AlternativeVerb> ev)
+        {
+            if (component.CancelToken != null)
+                return;
+
+            if (uid == ev.User ||
+                !ev.CanInteract ||
+                !ev.CanAccess ||
+                !EntityManager.TryGetComponent(ev.User, out SharedBodyComponent? body) ||
+                !_bodySystem.TryGetComponentsOnMechanisms<StomachComponent>(ev.User, out var stomachs, body))
+                return;
+
+            if (EntityManager.TryGetComponent<MobStateComponent>(uid, out var mobState) && mobState.IsAlive())
+                return;
+
+            AlternativeVerb verb = new()
+            {
+                Act = () =>
+                {
+                    TryDrink(ev.User, ev.User, component);
+                },
+                IconTexture = "/Textures/Interface/VerbIcons/drink.svg.192dpi.png",
+                Text = Loc.GetString("drink-system-verb-drink"),
+                Priority = -1
+            };
+
+            ev.Verbs.Add(verb);
         }
     }
 }

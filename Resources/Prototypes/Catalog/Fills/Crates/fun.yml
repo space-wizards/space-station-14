@@ -111,3 +111,15 @@
         amount: 1
       - id: d6Dice
         amount: 4
+
+- type: entity
+  id: CrateFunATV
+  name: ATV crate
+  parent: CrateLivestock
+  components:
+  - type: StorageFill
+    contents:
+    - id: VehicleATV
+      amount: 1
+    - id: VehicleKeyATV
+      amount: 1

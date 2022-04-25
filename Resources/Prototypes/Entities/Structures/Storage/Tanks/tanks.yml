@@ -62,6 +62,22 @@
           Quantity: 1500
 
 - type: entity
+  parent: WaterTankFull
+  id: WaterCooler
+  name: water cooler
+  description: Seems like a good place to stand and waste time.
+  components:
+  - type: Sprite
+    sprite: Structures/Storage/tanks.rsi
+    state: watercooler
+  - type: SolutionContainerManager
+    solutions:
+      tank:
+        reagents:
+        - ReagentId: Water
+          Quantity: 500
+
+- type: entity
   parent: StorageTank
   id: WaterTankHighCapacity
   name: high-capacity water tank
