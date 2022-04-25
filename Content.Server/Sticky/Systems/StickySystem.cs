@@ -71,7 +71,7 @@ public sealed class StickySystem : EntitySystem
             return false;
         if (component.Whitelist != null && !component.Whitelist.IsValid(target))
             return false;
-        Log.Debug("flag 1");
+        Log.Warning("flag 1");
         //makes sure that neither the target nor the host have entities stuck to them or is stuck to entities
         if (
             EntityManager.HasComponent<HasEntityStuckOnComponent>(uid)
@@ -81,7 +81,7 @@ public sealed class StickySystem : EntitySystem
             && EntityManager.GetComponent<StickyComponent>(target).StuckTo != null
             )
             return false;
-        Log.Debug("flag 2");
+        Log.Warning("flag 2");
         // check if delay is not zero to start do after
         var delay = (float) component.StickDelay.TotalSeconds;
         if (delay > 0)
