@@ -30,8 +30,14 @@ namespace Content.Server.Lathe
         public override void Initialize()
         {
             base.Initialize();
+            SubscribeLocalEvent<LatheComponent, InteractUsingEvent>(OnInteractUsingEvent);
             SubscribeLocalEvent<LatheComponent, InsertMaterialAttemptEvent>(OnInsertMaterialAttemptEvent);
             SubscribeLocalEvent<LatheComponent, ComponentInit>(OnComponentInit);
+        }
+
+        private void OnInteractUsingEvent(EntityUid uid, LatheComponent component, InteractUsingEvent args)
+        {
+            RaiseLocalEvent(uid , new InsertMaterialAttemptEvent(args.User , args.Used , args.Target , args.ClickLocation));
         }
 
         // These queues are to add/remove COMPONENTS to the lathes
@@ -109,8 +115,8 @@ namespace Content.Server.Lathe
             if (!TryComp<MaterialStorageComponent>(uid, out var storage) || !TryComp<MaterialComponent>(args.Inserted, out var material))
                 return;
 
-            //if (args.Cancelled)
-                //return;
+            if (args.Cancelled)
+                return;
 
             var multiplier = 1;
 

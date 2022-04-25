@@ -59,9 +59,9 @@ public sealed class StickySystem : EntitySystem
             && inserted.StuckTo != null
             || EntityManager.HasComponent<HasEntityStuckOnComponent>(ev.Inserted)
             )
-            _popupSystem.PopupCursor( "cannot-split-due-to-sticky" , Filter.Entities(ev.User));
-            //ev.Cancel();
-            return;
+            //_popupSystem.PopupCursor( "cannot-split-due-to-sticky" , Filter.Entities(ev.User));
+            ev.Cancel();
+
     }
 
     private void OnAfterInteract(EntityUid uid, StickyComponent component, AfterInteractEvent args)
