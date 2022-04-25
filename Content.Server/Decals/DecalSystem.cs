@@ -8,6 +8,7 @@ using Robust.Server.Player;
 using Robust.Shared.Enums;
 using Robust.Shared.Map;
 using Robust.Shared.Player;
+using Robust.Shared.Utility;
 
 namespace Content.Server.Decals
 {
@@ -42,6 +43,37 @@ namespace Content.Server.Decals
 
             SubscribeNetworkEvent<RequestDecalPlacementEvent>(OnDecalPlacementRequest);
             SubscribeNetworkEvent<RequestDecalRemovalEvent>(OnDecalRemovalRequest);
+            SubscribeLocalEvent<PostGridSplitEvent>(OnGridSplit);
+        }
+
+        private void OnGridSplit(ref PostGridSplitEvent ev)
+        {
+            // Decals will already be cleaned up on old grid by the tile emptying.
+            // We just need to worry about transferring / creating the new ones.
+            var enumerator = MapManager.GetGrid(ev.Grid).GetAllTilesEnumerator();
+            var oldChunkCollection = DecalGridChunkCollection(ev.OldGrid);
+            var chunkCollection = DecalGridChunkCollection(ev.Grid);
+
+            while (enumerator.MoveNext(out var tile))
+            {
+                var chunkIndices = GetChunkIndices(tile.Value.GridIndices);
+
+                if (!oldChunkCollection.ChunkCollection.TryGetValue(chunkIndices, out var oldChunk)) continue;
+
+                var bounds = new Box2(tile.Value.GridIndices, tile.Value.GridIndices + 1);
+
+                foreach (var (_, decal) in oldChunk)
+                {
+                    if (!bounds.Contains(decal.Coordinates)) continue;
+
+                    var uid = chunkCollection.NextUid++;
+                    var chunk = chunkCollection.ChunkCollection.GetOrNew(chunkIndices);
+
+                    chunk[uid] = decal;
+                    ChunkIndex[ev.Grid][uid] = chunkIndices;
+                    DirtyChunk(ev.Grid, chunkIndices);
+                }
+            }
         }
 
         public override void Shutdown()
@@ -161,7 +193,7 @@ namespace Content.Server.Decals
             if (!gridId.IsValid())
                 return false;
 
-            if (MapManager.GetGrid(gridId).GetTileRef(coordinates).IsSpace())
+            if (MapManager.GetGrid(gridId).GetTileRef(coordinates).IsSpace(_tileDefMan))
                 return false;
 
             var chunkCollection = DecalGridChunkCollection(gridId);
