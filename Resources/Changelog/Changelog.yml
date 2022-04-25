@@ -1,9 +1,4 @@
 Entries:
-- author: ElectroJr
-  changes:
-  - {message: Fixed bug stopping cable from being cut., type: Fix}
-  id: 906
-  time: '2022-01-18T22:17:46.0000000+00:00'
 - author: Macoron
   changes:
   - {message: Added muzzles to silence annoying criminals., type: Add}
@@ -3050,3 +3045,12 @@ Entries:
   - {message: NT Barratry has received a small update., type: Tweak}
   id: 1405
   time: '2022-04-25T14:45:54.0000000+00:00'
+- author: TimrodDX
+  changes:
+  - {message: Most airlocks on Delta Station are now named for your convenience. That
+      ought to clear a few things up around here., type: Add}
+  - {message: 'Delta Station now has an arrivals shuttle, hopefully reducing the amount
+      of deaths to arrivals being spaced.', type: Add}
+  - {message: Delta Station now actually has vehicles., type: Add}
+  id: 1406
+  time: '2022-04-25T14:50:03.0000000+00:00'
