@@ -1,10 +1,4 @@
 Entries:
-- author: sewerpig
-  changes:
-  - {message: Wooden Mosin and Heavy Sniper inhand sprites displays properly now,
-    type: Fix}
-  id: 903
-  time: '2022-01-18T09:43:47.0000000+00:00'
 - author: Lamrr
   changes:
   - {message: 'The captain''s carapace has returned! Captains can now opt for this
@@ -3052,3 +3046,9 @@ Entries:
     type: Add}
   id: 1402
   time: '2022-04-24T13:10:44.0000000+00:00'
+- author: Rane
+  changes:
+  - {message: You can no longer get on vehicles if your hands are full., type: Fix}
+  - {message: ATV crate price from 2500 -> 6000., type: Tweak}
+  id: 1403
+  time: '2022-04-25T00:05:54.0000000+00:00'
