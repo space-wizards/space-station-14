@@ -32,11 +32,13 @@ namespace Content.Server.Lathe.Components
         /// <summary>
         /// Update accumulator for the insertion time
         /// </suummary>
+        [DataField("insertionAccumulator")]
         public float InsertionAccumulator = 0f;
         /// <summary>
         /// Production accumulator for the production time.
         /// </summary>
         [ViewVariables]
+        [DataField("producingAccumulator")]
         public float ProducingAccumulator = 0f;
 
         /// <summary>

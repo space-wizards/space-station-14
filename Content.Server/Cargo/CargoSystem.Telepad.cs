@@ -13,9 +13,11 @@ namespace Content.Server.Cargo;
 public sealed partial class CargoSystem
 {
     [Dependency] private readonly PaperSystem _paperSystem = default!;
+
     private void InitializeTelepad()
     {
         SubscribeLocalEvent<CargoTelepadComponent, PowerChangedEvent>(OnTelepadPowerChange);
+        // Shouldn't need re-anchored event
         SubscribeLocalEvent<CargoTelepadComponent, AnchorStateChangedEvent>(OnTelepadAnchorChange);
     }
 
