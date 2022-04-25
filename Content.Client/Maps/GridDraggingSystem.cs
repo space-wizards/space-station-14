@@ -41,7 +41,7 @@ public sealed class GridDraggingSystem : SharedGridDraggingSystem
     {
         base.Update(frameTime);
 
-        if (!Enabled || !_gameTiming.InPrediction) return;
+        if (!Enabled || !_gameTiming.IsFirstTimePredicted) return;
 
         var state = _inputSystem.CmdStates.GetState(EngineKeyFunctions.Use);
 
