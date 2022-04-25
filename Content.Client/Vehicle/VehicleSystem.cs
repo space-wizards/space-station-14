@@ -27,7 +27,6 @@ namespace Content.Client.Vehicle
             // Reset if we get unbuckled.
             if (!TryComp<EyeComponent>(args.Rider, out var component) || component.Eye == null)
                 return; // This probably will never happen but in this strange new world we probably want to maintain our old vision
-            Logger.Error("Resetting our eye back to our eye..");
             _eyeManager.CurrentEye = component.Eye;
         }
 
