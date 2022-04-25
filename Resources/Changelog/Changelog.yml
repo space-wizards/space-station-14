@@ -1,10 +1,4 @@
 Entries:
-- author: Weaver
-  changes:
-  - {message: The game wiki (wiki.ss14.io)'s chemistry guide is now 100% up to date
-      and automated. You can trust that it's correct now., type: Add}
-  id: 905
-  time: '2022-01-18T21:44:22.0000000+00:00'
 - author: ElectroJr
   changes:
   - {message: Fixed bug stopping cable from being cut., type: Fix}
@@ -3051,3 +3045,8 @@ Entries:
   - {message: Emotes will no longer be capitalized when they shouldn't be., type: Fix}
   id: 1404
   time: '2022-04-25T00:15:40.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: NT Barratry has received a small update., type: Tweak}
+  id: 1405
+  time: '2022-04-25T14:45:54.0000000+00:00'
