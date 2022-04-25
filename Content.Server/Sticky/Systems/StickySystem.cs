@@ -80,14 +80,14 @@ public sealed class StickySystem : EntitySystem
         Log.Warning("flag 0001");
 
         //makes sure that neither the target nor the host have entities stuck to them or is stuck to entities
-        //if (
-        //    EntityManager.HasComponent<HasEntityStuckOnComponent>(uid)
-        //    || EntityManager.HasComponent<HasEntityStuckOnComponent>(target)
-        //    || EntityManager.TryGetComponent(uid , out StickyComponent stuckComp)
-        //    || stuckComp.StuckTo != null
-        //    && EntityManager.GetComponent<StickyComponent>(target).StuckTo != null
-        //)
-        //    return false;
+        if (
+            EntityManager.HasComponent<HasEntityStuckOnComponent>(uid)
+            || EntityManager.HasComponent<HasEntityStuckOnComponent>(target)
+            || EntityManager.TryGetComponent(target , out StickyComponent stuckComp)
+            && stuckComp.StuckTo != null
+            || EntityManager.GetComponent<StickyComponent>(uid).StuckTo != null
+        )
+            return false;
 
         Log.Warning("flag 0002");
 
