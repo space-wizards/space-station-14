@@ -53,11 +53,12 @@ public sealed class StickySystem : EntitySystem
 
     private void OnInsertMaterialAttemptEvent(InsertMaterialAttemptEvent ev)
     {
+        _popupSystem.PopupEntity("flag 0001", ev.User, Filter.Entities(ev.User));
+
         //Check if the inserted material has anything stuck on it
         if (EntityManager.TryGetComponent(ev.Inserted, out StickyComponent inserted)
             && inserted.StuckTo != null)
         {
-            _popupSystem.PopupEntity("flag 0001", ev.User, Filter.Entities(ev.User));
             ev.Cancel();
         }
 

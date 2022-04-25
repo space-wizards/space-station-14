@@ -112,6 +112,13 @@ namespace Content.Server.Lathe
             if (!TryComp<MaterialStorageComponent>(uid, out var storage) || !TryComp<MaterialComponent>(args.Inserted, out var material))
                 return;
 
+            _popupSystem.PopupEntity("flag 0003" , uid , Filter.Entities(args.User));
+            if (args.Cancelled)
+            {
+                _popupSystem.PopupEntity("flag 0004" , uid , Filter.Entities(args.User));
+                return;
+            }
+
             var multiplier = 1;
 
             if (TryComp<StackComponent>(args.Inserted, out var stack))
@@ -131,13 +138,6 @@ namespace Content.Server.Lathe
             // Check if it can take ALL of the material's volume.
             if (storage.StorageLimit > 0 && !storage.CanTakeAmount(totalAmount))
                 return;
-
-            _popupSystem.PopupEntity("flag 0003" , uid , Filter.Entities(args.User));
-            if (args.Cancelled)
-            {
-                _popupSystem.PopupEntity("flag 0004" , uid , Filter.Entities(args.User));
-                return;
-            }
 
             var lastMat = string.Empty;
             foreach (var mat in material.MaterialIds)
