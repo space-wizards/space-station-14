@@ -1,4 +1,5 @@
 
+using Content.Server.Stack.Events;
 using Content.Shared.Stacks;
 using Content.Shared.Sticky.Components;
 using Content.Shared.Verbs;
@@ -25,6 +26,8 @@ namespace Content.Server.Stack
             base.Initialize();
 
             SubscribeLocalEvent<StackComponent, GetVerbsEvent<AlternativeVerb>>(OnStackAlternativeInteract);
+
+            SubscribeLocalEvent<StackSplitAttemptEvent>(OnStackSplitAttemptEvent);
         }
 
         public override void SetCount(EntityUid uid, int amount, SharedStackComponent? component = null)
@@ -93,7 +96,7 @@ namespace Content.Server.Stack
             {
                 Text = Loc.GetString("comp-stack-split-halve"),
                 Category = VerbCategory.Split,
-                Act = () => UserSplit(uid, args.User, stack.Count / 2, stack),
+                Act = () => RaiseLocalEvent(uid , new StackSplitAttemptEvent(uid , args.User , stack.Count/2, stack)),
                 Priority = 1
             };
             args.Verbs.Add(halve);
@@ -108,7 +111,7 @@ namespace Content.Server.Stack
                 {
                     Text = amount.ToString(),
                     Category = VerbCategory.Split,
-                    Act = () => UserSplit(uid, args.User, amount, stack),
+                    Act = () => RaiseLocalEvent(uid , new StackSplitAttemptEvent(uid , args.User , stack.Count/2, stack)),
                     // we want to sort by size, not alphabetically by the verb text.
                     Priority = priority
                 };
@@ -119,43 +122,27 @@ namespace Content.Server.Stack
             }
         }
 
-        private void UserSplit(EntityUid uid, EntityUid userUid, int amount,
-            StackComponent? stack = null,
-            TransformComponent? userTransform = null)
+        private void OnStackSplitAttemptEvent(StackSplitAttemptEvent ev)
         {
-            if (!Resolve(uid, ref stack))
+            var stack = ev.Stack;
+            if (!Resolve(ev.Used, ref stack))
+                return;
+            var userTransform = ev.UserTransform;
+            if (!Resolve(ev.User, ref userTransform))
                 return;
 
-            if (!Resolve(userUid, ref userTransform))
-                return;
-
-            if (amount <= 0)
+            if (ev.Amount <= 0)
             {
-                PopupSystem.PopupCursor(Loc.GetString("comp-stack-split-too-small"), Filter.Entities(userUid));
+                PopupSystem.PopupCursor(Loc.GetString("comp-stack-split-too-small"), Filter.Entities(ev.User));
                 return;
             }
 
-            if (EntityManager.HasComponent<HasEntityStuckOnComponent>(uid))
-            {
-                var msg = Loc.GetString("cannot-merge-or-split-due-to-things-stuck");
-                PopupSystem.PopupEntity(msg, userUid, Filter.Entities(userUid));
-                return;
-            }
-
-            if (EntityManager.TryGetComponent(uid , out StickyComponent targetComp)
-                && targetComp.StuckTo != null)
-            {
-                var msg = Loc.GetString("cannot-merge-or-split-due-to-stuck-on-things");
-                PopupSystem.PopupEntity(msg, userUid, Filter.Entities(userUid));
-                return;
-            }
-
-            if (Split(uid, amount, userTransform.Coordinates ,stack) is not {} split)
+            if (Split(ev.Used, ev.Amount, userTransform.Coordinates , stack) is not {} split)
                 return;
 
-            HandsSystem.PickupOrDrop(userUid, split);
+            HandsSystem.PickupOrDrop(ev.User, split);
 
-            PopupSystem.PopupCursor(Loc.GetString("comp-stack-split"), Filter.Entities(userUid));
+            PopupSystem.PopupCursor(Loc.GetString("comp-stack-split"), Filter.Entities(ev.User));
         }
     }
 }

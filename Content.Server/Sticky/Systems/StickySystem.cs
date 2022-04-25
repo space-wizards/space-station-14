@@ -1,5 +1,6 @@
 ﻿using Content.Server.DoAfter;
 using Content.Server.Popups;
+using Content.Server.Stack.Events;
 using Content.Shared.Sticky.Components;
 using Content.Server.Sticky.Events;
 using Content.Shared.Hands.EntitySystems;
@@ -31,10 +32,26 @@ public sealed class StickySystem : EntitySystem
         SubscribeLocalEvent<StickyComponent, GetVerbsEvent<Verb>>(AddUnstickVerb);
 
         SubscribeLocalEvent<InsertMaterialAttemptEvent>(OnInsertMaterialAttemptEvent);
+        SubscribeLocalEvent<StackSplitAttemptEvent>(OnStackSplitAttemptEvent);
+    }
+
+    private void OnStackSplitAttemptEvent(StackSplitAttemptEvent ev)
+    {
+        if (EntityManager.HasComponent<HasEntityStuckOnComponent>(ev.Used))
+        {
+            ev.Cancel();
+        }
+
+        if (EntityManager.TryGetComponent(ev.Used , out StickyComponent targetComp)
+            && targetComp.StuckTo != null)
+        {
+            ev.Cancel();
+        }
     }
 
     private void OnInsertMaterialAttemptEvent(InsertMaterialAttemptEvent ev)
     {
+        //Check if the inserted material has anything stuck on it
         if (
             EntityManager.TryGetComponent(ev.Inserted , out StickyComponent inserted)
             && inserted.StuckTo != null
@@ -45,7 +62,7 @@ public sealed class StickySystem : EntitySystem
 
     private void OnAfterInteract(EntityUid uid, StickyComponent component, AfterInteractEvent args)
     {
-        Log.Warning("flag 0003");
+
         if (args.Handled || !args.CanReach || args.Target == null)
             return;
 
@@ -68,7 +85,6 @@ public sealed class StickySystem : EntitySystem
 
     private bool StartSticking(EntityUid uid, EntityUid user, EntityUid target, StickyComponent? component = null)
     {
-        Log.Warning("flag 0004");
         if (!Resolve(uid, ref component))
             return false;
 
@@ -77,7 +93,6 @@ public sealed class StickySystem : EntitySystem
             return false;
         if (component.Blacklist != null && component.Blacklist.IsValid(target))
             return false;
-        Log.Warning("flag 0001");
 
         //makes sure that neither the target nor the host have entities stuck to them or is stuck to entities
         if (
@@ -88,8 +103,6 @@ public sealed class StickySystem : EntitySystem
             || EntityManager.GetComponent<StickyComponent>(uid).StuckTo != null
         )
             return false;
-
-        Log.Warning("flag 0002");
 
         // check if delay is not zero to start do after
         var delay = (float) component.StickDelay.TotalSeconds;
