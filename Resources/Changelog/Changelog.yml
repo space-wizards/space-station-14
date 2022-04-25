@@ -1,10 +1,4 @@
 Entries:
-- author: Macoron
-  changes:
-  - {message: Added muzzles to silence annoying criminals., type: Add}
-  - {message: Prisoners wardrobes now have a muzzle inside., type: Add}
-  id: 907
-  time: '2022-01-18T22:18:22.0000000+00:00'
 - author: Capnsockless
   changes:
   - {message: Added a checkerboard., type: Add}
@@ -3054,3 +3048,9 @@ Entries:
   - {message: Delta Station now actually has vehicles., type: Add}
   id: 1406
   time: '2022-04-25T14:50:03.0000000+00:00'
+- author: Peptide90
+  changes:
+  - {message: 'Split Station minor update. More signage, some wiring fixes, vehicle
+      spawners, memorial in the park and more chance of splitting! (See bar).', type: Add}
+  id: 1407
+  time: '2022-04-25T17:07:53.0000000+00:00'
