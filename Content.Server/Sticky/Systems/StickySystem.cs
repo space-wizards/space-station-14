@@ -45,6 +45,7 @@ public sealed class StickySystem : EntitySystem
 
     private void OnAfterInteract(EntityUid uid, StickyComponent component, AfterInteractEvent args)
     {
+        Log.Warning("flag 0003");
         if (args.Handled || !args.CanReach || args.Target == null)
             return;
 
@@ -67,6 +68,7 @@ public sealed class StickySystem : EntitySystem
 
     private bool StartSticking(EntityUid uid, EntityUid user, EntityUid target, StickyComponent? component = null)
     {
+        Log.Warning("flag 0004");
         if (!Resolve(uid, ref component))
             return false;
         // check whitelist and blacklist
@@ -74,7 +76,7 @@ public sealed class StickySystem : EntitySystem
             return false;
         if (component.Blacklist != null && component.Blacklist.IsValid(target))
             return false;
-        Log.Warning("flag 1");
+        Log.Warning("flag 0001");
         //makes sure that neither the target nor the host have entities stuck to them or is stuck to entities
         if (
             EntityManager.HasComponent<HasEntityStuckOnComponent>(uid)
@@ -84,7 +86,7 @@ public sealed class StickySystem : EntitySystem
             && EntityManager.GetComponent<StickyComponent>(target).StuckTo != null
             )
             return false;
-        Log.Warning("flag 2");
+        Log.Warning("flag 0002");
 
         // check if delay is not zero to start do after
         var delay = (float) component.StickDelay.TotalSeconds;
