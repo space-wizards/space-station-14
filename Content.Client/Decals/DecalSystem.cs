@@ -85,6 +85,7 @@ namespace Content.Client.Decals
 
                 var chunkCollection = ChunkCollection(gridId);
 
+                // Update any existing data / remove decals we didn't receive data for.
                 foreach (var (indices, newChunkData) in gridChunks)
                 {
                     if (chunkCollection.TryGetValue(indices, out var chunk))
