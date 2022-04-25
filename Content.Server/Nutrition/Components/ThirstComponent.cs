@@ -19,8 +19,19 @@ using Robust.Shared.ViewVariables;
 
 namespace Content.Server.Nutrition.Components
 {
+
+    public enum ThirstThreshold : byte
+    {
+        // Hydrohomies
+        OverHydrated,
+        Okay,
+        Thirsty,
+        Parched,
+        Dead,
+    }
+
     [RegisterComponent]
-    public sealed class ThirstComponent : SharedThirstComponent
+    public sealed class ThirstComponent : Component
     {
 
         // Base stuff
@@ -33,7 +44,7 @@ namespace Content.Server.Nutrition.Components
 
         // Thirst
         [ViewVariables(VVAccess.ReadOnly)]
-        public override ThirstThreshold CurrentThirstThreshold { get; set; }
+        public ThirstThreshold CurrentThirstThreshold;
 
         public ThirstThreshold LastThirstThreshold;
 
@@ -60,10 +71,5 @@ namespace Content.Server.Nutrition.Components
         [DataField("damage", required: true)]
         [ViewVariables(VVAccess.ReadWrite)]
         public DamageSpecifier Damage = default!;
-        public override ComponentState GetComponentState()
-        {
-            return new ThirstComponentState(CurrentThirstThreshold);
-        }
-
     }
 }

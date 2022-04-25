@@ -1,5 +1,4 @@
-
-
+/*
 using System;
 using Content.Shared.Movement.Components;
 using Robust.Shared.GameObjects;
@@ -39,4 +38,4 @@ namespace Content.Shared.Nutrition.Components
         Dead,
     }
 }
-
+*/

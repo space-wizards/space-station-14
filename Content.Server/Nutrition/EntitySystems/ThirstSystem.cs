@@ -39,7 +39,6 @@ namespace Content.Server.Nutrition.EntitySystems
             component.LastThirstThreshold = ThirstThreshold.Okay; // TODO: Potentially change this -> Used Okay because no effects.
             // TODO: Check all thresholds make sense and throw if they don't.
             UpdateEffects(component);
-            component.Dirty();
         }
 
         private void OnRefreshMovespeed(EntityUid uid, ThirstComponent component, RefreshMovementSpeedModifiersEvent args)
@@ -141,7 +140,6 @@ namespace Content.Server.Nutrition.EntitySystems
 
                         component.CurrentThirstThreshold = calculatedThirstThreshold;
                         UpdateEffects(component);
-                        component.Dirty();
                     }
                     if (component.CurrentThirstThreshold == ThirstThreshold.Dead)
                     {
