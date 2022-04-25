@@ -4,6 +4,7 @@ using Content.Server.Drone.Components;
 using Content.Shared.Actions;
 using Content.Server.Light.Components;
 using Content.Shared.MobState;
+using Content.Shared.MobState.Components;
 using Content.Shared.Interaction.Events;
 using Content.Shared.Interaction.Components;
 using Content.Shared.Examine;
@@ -175,6 +176,11 @@ namespace Content.Server.Drone
             var xform = Comp<TransformComponent>(uid);
             foreach (var entity in _lookup.GetEntitiesInRange(xform.MapPosition, component.InteractionBlockRange))
             {
+                // Filter out dead ghost roles. Dead normal players are intended to block.
+                if ((TryComp<MobStateComponent>(entity, out var entityMobState) && HasComp<GhostTakeoverAvailableComponent>(entity) && entityMobState.IsDead()))
+                    continue;
+
+                // Return true if the entity is/was controlled by a player and is not a drone or ghost.
                 if (HasComp<MindComponent>(entity) && !HasComp<DroneComponent>(entity) && !HasComp<GhostComponent>(entity))
                 {
                     if (_gameTiming.IsFirstTimePredicted)
