@@ -28,13 +28,7 @@ namespace Content.Server.Lathe
         {
             base.Initialize();
             SubscribeLocalEvent<LatheComponent, InteractUsingEvent>(OnInteractUsingEvent);
-            SubscribeLocalEvent<LatheComponent, InsertMaterialAttemptEvent>(OnInsertMaterialAttemptEvent);
             SubscribeLocalEvent<LatheComponent, ComponentInit>(OnComponentInit);
-        }
-
-        private void OnInteractUsingEvent(EntityUid uid, LatheComponent component, InteractUsingEvent args)
-        {
-            RaiseLocalEvent(uid , new InsertMaterialAttemptEvent(args.User , args.Used , args.Target , args.ClickLocation));
         }
 
         // These queues are to add/remove COMPONENTS to the lathes
@@ -107,13 +101,16 @@ namespace Content.Server.Lathe
         /// When someone tries to use an item on the lathe,
         /// insert it if it's a stack and fits inside and don't have anything stuck to it
         /// </summary>
-        private void OnInsertMaterialAttemptEvent(EntityUid uid, LatheComponent component, InsertMaterialAttemptEvent args)
+        private void OnInteractUsingEvent(EntityUid uid, LatheComponent component, InteractUsingEvent args)
         {
-            if (!TryComp<MaterialStorageComponent>(uid, out var storage) || !TryComp<MaterialComponent>(args.Inserted, out var material))
+            if (!TryComp<MaterialStorageComponent>(uid, out var storage) || !TryComp<MaterialComponent>(args.Used, out var material))
                 return;
 
+            var otherSystemsCheck = new InsertMaterialAttemptEvent(args.User, args.Used, args.Target, args.ClickLocation);
+            RaiseLocalEvent(uid , otherSystemsCheck);
+            
             _popupSystem.PopupEntity("flag 0003" , uid , Filter.Entities(args.User));
-            if (args.Cancelled)
+            if (otherSystemsCheck.Cancelled)
             {
                 _popupSystem.PopupEntity("flag 0004" , uid , Filter.Entities(args.User));
                 return;
@@ -121,7 +118,7 @@ namespace Content.Server.Lathe
 
             var multiplier = 1;
 
-            if (TryComp<StackComponent>(args.Inserted, out var stack))
+            if (TryComp<StackComponent>(args.Used, out var stack))
                 multiplier = stack.Count;
 
             var totalAmount = 0;
@@ -148,10 +145,10 @@ namespace Content.Server.Lathe
             /// We need the prototype to get the color
             _prototypeManager.TryIndex(lastMat, out MaterialPrototype? matProto);
 
-            EntityManager.QueueDeleteEntity(args.Inserted);
+            EntityManager.QueueDeleteEntity(args.Used);
             InsertingAddQueue.Enqueue(uid);
             _popupSystem.PopupEntity(Loc.GetString("machine-insert-item", ("machine", uid),
-                ("item", args.Inserted)), uid, Filter.Entities(args.User));
+                ("item", args.Used)), uid, Filter.Entities(args.User));
             if (matProto != null)
             {
                 UpdateInsertingAppearance(uid, true, matProto.Color);
