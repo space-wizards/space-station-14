@@ -69,7 +69,10 @@ public sealed class StickySystem : EntitySystem
     {
         if (!Resolve(uid, ref component))
             return false;
+        // check whitelist and blacklist
         if (component.Whitelist != null && !component.Whitelist.IsValid(target))
+            return false;
+        if (component.Blacklist != null && component.Blacklist.IsValid(target))
             return false;
         Log.Warning("flag 1");
         //makes sure that neither the target nor the host have entities stuck to them or is stuck to entities
@@ -82,6 +85,7 @@ public sealed class StickySystem : EntitySystem
             )
             return false;
         Log.Warning("flag 2");
+
         // check if delay is not zero to start do after
         var delay = (float) component.StickDelay.TotalSeconds;
         if (delay > 0)
