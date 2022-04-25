@@ -88,7 +88,6 @@
     - Recyclable
     - Trash
 
-
 - type: entity
   parent: Crayon
   id: CrayonBlack
