@@ -71,21 +71,24 @@ public sealed class StickySystem : EntitySystem
         Log.Warning("flag 0004");
         if (!Resolve(uid, ref component))
             return false;
+
         // check whitelist and blacklist
         if (component.Whitelist != null && !component.Whitelist.IsValid(target))
             return false;
         if (component.Blacklist != null && component.Blacklist.IsValid(target))
             return false;
         Log.Warning("flag 0001");
+
         //makes sure that neither the target nor the host have entities stuck to them or is stuck to entities
-        if (
-            EntityManager.HasComponent<HasEntityStuckOnComponent>(uid)
-            || EntityManager.HasComponent<HasEntityStuckOnComponent>(target)
-            || EntityManager.TryGetComponent(uid , out StickyComponent stuckComp)
-            || stuckComp.StuckTo != null
-            && EntityManager.GetComponent<StickyComponent>(target).StuckTo != null
-            )
-            return false;
+        //if (
+        //    EntityManager.HasComponent<HasEntityStuckOnComponent>(uid)
+        //    || EntityManager.HasComponent<HasEntityStuckOnComponent>(target)
+        //    || EntityManager.TryGetComponent(uid , out StickyComponent stuckComp)
+        //    || stuckComp.StuckTo != null
+        //    && EntityManager.GetComponent<StickyComponent>(target).StuckTo != null
+        //)
+        //    return false;
+
         Log.Warning("flag 0002");
 
         // check if delay is not zero to start do after
