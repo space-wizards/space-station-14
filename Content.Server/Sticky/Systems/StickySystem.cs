@@ -39,12 +39,14 @@ public sealed class StickySystem : EntitySystem
     {
         if (EntityManager.HasComponent<HasEntityStuckOnComponent>(ev.Used))
         {
+            _popupSystem.PopupCursor("cannot-split-due-to-sticky",Filter.Entities(ev.User));
             ev.Cancel();
         }
 
         if (EntityManager.TryGetComponent(ev.Used , out StickyComponent targetComp)
             && targetComp.StuckTo != null)
         {
+            _popupSystem.PopupCursor("cannot-split-due-to-sticky",Filter.Entities(ev.User));
             ev.Cancel();
         }
     }
