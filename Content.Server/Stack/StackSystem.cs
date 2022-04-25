@@ -127,8 +127,12 @@ namespace Content.Server.Stack
             var stack = ev.Stack;
             if (!Resolve(ev.Used, ref stack))
                 return;
+
             var userTransform = ev.UserTransform;
             if (!Resolve(ev.User, ref userTransform))
+                return;
+
+            if(ev.Cancelled)
                 return;
 
             if (ev.Amount <= 0)
