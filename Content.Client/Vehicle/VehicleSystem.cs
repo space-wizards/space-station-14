@@ -16,14 +16,11 @@ namespace Content.Client.Vehicle
 
         private void OnBuckle(BuckledToVehicleEvent args)
         {
-            Logger.Error("Received event...");
             // Use the vehicle's eye if we get buckled
             if (args.Buckling)
             {
-                Logger.Error("Args are buckling...");
                 if (!TryComp<EyeComponent>(args.Vehicle, out var vehicleEye) || vehicleEye.Eye == null)
                     return;
-                Logger.Error("Setting current eye to vehicle's eye...");
                 _eyeManager.CurrentEye = vehicleEye.Eye;
                 return;
             }
