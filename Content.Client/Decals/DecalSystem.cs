@@ -81,6 +81,8 @@ namespace Content.Client.Decals
         {
             foreach (var (gridId, gridChunks) in ev.Data)
             {
+                if (gridChunks.Count == 0) continue;
+
                 var chunkCollection = ChunkCollection(gridId);
 
                 foreach (var (indices, newChunkData) in gridChunks)
@@ -122,6 +124,8 @@ namespace Content.Client.Decals
             // Now we'll cull old chunks out of range as the server will send them to us anyway.
             foreach (var (gridId, chunks) in ev.RemovedChunks)
             {
+                if (chunks.Count == 0) continue;
+
                 var chunkCollection = ChunkCollection(gridId);
 
                 foreach (var index in chunks)
