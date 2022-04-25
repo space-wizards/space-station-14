@@ -97,20 +97,11 @@ namespace Content.Client.Crayon.UI
         {
             _selected = state.Selected;
             ColorSelector.Visible = state.SelectableColor;
+            _color = state.Color;
 
-            if (Color.TryFromName(state.Color, out var namedColor))
+            if (ColorSelector.Visible)
             {
-                _color = state.Color;
-                ColorSelector.Color = namedColor;
-            }
-            else
-            {
-                Color hexColor = Color.TryFromHex(_color);
-                if (hexColor != null)
-                {
-                    _color = state.Color;
-                    ColorSelector.Color = hexColor;
-                }
+                ColorSelector.Color = state.Color;
             }
 
             RefreshList();
