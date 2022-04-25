@@ -108,13 +108,8 @@ namespace Content.Server.Lathe
 
             var otherSystemsCheck = new InsertMaterialAttemptEvent(args.User, args.Used, args.Target, args.ClickLocation);
             RaiseLocalEvent(uid , otherSystemsCheck);
-            
-            _popupSystem.PopupEntity("flag 0003" , uid , Filter.Entities(args.User));
-            if (otherSystemsCheck.Cancelled)
-            {
-                _popupSystem.PopupEntity("flag 0004" , uid , Filter.Entities(args.User));
-                return;
-            }
+
+            if (otherSystemsCheck.Cancelled) { return; }
 
             var multiplier = 1;
 
