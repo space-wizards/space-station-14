@@ -81,7 +81,6 @@ namespace Content.Server.Vehicle
                     _riderSystem.UnbuckleFromVehicle(args.BuckledEntity);
                     return;
                 }
-
                 // Set up the rider and vehicle with each other
                 EnsureComp<SharedPlayerInputMoverComponent>(uid);
                 var rider = EnsureComp<RiderComponent>(args.BuckledEntity);
