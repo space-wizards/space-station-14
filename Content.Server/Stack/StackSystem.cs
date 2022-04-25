@@ -130,6 +130,7 @@ namespace Content.Server.Stack
             if (!Resolve(userUid, ref userTransform))
                 return;
 
+            //Checks from other system
             var otherSystemCheck = new StackSplitAttemptEvent(uid, userUid, amount, stack, userTransform);
                RaiseLocalEvent(uid , otherSystemCheck);
             if(otherSystemCheck.Cancelled)

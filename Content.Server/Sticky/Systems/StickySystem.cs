@@ -6,6 +6,7 @@ using Content.Server.Sticky.Events;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Interaction;
 using Content.Shared.Lathe.Events;
+using Content.Shared.Stacks;
 using Content.Shared.Verbs;
 using Robust.Shared.Containers;
 using Robust.Shared.Player;
@@ -33,17 +34,30 @@ public sealed class StickySystem : EntitySystem
 
         SubscribeLocalEvent<InsertMaterialAttemptEvent>(OnInsertMaterialAttemptEvent);
         SubscribeLocalEvent<StackSplitAttemptEvent>(OnStackSplitAttemptEvent);
+        SubscribeLocalEvent<StackMergeAttemptEvent>(OnStackMergeAttemptEvent);
+    }
+
+    private void OnStackMergeAttemptEvent(StackMergeAttemptEvent ev)
+    {
+        if (EntityManager.HasComponent<HasEntityStuckOnComponent>(ev.Used)
+            || EntityManager.HasComponent<HasEntityStuckOnComponent>(ev.Target))
+        {
+            _popupSystem.PopupEntity("cannot-merge-due-to-entity-stuck-on", ev.Used ,Filter.Entities(ev.User));
+            ev.Cancel();
+        }
+
+        if ((EntityManager.TryGetComponent(ev.Used, out StickyComponent UsedStickyComp) && UsedStickyComp.StuckTo != null)
+            ||EntityManager.TryGetComponent(ev.Used, out StickyComponent TargetStickyComp) && TargetStickyComp.StuckTo != null)
+        {
+            _popupSystem.PopupEntity("cannot-merge-due-to-entity-stuck", ev.Used ,Filter.Entities(ev.User));
+            ev.Cancel();
+        }
     }
 
     private void OnStackSplitAttemptEvent(StackSplitAttemptEvent ev)
     {
-        if (EntityManager.HasComponent<HasEntityStuckOnComponent>(ev.Used))
-        {
-            _popupSystem.PopupEntity("cannot-split-due-to-sticky", ev.Used ,Filter.Entities(ev.User));
-            ev.Cancel();
-        }
-
-        if (EntityManager.TryGetComponent(ev.Used , out StickyComponent targetComp)
+        if (EntityManager.HasComponent<HasEntityStuckOnComponent>(ev.Used)
+            || EntityManager.TryGetComponent(ev.Used , out StickyComponent targetComp)
             && targetComp.StuckTo != null)
         {
             _popupSystem.PopupEntity("cannot-split-due-to-sticky", ev.Used ,Filter.Entities(ev.User));
@@ -53,18 +67,10 @@ public sealed class StickySystem : EntitySystem
 
     private void OnInsertMaterialAttemptEvent(InsertMaterialAttemptEvent ev)
     {
-        _popupSystem.PopupEntity("flag 0001", ev.User, Filter.Entities(ev.User));
-
-        //Check if the inserted material has anything stuck on it
         if (EntityManager.TryGetComponent(ev.Inserted, out StickyComponent inserted)
-            && inserted.StuckTo != null)
+            && inserted.StuckTo != null
+            || EntityManager.HasComponent<HasEntityStuckOnComponent>(ev.Inserted))
         {
-            ev.Cancel();
-        }
-
-        if (EntityManager.HasComponent<HasEntityStuckOnComponent>(ev.Inserted))
-        {
-            _popupSystem.PopupEntity("flag 0002", ev.User, Filter.Entities(ev.User));
             ev.Cancel();
         }
     }
