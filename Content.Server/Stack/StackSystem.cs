@@ -111,7 +111,7 @@ namespace Content.Server.Stack
                 {
                     Text = amount.ToString(),
                     Category = VerbCategory.Split,
-                    Act = () => RaiseLocalEvent(uid , new StackSplitAttemptEvent(uid , args.User , stack.Count/2, stack)),
+                    Act = () => RaiseLocalEvent(uid , new StackSplitAttemptEvent(uid , args.User , amount, stack)),
                     // we want to sort by size, not alphabetically by the verb text.
                     Priority = priority
                 };
