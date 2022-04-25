@@ -132,8 +132,12 @@ namespace Content.Server.Lathe
             if (storage.StorageLimit > 0 && !storage.CanTakeAmount(totalAmount))
                 return;
 
+            _popupSystem.PopupEntity("flag 0003" , uid , Filter.Entities(args.User));
             if (args.Cancelled)
+            {
+                _popupSystem.PopupEntity("flag 0004" , uid , Filter.Entities(args.User));
                 return;
+            }
 
             var lastMat = string.Empty;
             foreach (var mat in material.MaterialIds)
