@@ -52,16 +52,15 @@ namespace Content.Server.Decals
             var enumerator = MapManager.GetGrid(ev.Grid).GetAllTilesEnumerator();
             var oldChunkCollection = DecalGridChunkCollection(ev.OldGrid);
             var chunkCollection = DecalGridChunkCollection(ev.Grid);
-            var chunksSeen = new HashSet<Vector2i>();
 
             while (enumerator.MoveNext(out var tile))
             {
-                var chunkIndices = GetChunkIndices(tile.Value.GridIndices);
+                var tilePos = (Vector2) tile.Value.GridIndices;
+                var chunkIndices = GetChunkIndices(tilePos);
 
-                if (!chunksSeen.Add(chunkIndices) ||
-                    !oldChunkCollection.ChunkCollection.TryGetValue(chunkIndices, out var oldChunk)) continue;
+                if (!oldChunkCollection.ChunkCollection.TryGetValue(chunkIndices, out var oldChunk)) continue;
 
-                var bounds = new Box2(tile.Value.GridIndices, tile.Value.GridIndices + 1);
+                var bounds = new Box2(tilePos - 0.01f, tilePos + 1.01f);
                 var toRemove = new RemQueue<uint>();
 
                 foreach (var (oldUid, decal) in oldChunk)
