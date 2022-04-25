@@ -57,13 +57,11 @@ public sealed class StickySystem : EntitySystem
         //Check if the inserted material has anything stuck on it
         if (
             EntityManager.TryGetComponent(ev.Inserted , out StickyComponent inserted)
-            && inserted.StuckTo != null
+            & (inserted.StuckTo != null)
             || EntityManager.HasComponent<HasEntityStuckOnComponent>(ev.Inserted)
             )
             ev.Cancel();
             //
-
-
     }
 
     private void OnAfterInteract(EntityUid uid, StickyComponent component, AfterInteractEvent args)
