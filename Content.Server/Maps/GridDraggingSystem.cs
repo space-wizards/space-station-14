@@ -13,6 +13,19 @@ public sealed class GridDraggingSystem : SharedGridDraggingSystem
     {
         base.Initialize();
         SubscribeNetworkEvent<GridDragRequestPosition>(OnRequestDrag);
+        SubscribeNetworkEvent<GridDragVelocityRequest>(OnRequestVelocity);
+    }
+
+    private void OnRequestVelocity(GridDragVelocityRequest ev, EntitySessionEventArgs args)
+    {
+        if (args.SenderSession is not IPlayerSession playerSession ||
+            !_admin.CanCommand(playerSession, CommandName) ||
+            !Exists(ev.Grid) ||
+            Deleted(ev.Grid)) return;
+
+        var gridBody = Comp<PhysicsComponent>(ev.Grid);
+        gridBody.LinearVelocity = ev.LinearVelocity;
+        gridBody.AngularVelocity = 0f;
     }
 
     private void OnRequestDrag(GridDragRequestPosition msg, EntitySessionEventArgs args)

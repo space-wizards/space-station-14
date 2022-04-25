@@ -22,19 +22,43 @@ public sealed class GridDraggingSystem : SharedGridDraggingSystem
 
     private EntityUid? _dragging;
     private Vector2 _localPosition;
+    private MapCoordinates? _lastMousePosition;
 
     private void StartDragging(EntityUid grid, Vector2 localPosition)
     {
         _dragging = grid;
         _localPosition = localPosition;
+
+        if (TryComp<PhysicsComponent>(grid, out var body))
+        {
+            RaiseNetworkEvent(new GridDragVelocityRequest()
+            {
+                Grid = grid,
+                LinearVelocity = Vector2.Zero
+            });
+        }
     }
 
     private void StopDragging()
     {
         if (_dragging == null) return;
 
+        if (_lastMousePosition != null && TryComp<TransformComponent>(_dragging.Value, out var xform) &&
+            TryComp<PhysicsComponent>(_dragging.Value, out var body) &&
+            xform.MapID == _lastMousePosition.Value.MapId)
+        {
+            var tickTime = _gameTiming.TickPeriod;
+            var distance = _lastMousePosition.Value.Position - xform.WorldPosition;
+            RaiseNetworkEvent(new GridDragVelocityRequest()
+            {
+                Grid = _dragging.Value,
+                LinearVelocity = distance.LengthSquared > 0f ? (distance / (float) tickTime.TotalSeconds) * 0.25f : Vector2.Zero,
+            });
+        }
+
         _dragging = null;
         _localPosition = Vector2.Zero;
+        _lastMousePosition = null;
     }
 
     public override void Update(float frameTime)
@@ -79,6 +103,7 @@ public sealed class GridDraggingSystem : SharedGridDraggingSystem
         if (localToWorld.EqualsApprox(mousePos.Position, 0.01f)) return;
 
         var requestedGridOrigin = mousePos.Position - xform.WorldRotation.RotateVec(_localPosition);
+        _lastMousePosition = new MapCoordinates(requestedGridOrigin, mousePos.MapId);
 
         RaiseNetworkEvent(new GridDragRequestPosition()
         {

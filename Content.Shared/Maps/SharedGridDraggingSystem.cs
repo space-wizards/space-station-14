@@ -20,3 +20,10 @@ public sealed class GridDragRequestPosition : EntityEventArgs
     public EntityUid Grid;
     public Vector2 WorldPosition;
 }
+
+[Serializable, NetSerializable]
+public sealed class GridDragVelocityRequest : EntityEventArgs
+{
+    public EntityUid Grid;
+    public Vector2 LinearVelocity;
+}
