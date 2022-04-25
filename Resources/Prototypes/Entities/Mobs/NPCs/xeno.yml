@@ -87,6 +87,7 @@
   - type: Tag
     tags:
       - CannotSuicide
+  - type: NoSlip
 
 - type: entity
   name: space adder
