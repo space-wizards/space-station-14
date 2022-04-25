@@ -10,3 +10,6 @@ ent-ClothingShoesBootsSalvage = ботинки утилизаторов
 ent-ClothingShoesBootsPerformer = ботинки артиста
     .desc = Эти ботинки обеспечивают отличное сцепление с поверхностью, когда вы выходите на сцену.
     .suffix = { "" }
+ent-ClothingShoesBootsCombat = combat boots
+    .desc = Robust combat boots for combat scenarios or combat situations. All combat, all the time.
+    .suffix = { "" }

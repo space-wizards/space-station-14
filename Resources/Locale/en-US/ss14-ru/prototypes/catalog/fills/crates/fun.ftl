@@ -13,3 +13,6 @@ ent-CrateFunArtSupplies = art supplies
 ent-CrateFunBoardGames = board game crate
     .desc = { ent-CrateGenericSteel.desc }
     .suffix = { "" }
+ent-CrateFunATV = ATV crate
+    .desc = { ent-CrateLivestock.desc }
+    .suffix = { "" }

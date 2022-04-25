@@ -108,7 +108,7 @@
 - type: entity
   id: ThermomachineHeaterMachineCircuitBoard
   parent: BaseMachineCircuitboard
-  name: heather thermomachine machine board
+  name: heater thermomachine machine board
   description: Looks like you could use a screwdriver to change the board type.
   components:
   - type: MachineBoard

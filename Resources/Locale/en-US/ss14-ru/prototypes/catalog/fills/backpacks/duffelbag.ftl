@@ -37,3 +37,6 @@ ent-ClothingBackpackDuffelSyndicateC4tBundle = syndicate C-4 bundle
 ent-ClothingBackpackDuffelSyndicateHardsuitBundle = syndicate hardsuit bundle
     .desc = Contains the Syndicate's signature blood red hardsuit.
     .suffix = { "" }
+ent-ClothingBackpackDuffelSyndicateOperative = operative duffelbag
+    .desc = { ent-ClothingBackpackDuffelSyndicate.desc }
+    .suffix = { "" }

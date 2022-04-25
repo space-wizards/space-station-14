@@ -76,3 +76,6 @@ ent-RubberStampWarden = печать смотрителя
 ent-RubberStampTrader = печать торговца
     .desc = { ent-RubberStampMime.desc }
     .suffix = { "" }
+ent-RubberStampSyndicate = syndicate rubber stamp
+    .desc = { ent-RubberStampMime.desc }
+    .suffix = { "" }

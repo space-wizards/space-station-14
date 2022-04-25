@@ -139,3 +139,6 @@ ent-ClothingUniformJumpskirtHosFormal = hos's formal dress
 ent-ClothingUniformJumpskirtOperative = operative jumpskirt
     .desc = Uniform for elite syndicate operatives performing tactical operations in deep space.
     .suffix = { "" }
+ent-ClothingUniformJumpskirtAtmos = atmosheric technician jumpskirt
+    .desc = I am at work. I can't leave work. Work is breathing. I am testing air quality.
+    .suffix = { "" }

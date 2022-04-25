@@ -10,3 +10,6 @@ ent-WetFloorSign = знак "мокрый пол"
 ent-JanitorialTrolley = тележка уборщика
     .desc = Это альфа и омега санитарии.
     .suffix = { "" }
+ent-FloorDrain = drain
+    .desc = Drains puddles around it. Useful for dumping mop buckets or keeping certain rooms clean.
+    .suffix = { "" }

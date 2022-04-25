@@ -82,3 +82,6 @@ ent-CentcomPDA = центком КПК
 ent-MusicianPDA = КПК музыканта
     .desc = Он наполняет вас вдохновением.
     .suffix = { "" }
+ent-AtmosPDA = atmos PDA
+    .desc = Still smells like plasma.
+    .suffix = { "" }

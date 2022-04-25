@@ -1,5 +1,6 @@
 using Content.Server.Shuttles.Components;
 using Content.Server.Shuttles.EntitySystems;
+using Content.Shared.Vehicle.Components;
 using Content.Shared.Movement;
 using Content.Shared.Movement.Components;
 using Content.Shared.Shuttles.Components;
@@ -14,7 +15,12 @@ namespace Content.Server.Physics.Controllers
         [Dependency] private readonly IMapManager _mapManager = default!;
         [Dependency] private readonly ShuttleSystem _shuttle = default!;
         [Dependency] private readonly ThrusterSystem _thruster = default!;
-
+        /// <summary>
+        /// These mobs will get skipped over when checking which mobs
+        /// should be moved. Prediction is handled elsewhere by
+        /// cancelling the movement attempt in the shared and
+        /// client namespace.
+        /// </summary>
         private HashSet<EntityUid> _excludedMobs = new();
         private Dictionary<ShuttleComponent, List<(PilotComponent, IMoverComponent)>> _shuttlePilots = new();
 
@@ -40,6 +46,7 @@ namespace Content.Server.Physics.Controllers
             }
 
             HandleShuttleMovement(frameTime);
+            HandleVehicleMovement(frameTime);
 
             foreach (var (mover, physics) in EntityManager.EntityQuery<IMoverComponent, PhysicsComponent>(true))
             {
@@ -60,7 +67,7 @@ namespace Content.Server.Physics.Controllers
                 _excludedMobs.Add(mover.Owner);
 
                 var gridId = xform.GridID;
-
+                // This tries to see if the grid is a shuttle
                 if (!_mapManager.TryGetGrid(gridId, out var grid) ||
                     !EntityManager.TryGetComponent(grid.GridEntityId, out ShuttleComponent? shuttleComponent)) continue;
 
@@ -250,6 +257,18 @@ namespace Content.Server.Physics.Controllers
 
                     _thruster.SetAngularThrust(shuttle, true);
                 }
+            }
+        }
+        /// <summary>
+        /// Add mobs riding vehicles to the list of mobs whose input
+        /// should be ignored.
+        /// </summary>
+        private void HandleVehicleMovement(float frameTime)
+        {
+            foreach (var (rider, mover, xform) in EntityManager.EntityQuery<RiderComponent, SharedPlayerInputMoverComponent, TransformComponent>())
+            {
+                if (rider.Vehicle == null) continue;
+                _excludedMobs.Add(mover.Owner);
             }
         }
     }

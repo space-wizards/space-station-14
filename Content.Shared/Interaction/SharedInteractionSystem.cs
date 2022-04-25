@@ -272,17 +272,6 @@ namespace Content.Shared.Interaction
             if (message.Handled)
                 return;
 
-            var interactHandEventArgs = new InteractHandEventArgs(user, target);
-            var interactHandComps = AllComps<IInteractHand>(target).ToList();
-            foreach (var interactHandComp in interactHandComps)
-            {
-                // If an InteractHand returns a status completion we finish our interaction
-#pragma warning disable 618
-                if (interactHandComp.InteractHand(interactHandEventArgs))
-#pragma warning restore 618
-                    return;
-            }
-
             // Else we run Activate.
             InteractionActivate(user, target,
                 checkCanInteract: false,
@@ -439,7 +428,7 @@ namespace Content.Shared.Interaction
             CollisionGroup collisionMask = CollisionGroup.Impassable,
             Ignored? predicate = null,
             bool popup = false)
-        {;   
+        {;
             Ignored combinedPredicate = e => e == origin || (predicate?.Invoke(e) ?? false);
 
             var inRange = InRangeUnobstructed(Transform(origin).MapPosition, other, range, collisionMask, combinedPredicate);

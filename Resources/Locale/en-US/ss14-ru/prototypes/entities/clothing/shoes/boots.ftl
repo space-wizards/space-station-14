@@ -10,3 +10,6 @@ ent-ClothingShoesBootsSalvage = salvage boots
 ent-ClothingShoesBootsPerformer = performer's boots
     .desc = These boots provide great traction for when you're up on stage.
     .suffix = { "" }
+ent-ClothingShoesBootsCombat = combat boots
+    .desc = Robust combat boots for combat scenarios or combat situations. All combat, all the time.
+    .suffix = { "" }

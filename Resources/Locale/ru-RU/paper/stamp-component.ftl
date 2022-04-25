@@ -13,3 +13,4 @@ stamp-component-stamped-name-qm = Квартирмейстер
 stamp-component-stamped-name-rd = Научный руководитель
 stamp-component-stamped-name-warden = Смотритель
 stamp-component-stamped-name-trader = Торговец
+stamp-component-stamped-name-syndicate = Syndicate
