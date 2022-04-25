@@ -123,3 +123,15 @@
       amount: 1
     - id: VehicleKeyATV
       amount: 1
+
+- type: entity
+  id: CrateFunSyndicateSegway
+  name: syndicate segway crate
+  parent: CrateLivestock
+  components:
+    - type: StorageFill
+      contents:
+        - id: VehicleSyndicateSegway
+          amount: 1
+        - id: VehicleKeySyndicateSegway
+          amount: 1
