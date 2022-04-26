@@ -57,10 +57,10 @@
     size: 2
   - type: Tag
     tags:
-    - Recyclable
     - RollingPaper
     - Trash
   - type: Recyclable
+  - type: SpaceGarbage
 
 - type: entity
   id: CigaretteFilter
@@ -81,6 +81,5 @@
   - type: Tag
     tags:
     - CigFilter
-    - Recyclable
     - Trash
   - type: Recyclable

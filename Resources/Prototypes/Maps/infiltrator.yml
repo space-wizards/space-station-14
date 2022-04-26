@@ -1,0 +1,13 @@
+- type: gameMap
+  id: infiltrator
+  mapName: 'Syndicate Infiltrator'
+  mapNameTemplate: '{0} Infiltrator {1}'
+  nameGenerator:
+    !type:NanotrasenNameGenerator
+    prefixCreator: '14'
+  mapPath: /Maps/infiltrator.yml
+  minPlayers: 0
+  votable: false
+  overflowJobs: []
+  availableJobs:
+    Captain: [ 1, 1 ]
