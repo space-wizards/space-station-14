@@ -67,7 +67,7 @@
     sprite: Clothing/Back/Satchels/science.rsi
   - type: Clothing
     sprite: Clothing/Back/Satchels/science.rsi
-   - type: Armor
+  - type: Armor
     modifiers:
       coefficients:
         Heat: 0.95
