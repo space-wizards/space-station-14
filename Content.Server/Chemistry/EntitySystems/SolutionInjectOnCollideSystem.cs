@@ -50,9 +50,10 @@ namespace Content.Server.Chemistry.EntitySystems
             if (!EntityManager.TryGetComponent<BloodstreamComponent?>(args.OtherFixture.Body.Owner, out var bloodstream) ||
                 !_solutionsSystem.TryGetInjectableSolution(component.Owner, out var solution)) return;
 
-            if(component.CanPenetrateHelmet == false
-               && IsFaceBlocked(args.OtherFixture.Body.Owner , args.OurFixture.Body.Owner)
-               && component.CanPenetrateArmor == false) //TODO : Implement the armor check in another PR
+            //TODO : Implement the armor check in another PR
+            if (!component.CanPenetrateHelmet &&
+               !component.CanPenetrateArmor &&
+               IsFaceBlocked(args.OtherFixture.Body.Owner , args.OurFixture.Body.Owner))
                 return;
 
             var solRemoved = solution.SplitSolution(component.TransferAmount);
