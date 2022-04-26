@@ -64,6 +64,7 @@ namespace Content.Server.Storage.EntitySystems
             SubscribeLocalEvent<ServerStorageComponent, StorageInsertItemMessage>(OnInsertItemMessage);
             SubscribeLocalEvent<ServerStorageComponent, BoundUIOpenedEvent>(OnBoundUIOpen);
             SubscribeLocalEvent<ServerStorageComponent, BoundUIClosedEvent>(OnBoundUIClosed);
+            SubscribeLocalEvent<ServerStorageComponent, EntRemovedFromContainerMessage>(OnStorageItemRemoved);
 
             SubscribeLocalEvent<EntityStorageComponent, GetVerbsEvent<InteractionVerb>>(AddToggleOpenVerb);
             SubscribeLocalEvent<EntityStorageComponent, RelayMovementEntityEvent>(OnRelayMovement);
@@ -382,6 +383,12 @@ namespace Content.Server.Storage.EntitySystems
             }
         }
 
+        private void OnStorageItemRemoved(EntityUid uid, ServerStorageComponent storageComp, EntRemovedFromContainerMessage args)
+        {
+            RecalculateStorageUsed(uid, storageComp);
+            UpdateStorageUI(uid, storageComp);
+        }
+
         private void UpdateStorageVisualization(EntityUid uid, ServerStorageComponent storageComp)
         {
             if (!TryComp<AppearanceComponent>(uid, out var appearance))
@@ -482,8 +489,6 @@ namespace Content.Server.Storage.EntitySystems
                 SoundSystem.Play(Filter.Pvs(uid), storageComp.StorageRemoveSound.GetSound(), uid, AudioParams.Default);
 
             _sharedHandsSystem.TryPickupAnyHand(player, itemToRemove);
-            RecalculateStorageUsed(uid, storageComp);
-            UpdateStorageUI(uid, storageComp);
         }
 
         /// <summary>
