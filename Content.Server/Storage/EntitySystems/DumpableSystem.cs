@@ -60,7 +60,6 @@ namespace Content.Server.Storage.EntitySystems
                 },
                 Text = Loc.GetString("dump-verb-name"),
                 IconTexture = "/Textures/Interface/VerbIcons/drop.svg.192dpi.png",
-                Priority = 2
             };
             args.Verbs.Add(verb);
         }
