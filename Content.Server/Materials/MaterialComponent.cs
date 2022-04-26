@@ -17,7 +17,6 @@ namespace Content.Server.Materials
         // ReSharper disable once CollectionNeverUpdated.Local
         public readonly Dictionary<string, int> _materials = new();
         public List<string> MaterialIds => _materials.Keys.ToList();
-        public List<int> MaterialVolume => _materials.Values.ToList();
 
         /// <summary>
         ///     Returns all materials which make up this entity.
