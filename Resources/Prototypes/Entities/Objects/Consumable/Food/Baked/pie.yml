@@ -114,7 +114,7 @@
     - state: tin
     - state: plain
   - type: CreamPie
-  - type: SolutionInjectOnCollideComponent
+  - type: SolutionInjectOnCollide
     transferAmount: 20
 # Tastes like pie, cream, banana.
 
