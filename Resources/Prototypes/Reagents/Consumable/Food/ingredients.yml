@@ -57,11 +57,20 @@
   desc: Tasty spacey sugar!
   physicalDesc: sweet
   color: white
+  meltingPoint: 146.0
   metabolisms:
     Food:
       effects:
       - !type:SatiateHunger
         factor: 1
+  plantMetabolism:
+  - !type:PlantAdjustNutrition
+    amount: 0.1
+  - !type:PlantAdjustWeeds
+    amount: 2
+  - !type:PlantAdjustPests
+    amount: 2
+
 
 - type: reagent
   id: Blackpepper
