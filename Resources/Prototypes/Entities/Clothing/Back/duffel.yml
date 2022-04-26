@@ -63,7 +63,10 @@
     sprite: Clothing/Back/Duffels/clown.rsi
   - type: Clothing
     sprite: Clothing/Back/Duffels/clown.rsi
-
+  - type: Storage
+    storageSoundCollection:
+      collection: BikeHorn  
+      
 - type: entity
   parent: ClothingBackpackDuffel
   id: ClothingBackpackDuffelSecurity
