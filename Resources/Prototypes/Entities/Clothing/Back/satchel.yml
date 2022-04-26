@@ -14,7 +14,7 @@
     - back
     sprite: Clothing/Back/Satchels/satchel.rsi
   - type: Storage
-    capacity: 90
+    capacity: 80
     
 - type: entity
   parent: ClothingBackpackSatchel
@@ -26,6 +26,8 @@
     sprite: Clothing/Back/Satchels/engineering.rsi
   - type: Clothing
     sprite: Clothing/Back/Satchels/engineering.rsi
+  - type: Storage
+    capacity: 90
 
 - type: entity
   parent: ClothingBackpackSatchel
@@ -37,6 +39,8 @@
     sprite: Clothing/Back/Satchels/medical.rsi
   - type: Clothing
     sprite: Clothing/Back/Satchels/medical.rsi
+  - type: DiseaseProtection
+    protection: 0.05
 
 - type: entity
   parent: ClothingBackpackSatchel
@@ -48,6 +52,8 @@
     sprite: Clothing/Back/Satchels/chemistry.rsi
   - type: Clothing
     sprite: Clothing/Back/Satchels/chemistry.rsi
+  - type: DiseaseProtection
+    protection: 0.05
 
 - type: entity
   parent: ClothingBackpackSatchel
@@ -59,6 +65,11 @@
     sprite: Clothing/Back/Satchels/science.rsi
   - type: Clothing
     sprite: Clothing/Back/Satchels/science.rsi
+   - type: Armor
+    modifiers:
+      coefficients:
+        Heat: 0.95
+        Radiation: 0.95 
 
 - type: entity
   parent: ClothingBackpackSatchel
@@ -70,6 +81,10 @@
     sprite: Clothing/Back/Satchels/security.rsi
   - type: Clothing
     sprite: Clothing/Back/Satchels/security.rsi
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.95
 
 - type: entity
   parent: ClothingBackpackSatchel
@@ -81,6 +96,8 @@
     sprite: Clothing/Back/Satchels/captain.rsi
   - type: Clothing
     sprite: Clothing/Back/Satchels/captain.rsi
+  - type: ExplosionResistance
+    resistance: 0.95
 
 - type: entity
   parent: ClothingBackpackSatchel
@@ -92,6 +109,10 @@
     sprite: Clothing/Back/Satchels/hydroponics.rsi
   - type: Clothing
     sprite: Clothing/Back/Satchels/hydroponics.rsi
+  - type: Armor
+    modifiers:
+      coefficients:
+        Piercing: 0.95 #for all those thorny plants
 
 - type: entity
   parent: ClothingBackpackSatchel
