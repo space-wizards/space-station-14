@@ -86,16 +86,3 @@
     group: ShuttleGlass
   - type: Door
     occludes: false
-    bumpOpen: false
-    closeTimeTwo: 0.4
-    openTimeTwo: 0.4
-    board: DoorElectronics
-    crushDamage:
-      types:
-        Blunt: 15
-    openSound:
-      path: /Audio/Effects/docking.ogg
-    closeSound:
-      path: /Audio/Effects/docking.ogg
-    denySound:
-      path: /Audio/Machines/airlock_deny.ogg
