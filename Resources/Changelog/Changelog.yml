@@ -1,9 +1,4 @@
 Entries:
-- author: Capnsockless
-  changes:
-  - {message: Added a checkerboard., type: Add}
-  id: 908
-  time: '2022-01-18T23:44:24.0000000+00:00'
 - author: Weaver
   changes:
   - {message: "Gas analyzers are now obtainable in-game in tool closets and YouTool\u2122\
@@ -3054,3 +3049,8 @@ Entries:
       spawners, memorial in the park and more chance of splitting! (See bar).', type: Add}
   id: 1407
   time: '2022-04-25T17:07:53.0000000+00:00'
+- author: Zumorica
+  changes:
+  - {message: The "suspicion" gamemode now works on every map., type: Tweak}
+  id: 1408
+  time: '2022-04-26T14:57:25.0000000+00:00'
