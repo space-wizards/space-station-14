@@ -42,10 +42,6 @@
     sprite: Clothing/Back/Backpacks/security.rsi
   - type: Clothing
     sprite: Clothing/Back/Backpacks/security.rsi
-  - type: Armor
-    modifiers:
-      coefficients:
-        Blunt: 0.95
 
 - type: entity
   parent: ClothingBackpack
@@ -57,10 +53,6 @@
     sprite: Clothing/Back/Backpacks/engineering.rsi
   - type: Clothing
     sprite: Clothing/Back/Backpacks/engineering.rsi
-  - type: Armor
-    modifiers:
-      coefficients:
-        Blunt: 0.95
 
 - type: entity
   parent: ClothingBackpack
@@ -85,8 +77,6 @@
     sprite: Clothing/Back/Backpacks/captain.rsi
   - type: Clothing
     sprite: Clothing/Back/Backpacks/captain.rsi
-  - type: ExplosionResistance
-    resistance: 0.95
 
 - type: entity
   parent: ClothingBackpack
@@ -99,8 +89,8 @@
   - type: Clothing
     sprite: Clothing/Back/Backpacks/mime.rsi
   - type: Storage
-    storageSoundCollection: null
-     
+      storageSoundCollection:
+      collection: null
 
 - type: entity
   parent: ClothingBackpack
@@ -125,10 +115,6 @@
     sprite: Clothing/Back/Backpacks/botany.rsi
   - type: Clothing
     sprite: Clothing/Back/Backpacks/botany.rsi
-  - type: Armor
-    modifiers:
-      coefficients:
-        Piercing: 0.95
 
 - type: entity
   parent: ClothingBackpack
@@ -140,11 +126,6 @@
     sprite: Clothing/Back/Backpacks/science.rsi
   - type: Clothing
     sprite: Clothing/Back/Backpacks/science.rsi
-  - type: Armor
-    modifiers:
-      coefficients:
-        Heat: 0.95
-        Radiation: 0.95
     
 - type: entity
   parent: ClothingBackpack
@@ -155,9 +136,7 @@
   - type: Sprite
     sprite: Clothing/Back/Backpacks/virology.rsi
   - type: Clothing
-    sprite: Clothing/Back/Backpacks/virology.rsi
-  - type: DiseaseProtection
-    protection: 0.05    
+    sprite: Clothing/Back/Backpacks/virology.rsi 
 
 - type: entity
   parent: ClothingBackpack
