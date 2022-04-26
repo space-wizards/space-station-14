@@ -101,7 +101,8 @@
   - type: Clothing
     sprite: Clothing/Back/Duffels/mime.rsi
   - type: Storage  
-    storageSoundCollection: null 
+    storageSoundCollection:
+      collection: storageRustle
 
 - type: entity
   parent: ClothingBackpackDuffel
