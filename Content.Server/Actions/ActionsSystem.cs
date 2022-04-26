@@ -42,7 +42,7 @@ namespace Content.Server.Actions
         private void OnPlayerAttached(EntityUid uid, ActionsComponent component, PlayerAttachedEvent args)
         {
             // need to send state to new player.
-            component.Dirty();
+            Dirty(component);
         }
 
         protected override bool PerformBasicActions(EntityUid user, ActionType action)

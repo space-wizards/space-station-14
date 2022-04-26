@@ -25,50 +25,40 @@ namespace Content.Tests.Shared.Alert
     - category: Temperature
 
 - type: alert
-  name: AlertLowPressure
+  id: LowPressure
   category: Pressure
-  alertType: LowPressure
 
 - type: alert
-  name: AlertOverfed
+  id: Overfed
   category: Hunger
-  alertType: Overfed
 
 - type: alert
-  name: AlertHighPressure
+  id: HighPressure
   category: Pressure
-  alertType: HighPressure
 
 - type: alert
-  name: AlertPeckish
+  id: Peckish
   category: Hunger
-  alertType: Peckish
 
 - type: alert
-  name: AlertStun
-  alertType: Stun
+  id: Stun
 
 - type: alert
-  name: AlertHandcuffed
-  alertType: Handcuffed
+  id: Handcuffed
 
 - type: alert
-  name: AlertHot
+  id: Hot
   category: Temperature
-  alertType: Hot
 
 - type: alert
-  name: AlertCold
+  id: Cold
   category: Temperature
-  alertType: Cold
 
 - type: alert
-  name: AlertWeightless
-  alertType: Weightless
+  id: Weightless
 
 - type: alert
-  name: AlertPilotingShuttle
-  alertType: PilotingShuttle
+  id: PilotingShuttle
 ";
 
         [Test]
@@ -78,7 +68,7 @@ namespace Content.Tests.Shared.Alert
             var prototypeManager = IoCManager.Resolve<IPrototypeManager>();
             prototypeManager.Initialize();
             prototypeManager.LoadFromStream(new StringReader(PROTOTYPES));
-            prototypeManager.Resync();
+            prototypeManager.ResolveResults();
 
             var alertOrder = prototypeManager.EnumeratePrototypes<AlertOrderPrototype>().FirstOrDefault();
 

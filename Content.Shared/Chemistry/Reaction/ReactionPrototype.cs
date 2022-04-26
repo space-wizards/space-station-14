@@ -18,7 +18,7 @@ namespace Content.Shared.Chemistry.Reaction
     public sealed class ReactionPrototype : IPrototype, IComparable<ReactionPrototype>
     {
         [ViewVariables]
-        [DataField("id", required: true)]
+        [IdDataFieldAttribute]
         public string ID { get; } = default!;
 
         [DataField("name")]

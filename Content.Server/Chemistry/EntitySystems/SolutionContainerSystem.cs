@@ -41,9 +41,9 @@ public sealed partial class SolutionContainerSystem : EntitySystem
 
     private void InitSolution(EntityUid uid, SolutionContainerManagerComponent component, ComponentInit args)
     {
-        foreach (var keyValue in component.Solutions)
+        foreach (var (name, solutionHolder) in component.Solutions)
         {
-            var solutionHolder = keyValue.Value;
+            solutionHolder.Name = name;
             if (solutionHolder.MaxVolume == FixedPoint2.Zero)
             {
                 solutionHolder.MaxVolume = solutionHolder.TotalVolume > solutionHolder.InitialMaxVolume
@@ -283,7 +283,7 @@ public sealed partial class SolutionContainerSystem : EntitySystem
 
         if (!solutionsMgr.Solutions.ContainsKey(name))
         {
-            var newSolution = new Solution();
+            var newSolution = new Solution() { Name = name };
             solutionsMgr.Solutions.Add(name, newSolution);
         }
 

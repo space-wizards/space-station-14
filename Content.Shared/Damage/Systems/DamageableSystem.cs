@@ -186,6 +186,16 @@ namespace Content.Shared.Damage
             DamageChanged(component, new DamageSpecifier());
         }
 
+        public void SetDamageModifierSetId(EntityUid uid, string damageModifierSetId, DamageableComponent? comp = null)
+        {
+            if (!Resolve(uid, ref comp))
+                return;
+
+            comp.DamageModifierSetId = damageModifierSetId;
+
+            Dirty(comp);
+        }
+        
         private void DamageableGetState(EntityUid uid, DamageableComponent component, ref ComponentGetState args)
         {
             args.State = new DamageableComponentState(component.Damage.DamageDict, component.DamageModifierSetId);

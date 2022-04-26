@@ -1,10 +1,7 @@
-using System;
 using Content.Shared.Audio;
 using Content.Shared.Hands.Components;
 using Content.Shared.Rotation;
 using Robust.Shared.Audio;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
 using Robust.Shared.Player;
 using Robust.Shared.Timing;
 using Robust.Shared.Physics;
@@ -55,7 +52,7 @@ namespace Content.Shared.Standing
                 return false;
 
             standingState.Standing = false;
-            standingState.Dirty();
+            Dirty(standingState);
             RaiseLocalEvent(uid, new DownedEvent(), false);
 
             if (!_gameTiming.IsFirstTimePredicted)
@@ -66,8 +63,12 @@ namespace Content.Shared.Standing
 
             if (TryComp(uid, out FixturesComponent? fixtureComponent))
             {
-                foreach (var fixture in fixtureComponent.Fixtures.Values)
+                foreach (var (key, fixture) in fixtureComponent.Fixtures)
                 {
+                    if ((fixture.CollisionMask & (int) CollisionGroup.VaultImpassable) == 0)
+                        continue;
+
+                    standingState.VaultImpassableFixtures.Add(key);
                     fixture.CollisionMask &= ~(int) CollisionGroup.VaultImpassable;
                 }
             }
@@ -110,11 +111,13 @@ namespace Content.Shared.Standing
 
             if (TryComp(uid, out FixturesComponent? fixtureComponent))
             {
-                foreach (var fixture in fixtureComponent.Fixtures.Values)
+                foreach (var key in standingState.VaultImpassableFixtures)
                 {
-                    fixture.CollisionMask |= (int) CollisionGroup.VaultImpassable;
+                    if (fixtureComponent.Fixtures.TryGetValue(key, out var fixture))
+                        fixture.CollisionMask |= (int) CollisionGroup.VaultImpassable;
                 }
             }
+            standingState.VaultImpassableFixtures.Clear();
 
             return true;
         }

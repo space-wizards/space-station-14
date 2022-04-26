@@ -10,25 +10,23 @@ namespace Content.Server.MachineLinking.System
         public override void Initialize()
         {
             base.Initialize();
-
-            SubscribeLocalEvent<SignalSwitchComponent, InteractHandEvent>(OnInteracted);
-            SubscribeLocalEvent<SignalSwitchComponent, SignalValueRequestedEvent>(OnSignalValueRequested);
+            SubscribeLocalEvent<SignalSwitchComponent, ComponentInit>(OnInit);
+            SubscribeLocalEvent<SignalSwitchComponent, ActivateInWorldEvent>(OnActivated);
         }
 
-        private void OnSignalValueRequested(EntityUid uid, SignalSwitchComponent component, SignalValueRequestedEvent args)
+        private void OnInit(EntityUid uid, SignalSwitchComponent component, ComponentInit args)
         {
-            if (args.Port == "state")
-            {
-                args.Handled = true;
-                args.Signal = component.State;
-            }
+            var transmitter = EnsureComp<SignalTransmitterComponent>(uid);
+            foreach (string port in new[] { "On", "Off" })
+                if (!transmitter.Outputs.ContainsKey(port))
+                    transmitter.AddPort(port);
+
         }
 
-        private void OnInteracted(EntityUid uid, SignalSwitchComponent component, InteractHandEvent args)
+        private void OnActivated(EntityUid uid, SignalSwitchComponent component, ActivateInWorldEvent args)
         {
             component.State = !component.State;
-            RaiseLocalEvent(uid, new InvokePortEvent("state", component.State), false);
-            RaiseLocalEvent(uid, new InvokePortEvent("stateChange"), false);
+            RaiseLocalEvent(uid, new InvokePortEvent(component.State ? "On" : "Off"), false);
             args.Handled = true;
         }
     }

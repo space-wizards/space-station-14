@@ -51,9 +51,9 @@
       emptySpriteName: medipen_empty
   - type: Tag
     tags:
-    - Recyclable
     - Trash
   - type: Recyclable
+  - type: SpaceGarbage
 
 - type: entity
   name: emergency medipen
@@ -111,3 +111,7 @@
   - type: ExaminableSolution
     solution: hypospray
   - type: Hypospray
+  - type: Tag
+    tags:
+    - Write
+

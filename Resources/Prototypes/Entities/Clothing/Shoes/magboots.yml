@@ -1,4 +1,4 @@
-﻿- type: entity
+- type: entity
   parent: ClothingShoesBase
   id: ClothingShoesBootsMag
   name: magboots
@@ -19,7 +19,7 @@
         event: !type:ToggleActionEvent
     - type: ClothingSpeedModifier
       walkModifier: 0.85
-      sprintModifier: 0.65
+      sprintModifier: 0.8
       enabled: false
 
 - type: entity
@@ -34,7 +34,39 @@
   - type: Clothing
     sprite: Clothing/Shoes/Boots/magboots-advanced.rsi
   - type: Magboots
+    toggleAction:
+      icon: Clothing/Shoes/Boots/magboots-advanced.rsi/icon.png
+      iconOn: Clothing/Shoes/Boots/magboots-advanced.rsi/icon-on.png
+      name: action-name-magboot-toggle
+      description: action-decription-magboot-toggle
+      itemIconStyle: NoItem
+      event: !type:ToggleActionEvent
   - type: ClothingSpeedModifier
     walkModifier: 1
     sprintModifier: 1
     enabled: false
+  - type: NoSlip
+
+- type: entity
+  parent: ClothingShoesBase
+  id: ClothingShoesBootsMagSyndie
+  name: blood-red magboots
+  description: Reverse-engineered magnetic boots that have a heavy magnetic pull. Property of Gorlex Marauders.
+  components:
+    - type: Sprite
+      sprite: Clothing/Shoes/Boots/magboots-syndicate.rsi
+      state: icon
+    - type: Clothing
+      sprite: Clothing/Shoes/Boots/magboots-syndicate.rsi
+    - type: Magboots
+      toggleAction:
+        icon: Clothing/Shoes/Boots/magboots-syndicate.rsi/icon.png
+        iconOn: Clothing/Shoes/Boots/magboots-syndicate.rsi/icon-on.png
+        name: action-name-magboot-toggle
+        description: action-decription-magboot-toggle
+        itemIconStyle: NoItem
+        event: !type:ToggleActionEvent
+    - type: ClothingSpeedModifier
+      walkModifier: 0.85
+      sprintModifier: 0.8
+      enabled: false

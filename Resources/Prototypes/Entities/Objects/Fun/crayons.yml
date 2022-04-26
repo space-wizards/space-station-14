@@ -9,9 +9,9 @@
     tags:
     - Write
     - Crayon
-    - Recyclable
     - Trash
   - type: Recyclable
+  - type: SpaceGarbage
   - type: UserInterface
     interfaces:
     - key: enum.CrayonUiKey.Key

@@ -1,15 +1,14 @@
-﻿using Content.Shared.Body.Events;
+using Content.Shared.Body.Events;
 using Content.Shared.DragDrop;
 using Content.Shared.Emoting;
 using Content.Shared.Interaction;
 using Content.Shared.Interaction.Events;
-using Content.Shared.Inventory.Events;
 using Content.Shared.Item;
 using Content.Shared.Movement;
+using Content.Shared.Movement.Components;
 using Content.Shared.Speech;
 using Content.Shared.Throwing;
 using JetBrains.Annotations;
-using Robust.Shared.GameObjects;
 
 namespace Content.Shared.ActionBlocker
 {
@@ -19,11 +18,34 @@ namespace Content.Shared.ActionBlocker
     [UsedImplicitly]
     public sealed class ActionBlockerSystem : EntitySystem
     {
-        public bool CanMove(EntityUid uid)
+        public override void Initialize()
         {
-            var ev = new MovementAttemptEvent(uid);
+            base.Initialize();
+            SubscribeLocalEvent<IMoverComponent, ComponentStartup>(OnMoverStartup);
+        }
+
+        private void OnMoverStartup(EntityUid uid, IMoverComponent component, ComponentStartup args)
+        {
+            UpdateCanMove(uid, component);
+        }
+
+        public bool CanMove(EntityUid uid, IMoverComponent? component = null)
+        {
+            return Resolve(uid, ref component, false) && component.CanMove;
+        }
+
+        public bool UpdateCanMove(EntityUid uid, IMoverComponent? component = null)
+        {
+            if (!Resolve(uid, ref component, false))
+                return false;
+
+            var ev = new UpdateCanMoveEvent(uid);
             RaiseLocalEvent(uid, ev);
 
+            if (component.CanMove == ev.Cancelled && component is Component comp)
+                Dirty(comp);
+
+            component.CanMove = !ev.Cancelled;
             return !ev.Cancelled;
         }
 

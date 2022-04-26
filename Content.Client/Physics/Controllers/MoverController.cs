@@ -54,17 +54,12 @@ namespace Content.Client.Physics.Controllers
                 {
                     pullerBody.Predict = false;
                     body.Predict = false;
-                }
-            }
 
-            // If we're pulling a mob then make sure that isn't predicted so it doesn't fuck our velocity up.
-            if (TryComp(player, out SharedPullerComponent? pullerComp))
-            {
-                if (pullerComp.Pulling is {Valid: true} pulling &&
-                    HasComp<MobStateComponent>(pulling) &&
-                    TryComp(pulling, out PhysicsComponent? pullingBody))
-                {
-                    pullingBody.Predict = false;
+                    if (TryComp<SharedPullerComponent>(player, out var playerPuller) && playerPuller.Pulling != null &&
+                        TryComp<PhysicsComponent>(playerPuller.Pulling, out var pulledBody))
+                    {
+                        pulledBody.Predict = false;
+                    }
                 }
             }
 

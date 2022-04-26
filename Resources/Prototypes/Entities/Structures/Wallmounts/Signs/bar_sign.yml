@@ -31,7 +31,7 @@
 - type: entity
   id: LargeBarSign
   name: large bar sign
-  abstract: true
+  noSpawn: true
   components:
   - type: Clickable
   - type: InteractionOutline

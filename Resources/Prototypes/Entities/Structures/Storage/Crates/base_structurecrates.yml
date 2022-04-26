@@ -1,7 +1,7 @@
 - type: entity
   id: CrateGeneric
   parent: BaseStructureDynamic
-  abstract: true
+  noSpawn: true
   name: crate
   description: A large container for items.
   components:
@@ -64,7 +64,7 @@
 - type: entity
   id: CrateBaseSecure
   parent: BaseStructureDynamic
-  abstract: true
+  noSpawn: true
   name: crate
   description: A large container for items.
   components:

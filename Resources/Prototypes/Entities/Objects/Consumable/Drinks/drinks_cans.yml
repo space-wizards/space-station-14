@@ -36,10 +36,10 @@
       stateOpen: icon_open
   - type: Tag
     tags:
-    - Recyclable
     - Trash
   - type: ItemCooldown
   - type: Recyclable
+  - type: SpaceGarbage
 
 - type: entity
   parent: DrinkCanBaseFull
