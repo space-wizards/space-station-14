@@ -116,6 +116,8 @@
   - type: CreamPie
   - type: SolutionInjectOnCollide
     transferAmount: 20
+    transferEfficiency: 0.8
+
 # Tastes like pie, cream, banana.
 
 - type: entity
