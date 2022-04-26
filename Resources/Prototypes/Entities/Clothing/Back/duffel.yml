@@ -14,7 +14,7 @@
     Slots:
     - back
   - type: Storage
-    capacity: 130
+    capacity: 120
     storageSoundCollection:
       collection: storageRustle
   - type: ClothingSpeedModifier
