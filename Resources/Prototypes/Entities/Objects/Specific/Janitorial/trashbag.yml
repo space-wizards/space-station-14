@@ -30,6 +30,9 @@
   - type: StorageFillVisualizer
     maxFillLevels: 4
     fillBaseName: icon
+  - type: Clothing
+    Slots:
+    - Belt
 
 - type: entity
   name: trash bag
