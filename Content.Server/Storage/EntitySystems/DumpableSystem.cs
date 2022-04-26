@@ -2,6 +2,7 @@ using System.Threading;
 using Content.Shared.Interaction;
 using Content.Server.Storage.Components;
 using Content.Shared.Storage.Components;
+using Content.Shared.Verbs;
 using Content.Server.Disposal.Unit.Components;
 using Content.Server.Disposal.Unit.EntitySystems;
 using Content.Server.DoAfter;
@@ -21,6 +22,7 @@ namespace Content.Server.Storage.EntitySystems
         {
             base.Initialize();
             SubscribeLocalEvent<DumpableComponent, AfterInteractEvent>(OnAfterInteract);
+            SubscribeLocalEvent<DumpableComponent, GetVerbsEvent<AlternativeVerb>>(AddDumpVerb);
             SubscribeLocalEvent<DumpCompletedEvent>(OnDumpCompleted);
             SubscribeLocalEvent<DumpCancelledEvent>(OnDumpCancelled);
         }
@@ -42,8 +44,27 @@ namespace Content.Server.Storage.EntitySystems
                     return;
             }
         }
+        private void AddDumpVerb(EntityUid uid, DumpableComponent dumpable, GetVerbsEvent<AlternativeVerb> args)
+        {
+            if (!args.CanAccess || !args.CanInteract)
+                return;
 
-        private void StartDoAfter(EntityUid storageUid, EntityUid targetUid, EntityUid userUid, DumpableComponent dumpable, ServerStorageComponent storage, float multiplier = 1)
+            if (!TryComp<ServerStorageComponent>(uid, out var storage) || storage.StoredEntities == null || storage.StoredEntities.Count == 0)
+                return;
+
+            AlternativeVerb verb = new()
+            {
+                Act = () =>
+                {
+                    StartDoAfter(uid, null, args.User, dumpable, storage, 0.6f);
+                },
+                Text = Loc.GetString("dump-verb-name"),
+                Priority = 2
+            };
+            args.Verbs.Add(verb);
+        }
+
+        private void StartDoAfter(EntityUid storageUid, EntityUid? targetUid, EntityUid userUid, DumpableComponent dumpable, ServerStorageComponent storage, float multiplier = 1)
         {
             if (dumpable.CancelToken != null)
             {
