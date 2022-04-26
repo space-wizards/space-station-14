@@ -18,6 +18,7 @@
     storageSoundCollection:
       collection: storageRustle
   - type: ClothingSpeedModifier
+    walkModifier: 1
     sprintModifier: 0.9 
 
 - type: entity
