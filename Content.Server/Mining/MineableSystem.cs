@@ -30,24 +30,29 @@ public sealed class MineableSystem : EntitySystem
         if (!TryComp<PickaxeComponent>(args.Used, out var pickaxe))
             return;
 
+        if (pickaxe.MiningEntities.TryGetValue(uid, out var cancelToken))
+        {
+            cancelToken.Cancel();
+            pickaxe.MiningEntities.Remove(uid);
+            return;
+        }
+
         // Can't mine too many entities at once.
         if (pickaxe.MaxMiningEntities < pickaxe.MiningEntities.Count + 1)
             return;
 
-        // Can't mine one object multiple times.
-        if (!pickaxe.MiningEntities.Add(uid))
-            return;
+        cancelToken = new CancellationTokenSource();
+        pickaxe.MiningEntities[uid] = cancelToken;
 
-        pickaxe.CancelToken = new CancellationTokenSource();
-        var doAfter = new DoAfterEventArgs(args.User, component.BaseMineTime * pickaxe.MiningTimeMultiplier, pickaxe.CancelToken.Token, uid)
+        var doAfter = new DoAfterEventArgs(args.User, component.BaseMineTime * pickaxe.MiningTimeMultiplier, cancelToken.Token, uid)
         {
             BreakOnDamage = true,
             BreakOnStun = true,
             BreakOnTargetMove = true,
             BreakOnUserMove = true,
-            MovementThreshold = 0.5f,
-            BroadcastCancelledEvent = new MiningDoafterCancel(component) { Pickaxe = args.Used, Rock = uid },
-            TargetFinishedEvent = new MiningDoafterSuccess() { Pickaxe = args.Used, Rock = uid, Player = args.User }
+            MovementThreshold = 0.25f,
+            BroadcastCancelledEvent = new MiningDoafterCancel { Pickaxe = args.Used, Rock = uid },
+            TargetFinishedEvent = new MiningDoafterSuccess { Pickaxe = args.Used, Rock = uid, Player = args.User }
         };
 
         _doAfterSystem.DoAfter(doAfter);
@@ -59,33 +64,28 @@ public sealed class MineableSystem : EntitySystem
             return;
 
         _damageableSystem.TryChangeDamage(ev.Rock, pickaxe.Damage);
-        SoundSystem.Play(Filter.Pvs(ev.Rock), pickaxe.MiningSound.GetSound(), ev.Rock, AudioParams.Default);
+        SoundSystem.Play(Filter.Pvs(ev.Rock, entityManager: EntityManager), pickaxe.MiningSound.GetSound(), ev.Rock);
         pickaxe.MiningEntities.Remove(ev.Rock);
-        
+
         var spawnOre = EntitySpawnCollection.GetSpawns(component.Ores, _random);
-        EntityManager.SpawnEntity(spawnOre[0], EntityManager.GetComponent<TransformComponent>(ev.Player).Coordinates);
-        pickaxe.CancelToken = null;
+        var playerPos = Transform(ev.Player).MapPosition;
+        var spawnPos = playerPos.Offset(_random.NextVector2(0.3f));
+        EntityManager.SpawnEntity(spawnOre[0], spawnPos);
+        pickaxe.MiningEntities.Remove(uid);
     }
 
     private void OnDoafterCancel(MiningDoafterCancel ev)
     {
         if (!TryComp<PickaxeComponent>(ev.Pickaxe, out var pickaxe))
             return;
-        
-        pickaxe.CancelToken = null;
+
         pickaxe.MiningEntities.Remove(ev.Rock);
     }
-    
+
     private sealed class MiningDoafterCancel : EntityEventArgs
     {
-        public MineableComponent Component;
         public EntityUid Pickaxe;
         public EntityUid Rock;
-        public MiningDoafterCancel(MineableComponent component)
-        {
-            Component = component;
-        }
-        
     }
 }
 
