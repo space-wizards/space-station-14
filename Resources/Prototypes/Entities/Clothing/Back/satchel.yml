@@ -14,9 +14,9 @@
     - back
     sprite: Clothing/Back/Satchels/satchel.rsi
   - type: Storage
-    capacity: 80
+    capacity: 100
     storageSoundCollection:
-      collection: null
+      collection: storageRustle
     
 - type: entity
   parent: ClothingBackpackSatchel
@@ -29,7 +29,7 @@
   - type: Clothing
     sprite: Clothing/Back/Satchels/engineering.rsi
   - type: Storage
-    capacity: 90
+    capacity: 110
 
 - type: entity
   parent: ClothingBackpackSatchel
