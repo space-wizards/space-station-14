@@ -23,6 +23,7 @@ namespace Content.Server.Storage.EntitySystems
             base.Initialize();
             SubscribeLocalEvent<DumpableComponent, AfterInteractEvent>(OnAfterInteract);
             SubscribeLocalEvent<DumpableComponent, GetVerbsEvent<AlternativeVerb>>(AddDumpVerb);
+            SubscribeLocalEvent<DumpableComponent, GetVerbsEvent<UtilityVerb>>(AddUtilityVerbs);
             SubscribeLocalEvent<DumpCompletedEvent>(OnDumpCompleted);
             SubscribeLocalEvent<DumpCancelledEvent>(OnDumpCancelled);
         }
@@ -62,6 +63,43 @@ namespace Content.Server.Storage.EntitySystems
                 IconTexture = "/Textures/Interface/VerbIcons/drop.svg.192dpi.png",
             };
             args.Verbs.Add(verb);
+        }
+
+        private void AddUtilityVerbs(EntityUid uid, DumpableComponent dumpable, GetVerbsEvent<UtilityVerb> args)
+        {
+            if (!args.CanAccess || !args.CanInteract)
+                return;
+
+            if (!TryComp<ServerStorageComponent>(uid, out var storage) || storage.StoredEntities == null || storage.StoredEntities.Count == 0)
+                return;
+
+            if (HasComp<DisposalUnitComponent>(args.Target))
+            {
+                UtilityVerb verb = new()
+                {
+                    Act = () =>
+                    {
+                        StartDoAfter(uid, args.Target, args.User, dumpable, storage);
+                    },
+                    Text = Loc.GetString("dump-disposal-verb-name", ("unit", args.Target)),
+                    IconEntity = uid
+                };
+                args.Verbs.Add(verb);
+            }
+
+            if (HasComp<PlaceableSurfaceComponent>(args.Target))
+            {
+                UtilityVerb verb = new()
+                {
+                    Act = () =>
+                    {
+                        StartDoAfter(uid, args.Target, args.User, dumpable, storage);
+                    },
+                    Text = Loc.GetString("dump-placeable-verb-name", ("surface", args.Target)),
+                    IconEntity = uid
+                };
+                args.Verbs.Add(verb);
+            }
         }
 
         private void StartDoAfter(EntityUid storageUid, EntityUid? targetUid, EntityUid userUid, DumpableComponent dumpable, ServerStorageComponent storage, float multiplier = 1)
