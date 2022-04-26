@@ -22,6 +22,7 @@
     maxIntensity: 10
     intensitySlope: 3
     totalIntensity: 120 # about a ~4 tile radius
+    canCreateVacuum: false
   - type: ExplodeOnTrigger
   - type: Damageable
     damageContainer: Inorganic
@@ -80,7 +81,7 @@
 
 - type: entity
   name: Syndicate minibomb
-  description: Creates a small but powerful explosion that is strong enough to break through walls.
+  description: A precision sabotage explosive for quickly destroying a machine, dead body, or whatever else needs to go.
   parent: BaseItem
   id: SyndieMiniBomb
   components:
@@ -92,14 +93,12 @@
   - type: Item
     size: 5
   - type: OnUseTimerTrigger
-    delay: 5
+    delay: 10
   - type: Explosive
     explosionType: Default
-    # About a 2.5 tile radius. If placed next to walls, will destroy a line of 3-normal walls and turn 3 reinforced walls into girders.
-    totalIntensity: 492
-    intensitySlope: 20.5
-    maxIntensity: 41
-    canCreateVacuum: false # for destroying walls, not spacing the hallway
+    totalIntensity: 200
+    intensitySlope: 30 #Will destroy the tile under it reliably, space 1-2 more to rods. Only does any significant damage in a 5-tile cross.
+    maxIntensity: 60
   - type: ExplodeOnTrigger
   - type: Damageable
     damageContainer: Inorganic
@@ -115,7 +114,7 @@
     visuals:
     - type: TimerTriggerVisualizer
       countdown_sound:
-        path: /Audio/Effects/countdown.ogg
+        path: /Audio/Effects/minibombcountdown.ogg
 - type: entity
   name: the nuclear option
   description: Please don't throw it, think of the children.

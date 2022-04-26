@@ -222,6 +222,9 @@
     radius: 1.5
     energy: 1.6
     color: "#3c5eb5"
+  - type: Tag
+    tags:
+    - EmagImmune
 
 - type: entity
   parent: ComputerBase
@@ -392,6 +395,7 @@
       - FunInstruments
       - FunBrass
       - FunBoardGames
+      - FunATV
       - MaterialSteel
       - MaterialGlass
       - MaterialPlastic

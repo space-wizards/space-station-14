@@ -105,7 +105,7 @@ namespace Content.Shared.CCVar
         ///     Controls the default game preset.
         /// </summary>
         public static readonly CVarDef<string>
-            GameLobbyDefaultPreset = CVarDef.Create("game.defaultpreset", "suspicion", CVar.ARCHIVE);
+            GameLobbyDefaultPreset = CVarDef.Create("game.defaultpreset", "traitor", CVar.ARCHIVE);
 
         /// <summary>
         ///     Controls if the game can force a different preset if the current preset's criteria are not met.
@@ -543,6 +543,32 @@ namespace Content.Shared.CCVar
         /// </summary>
         public static readonly CVarDef<bool> SpaceWind =
             CVarDef.Create("atmos.space_wind", true, CVar.SERVERONLY);
+
+        /// <summary>
+        ///     Divisor from maxForce (pressureDifference * 2.25f) to force applied on objects.
+        /// </summary>
+        public static readonly CVarDef<float> SpaceWindPressureForceDivisorThrow =
+            CVarDef.Create("atmos.space_wind_pressure_force_divisor_throw", 15f, CVar.SERVERONLY);
+
+        /// <summary>
+        ///     Divisor from maxForce (pressureDifference * 2.25f) to force applied on objects.
+        /// </summary>
+        public static readonly CVarDef<float> SpaceWindPressureForceDivisorPush =
+            CVarDef.Create("atmos.space_wind_pressure_force_divisor_push", 2500f, CVar.SERVERONLY);
+
+        /// <summary>
+        ///     The maximum velocity (not force) that may be applied to an object by atmospheric pressure differences.
+        ///     Useful to prevent clipping through objects.
+        /// </summary>
+        public static readonly CVarDef<float> SpaceWindMaxVelocity =
+            CVarDef.Create("atmos.space_wind_max_velocity", 30f, CVar.SERVERONLY);
+
+        /// <summary>
+        ///     The maximum force that may be applied to an object by pushing (i.e. not throwing) atmospheric pressure differences.
+        ///     A "throwing" atmospheric pressure difference ignores this limit, but not the max. velocity limit.
+        /// </summary>
+        public static readonly CVarDef<float> SpaceWindMaxPushForce =
+            CVarDef.Create("atmos.space_wind_max_push_force", 20f, CVar.SERVERONLY);
 
         /// <summary>
         ///     Whether monstermos tile equalization is enabled.

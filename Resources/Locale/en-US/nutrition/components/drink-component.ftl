@@ -12,3 +12,6 @@ drink-component-try-use-drink-success-slurp = Slurp
 drink-component-force-feed = {$user} is trying to make you drink something!
 drink-component-force-feed-success = {$user} forced you to drink something!
 drink-component-force-feed-success-user = You successfully feed {$target}
+
+
+drink-system-verb-drink = Drink

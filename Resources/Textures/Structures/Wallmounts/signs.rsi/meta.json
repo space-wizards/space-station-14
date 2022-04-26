@@ -976,6 +976,14 @@
       ]
     },
     {
+      "name": "zomlab",
+      "delays": [
+        [
+          1
+        ]
+      ]
+    },
+    {
       "name": "small_secure_red",
       "delays": [
         [

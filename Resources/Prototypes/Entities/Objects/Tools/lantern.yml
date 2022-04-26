@@ -26,6 +26,7 @@
     - type: Appearance
       visuals:
         - type: LanternVisualizer
+    - type: ToggleableLightVisuals
     - type: PowerCellSlot
       cellSlot:
         startingItem: PowerCellSmallHigh

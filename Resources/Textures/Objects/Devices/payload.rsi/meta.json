@@ -30,6 +30,11 @@
             "name": "payload-explosive-armed",
             "directions": 1,
             "delays": [ [ 0.2, 0.2, 0.2 ] ]
+        },
+        {
+            "name": "payload-flash-armed",
+            "directions": 1,
+            "delays": [ [ 0.2, 0.2, 0.2 ] ]
         }
     ]
 }

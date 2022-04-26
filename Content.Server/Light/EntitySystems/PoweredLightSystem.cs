@@ -244,7 +244,6 @@ namespace Content.Server.Light.EntitySystems
             }
             else
             {
-                powerReceiver.Load = (light.On && lightBulb.State == LightBulbState.Normal) ? lightBulb.PowerUse : 0;
 
                 switch (lightBulb.State)
                 {
@@ -275,6 +274,8 @@ namespace Content.Server.Light.EntitySystems
                         appearance?.SetData(PoweredLightVisuals.BulbState, PoweredLightState.Burned);
                         break;
                 }
+
+                powerReceiver.Load = (light.On && lightBulb.State == LightBulbState.Normal) ? lightBulb.PowerUse : 0;
             }
         }
 
