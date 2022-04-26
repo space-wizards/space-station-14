@@ -76,5 +76,4 @@
           endValue: 1.0
           property: Radius
     - type: Clothing
-      Slots:
-      - Belt
+      Slots: [belt]

@@ -31,8 +31,7 @@
     maxFillLevels: 4
     fillBaseName: icon
   - type: Clothing
-    Slots:
-    - Belt
+    Slots: [belt]
 
 - type: entity
   name: trash bag
