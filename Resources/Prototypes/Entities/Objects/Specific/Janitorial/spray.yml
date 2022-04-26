@@ -29,8 +29,6 @@
     sprayVelocity: 2
     spraySound:
       path: /Audio/Effects/spray2.ogg
-  - type: Clothing
-    Slots: [belt]
 
 - type: entity
   name: spray bottle
