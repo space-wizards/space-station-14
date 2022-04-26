@@ -29,13 +29,12 @@ namespace Content.Server.Chemistry.EntitySystems
 
         private void OnTransferThroughFaceAttemptEvent(EntityUid uid, SolutionInjectOnCollideComponent component , TransferThroughFaceAttemptEvent args)
         {
-            IngestionBlockerComponent blocker;
+            if (args.Cancelled) return;
+
             if (_inventorySystem.TryGetSlotEntity(args.Uid, "head", out var headUid) &&
-                EntityManager.TryGetComponent(headUid, out blocker) &&
-                blocker.Enabled)
-            {
-                args.Cancel();
-            }
+                EntityManager.TryGetComponent(headUid, out IngestionBlockerComponent blocker) &&
+                blocker.Enabled) args.Cancel();
+
         }
 
         private void HandleInit(EntityUid uid, SolutionInjectOnCollideComponent component, ComponentInit args)

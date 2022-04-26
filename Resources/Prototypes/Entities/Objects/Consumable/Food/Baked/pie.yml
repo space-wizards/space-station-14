@@ -117,8 +117,8 @@
   - type: SolutionInjectOnCollide
     transferAmount: 20
     transferEfficiency: 0.2
-    canPenetrateArmor: false
-    canPenetrateHelmet: false
+    #canPenetrateArmor: false
+    #canPenetrateHelmet: false
 # Tastes like pie, cream, banana.
 
 - type: entity

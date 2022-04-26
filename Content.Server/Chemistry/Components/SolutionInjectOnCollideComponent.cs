@@ -24,10 +24,10 @@ namespace Content.Server.Chemistry.Components
         [DataField("transferEfficiency")]
         private float _transferEfficiency = 1f;
 
-        [DataField("canPenetrateArmor")]
-        public bool? CanPenetrateArmor { get; }
+        [DataField("canPenetrateArmor"), ViewVariables(VVAccess.ReadWrite)]
+        public bool CanPenetrateArmor { get; set; }
 
-        [DataField("canPenetrateHelmet")]
-        public bool? CanPenetrateHelmet { get; }
+        [DataField("canPenetrateHelmet"),ViewVariables(VVAccess.ReadWrite)]
+        public bool CanPenetrateHelmet { get; set; }
     }
 }
