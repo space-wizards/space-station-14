@@ -37,7 +37,8 @@
     Lawyer: [ 1, 1 ]
     SalvageSpecialist: [ 1, 2 ]
     Quartermaster: [ 1, 1 ]
-
+    AtmosphericTechnician: [ 1, 2 ]
+    
 - type: gameMap
   id: packedstation
   mapName: 'Packedstation'
@@ -80,6 +81,7 @@
     Librarian: [ 1, 1 ]
     Lawyer: [ 1, 2 ]
     Musician: [1, 1]
+    AtmosphericTechnician: [ 1, 2 ]
 
 - type: gameMap
   id: knightship
@@ -141,6 +143,7 @@
     Quartermaster: [ 1, 1 ]
     SalvageSpecialist: [ 4, 6 ]
     Musician: [1, 1]
+    AtmosphericTechnician: [ 1, 2 ]
 
 - type: gameMap
   id: ssreach

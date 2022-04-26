@@ -52,7 +52,6 @@
   equipment:
     jumpsuit: ClothingUniformJumpsuitColorBlack
     back: ClothingBackpackDuffelSyndicateAmmo
-    head: ClothingHeadHelmetHardsuitDeathsquad
     mask: ClothingMaskBreath
     eyes: ClothingEyesGlassesSecurity
     ears: ClothingHeadsetCentCom
@@ -65,3 +64,37 @@
   innerclothingskirt: ClothingUniformJumpskirtColorBlack
   satchel: ClothingBackpackDuffelSyndicateAmmo
   duffelbag: ClothingBackpackDuffelSyndicateAmmo
+
+#Syndicate Operative Outfit - Basic
+- type: startingGear
+  id: SyndicateOperativeGearBasic
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitOperative
+    back: ClothingBackpackDuffelSyndicateOperative
+    ears: ClothingHeadsetAltSyndicate
+    gloves: ClothingHandsGlovesCombat
+    shoes: ClothingShoesBootsCombat
+    id: AgentIDCard
+  innerclothingskirt: ClothingUniformJumpsuitOperative
+  satchel: ClothingBackpackDuffelSyndicateOperative
+  duffelbag: ClothingBackpackDuffelSyndicateOperative
+
+#Syndicate Operative Outfit - Full Kit
+- type: startingGear
+  id: SyndicateOperativeGearFull
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitOperative
+    back: ClothingBackpackDuffelSyndicateOperative
+    mask: ClothingMaskGasSyndicate
+  # eyes: Night Vision Goggles whenever they're made
+    eyes: ClothingEyesGlassesMeson 
+    ears: ClothingHeadsetAltSyndicate
+    gloves: ClothingHandsGlovesCombat
+    outerClothing: ClothingOuterHardsuitSyndie
+    shoes: ClothingShoesBootsCombat
+    id: AgentIDCard
+    pocket1: ExtendedEmergencyOxygenTankFilled
+    belt: ClothingBeltMilitaryWebbing
+  innerclothingskirt: ClothingUniformJumpsuitOperative
+  satchel: ClothingBackpackDuffelSyndicateOperative
+  duffelbag: ClothingBackpackDuffelSyndicateOperative
