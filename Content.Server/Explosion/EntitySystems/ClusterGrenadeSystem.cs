@@ -79,8 +79,16 @@ public sealed class ClusterGrenadeSystem : EntitySystem
                 delay += _random.Next(550, 900);
                 thrownCount++;
 
-                // TODO: Suss out throw strength
-                _throwingSystem.TryThrow(grenade, angle.ToVec().Normalized * component.ThrowDistance);
+                if (!component.UsePhysics)
+                {
+                    // TODO: Suss out throw strength
+                    _throwingSystem.TryThrow(grenade, angle.ToVec().Normalized * component.ThrowDistance);
+                }
+                else
+                {
+                    EntityManager.TryGetComponent<PhysicsComponent>(grenade, out var com);
+                    com.ApplyLinearImpulse(angle.ToVec() * component.ThrowDistance);
+                }
 
                 grenade.SpawnTimer(delay, () =>
                 {

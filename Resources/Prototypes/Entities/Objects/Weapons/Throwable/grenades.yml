@@ -203,6 +203,7 @@
       delay: 5
     - type: ClusterGrenade
       fillPrototype: MobHumanFeralClown
+      directImpulse: true
       maxGrenadesCount: 20
       delay: 5
     - type: Damageable
