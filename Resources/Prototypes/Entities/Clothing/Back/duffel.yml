@@ -14,9 +14,11 @@
     Slots:
     - back
   - type: Storage
-    capacity: 100
+    capacity: 130
     storageSoundCollection:
       collection: storageRustle
+  - type: ClothingSpeedModifier
+    sprintModifier: 0.9 
 
 - type: entity
   parent: ClothingBackpackDuffel
