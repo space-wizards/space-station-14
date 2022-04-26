@@ -23,5 +23,11 @@ namespace Content.Server.Chemistry.Components
 
         [DataField("transferEfficiency")]
         private float _transferEfficiency = 1f;
+
+        [DataField("canPenetrateArmor")]
+        public bool CanPenetrateArmor { get; }
+
+        [DataField("canPenetrateHelmet")]
+        public bool CanPenetrateHelmet { get; }
     }
 }
