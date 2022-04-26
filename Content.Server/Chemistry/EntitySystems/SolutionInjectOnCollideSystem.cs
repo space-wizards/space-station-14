@@ -67,12 +67,8 @@ namespace Content.Server.Chemistry.EntitySystems
         {
             //_popupSystem.PopupEntity("flag 0001 ", uid , Filter.Broadcast());
             var attemptEvent = new TransferThroughFaceAttemptEvent(uid);
-            RaiseLocalEvent( carrierAgentUid , attemptEvent , false);
-            if (attemptEvent.Cancelled)
-            {
-                return true ;
-            }
-            return false;
+            RaiseLocalEvent(carrierAgentUid, attemptEvent, false);
+            return !attemptEvent.Cancelled;
         }
     }
 }
