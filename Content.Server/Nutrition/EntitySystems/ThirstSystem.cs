@@ -23,6 +23,7 @@ namespace Content.Server.Nutrition.EntitySystems
         [Dependency] private readonly ILogManager _debuglog = default!;
         [Dependency] private readonly MovementSpeedModifierSystem _movement = default!;
         [Dependency] private readonly AlertsSystem _alerts = default!;
+        [Dependency] private readonly DamageableSystem _damage = default!;
         private float _accumulatedFrameTime;
 
         public override void Initialize()
@@ -157,7 +158,7 @@ namespace Content.Server.Nutrition.EntitySystems
 
                         if (!mobState.IsDead())
                         {
-                            EntitySystem.Get<DamageableSystem>().TryChangeDamage(component.Owner, component.Damage, true);
+                            _damage.TryChangeDamage(component.Owner, component.Damage, true);
                         }
                     }
                 }
