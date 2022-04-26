@@ -14,7 +14,7 @@ using Robust.Shared.Serialization;
 namespace Content.Shared.Storage
 {
     [NetworkedComponent()]
-    public abstract class SharedStorageComponent : Component, IDraggable
+    public abstract class SharedStorageComponent : Component
     {
         [Dependency] private readonly IEntityManager _entMan = default!;
         public abstract IReadOnlyList<EntityUid>? StoredEntities { get; }
@@ -25,38 +25,6 @@ namespace Content.Shared.Storage
         /// <param name="entity">The entity to remove</param>
         /// <returns>True if no longer in storage, false otherwise</returns>
         public abstract bool Remove(EntityUid entity);
-
-        bool IDraggable.CanDrop(CanDropEvent args)
-        {
-            return _entMan.TryGetComponent(args.Target, out PlaceableSurfaceComponent? placeable) &&
-                   placeable.IsPlaceable;
-        }
-
-        bool IDraggable.Drop(DragDropEvent eventArgs)
-        {
-            if (!EntitySystem.Get<ActionBlockerSystem>().CanInteract(eventArgs.User, eventArgs.Target))
-            {
-                return false;
-            }
-
-            var storedEntities = StoredEntities?.ToArray();
-
-            if (storedEntities == null)
-            {
-                return false;
-            }
-
-            // empty everything out
-            foreach (var storedEntity in storedEntities)
-            {
-                if (Remove(storedEntity))
-                {
-                    _entMan.GetComponent<TransformComponent>(storedEntity).WorldPosition = eventArgs.DropLocation.Position;
-                }
-            }
-
-            return true;
-        }
     }
 
     [Serializable, NetSerializable]
