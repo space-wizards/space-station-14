@@ -1,10 +1,4 @@
 Entries:
-- author: Weaver
-  changes:
-  - {message: "Gas analyzers are now obtainable in-game in tool closets and YouTool\u2122\
-      \ vending machines.", type: Add}
-  id: 909
-  time: '2022-01-19T02:31:33.0000000+00:00'
 - author: metalgearsloth
   changes:
   - {message: Admins can now also get chat logs in-game., type: Add}
@@ -3054,3 +3048,9 @@ Entries:
   - {message: The "suspicion" gamemode now works on every map., type: Tweak}
   id: 1408
   time: '2022-04-26T14:57:25.0000000+00:00'
+- author: Veritius
+  changes:
+  - {message: The Syndicate has distributed new segways for their agents to use.,
+    type: Add}
+  id: 1409
+  time: '2022-04-26T22:08:03.0000000+00:00'
