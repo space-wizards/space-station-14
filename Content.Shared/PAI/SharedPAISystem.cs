@@ -1,9 +1,9 @@
-using System;
+using Content.Shared.ActionBlocker;
+using Content.Shared.Actions;
 using Content.Shared.DragDrop;
 using Content.Shared.Interaction.Events;
 using Content.Shared.Item;
 using Content.Shared.Movement;
-using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.PAI
@@ -19,6 +19,9 @@ namespace Content.Shared.PAI
     /// </summary>
     public abstract class SharedPAISystem : EntitySystem
     {
+        [Dependency] private readonly ActionBlockerSystem _blocker = default!;
+        [Dependency] private readonly SharedActionsSystem _actionsSystem = default!;
+
         public override void Initialize()
         {
             base.Initialize();
@@ -26,12 +29,32 @@ namespace Content.Shared.PAI
             SubscribeLocalEvent<PAIComponent, InteractionAttemptEvent>(OnInteractAttempt);
             SubscribeLocalEvent<PAIComponent, DropAttemptEvent>(OnDropAttempt);
             SubscribeLocalEvent<PAIComponent, PickupAttemptEvent>(OnPickupAttempt);
-            SubscribeLocalEvent<PAIComponent, MovementAttemptEvent>(OnMoveAttempt);
+            SubscribeLocalEvent<PAIComponent, UpdateCanMoveEvent>(OnMoveAttempt);
             SubscribeLocalEvent<PAIComponent, ChangeDirectionAttemptEvent>(OnChangeDirectionAttempt);
+
+            SubscribeLocalEvent<PAIComponent, ComponentStartup>(OnStartup);
+            SubscribeLocalEvent<PAIComponent, ComponentShutdown>(OnShutdown);
         }
 
-        private void OnMoveAttempt(EntityUid uid, PAIComponent component, MovementAttemptEvent args)
+        private void OnStartup(EntityUid uid, PAIComponent component, ComponentStartup args)
         {
+            _blocker.UpdateCanMove(uid);
+            if (component.MidiAction != null)
+                _actionsSystem.AddAction(uid, component.MidiAction, null);
+        }
+
+        private void OnShutdown(EntityUid uid, PAIComponent component, ComponentShutdown args)
+        {
+            _blocker.UpdateCanMove(uid);
+            if (component.MidiAction != null)
+                _actionsSystem.RemoveAction(uid, component.MidiAction);
+        }
+
+        private void OnMoveAttempt(EntityUid uid, PAIComponent component, UpdateCanMoveEvent args)
+        {
+            if (component.LifeStage > ComponentLifeStage.Running)
+                return;
+
             args.Cancel(); // no more scurrying around on lil robot legs.
         }
 

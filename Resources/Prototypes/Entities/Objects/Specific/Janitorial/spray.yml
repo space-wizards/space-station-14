@@ -68,7 +68,7 @@
 - type: entity
   id: Vapor
   name: "vapor"
-  abstract: true
+  noSpawn: true
   components:
   - type: SolutionContainerManager
     solutions:

@@ -37,7 +37,7 @@
 - type: cargoProduct
   name: "DIY lung cancer crate"
   id: ServiceCustomSmokable
-  description: "Want to get a little creative with what you use to destroy your lungs? Then this crate is for you! Has everything you need to roll your own Cigarettes."
+  description: "Want to get a little creative with what you use to destroy your lungs? Then this crate is for you! Has everything you need to roll your own cigarettes."
   icon:
     sprite: Objects/Consumable/Smokeables/Cigarettes/Cartons/green.rsi
     state: closed

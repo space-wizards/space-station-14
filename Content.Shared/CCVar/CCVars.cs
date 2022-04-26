@@ -105,7 +105,7 @@ namespace Content.Shared.CCVar
         ///     Controls the default game preset.
         /// </summary>
         public static readonly CVarDef<string>
-            GameLobbyDefaultPreset = CVarDef.Create("game.defaultpreset", "suspicion", CVar.ARCHIVE);
+            GameLobbyDefaultPreset = CVarDef.Create("game.defaultpreset", "traitor", CVar.ARCHIVE);
 
         /// <summary>
         ///     Controls if the game can force a different preset if the current preset's criteria are not met.
@@ -173,7 +173,7 @@ namespace Content.Shared.CCVar
         ///     Whether a random rotation will be applied to the station on roundstart.
         /// </summary>
         public static readonly CVarDef<bool> StationRotation =
-            CVarDef.Create("game.station_rotation", false);
+            CVarDef.Create("game.station_rotation", true);
 
         /// <summary>
         ///     When enabled, guests will be assigned permanent UIDs and will have their preferences stored.
@@ -428,7 +428,7 @@ namespace Content.Shared.CCVar
         /// <remarks>
         ///     Large nukes tend to generate a lot of shrapnel that flies through space. This can functionally cripple
         ///     the server TPS for a while after an explosion (or even during, if the explosion is processed
-        ///     incrementally. 
+        ///     incrementally.
         /// </remarks>
         public static readonly CVarDef<int> ExplosionThrowLimit =
             CVarDef.Create("explosion.throw_limit", 400, CVar.SERVERONLY);
@@ -543,6 +543,32 @@ namespace Content.Shared.CCVar
         /// </summary>
         public static readonly CVarDef<bool> SpaceWind =
             CVarDef.Create("atmos.space_wind", true, CVar.SERVERONLY);
+
+        /// <summary>
+        ///     Divisor from maxForce (pressureDifference * 2.25f) to force applied on objects.
+        /// </summary>
+        public static readonly CVarDef<float> SpaceWindPressureForceDivisorThrow =
+            CVarDef.Create("atmos.space_wind_pressure_force_divisor_throw", 15f, CVar.SERVERONLY);
+
+        /// <summary>
+        ///     Divisor from maxForce (pressureDifference * 2.25f) to force applied on objects.
+        /// </summary>
+        public static readonly CVarDef<float> SpaceWindPressureForceDivisorPush =
+            CVarDef.Create("atmos.space_wind_pressure_force_divisor_push", 2500f, CVar.SERVERONLY);
+
+        /// <summary>
+        ///     The maximum velocity (not force) that may be applied to an object by atmospheric pressure differences.
+        ///     Useful to prevent clipping through objects.
+        /// </summary>
+        public static readonly CVarDef<float> SpaceWindMaxVelocity =
+            CVarDef.Create("atmos.space_wind_max_velocity", 30f, CVar.SERVERONLY);
+
+        /// <summary>
+        ///     The maximum force that may be applied to an object by pushing (i.e. not throwing) atmospheric pressure differences.
+        ///     A "throwing" atmospheric pressure difference ignores this limit, but not the max. velocity limit.
+        /// </summary>
+        public static readonly CVarDef<float> SpaceWindMaxPushForce =
+            CVarDef.Create("atmos.space_wind_max_push_force", 20f, CVar.SERVERONLY);
 
         /// <summary>
         ///     Whether monstermos tile equalization is enabled.
@@ -869,5 +895,15 @@ namespace Content.Shared.CCVar
         /// </summary>
         public static readonly CVarDef<int> ResourceUploadingStoreDeletionDays =
             CVarDef.Create("netres.store_deletion_days", 30, CVar.SERVER | CVar.SERVERONLY);
+
+        /*
+         * Controls
+         */
+
+        /// <summary>
+        /// Deadzone for drag-drop interactions.
+        /// </summary>
+        public static readonly CVarDef<float> DragDropDeadZone =
+            CVarDef.Create("control.drag_dead_zone", 12f, CVar.CLIENTONLY | CVar.ARCHIVE);
     }
 }

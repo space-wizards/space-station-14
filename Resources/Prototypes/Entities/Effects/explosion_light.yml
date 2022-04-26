@@ -1,5 +1,5 @@
 - type: entity
-  abstract: true
+  noSpawn: true
   id: ExplosionLight
   name: explosion light
   components:

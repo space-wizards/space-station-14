@@ -476,7 +476,7 @@ namespace Content.Server.Storage.Components
         protected virtual IEnumerable<EntityUid> DetermineCollidingEntities()
         {
             var entityLookup = EntitySystem.Get<EntityLookupSystem>();
-            return entityLookup.GetEntitiesIntersecting(Owner, _enteringRange, LookupFlags.Approximate);
+            return entityLookup.GetEntitiesInRange(Owner, _enteringRange, LookupFlags.Approximate);
         }
     }
 

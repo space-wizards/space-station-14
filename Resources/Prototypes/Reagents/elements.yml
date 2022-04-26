@@ -115,7 +115,7 @@
   id: Lithium
   name: lithium
   group: Elements
-  desc: A soft, silvery-white alkali metal. It is highly reactive, and ignites if it makes contact with water.
+  desc: A soft, silvery-white alkali metal. It's highly reactive, and ignites if it makes contact with water.
   physicalDesc: shiny
   color: "#c6c8cc"
   meltingPoint: 180.5
@@ -126,7 +126,7 @@
   id: Mercury
   name: mercury
   group: Elements
-  desc: A silver metal which is liquid at room temperature. It is highly toxic to humans.
+  desc: A silver metal which is liquid at room temperature. It's highly toxic to humans.
   physicalDesc: shiny
   color: "#929296"
   meltingPoint: -38.83

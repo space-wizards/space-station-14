@@ -697,3 +697,14 @@
   - type: Sprite
     layers:
       - state: box
+
+- type: entity
+  name: box of .30 rifle bullets
+  parent: BoxCardboard
+  id: BoxBulletLRifleSmall
+  description: A box full of individual .30 rifle bullets.
+  components:
+  - type: StorageFill
+    contents:
+      - id: CartridgeLRifle
+        amount: 20

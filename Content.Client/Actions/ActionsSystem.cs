@@ -118,7 +118,7 @@ namespace Content.Client.Actions
             SubscribeLocalEvent<ActionsComponent, ComponentHandleState>(HandleState);
         }
 
-        protected override void Dirty(ActionType action)
+        public override void Dirty(ActionType action)
         {
             // Should only ever receive component states for attached player's component.
             // --> lets not bother unnecessarily dirtying and prediction-resetting actions for other players.
@@ -155,19 +155,11 @@ namespace Content.Client.Actions
 
                 act.CopyFrom(serverAct);
                 serverActions.Remove(serverAct);
-
-                if (act is EntityTargetAction entAct)
-                {
-                    entAct.Whitelist?.UpdateRegistrations();
-                }
             }
 
             // Anything that remains is a new action
             foreach (var newAct in serverActions)
             {
-                if (newAct is EntityTargetAction entAct)
-                    entAct.Whitelist?.UpdateRegistrations();
-
                 // We create a new action, not just sorting a reference to the state's action.
                 component.Actions.Add((ActionType) newAct.Clone());
             }
