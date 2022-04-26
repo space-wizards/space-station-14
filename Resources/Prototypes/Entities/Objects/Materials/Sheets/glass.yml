@@ -48,7 +48,7 @@
   components:
   - type: Material
     materials:
-    - Glass
+      Glass: 100
   - type: Stack
     stackType: Glass
   - type: Sprite
@@ -89,7 +89,7 @@
   components:
   - type: Material
     materials:
-    - ReinforcedGlass
+      ReinforcedGlass: 100
   - type: Stack
     stackType: ReinforcedGlass
   - type: Sprite
@@ -130,7 +130,7 @@
   components:
   - type: Material
     materials:
-    - PlasmaGlass
+      PlasmaGlass: 100
   - type: Stack
     stackType: PlasmaGlass
   - type: Sprite
@@ -168,7 +168,7 @@
   components:
   - type: Material
     materials:
-    - ReinforcedPlasmaGlass
+      ReinforcedPlasmaGlass: 500
   - type: Stack
     stackType: ReinforcedPlasmaGlass
   - type: Sprite

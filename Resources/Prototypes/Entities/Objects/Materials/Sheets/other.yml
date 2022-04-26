@@ -64,7 +64,7 @@
   components:
   - type: Material
     materials:
-    - Plasma
+      Plasma: 500
   - type: Stack
     stackType: Plasma
   - type: Sprite
@@ -112,7 +112,7 @@
     - Plastic
   - type: Material
     materials:
-    - Plastic
+      Plastic: 100
   - type: Stack
     stackType: Plastic
   - type: Sprite
@@ -144,6 +144,9 @@
   name: uranium
   suffix: Full
   components:
+  - type: Material
+    materials:
+      Uranium: 100
   - type: Stack
     stackType: Uranium
   - type: Sprite

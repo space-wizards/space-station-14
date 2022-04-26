@@ -115,19 +115,20 @@ namespace Content.Server.Lathe
             var totalAmount = 0;
 
             // Check if it can insert all materials.
-            foreach (var mat in material.MaterialIds)
+            foreach (var (mat, vol) in material._materials)
             {
-                if (!storage.CanInsertMaterial(mat, material.volume * multiplier)) return;
-                totalAmount += material.volume * multiplier;
+                if (!storage.CanInsertMaterial(mat,
+                        vol * multiplier)) return;
+                totalAmount += vol * multiplier;
             }
 
             // Check if it can take ALL of the material's volume.
             if (storage.StorageLimit > 0 && !storage.CanTakeAmount(totalAmount))
                 return;
             var lastMat = string.Empty;
-            foreach (var mat in material.MaterialIds)
+            foreach (var (mat, vol) in material._materials)
             {
-                storage.InsertMaterial(mat, material.volume * multiplier);
+                storage.InsertMaterial(mat, vol * multiplier);
                 lastMat = mat;
             }
             

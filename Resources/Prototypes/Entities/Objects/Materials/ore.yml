@@ -37,8 +37,7 @@
     state: gold
   - type: Material
     materials:
-    - Gold
-    volume: 500
+      Gold: 500
 
 - type: entity
   parent: GoldOre
@@ -60,8 +59,7 @@
     state: iron
   - type: Material
     materials:
-    - Steel
-    volume: 500
+      Steel: 500
 
 - type: entity
   id: SteelOre1
@@ -83,8 +81,7 @@
     state: plasma
   - type: Material
     materials:
-    - Plasma
-    volume: 500
+      Plasma: 500
 
 - type: entity
   parent: PlasmaOre
@@ -106,8 +103,7 @@
     state: silver
   - type: Material
     materials:
-    - Silver
-    volume: 500
+      Silver: 500
 
 - type: entity
   parent: SilverOre
@@ -129,8 +125,7 @@
     state: spacecrystal
   - type: Material
     materials:
-    - Glass
-    volume: 500
+      Glass: 500
 
 - type: entity
   parent: SpaceCrystal
@@ -152,8 +147,7 @@
     state: uranium
   - type: Material
     materials:
-    - Uranium
-    volume: 500
+      Uranium: 500
 
 - type: entity
   parent: UraniumOre

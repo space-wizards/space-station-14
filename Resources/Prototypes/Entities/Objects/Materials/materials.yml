@@ -35,7 +35,7 @@
     stackType: Cloth
   - type: Material
     materials:
-    - Cloth
+      Cloth: 100
   - type: Extractable
     juiceSolution:
       reagents:
@@ -71,7 +71,7 @@
     stackType: Durathread
   - type: Material
     materials:
-    - Durathread
+      Durathread: 100
   - type: Sprite
     state: durathread_3
   - type: Appearance
@@ -103,7 +103,7 @@
   components:
   - type: Material
     materials:
-    - Wood
+      Wood: 100
   - type: Stack
     stackType: WoodPlank
   - type: Sprite
@@ -140,20 +140,20 @@
   name: refined diamond
   suffix: Full
   components:
-    - type: Stack
-      stackType: Diamond
-    - type: Sprite
-      state: diamond
-    - type: Item
-      HeldPrefix: diamond
+  - type: Stack
+    stackType: Diamond
+  - type: Sprite
+    state: diamond
+  - type: Item
+    HeldPrefix: diamond
 
 - type: entity
   parent: MaterialDiamond
   id: MaterialDiamond1
   suffix: Single
   components:
-    - type: Stack
-      count: 1
+  - type: Stack
+    count: 1
 
 - type: entity
   parent: MaterialBase
@@ -161,24 +161,24 @@
   name: cotton
   suffix: Full
   components:
-    - type: Stack
-      stackType: Cotton
-    - type: Sprite
-      state: cotton_3
-    - type: Appearance
-      visuals:
-        - type: StackVisualizer
-          stackLayers:
-            - cotton
-            - cotton_2
-            - cotton_3
+  - type: Stack
+    stackType: Cotton
+  - type: Sprite
+    state: cotton_3
+  - type: Appearance
+    visuals:
+      - type: StackVisualizer
+        stackLayers:
+          - cotton
+          - cotton_2
+          - cotton_3
 
 - type: entity
   parent: MaterialCotton
   id: MaterialCotton1
   suffix: Single
   components:
-    - type: Sprite
-      state: cotton
-    - type: Stack
-      count: 1
+  - type: Sprite
+    state: cotton
+  - type: Stack
+    count: 1

@@ -35,7 +35,7 @@
   components:
   - type: Material
     materials:
-    - Steel
+      Steel: 100
   - type: Stack
     stackType: Steel
   - type: Sprite
@@ -73,7 +73,7 @@
   components:
   - type: Material
     materials:
-    - Plasteel
+      Plasteel: 100
   - type: Stack
     stackType: Plasteel
   - type: Sprite
