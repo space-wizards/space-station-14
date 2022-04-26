@@ -145,9 +145,6 @@
   id: ExplosivePassable
 
 - type: Tag
-  id: Familiar
-
-- type: Tag
   id: FireAlarmElectronics
 
 - type: Tag

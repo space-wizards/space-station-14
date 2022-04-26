@@ -164,7 +164,7 @@ namespace Content.Shared.Maps
             if (!GetWorldTileBox(turf, out var worldBox))
                 return Enumerable.Empty<EntityUid>();
 
-            return lookupSystem.GetEntitiesIntersecting(turf.MapIndex, worldBox, flags);
+            return lookupSystem.GetEntitiesIntersecting(turf.GridIndex, worldBox, flags);
         }
 
         /// <summary>
@@ -191,22 +191,24 @@ namespace Content.Shared.Maps
         /// <summary>
         /// Checks if a turf has something dense on it.
         /// </summary>
-        public static bool IsBlockedTurf(this TileRef turf, bool filterMobs, SharedPhysicsSystem? physics = null, IEntitySystemManager? entSysMan = null)
+        public static bool IsBlockedTurf(this TileRef turf, bool filterMobs, EntityLookupSystem? physics = null, IEntitySystemManager? entSysMan = null)
         {
+            // TODO: Deprecate this with entitylookup.
             if (physics == null)
             {
-                // Slow path, resolve dependencies.
                 IoCManager.Resolve(ref entSysMan);
-                entSysMan.Resolve(ref physics);
+                physics = entSysMan.GetEntitySystem<EntityLookupSystem>();
             }
 
             if (!GetWorldTileBox(turf, out var worldBox))
                 return false;
 
-            var query = physics.GetCollidingEntities(turf.MapIndex, in worldBox);
+            var entManager = IoCManager.Resolve<IEntityManager>();
+            var query = physics.GetEntitiesIntersecting(turf.GridIndex, worldBox);
 
-            foreach (var body in query)
+            foreach (var ent in query)
             {
+                var body = entManager.GetComponent<PhysicsComponent>(ent);
                 if (body.CanCollide && body.Hard && (body.CollisionLayer & (int) CollisionGroup.Impassable) != 0)
                     return true;
 

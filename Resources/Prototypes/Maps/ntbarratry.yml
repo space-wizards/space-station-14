@@ -1,7 +1,7 @@
 - type: gameMap
   id: ntbarratry
-  mapName: 'NT Barratry'
-  mapNameTemplate: '{0} NT Barratry {1}'
+  mapName: 'Barratry'
+  mapNameTemplate: '{0} Barratry {1}'
   nameGenerator:
     !type:NanotrasenNameGenerator
     prefixCreator: '14'
