@@ -200,7 +200,7 @@
     - type: Item
       size: 5
     - type: OnUseTimerTrigger
-      delay: 5
+      delay: 10
     - type: ClusterGrenade
       fillPrototype: MobHumanFeralClown
       directImpulse: true
