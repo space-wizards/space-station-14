@@ -57,6 +57,7 @@
     - PussyWagonKeys
     - SecwayKeys
     - ATVKeys
+    - SyndicateSegwayKeys
 
 - type: entity
   parent: VehicleKeyPussyWagon
