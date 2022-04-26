@@ -65,7 +65,6 @@ namespace Content.Server.Chemistry.EntitySystems
 
         public bool IsFaceBlocked(EntityUid uid , EntityUid carrierAgentUid)
         {
-            //_popupSystem.PopupEntity("flag 0001 ", uid , Filter.Broadcast());
             var attemptEvent = new TransferThroughFaceAttemptEvent(uid);
             RaiseLocalEvent(carrierAgentUid, attemptEvent, false);
             return !attemptEvent.Cancelled;
