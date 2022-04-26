@@ -45,6 +45,9 @@
   - type: Clothing
     sprite: Clothing/Shoes/Specific/galoshes.rsi
   - type: NoSlip
+  - type: ClothingSpeedModifier
+    walkModifier: 0.8
+    sprintModifier: 0.75
 
 - type: entity
   parent: ClothingShoesBase
