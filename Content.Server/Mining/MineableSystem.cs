@@ -16,8 +16,6 @@ public sealed class MineableSystem : EntitySystem
     [Dependency] private readonly DamageableSystem _damageableSystem = default!;
     [Dependency] private readonly IRobustRandom _random = null!;
 
-
-
     public override void Initialize()
     {
         base.Initialize();
