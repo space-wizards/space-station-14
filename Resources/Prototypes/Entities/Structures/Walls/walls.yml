@@ -653,6 +653,7 @@
   parent: WallBase
   id: WallVaultAlien
   name: alien vault wall
+  description: A mysterious ornate looking wall. There may be ancient dangers inside. 
   components:
   - type: Sprite
     sprite: Structures/Walls/vault.rsi
