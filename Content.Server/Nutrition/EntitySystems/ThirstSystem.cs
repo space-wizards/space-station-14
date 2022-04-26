@@ -46,7 +46,7 @@ namespace Content.Server.Nutrition.EntitySystems
 
         private void OnRefreshMovespeed(EntityUid uid, ThirstComponent component, RefreshMovementSpeedModifiersEvent args)
         {
-            if(EntityManager.TryGetComponent(uid,out MobStateComponent? mobState))
+            if(EntityManager.TryGetComponent(component.Owner ,out MobStateComponent? mobState))
             {
                 if(mobState.IsDead())
                 {
