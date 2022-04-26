@@ -65,6 +65,7 @@ public sealed class ChatSanitizationManager : IChatSanitizationManager
         { "lel", "chatsan-laughs" },
         { "kek", "chatsan-laughs" },
         { "o7", "chatsan-salutes" },
+        { ";_;7", "chatsan-tearfully-salutes"},
         { "idk", "chatsan-shrugs" }
     };
 

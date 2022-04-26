@@ -1,4 +1,4 @@
-﻿using System.Text;
+using System.Text;
 using Content.Client.Resources;
 using Robust.Client.Graphics;
 using Robust.Client.Input;
@@ -115,14 +115,14 @@ namespace Content.Client.NodeContainer
                 foreach (var entity in _lookup.GetEntitiesIntersecting(grid.Index, worldAABB))
                 {
                     if (!_system.Entities.TryGetValue(entity, out var nodeData))
-                        return;
+                        continue;
 
                     var gridDict = _gridIndex.GetOrNew(grid.Index);
                     var coords = xformQuery.GetComponent(entity).Coordinates;
 
                     // TODO: This probably shouldn't be capable of returning NaN...
                     if (float.IsNaN(coords.Position.X) || float.IsNaN(coords.Position.Y))
-                        return;
+                        continue;
 
                     var tile = gridDict.GetOrNew(grid.TileIndicesFor(coords));
 

@@ -9,6 +9,7 @@
     successChance: 1
     interactSuccessString: hugging-success-generic
     interactSuccessSound: /Audio/Effects/hug.ogg
+    messagePerceivedByOthers: hugging-success-generic-others
   - type: Mind
     showExamineInfo: true
   - type: Input
