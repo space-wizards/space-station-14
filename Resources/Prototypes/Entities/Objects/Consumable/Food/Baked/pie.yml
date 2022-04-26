@@ -116,6 +116,20 @@
   - type: CreamPie
 # Tastes like pie, cream, banana.
 
+  - type: entity
+    name: Cheese cream pie
+    parent: FoodPieBase
+    id: FoodPieCheeseCream
+    description: mmm ... cheese ... , the perfect food for a hungry mice
+    components:
+      - type: Sprite
+        layers:
+          - state: tin
+          - state: plain
+      - type: CreamPie
+      - type: SolutionInjectOnCollideComponent
+        - transferAmount: 20
+
 - type: entity
   name: berry clafoutis
   parent: FoodPieBase
