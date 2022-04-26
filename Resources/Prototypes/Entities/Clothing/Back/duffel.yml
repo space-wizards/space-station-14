@@ -96,6 +96,9 @@
     sprite: Clothing/Back/Duffels/mime.rsi
   - type: Clothing
     sprite: Clothing/Back/Duffels/mime.rsi
+  - type: Storage  
+    storageSoundCollection:
+      collection: null  
 
 - type: entity
   parent: ClothingBackpackDuffel
@@ -141,7 +144,7 @@
     state: icon-med
   - type: Clothing
     sprite: Clothing/Back/Duffels/syndicate.rsi
-    HeldPrefix: med
+    HeldPrefix: med  
 
 - type: entity
   parent: ClothingBackpackDuffel
