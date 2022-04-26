@@ -41,8 +41,6 @@
     sprite: Clothing/Back/Satchels/medical.rsi
   - type: Clothing
     sprite: Clothing/Back/Satchels/medical.rsi
-  - type: DiseaseProtection
-    protection: 0.05
 
 - type: entity
   parent: ClothingBackpackSatchel
@@ -54,8 +52,6 @@
     sprite: Clothing/Back/Satchels/chemistry.rsi
   - type: Clothing
     sprite: Clothing/Back/Satchels/chemistry.rsi
-  - type: DiseaseProtection
-    protection: 0.05
 
 - type: entity
   parent: ClothingBackpackSatchel
