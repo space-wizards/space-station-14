@@ -59,6 +59,7 @@ namespace Content.Server.Storage.EntitySystems
                     StartDoAfter(uid, null, args.User, dumpable, storage, 0.6f);
                 },
                 Text = Loc.GetString("dump-verb-name"),
+                IconTexture = "/Textures/Interface/VerbIcons/drop.svg.192dpi.png",
                 Priority = 2
             };
             args.Verbs.Add(verb);
