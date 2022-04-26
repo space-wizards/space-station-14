@@ -205,16 +205,16 @@ namespace Content.Server.Vehicle
             {
                 return xform.LocalRotation.Degrees switch
                 {
-                    < 135f => 10,
+                    < 135f => 5,
                     <= 225f => 2,
-                    _ => 10
+                    _ => 5
                 };
             }
             return xform.LocalRotation.Degrees switch
             {
-                < 45f => 10,
+                < 45f => 5,
                 <= 315f => 2,
-                _ => 10
+                _ => 5
             };
         }
 
