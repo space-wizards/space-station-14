@@ -124,7 +124,6 @@ public sealed class WiresSystem : EntitySystem
             for (var i = 0; i < wireSet.Count; i++)
             {
                 wires.WiresList[layout.Specifications[i].Position] = wireSet[i];
-                Logger.DebugS("wires", $"{wires.LayoutId} : placing wire {i} at {layout.Specifications[i].Position}");
             }
 
             var id = 0;
@@ -161,7 +160,6 @@ public sealed class WiresSystem : EntitySystem
             for (var i = 0; i < enumeratedList.Count; i++)
             {
                 (int id, Wire d) = enumeratedList[i];
-                Logger.DebugS("wires", $"{wires.LayoutId} : og idx {id}, new idx {i}");
 
                 var wireType = d.Action.Identifier;
                 if (types.ContainsKey(wireType))
@@ -423,7 +421,6 @@ public sealed class WiresSystem : EntitySystem
 
     private void OnInteractUsing(EntityUid uid, WiresComponent component, InteractUsingEvent args)
     {
-        Logger.DebugS("Wires", "Attempting to interact using something");
         if (!EntityManager.TryGetComponent(args.Used, out ToolComponent? tool))
             return;
 
@@ -439,7 +436,6 @@ public sealed class WiresSystem : EntitySystem
         }
         else if (_toolSystem.UseTool(args.Used, args.User, uid, 0f, ScrewTime, new string[]{ "Screwing" }, doAfterCompleteEvent:new WireToolFinishedEvent(uid), toolComponent:tool))
         {
-            Logger.DebugS("Wires", "Trying to unscrew now...");
             args.Handled = true;
         }
     }

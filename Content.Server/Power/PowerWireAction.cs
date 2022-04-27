@@ -99,6 +99,12 @@ public sealed class PowerWireAction : BaseWireAction
             }
             else
             {
+                if (WiresSystem.TryGetData(owner, PowerWireActionKey.Pulsed, out bool isPulsed)
+                    && isPulsed)
+                {
+                    return;
+                }
+
                 power.PowerDisabled = false;
             }
         }
