@@ -43,6 +43,7 @@
     - type: ArtifactStorage
       Capacity: 1
       CanWeldShut: true
+    - type: SuppressArtifactContainer
     - type: PlaceableSurface
     - type: Damageable
       damageContainer: Inorganic

@@ -145,6 +145,7 @@ namespace Content.Client.Entry
             "VentCritterSpawnLocation",
             "RadiateArtifact",
             "TemperatureArtifact",
+            "SuppressArtifactContainer",
             "DisposalHolder",
             "DisposalTagger",
             "DisposalRouter",
