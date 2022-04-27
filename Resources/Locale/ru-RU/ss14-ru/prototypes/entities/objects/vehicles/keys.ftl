@@ -10,3 +10,6 @@ ent-VehicleKeyATV = ключ от квадроцикла
 ent-VehicleKeySkeleton = мастер-ключ от транспорта
     .desc = Открывает любое транспортное средство.
     .suffix = { "" }
+ent-VehicleKeySyndicateSegway = syndicate segway keys
+    .desc = Patterned after the iconic EMAG design.
+    .suffix = { "" }
