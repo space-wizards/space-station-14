@@ -569,14 +569,14 @@ public sealed class WiresSystem : EntitySystem
         return wires.WiresList.Find(x => x.Id == id);
     }
 
-    public IEnumerable<Wire> TryGetWires(EntityUid uid, object id, WiresComponent? wires = null)
+    public IEnumerable<Wire> TryGetWires<T>(EntityUid uid, WiresComponent? wires = null)
     {
         if (!Resolve(uid, ref wires))
             yield break;
 
         foreach (var wire in wires.WiresList)
         {
-            if (wire.Identifier == id)
+            if (wire.GetType() == typeof(T))
             {
                 yield return wire;
             }
@@ -635,7 +635,7 @@ public sealed class WiresSystem : EntitySystem
             case WiresAction.Pulse:
                 if (!_toolSystem.HasQuality(toolEntity, "Pulsing", tool))
                 {
-                    _popupSystem.PopupCursor(Loc.GetString("wires-component-ui-on-receive-message-need-wirecutters"), Filter.Entities(user));
+                    _popupSystem.PopupCursor(Loc.GetString("wires-component-ui-on-receive-message-need-multitool"), Filter.Entities(user));
                     return;
                 }
 
