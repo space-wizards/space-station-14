@@ -196,7 +196,7 @@ public sealed class WiresSystem : EntitySystem
 
     private List<Wire>? CreateWireSet(EntityUid uid, WireLayout? layout, List<IWireAction> wires, int dummyWires)
     {
-        if (wires.Wires == null)
+        if (wires.Count == 0)
             return null;
 
         List<WireColor> colors =
