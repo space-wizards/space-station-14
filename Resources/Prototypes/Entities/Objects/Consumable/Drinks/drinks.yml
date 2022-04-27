@@ -22,8 +22,6 @@
     solution: drink
   - type: RefillableSolution
     solution: drink
-  - type: SolutionTransfer
-    canChangeTransferAmount: true
   - type: UserInterface
     interfaces:
     - key: enum.TransferAmountUiKey.Key
