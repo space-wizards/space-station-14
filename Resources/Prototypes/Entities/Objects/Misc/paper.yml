@@ -157,13 +157,13 @@
       - id: Paper
         prob: 0.5
       - id: Paper
-        prob: 0.5
+        prob: 0.4
       - id: Paper
-        prob: 0.5
+        prob: 0.3
       - id: Paper
-        prob: 0.5
+        prob: 0.2
       - id: Paper
-        prob: 0.5
+        prob: 0.2
 
 - type: entity
   id: BoxFolderRed
