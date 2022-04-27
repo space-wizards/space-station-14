@@ -12,4 +12,4 @@ drink-component-try-use-drink-success-slurp = Сёрб
 drink-component-force-feed = { $user } пытается напоить вас чем-то!
 drink-component-force-feed-success = { $user } напоил вас чем-то!
 drink-component-force-feed-success-user = Вы успешно напоили { $target }
-drink-system-verb-drink = Drink
+drink-system-verb-drink = Пить

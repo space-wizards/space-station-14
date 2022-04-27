@@ -37,6 +37,6 @@ ent-ClothingBackpackDuffelSyndicateC4tBundle = набор C-4 синдиката
 ent-ClothingBackpackDuffelSyndicateHardsuitBundle = набор скафандров синдиката
     .desc = Содержит фирменный кроваво-красный комбинезон Синдиката.
     .suffix = { "" }
-ent-ClothingBackpackDuffelSyndicateOperative = operative duffelbag
+ent-ClothingBackpackDuffelSyndicateOperative = оперативный вещмешок
     .desc = { ent-ClothingBackpackDuffelSyndicate.desc }
     .suffix = { "" }

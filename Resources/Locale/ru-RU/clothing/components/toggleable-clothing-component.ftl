@@ -1,1 +1,1 @@
-toggleable-clothing-remove-first = You have to unequip { $entity } first.
+toggleable-clothing-remove-first = Сперва вам необходимо снять { $entity }.

@@ -88,6 +88,6 @@ ent-MusicianIDCard = ID карта музыканта
 ent-AgentIDCard = { ent-AssistantIDCard }
     .suffix = Агентская
     .desc = { ent-AssistantIDCard.desc }
-ent-AtmosIDCard = atmospheric technician ID card
+ent-AtmosIDCard = ID карта атмосферного техника
     .desc = { ent-IDCardStandard.desc }
     .suffix = { "" }

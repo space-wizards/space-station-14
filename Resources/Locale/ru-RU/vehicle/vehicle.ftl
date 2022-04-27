@@ -1,1 +1,1 @@
-vehicle-use-key = You use { THE($keys) } to start { THE($vehicle) }.
+vehicle-use-key = Вы используете { $keys } чтобы запустить { $vehicle }.

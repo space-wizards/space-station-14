@@ -1,6 +1,6 @@
-ent-TimerTrigger = таймер
+ent-TimerTrigger = таймер-триггер
     .desc = Настраиваемый таймер для сборки взрывных устройств.
     .suffix = { "" }
-ent-SignalTrigger = signal trigger
-    .desc = Adds a machine link that is triggered by signals.
+ent-SignalTrigger = сигнальный триггер
+    .desc = Позволяет соединить с устройством, заставляющим сработать по сигналу.
     .suffix = { "" }

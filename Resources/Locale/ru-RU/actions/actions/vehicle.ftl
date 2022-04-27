@@ -1,4 +1,4 @@
-action-name-honk = Honk
-action-desc-honk = Honk!
-action-name-siren = Toggle Siren
-action-desc-siren = Wee-woo.
+action-name-honk = Хонк
+action-desc-honk = Хонк!
+action-name-siren = Переключить сирену
+action-desc-siren = Вии-вуу.
