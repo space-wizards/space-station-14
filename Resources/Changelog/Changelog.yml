@@ -1,9 +1,4 @@
 Entries:
-- author: metalgearsloth
-  changes:
-  - {message: Admins can now also get chat logs in-game., type: Add}
-  id: 910
-  time: '2022-01-19T02:35:31.0000000+00:00'
 - author: Peptide90
   changes:
   - {message: Hardsuit helmets and hardhats now show that they're lit., type: Fix}
@@ -3054,3 +3049,9 @@ Entries:
     type: Add}
   id: 1409
   time: '2022-04-26T22:08:03.0000000+00:00'
+- author: Peptide90
+  changes:
+  - {message: Fireaxes are now the perfect crowbar. They can now be used to pry up
+      floor tiles., type: Tweak}
+  id: 1410
+  time: '2022-04-27T07:29:30.0000000+00:00'
