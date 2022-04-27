@@ -93,11 +93,11 @@ public sealed class PowerWireAction : BaseWireAction
         if (WiresSystem.TryGetData(owner, PowerWireActionInternalKeys.CutWires, out int? cut)
             && WiresSystem.TryGetData(owner, PowerWireActionInternalKeys.WireCount, out int? count))
         {
-            if (count == cut)
+            if (AllWiresCut(owner))
             {
                 power.PowerDisabled = true;
             }
-            else if (cut == 0)
+            else
             {
                 power.PowerDisabled = false;
             }
