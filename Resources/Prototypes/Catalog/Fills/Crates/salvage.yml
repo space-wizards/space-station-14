@@ -55,6 +55,8 @@
         #  - Heh
       - id: SalvageHumanCorpse
         prob: 0.1
+      - id: LidSalami
+        prob: 0.1
         # Interesting (1%)
         #  - Ammo
       - id: BoxMagnum
