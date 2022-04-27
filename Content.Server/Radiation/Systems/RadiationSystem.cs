@@ -12,8 +12,6 @@ public sealed class RadiationSystem : EntitySystem
         var lookUp = _lookup.GetEntitiesInRange(coordinates, range);
         foreach (var uid in lookUp)
         {
-            // For now at least still need this because it uses a list internally then returns and this may be deleted before we get to it.
-            // Update: Do we still need this?
             if (Deleted(uid))
                 continue;
 
