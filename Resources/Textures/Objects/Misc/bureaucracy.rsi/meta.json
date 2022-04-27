@@ -8,18 +8,6 @@
   },
   "states": [
     {
-      "name": "chestdrawer"
-    },
-    {
-      "name": "chestdrawer-open",
-      "delays": [
-        [
-          0.5,
-          0.1
-        ]
-      ]
-    },
-    {
       "name": "clipboard"
     },
     {
@@ -42,18 +30,6 @@
     },
     {
       "name": "envelope_torn_overlay"
-    },
-    {
-      "name": "filingcabinet"
-    },
-    {
-      "name": "filingcabinet-open",
-      "delays": [
-        [
-          0.5,
-          0.1
-        ]
-      ]
     },
     {
       "name": "folder-base"
@@ -298,18 +274,6 @@
     },
     {
       "name": "stamp-warden"
-    },
-    {
-      "name": "tallcabinet"
-    },
-    {
-      "name": "tallcabinet-open",
-      "delays": [
-        [
-          0.5,
-          0.1
-        ]
-      ]
     },
     {
       "name": "clipboard-equipped-BELT",
