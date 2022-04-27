@@ -580,6 +580,8 @@
   id: MobKangarooBoxer
   description: A large marsupial herbivore. It has powerful hind legs and... boxing gloves?
   components:
+  - type: CombatMode
+    canDisarm: true
   - type: Sprite
     drawdepth: Mobs
     layers:
