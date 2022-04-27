@@ -362,3 +362,11 @@
   category: Misc
   itemId: RubberStampSyndicate
   price: 2
+
+- type: uplinkListing
+  id: UplinkSyndicateSegwayCrate
+  category: Misc
+  itemId: CrateFunSyndicateSegway
+  listingName: syndicate segway
+  description: Be an enemy of the corporation, in style!
+  price: 5

@@ -206,9 +206,9 @@
     HeldPrefix: packet
   - type: Tag
     tags:
-    - Recyclable
     - Trash
   - type: Recyclable
+  - type: SpaceGarbage
 
 - type: entity
   noSpawn: true
