@@ -2103,9 +2103,9 @@
     sprite: Objects/Consumable/Drinks/ramen.rsi
   - type: Tag
     tags:
-    - Recyclable
     - Trash
   - type: Recyclable
+  - type: SpaceGarbage
 
 - type: entity
   parent: DrinkRamen

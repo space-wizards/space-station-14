@@ -15,6 +15,7 @@ using Robust.Server;
 using Robust.Server.Maps;
 using Robust.Server.ServerStatus;
 using Robust.Shared.Configuration;
+using Robust.Shared.Console;
 #if EXCEPTION_TOLERANCE
 using Robust.Shared.Exceptions;
 #endif
@@ -52,6 +53,7 @@ namespace Content.Server.GameTicking
             InitializeLobbyMusic();
             InitializeLobbyBackground();
             InitializeGamePreset();
+            InitializeGameRules();
             InitializeJobController();
             InitializeUpdates();
 
@@ -67,6 +69,13 @@ namespace Content.Server.GameTicking
             RestartRound();
 
             _postInitialized = true;
+        }
+
+        public override void Shutdown()
+        {
+            base.Shutdown();
+
+            ShutdownGameRules();
         }
 
         private void SendServerMessage(string message)
@@ -97,6 +106,7 @@ namespace Content.Server.GameTicking
         [Dependency] private readonly IGameMapManager _gameMapManager = default!;
         [Dependency] private readonly IServerDbManager _db = default!;
         [Dependency] private readonly ILogManager _logManager = default!;
+        [Dependency] private readonly IConsoleHost _consoleHost = default!;
 #if EXCEPTION_TOLERANCE
         [Dependency] private readonly IRuntimeLog _runtimeLog = default!;
 #endif

@@ -32,3 +32,4 @@
   - type: Tool
     qualities:
       - Prying
+  - type: TilePrying

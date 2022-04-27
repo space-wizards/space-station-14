@@ -311,6 +311,9 @@
   id: StringInstrument
 
 - type: Tag
+  id: SyndicateSegwayKeys
+
+- type: Tag
   id: Taser
 
 - type: Tag
