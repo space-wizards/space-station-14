@@ -54,6 +54,12 @@ namespace Content.Client.Physics.Controllers
                 {
                     pullerBody.Predict = false;
                     body.Predict = false;
+
+                    if (TryComp<SharedPullerComponent>(player, out var playerPuller) && playerPuller.Pulling != null &&
+                        TryComp<PhysicsComponent>(playerPuller.Pulling, out var pulledBody))
+                    {
+                        pulledBody.Predict = false;
+                    }
                 }
             }
 

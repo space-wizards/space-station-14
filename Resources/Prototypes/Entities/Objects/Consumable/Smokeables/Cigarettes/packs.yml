@@ -7,9 +7,9 @@
   - type: Tag
     tags:
     - CigPack
-    - Recyclable
     - Trash
   - type: Recyclable
+  - type: SpaceGarbage
   - type: Storage
     capacity: 6
   - type: Item

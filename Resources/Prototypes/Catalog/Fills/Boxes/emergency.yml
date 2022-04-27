@@ -91,3 +91,21 @@
       - id: EmergencyMedipen
       - id: Flare
       - id: FoodSnackChocolate
+
+- type: entity
+  name: extended-capacity survival box
+  parent: BoxCardboard
+  id: BoxSurvivalSyndicate
+  description: It's a box with basic internals inside. This one is labelled to contain an extended-capacity tank.
+  components:
+  - type: StorageFill
+    contents:
+      - id: ClothingMaskGasSyndicate
+      - id: ExtendedEmergencyOxygenTankFilled
+      - id: EmergencyMedipen
+      - id: Flare
+      - id: FoodSnackChocolate
+  - type: Sprite
+    layers:
+      - state: internals
+      - state: extendedtank

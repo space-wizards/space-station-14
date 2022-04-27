@@ -24,7 +24,7 @@ namespace Content.Client.IconSmoothing
         {
             base.Initialize();
 
-            SubscribeLocalEvent<IconSmoothComponent, AnchorStateChangedEvent>(HandleAnchorChanged);
+            SubscribeLocalEvent<IconSmoothComponent, AnchorStateChangedEvent>(OnAnchorChanged);
         }
 
         public override void FrameUpdate(float frameTime)
@@ -87,7 +87,7 @@ namespace Content.Client.IconSmoothing
             }
         }
 
-        private void HandleAnchorChanged(EntityUid uid, IconSmoothComponent component, ref AnchorStateChangedEvent args)
+        private void OnAnchorChanged(EntityUid uid, IconSmoothComponent component, ref AnchorStateChangedEvent args)
         {
             UpdateSmoothing(uid, component);
         }

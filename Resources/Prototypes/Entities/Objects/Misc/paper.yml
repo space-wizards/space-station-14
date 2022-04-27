@@ -405,3 +405,16 @@
     sprite: Objects/Misc/bureaucracy.rsi
     state: stamp-trader
     netsync: false
+
+- type: entity
+  name: syndicate rubber stamp
+  parent: RubberStampMime
+  id: RubberStampSyndicate
+  components:
+  - type: Stamp
+    stampedName: stamp-component-stamped-name-syndicate
+    stampState: "paper_stamp-syndicate"
+  - type: Sprite
+    sprite: Objects/Misc/bureaucracy.rsi
+    state: stamp-syndicate
+    netsync: false
