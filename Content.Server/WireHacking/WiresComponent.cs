@@ -30,7 +30,11 @@ public class WiresComponent : Component
 
     [ViewVariables]
     [DataField("wireActions")]
-    public List<IWireAction> WireActions { get; } = new();
+    public List<IWireAction>? WireActions { get; }
+
+    [ViewVariables]
+    [DataField("dummyWires")]
+    public int DummyWires { get; }
 
     [ViewVariables]
     public Dictionary<object, object> Statuses { get; } = new();

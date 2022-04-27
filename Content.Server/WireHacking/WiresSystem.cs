@@ -74,41 +74,55 @@ public sealed class WiresSystem : EntitySystem
             return;
 
         WireLayout? layout = null;
+        List<Wire>? wireSet = null;
         if (wires.LayoutId != null)
         {
             TryGetLayout(wires.LayoutId, out layout);
+
+            if (!_protoMan.TryIndex(wires.LayoutId, out WireLayoutPrototype? layoutPrototype))
+                return;
+
+            // does the prototype have a parent (and are the wires empty?) if so, we just create
+            // a new layout based on that
+            //
+            // TODO: Merge wire layouts...
+            if (!string.IsNullOrEmpty(layoutPrototype.Parent) && layoutPrototype.Wires == null)
+            {
+                var parent = layoutPrototype.Parent;
+
+                if (!_protoMan.TryIndex(parent, out WireLayoutPrototype? parentPrototype))
+                    return;
+
+                layoutPrototype = parentPrototype;
+            }
+
+            if (layoutPrototype.Wires != null)
+            {
+                foreach (var wire in layoutPrototype.Wires)
+                {
+                    wire.Initialize();
+                }
+
+                wireSet = CreateWireSet(uid, layout, layoutPrototype.Wires, layoutPrototype.DummyWires);
+            }
+        }
+        // this one's a little iffy, because it goes against the
+        // idea that wires should be flyweighted, but in return,
+        // it makes it so that wire sets are fully randomized
+        // every time
+        else if (wires.WireActions != null)
+        {
+            foreach (var wire in wires.WireActions)
+            {
+                wire.Initialize();
+            }
+
+            wireSet = CreateWireSet(uid, layout, wires.WireActions, wires.DummyWires);
         }
         else
         {
             return;
         }
-
-        if (!_protoMan.TryIndex(wires.LayoutId, out WireLayoutPrototype? layoutPrototype))
-            return;
-
-        // does the prototype have a parent (and are the wires empty?) if so, we just create
-        // a new layout based on that
-        //
-        // TODO: Merge wire layouts...
-        if (!string.IsNullOrEmpty(layoutPrototype.Parent) && layoutPrototype.Wires == null)
-        {
-            var parent = layoutPrototype.Parent;
-
-            if (!_protoMan.TryIndex(parent, out WireLayoutPrototype? parentPrototype))
-                return;
-
-            layoutPrototype = parentPrototype;
-        }
-
-        if (layoutPrototype.Wires != null)
-        {
-            foreach (var wire in layoutPrototype.Wires)
-            {
-                wire.Initialize();
-            }
-        }
-
-        var wireSet = CreateWireSet(uid, layout, layoutPrototype);
 
         if (wireSet == null || wireSet.Count == 0)
         {
@@ -183,19 +197,15 @@ public sealed class WiresSystem : EntitySystem
                 wires.WiresList[i] = wireSet[id];
             }
 
-            AddLayout(wires.LayoutId, new WireLayout(data));
+            if (wires.LayoutId != null)
+            {
+                AddLayout(wires.LayoutId, new WireLayout(data));
+            }
         }
-
-
     }
 
-    private List<Wire>? CreateWireSet(EntityUid uid, WireLayout? layout, WireLayoutPrototype wires)
+    private List<Wire>? CreateWireSet(EntityUid uid, WireLayout? layout, List<IWireAction> wires, int dummyWires)
     {
-        /*
-        if (!Resolve(uid, ref wires))
-            return null;
-            */
-
         if (wires.Wires == null)
             return null;
 
@@ -207,14 +217,14 @@ public sealed class WiresSystem : EntitySystem
 
 
         var wireSet = new List<Wire>();
-        for (var i = 0; i < wires.Wires.Count; i++)
+        for (var i = 0; i < wires.Count; i++)
         {
-            wireSet.Add(CreateWire(uid, wires.Wires[i], i, layout, colors, letters));
+            wireSet.Add(CreateWire(uid, wires[i], i, layout, colors, letters));
         }
 
-        for (var i = 1; i <= wires.DummyWires; i++)
+        for (var i = 1; i <= dummyWires; i++)
         {
-            wireSet.Add(CreateWire(uid, _dummyWire, wires.Wires.Count + i, layout, colors, letters));
+            wireSet.Add(CreateWire(uid, _dummyWire, wires.Count + i, layout, colors, letters));
         }
 
         return wireSet;
@@ -381,7 +391,6 @@ public sealed class WiresSystem : EntitySystem
 
     private void OnWiresActionMessage(EntityUid uid, WiresComponent component, WiresActionMessage args)
     {
-        // var wire = component.WiresList.Find(x => x.Id == args.Id);
         if (args.Session.AttachedEntity == null)
         {
             return;
@@ -394,15 +403,12 @@ public sealed class WiresSystem : EntitySystem
             return;
         }
 
-        // it would be odd if the entity was removed in the middle of this synchronous
-        // operation, wouldn't it?
         if (!_interactionSystem.InRangeUnobstructed(player, uid))
         {
             _popupSystem.PopupEntity(Loc.GetString("wires-component-ui-on-receive-message-cannot-reach"), uid, Filter.Entities(player));
             return;
         }
 
-        // we only need the active hand
         var activeHand = handsComponent.ActiveHand;
 
         if (activeHand == null)
@@ -585,16 +591,11 @@ public sealed class WiresSystem : EntitySystem
             || !Resolve(toolEntity, ref tool))
             return;
 
-        var wire = wires.WiresList.Find(x => x.Id == id);
+        var wire = TryGetWire(used, id, wires);
 
         if (wire == null)
             return;
 
-        // This is the big part of this.
-        // How do you get wire actions?
-        // Where should wires be stored?
-        // Where should wire state be stored?
-        //
         switch (action)
         {
             case WiresAction.Cut:
