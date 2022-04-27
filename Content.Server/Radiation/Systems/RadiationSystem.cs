@@ -14,7 +14,7 @@ public sealed class RadiationSystem : EntitySystem
         {
             // For now at least still need this because it uses a list internally then returns and this may be deleted before we get to it.
             // Update: Do we still need this?
-            if ((!Exists(uid) ? EntityLifeStage.Deleted : MetaData(uid).EntityLifeStage) >= EntityLifeStage.Deleted)
+            if (Deleted(uid))
                 continue;
 
             IrradiateEntity(uid, radsPerSecond, time);
