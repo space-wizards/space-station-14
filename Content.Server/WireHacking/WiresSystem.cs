@@ -77,7 +77,10 @@ public sealed class WiresSystem : EntitySystem
         List<Wire>? wireSet = null;
         if (wires.LayoutId != null)
         {
-            TryGetLayout(wires.LayoutId, out layout);
+            if (!wires.AlwaysRandomize)
+            {
+                TryGetLayout(wires.LayoutId, out layout);
+            }
 
             if (!_protoMan.TryIndex(wires.LayoutId, out WireLayoutPrototype? layoutPrototype))
                 return;
@@ -105,19 +108,6 @@ public sealed class WiresSystem : EntitySystem
 
                 wireSet = CreateWireSet(uid, layout, layoutPrototype.Wires, layoutPrototype.DummyWires);
             }
-        }
-        // this one's a little iffy, because it goes against the
-        // idea that wires should be flyweighted, but in return,
-        // it makes it so that wire sets are fully randomized
-        // every time
-        else if (wires.WireActions != null)
-        {
-            foreach (var wire in wires.WireActions)
-            {
-                wire.Initialize();
-            }
-
-            wireSet = CreateWireSet(uid, layout, wires.WireActions, wires.DummyWires);
         }
         else
         {
@@ -197,7 +187,7 @@ public sealed class WiresSystem : EntitySystem
                 wires.WiresList[i] = wireSet[id];
             }
 
-            if (wires.LayoutId != null)
+            if (!wires.AlwaysRandomize)
             {
                 AddLayout(wires.LayoutId, new WireLayout(data));
             }
@@ -259,7 +249,7 @@ public sealed class WiresSystem : EntitySystem
 
     private void OnWiresStartup(EntityUid uid, WiresComponent component, ComponentStartup args)
     {
-        if (component.WireActions != null)
+        if (!String.IsNullOrEmpty(component.LayoutId))
             SetOrCreateWireLayout(uid, component);
 
         UpdateUserInterface(uid);

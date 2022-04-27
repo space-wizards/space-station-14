@@ -17,7 +17,7 @@ public class WiresComponent : Component
 
     [ViewVariables]
     [DataField("LayoutId")]
-    public string? LayoutId { get; set; }
+    public string LayoutId { get; set; } = default!;
 
     [ViewVariables]
     public string? SerialNumber { get; set; }
@@ -29,12 +29,8 @@ public class WiresComponent : Component
     public List<Wire> WiresList { get; set; } = new();
 
     [ViewVariables]
-    [DataField("wireActions")]
-    public List<IWireAction>? WireActions { get; }
-
-    [ViewVariables]
-    [DataField("dummyWires")]
-    public int DummyWires { get; }
+    [DataField("alwaysRandomize")]
+    public bool AlwaysRandomize { get; }
 
     [ViewVariables]
     public Dictionary<object, object> Statuses { get; } = new();
