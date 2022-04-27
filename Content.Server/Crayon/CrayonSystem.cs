@@ -144,9 +144,10 @@ public sealed class CrayonSystem : EntitySystem
                     component._color = args.Color;
                 }
             }
+
+            Dirty(component);
         }
 
-        Dirty(component);
     }
 
     private void OnCrayonInit(EntityUid uid, CrayonComponent component, ComponentInit args)
