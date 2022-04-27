@@ -14,7 +14,7 @@
     - id: GoldOre1
       prob: 0.05
       orGroup: Asteroid
-    - id: SpaceCrystal1
+    - id: SpaceQuartz1
       prob: 0.20
       orGroup: Asteroid
     - id: PlasmaOre1
