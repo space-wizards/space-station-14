@@ -1,6 +1,5 @@
 using System;
 using Content.Server.UserInterface;
-using Content.Server.Wires;
 using Content.Shared.Acts;
 using Content.Shared.Interaction;
 using Content.Shared.Sound;
@@ -38,52 +37,5 @@ namespace Content.Server.VendingMachines
         [ViewVariables] public BoundUserInterface? UserInterface => Owner.GetUIOrNull(VendingMachineUiKey.Key);
         public float NonLimitedEjectForce = 7.5f;
         public float NonLimitedEjectRange = 5f;
-
-        /*
-        public enum Wires
-        {
-            /// <summary>
-            /// Shoots a random item when pulsed.
-            /// </summary>
-            Limiter
-        }
-        public void RegisterWires(WiresComponent.WiresBuilder builder)
-        {
-            builder.CreateWire(Wires.Limiter);
-        }
-
-        public void WiresUpdate(WiresUpdateEventArgs args)
-        {
-            var identifier = (Wires) args.Identifier;
-            if (identifier == Wires.Shoot && args.Action == WiresAction.Pulse)
-            {
-                EjectRandom();
-            }
-        }
-        */
-
-    /*
-    public class WiresUpdateEventArgs : EventArgs
-    public sealed class WiresUpdateEventArgs : EventArgs
-    {
-        public readonly object Identifier;
-        public readonly WiresAction Action;
-
-        public WiresUpdateEventArgs(object identifier, WiresAction action)
-        {
-            Identifier = identifier;
-            Action = action;
-        }
-    }
-    */
-
-    // why was this ever here???
-    /*
-    public interface IWires
-    {
-        void RegisterWires(WiresComponent.WiresBuilder builder);
-        void WiresUpdate(WiresUpdateEventArgs args);
-    }
-    */
     }
 }
