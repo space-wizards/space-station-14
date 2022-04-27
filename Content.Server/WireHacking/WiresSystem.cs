@@ -129,7 +129,7 @@ public sealed class WiresSystem : EntitySystem
             var id = 0;
             foreach (var wire in wires.WiresList)
             {
-                var wireType = wire.Action.Identifier;
+                var wireType = wire.Action.GetType();
                 if (types.ContainsKey(wireType))
                 {
                     types[wireType] += 1;
@@ -161,7 +161,7 @@ public sealed class WiresSystem : EntitySystem
             {
                 (int id, Wire d) = enumeratedList[i];
 
-                var wireType = d.Action.Identifier;
+                var wireType = d.Action.GetType();
                 if (types.ContainsKey(wireType))
                 {
                     types[wireType] += 1;
@@ -244,7 +244,6 @@ public sealed class WiresSystem : EntitySystem
             false,
             color,
             letter,
-            action.Identifier,
             action);
     }
 
@@ -781,22 +780,15 @@ public class Wire
     [ViewVariables]
     public WireLetter Letter { get; }
 
-    /// <summary>
-    /// Registered by components implementing IWires, used to identify which wire the client interacted with.
-    /// </summary>
-    [ViewVariables]
-    public object Identifier { get; }
-
     // The action that this wire performs upon activation.
     public IWireAction Action { get; set; }
 
-    public Wire(EntityUid owner, bool isCut, WireColor color, WireLetter letter, object identifier, IWireAction action)
+    public Wire(EntityUid owner, bool isCut, WireColor color, WireLetter letter, IWireAction action)
     {
         Owner = owner;
         IsCut = isCut;
         Color = color;
         Letter = letter;
-        Identifier = identifier;
         Action = action;
     }
 }

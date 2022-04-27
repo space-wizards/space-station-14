@@ -34,8 +34,6 @@ public class DoorSafetyWireAction : BaseWireAction
             _text);
     }
 
-    public override object Identifier { get; } = AirlockWireIdentifier.Safety;
-
     public override object StatusKey { get; } = AirlockWireStatus.SafetyIndicator;
 
     public override bool Cut(EntityUid user, Wire wire)

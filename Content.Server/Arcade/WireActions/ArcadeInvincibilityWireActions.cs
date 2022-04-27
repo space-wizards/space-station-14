@@ -11,7 +11,6 @@ public sealed class ArcadePlayerInvincibleWireAction : BaseToggleWireAction
     private string _text = "MNGR";
     private Color _color = Color.Purple;
 
-    public override object Identifier { get; } = ArcadeInvincibilityWireActionKeys.Player;
     public override object? StatusKey { get; } = SharedSpaceVillainArcadeComponent.Indicators.HealthManager;
 
     public override void ToggleValue(EntityUid owner, bool setting)
@@ -49,7 +48,6 @@ public sealed class ArcadePlayerInvincibleWireAction : BaseToggleWireAction
 [DataDefinition]
 public sealed class ArcadeEnemyInvincibleWireAction : BaseToggleWireAction
 {
-    public override object Identifier { get; } = ArcadeInvincibilityWireActionKeys.Enemy;
     public override object? StatusKey { get; } = null;
 
     public override void ToggleValue(EntityUid owner, bool setting)

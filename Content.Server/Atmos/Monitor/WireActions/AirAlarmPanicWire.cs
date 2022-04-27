@@ -15,7 +15,6 @@ public sealed class AirAlarmPanicWire : BaseWireAction
 
     private AirAlarmSystem _airAlarmSystem = default!;
 
-    public override object Identifier { get; } = AirAlarmWireStatus.Panic;
     public override object StatusKey { get; } = AirAlarmWireStatus.Panic;
 
     public override StatusLightData? GetStatusLightData(Wire wire)

@@ -11,7 +11,6 @@ namespace Content.Server.Wires;
 [DataDefinition]
 public sealed class DummyWireAction : BaseWireAction
 {
-    public override object Identifier { get; } = DummyWireActionIdentifier.Key;
     public override object? StatusKey { get; } = null;
 
     public override StatusLightData? GetStatusLightData(Wire wire) => null;

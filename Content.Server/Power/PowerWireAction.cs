@@ -34,8 +34,6 @@ public sealed class PowerWireAction : BaseWireAction
 
     private ElectrocutionSystem _electrocutionSystem = default!;
 
-    public override object Identifier { get; } = PowerWireActionKey.Key;
-
     public override object StatusKey { get; } = PowerWireActionKey.Status;
 
     public override StatusLightData? GetStatusLightData(Wire wire)

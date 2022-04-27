@@ -31,8 +31,6 @@ public class DoorBoltLightWireAction : BaseWireAction
             _text);
     }
 
-    public override object Identifier { get; } = AirlockWireIdentifier.BoltLight;
-
     public override object StatusKey { get; } = AirlockWireStatus.BoltLightIndicator;
 
     public override bool Cut(EntityUid user, Wire wire)

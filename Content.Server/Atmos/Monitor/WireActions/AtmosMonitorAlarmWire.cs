@@ -19,7 +19,6 @@ public sealed class AtmosMonitorDeviceNetWire : BaseWireAction
 
     private AtmosMonitorSystem _atmosMonitorSystem = default!;
 
-    public override object Identifier { get; } = AtmosMonitorAlarmWireActionKeys.Network;
     public override object StatusKey { get; } = AtmosMonitorAlarmWireActionKeys.Network;
 
     public override StatusLightData? GetStatusLightData(Wire wire)

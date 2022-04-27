@@ -43,8 +43,6 @@ public class DoorTimingWireAction : BaseWireAction
             _text);
     }
 
-    public override object Identifier { get; } = AirlockWireIdentifier.Timing;
-
     public override object StatusKey { get; } = AirlockWireStatus.TimingIndicator;
 
     public override bool Cut(EntityUid user, Wire wire)

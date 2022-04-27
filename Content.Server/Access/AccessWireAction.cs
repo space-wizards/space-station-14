@@ -35,8 +35,6 @@ public class AccessWireAction : BaseWireAction
             _text);
     }
 
-    public override object Identifier { get; } = AccessWireActionKey.Key;
-
     public override object StatusKey { get; } = AccessWireActionKey.Status;
 
     public override bool Cut(EntityUid user, Wire wire)

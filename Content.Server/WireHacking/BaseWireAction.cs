@@ -11,8 +11,6 @@ public abstract class BaseWireAction : IWireAction
     public IEntityManager EntityManager = default!;
     public WiresSystem WiresSystem = default!;
 
-    public abstract object Identifier { get; }
-
     // not virtual so implementors are aware that they need a nullable here
     public abstract object? StatusKey { get; }
 

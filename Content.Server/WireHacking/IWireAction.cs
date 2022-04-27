@@ -31,12 +31,6 @@ namespace Content.Server.Wires;
 // components instead)
 public interface IWireAction
 {
-    // This is so that things outside WiresSystem can
-    // easily grab a wire's type via an identifier,
-    // rather than iterating over a list of wires
-    // while checking the type of action inside.
-    public object Identifier { get; }
-
     // This is to link the wire's status with
     // its corresponding UI key. If this is null,
     // GetStatusLightData MUST also return null,
