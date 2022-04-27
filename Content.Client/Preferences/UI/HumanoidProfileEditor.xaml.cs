@@ -482,6 +482,12 @@ namespace Content.Client.Preferences.UI
                     Profile = Profile.WithCharacterAppearance(Profile.Appearance.WithSkinColor(color));
                     break;
                 }
+                case SpeciesSkinColor.TintedHues:
+                {
+                    var color = Color.FromHsv(new Vector4(range.Value / 100.0f, 0.1f, 1.0f, 1.0f));
+                    Profile = Profile.WithCharacterAppearance(Profile.Appearance.WithSkinColor(color));
+                    break;
+                }
             }
 
             IsDirty = true;
@@ -673,6 +679,11 @@ namespace Content.Client.Preferences.UI
                 case SpeciesSkinColor.Hues:
                 {
                     _skinColor.Value = color.X * 100;
+                    break;
+                }
+                case SpeciesSkinColor.TintedHues:
+                {
+                    _skinColor.Value = color.X * 100f;
                     break;
                 }
             }

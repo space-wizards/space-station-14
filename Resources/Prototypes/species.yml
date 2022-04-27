@@ -36,4 +36,4 @@
   roundStart: true
   prototype: MobSkeletonPerson
   dollPrototype: MobSkeletonPersonDummy
-  skinColoration: Hues
+  skinColoration: TintedHues
