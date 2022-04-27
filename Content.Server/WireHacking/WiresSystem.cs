@@ -46,9 +46,15 @@ public sealed class WiresSystem : EntitySystem
 
     public const float ScrewTime = 2.5f;
 
+    // These... shouldn't be added into wire layouts as an action.
+    // This does nothing as a wire action.
+    private static DummyWireAction _dummyWire = new DummyWireAction();
+
     #region Initialization
     public override void Initialize()
     {
+        _dummyWire.Initialize();
+
         SubscribeLocalEvent<RoundRestartCleanupEvent>(Reset);
 
         // this is a broadcast event
@@ -94,41 +100,95 @@ public sealed class WiresSystem : EntitySystem
             layoutPrototype = parentPrototype;
         }
 
+        if (layoutPrototype.Wires != null)
+        {
+            foreach (var wire in layoutPrototype.Wires)
+            {
+                wire.Initialize();
+            }
+        }
+
         var wireSet = CreateWireSet(uid, layout, layoutPrototype);
 
-        if (wireSet != null)
-            wires.WiresList.AddRange(wireSet);
+        if (wireSet == null || wireSet.Count == 0)
+        {
+            return;
+        }
+
+        wires.WiresList.AddRange(wireSet);
+
+        Dictionary<object, int> types = new Dictionary<object, int>();
 
         if (layout != null)
         {
-            wires.WiresList.Sort((a, b) =>
+            for (var i = 0; i < wireSet.Count; i++)
             {
-                var pA = layout.Specifications[a.Identifier].Position;
-                var pB = layout.Specifications[b.Identifier].Position;
+                wires.WiresList[layout.Specifications[i].Position] = wireSet[i];
+                Logger.DebugS("wires", $"{wires.LayoutId} : placing wire {i} at {layout.Specifications[i].Position}");
+            }
 
-                return pA.CompareTo(pB);
-            });
+            var id = 0;
+            foreach (var wire in wires.WiresList)
+            {
+                var wireType = wire.Action.Identifier;
+                if (types.ContainsKey(wireType))
+                {
+                    types[wireType] += 1;
+                }
+                else
+                {
+                    types.Add(wireType, 1);
+                }
+
+                wire.Id = id;
+                id++;
+
+                // don't care about the result, this should've
+                // been handled in layout creation
+                wire.Action.AddWire(wire, types[wireType]);
+            }
         }
         else
         {
-            _random.Shuffle(wires.WiresList);
-
-            var dict = new Dictionary<object, WireLayout.WireData>();
-            for (var i = 0; i < wires.WiresList.Count; i++)
+            var enumeratedList = new List<(int, Wire)>();
+            var data = new Dictionary<int, WireLayout.WireData>();
+            for (int i = 0; i < wireSet.Count; i++)
             {
-                var d = wires.WiresList[i];
-                dict.Add(d.Identifier, new WireLayout.WireData(d.Letter, d.Color, i));
+                enumeratedList.Add((i, wireSet[i]));
+            }
+            _random.Shuffle(enumeratedList);
+
+            for (var i = 0; i < enumeratedList.Count; i++)
+            {
+                (int id, Wire d) = enumeratedList[i];
+                Logger.DebugS("wires", $"{wires.LayoutId} : og idx {id}, new idx {i}");
+
+                var wireType = d.Action.Identifier;
+                if (types.ContainsKey(wireType))
+                {
+                    types[wireType] += 1;
+                }
+                else
+                {
+                    types.Add(wireType, 1);
+                }
+
+                d.Id = i;
+
+                if (!d.Action.AddWire(d, types[wireType]))
+                {
+                    d.Action = _dummyWire;
+                }
+
+                data.Add(id, new WireLayout.WireData(d.Letter, d.Color, i));
+
+                wires.WiresList[i] = wireSet[id];
             }
 
-            AddLayout(wires.LayoutId, new WireLayout(dict));
+            AddLayout(wires.LayoutId, new WireLayout(data));
         }
 
-        var id = 0;
-        foreach (var wire in wires.WiresList)
-        {
-            wire.Id = ++id;
-            wire.Action.Initialize(wire);
-        }
+
     }
 
     private List<Wire>? CreateWireSet(EntityUid uid, WireLayout? layout, WireLayoutPrototype wires)
@@ -147,22 +207,28 @@ public sealed class WiresSystem : EntitySystem
         List<WireLetter> letters =
             new((WireLetter[]) Enum.GetValues(typeof(WireLetter)));
 
+
         var wireSet = new List<Wire>();
-        foreach (var wire in wires.Wires)
+        for (var i = 0; i < wires.Wires.Count; i++)
         {
-            wireSet.Add(CreateWire(uid, wire, layout, colors, letters));
+            wireSet.Add(CreateWire(uid, wires.Wires[i], i, layout, colors, letters));
+        }
+
+        for (var i = 1; i <= wires.DummyWires; i++)
+        {
+            wireSet.Add(CreateWire(uid, _dummyWire, wires.Wires.Count + i, layout, colors, letters));
         }
 
         return wireSet;
     }
 
-    private Wire CreateWire(EntityUid uid, IWireAction action, WireLayout? layout, List<WireColor> colors, List<WireLetter> letters)
+    private Wire CreateWire(EntityUid uid, IWireAction action, int position, WireLayout? layout, List<WireColor> colors, List<WireLetter> letters)
     {
         WireLetter letter;
         WireColor color;
 
         if (layout != null
-            && layout.Specifications.TryGetValue(action.Identifier, out var spec))
+            && layout.Specifications.TryGetValue(position, out var spec))
         {
             color = spec.Color;
             letter = spec.Letter;
@@ -202,13 +268,10 @@ public sealed class WiresSystem : EntitySystem
 
     public bool TryCancelWireAction(EntityUid owner, object key)
     {
-        if (TryGetData(owner, key, out var cancelObject))
+        if (TryGetData(owner, key, out CancellationTokenSource? token))
         {
-            if (cancelObject is CancellationTokenSource token)
-            {
-                token.Cancel();
-                return true;
-            }
+            token.Cancel();
+            return true;
         }
 
         return false;
@@ -506,12 +569,18 @@ public sealed class WiresSystem : EntitySystem
         return wires.WiresList.Find(x => x.Id == id);
     }
 
-    public Wire? TryGetWire(EntityUid uid, object id, WiresComponent? wires = null)
+    public IEnumerable<Wire> TryGetWires(EntityUid uid, object id, WiresComponent? wires = null)
     {
         if (!Resolve(uid, ref wires))
-            return null;
+            yield break;
 
-        return wires.WiresList.Find(x => x.Identifier == id);
+        foreach (var wire in wires.WiresList)
+        {
+            if (wire.Identifier == id)
+            {
+                yield return wire;
+            }
+        }
     }
 
 
@@ -584,13 +653,22 @@ public sealed class WiresSystem : EntitySystem
         }
     }
 
-    public bool TryGetData(EntityUid uid, object identifier, [NotNullWhen(true)] out object? data, WiresComponent? wires = null)
+    public bool TryGetData<T>(EntityUid uid, object identifier, [NotNullWhen(true)] out T? data, WiresComponent? wires = null)
     {
-        data = null;
+        data = default(T);
         if (!Resolve(uid, ref wires))
             return false;
 
-        return wires.StateData.TryGetValue(identifier, out data);
+        wires.StateData.TryGetValue(identifier, out var result);
+
+        if (result is not T)
+        {
+            return false;
+        }
+
+        data = (T) result;
+
+        return true;
     }
 
     public void SetData(EntityUid uid, object identifier, object data, WiresComponent? wires = null)
@@ -714,7 +792,7 @@ public class Wire
     public object Identifier { get; }
 
     // The action that this wire performs upon activation.
-    public IWireAction Action { get; }
+    public IWireAction Action { get; set; }
 
     public Wire(EntityUid owner, bool isCut, WireColor color, WireLetter letter, object identifier, IWireAction action)
     {
@@ -749,9 +827,13 @@ public class WireDoAfterEvent : EntityEventArgs
 
 public sealed class WireLayout
 {
-    [ViewVariables] public IReadOnlyDictionary<object, WireData> Specifications { get; }
+    // why is this an <int, WireData>?
+    // List<T>.Insert panics,
+    // and I needed a uniquer key for wires
+    // which allows me to have a unified identifier
+    [ViewVariables] public IReadOnlyDictionary<int, WireData> Specifications { get; }
 
-    public WireLayout(IReadOnlyDictionary<object, WireData> specifications)
+    public WireLayout(IReadOnlyDictionary<int, WireData> specifications)
     {
         Specifications = specifications;
     }

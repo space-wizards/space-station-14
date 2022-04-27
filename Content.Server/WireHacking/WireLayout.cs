@@ -17,6 +17,9 @@ public sealed class WireLayoutPrototype : IPrototype
     [DataField("parent")]
     public string Parent { get; } = default!;
 
+    [DataField("dummyWires")]
+    public int DummyWires { get; } = default!;
+
     // TODO: Repeat wires of the same action type...
     // This might sound niche, but is useful for when
     // you want wire redundancy without having to

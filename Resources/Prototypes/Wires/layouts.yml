@@ -2,6 +2,8 @@
   id: Airlock
   wires:
   - !type:PowerWireAction
+  - !type:PowerWireAction
+    pulseTimeout: 15
   - !type:DoorBoltWireAction
   - !type:DoorBoltLightWireAction
   - !type:DoorTimingWireAction
@@ -21,6 +23,7 @@
 
 - type: wireLayout
   id: Vending
+  dummyWires: 2
   wires:
   - !type:PowerWireAction
   - !type:AccessWireAction

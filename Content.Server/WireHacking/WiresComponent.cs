@@ -26,7 +26,7 @@ public class WiresComponent : Component
     public int WireSeed { get; set; }
 
     [ViewVariables]
-    public List<Wire> WiresList { get; } = new();
+    public List<Wire> WiresList { get; set; } = new();
 
     [ViewVariables]
     [DataField("wireActions")]

@@ -34,9 +34,9 @@ public sealed class AirAlarmPanicWire : BaseWireAction
             _text);
     }
 
-    public override void Initialize(Wire wire)
+    public override void Initialize()
     {
-        base.Initialize(wire);
+        base.Initialize();
 
         _airAlarmSystem = EntitySystem.Get<AirAlarmSystem>();
     }

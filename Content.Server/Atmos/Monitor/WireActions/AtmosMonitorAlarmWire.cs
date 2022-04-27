@@ -39,9 +39,9 @@ public sealed class AtmosMonitorDeviceNetWire : BaseWireAction
             _text);
     }
 
-    public override void Initialize(Wire wire)
+    public override void Initialize()
     {
-        base.Initialize(wire);
+        base.Initialize();
 
         _atmosMonitorSystem = EntitySystem.Get<AtmosMonitorSystem>();
     }

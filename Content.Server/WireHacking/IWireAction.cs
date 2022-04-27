@@ -43,7 +43,22 @@ public interface IWireAction
     // otherwise nothing happens.
     public object? StatusKey { get; }
 
-    public void Initialize(Wire wire);
+    // Called when the wire in the layout
+    // is created for the first time. Ensures
+    // that the referenced action has all
+    // the correct system references (plus
+    // other information if needed,
+    // but wire actions should NOT be stateful!)
+    public void Initialize();
+
+    // Called when a wire is finally processed
+    // by WiresSystem upon wire layout
+    // creation. Use this to set specific details
+    // about the state of the entity in question.
+    //
+    // If this returns false, this will convert
+    // the given wire into a 'dummy' wire instead.
+    public bool AddWire(Wire wire, int count);
 
     public bool Cut(EntityUid user, Wire wire);
 

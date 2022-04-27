@@ -17,13 +17,14 @@ public abstract class BaseWireAction : IWireAction
     public abstract object? StatusKey { get; }
 
     // ugly, but IoC doesn't work during deserialization
-    public virtual void Initialize(Wire wire)
+    public virtual void Initialize()
     {
         EntityManager = IoCManager.Resolve<IEntityManager>();
 
         WiresSystem = EntitySystem.Get<WiresSystem>();
     }
 
+    public virtual bool AddWire(Wire wire, int count) => count == 1;
     public abstract bool Cut(EntityUid user, Wire wire);
     public abstract bool Mend(EntityUid user, Wire wire);
     public abstract bool Pulse(EntityUid user, Wire wire);
