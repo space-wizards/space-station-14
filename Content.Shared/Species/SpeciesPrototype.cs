@@ -51,4 +51,5 @@ public enum SpeciesSkinColor
 {
     HumanToned,
     Hues,
+    TintedHues,
 }

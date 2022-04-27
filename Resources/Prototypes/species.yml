@@ -29,3 +29,11 @@
   prototype: MobSlimePerson
   dollPrototype: MobSlimePersonDummy
   skinColoration: Hues
+
+- type: species
+  id: Skeleton
+  name: Skeleton
+  roundStart: true
+  prototype: MobSkeletonPerson
+  dollPrototype: MobSkeletonPersonDummy
+  skinColoration: Hues

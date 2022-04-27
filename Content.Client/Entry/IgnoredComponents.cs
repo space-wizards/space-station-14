@@ -337,7 +337,9 @@ namespace Content.Client.Entry
             "EnergySword",
             "DoorRemote",
             "InteractionPopup",
-            "HealthAnalyzer"
+            "HealthAnalyzer",
+            "SkeletonBodyManager",
+            "TransferMindOnGib"
         };
     }
 }

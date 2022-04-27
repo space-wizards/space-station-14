@@ -118,6 +118,18 @@
     Heat: 3.0
     Poison: 0.0
 
+# in relation to how they cause bloodloss damage.
+- type: damageModifierSet
+  id: Skeleton
+  coefficients:
+    Blunt: 3.0
+    Slash: 1.8
+    Piercing: 1.5
+    Cold: 0.0
+    Poison: 0.0
+    Asphyxiation: 0.0
+    Bloodloss: 0.0
+
 # Represents which damage types should be modified
 # in relation to how they cause bloodloss damage.
 - type: damageModifierSet
