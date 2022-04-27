@@ -16,3 +16,6 @@ ent-CrateFunBoardGames = ящик настольных игр
 ent-CrateFunATV = ящик с квадроциклом
     .desc = { ent-CrateLivestock.desc }
     .suffix = { "" }
+ent-CrateFunSyndicateSegway = syndicate segway crate
+    .desc = { ent-CrateLivestock.desc }
+    .suffix = { "" }

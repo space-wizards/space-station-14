@@ -16,3 +16,6 @@ ent-CrateFunBoardGames = board game crate
 ent-CrateFunATV = ATV crate
     .desc = { ent-CrateLivestock.desc }
     .suffix = { "" }
+ent-CrateFunSyndicateSegway = syndicate segway crate
+    .desc = { ent-CrateLivestock.desc }
+    .suffix = { "" }

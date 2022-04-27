@@ -66,6 +66,7 @@ namespace Content.Client.Entry
             "Drain",
             "Food",
             "DeployableBarrier",
+            "SpaceGarbage",
             "MagicMirror",
             "DiseaseSwab",
             "FloorTile",

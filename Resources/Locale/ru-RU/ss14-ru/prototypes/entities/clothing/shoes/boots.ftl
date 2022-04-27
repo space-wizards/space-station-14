@@ -12,3 +12,4 @@ ent-ClothingShoesBootsPerformer = ботинки артиста
     .suffix = { "" }
 ent-ClothingShoesBootsCombat = армейские ботинки
     .desc = Надёжные армейские ботинки, для боевых операций или боевых действий. Борьба - всё, борьба - всегда.
+    .suffix = { "" }

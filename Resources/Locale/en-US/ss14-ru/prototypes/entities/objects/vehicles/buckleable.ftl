@@ -13,3 +13,6 @@ ent-VehicleSecway = secway
 ent-VehicleATV = ATV
     .desc = All-Tile Vehicle.
     .suffix = { "" }
+ent-VehicleSyndicateSegway = syndicate segway
+    .desc = Be an enemy of the corporation, in style.
+    .suffix = { "" }

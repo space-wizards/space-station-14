@@ -10,3 +10,6 @@ ent-VehicleKeyATV = ATV keys
 ent-VehicleKeySkeleton = vehicle skeleton keys
     .desc = Unlock any vehicle.
     .suffix = { "" }
+ent-VehicleKeySyndicateSegway = syndicate segway keys
+    .desc = Patterned after the iconic EMAG design.
+    .suffix = { "" }

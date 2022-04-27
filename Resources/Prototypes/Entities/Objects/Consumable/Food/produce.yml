@@ -211,6 +211,7 @@
   - type: Extractable
     grindableSolutionName: food
   - type: Recyclable
+  - type: SpaceGarbage
 
 - type: entity
   name: carrot

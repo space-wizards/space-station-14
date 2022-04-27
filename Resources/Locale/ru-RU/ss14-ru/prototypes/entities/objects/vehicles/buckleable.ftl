@@ -13,3 +13,6 @@ ent-VehicleSecway = секвей
 ent-VehicleATV = квадроцикл
     .desc = Все-клеточное транспортное средство.
     .suffix = { "" }
+ent-VehicleSyndicateSegway = syndicate segway
+    .desc = Be an enemy of the corporation, in style.
+    .suffix = { "" }
