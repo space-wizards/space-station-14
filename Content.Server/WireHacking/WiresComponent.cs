@@ -9,7 +9,7 @@ public class WiresComponent : Component
     public bool IsPanelOpen { get; set; }
 
     [ViewVariables]
-    public bool IsPanelVisible { get; set; }
+    public bool IsPanelVisible { get; set; } = true;
 
     [ViewVariables]
     [DataField("BoardName")]
