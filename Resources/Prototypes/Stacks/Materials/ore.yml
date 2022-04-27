@@ -23,10 +23,10 @@
   spawn: SilverOre1
 
 - type: stack
-  id: SpaceCrystal
-  name: space crystal
-  icon: /Textures/Objects/Materials/ore.rsi/spacecrystal.png
-  spawn: SpaceCrystal1
+  id: SpaceQuartz
+  name: space quartz
+  icon: /Textures/Objects/Materials/ore.rsi/spacequartz.png
+  spawn: SpaceQuartz1
 
 - type: stack
   id: UraniumOre

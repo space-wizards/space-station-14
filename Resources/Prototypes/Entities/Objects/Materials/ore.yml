@@ -115,21 +115,21 @@
 
 - type: entity
   parent: OreBase
-  id: SpaceCrystal
-  name: space crystal
+  id: SpaceQuartz
+  name: space Quartz
   suffix: Full
   components:
   - type: Stack
-    stackType: SpaceCrystal
+    stackType: SpaceQuartz
   - type: Sprite
-    state: spacecrystal
+    state: spacequartz
   - type: Material
     materials:
       Glass: 500
 
 - type: entity
-  parent: SpaceCrystal
-  id: SpaceCrystal1
+  parent: SpaceQuartz
+  id: SpaceQuartz1
   suffix: Single
   components:
   - type: Stack
