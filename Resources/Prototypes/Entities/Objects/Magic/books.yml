@@ -1,0 +1,15 @@
+﻿- type: entity
+  id: RuneSpellbook
+  name: rune spellbook
+  parent: BaseItem
+  components:
+    - type: Sprite
+      netsync: false
+      sprite: Objects/Misc/books.rsi
+      layers:
+      - state: book_demonomicon
+    - type: Wieldable
+      wieldTime: 0.75
+    - type: Spellbook
+      worldSpells:
+        Trap: 3

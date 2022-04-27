@@ -1,0 +1,14 @@
+﻿- type: worldTargetAction
+  id: Traps
+  name: trap rune
+  description: summmons trap rune
+  useDelay: 10
+  range: -1
+  speech: unga
+  itemIconStyle: BigAction
+  checkCanAccess: false
+  icon:
+    sprite: Effects/crayondecals.rsi
+    state: rune1
+  serverEvent: !type:RuneMagicEvent
+    rune: Trap

@@ -1,0 +1,14 @@
+﻿- type: entity
+  id: Trap
+  name: trap
+  abstract: true
+  components:
+    - type: Fixtures
+      fixtures:
+        - id: TrapRune
+          shape:
+            !type:PhysShapeCircle
+              radius: 0.5
+          hard: false
+          mass: 5
+    - type: CollisionWake
