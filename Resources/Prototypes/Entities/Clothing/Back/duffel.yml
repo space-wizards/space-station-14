@@ -66,6 +66,8 @@
     sprite: Clothing/Back/Duffels/clown.rsi
   - type: Clothing
     sprite: Clothing/Back/Duffels/clown.rsi
+    storageOpenSound:
+      collection: BikeHorn
 
 - type: entity
   parent: ClothingBackpackDuffel
@@ -99,6 +101,8 @@
     sprite: Clothing/Back/Duffels/mime.rsi
   - type: Clothing
     sprite: Clothing/Back/Duffels/mime.rsi
+    storageOpenSound:
+      collection: null    
 
 - type: entity
   parent: ClothingBackpackDuffel
