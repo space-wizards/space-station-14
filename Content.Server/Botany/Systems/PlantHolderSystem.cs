@@ -240,10 +240,10 @@ namespace Content.Server.Botany.Systems
             {
                 _popupSystem.PopupCursor(Loc.GetString("plant-holder-component-compost-message",
                     ("owner", uid),
-                    ("args.Used", args.Used)), Filter.Entities(args.User));
+                    ("usingItem", args.Used)), Filter.Entities(args.User));
                 _popupSystem.PopupEntity(Loc.GetString("plant-holder-component-compost-others-message",
                     ("user", args.User),
-                    ("args.Used", args.Used),
+                    ("usingItem", args.Used),
                     ("owner", uid)), uid, Filter.Pvs(args.User).RemoveWhereAttachedEntity(puid => puid == args.User));
 
                 if (_solutionSystem.TryGetSolution(args.Used, produce.SolutionName, out var solution2))
