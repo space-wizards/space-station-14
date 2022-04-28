@@ -1,9 +1,4 @@
 Entries:
-- author: metalgearsloth
-  changes:
-  - {message: Floodlight collision fixed, type: Fix}
-  id: 914
-  time: '2022-01-21T16:29:16.0000000+00:00'
 - author: Rane
   changes:
   - {message: No-slip shoes now appear to be regular shoes when examined., type: Fix}
@@ -3054,3 +3049,9 @@ Entries:
       station!, type: Add}
   id: 1413
   time: '2022-04-28T10:41:04.0000000+00:00'
+- author: Peptide90
+  changes:
+  - {message: Certain drinks containers like paper cups won't shatter to glass anymore.,
+    type: Fix}
+  id: 1414
+  time: '2022-04-28T11:56:21.0000000+00:00'
