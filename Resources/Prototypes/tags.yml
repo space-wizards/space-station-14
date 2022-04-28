@@ -272,6 +272,9 @@
 
 - type: Tag
   id: PussyWagonKeys
+  
+- type: Tag
+  id: RawMaterial
 
 # Give this to something that doesn't need any special recycler behavior and just needs deleting.
 - type: Tag
@@ -354,3 +357,4 @@
 
 - type: Tag
   id: Write
+

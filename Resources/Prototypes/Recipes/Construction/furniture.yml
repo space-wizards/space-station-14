@@ -359,3 +359,20 @@
   canBuildInImpassable: false
   conditions:
     - !type:TileNotBlocked
+    
+- type: construction
+  id: MeatSpike
+  name: meat spike
+  description: A spike found in kitchens butchering animals.
+  graph: MeatSpike
+  startNode: start
+  targetNode: MeatSpike
+  category: Furniture
+  icon:
+    sprite: Structures/meat_spike.rsi
+    state: spike
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  conditions:
+    - !type:TileNotBlocked

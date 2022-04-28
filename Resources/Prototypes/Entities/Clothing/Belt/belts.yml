@@ -62,6 +62,10 @@
     visuals:
     - type: MappedItemVisualizer
       sprite: Clothing/Belt/belt_overlay.rsi
+  - type: UserInterface
+    interfaces:
+    - key: enum.StorageUiKey.Key
+      type: StorageBoundUserInterface
 
 - type: entity
   parent: ClothingBeltBase
