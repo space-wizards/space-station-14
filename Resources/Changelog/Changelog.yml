@@ -1,11 +1,4 @@
 Entries:
-- author: moony
-  changes:
-  - {message: Players who have joined the game with a character (Not as an observer)
-      are now exempt from the player cap for the duration of the round. This means
-      you can no longer get locked out if you have to relog for some reason., type: Tweak}
-  id: 912
-  time: '2022-01-19T23:01:21.0000000+00:00'
 - author: Pancake
   changes:
   - {message: AME prices have gone up to incentivize the use of the singularity engine.,
@@ -3055,3 +3048,8 @@ Entries:
   - {message: Barratry now has vehicles., type: Tweak}
   id: 1411
   time: '2022-04-28T03:17:37.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Decals (e.g. tile paint) should now be removed correctly., type: Fix}
+  id: 1412
+  time: '2022-04-28T10:23:44.0000000+00:00'
