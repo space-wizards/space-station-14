@@ -61,8 +61,6 @@ namespace Content.Client.Decals
         protected override bool RemoveDecalHook(GridId gridId, uint uid)
         {
             RemoveDecalFromRenderIndex(gridId, uid);
-            ChunkIndex[gridId].Remove(uid);
-
             return base.RemoveDecalHook(gridId, uid);
         }
 
@@ -94,7 +92,7 @@ namespace Content.Client.Decals
                         removedUids.ExceptWith(newChunkData.Keys);
                         foreach (var removedUid in removedUids)
                         {
-                            RemoveDecalHook(gridId, removedUid);
+                            RemoveDecalInternal(gridId, removedUid);
                         }
 
                         chunkCollection[indices] = newChunkData;
@@ -135,7 +133,7 @@ namespace Content.Client.Decals
 
                     foreach (var (uid, _) in chunk)
                     {
-                        RemoveDecalHook(gridId, uid);
+                        RemoveDecalInternal(gridId, uid);
                     }
 
                     chunkCollection.Remove(index);

@@ -178,7 +178,6 @@ namespace Content.Server.Decals
             {
                 var chunkIndices = GetChunkIndices(decal.Coordinates);
                 RemoveDecal(gridId, uid);
-                DirtyChunk(gridId, chunkIndices);
             }
         }
 
