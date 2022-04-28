@@ -36,6 +36,15 @@
   components:
   - type: PowerCell
     cellSize: Medium
+  - type: SolutionContainerManager
+    solutions:
+      powerCell:
+        maxVol: 10
+  - type: Extractable
+    juiceSolution:
+      reagents:
+        - ReagentId: Licoxide
+          Quantity: 10
 
 - type: entity
   id: PowerCellLargeBase
@@ -44,6 +53,15 @@
   components:
   - type: PowerCell
     cellSize: Large
+  - type: SolutionContainerManager
+    solutions:
+      powerCell:
+        maxVol: 15
+  - type: Extractable
+    juiceSolution:
+      reagents:
+        - ReagentId: Licoxide
+          Quantity: 15
 
 - type: entity
   name: potato battery
