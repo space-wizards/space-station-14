@@ -1,10 +1,4 @@
 Entries:
-- author: Pancake
-  changes:
-  - {message: AME prices have gone up to incentivize the use of the singularity engine.,
-    type: Tweak}
-  id: 913
-  time: '2022-01-20T12:33:13.0000000+00:00'
 - author: metalgearsloth
   changes:
   - {message: Floodlight collision fixed, type: Fix}
@@ -3053,3 +3047,10 @@ Entries:
   - {message: Decals (e.g. tile paint) should now be removed correctly., type: Fix}
   id: 1412
   time: '2022-04-28T10:23:44.0000000+00:00'
+- author: HoofedEar
+  changes:
+  - {message: Salvage is now able to mine for ores inside of asteroid rocks!, type: Add}
+  - {message: Use those ores in an Ore processor to turn them into materials for the
+      station!, type: Add}
+  id: 1413
+  time: '2022-04-28T10:41:04.0000000+00:00'
