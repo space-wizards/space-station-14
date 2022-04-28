@@ -1,22 +1,6 @@
 Entries:
 - author: Lamrr
   changes:
-  - {message: Shotgun shells ('shots') are now available in boxes., type: Add}
-  id: 919
-  time: '2022-01-22T20:47:55.0000000+00:00'
-- author: Willhelm53
-  changes:
-  - {message: Added ability for mop buckets to receive fluid from mops, type: Add}
-  - {message: Popup messages informing when the mop becomes full (from puddles or
-      mop bucket) or empty (from mop bucket), type: Add}
-  - {message: The mop now transfers solution from the puddle to the mop instead of
-      consuming water to destroy puddles, type: Fix}
-  - {message: 'The mop bucket now receives fluid from a wet mop, or gives fluid to
-      a dry mop', type: Tweak}
-  id: 920
-  time: '2022-01-23T05:27:22.0000000+00:00'
-- author: Lamrr
-  changes:
   - {message: You can now find full-tile tinted windows at a crafting menu near you.
       Useful for keeping the greytide out of your private affairs., type: Add}
   id: 921
@@ -3054,3 +3038,15 @@ Entries:
       should no longer suffer from pop-in, type: Tweak}
   id: 1418
   time: '2022-04-28T12:43:16.0000000+00:00'
+- author: Macoron
+  changes:
+  - {message: Added artifact container. It's used to safely transport or store dangerous
+      artifacts. Order it in cargo., type: Add}
+  id: 1419
+  time: '2022-04-28T22:03:40.0000000+00:00'
+- author: freeman2651
+  changes:
+  - {message: tweaks to handcuffs and restraints so they can now be used to restrain
+      yourself, type: Tweak}
+  id: 1420
+  time: '2022-04-28T22:04:41.0000000+00:00'

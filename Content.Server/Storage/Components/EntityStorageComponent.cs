@@ -232,51 +232,10 @@ namespace Content.Server.Storage.Components
                 if (entity.IsInContainer())
                     continue;
 
-                // conditions are complicated because of pizzabox-related issues, so follow this guide
-                // 0. Accomplish your goals at all costs.
-                // 1. AddToContents can block anything
-                // 2. maximum item count can block anything
-                // 3. ghosts can NEVER be eaten
-                // 4. items can always be eaten unless a previous law prevents it
-                // 5. if this is NOT AN ITEM, then mobs can always be eaten unless unless a previous law prevents it
-                // 6. if this is an item, then mobs must only be eaten if some other component prevents pick-up interactions while a mob is inside (e.g. foldable)
-
-                // Let's not insert admin ghosts, yeah? This is really a a hack and should be replaced by attempt events
-                if (_entMan.HasComponent<GhostComponent>(entity))
-                    continue;
-
-                // checks
-
-                var targetIsItem = _entMan.HasComponent<SharedItemComponent>(entity);
-                var targetIsMob = _entMan.HasComponent<SharedBodyComponent>(entity);
-                var storageIsItem = _entMan.HasComponent<SharedItemComponent>(Owner);
-
-                var allowedToEat = false;
-
-                if (targetIsItem)
-                    allowedToEat = true;
-
-                // BEFORE REPLACING THIS WITH, I.E. A PROPERTY:
-                // Make absolutely 100% sure you have worked out how to stop people ending up in backpacks.
-                // Seriously, it is insanely hacky and weird to get someone out of a backpack once they end up in there.
-                // And to be clear, they should NOT be in there.
-                // For the record, what you need to do is empty the backpack onto a PlacableSurface (table, rack)
-                if (targetIsMob)
-                {
-                    if (!storageIsItem)
-                        allowedToEat = true;
-                    else
-                    {
-                        // make an exception if this is a foldable-item that is currently un-folded (e.g., body bags).
-                        allowedToEat = _entMan.TryGetComponent(Owner, out FoldableComponent? foldable) && !foldable.IsFolded;
-                    }
-                }
-
-                if (!allowedToEat)
+                if (!CanFit(entity))
                     continue;
 
                 // finally, AddToContents
-
                 if (!AddToContents(entity))
                     continue;
 
@@ -290,6 +249,48 @@ namespace Content.Server.Storage.Components
             ModifyComponents();
                 SoundSystem.Play(Filter.Pvs(Owner), _closeSound.GetSound(), Owner);
             LastInternalOpenAttempt = default;
+        }
+
+        public virtual bool CanFit(EntityUid entity)
+        {
+            // conditions are complicated because of pizzabox-related issues, so follow this guide
+            // 0. Accomplish your goals at all costs.
+            // 1. AddToContents can block anything
+            // 2. maximum item count can block anything
+            // 3. ghosts can NEVER be eaten
+            // 4. items can always be eaten unless a previous law prevents it
+            // 5. if this is NOT AN ITEM, then mobs can always be eaten unless unless a previous law prevents it
+            // 6. if this is an item, then mobs must only be eaten if some other component prevents pick-up interactions while a mob is inside (e.g. foldable)
+
+            // Let's not insert admin ghosts, yeah? This is really a a hack and should be replaced by attempt events
+            if (_entMan.HasComponent<GhostComponent>(entity))
+                return false;
+
+            // checks
+
+            var targetIsItem = _entMan.HasComponent<SharedItemComponent>(entity);
+            var targetIsMob = _entMan.HasComponent<SharedBodyComponent>(entity);
+            var storageIsItem = _entMan.HasComponent<SharedItemComponent>(Owner);
+
+            var allowedToEat = targetIsItem;
+
+            // BEFORE REPLACING THIS WITH, I.E. A PROPERTY:
+            // Make absolutely 100% sure you have worked out how to stop people ending up in backpacks.
+            // Seriously, it is insanely hacky and weird to get someone out of a backpack once they end up in there.
+            // And to be clear, they should NOT be in there.
+            // For the record, what you need to do is empty the backpack onto a PlacableSurface (table, rack)
+            if (targetIsMob)
+            {
+                if (!storageIsItem)
+                    allowedToEat = true;
+                else
+                {
+                    // make an exception if this is a foldable-item that is currently un-folded (e.g., body bags).
+                    allowedToEat = _entMan.TryGetComponent(Owner, out FoldableComponent? foldable) && !foldable.IsFolded;
+                }
+            }
+
+            return allowedToEat;
         }
 
         protected virtual void OpenStorage()
