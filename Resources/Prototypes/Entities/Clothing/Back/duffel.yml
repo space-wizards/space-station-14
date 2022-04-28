@@ -103,6 +103,8 @@
     sprite: Clothing/Back/Duffels/mime.rsi
     storageOpenSound:
       collection: null    
+    storageInsertSound:
+      collection: null      
 
 - type: entity
   parent: ClothingBackpackDuffel
