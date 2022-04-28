@@ -127,7 +127,6 @@
   - type: Climbing
   - type: Flashable
   - type: Pullable
-  - type: Puller
   - type: Buckle
   - type: Recyclable
     safe: false
