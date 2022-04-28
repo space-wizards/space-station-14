@@ -10,9 +10,6 @@ using Content.Shared.Shuttles;
 using Content.Shared.Shuttles.Components;
 using Content.Shared.Tag;
 using Content.Shared.Verbs;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Localization;
 using Robust.Shared.Map;
 using Robust.Shared.Player;
 using Robust.Shared.Utility;
@@ -36,7 +33,6 @@ namespace Content.Server.Shuttles.EntitySystems
             SubscribeLocalEvent<ShuttleConsoleComponent, PowerChangedEvent>(HandlePowerChange);
             SubscribeLocalEvent<ShuttleConsoleComponent, GetVerbsEvent<InteractionVerb>>(OnConsoleInteract);
 
-            SubscribeLocalEvent<PilotComponent, ComponentShutdown>(HandlePilotShutdown);
             SubscribeLocalEvent<PilotComponent, MoveEvent>(HandlePilotMove);
         }
 
@@ -177,8 +173,9 @@ namespace Content.Server.Shuttles.EntitySystems
             AddPilot(args.User, component);
         }
 
-        private void HandlePilotShutdown(EntityUid uid, PilotComponent component, ComponentShutdown args)
+        protected override void HandlePilotShutdown(EntityUid uid, PilotComponent component, ComponentShutdown args)
         {
+            base.HandlePilotShutdown(uid, component, args);
             RemovePilot(component);
         }
 
@@ -206,6 +203,7 @@ namespace Content.Server.Shuttles.EntitySystems
 
             entity.PopupMessage(Loc.GetString("shuttle-pilot-start"));
             pilotComponent.Console = component;
+            ActionBlockerSystem.UpdateCanMove(entity);
             pilotComponent.Position = EntityManager.GetComponent<TransformComponent>(entity).Coordinates;
             pilotComponent.Dirty();
         }

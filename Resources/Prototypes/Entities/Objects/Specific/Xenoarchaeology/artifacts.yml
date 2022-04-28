@@ -11,6 +11,8 @@
       state: ano01
     - type: Physics
       bodyType: Dynamic
+    - type: Transform
+      noRot: true
     - type: Fixtures
       fixtures:
         - shape:
@@ -167,3 +169,10 @@
   suffix: Gas
   components:
     - type: GasArtifact
+
+- type: entity
+  parent: BaseXenoArtifact
+  id: DiseaseArtifact
+  suffix: Disease
+  components:
+    - type: DiseaseArtifact

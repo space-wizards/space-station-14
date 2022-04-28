@@ -89,7 +89,7 @@ namespace Content.Server.Atmos.EntitySystems
             _activePressures.Add(component);
         }
 
-        private void HighPressureMovements(GridAtmosphereComponent gridAtmosphere, TileAtmosphere tile, EntityQuery<PhysicsComponent> bodies, EntityQuery<TransformComponent> xforms, EntityQuery<MovedByPressureComponent> pressureQuery)
+        private void HighPressureMovements(GridAtmosphereComponent gridAtmosphere, TileAtmosphere tile, EntityQuery<PhysicsComponent> bodies, EntityQuery<TransformComponent> xforms, EntityQuery<MovedByPressureComponent> pressureQuery, EntityQuery<MetaDataComponent> metas)
         {
             // TODO ATMOS finish this
 
@@ -104,6 +104,9 @@ namespace Content.Server.Atmos.EntitySystems
                 }
             }
 
+            // Used by ExperiencePressureDifference to correct push/throw directions from tile-relative to physics world.
+            var gridWorldRotation = xforms.GetComponent(gridAtmosphere.Owner).WorldRotation;
+
             foreach (var entity in _lookup.GetEntitiesIntersecting(tile.GridIndex, tile.GridIndices))
             {
                 // Ideally containers would have their own EntityQuery internally or something given recursively it may need to slam GetComp<T> anyway.
@@ -113,9 +116,7 @@ namespace Content.Server.Atmos.EntitySystems
                     !pressure.Enabled)
                     continue;
 
-                var xform = xforms.GetComponent(entity);
-
-                if (_containers.IsEntityInContainer(entity, xform)) continue;
+                if (_containers.IsEntityInContainer(entity, metas.GetComponent(entity))) continue;
 
                 var pressureMovements = EnsureComp<MovedByPressureComponent>(entity);
                 if (pressure.LastHighPressureMovementAirCycle < gridAtmosphere.UpdateCounter)
@@ -127,7 +128,8 @@ namespace Content.Server.Atmos.EntitySystems
                         tile.PressureDifference,
                         tile.PressureDirection, 0,
                         tile.PressureSpecificTarget?.GridIndices.ToEntityCoordinates(tile.GridIndex, _mapManager) ?? EntityCoordinates.Invalid,
-                        xform,
+                        gridWorldRotation,
+                        xforms.GetComponent(entity),
                         body);
                 }
 
@@ -142,6 +144,7 @@ namespace Content.Server.Atmos.EntitySystems
                 _spaceWindSoundCooldown = 0;
         }
 
+        // Called from AtmosphereSystem.LINDA.cs with SpaceWind CVar check handled there.
         private void ConsiderPressureDifference(GridAtmosphereComponent gridAtmosphere, TileAtmosphere tile, TileAtmosphere other, float difference)
         {
             gridAtmosphere.HighPressureDelta.Add(tile);
@@ -159,6 +162,7 @@ namespace Content.Server.Atmos.EntitySystems
             AtmosDirection direction,
             float pressureResistanceProbDelta,
             EntityCoordinates throwTarget,
+            Angle gridWorldRotation,
             TransformComponent? xform = null,
             PhysicsComponent? physics = null)
         {
@@ -190,18 +194,28 @@ namespace Content.Server.Atmos.EntitySystems
 
                 if (maxForce > MovedByPressureComponent.ThrowForce)
                 {
+                    var moveForce = maxForce;
+                    moveForce /= (throwTarget != EntityCoordinates.Invalid) ? SpaceWindPressureForceDivisorThrow : SpaceWindPressureForceDivisorPush;
+                    moveForce *= MathHelper.Clamp(moveProb, 0, 100);
+
+                    // Apply a sanity clamp to prevent being thrown through objects.
+                    var maxSafeForceForObject = SpaceWindMaxVelocity * physics.Mass;
+                    moveForce = MathF.Min(moveForce, maxSafeForceForObject);
+
+                    // Grid-rotation adjusted direction
+                    var dirVec = (direction.ToAngle() + gridWorldRotation).ToWorldVec();
+
                     // TODO: Technically these directions won't be correct but uhh I'm just here for optimisations buddy not to fix my old bugs.
                     if (throwTarget != EntityCoordinates.Invalid)
                     {
-                        var moveForce = maxForce * MathHelper.Clamp(moveProb, 0, 100) / 15f;
-                        var pos = ((throwTarget.Position - xform.Coordinates.Position).Normalized + direction.ToDirection().ToVec()).Normalized;
+                        var pos = ((throwTarget.ToMap(EntityManager).Position - xform.WorldPosition).Normalized + dirVec).Normalized;
                         physics.ApplyLinearImpulse(pos * moveForce);
                     }
 
                     else
                     {
-                        var moveForce = MathF.Min(maxForce * MathHelper.Clamp(moveProb, 0, 100) / 2500f, 20f);
-                        physics.ApplyLinearImpulse(direction.ToDirection().ToVec() * moveForce);
+                        moveForce = MathF.Min(moveForce, SpaceWindMaxPushForce);
+                        physics.ApplyLinearImpulse(dirVec * moveForce);
                     }
 
                     component.LastHighPressureMovementAirCycle = cycle;

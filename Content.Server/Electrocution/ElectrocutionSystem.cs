@@ -36,7 +36,7 @@ namespace Content.Server.Electrocution
 {
     public sealed class ElectrocutionSystem : SharedElectrocutionSystem
     {
-        [Dependency] private readonly IEntityLookup _entityLookup = default!;
+        [Dependency] private readonly EntityLookupSystem _entityLookup = default!;
         [Dependency] private readonly IRobustRandom _random = default!;
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
         [Dependency] private readonly StatusEffectsSystem _statusEffectsSystem = default!;
@@ -47,6 +47,7 @@ namespace Content.Server.Electrocution
         [Dependency] private readonly DamageableSystem _damageableSystem = default!;
         [Dependency] private readonly NodeGroupSystem _nodeGroupSystem = default!;
         [Dependency] private readonly AdminLogSystem _logSystem = default!;
+        [Dependency] private readonly TagSystem _tagSystem = default!;
 
         private const string StatusEffectKey = "Electrocution";
         private const string DamageType = "Shock";
@@ -166,14 +167,12 @@ namespace Content.Server.Electrocution
             if (!electrified.Enabled)
                 return false;
 
-            var tagSystem = EntitySystem.Get<TagSystem>();
-
             if (electrified.NoWindowInTile)
             {
                 foreach (var entity in transform.Coordinates.GetEntitiesInTile(
-                    LookupFlags.Approximate | LookupFlags.IncludeAnchored, _entityLookup))
+                    LookupFlags.Approximate | LookupFlags.Anchored, _entityLookup))
                 {
-                    if (tagSystem.HasTag(entity, "Window"))
+                    if (_tagSystem.HasTag(entity, "Window"))
                         return false;
                 }
             }
@@ -184,8 +183,18 @@ namespace Content.Server.Electrocution
 
             var targets = new List<(EntityUid entity, int depth)>();
             GetChainedElectrocutionTargets(targetUid, targets);
-            if (!electrified.RequirePower)
+            if (!electrified.RequirePower || electrified.UsesApcPower)
             {
+                // Does it use APC power for its electrification check? Check if it's powered, and then
+                // attempt an electrocution if all the checks succeed.
+
+                if (electrified.UsesApcPower &&
+                    (!TryComp(uid, out ApcPowerReceiverComponent? power)
+                     || !power.Powered))
+                {
+                    return false;
+                }
+
                 var lastRet = true;
                 for (var i = targets.Count - 1; i >= 0; i--)
                 {

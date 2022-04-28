@@ -14,7 +14,7 @@ namespace Content.Shared.Atmos.Monitor
     [Serializable, NetSerializable]
     public sealed class AtmosAlarmThreshold : IPrototype, ISerializationHooks
     {
-        [DataField("id", required: true)]
+        [IdDataFieldAttribute]
         public string ID { get; } = default!;
         [ViewVariables]
         [DataField("ignore")]

@@ -1,18 +1,11 @@
-using System.Collections.Generic;
 using System.Linq;
 using Content.Server.Access.Systems;
-using Content.Server.Power.Components;
 using Content.Server.UserInterface;
 using Content.Shared.Access;
 using Content.Shared.Access.Components;
 using Content.Shared.Access.Systems;
-using Content.Shared.Containers.ItemSlots;
 using Robust.Server.GameObjects;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Log;
 using Robust.Shared.Prototypes;
-using Robust.Shared.ViewVariables;
 
 namespace Content.Server.Access.Components
 {
@@ -24,7 +17,6 @@ namespace Content.Server.Access.Components
         [Dependency] private readonly IEntityManager _entities = default!;
 
         [ViewVariables] private BoundUserInterface? UserInterface => Owner.GetUIOrNull(IdCardConsoleUiKey.Key);
-        [ViewVariables] private bool Powered => !_entities.TryGetComponent(Owner, out ApcPowerReceiverComponent? receiver) || receiver.Powered;
 
         protected override void Initialize()
         {
@@ -48,17 +40,6 @@ namespace Content.Server.Access.Components
 
             switch (obj.Message)
             {
-                case IdButtonPressedMessage msg:
-                    switch (msg.Button)
-                    {
-                        case UiButton.PrivilegedId:
-                            HandleIdButton(player, PrivilegedIdSlot);
-                            break;
-                        case UiButton.TargetId:
-                            HandleIdButton(player, TargetIdSlot);
-                            break;
-                    }
-                    break;
                 case WriteToTargetIdMessage msg:
                     TryWriteToTargetId(msg.FullName, msg.JobTitle, msg.AccessList);
                     UpdateUserInterface();
@@ -102,17 +83,6 @@ namespace Content.Server.Access.Components
 
             var accessSystem = EntitySystem.Get<AccessSystem>();
             accessSystem.TrySetTags(targetIdEntity, newAccessList);
-        }
-
-        /// <summary>
-        /// Called when one of the insert/remove ID buttons gets pressed.
-        /// </summary>
-        private void HandleIdButton(EntityUid user, ItemSlot slot)
-        {
-            if (slot.HasItem)
-                EntitySystem.Get<ItemSlotsSystem>().TryEjectToHands(Owner, slot, user);
-            else
-                EntitySystem.Get<ItemSlotsSystem>().TryInsertFromHand(Owner, slot, user);
         }
 
         public void UpdateUserInterface()

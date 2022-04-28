@@ -38,6 +38,7 @@ namespace Content.Server.Shuttles.EntitySystems
             SubscribeLocalEvent<DockingComponent, ComponentShutdown>(OnShutdown);
             SubscribeLocalEvent<DockingComponent, PowerChangedEvent>(OnPowerChange);
             SubscribeLocalEvent<DockingComponent, AnchorStateChangedEvent>(OnAnchorChange);
+            SubscribeLocalEvent<DockingComponent, ReAnchorEvent>(OnDockingReAnchor);
 
             SubscribeLocalEvent<DockingComponent, GetVerbsEvent<InteractionVerb>>(OnVerb);
             SubscribeLocalEvent<DockingComponent, BeforeDoorAutoCloseEvent>(OnAutoClose);
@@ -256,6 +257,16 @@ namespace Content.Server.Shuttles.EntitySystems
             }
         }
 
+        private void OnDockingReAnchor(EntityUid uid, DockingComponent component, ref ReAnchorEvent args)
+        {
+            if (!component.Docked) return;
+
+            var other = Comp<DockingComponent>(component.DockedWith!.Value);
+
+            Undock(component);
+            Dock(component, other);
+        }
+
         private void OnPowerChange(EntityUid uid, DockingComponent component, PowerChangedEvent args)
         {
             // This is because power can change during startup for <Reasons> and undock
@@ -317,7 +328,7 @@ namespace Content.Server.Shuttles.EntitySystems
 
             // TODO: I want this to ideally be 2 fixtures to force them to have some level of alignment buuuttt
             // I also need collisionmanager for that yet again so they get dis.
-            _fixtureSystem.CreateFixture(physicsComponent, fixture);
+            _fixtureSystem.TryCreateFixture(physicsComponent, fixture);
         }
 
         /// <summary>

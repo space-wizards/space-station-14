@@ -13,7 +13,7 @@ namespace Content.Server.Salvage
     public sealed class SalvageMapPrototype : IPrototype
     {
         [ViewVariables]
-        [DataField("id", required: true)]
+        [IdDataFieldAttribute]
         public string ID { get; } = default!;
 
         /// <summary>

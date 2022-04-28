@@ -29,7 +29,7 @@ namespace Content.Server.Ghost
         [Dependency] private readonly MindSystem _mindSystem = default!;
         [Dependency] private readonly SharedActionsSystem _actions = default!;
         [Dependency] private readonly VisibilitySystem _visibilitySystem = default!;
-        [Dependency] private readonly IEntityLookup _lookup = default!;
+        [Dependency] private readonly EntityLookupSystem _lookup = default!;
         [Dependency] private readonly FollowerSystem _followerSystem = default!;
 
         public override void Initialize()
@@ -253,7 +253,12 @@ namespace Content.Server.Ghost
             {
                 if (player.AttachedEntity is {Valid: true} attached)
                 {
-                    players.Add(attached, EntityManager.GetComponent<MetaDataComponent>(attached).EntityName);
+                    TryComp<MindComponent>(attached, out var mind);
+
+                    string playerInfo = $"{EntityManager.GetComponent<MetaDataComponent>(attached).EntityName} ({mind?.Mind?.CurrentJob?.Name ?? "Unknown"})";
+
+                    if (TryComp<MobStateComponent>(attached, out var state) && !state.IsDead())
+                        players.Add(attached, playerInfo);
                 }
             }
 

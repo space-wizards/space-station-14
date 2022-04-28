@@ -8,6 +8,6 @@
   - type: Clothing
     Slots: [belt]
     size: 50
-    QuickEquip: false
-    EquipSound:
+    quickEquip: false
+    equipSound:
       path: /Audio/Items/belt_equip.ogg

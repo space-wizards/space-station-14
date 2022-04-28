@@ -28,7 +28,7 @@ namespace Content.Shared.Throwing
         public override void Initialize()
         {
             base.Initialize();
-            SubscribeLocalEvent<ThrownItemComponent, PhysicsSleepMessage>(HandleSleep);
+            SubscribeLocalEvent<ThrownItemComponent, PhysicsSleepEvent>(OnSleep);
             SubscribeLocalEvent<ThrownItemComponent, StartCollideEvent>(HandleCollision);
             SubscribeLocalEvent<ThrownItemComponent, PreventCollideEvent>(PreventCollision);
             SubscribeLocalEvent<ThrownItemComponent, ThrownEvent>(ThrowItem);
@@ -67,7 +67,7 @@ namespace Content.Shared.Throwing
             var fixture = fixturesComponent.Fixtures.Values.First();
             var shape = fixture.Shape;
             var throwingFixture = new Fixture(physicsComponent, shape) { CollisionLayer = (int) CollisionGroup.ThrownItem, Hard = false, ID = ThrowingFixture };
-            _fixtures.CreateFixture(physicsComponent, throwingFixture, manager: fixturesComponent);
+            _fixtures.TryCreateFixture(physicsComponent, throwingFixture, manager: fixturesComponent);
         }
 
         private void HandleCollision(EntityUid uid, ThrownItemComponent component, StartCollideEvent args)
@@ -87,7 +87,7 @@ namespace Content.Shared.Throwing
             }
         }
 
-        private void HandleSleep(EntityUid uid, ThrownItemComponent thrownItem, PhysicsSleepMessage message)
+        private void OnSleep(EntityUid uid, ThrownItemComponent thrownItem, ref PhysicsSleepEvent @event)
         {
             StopThrow(uid, thrownItem);
         }

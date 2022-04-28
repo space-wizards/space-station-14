@@ -25,6 +25,15 @@
   description: A rugged, robust operator handgun with inbuilt silencer. Use pistol magazines (.25 caseless).
   price: 8
 
+# Poor accuracy, slow to fire, cheap option
+- type: uplinkListing
+  id: UplinkRifleMosin
+  category: Weapons
+  itemId: SniperBoltGunWood
+  listingName: Surplus Rifle
+  description: A bolt action service rifle that has seen many wars. Not modern by any standard, hand loaded, and terrible recoil, but it is cheap.
+  price: 4
+
 #- type: uplinkListing
 #  id: UplinkCrossbowEnergyMini
 #  category: Weapons
@@ -67,25 +76,35 @@
   id: UplinkExplosiveGrenadeFlash
   category: Explosives
   itemId: GrenadeFlashBang
-  price: 4
+  price: 2
 
 - type: uplinkListing
   id: UplinkSyndieMiniBomb
   category: Explosives
   itemId: SyndieMiniBomb
+  price: 7
+
+- type: uplinkListing
+  id: UplinkGrenadePenguin
+  category: Explosives
+  itemId: MobGrenadePenguin
   price: 6
 
-#- type: uplinkListing
-#  id: UplinkExplosiveC4
-#  category: Weapons
-#  itemId: ExplosiveC4
-#  price: 5
+- type: uplinkListing
+  id: UplinkC4
+  category: Explosives
+  itemId: C4
+  price: 2
+  description: >
+    C-4 is plastic explosive of the common variety Composition C. You can use it to breach walls, airlocks or sabotage equipment.
+    It can be attached to almost all objects and has a modifiable timer with a minimum setting of 10 seconds.
 
-#- type: uplinkListing
-#  id: UplinkDuffelExplosiveC4
-#  category: Weapons
-#  itemId: DuffelExplosiveC4
-#  price: 15
+- type: uplinkListing
+  id: UplinkC4Bundle
+  category: Explosives
+  itemId: ClothingBackpackDuffelSyndicateC4tBundle
+  price: 12 # 25% off
+  description: Because sometimes quantity is quality. Contains 8 C-4 plastic explosives.
 
 # Ammo
 
@@ -110,6 +129,15 @@
   price: 2
   icon: /Textures/Objects/Weapons/Guns/Ammunition/SpeedLoaders/Magnum/magnum_sl.rsi/icon.png
 
+# For the mosin
+- type: uplinkListing
+  id: UplinkMosinAmmo
+  category: Ammo
+  itemId: BoxBulletLRifleSmall
+  description: A box of bullets for the surplus rifle.
+  price: 2
+
+
 #Utility
 
 - type: uplinkListing
@@ -125,9 +153,26 @@
   id: UplinkEmag
   category: Utility
   itemId: Emag
-  description: This sequencer, or "emag", can be used to open or hack a huge variety of items around the station.
+  description: The business card of the syndicate, this sequencer is able to break open airlocks and tamper with a variety of station devices. Recharges automatically.
   icon: /Textures/Objects/Tools/emag.rsi/icon.png
   price: 8
+
+- type: uplinkListing
+  id: UplinkAgentIDCard
+  category: Utility
+  itemId: AgentIDCard
+  listingName: Agent ID Card
+  description: A modified ID card that can copy accesses from other cards and change its name and job title at-will.
+  icon: Objects/Misc/id_cards.rsi/default.png
+  price: 3
+
+- type: uplinkListing
+  id: UplinkHypopen
+  category: Utility
+  itemId: Hypopen
+  listingName: Hypopen
+  description: A chemical hypospray disguised as a pen, capable of instantly injecting up to 15u of reagents. Starts empty.
+  price: 4
 
 # Bundles
 
@@ -172,7 +217,7 @@
   id: UplinkToolbox
   category: Tools
   itemId: ToolboxSyndicateFilled
-  price: 5
+  price: 2
 
 - type: uplinkListing
   id: UplinkSyndicateJawsOfLife
@@ -190,7 +235,7 @@
   id: UplinkCarpDehydrated
   category: Tools
   itemId: DehydratedSpaceCarp
-  price: 5
+  price: 3
 
 # Armor
 
@@ -212,16 +257,34 @@
 - type: uplinkListing
   id: UplinkHardsuitSyndie
   category: Armor
-  itemId: ClothingOuterHardsuitSyndie
-  price: 5
+  itemId: ClothingBackpackDuffelSyndicateHardsuitBundle
+  description: The Syndicate's well known armored blood red hardsuit, capable of space walks and bullet resistant.
+  price: 8
 
 - type: uplinkListing
-  id: UplinkHardsuitSyndieHelmet
+  id: UplinkClothingShoesBootsMagSyndie
   category: Armor
-  itemId: ClothingHeadHelmetHardsuitSyndie
-  price: 5
+  itemId: ClothingShoesBootsMagSyndie
+  description: A pair of magnetic boots that will keep you on the ground if the gravity fails or is sabotaged, giving you a mobility advantage. If activated with gravity they will protect from slips, but they will slow you down.
+  price: 2
+
+- type: uplinkListing
+  id: UplinkEVASyndie
+  category: Armor
+  itemId: BoxSyndicateEVA
+  description: A simple EVA suit that offers no protection other than what's needed to survive in space.
+  price: 4
+
+
 
 # Misc
+
+- type: uplinkListing
+  id: UplinkCyberpen
+  category: Misc
+  itemId: CyberPen
+  description: Cybersun's legal department pen. Smells vaguely of hard-light and war profiteering.
+  price: 4
 
 - type: uplinkListing
   id: UplinkBalloon
@@ -244,12 +307,6 @@
   price: 4
 
 - type: uplinkListing
-  id: UplinkPen
-  category: Misc
-  itemId: Pen
-  price: 2
-
-- type: uplinkListing
   id: UplinkCigarettes
   category: Misc
   itemId: CigPackSyndicate
@@ -267,11 +324,11 @@
   itemId: lanternextrabright
   price: 2
 
-- type: uplinkListing
-  id: UplinkCostumeCentcom
-  category: Misc
-  itemId: ClothingBackpackDuffelSyndicateCostumeCentcom
-  price: 4
+#- type: uplinkListing
+#  id: UplinkCostumeCentcom
+#  category: Misc
+#  itemId: ClothingBackpackDuffelSyndicateCostumeCentcom
+#  price: 4
 
 - type: uplinkListing
   id: UplinkCostumeClown
@@ -291,4 +348,34 @@
   itemId: ClothingHeadHatCatEars
   listingName: Cat Ears
   description: UwU.
-  price: 3
+  price: 16
+
+
+- type: uplinkListing
+  id: UplinkGigacancerScanner
+  category: Misc
+  itemId: HandheldHealthAnalyzerGigacancer
+  listingName: Ultragigacancer Health Analyzer
+  description: Works like a normal health analyzer, other than giving everyone it scans ultragigacancer.
+  price: 5
+
+- type: uplinkListing
+  id: UplinkNocturineChemistryBottle
+  category: Misc
+  itemId: NocturineChemistryBottle
+  description: A chemical that makes it very hard for your target to stand up.
+  price: 5
+
+- type: uplinkListing
+  id: UplinkSyndicateStamp
+  category: Misc
+  itemId: RubberStampSyndicate
+  price: 2
+
+- type: uplinkListing
+  id: UplinkSyndicateSegwayCrate
+  category: Misc
+  itemId: CrateFunSyndicateSegway
+  listingName: syndicate segway
+  description: Be an enemy of the corporation, in style!
+  price: 5

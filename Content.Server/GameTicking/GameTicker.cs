@@ -2,6 +2,7 @@ using Content.Server.Administration.Logs;
 using Content.Server.Administration.Managers;
 using Content.Server.CharacterAppearance.Systems;
 using Content.Server.Chat.Managers;
+using Content.Server.Database;
 using Content.Server.Ghost;
 using Content.Server.Maps;
 using Content.Server.PDA;
@@ -14,6 +15,7 @@ using Robust.Server;
 using Robust.Server.Maps;
 using Robust.Server.ServerStatus;
 using Robust.Shared.Configuration;
+using Robust.Shared.Console;
 #if EXCEPTION_TOLERANCE
 using Robust.Shared.Exceptions;
 #endif
@@ -33,6 +35,8 @@ namespace Content.Server.GameTicking
 
         [ViewVariables] public MapId DefaultMap { get; private set; }
 
+        private ISawmill _sawmill = default!;
+
         public override void Initialize()
         {
             base.Initialize();
@@ -40,12 +44,16 @@ namespace Content.Server.GameTicking
             DebugTools.Assert(!_initialized);
             DebugTools.Assert(!_postInitialized);
 
+            _sawmill = _logManager.GetSawmill("ticker");
+
             // Initialize the other parts of the game ticker.
             InitializeStatusShell();
             InitializeCVars();
             InitializePlayer();
             InitializeLobbyMusic();
+            InitializeLobbyBackground();
             InitializeGamePreset();
+            InitializeGameRules();
             InitializeJobController();
             InitializeUpdates();
 
@@ -63,9 +71,16 @@ namespace Content.Server.GameTicking
             _postInitialized = true;
         }
 
+        public override void Shutdown()
+        {
+            base.Shutdown();
+
+            ShutdownGameRules();
+        }
+
         private void SendServerMessage(string message)
         {
-            var msg = _netManager.CreateNetMessage<MsgChatMessage>();
+            var msg = new MsgChatMessage();
             msg.Channel = ChatChannel.Server;
             msg.Message = message;
             IoCManager.Resolve<IServerNetManager>().ServerSendToAll(msg);
@@ -89,6 +104,9 @@ namespace Content.Server.GameTicking
         [Dependency] private readonly IBaseServer _baseServer = default!;
         [Dependency] private readonly IWatchdogApi _watchdogApi = default!;
         [Dependency] private readonly IGameMapManager _gameMapManager = default!;
+        [Dependency] private readonly IServerDbManager _db = default!;
+        [Dependency] private readonly ILogManager _logManager = default!;
+        [Dependency] private readonly IConsoleHost _consoleHost = default!;
 #if EXCEPTION_TOLERANCE
         [Dependency] private readonly IRuntimeLog _runtimeLog = default!;
 #endif

@@ -46,6 +46,50 @@
   placementMode: SnapgridCenter
   canBuildInImpassable: false
 
+- type: construction
+  name: wallmount substation
+  id: WallmountSubstation
+  graph: WallmountSubstation
+  startNode: start
+  targetNode: substation
+  category: Utilities
+  description: "A wallmount substation for compact spaces. Make sure to place cable under before building the wall."
+  icon:
+    sprite: Structures/Power/substation.rsi
+    state: substation_wall
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: true
+
+- type: construction
+  name: wallmount generator
+  id: WallmountGenerator
+  graph: WallmountGenerator
+  startNode: start
+  targetNode: generator
+  category: Utilities
+  description: "A wallmount generator for compact spaces. Make sure to place cable under before building the wall."
+  icon:
+    sprite: Structures/Power/Generation/wallmount_generator.rsi
+    state: panel
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: true
+
+- type: construction
+  name: wallmount APU
+  id: WallmountGeneratorAPU
+  graph: WallmountGenerator
+  startNode: start
+  targetNode: APU
+  category: Utilities
+  description: "A wallmount APU for compact shuttles. Make sure to place cable under before building the wall."
+  icon:
+    sprite: Structures/Power/Generation/wallmount_generator.rsi
+    state: panel
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: true
 
 # DISPOSALS
 - type: construction

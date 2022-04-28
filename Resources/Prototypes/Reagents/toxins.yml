@@ -197,15 +197,6 @@
   # TODO hallucinations
 
 - type: reagent
-  id: Soporific
-  name: soporific (sleep-toxin)
-  group: Toxins
-  desc: A less powerful sedative that takes a while to work, intended to help insomniacs and patients that are too aggressive to be treated normally. Takes roughly 50 seconds to make the patient fall asleep. Is safe in large quantities. Can be counteracted with Anti-Toxin.
-  physicalDesc: acrid
-  color: "#215263"
-  # TODO sleeping
-
-- type: reagent
   id: Histamine
   name: histamine
   group: Toxins
@@ -278,3 +269,20 @@
         damage:
           types:
             Poison: 6
+
+- type: reagent
+  id: VentCrud
+  name: vent crud
+  desc: A jet black substance found in poorly maintained ventilation systems.
+  physicalDesc: sticky
+  color: "#000000"
+  metabolisms:
+    Poison:
+      effects:
+        - !type:HealthChange
+          damage:
+            types:
+              Poison: 2
+        - !type:ChemCauseDisease ##Since this mostly just comes from the event you won't ingest that much
+          causeChance: 0.6
+          disease: VentCough

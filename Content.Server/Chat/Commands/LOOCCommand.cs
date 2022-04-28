@@ -24,6 +24,9 @@ namespace Content.Server.Chat.Commands
                 return;
             }
 
+            if (player.AttachedEntity is not { Valid: true } entity)
+                return;
+
             if (player.Status != SessionStatus.InGame)
                 return;
 
@@ -34,7 +37,7 @@ namespace Content.Server.Chat.Commands
             if (string.IsNullOrEmpty(message))
                 return;
 
-            IoCManager.Resolve<IChatManager>().SendLOOC(player, message);
+            EntitySystem.Get<ChatSystem>().TrySendInGameOOCMessage(entity, message, InGameOOCChatType.Looc, false, shell, player);
         }
     }
 }

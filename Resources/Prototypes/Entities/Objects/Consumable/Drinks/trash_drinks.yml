@@ -4,7 +4,7 @@
   id: DrinkBottleBaseEmpty
   parent: BaseItem
   abstract: true
-  description: That's an empty bottle.
+  description: An empty bottle.
   components:
   - type: Sprite
     state: icon
@@ -52,9 +52,9 @@
         acts: [ "Destruction" ]
   - type: Tag
     tags:
-    - Recyclable
     - Trash
   - type: Recyclable
+  - type: SpaceGarbage
 
 # Containers
 - type: entity

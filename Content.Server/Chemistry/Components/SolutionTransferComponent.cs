@@ -113,12 +113,12 @@ namespace Content.Server.Chemistry.Components
 
         async Task<bool> IAfterInteract.AfterInteract(AfterInteractEventArgs eventArgs)
         {
-            var solutionsSys = EntitySystem.Get<SolutionContainerSystem>();
-
             if (!eventArgs.CanReach || eventArgs.Target == null)
                 return false;
 
             var target = eventArgs.Target!.Value;
+            var solutionsSys = EntitySystem.Get<SolutionContainerSystem>();
+            var transferSystem = EntitySystem.Get<SolutionTransferSystem>();
 
             //Special case for reagent tanks, because normally clicking another container will give solution, not take it.
             if (CanReceive  && !_entities.HasComponent<RefillableSolutionComponent>(target) // target must not be refillable (e.g. Reagent Tanks)
@@ -135,7 +135,7 @@ namespace Content.Server.Chemistry.Components
                     transferAmount = FixedPoint2.Min(transferAmount, (FixedPoint2) refill.MaxRefill); // if the receiver has a smaller transfer limit, use that instead
                 }
 
-                var transferred = DoTransfer(eventArgs.User, target, targetDrain, Owner, ownerRefill, transferAmount);
+                var transferred = transferSystem.Transfer(eventArgs.User, target, targetDrain, Owner, ownerRefill, transferAmount);
                 if (transferred > 0)
                 {
                     var toTheBrim = ownerRefill.AvailableVolume == 0;
@@ -160,7 +160,7 @@ namespace Content.Server.Chemistry.Components
                     transferAmount = FixedPoint2.Min(transferAmount, (FixedPoint2) refill.MaxRefill);
                 }
 
-                var transferred = DoTransfer(eventArgs.User, Owner, ownerDrain, target, targetRefill, transferAmount);
+                var transferred = transferSystem.Transfer(eventArgs.User, Owner, ownerDrain, target, targetRefill, transferAmount);
 
                 if (transferred > 0)
                 {
@@ -174,37 +174,6 @@ namespace Content.Server.Chemistry.Components
             }
 
             return false;
-        }
-
-        /// <returns>The actual amount transferred.</returns>
-        private static FixedPoint2 DoTransfer(EntityUid user,
-            EntityUid sourceEntity,
-            Solution source,
-            EntityUid targetEntity,
-            Solution target,
-            FixedPoint2 amount)
-        {
-
-            if (source.DrainAvailable == 0)
-            {
-                sourceEntity.PopupMessage(user,
-                    Loc.GetString("comp-solution-transfer-is-empty", ("target", sourceEntity)));
-                return FixedPoint2.Zero;
-            }
-
-            if (target.AvailableVolume == 0)
-            {
-                targetEntity.PopupMessage(user,
-                    Loc.GetString("comp-solution-transfer-is-full", ("target", targetEntity)));
-                return FixedPoint2.Zero;
-            }
-
-            var actualAmount = FixedPoint2.Min(amount, FixedPoint2.Min(source.DrainAvailable, target.AvailableVolume));
-
-            var solution = EntitySystem.Get<SolutionContainerSystem>().Drain(sourceEntity, source, actualAmount);
-            EntitySystem.Get<SolutionContainerSystem>().Refill(targetEntity, target, solution);
-
-            return actualAmount;
         }
     }
 }

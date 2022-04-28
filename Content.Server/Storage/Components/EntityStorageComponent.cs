@@ -35,7 +35,7 @@ namespace Content.Server.Storage.Components
     [Virtual]
     [ComponentReference(typeof(IActivate))]
     [ComponentReference(typeof(IStorageComponent))]
-    public class EntityStorageComponent : Component, IActivate, IStorageComponent, IInteractUsing, IDestroyAct, IExAct
+    public class EntityStorageComponent : Component, IActivate, IStorageComponent, IInteractUsing, IDestroyAct
     {
         [Dependency] private readonly IEntityManager _entMan = default!;
 
@@ -164,7 +164,7 @@ namespace Content.Server.Storage.Components
             Contents.OccludesLight = _occludesLight;
 
             if(_entMan.TryGetComponent(Owner, out ConstructionComponent? construction))
-                EntitySystem.Get<ConstructionSystem>().AddContainer(Owner, Contents.ID, construction);
+                EntitySystem.Get<ConstructionSystem>().AddContainer(Owner, nameof(EntityStorageComponent), construction);
 
             if (_entMan.TryGetComponent<PlaceableSurfaceComponent?>(Owner, out var surface))
             {
@@ -475,26 +475,8 @@ namespace Content.Server.Storage.Components
 
         protected virtual IEnumerable<EntityUid> DetermineCollidingEntities()
         {
-            var entityLookup = IoCManager.Resolve<IEntityLookup>();
-            return entityLookup.GetEntitiesIntersecting(Owner, _enteringRange, LookupFlags.Approximate);
-        }
-
-        void IExAct.OnExplosion(ExplosionEventArgs eventArgs)
-        {
-            if (eventArgs.Severity < ExplosionSeverity.Heavy)
-            {
-                return;
-            }
-
-            var containedEntities = Contents.ContainedEntities.ToList();
-            foreach (var entity in containedEntities)
-            {
-                var exActs = _entMan.GetComponents<IExAct>(entity).ToArray();
-                foreach (var exAct in exActs)
-                {
-                    exAct.OnExplosion(eventArgs);
-                }
-            }
+            var entityLookup = EntitySystem.Get<EntityLookupSystem>();
+            return entityLookup.GetEntitiesInRange(Owner, _enteringRange, LookupFlags.Approximate);
         }
     }
 

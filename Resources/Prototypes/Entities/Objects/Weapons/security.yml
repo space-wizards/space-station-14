@@ -23,7 +23,7 @@
   - type: Clothing
     sprite: Objects/Weapons/Melee/stunbaton.rsi
     HeldPrefix: off
-    QuickEquip: false
+    quickEquip: false
     size: 20
     Slots:
     - Belt
@@ -32,7 +32,7 @@
   name: flash
   parent: BaseItem
   id: Flash
-  description: An ultrabright flashbulb with a trigger, causes the victum to be dazed and lose their eyesight for a moment. Useless when burnt out.
+  description: An ultrabright flashbulb with a trigger, which causes the victim to be dazed and lose their eyesight for a moment. Useless when burnt out.
   components:
     - type: Sprite
       sprite: Objects/Weapons/Melee/flash.rsi
@@ -56,7 +56,7 @@
   id: PortableFlasher
   description: An ultrabright flashbulb with a proximity trigger, useful for making an area security-only.
   components:
-    - type: SoundOnTrigger
+    - type: EmitSoundOnTrigger
       sound:
         path: /Audio/Weapons/flash.ogg
     - type: FlashOnTrigger

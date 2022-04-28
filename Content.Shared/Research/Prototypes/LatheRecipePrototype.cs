@@ -1,14 +1,9 @@
-using System;
-using System.Collections.Generic;
 using Content.Shared.Materials;
-using Robust.Shared.IoC;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
-using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.Dictionary;
 using Robust.Shared.Utility;
-using Robust.Shared.ViewVariables;
 
 namespace Content.Shared.Research.Prototypes
 {
@@ -16,7 +11,7 @@ namespace Content.Shared.Research.Prototypes
     public sealed class LatheRecipePrototype : IPrototype
     {
         [ViewVariables]
-        [DataField("id", required: true)]
+        [IdDataFieldAttribute]
         public string ID { get; } = default!;
 
         [DataField("name")]
@@ -32,7 +27,7 @@ namespace Content.Shared.Research.Prototypes
         private string _result = string.Empty;
 
         [DataField("completetime")]
-        private int _completeTime = 2500;
+        private TimeSpan _completeTime = TimeSpan.FromSeconds(5);
 
         [DataField("materials", customTypeSerializer: typeof(PrototypeIdDictionarySerializer<int, MaterialPrototype>))]
         private Dictionary<string, int> _requiredMaterials = new();
@@ -102,6 +97,6 @@ namespace Content.Shared.Research.Prototypes
         ///     Might lower depending on the lathe's upgrade level.
         /// </summary>
         [ViewVariables]
-        public int CompleteTime => _completeTime;
+        public TimeSpan CompleteTime => _completeTime;
     }
 }

@@ -1,14 +1,13 @@
-using System;
-using System.Collections.Generic;
 using System.Linq;
 using Content.Server.Chat.Managers;
 using Content.Server.GameTicking;
 using Content.Server.Maps;
+using Content.Shared.CCVar;
 using Content.Shared.Roles;
 using Content.Shared.Station;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Log;
+using Robust.Shared.Configuration;
+using Robust.Shared.Map;
+using Robust.Shared.Random;
 using Robust.Shared.Utility;
 
 namespace Content.Server.Station;
@@ -18,21 +17,101 @@ namespace Content.Server.Station;
 /// </summary>
 public sealed class StationSystem : EntitySystem
 {
-    [Dependency] private GameTicker _gameTicker = default!;
-    [Dependency] private IChatManager _chatManager = default!;
-    [Dependency] private IGameMapManager _gameMapManager = default!;
+    [Dependency] private readonly IChatManager _chatManager = default!;
+    [Dependency] private readonly IConfigurationManager _configurationManager = default!;
+    [Dependency] private readonly IGameMapManager _gameMapManager = default!;
+    [Dependency] private readonly ILogManager _logManager = default!;
+    [Dependency] private readonly IMapManager _mapManager = default!;
+    [Dependency] private readonly IRobustRandom _random = default!;
+    [Dependency] private readonly GameTicker _gameTicker = default!;
+
+    private ISawmill _sawmill = default!;
+
     private uint _idCounter = 1;
 
     private Dictionary<StationId, StationInfoData> _stationInfo = new();
+
     /// <summary>
-    /// List of stations for the current round.
+    /// List of stations currently loaded.
     /// </summary>
     public IReadOnlyDictionary<StationId, StationInfoData> StationInfo => _stationInfo;
 
+    private bool _randomStationOffset = false;
+    private bool _randomStationRotation = false;
+    private float _maxRandomStationOffset = 0.0f;
+
     public override void Initialize()
     {
-        base.Initialize();
+        _sawmill = _logManager.GetSawmill("station");
+
         SubscribeLocalEvent<GameRunLevelChangedEvent>(OnRoundEnd);
+        SubscribeLocalEvent<PreGameMapLoad>(OnPreGameMapLoad);
+        SubscribeLocalEvent<PostGameMapLoad>(OnPostGameMapLoad);
+
+        _configurationManager.OnValueChanged(CCVars.StationOffset, x => _randomStationOffset = x, true);
+        _configurationManager.OnValueChanged(CCVars.MaxStationOffset, x => _maxRandomStationOffset = x, true);
+        _configurationManager.OnValueChanged(CCVars.StationRotation, x => _randomStationRotation = x, true);
+    }
+
+    private void OnPreGameMapLoad(PreGameMapLoad ev)
+    {
+        // this is only for maps loaded during round setup!
+        if (_gameTicker.RunLevel == GameRunLevel.InRound)
+            return;
+
+        if (_randomStationOffset)
+            ev.Options.Offset += _random.NextVector2(_maxRandomStationOffset);
+
+        if (_randomStationRotation)
+            ev.Options.Rotation = _random.NextAngle();
+    }
+
+    private void OnPostGameMapLoad(PostGameMapLoad ev)
+    {
+        var dict = new Dictionary<string, StationId>();
+
+        // Iterate over all BecomesStation
+        for (var i = 0; i < ev.Grids.Count; i++)
+        {
+            var grid = ev.Grids[i];
+
+            // We still setup the grid
+            if (!TryComp<BecomesStationComponent>(_mapManager.GetGridEuid(grid), out var becomesStation))
+                continue;
+
+            var stationId = InitialSetupStationGrid(grid, ev.GameMap, ev.StationName);
+
+            dict.Add(becomesStation.Id, stationId);
+        }
+
+        if (!dict.Any())
+        {
+            // Oh jeez, no stations got loaded.
+            // We'll just take the first grid and setup that, then.
+
+            var grid = ev.Grids[0];
+            var stationId = InitialSetupStationGrid(grid, ev.GameMap, ev.StationName);
+
+            dict.Add("Station", stationId);
+        }
+
+        // Iterate over all PartOfStation
+        for (var i = 0; i < ev.Grids.Count; i++)
+        {
+            var grid = ev.Grids[i];
+            var geid = _mapManager.GetGridEuid(grid);
+            if (!TryComp<PartOfStationComponent>(geid, out var partOfStation))
+                continue;
+
+            if (dict.TryGetValue(partOfStation.Id, out var stationId))
+            {
+                AddGridToStation(geid, stationId);
+            }
+            else
+            {
+                _sawmill.Error($"Grid {grid} ({geid}) specified that it was part of station {partOfStation.Id} which does not exist");
+            }
+        }
     }
 
     /// <summary>
@@ -119,8 +198,7 @@ public sealed class StationSystem : EntitySystem
 
         _gameTicker.UpdateJobsAvailable(); // new station means new jobs, tell any lobby-goers.
 
-        Logger.InfoS("stations",
-            $"Setting up new {mapPrototype.ID} called {_stationInfo[id].Name} on grid {mapGrid}:{gridComponent.GridIndex}");
+        _sawmill.Info($"Setting up new {mapPrototype.ID} called {_stationInfo[id].Name} on grid {mapGrid}:{gridComponent.GridIndex}");
 
         return id;
     }
@@ -139,7 +217,7 @@ public sealed class StationSystem : EntitySystem
         var stationComponent = EntityManager.AddComponent<StationComponent>(mapGrid);
         stationComponent.Station = station;
 
-        Logger.InfoS("stations", $"Adding grid {mapGrid}:{gridComponent.GridIndex} to station {station} named {_stationInfo[station].Name}");
+        _sawmill.Info( $"Adding grid {mapGrid}:{gridComponent.GridIndex} to station {station} named {_stationInfo[station].Name}");
     }
 
     /// <summary>

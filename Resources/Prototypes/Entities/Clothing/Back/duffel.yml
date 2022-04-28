@@ -10,13 +10,15 @@
   - type: Clothing
     sprite: Clothing/Back/Duffels/duffel.rsi
     size: 9999
-    QuickEquip: false
+    quickEquip: false
     Slots:
     - back
   - type: Storage
     capacity: 100
-    storageSoundCollection:
-      collection: storageRustle
+  - type: UserInterface
+    interfaces:
+    - key: enum.StorageUiKey.Key
+      type: StorageBoundUserInterface
 
 - type: entity
   parent: ClothingBackpackDuffel

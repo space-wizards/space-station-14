@@ -1,8 +1,10 @@
 ﻿using System;
+using System.Linq;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Diagnostics;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Storage;
+using NpgsqlTypes;
 
 namespace Content.Server.Database
 {
@@ -59,6 +61,10 @@ namespace Content.Server.Database
                     "NOT inet '::ffff:0.0.0.0/96' >>= address");
             // ReSharper restore StringLiteralTypo
 
+            modelBuilder.Entity<AdminLog>()
+                .HasIndex(l => l.Message)
+                .IsTsVectorExpressionIndex("english");
+
             foreach(var entity in modelBuilder.Model.GetEntityTypes())
             {
                 foreach(var property in entity.GetProperties())
@@ -67,6 +73,11 @@ namespace Content.Server.Database
                         property.SetColumnType("timestamp with time zone");
                 }
             }
+        }
+
+        public override IQueryable<AdminLog> SearchLogs(IQueryable<AdminLog> query, string searchText)
+        {
+            return query.Where(log => EF.Functions.ToTsVector("english", log.Message).Matches(searchText));
         }
     }
 }

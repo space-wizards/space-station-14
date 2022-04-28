@@ -28,3 +28,7 @@
 - Flags: ADMIN
   Commands:
     - togglehealthoverlay
+
+- Flags: QUERY
+  Commands:
+    - uploadfile

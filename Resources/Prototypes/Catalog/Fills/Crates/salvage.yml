@@ -7,7 +7,6 @@
   components:
   - type: StorageFill
     contents:
-      - id: ClothingHeadHelmetHardsuitSalvage
       - id: ClothingOuterHardsuitSalvage
       - id: ClothingMaskBreath
       - id: OxygenTankFilled
@@ -24,7 +23,7 @@
 - type: entity
   id: CrateSalvageAssortedGoodies
   suffix: Filled, Salvage Random
-  abstract: true # You should use SalvageMaterialCrateSpawner instead
+  noSpawn: true # You should use SalvageMaterialCrateSpawner instead
   parent: CrateGenericSteel
   components:
   - type: StorageFill

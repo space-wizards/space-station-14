@@ -32,7 +32,7 @@
 - type: entity
   id: CircuitImprinterMachineCircuitboard
   parent: BaseMachineCircuitboard
-  name: Circuit Imprinter (Machine Board)
+  name: circuit imprinter machine board
   components:
   - type: MachineBoard
     prototype: CircuitImprinter
@@ -45,11 +45,53 @@
         DefaultPrototype: Beaker
         ExamineName: Glass Beaker
 
+- type: entity
+  id: UniformPrinterMachineCircuitboard
+  parent: BaseMachineCircuitboard
+  name: uniform printer machine board
+  components:
+  - type: MachineBoard
+    prototype: UniformPrinter
+    requirements:
+      MatterBin: 1
+      Manipulator: 1
+      Laser: 1
+
+- type: entity
+  id: VaccinatorMachineCircuitboard
+  parent: BaseMachineCircuitboard
+  name: vaccinator machine board
+  components:
+  - type: MachineBoard
+    prototype: Vaccinator
+    requirements:
+      MatterBin: 1
+      Manipulator: 1
+    materialRequirements:
+      Cable: 5
+    tagRequirements:
+        GlassBeaker:
+          Amount: 1
+          DefaultPrototype: Beaker
+          ExamineName: Glass Beaker
+
+- type: entity
+  id: DiagnoserMachineCircuitboard
+  parent: BaseMachineCircuitboard
+  name: diagnoser machine board
+  components:
+  - type: MachineBoard
+    prototype: DiseaseDiagnoser
+    requirements:
+      Manipulator: 1
+      Laser: 2
+    materialRequirements:
+      Cable: 5
 
 - type: entity
   id: ThermomachineFreezerMachineCircuitBoard
   parent: BaseMachineCircuitboard
-  name: Freezer Thermomachine (Machine Board)
+  name: freezer thermomachine machine board
   description: Looks like you could use a screwdriver to change the board type.
   components:
   - type: MachineBoard
@@ -66,7 +108,7 @@
 - type: entity
   id: ThermomachineHeaterMachineCircuitBoard
   parent: BaseMachineCircuitboard
-  name: Heater Thermomachine (Machine Board)
+  name: heater thermomachine machine board
   description: Looks like you could use a screwdriver to change the board type.
   components:
   - type: MachineBoard
@@ -176,7 +218,7 @@
       sprite: Objects/Misc/module.rsi
       state: power_mod
     - type: MachineBoard
-      prototype: BaseSMES
+      prototype: SMESBasic
       requirements:
         Capacitor: 10
 
@@ -187,7 +229,7 @@
   description: A machine printed circuit board for a substation
   components:
     - type: MachineBoard
-      prototype: BaseSubstation
+      prototype: SubstationBasic
       requirements:
         Capacitor: 3
       materialRequirements:
@@ -197,7 +239,7 @@
 - type: entity
   parent: BaseMachineCircuitboard
   id: DawInstrumentMachineCircuitboard
-  name: Digital Audio Workstation (Machine Board)
+  name: digital audio workstation machine board
   components:
     - type: MachineBoard
       prototype: DawInstrument
@@ -229,6 +271,29 @@
           DefaultPrototype: SaxophoneInstrument
           ExamineName: Woodwind Instrument
 
+- type: entity
+  id: GeneratorPlasmaMachineCircuitboard
+  parent: BaseMachineCircuitboard
+  name: generator (plasma) machine board
+  components:
+    - type: MachineBoard
+      prototype: GeneratorPlasma
+      requirements:
+        Capacitor: 1
+      materialRequirements:
+        CableHV: 5
+
+- type: entity
+  id: GeneratorUraniumMachineCircuitboard
+  parent: BaseMachineCircuitboard
+  name: generator (uranium) machine board
+  components:
+    - type: MachineBoard
+      prototype: GeneratorUranium
+      requirements:
+        Capacitor: 2
+      materialRequirements:
+        CableHV: 10
 
 - type: entity
   id: ReagentGrinderMachineCircuitboard
@@ -247,3 +312,39 @@
           Amount: 1
           DefaultPrototype: Beaker
           ExamineName: Glass Beaker
+
+- type: entity
+  id: StasisBedMachineCircuitboard
+  parent: BaseMachineCircuitboard
+  name: Stasis Bed (Machine Board)
+  components:
+    - type: MachineBoard
+      prototype: StasisBed
+      requirements:
+        Capacitor: 1
+        Manipulator: 1
+      materialRequirements:
+        Cable: 3
+      tagRequirements:
+        Pipe:
+          Amount: 4
+          DefaultPrototype: GasPipeStraight
+          ExamineName: Pipe
+        Cryobeaker:
+          Amount: 2
+          DefaultPrototype: CryostasisBeaker
+          ExamineName: Cryostasis Beaker
+
+- type: entity
+  id: OreProcessorMachineCircuitboard
+  parent: BaseMachineCircuitboard
+  name: ore processor machine board
+  components:
+    - type: MachineBoard
+      prototype: OreProcessor
+      requirements:
+        MatterBin: 1
+        Manipulator: 1
+        Laser: 2
+      materialRequirements:
+        Glass: 1

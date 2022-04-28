@@ -1,5 +1,3 @@
-using System;
-using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Linq;
 using System.Net;
@@ -11,7 +9,6 @@ using Content.Server.Preferences.Managers;
 using Content.Shared.CCVar;
 using Microsoft.EntityFrameworkCore;
 using Robust.Shared.Configuration;
-using Robust.Shared.IoC;
 using Robust.Shared.Network;
 using Robust.Shared.Utility;
 
@@ -31,11 +28,14 @@ namespace Content.Server.Database
         private readonly Task _dbReadyTask;
         private readonly SqliteServerDbContext _prefsCtx;
 
+        private int _msDelay;
+
         public ServerDbSqlite(DbContextOptions<SqliteServerDbContext> options)
         {
             _prefsCtx = new SqliteServerDbContext(options);
 
-            if (IoCManager.Resolve<IConfigurationManager>().GetCVar(CCVars.DatabaseSynchronous))
+            var cfg = IoCManager.Resolve<IConfigurationManager>();
+            if (cfg.GetCVar(CCVars.DatabaseSynchronous))
             {
                 _prefsCtx.Database.Migrate();
                 _dbReadyTask = Task.CompletedTask;
@@ -44,6 +44,8 @@ namespace Content.Server.Database
             {
                 _dbReadyTask = Task.Run(() => _prefsCtx.Database.Migrate());
             }
+
+            cfg.OnValueChanged(CCVars.DatabaseSqliteDelay, v => _msDelay = v, true);
         }
 
         #region Ban
@@ -422,7 +424,7 @@ namespace Content.Server.Database
             return (admins.Select(p => (p.a, p.LastSeenUserName)).ToArray(), adminRanks)!;
         }
 
-        public override async Task<int> AddNewRound(params Guid[] playerIds)
+        public override async Task<int> AddNewRound(Server server, params Guid[] playerIds)
         {
             await using var db = await GetDb();
 
@@ -439,7 +441,8 @@ namespace Content.Server.Database
             var round = new Round
             {
                 Id = nextId,
-                Players = players
+                Players = players,
+                ServerId = server.Id
             };
 
             db.DbContext.Round.Add(round);
@@ -485,9 +488,28 @@ namespace Content.Server.Database
             await db.DbContext.SaveChangesAsync();
         }
 
+        public override async Task<int> AddAdminNote(AdminNote note)
+        {
+            await using (var db = await GetDb())
+            {
+                var nextId = 1;
+                if (await db.DbContext.AdminNotes.AnyAsync())
+                {
+                    nextId = await db.DbContext.AdminNotes.MaxAsync(dbVersion => dbVersion.Id) + 1;
+                }
+
+                note.Id = nextId;
+            }
+
+            return await base.AddAdminNote(note);
+        }
+
         private async Task<DbGuardImpl> GetDbImpl()
         {
             await _dbReadyTask;
+            if (_msDelay > 0)
+                await Task.Delay(_msDelay);
+
             await _prefsSemaphore.WaitAsync();
 
             return new DbGuardImpl(this);

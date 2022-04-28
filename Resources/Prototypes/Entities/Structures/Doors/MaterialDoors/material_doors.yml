@@ -165,60 +165,6 @@
     node: plasmaDoor
 
 - type: entity
-  id: DiamondDoor
-  name: diamond door
-  parent: BaseMaterialDoor
-  description: A door, where will it lead?
-  components:
-  - type: Sprite
-    netsync: false
-    sprite: Structures/Doors/MineralDoors/diamond_door.rsi
-    layers:
-    - state: closed
-      map: ["enum.DoorVisualLayers.Base"]
-  - type: Damageable
-    damageContainer: Inorganic
-    damageModifierSet: StrongMetallic
-  - type: Destructible
-    thresholds:
-    - trigger:
-        !type:DamageTrigger
-        damage: 400
-      behaviors:
-      - !type:DoActsBehavior
-        acts: ["Destruction"]
-  - type: Construction
-    graph: DoorGraph
-    node: diamondDoor
-
-- type: entity
-  id: UraniumDoor
-  name: uranium door
-  parent: BaseMaterialDoor
-  description: A door, where will it lead?
-  components:
-  - type: Sprite
-    netsync: false
-    sprite: Structures/Doors/MineralDoors/uranium_door.rsi
-    layers:
-    - state: closed
-      map: ["enum.DoorVisualLayers.Base"]
-  - type: Damageable
-    damageContainer: Inorganic
-    damageModifierSet: StrongMetallic
-  - type: Destructible
-    thresholds:
-    - trigger:
-        !type:DamageTrigger
-        damage: 300
-      behaviors:
-      - !type:DoActsBehavior
-        acts: ["Destruction"]
-  - type: Construction
-    graph: DoorGraph
-    node: uraniumDoor
-
-- type: entity
   id: GoldDoor
   name: gold door
   parent: BaseMaterialDoor
@@ -249,20 +195,4 @@
   - type: Construction
     graph: DoorGraph
     node: silverDoor
-
-- type: entity
-  id: SandstoneDoor
-  name: sandstone door
-  parent: BaseMaterialDoor
-  description: A door, where will it lead?
-  components:
-  - type: Sprite
-    netsync: false
-    sprite: Structures/Doors/MineralDoors/sandstone_door.rsi
-    layers:
-    - state: closed
-      map: ["enum.DoorVisualLayers.Base"]
-  - type: Construction
-    graph: DoorGraph
-    node: sandstoneDoor
 

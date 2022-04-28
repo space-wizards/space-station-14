@@ -1,5 +1,3 @@
-using System;
-using System.Collections.Generic;
 using System.Runtime.ExceptionServices;
 using System.Threading;
 using System.Threading.Tasks;
@@ -8,17 +6,10 @@ using Content.Server.AI.Pathfinding;
 using Content.Server.AI.Pathfinding.Pathfinders;
 using Content.Server.CPUJob.JobQueues;
 using Content.Shared.Access.Systems;
-using Content.Shared.ActionBlocker;
 using Content.Shared.Interaction;
-using Content.Shared.Interaction.Helpers;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
 using Robust.Shared.Map;
-using Robust.Shared.Maths;
 using Robust.Shared.Physics;
-using Robust.Shared.Timing;
 using Robust.Shared.Utility;
-using Robust.Shared.ViewVariables;
 
 namespace Content.Server.AI.Steering
 {
@@ -249,7 +240,7 @@ namespace Content.Server.AI.Steering
             // Main optimisation to be done below is the redundant calls and adding more variables
             if (Deleted(entity) ||
                 !EntityManager.TryGetComponent(entity, out AiControllerComponent? controller) ||
-                !EntitySystem.Get<ActionBlockerSystem>().CanMove(entity) ||
+                !controller.CanMove ||
                 !EntityManager.GetComponent<TransformComponent>(entity).GridID.IsValid())
             {
                 return SteeringStatus.NoPath;

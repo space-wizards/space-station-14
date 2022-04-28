@@ -19,6 +19,7 @@
       - VaultImpassable
       mask:
       - Impassable
+      - VaultImpassable # tables should collide with other tables
       - SmallImpassable
   - type: Sprite
     netsync: false

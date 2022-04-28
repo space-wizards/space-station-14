@@ -135,6 +135,11 @@ public abstract class SharedDoorSystem : EntitySystem
                 door.NextStateChange = GameTiming.CurTime + door.DenyDuration;
                 break;
 
+            case DoorState.Emagging:
+                _activeDoors.Add(door);
+                door.NextStateChange = GameTiming.CurTime + door.EmagDuration;
+                break;
+
             case DoorState.Open:
             case DoorState.Closed:
                 door.Partial = false;
@@ -162,12 +167,9 @@ public abstract class SharedDoorSystem : EntitySystem
     #endregion
 
     #region Interactions
-    private void OnActivate(EntityUid uid, DoorComponent door, ActivateInWorldEvent args)
+    protected virtual void OnActivate(EntityUid uid, DoorComponent door, ActivateInWorldEvent args)
     {
-        if (args.Handled || !door.ClickOpen)
-            return;
-
-        TryToggleDoor(uid, door, args.User);
+        // avoid client-mispredicts, as the server will definitely handle this event
         args.Handled = true;
     }
 
@@ -355,7 +357,7 @@ public abstract class SharedDoorSystem : EntitySystem
         SetCollidable(uid, true, door, physics);
         door.NextStateChange = GameTiming.CurTime + door.CloseTimeTwo;
         _activeDoors.Add(door);
-        
+
         // Crush any entities. Note that we don't check airlock safety here. This should have been checked before
         // the door closed.
         Crush(uid, door, physics);
@@ -431,7 +433,7 @@ public abstract class SharedDoorSystem : EntitySystem
             if (!otherPhysics.CanCollide)
                 continue;
 
-            if ((physics.CollisionMask & otherPhysics.CollisionLayer) == 0
+            if (otherPhysics.BodyType == BodyType.Static || (physics.CollisionMask & otherPhysics.CollisionLayer) == 0
                 && (otherPhysics.CollisionMask & physics.CollisionLayer) == 0)
                 continue;
 
@@ -580,6 +582,10 @@ public abstract class SharedDoorSystem : EntitySystem
             case DoorState.Denying:
                 // Finish denying entry and return to the closed state.
                 SetState(door.Owner, DoorState.Closed, door);
+                break;
+
+            case DoorState.Emagging:
+                StartOpening(door.Owner, door);
                 break;
 
             case DoorState.Open:
