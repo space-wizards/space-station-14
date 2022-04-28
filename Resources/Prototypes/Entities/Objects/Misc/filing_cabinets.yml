@@ -20,6 +20,10 @@
     visuals:
     - type: BagOpenCloseVisualizer
       openIcon: filingcabinet-open
+  - type: UserInterface
+    interfaces:
+    - key: enum.StorageUiKey.Key
+      type: StorageBoundUserInterface
 
 - type: entity
   name: tall cabinet
@@ -56,3 +60,7 @@
     visuals:
     - type: BagOpenCloseVisualizer
       openIcon: chestdrawer-open
+  - type: UserInterface
+    interfaces:
+    - key: enum.StorageUiKey.Key
+      type: StorageBoundUserInterface
