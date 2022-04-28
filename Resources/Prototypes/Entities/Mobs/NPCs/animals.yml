@@ -499,6 +499,7 @@
       path: /Audio/Animals/goose_honk.ogg
   - type: Bloodstream
     bloodMaxVolume: 100
+  - type: Puller
 
 - type: entity
   name: gorilla
@@ -537,6 +538,7 @@
       amount: 4
   - type: Bloodstream
     bloodMaxVolume: 300
+  - type: Puller
 
 - type: entity
   name: kangaroo
@@ -573,7 +575,8 @@
         # SKIPPY NO!
         crit: kangaroo-dead
         dead: kangaroo-dead
-
+  - type: Puller
+  
 - type: entity
   name: boxing kangaroo
   parent: MobKangaroo
@@ -648,6 +651,7 @@
     - id: FoodMeat
       amount: 3
   - type: MonkeyAccent
+  - type: Puller
 
 - type: entity
   name: mouse
@@ -1150,6 +1154,7 @@
     successChance: 0.5
     interactSuccessString: petting-success-tarantula
     interactFailureString: petting-failure-generic
+  - type: Puller
 
 - type: entity
   name: tarantula
