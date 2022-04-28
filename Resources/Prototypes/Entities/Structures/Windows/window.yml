@@ -69,7 +69,7 @@
     base: window
   - type: InteractionPopup
     interactSuccessString: comp-window-knock
-    popupPerceivedByOthers: true
+    messagePerceivedByOthers: comp-window-knock
     interactSuccessSound:
       path: /Audio/Effects/glass_knock.ogg
   - type: Construction
@@ -110,7 +110,7 @@
     state: window
   - type: InteractionPopup
     interactSuccessString: comp-window-knock
-    popupPerceivedByOthers: true
+    messagePerceivedByOthers: comp-window-knock
     interactSuccessSound:
       path: /Audio/Effects/glass_knock.ogg
   - type: Physics
