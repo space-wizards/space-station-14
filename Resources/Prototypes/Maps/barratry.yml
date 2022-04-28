@@ -1,11 +1,11 @@
 - type: gameMap
-  id: ntbarratry
-  mapName: 'NT Barratry'
-  mapNameTemplate: '{0} NT Barratry {1}'
+  id: barratry
+  mapName: 'Barratry'
+  mapNameTemplate: '{0} Barratry {1}'
   nameGenerator:
     !type:NanotrasenNameGenerator
     prefixCreator: '14'
-  mapPath: /Maps/ntbarratry.yml
+  mapPath: /Maps/barratry.yml
   minPlayers: 40
   overflowJobs:
     - Assistant

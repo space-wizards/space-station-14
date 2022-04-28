@@ -92,19 +92,20 @@ namespace Content.Server.Drone
             {
                 var body = Comp<SharedBodyComponent>(uid); //There's no way something can have a mobstate but not a body...
 
-                foreach (var item in drone.ToolUids.Select((value, i) => ( value, i )))
+                foreach (var item in drone.ToolUids)
                 {
-                    if (_tagSystem.HasTag(item.value, "Drone"))
+                    if (_tagSystem.HasTag(item, "Drone"))
                     {
-                        RemComp<UnremoveableComponent>(item.value);
+                        RemComp<UnremoveableComponent>(item);
                     }
                     else
                     {
-                        EntityManager.DeleteEntity(item.value);
+                        Del(item);
                     }
                 }
+
                 body.Gib();
-                EntityManager.DeleteEntity(uid);
+                Del(uid);
             }
         }
 
@@ -124,7 +125,7 @@ namespace Content.Server.Drone
                     var items = EntitySpawnCollection.GetSpawns(drone.Tools, _robustRandom);
                     foreach (var entry in items)
                     {
-                        var item = EntityManager.SpawnEntity(entry, spawnCoord);
+                        var item = Spawn(entry, spawnCoord);
                         AddComp<UnremoveableComponent>(item);
                         if (!_handsSystem.TryPickupAnyHand(uid, item, checkActionBlocker: false))
                         {

@@ -27,20 +27,6 @@
             - material: Plasma
               amount: 20
               doAfter: 15
-        - to: diamondDoor
-          completed:
-            - !type:SnapToGrid { }
-          steps:
-            - material: Diamond
-              amount: 20
-              doAfter: 15
-        - to: uraniumDoor
-          completed:
-            - !type:SnapToGrid { }
-          steps:
-            - material: Uranium
-              amount: 20
-              doAfter: 15
         - to: goldDoor
           completed:
             - !type:SnapToGrid { }
@@ -53,13 +39,6 @@
             - !type:SnapToGrid { }
           steps:
             - material: Silver
-              amount: 20
-              doAfter: 15
-        - to: sandstoneDoor
-          completed:
-            - !type:SnapToGrid { }
-          steps:
-            - material: Sand
               amount: 20
               doAfter: 15
         - to: paperDoor
@@ -102,28 +81,6 @@
           steps:
             - tool: Anchoring
               doAfter: 15
-    - node: diamondDoor
-      entity: DiamondDoor
-      edges:
-        - to: start
-          completed:
-            - !type:SpawnPrototype
-              prototype: MaterialDiamond1
-              amount: 20
-          steps:
-            - tool: Anchoring
-              doAfter: 15
-    - node: uraniumDoor
-      entity: UraniumDoor
-      edges:
-        - to: start
-          completed:
-            - !type:SpawnPrototype
-              prototype: SheetUranium1
-              amount: 20
-          steps:
-            - tool: Anchoring
-              doAfter: 15
     - node: goldDoor
       entity: GoldDoor
       edges:
@@ -142,17 +99,6 @@
           completed:
             - !type:SpawnPrototype
               prototype: IngotSilver1
-              amount: 20
-          steps:
-            - tool: Anchoring
-              doAfter: 15
-    - node: sandstoneDoor
-      entity: SandstoneDoor
-      edges:
-        - to: start
-          completed:
-            - !type:SpawnPrototype
-              prototype: Sand
               amount: 20
           steps:
             - tool: Anchoring
