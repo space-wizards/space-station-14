@@ -1,22 +1,4 @@
 Entries:
-- author: Rane
-  changes:
-  - {message: No-slip shoes now appear to be regular shoes when examined., type: Fix}
-  id: 915
-  time: '2022-01-22T01:58:27.0000000+00:00'
-- author: mirrorcult
-  changes:
-  - {message: 'NanoTrasen manufacturing budget for item number TB-10298 ("glass table")
-      and all derivative products has been cut. We do not recommend you climb on any
-      instances of TB-10298, and definitely do not slam anyone down on an instance
-      of TB-10298.', type: Add}
-  id: 916
-  time: '2022-01-22T12:52:35.0000000+00:00'
-- author: DubiousDoggo
-  changes:
-  - {message: Added construction for disposal pipes, type: Add}
-  id: 917
-  time: '2022-01-22T12:54:26.0000000+00:00'
 - author: Macoron
   changes:
   - {message: Added to codebase new xeno artifacts with random effects., type: Add}
@@ -3055,3 +3037,19 @@ Entries:
     type: Fix}
   id: 1414
   time: '2022-04-28T11:56:21.0000000+00:00'
+- author: vulppine
+  changes:
+  - {message: Adds the rainbow crayon. Honk!, type: Add}
+  id: 1415
+  time: '2022-04-28T12:23:45.0000000+00:00'
+- author: Peptide90
+  changes:
+  - {message: Added crafting for meat spikes (In furniture) as well as signal buttons
+      and signal switches (All in Machines section)., type: Add}
+  id: 1416
+  time: '2022-04-28T12:24:02.0000000+00:00'
+- author: Veritius
+  changes:
+  - {message: Made xenos unable to slip., type: Tweak}
+  id: 1417
+  time: '2022-04-28T12:24:39.0000000+00:00'
