@@ -6,6 +6,7 @@ using Robust.Shared.Serialization.Manager.Attributes;
 
 namespace Content.Server.Wires;
 
+/// <summary><see cref="IWireAction" /></summary>
 public abstract class BaseWireAction : IWireAction
 {
     public IEntityManager EntityManager = default!;
@@ -36,6 +37,10 @@ public abstract class BaseWireAction : IWireAction
     //
     // this isn't required by any wire system methods though, so whatever inherits it here
     // can use it
+    /// <summary>
+    ///     Utility function to check if this given entity is powered.
+    /// </summary>
+    /// <returns>true if powered, false otherwise</returns>
     public bool IsPowered(EntityUid uid)
     {
         if (!EntityManager.TryGetComponent<ApcPowerReceiverComponent>(uid, out var power)

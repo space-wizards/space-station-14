@@ -1,10 +1,29 @@
 namespace Content.Server.Wires;
 
-// Some wire actions are literally just toggles
+/// <summary>
+///     Utility class meant to be implemented. This is to
+///     toggle a value whenever a wire is cut, mended,
+///     or pulsed.
+/// </summary>
 public abstract class BaseToggleWireAction : BaseWireAction
 {
+    /// <summary>
+    ///     Toggles the value on the given entity. An implementor
+    ///     is expected to handle the value toggle appropriately.
+    /// </summary>
     public abstract void ToggleValue(EntityUid owner, bool setting);
+    /// <summary>
+    ///     Gets the value on the given entity. An implementor
+    ///     is expected to handle the value getter properly.
+    /// </summary>
     public abstract bool GetValue(EntityUid owner);
+    /// <summary>
+    ///     Timeout key for the wire, if it is pulsed.
+    ///     If this is null, there will be no value revert
+    ///     after a given delay, otherwise, the value will
+    ///     be set to the opposite of what it currently is
+    ///     (according to GetValue)
+    /// </summary>
     public virtual object? TimeoutKey { get; } = null;
     public virtual int Delay { get; } = 30;
 

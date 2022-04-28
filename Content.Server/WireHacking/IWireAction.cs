@@ -37,23 +37,31 @@ public interface IWireAction
     ///     If this returns false, this will convert
     ///     the given wire into a 'dummy' wire instead.
     /// </summary>
+    /// <param name="wire">The wire in the entity's WiresComponent.</param>
+    /// <param name="count">The current count of this instance of the wire type.</param>
     public bool AddWire(Wire wire, int count);
 
     /// <summary>
     ///     What happens when this wire is cut.
     /// </summary>
+    /// <param name="user">The user attempting to interact with the wire.</param>
+    /// <param name="wire">The wire being interacted with.</param>
     /// <returns>true if successful, false otherwise.</summary>
     public bool Cut(EntityUid user, Wire wire);
 
     /// <summary>
     ///     What happens when this wire is mended.
     /// </summary>
+    /// <param name="user">The user attempting to interact with the wire.</param>
+    /// <param name="wire">The wire being interacted with.</param>
     /// <returns>true if successful, false otherwise.</summary>
     public bool Mend(EntityUid user, Wire wire);
 
     /// <summary>
     ///     What happens when this wire is pulsed.
     /// </summary>
+    /// <param name="user">The user attempting to interact with the wire.</param>
+    /// <param name="wire">The wire being interacted with.</param>
     /// <returns>true if successful, false otherwise.</summary>
     public bool Pulse(EntityUid user, Wire wire);
 

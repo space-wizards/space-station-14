@@ -46,8 +46,6 @@ public sealed class WiresSystem : EntitySystem
 
     public const float ScrewTime = 2.5f;
 
-    // These... shouldn't be added into wire layouts as an action.
-    // This does nothing as a wire action.
     private static DummyWireAction _dummyWire = new DummyWireAction();
 
     #region Initialization
