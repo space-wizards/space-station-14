@@ -81,6 +81,7 @@
   name: small standard power cell
   description: A rechargeable standardized power cell, size S. This is the cheapest kind you can find.
   id: PowerCellSmallStandard
+  suffix: Full
   parent: PowerCellSmallBase
   components:
   - type: Sprite
@@ -89,16 +90,25 @@
     - state: s_st
   - type: Battery
     maxCharge: 360
-    startingCharge: 0
+    startingCharge: 360
   - type: Appearance
     visuals:
     - type: PowerCellVisualizer
       prefix: s_st
 
 - type: entity
+  id: PowerCellSmallStandardPrinted
+  parent: PowerCellSmallStandard
+  components:
+    - type: Battery
+    maxCharge: 360
+    startingCharge: 0
+
+- type: entity
   name: small high-capacity power cell
   description: A rechargeable standardized power cell, size S. This is the popular and reliable version.
   id: PowerCellSmallHigh
+  suffix: Full
   parent: PowerCellSmallBase
   components:
   - type: Sprite
@@ -107,16 +117,25 @@
     - state: s_hi
   - type: Battery
     maxCharge: 720
-    startingCharge: 0
+    startingCharge: 720
   - type: Appearance
     visuals:
     - type: PowerCellVisualizer
       prefix: s_hi
 
 - type: entity
+  id: PowerCellSmallHighPrinted
+  parent: PowerCellSmallHigh
+  components:
+    - type: Battery
+    maxCharge: 720
+    startingCharge: 0
+
+- type: entity
   name: small super-capacity power cell
   description: A rechargeable standardized power cell, size S. This premium high-capacity brand stores up to 50% more energy than the competition.
   id: PowerCellSmallSuper
+  suffix: Full
   parent: PowerCellSmallBase
   components:
   - type: Sprite
@@ -125,17 +144,25 @@
     - state: s_sup
   - type: Battery
     maxCharge: 1080
-    startingCharge: 0
+    startingCharge: 1080
   - type: Appearance
     visuals:
     - type: PowerCellVisualizer
       prefix: s_sup
 
+- type: entity
+  id: PowerCellSmallSuperPrinted
+  parent: PowerCellSmallSuper
+  components:
+    - type: Battery
+    maxCharge: 1080
+    startingCharge: 0
 
 - type: entity
   name: small hyper-capacity power cell
   description: A rechargeable standardized power cell, size S. This one looks like a rare and powerful prototype.
   id: PowerCellSmallHyper
+  suffix: Full
   parent: PowerCellSmallBase
   components:
   - type: Sprite
@@ -144,16 +171,25 @@
     - state: s_hy
   - type: Battery
     maxCharge: 1800
-    startingCharge: 0
+    startingCharge: 1800
   - type: Appearance
     visuals:
     - type: PowerCellVisualizer
       prefix: s_hy
 
 - type: entity
+  id: PowerCellSmallHyperPrinted
+  parent: PowerCellSmallHyper
+  components:
+    - type: Battery
+    maxCharge: 1800
+    startingCharge: 0
+
+- type: entity
   name: small microreactor cell
   description: A rechargeable standardized microreactor cell, size S. Intended for low-power devices, it slowly recharges by itself.
   id: PowerCellSmallAutorecharge
+  suffix: Full
   parent: PowerCellSmallBase
   components:
     - type: Sprite
@@ -162,7 +198,7 @@
         - state: s_ar
     - type: Battery
       maxCharge: 50
-      startingCharge: 0
+      startingCharge: 50
     - type: BatterySelfRecharger
       autoRecharge: true
       autoRechargeRate: 0.16667 #takes about 5 minutes to charge itself back to full
@@ -175,6 +211,7 @@
   name: hardsuit helmet power cell
   description: A small cell that recharges itself intended for hardsuit helmets.
   id: PowerCellHardsuitHelmet
+  suffix: Full
   parent: PowerCellSmallBase
   components:
     - type: Sprite
@@ -183,7 +220,7 @@
         - state: s_ar
     - type: Battery
       maxCharge: 600 #lights drain 3/s but recharge of 2 makes this 1/s. Therefore 600 is 10 minutes of light.
-      startingCharge: 0
+      startingCharge: 600
     - type: BatterySelfRecharger
       autoRecharge: true
       autoRechargeRate: 2 #recharge of 2 makes total drain 1w / s so max charge is 1:1 with time. Time to fully charge should be 5 minutes. Having recharge gives light an extended flicker period which gives you some warning to return to light area.
@@ -196,6 +233,7 @@
   name: medium standard power cell
   description: A rechargeable standardized power cell, size M. This is the cheapest kind you can find.
   id: PowerCellMediumStandard
+  suffix: Full
   parent: PowerCellMediumBase
   components:
     - type: Sprite
@@ -204,16 +242,25 @@
         - state: m_st
     - type: Battery
       maxCharge: 2160
-      startingCharge: 0
+      startingCharge: 2160
     - type: Appearance
       visuals:
         - type: PowerCellVisualizer
           prefix: m_st
 
 - type: entity
+  id: PowerCellMediumStandardPrinted
+  parent: PowerCellMediumStandard
+  components:
+    - type: Battery
+    maxCharge: 2160
+    startingCharge: 0
+
+- type: entity
   name: medium high-capacity power cell
   description: A rechargeable standardized power cell, size M. This is the popular and reliable version.
   id: PowerCellMediumHigh
+  suffix: Full
   parent: PowerCellMediumBase
   components:
     - type: Sprite
@@ -222,16 +269,25 @@
         - state: m_hi
     - type: Battery
       maxCharge: 2880
-      startingCharge: 0
+      startingCharge: 2880
     - type: Appearance
       visuals:
         - type: PowerCellVisualizer
           prefix: m_hi
 
 - type: entity
+  id: PowerCellMediumHighPrinted
+  parent: PowerCellMediumHigh
+  components:
+    - type: Battery
+    maxCharge: 2880
+    startingCharge: 0
+
+- type: entity
   name: medium super-capacity power cell
   description: A rechargeable standardized power cell, size M. This premium high-capacity brand stores up to 50% more energy than the competition.
   id: PowerCellMediumSuper
+  suffix: Full
   parent: PowerCellMediumBase
   components:
     - type: Sprite
@@ -240,16 +296,25 @@
         - state: m_sup
     - type: Battery
       maxCharge: 3600
-      startingCharge: 0
+      startingCharge: 3600
     - type: Appearance
       visuals:
         - type: PowerCellVisualizer
           prefix: m_sup
 
 - type: entity
+  id: PowerCellMediumSuperPrinted
+  parent: PowerCellMediumSuper
+  components:
+    - type: Battery
+    maxCharge: 3600
+    startingCharge: 0
+
+- type: entity
   name: medium hyper-capacity power cell
   description: A rechargeable standardized power cell, size M. This one looks like a rare and powerful prototype.
   id: PowerCellMediumHyper
+  suffix: Full
   parent: PowerCellMediumBase
   components:
     - type: Sprite
@@ -258,16 +323,25 @@
         - state: m_hy
     - type: Battery
       maxCharge: 5400
-      startingCharge: 0
+      startingCharge: 5400
     - type: Appearance
       visuals:
         - type: PowerCellVisualizer
           prefix: m_hy
 
 - type: entity
+  id: PowerCellMediumHyperPrinted
+  parent: PowerCellMediumHyper
+  components:
+    - type: Battery
+    maxCharge: 5400
+    startingCharge: 0
+
+- type: entity
   name: large standard power cell
   description: A rechargeable standardized power cell, size L. This is the cheapest kind you can find.
   id: PowerCellLargeStandard
+  suffix: Full
   parent: PowerCellLargeBase
   components:
     - type: Sprite
@@ -276,16 +350,25 @@
         - state: l_st
     - type: Battery
       maxCharge: 9000
-      startingCharge: 0
+      startingCharge: 9000
     - type: Appearance
       visuals:
         - type: PowerCellVisualizer
           prefix: l_st
 
 - type: entity
+  id: PowerCellLargeStandardPrinted
+  parent: PowerCellLargeStandard
+  components:
+    - type: Battery
+    maxCharge: 9000
+    startingCharge: 0
+
+- type: entity
   name: large high-capacity power cell
   description: A rechargeable standardized power cell, size L. This is the popular and reliable version.
   id: PowerCellLargeHigh
+  suffix: Full
   parent: PowerCellLargeBase
   components:
     - type: Sprite
@@ -294,16 +377,25 @@
         - state: l_hi
     - type: Battery
       maxCharge: 18000
-      startingCharge: 0
+      startingCharge: 18000
     - type: Appearance
       visuals:
         - type: PowerCellVisualizer
           prefix: l_hi
 
 - type: entity
+  id: PowerCellLargeHighPrinted
+  parent: PowerCellLargeHigh
+  components:
+    - type: Battery
+    maxCharge: 18000
+    startingCharge: 0
+
+- type: entity
   name: large super-capacity power cell
   description: A rechargeable standardized power cell, size M. This premium high-capacity brand stores up to 50% more energy than the competition.
   id: PowerCellLargeSuper
+  suffix: Full
   parent: PowerCellLargeBase
   components:
     - type: Sprite
@@ -312,16 +404,25 @@
         - state: l_sup
     - type: Battery
       maxCharge: 54000
-      startingCharge: 0
+      startingCharge: 54000
     - type: Appearance
       visuals:
         - type: PowerCellVisualizer
           prefix: l_sup
 
 - type: entity
+  id: PowerCellLargeSuperPrinted
+  parent: PowerCellLargeSuper
+  components:
+    - type: Battery
+    maxCharge: 54000
+    startingCharge: 0
+
+- type: entity
   name: large hyper-capacity power cell
   description: A rechargeable standardized power cell, size L. This one looks like a rare and powerful prototype.
   id: PowerCellLargeHyper
+  suffix: Full
   parent: PowerCellLargeBase
   components:
     - type: Sprite
@@ -330,8 +431,16 @@
         - state: l_hy
     - type: Battery
       maxCharge: 72000
-      startingCharge: 0
+      startingCharge: 72000
     - type: Appearance
       visuals:
         - type: PowerCellVisualizer
           prefix: l_hy
+
+- type: entity
+  id: PowerCellLargeHyperPrinted
+  parent: PowerCellLargeHyper
+  components:
+    - type: Battery
+    maxCharge: 72000
+    startingCharge: 0
