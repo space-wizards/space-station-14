@@ -102,7 +102,9 @@ namespace Content.Server.Lathe
         /// </summary>
         private void OnInteractUsing(EntityUid uid, LatheComponent component, InteractUsingEvent args)
         {
-            if (!TryComp<MaterialStorageComponent>(uid, out var storage) || !TryComp<MaterialComponent>(args.Used, out var material))
+            if (!TryComp<MaterialStorageComponent>(uid, out var storage) 
+                || !TryComp<MaterialComponent>(args.Used, out var material)
+                || component.LatheWhitelist?.IsValid(args.Used) == false)
                 return;
 
             var multiplier = 1;
@@ -113,24 +115,30 @@ namespace Content.Server.Lathe
             var totalAmount = 0;
 
             // Check if it can insert all materials.
-            foreach (var mat in material.MaterialIds)
+            foreach (var (mat, vol) in material._materials)
             {
-                // TODO: Change how MaterialComponent works so this is not hard-coded.
-                if (!storage.CanInsertMaterial(mat, component.VolumePerSheet * multiplier))
-                    return;
-                totalAmount += component.VolumePerSheet * multiplier;
+                if (!storage.CanInsertMaterial(mat,
+                        vol * multiplier)) return;
+                totalAmount += vol * multiplier;
             }
 
             // Check if it can take ALL of the material's volume.
             if (storage.StorageLimit > 0 && !storage.CanTakeAmount(totalAmount))
                 return;
             var lastMat = string.Empty;
-            foreach (var mat in material.MaterialIds)
+            foreach (var (mat, vol) in material._materials)
             {
-                storage.InsertMaterial(mat, component.VolumePerSheet * multiplier);
+                storage.InsertMaterial(mat, vol * multiplier);
                 lastMat = mat;
             }
-            /// We need the prototype to get the color
+            
+            // Play a sound when inserting, if any
+            if (component.InsertingSound != null)
+            {
+                SoundSystem.Play(Filter.Pvs(component.Owner, entityManager: EntityManager), component.InsertingSound.GetSound(), component.Owner);
+            }
+            
+            // We need the prototype to get the color
             _prototypeManager.TryIndex(lastMat, out MaterialPrototype? matProto);
 
             EntityManager.QueueDeleteEntity(args.Used);
