@@ -51,6 +51,42 @@
   canBuildInImpassable: false
   conditions:
     - !type:TileNotBlocked
+    
+- type: construction
+  name: hidden door (false wall)
+  id: HiddenDoor
+  graph: Girder
+  startNode: start
+  targetNode: HiddenDoor
+  category: Structures
+  description: A secret door that looks like a wall.
+  icon:
+    sprite: Structures/Walls/solid.rsi
+    state: full
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canRotate: false
+  canBuildInImpassable: false
+  conditions:
+    - !type:TileNotBlocked
+    
+- type: construction
+  name: hidden door (false wall)
+  id: HiddenDoorReinforced
+  graph: Girder
+  startNode: start
+  targetNode: HiddenDoorReinforced
+  category: Structures
+  description: A secret door that looks like a reinforced wall.
+  icon:
+    sprite: Structures/Walls/solid.rsi
+    state: rgeneric
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canRotate: false
+  canBuildInImpassable: false
+  conditions:
+    - !type:TileNotBlocked
 
 - type: construction
   name: grille

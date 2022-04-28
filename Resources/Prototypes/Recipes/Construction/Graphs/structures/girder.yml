@@ -55,9 +55,42 @@
             - material: Plasteel
               amount: 2
               doAfter: 1
+              
+        - to: HiddenDoor
+          completed:
+            - !type:SnapToGrid
+              southRotation: true
+          steps:
+            - material: Steel
+              amount: 2
+              doAfter: 2
+              
+        - to: HiddenDoorReinforced
+          completed:
+            - !type:SnapToGrid
+              southRotation: true
+          steps:
+            - material: Plasteel
+              amount: 2
+              doAfter: 1
 
     - node: wall
       entity: WallSolid
+      edges:
+        - to: girder
+          completed:
+            - !type:SpawnPrototype
+              prototype: SheetSteel1
+              amount: 2
+          steps:
+            - tool: Welding
+              doAfter: 10
+
+    - node: HiddenDoor
+      entity: HiddenDoorMetal
+      actions:
+      - !type:SnapToGrid {}
+      - !type:SetAnchor {}
       edges:
         - to: girder
           completed:
@@ -85,13 +118,28 @@
             - material: Plasteel
               amount: 2
               doAfter: 1
-
+              
         - to: girder
           completed:
             - !type:SnapToGrid
               southRotation: true
           conditions:
             - !type:EntityAnchored { }
+          steps:
+            - tool: Welding
+              doAfter: 10
+              
+    - node: HiddenDoorReinforced
+      entity: HiddenDoorReinforced
+      actions:
+      - !type:SnapToGrid {}
+      - !type:SetAnchor {}
+      edges:
+        - to: girder
+          completed:
+            - !type:SpawnPrototype
+              prototype: SheetPlasteel1
+              amount: 2
           steps:
             - tool: Welding
               doAfter: 10
