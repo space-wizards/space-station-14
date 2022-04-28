@@ -1,6 +1,6 @@
 ﻿- type: entity
   id: SmallboxItem
-  parent: BaseItem
+  parent: BaseStorageItem
   abstract: true
   components:
   - type: Storage
