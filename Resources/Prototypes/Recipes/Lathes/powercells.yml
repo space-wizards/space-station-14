@@ -16,6 +16,7 @@
     Steel: 300
     Glass: 300
     Plastic: 100
+    Gold: 10
 
 - type: latheRecipe
   id: PowerCellSmallSuper
@@ -47,6 +48,7 @@
     Steel: 1800
     Glass: 1800
     Plastic: 600
+    Gold: 60
 
 - type: latheRecipe
   id: PowerCellMediumSuper
@@ -77,6 +79,7 @@
     Steel: 7500
     Glass: 7500
     Plastic: 2500
+    Gold: 250
 
 - type: latheRecipe
   id: PowerCellLargeSuper
