@@ -22,7 +22,7 @@ namespace Content.Client.UserInterface.Controls
 
         private readonly VScrollBar _vScrollBar;
 
-        private IReadOnlyList<EntityUid>? _entityUids;
+        private List<EntityUid>? _entityUids;
         private int _count = 0;
         private float _itemHeight = 0;
         private float _totalHeight = 0;
@@ -62,7 +62,7 @@ namespace Content.Client.UserInterface.Controls
             _vScrollBar.OnValueChanged += ScrollValueChanged;
         }
 
-        public void PopulateList(IReadOnlyList<EntityUid> entities)
+        public void PopulateList(List<EntityUid> entities)
         {
             if (_count == 0 && entities.Count > 0)
             {

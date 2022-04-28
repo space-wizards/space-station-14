@@ -3,11 +3,12 @@ using Robust.Client.GameObjects;
 using Robust.Client.UserInterface.Controls;
 using Robust.Shared.Input;
 using Content.Client.Items.Managers;
-
+using JetBrains.Annotations;
 using static Content.Shared.Storage.SharedStorageComponent;
 
 namespace Content.Client.Storage
 {
+    [UsedImplicitly]
     public sealed class StorageBoundUserInterface : BoundUserInterface
     {
         [ViewVariables] private StorageWindow? _window;
@@ -19,16 +20,23 @@ namespace Content.Client.Storage
         protected override void Open()
         {
             base.Open();
-            var entMan = IoCManager.Resolve<IEntityManager>();
 
-            _window = new StorageWindow(this) {Title = entMan.GetComponent<MetaDataComponent>(Owner.Owner).EntityName};
+            if (_window == null)
+            {
+                var entMan = IoCManager.Resolve<IEntityManager>();
+                _window = new StorageWindow(entMan) {Title = entMan.GetComponent<MetaDataComponent>(Owner.Owner).EntityName};
 
-            _window.EntityList.GenerateItem += _window.GenerateButton;
-            _window.EntityList.ItemPressed += InteractWithItem;
-            _window.StorageContainerButton.OnPressed += TouchedContainerButton;
+                _window.EntityList.GenerateItem += _window.GenerateButton;
+                _window.EntityList.ItemPressed += InteractWithItem;
+                _window.StorageContainerButton.OnPressed += TouchedContainerButton;
 
-            _window.OnClose += Close;
-            _window.OpenCentered();
+                _window.OnClose += Close;
+                _window.OpenCentered();
+            }
+            else
+            {
+                _window.Open();
+            }
         }
 
         public void InteractWithItem(BaseButton.ButtonEventArgs args, EntityUid entity)
@@ -73,6 +81,7 @@ namespace Content.Client.Storage
             }
 
             _window?.Dispose();
+            _window = null;
         }
     }
 }

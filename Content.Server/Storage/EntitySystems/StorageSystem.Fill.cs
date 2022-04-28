@@ -5,7 +5,6 @@ namespace Content.Server.Storage.EntitySystems;
 
 public sealed partial class StorageSystem
 {
-    [Dependency] private StorageSystem _storageSystem = default!;
     private void OnStorageFillMapInit(EntityUid uid, StorageFillComponent component, MapInitEvent args)
     {
         if (component.Contents.Count == 0) return;
@@ -29,7 +28,7 @@ public sealed partial class StorageSystem
             if (storage != null && storage.Insert(ent))
                continue;
 
-            if (serverStorageComp != null && _storageSystem.Insert(uid, ent, serverStorageComp))
+            if (serverStorageComp != null && Insert(uid, ent, serverStorageComp))
                 continue;
 
             Logger.ErrorS("storage", $"Tried to StorageFill {item} inside {uid} but can't.");

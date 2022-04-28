@@ -14,11 +14,11 @@ namespace Content.Shared.Storage
         [Serializable, NetSerializable]
         public sealed class StorageBoundUserInterfaceState : BoundUserInterfaceState
         {
-            public readonly IReadOnlyList<EntityUid> StoredEntities;
+            public readonly List<EntityUid> StoredEntities;
             public readonly int StorageSizeUsed;
             public readonly int StorageCapacityMax;
 
-            public StorageBoundUserInterfaceState(IReadOnlyList<EntityUid> storedEntities, int storageSizeUsed, int storageCapacityMax)
+            public StorageBoundUserInterfaceState(List<EntityUid> storedEntities, int storageSizeUsed, int storageCapacityMax)
             {
                 StoredEntities = storedEntities;
                 StorageSizeUsed = storageSizeUsed;

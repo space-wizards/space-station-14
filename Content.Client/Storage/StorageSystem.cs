@@ -6,7 +6,6 @@ namespace Content.Client.Storage;
 // TODO kill this is all horrid.
 public sealed class StorageSystem : EntitySystem
 {
-    [Dependency] private readonly IEntityManager _entityManager = default!;
     public override void Initialize()
     {
         base.Initialize();
@@ -23,13 +22,15 @@ public sealed class StorageSystem : EntitySystem
         if (!TryComp(msg.Storage, out ClientStorageComponent? storage))
             return;
 
+        TryComp(msg.Storage, out TransformComponent? transformComp);
+
         for (var i = 0; msg.StoredEntities.Count > i; i++)
         {
             var entity = msg.StoredEntities[i];
             var initialPosition = msg.EntityPositions[i];
-            if (_entityManager.EntityExists(entity) && TryComp(msg.Storage, out TransformComponent? transformComp))
+            if (EntityManager.EntityExists(entity) && transformComp != null)
             {
-                ReusableAnimations.AnimateEntityPickup(entity, initialPosition, transformComp.LocalPosition, _entityManager);
+                ReusableAnimations.AnimateEntityPickup(entity, initialPosition, transformComp.LocalPosition, EntityManager);
             }
         }
     }

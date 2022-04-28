@@ -17,7 +17,6 @@ using Robust.Shared.Containers;
 using Robust.Shared.Input.Binding;
 using Robust.Shared.Map;
 using Robust.Shared.Players;
-
 using static Content.Shared.Storage.SharedStorageComponent;
 
 namespace Content.Server.Interaction
@@ -32,6 +31,7 @@ namespace Content.Server.Interaction
         [Dependency] private readonly PullingSystem _pullSystem = default!;
         [Dependency] private readonly AdminLogSystem _adminLogSystem = default!;
         [Dependency] private readonly UserInterfaceSystem _uiSystem = default!;
+
         public override void Initialize()
         {
             base.Initialize();

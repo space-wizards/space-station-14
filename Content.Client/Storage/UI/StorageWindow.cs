@@ -15,17 +15,17 @@ namespace Content.Client.Storage.UI
     /// </summary>
     public sealed class StorageWindow : DefaultWindow
     {
-        private StorageBoundUserInterface Owner;
-        private Control _vBox;
+        private IEntityManager _entityManager;
+
         private readonly Label _information;
-        public ContainerButton StorageContainerButton;
+        public readonly ContainerButton StorageContainerButton;
         public readonly EntityListDisplay EntityList;
         private readonly StyleBoxFlat _hoveredBox = new() { BackgroundColor = Color.Black.WithAlpha(0.35f) };
         private readonly StyleBoxFlat _unHoveredBox = new() { BackgroundColor = Color.Black.WithAlpha(0.0f) };
 
-        public StorageWindow(StorageBoundUserInterface owner)
+        public StorageWindow(IEntityManager entityManager)
         {
-            Owner = owner;
+            _entityManager = entityManager;
             SetSize = (200, 320);
             Title = Loc.GetString("comp-storage-window-title");
             RectClipContent = true;
@@ -45,13 +45,13 @@ namespace Content.Client.Storage.UI
 
             StorageContainerButton.AddChild(innerContainerButton);
 
-            _vBox = new BoxContainer()
+            Control vBox = new BoxContainer()
             {
                 Orientation = LayoutOrientation.Vertical,
                 MouseFilter = MouseFilterMode.Ignore,
             };
 
-            StorageContainerButton.AddChild(_vBox);
+            StorageContainerButton.AddChild(vBox);
 
             _information = new Label
             {
@@ -59,14 +59,14 @@ namespace Content.Client.Storage.UI
                 VerticalAlignment = VAlignment.Center
             };
 
-            _vBox.AddChild(_information);
+            vBox.AddChild(_information);
 
             EntityList = new EntityListDisplay
             {
                 Name = "EntityListContainer",
             };
 
-            _vBox.AddChild(EntityList);
+            vBox.AddChild(EntityList);
 
             EntityList.OnMouseEntered += _ =>
             {
@@ -103,8 +103,6 @@ namespace Content.Client.Storage.UI
         /// </summary>
         public void GenerateButton(EntityUid entity, EntityContainerButton button)
         {
-            var _entityManager = IoCManager.Resolve<IEntityManager>();
-
             if (!_entityManager.EntityExists(entity))
                 return;
 

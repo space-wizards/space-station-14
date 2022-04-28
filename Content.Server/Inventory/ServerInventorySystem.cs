@@ -1,4 +1,3 @@
-using Content.Server.Atmos;
 using Content.Server.Clothing.Components;
 using Content.Server.Storage.Components;
 using Content.Server.Storage.EntitySystems;
@@ -10,9 +9,10 @@ using InventoryComponent = Content.Shared.Inventory.InventoryComponent;
 
 namespace Content.Server.Inventory
 {
-    sealed class ServerInventorySystem : InventorySystem
+    public sealed class ServerInventorySystem : InventorySystem
     {
         [Dependency] private readonly StorageSystem _storageSystem = default!;
+
         public override void Initialize()
         {
             base.Initialize();

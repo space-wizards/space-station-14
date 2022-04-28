@@ -28,7 +28,6 @@ using Robust.Shared.Map;
 using Robust.Shared.Player;
 using Robust.Server.Containers;
 using Content.Server.Popups;
-
 using static Content.Shared.Storage.SharedStorageComponent;
 
 namespace Content.Server.Storage.EntitySystems
@@ -38,15 +37,15 @@ namespace Content.Server.Storage.EntitySystems
     {
         [Dependency] private readonly IGameTiming _gameTiming = default!;
         [Dependency] private readonly IRobustRandom _random = default!;
-        [Dependency] private readonly DisposalUnitSystem _disposalSystem = default!;
-        [Dependency] private readonly EntityLookupSystem _entityLookupSystem = default!;
         [Dependency] private readonly ContainerSystem _containerSystem = default!;
-        [Dependency] private readonly InteractionSystem _interactionSystem = default!;
+        [Dependency] private readonly DisposalUnitSystem _disposalSystem = default!;
         [Dependency] private readonly DoAfterSystem _doAfterSystem = default!;
-        [Dependency] private readonly SharedHandsSystem _sharedHandsSystem = default!;
-        [Dependency] private readonly UserInterfaceSystem _uiSystem = default!;
+        [Dependency] private readonly EntityLookupSystem _entityLookupSystem = default!;
+        [Dependency] private readonly InteractionSystem _interactionSystem = default!;
         [Dependency] private readonly PopupSystem _popupSystem = default!;
+        [Dependency] private readonly SharedHandsSystem _sharedHandsSystem = default!;
         [Dependency] private readonly SharedInteractionSystem _sharedInteractionSystem = default!;
+        [Dependency] private readonly UserInterfaceSystem _uiSystem = default!;
 
         /// <inheritdoc />
         public override void Initialize()
@@ -196,7 +195,6 @@ namespace Content.Server.Storage.EntitySystems
         /// <summary>
         /// Inserts storable entities into this storage container if possible, otherwise return to the hand of the user
         /// </summary>
-        /// <param name="eventArgs"></param>
         /// <returns>true if inserted, false otherwise</returns>
         private void OnInteractUsing(EntityUid uid, ServerStorageComponent storageComp, InteractUsingEvent args)
         {
@@ -214,7 +212,6 @@ namespace Content.Server.Storage.EntitySystems
         /// <summary>
         /// Sends a message to open the storage UI
         /// </summary>
-        /// <param name="eventArgs"></param>
         /// <returns></returns>
         private void OnActivate(EntityUid uid, ServerStorageComponent storageComp, ActivateInWorldEvent args)
         {
@@ -226,9 +223,8 @@ namespace Content.Server.Storage.EntitySystems
 
         /// <summary>
         /// Allows a user to pick up entities by clicking them, or pick up all entities in a certain radius
-        /// arround a click.
+        /// around a click.
         /// </summary>
-        /// <param name="eventArgs"></param>
         /// <returns></returns>
         private async void AfterInteract(EntityUid uid, ServerStorageComponent storageComp, AfterInteractEvent eventArgs)
         {
@@ -248,11 +244,11 @@ namespace Content.Server.Storage.EntitySystems
                 var validStorables = new List<EntityUid>();
                 foreach (var entity in _entityLookupSystem.GetEntitiesInRange(eventArgs.ClickLocation, storageComp.AreaInsertRadius, LookupFlags.None))
                 {
-                    if (_containerSystem.IsEntityInContainer(entity)
-                        || entity == eventArgs.User
+                    if (entity == eventArgs.User
                         || !HasComp<SharedItemComponent>(entity)
                         || !_interactionSystem.InRangeUnobstructed(eventArgs.User, entity))
                         continue;
+
                     validStorables.Add(entity);
                 }
 
@@ -271,6 +267,7 @@ namespace Content.Server.Storage.EntitySystems
                     await _doAfterSystem.WaitDoAfter(doAfterArgs);
                 }
 
+                // TODO: Make it use the event DoAfter
                 var successfullyInserted = new List<EntityUid>();
                 var successfullyInsertedPositions = new List<EntityCoordinates>();
                 foreach (var entity in validStorables)
@@ -297,7 +294,7 @@ namespace Content.Server.Storage.EntitySystems
                 if (successfullyInserted.Count > 0)
                 {
                     if (storageComp.StorageInsertSound is not null)
-                        SoundSystem.Play(Filter.Pvs(uid), storageComp.StorageInsertSound.GetSound(), uid, AudioParams.Default);
+                        SoundSystem.Play(Filter.Pvs(uid, entityManager: EntityManager), storageComp.StorageInsertSound.GetSound(), uid, AudioParams.Default);
                     RaiseNetworkEvent(new AnimateInsertingEntitiesEvent(uid, successfullyInserted, successfullyInsertedPositions));
                 }
                 return;
@@ -315,8 +312,10 @@ namespace Content.Server.Storage.EntitySystems
 
                 if (TryComp<TransformComponent>(uid, out var transformOwner) && TryComp<TransformComponent>(target, out var transformEnt))
                 {
+                    var parent = transformOwner.ParentUid;
+
                     var position = EntityCoordinates.FromMap(
-                    transformOwner.Parent?.Owner ?? uid,
+                    parent.IsValid() ? parent : uid,
                     transformEnt.MapPosition);
                     if (PlayerInsertEntityInWorld(uid, eventArgs.User, target, storageComp))
                     {
@@ -379,7 +378,7 @@ namespace Content.Server.Storage.EntitySystems
                 UpdateStorageVisualization(uid, storageComp);
 
                 if (storageComp.StorageCloseSound is not null)
-                    SoundSystem.Play(Filter.Pvs(uid), storageComp.StorageCloseSound.GetSound(), uid, AudioParams.Default);
+                    SoundSystem.Play(Filter.Pvs(uid, entityManager: EntityManager), storageComp.StorageCloseSound.GetSound(), uid, AudioParams.Default);
             }
         }
 
@@ -409,9 +408,11 @@ namespace Content.Server.Storage.EntitySystems
             if (storageComp.Storage == null)
                 return;
 
+            var itemQuery = GetEntityQuery<SharedItemComponent>();
+
             foreach (var entity in storageComp.Storage.ContainedEntities)
             {
-                if (!TryComp(entity, out SharedItemComponent? itemComp))
+                if (!itemQuery.TryGetComponent(uid, out var itemComp))
                     continue;
 
                 storageComp.StorageUsed += itemComp.Size;
@@ -486,7 +487,7 @@ namespace Content.Server.Storage.EntitySystems
             _containerSystem.RemoveEntity(uid, itemToRemove, false);
 
             if (storageComp.StorageRemoveSound is not null)
-                SoundSystem.Play(Filter.Pvs(uid), storageComp.StorageRemoveSound.GetSound(), uid, AudioParams.Default);
+                SoundSystem.Play(Filter.Pvs(uid, entityManager: EntityManager), storageComp.StorageRemoveSound.GetSound(), uid, AudioParams.Default);
 
             _sharedHandsSystem.TryPickupAnyHand(player, itemToRemove);
         }
@@ -509,10 +510,10 @@ namespace Content.Server.Storage.EntitySystems
                 itemComp.Size > storageComp.StorageCapacityMax - storageComp.StorageUsed)
                 return false;
 
-            if (storageComp.Whitelist != null && !storageComp.Whitelist.IsValid(insertEnt))
+            if (storageComp.Whitelist?.IsValid(insertEnt, EntityManager) == false)
                 return false;
 
-            if (storageComp.Blacklist != null && storageComp.Blacklist.IsValid(insertEnt))
+            if (storageComp.Blacklist?.IsValid(insertEnt, EntityManager) == false)
                 return false;
 
             if (TryComp(insertEnt, out TransformComponent? transformComp) && transformComp.Anchored)
@@ -535,7 +536,7 @@ namespace Content.Server.Storage.EntitySystems
                 return false;
 
             if (storageComp.StorageInsertSound is not null)
-                SoundSystem.Play(Filter.Pvs(uid), storageComp.StorageInsertSound.GetSound(), uid, AudioParams.Default);
+                SoundSystem.Play(Filter.Pvs(uid, entityManager: EntityManager), storageComp.StorageInsertSound.GetSound(), uid, AudioParams.Default);
 
             RecalculateStorageUsed(uid, storageComp);
             UpdateStorageUI(uid, storageComp);
@@ -548,9 +549,11 @@ namespace Content.Server.Storage.EntitySystems
             if (!Resolve(uid, ref storageComp))
                 return false;
 
-            bool ItemRemoved = storageComp.Storage?.Remove(removeEnt) == true;
-            RecalculateStorageUsed(uid, storageComp);
-            return ItemRemoved;
+            var itemRemoved = storageComp.Storage?.Remove(removeEnt) == true;
+            if (itemRemoved)
+                RecalculateStorageUsed(uid, storageComp);
+
+            return itemRemoved;
         }
 
         /// <summary>
@@ -613,7 +616,7 @@ namespace Content.Server.Storage.EntitySystems
                 return;
 
             if (storageComp.StorageOpenSound is not null)
-                SoundSystem.Play(Filter.Pvs(uid), storageComp.StorageOpenSound.GetSound(), uid, AudioParams.Default);
+                SoundSystem.Play(Filter.Pvs(uid, entityManager: EntityManager), storageComp.StorageOpenSound.GetSound(), uid, AudioParams.Default);
 
             Logger.DebugS(storageComp.LoggerName, $"Storage (UID {uid}) \"used\" by player session (UID {player.PlayerSession.AttachedEntity}).");
 
@@ -659,7 +662,7 @@ namespace Content.Server.Storage.EntitySystems
             if (storageComp.Storage == null)
                 return;
 
-            var state = new StorageBoundUserInterfaceState(storageComp.Storage.ContainedEntities, storageComp.StorageUsed, storageComp.StorageCapacityMax);
+            var state = new StorageBoundUserInterfaceState((List<EntityUid>) storageComp.Storage.ContainedEntities, storageComp.StorageUsed, storageComp.StorageCapacityMax);
 
             _uiSystem.GetUiOrNull(uid, StorageUiKey.Key)?.SetState(state);
         }
