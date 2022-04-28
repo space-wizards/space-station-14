@@ -14,7 +14,10 @@
     Slots:
     - back
   - type: Storage
-    capacity: 100
+    capacity: 120
+  - type: ClothingSpeedModifier
+    walkModifier: 1
+    sprintModifier: 0.9
   - type: UserInterface
     interfaces:
     - key: enum.StorageUiKey.Key
