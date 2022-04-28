@@ -44,7 +44,7 @@ public sealed class WiresSystem : EntitySystem
     // This is where all the wire layouts are stored.
     [ViewVariables] private readonly Dictionary<string, WireLayout> _layouts = new();
 
-    public const float ScrewTime = 2.5f;
+    private const float ScrewTime = 2.5f;
 
     private static DummyWireAction _dummyWire = new DummyWireAction();
 
@@ -518,7 +518,7 @@ public sealed class WiresSystem : EntitySystem
         appearance.SetData(WiresVisuals.MaintenancePanelState, wires.IsPanelOpen && wires.IsPanelVisible);
     }
 
-    public void UpdateUserInterface(EntityUid uid, WiresComponent? wires = null, ServerUserInterfaceComponent? ui = null)
+    private void UpdateUserInterface(EntityUid uid, WiresComponent? wires = null, ServerUserInterfaceComponent? ui = null)
     {
         if (!Resolve(uid, ref wires, ref ui, false)) // logging this means that we get a bunch of errors
             return;
@@ -573,7 +573,7 @@ public sealed class WiresSystem : EntitySystem
     }
 
 
-    public void UpdateWires(EntityUid used, EntityUid user, EntityUid toolEntity, int id, WiresAction action, WiresComponent? wires = null, ToolComponent? tool = null)
+    private void UpdateWires(EntityUid used, EntityUid user, EntityUid toolEntity, int id, WiresAction action, WiresComponent? wires = null, ToolComponent? tool = null)
     {
         if (!Resolve(used, ref wires)
             || !Resolve(toolEntity, ref tool))
@@ -687,46 +687,27 @@ public sealed class WiresSystem : EntitySystem
 
         wires.StateData.Remove(identifier);
     }
-
-
-    // This should be used by IWireActions to set the current
-    // visual state of the wire.
-    public void SetStatus(EntityUid uid, object statusIdentifier, object status, WiresComponent? wires = null)
-    {
-        if (!Resolve(uid, ref wires))
-            return;
-
-        if (wires.Statuses.TryGetValue(statusIdentifier, out var storedMessage))
-        {
-            if (storedMessage == status)
-            {
-                return;
-            }
-        }
-
-        wires.Statuses[statusIdentifier] = status;
-    }
     #endregion
 
     #region Layout Handling
-    public bool TryGetLayout(string id, [NotNullWhen(true)] out WireLayout? layout)
+    private bool TryGetLayout(string id, [NotNullWhen(true)] out WireLayout? layout)
     {
         return _layouts.TryGetValue(id, out layout);
     }
 
-    public void AddLayout(string id, WireLayout layout)
+    private void AddLayout(string id, WireLayout layout)
     {
         _layouts.Add(id, layout);
     }
 
-    public void Reset(RoundRestartCleanupEvent args)
+    private void Reset(RoundRestartCleanupEvent args)
     {
         _layouts.Clear();
     }
     #endregion
 
     #region Events
-    private class WireToolFinishedEvent : EntityEventArgs
+    private sealed class WireToolFinishedEvent : EntityEventArgs
     {
         public EntityUid Target { get; }
 
@@ -739,7 +720,7 @@ public sealed class WiresSystem : EntitySystem
 
 }
 
-public class Wire
+public sealed class Wire
 {
     /// <summary>
     /// The entity that registered the wire.
@@ -790,7 +771,7 @@ public delegate void WireActionDelegate(Wire wire);
 
 // callbacks over the event bus,
 // because async is banned
-public class WireDoAfterEvent : EntityEventArgs
+public sealed class WireDoAfterEvent : EntityEventArgs
 {
     public WireActionDelegate Delegate { get; }
     public Wire Wire { get; }
