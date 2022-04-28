@@ -1,9 +1,4 @@
 Entries:
-- author: Peptide90
-  changes:
-  - {message: Hardsuit helmets and hardhats now show that they're lit., type: Fix}
-  id: 911
-  time: '2022-01-19T22:06:24.0000000+00:00'
 - author: moony
   changes:
   - {message: Players who have joined the game with a character (Not as an observer)
@@ -3055,3 +3050,8 @@ Entries:
       floor tiles., type: Tweak}
   id: 1410
   time: '2022-04-27T07:29:30.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Barratry now has vehicles., type: Tweak}
+  id: 1411
+  time: '2022-04-28T03:17:37.0000000+00:00'
