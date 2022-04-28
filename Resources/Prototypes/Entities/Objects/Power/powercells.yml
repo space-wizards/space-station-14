@@ -100,7 +100,7 @@
   id: PowerCellSmallStandardPrinted
   parent: PowerCellSmallStandard
   components:
-    - type: Battery
+  - type: Battery
     maxCharge: 360
     startingCharge: 0
 
@@ -127,7 +127,7 @@
   id: PowerCellSmallHighPrinted
   parent: PowerCellSmallHigh
   components:
-    - type: Battery
+  - type: Battery
     maxCharge: 720
     startingCharge: 0
 
@@ -154,7 +154,7 @@
   id: PowerCellSmallSuperPrinted
   parent: PowerCellSmallSuper
   components:
-    - type: Battery
+  - type: Battery
     maxCharge: 1080
     startingCharge: 0
 
@@ -181,7 +181,7 @@
   id: PowerCellSmallHyperPrinted
   parent: PowerCellSmallHyper
   components:
-    - type: Battery
+  - type: Battery
     maxCharge: 1800
     startingCharge: 0
 
@@ -252,7 +252,7 @@
   id: PowerCellMediumStandardPrinted
   parent: PowerCellMediumStandard
   components:
-    - type: Battery
+  - type: Battery
     maxCharge: 2160
     startingCharge: 0
 
@@ -279,7 +279,7 @@
   id: PowerCellMediumHighPrinted
   parent: PowerCellMediumHigh
   components:
-    - type: Battery
+  - type: Battery
     maxCharge: 2880
     startingCharge: 0
 
@@ -306,7 +306,7 @@
   id: PowerCellMediumSuperPrinted
   parent: PowerCellMediumSuper
   components:
-    - type: Battery
+  - type: Battery
     maxCharge: 3600
     startingCharge: 0
 
@@ -333,7 +333,7 @@
   id: PowerCellMediumHyperPrinted
   parent: PowerCellMediumHyper
   components:
-    - type: Battery
+  - type: Battery
     maxCharge: 5400
     startingCharge: 0
 
@@ -360,7 +360,7 @@
   id: PowerCellLargeStandardPrinted
   parent: PowerCellLargeStandard
   components:
-    - type: Battery
+  - type: Battery
     maxCharge: 9000
     startingCharge: 0
 
@@ -387,7 +387,7 @@
   id: PowerCellLargeHighPrinted
   parent: PowerCellLargeHigh
   components:
-    - type: Battery
+  - type: Battery
     maxCharge: 18000
     startingCharge: 0
 
@@ -414,7 +414,7 @@
   id: PowerCellLargeSuperPrinted
   parent: PowerCellLargeSuper
   components:
-    - type: Battery
+  - type: Battery
     maxCharge: 54000
     startingCharge: 0
 
@@ -441,6 +441,6 @@
   id: PowerCellLargeHyperPrinted
   parent: PowerCellLargeHyper
   components:
-    - type: Battery
+  - type: Battery
     maxCharge: 72000
     startingCharge: 0
