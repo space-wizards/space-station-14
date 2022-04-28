@@ -28,6 +28,7 @@
     Plastic: 200
     Gold: 50
 
+# The resource required is scaled to their power capacity 
 - type: latheRecipe
   id: PowerCellMediumStandard
   icon: Objects/Power/PowerCells/power_cell_medium_st.rsi
@@ -58,7 +59,6 @@
     Plastic: 1200
     Gold: 300
 
-# The resource required is scaled to their power capacity 
 - type: latheRecipe
   id: PowerCellLargeStandard
   icon: Objects/Power/PowerCells/power_cell_large_st.rsi

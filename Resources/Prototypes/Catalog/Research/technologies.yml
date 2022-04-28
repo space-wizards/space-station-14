@@ -350,6 +350,15 @@
     - GeneratorUraniumMachineCircuitboard
     - Signaller
     - SignalTrigger
+    - PowerCellSmallStandard
+    - PowerCellSmallHigh
+    - PowerCellSmallSuper
+    - PowerCellMediumStandard
+    - PowerCellMediumHigh
+    - PowerCellMediumSuper
+    - PowerCellLargeStandard
+    - PowerCellLargeHigh
+    - PowerCellLargeSuper
 
 - type: technology
   name: "compact power technology"
