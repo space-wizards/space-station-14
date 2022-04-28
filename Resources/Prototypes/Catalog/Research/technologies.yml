@@ -350,15 +350,6 @@
     - GeneratorUraniumMachineCircuitboard
     - Signaller
     - SignalTrigger
-    - PowerCellSmallStandard
-    - PowerCellSmallHigh
-    - PowerCellSmallSuper
-    - PowerCellMediumStandard
-    - PowerCellMediumHigh
-    - PowerCellMediumSuper
-    - PowerCellLargeStandard
-    - PowerCellLargeHigh
-    - PowerCellLargeSuper
 
 - type: technology
   name: "compact power technology"
@@ -391,6 +382,47 @@
     - SynthesizerInstrument
     - DawInstrumentMachineCircuitboard
 
+- type: technology
+  name: "basic powercell printing"
+  id: PowerCellBasic
+  description: now you can print some cheap powercells.
+  icon:
+    sprite: Objects/Power/PowerCells/power_cell_small_st.rsi/s_st.png
+  requiredPoints: 2500
+  requiredTechnologies:
+    - ElectromagneticTheory
+  unlockedRecipes:
+    - PowerCellSmallStandard
+    - PowerCellMediumStandard
+    - PowerCellLargeStandard
+
+- type: technology
+  name: "advanced powercell printing"
+  id: PowerCellAdvanced
+  description: now you can print more powerful powercells.
+  icon:
+    sprite: Objects/Power/PowerCells/power_cell_small_hi.rsi/s_st.png
+  requiredPoints: 5000
+  requiredTechnologies:
+    - ElectromagneticTheory
+  unlockedRecipes:
+    - PowerCellSmallHigh
+    - PowerCellMediumHigh
+    - PowerCellLargeHigh
+
+- type: technology
+  name: "super powercell printing"
+  id: PowerCellAdvanced
+  description: now you can print supercells.
+  icon:
+    sprite: Objects/Power/PowerCells/power_cell_small_sup.rsi/s_st.png
+  requiredPoints: 10000
+  requiredTechnologies:
+    - ElectromagneticTheory
+  unlockedRecipes:
+    - PowerCellSmallSuper
+    - PowerCellMediumSuper
+    - PowerCellLargeSuper
 # Basic Parts Technology Tree
 
 - type: technology
