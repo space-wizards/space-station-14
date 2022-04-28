@@ -1,6 +1,6 @@
 - type: latheRecipe
   id: PowerCellSmallStandard
-  icon: Objects/Power/PowerCells/power_cell_small_st.rsi
+  icon: Objects/Power/PowerCells/power_cell_small_st.rsi/s_st.png
   result: PowerCellSmallStandard
   completetime: 1
   materials:
@@ -9,7 +9,7 @@
 
 - type: latheRecipe
   id: PowerCellSmallHigh
-  icon: Objects/Power/PowerCells/power_cell_small_hi.rsi
+  icon: Objects/Power/PowerCells/power_cell_small_hi.rsi/s_hi.png
   result: PowerCellSmallHigh
   completetime: 6
   materials:
@@ -19,7 +19,7 @@
 
 - type: latheRecipe
   id: PowerCellSmallSuper
-  icon: Objects/Power/PowerCells/power_cell_small_sup.rsi
+  icon: Objects/Power/PowerCells/power_cell_small_sup.rsi/s_sup.png
   result: PowerCellSmallSuper
   completetime: 10
   materials:
@@ -31,7 +31,7 @@
 # The resource required is scaled to their power capacity 
 - type: latheRecipe
   id: PowerCellMediumStandard
-  icon: Objects/Power/PowerCells/power_cell_medium_st.rsi
+  icon: Objects/Power/PowerCells/power_cell_medium_st.rsi/m_st.png
   result: PowerCellMediumStandard
   completetime: 1
   materials:
@@ -40,7 +40,7 @@
 
 - type: latheRecipe
   id: PowerCellMediumHigh
-  icon: Objects/Power/PowerCells/power_cell_medium_hi.rsi
+  icon: Objects/Power/PowerCells/power_cell_medium_hi.rsi/m_hi.png
   result: PowerCellMediumHigh
   completetime: 6
   materials:
@@ -50,7 +50,7 @@
 
 - type: latheRecipe
   id: PowerCellMediumSuper
-  icon: Objects/Power/PowerCells/power_cell_medium_sup.rsi
+  icon: Objects/Power/PowerCells/power_cell_medium_sup.rsi/m_sup.png
   result: PowerCellMediumSuper
   completetime: 10
   materials:
@@ -61,7 +61,7 @@
 
 - type: latheRecipe
   id: PowerCellLargeStandard
-  icon: Objects/Power/PowerCells/power_cell_large_st.rsi
+  icon: Objects/Power/PowerCells/power_cell_large_st.rsi/l_st.png
   result: PowerCellLargeStandard
   completetime: 1
   materials:
@@ -70,7 +70,7 @@
 
 - type: latheRecipe
   id: PowerCellLargeHigh
-  icon: Objects/Power/PowerCells/power_cell_large_hi.rsi
+  icon: Objects/Power/PowerCells/power_cell_large_hi.rsi/l_hi.png
   result: PowerCellLargeHigh
   completetime: 6
   materials:
@@ -80,7 +80,7 @@
 
 - type: latheRecipe
   id: PowerCellLargeSuper
-  icon: Objects/Power/PowerCells/power_cell_large_sup.rsi
+  icon: Objects/Power/PowerCells/power_cell_large_sup.rsi/l_sup.png
   result: PowerCellLargeSuper
   completetime: 10
   materials:
