@@ -1,0 +1,90 @@
+- type: latheRecipe
+  id: PowerCellSmallStandard
+  icon: Objects/Power/PowerCells/power_cell_small_st.rsi
+  result: PowerCellSmallStandard
+  completetime: 1
+  materials:
+    Steel: 100
+    Plastic: 50
+
+- type: latheRecipe
+  id: PowerCellSmallHigh
+  icon: Objects/Power/PowerCells/power_cell_small_hi.rsi
+  result: PowerCellSmallHigh
+  completetime: 6
+  materials:
+    Steel: 300
+    Glass: 300
+    Plastic: 100
+
+- type: latheRecipe
+  id: PowerCellSmallSuper
+  icon: Objects/Power/PowerCells/power_cell_small_sup.rsi
+  result: PowerCellSmallSuper
+  completetime: 10
+  materials:
+    Steel: 300
+    Glass: 400
+    Plastic: 200
+    Gold: 50
+
+- type: latheRecipe
+  id: PowerCellMediumStandard
+  icon: Objects/Power/PowerCells/power_cell_medium_st.rsi
+  result: PowerCellMediumStandard
+  completetime: 1
+  materials:
+    Steel: 600
+    Plastic: 300
+
+- type: latheRecipe
+  id: PowerCellMediumHigh
+  icon: Objects/Power/PowerCells/power_cell_medium_hi.rsi
+  result: PowerCellMediumHigh
+  completetime: 6
+  materials:
+    Steel: 1800
+    Glass: 1800
+    Plastic: 600
+
+- type: latheRecipe
+  id: PowerCellMediumSuper
+  icon: Objects/Power/PowerCells/power_cell_medium_sup.rsi
+  result: PowerCellMediumSuper
+  completetime: 10
+  materials:
+    Steel: 1800
+    Glass: 2400
+    Plastic: 1200
+    Gold: 300
+
+# The resource required is scaled to their power capacity 
+- type: latheRecipe
+  id: PowerCellLargeStandard
+  icon: Objects/Power/PowerCells/power_cell_large_st.rsi
+  result: PowerCellLargeStandard
+  completetime: 1
+  materials:
+    Steel: 2500
+    Plastic: 1250
+
+- type: latheRecipe
+  id: PowerCellLargeHigh
+  icon: Objects/Power/PowerCells/power_cell_large_hi.rsi
+  result: PowerCellLargeHigh
+  completetime: 6
+  materials:
+    Steel: 7500
+    Glass: 7500
+    Plastic: 2500
+
+- type: latheRecipe
+  id: PowerCellLargeSuper
+  icon: Objects/Power/PowerCells/power_cell_large_sup.rsi
+  result: PowerCellLargeSuper
+  completetime: 10
+  materials:
+    Steel: 7500
+    Glass: 10000
+    Plastic: 5000
+    Gold: 1250
