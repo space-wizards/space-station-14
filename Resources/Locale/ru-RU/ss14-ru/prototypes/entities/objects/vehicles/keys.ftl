@@ -1,7 +1,7 @@
 ent-VehicleKeyPussyWagon = ключ от уборочной машины
     .desc = Интересный дизайн.
     .suffix = { "" }
-ent-VehicleKeySecway = ключ от СБегвея
+ent-VehicleKeySecway = ключ от секвея
     .desc = Ключи к будущему.
     .suffix = { "" }
 ent-VehicleKeyATV = ключ от квадроцикла
@@ -10,6 +10,6 @@ ent-VehicleKeyATV = ключ от квадроцикла
 ent-VehicleKeySkeleton = мастер-ключ от транспорта
     .desc = Открывает любое транспортное средство.
     .suffix = { "" }
-ent-VehicleKeySyndicateSegway = syndicate segway keys
-    .desc = Patterned after the iconic EMAG design.
+ent-VehicleKeySyndicateSegway = ключ от сегвея синдиката
+    .desc = Узор выполнен по образцу культового дизайна емага.
     .suffix = { "" }
