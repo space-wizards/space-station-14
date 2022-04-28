@@ -412,7 +412,7 @@ namespace Content.Server.Storage.EntitySystems
 
             foreach (var entity in storageComp.Storage.ContainedEntities)
             {
-                if (!itemQuery.TryGetComponent(uid, out var itemComp))
+                if (!itemQuery.TryGetComponent(entity, out var itemComp))
                     continue;
 
                 storageComp.StorageUsed += itemComp.Size;
