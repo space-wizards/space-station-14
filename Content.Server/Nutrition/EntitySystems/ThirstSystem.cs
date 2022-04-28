@@ -17,19 +17,20 @@ namespace Content.Server.Nutrition.EntitySystems
     [UsedImplicitly]
     public sealed class ThirstSystem : EntitySystem
     {
-
         [Dependency] private readonly IRobustRandom _random = default!;
-        [Dependency] private readonly AdminLogSystem _adminlog = default!;
-        [Dependency] private readonly ILogManager _debuglog = default!;
-        [Dependency] private readonly MovementSpeedModifierSystem _movement = default!;
         [Dependency] private readonly AlertsSystem _alerts = default!;
+        [Dependency] private readonly AdminLogSystem _adminlog = default!;
         [Dependency] private readonly DamageableSystem _damage = default!;
+        [Dependency] private readonly MovementSpeedModifierSystem _movement = default!;
+
+        private ISawmill _sawmill = default!;
         private float _accumulatedFrameTime;
 
         public override void Initialize()
         {
             base.Initialize();
 
+            _sawmill = Logger.GetSawmill("thirst");
             SubscribeLocalEvent<ThirstComponent, RefreshMovementSpeedModifiersEvent>(OnRefreshMovespeed);
             SubscribeLocalEvent<ThirstComponent, ComponentStartup>(OnComponentStartup);
         }
@@ -46,14 +47,7 @@ namespace Content.Server.Nutrition.EntitySystems
 
         private void OnRefreshMovespeed(EntityUid uid, ThirstComponent component, RefreshMovementSpeedModifiersEvent args)
         {
-            if(EntityManager.TryGetComponent(component.Owner ,out MobStateComponent? mobState))
-            {
-                if(mobState.IsDead())
-                {
-                    return;
-                }
-            }
-            float mod = component.CurrentThirstThreshold == ThirstThreshold.Parched ? 0.75f : 1.0f;
+            var mod = (component.CurrentThirstThreshold & (ThirstThreshold.Parched | ThirstThreshold.Dead)) != 0x0 ? 0.75f : 1.0f;
             args.ModifySpeed(mod, mod);
         }
 
@@ -126,8 +120,9 @@ namespace Content.Server.Nutrition.EntitySystems
 
                 case ThirstThreshold.Dead:
                     return;
+
                 default:
-                    _debuglog.GetSawmill("thirst").Error($"No thirst threshold found for {component.CurrentThirstThreshold}");
+                    _sawmill.Error($"No thirst threshold found for {component.CurrentThirstThreshold}");
                     throw new ArgumentOutOfRangeException($"No thirst threshold found for {component.CurrentThirstThreshold}");
             }
         }

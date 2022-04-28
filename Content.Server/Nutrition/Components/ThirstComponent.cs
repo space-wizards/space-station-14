@@ -1,33 +1,17 @@
-using System;
-using System.Collections.Generic;
-using Content.Server.Administration.Logs;
-using Content.Shared.Administration.Logs;
 using Content.Shared.Alert;
 using Content.Shared.Damage;
-using Content.Shared.Database;
-using Content.Shared.MobState.Components;
-using Content.Shared.Movement.Components;
-using Content.Shared.Movement.EntitySystems;
-using Content.Shared.Nutrition.Components;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Log;
-using Robust.Shared.Players;
-using Robust.Shared.Random;
-using Robust.Shared.Serialization.Manager.Attributes;
-using Robust.Shared.ViewVariables;
 
 namespace Content.Server.Nutrition.Components
 {
-
+    [Flags]
     public enum ThirstThreshold : byte
     {
         // Hydrohomies
-        OverHydrated,
-        Okay,
-        Thirsty,
-        Parched,
-        Dead,
+        Dead = 0,
+        Parched = 1 << 0,
+        Thirsty = 1 << 1,
+        Okay = 1 << 2,
+        OverHydrated = 1 << 3,
     }
 
     [RegisterComponent]
