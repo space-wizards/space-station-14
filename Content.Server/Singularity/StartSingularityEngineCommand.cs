@@ -32,7 +32,7 @@ namespace Content.Server.Singularity
             }
             foreach (var comp in entityManager.EntityQuery<RadiationCollectorComponent>())
             {
-                comp.Collecting = true;
+                EntitySystem.Get<RadiationCollectorSystem>().SetCollectorEnabled(comp.Owner, true, null, comp);
             }
             foreach (var comp in entityManager.EntityQuery<ParticleAcceleratorControlBoxComponent>())
             {
