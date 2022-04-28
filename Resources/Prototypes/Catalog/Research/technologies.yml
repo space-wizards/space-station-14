@@ -404,7 +404,7 @@
     sprite: Objects/Power/PowerCells/power_cell_small_hi.rsi/s_st.png
   requiredPoints: 5000
   requiredTechnologies:
-    - ElectromagneticTheory
+    - PowerCellBasic
   unlockedRecipes:
     - PowerCellSmallHigh
     - PowerCellMediumHigh
@@ -412,13 +412,13 @@
 
 - type: technology
   name: "super powercell printing"
-  id: PowerCellAdvanced
+  id: PowerCellSuper
   description: now you can print supercells.
   icon:
     sprite: Objects/Power/PowerCells/power_cell_small_sup.rsi/s_st.png
   requiredPoints: 10000
   requiredTechnologies:
-    - ElectromagneticTheory
+    - PowerCellAdvanced
   unlockedRecipes:
     - PowerCellSmallSuper
     - PowerCellMediumSuper
