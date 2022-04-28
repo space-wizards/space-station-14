@@ -154,12 +154,6 @@ namespace Content.Server.Cuffs.Components
                 return false;
             }
 
-            /*if (eventArgs.Target == eventArgs.User)
-            {
-                eventArgs.User.PopupMessage(Loc.GetString("handcuff-component-target-self-error"));
-                return true;
-            }*/
-
             if (Broken)
             {
                 eventArgs.User.PopupMessage(Loc.GetString("handcuff-component-cuffs-broken-error"));
