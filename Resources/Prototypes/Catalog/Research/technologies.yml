@@ -45,7 +45,6 @@
     - HydroponicsToolScythe
     - HydroponicsToolHatchet
     - KitchenKnife
-    - MicrowaveMachineCircuitboard
     - HandheldHealthAnalyzer
     - ClothingHandsGlovesLatex
     - ClothingHandsGlovesNitrile
@@ -65,6 +64,7 @@
   unlockedRecipes:
     - Shovel
     - ButchCleaver
+    - MicrowaveMachineCircuitboard
 
 - type: technology
   name: "advanced surgery"
