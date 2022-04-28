@@ -20,7 +20,7 @@ using Robust.Shared.Prototypes;
 namespace Content.Client.Power;
 
 [GenerateTypedNameReferences]
-public partial class PowerMonitoringWindow : DefaultWindow, IComputerWindow<PowerMonitoringConsoleBoundInterfaceState>
+public sealed partial class PowerMonitoringWindow : DefaultWindow, IComputerWindow<PowerMonitoringConsoleBoundInterfaceState>
 {
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
 
@@ -41,7 +41,7 @@ public partial class PowerMonitoringWindow : DefaultWindow, IComputerWindow<Powe
 
     public void UpdateList(Label number, double numberVal, ItemList list, PowerMonitoringConsoleEntry[] listVal)
     {
-        number.Text = numberVal.ToString();
+        number.Text = Loc.GetString("power-monitoring-window-value", ("value", numberVal));
         list.Clear();
         foreach (var ent in listVal)
         {
@@ -50,13 +50,13 @@ public partial class PowerMonitoringWindow : DefaultWindow, IComputerWindow<Powe
             if (entityPrototype != null)
                 iconState = SpriteComponent.GetPrototypeIcon(entityPrototype, StaticIoC.ResC);
             var icon = iconState?.GetFrame(RSI.State.Direction.South, 0);
-            list.AddItem($"{ent.NameLocalized} {ent.Size} {Loc.GetString("power-monitoring-window-watts")}", icon, false);
+            list.AddItem($"{ent.NameLocalized} {Loc.GetString("power-monitoring-window-value", ("value", ent.Size))}", icon, false);
         }
     }
 }
 
 [UsedImplicitly]
-public class PowerMonitoringConsoleBoundUserInterface : ComputerBoundUserInterface<PowerMonitoringWindow, PowerMonitoringConsoleBoundInterfaceState>
+public sealed class PowerMonitoringConsoleBoundUserInterface : ComputerBoundUserInterface<PowerMonitoringWindow, PowerMonitoringConsoleBoundInterfaceState>
 {
     public PowerMonitoringConsoleBoundUserInterface(ClientUserInterfaceComponent owner, object uiKey) : base(owner, uiKey) {}
 }

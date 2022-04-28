@@ -2,10 +2,10 @@
     xmlns="https://spacestation14.io"
     Title="{Loc 'power-monitoring-window-title'}">
     <BoxContainer Orientation="Vertical" VerticalExpand="True">
-        <GridContainer Columns="3">
+        <GridContainer Columns="2">
             <!-- Grid is used here to align things. -->
-            <Label Text="{Loc 'power-monitoring-window-total-sources'}"/><Label Name="TotalSourcesNum" Text="?"/><Label Text="{Loc 'power-monitoring-window-watts'}"/>
-            <Label Text="{Loc 'power-monitoring-window-total-loads'}"/><Label Name="TotalLoadsNum" Text="?"/><Label Text="{Loc 'power-monitoring-window-watts'}"/>
+            <Label Text="{Loc 'power-monitoring-window-total-sources'}"/><Label Name="TotalSourcesNum" Text="?"/>
+            <Label Text="{Loc 'power-monitoring-window-total-loads'}"/><Label Name="TotalLoadsNum" Text="?"/>
         </GridContainer>
         <TabContainer Name="MasterTabContainer" VerticalExpand="True">
             <ItemList Name="SourcesList" VerticalExpand="True">
