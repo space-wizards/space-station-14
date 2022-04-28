@@ -45,7 +45,7 @@ public sealed class PowerWireAction : BaseWireAction
             return null;
         }
 
-        if (EntityManager.TryGetComponent<ApcPowerReceiverComponent>(wire.Owner, out var power))
+        if (IsPowered(wire.Owner))
         {
             if (WiresSystem.TryGetData(wire.Owner, PowerWireActionKey.Pulsed, out bool pulsed)
                 && pulsed)
