@@ -335,3 +335,16 @@
           DefaultPrototype: CryostasisBeaker
           ExamineName: Cryostasis Beaker
 
+- type: entity
+  id: OreProcessorMachineCircuitboard
+  parent: BaseMachineCircuitboard
+  name: ore processor machine board
+  components:
+    - type: MachineBoard
+      prototype: OreProcessor
+      requirements:
+        MatterBin: 1
+        Manipulator: 1
+        Laser: 2
+      materialRequirements:
+        Glass: 1

@@ -1,18 +1,20 @@
-using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using Content.Server.Chat.Managers;
 using Content.Server.Players;
 using Content.Server.Roles;
+using Content.Server.Station;
 using Content.Server.Suspicion;
 using Content.Server.Suspicion.Roles;
 using Content.Server.Traitor.Uplink;
 using Content.Server.Traitor.Uplink.Account;
 using Content.Shared.CCVar;
 using Content.Shared.Doors.Systems;
+using Content.Shared.EntityList;
 using Content.Shared.GameTicking;
+using Content.Shared.Maps;
 using Content.Shared.MobState.Components;
+using Content.Shared.Random.Helpers;
 using Content.Shared.Roles;
 using Content.Shared.Sound;
 using Content.Shared.Suspicion;
@@ -22,15 +24,10 @@ using Robust.Server.Player;
 using Robust.Shared.Audio;
 using Robust.Shared.Configuration;
 using Robust.Shared.Enums;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Localization;
-using Robust.Shared.Log;
-using Robust.Shared.Maths;
+using Robust.Shared.Map;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
-using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
 using Timer = Robust.Shared.Timing.Timer;
@@ -42,14 +39,16 @@ namespace Content.Server.GameTicking.Rules;
 /// </summary>
 public sealed class SuspicionRuleSystem : GameRuleSystem
 {
+    [Dependency] private readonly IMapManager _mapManager = default!;
     [Dependency] private readonly IPlayerManager _playerManager = default!;
     [Dependency] private readonly IChatManager _chatManager = default!;
     [Dependency] private readonly IConfigurationManager _cfg = default!;
     [Dependency] private readonly IGameTiming _timing = default!;
-    [Dependency] private readonly IEntityManager _entities = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
+    [Dependency] private readonly ITileDefinitionManager _tileDefMan = default!;
     [Dependency] private readonly SharedDoorSystem _doorSystem = default!;
+    [Dependency] private readonly EntityLookupSystem _lookupSystem = default!;
 
     public override string Prototype => "Suspicion";
 
@@ -79,6 +78,7 @@ public sealed class SuspicionRuleSystem : GameRuleSystem
 
     private const string TraitorID = "SuspicionTraitor";
     private const string InnocentID = "SuspicionInnocent";
+    private const string SuspicionLootTable = "SuspicionRule";
 
     public override void Initialize()
     {
@@ -140,8 +140,9 @@ public sealed class SuspicionRuleSystem : GameRuleSystem
             attached.EnsureComponent<SuspicionRoleComponent>();
         }
 
+        // Max is players-1 so there's always at least one innocent.
         var numTraitors = MathHelper.Clamp(ev.Players.Length / playersPerTraitor,
-            minTraitors, ev.Players.Length);
+            minTraitors, ev.Players.Length-1);
 
         var traitors = new List<SuspicionTraitorRole>();
 
@@ -219,6 +220,51 @@ public sealed class SuspicionRuleSystem : GameRuleSystem
 
         _doorSystem.AccessType = SharedDoorSystem.AccessTypes.AllowAllNoExternal;
 
+        var susLoot = _prototypeManager.Index<EntityLootTablePrototype>(SuspicionLootTable);
+
+        foreach (var (_, mapGrid) in EntityManager.EntityQuery<StationComponent, IMapGridComponent>(true))
+        {
+            // I'm so sorry.
+            var tiles = mapGrid.Grid.GetAllTiles().ToArray();
+            Logger.Info($"TILES: {tiles.Length}");
+
+            var spawn = susLoot.GetSpawns();
+            var count = spawn.Count;
+
+            // Try to scale spawned amount by station size...
+            if (tiles.Length < 1000)
+            {
+                count = Math.Min(count, tiles.Length / 10);
+
+                // Shuffle so we pick items at random.
+                _random.Shuffle(spawn);
+            }
+
+            for (var i = 0; i < count; i++)
+            {
+                var item = spawn[i];
+
+                // Maximum number of attempts for trying to find a suitable empty tile.
+                // We do this because we don't want to hang the server when a devious map has literally no free tiles.
+                const int maxTries = 100;
+
+                for (var j = 0; j < maxTries; j++)
+                {
+                    var tile = _random.Pick(tiles);
+
+                    // Let's not spawn things on top of walls.
+                    if (tile.IsBlockedTurf(false, _lookupSystem) || tile.IsSpace(_tileDefMan))
+                        continue;
+
+                    var uid = Spawn(item, tile.GridPosition(_mapManager));
+
+                    // Keep track of all suspicion-spawned weapons so we can clean them up once the rule ends.
+                    EnsureComp<SuspicionItemComponent>(uid);
+                    break;
+                }
+            }
+        }
+
         _checkTimerCancel = new CancellationTokenSource();
         Timer.SpawnRepeating(DeadCheckDelay, CheckWinConditions, _checkTimerCancel.Token);
     }
@@ -230,6 +276,12 @@ public sealed class SuspicionRuleSystem : GameRuleSystem
         _traitors.Clear();
 
         _playerManager.PlayerStatusChanged -= PlayerManagerOnPlayerStatusChanged;
+
+        // Clean up all items we spawned before...
+        foreach (var item in EntityManager.EntityQuery<SuspicionItemComponent>(true))
+        {
+            Del(item.Owner);
+        }
 
         _checkTimerCancel.Cancel();
     }
@@ -245,8 +297,8 @@ public sealed class SuspicionRuleSystem : GameRuleSystem
         foreach (var playerSession in _playerManager.ServerSessions)
         {
             if (playerSession.AttachedEntity is not {Valid: true} playerEntity
-                || !_entities.TryGetComponent(playerEntity, out MobStateComponent? mobState)
-                || !_entities.HasComponent<SuspicionRoleComponent>(playerEntity))
+                || !TryComp(playerEntity, out MobStateComponent? mobState)
+                || !HasComp<SuspicionRoleComponent>(playerEntity))
             {
                 continue;
             }
