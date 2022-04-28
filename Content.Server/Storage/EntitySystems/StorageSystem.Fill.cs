@@ -34,7 +34,5 @@ public sealed partial class StorageSystem
             Logger.ErrorS("storage", $"Tried to StorageFill {item} inside {uid} but can't.");
             EntityManager.DeleteEntity(ent);
         }
-        if (serverStorageComp != null)
-            RecalculateStorageUsed(uid, serverStorageComp);
     }
 }

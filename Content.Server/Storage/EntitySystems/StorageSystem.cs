@@ -513,7 +513,7 @@ namespace Content.Server.Storage.EntitySystems
             if (storageComp.Whitelist?.IsValid(insertEnt, EntityManager) == false)
                 return false;
 
-            if (storageComp.Blacklist?.IsValid(insertEnt, EntityManager) == false)
+            if (storageComp.Blacklist?.IsValid(insertEnt, EntityManager) == true)
                 return false;
 
             if (TryComp(insertEnt, out TransformComponent? transformComp) && transformComp.Anchored)
