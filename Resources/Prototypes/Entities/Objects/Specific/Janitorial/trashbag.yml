@@ -1,7 +1,7 @@
 - type: entity
   name: trash bag
   id: TrashBag
-  parent: BaseItem
+  parent: BaseStorageItem
   components:
   - type: Sprite
     netSync: false
@@ -16,7 +16,9 @@
     capacity: 125
     quickInsert: true
     areaInsert: true
-    storageSoundCollection:
+    storageOpenSound:
+      collection: trashBagRustle
+    storageInsertSound:
       collection: trashBagRustle
     whitelist:
       tags:
@@ -55,5 +57,3 @@
     quickInsert: true
     areaInsert: true
     areaInsertRadius: 1000
-    storageSoundCollection:
-      collection: trashBagRustle

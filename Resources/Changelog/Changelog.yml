@@ -1,50 +1,4 @@
 Entries:
-- author: Peptide90
-  changes:
-  - {message: Hardsuit helmets and hardhats now show that they're lit., type: Fix}
-  id: 911
-  time: '2022-01-19T22:06:24.0000000+00:00'
-- author: moony
-  changes:
-  - {message: Players who have joined the game with a character (Not as an observer)
-      are now exempt from the player cap for the duration of the round. This means
-      you can no longer get locked out if you have to relog for some reason., type: Tweak}
-  id: 912
-  time: '2022-01-19T23:01:21.0000000+00:00'
-- author: Pancake
-  changes:
-  - {message: AME prices have gone up to incentivize the use of the singularity engine.,
-    type: Tweak}
-  id: 913
-  time: '2022-01-20T12:33:13.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - {message: Floodlight collision fixed, type: Fix}
-  id: 914
-  time: '2022-01-21T16:29:16.0000000+00:00'
-- author: Rane
-  changes:
-  - {message: No-slip shoes now appear to be regular shoes when examined., type: Fix}
-  id: 915
-  time: '2022-01-22T01:58:27.0000000+00:00'
-- author: mirrorcult
-  changes:
-  - {message: 'NanoTrasen manufacturing budget for item number TB-10298 ("glass table")
-      and all derivative products has been cut. We do not recommend you climb on any
-      instances of TB-10298, and definitely do not slam anyone down on an instance
-      of TB-10298.', type: Add}
-  id: 916
-  time: '2022-01-22T12:52:35.0000000+00:00'
-- author: DubiousDoggo
-  changes:
-  - {message: Added construction for disposal pipes, type: Add}
-  id: 917
-  time: '2022-01-22T12:54:26.0000000+00:00'
-- author: Macoron
-  changes:
-  - {message: Added to codebase new xeno artifacts with random effects., type: Add}
-  id: 918
-  time: '2022-01-22T12:55:11.0000000+00:00'
 - author: Lamrr
   changes:
   - {message: Shotgun shells ('shots') are now available in boxes., type: Add}
@@ -3055,3 +3009,48 @@ Entries:
       floor tiles., type: Tweak}
   id: 1410
   time: '2022-04-27T07:29:30.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Barratry now has vehicles., type: Tweak}
+  id: 1411
+  time: '2022-04-28T03:17:37.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Decals (e.g. tile paint) should now be removed correctly., type: Fix}
+  id: 1412
+  time: '2022-04-28T10:23:44.0000000+00:00'
+- author: HoofedEar
+  changes:
+  - {message: Salvage is now able to mine for ores inside of asteroid rocks!, type: Add}
+  - {message: Use those ores in an Ore processor to turn them into materials for the
+      station!, type: Add}
+  id: 1413
+  time: '2022-04-28T10:41:04.0000000+00:00'
+- author: Peptide90
+  changes:
+  - {message: Certain drinks containers like paper cups won't shatter to glass anymore.,
+    type: Fix}
+  id: 1414
+  time: '2022-04-28T11:56:21.0000000+00:00'
+- author: vulppine
+  changes:
+  - {message: Adds the rainbow crayon. Honk!, type: Add}
+  id: 1415
+  time: '2022-04-28T12:23:45.0000000+00:00'
+- author: Peptide90
+  changes:
+  - {message: Added crafting for meat spikes (In furniture) as well as signal buttons
+      and signal switches (All in Machines section)., type: Add}
+  id: 1416
+  time: '2022-04-28T12:24:02.0000000+00:00'
+- author: Veritius
+  changes:
+  - {message: Made xenos unable to slip., type: Tweak}
+  id: 1417
+  time: '2022-04-28T12:24:39.0000000+00:00'
+- author: ElectroJr
+  changes:
+  - {message: The singularity visuals have been slightly updated. Large singularities
+      should no longer suffer from pop-in, type: Tweak}
+  id: 1418
+  time: '2022-04-28T12:43:16.0000000+00:00'

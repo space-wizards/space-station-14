@@ -3,6 +3,7 @@ using Content.Shared.Lathe;
 using Content.Shared.Research.Prototypes;
 using Robust.Server.GameObjects;
 using Content.Shared.Sound;
+using Content.Shared.Whitelist;
 
 namespace Content.Server.Lathe.Components
 {
@@ -10,9 +11,11 @@ namespace Content.Server.Lathe.Components
     public sealed class LatheComponent : SharedLatheComponent
     {
         /// <summary>
-        /// How much volume in cm^3 each sheet of material adds
+        /// Whitelist for specifying the kind of materials that can be insert into the lathe
         /// </summary>
-        public int VolumePerSheet = 100;
+        [ViewVariables]
+        [DataField("whitelist")] 
+        public EntityWhitelist? LatheWhitelist;
 
         /// <summary>
         /// The lathe's construction queue
@@ -46,6 +49,12 @@ namespace Content.Server.Lathe.Components
         /// </summary>
         [DataField("producingSound")]
         public SoundSpecifier? ProducingSound;
+        
+        /// <summary>
+        /// The sound that plays when inserting an item into the lathe, if any
+        /// </summary>
+        [DataField("insertingSound")]
+        public SoundSpecifier? InsertingSound;
 
         /// <summmary>
         /// The lathe's UI.
