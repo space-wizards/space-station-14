@@ -385,9 +385,10 @@
 - type: technology
   name: "basic powercell printing"
   id: PowerCellBasic
-  description: now you can print some cheap powercells.
+  description: Print some Dollar store powercells.
   icon:
-    sprite: Objects/Power/PowerCells/power_cell_small_st.rsi/s_st.png
+    sprite: Objects/Power/PowerCells/power_cell_small_st.rsi
+    state: s_st
   requiredPoints: 2500
   requiredTechnologies:
     - ElectromagneticTheory
@@ -399,9 +400,10 @@
 - type: technology
   name: "advanced powercell printing"
   id: PowerCellAdvanced
-  description: now you can print more powerful powercells.
+  description: Now your tesla can finnaly drive longer than 500 m.
   icon:
-    sprite: Objects/Power/PowerCells/power_cell_small_hi.rsi/s_st.png
+    sprite: Objects/Power/PowerCells/power_cell_small_hi.rsi
+    state: s_hi
   requiredPoints: 5000
   requiredTechnologies:
     - PowerCellBasic
@@ -413,9 +415,10 @@
 - type: technology
   name: "super powercell printing"
   id: PowerCellSuper
-  description: now you can print supercells.
+  description: Believe it or not , you can power a small fleet with those powercells.
   icon:
-    sprite: Objects/Power/PowerCells/power_cell_small_sup.rsi/s_st.png
+    sprite: Objects/Power/PowerCells/power_cell_small_sup.rsi
+    state: s_sup
   requiredPoints: 10000
   requiredTechnologies:
     - PowerCellAdvanced
