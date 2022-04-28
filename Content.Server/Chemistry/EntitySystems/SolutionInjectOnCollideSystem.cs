@@ -24,17 +24,6 @@ namespace Content.Server.Chemistry.EntitySystems
             base.Initialize();
             SubscribeLocalEvent<SolutionInjectOnCollideComponent, ComponentInit>(HandleInit);
             SubscribeLocalEvent<SolutionInjectOnCollideComponent, StartCollideEvent>(HandleInjection);
-            SubscribeLocalEvent<SolutionInjectOnCollideComponent, TransferThroughFaceAttemptEvent>(OnTransferThroughFaceAttemptEvent);
-        }
-
-        private void OnTransferThroughFaceAttemptEvent(EntityUid uid, SolutionInjectOnCollideComponent component , TransferThroughFaceAttemptEvent args)
-        {
-            if (args.Cancelled) return;
-
-            if (_inventorySystem.TryGetSlotEntity(args.Uid, "head", out var headUid) &&
-                EntityManager.TryGetComponent(headUid, out IngestionBlockerComponent blocker) &&
-                blocker.Enabled) args.Cancel();
-
         }
 
         private void HandleInit(EntityUid uid, SolutionInjectOnCollideComponent component, ComponentInit args)
@@ -52,7 +41,7 @@ namespace Content.Server.Chemistry.EntitySystems
             //TODO : Implement the armor check in another PR
             if (!component.CanPenetrateHelmet &&
                !component.CanPenetrateArmor &&
-               IsFaceBlocked(args.OtherFixture.Body.Owner , args.OurFixture.Body.Owner))
+               IsFaceBlocked(args.OtherFixture.Body.Owner))
                 return;
 
             var solRemoved = solution.SplitSolution(component.TransferAmount);
@@ -63,11 +52,16 @@ namespace Content.Server.Chemistry.EntitySystems
             _bloodstreamSystem.TryAddToChemicals((args.OtherFixture.Body).Owner, solToInject, bloodstream);
         }
 
-        public bool IsFaceBlocked(EntityUid uid , EntityUid carrierAgentUid)
+        public bool IsFaceBlocked(EntityUid uid )
         {
-            var attemptEvent = new TransferThroughFaceAttemptEvent(uid);
-            RaiseLocalEvent(carrierAgentUid, attemptEvent, false);
-            return !attemptEvent.Cancelled;
+            IngestionBlockerComponent blocker;
+
+            return _inventorySystem.TryGetSlotEntity(uid, "mask", out var maskUid)
+                   && EntityManager.TryGetComponent(maskUid, out blocker)
+                   && blocker.Enabled
+                   || _inventorySystem.TryGetSlotEntity(uid, "head", out var headUid)
+                   && EntityManager.TryGetComponent(headUid, out blocker)
+                   && blocker.Enabled;
         }
     }
 }
