@@ -16,6 +16,7 @@ namespace Content.Server.Atmos.Components
         /// Accumulates time when yeeted by high pressure deltas.
         /// </summary>
         [ViewVariables]
+        [DataField("accumulator")]
         public float Accumulator = 0f;
 
         [ViewVariables(VVAccess.ReadWrite)]
