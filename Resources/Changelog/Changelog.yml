@@ -1,9 +1,4 @@
 Entries:
-- author: Macoron
-  changes:
-  - {message: Added to codebase new xeno artifacts with random effects., type: Add}
-  id: 918
-  time: '2022-01-22T12:55:11.0000000+00:00'
 - author: Lamrr
   changes:
   - {message: Shotgun shells ('shots') are now available in boxes., type: Add}
@@ -3053,3 +3048,9 @@ Entries:
   - {message: Made xenos unable to slip., type: Tweak}
   id: 1417
   time: '2022-04-28T12:24:39.0000000+00:00'
+- author: ElectroJr
+  changes:
+  - {message: The singularity visuals have been slightly updated. Large singularities
+      should no longer suffer from pop-in, type: Tweak}
+  id: 1418
+  time: '2022-04-28T12:43:16.0000000+00:00'
