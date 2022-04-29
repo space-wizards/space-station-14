@@ -12,7 +12,7 @@
   - type: DamageOtherOnHit
     damage:
       types:
-        Blunt: 5
+        Blunt: 10
   - type: Stack
     count: 1
   - type: Tag
@@ -24,16 +24,10 @@
     thresholds:
     - trigger:
         !type:DamageTrigger
-        damage: 20
+        damage: 100
       behaviors:
-      - !type:PlaySoundBehavior
-        sound: metalbreak.ogg
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
-  - type: DamageOnLand
-    damage:
-      types:
-        Blunt: 5
 
 - type: entity
   name: steel tile
