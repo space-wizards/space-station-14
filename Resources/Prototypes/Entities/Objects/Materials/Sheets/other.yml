@@ -111,6 +111,7 @@
     tags:
     - Plastic
     - Sheet
+    - DroneUsable
   - type: Material
     materials:
       Plastic: 100
