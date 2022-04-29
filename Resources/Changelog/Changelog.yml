@@ -1,10 +1,4 @@
 Entries:
-- author: Lamrr
-  changes:
-  - {message: Organise your paperwork with the addition of folders. Now available
-      from the bureaucracy crate., type: Add}
-  id: 922
-  time: '2022-01-23T17:46:55.0000000+00:00'
 - author: Peptide90
   changes:
   - {message: 'Constructed SMES, APC and substations now start with zero charge.',
@@ -3052,3 +3046,9 @@ Entries:
     type: Remove}
   id: 1421
   time: '2022-04-29T03:41:03.0000000+00:00'
+- author: AugustEymann
+  changes:
+  - {message: Microwave Circuitboard and ability to print it at Circuit imprinter.,
+    type: Add}
+  id: 1422
+  time: '2022-04-29T04:50:23.0000000+00:00'
