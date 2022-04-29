@@ -40,4 +40,4 @@
   cures:
     - !type:DiseaseReagentCure
       reagent: Romerol
-      min: 5
+      min: 10
