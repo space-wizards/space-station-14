@@ -57,9 +57,9 @@
       behaviors:
       - !type:DoActsBehavior
         acts: ["Destruction"]
-  - type: IconSmooth
-    key: walls
-    mode: NoSprite
+#  - type: IconSmooth
+#    key: walls
+#    base: solid
   - type: Occluder
     sizeX: 32
     sizeY: 32
@@ -77,6 +77,10 @@
   - type: Sprite
     netsync: false
     sprite: Structures/Doors/HiddenDoors/reinforcedwall.rsi
+#  - type: IconSmooth
+#    key: walls
+#    base: solid
+#    reinforcedBase: reinf_over
   - type: Construction
     graph: Girder
     node: HiddenDoorReinforced
