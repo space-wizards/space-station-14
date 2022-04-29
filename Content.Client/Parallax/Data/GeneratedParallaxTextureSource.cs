@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Threading;
 using System.Threading.Tasks;
 ﻿using System.Collections.Generic;
 using JetBrains.Annotations;
@@ -54,7 +55,7 @@ public sealed class GeneratedParallaxTextureSource : IParallaxTextureSource
     /// </summary>
     private ResourcePath PreviousParallaxConfigPath => new($"/parallax_{Identifier}config_old");
 
-    async Task<Texture> IParallaxTextureSource.GenerateTexture()
+    async Task<Texture> IParallaxTextureSource.GenerateTexture(CancellationToken cancel = default)
     {
         var parallaxConfig = GetParallaxConfig();
         if (parallaxConfig == null)
@@ -71,7 +72,7 @@ public sealed class GeneratedParallaxTextureSource : IParallaxTextureSource
             || previousParallaxConfig != parallaxConfig)
         {
             var table = Toml.ReadString(parallaxConfig);
-            await UpdateCachedTexture(table, debugParallax);
+            await UpdateCachedTexture(table, debugParallax, cancel);
 
             //Update the previous config
             using var writer = StaticIoC.ResC.UserData.OpenWriteText(PreviousParallaxConfigPath);
@@ -98,15 +99,19 @@ public sealed class GeneratedParallaxTextureSource : IParallaxTextureSource
         }
     }
 
-    private async Task UpdateCachedTexture(TomlTable config, bool saveDebugLayers)
+    private async Task UpdateCachedTexture(TomlTable config, bool saveDebugLayers, CancellationToken cancel = default)
     {
         var debugImages = saveDebugLayers ? new List<Image<Rgba32>>() : null;
 
         var sawmill = IoCManager.Resolve<ILogManager>().GetSawmill("parallax");
+
         // Generate the parallax in the thread pool.
         using var newParallexImage = await Task.Run(() =>
-            ParallaxGenerator.GenerateParallax(config, new Size(1920, 1080), sawmill, debugImages));
+            ParallaxGenerator.GenerateParallax(config, new Size(1920, 1080), sawmill, debugImages, cancel), cancel);
+
         // And load it in the main thread for safety reasons.
+        // But before spending time saving it, make sure to exit out early if it's not wanted.
+        cancel.ThrowIfCancellationRequested();
 
         // Store it and CRC so further game starts don't need to regenerate it.
         using var imageStream = StaticIoC.ResC.UserData.OpenWrite(ParallaxCachedImagePath);

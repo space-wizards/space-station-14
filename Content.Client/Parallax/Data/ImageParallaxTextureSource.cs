@@ -1,3 +1,4 @@
+using System.Threading;
 using System.Threading.Tasks;
 ﻿using System.Collections.Generic;
 using JetBrains.Annotations;
@@ -20,7 +21,7 @@ public sealed class ImageParallaxTextureSource : IParallaxTextureSource
     [DataField("path", required: true)]
     public ResourcePath Path { get; } = default!;
 
-    async Task<Texture> IParallaxTextureSource.GenerateTexture()
+    async Task<Texture> IParallaxTextureSource.GenerateTexture(CancellationToken cancel = default)
     {
         return StaticIoC.ResC.GetTexture(Path);
     }

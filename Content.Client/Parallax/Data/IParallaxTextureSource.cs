@@ -1,3 +1,4 @@
+using System.Threading;
 using System.Threading.Tasks;
 ﻿using System.Collections.Generic;
 using Robust.Shared.Serialization.Manager.Attributes;
@@ -12,7 +13,7 @@ namespace Content.Client.Parallax.Data
         /// Generates or loads the texture.
         /// Note that this should be cached, but not necessarily *here*.
         /// </summary>
-        Task<Texture> GenerateTexture();
+        Task<Texture> GenerateTexture(CancellationToken cancel = default);
     }
 }
 

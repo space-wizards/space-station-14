@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Globalization;
@@ -18,7 +19,7 @@ namespace Content.Client.Parallax
     {
         private readonly List<Layer> Layers = new();
 
-        public static Image<Rgba32> GenerateParallax(TomlTable config, Size size, ISawmill sawmill, List<Image<Rgba32>>? debugLayerDump)
+        public static Image<Rgba32> GenerateParallax(TomlTable config, Size size, ISawmill sawmill, List<Image<Rgba32>>? debugLayerDump, CancellationToken cancel = default)
         {
             sawmill.Debug("Generating parallax!");
             var generator = new ParallaxGenerator();
@@ -31,6 +32,7 @@ namespace Content.Client.Parallax
             var count = 0;
             foreach (var layer in generator.Layers)
             {
+                cancel.ThrowIfCancellationRequested();
                 layer.Apply(image);
                 debugLayerDump?.Add(image.Clone());
                 sawmill.Debug("Layer {0} done!", count++);
