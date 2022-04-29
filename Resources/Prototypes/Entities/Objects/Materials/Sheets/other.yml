@@ -107,6 +107,10 @@
   name: plastic
   suffix: Full
   components:
+  - type: Tag
+    tags:
+    - Plastic
+    - Sheet
   - type: Material
     materials:
       Plastic: 100
