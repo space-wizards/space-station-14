@@ -285,3 +285,12 @@
   materials:
      Steel: 100
      Glass: 900
+
+- type: latheRecipe
+  id: MicrowaveMachineCircuitboard
+  icon: Objects/Misc/module.rsi/id_mod.png
+  result: MicrowaveMachineCircuitboard
+  completetime: 4
+  materials:
+     Steel: 100
+     Glass: 900
