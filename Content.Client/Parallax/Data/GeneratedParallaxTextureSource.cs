@@ -59,7 +59,7 @@ public sealed class GeneratedParallaxTextureSource : IParallaxTextureSource
         var parallaxConfig = GetParallaxConfig();
         if (parallaxConfig == null)
         {
-            Logger.ErrorS("parallax", "Parallax config not found or unreadable.");
+            Logger.ErrorS("parallax", $"Parallax config not found or unreadable: {ParallaxConfigPath}");
             // The show must go on.
             return Texture.Transparent;
         }

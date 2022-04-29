@@ -54,8 +54,22 @@ internal sealed class ParallaxManager : IParallaxManager
 
         var parallaxPrototype = _prototypeManager.Index<ParallaxPrototype>(name);
 
-        var hq = await LoadParallaxLayers(parallaxPrototype.Layers.ToArray());
-        var lq = parallaxPrototype.LayersLQUseHQ ? hq : await LoadParallaxLayers(parallaxPrototype.LayersLQ.ToArray());
+        ParallaxLayerPrepared[] hq;
+        ParallaxLayerPrepared[] lq;
+
+        if (parallaxPrototype.LayersLQUseHQ)
+        {
+            lq = hq = await LoadParallaxLayers(parallaxPrototype.Layers);
+        }
+        else
+        {
+            var results = await Task.WhenAll(
+                LoadParallaxLayers(parallaxPrototype.Layers),
+                LoadParallaxLayers(parallaxPrototype.LayersLQ)
+            );
+            hq = results[0];
+            lq = results[1];
+        }
 
         if (_parallaxName == name)
         {
@@ -69,14 +83,15 @@ internal sealed class ParallaxManager : IParallaxManager
         }
     }
 
-    private async Task<ParallaxLayerPrepared[]> LoadParallaxLayers(ParallaxLayerConfig[] layersIn)
+    private async Task<ParallaxLayerPrepared[]> LoadParallaxLayers(List<ParallaxLayerConfig> layersIn)
     {
-        var layers = new ParallaxLayerPrepared[layersIn.Length];
-        for (var i = 0; i < layers.Length; i++)
+        // Because this is async, make sure it doesn't change (prototype reloads could muck this up)
+        var tasks = new Task<ParallaxLayerPrepared>[layersIn.Count];
+        for (var i = 0; i < layersIn.Count; i++)
         {
-            layers[i] = await LoadParallaxLayer(layersIn[i]);
+            tasks[i] = LoadParallaxLayer(layersIn[i]);
         }
-        return layers;
+        return await Task.WhenAll(tasks);
     }
 
     private async Task<ParallaxLayerPrepared> LoadParallaxLayer(ParallaxLayerConfig config)
