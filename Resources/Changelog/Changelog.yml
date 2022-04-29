@@ -1,12 +1,6 @@
 Entries:
 - author: Lamrr
   changes:
-  - {message: You can now find full-tile tinted windows at a crafting menu near you.
-      Useful for keeping the greytide out of your private affairs., type: Add}
-  id: 921
-  time: '2022-01-23T17:44:12.0000000+00:00'
-- author: Lamrr
-  changes:
   - {message: Organise your paperwork with the addition of folders. Now available
       from the bureaucracy crate., type: Add}
   id: 922
@@ -3050,3 +3044,11 @@ Entries:
       yourself, type: Tweak}
   id: 1420
   time: '2022-04-28T22:04:41.0000000+00:00'
+- author: Rane
+  changes:
+  - {message: Mimes can now create invisible walls using their secret knowledge of
+      their craft., type: Add}
+  - {message: Mimes can no longer speak or scream without revoking their Vow of Silence,
+    type: Remove}
+  id: 1421
+  time: '2022-04-29T03:41:03.0000000+00:00'
