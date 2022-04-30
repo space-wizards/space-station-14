@@ -290,7 +290,10 @@
   id: CloningConsoleComputerCircuitboard
   icon: Objects/Misc/module.rsi/id_mod.png
   result: CloningConsoleComputerCircuitboard
-  completetime: 1000
+  completetime: 4
+  materials:
+     Steel: 100
+     Glass: 900
 
   id: MicrowaveMachineCircuitboard
   icon: Objects/Misc/module.rsi/id_mod.png
