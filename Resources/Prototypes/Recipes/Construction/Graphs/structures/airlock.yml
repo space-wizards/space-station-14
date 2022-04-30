@@ -72,6 +72,13 @@
       steps:
       - tool: Screwing
         doAfter: 2.5
+    - to: glassElectronics
+      conditions:
+      - !type:EntityAnchored {}
+      steps:
+      - material: ReinforcedGlass
+        amount: 1
+        doAfter: 2
 
   - node: airlock
     entity: Airlock
@@ -88,3 +95,42 @@
       steps:
       - tool: Prying
         doAfter: 5
+        
+  - node: glassElectronics
+    entity: AirlockAssembly
+    edges:
+    - to: glassAirlock
+      conditions:
+      - !type:EntityAnchored {}
+      steps:
+      - material: ReinforcedGlass
+        amount: 1
+        doAfter: 2
+      - tool: Screwing
+        doAfter: 2.5
+    - to: wired
+      conditions:
+      - !type:EntityAnchored {}
+      completed:
+      - !type:EmptyAllContainers {}
+      steps:
+      - tool: Prying
+        doAfter: 5
+
+  - node: glassAirlock
+    entity: AirlockGlass
+    edges:
+    - to: glassElectronics
+      conditions:
+      - !type:EntityAnchored {}
+      - !type:DoorWelded {}
+      - !type:AirlockBolted
+        value: false
+      - !type:WirePanel {}
+      completed:
+      - !type:SpawnPrototype
+        prototype: SheetRGlass1
+        amount: 1
+      steps:
+      - tool: Prying
+        doAfter: 2
