@@ -26,7 +26,7 @@ using Robust.Shared.Player;
 namespace Content.Server.Kitchen.Components
 {
     [RegisterComponent]
-    public sealed class MicrowaveComponent : SharedMicrowaveComponent, ISuicideAct, IBreakAct
+    public sealed class MicrowaveComponent : SharedMicrowaveComponent, ISuicideAct
     {
         [Dependency] private readonly IEntityManager _entities = default!;
 
@@ -178,7 +178,7 @@ namespace Content.Server.Kitchen.Components
             }
         }
 
-        private void SetAppearance(MicrowaveVisualState state)
+        public void SetAppearance(MicrowaveVisualState state)
         {
             var finalState = state;
             if (Broken)
@@ -191,12 +191,7 @@ namespace Content.Server.Kitchen.Components
                 appearance.SetData(PowerDeviceVisuals.VisualState, finalState);
             }
         }
-
-        public void OnBreak(BreakageEventArgs eventArgs)
-        {
-            Broken = true;
-            SetAppearance(MicrowaveVisualState.Broken);
-        }
+        
         // ReSharper disable once InconsistentNaming
         // ReSharper disable once IdentifierTypo
         private void Wzhzhzh()
