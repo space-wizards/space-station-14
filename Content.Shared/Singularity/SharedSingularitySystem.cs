@@ -22,12 +22,12 @@ namespace Content.Shared.Singularity
             return level switch
             {
                 0 => 9999f,
-                1 => 6.4f,
-                2 => 7.0f,
-                3 => 8.0f,
-                4 => 10.0f,
-                5 => 12.0f,
-                6 => 12.0f,
+                1 => MathF.Sqrt(6.4f),
+                2 => MathF.Sqrt(7.0f),
+                3 => MathF.Sqrt(8.0f),
+                4 => MathF.Sqrt(10.0f),
+                5 => MathF.Sqrt(12.0f),
+                6 => MathF.Sqrt(12.0f),
                 _ => -1.0f
             };
         }
@@ -37,12 +37,12 @@ namespace Content.Shared.Singularity
             return level switch
             {
                 0 => 0.0f,
-                1 => 2.7f,
-                2 => 14.4f,
-                3 => 47.2f,
-                4 => 180.0f,
-                5 => 600.0f,
-                6 => 800.0f,
+                1 => 3645f,
+                2 => 103680f,
+                3 => 1113920f,
+                4 => 16200000f,
+                5 => 180000000f,
+                6 => 180000000f,
                 _ => -1.0f
             };
         }
@@ -126,7 +126,7 @@ namespace Content.Shared.Singularity
 
             if (EntityManager.TryGetComponent(singularity.Owner, out SingularityDistortionComponent? distortion))
             {
-                distortion.Falloff = GetFalloff(value);
+                distortion.FalloffPower = GetFalloff(value);
                 distortion.Intensity = GetIntensity(value);
             }
 
