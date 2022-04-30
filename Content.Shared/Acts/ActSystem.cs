@@ -6,17 +6,6 @@ using Robust.Shared.Map;
 
 namespace Content.Shared.Acts
 {
-    /// <summary>
-    /// This interface gives components behavior on getting destroyed.
-    /// </summary>
-    public interface IDestroyAct
-    {
-        /// <summary>
-        /// Called when object is destroyed
-        /// </summary>
-        void OnDestroy(DestructionEventArgs eventArgs);
-    }
-
     public sealed class DestructionEventArgs : EntityEventArgs { }
 
     public sealed class BreakageEventArgs : EntityEventArgs { }
@@ -37,13 +26,6 @@ namespace Content.Shared.Acts
             var eventArgs = new DestructionEventArgs();
 
             RaiseLocalEvent(owner, eventArgs, false);
-            var destroyActs = EntityManager.GetComponents<IDestroyAct>(owner).ToList();
-
-            foreach (var destroyAct in destroyActs)
-            {
-                destroyAct.OnDestroy(eventArgs);
-            }
-
             QueueDel(owner);
         }
 
