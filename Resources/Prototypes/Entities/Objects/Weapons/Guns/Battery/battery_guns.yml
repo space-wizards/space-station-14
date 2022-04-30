@@ -29,8 +29,32 @@
       zeroVisible: false
 
 - type: entity
-  name: retro laser gun
+  id: BatteryGunSmall
   parent: BatteryGunBase
+  abstract: true 
+  components:
+  - type: PowerCellSlot
+    slotSize: Small
+
+- type: entity
+  id: BatteryGunMedium
+  parent: BatteryGunBase
+  abstract: true 
+  components:
+  - type: PowerCellSlot
+    slotSize: Medium
+
+- type: entity
+  id: BatteryGunLarge
+  parent: BatteryGunBase
+  abstract: true 
+  components:
+  - type: PowerCellSlot
+    slotSize: Large
+
+- type: entity
+  name: retro laser gun
+  parent: BatteryGunSmall
   id: LaserGun
   description: A weapon using light amplified by the stimulated emission of radiation.
   components:
@@ -59,7 +83,7 @@
 
 - type: entity
   name: makeshift laser gun
-  parent: BatteryGunBase
+  parent: BatteryGunMedium
   id: MakeshiftLaser
   description: Better pray it won't burn your hands off.
   components:
@@ -76,11 +100,11 @@
     size: 24
     sprite: Objects/Weapons/Guns/Battery/makeshift.rsi
   - type: BatteryBarrel
-    fireCost: 40
+    fireCost: 120
 
 - type: entity
   name: svalinn laser pistol
-  parent: BatteryGunBase
+  parent: BatteryGunSmall
   id: LaserPistolSvalinn
   description: A cheap and widely used laser pistol.
   components:
@@ -101,7 +125,7 @@
 
 - type: entity
   name: PDW-10 pulse pistol
-  parent: BatteryGunBase
+  parent: BatteryGunSmall
   id: PulsePistolPdw
   description: A state of the art energy pistol favoured as a sidearm by the NT-ERT operatives.
   components:
@@ -131,7 +155,7 @@
 
 - type: entity
   name: cog laser carbine
-  parent: BatteryGunBase
+  parent: BatteryGunMedium
   id: LaserRifleCog
   description: Favoured by Nanotrasen Security for being cheap and easy to use.
   components:
@@ -148,11 +172,11 @@
     size: 24
     sprite: Objects/Weapons/Guns/Battery/cog.rsi
   - type: BatteryBarrel
-    fireCost: 12
+    fireCost: 120
 
 - type: entity
   name: nightfall laser rifle
-  parent: BatteryGunBase
+  parent: BatteryGunMedium
   id: LaserRifleSniper
   description: A scoped high capacity laser rifle.
   components:
@@ -179,7 +203,7 @@
 
 - type: entity
   name: DEAC-12 pulse carbine
-  parent: BatteryGunBase
+  parent: BatteryGunMedium
   id: PulseCarbineDeac
   description: A high tech energy carbine favoured by the NT-ERT operatives.
   components:
@@ -196,7 +220,7 @@
     size: 24
     sprite: Objects/Weapons/Guns/Battery/pulse_carbine.rsi
   - type: BatteryBarrel
-    fireCost: 12
+    fireCost: 120
     ammoPrototype: Pulse
     soundGunshot:
       path: /Audio/Weapons/Guns/Gunshots/laser_cannon.ogg
@@ -205,11 +229,11 @@
       ejectOnUse: true
       soundOptions:
         volume: -2
-      startingItem: PowerCellSmallHigh
+      startingItem: PowerCellMediumHigh
 
 - type: entity
   name: destroyer pulse rifle
-  parent: BatteryGunBase
+  parent: BatteryGunMedium
   id: PulseRifleDeathSquad
   description: A weapon that fully lives up to its name. 
   components:
@@ -235,11 +259,11 @@
       ejectOnUse: true
       soundOptions:
         volume: -2
-      startingItem: PowerCellSmallHigh
+      startingItem: PowerCellMediumHigh
 
 - type: entity
   name: laser cannon
-  parent: BatteryGunBase
+  parent: BatteryGunLarge
   id: LaserCannon
   description: A heavy duty, high powered laser weapon.
   components:
@@ -256,7 +280,7 @@
     size: 24
     sprite: Objects/Weapons/Guns/Battery/laser_cannon.rsi
   - type: BatteryBarrel
-    fireCost: 200
+    fireCost: 4000
     ammoPrototype: RedHeavyLaser
     soundGunshot:
       path: /Audio/Weapons/Guns/Gunshots/laser_cannon.ogg
@@ -265,11 +289,11 @@
       ejectOnUse: true
       soundOptions:
         volume: -2
-      startingItem: PowerCellSmallSuper
+      startingItem: PowerCellLargeSuper
 
 - type: entity
   name: x-ray cannon
-  parent: BatteryGunBase
+  parent: BatteryGunLarge
   id: XrayCannon
   description: An experimental weapon that uses concentrated x-ray energy against its target.
   components:
@@ -286,7 +310,7 @@
     size: 24
     sprite: Objects/Weapons/Guns/Battery/xray.rsi
   - type: BatteryBarrel
-    fireCost: 600
+    fireCost: 6000
     ammoPrototype: XrayLaser
     soundGunshot:
       path: /Audio/Weapons/Guns/Gunshots/laser3.ogg
@@ -295,7 +319,7 @@
       ejectOnUse: true
       soundOptions:
         volume: -2
-      startingItem: PowerCellSmallSuper
+      startingItem: PowerCellLargeSuper
   - type: Appearance
     visuals:
     - type: MagVisualizer
@@ -305,7 +329,7 @@
 
 - type: entity
   name: taser
-  parent: BatteryGunBase
+  parent: BatteryGunSmall
   id: TaserGun
   description: A low-capacity, energy-based stun gun used by security teams to subdue targets at range.
   components:
