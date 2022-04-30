@@ -1,9 +1,8 @@
 using Content.Client.Storage.UI;
+using JetBrains.Annotations;
 using Robust.Client.GameObjects;
 using Robust.Client.UserInterface.Controls;
 using Robust.Shared.Input;
-using Content.Client.Items.Managers;
-using JetBrains.Annotations;
 using static Content.Shared.Storage.SharedStorageComponent;
 
 namespace Content.Client.Storage
@@ -47,7 +46,7 @@ namespace Content.Client.Storage
             }
             else if (IoCManager.Resolve<IEntityManager>().EntityExists(entity))
             {
-                IoCManager.Resolve<IItemSlotManager>().OnButtonPressed(args.Event, entity);
+                // IoCManager.Resolve<IItemSlotManager>().OnButtonPressed(args.Event, entity); TODO hud refactor BEFORE MERGE
             }
         }
 

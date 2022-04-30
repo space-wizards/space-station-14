@@ -1,6 +1,6 @@
-using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
-using Robust.Shared.Prototypes;
 using Content.Shared.Actions.ActionTypes;
+using Robust.Shared.Prototypes;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 using Robust.Shared.Utility;
 
 namespace Content.Server.Abilities.Mime
@@ -29,7 +29,7 @@ namespace Content.Server.Abilities.Mime
         {
             UseDelay = TimeSpan.FromSeconds(30),
             Icon = new SpriteSpecifier.Texture(new ResourcePath("Structures/Walls/solid.rsi/full.png")),
-            Name = "mime-invisible-wall",
+            DisplayName = "mime-invisible-wall",
             Description = "mime-invisible-wall-desc",
             Priority = -1,
             Event = new InvisibleWallActionEvent(),

@@ -1,9 +1,8 @@
 using Content.Shared.Actions.ActionTypes;
-using Content.Shared.Sound;
 using Content.Shared.Containers.ItemSlots;
+using Content.Shared.Sound;
 using Robust.Shared.Audio;
 using Robust.Shared.Utility;
-using Content.Shared.Whitelist;
 
 namespace Content.Shared.Vehicle.Components
 {
@@ -79,7 +78,7 @@ namespace Content.Shared.Vehicle.Components
         {
         UseDelay = TimeSpan.FromSeconds(3.4),
         Icon = new SpriteSpecifier.Texture(new ResourcePath("Objects/Fun/bikehorn.rsi/icon.png")),
-        Name = "action-name-honk",
+        DisplayName = "action-name-honk",
         Description = "action-desc-honk",
         Event = new HonkActionEvent(),
         };
