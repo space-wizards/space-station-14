@@ -1,8 +1,7 @@
 using Content.Shared.ActionBlocker;
 using Content.Shared.Buckle.Components;
+using Content.Shared.Vehicle.Components;
 using Robust.Client.GameObjects;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
 
 namespace Content.Client.Buckle
 {
@@ -38,6 +37,11 @@ namespace Content.Client.Buckle
             _sysMan.GetEntitySystem<ActionBlockerSystem>().UpdateCanMove(Owner);
 
             if (!_entMan.TryGetComponent(Owner, out SpriteComponent? ownerSprite))
+            {
+                return;
+            }
+
+            if (!_entMan.TryGetComponent(Owner, out RiderComponent? rider))
             {
                 return;
             }

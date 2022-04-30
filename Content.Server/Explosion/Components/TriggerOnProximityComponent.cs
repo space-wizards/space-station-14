@@ -47,6 +47,7 @@ namespace Content.Server.Explosion.Components
         /// <summary>
         /// How much cooldown has elapsed (if relevant).
         /// </summary>
+        [DataField("accumulator")]
         public float Accumulator = 0f;
 
         /// <summary>

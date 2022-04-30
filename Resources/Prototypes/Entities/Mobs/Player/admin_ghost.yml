@@ -145,6 +145,7 @@
       - FunArtSupplies
       - FunInstruments
       - FunBoardGames
+      - FunATV
       - MaterialSteel
       - MaterialGlass
       - MaterialPlastic
@@ -161,6 +162,7 @@
       - AtmosphericsOxygen
       - AtmosphericsNitrogen
       - AtmosphericsCarbonDioxide
+      - ArtifactContainer
   - type: CrewMonitoringConsole
     snap: false
     precision: 3

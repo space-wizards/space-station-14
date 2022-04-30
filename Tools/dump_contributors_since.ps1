@@ -9,9 +9,9 @@ param(
     [Nullable[DateTime]]$until);
 
 $replacements = @{
-    "moonheart08" = "moony",
-    "Elijahrane" = "Rane",
-    "ZeroDayDaemon" = "Daemon",
+    "moonheart08" = "moony"
+    "Elijahrane" = "Rane"
+    "ZeroDayDaemon" = "Daemon"
     "ElectroJr" = "ElectroSR"
 }
 
@@ -25,10 +25,10 @@ $content = & "$PSScriptRoot\dump_commits_since.ps1" -repo space-wizards/space-st
 $contribs = ($content + $engine) `
     | Select-Object -ExpandProperty author `
     | Select-Object -ExpandProperty login -Unique `
-    | Where-Object { -not $ignore[$_] }
-    | ForEach-Object { $replacements[$_] ?? $_ } 
+    | Where-Object { -not $ignore[$_] }`
+    | ForEach-Object { if($replacements[$_] -eq $null){ $_ } else { $replacements[$_] }} `
     | Sort-Object `
-    | Join-String -Separator ", "
 
+$contribs = $contribs -join ", "
 Write-Host $contribs
 Write-Host "Total commit count is $($engine.Length + $content.Length)"

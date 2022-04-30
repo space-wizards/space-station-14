@@ -21,6 +21,12 @@ namespace Content.Server.Bible.Components
         [DataField("requriesBibleUser")]
         public bool RequiresBibleUser = true;
 
+        /// <summary>
+        /// The specific creature this summoned, if the SpecialItemPrototype has a mobstate.
+        /// </summary>
+        [ViewVariables]
+        public EntityUid? Summon = null;
+
         [DataField("summonAction")]
         public InstantAction SummonAction = new()
         {
@@ -29,5 +35,13 @@ namespace Content.Server.Bible.Components
             Description = "bible-summon-verb-desc",
             Event = new SummonActionEvent(),
         };
+
+        /// Used for respawning
+        [ViewVariables]
+        [DataField("accumulator")]
+        public float Accumulator = 0f;
+        [ViewVariables]
+        [DataField("respawnTime")]
+        public float RespawnTime = 180f;
     }
 }

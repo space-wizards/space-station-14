@@ -649,3 +649,25 @@
   - type: IconSmooth
     key: walls
     base: wood
+
+- type: entity
+  id: WallInvisible
+  name: Invisible Wall
+  components:
+  - type: Tag
+    tags:
+      - Wall
+  - type: Physics
+    bodyType: Static
+  - type: Fixtures
+    fixtures:
+    - shape:
+        !type:PhysShapeAabb
+          bounds: "-0.5,-0.5,0.5,0.5"
+      layer:
+      - Impassable
+      - VaultImpassable
+      - SmallImpassable
+      mask:
+      - Impassable
+  - type: Airtight

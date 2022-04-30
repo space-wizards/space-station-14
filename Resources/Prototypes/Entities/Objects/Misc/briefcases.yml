@@ -1,5 +1,5 @@
 - type: entity
-  parent: BaseItem
+  parent: BaseStorageItem
   abstract: true
   id: BriefcaseBase
   description: Useful for carrying items in your hands.
@@ -8,8 +8,6 @@
     size: 60
   - type: Storage
     capacity: 60
-    storageSoundCollection:
-      collection: storageRustle
 
 - type: entity
   name: brown briefcase

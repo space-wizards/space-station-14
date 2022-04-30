@@ -12,6 +12,7 @@ namespace Content.Server.Entry
             "MeleeWeaponArcAnimation",
             "AnimationsTest",
             "ItemStatus",
+            "VehicleVisuals",
             "Marker",
             "Clickable",
             "Icon",
