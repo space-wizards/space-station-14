@@ -93,7 +93,6 @@
             - Opaque
             - MobImpassable
             - SmallImpassable
-    - type: PlaceableSurface
     - type: Damageable
       damageContainer: Inorganic
       damageModifierSet: Metallic
@@ -112,6 +111,9 @@
         whitelist:
           components:
             - Paper
+    - type: WrappedStorage
+
+//TODO: Make more items here Closet, Crate, Box
 
 
 - type: entity

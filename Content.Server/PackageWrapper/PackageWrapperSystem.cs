@@ -52,7 +52,7 @@ namespace Content.Server.PackageWrapper
                         container2.ItemContainer.Insert(args.Target.Value);
                     }
                 }
-                if (TryComp<SharedItemComponent>(args.Target.Value, out var targetItem))
+                else if (TryComp<SharedItemComponent>(args.Target.Value, out var targetItem))
                 {
                     // find minimal size
                     var typeComp = component.Products
@@ -68,17 +68,9 @@ namespace Content.Server.PackageWrapper
                 }
                 else
                 {
-                    component.Owner.PopupMessage(args.User, "can't wrap");
+                    component.Owner.PopupMessage(args.User, "can't wrap"); // TODO: Add more popup messages like I can't fit this object, etc
                 }
             }
-
-            //component.Owner.PopupMessage(args.User, wrappable.WrapType);
-            // var spawnedObj = Spawn(component.ParcelBasePrototype, args.ClickLocation);
-            // var container = Comp<ServerStorageComponent>(spawnedObj);
-            // if (args.Target != null)
-            //     container.Insert(args.Target.Value);
-
-
         }
     }
 }
