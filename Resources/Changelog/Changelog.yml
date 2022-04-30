@@ -1,9 +1,4 @@
 Entries:
-- author: Mirino97
-  changes:
-  - {message: Fixed the Stay Alive objective icon, type: Fix}
-  id: 928
-  time: '2022-01-24T19:32:42.0000000+00:00'
 - author: metalgearsloth
   changes:
   - {message: Wide melee attacks now use sound overrides., type: Tweak}
@@ -3054,3 +3049,9 @@ Entries:
       able to bring forth the undead., type: Add}
   id: 1427
   time: '2022-04-30T21:21:40.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: 'Addes MREs, military rations that can be found in emergency closets
+      and ordered from cargo.', type: Add}
+  id: 1428
+  time: '2022-04-30T21:24:37.0000000+00:00'
