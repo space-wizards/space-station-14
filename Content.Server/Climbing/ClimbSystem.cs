@@ -204,7 +204,7 @@ public sealed class ClimbSystem : SharedClimbSystem
             || !TryComp<FixturesComponent>(uid, out var fixturesComp))
             return;
 
-        foreach (var (fixture, _) in args.OurFixture.Contacts)
+        foreach (var fixture in args.OurFixture.Contacts.Keys)
         {
             if (fixture == args.OtherFixture)
                 continue;
