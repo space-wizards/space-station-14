@@ -13,6 +13,7 @@ using Content.Shared.ActionBlocker;
 using Content.Shared.Acts;
 using Content.Shared.Atmos;
 using Content.Shared.Construction.Components;
+using Content.Shared.Destructible;
 using Content.Shared.Disposal;
 using Content.Shared.Disposal.Components;
 using Content.Shared.DragDrop;

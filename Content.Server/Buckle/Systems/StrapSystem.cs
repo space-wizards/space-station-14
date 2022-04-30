@@ -1,6 +1,7 @@
 using Content.Server.Buckle.Components;
 using Content.Server.Interaction;
 using Content.Shared.Acts;
+using Content.Shared.Destructible;
 using Content.Shared.Interaction;
 using Content.Shared.Storage;
 using Content.Shared.Verbs;

@@ -6,8 +6,6 @@ using Robust.Shared.Map;
 
 namespace Content.Shared.Acts
 {
-    public sealed class DestructionEventArgs : EntityEventArgs { }
-
     public sealed class BreakageEventArgs : EntityEventArgs { }
 
     public interface IBreakAct
@@ -21,14 +19,6 @@ namespace Content.Shared.Acts
     [UsedImplicitly]
     public sealed class ActSystem : EntitySystem
     {
-        public void HandleDestruction(EntityUid owner)
-        {
-            var eventArgs = new DestructionEventArgs();
-
-            RaiseLocalEvent(owner, eventArgs, false);
-            QueueDel(owner);
-        }
-
         public void HandleBreakage(EntityUid owner)
         {
             var eventArgs = new BreakageEventArgs();

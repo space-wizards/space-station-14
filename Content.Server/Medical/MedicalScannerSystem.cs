@@ -9,6 +9,7 @@ using Content.Shared.ActionBlocker;
 using Content.Shared.Acts;
 using Content.Shared.CharacterAppearance.Components;
 using Content.Shared.Damage;
+using Content.Shared.Destructible;
 using Content.Shared.DragDrop;
 using Content.Shared.Interaction;
 using Content.Shared.MobState.Components;

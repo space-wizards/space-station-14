@@ -14,7 +14,7 @@ namespace Content.Server.Construction.Completions
     {
         public void PerformAction(EntityUid uid, EntityUid? userUid, IEntityManager entityManager)
         {
-            entityManager.EntitySysManager.GetEntitySystem<ActSystem>().HandleDestruction(uid);
+            entityManager.EntitySysManager.GetEntitySystem<DestructibleSystem>().DestroyEntity(uid);
         }
     }
 }

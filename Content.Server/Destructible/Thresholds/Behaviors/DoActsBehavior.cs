@@ -30,7 +30,7 @@ namespace Content.Server.Destructible.Thresholds.Behaviors
 
             if (HasAct(ThresholdActs.Destruction))
             {
-                system.ActSystem.HandleDestruction(owner);
+                system.DestroyEntity(owner);
             }
         }
     }

@@ -1,6 +1,7 @@
 ﻿using System.Linq;
 using Content.Server.Storage.Components;
 using Content.Shared.Acts;
+using Content.Shared.Destructible;
 using Robust.Shared.Physics;
 
 namespace Content.Server.Storage.EntitySystems;

@@ -28,6 +28,7 @@ using Robust.Shared.Map;
 using Robust.Shared.Player;
 using Robust.Server.Containers;
 using Content.Server.Popups;
+using Content.Shared.Destructible;
 using static Content.Shared.Storage.SharedStorageComponent;
 
 namespace Content.Server.Storage.EntitySystems

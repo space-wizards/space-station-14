@@ -13,6 +13,7 @@ using Robust.Shared.GameStates;
 using Robust.Shared.Player;
 using Robust.Shared.Timing;
 using System.Diagnostics.CodeAnalysis;
+using Content.Shared.Destructible;
 
 namespace Content.Shared.Containers.ItemSlots
 {
