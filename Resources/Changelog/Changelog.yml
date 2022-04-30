@@ -1,10 +1,4 @@
 Entries:
-- author: Peptide90
-  changes:
-  - {message: 'Constructed SMES, APC and substations now start with zero charge.',
-    type: Fix}
-  id: 923
-  time: '2022-01-23T17:47:22.0000000+00:00'
 - author: moony
   changes:
   - {message: 'Kudzu and Gas Leak are now less likely to occur, and cannot happen
@@ -3052,3 +3046,8 @@ Entries:
     type: Add}
   id: 1422
   time: '2022-04-29T04:50:23.0000000+00:00'
+- author: ElectroJr
+  changes:
+  - {message: Fixed a bug causing hard-suit helmets to get stuck on heads., type: Fix}
+  id: 1423
+  time: '2022-04-30T04:54:35.0000000+00:00'
