@@ -1,14 +1,4 @@
 Entries:
-- author: metalgearsloth
-  changes:
-  - {message: Wide melee attacks now use sound overrides., type: Tweak}
-  id: 929
-  time: '2022-01-25T00:22:25.0000000+00:00'
-- author: Pancake
-  changes:
-  - {message: Blue tiles now obey the laws of physics., type: Fix}
-  id: 930
-  time: '2022-01-25T07:03:48.0000000+00:00'
 - author: Mirino97
   changes:
   - {message: Fixes Random Traitor Alive Objective's icon!, type: Fix}
@@ -3055,3 +3045,14 @@ Entries:
       and ordered from cargo.', type: Add}
   id: 1428
   time: '2022-04-30T21:24:37.0000000+00:00'
+- author: Ripmorld
+  changes:
+  - {message: Different Laser guns now uses different powercells, type: Add}
+  id: 1429
+  time: '2022-04-30T21:25:39.0000000+00:00'
+- author: 20kdc
+  changes:
+  - {message: A certain sealed small asteroid will no longer contain plasmafire or
+      crates., type: Tweak}
+  id: 1430
+  time: '2022-04-30T21:25:56.0000000+00:00'
