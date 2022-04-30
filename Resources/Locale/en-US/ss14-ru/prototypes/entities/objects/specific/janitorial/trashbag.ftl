@@ -1,5 +1,5 @@
 ent-TrashBag = trash bag
-    .desc = { ent-BaseItem.desc }
+    .desc = { ent-BaseStorageItem.desc }
     .suffix = { "" }
 ent-TrashBagBlue = trash bag
     .desc = { ent-TrashBag.desc }

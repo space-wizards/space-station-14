@@ -44,5 +44,5 @@ ent-DrinkEnergyDrinkCan = red bool energy drink
     .desc = A can of Red Bool, with enough caffeine to kill a horse.
     .suffix = { "" }
 ent-DrinkCanPack = 6pack
-    .desc = { ent-BaseItem.desc }
+    .desc = { ent-BaseStorageItem.desc }
     .suffix = { "" }

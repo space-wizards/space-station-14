@@ -1,3 +1,3 @@
-ent-Vox = Vox
-    .desc = { ent-BaseVox.desc }
+ent-MobVox = Vox
+    .desc = { ent-MobVoxBase.desc }
     .suffix = { "" }

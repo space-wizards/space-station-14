@@ -16,3 +16,6 @@ ent-MedicalTechFab = medical techfab
 ent-UniformPrinter = uniform printer
     .desc = Prints new or replacement uniforms.
     .suffix = { "" }
+ent-OreProcessor = ore processor
+    .desc = It produces sheets and ingots using ores.
+    .suffix = { "" }
