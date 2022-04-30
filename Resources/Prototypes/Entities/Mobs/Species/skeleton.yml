@@ -129,12 +129,6 @@
     - map: [ "belt" ]
     - map: [ "neck" ]
     - map: [ "back" ]
-    - map: [ "enum.HumanoidVisualLayers.FacialHair" ]
-      state: shaved
-      sprite: Mobs/Customization/human_facial_hair.rsi
-    - map: [ "enum.HumanoidVisualLayers.Hair" ]
-      state: bald
-      sprite: Mobs/Customization/human_hair.rsi
     - map: [ "mask" ]
     - map: [ "head" ]
     - map: [ "pocket1" ]
@@ -177,6 +171,7 @@
   - type: Body
     template: HumanoidTemplate
     preset: SkeletonPreset
+    gibSound: /Audio/Effects/bone_rattle.ogg
   - type: Damageable
     damageContainer: Biological
     damageModifierSet: Skeleton

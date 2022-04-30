@@ -32,7 +32,7 @@ namespace Content.Server.Body.Systems
                         }
                     }
                 }
-            }    
+            }
         }
 
         /// <remarks>
@@ -41,7 +41,7 @@ namespace Content.Server.Body.Systems
         /// </remarks>
         private void OnBeingGibbed(EntityUid uid, TransferMindOnGibComponent component, BeingGibbedEvent args)
         {
-            if(TryComp<SkeletonBodyManagerComponent>(component.TransferTarget, out var comp))
+            if (TryComp<SkeletonBodyManagerComponent>(component.TransferTarget, out var comp))
             {
                 comp.BodyParts = args.GibbedParts;
             }

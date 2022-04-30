@@ -14,6 +14,9 @@
       context: "human"
     - type: PlayerMobMover
     - type: PlayerInputMover
+    - type: Vocal
+      maleScream: /Audio/Voice/Skeleton/skeleton_scream.ogg
+      femaleScream: /Audio/Voice/Skeleton/skeleton_scream.ogg
     - type: Alerts
     - type: Actions
     - type: Eye

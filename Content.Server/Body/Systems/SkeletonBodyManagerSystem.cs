@@ -27,7 +27,7 @@ namespace Content.Server.Body.Systems
         [Dependency] private readonly IEntityManager _entities = default!;
         [Dependency] private readonly IServerPreferencesManager _prefsManager = null!;
         [Dependency] private readonly IPrototypeManager _prototype = default!;
-        [Dependency] private readonly PopupSystem _popupSystem= default!;
+        [Dependency] private readonly PopupSystem _popupSystem = default!;
         [Dependency] private readonly DoAfterSystem _doAfterSystem = default!;
         [Dependency] private readonly ConstructionSystem _construction = default!;
 
@@ -97,9 +97,6 @@ namespace Content.Server.Body.Systems
 
             // Ensures all of the old body part pieces are there
             var nearby = _construction.EnumerateNearby(user);
-
-            // there is certainly a less stinky way of doing this but alas
-            // i am a little baby coder who's only taken intro classes. -emo
             bool notFound;
             foreach (var part in component.BodyParts)
             {
@@ -141,10 +138,12 @@ namespace Content.Server.Body.Systems
                 mindcomp.Mind.TransferTo(mob);
 
             // Cleans up all the body part pieces
-            foreach(var entity in args.PartList)
+            foreach (var entity in args.PartList)
             {
                 _entities.DeleteEntity(entity);
             }
+
+            _popupSystem.PopupEntity(Loc.GetString("skeleton-reassemble-success", ("user", mob)), mob, Filter.Entities(mob));
         }
 
         /// <summary>
