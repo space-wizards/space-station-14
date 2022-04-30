@@ -1,5 +1,4 @@
 using Content.Shared.ActionBlocker;
-using Content.Shared.Acts;
 using Content.Shared.Hands.Components;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Interaction;

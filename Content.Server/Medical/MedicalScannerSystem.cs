@@ -6,7 +6,6 @@ using Content.Server.Popups;
 using Content.Server.Power.Components;
 using Content.Server.Preferences.Managers;
 using Content.Shared.ActionBlocker;
-using Content.Shared.Acts;
 using Content.Shared.CharacterAppearance.Components;
 using Content.Shared.Damage;
 using Content.Shared.Destructible;

@@ -1,7 +1,7 @@
 using Content.Server.Chemistry.EntitySystems;
 using Content.Server.Kitchen.Components;
 using Content.Server.Popups;
-using Content.Shared.Acts;
+using Content.Shared.Destructible;
 using Content.Shared.Interaction;
 using Content.Shared.Item;
 using Content.Shared.Kitchen.Components;

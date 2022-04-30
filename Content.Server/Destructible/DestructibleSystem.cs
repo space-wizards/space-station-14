@@ -4,7 +4,6 @@ using Content.Server.Destructible.Thresholds.Behaviors;
 using Content.Server.Destructible.Thresholds.Triggers;
 using Content.Server.Explosion.EntitySystems;
 using Content.Server.Stack;
-using Content.Shared.Acts;
 using Content.Shared.Damage;
 using Content.Shared.FixedPoint;
 using JetBrains.Annotations;
@@ -22,7 +21,6 @@ namespace Content.Server.Destructible
         [Dependency] public readonly IRobustRandom Random = default!;
         public new IEntityManager EntityManager => base.EntityManager;
 
-        [Dependency] public readonly ActSystem ActSystem = default!;
         [Dependency] public readonly AudioSystem AudioSystem = default!;
         [Dependency] public readonly ConstructionSystem ConstructionSystem = default!;
         [Dependency] public readonly ExplosionSystem ExplosionSystem = default!;

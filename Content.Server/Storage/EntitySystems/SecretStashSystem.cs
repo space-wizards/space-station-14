@@ -1,6 +1,5 @@
 using Content.Server.Popups;
 using Content.Server.Storage.Components;
-using Content.Shared.Acts;
 using Content.Shared.Destructible;
 using Content.Shared.Hands.Components;
 using Content.Shared.Hands.EntitySystems;

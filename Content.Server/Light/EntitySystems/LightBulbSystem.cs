@@ -1,5 +1,5 @@
 using Content.Server.Light.Components;
-using Content.Shared.Acts;
+using Content.Shared.Destructible;
 using Content.Shared.Light;
 using Content.Shared.Throwing;
 using Robust.Shared.Audio;

@@ -10,7 +10,6 @@ using Content.Server.Hands.Components;
 using Content.Server.Power.Components;
 using Content.Server.UserInterface;
 using Content.Shared.ActionBlocker;
-using Content.Shared.Acts;
 using Content.Shared.Atmos;
 using Content.Shared.Construction.Components;
 using Content.Shared.Destructible;

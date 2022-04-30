@@ -12,9 +12,29 @@ public abstract class SharedDestructibleSystem : EntitySystem
         RaiseLocalEvent(owner, eventArgs, false);
         QueueDel(owner);
     }
+
+    /// <summary>
+    ///     Force entity to broke.
+    /// </summary>
+    public void BreakEntity(EntityUid owner)
+    {
+        var eventArgs = new BreakageEventArgs();
+        RaiseLocalEvent(owner, eventArgs, false);
+    }
 }
 
+/// <summary>
+///     Raised when entity is destroyed and about to be deleted.
+/// </summary>
 public sealed class DestructionEventArgs : EntityEventArgs
+{
+
+}
+
+/// <summary>
+///     Raised when entity was heavy damage and about to break.
+/// </summary>
+public sealed class BreakageEventArgs : EntityEventArgs
 {
 
 }

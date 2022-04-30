@@ -7,7 +7,6 @@ using Content.Server.Construction.Components;
 using Content.Server.Ghost.Components;
 using Content.Server.Storage.EntitySystems;
 using Content.Server.Tools;
-using Content.Shared.Acts;
 using Content.Shared.Body.Components;
 using Content.Shared.Foldable;
 using Content.Shared.Interaction;

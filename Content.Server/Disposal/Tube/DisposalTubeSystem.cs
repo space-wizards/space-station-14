@@ -1,7 +1,7 @@
 using Content.Server.Disposal.Tube.Components;
 using Content.Server.UserInterface;
 using Content.Server.Hands.Components;
-using Content.Shared.Acts;
+using Content.Shared.Destructible;
 using Content.Shared.Movement;
 using Content.Shared.Verbs;
 using Content.Shared.Popups;

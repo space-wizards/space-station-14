@@ -8,7 +8,6 @@ using Content.Server.Power.Components;
 using Content.Server.Temperature.Components;
 using Content.Server.Temperature.Systems;
 using Content.Server.UserInterface;
-using Content.Shared.Acts;
 using Content.Shared.Body.Components;
 using Content.Shared.Body.Part;
 using Content.Shared.FixedPoint;
@@ -191,7 +190,7 @@ namespace Content.Server.Kitchen.Components
                 appearance.SetData(PowerDeviceVisuals.VisualState, finalState);
             }
         }
-        
+
         // ReSharper disable once InconsistentNaming
         // ReSharper disable once IdentifierTypo
         private void Wzhzhzh()

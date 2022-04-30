@@ -1,5 +1,4 @@
 using System.Linq;
-using Content.Shared.Acts;
 using Content.Shared.Alert;
 using Content.Shared.Buckle.Components;
 using Content.Shared.DragDrop;

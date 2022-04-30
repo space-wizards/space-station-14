@@ -4,7 +4,6 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization.Manager.Attributes;
 using System.Threading.Tasks;
 using Content.Server.Destructible;
-using Content.Shared.Acts;
 
 namespace Content.Server.Construction.Completions
 {
