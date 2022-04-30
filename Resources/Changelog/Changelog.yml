@@ -1,9 +1,4 @@
 Entries:
-- author: Mirino97
-  changes:
-  - {message: Fixes Random Traitor Alive Objective's icon!, type: Fix}
-  id: 931
-  time: '2022-01-25T09:29:31.0000000+00:00'
 - author: Pancake
   changes:
   - {message: Radiation range of the singularity has been reduced from 15 to 10.,
@@ -3056,3 +3051,9 @@ Entries:
       crates., type: Tweak}
   id: 1430
   time: '2022-04-30T21:25:56.0000000+00:00'
+- author: Peptide90
+  changes:
+  - {message: Added metal and wooden counters to be used in bars and shops for that
+      new look. Construction available too!, type: Add}
+  id: 1431
+  time: '2022-04-30T21:28:04.0000000+00:00'
