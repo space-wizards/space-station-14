@@ -1343,6 +1343,12 @@
   components:
   - type: InteractionPopup
     successChance: 1
+  - type: Butcherable
+    spawned:
+    - id: FoodMeat
+      amount: 3
+    - id: Telecrystal5
+      amount: 1
   - type: Grammar
     attributes:
       proper: true
