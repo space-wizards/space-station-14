@@ -170,335 +170,43 @@ grids:
     tiles: AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADAAAAAwAAAAMAAAAA==
 entities:
 - uid: 0
-  type: RadiationCollector
+  type: WaterCooler
   components:
-  - pos: 64.5,-0.5
+  - pos: -6.5,17.5
     parent: 858
     type: Transform
 - uid: 1
-  type: VendingMachineCoffee
+  type: TableReinforced
   components:
-  - name: Hot drinks machine
-    type: MetaData
-  - pos: -11.5,-17.5
+  - pos: -11.5,19.5
     parent: 858
     type: Transform
-  - enabled: False
-    type: AmbientSound
 - uid: 2
-  type: ToolboxElectricalFilled
+  type: SpawnMobMcGriff
   components:
-  - pos: -29.499815,8.100836
+  - pos: -1.5,8.5
     parent: 858
     type: Transform
-  - canCollide: False
-    type: Physics
-  - containers:
-      storagebase: !type:Container
-        ents: []
-    type: ContainerContainer
 - uid: 3
-  type: FirelockElectronics
+  type: WallReinforced
   components:
-  - pos: -29.687315,9.038336
+  - pos: 39.5,22.5
     parent: 858
     type: Transform
-  - canCollide: False
-    type: Physics
 - uid: 4
-  type: MagazineMagnumSmgRubber
+  type: SpawnPointCaptain
   components:
-  - parent: 132
+  - pos: 11.5,24.5
+    parent: 858
     type: Transform
-  - canCollide: False
-    type: Physics
-  - containers:
-      Content.Server.Weapon.Ranged.Ammunition.Components.RangedMagazineComponent-magazine: !type:Container
-        ents: []
-    type: ContainerContainer
 - uid: 5
-  type: MopItem
-  components:
-  - pos: 25.68625,0.6714213
-    parent: 858
-    type: Transform
-- uid: 6
-  type: WarningAir
-  components:
-  - pos: 37.5,20.5
-    parent: 858
-    type: Transform
-- uid: 7
-  type: GasMinerOxygen
-  components:
-  - pos: 34.5,22.5
-    parent: 858
-    type: Transform
-  - fixtures: []
-    type: Fixtures
-- uid: 8
-  type: Chair
-  components:
-  - pos: 6.5,-8.5
-    parent: 858
-    type: Transform
-- uid: 9
-  type: CableApcExtension
-  components:
-  - pos: -13.5,10.5
-    parent: 858
-    type: Transform
-  - enabled: False
-    type: AmbientSound
-  - canCollide: False
-    type: Physics
-- uid: 10
-  type: GasPassiveVent
-  components:
-  - rot: 1.5707963267948966 rad
-    pos: 46.5,23.5
-    parent: 858
-    type: Transform
-  - canCollide: False
-    type: Physics
-- uid: 11
-  type: CarpetBlue
-  components:
-  - pos: 11.5,23.5
-    parent: 858
-    type: Transform
-- uid: 12
-  type: GasPipeBend
-  components:
-  - pos: 41.5,23.5
-    parent: 858
-    type: Transform
-  - canCollide: False
-    type: Physics
-- uid: 13
   type: CarpetOrange
   components:
   - rot: -1.5707963267948966 rad
-    pos: -6.5,-2.5
+    pos: -7.5,-1.5
     parent: 858
     type: Transform
-- uid: 14
-  type: CableHV
-  components:
-  - pos: 19.5,-30.5
-    parent: 858
-    type: Transform
-  - enabled: False
-    type: AmbientSound
-  - canCollide: False
-    type: Physics
-- uid: 15
-  type: MagazinePistolSmgTopMounted
-  components:
-  - pos: -14.24543,19.569979
-    parent: 858
-    type: Transform
-  - containers:
-      Content.Server.Weapon.Ranged.Ammunition.Components.RangedMagazineComponent-magazine: !type:Container
-        ents: []
-    type: ContainerContainer
-- uid: 16
-  type: ShellShotgunBeanbag
-  components:
-  - pos: -11.418642,18.704296
-    parent: 858
-    type: Transform
-- uid: 17
-  type: GasPassiveVent
-  components:
-  - pos: 46.5,21.5
-    parent: 858
-    type: Transform
-  - canCollide: False
-    type: Physics
-- uid: 18
-  type: SuspicionGrenadesSpawner
-  components:
-  - rot: 4.371139006309477E-08 rad
-    pos: 0.5,-15.5
-    parent: 858
-    type: Transform
-- uid: 19
-  type: Chair
-  components:
-  - pos: 11.5,1.5
-    parent: 858
-    type: Transform
-- uid: 20
-  type: CableHV
-  components:
-  - pos: 19.5,-29.5
-    parent: 858
-    type: Transform
-  - enabled: False
-    type: AmbientSound
-  - canCollide: False
-    type: Physics
-- uid: 21
-  type: WallReinforced
-  components:
-  - pos: 27.5,14.5
-    parent: 858
-    type: Transform
-- uid: 22
-  type: ReinforcedWindow
-  components:
-  - pos: -7.5,-30.5
-    parent: 858
-    type: Transform
-- uid: 23
-  type: ReinforcedWindow
-  components:
-  - pos: -10.5,-29.5
-    parent: 858
-    type: Transform
-- uid: 24
-  type: ShellShotgunBeanbag
-  components:
-  - pos: -11.387392,18.344921
-    parent: 858
-    type: Transform
-- uid: 25
-  type: WallReinforced
-  components:
-  - pos: 20.5,-0.5
-    parent: 858
-    type: Transform
-- uid: 26
-  type: FirelockElectronics
-  components:
-  - pos: -29.42169,8.819586
-    parent: 858
-    type: Transform
-  - canCollide: False
-    type: Physics
-- uid: 27
-  type: ShellShotgunSlug
-  components:
-  - pos: -11.153017,18.423046
-    parent: 858
-    type: Transform
-- uid: 28
-  type: GasPipeTJunction
-  components:
-  - rot: 3.141592653589793 rad
-    pos: 10.5,25.5
-    parent: 858
-    type: Transform
-  - canCollide: False
-    type: Physics
-  - color: '#0335FCFF'
-    type: AtmosPipeColor
-  - enabled: False
-    type: AmbientSound
-- uid: 29
-  type: GasPassiveVent
-  components:
-  - rot: 1.5707963267948966 rad
-    pos: 38.5,23.5
-    parent: 858
-    type: Transform
-  - canCollide: False
-    type: Physics
-- uid: 30
-  type: CableApcExtension
-  components:
-  - pos: 12.5,-9.5
-    parent: 858
-    type: Transform
-  - enabled: False
-    type: AmbientSound
-  - canCollide: False
-    type: Physics
-- uid: 31
-  type: WallReinforced
-  components:
-  - pos: 35.5,23.5
-    parent: 858
-    type: Transform
-- uid: 32
-  type: MagazineMagnumSmg
-  components:
-  - pos: -13.293642,21.563671
-    parent: 858
-    type: Transform
-  - containers:
-      Content.Server.Weapon.Ranged.Ammunition.Components.RangedMagazineComponent-magazine: !type:Container
-        ents: []
-    type: ContainerContainer
-- uid: 33
-  type: GasPassiveVent
-  components:
-  - rot: 1.5707963267948966 rad
-    pos: 42.5,23.5
-    parent: 858
-    type: Transform
-  - canCollide: False
-    type: Physics
-- uid: 34
-  type: CableMVStack
-  components:
-  - pos: 48.35775,5.619252
-    parent: 858
-    type: Transform
-- uid: 35
-  type: Grille
-  components:
-  - pos: 19.5,20.5
-    parent: 858
-    type: Transform
-- uid: 36
-  type: ShellShotgunBeanbag
-  components:
-  - pos: -11.418642,18.548046
-    parent: 858
-    type: Transform
-- uid: 37
-  type: BoxSterile
-  components:
-  - pos: 21.350922,-4.296852
-    parent: 858
-    type: Transform
-  - containers:
-      storagebase: !type:Container
-        ents: []
-    type: ContainerContainer
-- uid: 38
-  type: MedicalScanner
-  components:
-  - pos: 7.5,-14.5
-    parent: 858
-    type: Transform
-  - containers:
-    - machine_parts
-    - machine_board
-    type: Construction
-  - containers:
-      MedicalScanner-bodyContainer: !type:ContainerSlot {}
-      machine_board: !type:Container
-        ents: []
-      machine_parts: !type:Container
-        ents: []
-    type: ContainerContainer
-- uid: 39
-  type: ShellShotgunSlug
-  components:
-  - pos: -11.153017,18.298046
-    parent: 858
-    type: Transform
-- uid: 40
-  type: SuspicionPistolSpawner
-  components:
-  - rot: 4.371139006309477E-08 rad
-    pos: -10.5,-0.5
-    parent: 858
-    type: Transform
-- uid: 41
+- uid: 6
   type: Poweredlight
   components:
   - rot: 1.5707963267948966 rad
@@ -515,41 +223,333 @@ entities:
       Off: []
       Toggle: []
     type: SignalReceiver
-- uid: 42
+- uid: 7
+  type: SuspicionPistolSpawner
+  components:
+  - rot: 4.371139006309477E-08 rad
+    pos: -10.5,-0.5
+    parent: 858
+    type: Transform
+- uid: 8
+  type: ShellShotgunSlug
+  components:
+  - pos: -11.153017,18.298046
+    parent: 858
+    type: Transform
+- uid: 9
+  type: MedicalScanner
+  components:
+  - pos: 7.5,-14.5
+    parent: 858
+    type: Transform
+  - containers:
+    - machine_parts
+    - machine_board
+    type: Construction
+  - containers:
+      MedicalScanner-bodyContainer: !type:ContainerSlot {}
+      machine_board: !type:Container
+        ents: []
+      machine_parts: !type:Container
+        ents: []
+    type: ContainerContainer
+- uid: 10
+  type: BoxSterile
+  components:
+  - pos: 21.350922,-4.296852
+    parent: 858
+    type: Transform
+  - containers:
+      storagebase: !type:Container
+        ents: []
+    type: ContainerContainer
+- uid: 11
+  type: ShellShotgunBeanbag
+  components:
+  - pos: -11.418642,18.548046
+    parent: 858
+    type: Transform
+- uid: 12
+  type: Grille
+  components:
+  - pos: 19.5,20.5
+    parent: 858
+    type: Transform
+- uid: 13
+  type: CableMVStack
+  components:
+  - pos: 48.35775,5.619252
+    parent: 858
+    type: Transform
+- uid: 14
+  type: GasPassiveVent
+  components:
+  - rot: 1.5707963267948966 rad
+    pos: 42.5,23.5
+    parent: 858
+    type: Transform
+  - canCollide: False
+    type: Physics
+- uid: 15
+  type: MagazineMagnumSmg
+  components:
+  - pos: -13.293642,21.563671
+    parent: 858
+    type: Transform
+  - containers:
+      Content.Server.Weapon.Ranged.Ammunition.Components.RangedMagazineComponent-magazine: !type:Container
+        ents: []
+    type: ContainerContainer
+- uid: 16
+  type: WallReinforced
+  components:
+  - pos: 35.5,23.5
+    parent: 858
+    type: Transform
+- uid: 17
+  type: CableApcExtension
+  components:
+  - pos: 12.5,-9.5
+    parent: 858
+    type: Transform
+  - enabled: False
+    type: AmbientSound
+  - canCollide: False
+    type: Physics
+- uid: 18
+  type: GasPassiveVent
+  components:
+  - rot: 1.5707963267948966 rad
+    pos: 38.5,23.5
+    parent: 858
+    type: Transform
+  - canCollide: False
+    type: Physics
+- uid: 19
+  type: GasPipeTJunction
+  components:
+  - rot: 3.141592653589793 rad
+    pos: 10.5,25.5
+    parent: 858
+    type: Transform
+  - canCollide: False
+    type: Physics
+  - color: '#0335FCFF'
+    type: AtmosPipeColor
+  - enabled: False
+    type: AmbientSound
+- uid: 20
+  type: ShellShotgunSlug
+  components:
+  - pos: -11.153017,18.423046
+    parent: 858
+    type: Transform
+- uid: 21
+  type: FirelockElectronics
+  components:
+  - pos: -29.42169,8.819586
+    parent: 858
+    type: Transform
+  - canCollide: False
+    type: Physics
+- uid: 22
+  type: WallReinforced
+  components:
+  - pos: 20.5,-0.5
+    parent: 858
+    type: Transform
+- uid: 23
+  type: ShellShotgunBeanbag
+  components:
+  - pos: -11.387392,18.344921
+    parent: 858
+    type: Transform
+- uid: 24
+  type: ReinforcedWindow
+  components:
+  - pos: -10.5,-29.5
+    parent: 858
+    type: Transform
+- uid: 25
+  type: ReinforcedWindow
+  components:
+  - pos: -7.5,-30.5
+    parent: 858
+    type: Transform
+- uid: 26
+  type: WallReinforced
+  components:
+  - pos: 27.5,14.5
+    parent: 858
+    type: Transform
+- uid: 27
+  type: CableHV
+  components:
+  - pos: 19.5,-29.5
+    parent: 858
+    type: Transform
+  - enabled: False
+    type: AmbientSound
+  - canCollide: False
+    type: Physics
+- uid: 28
+  type: Chair
+  components:
+  - pos: 11.5,1.5
+    parent: 858
+    type: Transform
+- uid: 29
+  type: SuspicionGrenadesSpawner
+  components:
+  - rot: 4.371139006309477E-08 rad
+    pos: 0.5,-15.5
+    parent: 858
+    type: Transform
+- uid: 30
+  type: GasPassiveVent
+  components:
+  - pos: 46.5,21.5
+    parent: 858
+    type: Transform
+  - canCollide: False
+    type: Physics
+- uid: 31
+  type: ShellShotgunBeanbag
+  components:
+  - pos: -11.418642,18.704296
+    parent: 858
+    type: Transform
+- uid: 32
+  type: MagazinePistolSmgTopMounted
+  components:
+  - pos: -14.24543,19.569979
+    parent: 858
+    type: Transform
+  - containers:
+      Content.Server.Weapon.Ranged.Ammunition.Components.RangedMagazineComponent-magazine: !type:Container
+        ents: []
+    type: ContainerContainer
+- uid: 33
+  type: CableHV
+  components:
+  - pos: 19.5,-30.5
+    parent: 858
+    type: Transform
+  - enabled: False
+    type: AmbientSound
+  - canCollide: False
+    type: Physics
+- uid: 34
   type: CarpetOrange
   components:
   - rot: -1.5707963267948966 rad
-    pos: -7.5,-1.5
+    pos: -6.5,-2.5
+    parent: 858
+    type: Transform
+- uid: 35
+  type: GasPipeBend
+  components:
+  - pos: 41.5,23.5
+    parent: 858
+    type: Transform
+  - canCollide: False
+    type: Physics
+- uid: 36
+  type: CarpetBlue
+  components:
+  - pos: 11.5,23.5
+    parent: 858
+    type: Transform
+- uid: 37
+  type: GasPassiveVent
+  components:
+  - rot: 1.5707963267948966 rad
+    pos: 46.5,23.5
+    parent: 858
+    type: Transform
+  - canCollide: False
+    type: Physics
+- uid: 38
+  type: CableApcExtension
+  components:
+  - pos: -13.5,10.5
+    parent: 858
+    type: Transform
+  - enabled: False
+    type: AmbientSound
+  - canCollide: False
+    type: Physics
+- uid: 39
+  type: Chair
+  components:
+  - pos: 6.5,-8.5
+    parent: 858
+    type: Transform
+- uid: 40
+  type: GasMinerOxygen
+  components:
+  - pos: 34.5,22.5
+    parent: 858
+    type: Transform
+  - fixtures: []
+    type: Fixtures
+- uid: 41
+  type: WarningAir
+  components:
+  - pos: 37.5,20.5
+    parent: 858
+    type: Transform
+- uid: 42
+  type: MopItem
+  components:
+  - pos: 25.68625,0.6714213
     parent: 858
     type: Transform
 - uid: 43
-  type: SpawnPointCaptain
+  type: MagazineMagnumSmgRubber
   components:
-  - pos: 11.5,24.5
-    parent: 858
+  - parent: 132
     type: Transform
+  - canCollide: False
+    type: Physics
+  - containers:
+      Content.Server.Weapon.Ranged.Ammunition.Components.RangedMagazineComponent-magazine: !type:Container
+        ents: []
+    type: ContainerContainer
 - uid: 44
-  type: WallReinforced
+  type: FirelockElectronics
   components:
-  - pos: 39.5,22.5
+  - pos: -29.687315,9.038336
     parent: 858
     type: Transform
+  - canCollide: False
+    type: Physics
 - uid: 45
-  type: SpawnMobMcGriff
+  type: ToolboxElectricalFilled
   components:
-  - pos: -1.5,8.5
+  - pos: -29.499815,8.100836
     parent: 858
     type: Transform
+  - canCollide: False
+    type: Physics
+  - containers:
+      storagebase: !type:Container
+        ents: []
+    type: ContainerContainer
 - uid: 46
-  type: TableReinforced
+  type: VendingMachineCoffee
   components:
-  - pos: -11.5,19.5
+  - name: Hot drinks machine
+    type: MetaData
+  - pos: -11.5,-17.5
     parent: 858
     type: Transform
+  - enabled: False
+    type: AmbientSound
 - uid: 47
-  type: WaterCooler
+  type: RadiationCollector
   components:
-  - pos: -6.5,17.5
+  - pos: 64.5,-0.5
     parent: 858
     type: Transform
 - uid: 48
@@ -1219,7 +1219,7 @@ entities:
   - containers:
       Content.Server.Weapon.Ranged.Barrels.Components.MagazineBarrelComponent-chamber: !type:ContainerSlot {}
       Content.Server.Weapon.Ranged.Barrels.Components.MagazineBarrelComponent-magazine: !type:ContainerSlot
-        ent: 4
+        ent: 43
     type: ContainerContainer
 - uid: 133
   type: GasPipeBend
@@ -82198,7 +82198,7 @@ entities:
 - uid: 7713
   type: RandomSoap
   components:
-  - pos: -19.5,8.5
+  - pos: -20.5,10.5
     parent: 858
     type: Transform
 - uid: 7714
@@ -93663,6 +93663,30 @@ entities:
   type: CrowbarRed
   components:
   - pos: -10.463156,-6.5336485
+    parent: 858
+    type: Transform
+- uid: 9155
+  type: SpawnVehicleSecway
+  components:
+  - pos: -9.5,17.5
+    parent: 858
+    type: Transform
+- uid: 9156
+  type: SpawnVehicleSecway
+  components:
+  - pos: -9.5,16.5
+    parent: 858
+    type: Transform
+- uid: 9157
+  type: VehicleKeySecway
+  components:
+  - pos: -6.491432,14.10022
+    parent: 858
+    type: Transform
+- uid: 9158
+  type: SpawnVehiclePussywagon
+  components:
+  - pos: -19.5,8.5
     parent: 858
     type: Transform
 ...

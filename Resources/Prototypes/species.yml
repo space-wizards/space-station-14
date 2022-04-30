@@ -37,3 +37,11 @@
   prototype: MobSkeletonPerson
   dollPrototype: MobSkeletonPersonDummy
   skinColoration: TintedHues
+
+#- type: species
+#  id: Vox
+#  name: Vox
+#  roundStart: true
+#  prototype: MobVox
+#  dollPrototype: MobVoxDummy
+#  skinColoration: Hues

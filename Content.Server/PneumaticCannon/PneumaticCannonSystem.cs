@@ -2,6 +2,7 @@ using System.Linq;
 using Content.Server.Atmos.Components;
 using Content.Server.Atmos.EntitySystems;
 using Content.Server.Nutrition.Components;
+using Content.Server.Storage.EntitySystems;
 using Content.Server.Storage.Components;
 using Content.Server.Stunnable;
 using Content.Shared.Camera;
@@ -31,6 +32,7 @@ namespace Content.Server.PneumaticCannon
         [Dependency] private readonly CameraRecoilSystem _cameraRecoil = default!;
         [Dependency] private readonly SharedHandsSystem _handsSystem = default!;
         [Dependency] private readonly ThrowingSystem _throwingSystem = default!;
+        [Dependency] private readonly StorageSystem _storageSystem = default!;
 
         private HashSet<PneumaticCannonComponent> _currentlyFiring = new();
 
@@ -133,9 +135,9 @@ namespace Content.Server.PneumaticCannon
             if (EntityManager.TryGetComponent<SharedItemComponent?>(args.Used, out var item)
                 && EntityManager.TryGetComponent<ServerStorageComponent?>(component.Owner, out var storage))
             {
-                if (storage.CanInsert(args.Used))
+                if (_storageSystem.CanInsert(component.Owner, args.Used, storage))
                 {
-                    storage.Insert(args.Used);
+                    _storageSystem.Insert(component.Owner, args.Used, storage);
                     args.User.PopupMessage(Loc.GetString("pneumatic-cannon-component-insert-item-success",
                         ("item", args.Used), ("cannon", component.Owner)));
                 }
@@ -317,7 +319,7 @@ namespace Content.Server.PneumaticCannon
             if (component.GasTankSlot.Remove(contained))
             {
                 _handsSystem.TryPickupAnyHand(user, contained);
-                
+
                 user.PopupMessage(Loc.GetString("pneumatic-cannon-component-gas-tank-remove",
                     ("tank", contained), ("cannon", component.Owner)));
                 UpdateAppearance(component);
