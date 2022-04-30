@@ -1,5 +1,5 @@
 ent-SignalSwitch = signal switch
-    .desc = Its a switch for toggling power to things.
+    .desc = It's a switch for toggling power to things.
     .suffix = { "" }
 ent-SignalButton = signal button
     .desc = It's a button for activating something.

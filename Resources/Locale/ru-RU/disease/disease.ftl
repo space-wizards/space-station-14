@@ -7,5 +7,5 @@ disease-meow = { CAPITALIZE($person) } мяукает.
 disease-hiss = { CAPITALIZE($person) } шипит.
 disease-beep = { CAPITALIZE($person) } пищит.
 disease-eaten-inside = Вы чувствуете, как будто вас поедают изнутри.
-disease-steal-compulsion = Вам хочется воровать вещи.
+disease-banana-compulsion = Вам хочется съесть несколько бананов.
 disease-beat-chest-compulsion = { CAPITALIZE($person) } бьёт { $person } в грудь.

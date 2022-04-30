@@ -1,5 +1,5 @@
-ent-ToolboxBase = { ent-BaseItem }
-    .desc = { ent-BaseItem.desc }
+ent-ToolboxBase = { ent-BaseStorageItem }
+    .desc = { ent-BaseStorageItem.desc }
     .suffix = { "" }
 ent-ToolboxEmergency = emergency toolbox
     .desc = A bright red toolbox, stocked with emergency tools.

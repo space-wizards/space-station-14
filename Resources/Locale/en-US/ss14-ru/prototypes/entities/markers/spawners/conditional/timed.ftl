@@ -4,3 +4,6 @@ ent-AITimedSpawner = AI Timed Spawner
 ent-XenoAITimedSpawner = Xeno AI Timed Spawner
     .desc = { ent-MarkerBase.desc }
     .suffix = { "" }
+ent-MouseTimedSpawner = Mouse Timed Spawner
+    .desc = { ent-MarkerBase.desc }
+    .suffix = { "" }

@@ -271,6 +271,40 @@
   canBuildInImpassable: false
   conditions:
     - !type:TileNotBlocked
+    
+- type: construction
+  name: metal counter
+  id: TableCounterMetal
+  graph: Table
+  startNode: start
+  targetNode: CounterMetal
+  category: Furniture
+  description: Looks like a good place to put a drink down.
+  icon:
+    sprite: Structures/Furniture/Tables/countermetal.rsi
+    state: full
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  conditions:
+    - !type:TileNotBlocked
+    
+- type: construction
+  name: wood counter
+  id: TableCounterWood
+  graph: Table
+  startNode: start
+  targetNode: CounterWood
+  category: Furniture
+  description: Do not apply fire to this. Rumour says it burns easily.
+  icon:
+    sprite: Structures/Furniture/Tables/counterwood.rsi
+    state: full
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  conditions:
+    - !type:TileNotBlocked
 
 #bathroom
 - type: construction
@@ -354,6 +388,23 @@
   icon:
     sprite: Structures/Furniture/furniture.rsi
     state: rack
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  conditions:
+    - !type:TileNotBlocked
+    
+- type: construction
+  id: MeatSpike
+  name: meat spike
+  description: A spike found in kitchens butchering animals.
+  graph: MeatSpike
+  startNode: start
+  targetNode: MeatSpike
+  category: Furniture
+  icon:
+    sprite: Structures/meat_spike.rsi
+    state: spike
   objectType: Structure
   placementMode: SnapgridCenter
   canBuildInImpassable: false

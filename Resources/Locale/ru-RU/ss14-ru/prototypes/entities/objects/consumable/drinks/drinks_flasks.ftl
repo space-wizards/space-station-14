@@ -1,6 +1,9 @@
 ent-DrinkShinyFlask = shiny flask
     .desc = A shiny metal flask. It appears to have a Greek symbol inscribed on it.
     .suffix = { "" }
+ent-DrinkMREFlask = MRE flask
+    .desc = An old military flask, filled with the finest contents for soldiers
+    .suffix = { "" }
 ent-DrinkDetFlask = inspector's flask
     .desc = A metal flask with a leather band and golden badge belonging to the inspector.
     .suffix = { "" }

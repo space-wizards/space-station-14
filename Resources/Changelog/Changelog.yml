@@ -1,126 +1,4 @@
 Entries:
-- author: Peptide90
-  changes:
-  - {message: Hardsuit helmets and hardhats now show that they're lit., type: Fix}
-  id: 911
-  time: '2022-01-19T22:06:24.0000000+00:00'
-- author: moony
-  changes:
-  - {message: Players who have joined the game with a character (Not as an observer)
-      are now exempt from the player cap for the duration of the round. This means
-      you can no longer get locked out if you have to relog for some reason., type: Tweak}
-  id: 912
-  time: '2022-01-19T23:01:21.0000000+00:00'
-- author: Pancake
-  changes:
-  - {message: AME prices have gone up to incentivize the use of the singularity engine.,
-    type: Tweak}
-  id: 913
-  time: '2022-01-20T12:33:13.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - {message: Floodlight collision fixed, type: Fix}
-  id: 914
-  time: '2022-01-21T16:29:16.0000000+00:00'
-- author: Rane
-  changes:
-  - {message: No-slip shoes now appear to be regular shoes when examined., type: Fix}
-  id: 915
-  time: '2022-01-22T01:58:27.0000000+00:00'
-- author: mirrorcult
-  changes:
-  - {message: 'NanoTrasen manufacturing budget for item number TB-10298 ("glass table")
-      and all derivative products has been cut. We do not recommend you climb on any
-      instances of TB-10298, and definitely do not slam anyone down on an instance
-      of TB-10298.', type: Add}
-  id: 916
-  time: '2022-01-22T12:52:35.0000000+00:00'
-- author: DubiousDoggo
-  changes:
-  - {message: Added construction for disposal pipes, type: Add}
-  id: 917
-  time: '2022-01-22T12:54:26.0000000+00:00'
-- author: Macoron
-  changes:
-  - {message: Added to codebase new xeno artifacts with random effects., type: Add}
-  id: 918
-  time: '2022-01-22T12:55:11.0000000+00:00'
-- author: Lamrr
-  changes:
-  - {message: Shotgun shells ('shots') are now available in boxes., type: Add}
-  id: 919
-  time: '2022-01-22T20:47:55.0000000+00:00'
-- author: Willhelm53
-  changes:
-  - {message: Added ability for mop buckets to receive fluid from mops, type: Add}
-  - {message: Popup messages informing when the mop becomes full (from puddles or
-      mop bucket) or empty (from mop bucket), type: Add}
-  - {message: The mop now transfers solution from the puddle to the mop instead of
-      consuming water to destroy puddles, type: Fix}
-  - {message: 'The mop bucket now receives fluid from a wet mop, or gives fluid to
-      a dry mop', type: Tweak}
-  id: 920
-  time: '2022-01-23T05:27:22.0000000+00:00'
-- author: Lamrr
-  changes:
-  - {message: You can now find full-tile tinted windows at a crafting menu near you.
-      Useful for keeping the greytide out of your private affairs., type: Add}
-  id: 921
-  time: '2022-01-23T17:44:12.0000000+00:00'
-- author: Lamrr
-  changes:
-  - {message: Organise your paperwork with the addition of folders. Now available
-      from the bureaucracy crate., type: Add}
-  id: 922
-  time: '2022-01-23T17:46:55.0000000+00:00'
-- author: Peptide90
-  changes:
-  - {message: 'Constructed SMES, APC and substations now start with zero charge.',
-    type: Fix}
-  id: 923
-  time: '2022-01-23T17:47:22.0000000+00:00'
-- author: moony
-  changes:
-  - {message: 'Kudzu and Gas Leak are now less likely to occur, and cannot happen
-      four times in a row.', type: Tweak}
-  id: 924
-  time: '2022-01-23T21:17:05.0000000+00:00'
-- author: Peptide90
-  changes:
-  - {message: Slimes no longer butcher into human meat., type: Fix}
-  id: 925
-  time: '2022-01-24T12:46:43.0000000+00:00'
-- author: Delete69
-  changes:
-  - {message: Thindows and windoors now have the same draw depth., type: Add}
-  id: 926
-  time: '2022-01-24T13:08:18.0000000+00:00'
-- author: Mirino97
-  changes:
-  - {message: The tried and true Syndicate Energy Sword is back in stock at your local
-      uplink!, type: Add}
-  id: 927
-  time: '2022-01-24T16:35:20.844542+00:00'
-- author: Mirino97
-  changes:
-  - {message: Fixed the Stay Alive objective icon, type: Fix}
-  id: 928
-  time: '2022-01-24T19:32:42.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - {message: Wide melee attacks now use sound overrides., type: Tweak}
-  id: 929
-  time: '2022-01-25T00:22:25.0000000+00:00'
-- author: Pancake
-  changes:
-  - {message: Blue tiles now obey the laws of physics., type: Fix}
-  id: 930
-  time: '2022-01-25T07:03:48.0000000+00:00'
-- author: Mirino97
-  changes:
-  - {message: Fixes Random Traitor Alive Objective's icon!, type: Fix}
-  id: 931
-  time: '2022-01-25T09:29:31.0000000+00:00'
 - author: Pancake
   changes:
   - {message: Radiation range of the singularity has been reduced from 15 to 10.,
@@ -3055,3 +2933,127 @@ Entries:
       floor tiles., type: Tweak}
   id: 1410
   time: '2022-04-27T07:29:30.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Barratry now has vehicles., type: Tweak}
+  id: 1411
+  time: '2022-04-28T03:17:37.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Decals (e.g. tile paint) should now be removed correctly., type: Fix}
+  id: 1412
+  time: '2022-04-28T10:23:44.0000000+00:00'
+- author: HoofedEar
+  changes:
+  - {message: Salvage is now able to mine for ores inside of asteroid rocks!, type: Add}
+  - {message: Use those ores in an Ore processor to turn them into materials for the
+      station!, type: Add}
+  id: 1413
+  time: '2022-04-28T10:41:04.0000000+00:00'
+- author: Peptide90
+  changes:
+  - {message: Certain drinks containers like paper cups won't shatter to glass anymore.,
+    type: Fix}
+  id: 1414
+  time: '2022-04-28T11:56:21.0000000+00:00'
+- author: vulppine
+  changes:
+  - {message: Adds the rainbow crayon. Honk!, type: Add}
+  id: 1415
+  time: '2022-04-28T12:23:45.0000000+00:00'
+- author: Peptide90
+  changes:
+  - {message: Added crafting for meat spikes (In furniture) as well as signal buttons
+      and signal switches (All in Machines section)., type: Add}
+  id: 1416
+  time: '2022-04-28T12:24:02.0000000+00:00'
+- author: Veritius
+  changes:
+  - {message: Made xenos unable to slip., type: Tweak}
+  id: 1417
+  time: '2022-04-28T12:24:39.0000000+00:00'
+- author: ElectroJr
+  changes:
+  - {message: The singularity visuals have been slightly updated. Large singularities
+      should no longer suffer from pop-in, type: Tweak}
+  id: 1418
+  time: '2022-04-28T12:43:16.0000000+00:00'
+- author: Macoron
+  changes:
+  - {message: Added artifact container. It's used to safely transport or store dangerous
+      artifacts. Order it in cargo., type: Add}
+  id: 1419
+  time: '2022-04-28T22:03:40.0000000+00:00'
+- author: freeman2651
+  changes:
+  - {message: tweaks to handcuffs and restraints so they can now be used to restrain
+      yourself, type: Tweak}
+  id: 1420
+  time: '2022-04-28T22:04:41.0000000+00:00'
+- author: Rane
+  changes:
+  - {message: Mimes can now create invisible walls using their secret knowledge of
+      their craft., type: Add}
+  - {message: Mimes can no longer speak or scream without revoking their Vow of Silence,
+    type: Remove}
+  id: 1421
+  time: '2022-04-29T03:41:03.0000000+00:00'
+- author: AugustEymann
+  changes:
+  - {message: Microwave Circuitboard and ability to print it at Circuit imprinter.,
+    type: Add}
+  id: 1422
+  time: '2022-04-29T04:50:23.0000000+00:00'
+- author: ElectroJr
+  changes:
+  - {message: Fixed a bug causing hard-suit helmets to get stuck on heads., type: Fix}
+  id: 1423
+  time: '2022-04-30T04:54:35.0000000+00:00'
+- author: lapatison
+  changes:
+  - {message: plant clippers strap for botanical belt, type: Add}
+  id: 1424
+  time: '2022-04-30T21:14:24.0000000+00:00'
+- author: Todd
+  changes:
+  - {message: Added a new lobby theme., type: Add}
+  id: 1425
+  time: '2022-04-30T21:14:36.0000000+00:00'
+- author: Peptide90
+  changes:
+  - {message: You can now hang trashbags off your toolbelt slot. Janitors rejoice.,
+    type: Tweak}
+  id: 1426
+  time: '2022-04-30T21:19:06.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Zombies are now weaker and the zombie infection now progresses slower.,
+    type: Tweak}
+  - {message: romerol now does less damage when consumed., type: Tweak}
+  - {message: The syndicate is now supplying its most devious of agents with a bundle
+      able to bring forth the undead., type: Add}
+  id: 1427
+  time: '2022-04-30T21:21:40.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: 'Addes MREs, military rations that can be found in emergency closets
+      and ordered from cargo.', type: Add}
+  id: 1428
+  time: '2022-04-30T21:24:37.0000000+00:00'
+- author: Ripmorld
+  changes:
+  - {message: Different Laser guns now uses different powercells, type: Add}
+  id: 1429
+  time: '2022-04-30T21:25:39.0000000+00:00'
+- author: 20kdc
+  changes:
+  - {message: A certain sealed small asteroid will no longer contain plasmafire or
+      crates., type: Tweak}
+  id: 1430
+  time: '2022-04-30T21:25:56.0000000+00:00'
+- author: Peptide90
+  changes:
+  - {message: Added metal and wooden counters to be used in bars and shops for that
+      new look. Construction available too!, type: Add}
+  id: 1431
+  time: '2022-04-30T21:28:04.0000000+00:00'

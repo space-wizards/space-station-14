@@ -58,3 +58,6 @@ ent-WallUranium = uranium wall
 ent-WallWood = wood wall
     .desc = { ent-WallBase.desc }
     .suffix = { "" }
+ent-WallInvisible = Invisible Wall
+    .desc = { "" }
+    .suffix = { "" }

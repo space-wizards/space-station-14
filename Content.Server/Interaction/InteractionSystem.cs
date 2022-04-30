@@ -1,5 +1,3 @@
-using System.Linq;
-using System.Threading.Tasks;
 using Content.Server.Administration.Logs;
 using Content.Server.CombatMode;
 using Content.Server.Hands.Components;
@@ -12,7 +10,6 @@ using Content.Shared.Input;
 using Content.Shared.Interaction;
 using Content.Shared.Item;
 using Content.Shared.Pulling.Components;
-using Content.Shared.Timing;
 using Content.Shared.Weapons.Melee;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
@@ -20,6 +17,7 @@ using Robust.Shared.Containers;
 using Robust.Shared.Input.Binding;
 using Robust.Shared.Map;
 using Robust.Shared.Players;
+using static Content.Shared.Storage.SharedStorageComponent;
 
 namespace Content.Server.Interaction
 {
@@ -32,6 +30,7 @@ namespace Content.Server.Interaction
         [Dependency] private readonly ActionBlockerSystem _actionBlockerSystem = default!;
         [Dependency] private readonly PullingSystem _pullSystem = default!;
         [Dependency] private readonly AdminLogSystem _adminLogSystem = default!;
+        [Dependency] private readonly UserInterfaceSystem _uiSystem = default!;
 
         public override void Initialize()
         {
@@ -71,7 +70,7 @@ namespace Content.Server.Interaction
                 return false;
 
             // we don't check if the user can access the storage entity itself. This should be handed by the UI system.
-            return storage.SubscribedSessions.Contains(actor.PlayerSession);
+            return _uiSystem.SessionHasOpenUi(container.Owner, StorageUiKey.Key, actor.PlayerSession);
         }
 
         #region Drag drop

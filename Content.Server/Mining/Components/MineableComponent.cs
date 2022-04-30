@@ -1,5 +1,5 @@
-using Robust.Shared.Analyzers;
-using Robust.Shared.GameObjects;
+using System.Threading;
+using Content.Shared.Storage;
 
 namespace Content.Server.Mining.Components;
 
@@ -7,5 +7,6 @@ namespace Content.Server.Mining.Components;
 [Friend(typeof(MineableSystem))]
 public sealed class MineableComponent : Component
 {
+    [DataField("ores")] public List<EntitySpawnEntry> Ores = new();
     public float BaseMineTime = 1.0f;
 }
