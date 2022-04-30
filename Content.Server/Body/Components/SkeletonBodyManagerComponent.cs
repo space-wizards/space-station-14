@@ -19,6 +19,9 @@ namespace Content.Server.Body.Components
         [ViewVariables]
         public float DoAfterTime = 5f;
 
+        /// <summary>
+        /// The list of body parts that are needed for reassembly
+        /// </summary>
         [ViewVariables]
         public List<SharedBodyPartComponent>? BodyParts = null;
     }

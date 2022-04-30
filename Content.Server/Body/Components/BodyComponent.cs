@@ -112,7 +112,7 @@ namespace Content.Server.Body.Components
 
     public sealed class BeingGibbedEvent : EntityEventArgs
     {
-        public List<SharedBodyPartComponent> GibbedParts;
+        public readonly List<SharedBodyPartComponent> GibbedParts;
 
         public BeingGibbedEvent(List<SharedBodyPartComponent> gibbedParts)
         {

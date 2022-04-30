@@ -12,6 +12,7 @@ namespace Content.Server.Body.Systems
             base.Initialize();
 
             SubscribeLocalEvent<TransferMindOnGibComponent, BeforeGibbedEvent>(OnBeforeGibbed);
+            SubscribeLocalEvent<TransferMindOnGibComponent, BeingGibbedEvent>(OnBeingGibbed);
         }
 
         private void OnBeforeGibbed(EntityUid uid, TransferMindOnGibComponent component, BeforeGibbedEvent args)
@@ -25,12 +26,25 @@ namespace Content.Server.Body.Systems
                         var entity = part.Key.Owner;
                         if (HasComp<SkeletonBodyManagerComponent>(entity))
                         {
+                            component.TransferTarget = entity;
                             _skeletonBodyManager.UpdateDNAEntry(entity, uid);
                             mindComp.Mind.TransferTo(entity);
                         }
                     }
                 }
             }    
+        }
+
+        /// <remarks>
+        /// This information has to be collected in this system because the BeingGibbedEvent
+        /// is raised locally on the entity
+        /// </remarks>
+        private void OnBeingGibbed(EntityUid uid, TransferMindOnGibComponent component, BeingGibbedEvent args)
+        {
+            if(TryComp<SkeletonBodyManagerComponent>(component.TransferTarget, out var comp))
+            {
+                comp.BodyParts = args.GibbedParts;
+            }
         }
     }
 }
