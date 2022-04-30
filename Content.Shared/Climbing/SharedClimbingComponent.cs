@@ -6,9 +6,6 @@ namespace Content.Shared.Climbing;
 [NetworkedComponent]
 public abstract class SharedClimbingComponent : Component
 {
-    [Dependency] private readonly IEntityManager _entMan = default!;
-    [Dependency] private readonly IEntitySystemManager _sysMan = default!;
-
     /// <summary>
     /// Whether the owner is climbing on a climbable entity.
     /// </summary>

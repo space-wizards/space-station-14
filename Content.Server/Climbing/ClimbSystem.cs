@@ -68,7 +68,7 @@ public sealed class ClimbSystem : SharedClimbSystem
             : CanVault(component, args.User, args.Dragged, args.Target, out reason);
 
         if (!canVault)
-            args.User.PopupMessage(reason);
+            _popupSystem.PopupEntity(reason, args.User, Filter.Entities(args.User));
 
         args.CanDrop = canVault;
         args.Handled = true;

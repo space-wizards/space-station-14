@@ -1,13 +1,15 @@
+using Content.Client.Interactable;
 using Content.Client.Movement.Components;
 using Content.Shared.Climbing;
 using Content.Shared.DragDrop;
-using Content.Shared.Interaction;
 using Robust.Shared.GameStates;
 
 namespace Content.Client.Movement;
 
 public sealed class ClimbSystem : SharedClimbSystem
 {
+    [Dependency] private readonly InteractionSystem _interactionSystem = default!;
+    
     public override void Initialize()
     {
         base.Initialize();
@@ -35,10 +37,8 @@ public sealed class ClimbSystem : SharedClimbSystem
         var dragged = args.Dragged;
         bool Ignored(EntityUid entity) => entity == target || entity == user || entity == dragged;
 
-        var sys = Get<SharedInteractionSystem>();
-
-        args.CanDrop = sys.InRangeUnobstructed(user, target, component.Range, predicate: Ignored)
-                       && sys.InRangeUnobstructed(user, dragged, component.Range, predicate: Ignored);
+        args.CanDrop = _interactionSystem.InRangeUnobstructed(user, target, component.Range, predicate: Ignored)
+                       && _interactionSystem.InRangeUnobstructed(user, dragged, component.Range, predicate: Ignored);
         args.Handled = true;
     }
 }
