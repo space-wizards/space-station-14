@@ -4,6 +4,8 @@
   parent: MobVoxBase
   id: MobVox
   components:
+    - type: CombatMode
+      canDisarm: true
     - type: InteractionPopup
       successChance: 1
       interactSuccessString: hugging-success-generic
