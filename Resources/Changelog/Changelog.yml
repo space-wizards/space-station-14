@@ -1,9 +1,4 @@
 Entries:
-- author: Delete69
-  changes:
-  - {message: Thindows and windoors now have the same draw depth., type: Add}
-  id: 926
-  time: '2022-01-24T13:08:18.0000000+00:00'
 - author: Mirino97
   changes:
   - {message: The tried and true Syndicate Energy Sword is back in stock at your local
@@ -3050,3 +3045,9 @@ Entries:
   - {message: Added a new lobby theme., type: Add}
   id: 1425
   time: '2022-04-30T21:14:36.0000000+00:00'
+- author: Peptide90
+  changes:
+  - {message: You can now hang trashbags off your toolbelt slot. Janitors rejoice.,
+    type: Tweak}
+  id: 1426
+  time: '2022-04-30T21:19:06.0000000+00:00'
