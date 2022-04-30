@@ -1,4 +1,5 @@
 using Content.Server.Cloning;
+using Content.Shared.Body.Components;
 
 namespace Content.Server.Body.Components
 {
@@ -11,5 +12,14 @@ namespace Content.Server.Body.Components
         /// </summary>
         [ViewVariables]
         public ClonerDNAEntry? DNA = null;
+
+        /// <summary>
+        /// The default time it takes to reassemble itself
+        /// </summary>
+        [ViewVariables]
+        public float DoAfterTime = 5f;
+
+        [ViewVariables]
+        public List<SharedBodyPartComponent>? BodyParts = null;
     }
 }

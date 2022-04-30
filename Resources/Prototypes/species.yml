@@ -33,7 +33,7 @@
 - type: species
   id: Skeleton
   name: Skeleton
-  roundStart: true
+  roundStart: true #touch this an feel my wrath
   prototype: MobSkeletonPerson
   dollPrototype: MobSkeletonPersonDummy
   skinColoration: TintedHues

@@ -46,7 +46,7 @@ namespace Content.Server.Construction
         }
 
         // LEGACY CODE. See warning at the top of the file!
-        private IEnumerable<EntityUid> EnumerateNearby(EntityUid user)
+        public IEnumerable<EntityUid> EnumerateNearby(EntityUid user)
         {
             foreach (var item in _handsSystem.EnumerateHeld(user))
             {

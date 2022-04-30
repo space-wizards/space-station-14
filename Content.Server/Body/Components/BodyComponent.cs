@@ -83,10 +83,10 @@ namespace Content.Server.Body.Components
             }
         }
 
-        public override void Gib(bool gibParts = false)
+        public override List<SharedBodyPartComponent> Gib(bool gibParts = false)
         {
             _entMan.EventBus.RaiseLocalEvent(Owner, new BeforeGibbedEvent(), false);
-            base.Gib(gibParts);
+            var gibs = base.Gib(gibParts);
 
             SoundSystem.Play(Filter.Pvs(Owner), _gibSound.GetSound(), _entMan.GetComponent<TransformComponent>(Owner).Coordinates, AudioHelpers.WithVariation(0.025f));
 
@@ -103,13 +103,21 @@ namespace Content.Server.Body.Components
                 }
             }
 
-            _entMan.EventBus.RaiseLocalEvent(Owner, new BeingGibbedEvent(), false);
+            _entMan.EventBus.RaiseLocalEvent(Owner, new BeingGibbedEvent(gibs), false);
             _entMan.QueueDeleteEntity(Owner);
+
+            return gibs;
         }
     }
 
     public sealed class BeingGibbedEvent : EntityEventArgs
     {
+        public List<SharedBodyPartComponent> GibbedParts;
+
+        public BeingGibbedEvent(List<SharedBodyPartComponent> gibbedParts)
+        {
+            GibbedParts = gibbedParts;
+        }
     }
 
     public sealed class BeforeGibbedEvent : EntityEventArgs
