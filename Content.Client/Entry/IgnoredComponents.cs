@@ -33,6 +33,7 @@ namespace Content.Client.Entry
             "MeleeChemicalInjector",
             "Dice",
             "PaperLabel",
+            "PressureImmunityComponent",
             "Construction",
             "PoweredLight",
             "Smes",

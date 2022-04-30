@@ -71,6 +71,7 @@
     - SlowedDown
     - Stutter
     - Electrocution
+    - PressureImmunity
   - type: DiseaseCarrier
   # Other
   - type: Inventory

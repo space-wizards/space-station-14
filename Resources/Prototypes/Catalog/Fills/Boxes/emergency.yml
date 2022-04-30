@@ -8,6 +8,7 @@
     contents:
       - id: ClothingMaskBreath
       - id: EmergencyOxygenTankFilled
+      - id: PressureMedipen
       - id: EmergencyMedipen
       - id: Flare
       - id: FoodSnackChocolate
