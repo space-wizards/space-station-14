@@ -1,15 +1,4 @@
 Entries:
-- author: moony
-  changes:
-  - {message: 'Kudzu and Gas Leak are now less likely to occur, and cannot happen
-      four times in a row.', type: Tweak}
-  id: 924
-  time: '2022-01-23T21:17:05.0000000+00:00'
-- author: Peptide90
-  changes:
-  - {message: Slimes no longer butcher into human meat., type: Fix}
-  id: 925
-  time: '2022-01-24T12:46:43.0000000+00:00'
 - author: Delete69
   changes:
   - {message: Thindows and windoors now have the same draw depth., type: Add}
@@ -3051,3 +3040,13 @@ Entries:
   - {message: Fixed a bug causing hard-suit helmets to get stuck on heads., type: Fix}
   id: 1423
   time: '2022-04-30T04:54:35.0000000+00:00'
+- author: lapatison
+  changes:
+  - {message: plant clippers strap for botanical belt, type: Add}
+  id: 1424
+  time: '2022-04-30T21:14:24.0000000+00:00'
+- author: Todd
+  changes:
+  - {message: Added a new lobby theme., type: Add}
+  id: 1425
+  time: '2022-04-30T21:14:36.0000000+00:00'
