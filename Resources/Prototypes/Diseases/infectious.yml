@@ -79,7 +79,7 @@
       message: disease-beat-chest-compulsion
     - !type:DiseasePopUp
       probability: 0.03
-      message: disease-steal-compulsion
+      message: disease-banana-compulsion
     - !type:DiseaseSnough
       probability: 0.02
       snoughMessage: disease-screech

@@ -2,8 +2,10 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using NUnit.Framework;
+using Robust.Server;
 using Robust.Server.Maps;
 using Robust.Shared.ContentPack;
+using Robust.Shared.Log;
 using Robust.Shared.Map;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
@@ -78,21 +80,25 @@ namespace Content.IntegrationTests.Tests
         [Test]
         public async Task LoadSaveTicksSaveSaltern()
         {
-            var server = StartServerDummyTicker();
+            var server = StartServerDummyTicker(new ServerIntegrationOptions()
+            {
+                // Don't blame me look at SaveLoadMultiGridMap
+                FailureLogLevel = LogLevel.Error,
+            });
             await server.WaitIdleAsync();
             var mapLoader = server.ResolveDependency<IMapLoader>();
             var mapManager = server.ResolveDependency<IMapManager>();
 
-            GridId? grid = default;
+            MapId mapId = default;
 
             // Load saltern.yml as uninitialized map, and save it to ensure it's up to date.
             server.Post(() =>
             {
-                var mapId = mapManager.CreateMap();
+                mapId = mapManager.CreateMap();
                 mapManager.AddUninitializedMap(mapId);
                 mapManager.SetMapPaused(mapId, true);
-                grid = mapLoader.LoadBlueprint(mapId, "Maps/saltern.yml").gridId;
-                mapLoader.SaveBlueprint(grid!.Value, "load save ticks save 1.yml");
+                mapLoader.LoadMap(mapId, "Maps/saltern.yml");
+                mapLoader.SaveMap(mapId, "load save ticks save 1.yml");
             });
 
             // Run 5 ticks.
@@ -100,7 +106,7 @@ namespace Content.IntegrationTests.Tests
 
             server.Post(() =>
             {
-                mapLoader.SaveBlueprint(grid!.Value, "/load save ticks save 2.yml");
+                mapLoader.SaveMap(mapId, "/load save ticks save 2.yml");
             });
 
             await server.WaitIdleAsync();

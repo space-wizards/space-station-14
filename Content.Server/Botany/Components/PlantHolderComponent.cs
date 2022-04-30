@@ -7,7 +7,6 @@ using Content.Shared.Botany;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.FixedPoint;
-using Content.Shared.Interaction;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;
@@ -15,9 +14,7 @@ using Robust.Shared.Timing;
 namespace Content.Server.Botany.Components
 {
     [RegisterComponent]
-#pragma warning disable 618
-    public sealed class PlantHolderComponent : Component, IInteractHand, IActivate
-#pragma warning restore 618
+    public sealed class PlantHolderComponent : Component
     {
         public const float HydroponicsSpeedMultiplier = 1f;
         public const float HydroponicsConsumptionMultiplier = 4f;
@@ -628,18 +625,6 @@ namespace Content.Server.Botany.Components
             SkipAging++; // We're forcing an update cycle, so one age hasn't passed.
             ForceUpdate = true;
             Update();
-        }
-
-        bool IInteractHand.InteractHand(InteractHandEventArgs eventArgs)
-        {
-            // DoHarvest does the sanity checks.
-            return DoHarvest(eventArgs.User);
-        }
-
-        void IActivate.Activate(ActivateEventArgs eventArgs)
-        {
-            // DoHarvest does the sanity checks.
-            DoHarvest(eventArgs.User);
         }
     }
 }
