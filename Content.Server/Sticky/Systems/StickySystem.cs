@@ -41,14 +41,14 @@ public sealed class StickySystem : EntitySystem
 
     private void AddUnstickVerb(EntityUid uid, StickyComponent component, GetVerbsEvent<Verb> args)
     {
-        if (component.StuckTo == null || !component.CanUnstick)
+        if (component.StuckTo == null || !component.CanUnstick || !args.CanInteract)
             return;
 
-        // we can't use args.CanAccess, because stuck in another container
+        // we can't use args.CanAccess, because it stuck in another container
         // we also need to ignore entity that it stuck to
         var inRange = _interactionSystem.InRangeUnobstructed(uid, args.User,
             predicate: entity => component.StuckTo == entity);
-        if (!inRange || !args.CanInteract)
+        if (!inRange)
             return;
 
         args.Verbs.Add(new Verb
