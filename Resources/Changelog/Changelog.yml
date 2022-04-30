@@ -1,12 +1,6 @@
 Entries:
 - author: Mirino97
   changes:
-  - {message: The tried and true Syndicate Energy Sword is back in stock at your local
-      uplink!, type: Add}
-  id: 927
-  time: '2022-01-24T16:35:20.844542+00:00'
-- author: Mirino97
-  changes:
   - {message: Fixed the Stay Alive objective icon, type: Fix}
   id: 928
   time: '2022-01-24T19:32:42.0000000+00:00'
@@ -3051,3 +3045,12 @@ Entries:
     type: Tweak}
   id: 1426
   time: '2022-04-30T21:19:06.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Zombies are now weaker and the zombie infection now progresses slower.,
+    type: Tweak}
+  - {message: romerol now does less damage when consumed., type: Tweak}
+  - {message: The syndicate is now supplying its most devious of agents with a bundle
+      able to bring forth the undead., type: Add}
+  id: 1427
+  time: '2022-04-30T21:21:40.0000000+00:00'
