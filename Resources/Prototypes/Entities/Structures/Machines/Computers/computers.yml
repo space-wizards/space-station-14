@@ -412,6 +412,7 @@
       - AtmosphericsOxygen
       - AtmosphericsNitrogen
       - AtmosphericsCarbonDioxide
+      - ArtifactContainer
 #      - AtmosphericsWaterVapor
 #      - AtmosphericsPlasma
 #      - AtmosphericsTritium

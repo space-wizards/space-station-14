@@ -44,7 +44,7 @@ namespace Content.Server.Chemistry.TileReactions
             }
 
             var decalSystem = EntitySystem.Get<DecalSystem>();
-            foreach (var uid in decalSystem.GetDecalsInRange(tile.GridIndex, tile.GridIndices+new Vector2(0.5f, 0.5f), validDelegate: x => x.Cleanable))
+            foreach (var (uid, _) in decalSystem.GetDecalsInRange(tile.GridIndex, tile.GridIndices+new Vector2(0.5f, 0.5f), validDelegate: x => x.Cleanable))
             {
                 decalSystem.RemoveDecal(tile.GridIndex, uid);
             }

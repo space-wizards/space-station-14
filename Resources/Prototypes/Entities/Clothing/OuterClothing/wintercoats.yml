@@ -1,8 +1,8 @@
 - type: entity
-  parent: ClothingOuterBase
+  parent: ClothingOuterStorageBase
   id: ClothingOuterWinterCoat
   name: winter coat
-  description: A heavy jacket made from 'synthetic' animal furs. 
+  description: A heavy jacket made from 'synthetic' animal furs.
   components:
   - type: Sprite
     sprite: Clothing/OuterClothing/WinterCoats/coat.rsi
@@ -15,8 +15,6 @@
       coefficients:
         Slash: 0.95
         Heat: 0.75
-  - type: Storage
-    capacity: 10
 
 - type: entity
   parent: ClothingOuterWinterCoat
@@ -71,7 +69,7 @@
 - type: entity
   parent: ClothingOuterWinterCoat
   id: ClothingOuterWinterChem
-  name: chemistry winter coat 
+  name: chemistry winter coat
   components:
   - type: Sprite
     sprite: Clothing/OuterClothing/WinterCoats/coatchem.rsi
@@ -151,7 +149,7 @@
 - type: entity
   parent: ClothingOuterWinterCoat
   id: ClothingOuterWinterMed
-  name: medical winter coat 
+  name: medical winter coat
   components:
   - type: Sprite
     sprite: Clothing/OuterClothing/WinterCoats/coatmed.rsi
@@ -201,7 +199,7 @@
 - type: entity
   parent: ClothingOuterWinterCoat
   id: ClothingOuterWinterRobo
-  name: robotics winter coat 
+  name: robotics winter coat
   components:
   - type: Sprite
     sprite: Clothing/OuterClothing/WinterCoats/coatrobo.rsi

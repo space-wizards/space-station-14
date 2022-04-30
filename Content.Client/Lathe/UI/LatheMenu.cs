@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using Content.Client.Lathe.Components;
+using Content.Shared.Lathe;
 using Content.Shared.Materials;
 using Content.Shared.Research.Prototypes;
 using Robust.Client.UserInterface;
@@ -35,7 +36,7 @@ namespace Content.Client.Lathe.UI
 
             Owner = owner;
 
-            Title = "Lathe Menu";
+            Title = "Lathe Menu"; // TODO Replace this with the name of the lathe itself
 
             var vBox = new BoxContainer
             {
