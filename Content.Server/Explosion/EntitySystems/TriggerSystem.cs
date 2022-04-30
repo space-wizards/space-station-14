@@ -5,6 +5,7 @@ using Content.Server.Explosion.Components;
 using Content.Server.Flash;
 using Content.Server.Flash.Components;
 using Content.Server.Sticky.Events;
+using Content.Shared.Actions;
 using JetBrains.Annotations;
 using Robust.Shared.Audio;
 using Robust.Shared.Physics;
@@ -13,6 +14,7 @@ using Robust.Shared.Player;
 using Content.Shared.Sound;
 using Content.Shared.Trigger;
 using Content.Shared.Database;
+using Content.Shared.Interaction;
 
 namespace Content.Server.Explosion.EntitySystems
 {
@@ -49,6 +51,8 @@ namespace Content.Server.Explosion.EntitySystems
             InitializeSignal();
 
             SubscribeLocalEvent<TriggerOnCollideComponent, StartCollideEvent>(OnTriggerCollide);
+            SubscribeLocalEvent<TriggerOnActivateComponent, ActivateInWorldEvent>(OnActivate);
+            SubscribeLocalEvent<TriggerOnOverlapComponent, >(OnOverlap);
 
             SubscribeLocalEvent<DeleteOnTriggerComponent, TriggerEvent>(HandleDeleteTrigger);
             SubscribeLocalEvent<ExplodeOnTriggerComponent, TriggerEvent>(HandleExplodeTrigger);
@@ -78,6 +82,15 @@ namespace Content.Server.Explosion.EntitySystems
             Trigger(component.Owner);
         }
 
+        private void OnActivate(EntityUid uid, TriggerOnActivateComponent component, ActivateInWorldEvent args)
+        {
+            Trigger(component.Owner);
+        }
+
+        private void OnOverlap(EntityUid uid, TriggerOnOverlapComponent component, ActivateInWorldEvent args)
+        {
+            Trigger(Component.Owner);
+        }
 
         public void Trigger(EntityUid trigger, EntityUid? user = null)
         {

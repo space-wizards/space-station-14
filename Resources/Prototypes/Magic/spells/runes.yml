@@ -1,14 +1,28 @@
 ﻿- type: entity
   id: Trap
-  name: trap
-  abstract: true
+  name: trap rune
   components:
     - type: Fixtures
       fixtures:
-        - id: TrapRune
-          shape:
-            !type:PhysShapeCircle
-              radius: 0.5
+        - shape:
+            !type:PhysShapeAabb
+            bounds: "-0.4,-0.4,0.4,0.4"
+          layer:
+            - SmallImpassable
+          mask:
+            - SmallImpassable
           hard: false
-          mass: 5
     - type: CollisionWake
+    - type: Physics
+    - type: Sprite
+      sprite: Effects/crayondecals.rsi
+      state: rune1
+    - type: TriggerOnActivate
+    - type: ExplodeOnTrigger
+    - type: Explosive
+      explosionType: Cryo
+      totalIntensity: 20.0
+      intensitySlope: 5
+      maxIntensity: 4
+    - type: Clickable
+

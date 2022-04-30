@@ -12,4 +12,4 @@
       wieldTime: 0.75
     - type: Spellbook
       worldSpells:
-        Trap: 3
+        Traps: 3
