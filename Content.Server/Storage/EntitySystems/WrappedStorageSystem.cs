@@ -40,8 +40,11 @@ namespace Content.Server.Storage.EntitySystems
                     args.User.TryGetContainer(out var userContainer); //Check if item in hand, if in hand unpack and put in hand
                     if (args.Target.TryGetContainer(out var container) && container != userContainer)
                     {
+                        var handComp = Comp<SharedHandsComponent>(args.User);
+                        // Drop 'wrapped object' because when i'm unwraping item, he always spawns on other hand or drop on floor
+                        handComp.Drop(uid);
                         var ent = (EntityUid) component.ItemContainer.ContainedEntity;
-                        Comp<SharedHandsComponent>(args.User).PutInHandOrDrop(ent);
+                        handComp.PutInHandOrDrop(ent);
                     }
                     else
                     {
