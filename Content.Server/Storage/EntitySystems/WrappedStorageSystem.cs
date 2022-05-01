@@ -21,7 +21,7 @@ namespace Content.Server.Storage.EntitySystems
         {
             base.Initialize();
             SubscribeLocalEvent<WrappedStorageComponent, ComponentInit>(OnInit);
-            SubscribeLocalEvent<WrappedStorageComponent, GetVerbsEvent<InteractionVerb>>(AddUnpackVerb);
+            SubscribeLocalEvent<WrappedStorageComponent, GetVerbsEvent<AlternativeVerb>>(AddUnpackVerb);
         }
 
         private void OnInit(EntityUid uid, WrappedStorageComponent component, ComponentInit args)
@@ -29,7 +29,7 @@ namespace Content.Server.Storage.EntitySystems
             component.ItemContainer = ContainerHelpers.EnsureContainer<ContainerSlot>(uid, "wrap", out _);
         }
 
-        private void Unpack(EntityUid uid, WrappedStorageComponent component, GetVerbsEvent<InteractionVerb> args) // TODO: make call by alt-click
+        private void Unpack(EntityUid uid, WrappedStorageComponent component, GetVerbsEvent<AlternativeVerb> args)
         {
             if (uid != null)
             {
@@ -53,9 +53,9 @@ namespace Content.Server.Storage.EntitySystems
             }
         }
 
-        private void AddUnpackVerb(EntityUid uid, WrappedStorageComponent component, GetVerbsEvent<InteractionVerb> args)
+        private void AddUnpackVerb(EntityUid uid, WrappedStorageComponent component, GetVerbsEvent<AlternativeVerb> args)
         {
-            InteractionVerb verb = new();
+            AlternativeVerb verb = new();
             verb.Act = () => Unpack(uid, component, args);
             verb.IconTexture = "/Textures/Interface/VerbIcons/pickup.svg.192dpi.png";
 
