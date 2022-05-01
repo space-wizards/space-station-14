@@ -1,0 +1,11 @@
+- type: entity
+  parent: BaseItem
+  id: EmagFixer
+  name: nanotrasen resequencer
+  description: A portable formatter for fixing corrupted NanoTrasen systems.
+  components:
+  - type: EmagFixer
+  - type: Sprite
+    netsync: false
+    sprite: Objects/Misc/stock_parts.rsi
+    state: card_reader
