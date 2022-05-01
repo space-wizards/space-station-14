@@ -7,6 +7,7 @@ namespace Content.Server.Explosion.EntitySystems;
 
 public sealed partial class TriggerSystem
 {
+    //Stores the entity as active so the event can resolve for each UID colliding with this entity.
     private readonly List<EntityUid> Active = new();
 
     private void InitializeTimedCollide()

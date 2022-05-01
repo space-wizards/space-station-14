@@ -347,6 +347,8 @@ namespace Content.Client.Entry
             "HealthAnalyzer",
             "Spellbook",
             "RuneMagic",
+            "TriggerOnActivate",
+            "TriggerOnTimedCollide",
         };
     }
 }

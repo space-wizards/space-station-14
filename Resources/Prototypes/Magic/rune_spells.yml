@@ -11,4 +11,4 @@
     sprite: Effects/crayondecals.rsi
     state: rune1
   serverEvent: !type:RuneMagicEvent
-    rune: Trap
+    rune: ExplosionRune

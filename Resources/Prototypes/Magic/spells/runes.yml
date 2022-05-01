@@ -1,6 +1,7 @@
 ﻿- type: entity
-  id: Trap
-  name: trap rune
+  id: BaseRune
+  name: "rune"
+  abstract: true
   components:
     - type: Fixtures
       fixtures:
@@ -17,13 +18,84 @@
     - type: Sprite
       sprite: Effects/crayondecals.rsi
       state: rune1
+    - type: Clickable
+
+- type: entity
+  parent: BaseRune
+  id: CollideRune
+  name: "collision rune"
+  abstract: true
+  components:
+    - type: TriggerOnCollide
+
+- type: entity
+  parent: BaseRune
+  id: ActivateRune
+  name: "activation rune"
+  abstract: true
+  components:
+    - type: TriggerOnActivate
+
+- type: entity
+  parent: BaseRune
+  id: CollideTimerRune
+  name: "collision timed rune"
+  abstract: true
+  components:
     - type: TriggerOnTimedCollide
-      threshold: 10
+      threshold: 5
+
+- type: entity
+  parent: CollideRune
+  id: ExplosionRune
+  name: "explosion rune"
+  components:
     - type: ExplodeOnTrigger
     - type: Explosive
       explosionType: Cryo
       totalIntensity: 20.0
       intensitySlope: 5
       maxIntensity: 4
-    - type: Clickable
 
+- type: entity
+  parent: CollideRune
+  id: StunRune
+  name: "stun rune"
+  components:
+    - type: DeleteOnTrigger
+    - type: StunOnCollide
+      stunAmount: 5
+      knockdownAmount: 3
+
+- type: entity
+  parent: CollideRune
+  id: IgniteRune
+  name: "ignite rune"
+  components:
+    - type: DeleteOnTrigger
+    - type: IgniteOnCollide
+      fireStacks: 10
+
+- type: entity
+  parent: CollideTimerRune
+  id: ExplosionTimedRune
+  name: "explosion timed rune"
+  components:
+    - type: ExplodeOnTrigger
+    - type: Explosive
+      explosionType: Cryo
+      totalIntensity: 20.0
+      intensitySlope: 5
+      maxIntensity: 4
+
+- type: entity
+  parent: ActivateRune
+  id: ExplosionActivateRune
+  name: "explosion activated rune"
+  components:
+    - type: ExplodeOnTrigger
+    - type: Explosive
+      explosionType: Cryo
+      totalIntensity: 20.0
+      intensitySlope: 5
+      maxIntensity: 4
