@@ -1,6 +1,6 @@
-ent-ClothingNeckBronzeheart = bronzeheart medal
-    .desc = Given to crewmates for exemplary bravery in the face of danger.
+ent-ClothingNeckBronzeheart = медаль бронзовое сердце
+    .desc = Выдается членам экипажа за проявленную храбрость перед лицом опасности.
     .suffix = { "" }
-ent-ClothingNeckGoldmedal = gold medal of crewmanship
-    .desc = Given to crewmates who display excellent crewmanship.
+ent-ClothingNeckGoldmedal = золотая медаль мастерства экипажа
+    .desc = Выдается членам экипажа, проявившим отличные навыки работы в команде.
     .suffix = { "" }

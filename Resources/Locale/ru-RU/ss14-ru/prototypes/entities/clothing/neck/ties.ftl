@@ -1,9 +1,9 @@
-ent-ClothingNeckTieRed = red-tie
-    .desc = A neosilk clip-on red tie.
+ent-ClothingNeckTieRed = красный галстук
+    .desc = Красный галстук из нео-шёлка с зажимом.
     .suffix = { "" }
-ent-ClothingNeckTieDet = detective's tie
-    .desc = A loosely tied necktie, a perfect accessory for the over-worked detective.
+ent-ClothingNeckTieDet = галстук детектива
+    .desc = Свободно завязанный галстук - идеальный аксессуар для усталого детектива.
     .suffix = { "" }
-ent-ClothingNeckHorrific = horrific necktie
-    .desc = The necktie is adorned with a garish pattern. It's disturbingly vivid. Somehow you feel as if it would be wrong to ever take it off. It's your friend now. You will betray it if you change it for some boring scarf.
+ent-ClothingNeckHorrific = кошмарный галстук
+    .desc = Галстук украшен аляповатым рисунком. Он раздражающе яркий. Почему-то вам кажется, что было бы неправильно снимать его. Теперь это ваш друг. Вы предадите его, если смените его на какой-нибудь скучный шарф.
     .suffix = { "" }
