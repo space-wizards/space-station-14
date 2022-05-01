@@ -1,10 +1,4 @@
 Entries:
-- author: Pancake
-  changes:
-  - {message: Radiation range of the singularity has been reduced from 15 to 10.,
-    type: Tweak}
-  id: 932
-  time: '2022-01-25T23:33:45.0000000+00:00'
 - author: Peptide90
   changes:
   - {message: Power tools now do their job faster! Power drills and jaws of life never
@@ -3057,3 +3051,9 @@ Entries:
       new look. Construction available too!, type: Add}
   id: 1431
   time: '2022-04-30T21:28:04.0000000+00:00'
+- author: hubismal
+  changes:
+  - {message: Players properly slide forward when slipping on things. Some liquids
+      or objects are more slippery than others., type: Fix}
+  id: 1432
+  time: '2022-05-01T06:02:29.0000000+00:00'
