@@ -113,7 +113,7 @@
             - Paper
     - type: WrappedStorage
 
-//TODO: Make more items here Closet, Crate, Box
+#TODO: Make more items here Closet, Crate, Box
 
 
 - type: entity

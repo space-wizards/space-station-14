@@ -1,44 +1,46 @@
 #Client-only related data?
 
-- type: WrapVisualVariant
-  id: WrapDefault
-  - type: WrapVisual
-    WrapType: Tiny
-    icon:
-      sprite: Objects/Materials/Wraps/WrapDefault.rsi
-      state: deliverypackage1
-  - type: WrapVisual
-    WrapType: Small
-    icon:
-      sprite: Objects/Materials/Wraps/WrapDefault.rsi
-      state: deliverypackage2
-  - type: WrapVisual
-    WrapType: Medium
-    icon:
-      sprite: Objects/Materials/Wraps/WrapDefault.rsi
-      state: deliverypackage3
-  - type: WrapVisual
-    WrapType: Large
-    icon:
-      sprite: Objects/Materials/Wraps/WrapDefault.rsi
-      state: deliverypackage4
-  - type: WrapVisual
-    WrapType: Sphere
-    icon:
-      sprite: Objects/Materials/Wraps/WrapDefault.rsi
-      state: deliverypackage5
-  - type: WrapVisual
-    WrapType: Box
-    icon:
-      sprite: Objects/Materials/Wraps/WrapDefault.rsi
-      state: deliverybox
-  - type: WrapVisual
-    WrapType: Closet
-    icon:
-      sprite: Objects/Materials/Wraps/WrapDefault.rsi
-      state: deliverycloset
-  - type: WrapVisual
-    WrapType: Crate
-    icon:
-      sprite: Objects/Materials/Wraps/WrapDefault.rsi
-      state: deliverycrate
+#- type: WrapVisualVariant
+#  id: WrapDefault
+# Add visualVariants latter
+
+- type: WrapVisual
+  WrapType: Tiny
+  icon:
+    sprite: Objects/Materials/Wraps/WrapDefault.rsi
+    state: deliverypackage1
+- type: WrapVisual
+  WrapType: Small
+  icon:
+    sprite: Objects/Materials/Wraps/WrapDefault.rsi
+    state: deliverypackage2
+- type: WrapVisual
+  WrapType: Medium
+  icon:
+    sprite: Objects/Materials/Wraps/WrapDefault.rsi
+    state: deliverypackage3
+- type: WrapVisual
+  WrapType: Large
+  icon:
+    sprite: Objects/Materials/Wraps/WrapDefault.rsi
+    state: deliverypackage4
+- type: WrapVisual
+  WrapType: Sphere
+  icon:
+    sprite: Objects/Materials/Wraps/WrapDefault.rsi
+    state: deliverypackage5
+- type: WrapVisual
+  WrapType: Box
+  icon:
+    sprite: Objects/Materials/Wraps/WrapDefault.rsi
+    state: deliverybox
+- type: WrapVisual
+  WrapType: Closet
+  icon:
+    sprite: Objects/Materials/Wraps/WrapDefault.rsi
+    state: deliverycloset
+- type: WrapVisual
+  WrapType: Crate
+  icon:
+    sprite: Objects/Materials/Wraps/WrapDefault.rsi
+    state: deliverycrate
