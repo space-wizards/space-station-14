@@ -46,7 +46,7 @@ namespace Content.Server.Storage.EntitySystems
                     else
                     {
                         var ent = (EntityUid) component.ItemContainer.ContainedEntity;
-                        Comp<TransformComponent>(ent).Coordinates = Comp<TransformComponent>(uid).Coordinates; // Crate respawns bit lower than package
+                        Comp<TransformComponent>(ent).Coordinates = Comp<TransformComponent>(uid).Coordinates;
                     }
                 }
                 QueueDel(uid);
