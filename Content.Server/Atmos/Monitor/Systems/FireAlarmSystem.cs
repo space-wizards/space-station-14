@@ -43,6 +43,10 @@ namespace Content.Server.Atmos.Monitor.Systems
 
         private void OnEmagged(EntityUid uid, FireAlarmComponent component, GotEmaggedEvent args)
         {
+            // TODO: Allow fixing of emagged fire alarms.
+            if (args.Fixing)
+                return;
+
             if (TryComp<AtmosMonitorComponent>(uid, out var atmosMonitor))
             {
                 if (atmosMonitor?.MonitorFire == true)

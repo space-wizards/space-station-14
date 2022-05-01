@@ -23,6 +23,10 @@ namespace Content.Server.Chemistry.EntitySystems
 
         private void OnEmagged(EntityUid uid, ReagentDispenserComponent comp, GotEmaggedEvent args)
         {
+            // TODO: Allow fixing of emagged ReagentDispensers.
+            if (args.Fixing)
+                return;
+
             if (!comp.AlreadyEmagged)
             {
                 comp.AddFromPrototype(comp.EmagPackPrototypeId);

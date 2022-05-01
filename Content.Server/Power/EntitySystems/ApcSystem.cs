@@ -73,16 +73,29 @@ namespace Content.Server.Power.EntitySystems
 
         private void OnEmagged(EntityUid uid, ApcComponent comp, GotEmaggedEvent args)
         {
-            if(!comp.Emagged)
+            if (args.Fixing)
             {
-                comp.Emagged = true;
-                args.Handled = true;
+                // Re-enable ID checking.
+                if (comp.Emagged)
+                {
+                    comp.Emagged = false;
+                    args.Handled = true;
+                }
+            }
+            else
+            {
+                // Disable ID checking.
+                if (!comp.Emagged)
+                {
+                    comp.Emagged = true;
+                    args.Handled = true;
+                }
             }
         }
 
         public void UpdateApcState(EntityUid uid,
-            ApcComponent? apc=null,
-            BatteryComponent? battery=null)
+            ApcComponent? apc = null,
+            BatteryComponent? battery = null)
         {
             if (!Resolve(uid, ref apc, ref battery))
                 return;
@@ -124,8 +137,8 @@ namespace Content.Server.Power.EntitySystems
         }
 
         public ApcChargeState CalcChargeState(EntityUid uid,
-            ApcComponent? apc=null,
-            BatteryComponent? battery=null)
+            ApcComponent? apc = null,
+            BatteryComponent? battery = null)
         {
             if (apc != null && apc.Emagged)
                 return ApcChargeState.Emag;
@@ -147,8 +160,8 @@ namespace Content.Server.Power.EntitySystems
         }
 
         public ApcExternalPowerState CalcExtPowerState(EntityUid uid,
-            ApcComponent? apc=null,
-            BatteryComponent? battery=null)
+            ApcComponent? apc = null,
+            BatteryComponent? battery = null)
         {
             if (!Resolve(uid, ref apc, ref battery))
                 return ApcExternalPowerState.None;

@@ -115,9 +115,20 @@ namespace Content.Server.Recycling
 
         private void OnEmagged(EntityUid uid, RecyclerComponent component, GotEmaggedEvent args)
         {
-            if (!component.Safe) return;
-            component.Safe = false;
-            args.Handled = true;
+            if (args.Fixing)
+            {
+                // It's once against safe to ride down a chute of used needles and toxic waste.
+                if (component.Safe) return;
+                component.Safe = true;
+                args.Handled = true;
+            }
+            else
+            {
+                // One man is trash. This feature is a treasure.
+                if (!component.Safe) return;
+                component.Safe = false;
+                args.Handled = true;
+            }
         }
     }
 }

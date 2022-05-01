@@ -3,3 +3,4 @@ emag-no-charges = No charges left!
 emag-charges-remaining = It has [color=fuchsia]{$charges}[/color] charges remaining.
 emag-max-charges = It's at [color=green]maximum[/color] charges.
 emag-recharging = There are [color=yellow]{$seconds}[/color] seconds left until the next charge.
+emag-fix-success = You reformatted {THE($target)}.

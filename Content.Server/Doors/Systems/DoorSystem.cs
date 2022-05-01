@@ -112,7 +112,7 @@ public sealed class DoorSystem : SharedDoorSystem
         SoundSystem.Play(filter, sound, uid, audioParams);
     }
 
-#region DoAfters
+    #region DoAfters
     /// <summary>
     ///     Weld or pry open a door.
     /// </summary>
@@ -214,7 +214,7 @@ public sealed class DoorSystem : SharedDoorSystem
         else if (door.State == DoorState.Open)
             StartClosing(uid, door);
     }
-#endregion
+    #endregion
 
     /// <summary>
     ///     Does the user have the permissions required to open this door?
@@ -285,22 +285,50 @@ public sealed class DoorSystem : SharedDoorSystem
 
         var board = EntityManager.SpawnEntity(door.BoardPrototype, Transform(uid).Coordinates);
 
-        if(!container.Insert(board))
+        if (!container.Insert(board))
             Logger.Warning($"Couldn't insert board {ToPrettyString(board)} into door {ToPrettyString(uid)}!");
     }
 
     private void OnEmagged(EntityUid uid, DoorComponent door, GotEmaggedEvent args)
     {
-        if(TryComp<AirlockComponent>(uid, out var airlockComponent))
+        if (TryComp<AirlockComponent>(uid, out var airlockComponent))
         {
-            if (airlockComponent.BoltsDown || !airlockComponent.IsPowered())
+            // Can't interface with an unpowered airlock.
+            if (!airlockComponent.IsPowered())
                 return;
 
-            if (door.State == DoorState.Closed)
+            if (args.Fixing)
             {
-                SetState(uid, DoorState.Emagging, door);
-                PlaySound(uid, door.SparkSound.GetSound(), AudioParams.Default.WithVolume(8), args.UserUid, false);
-                args.Handled = true;
+                // Repair the airlock's ID checker and open-bolted state (if necessary).
+                if (airlockComponent.BoltsDown && (door.State == DoorState.Open || door.State == DoorState.Opening))
+                {
+                    // The door is bolted and open. Emags do this and it can be disruptive, so undo it.
+                    airlockComponent.BoltsDown = false;
+                    SetState(uid, DoorState.Closing, door);
+                    args.Handled = true;
+                }
+                else if (door.State == DoorState.Emagging)
+                {
+                    // The door was JUST emagged and is playing the zap animation.
+                    // If it's allowed to finish then the door will be opened and bolted. Simply interrupt this.
+                    SetState(uid, DoorState.Closing, door);
+                    args.Handled = true;
+                }
+            }
+            else
+            {
+                // The bolts are blocking the part we need to zap.. I guess.
+                if (airlockComponent.BoltsDown)
+                    return;
+
+                // Only force open doors that aren't already open.
+                if (door.State == DoorState.Closed)
+                {
+                    // The 'Emagging' state lasts a short while, after which it will be forced open and bolted.
+                    SetState(uid, DoorState.Emagging, door);
+                    PlaySound(uid, door.SparkSound.GetSound(), AudioParams.Default.WithVolume(8), args.UserUid, false);
+                    args.Handled = true;
+                }
             }
         }
     }
@@ -317,7 +345,7 @@ public sealed class DoorSystem : SharedDoorSystem
         if (door.OpenSound != null)
             PlaySound(uid, door.OpenSound.GetSound(), AudioParams.Default.WithVolume(-5), user, predicted);
 
-        if(lastState == DoorState.Emagging && TryComp<AirlockComponent>(door.Owner, out var airlockComponent))
+        if (lastState == DoorState.Emagging && TryComp<AirlockComponent>(door.Owner, out var airlockComponent))
             airlockComponent?.SetBoltsWithAudio(!airlockComponent.IsBolted());
     }
 }

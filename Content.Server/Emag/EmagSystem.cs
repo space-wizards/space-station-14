@@ -61,7 +61,7 @@ namespace Content.Server.Emag
                 return;
             }
 
-            var emaggedEvent = new GotEmaggedEvent(args.User);
+            var emaggedEvent = new GotEmaggedEvent(args.User, shouldFix: false);
             RaiseLocalEvent(args.Target.Value, emaggedEvent, false);
             if (emaggedEvent.Handled)
             {

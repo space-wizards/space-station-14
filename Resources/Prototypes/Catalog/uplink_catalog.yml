@@ -155,7 +155,7 @@
   itemId: Emag
   description: The business card of the syndicate, this sequencer is able to break open airlocks and tamper with a variety of station devices. Recharges automatically.
   icon: /Textures/Objects/Tools/emag.rsi/icon.png
-  price: 8
+  price: 7
 
 - type: uplinkListing
   id: UplinkAgentIDCard

@@ -90,6 +90,10 @@ namespace Content.Server.Bed
 
         private void OnEmagged(EntityUid uid, StasisBedComponent component, GotEmaggedEvent args)
         {
+            // Only the emag can do this one neat trick.
+            if (args.Fixing)
+                return;
+
             ///Repeatable
             ///Reset any metabolisms first so they receive the multiplier correctly
             UpdateMetabolisms(uid, component, false);

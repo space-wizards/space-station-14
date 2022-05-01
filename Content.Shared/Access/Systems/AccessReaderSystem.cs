@@ -44,10 +44,23 @@ namespace Content.Shared.Access.Systems
 
         private void OnEmagged(EntityUid uid, AccessReaderComponent reader, GotEmaggedEvent args)
         {
-            if (reader.Enabled == true)
+            if (args.Fixing)
             {
-                reader.Enabled = false;
-                args.Handled = true;
+                // Enable ID access checks.
+                if (reader.Enabled == false)
+                {
+                    reader.Enabled = true;
+                    args.Handled = true;
+                }
+            }
+            else
+            {
+                // Disable ID access checks.
+                if (reader.Enabled == true)
+                {
+                    reader.Enabled = false;
+                    args.Handled = true;
+                }
             }
         }
 
@@ -153,7 +166,7 @@ namespace Content.Shared.Access.Systems
             }
 
             if (EntityManager.TryGetComponent(uid, out PDAComponent? pda) &&
-                pda.ContainedID?.Owner is {Valid: true} id)
+                pda.ContainedID?.Owner is { Valid: true } id)
             {
                 tags = EntityManager.GetComponent<AccessComponent>(id).Tags;
                 return true;

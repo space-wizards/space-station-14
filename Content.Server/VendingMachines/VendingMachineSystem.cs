@@ -21,7 +21,7 @@ namespace Content.Server.VendingMachines.systems
         [Dependency] private readonly IRobustRandom _random = default!;
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
         [Dependency] private readonly AccessReaderSystem _accessReader = default!;
-        [Dependency] private readonly PopupSystem _popupSystem = default!; 
+        [Dependency] private readonly PopupSystem _popupSystem = default!;
         [Dependency] private readonly ThrowingSystem _throwingSystem = default!;
 
         public override void Initialize()
@@ -79,12 +79,29 @@ namespace Content.Server.VendingMachines.systems
 
         private void OnEmagged(EntityUid uid, VendingMachineComponent component, GotEmaggedEvent args)
         {
-            if (component.Emagged || component.EmagPackPrototypeId == string.Empty)
+            if (args.Fixing)
+            {
+                // TODO: Fix the stock removal of emagged vendors (for the nt resequencer).
                 return;
 
-            AddVendEntries(component, component.EmagPackPrototypeId);
-            component.Emagged = true;
-            args.Handled = true;
+                // if (!component.Emagged)
+                    // return;
+
+                // No fun allowed. Or dangerous bullshit, if ever that's a thing.
+                // RemoveVendEntries(component, component.EmagPackPrototypeId);
+                // component.Emagged = false;
+                // args.Handled = true;
+            }
+            else
+            {
+                if (component.Emagged || component.EmagPackPrototypeId == string.Empty)
+                    return;
+
+                // Backroom deals.
+                AddVendEntries(component, component.EmagPackPrototypeId);
+                component.Emagged = true;
+                args.Handled = true;
+            }
         }
 
         public bool IsPowered(EntityUid uid, VendingMachineComponent? vendComponent = null)
@@ -116,7 +133,8 @@ namespace Content.Server.VendingMachines.systems
             vendComponent.SpriteName = packPrototype.SpriteName;
             if (!string.IsNullOrEmpty(vendComponent.SpriteName))
             {
-                if (TryComp<SpriteComponent>(vendComponent.Owner, out var spriteComp)) {
+                if (TryComp<SpriteComponent>(vendComponent.Owner, out var spriteComp))
+                {
                     const string vendingMachineRSIPath = "Structures/Machines/VendingMachines/{0}.rsi";
                     spriteComp.BaseRSIPath = string.Format(vendingMachineRSIPath, vendComponent.SpriteName);
                 }
@@ -151,6 +169,24 @@ namespace Content.Server.VendingMachines.systems
                     continue;
                 }
                 component.Inventory.Add(new VendingMachineInventoryEntry(id, amount));
+            }
+        }
+
+        /// <summary>
+        /// Remove entries AFTER initialization. Originally implemented for undoing emags.
+        /// </summary>
+
+        public void RemoveVendEntries(VendingMachineComponent component, string pack)
+        {
+            if (!_prototypeManager.TryIndex(pack, out VendingMachineInventoryPrototype? packPrototype))
+            {
+                Logger.Error($"Pack has no valid inventory prototype: {pack}");
+                return;
+            }
+
+            foreach (var (id, amount) in packPrototype.StartingInventory)
+            {
+                component.Inventory.RemoveAll(invEntry => invEntry.ID == id);
             }
         }
 

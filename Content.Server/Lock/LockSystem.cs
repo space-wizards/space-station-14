@@ -188,6 +188,10 @@ namespace Content.Server.Lock
 
         private void OnEmagged(EntityUid uid, LockComponent component, GotEmaggedEvent args)
         {
+            // The lock is too broken to be properly fixed.
+            if (args.Fixing)
+                return;
+
             if (component.Locked == true)
             {
                 if (component.UnlockSound != null)
@@ -197,8 +201,11 @@ namespace Content.Server.Lock
 
                 if (EntityManager.TryGetComponent(component.Owner, out AppearanceComponent? appearanceComp))
                 {
+                    // BUG: Broken locks don't appear as broken.
                     appearanceComp.SetData(StorageVisuals.Locked, false);
                 }
+
+                // TODO: Track broken locks so they can be fixed. Ex: BrokenLockComponent
                 EntityManager.RemoveComponent<LockComponent>(uid); //Literally destroys the lock as a tell it was emagged
                 args.Handled = true;
             }

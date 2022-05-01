@@ -6,8 +6,9 @@ namespace Content.Shared.Emag.Systems
     /// How to add an emag interaction:
     /// 1. Go to the system for the component you want the interaction with
     /// 2. Subscribe to the GotEmaggedEvent
-    /// 3. Have some check for if this actually needs to be emagged or is already emagged (to stop charge waste)
-    /// 4. Past the check, add all the effects you desire and HANDLE THE EVENT ARGUMENT so a charge is spent
+    /// 3. Check if you're trying to fix or sabotage the object ('args.Fixing')
+    /// 4. Have some check for if this actually needs to be emagged or is already emagged (to stop charge waste)
+    /// 5. Past the check, add all the effects you desire and HANDLE THE EVENT ARGUMENT so a charge is spent
     public sealed class SharedEmagSystem : EntitySystem
     {
         public override void Initialize()
@@ -29,13 +30,18 @@ namespace Content.Shared.Emag.Systems
         }
     }
 
+    /// <summary>
+    /// Handle the interact event for both emags and emag-fixer.
+    /// </summary>
     public sealed class GotEmaggedEvent : HandledEntityEventArgs
     {
         public readonly EntityUid UserUid;
+        public readonly bool Fixing;
 
-        public GotEmaggedEvent(EntityUid userUid)
+        public GotEmaggedEvent(EntityUid userUid, bool shouldFix = false)
         {
             UserUid = userUid;
+            Fixing = shouldFix;
         }
     }
 }
