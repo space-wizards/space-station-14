@@ -127,6 +127,8 @@
       whitelist:
         components:
         - Paper
+  - type: WrapType
+    wrapIn: Crate
   - type: Construction
     graph: CrateSecure
     node: cratesecure
