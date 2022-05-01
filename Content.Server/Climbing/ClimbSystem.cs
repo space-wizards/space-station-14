@@ -157,34 +157,15 @@ public sealed class ClimbSystem : SharedClimbSystem
     private bool ReplaceFixtures(ClimbingComponent climbingComp, PhysicsComponent physicsComp, FixturesComponent fixturesComp)
     {
         // Swap fixtures
-        var toAdd = new List<Fixture>();
         foreach (var (name, fixture) in fixturesComp.Fixtures)
         {
-            if (climbingComp.Fixtures.Contains(name)
-                || climbingComp.Fixtures.Contains($"{ClimbingFixtureName}-{name}")
+            if (climbingComp.DisabledFixtureMasks.ContainsKey(name)
                 || fixture.Hard == false
                 || (fixture.CollisionMask & ClimbingCollisionGroup) == 0)
                 continue;
 
-            climbingComp.DisabledFixtures.Add(fixture);
-
-            var climbFixture = new Fixture(fixture.Shape, fixture.CollisionLayer,
-                    fixture.CollisionMask & ~ClimbingCollisionGroup,
-                    true)
-                {ID = $"{ClimbingFixtureName}-{name}"};
-            toAdd.Add(climbFixture);
-        }
-
-        foreach (var fixture in climbingComp.DisabledFixtures)
-        {
-            _fixtureSystem.DestroyFixture(physicsComp, fixture, manager: fixturesComp);
-        }
-
-        foreach (var fixture in toAdd)
-        {
-            if (!_fixtureSystem.TryCreateFixture(physicsComp, fixture, manager: fixturesComp))
-                return false;
-            climbingComp.Fixtures.Add(fixture.ID);
+            climbingComp.DisabledFixtureMasks.Add(fixture.ID, fixture.CollisionMask & ClimbingCollisionGroup);
+            fixture.CollisionMask &= ~ClimbingCollisionGroup;
         }
 
         if (!_fixtureSystem.TryCreateFixture(physicsComp,
@@ -208,29 +189,24 @@ public sealed class ClimbSystem : SharedClimbSystem
         {
             if (fixture == args.OtherFixture)
                 continue;
+            // If still colliding with a climbable, do not stop climbing
             if (HasComp<ClimbableComponent>(fixture.Body.Owner))
                 return;
         }
 
-        foreach (var fixture in component.DisabledFixtures)
+        foreach (var (name, fixtureMask) in component.DisabledFixtureMasks)
         {
-            _fixtureSystem.CreateFixture(physicsComp, fixture, true, fixturesComp, transformComp);
+            if (!fixturesComp.Fixtures.TryGetValue(name, out var fixture))
+                continue;
+            fixture.CollisionMask |= fixtureMask;
         }
-        component.DisabledFixtures.Clear();
+        component.DisabledFixtureMasks.Clear();
 
         if (!_fixtureRemoveQueue.TryGetValue(uid, out var removeQueue))
         {
             removeQueue = new List<Fixture>();
             _fixtureRemoveQueue.Add(uid, removeQueue);
         }
-
-        foreach (var name in component.Fixtures)
-        {
-            if (!fixturesComp.Fixtures.TryGetValue(name, out var fixture))
-                continue;
-            removeQueue.Add(fixture);
-        }
-        component.Fixtures.Clear();
 
         if (fixturesComp.Fixtures.TryGetValue(ClimbingFixtureName, out var climbingFixture))
             removeQueue.Add(climbingFixture);

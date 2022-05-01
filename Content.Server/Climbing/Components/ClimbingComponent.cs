@@ -1,5 +1,4 @@
 using Content.Shared.Climbing;
-using Robust.Shared.Physics.Dynamics;
 
 namespace Content.Server.Climbing.Components;
 
@@ -31,8 +30,5 @@ public sealed class ClimbingComponent : SharedClimbingComponent
     }
 
     [ViewVariables]
-    public List<Fixture> DisabledFixtures { get; } = new();
-
-    [ViewVariables]
-    public List<string> Fixtures { get; } = new();
+    public Dictionary<string, int> DisabledFixtureMasks { get; } = new();
 }
