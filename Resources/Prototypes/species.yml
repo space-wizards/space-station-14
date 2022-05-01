@@ -33,7 +33,7 @@
 - type: species
   id: Skeleton
   name: Skeleton
-  roundStart: false #touch this and feel my wrath | bet --moony
+  roundStart: true #touch this and feel my wrath | bet --moony | you have no power over what is not your codebase --emo
   prototype: MobSkeletonPerson
   dollPrototype: MobSkeletonPersonDummy
   skinColoration: TintedHues
