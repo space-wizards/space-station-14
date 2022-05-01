@@ -1,2 +1,2 @@
-ent-LowWall = low wall
-    .desc = Goes up to about your waist.
+ent-LowWall = низкая стенка
+    .desc = Доходит примерно до талии.
