@@ -31,21 +31,26 @@ namespace Content.Server.Storage.EntitySystems
 
         private void Unpack(EntityUid uid, WrappedStorageComponent component, GetVerbsEvent<InteractionVerb> args) // TODO: make call by alt-click
         {
-            if (component.ItemContainer.ContainedEntity != null)
+            if (uid != null)
             {
-                args.User.TryGetContainer(out var userContainer); //Check if item in hand, if in hand unpack and put in hand
-                if (args.Target.TryGetContainer(out var container) && container != userContainer)
+                Comp<PhysicsComponent>(uid).CanCollide = false; // Turn off collider, because 'wraped object' move unwraped obj
+
+                if (component.ItemContainer.ContainedEntity != null)
                 {
-                    var ent = (EntityUid) component.ItemContainer.ContainedEntity;
-                    Comp<SharedHandsComponent>(args.User).PutInHandOrDrop(ent);
+                    args.User.TryGetContainer(out var userContainer); //Check if item in hand, if in hand unpack and put in hand
+                    if (args.Target.TryGetContainer(out var container) && container != userContainer)
+                    {
+                        var ent = (EntityUid) component.ItemContainer.ContainedEntity;
+                        Comp<SharedHandsComponent>(args.User).PutInHandOrDrop(ent);
+                    }
+                    else
+                    {
+                        var ent = (EntityUid) component.ItemContainer.ContainedEntity;
+                        Comp<TransformComponent>(ent).Coordinates = Comp<TransformComponent>(uid).Coordinates; // Crate respawns bit lower than package
+                    }
                 }
-                else
-                {
-                    var ent = (EntityUid) component.ItemContainer.ContainedEntity;
-                    Comp<TransformComponent>(ent).Coordinates = Comp<TransformComponent>(uid).Coordinates; // Crate respawns bit lower than package
-                }
+                QueueDel(uid);
             }
-            QueueDel(uid);
         }
 
         private void AddUnpackVerb(EntityUid uid, WrappedStorageComponent component, GetVerbsEvent<InteractionVerb> args)
