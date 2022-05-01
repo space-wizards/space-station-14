@@ -49,10 +49,10 @@ namespace Content.Server.Explosion.EntitySystems
             InitializeProximity();
             InitializeOnUse();
             InitializeSignal();
+            InitializeTimedCollide();
 
             SubscribeLocalEvent<TriggerOnCollideComponent, StartCollideEvent>(OnTriggerCollide);
             SubscribeLocalEvent<TriggerOnActivateComponent, ActivateInWorldEvent>(OnActivate);
-            SubscribeLocalEvent<TriggerOnOverlapComponent, >(OnOverlap);
 
             SubscribeLocalEvent<DeleteOnTriggerComponent, TriggerEvent>(HandleDeleteTrigger);
             SubscribeLocalEvent<ExplodeOnTriggerComponent, TriggerEvent>(HandleExplodeTrigger);
@@ -85,11 +85,6 @@ namespace Content.Server.Explosion.EntitySystems
         private void OnActivate(EntityUid uid, TriggerOnActivateComponent component, ActivateInWorldEvent args)
         {
             Trigger(component.Owner);
-        }
-
-        private void OnOverlap(EntityUid uid, TriggerOnOverlapComponent component, ActivateInWorldEvent args)
-        {
-            Trigger(Component.Owner);
         }
 
         public void Trigger(EntityUid trigger, EntityUid? user = null)
@@ -139,6 +134,7 @@ namespace Content.Server.Explosion.EntitySystems
 
             UpdateProximity(frameTime);
             UpdateTimer(frameTime);
+            UpdateTimedCollide(frameTime);
         }
 
         private void UpdateTimer(float frameTime)

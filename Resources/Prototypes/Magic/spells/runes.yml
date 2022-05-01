@@ -17,7 +17,8 @@
     - type: Sprite
       sprite: Effects/crayondecals.rsi
       state: rune1
-    - type: TriggerOnActivate
+    - type: TriggerOnTimedCollide
+      threshold: 10
     - type: ExplodeOnTrigger
     - type: Explosive
       explosionType: Cryo
