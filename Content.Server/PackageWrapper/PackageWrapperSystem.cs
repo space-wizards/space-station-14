@@ -45,6 +45,13 @@ namespace Content.Server.PackageWrapper
                 {
                     var typeComp = component.ProductsShaped.FirstOrDefault(x => targetWrapType.WrapType == x.ID);
 
+                    if(TryComp<EntityStorageComponent>(args.Target.Value, out var targetStorage))
+                    {
+                        // Cannot wrap the entity is currently opened.
+                        if (targetStorage.Open)
+                            return;
+                    }
+
                     if (typeComp != null)
                     {
                         var spawnedObj2 = Spawn(typeComp.ProtoSpawnID, Comp<TransformComponent>((EntityUid) args.Target).MapPosition);
