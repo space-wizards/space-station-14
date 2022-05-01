@@ -116,7 +116,7 @@
 - type: entity
   parent: OreBase
   id: SpaceQuartz
-  name: space Quartz
+  name: space quartz
   suffix: Full
   components:
   - type: Stack

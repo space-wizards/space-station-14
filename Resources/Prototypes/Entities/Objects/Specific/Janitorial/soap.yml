@@ -15,6 +15,7 @@
   - type: Slippery
     paralyzeTime: 2
     intersectPercentage: 0.2
+    launchForwardsMultiplier: 6.0
   - type: CollisionWake
     enabled: false
   - type: Physics
@@ -67,6 +68,7 @@
     state: syndie
   - type: Slippery
     paralyzeTime: 5
+    launchForwardsMultiplier: 9.0
   - type: Item
     HeldPrefix: syndie
 
@@ -93,5 +95,6 @@
     state: omega
   - type: Slippery
     paralyzeTime: 7
+    launchForwardsMultiplier: 9.0
   - type: Item
     HeldPrefix: omega
