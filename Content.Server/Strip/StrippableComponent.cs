@@ -25,7 +25,7 @@ namespace Content.Server.Strip
         [Dependency] private readonly IEntitySystemManager _sysMan = default!;
         private StrippableSystem _strippableSystem = default!;
 
-        public const float StripDelay = 2f;
+        public const float StripDelay = 6f;
 
         // TODO: This component needs localization.
 
