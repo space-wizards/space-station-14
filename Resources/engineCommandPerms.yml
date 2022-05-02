@@ -67,6 +67,7 @@
   - showpos
   - showray
   - showchunkbb
+  - showgridnodes
   - entfo
   - sggcell
   - ldrsc

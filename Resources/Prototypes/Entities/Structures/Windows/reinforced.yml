@@ -89,6 +89,8 @@
   - type: Construction
     graph: WindowDirectional
     node: windowReinforcedDirectional
+  - type: Damageable
+    damageModifierSet: RGlass
   - type: Destructible
     thresholds:
     - trigger:

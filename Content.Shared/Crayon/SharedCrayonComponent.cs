@@ -32,6 +32,16 @@ namespace Content.Shared.Crayon
     }
 
     [Serializable, NetSerializable]
+    public sealed class CrayonColorMessage : BoundUserInterfaceMessage
+    {
+        public readonly string Color;
+        public CrayonColorMessage(string color)
+        {
+            Color = color;
+        }
+    }
+
+    [Serializable, NetSerializable]
     public enum CrayonVisuals
     {
         State,
@@ -58,11 +68,13 @@ namespace Content.Shared.Crayon
     public sealed class CrayonBoundUserInterfaceState : BoundUserInterfaceState
     {
         public string Selected;
+        public bool SelectableColor;
         public Color Color;
 
-        public CrayonBoundUserInterfaceState(string selected, Color color)
+        public CrayonBoundUserInterfaceState(string selected, bool selectableColor, Color color)
         {
             Selected = selected;
+            SelectableColor = selectableColor;
             Color = color;
         }
     }

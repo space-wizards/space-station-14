@@ -53,8 +53,9 @@
     hitSound:
       path: /Audio/Effects/bite.ogg
     damage:
-      groups:
-        Brute: 16
+      types:
+        Piercing: 5
+        Slash: 10
   - type: CombatMode
     disarmAction:
       enabled: false
@@ -68,6 +69,7 @@
       Otherwise, wreak havoc on the station!
   - type: ReplacementAccent
     accent: genericAggressive
+  - type: NoSlip
 
 - type: entity
   name: space carp

@@ -26,7 +26,7 @@ public sealed class ToggleableClothingSystem : EntitySystem
     {
         base.Initialize();
 
-        SubscribeLocalEvent<ToggleableClothingComponent, ComponentAdd>(OnAdd);
+        SubscribeLocalEvent<ToggleableClothingComponent, ComponentInit>(OnInit);
         SubscribeLocalEvent<ToggleableClothingComponent, MapInitEvent>(OnMapInit);
         SubscribeLocalEvent<ToggleableClothingComponent, ToggleClothingEvent>(OnToggleClothing);
         SubscribeLocalEvent<ToggleableClothingComponent, GetItemActionsEvent>(OnGetActions);
@@ -71,7 +71,10 @@ public sealed class ToggleableClothingSystem : EntitySystem
     /// </summary>
     private void OnToggleableUnequip(EntityUid uid, ToggleableClothingComponent component, GotUnequippedEvent args)
     {
-        if (component.Container != null && component.Container.ContainedEntity != null && component.ClothingUid != null)
+        // If the attached clothing is not currently in the container, this just assumes that it is currently equipped.
+        // This should maybe double check that the entity currently in the slot is actually the attached clothing, but
+        // if its not, then something else has gone wrong already...
+        if (component.Container != null && component.Container.ContainedEntity == null && component.ClothingUid != null)
             _inventorySystem.TryUnequip(args.Equipee, component.Slot, force: true);
     }
 
@@ -160,7 +163,7 @@ public sealed class ToggleableClothingSystem : EntitySystem
             args.Actions.Add(component.ToggleAction);
     }
 
-    private void OnAdd(EntityUid uid, ToggleableClothingComponent component, ComponentAdd args)
+    private void OnInit(EntityUid uid, ToggleableClothingComponent component, ComponentInit args)
     {
         component.Container = _containerSystem.EnsureContainer<ContainerSlot>(uid, component.ContainerId);
     }

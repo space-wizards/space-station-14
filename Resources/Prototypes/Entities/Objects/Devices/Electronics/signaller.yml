@@ -10,3 +10,4 @@
     sprite: Objects/Devices/signaller.rsi
     state: signaller
   - type: Signaller
+  - type: UseDelay

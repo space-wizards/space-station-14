@@ -103,11 +103,8 @@ namespace Content.Server.Tabletop
 
                 var gamerUid = (gamer).Owner;
 
-                if (actor.PlayerSession.Status > SessionStatus.Connected || CanSeeTable(gamerUid, gamer.Tabletop)
-                                                                         || !StunnedOrNoHands(gamerUid))
-                    continue;
-
-                CloseSessionFor(actor.PlayerSession, gamer.Tabletop);
+                if (actor.PlayerSession.Status != SessionStatus.InGame || !CanSeeTable(gamerUid, gamer.Tabletop))
+                    CloseSessionFor(actor.PlayerSession, gamer.Tabletop);
             }
         }
     }

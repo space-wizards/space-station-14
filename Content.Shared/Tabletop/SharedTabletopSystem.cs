@@ -2,8 +2,10 @@ using Content.Shared.ActionBlocker;
 using Content.Shared.Hands.Components;
 using Content.Shared.Interaction;
 using Content.Shared.Stunnable;
+using Content.Shared.Tabletop.Components;
 using Robust.Shared.Network;
 using Robust.Shared.Serialization;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Content.Shared.Tabletop
 {
@@ -32,15 +34,10 @@ namespace Content.Shared.Tabletop
         /// <param name="table">The table entity to check.</param>
         protected bool CanSeeTable(EntityUid playerEntity, EntityUid? table)
         {
-            if (table == null)
-                return false;
-
-            if (EntityManager.GetComponent<TransformComponent>(table.Value).Parent?.Owner is not { } parent)
-            {
-                return false;
-            }
-
-            if (!EntityManager.HasComponent<MapComponent>(parent) && !EntityManager.HasComponent<IMapGridComponent>(parent))
+            // Table may have been deleted, hence TryComp
+            if (!TryComp(table, out MetaDataComponent? meta)
+                || meta.EntityLifeStage >= EntityLifeStage.Terminating
+                || (meta.Flags & MetaDataFlags.InContainer) == MetaDataFlags.InContainer)
             {
                 return false;
             }
@@ -48,15 +45,16 @@ namespace Content.Shared.Tabletop
             return _interactionSystem.InRangeUnobstructed(playerEntity, table.Value) && _actionBlockerSystem.CanInteract(playerEntity, table);
         }
 
-        protected bool StunnedOrNoHands(EntityUid playerEntity)
+        protected bool CanDrag(EntityUid playerEntity, EntityUid target, [NotNullWhen(true)] out TabletopDraggableComponent? draggable)
         {
-            var stunned = EntityManager.HasComponent<StunnedComponent>(playerEntity);
-            var hasHand = EntityManager.TryGetComponent<SharedHandsComponent>(playerEntity, out var handsComponent) &&
-                          handsComponent.Hands.Count > 0;
+            if (!TryComp(target, out draggable))
+                return false;
 
-            return stunned || !hasHand;
+            // CanSeeTable checks interaction action blockers. So no need to check them here.
+            // If this ever changes, so that ghosts can spectate games, then the check needs to be moved here.
+            
+            return TryComp(playerEntity, out SharedHandsComponent? hands) && hands.Hands.Count > 0;
         }
-
         #endregion
     }
 }

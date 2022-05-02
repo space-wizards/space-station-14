@@ -93,7 +93,6 @@
   components:
   - type: StorageFill
     contents:
-      - id: ClothingHeadHelmetHardsuitEngineering
       - id: ClothingOuterHardsuitEngineering
       - id: ClothingHandsGlovesColorYellow
       - id: ClothingMaskGas

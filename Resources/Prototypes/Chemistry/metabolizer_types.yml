@@ -12,3 +12,6 @@
 
 - type: metabolizerType
   id: Dragon
+
+- type: metabolizerType
+  id: Vox
