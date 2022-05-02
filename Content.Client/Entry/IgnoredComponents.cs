@@ -83,6 +83,7 @@ namespace Content.Client.Entry
             "DiseaseCarrier",
             "StorageFill",
             "Absorbent",
+            "RandomHumanoidAppearance",
             "CableVis",
             "BatterySelfRecharger",
             "Puddle",
