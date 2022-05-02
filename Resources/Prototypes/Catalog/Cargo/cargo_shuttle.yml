@@ -6,7 +6,7 @@
     sprite: Structures/Shuttles/thruster.rsi
     state: base
   product: Thruster
-  cost: 1000
+  cost: 1500
   category: Shuttle
   group: market
 
@@ -18,7 +18,7 @@
     sprite: Structures/Shuttles/gyroscope.rsi
     state: base
   product: Gyroscope
-  cost: 3000
+  cost: 4000
   category: Shuttle
   group: market
 
