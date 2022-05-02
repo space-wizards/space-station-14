@@ -1,13 +1,4 @@
 Entries:
-- author: Plasmaguy
-  changes:
-  - {message: 'Added three new drinks (root beer, ice cream, and root beer floats).',
-    type: Add}
-  - {message: Root beer can be dispensed from the Bar's soda machine, type: Tweak}
-  - {message: Cans of root beer can be dispensed from the Robust Softdrinks vending
-      machines, type: Tweak}
-  id: 940
-  time: '2022-01-27T07:33:27.0000000+00:00'
 - author: Rane
   changes:
   - {message: Chief Engineers now have access to the advanced magboots in their locker.,
@@ -3048,3 +3039,9 @@ Entries:
   - {message: Requires a little more effort strip something off of someone., type: Tweak}
   id: 1439
   time: '2022-05-02T22:47:19.0000000+00:00'
+- author: Macoron
+  changes:
+  - {message: You can't unstick C4 from great distance or while your character in
+      handcuffs., type: Fix}
+  id: 1440
+  time: '2022-05-02T22:50:11.0000000+00:00'
