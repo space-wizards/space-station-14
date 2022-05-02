@@ -1,18 +1,18 @@
 ﻿using Content.Client.Construction.UI;
 using Content.Client.Gameplay;
 using Content.Client.UserInterface.Controls;
+using Content.Client.UserInterface.Widgets;
 using Robust.Client.UserInterface;
-using MenuBar = Content.Client.UserInterface.Widgets.MenuBar;
 
 namespace Content.Client.UserInterface.Controllers;
 
-public sealed class CraftingUIController : UIController, IOnStateChanged<GameplayState>
+public sealed class CraftingUIController : UIController, IOnStateEntered<GameplayState>
 {
 
     private ConstructionMenuPresenter? _presenter;
     private MenuButton CraftingButton => UIManager.GetActiveUIWidget<MenuBar>().CraftingButton;
 
-    public void OnStateChanged(GameplayState state)
+    public void OnStateEntered(GameplayState state)
     {
         _presenter = new ConstructionMenuPresenter();
         // TODO unsubscribe

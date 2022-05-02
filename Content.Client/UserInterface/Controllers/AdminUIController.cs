@@ -3,6 +3,7 @@ using Content.Client.Administration.UI;
 using Content.Client.Administration.UI.Tabs.PlayerTab;
 using Content.Client.Gameplay;
 using Content.Client.UserInterface.Controls;
+using Content.Client.UserInterface.Widgets;
 using Content.Client.Verbs;
 using Content.Shared.Input;
 using Robust.Client.Console;
@@ -12,11 +13,10 @@ using Robust.Shared.Input;
 using Robust.Shared.Input.Binding;
 using Robust.Shared.Network;
 using static Robust.Client.UserInterface.Controls.BaseButton;
-using MenuBar = Content.Client.UserInterface.Widgets.MenuBar;
 
 namespace Content.Client.UserInterface.Controllers;
 
-public sealed class AdminUIController : UIController, IOnStateChanged<GameplayState>
+public sealed class AdminUIController : UIController, IOnStateEntered<GameplayState>
 {
     [Dependency] private readonly IClientAdminManager _admin = default!;
     [Dependency] private readonly IClientConGroupController _conGroups = default!;
@@ -30,7 +30,7 @@ public sealed class AdminUIController : UIController, IOnStateChanged<GameplaySt
 
     private MenuButton AdminButton => UIManager.GetActiveUIWidget<MenuBar>().AdminButton;
 
-    public void OnStateChanged(GameplayState state)
+    public void OnStateEntered(GameplayState state)
     {
         // Reset the AdminMenu Window on disconnect
         _net.Disconnect += (_, _) => ResetWindow();

@@ -3,6 +3,7 @@ using Content.Client.Hands;
 using Content.Client.Inventory;
 using Content.Client.UserInterface.Controls;
 using Content.Client.UserInterface.UIWindows;
+using Content.Client.UserInterface.Widgets;
 using Content.Shared.Input;
 using Robust.Client.GameObjects;
 using Robust.Client.UserInterface;
@@ -10,11 +11,10 @@ using Robust.Shared.Input;
 using Robust.Shared.Input.Binding;
 using static Content.Client.Inventory.ClientInventorySystem;
 using static Robust.Client.UserInterface.Controls.BaseButton;
-using MenuBar = Content.Client.UserInterface.Widgets.MenuBar;
 
 namespace Content.Client.UserInterface.Controllers;
 
-public sealed partial class InventoryUIController : UIController, IOnStateChanged<GameplayState>
+public sealed partial class InventoryUIController : UIController, IOnStateEntered<GameplayState>
 {
     [UISystemDependency] private readonly ClientInventorySystem _inventorySystem = default!;
     private ClientInventoryComponent? _playerInventory;
@@ -23,7 +23,7 @@ public sealed partial class InventoryUIController : UIController, IOnStateChange
     private readonly Dictionary<(string group, string slot), (ISpriteComponent sprite, bool showStorage)> _sprites = new();
     private MenuButton InventoryButton => UIManager.GetActiveUIWidget<MenuBar>().InventoryButton;
 
-    public void OnStateChanged(GameplayState state)
+    public void OnStateEntered(GameplayState state)
     {
         //bind open inventory key to OpenInventoryMenu;
         CommandBinds.Builder

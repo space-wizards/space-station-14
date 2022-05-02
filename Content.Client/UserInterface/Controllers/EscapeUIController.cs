@@ -2,17 +2,17 @@
 using Content.Client.MainMenu;
 using Content.Client.Options.UI;
 using Content.Client.UserInterface.Controls;
+using Content.Client.UserInterface.Widgets;
 using Robust.Client.Console;
 using Robust.Client.Input;
 using Robust.Client.UserInterface;
 using Robust.Shared.Input;
 using Robust.Shared.Input.Binding;
 using static Robust.Client.UserInterface.Controls.BaseButton;
-using MenuBar = Content.Client.UserInterface.Widgets.MenuBar;
 
 namespace Content.Client.UserInterface.Controllers;
 
-public sealed class EscapeUIController : UIController, IOnStateChanged<GameplayState>, IOnStateChanged<MainScreen>
+public sealed class EscapeUIController : UIController, IOnStateEntered<GameplayState>, IOnStateEntered<MainScreen>
 {
     [Dependency] private readonly IClientConsoleHost _console = default!;
     [Dependency] private readonly IInputManager _input = default!;
@@ -21,7 +21,7 @@ public sealed class EscapeUIController : UIController, IOnStateChanged<GameplayS
 
     private MenuButton? EscapeButton => UIManager.GetActiveUIWidgetOrNull<MenuBar>()?.EscapeButton;
 
-    public void OnStateChanged(GameplayState state)
+    public void OnStateEntered(GameplayState state)
     {
         if (EscapeButton != null)
         {
@@ -29,7 +29,7 @@ public sealed class EscapeUIController : UIController, IOnStateChanged<GameplayS
         }
     }
 
-    public void OnStateChanged(MainScreen state)
+    public void OnStateEntered(MainScreen state)
     {
         _input.SetInputCommand(EngineKeyFunctions.EscapeMenu,
             InputCmdHandler.FromDelegate(_ => ToggleWindow()));

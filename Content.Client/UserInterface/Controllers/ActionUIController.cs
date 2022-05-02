@@ -22,7 +22,7 @@ using MenuBar = Content.Client.UserInterface.Widgets.MenuBar;
 
 namespace Content.Client.UserInterface.Controllers;
 
-public sealed class ActionUIController : UIController, IOnStateChanged<GameplayState>
+public sealed class ActionUIController : UIController, IOnStateEntered<GameplayState>
 {
     [Dependency] private readonly IEntityManager _entities = default!;
 
@@ -48,7 +48,7 @@ public sealed class ActionUIController : UIController, IOnStateChanged<GameplayS
         };
     }
 
-    public void OnStateChanged(GameplayState state)
+    public void OnStateEntered(GameplayState state)
     {
         UIManager.PopupRoot.AddChild(_dragShadow);
         ActionButton.OnPressed += ActionButtonPressed;

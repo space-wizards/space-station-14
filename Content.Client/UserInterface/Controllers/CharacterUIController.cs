@@ -13,14 +13,14 @@ using MenuBar = Content.Client.UserInterface.Widgets.MenuBar;
 
 namespace Content.Client.UserInterface.Controllers;
 
-public sealed class CharacterUIController : UIController, IOnStateChanged<GameplayState>
+public sealed class CharacterUIController : UIController, IOnStateEntered<GameplayState>
 {
     [UISystemDependency] private readonly CharacterInfoSystem _characterInfo = default!;
 
     private CharacterWindow? _window;
     private MenuButton CharacterButton => UIManager.GetActiveUIWidget<MenuBar>().CharacterButton;
 
-    public void OnStateChanged(GameplayState state)
+    public void OnStateEntered(GameplayState state)
     {
         CharacterButton.OnPressed += CharacterButtonPressed;
 

@@ -9,12 +9,12 @@ using MenuBar = Content.Client.UserInterface.Widgets.MenuBar;
 
 namespace Content.Client.UserInterface.Controllers;
 
-public sealed class InfoUIController : UIController, IOnStateChanged<GameplayState>
+public sealed class InfoUIController : UIController, IOnStateEntered<GameplayState>
 {
     private RulesAndInfoWindow? _window;
     private MenuButton InfoButton => UIManager.GetActiveUIWidget<MenuBar>().InfoButton;
 
-    public void OnStateChanged(GameplayState state)
+    public void OnStateEntered(GameplayState state)
     {
         InfoButton.OnPressed += InfoButtonPressed;
 

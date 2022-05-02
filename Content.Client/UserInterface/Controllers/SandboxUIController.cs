@@ -5,6 +5,7 @@ using Content.Client.Sandbox;
 using Content.Client.SubFloor;
 using Content.Client.UserInterface.Controls;
 using Content.Client.UserInterface.UIWindows;
+using Content.Client.UserInterface.Widgets;
 using Content.Shared.Input;
 using Robust.Client.Debugging;
 using Robust.Client.Graphics;
@@ -13,12 +14,11 @@ using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controllers;
 using Robust.Shared.Input.Binding;
 using static Robust.Client.UserInterface.Controls.BaseButton;
-using MenuBar = Content.Client.UserInterface.Widgets.MenuBar;
 
 namespace Content.Client.UserInterface.Controllers;
 
 // TODO hud refactor should part of this be in engine?
-public sealed class SandboxUIController : UIController, IOnStateChanged<GameplayState>
+public sealed class SandboxUIController : UIController, IOnStateEntered<GameplayState>
 {
     [Dependency] private readonly IClientAdminManager _admin = default!;
     [Dependency] private readonly IEyeManager _eye = default!;
@@ -39,7 +39,7 @@ public sealed class SandboxUIController : UIController, IOnStateChanged<Gameplay
 
     private MenuButton SandboxButton => UIManager.GetActiveUIWidget<MenuBar>().SandboxButton;
 
-    public void OnStateChanged(GameplayState state)
+    public void OnStateEntered(GameplayState state)
     {
         SandboxButton.OnPressed += SandboxButtonPressed;
         _admin.AdminStatusUpdated += CheckStatus;
