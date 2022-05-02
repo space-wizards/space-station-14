@@ -11,5 +11,21 @@
     - type: Wieldable
       wieldTime: 0.75
     - type: Spellbook
-      worldSpells:
-        Traps: 3
+      instantSpells:
+        TheTraps: 3
+
+- type: entity
+  id: ForceWallSpellbook
+  name: force wall spellbook
+  parent: BaseItem
+  components:
+    - type: Sprite
+      netsync: false
+      sprite: Objects/Misc/books.rsi
+      layers:
+        - state: book_demonomicon
+    - type: Wieldable
+      wieldTime: 0.75
+    - type: Spellbook
+      instantSpells:
+        ForceWall: 3

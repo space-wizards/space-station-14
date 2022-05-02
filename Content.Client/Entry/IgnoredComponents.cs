@@ -349,6 +349,7 @@ namespace Content.Client.Entry
             "RuneMagic",
             "TriggerOnActivate",
             "TriggerOnTimedCollide",
+            "ForceWall",
         };
     }
 }

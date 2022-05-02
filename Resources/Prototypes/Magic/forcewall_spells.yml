@@ -1,14 +1,13 @@
 ﻿- type: instantAction
-  id: TheTraps
-  name: the traps
-  description: summmons trap runes
+  id: ForceWall
+  name: force wall
+  description: summmons walls
   useDelay: 10
   range: -1
-  speech: unga
+  speech: bunga
   itemIconStyle: BigAction
   checkCanAccess: false
   icon:
     sprite: Effects/crayondecals.rsi
     state: rune1
-  serverEvent: !type:RuneMagicEvent
-    rune: ExplosionRune
+  serverEvent: !type:ForceWallEvent

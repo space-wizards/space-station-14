@@ -2,8 +2,8 @@
 
 namespace Content.Server.Magic.Events;
 
-public sealed class RuneMagicEvent : WorldTargetActionEvent
+public sealed class RuneMagicEvent : InstantActionEvent
 {
     [DataField("rune", required: true)]
-    public string Rune = default!;
+    public string RunePrototype = default!;
 }
