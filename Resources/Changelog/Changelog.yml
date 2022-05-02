@@ -1,10 +1,4 @@
 Entries:
-- author: Peptide90
-  changes:
-  - {message: Captain and HoP now have Quartermaster access. Find somewhere else to
-      hide your contraband QM., type: Fix}
-  id: 937
-  time: '2022-01-26T18:29:44.0000000+00:00'
 - author: moony
   changes:
   - {message: 'The game rules have been updated. In short, no more revolutions unless
@@ -3053,3 +3047,9 @@ Entries:
   - {message: The ATV now has many possible descriptions., type: Tweak}
   id: 1436
   time: '2022-05-02T20:51:03.0000000+00:00'
+- author: Peptide90
+  changes:
+  - {message: Added three new wall types for secret vaults. Expect to find them in
+      some hidden areas of asteroids in future and containing ancient dangers!, type: Add}
+  id: 1437
+  time: '2022-05-02T22:38:07.0000000+00:00'
