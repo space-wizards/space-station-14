@@ -1,13 +1,4 @@
 Entries:
-- author: Peptide90
-  changes:
-  - {message: Power tools now do their job faster! Power drills and jaws of life never
-      looked so good to borrow..., type: Add}
-  - {message: Emergency welders are now slower than their bigger counterpart., type: Fix}
-  - {message: Metal crate deconstruction now requires a welder as it used to. Plastic
-      crates are still screwed., type: Fix}
-  id: 933
-  time: '2022-01-26T04:12:20.0000000+00:00'
 - author: metalgearsloth
   changes:
   - {message: Hacking doors now actually use their randomised layouts and hacking
@@ -3057,3 +3048,8 @@ Entries:
       or objects are more slippery than others., type: Fix}
   id: 1432
   time: '2022-05-01T06:02:29.0000000+00:00'
+- author: 20kdc
+  changes:
+  - {message: Knightship is officially deceased., type: Remove}
+  id: 1433
+  time: '2022-05-02T14:50:37.0000000+00:00'
