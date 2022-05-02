@@ -3,10 +3,8 @@
   name: force wall
   description: summmons walls
   useDelay: 10
-  range: -1
   speech: bunga
   itemIconStyle: BigAction
-  checkCanAccess: false
   icon:
     sprite: Effects/crayondecals.rsi
     state: rune1

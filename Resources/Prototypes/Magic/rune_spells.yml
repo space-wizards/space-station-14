@@ -3,10 +3,8 @@
   name: the traps
   description: summmons trap runes
   useDelay: 10
-  range: -1
   speech: unga
   itemIconStyle: BigAction
-  checkCanAccess: false
   icon:
     sprite: Effects/crayondecals.rsi
     state: rune1
