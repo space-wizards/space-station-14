@@ -1,15 +1,4 @@
 Entries:
-- author: metalgearsloth
-  changes:
-  - {message: Hacking doors now actually use their randomised layouts and hacking
-      takes time, type: Tweak}
-  id: 934
-  time: '2022-01-26T04:26:54.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - {message: Range limit removed from LOOC for ghosts, type: Tweak}
-  id: 935
-  time: '2022-01-26T13:18:56.0000000+00:00'
 - author: Lamrr
   changes:
   - {message: 'The mysterious red phone has returned, the favoured weapon of the Centcom
@@ -3053,3 +3042,15 @@ Entries:
   - {message: Knightship is officially deceased., type: Remove}
   id: 1433
   time: '2022-05-02T14:50:37.0000000+00:00'
+- author: Peptide90
+  changes:
+  - {message: Bolas and tiles now break after 3 and 4 throws respectively. Reduced
+      tile damage from 10 to 5. No more tile abuse., type: Tweak}
+  id: 1434
+  time: '2022-05-02T20:49:47.0000000+00:00'
+- author: Peptide90
+  changes:
+  - {message: To deconstruct vents and scrubbers you now need to use the screwdriver
+      before welding., type: Tweak}
+  id: 1435
+  time: '2022-05-02T20:49:53.0000000+00:00'
