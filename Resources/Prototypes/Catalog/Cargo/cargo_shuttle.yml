@@ -6,7 +6,7 @@
     sprite: Structures/Shuttles/thruster.rsi
     state: base
   product: Thruster
-  cost: 1500
+  cost: 1000
   category: Shuttle
   group: market
 
@@ -18,6 +18,18 @@
     sprite: Structures/Shuttles/gyroscope.rsi
     state: base
   product: Gyroscope
-  cost: 4000
+  cost: 3000
+  category: Shuttle
+  group: market
+
+- type: cargoProduct
+  name: shuttle assembly crate
+  id: ShuttleBasicKit
+  description: "Contains boards for a shuttle console and wallmounted power utilities."
+  icon:
+    sprite: Structures/Machines/computers.rsi
+    state: avionics-systems
+  product: CrateEngineeringShuttle
+  cost: 2500
   category: Shuttle
   group: market

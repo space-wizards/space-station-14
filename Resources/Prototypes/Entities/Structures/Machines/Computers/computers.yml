@@ -409,6 +409,7 @@
       - EngineParticleAccelerator
       - ShuttleThruster
       - ShuttleGyroscope
+      - ShuttleBasicKit
       - AtmosphericsAir
       - AtmosphericsOxygen
       - AtmosphericsNitrogen
