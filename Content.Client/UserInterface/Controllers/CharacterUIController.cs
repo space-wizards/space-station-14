@@ -15,8 +15,6 @@ namespace Content.Client.UserInterface.Controllers;
 
 public sealed class CharacterUIController : UIController, IOnStateChanged<GameplayState>
 {
-    [Dependency] private readonly IUserInterfaceManager _ui = default!;
-
     [UISystemDependency] private readonly CharacterInfoSystem _characterInfo = default!;
 
     private CharacterWindow? _window;
@@ -124,7 +122,7 @@ public sealed class CharacterUIController : UIController, IOnStateChanged<Gamepl
 
     private void CreateWindow()
     {
-        _window = _ui.CreateNamedWindow<CharacterWindow>("Character");
+        _window = UIManager.CreateNamedWindow<CharacterWindow>("Character");
 
         if (_window == null)
             return;

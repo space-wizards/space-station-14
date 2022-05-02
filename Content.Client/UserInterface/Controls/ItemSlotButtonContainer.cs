@@ -1,5 +1,4 @@
 ﻿using Content.Client.UserInterface.Controllers;
-using Robust.Client.UserInterface;
 
 namespace Content.Client.UserInterface.Controls;
 
@@ -16,7 +15,7 @@ public sealed class ItemSlotButtonContainer : ItemSlotUIContainer<SlotControl>
         }}
     public ItemSlotButtonContainer()
     {
-        _inventoryController = IoCManager.Resolve<IUserInterfaceManager>().GetUIController<InventoryUIController>();
+        _inventoryController = UserInterfaceManager.GetUIController<InventoryUIController>();
     }
 
     ~ItemSlotButtonContainer()

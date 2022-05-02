@@ -106,7 +106,7 @@ namespace Content.Client.UserInterface.Controls
                 TextureScale = (2, 2),
                 MouseFilter = MouseFilterMode.Stop
             });
-            AddChild(HighlightRect = new TextureRect()
+            AddChild(HighlightRect = new TextureRect
             {
                 Visible = false,
                 TextureScale = (2, 2),
@@ -211,19 +211,6 @@ namespace Content.Client.UserInterface.Controls
         {
             Hover?.Invoke(args, this);
         }
-
-        public void ClearButtonData()
-        {
-            Pressed = null;
-            Unpressed = null;
-            Hover = null;
-            StoragePressed = null;
-            Highlight = false;
-            Blocked = false;
-            HoverSpriteView.Sprite = null;
-            SpriteView.Sprite = null;
-        }
-
 
         protected override void OnThemeUpdated()
         {

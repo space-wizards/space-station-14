@@ -1,0 +1,9 @@
+﻿<cc:ActionButton
+    xmlns="https://spacestation14.io"
+    xmlns:cc="clr-namespace:Content.Client.UserInterface.Controls"
+    MouseFilter="Pass">
+    <TextureRect Name="Button" TextureScale="2 2"/>
+    <TextureRect Name="Icon" TextureScale="2 2"/>
+    <Label Name="Label" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+    <SpriteView Name="Sprite" OverrideDirection="South"/>
+</cc:ActionButton>

@@ -13,9 +13,6 @@ namespace Content.Client.Administration.UI.Tabs.AdminbusTab
     [GenerateTypedNameReferences]
     public sealed partial class AdminbusTab : Control
     {
-        // TODO hud refactor move this out to a controller
-        [Dependency] private readonly IUserInterfaceManager _ui = default!;
-
         private readonly EntitySpawningUIController _entitySpawningController;
         private readonly TileSpawningUIController _tileSpawningController;
         private readonly DecalPlacerUIController _decalPlacerController;
@@ -25,9 +22,9 @@ namespace Content.Client.Administration.UI.Tabs.AdminbusTab
             RobustXamlLoader.Load(this);
             IoCManager.InjectDependencies(this);
 
-            _entitySpawningController = _ui.GetUIController<EntitySpawningUIController>();
-            _tileSpawningController = _ui.GetUIController<TileSpawningUIController>();
-            _decalPlacerController = _ui.GetUIController<DecalPlacerUIController>();
+            _entitySpawningController = UserInterfaceManager.GetUIController<EntitySpawningUIController>();
+            _tileSpawningController = UserInterfaceManager.GetUIController<TileSpawningUIController>();
+            _decalPlacerController = UserInterfaceManager.GetUIController<DecalPlacerUIController>();
 
             // For the SpawnEntitiesButton and SpawnTilesButton we need to do the press manually
             // TODO: This will probably need some command check at some point

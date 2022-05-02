@@ -1,5 +1,4 @@
 ﻿using Robust.Client.Input;
-using Robust.Shared.IoC;
 using Robust.Shared.Map;
 
 namespace Content.Client.DragDrop
@@ -119,6 +118,7 @@ namespace Content.Client.DragDrop
         /// </summary>
         public void Update(float frameTime)
         {
+            // TODO use events instead
             switch (_state)
             {
                 // check if dragging should begin

@@ -13,9 +13,11 @@ using Robust.Shared.Input;
 using Robust.Shared.Input.Binding;
 using Robust.Shared.Timing;
 using static Content.Client.UserInterface.UIWindows.ActionsWindow;
+using static Robust.Client.UserInterface.Control;
 using static Robust.Client.UserInterface.Controls.BaseButton;
 using static Robust.Client.UserInterface.Controls.LineEdit;
 using static Robust.Client.UserInterface.Controls.MultiselectOptionButton<Content.Client.UserInterface.UIWindows.ActionsWindow.Filters>;
+using static Robust.Client.UserInterface.Controls.TextureRect;
 using MenuBar = Content.Client.UserInterface.Widgets.MenuBar;
 
 namespace Content.Client.UserInterface.Controllers;
@@ -28,21 +30,21 @@ public sealed class ActionUIController : UIController, IOnStateChanged<GameplayS
 
     private ActionButtonContainer? _container;
     private ActionPage? _defaultPage;
-    private List<ActionPage> _actionPages = new();
-    private readonly DragDropHelper<ActionButton> _dragDropHelper;
+    private readonly DragDropHelper<ActionButton> _menuDragHelper;
     private readonly TextureRect _dragShadow;
 
     private ActionsWindow? _window;
     private MenuButton ActionButton => UIManager.GetActiveUIWidget<MenuBar>().ActionButton;
     public ActionUIController()
     {
-        _dragDropHelper = new DragDropHelper<ActionButton>(OnBeginDrag, OnContinueDrag, OnEndDrag);
+        _menuDragHelper = new DragDropHelper<ActionButton>(OnMenuBeginDrag, OnMenuContinueDrag, OnMenuEndDrag);
         _dragShadow = new TextureRect
         {
             MinSize = (64, 64),
-            Stretch = TextureRect.StretchMode.Scale,
+            Stretch = StretchMode.Scale,
             Visible = false,
-            SetSize = (64, 64)
+            SetSize = (64, 64),
+            MouseFilter = MouseFilterMode.Ignore
         };
     }
 
@@ -143,7 +145,7 @@ public sealed class ActionUIController : UIController, IOnStateChanged<GameplayS
         foreach (var action in actions)
         {
             var actionItem = new ActionButton();
-            actionItem.UpdateButtonData(_entities, action);
+            actionItem.UpdateData(_entities, action);
             actionItem.ActionPressed += OnWindowActionPressed;
             actionItem.ActionUnpressed += OnWindowActionUnPressed;
             actionItem.ActionFocusExited += OnWindowActionFocusExisted;
@@ -159,16 +161,14 @@ public sealed class ActionUIController : UIController, IOnStateChanged<GameplayS
 
         var search = _window.SearchBar.Text;
         var filters = _window.FilterButton.SelectedKeys;
-        if (filters.Count == 0 && string.IsNullOrWhiteSpace(search))
-        {
-            ClearList();
-            return;
-        }
 
         IEnumerable<ActionType>? actions = _actionsSystem.PlayerActions?.Actions;
-        if (actions == null)
+        actions ??= Array.Empty<ActionType>();
+
+        if (filters.Count == 0 && string.IsNullOrWhiteSpace(search))
         {
-            actions = Array.Empty<ActionType>();
+            PopulateActions(actions);
+            return;
         }
 
         actions = actions.Where(action =>
@@ -225,56 +225,65 @@ public sealed class ActionUIController : UIController, IOnStateChanged<GameplayS
         if (args.Function != EngineKeyFunctions.UIClick && args.Function != EngineKeyFunctions.Use)
             return;
 
-        _dragDropHelper.MouseDown(action);
+        _menuDragHelper.MouseDown(action);
+        args.Handle();
     }
 
-    private void OnWindowActionUnPressed(GUIBoundKeyEventArgs args, ActionButton action)
+    private void OnWindowActionUnPressed(GUIBoundKeyEventArgs args, ActionButton dragged)
     {
         if (args.Function != EngineKeyFunctions.UIClick && args.Function != EngineKeyFunctions.Use)
             return;
 
+        args.Handle();
+
         if (UIManager.CurrentlyHovered is ActionButton button)
         {
-            if (!_dragDropHelper.IsDragging || _dragDropHelper.Dragged?.Action == null)
+            if (!_menuDragHelper.IsDragging || _menuDragHelper.Dragged?.Action == null)
             {
-                _dragDropHelper.EndDrag();
+                _menuDragHelper.EndDrag();
                 return;
             }
 
-            button.UpdateButtonData(_entities, _dragDropHelper.Dragged.Action);
+            button.UpdateData(_entities, _menuDragHelper.Dragged.Action);
         }
 
-        _dragDropHelper.EndDrag();
+        _menuDragHelper.EndDrag();
     }
 
     private void OnWindowActionFocusExisted(ActionButton button)
     {
-        _dragDropHelper.EndDrag();
+        _menuDragHelper.EndDrag();
     }
 
     private void OnActionPressed(GUIBoundKeyEventArgs args, ActionButton button)
     {
-        if (args.Function != EngineKeyFunctions.UIClick)
-            return;
-
-        _actionsSystem.TriggerAction(button.Action);
+        if (args.Function == EngineKeyFunctions.UIClick)
+        {
+            _actionsSystem.TriggerAction(button.Action);
+            args.Handle();
+        }
+        else if (args.Function == EngineKeyFunctions.UIRightClick)
+        {
+            button.ClearData();
+            args.Handle();
+        }
     }
 
-    private bool OnBeginDrag()
+    private bool OnMenuBeginDrag()
     {
-        _dragShadow.Texture = _dragDropHelper.Dragged?.IconTexture;
+        _dragShadow.Texture = _menuDragHelper.Dragged?.IconTexture;
         LayoutContainer.SetPosition(_dragShadow, UIManager.MousePositionScaled.Position - (32, 32));
         return true;
     }
 
-    private bool OnContinueDrag(float frameTime)
+    private bool OnMenuContinueDrag(float frameTime)
     {
         LayoutContainer.SetPosition(_dragShadow, UIManager.MousePositionScaled.Position - (32, 32));
         _dragShadow.Visible = true;
         return true;
     }
 
-    private void OnEndDrag()
+    private void OnMenuEndDrag()
     {
         _dragShadow.Visible = false;
     }
@@ -319,7 +328,7 @@ public sealed class ActionUIController : UIController, IOnStateChanged<GameplayS
 
     public override void FrameUpdate(FrameEventArgs args)
     {
-        _dragDropHelper.Update(args.DeltaSeconds);
+        _menuDragHelper.Update(args.DeltaSeconds);
     }
 
     private void ActionSystemStart()

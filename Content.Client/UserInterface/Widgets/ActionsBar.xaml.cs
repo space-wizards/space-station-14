@@ -4,7 +4,6 @@ using Robust.Client.UserInterface.XAML;
 
 namespace Content.Client.UserInterface.Widgets;
 
-
 [GenerateTypedNameReferences]
 public sealed partial class ActionsBar : UIWidget
 {
