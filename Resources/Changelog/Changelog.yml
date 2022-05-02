@@ -1,10 +1,4 @@
 Entries:
-- author: moony
-  changes:
-  - {message: 'The game rules have been updated. In short, no more revolutions unless
-      you''re an antagonist with administrator permission.', type: Tweak}
-  id: 938
-  time: '2022-01-26T22:50:44.0000000+00:00'
 - author: Peptide90
   changes:
   - {message: 'Lights now consume slighly more power than before. Can you cope?',
@@ -3053,3 +3047,9 @@ Entries:
       some hidden areas of asteroids in future and containing ancient dangers!, type: Add}
   id: 1437
   time: '2022-05-02T22:38:07.0000000+00:00'
+- author: TimrodDX
+  changes:
+  - {message: 'Delta Station now has an ore processor, and may or may not have some
+      decals.', type: Add}
+  id: 1438
+  time: '2022-05-02T22:43:33.0000000+00:00'
