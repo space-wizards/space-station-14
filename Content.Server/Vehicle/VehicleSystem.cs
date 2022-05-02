@@ -70,29 +70,29 @@ namespace Content.Server.Vehicle
         {
             if (args.Buckling)
             {
-                /// Add a virtual item to rider's hand, unbuckle if we can't.
+                // Add a virtual item to rider's hand, unbuckle if we can't.
                 if (!_virtualItemSystem.TrySpawnVirtualItemInHand(uid, args.BuckledEntity))
                 {
                     _riderSystem.UnbuckleFromVehicle(args.BuckledEntity);
                     return;
                 }
-                /// Set up the rider and vehicle with each other
+                // Set up the rider and vehicle with each other
                 EnsureComp<SharedPlayerInputMoverComponent>(uid);
                 var rider = EnsureComp<RiderComponent>(args.BuckledEntity);
                 component.Rider = args.BuckledEntity;
                 rider.Vehicle = component;
                 component.HasRider = true;
 
-                /// Handle pulling
+                // Handle pulling
                 RemComp<SharedPullableComponent>(args.BuckledEntity);
                 RemComp<SharedPullableComponent>(uid);
 
-                /// Let this open doors if it has the key in it
+                // Let this open doors if it has the key in it
                 if (component.HasKey)
                 {
                     _tagSystem.AddTag(uid, "DoorBumpOpener");
                 }
-                /// Update appearance stuff, add actions
+                // Update appearance stuff, add actions
                 UpdateBuckleOffset(Transform(uid), component);
                 UpdateDrawDepth(uid, GetDrawDepth(Transform(uid), component.NorthOnly));
                 if (TryComp<ActionsComponent>(args.BuckledEntity, out var actions) && TryComp<UnpoweredFlashlightComponent>(uid, out var flashlight))
@@ -113,9 +113,9 @@ namespace Content.Server.Vehicle
             _tagSystem.RemoveTag(uid, "DoorBumpOpener");
             EnsureComp<SharedPullableComponent>(args.BuckledEntity);
             EnsureComp<SharedPullableComponent>(uid);
-            /// Entity is no longer riding
+            // Entity is no longer riding
             RemComp<RiderComponent>(args.BuckledEntity);
-            /// Reset component
+            // Reset component
             component.HasRider = false;
             component.Rider = null;
             _itemSlotsSystem.SetLock(uid, component.Name, false);
@@ -128,13 +128,13 @@ namespace Content.Server.Vehicle
         /// </summary>
         private void OnMove(EntityUid uid, VehicleComponent component, ref MoveEvent args)
         {
-            /// This first check is just for safety
+            // This first check is just for safety
             if (!HasComp<SharedPlayerInputMoverComponent>(uid))
             {
                 UpdateAutoAnimate(uid, false);
                 return;
             }
-            /// The random check means the vehicle will stop after a few tiles without a key or without a rider
+            // The random check means the vehicle will stop after a few tiles without a key or without a rider
             if ((!component.HasRider || !component.HasKey) && _random.Prob(0.015f))
             {
                 RemComp<SharedPlayerInputMoverComponent>(uid);
@@ -155,16 +155,16 @@ namespace Content.Server.Vehicle
 
             if (_tagSystem.HasTag(args.Entity, "VehicleKey"))
             {
-                /// Return if the slot is not the key slot
-                /// That slot ID should be inherited from basevehicle in the .yml
+                // Return if the slot is not the key slot
+                // That slot ID should be inherited from basevehicle in the .yml
                 if (args.Container.ID != "key_slot")
                 {
                     return;
                 }
 
-                /// This lets the vehicle move
+                // This lets the vehicle move
                 EnsureComp<SharedPlayerInputMoverComponent>(uid);
-                /// This lets the vehicle open doors
+                // This lets the vehicle open doors
                 if (component.HasRider)
                     _tagSystem.AddTag(uid, "DoorBumpOpener");
 
@@ -238,6 +238,7 @@ namespace Content.Server.Vehicle
             }
 
         }
+
         /// <summary>
         /// Set the draw depth for the sprite.
         /// </summary>
@@ -251,7 +252,7 @@ namespace Content.Server.Vehicle
 
         /// <summary>
         /// Set whether the vehicle's base layer is animating or not.
-        /// </summmary>
+        /// </summary>
         private void UpdateAutoAnimate(EntityUid uid, bool autoAnimate)
         {
             if (!TryComp<AppearanceComponent>(uid, out var appearance))

@@ -64,6 +64,7 @@
   unlockedRecipes:
     - Shovel
     - ButchCleaver
+    - MicrowaveMachineCircuitboard
 
 - type: technology
   name: "advanced surgery"
@@ -270,6 +271,7 @@
     - FireExtinguisher
     - AutolatheMachineCircuitboard
     - ProtolatheMachineCircuitboard
+    - OreProcessorMachineCircuitboard
     - CircuitImprinterMachineCircuitboard
     - UniformPrinterMachineCircuitboard
     - AirAlarmElectronics
