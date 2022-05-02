@@ -1,12 +1,4 @@
 Entries:
-- author: Rane
-  changes:
-  - {message: Chief Engineers now have access to the advanced magboots in their locker.,
-    type: Add}
-  - {message: The 'Steal Magboots' objective is now 'Steal Advanced Magboots' and
-      considered more difficult., type: Tweak}
-  id: 941
-  time: '2022-01-28T18:28:05.0000000+00:00'
 - author: aaronmell
   changes:
   - {message: Admin and AdminRank windows show the save button correctly now, type: Fix}
@@ -3045,3 +3037,9 @@ Entries:
       handcuffs., type: Fix}
   id: 1440
   time: '2022-05-02T22:50:11.0000000+00:00'
+- author: Peptide90
+  changes:
+  - {message: Added the industrial welder and advanced industrial welders to the game.
+      Larger capacity and the advanced is faster at welding., type: Add}
+  id: 1441
+  time: '2022-05-02T22:51:24.0000000+00:00'
