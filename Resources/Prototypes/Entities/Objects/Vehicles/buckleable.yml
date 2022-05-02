@@ -226,6 +226,8 @@
     tags:
     - Cargo
     - Maintenance
+  - type: RandomMetadata
+    descriptionSet: ATVDescriptions
   - type: MovementSpeedModifier
     baseWalkSpeed : 8
     baseSprintSpeed : 8
