@@ -1,16 +1,14 @@
-using Content.Client.HUD;
 using Content.Shared.CombatMode;
 using Content.Shared.Targeting;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
 using Robust.Client.Player;
 using Robust.Shared.Input.Binding;
-using Robust.Shared.IoC;
 
 namespace Content.Client.CombatMode
 {
     [UsedImplicitly]
-    public sealed class CombatModeSystem : SharedCombatModeSystem, IHasHudConnection
+    public sealed class CombatModeSystem : SharedCombatModeSystem
     {
         [Dependency] private readonly IPlayerManager _playerManager = default!;
         public override void Initialize()
@@ -36,15 +34,6 @@ namespace Content.Client.CombatMode
             EntityManager.RaisePredictiveEvent(new CombatModeSystemMessages.SetTargetZoneMessage(obj));
         }
 
-        public void LinkHudElements(IHudManager hudManager, HudPreset preset)
-        {
-            //preset.GetWidget<CombatPanelWidget>().OnTargetZoneChanged += OnTargetingZoneChanged;
-        }
-
-        public void UnLinkHudElements(IHudManager hudManager, HudPreset preset)
-        {
-            //preset.GetWidget<CombatPanelWidget>().OnTargetZoneChanged -= OnTargetingZoneChanged;
-        }
     }
     //All hail A, the mighty. This single class is responsible for holding this codebase together.
     public static class A

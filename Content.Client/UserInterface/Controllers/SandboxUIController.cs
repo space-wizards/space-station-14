@@ -1,7 +1,5 @@
 ﻿using Content.Client.Administration.Managers;
 using Content.Client.Gameplay;
-using Content.Client.HUD;
-using Content.Client.HUD.Widgets;
 using Content.Client.Markers;
 using Content.Client.Sandbox;
 using Content.Client.SubFloor;
@@ -15,6 +13,7 @@ using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controllers;
 using Robust.Shared.Input.Binding;
 using static Robust.Client.UserInterface.Controls.BaseButton;
+using MenuBar = Content.Client.UserInterface.Widgets.MenuBar;
 
 namespace Content.Client.UserInterface.Controllers;
 
@@ -23,7 +22,6 @@ public sealed class SandboxUIController : UIController, IOnStateChanged<Gameplay
 {
     [Dependency] private readonly IClientAdminManager _admin = default!;
     [Dependency] private readonly IEyeManager _eye = default!;
-    [Dependency] private readonly IHudManager _hud = default!;
     [Dependency] private readonly IInputManager _input = default!;
     [Dependency] private readonly ILightManager _light = default!;
     [Dependency] private readonly IUIControllerManager _controllers = default!;
@@ -40,7 +38,7 @@ public sealed class SandboxUIController : UIController, IOnStateChanged<Gameplay
     private TileSpawningUIController TileSpawningController => _controllers.GetController<TileSpawningUIController>();
     private DecalPlacerUIController DecalPlacerController => _controllers.GetController<DecalPlacerUIController>();
 
-    private MenuButton SandboxButton => _hud.GetUIWidget<MenuBar>().SandboxButton;
+    private MenuButton SandboxButton => UIManager.GetActiveUIWidget<MenuBar>().SandboxButton;
 
     public void OnStateChanged(GameplayState state)
     {

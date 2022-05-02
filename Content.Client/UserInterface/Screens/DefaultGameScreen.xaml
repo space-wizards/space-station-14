@@ -1,0 +1,20 @@
+﻿<screens:DefaultGameScreen
+    xmlns="https://spacestation14.io"
+    xmlns:screens="clr-namespace:Content.Client.UserInterface.Screens"
+    xmlns:ui="clr-namespace:Content.Client.UserInterface.Controls"
+    xmlns:widgets="clr-namespace:Content.Client.UserInterface.Widgets"
+    Name="DefaultHud"
+    VerticalExpand="False"
+    VerticalAlignment="Bottom"
+    HorizontalAlignment="Center"
+>
+<widgets:MenuBar
+    Name="TopBar"
+    />
+<widgets:HandsGui
+    Name="Hands"
+    />
+<widgets:ActionsBar
+    Name="Actions"
+    />
+</screens:DefaultGameScreen>

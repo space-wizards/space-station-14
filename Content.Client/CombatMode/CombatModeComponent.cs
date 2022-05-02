@@ -1,10 +1,6 @@
-using Content.Client.HUD;
 using Content.Shared.CombatMode;
 using Content.Shared.Targeting;
-using Robust.Client.GameObjects;
 using Robust.Client.Player;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
 
 namespace Content.Client.CombatMode
 {

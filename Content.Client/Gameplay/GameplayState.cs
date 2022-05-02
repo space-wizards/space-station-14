@@ -4,15 +4,14 @@ using Content.Client.Chat.Managers;
 using Content.Client.Chat.UI;
 using Content.Client.Construction.UI;
 using Content.Client.Hands;
-using Content.Client.HUD;
 using Content.Client.UserInterface.Controls;
+using Content.Client.UserInterface.Screens;
 using Content.Client.Viewport;
 using Content.Client.Voting;
 using Content.Shared.CCVar;
 using Content.Shared.Chat;
 using Robust.Client.Graphics;
 using Robust.Client.Input;
-using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.CustomControls;
 using Robust.Shared.Configuration;
@@ -22,19 +21,18 @@ namespace Content.Client.Gameplay
 {
     public sealed class GameplayState : GamePlayStateBase, IMainViewportState
     {
-        public static readonly Vector2i ViewportSize = (EyeManager.PixelsPerMeter * 21, EyeManager.PixelsPerMeter * 15);
-
-        [Dependency] private readonly IUserInterfaceManager _userInterfaceManager = default!;
         [Dependency] private readonly IInputManager _inputManager = default!;
         [Dependency] private readonly IChatManager _chatManager = default!;
         [Dependency] private readonly IVoteManager _voteManager = default!;
-        [Dependency] private readonly IHudManager _hudManager = default!;
         [Dependency] private readonly IEyeManager _eyeManager = default!;
         [Dependency] private readonly IOverlayManager _overlayManager = default!;
         [Dependency] private readonly IGameTiming _gameTiming = default!;
         [Dependency] private readonly IConfigurationManager _configurationManager = default!;
 
         [ViewVariables] private ChatBox? _gameChat;
+
+        protected override Type? LinkedScreenType => typeof(DefaultGameScreen);
+        public static readonly Vector2i ViewportSize = (EyeManager.PixelsPerMeter * 21, EyeManager.PixelsPerMeter * 15);
         private ConstructionMenuPresenter? _constructionMenu;
         private AlertsFramePresenter? _alertsFramePresenter;
         private FpsCounter _fpsCounter = default!;
@@ -46,7 +44,7 @@ namespace Content.Client.Gameplay
             IoCManager.InjectDependencies(this);
         }
 
-        public override void Startup()
+        protected override void Startup()
         {
             base.Startup();
 
@@ -68,7 +66,7 @@ namespace Content.Client.Gameplay
                 }
             };
 
-            _userInterfaceManager.StateRoot.AddChild(Viewport);
+            UserInterfaceManager.StateRoot.AddChild(Viewport);
             LayoutContainer.SetAnchorPreset(Viewport, LayoutContainer.LayoutPreset.Wide);
             Viewport.SetPositionFirst();
             _chatManager.SetChatBox(_gameChat);
@@ -82,15 +80,13 @@ namespace Content.Client.Gameplay
             _overlayManager.AddOverlay(new ShowHandItemOverlay());
 
             _fpsCounter = new FpsCounter(_gameTiming);
-            _userInterfaceManager.StateRoot.AddChild(_fpsCounter);
+            UserInterfaceManager.StateRoot.AddChild(_fpsCounter);
             _fpsCounter.Visible = _configurationManager.GetCVar(CCVars.HudFpsCounterVisible);
             _configurationManager.OnValueChanged(CCVars.HudFpsCounterVisible, (show) => { _fpsCounter.Visible = show; });
-            _hudManager.SpawnActivePreset();
         }
 
-        public override void Shutdown()
+        protected override void Shutdown()
         {
-            _hudManager.DespawnActivePreset();
             _overlayManager.RemoveOverlay<ShowHandItemOverlay>();
             DisposePresenters();
 
@@ -99,7 +95,7 @@ namespace Content.Client.Gameplay
             _gameChat?.Dispose();
             Viewport.Dispose();
             // Clear viewport to some fallback, whatever.
-            _eyeManager.MainViewport = _userInterfaceManager.MainViewport;
+            _eyeManager.MainViewport = UserInterfaceManager.MainViewport;
             _fpsCounter.Dispose();
         }
 

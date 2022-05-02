@@ -2,7 +2,6 @@
 using Content.Client.Actions;
 using Content.Client.DragDrop;
 using Content.Client.Gameplay;
-using Content.Client.HUD;
 using Content.Client.UserInterface.Controls;
 using Content.Client.UserInterface.UIWindows;
 using Content.Shared.Actions;
@@ -17,15 +16,13 @@ using static Content.Client.UserInterface.UIWindows.ActionsWindow;
 using static Robust.Client.UserInterface.Controls.BaseButton;
 using static Robust.Client.UserInterface.Controls.LineEdit;
 using static Robust.Client.UserInterface.Controls.MultiselectOptionButton<Content.Client.UserInterface.UIWindows.ActionsWindow.Filters>;
-using MenuBar = Content.Client.HUD.Widgets.MenuBar;
+using MenuBar = Content.Client.UserInterface.Widgets.MenuBar;
 
 namespace Content.Client.UserInterface.Controllers;
 
 public sealed class ActionUIController : UIController, IOnStateChanged<GameplayState>
 {
     [Dependency] private readonly IEntityManager _entities = default!;
-    [Dependency] private readonly IHudManager _hud = default!;
-    [Dependency] private readonly IUserInterfaceManager _ui = default!;
 
     [UISystemDependency] private readonly ActionsSystem _actionsSystem = default!;
 
@@ -36,7 +33,7 @@ public sealed class ActionUIController : UIController, IOnStateChanged<GameplayS
     private readonly TextureRect _dragShadow;
 
     private ActionsWindow? _window;
-    private MenuButton ActionButton => _hud.GetUIWidget<MenuBar>().ActionButton;
+    private MenuButton ActionButton => UIManager.GetActiveUIWidget<MenuBar>().ActionButton;
     public ActionUIController()
     {
         _dragDropHelper = new DragDropHelper<ActionButton>(OnBeginDrag, OnContinueDrag, OnEndDrag);
@@ -51,7 +48,7 @@ public sealed class ActionUIController : UIController, IOnStateChanged<GameplayS
 
     public void OnStateChanged(GameplayState state)
     {
-        _ui.PopupRoot.AddChild(_dragShadow);
+        UIManager.PopupRoot.AddChild(_dragShadow);
         ActionButton.OnPressed += ActionButtonPressed;
 
         CommandBinds.Builder
@@ -67,7 +64,7 @@ public sealed class ActionUIController : UIController, IOnStateChanged<GameplayS
 
     private void CreateWindow()
     {
-        _window = _ui.CreateNamedWindow<ActionsWindow>("Actions");
+        _window = UIManager.CreateNamedWindow<ActionsWindow>("Actions");
 
         if (_window == null)
             return;
@@ -236,7 +233,7 @@ public sealed class ActionUIController : UIController, IOnStateChanged<GameplayS
         if (args.Function != EngineKeyFunctions.UIClick && args.Function != EngineKeyFunctions.Use)
             return;
 
-        if (_ui.CurrentlyHovered is ActionButton button)
+        if (UIManager.CurrentlyHovered is ActionButton button)
         {
             if (!_dragDropHelper.IsDragging || _dragDropHelper.Dragged?.Action == null)
             {
@@ -266,13 +263,13 @@ public sealed class ActionUIController : UIController, IOnStateChanged<GameplayS
     private bool OnBeginDrag()
     {
         _dragShadow.Texture = _dragDropHelper.Dragged?.IconTexture;
-        LayoutContainer.SetPosition(_dragShadow, _ui.MousePositionScaled.Position - (32, 32));
+        LayoutContainer.SetPosition(_dragShadow, UIManager.MousePositionScaled.Position - (32, 32));
         return true;
     }
 
     private bool OnContinueDrag(float frameTime)
     {
-        LayoutContainer.SetPosition(_dragShadow, _ui.MousePositionScaled.Position - (32, 32));
+        LayoutContainer.SetPosition(_dragShadow, UIManager.MousePositionScaled.Position - (32, 32));
         _dragShadow.Visible = true;
         return true;
     }

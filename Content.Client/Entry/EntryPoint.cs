@@ -3,7 +3,6 @@ using Content.Client.Changelog;
 using Content.Client.Chat.Managers;
 using Content.Client.Eui;
 using Content.Client.Flash;
-using Content.Client.HUD;
 using Content.Client.Info;
 using Content.Client.Input;
 using Content.Client.IoC;
@@ -37,7 +36,6 @@ using Robust.Client.Input;
 using Robust.Client.Player;
 using Robust.Client.State;
 using Robust.Client.UserInterface;
-using Robust.Client.UserInterface.Themes;
 using Robust.Shared.ContentPack;
 using Robust.Shared.Map;
 using Robust.Shared.Prototypes;
@@ -47,7 +45,6 @@ namespace Content.Client.Entry
 {
     public sealed class EntryPoint : GameClient
     {
-        [Dependency] private readonly IHudManager _hudManager = default!;
         [Dependency] private readonly IPlayerManager _playerManager = default!;
         [Dependency] private readonly IBaseClient _baseClient = default!;
         [Dependency] private readonly IGameController _gameController = default!;
@@ -136,9 +133,6 @@ namespace Content.Client.Entry
             _changelogManager.Initialize();
             _rulesManager.Initialize();
             _viewportManager.Initialize();
-            _hudManager.Initialize();//TODO: this is going to break shortly
-            _baseClient.PlayerJoinedServer += (_, _) => { _hudManager.Startup();}; //TODO: Move this
-            _baseClient.PlayerLeaveServer += (_, _) => { _hudManager.Shutdown();};
             _baseClient.PlayerJoinedServer += (_, _) => { _mapManager.CreateNewMapEntity(MapId.Nullspace);};
         }
 

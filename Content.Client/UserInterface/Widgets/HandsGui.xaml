@@ -1,7 +1,8 @@
-﻿<widget:HandsGui
+﻿<widgets:HandsGui
     xmlns="https://spacestation14.io"
-    xmlns:widget="clr-namespace:Content.Client.HUD.Widgets"
+    xmlns:widget="clr-namespace:Content.Client.UserInterface.Widgets"
     xmlns:ui="clr-namespace:Content.Client.UserInterface.Controls"
+    xmlns:widgets="clr-namespace:Content.Client.UserInterface.Widgets"
     Name="HandsInterface"
     VerticalExpand="False"
     VerticalAlignment="Bottom"
@@ -18,4 +19,4 @@
            />
        <ui:ItemSlotButtonContainer SlotGroup="MainHotbar"/>
    </BoxContainer>
-</widget:HandsGui>
+</widgets:HandsGui>

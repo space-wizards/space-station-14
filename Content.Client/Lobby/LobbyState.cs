@@ -49,7 +49,7 @@ namespace Content.Client.Lobby
 
         private ClientGameTicker _gameTicker = default!;
 
-        public override void Startup()
+        protected override void Startup()
         {
             _gameTicker = EntitySystem.Get<ClientGameTicker>();
             _characterSetup = new CharacterSetupGui(_entityManager, _resourceCache, _preferencesManager,
@@ -114,7 +114,7 @@ namespace Content.Client.Lobby
             _gameTicker.LobbyLateJoinStatusUpdated += LobbyLateJoinStatusUpdated;
         }
 
-        public override void Shutdown()
+        protected override void Shutdown()
         {
             _playerManager.PlayerListUpdated -= PlayerManagerOnPlayerListUpdated;
             _gameTicker.InfoBlobUpdated -= UpdateLobbyUi;

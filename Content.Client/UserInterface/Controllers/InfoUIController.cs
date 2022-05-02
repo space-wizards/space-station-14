@@ -1,22 +1,18 @@
 ﻿using Content.Client.Gameplay;
-using Content.Client.HUD;
 using Content.Client.Info;
 using Content.Client.UserInterface.Controls;
 using Content.Shared.Input;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Shared.Input.Binding;
-using MenuBar = Content.Client.HUD.Widgets.MenuBar;
+using MenuBar = Content.Client.UserInterface.Widgets.MenuBar;
 
 namespace Content.Client.UserInterface.Controllers;
 
 public sealed class InfoUIController : UIController, IOnStateChanged<GameplayState>
 {
-    [Dependency] private readonly IHudManager _hud = default!;
-    [Dependency] private readonly IUserInterfaceManager _ui = default!;
-
     private RulesAndInfoWindow? _window;
-    private MenuButton InfoButton => _hud.GetUIWidget<MenuBar>().InfoButton;
+    private MenuButton InfoButton => UIManager.GetActiveUIWidget<MenuBar>().InfoButton;
 
     public void OnStateChanged(GameplayState state)
     {
@@ -35,7 +31,7 @@ public sealed class InfoUIController : UIController, IOnStateChanged<GameplaySta
 
     private void CreateWindow()
     {
-        _window = _ui.CreateNamedWindow<RulesAndInfoWindow>("RulesAndInfo");
+        _window = UIManager.CreateNamedWindow<RulesAndInfoWindow>("RulesAndInfo");
 
         if (_window == null)
             return;
