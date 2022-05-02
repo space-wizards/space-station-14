@@ -19,15 +19,9 @@ using Content.Shared.Storage;
 using Content.Shared.Tools;
 using Robust.Shared.Audio;
 using Robust.Shared.Containers;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Localization;
-using Robust.Shared.Maths;
 using Robust.Shared.Physics;
 using Robust.Shared.Player;
-using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
-using Robust.Shared.ViewVariables;
 
 namespace Content.Server.Storage.Components
 {
@@ -44,10 +38,18 @@ namespace Content.Server.Storage.Components
         public static readonly TimeSpan InternalOpenAttemptDelay = TimeSpan.FromSeconds(0.5);
         public TimeSpan LastInternalOpenAttempt;
 
-        private const int OpenMask = (int) (
+        /// <summary>
+        ///     Collision masks that get removed when the storage gets opened.
+        /// </summary>
+        private const int MasksToRemove = (int) (
             CollisionGroup.MobImpassable |
             CollisionGroup.VaultImpassable |
             CollisionGroup.SmallImpassable);
+
+        /// <summary>
+        ///     Collision masks that were removed from ANY layer when the storage was opened;
+        /// </summary>
+        [DataField("removedMasks")] public int RemovedMasks;
 
         [ViewVariables]
         [DataField("Capacity")]
@@ -312,21 +314,24 @@ namespace Content.Server.Storage.Components
 
         private void ModifyComponents()
         {
-            if (!_isCollidableWhenOpen && _entMan.TryGetComponent<FixturesComponent?>(Owner, out var manager))
+            if (!_isCollidableWhenOpen && _entMan.TryGetComponent<FixturesComponent?>(Owner, out var manager)
+                && manager.Fixtures.Count > 0)
             {
+                // currently only works for single-fixture entities. If they have more than one fixture, then
+                // RemovedMasks needs to be tracked separately for each fixture, using a fixture Id Dictionary. Also the
+                // fixture IDs probably cant be automatically generated without causing issues, unless there is some
+                // guarantee that they will get deserialized with the same auto-generated ID when saving+loading the map.
+                var fixture = manager.Fixtures.Values.First();
+
                 if (Open)
                 {
-                    foreach (var (_, fixture) in manager.Fixtures)
-                    {
-                        fixture.CollisionLayer &= ~OpenMask;
-                    }
+                    RemovedMasks = fixture.CollisionLayer & MasksToRemove;
+                    fixture.CollisionLayer &= ~MasksToRemove;
                 }
                 else
                 {
-                    foreach (var (_, fixture) in manager.Fixtures)
-                    {
-                        fixture.CollisionLayer |= OpenMask;
-                    }
+                    fixture.CollisionLayer |= RemovedMasks;
+                    RemovedMasks = 0;
                 }
             }
 
