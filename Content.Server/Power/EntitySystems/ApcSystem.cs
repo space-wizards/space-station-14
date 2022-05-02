@@ -4,7 +4,6 @@ using Content.Shared.Access.Components;
 using Content.Shared.Access.Systems;
 using Content.Shared.APC;
 using Content.Shared.Emag.Systems;
-using Content.Shared.EmagFixer.Systems;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
@@ -31,7 +30,6 @@ namespace Content.Server.Power.EntitySystems
             SubscribeLocalEvent<ApcComponent, ChargeChangedEvent>(OnBatteryChargeChanged);
             SubscribeLocalEvent<ApcComponent, ApcToggleMainBreakerMessage>(OnToggleMainBreaker);
             SubscribeLocalEvent<ApcComponent, GotEmaggedEvent>(OnEmagged);
-            SubscribeLocalEvent<ApcComponent, GotEmagFixedEvent>(OnEmagFixed);
         }
 
         // Change the APC's state only when the battery state changes, or when it's first created.
@@ -92,15 +90,6 @@ namespace Content.Server.Power.EntitySystems
                     comp.Emagged = true;
                     args.Handled = true;
                 }
-            }
-        }
-
-        private void OnEmagFixed(EntityUid uid, ApcComponent comp, GotEmagFixedEvent args)
-        {
-            if(comp.Emagged)
-            {
-                comp.Emagged = false;
-                args.Handled = true;
             }
         }
 

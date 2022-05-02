@@ -2,7 +2,6 @@ using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Content.Shared.Inventory;
 using Content.Shared.Emag.Systems;
-using Content.Shared.EmagFixer.Systems;
 using Content.Shared.PDA;
 using Content.Shared.Access.Components;
 using Robust.Shared.Prototypes;
@@ -22,7 +21,6 @@ namespace Content.Shared.Access.Systems
             base.Initialize();
             SubscribeLocalEvent<AccessReaderComponent, ComponentInit>(OnInit);
             SubscribeLocalEvent<AccessReaderComponent, GotEmaggedEvent>(OnEmagged);
-            SubscribeLocalEvent<AccessReaderComponent, GotEmagFixedEvent>(OnEmagFixed);
             SubscribeLocalEvent<AccessReaderComponent, LinkAttemptEvent>(OnLinkAttempt);
         }
 
@@ -63,15 +61,6 @@ namespace Content.Shared.Access.Systems
                     reader.Enabled = false;
                     args.Handled = true;
                 }
-            }
-        }
-
-        private void OnEmagFixed(EntityUid uid, AccessReaderComponent reader, GotEmagFixedEvent args)
-        {
-            if (reader.Enabled == false)
-            {
-                reader.Enabled = true;
-                args.Handled = true;
             }
         }
 

@@ -11,7 +11,6 @@ using Content.Shared.Doors;
 using Content.Shared.Doors.Components;
 using Content.Shared.Doors.Systems;
 using Content.Shared.Emag.Systems;
-using Content.Shared.EmagFixer.Systems;
 using Content.Shared.Interaction;
 using Content.Shared.Tag;
 using Robust.Shared.Audio;
@@ -43,7 +42,6 @@ public sealed class DoorSystem : SharedDoorSystem
         SubscribeLocalEvent<DoorComponent, WeldFinishedEvent>(OnWeldFinished);
         SubscribeLocalEvent<DoorComponent, WeldCancelledEvent>(OnWeldCancelled);
         SubscribeLocalEvent<DoorComponent, GotEmaggedEvent>(OnEmagged);
-        SubscribeLocalEvent<DoorComponent, GotEmagFixedEvent>(OnEmagFixed);
     }
 
     protected override void OnActivate(EntityUid uid, DoorComponent door, ActivateInWorldEvent args)
@@ -331,30 +329,6 @@ public sealed class DoorSystem : SharedDoorSystem
                     PlaySound(uid, door.SparkSound.GetSound(), AudioParams.Default.WithVolume(8), args.UserUid, false);
                     args.Handled = true;
                 }
-            }
-        }
-    }
-
-    private void OnEmagFixed(EntityUid uid, DoorComponent door, GotEmagFixedEvent args)
-    {
-        if (TryComp<AirlockComponent>(uid, out var airlockComponent))
-        {
-            if (!airlockComponent.IsPowered())
-                return;
-
-            if (airlockComponent.BoltsDown && (door.State == DoorState.Open || door.State == DoorState.Opening))
-            {
-                // The door is bolted and open. Emags do this and it can be disruptive, so undo it.
-                airlockComponent.BoltsDown = false;
-                SetState(uid, DoorState.Closing, door);
-                args.Handled = true;
-            }
-            else if (door.State == DoorState.Emagging)
-            {
-                // The door was JUST emagged and is playing the zap animation.
-                // If it's allowed to finish then the door will be opened and bolted. Simply interrupt this.
-                SetState(uid, DoorState.Closing, door);
-                args.Handled = true;
             }
         }
     }
