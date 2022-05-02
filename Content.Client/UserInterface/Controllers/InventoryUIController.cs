@@ -17,8 +17,6 @@ namespace Content.Client.UserInterface.Controllers;
 public sealed partial class InventoryUIController : UIController, IOnStateChanged<GameplayState>
 {
     [UISystemDependency] private readonly ClientInventorySystem _inventorySystem = default!;
-    [Dependency] private readonly IUserInterfaceManager _ui = default!;
-
     private ClientInventoryComponent? _playerInventory;
     private readonly Dictionary<string, ItemSlotButtonContainer> _slotGroups = new();
     private InventoryWindow? _inventoryWindow;
@@ -44,7 +42,7 @@ public sealed partial class InventoryUIController : UIController, IOnStateChange
     {
         if (clientInv == null) return;
 
-        _inventoryWindow = _ui.CreateNamedWindow<InventoryWindow>("Inventory");
+        _inventoryWindow = UIManager.CreateNamedWindow<InventoryWindow>("Inventory");
         if (_inventoryWindow == null)
             return;
 

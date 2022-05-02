@@ -11,7 +11,7 @@ public sealed partial class HandsGui : UIWidget
     public HandsGui()
     {
         RobustXamlLoader.Load(this);
-        var inventoryUiController = UIControllerManager.GetController<InventoryUIController>();
+        var inventoryUiController = UserInterfaceManager.GetUIController<InventoryUIController>();
         inventoryUiController.RegisterHandContainer(HandContainer);
     }
 }

@@ -69,7 +69,6 @@ namespace Content.Client.Entry
         [Dependency] private readonly EuiManager _euiManager = default!;
         [Dependency] private readonly IVoteManager _voteManager = default!;
         [Dependency] private readonly IGamePrototypeLoadManager _gamePrototypeLoadManager = default!;
-        [Dependency] private readonly IUIControllerManager _uiControllerManager = default!;
         [Dependency] private readonly NetworkResourceManager _networkResources = default!;
 
         public override void Init()

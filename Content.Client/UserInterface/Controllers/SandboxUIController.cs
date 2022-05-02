@@ -24,7 +24,6 @@ public sealed class SandboxUIController : UIController, IOnStateChanged<Gameplay
     [Dependency] private readonly IEyeManager _eye = default!;
     [Dependency] private readonly IInputManager _input = default!;
     [Dependency] private readonly ILightManager _light = default!;
-    [Dependency] private readonly IUIControllerManager _controllers = default!;
 
     [UISystemDependency] private readonly DebugPhysicsSystem _debugPhysics = default!;
     [UISystemDependency] private readonly MarkerSystem _marker = default!;
@@ -34,9 +33,9 @@ public sealed class SandboxUIController : UIController, IOnStateChanged<Gameplay
     private SandboxWindow? _window;
 
     // TODO hud refactor BEFORE MERGE cache
-    private EntitySpawningUIController EntitySpawningController => _controllers.GetController<EntitySpawningUIController>();
-    private TileSpawningUIController TileSpawningController => _controllers.GetController<TileSpawningUIController>();
-    private DecalPlacerUIController DecalPlacerController => _controllers.GetController<DecalPlacerUIController>();
+    private EntitySpawningUIController EntitySpawningController => UIManager.GetUIController<EntitySpawningUIController>();
+    private TileSpawningUIController TileSpawningController => UIManager.GetUIController<TileSpawningUIController>();
+    private DecalPlacerUIController DecalPlacerController => UIManager.GetUIController<DecalPlacerUIController>();
 
     private MenuButton SandboxButton => UIManager.GetActiveUIWidget<MenuBar>().SandboxButton;
 
