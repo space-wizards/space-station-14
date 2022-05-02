@@ -29,6 +29,9 @@ public class WiresComponent : Component
     public List<Wire> WiresList { get; set; } = new();
 
     [ViewVariables]
+    public List<int> WiresQueue { get; } = new();
+
+    [ViewVariables]
     [DataField("alwaysRandomize")]
     public bool AlwaysRandomize { get; }
 

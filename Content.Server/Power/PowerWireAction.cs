@@ -16,10 +16,6 @@ namespace Content.Server.Power;
 
 // Generic power wire action. Use on anything
 // that requires power.
-//
-// note that a lot of this relies on a cheap trick;
-// this should be refactored either before this is
-// merged
 [DataDefinition]
 public sealed class PowerWireAction : BaseWireAction
 {
@@ -144,7 +140,7 @@ public sealed class PowerWireAction : BaseWireAction
             // if the power is disabled however, just don't bother
             if (timed && IsPowered(wire.Owner))
             {
-                WiresSystem.StartWireAction(wire.Owner, _pulseTimeout, PowerWireActionKey.ElectrifiedCancel, new WireDoAfterEvent(AwaitElectrifiedCancel, wire));
+                WiresSystem.StartWireAction(wire.Owner, _pulseTimeout, PowerWireActionKey.ElectrifiedCancel, new TimedWireEvent(AwaitElectrifiedCancel, wire));
             }
             else
             {
@@ -227,7 +223,7 @@ public sealed class PowerWireAction : BaseWireAction
 
         WiresSystem.SetData(wire.Owner, PowerWireActionKey.Pulsed, true);
 
-        WiresSystem.StartWireAction(wire.Owner, _pulseTimeout, PowerWireActionKey.PulseCancel, new WireDoAfterEvent(AwaitPulseCancel, wire));
+        WiresSystem.StartWireAction(wire.Owner, _pulseTimeout, PowerWireActionKey.PulseCancel, new TimedWireEvent(AwaitPulseCancel, wire));
 
         SetPower(wire.Owner, true);
 

@@ -40,11 +40,13 @@ public sealed class WiresSystem : EntitySystem
     [Dependency] private readonly SharedPopupSystem _popupSystem = default!;
     [Dependency] private readonly SharedInteractionSystem _interactionSystem = default!;
     [Dependency] private readonly HandsSystem _handsSystem = default!;
+    [Dependency] private readonly DoAfterSystem _doAfter = default!;
 
     // This is where all the wire layouts are stored.
     [ViewVariables] private readonly Dictionary<string, WireLayout> _layouts = new();
 
     private const float ScrewTime = 2.5f;
+    private const float ToolTime = 1f;
 
     private static DummyWireAction _dummyWire = new DummyWireAction();
 
@@ -62,8 +64,10 @@ public sealed class WiresSystem : EntitySystem
         SubscribeLocalEvent<WiresComponent, InteractUsingEvent>(OnInteractUsing);
         SubscribeLocalEvent<WiresComponent, ExaminedEvent>(OnExamine);
         SubscribeLocalEvent<WiresComponent, MapInitEvent>(OnMapInit);
-        SubscribeLocalEvent<WiresComponent, WireDoAfterEvent>(OnWireDoAfter);
+        SubscribeLocalEvent<WiresComponent, TimedWireEvent>(OnTimedWire);
         SubscribeLocalEvent<WiresComponent, PowerChangedEvent>(OnWiresPowered);
+        SubscribeLocalEvent<WiresComponent, OnWireDoAfterEvent>(OnWireDoAfter);
+        SubscribeLocalEvent<WiresComponent, OnWireDoAfterCancelEvent>(OnWireDoAfterCancel);
     }
 
     private void SetOrCreateWireLayout(EntityUid uid, WiresComponent? wires = null)
@@ -255,7 +259,7 @@ public sealed class WiresSystem : EntitySystem
     #endregion
 
     #region DoAfters
-    private void OnWireDoAfter(EntityUid uid, WiresComponent component, WireDoAfterEvent args)
+    private void OnTimedWire(EntityUid uid, WiresComponent component, TimedWireEvent args)
     {
         args.Delegate(args.Wire);
         UpdateUserInterface(uid);
@@ -272,7 +276,7 @@ public sealed class WiresSystem : EntitySystem
         return false;
     }
 
-    public void StartWireAction(EntityUid owner, float delay, object key, WireDoAfterEvent onFinish)
+    public void StartWireAction(EntityUid owner, float delay, object key, TimedWireEvent onFinish)
     {
         if (!HasComp<WiresComponent>(owner))
         {
@@ -354,9 +358,9 @@ public sealed class WiresSystem : EntitySystem
         public object Id;
         public float TimeLeft;
         public CancellationToken CancelToken;
-        public WireDoAfterEvent OnFinish;
+        public TimedWireEvent OnFinish;
 
-        public ActiveWireAction(object identifier, float time, CancellationToken cancelToken, WireDoAfterEvent onFinish)
+        public ActiveWireAction(object identifier, float time, CancellationToken cancelToken, TimedWireEvent onFinish)
         {
             Id = identifier;
             TimeLeft = time;
@@ -409,7 +413,17 @@ public sealed class WiresSystem : EntitySystem
         if (!EntityManager.TryGetComponent(activeHandEntity, out ToolComponent? tool))
             return;
 
-        UpdateWires(uid, player, activeHandEntity, args.Id, args.Action, component, tool);
+        TryDoWireAction(uid, player, activeHandEntity, args.Id, args.Action, component, tool);
+    }
+
+    private void OnWireDoAfter(EntityUid uid, WiresComponent component, OnWireDoAfterEvent args)
+    {
+        UpdateWires(args.Target, args.User, args.Tool, args.Id, args.Action, component);
+    }
+
+    private void OnWireDoAfterCancel(EntityUid uid, WiresComponent component, OnWireDoAfterCancelEvent args)
+    {
+        component.WiresQueue.Remove(args.Id);
     }
 
     private void OnInteractUsing(EntityUid uid, WiresComponent component, InteractUsingEvent args)
@@ -572,6 +586,73 @@ public sealed class WiresSystem : EntitySystem
         }
     }
 
+    private void TryDoWireAction(EntityUid used, EntityUid user, EntityUid toolEntity, int id, WiresAction action, WiresComponent? wires = null, ToolComponent? tool = null)
+    {
+        if (!Resolve(used, ref wires)
+            || !Resolve(toolEntity, ref tool))
+            return;
+
+        if (wires.WiresQueue.Contains(id))
+            return;
+
+        var wire = TryGetWire(used, id, wires);
+
+        if (wire == null)
+            return;
+
+        switch (action)
+        {
+            case WiresAction.Cut:
+                if (!_toolSystem.HasQuality(toolEntity, "Cutting", tool))
+                {
+                    _popupSystem.PopupCursor(Loc.GetString("wires-component-ui-on-receive-message-need-wirecutters"), Filter.Entities(user));
+                    return;
+                }
+
+                break;
+            case WiresAction.Mend:
+                if (!_toolSystem.HasQuality(toolEntity, "Cutting", tool))
+                {
+                    _popupSystem.PopupCursor(Loc.GetString("wires-component-ui-on-receive-message-need-wirecutters"), Filter.Entities(user));
+                    return;
+                }
+
+                break;
+            case WiresAction.Pulse:
+                if (!_toolSystem.HasQuality(toolEntity, "Pulsing", tool))
+                {
+                    _popupSystem.PopupCursor(Loc.GetString("wires-component-ui-on-receive-message-need-multitool"), Filter.Entities(user));
+                    return;
+                }
+
+                break;
+        }
+
+        var args = new DoAfterEventArgs(user, ToolTime, default, used)
+        {
+            NeedHand = true,
+            BreakOnStun = true,
+            BreakOnDamage = true,
+            BreakOnUserMove = true,
+            TargetFinishedEvent = new OnWireDoAfterEvent
+            {
+                Target = used,
+                User = user,
+                Tool = toolEntity,
+                Action = action,
+                Id = id
+            },
+            TargetCancelledEvent = new OnWireDoAfterCancelEvent
+            {
+                Id = id
+            }
+        };
+        _doAfter.DoAfter(args);
+
+        wires.WiresQueue.Add(id);
+    }
+
+
 
     private void UpdateWires(EntityUid used, EntityUid user, EntityUid toolEntity, int id, WiresAction action, WiresComponent? wires = null, ToolComponent? tool = null)
     {
@@ -635,6 +716,8 @@ public sealed class WiresSystem : EntitySystem
                 SoundSystem.Play(Filter.Pvs(used), wires.PulseSound.GetSound(), used);
                 break;
         }
+
+        wires.WiresQueue.Remove(id);
     }
 
     public bool TryGetData<T>(EntityUid uid, object identifier, [NotNullWhen(true)] out T? data, WiresComponent? wires = null)
@@ -716,8 +799,21 @@ public sealed class WiresSystem : EntitySystem
             Target = target;
         }
     }
-    #endregion
 
+    private sealed class OnWireDoAfterEvent : EntityEventArgs
+    {
+        public EntityUid User { get; set; }
+        public EntityUid Target { get; set; }
+        public EntityUid Tool { get; set; }
+        public WiresAction Action { get; set; }
+        public int Id { get; set; }
+    }
+
+    private sealed class OnWireDoAfterCancelEvent : EntityEventArgs
+    {
+        public int Id { get; set; }
+    }
+    #endregion
 }
 
 public sealed class Wire
@@ -771,12 +867,12 @@ public delegate void WireActionDelegate(Wire wire);
 
 // callbacks over the event bus,
 // because async is banned
-public sealed class WireDoAfterEvent : EntityEventArgs
+public sealed class TimedWireEvent : EntityEventArgs
 {
     public WireActionDelegate Delegate { get; }
     public Wire Wire { get; }
 
-    public WireDoAfterEvent(WireActionDelegate @delegate, Wire wire)
+    public TimedWireEvent(WireActionDelegate @delegate, Wire wire)
     {
         Delegate = @delegate;
         Wire = wire;

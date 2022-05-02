@@ -63,7 +63,7 @@ public class AccessWireAction : BaseWireAction
         if (EntityManager.TryGetComponent<AccessReaderComponent>(wire.Owner, out var access))
         {
             access.Enabled = false;
-            WiresSystem.StartWireAction(wire.Owner, _pulseTimeout, PulseTimeoutKey.Key, new WireDoAfterEvent(AwaitPulseCancel, wire));
+            WiresSystem.StartWireAction(wire.Owner, _pulseTimeout, PulseTimeoutKey.Key, new TimedWireEvent(AwaitPulseCancel, wire));
         }
 
         return true;

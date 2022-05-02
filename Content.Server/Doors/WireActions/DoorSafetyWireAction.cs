@@ -62,7 +62,7 @@ public class DoorSafetyWireAction : BaseWireAction
         if (EntityManager.TryGetComponent<AirlockComponent>(wire.Owner, out var door))
         {
             door.Safety = false;
-            WiresSystem.StartWireAction(wire.Owner, _timeout, PulseTimeoutKey.Key, new WireDoAfterEvent(AwaitSafetyTimerFinish, wire));
+            WiresSystem.StartWireAction(wire.Owner, _timeout, PulseTimeoutKey.Key, new TimedWireEvent(AwaitSafetyTimerFinish, wire));
         }
 
         return true;

@@ -71,7 +71,7 @@ public class DoorTimingWireAction : BaseWireAction
         if (EntityManager.TryGetComponent<AirlockComponent>(wire.Owner, out var door))
         {
             door.AutoCloseDelayModifier = 0.5f;
-            WiresSystem.StartWireAction(wire.Owner, _timeout, PulseTimeoutKey.Key, new WireDoAfterEvent(AwaitTimingTimerFinish, wire));
+            WiresSystem.StartWireAction(wire.Owner, _timeout, PulseTimeoutKey.Key, new TimedWireEvent(AwaitTimingTimerFinish, wire));
         }
 
 

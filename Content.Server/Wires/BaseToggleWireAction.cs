@@ -52,7 +52,7 @@ public abstract class BaseToggleWireAction : BaseWireAction
 
         if (TimeoutKey != null)
         {
-            WiresSystem.StartWireAction(wire.Owner, Delay, TimeoutKey, new WireDoAfterEvent(AwaitPulseCancel, wire));
+            WiresSystem.StartWireAction(wire.Owner, Delay, TimeoutKey, new TimedWireEvent(AwaitPulseCancel, wire));
         }
 
         return true;
