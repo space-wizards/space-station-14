@@ -1,10 +1,4 @@
 Entries:
-- author: Lamrr
-  changes:
-  - {message: 'The mysterious red phone has returned, the favoured weapon of the Centcom
-      Official and the second favourite instrument of the Clown.', type: Add}
-  id: 936
-  time: '2022-01-26T17:27:04.0000000+00:00'
 - author: Peptide90
   changes:
   - {message: Captain and HoP now have Quartermaster access. Find somewhere else to
@@ -3054,3 +3048,8 @@ Entries:
       before welding., type: Tweak}
   id: 1435
   time: '2022-05-02T20:49:53.0000000+00:00'
+- author: mirrorcult
+  changes:
+  - {message: The ATV now has many possible descriptions., type: Tweak}
+  id: 1436
+  time: '2022-05-02T20:51:03.0000000+00:00'
