@@ -11,9 +11,8 @@ public sealed partial class DefaultGameScreen : UIScreen
     public DefaultGameScreen()
     {
         RobustXamlLoader.Load(this);
-        SetAnchorAndMarginPreset(ActionUI, LayoutPreset.CenterLeft);
-        SetAnchorAndMarginPreset(TopBarUI, LayoutPreset.TopLeft);
-        SetAnchorAndMarginPreset(HandUI, LayoutPreset.CenterBottom);
-
+        SetAnchorAndMarginPreset(TopBarUI, LayoutPreset.TopLeft, margin:10);
+        SetAnchorAndMarginPreset(ActionUI, LayoutPreset.BottomLeft, margin:10);
+        SetAnchorAndMarginPreset(HandUI, LayoutPreset.BottomWide, margin:75);
     }
 }
