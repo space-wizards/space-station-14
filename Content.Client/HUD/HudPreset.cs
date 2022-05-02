@@ -12,7 +12,7 @@ public abstract class HudPreset
     [Dependency] private readonly IEntitySystemManager _entitySystemManager = default!;
     protected abstract void DefinePreset();
     protected virtual Thickness Margins => new Thickness(0);
-    private readonly Dictionary<Type, HudWidget> _widgets = new();
+    private readonly Dictionary<Type, HudWidgetLegacy> _widgets = new();
     private readonly HashSet<Type> _allowedStates = new();
     private readonly List<Type> _linkedEntitySystemTypes = new();
     private readonly Control _presetRoot;
@@ -71,7 +71,7 @@ public abstract class HudPreset
     }
 
     //register a new hud widget in this preset, internal use only
-    protected T RegisterWidget<T>() where T: HudWidget, new()
+    protected T RegisterWidget<T>() where T: HudWidgetLegacy, new()
     {
         if (_widgets.ContainsKey(typeof(T))) throw new Exception("Hud Widget not found");
         var newWidget = (T)_sandboxHelper.CreateInstance(typeof(T));
@@ -79,29 +79,29 @@ public abstract class HudPreset
         return newWidget;
     }
 
-    public bool HasWidget<T>() where T : HudWidget
+    public bool HasWidget<T>() where T : HudWidgetLegacy
     {
         return _widgets.ContainsKey(typeof(T));
     }
     //get a hud widget from this preset by type
-    public T? GetWidgetOrNull<T>() where T : HudWidget
+    public T? GetWidgetOrNull<T>() where T : HudWidgetLegacy
     {
         return (T?) _widgets.GetValueOrDefault(typeof(T));
     }
 
     //get a hud widget from this preset by type
-    public T GetWidget<T>() where T : HudWidget
+    public T GetWidget<T>() where T : HudWidgetLegacy
     {
         return (T) _widgets[typeof(T)];
     }
 
     //show/hide a hud widget by type
-    public void ShowWidget<T>(bool show) where T : HudWidget
+    public void ShowWidget<T>(bool show) where T : HudWidgetLegacy
     {
         _widgets[typeof(T)].Visible = show;
     }
 
-    public bool IsWidgetShown<T>() where T : HudWidget
+    public bool IsWidgetShown<T>() where T : HudWidgetLegacy
     {
         return _widgets.TryGetValue(typeof(T), out var widget) && widget.Visible;
     }

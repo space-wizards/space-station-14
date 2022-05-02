@@ -13,7 +13,7 @@ namespace Content.Client.UserInterface.Controllers;
 public sealed class InfoUIController : UIController, IOnStateChanged<GameplayState>
 {
     [Dependency] private readonly IHudManager _hud = default!;
-    [Dependency] private readonly IUIWindowManager _uiWindows = default!;
+    [Dependency] private readonly IUserInterfaceManager _ui = default!;
 
     private RulesAndInfoWindow? _window;
     private MenuButton InfoButton => _hud.GetUIWidget<MenuBar>().InfoButton;
@@ -35,7 +35,7 @@ public sealed class InfoUIController : UIController, IOnStateChanged<GameplaySta
 
     private void CreateWindow()
     {
-        _window = _uiWindows.CreateNamedWindow<RulesAndInfoWindow>("RulesAndInfo");
+        _window = _ui.CreateNamedWindow<RulesAndInfoWindow>("RulesAndInfo");
 
         if (_window == null)
             return;

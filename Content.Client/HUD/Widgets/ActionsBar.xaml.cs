@@ -5,7 +5,7 @@ namespace Content.Client.HUD.Widgets;
 
 
 [GenerateTypedNameReferences]
-public sealed partial class ActionsBar : HudWidget
+public sealed partial class ActionsBar : HudWidgetLegacy
 {
     public ActionsBar()
     {

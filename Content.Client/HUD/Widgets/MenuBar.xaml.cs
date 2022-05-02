@@ -6,7 +6,7 @@ using Robust.Client.UserInterface.XAML;
 namespace Content.Client.HUD.Widgets
 {
     [GenerateTypedNameReferences]
-    public sealed partial class MenuBar : HudWidget
+    public sealed partial class MenuBar : HudWidgetLegacy
     {
         public MenuBar()
         {

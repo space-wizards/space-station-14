@@ -37,12 +37,12 @@ public interface IHudManager
     public bool SwitchHudPreset<T>() where T : HudPreset;
     public bool ValidateHudTheme(int idx);
     public Texture GetHudTexture(string path);
-    public bool IsWidgetShown<T>() where T : HudWidget;
-    public void ShowUIWidget<T>(bool enabled) where T : HudWidget;
-    public T GetUIWidget<T>() where T : HudWidget;
+    public bool IsWidgetShown<T>() where T : HudWidgetLegacy;
+    public void ShowUIWidget<T>(bool enabled) where T : HudWidgetLegacy;
+    public T GetUIWidget<T>() where T : HudWidgetLegacy;
     //a nullsafe version of get UI widget that doesn't throw exceptions
-    public T? GetUIWidgetOrNull<T>() where T : HudWidget;
-    public bool HasWidget<T>() where T : HudWidget;
+    public T? GetUIWidgetOrNull<T>() where T : HudWidgetLegacy;
+    public bool HasWidget<T>() where T : HudWidgetLegacy;
     public IUIControllerManager UIControllerManager { get; }
 
     //Do Not abuse these or I will eat you
@@ -142,7 +142,7 @@ public sealed class HudManager  : IHudManager
         }
     }
 
-    public bool HasWidget<T>() where T : HudWidget
+    public bool HasWidget<T>() where T : HudWidgetLegacy
     {
         return _activeHudPreset!.HasWidget<T>();
     }
@@ -207,25 +207,25 @@ public sealed class HudManager  : IHudManager
         return _resourceCache.GetTexture(resourcePath);
     }
 
-    public bool IsWidgetShown<T>() where T: HudWidget
+    public bool IsWidgetShown<T>() where T: HudWidgetLegacy
     {
         return _activeHudPreset!.IsWidgetShown<T>();
     }
 
     //Grabs a reference to the specified widget from the HUD
-    public void ShowUIWidget<T>(bool enabled) where T : HudWidget
+    public void ShowUIWidget<T>(bool enabled) where T : HudWidgetLegacy
     {
         _activeHudPreset!.ShowWidget<T>(enabled);
     }
 
-    public T GetUIWidget<T>() where T : HudWidget
+    public T GetUIWidget<T>() where T : HudWidgetLegacy
     {
         var widget = _activeHudPreset!.GetWidget<T>();
         if (widget == null) throw new NullReferenceException(typeof(T).Name + " was not found in active Hud preset!");
         return widget;
     }
 
-    public T? GetUIWidgetOrNull<T>() where T : HudWidget
+    public T? GetUIWidgetOrNull<T>() where T : HudWidgetLegacy
     {
         return _activeHudPreset!.GetWidgetOrNull<T>();
     }

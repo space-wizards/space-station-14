@@ -25,7 +25,6 @@ public sealed class ActionUIController : UIController, IOnStateChanged<GameplayS
 {
     [Dependency] private readonly IEntityManager _entities = default!;
     [Dependency] private readonly IHudManager _hud = default!;
-    [Dependency] private readonly IUIWindowManager _uiWindows = default!;
     [Dependency] private readonly IUserInterfaceManager _ui = default!;
 
     [UISystemDependency] private readonly ActionsSystem _actionsSystem = default!;
@@ -38,7 +37,6 @@ public sealed class ActionUIController : UIController, IOnStateChanged<GameplayS
 
     private ActionsWindow? _window;
     private MenuButton ActionButton => _hud.GetUIWidget<MenuBar>().ActionButton;
-
     public ActionUIController()
     {
         _dragDropHelper = new DragDropHelper<ActionButton>(OnBeginDrag, OnContinueDrag, OnEndDrag);
@@ -69,7 +67,7 @@ public sealed class ActionUIController : UIController, IOnStateChanged<GameplayS
 
     private void CreateWindow()
     {
-        _window = _uiWindows.CreateNamedWindow<ActionsWindow>("Actions");
+        _window = _ui.CreateNamedWindow<ActionsWindow>("Actions");
 
         if (_window == null)
             return;

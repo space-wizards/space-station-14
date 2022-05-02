@@ -6,7 +6,7 @@ using Robust.Client.UserInterface.XAML;
 namespace Content.Client.HUD.Widgets;
 
 [GenerateTypedNameReferences]
-public sealed partial class HandsGui : HudWidget
+public sealed partial class HandsGui : HudWidgetLegacy
 {
     public HandsGui()
     {
