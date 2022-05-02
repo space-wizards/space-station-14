@@ -1,6 +1,5 @@
 using System;
 using Content.Server.UserInterface;
-using Content.Shared.Acts;
 using Content.Shared.Interaction;
 using Content.Shared.Sound;
 using Content.Shared.VendingMachines;
