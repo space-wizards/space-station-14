@@ -50,6 +50,7 @@ namespace Content.Client.Entry
             "ZombieTransfer",
             "Mineable",
             "RangedMagazine",
+            "RandomMetadata",
             "Ammo",
             "AiController",
             "Computer",
