@@ -9,12 +9,15 @@
     HorizontalAlignment="Center"
 >
 <widgets:MenuBar
-    Name="TopBar"
-    />
+    Name="TopBarUI"
+    Access= "Protected"
+/>
 <widgets:HandsGui
-    Name="Hands"
+    Name="HandUI"
+    Access= "Protected"
     />
 <widgets:ActionsBar
-    Name="Actions"
+    Name="ActionUI"
+    Access= "Protected"
     />
 </screens:DefaultGameScreen>
