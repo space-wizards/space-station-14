@@ -1,14 +1,4 @@
 Entries:
-- author: Peptide90
-  changes:
-  - {message: 'Lights now consume slighly more power than before. Can you cope?',
-    type: Fix}
-  - {message: 'LED lights are now less bright so won''t burn your eyes out, just your
-      hands.', type: Fix}
-  - {message: There's two high energy lightbulb specifically for shuttles and station
-      exteriors. Spot the blue and orange glow!, type: Add}
-  id: 939
-  time: '2022-01-27T00:01:32.0000000+00:00'
 - author: Plasmaguy
   changes:
   - {message: 'Added three new drinks (root beer, ice cream, and root beer floats).',
@@ -3053,3 +3043,8 @@ Entries:
       decals.', type: Add}
   id: 1438
   time: '2022-05-02T22:43:33.0000000+00:00'
+- author: HoofedEar
+  changes:
+  - {message: Requires a little more effort strip something off of someone., type: Tweak}
+  id: 1439
+  time: '2022-05-02T22:47:19.0000000+00:00'
