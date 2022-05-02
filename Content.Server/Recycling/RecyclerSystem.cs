@@ -4,6 +4,7 @@ using Content.Server.Recycling.Components;
 using Content.Shared.Audio;
 using Content.Shared.Body.Components;
 using Content.Shared.Emag.Systems;
+using Content.Shared.EmagFixer.Systems;
 using Content.Shared.Recycling;
 using Content.Shared.Tag;
 using Robust.Shared.Audio;
@@ -25,6 +26,7 @@ namespace Content.Server.Recycling
         {
             SubscribeLocalEvent<RecyclerComponent, StartCollideEvent>(OnCollide);
             SubscribeLocalEvent<RecyclerComponent, GotEmaggedEvent>(OnEmagged);
+            SubscribeLocalEvent<RecyclerComponent, GotEmagFixedEvent>(OnEmagFixed);
         }
 
         public void EnableRecycler(RecyclerComponent component)
@@ -129,6 +131,13 @@ namespace Content.Server.Recycling
                 component.Safe = false;
                 args.Handled = true;
             }
+        }
+
+        private void OnEmagFixed(EntityUid uid, RecyclerComponent component, GotEmagFixedEvent args)
+        {
+            if (component.Safe) return;
+            component.Safe = true;
+            args.Handled = true;
         }
     }
 }
