@@ -1,24 +1,7 @@
-using System;
 using JetBrains.Annotations;
-using Robust.Shared.Analyzers;
-using Robust.Shared.GameObjects;
 
 namespace Content.Shared.Interaction
 {
-    /// <summary>
-    /// This interface gives components behavior when being clicked on by a user with an empty hand
-    /// who is in range and has unobstructed reach of the target entity (allows inside blockers).
-    /// </summary>
-    [RequiresExplicitImplementation]
-    public interface IInteractHand
-    {
-        /// <summary>
-        /// Called when a player directly interacts with an empty hand when user is in range of the target entity.
-        /// </summary>
-        [Obsolete("Use InteractHandEvent instead")]
-        bool InteractHand(InteractHandEventArgs eventArgs);
-    }
-
     public sealed class InteractHandEventArgs : EventArgs, ITargetedInteractEventArgs
     {
         public InteractHandEventArgs(EntityUid user, EntityUid target)

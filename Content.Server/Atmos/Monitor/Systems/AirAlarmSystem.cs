@@ -175,6 +175,10 @@ namespace Content.Server.Atmos.Monitor.Systems
                 component.CurrentModeUpdater = null;
                 component.DeviceData.Clear();
             }
+            else
+            {
+                SyncAllDevices(uid);
+            }
         }
 
         private void OnClose(EntityUid uid, AirAlarmComponent component, BoundUIClosedEvent args)

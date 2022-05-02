@@ -15,6 +15,7 @@ namespace Content.Server.Decals
     {
         [Dependency] private readonly IPlayerManager _playerManager = default!;
         [Dependency] private readonly IAdminManager _adminManager = default!;
+        [Dependency] private readonly ITileDefinitionManager _tileDefMan = default!;
         [Dependency] private readonly SharedTransformSystem _transform = default!;
 
         private readonly Dictionary<GridId, HashSet<Vector2i>> _dirtyChunks = new();
@@ -37,7 +38,7 @@ namespace Content.Server.Decals
             base.Initialize();
 
             _playerManager.PlayerStatusChanged += OnPlayerStatusChanged;
-            MapManager.TileChanged += OnTileChanged;
+            SubscribeLocalEvent<TileChangedEvent>(OnTileChanged);
 
             SubscribeNetworkEvent<RequestDecalPlacementEvent>(OnDecalPlacementRequest);
             SubscribeNetworkEvent<RequestDecalRemovalEvent>(OnDecalRemovalRequest);
@@ -48,23 +49,22 @@ namespace Content.Server.Decals
             base.Shutdown();
 
             _playerManager.PlayerStatusChanged -= OnPlayerStatusChanged;
-            MapManager.TileChanged -= OnTileChanged;
         }
 
-        private void OnTileChanged(object? sender, TileChangedEventArgs e)
+        private void OnTileChanged(TileChangedEvent args)
         {
-            if (!e.NewTile.IsSpace())
+            if (!args.NewTile.IsSpace(_tileDefMan))
                 return;
 
-            var chunkCollection = ChunkCollection(e.NewTile.GridIndex);
-            var indices = GetChunkIndices(e.NewTile.GridIndices);
+            var chunkCollection = ChunkCollection(args.Entity);
+            var indices = GetChunkIndices(args.NewTile.GridIndices);
             var toDelete = new HashSet<uint>();
             if (chunkCollection.TryGetValue(indices, out var chunk))
             {
                 foreach (var (uid, decal) in chunk)
                 {
                     if (new Vector2((int) Math.Floor(decal.Coordinates.X), (int) Math.Floor(decal.Coordinates.Y)) ==
-                        e.NewTile.GridIndices)
+                        args.NewTile.GridIndices)
                     {
                         toDelete.Add(uid);
                     }
@@ -75,10 +75,10 @@ namespace Content.Server.Decals
 
             foreach (var uid in toDelete)
             {
-                RemoveDecalInternal(e.NewTile.GridIndex, uid);
+                RemoveDecalInternal(args.NewTile.GridIndex, uid);
             }
 
-            DirtyChunk(e.NewTile.GridIndex, indices);
+            DirtyChunk(args.NewTile.GridIndex, indices);
         }
 
         private void OnPlayerStatusChanged(object? sender, SessionStatusEventArgs e)
