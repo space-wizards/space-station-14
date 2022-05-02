@@ -51,6 +51,22 @@ public sealed class MagicSystem : EntitySystem
         }
     }
 
+    public override void Update(float frameTime)
+    {
+        base.Update(frameTime);
+
+        foreach (var forcewall in EntityQuery<ForceWallComponent>())
+        {
+            forcewall.Timer += frameTime;
+
+            if (forcewall.Timer > forcewall.ForceWallCooldown)
+            {
+                EntityManager.QueueDeleteEntity(forcewall.Owner);
+                ActiveWalls.Remove(forcewall.Owner);
+            }
+        }
+    }
+
     #region Wielding
 
     private void OnWielded(EntityUid uid, SpellbookComponent component, ItemWieldedEvent args)
@@ -71,21 +87,7 @@ public sealed class MagicSystem : EntitySystem
 
     #endregion
 
-    public override void Update(float frameTime)
-    {
-        base.Update(frameTime);
-
-        foreach (var forcewall in EntityQuery<ForceWallComponent>())
-        {
-            forcewall.Timer += frameTime;
-
-            if (forcewall.Timer > forcewall.ForceWallCooldown)
-            {
-                EntityManager.QueueDeleteEntity(forcewall.Owner);
-                ActiveWalls.Remove(forcewall.Owner);
-            }
-        }
-    }
+    #region Spells
 
     private void OnRuneMagic(RuneMagicEvent args)
     {
@@ -99,7 +101,25 @@ public sealed class MagicSystem : EntitySystem
 
     private void OnTeleportSpell(TeleportSpellEvent args)
     {
+        if (args.Handled)
+            return;
 
+        var transform = Transform(args.Performer);
+
+        if (_mapManager.TryFindGridAt(args.Target, out var grid))
+        {
+            var gridPosition = grid.WorldToLocal(args.Target.Position);
+
+            transform.Coordinates = new EntityCoordinates(grid.GridEntityId, gridPosition);
+        }
+        else
+        {
+            var mapEntity = _mapManager.GetMapEntityIdOrThrow(args.Target.MapId);
+            transform.WorldPosition = args.Target.Position;
+            transform.AttachParent(mapEntity);
+        }
+
+        args.Handled = true;
     }
 
     private void OnForceWallSpell(ForceWallEvent args)
@@ -152,4 +172,6 @@ public sealed class MagicSystem : EntitySystem
 
         args.Handled = true;
     }
+
+    #endregion
 }

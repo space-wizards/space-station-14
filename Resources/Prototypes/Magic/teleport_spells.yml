@@ -1,0 +1,14 @@
+﻿- type: worldTargetAction
+  id: Blink
+  name: blink
+  description: teleports user
+  useDelay: 10
+  range: 16 # default examine-range.
+  # ^ should probably add better validation that the clicked location is on the users screen somewhere,
+  itemIconStyle: BigAction
+  checkCanAccess: false
+  repeat: true
+  icon:
+    sprite: Effects/crayondecals.rsi
+    state: rune1
+  serverEvent: !type:TeleportSpellEvent
