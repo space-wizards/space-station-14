@@ -1,20 +1,13 @@
-using System.Collections.Generic;
-using Content.Client.HUD;
 using Content.Shared.Suspicion;
-using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
 using Robust.Client.Player;
 using Robust.Client.ResourceManagement;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.ViewVariables;
 
 namespace Content.Client.Suspicion
 {
     [RegisterComponent]
     public sealed class SuspicionRoleComponent : SharedSuspicionRoleComponent
     {
-        [Dependency] private readonly IHudManager _hudManager = default!;
         [Dependency] private readonly IOverlayManager _overlayManager = default!;
         [Dependency] private readonly IResourceCache _resourceCache = default!;
 

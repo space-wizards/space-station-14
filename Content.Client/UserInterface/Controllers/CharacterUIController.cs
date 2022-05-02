@@ -1,6 +1,5 @@
 ﻿using Content.Client.CharacterInfo;
 using Content.Client.Gameplay;
-using Content.Client.HUD;
 using Content.Client.UserInterface.Controls;
 using Content.Client.UserInterface.UIWindows;
 using Content.Shared.Input;
@@ -10,19 +9,18 @@ using Robust.Client.Utility;
 using Robust.Shared.Input.Binding;
 using static Content.Client.CharacterInfo.CharacterInfoSystem;
 using static Robust.Client.UserInterface.Controls.BaseButton;
-using MenuBar = Content.Client.HUD.Widgets.MenuBar;
+using MenuBar = Content.Client.UserInterface.Widgets.MenuBar;
 
 namespace Content.Client.UserInterface.Controllers;
 
 public sealed class CharacterUIController : UIController, IOnStateChanged<GameplayState>
 {
-    [Dependency] private readonly IHudManager _hud = default!;
-    [Dependency] private readonly IUIWindowManager _uiWindows = default!;
+    [Dependency] private readonly IUserInterfaceManager _ui = default!;
 
     [UISystemDependency] private readonly CharacterInfoSystem _characterInfo = default!;
 
     private CharacterWindow? _window;
-    private MenuButton CharacterButton => _hud.GetUIWidget<MenuBar>().CharacterButton;
+    private MenuButton CharacterButton => UIManager.GetActiveUIWidget<MenuBar>().CharacterButton;
 
     public void OnStateChanged(GameplayState state)
     {
@@ -126,7 +124,7 @@ public sealed class CharacterUIController : UIController, IOnStateChanged<Gamepl
 
     private void CreateWindow()
     {
-        _window = _uiWindows.CreateNamedWindow<CharacterWindow>("Character");
+        _window = _ui.CreateNamedWindow<CharacterWindow>("Character");
 
         if (_window == null)
             return;

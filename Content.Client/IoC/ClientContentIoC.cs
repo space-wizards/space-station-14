@@ -2,10 +2,7 @@
 using Content.Client.Changelog;
 using Content.Client.Chat.Managers;
 using Content.Client.Clickable;
-using Content.Client.Options;
 using Content.Client.Eui;
-using Content.Client.Gameplay;
-using Content.Client.HUD;
 using Content.Client.Info;
 using Content.Client.Module;
 using Content.Client.Parallax.Managers;
@@ -13,7 +10,6 @@ using Content.Client.Preferences;
 using Content.Client.Screenshot;
 using Content.Client.StationEvents.Managers;
 using Content.Client.Stylesheets;
-using Content.Client.UserInterface;
 using Content.Client.Viewport;
 using Content.Client.Voting;
 using Content.Shared.Administration;
@@ -25,7 +21,6 @@ namespace Content.Client.IoC
     {
         public static void Register()
         {
-            IoCManager.Register<IHudManager, HudManager>();
             IoCManager.Register<IParallaxManager, ParallaxManager>();
             IoCManager.Register<IChatManager, ChatManager>();
             IoCManager.Register<IModuleManager, ClientModuleManager>();

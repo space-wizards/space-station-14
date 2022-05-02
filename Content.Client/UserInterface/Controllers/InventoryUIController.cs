@@ -1,7 +1,5 @@
 ﻿using Content.Client.Gameplay;
 using Content.Client.Hands;
-using Content.Client.HUD;
-using Content.Client.HUD.Widgets;
 using Content.Client.Inventory;
 using Content.Client.UserInterface.Controls;
 using Content.Client.UserInterface.UIWindows;
@@ -12,20 +10,18 @@ using Robust.Shared.Input;
 using Robust.Shared.Input.Binding;
 using static Content.Client.Inventory.ClientInventorySystem;
 using static Robust.Client.UserInterface.Controls.BaseButton;
+using MenuBar = Content.Client.UserInterface.Widgets.MenuBar;
 
 namespace Content.Client.UserInterface.Controllers;
 
 public sealed partial class InventoryUIController : UIController, IOnStateChanged<GameplayState>
 {
     [UISystemDependency] private readonly ClientInventorySystem _inventorySystem = default!;
-    [Dependency] private readonly IUIWindowManager _uiWindowManager = default!;
-    [Dependency] private readonly IHudManager _hud = default!;
-
     private ClientInventoryComponent? _playerInventory;
     private readonly Dictionary<string, ItemSlotButtonContainer> _slotGroups = new();
     private InventoryWindow? _inventoryWindow;
     private readonly Dictionary<(string group, string slot), (ISpriteComponent sprite, bool showStorage)> _sprites = new();
-    private MenuButton InventoryButton => _hud.GetUIWidget<MenuBar>().InventoryButton;
+    private MenuButton InventoryButton => UIManager.GetActiveUIWidget<MenuBar>().InventoryButton;
 
     public void OnStateChanged(GameplayState state)
     {
@@ -34,7 +30,7 @@ public sealed partial class InventoryUIController : UIController, IOnStateChange
             .Bind(ContentKeyFunctions.OpenInventoryMenu, InputCmdHandler.FromDelegate(_ => ToggleInventoryMenu()))
             .Register<ClientInventorySystem>();
 
-        _hud.GetUIWidget<MenuBar>().InventoryButton.OnPressed += InventoryButtonPressed;
+        UIManager.GetActiveUIWidget<MenuBar>().InventoryButton.OnPressed += InventoryButtonPressed;
     }
 
     private void InventoryButtonPressed(ButtonEventArgs args)
@@ -46,7 +42,7 @@ public sealed partial class InventoryUIController : UIController, IOnStateChange
     {
         if (clientInv == null) return;
 
-        _inventoryWindow = _uiWindowManager.CreateNamedWindow<InventoryWindow>("Inventory");
+        _inventoryWindow = UIManager.CreateNamedWindow<InventoryWindow>("Inventory");
         if (_inventoryWindow == null)
             return;
 

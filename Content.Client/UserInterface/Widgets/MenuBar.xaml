@@ -1,11 +1,12 @@
-﻿<widgets:MenuBar xmlns="https://spacestation14.io"
+﻿<widgets1:MenuBar xmlns="https://spacestation14.io"
            xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
            xmlns:style="clr-namespace:Content.Client.Stylesheets"
-           xmlns:widgets="clr-namespace:Content.Client.HUD.Widgets"
+           xmlns:widgets="clr-namespace:Content.Client.UserInterface.Widgets"
            xmlns:ic="clr-namespace:Robust.Shared.Input;assembly=Robust.Shared"
            xmlns:is="clr-namespace:Content.Shared.Input;assembly=Content.Shared"
            xmlns:xe="clr-namespace:Content.Client.UserInterface.XamlExtensions"
            xmlns:ui="clr-namespace:Content.Client.UserInterface.Controls"
+           xmlns:widgets1="clr-namespace:Content.Client.UserInterface.Widgets"
            Name = "MenuButtons"
            VerticalExpand="False"
            Orientation="Horizontal"
@@ -85,4 +86,4 @@
         MinSize="42 64"
         AppendStyleClass="{x:Static style:StyleBase.ButtonOpenLeft}"
         />
-</widgets:MenuBar>
+</widgets1:MenuBar>

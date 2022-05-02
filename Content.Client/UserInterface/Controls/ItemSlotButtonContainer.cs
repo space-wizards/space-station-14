@@ -16,7 +16,7 @@ public sealed class ItemSlotButtonContainer : ItemSlotUIContainer<SlotControl>
         }}
     public ItemSlotButtonContainer()
     {
-        _inventoryController = IoCManager.Resolve<IUIControllerManager>().GetController<InventoryUIController>();
+        _inventoryController = IoCManager.Resolve<IUserInterfaceManager>().GetUIController<InventoryUIController>();
     }
 
     ~ItemSlotButtonContainer()

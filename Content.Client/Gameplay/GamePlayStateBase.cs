@@ -33,14 +33,14 @@ namespace Content.Client.Gameplay
         private bool _initialized = false;
         public bool Initialized => _initialized;
 
-        public override void Startup()
+        protected override void Startup()
         {
             _inputManager.KeyBindStateChanged += OnKeyBindStateChanged;
             _comparer = new ClickableEntityComparer(_entityManager);
             _initialized = true;
         }
 
-        public override void Shutdown()
+        protected override void Shutdown()
         {
             _inputManager.KeyBindStateChanged -= OnKeyBindStateChanged;
             _initialized = false;

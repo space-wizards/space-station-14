@@ -1,10 +1,11 @@
-﻿<widget:ActionsBar
+﻿<widgets:ActionsBar
     xmlns="https://spacestation14.io"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:widget="clr-namespace:Content.Client.HUD.Widgets"
+    xmlns:widget="clr-namespace:Content.Client.UserInterface.Widgets"
     xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls"
     xmlns:input="clr-namespace:Robust.Shared.Input;assembly=Robust.Shared"
     xmlns:in="clr-namespace:Content.Shared.Input;assembly=Content.Shared"
+    xmlns:widgets="clr-namespace:Content.Client.UserInterface.Widgets"
     Name="ActionsGUI"
     VerticalExpand="False"
     Orientation="Horizontal"
@@ -38,4 +39,4 @@
     </controls:ActionButtonContainer>
 
 
-</widget:ActionsBar>
+</widgets:ActionsBar>

@@ -1,6 +1,4 @@
 ﻿using Content.Client.Gameplay;
-using Content.Client.HUD;
-using Content.Client.HUD.Widgets;
 using Content.Client.MainMenu;
 using Content.Client.Options.UI;
 using Content.Client.UserInterface.Controls;
@@ -10,18 +8,18 @@ using Robust.Client.UserInterface;
 using Robust.Shared.Input;
 using Robust.Shared.Input.Binding;
 using static Robust.Client.UserInterface.Controls.BaseButton;
+using MenuBar = Content.Client.UserInterface.Widgets.MenuBar;
 
 namespace Content.Client.UserInterface.Controllers;
 
 public sealed class EscapeUIController : UIController, IOnStateChanged<GameplayState>, IOnStateChanged<MainScreen>
 {
     [Dependency] private readonly IClientConsoleHost _console = default!;
-    [Dependency] private readonly IHudManager _hud = default!;
     [Dependency] private readonly IInputManager _input = default!;
 
     private EscapeMenu? _window;
 
-    private MenuButton? EscapeButton => _hud.GetUIWidgetOrNull<MenuBar>()?.EscapeButton;
+    private MenuButton? EscapeButton => UIManager.GetActiveUIWidgetOrNull<MenuBar>()?.EscapeButton;
 
     public void OnStateChanged(GameplayState state)
     {

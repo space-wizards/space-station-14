@@ -9,7 +9,7 @@ namespace Content.Client.UserInterface.Controls;
 public class ActionButtonContainer : GridContainer
 {
     [Dependency] private readonly IEntityManager _entityManager = default!;
-    [Dependency] private readonly IUIControllerManager _uiControllerManager = default!;
+    [Dependency] private readonly IUserInterfaceManager _ui = default!;
 
     public event Action<GUIBoundKeyEventArgs, ActionButton>? ActionPressed;
     public event Action<GUIBoundKeyEventArgs, ActionButton>? ActionUnpressed;
@@ -18,7 +18,7 @@ public class ActionButtonContainer : GridContainer
     public ActionButtonContainer()
     {
         IoCManager.InjectDependencies(this);
-        _uiControllerManager.GetController<ActionUIController>().RegisterActionContainer(this);
+        _ui.GetUIController<ActionUIController>().RegisterActionContainer(this);
     }
 
     public ActionButton this[int index]
@@ -66,6 +66,6 @@ public class ActionButtonContainer : GridContainer
 
     ~ActionButtonContainer()
     {
-        _uiControllerManager.GetController<ActionUIController>().ClearActionContainer();
+        _ui.GetUIController<ActionUIController>().ClearActionContainer();
     }
 }

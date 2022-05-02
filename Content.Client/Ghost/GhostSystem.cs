@@ -1,11 +1,8 @@
 using Content.Client.Ghost.UI;
-using Content.Client.HUD;
 using Content.Shared.Ghost;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
 using Robust.Client.Player;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
 
 namespace Content.Client.Ghost
 {

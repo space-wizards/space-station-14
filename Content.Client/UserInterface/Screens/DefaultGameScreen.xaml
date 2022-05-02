@@ -1,0 +1,23 @@
+﻿<screens:DefaultGameScreen
+    xmlns="https://spacestation14.io"
+    xmlns:screens="clr-namespace:Content.Client.UserInterface.Screens"
+    xmlns:ui="clr-namespace:Content.Client.UserInterface.Controls"
+    xmlns:widgets="clr-namespace:Content.Client.UserInterface.Widgets"
+    Name="DefaultHud"
+    VerticalExpand="False"
+    VerticalAlignment="Bottom"
+    HorizontalAlignment="Center"
+>
+<widgets:MenuBar
+    Name="TopBarUI"
+    Access= "Protected"
+/>
+<widgets:HandsGui
+    Name="HandUI"
+    Access= "Protected"
+    />
+<widgets:ActionsBar
+    Name="ActionUI"
+    Access= "Protected"
+    />
+</screens:DefaultGameScreen>

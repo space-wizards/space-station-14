@@ -2,8 +2,6 @@
 using Content.Client.Administration.UI;
 using Content.Client.Administration.UI.Tabs.PlayerTab;
 using Content.Client.Gameplay;
-using Content.Client.HUD;
-using Content.Client.HUD.Widgets;
 using Content.Client.UserInterface.Controls;
 using Content.Client.Verbs;
 using Content.Shared.Input;
@@ -14,6 +12,7 @@ using Robust.Shared.Input;
 using Robust.Shared.Input.Binding;
 using Robust.Shared.Network;
 using static Robust.Client.UserInterface.Controls.BaseButton;
+using MenuBar = Content.Client.UserInterface.Widgets.MenuBar;
 
 namespace Content.Client.UserInterface.Controllers;
 
@@ -23,14 +22,13 @@ public sealed class AdminUIController : UIController, IOnStateChanged<GameplaySt
     [Dependency] private readonly IClientConGroupController _conGroups = default!;
     [Dependency] private readonly IClientConsoleHost _conHost = default!;
     [Dependency] private readonly IInputManager _input = default!;
-    [Dependency] private readonly IHudManager _hud = default!;
     [Dependency] private readonly INetManager _net = default!;
 
     [UISystemDependency] private readonly VerbSystem _verbs = default!;
 
     private AdminMenuWindow? _window;
 
-    private MenuButton AdminButton => _hud.GetUIWidget<MenuBar>().AdminButton;
+    private MenuButton AdminButton => UIManager.GetActiveUIWidget<MenuBar>().AdminButton;
 
     public void OnStateChanged(GameplayState state)
     {
