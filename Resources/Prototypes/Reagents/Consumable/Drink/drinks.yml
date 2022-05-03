@@ -1,16 +1,16 @@
 - type: reagent
   id: Coffee
-  name: coffee
+  name: reagent-name-coffee
   parent: BaseDrink
-  desc: A drink made from brewed coffee beans. Contains a moderate amount of caffeine.
+  desc: reagent-desc-coffee
   physicalDesc: aromatic
   color: "#664300"
 
 - type: reagent
   id: Cream
-  name: cream
+  name: reagent-name-cream
   group: Drinks
-  desc: The fatty, still liquid part of milk. Why don't you mix this with sum scotch, eh?
+  desc: reagent-desc-cream
   physicalDesc: creamy
   color: "#DFD7AF"
   metabolisms:
@@ -21,63 +21,63 @@
 
 - type: reagent
   id: CafeLatte
-  name: cafe latte
+  name: reagent-name-cafe-latte
   parent: BaseDrink
-  desc: A nice, strong and tasty beverage while you are reading.
+  desc: reagent-desc-cafe-latte
   physicalDesc: creamy
   color: "#664300"
   spritePath: cafe_latte.rsi
 
 - type: reagent
   id: GreenTea
-  name: green tea
+  name: reagent-name-green-tea
   parent: BaseDrink
-  desc: Tasty green tea.
+  desc: reagent-desc-green-tea
   physicalDesc: aromatic
   color: "#C33F00"
   spritePath: glass_green.rsi #Placeholder
 
 - type: reagent
   id: Grenadine
-  name: grenadine
+  name: reagent-name-grenadine
   parent: BaseDrink
-  desc: Not cherry flavored!
+  desc: reagent-desc-grenadine
   physicalDesc: dark-red
   color: "#EA1D26"
   spritePath: grenadineglass.rsi
 
 - type: reagent
   id: IcedCoffee
-  name: iced coffee
+  name: reagent-name-iced-coffee
   parent: BaseDrink
-  desc: Coffee and ice, refreshing and cool.
+  desc: reagent-desc-iced-coffee
   physicalDesc: aromatic
   color: "#102838"
   spritePath: icedcoffeeglass.rsi
 
 - type: reagent
   id: IcedGreenTea
-  name: iced green tea
+  name: reagent-name-iced-green-tea
   parent: BaseDrink
-  desc: cold green tea.
+  desc: reagent-desc-iced-green-tea
   physicalDesc: aromatic
   color: "#CE4200"
   spritePath: glass_green.rsi #Placeholder
 
 - type: reagent
   id: IcedTea
-  name: iced tea
+  name: reagent-name-iced-tea
   parent: BaseDrink
-  desc: No relation to a certain rap artist/actor.
+  desc: reagent-desc-iced-tea
   physicalDesc: aromatic
   color: "#104038"
   spritePath: icedteaglass.rsi
 
 - type: reagent
   id: Lemonade
-  name: lemonade
+  name: reagent-name-lemonade
   group: Drinks
-  desc: Drink using lemon juice, water, and a sweetener such as cane sugar or honey.
+  desc: reagent-desc-lemonade
   physicalDesc: tart
   color: "#FFFF00"
   spritePath: lemonadeglass.rsi
@@ -89,9 +89,9 @@
 
 - type: reagent
   id: Milk
-  name: milk
+  name: reagent-name-milk
   group: Drinks
-  desc: An opaque white liquid produced by the mammary glands of mammals.
+  desc: reagent-desc-milk
   physicalDesc: opaque
   color: "#DFDFDF"
   plantMetabolism:
@@ -104,18 +104,18 @@
       effects:
       - !type:SatiateThirst
         factor: 4
-        
+
 - type: reagent
   id: MilkGoat
   parent: Milk
-  name: goats milk
-  desc: An opaque white liquid produced by a goat. High buttermilk content.
+  name: reagent-name-milk-goat
+  desc: reagent-desc-milk-goat
 
 - type: reagent
   id: MilkOat
-  name: oat milk
+  name: reagent-name-milk-oat
   group: Drinks
-  desc: Surprisingly tasty.
+  desc: reagent-desc-milk-oat
   physicalDesc: refreshing
   color: "#302000"
   metabolisms:
@@ -127,13 +127,14 @@
 - type: reagent
   id: MilkSoy
   parent: MilkOat
-  name: soy milk
+  name: reagent-name-milk-soy
+  desc: reagent-desc-milk-soy
 
 - type: reagent
   id: MilkSpoiled
-  name: spoiled milk
+  name: reagent-name-milk-spoiled
   group: Drinks
-  desc: This milk has gone rancid.
+  desc: reagent-desc-milk-spoiled
   physicalDesc: putrid
   color: "#faffba"
   metabolisms:
@@ -144,8 +145,8 @@
 
 - type: reagent
   id: Nothing
-  name: nothing
-  desc: Absolutely nothing.
+  name: reagent-name-nothing
+  desc: reagent-desc-nothing
   group: Drinks
   physicalDesc: nothing
   spritePath: nothing.rsi
@@ -158,9 +159,9 @@
 
 - type: reagent
   id: NuclearCola
-  name: nuclear cola
+  name: reagent-name-nuclear-cola
   group: Drinks
-  desc: Cola, cola never changes.
+  desc: reagent-desc-nuclear-cola
   physicalDesc: fizzy
   color: "#100800"
   spritePath: nuclear_colaglass.rsi
@@ -178,42 +179,42 @@
 
 - type: reagent
   id: SodaWater
-  name: soda water
+  name: reagent-name-soda-water
   parent: BaseDrink
-  desc: A container of club soda. Why not make a scotch and soda?
+  desc: reagent-desc-soda-water
   physicalDesc: fizzy
   color: "#619494"
 
 - type: reagent
   id: SoyLatte
-  name: soy latte
+  name: reagent-name-soy-latte
   parent: BaseDrink
-  desc: A coffee drink made with espresso and steamed soy milk.
+  desc: reagent-desc-soy-latte
   physicalDesc: strong-smelling
   color: "#664300"
   spritePath: soy_latte.rsi
 
 - type: reagent
   id: Tea
-  name: tea
+  name: reagent-name-tea
   parent: BaseDrink
-  desc: A drink made by boiling leaves of the tea tree, Camellia sinensis.
+  desc: reagent-desc-tea
   physicalDesc: aromatic
   color: "#8a5a3a"
 
 - type: reagent
   id: TonicWater
-  name: tonic water
+  name: reagent-name-tonic-water
   parent: BaseDrink
-  desc: It tastes strange but at least the quinine keeps the Space Malaria at bay.
+  desc: reagent-desc-tonic-water
   physicalDesc: fizzy
   color: "#0064C8"
 
 - type: reagent
   id: Water
-  name: water
+  name: reagent-name-water
   parent: BaseDrink
-  desc: A colorless liquid that humans need in order to survive.
+  desc: reagent-desc-water
   physicalDesc: translucent
   color: "#c0e0ff20"
   boilingPoint: 100.0
@@ -226,8 +227,8 @@
 
 - type: reagent
   id: Ice
-  name: ice
-  desc: Frozen water.
+  name: reagent-name-ice
+  desc: reagent-desc-ice
   physicalDesc: frosty
   color: "#bed8e6"
   meltingPoint: 0.0
@@ -238,9 +239,9 @@
 
 - type: reagent
   id: DryRamen
-  name: dry ramen
+  name: reagent-name-dry-ramen
   parent: BaseDrink
-  desc: Dry noodles and salt.
+  desc: reagent-desc-dry-ramen
   physicalDesc: wormy
   color: "#664300"
   metabolisms:
@@ -251,9 +252,9 @@
 
 - type: reagent
   id: HotRamen
-  name: hot ramen
+  name: reagent-name-hot-ramen
   parent: BaseDrink
-  desc: Hot noodles.
+  desc: reagent-desc-hot-ramen
   physicalDesc: wormy
   color: "#664300"
   metabolisms:
@@ -264,9 +265,9 @@
 
 - type: reagent
   id: Pilk
-  name: pilk
+  name: reagent-name-pilk
   parent: BaseDrink
-  desc: A sickening mixture of milk and cola.
+  desc: reagent-desc-pilk
   physicalDesc: creamy
   color: "#e7c69f"
   metabolisms:
