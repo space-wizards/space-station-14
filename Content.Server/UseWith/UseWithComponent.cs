@@ -10,7 +10,7 @@ namespace Content.Server.UseWith;
 public sealed class UseWithComponent : Component
 {
     [DataField("spawnedPrototype", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
-    public string SpawnedPrototype;
+    public string? SpawnedPrototype;
 
     [DataField("spawnCount")] 
     public int SpawnCount;
