@@ -1,10 +1,4 @@
 Entries:
-- author: Lamrr
-  changes:
-  - {message: Dog beds have now arrived. You can now give Ian a place to sleep., type: Add}
-  - {message: Normal beds can now be constructed and deconstructed., type: Fix}
-  id: 946
-  time: '2022-01-30T04:47:12.0000000+00:00'
 - author: Schiene
   changes:
   - {message: Added a Knightship Emergency Shuttle., type: Add}
@@ -3044,3 +3038,8 @@ Entries:
       undamaged and at 100% health, type: Tweak}
   id: 1445
   time: '2022-05-03T09:53:06.0000000+00:00'
+- author: Putnam
+  changes:
+  - {message: Gas pumps now stop if overpressurized, type: Fix}
+  id: 1446
+  time: '2022-05-03T20:24:30.0000000+00:00'
