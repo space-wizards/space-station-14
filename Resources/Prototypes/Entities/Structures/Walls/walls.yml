@@ -708,10 +708,8 @@
     - shape:
         !type:PhysShapeAabb
           bounds: "-0.5,-0.5,0.5,0.5"
-      layer:
-      - Impassable
-      - VaultImpassable
-      - SmallImpassable
       mask:
-      - Impassable
+      - FullTileMask
+      layer:
+      - GlassLayer
   - type: Airtight
