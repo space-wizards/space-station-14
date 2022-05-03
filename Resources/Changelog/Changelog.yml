@@ -1,9 +1,4 @@
 Entries:
-- author: Schiene
-  changes:
-  - {message: Added a Knightship Emergency Shuttle., type: Add}
-  id: 947
-  time: '2022-01-30T07:32:01.0000000+00:00'
 - author: Pancake
   changes:
   - {message: '"Russian accent."', type: Add}
@@ -3043,3 +3038,8 @@ Entries:
   - {message: Gas pumps now stop if overpressurized, type: Fix}
   id: 1446
   time: '2022-05-03T20:24:30.0000000+00:00'
+- author: DogZeroX
+  changes:
+  - {message: Ghosts can now face in four directions., type: Tweak}
+  id: 1447
+  time: '2022-05-03T23:03:24.0000000+00:00'
