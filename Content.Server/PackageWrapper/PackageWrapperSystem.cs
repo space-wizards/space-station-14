@@ -23,6 +23,7 @@ using Robust.Shared.IoC;
 
 using Robust.Shared.Containers;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Utility;
 
 
 namespace Content.Server.PackageWrapper
@@ -78,9 +79,9 @@ namespace Content.Server.PackageWrapper
                 else if (TryComp<SharedItemComponent>(args.Target.Value, out var targetItem))
                 {
                     // find minimal size
-                    var typeComp = component.Products
+                    component.Products
                         .OrderBy(w => w.Capacity)
-                        .FirstOrDefault(item => targetItem.Size <= item.Capacity);
+                        .TryFirstOrDefault(item => targetItem.Size <= item.Capacity, out var typeComp);
                     // Spawn item with minimal size and insert
                     if (typeComp != null)
                     {
@@ -92,6 +93,11 @@ namespace Content.Server.PackageWrapper
                             Loc.GetString("on-successful-wrap-verb-message",
                                 ("target", Comp<MetaDataComponent>(args.Target.Value).EntityName),
                                 ("result", Comp<MetaDataComponent>(spawnedObj).EntityName)));
+                    }
+                    else
+                    {
+                        component.Owner.PopupMessage(args.User, Loc.GetString("on-failed-wrap-size-verb-message",
+                            ("target", Comp<MetaDataComponent>(args.Target.Value).EntityName)));
                     }
                 }
                 else
