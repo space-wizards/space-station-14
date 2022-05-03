@@ -15,9 +15,11 @@
     sprite: Clothing/Back/Satchels/satchel.rsi
   - type: Storage
     capacity: 100
-    storageSoundCollection:
-      collection: storageRustle
-    
+  - type: UserInterface
+    interfaces:
+    - key: enum.StorageUiKey.Key
+      type: StorageBoundUserInterface
+
 - type: entity
   parent: ClothingBackpackSatchel
   id: ClothingBackpackSatchelEngineering

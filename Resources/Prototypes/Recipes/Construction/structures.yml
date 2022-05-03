@@ -469,25 +469,6 @@
   conditions:
     - !type:TileNotBlocked
 
-- type: construction
-  name: light switch
-  id: LightSwitchRecipe
-  graph: LightSwitch
-  startNode: start
-  targetNode: lightSwitch
-  category: Structures
-  description: A switch for toggling lights that are connected to the same apc.
-  icon:
-    sprite: Structures/Wallmounts/switch.rsi
-    state: on
-  objectType: Structure
-  placementMode: SnapgridCenter
-  canRotate: true
-  canBuildInImpassable: true
-  conditions:
-    - !type:WallmountCondition
-
-
 #conveyor
 - type: construction
   name: conveyor belt
@@ -503,22 +484,6 @@
   icon:
     sprite: Structures/conveyor.rsi
     state: conveyor_stopped_cw
-  conditions:
-    - !type:TileNotBlocked
-
-- type: construction
-  name: two-way lever
-  id: TwoWayLever
-  graph: LeverGraph
-  startNode: start
-  targetNode: lever
-  category: Structures
-  description: A lever to control machines. It has 3 modes.
-  objectType: Structure
-  canBuildInImpassable: false
-  icon:
-    sprite: Structures/conveyor.rsi
-    state: switch-off
   conditions:
     - !type:TileNotBlocked
 
@@ -574,40 +539,6 @@
     - !type:TileNotBlocked
 
 - type: construction
-  name: diamond door
-  id: DiamondDoor
-  graph: DoorGraph
-  startNode: start
-  targetNode: diamondDoor
-  category: Structures
-  description: A primitive door with manual operation like the cavemen used.
-  objectType: Structure
-  placementMode: SnapgridCenter
-  canBuildInImpassable: false
-  icon:
-    sprite: Structures/Doors/MineralDoors/diamond_door.rsi
-    state: closed
-  conditions:
-    - !type:TileNotBlocked
-
-- type: construction
-  name: uranium door
-  id: UraniumDoor
-  graph: DoorGraph
-  startNode: start
-  targetNode: uraniumDoor
-  category: Structures
-  description: A primitive door with manual operation like the cavemen used.
-  objectType: Structure
-  placementMode: SnapgridCenter
-  canBuildInImpassable: false
-  icon:
-    sprite: Structures/Doors/MineralDoors/uranium_door.rsi
-    state: closed
-  conditions:
-    - !type:TileNotBlocked
-
-- type: construction
   name: gold door
   id: GoldDoor
   graph: DoorGraph
@@ -637,23 +568,6 @@
   canBuildInImpassable: false
   icon:
     sprite: Structures/Doors/MineralDoors/silver_door.rsi
-    state: closed
-  conditions:
-    - !type:TileNotBlocked
-
-- type: construction
-  name: sandstone door
-  id: SandstoneDoor
-  graph: DoorGraph
-  startNode: start
-  targetNode: sandstoneDoor
-  category: Structures
-  description: A primitive door with manual operation like the cavemen used.
-  objectType: Structure
-  placementMode: SnapgridCenter
-  canBuildInImpassable: false
-  icon:
-    sprite: Structures/Doors/MineralDoors/sandstone_door.rsi
     state: closed
   conditions:
     - !type:TileNotBlocked

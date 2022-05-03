@@ -236,7 +236,7 @@
     sprite: Objects/Weapons/Guns/Shotguns/sawn.rsi
     state: icon
   - type: Item
-    size: 24
+    size: 15
     sprite: Objects/Weapons/Guns/Shotguns/sawn.rsi
   - type: RangedWeapon
   - type: BoltActionBarrel

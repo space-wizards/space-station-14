@@ -3,6 +3,7 @@ using Content.Server.MachineLinking.Events;
 using Content.Shared.Interaction;
 using JetBrains.Annotations;
 using Robust.Shared.GameObjects;
+using Content.Shared.Interaction.Events;
 
 namespace Content.Server.MachineLinking.System
 {
@@ -13,7 +14,7 @@ namespace Content.Server.MachineLinking.System
         {
             base.Initialize();
             SubscribeLocalEvent<SignalButtonComponent, ComponentInit>(OnInit);
-            SubscribeLocalEvent<SignalButtonComponent, InteractHandEvent>(OnInteractHand);
+            SubscribeLocalEvent<SignalButtonComponent, ActivateInWorldEvent>(OnActivated);
         }
 
         private void OnInit(EntityUid uid, SignalButtonComponent component, ComponentInit args)
@@ -23,7 +24,7 @@ namespace Content.Server.MachineLinking.System
                 transmitter.AddPort("Pressed");
         }
 
-        private void OnInteractHand(EntityUid uid, SignalButtonComponent component, InteractHandEvent args)
+        private void OnActivated(EntityUid uid, SignalButtonComponent component, ActivateInWorldEvent args)
         {
             RaiseLocalEvent(uid, new InvokePortEvent("Pressed"), false);
             args.Handled = true;

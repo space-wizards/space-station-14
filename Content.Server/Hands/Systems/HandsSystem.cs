@@ -5,6 +5,7 @@ using Content.Server.Hands.Components;
 using Content.Server.Popups;
 using Content.Server.Stack;
 using Content.Server.Storage.Components;
+using Content.Server.Storage.EntitySystems;
 using Content.Server.Strip;
 using Content.Server.Stunnable;
 using Content.Shared.ActionBlocker;
@@ -47,6 +48,7 @@ namespace Content.Server.Hands.Systems
         [Dependency] private readonly SharedHandsSystem _handsSystem = default!;
         [Dependency] private readonly PullingSystem _pullingSystem = default!;
         [Dependency] private readonly ThrowingSystem _throwingSystem = default!;
+        [Dependency] private readonly StorageSystem _storageSystem = default!;
 
         public override void Initialize()
         {
@@ -262,7 +264,7 @@ namespace Content.Server.Hands.Systems
 
             if (hands.ActiveHand?.HeldEntity != null)
             {
-                storageComponent.PlayerInsertHeldEntity(plyEnt);
+                _storageSystem.PlayerInsertHeldEntity(slotEntity.Value, plyEnt, storageComponent);
             }
             else if (storageComponent.StoredEntities != null)
             {

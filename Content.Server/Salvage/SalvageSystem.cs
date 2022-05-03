@@ -205,21 +205,17 @@ namespace Content.Server.Salvage
             EntityManager.QueueDeleteEntity(salvage);
         }
 
-        private bool TryGetSalvagePlacementLocation(out MapCoordinates coords, out Angle angle)
+        private void TryGetSalvagePlacementLocation(SalvageMagnetComponent component, out MapCoordinates coords, out Angle angle)
         {
             coords = MapCoordinates.Nullspace;
             angle = Angle.Zero;
-            foreach (var (smc, tsc) in EntityManager.EntityQuery<SalvageMagnetComponent, TransformComponent>(true))
+            var tsc = Transform(component.Owner);
+            coords = new EntityCoordinates(component.Owner, component.Offset).ToMap(EntityManager);
+            var grid = tsc.GridID;
+            if (_mapManager.TryGetGrid(grid, out var magnetGrid))
             {
-                coords = new EntityCoordinates(smc.Owner, smc.Offset).ToMap(EntityManager);
-                var grid = tsc.GridID;
-                if (_mapManager.TryGetGrid(grid, out var magnetGrid))
-                {
-                    angle = magnetGrid.WorldRotation;
-                }
-                return true;
+                angle = magnetGrid.WorldRotation;
             }
-            return false;
         }
 
         private IEnumerable<SalvageMapPrototype> GetAllSalvageMaps() =>
@@ -227,12 +223,7 @@ namespace Content.Server.Salvage
 
         private bool SpawnSalvage(SalvageMagnetComponent component)
         {
-            if (!TryGetSalvagePlacementLocation(out var spl, out var spAngle))
-            {
-                Report("salvage-system-announcement-spawn-magnet-lost");
-                return false;
-            }
-
+            TryGetSalvagePlacementLocation(component, out var spl, out var spAngle);
             SalvageMapPrototype? map = null;
 
             var forcedSalvage = _configurationManager.GetCVar<string>(CCVars.SalvageForced);
@@ -276,17 +267,22 @@ namespace Content.Server.Salvage
                 Report("salvage-system-announcement-spawn-no-debris-available");
                 return false;
             }
-            var bp = _mapLoader.LoadBlueprint(spl.MapId, map.MapPath.ToString());
-            if (bp == null)
+
+            var opts = new MapLoadOptions
+            {
+                Offset = spl.Position
+            };
+
+            var (_, gridId) = _mapLoader.LoadBlueprint(spl.MapId, map.MapPath.ToString(), opts);
+            if (gridId == null)
             {
                 Report("salvage-system-announcement-spawn-debris-disintegrated");
                 return false;
             }
-            var salvageEntityId = bp.GridEntityId;
+            var salvageEntityId = _mapManager.GetGridEuid(gridId.Value);
             component.AttachedEntity = salvageEntityId;
 
             var pulledTransform = EntityManager.GetComponent<TransformComponent>(salvageEntityId);
-            pulledTransform.Coordinates = EntityCoordinates.FromMap(_mapManager, spl);
             pulledTransform.WorldRotation = spAngle;
 
             Report("salvage-system-announcement-arrived", ("timeLeft", HoldTime.TotalSeconds));
