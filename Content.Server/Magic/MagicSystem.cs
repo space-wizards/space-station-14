@@ -1,10 +1,13 @@
 ﻿using Content.Server.Coordinates.Helpers;
 using Content.Server.Decals;
+using Content.Server.Doors.Systems;
 using Content.Server.Magic.Events;
 using Content.Server.Wieldable;
 using Content.Server.Wieldable.Components;
 using Content.Shared.Actions;
 using Content.Shared.Actions.ActionTypes;
+using Content.Shared.Doors.Components;
+using Content.Shared.Doors.Systems;
 using Content.Shared.Maps;
 using Robust.Shared.Map;
 using Robust.Shared.Prototypes;
@@ -18,6 +21,8 @@ public sealed class MagicSystem : EntitySystem
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
     [Dependency] private readonly IMapManager _mapManager = default!;
     [Dependency] private readonly DecalSystem _decals = default!;
+    [Dependency] private readonly EntityLookupSystem _lookup = default!;
+    [Dependency] private readonly SharedDoorSystem _doorSystem = default!;
 
     private readonly List<EntityUid> ActiveWalls = new ();
 
@@ -31,7 +36,8 @@ public sealed class MagicSystem : EntitySystem
 
         SubscribeLocalEvent<RuneMagicEvent>(OnRuneMagic);
         SubscribeLocalEvent<TeleportSpellEvent>(OnTeleportSpell);
-        SubscribeLocalEvent<ForceWallEvent>(OnForceWallSpell);
+        SubscribeLocalEvent<ForceWallSpellEvent>(OnForceWallSpell);
+        SubscribeLocalEvent<KnockSpellEvent>(OnKnockSpell);
     }
 
     private void OnInit(EntityUid uid, SpellbookComponent component, ComponentInit args)
@@ -55,7 +61,7 @@ public sealed class MagicSystem : EntitySystem
     {
         base.Update(frameTime);
 
-        foreach (var forcewall in EntityQuery<ForceWallComponent>())
+        foreach (var forcewall in EntityQuery<ForceWallSpellComponent>())
         {
             forcewall.Timer += frameTime;
 
@@ -122,7 +128,7 @@ public sealed class MagicSystem : EntitySystem
         args.Handled = true;
     }
 
-    private void OnForceWallSpell(ForceWallEvent args)
+    private void OnForceWallSpell(ForceWallSpellEvent args)
     {
         if (args.Handled)
             return;
@@ -167,7 +173,24 @@ public sealed class MagicSystem : EntitySystem
 
         foreach (var wall in ActiveWalls)
         {
-            EnsureComp<ForceWallComponent>(wall);
+            EnsureComp<ForceWallSpellComponent>(wall);
+        }
+
+        args.Handled = true;
+    }
+
+    private void OnKnockSpell(KnockSpellEvent args)
+    {
+        if (args.Handled)
+            return;
+
+        var transform = Transform(args.Performer);
+        var coords = transform.Coordinates;
+
+        foreach (var entity in _lookup.GetEntitiesInRange(coords, args.Range))
+        {
+            if (TryComp<DoorComponent>(entity, out var doorComp))
+                _doorSystem.StartOpening(doorComp.Owner);
         }
 
         args.Handled = true;

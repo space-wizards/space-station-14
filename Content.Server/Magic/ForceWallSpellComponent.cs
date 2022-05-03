@@ -4,12 +4,8 @@ using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototy
 namespace Content.Server.Magic;
 
 [RegisterComponent]
-public sealed class ForceWallComponent : Component
+public sealed class ForceWallSpellComponent : Component
 {
-    [ViewVariables]
-    [DataField("wallPrototype", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
-    public string WallPrototype = "WallCult";
-
     [ViewVariables]
     public float Timer = 0f;
 

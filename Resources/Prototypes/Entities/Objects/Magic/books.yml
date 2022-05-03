@@ -45,3 +45,19 @@
     - type: Spellbook
       worldSpells:
         Blink: 3
+
+- type: entity
+  id: KnockSpellbook
+  name: knock spellbook
+  parent: BaseItem
+  components:
+    - type: Sprite
+      netsync: false
+      sprite: Objects/Misc/books.rsi
+      layers:
+        - state: book_demonomicon
+    - type: Wieldable
+      wieldTime: 0.75
+    - type: Spellbook
+      instantSpells:
+        Knock: 3

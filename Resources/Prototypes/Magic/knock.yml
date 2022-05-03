@@ -1,11 +1,11 @@
 ﻿- type: instantAction
-  id: ForceWall
-  name: force wall
-  description: summmons walls
+  id: Knock
+  name: knock
+  description: opens doors
   useDelay: 10
   speech: bunga
   itemIconStyle: BigAction
   icon:
     sprite: Effects/crayondecals.rsi
     state: rune1
-  serverEvent: !type:ForceWallSpellEvent
+  serverEvent: !type:KnockSpellEvent
