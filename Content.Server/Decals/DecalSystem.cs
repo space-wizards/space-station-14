@@ -371,7 +371,6 @@ namespace Content.Server.Decals
                 // and also mark them as stale for networking.
                 var toRemoveGrids = new RemQueue<GridId>();
                 // Store the chunks for later to remove.
-                var oldChunks = _chunkViewerPool.Get();
 
                 foreach (var (gridId, oldIndices) in _previousSentChunks[playerSession])
                 {
@@ -414,16 +413,13 @@ namespace Content.Server.Decals
                     {
                         newChunks.ExceptWith(previousChunks);
                     }
-                    else
-                    {
-                        // If we don't have the grid in range previously we'll just add every in range chunk
-                        _previousSentChunks[playerSession][gridId] = gridChunks;
-                    }
 
                     if (_dirtyChunks.TryGetValue(gridId, out var dirtyChunks))
                     {
-                        gridChunks.IntersectWith(dirtyChunks);
-                        newChunks.UnionWith(gridChunks);
+                        var inRange = new HashSet<Vector2i>();
+                        inRange.UnionWith(gridChunks);
+                        inRange.IntersectWith(dirtyChunks);
+                        newChunks.UnionWith(inRange);
                     }
 
                     if (newChunks.Count == 0)
@@ -432,23 +428,20 @@ namespace Content.Server.Decals
                         continue;
                     }
 
+                    // TODO: This is gonna have churn but mainly I want to fix the bugs rn.
+                    _previousSentChunks[playerSession][gridId] = gridChunks;
                     updatedChunks[gridId] = newChunks;
                 }
 
                 // We'll only remove stale grids after the above iteration.
-                foreach (var (gridId, indices) in staleChunks)
+                foreach (var gridId in toRemoveGrids)
                 {
-                    _previousSentChunks[playerSession][gridId].ExceptWith(indices);
-
-                    if (_previousSentChunks[playerSession][gridId].Count != 0) continue;
-
-                    _chunkIndexPool.Return(_previousSentChunks[playerSession][gridId]);
                     _previousSentChunks[playerSession].Remove(gridId);
                 }
 
                 if (updatedChunks.Count == 0)
                 {
-                    ReturnToPool(chunksInRange);
+                    // ReturnToPool(chunksInRange);
                     // Even if updatedChunks is empty we'll still return it to the pool as it may have been allocated higher.
                     ReturnToPool(updatedChunks);
                 }
