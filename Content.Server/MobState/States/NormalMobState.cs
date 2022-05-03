@@ -28,7 +28,7 @@ namespace Content.Server.MobState.States
 
             if (stateComponent.TryGetEarliestIncapacitatedState(threshold, out _, out var earliestThreshold) && damageable.TotalDamage > 0)
             {
-                modifier = (short) Math.Max((decimal) (damageable.TotalDamage / (earliestThreshold / 6f)),1);
+                modifier = (short) MathF.Max((float) (damageable.TotalDamage / (earliestThreshold / 6f)),1);
                  //if hurt at all we skip to the first hurt state with Max(), anything else will end up falling to 5 at maximum before crit
             }
             EntitySystem.Get<AlertsSystem>().ShowAlert(entity, AlertType.HumanHealth, modifier);
