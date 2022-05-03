@@ -1,17 +1,7 @@
-﻿using Content.Server.Clothing.Components;
-using Content.Server.Popups;
-using Content.Server.Storage.Components;
-using Content.Shared.Acts;
+﻿using Content.Server.Storage.Components;
 using Content.Shared.Hands.Components;
-using Content.Shared.Interaction;
-using Content.Shared.Placeable;
-using Content.Shared.Tag;
 using Content.Shared.Verbs;
 using Robust.Shared.Containers;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Localization;
-using Robust.Shared.Player;
 
 namespace Content.Server.Storage.EntitySystems
 {

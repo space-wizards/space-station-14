@@ -51,35 +51,5 @@ namespace Content.Server.PackageWrapper
         {
             return GetEnumerator();
         }
-
-        /// <summary>
-        ///     Returns a WrapContainer from the string id;
-        /// </summary>
-        /// <returns>Product</returns>
-        public WrapperTypePrototype? GetProduct(string productId)
-        {
-            var prototypeManager = IoCManager.Resolve<IPrototypeManager>();
-            if (!prototypeManager.TryIndex(productId, out WrapperTypePrototype? product) || !_products.Contains(product))
-            {
-                return null;
-            }
-            return product;
-        }
-
-        /// <summary>
-        ///     Returns a list with the IDs of all products.
-        /// </summary>
-        /// <returns>A list of product IDs</returns>
-        public List<string> GetProductIdList()
-        {
-            var productIds = new List<string>();
-
-            foreach (var product in _products)
-            {
-                productIds.Add(product.ID);
-            }
-
-            return productIds;
-        }
     }
 }

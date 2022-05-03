@@ -1,45 +1,37 @@
 # Sized base
 - type: WrapType
   id: Tiny
-  tags: ["WrapType"]
   protospawnid: TinyParcel
   capacity: 1
 
 - type: WrapType
   id: Small
-  tags: ["WrapType"]
   protospawnid: SmallParcel
   capacity: 5
 
 - type: WrapType
   id: Medium
-  tags: ["WrapType"]
   protospawnid: MediumParcel
   capacity: 10
 
 - type: WrapType
   id: Large
-  tags: ["WrapType"]
   protospawnid: LargeParcel
   capacity: 40
 
 #Shaped base
 - type: WrapShapedType
   id: Sphere
-  tags: ["WrapType"]
   protospawnid: SphereParcel
 
 - type: WrapShapedType
   id: Box
-  tags: ["WrapType"]
   protospawnid: BoxParcel
 
 - type: WrapShapedType
   id: Closet
-  tags: ["WrapType"]
   protospawnid: ClosetParcel
 
 - type: WrapShapedType
   id: Crate
-  tags: ["WrapType"]
   protospawnid: CrateParcel

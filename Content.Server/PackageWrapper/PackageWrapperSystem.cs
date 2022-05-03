@@ -1,28 +1,10 @@
-using System;
-using System.Collections.Generic;
 using System.Linq;
-using Content.Server.Chemistry.EntitySystems;
 using Content.Server.PackageWrapper.Components;
 using Content.Shared.Interaction;
 using Content.Shared.Popups;
 using JetBrains.Annotations;
-using Robust.Shared.GameObjects;
-
-using Content.Server.Electrocution;
-using Content.Server.Power.Components;
 using Content.Server.Storage.Components;
-using Content.Server.Storage.EntitySystems;
-using Content.Server.Tools;
-using Content.Server.Xenoarchaeology.XenoArtifacts.Triggers.Systems;
-using Content.Shared.Interaction;
 using Content.Shared.Item;
-using Content.Shared.Storage;
-using Content.Shared.VendingMachines;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-
-using Robust.Shared.Containers;
-using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
 
 
