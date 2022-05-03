@@ -1,9 +1,4 @@
 Entries:
-- author: metalgearsloth
-  changes:
-  - {message: Prying tiles now takes time., type: Tweak}
-  id: 945
-  time: '2022-01-30T03:48:18.0000000+00:00'
 - author: Lamrr
   changes:
   - {message: Dog beds have now arrived. You can now give Ian a place to sleep., type: Add}
@@ -3043,3 +3038,9 @@ Entries:
   - {message: NPCs can open doors to avoid pathfinder issues in the interim., type: Tweak}
   id: 1444
   time: '2022-05-03T08:25:01.0000000+00:00'
+- author: freeman2651
+  changes:
+  - {message: the health HUD icon for 100% health now only shows if you are actually
+      undamaged and at 100% health, type: Tweak}
+  id: 1445
+  time: '2022-05-03T09:53:06.0000000+00:00'
