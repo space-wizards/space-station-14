@@ -6,8 +6,8 @@ public sealed class KnockSpellEvent : InstantActionEvent
 {
     /// <summary>
     /// The range this spell opens doors in
-    /// From what I understand 16 is the default view range.
+    /// 4f is the default
     /// </summary>
     [DataField("range")]
-    public float Range = 16f;
+    public float Range = 4f;
 }

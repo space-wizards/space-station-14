@@ -9,7 +9,6 @@ using Content.Shared.Maps;
 using Robust.Shared.Map;
 using Robust.Shared.Prototypes;
 
-
 namespace Content.Server.Magic;
 
 public sealed class MagicSystem : EntitySystem
@@ -176,17 +175,23 @@ public sealed class MagicSystem : EntitySystem
         args.Handled = true;
     }
 
+    /// <summary>
+    /// Opens all doors within range
+    /// </summary>
+    /// <param name="args"></param>
     private void OnKnockSpell(KnockSpellEvent args)
     {
         if (args.Handled)
             return;
 
+        //Get the position of the player
         var transform = Transform(args.Performer);
         var coords = transform.Coordinates;
 
+        //Look for doors and don't open them if they're already open.
         foreach (var entity in _lookup.GetEntitiesInRange(coords, args.Range))
         {
-            if (TryComp<DoorComponent>(entity, out var doorComp))
+            if (TryComp<DoorComponent>(entity, out var doorComp) && doorComp.State is not DoorState.Open)
                 _doorSystem.StartOpening(doorComp.Owner);
         }
 
