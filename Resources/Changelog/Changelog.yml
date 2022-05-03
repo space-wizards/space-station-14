@@ -1,9 +1,4 @@
 Entries:
-- author: Macoron
-  changes:
-  - {message: Welding toilets no longer annihilate characters sitting on them., type: Fix}
-  id: 943
-  time: '2022-01-29T05:34:57.0000000+00:00'
 - author: ElectroJr
   changes:
   - {message: 'Airlocks no longer close when an entity is blocking the way. If the
@@ -3043,3 +3038,9 @@ Entries:
   - {message: Pneumatic cannons now properly fire and eject their contents., type: Fix}
   id: 1442
   time: '2022-05-03T02:53:03.0000000+00:00'
+- author: Mirino97
+  changes:
+  - {message: Items failed to insert in containers should no longer drop to the ground!,
+    type: Fix}
+  id: 1443
+  time: '2022-05-03T03:05:23.0000000+00:00'
