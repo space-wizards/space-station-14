@@ -1,9 +1,4 @@
 Entries:
-- author: aaronmell
-  changes:
-  - {message: Admin and AdminRank windows show the save button correctly now, type: Fix}
-  id: 942
-  time: '2022-01-29T05:20:26.0000000+00:00'
 - author: Macoron
   changes:
   - {message: Welding toilets no longer annihilate characters sitting on them., type: Fix}
@@ -3043,3 +3038,8 @@ Entries:
       Larger capacity and the advanced is faster at welding., type: Add}
   id: 1441
   time: '2022-05-02T22:51:24.0000000+00:00'
+- author: mirrorcult
+  changes:
+  - {message: Pneumatic cannons now properly fire and eject their contents., type: Fix}
+  id: 1442
+  time: '2022-05-03T02:53:03.0000000+00:00'
