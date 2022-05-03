@@ -1,5 +1,5 @@
-reagent-name-aluminium # -we use real words here. = aluminium
-reagent-desc-aluminium # -we use real words here. = A silver, soft, non-magnetic, and ductile metal.
+reagent-name-aluminium = aluminium
+reagent-desc-aluminium = A silver, soft, non-magnetic, and ductile metal.
 reagent-name-carbon = carbon
 reagent-desc-carbon = A black, crystalline solid.
 reagent-name-chlorine = chlorine

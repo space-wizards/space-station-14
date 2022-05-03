@@ -79,9 +79,9 @@
 
 - type: reagent
   id: THC
-  name: reagent-name-t-h-c
+  name: reagent-name-thc
   group: Narcotics
-  desc: reagent-desc-t-h-c
+  desc: reagent-desc-thc
   color: "#808080"
   physicalDesc: crystalline
   plantMetabolism:
@@ -92,9 +92,9 @@
 
 - type: reagent
   id: THCOil
-  name: reagent-name-t-h-c-oil
+  name: reagent-name-thc-oil
   group: Narcotics
-  desc: reagent-desc-t-h-c-oil
+  desc: reagent-desc-thc-oil
   physicalDesc: skunky
   color: "#DAA520"
 
