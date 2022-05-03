@@ -10,10 +10,10 @@
         components:
           - Body
           - Item
-    - type: RadiationPulse
-      range: 15
-      decay: false
-      dps: 0
+#    - type: RadiationPulse
+#      range: 15
+#      decay: false
+#      dps: 0
     - type: Damageable
       damageContainer: Inorganic
       damageModifierSet: Glass
@@ -54,8 +54,8 @@
       energy: 5
       color: "#d9ce00"
     - type: Explosive
-      explosionType: Default
-      maxIntensity: 100
-      intensitySlope: 5
-      totalIntensity: 5000
+      explosionType: Supermatter
+      maxIntensity: 10000
+      intensitySlope: 10
+      totalIntensity: 10000
 

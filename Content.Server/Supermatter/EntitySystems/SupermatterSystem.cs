@@ -17,6 +17,7 @@ using Robust.Shared.Player;
 using Content.Shared.Atmos;
 using Robust.Shared.Physics.Dynamics;
 using Content.Server.Chat;
+using Content.Server.Ghost.Components;
 
 namespace Content.Server.Supermatter.EntitySystems
 {
@@ -25,11 +26,12 @@ namespace Content.Server.Supermatter.EntitySystems
     {
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
         [Dependency] private readonly DamageableSystem _damageable = default!;
-        [Dependency] private readonly AtmosphereSystem _atmosphereSystem = default!;
+        [Dependency] private readonly AtmosphereSystem _atmosphere = default!;
         [Dependency] private readonly ChatSystem _chat = default!;
         [Dependency] private readonly IChatManager _chatManager = default!;
         [Dependency] private readonly TagSystem _tag = default!;
         [Dependency] private readonly SharedContainerSystem _container = default!;
+        [Dependency] private readonly ExplosionSystem _explosion = default!;
 
         public override void Initialize()
         {
@@ -60,7 +62,7 @@ namespace Content.Server.Supermatter.EntitySystems
             }
 
             SMcomponent.AtmosUpdateAccumulator += frameTime;
-            if (_atmosphereSystem.GetTileMixture(Xform.Coordinates) is { } mixture && SMcomponent.AtmosUpdateAccumulator > SupermatterComponent.AtmosUpdateTimer)
+            if (_atmosphere.GetTileMixture(Xform.Coordinates) is { } mixture && SMcomponent.AtmosUpdateAccumulator > SupermatterComponent.AtmosUpdateTimer)
             {
                 SMcomponent.AtmosUpdateAccumulator -= SupermatterComponent.AtmosUpdateTimer;
                 SMcomponent.Mix = mixture;
@@ -111,7 +113,7 @@ namespace Content.Server.Supermatter.EntitySystems
                     var h2oBonus = 1 - (SMcomponent.GasComp[5] * 0.25f);
                     SMcomponent.PowerTransmissionBonus *= h2oBonus;
 
-                    //TODO: port miasma
+                    //TODO: port miasma(?)
 
                     //more moles of gases are harder to heat than fewer, so let's scale heat damage around them
                     var MoleHeatPenalty = Math.Max(moles / SMcomponent.MoleHeatPenalty, 0.25);
@@ -132,26 +134,11 @@ namespace Content.Server.Supermatter.EntitySystems
                     //TODO: change pointlight brightness based off power ratio/temp factor
                     float TempFactor = SMcomponent.GasmixPowerRatio > 0.8 ? 50f : 30f;
 
-                    /*
-                    if (SMcomponent.GasmixPowerRatio > 0.8)
-                    {
-                        //with a perfect gas mix, make the power more based on heat
-                        TempFactor = 50f;
-                        //glow harder
-                    }
-                    else
-                    {
-                        //in normal mode, power is less effected by heat
-                        TempFactor = 30f;
-                        //glow normally
-                    }
-                    */
-
                     //power is set for radiation
                     SMcomponent.Power = Math.Max((((temp * TempFactor) / Atmospherics.T0C) * SMcomponent.GasmixPowerRatio) + SMcomponent.Power, 0);
 
                     //more math to actually calculate radiation output
-                    rad.RadsPerSecond = SMcomponent.Power * Math.Max(0f, (1f + (SMcomponent.PowerTransmissionBonus/10f)));
+                    //rad.RadsPerSecond = SMcomponent.Power * Math.Max(0f, (1f + (SMcomponent.PowerTransmissionBonus/10f)));
                     //_radiationSystem.Radiate(SMcomponent.Power * Math.Max(0f, (1f + (SMcomponent.PowerTransmissionBonus/10f))), 10f, SMcomponent, frameTime);
 
                     //TODO: PsyCoeff should change from 0-1 based on psycologist distance
@@ -205,8 +192,6 @@ namespace Content.Server.Supermatter.EntitySystems
 
             if (SMcomponent.DamageUpdateAccumulator > SupermatterComponent.DamageUpdateTimer)
             {
-                SMcomponent.DamageUpdateAccumulator -= SupermatterComponent.DamageUpdateTimer;
-
                 float damage = 0;
 
                 SMcomponent.DamageArchived = damageable.TotalDamage.Float();
@@ -246,7 +231,7 @@ namespace Content.Server.Supermatter.EntitySystems
                 }
 
                 //if in an atmosphere
-                if (_atmosphereSystem.GetTileMixture(Xform.Coordinates) is { } mixture)
+                if (_atmosphere.GetTileMixture(Xform.Coordinates) is { } mixture)
                 {
                     //((((some value between 0.5 and 1 * temp - ((273.15 + 40) * some values between 1 and 10)) * some number between 0.25 and knock your socks off / 150) * 0.25
                     //Heat and mols account for each other, a lot of hot mols are more damaging then a few
@@ -272,7 +257,7 @@ namespace Content.Server.Supermatter.EntitySystems
 
                     //if there are space tiles next to SM
                     //TODO: change moles out for checking if adjacent tiles exist
-                    foreach(var adjacent in _atmosphereSystem.GetAdjacentTileMixtures(Xform.Coordinates))
+                    foreach(var adjacent in _atmosphere.GetAdjacentTileMixtures(Xform.Coordinates))
                     {
                         if (adjacent.TotalMoles == 0)
                         {
@@ -297,6 +282,8 @@ namespace Content.Server.Supermatter.EntitySystems
                 //damage to add to total
                 var damageDelta = new DamageSpecifier(_prototypeManager.Index<DamageTypePrototype>("Blunt"), (Shared.FixedPoint.FixedPoint2)damage);
                 _damageable.TryChangeDamage(SMcomponent.Owner, damageDelta, true);
+
+                SMcomponent.DamageUpdateAccumulator -= SupermatterComponent.DamageUpdateTimer;
             }
         }
 
@@ -310,63 +297,82 @@ namespace Content.Server.Supermatter.EntitySystems
                 return;
             }
 
-            //TODO: make tesla spawn at SupermatterComponent.PowerPenaltyThreshold
+            var _delamType = SupermatterComponent.DelamType.Explosion;
+
+            var audioParams = AudioParams.Default;
+            audioParams.Loop = true;
+            audioParams.MaxDistance = 20f;
+            audioParams.Volume = 5;
+
+            //before we actually start counting down, check to see what delam type we're doing.
             if (!SMcomponent.FinalCountdown)
             {
-                if (_atmosphereSystem.GetTileMixture(Xform.Coordinates) is { } mixture)
+                //if we're in atmos
+                if (_atmosphere.GetTileMixture(Xform.Coordinates) is { } mixture)
                 {
+                    //if the moles on the sm's tile are above MolePenaltyThreshold
                     if (mixture.TotalMoles >= SupermatterComponent.MolePenaltyThreshold)
                     {
+                        _delamType = SupermatterComponent.DelamType.Singulo;
                         _chatManager.DispatchStationAnnouncement(Loc.GetString("supermatter-delamination-overmass"), "Supermatter", false);
                     }
-                    else
-                    {
-                        _chatManager.DispatchStationAnnouncement(Loc.GetString("supermatter-delamination-default"), "Supermatter", false);
-                    }
+                }
+                else
+                {
+                    _delamType = SupermatterComponent.DelamType.Explosion;
+                    _chatManager.DispatchStationAnnouncement(Loc.GetString("supermatter-delamination-default"), "Supermatter", false);
                 }
             }
+
             SMcomponent.FinalCountdown = true;
 
             SMcomponent.DelamTimerAccumulator += frameTime;
             SMcomponent.SpeakAccumulator += frameTime;
             int RoundSeconds = SupermatterComponent.DelamTimerTimer - (int)Math.Floor(SMcomponent.DelamTimerAccumulator);
 
+            //we healed out of delam, return
             if (SMcomponent.DamageArchived < SupermatterComponent.ExplosionPoint)
             {
                 _chatManager.DispatchStationAnnouncement(Loc.GetString("supermatter-safe-allert"), "Supermatter", false);
                 SMcomponent.FinalCountdown = false;
                 return;
             }
+            //we're more than 5 seconds from delam, only yell every 5 seconds.
             else if (RoundSeconds >= 5 && SMcomponent.SpeakAccumulator >= 5)
             {
                 SMcomponent.SpeakAccumulator -= 5;
                 _chatManager.DispatchStationAnnouncement(Loc.GetString("supermatter-seconds-before-delam", ("Seconds", RoundSeconds)), "Supermatter", false);
             }
+            //less than 5 seconds to delam, count every second.
             else if (RoundSeconds <  5 && SMcomponent.SpeakAccumulator >= 1)
             {
                 SMcomponent.SpeakAccumulator -= 1;
                 _chatManager.DispatchStationAnnouncement(Loc.GetString("supermatter-seconds-before-delam", ("Seconds", RoundSeconds)), "Supermatter", false);
             }
 
-            if (SMcomponent.DelamTimerAccumulator >= SupermatterComponent.DelamTimerTimer)
+            //play an alarm as long as you're delaming
+            if (SMcomponent.FinalCountdown)
             {
-                if (_atmosphereSystem.GetTileMixture(Xform.Coordinates) is { } mixture)
-                {
-                    if (mixture.TotalMoles >= SupermatterComponent.MolePenaltyThreshold)
-                    {
-                        EntityManager.SpawnEntity("Singularity", Xform.Coordinates);
-                        return;
-                    }
-                }
-                //TODO: tune this after explosion refactor
-                EntitySystem.Get<ExplosionSystem>().TriggerExplosive(Uid, explosive: Xplode, totalIntensity: 500000, radius: 100, user: Uid);
-                //EntityManager.QueueDeleteEntity(Uid);
+                SoundSystem.Play(Filter.Pvs(Uid, 5), SMcomponent.DelamAlarm.GetSound(), Uid, audioParams);
             }
 
-            if (SMcomponent.FinalCountdown && !SMcomponent.AlarmPlaying && RoundSeconds <= 10)
+            //TODO: make tesla(?) spawn at SupermatterComponent.PowerPenaltyThreshold and think up other delam types
+            //times up, explode or make a singulo
+            if (SMcomponent.DelamTimerAccumulator >= SupermatterComponent.DelamTimerTimer)
             {
-                SMcomponent.AlarmPlaying = true;
-                SoundSystem.Play(Filter.Pvs(Uid, 2), SMcomponent.DelamAlarm.GetSound(), Uid);
+                if (_delamType.Equals(SupermatterComponent.DelamType.Singulo))
+                {
+                    //spawn a singulo :)
+                    EntityManager.SpawnEntity("Singularity", Xform.Coordinates);
+                }
+                else if (_delamType.Equals(SupermatterComponent.DelamType.Explosion))
+                {
+                    //esplosion!!!!!
+                    _explosion.TriggerExplosive(Uid, explosive: Xplode, totalIntensity: 500000, radius: 500, user: Uid);
+                }
+
+                SMcomponent.FinalCountdown = false;
+                return;
             }
         }
 

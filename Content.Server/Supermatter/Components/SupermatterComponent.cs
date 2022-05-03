@@ -1,11 +1,7 @@
 using Content.Shared.Atmos;
 using Content.Shared.Sound;
-using Robust.Shared.GameObjects;
-using Robust.Shared.ViewVariables;
-using Robust.Shared.Analyzers;
 using Content.Server.Supermatter.EntitySystems;
 using Content.Shared.Whitelist;
-using Robust.Shared.Serialization.Manager.Attributes;
 
 
 namespace Content.Server.Supermatter.Components
@@ -85,7 +81,6 @@ namespace Content.Server.Supermatter.Components
         public float DelamTimerAccumulator {get; set;}
         public const int DelamTimerTimer = 30;
         public float SpeakAccumulator {get; set;} = 5f;
-        public bool AlarmPlaying = false;
         public float AtmosUpdateAccumulator {get; set;}
         //update atmos every half second
         public const float AtmosUpdateTimer = 0.5f;
@@ -162,5 +157,11 @@ namespace Content.Server.Supermatter.Components
             {Atmospherics.TritiumTransmitModifier,  Atmospherics.TritiumHeatPenalty,  Atmospherics.TritiumPowerMixRatio},  //tritium
             {Atmospherics.WaterTransmitModifier,    Atmospherics.WaterHeatPenalty,    Atmospherics.WaterPowerMixRatio},    //water
         };
+
+        public enum DelamType : sbyte
+        {
+            Explosion = 0,
+            Singulo = 1,
+        }
     }
 }
