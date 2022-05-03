@@ -12,7 +12,7 @@ namespace Content.Shared.Power
     }
 
     [Serializable, NetSerializable]
-    public enum PowerWireActionKey
+    public enum PowerWireActionKey : byte
     {
         Key,
         Status,

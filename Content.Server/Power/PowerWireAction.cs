@@ -257,7 +257,7 @@ public sealed class PowerWireAction : BaseWireAction
         SetPower(wire.Owner, false);
     }
 
-    private enum PowerWireActionInternalKeys
+    private enum PowerWireActionInternalKeys : byte
     {
         MainWire,
         WireCount,

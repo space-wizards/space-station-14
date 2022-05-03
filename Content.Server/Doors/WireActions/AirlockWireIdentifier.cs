@@ -1,6 +1,6 @@
 namespace Content.Server.Doors;
 
-public enum AirlockWireIdentifier
+public enum AirlockWireIdentifier : byte
 {
     Bolt,
     BoltLight,
