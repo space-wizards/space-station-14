@@ -72,7 +72,7 @@
   name: slice of margherita pizza
   parent: FoodPizzaSliceBase
   id: FoodPizzaMargheritaSlice
-  description: A slice of the Italy.
+  description: A slice of Italy.
   components:
   - type: Sprite
     layers:
