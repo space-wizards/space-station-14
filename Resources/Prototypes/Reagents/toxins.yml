@@ -1,8 +1,8 @@
 ﻿- type: reagent
   id: Toxin
-  name: toxin
+  name: reagent-name-toxin
   group: Toxins
-  desc: A Toxic chemical.
+  desc: reagent-desc-toxin
   color: "#cf3600"
   physicalDesc: opaque
   plantMetabolism:
@@ -20,9 +20,9 @@
 
 - type: reagent
   id: PolytrinicAcid
-  name: polytrinic acid
+  name: reagent-name-polytrinic-acid
   group: Toxins
-  desc: An extremely corrosive chemical substance. The slightest touch of it will melt off most masks and headgear, and it deals extreme damage to anyone who comes directly into contact with it.
+  desc: reagent-desc-polytrinic-acid
   physicalDesc: strong-smelling
   color: "#a1000b"
   boilingPoint: 78.2 # This isn't a real chemical...
@@ -60,9 +60,9 @@
 
 - type: reagent
   id: FluorosulfuricAcid
-  name: fluorosulfuric acid
+  name: reagent-name-fluorosulfuric-acid
   group: Toxins
-  desc: An extremely corrosive chemical substance.
+  desc: reagent-desc-fluorosulfuric-acid
   physicalDesc: strong-smelling
   color: "#5050ff"
   boilingPoint: 165
@@ -93,9 +93,9 @@
 
 - type: reagent
   id: SulfuricAcid
-  name: sulfuric acid
+  name: reagent-name-sulfuric-acid
   group: Toxins
-  desc: A highly corrosive, oily, colorless liquid.
+  desc: reagent-desc-sulfuric-acid
   physicalDesc: oily
   color: "#BF8C00"
   boilingPoint: 337.0
@@ -133,9 +133,9 @@
 
 - type: reagent
   id: UnstableMutagen
-  name: unstable mutagen
+  name: reagent-name-unstable-mutagen
   group: Toxins
-  desc: Causes mutations when injected into living people or plants. High doses may be lethal, especially in humans.
+  desc: reagent-desc-unstable-mutagen
   physicalDesc: glowing
   color: "#00ff5f"
   boilingPoint: 340282300000000000000000000000000000000 # Ethidium bromide, which doesn't boil.
@@ -153,9 +153,9 @@
 
 - type: reagent
   id: HeartbreakerToxin
-  name: heartbreaker toxin
+  name: reagent-name-heartbreaker-toxin
   group: Toxins
-  desc: A hallucinogenic compound that is illegal under space law. A synthetic drug derived from Mindbreaker toxin, it blocks some neurological signals to the respiratory system which causes choking.
+  desc: reagent-desc-heartbreaker-toxin
   physicalDesc: strong-smelling
   color: "#5f959c"
   metabolisms:
@@ -171,9 +171,9 @@
 
 - type: reagent
   id: Lexorin
-  name: lexorin
+  name: reagent-name-lexorin
   group: Toxins
-  desc: Temporarily stops respiration and causes tissue damage. Large doses are fatal, and will cause people to pass out very quickly. Dexalin and Dexalin Plus will both remove it, however.
+  desc: reagent-desc-lexorin
   physicalDesc: pungent
   color: "#6b0007"
   metabolisms:
@@ -186,9 +186,9 @@
 
 - type: reagent
   id: MindbreakerToxin
-  name: mindbreaker toxin
+  name: reagent-name-mindbreaker-toxin
   group: Toxins
-  desc: A potent hallucinogenic compound that is illegal under space law. Formerly known as LSD.
+  desc: reagent-desc-mindbreaker-toxin
   physicalDesc: opaque
   color: "#77b58e"
   plantMetabolism:
@@ -198,9 +198,9 @@
 
 - type: reagent
   id: Histamine
-  name: histamine
+  name: reagent-name-histamine
   group: Toxins
-  desc: Histamine's effects become more dangerous depending on the dosage amount. They range from mildly annoying to incredibly lethal.
+  desc: reagent-desc-histamine
   physicalDesc: abrasive
   color: "#FA6464"
   metabolisms:
@@ -235,9 +235,9 @@
 
 - type: reagent
   id: Theobromine
-  name: theobromine
+  name: reagent-name-theobromine
   group: Toxins
-  desc: Theobromine is a bitter alkaloid of the cacao plant found in chocolate, and some other foods.
+  desc: reagent-desc-theobromine
   physicalDesc: grainy
   color: "#f5f5f5"
   meltingPoint: 351
@@ -257,9 +257,9 @@
 
 - type: reagent
   id: Amatoxin
-  name: amatoxin
+  name: reagent-name-amatoxin
   group: Toxins
-  desc: A potent toxin found in some mushrooms.
+  desc: reagent-desc-amatoxin
   physicalDesc: nondescript
   color: "#D6CE7B"
   metabolisms:
@@ -272,8 +272,8 @@
 
 - type: reagent
   id: VentCrud
-  name: vent crud
-  desc: A jet black substance found in poorly maintained ventilation systems.
+  name: reagent-name-vent-crud
+  desc: reagent-desc-vent-crud
   physicalDesc: sticky
   color: "#000000"
   metabolisms:
@@ -289,8 +289,8 @@
 
 - type: reagent
   id: Corpium
-  name: corpium
-  desc: A Syndicate cocktail, carefully harvested from various sources. You wouldn't want this inside of you.
+  name: reagent-name-corpium
+  desc: reagent-desc-corpium
   physicalDesc: necrotic
   color: "#7668a1"
   metabolisms:

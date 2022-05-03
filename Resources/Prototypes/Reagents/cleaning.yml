@@ -1,7 +1,7 @@
 - type: reagent
   id: Bleach
-  name: bleach
-  desc: Heavy duty cleaner that can clean tiles the same as Space Cleaner and also decontaminate clothes. Extremely toxic when ingested.
+  name: reagent-name-bleach
+  desc: reagent-desc-bleach
   physicalDesc: strong-smelling
   color: "#a1000b"
   boilingPoint: 111.0
@@ -20,8 +20,8 @@
 
 - type: reagent
   id: SpaceCleaner
-  name: space cleaner
-  desc: This is able to clean almost all surfaces of almost anything that may dirty them. The janitor is likely to appreciate refills.
+  name: reagent-name-space-cleaner
+  desc: reagent-desc-space-cleaner
   physicalDesc: lemony fresh
   color: "#c8ff69"
   boilingPoint: 147.0 # Made this up, loosely based on bleach
@@ -31,8 +31,8 @@
 
 - type: reagent
   id: SpaceLube
-  name: space lube
-  desc: Space Lube is a high performance lubricant intended for maintenance of extremely complex mechanical equipment (and certainly not used to make people slip).
+  name: reagent-name-space-lube
+  desc: reagent-desc-space-lube
   physicalDesc: shiny
   color: "#77b58e"
   boilingPoint: 290.0 # Glycerin

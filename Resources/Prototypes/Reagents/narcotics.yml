@@ -1,8 +1,8 @@
 ﻿- type: reagent
   id: Desoxyephedrine
-  name: desoxyephedrine
+  name: reagent-name-desoxyephedrine
   group: Narcotics
-  desc: Desoxyephedrine is a potent stimulant with dangerous side-effects if too much is consumed.
+  desc: reagent-desc-desoxyephedrine
   physicalDesc: translucent
   color: "#FAFAFA"
   boilingPoint: 212.0  # Dexosyephedrine vape when?
@@ -42,9 +42,9 @@
 
 - type: reagent
   id: Ephedrine
-  name: ephedrine
+  name: reagent-name-ephedrine
   group: Narcotics
-  desc: Increases stun resistance and movement speed, giving you hand cramps. Overdose deals toxin damage and inhibits breathing.
+  desc: reagent-desc-ephedrine
   physicalDesc: powdery
   color: "#D2FFFA"
   boilingPoint: 255.0
@@ -79,9 +79,9 @@
 
 - type: reagent
   id: THC
-  name: THC
+  name: reagent-name-t-h-c
   group: Narcotics
-  desc: The main psychoactive compound in cannabis.
+  desc: reagent-desc-t-h-c
   color: "#808080"
   physicalDesc: crystalline
   plantMetabolism:
@@ -92,17 +92,17 @@
 
 - type: reagent
   id: THCOil
-  name: THC oil
+  name: reagent-name-t-h-c-oil
   group: Narcotics
-  desc: Pure THC oil, extracted from the leaves of the cannabis plant. Much stronger than in it's natural form and can be used to numb chronic pain in patients.
+  desc: reagent-desc-t-h-c-oil
   physicalDesc: skunky
   color: "#DAA520"
 
 - type: reagent
   id: Nicotine
-  name: Nicotine
+  name: reagent-name-nicotine
   group: Narcotics
-  desc: Dangerous and highly addictive.
+  desc: reagent-desc-nicotine
   color: "#C0C0C0"
   physicalDesc: strong smelling
   plantMetabolism:
@@ -111,26 +111,26 @@
 
 - type: reagent
   id: Impedrezene
-  name: impedrezene
+  name: reagent-name-impedrezene
   group: Narcotics
-  desc: A narcotic that impedes one's ability by slowing down the higher brain cell functions. Causes massive brain damage.
+  desc: reagent-desc-impedrezene
   physicalDesc: acrid
   color: "#215263"
 
 - type: reagent
   id: SpaceDrugs
-  name: space drugs
+  name: reagent-name-space-drugs
   group: Narcotics
-  desc: An illegal compound which induces a number of effects such as loss of balance and visual artefacts.
+  desc: reagent-desc-space-drugs
   physicalDesc: syrupy
   color: "#63806e"
 
 # Probably replace this one with sleeping chem when putting someone in a comatose state is easier
 - type: reagent
   id: Nocturine
-  name: nocturine
+  name: reagent-name-nocturine
   group: Narcotics
-  desc: Makes you feel very tired and unable to stand up. Basically, it's bone hurting juice.
+  desc: reagent-desc-nocturine
   physicalDesc: powdery
   color: "#128e80"
   boilingPoint: 444.0

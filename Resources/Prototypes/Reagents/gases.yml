@@ -1,7 +1,7 @@
 ﻿- type: reagent
   id: Oxygen
-  name: oxygen
-  desc: An oxidizing, colorless gas.
+  name: reagent-name-oxygen
+  desc: reagent-desc-oxygen
   physicalDesc: gaseous
   color: "#808080"
   boilingPoint: -183.0
@@ -29,8 +29,8 @@
 
 - type: reagent
   id: Plasma
-  name: plasma
-  desc: Funky, space-magic pixie dust. You probably shouldn't eat this, but we both know you will anyways.
+  name: reagent-name-plasma
+  desc: reagent-desc-plasma
   physicalDesc: gaseous
   color: "#7e009e"
   boilingPoint: -127.3 # Random values picked between the actual values for CO2 and O2
@@ -68,8 +68,8 @@
 
 - type: reagent
   id: Tritium
-  name: tritium
-  desc: Radioactive space-magic pixie dust.
+  name: reagent-name-tritium
+  desc: reagent-desc-tritium
   physicalDesc: ionizing
   color: "#66ff33"
   tileReactions:
@@ -97,8 +97,8 @@
 
 - type: reagent
   id: CarbonDioxide
-  name: carbon dioxide
-  desc: You have genuinely no idea what this is.
+  name: reagent-name-carbon-dioxide
+  desc: reagent-desc-carbon-dioxide
   physicalDesc: odorless
   color: "#66ff33"
   metabolisms:
@@ -122,8 +122,8 @@
 
 - type: reagent
   id: Nitrogen
-  name: nitrogen
-  desc: A colorless, odorless unreactive gas. Highly stable.
+  name: reagent-name-nitrogen
+  desc: reagent-desc-nitrogen
   physicalDesc: gaseous
   color: "#808080"
   boilingPoint: -195.8
