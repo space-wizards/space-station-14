@@ -377,7 +377,11 @@ namespace Content.Server.Decals
                     if (!chunksInRange.TryGetValue(gridId, out var chunks))
                     {
                         toRemoveGrids.Add(gridId);
-                        staleChunks[gridId] = oldIndices;
+
+                        // If grid was deleted then don't worry about sending it to the client.
+                        if (MapManager.TryGetGrid(gridId, out _))
+                            staleChunks[gridId] = oldIndices;
+
                         continue;
                     }
 
