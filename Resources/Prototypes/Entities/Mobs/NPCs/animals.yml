@@ -808,7 +808,7 @@
   name: lizard #Weh
   parent: SimpleMobBase
   id: MobLizard
-  description: I think it's lost.
+  description: A harmless dragon.
   components:
   - type: MovementSpeedModifier
     baseWalkSpeed : 2
@@ -849,10 +849,55 @@
     interactSuccessSound:
       path: /Audio/Animals/lizard_happy.ogg
   - type: Bloodstream
-    bloodMaxVolume: 50
+    bloodMaxVolume: 150
   - type: Damageable
     damageContainer: Biological
     damageModifierSet: Scale
+
+- type: entity
+  name: slug
+  parent: SimpleMobBase
+  id: MobSlug
+  description: And they called this a lizard?
+  components:
+  - type: MovementSpeedModifier
+    baseWalkSpeed : 2
+    baseSprintSpeed : 3
+  - type: Sprite
+    drawdepth: Mobs
+    layers:
+    - map: ["enum.DamageStateVisualLayers.Base"]
+      state: slug
+      sprite: Mobs/Animals/slug.rsi
+  - type: Physics
+  - type: Fixtures
+    fixtures:
+    - shape:
+        !type:PhysShapeCircle
+        radius: 0.2
+      mass: 5
+      mask:
+      - Impassable
+      - MobImpassable #Bullets?!
+      - SmallImpassable
+      layer:
+      - Opaque
+  - type: Appearance
+    visuals:
+    - type: DamageStateVisualizer
+      normal: slug
+      crit: dead
+      dead: dead
+  - type: Butcherable
+    spawned:
+    - id: FoodMeat
+      amount: 1
+  - type: InteractionPopup
+    successChance: 0.3
+    interactSuccessString: petting-success-generic
+    interactFailureString: petting-failure-generic
+  - type: Bloodstream
+    bloodMaxVolume: 50
 
 - type: entity
   name: frog
