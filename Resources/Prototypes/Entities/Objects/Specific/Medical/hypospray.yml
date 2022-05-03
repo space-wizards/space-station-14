@@ -89,9 +89,9 @@
           Quantity: 5
 
 - type: entity
-  name: pressure medipen
+  name: space medipen
   parent: ChemicalMedipen
-  id: PressureMedipen
+  id: SpaceMedipen
   description: Contains a mix of chemicals that protect you from the deadly effects of space.
   components:
   - type: Sprite

@@ -144,6 +144,7 @@
     contents:
       - id: ClothingMaskBreath
       - id: EmergencyOxygenTankFilled
+      - id: SpaceMedipen
       - id: EmergencyMedipen
       - id: Flare
       - id: FoodSnackChocolate

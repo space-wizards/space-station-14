@@ -57,6 +57,7 @@ namespace Content.Server.Atmos.EntitySystems
         /// </summary>
         private void OnLowPressureImmuneEvent(EntityUid uid, PressureImmunityComponent component, LowPressureEvent args)
         {
+            args.Modifier = 100;
             args.Multiplier = 10000;
         }
 
