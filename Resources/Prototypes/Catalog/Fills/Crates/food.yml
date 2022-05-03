@@ -9,3 +9,14 @@
     - id: FoodBoxPizzaFilled
       amount: 4
     - id: KnifePlastic
+
+- type: entity
+  id: CrateFoodMRE
+  name: MRE crate
+  description: A military style meal fit to feed a whole department.
+  parent: CratePlastic
+  components:
+  - type: StorageFill
+    contents:
+    - id: BoxMRE
+      amount: 6

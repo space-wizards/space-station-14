@@ -132,6 +132,7 @@
     state: pda-clown
   - type: Slippery
     paralyzeTime: 4
+    launchForwardsMultiplier: 9.0
   - type: CollisionWake
     enabled: false
   - type: Physics
@@ -505,3 +506,18 @@
     handheld: true
     bank: 1
     program: 2
+
+- type: entity
+  parent: BasePDA
+  id: AtmosPDA
+  name: atmos PDA
+  description: Still smells like plasma.
+  components:
+  - type: PDA
+    id: AtmosIDCard
+  - type: Appearance
+    visuals:
+      - type: PDAVisualizer
+        state: pda-atmos
+  - type: Icon
+    state: pda-atmos

@@ -186,7 +186,8 @@ namespace Content.Client.Preferences.UI
             _speciesList = prototypeManager.EnumeratePrototypes<SpeciesPrototype>().Where(o => o.RoundStart).ToList();
             for (var i = 0; i < _speciesList.Count; i++)
             {
-                CSpeciesButton.AddItem(_speciesList[i].Name, i);
+                var name = Loc.GetString(_speciesList[i].Name);
+                CSpeciesButton.AddItem(name, i);
             }
 
             CSpeciesButton.OnItemSelected += args =>

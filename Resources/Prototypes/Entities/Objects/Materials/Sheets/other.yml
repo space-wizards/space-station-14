@@ -58,38 +58,13 @@
 
 - type: entity
   parent: SheetOtherBase
-  id: SheetPhoron
-  name: phoron
-  suffix: Full
-  components:
-  - type: Material
-    materials:
-    - Phoron
-  - type: Stack
-    stackType: Phoron
-  - type: Sprite
-    state: phoron
-  - type: Item
-    HeldPrefix: phoron
-
-- type: entity
-  parent: SheetPhoron
-  id: SheetPhoron1
-  name: phoron
-  suffix: Single
-  components:
-  - type: Stack
-    count: 1
-
-- type: entity
-  parent: SheetOtherBase
   id: SheetPlasma
   name: plasma
   suffix: Full
   components:
   - type: Material
     materials:
-    - Plasma
+      Plasma: 500
   - type: Stack
     stackType: Plasma
   - type: Sprite
@@ -135,9 +110,11 @@
   - type: Tag
     tags:
     - Plastic
+    - Sheet
+    - DroneUsable
   - type: Material
     materials:
-    - Plastic
+      Plastic: 100
   - type: Stack
     stackType: Plastic
   - type: Sprite
@@ -169,6 +146,9 @@
   name: uranium
   suffix: Full
   components:
+  - type: Material
+    materials:
+      Uranium: 100
   - type: Stack
     stackType: Uranium
   - type: Sprite

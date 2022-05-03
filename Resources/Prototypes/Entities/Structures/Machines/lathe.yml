@@ -70,7 +70,6 @@
       - Spade
       - CableStack
       - HandheldGPSBasic
-      - HandheldHealthAnalyzer
   - type: ActivatableUI
     key: enum.LatheUiKey.Key
   - type: ActivatableUIRequiresPower
@@ -82,6 +81,11 @@
     anchored: true
   - type: Pullable
   - type: Lathe
+    whitelist:
+      tags:
+        - Sheet
+        - RawMaterial
+        - Ingot
 
 - type: entity
   parent: BaseMachinePowered
@@ -193,6 +197,8 @@
       - TimerTrigger
       - ChemicalPayload
       - FlashPayload
+      - Signaller
+      - SignalTrigger
   - type: ActivatableUI
     key: enum.LatheUiKey.Key #Yes only having 1 of them here doesn't break anything
   - type: ActivatableUIRequiresPower
@@ -206,11 +212,16 @@
     anchored: true
   - type: Pullable
   - type: Lathe
+    whitelist:
+      tags:
+        - Sheet
+        - RawMaterial
+        - Ingot
 
 - type: entity
   parent: Protolathe
   id: CircuitImprinter
-  name: Circuit Imprinter
+  name: circuit imprinter
   description: Prints circuit boards for machines.
   components:
   - type: Sprite
@@ -241,25 +252,32 @@
       - AutolatheMachineCircuitboard
       - ProtolatheMachineCircuitboard
       - ReagentGrinderMachineCircuitboard
+      - MicrowaveMachineCircuitboard
       - UniformPrinterMachineCircuitboard
       - ShuttleConsoleCircuitboard
       - CircuitImprinterMachineCircuitboard
       - DawInstrumentMachineCircuitboard
       - StasisBedMachineCircuitboard
+      - OreProcessorMachineCircuitboard
   - type: Machine
     board: CircuitImprinterMachineCircuitboard
   - type: Lathe
     producingSound: /Audio/Machines/circuitprinter.ogg
+    whitelist:
+      tags:
+        - Sheet
+        - RawMaterial
+        - Ingot
 
 - type: entity
   parent: Protolathe
   id: SecurityTechFab
-  name: Security TechFab
+  name: security techfab
   description: Prints equipment for use by security crew.
   components:
   - type: Sprite
     netsync: false
-    sprite: Structures/Machines/security_techfab.rsi
+    sprite: Structures/Machines/techfab.rsi
     layers:
     - state: icon
       map: ["enum.LatheVisualLayers.IsRunning"]
@@ -303,6 +321,72 @@
       - CableMVStack
       - CableHVStack
       - TimerTrigger
+      - Signaller
+      - SignalTrigger
+  - type: Lathe
+    whitelist:
+      tags:
+        - Sheet
+        - RawMaterial
+        - Ingot
+
+- type: entity
+  parent: Protolathe
+  id: MedicalTechFab
+  name: medical techfab
+  description: Prints equipment for use by the medbay.
+  components:
+  - type: Sprite
+    netsync: false
+    sprite: Structures/Machines/techfab.rsi
+    layers:
+    - state: icon
+      map: ["enum.LatheVisualLayers.IsRunning"]
+    - state: med
+    - state: unlit
+      shader: unshaded
+      map: ["enum.PowerDeviceVisualLayers.Powered"]
+    - state: inserting
+      map: ["enum.LatheVisualLayers.IsInserting"]
+    - state: panel
+      map: ["enum.WiresVisualLayers.MaintenancePanel"]
+  - type: LatheVisuals
+    idleState: icon
+    runningState: icon
+  - type: ProtolatheDatabase
+    protolatherecipes:
+      - HandheldHealthAnalyzer
+      - ClothingHandsGlovesLatex
+      - ClothingHandsGlovesNitrile
+      - ClothingMaskSterile
+      - DiseaseSwab
+      - HandheldCrewMonitor
+      - Scalpel
+      - Retractor
+      - Cautery
+      - Drill
+      - Saw
+      - Hemostat
+      - Beaker
+      - LargeBeaker
+      - CryostasisBeaker
+      - Dropper
+      - Syringe
+      - PillCanister #Everything below this is shared with other lathes
+      - FlashlightLantern
+      - Bucket
+      - MopItem
+      - SprayBottle
+      - FireExtinguisher
+      - LightTube
+      - LightBulb
+      - SheetSteel
+      - SheetGlass1
+      - SheetRGlass
+      - SheetPlastic
+      - CableStack
+      - CableMVStack
+      - CableHVStack
 
 - type: entity
   parent: Autolathe
@@ -374,7 +458,6 @@
       - ClothingOuterWinterHoS
       - ClothingOuterWinterQM
       - ClothingOuterWinterRD
-
   - type: Sprite
     sprite: Structures/Machines/uniform_printer.rsi
     netsync: false
@@ -385,3 +468,47 @@
     board: UniformPrinterMachineCircuitboard
   - type: Lathe
     producingSound: /Audio/Machines/uniformprinter.ogg
+    whitelist:
+      tags:
+        - Sheet
+        - RawMaterial
+
+- type: entity
+  parent: Autolathe
+  id: OreProcessor
+  name: ore processor
+  description: It produces sheets and ingots using ores.
+  components:
+    - type: LatheVisuals
+      ignoreColor: true
+    - type: Sprite
+      sprite: Structures/Machines/ore_processor.rsi
+      netsync: false
+      layers:
+        - state: icon
+          map: ["enum.LatheVisualLayers.IsRunning"]
+        - state: unlit
+          shader: unshaded
+          map: ["enum.PowerDeviceVisualLayers.Powered"]
+        - state: inserting
+          map: ["enum.LatheVisualLayers.IsInserting"]
+        - state: panel
+          map: ["enum.WiresVisualLayers.MaintenancePanel"]
+    - type: Machine
+      board: AutolatheMachineCircuitboard
+    - type: LatheDatabase
+      static: true
+      recipes:
+        - SheetSteel30
+        - SheetGlass30
+        - SheetRGlass30
+        - SheetPlasma30
+        - SheetPGlass30
+        - SheetRPGlass30
+        - SheetUranium1
+        - IngotGold1
+        - IngotSilver1
+    - type: Lathe
+      whitelist:
+        tags:
+          - Ore

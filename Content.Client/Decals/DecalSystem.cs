@@ -61,7 +61,6 @@ namespace Content.Client.Decals
         protected override bool RemoveDecalHook(GridId gridId, uint uid)
         {
             RemoveDecalFromRenderIndex(gridId, uid);
-
             return base.RemoveDecalHook(gridId, uid);
         }
 
@@ -80,8 +79,11 @@ namespace Content.Client.Decals
         {
             foreach (var (gridId, gridChunks) in ev.Data)
             {
+                if (gridChunks.Count == 0) continue;
+
                 var chunkCollection = ChunkCollection(gridId);
 
+                // Update any existing data / remove decals we didn't receive data for.
                 foreach (var (indices, newChunkData) in gridChunks)
                 {
                     if (chunkCollection.TryGetValue(indices, out var chunk))
@@ -90,8 +92,14 @@ namespace Content.Client.Decals
                         removedUids.ExceptWith(newChunkData.Keys);
                         foreach (var removedUid in removedUids)
                         {
-                            RemoveDecalFromRenderIndex(gridId, removedUid);
+                            RemoveDecalInternal(gridId, removedUid);
                         }
+
+                        chunkCollection[indices] = newChunkData;
+                    }
+                    else
+                    {
+                        chunkCollection.Add(indices, newChunkData);
                     }
 
                     foreach (var (uid, decal) in newChunkData)
@@ -107,25 +115,27 @@ namespace Content.Client.Decals
 
                         DecalRenderIndex[gridId][decal.ZIndex][uid] = decal;
                         DecalZIndexIndex[gridId][uid] = decal.ZIndex;
-
                         ChunkIndex[gridId][uid] = indices;
                     }
-
-                    chunkCollection[indices] = newChunkData;
                 }
+            }
 
-                // Now we'll cull old chunks out of range as the server will send them to us anyway.
-                var toRemove = new RemQueue<Vector2i>();
+            // Now we'll cull old chunks out of range as the server will send them to us anyway.
+            foreach (var (gridId, chunks) in ev.RemovedChunks)
+            {
+                if (chunks.Count == 0) continue;
 
-                foreach (var (index, _) in chunkCollection)
+                var chunkCollection = ChunkCollection(gridId);
+
+                foreach (var index in chunks)
                 {
-                    if (gridChunks.ContainsKey(index)) continue;
+                    if (!chunkCollection.TryGetValue(index, out var chunk)) continue;
 
-                    toRemove.Add(index);
-                }
+                    foreach (var (uid, _) in chunk)
+                    {
+                        RemoveDecalInternal(gridId, uid);
+                    }
 
-                foreach (var index in toRemove)
-                {
                     chunkCollection.Remove(index);
                 }
             }

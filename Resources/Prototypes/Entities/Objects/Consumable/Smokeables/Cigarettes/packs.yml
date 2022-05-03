@@ -1,15 +1,15 @@
 - type: entity
   id: CigPackBase
-  parent: BaseItem
+  parent: BaseStorageItem
   name: cigarette pack
   abstract: true
   components:
   - type: Tag
     tags:
     - CigPack
-    - Recyclable
     - Trash
   - type: Recyclable
+  - type: SpaceGarbage
   - type: Storage
     capacity: 6
   - type: Item

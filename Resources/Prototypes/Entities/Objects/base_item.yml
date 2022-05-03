@@ -35,3 +35,15 @@
     drawdepth: Items
     noRot: false
   - type: Pullable
+
+- type: entity
+  name: "storage item"
+  id: BaseStorageItem
+  parent: BaseItem
+  abstract: true
+  components:
+  - type: Storage
+  - type: UserInterface
+    interfaces:
+    - key: enum.StorageUiKey.Key
+      type: StorageBoundUserInterface

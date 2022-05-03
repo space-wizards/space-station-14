@@ -12,10 +12,12 @@ singuloose.ogg (Singuloose) by Janis Schiedková is licensed under a CC-BY-NC-SA
 
 vibe_ace.ogg (Vibe Ace) by Kevin MacLeod is licensed under CC-BY-3.0. It was converted from MP3 to OGG. The source can be found here: https://freemusicarchive.org/music/Kevin_MacLeod/Jazz_Sampler/Vibe_Ace
 
-Title3.ogg (Title3) By Cuboos is licensed under a BY-NC-SA 3.0 Creative Commons License. It is a remix of the song Tintin on the moon. It was converted from MP3 to OGG. The source can be found here: https://www.youtube.com/watch?v=YKVmXn-Gv0M
+Title3.ogg (Title3) By Cuboos is licensed under CC-BY-NC-SA 3.0. It is a remix of the song Tintin on the moon. It was converted from MP3 to OGG. The source can be found here: https://www.youtube.com/watch?v=YKVmXn-Gv0M
 
-Marhaba.ogg (Marhaba) by Ian Alex Mac is licensed under a BY 4.0 Creative Commons License. It was converted from MP3 to OGG. The source can be found here: https://freemusicarchive.org/music/Ian_Alex_Mac/Cues/Marhaba
+Marhaba.ogg (Marhaba) by Ian Alex Mac is licensed under CC-BY-NC-SA 3.0. It was converted from MP3 to OGG. The source can be found here: https://freemusicarchive.org/music/Ian_Alex_Mac/Cues/Marhaba
 
-Comet-Haley.ogg (Comet Haley) by Stellardrone is licensed under a BY 3.0 Creative Commons License. It was converted from MP3 to OGG. The source can be found here: https://freemusicarchive.org/music/Stellardrone/Light_Years_1227/07_Comet_Halley
+Comet-Haley.ogg (Comet Haley) by Stellardrone is licensed under CC-BY-NC-SA 3.0. It was converted from MP3 to OGG. The source can be found here: https://freemusicarchive.org/music/Stellardrone/Light_Years_1227/07_Comet_Halley
 
 Flip Flap.ogg (Flip Flap) by X-ceed is licensed by soundimage.org and is free for non-commercial use. It was converted from MP3 to OGG. The source is here http://aminet.net/package/mods/xceed/Flipflap
+
+Monument.ogg (Monument) by Six Umbrellas is licensed under CC-BY-NC-SA 3.0. It was downloaded as an OGG the source can be found here: https://sixumbrellas.bandcamp.com/album/the-psychedelic-and
