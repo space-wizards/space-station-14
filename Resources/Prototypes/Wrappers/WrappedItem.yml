@@ -11,7 +11,7 @@
       size: 31
 
 - type: entity
-  name: TinyParcel
+  name: Tiny Parcel
   parent: ParcelItemBase
   id: TinyParcel
   description: A [Size/WappType] wrapped package..
@@ -24,7 +24,7 @@
     - type: WrappedStorage
 
 - type: entity
-  name: SmallParcel
+  name: Small Parcel
   parent: BaseItem
   id: SmallParcel
   description: A [Size/WappType] wrapped package..
@@ -37,7 +37,7 @@
     - type: WrappedStorage
 
 - type: entity
-  name: MediumParcel
+  name: Medium Parcel
   parent: BaseItem
   id: MediumParcel
   description: A [Size/WappType] wrapped package..
@@ -50,7 +50,7 @@
     - type: WrappedStorage
 
 - type: entity
-  name: LargeParcel
+  name: Large Parcel
   parent: BaseItem
   id: LargeParcel
   description: A [Size/WappType] wrapped package..
@@ -66,7 +66,7 @@
   id: CrateParcel
   parent: BaseStructureDynamic
 #  abstract: true
-  name: crateWrapped
+  name: Wrapped Crate
   description: A large container for items, wrapped.
   components:
     - type: Transform

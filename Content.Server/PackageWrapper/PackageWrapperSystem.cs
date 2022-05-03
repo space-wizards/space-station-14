@@ -41,6 +41,16 @@ namespace Content.Server.PackageWrapper
         {
             if (args.Target != null)
             {
+                if (TryComp<TransformComponent>(args.Target.Value, out var targetTransform))
+                {
+                    if (targetTransform.Anchored)
+                    {
+                        component.Owner.PopupMessage(args.User, Loc.GetString("on-failed-wrap-verb-message",
+                            ("target", Comp<MetaDataComponent>(args.Target.Value).EntityName)));
+                        return;
+                    }
+                }
+
                 if(TryComp<WrapableShapeComponent>(args.Target.Value, out var targetWrapType)) // Broken!
                 {
                     var typeComp = component.ProductsShaped.FirstOrDefault(x => targetWrapType.WrapType == x.ID);
@@ -54,9 +64,15 @@ namespace Content.Server.PackageWrapper
 
                     if (typeComp != null)
                     {
-                        var spawnedObj2 = Spawn(typeComp.ProtoSpawnID, Comp<TransformComponent>((EntityUid) args.Target).MapPosition);
-                        var container2 = Comp<WrappedStorageComponent>(spawnedObj2);
-                        container2.ItemContainer.Insert(args.Target.Value);
+                        var spawnedObj = Spawn(typeComp.ProtoSpawnID, Comp<TransformComponent>((EntityUid) args.Target).MapPosition);
+                        var container = Comp<WrappedStorageComponent>(spawnedObj);
+                        container.ItemContainer.Insert(args.Target.Value);
+
+                        //There must be better way of getting entity name
+                        component.Owner.PopupMessage(args.User,
+                            Loc.GetString("on-successful-wrap-verb-message",
+                                ("target", Comp<MetaDataComponent>(args.Target.Value).EntityName),
+                                ("result", Comp<MetaDataComponent>(spawnedObj).EntityName)));
                     }
                 }
                 else if (TryComp<SharedItemComponent>(args.Target.Value, out var targetItem))
@@ -68,14 +84,20 @@ namespace Content.Server.PackageWrapper
                     // Spawn item with minimal size and insert
                     if (typeComp != null)
                     {
-                        var spawnedObj2 = Spawn(typeComp.ProtoSpawnID, Comp<TransformComponent>((EntityUid) args.Target).MapPosition);
-                        var container2 = Comp<WrappedStorageComponent>(spawnedObj2);
-                        container2.ItemContainer.Insert(args.Target.Value);
+                        var spawnedObj = Spawn(typeComp.ProtoSpawnID, Comp<TransformComponent>((EntityUid) args.Target).MapPosition);
+                        var container = Comp<WrappedStorageComponent>(spawnedObj);
+                        container.ItemContainer.Insert(args.Target.Value);
+
+                        component.Owner.PopupMessage(args.User,
+                            Loc.GetString("on-successful-wrap-verb-message",
+                                ("target", Comp<MetaDataComponent>(args.Target.Value).EntityName),
+                                ("result", Comp<MetaDataComponent>(spawnedObj).EntityName)));
                     }
                 }
                 else
                 {
-                    component.Owner.PopupMessage(args.User, "can't wrap"); // TODO: Add more popup messages like I can't fit this object, etc
+                    component.Owner.PopupMessage(args.User, Loc.GetString("on-failed-wrap-verb-message",
+                        ("target", Comp<MetaDataComponent>(args.Target.Value).EntityName)));
                 }
             }
         }
