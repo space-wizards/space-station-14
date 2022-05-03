@@ -1,4 +1,5 @@
-﻿using Content.Shared.Interaction;
+using Content.Shared.Interaction;
+using Content.Shared.Random.Helpers;
 using Content.Shared.Storage;
 using Robust.Shared.Random;
 
@@ -24,7 +25,8 @@ public sealed class UseWithSystem : EntitySystem
             var getResult = EntitySpawnCollection.GetSpawns(component.Results, _random)[0];
             var playerPos = Transform(uid).MapPosition;
             var spawnPos = playerPos.Offset(_random.NextVector2(0.3f));
-            Spawn(getResult, spawnPos);
+            var spawnResult = Spawn(getResult, spawnPos);
+            spawnResult.RandomOffset(0.25f);
         }
 
         QueueDel(uid);
