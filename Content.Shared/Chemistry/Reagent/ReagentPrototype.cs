@@ -31,6 +31,9 @@ namespace Content.Shared.Chemistry.Reagent
         [DataField("name", required: true)]
         public string Name { get; } = default!;
 
+        [ViewVariables(VVAccess.ReadOnly)]
+        public string LocalizedName => Loc.GetString(Name);
+
         [DataField("group")]
         public string Group { get; } = "Unknown";
 
@@ -43,6 +46,9 @@ namespace Content.Shared.Chemistry.Reagent
 
         [DataField("desc", required: true)]
         public string Description { get; } = default!;
+
+        [ViewVariables(VVAccess.ReadOnly)]
+        public string LocalizedDescription => Loc.GetString(Description);
 
         [DataField("physicalDesc", required: true)]
         public string PhysicalDescription { get; } = default!;
