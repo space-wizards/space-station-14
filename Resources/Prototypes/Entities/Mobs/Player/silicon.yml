@@ -3,6 +3,8 @@
   abstract: true
   id: PlayerSiliconBase #for player controlled silicons
   components:
+  - type: CombatMode
+    canDisarm: true
   - type: Reactive
     groups:
       Acidic: [Touch]

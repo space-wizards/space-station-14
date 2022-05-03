@@ -1,52 +1,37 @@
-using Content.Server.Power.Components;
-using Content.Shared.Radiation;
-using Content.Shared.Singularity.Components;
+using Content.Server.Singularity.EntitySystems;
 
 namespace Content.Server.Singularity.Components
 {
+    /// <summary>
+    ///     Generates electricity from radiation.
+    /// </summary>
     [RegisterComponent]
-    public sealed class RadiationCollectorComponent : Component, IRadiationAct
+    [Friend(typeof(RadiationCollectorSystem))]
+    public sealed class RadiationCollectorComponent : Component
     {
-        [Dependency] private readonly IEntityManager _entMan = default!;
-
-        public bool Enabled;
-        public TimeSpan CoolDownEnd;
-
-        [ViewVariables(VVAccess.ReadWrite)]
-        public bool Collecting {
-            get => Enabled;
-            set
-            {
-                if (Enabled == value) return;
-                Enabled = value;
-                SetAppearance(Enabled ? RadiationCollectorVisualState.Activating : RadiationCollectorVisualState.Deactivating);
-            }
-        }
-
+        /// <summary>
+        ///     How much joules will collector generate for each rad.
+        /// </summary>
+        [DataField("chargeModifier")]
         [ViewVariables(VVAccess.ReadWrite)]
         public float ChargeModifier = 30000f;
 
-        void IRadiationAct.RadiationAct(float frameTime, SharedRadiationPulseComponent radiation)
-        {
-            if (!Enabled) return;
+        /// <summary>
+        ///     Cooldown time between users interaction.
+        /// </summary>
+        [DataField("cooldown")]
+        [ViewVariables(VVAccess.ReadWrite)]
+        public TimeSpan Cooldown = TimeSpan.FromSeconds(0.81f);
 
-            // No idea if this is even vaguely accurate to the previous logic.
-            // The maths is copied from that logic even though it works differently.
-            // But the previous logic would also make the radiation collectors never ever stop providing energy.
-            // And since frameTime was used there, I'm assuming that this is what the intent was.
-            // This still won't stop things being potentially hilarously unbalanced though.
-            if (_entMan.TryGetComponent<BatteryComponent>(Owner, out var batteryComponent))
-            {
-                batteryComponent.CurrentCharge += frameTime * radiation.RadsPerSecond * ChargeModifier;
-            }
-        }
+        /// <summary>
+        ///     Was machine activated by user?
+        /// </summary>
+        [ViewVariables(VVAccess.ReadOnly)]
+        public bool Enabled;
 
-        public void SetAppearance(RadiationCollectorVisualState state)
-        {
-            if (IoCManager.Resolve<IEntityManager>().TryGetComponent<AppearanceComponent?>(Owner, out var appearance))
-            {
-                appearance.SetData(RadiationCollectorVisuals.VisualState, state);
-            }
-        }
+        /// <summary>
+        ///     Timestamp when machine can be deactivated again.
+        /// </summary>
+        public TimeSpan CoolDownEnd;
     }
 }

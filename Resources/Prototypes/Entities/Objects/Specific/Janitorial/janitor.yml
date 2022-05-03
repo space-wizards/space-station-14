@@ -205,6 +205,10 @@
           maxFillLevels: 3
           fillBaseName: cart_water_
           changeColor: false
+    - type: UserInterface
+      interfaces:
+      - key: enum.StorageUiKey.Key
+        type: StorageBoundUserInterface
 
 
 - type: entity

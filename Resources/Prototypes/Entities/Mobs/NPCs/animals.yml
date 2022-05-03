@@ -566,6 +566,8 @@
   id: MobKangarooBoxer
   description: A large marsupial herbivore. It has powerful hind legs and... boxing gloves?
   components:
+  - type: CombatMode
+    canDisarm: true
   - type: Sprite
     drawdepth: Mobs
     layers:
@@ -598,6 +600,8 @@
   parent: SimpleMobBase
   description: New church of neo-darwinists actually believe that EVERY animal evolved from a monkey. Tastes like pork, and killing them is both fun and relaxing.
   components:
+  - type: CombatMode
+    canDisarm: true
   - type: NameIdentifier
     group: Monkey
   - type: SentienceTarget
@@ -1305,6 +1309,12 @@
   components:
   - type: InteractionPopup
     successChance: 1
+  - type: Butcherable
+    spawned:
+    - id: FoodMeat
+      amount: 3
+    - id: Telecrystal5
+      amount: 1
   - type: Grammar
     attributes:
       proper: true

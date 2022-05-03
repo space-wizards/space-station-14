@@ -6,6 +6,7 @@
   abstract: true
   components:
     - type: Sprite
+      drawdepth: SmallObjects
       sprite: Objects/Specific/Xenoarchaeology/xeno_artifacts.rsi
       netsync: false
       state: ano01

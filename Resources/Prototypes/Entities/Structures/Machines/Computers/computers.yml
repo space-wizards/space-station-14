@@ -376,6 +376,7 @@
       - LivestockDuck
       - LivestockGoat
       - FoodPizza
+      - FoodMRE
       - ServiceJanitorial
       - ServiceLightsReplacement
       - ServiceSmokeables
@@ -412,6 +413,7 @@
       - AtmosphericsOxygen
       - AtmosphericsNitrogen
       - AtmosphericsCarbonDioxide
+      - ArtifactContainer
 #      - AtmosphericsWaterVapor
 #      - AtmosphericsPlasma
 #      - AtmosphericsTritium

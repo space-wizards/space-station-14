@@ -162,6 +162,7 @@
       - AtmosphericsOxygen
       - AtmosphericsNitrogen
       - AtmosphericsCarbonDioxide
+      - ArtifactContainer
   - type: CrewMonitoringConsole
     snap: false
     precision: 3

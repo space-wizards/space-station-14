@@ -6,7 +6,7 @@
   components:
   - type: Material
     materials:
-    - Credit
+      Credit: 100
   - type: Stack
     stackType: Credit
     max: 1000000 # if you somehow get this rich consider buying a second station
