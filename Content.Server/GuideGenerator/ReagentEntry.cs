@@ -41,7 +41,7 @@ public sealed class ReagentEntry
         Name = proto.LocalizedName;
         Group = proto.Group;
         Description = proto.LocalizedDescription;
-        PhysicalDescription = proto.PhysicalDescription;
+        PhysicalDescription = proto.LocalizedPhysicalDescription;
         SubstanceColor = proto.SubstanceColor.ToHex();
         Metabolisms = proto.Metabolisms;
     }

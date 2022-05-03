@@ -53,6 +53,9 @@ namespace Content.Shared.Chemistry.Reagent
         [DataField("physicalDesc", required: true)]
         public string PhysicalDescription { get; } = default!;
 
+        [ViewVariables(VVAccess.ReadOnly)]
+        public string LocalizedPhysicalDescription => Loc.GetString(PhysicalDescription);
+
         [DataField("color")]
         public Color SubstanceColor { get; } = Color.White;
 
