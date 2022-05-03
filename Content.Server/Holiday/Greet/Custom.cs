@@ -12,7 +12,7 @@ namespace Content.Server.Holiday.Greet
 
         public string Greet(HolidayPrototype holiday)
         {
-            return _greet;
+            return Loc.GetString(_greet);
         }
     }
 }
