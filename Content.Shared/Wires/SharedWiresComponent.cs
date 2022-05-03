@@ -10,19 +10,19 @@ using Robust.Shared.Serialization;
 namespace Content.Shared.Wires
 {
     [Serializable, NetSerializable]
-    public enum WiresVisuals
+    public enum WiresVisuals : byte
     {
         MaintenancePanelState
     }
 
     [Serializable, NetSerializable]
-    public enum WiresUiKey
+    public enum WiresUiKey : byte
     {
         Key,
     }
 
     [Serializable, NetSerializable]
-    public enum WiresAction
+    public enum WiresAction : byte
     {
         Mend,
         Cut,
@@ -30,7 +30,7 @@ namespace Content.Shared.Wires
     }
 
     [Serializable, NetSerializable]
-    public enum StatusLightState
+    public enum StatusLightState : byte
     {
         Off,
         On,
