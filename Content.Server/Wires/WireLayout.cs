@@ -15,7 +15,7 @@ public sealed class WireLayoutPrototype : IPrototype
     public string ID { get; } = default!;
 
     [DataField("parent")]
-    public string Parent { get; } = default!;
+    public string? Parent { get; } = default!;
 
     [DataField("dummyWires")]
     public int DummyWires { get; } = default!;

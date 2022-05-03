@@ -15,7 +15,6 @@ using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Maths;
 using Robust.Shared.Random;
-// using static Content.Shared.Wires.SharedWiresComponent;
 using static Robust.Client.UserInterface.Controls.BoxContainer;
 
 namespace Content.Client.Wires.UI

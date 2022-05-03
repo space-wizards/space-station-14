@@ -1,5 +1,3 @@
-using System;
-using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Threading;
@@ -12,21 +10,14 @@ using Content.Shared.Examine;
 using Content.Shared.GameTicking;
 using Content.Shared.Interaction;
 using Content.Shared.Popups;
-using Content.Shared.Sound;
 using Content.Shared.Tools.Components;
 using Content.Shared.Wires;
 using Robust.Server.GameObjects;
 using Robust.Server.Player;
 using Robust.Shared.Audio;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Localization;
-using Robust.Shared.Log;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
-using Robust.Shared.Reflection;
-using Robust.Shared.ViewVariables;
 
 namespace Content.Server.Wires;
 
@@ -110,10 +101,6 @@ public sealed class WiresSystem : EntitySystem
 
                 wireSet = CreateWireSet(uid, layout, layoutPrototype.Wires, layoutPrototype.DummyWires);
             }
-        }
-        else
-        {
-            return;
         }
 
         if (wireSet == null || wireSet.Count == 0)

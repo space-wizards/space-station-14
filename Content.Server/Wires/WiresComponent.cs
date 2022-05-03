@@ -3,7 +3,7 @@ using Content.Shared.Sound;
 namespace Content.Server.Wires;
 
 [RegisterComponent]
-public class WiresComponent : Component
+public sealed class WiresComponent : Component
 {
     [ViewVariables]
     public bool IsPanelOpen { get; set; }
