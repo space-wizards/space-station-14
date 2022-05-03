@@ -572,7 +572,7 @@ namespace Content.Server.Storage.EntitySystems
 
             var toInsert = hands.ActiveHandEntity;
 
-            if (!_sharedHandsSystem.TryDrop(player, toInsert.Value, handsComp: hands))
+            if (!CanInsert(uid, toInsert.Value, storageComp) || !_sharedHandsSystem.TryDrop(player, toInsert.Value, handsComp: hands))
             {
                 Popup(uid, player, "comp-storage-cant-insert", storageComp);
                 return false;
