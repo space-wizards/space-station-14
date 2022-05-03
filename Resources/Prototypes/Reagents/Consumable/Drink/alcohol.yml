@@ -306,7 +306,7 @@
   name: reagent-name-bilk
   parent: BaseAlcohol
   desc: reagent-desc-bilk
-  physicalDesc: bilky...
+  physicalDesc: bilky
   color: "#895C4C"
   spritePath: glass_brown.rsi
 

@@ -11,7 +11,7 @@
   name: reagent-name-bbq-sauce
   group: Foods
   desc: reagent-desc-bbq-sauce
-  physicalDesc: gloopy # splurgy
+  physicalDesc: gloopy
   color: darkred
 
 - type: reagent
