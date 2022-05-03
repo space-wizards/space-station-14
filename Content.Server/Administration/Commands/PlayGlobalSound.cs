@@ -72,6 +72,6 @@ public sealed class PlayGlobalSound : IConsoleCommand
                 break;
         }
 
-        SoundSystem.Play(filter, args[0], audio.Equals(AudioParams.Default) ? audio.WithVolume(-8) : audio);
+        SoundSystem.Play(filter, args[0], volumeOffset == 0 ? audio.WithVolume(-8) : audio);
     }
 }
