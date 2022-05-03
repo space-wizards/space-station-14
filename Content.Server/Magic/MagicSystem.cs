@@ -1,9 +1,6 @@
-﻿using Content.Server.Coordinates.Helpers;
-using Content.Server.Decals;
-using Content.Server.Doors.Systems;
+﻿using Content.Server.Decals;
 using Content.Server.Magic.Events;
 using Content.Server.Wieldable;
-using Content.Server.Wieldable.Components;
 using Content.Shared.Actions;
 using Content.Shared.Actions.ActionTypes;
 using Content.Shared.Doors.Components;

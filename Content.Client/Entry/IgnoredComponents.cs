@@ -346,7 +346,6 @@ namespace Content.Client.Entry
             "InteractionPopup",
             "HealthAnalyzer",
             "Spellbook",
-            "RuneMagic",
             "TriggerOnActivate",
             "TriggerOnTimedCollide",
         };
