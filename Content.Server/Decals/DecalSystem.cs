@@ -385,13 +385,19 @@ namespace Content.Server.Decals
                         continue;
                     }
 
-                    HashSet<Vector2i> elmo = new();
+                    var elmo = _chunkIndexPool.Get();
 
                     // Get individual stale chunks.
                     foreach (var chunk in oldIndices)
                     {
                         if (chunks.Contains(chunk)) continue;
                         elmo.Add(chunk);
+                    }
+
+                    if (elmo.Count == 0)
+                    {
+                        _chunkIndexPool.Return(elmo);
+                        continue;
                     }
 
                     // Remove chunks no longer in range.
@@ -436,7 +442,10 @@ namespace Content.Server.Decals
                 // We'll only remove stale grids after the above iteration.
                 foreach (var gridId in toRemoveGrids)
                 {
+                    var indices = _previousSentChunks[playerSession][gridId];
+                    indices.Clear();
                     _previousSentChunks[playerSession].Remove(gridId);
+                    _chunkIndexPool.Return(indices);
                 }
 
                 if (updatedChunks.Count == 0)
