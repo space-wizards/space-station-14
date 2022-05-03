@@ -3,7 +3,7 @@
   name: reagent-name-cryptobiolin
   group: Medicine
   desc: reagent-desc-cryptobiolin
-  physicalDesc: fizzy
+  physicalDesc: reagent-physical-desc-fizzy
   color: "#081a80"
 
 - type: reagent
@@ -11,7 +11,7 @@
   name: reagent-name-dylovene
   group: Medicine
   desc: reagent-desc-dylovene
-  physicalDesc: translucent
+  physicalDesc: reagent-physical-desc-translucent
   color: "#3a1d8a"
   metabolisms:
     Medicine:
@@ -32,7 +32,7 @@
   name: reagent-name-diphenhydramine
   group: Medicine
   desc: reagent-desc-diphenhydramine
-  physicalDesc: chalky
+  physicalDesc: reagent-physical-desc-chalky
   color: "#64ffe6"
   metabolisms:
     Medicine:
@@ -50,7 +50,7 @@
   name: reagent-name-arithrazine
   group: Medicine
   desc: reagent-desc-arithrazine
-  physicalDesc: cloudy
+  physicalDesc: reagent-physical-desc-cloudy
   color: "#bd5902"
   metabolisms:
     Medicine:
@@ -67,7 +67,7 @@
   name: reagent-name-bicaridine
   group: Medicine
   desc: reagent-desc-bicaridine
-  physicalDesc: opaque
+  physicalDesc: reagent-physical-desc-opaque
   color: "#ffaa00"
   metabolisms:
     Medicine:
@@ -82,7 +82,7 @@
   name: reagent-name-cryoxadone
   group: Medicine
   desc: reagent-desc-cryoxadone
-  physicalDesc: fizzy
+  physicalDesc: reagent-physical-desc-fizzy
   color: "#0091ff"
   plantMetabolism:
     - !type:PlantAdjustToxins
@@ -111,7 +111,7 @@
   group: Medicine
   parent: Cryoxadone
   desc: reagent-desc-clonexadone
-  physicalDesc: bubbly
+  physicalDesc: reagent-physical-desc-bubbly
   color: "#0666ff"
   plantMetabolism:
     - !type:PlantAdjustToxins
@@ -124,7 +124,7 @@
   name: reagent-name-dermaline
   group: Medicine
   desc: reagent-desc-dermaline
-  physicalDesc: translucent
+  physicalDesc: reagent-physical-desc-translucent
   color: "#215263"
   metabolisms:
     Medicine:
@@ -139,7 +139,7 @@
   name: reagent-name-dexalin
   group: Medicine
   desc: reagent-desc-dexalin
-  physicalDesc: opaque
+  physicalDesc: reagent-physical-desc-opaque
   color: "#0041a8"
   metabolisms:
     Medicine:
@@ -155,7 +155,7 @@
   name: reagent-name-dexalin-plus
   group: Medicine
   desc: reagent-desc-dexalin-plus
-  physicalDesc: cloudy
+  physicalDesc: reagent-physical-desc-cloudy
   color: "#4da0bd"
   metabolisms:
     Medicine:
@@ -172,7 +172,7 @@
   name: reagent-name-epinephrine
   group: Medicine
   desc: reagent-desc-epinephrine
-  physicalDesc: odorless
+  physicalDesc: reagent-physical-desc-odorless
   color: "#d2fffa"
   metabolisms:
     Medicine:
@@ -232,7 +232,7 @@
   name: reagent-name-hyronalin
   group: Medicine
   desc: reagent-desc-hyronalin
-  physicalDesc: cloudy
+  physicalDesc: reagent-physical-desc-cloudy
   color: "#4cb580"
   metabolisms:
     Medicine:
@@ -247,7 +247,7 @@
   name: reagent-name-inaprovaline
   group: Medicine
   desc: reagent-desc-inaprovaline
-  physicalDesc: opaque
+  physicalDesc: reagent-physical-desc-opaque
   color: "#731024"
   metabolisms:
     Medicine:
@@ -268,7 +268,7 @@
   name: reagent-name-kelotane
   group: Medicine
   desc: reagent-desc-kelotane
-  physicalDesc: strong-smelling
+  physicalDesc: reagent-physical-desc-strong-smelling
   color: "#bf3d19"
   metabolisms:
     Medicine:
@@ -283,7 +283,7 @@
   name: reagent-name-leporazine
   group: Medicine
   desc: reagent-desc-leporazine
-  physicalDesc: pungent
+  physicalDesc: reagent-physical-desc-pungent
   color: "#ff7db5"
   metabolisms:
     Medicine:
@@ -308,7 +308,7 @@
   name: reagent-name-phalanximine
   group: Medicine
   desc: reagent-desc-phalanximine
-  physicalDesc: acrid
+  physicalDesc: reagent-physical-desc-acrid
   color: "#c8ff75"
   metabolisms:
     Medicine:
@@ -324,7 +324,7 @@
   name: reagent-name-romerol
   group: Medicine
   desc: reagent-desc-romerol
-  physicalDesc: acrid
+  physicalDesc: reagent-physical-desc-acrid
   color: "#7e916e"
   metabolisms:
     Medicine:
@@ -339,7 +339,7 @@
   name: reagent-name-pulped-banana-peel
   group: Medicine
   desc: reagent-desc-pulped-banana-peel
-  physicalDesc: pulpy
+  physicalDesc: reagent-physical-desc-pulpy
   color: "#FFE774"
   metabolisms:
     Medicine:
@@ -352,7 +352,7 @@
   name: reagent-name-siderlac
   group: Medicine
   desc: reagent-desc-siderlac
-  physicalDesc: milky
+  physicalDesc: reagent-physical-desc-milky
   color: "#f4dab8"
   metabolisms:
     Medicine:
@@ -367,7 +367,7 @@
   name: reagent-name-spaceacillin
   group: Medicine
   desc: reagent-desc-spaceacillin
-  physicalDesc: opaque
+  physicalDesc: reagent-physical-desc-opaque
   color: "#9942f5"
   metabolisms:
     Medicine:
@@ -379,7 +379,7 @@
   name: reagent-name-stellibinin
   group: Medicine
   desc: reagent-desc-stellibinin
-  physicalDesc: starry
+  physicalDesc: reagent-physical-desc-starry
   color: "#2b2f77"
   metabolisms:
     Medicine:
@@ -401,7 +401,7 @@
   name: reagent-name-synaptizine
   group: Medicine
   desc: reagent-desc-synaptizine
-  physicalDesc: pungent
+  physicalDesc: reagent-physical-desc-pungent
   color: "#d49a2f"
   metabolisms:
     Poison:
@@ -424,7 +424,7 @@
   name: reagent-name-tranexamic-acid
   group: Medicine
   desc: reagent-desc-tranexamic-acid
-  physicalDesc: viscous
+  physicalDesc: reagent-physical-desc-viscous
   color: "#ba7d7d"
   metabolisms:
     Medicine:
@@ -446,7 +446,7 @@
   name: reagent-name-tricordrazine
   group: Medicine
   desc: reagent-desc-tricordrazine
-  physicalDesc: opaque
+  physicalDesc: reagent-physical-desc-opaque
   color: "#00e5ff"
   metabolisms:
     Medicine:
@@ -467,7 +467,7 @@
   name: reagent-name-lipozine
   group: Medicine
   desc: reagent-desc-lipozine
-  physicalDesc: oily
+  physicalDesc: reagent-physical-desc-oily
   color: "#2690b5"
   metabolisms:
     Medicine:
@@ -481,7 +481,7 @@
   name: reagent-name-omnizine
   group: Medicine
   desc: reagent-desc-omnizine
-  physicalDesc: soothing
+  physicalDesc: reagent-physical-desc-soothing
   color: "#fcf7f9"
   metabolisms:
     Medicine:
@@ -499,7 +499,7 @@
   name: reagent-name-ultravasculine
   group: Medicine
   desc: reagent-desc-ultravasculine
-  physicalDesc: thick and grainy
+  physicalDesc: reagent-physical-desc-thick-and-grainy
   color: "#520e30"
   metabolisms:
     Medicine:

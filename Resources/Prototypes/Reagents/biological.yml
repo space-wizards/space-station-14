@@ -4,7 +4,7 @@
   group: Biological
   desc: reagent-desc-blood
   color: "#800000"
-  physicalDesc: ferrous
+  physicalDesc: reagent-physical-desc-ferrous
   metabolisms:
     Drink:
       # Quenching!
@@ -21,7 +21,7 @@
   group: Biological
   desc: reagent-desc-slime
   color: "#2cf274"
-  physicalDesc: viscous
+  physicalDesc: reagent-physical-desc-viscous
   metabolisms:
     Food:
       # Delicious!

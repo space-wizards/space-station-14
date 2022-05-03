@@ -18,7 +18,7 @@
   name: reagent-name-thermite
   parent: BasePyrotechnic
   desc: reagent-desc-thermite
-  physicalDesc: grainy
+  physicalDesc: reagent-physical-desc-grainy
   color: "#757245"
   boilingPoint: 2977.0 # Aluminum oxide
   meltingPoint: 2030.0
@@ -38,7 +38,7 @@
   name: reagent-name-napalm
   parent: BasePyrotechnic
   desc: reagent-desc-napalm
-  physicalDesc: soapy
+  physicalDesc: reagent-physical-desc-soapy
   color: "#FA00AF"
   tileReactions:
   - !type:FlammableTileReaction
@@ -64,7 +64,7 @@
   name: reagent-name-phlogiston
   parent: BasePyrotechnic
   desc: reagent-desc-phlogiston
-  physicalDesc: burning
+  physicalDesc: reagent-physical-desc-burning
   color: "#D4872A"
   metabolisms:
     Poison:
@@ -90,7 +90,7 @@
   name: reagent-name-chlorine-trifluoride
   parent: BasePyrotechnic
   desc: reagent-desc-chlorine-trifluoride
-  physicalDesc: blazing
+  physicalDesc: reagent-physical-desc-blazing
   color: "#FFC8C8"
   tileReactions:
   - !type:PryTileReaction
@@ -124,7 +124,7 @@
   name: reagent-name-foaming-agent
   parent: BasePyrotechnic
   desc: reagent-desc-foaming-agent
-  physicalDesc: foamy
+  physicalDesc: reagent-physical-desc-foamy
   color: "#215263"
   boilingPoint: 418.0 # I went with ammonium lauryl sulfate as the basis for this
   meltingPoint: 7.4 # I made this up
@@ -134,7 +134,7 @@
   name: reagent-name-welding-fuel
   parent: BasePyrotechnic
   desc: reagent-desc-welding-fuel
-  physicalDesc: oily
+  physicalDesc: reagent-physical-desc-oily
   color: "#a76b1c"
   boilingPoint: -84.7 # Acetylene. Close enough.
   meltingPoint: -80.7
@@ -155,7 +155,7 @@
   name: reagent-name-fluorosurfactant
   parent: BasePyrotechnic
   desc: reagent-desc-fluorosurfactant
-  physicalDesc: opaque
+  physicalDesc: reagent-physical-desc-opaque
   color: "#9e6b38"
   boilingPoint: 190.0 # Perfluorooctanoic Acid.
   meltingPoint: 45.0

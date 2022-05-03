@@ -3,7 +3,7 @@
   name: reagent-name-coffee
   parent: BaseDrink
   desc: reagent-desc-coffee
-  physicalDesc: aromatic
+  physicalDesc: reagent-physical-desc-aromatic
   color: "#664300"
 
 - type: reagent
@@ -11,7 +11,7 @@
   name: reagent-name-cream
   group: Drinks
   desc: reagent-desc-cream
-  physicalDesc: creamy
+  physicalDesc: reagent-physical-desc-creamy
   color: "#DFD7AF"
   metabolisms:
     Drink:
@@ -24,7 +24,7 @@
   name: reagent-name-cafe-latte
   parent: BaseDrink
   desc: reagent-desc-cafe-latte
-  physicalDesc: creamy
+  physicalDesc: reagent-physical-desc-creamy
   color: "#664300"
   spritePath: cafe_latte.rsi
 
@@ -33,7 +33,7 @@
   name: reagent-name-green-tea
   parent: BaseDrink
   desc: reagent-desc-green-tea
-  physicalDesc: aromatic
+  physicalDesc: reagent-physical-desc-aromatic
   color: "#C33F00"
   spritePath: glass_green.rsi #Placeholder
 
@@ -42,7 +42,7 @@
   name: reagent-name-grenadine
   parent: BaseDrink
   desc: reagent-desc-grenadine
-  physicalDesc: dark-red
+  physicalDesc: reagent-physical-desc-dark-red
   color: "#EA1D26"
   spritePath: grenadineglass.rsi
 
@@ -51,7 +51,7 @@
   name: reagent-name-iced-coffee
   parent: BaseDrink
   desc: reagent-desc-iced-coffee
-  physicalDesc: aromatic
+  physicalDesc: reagent-physical-desc-aromatic
   color: "#102838"
   spritePath: icedcoffeeglass.rsi
 
@@ -60,7 +60,7 @@
   name: reagent-name-iced-green-tea
   parent: BaseDrink
   desc: reagent-desc-iced-green-tea
-  physicalDesc: aromatic
+  physicalDesc: reagent-physical-desc-aromatic
   color: "#CE4200"
   spritePath: glass_green.rsi #Placeholder
 
@@ -69,7 +69,7 @@
   name: reagent-name-iced-tea
   parent: BaseDrink
   desc: reagent-desc-iced-tea
-  physicalDesc: aromatic
+  physicalDesc: reagent-physical-desc-aromatic
   color: "#104038"
   spritePath: icedteaglass.rsi
 
@@ -78,7 +78,7 @@
   name: reagent-name-lemonade
   group: Drinks
   desc: reagent-desc-lemonade
-  physicalDesc: tart
+  physicalDesc: reagent-physical-desc-tart
   color: "#FFFF00"
   spritePath: lemonadeglass.rsi
   metabolisms:
@@ -92,7 +92,7 @@
   name: reagent-name-milk
   group: Drinks
   desc: reagent-desc-milk
-  physicalDesc: opaque
+  physicalDesc: reagent-physical-desc-opaque
   color: "#DFDFDF"
   plantMetabolism:
     - !type:PlantAdjustNutrition
@@ -116,7 +116,7 @@
   name: reagent-name-milk-oat
   group: Drinks
   desc: reagent-desc-milk-oat
-  physicalDesc: refreshing
+  physicalDesc: reagent-physical-desc-refreshing
   color: "#302000"
   metabolisms:
     Drink:
@@ -135,7 +135,7 @@
   name: reagent-name-milk-spoiled
   group: Drinks
   desc: reagent-desc-milk-spoiled
-  physicalDesc: putrid
+  physicalDesc: reagent-physical-desc-putrid
   color: "#faffba"
   metabolisms:
     Drink:
@@ -148,7 +148,7 @@
   name: reagent-name-nothing
   desc: reagent-desc-nothing
   group: Drinks
-  physicalDesc: nothing
+  physicalDesc: reagent-physical-desc-nothing
   spritePath: nothing.rsi
   metabolisms:
     Drink:
@@ -162,7 +162,7 @@
   name: reagent-name-nuclear-cola
   group: Drinks
   desc: reagent-desc-nuclear-cola
-  physicalDesc: fizzy
+  physicalDesc: reagent-physical-desc-fizzy
   color: "#100800"
   spritePath: nuclear_colaglass.rsi
   metabolisms:
@@ -182,7 +182,7 @@
   name: reagent-name-soda-water
   parent: BaseDrink
   desc: reagent-desc-soda-water
-  physicalDesc: fizzy
+  physicalDesc: reagent-physical-desc-fizzy
   color: "#619494"
 
 - type: reagent
@@ -190,7 +190,7 @@
   name: reagent-name-soy-latte
   parent: BaseDrink
   desc: reagent-desc-soy-latte
-  physicalDesc: strong-smelling
+  physicalDesc: reagent-physical-desc-strong-smelling
   color: "#664300"
   spritePath: soy_latte.rsi
 
@@ -199,7 +199,7 @@
   name: reagent-name-tea
   parent: BaseDrink
   desc: reagent-desc-tea
-  physicalDesc: aromatic
+  physicalDesc: reagent-physical-desc-aromatic
   color: "#8a5a3a"
 
 - type: reagent
@@ -207,7 +207,7 @@
   name: reagent-name-tonic-water
   parent: BaseDrink
   desc: reagent-desc-tonic-water
-  physicalDesc: fizzy
+  physicalDesc: reagent-physical-desc-fizzy
   color: "#0064C8"
 
 - type: reagent
@@ -215,7 +215,7 @@
   name: reagent-name-water
   parent: BaseDrink
   desc: reagent-desc-water
-  physicalDesc: translucent
+  physicalDesc: reagent-physical-desc-translucent
   color: "#c0e0ff20"
   boilingPoint: 100.0
   meltingPoint: 0.0
@@ -229,7 +229,7 @@
   id: Ice
   name: reagent-name-ice
   desc: reagent-desc-ice
-  physicalDesc: frosty
+  physicalDesc: reagent-physical-desc-frosty
   color: "#bed8e6"
   meltingPoint: 0.0
   boilingPoint: 100.0
@@ -242,7 +242,7 @@
   name: reagent-name-dry-ramen
   parent: BaseDrink
   desc: reagent-desc-dry-ramen
-  physicalDesc: wormy
+  physicalDesc: reagent-physical-desc-wormy
   color: "#664300"
   metabolisms:
     Food:
@@ -255,7 +255,7 @@
   name: reagent-name-hot-ramen
   parent: BaseDrink
   desc: reagent-desc-hot-ramen
-  physicalDesc: wormy
+  physicalDesc: reagent-physical-desc-wormy
   color: "#664300"
   metabolisms:
     Food:
@@ -268,7 +268,7 @@
   name: reagent-name-pilk
   parent: BaseDrink
   desc: reagent-desc-pilk
-  physicalDesc: creamy
+  physicalDesc: reagent-physical-desc-creamy
   color: "#e7c69f"
   metabolisms:
     Drink:

@@ -3,7 +3,7 @@
   name: reagent-name-flour
   group: Foods
   desc: reagent-desc-flour
-  physicalDesc: powdery
+  physicalDesc: reagent-physical-desc-powdery
   color: white
   metabolisms:
     Food:
@@ -16,7 +16,7 @@
   name: reagent-name-oats
   group: Foods
   desc: reagent-desc-oats
-  physicalDesc: coarse
+  physicalDesc: reagent-physical-desc-coarse
   color: tan
   metabolisms:
     Food:
@@ -29,7 +29,7 @@
   name: reagent-name-enzyme
   group: Foods
   desc: reagent-desc-enzyme
-  physicalDesc: chalky
+  physicalDesc: reagent-physical-desc-chalky
   color: "#009900"
   metabolisms:
     Food:
@@ -42,7 +42,7 @@
   name: reagent-name-egg
   group: Foods
   desc: reagent-desc-egg
-  physicalDesc: mucus-like
+  physicalDesc: reagent-physical-desc-mucus-like
   color: white
   metabolisms:
     Food:
@@ -55,7 +55,7 @@
   name: reagent-name-sugar
   group: Foods
   desc: reagent-desc-sugar
-  physicalDesc: sweet
+  physicalDesc: reagent-physical-desc-sweet
   color: white
   metabolisms:
     Food:
@@ -68,7 +68,7 @@
   name: reagent-name-blackpepper
   group: Foods
   desc: reagent-desc-blackpepper
-  physicalDesc: grainy
+  physicalDesc: reagent-physical-desc-grainy
   color: black
   metabolisms:
     Food:
@@ -81,7 +81,7 @@
   name: reagent-name-vinegar
   group: Foods
   desc: reagent-desc-vinegar
-  physicalDesc: sour
+  physicalDesc: reagent-physical-desc-sour
   color: tan
   metabolisms:
     Food:
@@ -94,7 +94,7 @@
   name: reagent-name-rice
   group: Foods
   desc: reagent-desc-rice
-  physicalDesc: chewy
+  physicalDesc: reagent-physical-desc-chewy
   color: white
   metabolisms:
     Food:
@@ -106,7 +106,7 @@
   name: reagent-name-oil-olive
   group: Foods
   desc: reagent-desc-oil-olive
-  physicalDesc: oily
+  physicalDesc: reagent-physical-desc-oily
   color: olive
   metabolisms:
     Food:
@@ -119,7 +119,7 @@
   name: reagent-name-oil
   group: Foods
   desc: reagent-desc-oil
-  physicalDesc: oily
+  physicalDesc: reagent-physical-desc-oily
   color: "#b67823"
   boilingPoint: 300.0
   meltingPoint: -16.0
@@ -130,7 +130,7 @@
   id: CapsaicinOil
   name: reagent-name-capsaicin-oil
   desc: reagent-desc-capsaicin-oil
-  physicalDesc: oily
+  physicalDesc: reagent-physical-desc-oily
   color: "#FF0000"
   meltingPoint: 146
   boilingPoint: 410 # Really high boiling point compared to its melting

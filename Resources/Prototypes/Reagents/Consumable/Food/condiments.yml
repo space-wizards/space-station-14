@@ -3,7 +3,7 @@
   name: reagent-name-astrotame
   group: Foods
   desc: reagent-desc-astrotame
-  physicalDesc: sugary
+  physicalDesc: reagent-physical-desc-sugary
   color: aquamarine
 
 - type: reagent
@@ -11,7 +11,7 @@
   name: reagent-name-bbq-sauce
   group: Foods
   desc: reagent-desc-bbq-sauce
-  physicalDesc: gloopy
+  physicalDesc: reagent-physical-desc-gloopy
   color: darkred
 
 - type: reagent
@@ -19,7 +19,7 @@
   name: reagent-name-cornoil
   group: Foods
   desc: reagent-desc-cornoil
-  physicalDesc: oily
+  physicalDesc: reagent-physical-desc-oily
   color: yellow
 
 - type: reagent
@@ -27,7 +27,7 @@
   name: reagent-name-frostoil
   group: Foods
   desc: reagent-desc-frostoil
-  physicalDesc: cold
+  physicalDesc: reagent-physical-desc-cold
   color: skyblue
 
 - type: reagent
@@ -35,7 +35,7 @@
   name: reagent-name-horseradish-sauce
   group: Foods
   desc: reagent-desc-horseradish-sauce
-  physicalDesc: overpowering
+  physicalDesc: reagent-physical-desc-overpowering
   color: gray
 
 - type: reagent
@@ -43,7 +43,7 @@
   name: reagent-name-hotsauce
   group: Foods
   desc: reagent-desc-hotsauce
-  physicalDesc: spicy
+  physicalDesc: reagent-physical-desc-spicy
   color: red
 
 - type: reagent
@@ -51,7 +51,7 @@
   name: reagent-name-ketchup
   group: Foods
   desc: reagent-desc-ketchup
-  physicalDesc: tangy
+  physicalDesc: reagent-physical-desc-tangy
   color: red
 
 - type: reagent
@@ -59,7 +59,7 @@
   name: reagent-name-soysauce
   group: Foods
   desc: reagent-desc-soysauce
-  physicalDesc: salty
+  physicalDesc: reagent-physical-desc-salty
   color: saddlebrown
 
 - type: reagent
@@ -67,7 +67,7 @@
   name: reagent-name-table-salt
   group: Foods
   desc: reagent-desc-table-salt
-  physicalDesc: grainy
+  physicalDesc: reagent-physical-desc-grainy
   color: "#a1000b"
   boilingPoint: 1465.0
   meltingPoint: 800.7

@@ -3,7 +3,7 @@
   name: reagent-name-juice-apple
   parent: BaseDrink
   desc: reagent-desc-juice-apple
-  physicalDesc: crisp
+  physicalDesc: reagent-physical-desc-crisp
   color: "#FDAD01"
 
 - type: reagent
@@ -11,7 +11,7 @@
   name: reagent-name-juice-banana
   parent: BaseDrink
   desc: reagent-desc-juice-banana
-  physicalDesc: crisp
+  physicalDesc: reagent-physical-desc-crisp
   color: "#FFE777"
 
 - type: reagent
@@ -19,14 +19,14 @@
   name: reagent-name-juice-berry
   parent: BaseDrink
   desc: reagent-desc-juice-berry
-  physicalDesc: sweet
+  physicalDesc: reagent-physical-desc-sweet
   color: "#660099"
 
 - type: reagent
   id: JuiceBerryPoison
   name: reagent-name-juice-berry-poison
   desc: reagent-desc-juice-berry-poison
-  physicalDesc: sickly
+  physicalDesc: reagent-physical-desc-sickly
   color: "#6600CC"
   metabolisms:
     Drink:
@@ -55,7 +55,7 @@
   name: reagent-name-juice-carrot
   parent: BaseDrink
   desc: reagent-desc-juice-carrot
-  physicalDesc: crisp
+  physicalDesc: reagent-physical-desc-crisp
   color: "#FF8820"
 
 - type: reagent
@@ -63,7 +63,7 @@
   name: reagent-name-juice-grape
   parent: BaseDrink
   desc: reagent-desc-juice-grape
-  physicalDesc: crisp
+  physicalDesc: reagent-physical-desc-crisp
   color: "#512284"
 
 - type: reagent
@@ -71,7 +71,7 @@
   name: reagent-name-juice-lemon
   parent: BaseDrink
   desc: reagent-desc-juice-lemon
-  physicalDesc: citric
+  physicalDesc: reagent-physical-desc-citric
   color: "#fff690"
 
 - type: reagent
@@ -79,7 +79,7 @@
   name: reagent-name-juice-lime
   parent: BaseDrink
   desc: reagent-desc-juice-lime
-  physicalDesc: citric
+  physicalDesc: reagent-physical-desc-citric
   color: "#99bb43"
 
 # /datum/reagent/drink/orangejuice/on_mob_life(var/mob/living/M)
@@ -95,7 +95,7 @@
   name: reagent-name-juice-orange
   parent: BaseDrink
   desc: reagent-desc-juice-orange
-  physicalDesc: citric
+  physicalDesc: reagent-physical-desc-citric
   color: "#E78108"
 
 - type: reagent
@@ -103,7 +103,7 @@
   name: reagent-name-juice-pineapple
   parent: BaseDrink
   desc: reagent-desc-juice-pineapple
-  physicalDesc: tropical
+  physicalDesc: reagent-physical-desc-tropical
   color: yellow
 
 - type: reagent
@@ -111,7 +111,7 @@
   name: reagent-name-juice-potato
   parent: BaseDrink
   desc: reagent-desc-juice-potato
-  physicalDesc: starchy
+  physicalDesc: reagent-physical-desc-starchy
   color: "#302000"
 
 - type: reagent
@@ -119,7 +119,7 @@
   name: reagent-name-juice-tomato
   parent: BaseDrink
   desc: reagent-desc-juice-tomato
-  physicalDesc: saucey
+  physicalDesc: reagent-physical-desc-saucey
   color: "#731008"
 
 - type: reagent
@@ -127,5 +127,5 @@
   name: reagent-name-juice-watermelon
   parent: BaseDrink
   desc: reagent-desc-juice-watermelon
-  physicalDesc: sweet
+  physicalDesc: reagent-physical-desc-sweet
   color: "#EF3520"

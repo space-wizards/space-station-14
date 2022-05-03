@@ -8,7 +8,7 @@
   name: reagent-name-absinthe
   parent: BaseAlcohol
   desc: reagent-desc-absinthe
-  physicalDesc: strong-smelling
+  physicalDesc: reagent-physical-desc-strong-smelling
   color: "#33EE00"
   spritePath: absintheglass.rsi
 
@@ -17,7 +17,7 @@
   name: reagent-name-ale
   parent: BaseAlcohol
   desc: reagent-desc-ale
-  physicalDesc: bubbly
+  physicalDesc: reagent-physical-desc-bubbly
   color: "#663100"
   spritePath: aleglass.rsi
 
@@ -26,7 +26,7 @@
   name: reagent-name-beer
   parent: BaseAlcohol
   desc: reagent-desc-beer
-  physicalDesc: bubbly
+  physicalDesc: reagent-physical-desc-bubbly
   color: "#cfa85f"
   spritePath: beerglass.rsi
 
@@ -35,7 +35,7 @@
   name: reagent-name-blue-curacao
   parent: BaseAlcohol
   desc: reagent-desc-blue-curacao
-  physicalDesc: strong-smelling
+  physicalDesc: reagent-physical-desc-strong-smelling
   color: "#0000CD"
   spritePath: curacaoglass.rsi
 
@@ -44,7 +44,7 @@
   name: reagent-name-cognac
   parent: BaseAlcohol
   desc: reagent-desc-cognac
-  physicalDesc: strong-smelling
+  physicalDesc: reagent-physical-desc-strong-smelling
   color: "#AB3C05"
   spritePath: cognacglass.rsi
 
@@ -53,7 +53,7 @@
   name: reagent-name-dead-rum
   parent: BaseAlcohol
   desc: reagent-desc-dead-rum
-  physicalDesc: strong-smelling
+  physicalDesc: reagent-physical-desc-strong-smelling
   color: "#664300"
   spritePath: rumglass.rsi
 
@@ -62,7 +62,7 @@
   name: reagent-name-ethanol
   parent: BaseAlcohol
   desc: reagent-desc-ethanol
-  physicalDesc: strong-smelling
+  physicalDesc: reagent-physical-desc-strong-smelling
   color: "#b05b3c"
   boilingPoint: 78.2
   meltingPoint: -114.1
@@ -79,7 +79,7 @@
   name: reagent-name-gin
   parent: BaseAlcohol
   desc: reagent-desc-gin
-  physicalDesc: strong-smelling
+  physicalDesc: reagent-physical-desc-strong-smelling
   color: "#664300"
   spritePath: ginvodkaglass.rsi
 
@@ -88,7 +88,7 @@
   name: reagent-name-kahlua
   parent: BaseAlcohol
   desc: reagent-desc-kahlua
-  physicalDesc: cloudy
+  physicalDesc: reagent-physical-desc-cloudy
   color: "#664300"
   spritePath: kahluaglass.rsi
 
@@ -97,7 +97,7 @@
   name: reagent-name-melon-liquor
   parent: BaseAlcohol
   desc: reagent-desc-melon-liquor
-  physicalDesc: strong-smelling
+  physicalDesc: reagent-physical-desc-strong-smelling
   color: "#138808"
   spritePath: emeraldglass.rsi
 
@@ -106,7 +106,7 @@
   name: reagent-name-n-t-cahors
   parent: BaseAlcohol
   desc: reagent-desc-n-t-cahors
-  physicalDesc: strong-smelling
+  physicalDesc: reagent-physical-desc-strong-smelling
   color: "#7E4043"
   spritePath: wineglass.rsi
 
@@ -115,7 +115,7 @@
   name: reagent-name-poison-wine
   parent: BaseAlcohol
   desc: reagent-desc-poison-wine
-  physicalDesc: strong-smelling
+  physicalDesc: reagent-physical-desc-strong-smelling
   color: "#000000"
   spritePath: pwineglass.rsi
   metabolisms:
@@ -135,7 +135,7 @@
   name: reagent-name-rum
   parent: BaseAlcohol
   desc: reagent-desc-rum
-  physicalDesc: strong-smelling
+  physicalDesc: reagent-physical-desc-strong-smelling
   color: "#664300"
   spritePath: rumglass.rsi
 
@@ -144,7 +144,7 @@
   name: reagent-name-sake
   parent: BaseAlcohol
   desc: reagent-desc-sake
-  physicalDesc: strong-smelling
+  physicalDesc: reagent-physical-desc-strong-smelling
   color: "#DDDDDD"
 
 - type: reagent
@@ -152,7 +152,7 @@
   name: reagent-name-tequila
   parent: BaseAlcohol
   desc: reagent-desc-tequila
-  physicalDesc: strong-smelling
+  physicalDesc: reagent-physical-desc-strong-smelling
   color: "#d7d1d155"
 
 - type: reagent
@@ -160,7 +160,7 @@
   name: reagent-name-vermouth
   parent: BaseAlcohol
   desc: reagent-desc-vermouth
-  physicalDesc: strong-smelling
+  physicalDesc: reagent-physical-desc-strong-smelling
   color: "#91FF91"
   spritePath: vermouthglass.rsi
 
@@ -169,7 +169,7 @@
   name: reagent-name-vodka
   parent: BaseAlcohol
   desc: reagent-desc-vodka
-  physicalDesc: strong-smelling
+  physicalDesc: reagent-physical-desc-strong-smelling
   color: "#d1d1d155"
   spritePath: ginvodkaglass.rsi
 
@@ -178,7 +178,7 @@
   name: reagent-name-whiskey
   parent: BaseAlcohol
   desc: reagent-desc-whiskey
-  physicalDesc: strong-smelling
+  physicalDesc: reagent-physical-desc-strong-smelling
   color: "#664300"
   spritePath: whiskeyglass.rsi
 
@@ -187,7 +187,7 @@
   name: reagent-name-wine
   parent: BaseAlcohol
   desc: reagent-desc-wine
-  physicalDesc: translucent
+  physicalDesc: reagent-physical-desc-translucent
   color: "#7E4043"
   spritePath: wineglass.rsi
 
@@ -198,7 +198,7 @@
   name: reagent-name-acid-spit
   parent: BaseAlcohol
   desc: reagent-desc-acid-spit
-  physicalDesc: strong-smelling
+  physicalDesc: reagent-physical-desc-strong-smelling
   color: "#365000"
   spritePath: acidspitglass.rsi
 
@@ -207,7 +207,7 @@
   name: reagent-name-allies-cocktail #haha, cock. that's hot
   parent: BaseAlcohol
   desc: reagent-desc-allies-cocktail #haha, cock. that's hot
-  physicalDesc: strong-smelling
+  physicalDesc: reagent-physical-desc-strong-smelling
   color: "#00664d"
   spritePath: alliescocktail.rsi
 
@@ -216,7 +216,7 @@
   name: reagent-name-aloe
   parent: BaseAlcohol
   desc: reagent-desc-aloe
-  physicalDesc: strong-smelling
+  physicalDesc: reagent-physical-desc-strong-smelling
   color: "#192c00"
   spritePath: aloe.rsi
 
@@ -225,7 +225,7 @@
   name: reagent-name-amasec
   parent: BaseAlcohol
   desc: reagent-desc-amasec
-  physicalDesc: strong-smelling
+  physicalDesc: reagent-physical-desc-strong-smelling
   color: "#124da7"
   spritePath: amasecglass.rsi
 
@@ -234,7 +234,7 @@
   name: reagent-name-andalusia
   parent: BaseAlcohol
   desc: reagent-desc-andalusia
-  physicalDesc: strong-smelling
+  physicalDesc: reagent-physical-desc-strong-smelling
   color: "#665700"
   spritePath: andalusia.rsi
 
@@ -243,7 +243,7 @@
   name: reagent-name-antifreeze
   parent: BaseAlcohol
   desc: reagent-desc-antifreeze
-  physicalDesc: translucent
+  physicalDesc: reagent-physical-desc-translucent
   color: "#ff7d63"
   spritePath: antifreeze.rsi
 
@@ -252,7 +252,7 @@
   name: reagent-name-atomic-bomb
   parent: BaseAlcohol
   desc: reagent-desc-atomic-bomb
-  physicalDesc: cloudy
+  physicalDesc: reagent-physical-desc-cloudy
   color: "#666300"
   spritePath: atomicbombglass.rsi
 
@@ -261,7 +261,7 @@
   name: reagent-name-b52
   parent: BaseAlcohol
   desc: reagent-desc-b52
-  physicalDesc: bubbly
+  physicalDesc: reagent-physical-desc-bubbly
   color: "#664300"
   spritePath: b52glass.rsi
 
@@ -270,7 +270,7 @@
   name: reagent-name-bahama-mama
   parent: BaseAlcohol
   desc: reagent-desc-bahama-mama
-  physicalDesc: strong-smelling
+  physicalDesc: reagent-physical-desc-strong-smelling
   color: "#FF7F3B"
   spritePath: bahama_mama.rsi
 
@@ -279,7 +279,7 @@
   name: reagent-name-banana-honk
   parent: BaseAlcohol
   desc: reagent-desc-banana-honk
-  physicalDesc: strong-smelling
+  physicalDesc: reagent-physical-desc-strong-smelling
   color: "#ffff91"
   spritePath: bananahonkglass.rsi
 
@@ -288,7 +288,7 @@
   name: reagent-name-barefoot
   parent: BaseAlcohol
   desc: reagent-desc-barefoot
-  physicalDesc: strong-smelling
+  physicalDesc: reagent-physical-desc-strong-smelling
   color: "#664300"
   spritePath: b&p.rsi
 
@@ -297,7 +297,7 @@
   name: reagent-name-beepsky-smash
   parent: BaseAlcohol
   desc: reagent-desc-beepsky-smash
-  physicalDesc: strong-smelling
+  physicalDesc: reagent-physical-desc-strong-smelling
   color: "#664300"
   spritePath: beepskysmashglass.rsi
 
@@ -306,7 +306,7 @@
   name: reagent-name-bilk
   parent: BaseAlcohol
   desc: reagent-desc-bilk
-  physicalDesc: bilky
+  physicalDesc: reagent-physical-desc-bilky
   color: "#895C4C"
   spritePath: glass_brown.rsi
 
@@ -315,7 +315,7 @@
   name: reagent-name-black-russian
   parent: BaseAlcohol
   desc: reagent-desc-black-russian
-  physicalDesc: strong-smelling
+  physicalDesc: reagent-physical-desc-strong-smelling
   color: "#360000"
   spritePath: blackrussianglass.rsi
 
@@ -324,7 +324,7 @@
   name: reagent-name-bloody-mary
   parent: BaseAlcohol
   desc: reagent-desc-bloody-mary
-  physicalDesc: strong-smelling
+  physicalDesc: reagent-physical-desc-strong-smelling
   color: "#660000"
   spritePath: bloodymaryglass.rsi
 
@@ -333,7 +333,7 @@
   name: reagent-name-booger
   parent: BaseAlcohol
   desc: reagent-desc-booger
-  physicalDesc: strong-smelling
+  physicalDesc: reagent-physical-desc-strong-smelling
   color: "#8CFF8C"
   spritePath: booger.rsi
 
@@ -342,7 +342,7 @@
   name: reagent-name-brave-bull
   parent: BaseAlcohol
   desc: reagent-desc-brave-bull
-  physicalDesc: strong-smelling
+  physicalDesc: reagent-physical-desc-strong-smelling
   color: "#664300"
   spritePath: bravebullglass.rsi
 
@@ -351,7 +351,7 @@
   name: reagent-name-cuba-libre
   parent: BaseAlcohol
   desc: reagent-desc-cuba-libre
-  physicalDesc: bubbly
+  physicalDesc: reagent-physical-desc-bubbly
   color: "#3E1B00"
   spritePath: cubalibreglass.rsi
 
@@ -360,7 +360,7 @@
   name: reagent-name-demons-blood
   parent: BaseAlcohol
   desc: reagent-desc-demons-blood
-  physicalDesc: strong-smelling
+  physicalDesc: reagent-physical-desc-strong-smelling
   color: "#a70000"
   spritePath: demonsblood.rsi
 
@@ -369,7 +369,7 @@
   name: reagent-name-devils-kiss
   parent: BaseAlcohol
   desc: reagent-desc-devils-kiss
-  physicalDesc: strong-smelling
+  physicalDesc: reagent-physical-desc-strong-smelling
   color: "#A68310"
   spritePath: devilskiss.rsi
 
@@ -378,7 +378,7 @@
   name: reagent-name-doctors-delight
   parent: BaseAlcohol
   desc: reagent-desc-doctors-delight
-  physicalDesc: strong-smelling
+  physicalDesc: reagent-physical-desc-strong-smelling
   color: "#FF8CFF"
   spritePath: doctorsdelightglass.rsi
   metabolisms:
@@ -403,7 +403,7 @@
   name: reagent-name-driest-martini
   parent: BaseAlcohol
   desc: reagent-desc-driest-martini
-  physicalDesc: strong-smelling
+  physicalDesc: reagent-physical-desc-strong-smelling
   color: "#2E6671"
   spritePath: driestmartiniglass.rsi
 
@@ -412,7 +412,7 @@
   name: reagent-name-erika-suprise
   parent: BaseAlcohol
   desc: reagent-desc-erika-suprise
-  physicalDesc: strong-smelling
+  physicalDesc: reagent-physical-desc-strong-smelling
   color: "#2E6671"
   spritePath: erikasurprise.rsi
 
@@ -421,7 +421,7 @@
   name: reagent-name-gargle-blaster
   parent: BaseAlcohol
   desc: reagent-desc-gargle-blaster
-  physicalDesc: volatile
+  physicalDesc: reagent-physical-desc-volatile
   color: "#9cc8b4"
   spritePath: gargleblasterglass.rsi
 
@@ -430,7 +430,7 @@
   name: reagent-name-gin-fizz
   parent: BaseAlcohol
   desc: reagent-desc-gin-fizz
-  physicalDesc: strong-smelling
+  physicalDesc: reagent-physical-desc-strong-smelling
   color: "#664300"
   spritePath: ginfizzglass.rsi
 
@@ -439,7 +439,7 @@
   name: reagent-name-gin-tonic
   parent: BaseAlcohol
   desc: reagent-desc-gin-tonic
-  physicalDesc: strong-smelling
+  physicalDesc: reagent-physical-desc-strong-smelling
   color: "#004166"
   spritePath: gintonicglass.rsi
 
@@ -448,7 +448,7 @@
   name: reagent-name-goldschlager
   parent: BaseAlcohol
   desc: reagent-desc-goldschlager
-  physicalDesc: strong-smelling
+  physicalDesc: reagent-physical-desc-strong-smelling
   color: "#FFFF91"
   spritePath: goldschlagerglass.rsi
 
@@ -457,7 +457,7 @@
   name: reagent-name-grog
   parent: BaseAlcohol
   desc: reagent-desc-grog
-  physicalDesc: strong-smelling
+  physicalDesc: reagent-physical-desc-strong-smelling
   color: "#664300"
   spritePath: grogglass.rsi
 
@@ -466,7 +466,7 @@
   name: reagent-name-hippies-delight
   parent: BaseAlcohol
   desc: reagent-desc-hippies-delight
-  physicalDesc: strong-smelling
+  physicalDesc: reagent-physical-desc-strong-smelling
   color: "#6eaa0c"
   spritePath: hippiesdelightglass.rsi
 
@@ -475,7 +475,7 @@
   name: reagent-name-hooch
   parent: BaseAlcohol
   desc: reagent-desc-hooch
-  physicalDesc: strong-smelling
+  physicalDesc: reagent-physical-desc-strong-smelling
   color: "#664e00"
   spritePath: glass_brown2.rsi
 
@@ -484,7 +484,7 @@
   name: reagent-name-iced-beer
   parent: BaseAlcohol
   desc: reagent-desc-iced-beer
-  physicalDesc: bubbly
+  physicalDesc: reagent-physical-desc-bubbly
   color: "#664300"
   spritePath: iced_beerglass.rsi
 
@@ -493,7 +493,7 @@
   name: reagent-name-irish-car-bomb
   parent: BaseAlcohol
   desc: reagent-desc-irish-car-bomb
-  physicalDesc: bubbly
+  physicalDesc: reagent-physical-desc-bubbly
   color: "#2E6671"
   spritePath: irishcarbomb.rsi
 
@@ -502,7 +502,7 @@
   name: reagent-name-irish-cream
   parent: BaseAlcohol
   desc: reagent-desc-irish-cream
-  physicalDesc: creamy
+  physicalDesc: reagent-physical-desc-creamy
   color: "#664300"
   spritePath: irishcreamglass.rsi
 
@@ -511,7 +511,7 @@
   name: reagent-name-irish-coffee
   parent: BaseAlcohol
   desc: reagent-desc-irish-coffee
-  physicalDesc: cloudy
+  physicalDesc: reagent-physical-desc-cloudy
   color: "#664300"
   spritePath: irishcoffeeglass.rsi
 
@@ -520,7 +520,7 @@
   name: reagent-name-kira-special
   parent: BaseAlcohol
   desc: reagent-desc-kira-special
-  physicalDesc: strong-smelling
+  physicalDesc: reagent-physical-desc-strong-smelling
   color: "#CCCC99"
   spritePath: kiraspecial.rsi
 
@@ -529,7 +529,7 @@
   name: reagent-name-long-island-iced-tea
   parent: BaseAlcohol
   desc: reagent-desc-long-island-iced-tea
-  physicalDesc: strong-smelling
+  physicalDesc: reagent-physical-desc-strong-smelling
   color: "#664300"
   spritePath: longislandicedteaglass.rsi
 
@@ -538,7 +538,7 @@
   name: reagent-name-manhattan
   parent: BaseAlcohol
   desc: reagent-desc-manhattan
-  physicalDesc: strong-smelling
+  physicalDesc: reagent-physical-desc-strong-smelling
   color: "#664300"
   spritePath: manhattanglass.rsi
 
@@ -547,7 +547,7 @@
   name: reagent-name-manhattan-project
   parent: BaseAlcohol
   desc: reagent-desc-manhattan-project
-  physicalDesc: strong-smelling
+  physicalDesc: reagent-physical-desc-strong-smelling
   color: "#664300"
   spritePath: proj_manhattanglass.rsi
 
@@ -556,7 +556,7 @@
   name: reagent-name-manly-dorf
   parent: BaseAlcohol
   desc: reagent-desc-manly-dorf
-  physicalDesc: bubbly
+  physicalDesc: reagent-physical-desc-bubbly
   color: "#664300"
   spritePath: manlydorfglass.rsi
 
@@ -565,7 +565,7 @@
   name: reagent-name-margarita
   parent: BaseAlcohol
   desc: reagent-desc-margarita
-  physicalDesc: strong-smelling
+  physicalDesc: reagent-physical-desc-strong-smelling
   color: "#8CFF8C"
   spritePath: margaritaglass.rsi
 
@@ -574,7 +574,7 @@
   name: reagent-name-martini
   parent: BaseAlcohol
   desc: reagent-desc-martini
-  physicalDesc: strong-smelling
+  physicalDesc: reagent-physical-desc-strong-smelling
   color: "#664300"
   spritePath: martiniglass.rsi
 
@@ -583,7 +583,7 @@
   name: reagent-name-mead
   parent: BaseAlcohol
   desc: reagent-desc-mead
-  physicalDesc: strong-smelling
+  physicalDesc: reagent-physical-desc-strong-smelling
   color: "#664300"
   spritePath: meadglass.rsi
 
@@ -592,7 +592,7 @@
   name: reagent-name-mojito
   parent: BaseAlcohol
   desc: reagent-desc-mojito
-  physicalDesc: strong-smelling
+  physicalDesc: reagent-physical-desc-strong-smelling
   color: "#664300"
   spritePath: mojito.rsi
 
@@ -601,7 +601,7 @@
   name: reagent-name-moonshine
   parent: BaseAlcohol
   desc: reagent-desc-moonshine
-  physicalDesc: strong-smelling
+  physicalDesc: reagent-physical-desc-strong-smelling
   color: "#d1d7d155"
 
 - type: reagent
@@ -609,7 +609,7 @@
   name: reagent-name-neurotoxin
   parent: BaseAlcohol
   desc: reagent-desc-neurotoxin
-  physicalDesc: strong-smelling
+  physicalDesc: reagent-physical-desc-strong-smelling
   color: "#2E2E61"
   spritePath: neurotoxinglass.rsi
   metabolisms:
@@ -628,7 +628,7 @@
   name: reagent-name-patron
   parent: BaseAlcohol
   desc: reagent-desc-patron
-  physicalDesc: metallic
+  physicalDesc: reagent-physical-desc-metallic
   color: "#585840"
   spritePath: patronglass.rsi
 
@@ -637,7 +637,7 @@
   name: reagent-name-red-mead
   parent: BaseAlcohol
   desc: reagent-desc-red-mead
-  physicalDesc: strong-smelling
+  physicalDesc: reagent-physical-desc-strong-smelling
   color: "#C73C00"
   spritePath: red_meadglass.rsi
 
@@ -646,7 +646,7 @@
   name: reagent-name-rewriter
   parent: BaseAlcohol
   desc: reagent-desc-rewriter
-  physicalDesc: strong-smelling
+  physicalDesc: reagent-physical-desc-strong-smelling
   color: "#485000"
   spritePath: rewriter.rsi
 
@@ -655,7 +655,7 @@
   name: reagent-name-sbiten
   parent: BaseAlcohol
   desc: reagent-desc-sbiten
-  physicalDesc: strong-smelling
+  physicalDesc: reagent-physical-desc-strong-smelling
   color: "#004166"
   spritePath: sbitenglass.rsi
 
@@ -664,7 +664,7 @@
   name: reagent-name-screwdriver-cocktail
   parent: BaseAlcohol
   desc: reagent-desc-screwdriver-cocktail
-  physicalDesc: strong-smelling
+  physicalDesc: reagent-physical-desc-strong-smelling
   color: "#A68310"
   spritePath: screwdriverglass.rsi
 
@@ -673,7 +673,7 @@
   name: reagent-name-silencer
   parent: BaseAlcohol
   desc: reagent-desc-silencer
-  physicalDesc: strong-smelling
+  physicalDesc: reagent-physical-desc-strong-smelling
   color: "#004666"
   spritePath: silencerglass.rsi
 
@@ -682,7 +682,7 @@
   name: reagent-name-singulo
   parent: BaseAlcohol
   desc: reagent-desc-singulo
-  physicalDesc: strong-smelling
+  physicalDesc: reagent-physical-desc-strong-smelling
   color: "#3b0c0c"
   spritePath: singulo.rsi
 
@@ -691,7 +691,7 @@
   name: reagent-name-snow-white
   parent: BaseAlcohol
   desc: reagent-desc-snow-white
-  physicalDesc: bubbly
+  physicalDesc: reagent-physical-desc-bubbly
   color: "#FFFFFF"
   spritePath: snowwhite.rsi
 
@@ -700,7 +700,7 @@
   name: reagent-name-sui-dream
   parent: BaseAlcohol
   desc: reagent-desc-sui-dream
-  physicalDesc: strong-smelling
+  physicalDesc: reagent-physical-desc-strong-smelling
   color: "#00A86B"
   spritePath: sdreamglass.rsi
 
@@ -709,7 +709,7 @@
   name: reagent-name-syndicate-bomb
   parent: BaseAlcohol
   desc: reagent-desc-syndicate-bomb
-  physicalDesc: opaque
+  physicalDesc: reagent-physical-desc-opaque
   color: "#2E6660"
   spritePath: syndicatebomb.rsi
 
@@ -718,7 +718,7 @@
   name: reagent-name-tequila-sunrise
   parent: BaseAlcohol
   desc: reagent-desc-tequila-sunrise
-  physicalDesc: strong-smelling
+  physicalDesc: reagent-physical-desc-strong-smelling
   color: "#FFE48C"
   spritePath: tequillasunriseglass.rsi
 
@@ -727,7 +727,7 @@
   name: reagent-name-three-mile-island
   parent: BaseAlcohol
   desc: reagent-desc-three-mile-island
-  physicalDesc: strong-smelling
+  physicalDesc: reagent-physical-desc-strong-smelling
   color: "#666340"
   spritePath: threemileislandglass.rsi
 
@@ -736,7 +736,7 @@
   name: reagent-name-toxins-special
   parent: BaseAlcohol
   desc: reagent-desc-toxins-special
-  physicalDesc: strong-smelling
+  physicalDesc: reagent-physical-desc-strong-smelling
   color: "#665c00"
   spritePath: toxinsspecialglass.rsi
 
@@ -745,7 +745,7 @@
   name: reagent-name-vodka-martini
   parent: BaseAlcohol
   desc: reagent-desc-vodka-martini
-  physicalDesc: strong-smelling
+  physicalDesc: reagent-physical-desc-strong-smelling
   color: "#004666"
   spritePath: martiniglass.rsi
 
@@ -754,7 +754,7 @@
   name: reagent-name-vodka-tonic
   parent: BaseAlcohol
   desc: reagent-desc-vodka-tonic
-  physicalDesc: strong-smelling
+  physicalDesc: reagent-physical-desc-strong-smelling
   color: "#0064C8"
   spritePath: vodkatonicglass.rsi
 
@@ -763,7 +763,7 @@
   name: reagent-name-whiskey-cola
   parent: BaseAlcohol
   desc: reagent-desc-whiskey-cola
-  physicalDesc: bubbly
+  physicalDesc: reagent-physical-desc-bubbly
   color: "#3E1B00"
   spritePath: whiskeycolaglass.rsi
 
@@ -772,7 +772,7 @@
   name: reagent-name-whiskey-soda
   parent: BaseAlcohol
   desc: reagent-desc-whiskey-soda
-  physicalDesc: strong-smelling
+  physicalDesc: reagent-physical-desc-strong-smelling
   color: "#533600"
   spritePath: whiskeysodaglass.rsi
 
@@ -781,6 +781,6 @@
   name: reagent-name-white-russian
   parent: BaseAlcohol
   desc: reagent-desc-white-russian
-  physicalDesc: strong-smelling
+  physicalDesc: reagent-physical-desc-strong-smelling
   color: "#A68340"
   spritePath: whiterussianglass.rsi

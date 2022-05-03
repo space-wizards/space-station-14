@@ -3,7 +3,7 @@
   name: reagent-name-desoxyephedrine
   group: Narcotics
   desc: reagent-desc-desoxyephedrine
-  physicalDesc: translucent
+  physicalDesc: reagent-physical-desc-translucent
   color: "#FAFAFA"
   boilingPoint: 212.0  # Dexosyephedrine vape when?
   meltingPoint: 170.0
@@ -45,7 +45,7 @@
   name: reagent-name-ephedrine
   group: Narcotics
   desc: reagent-desc-ephedrine
-  physicalDesc: powdery
+  physicalDesc: reagent-physical-desc-powdery
   color: "#D2FFFA"
   boilingPoint: 255.0
   meltingPoint: 36.0
@@ -83,7 +83,7 @@
   group: Narcotics
   desc: reagent-desc-thc
   color: "#808080"
-  physicalDesc: crystalline
+  physicalDesc: reagent-physical-desc-crystalline
   plantMetabolism:
   - !type:PlantAdjustNutrition
     amount: -5
@@ -95,7 +95,7 @@
   name: reagent-name-thc-oil
   group: Narcotics
   desc: reagent-desc-thc-oil
-  physicalDesc: skunky
+  physicalDesc: reagent-physical-desc-skunky
   color: "#DAA520"
 
 - type: reagent
@@ -104,7 +104,7 @@
   group: Narcotics
   desc: reagent-desc-nicotine
   color: "#C0C0C0"
-  physicalDesc: strong smelling
+  physicalDesc: reagent-physical-desc-strong-smelling
   plantMetabolism:
   - !type:PlantAdjustHealth
     amount: -5
@@ -114,7 +114,7 @@
   name: reagent-name-impedrezene
   group: Narcotics
   desc: reagent-desc-impedrezene
-  physicalDesc: acrid
+  physicalDesc: reagent-physical-desc-acrid
   color: "#215263"
 
 - type: reagent
@@ -122,7 +122,7 @@
   name: reagent-name-space-drugs
   group: Narcotics
   desc: reagent-desc-space-drugs
-  physicalDesc: syrupy
+  physicalDesc: reagent-physical-desc-syrupy
   color: "#63806e"
 
 # Probably replace this one with sleeping chem when putting someone in a comatose state is easier
@@ -131,7 +131,7 @@
   name: reagent-name-nocturine
   group: Narcotics
   desc: reagent-desc-nocturine
-  physicalDesc: powdery
+  physicalDesc: reagent-physical-desc-powdery
   color: "#128e80"
   boilingPoint: 444.0
   meltingPoint: 128.0

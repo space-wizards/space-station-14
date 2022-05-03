@@ -3,7 +3,7 @@
   name: reagent-name-nutriment
   group: Foods
   desc: reagent-desc-nutriment
-  physicalDesc: opaque
+  physicalDesc: reagent-physical-desc-opaque
   color: "#664330"
   metabolisms:
     Food:
@@ -19,7 +19,7 @@
   id: Glucose
   name: reagent-name-glucose
   desc: reagent-desc-glucose
-  physicalDesc: syrupy
+  physicalDesc: reagent-physical-desc-syrupy
   color: "#ffffff"
   boilingPoint: 340282300000000000000000000000000000000 #Fun fact: Glucose can't boil. So let's just set it to the maximum float value.
   meltingPoint: 146.0
@@ -37,7 +37,7 @@
   name: reagent-name-vitamin
   group: Foods
   desc: reagent-desc-vitamin
-  physicalDesc: chalky
+  physicalDesc: reagent-physical-desc-chalky
   color: "#D3D3D3"
   metabolisms:
     Food: #This makes it not compete with medicines, a large bonus for something that can heal
@@ -58,7 +58,7 @@
   name: reagent-name-protein
   group: Foods
   desc: reagent-desc-protein
-  physicalDesc: clumpy
+  physicalDesc: reagent-physical-desc-clumpy
   color: "#FFFFE5"
   metabolisms:
     Food:

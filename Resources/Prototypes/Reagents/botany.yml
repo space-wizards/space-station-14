@@ -4,7 +4,7 @@
   group: Botanical
   desc: reagent-desc-e-z-nutrient
   color: "#664330"
-  physicalDesc: thick
+  physicalDesc: reagent-physical-desc-thick
   plantMetabolism:
     - !type:PlantAdjustNutrition
       amount: 1
@@ -15,7 +15,7 @@
   group: Botanical
   desc: reagent-desc-left4-zed
   color: "#5b406c"
-  physicalDesc: heterogeneous
+  physicalDesc: reagent-physical-desc-heterogeneous
   plantMetabolism:
     - !type:PlantAdjustNutrition
       amount: 1
@@ -31,7 +31,7 @@
   group: Botanical
   desc: reagent-desc-pest-killer
   color: "#9e9886"
-  physicalDesc: bubbling
+  physicalDesc: reagent-physical-desc-bubbling
   plantMetabolism:
     - !type:PlantAdjustToxins
       amount: 4
@@ -44,7 +44,7 @@
   group: Botanical
   desc: reagent-desc-plant-b-gone
   color: "#49002E"
-  physicalDesc: bubbling
+  physicalDesc: reagent-physical-desc-bubbling
   plantMetabolism:
     - !type:PlantAdjustToxins
       amount: 6
@@ -61,7 +61,7 @@
   group: Botanical
   desc: reagent-desc-robust-harvest
   color: "#3e901c"
-  physicalDesc: robust
+  physicalDesc: reagent-physical-desc-robust
   plantMetabolism:
     - !type:PlantAdjustNutrition
       amount: 0.05
@@ -79,7 +79,7 @@
   group: Botanical
   desc: reagent-desc-weed-killer
   color: "#968395"
-  physicalDesc: bubbling
+  physicalDesc: reagent-physical-desc-bubbling
   plantMetabolism:
     - !type:PlantAdjustToxins
       amount: 4
@@ -91,7 +91,7 @@
   name: reagent-name-ammonia
   group: Botanical
   desc: reagent-desc-ammonia
-  physicalDesc: pungent
+  physicalDesc: reagent-physical-desc-pungent
   color: "#77b58e"
   boilingPoint: -33.0
   meltingPoint: -77.7
@@ -113,7 +113,7 @@
   name: reagent-name-diethylamine
   group: Botanical
   desc: reagent-desc-diethylamine
-  physicalDesc: strong-smelling
+  physicalDesc: reagent-physical-desc-strong-smelling
   color: "#a1000b"
   boilingPoint: 55.5
   meltingPoint: -50.0

@@ -2,7 +2,7 @@
   id: Acetone
   name: reagent-name-acetone
   desc: reagent-desc-acetone
-  physicalDesc: acidic
+  physicalDesc: reagent-physical-desc-acidic
   color: "#AF14B7"
   boilingPoint: 55.5
   meltingPoint: -50.0
@@ -11,7 +11,7 @@
   id: Phenol
   name: reagent-name-phenol
   desc: reagent-desc-phenol
-  physicalDesc: acidic
+  physicalDesc: reagent-physical-desc-acidic
   color: "#E7EA91"
   boilingPoint: 55.5
   meltingPoint: -50.0

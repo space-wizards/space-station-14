@@ -3,7 +3,7 @@
   name: reagent-name-cola
   parent: BaseSoda
   desc: reagent-desc-cola
-  physicalDesc: fizzy
+  physicalDesc: reagent-physical-desc-fizzy
   color: "#422912"
 
 - type: reagent
@@ -11,7 +11,7 @@
   name: reagent-name-changeling-sting
   parent: BaseSoda
   desc: reagent-desc-changeling-sting
-  physicalDesc: fizzy
+  physicalDesc: reagent-physical-desc-fizzy
   color: "#2E6671"
 
 - type: reagent
@@ -19,7 +19,7 @@
   name: reagent-name-dr-gibb
   parent: BaseSoda
   desc: reagent-desc-dr-gibb
-  physicalDesc: fizzy
+  physicalDesc: reagent-physical-desc-fizzy
   color: "#102000"
 
 - type: reagent
@@ -27,7 +27,7 @@
   name: reagent-name-energy-drink
   parent: BaseSoda
   desc: reagent-desc-energy-drink
-  physicalDesc: fizzy
+  physicalDesc: reagent-physical-desc-fizzy
   color: "#ffffbf"
 
 - type: reagent
@@ -35,7 +35,7 @@
   name: reagent-name-grape-soda
   parent: BaseSoda
   desc: reagent-desc-grape-soda
-  physicalDesc: fizzy
+  physicalDesc: reagent-physical-desc-fizzy
   color: "#ae94a6"
 
 - type: reagent
@@ -43,7 +43,7 @@
   name: reagent-name-ice-cream
   parent: BaseSoda
   desc: reagent-desc-ice-cream
-  physicalDesc: creamy
+  physicalDesc: reagent-physical-desc-creamy
   color: "#fffbd6"
   spritePath: icecreamglass.rsi
 
@@ -52,7 +52,7 @@
   name: reagent-name-lemon-lime
   parent: BaseSoda
   desc: reagent-desc-lemon-lime
-  physicalDesc: fizzy
+  physicalDesc: reagent-physical-desc-fizzy
   color: "#878F00"
   spritePath: lemonlime.rsi
 
@@ -61,7 +61,7 @@
   name: reagent-name-pwr-game
   parent: BaseSoda
   desc: reagent-desc-pwr-game
-  physicalDesc: fizzy
+  physicalDesc: reagent-physical-desc-fizzy
   color: "#9385bf"
 
 - type: reagent
@@ -69,7 +69,7 @@
   name: reagent-name-root-beer
   parent: BaseSoda
   desc: reagent-desc-root-beer
-  physicalDesc: fizzy
+  physicalDesc: reagent-physical-desc-fizzy
   color: "#381c07"
   spritePath: rootbeerglass.rsi
 
@@ -78,7 +78,7 @@
   name: reagent-name-root-beer-float
   parent: BaseSoda
   desc: reagent-desc-root-beer-float
-  physicalDesc: fizzy and creamy
+  physicalDesc: reagent-physical-desc-fizzy and creamy
   color: "#4f361f"
   spritePath: rootbeerfloatglass.rsi
 
@@ -87,7 +87,7 @@
   name: reagent-name-space-mountain-wind
   parent: BaseSoda
   desc: reagent-desc-space-mountain-wind
-  physicalDesc: fizzy
+  physicalDesc: reagent-physical-desc-fizzy
   color: "#102000"
 
 - type: reagent
@@ -95,7 +95,7 @@
   name: reagent-name-space-up
   parent: BaseSoda
   desc: reagent-desc-space-up
-  physicalDesc: fizzy
+  physicalDesc: reagent-physical-desc-fizzy
   color: "#00FF00"
 
 - type: reagent
@@ -103,7 +103,7 @@
   name: reagent-name-starkist
   parent: BaseSoda
   desc: reagent-desc-starkist
-  physicalDesc: fizzy
+  physicalDesc: reagent-physical-desc-fizzy
   color: "#9F3400"
 
 - type: reagent
@@ -111,7 +111,7 @@
   name: reagent-name-fourteen-loko
   parent: BaseSoda
   desc: reagent-desc-fourteen-loko
-  physicalDesc: fizzy
+  physicalDesc: reagent-physical-desc-fizzy
   color: "#deb928"
   metabolisms:
     Drink:

@@ -2,7 +2,7 @@
   id: Bleach
   name: reagent-name-bleach
   desc: reagent-desc-bleach
-  physicalDesc: strong-smelling
+  physicalDesc: reagent-physical-desc-strong-smelling
   color: "#a1000b"
   boilingPoint: 111.0
   meltingPoint: -5.0
@@ -22,7 +22,7 @@
   id: SpaceCleaner
   name: reagent-name-space-cleaner
   desc: reagent-desc-space-cleaner
-  physicalDesc: lemony fresh
+  physicalDesc: reagent-physical-desc-lemony-fresh
   color: "#c8ff69"
   boilingPoint: 147.0 # Made this up, loosely based on bleach
   meltingPoint: -11.0
@@ -33,7 +33,7 @@
   id: SpaceLube
   name: reagent-name-space-lube
   desc: reagent-desc-space-lube
-  physicalDesc: shiny
+  physicalDesc: reagent-physical-desc-shiny
   color: "#77b58e"
   boilingPoint: 290.0 # Glycerin
   meltingPoint: 18.2
