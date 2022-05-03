@@ -338,7 +338,8 @@ namespace Content.Client.Entry
             "EnergySword",
             "DoorRemote",
             "InteractionPopup",
-            "HealthAnalyzer"
+            "HealthAnalyzer",
+            "UseWith"
         };
     }
 }
