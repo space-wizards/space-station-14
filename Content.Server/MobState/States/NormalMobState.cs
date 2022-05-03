@@ -26,7 +26,7 @@ namespace Content.Server.MobState.States
 
             short modifier = 0;
 
-            if (stateComponent.TryGetEarliestIncapacitatedState(threshold, out _, out var earliestThreshold) && damageable.TotalDamage>0)
+            if (stateComponent.TryGetEarliestIncapacitatedState(threshold, out _, out var earliestThreshold) && damageable.TotalDamage > 0)
             {
                 modifier = (short) Math.Max((decimal) (damageable.TotalDamage / (earliestThreshold / 6f)),1);
                  //if hurt at all we skip to the first hurt state with Max(), anything else will end up falling to 5 at maximum before crit
