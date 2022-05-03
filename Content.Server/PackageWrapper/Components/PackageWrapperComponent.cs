@@ -14,7 +14,7 @@ using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototy
 namespace Content.Server.PackageWrapper
 {
     [RegisterComponent]
-    public class PackageWrapperComponent : Component, IEnumerable<WrapperTypePrototype>, ISerializationHooks
+    public class PackageWrapperComponent : Component, IEnumerable<WrapperTypePrototype>
     {
         [Dependency] private readonly IEntityManager _entMan = default!;
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
@@ -34,24 +34,12 @@ namespace Content.Server.PackageWrapper
         {
             base.Initialize();
 
-            //Charges = Capacity; // make here capacity init
-
             // I dont know how to get list of all my warpType prototypes so i use that.
             // I'm really need to know how to init data once for all PackageWrappers
             _products = _prototypeManager.EnumeratePrototypes<WrapperTypePrototype>().ToList();
             _productsShaped = _prototypeManager.EnumeratePrototypes<WrapperShapedTypePrototype>().ToList();
 
             Dirty();
-        }
-
-        void ISerializationHooks.AfterDeserialization()
-        {
-
-        }
-
-        void ISerializationHooks.BeforeSerialization()
-        {
-
         }
 
         public IEnumerator<WrapperTypePrototype> GetEnumerator()
