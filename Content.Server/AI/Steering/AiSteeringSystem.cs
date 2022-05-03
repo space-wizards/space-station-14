@@ -5,7 +5,9 @@ using Content.Server.AI.Components;
 using Content.Server.AI.Pathfinding;
 using Content.Server.AI.Pathfinding.Pathfinders;
 using Content.Server.CPUJob.JobQueues;
+using Content.Server.Doors.Components;
 using Content.Shared.Access.Systems;
+using Content.Shared.Doors.Components;
 using Content.Shared.Interaction;
 using Robust.Shared.Map;
 using Robust.Shared.Physics;
@@ -385,6 +387,20 @@ namespace Content.Server.AI.Steering
             {
                 movementVector += CollisionAvoidance(entity, movementVector, ignoredCollision);
             }
+
+            // TODO: Jesus this code is shit, slork is a cute dork, but the pathfinder should annotate this.
+            if (_mapManager.TryGetGrid(nextGrid.Value.EntityId, out var grid))
+            {
+                foreach (var ent in grid.GetAnchoredEntities(nextGrid.Value))
+                {
+                    if (HasComp<DoorComponent>(ent))
+                    {
+                        _interactionSystem.InteractHand(entity, ent);
+                        break;
+                    }
+                }
+            }
+
             // Group behaviors would also go here e.g. separation, cohesion, alignment
 
             // Move towards it
@@ -472,10 +488,12 @@ namespace Content.Server.AI.Steering
                 _nextGrid.Remove(entity);
             }
 
+            var xform = EntityManager.GetComponent<TransformComponent>(entity);
+
             // If no tiles left just move towards the target (if we're close)
             if (!_paths.ContainsKey(entity) || _paths[entity].Count == 0)
             {
-                if ((steeringRequest.TargetGrid.Position - EntityManager.GetComponent<TransformComponent>(entity).Coordinates.Position).Length <= 2.0f)
+                if ((steeringRequest.TargetGrid.Position - xform.Coordinates.Position).Length <= 2.0f)
                 {
                     return steeringRequest.TargetGrid;
                 }
@@ -485,7 +503,7 @@ namespace Content.Server.AI.Steering
             }
 
             if (!_nextGrid.TryGetValue(entity, out var nextGrid) ||
-                (nextGrid.Position - EntityManager.GetComponent<TransformComponent>(entity).Coordinates.Position).Length <= TileTolerance)
+                (nextGrid.Position - xform.Coordinates.Position).Length <= TileTolerance)
             {
                 UpdateGridCache(entity);
                 nextGrid = _nextGrid[entity];

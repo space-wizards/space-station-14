@@ -26,7 +26,9 @@
         prob: 0.05
       - id: ClothingOuterSuitEmergency
         prob: 0.5
-
+      - id: BoxMRE
+        prob: 0.1
+        
 - type: entity
   id: ClosetFireFilled
   parent: ClosetFire
