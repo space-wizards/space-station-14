@@ -370,6 +370,8 @@ namespace Content.Server.Decals
                 // Then, remove them from previousSentChunks (for stuff like grids out of range)
                 // and also mark them as stale for networking.
                 var toRemoveGrids = new RemQueue<GridId>();
+                // Store the chunks for later to remove.
+                var oldChunks = _chunkViewerPool.Get();
 
                 foreach (var (gridId, oldIndices) in _previousSentChunks[playerSession])
                 {
@@ -398,12 +400,6 @@ namespace Content.Server.Decals
                     {
                         _chunkIndexPool.Return(elmo);
                         continue;
-                    }
-
-                    // Remove chunks no longer in range.
-                    foreach (var chunk in elmo)
-                    {
-                        oldIndices.Remove(chunk);
                     }
 
                     staleChunks.Add(gridId, elmo);
@@ -440,12 +436,14 @@ namespace Content.Server.Decals
                 }
 
                 // We'll only remove stale grids after the above iteration.
-                foreach (var gridId in toRemoveGrids)
+                foreach (var (gridId, indices) in staleChunks)
                 {
-                    var indices = _previousSentChunks[playerSession][gridId];
-                    indices.Clear();
+                    _previousSentChunks[playerSession][gridId].ExceptWith(indices);
+
+                    if (_previousSentChunks[playerSession][gridId].Count != 0) continue;
+
+                    _chunkIndexPool.Return(_previousSentChunks[playerSession][gridId]);
                     _previousSentChunks[playerSession].Remove(gridId);
-                    _chunkIndexPool.Return(indices);
                 }
 
                 if (updatedChunks.Count == 0)
