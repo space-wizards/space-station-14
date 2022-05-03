@@ -176,7 +176,7 @@ public sealed class WiresSystem : EntitySystem
                 wires.WiresList[i] = wireSet[id];
             }
 
-            if (!wires.AlwaysRandomize)
+            if (!wires.AlwaysRandomize && !string.IsNullOrEmpty(wires.LayoutId))
             {
                 AddLayout(wires.LayoutId, new WireLayout(data));
             }
