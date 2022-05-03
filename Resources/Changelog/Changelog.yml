@@ -1,10 +1,4 @@
 Entries:
-- author: ElectroJr
-  changes:
-  - {message: 'Airlocks no longer close when an entity is blocking the way. If the
-      safety is disabled, airlocks will now properly crush entities.', type: Fix}
-  id: 944
-  time: '2022-01-30T00:49:57.0000000+00:00'
 - author: metalgearsloth
   changes:
   - {message: Prying tiles now takes time., type: Tweak}
@@ -3044,3 +3038,8 @@ Entries:
     type: Fix}
   id: 1443
   time: '2022-05-03T03:05:23.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: NPCs can open doors to avoid pathfinder issues in the interim., type: Tweak}
+  id: 1444
+  time: '2022-05-03T08:25:01.0000000+00:00'
