@@ -1,8 +1,8 @@
 ﻿- type: reagent
   id: Nutriment
-  name: nutriment
+  name: reagent-name-nutriment
   group: Foods
-  desc: All the vitamins, minerals, and carbohydrates the body needs in pure form.
+  desc: reagent-desc-nutriment
   physicalDesc: opaque
   color: "#664330"
   metabolisms:
@@ -17,8 +17,8 @@
 
 - type: reagent
   id: Glucose
-  name: glucose
-  desc: A simple sugar found in many foods.
+  name: reagent-name-glucose
+  desc: reagent-desc-glucose
   physicalDesc: syrupy
   color: "#ffffff"
   boilingPoint: 340282300000000000000000000000000000000 #Fun fact: Glucose can't boil. So let's just set it to the maximum float value.
@@ -34,9 +34,9 @@
 
 - type: reagent
   id: Vitamin
-  name: vitamin
+  name: reagent-name-vitamin
   group: Foods
-  desc: Found in healthy, complete meals.
+  desc: reagent-desc-vitamin
   physicalDesc: chalky
   color: "#D3D3D3"
   metabolisms:
@@ -55,9 +55,9 @@
 
 - type: reagent
   id: Protein
-  name: protein
+  name: reagent-name-protein
   group: Foods
-  desc: Found in certain meals, good for bodily health.
+  desc: reagent-desc-protein
   physicalDesc: clumpy
   color: "#FFFFE5"
   metabolisms:

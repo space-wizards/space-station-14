@@ -1,8 +1,8 @@
 - type: reagent
   id: Flour
-  name: flour
+  name: reagent-name-flour
   group: Foods
-  desc: Used for baking.
+  desc: reagent-desc-flour
   physicalDesc: powdery
   color: white
   metabolisms:
@@ -13,9 +13,9 @@
 
 - type: reagent
   id: Oats
-  name: oats
+  name: reagent-name-oats
   group: Foods
-  desc: Used for a variety of tasty purposes.
+  desc: reagent-desc-oats
   physicalDesc: coarse
   color: tan
   metabolisms:
@@ -26,9 +26,9 @@
 
 - type: reagent
   id: Enzyme
-  name: universal enzyme
+  name: reagent-name-enzyme
   group: Foods
-  desc: Used in cooking various dishes.
+  desc: reagent-desc-enzyme
   physicalDesc: chalky
   color: "#009900"
   metabolisms:
@@ -39,9 +39,9 @@
 
 - type: reagent
   id: Egg
-  name: egg
+  name: reagent-name-egg
   group: Foods
-  desc: Used for baking.
+  desc: reagent-desc-egg
   physicalDesc: mucus-like
   color: white
   metabolisms:
@@ -52,9 +52,9 @@
 
 - type: reagent
   id: Sugar
-  name: sugar
+  name: reagent-name-sugar
   group: Foods
-  desc: Tasty spacey sugar!
+  desc: reagent-desc-sugar
   physicalDesc: sweet
   color: white
   metabolisms:
@@ -65,9 +65,9 @@
 
 - type: reagent
   id: Blackpepper
-  name: black pepper
+  name: reagent-name-blackpepper
   group: Foods
-  desc: Often used to flavor food or make people sneeze.
+  desc: reagent-desc-blackpepper
   physicalDesc: grainy
   color: black
   metabolisms:
@@ -78,9 +78,9 @@
 
 - type: reagent
   id: Vinegar
-  name: vinegar
+  name: reagent-name-vinegar
   group: Foods
-  desc: Often used to flavor food.
+  desc: reagent-desc-vinegar
   physicalDesc: sour
   color: tan
   metabolisms:
@@ -91,9 +91,9 @@
 
 - type: reagent
   id: Rice
-  name: rice
+  name: reagent-name-rice
   group: Foods
-  desc: Hard, small white grains.
+  desc: reagent-desc-rice
   physicalDesc: chewy
   color: white
   metabolisms:
@@ -103,9 +103,9 @@
 
 - type: reagent
   id: OilOlive
-  name: olive oil
+  name: reagent-name-oil-olive
   group: Foods
-  desc: Viscous and fragrant.
+  desc: reagent-desc-oil-olive
   physicalDesc: oily
   color: olive
   metabolisms:
@@ -116,9 +116,9 @@
 
 - type: reagent
   id: Oil
-  name: oil
+  name: reagent-name-oil
   group: Foods
-  desc: Used by chefs to cook.
+  desc: reagent-desc-oil
   physicalDesc: oily
   color: "#b67823"
   boilingPoint: 300.0
@@ -128,8 +128,8 @@
 
 - type: reagent
   id: CapsaicinOil
-  name: Capsaicin Oil
-  desc: Capsaicin Oil is the ingredient found in different types of hot peppers.
+  name: reagent-name-capsaicin-oil
+  desc: reagent-desc-capsaicin-oil
   physicalDesc: oily
   color: "#FF0000"
   meltingPoint: 146
