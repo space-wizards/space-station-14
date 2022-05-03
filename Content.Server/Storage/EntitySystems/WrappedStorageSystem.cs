@@ -52,9 +52,7 @@ namespace Content.Server.Storage.EntitySystems
             verb.Act = () => Unpack(uid, component, args);
             verb.IconTexture = "/Textures/Interface/VerbIcons/pickup.svg.192dpi.png";
 
-            // if the item already in a container (that is not the same as the user's), then change the text.
-            // this occurs when the item is in their inventory or in an open backpack
-            verb.Text = "Unpack"; // TODO: Make Loc.GetString
+            verb.Text = Loc.GetString("packaged-item-verb-unpack");
 
             args.Verbs.Add(verb);
         }

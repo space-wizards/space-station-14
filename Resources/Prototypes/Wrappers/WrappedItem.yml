@@ -213,9 +213,6 @@
             - Paper
     - type: WrappedStorage
 
-#TODO: Make more items here Closet, Crate, Box
-
-
 - type: entity
   name: Wrapper
   parent: BaseItem
