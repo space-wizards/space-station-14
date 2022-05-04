@@ -100,7 +100,7 @@ public sealed class StationJobsTest : ContentIntegrationTest
             start.Start();
             var assigned = stationJobs.AssignJobs(fakePlayers, stations);
             var time = start.Elapsed.TotalMilliseconds;
-            Logger.Info($"Took {time}ms to distribute {TotalPlayers} players.");
+            Logger.Info($"Took {time} ms to distribute {TotalPlayers} players.");
 
             foreach (var station in stations)
             {
