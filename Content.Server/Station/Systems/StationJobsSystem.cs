@@ -10,7 +10,6 @@ using JetBrains.Annotations;
 using Robust.Shared.Configuration;
 using Robust.Shared.Player;
 using Robust.Shared.Random;
-using Robust.Shared.Utility;
 
 namespace Content.Server.Station.Systems;
 
@@ -35,6 +34,15 @@ public sealed partial class StationJobsSystem : EntitySystem
         _configurationManager.OnValueChanged(CCVars.GameDisallowLateJoins, _ => UpdateJobsAvailable(), true);
 
         InitializeRoundStart();
+    }
+
+    public override void Update(float _)
+    {
+        if (_availableJobsDirty)
+        {
+            _cachedAvailableJobs = GenerateJobsAvailableEvent();
+            RaiseNetworkEvent(_cachedAvailableJobs, Filter.Empty().AddPlayers(_gameTicker.PlayersInLobby.Keys));
+        }
     }
 
     private void OnStationDeletion(EntityUid uid, StationJobsComponent component, ComponentShutdown args)
@@ -376,7 +384,9 @@ public sealed partial class StationJobsSystem : EntitySystem
 
     #region Latejoin job management
 
-    private TickerJobsAvailableEvent _cachedAvailableJobs = new TickerJobsAvailableEvent(new Dictionary<EntityUid, string>(), new Dictionary<EntityUid, Dictionary<string, uint?>>());
+    private bool _availableJobsDirty;
+
+    private TickerJobsAvailableEvent _cachedAvailableJobs = new (new Dictionary<EntityUid, string>(), new Dictionary<EntityUid, Dictionary<string, uint?>>());
 
     /// <summary>
     /// Assembles an event from the current available-to-play jobs.
@@ -406,8 +416,7 @@ public sealed partial class StationJobsSystem : EntitySystem
     /// </summary>
     private void UpdateJobsAvailable()
     {
-        _cachedAvailableJobs = GenerateJobsAvailableEvent();
-        RaiseNetworkEvent(_cachedAvailableJobs, Filter.Empty().AddPlayers(_gameTicker.PlayersInLobby.Keys));
+        _availableJobsDirty = true;
     }
 
     private void OnPlayerJoinedLobby(PlayerJoinedLobbyEvent ev)
