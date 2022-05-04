@@ -120,7 +120,7 @@ namespace Content.Server.Storage.EntitySystems
             _doAfterSystem.DoAfter(new DoAfterEventArgs(userUid, delay, dumpable.CancelToken.Token, target: targetUid)
             {
                 BroadcastFinishedEvent = new DumpCompletedEvent(userUid, targetUid, storage.StoredEntities),
-                BroadcastCancelledEvent = new DumpCancelledEvent(dumpable),
+                BroadcastCancelledEvent = new DumpCancelledEvent(dumpable.Owner),
                 BreakOnTargetMove = true,
                 BreakOnUserMove = true,
                 BreakOnStun = true,
@@ -163,15 +163,16 @@ namespace Content.Server.Storage.EntitySystems
 
         private void OnDumpCancelled(DumpCancelledEvent args)
         {
-            args.Dumpable.CancelToken = null;
+            if (TryComp<DumpableComponent>(args.Uid, out var dumpable))
+                dumpable.CancelToken = null;
         }
 
         private sealed class DumpCancelledEvent : EntityEventArgs
         {
-            public readonly DumpableComponent Dumpable;
-            public DumpCancelledEvent(DumpableComponent dumpable)
+            public readonly EntityUid Uid;
+            public DumpCancelledEvent(EntityUid uid)
             {
-                Dumpable = dumpable;
+                Uid = uid;
             }
         }
 
