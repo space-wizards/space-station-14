@@ -5,8 +5,8 @@ using System.Threading.Tasks;
 using Content.Server.Construction;
 using Content.Server.Construction.Components;
 using Content.Server.Ghost.Components;
+using Content.Server.Storage.EntitySystems;
 using Content.Server.Tools;
-using Content.Shared.Acts;
 using Content.Shared.Body.Components;
 using Content.Shared.Foldable;
 using Content.Shared.Interaction;
@@ -19,15 +19,9 @@ using Content.Shared.Storage;
 using Content.Shared.Tools;
 using Robust.Shared.Audio;
 using Robust.Shared.Containers;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Localization;
-using Robust.Shared.Maths;
 using Robust.Shared.Physics;
 using Robust.Shared.Player;
-using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
-using Robust.Shared.ViewVariables;
 
 namespace Content.Server.Storage.Components
 {
@@ -35,7 +29,7 @@ namespace Content.Server.Storage.Components
     [Virtual]
     [ComponentReference(typeof(IActivate))]
     [ComponentReference(typeof(IStorageComponent))]
-    public class EntityStorageComponent : Component, IActivate, IStorageComponent, IInteractUsing, IDestroyAct
+    public class EntityStorageComponent : Component, IActivate, IStorageComponent, IInteractUsing
     {
         [Dependency] private readonly IEntityManager _entMan = default!;
 
@@ -44,10 +38,18 @@ namespace Content.Server.Storage.Components
         public static readonly TimeSpan InternalOpenAttemptDelay = TimeSpan.FromSeconds(0.5);
         public TimeSpan LastInternalOpenAttempt;
 
-        private const int OpenMask = (int) (
+        /// <summary>
+        ///     Collision masks that get removed when the storage gets opened.
+        /// </summary>
+        private const int MasksToRemove = (int) (
             CollisionGroup.MobImpassable |
             CollisionGroup.VaultImpassable |
             CollisionGroup.SmallImpassable);
+
+        /// <summary>
+        ///     Collision masks that were removed from ANY layer when the storage was opened;
+        /// </summary>
+        [DataField("removedMasks")] public int RemovedMasks;
 
         [ViewVariables]
         [DataField("Capacity")]
@@ -68,7 +70,7 @@ namespace Content.Server.Storage.Components
         private bool _occludesLight = true;
 
         [DataField("open")]
-        private bool _open;
+        public bool Open;
 
         [DataField("weldingQuality", customTypeSerializer:typeof(PrototypeIdSerializer<ToolQualityPrototype>))]
         private string _weldingQuality = "Welding";
@@ -111,13 +113,6 @@ namespace Content.Server.Storage.Components
                 _occludesLight = value;
                 Contents.OccludesLight = _occludesLight;
             }
-        }
-
-        [ViewVariables(VVAccess.ReadWrite)]
-        public bool Open
-        {
-            get => _open;
-            private set => _open = value;
         }
 
         [ViewVariables(VVAccess.ReadWrite)]
@@ -296,7 +291,7 @@ namespace Content.Server.Storage.Components
         protected virtual void OpenStorage()
         {
             Open = true;
-            EmptyContents();
+            EntitySystem.Get<EntityStorageSystem>().EmptyContents(Owner, this);
             ModifyComponents();
                 SoundSystem.Play(Filter.Pvs(Owner), _openSound.GetSound(), Owner);
         }
@@ -312,21 +307,24 @@ namespace Content.Server.Storage.Components
 
         private void ModifyComponents()
         {
-            if (!_isCollidableWhenOpen && _entMan.TryGetComponent<FixturesComponent?>(Owner, out var manager))
+            if (!_isCollidableWhenOpen && _entMan.TryGetComponent<FixturesComponent?>(Owner, out var manager)
+                && manager.Fixtures.Count > 0)
             {
+                // currently only works for single-fixture entities. If they have more than one fixture, then
+                // RemovedMasks needs to be tracked separately for each fixture, using a fixture Id Dictionary. Also the
+                // fixture IDs probably cant be automatically generated without causing issues, unless there is some
+                // guarantee that they will get deserialized with the same auto-generated ID when saving+loading the map.
+                var fixture = manager.Fixtures.Values.First();
+
                 if (Open)
                 {
-                    foreach (var (_, fixture) in manager.Fixtures)
-                    {
-                        fixture.CollisionLayer &= ~OpenMask;
-                    }
+                    RemovedMasks = fixture.CollisionLayer & MasksToRemove;
+                    fixture.CollisionLayer &= ~MasksToRemove;
                 }
                 else
                 {
-                    foreach (var (_, fixture) in manager.Fixtures)
-                    {
-                        fixture.CollisionLayer |= OpenMask;
-                    }
+                    fixture.CollisionLayer |= RemovedMasks;
+                    RemovedMasks = 0;
                 }
             }
 
@@ -359,21 +357,6 @@ namespace Content.Server.Storage.Components
         public virtual Vector2 ContentsDumpPosition()
         {
             return _entMan.GetComponent<TransformComponent>(Owner).WorldPosition;
-        }
-
-        private void EmptyContents()
-        {
-            foreach (var contained in Contents.ContainedEntities.ToArray())
-            {
-                if (Contents.Remove(contained))
-                {
-                    _entMan.GetComponent<TransformComponent>(contained).WorldPosition = ContentsDumpPosition();
-                    if (_entMan.TryGetComponent<IPhysBody?>(contained, out var physics))
-                    {
-                        physics.CanCollide = true;
-                    }
-                }
-            }
         }
 
         public virtual bool TryOpenStorage(EntityUid user)
@@ -466,12 +449,6 @@ namespace Content.Server.Storage.Components
             _beingWelded = false;
             IsWeldedShut ^= true;
             return true;
-        }
-
-        void IDestroyAct.OnDestroy(DestructionEventArgs eventArgs)
-        {
-            Open = true;
-            EmptyContents();
         }
 
         protected virtual IEnumerable<EntityUid> DetermineCollidingEntities()

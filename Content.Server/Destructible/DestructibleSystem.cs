@@ -4,7 +4,6 @@ using Content.Server.Destructible.Thresholds.Behaviors;
 using Content.Server.Destructible.Thresholds.Triggers;
 using Content.Server.Explosion.EntitySystems;
 using Content.Server.Stack;
-using Content.Shared.Acts;
 using Content.Shared.Damage;
 using Content.Shared.FixedPoint;
 using JetBrains.Annotations;
@@ -12,16 +11,16 @@ using Robust.Server.GameObjects;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using System;
+using Content.Shared.Destructible;
 
 namespace Content.Server.Destructible
 {
     [UsedImplicitly]
-    public sealed class DestructibleSystem : EntitySystem
+    public sealed class DestructibleSystem : SharedDestructibleSystem
     {
         [Dependency] public readonly IRobustRandom Random = default!;
         public new IEntityManager EntityManager => base.EntityManager;
 
-        [Dependency] public readonly ActSystem ActSystem = default!;
         [Dependency] public readonly AudioSystem AudioSystem = default!;
         [Dependency] public readonly ConstructionSystem ConstructionSystem = default!;
         [Dependency] public readonly ExplosionSystem ExplosionSystem = default!;

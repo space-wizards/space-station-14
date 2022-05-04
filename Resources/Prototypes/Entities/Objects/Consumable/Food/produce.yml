@@ -178,6 +178,7 @@
     HeldPrefix: peel
   - type: Slippery
     intersectPercentage: 0.2
+    launchForwardsMultiplier: 6.0
   - type: CollisionWake
     enabled: false
   - type: Physics

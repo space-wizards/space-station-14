@@ -132,6 +132,7 @@
     state: pda-clown
   - type: Slippery
     paralyzeTime: 4
+    launchForwardsMultiplier: 9.0
   - type: CollisionWake
     enabled: false
   - type: Physics
@@ -520,4 +521,3 @@
         state: pda-atmos
   - type: Icon
     state: pda-atmos
-        

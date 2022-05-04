@@ -9,7 +9,7 @@
   - type: Clothing
     sprite: Clothing/OuterClothing/Hardsuits/atmospherics.rsi
   - type: PressureProtection
-    highPressureMultiplier: 0.08
+    highPressureMultiplier: 0.02
     lowPressureMultiplier: 10000
   - type: ClothingSpeedModifier
     walkModifier: 0.65
@@ -23,7 +23,7 @@
         Heat: 0.2
         Radiation: 0.25
   - type: TemperatureProtection
-    coefficient: 0.01
+    coefficient: 0.001
   - type: ExplosionResistance
     resistance: 0.8
   - type: ToggleableClothing
@@ -40,7 +40,7 @@
   - type: Clothing
     sprite: Clothing/OuterClothing/Hardsuits/capspace.rsi
   - type: PressureProtection
-    highPressureMultiplier: 0.3
+    highPressureMultiplier: 0.02
     lowPressureMultiplier: 1000
   - type: ClothingSpeedModifier
     walkModifier: 0.8
@@ -51,7 +51,7 @@
         Blunt: 0.8
         Slash: 0.8
         Piercing: 0.75
-        Heat: 0.5 
+        Heat: 0.3 
         Radiation: 0.1
   - type: ExplosionResistance
     resistance: 0.5
@@ -69,7 +69,7 @@
   - type: Clothing
     sprite: Clothing/OuterClothing/Hardsuits/deathsquad.rsi
   - type: PressureProtection
-    highPressureMultiplier: 0.27
+    highPressureMultiplier: 0.02
     lowPressureMultiplier: 1000
   - type: ClothingSpeedModifier
     walkModifier: 1.0
@@ -98,7 +98,7 @@
   - type: Clothing
     sprite: Clothing/OuterClothing/Hardsuits/engineering.rsi
   - type: PressureProtection
-    highPressureMultiplier: 0.26
+    highPressureMultiplier: 0.04
     lowPressureMultiplier: 1000
   - type: ClothingSpeedModifier
     walkModifier: 0.65
@@ -127,7 +127,7 @@
   - type: Clothing
     sprite: Clothing/OuterClothing/Hardsuits/engineering-white.rsi
   - type: PressureProtection
-    highPressureMultiplier: 0.24
+    highPressureMultiplier: 0.02
     lowPressureMultiplier: 1000
   - type: ClothingSpeedModifier
     walkModifier: 0.75
@@ -211,7 +211,7 @@
   - type: Clothing
     sprite: Clothing/OuterClothing/Hardsuits/medical.rsi
   - type: PressureProtection
-    highPressureMultiplier: 0.6
+    highPressureMultiplier: 0.3
     lowPressureMultiplier: 5500
   - type: DiseaseProtection
     protection: 0.2
@@ -237,7 +237,7 @@
   - type: Clothing
     sprite: Clothing/OuterClothing/Hardsuits/rd.rsi
   - type: PressureProtection
-    highPressureMultiplier: 0.60
+    highPressureMultiplier: 0.05
     lowPressureMultiplier: 5500
   - type: Armor
     modifiers:
@@ -269,18 +269,18 @@
     highPressureMultiplier: 0.525
     lowPressureMultiplier: 10000
   - type: ClothingSpeedModifier
-    walkModifier: 0.6 #changing these values around so its only a tiny bit faster so less salvages get stuck floating in space
+    walkModifier: 0.6
     sprintModifier: 0.65
   - type: Armor
     modifiers:
       coefficients:
-        Blunt: 0.8 #buffed up due to introduction of spationaut suit 
-        Slash: 0.75
-        Piercing: 0.75
+        Blunt: 0.75
+        Slash: 0.7
+        Piercing: 0.7
         Heat: 0.85
         Radiation: 0.5
   - type: ExplosionResistance
-    resistance: 0.8
+    resistance: 0.7
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHelmetHardsuitSalvage
 
@@ -350,7 +350,7 @@
   - type: Clothing
     sprite: Clothing/OuterClothing/Hardsuits/syndicate.rsi
   - type: PressureProtection
-    highPressureMultiplier: 0.27
+    highPressureMultiplier: 0.05
     lowPressureMultiplier: 1000
   - type: ClothingSpeedModifier
     walkModifier: 1.0
@@ -379,7 +379,7 @@
   - type: Clothing
     sprite: Clothing/OuterClothing/Hardsuits/wizard.rsi
   - type: PressureProtection
-    highPressureMultiplier: 0.27
+    highPressureMultiplier: 0.05
     lowPressureMultiplier: 1000
   - type: ClothingSpeedModifier
     walkModifier: 0.8
@@ -440,7 +440,7 @@
     highPressureMultiplier: 0.72
     lowPressureMultiplier: 10000
   - type: ClothingSpeedModifier
-    walkModifier: 0.9 #mildly better than eva, might adjust this down if its heavily abused but want to see how it plays out in game first 
+    walkModifier: 0.9 
     sprintModifier: 0.8
   - type: Armor
     modifiers:
@@ -449,7 +449,7 @@
         Slash: 0.9
         Piercing: 0.95
         Heat: 0.9
-        Radiation: 0.5 #low physical but gave some rad protection in case of rad artifacts/rad storms
+        Radiation: 0.5 
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHelmetHardsuitSpatio
 

@@ -19,6 +19,10 @@
           type: Animal
       # Convert Oxygen into CO2.
       - !type:ModifyLungGas
+        conditions:
+        - !type:OrganType
+          type: Vox
+          shouldHave: false
         ratios:
           CarbonDioxide: 1.0
           Oxygen: -1.0
@@ -124,3 +128,19 @@
   color: "#808080"
   boilingPoint: -195.8
   meltingPoint: -210.0
+  metabolisms:
+    Gas:
+      effects:
+      - !type:Oxygenate
+        conditions:
+        - !type:OrganType
+          type: Vox
+      # Converts Nitrogen into CO2
+      - !type:ModifyLungGas
+        conditions:
+        - !type:OrganType
+          type: Vox
+        ratios:
+          CarbonDioxide: 1.0
+          Nitrogen: -1.0
+

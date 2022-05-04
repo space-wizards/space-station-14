@@ -85,6 +85,7 @@
       tags:
         - Sheet
         - RawMaterial
+        - Ingot
 
 - type: entity
   parent: BaseMachinePowered
@@ -215,6 +216,7 @@
       tags:
         - Sheet
         - RawMaterial
+        - Ingot
 
 - type: entity
   parent: Protolathe
@@ -250,6 +252,7 @@
       - AutolatheMachineCircuitboard
       - ProtolatheMachineCircuitboard
       - ReagentGrinderMachineCircuitboard
+      - MicrowaveMachineCircuitboard
       - UniformPrinterMachineCircuitboard
       - ShuttleConsoleCircuitboard
       - CircuitImprinterMachineCircuitboard
@@ -264,6 +267,7 @@
       tags:
         - Sheet
         - RawMaterial
+        - Ingot
 
 - type: entity
   parent: Protolathe
@@ -324,6 +328,7 @@
       tags:
         - Sheet
         - RawMaterial
+        - Ingot
 
 - type: entity
   parent: Protolathe

@@ -17,7 +17,6 @@ using Robust.Shared.Utility;
 using System.Threading;
 using Content.Server.DoAfter;
 using Content.Server.Interaction;
-using Content.Shared.Acts;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Item;
 using Content.Shared.Placeable;
@@ -28,6 +27,7 @@ using Robust.Shared.Map;
 using Robust.Shared.Player;
 using Robust.Server.Containers;
 using Content.Server.Popups;
+using Content.Shared.Destructible;
 using static Content.Shared.Storage.SharedStorageComponent;
 
 namespace Content.Server.Storage.EntitySystems
@@ -572,7 +572,7 @@ namespace Content.Server.Storage.EntitySystems
 
             var toInsert = hands.ActiveHandEntity;
 
-            if (!_sharedHandsSystem.TryDrop(player, toInsert.Value, handsComp: hands))
+            if (!CanInsert(uid, toInsert.Value, storageComp) || !_sharedHandsSystem.TryDrop(player, toInsert.Value, handsComp: hands))
             {
                 Popup(uid, player, "comp-storage-cant-insert", storageComp);
                 return false;
