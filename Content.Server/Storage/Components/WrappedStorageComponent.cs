@@ -6,8 +6,6 @@ namespace Content.Server.Storage.Components
 {
     /// <summary>
     ///     Logic for a wrapped items.
-    ///     Unlike <see cref="ItemSlotsComponent"/> it doesn't have interaction logic or verbs.
-    ///     Other classes like <see cref="ToiletComponent"/> should implement it.
     /// </summary>
     [RegisterComponent]
     public class WrappedStorageComponent : Component

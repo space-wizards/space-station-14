@@ -14,7 +14,7 @@
   name: Tiny Parcel
   parent: ParcelItemBase
   id: TinyParcel
-  description: A [Size/WappType] wrapped package..
+  description: A tiny wrapped package..
   components:
     - type: Sprite
       sprite: Objects/Materials/Wraps/WrapDefault.rsi
@@ -27,7 +27,7 @@
   name: Small Parcel
   parent: BaseItem
   id: SmallParcel
-  description: A [Size/WappType] wrapped package..
+  description: A small wrapped package..
   components:
     - type: Sprite
       sprite: Objects/Materials/Wraps/WrapDefault.rsi
@@ -40,7 +40,7 @@
   name: Medium Parcel
   parent: BaseItem
   id: MediumParcel
-  description: A [Size/WappType] wrapped package..
+  description: A medium wrapped package..
   components:
     - type: Sprite
       sprite: Objects/Materials/Wraps/WrapDefault.rsi
@@ -53,7 +53,7 @@
   name: Large Parcel
   parent: BaseItem
   id: LargeParcel
-  description: A [Size/WappType] wrapped package..
+  description: A large wrapped package..
   components:
     - type: Sprite
       sprite: Objects/Materials/Wraps/WrapDefault.rsi
