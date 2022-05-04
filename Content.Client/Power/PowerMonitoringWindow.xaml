@@ -10,8 +10,11 @@
         <TabContainer Name="MasterTabContainer" VerticalExpand="True">
             <ItemList Name="SourcesList" VerticalExpand="True">
             </ItemList>
-            <ItemList Name="LoadsList" VerticalExpand="True">
-            </ItemList>
+            <BoxContainer Orientation="Vertical" VerticalExpand="True">
+                <CheckBox Margin="8 8" Name="ShowInactiveConsumersCheckBox" Text="{Loc 'power-monitoring-window-show-inactive-consumers'}" />
+                <ItemList Name="LoadsList" VerticalExpand="True">
+                </ItemList>
+            </BoxContainer>
         </TabContainer>
     </BoxContainer>
 </DefaultWindow>

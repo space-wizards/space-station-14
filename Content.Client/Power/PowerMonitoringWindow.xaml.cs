@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using Content.Client.Computer;
 using Content.Client.IoC;
 using Content.Shared.Power;
@@ -36,21 +37,42 @@ public sealed partial class PowerMonitoringWindow : DefaultWindow, IComputerWind
     public void UpdateState(PowerMonitoringConsoleBoundInterfaceState scc)
     {
         UpdateList(TotalSourcesNum, scc.TotalSources, SourcesList, scc.Sources);
-        UpdateList(TotalLoadsNum, scc.TotalLoads, LoadsList, scc.Loads);
+        var loads = scc.Loads;
+        if (!ShowInactiveConsumersCheckBox.Pressed)
+        {
+            // Not showing inactive consumers, so hiding them.
+            // This means filtering out loads that are not either:
+            // + Batteries (always important)
+            // + Meaningful (size above 0)
+            loads = loads.Where(a => a.IsBattery || (a.Size > 0.0f)).ToArray();
+        }
+        UpdateList(TotalLoadsNum, scc.TotalLoads, LoadsList, loads);
     }
 
     public void UpdateList(Label number, double numberVal, ItemList list, PowerMonitoringConsoleEntry[] listVal)
     {
         number.Text = Loc.GetString("power-monitoring-window-value", ("value", numberVal));
-        list.Clear();
-        foreach (var ent in listVal)
+        // This magic is important to prevent scrolling issues.
+        while (list.Count > listVal.Length)
         {
+            list.RemoveAt(list.Count - 1);
+        }
+        while (list.Count < listVal.Length)
+        {
+            list.AddItem("YOU SHOULD NEVER SEE THIS (REALLY!)", null, false);
+        }
+        // Now overwrite the items properly...
+        for (var i = 0; i < listVal.Length; i++)
+        {
+            var ent = listVal[i];
             _prototypeManager.TryIndex(ent.IconEntityPrototypeId, out EntityPrototype? entityPrototype);
             IRsiStateLike? iconState = null;
             if (entityPrototype != null)
                 iconState = SpriteComponent.GetPrototypeIcon(entityPrototype, StaticIoC.ResC);
             var icon = iconState?.GetFrame(RSI.State.Direction.South, 0);
-            list.AddItem($"{ent.NameLocalized} {Loc.GetString("power-monitoring-window-value", ("value", ent.Size))}", icon, false);
+            var item = list[i];
+            item.Text = $"{ent.NameLocalized} {Loc.GetString("power-monitoring-window-value", ("value", ent.Size))}";
+            item.Icon = icon;
         }
     }
 }

@@ -28,11 +28,13 @@ public sealed class PowerMonitoringConsoleEntry
     public string NameLocalized;
     public string IconEntityPrototypeId;
     public double Size;
-    public PowerMonitoringConsoleEntry(string nl, string ipi, double size)
+    public bool IsBattery;
+    public PowerMonitoringConsoleEntry(string nl, string ipi, double size, bool isBattery)
     {
         NameLocalized = nl;
         IconEntityPrototypeId = ipi;
         Size = size;
+        IsBattery = isBattery;
     }
 }
 

@@ -44,11 +44,11 @@ internal sealed class PowerMonitoringConsoleSystem : EntitySystem
         var totalLoads = 0.0d;
         var sources = new List<PowerMonitoringConsoleEntry>();
         var loads = new List<PowerMonitoringConsoleEntry>();
-        PowerMonitoringConsoleEntry LoadOrSource(Component comp, double rate)
+        PowerMonitoringConsoleEntry LoadOrSource(Component comp, double rate, bool isBattery)
         {
             var md = MetaData(comp.Owner);
             var prototype = md.EntityPrototype?.ID ?? "";
-            return new PowerMonitoringConsoleEntry(md.EntityName, prototype, rate);
+            return new PowerMonitoringConsoleEntry(md.EntityName, prototype, rate, isBattery);
         }
         // Right, so, here's what needs to be considered here.
         var netQ = ncComp.GetNode<Node>("hv").NodeGroup as PowerNet;
@@ -57,12 +57,7 @@ internal sealed class PowerMonitoringConsoleSystem : EntitySystem
             var net = netQ!;
             foreach (PowerConsumerComponent pcc in net.Consumers)
             {
-                if (pcc.DrawRate <= 0)
-                {
-                    // Grilles & other inactive power consumers.
-                    continue;
-                }
-                loads.Add(LoadOrSource(pcc, pcc.DrawRate));
+                loads.Add(LoadOrSource(pcc, pcc.DrawRate, false));
                 totalLoads += pcc.DrawRate;
             }
             foreach (BatteryChargerComponent pcc in net.Chargers)
@@ -72,12 +67,12 @@ internal sealed class PowerMonitoringConsoleSystem : EntitySystem
                     continue;
                 }
                 var rate = batteryComp.NetworkBattery.CurrentReceiving;
-                loads.Add(LoadOrSource(pcc, rate));
+                loads.Add(LoadOrSource(pcc, rate, true));
                 totalLoads += rate;
             }
             foreach (PowerSupplierComponent pcc in net.Suppliers)
             {
-                sources.Add(LoadOrSource(pcc, pcc.MaxSupply));
+                sources.Add(LoadOrSource(pcc, pcc.MaxSupply, false));
                 totalSources += pcc.MaxSupply;
             }
             foreach (BatteryDischargerComponent pcc in net.Dischargers)
@@ -87,7 +82,7 @@ internal sealed class PowerMonitoringConsoleSystem : EntitySystem
                     continue;
                 }
                 var rate = batteryComp.NetworkBattery.CurrentSupply;
-                sources.Add(LoadOrSource(pcc, rate));
+                sources.Add(LoadOrSource(pcc, rate, true));
                 totalSources += rate;
             }
         }
