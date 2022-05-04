@@ -43,7 +43,7 @@ namespace Content.Server.PackageWrapper
                 }
 
                 // If object shaped, wrap it in shape
-                if(TryComp<WrapableShapeComponent>(args.Target.Value, out var targetWrapType))
+                if(TryComp<WrappableInShapeComponent>(args.Target.Value, out var targetWrapType))
                 {
                     var typeComp = component.ProductsShaped.FirstOrDefault(x => targetWrapType.WrapType == x.ID);
 

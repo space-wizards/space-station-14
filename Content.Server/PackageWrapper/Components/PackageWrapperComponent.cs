@@ -19,8 +19,6 @@ namespace Content.Server.PackageWrapper
         [Dependency] private readonly IEntityManager _entMan = default!;
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
 
-        public sealed override string Name => "PackageWrapper";
-
         protected List<WrapperTypePrototype> _products = new();
         protected List<WrapperShapedTypePrototype> _productsShaped = new();
 

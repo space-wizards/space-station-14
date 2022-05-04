@@ -59,7 +59,7 @@
       whitelist:
         components:
         - Paper
-  - type: WrapType
+  - type: WrappableInShape
     wrapIn: Crate
 
 
@@ -125,7 +125,7 @@
       whitelist:
         components:
         - Paper
-  - type: WrapType
+  - type: WrappableInShape
     wrapIn: Crate
   - type: Construction
     graph: CrateSecure

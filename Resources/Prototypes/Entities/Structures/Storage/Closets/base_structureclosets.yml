@@ -68,5 +68,5 @@
       state: generic
       state_open: generic_open
       state_closed: generic_door
-  - type: WrapType
+  - type: WrappableInShape
     wrapIn: Closet

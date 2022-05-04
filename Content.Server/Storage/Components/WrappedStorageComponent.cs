@@ -10,8 +10,6 @@ namespace Content.Server.Storage.Components
     [RegisterComponent]
     public class WrappedStorageComponent : Component
     {
-        public override string Name => "WrappedStorage";
-
         /// <summary>
         ///     Container used to keep item.
         /// </summary>

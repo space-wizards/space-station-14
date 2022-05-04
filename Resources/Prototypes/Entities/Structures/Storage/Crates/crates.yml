@@ -632,6 +632,6 @@
   - type: Construction
     graph: CrateLivestock
     node: cratelivestock
-  - type: WrapType
+  - type: WrappableInShape
     wrapIn: Box
 
