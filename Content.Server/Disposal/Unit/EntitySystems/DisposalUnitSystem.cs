@@ -162,6 +162,17 @@ namespace Content.Server.Disposal.Unit.EntitySystems
             AfterInsert(unit, toInsert);
         }
 
+        public void DoInsertDisposalUnit(EntityUid unit, EntityUid toInsert, DisposalUnitComponent? disposal = null)
+        {
+            if (!Resolve(unit, ref disposal))
+                return;
+
+            if (!disposal.Container.Insert(toInsert))
+                return;
+
+            AfterInsert(disposal, toInsert);
+        }
+
         public override void Update(float frameTime)
         {
             base.Update(frameTime);
