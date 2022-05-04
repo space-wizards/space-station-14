@@ -42,5 +42,16 @@ public sealed class SpawnPointSystem : EntitySystem
                 return;
             }
         }
+
+        // Ok we've still not returned, but we need to put them /somewhere/.
+        // TODO: Refactor gameticker spawning code so we don't have to do this!
+        foreach (var spawnPoint in points)
+        {
+            var xform = Transform(spawnPoint.Owner);
+            args.SpawnResult = _stationSpawning.SpawnPlayerMob(xform.Coordinates, args.Job, args.HumanoidCharacterProfile);
+            return;
+        }
+
+        Logger.ErrorS("spawning", "No spawn points were available!");
     }
 }
