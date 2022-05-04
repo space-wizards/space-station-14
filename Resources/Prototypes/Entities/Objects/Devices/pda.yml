@@ -530,5 +530,5 @@
   components:
   - type: PDA
     id: AssistantIDCard
- - type: Icon
+  - type: Icon
     state: pda-clear    
