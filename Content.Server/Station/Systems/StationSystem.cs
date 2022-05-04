@@ -190,7 +190,8 @@ public sealed class StationSystem : EntitySystem
         }
         else
         {
-            metaData.EntityName = "How did we get here?";
+            _sawmill.Error($"When setting up station {station}, was unable to find a valid name in the config and no name was provided.");
+            metaData.EntityName = "unnamed station";
         }
 
         RaiseLocalEvent(new StationInitializedEvent(station));
