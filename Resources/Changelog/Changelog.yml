@@ -1,10 +1,4 @@
 Entries:
-- author: Schiene
-  changes:
-  - {message: 'Added a new non-votable map, Moonrise-class Emergency Response Cruiser.',
-    type: Add}
-  id: 957
-  time: '2022-01-30T15:11:40.0000000+00:00'
 - author: Rane
   changes:
   - {message: 'Chaplains'' prayers have been answered, and they now spawn with a fully
@@ -3039,3 +3033,10 @@ Entries:
       networks., type: Add}
   id: 1456
   time: '2022-05-04T17:59:40.0000000+00:00'
+- author: Rane
+  changes:
+  - {message: Your camera now follows the vehicle rather than you when you are riding
+      one., type: Tweak}
+  - {message: Vehicles no longer render above kudzu., type: Fix}
+  id: 1457
+  time: '2022-05-04T18:21:39.0000000+00:00'
