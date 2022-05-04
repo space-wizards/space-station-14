@@ -132,7 +132,7 @@ namespace Content.Server.Body.Systems
             var mob = _entities.SpawnEntity(speciesProto, _entities.GetComponent<TransformComponent>(component.Owner).MapPosition);
 
             Get<SharedHumanoidAppearanceSystem>().UpdateFromProfile(mob, component.DNA.Value.Profile);
-            _entities.GetComponent<MetaDataComponent>(mob).EntityName = component.DNA.Value.Profile.Name;
+            MetaData(mob).EntityName = component.DNA.Value.Profile.Name;
 
             if (TryComp<MindComponent>(uid, out var mindcomp) && mindcomp.Mind != null)
                 mindcomp.Mind.TransferTo(mob);
@@ -150,8 +150,8 @@ namespace Content.Server.Body.Systems
         /// Called before the skeleton entity is gibbed in order to save
         /// the dna for reassembly later
         /// </summary>
-        /// param name="uid"></param> the entity the mind is going to be transfered which also stores the DNA
-        /// <param name="body"></param> the entity whose DNA is being saved
+        /// <param name="uid"> the entity the mind is going to be transfered which also stores the DNA</param>
+        /// <param name="body">the entity whose DNA is being saved</param> 
         public void UpdateDNAEntry(EntityUid uid, EntityUid body)
         {
             if (!TryComp<SkeletonBodyManagerComponent>(uid, out var skelBodyComp) ||

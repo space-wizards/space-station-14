@@ -190,6 +190,74 @@
   - type: Food
     trash: FoodPacketSyndiTrash
 
+- type: entity
+  name: nutribrick
+  parent: FoodSnackBase
+  id: FoodSnackNutribrick
+  description: A carefully synthesized brick designed to contain the highest ratio of nutriment to volume. Tastes like shit.
+  components:
+  - type: Item
+    size: 10
+  - type: Sprite
+    state: nutribrick
+  - type: SpawnItemsOnUse
+    items:
+      - id: FoodPacketMRETrash
+      - id: FoodSnackNutribrickOpen
+    sound:
+      path: /Audio/Effects/unwrap.ogg
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 30
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 25
+
+- type: entity
+  name: nutribrick
+  parent: FoodSnackNutribrick
+  id: FoodSnackNutribrickOpen
+  components:
+  - type: Sprite
+    state: nutribrick-open
+  - type: Food
+
+- type: entity
+  name: brownie
+  parent: FoodSnackBase
+  id: FoodSnackMREBrownie
+  description: A precisely mixed brownie, made to withstand blunt trauma and harsh conditions. Tastes like shit.
+  components:
+  - type: Item
+    size: 10
+  - type: Sprite
+    state: mre-brownie
+  - type: SpawnItemsOnUse
+    items:
+      - id: FoodPacketMRETrash
+      - id: FoodSnackMREBrownieOpen
+    sound:
+      path: /Audio/Effects/unwrap.ogg
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 15
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 10
+        - ReagentId: Theobromine
+          Quantity: 3
+
+- type: entity
+  name: brownie
+  parent: FoodSnackMREBrownie
+  id: FoodSnackMREBrownieOpen
+  components:
+  - type: Sprite
+    state: mre-brownie-open
+  - type: Food
+
 # Trash
 
 - type: entity
@@ -330,3 +398,13 @@
     state: syndicakes-trash
   - type: Item
     color: white
+
+- type: entity
+  noSpawn: true
+  parent: FoodPacketTrash
+  id: FoodPacketMRETrash
+  name: MRE wrapper
+  description: A general purpose wrapper for a variety of military food goods.
+  components:
+  - type: Sprite
+    state: mre-wrapper

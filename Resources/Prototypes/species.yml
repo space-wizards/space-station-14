@@ -33,7 +33,15 @@
 - type: species
   id: Skeleton
   name: Skeleton
-  roundStart: true #touch this an feel my wrath
+  roundStart: true #touch this and feel my wrath | bet --moony | there will be violence --emo
   prototype: MobSkeletonPerson
   dollPrototype: MobSkeletonPersonDummy
   skinColoration: TintedHues
+
+#- type: species
+#  id: Vox
+#  name: Vox
+#  roundStart: true
+#  prototype: MobVox
+#  dollPrototype: MobVoxDummy
+#  skinColoration: Hues
