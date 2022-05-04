@@ -27,7 +27,7 @@ namespace Content.Server.Lathe
         public override void Initialize()
         {
             base.Initialize();
-            SubscribeLocalEvent<LatheComponent, InteractUsingEvent>(OnInteractUsingEvent);
+            SubscribeLocalEvent<LatheComponent, InteractUsingEvent>(OnInteractUsing);
             SubscribeLocalEvent<LatheComponent, ComponentInit>(OnComponentInit);
         }
 
@@ -101,7 +101,7 @@ namespace Content.Server.Lathe
         /// When someone tries to use an item on the lathe,
         /// insert it if it's a stack and fits inside and doesn't have anything stuck to it
         /// </summary>
-        private void OnInteractUsingEvent(EntityUid uid, LatheComponent component, InteractUsingEvent args)
+        private void OnInteractUsing(EntityUid uid, LatheComponent component, InteractUsingEvent args)
         {
             if (!TryComp<MaterialStorageComponent>(uid, out var storage) || !TryComp<MaterialComponent>(args.Used, out var material))
                 return;

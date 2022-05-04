@@ -94,7 +94,7 @@ namespace Content.Server.Stack
             {
                 Text = Loc.GetString("comp-stack-split-halve"),
                 Category = VerbCategory.Split,
-                Act = () => UserSplit(uid , args.User , stack.Count/2, stack),
+                Act = () => UserSplit(uid, args.User, stack.Count / 2, stack),
                 Priority = 1
             };
             args.Verbs.Add(halve);
