@@ -42,7 +42,7 @@ public sealed class StickySystem : EntitySystem
         if (EntityManager.HasComponent<HasEntityStuckOnComponent>(ev.Used)
             || EntityManager.HasComponent<HasEntityStuckOnComponent>(ev.Target))
         {
-            _popupSystem.PopupEntity(Loc.GetString("cannot-merge-due-to-entity-stuck-on"), ev.Used ,Filter.Entities(ev.User));
+            _popupSystem.PopupEntity(Loc.GetString("cannot-merge-due-to-entity-stuck-on"), ev.Used, Filter.Entities(ev.User));
             ev.Cancel();
         }
 
