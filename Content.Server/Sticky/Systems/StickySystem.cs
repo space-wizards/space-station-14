@@ -293,7 +293,7 @@ public sealed class StickySystem : EntitySystem
         public readonly EntityUid User;
         public readonly EntityUid Target;
 
-        public UnstickSuccessfulEvent(EntityUid uid, EntityUid user , EntityUid target)
+        public UnstickSuccessfulEvent(EntityUid uid, EntityUid user, EntityUid target)
         {
             Uid = uid;
             User = user;
