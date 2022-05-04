@@ -5,6 +5,8 @@
   parent: SimpleSpaceMobBase
   description: They mostly come at night. Mostly.
   components:
+  - type: CombatMode
+    canDisarm: true
   - type: UtilityAI
     behaviorSets:
     - Idle
@@ -69,9 +71,10 @@
       dead: dead
   - type: Puller
   - type: Butcherable
-    spawned: FoodMeatXeno
     butcheringType: Spike
-    pieces: 5
+    spawned:
+    - id: FoodMeatXeno
+      amount: 5
   - type: GhostTakeoverAvailable
     makeSentient: true
     name: xeno
@@ -83,3 +86,79 @@
     heatDamageThreshold: 360
     coldDamageThreshold: -150
     currentTemperature: 310.15
+  - type: Tag
+    tags:
+      - CannotSuicide
+  - type: NoSlip
+
+- type: entity
+  name: space adder
+  parent: SimpleSpaceMobBase
+  id: MobPurpleSnake
+  description: A menacing purple snake from Kepler-283c.
+  components:
+  - type: Sprite
+    drawdepth: Mobs
+    sprite: Mobs/Aliens/Xenos/purple_snake.rsi
+    layers:
+    - map: ["enum.DamageStateVisualLayers.Base"]
+      state: purple_snake
+  - type: Appearance
+    visuals:
+    - type: DamageStateVisualizer
+      normal: purple_snake
+      crit: dead_purple_snake
+      dead: dead_purple_snake
+  - type: Grammar
+    attributes:
+      proper: true
+      gender: male
+  - type: UtilityAI
+    behaviorSets:
+    - Idle
+    - UnarmedAttackHostiles
+  - type: AiFactionTag
+    factions:
+    - Xeno
+  - type: UnarmedCombat
+    range: 1.5
+    arcwidth: 0
+    arc: bite
+    damage:
+      types:
+        Piercing: 5
+  - type: MeleeChemicalInjector
+  - type: SolutionContainerManager
+    solutions:
+      melee:
+        reagents:
+        - ReagentId: Toxin
+          Quantity: 50
+  - type: RefillableSolution
+    solution: melee
+  - type: InjectableSolution
+    solution: melee
+  - type: SolutionTransfer
+    maxTransferAmount: 3
+
+- type: entity
+  name: space adder
+  parent: MobPurpleSnake
+  id: MobSmallPurpleSnake
+  suffix: small
+  description: A smaller version of the menacing purple snake from Kepler-283c.
+  components:
+  - type: Sprite
+    drawdepth: Mobs
+    sprite: Mobs/Aliens/Xenos/purple_snake.rsi
+    layers:
+    - map: ["enum.DamageStateVisualLayers.Base"]
+      state: small_purple_snake
+  - type: Appearance
+    visuals:
+    - type: DamageStateVisualizer
+      normal: purple_snake
+      crit: dead_small_purple_snake
+      dead: dead_small_purple_snake
+  - type: SolutionTransfer
+    maxTransferAmount: 1

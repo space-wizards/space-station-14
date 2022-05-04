@@ -7,17 +7,24 @@ namespace Content.Server.Entry
             "ConstructionGhost",
             "IconSmooth",
             "ReinforcedWall",
+            "StasisBedVisuals",
             "InteractionOutline",
             "MeleeWeaponArcAnimation",
             "AnimationsTest",
             "ItemStatus",
+            "VehicleVisuals",
             "Marker",
             "Clickable",
             "Icon",
             "ClientEntitySpawner",
             "CharacterInfo",
             "ItemCabinetVisuals",
-            "HandheldGPS"
+            "LatheVisuals",
+            "DiseaseMachineVisuals",
+            "HandheldGPS",
+            "ToggleableLightVisuals",
+            "PotencyVisuals",
+            "PaperVisuals"
         };
     }
 }

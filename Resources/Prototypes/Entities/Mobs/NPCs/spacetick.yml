@@ -1,0 +1,85 @@
+- type: entity
+  name: space tick
+  id: MobTick
+  parent: SimpleSpaceMobBase
+  description: It's a space tick, watch out for its nasty bite. Centcomm reports that 90 percent of cargo leg amputations are due to space tick bites.
+  components:
+  - type: UtilityAI
+    behaviorSets:
+    - Idle
+    - UnarmedAttackHostiles
+  - type: AiFactionTag
+    factions:
+    - SimpleHostile
+  - type: Sprite
+    drawdepth: Mobs
+    layers:
+    - map: ["enum.DamageStateVisualLayers.Base"]
+      state: alive
+      sprite: Mobs/Aliens/Xenos/spacetick.rsi
+      scale: 0.8, 0.8
+  - type: Physics
+  - type: MovementSpeedModifier
+    baseWalkSpeed : 4
+    baseSprintSpeed : 6
+  - type: Fixtures
+    fixtures:
+    - shape:
+        !type:PhysShapeCircle
+        radius: 0.20
+      mass: 2.5
+      mask:
+      - Impassable
+      - MobImpassable
+      - SmallImpassable
+      layer:
+      - Opaque
+  - type: MobState
+    thresholds:
+      0: !type:NormalMobState {}
+      15: !type:DeadMobState {}
+  - type: MovementIgnoreGravity
+  - type: Appearance
+    visuals:
+    - type: DamageStateVisualizer
+      normal: alive
+      dead: dead
+  - type: Butcherable
+    spawned:
+    - id: FoodMeatXeno
+      amount: 1
+  - type: Bloodstream
+    bloodMaxVolume: 50
+  - type: CombatMode
+    disarmAction:
+      enabled: false
+      autoPopulate: false
+      name: action-name-disarm
+  - type: UnarmedCombat
+    range: 0.5
+    arcwidth: 0
+    arc: bite
+    damage:
+      groups:
+        Brute: 2
+  - type: MeleeChemicalInjector
+  - type: SolutionContainerManager
+    solutions:
+      melee:
+        reagents:
+        - ReagentId: Toxin
+          Quantity: 5
+  - type: RefillableSolution
+    solution: melee
+  - type: InjectableSolution
+    solution: melee
+  - type: SolutionTransfer
+    maxTransferAmount: 5
+  - type: GhostTakeoverAvailable
+    makeSentient: true
+    name: space tick
+    description: |
+      If you're a salvage spawn, defend the loot inside!
+      Otherwise, wreak havoc on the station!
+  - type: ReplacementAccent
+    accent: genericAggressive

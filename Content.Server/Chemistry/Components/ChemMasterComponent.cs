@@ -1,28 +1,17 @@
-using System;
-using System.Collections.Generic;
-using Content.Server.Chemistry.Components.SolutionManager;
 using Content.Server.Chemistry.EntitySystems;
-using Content.Server.Hands.Components;
 using Content.Server.Labels.Components;
 using Content.Server.Power.Components;
 using Content.Server.UserInterface;
-using Content.Shared.ActionBlocker;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Containers.ItemSlots;
 using Content.Shared.FixedPoint;
-using Content.Shared.Interaction;
-using Content.Shared.Item;
+using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Popups;
-using Content.Shared.Random.Helpers;
 using Content.Shared.Sound;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Localization;
+
 using Robust.Shared.Player;
-using Robust.Shared.Serialization.Manager.Attributes;
-using Robust.Shared.ViewVariables;
 
 namespace Content.Server.Chemistry.Components
 {
@@ -33,11 +22,11 @@ namespace Content.Server.Chemistry.Components
     /// Messages sent from the client are used to handle ui button presses.
     /// </summary>
     [RegisterComponent]
-    [ComponentReference(typeof(IActivate))]
     [ComponentReference(typeof(SharedChemMasterComponent))]
-    public sealed class ChemMasterComponent : SharedChemMasterComponent, IActivate
+    public sealed class ChemMasterComponent : SharedChemMasterComponent
     {
         [Dependency] private readonly IEntityManager _entities = default!;
+        [Dependency] private readonly IEntitySystemManager _sysMan = default!;
 
         [ViewVariables]
         private uint _pillType = 1;
@@ -79,25 +68,6 @@ namespace Content.Server.Chemistry.Components
             _bufferSolution = EntitySystem.Get<SolutionContainerSystem>().EnsureSolution(Owner, SolutionName);
         }
 
-        [Obsolete("Component Messages are deprecated, use Entity Events instead.")]
-        public override void HandleMessage(ComponentMessage message, IComponent? component)
-        {
-#pragma warning disable 618
-            base.HandleMessage(message, component);
-#pragma warning restore 618
-            switch (message)
-            {
-                case PowerChangedMessage:
-                    OnPowerChanged();
-                    break;
-            }
-        }
-
-        private void OnPowerChanged()
-        {
-            UpdateUserInterface();
-        }
-
         /// <summary>
         /// Handles ui messages from the client. For things such as button presses
         /// which interact with the world and require server action.
@@ -108,21 +78,14 @@ namespace Content.Server.Chemistry.Components
             if (obj.Session.AttachedEntity is not {Valid: true} player)
                 return;
 
-            var msg = (UiActionMessage) obj.Message;
-            var needsPower = msg.Action switch
-            {
-                UiAction.Eject => false,
-                _ => true,
-            };
+            if (obj.Message is not UiActionMessage msg)
+                return;
 
-            if (!PlayerCanUseChemMaster(player, needsPower))
+            if (!PlayerCanUseChemMaster(player, true))
                 return;
 
             switch (msg.Action)
             {
-                case UiAction.Eject:
-                    EntitySystem.Get<ItemSlotsSystem>().TryEjectToHands(Owner, BeakerSlot, player);
-                    break;
                 case UiAction.ChemButton:
                     TransferReagent(msg.Id, msg.Amount, msg.IsBuffer);
                     break;
@@ -286,6 +249,9 @@ namespace Content.Server.Chemistry.Components
                 return;
             }
 
+            var handSys = _sysMan.GetEntitySystem<SharedHandsSystem>();
+            var solSys = _sysMan.GetEntitySystem<SolutionContainerSystem>();
+
             if (action == UiAction.CreateBottles)
             {
                 var individualVolume = BufferSolution.TotalVolume / FixedPoint2.New(bottleAmount);
@@ -308,25 +274,12 @@ namespace Content.Server.Chemistry.Components
                     labelComponent.CurrentLabel = label;
 
                     var bufferSolution = BufferSolution.SplitSolution(actualVolume);
-                    var bottleSolution = EntitySystem.Get<SolutionContainerSystem>().EnsureSolution(bottle, "drink");
+                    var bottleSolution = solSys.EnsureSolution(bottle, "drink");
 
-                    EntitySystem.Get<SolutionContainerSystem>().TryAddSolution(bottle, bottleSolution, bufferSolution);
+                    solSys.TryAddSolution(bottle, bottleSolution, bufferSolution);
 
                     //Try to give them the bottle
-                    if (_entities.TryGetComponent<HandsComponent?>(user, out var hands) &&
-                        _entities.TryGetComponent<SharedItemComponent?>(bottle, out var item))
-                    {
-                        if (hands.CanPutInHand(item))
-                        {
-                            hands.PutInHand(item);
-                            continue;
-                        }
-                    }
-
-                    //Put it on the floor
-                    _entities.GetComponent<TransformComponent>(bottle).Coordinates = _entities.GetComponent<TransformComponent>(user).Coordinates;
-                    //Give it an offset
-                    bottle.RandomOffset(0.2f);
+                    handSys.PickupOrDrop(user, bottle);
                 }
             }
             else //Pills
@@ -352,7 +305,7 @@ namespace Content.Server.Chemistry.Components
 
                     var bufferSolution = BufferSolution.SplitSolution(actualVolume);
                     var pillSolution = EntitySystem.Get<SolutionContainerSystem>().EnsureSolution(pill, "food");
-                    EntitySystem.Get<SolutionContainerSystem>().TryAddSolution(pill, pillSolution, bufferSolution);
+                    solSys.TryAddSolution(pill, pillSolution, bufferSolution);
 
                     //Change pill Sprite component state
                     if (!_entities.TryGetComponent(pill, out SpriteComponent? sprite))
@@ -362,20 +315,7 @@ namespace Content.Server.Chemistry.Components
                     sprite?.LayerSetState(0, "pill" + _pillType);
 
                     //Try to give them the bottle
-                    if (_entities.TryGetComponent<HandsComponent?>(user, out var hands) &&
-                        _entities.TryGetComponent<SharedItemComponent?>(pill, out var item))
-                    {
-                        if (hands.CanPutInHand(item))
-                        {
-                            hands.PutInHand(item);
-                            continue;
-                        }
-                    }
-
-                    //Put it on the floor
-                    _entities.GetComponent<TransformComponent>(pill).Coordinates = _entities.GetComponent<TransformComponent>(user).Coordinates;
-                    //Give it an offset
-                    pill.RandomOffset(0.2f);
+                    handSys.PickupOrDrop(user, pill);
                 }
             }
 
@@ -383,30 +323,6 @@ namespace Content.Server.Chemistry.Components
                 _label = "";
 
             UpdateUserInterface();
-        }
-
-        /// <summary>
-        /// Called when you click the owner entity with an empty hand. Opens the UI client-side if possible.
-        /// </summary>
-        /// <param name="args">Data relevant to the event such as the actor which triggered it.</param>
-        void IActivate.Activate(ActivateEventArgs args)
-        {
-            if (!_entities.TryGetComponent(args.User, out ActorComponent? actor))
-            {
-                return;
-            }
-
-            if (!_entities.TryGetComponent(args.User, out HandsComponent? hands))
-            {
-                Owner.PopupMessage(args.User, Loc.GetString("chem-master-component-activate-no-hands"));
-                return;
-            }
-
-            var activeHandEntity = hands.GetActiveHandItem?.Owner;
-            if (activeHandEntity == null)
-            {
-                UserInterface?.Open(actor.PlayerSession);
-            }
         }
 
         private void ClickSound()

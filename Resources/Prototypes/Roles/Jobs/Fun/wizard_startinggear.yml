@@ -46,7 +46,6 @@
   equipment:
     jumpsuit: ClothingUniformJumpsuitColorPurple
     back: ClothingBackpackFilled
-    head: ClothingHeadHelmetHardsuitWizard
     outerClothing: ClothingOuterHardsuitWizard
     shoes: ClothingShoesWizard
     id: AssistantPDA

@@ -30,7 +30,6 @@ namespace Content.Server.AI.Pathfinding
     public sealed class PathfindingSystem : EntitySystem
     {
         [Dependency] private readonly IMapManager _mapManager = default!;
-        [Dependency] private readonly IEntityManager _entityManager = default!;
         [Dependency] private readonly AccessReaderSystem _accessReader = default!;
 
         public IReadOnlyDictionary<GridId, Dictionary<Vector2i, PathfindingChunk>> Graph => _graph;
@@ -206,21 +205,12 @@ namespace Content.Server.AI.Pathfinding
             SubscribeLocalEvent<CollisionChangeMessage>(QueueCollisionChangeMessage);
             SubscribeLocalEvent<MoveEvent>(QueueMoveEvent);
             SubscribeLocalEvent<AccessReaderChangeMessage>(QueueAccessChangeMessage);
+            SubscribeLocalEvent<GridRemovalEvent>(HandleGridRemoval);
+            SubscribeLocalEvent<TileChangedEvent>(QueueTileChange);
 
             // Handle all the base grid changes
             // Anything that affects traversal (i.e. collision layer) is handled separately.
-            _mapManager.OnGridRemoved += HandleGridRemoval;
-            _mapManager.GridChanged += QueueGridChange;
-            _mapManager.TileChanged += QueueTileChange;
-        }
 
-        public override void Shutdown()
-        {
-            base.Shutdown();
-
-            _mapManager.OnGridRemoved -= HandleGridRemoval;
-            _mapManager.GridChanged -= QueueGridChange;
-            _mapManager.TileChanged -= QueueTileChange;
         }
 
         private void HandleTileUpdate(TileRef tile)
@@ -231,25 +221,17 @@ namespace Content.Server.AI.Pathfinding
             node.UpdateTile(tile);
         }
 
-        private void HandleGridRemoval(MapId mapId, GridId gridId)
+        private void HandleGridRemoval(GridRemovalEvent ev)
         {
-            if (_graph.ContainsKey(gridId))
+            if (_graph.ContainsKey(ev.GridId))
             {
-                _graph.Remove(gridId);
+                _graph.Remove(ev.GridId);
             }
         }
 
-        private void QueueGridChange(object? sender, GridChangedEventArgs eventArgs)
+        private void QueueTileChange(TileChangedEvent ev)
         {
-            foreach (var (position, _) in eventArgs.Modified)
-            {
-                _tileUpdateQueue.Enqueue(eventArgs.Grid.GetTileRef(position));
-            }
-        }
-
-        private void QueueTileChange(object? sender, TileChangedEventArgs eventArgs)
-        {
-            _tileUpdateQueue.Enqueue(eventArgs.NewTile);
+            _tileUpdateQueue.Enqueue(ev.NewTile);
         }
 
         private void QueueAccessChangeMessage(AccessReaderChangeMessage message)
@@ -272,8 +254,9 @@ namespace Content.Server.AI.Pathfinding
                 return;
             }
 
-            var grid = _mapManager.GetGrid(EntityManager.GetComponent<TransformComponent>(entity).GridID);
-            var tileRef = grid.GetTileRef(EntityManager.GetComponent<TransformComponent>(entity).Coordinates);
+            var xform = EntityManager.GetComponent<TransformComponent>(entity);
+            var grid = _mapManager.GetGrid(xform.GridID);
+            var tileRef = grid.GetTileRef(xform.Coordinates);
 
             var chunk = GetChunk(tileRef);
             var node = chunk.GetNode(tileRef);
@@ -314,9 +297,10 @@ namespace Content.Server.AI.Pathfinding
             }
 
             // Memory leak protection until grid parenting confirmed fix / you REALLY need the performance
-            var gridBounds = _mapManager.GetGrid(EntityManager.GetComponent<TransformComponent>(moveEvent.Sender).GridID).WorldBounds;
+            var xform = EntityManager.GetComponent<TransformComponent>(moveEvent.Sender);
+            var gridBounds = _mapManager.GetGrid(xform.GridID).WorldBounds;
 
-            if (!gridBounds.Contains(EntityManager.GetComponent<TransformComponent>(moveEvent.Sender).WorldPosition))
+            if (!gridBounds.Contains(xform.WorldPosition))
             {
                 HandleEntityRemove(moveEvent.Sender);
                 return;
@@ -329,7 +313,7 @@ namespace Content.Server.AI.Pathfinding
                 return;
             }
 
-            var newGridId = moveEvent.NewPosition.GetGridId(_entityManager);
+            var newGridId = moveEvent.NewPosition.GetGridId(EntityManager);
             if (newGridId == GridId.Invalid)
             {
                 HandleEntityRemove(moveEvent.Sender);

@@ -1,17 +1,8 @@
-using System;
-using System.Collections.Generic;
 using Content.Shared.Hands.Components;
-using Content.Shared.Interaction;
-using Content.Shared.Interaction.Helpers;
 using Content.Shared.Inventory;
 using Content.Shared.Sound;
-using Robust.Shared.GameObjects;
 using Robust.Shared.GameStates;
-using Robust.Shared.IoC;
-using Robust.Shared.Maths;
 using Robust.Shared.Serialization;
-using Robust.Shared.Serialization.Manager.Attributes;
-using Robust.Shared.ViewVariables;
 using static Robust.Shared.GameObjects.SharedSpriteComponent;
 
 namespace Content.Shared.Item
@@ -20,7 +11,7 @@ namespace Content.Shared.Item
     ///    Players can pick up, drop, and put items in bags, and they can be seen in player's hands.
     /// </summary>
     [NetworkedComponent()]
-    public abstract class SharedItemComponent : Component, IInteractHand
+    public abstract class SharedItemComponent : Component
     {
         [Dependency] private readonly IEntityManager _entMan = default!;
 
@@ -47,6 +38,20 @@ namespace Content.Shared.Item
         public Dictionary<string, List<PrototypeLayerData>> ClothingVisuals = new();
 
         /// <summary>
+        ///     Whether or not this item can be picked up.
+        /// </summary>
+        /// <remarks>
+        ///     This should almost always be true for items. But in some special cases, an item can be equipped but not
+        ///     picked up. E.g., hardsuit helmets are attached to the suit, so we want to disable things like the pickup
+        ///     verb.
+        /// </remarks>
+        [DataField("canPickup")]
+        public bool CanPickup = true;
+
+        [DataField("quickEquip")]
+        public bool QuickEquip = true;
+
+        /// <summary>
         ///     Part of the state of the sprite shown on the player when this item is in their hands or inventory.
         /// </summary>
         /// <remarks>
@@ -70,48 +75,18 @@ namespace Content.Shared.Item
         [DataField("Slots")]
         public SlotFlags SlotFlags = SlotFlags.PREVENTEQUIP; //Different from None, NONE allows equips if no slot flags are required
 
-        [DataField("EquipSound")]
+        [DataField("equipSound")]
         public SoundSpecifier? EquipSound { get; set; } = default!;
 
-        // TODO REMOVE. Currently nonfunctional and only used by RGB system. #6253 Fixes this but requires #6252
-        /// <summary>
-        ///     Color of the sprite shown on the player when this item is in their hands.
-        /// </summary>
-        [ViewVariables(VVAccess.ReadWrite)]
-        public Color Color
-        {
-            get => _color;
-            set
-            {
-                _color = value;
-                Dirty();
-            }
-        }
-        [DataField("color")]
-        private Color _color = Color.White;
-
+        [DataField("unequipSound")]
+        public SoundSpecifier? UnequipSound = default!;
+        
         /// <summary>
         ///     Rsi of the sprite shown on the player when this item is in their hands. Used to generate a default entry for <see cref="InhandVisuals"/>
         /// </summary>
         [ViewVariables(VVAccess.ReadWrite)]
         [DataField("sprite")]
         public readonly string? RsiPath;
-
-        bool IInteractHand.InteractHand(InteractHandEventArgs eventArgs)
-        {
-            var user = eventArgs.User;
-
-            if (!_entMan.TryGetComponent(user, out SharedHandsComponent hands))
-                return false;
-
-            var activeHand = hands.ActiveHand;
-
-            if (activeHand == null)
-                return false;
-
-            // hands checks action blockers
-            return hands.TryPickupEntityToActiveHand(Owner, animateUser: true);
-        }
 
         public void RemovedFromSlot()
         {

@@ -16,7 +16,7 @@
     sprite: Objects/Devices/pda.rsi
     state: pda
   - type: Clothing
-    QuickEquip: false
+    quickEquip: false
     size: 10
     Slots:
     - idcard
@@ -35,6 +35,8 @@
     mask: /Textures/Effects/LightMasks/cone.png
     autoRot: true
   - type: Ringer
+  - type: ActivatableUI
+    key: enum.PDAUiKey.Key
   - type: UserInterface
     interfaces:
     - key: enum.PDAUiKey.Key
@@ -45,6 +47,8 @@
       type: RingerBoundUserInterface
     - key: enum.InstrumentUiKey.Key
       type: InstrumentBoundUserInterface
+    - key: enum.HealthAnalyzerUiKey.Key
+      type: HealthAnalyzerBoundUserInterface
   - type: PDA
     penSlot:
       startingItem: Pen
@@ -128,6 +132,7 @@
     state: pda-clown
   - type: Slippery
     paralyzeTime: 4
+    launchForwardsMultiplier: 9.0
   - type: CollisionWake
     enabled: false
   - type: Physics
@@ -355,7 +360,7 @@
   parent: BasePDA
   id: CMOPDA
   name: chief medical officer PDA
-  description: Extraordinarily shiny and sterile.
+  description: Extraordinarily shiny and sterile. Has a built-in health analyzer.
   components:
   - type: PDA
     id: CMOIDCard
@@ -365,12 +370,14 @@
         state: pda-cmo
   - type: Icon
     state: pda-cmo
+  - type: HealthAnalyzer
+    scanDelay: 1
 
 - type: entity
   parent: BasePDA
   id: MedicalPDA
   name: medical PDA
-  description: Shiny and sterile.
+  description: Shiny and sterile. Has a built-in health analyzer.
   components:
   - type: PDA
     id: MedicalIDCard
@@ -380,6 +387,8 @@
         state: pda-medical
   - type: Icon
     state: pda-medical
+  - type: HealthAnalyzer
+    scanDelay: 1.2
 
 - type: entity
   parent: BasePDA
@@ -497,3 +506,29 @@
     handheld: true
     bank: 1
     program: 2
+
+- type: entity
+  parent: BasePDA
+  id: AtmosPDA
+  name: atmos PDA
+  description: Still smells like plasma.
+  components:
+  - type: PDA
+    id: AtmosIDCard
+  - type: Appearance
+    visuals:
+      - type: PDAVisualizer
+        state: pda-atmos
+  - type: Icon
+    state: pda-atmos
+
+- type: entity
+  parent: BasePDA
+  id: ClearPDA
+  name: clear PDA
+  description: 99 and 44/100ths percent pure plastic. 
+  components:
+  - type: PDA
+    id: AssistantIDCard
+  - type: Icon
+    state: pda-clear    

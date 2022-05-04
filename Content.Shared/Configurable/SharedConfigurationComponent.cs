@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using Robust.Shared.GameObjects;
+using System.Text.RegularExpressions;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.Configurable
@@ -8,6 +6,9 @@ namespace Content.Shared.Configurable
     [Virtual]
     public class SharedConfigurationComponent : Component
     {
+        [DataField("validation")]
+        public readonly Regex Validation = new("^[a-zA-Z0-9 ]*$", RegexOptions.Compiled);
+
         [Serializable, NetSerializable]
         public sealed class ConfigurationBoundUserInterfaceState : BoundUserInterfaceState
         {

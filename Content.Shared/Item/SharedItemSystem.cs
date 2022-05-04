@@ -1,15 +1,16 @@
+using Content.Shared.Hands.EntitySystems;
+using Content.Shared.Interaction;
 using Content.Shared.Inventory.Events;
 using Content.Shared.Verbs;
 using Robust.Shared.Containers;
-using Robust.Shared.GameObjects;
 using Robust.Shared.GameStates;
-using Robust.Shared.Localization;
-using System;
 
 namespace Content.Shared.Item
 {
     public abstract class SharedItemSystem : EntitySystem
     {
+        [Dependency] private readonly SharedHandsSystem _handsSystem = default!;
+
         public override void Initialize()
         {
             base.Initialize();
@@ -17,9 +18,18 @@ namespace Content.Shared.Item
 
             SubscribeLocalEvent<SharedSpriteComponent, GotEquippedEvent>(OnEquipped);
             SubscribeLocalEvent<SharedSpriteComponent, GotUnequippedEvent>(OnUnequipped);
+            SubscribeLocalEvent<SharedItemComponent, InteractHandEvent>(OnHandInteract);
 
             SubscribeLocalEvent<SharedItemComponent, ComponentGetState>(OnGetState);
             SubscribeLocalEvent<SharedItemComponent, ComponentHandleState>(OnHandleState);
+        }
+
+        private void OnHandInteract(EntityUid uid, SharedItemComponent component, InteractHandEvent args)
+        {
+            if (args.Handled || !component.CanPickup)
+                return;
+
+            args.Handled = _handsSystem.TryPickup(args.User, uid, animateUser: false);
         }
 
         private void OnHandleState(EntityUid uid, SharedItemComponent component, ref ComponentHandleState args)
@@ -57,11 +67,12 @@ namespace Content.Shared.Item
                 args.Using != null ||
                 !args.CanAccess ||
                 !args.CanInteract ||
-                !args.Hands.CanPickupEntityToActiveHand(args.Target))
+                !component.CanPickup ||
+                !_handsSystem.CanPickupAnyHand(args.User, args.Target, handsComp: args.Hands, item: component))
                 return;
 
             InteractionVerb verb = new();
-            verb.Act = () => args.Hands.TryPickupEntityToActiveHand(args.Target);
+            verb.Act = () => _handsSystem.TryPickupAnyHand(args.User, args.Target, checkActionBlocker: false, handsComp: args.Hands, item: component);
             verb.IconTexture = "/Textures/Interface/VerbIcons/pickup.svg.192dpi.png";
 
             // if the item already in a container (that is not the same as the user's), then change the text.

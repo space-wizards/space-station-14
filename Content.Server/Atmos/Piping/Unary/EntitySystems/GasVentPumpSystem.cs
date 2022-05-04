@@ -13,6 +13,7 @@ using Content.Shared.Atmos;
 using Content.Shared.Atmos.Monitor;
 using Content.Shared.Atmos.Piping.Unary.Components;
 using Content.Shared.Atmos.Visuals;
+using Content.Shared.Audio;
 using JetBrains.Annotations;
 using Robust.Shared.Timing;
 
@@ -24,6 +25,7 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
         [Dependency] private readonly AtmosphereSystem _atmosphereSystem = default!;
         [Dependency] private readonly DeviceNetworkSystem _deviceNetSystem = default!;
         [Dependency] private readonly IGameTiming _gameTiming = default!;
+        [Dependency] private readonly SharedAmbientSoundSystem _ambientSoundSystem = default!;
 
         public override void Initialize()
         {
@@ -31,18 +33,17 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
 
             SubscribeLocalEvent<GasVentPumpComponent, AtmosDeviceUpdateEvent>(OnGasVentPumpUpdated);
             SubscribeLocalEvent<GasVentPumpComponent, AtmosDeviceDisabledEvent>(OnGasVentPumpLeaveAtmosphere);
+            SubscribeLocalEvent<GasVentPumpComponent, AtmosDeviceEnabledEvent>(OnGasVentPumpEnterAtmosphere);
             SubscribeLocalEvent<GasVentPumpComponent, AtmosMonitorAlarmEvent>(OnAtmosAlarm);
             SubscribeLocalEvent<GasVentPumpComponent, PowerChangedEvent>(OnPowerChanged);
-            SubscribeLocalEvent<GasVentPumpComponent, PacketSentEvent>(OnPacketRecv);
+            SubscribeLocalEvent<GasVentPumpComponent, DeviceNetworkPacketEvent>(OnPacketRecv);
         }
 
         private void OnGasVentPumpUpdated(EntityUid uid, GasVentPumpComponent vent, AtmosDeviceUpdateEvent args)
         {
-            var appearance = EntityManager.GetComponentOrNull<AppearanceComponent>(vent.Owner); //Bingo waz here
-
+            //Bingo waz here
             if (vent.Welded)
             {
-                appearance?.SetData(VentPumpVisuals.State, VentPumpState.Welded);
                 return;
             }
 
@@ -51,7 +52,6 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
                 || !TryComp(uid, out NodeContainerComponent? nodeContainer)
                 || !nodeContainer.TryGetNode(vent.InletName, out PipeNode? pipe))
             {
-                appearance?.SetData(VentPumpVisuals.State, VentPumpState.Off);
                 return;
             }
 
@@ -60,7 +60,6 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
             // We're in an air-blocked tile... Do nothing.
             if (environment == null)
             {
-                appearance?.SetData(VentPumpVisuals.State, VentPumpState.Off);
                 return;
             }
 
@@ -69,8 +68,6 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
 
             if (vent.PumpDirection == VentPumpDirection.Releasing && pipe.Air.Pressure > 0)
             {
-                appearance?.SetData(VentPumpVisuals.State, VentPumpState.Out);
-
                 if (environment.Pressure > vent.MaxPressure)
                     return;
 
@@ -100,8 +97,6 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
             }
             else if (vent.PumpDirection == VentPumpDirection.Siphoning && environment.Pressure > 0)
             {
-                appearance?.SetData(VentPumpVisuals.State, VentPumpState.In);
-
                 if (pipe.Air.Pressure > vent.MaxPressure)
                     return;
 
@@ -134,10 +129,12 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
 
         private void OnGasVentPumpLeaveAtmosphere(EntityUid uid, GasVentPumpComponent component, AtmosDeviceDisabledEvent args)
         {
-            if (EntityManager.TryGetComponent(uid, out AppearanceComponent? appearance))
-            {
-                appearance.SetData(VentPumpVisuals.State, VentPumpState.Off);
-            }
+            UpdateState(uid, component);
+        }
+
+        private void OnGasVentPumpEnterAtmosphere(EntityUid uid, GasVentPumpComponent component, AtmosDeviceEnabledEvent args)
+        {
+            UpdateState(uid, component);
         }
 
         private void OnAtmosAlarm(EntityUid uid, GasVentPumpComponent component, AtmosMonitorAlarmEvent args)
@@ -150,14 +147,17 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
             {
                 component.Enabled = true;
             }
+
+            UpdateState(uid, component);
         }
 
         private void OnPowerChanged(EntityUid uid, GasVentPumpComponent component, PowerChangedEvent args)
         {
             component.Enabled = args.Powered;
+            UpdateState(uid, component);
         }
 
-        private void OnPacketRecv(EntityUid uid, GasVentPumpComponent component, PacketSentEvent args)
+        private void OnPacketRecv(EntityUid uid, GasVentPumpComponent component, DeviceNetworkPacketEvent args)
         {
             if (!EntityManager.TryGetComponent(uid, out DeviceNetworkComponent netConn)
                 || !EntityManager.TryGetComponent(uid, out AtmosAlarmableComponent alarmable)
@@ -172,7 +172,7 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
                     payload.Add(DeviceNetworkConstants.Command, AirAlarmSystem.AirAlarmSyncData);
                     payload.Add(AirAlarmSystem.AirAlarmSyncData, component.ToAirAlarmData());
 
-                    _deviceNetSystem.QueuePacket(uid, args.SenderAddress, AirAlarmSystem.Freq, payload);
+                    _deviceNetSystem.QueuePacket(uid, args.SenderAddress, payload, device: netConn);
 
                     return;
                 case AirAlarmSystem.AirAlarmSetData:
@@ -180,15 +180,41 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
                         break;
 
                     component.FromAirAlarmData(setData);
+                    UpdateState(uid, component);
                     alarmable.IgnoreAlarms = setData.IgnoreAlarms;
                     payload.Add(DeviceNetworkConstants.Command, AirAlarmSystem.AirAlarmSetDataStatus);
                     payload.Add(AirAlarmSystem.AirAlarmSetDataStatus, true);
 
-                    _deviceNetSystem.QueuePacket(uid, string.Empty, AirAlarmSystem.Freq, payload, true);
+                    _deviceNetSystem.QueuePacket(uid, null, payload, device: netConn);
 
                     return;
             }
         }
 
+        private void UpdateState(EntityUid uid, GasVentPumpComponent vent, AppearanceComponent? appearance = null)
+        {
+            if (!Resolve(uid, ref appearance, false))
+                return;
+
+            _ambientSoundSystem.SetAmbience(uid, true);
+            if (!vent.Enabled)
+            {
+                _ambientSoundSystem.SetAmbience(uid, false);
+                appearance.SetData(VentPumpVisuals.State, VentPumpState.Off);
+            }
+            else if (vent.PumpDirection == VentPumpDirection.Releasing)
+            {
+                appearance.SetData(VentPumpVisuals.State, VentPumpState.Out);
+            }
+            else if (vent.PumpDirection == VentPumpDirection.Siphoning)
+            {
+                appearance.SetData(VentPumpVisuals.State, VentPumpState.In);
+            }
+            else if (vent.Welded)
+            {
+                _ambientSoundSystem.SetAmbience(uid, false);
+                appearance.SetData(VentPumpVisuals.State, VentPumpState.Welded);
+            }
+        }
     }
 }

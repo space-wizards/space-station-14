@@ -28,7 +28,7 @@ namespace Content.Server.Stunnable.Components
 
         [ViewVariables(VVAccess.ReadWrite)]
         [DataField("energyPerUse")]
-        public float EnergyPerUse { get; set; } = 50;
+        public float EnergyPerUse { get; set; } = 350;
 
         [ViewVariables(VVAccess.ReadWrite)]
         [DataField("onThrowStunChance")]

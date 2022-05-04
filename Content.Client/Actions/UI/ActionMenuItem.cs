@@ -41,7 +41,7 @@ namespace Content.Client.Actions.UI
             Action = action;
             _onControlFocusExited = onControlFocusExited;
 
-            MinSize = (64, 64);
+            SetSize = (64, 64);
             VerticalAlignment = VAlignment.Top;
 
             _bigActionIcon = new TextureRect
@@ -129,7 +129,7 @@ namespace Content.Client.Actions.UI
                 _smallActionIcon.Texture = null;
                 _smallActionIcon.Visible = false;
             }
-            else if (Action.Provider != null && Action.ItemIconStyle == ItemActionIconStyle.BigItem)
+            else if (Action.EntityIcon != null && Action.ItemIconStyle == ItemActionIconStyle.BigItem)
             {
                 _smallActionIcon.Texture = texture;
                 _smallActionIcon.Modulate = Action.IconColor;
@@ -149,7 +149,7 @@ namespace Content.Client.Actions.UI
 
         private void UpdateItemIcon()
         {
-            if (Action?.Provider == null || !IoCManager.Resolve<IEntityManager>().TryGetComponent(Action.Provider.Value, out SpriteComponent sprite))
+            if (Action?.EntityIcon == null || !IoCManager.Resolve<IEntityManager>().TryGetComponent(Action.EntityIcon.Value, out SpriteComponent sprite))
             {
                 _bigItemSpriteView.Visible = false;
                 _bigItemSpriteView.Sprite = null;

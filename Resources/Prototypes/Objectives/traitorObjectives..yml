@@ -143,3 +143,16 @@
   conditions:
     - !type:StealCondition
       prototype: SupplyComputerCircuitboard
+
+- type: objective
+  id: CorgiMeatStealObjective
+  issuer: syndicate
+  prob: 0.2
+  requirements:
+    - !type:TraitorRequirement {}
+    - !type:IncompatibleConditionsRequirement
+      conditions:
+        - DieCondition
+  conditions:
+    - !type:StealCondition
+      prototype: FoodMeatCorgi

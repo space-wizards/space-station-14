@@ -14,6 +14,7 @@ using Content.Shared.Atmos;
 using Content.Shared.Atmos.Piping.Unary.Visuals;
 using Content.Shared.Atmos.Monitor;
 using Content.Shared.Atmos.Piping.Unary.Components;
+using Content.Shared.Audio;
 using JetBrains.Annotations;
 using Robust.Shared.Timing;
 
@@ -25,25 +26,24 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
         [Dependency] private readonly IGameTiming _gameTiming = default!;
         [Dependency] private readonly AtmosphereSystem _atmosphereSystem = default!;
         [Dependency] private readonly DeviceNetworkSystem _deviceNetSystem = default!;
+        [Dependency] private readonly SharedAmbientSoundSystem _ambientSoundSystem = default!;
 
         public override void Initialize()
         {
             base.Initialize();
 
             SubscribeLocalEvent<GasVentScrubberComponent, AtmosDeviceUpdateEvent>(OnVentScrubberUpdated);
+            SubscribeLocalEvent<GasVentScrubberComponent, AtmosDeviceEnabledEvent>(OnVentScrubberEnterAtmosphere);
             SubscribeLocalEvent<GasVentScrubberComponent, AtmosDeviceDisabledEvent>(OnVentScrubberLeaveAtmosphere);
             SubscribeLocalEvent<GasVentScrubberComponent, AtmosMonitorAlarmEvent>(OnAtmosAlarm);
             SubscribeLocalEvent<GasVentScrubberComponent, PowerChangedEvent>(OnPowerChanged);
-            SubscribeLocalEvent<GasVentScrubberComponent, PacketSentEvent>(OnPacketRecv);
+            SubscribeLocalEvent<GasVentScrubberComponent, DeviceNetworkPacketEvent>(OnPacketRecv);
         }
 
         private void OnVentScrubberUpdated(EntityUid uid, GasVentScrubberComponent scrubber, AtmosDeviceUpdateEvent args)
         {
-            var appearance = EntityManager.GetComponentOrNull<AppearanceComponent>(scrubber.Owner);
-
             if (scrubber.Welded)
             {
-                appearance?.SetData(ScrubberVisuals.State, ScrubberState.Welded);
                 return;
             }
 
@@ -56,38 +56,35 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
             || !EntityManager.TryGetComponent(uid, out NodeContainerComponent? nodeContainer)
             || !nodeContainer.TryGetNode(scrubber.OutletName, out PipeNode? outlet))
             {
-                appearance?.SetData(ScrubberVisuals.State, ScrubberState.Off);
                 return;
             }
 
-            var environment = _atmosphereSystem.GetTileMixture(EntityManager.GetComponent<TransformComponent>(scrubber.Owner).Coordinates, true);
+            var xform = Transform(uid);
+            var environment = _atmosphereSystem.GetTileMixture(xform.Coordinates, true);
 
-            Scrub(timeDelta, scrubber, appearance, environment, outlet);
+            Scrub(timeDelta, scrubber, environment, outlet);
 
             if (!scrubber.WideNet) return;
 
             // Scrub adjacent tiles too.
-            foreach (var adjacent in _atmosphereSystem.GetAdjacentTileMixtures(EntityManager.GetComponent<TransformComponent>(scrubber.Owner).Coordinates, false, true))
+            foreach (var adjacent in _atmosphereSystem.GetAdjacentTileMixtures(xform.Coordinates, false, true))
             {
-                Scrub(timeDelta, scrubber, null, adjacent, outlet);
+                Scrub(timeDelta, scrubber, adjacent, outlet);
             }
         }
 
-        private void OnVentScrubberLeaveAtmosphere(EntityUid uid, GasVentScrubberComponent component, AtmosDeviceDisabledEvent args)
-        {
-            if (EntityManager.TryGetComponent(uid, out AppearanceComponent? appearance))
-            {
-                appearance.SetData(ScrubberVisuals.State, ScrubberState.Off);
-            }
-        }
+        private void OnVentScrubberLeaveAtmosphere(EntityUid uid, GasVentScrubberComponent component,
+            AtmosDeviceDisabledEvent args) => UpdateState(uid, component);
 
-        private void Scrub(float timeDelta, GasVentScrubberComponent scrubber, AppearanceComponent? appearance, GasMixture? tile, PipeNode outlet)
+        private void OnVentScrubberEnterAtmosphere(EntityUid uid, GasVentScrubberComponent component,
+            AtmosDeviceEnabledEvent args) => UpdateState(uid, component);
+
+        private void Scrub(float timeDelta, GasVentScrubberComponent scrubber, GasMixture? tile, PipeNode outlet)
         {
             // Cannot scrub if tile is null or air-blocked.
             if (tile == null
                 || outlet.Air.Pressure >= 50 * Atmospherics.OneAtmosphere) // Cannot scrub if pressure too high.
             {
-                appearance?.SetData(ScrubberVisuals.State, ScrubberState.Off);
                 return;
             }
 
@@ -101,8 +98,6 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
 
             if (scrubber.PumpDirection == ScrubberPumpDirection.Scrubbing)
             {
-                appearance?.SetData(ScrubberVisuals.State, scrubber.WideNet ? ScrubberState.WideScrub : ScrubberState.Scrub);
-
                 _atmosphereSystem.ScrubInto(removed, outlet.Air, scrubber.FilterGases);
 
                 // Remix the gases.
@@ -110,8 +105,6 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
             }
             else if (scrubber.PumpDirection == ScrubberPumpDirection.Siphoning)
             {
-                appearance?.SetData(ScrubberVisuals.State, ScrubberState.Siphon);
-
                 _atmosphereSystem.Merge(outlet.Air, removed);
             }
         }
@@ -126,12 +119,17 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
             {
                 component.Enabled = true;
             }
+
+            UpdateState(uid, component);
         }
 
-        private void OnPowerChanged(EntityUid uid, GasVentScrubberComponent component, PowerChangedEvent args) =>
+        private void OnPowerChanged(EntityUid uid, GasVentScrubberComponent component, PowerChangedEvent args)
+        {
             component.Enabled = args.Powered;
+            UpdateState(uid, component);
+        }
 
-        private void OnPacketRecv(EntityUid uid, GasVentScrubberComponent component, PacketSentEvent args)
+        private void OnPacketRecv(EntityUid uid, GasVentScrubberComponent component, DeviceNetworkPacketEvent args)
         {
             if (!EntityManager.TryGetComponent(uid, out DeviceNetworkComponent netConn)
                 || !EntityManager.TryGetComponent(uid, out AtmosAlarmableComponent alarmable)
@@ -146,7 +144,7 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
                     payload.Add(DeviceNetworkConstants.Command, AirAlarmSystem.AirAlarmSyncData);
                     payload.Add(AirAlarmSystem.AirAlarmSyncData, component.ToAirAlarmData());
 
-                    _deviceNetSystem.QueuePacket(uid, args.SenderAddress, AirAlarmSystem.Freq, payload);
+                    _deviceNetSystem.QueuePacket(uid, args.SenderAddress, payload, device: netConn);
 
                     return;
                 case AirAlarmSystem.AirAlarmSetData:
@@ -154,13 +152,44 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
                         break;
 
                     component.FromAirAlarmData(setData);
+                    UpdateState(uid, component);
                     alarmable.IgnoreAlarms = setData.IgnoreAlarms;
                     payload.Add(DeviceNetworkConstants.Command, AirAlarmSystem.AirAlarmSetDataStatus);
                     payload.Add(AirAlarmSystem.AirAlarmSetDataStatus, true);
 
-                    _deviceNetSystem.QueuePacket(uid, string.Empty, AirAlarmSystem.Freq, payload, true);
+                    _deviceNetSystem.QueuePacket(uid, null, payload, device: netConn);
 
                     return;
+            }
+        }
+
+        /// <summary>
+        ///     Updates a scrubber's appearance and ambience state.
+        /// </summary>
+        private void UpdateState(EntityUid uid, GasVentScrubberComponent scrubber,
+            AppearanceComponent? appearance = null)
+        {
+            if (!Resolve(uid, ref appearance, false))
+                return;
+
+            _ambientSoundSystem.SetAmbience(uid, true);
+            if (!scrubber.Enabled)
+            {
+                _ambientSoundSystem.SetAmbience(uid, false);
+                appearance.SetData(ScrubberVisuals.State, ScrubberState.Off);
+            }
+            else if (scrubber.PumpDirection == ScrubberPumpDirection.Scrubbing)
+            {
+                appearance.SetData(ScrubberVisuals.State, scrubber.WideNet ? ScrubberState.WideScrub : ScrubberState.Scrub);
+            }
+            else if (scrubber.PumpDirection == ScrubberPumpDirection.Siphoning)
+            {
+                appearance.SetData(ScrubberVisuals.State, ScrubberState.Siphon);
+            }
+            else if (scrubber.Welded)
+            {
+                _ambientSoundSystem.SetAmbience(uid, false);
+                appearance.SetData(ScrubberVisuals.State, ScrubberState.Welded);
             }
         }
     }

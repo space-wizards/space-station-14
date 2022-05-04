@@ -1,6 +1,6 @@
 - type: species
   id: Human
-  name: Human
+  name: species-name-human
   roundStart: true
   prototype: MobHuman
   dollPrototype: MobHumanDummy
@@ -8,16 +8,33 @@
 
 - type: species
   id: Dwarf
-  name: Dwarf
+  name: species-name-dwarf
   roundStart: true
   prototype: MobDwarf
   dollPrototype: MobDwarfDummy
   skinColoration: HumanToned
 
 - type: species
+  id: Reptilian
+  name: species-name-reptilian
+  roundStart: true
+  prototype: MobReptilian
+  dollPrototype: MobReptilianDummy
+  skinColoration: Hues
+
+- type: species
   id: SlimePerson
-  name: Slime Person
+  name: species-name-slime
   roundStart: true
   prototype: MobSlimePerson
   dollPrototype: MobSlimePersonDummy
   skinColoration: Hues
+
+#- type: species
+#  id: Vox
+#  name: Vox
+#  roundStart: true
+#  prototype: MobVox
+#  dollPrototype: MobVoxDummy
+#  skinColoration: Hues
+

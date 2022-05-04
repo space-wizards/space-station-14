@@ -1,18 +1,26 @@
 using Content.Server.Chemistry.EntitySystems;
 using Content.Server.Kitchen.Components;
+using Content.Server.Popups;
+using Content.Shared.Destructible;
+using Content.Shared.Interaction;
+using Content.Shared.Item;
+using Content.Shared.Kitchen.Components;
+using Robust.Shared.Player;
 using JetBrains.Annotations;
-using Robust.Shared.GameObjects;
 
 namespace Content.Server.Kitchen.EntitySystems
 {
     [UsedImplicitly]
     internal sealed class MicrowaveSystem : EntitySystem
     {
+        [Dependency] private readonly PopupSystem _popupSystem = default!;
         public override void Initialize()
         {
             base.Initialize();
 
             SubscribeLocalEvent<MicrowaveComponent, SolutionChangedEvent>(OnSolutionChange);
+            SubscribeLocalEvent<MicrowaveComponent, InteractUsingEvent>(OnInteractUsing);
+            SubscribeLocalEvent<MicrowaveComponent, BreakageEventArgs>(OnBreak);
         }
 
         private void OnSolutionChange(EntityUid uid, MicrowaveComponent component, SolutionChangedEvent args)
@@ -27,6 +35,36 @@ namespace Content.Server.Kitchen.EntitySystems
             {
                 comp.OnUpdate();
             }
+        }
+
+        private void OnInteractUsing(EntityUid uid, MicrowaveComponent component, InteractUsingEvent args)
+        {
+            if (!component.Powered)
+            {
+                _popupSystem.PopupEntity(Loc.GetString("microwave-component-interact-using-no-power"), uid, Filter.Entities(args.User));
+                return;
+            }
+
+            if (component.Broken)
+            {
+                _popupSystem.PopupEntity(Loc.GetString("microwave-component-interact-using-broken"), uid, Filter.Entities(args.User));
+                return;
+            }
+
+            if (!HasComp<SharedItemComponent>(args.Used))
+            {
+                _popupSystem.PopupEntity(Loc.GetString("microwave-component-interact-using-transfer-fail"), uid, Filter.Entities(args.User));
+                return;
+            }
+
+            component.Storage.Insert(args.Used);
+            component.DirtyUi();
+        }
+
+        private void OnBreak(EntityUid uid, MicrowaveComponent component, BreakageEventArgs args)
+        {
+            component.Broken = true;
+            component.SetAppearance(MicrowaveVisualState.Broken);
         }
     }
 }

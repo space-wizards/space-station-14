@@ -43,6 +43,7 @@
           steps:
             - material: Steel
               amount: 2
+              doAfter: 2
 
         - to: reinforcedGirder
           completed:
@@ -53,6 +54,7 @@
           steps:
             - material: Plasteel
               amount: 2
+              doAfter: 1
 
     - node: wall
       entity: WallSolid
@@ -64,7 +66,7 @@
               amount: 2
           steps:
             - tool: Welding
-              doAfter: 2
+              doAfter: 10
 
     - node: reinforcedGirder
       actions:
@@ -92,7 +94,7 @@
             - !type:EntityAnchored { }
           steps:
             - tool: Welding
-              doAfter: 2
+              doAfter: 10
 
     - node: reinforcedWall
       entity: WallReinforced
@@ -108,7 +110,7 @@
             - tool: Screwing
               doAfter: 1
             - tool: Welding
-              doAfter: 1
+              doAfter: 5
               completed:
                 - !type:VisualizerDataInt
                   key: "enum.ReinforcedWallVisuals.DeconstructionStage"
@@ -122,7 +124,7 @@
                   key: "enum.ReinforcedWallVisuals.DeconstructionStage"
                   data: 3
             - tool: Welding
-              doAfter: 2
+              doAfter: 10
               completed:
                 - !type:VisualizerDataInt
                   key: "enum.ReinforcedWallVisuals.DeconstructionStage"

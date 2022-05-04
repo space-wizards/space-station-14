@@ -9,3 +9,15 @@
   cost: 1000
   category: Food
   group: market
+
+- type: cargoProduct
+  name: "MRE crate"
+  id: FoodMRE
+  description: A military style meal fit to feed a whole department.
+  icon:
+    sprite: Objects/Consumable/Food/snacks.rsi
+    state: nutribrick
+  product: CrateFoodMRE
+  cost: 4000
+  category: Food
+  group: market

@@ -5,8 +5,7 @@
   description: A cardboard box for storing things.
   components:
   - type: Sprite
-    layers:
-      - state: box
+    state: box
 
 - type: entity
   name: lightbulb box
@@ -27,6 +26,9 @@
     whitelist:
       components:
       - LightBulb
+  - type: Tag
+    tags:
+      - DroneUsable
 
 - type: entity
   name: lighttube box
@@ -47,6 +49,9 @@
     whitelist:
       components:
       - LightBulb
+  - type: Tag
+    tags:
+      - DroneUsable
 
 - type: entity
   name: mixed lights box
@@ -133,7 +138,7 @@
   name: survival box
   parent: BoxCardboard
   id: BoxSurvival
-  description: It's box with basic internals inside.
+  description: It's a box with basic internals inside.
   components:
   - type: StorageFill
     contents:
@@ -145,6 +150,23 @@
   - type: Sprite
     layers:
       - state: box
+      - state: writing
+
+- type: entity
+  name: M.R.E.
+  parent: BoxCardboard
+  id: BoxMRE
+  description: A box of decades old military surplus rations. It is surprisingly not rotten.
+  components:
+  - type: StorageFill
+    contents:
+      - id: DrinkMREFlask
+      - id: FoodSnackNutribrick
+      - id: FoodSnackMREBrownie
+      - id: FoodCondimentPacketKetchup
+  - type: Sprite
+    layers:
+      - state: box_olive
       - state: writing
 
 - type: entity
@@ -180,6 +202,9 @@
     layers:
       - state: box
       - state: writing
+  - type: Tag
+    tags:
+      - DroneUsable
 
 
 - type: entity
@@ -228,4 +253,30 @@
   - type: Sprite
     layers:
       - state: box
+      - state: writing
+  - type: Tag
+    tags:
+      - DroneUsable
+
+- type: entity
+  name: syndicate EVA box
+  parent: BoxCardboard
+  id: BoxSyndicateEVA
+  description: A box containing one Syndicate approved EVA suit.
+  components:
+  - type: Item
+    size: 40
+  - type: Storage
+    capacity: 40
+    size: 10
+    whitelist:
+      components:
+      - Clothing
+  - type: StorageFill
+    contents:
+      - id: ClothingHeadHelmetSyndicate
+      - id: ClothingOuterHardsuitSyndicate
+  - type: Sprite
+    layers:
+      - state: box_of_doom
       - state: writing

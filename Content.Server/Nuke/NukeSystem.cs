@@ -1,10 +1,11 @@
 using Content.Server.Chat.Managers;
-using Content.Server.Construction.Components;
 using Content.Server.Coordinates.Helpers;
+using Content.Server.Explosion.EntitySystems;
 using Content.Server.Popups;
 using Content.Server.UserInterface;
 using Content.Shared.Audio;
 using Content.Shared.Body.Components;
+using Content.Shared.Construction.Components;
 using Content.Shared.Containers.ItemSlots;
 using Content.Shared.Nuke;
 using Content.Shared.Sound;
@@ -19,7 +20,7 @@ namespace Content.Server.Nuke
         [Dependency] private readonly NukeCodeSystem _codes = default!;
         [Dependency] private readonly ItemSlotsSystem _itemSlots = default!;
         [Dependency] private readonly PopupSystem _popups = default!;
-        [Dependency] private readonly EntityLookupSystem _lookup = default!;
+        [Dependency] private readonly ExplosionSystem _explosions = default!;
         [Dependency] private readonly IChatManager _chat = default!;
 
         public override void Initialize()
@@ -33,10 +34,10 @@ namespace Content.Server.Nuke
             // anchoring logic
             SubscribeLocalEvent<NukeComponent, AnchorAttemptEvent>(OnAnchorAttempt);
             SubscribeLocalEvent<NukeComponent, UnanchorAttemptEvent>(OnUnanchorAttempt);
+            // Shouldn't need re-anchoring.
             SubscribeLocalEvent<NukeComponent, AnchorStateChangedEvent>(OnAnchorChanged);
 
             // ui events
-            SubscribeLocalEvent<NukeComponent, NukeEjectMessage>(OnEjectButtonPressed);
             SubscribeLocalEvent<NukeComponent, NukeAnchorMessage>(OnAnchorButtonPressed);
             SubscribeLocalEvent<NukeComponent, NukeArmedMessage>(OnArmButtonPressed);
             SubscribeLocalEvent<NukeComponent, NukeKeypadMessage>(OnKeypadButtonPressed);
@@ -47,7 +48,7 @@ namespace Content.Server.Nuke
         private void OnInit(EntityUid uid, NukeComponent component, ComponentInit args)
         {
             component.RemainingTime = component.Timer;
-            _itemSlots.AddItemSlot(uid, component.Name, component.DiskSlot);
+            _itemSlots.AddItemSlot(uid, SharedNukeComponent.NukeDiskSlotId, component.DiskSlot);
 
             UpdateStatus(uid, component);
             UpdateUserInterface(uid, component);
@@ -118,14 +119,6 @@ namespace Content.Server.Nuke
         #endregion
 
         #region UI Events
-        private void OnEjectButtonPressed(EntityUid uid, NukeComponent component, NukeEjectMessage args)
-        {
-            if (!component.DiskSlot.HasItem)
-                return;
-
-            _itemSlots.TryEjectToHands(uid, component.DiskSlot, args.Session.AttachedEntity);
-        }
-
         private async void OnAnchorButtonPressed(EntityUid uid, NukeComponent component, NukeAnchorMessage args)
         {
             if (!component.DiskSlot.HasItem)
@@ -397,19 +390,16 @@ namespace Content.Server.Nuke
             if (!Resolve(uid, ref component, ref transform))
                 return;
 
-            // gib anyone in a blast radius
-            // its lame, but will work for now
-            var pos = transform.Coordinates;
-            var ents = _lookup.GetEntitiesInRange(pos, component.BlastRadius);
-            foreach (var ent in ents)
-            {
-                var entUid = ent;
-                if (!EntityManager.EntityExists(entUid))
-                    continue;
+            if (component.Exploded)
+                return;
 
-                if (EntityManager.TryGetComponent(entUid, out SharedBodyComponent? body))
-                    body.Gib();
-            }
+            component.Exploded = true;
+
+            _explosions.QueueExplosion(uid,
+                component.ExplosionType,
+                component.TotalIntensity,
+                component.IntensitySlope,
+                component.MaxIntensity);
 
             EntityManager.DeleteEntity(uid);
         }

@@ -66,11 +66,7 @@
   - type: IconSmooth
     key: walls
     mode: NoSprite
-  - type: SignalReceiver
-    inputs:
-    - name: pressed
-  - type: ToggleDoorOnTrigger
-  - type: TriggerOnSignalReceived
+  - type: DoorSignalControl
   placement:
     mode: SnapgridCenter
 
@@ -181,7 +177,11 @@
     fixtures:
     - shape:
         !type:PhysShapeAabb
-          bounds: "-0.49,-0.49,0.49,0.49"
+          bounds: "-0.45,-0.45,0.45,0.45"
       mass: 50
       layer:
       - Opaque
+      mask:
+      - VaultImpassable
+  - type: Transform
+    noRot: true

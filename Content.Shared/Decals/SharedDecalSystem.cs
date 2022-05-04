@@ -12,7 +12,6 @@ namespace Content.Shared.Decals
         [Dependency] protected readonly IPrototypeManager PrototypeManager = default!;
         [Dependency] private readonly IConfigurationManager _configurationManager = default!;
         [Dependency] protected readonly IMapManager MapManager = default!;
-        [Dependency] protected readonly SharedTransformSystem Transforms = default!;
 
         protected readonly Dictionary<GridId, Dictionary<uint, Vector2i>> ChunkIndex = new();
 
@@ -53,8 +52,11 @@ namespace Content.Shared.Decals
             }
         }
 
-        protected DecalGridComponent.DecalGridChunkCollection DecalGridChunkCollection(GridId gridId) => EntityManager
-            .GetComponent<DecalGridComponent>(MapManager.GetGrid(gridId).GridEntityId).ChunkCollection;
+        protected DecalGridComponent.DecalGridChunkCollection DecalGridChunkCollection(EntityUid gridEuid) =>
+            Comp<DecalGridComponent>(gridEuid).ChunkCollection;
+        protected DecalGridComponent.DecalGridChunkCollection DecalGridChunkCollection(GridId gridId) =>
+            Comp<DecalGridComponent>(MapManager.GetGridEuid(gridId)).ChunkCollection;
+        protected Dictionary<Vector2i, Dictionary<uint, Decal>> ChunkCollection(EntityUid gridEuid) => DecalGridChunkCollection(gridEuid).ChunkCollection;
         protected Dictionary<Vector2i, Dictionary<uint, Decal>> ChunkCollection(GridId gridId) => DecalGridChunkCollection(gridId).ChunkCollection;
 
         protected virtual void DirtyChunk(GridId id, Vector2i chunkIndices) {}
@@ -77,46 +79,19 @@ namespace Content.Shared.Decals
             if (chunkCollection[indices].Count == 0)
                 chunkCollection.Remove(indices);
 
-            ChunkIndex[gridId]?.Remove(uid);
+            ChunkIndex[gridId].Remove(uid);
             DirtyChunk(gridId, indices);
             return true;
         }
 
         protected virtual bool RemoveDecalHook(GridId gridId, uint uid) => true;
 
-        private (Box2 view, MapId mapId) CalcViewBounds(in EntityUid euid)
+        protected (Box2 view, MapId mapId) CalcViewBounds(in EntityUid euid, TransformComponent xform)
         {
-            var xform = EntityManager.GetComponent<TransformComponent>(euid);
-
             var view = Box2.UnitCentered.Scale(_viewSize).Translated(xform.WorldPosition);
             var map = xform.MapID;
 
             return (view, map);
-        }
-
-        protected Dictionary<GridId, HashSet<Vector2i>> GetChunksForViewers(HashSet<EntityUid> viewers)
-        {
-            var chunks = new Dictionary<GridId, HashSet<Vector2i>>();
-            var xformQuery = GetEntityQuery<TransformComponent>();
-
-            foreach (var viewerUid in viewers)
-            {
-                var (bounds, mapId) = CalcViewBounds(viewerUid);
-
-                foreach (var grid in MapManager.FindGridsIntersecting(mapId, bounds))
-                {
-                    if (!chunks.ContainsKey(grid.Index))
-                        chunks[grid.Index] = new HashSet<Vector2i>();
-
-                    var enumerator = new ChunkIndicesEnumerator(Transforms.GetInvWorldMatrix(grid.GridEntityId, xformQuery).TransformBox(bounds), ChunkSize);
-
-                    while (enumerator.MoveNext(out var indices))
-                    {
-                        chunks[grid.Index].Add(indices.Value);
-                    }
-                }
-            }
-            return chunks;
         }
     }
 

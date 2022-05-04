@@ -7,6 +7,7 @@ using Content.Shared.Crayon;
 using Content.Shared.Database;
 using Content.Shared.Decals;
 using Content.Shared.Interaction;
+using Content.Shared.Interaction.Events;
 using Content.Shared.Interaction.Helpers;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
@@ -32,6 +33,7 @@ public sealed class CrayonSystem : EntitySystem
         base.Initialize();
         SubscribeLocalEvent<CrayonComponent, ComponentInit>(OnCrayonInit);
         SubscribeLocalEvent<CrayonComponent, CrayonSelectMessage>(OnCrayonBoundUI);
+        SubscribeLocalEvent<CrayonComponent, CrayonColorMessage>(OnCrayonBoundUIColor);
         SubscribeLocalEvent<CrayonComponent, UseInHandEvent>(OnCrayonUse);
         SubscribeLocalEvent<CrayonComponent, AfterInteractEvent>(OnCrayonAfterInteract);
         SubscribeLocalEvent<CrayonComponent, DroppedEvent>(OnCrayonDropped);
@@ -50,7 +52,11 @@ public sealed class CrayonSystem : EntitySystem
 
         if (component.Charges <= 0)
         {
-            _popup.PopupEntity(Loc.GetString("crayon-interact-not-enough-left-text"), uid, Filter.Entities(args.User));
+            if (component.DeleteEmpty)
+                UseUpCrayon(uid, args.User);
+            else
+                _popup.PopupEntity(Loc.GetString("crayon-interact-not-enough-left-text"), uid, Filter.Entities(args.User));
+
             args.Handled = true;
             return;
         }
@@ -62,7 +68,21 @@ public sealed class CrayonSystem : EntitySystem
             return;
         }
 
-        if(!_decals.TryAddDecal(component.SelectedState, args.ClickLocation.Offset(new Vector2(-0.5f,-0.5f)), out _, Color.FromName(component._color), cleanable: true))
+        Color color = Color.White;
+        if (Color.TryFromName(component._color, out var namedColor))
+        {
+            color = namedColor;
+        }
+        else
+        {
+            var hexColor = Color.TryFromHex(component._color);
+            if (hexColor != null)
+            {
+                color = (Color) hexColor;
+            }
+        }
+
+        if(!_decals.TryAddDecal(component.SelectedState, args.ClickLocation.Offset(new Vector2(-0.5f,-0.5f)), out _, color, cleanable: true))
             return;
 
         if (component.UseSound != null)
@@ -73,6 +93,9 @@ public sealed class CrayonSystem : EntitySystem
         Dirty(component);
         _logs.Add(LogType.CrayonDraw, LogImpact.Low, $"{EntityManager.ToPrettyString(args.User):user} drew a {component._color:color} {component.SelectedState}");
         args.Handled = true;
+
+        if (component.DeleteEmpty && component.Charges <= 0)
+            UseUpCrayon(uid, args.User);
     }
 
     private void OnCrayonUse(EntityUid uid, CrayonComponent component, UseInHandEvent args)
@@ -88,7 +111,7 @@ public sealed class CrayonSystem : EntitySystem
         if (component.UserInterface?.SessionHasOpen(actor.PlayerSession) == true)
         {
             // Tell the user interface the selected stuff
-            component.UserInterface.SetState(new CrayonBoundUserInterfaceState(component.SelectedState, component.Color));
+            component.UserInterface.SetState(new CrayonBoundUserInterfaceState(component.SelectedState, component.SelectableColor, component.Color));
         }
 
         args.Handled = true;
@@ -100,7 +123,31 @@ public sealed class CrayonSystem : EntitySystem
         if (!_prototypeManager.TryIndex<DecalPrototype>(args.State, out var prototype) || !prototype.Tags.Contains("crayon")) return;
 
         component.SelectedState = args.State;
+
         Dirty(component);
+    }
+
+    private void OnCrayonBoundUIColor(EntityUid uid, CrayonComponent component, CrayonColorMessage args)
+    {
+        // you still need to ensure that the given color is a valid color
+        if (component.SelectableColor && args.Color != component._color)
+        {
+            if (Color.TryFromName(component._color, out var namedColor))
+            {
+                component._color = args.Color;
+            }
+            else
+            {
+                var hexColor = Color.TryFromHex(component._color);
+                if (hexColor != null)
+                {
+                    component._color = args.Color;
+                }
+            }
+
+            Dirty(component);
+        }
+
     }
 
     private void OnCrayonInit(EntityUid uid, CrayonComponent component, ComponentInit args)
@@ -115,7 +162,13 @@ public sealed class CrayonSystem : EntitySystem
 
     private void OnCrayonDropped(EntityUid uid, CrayonComponent component, DroppedEvent args)
     {
-        if (TryComp<ActorComponent>(args.UserUid, out var actor))
+        if (TryComp<ActorComponent>(args.User, out var actor))
             component.UserInterface?.Close(actor.PlayerSession);
+    }
+
+    private void UseUpCrayon(EntityUid uid, EntityUid user)
+    {
+        _popup.PopupEntity(Loc.GetString("crayon-interact-used-up-text", ("owner", uid)), user, Filter.Entities(user));
+        EntityManager.QueueDeleteEntity(uid);
     }
 }

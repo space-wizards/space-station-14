@@ -45,13 +45,27 @@
 - type: damageModifierSet
   id: Glass
   coefficients:
-    Blunt: 0.5
+    Blunt: 1.2
     Slash: 0.5
-    Piercing: 1.5
+    Piercing: 1.0
     Heat: 0
     Shock: 0
   flatReductions:
     Blunt: 5
+    Slash: 5
+
+- type: damageModifierSet
+  id: RGlass
+  coefficients:
+    Blunt: 1.0
+    Slash: 0.3
+    Piercing: 0.6
+    Heat: 0
+    Shock: 0
+  flatReductions:
+    Blunt: 5
+    Slash: 10
+    Piercing: 5
 
 - type: damageModifierSet
   id: Wood
@@ -71,6 +85,38 @@
     Piercing: 1.2
     Cold: 1.5
     Poison: 0.8
+
+- type: damageModifierSet
+  id: Infernal
+  coefficients:
+    Blunt: 0.8
+    Slash: 0.8
+    Piercing: 0.8
+    Cold: 0.8
+    Heat: 0.2
+#   Holy: 3 If we ever get some holy or magic sort of damage type they should be vulnerable
+  flatReductions:
+    Heat: 3
+
+- type: damageModifierSet
+  id: Scale # Skin tougher, bones weaker, strong stomachs, cold-blooded (kindof)
+  coefficients:
+    Blunt: 1.1
+    Slash: 0.9
+    Cold: 1.5
+    Heat: 0.9
+    Poison: 0.9
+
+- type: damageModifierSet
+  id: Zombie #Blunt resistent and immune to biological threats, but can be hacked apart and burned
+  coefficients:
+    Blunt: 0.6
+    Slash: 0.9
+    Piercing: 0.9
+    Shock: 1.5
+    Cold: 0.2
+    Heat: 3.0
+    Poison: 0.0
 
 # Represents which damage types should be modified
 # in relation to how they cause bloodloss damage.

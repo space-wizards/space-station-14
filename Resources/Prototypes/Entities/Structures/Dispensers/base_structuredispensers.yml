@@ -6,10 +6,12 @@
   components:
   - type: Transform
     anchored: true
+    noRot: true
   - type: Clickable
   - type: InteractionOutline
   - type: Physics
     bodyType: Static
+    fixedRotation: false
   - type: Fixtures
     fixtures:
     - shape:
@@ -26,6 +28,9 @@
         - SmallImpassable
   - type: ApcPowerReceiver
   - type: ExtensionCableReceiver
+  - type: ActivatableUI
+    key: enum.ReagentDispenserUiKey.Key
+  - type: ActivatableUIRequiresPower
   - type: UserInterface
     interfaces:
     - key: enum.ReagentDispenserUiKey.Key

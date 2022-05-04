@@ -1,0 +1,152 @@
+- type: disease
+  id: SpaceCold
+  name: space cold
+  cureResist: 0
+  effects:
+    - !type:DiseaseAdjustReagent
+      probability: 0.2
+      reagent: Histamine
+      amount: 0.5
+    - !type:DiseasePopUp
+      probability: 0.025
+    - !type:DiseaseSnough
+      probability: 0.025
+      snoughSound:
+        collection: Sneezes
+  cures:
+    - !type:DiseaseBedrestCure
+      maxLength: 20
+    - !type:DiseaseJustWaitCure
+      maxLength: 400
+    - !type:DiseaseReagentCure
+      reagent: Ultravasculine
+###    - !type:DiseaseReagentCure ### In Loving Memory, Lean
+###      reagent: Lean            ### 2022/03/12 - 2022/03/13
+
+- type: disease
+  id: VentCough
+  name: vent cough
+  effects:
+    - !type:DiseasePopUp
+      probability: 0.025
+      message: generic-reagent-effect-burning-insides
+    - !type:DiseaseSnough
+      probability: 0.025
+      snoughMessage: disease-cough
+      snoughSound:
+        collection: Coughs
+    - !type:DiseaseHealthChange
+      probability: 0.015
+      damage:
+        groups:
+          Caustic: 1
+  cures:
+    - !type:DiseaseBedrestCure
+      maxLength: 30
+    - !type:DiseaseJustWaitCure
+      maxLength: 600
+    - !type:DiseaseReagentCure
+      reagent: SpaceCleaner
+
+- type: disease
+  id: VanAusdallsRobovirus
+  name: Van Ausdall's Robovirus
+  cureResist: 0.1
+  effects:
+    - !type:DiseaseAdjustReagent
+      probability: 0.025
+      reagent: Licoxide
+      amount: 0.5
+    - !type:DiseaseSnough
+      probability: 0.02
+      snoughMessage: disease-beep
+      snoughSound:
+        collection: RobotBeeps
+  cures:
+    - !type:DiseaseJustWaitCure
+      maxLength: 900
+    - !type:DiseaseReagentCure
+      reagent: BeepskySmash
+
+- type: disease
+  id: AMIV
+  name: AMIV
+  cureResist: 0.10
+  effects:
+    - !type:DiseasePopUp
+      probability: 0.015
+      type: Pvs
+      message: disease-beat-chest-compulsion
+    - !type:DiseasePopUp
+      probability: 0.03
+      message: disease-banana-compulsion
+    - !type:DiseaseSnough
+      probability: 0.02
+      snoughMessage: disease-screech
+      snoughSound:
+        collection: MonkeyScreeches
+    - !type:DiseaseGenericStatusEffect
+      probability: 0.3
+      key: Stutter
+      component: MonkeyAccent
+    - !type:DiseaseHealthChange
+      probability: 0.53
+      damage:
+        types:
+          Asphyxiation: 1
+  cures:
+    - !type:DiseaseJustWaitCure
+      maxLength: 1600
+    - !type:DiseaseReagentCure
+      reagent: BananaHonk
+
+- type: disease
+  id: BleedersBite
+  name: Bleeder's Bite
+  effects:
+    - !type:DiseaseAdjustReagent
+      reagent: TranexamicAcid
+      amount: -2.5
+    - !type:DiseaseHealthChange
+      probability: 0.015
+      damage:
+        types:
+          Piercing: 20
+    - !type:DiseasePopUp
+      probability: 0.05
+      message: disease-eaten-inside
+  cures:
+    - !type:DiseaseJustWaitCure
+      maxLength: 900
+    - !type:DiseaseBodyTemperatureCure
+      min: 360
+    - !type:DiseaseReagentCure
+      reagent: DemonsBlood
+
+- type: disease
+  id: OwOnavirus
+  name: OwOnavirus
+  cureResist: 0.25
+  effects:
+    - !type:DiseaseGenericStatusEffect
+      key: Stutter
+      component: OwOAccent
+    - !type:DiseaseAdjustReagent ## 20 / 0.013 / 60 is around 25 minutes before overdose (0.5u metabolize each tick)
+      probability: 0.513
+      reagent: Ephedrine
+      amount: 1
+    - !type:DiseaseSnough
+      probability: 0.01
+      snoughMessage: disease-meow
+      snoughSound:
+        collection: CatMeows
+    - !type:DiseaseSnough
+      probability: 0.01
+      snoughMessage: disease-hiss
+      snoughSound:
+        collection: CatHisses
+  cures:
+    - !type:DiseaseBodyTemperatureCure
+      min: 420 ## Reachable with a flamer
+    - !type:DiseaseReagentCure
+      reagent: Theobromine

@@ -51,10 +51,10 @@ namespace Content.Server.Interaction.Components;
         public float SuccessChance = 1.0f; // Always succeed, unless specified otherwise on the yaml prototype.
 
         /// <summary>
-        /// Will the popup message be perceived by entities not involved in the interaction?
+        /// If set, shows a message to all surrounding players but NOT the current player.
         /// </summary>
-        [DataField("popupPerceivedByOthers")]
-        public bool PopupPerceivedByOthers = false;
+        [DataField("messagePerceivedByOthers")]
+        public string? MessagePerceivedByOthers;
 
         /// <summary>
         /// Will the sound effect be perceived by entities not involved in the interaction?

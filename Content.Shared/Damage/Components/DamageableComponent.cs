@@ -1,17 +1,9 @@
-using System;
-using System.Collections.Generic;
-using Content.Shared.Acts;
 using Content.Shared.Damage.Prototypes;
 using Content.Shared.FixedPoint;
-using Content.Shared.Radiation;
-using Robust.Shared.Analyzers;
-using Robust.Shared.GameObjects;
 using Robust.Shared.GameStates;
 using Robust.Shared.Serialization;
-using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.List;
-using Robust.Shared.ViewVariables;
 
 namespace Content.Shared.Damage
 {
@@ -25,7 +17,7 @@ namespace Content.Shared.Damage
     [RegisterComponent]
     [NetworkedComponent()]
     [Friend(typeof(DamageableSystem))]
-    public sealed class DamageableComponent : Component, IRadiationAct, IExAct
+    public sealed class DamageableComponent : Component
     {
         /// <summary>
         ///     This <see cref="DamageContainerPrototype"/> specifies what damage types are supported by this component.
@@ -77,42 +69,6 @@ namespace Content.Shared.Damage
         [ViewVariables]
         [DataField("explosionDamageTypes", customTypeSerializer: typeof(PrototypeIdListSerializer<DamageTypePrototype>))]
         public List<string> ExplosionDamageTypeIDs = new() { "Piercing", "Heat" };
-
-        // TODO RADIATION Remove this.
-        void IRadiationAct.RadiationAct(float frameTime, SharedRadiationPulseComponent radiation)
-        {
-            var damageValue = FixedPoint2.New(MathF.Max((frameTime * radiation.RadsPerSecond), 1));
-
-            // Radiation should really just be a damage group instead of a list of types.
-            DamageSpecifier damage = new();
-            foreach (var typeID in RadiationDamageTypeIDs)
-            {
-                damage.DamageDict.Add(typeID, damageValue);
-            }
-
-            EntitySystem.Get<DamageableSystem>().TryChangeDamage(Owner, damage);
-        }
-
-        // TODO EXPLOSION Remove this.
-        void IExAct.OnExplosion(ExplosionEventArgs eventArgs)
-        {
-            var damageValue = eventArgs.Severity switch
-            {
-                ExplosionSeverity.Light => FixedPoint2.New(20),
-                ExplosionSeverity.Heavy => FixedPoint2.New(60),
-                ExplosionSeverity.Destruction => FixedPoint2.New(250),
-                _ => throw new ArgumentOutOfRangeException()
-            };
-
-            // Explosion should really just be a damage group instead of a list of types.
-            DamageSpecifier damage = new();
-            foreach (var typeID in ExplosionDamageTypeIDs)
-            {
-                damage.DamageDict.Add(typeID, damageValue);
-            }
-
-            EntitySystem.Get<DamageableSystem>().TryChangeDamage(Owner, damage);
-        }
     }
 
     [Serializable, NetSerializable]

@@ -1,0 +1,2 @@
+Note:
+Only png and jpgs files are supported, and you need a prototype in Resources/Prototypes/lobbyscreens.yml

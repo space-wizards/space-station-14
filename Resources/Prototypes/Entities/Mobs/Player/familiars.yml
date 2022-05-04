@@ -1,0 +1,71 @@
+- type: entity
+  name: Remilia
+  parent: MobBat
+  id: MobBatRemilia
+  description: The chaplain's familiar. Likes fruit.
+  components:
+  - type: GhostTakeoverAvailable
+    makeSentient: true
+    name: Remilia, the chaplain's familiar
+    description: Obey your master. Eat fruit.
+    rules: You are an intelligent fruit bat. Follow the chaplain around. Don't cause any trouble unless the chaplain tells you to.
+  - type: Grammar
+    attributes:
+      gender: female
+      proper: true
+  - type: Tag
+    tags:
+      - DoorBumpOpener
+  - type: Access
+    tags:
+    - Chapel
+  - type: Mind
+    showExamineInfo: true
+  - type: Alerts
+
+- type: entity
+  name: Cerberus
+  parent: MobCorgiNarsi
+  id: MobCorgiCerberus
+  description: This pupper is not wholesome.
+  components:
+  - type: GhostTakeoverAvailable
+    makeSentient: true
+    name: Cerberus, Evil Familiar
+    description: Obey your master. Spread chaos.
+    rules: You are an intelligent, demonic dog. Try to help the chaplain and any of his flock. As an antagonist, you're otherwise unrestrained.
+  - type: UnarmedCombat
+    range: 1.5
+    arcwidth: 0
+    arc: bite
+    damage:
+      types:
+        Piercing: 8
+        Slash: 7
+  - type: UtilityAI
+    behaviorSets:
+    - Idle
+  - type: AiFactionTag
+    factions:
+    - SimpleNeutral
+  - type: InteractionPopup
+    successChance: 0.5
+    interactSuccessString: petting-success-corrupted-corgi
+    interactFailureString: petting-failure-corrupted-corgi
+  - type: MobState
+    thresholds:
+      0: !type:NormalMobState {}
+      80: !type:CriticalMobState {}
+      160: !type:DeadMobState {}
+  - type: Grammar
+    attributes:
+      gender: male
+      proper: true
+  - type: Tag
+    tags:
+      - DoorBumpOpener
+  - type: Access
+    tags:
+    - Chapel
+  - type: Mind
+    showExamineInfo: true

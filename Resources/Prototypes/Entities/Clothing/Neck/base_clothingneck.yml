@@ -5,12 +5,13 @@
   components:
   - type: Clothing
     size: 10
-    QuickEquip: true
+    quickEquip: true
     Slots:
     - neck
   - type: Sprite
     state: icon
   - type: Butcherable
     butcheringType: Knife
-    spawned: MaterialCloth1
-    pieces: 2
+    spawned:
+    - id: MaterialCloth1
+      amount: 2

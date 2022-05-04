@@ -6,11 +6,14 @@ using Content.Server.Maps;
 using Content.Server.Mind;
 using Content.Server.Players;
 using Content.Server.Station;
+using Content.Shared.CCVar;
 using Content.Shared.Coordinates;
 using Content.Shared.GameTicking;
 using Content.Shared.Preferences;
 using Content.Shared.Station;
+using JetBrains.Annotations;
 using Prometheus;
+using Robust.Server.Maps;
 using Robust.Server.Player;
 using Robust.Shared.Map;
 using Robust.Shared.Network;
@@ -63,6 +66,12 @@ namespace Content.Server.GameTicking
         [ViewVariables]
         public int RoundId { get; private set; }
 
+        /// <summary>
+        ///     Loads all the maps for the given round.
+        /// </summary>
+        /// <remarks>
+        ///     Must be called before the runlevel is set to InRound.
+        /// </remarks>
         private void LoadMaps()
         {
             AddGamePresetRules();
@@ -70,7 +79,7 @@ namespace Content.Server.GameTicking
             DefaultMap = _mapManager.CreateMap();
             _mapManager.AddUninitializedMap(DefaultMap);
             var startTime = _gameTiming.RealTime;
-            var maps = new List<GameMapPrototype>() { _gameMapManager.GetSelectedMapChecked(true) };
+            var maps = new List<GameMapPrototype>() { _gameMapManager.GetSelectedMapChecked(true, true) };
 
             // Let game rules dictate what maps we should load.
             RaiseLocalEvent(new LoadingMapsEvent(maps));
@@ -85,85 +94,36 @@ namespace Content.Server.GameTicking
                     _mapManager.AddUninitializedMap(toLoad);
                 }
 
-                _mapLoader.LoadMap(toLoad, map.MapPath.ToString());
-
-                var grids = _mapManager.GetAllMapGrids(toLoad).ToList();
-                var dict = new Dictionary<string, StationId>();
-
-                StationId SetupInitialStation(IMapGrid grid, GameMapPrototype map)
-                {
-                    var stationId = _stationSystem.InitialSetupStationGrid(grid.GridEntityId, map);
-                    SetupGridStation(grid);
-
-                    // ass!
-                    _spawnPoint = grid.ToCoordinates();
-                    return stationId;
-                }
-
-                // Iterate over all BecomesStation
-                for (var i = 0; i < grids.Count; i++)
-                {
-                    var grid = grids[i];
-
-                    // We still setup the grid
-                    if (!TryComp<BecomesStationComponent>(grid.GridEntityId, out var becomesStation))
-                        continue;
-
-                    var stationId = SetupInitialStation(grid, map);
-
-                    dict.Add(becomesStation.Id, stationId);
-                }
-
-                if (!dict.Any())
-                {
-                    // Oh jeez, no stations got loaded.
-                    // We'll just take the first grid and setup that, then.
-
-                    var grid = grids[0];
-                    var stationId = SetupInitialStation(grid, map);
-
-                    dict.Add("Station", stationId);
-                }
-
-                // Iterate over all PartOfStation
-                for (var i = 0; i < grids.Count; i++)
-                {
-                    var grid = grids[i];
-                    if (!TryComp<PartOfStationComponent>(grid.GridEntityId, out var partOfStation))
-                        continue;
-                    SetupGridStation(grid);
-
-                    if (dict.TryGetValue(partOfStation.Id, out var stationId))
-                    {
-                        _stationSystem.AddGridToStation(grid.GridEntityId, stationId);
-                    }
-                    else
-                    {
-                        _sawmill.Error($"Grid {grid.Index} ({grid.GridEntityId}) specified that it was part of station {partOfStation.Id} which does not exist");
-                    }
-                }
+                LoadGameMap(map, toLoad, null);
             }
 
             var timeSpan = _gameTiming.RealTime - startTime;
             _sawmill.Info($"Loaded maps in {timeSpan.TotalMilliseconds:N2}ms.");
         }
 
-        private void SetupGridStation(IMapGrid grid)
+
+        /// <summary>
+        ///     Loads a new map, allowing systems interested in it to handle loading events.
+        ///     In the base game, this is required to be used if you want to load a station.
+        /// </summary>
+        /// <param name="map">Game map prototype to load in.</param>
+        /// <param name="targetMapId">Map to load into.</param>
+        /// <param name="loadOptions">Map loading options, includes offset.</param>
+        /// <param name="stationName">Name to assign to the loaded station.</param>
+        /// <returns>All loaded entities and grids.</returns>
+        public (IReadOnlyList<EntityUid>, IReadOnlyList<GridId>) LoadGameMap(GameMapPrototype map, MapId targetMapId, MapLoadOptions? loadOptions, string? stationName = null)
         {
-            var stationXform = EntityManager.GetComponent<TransformComponent>(grid.GridEntityId);
+            var loadOpts = loadOptions ?? new MapLoadOptions();
 
-            if (StationOffset)
-            {
-                // Apply a random offset to the station grid entity.
-                var x = _robustRandom.NextFloat(-MaxStationOffset, MaxStationOffset);
-                var y = _robustRandom.NextFloat(-MaxStationOffset, MaxStationOffset);
-                stationXform.LocalPosition = new Vector2(x, y);
-            }
+            var ev = new PreGameMapLoad(targetMapId, map, loadOpts);
+            RaiseLocalEvent(ev);
 
-            if (StationRotation)
-            {
-                stationXform.LocalRotation = _robustRandom.NextFloat(MathF.Tau);
-            }
+            var (entities, gridIds) = _mapLoader.LoadMap(targetMapId, ev.GameMap.MapPath.ToString(), ev.Options);
+
+            RaiseLocalEvent(new PostGameMapLoad(map, targetMapId, entities, gridIds, stationName));
+
+            _spawnPoint = _mapManager.GetGrid(gridIds[0]).ToCoordinates();
+            return (entities, gridIds);
         }
 
         public void StartRound(bool force = false)
@@ -190,10 +150,15 @@ namespace Content.Server.GameTicking
             RoundLengthMetric.Set(0);
 
             var playerIds = _playersInLobby.Keys.Select(player => player.UserId.UserId).ToArray();
+            var serverName = _configurationManager.GetCVar(CCVars.AdminLogsServerName);
             // TODO FIXME AAAAAAAAAAAAAAAAAAAH THIS IS BROKEN
             // Task.Run as a terrible dirty workaround to avoid synchronization context deadlock from .Result here.
             // This whole setup logic should be made asynchronous so we can properly wait on the DB AAAAAAAAAAAAAH
-            RoundId = Task.Run(async () => await _db.AddNewRound(playerIds)).Result;
+            RoundId = Task.Run(async () =>
+            {
+                var server = await _db.AddOrGetServer(serverName);
+                return await _db.AddNewRound(server, playerIds);
+            }).Result;
 
             var startingEvent = new RoundStartingEvent();
             RaiseLocalEvent(startingEvent);
@@ -360,7 +325,7 @@ namespace Content.Server.GameTicking
             // This ordering mechanism isn't great (no ordering of minds) but functions
             var listOfPlayerInfoFinal = listOfPlayerInfo.OrderBy(pi => pi.PlayerOOCName).ToArray();
             _playersInGame.Clear();
-            RaiseNetworkEvent(new RoundEndMessageEvent(gamemodeTitle, roundEndText, roundDuration, listOfPlayerInfoFinal.Length, listOfPlayerInfoFinal));
+            RaiseNetworkEvent(new RoundEndMessageEvent(gamemodeTitle, roundEndText, roundDuration, RoundId, listOfPlayerInfoFinal.Length, listOfPlayerInfoFinal));
         }
 
         public void RestartRound()
@@ -383,6 +348,7 @@ namespace Content.Server.GameTicking
 
             RunLevel = GameRunLevel.PreRoundLobby;
             LobbySong = _robustRandom.Pick(_lobbyMusicCollection.PickFiles).ToString();
+            RandomizeLobbyBackground();
             ResettingCleanup();
 
             if (!LobbyEnabled)
@@ -526,6 +492,7 @@ namespace Content.Server.GameTicking
     ///     Contains a list of game map prototypes to load; modify it if you want to load different maps,
     ///     for example as part of a game rule.
     /// </summary>
+    [PublicAPI]
     public sealed class LoadingMapsEvent : EntityEventArgs
     {
         public List<GameMapPrototype> Maps;
@@ -533,6 +500,54 @@ namespace Content.Server.GameTicking
         public LoadingMapsEvent(List<GameMapPrototype> maps)
         {
             Maps = maps;
+        }
+    }
+
+    /// <summary>
+    ///     Event raised before the game loads a given map.
+    ///     This event is mutable, and load options should be tweaked if necessary.
+    /// </summary>
+    /// <remarks>
+    ///     You likely want to subscribe to this after StationSystem.
+    /// </remarks>
+    [PublicAPI]
+    public sealed class PreGameMapLoad : EntityEventArgs
+    {
+        public readonly MapId Map;
+        public GameMapPrototype GameMap;
+        public MapLoadOptions Options;
+
+        public PreGameMapLoad(MapId map, GameMapPrototype gameMap, MapLoadOptions options)
+        {
+            Map = map;
+            GameMap = gameMap;
+            Options = options;
+        }
+    }
+
+
+    /// <summary>
+    ///     Event raised after the game loads a given map.
+    /// </summary>
+    /// <remarks>
+    ///     You likely want to subscribe to this after StationSystem.
+    /// </remarks>
+    [PublicAPI]
+    public sealed class PostGameMapLoad : EntityEventArgs
+    {
+        public readonly GameMapPrototype GameMap;
+        public readonly MapId Map;
+        public readonly IReadOnlyList<EntityUid> Entities;
+        public readonly IReadOnlyList<GridId> Grids;
+        public readonly string? StationName;
+
+        public PostGameMapLoad(GameMapPrototype gameMap, MapId map, IReadOnlyList<EntityUid> entities, IReadOnlyList<GridId> grids, string? stationName)
+        {
+            GameMap = gameMap;
+            Map = map;
+            Entities = entities;
+            Grids = grids;
+            StationName = stationName;
         }
     }
 

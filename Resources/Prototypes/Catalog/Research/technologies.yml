@@ -45,6 +45,11 @@
     - HydroponicsToolScythe
     - HydroponicsToolHatchet
     - KitchenKnife
+    - HandheldHealthAnalyzer
+    - ClothingHandsGlovesLatex
+    - ClothingHandsGlovesNitrile
+    - ClothingMaskSterile
+    - DiseaseSwab
 
 - type: technology
   name: "advanced botany"
@@ -59,6 +64,7 @@
   unlockedRecipes:
     - Shovel
     - ButchCleaver
+    - MicrowaveMachineCircuitboard
 
 - type: technology
   name: "advanced surgery"
@@ -98,25 +104,43 @@
     - Syringe
     - ReagentGrinderMachineCircuitboard
     - PillCanister
+    - TimerTrigger
+    - ChemicalPayload
 
 - type: technology
   name: "medical machinery"
   id: MedicalMachinery
-  description: More machine power for more healing efficiency.
+  description: Machines any self-respecting medbay would need.
   icon:
-    sprite: Structures/Machines/cloning.rsi
-    state: pod_0
-  requiredPoints: 15000
+    sprite: Structures/dispensers.rsi
+    state: industrial-working
+  requiredPoints: 10000
   requiredTechnologies:
     - BiologicalTechnology
     - ChemistryTechnology
   unlockedRecipes:
-    - CloningPodMachineCircuitboard
-    - MedicalScannerMachineCircuitboard
     - ChemMasterMachineCircuitboard
     - ChemDispenserMachineCircuitboard
     - CrewMonitoringComputerCircuitboard
+    - VaccinatorMachineCircuitboard
+    - DiagnoserMachineCircuitboard
     - HandheldCrewMonitor
+
+- type: technology
+  name: "advanced life support systems"
+  id: AdvancedLifeSupport
+  description: The cutting edge of life and death.
+  icon:
+    sprite: Structures/Machines/cloning.rsi
+    state: pod_0
+  requiredPoints: 20000
+  requiredTechnologies:
+    - MedicalMachinery
+    - AdvancedSugery
+  unlockedRecipes:
+    - CloningPodMachineCircuitboard
+    - MedicalScannerMachineCircuitboard
+    - StasisBedMachineCircuitboard
 
 # Security Technology Tree
 
@@ -134,6 +158,7 @@
     - Flash
     - Handcuffs
     - Stunbaton
+    - FlashPayload
 
 - type: technology
   name: "non-lethal technology"
@@ -246,7 +271,9 @@
     - FireExtinguisher
     - AutolatheMachineCircuitboard
     - ProtolatheMachineCircuitboard
+    - OreProcessorMachineCircuitboard
     - CircuitImprinterMachineCircuitboard
+    - UniformPrinterMachineCircuitboard
     - AirAlarmElectronics
     - FireAlarmElectronics
 
@@ -316,8 +343,32 @@
     - APCElectronics
     - SMESMachineCircuitboard
     - SubstationMachineCircuitboard
+    - WallmountSubstationElectronics
+    - WallmountGeneratorElectronics
+    - WallmountGeneratorAPUElectronics
     - HydroponicsTrayMachineCircuitboard
     - SolarControlComputerCircuitboard
+    - GeneratorPlasmaMachineCircuitboard
+    - GeneratorUraniumMachineCircuitboard
+    - Signaller
+    - SignalTrigger
+
+- type: technology
+  name: "compact power technology"
+  id: CompactPowerTechnology
+  description: Power, but smaller.
+  icon:
+    sprite: Structures/Power/apc.rsi
+    state: apc0
+  requiredPoints: 5000
+  requiredTechnologies:
+    - ElectromagneticTheory
+  unlockedRecipes:
+    - WallmountSubstationElectronics
+    - WallmountGeneratorElectronics
+    - WallmountGeneratorAPUElectronics
+    - GeneratorPlasmaMachineCircuitboard
+    - GeneratorUraniumMachineCircuitboard
 
 - type: technology
   name: "applied musicology"

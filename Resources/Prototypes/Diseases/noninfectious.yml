@@ -1,0 +1,43 @@
+- type: disease
+  id: Ultragigacancer
+  name: ultragigacancer
+  infectious: false
+  cureResist: 0.15
+  effects:
+    - !type:DiseaseHealthChange
+      probability: 0.35
+      damage:
+        types:
+          Cellular: 1
+    - !type:DiseasePopUp
+      probability: 0.03
+  cures:
+    - !type:DiseaseReagentCure
+      reagent: Phalanximine
+      min: 15
+
+### Once radiation is refactored I want it to have a small chance of giving you regular cancer
+
+- type: disease
+  id: ZombieInfection
+  name: Zombie Infection #This is the incubation period of the zombie disease.
+  infectious: false
+  cureResist: 0.2
+  effects:
+    - !type:DiseaseHealthChange
+      probability: 0.01
+      damage:
+        types:
+          Blunt: 3
+    - !type:DiseaseSnough
+      probability: 0.05
+      snoughMessage: disease-cough
+      snoughSound:
+        collection: Coughs
+    - !type:DiseaseProgression
+      probability: 0.33
+      comp: DiseaseZombie
+  cures:
+    - !type:DiseaseReagentCure
+      reagent: Romerol
+      min: 10

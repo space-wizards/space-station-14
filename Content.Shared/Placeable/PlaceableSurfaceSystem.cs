@@ -1,14 +1,14 @@
-using Content.Shared.Hands.Components;
+using Content.Shared.Storage.Components;
+using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Interaction;
-using Robust.Shared.GameObjects;
 using Robust.Shared.GameStates;
-using Robust.Shared.IoC;
-using Robust.Shared.Maths;
 
 namespace Content.Shared.Placeable
 {
     public sealed class PlaceableSurfaceSystem : EntitySystem
     {
+        [Dependency] private readonly SharedHandsSystem _handsSystem = default!;
+
         public override void Initialize()
         {
             base.Initialize();
@@ -52,16 +52,18 @@ namespace Content.Shared.Placeable
             if (!surface.IsPlaceable)
                 return;
 
-            if(!EntityManager.TryGetComponent<SharedHandsComponent?>(args.User, out var handComponent))
+            // 99% of the time they want to dump the stuff inside on the table, they can manually place with q if they really need to.
+            // Just causes prediction CBT otherwise.
+            if (HasComp<DumpableComponent>(args.Used))
                 return;
 
-            if(!handComponent.TryDropEntity(args.Used, EntityManager.GetComponent<TransformComponent>(surface.Owner).Coordinates))
+            if (!_handsSystem.TryDrop(args.User, args.Used))
                 return;
 
             if (surface.PlaceCentered)
-                EntityManager.GetComponent<TransformComponent>(args.Used).LocalPosition = EntityManager.GetComponent<TransformComponent>(uid).LocalPosition + surface.PositionOffset;
+                Transform(args.Used).LocalPosition = Transform(uid).LocalPosition + surface.PositionOffset;
             else
-                EntityManager.GetComponent<TransformComponent>(args.Used).Coordinates = args.ClickLocation;
+                Transform(args.Used).Coordinates = args.ClickLocation;
 
             args.Handled = true;
         }
