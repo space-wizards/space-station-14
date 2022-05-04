@@ -230,7 +230,7 @@ public sealed class StickySystem : EntitySystem
         }
 
         //adds HasEntityStuckOnComponent to the entity that is stuck to use for identification
-        EntityManager.AddComponent<HasEntityStuckOnComponent>(target);
+        EnsureComp<HasEntityStuckOnComponent>(target);
 
         component.StuckTo = target;
         RaiseLocalEvent(uid, new EntityStuckEvent(target, user));
