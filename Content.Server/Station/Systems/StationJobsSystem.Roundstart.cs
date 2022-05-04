@@ -69,7 +69,6 @@ public sealed partial class StationJobsSystem
             }
         }
 
-
         // We reuse this collection.
         var stationSlots = new Dictionary<EntityUid, Dictionary<string, uint?>>(stations.Count);
         foreach (var station in stations)
