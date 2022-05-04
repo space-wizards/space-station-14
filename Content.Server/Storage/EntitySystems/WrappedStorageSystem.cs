@@ -38,9 +38,11 @@ namespace Content.Server.Storage.EntitySystems
                         {
                             if (hand != null)
                             {
-                                _handsSystem.DoDrop(uid, hand);
-                                var ent = (EntityUid) component.ItemContainer.ContainedEntity;
-                                _handsSystem.TryPickupAnyHand(args.User,ent);
+                                if (_handsSystem.TryDrop(args.User, hand, null, true, true, handComp))
+                                {
+                                    var ent = (EntityUid) component.ItemContainer.ContainedEntity;
+                                    _handsSystem.TryPickupAnyHand(args.User,ent);
+                                }
                             }
                         }
                     }
