@@ -97,7 +97,7 @@
 
 - type: entity
   parent: AirlockAtmospherics
-  id: AirlockEngineeringLocked
+  id: AirlockAtmosphericsLocked
   suffix: Atmospherics, Locked
   components:
   - type: AccessReader
