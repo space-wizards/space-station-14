@@ -60,8 +60,8 @@ public sealed partial class StationJobsSystem : EntitySystem
 
         var mapJobList = stationData.StationConfig.AvailableJobs;
 
-        stationJobs.RoundStartTotalJobs = mapJobList.Values.Where(x => x[0] is not null).Select(x => x[0]).Where(x => x > 0).Sum(x => x!.Value);
-        stationJobs.MidRoundTotalJobs = mapJobList.Values.Where(x => x[1] is not null).Select(x => x[1]).Where(x => x > 0).Sum(x => x!.Value);
+        stationJobs.RoundStartTotalJobs = mapJobList.Values.Where(x => x[0] is not null && x[0] > 0).Sum(x => x[0]!.Value);
+        stationJobs.MidRoundTotalJobs = mapJobList.Values.Where(x => x[1] is not null && x[1] > 0).Sum(x => x[1]!.Value);
         stationJobs.TotalJobs = stationJobs.MidRoundTotalJobs;
         stationJobs.JobList = mapJobList.ToDictionary(x => x.Key, x =>
         {
