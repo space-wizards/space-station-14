@@ -131,7 +131,7 @@ namespace Content.Server.Stack
                 return;
 
             //Checks from other system
-            var otherSystemCheck = new StackSplitAttemptEvent(uid, userUid, amount, stack, userTransform);
+            var otherSystemCheck = new StackSplitAttemptEvent(uid, userUid, amount);
            RaiseLocalEvent(uid , otherSystemCheck);
             if(otherSystemCheck.Cancelled)
                 return;

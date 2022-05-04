@@ -12,22 +12,10 @@ public sealed class StackSplitAttemptEvent : CancellableEntityEventArgs
     /// </summary>
     public EntityUid User { get; }
     public int Amount { get; }
-    public StackComponent? Stack { get; }
-    public TransformComponent? UserTransform { get; }
-
-    public StackSplitAttemptEvent
-    (
-        EntityUid used ,
-        EntityUid user ,
-        int amount ,
-        StackComponent? stack = null,
-        TransformComponent? userTransform = null
-    )
+    public StackSplitAttemptEvent(EntityUid used, EntityUid user, int amount)
     {
         Used = used;
         User = user;
         Amount = amount;
-        Stack = stack;
-        UserTransform = userTransform;
     }
 }

@@ -9,6 +9,6 @@ comp-sticky-success-unstick-bomb = You removed the bomb
 comp-sticky-unstick-verb-text = Unstick
 
 # Split stack fail message
-cannot-split-due-to-sticky = It is too sticky !
-cannot-merge-due-to-entity-stuck-on = It has things stuck to it !
-cannot-merge-due-to-entity-stuck = It is stuck !
+cannot-split-due-to-sticky = It is too sticky!
+cannot-merge-due-to-entity-stuck-on = It has things stuck to it!
+cannot-merge-due-to-entity-stuck = It is stuck!

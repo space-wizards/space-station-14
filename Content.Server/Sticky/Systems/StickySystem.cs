@@ -200,8 +200,6 @@ public sealed class StickySystem : EntitySystem
         UnstickFromEntity(ev.Uid, ev.User, component);
 
         EntityManager.RemoveComponent<HasEntityStuckOnComponent>(ev.Target);
-        else
-            Log.Warning("has-entity-stuck-on-without-stuck-comp");
     }
 
     public void StickToEntity(EntityUid uid, EntityUid target, EntityUid user, StickyComponent? component = null)
