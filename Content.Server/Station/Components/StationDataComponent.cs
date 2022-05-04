@@ -19,8 +19,10 @@ public sealed class StationDataComponent : Component
 
     /// <summary>
     /// List of all grids this station is part of.
-    /// You shouldn't mutate this.
     /// </summary>
+    /// <remarks>
+    /// You should not mutate this yourself, go through StationSystem so the appropriate events get fired.
+    /// </remarks>
     [DataField("grids")]
     public readonly HashSet<EntityUid> Grids = new();
 }
