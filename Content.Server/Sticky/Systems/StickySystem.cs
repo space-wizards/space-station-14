@@ -157,7 +157,7 @@ public sealed class StickySystem : EntitySystem
         StickToEntity(ev.Uid, ev.Target, ev.User, component);
     }
 
-    private void StartUnsticking(EntityUid uid, EntityUid user, EntityUid target ,StickyComponent? component = null)
+    private void StartUnsticking(EntityUid uid, EntityUid user, EntityUid target, StickyComponent? component = null)
     {
         if (!Resolve(uid, ref component))
             return;
