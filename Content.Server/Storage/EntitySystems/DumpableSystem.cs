@@ -119,7 +119,7 @@ namespace Content.Server.Storage.EntitySystems
             dumpable.CancelToken = new CancellationTokenSource();
             _doAfterSystem.DoAfter(new DoAfterEventArgs(userUid, delay, dumpable.CancelToken.Token, target: targetUid)
             {
-                BroadcastFinishedEvent = new DumpCompletedEvent(userUid, targetUid, dumpable, storage.StoredEntities),
+                BroadcastFinishedEvent = new DumpCompletedEvent(userUid, targetUid, storage.StoredEntities),
                 BroadcastCancelledEvent = new DumpCancelledEvent(dumpable),
                 BreakOnTargetMove = true,
                 BreakOnUserMove = true,
@@ -179,15 +179,12 @@ namespace Content.Server.Storage.EntitySystems
         {
             public EntityUid User { get; }
             public EntityUid? Target { get; }
-            public DumpableComponent Dumpable { get; }
-
             public IReadOnlyList<EntityUid> StoredEntities { get; }
 
-            public DumpCompletedEvent(EntityUid user, EntityUid? target, DumpableComponent dumpable, IReadOnlyList<EntityUid> storedEntities)
+            public DumpCompletedEvent(EntityUid user, EntityUid? target, IReadOnlyList<EntityUid> storedEntities)
             {
                 User = user;
                 Target = target;
-                Dumpable = dumpable;
                 StoredEntities = storedEntities;
             }
         }

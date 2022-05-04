@@ -204,6 +204,14 @@
   price: 40
   icon: /Textures/Objects/Weapons/Guns/LMGs/l6.rsi/icon.png
 
+- type: uplinkListing
+  id: UplinkZombieBundle
+  category: Bundles
+  itemId: ClothingBackpackDuffelZombieBundle
+  price: 40
+  icon: /Textures/Structures/Wallmounts/signs.rsi/bio.png
+
+
 #- type: uplinkListing
 #  id: UplinkCarbineBundle
 #  category: Bundles
@@ -362,3 +370,11 @@
   category: Misc
   itemId: RubberStampSyndicate
   price: 2
+
+- type: uplinkListing
+  id: UplinkSyndicateSegwayCrate
+  category: Misc
+  itemId: CrateFunSyndicateSegway
+  listingName: syndicate segway
+  description: Be an enemy of the corporation, in style!
+  price: 5

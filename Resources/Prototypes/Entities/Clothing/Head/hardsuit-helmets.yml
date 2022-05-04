@@ -76,7 +76,7 @@
     lowPressureMultiplier: 1000
 
 - type: entity
-  parent: HatBase
+  parent: ClothingHeadHardsuitBase
   id: ClothingHeadHelmetHardsuitDeathsquad
   noSpawn: true
   name: deathsquad hardsuit helmet

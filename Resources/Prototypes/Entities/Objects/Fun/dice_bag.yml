@@ -1,5 +1,5 @@
 - type: entity
-  parent: BaseItem
+  parent: BaseStorageItem
   id: DiceBag
   name: bag of dice
   description: Contains all the luck you'll ever need.

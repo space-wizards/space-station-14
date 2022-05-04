@@ -1,4 +1,5 @@
 using System.Diagnostics.CodeAnalysis;
+using Content.Shared.ActionBlocker;
 using Content.Shared.Clothing.Components;
 using Content.Shared.Hands.Components;
 using Content.Shared.Hands.EntitySystems;
@@ -24,6 +25,7 @@ public abstract partial class InventorySystem
     [Dependency] private readonly MovementSpeedModifierSystem _movementSpeed = default!;
     [Dependency] private readonly SharedInteractionSystem _interactionSystem = default!;
     [Dependency] private readonly SharedContainerSystem _containerSystem = default!;
+    [Dependency] private readonly ActionBlockerSystem _actionBlockerSystem = default!;
     [Dependency] private readonly SharedHandsSystem _handsSystem = default!;
     [Dependency] private readonly IGameTiming _gameTiming = default!;
     [Dependency] private readonly INetManager _netMan = default!;
@@ -117,15 +119,15 @@ public abstract partial class InventorySystem
         if (held != null && itemUid != null)
         {
             _interactionSystem.InteractUsing(actor, held.Value, itemUid.Value,
-                new EntityCoordinates());
+                Transform(itemUid.Value).Coordinates);
             return;
         }
 
-        // un-equip to hands
+        // interact with an empty hand (usually just unequips the item).
         if (itemUid != null)
         {
-            if (_handsSystem.CanPickupAnyHand(actor, itemUid.Value, handsComp: hands) && TryUnequip(actor, ev.Slot, inventory: inventory))
-                _handsSystem.TryPickup(actor, itemUid.Value, checkActionBlocker: false, handsComp: hands);
+            if (_actionBlockerSystem.CanInteract(actor, itemUid.Value))
+                _interactionSystem.InteractHand(actor, itemUid.Value);
             return;
         }
 
