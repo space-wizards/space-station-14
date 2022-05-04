@@ -42,7 +42,7 @@ public sealed class StickySystem : EntitySystem
         if (EntityManager.HasComponent<HasEntityStuckOnComponent>(ev.Used)
             || EntityManager.HasComponent<HasEntityStuckOnComponent>(ev.Target))
         {
-            _popupSystem.PopupEntity(Loc.GetString("cannot-merge-due-to-entity-stuck-on"), ev.Used ,Filter.Entities(ev.User));
+            _popupSystem.PopupEntity(Loc.GetString("cannot-merge-due-to-entity-stuck-on"), ev.Used, Filter.Entities(ev.User));
             ev.Cancel();
         }
 
@@ -111,13 +111,11 @@ public sealed class StickySystem : EntitySystem
             return false;
 
         //makes sure that neither the target nor the host have entities stuck to them or is stuck to entities
-        if (
-            EntityManager.HasComponent<HasEntityStuckOnComponent>(uid)
+        if (EntityManager.HasComponent<HasEntityStuckOnComponent>(uid)
             || EntityManager.HasComponent<HasEntityStuckOnComponent>(target)
-            || EntityManager.TryGetComponent(target , out StickyComponent stuckComp)
+            || EntityManager.TryGetComponent(target, out StickyComponent stuckComp)
             && stuckComp.StuckTo != null
-            || EntityManager.GetComponent<StickyComponent>(uid).StuckTo != null
-        )
+            || EntityManager.GetComponent<StickyComponent>(uid).StuckTo != null)
             return false;
 
         // check if delay is not zero to start do after
@@ -159,7 +157,7 @@ public sealed class StickySystem : EntitySystem
         StickToEntity(ev.Uid, ev.Target, ev.User, component);
     }
 
-    private void StartUnsticking(EntityUid uid, EntityUid user, EntityUid target ,StickyComponent? component = null)
+    private void StartUnsticking(EntityUid uid, EntityUid user, EntityUid target, StickyComponent? component = null)
     {
         if (!Resolve(uid, ref component))
             return;
@@ -177,7 +175,7 @@ public sealed class StickySystem : EntitySystem
             // start unsticking object
             _doAfterSystem.DoAfter(new DoAfterEventArgs(user, delay, target: uid)
             {
-                BroadcastFinishedEvent = new UnstickSuccessfulEvent(uid, user , target),
+                BroadcastFinishedEvent = new UnstickSuccessfulEvent(uid, user, target),
                 BreakOnStun = true,
                 BreakOnTargetMove = true,
                 BreakOnUserMove = true,
@@ -201,8 +199,7 @@ public sealed class StickySystem : EntitySystem
 
         UnstickFromEntity(ev.Uid, ev.User, component);
 
-        if (EntityManager.HasComponent<HasEntityStuckOnComponent>(ev.Target))
-            EntityManager.RemoveComponent<HasEntityStuckOnComponent>(ev.Target);
+        EntityManager.RemoveComponent<HasEntityStuckOnComponent>(ev.Target);
         else
             Log.Warning("has-entity-stuck-on-without-stuck-comp");
     }
@@ -232,7 +229,7 @@ public sealed class StickySystem : EntitySystem
         }
 
         //adds HasEntityStuckOnComponent to the entity that is stuck to use for identification
-        EntityManager.AddComponent<HasEntityStuckOnComponent>(target);
+        EnsureComp<HasEntityStuckOnComponent>(target);
 
         component.StuckTo = target;
         RaiseLocalEvent(uid, new EntityStuckEvent(target, user));
