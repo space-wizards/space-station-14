@@ -75,6 +75,19 @@
     color: "#c9c042"
   - type: Computer
     board: PowerComputerCircuitboard
+  - type: PowerMonitoringConsole
+  - type: NodeContainer
+    examinable: true
+    nodes:
+      hv:
+        !type:CableDeviceNode
+        nodeGroupID: HVPower
+  - type: ActivatableUI
+    key: enum.PowerMonitoringConsoleUiKey.Key
+  - type: UserInterface
+    interfaces:
+    - key: enum.PowerMonitoringConsoleUiKey.Key
+      type: PowerMonitoringConsoleBoundUserInterface
 
 - type: entity
   parent: ComputerBase
