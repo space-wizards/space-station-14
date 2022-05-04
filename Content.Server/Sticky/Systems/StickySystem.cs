@@ -111,13 +111,11 @@ public sealed class StickySystem : EntitySystem
             return false;
 
         //makes sure that neither the target nor the host have entities stuck to them or is stuck to entities
-        if (
-            EntityManager.HasComponent<HasEntityStuckOnComponent>(uid)
+        if (EntityManager.HasComponent<HasEntityStuckOnComponent>(uid)
             || EntityManager.HasComponent<HasEntityStuckOnComponent>(target)
-            || EntityManager.TryGetComponent(target , out StickyComponent stuckComp)
+            || EntityManager.TryGetComponent(target, out StickyComponent stuckComp)
             && stuckComp.StuckTo != null
-            || EntityManager.GetComponent<StickyComponent>(uid).StuckTo != null
-        )
+            || EntityManager.GetComponent<StickyComponent>(uid).StuckTo != null)
             return false;
 
         // check if delay is not zero to start do after
