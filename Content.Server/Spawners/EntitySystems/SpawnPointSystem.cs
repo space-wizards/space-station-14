@@ -15,10 +15,10 @@ public sealed class SpawnPointSystem : EntitySystem
 
     public override void Initialize()
     {
-        SubscribeLocalEvent<SpawnPlayerEvent>(OnSpawnPlayer);
+        SubscribeLocalEvent<PlayerSpawningEvent>(OnSpawnPlayer);
     }
 
-    private void OnSpawnPlayer(SpawnPlayerEvent args)
+    private void OnSpawnPlayer(PlayerSpawningEvent args)
     {
         // TODO: Cache all this if it ends up important.
         var points = EntityQuery<SpawnPointComponent>().ToList();

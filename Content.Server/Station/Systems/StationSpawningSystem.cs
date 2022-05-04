@@ -1,5 +1,4 @@
-﻿using System.Linq;
-using Content.Server.Access.Systems;
+﻿using Content.Server.Access.Systems;
 using Content.Server.CharacterAppearance.Systems;
 using Content.Server.Hands.Components;
 using Content.Server.Hands.Systems;
@@ -64,7 +63,7 @@ public sealed class StationSpawningSystem : EntitySystem
         if (station != null && !Resolve(station.Value, ref stationSpawning))
             throw new ArgumentException("Tried to use a non-station entity as a station!", nameof(station));
 
-        var ev = new SpawnPlayerEvent(job, profile, station);
+        var ev = new PlayerSpawningEvent(job, profile, station);
         RaiseLocalEvent(ev);
 
         DebugTools.Assert(ev.SpawnResult is {Valid: true} or null);
@@ -173,13 +172,13 @@ public sealed class StationSpawningSystem : EntitySystem
 }
 
 /// <summary>
-/// Event fired on any spawner eligible to attempt to spawn a player.
+/// Ordered broadcast event fired on any spawner eligible to attempt to spawn a player.
 /// This event's success is measured by if SpawnResult is not null.
 /// You should not make this event's success rely on random chance.
 /// This event is designed to use ordered handling. You probably want SpawnPointSystem to be the last handler.
 /// </summary>
 [PublicAPI]
-public sealed class SpawnPlayerEvent : EntityEventArgs
+public sealed class PlayerSpawningEvent : EntityEventArgs
 {
     /// <summary>
     /// The entity spawned, if any. You should set this if you succeed at spawning the character, and leave it alone if it's not null.
@@ -198,7 +197,7 @@ public sealed class SpawnPlayerEvent : EntityEventArgs
     /// </summary>
     public readonly EntityUid? Station;
 
-    public SpawnPlayerEvent(Job? job, HumanoidCharacterProfile? humanoidCharacterProfile, EntityUid? station)
+    public PlayerSpawningEvent(Job? job, HumanoidCharacterProfile? humanoidCharacterProfile, EntityUid? station)
     {
         Job = job;
         HumanoidCharacterProfile = humanoidCharacterProfile;

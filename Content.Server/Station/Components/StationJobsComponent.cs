@@ -1,5 +1,8 @@
 ﻿using Content.Server.Station.Systems;
+using Content.Shared.Roles;
 using JetBrains.Annotations;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.Dictionary;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.Set;
 
 namespace Content.Server.Station.Components;
 
@@ -39,7 +42,8 @@ public sealed class StationJobsComponent : Component
     /// <remarks>
     /// This should not be mutated or used directly unless you really know what you're doing, go through StationJobsSystem.
     /// </remarks>
-    [DataField("jobList")] public Dictionary<string, uint?> JobList = new();
+    [DataField("jobList", customTypeSerializer: typeof(PrototypeIdDictionarySerializer<uint?, JobPrototype>))]
+    public Dictionary<string, uint?> JobList = new();
 
     /// <summary>
     /// The round-start list of jobs.
@@ -47,10 +51,11 @@ public sealed class StationJobsComponent : Component
     /// <remarks>
     /// This should not be mutated, ever.
     /// </remarks>
-    [DataField("roundStartJobList")] public Dictionary<string, uint?> RoundStartJobList = new();
+    [DataField("roundStartJobList", customTypeSerializer: typeof(PrototypeIdDictionarySerializer<uint?, JobPrototype>))]
+    public Dictionary<string, uint?> RoundStartJobList = new();
 
     /// <summary>
     /// Overflow jobs that round-start can spawn infinitely many of.
     /// </summary>
-    [DataField("overflowJobs")] public HashSet<string> OverflowJobs = new();
+    [DataField("overflowJobs", customTypeSerializer: typeof(PrototypeIdHashSetSerializer<JobPrototype>))] public HashSet<string> OverflowJobs = new();
 }

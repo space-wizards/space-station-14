@@ -21,6 +21,6 @@ public sealed class StationDataComponent : Component
     /// List of all grids this station is part of.
     /// You shouldn't mutate this.
     /// </summary>
-    [DataField("grids")] // Can this even be serialized or does it need to be a list of entities
+    [DataField("grids")]
     public readonly HashSet<EntityUid> Grids = new();
 }
