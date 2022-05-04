@@ -1,15 +1,4 @@
 Entries:
-- author: Schiene
-  changes:
-  - {message: Adds CentComm Outpost spawnable map, type: Add}
-  id: 949
-  time: '2022-01-30T09:06:20.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - {message: Fix potential crash on item cooldowns where the item was deleted during
-      use., type: Fix}
-  id: 950
-  time: '2022-01-30T13:27:29.0000000+00:00'
 - author: scaly-chimp
   changes:
   - {message: Added new flare shotgun shells, type: Add}
@@ -3044,3 +3033,15 @@ Entries:
   - {message: 'Added slugs, what used to be old lizard sprite.', type: Add}
   id: 1448
   time: '2022-05-03T23:17:57.0000000+00:00'
+- author: Rane
+  changes:
+  - {message: Drones will no longer be blocked from acting near dead ghost roles.,
+    type: Fix}
+  id: 1449
+  time: '2022-05-04T02:41:15.0000000+00:00'
+- author: Rane
+  changes:
+  - {message: Margherita pizza now actually resembles margherita pizza in its recipe
+      and description., type: Fix}
+  id: 1450
+  time: '2022-05-04T02:41:36.0000000+00:00'
