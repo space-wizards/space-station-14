@@ -96,6 +96,14 @@
     access: [["Engineering"]]
 
 - type: entity
+  parent: AirlockAtmospherics
+  id: AirlockEngineeringLocked
+  suffix: Atmospherics, Locked
+  components:
+  - type: AccessReader
+    access: [["Atmospherics"]]
+
+- type: entity
   parent: AirlockCargo
   id: AirlockCargoLocked
   suffix: Cargo, Locked
