@@ -99,7 +99,7 @@ namespace Content.Server.Lathe
 
         /// <summary>
         /// When someone tries to use an item on the lathe,
-        /// insert it if it's a stack and fits inside and don't have anything stuck to it
+        /// insert it if it's a stack and fits inside and doesn't have anything stuck to it
         /// </summary>
         private void OnInteractUsingEvent(EntityUid uid, LatheComponent component, InteractUsingEvent args)
         {
