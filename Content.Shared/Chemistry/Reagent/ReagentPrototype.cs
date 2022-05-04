@@ -29,7 +29,7 @@ namespace Content.Shared.Chemistry.Reagent
         public string ID { get; } = default!;
 
         [DataField("name", required: true)]
-        public string Name { get; } = default!;
+        private string Name { get; } = default!;
 
         [ViewVariables(VVAccess.ReadOnly)]
         public string LocalizedName => Loc.GetString(Name);
@@ -45,7 +45,7 @@ namespace Content.Shared.Chemistry.Reagent
         public bool Abstract { get; private set; }
 
         [DataField("desc", required: true)]
-        public string Description { get; } = default!;
+        private string Description { get; } = default!;
 
         [ViewVariables(VVAccess.ReadOnly)]
         public string LocalizedDescription => Loc.GetString(Description);
