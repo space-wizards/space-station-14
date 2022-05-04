@@ -1,10 +1,4 @@
 Entries:
-- author: scaly-chimp
-  changes:
-  - {message: Added new flare shotgun shells, type: Add}
-  - {message: fixed the incediary shotgun shells being a reskin., type: Fix}
-  id: 951
-  time: '2022-01-30T13:44:45.0000000+00:00'
 - author: Rane
   changes:
   - {message: Removed the objective to stay alive., type: Remove}
@@ -3045,3 +3039,8 @@ Entries:
       and description., type: Fix}
   id: 1450
   time: '2022-05-04T02:41:36.0000000+00:00'
+- author: Rane
+  changes:
+  - {message: Fixed a bug where lathe queues could get stuck., type: Fix}
+  id: 1451
+  time: '2022-05-04T02:43:25.0000000+00:00'
