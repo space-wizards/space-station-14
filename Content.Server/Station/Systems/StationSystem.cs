@@ -323,7 +323,7 @@ public sealed class StationSystem : EntitySystem
 }
 
 /// <summary>
-/// Event fired when a station is first set up.
+/// Broadcast event fired when a station is first set up.
 /// This is the ideal point to add components to it.
 /// </summary>
 [PublicAPI]
@@ -341,7 +341,7 @@ public sealed class StationInitializedEvent : EntityEventArgs
 }
 
 /// <summary>
-/// Event fired when a grid becomes a member of a station.
+/// Directed event fired on a station when a grid becomes a member of the station.
 /// </summary>
 [PublicAPI]
 public sealed class StationGridAddedEvent : EntityEventArgs
@@ -365,7 +365,7 @@ public sealed class StationGridAddedEvent : EntityEventArgs
 }
 
 /// <summary>
-/// Event fired when a grid is no longer a member of a station.
+/// Directed event fired on a station when a grid is no longer a member of the station.
 /// </summary>
 [PublicAPI]
 public sealed class StationGridRemovedEvent : EntityEventArgs
@@ -382,7 +382,7 @@ public sealed class StationGridRemovedEvent : EntityEventArgs
 }
 
 /// <summary>
-/// Event fired when a station has been renamed.
+/// Directed event fired on a station when it is renamed.
 /// </summary>
 [PublicAPI]
 public sealed class StationRenamedEvent : EntityEventArgs

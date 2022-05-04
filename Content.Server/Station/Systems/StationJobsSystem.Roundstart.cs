@@ -18,6 +18,9 @@ public sealed partial class StationJobsSystem
     private Dictionary<int, HashSet<string>> _jobsByWeight = default!;
     private List<int> _orderedWeights = default!;
 
+    /// <summary>
+    /// Sets up some tables used by AssignJobs, including jobs sorted by their weights, and a list of weights in order from highest to lowest.
+    /// </summary>
     private void InitializeRoundStart()
     {
         _jobsByWeight = new Dictionary<int, HashSet<string>>();
@@ -43,6 +46,7 @@ public sealed partial class StationJobsSystem
     /// <remarks>
     /// You probably shouldn't use useRoundStartJobs mid-round if the station has been available to join,
     /// as there may end up being more round-start slots than available slots, which can cause weird behavior.
+    /// A warning to all who enter ye cursed lands: This function is long and mildly incomprehensible. Best used without touching.
     /// </remarks>
     public Dictionary<NetUserId, (string, EntityUid)> AssignJobs(Dictionary<NetUserId, HumanoidCharacterProfile> profiles, IReadOnlyList<EntityUid> stations, bool useRoundStartJobs = true)
     {
@@ -51,11 +55,13 @@ public sealed partial class StationJobsSystem
         if (profiles.Count == 0)
             return new Dictionary<NetUserId, (string, EntityUid)>();
 
+        // We need to modify this collection later, so make a copy of it.
         profiles = profiles.ShallowClone();
 
         // Player <-> (job, station)
         var assigned = new Dictionary<NetUserId, (string, EntityUid)>(profiles.Count);
 
+        // The jobs left on the stations. This collection is modified as jobs are assigned to track what's available.
         var stationJobs = new Dictionary<EntityUid, Dictionary<string, uint?>>();
         foreach (var station in stations)
         {
@@ -70,19 +76,23 @@ public sealed partial class StationJobsSystem
         }
 
 
-        // We reuse this collection.
-        var stationSlots = new Dictionary<EntityUid, Dictionary<string, uint?>>(stations.Count);
+        // We reuse this collection. It tracks what jobs we're currently trying to select players for.
+        var currentlySelectingJobs = new Dictionary<EntityUid, Dictionary<string, uint?>>(stations.Count);
         foreach (var station in stations)
         {
-            stationSlots.Add(station, new Dictionary<string, uint?>());
+            currentlySelectingJobs.Add(station, new Dictionary<string, uint?>());
         }
+
         // And these.
+        // Tracks what players are available for a given job in the current iteration of selection.
         var jobPlayerOptions = new Dictionary<string, HashSet<NetUserId>>();
+        // Tracks the total number of slots for the given stations in the current iteration of selection.
         var stationTotalSlots = new Dictionary<EntityUid, int>(stations.Count);
+        // The share of the players each station gets in the current iteration of job selection.
         var stationShares = new Dictionary<EntityUid, int>(stations.Count);
 
         // Ok so the general algorithm:
-        // We start with the highest weight jobs and work our way down.
+        // We start with the highest weight jobs and work our way down. We filter jobs by weight when selecting as well.
         // Weight > Priority > Station.
         foreach (var weight in _orderedWeights)
         {
@@ -92,11 +102,13 @@ public sealed partial class StationJobsSystem
                     goto endFunc;
 
                 var candidates = GetPlayersJobCandidates(weight, selectedPriority, profiles);
-                jobPlayerOptions.Clear(); // We reuse this collection.
+
                 var optionsRemaining = 0;
 
+                // Assigns a player to the given station, updating all the bookkeeping while at it.
                 void AssignPlayer(NetUserId player, string job, EntityUid station)
                 {
+                    // Remove the player from all possible jobs as that's faster than actually checking what they have selected.
                     foreach (var (_, players) in jobPlayerOptions)
                     {
                         players.Remove(player);
@@ -109,6 +121,11 @@ public sealed partial class StationJobsSystem
                     optionsRemaining--;
                 }
 
+                jobPlayerOptions.Clear(); // We reuse this collection.
+
+                // Goes through every candidate, and adds them to jobPlayerOptions, so that the candidate players
+                // have an index sorted by job. We use this (much) later when actually assigning people to randomly
+                // pick from the list of candidates for the job.
                 foreach (var (user, jobs) in candidates)
                 {
                     foreach (var job in jobs)
@@ -122,8 +139,8 @@ public sealed partial class StationJobsSystem
                     optionsRemaining++;
                 }
 
-                // We reuse this collection.
-                foreach (var slots in stationSlots)
+                // We reuse this collection, so clear it's children.
+                foreach (var slots in currentlySelectingJobs)
                 {
                     slots.Value.Clear();
                 }
@@ -131,7 +148,7 @@ public sealed partial class StationJobsSystem
                 // Go through every station..
                 foreach (var station in stations)
                 {
-                    var slots = stationSlots[station];
+                    var slots = currentlySelectingJobs[station];
 
                     // Get all of the jobs in the selected weight category.
                     foreach (var (job, slot) in stationJobs[station])
@@ -141,10 +158,12 @@ public sealed partial class StationJobsSystem
                     }
                 }
 
-                // Intentionally discounts the value of uncapped slots! They're only a single slot when deciding a station's share.
+
                 // Clear for reuse.
                 stationTotalSlots.Clear();
-                foreach (var (station, jobs) in stationSlots)
+
+                // Intentionally discounts the value of uncapped slots! They're only a single slot when deciding a station's share.
+                foreach (var (station, jobs) in currentlySelectingJobs)
                 {
                     stationTotalSlots.Add(
                         station,
@@ -154,18 +173,23 @@ public sealed partial class StationJobsSystem
 
                 var totalSlots = 0;
 
+                // LINQ moment.
+                // totalSlots = stationTotalSlots.Sum(x => x.Value);
                 foreach (var (_, slot) in stationTotalSlots)
                 {
                     totalSlots += slot;
                 }
 
                 if (totalSlots == 0)
-                    continue; // No slots so just leave.
+                    continue; // No slots so just move to the next iteration.
 
                 // Clear for reuse.
                 stationShares.Clear();
+
+                // How many players we've distributed so far. Used to grant any remaining slots if we have leftovers.
                 var distributed = 0;
 
+                // Goes through each station and figures out how many players we should give it for the current iteration.
                 foreach (var station in stations)
                 {
                     // Calculates the percent share then multiplies.
@@ -174,6 +198,7 @@ public sealed partial class StationJobsSystem
                 }
 
                 // Avoids the fair share problem where if there's two stations and one player neither gets one.
+                // We do this by simply selecting a station randomly and giving it the remaining share(s).
                 if (distributed < candidates.Count)
                 {
                     var choice = _random.Pick(stations);
@@ -186,8 +211,11 @@ public sealed partial class StationJobsSystem
                     if (stationShares[station] == 0)
                         continue;
 
-                    var slots = stationSlots[station];
-                    var allJobs = slots.Keys.ToList();
+                    // The jobs we're selecting from for the current station.
+                    var currStationSelectingJobs = currentlySelectingJobs[station];
+                    // We only need this list because we need to go through this in a random order.
+                    // Oh the misery, another allocation.
+                    var allJobs = currStationSelectingJobs.Keys.ToList();
                     _random.Shuffle(allJobs);
                     // And iterates through all it's jobs in a random order until the count settles.
                     // No, AFAIK it cannot be done any saner than this. I hate "shaking" collections as much
@@ -203,7 +231,7 @@ public sealed partial class StationJobsSystem
                             if (stationShares[station] == 0)
                                 break;
 
-                            if (slots[job] != null && slots[job] == 0)
+                            if (currStationSelectingJobs[job] != null && currStationSelectingJobs[job] == 0)
                                 continue; // Can't assign this job.
 
                             if (!jobPlayerOptions.ContainsKey(job))
@@ -214,8 +242,8 @@ public sealed partial class StationJobsSystem
                             AssignPlayer(player, job, station);
                             stationShares[station]--;
 
-                            if (slots[job] != null)
-                                slots[job]--;
+                            if (currStationSelectingJobs[job] != null)
+                                currStationSelectingJobs[job]--;
 
                             if (optionsRemaining == 0)
                                 goto done;
