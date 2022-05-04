@@ -35,7 +35,8 @@ public sealed class ListStationJobsCommand : IConsoleCommand
 
         foreach (var (job, amount) in stationJobs.GetJobs(new EntityUid(station)))
         {
-            shell.WriteLine($"{job}: {amount}");
+            var amountText = amount is null ? "Infinite" : amount.ToString();
+            shell.WriteLine($"{job}: {amountText}");
         }
     }
 }

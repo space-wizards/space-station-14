@@ -100,18 +100,20 @@ public sealed partial class StationJobsSystem : EntitySystem
     /// <exception cref="ArgumentException">Thrown when the given station is not a station.</exception>
     public bool TryAssignJob(EntityUid station, string jobPrototypeId, StationJobsComponent? stationJobs = null)
     {
-        return AdjustJobSlots(station, jobPrototypeId, -1, false, stationJobs);
+        return TryAdjustJobSlot(station, jobPrototypeId, -1, false, false, stationJobs);
     }
 
-    /// <inheritdoc cref="AdjustJobSlots(Robust.Shared.GameObjects.EntityUid,Content.Shared.Roles.JobPrototype,int,bool,Content.Server.Station.Components.StationJobsComponent?)"/>
+    /// <inheritdoc cref="TryAdjustJobSlot(Robust.Shared.GameObjects.EntityUid,Content.Shared.Roles.JobPrototype,int,bool,bool,Content.Server.Station.Components.StationJobsComponent?)"/>
     /// <param name="station">Station to adjust the job slot on.</param>
     /// <param name="job">Job to adjust.</param>
     /// <param name="amount">Amount to adjust by.</param>
     /// <param name="createSlot">Whether or not it should create the slot if it doesn't exist.</param>
+    /// <param name="clamp">Whether or not to clamp to zero if you'd remove more jobs than are available.</param>
     /// <param name="stationJobs">Resolve pattern, station jobs component of the station.</param>
-    public bool AdjustJobSlots(EntityUid station, JobPrototype job, int amount, bool createSlot = false, StationJobsComponent? stationJobs = null)
+    public bool TryAdjustJobSlot(EntityUid station, JobPrototype job, int amount, bool createSlot = false, bool clamp = false,
+        StationJobsComponent? stationJobs = null)
     {
-        return AdjustJobSlots(station, job.ID, amount, createSlot, stationJobs);
+        return TryAdjustJobSlot(station, job.ID, amount, createSlot, clamp, stationJobs);
     }
 
     /// <summary>
@@ -121,10 +123,11 @@ public sealed partial class StationJobsSystem : EntitySystem
     /// <param name="jobPrototypeId">Job prototype ID to adjust.</param>
     /// <param name="amount">Amount to adjust by.</param>
     /// <param name="createSlot">Whether or not it should create the slot if it doesn't exist.</param>
+    /// <param name="clamp">Whether or not to clamp to zero if you'd remove more jobs than are available.</param>
     /// <param name="stationJobs">Resolve pattern, station jobs component of the station.</param>
     /// <returns>Whether or not slot adjustment was a success.</returns>
     /// <exception cref="ArgumentException">Thrown when the given station is not a station.</exception>
-    public bool AdjustJobSlots(EntityUid station, string jobPrototypeId, int amount, bool createSlot = false,
+    public bool TryAdjustJobSlot(EntityUid station, string jobPrototypeId, int amount, bool createSlot = false, bool clamp = false,
         StationJobsComponent? stationJobs = null)
     {
         if (!Resolve(station, ref stationJobs))
@@ -156,7 +159,7 @@ public sealed partial class StationJobsSystem : EntitySystem
                     return true;
 
                 // Would remove more jobs than we have available.
-                if (amount < 0 && jobList[jobPrototypeId] - amount < 0)
+                if (amount < 0 && (jobList[jobPrototypeId] + amount < 0 && !clamp))
                     return false;
 
                 stationJobs.TotalJobs += amount;
@@ -165,7 +168,55 @@ public sealed partial class StationJobsSystem : EntitySystem
                 if (amount > 0)
                     jobList[jobPrototypeId] += (uint)amount;
                 else
-                    jobList[jobPrototypeId] -= (uint)Math.Abs(amount);
+                {
+                    if ((int)jobList[jobPrototypeId]!.Value - Math.Abs(amount) <= 0)
+                        jobList[jobPrototypeId] = 0;
+                    else
+                        jobList[jobPrototypeId] -= (uint) Math.Abs(amount);
+                }
+
+                UpdateJobsAvailable();
+                return true;
+        }
+    }
+
+    /// <summary>
+    /// Attempts to set the given job slot to the amount provided.
+    /// </summary>
+    /// <param name="station">Station to adjust the job slot on.</param>
+    /// <param name="jobPrototypeId">Job prototype ID to adjust.</param>
+    /// <param name="amount">Amount to set to.</param>
+    /// <param name="createSlot">Whether or not it should create the slot if it doesn't exist.</param>
+    /// <param name="stationJobs"></param>
+    /// <returns></returns>
+    /// <exception cref="ArgumentException"></exception>
+    public bool TrySetJobSlot(EntityUid station, string jobPrototypeId, int amount, bool createSlot = false,
+        StationJobsComponent? stationJobs = null)
+    {
+        if (!Resolve(station, ref stationJobs))
+            throw new ArgumentException("Tried to use a non-station entity as a station!", nameof(station));
+        if (amount < 0)
+            throw new ArgumentException("Tried to set a job to have a negative number of slots!", nameof(amount));
+
+        var jobList = stationJobs.JobList;
+
+        switch (jobList.ContainsKey(jobPrototypeId))
+        {
+            case false:
+                if (!createSlot)
+                    return false;
+                stationJobs.TotalJobs += amount;
+                jobList[jobPrototypeId] = (uint?)amount;
+                UpdateJobsAvailable();
+                return true;
+            case true:
+                // Job is unlimited so just say we adjusted it and do nothing.
+                if (jobList[jobPrototypeId] == null)
+                    return true;
+
+                stationJobs.TotalJobs += amount - (int)jobList[jobPrototypeId]!.Value;
+
+                jobList[jobPrototypeId] = (uint)amount;
                 UpdateJobsAvailable();
                 return true;
         }

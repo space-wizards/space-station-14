@@ -52,6 +52,9 @@ public sealed class StationJobsTest : ContentIntegrationTest
 - type: job
   id: TCaptain
   weight: 10
+
+- type: job
+  id: TChaplain
 ";
 
     private const int StationCount = 100;
@@ -128,6 +131,57 @@ public sealed class StationJobsTest : ContentIntegrationTest
             Assert.That(assigned.Values.Select(x => x.Item1).ToList(), Does.Contain("TAssistant"));
             // There must be captains present, too.
             Assert.That(assigned.Values.Select(x => x.Item1).ToList(), Does.Contain("TCaptain"));
+        });
+    }
+
+    [Test]
+    public async Task AdjustJobsTest()
+    {
+        var options = new ServerContentIntegrationOption {ExtraPrototypes = Prototypes, Options = new ServerOptions() { LoadContentResources = false }};
+        var server = StartServer(options);
+
+        await server.WaitIdleAsync();
+
+        var prototypeManager = server.ResolveDependency<IPrototypeManager>();
+        var mapManager = server.ResolveDependency<IMapManager>();
+        var fooStationProto = prototypeManager.Index<GameMapPrototype>("FooStation");
+        var entSysMan = server.ResolveDependency<IEntityManager>().EntitySysManager;
+        var stationJobs = entSysMan.GetEntitySystem<StationJobsSystem>();
+        var stationSystem = entSysMan.GetEntitySystem<StationSystem>();
+
+        var station = EntityUid.Invalid;
+        await server.WaitPost(() =>
+        {
+            mapManager.CreateNewMapEntity(MapId.Nullspace);
+            station = stationSystem.InitializeNewStation(fooStationProto.Stations["Station"], null, $"Foo Station");
+        });
+
+        await server.WaitAssertion(() =>
+        {
+            // Verify jobs are/are not unlimited.
+            Assert.Multiple(() =>
+            {
+                Assert.That(stationJobs.IsJobUnlimited(station, "TAssistant"), "TAssistant is expected to be unlimited.");
+                Assert.That(stationJobs.IsJobUnlimited(station, "TMime"), "TMime is expected to be unlimited.");
+                Assert.That(!stationJobs.IsJobUnlimited(station, "TCaptain"), "TCaptain is expected to not be unlimited.");
+                Assert.That(!stationJobs.IsJobUnlimited(station, "TClown"), "TClown is expected to not be unlimited.");
+            });
+            Assert.Multiple(() =>
+            {
+                Assert.That(stationJobs.TrySetJobSlot(station, "TClown", 0), "Could not set TClown to have zero slots.");
+                Assert.That(stationJobs.TryGetJobSlot(station, "TClown", out var clownSlots), "Could not get the number of TClown slots.");
+                Assert.That(clownSlots, Is.EqualTo(0));
+                Assert.That(!stationJobs.TryAdjustJobSlot(station, "TCaptain", -9999), "Was able to adjust TCaptain by -9999 without clamping.");
+                Assert.That(stationJobs.TryAdjustJobSlot(station, "TCaptain", -9999, false, true), "Could not adjust TCaptain by -9999.");
+                Assert.That(stationJobs.TryGetJobSlot(station, "TCaptain", out var captainSlots), "Could not get the number of TCaptain slots.");
+                Assert.That(captainSlots, Is.EqualTo(0));
+            });
+            Assert.Multiple(() =>
+            {
+                Assert.That(stationJobs.TrySetJobSlot(station, "TChaplain", 10, true), "Could not create 10 TChaplain slots.");
+                stationJobs.MakeJobUnlimited(station, "TChaplain");
+                Assert.That(stationJobs.IsJobUnlimited(station, "TChaplain"), "Could not make TChaplain unlimited.");
+            });
         });
     }
 }
