@@ -98,6 +98,7 @@ public sealed class MagicSystem : EntitySystem
 
         var transform = Transform(args.Performer);
         Spawn(args.RunePrototype, transform.Coordinates);
+
         args.Handled = true;
     }
 

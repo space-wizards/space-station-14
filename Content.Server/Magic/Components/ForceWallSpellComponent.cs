@@ -10,5 +10,6 @@ public sealed class ForceWallSpellComponent : Component
     public float Timer = 0f;
 
     [ViewVariables]
+    [DataField("forceWallCooldown")]
     public float ForceWallCooldown = 30f;
 }
