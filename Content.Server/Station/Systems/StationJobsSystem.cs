@@ -392,9 +392,11 @@ public sealed partial class StationJobsSystem : EntitySystem
         bool TryPick(JobPriority priority, [NotNullWhen(true)] out string? jobId)
         {
             var filtered = jobPriorities
-                .Where(p => p.Value == priority)
-                .Where(p => disallowedJobs != null && !disallowedJobs.Contains(p.Key))
-                .Where(p => available.Contains(p.Key))
+                .Where(p =>
+                            p.Value == priority
+                            && disallowedJobs != null
+                            && !disallowedJobs.Contains(p.Key)
+                            && available.Contains(p.Key))
                 .Select(p => p.Key)
                 .ToList();
 
