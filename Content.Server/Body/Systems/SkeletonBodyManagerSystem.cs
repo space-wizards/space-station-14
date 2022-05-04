@@ -132,7 +132,7 @@ namespace Content.Server.Body.Systems
             var mob = _entities.SpawnEntity(speciesProto, _entities.GetComponent<TransformComponent>(component.Owner).MapPosition);
 
             Get<SharedHumanoidAppearanceSystem>().UpdateFromProfile(mob, component.DNA.Value.Profile);
-            _entities.GetComponent<MetaDataComponent>(mob).EntityName = component.DNA.Value.Profile.Name;
+            MetaData(mob).EntityName = component.DNA.Value.Profile.Name;
 
             if (TryComp<MindComponent>(uid, out var mindcomp) && mindcomp.Mind != null)
                 mindcomp.Mind.TransferTo(mob);
