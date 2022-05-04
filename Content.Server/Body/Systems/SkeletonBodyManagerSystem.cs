@@ -151,7 +151,7 @@ namespace Content.Server.Body.Systems
         /// the dna for reassembly later
         /// </summary>
         /// param name="uid"></param> the entity the mind is going to be transfered which also stores the DNA
-        /// <param name="body"></param> the entity whose DNA is being saved
+        /// <param name="body">the entity whose DNA is being saved</param> 
         public void UpdateDNAEntry(EntityUid uid, EntityUid body)
         {
             if (!TryComp<SkeletonBodyManagerComponent>(uid, out var skelBodyComp) ||
