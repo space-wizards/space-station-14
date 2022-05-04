@@ -1,5 +1,6 @@
 ﻿using Content.Server.Storage.Components;
 using Content.Shared.Hands.Components;
+using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Verbs;
 using Robust.Shared.Containers;
 
@@ -7,6 +8,7 @@ namespace Content.Server.Storage.EntitySystems
 {
     public class WrappedStorageSystem : EntitySystem
     {
+        [Dependency] private readonly SharedHandsSystem _handsSystem = default!;
         public override void Initialize()
         {
             base.Initialize();
@@ -32,9 +34,15 @@ namespace Content.Server.Storage.EntitySystems
                     {
                         var handComp = Comp<SharedHandsComponent>(args.User);
                         // Drop 'wrapped object' because when i'm unwraping item, he always spawns on other hand or drop on floor
-                        handComp.Drop(uid);
-                        var ent = (EntityUid) component.ItemContainer.ContainedEntity;
-                        handComp.PutInHandOrDrop(ent);
+                        if (TryFindHandWithItem(uid, handComp, out var hand))
+                        {
+                            if (hand != null)
+                            {
+                                _handsSystem.DoDrop(uid, hand);
+                                var ent = (EntityUid) component.ItemContainer.ContainedEntity;
+                                _handsSystem.TryPickupAnyHand(args.User,ent);
+                            }
+                        }
                     }
                     else
                     {
@@ -44,6 +52,21 @@ namespace Content.Server.Storage.EntitySystems
                 }
                 QueueDel(uid);
             }
+        }
+
+        private bool TryFindHandWithItem(EntityUid target,SharedHandsComponent handComp, out Hand? foundHand)
+        {
+            foreach (var hand in handComp.Hands)
+            {
+                if (hand.Value.HeldEntity != null && hand.Value.HeldEntity.Value == target)
+                {
+                    foundHand = hand.Value;
+                    return true;
+                }
+            }
+
+            foundHand = null;
+            return false;
         }
 
         private void AddUnpackVerb(EntityUid uid, WrappedStorageComponent component, GetVerbsEvent<AlternativeVerb> args)

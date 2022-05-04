@@ -2,17 +2,13 @@ using Robust.Shared.Prototypes;
 
 namespace Content.Server.PackageWrapper.Components
 {
-    [Serializable, Prototype("WrapType")]
+    [Prototype("WrapType")]
     public class WrapperTypePrototype : IPrototype
     {
-        [ViewVariables]
-        [DataField("id", required: true)]
-        public string ID { get; } = default!;
+        [IdDataFieldAttribute] public string ID { get; } = null!;
 
-        [DataField("protospawnid")]
-        public string ProtoSpawnID { get; } = string.Empty;
+        [DataField("protospawnid")] public string ProtoSpawnID { get; } = null!;
 
-        [DataField("capacity")]
-        public int Capacity = 0;
+        [DataField("capacity")] public int Capacity { get; } = 0;
     }
 }
