@@ -1,10 +1,4 @@
 Entries:
-- author: Rane
-  changes:
-  - {message: 'Chaplains'' prayers have been answered, and they now spawn with a fully
-      functional bible.', type: Add}
-  id: 958
-  time: '2022-01-30T15:20:23.0000000+00:00'
 - author: ElectroJr
   changes:
   - {message: Fixed ghost being able to interact with the world via various UI elements.,
@@ -3040,3 +3034,8 @@ Entries:
   - {message: Vehicles no longer render above kudzu., type: Fix}
   id: 1457
   time: '2022-05-04T18:21:39.0000000+00:00'
+- author: TimrodDX
+  changes:
+  - {message: Delta Station now has filing cabinets., type: Add}
+  id: 1458
+  time: '2022-05-04T22:25:16.0000000+00:00'
