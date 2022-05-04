@@ -1,9 +1,4 @@
 Entries:
-- author: metalgearsloth
-  changes:
-  - {message: Conveyors now 20% less jank., type: Tweak}
-  id: 953
-  time: '2022-01-30T14:30:16.0000000+00:00'
 - author: Rane
   changes:
   - {message: 'Wood floor tiles can no longer be placed directly on space, and do
@@ -3041,3 +3036,9 @@ Entries:
   - {message: The health status now looks fancier!, type: Tweak}
   id: 1452
   time: '2022-05-04T02:49:48.0000000+00:00'
+- author: Peptide90
+  changes:
+  - {message: 'NSS Pillar Update! Added vehicle spawns, drains, watercoolers and other
+      missing content. Misc fixes and updated the escape pods to work.', type: Tweak}
+  id: 1453
+  time: '2022-05-04T02:51:58.0000000+00:00'
