@@ -109,7 +109,8 @@ namespace Content.Server.Lathe
             var otherSystemsCheck = new InsertMaterialAttemptEvent(args.User, args.Used, args.Target, args.ClickLocation);
             RaiseLocalEvent(uid , otherSystemsCheck);
 
-            if (otherSystemsCheck.Cancelled) { return; }
+            if (otherSystemsCheck.Cancelled)
+                return;
 
             var multiplier = 1;
 
