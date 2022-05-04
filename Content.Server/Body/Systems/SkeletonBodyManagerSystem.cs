@@ -150,7 +150,7 @@ namespace Content.Server.Body.Systems
         /// Called before the skeleton entity is gibbed in order to save
         /// the dna for reassembly later
         /// </summary>
-        /// param name="uid"></param> the entity the mind is going to be transfered which also stores the DNA
+        /// <param name="uid"> the entity the mind is going to be transfered which also stores the DNA</param>
         /// <param name="body">the entity whose DNA is being saved</param> 
         public void UpdateDNAEntry(EntityUid uid, EntityUid body)
         {
