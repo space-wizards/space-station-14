@@ -1,12 +1,4 @@
 Entries:
-- author: Rane
-  changes:
-  - {message: 'Wood floor tiles can no longer be placed directly on space, and do
-      not space so easily.', type: Fix}
-  - {message: Cryobeaker capacity reduced from 60 to 40., type: Tweak}
-  - {message: Explosive grenades and minibombs no longer beep., type: Tweak}
-  id: 954
-  time: '2022-01-30T14:34:11.0000000+00:00'
 - author: Pancake
   changes:
   - {message: Admins now have more animals to release into the station!, type: Add}
@@ -3042,3 +3034,9 @@ Entries:
       missing content. Misc fixes and updated the escape pods to work.', type: Tweak}
   id: 1453
   time: '2022-05-04T02:51:58.0000000+00:00'
+- author: Rane
+  changes:
+  - {message: 'The trash bag and plant bag can now be directly emptied into disposal
+      units, onto tables, or on the ground with an alternative verb.', type: Add}
+  id: 1454
+  time: '2022-05-04T03:00:22.0000000+00:00'
