@@ -1,10 +1,4 @@
 Entries:
-- author: Pancake
-  changes:
-  - {message: Admins now have more animals to release into the station!, type: Add}
-  - {message: Vending machines are now less murderous., type: Tweak}
-  id: 955
-  time: '2022-01-30T14:35:00.0000000+00:00'
 - author: mirrorcult
   changes:
   - {message: Fire extinguisher spray now applies touch reactions., type: Add}
@@ -3040,3 +3034,8 @@ Entries:
       units, onto tables, or on the ground with an alternative verb.', type: Add}
   id: 1454
   time: '2022-05-04T03:00:22.0000000+00:00'
+- author: Fishfish458
+  changes:
+  - {message: Found where Poly hid the CE's stamp and it is now returned., type: Fix}
+  id: 1455
+  time: '2022-05-04T16:22:54.0000000+00:00'
