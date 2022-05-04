@@ -1,4 +1,5 @@
 using Content.Server.Tools.Components;
+using Content.Shared.Examine;
 using Content.Shared.Interaction;
 
 namespace Content.Server.Tools.Systems;
@@ -13,6 +14,13 @@ public sealed class WeldableSystem : EntitySystem
         SubscribeLocalEvent<WeldableComponent, InteractUsingEvent>(OnInteractUsing);
         SubscribeLocalEvent<WeldableComponent, WeldFinishedEvent>(OnWeldFinished);
         SubscribeLocalEvent<WeldableComponent, WeldCancelledEvent>(OnWeldCanceled);
+        SubscribeLocalEvent<WeldableComponent, ExaminedEvent>(OnExamine);
+    }
+
+    private void OnExamine(EntityUid uid, WeldableComponent component, ExaminedEvent args)
+    {
+        if (component.IsWelded && component.WeldedExamineMessage != null)
+            args.PushText(Loc.GetString(component.WeldedExamineMessage));
     }
 
     private void OnInteractUsing(EntityUid uid, WeldableComponent component, InteractUsingEvent args)

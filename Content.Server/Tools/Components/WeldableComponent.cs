@@ -38,6 +38,13 @@ public sealed class WeldableComponent : Component
     public TimeSpan WeldingTime = TimeSpan.FromSeconds(1f);
 
     /// <summary>
+    ///     Shown when welded entity is examined.
+    /// </summary>
+    [DataField("weldedExamineMessage")]
+    [ViewVariables(VVAccess.ReadWrite)]
+    public string? WeldedExamineMessage = "door-component-examine-is-welded";
+
+    /// <summary>
     ///     Whether something is currently using a welder on this so DoAfter isn't spammed.
     /// </summary>
     [ViewVariables(VVAccess.ReadOnly)]
