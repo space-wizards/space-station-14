@@ -127,6 +127,7 @@ public sealed class StationJobsTest : ContentIntegrationTest
             // There must be assistants present.
             Assert.That(assigned.Values.Select(x => x.Item1).ToList(), Does.Contain("TAssistant"));
             // There must be captains present, too.
+            Assert.That(assigned.Values.Select(x => x.Item1).ToList(), Does.Contain("TCaptain"));
         });
     }
 }
