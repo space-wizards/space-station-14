@@ -1,12 +1,4 @@
 Entries:
-- author: Rane
-  changes:
-  - {message: Removed the objective to stay alive., type: Remove}
-  - {message: Lowered max objective difficulty., type: Tweak}
-  - {message: 'Steal objective probability reduced by 1/3, and die objective probability
-      reduced by 9/10.', type: Tweak}
-  id: 952
-  time: '2022-01-30T14:19:27.0000000+00:00'
 - author: metalgearsloth
   changes:
   - {message: Conveyors now 20% less jank., type: Tweak}
@@ -3044,3 +3036,8 @@ Entries:
   - {message: Fixed a bug where lathe queues could get stuck., type: Fix}
   id: 1451
   time: '2022-05-04T02:43:25.0000000+00:00'
+- author: DogZeroX
+  changes:
+  - {message: The health status now looks fancier!, type: Tweak}
+  id: 1452
+  time: '2022-05-04T02:49:48.0000000+00:00'
