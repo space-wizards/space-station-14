@@ -46,8 +46,7 @@ namespace Content.MapRenderer.Painters
                 var sprite = _sTileDefinitionManager[tile.Tile.TypeId].SpriteName;
                 var image = images[sprite][tile.Tile.Variant];
 
-                if (x*tileSize <= gridCanvas.Width && y * tileSize <= gridCanvas.Height)
-                    gridCanvas.Mutate(o => o.DrawImage(image, new Point(x * tileSize, y * tileSize), 1));
+                gridCanvas.Mutate(o => o.DrawImage(image, new Point(x * tileSize, y * tileSize), 1));
 
                 i++;
             });
