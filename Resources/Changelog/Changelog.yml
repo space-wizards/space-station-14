@@ -1,10 +1,4 @@
 Entries:
-- author: mirrorcult
-  changes:
-  - {message: Fire extinguisher spray now applies touch reactions., type: Add}
-  - {message: Fire extinguishers can be refilled from any source now., type: Tweak}
-  id: 956
-  time: '2022-01-30T14:42:15.0000000+00:00'
 - author: Schiene
   changes:
   - {message: 'Added a new non-votable map, Moonrise-class Emergency Response Cruiser.',
@@ -3039,3 +3033,9 @@ Entries:
   - {message: Found where Poly hid the CE's stamp and it is now returned., type: Fix}
   id: 1455
   time: '2022-05-04T16:22:54.0000000+00:00'
+- author: 20kdc
+  changes:
+  - {message: Power Monitoring Consoles now show some power details on high-voltage
+      networks., type: Add}
+  id: 1456
+  time: '2022-05-04T17:59:40.0000000+00:00'
