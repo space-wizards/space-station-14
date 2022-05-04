@@ -1,4 +1,5 @@
-﻿using Content.Server.Decals;
+﻿using Content.Server.Coordinates.Helpers;
+using Content.Server.Decals;
 using Content.Server.Magic.Events;
 using Content.Server.Wieldable;
 using Content.Shared.Actions;
@@ -97,11 +98,15 @@ public sealed class MagicSystem : EntitySystem
             return;
 
         var transform = Transform(args.Performer);
-        Spawn(args.RunePrototype, transform.Coordinates);
+        Spawn(args.RunePrototype, transform.Coordinates.SnapToGrid());
 
         args.Handled = true;
     }
 
+    /// <summary>
+    /// Teleports the user to the clicked location
+    /// </summary>
+    /// <param name="args"></param>
     private void OnTeleportSpell(TeleportSpellEvent args)
     {
         if (args.Handled)
@@ -125,6 +130,11 @@ public sealed class MagicSystem : EntitySystem
         args.Handled = true;
     }
 
+    /// <summary>
+    /// Spawns 3 walls in front of the caster in a 3x1/1x3 pattern
+    /// Disappears after a set amount of time
+    /// </summary>
+    /// <param name="args"></param>
     private void OnForceWallSpell(ForceWallSpellEvent args)
     {
         if (args.Handled)
