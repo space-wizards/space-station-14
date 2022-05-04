@@ -10,12 +10,12 @@ public sealed class WeldableSystem : EntitySystem
     public override void Initialize()
     {
         base.Initialize();
-        SubscribeLocalEvent<WeldableComponent, AfterInteractEvent>(OnAfterInteract);
+        SubscribeLocalEvent<WeldableComponent, InteractUsingEvent>(OnInteractUsing);
         SubscribeLocalEvent<WeldableComponent, WeldFinishedEvent>(OnWeldFinished);
         SubscribeLocalEvent<WeldableComponent, WeldCancelledEvent>(OnWeldCanceled);
     }
 
-    private void OnAfterInteract(EntityUid uid, WeldableComponent component, AfterInteractEvent args)
+    private void OnInteractUsing(EntityUid uid, WeldableComponent component, InteractUsingEvent args)
     {
         if (args.Handled)
             return;
