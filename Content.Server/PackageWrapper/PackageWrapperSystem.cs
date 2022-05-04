@@ -42,6 +42,7 @@ namespace Content.Server.PackageWrapper
                     return;
                 }
 
+
                 // If object shaped, wrap it in shape
                 if(TryComp<WrappableInShapeComponent>(args.Target.Value, out var targetWrapType))
                 {
@@ -56,7 +57,7 @@ namespace Content.Server.PackageWrapper
 
                     if (typeComp != null)
                     {
-                        var spawnedObj = Spawn(typeComp.ProtoSpawnID, Comp<TransformComponent>((EntityUid) args.Target).MapPosition);
+                        var spawnedObj = Spawn(typeComp.ProtoSpawnID, Comp<TransformComponent>((EntityUid) args.Target).Coordinates);
                         var container = Comp<WrappedStorageComponent>(spawnedObj);
                         container.ItemContainer.Insert(args.Target.Value);
 
@@ -77,7 +78,7 @@ namespace Content.Server.PackageWrapper
                     // Spawn item with minimal size and insert
                     if (typeComp != null)
                     {
-                        var spawnedObj = Spawn(typeComp.ProtoSpawnID, Comp<TransformComponent>((EntityUid) args.Target).MapPosition);
+                        var spawnedObj = Spawn(typeComp.ProtoSpawnID, Comp<TransformComponent>((EntityUid) args.Target).Coordinates);
                         var container = Comp<WrappedStorageComponent>(spawnedObj);
                         container.ItemContainer.Insert(args.Target.Value);
 
