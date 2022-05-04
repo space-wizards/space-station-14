@@ -15,6 +15,5 @@ namespace Content.Shared.Body.Part
         Biological,
         Mechanical,
         Slime,
-        Skeleton
     }
 }

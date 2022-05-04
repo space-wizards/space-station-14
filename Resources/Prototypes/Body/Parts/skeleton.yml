@@ -23,7 +23,7 @@
     - type: BodyPart
       partType: Torso
       size: 14
-      compatibility: Skeleton
+      compatibility: Biological
 #    criticalThreshold: 100
 #    deadThreshold: 150
 
@@ -43,7 +43,7 @@
     - type: BodyPart
       partType: Head
       size: 7
-      compatibility: Skeleton 
+      compatibility: Biological
     #Unique stuff the skull has for one a skelly gets "boned" nyeheheh
     - type: SkeletonBodyManager
     - type: Input
@@ -80,7 +80,7 @@
     - type: BodyPart
       partType: Arm
       size: 5
-      compatibility: Skeleton
+      compatibility: Biological
       symmetry: Left
     #    criticalThreshold: 40
     #    deadThreshold: 80
@@ -100,7 +100,7 @@
     - type: BodyPart
       partType: Arm
       size: 5
-      compatibility: Skeleton
+      compatibility: Biological
       symmetry: Right
     #    criticalThreshold: 40
     #    deadThreshold: 80
@@ -120,7 +120,7 @@
     - type: BodyPart
       partType: Hand
       size: 3
-      compatibility: Skeleton
+      compatibility: Biological
       symmetry: Left
     #    criticalThreshold: 30
     #    deadThreshold: 60
@@ -140,7 +140,7 @@
     - type: BodyPart
       partType: Hand
       size: 3
-      compatibility: Skeleton
+      compatibility: Biological
       symmetry: Right
     #    criticalThreshold: 30
     #    deadThreshold: 60
@@ -160,7 +160,7 @@
     - type: BodyPart
       partType: Leg
       size: 6
-      compatibility: Skeleton
+      compatibility: Biological
       symmetry: Left
 
 - type: entity
@@ -178,7 +178,7 @@
     - type: BodyPart
       partType: Leg
       size: 6
-      compatibility: Skeleton
+      compatibility: Biological
       symmetry: Right
     #    criticalThreshold: 45
     #    deadThreshold: 90
@@ -198,7 +198,7 @@
     - type: BodyPart
       partType: Foot
       size: 2
-      compatibility: Skeleton
+      compatibility: Biological
       symmetry: Left
 #    criticalThreshold: 30
 #    deadThreshold: 60
@@ -218,7 +218,7 @@
     - type: BodyPart
       partType: Foot
       size: 2
-      compatibility: Skeleton
+      compatibility: Biological
       symmetry: Right
 #    criticalThreshold: 30
 #    deadThreshold: 60

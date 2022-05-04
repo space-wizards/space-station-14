@@ -23,6 +23,6 @@ namespace Content.Server.Body.Components
         /// The list of body parts that are needed for reassembly
         /// </summary>
         [ViewVariables]
-        public List<SharedBodyPartComponent>? BodyParts = null;
+        public HashSet<EntityUid>? BodyParts = null;
     }
 }

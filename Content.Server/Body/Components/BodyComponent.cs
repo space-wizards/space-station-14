@@ -83,7 +83,7 @@ namespace Content.Server.Body.Components
             }
         }
 
-        public override List<SharedBodyPartComponent> Gib(bool gibParts = false)
+        public override HashSet<EntityUid> Gib(bool gibParts = false)
         {
             _entMan.EventBus.RaiseLocalEvent(Owner, new BeforeGibbedEvent(), false);
             var gibs = base.Gib(gibParts);
@@ -112,9 +112,9 @@ namespace Content.Server.Body.Components
 
     public sealed class BeingGibbedEvent : EntityEventArgs
     {
-        public readonly List<SharedBodyPartComponent> GibbedParts;
+        public readonly HashSet<EntityUid> GibbedParts;
 
-        public BeingGibbedEvent(List<SharedBodyPartComponent> gibbedParts)
+        public BeingGibbedEvent(HashSet<EntityUid> gibbedParts)
         {
             GibbedParts = gibbedParts;
         }

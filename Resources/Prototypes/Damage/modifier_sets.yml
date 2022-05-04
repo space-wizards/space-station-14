@@ -118,12 +118,13 @@
     Heat: 3.0
     Poison: 0.0
 
-# immune to everything except physical and cold damage
+# immune to everything except physical and heat damage
 - type: damageModifierSet
   id: Skeleton
   coefficients:
     Blunt: 2.5
     Slash: 1.5
+    Piercing: 1.2
     Cold: 0.0
     Poison: 0.0
     Radiation: 0.0

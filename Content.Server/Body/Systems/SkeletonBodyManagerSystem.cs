@@ -24,12 +24,12 @@ namespace Content.Server.Body.Systems
 {
     public sealed class SkeletonBodyManagerSystem : EntitySystem
     {
-        [Dependency] private readonly IEntityManager _entities = default!;
         [Dependency] private readonly IServerPreferencesManager _prefsManager = null!;
         [Dependency] private readonly IPrototypeManager _prototype = default!;
         [Dependency] private readonly PopupSystem _popupSystem = default!;
         [Dependency] private readonly DoAfterSystem _doAfterSystem = default!;
         [Dependency] private readonly ConstructionSystem _construction = default!;
+        [Dependency] private readonly SharedHumanoidAppearanceSystem _humanoidAppeareance = default!;
 
         public override void Initialize()
         {
@@ -78,7 +78,7 @@ namespace Content.Server.Body.Systems
                     BreakOnDamage = true,
                     BreakOnStun = true,
                     NeedHand = false,
-                    BroadcastFinishedEvent = new ReassembleDoAfterComplete(uid, args.User, component, partList),
+                    BroadcastFinishedEvent = new ReassembleDoAfterComplete(uid, args.User, partList),
                 };
 
                 _doAfterSystem.DoAfter(doAfterEventArgs);
@@ -88,9 +88,9 @@ namespace Content.Server.Body.Systems
             args.Verbs.Add(custom);
         }
 
-        private bool GetNearbyParts(EntityUid user, EntityUid uid, SkeletonBodyManagerComponent component, out List<EntityUid>? partList)
+        private bool GetNearbyParts(EntityUid user, EntityUid uid, SkeletonBodyManagerComponent component, out HashSet<EntityUid>? partList)
         {
-            partList = new List<EntityUid>();
+            partList = new HashSet<EntityUid>();
 
             if (component.BodyParts == null)
                 return false;
@@ -103,10 +103,10 @@ namespace Content.Server.Body.Systems
                 notFound = true;
                 foreach (var entity in nearby)
                 {
-                    if (part.Owner == entity || part.Owner == component.Owner)
+                    if (part == entity || part == component.Owner)
                     {
                         notFound = false;
-                        partList.Add(part.Owner);
+                        partList.Add(part);
                     }
                 }
                 if (notFound)
@@ -122,16 +122,19 @@ namespace Content.Server.Body.Systems
         private void Reassemble(ReassembleDoAfterComplete args)
         {
             var uid = args.Uid;
-            var component = args.Component;
+            TryComp<SkeletonBodyManagerComponent>(args.Uid, out var component);
+
+            if (component == null)
+                return;
 
             if (component.DNA == null)
                 return;
 
             // Creates the new entity and transfers the mind component
             var speciesProto = _prototype.Index<SpeciesPrototype>(component.DNA.Value.Profile.Species).Prototype;
-            var mob = _entities.SpawnEntity(speciesProto, _entities.GetComponent<TransformComponent>(component.Owner).MapPosition);
+            var mob = EntityManager.SpawnEntity(speciesProto, EntityManager.GetComponent<TransformComponent>(component.Owner).MapPosition);
 
-            Get<SharedHumanoidAppearanceSystem>().UpdateFromProfile(mob, component.DNA.Value.Profile);
+            _humanoidAppeareance.UpdateFromProfile(mob, component.DNA.Value.Profile);
             MetaData(mob).EntityName = component.DNA.Value.Profile.Name;
 
             if (TryComp<MindComponent>(uid, out var mindcomp) && mindcomp.Mind != null)
@@ -140,7 +143,7 @@ namespace Content.Server.Body.Systems
             // Cleans up all the body part pieces
             foreach (var entity in args.PartList)
             {
-                _entities.DeleteEntity(entity);
+                EntityManager.DeleteEntity(entity);
             }
 
             _popupSystem.PopupEntity(Loc.GetString("skeleton-reassemble-success", ("user", mob)), mob, Filter.Entities(mob));
@@ -172,14 +175,12 @@ namespace Content.Server.Body.Systems
         {
             public readonly EntityUid Uid; //the entity being reassembled
             public readonly EntityUid User; //the user performing the reassembly
-            public readonly SkeletonBodyManagerComponent Component;
-            public readonly List<EntityUid> PartList;
+            public readonly HashSet<EntityUid> PartList;
 
-            public ReassembleDoAfterComplete(EntityUid uid, EntityUid user, SkeletonBodyManagerComponent component, List<EntityUid> partList)
+            public ReassembleDoAfterComplete(EntityUid uid, EntityUid user, HashSet<EntityUid> partList)
             {
                 Uid = uid;
                 User = user;
-                Component = component;
                 PartList = partList;
             }
         }

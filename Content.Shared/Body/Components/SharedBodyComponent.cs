@@ -394,12 +394,12 @@ namespace Content.Shared.Body.Components
             }
         }
 
-        public virtual List<SharedBodyPartComponent> Gib(bool gibParts = false)
+        public virtual HashSet<EntityUid> Gib(bool gibParts = false)
         {
-            var gibs = new List<SharedBodyPartComponent>();
+            var gibs = new HashSet<EntityUid>();
             foreach (var part in SlotParts.Keys)
             {
-                gibs.Add(part);
+                gibs.Add(part.Owner);
                 RemovePart(part);
 
                 if (gibParts)
