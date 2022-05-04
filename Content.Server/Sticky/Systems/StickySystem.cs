@@ -175,7 +175,7 @@ public sealed class StickySystem : EntitySystem
             // start unsticking object
             _doAfterSystem.DoAfter(new DoAfterEventArgs(user, delay, target: uid)
             {
-                BroadcastFinishedEvent = new UnstickSuccessfulEvent(uid, user , target),
+                BroadcastFinishedEvent = new UnstickSuccessfulEvent(uid, user, target),
                 BreakOnStun = true,
                 BreakOnTargetMove = true,
                 BreakOnUserMove = true,
