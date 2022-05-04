@@ -37,7 +37,7 @@ namespace Content.Shared.Stacks
             if (!TryComp(args.Used, out SharedStackComponent? recipientStack))
                 return;
 
-            if (!TryMergeStacks( args.User, uid, args.Used, out var transfered, stack, recipientStack))
+            if (!TryMergeStacks(args.User, uid, args.Used, out var transfered, stack, recipientStack))
                 return;
 
             args.Handled = true;
