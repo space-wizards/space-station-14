@@ -1,6 +1,7 @@
 using Content.Server.Tools.Components;
 using Content.Shared.Examine;
 using Content.Shared.Interaction;
+using Content.Shared.Tools.Components;
 
 namespace Content.Server.Tools.Systems;
 
@@ -77,11 +78,23 @@ public sealed class WeldableSystem : EntitySystem
 
         component.IsWelded = !component.IsWelded;
         RaiseLocalEvent(uid, new WeldableChangedEvent(component.IsWelded));
+
+        UpdateAppearance(uid, component);
     }
 
     private void OnWeldCanceled(EntityUid uid, WeldableComponent component, WeldCancelledEvent args)
     {
         component.BeingWelded = false;
+    }
+
+    private void UpdateAppearance(EntityUid uid, WeldableComponent? component = null)
+    {
+        if (!Resolve(uid, ref component))
+            return;
+
+        if (!TryComp(uid, out AppearanceComponent? appearance))
+            return;
+        appearance.SetData(WeldableVisuals.IsWelded, component.IsWelded);
     }
 
     /// <summary>
