@@ -13,7 +13,7 @@
 - type: cargoProduct
   name: shuttle gyroscope
   id: ShuttleGyroscope
-  description: 1 gyroscope for use in rotating a shuttle.
+  description: A gyroscope for use in rotating a shuttle.
   icon:
     sprite: Structures/Shuttles/gyroscope.rsi
     state: base
@@ -23,13 +23,14 @@
   group: market
 
 - type: cargoProduct
-  name: shuttle assembly crate
-  id: ShuttleBasicKit
-  description: "Contains boards for a shuttle console and wallmounted power utilities."
+  name: shuttle powering crate
+  id: ShuttlePowerKit
+  description: Contains boards for wallmounted power utilities.
   icon:
     sprite: Structures/Machines/computers.rsi
     state: avionics-systems
   product: CrateEngineeringShuttle
-  cost: 2500
+  cost: 3000
   category: Shuttle
   group: market
+#  locked: true   # only the QM has permission to order by default

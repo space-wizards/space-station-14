@@ -139,13 +139,11 @@
 
 - type: entity
   id: CrateEngineeringShuttle
-  name: shuttle assembly crate
+  name: shuttle power crate
   parent: CrateEngineeringSecure
   components:
   - type: StorageFill
     contents:
-      - id: ShuttleConsoleCircuitboard
-        amount: 1
       - id: WallmountSubstationElectronics
         amount: 1
       - id: WallmountGeneratorAPUElectronics
@@ -154,15 +152,3 @@
         amount: 1
       - id: InflatableDoorStack1
         amount: 1
-
-#- type: entity
-#  id: CrateEngineeringPropulsion
-#  name: shuttle propulsion crate
-#  parent: CrateEngineeringPropulsion
-#  components:
-#  - type: StorageFill
-#    contents:
-#      - id: ShuttleGyroscopeCircuitboard
-#        amount: 1
-#      - id: ShuttleThrusterCircuitboard
-#        amount: 2
