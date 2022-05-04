@@ -1,3 +1,3 @@
-ent-RadiationCollector = radiation collector
-    .desc = A machine that collects Radiation and turns it into power.
+ent-RadiationCollector = накопитель радиации
+    .desc = Машина, которая накапливает радиацию и превращает ее в энергию.
     .suffix = { "" }

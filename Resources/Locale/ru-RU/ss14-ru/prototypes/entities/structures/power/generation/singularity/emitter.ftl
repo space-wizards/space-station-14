@@ -1,3 +1,3 @@
-ent-Emitter = emitter
-    .desc = A heavy duty industrial laser. Shoots non-stop when turned on.
+ent-Emitter = эмиттер
+    .desc = Сверхмощный промышленный лазер. Когда включен, безостановочно стреляет.
     .suffix = { "" }
