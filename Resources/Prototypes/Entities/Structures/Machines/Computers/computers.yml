@@ -76,7 +76,6 @@
   - type: Computer
     board: PowerComputerCircuitboard
   - type: PowerMonitoringConsole
-    voltage: High
   - type: NodeContainer
     examinable: true
     nodes:

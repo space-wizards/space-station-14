@@ -7,6 +7,7 @@ using Content.Server.Power.NodeGroups;
 using Content.Server.UserInterface;
 using Content.Server.WireHacking;
 using JetBrains.Annotations;
+using Robust.Server.GameObjects;
 
 namespace Content.Server.Power.EntitySystems;
 
@@ -14,13 +15,17 @@ namespace Content.Server.Power.EntitySystems;
 internal sealed class PowerMonitoringConsoleSystem : EntitySystem
 {
     private float _updateTimer = 0.0f;
+    private const float UpdateTime = 1.0f;
+
+    [Dependency]
+    private UserInterfaceSystem _userInterfaceSystem = default!;
 
     public override void Update(float frameTime)
     {
         _updateTimer += frameTime;
-        if (_updateTimer >= 1)
+        if (_updateTimer >= UpdateTime)
         {
-            _updateTimer -= 1;
+            _updateTimer -= UpdateTime;
             foreach (var component in EntityQuery<PowerMonitoringConsoleComponent>())
             {
                 UpdateUIState(component.Owner, component);
@@ -90,7 +95,8 @@ internal sealed class PowerMonitoringConsoleSystem : EntitySystem
         loads.Sort(CompareLoadOrSources);
         sources.Sort(CompareLoadOrSources);
         // Actually set state.
-        target.GetUIOrNull(PowerMonitoringConsoleUiKey.Key)?.SetState(new PowerMonitoringConsoleBoundInterfaceState(totalSources, totalLoads, sources.ToArray(), loads.ToArray()));
+        var state = new PowerMonitoringConsoleBoundInterfaceState(totalSources, totalLoads, sources.ToArray(), loads.ToArray());
+        _userInterfaceSystem.GetUiOrNull(target, PowerMonitoringConsoleUiKey.Key)?.SetState(state);
     }
 
     private int CompareLoadOrSources(PowerMonitoringConsoleEntry x, PowerMonitoringConsoleEntry y)
