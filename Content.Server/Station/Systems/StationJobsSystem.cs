@@ -223,7 +223,6 @@ public sealed partial class StationJobsSystem : EntitySystem
         if (!Resolve(station, ref stationJobs))
             throw new ArgumentException("Tried to use a non-station entity as a station!", nameof(station));
 
-
         var res = stationJobs.JobList.TryGetValue(jobPrototypeId, out var job) && job == null;
         return res;
     }
