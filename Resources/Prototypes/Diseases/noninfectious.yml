@@ -25,17 +25,17 @@
   cureResist: 0.2
   effects:
     - !type:DiseaseHealthChange
-      probability: 0.05
+      probability: 0.01
       damage:
         types:
           Blunt: 3
     - !type:DiseaseSnough
-      probability: 0.005
+      probability: 0.05
       snoughMessage: disease-cough
       snoughSound:
         collection: Coughs
     - !type:DiseaseProgression
-      probability: 0.5
+      probability: 0.33
       comp: DiseaseZombie
   cures:
     - !type:DiseaseReagentCure

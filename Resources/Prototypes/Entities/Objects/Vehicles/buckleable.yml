@@ -255,3 +255,58 @@
           - VehicleKey
           - ATVKeys
         insertSound: /Audio/Effects/Vehicle/vehiclestartup.ogg
+
+- type: entity
+  id: VehicleSyndicateSegway
+  parent: VehicleBase
+  name: syndicate segway
+  description: Be an enemy of the corporation, in style.
+  components:
+    - type: Vehicle
+      northOnly: true
+      northOverride: -0.1
+      southOverride: 0.1
+      hornSound:
+        path: /Audio/Effects/Vehicle/policesiren.ogg
+      hornAction:
+        name: action-name-siren
+        description: action-desc-siren
+        icon: Objects/Fun/bikehorn.rsi/icon.png
+        iconOn: Objects/Fun/bikehorn.rsi/icon.png
+        event: !type:ToggleActionEvent
+      hornIsSiren: true
+    - type: Sprite
+      sprite: Objects/Vehicles/syndicatesegway.rsi
+      layers:
+        - state: vehicle
+          map: ["enum.VehicleVisualLayers.AutoAnimate"]
+      netsync: false
+      noRot: true
+    - type: Access
+      tags:
+        - Security
+        - Brig
+        - Maintenance
+        - Service
+    - type: Strap
+      buckleOffset: "0.15, -0.05"
+      maxBuckleDistance: 1
+    - type: MovementSpeedModifier
+      baseWalkSpeed : 8
+      baseSprintSpeed : 8
+    - type: Armor
+      modifiers:
+        coeffecients:
+          Blunt: 0.8
+          Slash: 0.6
+          Piercing: 0.85
+    - type: ItemSlots
+      slots:
+        key_slot:
+          name: Keys
+          whitelist:
+            requireAll: true
+            tags:
+              - VehicleKey
+              - SyndicateSegwayKeys
+          insertSound: /Audio/Effects/Vehicle/vehiclestartup.ogg
