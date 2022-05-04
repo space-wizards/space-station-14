@@ -97,7 +97,8 @@
       layer:     #removed opaque from the layer, allowing lasers to pass through glass airlocks
       - Impassable
       - VaultImpassable
-
+  - type: PaintableAirlock
+    group: Windoor
 
 - type: entity
   parent: AirlockGlass
@@ -106,6 +107,8 @@
   components:
   - type: Sprite
     sprite: Structures/Doors/Airlocks/Glass/engineering.rsi
+  - type: PaintableAirlock
+    group: Glass
 
 - type: entity
   parent: AirlockGlass
@@ -114,6 +117,8 @@
   components:
   - type: Sprite
     sprite: Structures/Doors/Airlocks/Glass/cargo.rsi
+  - type: PaintableAirlock
+    group: Glass
 
 - type: entity
   parent: AirlockGlass
@@ -122,6 +127,8 @@
   components:
   - type: Sprite
     sprite: Structures/Doors/Airlocks/Glass/medical.rsi
+  - type: PaintableAirlock
+    group: Glass
 
 - type: entity
   parent: AirlockGlass
@@ -130,6 +137,8 @@
   components:
   - type: Sprite
     sprite: Structures/Doors/Airlocks/Glass/science.rsi
+  - type: PaintableAirlock
+    group: Glass
 
 - type: entity
   parent: AirlockGlass
@@ -138,6 +147,8 @@
   components:
   - type: Sprite
     sprite: Structures/Doors/Airlocks/Glass/command.rsi
+  - type: PaintableAirlock
+    group: Glass
 
 - type: entity
   parent: AirlockGlass
@@ -146,3 +157,5 @@
   components:
   - type: Sprite
     sprite: Structures/Doors/Airlocks/Glass/security.rsi
+  - type: PaintableAirlock
+    group: Glass

@@ -52,8 +52,11 @@ namespace Content.Shared.Decals
             }
         }
 
-        protected DecalGridComponent.DecalGridChunkCollection DecalGridChunkCollection(GridId gridId) => EntityManager
-            .GetComponent<DecalGridComponent>(MapManager.GetGrid(gridId).GridEntityId).ChunkCollection;
+        protected DecalGridComponent.DecalGridChunkCollection DecalGridChunkCollection(EntityUid gridEuid) =>
+            Comp<DecalGridComponent>(gridEuid).ChunkCollection;
+        protected DecalGridComponent.DecalGridChunkCollection DecalGridChunkCollection(GridId gridId) =>
+            Comp<DecalGridComponent>(MapManager.GetGridEuid(gridId)).ChunkCollection;
+        protected Dictionary<Vector2i, Dictionary<uint, Decal>> ChunkCollection(EntityUid gridEuid) => DecalGridChunkCollection(gridEuid).ChunkCollection;
         protected Dictionary<Vector2i, Dictionary<uint, Decal>> ChunkCollection(GridId gridId) => DecalGridChunkCollection(gridId).ChunkCollection;
 
         protected virtual void DirtyChunk(GridId id, Vector2i chunkIndices) {}
@@ -76,7 +79,7 @@ namespace Content.Shared.Decals
             if (chunkCollection[indices].Count == 0)
                 chunkCollection.Remove(indices);
 
-            ChunkIndex[gridId]?.Remove(uid);
+            ChunkIndex[gridId].Remove(uid);
             DirtyChunk(gridId, indices);
             return true;
         }

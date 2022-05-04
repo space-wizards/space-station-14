@@ -1,6 +1,6 @@
 - type: gameMap
   id: splitstation
-  mapName: 'Split Station v2.1'
+  mapName: 'Split Station'
   mapPath: /Maps/splitstation.yml
   minPlayers: 40
   stations:
@@ -38,3 +38,4 @@
         Quartermaster: [ 1, 1 ]
         SalvageSpecialist: [ 4, 6 ]
         Musician: [ 1, 1 ]
+        AtmosphericTechnician: [ 1, 2 ]

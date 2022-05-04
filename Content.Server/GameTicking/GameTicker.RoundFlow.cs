@@ -344,6 +344,7 @@ namespace Content.Server.GameTicking
 
             RunLevel = GameRunLevel.PreRoundLobby;
             LobbySong = _robustRandom.Pick(_lobbyMusicCollection.PickFiles).ToString();
+            RandomizeLobbyBackground();
             ResettingCleanup();
 
             if (!LobbyEnabled)

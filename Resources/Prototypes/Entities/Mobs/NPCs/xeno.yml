@@ -5,6 +5,8 @@
   parent: SimpleSpaceMobBase
   description: They mostly come at night. Mostly.
   components:
+  - type: CombatMode
+    canDisarm: true
   - type: UtilityAI
     behaviorSets:
     - Idle
@@ -87,6 +89,7 @@
   - type: Tag
     tags:
       - CannotSuicide
+  - type: NoSlip
 
 - type: entity
   name: space adder

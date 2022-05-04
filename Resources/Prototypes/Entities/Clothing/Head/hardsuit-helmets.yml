@@ -1,6 +1,7 @@
 - type: entity
   parent: ClothingHeadHardsuitWithLightBase
   id: ClothingHeadHelmetHardsuitAtmos
+  noSpawn: true
   name: atmos hardsuit helmet
   description: A special hardsuit helmet designed for working in low-pressure, high thermal environments.
   components:
@@ -17,6 +18,8 @@
       map: [ "light" ]
   - type: HandheldLight
     addPrefix: false
+  - type: ToggleableLightVisuals
+    spriteLayer: light
     inhandVisuals:
       left:
       - state: inhand-left-light
@@ -44,8 +47,8 @@
       - state: inhand-right-unshaded
         shader: unshaded
   - type: PressureProtection
-    highPressureMultiplier: 0.40
-    lowPressureMultiplier: 100
+    highPressureMultiplier: 0.08
+    lowPressureMultiplier: 10000
   - type: Armor
     modifiers:
       coefficients:
@@ -60,6 +63,7 @@
 - type: entity
   parent: ClothingHeadHardsuitBase
   id: ClothingHeadHelmetHardsuitCap
+  noSpawn: true
   name: captain's hardsuit helmet
   description: Special hardsuit helmet, made for the captain of the station.
   components:
@@ -67,10 +71,14 @@
     sprite: Clothing/Head/Hardsuits/capspace.rsi
   - type: Clothing
     sprite: Clothing/Head/Hardsuits/capspace.rsi
+  - type: PressureProtection
+    highPressureMultiplier: 0.3
+    lowPressureMultiplier: 1000
 
 - type: entity
-  parent: HatBase
+  parent: ClothingHeadHardsuitBase
   id: ClothingHeadHelmetHardsuitDeathsquad
+  noSpawn: true
   name: deathsquad hardsuit helmet
   description: A robust helmet for special operations.
   components:
@@ -78,10 +86,14 @@
     sprite: Clothing/Head/Hardsuits/deathsquad.rsi
   - type: Clothing
     sprite: Clothing/Head/Hardsuits/deathsquad.rsi
+  - type: PressureProtection
+    highPressureMultiplier: 0.08
+    lowPressureMultiplier: 1000
 
 - type: entity
   parent: ClothingHeadHardsuitWithLightBase
   id: ClothingHeadHelmetHardsuitEngineering
+  noSpawn: true
   name: engineering hardsuit helmet
   description: An engineering hardsuit helmet designed for working in low-pressure, high radioactive environments.
   components:
@@ -90,12 +102,13 @@
   - type: Clothing
     sprite: Clothing/Head/Hardsuits/engineering.rsi
   - type: PressureProtection
-    highPressureMultiplier: 0.40
-    lowPressureMultiplier: 100
+    highPressureMultiplier: 0.1
+    lowPressureMultiplier: 1000
 
 - type: entity
   parent: ClothingHeadHardsuitWithLightBase
   id: ClothingHeadHelmetHardsuitEngineeringWhite
+  noSpawn: true
   name: chief engineer's hardsuit helmet
   description: Special hardsuit helmet, made for the chief engineer of the station.
   components:
@@ -103,10 +116,14 @@
     sprite: Clothing/Head/Hardsuits/engineering-white.rsi
   - type: Clothing
     sprite: Clothing/Head/Hardsuits/engineering-white.rsi
+  - type: PressureProtection
+    highPressureMultiplier: 0.08
+    lowPressureMultiplier: 1000
 
 - type: entity
   parent: HatBase
   id: ClothingHeadHelmetIHSVoidHelm
+  noSpawn: true
   name: IHS voidhelm
   description: A robust, tactical IHS helmet.
   components:
@@ -115,12 +132,13 @@
   - type: Clothing
     sprite: Clothing/Head/Hardsuits/ihsvoid.rsi
   - type: PressureProtection
-    highPressureMultiplier: 0.60
-    lowPressureMultiplier: 100
+    highPressureMultiplier: 0.3
+    lowPressureMultiplier: 10000
 
 - type: entity
   parent: ClothingHeadHardsuitWithLightBase
   id: ClothingHeadHelmetHardsuitMedical
+  noSpawn: true
   name: chief medical officer's hardsuit helmet
   description: Lightweight medical hardsuit helmet that doesn't restrict your head movements.
   components:
@@ -129,14 +147,15 @@
   - type: Clothing
     sprite: Clothing/Head/Hardsuits/medical.rsi
   - type: PressureProtection
-    highPressureMultiplier: 0.80
-    lowPressureMultiplier: 55
+    highPressureMultiplier: 0.6
+    lowPressureMultiplier: 5500
   - type: DiseaseProtection
     protection: 0.15
 
 - type: entity
   parent: ClothingHeadHardsuitWithLightBase
   id: ClothingHeadHelmetHardsuitRd
+  noSpawn: true
   name: experimental research hardsuit helmet
   description: Lightweight hardsuit helmet that doesn't restrict your head movements.
   components:
@@ -145,12 +164,13 @@
   - type: Clothing
     sprite: Clothing/Head/Hardsuits/rd.rsi
   - type: PressureProtection
-    highPressureMultiplier: 0.80
-    lowPressureMultiplier: 55
+    highPressureMultiplier: 0.60
+    lowPressureMultiplier: 5500
 
 - type: entity
   parent: ClothingHeadHardsuitWithLightBase
   id: ClothingHeadHelmetHardsuitSalvage
+  noSpawn: true
   name: salvage hardsuit helmet
   description: A special helmet designed for work in a hazardous, low pressure environment. Has reinforced plating for wildlife encounters and dual floodlights.
   components:
@@ -159,12 +179,22 @@
   - type: Clothing
     sprite: Clothing/Head/Hardsuits/salvage.rsi
   - type: PressureProtection
-    highPressureMultiplier: 0.70
-    lowPressureMultiplier: 100
+    highPressureMultiplier: 0.525
+    lowPressureMultiplier: 10000
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.8
+        Slash: 0.8
+        Piercing: 0.8 
+  - type: PointLight
+    radius: 7
+    energy: 3
 
 - type: entity
   parent: ClothingHeadHardsuitWithLightBase
   id: ClothingHeadHelmetHardsuitSecurity
+  noSpawn: true
   name: security hardsuit helmet
   description: Armored hardsuit helmet for security needs.
   components:
@@ -173,12 +203,19 @@
   - type: Clothing
     sprite: Clothing/Head/Hardsuits/security.rsi
   - type: PressureProtection
-    highPressureMultiplier: 0.70
-    lowPressureMultiplier: 100
-
+    highPressureMultiplier: 0.525
+    lowPressureMultiplier: 10000
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.8
+        Slash: 0.8
+        Piercing: 0.8
+        
 - type: entity
   parent: ClothingHeadHardsuitWithLightBase
   id: ClothingHeadHelmetHardsuitSecurityRed
+  noSpawn: true
   name: head of security's hardsuit helmet
   description: Security hardsuit helmet with the latest top secret NT-HUD software. Belongs to the HoS.
   components:
@@ -187,12 +224,19 @@
   - type: Clothing
     sprite: Clothing/Head/Hardsuits/security-red.rsi
   - type: PressureProtection
-    highPressureMultiplier: 0.60
-    lowPressureMultiplier: 100
+    highPressureMultiplier: 0.45
+    lowPressureMultiplier: 10000
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.8
+        Slash: 0.8
+        Piercing: 0.8
 
 - type: entity
   parent: ClothingHeadHardsuitWithLightBase
   id: ClothingHeadHelmetHardsuitSyndie
+  noSpawn: true
   name: blood red hardsuit helmet
   description: An advanced red hardsuit helmet designed for work in special operations.
   components:
@@ -202,10 +246,22 @@
     sprite: Clothing/Head/Hardsuits/syndicate.rsi
   - type: PointLight
     color: green
+  - type: PressureProtection
+    highPressureMultiplier: 0.08
+    lowPressureMultiplier: 1000
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.8
+        Slash: 0.8
+        Piercing: 0.8
+        Heat: 0.8
+        Radiation: 0.5
 
 - type: entity
   parent: ClothingHeadHardsuitWithLightBase
   id: ClothingHeadHelmetHardsuitWizard
+  noSpawn: true
   name: wizard hardsuit helmet
   description: A bizarre gem-encrusted helmet that radiates magical energies.
   components:
@@ -213,10 +269,14 @@
     sprite: Clothing/Head/Hardsuits/wizard.rsi
   - type: Clothing
     sprite: Clothing/Head/Hardsuits/wizard.rsi
+  - type: PressureProtection
+    highPressureMultiplier: 0.27
+    lowPressureMultiplier: 1000
 
 - type: entity
   parent: ClothingHeadHardsuitBase
   id: ClothingHeadHelmetHardsuitLing
+  noSpawn: true
   name: organic space helmet
   description: A spaceworthy biomass of pressure and temperature resistant tissue.
   components:
@@ -225,12 +285,13 @@
   - type: Clothing
     sprite: Clothing/Head/Hardsuits/lingspacehelmet.rsi
   - type: PressureProtection
-    highPressureMultiplier: 0.5
-    lowPressureMultiplier: 100
+    highPressureMultiplier: 0.225
+    lowPressureMultiplier: 10000
     
 - type: entity
   parent: ClothingHeadHardsuitWithLightBase
   id: ClothingHeadHelmetHardsuitSpatio
+  noSpawn: true
   name: spationaut hardsuit helmet
   description: A sturdy helmet designed for complex industrial operations in space. 
   components:
@@ -274,5 +335,5 @@
       - state: inhand-right-unshaded
         shader: unshaded   
   - type: PressureProtection
-    highPressureMultiplier: 0.8
-    lowPressureMultiplier: 100
+    highPressureMultiplier: 0.72
+    lowPressureMultiplier: 10000

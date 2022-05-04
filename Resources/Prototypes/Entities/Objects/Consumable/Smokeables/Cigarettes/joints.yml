@@ -11,9 +11,9 @@
   - type: Tag
     tags:
       - Cigarette
-      - Recyclable
       - Trash
   - type: Recyclable
+  - type: SpaceGarbage
   - type: Clothing
     sprite: Objects/Consumable/Smokeables/Cigarettes/blunt.rsi
     Slots: [ mask ]
@@ -43,9 +43,9 @@
   - type: Tag
     tags:
       - Cigarette
-      - Recyclable
       - Trash
   - type: Recyclable
+  - type: SpaceGarbage
   - type: Clothing
     sprite: Objects/Consumable/Smokeables/Cigarettes/blunt.rsi
     Slots: [ mask ]

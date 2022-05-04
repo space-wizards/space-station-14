@@ -3,6 +3,8 @@
   abstract: true
   id: PlayerSiliconBase #for player controlled silicons
   components:
+  - type: CombatMode
+    canDisarm: true
   - type: Reactive
     groups:
       Acidic: [Touch]
@@ -162,8 +164,8 @@
       event: !type:ToggleActionEvent
   - type: PointLight
     enabled: false
-    radius: 2.5
-    softness: 5
+    radius: 3.5
+    softness: 1
     mask: /Textures/Effects/LightMasks/cone.png
     autoRot: true
   - type: Tag

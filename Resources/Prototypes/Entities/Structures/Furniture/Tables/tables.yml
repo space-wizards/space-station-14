@@ -13,7 +13,7 @@
     fixtures:
     - shape:
         !type:PhysShapeAabb
-        bounds: "-0.45,-0.45,0.45,0.45"
+        bounds: "-0.40,-0.30,0.40,0.45"
       mass: 50
       mask:
       - Impassable
@@ -43,6 +43,96 @@
   - type: Construction
     graph: Table
     node: TableFrame
+    
+- type: entity
+  id: CounterWoodFrame
+  parent: BaseStructure
+  name: wooden counter frame
+  description: Pieces of wood that make the frame of a table.
+  components:
+  - type: Sprite
+    sprite: Structures/Furniture/Tables/counterwood.rsi
+  - type: Icon
+    sprite: Structures/Furniture/Tables/counterwood.rsi
+  - type: Fixtures
+    fixtures:
+    - shape:
+        !type:PhysShapeAabb
+        bounds: "-0.45,-0.45,0.45,0.45"
+      mass: 50
+      mask:
+      - Impassable
+      - SmallImpassable
+  - type: Damageable
+    damageContainer: Inorganic
+    damageModifierSet: Wood
+  - type: IconSmooth
+    key: state
+    base: state_
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 1
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          path: /Audio/Effects/woodhit.ogg
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          MaterialWoodPlank1:
+            min: 0
+            max: 1
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+  - type: Construction
+    graph: Table
+    node: CounterWoodFrame
+
+- type: entity
+  id: CounterMetalFrame
+  parent: BaseStructure
+  name: metal counter frame
+  description: Pieces of metal that make the frame of a table.
+  components:
+  - type: Sprite
+    sprite: Structures/Furniture/Tables/countermetal.rsi
+  - type: Icon
+    sprite: Structures/Furniture/Tables/countermetal.rsi
+  - type: Fixtures
+    fixtures:
+    - shape:
+        !type:PhysShapeAabb
+        bounds: "-0.45,-0.45,0.45,0.45"
+      mass: 50
+      mask:
+      - Impassable
+      - SmallImpassable
+  - type: Damageable
+    damageContainer: Inorganic
+    damageModifierSet: Metallic
+  - type: IconSmooth
+    key: state
+    base: state_
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 1
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          path: /Audio/Effects/metalbreak.ogg
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          SheetSteel1:
+            min: 0
+            max: 1
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+  - type: Construction
+    graph: Table
+    node: CounterMetalFrame
 
 - type: entity
   id: Table
@@ -380,3 +470,25 @@
       behaviors:
       - !type:DoActsBehavior
         acts: ["Destruction"]
+
+# counters
+
+- type: entity
+  id: TableCounterWood
+  parent: CounterWoodFrame
+  name: wood counter
+  description: Do not apply fire to this. Rumour says it burns easily.
+  components:
+  - type: Construction
+    graph: Table
+    node: CounterWood
+      
+- type: entity
+  id: TableCounterMetal
+  parent: CounterMetalFrame
+  name: metal counter
+  description: Looks like a good place to put a drink down.
+  components:
+  - type: Construction
+    graph: Table
+    node: CounterMetal

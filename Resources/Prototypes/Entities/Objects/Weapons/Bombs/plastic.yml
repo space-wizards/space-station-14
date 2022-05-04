@@ -16,6 +16,8 @@
       initialBeepDelay: 0
       beepSound: /Audio/Machines/Nuke/general_beep.ogg
       startOnStick: true
+    - type: TriggerOnSignal
+    - type: SignalReceiver
     - type: Sticky
       stickDelay: 5
       unstickDelay: 5
@@ -23,11 +25,14 @@
       stickPopupSuccess: comp-sticky-success-stick-bomb
       unstickPopupStart: comp-sticky-start-unstick-bomb
       unstickPopupSuccess: comp-sticky-success-unstick-bomb
+      blacklist: # can't stick it to other items
+        components:
+          - Item
     - type: Explosive # Powerful explosion in a very small radius. Doesn't break underplating.
-      explosionType: Default
-      maxIntensity: 300
-      intensitySlope: 100
-      totalIntensity: 300
+      explosionType: DemolitionCharge
+      totalIntensity: 60
+      intensitySlope: 5
+      maxIntensity: 30
       canCreateVacuum: false
     - type: ExplodeOnTrigger
     - type: Damageable
@@ -36,10 +41,11 @@
       thresholds:
         - trigger:
             !type:DamageTrigger
-            damage: 10
+            damage: 50
           behaviors:
             - !type:DoActsBehavior
               acts: ["Destruction"]
+            - !type:ExplodeBehavior
     - type: StickyVisualizer
     - type: Appearance
       visuals:

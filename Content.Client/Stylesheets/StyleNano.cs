@@ -1183,6 +1183,12 @@ namespace Content.Client.Stylesheets
                     new StyleProperty(Slider.StylePropertyFill, sliderFillBox),
                 }),
 
+                new StyleRule(SelectorElement.Type(typeof(ColorableSlider)), new []
+                {
+                    new StyleProperty(ColorableSlider.StylePropertyFillWhite, sliderFillWhite),
+                    new StyleProperty(ColorableSlider.StylePropertyBackgroundWhite, sliderFillWhite),
+                }),
+
                 new StyleRule(new SelectorElement(typeof(Slider), new []{StyleClassSliderRed}, null, null), new []
                 {
                     new StyleProperty(Slider.StylePropertyFill, sliderFillRed),

@@ -17,7 +17,6 @@ using Robust.Shared.Audio;
 using Robust.Shared.Containers;
 using Robust.Shared.Physics.Dynamics;
 using Robust.Shared.Player;
-using Content.Shared.Hands.Components;
 using System.Linq;
 using Content.Shared.Tools.Components;
 
@@ -294,6 +293,9 @@ public sealed class DoorSystem : SharedDoorSystem
     {
         if(TryComp<AirlockComponent>(uid, out var airlockComponent))
         {
+            if (airlockComponent.BoltsDown || !airlockComponent.IsPowered())
+                return;
+
             if (door.State == DoorState.Closed)
             {
                 SetState(uid, DoorState.Emagging, door);

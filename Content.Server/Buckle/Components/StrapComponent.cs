@@ -1,24 +1,16 @@
-using System.Collections.Generic;
 using System.Linq;
-using Content.Shared.Acts;
 using Content.Shared.Alert;
 using Content.Shared.Buckle.Components;
 using Content.Shared.DragDrop;
-using Content.Shared.Interaction;
 using Content.Shared.Sound;
-using Robust.Server.GameObjects;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Maths;
 using Robust.Shared.Serialization;
-using Robust.Shared.Serialization.Manager.Attributes;
-using Robust.Shared.ViewVariables;
+
 
 namespace Content.Server.Buckle.Components
 {
     [RegisterComponent]
     [ComponentReference(typeof(SharedStrapComponent))]
-    public sealed class StrapComponent : SharedStrapComponent, IInteractHand, ISerializationHooks, IDestroyAct
+    public sealed class StrapComponent : SharedStrapComponent, ISerializationHooks
     {
         [Dependency] private readonly IEntityManager _entityManager = default!;
 
@@ -41,7 +33,7 @@ namespace Content.Server.Buckle.Components
         /// If this offset it too big, it will be clamped to <see cref="MaxBuckleDistance"/>
         /// </summary>
         [DataField("buckleOffset", required: false)]
-        private Vector2 _buckleOffset = Vector2.Zero;
+        public Vector2 BuckleOffsetUnclamped = Vector2.Zero;
 
         private bool _enabled = true;
 
@@ -64,7 +56,7 @@ namespace Content.Server.Buckle.Components
         /// Don't change it unless you really have to
         /// </summary>
         [DataField("maxBuckleDistance", required: false)]
-        public float MaxBuckleDistance = 0.5f;
+        public float MaxBuckleDistance = 0.1f;
 
         /// <summary>
         /// You can specify the offset the entity will have after unbuckling.
@@ -76,7 +68,7 @@ namespace Content.Server.Buckle.Components
         /// Gets and clamps the buckle offset to MaxBuckleDistance
         /// </summary>
         public Vector2 BuckleOffset => Vector2.Clamp(
-            _buckleOffset,
+            BuckleOffsetUnclamped,
             Vector2.One * -MaxBuckleDistance,
             Vector2.One * MaxBuckleDistance);
 
@@ -190,12 +182,7 @@ namespace Content.Server.Buckle.Components
             RemoveAll();
         }
 
-        void IDestroyAct.OnDestroy(DestructionEventArgs eventArgs)
-        {
-            RemoveAll();
-        }
-
-        private void RemoveAll()
+        public void RemoveAll()
         {
             var entManager = IoCManager.Resolve<IEntityManager>();
 
@@ -214,18 +201,6 @@ namespace Content.Server.Buckle.Components
         public override ComponentState GetComponentState()
         {
             return new StrapComponentState(Position);
-        }
-
-        bool IInteractHand.InteractHand(InteractHandEventArgs eventArgs)
-        {
-            var entManager = IoCManager.Resolve<IEntityManager>();
-
-            if (!entManager.TryGetComponent<BuckleComponent>(eventArgs.User, out var buckle))
-            {
-                return false;
-            }
-
-            return buckle.ToggleBuckle(eventArgs.User, Owner);
         }
 
         public override bool DragDropOn(DragDropEvent eventArgs)

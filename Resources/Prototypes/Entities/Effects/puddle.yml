@@ -15,6 +15,7 @@
   - type: Clickable
   - type: Evaporation
   - type: Slippery
+    launchForwardsMultiplier: 2.0
   - type: Physics
   - type: Fixtures
     fixtures:
