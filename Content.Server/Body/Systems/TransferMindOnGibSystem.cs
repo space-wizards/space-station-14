@@ -17,20 +17,20 @@ namespace Content.Server.Body.Systems
 
         private void OnBeforeGibbed(EntityUid uid, TransferMindOnGibComponent component, BeforeGibbedEvent args)
         {
-            if (TryComp<MindComponent>(uid, out var mindComp) && mindComp.Mind != null)
+            if (!TryComp<MindComponent>(uid, out var mindComp) || mindComp?.Mind == null)
+                return;
+
+            if (!TryComp<BodyComponent>(uid, out var bodyComp))
+                return;
+
+            foreach (var part in bodyComp.Parts)
             {
-                if (TryComp<BodyComponent>(uid, out var bodyComp))
+                var entity = part.Key.Owner;
+                if (HasComp<SkeletonBodyManagerComponent>(entity))
                 {
-                    foreach (var part in bodyComp.Parts)
-                    {
-                        var entity = part.Key.Owner;
-                        if (HasComp<SkeletonBodyManagerComponent>(entity))
-                        {
-                            component.TransferTarget = entity;
-                            _skeletonBodyManager.UpdateDNAEntry(entity, uid);
-                            mindComp.Mind.TransferTo(entity);
-                        }
-                    }
+                    component.TransferTarget = entity;
+                    _skeletonBodyManager.UpdateDNAEntry(entity, uid);
+                    mindComp.Mind.TransferTo(entity);
                 }
             }
         }
