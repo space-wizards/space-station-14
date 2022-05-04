@@ -24,17 +24,26 @@ namespace Content.Server.PackageWrapper
         {
             if (args.Target != null)
             {
+                //Don't wrap anchored items
                 if (TryComp<TransformComponent>(args.Target.Value, out var targetTransform))
                 {
                     if (targetTransform.Anchored)
                     {
-                        component.Owner.PopupMessage(args.User, Loc.GetString("on-failed-wrap-verb-message",
+                        component.Owner.PopupMessage(args.User, Loc.GetString("on-failed-wrap-message",
                             ("target", Comp<MetaDataComponent>(args.Target.Value).EntityName)));
                         return;
                     }
                 }
+                //Don't wrap wrapped items
+                if (TryComp<WrappedStorageComponent>(args.Target, out _))
+                {
+                    component.Owner.PopupMessage(args.User, Loc.GetString("on-failed-wrap-message",
+                        ("target", Comp<MetaDataComponent>(args.Target.Value).EntityName)));
+                    return;
+                }
 
-                if(TryComp<WrapableShapeComponent>(args.Target.Value, out var targetWrapType)) // Broken!
+                // If object shaped, wrap it in shape
+                if(TryComp<WrapableShapeComponent>(args.Target.Value, out var targetWrapType))
                 {
                     var typeComp = component.ProductsShaped.FirstOrDefault(x => targetWrapType.WrapType == x.ID);
 
@@ -53,11 +62,12 @@ namespace Content.Server.PackageWrapper
 
                         //There must be better way of getting entity name
                         component.Owner.PopupMessage(args.User,
-                            Loc.GetString("on-successful-wrap-verb-message",
+                            Loc.GetString("on-successful-wrap-message",
                                 ("target", Comp<MetaDataComponent>(args.Target.Value).EntityName),
                                 ("result", Comp<MetaDataComponent>(spawnedObj).EntityName)));
                     }
                 }
+                // If object not shaped, wrap by it's size
                 else if (TryComp<SharedItemComponent>(args.Target.Value, out var targetItem))
                 {
                     // find minimal size
@@ -72,19 +82,19 @@ namespace Content.Server.PackageWrapper
                         container.ItemContainer.Insert(args.Target.Value);
 
                         component.Owner.PopupMessage(args.User,
-                            Loc.GetString("on-successful-wrap-verb-message",
+                            Loc.GetString("on-successful-wrap-message",
                                 ("target", Comp<MetaDataComponent>(args.Target.Value).EntityName),
                                 ("result", Comp<MetaDataComponent>(spawnedObj).EntityName)));
                     }
                     else
                     {
-                        component.Owner.PopupMessage(args.User, Loc.GetString("on-failed-wrap-size-verb-message",
+                        component.Owner.PopupMessage(args.User, Loc.GetString("on-failed-wrap-size-message",
                             ("target", Comp<MetaDataComponent>(args.Target.Value).EntityName)));
                     }
                 }
                 else
                 {
-                    component.Owner.PopupMessage(args.User, Loc.GetString("on-failed-wrap-verb-message",
+                    component.Owner.PopupMessage(args.User, Loc.GetString("on-failed-wrap-message",
                         ("target", Comp<MetaDataComponent>(args.Target.Value).EntityName)));
                 }
             }
