@@ -1,136 +1,4 @@
 Entries:
-- author: Peptide90
-  changes:
-  - {message: Captain and HoP now have Quartermaster access. Find somewhere else to
-      hide your contraband QM., type: Fix}
-  id: 937
-  time: '2022-01-26T18:29:44.0000000+00:00'
-- author: moony
-  changes:
-  - {message: 'The game rules have been updated. In short, no more revolutions unless
-      you''re an antagonist with administrator permission.', type: Tweak}
-  id: 938
-  time: '2022-01-26T22:50:44.0000000+00:00'
-- author: Peptide90
-  changes:
-  - {message: 'Lights now consume slighly more power than before. Can you cope?',
-    type: Fix}
-  - {message: 'LED lights are now less bright so won''t burn your eyes out, just your
-      hands.', type: Fix}
-  - {message: There's two high energy lightbulb specifically for shuttles and station
-      exteriors. Spot the blue and orange glow!, type: Add}
-  id: 939
-  time: '2022-01-27T00:01:32.0000000+00:00'
-- author: Plasmaguy
-  changes:
-  - {message: 'Added three new drinks (root beer, ice cream, and root beer floats).',
-    type: Add}
-  - {message: Root beer can be dispensed from the Bar's soda machine, type: Tweak}
-  - {message: Cans of root beer can be dispensed from the Robust Softdrinks vending
-      machines, type: Tweak}
-  id: 940
-  time: '2022-01-27T07:33:27.0000000+00:00'
-- author: Rane
-  changes:
-  - {message: Chief Engineers now have access to the advanced magboots in their locker.,
-    type: Add}
-  - {message: The 'Steal Magboots' objective is now 'Steal Advanced Magboots' and
-      considered more difficult., type: Tweak}
-  id: 941
-  time: '2022-01-28T18:28:05.0000000+00:00'
-- author: aaronmell
-  changes:
-  - {message: Admin and AdminRank windows show the save button correctly now, type: Fix}
-  id: 942
-  time: '2022-01-29T05:20:26.0000000+00:00'
-- author: Macoron
-  changes:
-  - {message: Welding toilets no longer annihilate characters sitting on them., type: Fix}
-  id: 943
-  time: '2022-01-29T05:34:57.0000000+00:00'
-- author: ElectroJr
-  changes:
-  - {message: 'Airlocks no longer close when an entity is blocking the way. If the
-      safety is disabled, airlocks will now properly crush entities.', type: Fix}
-  id: 944
-  time: '2022-01-30T00:49:57.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - {message: Prying tiles now takes time., type: Tweak}
-  id: 945
-  time: '2022-01-30T03:48:18.0000000+00:00'
-- author: Lamrr
-  changes:
-  - {message: Dog beds have now arrived. You can now give Ian a place to sleep., type: Add}
-  - {message: Normal beds can now be constructed and deconstructed., type: Fix}
-  id: 946
-  time: '2022-01-30T04:47:12.0000000+00:00'
-- author: Schiene
-  changes:
-  - {message: Added a Knightship Emergency Shuttle., type: Add}
-  id: 947
-  time: '2022-01-30T07:32:01.0000000+00:00'
-- author: Pancake
-  changes:
-  - {message: '"Russian accent."', type: Add}
-  id: 948
-  time: '2022-01-30T08:06:16.0000000+00:00'
-- author: Schiene
-  changes:
-  - {message: Adds CentComm Outpost spawnable map, type: Add}
-  id: 949
-  time: '2022-01-30T09:06:20.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - {message: Fix potential crash on item cooldowns where the item was deleted during
-      use., type: Fix}
-  id: 950
-  time: '2022-01-30T13:27:29.0000000+00:00'
-- author: scaly-chimp
-  changes:
-  - {message: Added new flare shotgun shells, type: Add}
-  - {message: fixed the incediary shotgun shells being a reskin., type: Fix}
-  id: 951
-  time: '2022-01-30T13:44:45.0000000+00:00'
-- author: Rane
-  changes:
-  - {message: Removed the objective to stay alive., type: Remove}
-  - {message: Lowered max objective difficulty., type: Tweak}
-  - {message: 'Steal objective probability reduced by 1/3, and die objective probability
-      reduced by 9/10.', type: Tweak}
-  id: 952
-  time: '2022-01-30T14:19:27.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - {message: Conveyors now 20% less jank., type: Tweak}
-  id: 953
-  time: '2022-01-30T14:30:16.0000000+00:00'
-- author: Rane
-  changes:
-  - {message: 'Wood floor tiles can no longer be placed directly on space, and do
-      not space so easily.', type: Fix}
-  - {message: Cryobeaker capacity reduced from 60 to 40., type: Tweak}
-  - {message: Explosive grenades and minibombs no longer beep., type: Tweak}
-  id: 954
-  time: '2022-01-30T14:34:11.0000000+00:00'
-- author: Pancake
-  changes:
-  - {message: Admins now have more animals to release into the station!, type: Add}
-  - {message: Vending machines are now less murderous., type: Tweak}
-  id: 955
-  time: '2022-01-30T14:35:00.0000000+00:00'
-- author: mirrorcult
-  changes:
-  - {message: Fire extinguisher spray now applies touch reactions., type: Add}
-  - {message: Fire extinguishers can be refilled from any source now., type: Tweak}
-  id: 956
-  time: '2022-01-30T14:42:15.0000000+00:00'
-- author: Schiene
-  changes:
-  - {message: 'Added a new non-votable map, Moonrise-class Emergency Response Cruiser.',
-    type: Add}
-  id: 957
-  time: '2022-01-30T15:11:40.0000000+00:00'
 - author: Rane
   changes:
   - {message: 'Chaplains'' prayers have been answered, and they now spawn with a fully
@@ -3053,3 +2921,122 @@ Entries:
   - {message: The ATV now has many possible descriptions., type: Tweak}
   id: 1436
   time: '2022-05-02T20:51:03.0000000+00:00'
+- author: Peptide90
+  changes:
+  - {message: Added three new wall types for secret vaults. Expect to find them in
+      some hidden areas of asteroids in future and containing ancient dangers!, type: Add}
+  id: 1437
+  time: '2022-05-02T22:38:07.0000000+00:00'
+- author: TimrodDX
+  changes:
+  - {message: 'Delta Station now has an ore processor, and may or may not have some
+      decals.', type: Add}
+  id: 1438
+  time: '2022-05-02T22:43:33.0000000+00:00'
+- author: HoofedEar
+  changes:
+  - {message: Requires a little more effort strip something off of someone., type: Tweak}
+  id: 1439
+  time: '2022-05-02T22:47:19.0000000+00:00'
+- author: Macoron
+  changes:
+  - {message: You can't unstick C4 from great distance or while your character in
+      handcuffs., type: Fix}
+  id: 1440
+  time: '2022-05-02T22:50:11.0000000+00:00'
+- author: Peptide90
+  changes:
+  - {message: Added the industrial welder and advanced industrial welders to the game.
+      Larger capacity and the advanced is faster at welding., type: Add}
+  id: 1441
+  time: '2022-05-02T22:51:24.0000000+00:00'
+- author: mirrorcult
+  changes:
+  - {message: Pneumatic cannons now properly fire and eject their contents., type: Fix}
+  id: 1442
+  time: '2022-05-03T02:53:03.0000000+00:00'
+- author: Mirino97
+  changes:
+  - {message: Items failed to insert in containers should no longer drop to the ground!,
+    type: Fix}
+  id: 1443
+  time: '2022-05-03T03:05:23.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: NPCs can open doors to avoid pathfinder issues in the interim., type: Tweak}
+  id: 1444
+  time: '2022-05-03T08:25:01.0000000+00:00'
+- author: freeman2651
+  changes:
+  - {message: the health HUD icon for 100% health now only shows if you are actually
+      undamaged and at 100% health, type: Tweak}
+  id: 1445
+  time: '2022-05-03T09:53:06.0000000+00:00'
+- author: Putnam
+  changes:
+  - {message: Gas pumps now stop if overpressurized, type: Fix}
+  id: 1446
+  time: '2022-05-03T20:24:30.0000000+00:00'
+- author: DogZeroX
+  changes:
+  - {message: Ghosts can now face in four directions., type: Tweak}
+  id: 1447
+  time: '2022-05-03T23:03:24.0000000+00:00'
+- author: Lizard Master
+  changes:
+  - {message: Lizards (animal) now look like Komodos instead of worms., type: Tweak}
+  - {message: 'Added slugs, what used to be old lizard sprite.', type: Add}
+  id: 1448
+  time: '2022-05-03T23:17:57.0000000+00:00'
+- author: Rane
+  changes:
+  - {message: Drones will no longer be blocked from acting near dead ghost roles.,
+    type: Fix}
+  id: 1449
+  time: '2022-05-04T02:41:15.0000000+00:00'
+- author: Rane
+  changes:
+  - {message: Margherita pizza now actually resembles margherita pizza in its recipe
+      and description., type: Fix}
+  id: 1450
+  time: '2022-05-04T02:41:36.0000000+00:00'
+- author: Rane
+  changes:
+  - {message: Fixed a bug where lathe queues could get stuck., type: Fix}
+  id: 1451
+  time: '2022-05-04T02:43:25.0000000+00:00'
+- author: DogZeroX
+  changes:
+  - {message: The health status now looks fancier!, type: Tweak}
+  id: 1452
+  time: '2022-05-04T02:49:48.0000000+00:00'
+- author: Peptide90
+  changes:
+  - {message: 'NSS Pillar Update! Added vehicle spawns, drains, watercoolers and other
+      missing content. Misc fixes and updated the escape pods to work.', type: Tweak}
+  id: 1453
+  time: '2022-05-04T02:51:58.0000000+00:00'
+- author: Rane
+  changes:
+  - {message: 'The trash bag and plant bag can now be directly emptied into disposal
+      units, onto tables, or on the ground with an alternative verb.', type: Add}
+  id: 1454
+  time: '2022-05-04T03:00:22.0000000+00:00'
+- author: Fishfish458
+  changes:
+  - {message: Found where Poly hid the CE's stamp and it is now returned., type: Fix}
+  id: 1455
+  time: '2022-05-04T16:22:54.0000000+00:00'
+- author: 20kdc
+  changes:
+  - {message: Power Monitoring Consoles now show some power details on high-voltage
+      networks., type: Add}
+  id: 1456
+  time: '2022-05-04T17:59:40.0000000+00:00'
+- author: Rane
+  changes:
+  - {message: Your camera now follows the vehicle rather than you when you are riding
+      one., type: Tweak}
+  - {message: Vehicles no longer render above kudzu., type: Fix}
+  id: 1457
+  time: '2022-05-04T18:21:39.0000000+00:00'

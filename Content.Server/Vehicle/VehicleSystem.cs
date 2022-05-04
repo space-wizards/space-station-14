@@ -10,8 +10,10 @@ using Content.Server.Light.Components;
 using Content.Server.Buckle.Components;
 using Content.Server.Hands.Systems;
 using Content.Shared.Tag;
+using Content.Server.Mind.Components;
 using Robust.Shared.Random;
 using Robust.Shared.Containers;
+using Robust.Shared.Player;
 
 namespace Content.Server.Vehicle
 {
@@ -24,7 +26,6 @@ namespace Content.Server.Vehicle
         [Dependency] private readonly TagSystem _tagSystem = default!;
         [Dependency] private readonly ItemSlotsSystem _itemSlotsSystem = default!;
         [Dependency] private readonly RiderSystem _riderSystem = default!;
-
         public override void Initialize()
         {
             base.Initialize();
@@ -68,6 +69,10 @@ namespace Content.Server.Vehicle
         /// </summary>
         private void OnBuckleChange(EntityUid uid, VehicleComponent component, BuckleChangeEvent args)
         {
+            // Send an event that our vehicle buckle changed
+            if (TryComp<MindComponent>(args.BuckledEntity, out var mind) && mind.Mind != null && mind.Mind.TryGetSession(out var session))
+                RaiseNetworkEvent(new BuckledToVehicleEvent(uid, args.BuckledEntity, args.Buckling), Filter.SinglePlayer(session));
+
             if (args.Buckling)
             {
                 // Add a virtual item to rider's hand, unbuckle if we can't.
@@ -200,16 +205,16 @@ namespace Content.Server.Vehicle
             {
                 return xform.LocalRotation.Degrees switch
                 {
-                    < 135f => 10,
+                    < 135f => 5,
                     <= 225f => 2,
-                    _ => 10
+                    _ => 5
                 };
             }
             return xform.LocalRotation.Degrees switch
             {
-                < 45f => 10,
+                < 45f => 5,
                 <= 315f => 2,
-                _ => 10
+                _ => 5
             };
         }
 

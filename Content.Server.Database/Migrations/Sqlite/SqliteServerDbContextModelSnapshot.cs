@@ -109,6 +109,8 @@ namespace Content.Server.Database.Migrations.Sqlite
                     b.HasKey("Id", "RoundId")
                         .HasName("PK_admin_log");
 
+                    b.HasIndex("Date");
+
                     b.HasIndex("RoundId")
                         .HasDatabaseName("IX_admin_log_round_id");
 

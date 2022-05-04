@@ -8,7 +8,7 @@ namespace Content.Client.Storage
     /// Client version of item storage containers, contains a UI which displays stored entities and their size
     /// </summary>
     [RegisterComponent]
-    public sealed class ClientStorageComponent : SharedStorageComponent, IDraggable
+    public sealed class ClientStorageComponent : SharedStorageComponent
     {
         [Dependency] private readonly IEntityManager _entityManager = default!;
         private List<EntityUid> _storedEntities = new();
