@@ -562,18 +562,13 @@ namespace Content.Client.Preferences.UI
         private void RebuildSpriteView()
         {
             var species = Profile?.Species ?? SpeciesManager.DefaultSpecies;
+            var dollProto = _prototypeManager.Index<SpeciesPrototype>(species).DollPrototype;
 
-            if (_lastSpecies != species)
-            {
-                var dollProto = _prototypeManager.Index<SpeciesPrototype>(species).DollPrototype;
+            if (_previewDummy != null)
+                _entMan.DeleteEntity(_previewDummy!.Value);
 
-                if (_previewDummy != null)
-                    _entMan.DeleteEntity(_previewDummy!.Value);
-
-                _previewDummy = _entMan.SpawnEntity(dollProto, MapCoordinates.Nullspace);
-                _lastSpecies = species;
-            }
-
+            _previewDummy = _entMan.SpawnEntity(dollProto, MapCoordinates.Nullspace);
+            _lastSpecies = species;
             var sprite = _entMan.GetComponent<SpriteComponent>(_previewDummy!.Value);
 
             if (_previewSprite == null)
