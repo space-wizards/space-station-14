@@ -410,5 +410,4 @@
   components:
   - type: Sprite
     layers:
-    - state: syndi
-    
+    - state: syndie
