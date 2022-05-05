@@ -585,7 +585,7 @@ public sealed class WiresSystem : EntitySystem
         if (!Resolve(uid, ref wires))
             return null;
 
-        return id > 0 && id < wires.WiresList.Count
+        return id >= 0 && id < wires.WiresList.Count
             ? wires.WiresList[id]
             : null;
     }
