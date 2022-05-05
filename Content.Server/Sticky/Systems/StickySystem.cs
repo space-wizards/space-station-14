@@ -168,8 +168,6 @@ public sealed class StickySystem : EntitySystem
             return;
 
         UnstickFromEntity(ev.Uid, ev.User, component);
-
-        EntityManager.RemoveComponent<HasEntityStuckOnComponent>(ev.Target);
     }
 
     public void StickToEntity(EntityUid uid, EntityUid target, EntityUid user, StickyComponent? component = null)
@@ -203,7 +201,7 @@ public sealed class StickySystem : EntitySystem
         RaiseLocalEvent(uid, new EntityStuckEvent(target, user));
     }
 
-    public void UnstickFromEntity(EntityUid uid, EntityUid user, StickyComponent? component = null)
+    public void UnstickFromEntity(EntityUid uid, EntityUid user,StickyComponent? component = null)
     {
         if (!Resolve(uid, ref component))
             return;
@@ -217,6 +215,8 @@ public sealed class StickySystem : EntitySystem
         // delete container if it's now empty
         if (container.ContainedEntities.Count == 0)
             container.Shutdown();
+        // removes the component flag on the target
+        EntityManager.RemoveComponent<HasEntityStuckOnComponent>(target);
 
         // try place dropped entity into user hands
         _handsSystem.PickupOrDrop(user, uid);
