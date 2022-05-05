@@ -2,11 +2,14 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Data.Common;
 using System.Linq;
 using System.Net;
 using System.Text.Json;
 using Content.Shared.Database;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Storage;
+using Npgsql;
 
 namespace Content.Server.Database
 {
@@ -174,6 +177,8 @@ namespace Content.Server.Database
         {
             return query.Where(log => EF.Functions.Like(log.Message, "%" + searchText + "%"));
         }
+
+        public abstract int CountAdminLogs();
     }
 
     public class Preference
