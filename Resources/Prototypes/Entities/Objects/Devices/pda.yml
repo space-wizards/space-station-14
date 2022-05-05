@@ -131,7 +131,8 @@
   - type: Icon
     state: pda-clown
   - type: Slippery
-    paralyzeTime: 4
+    paralyzeTime: 4.0
+    knockdownTime: 4.5
     launchForwardsMultiplier: 9.0
   - type: CollisionWake
     enabled: false
@@ -526,9 +527,9 @@
   parent: BasePDA
   id: ClearPDA
   name: clear PDA
-  description: 99 and 44/100ths percent pure plastic. 
+  description: 99 and 44/100ths percent pure plastic.
   components:
   - type: PDA
     id: AssistantIDCard
   - type: Icon
-    state: pda-clear    
+    state: pda-clear

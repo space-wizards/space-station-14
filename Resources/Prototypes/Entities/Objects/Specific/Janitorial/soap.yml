@@ -13,7 +13,8 @@
   - type: Item
     sprite: Objects/Specific/Janitorial/soap.rsi
   - type: Slippery
-    paralyzeTime: 2
+    paralyzeTime: 1.5
+    knockdownTime: 2.5
     intersectPercentage: 0.2
     launchForwardsMultiplier: 6.0
   - type: CollisionWake
@@ -67,7 +68,8 @@
   - type: Sprite
     state: syndie
   - type: Slippery
-    paralyzeTime: 5
+    paralyzeTime: 5.0
+    knockdownTime: 5.5
     launchForwardsMultiplier: 9.0
   - type: Item
     HeldPrefix: syndie
@@ -81,7 +83,8 @@
   - type: Sprite
     state: gibs
   - type: Slippery
-    paralyzeTime: 2
+    paralyzeTime: 1.5
+    knockdownTime: 2.5
   - type: Item
     HeldPrefix: gibs
 
@@ -94,7 +97,8 @@
   - type: Sprite
     state: omega
   - type: Slippery
-    paralyzeTime: 7
+    paralyzeTime: 7.0
+    knockdownTime: 7.5
     launchForwardsMultiplier: 9.0
   - type: Item
     HeldPrefix: omega

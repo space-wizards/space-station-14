@@ -17,6 +17,7 @@ namespace Content.Shared.Slippery
     public sealed class SlipperyComponent : Component
     {
         private float _paralyzeTime = 5f;
+        private float _knockdownTime = 5f;
         private float _intersectPercentage = 0.3f;
         private float _requiredSlipSpeed = 3.5f;
         private float _launchForwardsMultiplier = 1f;
@@ -64,6 +65,23 @@ namespace Content.Shared.Slippery
                 if (MathHelper.CloseToPercent(_paralyzeTime, value)) return;
 
                 _paralyzeTime = value;
+                Dirty();
+            }
+        }
+
+        /// <summary>
+        ///     How many seconds the mob will be forced to crawl.
+        /// </summary>
+        [ViewVariables(VVAccess.ReadWrite)]
+        [DataField("knockdownTime")]
+        public float KnockdownTime
+        {
+            get => _knockdownTime;
+            set
+            {
+                if (MathHelper.CloseToPercent(_knockdownTime, value)) return;
+
+                _knockdownTime = value;
                 Dirty();
             }
         }
@@ -138,7 +156,7 @@ namespace Content.Shared.Slippery
 
         public override ComponentState GetComponentState()
         {
-            return new SlipperyComponentState(ParalyzeTime, IntersectPercentage, RequiredSlipSpeed, LaunchForwardsMultiplier, Slippery, SlipSound.GetSound(), Slipped.ToArray());
+            return new SlipperyComponentState(ParalyzeTime, KnockdownTime, IntersectPercentage, RequiredSlipSpeed, LaunchForwardsMultiplier, Slippery, SlipSound.GetSound(), Slipped.ToArray());
         }
 
         public override void HandleComponentState(ComponentState? curState, ComponentState? nextState)
@@ -148,6 +166,7 @@ namespace Content.Shared.Slippery
             _slippery = state.Slippery;
             _intersectPercentage = state.IntersectPercentage;
             _paralyzeTime = state.ParalyzeTime;
+            _knockdownTime = state.KnockdownTime;
             _requiredSlipSpeed = state.RequiredSlipSpeed;
             _launchForwardsMultiplier = state.LaunchForwardsMultiplier;
             _slipSound = new SoundPathSpecifier(state.SlipSound);
@@ -164,6 +183,7 @@ namespace Content.Shared.Slippery
     public sealed class SlipperyComponentState : ComponentState
     {
         public float ParalyzeTime { get; }
+        public float KnockdownTime { get; }
         public float IntersectPercentage { get; }
         public float RequiredSlipSpeed { get; }
         public float LaunchForwardsMultiplier { get; }
@@ -171,9 +191,10 @@ namespace Content.Shared.Slippery
         public string SlipSound { get; }
         public readonly EntityUid[] Slipped;
 
-        public SlipperyComponentState(float paralyzeTime, float intersectPercentage, float requiredSlipSpeed, float launchForwardsMultiplier, bool slippery, string slipSound, EntityUid[] slipped)
+        public SlipperyComponentState(float paralyzeTime, float knockdownTime, float intersectPercentage, float requiredSlipSpeed, float launchForwardsMultiplier, bool slippery, string slipSound, EntityUid[] slipped)
         {
             ParalyzeTime = paralyzeTime;
+            KnockdownTime = knockdownTime;
             IntersectPercentage = intersectPercentage;
             RequiredSlipSpeed = requiredSlipSpeed;
             LaunchForwardsMultiplier = launchForwardsMultiplier;

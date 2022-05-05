@@ -16,6 +16,8 @@
   - type: Evaporation
   - type: Slippery
     launchForwardsMultiplier: 2.0
+    paralyzeTime: 2.0
+    knockdownTime: 4.0
   - type: Physics
   - type: Fixtures
     fixtures:

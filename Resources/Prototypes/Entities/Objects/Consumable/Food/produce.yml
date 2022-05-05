@@ -179,6 +179,8 @@
   - type: Slippery
     intersectPercentage: 0.2
     launchForwardsMultiplier: 6.0
+    paralyzeTime: 4.5
+    knockdownTime: 5.5
   - type: CollisionWake
     enabled: false
   - type: Physics

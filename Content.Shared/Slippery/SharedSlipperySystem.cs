@@ -105,12 +105,22 @@ namespace Content.Shared.Slippery
 
             bool playSound = !_statusEffectsSystem.HasStatusEffect(otherBody.Owner, "KnockedDown");
 
-            _stunSystem.TryParalyze(otherBody.Owner, TimeSpan.FromSeconds(component.ParalyzeTime), true);
+            // Duration of full paralysis.
+            if (component.ParalyzeTime > 0f)
+                _stunSystem.TryParalyze(otherBody.Owner, TimeSpan.FromSeconds(component.ParalyzeTime), true);
+
+            // Duration of knockdown with slowed movement.
+            if (component.KnockdownTime > 0f)
+            {
+                _stunSystem.TryKnockdown(otherBody.Owner, TimeSpan.FromSeconds(component.KnockdownTime), true);
+                _stunSystem.TrySlowdown(otherBody.Owner, TimeSpan.FromSeconds(component.KnockdownTime), true);
+            }
+
             component.Slipped.Add(otherBody.Owner);
             component.Dirty();
 
             //Preventing from playing the slip sound when you are already knocked down.
-            if(playSound)
+            if (playSound)
             {
                 PlaySound(component);
             }
