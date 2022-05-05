@@ -141,7 +141,16 @@ namespace Content.Shared.Wires
     [Serializable, NetSerializable]
     public struct StatusEntry
     {
+        /// <summary>
+        ///     The key of this status, according to the status dictionary
+        ///     server side.
+        /// </summary>
         public readonly object Key;
+
+        /// <summary>
+        ///     The value of this status, according to the status dictionary
+        ///     server side..
+        /// </summary>
         public readonly object Value;
 
         public StatusEntry(object key, object value)
@@ -157,12 +166,32 @@ namespace Content.Shared.Wires
     }
 
 
+    /// <summary>
+    ///     ClientWire, sent by the server so that the client knows
+    ///     what wires there are on an entity.
+    /// </summary>
     [Serializable, NetSerializable]
     public class ClientWire
     {
+        /// <summary>
+        ///     ID of this wire, which corresponds to
+        ///     the ID server side.
+        /// </summary>
         public int Id;
+
+        /// <summary>
+        ///     Whether this wire is cut or not.
+        /// </summary>
         public bool IsCut;
+
+        /// <summary>
+        ///     Current color of the wire.
+        /// </summary>
         public WireColor Color;
+
+        /// <summary>
+        ///     Current letter of the wire.
+        /// </summary>
         public WireLetter Letter;
 
         public ClientWire(int id, bool isCut, WireColor color, WireLetter letter)
