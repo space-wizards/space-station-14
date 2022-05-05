@@ -37,10 +37,22 @@
     {
       "name": "cap0-inhand-left",
       "directions": 4
+      "delays": [
+        [
+          0.3,
+          0.3
+        ]
+      ]
     },
     {
       "name": "cap0-inhand-right",
       "directions": 4
+      "delays": [
+        [
+          0.3,
+          0.3
+        ]
+      ]
     },
     {
       "name": "cap1-inhand-left",
