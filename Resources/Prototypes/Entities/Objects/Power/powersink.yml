@@ -1,0 +1,37 @@
+﻿- type: entity
+  id: PowerSink
+  name: Power Sink
+  description: Drains immense amounts of electricity from the grid.
+  components:
+    - type: NodeContainer
+      examinable: true
+      nodes:
+        input:
+          !type:CableDeviceNode
+          nodeGroupID: HVPower
+    - type: PowerConsumer
+      voltage: High
+      drawRate: 35000
+    - type: Transform
+      anchored: true
+    - type: Fixtures
+      fixtures:
+      - shape:
+          !type:PhysShapeAabb
+            bounds: "-0.25,-0.25,0.25,0.25"
+        mass: 15
+        mask:
+        - SmallImpassable
+        layer:
+        - MobImpassable
+    - type: Destructible
+      thresholds:
+      - trigger:
+          !type:DamageTrigger
+          damage: 50
+        behaviors:
+        - !type:DoActsBehavior
+          acts: [ "Destruction" ]
+    - type: PowerSink
+      capacity: 15
+      chargeRate: 1
