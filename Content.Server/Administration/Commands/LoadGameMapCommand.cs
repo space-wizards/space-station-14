@@ -21,7 +21,7 @@ namespace Content.Server.Administration.Commands
         {
             var prototypeManager = IoCManager.Resolve<IPrototypeManager>();
             var entityManager = IoCManager.Resolve<IEntityManager>();
-            var gameTicker = entityManager.EntitySysManager.GetEntitySystem<GameTicker>();
+            var gameMapSystem = entityManager.EntitySysManager.GetEntitySystem<GameMapSystem>();
 
             if (args.Length is not (2 or 4 or 5))
             {
@@ -40,7 +40,7 @@ namespace Content.Server.Administration.Commands
                 {
                     loadOptions.Offset = new Vector2(x, y);
                 }
-                var (ents, grids) = gameTicker.LoadGameMap(gameMap, new MapId(mapId), loadOptions, stationName);
+                var (ents, grids) = gameMapSystem.LoadGameMap(gameMap, new MapId(mapId), loadOptions, stationName);
                 shell.WriteLine($"Loaded {ents.Count} entities and {grids.Count} grids.");
             }
             else

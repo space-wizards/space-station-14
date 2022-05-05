@@ -112,12 +112,11 @@ namespace Content.Server.GameTicking
 #if EXCEPTION_TOLERANCE
         [Dependency] private readonly IRuntimeLog _runtimeLog = default!;
 #endif
+        [Dependency] private readonly GameMapSystem _gameMapSystem = default!;
         [Dependency] private readonly StationSystem _stationSystem = default!;
         [Dependency] private readonly StationSpawningSystem _stationSpawning = default!;
         [Dependency] private readonly StationJobsSystem _stationJobs = default!;
         [Dependency] private readonly AdminLogSystem _adminLogSystem = default!;
-        [Dependency] private readonly HumanoidAppearanceSystem _humanoidAppearanceSystem = default!;
-        [Dependency] private readonly PDASystem _pdaSystem = default!;
         [Dependency] private readonly DamageableSystem _damageable = default!;
         [Dependency] private readonly GhostSystem _ghosts = default!;
         [Dependency] private readonly RoleBanManager _roleBanManager = default!;
