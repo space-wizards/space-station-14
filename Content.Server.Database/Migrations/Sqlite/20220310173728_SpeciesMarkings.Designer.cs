@@ -3,6 +3,7 @@ using System;
 using Content.Server.Database;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Content.Server.Database.Migrations.Sqlite
 {
     [DbContext(typeof(SqliteServerDbContext))]
-    partial class SqliteServerDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220310173728_SpeciesMarkings")]
+    partial class SpeciesMarkings
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "6.0.0");
@@ -109,8 +111,6 @@ namespace Content.Server.Database.Migrations.Sqlite
                     b.HasKey("Id", "RoundId")
                         .HasName("PK_admin_log");
 
-                    b.HasIndex("Date");
-
                     b.HasIndex("RoundId")
                         .HasDatabaseName("IX_admin_log_round_id");
 
@@ -168,77 +168,6 @@ namespace Content.Server.Database.Migrations.Sqlite
                     b.HasIndex("LogId", "RoundId");
 
                     b.ToTable("admin_log_player", (string)null);
-                });
-
-            modelBuilder.Entity("Content.Server.Database.AdminNote", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER")
-                        .HasColumnName("admin_notes_id");
-
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("TEXT")
-                        .HasColumnName("created_at");
-
-                    b.Property<Guid>("CreatedById")
-                        .HasColumnType("TEXT")
-                        .HasColumnName("created_by_id");
-
-                    b.Property<bool>("Deleted")
-                        .HasColumnType("INTEGER")
-                        .HasColumnName("deleted");
-
-                    b.Property<DateTime?>("DeletedAt")
-                        .HasColumnType("TEXT")
-                        .HasColumnName("deleted_at");
-
-                    b.Property<Guid?>("DeletedById")
-                        .HasColumnType("TEXT")
-                        .HasColumnName("deleted_by_id");
-
-                    b.Property<DateTime>("LastEditedAt")
-                        .HasColumnType("TEXT")
-                        .HasColumnName("last_edited_at");
-
-                    b.Property<Guid>("LastEditedById")
-                        .HasColumnType("TEXT")
-                        .HasColumnName("last_edited_by_id");
-
-                    b.Property<string>("Message")
-                        .IsRequired()
-                        .HasMaxLength(4096)
-                        .HasColumnType("TEXT")
-                        .HasColumnName("message");
-
-                    b.Property<Guid>("PlayerUserId")
-                        .HasColumnType("TEXT")
-                        .HasColumnName("player_user_id");
-
-                    b.Property<int?>("RoundId")
-                        .HasColumnType("INTEGER")
-                        .HasColumnName("round_id");
-
-                    b.Property<bool>("ShownToPlayer")
-                        .HasColumnType("INTEGER")
-                        .HasColumnName("shown_to_player");
-
-                    b.HasKey("Id")
-                        .HasName("PK_admin_notes");
-
-                    b.HasIndex("CreatedById");
-
-                    b.HasIndex("DeletedById");
-
-                    b.HasIndex("LastEditedById");
-
-                    b.HasIndex("PlayerUserId")
-                        .HasDatabaseName("IX_admin_notes_player_user_id");
-
-                    b.HasIndex("RoundId")
-                        .HasDatabaseName("IX_admin_notes_round_id");
-
-                    b.ToTable("admin_notes", (string)null);
                 });
 
             modelBuilder.Entity("Content.Server.Database.AdminRank", b =>
@@ -428,10 +357,6 @@ namespace Content.Server.Database.Migrations.Sqlite
                         .HasColumnType("TEXT")
                         .HasColumnName("first_seen_time");
 
-                    b.Property<DateTime?>("LastReadRules")
-                        .HasColumnType("TEXT")
-                        .HasColumnName("last_read_rules");
-
                     b.Property<string>("LastSeenAddress")
                         .IsRequired()
                         .HasColumnType("TEXT")
@@ -604,35 +529,10 @@ namespace Content.Server.Database.Migrations.Sqlite
                         .HasColumnType("INTEGER")
                         .HasColumnName("round_id");
 
-                    b.Property<int>("ServerId")
-                        .HasColumnType("INTEGER")
-                        .HasColumnName("server_id");
-
                     b.HasKey("Id")
                         .HasName("PK_round");
 
-                    b.HasIndex("ServerId")
-                        .HasDatabaseName("IX_round_server_id");
-
                     b.ToTable("round", (string)null);
-                });
-
-            modelBuilder.Entity("Content.Server.Database.Server", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER")
-                        .HasColumnName("server_id");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("TEXT")
-                        .HasColumnName("name");
-
-                    b.HasKey("Id")
-                        .HasName("PK_server");
-
-                    b.ToTable("server", (string)null);
                 });
 
             modelBuilder.Entity("Content.Server.Database.ServerBan", b =>
@@ -819,37 +719,6 @@ namespace Content.Server.Database.Migrations.Sqlite
                     b.ToTable("server_unban", (string)null);
                 });
 
-            modelBuilder.Entity("Content.Server.Database.UploadedResourceLog", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER")
-                        .HasColumnName("uploaded_resource_log_id");
-
-                    b.Property<byte[]>("Data")
-                        .IsRequired()
-                        .HasColumnType("BLOB")
-                        .HasColumnName("data");
-
-                    b.Property<DateTime>("Date")
-                        .HasColumnType("TEXT")
-                        .HasColumnName("date");
-
-                    b.Property<string>("Path")
-                        .IsRequired()
-                        .HasColumnType("TEXT")
-                        .HasColumnName("path");
-
-                    b.Property<Guid>("UserId")
-                        .HasColumnType("TEXT")
-                        .HasColumnName("user_id");
-
-                    b.HasKey("Id")
-                        .HasName("PK_uploaded_resource_log");
-
-                    b.ToTable("uploaded_resource_log", (string)null);
-                });
-
             modelBuilder.Entity("Content.Server.Database.Whitelist", b =>
                 {
                     b.Property<Guid>("UserId")
@@ -947,54 +816,6 @@ namespace Content.Server.Database.Migrations.Sqlite
                     b.Navigation("Player");
                 });
 
-            modelBuilder.Entity("Content.Server.Database.AdminNote", b =>
-                {
-                    b.HasOne("Content.Server.Database.Player", "CreatedBy")
-                        .WithMany("AdminNotesCreated")
-                        .HasForeignKey("CreatedById")
-                        .HasPrincipalKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired()
-                        .HasConstraintName("FK_admin_notes_player_created_by_id");
-
-                    b.HasOne("Content.Server.Database.Player", "DeletedBy")
-                        .WithMany("AdminNotesDeleted")
-                        .HasForeignKey("DeletedById")
-                        .HasPrincipalKey("UserId")
-                        .HasConstraintName("FK_admin_notes_player_deleted_by_id");
-
-                    b.HasOne("Content.Server.Database.Player", "LastEditedBy")
-                        .WithMany("AdminNotesLastEdited")
-                        .HasForeignKey("LastEditedById")
-                        .HasPrincipalKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired()
-                        .HasConstraintName("FK_admin_notes_player_last_edited_by_id");
-
-                    b.HasOne("Content.Server.Database.Player", "Player")
-                        .WithMany("AdminNotesReceived")
-                        .HasForeignKey("PlayerUserId")
-                        .HasPrincipalKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired()
-                        .HasConstraintName("FK_admin_notes_player_player_user_id");
-
-                    b.HasOne("Content.Server.Database.Round", "Round")
-                        .WithMany()
-                        .HasForeignKey("RoundId")
-                        .HasConstraintName("FK_admin_notes_round_round_id");
-
-                    b.Navigation("CreatedBy");
-
-                    b.Navigation("DeletedBy");
-
-                    b.Navigation("LastEditedBy");
-
-                    b.Navigation("Player");
-
-                    b.Navigation("Round");
-                });
-
             modelBuilder.Entity("Content.Server.Database.AdminRankFlag", b =>
                 {
                     b.HasOne("Content.Server.Database.AdminRank", "Rank")
@@ -1041,18 +862,6 @@ namespace Content.Server.Database.Migrations.Sqlite
                         .HasConstraintName("FK_profile_preference_preference_id");
 
                     b.Navigation("Preference");
-                });
-
-            modelBuilder.Entity("Content.Server.Database.Round", b =>
-                {
-                    b.HasOne("Content.Server.Database.Server", "Server")
-                        .WithMany("Rounds")
-                        .HasForeignKey("ServerId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired()
-                        .HasConstraintName("FK_round_server_server_id");
-
-                    b.Navigation("Server");
                 });
 
             modelBuilder.Entity("Content.Server.Database.ServerBanHit", b =>
@@ -1144,14 +953,6 @@ namespace Content.Server.Database.Migrations.Sqlite
             modelBuilder.Entity("Content.Server.Database.Player", b =>
                 {
                     b.Navigation("AdminLogs");
-
-                    b.Navigation("AdminNotesCreated");
-
-                    b.Navigation("AdminNotesDeleted");
-
-                    b.Navigation("AdminNotesLastEdited");
-
-                    b.Navigation("AdminNotesReceived");
                 });
 
             modelBuilder.Entity("Content.Server.Database.Preference", b =>
@@ -1169,11 +970,6 @@ namespace Content.Server.Database.Migrations.Sqlite
             modelBuilder.Entity("Content.Server.Database.Round", b =>
                 {
                     b.Navigation("AdminLogs");
-                });
-
-            modelBuilder.Entity("Content.Server.Database.Server", b =>
-                {
-                    b.Navigation("Rounds");
                 });
 
             modelBuilder.Entity("Content.Server.Database.ServerBan", b =>
