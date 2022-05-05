@@ -14,7 +14,7 @@
       Tail:
         points: 1
         required: true
-        defaultMarkings: [LizardTailSmooth] 
+        defaultMarkings: [LizardTailSmooth]
       Snout:
         points: 1
         required: true
@@ -31,10 +31,6 @@
     drawdepth: Mobs
     scale: 1, 1
     layers:
-      - map: [ "enum.HumanoidVisualLayers.Tail" ]
-        sprite: Mobs/Customization/masking_helpers.rsi
-        state: none
-        visible: false
       - map: [ "enum.HumanoidVisualLayers.Chest" ]
         color: "#34a223"
         sprite: Mobs/Species/Reptilian/parts.rsi
@@ -112,6 +108,10 @@
         state: none
         visible: false
       - map: [ "enum.HumanoidVisualLayers.HeadTop" ]
+        sprite: Mobs/Customization/masking_helpers.rsi
+        state: none
+        visible: false
+      - map: [ "enum.HumanoidVisualLayers.Tail" ]
         sprite: Mobs/Customization/masking_helpers.rsi
         state: none
         visible: false
@@ -156,7 +156,7 @@
       Tail:
         points: 1
         required: true
-        defaultMarkings: [LizardTailSmooth] 
+        defaultMarkings: [LizardTailSmooth]
       Snout:
         points: 1
         required: true
@@ -173,8 +173,6 @@
     drawdepth: Mobs
     scale: 1, 1
     layers:
-      - map: [ "enum.HumanoidVisualLayers.Tail" ]
-        visible: false
       - map: [ "enum.HumanoidVisualLayers.Chest" ]
         color: "#34a223"
         sprite: Mobs/Species/Reptilian/parts.rsi
@@ -184,6 +182,8 @@
         sprite: Mobs/Species/Reptilian/parts.rsi
         state: head_m
       - map: [ "enum.HumanoidVisualLayers.Snout" ]
+        sprite: Mobs/Customization/masking_helpers.rsi
+        state: none
         visible: false
       - map: [ "enum.HumanoidVisualLayers.Eyes" ]
         color: "#008800"
@@ -246,8 +246,16 @@
       - map: [ "neck" ]
       - map: [ "back" ]
       - map: [ "enum.HumanoidVisualLayers.HeadSide" ]
+        sprite: Mobs/Customization/masking_helpers.rsi
+        state: none
         visible: false
       - map: [ "enum.HumanoidVisualLayers.HeadTop" ]
+        sprite: Mobs/Customization/masking_helpers.rsi
+        state: none
+        visible: false
+      - map: [ "enum.HumanoidVisualLayers.Tail" ]
+        sprite: Mobs/Customization/masking_helpers.rsi
+        state: none
         visible: false
       - map: [ "mask" ]
       - map: [ "head" ]
