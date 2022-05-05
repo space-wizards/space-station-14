@@ -12,8 +12,11 @@ public sealed class WeldableVisualizerSystem : VisualizerSystem<WeldableComponen
 
         if (!TryComp(uid, out SpriteComponent? sprite))
             return;
-        args.Component.TryGetData(WeldableVisuals.IsWelded, out bool isWelded);
 
-        sprite.LayerSetVisible(WeldableLayers.BaseWelded, isWelded);
+        args.Component.TryGetData(WeldableVisuals.IsWelded, out bool isWelded);
+        if (sprite.LayerMapTryGet(WeldableLayers.BaseWelded, out var layer))
+        {
+            sprite.LayerSetVisible(layer, isWelded);
+        }
     }
 }
