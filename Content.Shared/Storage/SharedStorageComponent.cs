@@ -81,8 +81,6 @@ namespace Content.Shared.Storage
     public enum StorageVisuals
     {
         Open,
-        CanWeld,
-        Welded,
         CanLock,
         Locked
     }
