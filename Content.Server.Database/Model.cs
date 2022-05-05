@@ -91,6 +91,9 @@ namespace Content.Server.Database
                 .Property(log => log.Id)
                 .ValueGeneratedOnAdd();
 
+            modelBuilder.Entity<AdminLog>()
+                .HasIndex(log => log.Date);
+
             modelBuilder.Entity<AdminLogPlayer>()
                 .HasOne(player => player.Player)
                 .WithMany(player => player.AdminLogs)

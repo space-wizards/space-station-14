@@ -1,7 +1,7 @@
 - type: entity
   name: bible
   description: New Interstellar Version 2340
-  parent: BaseItem
+  parent: BaseStorageItem
   id: Bible
   components:
   - type: Bible
@@ -27,10 +27,14 @@
     size: 15
     sprite: Objects/Specific/Chapel/bible.rsi
     prefix: inhand
+    Slots:
+    - Belt
   - type: Storage
     capacity: 10
-    storageSoundCollection:
-      collection: storageRustle
+  - type: UserInterface
+    interfaces:
+    - key: enum.StorageUiKey.Key
+      type: StorageBoundUserInterface
 
 - type: entity
   parent: Bible
@@ -55,6 +59,7 @@
     cooldownTime: 1.3
   - type: Summonable
     specialItem: MobCorgiCerberus
+    respawnTime: 300
   - type: Sprite
     netsync: false
     sprite: Objects/Specific/Chapel/necronomicon.rsi
@@ -63,3 +68,5 @@
     size: 15
     sprite: Objects/Specific/Chapel/necronomicon.rsi
     prefix: inhand
+    Slots:
+    - Belt

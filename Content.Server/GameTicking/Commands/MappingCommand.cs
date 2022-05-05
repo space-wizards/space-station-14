@@ -85,10 +85,7 @@ namespace Content.Server.GameTicking.Commands
 
             shell.ExecuteCommand("sudo cvar events.enabled false");
             shell.ExecuteCommand($"tp 0 0 {mapId}");
-            shell.RemoteExecuteCommand("showmarkers");
-            shell.RemoteExecuteCommand("togglelight");
-            shell.RemoteExecuteCommand("showsubfloorforever");
-            shell.RemoteExecuteCommand("loadmapacts");
+            shell.RemoteExecuteCommand("mappingclientsidesetup");
             mapManager.SetMapPaused(mapId, true);
 
             if (args.Length == 2)

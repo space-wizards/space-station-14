@@ -9,7 +9,7 @@ using Content.Shared.VendingMachines;
 using Robust.Server.GameObjects;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
-using Content.Shared.Acts;
+using Content.Shared.Destructible;
 using Content.Shared.Emag.Systems;
 using static Content.Shared.VendingMachines.SharedVendingMachineComponent;
 using Content.Shared.Throwing;
@@ -21,7 +21,7 @@ namespace Content.Server.VendingMachines.systems
         [Dependency] private readonly IRobustRandom _random = default!;
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
         [Dependency] private readonly AccessReaderSystem _accessReader = default!;
-        [Dependency] private readonly PopupSystem _popupSystem = default!; 
+        [Dependency] private readonly PopupSystem _popupSystem = default!;
         [Dependency] private readonly ThrowingSystem _throwingSystem = default!;
 
         public override void Initialize()

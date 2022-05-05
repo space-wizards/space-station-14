@@ -63,6 +63,7 @@ namespace Content.Server.Database
 
             modelBuilder.Entity<AdminLog>()
                 .HasIndex(l => l.Message)
+                .HasMethod("GIN")
                 .IsTsVectorExpressionIndex("english");
 
             foreach(var entity in modelBuilder.Model.GetEntityTypes())

@@ -91,7 +91,9 @@ public sealed class ChatSystem : EntitySystem
         if (!CanSendInGame(message, shell, player))
             return;
 
-        message = SanitizeInGameICMessage(source, message, out var emoteStr);
+        bool shouldCapitalize = (desiredType != InGameICChatType.Emote);
+
+        message = SanitizeInGameICMessage(source, message, out var emoteStr, shouldCapitalize);
 
         // Was there an emote in the message? If so, send it.
         if (player != null && emoteStr != message && emoteStr != null)
@@ -294,10 +296,11 @@ public sealed class ChatSystem : EntitySystem
     }
 
     // ReSharper disable once InconsistentNaming
-    private string SanitizeInGameICMessage(EntityUid source, string message, out string? emoteStr)
+    private string SanitizeInGameICMessage(EntityUid source, string message, out string? emoteStr, bool capitalize = true)
     {
         var newMessage = message.Trim();
-        newMessage = SanitizeMessageCapital(source, newMessage);
+        if (capitalize)
+            newMessage = SanitizeMessageCapital(source, newMessage);
         newMessage = FormattedMessage.EscapeText(newMessage);
 
         _sanitizer.TrySanitizeOutSmilies(newMessage, source, out newMessage, out emoteStr);
@@ -334,6 +337,10 @@ public sealed class ChatSystem : EntitySystem
     {
         if (message.StartsWith(';'))
         {
+            // Special case for ";" messages
+            if (message.Length == 1)
+                return "";
+
             // Remove semicolon
             message = message.Substring(1).TrimStart();
 

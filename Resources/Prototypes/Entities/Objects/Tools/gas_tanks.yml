@@ -31,7 +31,7 @@
   parent: GasTankBase
   id: OxygenTank
   name: oxygen tank
-  description: A tank of oxygen.
+  description: A tank of oxygen, this one is blue.
   components:
   - type: Sprite
     sprite: Objects/Tanks/oxygen.rsi
@@ -77,7 +77,7 @@
 - type: entity
   parent: OxygenTank
   id: EmergencyOxygenTank
-  name: extended-capacity emergency oxygen tank
+  name: emergency oxygen tank
   description: Used for emergencies. Contains very little oxygen, so try to conserve it until you actually need it.
   components:
   - type: Sprite
@@ -85,7 +85,7 @@
   - type: GasTank
     outputPressure: 21.27825
     air:
-      volume: 2
+      volume: 3
       temperature: 293.15
   - type: Clothing
     size: 10
@@ -98,7 +98,7 @@
 - type: entity
   parent: EmergencyOxygenTank
   id: ExtendedEmergencyOxygenTank
-  name: double emergency oxygen tank
+  name: extended-capacity emergency oxygen tank
   description: Used for emergencies. Contains little oxygen, so try to conserve it until you actually need it.
   components:
   - type: Sprite
@@ -120,13 +120,14 @@
 - type: entity
   parent: ExtendedEmergencyOxygenTank
   id: DoubleEmergencyOxygenTank
+  name: double emergency oxygen tank
   components:
   - type: Sprite
     sprite: Objects/Tanks/emergency_double.rsi
   - type: GasTank
     outputPressure: 21.27825
     air:
-      volume: 10
+      volume: 12
       temperature: 293.15
   - type: Clothing
     size: 10
