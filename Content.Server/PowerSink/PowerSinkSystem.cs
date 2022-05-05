@@ -15,10 +15,10 @@ namespace Content.Server.PowerSink
                 {
                     var networkLoad = Comp<PowerConsumerComponent>(comp.Owner).NetworkLoad;
                     // Charge rate is multiplied by how much power it can get
-                    comp.Charge += comp.ChargeRate * (networkLoad.ReceivingPower / networkLoad.DesiredPower) * frameTime;
+                    comp.Charge += networkLoad.ReceivingPower / networkLoad.DesiredPower * frameTime;
                     if (comp.Charge >= comp.Capacity)
                     {
-                        _explosionSystem.QueueExplosion(comp.Owner, "Default", 5, 5, 5, canCreateVacuum: false);
+                        _explosionSystem.QueueExplosion(comp.Owner, "Default", 5, 1, 5, canCreateVacuum: false);
                         comp.AlreadyExploded = true;
                     }
                 }

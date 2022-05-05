@@ -9,9 +9,6 @@
         [ViewVariables(VVAccess.ReadWrite)] [DataField("capacity")]
         public float Capacity = 10;
 
-        [ViewVariables(VVAccess.ReadWrite)] [DataField("chargeRate")]
-        public float ChargeRate = 1;
-
         [ViewVariables]
         public float Charge = 0;
 
