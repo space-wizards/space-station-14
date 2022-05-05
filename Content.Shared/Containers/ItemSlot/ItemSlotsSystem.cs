@@ -1,5 +1,4 @@
 using Content.Shared.ActionBlocker;
-using Content.Shared.Acts;
 using Content.Shared.Hands.Components;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Interaction;
@@ -13,6 +12,7 @@ using Robust.Shared.GameStates;
 using Robust.Shared.Player;
 using Robust.Shared.Timing;
 using System.Diagnostics.CodeAnalysis;
+using Content.Shared.Destructible;
 
 namespace Content.Shared.Containers.ItemSlots
 {
@@ -170,6 +170,9 @@ namespace Content.Shared.Containers.ItemSlots
 
             foreach (var slot in itemSlots.Slots.Values)
             {
+                if (!slot.InsertOnInteract)
+                    continue;
+
                 if (!CanInsert(uid, args.Used, slot, swap: slot.Swap, popup: args.User))
                     continue;
 
@@ -333,10 +336,16 @@ namespace Content.Shared.Containers.ItemSlots
         {
             item = null;
 
+            /// This handles logic with the slot itself
             if (!CanEject(slot))
                 return false;
 
             item = slot.Item;
+
+            /// This handles user logic
+            if (user != null && item != null && !_actionBlockerSystem.CanPickup(user.Value, item.Value))
+                return false;
+
             Eject(uid, slot, item!.Value, user, excludeUserAudio);
             return true;
         }

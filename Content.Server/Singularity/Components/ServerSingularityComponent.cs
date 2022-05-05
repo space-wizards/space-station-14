@@ -60,6 +60,7 @@ namespace Content.Server.Singularity.Components
                 _ => 0
             };
 
+        [DataField("moveAccumulator")]
         public float MoveAccumulator;
 
         // This is an interesting little workaround.

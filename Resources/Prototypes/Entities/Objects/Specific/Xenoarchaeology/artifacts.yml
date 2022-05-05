@@ -6,11 +6,14 @@
   abstract: true
   components:
     - type: Sprite
+      drawdepth: SmallObjects
       sprite: Objects/Specific/Xenoarchaeology/xeno_artifacts.rsi
       netsync: false
       state: ano01
     - type: Physics
       bodyType: Dynamic
+    - type: Transform
+      noRot: true
     - type: Fixtures
       fixtures:
         - shape:

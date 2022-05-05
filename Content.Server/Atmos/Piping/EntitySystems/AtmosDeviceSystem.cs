@@ -26,6 +26,7 @@ namespace Content.Server.Atmos.Piping.EntitySystems
 
             SubscribeLocalEvent<AtmosDeviceComponent, ComponentInit>(OnDeviceInitialize);
             SubscribeLocalEvent<AtmosDeviceComponent, ComponentShutdown>(OnDeviceShutdown);
+            // Re-anchoring should be handled by the parent change.
             SubscribeLocalEvent<AtmosDeviceComponent, EntParentChangedMessage>(OnDeviceParentChanged);
             SubscribeLocalEvent<AtmosDeviceComponent, AnchorStateChangedEvent>(OnDeviceAnchorChanged);
         }
@@ -104,7 +105,7 @@ namespace Content.Server.Atmos.Piping.EntitySystems
             if (!component.RequireAnchored)
                 return;
 
-            if(EntityManager.GetComponent<TransformComponent>(component.Owner).Anchored)
+            if (args.Anchored)
                 JoinAtmosphere(component);
             else
                 LeaveAtmosphere(component);

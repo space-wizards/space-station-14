@@ -170,7 +170,7 @@ public abstract class SharedDoorSystem : EntitySystem
     protected virtual void OnActivate(EntityUid uid, DoorComponent door, ActivateInWorldEvent args)
     {
         // avoid client-mispredicts, as the server will definitely handle this event
-        args.Handled = true; 
+        args.Handled = true;
     }
 
     private void OnExamine(EntityUid uid, DoorComponent door, ExaminedEvent args)
@@ -433,7 +433,7 @@ public abstract class SharedDoorSystem : EntitySystem
             if (!otherPhysics.CanCollide)
                 continue;
 
-            if ((physics.CollisionMask & otherPhysics.CollisionLayer) == 0
+            if (otherPhysics.BodyType == BodyType.Static || (physics.CollisionMask & otherPhysics.CollisionLayer) == 0
                 && (otherPhysics.CollisionMask & physics.CollisionLayer) == 0)
                 continue;
 

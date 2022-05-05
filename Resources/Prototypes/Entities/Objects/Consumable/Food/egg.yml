@@ -110,6 +110,7 @@
     - Egg
     - Trash
   - type: Recyclable
+  - type: SpaceGarbage
 
 # Egg
 

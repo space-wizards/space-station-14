@@ -1,21 +1,38 @@
 ﻿- type: entity
   save: false
   name: Vox
-  parent: BaseVox
-  id: Vox
+  parent: MobVoxBase
+  id: MobVox
   components:
+    - type: CombatMode
+      canDisarm: true
+    - type: InteractionPopup
+      successChance: 1
+      interactSuccessString: hugging-success-generic
+      interactSuccessSound: /Audio/Effects/hug.ogg
+      messagePerceivedByOthers: hugging-success-generic-others
     - type: Mind
       showExamineInfo: true
     - type: Input
       context: "human"
-    - type: Alerts
-    - type: Actions
-    - type: Eye
-    - type: CameraRecoil
-    - type: Examiner
+    - type: PlayerMobMover
+    - type: PlayerInputMover
     - type: Vocal
       maleScream: /Audio/Voice/Vox/shriek1.ogg
       femaleScream: /Audio/Voice/Vox/shriek1.ogg
+    - type: Alerts
+    - type: Eye
+    - type: CameraRecoil
+    - type: Examiner
+    - type: CanHostGuardian
     - type: AiFactionTag
       factions:
         - NanoTrasen
+    - type: Respirator
+      damage:
+       types:
+        Asphyxiation: 1.5
+      damageRecovery:
+        types:
+          Asphyxiation: -1.5
+

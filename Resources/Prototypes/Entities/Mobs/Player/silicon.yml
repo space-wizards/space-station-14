@@ -3,6 +3,8 @@
   abstract: true
   id: PlayerSiliconBase #for player controlled silicons
   components:
+  - type: CombatMode
+    canDisarm: true
   - type: Reactive
     groups:
       Acidic: [Touch]
@@ -162,8 +164,8 @@
       event: !type:ToggleActionEvent
   - type: PointLight
     enabled: false
-    radius: 2.5
-    softness: 5
+    radius: 3.5
+    softness: 1
     mask: /Textures/Effects/LightMasks/cone.png
     autoRot: true
   - type: Tag
@@ -228,17 +230,3 @@
       normal: onestar_boss
       dead: onestar_boss_wrecked
   - type: CombatMode
-    disarmAction:
-      name: action-name-disarm
-      description: action-description-disarm
-      icon: Interface/Actions/disarmOff.png
-      iconOn: Interface/Actions/disarm.png
-      repeat: true
-      useDelay: 1.5
-      interactOnMiss: true
-      event: !type:DisarmActionEvent
-      canTargetSelf: false
-      whitelist:
-        components:
-        - Hands
-        - StatusEffects

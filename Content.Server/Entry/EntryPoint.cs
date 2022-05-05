@@ -32,6 +32,7 @@ using Robust.Shared.ContentPack;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Log;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
 
@@ -51,6 +52,7 @@ namespace Content.Server.Entry
                 new[] { "Content.Client", "Content.Shared", "Content.Shared.Database" });
 
             var factory = IoCManager.Resolve<IComponentFactory>();
+            var prototypes = IoCManager.Resolve<IPrototypeManager>();
 
             factory.DoAutoRegistrations();
 
@@ -58,6 +60,8 @@ namespace Content.Server.Entry
             {
                 factory.RegisterIgnore(ignoreName);
             }
+
+            prototypes.RegisterIgnore("parallax");
 
             ServerContentIoC.Register();
 

@@ -98,6 +98,8 @@ public sealed class GameMapManager : IGameMapManager
 
         _currentMap = map;
         _currentMapForced = false;
+        var ticker = EntitySystem.Get<GameTicking.GameTicker>();
+        ticker.UpdateInfoText();
         return true;
 
     }
@@ -108,6 +110,8 @@ public sealed class GameMapManager : IGameMapManager
             throw new ArgumentException($"The map \"{gameMap}\" is invalid!");
         _currentMap = map;
         _currentMapForced = true;
+        var ticker = EntitySystem.Get<GameTicking.GameTicker>();
+        ticker.UpdateInfoText();
     }
 
     public void SelectRandomMap()
@@ -115,6 +119,8 @@ public sealed class GameMapManager : IGameMapManager
         var maps = CurrentlyEligibleMaps().ToList();
         _currentMap = _random.Pick(maps);
         _currentMapForced = false;
+        var ticker = EntitySystem.Get<GameTicking.GameTicker>();
+        ticker.UpdateInfoText();
     }
 
     public GameMapPrototype GetSelectedMap()
