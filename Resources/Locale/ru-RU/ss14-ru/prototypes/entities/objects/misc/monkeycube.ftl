@@ -1,6 +1,6 @@
-ent-MonkeyCubeBox = monkey cube box
-    .desc = Drymate brand monkey cubes. Just add water!
+ent-MonkeyCubeBox = коробка кубиков обезьян
+    .desc = Кубики обезьян фирмы Drymate. Просто добавь воды!
     .suffix = { "" }
-ent-MonkeyCubeWrapped = monkey cube
-    .desc = Unwrap this to get a monkey cube.
-    .suffix = Wrapped
+ent-MonkeyCubeWrapped = кубик обезьяны
+    .desc = Разверните его, чтобы получить кубик обезьяны.
+    .suffix = Завёрнутый

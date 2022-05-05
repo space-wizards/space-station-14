@@ -1,6 +1,6 @@
 ent-BriefcaseBase = { ent-BaseItem }
-    .desc = Useful for carrying items in your hands.
+    .desc = Пригодится для переноски предметов в руках.
     .suffix = { "" }
-ent-BriefcaseBrown = brown briefcase
-    .desc = A handy briefcase.
+ent-BriefcaseBrown = коричневый чемодан
+    .desc = Удобный чемоданчик.
     .suffix = { "" }
