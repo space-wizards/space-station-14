@@ -42,14 +42,14 @@ public sealed class StickySystem : EntitySystem
         if (EntityManager.HasComponent<HasEntityStuckOnComponent>(ev.Used)
             || EntityManager.HasComponent<HasEntityStuckOnComponent>(ev.Target))
         {
-            _popupSystem.PopupEntity(Loc.GetString("cannot-merge-due-to-entity-stuck-on"), ev.Used, Filter.Entities(ev.User));
+            _popupSystem.PopupEntity(Loc.GetString("event-sticky-merge-fail-entity-stuck-on"), ev.Used, Filter.Entities(ev.User));
             ev.Cancel();
         }
 
         if ((EntityManager.TryGetComponent(ev.Used, out StickyComponent usedStickyComp) && usedStickyComp.StuckTo != null)
             ||EntityManager.TryGetComponent(ev.Used, out StickyComponent targetStickyComp) && targetStickyComp.StuckTo != null)
         {
-            _popupSystem.PopupEntity(Loc.GetString("cannot-merge-due-to-entity-stuck"), ev.Used ,Filter.Entities(ev.User));
+            _popupSystem.PopupEntity(Loc.GetString("event-sticky-merge-fail-entity-stuck"), ev.Used ,Filter.Entities(ev.User));
             ev.Cancel();
         }
     }
@@ -60,7 +60,7 @@ public sealed class StickySystem : EntitySystem
             || EntityManager.TryGetComponent(ev.Used , out StickyComponent targetComp)
             && targetComp.StuckTo != null)
         {
-            _popupSystem.PopupEntity(Loc.GetString("cannot-split-due-to-sticky"), ev.Used ,Filter.Entities(ev.User));
+            _popupSystem.PopupEntity(Loc.GetString("event-sticky-general-fail"), ev.Used ,Filter.Entities(ev.User));
             ev.Cancel();
         }
     }
@@ -71,7 +71,7 @@ public sealed class StickySystem : EntitySystem
             && inserted.StuckTo != null
             || EntityManager.HasComponent<HasEntityStuckOnComponent>(ev.Inserted))
         {
-            _popupSystem.PopupEntity(Loc.GetString("cannot-split-due-to-sticky"), ev.Inserted ,Filter.Entities(ev.User));
+            _popupSystem.PopupEntity(Loc.GetString("event-sticky-general-fail"), ev.Inserted ,Filter.Entities(ev.User));
             ev.Cancel();
         }
     }
