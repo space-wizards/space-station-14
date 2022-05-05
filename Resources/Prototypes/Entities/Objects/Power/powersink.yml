@@ -14,7 +14,7 @@
           nodeGroupID: HVPower
     - type: PowerConsumer
       voltage: High
-      drawRate: 500000
+      drawRate: 1000000
     - type: Transform
       anchored: true
     - type: Fixtures
@@ -36,7 +36,6 @@
         - !type:DoActsBehavior
           acts: [ "Destruction" ]
     - type: PowerSink
-      capacity: 25
     - type: Sprite
       netsync: false
       sprite: Structures/Machines/microwave.rsi
