@@ -1,4 +1,9 @@
 - type: deviceFrequency
+  id: SurveillanceCamera
+  name: device-frequency-prototype-name-surveillance-camera
+  frequency: 6213 # i only have so many of these, y'know?
+
+- type: deviceFrequency
   id: AtmosMonitor
   name: device-frequency-prototype-name-atmos
   frequency: 1621

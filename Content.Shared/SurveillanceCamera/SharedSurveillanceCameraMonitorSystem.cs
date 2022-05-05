@@ -43,6 +43,16 @@ public sealed class SurveillanceCameraMonitorUiState : BoundUserInterfaceState
     }
 }
 
+public sealed class SurveillanceCameraMonitorSwitchMessage : BoundUserInterfaceMessage
+{
+    public string Address { get; }
+
+    public SurveillanceCameraMonitorSwitchMessage(string address)
+    {
+        Address = address;
+    }
+}
+
 public enum SurveillanceCameraMonitorUiKey : byte
 {
     Key

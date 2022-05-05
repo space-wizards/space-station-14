@@ -1,3 +1,7 @@
+using Content.Server.DeviceNetwork;
+using Content.Server.DeviceNetwork.Systems;
+using Content.Server.Power.Components;
+using Content.Shared.Interaction;
 using Robust.Server.GameObjects;
 using Robust.Server.Player;
 
@@ -5,8 +9,20 @@ namespace Content.Server.SurveillanceCamera;
 
 public sealed class SurveillanceCameraMonitorSystem : EntitySystem
 {
-    [Dependency] private SurveillanceCameraSystem _surveillanceCameras = default!;
-    [Dependency] private UserInterfaceSystem _userInterface = default!;
+    [Dependency] private readonly SurveillanceCameraSystem _surveillanceCameras = default!;
+    [Dependency] private readonly UserInterfaceSystem _userInterface = default!;
+    [Dependency] private readonly DeviceNetworkSystem _deviceNetworkSystem = default!;
+
+    public override void Initialize()
+    {
+        SubscribeLocalEvent<SurveillanceCameraDeactivateEvent>(OnSurveillanceCameraDeactivate);
+        SubscribeLocalEvent<SurveillanceCameraMonitorComponent, BoundUIClosedEvent>(OnBoundUiClose);
+        SubscribeLocalEvent<SurveillanceCameraMonitorComponent, InteractHandEvent>(OnInteractHand);
+        SubscribeLocalEvent<SurveillanceCameraMonitorComponent, PowerChangedEvent>(OnPowerChanged);
+        SubscribeLocalEvent<SurveillanceCameraMonitorComponent, SurveillanceCameraMonitorSwitchMessage>(OnSwitchMessage);
+        SubscribeLocalEvent<SurveillanceCameraMonitorComponent, DeviceNetworkPacketEvent>(OnPacketReceived);
+    }
+
     // TODO:
     //
     // - What happens if a monitor is depowered?
@@ -18,6 +34,55 @@ public sealed class SurveillanceCameraMonitorSystem : EntitySystem
     // Deactivation can occur for any reason (deletion, power off, etc.,) but the
     // result is always the same: the monitor must update any viewers and send
     // the updated states over to viewing clients.
+
+    #region Event Handling
+
+    private void OnPacketReceived(EntityUid uid, SurveillanceCameraMonitorComponent component,
+        DeviceNetworkPacketEvent args)
+    {
+        if (args.Address == null)
+        {
+            return;
+        }
+
+        if (args.Data.TryGetValue(DeviceNetworkConstants.Command, out string? command))
+        {
+            switch (command)
+            {
+                case SurveillanceCameraSystem.CameraDataMessage:
+                    if (component.NextCameraAddress == args.Address)
+                    {
+                        TrySwitchCameraByUid(uid, args.Sender, component);
+                    }
+
+                    component.NextCameraAddress = null;
+                    break;
+            }
+        }
+    }
+    private void OnSwitchMessage(EntityUid uid, SurveillanceCameraMonitorComponent component, SurveillanceCameraMonitorSwitchMessage message)
+    {
+        if (component.NextCameraAddress == null)
+        {
+            TrySwitchCameraByAddress(uid, message.Address, component);
+        }
+    }
+
+    private void OnPowerChanged(EntityUid uid, SurveillanceCameraMonitorComponent component, PowerChangedEvent args)
+    {
+        if (!args.Powered)
+        {
+            RemoveActiveCamera(uid, component);
+            component.NextCameraAddress = null;
+        }
+    }
+
+    private void OnInteractHand(EntityUid uid, SurveillanceCameraMonitorComponent component, InteractHandEvent args)
+    {
+        AddViewer(uid, args.User);
+        TryOpenUserInterface(uid, args.User);
+    }
+
     private void OnSurveillanceCameraDeactivate(SurveillanceCameraDeactivateEvent args)
     {
         if (!TryComp(args.Camera, out SurveillanceCameraComponent? camera))
@@ -45,6 +110,7 @@ public sealed class SurveillanceCameraMonitorSystem : EntitySystem
     {
         RemoveViewer(uid, args.Entity, component);
     }
+    #endregion
 
     // Adds a viewer to the camera and the monitor.
     private void AddViewer(EntityUid uid, EntityUid player, SurveillanceCameraMonitorComponent? monitor = null)
@@ -116,6 +182,22 @@ public sealed class SurveillanceCameraMonitorSystem : EntitySystem
         UpdateUserInterface(uid, monitor);
     }
 
+    private void TrySwitchCameraByAddress(EntityUid uid, string address,
+        SurveillanceCameraMonitorComponent? monitor = null)
+    {
+        if (!Resolve(uid, ref monitor))
+        {
+            return;
+        }
+
+        var payload = new NetworkPayload()
+        {
+            {DeviceNetworkConstants.Command, SurveillanceCameraSystem.CameraPingMessage}
+        };
+        monitor.NextCameraAddress = address;
+        _deviceNetworkSystem.QueuePacket(uid, address, payload);
+    }
+
     // Attempts to switch over the current viewed camera on this monitor
     // to the new camera.
     private void TrySwitchCameraByUid(EntityUid uid, EntityUid newCamera, SurveillanceCameraMonitorComponent? monitor = null)
@@ -146,6 +228,18 @@ public sealed class SurveillanceCameraMonitorSystem : EntitySystem
         _surveillanceCameras.RemoveActiveViewers((EntityUid) monitor.ActiveCamera, monitor.Viewers);
 
         UpdateUserInterface(uid, monitor);
+    }
+
+    private void TryOpenUserInterface(EntityUid uid, EntityUid player, SurveillanceCameraMonitorComponent? monitor = null, ActorComponent? actor = null)
+    {
+        if (!Resolve(uid, ref monitor)
+            || !Resolve(player, ref actor))
+        {
+            return;
+        }
+
+        _userInterface.GetUiOrNull(uid, SurveillanceCameraMonitorUiKey.Key)?.Open(actor.PlayerSession);
+        UpdateUserInterface(uid, monitor, player);
     }
 
     private void UpdateUserInterface(EntityUid uid, SurveillanceCameraMonitorComponent? monitor = null, EntityUid? player = null)
