@@ -86,6 +86,12 @@
   size: 7.5
 
 - type: salvageMap
+  id: ClownSalv
+  name: Spaced Clown Room
+  mapPath: /Maps/Salvage/ClownSalv.yml
+  size: 8
+
+- type: salvageMap
   id: tickColony
   name: "Space Tick colony"
   mapPath: /Maps/Salvage/tick-colony.yml
@@ -114,6 +120,8 @@
   name: "Crashed Shuttle"
   mapPath: /Maps/Salvage/medium-crashed-shuttle.yml
   size: 9.5
+  
+
 
 # """Large""" maps
 
