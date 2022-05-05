@@ -49,6 +49,7 @@ ui-options-vp-integer-scaling-tooltip = If this option is enabled, the viewport 
                                         means that black bars appear at the top/bottom of the screen or that part
                                         of the viewport is not visible.
 ui-options-vp-low-res = Low-resolution viewport
+ui-options-parallax-low-quality = Low-quality Parallax (background)
 ui-options-fps-counter = Show FPS counter
 
 ## Controls menu

@@ -26,7 +26,7 @@ public sealed class ToggleableClothingSystem : EntitySystem
     {
         base.Initialize();
 
-        SubscribeLocalEvent<ToggleableClothingComponent, ComponentAdd>(OnAdd);
+        SubscribeLocalEvent<ToggleableClothingComponent, ComponentInit>(OnInit);
         SubscribeLocalEvent<ToggleableClothingComponent, MapInitEvent>(OnMapInit);
         SubscribeLocalEvent<ToggleableClothingComponent, ToggleClothingEvent>(OnToggleClothing);
         SubscribeLocalEvent<ToggleableClothingComponent, GetItemActionsEvent>(OnGetActions);
@@ -163,7 +163,7 @@ public sealed class ToggleableClothingSystem : EntitySystem
             args.Actions.Add(component.ToggleAction);
     }
 
-    private void OnAdd(EntityUid uid, ToggleableClothingComponent component, ComponentAdd args)
+    private void OnInit(EntityUid uid, ToggleableClothingComponent component, ComponentInit args)
     {
         component.Container = _containerSystem.EnsureContainer<ContainerSlot>(uid, component.ContainerId);
     }

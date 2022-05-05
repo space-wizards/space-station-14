@@ -286,3 +286,20 @@
         - !type:ChemCauseDisease ##Since this mostly just comes from the event you won't ingest that much
           causeChance: 0.6
           disease: VentCough
+
+- type: reagent
+  id: Corpium
+  name: corpium
+  desc: A Syndicate cocktail, carefully harvested from various sources. You wouldn't want this inside of you.
+  physicalDesc: necrotic
+  color: "#7668a1"
+  metabolisms:
+    Poison:
+      effects:
+        - !type:HealthChange
+          damage:
+            types:
+              Cellular: 1
+        - !type:ChemCauseDisease
+          causeChance: 1
+          disease: ZombieInfection

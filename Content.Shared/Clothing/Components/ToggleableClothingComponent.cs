@@ -48,6 +48,7 @@ public sealed class ToggleableClothingComponent : Component
     [DataField("containerId")]
     public string ContainerId = DefaultClothingContainerId;
 
+    [ViewVariables]
     public ContainerSlot? Container;
 
     /// <summary>

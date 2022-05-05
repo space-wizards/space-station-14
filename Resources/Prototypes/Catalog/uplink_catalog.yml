@@ -204,6 +204,14 @@
   price: 40
   icon: /Textures/Objects/Weapons/Guns/LMGs/l6.rsi/icon.png
 
+- type: uplinkListing
+  id: UplinkZombieBundle
+  category: Bundles
+  itemId: ClothingBackpackDuffelZombieBundle
+  price: 40
+  icon: /Textures/Structures/Wallmounts/signs.rsi/bio.png
+
+
 #- type: uplinkListing
 #  id: UplinkCarbineBundle
 #  category: Bundles

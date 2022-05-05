@@ -19,6 +19,10 @@ namespace Content.Server.Crayon
         public Color Color { get; private set; }
 
         [ViewVariables(VVAccess.ReadWrite)]
+        [DataField("selectableColor")]
+        public bool SelectableColor { get; set; }
+
+        [ViewVariables(VVAccess.ReadWrite)]
         public int Charges { get; set; }
 
         [ViewVariables(VVAccess.ReadWrite)]
