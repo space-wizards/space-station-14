@@ -3,11 +3,13 @@ using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototy
 
 namespace Content.Server.Wires;
 
-// WireLayout prototype.
-//
-// This is meant for ease of organizing wire sets on entities that use
-// wires. Once one of these is initialized, it should be stored in the
-// WiresSystem as a functional wire set.
+/// <summary>
+///     WireLayout prototype.
+///
+///     This is meant for ease of organizing wire sets on entities that use
+///     wires. Once one of these is initialized, it should be stored in the
+///     WiresSystem as a functional wire set.
+/// </summary>
 [Prototype("wireLayout")]
 public sealed class WireLayoutPrototype : IPrototype, IInheritingPrototype
 {
@@ -20,15 +22,17 @@ public sealed class WireLayoutPrototype : IPrototype, IInheritingPrototype
     [AbstractDataField]
     public bool Abstract { get; }
 
+    /// <summary>
+    ///     How many wires in this layout will do
+    ///     nothing (these are added upon layout
+    ///     initialization)
+    /// </summary>
     [DataField("dummyWires")]
     public int DummyWires { get; } = default!;
 
-    // TODO: Repeat wires of the same action type...
-    // This might sound niche, but is useful for when
-    // you want wire redundancy without having to
-    // define new wire actions/create trees of inheritance.
-    //
-    // (see: doors w/ 2 power wires)
+    /// <summary>
+    ///     All the valid IWireActions currently in this layout.
+    /// </summary>
     [DataField("wires")]
     public List<IWireAction>? Wires { get; }
 }
