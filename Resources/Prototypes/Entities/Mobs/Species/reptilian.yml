@@ -182,6 +182,8 @@
         sprite: Mobs/Species/Reptilian/parts.rsi
         state: head_m
       - map: [ "enum.HumanoidVisualLayers.Snout" ]
+        sprite: Mobs/Customization/masking_helpers.rsi
+        state: none
         visible: false
       - map: [ "enum.HumanoidVisualLayers.Eyes" ]
         color: "#008800"
@@ -244,10 +246,16 @@
       - map: [ "neck" ]
       - map: [ "back" ]
       - map: [ "enum.HumanoidVisualLayers.HeadSide" ]
+        sprite: Mobs/Customization/masking_helpers.rsi
+        state: none
         visible: false
       - map: [ "enum.HumanoidVisualLayers.HeadTop" ]
+        sprite: Mobs/Customization/masking_helpers.rsi
+        state: none
         visible: false
       - map: [ "enum.HumanoidVisualLayers.Tail" ]
+        sprite: Mobs/Customization/masking_helpers.rsi
+        state: none
         visible: false
       - map: [ "mask" ]
       - map: [ "head" ]
