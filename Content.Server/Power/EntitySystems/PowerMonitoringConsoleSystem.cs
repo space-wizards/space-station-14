@@ -5,7 +5,6 @@ using Content.Server.NodeContainer.Nodes;
 using Content.Server.Power.Components;
 using Content.Server.Power.NodeGroups;
 using Content.Server.UserInterface;
-using Content.Server.WireHacking;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
 
@@ -99,4 +98,3 @@ internal sealed class PowerMonitoringConsoleSystem : EntitySystem
         return -x.Size.CompareTo(y.Size);
     }
 }
-
