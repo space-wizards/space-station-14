@@ -387,8 +387,13 @@
       - state: mag-unshaded-4
         map: ["enum.RangedBarrelVisualLayers.MagUnshaded"]
         shader: unshaded
-  - type: Item
+  - type: Clothing
+    sprite: Objects/Weapons/Guns/Battery/antiquelasergun.rsi
     size: 12
+    quickEquip: false
+    Slots:
+    - Belt
+    HeldPrefix: cap4
   - type: BatteryBarrel
     fireCost: 6
     soundGunshot:
