@@ -58,6 +58,8 @@
         maxVol: 600
         canReact: false
   - type: Slippery
+    paralyzeTime: 5.0
+    knockdownTime: 5.5
 
 - type: entity
   id: IronMetalFoam
