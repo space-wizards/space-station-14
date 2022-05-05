@@ -14,5 +14,8 @@
 
         [ViewVariables]
         public float Charge = 0;
+
+        // We definitely don't want this to explode more than once.
+        public bool AlreadyExploded = false;
     }
 }

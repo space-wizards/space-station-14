@@ -19,6 +19,7 @@ namespace Content.Server.PowerSink
                     if (comp.Charge >= comp.Capacity)
                     {
                         _explosionSystem.QueueExplosion(comp.Owner, "Default", 5, 5, 5, canCreateVacuum: false);
+                        comp.AlreadyExploded = true;
                     }
                 }
             }
