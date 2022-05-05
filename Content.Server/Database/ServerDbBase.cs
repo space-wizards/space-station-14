@@ -173,20 +173,20 @@ namespace Content.Server.Database
             if (Enum.TryParse<Gender>(profile.Gender, true, out var genderVal))
                 gender = genderVal;
 
+            // ReSharper disable once ConditionalAccessQualifierIsNonNullableAccordingToAPIContract
+            var markingsRaw = profile.Markings?.Deserialize<List<string>>();
+            profile.Markings?.Dispose();
+
             List<Marking> markings = new();
-            if (profile.Markings != null && profile.Markings.Length != 0)
+            if (markingsRaw != null)
             {
-                List<string>? markingsRaw = JsonSerializer.Deserialize<List<string>>(profile.Markings);
-                if (markingsRaw != null)
+                foreach (var marking in markingsRaw)
                 {
-                    foreach (var marking in markingsRaw)
-                    {
-                        var parsed = Marking.ParseFromDbString(marking);
+                    var parsed = Marking.ParseFromDbString(marking);
 
-                        if (parsed is null) continue;
+                    if (parsed is null) continue;
 
-                        markings.Add(parsed);
-                    }
+                    markings.Add(parsed);
                 }
             }
             var markingsSet = new MarkingsSet(markings);
@@ -223,7 +223,7 @@ namespace Content.Server.Database
             {
                 markingStrings.Add(marking.ToString());
             }
-            var markings = JsonSerializer.Serialize(markingStrings);
+            var markings = JsonSerializer.SerializeToDocument(markingStrings);
 
             var entity = new Profile
             {
