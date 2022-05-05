@@ -5,7 +5,6 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.Localization;
 using Robust.Shared.Maths;
 using Robust.Shared.Serialization;
-// using static Content.Shared.Wires.SharedWiresComponent;
 
 namespace Content.Shared.Wires
 {
