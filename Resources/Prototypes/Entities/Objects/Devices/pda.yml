@@ -548,7 +548,7 @@
   - type: Appearance
     visuals:
       - type: PDAVisualizer
-        state: pda-syndi
+        state: pda-syndie
   - type: Icon
-    state: pda-syndi
+    state: pda-syndie
     
