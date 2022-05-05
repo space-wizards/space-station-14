@@ -351,9 +351,25 @@ public sealed class WiresSystem : EntitySystem
 
     private class ActiveWireAction
     {
+        /// <summary>
+        ///     The wire action's ID. This is so that once the action is finished,
+        ///     any related data can be removed from the state dictionary.
+        /// </summary>
         public object Id;
+
+        /// <summary>
+        ///     How much time is left in this action before it finishes.
+        /// </summary>
         public float TimeLeft;
+
+        /// <summary>
+        ///     The token used to cancel the action.
+        /// </summary>
         public CancellationToken CancelToken;
+
+        /// <summary>
+        ///     The event called once the action finishes.
+        /// </summary>
         public TimedWireEvent OnFinish;
 
         public ActiveWireAction(object identifier, float time, CancellationToken cancelToken, TimedWireEvent onFinish)
@@ -889,7 +905,15 @@ public delegate void WireActionDelegate(Wire wire);
 // because async is banned
 public sealed class TimedWireEvent : EntityEventArgs
 {
+    /// <summary>
+    ///     The function to be called once
+    ///     the timed event is complete.
+    /// </summary>
     public WireActionDelegate Delegate { get; }
+
+    /// <summary>
+    ///     The wire tied to this timed wire event.
+    /// </summary>
     public Wire Wire { get; }
 
     public TimedWireEvent(WireActionDelegate @delegate, Wire wire)
