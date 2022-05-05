@@ -84,30 +84,8 @@
     AtmosphericTechnician: [ 1, 2 ]
 
 - type: gameMap
-  id: knightship
-  mapName: 'Knightship'
-  mapNameTemplate: '{0} Knightship {1}'
-  nameGenerator:
-    !type:NanotrasenNameGenerator
-    prefixCreator: '14'
-  mapPath: /Maps/knightship.yml
-  votable: false
-  minPlayers: 0
-  maxPlayers: 8
-  overflowJobs: []
-  availableJobs:
-    Bartender: [ 1, 1 ]
-    Captain: [ 1, 1 ]
-    ChiefEngineer: [ 1, 1 ]
-    StationEngineer: [ 1, 1 ]
-    ChiefMedicalOfficer: [ 1, 1 ]
-    MedicalDoctor: [ 1, 1 ]
-    ResearchDirector: [ 1, 1 ]
-    Botanist: [ 1, 1 ]
-
-- type: gameMap
   id: NSSPillar
-  mapName: 'NSS Pillar v5.3'
+  mapName: 'NSS Pillar'
   mapNameTemplate: '{0} NSSPillar {1}'
   nameGenerator:
     !type:NanotrasenNameGenerator
