@@ -252,6 +252,10 @@ public sealed class WiresSystem : EntitySystem
         UpdateUserInterface(uid);
     }
 
+    /// <summary>
+    ///     Tries to cancel an active wire action via the given key that it's stored in.
+    /// </summary>
+    /// <param id="key">The key used to cancel the action.</param>
     public bool TryCancelWireAction(EntityUid owner, object key)
     {
         if (TryGetData(owner, key, out CancellationTokenSource? token))
@@ -263,6 +267,12 @@ public sealed class WiresSystem : EntitySystem
         return false;
     }
 
+    /// <summary>
+    ///     Starts a timed action for this entity.
+    /// </summary>
+    /// <param id="delay">How long this takes to finish</param>
+    /// <param id="key">The key used to cancel the action</param>
+    /// <param id="onFinish">The event that is sent out when the wire is finished <see cref="TimedWireEvent" /></param>
     public void StartWireAction(EntityUid owner, float delay, object key, TimedWireEvent onFinish)
     {
         if (!HasComp<WiresComponent>(owner))
@@ -550,6 +560,10 @@ public sealed class WiresSystem : EntitySystem
         _uiSystem.GetUiOrNull(uid, WiresUiKey.Key)?.Open(player);
     }
 
+    /// <summary>
+    ///     Tries to get a wire on this entity by its integer id.
+    /// </summary>
+    /// <returns>The wire if found, otherwise null</returns>
     public Wire? TryGetWire(EntityUid uid, int id, WiresComponent? wires = null)
     {
         if (!Resolve(uid, ref wires))
@@ -558,6 +572,10 @@ public sealed class WiresSystem : EntitySystem
         return wires.WiresList.Find(x => x.Id == id);
     }
 
+    /// <summary>
+    ///     Tries to get all the wires on this entity by the wire action type.
+    /// </summary>
+    /// <returns>Enumerator of all wires in this entity according to the given type.</returns>
     public IEnumerable<Wire> TryGetWires<T>(EntityUid uid, WiresComponent? wires = null)
     {
         if (!Resolve(uid, ref wires))
@@ -706,6 +724,10 @@ public sealed class WiresSystem : EntitySystem
         wires.WiresQueue.Remove(id);
     }
 
+    /// <summary>
+    ///     Tries to get the stateful data stored in this entity's WiresComponent.
+    /// </summary>
+    /// <param id="identifier">The key that stores the data in the WiresComponent.</param>
     public bool TryGetData<T>(EntityUid uid, object identifier, [NotNullWhen(true)] out T? data, WiresComponent? wires = null)
     {
         data = default(T);
@@ -724,6 +746,11 @@ public sealed class WiresSystem : EntitySystem
         return true;
     }
 
+    /// <summary>
+    ///     Sets data in the entity's WiresComponent state dictionary by key.
+    /// </summary>
+    /// <param id="identifier">The key that stores the data in the WiresComponent.</param>
+    /// <param id="data">The data to store using the given identifier.</param>
     public void SetData(EntityUid uid, object identifier, object data, WiresComponent? wires = null)
     {
         if (!Resolve(uid, ref wires))
@@ -741,6 +768,9 @@ public sealed class WiresSystem : EntitySystem
         UpdateUserInterface(uid, wires);
     }
 
+    /// <summary>
+    ///     If this entity has data stored via this key in the WiresComponent it has
+    /// </summary>
     public bool HasData(EntityUid uid, object identifier, WiresComponent? wires = null)
     {
         if (!Resolve(uid, ref wires))
@@ -749,6 +779,10 @@ public sealed class WiresSystem : EntitySystem
         return wires.StateData.ContainsKey(identifier);
     }
 
+    /// <summary>
+    ///     Removes data from this entity stored in the given key from the entity's WiresComponent.
+    /// </summary>
+    /// <param id="identifier">The key that stores the data in the WiresComponent.</param>
     public void RemoveData(EntityUid uid, object identifier, WiresComponent? wires = null)
     {
         if (!Resolve(uid, ref wires))
