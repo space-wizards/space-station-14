@@ -1,7 +1,6 @@
 
-using Content.Server.Stack.Events;
 using Content.Shared.Stacks;
-using Content.Shared.Sticky.Components;
+using Content.Shared.Sticky.Events;
 using Content.Shared.Verbs;
 using JetBrains.Annotations;
 using Robust.Shared.Map;
@@ -131,7 +130,7 @@ namespace Content.Server.Stack
                 return;
 
             //Checks from other system
-            var otherSystemCheck = new StackSplitAttemptEvent(uid, userUid, amount);
+            var otherSystemCheck = new StickySystemTestAttemptEvent(uid, userUid);
            RaiseLocalEvent(uid , otherSystemCheck);
             if(otherSystemCheck.Cancelled)
                 return;

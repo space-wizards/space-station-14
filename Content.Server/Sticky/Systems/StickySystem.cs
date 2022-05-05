@@ -1,16 +1,14 @@
 ﻿using Content.Server.DoAfter;
 using Content.Server.Popups;
-using Content.Server.Stack.Events;
 using Content.Shared.Sticky.Components;
 using Content.Server.Sticky.Events;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Interaction;
-using Content.Shared.Lathe.Events;
-using Content.Shared.Stacks;
+using Content.Shared.Sticky.Events;
 using Content.Shared.Verbs;
 using Robust.Shared.Containers;
 using Robust.Shared.Player;
-using Serilog;
+
 
 namespace Content.Server.Sticky.Systems;
 
@@ -20,6 +18,7 @@ public sealed class StickySystem : EntitySystem
     [Dependency] private readonly PopupSystem _popupSystem = default!;
     [Dependency] private readonly SharedContainerSystem _containerSystem = default!;
     [Dependency] private readonly SharedHandsSystem _handsSystem = default!;
+
 
     private const string StickerSlotId = "stickers_container";
 
@@ -32,46 +31,17 @@ public sealed class StickySystem : EntitySystem
         SubscribeLocalEvent<StickyComponent, AfterInteractEvent>(OnAfterInteract);
         SubscribeLocalEvent<StickyComponent, GetVerbsEvent<Verb>>(AddUnstickVerb);
 
-        SubscribeLocalEvent<InsertMaterialAttemptEvent>(OnInsertMaterialAttemptEvent);
-        SubscribeLocalEvent<StackSplitAttemptEvent>(OnStackSplitAttemptEvent);
-        SubscribeLocalEvent<StackMergeAttemptEvent>(OnStackMergeAttemptEvent);
+        SubscribeLocalEvent<StickySystemTestAttemptEvent>(OnStickySystemTestAttemptEvent);
+
     }
 
-    private void OnStackMergeAttemptEvent(StackMergeAttemptEvent ev)
+    private void OnStickySystemTestAttemptEvent(StickySystemTestAttemptEvent ev)
     {
-        if (EntityManager.HasComponent<HasEntityStuckOnComponent>(ev.Used)
-            || EntityManager.HasComponent<HasEntityStuckOnComponent>(ev.Target))
-        {
-            _popupSystem.PopupEntity(Loc.GetString("event-sticky-merge-fail-entity-stuck-on"), ev.Used, Filter.Entities(ev.User));
-            ev.Cancel();
-        }
-
-        if ((EntityManager.TryGetComponent(ev.Used, out StickyComponent usedStickyComp) && usedStickyComp.StuckTo != null)
-            ||EntityManager.TryGetComponent(ev.Used, out StickyComponent targetStickyComp) && targetStickyComp.StuckTo != null)
-        {
-            _popupSystem.PopupEntity(Loc.GetString("event-sticky-merge-fail-entity-stuck"), ev.Used ,Filter.Entities(ev.User));
-            ev.Cancel();
-        }
-    }
-
-    private void OnStackSplitAttemptEvent(StackSplitAttemptEvent ev)
-    {
-        if (EntityManager.HasComponent<HasEntityStuckOnComponent>(ev.Used)
-            || EntityManager.TryGetComponent(ev.Used , out StickyComponent targetComp)
-            && targetComp.StuckTo != null)
-        {
-            _popupSystem.PopupEntity(Loc.GetString("event-sticky-general-fail"), ev.Used ,Filter.Entities(ev.User));
-            ev.Cancel();
-        }
-    }
-
-    private void OnInsertMaterialAttemptEvent(InsertMaterialAttemptEvent ev)
-    {
-        if (EntityManager.TryGetComponent(ev.Inserted, out StickyComponent inserted)
+        if (EntityManager.TryGetComponent(ev.Subject, out StickyComponent inserted)
             && inserted.StuckTo != null
-            || EntityManager.HasComponent<HasEntityStuckOnComponent>(ev.Inserted))
+            || EntityManager.HasComponent<HasEntityStuckOnComponent>(ev.Subject))
         {
-            _popupSystem.PopupEntity(Loc.GetString("event-sticky-general-fail"), ev.Inserted ,Filter.Entities(ev.User));
+            _popupSystem.PopupEntity(Loc.GetString(ev.FailPopupMessage), ev.Subject ,Filter.Entities(ev.User));
             ev.Cancel();
         }
     }

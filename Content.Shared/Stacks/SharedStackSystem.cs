@@ -4,6 +4,7 @@ using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Interaction;
 using Content.Shared.Popups;
 using Content.Shared.Sticky.Components;
+using Content.Shared.Sticky.Events;
 using JetBrains.Annotations;
 using Robust.Shared.GameStates;
 using Robust.Shared.Player;
@@ -83,7 +84,11 @@ namespace Content.Shared.Stacks
         {
             transfered = 0;
 
-            var otherSystemCheck = new StackMergeAttemptEvent(donor , recipient , user);
+            var otherSystemCheck = new StickySystemTestAttemptEvent(donor ,user);
+            RaiseLocalEvent(donor , otherSystemCheck);
+            if (otherSystemCheck.Cancelled)
+                return false;
+            otherSystemCheck = new StickySystemTestAttemptEvent(recipient ,user);
             RaiseLocalEvent(donor , otherSystemCheck);
             if (otherSystemCheck.Cancelled)
                 return false;

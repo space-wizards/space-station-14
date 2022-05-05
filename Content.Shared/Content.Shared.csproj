@@ -30,6 +30,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Text\Names\*.txt" />
   </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Lathe\Events" />
+  </ItemGroup>
   <Import Project="..\RobustToolbox\MSBuild\Robust.Analyzers.targets" />
 
 </Project>

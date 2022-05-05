@@ -9,7 +9,7 @@ using Content.Server.Popups;
 using Content.Server.Power.Components;
 using Content.Server.Stack;
 using Content.Server.UserInterface;
-using Content.Shared.Lathe.Events;
+using Content.Shared.Sticky.Events;
 using Robust.Server.GameObjects;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Player;
@@ -106,9 +106,12 @@ namespace Content.Server.Lathe
             if (!TryComp<MaterialStorageComponent>(uid, out var storage) || !TryComp<MaterialComponent>(args.Used, out var material))
                 return;
 
-            var otherSystemsCheck = new InsertMaterialAttemptEvent(args.User, args.Used, args.Target, args.ClickLocation);
+            var otherSystemsCheck = new StickySystemTestAttemptEvent(args.Used, args.User);
             RaiseLocalEvent(uid , otherSystemsCheck);
-
+            if (otherSystemsCheck.Cancelled)
+                return;
+            otherSystemsCheck = new StickySystemTestAttemptEvent(args.Target, args.User);
+            RaiseLocalEvent(uid , otherSystemsCheck);
             if (otherSystemsCheck.Cancelled)
                 return;
 
