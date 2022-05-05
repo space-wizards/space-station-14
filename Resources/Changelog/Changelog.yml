@@ -1,10 +1,4 @@
 Entries:
-- author: ElectroJr
-  changes:
-  - {message: Fixed ghost being able to interact with the world via various UI elements.,
-    type: Fix}
-  id: 959
-  time: '2022-01-30T15:26:08.0000000+00:00'
 - author: Schiene
   changes:
   - {message: Remastered the Dart shuttle, type: Add}
@@ -3039,3 +3033,10 @@ Entries:
   - {message: Delta Station now has filing cabinets., type: Add}
   id: 1458
   time: '2022-05-04T22:25:16.0000000+00:00'
+- author: vulppine
+  changes:
+  - {message: Certain crewmembers may find themselves afflicted with mysterious patterns
+      or extrusions on their bodies. Nanotrasen is not responsible for this incident.
+      (You can now add body markings onto your character.), type: Add}
+  id: 1459
+  time: '2022-05-05T08:07:42.0000000+00:00'
