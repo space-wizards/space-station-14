@@ -1,3 +1,4 @@
+using Content.Server.Tools.Systems;
 using Content.Shared.Tools;
 using Content.Shared.Tools.Components;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
@@ -8,6 +9,7 @@ namespace Content.Server.Tools.Components;
 ///     Allows users to weld/unweld doors, crates and lockers.
 /// </summary>
 [RegisterComponent]
+[Friend(typeof(WeldableSystem))]
 public sealed class WeldableComponent : SharedWeldableComponent
 {
     /// <summary>
