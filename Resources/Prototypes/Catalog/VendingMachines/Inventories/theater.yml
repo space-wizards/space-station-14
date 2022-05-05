@@ -3,6 +3,8 @@
   name: AutoDrobe
   spriteName: theater
   startingInventory:
+    ClothingOuterCoatClown: 1
+    ClothingOuterCoatMime: 1
     ClothingMaskJoy: 2
     ClothingHeadHatCardborg: 2
     ClothingOuterCardborg: 2
