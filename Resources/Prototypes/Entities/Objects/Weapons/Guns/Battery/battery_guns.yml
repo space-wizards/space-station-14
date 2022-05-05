@@ -373,7 +373,7 @@
       zeroVisible: true
 
 - type: entity
-  name: taser
+  name: antique laser gun
   parent: BatteryGunSmall
   id: AntiqueLaserGun
   description: This is an antique laser gun. All craftsmanship is of the highest quality. It is decorated with assistant leather and chrome. The object menaces with spikes of energy.
