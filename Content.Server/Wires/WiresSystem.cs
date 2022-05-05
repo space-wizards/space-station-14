@@ -292,7 +292,6 @@ public sealed class WiresSystem : EntitySystem
             tokenSource.Token,
             onFinish
         ));
-
     }
 
     private Dictionary<EntityUid, List<ActiveWireAction>> _activeWires = new();
@@ -396,7 +395,7 @@ public sealed class WiresSystem : EntitySystem
         if (activeHand.HeldEntity == null)
             return;
 
-        var activeHandEntity = (EntityUid) activeHand.HeldEntity;
+        var activeHandEntity = activeHand.HeldEntity.Value;
         if (!EntityManager.TryGetComponent(activeHandEntity, out ToolComponent? tool))
             return;
 
