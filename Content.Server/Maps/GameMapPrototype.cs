@@ -22,14 +22,12 @@ public sealed partial class GameMapPrototype : IPrototype
     /// <summary>
     /// Name of the map to use in generic messages, like the map vote.
     /// </summary>
-    [DataField("mapName", required: true)]
-    public string MapName { get; } = default!;
+    [DataField("mapName", required: true)] public readonly string MapName = default!;
 
     /// <summary>
     /// Relative directory path to the given map, i.e. `/Maps/saltern.yml`
     /// </summary>
-    [DataField("mapPath", required: true)]
-    public ResourcePath MapPath { get; } = default!;
+    [DataField("mapPath", required: true)] public readonly ResourcePath MapPath = default!;
 
     [DataField("stations")]
     private Dictionary<string, StationConfig> _stations = new();

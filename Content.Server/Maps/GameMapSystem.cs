@@ -1,4 +1,5 @@
 ﻿using Content.Server.GameTicking;
+using Content.Server.Voting.Managers;
 using Content.Shared.Coordinates;
 using JetBrains.Annotations;
 using Robust.Server.Maps;
@@ -22,6 +23,7 @@ public sealed partial class GameMapSystem : EntitySystem
     [Dependency] private readonly IPlayerManager _playerManager = default!;
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
+    [Dependency] private readonly IVoteManager _voteManager = default!;
     [Dependency] private readonly GameTicker _gameTicker = default!;
 
     public override void Initialize()
