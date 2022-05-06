@@ -14,7 +14,7 @@
   speciesRestriction: [Human]
   sprites:
   - sprite: Mobs/Customization/tattoos.rsi
-    state: tatto_nightling
+    state: tattoo_nightling
 
 - type: marking
   id: TattooSilverburghLeftLeg
@@ -23,7 +23,7 @@
   speciesRestriction: [Human]
   sprites:
   - sprite: Mobs/Customization/tattoos.rsi
-    state: tatto_silverburgh_l_leg
+    state: tattoo_silverburgh_l_leg
 
 - type: marking
   id: TattooSilverburghRightLeg
@@ -32,7 +32,7 @@
   speciesRestriction: [Human]
   sprites:
   - sprite: Mobs/Customization/tattoos.rsi
-    state: tatto_silverburgh_r_leg
+    state: tattoo_silverburgh_r_leg
 
 - type: marking
   id: TattooCampbellLeftArm
@@ -41,7 +41,7 @@
   speciesRestriction: [Human]
   sprites:
   - sprite: Mobs/Customization/tattoos.rsi
-    state: tatto_campbell_l_arm
+    state: tattoo_campbell_l_arm
 
 - type: marking
   id: TattooCampbellRightArm
@@ -50,7 +50,7 @@
   speciesRestriction: [Human]
   sprites:
   - sprite: Mobs/Customization/tattoos.rsi
-    state: tatto_campbell_r_arm
+    state: tattoo_campbell_r_arm
 
 - type: marking
   id: TattooCampbellLeftLeg
@@ -59,7 +59,7 @@
   speciesRestriction: [Human]
   sprites:
   - sprite: Mobs/Customization/tattoos.rsi
-    state: tatto_campbell_l_leg
+    state: tattoo_campbell_l_leg
 
 - type: marking
   id: TattooCampbellRightLeg
@@ -68,4 +68,4 @@
   speciesRestriction: [Human]
   sprites:
   - sprite: Mobs/Customization/tattoos.rsi
-    state: tatto_campbell_r_leg
+    state: tattoo_campbell_r_leg
