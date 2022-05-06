@@ -15,9 +15,6 @@ namespace Content.Server.Crayon
     {
         [DataField("useSound")] public SoundSpecifier? UseSound;
 
-        [ViewVariables]
-        public Color Color { get; private set; }
-
         [ViewVariables(VVAccess.ReadWrite)]
         [DataField("selectableColor")]
         public bool SelectableColor { get; set; }
@@ -34,10 +31,5 @@ namespace Content.Server.Crayon
         public bool DeleteEmpty = true;
 
         [ViewVariables] public BoundUserInterface? UserInterface => Owner.GetUIOrNull(CrayonUiKey.Key);
-
-        void ISerializationHooks.AfterDeserialization()
-        {
-            Color = Color.FromName(_color);
-        }
     }
 }
