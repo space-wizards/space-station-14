@@ -102,6 +102,7 @@
       - id: CigarCase
         prob: 0.15
       - id: DoorRemoteEngineering
+      - id: RubberStampCE
 
 - type: entity
   id: LockerChiefMedicalOfficerFilled

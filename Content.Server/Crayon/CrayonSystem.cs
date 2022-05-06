@@ -33,6 +33,7 @@ public sealed class CrayonSystem : EntitySystem
         base.Initialize();
         SubscribeLocalEvent<CrayonComponent, ComponentInit>(OnCrayonInit);
         SubscribeLocalEvent<CrayonComponent, CrayonSelectMessage>(OnCrayonBoundUI);
+        SubscribeLocalEvent<CrayonComponent, CrayonColorMessage>(OnCrayonBoundUIColor);
         SubscribeLocalEvent<CrayonComponent, UseInHandEvent>(OnCrayonUse);
         SubscribeLocalEvent<CrayonComponent, AfterInteractEvent>(OnCrayonAfterInteract);
         SubscribeLocalEvent<CrayonComponent, DroppedEvent>(OnCrayonDropped);
@@ -67,7 +68,21 @@ public sealed class CrayonSystem : EntitySystem
             return;
         }
 
-        if(!_decals.TryAddDecal(component.SelectedState, args.ClickLocation.Offset(new Vector2(-0.5f,-0.5f)), out _, Color.FromName(component._color), cleanable: true))
+        Color color = Color.White;
+        if (Color.TryFromName(component._color, out var namedColor))
+        {
+            color = namedColor;
+        }
+        else
+        {
+            var hexColor = Color.TryFromHex(component._color);
+            if (hexColor != null)
+            {
+                color = (Color) hexColor;
+            }
+        }
+
+        if(!_decals.TryAddDecal(component.SelectedState, args.ClickLocation.Offset(new Vector2(-0.5f,-0.5f)), out _, color, cleanable: true))
             return;
 
         if (component.UseSound != null)
@@ -96,7 +111,7 @@ public sealed class CrayonSystem : EntitySystem
         if (component.UserInterface?.SessionHasOpen(actor.PlayerSession) == true)
         {
             // Tell the user interface the selected stuff
-            component.UserInterface.SetState(new CrayonBoundUserInterfaceState(component.SelectedState, component.Color));
+            component.UserInterface.SetState(new CrayonBoundUserInterfaceState(component.SelectedState, component.SelectableColor, component.Color));
         }
 
         args.Handled = true;
@@ -108,7 +123,31 @@ public sealed class CrayonSystem : EntitySystem
         if (!_prototypeManager.TryIndex<DecalPrototype>(args.State, out var prototype) || !prototype.Tags.Contains("crayon")) return;
 
         component.SelectedState = args.State;
+
         Dirty(component);
+    }
+
+    private void OnCrayonBoundUIColor(EntityUid uid, CrayonComponent component, CrayonColorMessage args)
+    {
+        // you still need to ensure that the given color is a valid color
+        if (component.SelectableColor && args.Color != component._color)
+        {
+            if (Color.TryFromName(component._color, out var namedColor))
+            {
+                component._color = args.Color;
+            }
+            else
+            {
+                var hexColor = Color.TryFromHex(component._color);
+                if (hexColor != null)
+                {
+                    component._color = args.Color;
+                }
+            }
+
+            Dirty(component);
+        }
+
     }
 
     private void OnCrayonInit(EntityUid uid, CrayonComponent component, ComponentInit args)
