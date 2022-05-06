@@ -24,7 +24,8 @@ namespace Content.Server.Dragon
         [Dependency] private readonly PopupSystem _popupSystem = default!;
         [Dependency] private readonly BloodstreamSystem _bloodstreamSystem = default!;
         [Dependency] private readonly SharedContainerSystem _containerSystem = default!;
-        
+        [Dependency] private readonly TagSystem _tagSystem = default!;
+
         public override void Initialize()
         {
             base.Initialize();
@@ -139,7 +140,7 @@ namespace Content.Server.Dragon
             else if (EntityManager.TryGetComponent(target, out TagComponent tags))
             {
                 // If it can be built- it can be destoryed
-                if (tags.Tags.Contains("RCDDeconstructWhitelist"))
+                if (_tagSystem.HasTag(target, "RCDDeconstructWhitelist"))
                 {
                     _popupSystem.PopupEntity(Loc.GetString("devour-action-popup-message-structure"), dragonuid, Filter.Entities(dragonuid));
                     dragoncomp.CancelToken = new CancellationTokenSource();
