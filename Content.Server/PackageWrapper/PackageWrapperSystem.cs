@@ -5,6 +5,7 @@ using Content.Shared.Popups;
 using JetBrains.Annotations;
 using Content.Server.Storage.Components;
 using Content.Shared.Item;
+using Robust.Shared.Containers;
 using Robust.Shared.Utility;
 
 
@@ -13,6 +14,7 @@ namespace Content.Server.PackageWrapper
     [UsedImplicitly]
     public class PackageWrapSystem : EntitySystem
     {
+        [Dependency] private readonly SharedContainerSystem _containerSystem = default!;
         public override void Initialize()
         {
             base.Initialize();
@@ -78,25 +80,35 @@ namespace Content.Server.PackageWrapper
                     // Spawn item with minimal size and insert
                     if (typeComp != null)
                     {
-                        var spawnedObj = Spawn(typeComp.ProtoSpawnID, Comp<TransformComponent>((EntityUid) args.Target).Coordinates);
-                        var container = Comp<WrappedStorageComponent>(spawnedObj);
-                        container.ItemContainer.Insert(args.Target.Value);
+                        EntityUid spawnedObjectUid;
+
+                        if (_containerSystem.TryGetContainingContainer(args.Target.Value, out var itemContainer))
+                        {
+                            // Drop item
+                            Transform(args.Target.Value).AttachToGridOrMap();
+                            var spawnedWrapperContainer = Spawn(typeComp.ProtoSpawnID,Transform(args.Target.Value).MapPosition);
+                            var wrapperComp = Comp<WrappedStorageComponent>(spawnedWrapperContainer);
+
+                            itemContainer.Insert(wrapperComp.Owner);
+                            wrapperComp.ItemContainer.Insert(args.Target.Value);
+
+                            spawnedObjectUid = spawnedWrapperContainer;
+                        }
+                        else
+                        {
+                            //Spawn in coords
+                            var spawnedWrapperContainer = Spawn(typeComp.ProtoSpawnID, Transform(args.Target.Value).Coordinates);
+                            var wrapperComp = Comp<WrappedStorageComponent>(spawnedWrapperContainer);
+                            wrapperComp.ItemContainer.Insert(args.Target.Value);
+
+                            spawnedObjectUid = spawnedWrapperContainer;
+                        }
 
                         component.Owner.PopupMessage(args.User,
                             Loc.GetString("on-successful-wrap-message",
                                 ("target", Comp<MetaDataComponent>(args.Target.Value).EntityName),
-                                ("result", Comp<MetaDataComponent>(spawnedObj).EntityName)));
+                                ("result", Comp<MetaDataComponent>(spawnedObjectUid).EntityName)));
                     }
-                    else
-                    {
-                        component.Owner.PopupMessage(args.User, Loc.GetString("on-failed-wrap-size-message",
-                            ("target", Comp<MetaDataComponent>(args.Target.Value).EntityName)));
-                    }
-                }
-                else
-                {
-                    component.Owner.PopupMessage(args.User, Loc.GetString("on-failed-wrap-message",
-                        ("target", Comp<MetaDataComponent>(args.Target.Value).EntityName)));
                 }
             }
         }
