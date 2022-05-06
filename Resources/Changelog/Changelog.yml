@@ -1,10 +1,4 @@
 Entries:
-- author: Peptide90
-  changes:
-  - {message: Added non lethal technology to research tree. Allows protolathe to produce
-      rubber bullets and beanbag shells., type: Add}
-  id: 965
-  time: '2022-02-01T06:15:29.0000000+00:00'
 - author: Fishfish458
   changes:
   - {message: 'Added insta-heat ramen, just add water!', type: Add}
@@ -3040,3 +3034,10 @@ Entries:
       to be used on the tile below you., type: Fix}
   id: 1464
   time: '2022-05-06T10:59:03.0000000+00:00'
+- author: juliangiebel
+  changes:
+  - {message: Added a new medipen variant to survival boxes that buys you some time
+      when you get spaced., type: Add}
+  - {message: Some emergency lockers now contain an emergency suit., type: Tweak}
+  id: 1465
+  time: '2022-05-06T21:44:29.0000000+00:00'
