@@ -1,9 +1,4 @@
 Entries:
-- author: Ygg01
-  changes:
-  - {message: Prevents cutoff of drinks, type: Fix}
-  id: 964
-  time: '2022-01-31T23:55:38.0000000+00:00'
 - author: Peptide90
   changes:
   - {message: Added non lethal technology to research tree. Allows protolathe to produce
@@ -3039,3 +3034,9 @@ Entries:
   - {message: SlimePeople now have limb gradients markings, type: Add}
   id: 1463
   time: '2022-05-06T08:50:00.0000000+00:00'
+- author: mirrorcult
+  changes:
+  - {message: Trying to insert items into storage will no longer cause those items
+      to be used on the tile below you., type: Fix}
+  id: 1464
+  time: '2022-05-06T10:59:03.0000000+00:00'
