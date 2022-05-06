@@ -21,9 +21,9 @@
   components:
     - type: Sprite
       netsync: false
-      sprite: Objects/Misc/books.rsi
+      sprite: Objects/Magic/spellbooks.rsi
       layers:
-        - state: book_demonomicon
+        - state: bookforcewall
     - type: Wieldable
       wieldTime: 0.75
     - type: Spellbook
@@ -37,9 +37,9 @@
   components:
     - type: Sprite
       netsync: false
-      sprite: Objects/Misc/books.rsi
+      sprite: Objects/Magic/spellbooks.rsi
       layers:
-        - state: book_demonomicon
+        - state: spellbook
     - type: Wieldable
       wieldTime: 0.75
     - type: Spellbook
@@ -53,9 +53,9 @@
   components:
     - type: Sprite
       netsync: false
-      sprite: Objects/Misc/books.rsi
+      sprite: Objects/Magic/spellbooks.rsi
       layers:
-        - state: book_demonomicon
+        - state: bookknock
     - type: Wieldable
       wieldTime: 0.75
     - type: Spellbook
