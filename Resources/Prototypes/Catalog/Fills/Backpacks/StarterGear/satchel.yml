@@ -7,14 +7,16 @@
     contents:
       - id: BoxSurvival
 
-#- type: entity
-#  noSpawn: true
-#  parent: ClothingBackpackSatchelClown
-#  id: ClothingBackpackSatchelClownFilled
-#  components:
-#  - type: StorageFill
-#    contents:
-#      - id: BoxHug
+- type: entity
+  noSpawn: true
+  parent: ClothingBackpackSatchelClown
+  id: ClothingBackpackSatchelClownFilled
+  components:
+  - type: StorageFill
+    contents:
+      - id: BoxHug
+      - id: RubberStampClown
+      - id: CrayonRainbow
 
 - type: entity
   noSpawn: true
