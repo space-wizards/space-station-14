@@ -74,7 +74,7 @@ namespace Content.Client.Markings
 
                 // if the given marking isn't correctly formed, we need to
                 // instead just allocate a new marking based on the old one
-                // with the correct sprite count
+
                 if (marking.MarkingColors.Count != markingPrototype.Sprites.Count)
                 {
                     marking = new Marking(marking.MarkingId, markingPrototype.Sprites.Count);
