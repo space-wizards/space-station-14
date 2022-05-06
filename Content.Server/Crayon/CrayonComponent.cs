@@ -11,7 +11,7 @@ using Robust.Shared.ViewVariables;
 namespace Content.Server.Crayon
 {
     [RegisterComponent]
-    public sealed class CrayonComponent : SharedCrayonComponent, ISerializationHooks
+    public sealed class CrayonComponent : SharedCrayonComponent
     {
         [DataField("useSound")] public SoundSpecifier? UseSound;
 
