@@ -17,6 +17,7 @@
   - type: MovementSpeedModifier
     baseWalkSpeed : 7
     baseSprintSpeed : 7
+  - type: Eye
   - type: Tag
   - type: Pullable
   - type: Physics

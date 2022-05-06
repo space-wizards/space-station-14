@@ -175,19 +175,6 @@ namespace Content.Server.Storage.EntitySystems
 
                 args.Verbs.Add(verb);
             }
-
-            // if the target is a disposal unit, add a verb to transfer storage into the unit (e.g., empty a trash bag).
-            if (!TryComp(args.Target, out DisposalUnitComponent? disposal))
-                return;
-
-            UtilityVerb dispose = new()
-            {
-                Text = Loc.GetString("storage-component-dispose-verb"),
-                IconEntity = args.Using,
-                Act = () => DisposeEntities(args.User, uid, args.Target, component, lockComponent, disposal)
-            };
-
-            args.Verbs.Add(dispose);
         }
 
 
@@ -198,6 +185,9 @@ namespace Content.Server.Storage.EntitySystems
         /// <returns>true if inserted, false otherwise</returns>
         private void OnInteractUsing(EntityUid uid, ServerStorageComponent storageComp, InteractUsingEvent args)
         {
+            if (args.Handled)
+                return;
+
             if (!storageComp.ClickInsert)
                 return;
 
@@ -206,7 +196,8 @@ namespace Content.Server.Storage.EntitySystems
             if (HasComp<PlaceableSurfaceComponent>(uid))
                 return;
 
-            PlayerInsertHeldEntity(uid, args.User, storageComp);
+            if (PlayerInsertHeldEntity(uid, args.User, storageComp))
+                args.Handled = true;
         }
 
         /// <summary>
@@ -441,35 +432,6 @@ namespace Content.Server.Storage.EntitySystems
             foreach (var entity in entities.ToList())
             {
                 Insert(target, entity, targetComp);
-            }
-            RecalculateStorageUsed(sourceComp);
-            UpdateStorageUI(source, sourceComp);
-        }
-
-        /// <summary>
-        ///     Move entities from storage into a disposal unit.
-        /// </summary>
-        public void DisposeEntities(EntityUid user, EntityUid source, EntityUid target,
-            ServerStorageComponent? sourceComp = null, LockComponent? sourceLock = null,
-            DisposalUnitComponent? disposalComp = null)
-        {
-            if (!Resolve(source, ref sourceComp) || !Resolve(target, ref disposalComp))
-                return;
-
-            var entities = sourceComp.Storage?.ContainedEntities;
-            if (entities == null || entities.Count == 0)
-                return;
-
-            if (Resolve(source, ref sourceLock, false) && sourceLock.Locked)
-                return;
-
-            foreach (var entity in entities.ToList())
-            {
-                if (_disposalSystem.CanInsert(disposalComp, entity)
-                    && disposalComp.Container.Insert(entity))
-                {
-                    _disposalSystem.AfterInsert(disposalComp, entity);
-                }
             }
             RecalculateStorageUsed(sourceComp);
             UpdateStorageUI(source, sourceComp);

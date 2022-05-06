@@ -13,3 +13,5 @@
   - type: ReagentDispenser
     pack: BoozeDispenserInventory
     emagPack: BoozeDispenserEmagInventory
+  - type: Transform
+    noRot: false 

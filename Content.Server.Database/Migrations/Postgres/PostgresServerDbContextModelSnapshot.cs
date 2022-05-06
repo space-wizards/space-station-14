@@ -120,8 +120,12 @@ namespace Content.Server.Database.Migrations.Postgres
                     b.HasKey("Id", "RoundId")
                         .HasName("PK_admin_log");
 
+                    b.HasIndex("Date");
+
                     b.HasIndex("Message")
                         .HasAnnotation("Npgsql:TsVectorConfig", "english");
+
+                    NpgsqlIndexBuilderExtensions.HasMethod(b.HasIndex("Message"), "GIN");
 
                     b.HasIndex("RoundId")
                         .HasDatabaseName("IX_admin_log_round_id");
@@ -590,6 +594,10 @@ namespace Content.Server.Database.Migrations.Postgres
                         .IsRequired()
                         .HasColumnType("text")
                         .HasColumnName("hair_name");
+
+                    b.Property<JsonDocument>("Markings")
+                        .HasColumnType("jsonb")
+                        .HasColumnName("markings");
 
                     b.Property<int>("PreferenceId")
                         .HasColumnType("integer")

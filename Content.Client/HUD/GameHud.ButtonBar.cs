@@ -49,8 +49,7 @@ public interface IButtonBarView
     event Action<bool> SandboxButtonToggled;
 
     // Info top button
-    bool InfoButtonDown { get; set; }
-    event Action<bool> InfoButtonToggled;
+    event Action InfoButtonPressed;
 }
 
 internal sealed partial class GameHud
@@ -196,30 +195,16 @@ internal sealed partial class GameHud
             {
                 ToolTip = Loc.GetString("ui-options-function-open-info"),
                 MinSize = topMinSize,
-                StyleClasses = { StyleBase.ButtonOpenLeft, TopButton.StyleClassRedTopButton },
+                StyleClasses = { StyleBase.ButtonOpenLeft },
+                ToggleMode = false
             };
 
             topButtonsContainer.AddChild(_buttonInfo);
 
-            _buttonInfo.OnToggled += args => InfoButtonToggled?.Invoke(args.Pressed);
-            _buttonInfo.OnToggled += ButtonInfoToggledHandler;
+            _buttonInfo.OnPressed += args => InfoButtonPressed?.Invoke();
         }
 
         return topButtonsContainer;
-    }
-
-    private void ButtonInfoToggledHandler(BaseButton.ButtonToggledEventArgs obj)
-    {
-        ButtonInfoToggled(obj.Pressed);
-    }
-
-    private void ButtonInfoToggled(bool pressed)
-    {
-        if(!pressed)
-            return;
-
-        _buttonInfo.StyleClasses.Remove(TopButton.StyleClassRedTopButton);
-        _buttonInfo.OnToggled -= ButtonInfoToggledHandler;
     }
 
     /// <inheritdoc />
@@ -335,16 +320,5 @@ internal sealed partial class GameHud
     public event Action<bool>? SandboxButtonToggled;
 
     /// <inheritdoc />
-    public bool InfoButtonDown
-    {
-        get => _buttonInfo.Pressed;
-        set
-        {
-            _buttonInfo.Pressed = value;
-            ButtonInfoToggled(value);
-        }
-    }
-
-    /// <inheritdoc />
-    public event Action<bool>? InfoButtonToggled;
+    public event Action? InfoButtonPressed;
 }

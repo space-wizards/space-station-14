@@ -13,3 +13,5 @@
   - type: ReagentDispenser
     pack: SodaDispenserInventory
     emagPack: SodaDispenserEmagInventory
+  - type: Transform
+    noRot: false 
