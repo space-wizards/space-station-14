@@ -138,6 +138,7 @@ namespace Content.Client.Entry
             "Flash",
             "Docking",
             "Telecrystal",
+            "PowerMonitoringConsole",
             "RCD",
             "RCDAmmo",
             "CursedEntityStorage",
@@ -344,6 +345,7 @@ namespace Content.Client.Entry
             "DoorRemote",
             "InteractionPopup",
             "HealthAnalyzer",
+            "Wires"
             "WrappedStorage",
             "WrappableInShape",
             "PackageWrapper"
