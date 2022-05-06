@@ -1,12 +1,4 @@
 Entries:
-- author: Rane
-  changes:
-  - {message: The bible's sounds are now positional and won't play at max volume every
-      time., type: Fix}
-  - {message: 'The bible''s cooldown has been increased to reduce sound spam, but
-      its healing rate remains the same.', type: Tweak}
-  id: 962
-  time: '2022-01-30T21:33:46.0000000+00:00'
 - author: Peptide90
   changes:
   - {message: Kitchen and Chemistry now have access to specific windoors. Look out
@@ -3041,3 +3033,9 @@ Entries:
       when you pulse, cut, and mend wires in some electronics.', type: Tweak}
   id: 1461
   time: '2022-05-06T02:35:06.0000000+00:00'
+- author: 20kdc
+  changes:
+  - {message: 'The admin help and rules buttons have swapped positions in the in-game
+      interface (rules now in escape menu, etc.)', type: Tweak}
+  id: 1462
+  time: '2022-05-06T03:46:33.0000000+00:00'
