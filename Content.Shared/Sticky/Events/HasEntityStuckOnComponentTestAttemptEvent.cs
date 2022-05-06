@@ -12,7 +12,7 @@ public sealed class HasEntityStuckOnComponentTestAttemptEvent : CancellableEntit
     /// </summary>
     public EntityUid User { get; }
 
-    public HasEntityStuckOnComponentTestAttemptEvent(EntityUid user , string failPopupMessage = "")
+    public HasEntityStuckOnComponentTestAttemptEvent(EntityUid user , string failPopupMessage = "event-sticky-has-things-stuck-on")
     {
         User = user;
         FailPopupMessage = failPopupMessage;
