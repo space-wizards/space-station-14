@@ -1,12 +1,4 @@
 Entries:
-- author: Peptide90
-  changes:
-  - {message: Kitchen and Chemistry now have access to specific windoors. Look out
-      for these in future., type: Add}
-  - {message: Brig specific access has been added for Warden and HoS - To be mapped
-      in future., type: Tweak}
-  id: 963
-  time: '2022-01-30T21:34:36.0000000+00:00'
 - author: Ygg01
   changes:
   - {message: Prevents cutoff of drinks, type: Fix}
@@ -3039,3 +3031,11 @@ Entries:
       interface (rules now in escape menu, etc.)', type: Tweak}
   id: 1462
   time: '2022-05-06T03:46:33.0000000+00:00'
+- author: Lizzer lover
+  changes:
+  - {message: 'Reptilians now have two more frills (Big, Divinity) and one horn marking
+      (doublehorn)', type: Add}
+  - {message: Humans now have tattoos markings, type: Add}
+  - {message: SlimePeople now have limb gradients markings, type: Add}
+  id: 1463
+  time: '2022-05-06T08:50:00.0000000+00:00'
