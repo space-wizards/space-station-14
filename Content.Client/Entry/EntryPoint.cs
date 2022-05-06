@@ -77,7 +77,6 @@ namespace Content.Client.Entry
             factory.RegisterClass<SharedLatheComponent>();
             factory.RegisterClass<SharedSpawnPointComponent>();
             factory.RegisterClass<SharedVendingMachineComponent>();
-            factory.RegisterClass<SharedWiresComponent>();
             factory.RegisterClass<SharedCargoConsoleComponent>();
             factory.RegisterClass<SharedReagentDispenserComponent>();
             factory.RegisterClass<SharedChemMasterComponent>();
@@ -105,6 +104,7 @@ namespace Content.Client.Entry
             prototypes.RegisterIgnore("worldSpell");
             prototypes.RegisterIgnore("entitySpell");
             prototypes.RegisterIgnore("instantSpell");
+            prototypes.RegisterIgnore("wireLayout");
 
             ClientContentIoC.Register();
 
