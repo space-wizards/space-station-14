@@ -1,9 +1,4 @@
 Entries:
-- author: Schiene
-  changes:
-  - {message: Remastered the Dart shuttle, type: Add}
-  id: 960
-  time: '2022-01-30T16:01:49.0000000+00:00'
 - author: ElectroJr
   changes:
   - {message: Fixed a visual bug that would sometimes result in players getting stuck
@@ -3040,3 +3035,8 @@ Entries:
       (You can now add body markings onto your character.), type: Add}
   id: 1459
   time: '2022-05-05T08:07:42.0000000+00:00'
+- author: Rane
+  changes:
+  - {message: Drones no longer have combat mode or disarms again., type: Fix}
+  id: 1460
+  time: '2022-05-06T01:12:26.0000000+00:00'
