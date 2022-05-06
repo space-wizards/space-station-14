@@ -7,5 +7,5 @@ namespace Content.Server.Magic.Events;
 public sealed class ForceWallSpellEvent : InstantActionEvent
 {
     [DataField("wallPrototype", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
-    public string WallPrototype = "WallCult";
+    public string WallPrototype = "WallForce";
 }
