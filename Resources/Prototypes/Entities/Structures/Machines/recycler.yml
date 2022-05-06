@@ -35,6 +35,7 @@
         - Opaque
   - type: Transform
     anchored: true
+    noRot: false    
   - type: Sprite
     netsync: false
     drawdepth: Doors
