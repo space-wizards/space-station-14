@@ -8,7 +8,7 @@ namespace Content.Server.Storage.EntitySystems
 {
     public class WrappedStorageSystem : EntitySystem
     {
-        [Dependency] private readonly SharedHandsSystem _handsSystem = default!;
+        [Dependency] private readonly SharedContainerSystem _containerSystem = default!;
         public override void Initialize()
         {
             base.Initialize();
@@ -29,22 +29,13 @@ namespace Content.Server.Storage.EntitySystems
 
                 if (component.ItemContainer.ContainedEntity != null)
                 {
-                    args.User.TryGetContainer(out var userContainer); //Check if item in hand, if in hand unpack and put in hand
-                    if (args.Target.TryGetContainer(out var container) && container != userContainer)
+                    if (_containerSystem.TryGetContainingContainer(args.Target, out var container))
                     {
-                        var handComp = Comp<SharedHandsComponent>(args.User);
                         // Drop 'wrapped object' because when i'm unwraping item, he always spawns on other hand or drop on floor
-                        if (TryFindHandWithItem(uid, handComp, out var hand))
-                        {
-                            if (hand != null)
-                            {
-                                if (_handsSystem.TryDrop(args.User, hand, null, true, true, handComp))
-                                {
-                                    var ent = (EntityUid) component.ItemContainer.ContainedEntity;
-                                    _handsSystem.TryPickupAnyHand(args.User,ent);
-                                }
-                            }
-                        }
+                        Transform(args.Target).AttachToGridOrMap();
+                        var ent = (EntityUid) component.ItemContainer.ContainedEntity;
+                        //Insert unpacked item
+                        container.Insert(ent);
                     }
                     else
                     {
@@ -54,21 +45,6 @@ namespace Content.Server.Storage.EntitySystems
                 }
                 QueueDel(uid);
             }
-        }
-
-        private bool TryFindHandWithItem(EntityUid target,SharedHandsComponent handComp, out Hand? foundHand)
-        {
-            foreach (var hand in handComp.Hands)
-            {
-                if (hand.Value.HeldEntity != null && hand.Value.HeldEntity.Value == target)
-                {
-                    foundHand = hand.Value;
-                    return true;
-                }
-            }
-
-            foundHand = null;
-            return false;
         }
 
         private void AddUnpackVerb(EntityUid uid, WrappedStorageComponent component, GetVerbsEvent<AlternativeVerb> args)
