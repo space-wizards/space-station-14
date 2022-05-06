@@ -345,7 +345,7 @@ namespace Content.Client.Entry
             "DoorRemote",
             "InteractionPopup",
             "HealthAnalyzer",
-            "Wires"
+            "Wires",
             "WrappedStorage",
             "WrappableInShape",
             "PackageWrapper"
