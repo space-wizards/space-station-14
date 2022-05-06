@@ -1,9 +1,8 @@
 ﻿- type: instantAction
-  id: TheTraps
-  name: the traps
-  description: summmons trap runes
+  id: HealingRune
+  name: action-name-spell-rune-healing
+  description: action-description-spell-rune-healing
   useDelay: 10
-  speech: unga
   itemIconStyle: BigAction
   icon:
     sprite: Effects/crayondecals.rsi

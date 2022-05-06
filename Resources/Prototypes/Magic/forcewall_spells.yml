@@ -1,9 +1,9 @@
 ﻿- type: instantAction
   id: ForceWall
-  name: force wall
-  description: summmons walls
+  name: action-name-spell-forcewall
+  description: action-description-spell-forcewall
   useDelay: 10
-  speech: bunga
+  speech: action-speech-spell-forcewall
   itemIconStyle: BigAction
   icon:
     sprite: Effects/crayondecals.rsi

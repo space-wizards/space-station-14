@@ -1,7 +1,7 @@
 ﻿- type: worldTargetAction
   id: Blink
-  name: blink
-  description: teleports user
+  name: action-name-spell-blink
+  description: action-description-spell-blink
   useDelay: 10
   range: 16 # default examine-range.
   # ^ should probably add better validation that the clicked location is on the users screen somewhere,

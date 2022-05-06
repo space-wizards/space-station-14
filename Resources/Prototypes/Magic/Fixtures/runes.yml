@@ -116,3 +116,14 @@
       totalIntensity: 20.0
       intensitySlope: 5
       maxIntensity: 4
+
+- type: entity
+  parent: CollideTimerRune
+  id: HealingTimedRune
+  name: "healing timed rune"
+  components:
+    - type: HealOnTrigger
+      damage:
+        groups:
+          Burn: -10
+

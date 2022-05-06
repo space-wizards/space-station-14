@@ -1,9 +1,9 @@
 ﻿- type: instantAction
   id: Knock
-  name: knock
-  description: opens doors
+  name: action-name-spell-knock
+  description: action-description-spell-knock
   useDelay: 10
-  speech: bunga
+  speech: action-speech-spell-knock
   itemIconStyle: BigAction
   icon:
     sprite: Effects/crayondecals.rsi

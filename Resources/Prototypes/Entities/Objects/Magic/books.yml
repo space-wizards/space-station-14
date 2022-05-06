@@ -1,6 +1,6 @@
 ﻿- type: entity
-  id: RuneSpellbook
-  name: rune spellbook
+  id: HealingRuneSpellbook
+  name: healing rune spellbook
   parent: BaseItem
   components:
     - type: Sprite
@@ -12,7 +12,7 @@
       wieldTime: 0.75
     - type: Spellbook
       instantSpells:
-        TheTraps: 3
+        HealingRune: 3
 
 - type: entity
   id: ForceWallSpellbook
