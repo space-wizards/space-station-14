@@ -185,6 +185,9 @@ namespace Content.Server.Storage.EntitySystems
         /// <returns>true if inserted, false otherwise</returns>
         private void OnInteractUsing(EntityUid uid, ServerStorageComponent storageComp, InteractUsingEvent args)
         {
+            if (args.Handled)
+                return;
+
             if (!storageComp.ClickInsert)
                 return;
 
@@ -193,7 +196,8 @@ namespace Content.Server.Storage.EntitySystems
             if (HasComp<PlaceableSurfaceComponent>(uid))
                 return;
 
-            PlayerInsertHeldEntity(uid, args.User, storageComp);
+            if (PlayerInsertHeldEntity(uid, args.User, storageComp))
+                args.Handled = true;
         }
 
         /// <summary>
