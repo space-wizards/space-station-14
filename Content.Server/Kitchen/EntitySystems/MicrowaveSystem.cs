@@ -1,8 +1,10 @@
 using Content.Server.Chemistry.EntitySystems;
 using Content.Server.Kitchen.Components;
 using Content.Server.Popups;
+using Content.Shared.Destructible;
 using Content.Shared.Interaction;
 using Content.Shared.Item;
+using Content.Shared.Kitchen.Components;
 using Robust.Shared.Player;
 using JetBrains.Annotations;
 
@@ -18,6 +20,7 @@ namespace Content.Server.Kitchen.EntitySystems
 
             SubscribeLocalEvent<MicrowaveComponent, SolutionChangedEvent>(OnSolutionChange);
             SubscribeLocalEvent<MicrowaveComponent, InteractUsingEvent>(OnInteractUsing);
+            SubscribeLocalEvent<MicrowaveComponent, BreakageEventArgs>(OnBreak);
         }
 
         private void OnSolutionChange(EntityUid uid, MicrowaveComponent component, SolutionChangedEvent args)
@@ -56,6 +59,12 @@ namespace Content.Server.Kitchen.EntitySystems
 
             component.Storage.Insert(args.Used);
             component.DirtyUi();
+        }
+
+        private void OnBreak(EntityUid uid, MicrowaveComponent component, BreakageEventArgs args)
+        {
+            component.Broken = true;
+            component.SetAppearance(MicrowaveVisualState.Broken);
         }
     }
 }

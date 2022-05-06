@@ -5,6 +5,9 @@
   components:
   - type: WallMount
   - type: ApcPowerReceiver
+  - type: Electrified
+    enabled: false
+    usesApcPower: true
   - type: ExtensionCableReceiver
   - type: DeviceNetwork
     deviceNetId: Apc

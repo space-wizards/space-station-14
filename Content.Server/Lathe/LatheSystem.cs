@@ -74,7 +74,7 @@ namespace Content.Server.Lathe
                 }
                 lathe.ProducingAccumulator = 0;
 
-                FinishProducing(lathe.ProducingRecipe, lathe);
+                FinishProducing(lathe.ProducingRecipe, lathe, true);
             }
         }
 
@@ -102,7 +102,7 @@ namespace Content.Server.Lathe
         /// </summary>
         private void OnInteractUsing(EntityUid uid, LatheComponent component, InteractUsingEvent args)
         {
-            if (!TryComp<MaterialStorageComponent>(uid, out var storage) 
+            if (!TryComp<MaterialStorageComponent>(uid, out var storage)
                 || !TryComp<MaterialComponent>(args.Used, out var material)
                 || component.LatheWhitelist?.IsValid(args.Used) == false)
                 return;
@@ -131,13 +131,13 @@ namespace Content.Server.Lathe
                 storage.InsertMaterial(mat, vol * multiplier);
                 lastMat = mat;
             }
-            
+
             // Play a sound when inserting, if any
             if (component.InsertingSound != null)
             {
                 SoundSystem.Play(Filter.Pvs(component.Owner, entityManager: EntityManager), component.InsertingSound.GetSound(), component.Owner);
             }
-            
+
             // We need the prototype to get the color
             _prototypeManager.TryIndex(lastMat, out MaterialPrototype? matProto);
 
@@ -156,17 +156,26 @@ namespace Content.Server.Lathe
         /// This handles the checks to start producing an item, and
         /// starts up the sound and visuals
         /// </summary>
-        private bool Produce(LatheComponent component, LatheRecipePrototype recipe, bool SkipCheck = false)
+        private void Produce(LatheComponent component, LatheRecipePrototype recipe, bool SkipCheck = false)
         {
             if (!component.CanProduce(recipe)
                 || !TryComp(component.Owner, out MaterialStorageComponent? storage))
-                return false;
+            {
+                FinishProducing(recipe, component, false);
+                return;
+            }
 
             if (!SkipCheck && HasComp<LatheProducingComponent>(component.Owner))
-                return false;
+            {
+                FinishProducing(recipe, component, false);
+                return;
+            }
 
             if (TryComp<ApcPowerReceiverComponent>(component.Owner, out var receiver) && !receiver.Powered)
-                return false;
+            {
+                FinishProducing(recipe, component, false);
+                return;
+            }
 
             component.UserInterface?.SendMessage(new LatheFullQueueMessage(GetIdQueue(component)));
 
@@ -185,17 +194,17 @@ namespace Content.Server.Lathe
             }
             UpdateRunningAppearance(component.Owner, true);
             ProducingAddQueue.Enqueue(component.Owner);
-            return true;
         }
 
         /// <summary>
-        /// After the production timer is up, this spawns the recipe and
-        /// either cleans up or continues to the next item in the queue
+        /// If we were able to produce the recipe,
+        /// spawn it and cleanup. If we weren't, just do cleanup.
         /// </summary>
-        private void FinishProducing(LatheRecipePrototype recipe, LatheComponent component)
+        private void FinishProducing(LatheRecipePrototype recipe, LatheComponent component, bool productionSucceeded = true)
         {
             component.ProducingRecipe = null;
-            EntityManager.SpawnEntity(recipe.Result, Comp<TransformComponent>(component.Owner).Coordinates);
+            if (productionSucceeded)
+                EntityManager.SpawnEntity(recipe.Result, Comp<TransformComponent>(component.Owner).Coordinates);
             component.UserInterface?.SendMessage(new LatheStoppedProducingRecipeMessage());
             // Continue to next in queue if there are items left
             if (component.Queue.Count > 0)

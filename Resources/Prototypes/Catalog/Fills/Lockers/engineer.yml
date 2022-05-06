@@ -67,7 +67,9 @@
     contents:
       - id: WelderMini
       - id: Welder
-        prob: 0.1
+        prob: 0.7
+      - id: WelderIndustrial
+        prob: 0.5
       - id: ClothingHeadHatWelding
         prob: 0.5
 
