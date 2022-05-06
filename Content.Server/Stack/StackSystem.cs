@@ -130,9 +130,11 @@ namespace Content.Server.Stack
                 return;
 
             //Checks from other system
-            var otherSystemCheck = new StickySystemTestAttemptEvent(uid, userUid);
-           RaiseLocalEvent(uid , otherSystemCheck);
-            if(otherSystemCheck.Cancelled)
+            var stickyCompCheck = new StickyComponentTestAttemptEvent(userUid);
+            RaiseLocalEvent(uid , stickyCompCheck);
+            var hasEntityStuckOnCompCheck = new HasEntityStuckOnComponentTestAttemptEvent(userUid);
+            RaiseLocalEvent(uid , hasEntityStuckOnCompCheck);
+            if(stickyCompCheck.Cancelled || hasEntityStuckOnCompCheck.Cancelled)
                 return;
 
             if (amount <= 0)

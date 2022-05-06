@@ -31,20 +31,32 @@ public sealed class StickySystem : EntitySystem
         SubscribeLocalEvent<StickyComponent, AfterInteractEvent>(OnAfterInteract);
         SubscribeLocalEvent<StickyComponent, GetVerbsEvent<Verb>>(AddUnstickVerb);
 
-        SubscribeLocalEvent<StickySystemTestAttemptEvent>(OnStickySystemTestAttemptEvent);
+        SubscribeLocalEvent<StickyComponent, StickyComponentTestAttemptEvent>(OnStickySystemTest);
+        SubscribeLocalEvent<HasEntityStuckOnComponent, HasEntityStuckOnComponentTestAttemptEvent>(OnHasEntityStuckOnComponentTest);
 
     }
 
-    private void OnStickySystemTestAttemptEvent(StickySystemTestAttemptEvent ev)
+    private void OnHasEntityStuckOnComponentTest(EntityUid uid, HasEntityStuckOnComponent component, HasEntityStuckOnComponentTestAttemptEvent args)
     {
-        if (EntityManager.TryGetComponent(ev.Subject, out StickyComponent inserted)
-            && inserted.StuckTo != null
-            || EntityManager.HasComponent<HasEntityStuckOnComponent>(ev.Subject))
+        if (EntityManager.HasComponent<HasEntityStuckOnComponent>(uid))
         {
-            _popupSystem.PopupEntity(Loc.GetString(ev.FailPopupMessage), ev.Subject ,Filter.Entities(ev.User));
-            ev.Cancel();
+            _popupSystem.PopupEntity(Loc.GetString(args.FailPopupMessage), uid ,Filter.Entities(args.User));
+            args.Cancel();
         }
     }
+
+    private void OnStickySystemTest(EntityUid uid, StickyComponent component, StickyComponentTestAttemptEvent args)
+    {
+
+        if (EntityManager.TryGetComponent(uid, out StickyComponent stickyComponent)
+            && stickyComponent.StuckTo != null)
+        {
+            _popupSystem.PopupEntity(Loc.GetString(args.FailPopupMessage), uid ,Filter.Entities(args.User));
+            args.Cancel();
+        }
+    }
+
+
 
     private void OnAfterInteract(EntityUid uid, StickyComponent component, AfterInteractEvent args)
     {

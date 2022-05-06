@@ -106,13 +106,14 @@ namespace Content.Server.Lathe
             if (!TryComp<MaterialStorageComponent>(uid, out var storage) || !TryComp<MaterialComponent>(args.Used, out var material))
                 return;
 
-            var otherSystemsCheck = new StickySystemTestAttemptEvent(args.Used, args.User);
-            RaiseLocalEvent(uid , otherSystemsCheck);
-            if (otherSystemsCheck.Cancelled)
+            var stickyCompCheck = new StickyComponentTestAttemptEvent(args.User);
+            RaiseLocalEvent(uid , stickyCompCheck);
+            if (stickyCompCheck.Cancelled)
                 return;
-            otherSystemsCheck = new StickySystemTestAttemptEvent(args.Target, args.User);
-            RaiseLocalEvent(uid , otherSystemsCheck);
-            if (otherSystemsCheck.Cancelled)
+
+            var hasEntityStuckOnCompCheck = new HasEntityStuckOnComponentTestAttemptEvent(args.User);
+            RaiseLocalEvent(uid ,hasEntityStuckOnCompCheck);
+            if (hasEntityStuckOnCompCheck.Cancelled)
                 return;
 
             var multiplier = 1;

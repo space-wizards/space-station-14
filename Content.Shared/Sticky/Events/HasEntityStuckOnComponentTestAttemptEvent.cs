@@ -1,6 +1,6 @@
 namespace Content.Shared.Sticky.Events;
 
-public sealed class StickyComponentTestAttemptEvent : CancellableEntityEventArgs
+public sealed class HasEntityStuckOnComponentTestAttemptEvent : CancellableEntityEventArgs
 {
     /// <summary>
     /// The popup message that appears when it fails the test
@@ -12,9 +12,9 @@ public sealed class StickyComponentTestAttemptEvent : CancellableEntityEventArgs
     /// </summary>
     public EntityUid User { get; }
 
-    public StickyComponentTestAttemptEvent(EntityUid user, string failPopupMessage = "event-sticky-general-fail")
+    public HasEntityStuckOnComponentTestAttemptEvent(EntityUid user , string failPopupMessage = "")
     {
-        FailPopupMessage = failPopupMessage;
         User = user;
+        FailPopupMessage = failPopupMessage;
     }
 }

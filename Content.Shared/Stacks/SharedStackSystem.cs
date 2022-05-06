@@ -84,13 +84,24 @@ namespace Content.Shared.Stacks
         {
             transfered = 0;
 
-            var otherSystemCheck = new StickySystemTestAttemptEvent(donor ,user);
-            RaiseLocalEvent(donor , otherSystemCheck);
-            if (otherSystemCheck.Cancelled)
+            var stickyCompCheck = new StickyComponentTestAttemptEvent(user);
+            RaiseLocalEvent(donor , stickyCompCheck);
+            if (stickyCompCheck.Cancelled)
                 return false;
-            otherSystemCheck = new StickySystemTestAttemptEvent(recipient ,user);
-            RaiseLocalEvent(donor , otherSystemCheck);
-            if (otherSystemCheck.Cancelled)
+
+            var hasEntityStuckOnCompCheck = new HasEntityStuckOnComponentTestAttemptEvent(user);
+            RaiseLocalEvent(donor , hasEntityStuckOnCompCheck);
+            if (hasEntityStuckOnCompCheck.Cancelled)
+                return false;
+
+            stickyCompCheck = new StickyComponentTestAttemptEvent(user);
+            RaiseLocalEvent(recipient , stickyCompCheck);
+            if (stickyCompCheck.Cancelled)
+                return false;
+
+            hasEntityStuckOnCompCheck = new HasEntityStuckOnComponentTestAttemptEvent(user);
+            RaiseLocalEvent(recipient , hasEntityStuckOnCompCheck);
+            if (hasEntityStuckOnCompCheck.Cancelled)
                 return false;
 
             if (!Resolve(recipient, ref recipientStack, false) || !Resolve(donor, ref donorStack, false))
