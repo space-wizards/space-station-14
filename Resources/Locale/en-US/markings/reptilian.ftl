@@ -39,3 +39,16 @@ marking-LizardSnoutRound = Lizard Snout (Round)
 
 marking-LizardSnoutSharp-snout_sharp = Lizard Snout (Sharp)
 marking-LizardSnoutSharp = Lizard Snout (Sharp)
+
+marking-LizardChestTiger-chest_tiger = Lizard Chest (Tiger)
+marking-LizardChestTiger = Lizard Chest (Tiger)
+
+marking-LizardFrillsDivinity-frills_divinity = Lizard Frills (Divinity)
+marking-LizardFrillsDivinity = Lizard Frills (Divinity)
+
+marking-LizardFrillsBig-frills_big = Lizard Frills (Big)
+marking-LizardFrillsBig = Lizard Frills (Big)
+
+marking-LizardHornsDouble-horns_double = Lizard Horns (Double)
+marking-LizardHornsDouble = Lizard Horns (Double)
+
