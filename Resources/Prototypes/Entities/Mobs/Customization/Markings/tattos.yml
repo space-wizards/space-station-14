@@ -4,7 +4,7 @@
   markingCategory: Chest
   speciesRestriction: [Human]
   sprites:
-  - sprite: Mobs/Customization/tattoo.rsi
+  - sprite: Mobs/Customization/tattoos.rsi
     state: tattoo_hive_chest
 
 - type: marking
