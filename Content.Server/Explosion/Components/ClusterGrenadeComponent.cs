@@ -44,12 +44,6 @@ namespace Content.Server.Explosion.Components
         public float ThrowDistance = 50;
 
         /// <summary>
-        ///     Use physics impulse instead of
-        /// </summary>
-        [ViewVariables(VVAccess.ReadWrite)] [DataField("directImpulse")]
-        public bool UsePhysics = false;
-
-        /// <summary>
         ///     This is the end.
         /// </summary>
         public bool CountDown;
