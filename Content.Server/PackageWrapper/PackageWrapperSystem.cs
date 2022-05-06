@@ -31,8 +31,6 @@ namespace Content.Server.PackageWrapper
                 {
                     if (targetTransform.Anchored)
                     {
-                        component.Owner.PopupMessage(args.User, Loc.GetString("on-failed-wrap-message",
-                            ("target", Comp<MetaDataComponent>(args.Target.Value).EntityName)));
                         return;
                     }
                 }
