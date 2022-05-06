@@ -125,8 +125,6 @@ namespace Content.Server.Hands.Systems
 
             // update gui of anyone stripping this entity.
             _strippableSystem.SendUpdate(uid);
-
-            _logSystem.Add(LogType.Pickup, LogImpact.Low, $"{uid} picked up {entity}");
         }
 
 
