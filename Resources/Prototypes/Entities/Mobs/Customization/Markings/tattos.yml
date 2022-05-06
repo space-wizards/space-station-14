@@ -1,71 +1,71 @@
 - type: marking
-  id: TattoHiveChest
+  id: TattooHiveChest
   bodyPart: Chest
   markingCategory: Chest
   speciesRestriction: [Human]
   sprites:
-  - sprite: Mobs/Customization/tattos.rsi
+  - sprite: Mobs/Customization/tattoo.rsi
     state: tatto_hive_chest
 
 - type: marking
-  id: TattoNightlingChest
+  id: TattooNightlingChest
   bodyPart: Chest
   markingCategory: Chest
   speciesRestriction: [Human]
   sprites:
-  - sprite: Mobs/Customization/tattos.rsi
+  - sprite: Mobs/Customization/tattoos.rsi
     state: tatto_nightling
 
 - type: marking
-  id: TattoSilverburghLeftLeg
+  id: TattooSilverburghLeftLeg
   bodyPart: LLeg
   markingCategory: Legs
   speciesRestriction: [Human]
   sprites:
-  - sprite: Mobs/Customization/tattos.rsi
+  - sprite: Mobs/Customization/tattoos.rsi
     state: tatto_silverburgh_l_leg
 
 - type: marking
-  id: TattoSilverburghRightLeg
+  id: TattooSilverburghRightLeg
   bodyPart: RLeg
   markingCategory: Legs
   speciesRestriction: [Human]
   sprites:
-  - sprite: Mobs/Customization/tattos.rsi
+  - sprite: Mobs/Customization/tattoos.rsi
     state: tatto_silverburgh_r_leg
 
 - type: marking
-  id: TattoCampbellLeftArm
+  id: TattooCampbellLeftArm
   bodyPart: LArm
   markingCategory: Arms
   speciesRestriction: [Human]
   sprites:
-  - sprite: Mobs/Customization/tattos.rsi
+  - sprite: Mobs/Customization/tattoos.rsi
     state: tatto_campbell_l_arm
 
 - type: marking
-  id: TattoCampbellRightArm
+  id: TattooCampbellRightArm
   bodyPart: RArm
   markingCategory: Arms
   speciesRestriction: [Human]
   sprites:
-  - sprite: Mobs/Customization/tattos.rsi
+  - sprite: Mobs/Customization/tattoos.rsi
     state: tatto_campbell_r_arm
 
 - type: marking
-  id: TattoCampbellLeftLeg
+  id: TattooCampbellLeftLeg
   bodyPart: LLeg
-  markingCategory: Legs
+  markingCategory: Legs 
   speciesRestriction: [Human]
   sprites:
-  - sprite: Mobs/Customization/tattos.rsi
+  - sprite: Mobs/Customization/tattoos.rsi
     state: tatto_campbell_l_leg
 
 - type: marking
-  id: TattoCampbellRightLeg
+  id: TattooCampbellRightLeg
   bodyPart: RLeg
   markingCategory: Legs
   speciesRestriction: [Human]
   sprites:
-  - sprite: Mobs/Customization/tattos.rsi
+  - sprite: Mobs/Customization/tattoos.rsi
     state: tatto_campbell_r_leg
