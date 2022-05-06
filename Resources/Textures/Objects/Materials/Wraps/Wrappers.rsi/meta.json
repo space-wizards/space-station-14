@@ -1,0 +1,17 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Taken from tgstation at commit https://github.com/tgstation/tgstation/commit/9b7f1ada6be169665f7e4397582d09cdc8c9f735",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "wrap_paper_base"
+    },
+    {
+      "name": "wrap_paper_ribbon"
+    }
+  ]
+}

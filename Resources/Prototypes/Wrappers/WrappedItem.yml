@@ -217,6 +217,6 @@
   description: A package wrapper..
   components:
     - type: Sprite
-      sprite: Objects/Materials/Wraps/WrapDefault.rsi
-      state: deliverypackage1
+      sprite: Objects/Materials/Wraps/Wrappers.rsi
+      state: wrap_paper_base
     - type: PackageWrapper
