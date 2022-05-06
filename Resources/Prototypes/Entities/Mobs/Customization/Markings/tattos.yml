@@ -1,0 +1,71 @@
+- type: marking
+  id: TattoHiveChest
+  bodyPart: Chest
+  markingCategory: Chest
+  speciesRestriction: [Human]
+  sprites:
+  - sprite: Mobs/Customization/tattos.rsi
+    state: tatto_hive_chest
+
+- type: marking
+  id: TattoNightlingChest
+  bodyPart: Chest
+  markingCategory: Chest
+  speciesRestriction: [Human]
+  sprites:
+  - sprite: Mobs/Customization/tattos.rsi
+    state: tatto_nightling
+
+- type: marking
+  id: TattoSilverburghLeftLeg
+  bodyPart: LLeg
+  markingCategory: Legs
+  speciesRestriction: [Human]
+  sprites:
+  - sprite: Mobs/Customization/tattos.rsi
+    state: tatto_silverburgh_l_leg
+
+- type: marking
+  id: TattoSilverburghRightLeg
+  bodyPart: RLeg
+  markingCategory: Legs
+  speciesRestriction: [Human]
+  sprites:
+  - sprite: Mobs/Customization/tattos.rsi
+    state: tatto_silverburgh_r_leg
+
+- type: marking
+  id: TattoCampbellLeftArm
+  bodyPart: LArm
+  markingCategory: Arms
+  speciesRestriction: [Human]
+  sprites:
+  - sprite: Mobs/Customization/tattos.rsi
+    state: tatto_campbell_l_arm
+
+- type: marking
+  id: TattoCampbellRightArm
+  bodyPart: RArm
+  markingCategory: Arms
+  speciesRestriction: [Human]
+  sprites:
+  - sprite: Mobs/Customization/tattos.rsi
+    state: tatto_campbell_r_arm
+
+- type: marking
+  id: TattoCampbellLeftLeg
+  bodyPart: LLeg
+  markingCategory: Legs
+  speciesRestriction: [Human]
+  sprites:
+  - sprite: Mobs/Customization/tattos.rsi
+    state: tatto_campbell_l_leg
+
+- type: marking
+  id: TattoCampbellRightLeg
+  bodyPart: RLeg
+  markingCategory: Legs
+  speciesRestriction: [Human]
+  sprites:
+  - sprite: Mobs/Customization/tattos.rsi
+    state: tatto_campbell_r_leg
