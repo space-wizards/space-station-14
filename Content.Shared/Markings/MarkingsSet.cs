@@ -129,25 +129,21 @@ public class MarkingsSet : IEnumerable, IEquatable<MarkingsSet>
             manager = IoCManager.Resolve<MarkingManager>();
         }
 
-        var newList = new List<Marking>();
-
-        for (var i = 0; i < set._markings.Count; i++)
+        for (var i = set._markings.Count - 1; i >= 0; i--)
         {
             var marking = set._markings[i];
             if (manager.IsValidMarking(marking, out var markingProto))
             {
                 if (marking.MarkingColors.Count != markingProto.Sprites.Count)
                 {
-                    newList.Add(new Marking(marking.MarkingId, markingProto.Sprites.Count));
-                }
-                else
-                {
-                    newList.Add(marking);
+                    set._markings[i] = new Marking(marking.MarkingId, markingProto.Sprites.Count);
                 }
             }
+            else
+            {
+                set._markings.RemoveAt(i);
+            }
         }
-
-        set._markings = newList;
 
         return set;
     }
