@@ -860,11 +860,9 @@
         radius: 0.2
       mass: 5
       mask:
-      - Impassable
-      - MobImpassable #Bullets?!
-      - SmallImpassable
+      - MobMask
       layer:
-      - Opaque
+      - MobLayer
   - type: Appearance
     visuals:
     - type: DamageStateVisualizer
