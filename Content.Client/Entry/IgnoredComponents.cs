@@ -348,6 +348,7 @@ namespace Content.Client.Entry
             "Spellbook",
             "TriggerOnActivate",
             "TriggerOnTimedCollide",
+            "Wires",
         };
     }
 }
