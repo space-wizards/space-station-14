@@ -2,6 +2,7 @@ using Content.Server.DeviceNetwork;
 using Content.Server.DeviceNetwork.Systems;
 using Content.Server.Power.Components;
 using Content.Shared.Interaction;
+using Content.Shared.SurveillanceCamera;
 using Robust.Server.GameObjects;
 using Robust.Server.Player;
 
@@ -36,8 +37,7 @@ public sealed class SurveillanceCameraMonitorSystem : EntitySystem
     // the updated states over to viewing clients.
 
     #region Event Handling
-
-    private void OnPacketReceived(EntityUid uid, SurveillanceCameraMonitorComponent component,
+        private void OnPacketReceived(EntityUid uid, SurveillanceCameraMonitorComponent component,
         DeviceNetworkPacketEvent args)
     {
         if (args.Address == null)
@@ -79,7 +79,6 @@ public sealed class SurveillanceCameraMonitorSystem : EntitySystem
 
     private void OnInteractHand(EntityUid uid, SurveillanceCameraMonitorComponent component, InteractHandEvent args)
     {
-        AddViewer(uid, args.User);
         TryOpenUserInterface(uid, args.User);
     }
 
@@ -230,7 +229,9 @@ public sealed class SurveillanceCameraMonitorSystem : EntitySystem
         UpdateUserInterface(uid, monitor);
     }
 
-    private void TryOpenUserInterface(EntityUid uid, EntityUid player, SurveillanceCameraMonitorComponent? monitor = null, ActorComponent? actor = null)
+    // This is public primarily because it might be useful to have the ability to
+    // have this component added to any entity, and have them open the BUI (somehow).
+    public void TryOpenUserInterface(EntityUid uid, EntityUid player, SurveillanceCameraMonitorComponent? monitor = null, ActorComponent? actor = null)
     {
         if (!Resolve(uid, ref monitor)
             || !Resolve(player, ref actor))
@@ -239,6 +240,8 @@ public sealed class SurveillanceCameraMonitorSystem : EntitySystem
         }
 
         _userInterface.GetUiOrNull(uid, SurveillanceCameraMonitorUiKey.Key)?.Open(actor.PlayerSession);
+
+        AddViewer(uid, player);
         UpdateUserInterface(uid, monitor, player);
     }
 

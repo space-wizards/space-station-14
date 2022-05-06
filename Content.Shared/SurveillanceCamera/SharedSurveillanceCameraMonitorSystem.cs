@@ -1,4 +1,6 @@
-namespace Content.Server.SurveillanceCamera;
+using Robust.Shared.Serialization;
+
+namespace Content.Shared.SurveillanceCamera;
 
 // Camera monitor state. If the camera is null, there should be a blank
 // space where the camera is.
@@ -26,6 +28,7 @@ namespace Content.Server.SurveillanceCamera;
 // I think that SurveillanceCameraComponent should be an object
 // that stores information about the camera as well as an eye storage
 // (but this could just be replaced with an EyeComponent tbh)
+[Serializable, NetSerializable]
 public sealed class SurveillanceCameraMonitorUiState : BoundUserInterfaceState
 {
     // The active camera on the monitor. If this is null, the part of the UI
@@ -43,6 +46,7 @@ public sealed class SurveillanceCameraMonitorUiState : BoundUserInterfaceState
     }
 }
 
+[Serializable, NetSerializable]
 public sealed class SurveillanceCameraMonitorSwitchMessage : BoundUserInterfaceMessage
 {
     public string Address { get; }
@@ -53,6 +57,26 @@ public sealed class SurveillanceCameraMonitorSwitchMessage : BoundUserInterfaceM
     }
 }
 
+[Serializable, NetSerializable]
+public sealed class SurveillanceCameraMonitorSubnetInfoMessage : BoundUserInterfaceMessage
+{
+    public List<SurveillanceCameraInfo> SubnetInfo { get; }
+
+    public SurveillanceCameraMonitorSubnetInfoMessage(List<SurveillanceCameraInfo> subnetInfo)
+    {
+        SubnetInfo = subnetInfo;
+    }
+}
+
+[Serializable, NetSerializable]
+public sealed class SurveillanceCameraInfo
+{
+    public string Address { get; set; } = default!;
+    public string Name { get; set; } = default!;
+    public string Subnet { get; set; } = default!;
+}
+
+[Serializable, NetSerializable]
 public enum SurveillanceCameraMonitorUiKey : byte
 {
     Key
