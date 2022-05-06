@@ -5,6 +5,7 @@ using Content.Shared.Interaction;
 using Content.Shared.Interaction.Events;
 using Content.Shared.Throwing;
 using Robust.Shared.Containers;
+using Robust.Shared.Physics;
 using Robust.Shared.Random;
 
 namespace Content.Server.Explosion.EntitySystems;
@@ -79,8 +80,22 @@ public sealed class ClusterGrenadeSystem : EntitySystem
                 delay += _random.Next(550, 900);
                 thrownCount++;
 
-                // TODO: Suss out throw strength
-                _throwingSystem.TryThrow(grenade, angle.ToVec().Normalized * component.ThrowDistance);
+                var physComp = EntityManager.GetComponent<PhysicsComponent>(grenade);
+                if (physComp.BodyType == BodyType.KinematicController)
+                {
+                    physComp.BodyType = BodyType.Dynamic;
+                    // TODO: Suss out throw strength
+                    _throwingSystem.TryThrow(grenade, angle.ToVec().Normalized * component.ThrowDistance);
+                    grenade.SpawnTimer(delay+500, () =>
+                    {
+                        physComp.BodyType = BodyType.KinematicController;
+                    });
+                }
+                else
+                {
+                    // TODO: Suss out throw strength
+                    _throwingSystem.TryThrow(grenade, angle.ToVec().Normalized * component.ThrowDistance);
+                }
 
                 grenade.SpawnTimer(delay, () =>
                 {
