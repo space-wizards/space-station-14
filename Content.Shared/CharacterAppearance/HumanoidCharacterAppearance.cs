@@ -1,5 +1,7 @@
-﻿using Robust.Shared.Random;
+﻿using Content.Shared.Markings;
+using Robust.Shared.Random;
 using Robust.Shared.Serialization;
+using System.Linq;
 
 namespace Content.Shared.CharacterAppearance
 {
@@ -11,7 +13,8 @@ namespace Content.Shared.CharacterAppearance
             string facialHairStyleId,
             Color facialHairColor,
             Color eyeColor,
-            Color skinColor)
+            Color skinColor,
+            MarkingsSet markings)
         {
             HairStyleId = hairStyleId;
             HairColor = ClampColor(hairColor);
@@ -19,6 +22,7 @@ namespace Content.Shared.CharacterAppearance
             FacialHairColor = ClampColor(facialHairColor);
             EyeColor = ClampColor(eyeColor);
             SkinColor = ClampColor(skinColor);
+            Markings = markings;
         }
 
         public string HairStyleId { get; }
@@ -27,35 +31,41 @@ namespace Content.Shared.CharacterAppearance
         public Color FacialHairColor { get; }
         public Color EyeColor { get; }
         public Color SkinColor { get; }
+        public MarkingsSet Markings { get; }
 
         public HumanoidCharacterAppearance WithHairStyleName(string newName)
         {
-            return new(newName, HairColor, FacialHairStyleId, FacialHairColor, EyeColor, SkinColor);
+            return new(newName, HairColor, FacialHairStyleId, FacialHairColor, EyeColor, SkinColor, Markings);
         }
 
         public HumanoidCharacterAppearance WithHairColor(Color newColor)
         {
-            return new(HairStyleId, newColor, FacialHairStyleId, FacialHairColor, EyeColor, SkinColor);
+            return new(HairStyleId, newColor, FacialHairStyleId, FacialHairColor, EyeColor, SkinColor, Markings);
         }
 
         public HumanoidCharacterAppearance WithFacialHairStyleName(string newName)
         {
-            return new(HairStyleId, HairColor, newName, FacialHairColor, EyeColor, SkinColor);
+            return new(HairStyleId, HairColor, newName, FacialHairColor, EyeColor, SkinColor, Markings);
         }
 
         public HumanoidCharacterAppearance WithFacialHairColor(Color newColor)
         {
-            return new(HairStyleId, HairColor, FacialHairStyleId, newColor, EyeColor, SkinColor);
+            return new(HairStyleId, HairColor, FacialHairStyleId, newColor, EyeColor, SkinColor, Markings);
         }
 
         public HumanoidCharacterAppearance WithEyeColor(Color newColor)
         {
-            return new(HairStyleId, HairColor, FacialHairStyleId, FacialHairColor, newColor, SkinColor);
+            return new(HairStyleId, HairColor, FacialHairStyleId, FacialHairColor, newColor, SkinColor, Markings);
         }
 
         public HumanoidCharacterAppearance WithSkinColor(Color newColor)
         {
-            return new(HairStyleId, HairColor, FacialHairStyleId, FacialHairColor, EyeColor, newColor);
+            return new(HairStyleId, HairColor, FacialHairStyleId, FacialHairColor, EyeColor, newColor, Markings);
+        }
+
+        public HumanoidCharacterAppearance WithMarkings(MarkingsSet newMarkings)
+        {
+            return new(HairStyleId, HairColor, FacialHairStyleId, FacialHairColor, EyeColor, SkinColor, newMarkings);
         }
 
         public static HumanoidCharacterAppearance Default()
@@ -66,7 +76,8 @@ namespace Content.Shared.CharacterAppearance
                 HairStyles.DefaultFacialHairStyle,
                 Color.Black,
                 Color.Black,
-                Color.FromHex("#C0967F")
+                Color.FromHex("#C0967F"),
+                new MarkingsSet()
             );
         }
 
@@ -90,7 +101,7 @@ namespace Content.Shared.CharacterAppearance
                 .WithBlue(RandomizeColor(newHairColor.B));
 
             // TODO: Add random eye and skin color
-            return new HumanoidCharacterAppearance(newHairStyle, newHairColor, newFacialHairStyle, newHairColor, Color.Black, Color.FromHex("#C0967F"));
+            return new HumanoidCharacterAppearance(newHairStyle, newHairColor, newFacialHairStyle, newHairColor, Color.Black, Color.FromHex("#C0967F"), new MarkingsSet());
 
             float RandomizeColor(float channel)
             {
@@ -103,7 +114,7 @@ namespace Content.Shared.CharacterAppearance
             return new(color.RByte, color.GByte, color.BByte);
         }
 
-        public static HumanoidCharacterAppearance EnsureValid(HumanoidCharacterAppearance appearance)
+        public static HumanoidCharacterAppearance EnsureValid(HumanoidCharacterAppearance appearance, string species)
         {
             var mgr = IoCManager.Resolve<SpriteAccessoryManager>();
             var hairStyleId = appearance.HairStyleId;
@@ -123,13 +134,17 @@ namespace Content.Shared.CharacterAppearance
             var eyeColor = ClampColor(appearance.EyeColor);
             var skinColor = ClampColor(appearance.SkinColor);
 
+            var validMarkingsSet = MarkingsSet.EnsureValid(appearance.Markings);
+            validMarkingsSet = MarkingsSet.FilterSpecies(validMarkingsSet, species);
+
             return new HumanoidCharacterAppearance(
                 hairStyleId,
                 hairColor,
                 facialHairStyleId,
                 facialHairColor,
                 eyeColor,
-                skinColor);
+                skinColor,
+                validMarkingsSet);
         }
 
         public bool MemberwiseEquals(ICharacterAppearance maybeOther)
@@ -141,6 +156,7 @@ namespace Content.Shared.CharacterAppearance
             if (!FacialHairColor.Equals(other.FacialHairColor)) return false;
             if (!EyeColor.Equals(other.EyeColor)) return false;
             if (!SkinColor.Equals(other.SkinColor)) return false;
+            if (!Markings.Equals(other.Markings)) return false;
             return true;
         }
     }

@@ -162,6 +162,14 @@
     - map: [ "head" ]
     - map: [ "pocket1" ]
     - map: [ "pocket2" ]
+  - type: Markings
+    layerPoints:
+      Tail:
+        points: 0
+        required: false
+      HeadTop:
+        points: 0
+        required: false
   - type: Physics
     bodyType: KinematicController
   - type: Fixtures
@@ -395,6 +403,7 @@
       - map: [ "pocket2" ]
       - map: ["hand-left"]
       - map: ["hand-right"]
+    - type: Markings 
     - type: Physics
       bodyType: Dynamic
     - type: Fixtures

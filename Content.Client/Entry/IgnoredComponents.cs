@@ -138,6 +138,7 @@ namespace Content.Client.Entry
             "Flash",
             "Docking",
             "Telecrystal",
+            "PowerMonitoringConsole",
             "RCD",
             "RCDAmmo",
             "CursedEntityStorage",
@@ -343,7 +344,8 @@ namespace Content.Client.Entry
             "EnergySword",
             "DoorRemote",
             "InteractionPopup",
-            "HealthAnalyzer"
+            "HealthAnalyzer",
+            "Wires"
         };
     }
 }
