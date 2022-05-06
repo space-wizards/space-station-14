@@ -4,7 +4,7 @@
   markingCategory: HeadSide
   speciesRestriction: [Reptilian]
   sprites:
-  - sprite: Mobs/Customization/reptilian_parts.rsi/
+  - sprite: Mobs/Customization/reptilian_parts.rsi
     state: frills_aquatic
 
 - type: marking
@@ -13,7 +13,7 @@
   markingCategory: HeadSide
   speciesRestriction: [Reptilian]
   sprites:
-  - sprite: Mobs/Customization/reptilian_parts.rsi/
+  - sprite: Mobs/Customization/reptilian_parts.rsi
     state: frills_short
 
 - type: marking
@@ -22,7 +22,7 @@
   markingCategory: HeadSide
   speciesRestriction: [Reptilian]
   sprites:
-  - sprite: Mobs/Customization/reptilian_parts.rsi/
+  - sprite: Mobs/Customization/reptilian_parts.rsi
     state: frills_simple
 
 - type: marking
@@ -31,7 +31,7 @@
   markingCategory: HeadSide
   speciesRestriction: [Reptilian]
   sprites:
-  - sprite: Mobs/Customization/reptilian_parts.rsi/
+  - sprite: Mobs/Customization/reptilian_parts.rsi
     state: frills_divinity
 
 - type: marking
@@ -40,7 +40,7 @@
   markingCategory: HeadSide
   speciesRestriction: [Reptilian]
   sprites:
-  - sprite: Mobs/Customization/reptilian_parts.rsi/
+  - sprite: Mobs/Customization/reptilian_parts.rsi
     state: frills_big
 
 - type: marking
@@ -49,7 +49,7 @@
   markingCategory: HeadTop
   speciesRestriction: [Reptilian]
   sprites:
-  - sprite: Mobs/Customization/reptilian_parts.rsi/
+  - sprite: Mobs/Customization/reptilian_parts.rsi
     state: horns_angler
 
 - type: marking
@@ -58,7 +58,7 @@
   markingCategory: HeadTop
   speciesRestriction: [Reptilian]
   sprites:
-  - sprite: Mobs/Customization/reptilian_parts.rsi/
+  - sprite: Mobs/Customization/reptilian_parts.rsi
     state: horns_curled
 
 - type: marking
@@ -67,7 +67,7 @@
   markingCategory: HeadTop
   speciesRestriction: [Reptilian]
   sprites:
-  - sprite: Mobs/Customization/reptilian_parts.rsi/
+  - sprite: Mobs/Customization/reptilian_parts.rsi
     state: horns_ram
 
 - type: marking
@@ -76,7 +76,7 @@
   markingCategory: HeadTop
   speciesRestriction: [Reptilian]
   sprites:
-  - sprite: Mobs/Customization/reptilian_parts.rsi/
+  - sprite: Mobs/Customization/reptilian_parts.rsi
     state: horns_short
 
 - type: marking
@@ -85,16 +85,16 @@
   markingCategory: HeadTop
   speciesRestriction: [Reptilian]
   sprites:
-  - sprite: Mobs/Customization/reptilian_parts.rsi/
+  - sprite: Mobs/Customization/reptilian_parts.rsi
     state: horns_simple
-  
+
 - type: marking
   id: LizardHornsDouble
   bodyPart: HeadTop
   markingCategory: HeadTop
   speciesRestriction: [Reptilian]
   sprites:
-  - sprite: Mobs/Customization/reptilian_parts.rsi/
+  - sprite: Mobs/Customization/reptilian_parts.rsi
     state: horns_double
 
 - type: marking
@@ -103,7 +103,7 @@
   markingCategory: Tail
   speciesRestriction: [Reptilian]
   sprites:
-  - sprite: Mobs/Customization/reptilian_parts.rsi/
+  - sprite: Mobs/Customization/reptilian_parts.rsi
     state: tail_smooth
 
 - type: marking
@@ -112,7 +112,7 @@
   markingCategory: Tail
   speciesRestriction: [Reptilian]
   sprites:
-  - sprite: Mobs/Customization/reptilian_parts.rsi/
+  - sprite: Mobs/Customization/reptilian_parts.rsi
     state: tail_spikes
 
 - type: marking
@@ -121,7 +121,7 @@
   markingCategory: Tail
   speciesRestriction: [Reptilian]
   sprites:
-  - sprite: Mobs/Customization/reptilian_parts.rsi/
+  - sprite: Mobs/Customization/reptilian_parts.rsi
     state: tail_ltiger
 
 - type: marking
@@ -130,7 +130,7 @@
   markingCategory: Tail
   speciesRestriction: [Reptilian]
   sprites:
-  - sprite: Mobs/Customization/reptilian_parts.rsi/
+  - sprite: Mobs/Customization/reptilian_parts.rsi
     state: tail_dtiger
 
 - type: marking
@@ -140,7 +140,7 @@
   followSkinColor: true
   speciesRestriction: [Reptilian]
   sprites:
-  - sprite: Mobs/Customization/reptilian_parts.rsi/
+  - sprite: Mobs/Customization/reptilian_parts.rsi
     state: snout_round
 
 - type: marking
@@ -150,7 +150,7 @@
   followSkinColor: true
   speciesRestriction: [Reptilian]
   sprites:
-  - sprite: Mobs/Customization/reptilian_parts.rsi/
+  - sprite: Mobs/Customization/reptilian_parts.rsi
     state: snout_sharp
 
 - type: marking
@@ -160,5 +160,5 @@
   followSkinColor: false
   speciesRestriction: [Reptilian]
   sprites:
-  - sprite: Mobs/Customization/reptilian_parts.rsi/
+  - sprite: Mobs/Customization/reptilian_parts.rsi
     state: body_tiger

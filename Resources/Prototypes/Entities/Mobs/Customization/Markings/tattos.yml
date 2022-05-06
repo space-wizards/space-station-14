@@ -5,7 +5,7 @@
   speciesRestriction: [Human]
   sprites:
   - sprite: Mobs/Customization/tattoo.rsi
-    state: tatto_hive_chest
+    state: tattoo_hive_chest
 
 - type: marking
   id: TattooNightlingChest
@@ -55,7 +55,7 @@
 - type: marking
   id: TattooCampbellLeftLeg
   bodyPart: LLeg
-  markingCategory: Legs 
+  markingCategory: Legs
   speciesRestriction: [Human]
   sprites:
   - sprite: Mobs/Customization/tattoos.rsi
