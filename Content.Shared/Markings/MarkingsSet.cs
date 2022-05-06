@@ -124,10 +124,7 @@ public class MarkingsSet : IEnumerable, IEquatable<MarkingsSet>
     // Ensures that all markings in a set are valid.
     public static MarkingsSet EnsureValid(MarkingsSet set, MarkingManager? manager = null)
     {
-        if (manager == null)
-        {
-            manager = IoCManager.Resolve<MarkingManager>();
-        }
+        IoCManager.Resolve(ref manager);
 
         for (var i = set._markings.Count - 1; i >= 0; i--)
         {
@@ -149,12 +146,12 @@ public class MarkingsSet : IEnumerable, IEquatable<MarkingsSet>
     }
 
     // Filters out markings based on species.
-    public static MarkingsSet FilterSpecies(MarkingsSet set, string species)
+    public static MarkingsSet FilterSpecies(MarkingsSet set, string species, MarkingManager? manager = null)
     {
-        var _markingsManager = IoCManager.Resolve<MarkingManager>();
+        IoCManager.Resolve(ref manager);
         var newList = set._markings.Where(marking =>
         {
-            if (!_markingsManager.Markings().TryGetValue(marking.MarkingId, out MarkingPrototype? prototype))
+            if (!manager.Markings().TryGetValue(marking.MarkingId, out MarkingPrototype? prototype))
             {
                 return false;
             }
@@ -176,14 +173,14 @@ public class MarkingsSet : IEnumerable, IEquatable<MarkingsSet>
     }
 
     // Processes a MarkingsSet using the given dictionary of MarkingPoints.
-    public static MarkingsSet ProcessPoints(MarkingsSet set, Dictionary<MarkingCategories, MarkingPoints> points)
+    public static MarkingsSet ProcessPoints(MarkingsSet set, Dictionary<MarkingCategories, MarkingPoints> points, MarkingManager? manager = null)
     {
+        IoCManager.Resolve(ref manager);
         var finalSet = new List<Marking>();
-        var _markingsManager = IoCManager.Resolve<MarkingManager>();
 
         foreach (var marking in set)
         {
-            if (_markingsManager.Markings().TryGetValue(marking.MarkingId, out MarkingPrototype? markingPrototype))
+            if (manager.Markings().TryGetValue(marking.MarkingId, out MarkingPrototype? markingPrototype))
             {
                 if (points.TryGetValue(markingPrototype.MarkingCategory, out var pointsRemaining))
                 {
