@@ -83,7 +83,8 @@ namespace Content.Server.Database
 
         public override int CountAdminLogs()
         {
-            var command = new NpgsqlCommand("SELECT reltuples FROM pg_class WHERE relname = 'admin_log';", (NpgsqlConnection?) Database.GetDbConnection());
+            using var command = new NpgsqlCommand("SELECT reltuples FROM pg_class WHERE relname = 'admin_log';", (NpgsqlConnection?) Database.GetDbConnection());
+
             Database.GetDbConnection().Open();
             var count = Convert.ToInt32((float) (command.ExecuteScalar() ?? 0));
             Database.GetDbConnection().Close();
