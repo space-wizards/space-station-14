@@ -87,7 +87,7 @@
   - type: Clothing
     sprite: Clothing/Head/Hardsuits/deathsquad.rsi
   - type: PressureProtection
-    highPressureMultiplier: 0.27
+    highPressureMultiplier: 0.08
     lowPressureMultiplier: 1000
 
 - type: entity
@@ -102,7 +102,7 @@
   - type: Clothing
     sprite: Clothing/Head/Hardsuits/engineering.rsi
   - type: PressureProtection
-    highPressureMultiplier: 0.26
+    highPressureMultiplier: 0.1
     lowPressureMultiplier: 1000
 
 - type: entity
@@ -117,7 +117,7 @@
   - type: Clothing
     sprite: Clothing/Head/Hardsuits/engineering-white.rsi
   - type: PressureProtection
-    highPressureMultiplier: 0.24
+    highPressureMultiplier: 0.08
     lowPressureMultiplier: 1000
 
 - type: entity
@@ -181,6 +181,15 @@
   - type: PressureProtection
     highPressureMultiplier: 0.525
     lowPressureMultiplier: 10000
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.8
+        Slash: 0.8
+        Piercing: 0.8 
+  - type: PointLight
+    radius: 7
+    energy: 3
 
 - type: entity
   parent: ClothingHeadHardsuitWithLightBase
@@ -196,7 +205,13 @@
   - type: PressureProtection
     highPressureMultiplier: 0.525
     lowPressureMultiplier: 10000
-
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.8
+        Slash: 0.8
+        Piercing: 0.8
+        
 - type: entity
   parent: ClothingHeadHardsuitWithLightBase
   id: ClothingHeadHelmetHardsuitSecurityRed
@@ -211,6 +226,12 @@
   - type: PressureProtection
     highPressureMultiplier: 0.45
     lowPressureMultiplier: 10000
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.8
+        Slash: 0.8
+        Piercing: 0.8
 
 - type: entity
   parent: ClothingHeadHardsuitWithLightBase
@@ -226,8 +247,16 @@
   - type: PointLight
     color: green
   - type: PressureProtection
-    highPressureMultiplier: 0.27
+    highPressureMultiplier: 0.08
     lowPressureMultiplier: 1000
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.8
+        Slash: 0.8
+        Piercing: 0.8
+        Heat: 0.8
+        Radiation: 0.5
 
 - type: entity
   parent: ClothingHeadHardsuitWithLightBase

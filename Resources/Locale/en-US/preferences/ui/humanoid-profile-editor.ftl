@@ -35,3 +35,4 @@ humanoid-profile-editor-job-priority-medium-button = Medium
 humanoid-profile-editor-job-priority-low-button = Low
 humanoid-profile-editor-job-priority-never-button = Never
 humanoid-profile-editor-naming-rules-warning = Warning: Offensive or LRP IC names will lead to admin intervention on this server. Read our \[Rules\] for more.
+humanoid-profile-editor-markings-tab = Markings

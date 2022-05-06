@@ -75,6 +75,19 @@
     color: "#c9c042"
   - type: Computer
     board: PowerComputerCircuitboard
+  - type: PowerMonitoringConsole
+  - type: NodeContainer
+    examinable: true
+    nodes:
+      hv:
+        !type:CableDeviceNode
+        nodeGroupID: HVPower
+  - type: ActivatableUI
+    key: enum.PowerMonitoringConsoleUiKey.Key
+  - type: UserInterface
+    interfaces:
+    - key: enum.PowerMonitoringConsoleUiKey.Key
+      type: PowerMonitoringConsoleBoundUserInterface
 
 - type: entity
   parent: ComputerBase
@@ -349,74 +362,6 @@
       screen: supply
   - type: CargoConsole
   - type: CargoOrderDatabase
-  - type: GalacticMarket
-    products:
-      - MedicalSupplies
-      - MedicalChemistrySupplies
-      - EmergencyExplosive
-      - EmergencyFire
-      - EmergencyInternals
-      - EmergencyRadiation
-      - EmergencyInflatablewall
-      - ArmorySmg
-      - ArmoryShotgun
-      - SecurityArmor
-      - SecurityRiot
-      - SecurityLaser
-      - SecurityHelmet
-      - SecuritySupplies
-      - SecurityNonLethal
-      - SecurityRestraints
-      - HydroponicsTools
-      - HydroponicsSeeds
-      - HydroponicsSeedsExotic
-      - LivestockMonkeyCube
-      - LivestockCow
-      - LivestockChicken
-      - LivestockDuck
-      - LivestockGoat
-      - FoodPizza
-      - FoodMRE
-      - ServiceJanitorial
-      - ServiceLightsReplacement
-      - ServiceSmokeables
-      - ServiceCustomSmokable
-      - ServiceBureaucracy
-      - ServicePersonnel
-      - EngineeringCableLv
-      - EngineeringCableMv
-      - EngineeringCableHv
-      - EngineeringCableBulk
-      - EngineAmeShielding
-      - EngineAmeJar
-      - EngineAmeControl
-      - EngineSolar
-      - FunPlushies
-      - FunArtSupplies
-      - FunInstruments
-      - FunBrass
-      - FunBoardGames
-      - FunATV
-      - MaterialSteel
-      - MaterialGlass
-      - MaterialPlastic
-      - MaterialPlasteel
-      - MaterialPlasma
-      - EngineSingularityEmitter
-      - EngineSingularityCollector
-      - EngineSingularityGenerator
-      - EngineSingularityContainment
-      - EngineParticleAccelerator
-      - ShuttleThruster
-      - ShuttleGyroscope
-      - AtmosphericsAir
-      - AtmosphericsOxygen
-      - AtmosphericsNitrogen
-      - AtmosphericsCarbonDioxide
-      - ArtifactContainer
-#      - AtmosphericsWaterVapor
-#      - AtmosphericsPlasma
-#      - AtmosphericsTritium
   - type: ActivatableUI
     key: enum.CargoConsoleUiKey.Key
   - type: ActivatableUIRequiresPower

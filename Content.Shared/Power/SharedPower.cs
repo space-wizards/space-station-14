@@ -10,4 +10,15 @@ namespace Content.Shared.Power
         Charging,
         Discharging,
     }
+
+    [Serializable, NetSerializable]
+    public enum PowerWireActionKey : byte
+    {
+        Key,
+        Status,
+        Pulsed,
+        Electrified,
+        PulseCancel,
+        ElectrifiedCancel
+    }
 }

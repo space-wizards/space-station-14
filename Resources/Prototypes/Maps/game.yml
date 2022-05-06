@@ -85,7 +85,7 @@
 
 - type: gameMap
   id: NSSPillar
-  mapName: 'NSS Pillar v5.3'
+  mapName: 'NSS Pillar'
   mapNameTemplate: '{0} NSSPillar {1}'
   nameGenerator:
     !type:NanotrasenNameGenerator
