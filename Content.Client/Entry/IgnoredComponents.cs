@@ -345,10 +345,10 @@ namespace Content.Client.Entry
             "DoorRemote",
             "InteractionPopup",
             "HealthAnalyzer",
+            "Wires",
             "Spellbook",
             "TriggerOnActivate",
             "TriggerOnTimedCollide",
-            "Wires"
         };
     }
 }
