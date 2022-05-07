@@ -27,7 +27,7 @@ namespace Content.Server.StationEvents.Events
         public override string StartAnnouncement =>  Loc.GetString("station-event-meteor-swarm-start-announcement");
         protected override string EndAnnouncement => Loc.GetString("station-event-meteor-swarm-ebd-announcement");
 
-        public override string? StartAudio => "/Audio/Announcements/bloblarm.ogg";
+        public override string? StartAudio => "/Audio/Announcements/meteors.ogg";
 
         protected override float StartAfter => 30f;
         protected override float EndAfter => float.MaxValue;
