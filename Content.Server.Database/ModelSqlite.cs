@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Globalization;
 using System.IO;
+using System.Linq;
 using System.Net;
 using System.Text;
 using System.Text.Json;
@@ -79,6 +80,11 @@ namespace Content.Server.Database
             modelBuilder.Entity<Profile>()
                 .Property(log => log.Markings)
                 .HasConversion(jsonByteArrayConverter);
+        }
+
+        public override int CountAdminLogs()
+        {
+            return AdminLog.Count();
         }
 
         private static string InetToString(IPAddress address, int mask) {

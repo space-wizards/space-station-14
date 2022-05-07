@@ -1,57 +1,4 @@
 Entries:
-- author: Schiene
-  changes:
-  - {message: Remastered the Dart shuttle, type: Add}
-  id: 960
-  time: '2022-01-30T16:01:49.0000000+00:00'
-- author: ElectroJr
-  changes:
-  - {message: Fixed a visual bug that would sometimes result in players getting stuck
-      lying on the floor after being stunned., type: Fix}
-  id: 961
-  time: '2022-01-30T16:34:48.0000000+00:00'
-- author: Rane
-  changes:
-  - {message: The bible's sounds are now positional and won't play at max volume every
-      time., type: Fix}
-  - {message: 'The bible''s cooldown has been increased to reduce sound spam, but
-      its healing rate remains the same.', type: Tweak}
-  id: 962
-  time: '2022-01-30T21:33:46.0000000+00:00'
-- author: Peptide90
-  changes:
-  - {message: Kitchen and Chemistry now have access to specific windoors. Look out
-      for these in future., type: Add}
-  - {message: Brig specific access has been added for Warden and HoS - To be mapped
-      in future., type: Tweak}
-  id: 963
-  time: '2022-01-30T21:34:36.0000000+00:00'
-- author: Ygg01
-  changes:
-  - {message: Prevents cutoff of drinks, type: Fix}
-  id: 964
-  time: '2022-01-31T23:55:38.0000000+00:00'
-- author: Peptide90
-  changes:
-  - {message: Added non lethal technology to research tree. Allows protolathe to produce
-      rubber bullets and beanbag shells., type: Add}
-  id: 965
-  time: '2022-02-01T06:15:29.0000000+00:00'
-- author: Fishfish458
-  changes:
-  - {message: 'Added insta-heat ramen, just add water!', type: Add}
-  id: 966
-  time: '2022-02-01T06:16:49.0000000+00:00'
-- author: Veritius
-  changes:
-  - {message: added pilk, type: Add}
-  id: 967
-  time: '2022-02-02T06:20:54.0000000+00:00'
-- author: wrexbe
-  changes:
-  - {message: Suicide by toilet shows correct messages., type: Fix}
-  id: 968
-  time: '2022-02-02T23:14:42.0000000+00:00'
 - author: mirrorcult
   changes:
   - {message: Deconstructing crates now requires a screwdriver again., type: Fix}
@@ -3040,3 +2987,61 @@ Entries:
       (You can now add body markings onto your character.), type: Add}
   id: 1459
   time: '2022-05-05T08:07:42.0000000+00:00'
+- author: Rane
+  changes:
+  - {message: Drones no longer have combat mode or disarms again., type: Fix}
+  id: 1460
+  time: '2022-05-06T01:12:26.0000000+00:00'
+- author: vulppine
+  changes:
+  - {message: 'Nanotrasen has finally kicked the old board vendor square in the ass,
+      and told them to actually make their boards more maintainable. Expect more functionality
+      when you pulse, cut, and mend wires in some electronics.', type: Tweak}
+  id: 1461
+  time: '2022-05-06T02:35:06.0000000+00:00'
+- author: 20kdc
+  changes:
+  - {message: 'The admin help and rules buttons have swapped positions in the in-game
+      interface (rules now in escape menu, etc.)', type: Tweak}
+  id: 1462
+  time: '2022-05-06T03:46:33.0000000+00:00'
+- author: Lizzer lover
+  changes:
+  - {message: 'Reptilians now have two more frills (Big, Divinity) and one horn marking
+      (doublehorn)', type: Add}
+  - {message: Humans now have tattoos markings, type: Add}
+  - {message: SlimePeople now have limb gradients markings, type: Add}
+  id: 1463
+  time: '2022-05-06T08:50:00.0000000+00:00'
+- author: mirrorcult
+  changes:
+  - {message: Trying to insert items into storage will no longer cause those items
+      to be used on the tile below you., type: Fix}
+  id: 1464
+  time: '2022-05-06T10:59:03.0000000+00:00'
+- author: juliangiebel
+  changes:
+  - {message: Added a new medipen variant to survival boxes that buys you some time
+      when you get spaced., type: Add}
+  - {message: Some emergency lockers now contain an emergency suit., type: Tweak}
+  id: 1465
+  time: '2022-05-06T21:44:29.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Syndicate Zombie Bundle price increase from 40TC to 50TC, type: Tweak}
+  - {message: Syndicate Zombie Bundle contents have been reduced., type: Tweak}
+  - {message: Zombie Infection now does (slightly) less damage., type: Tweak}
+  - {message: Removed fun. (ha), type: Remove}
+  id: 1466
+  time: '2022-05-07T02:52:49.0000000+00:00'
+- author: DogZeroX
+  changes:
+  - {message: Added a new sound chip to the vox announcer that will warn you about
+      meteors and aliens instead of playing an obnoxious alarm., type: Tweak}
+  id: 1467
+  time: '2022-05-07T05:09:30.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Added new default sound for events., type: Add}
+  id: 1468
+  time: '2022-05-07T05:41:16.0000000+00:00'

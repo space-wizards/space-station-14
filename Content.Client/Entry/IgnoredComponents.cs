@@ -33,6 +33,7 @@ namespace Content.Client.Entry
             "MeleeChemicalInjector",
             "Dice",
             "PaperLabel",
+            "PressureImmunity",
             "Construction",
             "PoweredLight",
             "Smes",
@@ -344,7 +345,8 @@ namespace Content.Client.Entry
             "EnergySword",
             "DoorRemote",
             "InteractionPopup",
-            "HealthAnalyzer"
+            "HealthAnalyzer",
+            "Wires"
         };
     }
 }
