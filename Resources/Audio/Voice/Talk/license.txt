@@ -12,3 +12,4 @@ speak_4_exclaim.ogg
 speak_4.ogg
 all taken from
 https://github.com/goonstation/goonstation/tree/master/sound/misc/talk
+licensed under CC BY-NC-SA 3.0
