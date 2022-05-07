@@ -1,9 +1,4 @@
 Entries:
-- author: Veritius
-  changes:
-  - {message: added pilk, type: Add}
-  id: 967
-  time: '2022-02-02T06:20:54.0000000+00:00'
 - author: wrexbe
   changes:
   - {message: Suicide by toilet shows correct messages., type: Fix}
@@ -3044,3 +3039,9 @@ Entries:
   - {message: Removed fun. (ha), type: Remove}
   id: 1466
   time: '2022-05-07T02:52:49.0000000+00:00'
+- author: DogZeroX
+  changes:
+  - {message: Added a new sound chip to the vox announcer that will warn you about
+      meteors and aliens instead of playing an obnoxious alarm., type: Tweak}
+  id: 1467
+  time: '2022-05-07T05:09:30.0000000+00:00'
