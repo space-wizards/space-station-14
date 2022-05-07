@@ -1,1 +1,3 @@
 outbreak7.ogg taken from /tg/station at commit https://github.com/tgstation/tgstation/commit/40d89d11ea4a5cb81d61dc1018b46f4e7d32c62a
+meteors.ogg taken from https://github.com/tgstation/tgstation/commits/master/sound/ai/default/meteors.ogg
+aliens.ogg taken from https://github.com/tgstation/tgstation/commits/master/sound/ai/default/aliens.ogg
