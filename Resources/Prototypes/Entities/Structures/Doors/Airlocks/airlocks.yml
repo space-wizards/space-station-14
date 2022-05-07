@@ -99,7 +99,7 @@
       - VaultImpassable
   - type: Construction
     graph: Airlock
-    node: glassairlock
+    node: glassAirlock
   - type: PaintableAirlock
     group: Windoor
 
