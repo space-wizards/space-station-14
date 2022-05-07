@@ -602,7 +602,7 @@
   parent: BaseAlcohol
   desc: Wine and citrus stirred together.
   physicalDesc: strong-smelling
-  color: "#664300"
+  color: "#FFCA4B"
   spritePath: mimosa.rsi
 
 - type: reagent
@@ -809,7 +809,7 @@
   parent: BaseAlcohol
   desc: It makes your face pucker just looking at it.
   physicalDesc: strong-smelling
-  color: "#533600"
+  color: "#d4915d"
   spritePath: whiskeysour.rsi
 
 - type: reagent
