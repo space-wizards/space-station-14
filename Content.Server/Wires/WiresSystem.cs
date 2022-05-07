@@ -32,7 +32,7 @@ public sealed class WiresSystem : EntitySystem
     [Dependency] private readonly HandsSystem _handsSystem = default!;
     [Dependency] private readonly DoAfterSystem _doAfter = default!;
 
-    private RobustRandom _random = new();
+    private IRobustRandom _random = new RobustRandom();
 
     // This is where all the wire layouts are stored.
     [ViewVariables] private readonly Dictionary<string, WireLayout> _layouts = new();
@@ -824,7 +824,7 @@ public sealed class WiresSystem : EntitySystem
     private void Reset(RoundRestartCleanupEvent args)
     {
         _layouts.Clear();
-        _random = new();
+        _random = new RobustRandom();
     }
     #endregion
 
