@@ -45,6 +45,7 @@ public sealed class WiresSystem : EntitySystem
     #region Initialization
     public override void Initialize()
     {
+        _dummyWire.Initialize();
 
         SubscribeLocalEvent<RoundRestartCleanupEvent>(Reset);
 
