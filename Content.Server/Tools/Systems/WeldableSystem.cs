@@ -97,6 +97,13 @@ public sealed class WeldableSystem : EntitySystem
         appearance.SetData(WeldableVisuals.IsWelded, component.IsWelded);
     }
 
+    public void SetWeldingTime(EntityUid uid, TimeSpan time, WeldableComponent? component = null)
+    {
+        if (!Resolve(uid, ref component))
+            return;
+        component.WeldingTime = time;
+    }
+
     /// <summary>
     ///     Raised after welding do_after has finished. It doesn't guarantee success,
     ///     use <see cref="WeldableChangedEvent"/> to get updated status.
