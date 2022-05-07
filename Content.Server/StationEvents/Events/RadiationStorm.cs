@@ -23,7 +23,7 @@ namespace Content.Server.StationEvents.Events
         public override string Name => "RadiationStorm";
         public override string StartAnnouncement => Loc.GetString("station-event-radiation-storm-start-announcement");
         protected override string EndAnnouncement => Loc.GetString("station-event-radiation-storm-end-announcement");
-        public override string StartAudio => "/Audio/Announcements/radiation.ogg";
+        public override SoundSpecifier? StartAudio => new SoundPathSpecifier("/Audio/Announcements/radiation.ogg");
         protected override float StartAfter => 10.0f;
 
         // Event specific details

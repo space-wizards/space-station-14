@@ -292,16 +292,51 @@
         conditions:
         - !type:Temperature
           max: 293.15
-        amount: 1000 # thermal energy, not temperature!
+        amount: 100000 # thermal energy, not temperature!
       - !type:AdjustTemperature
         conditions:
         - !type:Temperature
           min: 293.15
-        amount: -1000
+        amount: -10000
       - !type:PopupMessage
         type: Local
         messages: [ "leporazine-effect-temperature-adjusting" ]
         probability: 0.2
+
+- type: reagent
+  id: Barozine
+  name: barozine
+  group: Medicine
+  desc: A somewhat toxic medicine that prevents pressure damage. Causes extreme pain and jittering. Very poisonous when overdosed.
+  physicalDesc: viscous
+  color: "#ff867d"
+  metabolisms:
+    Medicine:
+      effects:
+      - !type:HealthChange
+        damage:
+          types:
+            Poison: 1
+      - !type:HealthChange
+        conditions:
+          - !type:ReagentThreshold
+            min: 15
+        damage:
+          types:
+            Poison: 4
+      - !type:GenericStatusEffect
+        key: PressureImmunity
+        component: PressureImmunity
+      - !type:GenericStatusEffect
+        key: Stutter
+        component: StutteringAccent
+      - !type:Jitter
+      - !type:Scream
+        probability: 0.2
+      - !type:PopupMessage
+        type: Local
+        messages: [ "barozine-effect-skin-burning", "barozine-effect-muscle-contract" ]
+        probability: 0.1
 
 - type: reagent
   id: Phalanximine

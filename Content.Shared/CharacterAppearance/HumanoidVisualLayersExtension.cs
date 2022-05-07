@@ -17,14 +17,13 @@ namespace Content.Shared.CharacterAppearance
                     yield return HumanoidVisualLayers.Chest;
                     break;
                 case BodyPartType.Tail:
-                    yield return HumanoidVisualLayers.TailFront;
-                    yield return HumanoidVisualLayers.TailBehind;
+                    yield return HumanoidVisualLayers.Tail;
                     break;
                 case BodyPartType.Head:
                     yield return HumanoidVisualLayers.Head;
                     yield return HumanoidVisualLayers.Snout;
-                    yield return HumanoidVisualLayers.Frills;
-                    yield return HumanoidVisualLayers.Horns;
+                    yield return HumanoidVisualLayers.HeadSide;
+                    yield return HumanoidVisualLayers.HeadTop;
                     yield return HumanoidVisualLayers.Eyes;
                     yield return HumanoidVisualLayers.FacialHair;
                     yield return HumanoidVisualLayers.Hair;

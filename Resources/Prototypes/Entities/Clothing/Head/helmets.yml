@@ -196,8 +196,8 @@
   - type: Clothing
     sprite: Clothing/Head/Helmets/firehelmet.rsi
     size: 5
-    canPickup: true 
-    quickEquip: true 
+    canPickup: true
+    quickEquip: true
   - type: IngestionBlocker
   - type: PowerCellSlot
     cellSlot:
@@ -215,7 +215,7 @@
   - type: PressureProtection
     highPressureMultiplier: 0.65
     lowPressureMultiplier: 1000
-  
+
 
 - type: entity
   parent: ClothingHeadHardsuitWithLightBase
@@ -228,8 +228,8 @@
   - type: Clothing
     sprite: Clothing/Head/Helmets/atmos_firehelmet.rsi
     size: 5
-    canPickup: true 
-    quickEquip: true 
+    canPickup: true
+    quickEquip: true
   - type: IngestionBlocker
   - type: TemperatureProtection
     coefficient: 0.005

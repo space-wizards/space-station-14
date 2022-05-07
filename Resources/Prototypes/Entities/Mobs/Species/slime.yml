@@ -90,6 +90,14 @@
         - map: [ "head" ]
         - map: [ "pocket1" ]
         - map: [ "pocket2" ]
+    - type: Markings
+      layerPoints:
+       Legs:
+        points: 2
+        required: false
+       Arms:
+        points: 4
+        required: false
     - type: Body
       template: HumanoidTemplate
       preset: SlimePreset
