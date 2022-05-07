@@ -1,4 +1,4 @@
-﻿using System.Linq;
+using System.Linq;
 using Content.Server.Station;
 using Content.Shared.Roles;
 using JetBrains.Annotations;

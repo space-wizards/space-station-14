@@ -14,8 +14,6 @@ public sealed class KudzuGrowth : StationEvent
     public override string? StartAnnouncement =>
         Loc.GetString("station-event-kudzu-growth-start-announcement");
 
-    public override SoundSpecifier? StartAudio => new SoundPathSpecifier("/Audio/Announcements/bloblarm.ogg");
-
     public override int EarliestStart => 15;
 
     public override int MinimumPlayers => 15;

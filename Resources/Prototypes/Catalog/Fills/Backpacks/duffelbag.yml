@@ -199,12 +199,10 @@
   - type: StorageFill
     contents:
       - id: SyringeCorpium
-      - id: Handcuffs
       - id: FlareGun
-        amount: 2
       - id: BoxShotgunFlare
       - id: PillRomerol
-        amount: 4
+        amount: 3
 
 - type: entity
   parent: ClothingBackpackDuffelSyndicate

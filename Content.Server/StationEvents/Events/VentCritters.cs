@@ -1,6 +1,5 @@
-﻿using System.Linq;
+using System.Linq;
 using Content.Server.StationEvents.Components;
-using Content.Shared.Sound;
 using Robust.Shared.Random;
 
 namespace Content.Server.StationEvents.Events;
@@ -18,7 +17,7 @@ public sealed class VentCritters : StationEvent
     public override string? StartAnnouncement =>
         Loc.GetString("station-event-vent-spiders-start-announcement", ("data", Loc.GetString(Loc.GetString($"random-sentience-event-data-{_random.Next(1, 6)}"))));
 
-    public override SoundSpecifier? StartAudio => new SoundPathSpecifier("/Audio/Announcements/bloblarm.ogg");
+    public override string? StartAudio => "/Audio/Announcements/aliens.ogg";
 
     public override int EarliestStart => 15;
 
