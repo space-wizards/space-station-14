@@ -55,6 +55,10 @@
   - type: Speech
     playSpeechSound: true
     speechSoundsId: Vending
+  - type: DoAfter
+  - type: Electrified
+    enabled: false
+    usesApcPower: true
   - type: PointLight
     enabled: false
     castShadows: false

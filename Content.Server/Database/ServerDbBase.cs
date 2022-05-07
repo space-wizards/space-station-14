@@ -175,7 +175,6 @@ namespace Content.Server.Database
 
             // ReSharper disable once ConditionalAccessQualifierIsNonNullableAccordingToAPIContract
             var markingsRaw = profile.Markings?.Deserialize<List<string>>();
-            profile.Markings?.Dispose();
 
             List<Marking> markings = new();
             if (markingsRaw != null)

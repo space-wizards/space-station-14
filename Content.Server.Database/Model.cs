@@ -174,6 +174,8 @@ namespace Content.Server.Database
         {
             return query.Where(log => EF.Functions.Like(log.Message, "%" + searchText + "%"));
         }
+
+        public abstract int CountAdminLogs();
     }
 
     public class Preference
