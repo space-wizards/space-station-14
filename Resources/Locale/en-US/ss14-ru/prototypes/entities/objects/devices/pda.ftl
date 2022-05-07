@@ -85,3 +85,6 @@ ent-MusicianPDA = musician PDA
 ent-AtmosPDA = atmos PDA
     .desc = Still smells like plasma.
     .suffix = { "" }
+ent-ClearPDA = clear PDA
+    .desc = 99 and 44/100ths percent pure plastic.
+    .suffix = { "" }
