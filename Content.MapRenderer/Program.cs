@@ -12,7 +12,7 @@ namespace Content.MapRenderer
 {
     internal class Program
     {
-        private const string MapsAddedEnvKey = "FILES_ADDED";
+        private const string MapsAddedEnvKey = MyStation.yml ;
         private const string MapsModifiedEnvKey = "FILES_MODIFIED";
 
         private static readonly MapPainter MapPainter = new();
