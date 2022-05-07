@@ -23,7 +23,6 @@ namespace Content.Server.Wires;
 
 public sealed class WiresSystem : EntitySystem
 {
-    [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly IPrototypeManager _protoMan = default!;
     [Dependency] private readonly AudioSystem _audioSystem = default!;
     [Dependency] private readonly UserInterfaceSystem _uiSystem = default!;
@@ -32,6 +31,8 @@ public sealed class WiresSystem : EntitySystem
     [Dependency] private readonly SharedInteractionSystem _interactionSystem = default!;
     [Dependency] private readonly HandsSystem _handsSystem = default!;
     [Dependency] private readonly DoAfterSystem _doAfter = default!;
+
+    private RobustRandom _random = new();
 
     // This is where all the wire layouts are stored.
     [ViewVariables] private readonly Dictionary<string, WireLayout> _layouts = new();
@@ -44,7 +45,6 @@ public sealed class WiresSystem : EntitySystem
     #region Initialization
     public override void Initialize()
     {
-        _dummyWire.Initialize();
 
         SubscribeLocalEvent<RoundRestartCleanupEvent>(Reset);
 
@@ -824,6 +824,7 @@ public sealed class WiresSystem : EntitySystem
     private void Reset(RoundRestartCleanupEvent args)
     {
         _layouts.Clear();
+        _random = new();
     }
     #endregion
 
