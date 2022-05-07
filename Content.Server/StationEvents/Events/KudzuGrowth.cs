@@ -1,9 +1,5 @@
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Localization;
-using Robust.Shared.Log;
+using Content.Shared.Sound;
 using Robust.Shared.Map;
-using Robust.Shared.Maths;
 using Robust.Shared.Random;
 
 namespace Content.Server.StationEvents.Events;
@@ -18,7 +14,7 @@ public sealed class KudzuGrowth : StationEvent
     public override string? StartAnnouncement =>
         Loc.GetString("station-event-kudzu-growth-start-announcement");
 
-    public override string? StartAudio => "/Audio/Announcements/bloblarm.ogg";
+    public override SoundSpecifier? StartAudio => new SoundPathSpecifier("/Audio/Announcements/bloblarm.ogg");
 
     public override int EarliestStart => 15;
 

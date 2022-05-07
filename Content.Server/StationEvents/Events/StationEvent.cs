@@ -4,6 +4,7 @@ using Content.Server.Atmos.EntitySystems;
 using Content.Server.Chat.Managers;
 using Content.Server.Station;
 using Content.Shared.Database;
+using Content.Shared.Sound;
 using Content.Shared.Station;
 using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
@@ -51,7 +52,7 @@ namespace Content.Server.StationEvents.Events
         /// <summary>
         ///     Starting audio of the event.
         /// </summary>
-        public virtual string? StartAudio { get; set; } = null;
+        public virtual SoundSpecifier? StartAudio { get; set; } = new SoundPathSpecifier("/Audio/Announcements/attention.ogg");
 
         /// <summary>
         ///     Ending audio of the event.
@@ -137,7 +138,7 @@ namespace Content.Server.StationEvents.Events
 
             if (StartAudio != null)
             {
-                SoundSystem.Play(Filter.Broadcast(), StartAudio, AudioParams);
+                SoundSystem.Play(Filter.Broadcast(), StartAudio.GetSound(), AudioParams);
             }
 
             Announced = true;

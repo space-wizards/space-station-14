@@ -16,8 +16,6 @@ public sealed class BureaucraticError : StationEvent
         Loc.GetString("station-event-bureaucratic-error-announcement");
     public override string Name => "BureaucraticError";
 
-    public override string? StartAudio => "/Audio/Announcements/announce.ogg";
-
     public override int MinimumPlayers => 25;
 
     public override float Weight => WeightLow;

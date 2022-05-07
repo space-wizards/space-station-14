@@ -24,7 +24,7 @@ public sealed class VentClog : StationEvent
     public override string? StartAnnouncement =>
         Loc.GetString("station-event-vent-clog-start-announcement");
 
-    public override string? StartAudio => "/Audio/Announcements/bloblarm.ogg";
+    public override SoundSpecifier? StartAudio => new SoundPathSpecifier("/Audio/Announcements/bloblarm.ogg");
 
     public override int EarliestStart => 15;
 
