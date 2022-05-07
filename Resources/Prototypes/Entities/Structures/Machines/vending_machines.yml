@@ -52,6 +52,10 @@
     BoardName: "Vending Machine"
     LayoutId: Vending
   - type: Anchorable
+  - type: DoAfter
+  - type: Electrified
+    enabled: false
+    usesApcPower: true
   - type: PointLight
     enabled: false
     castShadows: false
@@ -125,7 +129,7 @@
   parent: VendingMachine
   id: VendingMachineCart
   name: PTech
-  description: PTech vending! Providing a ROBUST selection of PDA cartridges.
+  description: PTech vending! Providing a ROBUST selection of PDAs, cartridges, and anything else a dull paper pusher needs!
   components:
   - type: VendingMachine
     pack: PTechInventory
@@ -151,6 +155,8 @@
     radius: 1
     energy: 1.3
     color: "#ffb0b0"
+  - type: AccessReader
+    access: [["HeadOfPersonnel"]]    
 
 - type: entity
   parent: VendingMachine

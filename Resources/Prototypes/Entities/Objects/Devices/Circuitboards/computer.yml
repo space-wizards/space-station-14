@@ -68,6 +68,14 @@
 
 - type: entity
   parent: BaseComputerCircuitboard
+  id: PowerMonitoringComputerCircuitboard
+  name: power monitoring computer board
+  components:
+    - type: ComputerBoard
+      prototype: ComputerPowerMonitoring
+
+- type: entity
+  parent: BaseComputerCircuitboard
   id: ResearchComputerCircuitboard
   name: R&D computer board
   description: A computer printed circuit board for a R&D console

@@ -6,7 +6,7 @@
     !type:NanotrasenNameGenerator
     prefixCreator: '14'
   mapPath: /Maps/bagel.yml
-  minPlayers: 30
+  minPlayers: 35
   overflowJobs:
     - Assistant
   availableJobs:
@@ -16,7 +16,7 @@
     Botanist: [ 3, 3]
     Chef: [ 2, 2 ]
     Clown: [ 1, 1 ]
-    Janitor: [ 2, 3 ]
+    Janitor: [ 3, 3 ]
     Mime: [ 1, 1 ]
     Captain: [ 1, 1 ]
     HeadOfPersonnel: [ 1, 1 ]
@@ -26,7 +26,7 @@
     MedicalDoctor: [ 3, 3 ]
     Chemist: [ 2, 3 ]
     ResearchDirector: [ 1, 1 ]
-    Scientist: [ 3, 4 ]
+    Scientist: [ 4, 4 ]
     HeadOfSecurity: [ 1, 1 ]
     SecurityOfficer: [ 4, 4 ]
     Chaplain: [ 1, 1 ]

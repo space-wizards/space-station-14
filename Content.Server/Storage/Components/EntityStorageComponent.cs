@@ -5,8 +5,8 @@ using System.Threading.Tasks;
 using Content.Server.Construction;
 using Content.Server.Construction.Components;
 using Content.Server.Ghost.Components;
+using Content.Server.Storage.EntitySystems;
 using Content.Server.Tools;
-using Content.Shared.Acts;
 using Content.Shared.Body.Components;
 using Content.Shared.Foldable;
 using Content.Shared.Interaction;
@@ -29,7 +29,7 @@ namespace Content.Server.Storage.Components
     [Virtual]
     [ComponentReference(typeof(IActivate))]
     [ComponentReference(typeof(IStorageComponent))]
-    public class EntityStorageComponent : Component, IActivate, IStorageComponent, IInteractUsing, IDestroyAct
+    public class EntityStorageComponent : Component, IActivate, IStorageComponent, IInteractUsing
     {
         [Dependency] private readonly IEntityManager _entMan = default!;
 
@@ -70,7 +70,7 @@ namespace Content.Server.Storage.Components
         private bool _occludesLight = true;
 
         [DataField("open")]
-        private bool _open;
+        public bool Open;
 
         [DataField("weldingQuality", customTypeSerializer:typeof(PrototypeIdSerializer<ToolQualityPrototype>))]
         private string _weldingQuality = "Welding";
@@ -113,13 +113,6 @@ namespace Content.Server.Storage.Components
                 _occludesLight = value;
                 Contents.OccludesLight = _occludesLight;
             }
-        }
-
-        [ViewVariables(VVAccess.ReadWrite)]
-        public bool Open
-        {
-            get => _open;
-            private set => _open = value;
         }
 
         [ViewVariables(VVAccess.ReadWrite)]
@@ -298,7 +291,7 @@ namespace Content.Server.Storage.Components
         protected virtual void OpenStorage()
         {
             Open = true;
-            EmptyContents();
+            EntitySystem.Get<EntityStorageSystem>().EmptyContents(Owner, this);
             ModifyComponents();
                 SoundSystem.Play(Filter.Pvs(Owner), _openSound.GetSound(), Owner);
         }
@@ -364,21 +357,6 @@ namespace Content.Server.Storage.Components
         public virtual Vector2 ContentsDumpPosition()
         {
             return _entMan.GetComponent<TransformComponent>(Owner).WorldPosition;
-        }
-
-        private void EmptyContents()
-        {
-            foreach (var contained in Contents.ContainedEntities.ToArray())
-            {
-                if (Contents.Remove(contained))
-                {
-                    _entMan.GetComponent<TransformComponent>(contained).WorldPosition = ContentsDumpPosition();
-                    if (_entMan.TryGetComponent<IPhysBody?>(contained, out var physics))
-                    {
-                        physics.CanCollide = true;
-                    }
-                }
-            }
         }
 
         public virtual bool TryOpenStorage(EntityUid user)
@@ -471,12 +449,6 @@ namespace Content.Server.Storage.Components
             _beingWelded = false;
             IsWeldedShut ^= true;
             return true;
-        }
-
-        void IDestroyAct.OnDestroy(DestructionEventArgs eventArgs)
-        {
-            Open = true;
-            EmptyContents();
         }
 
         protected virtual IEnumerable<EntityUid> DetermineCollidingEntities()

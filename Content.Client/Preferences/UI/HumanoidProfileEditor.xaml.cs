@@ -8,6 +8,7 @@ using Content.Client.Stylesheets;
 using Content.Shared.CharacterAppearance;
 using Content.Shared.CharacterAppearance.Systems;
 using Content.Shared.GameTicking;
+using Content.Shared.Markings;
 using Content.Shared.Preferences;
 using Content.Shared.Roles;
 using Content.Shared.Species;
@@ -91,8 +92,12 @@ namespace Content.Client.Preferences.UI
         private SpriteView? _previewSprite;
         private SpriteView? _previewSpriteSide;
 
+        private BoxContainer _rgbSkinColorContainer => CRgbSkinColorContainer;
+        private ColorSelectorSliders _rgbSkinColorSelector;
+
         private bool _isDirty;
         private bool _needUpdatePreview;
+        private bool _needsDummyRebuild;
         public int CharacterSlot;
         public HumanoidCharacterProfile? Profile;
 
@@ -186,14 +191,15 @@ namespace Content.Client.Preferences.UI
             _speciesList = prototypeManager.EnumeratePrototypes<SpeciesPrototype>().Where(o => o.RoundStart).ToList();
             for (var i = 0; i < _speciesList.Count; i++)
             {
-                CSpeciesButton.AddItem(_speciesList[i].Name, i);
+                var name = Loc.GetString(_speciesList[i].Name);
+                CSpeciesButton.AddItem(name, i);
             }
 
             CSpeciesButton.OnItemSelected += args =>
             {
                 CSpeciesButton.SelectId(args.Id);
                 SetSpecies(_speciesList[args.Id].ID);
-                OnSkinColorOnValueChanged(CSkin);
+                OnSkinColorOnValueChanged();
             };
 
             #endregion Species
@@ -208,7 +214,16 @@ namespace Content.Client.Preferences.UI
             // 0 is 45 - 20 - 100
             // 20 is 25 - 20 - 100
             // 100 is 25 - 100 - 20
-            _skinColor.OnValueChanged += OnSkinColorOnValueChanged;
+            _skinColor.OnValueChanged += _ =>
+            {
+                OnSkinColorOnValueChanged();
+            };
+
+            _rgbSkinColorContainer.AddChild(_rgbSkinColorSelector = new ColorSelectorSliders());
+            _rgbSkinColorSelector.OnColorChanged += _ =>
+            {
+                OnSkinColorOnValueChanged();
+            };
 
             #endregion
 
@@ -433,6 +448,16 @@ namespace Content.Client.Preferences.UI
 
             #endregion Save
 
+            #region Markings
+            _tabContainer.SetTabTitle(3, Loc.GetString("humanoid-profile-editor-markings-tab"));
+
+            CMarkings.OnMarkingAdded += OnMarkingChange;
+            CMarkings.OnMarkingRemoved += OnMarkingChange;
+            CMarkings.OnMarkingColorChange += OnMarkingChange;
+            CMarkings.OnMarkingRankChange += OnMarkingChange;
+
+            #endregion Markings
+
             #endregion Left
 
             if (preferencesManager.ServerDataLoaded)
@@ -442,10 +467,31 @@ namespace Content.Client.Preferences.UI
 
             preferencesManager.OnServerDataLoaded += LoadServerData;
 
+
             IsDirty = false;
         }
 
-        private void OnSkinColorOnValueChanged(Range range)
+        private void OnMarkingChange(MarkingsSet markings)
+        {
+            if (Profile is null)
+                return;
+
+            Profile = Profile.WithCharacterAppearance(Profile.Appearance.WithMarkings(markings));
+            NeedsDummyRebuild = true;
+            IsDirty = true;
+        }
+
+        private void OnMarkingColorChange(MarkingsSet markings)
+        {
+            if (Profile is null)
+                return;
+
+            Profile = Profile.WithCharacterAppearance(Profile.Appearance.WithMarkings(markings));
+            IsDirty = true;
+        }
+
+
+        private void OnSkinColorOnValueChanged()
         {
             if (Profile is null) return;
 
@@ -455,7 +501,14 @@ namespace Content.Client.Preferences.UI
             {
                 case SpeciesSkinColor.HumanToned:
                 {
-                    var rangeOffset = (int) range.Value - 20;
+                    var range = _skinColor.Value;
+                    if (!_skinColor.Visible)
+                    {
+                        _skinColor.Visible = true;
+                        _rgbSkinColorContainer.Visible = false;
+                    }
+
+                    var rangeOffset = (int) range - 20;
 
                     float hue = 25;
                     float sat = 20;
@@ -478,13 +531,20 @@ namespace Content.Client.Preferences.UI
                 }
                 case SpeciesSkinColor.Hues:
                 {
-                    var color = Color.FromHsv(new Vector4(range.Value / 100.0f, 1.0f, 1.0f, 1.0f));
+                    if (!_rgbSkinColorContainer.Visible)
+                    {
+                        _skinColor.Visible = false;
+                        _rgbSkinColorContainer.Visible = true;
+                    }
+
+                    var color = new Color(_rgbSkinColorSelector.Color.R, _rgbSkinColorSelector.Color.G, _rgbSkinColorSelector.Color.B);
                     Profile = Profile.WithCharacterAppearance(Profile.Appearance.WithSkinColor(color));
                     break;
                 }
             }
 
             IsDirty = true;
+            NeedsDummyRebuild = true; // ugh - fix this asap
         }
 
         protected override void Dispose(bool disposing)
@@ -502,18 +562,13 @@ namespace Content.Client.Preferences.UI
         private void RebuildSpriteView()
         {
             var species = Profile?.Species ?? SpeciesManager.DefaultSpecies;
+            var dollProto = _prototypeManager.Index<SpeciesPrototype>(species).DollPrototype;
 
-            if (_lastSpecies != species)
-            {
-                var dollProto = _prototypeManager.Index<SpeciesPrototype>(species).DollPrototype;
+            if (_previewDummy != null)
+                _entMan.DeleteEntity(_previewDummy!.Value);
 
-                if (_previewDummy != null)
-                    _entMan.DeleteEntity(_previewDummy!.Value);
-
-                _previewDummy = _entMan.SpawnEntity(dollProto, MapCoordinates.Nullspace);
-                _lastSpecies = species;
-            }
-
+            _previewDummy = _entMan.SpawnEntity(dollProto, MapCoordinates.Nullspace);
+            _lastSpecies = species;
             var sprite = _entMan.GetComponent<SpriteComponent>(_previewDummy!.Value);
 
             if (_previewSprite == null)
@@ -556,6 +611,8 @@ namespace Content.Client.Preferences.UI
         {
             Profile = (HumanoidCharacterProfile) _preferencesManager.Preferences!.SelectedCharacter;
             CharacterSlot = _preferencesManager.Preferences.SelectedCharacterIndex;
+
+            NeedsDummyRebuild = true;
             UpdateControls();
         }
 
@@ -580,7 +637,9 @@ namespace Content.Client.Preferences.UI
         private void SetSpecies(string newSpecies)
         {
             Profile = Profile?.WithSpecies(newSpecies);
-            OnSkinColorOnValueChanged(CSkin); // Species may have special color prefs, make sure to update it.
+            OnSkinColorOnValueChanged(); // Species may have special color prefs, make sure to update it.
+            CMarkings.SetSpecies(newSpecies); // Repopulate the markings tab as well.
+            NeedsDummyRebuild = true;
             IsDirty = true;
         }
 
@@ -609,6 +668,7 @@ namespace Content.Client.Preferences.UI
             if (Profile != null)
             {
                 _preferencesManager.UpdateCharacter(Profile, CharacterSlot);
+                NeedsDummyRebuild = true;
                 OnProfileChanged?.Invoke(Profile, CharacterSlot);
             }
         }
@@ -624,6 +684,15 @@ namespace Content.Client.Preferences.UI
             }
         }
 
+        private bool NeedsDummyRebuild
+        {
+            get => _needsDummyRebuild;
+            set
+            {
+                _needsDummyRebuild = value;
+                _needUpdatePreview = true;
+            }
+        }
 
         private void UpdateNameEdit()
         {
@@ -649,12 +718,18 @@ namespace Content.Client.Preferences.UI
                 return;
 
             var skin = _prototypeManager.Index<SpeciesPrototype>(Profile.Species).SkinColoration;
-            var color = Color.ToHsv(Profile.Appearance.SkinColor);
 
             switch (skin)
             {
                 case SpeciesSkinColor.HumanToned:
                 {
+                    if (!_skinColor.Visible)
+                    {
+                        _skinColor.Visible = true;
+                        _rgbSkinColorContainer.Visible = false;
+                    }
+
+                    var color = Color.ToHsv(Profile.Appearance.SkinColor);
                     // check for hue/value first, if hue is lower than this percentage
                     // and value is 1.0
                     // then it'll be hue
@@ -672,11 +747,28 @@ namespace Content.Client.Preferences.UI
                 }
                 case SpeciesSkinColor.Hues:
                 {
-                    _skinColor.Value = color.X * 100;
+                    if (!_rgbSkinColorContainer.Visible)
+                    {
+                        _skinColor.Visible = false;
+                        _rgbSkinColorContainer.Visible = true;
+                    }
+
+                    // set the RGB values to the direct values otherwise
+                    _rgbSkinColorSelector.Color = Profile.Appearance.SkinColor;
                     break;
                 }
             }
 
+        }
+
+        private void UpdateMarkings()
+        {
+            if (Profile == null)
+            {
+                return;
+            }
+
+            CMarkings.SetData(Profile.Appearance.Markings, Profile.Species);
         }
 
         private void UpdateSpecies()
@@ -757,7 +849,12 @@ namespace Content.Client.Preferences.UI
         {
             if (Profile is null)
                 return;
-            RebuildSpriteView();
+
+            if (_needsDummyRebuild)
+            {
+                RebuildSpriteView(); // Species change also requires sprite rebuild, so we'll do that now.
+                _needsDummyRebuild = false;
+            }
 
             EntitySystem.Get<SharedHumanoidAppearanceSystem>().UpdateFromProfile(_previewDummy!.Value, Profile);
             LobbyCharacterPreviewPanel.GiveDummyJobClothes(_previewDummy!.Value, Profile);
@@ -779,6 +876,7 @@ namespace Content.Client.Preferences.UI
             UpdateSaveButton();
             UpdateJobPriorities();
             UpdateAntagPreferences();
+            UpdateMarkings();
 
             _needUpdatePreview = true;
 

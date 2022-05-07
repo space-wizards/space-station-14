@@ -71,6 +71,7 @@
     - SlowedDown
     - Stutter
     - Electrocution
+    - PressureImmunity
   - type: DiseaseCarrier
   # Other
   - type: Inventory
@@ -162,6 +163,24 @@
     - map: [ "head" ]
     - map: [ "pocket1" ]
     - map: [ "pocket2" ]
+  - type: Markings
+    layerPoints:
+      Tail:
+        points: 0
+        required: false
+      HeadTop:
+        points: 0
+        required: false
+      Chest:
+        points: 1
+        required: false
+      Legs:
+        points: 2
+        required: false
+      Arms:
+        points: 2
+        required: false
+             
   - type: Physics
     bodyType: KinematicController
   - type: Fixtures
@@ -395,6 +414,7 @@
       - map: [ "pocket2" ]
       - map: ["hand-left"]
       - map: ["hand-right"]
+    - type: Markings 
     - type: Physics
       bodyType: Dynamic
     - type: Fixtures
