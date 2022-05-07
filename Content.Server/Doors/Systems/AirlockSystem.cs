@@ -1,6 +1,6 @@
 using Content.Server.Doors.Components;
 using Content.Server.Power.Components;
-using Content.Server.WireHacking;
+using Content.Server.Wires;
 using Content.Shared.Doors;
 using Content.Shared.Doors.Components;
 using Content.Shared.Doors.Systems;
@@ -15,6 +15,8 @@ namespace Content.Server.Doors.Systems
 {
     public sealed class AirlockSystem : SharedAirlockSystem
     {
+        [Dependency] private readonly WiresSystem _wiresSystem = default!;
+
         public override void Initialize()
         {
             base.Initialize();
@@ -128,7 +130,7 @@ namespace Content.Server.Doors.Systems
             if (TryComp<WiresComponent>(uid, out var wiresComponent) && wiresComponent.IsPanelOpen &&
                 EntityManager.TryGetComponent(args.User, out ActorComponent? actor))
             {
-                wiresComponent.OpenInterface(actor.PlayerSession);
+                _wiresSystem.OpenUserInterface(uid, actor.PlayerSession);
                 args.Handled = true;
             }
         }

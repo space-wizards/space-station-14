@@ -34,5 +34,5 @@ public sealed class GlassTableComponent : Component
     /// <summary>
     ///     How long should someone who climbs on this table be stunned for?
     /// </summary>
-    public float StunTime = 5.0f;
+    public float StunTime = 2.0f;
 }

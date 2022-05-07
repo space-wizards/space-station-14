@@ -1,5 +1,6 @@
 using Content.Server.Chemistry.Components;
 using Content.Shared.Interaction;
+using Content.Shared.Interaction.Events;
 using Content.Shared.Weapons.Melee;
 using JetBrains.Annotations;
 using Robust.Shared.GameObjects;
@@ -13,6 +14,15 @@ namespace Content.Server.Chemistry.EntitySystems
             SubscribeLocalEvent<HyposprayComponent, AfterInteractEvent>(OnAfterInteract);
             SubscribeLocalEvent<HyposprayComponent, ClickAttackEvent>(OnClickAttack);
             SubscribeLocalEvent<HyposprayComponent, SolutionChangedEvent>(OnSolutionChange);
+            SubscribeLocalEvent<HyposprayComponent, UseInHandEvent>(OnUseInHand);
+        }
+
+        private void OnUseInHand(EntityUid uid, HyposprayComponent component, UseInHandEvent args)
+        {
+            if (args.Handled) return;
+
+            component.TryDoInject(args.User, args.User);
+            args.Handled = true;
         }
 
         private void OnSolutionChange(EntityUid uid, HyposprayComponent component, SolutionChangedEvent args)
