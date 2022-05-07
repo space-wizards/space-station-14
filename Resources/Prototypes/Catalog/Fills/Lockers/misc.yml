@@ -24,6 +24,8 @@
         prob: 0.2
       - id: FlareGun
         prob: 0.05
+      - id: ClothingOuterSuitEmergency
+        prob: 0.5
       - id: BoxMRE
         prob: 0.1
         
