@@ -5,6 +5,8 @@ using Robust.Shared.Audio;
 using Content.Shared.Sound;
 using Content.Shared.Speech;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Timing;
+using System;
 
 namespace Content.Shared.Speech
 {
@@ -24,14 +26,22 @@ namespace Content.Shared.Speech
 
         [ViewVariables(VVAccess.ReadWrite)]
         [DataField("speechSoundsId", customTypeSerializer:typeof(PrototypeIdSerializer<SpeechSoundsPrototype>))]
-        public string SpeechSoundsId {get; set;} = "Alto";
+        public string SpeechSoundsId { get; set; } = "Alto";
 
         [DataField("audioParams")]
         public AudioParams AudioParams = AudioParams.Default.WithVolume(5f);
 
+        [ViewVariables(VVAccess.ReadWrite)]
+        [DataField("soundCooldownTime")]
+        public float SoundCooldownTime { get; set; } = 0.5f;
+
+        public TimeSpan LastTimeSoundPlayed = TimeSpan.Zero;
+
         //Don't use this.
         //Cache for SpeechSoundsPrototype to avoid Indexing every single time someone talks.
         public SpeechSoundsPrototype? SpeechSoundsCache = null;
+
+
 
         public bool Enabled
         {
