@@ -1,9 +1,4 @@
 Entries:
-- author: wrexbe
-  changes:
-  - {message: Suicide by toilet shows correct messages., type: Fix}
-  id: 968
-  time: '2022-02-02T23:14:42.0000000+00:00'
 - author: mirrorcult
   changes:
   - {message: Deconstructing crates now requires a screwdriver again., type: Fix}
@@ -3045,3 +3040,8 @@ Entries:
       meteors and aliens instead of playing an obnoxious alarm., type: Tweak}
   id: 1467
   time: '2022-05-07T05:09:30.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Added new default sound for events., type: Add}
+  id: 1468
+  time: '2022-05-07T05:41:16.0000000+00:00'
