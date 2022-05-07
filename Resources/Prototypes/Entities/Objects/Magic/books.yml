@@ -1,6 +1,6 @@
 ﻿- type: entity
-  id: HealingRuneSpellbook
-  name: healing rune spellbook
+  id: FlashRuneSpellbook
+  name: flash rune spellbook
   parent: BaseItem
   components:
     - type: Sprite
@@ -12,7 +12,7 @@
       wieldTime: 0.75
     - type: Spellbook
       instantSpells:
-        HealingRune: 3
+        FlashRune: 3
 
 - type: entity
   id: ForceWallSpellbook

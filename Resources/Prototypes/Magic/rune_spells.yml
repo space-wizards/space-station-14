@@ -1,5 +1,5 @@
 ﻿- type: instantAction
-  id: HealingRune
+  id: FlashRune
   name: action-name-spell-rune-healing
   description: action-description-spell-rune-healing
   useDelay: 10
@@ -8,4 +8,4 @@
     sprite: Effects/crayondecals.rsi
     state: rune1
   serverEvent: !type:RuneMagicEvent
-    rune: ExplosionRune
+    rune: FlashRune

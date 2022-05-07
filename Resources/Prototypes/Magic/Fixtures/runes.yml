@@ -118,12 +118,9 @@
       maxIntensity: 4
 
 - type: entity
-  parent: CollideTimerRune
-  id: HealingTimedRune
-  name: "healing timed rune"
+  parent: ActivateRune
+  id: FlashRune
+  name: "flash rune"
   components:
-    - type: HealOnTrigger
-      damage:
-        groups:
-          Burn: -10
-
+    - type: FlashOnTrigger
+    - type: DeleteOnTrigger
