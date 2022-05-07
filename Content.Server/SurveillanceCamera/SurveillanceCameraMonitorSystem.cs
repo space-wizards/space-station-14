@@ -22,6 +22,7 @@ public sealed class SurveillanceCameraMonitorSystem : EntitySystem
         SubscribeLocalEvent<SurveillanceCameraMonitorComponent, PowerChangedEvent>(OnPowerChanged);
         SubscribeLocalEvent<SurveillanceCameraMonitorComponent, SurveillanceCameraMonitorSwitchMessage>(OnSwitchMessage);
         SubscribeLocalEvent<SurveillanceCameraMonitorComponent, DeviceNetworkPacketEvent>(OnPacketReceived);
+        SubscribeLocalEvent<SurveillanceCameraMonitorComponent, SurveillanceCameraMonitorSubnetRequestMessage>(OnSubnetRequest);
     }
 
     // TODO:
@@ -37,7 +38,14 @@ public sealed class SurveillanceCameraMonitorSystem : EntitySystem
     // the updated states over to viewing clients.
 
     #region Event Handling
-        private void OnPacketReceived(EntityUid uid, SurveillanceCameraMonitorComponent component,
+
+    private void OnSubnetRequest(EntityUid uid, SurveillanceCameraMonitorComponent component,
+        SurveillanceCameraMonitorSubnetRequestMessage args)
+    {
+
+    }
+
+    private void OnPacketReceived(EntityUid uid, SurveillanceCameraMonitorComponent component,
         DeviceNetworkPacketEvent args)
     {
         if (args.Address == null)
@@ -60,6 +68,7 @@ public sealed class SurveillanceCameraMonitorSystem : EntitySystem
             }
         }
     }
+
     private void OnSwitchMessage(EntityUid uid, SurveillanceCameraMonitorComponent component, SurveillanceCameraMonitorSwitchMessage message)
     {
         if (component.NextCameraAddress == null)
@@ -82,6 +91,7 @@ public sealed class SurveillanceCameraMonitorSystem : EntitySystem
         TryOpenUserInterface(uid, args.User);
     }
 
+    // This is to ensure that there's no delay in ensuring that a camera is deactivated.
     private void OnSurveillanceCameraDeactivate(SurveillanceCameraDeactivateEvent args)
     {
         if (!TryComp(args.Camera, out SurveillanceCameraComponent? camera))

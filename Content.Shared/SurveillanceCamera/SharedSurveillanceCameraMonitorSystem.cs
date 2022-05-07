@@ -58,6 +58,17 @@ public sealed class SurveillanceCameraMonitorSwitchMessage : BoundUserInterfaceM
 }
 
 [Serializable, NetSerializable]
+public sealed class SurveillanceCameraMonitorSubnetRequestMessage : BoundUserInterfaceMessage
+{
+    public string Subnet { get; }
+
+    public SurveillanceCameraMonitorSubnetRequestMessage(string subnet)
+    {
+        Subnet = subnet;
+    }
+}
+
+[Serializable, NetSerializable]
 public sealed class SurveillanceCameraMonitorSubnetInfoMessage : BoundUserInterfaceMessage
 {
     public List<SurveillanceCameraInfo> SubnetInfo { get; }
