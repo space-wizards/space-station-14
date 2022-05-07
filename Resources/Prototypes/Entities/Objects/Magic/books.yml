@@ -1,63 +1,63 @@
 ﻿- type: entity
-  id: FlashRuneSpellbook
-  name: flash rune spellbook
+  id: BaseSpellbook
+  name: spellbook
   parent: BaseItem
+  abstract: true
   components:
     - type: Sprite
       netsync: false
       sprite: Objects/Misc/books.rsi
       layers:
-      - state: book_demonomicon
-    - type: Wieldable
-      wieldTime: 0.75
+        - state: book_demonomicon
+    - type: Spellbook
+
+- type: entity
+  id: FlashRuneSpellbook
+  name: flash rune spellbook
+  parent: BaseSpellbook
+  components:
     - type: Spellbook
       instantSpells:
-        FlashRune: 3
+        FlashRune: -1
 
 - type: entity
   id: ForceWallSpellbook
   name: force wall spellbook
-  parent: BaseItem
+  parent: BaseSpellbook
   components:
     - type: Sprite
       netsync: false
       sprite: Objects/Magic/spellbooks.rsi
       layers:
         - state: bookforcewall
-    - type: Wieldable
-      wieldTime: 0.75
     - type: Spellbook
       instantSpells:
-        ForceWall: 3
+        ForceWall: -1
 
 - type: entity
   id: BlinkBook
   name: blink spellbook
-  parent: BaseItem
+  parent: BaseSpellbook
   components:
     - type: Sprite
       netsync: false
       sprite: Objects/Magic/spellbooks.rsi
       layers:
         - state: spellbook
-    - type: Wieldable
-      wieldTime: 0.75
     - type: Spellbook
       worldSpells:
-        Blink: 3
+        Blink: -1
 
 - type: entity
   id: KnockSpellbook
   name: knock spellbook
-  parent: BaseItem
+  parent: BaseSpellbook
   components:
     - type: Sprite
       netsync: false
       sprite: Objects/Magic/spellbooks.rsi
       layers:
         - state: bookknock
-    - type: Wieldable
-      wieldTime: 0.75
     - type: Spellbook
       instantSpells:
-        Knock: 3
+        Knock: -1

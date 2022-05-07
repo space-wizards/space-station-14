@@ -1,4 +1,5 @@
-﻿using Content.Shared.Actions.ActionTypes;
+﻿using System.Threading;
+using Content.Shared.Actions.ActionTypes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.Dictionary;
 
 namespace Content.Server.Magic;
@@ -12,15 +13,18 @@ public sealed class SpellbookComponent : Component
     [ViewVariables]
     public readonly List<ActionType> Spells = new();
 
-    [DataField("worldSpells",
-        customTypeSerializer: typeof(PrototypeIdDictionarySerializer<int, WorldTargetActionPrototype>))]
+    [DataField("worldSpells", customTypeSerializer: typeof(PrototypeIdDictionarySerializer<int, WorldTargetActionPrototype>))]
     public readonly Dictionary<string, int> WorldSpells = new();
 
-    [DataField("entitySpells",
-        customTypeSerializer: typeof(PrototypeIdDictionarySerializer<int, EntityTargetActionPrototype>))]
+    [DataField("entitySpells", customTypeSerializer: typeof(PrototypeIdDictionarySerializer<int, EntityTargetActionPrototype>))]
     public readonly Dictionary<string, int> EntitySpells = new();
 
-    [DataField("instantSpells",
-        customTypeSerializer: typeof(PrototypeIdDictionarySerializer<int, InstantActionPrototype>))]
+    [DataField("instantSpells", customTypeSerializer: typeof(PrototypeIdDictionarySerializer<int, InstantActionPrototype>))]
     public readonly Dictionary<string, int> InstantSpells = new();
+
+    [ViewVariables]
+    [DataField("learnTime")]
+    public float LearnTime = 2f;
+
+    public CancellationTokenSource? CancelToken;
 }

@@ -1,11 +1,13 @@
 ﻿using Content.Server.Coordinates.Helpers;
 using Content.Server.Decals;
+using Content.Server.DoAfter;
 using Content.Server.Magic.Events;
 using Content.Server.Wieldable;
 using Content.Shared.Actions;
 using Content.Shared.Actions.ActionTypes;
 using Content.Shared.Doors.Components;
 using Content.Shared.Doors.Systems;
+using Content.Shared.Interaction.Events;
 using Content.Shared.Maps;
 using Robust.Server.GameObjects;
 using Robust.Shared.Map;
@@ -21,6 +23,7 @@ public sealed class MagicSystem : EntitySystem
     [Dependency] private readonly DecalSystem _decals = default!;
     [Dependency] private readonly EntityLookupSystem _lookup = default!;
     [Dependency] private readonly SharedDoorSystem _doorSystem = default!;
+    [Dependency] private readonly DoAfterSystem _doAfter = default!;
 
     private readonly List<EntityUid> ActiveWalls = new ();
 
@@ -29,8 +32,8 @@ public sealed class MagicSystem : EntitySystem
         base.Initialize();
 
         SubscribeLocalEvent<SpellbookComponent, ComponentInit>(OnInit);
-        SubscribeLocalEvent<SpellbookComponent, ItemWieldedEvent>(OnWielded);
-        SubscribeLocalEvent<SpellbookComponent, ItemUnwieldedEvent>(OnUnWield);
+        SubscribeLocalEvent<SpellbookComponent, UseInHandEvent>(OnUse);
+        SubscribeLocalEvent<SpellbookComponent, LearnDoAfterComplete>(TeachSpell);
 
         SubscribeLocalEvent<RuneMagicEvent>(OnRuneMagic);
         SubscribeLocalEvent<TeleportSpellEvent>(OnTeleportSpell);
@@ -40,6 +43,7 @@ public sealed class MagicSystem : EntitySystem
 
     private void OnInit(EntityUid uid, SpellbookComponent component, ComponentInit args)
     {
+        //Negative charges means the spell can be used without it running out.
         foreach (var (id, charges) in component.WorldSpells)
         {
             var spell = new WorldTargetAction(_prototypeManager.Index<WorldTargetActionPrototype>(id));
@@ -71,25 +75,41 @@ public sealed class MagicSystem : EntitySystem
         }
     }
 
-    #region Wielding
-
-    private void OnWielded(EntityUid uid, SpellbookComponent component, ItemWieldedEvent args)
+    private void OnUse(EntityUid uid, SpellbookComponent component, UseInHandEvent args)
     {
-        if (args.User == null)
+        if (args.Handled)
             return;
 
-        _actionsSystem.AddActions(args.User.Value, component.Spells, uid);
+        AttemptLearn(uid, component, args);
+
+        args.Handled = true;
     }
 
-    private void OnUnWield(EntityUid uid, SpellbookComponent component, ItemUnwieldedEvent args)
+    private void AttemptLearn(EntityUid uid, SpellbookComponent component, UseInHandEvent args)
     {
-        if (args.User == null)
+        component.CancelToken = new();
+        var doAfterEventArgs = new DoAfterEventArgs(args.User, component.LearnTime, component.CancelToken.Token, uid)
+        {
+            BreakOnTargetMove = true,
+            BreakOnUserMove = true,
+            BreakOnDamage = true,
+            BreakOnStun = true,
+            NeedHand = true, //What, are you going to read with your eyes only??
+            TargetFinishedEvent = new LearnDoAfterComplete(args.User),
+            TargetCancelledEvent = new LearnDoAfterCancel(),
+        };
+
+        _doAfter.DoAfter(doAfterEventArgs);
+    }
+
+    private void TeachSpell(EntityUid uid, SpellbookComponent component, LearnDoAfterComplete ev)
+    {
+        if (ev.User == null)
             return;
 
-        _actionsSystem.RemoveProvidedActions(args.User.Value, uid);
+        component.CancelToken = null;
+        _actionsSystem.AddActions(ev.User, component.Spells, uid);
     }
-
-    #endregion
 
     #region Spells
 
@@ -209,6 +229,22 @@ public sealed class MagicSystem : EntitySystem
 
         args.Handled = true;
     }
+
+    #endregion
+
+    #region DoAfterClasses
+
+    private sealed class LearnDoAfterComplete : EntityEventArgs
+    {
+        public readonly EntityUid User;
+
+        public LearnDoAfterComplete(EntityUid uid)
+        {
+            User = uid;
+        }
+    }
+
+    private sealed class LearnDoAfterCancel : EntityEventArgs { }
 
     #endregion
 }
