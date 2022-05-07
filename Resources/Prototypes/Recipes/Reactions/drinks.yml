@@ -57,6 +57,16 @@
     BeepskySmash: 2
 
 - type: reaction
+  id: BermudaTriangle
+  reactants:
+    Rum:
+      amount: 2
+    Vermouth:
+      amount: 1
+  products:
+    BermudaTriangle: 3
+
+- type: reaction
   id: Bilk
   reactants:
     Beer:
@@ -131,6 +141,18 @@
       amount: 2
   products:
     CubaLibre: 3
+
+- type: reaction
+  id: Daiquiri
+  reactants:
+    JuiceLime:
+      amount: 1
+    Rum:
+      amount: 2
+    Sugar:
+      amount: 1
+  products:
+    Daiquiri: 4
 
 - type: reaction
   id: DoctorsDelight
@@ -387,6 +409,16 @@
     Martini: 3
 
 - type: reaction
+  id: Mimosa
+  reactants:
+    JuiceOrange:
+      amount: 1
+    Wine:
+      amount: 1
+  products:
+    Mimosa: 2
+
+- type: reaction
   id: Mojito
   reactants:
     JuiceLime:
@@ -531,6 +563,18 @@
       amount: 2
   products:
     WhiskeyCola: 3
+
+- type: reaction
+  id: WhiskeySour
+  reactants:
+    JuiceLemon:
+      amount: 1
+    Sugar:
+      amount: 1
+    Whiskey:
+      amount: 2
+  products:
+    WhiskeySour: 3
 
 - type: reaction
   id: WhiteRussian

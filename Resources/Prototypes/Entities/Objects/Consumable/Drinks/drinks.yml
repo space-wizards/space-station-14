@@ -312,6 +312,23 @@
 
 - type: entity
   parent: DrinkGlassBase
+  id: DrinkBermudaTriangleGlass
+  name: bermuda triangle glass
+  description: Try not to lose yourself.
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 50
+        reagents:
+        - ReagentId: BermudaTriangle
+          Quantity: 50
+  - type: Drink
+  - type: Sprite
+    sprite: Objects/Consumable/Drinks/bermudatriangle.rsi
+
+- type: entity
+  parent: DrinkGlassBase
   id: DrinkBeerglass
   name: beer glass
   description: A freezing pint of beer.
@@ -552,6 +569,22 @@
           Quantity: 50
   - type: Sprite
     sprite: Objects/Consumable/Drinks/cubalibreglass.rsi
+
+- type: entity
+  parent: DrinkGlassBase
+  id: DrinkDaiquiriGlass
+  name: daiquiri glass
+  description: A classic mix of rum and citrus.
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 50
+        reagents:
+        - ReagentId: Daiquiri
+          Quantity: 50
+  - type: Sprite
+    sprite: Objects/Consumable/Drinks/daiquiri.rsi
 
 - type: entity
   parent: DrinkGlassBase
@@ -1223,6 +1256,23 @@
   - type: Drink
   - type: Sprite
     sprite: Objects/Consumable/Drinks/martiniglass.rsi
+
+- type: entity
+  parent: DrinkGlassBase
+  id: DrinkMimosaGlass
+  name: classic mimosa glass
+  description: Wine and citrus stirred together.
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 50
+        reagents:
+        - ReagentId: Mimosa
+          Quantity: 50
+  - type: Drink
+  - type: Sprite
+    sprite: Objects/Consumable/Drinks/mimosa.rsi
 
 - type: entity
   parent: DrinkGlassBase
@@ -1994,6 +2044,23 @@
   - type: Drink
   - type: Sprite
     sprite: Objects/Consumable/Drinks/whiskeysodaglass.rsi
+
+- type: entity
+  parent: DrinkGlassBase
+  id: DrinkWhiskeySourGlass
+  name: whiskey sour glass
+  description: It makes your face pucker just looking at it.
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 50
+        reagents:
+        - ReagentId: WhiskeySour
+          Quantity: 50
+  - type: Drink
+  - type: Sprite
+    sprite: Objects/Consumable/Drinks/whiskeysour.rsi
 
 - type: entity
   parent: DrinkGlassBase

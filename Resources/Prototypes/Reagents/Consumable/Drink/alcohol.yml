@@ -302,6 +302,15 @@
   spritePath: beepskysmashglass.rsi
 
 - type: reagent
+  id: BermudaTriangle
+  name: bermuda triangle
+  parent: BaseAlcohol
+  desc: Try not to lose yourself.
+  physicalDesc: strong-smelling
+  color: "#8A624A"
+  spritePath: bermudatriangle.rsi
+
+- type: reagent
   id: Bilk
   name: bilk
   parent: BaseAlcohol
@@ -354,6 +363,15 @@
   physicalDesc: bubbly
   color: "#3E1B00"
   spritePath: cubalibreglass.rsi
+
+- type: reagent
+  id: Daiquiri
+  name: daiquiri
+  parent: BaseAlcohol
+  desc: A classic mix of rum and citrus.
+  physicalDesc: bubbly
+  color: "#D9463E"
+  spritePath: daiquiri.rsi
 
 - type: reagent
   id: DemonsBlood
@@ -579,6 +597,15 @@
   spritePath: martiniglass.rsi
 
 - type: reagent
+  id: Mimosa
+  name: classic mimosa
+  parent: BaseAlcohol
+  desc: Wine and citrus stirred together.
+  physicalDesc: strong-smelling
+  color: "#664300"
+  spritePath: mimosa.rsi
+
+- type: reagent
   id: Mead
   name: mead
   parent: BaseAlcohol
@@ -775,6 +802,15 @@
   physicalDesc: strong-smelling
   color: "#533600"
   spritePath: whiskeysodaglass.rsi
+
+- type: reagent
+  id: WhiskeySour
+  name: whiskey sour
+  parent: BaseAlcohol
+  desc: It makes your face pucker just looking at it.
+  physicalDesc: strong-smelling
+  color: "#533600"
+  spritePath: whiskeysour.rsi
 
 - type: reagent
   id: WhiteRussian
