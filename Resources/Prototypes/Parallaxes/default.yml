@@ -4,7 +4,7 @@
     - texture:
         !type:ImageParallaxTextureSource
         path: "/Textures/Parallax.rsi/Space1.png"
-      slowness: 0.5
+      slowness: 0.8
       scale: "1, 1"
     - texture:
         !type:GeneratedParallaxTextureSource
