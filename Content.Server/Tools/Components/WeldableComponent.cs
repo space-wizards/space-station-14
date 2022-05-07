@@ -45,7 +45,7 @@ public sealed class WeldableComponent : SharedWeldableComponent
     /// </summary>
     [DataField("weldedExamineMessage")]
     [ViewVariables(VVAccess.ReadWrite)]
-    public string? WeldedExamineMessage = "door-component-examine-is-welded";
+    public string? WeldedExamineMessage = "weldable-component-examine-is-welded";
 
     /// <summary>
     ///     Whether something is currently using a welder on this so DoAfter isn't spammed.
