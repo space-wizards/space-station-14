@@ -9,6 +9,6 @@
   checkCanAccess: false
   repeat: true
   icon:
-    sprite: Effects/crayondecals.rsi
-    state: rune1
+    sprite: Objects/Magic/magicactions.rsi
+    state: blink
   serverEvent: !type:TeleportSpellEvent
