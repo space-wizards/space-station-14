@@ -24,7 +24,8 @@ public sealed class SurplusBundleSystem : EntitySystem
     private void InitList()
     {
         // sort data in price descending order
-        _uplinks = _prototypeManager.EnumeratePrototypes<UplinkStoreListingPrototype>().ToArray();
+        _uplinks = _prototypeManager.EnumeratePrototypes<UplinkStoreListingPrototype>()
+            .Where(item => item.CanSurplus).ToArray();
         Array.Sort(_uplinks, (a, b) => b.Price - a.Price);
     }
 

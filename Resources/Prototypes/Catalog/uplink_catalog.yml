@@ -89,6 +89,7 @@
   category: Explosives
   itemId: MobGrenadePenguin
   price: 6
+  surplus: false # got wrecked by penguins from surplus crate
 
 - type: uplinkListing
   id: UplinkC4
@@ -217,6 +218,7 @@
   itemId: CrateSyndicateSurplusBundle
   description: Contains 50 telecrystals worth of completely random Syndicate items. It can be useless junk or really good.
   price: 20
+  surplus: false
 
 - type: uplinkListing
   id: UplinkSuperSurplusBundle
@@ -224,6 +226,7 @@
   itemId: CrateSyndicateSuperSurplusBundle
   description: Contains 125 telecrystals worth of completely random Syndicate items.
   price: 40
+  surplus: false
 
 #- type: uplinkListing
 #  id: UplinkCarbineBundle
@@ -391,3 +394,4 @@
   listingName: syndicate segway
   description: Be an enemy of the corporation, in style!
   price: 5
+  surplus: false
