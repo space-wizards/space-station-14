@@ -47,7 +47,7 @@ namespace Content.Server.CombatMode
                 && !targetHandsComponent.ActiveHand.IsEmpty)
             {
                 Debug.Assert(targetHandsComponent.ActiveHand.HeldEntity != null, "targetHandsComponent.ActiveHand.HeldEntity != null");
-                var inTargetHand = (EntityUid) targetHandsComponent.ActiveHand.HeldEntity;
+                var inTargetHand = targetHandsComponent.ActiveHand.HeldEntity.Value;
                 attemptEvent.TargetItemInHandUid = inTargetHand;
 
                 RaiseLocalEvent(inTargetHand, attemptEvent);
