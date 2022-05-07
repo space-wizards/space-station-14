@@ -132,6 +132,7 @@
     state: pda-clown
   - type: Slippery
     paralyzeTime: 4
+    launchForwardsMultiplier: 9.0
   - type: CollisionWake
     enabled: false
   - type: Physics
@@ -520,4 +521,34 @@
         state: pda-atmos
   - type: Icon
     state: pda-atmos
-        
+
+- type: entity
+  parent: BasePDA
+  id: ClearPDA
+  name: clear PDA
+  description: 99 and 44/100ths percent pure plastic. 
+  components:
+  - type: PDA
+    id: AssistantIDCard
+  - type: Appearance
+    visuals:
+      - type: PDAVisualizer
+        state: pda-clear
+  - type: Icon
+    state: pda-clear    
+
+- type: entity
+  parent: BasePDA
+  id: SyndiPDA
+  name: syndicate PDA
+  description: Ok, time to be a productive member of- oh cool I'm a bad guy time to kill people!
+  components:
+  - type: PDA
+    id: SyndicateIDCard
+  - type: Appearance
+    visuals:
+      - type: PDAVisualizer
+        state: pda-syndi
+  - type: Icon
+    state: pda-syndi
+    

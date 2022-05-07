@@ -85,3 +85,6 @@ ent-MusicianPDA = КПК музыканта
 ent-AtmosPDA = атмос КПК
     .desc = Все ещё пахнет плазмой.
     .suffix = { "" }
+ent-ClearPDA = clear PDA
+    .desc = 99 and 44/100ths percent pure plastic.
+    .suffix = { "" }

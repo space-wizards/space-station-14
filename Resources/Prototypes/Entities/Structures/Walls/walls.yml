@@ -27,9 +27,6 @@
   - type: IconSmooth
     key: walls
     base: brick
-  - type: Occluder
-    sizeX: 32
-    sizeY: 32
 
 - type: entity
   parent: WallBase
@@ -649,6 +646,57 @@
   - type: IconSmooth
     key: walls
     base: wood
+
+
+# Vault Walls
+
+- type: entity
+  parent: WallBase
+  id: WallVaultAlien
+  name: alien vault wall
+  description: A mysterious ornate looking wall. There may be ancient dangers inside. 
+  components:
+  - type: Sprite
+    sprite: Structures/Walls/vault.rsi
+    state: alienvault
+  - type: Icon
+    sprite: Structures/Walls/vault.rsi
+    state: alienvault
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 500
+      behaviors:
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+    
+- type: entity
+  parent: WallVaultAlien
+  id: WallVaultRock
+  name: rock vault wall
+  components:
+  - type: Sprite
+    sprite: Structures/Walls/vault.rsi
+    state: rockvault
+  - type: Icon
+    sprite: Structures/Walls/vault.rsi
+    state: rockvault
+    
+- type: entity
+  parent: WallVaultAlien
+  id: WallVaultSandstone
+  name: sandstone vault wall
+  components:
+  - type: Sprite
+    sprite: Structures/Walls/vault.rsi
+    state: sandstonevault
+  - type: Icon
+    sprite: Structures/Walls/vault.rsi
+    state: sandstonevault
+
+
+# Mime
 
 - type: entity
   id: WallInvisible

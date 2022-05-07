@@ -1,6 +1,6 @@
 - type: species
   id: Human
-  name: Human
+  name: species-name-human
   roundStart: true
   prototype: MobHuman
   dollPrototype: MobHumanDummy
@@ -8,7 +8,7 @@
 
 - type: species
   id: Dwarf
-  name: Dwarf
+  name: species-name-dwarf
   roundStart: false
   prototype: MobDwarf
   dollPrototype: MobDwarfDummy
@@ -16,7 +16,7 @@
 
 - type: species
   id: Reptilian
-  name: Reptilian
+  name: species-name-reptilian
   roundStart: true
   prototype: MobReptilian
   dollPrototype: MobReptilianDummy
@@ -24,7 +24,7 @@
 
 - type: species
   id: SlimePerson
-  name: Slime Person
+  name: species-name-slime
   roundStart: true
   prototype: MobSlimePerson
   dollPrototype: MobSlimePersonDummy
