@@ -4,4 +4,12 @@
   parent: CrateGenericSteel
   components:
     - type: SurplusBundle
-      totalPrice: 40
+      totalPrice: 50
+
+- type: entity
+  id: CrateSyndicateSuperSurplusBundle
+  name: syndicate super surplus crate
+  parent: CrateGenericSteel
+  components:
+    - type: SurplusBundle
+      totalPrice: 125

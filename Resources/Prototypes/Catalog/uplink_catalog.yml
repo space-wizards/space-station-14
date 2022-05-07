@@ -211,6 +211,19 @@
   price: 50
   icon: /Textures/Structures/Wallmounts/signs.rsi/bio.png
 
+- type: uplinkListing
+  id: UplinkSurplusBundle
+  category: Bundles
+  itemId: CrateSyndicateSurplusBundle
+  description: Contains 50 telecrystals worth of completely random Syndicate items. It can be useless junk or really good.
+  price: 20
+
+- type: uplinkListing
+  id: UplinkSuperSurplusBundle
+  category: Bundles
+  itemId: CrateSyndicateSuperSurplusBundle
+  description: Contains 125 telecrystals worth of completely random Syndicate items.
+  price: 40
 
 #- type: uplinkListing
 #  id: UplinkCarbineBundle
