@@ -5,7 +5,6 @@ using Content.Shared.Speech;
 using Content.Shared.Sound;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
-using System;
 
 namespace Content.Server.Speech
 {
