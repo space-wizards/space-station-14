@@ -52,6 +52,9 @@
     BoardName: "Vending Machine"
     LayoutId: Vending
   - type: Anchorable
+  - type: Speech
+    playSpeechSound: true
+    speechSoundsId: Vending
   - type: PointLight
     enabled: false
     castShadows: false
@@ -152,7 +155,7 @@
     energy: 1.3
     color: "#ffb0b0"
   - type: AccessReader
-    access: [["HeadOfPersonnel"]]    
+    access: [["HeadOfPersonnel"]]
 
 - type: entity
   parent: VendingMachine
