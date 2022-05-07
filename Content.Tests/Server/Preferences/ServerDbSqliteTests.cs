@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Content.Server.Database;
 using Content.Shared.CharacterAppearance;
 using Content.Shared.GameTicking;
+using Content.Shared.Markings;
 using Content.Shared.Preferences;
 using Microsoft.Data.Sqlite;
 using Microsoft.EntityFrameworkCore;
@@ -52,7 +53,8 @@ namespace Content.Tests.Server.Preferences
                     "Shaved",
                     Color.Aquamarine,
                     Color.Azure,
-                    Color.Beige
+                    Color.Beige,
+                    new MarkingsSet()
                 ),
                 ClothingPreference.Jumpskirt,
                 BackpackPreference.Backpack,

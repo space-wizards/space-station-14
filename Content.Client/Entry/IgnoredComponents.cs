@@ -33,6 +33,7 @@ namespace Content.Client.Entry
             "MeleeChemicalInjector",
             "Dice",
             "PaperLabel",
+            "PressureImmunity",
             "Construction",
             "PoweredLight",
             "Smes",
@@ -50,6 +51,7 @@ namespace Content.Client.Entry
             "ZombieTransfer",
             "Mineable",
             "RangedMagazine",
+            "RandomMetadata",
             "Ammo",
             "AiController",
             "Computer",
@@ -57,6 +59,7 @@ namespace Content.Client.Entry
             "ResearchPointSource",
             "ResearchClient",
             "IdCardConsole",
+            "MimePowers",
             "ThermalRegulator",
             "DiseaseMachineRunning",
             "DiseaseMachine",
@@ -82,6 +85,7 @@ namespace Content.Client.Entry
             "DiseaseCarrier",
             "StorageFill",
             "Absorbent",
+            "RandomHumanoidAppearance",
             "CableVis",
             "BatterySelfRecharger",
             "Puddle",
@@ -135,6 +139,7 @@ namespace Content.Client.Entry
             "Flash",
             "Docking",
             "Telecrystal",
+            "PowerMonitoringConsole",
             "RCD",
             "RCDAmmo",
             "CursedEntityStorage",
@@ -145,6 +150,7 @@ namespace Content.Client.Entry
             "VentCritterSpawnLocation",
             "RadiateArtifact",
             "TemperatureArtifact",
+            "SuppressArtifactContainer",
             "DisposalHolder",
             "DisposalTagger",
             "DisposalRouter",
@@ -290,6 +296,7 @@ namespace Content.Client.Entry
             "AmbientOnPowered",
             "DoorSignalControl",
             "Wieldable",
+            "ArtifactStorage",
             "IncreaseDamageOnWield",
             "TabletopGame",
             "LitOnPowered",
@@ -310,6 +317,7 @@ namespace Content.Client.Entry
             "GhostRadio",
             "Armor",
             "AtmosMonitor",
+            "UseWith",
             "AtmosAlarmable",
             "FireAlarm",
             "AirAlarm",
@@ -339,7 +347,7 @@ namespace Content.Client.Entry
             "DoorRemote",
             "InteractionPopup",
             "HealthAnalyzer",
-            "UseWith"
+            "Wires"
         };
     }
 }

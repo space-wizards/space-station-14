@@ -302,7 +302,7 @@ namespace Content.Shared.Preferences
                 name = RandomName();
             }
 
-            var appearance = HumanoidCharacterAppearance.EnsureValid(Appearance);
+            var appearance = HumanoidCharacterAppearance.EnsureValid(Appearance, Species);
 
             var prefsUnavailableMode = PreferenceUnavailable switch
             {

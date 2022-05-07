@@ -80,7 +80,7 @@
   name: Cybersun pen
   parent: BaseItem
   id: CyberPen
-  description: A high-tech pen straight from Cybersun's legal department, capable of refracting hard-light at impossible angles through its diamond tip in order to write. 
+  description: A high-tech pen straight from Cybersun's legal department, capable of refracting hard-light at impossible angles through its diamond tip in order to write.
   components:
   - type: Tag
     tags:
@@ -133,7 +133,7 @@
 #      black: "#3f3f3f"
   - type: Item
     sprite: Objects/Misc/bureaucracy.rsi
-    size: 20
+    size: 5
   - type: Storage
     capacity: 10
     size: 10
@@ -149,6 +149,21 @@
   - type: Appearance
     visuals:
     - type: MappedItemVisualizer
+  - type: Tag
+    tags:
+    - Folder
+  - type: StorageFill
+    contents:
+      - id: Paper
+        prob: 0.5
+      - id: Paper
+        prob: 0.4
+      - id: Paper
+        prob: 0.3
+      - id: Paper
+        prob: 0.2
+      - id: Paper
+        prob: 0.2
 
 - type: entity
   id: BoxFolderRed
@@ -248,7 +263,6 @@
   - type: Sprite
     sprite: Objects/Misc/bureaucracy.rsi
     state: stamp-cap
-    netsync: false
 
 - type: entity
   name: CentCom rubber stamp
@@ -261,7 +275,6 @@
   - type: Sprite
     sprite: Objects/Misc/bureaucracy.rsi
     state: stamp-cent
-    netsync: false
 
 - type: entity
   name: chaplain's rubber stamp
@@ -274,7 +287,6 @@
   - type: Sprite
     sprite: Objects/Misc/bureaucracy.rsi
     state: stamp-chaplain
-    netsync: false
 
 - type: entity
   name: clown's rubber stamp
@@ -287,7 +299,6 @@
   - type: Sprite
     sprite: Objects/Misc/bureaucracy.rsi
     state: stamp-clown
-    netsync: false
 
 - type: entity
   name: chief medical officer's rubber stamp
@@ -300,7 +311,6 @@
   - type: Sprite
     sprite: Objects/Misc/bureaucracy.rsi
     state: stamp-cmo
-    netsync: false
 
 - type: entity
   name: DENIED rubber stamp
@@ -313,7 +323,6 @@
   - type: Sprite
     sprite: Objects/Misc/bureaucracy.rsi
     state: stamp-deny
-    netsync: false
 
 - type: entity
   name: APPROVED rubber stamp
@@ -326,7 +335,6 @@
   - type: Sprite
     sprite: Objects/Misc/bureaucracy.rsi
     state: stamp-iaa
-    netsync: false
 
 - type: entity
   name: head of personnel's rubber stamp
@@ -339,7 +347,6 @@
   - type: Sprite
     sprite: Objects/Misc/bureaucracy.rsi
     state: stamp-hop
-    netsync: false
 
 - type: entity
   name: head of security's rubber stamp
@@ -352,7 +359,6 @@
   - type: Sprite
     sprite: Objects/Misc/bureaucracy.rsi
     state: stamp-hos
-    netsync: false
 
 - type: entity
   name: quartermaster's rubber stamp
@@ -365,7 +371,6 @@
   - type: Sprite
     sprite: Objects/Misc/bureaucracy.rsi
     state: stamp-qm
-    netsync: false
 
 - type: entity
   name: research director's rubber stamp
@@ -378,7 +383,6 @@
   - type: Sprite
     sprite: Objects/Misc/bureaucracy.rsi
     state: stamp-rd
-    netsync: false
 
 - type: entity
   name: warden's rubber stamp
@@ -391,7 +395,6 @@
   - type: Sprite
     sprite: Objects/Misc/bureaucracy.rsi
     state: stamp-warden
-    netsync: false
 
 - type: entity
   name: trader's rubber stamp
@@ -404,7 +407,6 @@
   - type: Sprite
     sprite: Objects/Misc/bureaucracy.rsi
     state: stamp-trader
-    netsync: false
 
 - type: entity
   name: syndicate rubber stamp
@@ -417,4 +419,15 @@
   - type: Sprite
     sprite: Objects/Misc/bureaucracy.rsi
     state: stamp-syndicate
-    netsync: false
+
+- type: entity
+  name: chief engineers's rubber stamp
+  parent: RubberStampMime
+  id: RubberStampCE
+  components:
+  - type: Stamp
+    stampedName: stamp-component-stamped-name-ce
+    stampState: "paper_stamp-ce"
+  - type: Sprite
+    sprite: Objects/Misc/bureaucracy.rsi
+    state: stamp-ce

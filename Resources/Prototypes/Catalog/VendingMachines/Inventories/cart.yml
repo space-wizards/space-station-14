@@ -2,3 +2,10 @@
   id: PTechInventory
   name: PTech
   spriteName: cart
+  startingInventory:
+    AssistantPDA: 5
+    ClearPDA: 5
+    AssistantIDCard: 5
+    RubberStampApproved: 1
+    RubberStampDenied: 1
+    Paper: 10

@@ -12,9 +12,10 @@
     spillSound:
       path: /Audio/Effects/Fluids/splat.ogg
     recolor: true
-  - type: Clickable
-  - type: Evaporation
+  - type: Clickable  
   - type: Slippery
+    launchForwardsMultiplier: 2.0
+  - type: Evaporation
   - type: Physics
   - type: Fixtures
     fixtures:
@@ -99,7 +100,6 @@
     state: splatter-0
     netsync: false
   - type: Puddle
-    slipThreshold: 20
     overflowVolume: 50
     opacityModifier: 8
   - type: Evaporation

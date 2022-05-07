@@ -1,6 +1,7 @@
 using Content.Server.Disposal.Tube.Components;
 using Content.Server.UserInterface;
 using Content.Server.Hands.Components;
+using Content.Shared.Destructible;
 using Content.Shared.Movement;
 using Content.Shared.Verbs;
 using Content.Shared.Popups;
@@ -23,6 +24,7 @@ namespace Content.Server.Disposal.Tube
 
             SubscribeLocalEvent<DisposalTubeComponent, PhysicsBodyTypeChangedEvent>(BodyTypeChanged);
             SubscribeLocalEvent<DisposalTubeComponent, RelayMovementEntityEvent>(OnRelayMovement);
+            SubscribeLocalEvent<DisposalTubeComponent, BreakageEventArgs>(OnBreak);
             SubscribeLocalEvent<DisposalTaggerComponent, GetVerbsEvent<InteractionVerb>>(AddOpenUIVerbs);
             SubscribeLocalEvent<DisposalRouterComponent, GetVerbsEvent<InteractionVerb>>(AddOpenUIVerbs);
             SubscribeLocalEvent<DisposalRouterComponent, ActivatableUIOpenAttemptEvent>(OnOpenRouterUIAttempt);
@@ -71,6 +73,11 @@ namespace Content.Server.Disposal.Tube
 
             component.LastClang = _gameTiming.CurTime;
             SoundSystem.Play(Filter.Pvs(uid), component.ClangSound.GetSound(), uid);
+        }
+
+        private void OnBreak(EntityUid uid, DisposalTubeComponent component, BreakageEventArgs args)
+        {
+            component.Disconnect();
         }
 
         private void OnOpenRouterUIAttempt(EntityUid uid, DisposalRouterComponent router, ActivatableUIOpenAttemptEvent args)
