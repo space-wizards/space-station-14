@@ -1,5 +1,6 @@
 using Content.Server.Atmos.EntitySystems;
 using Content.Shared.Atmos;
+using Content.Shared.Sound;
 using Content.Shared.Station;
 using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
