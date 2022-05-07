@@ -91,3 +91,6 @@ ent-AgentIDCard = { ent-AssistantIDCard }
 ent-AtmosIDCard = ID карта атмосферного техника
     .desc = { ent-IDCardStandard.desc }
     .suffix = { "" }
+ent-SyndicateIDCard = Syndicate ID card
+    .desc = { ent-IDCardStandard.desc }
+    .suffix = { "" }
