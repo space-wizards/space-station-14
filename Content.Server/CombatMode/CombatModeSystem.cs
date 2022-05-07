@@ -1,6 +1,8 @@
+using System.Diagnostics;
 using Content.Server.Act;
 using Content.Server.Actions.Events;
 using Content.Server.Administration.Logs;
+using Content.Server.Hands.Components;
 using Content.Server.Popups;
 using Content.Server.Weapon.Melee;
 using Content.Shared.ActionBlocker;
@@ -39,6 +41,18 @@ namespace Content.Server.CombatMode
                 return;
 
             var attemptEvent = new DisarmAttemptEvent(args.Target, args.Performer);
+
+            if (EntityManager.TryGetComponent<HandsComponent>(args.Target, out HandsComponent targetHandsComponent)
+                && targetHandsComponent.ActiveHand != null
+                && !targetHandsComponent.ActiveHand.IsEmpty)
+            {
+                Debug.Assert(targetHandsComponent.ActiveHand.HeldEntity != null, "targetHandsComponent.ActiveHand.HeldEntity != null");
+                var inTargetHand = (EntityUid) targetHandsComponent.ActiveHand.HeldEntity;
+                attemptEvent.TargetItemInHandUid = inTargetHand;
+
+                RaiseLocalEvent(inTargetHand, attemptEvent);
+            }
+
             RaiseLocalEvent(args.Target, attemptEvent);
             if (attemptEvent.Cancelled)
                 return;

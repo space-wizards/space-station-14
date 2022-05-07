@@ -6,10 +6,12 @@ namespace Content.Server.Actions.Events
     {
         public readonly EntityUid TargetUid;
         public readonly EntityUid DisarmerUid;
-        public DisarmAttemptEvent(EntityUid targetUid, EntityUid disarmerUid)
+        public EntityUid? TargetItemInHandUid;
+        public DisarmAttemptEvent(EntityUid targetUid, EntityUid disarmerUid, EntityUid? targetItemInHandUid = null)
         {
             TargetUid = targetUid;
             DisarmerUid = disarmerUid;
+            TargetItemInHandUid = targetItemInHandUid;
         }
     }
 }
