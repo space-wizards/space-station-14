@@ -5,6 +5,8 @@ using Content.Shared.Speech;
 using Content.Shared.Sound;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Timing;
+using System;
 
 namespace Content.Server.Speech
 {
@@ -12,6 +14,7 @@ namespace Content.Server.Speech
     {
 
         [Dependency] private readonly IPrototypeManager _proto = default!;
+        [Dependency] private readonly IGameTiming _gameTiming = default!;
 
         public override void Initialize()
         {
@@ -37,6 +40,9 @@ namespace Content.Server.Speech
         private void OnEntitySpoke(EntityUid uid, SharedSpeechComponent component, EntitySpokeEvent args)
         {
             if (!component.PlaySpeechSound) return;
+            var cooldown = TimeSpan.FromSeconds(component.SoundCooldownTime);
+            //Ensure more than the cooldown time has passed since last speaking
+            if ((_gameTiming.CurTime - component.LastTimeSoundPlayed) < cooldown) return;
 
             //Play speech sound
 
@@ -65,6 +71,7 @@ namespace Content.Server.Speech
                         break;
 
                 }
+                component.LastTimeSoundPlayed = _gameTiming.CurTime;
                 SoundSystem.Play(Filter.Pvs(uid), contextSound.GetSound(), uid, component.AudioParams);
             }
         }
