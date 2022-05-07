@@ -57,7 +57,7 @@ namespace Content.Server.StationEvents.Events
         /// <summary>
         ///     Ending audio of the event.
         /// </summary>
-        public virtual string? EndAudio { get; } = null;
+        public virtual SoundSpecifier? EndAudio { get; } = null;
 
         public virtual AudioParams AudioParams { get; } = AudioParams.Default.WithVolume(-10f);
 
@@ -161,7 +161,7 @@ namespace Content.Server.StationEvents.Events
 
             if (EndAudio != null)
             {
-                SoundSystem.Play(Filter.Broadcast(), EndAudio, AudioParams);
+                SoundSystem.Play(Filter.Broadcast(), EndAudio.GetSound(), AudioParams);
             }
 
             Started = false;
