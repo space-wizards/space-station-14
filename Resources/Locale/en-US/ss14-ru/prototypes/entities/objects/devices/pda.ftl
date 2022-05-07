@@ -88,3 +88,6 @@ ent-AtmosPDA = atmos PDA
 ent-ClearPDA = clear PDA
     .desc = 99 and 44/100ths percent pure plastic.
     .suffix = { "" }
+ent-SyndiPDA = syndicate PDA
+    .desc = Ok, time to be a productive member of- oh cool I'm a bad guy time to kill people!
+    .suffix = { "" }
