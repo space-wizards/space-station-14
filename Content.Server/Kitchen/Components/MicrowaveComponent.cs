@@ -8,7 +8,6 @@ using Content.Server.Power.Components;
 using Content.Server.Temperature.Components;
 using Content.Server.Temperature.Systems;
 using Content.Server.UserInterface;
-using Content.Shared.Acts;
 using Content.Shared.Body.Components;
 using Content.Shared.Body.Part;
 using Content.Shared.FixedPoint;
@@ -26,7 +25,7 @@ using Robust.Shared.Player;
 namespace Content.Server.Kitchen.Components
 {
     [RegisterComponent]
-    public sealed class MicrowaveComponent : SharedMicrowaveComponent, ISuicideAct, IBreakAct
+    public sealed class MicrowaveComponent : SharedMicrowaveComponent, ISuicideAct
     {
         [Dependency] private readonly IEntityManager _entities = default!;
 
@@ -178,7 +177,7 @@ namespace Content.Server.Kitchen.Components
             }
         }
 
-        private void SetAppearance(MicrowaveVisualState state)
+        public void SetAppearance(MicrowaveVisualState state)
         {
             var finalState = state;
             if (Broken)
@@ -192,11 +191,6 @@ namespace Content.Server.Kitchen.Components
             }
         }
 
-        public void OnBreak(BreakageEventArgs eventArgs)
-        {
-            Broken = true;
-            SetAppearance(MicrowaveVisualState.Broken);
-        }
         // ReSharper disable once InconsistentNaming
         // ReSharper disable once IdentifierTypo
         private void Wzhzhzh()

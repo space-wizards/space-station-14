@@ -64,6 +64,7 @@
   unlockedRecipes:
     - Shovel
     - ButchCleaver
+    - MicrowaveMachineCircuitboard
 
 - type: technology
   name: "advanced surgery"

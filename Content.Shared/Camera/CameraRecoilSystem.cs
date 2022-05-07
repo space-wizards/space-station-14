@@ -55,8 +55,7 @@ public sealed class CameraRecoilSystem : EntitySystem
         if (!EntityManager.HasComponent<CameraRecoilComponent>(euid))
             return;
 
-        //TODO: This should only be sent to clients registered as viewers to the entity.
-        RaiseNetworkEvent(new CameraKickEvent(euid, kickback), Filter.Broadcast());
+        RaiseNetworkEvent(new CameraKickEvent(euid, kickback), Filter.Entities(euid));
     }
 
     public override void FrameUpdate(float frameTime)

@@ -1,7 +1,8 @@
 <Control xmlns="https://spacestation14.io"
          xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
          xmlns:magicmirror="clr-namespace:Content.Client.CharacterAppearance"
-         xmlns:prefUi="clr-namespace:Content.Client.Preferences.UI">
+         xmlns:prefUi="clr-namespace:Content.Client.Preferences.UI"
+         xmlns:markings="clr-namespace:Content.Client.Markings">
     <BoxContainer Orientation="Horizontal">
         <!-- Left side -->
         <BoxContainer Orientation="Vertical" Margin="10 10 10 10">
@@ -87,9 +88,10 @@
                             </BoxContainer>
                             <!-- Skin -->
                             <prefUi:HighlightedContainer>
-                                <BoxContainer HorizontalExpand="True">
+                                <BoxContainer HorizontalExpand="True" Orientation="Vertical">
                                     <Label Text="{Loc 'humanoid-profile-editor-skin-color-label'}" />
                                     <Slider HorizontalExpand="True" Name="CSkin" MinValue="0" MaxValue="100" Value="20" />
+                                    <BoxContainer Name="CRgbSkinColorContainer" Visible="False" Orientation="Vertical" HorizontalExpand="True"></BoxContainer>
                                 </BoxContainer>
                             </prefUi:HighlightedContainer>
                             <!-- Hair -->
@@ -134,6 +136,12 @@
                     <!-- Antags -->
                     <ScrollContainer VerticalExpand="True">
                         <BoxContainer Name="CAntagList" Orientation="Vertical" />
+                    </ScrollContainer>
+                </BoxContainer>
+                <BoxContainer Name="CMarkingsTab" Orientation="Vertical">
+                    <!-- Markings -->
+                    <ScrollContainer VerticalExpand="True">
+                        <markings:MarkingPicker Name="CMarkings" />
                     </ScrollContainer>
                 </BoxContainer>
             </TabContainer>

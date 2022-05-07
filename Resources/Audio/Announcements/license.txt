@@ -1,1 +1,5 @@
-outbreak7.ogg taken from /tg/station at commit https://github.com/tgstation/tgstation/commit/40d89d11ea4a5cb81d61dc1018b46f4e7d32c62a
+aliens.ogg taken from https://github.com/tgstation/tgstation/blob/95731342b97167d7883ff091d389f79c36442ee6/sound/ai/default/aliens.ogg used under CC-BY-SA-3.0
+attention.ogg taken from /tg/station at commit https://github.com/tgstation/tgstation/commit/40d89d11ea4a5cb81d61dc1018b46f4e7d32c62a used under CC-BY-SA-3.0
+meteors.ogg taken from https://github.com/tgstation/tgstation/blob/95731342b97167d7883ff091d389f79c36442ee6/sound/ai/default/meteors.ogg used under CC-BY-SA-3.0
+outbreak7.ogg taken from /tg/station at commit https://github.com/tgstation/tgstation/commit/40d89d11ea4a5cb81d61dc1018b46f4e7d32c62a used under CC-BY-SA-3.0
+

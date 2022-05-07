@@ -1,7 +1,11 @@
 - type: entity
   id: SignalSwitch
-  name: "signal switch"
-  description: "Its a switch for toggling power to things."
+  name: signal switch
+  description: It's a switch for toggling power to things.
+  placement:
+    mode: SnapgridCenter
+    snap:
+    - Wallmount
   components:
   - type: WallMount
     arc: 360
@@ -15,15 +19,18 @@
   - type: UseDelay
     delay: 0.5 # prevent light-toggling auto-clickers.
   - type: Rotatable
+  - type: Construction
+    graph: SignalSwitchGraph
+    node: SignalSwitchNode
+
+- type: entity
+  id: SignalButton
+  name: signal button
+  description: It's a button for activating something.
   placement:
     mode: SnapgridCenter
     snap:
     - Wallmount
-
-- type: entity
-  id: SignalButton
-  name: "signal button"
-  description: "It's a button for activating something."
   components:
   - type: WallMount
     arc: 360
@@ -37,15 +44,18 @@
   - type: UseDelay
     delay: 0.5 # prevent light-toggling auto-clickers.
   - type: Rotatable
-  placement:
-    mode: SnapgridCenter
-    snap:
-    - Wallmount
+  - type: Construction
+    graph: SignalButtonGraph
+    node: SignalButtonNode
 
 - type: entity
   id: ApcNetSwitch
   name: apc net switch
   description: Its a switch for toggling lights that are connected to the same apc.
+  placement:
+    mode: SnapgridCenter
+    snap:
+      - Wallmount
   components:
     - type: WallMount
       arc: 360
@@ -58,19 +68,15 @@
       sprite: Structures/Wallmounts/switch.rsi
       state: on
     - type: Rotatable
-    - type: Construction
-      graph: LightSwitch
-      node: lightSwitch
     - type: ExtensionCableReceiver
     - type: DeviceNetwork
       deviceNetId: Apc
       transmitFrequencyId: SmartLight # assuming people want to use it for light switches.
     - type: ApcNetworkConnection
     - type: ApcNetSwitch
-  placement:
-    mode: SnapgridCenter
-    snap:
-      - Wallmount
+    - type: Construction
+      graph: LightSwitchGraph
+      node: LightSwitchNode
 
 - type: entity
   id: TwoWayLever
@@ -94,9 +100,6 @@
           state_forward: switch-fwd
           state_off: switch-off
           state_reversed: switch-rev
-    - type: Construction
-      graph: LeverGraph
-      node: lever
     - type: Damageable
       damageContainer: Inorganic
       damageModifierSet: Metallic
@@ -108,4 +111,6 @@
         behaviors:
         - !type:DoActsBehavior
           acts: [ "Destruction" ]
-
+    - type: Construction
+      graph: LeverGraph
+      node: LeverNode

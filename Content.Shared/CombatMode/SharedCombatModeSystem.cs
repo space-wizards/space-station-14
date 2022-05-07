@@ -33,12 +33,13 @@ namespace Content.Shared.CombatMode
                 _actionsSystem.AddAction(uid, component.CombatToggleAction, null);
 
             if (component.DisarmAction == null
+                && component.CanDisarm
                 && _protoMan.TryIndex(component.DisarmActionId, out EntityTargetActionPrototype? disarmProto))
             {
                 component.DisarmAction = new(disarmProto);
             }
 
-            if (component.DisarmAction != null)
+            if (component.DisarmAction != null && component.CanDisarm)
                 _actionsSystem.AddAction(uid, component.DisarmAction, null);
         }
 

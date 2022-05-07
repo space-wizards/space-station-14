@@ -1,4 +1,4 @@
-﻿using System.Linq;
+using System.Linq;
 using Content.Server.Atmos.Piping.Unary.Components;
 using Content.Server.Chemistry.ReactionEffects;
 using Content.Shared.Chemistry.Components;
@@ -23,8 +23,6 @@ public sealed class VentClog : StationEvent
 
     public override string? StartAnnouncement =>
         Loc.GetString("station-event-vent-clog-start-announcement");
-
-    public override string? StartAudio => "/Audio/Announcements/bloblarm.ogg";
 
     public override int EarliestStart => 15;
 

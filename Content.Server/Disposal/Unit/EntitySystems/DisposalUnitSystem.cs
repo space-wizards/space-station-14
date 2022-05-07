@@ -10,9 +10,9 @@ using Content.Server.Hands.Components;
 using Content.Server.Power.Components;
 using Content.Server.UserInterface;
 using Content.Shared.ActionBlocker;
-using Content.Shared.Acts;
 using Content.Shared.Atmos;
 using Content.Shared.Construction.Components;
+using Content.Shared.Destructible;
 using Content.Shared.Disposal;
 using Content.Shared.Disposal.Components;
 using Content.Shared.DragDrop;
@@ -160,6 +160,17 @@ namespace Content.Server.Disposal.Unit.EntitySystems
             }
 
             AfterInsert(unit, toInsert);
+        }
+
+        public void DoInsertDisposalUnit(EntityUid unit, EntityUid toInsert, DisposalUnitComponent? disposal = null)
+        {
+            if (!Resolve(unit, ref disposal))
+                return;
+
+            if (!disposal.Container.Insert(toInsert))
+                return;
+
+            AfterInsert(disposal, toInsert);
         }
 
         public override void Update(float frameTime)
