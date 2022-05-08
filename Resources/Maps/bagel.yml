@@ -242,347 +242,24 @@ grids:
     tiles: AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAMAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==
 entities:
 - uid: 0
-  type: GasPipeStraight
+  type: ClothingNeckScarfStripedGreen
   components:
-  - rot: -1.5707963267948966 rad
-    pos: -30.5,-3.5
+  - pos: -15.652456,-29.638643
     parent: 59
     type: Transform
-  - canCollide: False
-    type: Physics
-  - color: '#FF1212FF'
-    type: AtmosPipeColor
-  - enabled: False
-    type: AmbientSound
 - uid: 1
-  type: SignalButton
+  type: SpawnPointJanitor
   components:
-  - pos: -15.5,-51.5
+  - pos: -4.5,-27.5
     parent: 59
     type: Transform
-  - fixtures: []
-    type: Fixtures
-  - outputs:
-      Pressed: []
-    type: SignalTransmitter
 - uid: 2
   type: Catwalk
   components:
-  - pos: 29.5,-64.5
+  - pos: 30.5,-64.5
     parent: 59
     type: Transform
 - uid: 3
-  type: WallSolid
-  components:
-  - rot: -1.5707963267948966 rad
-    pos: 22.5,-27.5
-    parent: 59
-    type: Transform
-- uid: 4
-  type: WallReinforced
-  components:
-  - rot: 1.5707963267948966 rad
-    pos: -62.5,6.5
-    parent: 59
-    type: Transform
-- uid: 5
-  type: GasPipeStraight
-  components:
-  - pos: -36.5,-11.5
-    parent: 59
-    type: Transform
-  - canCollide: False
-    type: Physics
-  - color: '#0335FCFF'
-    type: AtmosPipeColor
-  - enabled: False
-    type: AmbientSound
-- uid: 6
-  type: GasPipeTJunction
-  components:
-  - rot: 3.141592653589793 rad
-    pos: -33.5,7.5
-    parent: 59
-    type: Transform
-  - canCollide: False
-    type: Physics
-  - color: '#0335FCFF'
-    type: AtmosPipeColor
-  - enabled: False
-    type: AmbientSound
-- uid: 7
-  type: Catwalk
-  components:
-  - pos: 30.5,-60.5
-    parent: 59
-    type: Transform
-- uid: 8
-  type: Catwalk
-  components:
-  - pos: 29.5,-60.5
-    parent: 59
-    type: Transform
-- uid: 9
-  type: Catwalk
-  components:
-  - pos: 28.5,-60.5
-    parent: 59
-    type: Transform
-- uid: 10
-  type: Catwalk
-  components:
-  - pos: 27.5,-60.5
-    parent: 59
-    type: Transform
-- uid: 11
-  type: Catwalk
-  components:
-  - pos: 26.5,-60.5
-    parent: 59
-    type: Transform
-- uid: 12
-  type: Catwalk
-  components:
-  - pos: 25.5,-60.5
-    parent: 59
-    type: Transform
-- uid: 13
-  type: Catwalk
-  components:
-  - pos: 24.5,-60.5
-    parent: 59
-    type: Transform
-- uid: 14
-  type: Catwalk
-  components:
-  - pos: 23.5,-60.5
-    parent: 59
-    type: Transform
-- uid: 15
-  type: Catwalk
-  components:
-  - pos: 22.5,-60.5
-    parent: 59
-    type: Transform
-- uid: 16
-  type: Catwalk
-  components:
-  - pos: 20.5,-64.5
-    parent: 59
-    type: Transform
-- uid: 17
-  type: Catwalk
-  components:
-  - pos: 21.5,-64.5
-    parent: 59
-    type: Transform
-- uid: 18
-  type: Catwalk
-  components:
-  - pos: 22.5,-64.5
-    parent: 59
-    type: Transform
-- uid: 19
-  type: Catwalk
-  components:
-  - pos: 23.5,-64.5
-    parent: 59
-    type: Transform
-- uid: 20
-  type: Catwalk
-  components:
-  - pos: 24.5,-64.5
-    parent: 59
-    type: Transform
-- uid: 21
-  type: Catwalk
-  components:
-  - pos: 25.5,-64.5
-    parent: 59
-    type: Transform
-- uid: 22
-  type: Catwalk
-  components:
-  - pos: 26.5,-64.5
-    parent: 59
-    type: Transform
-- uid: 23
-  type: Catwalk
-  components:
-  - pos: 27.5,-64.5
-    parent: 59
-    type: Transform
-- uid: 24
-  type: Catwalk
-  components:
-  - pos: 28.5,-64.5
-    parent: 59
-    type: Transform
-- uid: 25
-  type: Catwalk
-  components:
-  - pos: 32.5,-64.5
-    parent: 59
-    type: Transform
-- uid: 26
-  type: WallSolid
-  components:
-  - pos: 18.5,21.5
-    parent: 59
-    type: Transform
-- uid: 27
-  type: FloorTileItemArcadeBlue
-  components:
-  - pos: -35.503693,-35.511295
-    parent: 59
-    type: Transform
-- uid: 28
-  type: ReinforcedWindow
-  components:
-  - pos: -32.5,-7.5
-    parent: 59
-    type: Transform
-- uid: 29
-  type: Grille
-  components:
-  - rot: 1.5707963267948966 rad
-    pos: -25.5,-12.5
-    parent: 59
-    type: Transform
-- uid: 30
-  type: Crematorium
-  components:
-  - rot: 1.5707963267948966 rad
-    pos: 33.5,-10.5
-    parent: 59
-    type: Transform
-  - containers:
-      EntityStorageComponent: !type:Container
-        ents: []
-      morgue_tray: !type:ContainerSlot
-        ent: 350
-    type: ContainerContainer
-- uid: 31
-  type: ReinforcedWindow
-  components:
-  - rot: 1.5707963267948966 rad
-    pos: -24.5,-10.5
-    parent: 59
-    type: Transform
-- uid: 32
-  type: PlushieLizard
-  components:
-  - pos: 55.62253,-8.328542
-    parent: 59
-    type: Transform
-- uid: 33
-  type: WallReinforced
-  components:
-  - pos: -20.5,-8.5
-    parent: 59
-    type: Transform
-- uid: 34
-  type: ToolboxElectricalFilled
-  components:
-  - pos: 37.455032,-37.40484
-    parent: 59
-    type: Transform
-  - containers:
-      storagebase: !type:Container
-        ents: []
-    type: ContainerContainer
-- uid: 35
-  type: RandomInstruments
-  components:
-  - pos: 55.5,-5.5
-    parent: 59
-    type: Transform
-- uid: 36
-  type: Grille
-  components:
-  - rot: 1.5707963267948966 rad
-    pos: 54.5,-6.5
-    parent: 59
-    type: Transform
-- uid: 37
-  type: RandomPosterAny
-  components:
-  - pos: 41.5,-4.5
-    parent: 59
-    type: Transform
-- uid: 38
-  type: MagazineMagnumSmgRubber
-  components:
-  - parent: 8896
-    type: Transform
-  - canCollide: False
-    type: Physics
-  - containers:
-      Content.Server.Weapon.Ranged.Ammunition.Components.RangedMagazineComponent-magazine: !type:Container
-        ents: []
-    type: ContainerContainer
-- uid: 39
-  type: ClothingNeckScarfStripedRed
-  components:
-  - pos: -17.449331,-29.623018
-    parent: 59
-    type: Transform
-- uid: 40
-  type: WallReinforced
-  components:
-  - rot: 3.141592653589793 rad
-    pos: -35.5,-5.5
-    parent: 59
-    type: Transform
-- uid: 41
-  type: WallReinforced
-  components:
-  - pos: -24.5,-6.5
-    parent: 59
-    type: Transform
-- uid: 42
-  type: WallReinforced
-  components:
-  - pos: 56.5,-4.5
-    parent: 59
-    type: Transform
-- uid: 43
-  type: ReinforcedWindow
-  components:
-  - pos: -28.5,-8.5
-    parent: 59
-    type: Transform
-- uid: 44
-  type: Chair
-  components:
-  - rot: 1.5707963267948966 rad
-    pos: 56.5,-7.5
-    parent: 59
-    type: Transform
-- uid: 45
-  type: ReinforcedWindow
-  components:
-  - pos: -26.5,-17.5
-    parent: 59
-    type: Transform
-- uid: 46
-  type: GasVentPump
-  components:
-  - rot: 3.141592653589793 rad
-    pos: -9.5,-27.5
-    parent: 59
-    type: Transform
-  - canCollide: False
-    type: Physics
-  - color: '#0335FCFF'
-    type: AtmosPipeColor
-- uid: 47
-  type: WallReinforced
-  components:
-  - pos: -32.5,-5.5
-    parent: 59
-    type: Transform
-- uid: 48
   type: DisposalPipe
   components:
   - rot: -1.5707963267948966 rad
@@ -595,24 +272,347 @@ entities:
       DisposalTransit: !type:Container
         ents: []
     type: ContainerContainer
+- uid: 4
+  type: WallReinforced
+  components:
+  - pos: -32.5,-5.5
+    parent: 59
+    type: Transform
+- uid: 5
+  type: GasVentPump
+  components:
+  - rot: 3.141592653589793 rad
+    pos: -9.5,-27.5
+    parent: 59
+    type: Transform
+  - canCollide: False
+    type: Physics
+  - color: '#0335FCFF'
+    type: AtmosPipeColor
+- uid: 6
+  type: ReinforcedWindow
+  components:
+  - pos: -26.5,-17.5
+    parent: 59
+    type: Transform
+- uid: 7
+  type: Chair
+  components:
+  - rot: 1.5707963267948966 rad
+    pos: 56.5,-7.5
+    parent: 59
+    type: Transform
+- uid: 8
+  type: ReinforcedWindow
+  components:
+  - pos: -28.5,-8.5
+    parent: 59
+    type: Transform
+- uid: 9
+  type: WallReinforced
+  components:
+  - pos: 56.5,-4.5
+    parent: 59
+    type: Transform
+- uid: 10
+  type: WallReinforced
+  components:
+  - pos: -24.5,-6.5
+    parent: 59
+    type: Transform
+- uid: 11
+  type: WallReinforced
+  components:
+  - rot: 3.141592653589793 rad
+    pos: -35.5,-5.5
+    parent: 59
+    type: Transform
+- uid: 12
+  type: ClothingNeckScarfStripedRed
+  components:
+  - pos: -17.449331,-29.623018
+    parent: 59
+    type: Transform
+- uid: 13
+  type: MagazineMagnumSmgRubber
+  components:
+  - parent: 8896
+    type: Transform
+  - canCollide: False
+    type: Physics
+  - containers:
+      Content.Server.Weapon.Ranged.Ammunition.Components.RangedMagazineComponent-magazine: !type:Container
+        ents: []
+    type: ContainerContainer
+- uid: 14
+  type: RandomPosterAny
+  components:
+  - pos: 41.5,-4.5
+    parent: 59
+    type: Transform
+- uid: 15
+  type: Grille
+  components:
+  - rot: 1.5707963267948966 rad
+    pos: 54.5,-6.5
+    parent: 59
+    type: Transform
+- uid: 16
+  type: RandomInstruments
+  components:
+  - pos: 55.5,-5.5
+    parent: 59
+    type: Transform
+- uid: 17
+  type: ToolboxElectricalFilled
+  components:
+  - pos: 37.455032,-37.40484
+    parent: 59
+    type: Transform
+  - containers:
+      storagebase: !type:Container
+        ents: []
+    type: ContainerContainer
+- uid: 18
+  type: WallReinforced
+  components:
+  - pos: -20.5,-8.5
+    parent: 59
+    type: Transform
+- uid: 19
+  type: PlushieLizard
+  components:
+  - pos: 55.62253,-8.328542
+    parent: 59
+    type: Transform
+- uid: 20
+  type: ReinforcedWindow
+  components:
+  - rot: 1.5707963267948966 rad
+    pos: -24.5,-10.5
+    parent: 59
+    type: Transform
+- uid: 21
+  type: Crematorium
+  components:
+  - rot: 1.5707963267948966 rad
+    pos: 33.5,-10.5
+    parent: 59
+    type: Transform
+  - containers:
+      EntityStorageComponent: !type:Container
+        ents: []
+      morgue_tray: !type:ContainerSlot
+        ent: 350
+    type: ContainerContainer
+- uid: 22
+  type: Grille
+  components:
+  - rot: 1.5707963267948966 rad
+    pos: -25.5,-12.5
+    parent: 59
+    type: Transform
+- uid: 23
+  type: ReinforcedWindow
+  components:
+  - pos: -32.5,-7.5
+    parent: 59
+    type: Transform
+- uid: 24
+  type: FloorTileItemArcadeBlue
+  components:
+  - pos: -35.503693,-35.511295
+    parent: 59
+    type: Transform
+- uid: 25
+  type: WallSolid
+  components:
+  - pos: 18.5,21.5
+    parent: 59
+    type: Transform
+- uid: 26
+  type: Catwalk
+  components:
+  - pos: 32.5,-64.5
+    parent: 59
+    type: Transform
+- uid: 27
+  type: Catwalk
+  components:
+  - pos: 28.5,-64.5
+    parent: 59
+    type: Transform
+- uid: 28
+  type: Catwalk
+  components:
+  - pos: 27.5,-64.5
+    parent: 59
+    type: Transform
+- uid: 29
+  type: Catwalk
+  components:
+  - pos: 26.5,-64.5
+    parent: 59
+    type: Transform
+- uid: 30
+  type: Catwalk
+  components:
+  - pos: 25.5,-64.5
+    parent: 59
+    type: Transform
+- uid: 31
+  type: Catwalk
+  components:
+  - pos: 24.5,-64.5
+    parent: 59
+    type: Transform
+- uid: 32
+  type: Catwalk
+  components:
+  - pos: 23.5,-64.5
+    parent: 59
+    type: Transform
+- uid: 33
+  type: Catwalk
+  components:
+  - pos: 22.5,-64.5
+    parent: 59
+    type: Transform
+- uid: 34
+  type: Catwalk
+  components:
+  - pos: 21.5,-64.5
+    parent: 59
+    type: Transform
+- uid: 35
+  type: Catwalk
+  components:
+  - pos: 20.5,-64.5
+    parent: 59
+    type: Transform
+- uid: 36
+  type: Catwalk
+  components:
+  - pos: 22.5,-60.5
+    parent: 59
+    type: Transform
+- uid: 37
+  type: Catwalk
+  components:
+  - pos: 23.5,-60.5
+    parent: 59
+    type: Transform
+- uid: 38
+  type: Catwalk
+  components:
+  - pos: 24.5,-60.5
+    parent: 59
+    type: Transform
+- uid: 39
+  type: Catwalk
+  components:
+  - pos: 25.5,-60.5
+    parent: 59
+    type: Transform
+- uid: 40
+  type: Catwalk
+  components:
+  - pos: 26.5,-60.5
+    parent: 59
+    type: Transform
+- uid: 41
+  type: Catwalk
+  components:
+  - pos: 27.5,-60.5
+    parent: 59
+    type: Transform
+- uid: 42
+  type: Catwalk
+  components:
+  - pos: 28.5,-60.5
+    parent: 59
+    type: Transform
+- uid: 43
+  type: Catwalk
+  components:
+  - pos: 29.5,-60.5
+    parent: 59
+    type: Transform
+- uid: 44
+  type: Catwalk
+  components:
+  - pos: 30.5,-60.5
+    parent: 59
+    type: Transform
+- uid: 45
+  type: GasPipeTJunction
+  components:
+  - rot: 3.141592653589793 rad
+    pos: -33.5,7.5
+    parent: 59
+    type: Transform
+  - canCollide: False
+    type: Physics
+  - color: '#0335FCFF'
+    type: AtmosPipeColor
+  - enabled: False
+    type: AmbientSound
+- uid: 46
+  type: GasPipeStraight
+  components:
+  - pos: -36.5,-11.5
+    parent: 59
+    type: Transform
+  - canCollide: False
+    type: Physics
+  - color: '#0335FCFF'
+    type: AtmosPipeColor
+  - enabled: False
+    type: AmbientSound
+- uid: 47
+  type: WallReinforced
+  components:
+  - rot: 1.5707963267948966 rad
+    pos: -62.5,6.5
+    parent: 59
+    type: Transform
+- uid: 48
+  type: WallSolid
+  components:
+  - rot: -1.5707963267948966 rad
+    pos: 22.5,-27.5
+    parent: 59
+    type: Transform
 - uid: 49
   type: Catwalk
   components:
-  - pos: 30.5,-64.5
+  - pos: 29.5,-64.5
     parent: 59
     type: Transform
 - uid: 50
-  type: SpawnPointJanitor
+  type: GasPipeStraight
   components:
-  - pos: -4.5,-27.5
+  - rot: -1.5707963267948966 rad
+    pos: -30.5,-3.5
     parent: 59
     type: Transform
+  - canCollide: False
+    type: Physics
+  - color: '#FF1212FF'
+    type: AtmosPipeColor
+  - enabled: False
+    type: AmbientSound
 - uid: 51
-  type: ClothingNeckScarfStripedGreen
+  type: SignalButton
   components:
-  - pos: -15.652456,-29.638643
+  - pos: -15.5,-51.5
     parent: 59
     type: Transform
+  - fixtures: []
+    type: Fixtures
+  - outputs:
+      Pressed: []
+    type: SignalTransmitter
 - uid: 52
   type: WallSolid
   components:
@@ -10113,7 +10113,7 @@ entities:
       22,0: 0
       22,1: 0
       22,2: 0
-      22,3: 1
+      22,3: 0
       22,4: 0
       22,5: 0
       22,6: 0
@@ -10215,7 +10215,7 @@ entities:
       -27,-17: 0
       -26,-32: 0
       -26,-31: 0
-      -26,-30: 2
+      -26,-30: 1
       -26,-29: 0
       -26,-28: 0
       -26,-27: 0
@@ -10231,7 +10231,7 @@ entities:
       -26,-17: 0
       -25,-32: 0
       -25,-31: 0
-      -25,-30: 3
+      -25,-30: 2
       -25,-29: 0
       -25,-28: 0
       -25,-27: 0
@@ -10247,7 +10247,7 @@ entities:
       -25,-17: 0
       -24,-32: 0
       -24,-31: 0
-      -24,-30: 4
+      -24,-30: 3
       -24,-29: 0
       -24,-28: 0
       -24,-27: 0
@@ -10263,7 +10263,7 @@ entities:
       -24,-17: 0
       -23,-32: 0
       -23,-31: 0
-      -23,-30: 5
+      -23,-30: 4
       -23,-29: 0
       -23,-28: 0
       -23,-27: 0
@@ -13275,8 +13275,8 @@ entities:
       -54,-10: 0
       -54,-9: 0
       -54,-8: 0
-      -54,-7: 1
-      -54,-6: 1
+      -54,-7: 5
+      -54,-6: 5
       -54,-5: 0
       -54,-3: 0
       -54,-2: 0
@@ -15732,8 +15732,8 @@ entities:
       -32,42: 0
       -32,43: 0
       -32,44: 0
-      -32,45: 1
-      -32,46: 1
+      -32,45: 5
+      -32,46: 5
       -32,47: 0
       -31,34: 0
       -31,35: 0
@@ -15746,8 +15746,8 @@ entities:
       -31,42: 0
       -31,43: 0
       -31,44: 0
-      -31,45: 1
-      -31,46: 1
+      -31,45: 5
+      -31,46: 5
       -31,47: 0
       -30,42: 0
       -29,35: 0
@@ -15867,11 +15867,11 @@ entities:
       18,19: 0
       18,20: 0
       -47,42: 0
-      -46,42: 1
+      -46,42: 5
       -45,41: 0
-      -45,42: 1
+      -45,42: 5
       -45,43: 0
-      -44,42: 1
+      -44,42: 5
       -43,42: 0
       -42,40: 0
       -42,41: 0
@@ -15935,8 +15935,8 @@ entities:
       -33,42: 0
       -33,43: 0
       -33,44: 0
-      -33,45: 1
-      -33,46: 1
+      -33,45: 5
+      -33,46: 5
       -33,47: 0
       -32,48: 0
       -32,49: 0
@@ -20634,8 +20634,8 @@ entities:
       -56,-3: 0
       -56,-1: 0
       -55,-9: 0
-      -55,-7: 1
-      -55,-6: 1
+      -55,-7: 5
+      -55,-6: 5
       -55,-5: 0
       -55,-4: 0
       -55,-3: 0
@@ -20733,8 +20733,8 @@ entities:
       -53,-11: 0
       -53,-10: 0
       -53,-9: 0
-      -53,-7: 1
-      -53,-6: 1
+      -53,-7: 5
+      -53,-6: 5
       -53,-4: 0
       -53,-3: 0
       -53,-2: 0
@@ -20743,8 +20743,8 @@ entities:
       -52,-10: 0
       -52,-9: 0
       -52,-8: 0
-      -52,-7: 1
-      -52,-6: 1
+      -52,-7: 5
+      -52,-6: 5
       -52,-4: 0
       -52,-3: 0
       -52,-2: 0
@@ -21253,9 +21253,9 @@ entities:
       11,-5: 0
       11,-3: 0
       -11,-7: 0
-      -11,-6: 0
-      -11,-5: 0
-      -11,-4: 0
+      -11,-6: 8
+      -11,-5: 9
+      -11,-4: 10
       -11,-3: 0
       -9,-4: 0
       -9,-3: 0
@@ -21484,42 +21484,42 @@ entities:
       -48,45: 0
       -47,40: 0
       -47,45: 0
-      -46,32: 8
+      -46,32: 11
       -46,33: 0
       -46,34: 6
       -46,35: 0
-      -46,36: 1
+      -46,36: 5
       -46,37: 0
-      -46,38: 1
+      -46,38: 5
       -46,39: 0
       -46,40: 7
       -46,41: 0
       -46,43: 0
-      -46,44: 1
+      -46,44: 5
       -46,45: 0
-      -45,32: 8
+      -45,32: 11
       -45,33: 0
       -45,34: 6
       -45,35: 0
-      -45,36: 1
+      -45,36: 5
       -45,37: 0
-      -45,38: 1
+      -45,38: 5
       -45,39: 0
       -45,40: 7
-      -45,44: 1
+      -45,44: 5
       -45,45: 0
-      -44,32: 8
+      -44,32: 11
       -44,33: 0
       -44,34: 6
       -44,35: 0
-      -44,36: 1
+      -44,36: 5
       -44,37: 0
-      -44,38: 1
+      -44,38: 5
       -44,39: 0
       -44,40: 7
       -44,41: 0
       -44,43: 0
-      -44,44: 1
+      -44,44: 5
       -44,45: 0
       -43,32: 0
       -43,33: 0
@@ -21906,23 +21906,13 @@ entities:
       -66,14: 0
       -66,15: 0
       -65,8: 0
+      -12,-4: 5
     uniqueMixes:
     - volume: 2500
       temperature: 293.15
       moles:
       - 21.824879
       - 82.10312
-      - 0
-      - 0
-      - 0
-      - 0
-      - 0
-      - 0
-    - volume: 2500
-      temperature: 293.15
-      moles:
-      - 0
-      - 0
       - 0
       - 0
       - 0
@@ -21976,6 +21966,17 @@ entities:
     - volume: 2500
       temperature: 293.15
       moles:
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+    - volume: 2500
+      temperature: 293.15
+      moles:
       - 6666.982
       - 0
       - 0
@@ -21991,6 +21992,39 @@ entities:
       - 0
       - 0
       - 6666.982
+      - 0
+      - 0
+      - 0
+      - 0
+    - volume: 2500
+      temperature: 220.53749
+      moles:
+      - 16.36866
+      - 61.57734
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+    - volume: 2500
+      temperature: 202.38438
+      moles:
+      - 15.004604
+      - 56.445892
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+    - volume: 2500
+      temperature: 270.4586
+      moles:
+      - 14.66359
+      - 55.163033
+      - 0
+      - 0
       - 0
       - 0
       - 0
@@ -24558,7 +24592,7 @@ entities:
 - uid: 350
   type: CrematoriumTray
   components:
-  - parent: 30
+  - parent: 21
     type: Transform
   - canCollide: False
     type: Physics
@@ -92849,6 +92883,9 @@ entities:
   - pos: -17.499718,-35.38202
     parent: 59
     type: Transform
+  - containers:
+      toggleable-clothing: !type:ContainerSlot {}
+    type: ContainerContainer
 - uid: 7742
   type: Grille
   components:
@@ -102546,7 +102583,7 @@ entities:
   - containers:
       Content.Server.Weapon.Ranged.Barrels.Components.MagazineBarrelComponent-chamber: !type:ContainerSlot {}
       Content.Server.Weapon.Ranged.Barrels.Components.MagazineBarrelComponent-magazine: !type:ContainerSlot
-        ent: 38
+        ent: 13
     type: ContainerContainer
 - uid: 8897
   type: GasVentScrubber
@@ -183183,10 +183220,9 @@ entities:
     parent: 59
     type: Transform
 - uid: 18139
-  type: WindowReinforcedDirectional
+  type: SpawnPointServiceWorker
   components:
-  - rot: 1.5707963267948966 rad
-    pos: -10.5,-5.5
+  - pos: 25.5,-33.5
     parent: 59
     type: Transform
 - uid: 18140
@@ -186732,17 +186768,15 @@ entities:
         uid: 18438
     type: SignalReceiver
 - uid: 18520
-  type: WindowReinforcedDirectional
+  type: SpawnPointSecurityCadet
   components:
-  - rot: 1.5707963267948966 rad
-    pos: -10.5,-4.5
+  - pos: -33.5,-0.5
     parent: 59
     type: Transform
 - uid: 18521
-  type: WindowReinforcedDirectional
+  type: SpawnPointSecurityCadet
   components:
-  - rot: 1.5707963267948966 rad
-    pos: -10.5,-3.5
+  - pos: -32.5,-0.5
     parent: 59
     type: Transform
 - uid: 18522
@@ -189373,4 +189407,34 @@ entities:
       Off: []
       Toggle: []
     type: SignalReceiver
+- uid: 18823
+  type: SpawnPointServiceWorker
+  components:
+  - pos: 26.5,-33.5
+    parent: 59
+    type: Transform
+- uid: 18824
+  type: SpawnPointMedicalIntern
+  components:
+  - pos: 48.5,-10.5
+    parent: 59
+    type: Transform
+- uid: 18825
+  type: SpawnPointMedicalIntern
+  components:
+  - pos: 49.5,-10.5
+    parent: 59
+    type: Transform
+- uid: 18826
+  type: SpawnPointTechnicalAssistant
+  components:
+  - pos: -2.5,18.5
+    parent: 59
+    type: Transform
+- uid: 18827
+  type: SpawnPointTechnicalAssistant
+  components:
+  - pos: -1.5,18.5
+    parent: 59
+    type: Transform
 ...
