@@ -43,8 +43,6 @@ public sealed class SpeciesPrototype : IPrototype
     /// </summary>
     [DataField("skinColoration", required: true)]
     public SpeciesSkinColor SkinColoration { get; }
-
-
 }
 
 public enum SpeciesSkinColor

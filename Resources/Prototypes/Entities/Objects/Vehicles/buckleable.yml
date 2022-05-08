@@ -17,6 +17,7 @@
   - type: MovementSpeedModifier
     baseWalkSpeed : 7
     baseSprintSpeed : 7
+  - type: Eye
   - type: Tag
   - type: Pullable
   - type: Physics
@@ -226,6 +227,8 @@
     tags:
     - Cargo
     - Maintenance
+  - type: RandomMetadata
+    descriptionSet: ATVDescriptions
   - type: MovementSpeedModifier
     baseWalkSpeed : 8
     baseSprintSpeed : 8

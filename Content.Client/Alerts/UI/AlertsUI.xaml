@@ -1,7 +1,6 @@
 ﻿<Control xmlns="https://spacestation14.io"
          MinSize="64 64">
-    <PanelContainer StyleClasses="TransparentBorderedWindowPanel"
-                    HorizontalAlignment="Right"
+    <PanelContainer HorizontalAlignment="Right"
                     VerticalAlignment="Top">
         <GridContainer Name="AlertContainer" Access="Public" MaxGridHeight="64" ExpandBackwards="True">
 

@@ -1,6 +1,7 @@
 using System.Linq;
 using Content.Server.Administration.Logs;
 using Content.Server.Decals;
+using Content.Server.Nutrition.EntitySystems;
 using Content.Server.Popups;
 using Content.Shared.Audio;
 using Content.Shared.Crayon;
@@ -35,7 +36,7 @@ public sealed class CrayonSystem : EntitySystem
         SubscribeLocalEvent<CrayonComponent, CrayonSelectMessage>(OnCrayonBoundUI);
         SubscribeLocalEvent<CrayonComponent, CrayonColorMessage>(OnCrayonBoundUIColor);
         SubscribeLocalEvent<CrayonComponent, UseInHandEvent>(OnCrayonUse);
-        SubscribeLocalEvent<CrayonComponent, AfterInteractEvent>(OnCrayonAfterInteract);
+        SubscribeLocalEvent<CrayonComponent, AfterInteractEvent>(OnCrayonAfterInteract, after: new []{ typeof(FoodSystem) });
         SubscribeLocalEvent<CrayonComponent, DroppedEvent>(OnCrayonDropped);
         SubscribeLocalEvent<CrayonComponent, ComponentGetState>(OnCrayonGetState);
     }
