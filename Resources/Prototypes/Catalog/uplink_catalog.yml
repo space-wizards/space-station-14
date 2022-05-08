@@ -258,7 +258,7 @@
 - type : uplinkListing
   id: UplinkPowerSink
   category: Tools
-  itemID: PowerSink
+  itemId: PowerSink
   price: 5
 
 - type: uplinkListing
