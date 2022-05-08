@@ -77,7 +77,6 @@ namespace Content.Client.Entry
             factory.RegisterClass<SharedLatheComponent>();
             factory.RegisterClass<SharedSpawnPointComponent>();
             factory.RegisterClass<SharedVendingMachineComponent>();
-            factory.RegisterClass<SharedWiresComponent>();
             factory.RegisterClass<SharedCargoConsoleComponent>();
             factory.RegisterClass<SharedReagentDispenserComponent>();
             factory.RegisterClass<SharedChemMasterComponent>();
@@ -105,6 +104,7 @@ namespace Content.Client.Entry
             prototypes.RegisterIgnore("worldSpell");
             prototypes.RegisterIgnore("entitySpell");
             prototypes.RegisterIgnore("instantSpell");
+            prototypes.RegisterIgnore("wireLayout");
 
             ClientContentIoC.Register();
 
@@ -118,7 +118,6 @@ namespace Content.Client.Entry
             factory.GenerateNetIds();
 
             IoCManager.Resolve<IClientAdminManager>().Initialize();
-            IoCManager.Resolve<IParallaxManager>().LoadParallax();
             IoCManager.Resolve<IBaseClient>().PlayerJoinedServer += SubscribePlayerAttachmentEvents;
             IoCManager.Resolve<IStylesheetManager>().Initialize();
             IoCManager.Resolve<IScreenshotHook>().Initialize();
@@ -180,6 +179,7 @@ namespace Content.Client.Entry
             ContentContexts.SetupContexts(inputMan.Contexts);
 
             IoCManager.Resolve<IGameHud>().Initialize();
+            IoCManager.Resolve<IParallaxManager>().LoadParallax(); // Have to do this later because prototypes are needed.
 
             var overlayMgr = IoCManager.Resolve<IOverlayManager>();
             overlayMgr.AddOverlay(new ParallaxOverlay());
