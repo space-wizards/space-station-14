@@ -11,6 +11,40 @@
     Antifreeze: 4
 
 - type: reaction
+  id: AlliesCocktail
+  reactants:
+    Martini:
+      amount: 1
+    Vodka:
+      amount: 1
+  products:
+    AlliesCocktail: 2
+
+- type: reaction
+  id: Amasec
+  reactants:
+    Iron:
+      amount: 1
+    Wine:
+      amount: 5
+    Vodka:
+      amount: 5
+  products:
+    Amasec: 10
+
+- type: reaction
+  id: Andalusia
+  reactants:
+    Rum:
+      amount: 1
+    Whiskey:
+      amount: 1
+    JuiceLemon:
+      amount: 1
+  products:
+    Andalusia: 3
+
+- type: reaction
   id: AtomicBomb
   reactants:
     B52:
@@ -133,6 +167,30 @@
     CubaLibre: 3
 
 - type: reaction
+  id: DemonsBlood
+  reactants:
+    SpaceMountainWind:
+      amount: 1
+    Rum:
+      amount: 1
+    Blood:
+      amount: 1
+  products:
+    DemonsBlood: 3
+
+- type: reaction
+  id: DevilsKiss
+  reactants:
+    Blood:
+      amount: 1
+    Rum:
+      amount: 1
+    Kahlua:
+      amount: 1
+  products:
+    DevilsKiss: 3
+
+- type: reaction
   id: DoctorsDelight
   reactants:
     Cream:
@@ -243,6 +301,16 @@
       amount: 1
   products:
     Grog: 2
+
+- type: reaction
+  id: IcedBeer
+  reactants:
+    Beer:
+      amount: 5
+    Water:
+      amount: 1
+  products:
+    IcedBeer: 6
 
 - type: reaction
   id: IceCream
@@ -433,6 +501,16 @@
     Patron: 10
 
 - type: reaction
+  id: RedMead
+  reactants:
+    Mead:
+      amount: 1
+    Blood:
+      amount: 1
+  products:
+    RedMead: 2
+
+- type: reaction
   id: Rewriter
   reactants:
     Coffee:
@@ -483,6 +561,18 @@
     Starkist: 3
 
 - type: reaction
+  id: Silencer
+  reactants:
+    Nothing:
+      amount: 1
+    Cream:
+      amount: 1
+    Sugar:
+      amount: 1
+  products:
+    Silencer: 3
+
+- type: reaction
   id: Singulo
   reactants:
     Vodka:
@@ -493,6 +583,16 @@
       amount: 5
   products:
     Singulo: 11
+
+- type: reaction
+  id: SnowWhite
+  reactants:
+    Beer:
+      amount: 1
+    LemonLime:
+      amount: 1
+  products:
+    SnowWhite: 2
 
 - type: reaction
   id: SyndicateBomb
@@ -523,6 +623,18 @@
       amount: 1
   products:
     ThreeMileIsland: 10
+
+- type: reaction
+  id: ToxinsSpecial
+  reactants:
+    Rum:
+      amount: 2
+    Vermouth:
+      amount: 1
+    Plasma:
+      amount: 2
+  products:
+    ToxinsSpecial: 5
 
 - type: reaction
   id: VodkaMartini
