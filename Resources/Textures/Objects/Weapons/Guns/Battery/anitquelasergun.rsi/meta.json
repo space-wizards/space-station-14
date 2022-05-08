@@ -61,11 +61,11 @@
 			"directions": 4
 		},
 		{
-			"name": "inhand-left",
+			"name": "inhand-left-4",
 			"directions": 4
 		},
 		{
-			"name": "inhand-right",
+			"name": "inhand-right-4",
 			"directions": 4
 		}
 	]
