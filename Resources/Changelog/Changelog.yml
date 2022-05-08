@@ -1,9 +1,4 @@
 Entries:
-- author: walrusfromspace
-  changes:
-  - {message: Added door remotes to the heads' lockers, type: Add}
-  id: 984
-  time: '2022-02-05T13:33:24.0000000+00:00'
 - author: ElectroJr
   changes:
   - {message: Windoors should no longer crush people as they auto close., type: Fix}
@@ -3029,3 +3024,11 @@ Entries:
   - {message: 'Humans, mice, and vending machines make noise when they talk.', type: Add}
   id: 1483
   time: '2022-05-08T13:23:08.0000000+00:00'
+- author: mirrorcult
+  changes:
+  - {message: 'Nanotrasen has hired four new classes of interns for Engineering, Medical,
+      Security, and Service. They have been vetted thoroughly and Nanotrasen assures
+      you that they could not be traitors. Any members of this department are free
+      to bully or teach the interns however they please.', type: Add}
+  id: 1484
+  time: '2022-05-08T20:00:01.0000000+00:00'
