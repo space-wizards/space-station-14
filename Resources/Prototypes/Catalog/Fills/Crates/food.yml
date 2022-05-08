@@ -1,4 +1,4 @@
-- type: entity
+type: entity
   id: CrateFoodPizza
   name: emergency pizza delivery
   description: Help do your part to end station hunger by distributing pizza to underfunded departments!
@@ -10,7 +10,7 @@
       amount: 4
     - id: KnifePlastic
 
-- type: entity
+type: entity
   id: CrateFoodMRE
   name: MRE crate
   description: A military style meal fit to feed a whole department.
