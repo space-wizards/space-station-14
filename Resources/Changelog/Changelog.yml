@@ -1,9 +1,4 @@
 Entries:
-- author: mirrorcult
-  changes:
-  - {message: Deconstructing crates now requires a screwdriver again., type: Fix}
-  id: 969
-  time: '2022-02-03T23:43:52.815666+00:00'
 - author: Peptide90
   changes:
   - {message: Changed map Reach from 25 players max to 15., type: Tweak}
@@ -3045,3 +3040,8 @@ Entries:
   - {message: Added new default sound for events., type: Add}
   id: 1468
   time: '2022-05-07T05:41:16.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Removed the background from alerts., type: Tweak}
+  id: 1469
+  time: '2022-05-08T00:34:42.0000000+00:00'
