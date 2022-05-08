@@ -34,6 +34,10 @@
     - id: ReagentContainerMilk
       amount: 4
     - id: ReagentContainerMilkSoy
+      amount: 1
     - id: ReagentContainerSugar
+      amount: 1
     - id: FoodCondimentBottleEnzyme
+      amount: 1
     - id: LargeBeaker
+      amount: 1
