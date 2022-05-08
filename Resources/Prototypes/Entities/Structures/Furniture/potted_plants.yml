@@ -15,13 +15,9 @@
         radius: 0.2
       mass: 25
       mask:
-        - SmallImpassable
-        - VaultImpassable
+        - Impassable 
       layer:
         - Opaque
-        - MobImpassable
-        - SmallImpassable
-        - VaultImpassable
   - type: Sprite
     drawdepth: Overdoors
     offset: "0.0,0.3"
