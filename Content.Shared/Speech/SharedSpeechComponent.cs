@@ -21,12 +21,8 @@ namespace Content.Shared.Speech
         private bool _enabled = true;
 
         [ViewVariables(VVAccess.ReadWrite)]
-        [DataField("playSpeechSound")]
-        public bool PlaySpeechSound = false;
-
-        [ViewVariables(VVAccess.ReadWrite)]
-        [DataField("speechSoundsId", customTypeSerializer:typeof(PrototypeIdSerializer<SpeechSoundsPrototype>))]
-        public string SpeechSoundsId { get; set; } = "Alto";
+        [DataField("speechSounds", customTypeSerializer:typeof(PrototypeIdSerializer<SpeechSoundsPrototype>))]
+        public string? SpeechSounds;
 
         [DataField("audioParams")]
         public AudioParams AudioParams = AudioParams.Default.WithVolume(5f);
@@ -36,12 +32,6 @@ namespace Content.Shared.Speech
         public float SoundCooldownTime { get; set; } = 0.5f;
 
         public TimeSpan LastTimeSoundPlayed = TimeSpan.Zero;
-
-        //Don't use this.
-        //Cache for SpeechSoundsPrototype to avoid Indexing every single time someone talks.
-        public SpeechSoundsPrototype? SpeechSoundsCache = null;
-
-
 
         public bool Enabled
         {
