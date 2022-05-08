@@ -1,19 +1,4 @@
 Entries:
-- author: Rane
-  changes:
-  - {message: 'Added poppies and aloe, 2 plants which yield basic medicines when ground.',
-    type: Add}
-  - {message: 'Added aloe cream, a natural ointment made by microwaving aloe for 10
-      seconds.', type: Add}
-  id: 979
-  time: '2022-02-04T23:17:05.0000000+00:00'
-- author: Peptide90
-  changes:
-  - {message: The power bill has finally arrived. Computers and Machines use considerably
-      more power now. Engineering better be fast at getting some generation going!,
-    type: Tweak}
-  id: 980
-  time: '2022-02-04T23:17:11.0000000+00:00'
 - author: Lamrr
   changes:
   - {message: The digital audio workstaiton (sic) has been relabelled., type: Fix}
@@ -3039,3 +3024,14 @@ Entries:
   - {message: chef hat storage fixed!, type: Tweak}
   id: 1478
   time: '2022-05-08T07:52:41.0000000+00:00'
+- author: Peptide90
+  changes:
+  - {message: Light now passes through glass external airlocks and glass docking airlocks.,
+    type: Fix}
+  id: 1479
+  time: '2022-05-08T08:51:20.0000000+00:00'
+- author: mirrorcult
+  changes:
+  - {message: Crayons are now edible., type: Add}
+  id: 1480
+  time: '2022-05-08T08:51:34.0000000+00:00'
