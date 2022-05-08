@@ -35,6 +35,7 @@
     - type: PowerSink
     - type: Battery
       maxCharge: 12500000
+    - type: ExaminableBattery
     - type: PowerConsumer
       voltage: High
       drawRate: 300000

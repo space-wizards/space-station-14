@@ -23,17 +23,6 @@ namespace Content.Server.PowerSink
                 return;
             if (args.IsInDetailsRange)
             {
-                var effectiveMax = battery.MaxCharge;
-                if (effectiveMax == 0) {effectiveMax = 1;}
-                var chargeFraction = battery.CurrentCharge / effectiveMax;
-                var chargePercentRounded = (int) (chargeFraction * 100);
-                args.PushMarkup(
-                    Loc.GetString(
-                        "powersink-examine-charge-percent",
-                        ("percent", chargePercentRounded),
-                        ("markupPercentColor", "green")
-                    )
-                );
                 var drainAmount = (int) Comp<PowerConsumerComponent>(component.Owner).NetworkLoad.ReceivingPower / 1000;
                 args.PushMarkup(
                     Loc.GetString(
