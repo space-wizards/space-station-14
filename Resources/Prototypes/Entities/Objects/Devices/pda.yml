@@ -307,7 +307,9 @@
         state: pda-captain
   - type: Icon
     state: pda-captain
-
+  - type: PDA
+    penSlot:
+      startingItem: PenCap
 
 - type: entity
   parent: BasePDA
@@ -323,7 +325,9 @@
         state: pda-hop
   - type: Icon
     state: pda-hop
-
+  - type: PDA
+    penSlot:
+      startingItem: PenHop
 
 - type: entity
   parent: BasePDA
