@@ -5,6 +5,10 @@ namespace Content.Server.Holiday.Greet
 {
     public sealed class DefaultHolidayGreet : IHolidayGreet
     {
-        public string Greet(HolidayPrototype holiday) => Loc.GetString("holiday-greet", ("holidayName", holiday.Name));
+        public string Greet(HolidayPrototype holiday)
+        {
+            var holidayName = Loc.GetString(holiday.Name);
+            return Loc.GetString("holiday-greet", ("holidayName", holidayName));
+        }
     }
 }

@@ -33,6 +33,7 @@ namespace Content.Client.Entry
             "MeleeChemicalInjector",
             "Dice",
             "PaperLabel",
+            "PressureImmunity",
             "Construction",
             "PoweredLight",
             "Smes",
@@ -50,6 +51,7 @@ namespace Content.Client.Entry
             "ZombieTransfer",
             "Mineable",
             "RangedMagazine",
+            "RandomMetadata",
             "Ammo",
             "AiController",
             "Computer",
@@ -83,6 +85,7 @@ namespace Content.Client.Entry
             "DiseaseCarrier",
             "StorageFill",
             "Absorbent",
+            "RandomHumanoidAppearance",
             "CableVis",
             "BatterySelfRecharger",
             "Puddle",
@@ -136,6 +139,7 @@ namespace Content.Client.Entry
             "Flash",
             "Docking",
             "Telecrystal",
+            "PowerMonitoringConsole",
             "RCD",
             "RCDAmmo",
             "CursedEntityStorage",
@@ -341,7 +345,8 @@ namespace Content.Client.Entry
             "EnergySword",
             "DoorRemote",
             "InteractionPopup",
-            "HealthAnalyzer"
+            "HealthAnalyzer",
+            "Wires"
         };
     }
 }

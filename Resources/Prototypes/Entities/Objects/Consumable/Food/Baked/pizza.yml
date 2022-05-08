@@ -59,7 +59,7 @@
   name: margherita pizza
   parent: FoodPizzaBase
   id: FoodPizzaMargherita
-  description: The cheesiest pizza in the galaxy.
+  description: The flavor of Italy.
   components:
   - type: Sprite
     layers:
@@ -72,7 +72,7 @@
   name: slice of margherita pizza
   parent: FoodPizzaSliceBase
   id: FoodPizzaMargheritaSlice
-  description: A slice of the cheesiest pizza in the galaxy.
+  description: A slice of Italy.
   components:
   - type: Sprite
     layers:
