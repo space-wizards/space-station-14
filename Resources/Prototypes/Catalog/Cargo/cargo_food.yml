@@ -22,7 +22,7 @@
   category: Food
   group: market
 
-type: cargoProduct
+- type: cargoProduct
   name: "kitchen supplies crate"
   id: FoodCook
   description: Extra kitchen supplies, in case the botanists are absent.
