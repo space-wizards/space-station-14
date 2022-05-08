@@ -7,7 +7,6 @@ namespace Content.Client.Entry
         {
             "AirlockPainter",
             "AmmoBox",
-            "Pickaxe",
             "IngestionBlocker",
             "Charger",
             "CloningPod",
