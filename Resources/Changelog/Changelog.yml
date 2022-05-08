@@ -1,13 +1,4 @@
 Entries:
-- author: Lamrr
-  changes:
-  - {message: Improve your MIDI track rendition five fold through the new digital
-      audio workstation. This end-of-the-line instrument won't be cheap to construct
-      however..., type: Add}
-  - {message: NanoTrasen has updated its research programme to include cutting edge
-      advances in applied musicology., type: Add}
-  id: 976
-  time: '2022-02-04T21:17:09.0000000+00:00'
 - author: Fishfish458
   changes:
   - {message: Added handheld crew monitor to research and proto-lathe, type: Add}
@@ -3042,3 +3033,8 @@ Entries:
       now., type: Fix}
   id: 1475
   time: '2022-05-08T06:08:23.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Several large areas of Barratry have been redone., type: Tweak}
+  id: 1476
+  time: '2022-05-08T07:45:30.0000000+00:00'
