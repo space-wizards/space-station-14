@@ -14,4 +14,11 @@ public sealed class KnockSpellEvent : InstantActionEvent
 
     [DataField("knockSound")]
     public SoundSpecifier KnockSound = new SoundPathSpecifier("/Audio/Magic/knock.ogg");
+
+    /// <summary>
+    /// Volume control for the spell.
+    /// -6f is default because the base soundfile is really loud
+    /// </summary>
+    [DataField("knockVolume")]
+    public float KnockVolume = -6f;
 }

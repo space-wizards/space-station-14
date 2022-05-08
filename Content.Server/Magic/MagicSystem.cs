@@ -1,6 +1,8 @@
-﻿using Content.Server.Coordinates.Helpers;
+﻿using Content.Server.Construction.Conditions;
+using Content.Server.Coordinates.Helpers;
 using Content.Server.Decals;
 using Content.Server.DoAfter;
+using Content.Server.Doors.Components;
 using Content.Server.Magic.Events;
 using Content.Server.Wieldable;
 using Content.Shared.Actions;
@@ -56,6 +58,13 @@ public sealed class MagicSystem : EntitySystem
         foreach (var (id, charges) in component.InstantSpells)
         {
             var spell = new InstantAction(_prototypeManager.Index<InstantActionPrototype>(id));
+            _actionsSystem.SetCharges(spell, charges < 0 ? null : charges);
+            component.Spells.Add(spell);
+        }
+
+        foreach (var (id, charges) in component.EntitySpells)
+        {
+            var spell = new EntityTargetAction(_prototypeManager.Index<EntityTargetActionPrototype>(id));
             _actionsSystem.SetCharges(spell, charges < 0 ? null : charges);
             component.Spells.Add(spell);
         }
@@ -199,7 +208,7 @@ public sealed class MagicSystem : EntitySystem
                 return;
         }
 
-        SoundSystem.Play(Filter.Pvs(coords), args.ForceWallSound.GetSound());
+        SoundSystem.Play(Filter.Pvs(coords), args.ForceWallSound.GetSound(), AudioParams.Default.WithVolume(args.ForceWallVolume));
         ActiveWalls.Add(Spawn(args.WallPrototype, coords));
         ActiveWalls.Add(Spawn(args.WallPrototype, coordsPlus));
         ActiveWalls.Add(Spawn(args.WallPrototype, coordsMinus));
@@ -225,11 +234,14 @@ public sealed class MagicSystem : EntitySystem
         var transform = Transform(args.Performer);
         var coords = transform.Coordinates;
 
-        SoundSystem.Play(Filter.Pvs(coords), args.KnockSound.GetSound());
+        SoundSystem.Play(Filter.Pvs(coords), args.KnockSound.GetSound(), AudioParams.Default.WithVolume(args.KnockVolume));
 
         //Look for doors and don't open them if they're already open.
         foreach (var entity in _lookup.GetEntitiesInRange(coords, args.Range))
         {
+            if (TryComp<AirlockComponent>(entity, out var airlock))
+                airlock.BoltsDown = false;
+
             if (TryComp<DoorComponent>(entity, out var doorComp) && doorComp.State is not DoorState.Open)
                 _doorSystem.StartOpening(doorComp.Owner);
         }

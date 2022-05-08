@@ -24,7 +24,7 @@ public sealed class SpellbookComponent : Component
 
     [ViewVariables]
     [DataField("learnTime")]
-    public float LearnTime = 2f;
+    public float LearnTime = .75f;
 
     public CancellationTokenSource? CancelToken;
 }

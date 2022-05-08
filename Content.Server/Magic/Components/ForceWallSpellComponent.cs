@@ -11,5 +11,5 @@ public sealed class ForceWallSpellComponent : Component
 
     [ViewVariables]
     [DataField("forceWallCooldown")]
-    public float ForceWallCooldown = 30f;
+    public float ForceWallCooldown = 20f;
 }

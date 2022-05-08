@@ -12,4 +12,11 @@ public sealed class ForceWallSpellEvent : InstantActionEvent
 
     [DataField("forceWallSound")]
     public SoundSpecifier ForceWallSound = new SoundPathSpecifier("/Audio/Magic/forcewall.ogg");
+
+    /// <summary>
+    /// Volume control for the spell.
+    /// -6f is default because the base soundfile is really loud
+    /// </summary>
+    [DataField("forceWallVolume")]
+    public float ForceWallVolume = -6f;
 }
