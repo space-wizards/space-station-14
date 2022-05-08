@@ -85,6 +85,12 @@
   components:
   - type: PDA
     id: TechnicalAssistantIDCard
+  - type: Appearance
+    visuals:
+    - type: PDAVisualizer
+      state: pda-interntech
+  - type: Icon
+    state: pda-interntech
 
 - type: entity
   parent: BasePDA
@@ -94,6 +100,12 @@
   components:
   - type: PDA
     id: MedicalInternIDCard
+  - type: Appearance
+    visuals:
+    - type: PDAVisualizer
+      state: pda-internmed
+  - type: Icon
+    state: pda-internmed
 
 - type: entity
   parent: BasePDA
@@ -103,6 +115,12 @@
   components:
   - type: PDA
     id: SecurityCadetIDCard
+  - type: Appearance
+    visuals:
+    - type: PDAVisualizer
+      state: pda-interncadet
+  - type: Icon
+    state: pda-interncadet
 
 - type: entity
   parent: BasePDA
@@ -112,6 +130,12 @@
   components:
   - type: PDA
     id: ServiceWorkerIDCard
+  - type: Appearance
+    visuals:
+    - type: PDAVisualizer
+      state: pda-internservice
+  - type: Icon
+    state: pda-internservice
 
 - type: entity
   parent: BasePDA

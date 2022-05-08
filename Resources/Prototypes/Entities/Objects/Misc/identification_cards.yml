@@ -39,6 +39,10 @@
   components:
   - type: PresetIdCard
     job: TechnicalAssistant
+  - type: Sprite
+    layers:
+    - state: default
+    - state: idintern-tech
 
 - type: entity
   parent: AssistantIDCard
@@ -47,6 +51,10 @@
   components:
   - type: PresetIdCard
     job: MedicalIntern
+  - type: Sprite
+    layers:
+    - state: default
+    - state: idintern-med
 
 - type: entity
   parent: AssistantIDCard
@@ -55,6 +63,10 @@
   components:
   - type: PresetIdCard
     job: SecurityCadet
+  - type: Sprite
+    layers:
+    - state: default
+    - state: idintern-cadet
 
 - type: entity
   parent: AssistantIDCard
@@ -63,7 +75,10 @@
   components:
   - type: PresetIdCard
     job: ServiceWorker
-
+  - type: Sprite
+    layers:
+    - state: default
+    - state: idintern-service
 
 - type: entity
   parent: IDCardStandard
