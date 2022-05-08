@@ -1,10 +1,4 @@
 Entries:
-- author: Peptide90
-  changes:
-  - {message: You can now milk goats for their milk. Try keep them still long enough!,
-    type: Add}
-  id: 971
-  time: '2022-02-04T21:14:47.0000000+00:00'
 - author: Seth
   changes:
   - {message: Goats are back into the cargo console, type: Tweak}
@@ -3045,3 +3039,9 @@ Entries:
       once hidden behind the space clouds.', type: Add}
   id: 1470
   time: '2022-05-08T00:49:22.0000000+00:00'
+- author: mirrorcult
+  changes:
+  - {message: Unequipping clothing now properly resets any movespeed modifiers they
+      gave you., type: Fix}
+  id: 1471
+  time: '2022-05-08T01:45:07.0000000+00:00'
