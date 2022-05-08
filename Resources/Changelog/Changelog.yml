@@ -1,10 +1,4 @@
 Entries:
-- author: Zyme
-  changes:
-  - {message: The Syndicate now offers a pyjama bundle! You can find it on your nearest
-      uplink., type: Add}
-  id: 975
-  time: '2022-02-04T21:16:31.0000000+00:00'
 - author: Lamrr
   changes:
   - {message: Improve your MIDI track rendition five fold through the new digital
@@ -3042,3 +3036,9 @@ Entries:
       over them.', type: Tweak}
   id: 1474
   time: '2022-05-08T05:41:52.0000000+00:00'
+- author: DogZeroX
+  changes:
+  - {message: Barsigns should properly appear on top of glass without half-clipping
+      now., type: Fix}
+  id: 1475
+  time: '2022-05-08T06:08:23.0000000+00:00'
