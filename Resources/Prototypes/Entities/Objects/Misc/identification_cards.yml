@@ -33,6 +33,39 @@
     job: Assistant
 
 - type: entity
+  parent: AssistantIDCard
+  id: TechnicalAssistantIDCard
+  name: technical assistant ID card
+  components:
+  - type: PresetIdCard
+    job: TechnicalAssistant
+
+- type: entity
+  parent: AssistantIDCard
+  id: MedicalInternIDCard
+  name: medical intern ID card
+  components:
+  - type: PresetIdCard
+    job: MedicalIntern
+
+- type: entity
+  parent: AssistantIDCard
+  id: SecurityCadetIDCard
+  name: security cadet ID card
+  components:
+  - type: PresetIdCard
+    job: SecurityCadet
+
+- type: entity
+  parent: AssistantIDCard
+  id: ServiceWorkerIDCard
+  name: service worker ID card
+  components:
+  - type: PresetIdCard
+    job: ServiceWorker
+
+
+- type: entity
   parent: IDCardStandard
   id: CaptainIDCard
   name: captain ID card
@@ -390,7 +423,7 @@
     interfaces:
       - key: enum.AgentIDCardUiKey.Key
         type: AgentIDCardBoundUserInterface
-        
+
 - type: entity
   parent: IDCardStandard
   id: AtmosIDCard

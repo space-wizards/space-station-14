@@ -79,6 +79,42 @@
 
 - type: entity
   parent: BasePDA
+  id: TechnicalAssistantPDA
+  name: technical assistant PDA
+  description: Why isn't it yellow?
+  components:
+  - type: PDA
+    id: TechnicalAssistantIDCard
+
+- type: entity
+  parent: BasePDA
+  id: MedicalInternPDA
+  name: medical intern PDA
+  description: Why isn't it white?
+  components:
+  - type: PDA
+    id: MedicalInternIDCard
+
+- type: entity
+  parent: BasePDA
+  id: SecurityCadetPDA
+  name: security cadet PDA
+  description: Why isn't it red?
+  components:
+  - type: PDA
+    id: SecurityCadetIDCard
+
+- type: entity
+  parent: BasePDA
+  id: ServiceWorkerPDA
+  name: service worker PDA
+  description: Why isn't it gray?
+  components:
+  - type: PDA
+    id: ServiceWorkerIDCard
+
+- type: entity
+  parent: BasePDA
   id: ChefPDA
   name: chef PDA
   description: Covered in grease and flour.
@@ -526,7 +562,7 @@
   parent: BasePDA
   id: ClearPDA
   name: clear PDA
-  description: 99 and 44/100ths percent pure plastic. 
+  description: 99 and 44/100ths percent pure plastic.
   components:
   - type: PDA
     id: AssistantIDCard
@@ -535,7 +571,7 @@
       - type: PDAVisualizer
         state: pda-clear
   - type: Icon
-    state: pda-clear    
+    state: pda-clear
 
 - type: entity
   parent: BasePDA
@@ -551,4 +587,4 @@
         state: pda-syndi
   - type: Icon
     state: pda-syndi
-    
+
