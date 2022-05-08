@@ -1,4 +1,4 @@
-﻿- type: entity
+- type: entity
   name: baseinstrument
   id: BasePlaceableInstrument
   parent: BaseStructureDynamic
@@ -39,6 +39,8 @@
           - SmallImpassable
         mask:
           - VaultImpassable
+  - type: Transform
+    anchored: true
 
 - type: entity
   parent: BasePlaceableInstrument
