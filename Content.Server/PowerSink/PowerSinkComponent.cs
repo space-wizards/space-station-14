@@ -7,7 +7,7 @@
     public sealed class PowerSinkComponent : Component
     {
         [ViewVariables(VVAccess.ReadWrite)] [DataField("capacity")]
-        public float Capacity = 250;
+        public float Capacity = 100;
 
         [ViewVariables]
         public float Charge = 0;
