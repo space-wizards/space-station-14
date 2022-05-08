@@ -355,7 +355,7 @@
   - type: BatteryBarrel
     minAngle: 5
     angleIncrease: 20
-    fireCost: 80
+    fireCost: 360
     ammoPrototype: BulletTaser
     soundGunshot:
       path: /Audio/Weapons/Guns/Gunshots/taser.ogg

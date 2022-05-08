@@ -402,3 +402,12 @@
     - state: idatmospherictechnician
   - type: PresetIdCard
     job: AtmosphericTechnician
+
+- type: entity
+  parent: IDCardStandard
+  id: SyndicateIDCard
+  name: Syndicate ID card
+  components:
+  - type: Sprite
+    layers:
+    - state: syndie

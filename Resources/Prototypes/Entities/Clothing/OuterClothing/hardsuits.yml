@@ -479,3 +479,33 @@
         Slash: 0.95
         Heat: 0.90
         Radiation: 0.75
+        
+- type: entity
+  parent: ClothingOuterHardsuitBase
+  id: ClothingOuterHardsuitJuggernaut
+  name: cybersun juggernaut suit
+  description: A suit made by the cutting edge R&D department at cybersun to be hyper resilient.
+  components:
+  - type: Sprite
+    sprite: Clothing/OuterClothing/Hardsuits/cybersun.rsi
+  - type: Clothing
+    sprite: Clothing/OuterClothing/Hardsuits/cybersun.rsi
+  - type: PressureProtection
+    highPressureMultiplier: 0.2
+    lowPressureMultiplier: 1000
+  - type: ClothingSpeedModifier
+    walkModifier: 0.5
+    sprintModifier: 0.5 #extremely slow
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.2
+        Slash: 0.2
+        Piercing: 0.2
+        Heat: 0.35
+        Radiation: 0.1
+  - type: ExplosionResistance
+    resistance: 0.2
+  - type: ToggleableClothing
+    clothingPrototype: ClothingHeadHelmetHardsuitCybersun
+    

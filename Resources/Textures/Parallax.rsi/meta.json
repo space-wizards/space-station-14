@@ -1,0 +1,14 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "https://github.com/discordia-space/CEV-Eris/commits/master/icons/parallax.dmi",
+  "size": {
+    "x": 736,
+    "y": 736
+  },
+  "states": [
+    {
+      "name": "space1"
+    }
+  ]
+}
