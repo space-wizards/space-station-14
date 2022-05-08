@@ -1,6 +1,6 @@
 ﻿using System.Threading;
-using Content.Server.Anprim14.Gathering.Components;
 using Content.Server.DoAfter;
+using Content.Server.Gatherable.Components;
 using Content.Shared.Damage;
 using Content.Shared.Interaction;
 using Content.Shared.Storage;
@@ -9,7 +9,7 @@ using Robust.Shared.Audio;
 using Robust.Shared.Player;
 using Robust.Shared.Random;
 
-namespace Content.Server.Anprim14.Gathering;
+namespace Content.Server.Gatherable;
 
 public sealed class GatherableSystem : EntitySystem
 {
@@ -66,32 +66,23 @@ public sealed class GatherableSystem : EntitySystem
         if (!TryComp(ev.Tool, out GatheringToolComponent? tool))
             return;
 
+        // Complete the gathering process
         _damageableSystem.TryChangeDamage(ev.Resource, tool.Damage);
         SoundSystem.Play(Filter.Pvs(ev.Resource, entityManager: EntityManager), tool.GatheringSound.GetSound(), ev.Resource);
         tool.GatheringEntities.Remove(ev.Resource);
 
-        if (component.UseMappedLoot && component.MappedLoot != null)
+        // Spawn the loot!
+        if (component.MappedLoot == null) return;
+        foreach (var pair in component.MappedLoot)
         {
-            foreach (var pair in component.MappedLoot)
+            if (pair.Key != "All")
             {
                 if (!_tagSystem.HasTag(tool.Owner, pair.Key)) continue;
-                var spawnLoot = EntitySpawnCollection.GetSpawns(pair.Value, _random);
-                var playerPos = Transform(ev.Player).MapPosition;
-                var spawnPos = playerPos.Offset(_random.NextVector2(0.3f));
-                EntityManager.SpawnEntity(spawnLoot[0], spawnPos);
-                tool.GatheringEntities.Remove(uid);
             }
-        }
-        else
-        {
-            if (component.Loot != null)
-            {
-                var spawnLoot = EntitySpawnCollection.GetSpawns(component.Loot, _random);
-                var playerPos = Transform(ev.Player).MapPosition;
-                var spawnPos = playerPos.Offset(_random.NextVector2(0.3f));
-                EntityManager.SpawnEntity(spawnLoot[0], spawnPos);
-            }
-
+            var spawnLoot = EntitySpawnCollection.GetSpawns(pair.Value, _random);
+            var playerPos = Transform(ev.Player).MapPosition;
+            var spawnPos = playerPos.Offset(_random.NextVector2(0.3f));
+            EntityManager.SpawnEntity(spawnLoot[0], spawnPos);
             tool.GatheringEntities.Remove(uid);
         }
     }

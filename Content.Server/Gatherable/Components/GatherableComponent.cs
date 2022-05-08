@@ -1,18 +1,12 @@
 using Content.Shared.Storage;
 using Content.Shared.Whitelist;
 
-namespace Content.Server.Anprim14.Gathering.Components;
+namespace Content.Server.Gatherable.Components;
 
 [RegisterComponent]
 [Friend(typeof(GatherableSystem))]
 public sealed class GatherableComponent : Component
 {
-    /// <summary>
-    ///     Are we using a mapped loot table?
-    /// </summary>
-    [DataField("useMappedLoot")] 
-    public bool UseMappedLoot;
-
     /// <summary>
     ///     Whitelist for specifying the kind of tools can be used on a resource
     ///     Supports multiple tags.
@@ -20,12 +14,6 @@ public sealed class GatherableComponent : Component
     [ViewVariables]
     [DataField("whitelist", required: true)] 
     public EntityWhitelist? ToolWhitelist;
-
-    /// <summary>
-    ///     Loot table for the resource
-    /// </summary>
-    [DataField("loot")] 
-    public List<EntitySpawnEntry>? Loot = new();
 
     /// <summary>
     ///     If this is defined, loot table will must be mapped
@@ -43,6 +31,6 @@ public sealed class GatherableComponent : Component
     ///       FishingPole:
     ///         - id: EntityID2
     /// </summary>
-    [DataField("mappedLoot")] 
+    [DataField("loot")] 
     public Dictionary<string, List<EntitySpawnEntry>>? MappedLoot = new();
 }

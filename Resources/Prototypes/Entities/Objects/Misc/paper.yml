@@ -85,14 +85,11 @@
   - type: Tag
     tags:
     - Write
+    - Pickaxe
   - type: Sprite
     sprite: Objects/Misc/bureaucracy.rsi
     state: overpriced_pen
     netsync: false
-  - type: Pickaxe
-    damage:
-      types:
-        Piercing: 5
   - type: ItemCooldown
   - type: MeleeWeapon
     damage:
