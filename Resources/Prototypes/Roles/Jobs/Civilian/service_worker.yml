@@ -6,6 +6,7 @@
   - Civilian
   icon: "ServiceWorker"
   supervisors: "the bartender, chefs, botanists, and head of personnel"
+  canBeAntag: false
   access:
   - Service
   - Maintenance
@@ -18,7 +19,7 @@
     jumpsuit: ClothingUniformJumpsuitBartender
     back: ClothingBackpackFilled
     shoes: ClothingShoesColorBlack
-    id: AssistantPDA
+    id: ServiceWorkerPDA
     ears: ClothingHeadsetService
   innerclothingskirt: ClothingUniformJumpskirtBartender
   satchel: ClothingBackpackSatchelFilled
