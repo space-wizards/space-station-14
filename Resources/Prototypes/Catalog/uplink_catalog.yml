@@ -270,6 +270,13 @@
   price: 8
 
 - type: uplinkListing
+  id: UplinkHardsuitSyndieElite
+  category: Armor
+  itemId: ClothingOuterHardsuitSyndieElite
+  description: An upgraded version of the blood red hardsuit that features enhanced fireproofing, pressure resist, and superior armor.
+  price: 12
+  
+- type: uplinkListing
   id: UplinkClothingShoesBootsMagSyndie
   category: Armor
   itemId: ClothingShoesBootsMagSyndie
