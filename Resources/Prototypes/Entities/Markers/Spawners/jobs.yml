@@ -76,16 +76,16 @@
 # Civilian
 
 - type: entity
-  id: SpawnPointAssistant
+  id: SpawnPointAssistant # TODO rename, but requires map changes.
   parent: SpawnPointJobBase
-  name: assistant
+  name: passenger
   components:
   - type: SpawnPoint
-    job_id: Assistant
+    job_id: Passenger
   - type: Sprite
     layers:
       - state: green
-      - state: assistant
+      - state: passenger
 
 - type: entity
   id: SpawnPointBartender
@@ -258,7 +258,7 @@
     layers:
       - state: green
       - state: engineer
-      
+
 - type: entity
   id: SpawnPointAtmos
   parent: SpawnPointJobBase
@@ -270,7 +270,7 @@
       layers:
         - state: green
         - state: atmospherics
-        
+
 # Medical
 
 - type: entity

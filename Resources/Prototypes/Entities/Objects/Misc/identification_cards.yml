@@ -22,15 +22,15 @@
 
 - type: entity
   parent: IDCardStandard
-  id: AssistantIDCard
-  name: assistant ID card
+  id: PassengerIDCard
+  name: passenger ID card
   components:
   - type: Sprite
     layers:
     - state: default
-    - state: idassistant
+    - state: idpassenger
   - type: PresetIdCard
-    job: Assistant
+    job: Passenger
 
 - type: entity
   parent: IDCardStandard
@@ -379,7 +379,7 @@
       job: Musician
 
 - type: entity
-  parent: AssistantIDCard
+  parent: PassengerIDCard
   id: AgentIDCard
   suffix: Agent
   components:
@@ -390,7 +390,7 @@
     interfaces:
       - key: enum.AgentIDCardUiKey.Key
         type: AgentIDCardBoundUserInterface
-        
+
 - type: entity
   parent: IDCardStandard
   id: AtmosIDCard

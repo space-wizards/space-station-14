@@ -8,10 +8,10 @@
   mapPath: /Maps/delta.yml
   minPlayers: 60
   overflowJobs:
-    - Assistant
+    - Passenger
   availableJobs:
     CargoTechnician: [ 4, 4 ]
-    Assistant: [ -1, -1 ]
+    Passenger: [ -1, -1 ]
     Bartender: [ 1, 1 ]
     Botanist: [ 4, 4]
     Chef: [ 1, 2 ]
@@ -34,6 +34,6 @@
     Librarian: [ 1, 1 ]
     Lawyer: [ 2, 2 ]
     Quartermaster: [ 1, 1 ]
-    SalvageSpecialist: [ 3, 3 ] 
+    SalvageSpecialist: [ 3, 3 ]
     Musician: [ 2, 2 ]
     AtmosphericTechnician: [ 1, 2 ]
