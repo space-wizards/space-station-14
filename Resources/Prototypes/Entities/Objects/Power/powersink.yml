@@ -34,7 +34,7 @@
           acts: [ "Destruction" ]
     - type: PowerSink
     - type: Battery
-      maxCharge: 12500000
+      maxCharge: 25000000
     - type: ExaminableBattery
     - type: PowerConsumer
       voltage: High
