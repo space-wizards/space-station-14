@@ -1,19 +1,4 @@
 Entries:
-- author: Lamrr
-  changes:
-  - {message: The digital audio workstaiton (sic) has been relabelled., type: Fix}
-  id: 981
-  time: '2022-02-05T01:23:43.0000000+00:00'
-- author: Willhelm53
-  changes:
-  - {message: Added new sparkle sprite that is applied to puddles below a certain
-      volume. Better look out for those wet floor signs!, type: Add}
-  - {message: 'Nerfed regular blue buckets to only hold 100u (down from 500u), bringing
-      them more in line with their capacity in SS13.', type: Fix}
-  - {message: 'Mops can now pick up all but the last 5u of a puddle. The remaining
-      5u is how wet floors work. But hey, that''s what evaporation is for!', type: Tweak}
-  id: 982
-  time: '2022-02-05T02:26:11.0000000+00:00'
 - author: ElectroJr
   changes:
   - {message: 'You should now be able to un-anchor things like disposal units, instead
@@ -3035,3 +3020,13 @@ Entries:
   - {message: Crayons are now edible., type: Add}
   id: 1480
   time: '2022-05-08T08:51:34.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Popups now get occluded, type: Tweak}
+  id: 1481
+  time: '2022-05-08T08:54:27.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Speech bubbles are now occluded, type: Tweak}
+  id: 1482
+  time: '2022-05-08T08:54:56.0000000+00:00'
