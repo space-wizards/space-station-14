@@ -24,7 +24,7 @@ namespace Content.Server.Speech.EntitySystems
         {
             var words = _proto.Index<ReplacementAccentPrototype>(component.Accent).Words;
 
-            args.Message = words.Length != 0 ? _random.Pick(words) : "";
+            args.Message = words.Length != 0 ? Loc.GetString(_random.Pick(words)) : "";
         }
     }
 }

@@ -16,6 +16,7 @@
   - Command
   - External
   - ChiefEngineer
+  - Atmospherics
 
 - type: startingGear
   id: ChiefEngineerGear

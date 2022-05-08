@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Content.Server.WireHacking;
+using Content.Server.Wires;
 using Content.Shared.Construction;
 using Content.Shared.Examine;
 using JetBrains.Annotations;
