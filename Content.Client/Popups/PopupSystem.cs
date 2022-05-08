@@ -173,6 +173,12 @@ namespace Content.Client.Popups
             private readonly IEntityManager _entityManager;
 
             public float TotalTime { get; private set; }
+            /// <summary>
+            /// The original Mapid and ScreenPosition of the label.
+            /// </summary>
+            /// <remarks>
+            /// Yes that's right it's not technically MapCoordinates.
+            /// </remarks>
             public MapCoordinates InitialPos { get; set; }
             public EntityUid? Entity { get; set; }
 
