@@ -1,15 +1,4 @@
 Entries:
-- author: Fishfish458
-  changes:
-  - {message: Added handheld crew monitor to research and proto-lathe, type: Add}
-  id: 977
-  time: '2022-02-04T21:17:16.0000000+00:00'
-- author: Peptide90
-  changes:
-  - {message: 'Added a new large pop map. Welcome to NSS Pillar! Familiar cousin to
-      box, follow the signs so you don''t get lost.', type: Add}
-  id: 978
-  time: '2022-02-04T21:34:52.0000000+00:00'
 - author: Rane
   changes:
   - {message: 'Added poppies and aloe, 2 plants which yield basic medicines when ground.',
@@ -3038,3 +3027,15 @@ Entries:
   - {message: Several large areas of Barratry have been redone., type: Tweak}
   id: 1476
   time: '2022-05-08T07:45:30.0000000+00:00'
+- author: Macoron
+  changes:
+  - {message: Attention syndicate agents! We have found some old crates with random
+      junk inside. We are ready to sell it for 20 telecrystals while content inside
+      cost 50 telecrystals., type: Add}
+  id: 1477
+  time: '2022-05-08T07:52:01.0000000+00:00'
+- author: UKNOWH
+  changes:
+  - {message: chef hat storage fixed!, type: Tweak}
+  id: 1478
+  time: '2022-05-08T07:52:41.0000000+00:00'
