@@ -143,6 +143,10 @@ grids:
 - settings:
     chunksize: 16
     tilesize: 1
+  chunks: []
+- settings:
+    chunksize: 16
+    tilesize: 1
   chunks:
   - ind: -1,-1
     tiles: AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA4AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADgAAAA4AAAAxAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADgAAAA4AAAAxAAAAMQAAAA==
@@ -164,272 +168,78 @@ grids:
     tiles: DgAAAA4AAAAOAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA4AAAAOAAAADgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAOAAAADgAAAA4AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADgAAAA4AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==
   - ind: -1,0
     tiles: AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA4AAAAOAAAADgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAOAAAADgAAAA4AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA4AAAARAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==
-- settings:
-    chunksize: 16
-    tilesize: 1
-  chunks: []
 entities:
 - uid: 0
-  type: EmergencyLight
+  type: WallReinforced
   components:
-  - rot: 3.141592653589793 rad
-    pos: -61.5,-10.5
+  - pos: 1.5,0.5
     parent: 61
     type: Transform
 - uid: 1
-  type: GrilleBroken
+  type: Chair
   components:
-  - rot: -1.5707963267948966 rad
-    pos: 45.5,-14.5
+  - pos: -9.5,-24.5
     parent: 61
     type: Transform
 - uid: 2
-  type: GrilleBroken
+  type: GasVentPump
   components:
-  - rot: 1.5707963267948966 rad
-    pos: -72.5,-19.5
+  - rot: -1.5707963267948966 rad
+    pos: -32.5,-2.5
     parent: 61
     type: Transform
+  - canCollide: False
+    type: Physics
+  - color: '#0335FCFF'
+    type: AtmosPipeColor
 - uid: 3
-  type: Grille
+  type: WallSolid
   components:
-  - pos: -72.5,-18.5
+  - pos: 0.5,-0.5
     parent: 61
     type: Transform
 - uid: 4
-  type: Grille
+  type: WallReinforced
   components:
-  - pos: -72.5,-20.5
+  - pos: -9.5,4.5
     parent: 61
     type: Transform
 - uid: 5
-  type: Grille
+  type: GasPipeBend
   components:
-  - pos: -72.5,-17.5
+  - rot: 3.141592653589793 rad
+    pos: -3.5,-2.5
     parent: 61
     type: Transform
+  - canCollide: False
+    type: Physics
+  - color: '#0335FCFF'
+    type: AtmosPipeColor
 - uid: 6
-  type: Grille
+  type: ClothingShoesSwat
   components:
-  - pos: -72.5,-16.5
+  - pos: -11.555514,12.275328
     parent: 61
     type: Transform
 - uid: 7
-  type: GrilleBroken
+  type: WallReinforced
   components:
-  - pos: -72.5,-15.5
+  - pos: 1.5,-2.5
     parent: 61
     type: Transform
 - uid: 8
-  type: GrilleBroken
+  type: WallSolid
   components:
-  - rot: 3.141592653589793 rad
-    pos: -72.5,-13.5
+  - pos: -4.5,1.5
     parent: 61
     type: Transform
 - uid: 9
-  type: Grille
+  type: Paper
   components:
-  - pos: -72.5,-12.5
+  - pos: 0.6795528,-3.1842399
     parent: 61
     type: Transform
 - uid: 10
-  type: Grille
-  components:
-  - pos: -72.5,-11.5
-    parent: 61
-    type: Transform
-- uid: 11
-  type: Grille
-  components:
-  - pos: -72.5,-10.5
-    parent: 61
-    type: Transform
-- uid: 12
-  type: Grille
-  components:
-  - pos: -72.5,-9.5
-    parent: 61
-    type: Transform
-- uid: 13
-  type: Grille
-  components:
-  - pos: -72.5,-8.5
-    parent: 61
-    type: Transform
-- uid: 14
-  type: Grille
-  components:
-  - pos: -72.5,-7.5
-    parent: 61
-    type: Transform
-- uid: 15
-  type: GrilleBroken
-  components:
-  - pos: -72.5,-6.5
-    parent: 61
-    type: Transform
-- uid: 16
-  type: Grille
-  components:
-  - pos: 49.5,-14.5
-    parent: 61
-    type: Transform
-- uid: 17
-  type: Grille
-  components:
-  - pos: 55.5,-14.5
-    parent: 61
-    type: Transform
-- uid: 18
-  type: GrilleBroken
-  components:
-  - rot: -1.5707963267948966 rad
-    pos: 56.5,-14.5
-    parent: 61
-    type: Transform
-- uid: 19
-  type: GrilleBroken
-  components:
-  - rot: 1.5707963267948966 rad
-    pos: 54.5,-14.5
-    parent: 61
-    type: Transform
-- uid: 20
-  type: GrilleBroken
-  components:
-  - rot: -1.5707963267948966 rad
-    pos: 51.5,-14.5
-    parent: 61
-    type: Transform
-- uid: 21
-  type: Grille
-  components:
-  - pos: 50.5,-14.5
-    parent: 61
-    type: Transform
-- uid: 22
-  type: GrilleBroken
-  components:
-  - rot: 1.5707963267948966 rad
-    pos: 36.5,-14.5
-    parent: 61
-    type: Transform
-- uid: 23
-  type: GrilleBroken
-  components:
-  - rot: 3.141592653589793 rad
-    pos: 43.5,5.5
-    parent: 61
-    type: Transform
-- uid: 24
-  type: EmergencyLight
-  components:
-  - pos: -15.5,-12.5
-    parent: 61
-    type: Transform
-- uid: 25
-  type: EmergencyLight
-  components:
-  - rot: 3.141592653589793 rad
-    pos: 21.5,-27.5
-    parent: 61
-    type: Transform
-- uid: 26
-  type: AsteroidRock
-  components:
-  - pos: -16.5,13.5
-    parent: 61
-    type: Transform
-- uid: 27
-  type: AsteroidRock
-  components:
-  - pos: -22.5,13.5
-    parent: 61
-    type: Transform
-- uid: 28
-  type: AsteroidRock
-  components:
-  - pos: -22.5,12.5
-    parent: 61
-    type: Transform
-- uid: 29
-  type: Grille
-  components:
-  - pos: -49.5,-7.5
-    parent: 61
-    type: Transform
-- uid: 30
-  type: ReinforcedWindow
-  components:
-  - pos: -51.5,-7.5
-    parent: 61
-    type: Transform
-- uid: 31
-  type: WallReinforced
-  components:
-  - pos: -52.5,-7.5
-    parent: 61
-    type: Transform
-- uid: 32
-  type: EmergencyLight
-  components:
-  - rot: 3.141592653589793 rad
-    pos: -27.5,-20.5
-    parent: 61
-    type: Transform
-- uid: 33
-  type: EmergencyLight
-  components:
-  - pos: 5.5,-20.5
-    parent: 61
-    type: Transform
-- uid: 34
-  type: EmergencyLight
-  components:
-  - pos: 21.5,-8.5
-    parent: 61
-    type: Transform
-- uid: 35
-  type: Grille
-  components:
-  - pos: 42.5,-7.5
-    parent: 61
-    type: Transform
-- uid: 36
-  type: EmergencyLight
-  components:
-  - pos: 55.5,-8.5
-    parent: 61
-    type: Transform
-- uid: 37
-  type: EmergencyLight
-  components:
-  - pos: 53.5,4.5
-    parent: 61
-    type: Transform
-- uid: 38
-  type: EmergencyLight
-  components:
-  - pos: -6.5,-29.5
-    parent: 61
-    type: Transform
-- uid: 39
-  type: Lamp
-  components:
-  - pos: -1.3048222,-3.3092399
-    parent: 61
-    type: Transform
-  - containers:
-      cellslot_cell_container: !type:ContainerSlot {}
-    type: ContainerContainer
-- uid: 40
-  type: WallReinforced
-  components:
-  - pos: -6.5,-7.5
-    parent: 61
-    type: Transform
-- uid: 41
   type: MedicalScanner
   components:
   - pos: -27.5,-17.5
@@ -446,74 +256,264 @@ entities:
       machine_parts: !type:Container
         ents: []
     type: ContainerContainer
-- uid: 42
-  type: Paper
+- uid: 11
+  type: WallReinforced
   components:
-  - pos: 0.6795528,-3.1842399
+  - pos: -6.5,-7.5
+    parent: 61
+    type: Transform
+- uid: 12
+  type: Lamp
+  components:
+  - pos: -1.3048222,-3.3092399
+    parent: 61
+    type: Transform
+  - containers:
+      cellslot_cell_container: !type:ContainerSlot {}
+    type: ContainerContainer
+- uid: 13
+  type: EmergencyLight
+  components:
+  - pos: -6.5,-29.5
+    parent: 61
+    type: Transform
+- uid: 14
+  type: EmergencyLight
+  components:
+  - pos: 53.5,4.5
+    parent: 61
+    type: Transform
+- uid: 15
+  type: EmergencyLight
+  components:
+  - pos: 55.5,-8.5
+    parent: 61
+    type: Transform
+- uid: 16
+  type: Grille
+  components:
+  - pos: 42.5,-7.5
+    parent: 61
+    type: Transform
+- uid: 17
+  type: EmergencyLight
+  components:
+  - pos: 21.5,-8.5
+    parent: 61
+    type: Transform
+- uid: 18
+  type: EmergencyLight
+  components:
+  - pos: 5.5,-20.5
+    parent: 61
+    type: Transform
+- uid: 19
+  type: EmergencyLight
+  components:
+  - rot: 3.141592653589793 rad
+    pos: -27.5,-20.5
+    parent: 61
+    type: Transform
+- uid: 20
+  type: WallReinforced
+  components:
+  - pos: -52.5,-7.5
+    parent: 61
+    type: Transform
+- uid: 21
+  type: ReinforcedWindow
+  components:
+  - pos: -51.5,-7.5
+    parent: 61
+    type: Transform
+- uid: 22
+  type: Grille
+  components:
+  - pos: -49.5,-7.5
+    parent: 61
+    type: Transform
+- uid: 23
+  type: AsteroidRock
+  components:
+  - pos: -22.5,12.5
+    parent: 61
+    type: Transform
+- uid: 24
+  type: AsteroidRock
+  components:
+  - pos: -22.5,13.5
+    parent: 61
+    type: Transform
+- uid: 25
+  type: AsteroidRock
+  components:
+  - pos: -16.5,13.5
+    parent: 61
+    type: Transform
+- uid: 26
+  type: EmergencyLight
+  components:
+  - rot: 3.141592653589793 rad
+    pos: 21.5,-27.5
+    parent: 61
+    type: Transform
+- uid: 27
+  type: EmergencyLight
+  components:
+  - pos: -15.5,-12.5
+    parent: 61
+    type: Transform
+- uid: 28
+  type: GrilleBroken
+  components:
+  - rot: 3.141592653589793 rad
+    pos: 43.5,5.5
+    parent: 61
+    type: Transform
+- uid: 29
+  type: GrilleBroken
+  components:
+  - rot: 1.5707963267948966 rad
+    pos: 36.5,-14.5
+    parent: 61
+    type: Transform
+- uid: 30
+  type: Grille
+  components:
+  - pos: 50.5,-14.5
+    parent: 61
+    type: Transform
+- uid: 31
+  type: GrilleBroken
+  components:
+  - rot: -1.5707963267948966 rad
+    pos: 51.5,-14.5
+    parent: 61
+    type: Transform
+- uid: 32
+  type: GrilleBroken
+  components:
+  - rot: 1.5707963267948966 rad
+    pos: 54.5,-14.5
+    parent: 61
+    type: Transform
+- uid: 33
+  type: GrilleBroken
+  components:
+  - rot: -1.5707963267948966 rad
+    pos: 56.5,-14.5
+    parent: 61
+    type: Transform
+- uid: 34
+  type: Grille
+  components:
+  - pos: 55.5,-14.5
+    parent: 61
+    type: Transform
+- uid: 35
+  type: Grille
+  components:
+  - pos: 49.5,-14.5
+    parent: 61
+    type: Transform
+- uid: 36
+  type: GrilleBroken
+  components:
+  - pos: -72.5,-6.5
+    parent: 61
+    type: Transform
+- uid: 37
+  type: Grille
+  components:
+  - pos: -72.5,-7.5
+    parent: 61
+    type: Transform
+- uid: 38
+  type: Grille
+  components:
+  - pos: -72.5,-8.5
+    parent: 61
+    type: Transform
+- uid: 39
+  type: Grille
+  components:
+  - pos: -72.5,-9.5
+    parent: 61
+    type: Transform
+- uid: 40
+  type: Grille
+  components:
+  - pos: -72.5,-10.5
+    parent: 61
+    type: Transform
+- uid: 41
+  type: Grille
+  components:
+  - pos: -72.5,-11.5
+    parent: 61
+    type: Transform
+- uid: 42
+  type: Grille
+  components:
+  - pos: -72.5,-12.5
     parent: 61
     type: Transform
 - uid: 43
-  type: WallSolid
+  type: GrilleBroken
   components:
-  - pos: -4.5,1.5
+  - rot: 3.141592653589793 rad
+    pos: -72.5,-13.5
     parent: 61
     type: Transform
 - uid: 44
-  type: WallReinforced
+  type: GrilleBroken
   components:
-  - pos: 1.5,-2.5
+  - pos: -72.5,-15.5
     parent: 61
     type: Transform
 - uid: 45
-  type: ClothingShoesSwat
+  type: Grille
   components:
-  - pos: -11.555514,12.275328
+  - pos: -72.5,-16.5
     parent: 61
     type: Transform
 - uid: 46
-  type: GasPipeBend
+  type: Grille
   components:
-  - rot: 3.141592653589793 rad
-    pos: -3.5,-2.5
+  - pos: -72.5,-17.5
     parent: 61
     type: Transform
-  - canCollide: False
-    type: Physics
-  - color: '#0335FCFF'
-    type: AtmosPipeColor
 - uid: 47
-  type: WallReinforced
+  type: Grille
   components:
-  - pos: -9.5,4.5
+  - pos: -72.5,-20.5
     parent: 61
     type: Transform
 - uid: 48
-  type: WallSolid
+  type: Grille
   components:
-  - pos: 0.5,-0.5
+  - pos: -72.5,-18.5
     parent: 61
     type: Transform
 - uid: 49
-  type: GasVentPump
+  type: GrilleBroken
   components:
-  - rot: -1.5707963267948966 rad
-    pos: -32.5,-2.5
+  - rot: 1.5707963267948966 rad
+    pos: -72.5,-19.5
     parent: 61
     type: Transform
-  - canCollide: False
-    type: Physics
-  - color: '#0335FCFF'
-    type: AtmosPipeColor
 - uid: 50
-  type: Chair
+  type: EmergencyLight
   components:
-  - pos: -9.5,-24.5
+  - rot: 3.141592653589793 rad
+    pos: -61.5,-10.5
     parent: 61
     type: Transform
 - uid: 51
-  type: WallReinforced
+  type: GrilleBroken
   components:
-  - pos: 1.5,0.5
+  - rot: -1.5707963267948966 rad
+    pos: 45.5,-14.5
     parent: 61
     type: Transform
 - uid: 52
@@ -665,223 +665,223 @@ entities:
           color: '#334E6DC8'
           id: QuarterTileOverlayGreyscale
           coordinates: -1,8
-        781:
+        777:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtHeavy
           coordinates: -24,6
-        782:
+        778:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtHeavy
           coordinates: -11,8
-        783:
+        779:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtHeavy
           coordinates: -11,7
-        784:
+        780:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtHeavy
           coordinates: -13,5
-        785:
+        781:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtHeavy
           coordinates: -15,7
-        788:
+        784:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtHeavy
           coordinates: -13,0
-        796:
+        792:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtMedium
           coordinates: -12,0
-        797:
+        793:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtMedium
           coordinates: -13,1
-        798:
+        794:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtMedium
           coordinates: -11,6
-        799:
+        795:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtMedium
           coordinates: -11,5
-        800:
+        796:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtMedium
           coordinates: -13,4
-        801:
+        797:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtMedium
           coordinates: -13,6
-        802:
+        798:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtMedium
           coordinates: -15,6
-        803:
+        799:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtMedium
           coordinates: -16,7
-        804:
+        800:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtMedium
           coordinates: -23,6
-        805:
+        801:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtMedium
           coordinates: -22,7
-        806:
+        802:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtMedium
           coordinates: -20,8
-        807:
+        803:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtMedium
           coordinates: -24,7
-        808:
+        804:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtMedium
           coordinates: -24,4
-        809:
+        805:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtMedium
           coordinates: -25,3
-        810:
+        806:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtLight
           coordinates: -25,4
-        811:
+        807:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtLight
           coordinates: -22,6
-        812:
+        808:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtLight
           coordinates: -24,2
-        813:
+        809:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtLight
           coordinates: -25,1
-        814:
+        810:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtLight
           coordinates: -25,2
-        815:
+        811:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtLight
           coordinates: -16,6
-        816:
+        812:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtLight
           coordinates: -17,7
-        817:
+        813:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtLight
           coordinates: -19,7
-        818:
+        814:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtLight
           coordinates: -13,4
-        819:
+        815:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtLight
           coordinates: -12,6
-        820:
+        816:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtLight
           coordinates: -13,8
-        821:
+        817:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtLight
           coordinates: -12,3
-        835:
+        831:
           color: '#EFB34196'
           id: HalfTileOverlayGreyscale270
           coordinates: -25,0
-        836:
+        832:
           color: '#EFB34196'
           id: HalfTileOverlayGreyscale270
           coordinates: -25,1
-        837:
+        833:
           color: '#EFB34196'
           id: HalfTileOverlayGreyscale270
           coordinates: -25,2
-        838:
+        834:
           color: '#EFB34196'
           id: HalfTileOverlayGreyscale270
           coordinates: -25,3
-        839:
+        835:
           color: '#EFB34196'
           id: HalfTileOverlayGreyscale270
           coordinates: -25,4
-        846:
+        842:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtLight
           coordinates: -25,0
-        851:
+        847:
           angle: 1.5707963267948966 rad
           color: '#FFFFFFFF'
           id: WarningLine
           coordinates: -15,2
-        852:
+        848:
           angle: 1.5707963267948966 rad
           color: '#FFFFFFFF'
           id: WarningLine
           coordinates: -15,3
-        853:
+        849:
           angle: 1.5707963267948966 rad
           color: '#FFFFFFFF'
           id: WarningLine
           coordinates: -15,4
-        860:
+        856:
           color: '#EFB34196'
           id: HalfTileOverlayGreyscale90
           coordinates: -21,0
-        861:
+        857:
           color: '#EFB34196'
           id: HalfTileOverlayGreyscale90
           coordinates: -21,1
-        862:
+        858:
           color: '#EFB34196'
           id: HalfTileOverlayGreyscale90
           coordinates: -21,2
-        863:
+        859:
           color: '#EFB34196'
           id: HalfTileOverlayGreyscale90
           coordinates: -21,3
-        864:
+        860:
           color: '#EFB34196'
           id: HalfTileOverlayGreyscale90
           coordinates: -21,4
@@ -954,351 +954,351 @@ entities:
           color: '#DE3A3A96'
           id: HalfTileOverlayGreyscale
           coordinates: 19,4
-        63:
+        62:
           angle: 3.141592653589793 rad
           color: '#FFFFFFFF'
           id: WarningLine
           coordinates: 17,1
-        64:
+        63:
           angle: 3.141592653589793 rad
           color: '#FFFFFFFF'
           id: WarningLine
           coordinates: 18,1
-        65:
+        64:
           angle: 3.141592653589793 rad
           color: '#FFFFFFFF'
           id: WarningLine
           coordinates: 19,1
-        69:
+        68:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtLight
           coordinates: 10,1
-        70:
+        69:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtLight
           coordinates: 9,4
-        71:
+        70:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtMedium
           coordinates: 9,3
-        72:
+        71:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtMedium
           coordinates: 9,0
-        73:
+        72:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtMedium
           coordinates: 10,0
-        74:
+        73:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtHeavy
           coordinates: 9,1
-        75:
+        74:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtHeavy
           coordinates: 10,3
-        76:
+        75:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtLight
           coordinates: 11,1
-        77:
+        76:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtLight
           coordinates: 11,4
-        78:
+        77:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtLight
           coordinates: 12,4
+        99:
+          angle: -3.141592653589793 rad
+          color: '#FFFFFFFF'
+          id: WarningLine
+          coordinates: 11,25
         100:
           angle: -3.141592653589793 rad
           color: '#FFFFFFFF'
           id: WarningLine
-          coordinates: 11,25
+          coordinates: 12,25
         101:
           angle: -3.141592653589793 rad
           color: '#FFFFFFFF'
           id: WarningLine
-          coordinates: 12,25
+          coordinates: 13,25
         102:
           angle: -3.141592653589793 rad
           color: '#FFFFFFFF'
           id: WarningLine
-          coordinates: 13,25
-        103:
-          angle: -3.141592653589793 rad
-          color: '#FFFFFFFF'
-          id: WarningLine
           coordinates: 14,25
-        104:
+        103:
           color: '#DE3A3A96'
           id: HalfTileOverlayGreyscale180
           coordinates: 11,24
-        105:
+        104:
           color: '#DE3A3A96'
           id: HalfTileOverlayGreyscale180
           coordinates: 12,24
-        106:
+        105:
           color: '#DE3A3A96'
           id: HalfTileOverlayGreyscale180
           coordinates: 13,24
-        107:
+        106:
           color: '#DE3A3A96'
           id: HalfTileOverlayGreyscale180
           coordinates: 14,24
-        108:
+        107:
           color: '#DE3A3A96'
           id: FullTileOverlayGreyscale
           coordinates: 14,23
-        109:
+        108:
           color: '#DE3A3A96'
           id: HalfTileOverlayGreyscale
           coordinates: 14,22
-        110:
+        109:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtHeavy
           coordinates: 11,25
-        111:
+        110:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtHeavy
           coordinates: 14,24
-        112:
+        111:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtHeavy
           coordinates: 14,22
-        113:
+        112:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtMedium
           coordinates: 14,21
-        114:
+        113:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtMedium
           coordinates: 11,24
-        115:
+        114:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtLight
           coordinates: 12,24
+        115:
+          cleanable: True
+          color: '#FFFFFFFF'
+          id: DirtLight
+          coordinates: 16,26
         116:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtLight
-          coordinates: 16,26
+          coordinates: 12,27
         117:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtLight
-          coordinates: 12,27
-        118:
-          cleanable: True
-          color: '#FFFFFFFF'
-          id: DirtLight
           coordinates: 11,27
-        119:
+        118:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtHeavy
           coordinates: 10,28
-        120:
+        119:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtHeavy
           coordinates: 18,27
-        121:
+        120:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtMedium
           coordinates: 17,27
-        122:
+        121:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtMedium
           coordinates: 17,28
-        123:
+        122:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtMedium
           coordinates: 15,28
-        124:
+        123:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtMedium
           coordinates: 16,26
-        125:
+        124:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtMedium
           coordinates: 16,25
-        126:
+        125:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtLight
           coordinates: 17,26
-        127:
+        126:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtLight
           coordinates: 16,24
-        128:
+        127:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtLight
           coordinates: 16,27
-        129:
+        128:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtLight
           coordinates: 9,27
-        130:
+        129:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtLight
           coordinates: 10,27
-        131:
+        130:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtLight
           coordinates: 14,27
-        132:
+        131:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtHeavy
           coordinates: 5,7
-        133:
+        132:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtHeavy
           coordinates: 5,8
-        137:
+        136:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtHeavy
           coordinates: 7,0
-        142:
+        141:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtMedium
           coordinates: 6,0
-        145:
+        144:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtMedium
           coordinates: 5,3
-        146:
+        145:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtMedium
           coordinates: 5,6
-        147:
+        146:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtMedium
           coordinates: 7,8
-        148:
+        147:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtLight
           coordinates: 6,7
-        149:
+        148:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtLight
           coordinates: 7,7
-        150:
+        149:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtLight
           coordinates: 6,6
-        151:
+        150:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtLight
           coordinates: 5,5
-        152:
+        151:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtLight
           coordinates: 5,2
-        164:
+        163:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtHeavy
           coordinates: 14,4
+        167:
+          cleanable: True
+          color: '#FFFFFFFF'
+          id: DirtMedium
+          coordinates: 13,4
         168:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtMedium
-          coordinates: 13,4
-        169:
-          cleanable: True
-          color: '#FFFFFFFF'
-          id: DirtMedium
           coordinates: 14,2
-        170:
+        169:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtLight
           coordinates: 14,3
-        171:
+        170:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtLight
           coordinates: 14,1
-        174:
+        173:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtLight
           coordinates: 15,3
-        175:
+        174:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtLight
           coordinates: 16,3
-        176:
+        175:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtLight
           coordinates: 15,4
-        177:
+        176:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtLight
           coordinates: 12,2
-        178:
+        177:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtLight
           coordinates: 20,3
-        179:
+        178:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtLight
           coordinates: 19,4
-        434:
+        432:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtLight
           coordinates: 13,4
-        436:
+        434:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtHeavy
           coordinates: 14,4
-        437:
+        435:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtLight
@@ -1396,1232 +1396,1242 @@ entities:
           color: '#DE3A3A96'
           id: HalfTileOverlayGreyscale90
           coordinates: 15,-2
-        53:
+        52:
           color: '#DE3A3A96'
           id: HalfTileOverlayGreyscale
           coordinates: 17,-4
-        54:
+        53:
           color: '#DE3A3A96'
           id: HalfTileOverlayGreyscale
           coordinates: 18,-4
-        55:
+        54:
           color: '#DE3A3A96'
           id: HalfTileOverlayGreyscale
           coordinates: 19,-4
-        56:
+        55:
           color: '#DE3A3A96'
           id: HalfTileOverlayGreyscale
           coordinates: 20,-4
-        57:
+        56:
           color: '#DE3A3A96'
           id: HalfTileOverlayGreyscale180
           coordinates: 17,-7
-        58:
+        57:
           color: '#DE3A3A96'
           id: HalfTileOverlayGreyscale180
           coordinates: 18,-7
-        59:
+        58:
           color: '#DE3A3A96'
           id: HalfTileOverlayGreyscale180
           coordinates: 19,-7
-        60:
+        59:
           color: '#DE3A3A96'
           id: HalfTileOverlayGreyscale180
           coordinates: 20,-7
-        61:
+        60:
           color: '#DE3A3A96'
           id: FullTileOverlayGreyscale
           coordinates: 16,-6
-        62:
+        61:
           color: '#DE3A3A96'
           id: FullTileOverlayGreyscale
           coordinates: 16,-5
-        66:
+        65:
           color: '#FFFFFFFF'
           id: WarningLine
           coordinates: 17,-2
-        67:
+        66:
           color: '#FFFFFFFF'
           id: WarningLine
           coordinates: 18,-2
-        68:
+        67:
           color: '#FFFFFFFF'
           id: WarningLine
           coordinates: 19,-2
-        79:
+        78:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtLight
           coordinates: 8,-6
-        80:
+        79:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtMedium
           coordinates: 8,-5
-        81:
+        80:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtLight
           coordinates: 7,-5
+        81:
+          cleanable: True
+          color: '#FFFFFFFF'
+          id: DirtLight
+          coordinates: 7,-6
         82:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtLight
-          coordinates: 7,-6
+          coordinates: 15,-6
         83:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtLight
-          coordinates: 15,-6
-        84:
-          cleanable: True
-          color: '#FFFFFFFF'
-          id: DirtLight
           coordinates: 17,-5
-        85:
+        84:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtMedium
           coordinates: 17,-6
-        86:
+        85:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtMedium
           coordinates: 13,-7
-        87:
+        86:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtHeavy
           coordinates: 15,-7
-        88:
+        87:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtLight
           coordinates: 14,-7
-        89:
+        88:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtLight
           coordinates: 15,-5
-        90:
+        89:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtLight
           coordinates: 11,-7
-        91:
+        90:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtLight
           coordinates: 8,-8
-        92:
+        91:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtLight
           coordinates: 5,-7
-        93:
+        92:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtLight
           coordinates: 0,-8
-        97:
+        96:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtMedium
           coordinates: 1,-9
-        98:
+        97:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtLight
           coordinates: 0,-9
-        99:
+        98:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtLight
           coordinates: 2,-8
-        134:
+        133:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtHeavy
           coordinates: 2,-1
-        135:
+        134:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtHeavy
           coordinates: 2,-2
-        136:
+        135:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtHeavy
           coordinates: 3,-1
-        138:
+        137:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtMedium
           coordinates: 2,-9
-        139:
+        138:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtMedium
           coordinates: 2,-3
-        140:
+        139:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtMedium
           coordinates: 2,-4
-        141:
+        140:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtMedium
           coordinates: 3,-2
-        143:
+        142:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtMedium
           coordinates: 7,-1
-        144:
+        143:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtMedium
           coordinates: 7,-3
-        153:
+        152:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtLight
           coordinates: 6,-1
-        154:
+        153:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtLight
           coordinates: 7,-2
-        155:
+        154:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtLight
           coordinates: 6,-3
-        156:
+        155:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtLight
           coordinates: 2,-5
-        157:
+        156:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtLight
           coordinates: 3,-3
-        158:
+        157:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtLight
           coordinates: 4,-2
-        159:
+        158:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtLight
           coordinates: 4,-1
-        160:
+        159:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtLight
           coordinates: 4,-3
-        161:
+        160:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtLight
           coordinates: 4,-5
-        165:
+        164:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtHeavy
           coordinates: 13,-3
-        166:
+        165:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtMedium
           coordinates: 13,-4
-        167:
+        166:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtMedium
           coordinates: 13,-2
-        172:
+        171:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtLight
           coordinates: 13,-1
-        173:
+        172:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtLight
           coordinates: 14,-3
-        181:
+        179:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtHeavy
           coordinates: 20,-7
-        182:
+        180:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtHeavy
           coordinates: 19,-5
-        183:
+        181:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtMedium
           coordinates: 18,-5
-        184:
+        182:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtMedium
           coordinates: 19,-4
-        185:
+        183:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtMedium
           coordinates: 20,-6
-        186:
+        184:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtLight
           coordinates: 17,-5
-        187:
+        185:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtLight
           coordinates: 19,-6
-        188:
+        186:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtLight
           coordinates: 20,-4
-        189:
+        187:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtLight
           coordinates: 18,-7
-        192:
+        190:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtHeavy
           coordinates: 0,-28
-        201:
+        199:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtMedium
           coordinates: 2,-23
-        202:
+        200:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtMedium
           coordinates: 3,-21
-        205:
+        203:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtLight
           coordinates: 0,-30
-        206:
+        204:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtLight
           coordinates: 1,-30
-        212:
+        210:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtLight
           coordinates: 0,-27
-        213:
+        211:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtLight
           coordinates: 0,-24
-        217:
+        215:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtLight
           coordinates: 4,-14
-        218:
+        216:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtMedium
           coordinates: 4,-13
-        219:
+        217:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtHeavy
           coordinates: 2,-13
-        220:
+        218:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtHeavy
           coordinates: 6,-14
-        221:
+        219:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtHeavy
           coordinates: 8,-13
-        222:
+        220:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtHeavy
           coordinates: 13,-11
-        223:
+        221:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtHeavy
           coordinates: 8,-14
-        224:
+        222:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtMedium
           coordinates: 8,-15
-        225:
+        223:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtMedium
           coordinates: 7,-14
-        226:
+        224:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtMedium
           coordinates: 12,-11
-        227:
+        225:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtMedium
           coordinates: 8,-16
-        228:
+        226:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtLight
           coordinates: 7,-15
-        229:
+        227:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtLight
           coordinates: 7,-16
-        230:
+        228:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtLight
           coordinates: 8,-17
-        231:
+        229:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtLight
           coordinates: 8,-18
-        232:
+        230:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtLight
           coordinates: 6,-18
-        233:
+        231:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtLight
           coordinates: 6,-13
-        234:
+        232:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtLight
           coordinates: 7,-12
-        235:
+        233:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtLight
           coordinates: 11,-11
-        236:
+        234:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtLight
           coordinates: 13,-10
-        237:
+        235:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtLight
           coordinates: 14,-11
-        238:
+        236:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtLight
           coordinates: 16,-11
-        239:
+        237:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtLight
           coordinates: 11,-9
-        240:
+        238:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtLight
           coordinates: 12,-9
-        241:
+        239:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtLight
           coordinates: 5,-11
-        242:
+        240:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtLight
           coordinates: 4,-11
-        253:
+        251:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtHeavy
           coordinates: 0,-19
-        260:
+        258:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtLight
           coordinates: 0,-16
-        261:
+        259:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtLight
           coordinates: 0,-15
-        262:
+        260:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtLight
           coordinates: 2,-15
-        263:
+        261:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtLight
           coordinates: 6,-19
-        264:
+        262:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtHeavy
           coordinates: 2,-29
-        265:
+        263:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtMedium
           coordinates: 3,-29
-        266:
+        264:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtMedium
           coordinates: 4,-28
-        267:
+        265:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtMedium
           coordinates: 2,-28
-        268:
+        266:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtMedium
           coordinates: 2,-30
-        269:
+        267:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtLight
           coordinates: 3,-30
-        270:
+        268:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtLight
           coordinates: 3,-28
-        271:
+        269:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtLight
           coordinates: 3,-27
-        272:
+        270:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtLight
           coordinates: 4,-25
-        273:
+        271:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtLight
           coordinates: 3,-31
-        274:
+        272:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtLight
           coordinates: 0,-32
-        399:
+        397:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtHeavy
           coordinates: 8,-25
-        400:
+        398:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtHeavy
           coordinates: 6,-28
-        401:
+        399:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtMedium
           coordinates: 5,-29
-        402:
+        400:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtMedium
           coordinates: 5,-28
-        403:
+        401:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtMedium
           coordinates: 8,-26
-        404:
+        402:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtMedium
           coordinates: 7,-26
-        405:
+        403:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtLight
           coordinates: 8,-27
-        406:
+        404:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtLight
           coordinates: 6,-26
-        407:
+        405:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtLight
           coordinates: 5,-25
-        408:
+        406:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtLight
           coordinates: 7,-28
-        409:
+        407:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtLight
           coordinates: 7,-29
-        410:
+        408:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtLight
           coordinates: 9,-29
-        411:
+        409:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtHeavy
           coordinates: 13,-29
-        412:
+        410:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtHeavy
           coordinates: 13,-26
-        413:
+        411:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtMedium
           coordinates: 14,-26
-        414:
+        412:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtMedium
           coordinates: 14,-27
-        415:
+        413:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtLight
           coordinates: 14,-25
-        416:
+        414:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtLight
           coordinates: 14,-29
-        417:
+        415:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtLight
           coordinates: 14,-28
-        418:
+        416:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtHeavy
           coordinates: 4,-30
+        417:
+          cleanable: True
+          color: '#FFFFFFFF'
+          id: DirtHeavy
+          coordinates: 4,-29
+        418:
+          cleanable: True
+          color: '#FFFFFFFF'
+          id: DirtHeavy
+          coordinates: 4,-29
         419:
-          cleanable: True
-          color: '#FFFFFFFF'
-          id: DirtHeavy
-          coordinates: 4,-29
-        420:
-          cleanable: True
-          color: '#FFFFFFFF'
-          id: DirtHeavy
-          coordinates: 4,-29
-        421:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtLight
           coordinates: 4,-31
-        422:
+        420:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtLight
           coordinates: 3,-28
-        425:
+        423:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtHeavy
           coordinates: 8,-13
-        426:
+        424:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtHeavy
           coordinates: 8,-6
-        427:
+        425:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtHeavy
           coordinates: 8,-7
-        428:
+        426:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtLight
           coordinates: 6,-6
-        429:
+        427:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtLight
           coordinates: 7,-6
-        430:
+        428:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtLight
           coordinates: 7,-7
+        429:
+          cleanable: True
+          color: '#FFFFFFFF'
+          id: DirtLight
+          coordinates: 11,-6
+        430:
+          cleanable: True
+          color: '#FFFFFFFF'
+          id: DirtLight
+          coordinates: 10,-7
         431:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtLight
           coordinates: 11,-6
-        432:
-          cleanable: True
-          color: '#FFFFFFFF'
-          id: DirtLight
-          coordinates: 10,-7
         433:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtLight
-          coordinates: 11,-6
-        435:
-          cleanable: True
-          color: '#FFFFFFFF'
-          id: DirtLight
           coordinates: 13,-2
-        450:
+        448:
           angle: 3.141592653589793 rad
           color: '#FFFFFFFF'
           id: WarnEnd
           coordinates: 23,-16
-        451:
+        449:
           color: '#A4610696'
           id: HalfTileOverlayGreyscale270
           coordinates: 19,-13
-        452:
+        450:
           color: '#A4610696'
           id: HalfTileOverlayGreyscale270
           coordinates: 19,-14
-        453:
+        451:
           color: '#A4610696'
           id: HalfTileOverlayGreyscale270
           coordinates: 19,-15
-        454:
+        452:
           color: '#A4610696'
           id: HalfTileOverlayGreyscale270
           coordinates: 19,-16
-        455:
+        453:
           color: '#A4610696'
           id: HalfTileOverlayGreyscale90
           coordinates: 23,-15
-        456:
+        454:
           color: '#A4610696'
           id: HalfTileOverlayGreyscale90
           coordinates: 23,-14
-        457:
+        455:
           color: '#A4610696'
           id: HalfTileOverlayGreyscale90
           coordinates: 23,-13
-        458:
+        456:
           color: '#A4610696'
           id: QuarterTileOverlayGreyscale180
           coordinates: 19,-16
-        459:
+        457:
           color: '#A4610696'
           id: HalfTileOverlayGreyscale180
           coordinates: 20,-16
-        460:
+        458:
           color: '#A4610696'
           id: HalfTileOverlayGreyscale180
           coordinates: 21,-16
-        461:
+        459:
           color: '#A4610696'
           id: HalfTileOverlayGreyscale180
           coordinates: 22,-16
-        462:
+        460:
           color: '#A4610696'
           id: HalfTileOverlayGreyscale270
           coordinates: 15,-18
-        463:
+        461:
           color: '#A4610696'
           id: HalfTileOverlayGreyscale270
           coordinates: 15,-19
-        464:
+        462:
           color: '#A4610696'
           id: HalfTileOverlayGreyscale270
           coordinates: 15,-20
-        465:
+        463:
           color: '#A4610696'
           id: HalfTileOverlayGreyscale270
           coordinates: 15,-21
-        466:
+        464:
           color: '#A4610696'
           id: HalfTileOverlayGreyscale90
           coordinates: 17,-21
-        467:
+        465:
           color: '#A4610696'
           id: HalfTileOverlayGreyscale90
           coordinates: 17,-20
-        468:
+        466:
           color: '#A4610696'
           id: HalfTileOverlayGreyscale90
           coordinates: 17,-19
-        469:
+        467:
           color: '#A4610696'
           id: HalfTileOverlayGreyscale90
           coordinates: 17,-18
-        470:
+        468:
           color: '#A4610696'
           id: FullTileOverlayGreyscale
           coordinates: 18,-20
-        471:
+        469:
           color: '#A4610696'
           id: FullTileOverlayGreyscale
           coordinates: 18,-19
-        472:
+        470:
           color: '#A4610696'
           id: HalfTileOverlayGreyscale270
           coordinates: 19,-22
-        473:
+        471:
           color: '#A4610696'
           id: HalfTileOverlayGreyscale270
           coordinates: 19,-21
-        474:
+        472:
           color: '#A4610696'
           id: HalfTileOverlayGreyscale270
           coordinates: 19,-20
-        475:
+        473:
           color: '#A4610696'
           id: HalfTileOverlayGreyscale270
           coordinates: 19,-19
-        476:
+        474:
           color: '#A4610696'
           id: HalfTileOverlayGreyscale270
           coordinates: 19,-18
-        477:
+        475:
           color: '#FFFFFFFF'
           id: Box
           coordinates: 24,-22
-        478:
+        476:
           color: '#FFFFFFFF'
           id: Box
           coordinates: 24,-21
-        479:
+        477:
           color: '#FFFFFFFF'
           id: BotLeft
           coordinates: 24,-19
-        480:
+        478:
           color: '#FFFFFFFF'
           id: BotLeft
           coordinates: 24,-18
-        481:
+        479:
           angle: 3.141592653589793 rad
           color: '#FFFFFFFF'
           id: WarningLine
           coordinates: 23,-24
+        480:
+          angle: 3.141592653589793 rad
+          color: '#FFFFFFFF'
+          id: WarningLine
+          coordinates: 22,-24
+        481:
+          angle: 3.141592653589793 rad
+          color: '#FFFFFFFF'
+          id: WarningLine
+          coordinates: 21,-24
         482:
           angle: 3.141592653589793 rad
           color: '#FFFFFFFF'
           id: WarningLine
-          coordinates: 22,-24
+          coordinates: 20,-24
         483:
           angle: 3.141592653589793 rad
           color: '#FFFFFFFF'
           id: WarningLine
-          coordinates: 21,-24
-        484:
-          angle: 3.141592653589793 rad
-          color: '#FFFFFFFF'
-          id: WarningLine
-          coordinates: 20,-24
-        485:
-          angle: 3.141592653589793 rad
-          color: '#FFFFFFFF'
-          id: WarningLine
           coordinates: 19,-24
-        486:
+        484:
           color: '#FFFFFFFF'
           id: StandClear
           coordinates: 23,-16
-        487:
+        485:
           angle: -3.141592653589793 rad
           color: '#FFFFFFFF'
           id: LoadingArea
           coordinates: 23,-27
-        488:
+        486:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtHeavy
           coordinates: 23,-15
-        489:
+        487:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtHeavy
           coordinates: 22,-16
-        490:
+        488:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtHeavy
           coordinates: 19,-16
-        491:
+        489:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtHeavy
           coordinates: 19,-14
-        492:
+        490:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtHeavy
           coordinates: 23,-15
-        493:
+        491:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtMedium
           coordinates: 23,-14
-        494:
+        492:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtMedium
           coordinates: 23,-13
-        495:
+        493:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtMedium
           coordinates: 20,-16
-        496:
+        494:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtMedium
           coordinates: 19,-15
-        497:
+        495:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtMedium
           coordinates: 20,-14
-        498:
+        496:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtMedium
           coordinates: 20,-12
-        499:
+        497:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtMedium
           coordinates: 21,-13
-        500:
+        498:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtLight
           coordinates: 20,-15
-        501:
+        499:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtLight
           coordinates: 21,-16
-        502:
+        500:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtLight
           coordinates: 19,-13
-        503:
+        501:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtLight
           coordinates: 19,-12
-        504:
+        502:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtLight
           coordinates: 19,-11
-        505:
+        503:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtLight
           coordinates: 22,-15
-        506:
+        504:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtLight
           coordinates: 23,-12
-        507:
+        505:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtLight
           coordinates: 23,-11
-        508:
+        506:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtLight
           coordinates: 24,-15
-        509:
+        507:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtHeavy
           coordinates: 25,-15
-        510:
+        508:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtMedium
           coordinates: 25,-16
-        511:
+        509:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtLight
           coordinates: 25,-17
-        512:
+        510:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtLight
           coordinates: 26,-15
-        513:
+        511:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtLight
           coordinates: 25,-14
-        514:
+        512:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtLight
           coordinates: 26,-14
-        515:
+        513:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtLight
           coordinates: 25,-17
-        516:
+        514:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtLight
           coordinates: 25,-19
-        517:
+        515:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtHeavy
           coordinates: 21,-22
-        518:
+        516:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtHeavy
           coordinates: 22,-22
-        519:
+        517:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtHeavy
           coordinates: 19,-20
-        520:
+        518:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtMedium
           coordinates: 19,-19
-        521:
+        519:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtMedium
           coordinates: 21,-21
-        522:
+        520:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtMedium
           coordinates: 22,-19
-        523:
+        521:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtMedium
           coordinates: 17,-20
-        524:
+        522:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtLight
           coordinates: 16,-20
-        525:
+        523:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtLight
           coordinates: 17,-19
-        526:
+        524:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtLight
           coordinates: 20,-20
-        527:
+        525:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtLight
           coordinates: 20,-21
-        528:
+        526:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtLight
           coordinates: 22,-20
-        529:
+        527:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtLight
           coordinates: 20,-18
-        530:
+        528:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtHeavy
           coordinates: 22,-24
-        531:
+        529:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtHeavy
           coordinates: 21,-24
+        530:
+          cleanable: True
+          color: '#FFFFFFFF'
+          id: DirtHeavy
+          coordinates: 22,-26
+        531:
+          cleanable: True
+          color: '#FFFFFFFF'
+          id: DirtHeavy
+          coordinates: 23,-27
         532:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtHeavy
-          coordinates: 22,-26
+          coordinates: 20,-28
         533:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtHeavy
-          coordinates: 23,-27
+          coordinates: 20,-26
         534:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtHeavy
-          coordinates: 20,-28
+          coordinates: 20,-26
         535:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtHeavy
-          coordinates: 20,-26
+          coordinates: 22,-26
         536:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtHeavy
-          coordinates: 20,-26
+          coordinates: 22,-26
         537:
-          cleanable: True
-          color: '#FFFFFFFF'
-          id: DirtHeavy
-          coordinates: 22,-26
-        538:
-          cleanable: True
-          color: '#FFFFFFFF'
-          id: DirtHeavy
-          coordinates: 22,-26
-        539:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtMedium
           coordinates: 22,-27
-        540:
+        538:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtMedium
           coordinates: 21,-27
-        541:
+        539:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtMedium
           coordinates: 21,-26
-        542:
+        540:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtMedium
           coordinates: 20,-25
-        543:
+        541:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtMedium
           coordinates: 20,-24
-        544:
+        542:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtMedium
           coordinates: 22,-27
-        545:
+        543:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtMedium
           coordinates: 22,-25
-        546:
+        544:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtMedium
           coordinates: 20,-27
-        547:
+        545:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtLight
           coordinates: 21,-25
-        548:
+        546:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtLight
           coordinates: 22,-25
-        549:
+        547:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtLight
           coordinates: 23,-27
-        550:
+        548:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtLight
           coordinates: 23,-26
-        551:
+        549:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtLight
           coordinates: 20,-29
-        552:
+        550:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtLight
           coordinates: 19,-29
-        553:
+        551:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtLight
           coordinates: 19,-27
-        554:
+        552:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtLight
           coordinates: 19,-26
+        553:
+          cleanable: True
+          color: '#FFFFFFFF'
+          id: DirtLight
+          coordinates: 19,-24
+        554:
+          cleanable: True
+          color: '#FFFFFFFF'
+          id: DirtLight
+          coordinates: 19,-24
         555:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtLight
-          coordinates: 19,-24
+          coordinates: 19,-25
         556:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtLight
-          coordinates: 19,-24
+          coordinates: 21,-25
         557:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtLight
-          coordinates: 19,-25
+          coordinates: 22,-25
         558:
           cleanable: True
           color: '#FFFFFFFF'
@@ -2631,1717 +2641,1712 @@ entities:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtLight
-          coordinates: 22,-25
-        560:
-          cleanable: True
-          color: '#FFFFFFFF'
-          id: DirtLight
-          coordinates: 21,-25
-        561:
-          cleanable: True
-          color: '#FFFFFFFF'
-          id: DirtLight
           coordinates: 19,-25
-        562:
+        560:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtHeavy
           coordinates: 19,-25
-        563:
+        561:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtHeavy
           coordinates: 19,-26
-        564:
+        562:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtHeavy
           coordinates: 19,-27
-        565:
+        563:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtHeavy
           coordinates: 20,-29
-        566:
+        564:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtHeavy
           coordinates: 19,-29
-        567:
+        565:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtHeavy
           coordinates: 21,-23
-        568:
+        566:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtHeavy
           coordinates: 22,-23
-        569:
+        567:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtHeavy
           coordinates: 23,-26
-        570:
+        568:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtHeavy
           coordinates: 23,-25
-        571:
+        569:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtHeavy
           coordinates: 23,-24
-        572:
+        570:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtMedium
           coordinates: 25,-22
-        573:
+        571:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtLight
           coordinates: 26,-22
-        574:
+        572:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtLight
           coordinates: 24,-20
-        575:
+        573:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtLight
           coordinates: 24,-21
-        576:
+        574:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtLight
           coordinates: 26,-18
-        577:
+        575:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtLight
           coordinates: 18,-11
-        578:
+        576:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtLight
           coordinates: 21,-10
-        579:
+        577:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtLight
           coordinates: 22,-10
-        580:
+        578:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtLight
           coordinates: 26,-10
-        581:
+        579:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtLight
           coordinates: 17,-10
-        596:
+        592:
           color: '#9FED5896'
           id: HalfTileOverlayGreyscale270
           coordinates: 31,-7
-        597:
+        593:
           color: '#9FED5896'
           id: HalfTileOverlayGreyscale270
           coordinates: 31,-6
-        598:
+        594:
           color: '#9FED5896'
           id: HalfTileOverlayGreyscale270
           coordinates: 31,-5
-        609:
+        605:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtMedium
           coordinates: 29,-9
-        610:
+        606:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtMedium
           coordinates: 30,-9
-        611:
+        607:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtLight
           coordinates: 31,-9
-        612:
+        608:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtLight
           coordinates: 31,-10
-        613:
+        609:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtLight
           coordinates: 28,-9
-        619:
+        615:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtLight
           coordinates: 25,-9
-        620:
+        616:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtLight
           coordinates: 26,-9
-        773:
+        769:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtLight
           coordinates: 29,-11
-        774:
+        770:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtLight
           coordinates: 25,-11
-        775:
+        771:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtHeavy
           coordinates: 24,-11
-        776:
+        772:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtMedium
           coordinates: 24,-10
-        777:
+        773:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtMedium
           coordinates: 22,-11
-        778:
+        774:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtLight
           coordinates: 22,-12
-        779:
+        775:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtLight
           coordinates: 20,-11
-        780:
+        776:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtLight
           coordinates: 2,-11
-        904:
+        897:
           color: '#A4610696'
           id: HalfTileOverlayGreyscale180
           coordinates: 15,-16
-        905:
+        898:
           color: '#A4610696'
           id: HalfTileOverlayGreyscale180
           coordinates: 16,-16
-        906:
+        899:
           color: '#A4610696'
           id: HalfTileOverlayGreyscale180
           coordinates: 17,-16
-        926:
+        919:
           color: '#DE3A3A96'
           id: CheckerNWSE
           coordinates: 11,-4
-        927:
+        920:
           color: '#DE3A3A96'
           id: CheckerNWSE
           coordinates: 10,-4
-        928:
+        921:
           color: '#DE3A3A96'
           id: CheckerNWSE
           coordinates: 9,-4
-        929:
+        922:
           color: '#DE3A3A96'
           id: CheckerNWSE
           coordinates: 9,-3
-        930:
+        923:
           color: '#DE3A3A96'
           id: CheckerNWSE
           coordinates: 10,-3
-        931:
+        924:
           color: '#DE3A3A96'
           id: CheckerNWSE
           coordinates: 11,-3
-        932:
+        925:
           color: '#DE3A3A96'
           id: CheckerNWSE
           coordinates: 11,-2
-        933:
+        926:
           color: '#DE3A3A96'
           id: CheckerNWSE
           coordinates: 10,-2
-        934:
+        927:
           color: '#DE3A3A96'
           id: CheckerNWSE
           coordinates: 9,-2
-        935:
+        928:
           color: '#DE3A3A96'
           id: FullTileOverlayGreyscale
           coordinates: 12,-3
       -1,-1:
-        94:
+        93:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtLight
           coordinates: -4,-8
-        95:
+        94:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtLight
           coordinates: -4,-9
-        96:
+        95:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtLight
           coordinates: -5,-9
-        162:
+        161:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtLight
           coordinates: -1,-9
-        163:
+        162:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtLight
           coordinates: -3,-8
-        190:
+        188:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtHeavy
           coordinates: -1,-30
-        191:
+        189:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtHeavy
           coordinates: -1,-28
-        193:
+        191:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtHeavy
           coordinates: -6,-21
-        194:
+        192:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtHeavy
           coordinates: -6,-22
-        195:
+        193:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtHeavy
           coordinates: -6,-25
-        196:
+        194:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtMedium
           coordinates: -3,-30
-        197:
+        195:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtMedium
           coordinates: -1,-29
-        198:
+        196:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtMedium
           coordinates: -3,-28
-        199:
+        197:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtMedium
           coordinates: -3,-27
-        200:
+        198:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtMedium
           coordinates: -4,-28
-        203:
+        201:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtLight
           coordinates: -2,-30
-        204:
+        202:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtLight
           coordinates: -1,-31
-        207:
+        205:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtLight
           coordinates: -5,-30
-        208:
+        206:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtLight
           coordinates: -2,-28
-        209:
+        207:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtLight
           coordinates: -3,-29
-        210:
+        208:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtLight
           coordinates: -4,-28
-        211:
+        209:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtLight
           coordinates: -5,-28
-        214:
+        212:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtLight
           coordinates: -1,-24
-        215:
+        213:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtLight
           coordinates: -4,-22
-        216:
+        214:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtLight
           coordinates: -6,-15
-        243:
+        241:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtHeavy
           coordinates: -5,-11
-        244:
+        242:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtMedium
           coordinates: -6,-11
-        245:
+        243:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtMedium
           coordinates: -8,-15
-        246:
+        244:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtLight
           coordinates: -8,-14
-        247:
+        245:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtLight
           coordinates: -8,-13
-        248:
+        246:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtLight
           coordinates: -4,-11
-        249:
+        247:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtLight
           coordinates: -3,-11
-        250:
+        248:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtLight
           coordinates: -5,-10
-        251:
+        249:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtLight
           coordinates: -8,-16
-        252:
+        250:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtLight
           coordinates: -8,-17
-        254:
+        252:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtMedium
           coordinates: -3,-19
-        255:
+        253:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtMedium
           coordinates: -2,-18
-        256:
+        254:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtMedium
           coordinates: -3,-17
-        257:
+        255:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtLight
           coordinates: -3,-18
-        258:
+        256:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtLight
           coordinates: -2,-17
-        259:
+        257:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtLight
           coordinates: -1,-17
-        275:
+        273:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtLight
           coordinates: -7,-30
-        276:
+        274:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtLight
           coordinates: -8,-29
-        277:
+        275:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtHeavy
           coordinates: -8,-27
-        278:
+        276:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtMedium
           coordinates: -9,-27
-        279:
+        277:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtMedium
           coordinates: -10,-26
-        280:
+        278:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtMedium
           coordinates: -9,-30
-        281:
+        279:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtMedium
           coordinates: -9,-23
-        282:
+        280:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtLight
           coordinates: -8,-26
-        283:
+        281:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtLight
           coordinates: -9,-26
-        284:
+        282:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtLight
           coordinates: -10,-25
-        285:
+        283:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtLight
           coordinates: -10,-27
-        286:
+        284:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtLight
           coordinates: -9,-28
-        287:
+        285:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtLight
           coordinates: -10,-31
-        288:
+        286:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtLight
           coordinates: -9,-32
-        289:
+        287:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtLight
           coordinates: -8,-31
-        290:
+        288:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtLight
           coordinates: -9,-31
-        291:
+        289:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtLight
           coordinates: -9,-25
-        292:
+        290:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtLight
           coordinates: -9,-22
-        293:
+        291:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtLight
           coordinates: -8,-20
-        294:
+        292:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtLight
           coordinates: -9,-18
-        295:
+        293:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtLight
           coordinates: -9,-12
-        296:
+        294:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtLight
           coordinates: -9,-10
-        297:
+        295:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtMedium
           coordinates: -8,-11
-        298:
+        296:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtLight
           coordinates: -7,-11
-        299:
+        297:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtLight
           coordinates: -10,-11
-        300:
+        298:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtLight
           coordinates: -11,-11
-        301:
+        299:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtLight
           coordinates: -8,-7
-        302:
+        300:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtLight
           coordinates: -8,-6
-        303:
+        301:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtLight
           coordinates: -8,-9
-        304:
+        302:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtMedium
           coordinates: -7,-9
-        305:
+        303:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtHeavy
           coordinates: -6,-9
-        306:
+        304:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtLight
           coordinates: -6,-10
-        307:
+        305:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtLight
           coordinates: -3,-9
-        308:
+        306:
           color: '#FDD178FF'
           id: HalfTileOverlayGreyscale
           coordinates: -13,-17
-        309:
+        307:
           color: '#FDD178FF'
           id: HalfTileOverlayGreyscale
           coordinates: -14,-17
-        310:
+        308:
           color: '#FDD178FF'
           id: HalfTileOverlayGreyscale
           coordinates: -15,-17
-        311:
+        309:
           color: '#FDD178FF'
           id: HalfTileOverlayGreyscale
           coordinates: -12,-17
-        312:
+        310:
           color: '#FDD178FF'
           id: QuarterTileOverlayGreyscale180
           coordinates: -12,-17
-        313:
+        311:
           color: '#FDD178FF'
           id: HalfTileOverlayGreyscale90
           coordinates: -12,-18
-        314:
+        312:
           color: '#FDD178FF'
           id: HalfTileOverlayGreyscale90
           coordinates: -12,-19
-        315:
+        313:
           color: '#FDD178FF'
           id: HalfTileOverlayGreyscale90
           coordinates: -12,-20
-        316:
+        314:
           color: '#FDD178FF'
           id: QuarterTileOverlayGreyscale270
           coordinates: -15,-17
-        317:
+        315:
           color: '#FDD178FF'
           id: HalfTileOverlayGreyscale270
           coordinates: -15,-18
-        318:
+        316:
           color: '#FDD178FF'
           id: HalfTileOverlayGreyscale270
           coordinates: -15,-19
-        319:
+        317:
           color: '#FDD178FF'
           id: HalfTileOverlayGreyscale270
           coordinates: -15,-20
-        320:
+        318:
           color: '#52B4E996'
           id: HalfTileOverlayGreyscale270
           coordinates: -19,-17
-        321:
+        319:
           color: '#52B4E996'
           id: HalfTileOverlayGreyscale270
           coordinates: -19,-18
-        322:
+        320:
           color: '#52B4E996'
           id: HalfTileOverlayGreyscale270
           coordinates: -19,-19
-        323:
+        321:
           color: '#52B4E996'
           id: HalfTileOverlayGreyscale270
           coordinates: -19,-20
-        324:
+        322:
           color: '#52B4E996'
           id: HalfTileOverlayGreyscale90
           coordinates: -17,-20
-        325:
+        323:
           color: '#52B4E996'
           id: HalfTileOverlayGreyscale90
           coordinates: -17,-19
-        326:
+        324:
           color: '#52B4E996'
           id: HalfTileOverlayGreyscale90
           coordinates: -17,-18
-        327:
+        325:
           color: '#52B4E996'
           id: HalfTileOverlayGreyscale90
           coordinates: -17,-17
-        328:
+        326:
           color: '#52B4E996'
           id: HalfTileOverlayGreyscale
           coordinates: -15,-13
-        329:
+        327:
           color: '#52B4E996'
           id: HalfTileOverlayGreyscale
           coordinates: -16,-13
-        330:
+        328:
           color: '#52B4E996'
           id: HalfTileOverlayGreyscale
           coordinates: -17,-13
-        331:
+        329:
           color: '#52B4E996'
           id: HalfTileOverlayGreyscale
           coordinates: -18,-13
-        332:
+        330:
           color: '#52B4E996'
           id: HalfTileOverlayGreyscale
           coordinates: -19,-13
-        333:
+        331:
           color: '#52B4E996'
           id: HalfTileOverlayGreyscale
           coordinates: -21,-13
-        334:
+        332:
           color: '#52B4E996'
           id: HalfTileOverlayGreyscale
           coordinates: -28,-13
-        335:
+        333:
           color: '#52B4E996'
           id: QuarterTileOverlayGreyscale180
           coordinates: -28,-13
-        336:
+        334:
           color: '#52B4E996'
           id: QuarterTileOverlayGreyscale270
           coordinates: -21,-13
-        337:
+        335:
           color: '#52B4E996'
           id: QuarterTileOverlayGreyscale
           coordinates: -21,-14
-        338:
+        336:
           color: '#52B4E996'
           id: QuarterTileOverlayGreyscale90
           coordinates: -28,-14
-        339:
+        337:
           color: '#52B4E996'
           id: QuarterTileOverlayGreyscale90
           coordinates: -27,-14
-        340:
+        338:
           color: '#52B4E996'
           id: QuarterTileOverlayGreyscale
           coordinates: -27,-14
-        341:
+        339:
           color: '#52B4E996'
           id: HalfTileOverlayGreyscale
           coordinates: -26,-14
-        342:
+        340:
           color: '#52B4E996'
           id: HalfTileOverlayGreyscale
           coordinates: -25,-14
-        343:
+        341:
           color: '#52B4E996'
           id: HalfTileOverlayGreyscale
           coordinates: -24,-14
-        344:
+        342:
           color: '#52B4E996'
           id: HalfTileOverlayGreyscale
           coordinates: -23,-14
-        345:
+        343:
           color: '#52B4E996'
           id: HalfTileOverlayGreyscale
           coordinates: -22,-14
-        346:
+        344:
           color: '#52B4E996'
           id: HalfTileOverlayGreyscale270
           coordinates: -28,-17
-        347:
+        345:
           color: '#52B4E996'
           id: HalfTileOverlayGreyscale270
           coordinates: -28,-18
-        348:
+        346:
           color: '#52B4E996'
           id: HalfTileOverlayGreyscale270
           coordinates: -28,-19
-        349:
+        347:
           color: '#52B4E996'
           id: HalfTileOverlayGreyscale270
           coordinates: -28,-20
-        350:
+        348:
           color: '#52B4E996'
           id: HalfTileOverlayGreyscale270
           coordinates: -28,-21
-        351:
+        349:
           color: '#52B4E996'
           id: HalfTileOverlayGreyscale90
           coordinates: -25,-21
-        352:
+        350:
           color: '#52B4E996'
           id: HalfTileOverlayGreyscale90
           coordinates: -25,-20
-        353:
+        351:
           color: '#52B4E996'
           id: HalfTileOverlayGreyscale90
           coordinates: -25,-19
-        354:
+        352:
           color: '#52B4E996'
           id: HalfTileOverlayGreyscale90
           coordinates: -25,-18
-        355:
+        353:
           color: '#52B4E996'
           id: HalfTileOverlayGreyscale90
           coordinates: -25,-17
-        356:
+        354:
           color: '#52B4E996'
           id: HalfTileOverlayGreyscale90
           coordinates: -17,-25
-        357:
+        355:
           color: '#52B4E996'
           id: HalfTileOverlayGreyscale90
           coordinates: -17,-24
-        358:
+        356:
           color: '#52B4E996'
           id: HalfTileOverlayGreyscale90
           coordinates: -17,-23
-        359:
+        357:
           color: '#52B4E996'
           id: HalfTileOverlayGreyscale90
           coordinates: -17,-22
-        360:
+        358:
           color: '#52B4E996'
           id: QuarterTileOverlayGreyscale
           coordinates: -19,-22
-        361:
+        359:
           color: '#52B4E996'
           id: HalfTileOverlayGreyscale
           coordinates: -20,-22
-        362:
+        360:
           color: '#52B4E996'
           id: HalfTileOverlayGreyscale
           coordinates: -21,-22
-        363:
+        361:
           color: '#52B4E996'
           id: HalfTileOverlayGreyscale
           coordinates: -22,-22
-        364:
+        362:
           color: '#52B4E996'
           id: HalfTileOverlayGreyscale
           coordinates: -23,-22
-        365:
+        363:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtHeavy
           coordinates: -10,-13
-        366:
+        364:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtMedium
           coordinates: -10,-14
-        367:
+        365:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtMedium
           coordinates: -10,-15
-        368:
+        366:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtMedium
           coordinates: -10,-18
-        369:
+        367:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtLight
           coordinates: -10,-19
-        370:
+        368:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtLight
           coordinates: -10,-17
-        371:
+        369:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtLight
           coordinates: -9,-13
-        372:
+        370:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtLight
           coordinates: -10,-12
-        373:
+        371:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtLight
           coordinates: -15,-11
-        374:
+        372:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtHeavy
           coordinates: -12,-11
-        375:
+        373:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtMedium
           coordinates: -13,-11
-        376:
+        374:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtMedium
           coordinates: -12,-10
-        377:
+        375:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtLight
           coordinates: -12,-9
-        378:
+        376:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtLight
           coordinates: -11,-10
-        379:
+        377:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtLight
           coordinates: -13,-10
-        380:
+        378:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtLight
           coordinates: -12,-12
-        381:
+        379:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtLight
           coordinates: -11,-14
-        382:
+        380:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtMedium
           coordinates: -13,-12
-        383:
+        381:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtMedium
           coordinates: -11,-13
-        384:
+        382:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtLight
           coordinates: -12,-13
-        385:
+        383:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtLight
           coordinates: -12,-15
-        386:
+        384:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtHeavy
           coordinates: -12,-14
-        387:
+        385:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtMedium
           coordinates: -13,-14
-        388:
+        386:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtMedium
           coordinates: -14,-13
-        389:
+        387:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtLight
           coordinates: -14,-14
-        390:
+        388:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtLight
           coordinates: -13,-13
-        391:
+        389:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtLight
           coordinates: -15,-15
-        392:
+        390:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtLight
           coordinates: -13,-15
-        393:
+        391:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtLight
           coordinates: -17,-15
-        394:
+        392:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtLight
           coordinates: -19,-14
-        395:
+        393:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtLight
           coordinates: -23,-15
-        396:
+        394:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtMedium
           coordinates: -19,-13
-        397:
+        395:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtLight
           coordinates: -20,-14
-        398:
+        396:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtLight
           coordinates: -17,-13
-        423:
+        421:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtHeavy
           coordinates: -8,-27
-        424:
+        422:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtMedium
           coordinates: -8,-28
-        438:
+        436:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtHeavy
           coordinates: -6,-9
-        439:
+        437:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtHeavy
           coordinates: -3,-8
-        440:
+        438:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtLight
           coordinates: -2,-8
-        441:
+        439:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtLight
           coordinates: -1,-8
-        442:
+        440:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtLight
           coordinates: -6,-10
-        443:
+        441:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtLight
           coordinates: -7,-10
+        442:
+          cleanable: True
+          color: '#FFFFFFFF'
+          id: DirtLight
+          coordinates: -10,-15
+        443:
+          cleanable: True
+          color: '#FFFFFFFF'
+          id: DirtLight
+          coordinates: -10,-15
         444:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtLight
-          coordinates: -10,-15
+          coordinates: -13,-15
         445:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtLight
-          coordinates: -10,-15
-        446:
-          cleanable: True
-          color: '#FFFFFFFF'
-          id: DirtLight
-          coordinates: -13,-15
-        447:
-          cleanable: True
-          color: '#FFFFFFFF'
-          id: DirtLight
           coordinates: -14,-15
-        448:
+        446:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtMedium
           coordinates: -12,-15
-        449:
+        447:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtMedium
           coordinates: -10,-16
-        584:
+        580:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtLight
           coordinates: -18,-30
-        590:
+        586:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtLight
           coordinates: -20,-32
-        591:
+        587:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtLight
           coordinates: -19,-32
-        592:
-          cleanable: True
-          color: '#FFFFFFFF'
-          id: DirtLight
-          coordinates: -18,-32
-        632:
-          cleanable: True
-          color: '#FFFFFFFF'
-          id: DirtHeavy
-          coordinates: -31,-11
-        633:
-          cleanable: True
-          color: '#FFFFFFFF'
-          id: DirtHeavy
-          coordinates: -32,-11
-        634:
-          cleanable: True
-          color: '#FFFFFFFF'
-          id: DirtHeavy
-          coordinates: -30,-9
-        635:
-          cleanable: True
-          color: '#FFFFFFFF'
-          id: DirtHeavy
-          coordinates: -31,-9
-        636:
-          cleanable: True
-          color: '#FFFFFFFF'
-          id: DirtHeavy
-          coordinates: -19,-9
-        637:
-          cleanable: True
-          color: '#FFFFFFFF'
-          id: DirtHeavy
-          coordinates: -20,-9
-        638:
-          cleanable: True
-          color: '#FFFFFFFF'
-          id: DirtHeavy
-          coordinates: -21,-11
-        639:
-          cleanable: True
-          color: '#FFFFFFFF'
-          id: DirtHeavy
-          coordinates: -13,-9
-        640:
-          cleanable: True
-          color: '#FFFFFFFF'
-          id: DirtMedium
-          coordinates: -14,-9
-        641:
-          cleanable: True
-          color: '#FFFFFFFF'
-          id: DirtMedium
-          coordinates: -14,-10
-        642:
-          cleanable: True
-          color: '#FFFFFFFF'
-          id: DirtMedium
-          coordinates: -18,-9
-        643:
-          cleanable: True
-          color: '#FFFFFFFF'
-          id: DirtMedium
-          coordinates: -19,-10
-        644:
-          cleanable: True
-          color: '#FFFFFFFF'
-          id: DirtMedium
-          coordinates: -20,-10
-        645:
-          cleanable: True
-          color: '#FFFFFFFF'
-          id: DirtMedium
-          coordinates: -20,-11
-        646:
-          cleanable: True
-          color: '#FFFFFFFF'
-          id: DirtMedium
-          coordinates: -22,-11
-        647:
-          cleanable: True
-          color: '#FFFFFFFF'
-          id: DirtMedium
-          coordinates: -23,-11
-        648:
-          cleanable: True
-          color: '#FFFFFFFF'
-          id: DirtMedium
-          coordinates: -21,-10
-        649:
-          cleanable: True
-          color: '#FFFFFFFF'
-          id: DirtMedium
-          coordinates: -26,-11
-        650:
-          cleanable: True
-          color: '#FFFFFFFF'
-          id: DirtMedium
-          coordinates: -26,-10
-        651:
-          cleanable: True
-          color: '#FFFFFFFF'
-          id: DirtMedium
-          coordinates: -30,-10
-        652:
-          cleanable: True
-          color: '#FFFFFFFF'
-          id: DirtMedium
-          coordinates: -31,-10
-        653:
-          cleanable: True
-          color: '#FFFFFFFF'
-          id: DirtMedium
-          coordinates: -28,-9
-        654:
-          cleanable: True
-          color: '#FFFFFFFF'
-          id: DirtMedium
-          coordinates: -32,-9
-        692:
-          cleanable: True
-          color: '#FFFFFFFF'
-          id: DirtLight
-          coordinates: -32,-10
-        693:
-          cleanable: True
-          color: '#FFFFFFFF'
-          id: DirtLight
-          coordinates: -30,-11
-        694:
-          cleanable: True
-          color: '#FFFFFFFF'
-          id: DirtLight
-          coordinates: -29,-10
-        695:
-          cleanable: True
-          color: '#FFFFFFFF'
-          id: DirtLight
-          coordinates: -28,-10
-        696:
-          cleanable: True
-          color: '#FFFFFFFF'
-          id: DirtLight
-          coordinates: -27,-9
-        697:
-          cleanable: True
-          color: '#FFFFFFFF'
-          id: DirtLight
-          coordinates: -26,-9
-        698:
-          cleanable: True
-          color: '#FFFFFFFF'
-          id: DirtLight
-          coordinates: -25,-10
-        699:
-          cleanable: True
-          color: '#FFFFFFFF'
-          id: DirtLight
-          coordinates: -24,-10
-        700:
-          cleanable: True
-          color: '#FFFFFFFF'
-          id: DirtLight
-          coordinates: -19,-11
-        701:
-          cleanable: True
-          color: '#FFFFFFFF'
-          id: DirtLight
-          coordinates: -18,-10
-        702:
-          cleanable: True
-          color: '#FFFFFFFF'
-          id: DirtLight
-          coordinates: -16,-11
-        703:
-          cleanable: True
-          color: '#FFFFFFFF'
-          id: DirtLight
-          coordinates: -22,-9
-        704:
-          cleanable: True
-          color: '#FFFFFFFF'
-          id: DirtLight
-          coordinates: -15,-9
-        786:
-          cleanable: True
-          color: '#FFFFFFFF'
-          id: DirtHeavy
-          coordinates: -9,-7
-        787:
-          cleanable: True
-          color: '#FFFFFFFF'
-          id: DirtHeavy
-          coordinates: -10,-6
-        789:
-          cleanable: True
-          color: '#FFFFFFFF'
-          id: DirtHeavy
-          coordinates: -13,-1
-        790:
-          cleanable: True
-          color: '#FFFFFFFF'
-          id: DirtMedium
-          coordinates: -9,-6
-        791:
-          cleanable: True
-          color: '#FFFFFFFF'
-          id: DirtMedium
-          coordinates: -10,-5
-        792:
-          cleanable: True
-          color: '#FFFFFFFF'
-          id: DirtMedium
-          coordinates: -10,-4
-        793:
-          cleanable: True
-          color: '#FFFFFFFF'
-          id: DirtMedium
-          coordinates: -11,-3
-        794:
-          cleanable: True
-          color: '#FFFFFFFF'
-          id: DirtMedium
-          coordinates: -12,-2
-        795:
-          cleanable: True
-          color: '#FFFFFFFF'
-          id: DirtMedium
-          coordinates: -13,-2
-        822:
-          cleanable: True
-          color: '#FFFFFFFF'
-          id: DirtLight
-          coordinates: -12,-2
-        823:
-          cleanable: True
-          color: '#FFFFFFFF'
-          id: DirtLight
-          coordinates: -10,-3
-        824:
-          cleanable: True
-          color: '#FFFFFFFF'
-          id: DirtLight
-          coordinates: -10,-7
-        825:
-          cleanable: True
-          color: '#FFFFFFFF'
-          id: DirtLight
-          coordinates: -9,-2
-        826:
-          color: '#EFB34196'
-          id: HalfTileOverlayGreyscale
-          coordinates: -30,-5
-        827:
-          color: '#EFB34196'
-          id: HalfTileOverlayGreyscale
-          coordinates: -31,-5
-        828:
-          color: '#EFB34196'
-          id: HalfTileOverlayGreyscale
-          coordinates: -32,-5
-        829:
-          color: '#EFB34196'
-          id: HalfTileOverlayGreyscale90
-          coordinates: -25,-7
-        830:
-          color: '#EFB34196'
-          id: HalfTileOverlayGreyscale90
-          coordinates: -25,-6
-        831:
-          color: '#EFB34196'
-          id: HalfTileOverlayGreyscale90
-          coordinates: -25,-5
-        832:
-          color: '#EFB34196'
-          id: HalfTileOverlayGreyscale90
-          coordinates: -25,-4
-        833:
-          color: '#EFB34196'
-          id: HalfTileOverlayGreyscale90
-          coordinates: -25,-3
-        834:
-          color: '#EFB34196'
-          id: HalfTileOverlayGreyscale270
-          coordinates: -25,-1
-        840:
-          cleanable: True
-          color: '#FFFFFFFF'
-          id: DirtHeavy
-          coordinates: -30,-7
-        841:
-          cleanable: True
-          color: '#FFFFFFFF'
-          id: DirtMedium
-          coordinates: -31,-7
-        842:
-          cleanable: True
-          color: '#FFFFFFFF'
-          id: DirtLight
-          coordinates: -32,-7
-        843:
-          cleanable: True
-          color: '#FFFFFFFF'
-          id: DirtLight
-          coordinates: -30,-6
-        844:
-          cleanable: True
-          color: '#FFFFFFFF'
-          id: DirtLight
-          coordinates: -28,-6
-        845:
-          cleanable: True
-          color: '#FFFFFFFF'
-          id: DirtLight
-          coordinates: -27,-3
-        847:
-          cleanable: True
-          color: '#FFFFFFFF'
-          id: DirtLight
-          coordinates: -21,-1
-        848:
-          cleanable: True
-          color: '#FFFFFFFF'
-          id: DirtLight
-          coordinates: -25,-7
-        849:
-          cleanable: True
-          color: '#FFFFFFFF'
-          id: DirtLight
-          coordinates: -25,-5
-        858:
-          angle: -3.141592653589793 rad
-          color: '#FFFFFFFF'
-          id: Arrows
-          coordinates: -31,-7
-        859:
-          color: '#EFB34196'
-          id: HalfTileOverlayGreyscale90
-          coordinates: -21,-1
-        865:
-          color: '#EFB34196'
-          id: HalfTileOverlayGreyscale270
-          coordinates: -28,-7
-        866:
-          color: '#EFB34196'
-          id: HalfTileOverlayGreyscale270
-          coordinates: -28,-6
-        867:
-          color: '#EFB34196'
-          id: HalfTileOverlayGreyscale270
-          coordinates: -28,-5
-        868:
-          color: '#EFB34196'
-          id: HalfTileOverlayGreyscale270
-          coordinates: -28,-4
-        869:
-          color: '#EFB34196'
-          id: HalfTileOverlayGreyscale270
-          coordinates: -28,-3
-        873:
-          color: '#D381C996'
-          id: CheckerNWSE
-          coordinates: -28,-32
-        874:
-          color: '#D381C996'
-          id: CheckerNWSE
-          coordinates: -27,-32
-        875:
-          color: '#D381C996'
-          id: CheckerNWSE
-          coordinates: -26,-32
-        876:
-          color: '#D381C996'
-          id: FullTileOverlayGreyscale
-          coordinates: -25,-32
-        885:
-          color: '#D381C996'
-          id: QuarterTileOverlayGreyscale180
-          coordinates: -17,-32
-        886:
-          color: '#D381C996'
-          id: HalfTileOverlayGreyscale180
-          coordinates: -16,-32
-        887:
-          color: '#D381C996'
-          id: HalfTileOverlayGreyscale180
-          coordinates: -15,-32
-        888:
-          color: '#D381C996'
-          id: HalfTileOverlayGreyscale180
-          coordinates: -14,-32
-        889:
-          color: '#D381C996'
-          id: HalfTileOverlayGreyscale180
-          coordinates: -13,-32
-        892:
-          color: '#D381C996'
-          id: ThreeQuarterTileOverlayGreyscale90
-          coordinates: -12,-30
-        893:
-          color: '#D381C996'
-          id: HalfTileOverlayGreyscale
-          coordinates: -13,-30
-        894:
-          color: '#D381C996'
-          id: HalfTileOverlayGreyscale
-          coordinates: -14,-30
-        895:
-          color: '#D381C996'
-          id: HalfTileOverlayGreyscale
-          coordinates: -15,-30
-        896:
-          color: '#D381C996'
-          id: HalfTileOverlayGreyscale
-          coordinates: -16,-30
-        897:
-          color: '#D381C996'
-          id: QuarterTileOverlayGreyscale90
-          coordinates: -17,-30
-        898:
-          color: '#D381C996'
-          id: ThreeQuarterTileOverlayGreyscale90
-          coordinates: -17,-29
-        899:
-          color: '#D381C996'
-          id: HalfTileOverlayGreyscale
-          coordinates: -18,-29
-        900:
-          color: '#D381C996'
-          id: HalfTileOverlayGreyscale
-          coordinates: -19,-29
-        901:
-          color: '#D381C996'
-          id: HalfTileOverlayGreyscale
-          coordinates: -20,-29
-        907:
-          color: '#52B4E996'
-          id: CheckerNWSE
-          coordinates: -25,-25
-        908:
-          color: '#52B4E996'
-          id: CheckerNWSE
-          coordinates: -26,-25
-        909:
-          color: '#52B4E996'
-          id: CheckerNWSE
-          coordinates: -27,-25
-        910:
-          color: '#52B4E996'
-          id: CheckerNWSE
-          coordinates: -27,-24
-        911:
-          color: '#52B4E996'
-          id: CheckerNWSE
-          coordinates: -26,-24
-        912:
-          color: '#52B4E996'
-          id: CheckerNWSE
-          coordinates: -25,-24
-        913:
-          color: '#52B4E996'
-          id: CheckerNWSE
-          coordinates: -25,-23
-        914:
-          color: '#52B4E996'
-          id: CheckerNWSE
-          coordinates: -26,-23
-        915:
-          color: '#52B4E996'
-          id: CheckerNWSE
-          coordinates: -27,-23
-        916:
-          color: '#EFB34196'
-          id: CheckerNWSE
-          coordinates: -23,-5
-        917:
-          color: '#EFB34196'
-          id: CheckerNWSE
-          coordinates: -22,-5
-        918:
-          color: '#EFB34196'
-          id: CheckerNWSE
-          coordinates: -21,-5
-        919:
-          color: '#EFB34196'
-          id: CheckerNWSE
-          coordinates: -21,-4
-        920:
-          color: '#EFB34196'
-          id: CheckerNWSE
-          coordinates: -22,-4
-        921:
-          color: '#EFB34196'
-          id: CheckerNWSE
-          coordinates: -23,-4
-        922:
-          color: '#EFB34196'
-          id: CheckerNWSE
-          coordinates: -23,-3
-        923:
-          color: '#EFB34196'
-          id: CheckerNWSE
-          coordinates: -22,-3
-        924:
-          color: '#EFB34196'
-          id: CheckerNWSE
-          coordinates: -21,-3
-        925:
-          color: '#EFB34196'
-          id: FullTileOverlayGreyscale
-          coordinates: -24,-5
-      -1,-2:
-        585:
-          cleanable: True
-          color: '#FFFFFFFF'
-          id: DirtHeavy
-          coordinates: -20,-33
-        586:
-          cleanable: True
-          color: '#FFFFFFFF'
-          id: DirtHeavy
-          coordinates: -22,-33
-        587:
-          cleanable: True
-          color: '#FFFFFFFF'
-          id: DirtMedium
-          coordinates: -21,-33
         588:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtLight
+          coordinates: -18,-32
+        628:
+          cleanable: True
+          color: '#FFFFFFFF'
+          id: DirtHeavy
+          coordinates: -31,-11
+        629:
+          cleanable: True
+          color: '#FFFFFFFF'
+          id: DirtHeavy
+          coordinates: -32,-11
+        630:
+          cleanable: True
+          color: '#FFFFFFFF'
+          id: DirtHeavy
+          coordinates: -30,-9
+        631:
+          cleanable: True
+          color: '#FFFFFFFF'
+          id: DirtHeavy
+          coordinates: -31,-9
+        632:
+          cleanable: True
+          color: '#FFFFFFFF'
+          id: DirtHeavy
+          coordinates: -19,-9
+        633:
+          cleanable: True
+          color: '#FFFFFFFF'
+          id: DirtHeavy
+          coordinates: -20,-9
+        634:
+          cleanable: True
+          color: '#FFFFFFFF'
+          id: DirtHeavy
+          coordinates: -21,-11
+        635:
+          cleanable: True
+          color: '#FFFFFFFF'
+          id: DirtHeavy
+          coordinates: -13,-9
+        636:
+          cleanable: True
+          color: '#FFFFFFFF'
+          id: DirtMedium
+          coordinates: -14,-9
+        637:
+          cleanable: True
+          color: '#FFFFFFFF'
+          id: DirtMedium
+          coordinates: -14,-10
+        638:
+          cleanable: True
+          color: '#FFFFFFFF'
+          id: DirtMedium
+          coordinates: -18,-9
+        639:
+          cleanable: True
+          color: '#FFFFFFFF'
+          id: DirtMedium
+          coordinates: -19,-10
+        640:
+          cleanable: True
+          color: '#FFFFFFFF'
+          id: DirtMedium
+          coordinates: -20,-10
+        641:
+          cleanable: True
+          color: '#FFFFFFFF'
+          id: DirtMedium
+          coordinates: -20,-11
+        642:
+          cleanable: True
+          color: '#FFFFFFFF'
+          id: DirtMedium
+          coordinates: -22,-11
+        643:
+          cleanable: True
+          color: '#FFFFFFFF'
+          id: DirtMedium
+          coordinates: -23,-11
+        644:
+          cleanable: True
+          color: '#FFFFFFFF'
+          id: DirtMedium
+          coordinates: -21,-10
+        645:
+          cleanable: True
+          color: '#FFFFFFFF'
+          id: DirtMedium
+          coordinates: -26,-11
+        646:
+          cleanable: True
+          color: '#FFFFFFFF'
+          id: DirtMedium
+          coordinates: -26,-10
+        647:
+          cleanable: True
+          color: '#FFFFFFFF'
+          id: DirtMedium
+          coordinates: -30,-10
+        648:
+          cleanable: True
+          color: '#FFFFFFFF'
+          id: DirtMedium
+          coordinates: -31,-10
+        649:
+          cleanable: True
+          color: '#FFFFFFFF'
+          id: DirtMedium
+          coordinates: -28,-9
+        650:
+          cleanable: True
+          color: '#FFFFFFFF'
+          id: DirtMedium
+          coordinates: -32,-9
+        688:
+          cleanable: True
+          color: '#FFFFFFFF'
+          id: DirtLight
+          coordinates: -32,-10
+        689:
+          cleanable: True
+          color: '#FFFFFFFF'
+          id: DirtLight
+          coordinates: -30,-11
+        690:
+          cleanable: True
+          color: '#FFFFFFFF'
+          id: DirtLight
+          coordinates: -29,-10
+        691:
+          cleanable: True
+          color: '#FFFFFFFF'
+          id: DirtLight
+          coordinates: -28,-10
+        692:
+          cleanable: True
+          color: '#FFFFFFFF'
+          id: DirtLight
+          coordinates: -27,-9
+        693:
+          cleanable: True
+          color: '#FFFFFFFF'
+          id: DirtLight
+          coordinates: -26,-9
+        694:
+          cleanable: True
+          color: '#FFFFFFFF'
+          id: DirtLight
+          coordinates: -25,-10
+        695:
+          cleanable: True
+          color: '#FFFFFFFF'
+          id: DirtLight
+          coordinates: -24,-10
+        696:
+          cleanable: True
+          color: '#FFFFFFFF'
+          id: DirtLight
+          coordinates: -19,-11
+        697:
+          cleanable: True
+          color: '#FFFFFFFF'
+          id: DirtLight
+          coordinates: -18,-10
+        698:
+          cleanable: True
+          color: '#FFFFFFFF'
+          id: DirtLight
+          coordinates: -16,-11
+        699:
+          cleanable: True
+          color: '#FFFFFFFF'
+          id: DirtLight
+          coordinates: -22,-9
+        700:
+          cleanable: True
+          color: '#FFFFFFFF'
+          id: DirtLight
+          coordinates: -15,-9
+        782:
+          cleanable: True
+          color: '#FFFFFFFF'
+          id: DirtHeavy
+          coordinates: -9,-7
+        783:
+          cleanable: True
+          color: '#FFFFFFFF'
+          id: DirtHeavy
+          coordinates: -10,-6
+        785:
+          cleanable: True
+          color: '#FFFFFFFF'
+          id: DirtHeavy
+          coordinates: -13,-1
+        786:
+          cleanable: True
+          color: '#FFFFFFFF'
+          id: DirtMedium
+          coordinates: -9,-6
+        787:
+          cleanable: True
+          color: '#FFFFFFFF'
+          id: DirtMedium
+          coordinates: -10,-5
+        788:
+          cleanable: True
+          color: '#FFFFFFFF'
+          id: DirtMedium
+          coordinates: -10,-4
+        789:
+          cleanable: True
+          color: '#FFFFFFFF'
+          id: DirtMedium
+          coordinates: -11,-3
+        790:
+          cleanable: True
+          color: '#FFFFFFFF'
+          id: DirtMedium
+          coordinates: -12,-2
+        791:
+          cleanable: True
+          color: '#FFFFFFFF'
+          id: DirtMedium
+          coordinates: -13,-2
+        818:
+          cleanable: True
+          color: '#FFFFFFFF'
+          id: DirtLight
+          coordinates: -12,-2
+        819:
+          cleanable: True
+          color: '#FFFFFFFF'
+          id: DirtLight
+          coordinates: -10,-3
+        820:
+          cleanable: True
+          color: '#FFFFFFFF'
+          id: DirtLight
+          coordinates: -10,-7
+        821:
+          cleanable: True
+          color: '#FFFFFFFF'
+          id: DirtLight
+          coordinates: -9,-2
+        822:
+          color: '#EFB34196'
+          id: HalfTileOverlayGreyscale
+          coordinates: -30,-5
+        823:
+          color: '#EFB34196'
+          id: HalfTileOverlayGreyscale
+          coordinates: -31,-5
+        824:
+          color: '#EFB34196'
+          id: HalfTileOverlayGreyscale
+          coordinates: -32,-5
+        825:
+          color: '#EFB34196'
+          id: HalfTileOverlayGreyscale90
+          coordinates: -25,-7
+        826:
+          color: '#EFB34196'
+          id: HalfTileOverlayGreyscale90
+          coordinates: -25,-6
+        827:
+          color: '#EFB34196'
+          id: HalfTileOverlayGreyscale90
+          coordinates: -25,-5
+        828:
+          color: '#EFB34196'
+          id: HalfTileOverlayGreyscale90
+          coordinates: -25,-4
+        829:
+          color: '#EFB34196'
+          id: HalfTileOverlayGreyscale90
+          coordinates: -25,-3
+        830:
+          color: '#EFB34196'
+          id: HalfTileOverlayGreyscale270
+          coordinates: -25,-1
+        836:
+          cleanable: True
+          color: '#FFFFFFFF'
+          id: DirtHeavy
+          coordinates: -30,-7
+        837:
+          cleanable: True
+          color: '#FFFFFFFF'
+          id: DirtMedium
+          coordinates: -31,-7
+        838:
+          cleanable: True
+          color: '#FFFFFFFF'
+          id: DirtLight
+          coordinates: -32,-7
+        839:
+          cleanable: True
+          color: '#FFFFFFFF'
+          id: DirtLight
+          coordinates: -30,-6
+        840:
+          cleanable: True
+          color: '#FFFFFFFF'
+          id: DirtLight
+          coordinates: -28,-6
+        841:
+          cleanable: True
+          color: '#FFFFFFFF'
+          id: DirtLight
+          coordinates: -27,-3
+        843:
+          cleanable: True
+          color: '#FFFFFFFF'
+          id: DirtLight
+          coordinates: -21,-1
+        844:
+          cleanable: True
+          color: '#FFFFFFFF'
+          id: DirtLight
+          coordinates: -25,-7
+        845:
+          cleanable: True
+          color: '#FFFFFFFF'
+          id: DirtLight
+          coordinates: -25,-5
+        854:
+          angle: -3.141592653589793 rad
+          color: '#FFFFFFFF'
+          id: Arrows
+          coordinates: -31,-7
+        855:
+          color: '#EFB34196'
+          id: HalfTileOverlayGreyscale90
+          coordinates: -21,-1
+        861:
+          color: '#EFB34196'
+          id: HalfTileOverlayGreyscale270
+          coordinates: -28,-7
+        862:
+          color: '#EFB34196'
+          id: HalfTileOverlayGreyscale270
+          coordinates: -28,-6
+        863:
+          color: '#EFB34196'
+          id: HalfTileOverlayGreyscale270
+          coordinates: -28,-5
+        864:
+          color: '#EFB34196'
+          id: HalfTileOverlayGreyscale270
+          coordinates: -28,-4
+        865:
+          color: '#EFB34196'
+          id: HalfTileOverlayGreyscale270
+          coordinates: -28,-3
+        869:
+          color: '#D381C996'
+          id: CheckerNWSE
+          coordinates: -28,-32
+        870:
+          color: '#D381C996'
+          id: CheckerNWSE
+          coordinates: -27,-32
+        871:
+          color: '#D381C996'
+          id: CheckerNWSE
+          coordinates: -26,-32
+        872:
+          color: '#D381C996'
+          id: FullTileOverlayGreyscale
+          coordinates: -25,-32
+        881:
+          color: '#D381C996'
+          id: QuarterTileOverlayGreyscale180
+          coordinates: -17,-32
+        882:
+          color: '#D381C996'
+          id: HalfTileOverlayGreyscale180
+          coordinates: -16,-32
+        883:
+          color: '#D381C996'
+          id: HalfTileOverlayGreyscale180
+          coordinates: -15,-32
+        884:
+          color: '#D381C996'
+          id: HalfTileOverlayGreyscale180
+          coordinates: -14,-32
+        885:
+          color: '#D381C996'
+          id: HalfTileOverlayGreyscale180
+          coordinates: -13,-32
+        886:
+          color: '#D381C996'
+          id: ThreeQuarterTileOverlayGreyscale90
+          coordinates: -12,-30
+        887:
+          color: '#D381C996'
+          id: HalfTileOverlayGreyscale
+          coordinates: -13,-30
+        888:
+          color: '#D381C996'
+          id: HalfTileOverlayGreyscale
+          coordinates: -14,-30
+        889:
+          color: '#D381C996'
+          id: HalfTileOverlayGreyscale
+          coordinates: -15,-30
+        890:
+          color: '#D381C996'
+          id: HalfTileOverlayGreyscale
+          coordinates: -16,-30
+        891:
+          color: '#D381C996'
+          id: QuarterTileOverlayGreyscale90
+          coordinates: -17,-30
+        892:
+          color: '#D381C996'
+          id: ThreeQuarterTileOverlayGreyscale90
+          coordinates: -17,-29
+        893:
+          color: '#D381C996'
+          id: HalfTileOverlayGreyscale
+          coordinates: -18,-29
+        894:
+          color: '#D381C996'
+          id: HalfTileOverlayGreyscale
+          coordinates: -19,-29
+        895:
+          color: '#D381C996'
+          id: HalfTileOverlayGreyscale
+          coordinates: -20,-29
+        900:
+          color: '#52B4E996'
+          id: CheckerNWSE
+          coordinates: -25,-25
+        901:
+          color: '#52B4E996'
+          id: CheckerNWSE
+          coordinates: -26,-25
+        902:
+          color: '#52B4E996'
+          id: CheckerNWSE
+          coordinates: -27,-25
+        903:
+          color: '#52B4E996'
+          id: CheckerNWSE
+          coordinates: -27,-24
+        904:
+          color: '#52B4E996'
+          id: CheckerNWSE
+          coordinates: -26,-24
+        905:
+          color: '#52B4E996'
+          id: CheckerNWSE
+          coordinates: -25,-24
+        906:
+          color: '#52B4E996'
+          id: CheckerNWSE
+          coordinates: -25,-23
+        907:
+          color: '#52B4E996'
+          id: CheckerNWSE
+          coordinates: -26,-23
+        908:
+          color: '#52B4E996'
+          id: CheckerNWSE
+          coordinates: -27,-23
+        909:
+          color: '#EFB34196'
+          id: CheckerNWSE
+          coordinates: -23,-5
+        910:
+          color: '#EFB34196'
+          id: CheckerNWSE
+          coordinates: -22,-5
+        911:
+          color: '#EFB34196'
+          id: CheckerNWSE
+          coordinates: -21,-5
+        912:
+          color: '#EFB34196'
+          id: CheckerNWSE
+          coordinates: -21,-4
+        913:
+          color: '#EFB34196'
+          id: CheckerNWSE
+          coordinates: -22,-4
+        914:
+          color: '#EFB34196'
+          id: CheckerNWSE
+          coordinates: -23,-4
+        915:
+          color: '#EFB34196'
+          id: CheckerNWSE
+          coordinates: -23,-3
+        916:
+          color: '#EFB34196'
+          id: CheckerNWSE
+          coordinates: -22,-3
+        917:
+          color: '#EFB34196'
+          id: CheckerNWSE
+          coordinates: -21,-3
+        918:
+          color: '#EFB34196'
+          id: FullTileOverlayGreyscale
+          coordinates: -24,-5
+      -1,-2:
+        581:
+          cleanable: True
+          color: '#FFFFFFFF'
+          id: DirtHeavy
+          coordinates: -20,-33
+        582:
+          cleanable: True
+          color: '#FFFFFFFF'
+          id: DirtHeavy
+          coordinates: -22,-33
+        583:
+          cleanable: True
+          color: '#FFFFFFFF'
+          id: DirtMedium
+          coordinates: -21,-33
+        584:
+          cleanable: True
+          color: '#FFFFFFFF'
+          id: DirtLight
           coordinates: -23,-33
+        585:
+          cleanable: True
+          color: '#FFFFFFFF'
+          id: DirtLight
+          coordinates: -24,-33
         589:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtLight
-          coordinates: -24,-33
-        593:
-          cleanable: True
-          color: '#FFFFFFFF'
-          id: DirtLight
           coordinates: -28,-33
-        850:
+        846:
           color: '#FFFFFFFF'
           id: WarnBox
           coordinates: -23,-54
-        870:
+        866:
           color: '#D381C996'
           id: CheckerNWSE
           coordinates: -26,-33
-        871:
+        867:
           color: '#D381C996'
           id: CheckerNWSE
           coordinates: -27,-33
-        872:
+        868:
           color: '#D381C996'
           id: CheckerNWSE
           coordinates: -28,-33
-        877:
+        873:
           color: '#D381C996'
           id: HalfTileOverlayGreyscale180
           coordinates: -22,-33
-        878:
+        874:
           color: '#D381C996'
           id: HalfTileOverlayGreyscale180
           coordinates: -23,-33
-        879:
+        875:
           color: '#D381C996'
           id: HalfTileOverlayGreyscale180
           coordinates: -24,-33
-        880:
+        876:
           color: '#D381C996'
           id: HalfTileOverlayGreyscale180
           coordinates: -20,-33
-        881:
+        877:
           color: '#D381C996'
           id: HalfTileOverlayGreyscale180
           coordinates: -19,-33
-        882:
+        878:
           color: '#D381C996'
           id: HalfTileOverlayGreyscale180
           coordinates: -18,-33
-        883:
+        879:
           color: '#D381C996'
           id: HalfTileOverlayGreyscale180
           coordinates: -17,-33
-        884:
+        880:
           color: '#D381C996'
           id: QuarterTileOverlayGreyscale90
           coordinates: -17,-33
-        902:
+        896:
           color: '#D381C996'
           id: HalfTileOverlayGreyscale180
           coordinates: -21,-33
       1,0:
-        594:
+        590:
           cleanable: True
           color: '#FFFFFFFF'
           id: WarnBox
           coordinates: 50,0
-        595:
+        591:
           cleanable: True
           color: '#FFFFFFFF'
           id: WarnBox
           coordinates: 60,0
-        708:
+        704:
+          cleanable: True
+          color: '#FFFFFFFF'
+          id: DirtHeavy
+          coordinates: 48,0
+        705:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtHeavy
@@ -4350,665 +4355,660 @@ entities:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtHeavy
-          coordinates: 48,0
-        713:
-          cleanable: True
-          color: '#FFFFFFFF'
-          id: DirtHeavy
           coordinates: 62,0
-        725:
+        721:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtMedium
           coordinates: 48,1
-        756:
+        752:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtLight
           coordinates: 47,0
-        757:
+        753:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtLight
           coordinates: 47,1
-        758:
+        754:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtLight
           coordinates: 48,2
-        771:
+        767:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtLight
           coordinates: 62,1
-        772:
+        768:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtLight
           coordinates: 62,2
       1,-1:
-        599:
+        595:
           color: '#9FED5896'
           id: HalfTileOverlayGreyscale90
           coordinates: 35,-7
-        600:
+        596:
           color: '#9FED5896'
           id: HalfTileOverlayGreyscale90
           coordinates: 35,-6
-        601:
+        597:
           color: '#9FED5896'
           id: HalfTileOverlayGreyscale90
           coordinates: 35,-5
-        602:
+        598:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtHeavy
           coordinates: 33,-9
-        603:
+        599:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtHeavy
           coordinates: 33,-7
-        604:
+        600:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtHeavy
           coordinates: 33,-8
-        605:
+        601:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtMedium
           coordinates: 32,-7
-        606:
+        602:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtMedium
           coordinates: 35,-6
-        607:
+        603:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtMedium
           coordinates: 32,-9
-        608:
+        604:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtMedium
           coordinates: 32,-10
-        614:
+        610:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtLight
           coordinates: 32,-6
-        615:
+        611:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtLight
           coordinates: 34,-7
-        616:
+        612:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtLight
           coordinates: 34,-9
-        617:
+        613:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtLight
           coordinates: 34,-10
-        618:
+        614:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtLight
           coordinates: 36,-10
-        705:
+        701:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtHeavy
           coordinates: 39,-9
-        706:
+        702:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtHeavy
           coordinates: 47,-10
-        707:
+        703:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtHeavy
           coordinates: 46,-10
-        710:
+        706:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtHeavy
           coordinates: 48,-1
-        711:
+        707:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtHeavy
           coordinates: 61,-2
-        712:
+        708:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtHeavy
           coordinates: 62,-1
-        714:
+        710:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtHeavy
           coordinates: 62,-6
-        715:
+        711:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtHeavy
           coordinates: 61,-9
-        716:
+        712:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtHeavy
           coordinates: 59,-10
-        717:
+        713:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtMedium
           coordinates: 61,-10
-        718:
+        714:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtMedium
           coordinates: 62,-9
-        719:
+        715:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtMedium
           coordinates: 62,-7
-        720:
+        716:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtMedium
           coordinates: 61,-5
-        721:
+        717:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtMedium
           coordinates: 62,-4
-        722:
+        718:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtMedium
           coordinates: 62,-2
-        723:
+        719:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtMedium
           coordinates: 48,-2
-        724:
+        720:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtMedium
           coordinates: 47,-1
-        726:
+        722:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtMedium
           coordinates: 48,-6
-        727:
+        723:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtMedium
           coordinates: 48,-9
-        728:
+        724:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtMedium
           coordinates: 48,-10
-        729:
+        725:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtMedium
           coordinates: 45,-11
-        730:
+        726:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtMedium
           coordinates: 45,-10
-        731:
+        727:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtMedium
           coordinates: 42,-11
-        732:
+        728:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtMedium
           coordinates: 41,-11
-        733:
+        729:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtMedium
           coordinates: 41,-10
-        734:
+        730:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtMedium
           coordinates: 38,-10
-        735:
+        731:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtMedium
           coordinates: 53,-10
-        736:
+        732:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtMedium
           coordinates: 55,-10
-        737:
+        733:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtMedium
           coordinates: 54,-11
-        738:
+        734:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtLight
           coordinates: 53,-11
-        739:
+        735:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtLight
           coordinates: 55,-10
-        740:
+        736:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtLight
           coordinates: 54,-10
-        741:
+        737:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtLight
           coordinates: 51,-10
-        742:
+        738:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtLight
           coordinates: 52,-10
-        743:
+        739:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtLight
           coordinates: 48,-11
-        744:
+        740:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtLight
           coordinates: 49,-10
-        745:
+        741:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtLight
           coordinates: 47,-11
-        746:
+        742:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtLight
           coordinates: 44,-10
-        747:
+        743:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtLight
           coordinates: 43,-10
-        748:
+        744:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtLight
           coordinates: 40,-11
-        749:
+        745:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtLight
           coordinates: 38,-11
-        750:
+        746:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtLight
           coordinates: 39,-10
-        751:
+        747:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtLight
           coordinates: 37,-10
-        752:
+        748:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtLight
           coordinates: 48,-7
-        753:
+        749:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtLight
           coordinates: 47,-6
-        754:
+        750:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtLight
           coordinates: 48,-5
-        755:
+        751:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtLight
           coordinates: 48,-4
-        759:
+        755:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtLight
           coordinates: 56,-11
-        760:
+        756:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtLight
           coordinates: 56,-10
-        761:
+        757:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtLight
           coordinates: 58,-10
-        762:
+        758:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtLight
           coordinates: 62,-10
-        763:
+        759:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtLight
           coordinates: 63,-9
-        764:
+        760:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtLight
           coordinates: 63,-7
-        765:
+        761:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtLight
           coordinates: 61,-7
-        766:
+        762:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtLight
           coordinates: 61,-6
-        767:
+        763:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtLight
           coordinates: 61,-4
-        768:
+        764:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtLight
           coordinates: 63,-3
-        769:
+        765:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtLight
           coordinates: 63,-2
-        770:
+        766:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtLight
           coordinates: 63,-1
       0,-2:
-        621:
+        617:
           cleanable: True
           color: '#FFFFFFFF'
           id: Remains
           coordinates: 13,-37
       -2,-1:
-        622:
+        618:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtHeavy
           coordinates: -44,-11
-        623:
+        619:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtHeavy
           coordinates: -53,-11
-        624:
+        620:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtHeavy
           coordinates: -52,-10
-        625:
+        621:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtHeavy
           coordinates: -53,-9
-        626:
+        622:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtHeavy
           coordinates: -64,-9
-        629:
+        625:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtHeavy
           coordinates: -49,-10
-        630:
+        626:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtHeavy
           coordinates: -39,-10
-        631:
-          cleanable: True
-          color: '#FFFFFFFF'
-          id: DirtHeavy
-          coordinates: -38,-10
-        655:
-          cleanable: True
-          color: '#FFFFFFFF'
-          id: DirtMedium
-          coordinates: -33,-11
-        656:
-          cleanable: True
-          color: '#FFFFFFFF'
-          id: DirtMedium
-          coordinates: -34,-10
-        657:
-          cleanable: True
-          color: '#FFFFFFFF'
-          id: DirtMedium
-          coordinates: -37,-10
-        658:
-          cleanable: True
-          color: '#FFFFFFFF'
-          id: DirtMedium
-          coordinates: -39,-11
-        659:
-          cleanable: True
-          color: '#FFFFFFFF'
-          id: DirtMedium
-          coordinates: -40,-10
-        660:
-          cleanable: True
-          color: '#FFFFFFFF'
-          id: DirtMedium
-          coordinates: -42,-10
-        661:
-          cleanable: True
-          color: '#FFFFFFFF'
-          id: DirtMedium
-          coordinates: -45,-11
-        662:
-          cleanable: True
-          color: '#FFFFFFFF'
-          id: DirtMedium
-          coordinates: -43,-11
-        663:
-          cleanable: True
-          color: '#FFFFFFFF'
-          id: DirtMedium
-          coordinates: -47,-11
-        664:
-          cleanable: True
-          color: '#FFFFFFFF'
-          id: DirtMedium
-          coordinates: -48,-11
-        665:
-          cleanable: True
-          color: '#FFFFFFFF'
-          id: DirtMedium
-          coordinates: -48,-10
-        666:
-          cleanable: True
-          color: '#FFFFFFFF'
-          id: DirtMedium
-          coordinates: -50,-10
-        667:
-          cleanable: True
-          color: '#FFFFFFFF'
-          id: DirtMedium
-          coordinates: -53,-10
-        668:
-          cleanable: True
-          color: '#FFFFFFFF'
-          id: DirtMedium
-          coordinates: -54,-11
-        669:
-          cleanable: True
-          color: '#FFFFFFFF'
-          id: DirtMedium
-          coordinates: -53,-8
-        670:
-          cleanable: True
-          color: '#FFFFFFFF'
-          id: DirtMedium
-          coordinates: -58,-10
-        671:
-          cleanable: True
-          color: '#FFFFFFFF'
-          id: DirtMedium
-          coordinates: -59,-10
-        672:
-          cleanable: True
-          color: '#FFFFFFFF'
-          id: DirtMedium
-          coordinates: -60,-11
-        673:
-          cleanable: True
-          color: '#FFFFFFFF'
-          id: DirtMedium
-          coordinates: -64,-10
-        678:
-          cleanable: True
-          color: '#FFFFFFFF'
-          id: DirtLight
-          coordinates: -64,-11
-        679:
-          cleanable: True
-          color: '#FFFFFFFF'
-          id: DirtLight
-          coordinates: -57,-11
-        680:
-          cleanable: True
-          color: '#FFFFFFFF'
-          id: DirtLight
-          coordinates: -55,-10
-        681:
-          cleanable: True
-          color: '#FFFFFFFF'
-          id: DirtLight
-          coordinates: -54,-10
-        682:
-          cleanable: True
-          color: '#FFFFFFFF'
-          id: DirtLight
-          coordinates: -52,-9
-        683:
-          cleanable: True
-          color: '#FFFFFFFF'
-          id: DirtLight
-          coordinates: -49,-11
-        684:
-          cleanable: True
-          color: '#FFFFFFFF'
-          id: DirtLight
-          coordinates: -50,-11
-        685:
-          cleanable: True
-          color: '#FFFFFFFF'
-          id: DirtLight
-          coordinates: -52,-11
-        686:
-          cleanable: True
-          color: '#FFFFFFFF'
-          id: DirtLight
-          coordinates: -47,-10
-        687:
-          cleanable: True
-          color: '#FFFFFFFF'
-          id: DirtLight
-          coordinates: -46,-10
-        688:
-          cleanable: True
-          color: '#FFFFFFFF'
-          id: DirtLight
-          coordinates: -39,-9
-        689:
-          cleanable: True
-          color: '#FFFFFFFF'
-          id: DirtLight
-          coordinates: -40,-11
-        690:
-          cleanable: True
-          color: '#FFFFFFFF'
-          id: DirtLight
-          coordinates: -34,-11
-        691:
-          cleanable: True
-          color: '#FFFFFFFF'
-          id: DirtLight
-          coordinates: -35,-11
-        854:
-          color: '#EFB34196'
-          id: HalfTileOverlayGreyscale
-          coordinates: -34,-4
-        855:
-          color: '#EFB34196'
-          id: HalfTileOverlayGreyscale
-          coordinates: -35,-4
-        856:
-          color: '#EFB34196'
-          id: HalfTileOverlayGreyscale
-          coordinates: -36,-4
-        857:
-          color: '#FFFFFFFF'
-          id: Arrows
-          coordinates: -34,-5
-      -3,-1:
         627:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtHeavy
-          coordinates: -66,-9
-        628:
-          cleanable: True
-          color: '#FFFFFFFF'
-          id: DirtHeavy
-          coordinates: -67,-9
-        674:
+          coordinates: -38,-10
+        651:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtMedium
-          coordinates: -66,-10
+          coordinates: -33,-11
+        652:
+          cleanable: True
+          color: '#FFFFFFFF'
+          id: DirtMedium
+          coordinates: -34,-10
+        653:
+          cleanable: True
+          color: '#FFFFFFFF'
+          id: DirtMedium
+          coordinates: -37,-10
+        654:
+          cleanable: True
+          color: '#FFFFFFFF'
+          id: DirtMedium
+          coordinates: -39,-11
+        655:
+          cleanable: True
+          color: '#FFFFFFFF'
+          id: DirtMedium
+          coordinates: -40,-10
+        656:
+          cleanable: True
+          color: '#FFFFFFFF'
+          id: DirtMedium
+          coordinates: -42,-10
+        657:
+          cleanable: True
+          color: '#FFFFFFFF'
+          id: DirtMedium
+          coordinates: -45,-11
+        658:
+          cleanable: True
+          color: '#FFFFFFFF'
+          id: DirtMedium
+          coordinates: -43,-11
+        659:
+          cleanable: True
+          color: '#FFFFFFFF'
+          id: DirtMedium
+          coordinates: -47,-11
+        660:
+          cleanable: True
+          color: '#FFFFFFFF'
+          id: DirtMedium
+          coordinates: -48,-11
+        661:
+          cleanable: True
+          color: '#FFFFFFFF'
+          id: DirtMedium
+          coordinates: -48,-10
+        662:
+          cleanable: True
+          color: '#FFFFFFFF'
+          id: DirtMedium
+          coordinates: -50,-10
+        663:
+          cleanable: True
+          color: '#FFFFFFFF'
+          id: DirtMedium
+          coordinates: -53,-10
+        664:
+          cleanable: True
+          color: '#FFFFFFFF'
+          id: DirtMedium
+          coordinates: -54,-11
+        665:
+          cleanable: True
+          color: '#FFFFFFFF'
+          id: DirtMedium
+          coordinates: -53,-8
+        666:
+          cleanable: True
+          color: '#FFFFFFFF'
+          id: DirtMedium
+          coordinates: -58,-10
+        667:
+          cleanable: True
+          color: '#FFFFFFFF'
+          id: DirtMedium
+          coordinates: -59,-10
+        668:
+          cleanable: True
+          color: '#FFFFFFFF'
+          id: DirtMedium
+          coordinates: -60,-11
+        669:
+          cleanable: True
+          color: '#FFFFFFFF'
+          id: DirtMedium
+          coordinates: -64,-10
+        674:
+          cleanable: True
+          color: '#FFFFFFFF'
+          id: DirtLight
+          coordinates: -64,-11
         675:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtLight
-          coordinates: -67,-10
+          coordinates: -57,-11
         676:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtLight
-          coordinates: -68,-9
+          coordinates: -55,-10
         677:
+          cleanable: True
+          color: '#FFFFFFFF'
+          id: DirtLight
+          coordinates: -54,-10
+        678:
+          cleanable: True
+          color: '#FFFFFFFF'
+          id: DirtLight
+          coordinates: -52,-9
+        679:
+          cleanable: True
+          color: '#FFFFFFFF'
+          id: DirtLight
+          coordinates: -49,-11
+        680:
+          cleanable: True
+          color: '#FFFFFFFF'
+          id: DirtLight
+          coordinates: -50,-11
+        681:
+          cleanable: True
+          color: '#FFFFFFFF'
+          id: DirtLight
+          coordinates: -52,-11
+        682:
+          cleanable: True
+          color: '#FFFFFFFF'
+          id: DirtLight
+          coordinates: -47,-10
+        683:
+          cleanable: True
+          color: '#FFFFFFFF'
+          id: DirtLight
+          coordinates: -46,-10
+        684:
+          cleanable: True
+          color: '#FFFFFFFF'
+          id: DirtLight
+          coordinates: -39,-9
+        685:
+          cleanable: True
+          color: '#FFFFFFFF'
+          id: DirtLight
+          coordinates: -40,-11
+        686:
+          cleanable: True
+          color: '#FFFFFFFF'
+          id: DirtLight
+          coordinates: -34,-11
+        687:
+          cleanable: True
+          color: '#FFFFFFFF'
+          id: DirtLight
+          coordinates: -35,-11
+        850:
+          color: '#EFB34196'
+          id: HalfTileOverlayGreyscale
+          coordinates: -34,-4
+        851:
+          color: '#EFB34196'
+          id: HalfTileOverlayGreyscale
+          coordinates: -35,-4
+        852:
+          color: '#EFB34196'
+          id: HalfTileOverlayGreyscale
+          coordinates: -36,-4
+        853:
+          color: '#FFFFFFFF'
+          id: Arrows
+          coordinates: -34,-5
+      -3,-1:
+        623:
+          cleanable: True
+          color: '#FFFFFFFF'
+          id: DirtHeavy
+          coordinates: -66,-9
+        624:
+          cleanable: True
+          color: '#FFFFFFFF'
+          id: DirtHeavy
+          coordinates: -67,-9
+        670:
+          cleanable: True
+          color: '#FFFFFFFF'
+          id: DirtMedium
+          coordinates: -66,-10
+        671:
+          cleanable: True
+          color: '#FFFFFFFF'
+          id: DirtLight
+          coordinates: -67,-10
+        672:
+          cleanable: True
+          color: '#FFFFFFFF'
+          id: DirtLight
+          coordinates: -68,-9
+        673:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtLight
@@ -10971,6 +10971,35 @@ entities:
       -67,-18: 129
       -66,-18: 118
       -65,-18: 129
+      -64,-16: 118
+      -64,-14: 118
+      -63,-16: 118
+      -63,-14: 118
+      -68,-16: 118
+      -68,-14: 118
+      -67,-16: 118
+      -67,-14: 118
+      -66,-16: 118
+      -66,-14: 118
+      -65,-16: 118
+      -65,-15: 118
+      -65,-14: 118
+      -64,-19: 118
+      -64,-17: 118
+      -63,-19: 118
+      -63,-17: 118
+      -72,-19: 118
+      -71,-19: 118
+      -70,-19: 118
+      -69,-19: 118
+      -68,-19: 118
+      -68,-17: 118
+      -67,-19: 118
+      -67,-17: 118
+      -66,-19: 118
+      -66,-17: 118
+      -65,-19: 118
+      -65,-17: 118
     uniqueMixes:
     - volume: 2500
       temperature: 256.84375
@@ -11028,10 +11057,10 @@ entities:
       - 0
       - 0
     - volume: 2500
-      temperature: 287.96356
+      temperature: 287.9634
       moles:
-      - 21.435162
-      - 80.63704
+      - 21.43515
+      - 80.63699
       - 0
       - 0
       - 0
@@ -11039,10 +11068,10 @@ entities:
       - 0
       - 0
     - volume: 2500
-      temperature: 272.40363
+      temperature: 272.40356
       moles:
-      - 20.265965
-      - 76.23863
+      - 20.26596
+      - 76.23862
       - 0
       - 0
       - 0
@@ -11050,10 +11079,10 @@ entities:
       - 0
       - 0
     - volume: 2500
-      temperature: 215.3509
+      temperature: 215.35089
       moles:
-      - 15.97893
-      - 60.111217
+      - 15.9789295
+      - 60.111214
       - 0
       - 0
       - 0
@@ -11160,10 +11189,10 @@ entities:
       - 0
       - 0
     - volume: 2500
-      temperature: 288.00784
+      temperature: 288.00668
       moles:
-      - 21.43849
-      - 80.64957
+      - 21.438402
+      - 80.64923
       - 0
       - 0
       - 0
@@ -11171,10 +11200,10 @@ entities:
       - 0
       - 0
     - volume: 2500
-      temperature: 291.86447
+      temperature: 291.86417
       moles:
-      - 21.72828
-      - 81.73973
+      - 21.72826
+      - 81.73965
       - 0
       - 0
       - 0
@@ -11292,10 +11321,10 @@ entities:
       - 0
       - 0
     - volume: 2500
-      temperature: 288.61172
+      temperature: 288.3281
       moles:
-      - 7.843316
-      - 29.505808
+      - 6.969468
+      - 26.218475
       - 0
       - 0
       - 0
@@ -11303,10 +11332,10 @@ entities:
       - 0
       - 0
     - volume: 2500
-      temperature: 291.87363
+      temperature: 291.8559
       moles:
-      - 21.72897
-      - 81.74231
+      - 21.727634
+      - 81.737305
       - 0
       - 0
       - 0
@@ -11314,10 +11343,10 @@ entities:
       - 0
       - 0
     - volume: 2500
-      temperature: 287.97354
+      temperature: 287.96466
       moles:
-      - 21.43591
-      - 80.639854
+      - 21.435244
+      - 80.63735
       - 0
       - 0
       - 0
@@ -11325,10 +11354,10 @@ entities:
       - 0
       - 0
     - volume: 2500
-      temperature: 273.70276
+      temperature: 273.70053
       moles:
-      - 20.363583
-      - 76.60586
+      - 20.363415
+      - 76.60523
       - 0
       - 0
       - 0
@@ -12260,10 +12289,10 @@ entities:
       - 0
       - 0
     - volume: 2500
-      temperature: 273.7914
+      temperature: 273.78696
       moles:
-      - 16.001003
-      - 60.194252
+      - 16.004667
+      - 60.208035
       - 0
       - 0
       - 0
@@ -12304,10 +12333,10 @@ entities:
       - 0
       - 0
     - volume: 2500
-      temperature: 274.9969
+      temperature: 273.8623
       moles:
-      - 9.548385
-      - 35.920113
+      - 6.052994
+      - 22.770786
       - 0
       - 0
       - 0
@@ -12359,10 +12388,10 @@ entities:
       - 0
       - 0
     - volume: 2500
-      temperature: 288.31036
+      temperature: 288.30923
       moles:
-      - 4.000251
-      - 15.048563
+      - 4.001167
+      - 15.052009
       - 0
       - 0
       - 0
@@ -69368,7 +69397,7 @@ entities:
   - pos: -68.19279,-20.404783
     parent: null
     type: Transform
-  - index: 3
+  - index: 1
     type: MapGrid
   - angularDamping: 100
     linearDamping: 50
@@ -88327,7 +88356,7 @@ entities:
   - pos: -64.46839,-31.002382
     parent: null
     type: Transform
-  - index: 1
+  - index: 2
     type: MapGrid
   - angularDamping: 100
     linearDamping: 50
@@ -88984,7 +89013,7 @@ entities:
   - pos: -27.133831,23.683748
     parent: null
     type: Transform
-  - index: 2
+  - index: 3
     type: MapGrid
   - angularDamping: 100
     linearDamping: 50
@@ -93143,4 +93172,528 @@ entities:
   - pos: -58.5,-19.5
     parent: 61
     type: Transform
+- uid: 9278
+  type: CableMV
+  components:
+  - pos: 53.5,-0.5
+    parent: 61
+    type: Transform
+  - canCollide: False
+    type: Physics
+- uid: 9279
+  type: CableMV
+  components:
+  - pos: 54.5,-0.5
+    parent: 61
+    type: Transform
+  - canCollide: False
+    type: Physics
+- uid: 9280
+  type: SpawnPointSecurityCadet
+  components:
+  - pos: 18.5,-4.5
+    parent: 61
+    type: Transform
+- uid: 9281
+  type: SpawnPointServiceWorker
+  components:
+  - pos: -1.5,-17.5
+    parent: 61
+    type: Transform
+- uid: 9282
+  type: SpawnPointMedicalIntern
+  components:
+  - pos: -18.5,-23.5
+    parent: 61
+    type: Transform
+- uid: 9283
+  type: SpawnPointTechnicalAssistant
+  components:
+  - pos: -34.5,-4.5
+    parent: 61
+    type: Transform
+- uid: 9284
+  type: CableHV
+  components:
+  - pos: -6.5,11.5
+    parent: 61
+    type: Transform
+  - enabled: False
+    type: AmbientSound
+  - canCollide: False
+    type: Physics
+- uid: 9285
+  type: CableHV
+  components:
+  - pos: -6.5,12.5
+    parent: 61
+    type: Transform
+  - enabled: False
+    type: AmbientSound
+  - canCollide: False
+    type: Physics
+- uid: 9286
+  type: CableHV
+  components:
+  - pos: -6.5,13.5
+    parent: 61
+    type: Transform
+  - canCollide: False
+    type: Physics
+- uid: 9287
+  type: CableHV
+  components:
+  - pos: -7.5,13.5
+    parent: 61
+    type: Transform
+  - canCollide: False
+    type: Physics
+- uid: 9288
+  type: CableHV
+  components:
+  - pos: -3.5,11.5
+    parent: 61
+    type: Transform
+  - enabled: False
+    type: AmbientSound
+  - canCollide: False
+    type: Physics
+- uid: 9289
+  type: CableHV
+  components:
+  - pos: -3.5,12.5
+    parent: 61
+    type: Transform
+  - enabled: False
+    type: AmbientSound
+  - canCollide: False
+    type: Physics
+- uid: 9290
+  type: CableHV
+  components:
+  - pos: -3.5,13.5
+    parent: 61
+    type: Transform
+  - enabled: False
+    type: AmbientSound
+  - canCollide: False
+    type: Physics
+- uid: 9291
+  type: CableHV
+  components:
+  - pos: -3.5,14.5
+    parent: 61
+    type: Transform
+  - canCollide: False
+    type: Physics
+- uid: 9292
+  type: CableHV
+  components:
+  - pos: -4.5,14.5
+    parent: 61
+    type: Transform
+  - canCollide: False
+    type: Physics
+- uid: 9293
+  type: CableHV
+  components:
+  - pos: -2.5,13.5
+    parent: 61
+    type: Transform
+  - enabled: False
+    type: AmbientSound
+  - canCollide: False
+    type: Physics
+- uid: 9294
+  type: CableHV
+  components:
+  - pos: -1.5,13.5
+    parent: 61
+    type: Transform
+  - enabled: False
+    type: AmbientSound
+  - canCollide: False
+    type: Physics
+- uid: 9295
+  type: CableHV
+  components:
+  - pos: -1.5,14.5
+    parent: 61
+    type: Transform
+  - canCollide: False
+    type: Physics
+- uid: 9296
+  type: CableHV
+  components:
+  - pos: -0.5,14.5
+    parent: 61
+    type: Transform
+  - canCollide: False
+    type: Physics
+- uid: 9297
+  type: CableHV
+  components:
+  - pos: -1.5,12.5
+    parent: 61
+    type: Transform
+  - enabled: False
+    type: AmbientSound
+  - canCollide: False
+    type: Physics
+- uid: 9298
+  type: CableHV
+  components:
+  - pos: -1.5,11.5
+    parent: 61
+    type: Transform
+  - enabled: False
+    type: AmbientSound
+  - canCollide: False
+    type: Physics
+- uid: 9299
+  type: CableHV
+  components:
+  - pos: -0.5,11.5
+    parent: 61
+    type: Transform
+  - enabled: False
+    type: AmbientSound
+  - canCollide: False
+    type: Physics
+- uid: 9300
+  type: CableHV
+  components:
+  - pos: 0.5,11.5
+    parent: 61
+    type: Transform
+  - enabled: False
+    type: AmbientSound
+  - canCollide: False
+    type: Physics
+- uid: 9301
+  type: CableHV
+  components:
+  - pos: 1.5,11.5
+    parent: 61
+    type: Transform
+  - enabled: False
+    type: AmbientSound
+  - canCollide: False
+    type: Physics
+- uid: 9302
+  type: CableHV
+  components:
+  - pos: 1.5,12.5
+    parent: 61
+    type: Transform
+  - enabled: False
+    type: AmbientSound
+  - canCollide: False
+    type: Physics
+- uid: 9303
+  type: CableHV
+  components:
+  - pos: 1.5,13.5
+    parent: 61
+    type: Transform
+  - canCollide: False
+    type: Physics
+- uid: 9304
+  type: CableHV
+  components:
+  - pos: 2.5,13.5
+    parent: 61
+    type: Transform
+  - canCollide: False
+    type: Physics
+- uid: 9305
+  type: CableHV
+  components:
+  - pos: -9.5,6.5
+    parent: 61
+    type: Transform
+  - enabled: False
+    type: AmbientSound
+  - canCollide: False
+    type: Physics
+- uid: 9306
+  type: CableHV
+  components:
+  - pos: -9.5,8.5
+    parent: 61
+    type: Transform
+  - enabled: False
+    type: AmbientSound
+  - canCollide: False
+    type: Physics
+- uid: 9307
+  type: CableHV
+  components:
+  - pos: -6.5,6.5
+    parent: 61
+    type: Transform
+  - enabled: False
+    type: AmbientSound
+  - canCollide: False
+    type: Physics
+- uid: 9308
+  type: CableHV
+  components:
+  - pos: -6.5,8.5
+    parent: 61
+    type: Transform
+  - enabled: False
+    type: AmbientSound
+  - canCollide: False
+    type: Physics
+- uid: 9309
+  type: CableHV
+  components:
+  - pos: -2.5,9.5
+    parent: 61
+    type: Transform
+  - enabled: False
+    type: AmbientSound
+  - canCollide: False
+    type: Physics
+- uid: 9310
+  type: CableHV
+  components:
+  - pos: 1.5,6.5
+    parent: 61
+    type: Transform
+  - enabled: False
+    type: AmbientSound
+  - canCollide: False
+    type: Physics
+- uid: 9311
+  type: CableHV
+  components:
+  - pos: 1.5,8.5
+    parent: 61
+    type: Transform
+  - enabled: False
+    type: AmbientSound
+  - canCollide: False
+    type: Physics
+- uid: 9312
+  type: CableHV
+  components:
+  - pos: 4.5,6.5
+    parent: 61
+    type: Transform
+  - enabled: False
+    type: AmbientSound
+  - canCollide: False
+    type: Physics
+- uid: 9313
+  type: CableHV
+  components:
+  - pos: 4.5,8.5
+    parent: 61
+    type: Transform
+  - enabled: False
+    type: AmbientSound
+  - canCollide: False
+    type: Physics
+- uid: 9314
+  type: CableMV
+  components:
+  - pos: -2.5,9.5
+    parent: 61
+    type: Transform
+  - enabled: False
+    type: AmbientSound
+  - canCollide: False
+    type: Physics
+- uid: 9315
+  type: CableMV
+  components:
+  - pos: -2.5,8.5
+    parent: 61
+    type: Transform
+  - enabled: False
+    type: AmbientSound
+  - canCollide: False
+    type: Physics
+- uid: 9316
+  type: CableMV
+  components:
+  - pos: -2.5,7.5
+    parent: 61
+    type: Transform
+  - enabled: False
+    type: AmbientSound
+  - canCollide: False
+    type: Physics
+- uid: 9317
+  type: CableMV
+  components:
+  - pos: -2.5,6.5
+    parent: 61
+    type: Transform
+  - enabled: False
+    type: AmbientSound
+  - canCollide: False
+    type: Physics
+- uid: 9318
+  type: CableMV
+  components:
+  - pos: -2.5,5.5
+    parent: 61
+    type: Transform
+  - enabled: False
+    type: AmbientSound
+  - canCollide: False
+    type: Physics
+- uid: 9319
+  type: CableMV
+  components:
+  - pos: -2.5,4.5
+    parent: 61
+    type: Transform
+  - enabled: False
+    type: AmbientSound
+  - canCollide: False
+    type: Physics
+- uid: 9320
+  type: CableMV
+  components:
+  - pos: -2.5,3.5
+    parent: 61
+    type: Transform
+  - enabled: False
+    type: AmbientSound
+  - canCollide: False
+    type: Physics
+- uid: 9321
+  type: CableMV
+  components:
+  - pos: -2.5,2.5
+    parent: 61
+    type: Transform
+  - enabled: False
+    type: AmbientSound
+  - canCollide: False
+    type: Physics
+- uid: 9322
+  type: CableMV
+  components:
+  - pos: -2.5,1.5
+    parent: 61
+    type: Transform
+  - enabled: False
+    type: AmbientSound
+  - canCollide: False
+    type: Physics
+- uid: 9323
+  type: CableMV
+  components:
+  - pos: -2.5,0.5
+    parent: 61
+    type: Transform
+  - enabled: False
+    type: AmbientSound
+  - canCollide: False
+    type: Physics
+- uid: 9324
+  type: CableMV
+  components:
+  - pos: -2.5,-0.5
+    parent: 61
+    type: Transform
+  - enabled: False
+    type: AmbientSound
+  - canCollide: False
+    type: Physics
+- uid: 9325
+  type: CableMV
+  components:
+  - pos: -2.5,-1.5
+    parent: 61
+    type: Transform
+  - enabled: False
+    type: AmbientSound
+  - canCollide: False
+    type: Physics
+- uid: 9326
+  type: CableMV
+  components:
+  - pos: -2.5,-2.5
+    parent: 61
+    type: Transform
+  - enabled: False
+    type: AmbientSound
+  - canCollide: False
+    type: Physics
+- uid: 9327
+  type: CableMV
+  components:
+  - pos: -2.5,-3.5
+    parent: 61
+    type: Transform
+  - enabled: False
+    type: AmbientSound
+  - canCollide: False
+    type: Physics
+- uid: 9328
+  type: CableMV
+  components:
+  - pos: -2.5,-4.5
+    parent: 61
+    type: Transform
+  - enabled: False
+    type: AmbientSound
+  - canCollide: False
+    type: Physics
+- uid: 9329
+  type: CableMV
+  components:
+  - pos: -2.5,-5.5
+    parent: 61
+    type: Transform
+  - enabled: False
+    type: AmbientSound
+  - canCollide: False
+    type: Physics
+- uid: 9330
+  type: CableMV
+  components:
+  - pos: -2.5,-6.5
+    parent: 61
+    type: Transform
+  - enabled: False
+    type: AmbientSound
+  - canCollide: False
+    type: Physics
+- uid: 9331
+  type: CableMV
+  components:
+  - pos: -1.5,-6.5
+    parent: 61
+    type: Transform
+  - enabled: False
+    type: AmbientSound
+  - canCollide: False
+    type: Physics
+- uid: 9332
+  type: CableMV
+  components:
+  - pos: -0.5,-6.5
+    parent: 61
+    type: Transform
+  - enabled: False
+    type: AmbientSound
+  - canCollide: False
+    type: Physics
+- uid: 9333
+  type: CableMV
+  components:
+  - pos: 0.5,-6.5
+    parent: 61
+    type: Transform
+  - enabled: False
+    type: AmbientSound
+  - canCollide: False
+    type: Physics
 ...
