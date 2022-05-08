@@ -309,6 +309,7 @@
 #  - type: Recyclable Turns out turning off recycler safeties without considering the instagib is a bad idea
 #    safe: false
   - type: Speech
+    playSpeechSound: true
   - type: Vocal
   - type: Emoting
   - type: Grammar
@@ -414,7 +415,7 @@
       - map: [ "pocket2" ]
       - map: ["hand-left"]
       - map: ["hand-right"]
-    - type: Markings 
+    - type: Markings
     - type: Physics
       bodyType: Dynamic
     - type: Fixtures
