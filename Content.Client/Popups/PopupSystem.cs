@@ -152,6 +152,12 @@ namespace Content.Client.Popups
                     continue;
                 }
 
+                if (label.Entity == player)
+                {
+                    label.Visible = true;
+                    continue;
+                }
+
                 var otherPos = label.Entity != null ? Transform(label.Entity.Value).MapPosition : label.InitialPos;
 
                 if (!ExamineSystemShared.InRangeUnOccluded(
