@@ -33,7 +33,7 @@
 - type: species
   id: Skeleton
   name: Skeleton
-  roundStart: false #unspooky
+  roundStart: true #unspooky, change it in october
   prototype: MobSkeletonPerson
   dollPrototype: MobSkeletonPersonDummy
   skinColoration: TintedHues

@@ -5,6 +5,8 @@ using Content.Server.DoAfter;
 using Content.Server.Mind.Components;
 using Content.Server.Popups;
 using Content.Server.Preferences.Managers;
+using Content.Shared.Actions;
+using Content.Shared.Actions.ActionTypes;
 using Content.Shared.CharacterAppearance.Systems;
 using Content.Shared.Preferences;
 using Content.Shared.Species;
@@ -12,7 +14,7 @@ using Content.Shared.Verbs;
 using Robust.Server.GameObjects;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
-using System.Diagnostics.CodeAnalysis;
+using Robust.Shared.Utility;
 
 /// <remarks>
 /// Fair warning, this is all kinda shitcode, but it'll have to wait for a major
@@ -26,6 +28,7 @@ namespace Content.Server.Body.Systems
     {
         [Dependency] private readonly IServerPreferencesManager _prefsManager = null!;
         [Dependency] private readonly IPrototypeManager _prototype = default!;
+        [Dependency] private readonly SharedActionsSystem _actions = default!;
         [Dependency] private readonly PopupSystem _popupSystem = default!;
         [Dependency] private readonly DoAfterSystem _doAfterSystem = default!;
         [Dependency] private readonly ConstructionSystem _construction = default!;
@@ -36,6 +39,7 @@ namespace Content.Server.Body.Systems
             base.Initialize();
 
             SubscribeLocalEvent<BodyReassembleComponent, PartGibbedEvent>(OnPartGibbed);
+            SubscribeLocalEvent<BodyReassembleComponent, ReassembleActionEvent>(OnReassembleAction);
 
             SubscribeLocalEvent<BodyReassembleComponent, GetVerbsEvent<AlternativeVerb>>(AddReassembleVerbs);
             SubscribeLocalEvent<ReassembleDoAfterComplete>(Reassemble);
@@ -49,6 +53,34 @@ namespace Content.Server.Body.Systems
             component.BodyParts = args.GibbedParts;
             UpdateDNAEntry(uid, args.EntityToGib);
             mindComp.Mind.TransferTo(uid);
+
+            if (component.ReassembleAction == null)
+                return;
+
+            _actions.AddAction(uid, component.ReassembleAction, null);
+        }
+
+        private void OnReassembleAction(EntityUid uid, BodyReassembleComponent component, ReassembleActionEvent args)
+        {
+            if (!GetNearbyParts(uid, uid, component, out var partList))
+                return;
+
+            if (partList == null)
+                return;
+
+            var doAfterTime = component.DoAfterTime * 2;
+
+            var doAfterEventArgs = new DoAfterEventArgs(component.Owner, doAfterTime, default, component.Owner)
+            {
+                BreakOnTargetMove = true,
+                BreakOnUserMove = true,
+                BreakOnDamage = true,
+                BreakOnStun = true,
+                NeedHand = false,
+                BroadcastFinishedEvent = new ReassembleDoAfterComplete(uid, uid, partList),
+            };
+
+            _doAfterSystem.DoAfter(doAfterEventArgs);
         }
 
         /// <summary>
@@ -56,7 +88,6 @@ namespace Content.Server.Body.Systems
         /// </summary>
         private void AddReassembleVerbs(EntityUid uid, BodyReassembleComponent component, GetVerbsEvent<AlternativeVerb> args)
         {
-            // every time i get warned of a null refernce i add another if statement
             if (!args.CanAccess || !args.CanInteract)
                 return;
 
@@ -94,7 +125,7 @@ namespace Content.Server.Body.Systems
 
                 _doAfterSystem.DoAfter(doAfterEventArgs);
             };
-            custom.IconTexture = "/Textures/Mobs/Species/Skeleton/parts.rsi/full.png";
+            custom.IconEntity = uid;
             custom.Priority = 1;
             args.Verbs.Add(custom);
         }
@@ -195,3 +226,5 @@ namespace Content.Server.Body.Systems
         }
     }
 }
+
+public class ReassembleActionEvent : InstantActionEvent { }

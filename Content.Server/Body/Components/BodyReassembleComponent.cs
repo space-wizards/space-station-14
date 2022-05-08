@@ -1,4 +1,5 @@
 using Content.Server.Cloning;
+using Content.Shared.Actions.ActionTypes;
 
 namespace Content.Server.Body.Components
 {
@@ -23,5 +24,8 @@ namespace Content.Server.Body.Components
         /// </summary>
         [ViewVariables]
         public HashSet<EntityUid>? BodyParts = null;
+
+        [DataField("action")] 
+        public InstantAction? ReassembleAction = null;
     }
 }

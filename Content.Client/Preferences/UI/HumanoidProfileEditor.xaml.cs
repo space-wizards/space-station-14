@@ -543,7 +543,18 @@ namespace Content.Client.Preferences.UI
                 }
                 case SpeciesSkinColor.TintedHues:
                 {
-                    var color = Color.FromHsv(new Vector4(range.Value / 100.0f, 0.1f, 1.0f, 1.0f));
+                    if (!_rgbSkinColorContainer.Visible)
+                    {
+                        _skinColor.Visible = false;
+                        _rgbSkinColorContainer.Visible = true;
+                    }
+
+                    // a little hacky in order to convert rgb --> hsv --> rgb
+                    var color = new Color(_rgbSkinColorSelector.Color.R, _rgbSkinColorSelector.Color.G, _rgbSkinColorSelector.Color.B);
+                    var newColor = Color.ToHsv(color);
+                    newColor.Y = .1f;
+                    color = Color.FromHsv(newColor);
+
                     Profile = Profile.WithCharacterAppearance(Profile.Appearance.WithSkinColor(color));
                     break;
                 }
@@ -765,7 +776,14 @@ namespace Content.Client.Preferences.UI
                 }
                 case SpeciesSkinColor.TintedHues:
                 {
-                    _skinColor.Value = color.X * 100f;
+                    if (!_rgbSkinColorContainer.Visible)
+                    {
+                        _skinColor.Visible = false;
+                        _rgbSkinColorContainer.Visible = true;
+                    }
+
+                    // set the RGB values to the direct values otherwise
+                    _rgbSkinColorSelector.Color = Profile.Appearance.SkinColor;
                     break;
                 }
             }

@@ -24,6 +24,7 @@
   - type: Hands
   - type: MovementSpeedModifier
   - type: MovedByPressure
+  - type: Markings
   - type: Barotrauma
     damage:
       types:
