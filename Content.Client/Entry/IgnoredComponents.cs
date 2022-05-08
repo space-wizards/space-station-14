@@ -142,6 +142,7 @@ namespace Content.Client.Entry
             "PowerMonitoringConsole",
             "RCD",
             "RCDAmmo",
+            "SurplusBundle",
             "CursedEntityStorage",
             "DiseaseArtifact",
             "Radio",
