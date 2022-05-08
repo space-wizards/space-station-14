@@ -14,7 +14,7 @@
           nodeGroupID: HVPower
     - type: PowerConsumer
       voltage: High
-      drawRate: 1000000
+      drawRate: 300000
     - type: Transform
       anchored: true
     - type: Fixtures
@@ -36,6 +36,7 @@
         - !type:DoActsBehavior
           acts: [ "Destruction" ]
     - type: PowerSink
+      capacity: 100
     - type: Sprite
       netsync: false
       sprite: Objects/Power/powersink.rsi
