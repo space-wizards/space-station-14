@@ -4,10 +4,13 @@
   id: Pickaxe
   description: Notched to perfection, for jamming it into rocks
   components:
+  - type: Tag
+    tags:
+    - Pickaxe
   - type: Sprite
     sprite: Objects/Weapons/Melee/pickaxe.rsi
     state: pickaxe
-  - type: Pickaxe
+  - type: GatheringTool
     damage:
       types:
         Piercing: 25

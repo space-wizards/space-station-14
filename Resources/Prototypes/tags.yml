@@ -245,6 +245,9 @@
 
 - type: Tag
   id: Plastic
+  
+- type: Tag
+  id: Pickaxe
 
 - type: Tag
   id: Pill

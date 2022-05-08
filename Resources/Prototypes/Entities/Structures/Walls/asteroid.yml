@@ -6,8 +6,11 @@
   components:
   - type: RandomAppearance
     key: enum.AsteroidRockVisuals.State
-  - type: Mineable
-    ores:
+  - type: Gatherable
+    whitelist:
+      tags:
+        - Pickaxe
+    loot:
     - id: SteelOre1
       prob: 0.25
       orGroup: Asteroid
