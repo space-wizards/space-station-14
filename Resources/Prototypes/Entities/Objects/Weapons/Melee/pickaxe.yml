@@ -42,7 +42,7 @@
     damage:
       types:
         Piercing: 25
-    timeMultiplier: 0.75
+    gatheringTime: 0.75
   - type: ItemCooldown
   - type: MeleeWeapon
     damage:
