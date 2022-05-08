@@ -21,7 +21,7 @@
     - id: BoxMRE
       amount: 6
 
-- type: entity
+type: entity
   id: CrateFoodCooking
   name: kitchen supplies crate
   description: Extra kitchen supplies, in case the botanists are absent.
