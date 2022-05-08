@@ -38,11 +38,5 @@
     - type: PowerSink
     - type: Sprite
       netsync: false
-      sprite: Structures/Machines/microwave.rsi
-      drawdepth: SmallObjects
-      layers:
-      - state: mw0
-        map: [ "enum.MicrowaveVisualizerLayers.Base" ]
-      - state: mw_unlit
-        shader: unshaded
-        map: [ "enum.MicrowaveVisualizerLayers.BaseUnlit" ]
+      sprite: Objects/Power/powersink.rsi
+      state: powersink
