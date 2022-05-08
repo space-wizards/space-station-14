@@ -1,18 +1,4 @@
 Entries:
-- author: Seth
-  changes:
-  - {message: Goats are back into the cargo console, type: Tweak}
-  id: 972
-  time: '2022-02-04T21:14:54.0000000+00:00'
-- author: Peptide90
-  changes:
-  - {message: Universal Enzyme and corn oil can now be produced by juicing corn.,
-    type: Add}
-  - {message: 'Ketchup can now be made by combining 10 tomato juice and 5 sugar. BBQ
-      Sauce can be made by 5 ketchup, vinegar and sugar each. Hot Sauce with 5 tomato
-      juice, salt and capsaicin oil.', type: Add}
-  id: 973
-  time: '2022-02-04T21:15:10.0000000+00:00'
 - author: Lamrr
   changes:
   - {message: 'Fingerless gloves have arrived. Protect your hands, well at least some
@@ -3045,3 +3031,14 @@ Entries:
       gave you., type: Fix}
   id: 1471
   time: '2022-05-08T01:45:07.0000000+00:00'
+- author: DogZeroX
+  changes:
+  - {message: Pianos are now anchored to the ground to slowdown theft., type: Tweak}
+  id: 1472
+  time: '2022-05-08T05:02:02.0000000+00:00'
+- author: emisse
+  changes:
+  - {message: tasers can only fire 1 shot, type: Add}
+  - {message: blood no longer slips, type: Add}
+  id: 1473
+  time: '2022-05-08T05:02:12.0000000+00:00'
