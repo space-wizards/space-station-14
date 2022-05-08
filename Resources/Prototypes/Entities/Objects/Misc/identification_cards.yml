@@ -390,3 +390,24 @@
     interfaces:
       - key: enum.AgentIDCardUiKey.Key
         type: AgentIDCardBoundUserInterface
+        
+- type: entity
+  parent: IDCardStandard
+  id: AtmosIDCard
+  name: atmospheric technician ID card
+  components:
+  - type: Sprite
+    layers:
+    - state: orange
+    - state: idatmospherictechnician
+  - type: PresetIdCard
+    job: AtmosphericTechnician
+
+- type: entity
+  parent: IDCardStandard
+  id: SyndicateIDCard
+  name: Syndicate ID card
+  components:
+  - type: Sprite
+    layers:
+    - state: syndie

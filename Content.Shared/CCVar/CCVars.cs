@@ -105,7 +105,7 @@ namespace Content.Shared.CCVar
         ///     Controls the default game preset.
         /// </summary>
         public static readonly CVarDef<string>
-            GameLobbyDefaultPreset = CVarDef.Create("game.defaultpreset", "suspicion", CVar.ARCHIVE);
+            GameLobbyDefaultPreset = CVarDef.Create("game.defaultpreset", "traitor", CVar.ARCHIVE);
 
         /// <summary>
         ///     Controls if the game can force a different preset if the current preset's criteria are not met.
@@ -327,6 +327,9 @@ namespace Content.Shared.CCVar
 
         public static readonly CVarDef<bool> ParallaxDebug =
             CVarDef.Create("parallax.debug", false, CVar.CLIENTONLY);
+
+        public static readonly CVarDef<bool> ParallaxLowQuality =
+            CVarDef.Create("parallax.low_quality", false, CVar.ARCHIVE | CVar.CLIENTONLY);
 
         /*
          * Physics

@@ -10,9 +10,9 @@ using Content.Server.Hands.Components;
 using Content.Server.Power.Components;
 using Content.Server.UserInterface;
 using Content.Shared.ActionBlocker;
-using Content.Shared.Acts;
 using Content.Shared.Atmos;
 using Content.Shared.Construction.Components;
+using Content.Shared.Destructible;
 using Content.Shared.Disposal;
 using Content.Shared.Disposal.Components;
 using Content.Shared.DragDrop;
@@ -46,6 +46,7 @@ namespace Content.Server.Disposal.Unit.EntitySystems
         {
             base.Initialize();
 
+            // Shouldn't need re-anchoring.
             SubscribeLocalEvent<DisposalUnitComponent, AnchorStateChangedEvent>(OnAnchorChanged);
             // TODO: Predict me when hands predicted
             SubscribeLocalEvent<DisposalUnitComponent, RelayMovementEntityEvent>(HandleMovement);
@@ -161,6 +162,17 @@ namespace Content.Server.Disposal.Unit.EntitySystems
             AfterInsert(unit, toInsert);
         }
 
+        public void DoInsertDisposalUnit(EntityUid unit, EntityUid toInsert, DisposalUnitComponent? disposal = null)
+        {
+            if (!Resolve(unit, ref disposal))
+                return;
+
+            if (!disposal.Container.Insert(toInsert))
+                return;
+
+            AfterInsert(disposal, toInsert);
+        }
+
         public override void Update(float frameTime)
         {
             base.Update(frameTime);
@@ -244,7 +256,7 @@ namespace Content.Server.Disposal.Unit.EntitySystems
             {
                 return;
             }
-            
+
             if (!CanInsert(component, args.Used) || !_handsSystem.TryDropIntoContainer(args.User, args.Used, component.Container))
             {
                 return;

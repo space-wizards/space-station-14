@@ -1,12 +1,12 @@
 - type: gameMap
   id: splitstation
-  mapName: 'Split Station v2.1'
+  mapName: 'Split Station'
   mapNameTemplate: '{0} Split Station {1}'
   nameGenerator:
     !type:NanotrasenNameGenerator
     prefixCreator: '14'
   mapPath: /Maps/splitstation.yml
-  minPlayers: 40
+  minPlayers: 60
   overflowJobs:
     - Assistant
   availableJobs:
@@ -36,3 +36,4 @@
     Quartermaster: [ 1, 1 ]
     SalvageSpecialist: [ 4, 6 ] 
     Musician: [ 1, 1 ]
+    AtmosphericTechnician: [ 1, 2 ]
