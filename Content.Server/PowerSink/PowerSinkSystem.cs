@@ -48,11 +48,10 @@ namespace Content.Server.PowerSink
                 {
                     if(TryComp<PowerConsumerComponent>(comp.Owner, out var networkLoad) && TryComp<BatteryComponent>(comp.Owner, out var battery))
                     {
-                        // Charge rate is multiplied by how much power it can get
-                        battery.CurrentCharge += networkLoad.NetworkLoad.ReceivingPower * frameTime;
+                        battery.CurrentCharge += networkLoad.NetworkLoad.ReceivingPower / 1000;
                         if (battery.CurrentCharge >= battery.MaxCharge)
                         {
-                            _explosionSystem.QueueExplosion(comp.Owner, "Default", 5, 1, 5, canCreateVacuum: false);
+                            _explosionSystem.QueueExplosion(comp.Owner, "Default", 5 * (battery.MaxCharge / 2500000), 0.5f, 10, canCreateVacuum: false);
                             EntityManager.RemoveComponent(comp.Owner, comp);
                         }
                     }
