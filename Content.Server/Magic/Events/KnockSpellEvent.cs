@@ -1,4 +1,5 @@
 ﻿using Content.Shared.Actions;
+using Content.Shared.Sound;
 
 namespace Content.Server.Magic.Events;
 
@@ -10,4 +11,7 @@ public sealed class KnockSpellEvent : InstantActionEvent
     /// </summary>
     [DataField("range")]
     public float Range = 4f;
+
+    [DataField("knockSound")]
+    public SoundSpecifier KnockSound = new SoundPathSpecifier("/Audio/Magic/knock.ogg");
 }

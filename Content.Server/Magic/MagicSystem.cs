@@ -10,7 +10,9 @@ using Content.Shared.Doors.Systems;
 using Content.Shared.Interaction.Events;
 using Content.Shared.Maps;
 using Robust.Server.GameObjects;
+using Robust.Shared.Audio;
 using Robust.Shared.Map;
+using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 
 namespace Content.Server.Magic;
@@ -140,12 +142,14 @@ public sealed class MagicSystem : EntitySystem
             var gridPosition = grid.WorldToLocal(args.Target.Position);
 
             transform.Coordinates = new EntityCoordinates(grid.GridEntityId, gridPosition);
+            SoundSystem.Play(Filter.Pvs(args.Target), args.BlinkSound.GetSound());
         }
         else
         {
             var mapEntity = _mapManager.GetMapEntityIdOrThrow(args.Target.MapId);
             transform.WorldPosition = args.Target.Position;
             transform.AttachParent(mapEntity);
+            SoundSystem.Play(Filter.Pvs(args.Target), args.BlinkSound.GetSound());
         }
 
         args.Handled = true;
@@ -195,6 +199,7 @@ public sealed class MagicSystem : EntitySystem
                 return;
         }
 
+        SoundSystem.Play(Filter.Pvs(coords), args.ForceWallSound.GetSound());
         ActiveWalls.Add(Spawn(args.WallPrototype, coords));
         ActiveWalls.Add(Spawn(args.WallPrototype, coordsPlus));
         ActiveWalls.Add(Spawn(args.WallPrototype, coordsMinus));
@@ -219,6 +224,8 @@ public sealed class MagicSystem : EntitySystem
         //Get the position of the player
         var transform = Transform(args.Performer);
         var coords = transform.Coordinates;
+
+        SoundSystem.Play(Filter.Pvs(coords), args.KnockSound.GetSound());
 
         //Look for doors and don't open them if they're already open.
         foreach (var entity in _lookup.GetEntitiesInRange(coords, args.Range))
