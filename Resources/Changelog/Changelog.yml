@@ -1,10 +1,4 @@
 Entries:
-- author: ElectroJr
-  changes:
-  - {message: 'You should now be able to un-anchor things like disposal units, instead
-      of just discarding your wrench.', type: Tweak}
-  id: 983
-  time: '2022-02-05T02:39:02.0000000+00:00'
 - author: walrusfromspace
   changes:
   - {message: Added door remotes to the heads' lockers, type: Add}
@@ -3030,3 +3024,8 @@ Entries:
   - {message: Speech bubbles are now occluded, type: Tweak}
   id: 1482
   time: '2022-05-08T08:54:56.0000000+00:00'
+- author: hubismal
+  changes:
+  - {message: 'Humans, mice, and vending machines make noise when they talk.', type: Add}
+  id: 1483
+  time: '2022-05-08T13:23:08.0000000+00:00'
