@@ -18,13 +18,14 @@ namespace Content.Server.PowerSink
 
         private void OnExamine(EntityUid uid, PowerSinkComponent component, ExaminedEvent args)
         {
-            if (!TryComp<PowerSinkComponent>(uid, out var batteryComponent))
+            var battery = Comp<BatteryComponent>(component.Owner);
+            if (!TryComp<PowerSinkComponent>(uid, out var powerSinkComponent))
                 return;
             if (args.IsInDetailsRange)
             {
-                var effectiveMax = component.Capacity;
+                var effectiveMax = battery.MaxCharge;
                 if (effectiveMax == 0) {effectiveMax = 1;}
-                var chargeFraction = batteryComponent.Charge / effectiveMax;
+                var chargeFraction = battery.CurrentCharge / effectiveMax;
                 var chargePercentRounded = (int) (chargeFraction * 100);
                 args.PushMarkup(
                     Loc.GetString(
@@ -51,9 +52,10 @@ namespace Content.Server.PowerSink
                 if (Comp<TransformComponent>(comp.Owner).Anchored)
                 {
                     var networkLoad = Comp<PowerConsumerComponent>(comp.Owner).NetworkLoad;
+                    var battery = Comp<BatteryComponent>(comp.Owner);
                     // Charge rate is multiplied by how much power it can get
-                    comp.Charge += networkLoad.ReceivingPower * 0.000001f * frameTime;
-                    if (comp.Charge >= comp.Capacity)
+                    battery.CurrentCharge += networkLoad.ReceivingPower * frameTime;
+                    if (battery.CurrentCharge >= battery.MaxCharge)
                     {
                         _explosionSystem.QueueExplosion(comp.Owner, "Default", 5, 1, 5, canCreateVacuum: false);
                         comp.AlreadyExploded = true;

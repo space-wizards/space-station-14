@@ -239,7 +239,7 @@
   itemId: ClothingBackpackDuffelSyndicateFilledMedical
   price: 5
 
-- type : uplinklisting
+- type : uplinkListing
   id: UplinkPowerSink
   category: Tools
   itemID: PowerSink
