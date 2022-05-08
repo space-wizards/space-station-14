@@ -16,7 +16,6 @@ public sealed class GatherableComponent : Component
     public EntityWhitelist? ToolWhitelist;
 
     /// <summary>
-    ///     If this is defined, loot table will must be mapped
     ///     YAML example below
     ///     (Tag1, Tag2, Entity1, Entity2 are placeholders for example)
     ///     --------------------
