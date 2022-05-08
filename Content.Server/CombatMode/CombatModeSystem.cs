@@ -57,7 +57,7 @@ namespace Content.Server.CombatMode
 
             if (inTargetHand != null)
             {
-                RaiseLocalEvent((EntityUid) inTargetHand, attemptEvent);
+                RaiseLocalEvent(inTargetHand.Value, attemptEvent);
             }
             RaiseLocalEvent(args.Target, attemptEvent);
             if (attemptEvent.Cancelled)
