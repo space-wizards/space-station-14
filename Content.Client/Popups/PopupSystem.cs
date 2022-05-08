@@ -1,13 +1,16 @@
 using Content.Client.Stylesheets;
+using Content.Shared.Examine;
 using Content.Shared.GameTicking;
 using Content.Shared.Popups;
 using Robust.Client.Graphics;
 using Robust.Client.Input;
+using Robust.Client.Player;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Shared.Map;
 using Robust.Shared.Player;
 using Robust.Shared.Timing;
+using Robust.Shared.Utility;
 
 namespace Content.Client.Popups
 {
@@ -16,6 +19,7 @@ namespace Content.Client.Popups
         [Dependency] private readonly IInputManager _inputManager = default!;
         [Dependency] private readonly IUserInterfaceManager _userInterfaceManager = default!;
         [Dependency] private readonly IEyeManager _eyeManager = default!;
+        [Dependency] private readonly IPlayerManager _playerManager = default!;
 
         private readonly List<PopupLabel> _aliveLabels = new();
 
@@ -62,8 +66,9 @@ namespace Content.Client.Popups
             _userInterfaceManager.PopupRoot.AddChild(label);
             label.Measure(Vector2.Infinity);
 
-            label.InitialPos = coordinates.Position / label.UIScale - label.DesiredSize / 2;
-            LayoutContainer.SetPosition(label, label.InitialPos);
+            var mapCoordinates = _eyeManager.ScreenToMap(coordinates.Position / label.UIScale - label.DesiredSize / 2);
+            label.InitialPos = mapCoordinates;
+            LayoutContainer.SetPosition(label, label.InitialPos.Position);
             _aliveLabels.Add(label);
         }
 
@@ -128,13 +133,44 @@ namespace Content.Client.Popups
 
         public override void FrameUpdate(float frameTime)
         {
-            foreach (var l in _aliveLabels)
-            {
-                if (l.TotalTime > PopupLifetime)
-                    l.Dispose();
-            }
+            if (_aliveLabels.Count == 0) return;
 
-            _aliveLabels.RemoveAll(l => l.Disposed);
+            var player = _playerManager.LocalPlayer?.ControlledEntity;
+            var playerPos = player != null ? Transform(player.Value).MapPosition : MapCoordinates.Nullspace;
+
+            // ReSharper disable once ConvertToLocalFunction
+            var predicate = static (EntityUid uid, (EntityUid? compOwner, EntityUid? attachedEntity) data)
+                => uid == data.compOwner || uid == data.attachedEntity;
+
+            for (var i = _aliveLabels.Count - 1; i >= 0; i--)
+            {
+                var label = _aliveLabels[i];
+                if (label.TotalTime > PopupLifetime)
+                {
+                    label.Dispose();
+                    _aliveLabels.RemoveAt(i);
+                    continue;
+                }
+
+                if (label.Entity == player)
+                {
+                    label.Visible = true;
+                    continue;
+                }
+
+                var otherPos = label.Entity != null ? Transform(label.Entity.Value).MapPosition : label.InitialPos;
+
+                if (!ExamineSystemShared.InRangeUnOccluded(
+                        playerPos,
+                        otherPos, 0f,
+                        (label.Entity, player), predicate))
+                {
+                    label.Visible = false;
+                    continue;
+                }
+
+                label.Visible = true;
+            }
         }
 
         private sealed class PopupLabel : Label
@@ -143,7 +179,13 @@ namespace Content.Client.Popups
             private readonly IEntityManager _entityManager;
 
             public float TotalTime { get; private set; }
-            public Vector2 InitialPos { get; set; }
+            /// <summary>
+            /// The original Mapid and ScreenPosition of the label.
+            /// </summary>
+            /// <remarks>
+            /// Yes that's right it's not technically MapCoordinates.
+            /// </remarks>
+            public MapCoordinates InitialPos { get; set; }
             public EntityUid? Entity { get; set; }
 
             public PopupLabel(IEyeManager eyeManager, IEntityManager entityManager)
@@ -161,7 +203,7 @@ namespace Content.Client.Popups
 
                 Vector2 position;
                 if (Entity == null)
-                    position = InitialPos;
+                    position = InitialPos.Position;
                 else if (_entityManager.TryGetComponent(Entity.Value, out TransformComponent xform))
                     position = (_eyeManager.CoordinatesToScreen(xform.Coordinates).Position / UIScale) - DesiredSize / 2;
                 else
