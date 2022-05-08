@@ -14,6 +14,7 @@ namespace Content.Server.PowerSink
             base.Initialize();
 
             SubscribeLocalEvent<PowerSinkComponent, ExaminedEvent>(OnExamine);
+            SubscribeLocalEvent<PowerSinkComponent, AnchorStateChangedEvent>(OnAnchorChange);
         }
 
         private void OnExamine(EntityUid uid, PowerSinkComponent component, ExaminedEvent args)
@@ -34,20 +35,26 @@ namespace Content.Server.PowerSink
             }
         }
 
+        private void OnAnchorChange(EntityUid uid, PowerSinkComponent component, ref AnchorStateChangedEvent args)
+        {
+            component.IsAnchored = args.Anchored;
+        }
+
         public override void Update(float frameTime)
         {
             foreach (var comp in EntityManager.EntityQuery<PowerSinkComponent>())
             {
-                if (Comp<TransformComponent>(comp.Owner).Anchored)
+                if (comp.IsAnchored)
                 {
-                    var networkLoad = Comp<PowerConsumerComponent>(comp.Owner).NetworkLoad;
-                    var battery = Comp<BatteryComponent>(comp.Owner);
-                    // Charge rate is multiplied by how much power it can get
-                    battery.CurrentCharge += networkLoad.ReceivingPower * frameTime;
-                    if (battery.CurrentCharge >= battery.MaxCharge)
+                    if(TryComp<PowerConsumerComponent>(comp.Owner, out var networkLoad) && TryComp<BatteryComponent>(comp.Owner, out var battery))
                     {
-                        _explosionSystem.QueueExplosion(comp.Owner, "Default", 5, 1, 5, canCreateVacuum: false);
-                        comp.AlreadyExploded = true;
+                        // Charge rate is multiplied by how much power it can get
+                        battery.CurrentCharge += networkLoad.NetworkLoad.ReceivingPower * frameTime;
+                        if (battery.CurrentCharge >= battery.MaxCharge)
+                        {
+                            _explosionSystem.QueueExplosion(comp.Owner, "Default", 5, 1, 5, canCreateVacuum: false);
+                            EntityManager.RemoveComponent(comp.Owner, comp);
+                        }
                     }
                 }
             }

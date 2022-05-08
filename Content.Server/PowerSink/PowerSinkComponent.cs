@@ -6,7 +6,6 @@
     [RegisterComponent]
     public sealed class PowerSinkComponent : Component
     {
-        // We definitely don't want this to explode more than once.
-        public bool AlreadyExploded = false;
+        public bool IsAnchored;
     }
 }
