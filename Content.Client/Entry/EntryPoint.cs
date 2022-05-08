@@ -105,6 +105,7 @@ namespace Content.Client.Entry
             prototypes.RegisterIgnore("entitySpell");
             prototypes.RegisterIgnore("instantSpell");
             prototypes.RegisterIgnore("wireLayout");
+            prototypes.RegisterIgnore("nukeopsRole");
 
             ClientContentIoC.Register();
 

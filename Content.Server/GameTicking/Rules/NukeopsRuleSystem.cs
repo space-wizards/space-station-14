@@ -1,6 +1,12 @@
 ﻿using System.Linq;
 using Content.Server.Chat.Managers;
+using Content.Server.Nukeops;
+using Content.Shared.Access;
+using Content.Shared.Access.Components;
+using Content.Shared.Access.Systems;
 using Content.Shared.CCVar;
+using Content.Shared.Inventory;
+using Content.Shared.Roles;
 using Robust.Server.Maps;
 using Robust.Server.Player;
 using Robust.Shared.Configuration;
@@ -12,11 +18,15 @@ namespace Content.Server.GameTicking.Rules;
 
 public sealed class NukeopsRuleSystem : GameRuleSystem
 {
+    [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly IConfigurationManager _cfg = default!;
     [Dependency] private readonly IChatManager _chatManager = default!;
     [Dependency] private readonly IMapLoader _mapLoader = default!;
     [Dependency] private readonly IMapManager _mapManager = default!;
+    [Dependency] private readonly InventorySystem _inventorySystem = default!;
+    [Dependency] private readonly AccessSystem _accessSystem = default!;
+
 
     public override string Prototype => "Nukeops";
 
@@ -57,6 +67,9 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
         }
 
         //todo spawners
+        var gear = _prototypeManager.Index<StartingGearPrototype>("NukeopsGear");
+        var accessLevel = _prototypeManager.Index<AccessLevelPrototype>("NuclearOperative");
+        var roles = _prototypeManager.EnumeratePrototypes<NukeopsRolePrototype>().ToList();
         var spawnpos = new EntityCoordinates(_mapManager.GetGridEuid(grid.Value), Vector2.Zero);
         for (var i = 0; i < ops.Length; i++)
         {
@@ -72,6 +85,19 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
             EntityManager.GetComponent<MetaDataComponent>(mob).EntityName = name;
 
             newMind.TransferTo(mob);
+            GameTicker.EquipStartingGear(mob, gear, null);
+
+            //todo make this a preference
+            var role = _random.Pick(roles);
+
+            var duffel = EntityManager.SpawnEntity(role.Back, spawnpos);
+            _inventorySystem.TryEquip(mob, duffel, "back", true, true);
+
+            if (_inventorySystem.TryGetSlotEntity(mob, "id", out var idUid))
+            {
+                _accessSystem.TrySetTags(idUid.Value, new[] { accessLevel.ID });
+            }
+
             GameTicker.PlayerJoinGame(session);
         }
     }

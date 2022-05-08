@@ -1,0 +1,27 @@
+﻿#- type: nukeopsRole
+#  id: Medical
+#  back: ClothingBackpackDuffelSyndicateFilledMedical
+
+- type: nukeopsRole
+  id: Crowd control
+  back: ClothingBackpackDuffelSyndicateFilledShotgun
+
+- type: nukeopsRole
+  id: Strike Team
+  back: ClothingBackpackDuffelSyndicateFilledSMG
+
+- type: nukeopsRole
+  id: Agent
+  back: ClothingBackpackDuffelSyndicateFilledRevolver
+
+- type: nukeopsRole
+  id: Heavy
+  back: ClothingBackpackDuffelSyndicateFilledLMG
+
+- type: nukeopsRole
+  id: Grenadier
+  back: ClothingBackpackDuffelSyndicateFilledGrenadeLauncher
+
+- type: nukeopsRole
+  id: Spec Ops
+  back: ClothingBackpackDuffelSyndicateFilledCarbine
