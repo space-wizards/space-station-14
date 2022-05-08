@@ -483,6 +483,18 @@
     Starkist: 3
 
 - type: reaction
+  id: Singulo
+  reactants:
+    Vodka:
+      amount: 5
+    Radium:
+      amount: 1
+    Wine:
+      amount: 5
+  products:
+    Singulo: 11
+
+- type: reaction
   id: SyndicateBomb
   reactants:
     Beer:
