@@ -43,17 +43,6 @@ namespace Content.Server.AI.Pathfinding
             GenerateMask();
         }
 
-        public static bool IsRelevant(EntityUid entity, IPhysBody physicsComponent)
-        {
-            if (IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(entity).GridID == GridId.Invalid ||
-                (PathfindingSystem.TrackedCollisionLayers & physicsComponent.CollisionLayer) == 0)
-            {
-                return false;
-            }
-
-            return true;
-        }
-
         /// <summary>
         /// Return our neighboring nodes (even across chunks)
         /// </summary>

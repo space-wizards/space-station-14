@@ -66,7 +66,7 @@ public sealed class DoorSystem : SharedDoorSystem
             _airtightSystem.SetAirblocked(airtight, collidable);
 
         // Pathfinding / AI stuff.
-        RaiseLocalEvent(new AccessReaderChangeMessage(uid, collidable));
+        RaiseLocalEvent(new AccessReaderChangeEvent(uid, collidable));
 
         base.SetCollidable(uid, collidable, door, physics, occluder);
     }
