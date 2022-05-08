@@ -1,13 +1,14 @@
 using Content.Client.Chat.Managers;
 using Content.Client.Chat.UI;
 using Content.Client.Examine;
+using Content.Shared.Chat;
 using Content.Shared.Examine;
 using Robust.Client.Player;
 using Robust.Shared.Map;
 
 namespace Content.Client.Chat;
 
-public sealed class ChatSystem : EntitySystem
+public sealed class ChatSystem : SharedChatSystem
 {
     [Dependency] private readonly IChatManager _manager = default!;
     [Dependency] private readonly IPlayerManager _player = default!;
@@ -24,12 +25,15 @@ public sealed class ChatSystem : EntitySystem
 
         foreach (var (ent, bubs) in bubbles)
         {
-            if (ent == player) continue;
+            if (ent == player)
+            {
+                SetBubbles(bubs, true);
+                continue;
+            }
 
             var otherPos = Transform(ent).MapPosition;
 
-            if (ent != player &&
-                !ExamineSystemShared.InRangeUnOccluded(
+            if (!ExamineSystemShared.InRangeUnOccluded(
                     playerPos,
                     otherPos, 0f,
                     (ent, player), predicate))
