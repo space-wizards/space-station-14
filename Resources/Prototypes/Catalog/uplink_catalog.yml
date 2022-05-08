@@ -283,6 +283,12 @@
   description: A simple EVA suit that offers no protection other than what's needed to survive in space.
   price: 4
 
+- type: uplinkListing
+  id: UplinkClothingOuterHardsuitJuggernaut
+  category: Armor
+  itemId: ClothingOuterHardsuitJuggernaut
+  description: Hyper resilient armor made of materials tested in the Tau chromosphere facility. The only thing that's going to be slowing you down is this suit... and tasers.
+  price: 12
 
 
 # Misc
