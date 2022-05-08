@@ -1,21 +1,4 @@
 Entries:
-- author: mirrorcult
-  changes:
-  - {message: Deconstructing crates now requires a screwdriver again., type: Fix}
-  id: 969
-  time: '2022-02-03T23:43:52.815666+00:00'
-- author: Peptide90
-  changes:
-  - {message: Changed map Reach from 25 players max to 15., type: Tweak}
-  - {message: Changed map Saltern from 20 to 25 max players., type: Tweak}
-  id: 970
-  time: '2022-02-04T13:20:25.0000000+00:00'
-- author: Peptide90
-  changes:
-  - {message: You can now milk goats for their milk. Try keep them still long enough!,
-    type: Add}
-  id: 971
-  time: '2022-02-04T21:14:47.0000000+00:00'
 - author: Seth
   changes:
   - {message: Goats are back into the cargo console, type: Tweak}
@@ -3045,3 +3028,20 @@ Entries:
   - {message: Added new default sound for events., type: Add}
   id: 1468
   time: '2022-05-07T05:41:16.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Removed the background from alerts., type: Tweak}
+  id: 1469
+  time: '2022-05-08T00:34:42.0000000+00:00'
+- author: DogZeroX
+  changes:
+  - {message: 'The space pollution has cleared, and now you can see the bright nebulae
+      once hidden behind the space clouds.', type: Add}
+  id: 1470
+  time: '2022-05-08T00:49:22.0000000+00:00'
+- author: mirrorcult
+  changes:
+  - {message: Unequipping clothing now properly resets any movespeed modifiers they
+      gave you., type: Fix}
+  id: 1471
+  time: '2022-05-08T01:45:07.0000000+00:00'
