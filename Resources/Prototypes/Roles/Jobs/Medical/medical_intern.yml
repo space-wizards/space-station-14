@@ -6,7 +6,7 @@
   - Civilian
   - Medical
   icon: "MedicalIntern"
-  supervisors: "the medical doctors, chemists, and chief medical officer"
+  supervisors: "medical doctors, chemists, and the chief medical officer"
   canBeAntag: false
   access:
   - Medical

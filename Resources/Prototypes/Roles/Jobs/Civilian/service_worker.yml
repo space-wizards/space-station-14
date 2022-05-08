@@ -5,7 +5,7 @@
   departments:
   - Civilian
   icon: "ServiceWorker"
-  supervisors: "the bartender, chefs, botanists, and head of personnel"
+  supervisors: "chefs, botanists, the bartender, and the head of personnel"
   canBeAntag: false
   access:
   - Service

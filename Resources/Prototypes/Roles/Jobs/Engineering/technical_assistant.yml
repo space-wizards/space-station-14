@@ -6,7 +6,7 @@
   - Civilian
   - Engineering
   icon: "TechnicalAssistant"
-  supervisors: "the station engineers, atmospheric technicians, and chief engineer"
+  supervisors: "station engineers, atmospheric technicians, and the chief engineer"
   canBeAntag: false
   access:
   - Maintenance

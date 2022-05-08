@@ -6,13 +6,12 @@
   - Civilian
   - Security
   icon: "SecurityCadet"
-  supervisors: "the security officers, and head of security"
+  supervisors: "security officers, the warden, and the head of security"
   canBeAntag: false
   access:
   - Security
   - Brig
   - Maintenance
-  - Service
 
 - type: startingGear
   id: SecurityCadetGear
