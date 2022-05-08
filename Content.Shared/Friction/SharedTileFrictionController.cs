@@ -74,6 +74,8 @@ namespace Content.Shared.Friction
                     body.BodyStatus == BodyStatus.InAir ||
                     Mover.UseMobMovement(body.Owner)) continue;
 
+                if (body.LinearVelocity.Equals(Vector2.Zero) && body.AngularVelocity.Equals(0f)) continue;
+
                 DebugTools.Assert(!Deleted(body.Owner));
                 var surfaceFriction = GetTileFriction(body, xformQuery.GetComponent(body.Owner));
                 var bodyModifier = 1f;
