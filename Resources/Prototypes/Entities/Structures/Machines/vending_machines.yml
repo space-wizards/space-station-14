@@ -53,8 +53,7 @@
     LayoutId: Vending
   - type: Anchorable
   - type: Speech
-    playSpeechSound: true
-    speechSoundsId: Vending
+    speechSounds: Vending
   - type: DoAfter
   - type: Electrified
     enabled: false

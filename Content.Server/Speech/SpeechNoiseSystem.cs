@@ -12,69 +12,46 @@ namespace Content.Server.Speech
 {
     public sealed class SpeechSoundSystem : EntitySystem
     {
-
-        [Dependency] private readonly IPrototypeManager _proto = default!;
         [Dependency] private readonly IGameTiming _gameTiming = default!;
+        [Dependency] private readonly IPrototypeManager _protoManager = default!;
 
         public override void Initialize()
         {
             base.Initialize();
 
             SubscribeLocalEvent<SharedSpeechComponent, EntitySpokeEvent>(OnEntitySpoke);
-            SubscribeLocalEvent<SharedSpeechComponent, ComponentStartup>(OnStartup);
         }
-
-        private void OnStartup(EntityUid uid, SharedSpeechComponent component, ComponentStartup args)
-        {
-            //Cache prototype on component startup.
-            if (_proto.TryIndex(component.SpeechSoundsId, out SpeechSoundsPrototype? speechsnds))
-            {
-                if (speechsnds != null)
-                {
-                    component.SpeechSoundsCache = speechsnds;
-                }
-            }
-        }
-
 
         private void OnEntitySpoke(EntityUid uid, SharedSpeechComponent component, EntitySpokeEvent args)
         {
-            if (!component.PlaySpeechSound) return;
+            if (component.SpeechSounds == null) return;
+
+            var currentTime = _gameTiming.CurTime;
             var cooldown = TimeSpan.FromSeconds(component.SoundCooldownTime);
-            //Ensure more than the cooldown time has passed since last speaking
-            if ((_gameTiming.CurTime - component.LastTimeSoundPlayed) < cooldown) return;
 
-            //Play speech sound
+            // Ensure more than the cooldown time has passed since last speaking
+            if (currentTime - component.LastTimeSoundPlayed < cooldown) return;
 
-            if (component.SpeechSoundsCache != null)
+            // Play speech sound
+            string contextSound;
+            var prototype = _protoManager.Index<SpeechSoundsPrototype>(component.SpeechSounds);
+
+            // Different sounds for ask/exclaim based on last character
+            switch (args.Message[^1])
             {
-                //Re-Index sounds prototype if cached proto ID is outdated, allows VV and changing the voice.
-                if (component.SpeechSoundsCache.ID != component.SpeechSoundsId)
-                {
-                    if (_proto.TryIndex(component.SpeechSoundsId, out SpeechSoundsPrototype? speechsnds))
-                    {
-                        if (speechsnds != null)
-                        {
-                            component.SpeechSoundsCache = speechsnds;
-                        }
-                    }
-                }
-                var contextSound = component.SpeechSoundsCache.SaySound;
-                //Different sounds for ask/exclaim based on last character
-                switch (args.Message[args.Message.Length-1])
-                {
-                    case '?':
-                        contextSound = component.SpeechSoundsCache.AskSound;
-                        break;
-                    case '!':
-                        contextSound = component.SpeechSoundsCache.ExclaimSound;
-                        break;
-
-                }
-                component.LastTimeSoundPlayed = _gameTiming.CurTime;
-                SoundSystem.Play(Filter.Pvs(uid), contextSound.GetSound(), uid, component.AudioParams);
+                case '?':
+                    contextSound = prototype.AskSound.GetSound();
+                    break;
+                case '!':
+                    contextSound = prototype.ExclaimSound.GetSound();
+                    break;
+                default:
+                    contextSound = prototype.SaySound.GetSound();
+                    break;
             }
-        }
 
+            component.LastTimeSoundPlayed = currentTime;
+            SoundSystem.Play(Filter.Pvs(uid, entityManager: EntityManager), contextSound, uid, component.AudioParams);
+        }
     }
 }
