@@ -97,6 +97,22 @@
 
 - type: entity
   parent: DrinkGlassBase
+  id: DrinkAmarettoGlass
+  name: amaretto glass
+  description: A gentle and syrup like drink, tastes of almonds and apricots.
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 50
+        reagents:
+        - ReagentId: Amaretto
+          Quantity: 50
+  - type: Sprite
+    sprite: Objects/Consumable/Drinks/amarettoglass.rsi
+
+- type: entity
+  parent: DrinkGlassBase
   id: DrinkAcidSpitGlass
   name: acid spit glass
   description: A drink from the company archives. Made from live aliens.

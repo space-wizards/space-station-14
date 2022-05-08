@@ -13,6 +13,15 @@
   spritePath: absintheglass.rsi
 
 - type: reagent
+  id: Amaretto
+  name: amaretto
+  parent: BaseAlcohol
+  desc: A gentle and syrup like drink, tastes of almonds and apricots.
+  physicalDesc: strong-smelling
+  color: "#33EE00"
+  spritePath: amarettoglass.rsi
+
+- type: reagent
   id: Ale
   name: ale
   parent: BaseAlcohol
