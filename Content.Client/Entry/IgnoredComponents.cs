@@ -342,8 +342,7 @@ namespace Content.Client.Entry
             "DoorRemote",
             "InteractionPopup",
             "HealthAnalyzer",
-            "SkeletonBodyManager",
-            "TransferMindOnGib"
+            "BodyReassemble"
         };
     }
 }

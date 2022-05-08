@@ -85,8 +85,17 @@ namespace Content.Server.Body.Components
 
         public override HashSet<EntityUid> Gib(bool gibParts = false)
         {
-            _entMan.EventBus.RaiseLocalEvent(Owner, new BeforeGibbedEvent(), false);
             var gibs = base.Gib(gibParts);
+
+            /// <remarks>
+            /// This needs to be done in this for loop or else it just doesn't work. I don't know why
+            /// I don't know how, but putting it in the one below just causes all of the events to not
+            /// be raised.
+            /// </remarks>
+            foreach (var part in gibs)
+            {
+                _entMan.EventBus.RaiseLocalEvent(part, new PartGibbedEvent(Owner, gibs));
+            }
 
             SoundSystem.Play(Filter.Pvs(Owner), _gibSound.GetSound(), _entMan.GetComponent<TransformComponent>(Owner).Coordinates, AudioHelpers.WithVariation(0.025f));
 
@@ -120,7 +129,18 @@ namespace Content.Server.Body.Components
         }
     }
 
-    public sealed class BeforeGibbedEvent : EntityEventArgs
+    /// <summary>
+    /// An event raised on all the parts of an entity when it's gibbed
+    /// </summary>
+    public sealed class PartGibbedEvent : EntityEventArgs
     {
+        public EntityUid EntityToGib;
+        public readonly HashSet<EntityUid> GibbedParts;
+
+        public PartGibbedEvent(EntityUid entityToGib, HashSet<EntityUid> gibbedParts)
+        {
+            EntityToGib = entityToGib;
+            GibbedParts = gibbedParts;
+        }
     }
 }

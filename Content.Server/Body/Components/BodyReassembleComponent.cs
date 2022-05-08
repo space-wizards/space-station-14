@@ -1,10 +1,9 @@
 using Content.Server.Cloning;
-using Content.Shared.Body.Components;
 
 namespace Content.Server.Body.Components
 {
     [RegisterComponent]
-    public sealed class SkeletonBodyManagerComponent : Component
+    public sealed class BodyReassembleComponent : Component
     {
         /// <summary>
         /// The dna entry used for reassembling the skeleton

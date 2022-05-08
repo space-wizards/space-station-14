@@ -22,7 +22,7 @@ using System.Diagnostics.CodeAnalysis;
 
 namespace Content.Server.Body.Systems
 {
-    public sealed class SkeletonBodyManagerSystem : EntitySystem
+    public sealed class BodyReassembleSystem : EntitySystem
     {
         [Dependency] private readonly IServerPreferencesManager _prefsManager = null!;
         [Dependency] private readonly IPrototypeManager _prototype = default!;
@@ -35,15 +35,26 @@ namespace Content.Server.Body.Systems
         {
             base.Initialize();
 
-            SubscribeLocalEvent<SkeletonBodyManagerComponent, GetVerbsEvent<AlternativeVerb>>(AddReassembleVerbs);
+            SubscribeLocalEvent<BodyReassembleComponent, PartGibbedEvent>(OnPartGibbed);
+
+            SubscribeLocalEvent<BodyReassembleComponent, GetVerbsEvent<AlternativeVerb>>(AddReassembleVerbs);
             SubscribeLocalEvent<ReassembleDoAfterComplete>(Reassemble);
         }
 
+        private void OnPartGibbed(EntityUid uid, BodyReassembleComponent component, PartGibbedEvent args)
+        {
+            if (!TryComp<MindComponent>(args.EntityToGib, out var mindComp) || mindComp?.Mind == null)
+                return;
+
+            component.BodyParts = args.GibbedParts;
+            UpdateDNAEntry(uid, args.EntityToGib);
+            mindComp.Mind.TransferTo(uid);
+        }
+
         /// <summary>
-        /// Adds the custom verb for reassembling skeleton parts
-        /// into a full skeleton
+        /// Adds the custom verb for reassembling body parts
         /// </summary>
-        private void AddReassembleVerbs(EntityUid uid, SkeletonBodyManagerComponent component, GetVerbsEvent<AlternativeVerb> args)
+        private void AddReassembleVerbs(EntityUid uid, BodyReassembleComponent component, GetVerbsEvent<AlternativeVerb> args)
         {
             // every time i get warned of a null refernce i add another if statement
             if (!args.CanAccess || !args.CanInteract)
@@ -62,7 +73,7 @@ namespace Content.Server.Body.Systems
 
             // Custom verb
             AlternativeVerb custom = new();
-            custom.Text = Loc.GetString("skeleton-reassemble-action");
+            custom.Text = Loc.GetString("reassemble-action");
             custom.Act = () =>
             {
                 if (!GetNearbyParts(args.User, uid, component, out var partList))
@@ -88,7 +99,7 @@ namespace Content.Server.Body.Systems
             args.Verbs.Add(custom);
         }
 
-        private bool GetNearbyParts(EntityUid user, EntityUid uid, SkeletonBodyManagerComponent component, out HashSet<EntityUid>? partList)
+        private bool GetNearbyParts(EntityUid user, EntityUid uid, BodyReassembleComponent component, out HashSet<EntityUid>? partList)
         {
             partList = new HashSet<EntityUid>();
 
@@ -111,7 +122,7 @@ namespace Content.Server.Body.Systems
                 }
                 if (notFound)
                 {
-                    _popupSystem.PopupEntity(Loc.GetString("skeleton-reassemble-fail"), uid, Filter.Entities(uid));
+                    _popupSystem.PopupEntity(Loc.GetString("reassemble-fail"), uid, Filter.Entities(uid));
                     return false;
                 }
             }
@@ -122,9 +133,8 @@ namespace Content.Server.Body.Systems
         private void Reassemble(ReassembleDoAfterComplete args)
         {
             var uid = args.Uid;
-            TryComp<SkeletonBodyManagerComponent>(args.Uid, out var component);
 
-            if (component == null)
+            if (!TryComp<BodyReassembleComponent>(args.Uid, out var component) || component == null)
                 return;
 
             if (component.DNA == null)
@@ -146,19 +156,18 @@ namespace Content.Server.Body.Systems
                 EntityManager.DeleteEntity(entity);
             }
 
-            _popupSystem.PopupEntity(Loc.GetString("skeleton-reassemble-success", ("user", mob)), mob, Filter.Entities(mob));
+            _popupSystem.PopupEntity(Loc.GetString("reassemble-success", ("user", mob)), mob, Filter.Entities(mob));
         }
 
         /// <summary>
         /// Called before the skeleton entity is gibbed in order to save
         /// the dna for reassembly later
         /// </summary>
-        /// <param name="uid"> the entity the mind is going to be transfered which also stores the DNA</param>
-        /// <param name="body">the entity whose DNA is being saved</param> 
-        public void UpdateDNAEntry(EntityUid uid, EntityUid body)
+        /// <param name="uid"> the entity that the player will transfer to</param>
+        /// <param name="body"> the entity whose DNA is being saved</param> 
+        private void UpdateDNAEntry(EntityUid uid, EntityUid body)
         {
-            if (!TryComp<SkeletonBodyManagerComponent>(uid, out var skelBodyComp) ||
-                !TryComp<MindComponent>(body, out var mindcomp))
+            if (!TryComp<BodyReassembleComponent>(uid, out var skelBodyComp) || !TryComp<MindComponent>(body, out var mindcomp))
                 return;
 
             if (mindcomp.Mind == null)

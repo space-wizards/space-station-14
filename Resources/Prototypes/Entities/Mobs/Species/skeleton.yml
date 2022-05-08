@@ -259,7 +259,6 @@
     attributes:
       proper: true
   - type: StandingState
-  - type: TransferMindOnGib
 
 - type: entity
   save: false

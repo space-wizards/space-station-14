@@ -33,7 +33,7 @@
 - type: species
   id: Skeleton
   name: Skeleton
-  roundStart: true #touch this and feel my wrath | bet --moony | there will be violence --emo
+  roundStart: false #unspooky
   prototype: MobSkeletonPerson
   dollPrototype: MobSkeletonPersonDummy
   skinColoration: TintedHues
