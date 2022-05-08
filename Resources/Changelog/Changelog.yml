@@ -1,10 +1,4 @@
 Entries:
-- author: Lamrr
-  changes:
-  - {message: 'Fingerless gloves have arrived. Protect your hands, well at least some
-      parts of them.', type: Add}
-  id: 974
-  time: '2022-02-04T21:16:22.0000000+00:00'
 - author: Zyme
   changes:
   - {message: The Syndicate now offers a pyjama bundle! You can find it on your nearest
@@ -3042,3 +3036,9 @@ Entries:
   - {message: blood no longer slips, type: Add}
   id: 1473
   time: '2022-05-08T05:02:12.0000000+00:00'
+- author: DogZeroX
+  changes:
+  - {message: 'The botanists have clipped down the potted plants, you can now walk
+      over them.', type: Tweak}
+  id: 1474
+  time: '2022-05-08T05:41:52.0000000+00:00'
