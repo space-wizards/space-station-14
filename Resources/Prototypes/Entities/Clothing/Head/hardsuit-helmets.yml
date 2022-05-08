@@ -348,7 +348,7 @@
   - type: Sprite
     sprite: Clothing/Head/Hardsuits/syndiecommander.rsi
   - type: Clothing
-    sprite: Clothing/Head/Hardsuits/syndicommader.rsi
+    sprite: Clothing/Head/Hardsuits/syndiecommader.rsi
   - type: PointLight
     color: green
   - type: PressureProtection
@@ -361,4 +361,31 @@
         Slash: 0.6
         Piercing: 0.6
         Heat: 0.8
+        Radiation: 0.5
+
+- type: entity
+  parent: ClothingHeadHardsuitWithLightBase
+  id: ClothingHeadHelmetHardsuitSyndieElite
+  noSpawn: true
+  name: syndicate elite helmet
+  description: A variant of the blood red helmet designed by the gorlax marauders to be exceptionally fireproof and pressure proof.
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/Hardsuits/syndieelite.rsi
+  - type: Clothing
+    sprite: Clothing/Head/Hardsuits/syndieelite.rsi
+  - type: PointLight
+    color: red
+  - type: PressureProtection
+    highPressureMultiplier: 0.08
+    lowPressureMultiplier: 1000
+ - type: TemperatureProtection
+    coefficient: 0.005    
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.8
+        Slash: 0.8
+        Piercing: 0.8
+        Heat: 0.2
         Radiation: 0.5
