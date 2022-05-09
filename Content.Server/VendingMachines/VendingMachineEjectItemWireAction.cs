@@ -22,7 +22,9 @@ public sealed class VendingMachineEjectItemWireAction : BaseWireAction
             && EntityManager.TryGetComponent(wire.Owner, out VendingMachineComponent vending))
         {
             // Nothing yet.
-            lightState = StatusLightState.On;
+            lightState = vending.CanShoot
+                ? StatusLightState.BlinkingFast
+                : StatusLightState.On;
         }
 
         return new StatusLightData(
@@ -40,13 +42,21 @@ public sealed class VendingMachineEjectItemWireAction : BaseWireAction
 
     public override bool Cut(EntityUid user, Wire wire)
     {
-        // Nothing yet.
+        if (EntityManager.TryGetComponent(wire.Owner, out VendingMachineComponent vending))
+        {
+            vending.CanShoot = true;
+        }
+
         return true;
     }
 
     public override bool Mend(EntityUid user, Wire wire)
     {
-        // Nothing yet.
+        if (EntityManager.TryGetComponent(wire.Owner, out VendingMachineComponent vending))
+        {
+            vending.CanShoot = false;
+        }
+
         return true;
     }
 

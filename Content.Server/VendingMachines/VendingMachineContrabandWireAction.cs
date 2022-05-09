@@ -40,6 +40,4 @@ public sealed class VendingMachineContrabandWireAction : BaseToggleWireAction
     {
         return EntityManager.TryGetComponent(owner, out VendingMachineComponent vending) && !vending.Contraband;
     }
-
-
 }
