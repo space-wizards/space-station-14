@@ -192,7 +192,7 @@ namespace Content.Server.Database
 
             return new HumanoidCharacterProfile(
                 profile.CharacterName,
-                profile.FlavorTextDescription,
+                profile.FlavorText,
                 profile.Species,
                 profile.Age,
                 sex,
