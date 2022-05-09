@@ -398,7 +398,7 @@
   - type: PowerCellSlot
     descFormatString : "" # empty string for no examine-text (cell is not ejectable)
     cellSlot:
-      startingItem: PowerCellHardsuitHelmet # self recharging
+      startingItem: PowerCellAntiqueProto
       soundOptions:
         volume: -2
       locked: true
