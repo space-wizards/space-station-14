@@ -1,9 +1,4 @@
 Entries:
-- author: ElectroJr
-  changes:
-  - {message: Windoors should no longer crush people as they auto close., type: Fix}
-  id: 985
-  time: '2022-02-05T17:27:06.0000000+00:00'
 - author: Peptide90
   changes:
   - {message: Blast doors can't be opened with a crowbar anymore., type: Tweak}
@@ -3032,3 +3027,14 @@ Entries:
       to bully or teach the interns however they please.', type: Add}
   id: 1484
   time: '2022-05-08T20:00:01.0000000+00:00'
+- author: hubismal
+  changes:
+  - {message: Speech sounds now sound a little different every time., type: Tweak}
+  - {message: Speech sounds now are louder when closer and quieter when further.,
+    type: Tweak}
+  - {message: TYPING IN ALL CAPS will make you play the yelling speech sound., type: Tweak}
+  - {message: Vending machines are quieter., type: Tweak}
+  - {message: Your personal AIs talk using their synthesizers., type: Add}
+  - {message: Monkeys use their beautiful voices., type: Add}
+  id: 1485
+  time: '2022-05-09T04:55:24.0000000+00:00'
