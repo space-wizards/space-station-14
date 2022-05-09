@@ -22,7 +22,7 @@ using Robust.Shared.Prototypes;
 
 namespace Content.Server.Crayon;
 
-public sealed class CrayonSystem : EntitySystem
+public sealed class CrayonSystem : SharedCrayonSystem
 {
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
     [Dependency] private readonly AdminLogSystem _logs = default!;
@@ -43,7 +43,7 @@ public sealed class CrayonSystem : EntitySystem
 
     private static void OnCrayonGetState(EntityUid uid, CrayonComponent component, ref ComponentGetState args)
     {
-        args.State = new CrayonComponentState(component._color, component.SelectedState, component.Charges, component.Capacity);
+        args.State = new CrayonComponentState(component.Color, component.SelectedState, component.Charges, component.Capacity);
     }
 
     private void OnCrayonAfterInteract(EntityUid uid, CrayonComponent component, AfterInteractEvent args)
@@ -69,21 +69,7 @@ public sealed class CrayonSystem : EntitySystem
             return;
         }
 
-        Color color = Color.White;
-        if (Color.TryFromName(component._color, out var namedColor))
-        {
-            color = namedColor;
-        }
-        else
-        {
-            var hexColor = Color.TryFromHex(component._color);
-            if (hexColor != null)
-            {
-                color = (Color) hexColor;
-            }
-        }
-
-        if(!_decals.TryAddDecal(component.SelectedState, args.ClickLocation.Offset(new Vector2(-0.5f,-0.5f)), out _, color, cleanable: true))
+        if(!_decals.TryAddDecal(component.SelectedState, args.ClickLocation.Offset(new Vector2(-0.5f,-0.5f)), out _, component.Color, cleanable: true))
             return;
 
         if (component.UseSound != null)
@@ -92,7 +78,7 @@ public sealed class CrayonSystem : EntitySystem
         // Decrease "Ammo"
         component.Charges--;
         Dirty(component);
-        _logs.Add(LogType.CrayonDraw, LogImpact.Low, $"{EntityManager.ToPrettyString(args.User):user} drew a {component._color:color} {component.SelectedState}");
+        _logs.Add(LogType.CrayonDraw, LogImpact.Low, $"{EntityManager.ToPrettyString(args.User):user} drew a {component.Color:color} {component.SelectedState}");
         args.Handled = true;
 
         if (component.DeleteEmpty && component.Charges <= 0)
@@ -131,20 +117,9 @@ public sealed class CrayonSystem : EntitySystem
     private void OnCrayonBoundUIColor(EntityUid uid, CrayonComponent component, CrayonColorMessage args)
     {
         // you still need to ensure that the given color is a valid color
-        if (component.SelectableColor && args.Color != component._color)
+        if (component.SelectableColor && args.Color != component.Color)
         {
-            if (Color.TryFromName(component._color, out var namedColor))
-            {
-                component._color = args.Color;
-            }
-            else
-            {
-                var hexColor = Color.TryFromHex(component._color);
-                if (hexColor != null)
-                {
-                    component._color = args.Color;
-                }
-            }
+            component.Color = args.Color;
 
             Dirty(component);
         }
