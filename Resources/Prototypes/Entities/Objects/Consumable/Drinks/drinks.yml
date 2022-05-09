@@ -497,6 +497,23 @@
 
 - type: entity
   parent: DrinkGlassBase
+  id: DrinkChampagneGlass
+  name: champagne glass_brown
+  description: A sparkling wine known for its ability to strike fast and hard.
+  components:
+  - type: Drink
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 50
+        reagents:
+        - ReagentId: Champagne
+          Quantity: 50
+  - type: Sprite
+    sprite: Objects/Consumable/Drinks/champagneglass.rsi
+
+- type: entity
+  parent: DrinkGlassBase
   id: DrinkChocolateGlass
   name: hot chocolate
   description: A heated drink consisting melted chocolate and heated milk.
@@ -521,6 +538,24 @@
   - type: Drink
   - type: Sprite
     sprite: Objects/Consumable/Drinks/cafe_latte.rsi
+
+- type: entity
+  parent: DrinkGlassBase
+  id: DrinkCreamSodaGlass
+  name: cream soda
+  description: A classic space-American vanilla flavored soft drink.
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 50
+        reagents:
+        - ReagentId: CreamSoda
+          Quantity: 50
+  - type: Drink
+  - type: Sprite
+    sprite: Objects/Consumable/Drinks/creamsodaglass.rsi
+
 
 - type: entity
   parent: DrinkGlassBase
@@ -704,6 +739,23 @@
   - type: Drink
   - type: Sprite
     sprite: Objects/Consumable/Drinks/erikasurprise.rsi
+
+- type: entity
+  parent: DrinkGlassBase
+  id: DrinkFetchingFizzGlass
+  name: fetching fizz glass
+  description: Whiskey sour/iron/uranium mixture resulting in highly magnetic slurry. Mild alcohol content. 
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 50
+        reagents:
+        - ReagentId: FetchingFizz
+          Quantity: 50
+  - type: Drink
+  - type: Sprite
+    sprite: Objects/Consumable/Drinks/fetchingfizzglass.rsi
 
 - type: entity
   parent: DrinkGlassBase
@@ -1574,6 +1626,23 @@
   - type: Drink
   - type: Sprite
     sprite: Objects/Consumable/Drinks/screwdriverglass.rsi
+
+- type: entity
+  parent: DrinkGlassBase
+  id: DrinkSolDryGlass
+  name: sol dry glass
+  description: A soothing, mellow drink made from ginger. 
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 50
+        reagents:
+        - ReagentId: SolDry
+          Quantity: 50
+  - type: Drink
+  - type: Sprite
+    sprite: Objects/Consumable/Drinks/soldryglass.rsi
 
 - type: entity
   parent: DrinkGlassBase

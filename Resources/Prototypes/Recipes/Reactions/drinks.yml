@@ -169,6 +169,18 @@
     CafeLatte: 2
 
 - type: reaction
+  id: CreamSoda
+  reactants:
+    SodaWater:
+      amount: 2
+    Sugar:
+      amount: 1
+    Cream:
+      amount: 1
+  products:
+    CreamSoda: 4
+
+- type: reaction
   id: CubaLibre
   reactants:
     Cola:
@@ -243,6 +255,16 @@
       amount: 1
   products:
     ErikaSuprise: 6
+
+- type: reaction
+  id: FetchingFizz
+  reactants:
+    NuclearCola:
+      amount: 1
+    Iron:
+      amount: 1
+  products:
+    FetchingFizz: 2
 
 - type: reaction
   id: FourteenLoko

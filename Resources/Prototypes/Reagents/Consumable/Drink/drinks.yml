@@ -29,6 +29,15 @@
   spritePath: cafe_latte.rsi
 
 - type: reagent
+  id: CreamSoda
+  name: cream soda
+  parent: BaseDrink
+  desc: A classic space-American vanilla flavored soft drink. .
+  physicalDesc: creamy
+  color: "#664300"
+  spritePath: creamsodaglass.rsi
+
+- type: reagent
   id: GreenTea
   name: green tea
   parent: BaseDrink
@@ -183,6 +192,15 @@
   desc: A container of club soda. Why not make a scotch and soda?
   physicalDesc: fizzy
   color: "#619494"
+
+- type: reagent
+  id: SolDry
+  name: sol dry
+  parent: BaseDrink
+  desc: A soothing, mellow drink made from ginger.
+  physicalDesc: fizzy
+  color: "#619494"
+  spritePath: soldryglass.rsi
 
 - type: reagent
   id: SoyLatte

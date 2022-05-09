@@ -49,6 +49,15 @@
   spritePath: curacaoglass.rsi
 
 - type: reagent
+  id: Champagne
+  name: champagne
+  parent: BaseAlcohol
+  desc: A sparkling wine known for its ability to strike fast and hard.
+  physicalDesc: strong-smelling
+  color: "#0000CD"
+  spritePath: champagneglass.rsi
+
+- type: reagent
   id: Cognac
   name: cognac
   parent: BaseAlcohol
@@ -442,6 +451,15 @@
   physicalDesc: strong-smelling
   color: "#2E6671"
   spritePath: erikasurprise.rsi
+
+- type: reagent
+  id: FetchingFizz
+  name: fetching fizz
+  parent: BaseAlcohol
+  desc: Whiskey sour/iron/uranium mixture resulting in highly magnetic slurry. Mild alcohol content.
+  physicalDesc: strong-smelling
+  color: "#2E6671"
+  spritePath: fetchingfizzglass.rsi
 
 - type: reagent
   id: GargleBlaster
