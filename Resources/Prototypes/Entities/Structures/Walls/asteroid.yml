@@ -28,7 +28,7 @@
       orGroup: Asteroid
   - type: Sprite
     sprite: Structures/Walls/asteroid_rock.rsi
-    state: 0
+    state: full
   - type: Damageable
     damageContainer: Inorganic
   - type: Destructible
@@ -43,9 +43,6 @@
     sizeX: 32
     sizeY: 32
   - type: Airtight
-  - type: Appearance
-    visuals:
-    - type: AsteroidRockVisualizer
   - type: Fixtures
     fixtures:
     - shape:
@@ -59,3 +56,6 @@
       - Impassable
       - VaultImpassable
       - SmallImpassable
+  - type: IconSmooth
+    key: rock
+    base: rock_
