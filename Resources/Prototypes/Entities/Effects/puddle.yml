@@ -12,7 +12,7 @@
     spillSound:
       path: /Audio/Effects/Fluids/splat.ogg
     recolor: true
-  - type: Clickable  
+  - type: Clickable
   - type: Evaporation
   - type: Physics
   - type: Fixtures
@@ -57,6 +57,7 @@
     - type: PuddleVisualizer
   - type: Slippery
     launchForwardsMultiplier: 2.0
+  - type: StepTrigger
 
 - type: entity
   name: puddle
@@ -75,7 +76,8 @@
       recolor: true
   - type: Slippery
     launchForwardsMultiplier: 2.0
-    
+  - type: StepTrigger
+
 - type: entity
   name: puddle
   id: PuddleSplatter
@@ -92,7 +94,8 @@
     - type: PuddleVisualizer
   - type: Slippery
     launchForwardsMultiplier: 2.0
-    
+  - type: StepTrigger
+
 - type: entity
   id: PuddleBlood
   name: blood
@@ -137,7 +140,8 @@
     - type: PuddleVisualizer
   - type: Slippery
     launchForwardsMultiplier: 2.0
-    
+  - type: StepTrigger
+
 - type: entity
   name: toxins vomit
   id: PuddleVomitToxin
@@ -162,7 +166,8 @@
     - type: PuddleVisualizer
   - type: Slippery
     launchForwardsMultiplier: 2.0
-    
+  - type: StepTrigger
+
 - type: entity
   name: writing
   id: PuddleWriting
@@ -180,4 +185,4 @@
     - type: PuddleVisualizer
   - type: Slippery
     launchForwardsMultiplier: 2.0
-    
+  - type: StepTrigger
