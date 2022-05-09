@@ -2,11 +2,12 @@
 using Content.Server.DoAfter;
 using Content.Server.Gatherable.Components;
 using Content.Shared.Damage;
+using Content.Shared.EntityList;
 using Content.Shared.Interaction;
-using Content.Shared.Storage;
 using Content.Shared.Tag;
 using Robust.Shared.Audio;
 using Robust.Shared.Player;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 
 namespace Content.Server.Gatherable;
@@ -17,6 +18,7 @@ public sealed class GatherableSystem : EntitySystem
     [Dependency] private readonly DamageableSystem _damageableSystem = default!;
     [Dependency] private readonly IRobustRandom _random = null!;
     [Dependency] private readonly TagSystem _tagSystem = Get<TagSystem>();
+    [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
 
     public override void Initialize()
     {
@@ -79,7 +81,8 @@ public sealed class GatherableSystem : EntitySystem
             {
                 if (!_tagSystem.HasTag(tool.Owner, pair.Key)) continue;
             }
-            var spawnLoot = EntitySpawnCollection.GetSpawns(pair.Value, _random);
+            var getLoot = _prototypeManager.Index<EntityLootTablePrototype>(pair.Value);
+            var spawnLoot = getLoot.GetSpawns();
             var playerPos = Transform(ev.Player).MapPosition;
             var spawnPos = playerPos.Offset(_random.NextVector2(0.3f));
             EntityManager.SpawnEntity(spawnLoot[0], spawnPos);
