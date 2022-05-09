@@ -10,7 +10,6 @@ using Robust.Client.UserInterface.Controls;
 using Robust.Shared.Map;
 using Robust.Shared.Player;
 using Robust.Shared.Timing;
-using Robust.Shared.Utility;
 
 namespace Content.Client.Popups
 {
@@ -19,6 +18,7 @@ namespace Content.Client.Popups
         [Dependency] private readonly IInputManager _inputManager = default!;
         [Dependency] private readonly IUserInterfaceManager _userInterfaceManager = default!;
         [Dependency] private readonly IEyeManager _eyeManager = default!;
+        [Dependency] private readonly IMapManager _map = default!;
         [Dependency] private readonly IPlayerManager _playerManager = default!;
 
         private readonly List<PopupLabel> _aliveLabels = new();
@@ -54,9 +54,15 @@ namespace Content.Client.Popups
             PopupMessage(message, _eyeManager.CoordinatesToScreen(transform.Coordinates), uid);
         }
 
-        public void PopupMessage(string message, ScreenCoordinates coordinates, EntityUid? entity = null)
+        private void PopupMessage(string message, ScreenCoordinates coordinates, EntityUid? entity = null)
         {
-            var label = new PopupLabel(_eyeManager, EntityManager)
+            var mapCoords = _eyeManager.ScreenToMap(coordinates);
+            PopupMessage(message, EntityCoordinates.FromMap(_map, mapCoords), entity);
+        }
+
+        private void PopupMessage(string message, EntityCoordinates coordinates, EntityUid? entity = null)
+        {
+            var label = new PopupLabel(_eyeManager, EntityManager, _map)
             {
                 Entity = entity,
                 Text = message,
@@ -66,9 +72,8 @@ namespace Content.Client.Popups
             _userInterfaceManager.PopupRoot.AddChild(label);
             label.Measure(Vector2.Infinity);
 
-            var mapCoordinates = _eyeManager.ScreenToMap(coordinates.Position / label.UIScale - label.DesiredSize / 2);
-            label.InitialPos = mapCoordinates;
-            LayoutContainer.SetPosition(label, label.InitialPos.Position);
+            label.InitialPos = coordinates;
+
             _aliveLabels.Add(label);
         }
 
@@ -158,7 +163,7 @@ namespace Content.Client.Popups
                     continue;
                 }
 
-                var otherPos = label.Entity != null ? Transform(label.Entity.Value).MapPosition : label.InitialPos;
+                var otherPos = label.Entity != null ? Transform(label.Entity.Value).MapPosition : label.InitialPos.ToMap(EntityManager);
 
                 if (!ExamineSystemShared.InRangeUnOccluded(
                         playerPos,
@@ -177,6 +182,7 @@ namespace Content.Client.Popups
         {
             private readonly IEyeManager _eyeManager;
             private readonly IEntityManager _entityManager;
+            private readonly IMapManager _mapManager;
 
             public float TotalTime { get; private set; }
             /// <summary>
@@ -185,13 +191,14 @@ namespace Content.Client.Popups
             /// <remarks>
             /// Yes that's right it's not technically MapCoordinates.
             /// </remarks>
-            public MapCoordinates InitialPos { get; set; }
+            public EntityCoordinates InitialPos { get; set; }
             public EntityUid? Entity { get; set; }
 
-            public PopupLabel(IEyeManager eyeManager, IEntityManager entityManager)
+            public PopupLabel(IEyeManager eyeManager, IEntityManager entityManager, IMapManager mapManager)
             {
                 _eyeManager = eyeManager;
                 _entityManager = entityManager;
+                _mapManager = mapManager;
                 ShadowOffsetXOverride = 1;
                 ShadowOffsetYOverride = 1;
                 FontColorShadowOverride = Color.Black;
@@ -201,11 +208,15 @@ namespace Content.Client.Popups
             {
                 TotalTime += eventArgs.DeltaSeconds;
 
-                Vector2 position;
+                EntityCoordinates coords;
                 if (Entity == null)
-                    position = InitialPos.Position;
-                else if (_entityManager.TryGetComponent(Entity.Value, out TransformComponent xform))
-                    position = (_eyeManager.CoordinatesToScreen(xform.Coordinates).Position / UIScale) - DesiredSize / 2;
+                {
+                    coords = InitialPos;
+                }
+                else if (_entityManager.TryGetComponent(Entity.Value, out TransformComponent? xform))
+                {
+                    coords = xform.Coordinates;
+                }
                 else
                 {
                     // Entity has probably been deleted.
@@ -213,6 +224,8 @@ namespace Content.Client.Popups
                     TotalTime += PopupLifetime;
                     return;
                 }
+
+                var position = _eyeManager.CoordinatesToScreen(coords).Position / UIScale - DesiredSize / 2;
 
                 LayoutContainer.SetPosition(this, position - (0, 20 * (TotalTime * TotalTime + TotalTime)));
 
