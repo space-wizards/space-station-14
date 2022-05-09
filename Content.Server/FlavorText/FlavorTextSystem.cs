@@ -1,6 +1,4 @@
-﻿using Content.Server.HealthExaminable;
-using Content.Shared.Examine;
-using Content.Shared.FixedPoint;
+﻿using Content.Shared.Examine;
 using Content.Shared.Verbs;
 using Robust.Shared.Utility;
 
