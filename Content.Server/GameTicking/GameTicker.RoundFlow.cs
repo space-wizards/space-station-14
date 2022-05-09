@@ -10,11 +10,13 @@ using Content.Shared.CCVar;
 using Content.Shared.Coordinates;
 using Content.Shared.GameTicking;
 using Content.Shared.Preferences;
+using Content.Shared.Sound;
 using Content.Shared.Station;
 using JetBrains.Annotations;
 using Prometheus;
 using Robust.Server.Maps;
 using Robust.Server.Player;
+using Robust.Shared.Audio;
 using Robust.Shared.Map;
 using Robust.Shared.Network;
 using Robust.Shared.Player;
@@ -325,7 +327,7 @@ namespace Content.Server.GameTicking
             // This ordering mechanism isn't great (no ordering of minds) but functions
             var listOfPlayerInfoFinal = listOfPlayerInfo.OrderBy(pi => pi.PlayerOOCName).ToArray();
             _playersInGame.Clear();
-            RaiseNetworkEvent(new RoundEndMessageEvent(gamemodeTitle, roundEndText, roundDuration, RoundId, listOfPlayerInfoFinal.Length, listOfPlayerInfoFinal));
+            RaiseNetworkEvent(new RoundEndMessageEvent(gamemodeTitle, roundEndText, roundDuration, RoundId, listOfPlayerInfoFinal.Length, listOfPlayerInfoFinal, LobbySong));
         }
 
         public void RestartRound()
@@ -350,6 +352,7 @@ namespace Content.Server.GameTicking
             LobbySong = _robustRandom.Pick(_lobbyMusicCollection.PickFiles).ToString();
             RandomizeLobbyBackground();
             ResettingCleanup();
+            SoundSystem.Play(Filter.Broadcast(), new SoundCollectionSpecifier("RoundEnd").GetSound());
 
             if (!LobbyEnabled)
             {
