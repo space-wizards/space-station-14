@@ -1,9 +1,4 @@
 Entries:
-- author: Peptide90
-  changes:
-  - {message: Blast doors can't be opened with a crowbar anymore., type: Tweak}
-  id: 986
-  time: '2022-02-05T18:06:33.0000000+00:00'
 - author: router
   changes:
   - {message: Replaced all ingot mints to fix a typo in their stamping. All "Nanotransen"
@@ -3038,3 +3033,8 @@ Entries:
   - {message: Monkeys use their beautiful voices., type: Add}
   id: 1485
   time: '2022-05-09T04:55:24.0000000+00:00'
+- author: ShadowCommander
+  changes:
+  - {message: Added construction recipe for glass airlocks, type: Add}
+  id: 1486
+  time: '2022-05-09T05:52:19.0000000+00:00'
