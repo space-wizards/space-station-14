@@ -1,0 +1,54 @@
+- type: speechSounds
+  id: Bass
+  saySound:
+    path: /Audio/Voice/Talk/speak_4.ogg
+  askSound:
+    path: /Audio/Voice/Talk/speak_4_ask.ogg
+  exclaimSound:
+    path: /Audio/Voice/Talk/speak_4_exclaim.ogg
+
+- type: speechSounds
+  id: Baritone
+  saySound:
+    path: /Audio/Voice/Talk/speak_1.ogg
+  askSound:
+    path: /Audio/Voice/Talk/speak_1_ask.ogg
+  exclaimSound:
+    path: /Audio/Voice/Talk/speak_1_exclaim.ogg
+
+- type: speechSounds
+  id: Tenor
+  saySound:
+    path: /Audio/Voice/Talk/speak_3.ogg
+  askSound:
+    path: /Audio/Voice/Talk/speak_3_ask.ogg
+  exclaimSound:
+    path: /Audio/Voice/Talk/speak_3_exclaim.ogg
+
+- type: speechSounds
+  id: Alto
+  saySound:
+    path: /Audio/Voice/Talk/speak_2.ogg
+  askSound:
+    path: /Audio/Voice/Talk/speak_2_ask.ogg
+  exclaimSound:
+    path: /Audio/Voice/Talk/speak_2_exclaim.ogg
+
+- type: speechSounds
+  id: Squeak
+  saySound:
+    path: /Audio/Animals/mouse_squeak.ogg
+  askSound:
+    path: /Audio/Animals/mouse_squeak.ogg
+  exclaimSound:
+    path: /Audio/Animals/mouse_squeak.ogg
+
+- type: speechSounds
+  id: Vending
+  saySound:
+    path: /Audio/Machines/vending_jingle.ogg
+  askSound:
+    path: /Audio/Machines/vending_jingle.ogg
+  exclaimSound:
+    path: /Audio/Machines/vending_jingle.ogg
+

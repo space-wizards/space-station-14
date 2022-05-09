@@ -30,5 +30,8 @@ namespace Content.Shared.PDA
 
         [DataField("icon")]
         public SpriteSpecifier? Icon { get; } = null;
+
+        [DataField("surplus")]
+        public bool CanSurplus = true;
     }
 }

@@ -17,6 +17,8 @@
       state: bat
       sprite: Mobs/Animals/bat.rsi
   - type: Physics
+  - type: Speech
+    speechSounds: Squeak
   - type: Fixtures
     fixtures:
     - shape:
@@ -663,6 +665,8 @@
     makeSentient: true
     name: mouse
     description: A hungry and mischievous mouse.
+  - type: Speech
+    speechSounds: Squeak
   - type: Sprite
     drawdepth: FloorObjects
     layers:
