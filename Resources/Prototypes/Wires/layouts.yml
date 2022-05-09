@@ -23,10 +23,11 @@
 
 - type: wireLayout
   id: Vending
-  dummyWires: 2
+  dummyWires: 1
   wires:
   - !type:PowerWireAction
   - !type:AccessWireAction
+  - !type:VendingMachineContrabandWireAction
 
 - type: wireLayout
   id: AirAlarm

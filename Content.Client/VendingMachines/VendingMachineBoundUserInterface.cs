@@ -38,9 +38,9 @@ namespace Content.Client.VendingMachines
             _menu.OpenCentered();
         }
 
-        public void Eject(string id)
+        public void Eject(InventoryType type, string id)
         {
-            SendMessage(new VendingMachineEjectMessage(id));
+            SendMessage(new VendingMachineEjectMessage(type, id));
         }
 
         protected override void ReceiveMessage(BoundUserInterfaceMessage message)

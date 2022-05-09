@@ -11,8 +11,11 @@ namespace Content.Shared.VendingMachines
     [NetworkedComponent()]
     public class SharedVendingMachineComponent : Component
     {
-        [ViewVariables]
-        public List<VendingMachineInventoryEntry> Inventory = new();
+        [ViewVariables] public List<VendingMachineInventoryEntry> Inventory = new();
+
+        [ViewVariables] public List<VendingMachineInventoryEntry> EmaggedInventory = new();
+
+        [ViewVariables] public List<VendingMachineInventoryEntry> ContrabandInventory = new();
 
         [Serializable, NetSerializable]
         public enum VendingMachineVisuals
@@ -33,9 +36,11 @@ namespace Content.Shared.VendingMachines
         [Serializable, NetSerializable]
         public sealed class VendingMachineEjectMessage : BoundUserInterfaceMessage
         {
+            public readonly InventoryType Type;
             public readonly string ID;
-            public VendingMachineEjectMessage(string id)
+            public VendingMachineEjectMessage(InventoryType type, string id)
             {
+                Type = type;
                 ID = id;
             }
         }
@@ -64,12 +69,14 @@ namespace Content.Shared.VendingMachines
         [Serializable, NetSerializable]
         public sealed class VendingMachineInventoryEntry
         {
+            [ViewVariables(VVAccess.ReadWrite)] public InventoryType Type;
             [ViewVariables(VVAccess.ReadWrite)]
             public string ID;
             [ViewVariables(VVAccess.ReadWrite)]
             public uint Amount;
-            public VendingMachineInventoryEntry(string id, uint amount)
+            public VendingMachineInventoryEntry(InventoryType type, string id, uint amount)
             {
+                Type = type;
                 ID = id;
                 Amount = amount;
             }
@@ -81,6 +88,14 @@ namespace Content.Shared.VendingMachines
             Access,
             Advertisement,
             Limiter
+        }
+
+        [Serializable, NetSerializable]
+        public enum InventoryType
+        {
+            Regular,
+            Emagged,
+            Contraband
         }
     }
 }
