@@ -1,17 +1,4 @@
 Entries:
-- author: Peptide90
-  changes:
-  - {message: Massive list of changes and fixes for NSS Pillar. See Github for list.,
-    type: Fix}
-  id: 988
-  time: '2022-02-05T21:27:43.0000000+00:00'
-- author: Rane
-  changes:
-  - {message: Brig access is now the least privileged form of security access and
-      given to lawyers. It may take a while for stations to update their airlock software
-      to the latest version., type: Tweak}
-  id: 989
-  time: '2022-02-05T23:08:15.0000000+00:00'
 - author: moony
   changes:
   - {message: Hopefully fix pillar spawning., type: Fix}
@@ -3036,3 +3023,15 @@ Entries:
   - {message: Removed the new parallax background., type: Remove}
   id: 1487
   time: '2022-05-09T09:15:42.0000000+00:00'
+- author: Daemon
+  changes:
+  - {message: Nanotrasen automated messages will no longer tell you to press the wrong
+      button., type: Tweak}
+  id: 1488
+  time: '2022-05-09T21:38:43.0000000+00:00'
+- author: Peptide90
+  changes:
+  - {message: 'Splitstation minor update. More hidden drip, intern spawn points, power
+      monitoring, removed spawn shuttle, paramedic void suit.', type: Tweak}
+  id: 1489
+  time: '2022-05-09T21:39:35.0000000+00:00'
