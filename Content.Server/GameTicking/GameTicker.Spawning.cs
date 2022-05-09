@@ -1,6 +1,7 @@
 using System.Globalization;
 using System.Linq;
 using Content.Server.Access.Systems;
+using Content.Server.FlavorText;
 using Content.Server.Ghost;
 using Content.Server.Ghost.Components;
 using Content.Server.Hands.Components;
@@ -293,6 +294,10 @@ namespace Content.Server.GameTicking
             {
                 _humanoidAppearanceSystem.UpdateFromProfile(entity, profile);
                 EntityManager.GetComponent<MetaDataComponent>(entity).EntityName = profile.Name;
+                if (profile.FlavorText != "")
+                {
+                    EntityManager.AddComponent<FlavorTextComponent>(entity).Content = profile.FlavorText;
+                }
             }
 
             return entity;

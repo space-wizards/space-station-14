@@ -1,0 +1,8 @@
+﻿<Control xmlns="https://spacestation14.io">
+    <!-- Primary container -->
+    <BoxContainer Orientation="Vertical" HorizontalExpand="True">
+        <LineEdit>
+
+        </LineEdit>
+    </BoxContainer>
+</Control>
