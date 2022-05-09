@@ -1,7 +1,7 @@
 ﻿namespace Content.Server.FlavorText
 {
-    public class FlavorTextSystem
+    public class FlavorTextSystem : EntitySystem
     {
-
+        
     }
 }

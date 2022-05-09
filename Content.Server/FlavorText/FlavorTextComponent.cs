@@ -1,6 +1,6 @@
 ﻿namespace Content.Server.FlavorText
 {
-    public class FlavorTextComponent
+    public class FlavorTextComponent : Component
     {
 
     }
