@@ -17,6 +17,13 @@ public sealed class StickyComponent : Component
     public EntityWhitelist? Whitelist;
 
     /// <summary>
+    ///     What target entities can't be used as surface for sticky entity.
+    /// </summary>
+    [DataField("blacklist")]
+    [ViewVariables(VVAccess.ReadWrite)]
+    public EntityWhitelist? Blacklist;
+
+    /// <summary>
     ///     How much time does it take to stick entity to target.
     ///     If zero will stick entity immediately.
     /// </summary>

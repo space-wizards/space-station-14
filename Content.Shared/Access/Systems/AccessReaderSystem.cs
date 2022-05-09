@@ -6,6 +6,7 @@ using Content.Shared.PDA;
 using Content.Shared.Access.Components;
 using Robust.Shared.Prototypes;
 using Content.Shared.Hands.EntitySystems;
+using Content.Shared.MachineLinking.Events;
 
 namespace Content.Shared.Access.Systems
 {
@@ -20,6 +21,13 @@ namespace Content.Shared.Access.Systems
             base.Initialize();
             SubscribeLocalEvent<AccessReaderComponent, ComponentInit>(OnInit);
             SubscribeLocalEvent<AccessReaderComponent, GotEmaggedEvent>(OnEmagged);
+            SubscribeLocalEvent<AccessReaderComponent, LinkAttemptEvent>(OnLinkAttempt);
+        }
+
+        private void OnLinkAttempt(EntityUid uid, AccessReaderComponent component, LinkAttemptEvent args)
+        {
+            if (component.Enabled && !IsAllowed(component, args.User))
+                args.Cancel();
         }
 
         private void OnInit(EntityUid uid, AccessReaderComponent reader, ComponentInit args)
@@ -59,32 +67,77 @@ namespace Content.Shared.Access.Systems
 
         public bool IsAllowed(AccessReaderComponent reader, ICollection<string> accessTags)
         {
+            if (!reader.Enabled)
+            {
+                // Access reader is totally disabled, so access is always allowed.
+                return true;
+            }
+
             if (reader.DenyTags.Overlaps(accessTags))
             {
                 // Sec owned by cargo.
+
+                // Note that in resolving the issue with only one specific item "counting" for access, this became a bit more strict.
+                // As having an ID card in any slot that "counts" with a denied access group will cause denial of access.
+                // DenyTags doesn't seem to be used right now anyway, though, so it'll be dependent on whoever uses it to figure out if this matters.
                 return false;
             }
 
-            return !reader.Enabled || reader.AccessLists.Count == 0 || reader.AccessLists.Any(a => a.IsSubsetOf(accessTags));
+            return reader.AccessLists.Count == 0 || reader.AccessLists.Any(a => a.IsSubsetOf(accessTags));
         }
 
         public ICollection<string> FindAccessTags(EntityUid uid)
         {
+            HashSet<string>? tags = null;
+            var owned = false;
+
             // check entity itself
-            if (FindAccessTagsItem(uid, out var tags))
-                return tags;
+            FindAccessTagsItem(uid, ref tags, ref owned);
 
             foreach (var item in _handsSystem.EnumerateHeld(uid))
             {
-                if (FindAccessTagsItem(item, out tags))
-                    return tags;
+                FindAccessTagsItem(item, ref tags, ref owned);
             }
 
             // maybe its inside an inventory slot?
-            if (_inventorySystem.TryGetSlotEntity(uid, "id", out var idUid) && FindAccessTagsItem(idUid.Value, out tags))
-                return tags;
+            if (_inventorySystem.TryGetSlotEntity(uid, "id", out var idUid))
+            {
+                FindAccessTagsItem(idUid.Value, ref tags, ref owned);
+            }
 
-            return Array.Empty<string>();
+            return ((ICollection<string>?) tags) ?? Array.Empty<string>();
+        }
+
+        /// <summary>
+        ///     Try to find <see cref="AccessComponent"/> on this item
+        ///     or inside this item (if it's pda)
+        ///     This version merges into a set or replaces the set.
+        ///     If owned is false, the existing tag-set "isn't ours" and can't be merged with (is read-only).
+        /// </summary>
+        private void FindAccessTagsItem(EntityUid uid, ref HashSet<string>? tags, ref bool owned)
+        {
+            if (!FindAccessTagsItem(uid, out var targetTags))
+            {
+                // no tags, no problem
+                return;
+            }
+            if (tags != null)
+            {
+                // existing tags, so copy to make sure we own them
+                if (!owned)
+                {
+                    tags = new(tags);
+                    owned = true;
+                }
+                // then merge
+                tags.UnionWith(targetTags);
+            }
+            else
+            {
+                // no existing tags, so now they're ours
+                tags = targetTags;
+                owned = false;
+            }
         }
 
         /// <summary>

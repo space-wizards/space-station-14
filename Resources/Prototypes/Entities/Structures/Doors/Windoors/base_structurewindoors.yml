@@ -30,7 +30,7 @@
       shader: unshaded
       map: ["enum.DoorVisualLayers.BaseUnlit"]
     - state: welded
-      map: ["enum.DoorVisualLayers.BaseWelded"]
+      map: ["enum.WeldableLayers.BaseWelded"]
     - state: bolted_unlit
       shader: unshaded
       map: ["enum.DoorVisualLayers.BaseBolted"]
@@ -75,7 +75,6 @@
     safety: false
   - type: Door
     canCrush: false
-    weldable: false
     board: DoorElectronics
     openSound:
       path: /Audio/Machines/windoor_open.ogg
@@ -123,7 +122,7 @@
       shader: unshaded
       map: [ "enum.DoorVisualLayers.BaseUnlit" ]
     - state: welded
-      map: [ "enum.DoorVisualLayers.BaseWelded" ]
+      map: [ "enum.WeldableLayers.BaseWelded" ]
     - state: bolted_unlit
       shader: unshaded
       map: [ "enum.DoorVisualLayers.BaseBolted" ]

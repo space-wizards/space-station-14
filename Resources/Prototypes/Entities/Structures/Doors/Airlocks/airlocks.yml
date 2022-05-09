@@ -13,7 +13,15 @@
   components:
   - type: Sprite
     sprite: Structures/Doors/Airlocks/Standard/engineering.rsi
-
+    
+- type: entity
+  parent: Airlock
+  id: AirlockAtmospherics
+  suffix: Atmospherics
+  components:
+  - type: Sprite
+    sprite: Structures/Doors/Airlocks/Standard/atmospherics.rsi
+    
 - type: entity
   parent: Airlock
   id: AirlockCargo
@@ -97,6 +105,9 @@
       layer:     #removed opaque from the layer, allowing lasers to pass through glass airlocks
       - Impassable
       - VaultImpassable
+  - type: Construction
+    graph: Airlock
+    node: glassAirlock
   - type: PaintableAirlock
     group: Windoor
 
@@ -109,6 +120,16 @@
     sprite: Structures/Doors/Airlocks/Glass/engineering.rsi
   - type: PaintableAirlock
     group: Glass
+    
+- type: entity
+  parent: AirlockGlass
+  id: AirlockAtmosphericsGlass
+  suffix: Atmospherics
+  components:
+  - type: Sprite
+    sprite: Structures/Doors/Airlocks/Glass/atmospherics.rsi
+  - type: PaintableAirlock
+    group: Glass    
 
 - type: entity
   parent: AirlockGlass

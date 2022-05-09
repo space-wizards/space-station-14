@@ -1,5 +1,6 @@
 using Content.Server.Atmos.EntitySystems;
 using Content.Shared.Atmos;
+using Content.Shared.Sound;
 using Content.Shared.Station;
 using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
@@ -21,8 +22,6 @@ namespace Content.Server.StationEvents.Events
 
         public override string StartAnnouncement => Loc.GetString("station-event-gas-leak-start-announcement");
 
-        // Sourced from https://github.com/vgstation-coders/vgstation13/blob/2c5a491446ab824a8fbbf39bcf656b590e0228df/sound/misc/bloblarm.ogg
-        public override string StartAudio => "/Audio/Announcements/bloblarm.ogg";
 
         protected override string EndAnnouncement => Loc.GetString("station-event-gas-leak-end-announcement");
 
