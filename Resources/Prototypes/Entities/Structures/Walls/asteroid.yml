@@ -4,8 +4,6 @@
   name: asteroid rock
   description: An asteroid.
   components:
-  - type: RandomAppearance
-    key: enum.AsteroidRockVisuals.State
   - type: Mineable
     ores:
     - id: SteelOre1
