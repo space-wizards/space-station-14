@@ -239,7 +239,7 @@
   name: fortune cookie
   parent: FoodSnackBase
   id: FoodSnackCookieFortune
-  description: A boring cardboard tasting snap with a fortune inside. Surprise! You're boring too.
+  description: A boring cardboard tasting snack with a fortune inside. Surprise! You're boring too.
   components:
   - type: Sprite
     state: cookie_fortune
