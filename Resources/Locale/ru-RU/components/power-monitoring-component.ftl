@@ -1,7 +1,7 @@
-power-monitoring-window-title = Power Monitoring Console
-power-monitoring-window-tab-sources = Sources
-power-monitoring-window-tab-loads = Loads
-power-monitoring-window-total-sources = Total Sources:
-power-monitoring-window-total-loads = Total Loads:
+power-monitoring-window-title = Компьютер контроля питания
+power-monitoring-window-tab-sources = Источники
+power-monitoring-window-tab-loads = Нагрузка
+power-monitoring-window-total-sources = Всего источников:
+power-monitoring-window-total-loads = Всего нагрузка:
 power-monitoring-window-value = { POWERWATTS($value) }
-power-monitoring-window-show-inactive-consumers = Show Inactive Consumers
+power-monitoring-window-show-inactive-consumers = Показать неактивные потребители тока

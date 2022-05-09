@@ -1,11 +1,11 @@
 ent-Welder = сварочный аппарат
     .desc = Плавит всё что угодно, пока заправлен, не забывайте о защите глаз!
     .suffix = { "" }
-ent-WelderIndustrial = industrial welding tool
-    .desc = An industrial welder with over double the fuel capacity.
+ent-WelderIndustrial = промышленный сварочный аппарат
+    .desc = Промышленный сварочный аппарат с увеличенным более чем вдвое запасом топлива.
     .suffix = { "" }
-ent-WelderIndustrialAdvanced = advanced industrial welding tool
-    .desc = An advanced industrial welder with over double the fuel capacity and hotter flame.
+ent-WelderIndustrialAdvanced = продвинутый промышленный сварочный аппарат
+    .desc = Продвинутый промышленный сварочный аппарат с увеличенным более чем вдвое запасом топлива и более мощным пламенем.
     .suffix = { "" }
 ent-WelderExperimental = экспериментальный сварочный аппарат
     .desc = Экспериментальный сварочный аппарат, способный самостоятельно вырабатывать топливо, менее вреден для глаз.
