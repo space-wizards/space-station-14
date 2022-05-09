@@ -17,6 +17,8 @@ public sealed class GhostKickUserOnTriggerSystem : EntitySystem
         if (!TryComp(args.User, out ActorComponent? actor))
             return;
 
-        _ghostKickManager.DoDisconnect(actor.PlayerSession.ConnectedClient);
+        _ghostKickManager.DoDisconnect(
+            actor.PlayerSession.ConnectedClient,
+            "Tripped over a kick mine, crashed through the fourth wall");
     }
 }
