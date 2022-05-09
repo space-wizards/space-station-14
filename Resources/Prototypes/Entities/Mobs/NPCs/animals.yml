@@ -636,6 +636,8 @@
       state: monkey
       sprite: Mobs/Animals/monkey.rsi
   - type: Hands
+  - type: Speech
+    speechSounds: Monkey
   - type: Body
     template: PrimateTemplate
     preset: PrimatePreset

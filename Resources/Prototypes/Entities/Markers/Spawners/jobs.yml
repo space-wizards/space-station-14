@@ -88,6 +88,38 @@
       - state: assistant
 
 - type: entity
+  id: SpawnPointTechnicalAssistant
+  parent: SpawnPointAssistant
+  name: technical assistant
+  components:
+  - type: SpawnPoint
+    job_id: TechnicalAssistant
+
+- type: entity
+  id: SpawnPointMedicalIntern
+  parent: SpawnPointAssistant
+  name: medical intern
+  components:
+  - type: SpawnPoint
+    job_id: MedicalIntern
+
+- type: entity
+  id: SpawnPointSecurityCadet
+  parent: SpawnPointAssistant
+  name: security cadet
+  components:
+  - type: SpawnPoint
+    job_id: SecurityCadet
+
+- type: entity
+  id: SpawnPointServiceWorker
+  parent: SpawnPointAssistant
+  name: service worker
+  components:
+  - type: SpawnPoint
+    job_id: ServiceWorker
+
+- type: entity
   id: SpawnPointBartender
   parent: SpawnPointJobBase
   name: bartender
@@ -258,7 +290,7 @@
     layers:
       - state: green
       - state: engineer
-      
+
 - type: entity
   id: SpawnPointAtmos
   parent: SpawnPointJobBase
@@ -270,7 +302,7 @@
       layers:
         - state: green
         - state: atmospherics
-        
+
 # Medical
 
 - type: entity

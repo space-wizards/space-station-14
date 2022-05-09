@@ -6,6 +6,7 @@ using Content.Shared.Sound;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
+using Robust.Shared.Random;
 using System;
 
 namespace Content.Server.Speech
@@ -14,6 +15,7 @@ namespace Content.Server.Speech
     {
         [Dependency] private readonly IGameTiming _gameTiming = default!;
         [Dependency] private readonly IPrototypeManager _protoManager = default!;
+        [Dependency] private readonly IRobustRandom _random = default!;
 
         public override void Initialize()
         {
@@ -35,6 +37,7 @@ namespace Content.Server.Speech
             // Play speech sound
             string contextSound;
             var prototype = _protoManager.Index<SpeechSoundsPrototype>(component.SpeechSounds);
+            var message = args.Message;
 
             // Different sounds for ask/exclaim based on last character
             switch (args.Message[^1])
@@ -50,8 +53,22 @@ namespace Content.Server.Speech
                     break;
             }
 
+            // Use exclaim sound if most characters are uppercase.
+            int uppercaseCount = 0;
+            for (int i = 0; i < message.Length; i++)
+            {
+                if (char.IsUpper(message[i])) uppercaseCount++;
+            }
+            if (uppercaseCount > (message.Length / 2))
+            {
+                contextSound = contextSound = prototype.ExclaimSound.GetSound();
+            }
+
+            var scale = (float) _random.NextGaussian(1, prototype.Variation);
+            var pitchedAudioParams = component.AudioParams.WithPitchScale(scale);
+
             component.LastTimeSoundPlayed = currentTime;
-            SoundSystem.Play(Filter.Pvs(uid, entityManager: EntityManager), contextSound, uid, component.AudioParams);
+            SoundSystem.Play(Filter.Pvs(uid, entityManager: EntityManager), contextSound, uid, pitchedAudioParams);
         }
     }
 }
