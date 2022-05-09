@@ -1,9 +1,4 @@
 Entries:
-- author: moony
-  changes:
-  - {message: Hopefully fix pillar spawning., type: Fix}
-  id: 990
-  time: '2022-02-06T02:22:28.0000000+00:00'
 - author: mirrorcult
   changes:
   - {message: Directional windows no longer look weird when viewed while rotated.,
@@ -3035,3 +3030,10 @@ Entries:
       monitoring, removed spawn shuttle, paramedic void suit.', type: Tweak}
   id: 1489
   time: '2022-05-09T21:39:35.0000000+00:00'
+- author: DogZeroX
+  changes:
+  - {message: "Space Wind \u2122 has been removed (until it is fixed or there's a\
+      \ better alternative), you will no longer be pushed by explosive decompression\
+      \ or airflows.", type: Remove}
+  id: 1490
+  time: '2022-05-09T22:35:42.0000000+00:00'
