@@ -21,7 +21,6 @@ public sealed class VendingMachineEjectItemWireAction : BaseWireAction
         if (IsPowered(wire.Owner)
             && EntityManager.TryGetComponent(wire.Owner, out VendingMachineComponent vending))
         {
-            // Nothing yet.
             lightState = vending.CanShoot
                 ? StatusLightState.BlinkingFast
                 : StatusLightState.On;
