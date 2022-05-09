@@ -361,13 +361,14 @@
   components:
   - type: PDA
     id: CaptainIDCard
+    penSlot:
+      startingItem: PenCap    
   - type: Appearance
     visuals:
       - type: PDAVisualizer
         state: pda-captain
   - type: Icon
     state: pda-captain
-
 
 - type: entity
   parent: BasePDA
@@ -377,13 +378,14 @@
   components:
   - type: PDA
     id: HoPIDCard
+    penSlot:
+      startingItem: PenHop    
   - type: Appearance
     visuals:
       - type: PDAVisualizer
         state: pda-hop
   - type: Icon
     state: pda-hop
-
 
 - type: entity
   parent: BasePDA

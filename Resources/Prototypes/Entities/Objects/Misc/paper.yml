@@ -109,6 +109,26 @@
     size: 2
 
 - type: entity
+  name: captain's fountain pen
+  parent: Pen
+  id: PenCap
+  description: 'A luxurious fountain pen for the captain of the station.'
+  components:
+  - type: Sprite
+    sprite: Objects/Misc/bureaucracy.rsi
+    state: pen_cap
+   
+- type: entity
+  name: hop's fountain pen
+  parent: Pen
+  id: PenHop
+  description: 'A luxurious fountain pen for the hop of the station.'
+  components:
+  - type: Sprite
+    sprite: Objects/Misc/bureaucracy.rsi
+    state: pen_hop
+    
+- type: entity
   id: BoxFolderBase
   parent: BoxBase
   name: folder
