@@ -1,0 +1,27 @@
+﻿- type: entity
+  name: kick mine
+  parent: BaseItem
+  id: LandMineKick
+  components:
+    - type: Sprite
+      sprite: Objects/Misc/uglymine.rsi
+      state: uglymine
+    - type: Physics
+      bodyType: Dynamic
+    - type: Fixtures
+      fixtures:
+        - shape:
+            !type:PhysShapeAabb
+            bounds: "-0.2,-0.2,0.2,0.2"
+          id: "slips"
+          hard: false
+          layer:
+            - SmallImpassable
+        - shape:
+            !type:PhysShapeAabb
+            bounds: "-0.2,-0.2,0.2,0.2"
+          mass: 5
+          mask:
+            - SmallImpassable
+    - type: LandMine
+    - type: MineEffectKick

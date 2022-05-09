@@ -10,6 +10,7 @@ using Content.Client.HUD;
 using Content.Client.Info;
 using Content.Client.Input;
 using Content.Client.IoC;
+using Content.Client.LandMines;
 using Content.Client.Launcher;
 using Content.Client.MainMenu;
 using Content.Client.MobState.Overlays;
@@ -124,6 +125,7 @@ namespace Content.Client.Entry
             IoCManager.Resolve<ChangelogManager>().Initialize();
             IoCManager.Resolve<RulesManager>().Initialize();
             IoCManager.Resolve<ViewportManager>().Initialize();
+            IoCManager.Resolve<KickMineManager>().Initialize();
 
             IoCManager.InjectDependencies(this);
 
