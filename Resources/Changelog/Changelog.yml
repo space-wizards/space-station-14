@@ -1,11 +1,4 @@
 Entries:
-- author: router
-  changes:
-  - {message: Replaced all ingot mints to fix a typo in their stamping. All "Nanotransen"
-      gold and silver bars have been melted down and reformed., type: Fix}
-  - {message: Removed Herobrine., type: Remove}
-  id: 987
-  time: '2022-02-05T19:23:06.0000000+00:00'
 - author: Peptide90
   changes:
   - {message: Massive list of changes and fixes for NSS Pillar. See Github for list.,
@@ -3038,3 +3031,8 @@ Entries:
   - {message: Added construction recipe for glass airlocks, type: Add}
   id: 1486
   time: '2022-05-09T05:52:19.0000000+00:00'
+- author: PJB3005
+  changes:
+  - {message: Removed the new parallax background., type: Remove}
+  id: 1487
+  time: '2022-05-09T09:15:42.0000000+00:00'
