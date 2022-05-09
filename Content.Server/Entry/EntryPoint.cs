@@ -10,6 +10,7 @@ using Content.Server.Connection;
 using Content.Server.Database;
 using Content.Server.EUI;
 using Content.Server.GameTicking;
+using Content.Server.GhostKick;
 using Content.Server.GuideGenerator;
 using Content.Server.Info;
 using Content.Server.IoC;
@@ -93,7 +94,7 @@ namespace Content.Server.Entry
                 IoCManager.Resolve<INodeGroupFactory>().Initialize();
                 IoCManager.Resolve<IGamePrototypeLoadManager>().Initialize();
                 IoCManager.Resolve<NetworkResourceManager>().Initialize();
-                IoCManager.Resolve<KickMineManager>().Initialize();
+                IoCManager.Resolve<GhostKickManager>().Initialize();
 
                 _voteManager.Initialize();
             }

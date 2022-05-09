@@ -320,7 +320,7 @@ namespace Content.Client.Entry
             "AtmosMonitor",
             "AtmosAlarmable",
             "LandMine",
-            "MineEffectKick",
+            "GhostKickUserOnTrigger",
             "FireAlarm",
             "AirAlarm",
             "RadarConsole",

@@ -1,12 +1,12 @@
-﻿using Content.Shared.LandMines;
+﻿using Content.Shared.GhostKick;
 using Robust.Client;
 using Robust.Shared;
 using Robust.Shared.Configuration;
 using Robust.Shared.Network;
 
-namespace Content.Client.LandMines;
+namespace Content.Client.GhostKick;
 
-public sealed class KickMineManager
+public sealed class GhostKickManager
 {
     private bool _fakeLossEnabled;
 
@@ -16,7 +16,7 @@ public sealed class KickMineManager
 
     public void Initialize()
     {
-        _netManager.RegisterNetMessage<MsgKickMineDisconnect>(RxCallback);
+        _netManager.RegisterNetMessage<MsgGhostKick>(RxCallback);
 
         _baseClient.RunLevelChanged += BaseClientOnRunLevelChanged;
     }
@@ -31,7 +31,7 @@ public sealed class KickMineManager
         }
     }
 
-    private void RxCallback(MsgKickMineDisconnect message)
+    private void RxCallback(MsgGhostKick message)
     {
         _fakeLossEnabled = true;
 

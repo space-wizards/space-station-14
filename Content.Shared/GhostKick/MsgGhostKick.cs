@@ -1,9 +1,9 @@
 ﻿using Lidgren.Network;
 using Robust.Shared.Network;
 
-namespace Content.Shared.LandMines;
+namespace Content.Shared.GhostKick;
 
-public sealed class MsgKickMineDisconnect : NetMessage
+public sealed class MsgGhostKick : NetMessage
 {
     public override MsgGroups MsgGroup => MsgGroups.Core;
 

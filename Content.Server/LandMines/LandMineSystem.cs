@@ -1,4 +1,5 @@
-﻿using Content.Shared.Popups;
+﻿using Content.Server.Explosion.EntitySystems;
+using Content.Shared.Popups;
 using Content.Shared.StepTrigger;
 using Robust.Shared.Player;
 
@@ -7,6 +8,7 @@ namespace Content.Server.LandMines;
 public sealed class LandMineSystem : EntitySystem
 {
     [Dependency] private readonly SharedPopupSystem _popupSystem = default!;
+    [Dependency] private readonly TriggerSystem _trigger = default!;
 
 
     public override void Initialize()
@@ -30,13 +32,9 @@ public sealed class LandMineSystem : EntitySystem
             Transform(uid).Coordinates,
             Filter.Entities(args.Tripper));
 
-        RaiseLocalEvent(uid, new MineTriggeredEvent { Tripper = args.Tripper });
+        _trigger.Trigger(uid, args.Tripper);
 
         QueueDel(uid);
     }
 }
 
-public sealed class MineTriggeredEvent : EntityEventArgs
-{
-    public EntityUid Tripper;
-}
