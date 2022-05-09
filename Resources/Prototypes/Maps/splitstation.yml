@@ -37,3 +37,7 @@
     SalvageSpecialist: [ 4, 6 ] 
     Musician: [ 1, 1 ]
     AtmosphericTechnician: [ 1, 2 ]
+    TechnicalAssistant: [ 2, 2 ]
+    MedicalIntern: [ 2, 2 ]
+    ServiceWorker: [ 2, 2 ]
+    SecurityCadet: [ 2, 2 ] 
