@@ -111,6 +111,18 @@
     BlackRussian: 3
 
 - type: reaction
+  id: BlankPaper
+  reactants:
+    Silencer:
+      amount: 1
+    Nothing:
+      amount: 1
+    NuclearCola:
+      amount: 1
+  products:
+    BlankPaper: 3
+
+- type: reaction
   id: BloodyMary
   reactants:
     JuiceLime:

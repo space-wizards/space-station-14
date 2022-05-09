@@ -18,7 +18,7 @@
   parent: BaseAlcohol
   desc: A gentle and syrup like drink, tastes of almonds and apricots.
   physicalDesc: strong-smelling
-  color: "#33EE00"
+  color: "#a66e60"
   spritePath: amarettoglass.rsi
 
 - type: reagent
@@ -163,6 +163,15 @@
   desc: A strong and mildly flavoured, mexican produced spirit.
   physicalDesc: strong-smelling
   color: "#d7d1d155"
+
+- type: reagent
+  id: TripleSec
+  name: triple sec
+  parent: BaseAlcohol
+  desc: A sweet and vibrant orange liqueur.
+  physicalDesc: strong-smelling
+  color: "#FFA500"
+  spritePath: triplesecglass.rsi
 
 - type: reagent
   id: Vermouth
@@ -327,6 +336,15 @@
   physicalDesc: strong-smelling
   color: "#360000"
   spritePath: blackrussianglass.rsi
+
+- type: reagent
+  id: BlankPaper
+  name: blank paper
+  parent: BaseAlcohol
+  desc: A fizzy cocktail for those looking to start fresh. #This should in the future be able to reinstiute the oath of silence within a mime.
+  physicalDesc: strong-smelling
+  color: "#360000"
+  spritePath: blankpaperglass.rsi
 
 - type: reagent
   id: BloodyMary

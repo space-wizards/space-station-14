@@ -395,6 +395,23 @@
 
 - type: entity
   parent: DrinkGlassBase
+  id: DrinkBlankPaperGlass
+  name: blank paper glass
+  description: A fizzy cocktail for those looking to start fresh.
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 50
+        reagents:
+        - ReagentId: BlankPaper
+          Quantity: 50
+  - type: Drink
+  - type: Sprite
+    sprite: Objects/Consumable/Drinks/blankpaperglass.rsi
+
+- type: entity
+  parent: DrinkGlassBase
   id: DrinkBlueCuracaoGlass
   name: blue curacao
   description: Exotically blue, fruity drink, distilled from oranges.
@@ -1791,6 +1808,24 @@
   - type: Drink
   - type: Sprite
     sprite: Objects/Consumable/Drinks/tequillaglass.rsi
+
+
+- type: entity
+  parent: DrinkGlassBase
+  id: DrinkTripleSecGlass
+  name: triple sec glass
+  description: A sweet and vibrant orange liqueur.
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 50
+        reagents:
+        - ReagentId: TripleSec
+          Quantity: 50
+  - type: Drink
+  - type: Sprite
+    sprite: Objects/Consumable/Drinks/triplesecglass.rsi
 
 - type: entity
   parent: DrinkGlassBase
