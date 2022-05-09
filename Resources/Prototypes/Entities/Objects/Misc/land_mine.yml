@@ -25,3 +25,5 @@
             - SmallImpassable
     - type: LandMine
     - type: MineEffectKick
+    - type: StepTrigger
+      requiredTriggeredSpeed: 0
