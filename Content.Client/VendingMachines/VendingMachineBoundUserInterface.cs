@@ -32,7 +32,7 @@ namespace Content.Client.VendingMachines
             VendingMachine = vendingMachine;
 
             _menu = new VendingMachineMenu(this) {Title = entMan.GetComponent<MetaDataComponent>(Owner.Owner).EntityName};
-            _menu.Populate(VendingMachine.Inventory);
+            _menu.Populate(VendingMachine.AllInventory);
 
             _menu.OnClose += Close;
             _menu.OpenCentered();

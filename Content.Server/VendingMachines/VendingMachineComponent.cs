@@ -17,23 +17,6 @@ namespace Content.Server.VendingMachines
     {
         public bool Ejecting;
 
-        public bool Emagged = false;
-
-        public bool Contraband;
-
-        public List<VendingMachineInventoryEntry> AllInventory
-        {
-            get
-            {
-                var inventory = new List<VendingMachineInventoryEntry>(Inventory);
-
-                if (Emagged) inventory.AddRange(EmaggedInventory);
-                if (Contraband) inventory.AddRange(ContrabandInventory);
-
-                return inventory;
-            }
-        }
-
         public TimeSpan AnimationDuration = TimeSpan.Zero;
 
         [ViewVariables] [DataField("pack", customTypeSerializer:typeof(PrototypeIdSerializer<VendingMachineInventoryPrototype>))]

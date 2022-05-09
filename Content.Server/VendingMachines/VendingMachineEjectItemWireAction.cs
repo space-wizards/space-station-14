@@ -1,16 +1,18 @@
 using Content.Server.VendingMachines.Systems;
 using Content.Server.Wires;
+using Content.Shared.VendingMachines;
 using Content.Shared.Wires;
 
 namespace Content.Server.VendingMachines;
 
-public class VendingMachineEjectItemWireAction : BaseWireAction
+[DataDefinition]
+public sealed class VendingMachineEjectItemWireAction : BaseWireAction
 {
     private VendingMachineSystem _vendingMachineSystem = default!;
 
     private Color _color = Color.Red;
     private string _text = "VEND";
-    public override object? StatusKey { get; } = InternalKey.StatusKey;
+    public override object? StatusKey { get; } = EjectWireKey.StatusKey;
 
     public override StatusLightData? GetStatusLightData(Wire wire)
     {
@@ -53,10 +55,5 @@ public class VendingMachineEjectItemWireAction : BaseWireAction
         _vendingMachineSystem.EjectRandom(wire.Owner, true);
 
         return true;
-    }
-
-    private enum InternalKey : byte
-    {
-        StatusKey
     }
 }

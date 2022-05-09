@@ -12,10 +12,24 @@ namespace Content.Shared.VendingMachines
     public class SharedVendingMachineComponent : Component
     {
         [ViewVariables] public List<VendingMachineInventoryEntry> Inventory = new();
-
         [ViewVariables] public List<VendingMachineInventoryEntry> EmaggedInventory = new();
-
         [ViewVariables] public List<VendingMachineInventoryEntry> ContrabandInventory = new();
+
+        public List<VendingMachineInventoryEntry> AllInventory
+        {
+            get
+            {
+                var inventory = new List<VendingMachineInventoryEntry>(Inventory);
+
+                if (Emagged) inventory.AddRange(EmaggedInventory);
+                if (Contraband) inventory.AddRange(ContrabandInventory);
+
+                return inventory;
+            }
+        }
+
+        public bool Emagged;
+        public bool Contraband;
 
         [Serializable, NetSerializable]
         public enum VendingMachineVisuals
@@ -97,5 +111,18 @@ namespace Content.Shared.VendingMachines
             Emagged,
             Contraband
         }
+    }
+
+    [Serializable, NetSerializable]
+    public enum ContrabandWireKey : byte
+    {
+        StatusKey,
+        TimeoutKey
+    }
+
+    [Serializable, NetSerializable]
+    public enum EjectWireKey : byte
+    {
+        StatusKey,
     }
 }

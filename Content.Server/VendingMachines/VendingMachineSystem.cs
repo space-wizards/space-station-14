@@ -186,7 +186,7 @@ namespace Content.Server.VendingMachines.Systems
 
             if (TryComp<AccessReaderComponent?>(vendComponent.Owner, out var accessReader))
             {
-                if (!vendComponent.Emagged || !_accessReader.IsAllowed(accessReader, sender.Value))
+                if (!_accessReader.IsAllowed(accessReader, sender.Value) && !vendComponent.Emagged)
                 {
                     _popupSystem.PopupEntity(Loc.GetString("vending-machine-component-try-eject-access-denied"), uid, Filter.Pvs(uid));
                     Deny(uid, vendComponent);
@@ -237,7 +237,7 @@ namespace Content.Server.VendingMachines.Systems
             // Start Ejecting, and prevent users from ordering while anim playing
             vendComponent.Ejecting = true;
             entry.Amount--;
-            vendComponent.UserInterface?.SendMessage(new VendingMachineInventoryMessage(vendComponent.Inventory));
+            vendComponent.UserInterface?.SendMessage(new VendingMachineInventoryMessage(vendComponent.AllInventory));
             TryUpdateVisualState(uid, VendingMachineVisualState.Eject, vendComponent);
             vendComponent.Owner.SpawnTimer(vendComponent.AnimationDuration, () =>
             {

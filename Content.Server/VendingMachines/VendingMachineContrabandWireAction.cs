@@ -1,4 +1,5 @@
 using Content.Server.Wires;
+using Content.Shared.VendingMachines;
 using Content.Shared.Wires;
 
 namespace Content.Server.VendingMachines;
@@ -8,8 +9,8 @@ public sealed class VendingMachineContrabandWireAction : BaseToggleWireAction
 {
     private readonly Color _color = Color.Green;
     private readonly string _text = "MNGR";
-    public override object? StatusKey { get; } = InternalKey.StatusKey;
-    public override object? TimeoutKey { get; } = InternalKey.TimeoutKey;
+    public override object? StatusKey { get; } = ContrabandWireKey.StatusKey;
+    public override object? TimeoutKey { get; } = ContrabandWireKey.TimeoutKey;
 
     public override StatusLightData? GetStatusLightData(Wire wire)
     {
@@ -31,18 +32,14 @@ public sealed class VendingMachineContrabandWireAction : BaseToggleWireAction
     {
         if (EntityManager.TryGetComponent(owner, out VendingMachineComponent vending))
         {
-            vending.Contraband = setting;
+            vending.Contraband = !setting;
         }
     }
 
     public override bool GetValue(EntityUid owner)
     {
-        return EntityManager.TryGetComponent(owner, out VendingMachineComponent vending) && vending.Contraband;
+        return EntityManager.TryGetComponent(owner, out VendingMachineComponent vending) && !vending.Contraband;
     }
 
-    private enum InternalKey : byte
-    {
-        StatusKey,
-        TimeoutKey
-    }
+
 }
