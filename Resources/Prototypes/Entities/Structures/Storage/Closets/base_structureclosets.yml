@@ -17,7 +17,7 @@
       map: ["enum.StorageVisualLayers.Door"]
     - state: welded
       visible: false
-      map: ["enum.StorageVisualLayers.Welded"]
+      map: ["enum.WeldableLayers.BaseWelded"]
   - type: MovedByPressure
   - type: DamageOnHighSpeedImpact
     damage:
@@ -41,6 +41,7 @@
       - MobImpassable
       - SmallImpassable
   - type: EntityStorage
+  - type: Weldable
   - type: PlaceableSurface
     placeCentered: true
   - type: Damageable

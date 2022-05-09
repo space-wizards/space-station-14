@@ -1,25 +1,4 @@
 Entries:
-- author: ElectroJr
-  changes:
-  - {message: 'You should now be able to un-anchor things like disposal units, instead
-      of just discarding your wrench.', type: Tweak}
-  id: 983
-  time: '2022-02-05T02:39:02.0000000+00:00'
-- author: walrusfromspace
-  changes:
-  - {message: Added door remotes to the heads' lockers, type: Add}
-  id: 984
-  time: '2022-02-05T13:33:24.0000000+00:00'
-- author: ElectroJr
-  changes:
-  - {message: Windoors should no longer crush people as they auto close., type: Fix}
-  id: 985
-  time: '2022-02-05T17:27:06.0000000+00:00'
-- author: Peptide90
-  changes:
-  - {message: Blast doors can't be opened with a crowbar anymore., type: Tweak}
-  id: 986
-  time: '2022-02-05T18:06:33.0000000+00:00'
 - author: router
   changes:
   - {message: Replaced all ingot mints to fix a typo in their stamping. All "Nanotransen"
@@ -3030,3 +3009,32 @@ Entries:
   - {message: Speech bubbles are now occluded, type: Tweak}
   id: 1482
   time: '2022-05-08T08:54:56.0000000+00:00'
+- author: hubismal
+  changes:
+  - {message: 'Humans, mice, and vending machines make noise when they talk.', type: Add}
+  id: 1483
+  time: '2022-05-08T13:23:08.0000000+00:00'
+- author: mirrorcult
+  changes:
+  - {message: 'Nanotrasen has hired four new classes of interns for Engineering, Medical,
+      Security, and Service. They have been vetted thoroughly and Nanotrasen assures
+      you that they could not be traitors. Any members of this department are free
+      to bully or teach the interns however they please.', type: Add}
+  id: 1484
+  time: '2022-05-08T20:00:01.0000000+00:00'
+- author: hubismal
+  changes:
+  - {message: Speech sounds now sound a little different every time., type: Tweak}
+  - {message: Speech sounds now are louder when closer and quieter when further.,
+    type: Tweak}
+  - {message: TYPING IN ALL CAPS will make you play the yelling speech sound., type: Tweak}
+  - {message: Vending machines are quieter., type: Tweak}
+  - {message: Your personal AIs talk using their synthesizers., type: Add}
+  - {message: Monkeys use their beautiful voices., type: Add}
+  id: 1485
+  time: '2022-05-09T04:55:24.0000000+00:00'
+- author: ShadowCommander
+  changes:
+  - {message: Added construction recipe for glass airlocks, type: Add}
+  id: 1486
+  time: '2022-05-09T05:52:19.0000000+00:00'
