@@ -1,20 +1,20 @@
-markings-used = Used Markings
-markings-unused = Unused Markings
-markings-add = Add Marking
-markings-remove = Remove Marking
-markings-rank-up = Up
-markings-rank-down = Down
-marking-points-remaining = Markings left: { $points }
+markings-used = Используемые отметины
+markings-unused = Неиспользуемые отметины
+markings-add = Добавить отметину
+markings-remove = Убрать отметину
+markings-rank-up = Вверх
+markings-rank-down = Вниз
+marking-points-remaining = Отметин осталось: { $points }
 marking-used = { $marking-name } ({ $marking-category })
 
 # Categories
 
-markings-category-Head = Head
-markings-category-HeadTop = Head (Top)
-markings-category-HeadSide = Head (Side)
-markings-category-Snout = Snout
-markings-category-Chest = Chest
-markings-category-Arms = Arms
-markings-category-Legs = Legs
-markings-category-Tail = Tail
-markings-category-Overlay = Overlay
+markings-category-Head = Голова
+markings-category-HeadTop = Голова (верх)
+markings-category-HeadSide = Голова (бок)
+markings-category-Snout = Морда
+markings-category-Chest = Грудь
+markings-category-Arms = Руки
+markings-category-Legs = Ноги
+markings-category-Tail = Хвост
+markings-category-Overlay = Наложение
