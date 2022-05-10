@@ -111,6 +111,18 @@
         },
         {
             "name": "Musician"
+        },
+        {
+            "name": "MedicalIntern"
+        },
+        {
+            "name": "TechnicalAssistant"
+        },
+        {
+            "name": "ServiceWorker"
+        },
+        {
+            "name": "SecurityCadet"
         }
     ]
 }

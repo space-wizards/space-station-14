@@ -19,7 +19,7 @@
           map: ["enum.StorageVisualLayers.Door"]
         - state: welded
           visible: false
-          map: ["enum.StorageVisualLayers.Welded"]
+          map: ["enum.WeldableLayers.BaseWelded"]
         - state: locked
           map: ["enum.StorageVisualLayers.Lock"]
           shader: unshaded
@@ -42,7 +42,7 @@
       state: artifact_container_icon
     - type: ArtifactStorage
       Capacity: 1
-      CanWeldShut: true
+    - type: Weldable
     - type: SuppressArtifactContainer
     - type: PlaceableSurface
     - type: Damageable

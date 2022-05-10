@@ -3,8 +3,6 @@ using System.Text;
 using Content.Server.Administration.Logs;
 using Content.Server.Administration.Managers;
 using Content.Server.Chat.Managers;
-using Content.Server.Disease;
-using Content.Server.Disease.Components;
 using Content.Server.Ghost.Components;
 using Content.Server.Headset;
 using Content.Server.Players;
@@ -14,9 +12,7 @@ using Content.Shared.ActionBlocker;
 using Content.Shared.CCVar;
 using Content.Shared.Chat;
 using Content.Shared.Database;
-using Content.Shared.Disease.Components;
 using Content.Shared.Inventory;
-using Content.Shared.Popups;
 using Robust.Server.Player;
 using Robust.Shared.Configuration;
 using Robust.Shared.Console;
@@ -32,7 +28,7 @@ namespace Content.Server.Chat;
 ///     ChatSystem is responsible for in-simulation chat handling, such as whispering, speaking, emoting, etc.
 ///     ChatSystem depends on ChatManager to actually send the messages.
 /// </summary>
-public sealed class ChatSystem : EntitySystem
+public sealed class ChatSystem : SharedChatSystem
 {
     [Dependency] private readonly IConfigurationManager _configurationManager = default!;
     [Dependency] private readonly IChatManager _chatManager = default!;

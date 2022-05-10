@@ -13,7 +13,7 @@
       layer:
       - Passable
   - type: Sprite
-    drawdepth: WallTops
+    drawdepth: Objects
     sprite: Structures/Wallmounts/barsign.rsi
     state: empty
   - type: ApcPowerReceiver
