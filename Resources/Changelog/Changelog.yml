@@ -1,11 +1,6 @@
 Entries:
 - author: metalgearsloth
   changes:
-  - {message: Airlock construction / deconstruction now takes longer., type: Tweak}
-  id: 998
-  time: '2022-02-07T03:06:11.0000000+00:00'
-- author: metalgearsloth
-  changes:
   - {message: Healing (via ointments etc.) now takes time., type: Tweak}
   id: 999
   time: '2022-02-07T03:14:46.0000000+00:00'
@@ -3038,3 +3033,8 @@ Entries:
       bags of milk and flour and other supplements.', type: Add}
   id: 1497
   time: '2022-05-10T08:03:13.0000000+00:00'
+- author: Tomeno
+  changes:
+  - {message: Atmos yeets should make a lot more sense now, type: Tweak}
+  id: 1498
+  time: '2022-05-10T15:02:40.0000000+00:00'
