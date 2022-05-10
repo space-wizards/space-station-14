@@ -37,11 +37,11 @@
     footstepSoundCollection:
       collection: footstep_clown
   - type: PointLight
-      netsync: false
-      enabled: false
-      radius: 3
-      energy: 2
-      color: "#FFD800"   
+    netsync: false
+    enabled: false
+    radius: 3
+    energy: 2
+    color: "#FFD800"   
 
 - type: entity
   parent: ClothingShoesBase
