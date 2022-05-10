@@ -9,10 +9,10 @@
   minPlayers: 0
   maxPlayers: 35
   overflowJobs:
-    - Assistant
+    - Passenger
   availableJobs:
     CargoTechnician: [ 2, 2 ]
-    Assistant: [ -1, -1 ]
+    Passenger: [ -1, -1 ]
     Bartender: [ 1, 1 ]
     Botanist: [ 2, 2]
     Chef: [ 1, 1 ]
@@ -38,3 +38,7 @@
     SalvageSpecialist: [ 2, 2 ]
     Musician: [ 1, 1 ]
     AtmosphericTechnician: [ 2, 2 ]
+    TechnicalAssistant: [ 1, 1 ]
+    MedicalIntern: [ 1, 1 ]
+    ServiceWorker: [ 1, 1 ]
+    SecurityCadet: [ 1, 1 ]

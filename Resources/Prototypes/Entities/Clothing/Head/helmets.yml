@@ -125,7 +125,10 @@
         Blunt: 0.8
         Slash: 0.8
         Piercing: 0.8
-
+  - type: Tag
+    tags:
+    - HidesHair
+    
 - type: entity
   parent: ClothingHeadBase
   id: ClothingHeadHelmetSpaceNinja
@@ -137,7 +140,10 @@
   - type: Clothing
     sprite: Clothing/Head/Helmets/spaceninja.rsi
   - type: IngestionBlocker
-
+  - type: Tag
+    tags:
+    - HidesHair
+    
 - type: entity
   parent: ClothingHeadEVAHelmetBase
   id: ClothingHeadHelmetSyndicate

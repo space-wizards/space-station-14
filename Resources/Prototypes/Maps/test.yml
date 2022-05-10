@@ -5,7 +5,7 @@
   minPlayers: 0
   votable: false
   overflowJobs:
-    - Assistant
+    - Passenger
   availableJobs:
-    Assistant: [ -1, -1 ]
+    Passenger: [ -1, -1 ]
 

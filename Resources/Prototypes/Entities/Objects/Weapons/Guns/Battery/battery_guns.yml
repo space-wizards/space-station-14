@@ -355,13 +355,50 @@
   - type: BatteryBarrel
     minAngle: 5
     angleIncrease: 20
-    fireCost: 80
+    fireCost: 360
     ammoPrototype: BulletTaser
     soundGunshot:
       path: /Audio/Weapons/Guns/Gunshots/taser.ogg
   - type: PowerCellSlot
     descFormatString : "" # empty string for no examine-text (cell is not ejectable)
     cellSlot:
+      soundOptions:
+        volume: -2
+      locked: true
+  - type: Appearance
+    visuals:
+    - type: MagVisualizer
+      magState: mag
+      steps: 5
+      zeroVisible: true
+
+- type: entity
+  name: antique laser gun
+  parent: BatteryGunSmall
+  id: AntiqueLaserGun
+  description: This is an antique laser gun. All craftsmanship is of the highest quality. It is decorated with assistant leather and chrome. The object menaces with spikes of energy.
+  components:
+  - type: Sprite
+    netsync: false
+    sprite: Objects/Weapons/Guns/Battery/antiquelasergun.rsi
+    layers:
+      - state: base
+        map: ["enum.RangedBarrelVisualLayers.Base"]
+      - state: mag-unshaded-4
+        map: ["enum.RangedBarrelVisualLayers.MagUnshaded"]
+        shader: unshaded
+  - type: Item
+    size: 12
+    sprite: Objects/Weapons/Guns/Battery/antiquelasergun.rsi
+  - type: BatteryBarrel
+    fireCost: 6
+    soundGunshot:
+      path: /Audio/Weapons/Guns/Gunshots/laser_cannon.ogg
+  - type: RangedWeapon    
+  - type: PowerCellSlot
+    descFormatString : "" # empty string for no examine-text (cell is not ejectable)
+    cellSlot:
+      startingItem: PowerCellAntiqueProto
       soundOptions:
         volume: -2
       locked: true

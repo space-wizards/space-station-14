@@ -78,11 +78,9 @@ namespace Content.Shared.Storage
 
     [NetSerializable]
     [Serializable]
-    public enum StorageVisuals
+    public enum StorageVisuals : byte
     {
         Open,
-        CanWeld,
-        Welded,
         CanLock,
         Locked
     }

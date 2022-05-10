@@ -1,187 +1,4 @@
 Entries:
-- author: mirrorcult
-  changes:
-  - {message: Deconstructing crates now requires a screwdriver again., type: Fix}
-  id: 969
-  time: '2022-02-03T23:43:52.815666+00:00'
-- author: Peptide90
-  changes:
-  - {message: Changed map Reach from 25 players max to 15., type: Tweak}
-  - {message: Changed map Saltern from 20 to 25 max players., type: Tweak}
-  id: 970
-  time: '2022-02-04T13:20:25.0000000+00:00'
-- author: Peptide90
-  changes:
-  - {message: You can now milk goats for their milk. Try keep them still long enough!,
-    type: Add}
-  id: 971
-  time: '2022-02-04T21:14:47.0000000+00:00'
-- author: Seth
-  changes:
-  - {message: Goats are back into the cargo console, type: Tweak}
-  id: 972
-  time: '2022-02-04T21:14:54.0000000+00:00'
-- author: Peptide90
-  changes:
-  - {message: Universal Enzyme and corn oil can now be produced by juicing corn.,
-    type: Add}
-  - {message: 'Ketchup can now be made by combining 10 tomato juice and 5 sugar. BBQ
-      Sauce can be made by 5 ketchup, vinegar and sugar each. Hot Sauce with 5 tomato
-      juice, salt and capsaicin oil.', type: Add}
-  id: 973
-  time: '2022-02-04T21:15:10.0000000+00:00'
-- author: Lamrr
-  changes:
-  - {message: 'Fingerless gloves have arrived. Protect your hands, well at least some
-      parts of them.', type: Add}
-  id: 974
-  time: '2022-02-04T21:16:22.0000000+00:00'
-- author: Zyme
-  changes:
-  - {message: The Syndicate now offers a pyjama bundle! You can find it on your nearest
-      uplink., type: Add}
-  id: 975
-  time: '2022-02-04T21:16:31.0000000+00:00'
-- author: Lamrr
-  changes:
-  - {message: Improve your MIDI track rendition five fold through the new digital
-      audio workstation. This end-of-the-line instrument won't be cheap to construct
-      however..., type: Add}
-  - {message: NanoTrasen has updated its research programme to include cutting edge
-      advances in applied musicology., type: Add}
-  id: 976
-  time: '2022-02-04T21:17:09.0000000+00:00'
-- author: Fishfish458
-  changes:
-  - {message: Added handheld crew monitor to research and proto-lathe, type: Add}
-  id: 977
-  time: '2022-02-04T21:17:16.0000000+00:00'
-- author: Peptide90
-  changes:
-  - {message: 'Added a new large pop map. Welcome to NSS Pillar! Familiar cousin to
-      box, follow the signs so you don''t get lost.', type: Add}
-  id: 978
-  time: '2022-02-04T21:34:52.0000000+00:00'
-- author: Rane
-  changes:
-  - {message: 'Added poppies and aloe, 2 plants which yield basic medicines when ground.',
-    type: Add}
-  - {message: 'Added aloe cream, a natural ointment made by microwaving aloe for 10
-      seconds.', type: Add}
-  id: 979
-  time: '2022-02-04T23:17:05.0000000+00:00'
-- author: Peptide90
-  changes:
-  - {message: The power bill has finally arrived. Computers and Machines use considerably
-      more power now. Engineering better be fast at getting some generation going!,
-    type: Tweak}
-  id: 980
-  time: '2022-02-04T23:17:11.0000000+00:00'
-- author: Lamrr
-  changes:
-  - {message: The digital audio workstaiton (sic) has been relabelled., type: Fix}
-  id: 981
-  time: '2022-02-05T01:23:43.0000000+00:00'
-- author: Willhelm53
-  changes:
-  - {message: Added new sparkle sprite that is applied to puddles below a certain
-      volume. Better look out for those wet floor signs!, type: Add}
-  - {message: 'Nerfed regular blue buckets to only hold 100u (down from 500u), bringing
-      them more in line with their capacity in SS13.', type: Fix}
-  - {message: 'Mops can now pick up all but the last 5u of a puddle. The remaining
-      5u is how wet floors work. But hey, that''s what evaporation is for!', type: Tweak}
-  id: 982
-  time: '2022-02-05T02:26:11.0000000+00:00'
-- author: ElectroJr
-  changes:
-  - {message: 'You should now be able to un-anchor things like disposal units, instead
-      of just discarding your wrench.', type: Tweak}
-  id: 983
-  time: '2022-02-05T02:39:02.0000000+00:00'
-- author: walrusfromspace
-  changes:
-  - {message: Added door remotes to the heads' lockers, type: Add}
-  id: 984
-  time: '2022-02-05T13:33:24.0000000+00:00'
-- author: ElectroJr
-  changes:
-  - {message: Windoors should no longer crush people as they auto close., type: Fix}
-  id: 985
-  time: '2022-02-05T17:27:06.0000000+00:00'
-- author: Peptide90
-  changes:
-  - {message: Blast doors can't be opened with a crowbar anymore., type: Tweak}
-  id: 986
-  time: '2022-02-05T18:06:33.0000000+00:00'
-- author: router
-  changes:
-  - {message: Replaced all ingot mints to fix a typo in their stamping. All "Nanotransen"
-      gold and silver bars have been melted down and reformed., type: Fix}
-  - {message: Removed Herobrine., type: Remove}
-  id: 987
-  time: '2022-02-05T19:23:06.0000000+00:00'
-- author: Peptide90
-  changes:
-  - {message: Massive list of changes and fixes for NSS Pillar. See Github for list.,
-    type: Fix}
-  id: 988
-  time: '2022-02-05T21:27:43.0000000+00:00'
-- author: Rane
-  changes:
-  - {message: Brig access is now the least privileged form of security access and
-      given to lawyers. It may take a while for stations to update their airlock software
-      to the latest version., type: Tweak}
-  id: 989
-  time: '2022-02-05T23:08:15.0000000+00:00'
-- author: moony
-  changes:
-  - {message: Hopefully fix pillar spawning., type: Fix}
-  id: 990
-  time: '2022-02-06T02:22:28.0000000+00:00'
-- author: mirrorcult
-  changes:
-  - {message: Directional windows no longer look weird when viewed while rotated.,
-    type: Tweak}
-  id: 991
-  time: '2022-02-06T02:25:13.0000000+00:00'
-- author: Peptide90
-  changes:
-  - {message: 'NSS Pillar minor update! Check out changes to security, permabrig and
-      salvage among other things.', type: Tweak}
-  id: 992
-  time: '2022-02-06T12:56:41.0000000+00:00'
-- author: lajolico
-  changes:
-  - {message: Lasers can now pass through glass airlocks, type: Add}
-  id: 993
-  time: '2022-02-06T13:48:31.0000000+00:00'
-- author: scaly-chimp
-  changes:
-  - {message: adds a portable flasher for security to lock down areas, type: Add}
-  id: 994
-  time: '2022-02-06T15:59:42.0000000+00:00'
-- author: mirrorcult
-  changes:
-  - {message: 'The L6 Saw, C20r, Bojevic, and Grenade Launcher are no longer purchasable
-      without another traitor''s help. Do something more creative.', type: Tweak}
-  - {message: Holoparasites cost 14TC down from 16TC., type: Tweak}
-  id: 995
-  time: '2022-02-06T23:46:06.0000000+00:00'
-- author: Lamrr
-  changes:
-  - {message: NanoTrasen has finally discovered the recipe for storage racks., type: Fix}
-  id: 996
-  time: '2022-02-07T01:51:57.0000000+00:00'
-- author: Macoron
-  changes:
-  - {message: Add more random xeno artifacts effects., type: Add}
-  id: 997
-  time: '2022-02-07T02:26:10.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - {message: Airlock construction / deconstruction now takes longer., type: Tweak}
-  id: 998
-  time: '2022-02-07T03:06:11.0000000+00:00'
 - author: metalgearsloth
   changes:
   - {message: Healing (via ointments etc.) now takes time., type: Tweak}
@@ -3045,3 +2862,179 @@ Entries:
   - {message: Added new default sound for events., type: Add}
   id: 1468
   time: '2022-05-07T05:41:16.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Removed the background from alerts., type: Tweak}
+  id: 1469
+  time: '2022-05-08T00:34:42.0000000+00:00'
+- author: DogZeroX
+  changes:
+  - {message: 'The space pollution has cleared, and now you can see the bright nebulae
+      once hidden behind the space clouds.', type: Add}
+  id: 1470
+  time: '2022-05-08T00:49:22.0000000+00:00'
+- author: mirrorcult
+  changes:
+  - {message: Unequipping clothing now properly resets any movespeed modifiers they
+      gave you., type: Fix}
+  id: 1471
+  time: '2022-05-08T01:45:07.0000000+00:00'
+- author: DogZeroX
+  changes:
+  - {message: Pianos are now anchored to the ground to slowdown theft., type: Tweak}
+  id: 1472
+  time: '2022-05-08T05:02:02.0000000+00:00'
+- author: emisse
+  changes:
+  - {message: tasers can only fire 1 shot, type: Add}
+  - {message: blood no longer slips, type: Add}
+  id: 1473
+  time: '2022-05-08T05:02:12.0000000+00:00'
+- author: DogZeroX
+  changes:
+  - {message: 'The botanists have clipped down the potted plants, you can now walk
+      over them.', type: Tweak}
+  id: 1474
+  time: '2022-05-08T05:41:52.0000000+00:00'
+- author: DogZeroX
+  changes:
+  - {message: Barsigns should properly appear on top of glass without half-clipping
+      now., type: Fix}
+  id: 1475
+  time: '2022-05-08T06:08:23.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Several large areas of Barratry have been redone., type: Tweak}
+  id: 1476
+  time: '2022-05-08T07:45:30.0000000+00:00'
+- author: Macoron
+  changes:
+  - {message: Attention syndicate agents! We have found some old crates with random
+      junk inside. We are ready to sell it for 20 telecrystals while content inside
+      cost 50 telecrystals., type: Add}
+  id: 1477
+  time: '2022-05-08T07:52:01.0000000+00:00'
+- author: UKNOWH
+  changes:
+  - {message: chef hat storage fixed!, type: Tweak}
+  id: 1478
+  time: '2022-05-08T07:52:41.0000000+00:00'
+- author: Peptide90
+  changes:
+  - {message: Light now passes through glass external airlocks and glass docking airlocks.,
+    type: Fix}
+  id: 1479
+  time: '2022-05-08T08:51:20.0000000+00:00'
+- author: mirrorcult
+  changes:
+  - {message: Crayons are now edible., type: Add}
+  id: 1480
+  time: '2022-05-08T08:51:34.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Popups now get occluded, type: Tweak}
+  id: 1481
+  time: '2022-05-08T08:54:27.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Speech bubbles are now occluded, type: Tweak}
+  id: 1482
+  time: '2022-05-08T08:54:56.0000000+00:00'
+- author: hubismal
+  changes:
+  - {message: 'Humans, mice, and vending machines make noise when they talk.', type: Add}
+  id: 1483
+  time: '2022-05-08T13:23:08.0000000+00:00'
+- author: mirrorcult
+  changes:
+  - {message: 'Nanotrasen has hired four new classes of interns for Engineering, Medical,
+      Security, and Service. They have been vetted thoroughly and Nanotrasen assures
+      you that they could not be traitors. Any members of this department are free
+      to bully or teach the interns however they please.', type: Add}
+  id: 1484
+  time: '2022-05-08T20:00:01.0000000+00:00'
+- author: hubismal
+  changes:
+  - {message: Speech sounds now sound a little different every time., type: Tweak}
+  - {message: Speech sounds now are louder when closer and quieter when further.,
+    type: Tweak}
+  - {message: TYPING IN ALL CAPS will make you play the yelling speech sound., type: Tweak}
+  - {message: Vending machines are quieter., type: Tweak}
+  - {message: Your personal AIs talk using their synthesizers., type: Add}
+  - {message: Monkeys use their beautiful voices., type: Add}
+  id: 1485
+  time: '2022-05-09T04:55:24.0000000+00:00'
+- author: ShadowCommander
+  changes:
+  - {message: Added construction recipe for glass airlocks, type: Add}
+  id: 1486
+  time: '2022-05-09T05:52:19.0000000+00:00'
+- author: PJB3005
+  changes:
+  - {message: Removed the new parallax background., type: Remove}
+  id: 1487
+  time: '2022-05-09T09:15:42.0000000+00:00'
+- author: Daemon
+  changes:
+  - {message: Nanotrasen automated messages will no longer tell you to press the wrong
+      button., type: Tweak}
+  id: 1488
+  time: '2022-05-09T21:38:43.0000000+00:00'
+- author: Peptide90
+  changes:
+  - {message: 'Splitstation minor update. More hidden drip, intern spawn points, power
+      monitoring, removed spawn shuttle, paramedic void suit.', type: Tweak}
+  id: 1489
+  time: '2022-05-09T21:39:35.0000000+00:00'
+- author: DogZeroX
+  changes:
+  - {message: "Space Wind \u2122 has been removed (until it is fixed or there's a\
+      \ better alternative), you will no longer be pushed by explosive decompression\
+      \ or airflows.", type: Remove}
+  id: 1490
+  time: '2022-05-09T22:35:42.0000000+00:00'
+- author: Tomeno
+  changes:
+  - {message: Icon smoothing for asteroid rocks, type: Add}
+  id: 1491
+  time: '2022-05-10T00:41:28.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Audio now plays signalling roundstart., type: Add}
+  id: 1492
+  time: '2022-05-10T00:44:38.0000000+00:00'
+- author: DogZeroX
+  changes:
+  - {message: Pizzas no longer have a curse that forces them to come with a plate.
+      The number of plates trashed in disposal has decreased by 1000%., type: Tweak}
+  id: 1493
+  time: '2022-05-10T01:12:14.0000000+00:00'
+- author: vulppine
+  changes:
+  - {message: 'NanoTrasen vending machine vendors appear to have changed their policies
+      on some items within vending machines, and gave the boards a redesign. Explore
+      the new, possibly hidden options on your local vending machine today!', type: Tweak}
+  id: 1494
+  time: '2022-05-10T02:22:58.0000000+00:00'
+- author: mirrorcult
+  changes:
+  - {message: Assistants no longer assist. They are merely Passengers on this great
+      station., type: Tweak}
+  id: 1495
+  time: '2022-05-10T03:35:09.0000000+00:00'
+- author: Veritius
+  changes:
+  - {message: Removed drones as ghost roles for the time being, type: Remove}
+  id: 1496
+  time: '2022-05-10T06:50:54.0000000+00:00'
+- author: lapatison
+  changes:
+  - {message: 'Orderable from cargo `kitchen supplies crate`, that stores several
+      bags of milk and flour and other supplements.', type: Add}
+  id: 1497
+  time: '2022-05-10T08:03:13.0000000+00:00'
+- author: Tomeno
+  changes:
+  - {message: Atmos yeets should make a lot more sense now, type: Tweak}
+  id: 1498
+  time: '2022-05-10T15:02:40.0000000+00:00'
