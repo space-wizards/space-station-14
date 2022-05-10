@@ -64,12 +64,11 @@ public sealed class ClusterGrenadeSystem : EntitySystem
             return;
 
         component.CountDown = true;
-        var delay = 20;
         var grenadesInserted = component.GrenadesContainer.ContainedEntities.Count + component.UnspawnedCount;
         var segmentAngle = 360 / grenadesInserted;
         // Welcome to nesting hell.
         var throwDelay = 60 / component.ThrowsPerSecond;
-        uid.SpawnTimer(delay, () =>
+        uid.SpawnTimer((int) component.Delay, () =>
         {
             for (var thrownCount = 0; thrownCount < grenadesInserted; thrownCount++)
             {
@@ -87,7 +86,7 @@ public sealed class ClusterGrenadeSystem : EntitySystem
                         physComp.BodyType = BodyType.Dynamic;
                         // TODO: Suss out throw strength
                         physComp.ApplyLinearImpulse(angle.ToVec().Normalized * component.ThrowDistance);
-                        grenade.SpawnTimer(delay, () =>
+                        grenade.SpawnTimer(1000, () =>
                         {
                             physComp.BodyType = BodyType.KinematicController;
                         });
@@ -95,10 +94,10 @@ public sealed class ClusterGrenadeSystem : EntitySystem
                     else
                     {
                         // TODO: Suss out throw strength
-                        _throwingSystem.TryThrow(grenade, angle.ToVec().Normalized * component.ThrowDistance);
+                        _throwingSystem.TryThrow(grenade, angle.ToVec().Normalized * component.ThrowDistance * 500);
                     }
 
-                    grenade.SpawnTimer(delay, () =>
+                    grenade.SpawnTimer(1000, () =>
                     {
                         if ((!EntityManager.EntityExists(grenade) ? EntityLifeStage.Deleted : MetaData(grenade).EntityLifeStage) >= EntityLifeStage.Deleted)
                             return;
