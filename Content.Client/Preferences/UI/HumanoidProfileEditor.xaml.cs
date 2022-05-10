@@ -5,6 +5,7 @@ using Content.Client.CharacterAppearance;
 using Content.Client.Lobby.UI;
 using Content.Client.Message;
 using Content.Client.Stylesheets;
+using Content.Shared.CCVar;
 using Content.Shared.CharacterAppearance;
 using Content.Shared.CharacterAppearance.Systems;
 using Content.Shared.GameTicking;

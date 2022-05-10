@@ -28,6 +28,7 @@ namespace Content.Shared.Preferences
         public const int MinimumAge = 18;
         public const int MaximumAge = 120;
         public const int MaxNameLength = 32;
+        public const int MaxDescLength = 512;
 
         private readonly Dictionary<string, JobPriority> _jobPriorities;
         private readonly List<string> _antagPreferences;
@@ -312,6 +313,21 @@ namespace Content.Shared.Preferences
                 name = RandomName();
             }
 
+            if (IoCManager.Resolve<IConfigurationManager>().GetCVar(CCVars.RestrictedNames))
+            {
+                name = Regex.Replace(name, @"[^A-Z,a-z,0-9, -]", string.Empty);
+            }
+
+            string flavortext;
+            if (FlavorText.Length > MaxDescLength)
+            {
+                flavortext = FlavorText[..MaxDescLength];
+            }
+            else
+            {
+                flavortext = FlavorText;
+            }
+
             var appearance = HumanoidCharacterAppearance.EnsureValid(Appearance, Species);
 
             var prefsUnavailableMode = PreferenceUnavailable switch
@@ -353,6 +369,7 @@ namespace Content.Shared.Preferences
                 .ToList();
 
             Name = name;
+            FlavorText = flavortext;
             Age = age;
             Sex = sex;
             Gender = gender;
