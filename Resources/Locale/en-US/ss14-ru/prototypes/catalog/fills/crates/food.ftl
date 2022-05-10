@@ -4,3 +4,6 @@ ent-CrateFoodPizza = emergency pizza delivery
 ent-CrateFoodMRE = MRE crate
     .desc = A military style meal fit to feed a whole department.
     .suffix = { "" }
+ent-CrateFoodCooking = kitchen supplies crate
+    .desc = Extra kitchen supplies, in case the botanists are absent.
+    .suffix = { "" }

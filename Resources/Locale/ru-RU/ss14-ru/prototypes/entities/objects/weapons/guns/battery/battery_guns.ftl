@@ -43,3 +43,6 @@ ent-XrayCannon = рентгеновская пушка
 ent-TaserGun = электрошокер
     .desc = Электрошокер малой мощности, используемый службой безопасности для подавления целей на расстоянии.
     .suffix = { "" }
+ent-AntiqueLaserGun = antique laser gun
+    .desc = This is an antique laser gun. All craftsmanship is of the highest quality. It is decorated with assistant leather and chrome. The object menaces with spikes of energy.
+    .suffix = { "" }

@@ -55,3 +55,6 @@ ent-ClothingOuterHardsuitSpatio = spationaut hardsuit
 ent-ClothingOuterHardsuitVoidParamed = Paramedic Void Suit
     .desc = A void suit made for paramedics.
     .suffix = { "" }
+ent-ClothingOuterHardsuitJuggernaut = cybersun juggernaut suit
+    .desc = A suit made by the cutting edge R&D department at cybersun to be hyper resilient.
+    .suffix = { "" }

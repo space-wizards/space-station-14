@@ -43,3 +43,6 @@ ent-ClothingHeadHelmetHardsuitLing = органический космическ
 ent-ClothingHeadHelmetHardsuitSpatio = шлем лёгкого скафандра утилизатора
     .desc = Прочный шлем, предназначенный для сложных технических работ в космосе.
     .suffix = { "" }
+ent-ClothingHeadHelmetHardsuitCybersun = cybersun juggernaut helmet
+    .desc = Made of compressed red matter, this helmet was designed in the Tau chromosphere facility.
+    .suffix = { "" }

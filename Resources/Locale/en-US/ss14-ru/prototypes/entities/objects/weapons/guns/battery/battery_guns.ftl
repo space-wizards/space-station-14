@@ -43,3 +43,6 @@ ent-XrayCannon = x-ray cannon
 ent-TaserGun = taser
     .desc = A low-capacity, energy-based stun gun used by security teams to subdue targets at range.
     .suffix = { "" }
+ent-AntiqueLaserGun = antique laser gun
+    .desc = This is an antique laser gun. All craftsmanship is of the highest quality. It is decorated with assistant leather and chrome. The object menaces with spikes of energy.
+    .suffix = { "" }

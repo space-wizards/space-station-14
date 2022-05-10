@@ -55,3 +55,6 @@ ent-ClothingOuterHardsuitSpatio = лёгкий скафандр утилизат
 ent-ClothingOuterHardsuitVoidParamed = пустотный скафандр парамедика
     .desc = Пустотный скафандр, предназначенный для парамедиков.
     .suffix = { "" }
+ent-ClothingOuterHardsuitJuggernaut = cybersun juggernaut suit
+    .desc = A suit made by the cutting edge R&D department at cybersun to be hyper resilient.
+    .suffix = { "" }
