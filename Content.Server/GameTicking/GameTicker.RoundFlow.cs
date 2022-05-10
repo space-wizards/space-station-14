@@ -6,13 +6,11 @@ using Content.Server.Ghost;
 using Content.Server.Maps;
 using Content.Server.Mind;
 using Content.Server.Players;
-using Content.Server.Station;
 using Content.Shared.CCVar;
 using Content.Shared.Coordinates;
 using Content.Shared.GameTicking;
 using Content.Shared.Preferences;
 using Content.Shared.Sound;
-using Content.Shared.Station;
 using JetBrains.Annotations;
 using Prometheus;
 using Robust.Server.Maps;
@@ -208,7 +206,7 @@ namespace Content.Server.GameTicking
             // MapInitialize *before* spawning players, our codebase is too shit to do it afterwards...
             _mapManager.DoMapInitialize(DefaultMap);
 
-            SpawnPlayers(readyPlayers, origReadyPlayers, profiles, force);
+            SpawnPlayers(readyPlayers, origReadyPlayers.Select(x => x.UserId), profiles, force);
 
             _roundStartDateTime = DateTime.UtcNow;
             RunLevel = GameRunLevel.InRound;
@@ -217,7 +215,6 @@ namespace Content.Server.GameTicking
             SendStatusToAll();
             ReqWindowAttentionAll();
             UpdateLateJoinStatus();
-            UpdateJobsAvailable();
             AnnounceRound();
 
 #if EXCEPTION_TOLERANCE
@@ -431,8 +428,6 @@ namespace Content.Server.GameTicking
             // So clients' entity systems can clean up too...
             RaiseNetworkEvent(ev, Filter.Broadcast());
 
-            _spawnedPositions.Clear();
-            _manifest.Clear();
             DisallowLateJoin = false;
         }
 
