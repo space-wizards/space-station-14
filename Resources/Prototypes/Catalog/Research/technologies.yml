@@ -385,7 +385,7 @@
 - type: technology
   name: "basic powercell printing"
   id: PowerCellBasic
-  description: Print some Dollar store powercells.
+  description: Print standard powercells.
   icon:
     sprite: Objects/Power/PowerCells/power_cell_small_st.rsi
     state: s_st
@@ -400,7 +400,7 @@
 - type: technology
   name: "advanced powercell printing"
   id: PowerCellAdvanced
-  description: Now your tesla can finnaly drive longer than 500 m.
+  description: Print advanced powercells.
   icon:
     sprite: Objects/Power/PowerCells/power_cell_small_hi.rsi
     state: s_hi
@@ -415,7 +415,7 @@
 - type: technology
   name: "super powercell printing"
   id: PowerCellSuper
-  description: Believe it or not , you can power a small fleet with those powercells.
+  description: Print super powercells.
   icon:
     sprite: Objects/Power/PowerCells/power_cell_small_sup.rsi
     state: s_sup
