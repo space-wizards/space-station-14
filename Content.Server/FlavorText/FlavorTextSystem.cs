@@ -24,7 +24,6 @@ namespace Content.Server.FlavorText
                 Act = () =>
                 {
                     var markup = new FormattedMessage();
-                    // TODO: Strip markup
                     markup.AddMarkup(component.Content);
                     _examineSystem.SendExamineTooltip(args.User, uid, markup, false, false);
                 },

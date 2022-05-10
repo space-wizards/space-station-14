@@ -16,6 +16,7 @@ using Robust.Shared.Localization;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Serialization;
+using Robust.Shared.Utility;
 
 namespace Content.Shared.Preferences
 {
@@ -316,11 +317,11 @@ namespace Content.Shared.Preferences
             string flavortext;
             if (FlavorText.Length > MaxDescLength)
             {
-                flavortext = FlavorText[..MaxDescLength];
+                flavortext = FormattedMessage.RemoveMarkup(FlavorText)[..MaxDescLength];
             }
             else
             {
-                flavortext = FlavorText;
+                flavortext = FormattedMessage.RemoveMarkup(FlavorText);
             }
 
             var appearance = HumanoidCharacterAppearance.EnsureValid(Appearance, Species);
