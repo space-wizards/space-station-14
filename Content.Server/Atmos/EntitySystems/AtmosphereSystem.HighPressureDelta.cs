@@ -104,6 +104,19 @@ namespace Content.Server.Atmos.EntitySystems
                 }
             }
 
+
+            if (tile.PressureDifference > 100)
+            {
+                // TODO ATMOS Do space wind graphics here!
+            }
+
+            if (_spaceWindSoundCooldown++ > SpaceWindSoundCooldownCycles)
+                _spaceWindSoundCooldown = 0;
+
+            // No atmos yeets, return early.
+            if (!SpaceWind)
+                return;
+
             // Used by ExperiencePressureDifference to correct push/throw directions from tile-relative to physics world.
             var gridWorldRotation = xforms.GetComponent(gridAtmosphere.Owner).WorldRotation;
 
@@ -134,25 +147,18 @@ namespace Content.Server.Atmos.EntitySystems
                 }
 
             }
-
-            if (tile.PressureDifference > 100)
-            {
-                // TODO ATMOS Do space wind graphics here!
-            }
-
-            if (_spaceWindSoundCooldown++ > SpaceWindSoundCooldownCycles)
-                _spaceWindSoundCooldown = 0;
         }
 
         // Called from AtmosphereSystem.LINDA.cs with SpaceWind CVar check handled there.
-        private void ConsiderPressureDifference(GridAtmosphereComponent gridAtmosphere, TileAtmosphere tile, TileAtmosphere other, float difference)
+        private void ConsiderPressureDifference(GridAtmosphereComponent gridAtmosphere, TileAtmosphere tile, AtmosDirection differenceDirection, float difference)
         {
             gridAtmosphere.HighPressureDelta.Add(tile);
-            if (difference > tile.PressureDifference)
-            {
-                tile.PressureDifference = difference;
-                tile.PressureDirection = (tile.GridIndices - other.GridIndices).GetDir().ToAtmosDirection();
-            }
+
+            if (difference <= tile.PressureDifference)
+                return;
+
+            tile.PressureDifference = difference;
+            tile.PressureDirection = differenceDirection;
         }
 
         public void ExperiencePressureDifference(
