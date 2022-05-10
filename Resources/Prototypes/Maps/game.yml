@@ -10,9 +10,9 @@
         !type:NanotrasenNameGenerator
         prefixCreator: '14'
       overflowJobs:
-        - Assistant
+        - Passenger
       availableJobs:
-        Assistant: [ -1, -1 ]
+        Passenger: [ -1, -1 ]
         CargoTechnician: [ 4, 6 ]
         Bartender: [ 2, 2 ]
         Botanist: [ 2, 4 ]
@@ -54,10 +54,10 @@
         !type:NanotrasenNameGenerator
         prefixCreator: '14'
       overflowJobs:
-        - Assistant
+        - Passenger
       availableJobs:
         CargoTechnician: [ 1, 1 ]
-        Assistant: [ 4, 8 ]
+        Passenger: [ 4, 8 ]
         Bartender: [ 1, 1 ]
         Botanist: [ 1, 1 ]
         Chef: [ 1, 1 ]

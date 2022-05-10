@@ -1,7 +1,6 @@
 - type: gameMap
   id: delta
   mapName: 'Delta Station'
-
   mapPath: /Maps/delta.yml
   minPlayers: 60
   stations:
@@ -11,10 +10,10 @@
         !type:NanotrasenNameGenerator
         prefixCreator: '14'
       overflowJobs:
-        - Assistant
+        - Passenger
       availableJobs:
         CargoTechnician: [ 4, 4 ]
-        Assistant: [ -1, -1 ]
+        Passenger: [ -1, -1 ]
         Bartender: [ 1, 1 ]
         Botanist: [ 4, 4 ]
         Chef: [ 1, 2 ]

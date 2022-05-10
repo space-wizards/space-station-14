@@ -4,7 +4,7 @@ markings-add = Add Marking
 markings-remove = Remove Marking
 markings-rank-up = Up
 markings-rank-down = Down
-marking-points-remaining = Points remaining: {$points}
+marking-points-remaining = Markings left: {$points}
 marking-used = {$marking-name} ({$marking-category})
 
 # Categories

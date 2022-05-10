@@ -8,6 +8,6 @@
     Station: #TODO: Add a BecomesStation to empty.yml
       mapNameTemplate: "Empty"
       overflowJobs:
-        - Assistant
+        - Passenger
       availableJobs:
-        Assistant: [ -1, -1 ]
+        Passenger: [ -1, -1 ]

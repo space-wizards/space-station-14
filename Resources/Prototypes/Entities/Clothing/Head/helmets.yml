@@ -125,7 +125,10 @@
         Blunt: 0.8
         Slash: 0.8
         Piercing: 0.8
-
+  - type: Tag
+    tags:
+    - HidesHair
+    
 - type: entity
   parent: ClothingHeadBase
   id: ClothingHeadHelmetSpaceNinja
@@ -137,7 +140,10 @@
   - type: Clothing
     sprite: Clothing/Head/Helmets/spaceninja.rsi
   - type: IngestionBlocker
-
+  - type: Tag
+    tags:
+    - HidesHair
+    
 - type: entity
   parent: ClothingHeadEVAHelmetBase
   id: ClothingHeadHelmetSyndicate
@@ -196,8 +202,8 @@
   - type: Clothing
     sprite: Clothing/Head/Helmets/firehelmet.rsi
     size: 5
-    canPickup: true 
-    quickEquip: true 
+    canPickup: true
+    quickEquip: true
   - type: IngestionBlocker
   - type: PowerCellSlot
     cellSlot:
@@ -215,7 +221,7 @@
   - type: PressureProtection
     highPressureMultiplier: 0.65
     lowPressureMultiplier: 1000
-  
+
 
 - type: entity
   parent: ClothingHeadHardsuitWithLightBase
@@ -228,8 +234,8 @@
   - type: Clothing
     sprite: Clothing/Head/Helmets/atmos_firehelmet.rsi
     size: 5
-    canPickup: true 
-    quickEquip: true 
+    canPickup: true
+    quickEquip: true
   - type: IngestionBlocker
   - type: TemperatureProtection
     coefficient: 0.005

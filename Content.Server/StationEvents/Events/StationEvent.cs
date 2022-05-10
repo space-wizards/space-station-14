@@ -5,6 +5,7 @@ using Content.Server.Chat.Managers;
 using Content.Server.Station.Components;
 using Content.Server.Station.Systems;
 using Content.Shared.Database;
+using Content.Shared.Sound;
 using Robust.Shared.Audio;
 using Robust.Shared.Map;
 using Robust.Shared.Player;
@@ -48,12 +49,12 @@ namespace Content.Server.StationEvents.Events
         /// <summary>
         ///     Starting audio of the event.
         /// </summary>
-        public virtual string? StartAudio { get; set; } = null;
+        public virtual SoundSpecifier? StartAudio { get; set; } = new SoundPathSpecifier("/Audio/Announcements/attention.ogg");
 
         /// <summary>
         ///     Ending audio of the event.
         /// </summary>
-        public virtual string? EndAudio { get; } = null;
+        public virtual SoundSpecifier? EndAudio { get; } = null;
 
         public virtual AudioParams AudioParams { get; } = AudioParams.Default.WithVolume(-10f);
 
@@ -134,7 +135,7 @@ namespace Content.Server.StationEvents.Events
 
             if (StartAudio != null)
             {
-                SoundSystem.Play(Filter.Broadcast(), StartAudio, AudioParams);
+                SoundSystem.Play(Filter.Broadcast(), StartAudio.GetSound(), AudioParams);
             }
 
             Announced = true;
@@ -157,7 +158,7 @@ namespace Content.Server.StationEvents.Events
 
             if (EndAudio != null)
             {
-                SoundSystem.Play(Filter.Broadcast(), EndAudio, AudioParams);
+                SoundSystem.Play(Filter.Broadcast(), EndAudio.GetSound(), AudioParams);
             }
 
             Started = false;

@@ -1,4 +1,4 @@
-﻿- type: gameMap
+- type: gameMap
   id: saltern
   mapName: 'Saltern'
   mapPath: /Maps/saltern.yml
@@ -12,10 +12,10 @@
         !type:NanotrasenNameGenerator
         prefixCreator: '14'
       overflowJobs:
-        - Assistant
+        - Passenger
       availableJobs:
         CargoTechnician: [ 1, 2 ]
-        Assistant: [ -1, -1 ]
+        Passenger: [ -1, -1 ]
         Bartender: [ 1, 1 ]
         Botanist: [ 2, 2 ]
         Chef: [ 1, 1 ]
@@ -39,3 +39,7 @@
         Lawyer: [ 1, 1 ]
         SalvageSpecialist: [ 1, 2 ]
         Quartermaster: [ 1, 1 ]
+        TechnicalAssistant: [ 2, 2 ]
+        MedicalIntern: [ 2, 2 ]
+        ServiceWorker: [ 2, 2 ]
+        SecurityCadet: [ 2, 2 ]

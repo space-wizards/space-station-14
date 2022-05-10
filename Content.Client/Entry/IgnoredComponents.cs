@@ -33,6 +33,7 @@ namespace Content.Client.Entry
             "MeleeChemicalInjector",
             "Dice",
             "PaperLabel",
+            "PressureImmunity",
             "Construction",
             "PoweredLight",
             "Smes",
@@ -141,6 +142,7 @@ namespace Content.Client.Entry
             "PowerMonitoringConsole",
             "RCD",
             "RCDAmmo",
+            "SurplusBundle",
             "CursedEntityStorage",
             "DiseaseArtifact",
             "Radio",
@@ -345,6 +347,7 @@ namespace Content.Client.Entry
             "DoorRemote",
             "InteractionPopup",
             "HealthAnalyzer",
+            "Thirst",
             "Wires"
         };
     }

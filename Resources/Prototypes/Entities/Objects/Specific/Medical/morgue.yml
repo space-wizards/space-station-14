@@ -39,7 +39,6 @@
       mask:
       - Impassable
   - type: BodyBagEntityStorage
-    CanWeldShut: false
     Capacity: 1
     IsCollidableWhenOpen: true
     closeSound:

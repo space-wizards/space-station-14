@@ -58,10 +58,14 @@ namespace Content.Server.Administration.Commands
             var entMan = IoCManager.Resolve<IEntityManager>();
             entMan.GetComponentOrNull<MobStateComponent>(targetUid)?.UpdateState(0);
             entMan.GetComponentOrNull<HungerComponent>(targetUid)?.ResetFood();
-            entMan.GetComponentOrNull<ThirstComponent>(targetUid)?.ResetThirst();
 
             // TODO holy shit make this an event my man!
             EntitySystem.Get<StatusEffectsSystem>().TryRemoveAllStatusEffects(target);
+
+            if(entMan.TryGetComponent(target , out ThirstComponent? thirst))
+            {
+                EntitySystem.Get<ThirstSystem>().ResetThirst(thirst);
+            }
 
             if (entMan.TryGetComponent(target, out FlammableComponent? flammable))
             {

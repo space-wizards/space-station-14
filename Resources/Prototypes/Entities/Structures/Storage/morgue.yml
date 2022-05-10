@@ -34,7 +34,6 @@
        - VaultImpassable
        - SmallImpassable
   - type: MorgueEntityStorage
-    CanWeldShut: false
     IsCollidableWhenOpen: true
     Capacity: 1
     closeSound:
@@ -116,7 +115,6 @@
        - VaultImpassable
        - SmallImpassable
   - type: CrematoriumEntityStorage
-    CanWeldShut: false
     IsCollidableWhenOpen: true
     Capacity: 1
     closeSound:

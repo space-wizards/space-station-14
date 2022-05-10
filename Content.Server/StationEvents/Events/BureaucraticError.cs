@@ -1,4 +1,4 @@
-﻿using System.Linq;
+using System.Linq;
 using Content.Server.Station.Systems;
 using JetBrains.Annotations;
 using Robust.Shared.Random;
@@ -12,8 +12,6 @@ public sealed class BureaucraticError : StationEvent
     public override string StartAnnouncement =>
         Loc.GetString("station-event-bureaucratic-error-announcement");
     public override string Name => "BureaucraticError";
-
-    public override string StartAudio => "/Audio/Announcements/announce.ogg";
 
     public override int MinimumPlayers => 25;
 

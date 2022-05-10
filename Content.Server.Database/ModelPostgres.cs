@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Diagnostics;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Storage;
-using NpgsqlTypes;
+using Npgsql;
 
 namespace Content.Server.Database
 {
@@ -79,6 +79,16 @@ namespace Content.Server.Database
         public override IQueryable<AdminLog> SearchLogs(IQueryable<AdminLog> query, string searchText)
         {
             return query.Where(log => EF.Functions.ToTsVector("english", log.Message).Matches(searchText));
+        }
+
+        public override int CountAdminLogs()
+        {
+            using var command = new NpgsqlCommand("SELECT reltuples FROM pg_class WHERE relname = 'admin_log';", (NpgsqlConnection?) Database.GetDbConnection());
+
+            Database.GetDbConnection().Open();
+            var count = Convert.ToInt32((float) (command.ExecuteScalar() ?? 0));
+            Database.GetDbConnection().Close();
+            return count;
         }
     }
 }

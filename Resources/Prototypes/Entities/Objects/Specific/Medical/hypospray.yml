@@ -33,7 +33,7 @@
       map: ["enum.SolutionContainerLayers.Fill"]
   - type: Item
     sprite: Objects/Specific/Medical/medipen.rsi
-    size: 5
+    size: 3
   - type: SolutionContainerManager
     solutions:
       pen:
@@ -87,6 +87,37 @@
           Quantity: 10
         - ReagentId: Epinephrine
           Quantity: 5
+
+- type: entity
+  name: space medipen
+  parent: ChemicalMedipen
+  id: SpaceMedipen
+  description: Contains a mix of chemicals that protect you from the deadly effects of space.
+  components:
+  - type: Sprite
+    sprite: Objects/Specific/Medical/medipen.rsi
+    netsync: false
+    layers:
+    - state: hypovolemic
+      map: [ "enum.SolutionContainerLayers.Fill" ]
+  - type: Appearance
+    visuals:
+      - type: SolutionContainerVisualizer
+        maxFillLevels: 1
+        changeColor: false
+        emptySpriteName: hypovolemic_empty
+  - type: Hypospray
+    solutionName: pen
+    transferAmount: 20
+  - type: SolutionContainerManager
+    solutions:
+      pen:
+        maxVol: 20
+        reagents:
+          - ReagentId: Leporazine
+            Quantity: 10
+          - ReagentId: Barozine
+            Quantity: 10
 
 - type: entity
   name: pen

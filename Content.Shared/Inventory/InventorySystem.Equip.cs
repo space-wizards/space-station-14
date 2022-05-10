@@ -123,11 +123,13 @@ public abstract partial class InventorySystem
             return;
         }
 
-        // interact with an empty hand (usually just unequips the item).
+        // unequip the item.
         if (itemUid != null)
         {
-            if (_actionBlockerSystem.CanInteract(actor, itemUid.Value))
-                _interactionSystem.InteractHand(actor, itemUid.Value);
+            if (!TryUnequip(actor, ev.Slot, out var item, predicted: true, inventory: inventory))
+                return;
+
+            _handsSystem.PickupOrDrop(actor, item.Value);
             return;
         }
 
@@ -145,7 +147,7 @@ public abstract partial class InventorySystem
 
         if (_handsSystem.TryDrop(actor, hands.ActiveHand!, doDropInteraction: false, handsComp: hands))
             TryEquip(actor, actor, held.Value, ev.Slot, predicted: true, inventory: inventory);
-        }
+    }
 
     public bool TryEquip(EntityUid uid, EntityUid itemUid, string slot, bool silent = false, bool force = false, bool predicted = false,
         InventoryComponent? inventory = null, SharedItemComponent? item = null) =>
