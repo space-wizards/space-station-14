@@ -10,10 +10,10 @@
   maxPlayers: 29
   fallback: true
   overflowJobs:
-    - Assistant
+    - Passenger
   availableJobs:
     CargoTechnician: [ 2, 2 ]
-    Assistant: [ -1, -1 ]
+    Passenger: [ -1, -1 ]
     Bartender: [ 1, 1 ]
     Botanist: [ 2, 2 ]
     Chef: [ 1, 1 ]
