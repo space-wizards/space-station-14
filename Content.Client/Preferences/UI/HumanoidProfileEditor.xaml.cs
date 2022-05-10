@@ -463,7 +463,7 @@ namespace Content.Client.Preferences.UI
 
             CFlavorText.OnFlavorTextChanged += OnFlavorTextChange;
 
-            #endregion
+            #endregion FlavorText
 
             #endregion Left
 
