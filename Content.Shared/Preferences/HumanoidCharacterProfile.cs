@@ -313,11 +313,6 @@ namespace Content.Shared.Preferences
                 name = RandomName();
             }
 
-            if (IoCManager.Resolve<IConfigurationManager>().GetCVar(CCVars.RestrictedNames))
-            {
-                name = Regex.Replace(name, @"[^A-Z,a-z,0-9, -]", string.Empty);
-            }
-
             string flavortext;
             if (FlavorText.Length > MaxDescLength)
             {
