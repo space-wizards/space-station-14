@@ -15,11 +15,11 @@ namespace Content.Shared.Physics
     public enum CollisionGroup
     {
 		None             = 0,
-		Opaque           = 1 << 0, // 1 Blocks light, for lasers
+		Opaque           = 1 << 0, // 1 Blocks light, can be hit by lasers
 		Impassable       = 1 << 1, // 2 Walls, objects impassable by any means
 		MidImpassable    = 1 << 2, // 4 Mobs, players, crabs, etc
-		HighImpassable   = 1 << 3, // 8 Things that cannot be jumped over, not half walls or tables
-		LowImpassable    = 1 << 4, // 16 Things a smaller object - a cat, a crab - can't go through - a wall, but not a computer terminal or a table
+		HighImpassable   = 1 << 3, // 8 Things on top of tables and things that block tall/large mobs.
+		LowImpassable    = 1 << 4, // 16 For things that can fit under a table or squeeze under an airlock
         GhostImpassable  = 1 << 5, // 32 Things impassible by ghosts/observers, ie blessed tiles or forcefields
         BulletImpassable = 1 << 6, // 64 Can be hit by bullets
         MapGrid          = MapGridHelpers.CollisionGroup, // Map grids, like shuttles. This is the actual grid itself, not the walls or other entities connected to the grid.
