@@ -90,7 +90,7 @@ public sealed partial class PathfindingSystem
     /// </summary>
     /// <param name="tile"></param>
     /// <returns></returns>
-    private PathfindingNode GetNode(TileRef tile)
+    public PathfindingNode GetNode(TileRef tile)
     {
         var chunk = GetOrCreateChunk(tile);
         var node = chunk.GetNode(tile);
