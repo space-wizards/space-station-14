@@ -32,7 +32,7 @@ namespace Content.Server.FlavorText
                 Category = VerbCategory.Examine,
                 Disabled = !detailsRange,
                 Message = Loc.GetString("flavortext-examinable-verb-disabled"),
-                IconTexture = "/Textures/Interface/VerbIcons/rejuvenate.svg.192dpi.png"
+                IconTexture = "/Textures/Interface/VerbIcons/examine.svg.192dpi.png"
             };
 
             args.Verbs.Add(verb);
