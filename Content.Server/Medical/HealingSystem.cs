@@ -92,6 +92,8 @@ public sealed class HealingSystem : EntitySystem
 
     private bool TryHeal(EntityUid uid, EntityUid user, EntityUid target, HealingComponent component)
     {
+        if (component.CancelToken != null) return false;
+
         if (TryComp<MobStateComponent>(target, out var state) && state.IsDead())
             return false;
 
