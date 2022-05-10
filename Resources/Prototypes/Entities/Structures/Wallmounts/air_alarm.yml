@@ -47,7 +47,7 @@
           bounds: "-0.25,-0.25,0.3,0.25"
       layer: [ Passable ]
   - type: AccessReader
-    access: [["Engineering"]]
+    access: [["Atmospherics"]]
   - type: Appearance
     visuals:
     - type: AtmosMonitorVisualizer

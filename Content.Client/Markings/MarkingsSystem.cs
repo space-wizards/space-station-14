@@ -47,7 +47,10 @@ namespace Content.Client.Markings
 
             foreach (var marking in markingList)
             {
-                markings.ActiveMarkings[_markingManager.Markings()[marking.MarkingId].BodyPart].Add(marking);
+                if (_markingManager.Markings().TryGetValue(marking.MarkingId, out var markingProto))
+                {
+                    markings.ActiveMarkings[markingProto.BodyPart].Add(marking);
+                }
             }
         }
 
@@ -67,6 +70,14 @@ namespace Content.Client.Markings
                 if (!_markingManager.IsValidMarking(marking, out MarkingPrototype? markingPrototype))
                 {
                     continue;
+                }
+
+                // if the given marking isn't correctly formed, we need to
+                // instead just allocate a new marking based on the old one
+
+                if (marking.MarkingColors.Count != markingPrototype.Sprites.Count)
+                {
+                    marking = new Marking(marking.MarkingId, markingPrototype.Sprites.Count);
                 }
 
                 if (usedPoints.TryGetValue(markingPrototype.MarkingCategory, out MarkingPoints? points))

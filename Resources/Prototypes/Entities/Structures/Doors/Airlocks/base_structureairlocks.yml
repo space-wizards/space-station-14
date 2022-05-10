@@ -15,7 +15,7 @@
       shader: unshaded
       map: ["enum.DoorVisualLayers.BaseUnlit"]
     - state: welded
-      map: ["enum.DoorVisualLayers.BaseWelded"]
+      map: ["enum.WeldableLayers.BaseWelded"]
     - state: bolted_unlit
       shader: unshaded
       map: ["enum.DoorVisualLayers.BaseBolted"]
@@ -48,6 +48,9 @@
       path: /Audio/Machines/airlock_close.ogg
     denySound:
       path: /Audio/Machines/airlock_deny.ogg
+  - type: Weldable
+    fuel: 3
+    time: 3
   - type: Airlock
   - type: Appearance
     visuals:

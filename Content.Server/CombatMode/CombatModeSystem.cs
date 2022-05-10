@@ -1,6 +1,8 @@
+using System.Diagnostics;
 using Content.Server.Act;
 using Content.Server.Actions.Events;
 using Content.Server.Administration.Logs;
+using Content.Server.Hands.Components;
 using Content.Server.Popups;
 using Content.Server.Weapon.Melee;
 using Content.Shared.ActionBlocker;
@@ -9,6 +11,10 @@ using Content.Shared.CombatMode;
 using Content.Shared.Database;
 using JetBrains.Annotations;
 using Robust.Shared.Audio;
+using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
+using Robust.Shared.Localization;
+using Robust.Shared.Maths;
 using Robust.Shared.Player;
 using Robust.Shared.Random;
 
@@ -38,7 +44,21 @@ namespace Content.Server.CombatMode
             if (!_actionBlockerSystem.CanAttack(args.Performer))
                 return;
 
-            var attemptEvent = new DisarmAttemptEvent(args.Target, args.Performer);
+            EntityUid? inTargetHand = null;
+
+            if (EntityManager.TryGetComponent<HandsComponent>(args.Target, out HandsComponent targetHandsComponent)
+                && targetHandsComponent.ActiveHand != null
+                && !targetHandsComponent.ActiveHand.IsEmpty)
+            {
+                inTargetHand = targetHandsComponent.ActiveHand.HeldEntity!.Value;
+            }
+
+            var attemptEvent = new DisarmAttemptEvent(args.Target, args.Performer,inTargetHand);
+
+            if (inTargetHand != null)
+            {
+                RaiseLocalEvent(inTargetHand.Value, attemptEvent);
+            }
             RaiseLocalEvent(args.Target, attemptEvent);
             if (attemptEvent.Cancelled)
                 return;

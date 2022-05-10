@@ -185,7 +185,13 @@ namespace Content.Server.Storage.EntitySystems
         /// <returns>true if inserted, false otherwise</returns>
         private void OnInteractUsing(EntityUid uid, ServerStorageComponent storageComp, InteractUsingEvent args)
         {
+            if (args.Handled)
+                return;
+
             if (!storageComp.ClickInsert)
+                return;
+
+            if (TryComp(uid, out LockComponent? lockComponent) && lockComponent.Locked)
                 return;
 
             Logger.DebugS(storageComp.LoggerName, $"Storage (UID {uid}) attacked by user (UID {args.User}) with entity (UID {args.Used}).");
@@ -193,7 +199,8 @@ namespace Content.Server.Storage.EntitySystems
             if (HasComp<PlaceableSurfaceComponent>(uid))
                 return;
 
-            PlayerInsertHeldEntity(uid, args.User, storageComp);
+            if (PlayerInsertHeldEntity(uid, args.User, storageComp))
+                args.Handled = true;
         }
 
         /// <summary>
@@ -203,6 +210,9 @@ namespace Content.Server.Storage.EntitySystems
         private void OnActivate(EntityUid uid, ServerStorageComponent storageComp, ActivateInWorldEvent args)
         {
             if (!TryComp<ActorComponent>(args.User, out var actor))
+                return;
+
+            if (TryComp(uid, out LockComponent? lockComponent) && lockComponent.Locked)
                 return;
 
             OpenStorageUI(uid, args.User, storageComp);
