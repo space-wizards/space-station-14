@@ -1,10 +1,4 @@
 Entries:
-- author: Peptide90
-  changes:
-  - {message: 'NSS Pillar minor update! Check out changes to security, permabrig and
-      salvage among other things.', type: Tweak}
-  id: 992
-  time: '2022-02-06T12:56:41.0000000+00:00'
 - author: lajolico
   changes:
   - {message: Lasers can now pass through glass airlocks, type: Add}
@@ -3036,3 +3030,8 @@ Entries:
   - {message: Icon smoothing for asteroid rocks, type: Add}
   id: 1491
   time: '2022-05-10T00:41:28.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Audio now plays signalling roundstart., type: Add}
+  id: 1492
+  time: '2022-05-10T00:44:38.0000000+00:00'
