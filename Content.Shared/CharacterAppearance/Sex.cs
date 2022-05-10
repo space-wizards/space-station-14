@@ -24,8 +24,8 @@ namespace Content.Shared.CharacterAppearance
             // Some downstream is probably gonna have this eventually but then they can deal with fallbacks.
             if (!prototypeManager.TryIndex(species, out SpeciesPrototype? speciesProto))
             {
-                speciesProto = prototypeManager.Index<SpeciesPrototype>(species);
-                Logger.Warning($"Unable to find species {species} for name, falling back to {speciesProto.ID}");
+                speciesProto = prototypeManager.Index<SpeciesPrototype>("Human");
+                Logger.Warning($"Unable to find species {species} for name, falling back to Human");
             }
 
             switch (speciesProto.Naming)
