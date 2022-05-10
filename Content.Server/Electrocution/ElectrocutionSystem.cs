@@ -450,7 +450,7 @@ namespace Content.Server.Electrocution
                 return;
             }
 
-            SoundSystem.Play(Filter.Pvs(targetUid), _random.Pick(electrified.ShockNoises).GetSound(), targetUid, AudioParams.Default.WithVolume(electrified.ShockVolume));
+            SoundSystem.Play(Filter.Pvs(targetUid), electrified.ShockNoises.GetSound(), targetUid, AudioParams.Default.WithVolume(electrified.ShockVolume));
         }
     }
 }

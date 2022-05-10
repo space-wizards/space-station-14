@@ -68,13 +68,7 @@ namespace Content.Server.Electrocution
         public float SiemensCoefficient { get; } = 1f;
 
         [DataField("shockNoises")]
-        public List<SoundSpecifier> ShockNoises { get; } = new()
-        {
-            new SoundPathSpecifier("/Audio/Effects/sparks1.ogg"),
-            new SoundPathSpecifier("/Audio/Effects/sparks2.ogg"),
-            new SoundPathSpecifier("/Audio/Effects/sparks3.ogg"),
-            new SoundPathSpecifier("/Audio/Effects/sparks4.ogg")
-        };
+        public SoundCollectionSpecifier ShockNoises { get; } = new("sparks");
 
         [DataField("playSoundOnShock")]
         public bool PlaySoundOnShock { get; } = true;
