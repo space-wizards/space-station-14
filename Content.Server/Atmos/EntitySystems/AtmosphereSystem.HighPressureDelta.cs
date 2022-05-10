@@ -120,6 +120,25 @@ namespace Content.Server.Atmos.EntitySystems
             // Used by ExperiencePressureDifference to correct push/throw directions from tile-relative to physics world.
             var gridWorldRotation = xforms.GetComponent(gridAtmosphere.Owner).WorldRotation;
 
+            // If we're using monstermos, smooth out the yeet direction to follow the flow
+            if (MonstermosEqualization)
+            {
+                // We step through tiles according to the pressure direction on the current tile.
+                // The goal is to get a general direction of the airflow in the area.
+                // 3 is the magic number - enough to go around corners, but not U-turns.
+                var curTile = tile!;
+                for (var i = 0; i < 3; i++)
+                {
+                    if (curTile.PressureDirection == AtmosDirection.Invalid
+                        || !curTile.AdjacentBits.IsFlagSet(curTile.PressureDirection))
+                        break;
+                    curTile = curTile.AdjacentTiles[curTile.PressureDirection.ToIndex()]!;
+                }
+
+                if (curTile != tile)
+                    tile.PressureSpecificTarget = curTile;
+            }
+
             foreach (var entity in _lookup.GetEntitiesIntersecting(tile.GridIndex, tile.GridIndices))
             {
                 // Ideally containers would have their own EntityQuery internally or something given recursively it may need to slam GetComp<T> anyway.
