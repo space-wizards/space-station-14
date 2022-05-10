@@ -228,7 +228,6 @@ namespace Content.Client.LateJoin
 
         private void JobsAvailableUpdated(IReadOnlyDictionary<EntityUid, Dictionary<string, uint?>> _)
         {
-            Logger.Debug("UI rebuilt.");
             RebuildUI();
         }
 

@@ -42,6 +42,7 @@ public sealed partial class StationJobsSystem : EntitySystem
         {
             _cachedAvailableJobs = GenerateJobsAvailableEvent();
             RaiseNetworkEvent(_cachedAvailableJobs, Filter.Empty().AddPlayers(_gameTicker.PlayersInLobby.Keys));
+            _availableJobsDirty = false;
         }
     }
 
