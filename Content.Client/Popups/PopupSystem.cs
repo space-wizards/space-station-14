@@ -146,7 +146,7 @@ namespace Content.Client.Popups
             {
                 var label = _aliveLabels[i];
                 if (label.TotalTime > PopupLifetime ||
-                    Deleted(label.Entity))
+                    label.Entity != null && Deleted(label.Entity))
                 {
                     label.Dispose();
                     _aliveLabels.RemoveAt(i);
