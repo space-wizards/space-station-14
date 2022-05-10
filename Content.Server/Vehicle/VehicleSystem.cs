@@ -70,14 +70,8 @@ namespace Content.Server.Vehicle
         private void OnBuckleChange(EntityUid uid, VehicleComponent component, BuckleChangeEvent args)
         {
             // Send an event that our vehicle buckle changed
-            if (TryComp<MindComponent>(args.BuckledEntity, out var mind)
-                && mind.Mind != null
-                && !mind.Mind.IsVisitingEntity
-                && mind.Mind.TryGetSession(out var session))
-            {
-                RaiseNetworkEvent(new BuckledToVehicleEvent(uid, args.BuckledEntity, args.Buckling),
-                    Filter.SinglePlayer(session));
-            }
+            if (TryComp<MindComponent>(args.BuckledEntity, out var mind) && mind.Mind != null && mind.Mind.TryGetSession(out var session))
+                RaiseNetworkEvent(new BuckledToVehicleEvent(uid, args.BuckledEntity, args.Buckling), Filter.SinglePlayer(session));
 
             if (args.Buckling)
             {
