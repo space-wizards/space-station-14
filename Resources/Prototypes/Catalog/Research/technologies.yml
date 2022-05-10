@@ -385,7 +385,7 @@
 - type: technology
   name: "basic powercell printing"
   id: PowerCellBasic
-  description: Print some Dollar store powercells.
+  description: Print some dollar store powercells.
   icon:
     sprite: Objects/Power/PowerCells/power_cell_small_st.rsi
     state: s_st
