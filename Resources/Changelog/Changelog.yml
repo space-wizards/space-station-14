@@ -1,9 +1,4 @@
 Entries:
-- author: lajolico
-  changes:
-  - {message: Lasers can now pass through glass airlocks, type: Add}
-  id: 993
-  time: '2022-02-06T13:48:31.0000000+00:00'
 - author: scaly-chimp
   changes:
   - {message: adds a portable flasher for security to lock down areas, type: Add}
@@ -3035,3 +3030,9 @@ Entries:
   - {message: Audio now plays signalling roundstart., type: Add}
   id: 1492
   time: '2022-05-10T00:44:38.0000000+00:00'
+- author: DogZeroX
+  changes:
+  - {message: Pizzas no longer have a curse that forces them to come with a plate.
+      The number of plates trashed in disposal has decreased by 1000%., type: Tweak}
+  id: 1493
+  time: '2022-05-10T01:12:14.0000000+00:00'
