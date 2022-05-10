@@ -1,3 +1,4 @@
+using Content.Shared.Sound;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization.Manager.Attributes;
 
@@ -65,5 +66,20 @@ namespace Content.Server.Electrocution
 
         [DataField("siemensCoefficient")]
         public float SiemensCoefficient { get; } = 1f;
+
+        [DataField("shockNoises")]
+        public List<SoundSpecifier> ShockNoises { get; } = new()
+        {
+            new SoundPathSpecifier("/Audio/Effects/sparks1.ogg"),
+            new SoundPathSpecifier("/Audio/Effects/sparks2.ogg"),
+            new SoundPathSpecifier("/Audio/Effects/sparks3.ogg"),
+            new SoundPathSpecifier("/Audio/Effects/sparks4.ogg")
+        };
+
+        [DataField("playSoundOnShock")]
+        public bool PlaySoundOnShock { get; } = true;
+
+        [DataField("shockVolume")]
+        public float ShockVolume { get; } = 20;
     }
 }
