@@ -81,7 +81,7 @@ namespace Content.Server.Atmos.EntitySystems
                     var difference = Share(tile.Air!, enemyTile.Air!, adjacentTileLength);
 
                     // Monstermos already handles this, so let's not handle it ourselves.
-                    if (SpaceWind && !MonstermosEqualization)
+                    if (!MonstermosEqualization)
                     {
                         if (difference >= 0)
                         {

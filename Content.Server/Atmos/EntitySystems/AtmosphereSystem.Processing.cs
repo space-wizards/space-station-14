@@ -219,6 +219,8 @@ namespace Content.Server.Atmos.EntitySystems
             if(!atmosphere.ProcessingPaused)
                 atmosphere.CurrentRunTiles = new Queue<TileAtmosphere>(atmosphere.HighPressureDelta);
 
+            // Note: This is still processed even if space wind is turned off since this handles playing the sounds.
+
             var number = 0;
             var bodies = EntityManager.GetEntityQuery<PhysicsComponent>();
             var xforms = EntityManager.GetEntityQuery<TransformComponent>();
