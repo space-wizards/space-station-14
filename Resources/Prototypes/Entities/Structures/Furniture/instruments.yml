@@ -44,6 +44,8 @@
       - HighImpassable
       - MidImpassable
       - BulletImpassable
+  - type: Transform
+    anchored: true
 
 - type: entity
   parent: BasePlaceableInstrument

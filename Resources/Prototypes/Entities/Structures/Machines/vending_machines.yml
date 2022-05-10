@@ -49,6 +49,8 @@
     BoardName: "Vending Machine"
     LayoutId: Vending
   - type: Anchorable
+  - type: Speech
+    speechSounds: Vending
   - type: DoAfter
   - type: Electrified
     enabled: false
@@ -153,7 +155,7 @@
     energy: 1.3
     color: "#ffb0b0"
   - type: AccessReader
-    access: [["HeadOfPersonnel"]]    
+    access: [["HeadOfPersonnel"]]
 
 - type: entity
   parent: VendingMachine
@@ -927,7 +929,6 @@
   components:
   - type: VendingMachine
     pack: PietyVendInventory
-    emagPack: PietyVendEmagInventory
   - type: Sprite
     sprite: Structures/Machines/VendingMachines/chapdrobe.rsi
     layers:

@@ -28,7 +28,6 @@
       layer:
       - WallLayer
   - type: MorgueEntityStorage
-    CanWeldShut: false
     IsCollidableWhenOpen: true
     Capacity: 1
     closeSound:
@@ -101,7 +100,6 @@
       layer:
       - MachineLayer
   - type: CrematoriumEntityStorage
-    CanWeldShut: false
     IsCollidableWhenOpen: true
     Capacity: 1
     closeSound:

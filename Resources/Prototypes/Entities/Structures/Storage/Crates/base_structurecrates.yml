@@ -16,7 +16,7 @@
       map: ["enum.StorageVisualLayers.Door"]
     - state: welded
       visible: false
-      map: ["enum.StorageVisualLayers.Welded"]
+      map: ["enum.WeldableLayers.BaseWelded"]
   - type: InteractionOutline
   - type: Physics
   - type: Fixtures
@@ -31,7 +31,7 @@
       - MachineLayer
   - type: EntityStorage
     Capacity: 500
-    CanWeldShut: true
+  - type: Weldable
   - type: PlaceableSurface
   - type: Damageable
     damageContainer: Inorganic
@@ -76,7 +76,7 @@
       map: ["enum.StorageVisualLayers.Door"]
     - state: welded
       visible: false
-      map: ["enum.StorageVisualLayers.Welded"]
+      map: ["enum.WeldableLayers.BaseWelded"]
   - type: InteractionOutline
   - type: Physics
   - type: Fixtures
@@ -91,7 +91,7 @@
       - MachineLayer
   - type: EntityStorage
     Capacity: 500
-    CanWeldShut: true
+  - type: Weldable
   - type: PlaceableSurface
   - type: Damageable
     damageContainer: Inorganic

@@ -17,6 +17,8 @@
       state: bat
       sprite: Mobs/Animals/bat.rsi
   - type: Physics
+  - type: Speech
+    speechSounds: Squeak
   - type: Fixtures
     fixtures:
     - shape:
@@ -72,9 +74,6 @@
   - type: MovementSpeedModifier
     baseWalkSpeed : 7
     baseSprintSpeed : 7
-  - type: RandomAppearance
-    # relic
-    key: enum.AsteroidRockVisuals.State
   - type: Sprite
     drawdepth: Mobs
     layers:
@@ -402,7 +401,6 @@
       normal: crab
       crit: dead
       dead: dead
-    - type: AsteroidRockVisualizer
   - type: Butcherable
     spawned:
     - id: FoodMeatCrab
@@ -620,6 +618,8 @@
       state: monkey
       sprite: Mobs/Animals/monkey.rsi
   - type: Hands
+  - type: Speech
+    speechSounds: Monkey
   - type: Body
     template: PrimateTemplate
     preset: PrimatePreset
@@ -649,6 +649,8 @@
     makeSentient: true
     name: mouse
     description: A hungry and mischievous mouse.
+  - type: Speech
+    speechSounds: Squeak
   - type: Sprite
     drawdepth: FloorObjects
     layers:

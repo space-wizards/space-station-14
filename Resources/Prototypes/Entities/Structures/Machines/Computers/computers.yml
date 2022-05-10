@@ -404,6 +404,7 @@
   name: wooden television
   description: It's an old television displaying the station's cameras, if they worked.
   components:
+  - type: InteractionOutline
   - type: Sprite
     sprite: Structures/Machines/computers.rsi
     layers:

@@ -55,6 +55,7 @@
       - id: ClothingNeckBronzeheart
       - id: ClothingNeckGoldmedal
       - id: RubberStampCaptain
+      - id: AntiqueLaserGun
 
 - type: entity
   id: LockerHeadOfPersonnelFilled

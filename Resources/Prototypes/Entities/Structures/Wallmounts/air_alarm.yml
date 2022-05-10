@@ -40,7 +40,7 @@
     BoardName: "Air Alarm"
     LayoutId: AirAlarm
   - type: AccessReader
-    access: [["Engineering"]]
+    access: [["Atmospherics"]]
   - type: Appearance
     visuals:
     - type: AtmosMonitorVisualizer

@@ -180,7 +180,7 @@
       Arms:
         points: 2
         required: false
-             
+
   - type: Physics
     bodyType: KinematicController
   - type: Fixtures
@@ -306,13 +306,13 @@
 #  - type: Recyclable Turns out turning off recycler safeties without considering the instagib is a bad idea
 #    safe: false
   - type: Speech
+    speechSounds: Alto
   - type: Vocal
   - type: Emoting
   - type: Grammar
     attributes:
       proper: true
   - type: StandingState
-
 
 - type: entity
   save: false
@@ -411,7 +411,7 @@
       - map: [ "pocket2" ]
       - map: ["hand-left"]
       - map: ["hand-right"]
-    - type: Markings 
+    - type: Markings
     - type: Physics
       bodyType: Dynamic
     - type: Fixtures

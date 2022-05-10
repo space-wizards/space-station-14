@@ -10,7 +10,7 @@
     gloves: ClothingHandsGlovesIhscombat
     outerClothing: IHSVoidsuit
     shoes: ClothingShoesBootsJack
-    id: AssistantPDA
+    id: PassengerPDA
     ears: ClothingHeadsetService
   innerclothingskirt: ClothingUniformJumpskirtColorBlack
   satchel: ClothingBackpackSatchelFilled
@@ -25,7 +25,7 @@
     head: ClothingHeadHatPirate
     outerClothing: ClothingOuterCoatPirate
     shoes: ClothingShoesBootsWork
-    id: AssistantPDA
+    id: PassengerPDA
     belt: ClothingBeltUtility
   innerclothingskirt: ClothingUniformJumpskirtColorLightBrown
   satchel: ClothingBackpackSatchelEngineering
@@ -41,7 +41,7 @@
     gloves: ClothingHandsGlovesSpaceNinja
     outerClothing: ClothingOuterSuitSpaceninja
     shoes: ClothingShoesSpaceNinja
-    id: AssistantPDA
+    id: PassengerPDA
   innerclothingskirt: ClothingUniformJumpskirtColorBlack
   satchel: ClothingBackpackSatchelFilled
   duffelbag: ClothingBackpackDuffelFilled
@@ -87,7 +87,7 @@
     back: ClothingBackpackDuffelSyndicateOperative
     mask: ClothingMaskGasSyndicate
   # eyes: Night Vision Goggles whenever they're made
-    eyes: ClothingEyesGlassesMeson 
+    eyes: ClothingEyesGlassesMeson
     ears: ClothingHeadsetAltSyndicate
     gloves: ClothingHandsGlovesCombat
     outerClothing: ClothingOuterHardsuitSyndie
