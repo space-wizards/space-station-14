@@ -715,6 +715,11 @@ namespace Content.Client.Preferences.UI
             _nameEdit.Text = Profile?.Name ?? "";
         }
 
+        private void UpdateFlavorTextEdit()
+        {
+            CFlavorText.FlavorTextInput.Text = Profile?.FlavorText ?? "";
+        }
+
         private void UpdateAgeEdit()
         {
             _ageEdit.Text = Profile?.Age.ToString() ?? "";
@@ -880,6 +885,7 @@ namespace Content.Client.Preferences.UI
         {
             if (Profile is null) return;
             UpdateNameEdit();
+            UpdateFlavorTextEdit();
             UpdateSexControls();
             UpdateGenderControls();
             UpdateSkinColor();
