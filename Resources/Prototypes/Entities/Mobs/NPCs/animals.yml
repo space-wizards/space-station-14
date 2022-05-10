@@ -76,9 +76,6 @@
   - type: MovementSpeedModifier
     baseWalkSpeed : 7
     baseSprintSpeed : 7
-  - type: RandomAppearance
-    # relic
-    key: enum.AsteroidRockVisuals.State
   - type: Sprite
     drawdepth: Mobs
     layers:
@@ -414,7 +411,6 @@
       normal: crab
       crit: dead
       dead: dead
-    - type: AsteroidRockVisualizer
   - type: Butcherable
     spawned:
     - id: FoodMeatCrab
