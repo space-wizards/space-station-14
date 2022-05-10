@@ -14,21 +14,14 @@ public sealed partial class SurveillanceCameraMonitorWindow : DefaultWindow
     public event Action<string>? CameraSelected;
     public event Action<string>? SubnetOpened;
 
-    private readonly Dictionary<string, Tree.Item> _subnets = new();
-
     public SurveillanceCameraMonitorWindow()
     {
         RobustXamlLoader.Load(this);
 
-        SubnetTree.OnItemSelected += () =>
+        SubnetSelector.OnItemSelected += args =>
         {
-            if (SubnetTree.Selected?.Metadata == null
-                || SubnetTree.Selected.Metadata is not string address)
-            {
-                return;
-            }
-
-            CameraSelected!(address);
+            // piss
+            SubnetOpened!((string) args.Button.SelectedMetadata!);
         };
     }
 
@@ -40,34 +33,31 @@ public sealed partial class SurveillanceCameraMonitorWindow : DefaultWindow
 
         // if the subnet count is unequal, that means
         // we have to rebuild the subnets
-        if (_subnets.Keys.Count != subnets.Count)
+        if (SubnetSelector.ItemCount != subnets.Count)
         {
-            _subnets.Clear();
-            SubnetTree.Clear();
-        }
+            SubnetSelector.Clear();
+            SubnetList.DisposeAllChildren();
+            SubnetList.RemoveAllChildren();
 
-        foreach (var subnet in subnets)
-        {
-            AddSubnet(subnet);
+            foreach (var subnet in subnets)
+            {
+                AddSubnet(subnet);
+            }
         }
     }
 
-    private Tree.Item AddSubnet(string subnet)
+    private int AddSubnet(string subnet)
     {
-        var item = SubnetTree.CreateItem();
-        item.Text = subnet;
-        if (!_subnets.ContainsKey(subnet))
-        {
-            _subnets.Add(subnet, item);
-        }
+        SubnetSelector.AddItem(subnet);
+        SubnetSelector.SetItemMetadata(SubnetSelector.ItemCount - 1, subnet);
 
-        return item;
+        return SubnetSelector.ItemCount - 1;
     }
 
     // When a subnet is queried from the client UI, it should
     // populate that subnet's tree with the nodes that indicate
     // the cameras in that subnet.
-    public void PopulateSubnet(List<SurveillanceCameraInfo> subnetInfo)
+    public void SubnetSelected(List<SurveillanceCameraInfo> subnetInfo)
     {
         if (subnetInfo.Count == 0)
         {
@@ -76,9 +66,10 @@ public sealed partial class SurveillanceCameraMonitorWindow : DefaultWindow
 
         var subnet = subnetInfo[0].Subnet;
 
-        if (!_subnets.TryGetValue(subnet, out var subnetNode))
+        if (SubnetSelector.SelectedMetadata == null
+            || subnet != (string) SubnetSelector.SelectedMetadata)
         {
-            subnetNode = AddSubnet(subnet);
+            return;
         }
 
         foreach (var camera in subnetInfo)
@@ -88,9 +79,21 @@ public sealed partial class SurveillanceCameraMonitorWindow : DefaultWindow
                 continue;
             }
 
-            var item = SubnetTree.CreateItem(subnetNode);
-            item.Text = $"{camera.Name} - {camera.Address}";
-            item.Metadata = camera.Address;
+            var button = CreateCameraButton(camera.Name, camera.Address);
+
+            SubnetList.AddChild(button);
         }
+    }
+
+    private Button CreateCameraButton(string name, string address)
+    {
+        var button = new Button()
+        {
+            Text = name
+        };
+
+        button.OnPressed += _ => CameraSelected!(address);
+
+        return button;
     }
 }

@@ -2,7 +2,11 @@
                xmlns:viewport="clr-namespace:Content.Client.Viewport">
     <BoxContainer Orientation="Horizontal">
         <Control MaxWidth="200">
-            <Tree Name="SubnetTree" />
+            <!-- lazy -->
+            <OptionButton Name="SubnetSelector" />
+            <ScrollContainer>
+                <BoxContainer Name="SubnetList" Orientation="Vertical" />
+            </ScrollContainer>
         </Control>
         <Control Margin="5 5 5 5">
             <viewport:ScalingViewport Name="CameraView" MouseFilter="Ignore" />
