@@ -445,7 +445,7 @@ namespace Content.Server.Electrocution
 
         private void PlayElectrocutionSound(EntityUid targetUid, EntityUid sourceUid, ElectrifiedComponent? electrified = null)
         {
-            if (!Resolve(sourceUid, ref electrified) || electrified.ShockNoises.Count == 0 || !electrified.PlaySoundOnShock)
+            if (!Resolve(sourceUid, ref electrified) || !electrified.PlaySoundOnShock)
             {
                 return;
             }
