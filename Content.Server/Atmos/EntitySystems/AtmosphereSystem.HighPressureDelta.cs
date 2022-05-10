@@ -145,14 +145,15 @@ namespace Content.Server.Atmos.EntitySystems
         }
 
         // Called from AtmosphereSystem.LINDA.cs with SpaceWind CVar check handled there.
-        private void ConsiderPressureDifference(GridAtmosphereComponent gridAtmosphere, TileAtmosphere tile, TileAtmosphere other, float difference)
+        private void ConsiderPressureDifference(GridAtmosphereComponent gridAtmosphere, TileAtmosphere tile, AtmosDirection otherDirection, float difference)
         {
             gridAtmosphere.HighPressureDelta.Add(tile);
-            if (difference > tile.PressureDifference)
-            {
-                tile.PressureDifference = difference;
-                tile.PressureDirection = (tile.GridIndices - other.GridIndices).GetDir().ToAtmosDirection();
-            }
+
+            if (difference <= tile.PressureDifference)
+                return;
+
+            tile.PressureDifference = difference;
+            tile.PressureDirection = otherDirection;
         }
 
         public void ExperiencePressureDifference(
