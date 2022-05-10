@@ -27,6 +27,7 @@ namespace Content.Client.DoAfter
     */
         [Dependency] private readonly IEyeManager _eyeManager = default!;
         [Dependency] private readonly IGameTiming _gameTiming = default!;
+        [Dependency] private readonly ExamineSystemShared _examineSystem = default!;
 
         /// <summary>
         ///     We'll use an excess time so stuff like finishing effects can show.
@@ -205,6 +206,7 @@ namespace Content.Client.DoAfter
             var predicate = static (EntityUid uid, (EntityUid compOwner, EntityUid? attachedEntity) data)
                 => uid == data.compOwner || uid == data.attachedEntity;
 
+            var occluded = _examineSystem.IsOccluded(entity);
             var viewbox = _eyeManager.GetWorldViewport().Enlarged(2.0f);
             var entXform = Transform(entity);
             var playerPos = entXform.MapPosition;
@@ -224,7 +226,8 @@ namespace Content.Client.DoAfter
 
                 var range = (compPos.Position - playerPos.Position).Length + 0.01f;
 
-                if (comp.Owner != _attachedEntity &&
+                if (occluded &&
+                    comp.Owner != _attachedEntity &&
                     !ExamineSystemShared.InRangeUnOccluded(
                         playerPos,
                         compPos, range,
