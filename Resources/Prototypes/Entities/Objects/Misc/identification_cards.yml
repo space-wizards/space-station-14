@@ -33,6 +33,54 @@
     job: Assistant
 
 - type: entity
+  parent: AssistantIDCard
+  id: TechnicalAssistantIDCard
+  name: technical assistant ID card
+  components:
+  - type: PresetIdCard
+    job: TechnicalAssistant
+  - type: Sprite
+    layers:
+    - state: default
+    - state: idintern-tech
+
+- type: entity
+  parent: AssistantIDCard
+  id: MedicalInternIDCard
+  name: medical intern ID card
+  components:
+  - type: PresetIdCard
+    job: MedicalIntern
+  - type: Sprite
+    layers:
+    - state: default
+    - state: idintern-med
+
+- type: entity
+  parent: AssistantIDCard
+  id: SecurityCadetIDCard
+  name: security cadet ID card
+  components:
+  - type: PresetIdCard
+    job: SecurityCadet
+  - type: Sprite
+    layers:
+    - state: default
+    - state: idintern-cadet
+
+- type: entity
+  parent: AssistantIDCard
+  id: ServiceWorkerIDCard
+  name: service worker ID card
+  components:
+  - type: PresetIdCard
+    job: ServiceWorker
+  - type: Sprite
+    layers:
+    - state: default
+    - state: idintern-service
+
+- type: entity
   parent: IDCardStandard
   id: CaptainIDCard
   name: captain ID card
@@ -390,7 +438,7 @@
     interfaces:
       - key: enum.AgentIDCardUiKey.Key
         type: AgentIDCardBoundUserInterface
-        
+
 - type: entity
   parent: IDCardStandard
   id: AtmosIDCard
