@@ -2,7 +2,7 @@
 
 namespace Content.Server.Maps;
 
-[RegisterComponent, PublicAPI]
+[RegisterComponent, Friend(typeof(GameMapSystem)), PublicAPI]
 public sealed class MapBookkeepingComponent : Component
 {
     /// <summary>

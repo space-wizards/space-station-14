@@ -4,17 +4,21 @@ namespace Content.Server.Maps;
 
 public sealed partial class GameMapSystem
 {
-    private List<string> _previousMaps = new();
+    [ViewVariables] private readonly List<string> _previousMaps = new();
 
     /// <summary>
     /// All previously loaded maps.
     /// </summary>
+    /// <remarks>
+    /// Unlike the old GameMapManager queue this list is never cleared.
+    /// </remarks>
     public IReadOnlyList<string> PreviousMaps => _previousMaps;
 
-    private HashSet<EntityUid> _currentlyLoadedMaps = new();
+    [ViewVariables] private readonly HashSet<EntityUid> _currentlyLoadedMaps = new();
 
     /// <summary>
-    /// All maps loaded in the current round. This provides their respective bookkeeper, which lets you look up information about the map.
+    /// All maps currently considered to be loaded.
+    /// This provides their respective bookkeeper entity, which lets you look up information about the map.
     /// </summary>
     public IReadOnlySet<EntityUid> CurrentlyLoadedMaps => _currentlyLoadedMaps;
 

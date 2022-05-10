@@ -22,11 +22,6 @@ public sealed partial class GameMapPrototype
     /// </summary>
     [DataField("maxPlayers")] public readonly uint MaxPlayers = uint.MaxValue;
 
-    /// <summary>
-    /// Median number of players for the map.
-    /// </summary>
-    public uint MedianPlayers => (MinPlayers + MaxPlayers) / 2;
-
     [DataField("conditions")] private readonly List<GameMapCondition> _conditions = new();
 
     /// <summary>
@@ -35,13 +30,11 @@ public sealed partial class GameMapPrototype
     public IReadOnlyList<GameMapCondition> Conditions => _conditions;
 
     /// <summary>
-    /// Whether or not this map can be duplicated when trying to meet a pop demand.
-    /// This is still constrained by MaxPartners.
+    /// How far apart the boundary of other maps should be from the center of this map.
     /// </summary>
-    [DataField("canDuplicate")] public readonly bool CanDuplicate;
+    /// <remarks>
+    /// This is summed with the map separation for the other map, effectively making it two circles touching.
+    /// </remarks>
+    public float MapSeparation = 300.0f;
 
-    /// <summary>
-    /// The maximum number of maps that this map can be loaded alongside.
-    /// </summary>
-    [DataField("maximumPartners")] public readonly int MaximumPartners = 1;
 }

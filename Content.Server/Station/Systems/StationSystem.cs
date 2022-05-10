@@ -39,24 +39,17 @@ public sealed class StationSystem : EntitySystem
     /// </remarks>
     public IReadOnlySet<EntityUid> Stations => _stations;
 
-    private bool _randomStationOffset;
-    private bool _randomStationRotation;
-    private float _maxRandomStationOffset;
-
     /// <inheritdoc/>
     public override void Initialize()
     {
         _sawmill = _logManager.GetSawmill("station");
 
         SubscribeLocalEvent<GameRunLevelChangedEvent>(OnRoundEnd);
-        SubscribeLocalEvent<PreGameMapLoad>(OnPreGameMapLoad);
-        SubscribeLocalEvent<PostGameMapLoad>(OnPostGameMapLoad);
+        SubscribeLocalEvent<PostLoadGameMapEvent>(OnPostGameMapLoad);
         SubscribeLocalEvent<StationDataComponent, ComponentAdd>(OnStationStartup);
         SubscribeLocalEvent<StationDataComponent, ComponentShutdown>(OnStationDeleted);
 
-        _configurationManager.OnValueChanged(CCVars.StationOffset, x => _randomStationOffset = x, true);
-        _configurationManager.OnValueChanged(CCVars.MaxStationOffset, x => _maxRandomStationOffset = x, true);
-        _configurationManager.OnValueChanged(CCVars.StationRotation, x => _randomStationRotation = x, true);
+
     }
 
     #region Event handlers
@@ -71,20 +64,7 @@ public sealed class StationSystem : EntitySystem
         _stations.Remove(uid);
     }
 
-    private void OnPreGameMapLoad(PreGameMapLoad ev)
-    {
-        // this is only for maps loaded during round setup!
-        if (_gameTicker.RunLevel == GameRunLevel.InRound)
-            return;
-
-        if (_randomStationOffset)
-            ev.Options.Offset += _random.NextVector2(_maxRandomStationOffset);
-
-        if (_randomStationRotation)
-            ev.Options.Rotation = _random.NextAngle();
-    }
-
-    private void OnPostGameMapLoad(PostGameMapLoad ev)
+    private void OnPostGameMapLoad(PostLoadGameMapEvent ev)
     {
         var dict = new Dictionary<string, List<GridId>>();
 
