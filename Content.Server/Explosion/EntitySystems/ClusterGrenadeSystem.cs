@@ -7,7 +7,6 @@ using Content.Shared.Throwing;
 using Robust.Shared.Containers;
 using Robust.Shared.Physics;
 using Robust.Shared.Random;
-using Robust.Shared.Timing;
 
 namespace Content.Server.Explosion.EntitySystems;
 
@@ -69,19 +68,18 @@ public sealed class ClusterGrenadeSystem : EntitySystem
         var grenadesInserted = component.GrenadesContainer.ContainedEntities.Count + component.UnspawnedCount;
         var segmentAngle = 360 / grenadesInserted;
         // Welcome to nesting hell.
+        var throwDelay = 60 / component.ThrowsPerSecond;
         uid.SpawnTimer(delay, () =>
         {
             for (int thrownCount = 0; thrownCount < grenadesInserted; thrownCount++)
             {
-                uid.SpawnTimer(60 / component.ThrowsPerSecond * thrownCount, () =>
+                uid.SpawnTimer(throwDelay * thrownCount, () =>
                 {
                     TryGetGrenade(component, out var grenade);
                     var angleMin = segmentAngle * thrownCount;
                     var angleMax = segmentAngle * (thrownCount + 1);
                     var angle = Angle.FromDegrees(_random.Next(angleMin, angleMax));
                     // var distance = random.NextFloat() * _throwDistance;
-
-                    delay += _random.Next(550, 900);
 
                     var physComp = EntityManager.GetComponent<PhysicsComponent>(grenade);
                     if (physComp.BodyType == BodyType.KinematicController)
@@ -109,7 +107,7 @@ public sealed class ClusterGrenadeSystem : EntitySystem
                     });
                 });
             }
-            uid.SpawnTimer(60 / component.ThrowsPerSecond * grenadesInserted, () =>
+            uid.SpawnTimer(throwDelay * grenadesInserted, () =>
             {
                 EntityManager.DeleteEntity(uid);
             });
