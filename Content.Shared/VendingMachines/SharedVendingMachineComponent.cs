@@ -105,7 +105,7 @@ namespace Content.Shared.VendingMachines
         }
 
         [Serializable, NetSerializable]
-        public enum InventoryType
+        public enum InventoryType : byte
         {
             Regular,
             Emagged,
