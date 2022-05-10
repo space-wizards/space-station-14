@@ -31,7 +31,7 @@ public sealed partial class GameMapPrototype : IPrototype
     [DataField("mapPath", required: true)]
     public ResourcePath MapPath { get; } = default!;
 
-    [DataField("stations")]
+    [DataField("stations", required: true)]
     private Dictionary<string, StationConfig> _stations = new();
 
     /// <summary>
