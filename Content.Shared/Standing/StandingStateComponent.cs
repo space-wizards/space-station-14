@@ -20,8 +20,8 @@ namespace Content.Shared.Standing
         ///     List of fixtures that had vault-impassable prior to an entity being downed. Required when re-adding the
         ///     collision mask.
         /// </summary>
-        [DataField("vaultImpassableFixtures")]
-        public List<string> HighImpassableFixtures = new();
+        [DataField("highImpassableFixtures")]
+        public List<string> HighImpassableFixtures = new(); // TODO ShadowCommander: Figure out if this is needed anymore
 
         public override ComponentState GetComponentState()
         {
