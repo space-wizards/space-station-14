@@ -86,7 +86,7 @@ public sealed class ClusterGrenadeSystem : EntitySystem
                     {
                         physComp.BodyType = BodyType.Dynamic;
                         // TODO: Suss out throw strength
-                        physComp.ApplyLinearImpulse(angle.ToVec().Normalized * component.ThrowDistance * 0.1f);
+                        physComp.ApplyLinearImpulse(angle.ToVec().Normalized * component.ThrowDistance);
                         grenade.SpawnTimer(delay, () =>
                         {
                             physComp.BodyType = BodyType.KinematicController;
