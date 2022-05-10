@@ -1,11 +1,4 @@
 Entries:
-- author: mirrorcult
-  changes:
-  - {message: 'The L6 Saw, C20r, Bojevic, and Grenade Launcher are no longer purchasable
-      without another traitor''s help. Do something more creative.', type: Tweak}
-  - {message: Holoparasites cost 14TC down from 16TC., type: Tweak}
-  id: 995
-  time: '2022-02-06T23:46:06.0000000+00:00'
 - author: Lamrr
   changes:
   - {message: NanoTrasen has finally discovered the recipe for storage racks., type: Fix}
@@ -3038,3 +3031,9 @@ Entries:
       the new, possibly hidden options on your local vending machine today!', type: Tweak}
   id: 1494
   time: '2022-05-10T02:22:58.0000000+00:00'
+- author: mirrorcult
+  changes:
+  - {message: Assistants no longer assist. They are merely Passengers on this great
+      station., type: Tweak}
+  id: 1495
+  time: '2022-05-10T03:35:09.0000000+00:00'
