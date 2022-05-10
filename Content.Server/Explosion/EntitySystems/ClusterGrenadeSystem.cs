@@ -71,7 +71,7 @@ public sealed class ClusterGrenadeSystem : EntitySystem
         var throwDelay = 60 / component.ThrowsPerSecond;
         uid.SpawnTimer(delay, () =>
         {
-            for (int thrownCount = 0; thrownCount < grenadesInserted; thrownCount++)
+            for (var thrownCount = 0; thrownCount < grenadesInserted; thrownCount++)
             {
                 uid.SpawnTimer(throwDelay * thrownCount, () =>
                 {
