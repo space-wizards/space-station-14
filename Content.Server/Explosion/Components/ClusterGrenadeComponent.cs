@@ -44,6 +44,13 @@ namespace Content.Server.Explosion.Components
         public float ThrowDistance = 50;
 
         /// <summary>
+        /// How many grenades are thrown at once.
+        /// Set to 0 to throw all at once.
+        /// </summary>
+        [ViewVariables(VVAccess.ReadWrite)] [DataField("throwsPerSecond")]
+        public int ThrowsPerSecond = 0;
+
+        /// <summary>
         ///     This is the end.
         /// </summary>
         public bool CountDown;

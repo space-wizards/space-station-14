@@ -7,6 +7,7 @@ using Content.Shared.Throwing;
 using Robust.Shared.Containers;
 using Robust.Shared.Physics;
 using Robust.Shared.Random;
+using Robust.Shared.Timing;
 
 namespace Content.Server.Explosion.EntitySystems;
 
@@ -60,53 +61,58 @@ public sealed class ClusterGrenadeSystem : EntitySystem
             return;
 
         // TODO: Should be an Update loop
-        uid.SpawnTimer((int) (component.Delay * 1000), () =>
+        if (Deleted(component.Owner))
+            return;
+
+        component.CountDown = true;
+        var delay = 20;
+        var grenadesInserted = component.GrenadesContainer.ContainedEntities.Count + component.UnspawnedCount;
+        var segmentAngle = 360 / grenadesInserted;
+        // Welcome to nesting hell.
+        uid.SpawnTimer(delay, () =>
         {
-            if (Deleted(component.Owner))
-                return;
-
-            component.CountDown = true;
-            var delay = 20;
-            var grenadesInserted = component.GrenadesContainer.ContainedEntities.Count + component.UnspawnedCount;
-            var thrownCount = 0;
-            var segmentAngle = 360 / grenadesInserted;
-            while (TryGetGrenade(component, out var grenade))
+            for (int thrownCount = 0; thrownCount < grenadesInserted; thrownCount++)
             {
-                var angleMin = segmentAngle * thrownCount;
-                var angleMax = segmentAngle * (thrownCount + 1);
-                var angle = Angle.FromDegrees(_random.Next(angleMin, angleMax));
-                // var distance = random.NextFloat() * _throwDistance;
-
-                delay += _random.Next(550, 900);
-                thrownCount++;
-
-                var physComp = EntityManager.GetComponent<PhysicsComponent>(grenade);
-                if (physComp.BodyType == BodyType.KinematicController)
+                uid.SpawnTimer(60 / component.ThrowsPerSecond * thrownCount, () =>
                 {
-                    physComp.BodyType = BodyType.Dynamic;
-                    // TODO: Suss out throw strength
-                    _throwingSystem.TryThrow(grenade, angle.ToVec().Normalized * component.ThrowDistance);
-                    grenade.SpawnTimer(delay+100, () =>
+                    TryGetGrenade(component, out var grenade);
+                    var angleMin = segmentAngle * thrownCount;
+                    var angleMax = segmentAngle * (thrownCount + 1);
+                    var angle = Angle.FromDegrees(_random.Next(angleMin, angleMax));
+                    // var distance = random.NextFloat() * _throwDistance;
+
+                    delay += _random.Next(550, 900);
+
+                    var physComp = EntityManager.GetComponent<PhysicsComponent>(grenade);
+                    if (physComp.BodyType == BodyType.KinematicController)
                     {
-                        physComp.BodyType = BodyType.KinematicController;
+                        physComp.BodyType = BodyType.Dynamic;
+                        // TODO: Suss out throw strength
+                        _throwingSystem.TryThrow(grenade, angle.ToVec().Normalized * component.ThrowDistance);
+                        grenade.SpawnTimer(delay, () =>
+                        {
+                            physComp.BodyType = BodyType.KinematicController;
+                        });
+                    }
+                    else
+                    {
+                        // TODO: Suss out throw strength
+                        _throwingSystem.TryThrow(grenade, angle.ToVec().Normalized * component.ThrowDistance);
+                    }
+
+                    grenade.SpawnTimer(delay, () =>
+                    {
+                        if ((!EntityManager.EntityExists(grenade) ? EntityLifeStage.Deleted : MetaData(grenade).EntityLifeStage) >= EntityLifeStage.Deleted)
+                            return;
+
+                        _trigger.Trigger(grenade, args.User);
                     });
-                }
-                else
-                {
-                    // TODO: Suss out throw strength
-                    _throwingSystem.TryThrow(grenade, angle.ToVec().Normalized * component.ThrowDistance);
-                }
-
-                grenade.SpawnTimer(delay, () =>
-                {
-                    if ((!EntityManager.EntityExists(grenade) ? EntityLifeStage.Deleted : MetaData(grenade).EntityLifeStage) >= EntityLifeStage.Deleted)
-                        return;
-
-                    _trigger.Trigger(grenade, args.User);
                 });
             }
-
-            EntityManager.DeleteEntity(uid);
+            uid.SpawnTimer(60 / component.ThrowsPerSecond * grenadesInserted, () =>
+            {
+                EntityManager.DeleteEntity(uid);
+            });
         });
 
         args.Handled = true;

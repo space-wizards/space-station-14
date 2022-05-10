@@ -206,6 +206,7 @@
       directImpulse: true
       maxGrenadesCount: 20
       delay: 5
+      throwsPerSecond: 2
     - type: Damageable
       damageContainer: Inorganic
     - type: Destructible
