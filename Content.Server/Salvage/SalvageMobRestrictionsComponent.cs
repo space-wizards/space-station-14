@@ -10,7 +10,8 @@ namespace Content.Server.Salvage;
 ///     This component exists as a sort of stateful marker for a
 ///     killswitch meant to keep salvage mobs from doing stuff they
 ///     really shouldn't (attacking station).
-///     The main thing is that this component receives critical events that alert SalvageMobRestrictionsSystem to the presence of a 
+///     The main thing is that adding this component ties the mob to
+///     whatever it's currently parented to.
 /// </summary>
 [RegisterComponent]
 public sealed class SalvageMobRestrictionsComponent : Component
