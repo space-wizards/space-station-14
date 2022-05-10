@@ -1,10 +1,4 @@
 Entries:
-- author: mirrorcult
-  changes:
-  - {message: Directional windows no longer look weird when viewed while rotated.,
-    type: Tweak}
-  id: 991
-  time: '2022-02-06T02:25:13.0000000+00:00'
 - author: Peptide90
   changes:
   - {message: 'NSS Pillar minor update! Check out changes to security, permabrig and
@@ -3037,3 +3031,8 @@ Entries:
       \ or airflows.", type: Remove}
   id: 1490
   time: '2022-05-09T22:35:42.0000000+00:00'
+- author: Tomeno
+  changes:
+  - {message: Icon smoothing for asteroid rocks, type: Add}
+  id: 1491
+  time: '2022-05-10T00:41:28.0000000+00:00'
