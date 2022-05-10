@@ -1,8 +1,3 @@
 ﻿<Control xmlns="https://spacestation14.io">
-    <!-- Primary container -->
-    <BoxContainer Orientation="Vertical" HorizontalExpand="True">
-        <LineEdit>
-
-        </LineEdit>
-    </BoxContainer>
+    <LineEdit Name="CFlavorTextInput" MinSize="220 0" HorizontalExpand="True" />
 </Control>

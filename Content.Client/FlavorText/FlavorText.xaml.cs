@@ -7,10 +7,19 @@ namespace Content.Client.FlavorText
     [GenerateTypedNameReferences]
     public sealed partial class FlavorText : Control
     {
-        public void FlavorTextControl()
+        public Action<string>? OnFlavorTextChanged;
+
+        public FlavorText()
         {
             RobustXamlLoader.Load(this);
             IoCManager.InjectDependencies(this);
+
+            CFlavorTextInput.OnTextChanged += _ => FlavorTextChanged();
+        }
+
+        public void FlavorTextChanged()
+        {
+            OnFlavorTextChanged?.Invoke(CFlavorTextInput.Text);
         }
     }
 }

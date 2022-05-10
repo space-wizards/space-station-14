@@ -155,6 +155,11 @@ namespace Content.Shared.Preferences
             return new(this) { Name = name };
         }
 
+        public HumanoidCharacterProfile WithFlavorText(string flavorText)
+        {
+            return new(this) { FlavorText = flavorText };
+        }
+
         public HumanoidCharacterProfile WithAge(int age)
         {
             return new(this) { Age = age };

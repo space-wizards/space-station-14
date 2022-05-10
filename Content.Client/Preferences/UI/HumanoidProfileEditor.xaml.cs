@@ -458,6 +458,12 @@ namespace Content.Client.Preferences.UI
 
             #endregion Markings
 
+            #region FlavorText
+
+            CFlavorText.OnFlavorTextChanged += OnFlavorTextChange;
+
+            #endregion
+
             #endregion Left
 
             if (preferencesManager.ServerDataLoaded)
@@ -469,6 +475,15 @@ namespace Content.Client.Preferences.UI
 
 
             IsDirty = false;
+        }
+
+        private void OnFlavorTextChange(string content)
+        {
+            if (Profile is null)
+                return;
+
+            Profile = Profile.WithFlavorText(content);
+            IsDirty = true;
         }
 
         private void OnMarkingChange(MarkingsSet markings)
@@ -544,7 +559,7 @@ namespace Content.Client.Preferences.UI
             }
 
             IsDirty = true;
-            NeedsDummyRebuild = true; // ugh - fix this asap
+            NeedsDummyRebuild = true; // TODO: ugh - fix this asap
         }
 
         protected override void Dispose(bool disposing)
