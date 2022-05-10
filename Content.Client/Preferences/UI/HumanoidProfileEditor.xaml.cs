@@ -459,6 +459,7 @@ namespace Content.Client.Preferences.UI
             #endregion Markings
 
             #region FlavorText
+            _tabContainer.SetTabTitle(4, Loc.GetString("humanoid-profile-editor-flavortext-tab"));
 
             CFlavorText.OnFlavorTextChanged += OnFlavorTextChange;
 
