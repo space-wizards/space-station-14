@@ -8,10 +8,10 @@
   mapPath: /Maps/splitstation.yml
   minPlayers: 60
   overflowJobs:
-    - Assistant
+    - Passenger
   availableJobs:
     CargoTechnician: [ 3, 6 ]
-    Assistant: [ -1, -1 ]
+    Passenger: [ -1, -1 ]
     Bartender: [ 2, 3 ]
     Botanist: [ 3, 6]
     Chef: [ 2, 4 ]
@@ -34,7 +34,7 @@
     Librarian: [ 1, 1 ]
     Lawyer: [ 2, 2 ]
     Quartermaster: [ 1, 1 ]
-    SalvageSpecialist: [ 4, 6 ] 
+    SalvageSpecialist: [ 4, 6 ]
     Musician: [ 1, 1 ]
     AtmosphericTechnician: [ 1, 2 ]
     TechnicalAssistant: [ 2, 2 ]

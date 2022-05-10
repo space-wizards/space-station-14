@@ -70,12 +70,12 @@
 
 - type: entity
   parent: BasePDA
-  id: AssistantPDA
-  name: assistant PDA
+  id: PassengerPDA
+  name: passenger PDA
   description: Why isn't it gray?
   components:
   - type: PDA
-    id: AssistantIDCard
+    id: PassengerIDCard
 
 - type: entity
   parent: BasePDA
@@ -531,7 +531,7 @@
   parent: BasePDA
   id: SecurityPDA
   name: security PDA
-  description: Red to hide the stains of assistant blood.
+  description: Red to hide the stains of passenger blood.
   components:
   - type: PDA
     id: SecurityIDCard
@@ -543,7 +543,7 @@
     state: pda-security
 
 - type: entity
-  parent: AssistantPDA
+  parent: PassengerPDA
   id: CentcomPDA
   name: centcom PDA
   description: Colored the numbing grey of bureaucracy.
@@ -591,7 +591,7 @@
   description: 99 and 44/100ths percent pure plastic.
   components:
   - type: PDA
-    id: AssistantIDCard
+    id: PassengerIDCard
   - type: Appearance
     visuals:
       - type: PDAVisualizer
