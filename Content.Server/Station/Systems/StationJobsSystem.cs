@@ -81,7 +81,7 @@ public sealed partial class StationJobsSystem : EntitySystem
 
     #region Public API
 
-    /// <inheritdoc cref="TryAssignJob(Robust.Shared.GameObjects.EntityUid,Content.Shared.Roles.JobPrototype,Content.Server.Station.Components.StationJobsComponent?)"/>
+    /// <inheritdoc cref="TryAssignJob(Robust.Shared.GameObjects.EntityUid,string,Content.Server.Station.Components.StationJobsComponent?)"/>
     /// <param name="station">Station to assign a job on.</param>
     /// <param name="job">Job to assign.</param>
     /// <param name="stationJobs">Resolve pattern, station jobs component of the station.</param>
@@ -103,7 +103,7 @@ public sealed partial class StationJobsSystem : EntitySystem
         return TryAdjustJobSlot(station, jobPrototypeId, -1, false, false, stationJobs);
     }
 
-    /// <inheritdoc cref="TryAdjustJobSlot(Robust.Shared.GameObjects.EntityUid,Content.Shared.Roles.JobPrototype,int,bool,bool,Content.Server.Station.Components.StationJobsComponent?)"/>
+    /// <inheritdoc cref="TryAdjustJobSlot(Robust.Shared.GameObjects.EntityUid,string,int,bool,bool,Content.Server.Station.Components.StationJobsComponent?)"/>
     /// <param name="station">Station to adjust the job slot on.</param>
     /// <param name="job">Job to adjust.</param>
     /// <param name="amount">Amount to adjust by.</param>
@@ -180,6 +180,19 @@ public sealed partial class StationJobsSystem : EntitySystem
         }
     }
 
+    /// <inheritdoc cref="TrySetJobSlot(Robust.Shared.GameObjects.EntityUid,string,int,bool,Content.Server.Station.Components.StationJobsComponent?)"/>
+    /// <param name="station">Station to adjust the job slot on.</param>
+    /// <param name="jobPrototype">Job prototype to adjust.</param>
+    /// <param name="amount">Amount to set to.</param>
+    /// <param name="createSlot">Whether or not it should create the slot if it doesn't exist.</param>
+    /// <param name="stationJobs">Resolve pattern, station jobs component of the station.</param>
+    /// <returns></returns>
+    public bool TrySetJobSlot(EntityUid station, JobPrototype jobPrototype, int amount, bool createSlot = false,
+        StationJobsComponent? stationJobs = null)
+    {
+        return TrySetJobSlot(station, jobPrototype.ID, amount, createSlot, stationJobs);
+    }
+
     /// <summary>
     /// Attempts to set the given job slot to the amount provided.
     /// </summary>
@@ -187,9 +200,9 @@ public sealed partial class StationJobsSystem : EntitySystem
     /// <param name="jobPrototypeId">Job prototype ID to adjust.</param>
     /// <param name="amount">Amount to set to.</param>
     /// <param name="createSlot">Whether or not it should create the slot if it doesn't exist.</param>
-    /// <param name="stationJobs"></param>
-    /// <returns></returns>
-    /// <exception cref="ArgumentException"></exception>
+    /// <param name="stationJobs">Resolve pattern, station jobs component of the station.</param>
+    /// <returns>Whether or not setting the value succeeded.</returns>
+    /// <exception cref="ArgumentException">Thrown when the given station is not a station.</exception>
     public bool TrySetJobSlot(EntityUid station, string jobPrototypeId, int amount, bool createSlot = false,
         StationJobsComponent? stationJobs = null)
     {
@@ -222,7 +235,7 @@ public sealed partial class StationJobsSystem : EntitySystem
         }
     }
 
-    /// <inheritdoc cref="MakeJobUnlimited(Robust.Shared.GameObjects.EntityUid,Content.Shared.Roles.JobPrototype,Content.Server.Station.Components.StationJobsComponent?)"/>
+    /// <inheritdoc cref="MakeJobUnlimited(Robust.Shared.GameObjects.EntityUid,string,Content.Server.Station.Components.StationJobsComponent?)"/>
     /// <param name="station">Station to make a job unlimited on.</param>
     /// <param name="job">Job to make unlimited.</param>
     /// <param name="stationJobs">Resolve pattern, station jobs component of the station.</param>
@@ -252,7 +265,7 @@ public sealed partial class StationJobsSystem : EntitySystem
         UpdateJobsAvailable();
     }
 
-    /// <inheritdoc cref="IsJobUnlimited(Robust.Shared.GameObjects.EntityUid,Content.Shared.Roles.JobPrototype,Content.Server.Station.Components.StationJobsComponent?)"/>
+    /// <inheritdoc cref="IsJobUnlimited(Robust.Shared.GameObjects.EntityUid,string,Content.Server.Station.Components.StationJobsComponent?)"/>
     /// <param name="station">Station to check.</param>
     /// <param name="job">Job to check.</param>
     /// <param name="stationJobs">Resolve pattern, station jobs component of the station.</param>
@@ -278,7 +291,7 @@ public sealed partial class StationJobsSystem : EntitySystem
         return res;
     }
 
-    /// <inheritdoc cref="TryGetJobSlot(Robust.Shared.GameObjects.EntityUid,Content.Shared.Roles.JobPrototype,out System.Nullable{uint},Content.Server.Station.Components.StationJobsComponent?)"/>
+    /// <inheritdoc cref="TryGetJobSlot(Robust.Shared.GameObjects.EntityUid,string,out System.Nullable{uint},Content.Server.Station.Components.StationJobsComponent?)"/>
     /// <param name="station">Station to get slot info from.</param>
     /// <param name="job">Job to get slot info for.</param>
     /// <param name="slots">The number of slots remaining. Null if infinite.</param>

@@ -55,6 +55,6 @@ public sealed class AdjustStationJobCommand : IConsoleCommand
             return;
         }
 
-        stationJobs.TryAdjustJobSlot(station, job, amount, true);
+        stationJobs.TrySetJobSlot(station, job, amount, true);
     }
 }
