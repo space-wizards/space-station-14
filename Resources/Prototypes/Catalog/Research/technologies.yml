@@ -415,7 +415,7 @@
 - type: technology
   name: "super powercell printing"
   id: PowerCellSuper
-  description: Believe it or not , you can power a small fleet with those powercells.
+  description: Believe it or not, you can power a small fleet with these powercells.
   icon:
     sprite: Objects/Power/PowerCells/power_cell_small_sup.rsi
     state: s_sup
