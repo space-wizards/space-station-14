@@ -36,15 +36,6 @@
   components:
   - type: PowerCell
     cellSize: Medium
-  - type: SolutionContainerManager
-    solutions:
-      powerCell:
-        maxVol: 10
-  - type: Extractable
-    juiceSolution:
-      reagents:
-        - ReagentId: Licoxide
-          Quantity: 10
 
 - type: entity
   id: PowerCellLargeBase
@@ -53,15 +44,6 @@
   components:
   - type: PowerCell
     cellSize: Large
-  - type: SolutionContainerManager
-    solutions:
-      powerCell:
-        maxVol: 15
-  - type: Extractable
-    juiceSolution:
-      reagents:
-        - ReagentId: Licoxide
-          Quantity: 15
 
 - type: entity
   name: potato battery
@@ -98,6 +80,7 @@
 
 - type: entity
   id: PowerCellSmallStandardPrinted
+  suffix: Empty
   parent: PowerCellSmallStandard
   components:
   - type: Battery
@@ -125,6 +108,7 @@
 
 - type: entity
   id: PowerCellSmallHighPrinted
+  suffix: Empty
   parent: PowerCellSmallHigh
   components:
   - type: Battery
@@ -152,6 +136,7 @@
 
 - type: entity
   id: PowerCellSmallSuperPrinted
+  suffix: Empty
   parent: PowerCellSmallSuper
   components:
   - type: Battery
@@ -179,6 +164,7 @@
 
 - type: entity
   id: PowerCellSmallHyperPrinted
+  suffix: Empty
   parent: PowerCellSmallHyper
   components:
   - type: Battery
@@ -250,6 +236,7 @@
 
 - type: entity
   id: PowerCellMediumStandardPrinted
+  suffix: Empty
   parent: PowerCellMediumStandard
   components:
   - type: Battery
@@ -277,6 +264,7 @@
 
 - type: entity
   id: PowerCellMediumHighPrinted
+  suffix: Empty
   parent: PowerCellMediumHigh
   components:
   - type: Battery
@@ -304,6 +292,7 @@
 
 - type: entity
   id: PowerCellMediumSuperPrinted
+  suffix: Empty
   parent: PowerCellMediumSuper
   components:
   - type: Battery
@@ -331,6 +320,7 @@
 
 - type: entity
   id: PowerCellMediumHyperPrinted
+  suffix: Empty
   parent: PowerCellMediumHyper
   components:
   - type: Battery
@@ -358,6 +348,7 @@
 
 - type: entity
   id: PowerCellLargeStandardPrinted
+  suffix: Empty
   parent: PowerCellLargeStandard
   components:
   - type: Battery
@@ -385,6 +376,7 @@
 
 - type: entity
   id: PowerCellLargeHighPrinted
+  suffix: Empty
   parent: PowerCellLargeHigh
   components:
   - type: Battery
@@ -412,6 +404,7 @@
 
 - type: entity
   id: PowerCellLargeSuperPrinted
+  suffix: Empty
   parent: PowerCellLargeSuper
   components:
   - type: Battery
@@ -439,6 +432,7 @@
 
 - type: entity
   id: PowerCellLargeHyperPrinted
+  suffix: Empty
   parent: PowerCellLargeHyper
   components:
   - type: Battery
