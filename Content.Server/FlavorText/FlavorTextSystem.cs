@@ -24,7 +24,6 @@ namespace Content.Server.FlavorText
                 Act = () =>
                 {
                     var markup = new FormattedMessage();
-                    // TODO: Strip markup
                     markup.AddMarkup(component.Content);
                     _examineSystem.SendExamineTooltip(args.User, uid, markup, false, false);
                 },
@@ -32,7 +31,7 @@ namespace Content.Server.FlavorText
                 Category = VerbCategory.Examine,
                 Disabled = !detailsRange,
                 Message = Loc.GetString("flavortext-examinable-verb-disabled"),
-                IconTexture = "/Textures/Interface/VerbIcons/rejuvenate.svg.192dpi.png"
+                IconTexture = "/Textures/Interface/VerbIcons/examine.svg.192dpi.png"
             };
 
             args.Verbs.Add(verb);

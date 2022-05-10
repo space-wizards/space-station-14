@@ -16,6 +16,7 @@ using Robust.Shared.Localization;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Serialization;
+using Robust.Shared.Utility;
 
 namespace Content.Shared.Preferences
 {
@@ -28,6 +29,7 @@ namespace Content.Shared.Preferences
         public const int MinimumAge = 18;
         public const int MaximumAge = 120;
         public const int MaxNameLength = 32;
+        public const int MaxDescLength = 512;
 
         private readonly Dictionary<string, JobPriority> _jobPriorities;
         private readonly List<string> _antagPreferences;
@@ -153,6 +155,11 @@ namespace Content.Shared.Preferences
         public HumanoidCharacterProfile WithName(string name)
         {
             return new(this) { Name = name };
+        }
+
+        public HumanoidCharacterProfile WithFlavorText(string flavorText)
+        {
+            return new(this) { FlavorText = flavorText };
         }
 
         public HumanoidCharacterProfile WithAge(int age)
@@ -307,6 +314,16 @@ namespace Content.Shared.Preferences
                 name = RandomName();
             }
 
+            string flavortext;
+            if (FlavorText.Length > MaxDescLength)
+            {
+                flavortext = FormattedMessage.RemoveMarkup(FlavorText)[..MaxDescLength];
+            }
+            else
+            {
+                flavortext = FormattedMessage.RemoveMarkup(FlavorText);
+            }
+
             var appearance = HumanoidCharacterAppearance.EnsureValid(Appearance, Species);
 
             var prefsUnavailableMode = PreferenceUnavailable switch
@@ -348,6 +365,7 @@ namespace Content.Shared.Preferences
                 .ToList();
 
             Name = name;
+            FlavorText = flavortext;
             Age = age;
             Sex = sex;
             Gender = gender;

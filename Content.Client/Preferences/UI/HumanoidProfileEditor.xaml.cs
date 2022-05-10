@@ -459,8 +459,9 @@ namespace Content.Client.Preferences.UI
             #endregion Markings
 
             #region FlavorText
-
             _tabContainer.SetTabTitle(4, Loc.GetString("humanoid-profile-editor-flavortext-tab"));
+
+            CFlavorText.OnFlavorTextChanged += OnFlavorTextChange;
 
             #endregion FlavorText
 
@@ -475,6 +476,15 @@ namespace Content.Client.Preferences.UI
 
 
             IsDirty = false;
+        }
+
+        private void OnFlavorTextChange(string content)
+        {
+            if (Profile is null)
+                return;
+
+            Profile = Profile.WithFlavorText(content);
+            IsDirty = true;
         }
 
         private void OnMarkingChange(MarkingsSet markings)
@@ -550,7 +560,7 @@ namespace Content.Client.Preferences.UI
             }
 
             IsDirty = true;
-            NeedsDummyRebuild = true; // ugh - fix this asap
+            NeedsDummyRebuild = true; // TODO: ugh - fix this asap
         }
 
         protected override void Dispose(bool disposing)
@@ -703,6 +713,11 @@ namespace Content.Client.Preferences.UI
         private void UpdateNameEdit()
         {
             _nameEdit.Text = Profile?.Name ?? "";
+        }
+
+        private void UpdateFlavorTextEdit()
+        {
+            CFlavorText.FlavorTextInput.Text = Profile?.FlavorText ?? "";
         }
 
         private void UpdateAgeEdit()
@@ -870,6 +885,7 @@ namespace Content.Client.Preferences.UI
         {
             if (Profile is null) return;
             UpdateNameEdit();
+            UpdateFlavorTextEdit();
             UpdateSexControls();
             UpdateGenderControls();
             UpdateSkinColor();
