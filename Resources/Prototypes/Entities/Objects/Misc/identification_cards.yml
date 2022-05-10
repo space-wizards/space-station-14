@@ -33,7 +33,7 @@
     job: Passenger
 
 - type: entity
-  parent: AssistantIDCard
+  parent: PassengerIDCard
   id: TechnicalAssistantIDCard
   name: technical assistant ID card
   components:
