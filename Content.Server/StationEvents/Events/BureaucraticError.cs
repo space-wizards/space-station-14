@@ -1,8 +1,6 @@
 using System.Linq;
-using Content.Server.Station;
-using Content.Shared.Roles;
+using Content.Server.Station.Systems;
 using JetBrains.Annotations;
-using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 
 namespace Content.Server.StationEvents.Events;
@@ -11,8 +9,7 @@ namespace Content.Server.StationEvents.Events;
 public sealed class BureaucraticError : StationEvent
 {
     [Dependency] private readonly IRobustRandom _random = default!;
-    [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
-    public override string? StartAnnouncement =>
+    public override string StartAnnouncement =>
         Loc.GetString("station-event-bureaucratic-error-announcement");
     public override string Name => "BureaucraticError";
 
@@ -27,20 +24,22 @@ public sealed class BureaucraticError : StationEvent
     public override void Startup()
     {
         base.Startup();
-        var chosenStation = _random.Pick(EntitySystem.Get<StationSystem>().StationInfo.Values.ToList());
-        var jobList = chosenStation.JobList.Keys.Where(x => !_prototypeManager.Index<JobPrototype>(x).IsHead).ToList();
+        var stationSystem = EntitySystem.Get<StationSystem>();
+        var stationJobsSystem = EntitySystem.Get<StationJobsSystem>();
+        var chosenStation = _random.Pick(stationSystem.Stations.ToList());
+        var jobList = stationJobsSystem.GetJobs(chosenStation).Keys.ToList();
 
         // Low chance to completely change up the late-join landscape by closing all positions except infinite slots.
         // Lower chance than the /tg/ equivalent of this event.
         if (_random.Prob(0.25f))
         {
             var chosenJob = _random.PickAndTake(jobList);
-            chosenStation.AdjustJobAmount(chosenJob, -1); // INFINITE chaos.
+            stationJobsSystem.MakeJobUnlimited(chosenStation, chosenJob); // INFINITE chaos.
             foreach (var job in jobList)
             {
-                if (chosenStation.JobList[job] == -1)
+                if (stationJobsSystem.IsJobUnlimited(chosenStation, job))
                     continue;
-                chosenStation.AdjustJobAmount(job, 0);
+                stationJobsSystem.TrySetJobSlot(chosenStation, job, 0);
             }
         }
         else
@@ -49,11 +48,10 @@ public sealed class BureaucraticError : StationEvent
             for (var i = 0; i < _random.Next((int)(jobList.Count * 0.20), (int)(jobList.Count * 0.30)); i++)
             {
                 var chosenJob = _random.PickAndTake(jobList);
-                if (chosenStation.JobList[chosenJob] == -1)
+                if (stationJobsSystem.IsJobUnlimited(chosenStation, chosenJob))
                     continue;
 
-                var adj = Math.Max(chosenStation.JobList[chosenJob] + _random.Next(-3, 6), 0);
-                chosenStation.AdjustJobAmount(chosenJob, adj);
+                stationJobsSystem.TryAdjustJobSlot(chosenStation, chosenJob, _random.Next(-3, 6));
             }
         }
     }
