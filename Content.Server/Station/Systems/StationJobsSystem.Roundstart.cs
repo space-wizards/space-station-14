@@ -109,9 +109,11 @@ public sealed partial class StationJobsSystem
                 void AssignPlayer(NetUserId player, string job, EntityUid station)
                 {
                     // Remove the player from all possible jobs as that's faster than actually checking what they have selected.
-                    foreach (var (_, players) in jobPlayerOptions)
+                    foreach (var (k, players) in jobPlayerOptions)
                     {
                         players.Remove(player);
+                        if (players.Count == 0)
+                            jobPlayerOptions.Remove(k);
                     }
 
                     stationJobs[station][job]--;
