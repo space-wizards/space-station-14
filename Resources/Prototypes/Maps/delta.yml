@@ -4,7 +4,7 @@
   mapPath: /Maps/delta.yml
   minPlayers: 60
   stations:
-    Station: Delta
+    Delta:
       mapNameTemplate: '{0} Delta Station {1}'
       nameGenerator:
         !type:NanotrasenNameGenerator
