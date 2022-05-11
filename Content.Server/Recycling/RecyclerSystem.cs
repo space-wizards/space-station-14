@@ -1,11 +1,17 @@
 using Content.Server.Audio;
+using Content.Server.GameTicking;
+using Content.Server.Players;
+using Content.Server.Popups;
 using Content.Server.Power.Components;
 using Content.Server.Recycling.Components;
 using Content.Shared.Audio;
 using Content.Shared.Body.Components;
 using Content.Shared.Emag.Systems;
+using Content.Shared.Interaction.Events;
+using Content.Shared.Popups;
 using Content.Shared.Recycling;
 using Content.Shared.Tag;
+using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.Physics.Dynamics;
 using Robust.Shared.Player;
@@ -25,6 +31,33 @@ namespace Content.Server.Recycling
         {
             SubscribeLocalEvent<RecyclerComponent, StartCollideEvent>(OnCollide);
             SubscribeLocalEvent<RecyclerComponent, GotEmaggedEvent>(OnEmagged);
+            SubscribeLocalEvent<RecyclerComponent, SuicideEvent>(OnSuicide);
+        }
+
+        private void OnSuicide(EntityUid uid, RecyclerComponent component, SuicideEvent args)
+        {
+            if (args.Handled) return;
+            args.SetHandled(SuicideKind.Bloodloss);
+            var victim = args.Victim;
+            if (TryComp(victim, out ActorComponent? actor) &&
+                actor.PlayerSession.ContentData()?.Mind is { } mind)
+            {
+                Get<GameTicker>().OnGhostAttempt(mind, false);
+                if (mind.OwnedEntity is { Valid: true } entity)
+                {
+                    entity.PopupMessage(Loc.GetString("recycler-component-suicide-message"));
+                }
+            }
+
+            victim.PopupMessageOtherClients(Loc.GetString("recycler-component-suicide-message-others",
+                ("victim", victim)));
+
+            if (TryComp<SharedBodyComponent?>(victim, out var body))
+            {
+                body.Gib(true);
+            }
+
+            Bloodstain(component);
         }
 
         public void EnableRecycler(RecyclerComponent component)

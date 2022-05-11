@@ -4,6 +4,13 @@ using Content.Shared.Examine;
 using Content.Shared.Database;
 using Content.Shared.Verbs;
 using JetBrains.Annotations;
+using Content.Shared.Interaction.Events;
+using Robust.Server.GameObjects;
+using Content.Server.Players;
+using Content.Server.GameTicking;
+using Content.Shared.Popups;
+using Content.Server.Popups;
+using Content.Shared.Standing;
 
 namespace Content.Server.Morgue
 {
@@ -19,7 +26,39 @@ namespace Content.Server.Morgue
 
             SubscribeLocalEvent<CrematoriumEntityStorageComponent, GetVerbsEvent<AlternativeVerb>>(AddCremateVerb);
             SubscribeLocalEvent<CrematoriumEntityStorageComponent, ExaminedEvent>(OnCrematoriumExamined);
+            SubscribeLocalEvent<CrematoriumEntityStorageComponent, SuicideEvent>(OnSuicide);
             SubscribeLocalEvent<MorgueEntityStorageComponent, ExaminedEvent>(OnMorgueExamined);
+        }
+
+        private void OnSuicide(EntityUid uid, CrematoriumEntityStorageComponent component, SuicideEvent args)
+        {
+            if (args.Handled) return;
+            args.SetHandled(SuicideKind.Heat);
+            var victim = args.Victim;
+            if (TryComp(victim, out ActorComponent? actor) && actor.PlayerSession.ContentData()?.Mind is { } mind)
+            {
+                Get<GameTicker>().OnGhostAttempt(mind, false);
+
+                if (mind.OwnedEntity is { Valid: true } entity)
+                {
+                    entity.PopupMessage(Loc.GetString("crematorium-entity-storage-component-suicide-message"));
+                }
+            }
+
+            victim.PopupMessageOtherClients(Loc.GetString("crematorium-entity-storage-component-suicide-message-others", ("victim", victim)));
+
+            if (component.CanInsert(victim))
+            {
+                component.Insert(victim);
+                Get<StandingStateSystem>().Down(victim, false);
+            }
+            else
+            {
+                
+                EntityManager.DeleteEntity(victim);
+            }
+
+            component.Cremate();
         }
 
         private void AddCremateVerb(EntityUid uid, CrematoriumEntityStorageComponent component, GetVerbsEvent<AlternativeVerb> args)
