@@ -33,7 +33,8 @@ public sealed class SurveillanceCameraComponent : Component
     // to change/set this so mapping these in isn't
     // the most terrible thing possible.
     [ViewVariables(VVAccess.ReadWrite)]
-    public string Name { get; } = default!;
+    [DataField("id")]
+    public string Id { get; } = default!;
 
     // This should probably be dependent on ApcDeviceNet,
     // which in turn routes to something connected
@@ -41,5 +42,6 @@ public sealed class SurveillanceCameraComponent : Component
     //
     // something something router boxes
     [ViewVariables(VVAccess.ReadWrite)]
+    [DataField("subnet")]
     public string Subnet { get; } = default!;
 }

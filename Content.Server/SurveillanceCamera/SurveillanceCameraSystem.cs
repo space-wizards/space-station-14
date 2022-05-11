@@ -52,7 +52,7 @@ public sealed class SurveillanceCameraSystem : SharedSurveillanceCameraSystem
             var payload = new NetworkPayload()
             {
                 { DeviceNetworkConstants.Command, "" },
-                { CameraNameData, component.Name },
+                { CameraNameData, component.Id },
                 { CameraSubnetData, component.Subnet }
             };
 
@@ -88,14 +88,7 @@ public sealed class SurveillanceCameraSystem : SharedSurveillanceCameraSystem
 
     private void OnPowerChanged(EntityUid camera, SurveillanceCameraComponent component, PowerChangedEvent args)
     {
-        if (!args.Powered)
-        {
-            Deactivate(camera, component);
-        }
-        else
-        {
-            component.Active = true;
-        }
+        SetActive(camera, args.Powered, component);
     }
 
     private void OnShutdown(EntityUid camera, SurveillanceCameraComponent component, ComponentShutdown args)

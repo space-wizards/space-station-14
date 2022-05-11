@@ -1,0 +1,30 @@
+- type: entity
+  id: SurveillanceCamera
+  name: camera
+  description: A surveillance camera. It's watching you. Kinda.
+  components:
+  - type: WallMount
+  - type: ApcPowerReceiver
+  - type: ExtensionCableReceiver
+  - type: DeviceNetwork
+    deviceNetId: SurveillanceCamera
+  - type: SurveillanceCamera
+    id: "test"
+    subnet: "subnet"
+
+- type: entity
+  id: SurveillanceCameraMonitor
+  name: Camera
+  description: A surveillance camera monitor. You're watching them. Maybe.
+  components:
+  - type: ApcPowerReceiver
+  - type: ExtensionCableReceiver
+  - type: DeviceNetwork
+    deviceNetId: SurveillanceCamera
+  - type: SurveillanceCamera
+  - type: Clickable
+  - type: InteractionOutline
+  - type: UserInterface
+    interfaces:
+      - key: enum.SurveillanceCameraMonitorUiKey.Key
+        type: SurveillanceCameraMonitorBoundUi
