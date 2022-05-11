@@ -57,6 +57,12 @@ public sealed partial class SurveillanceCameraMonitorWindow : DefaultWindow
     // When a subnet is queried from the client UI, it should
     // populate that subnet's tree with the nodes that indicate
     // the cameras in that subnet.
+    //
+    // The issue with this is that this would require caching in the
+    // camera system itself, which... is that ideal to do? Is it OK?
+    // I don't have a problem treating the system like a true
+    // singleton for just a simple cache, but the issue relates to
+    // if the DeviceNet portion of it should be axed or not.
     public void SubnetSelected(List<SurveillanceCameraInfo> subnetInfo)
     {
         if (subnetInfo.Count == 0)

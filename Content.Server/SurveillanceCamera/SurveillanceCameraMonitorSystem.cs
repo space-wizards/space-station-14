@@ -14,9 +14,12 @@ public sealed class SurveillanceCameraMonitorSystem : EntitySystem
     [Dependency] private readonly UserInterfaceSystem _userInterface = default!;
     [Dependency] private readonly DeviceNetworkSystem _deviceNetworkSystem = default!;
 
+    // who to route subnet data to based on camera data packets received
+    private readonly Dictionary<string, HashSet<EntityUid>> _subnetCameraRouting = new();
+
     public override void Initialize()
     {
-        SubscribeLocalEvent<SurveillanceCameraDeactivateEvent>(OnSurveillanceCameraDeactivate);
+        SubscribeLocalEvent<SurveillanceCameraMonitorComponent, SurveillanceCameraDeactivateEvent>(OnSurveillanceCameraDeactivate);
         SubscribeLocalEvent<SurveillanceCameraMonitorComponent, BoundUIClosedEvent>(OnBoundUiClose);
         SubscribeLocalEvent<SurveillanceCameraMonitorComponent, InteractHandEvent>(OnInteractHand);
         SubscribeLocalEvent<SurveillanceCameraMonitorComponent, PowerChangedEvent>(OnPowerChanged);
@@ -42,7 +45,15 @@ public sealed class SurveillanceCameraMonitorSystem : EntitySystem
     private void OnSubnetRequest(EntityUid uid, SurveillanceCameraMonitorComponent component,
         SurveillanceCameraMonitorSubnetRequestMessage args)
     {
+        if (!component.KnownSubnets.Contains(args.Subnet))
+        {
+            return;
+        }
 
+        if (args.Session.AttachedEntity != null)
+        {
+            RouteCameraInfoToClient(uid, args.Session.AttachedEntity.Value, args.Subnet, component);
+        }
     }
 
     private void OnPacketReceived(EntityUid uid, SurveillanceCameraMonitorComponent component,
@@ -57,13 +68,37 @@ public sealed class SurveillanceCameraMonitorSystem : EntitySystem
         {
             switch (command)
             {
-                case SurveillanceCameraSystem.CameraDataMessage:
+                case SurveillanceCameraSystem.CameraConnectMessage:
                     if (component.NextCameraAddress == args.Address)
                     {
                         TrySwitchCameraByUid(uid, args.Sender, component);
                     }
 
                     component.NextCameraAddress = null;
+                    break;
+                case SurveillanceCameraSystem.CameraDataMessage:
+                    if (!args.Data.TryGetValue(SurveillanceCameraSystem.CameraNameData, out string? name)
+                        || !args.Data.TryGetValue(SurveillanceCameraSystem.CameraSubnetData, out string? subnetData))
+                    {
+                        return;
+                    }
+
+                    var info = new SurveillanceCameraInfo()
+                    {
+                        Address = args.Address,
+                        Name = name,
+                        Subnet = subnetData
+                    };
+
+                    SendCameraInfoToClient(uid, info, component);
+
+                    break;
+                case SurveillanceCameraSystem.CameraPingMessage:
+                    if (args.Data.TryGetValue(SurveillanceCameraSystem.CameraSubnetData, out string? subnet))
+                    {
+                        component.KnownSubnets.Add(subnet);
+                    }
+
                     break;
             }
         }
@@ -83,6 +118,7 @@ public sealed class SurveillanceCameraMonitorSystem : EntitySystem
         {
             RemoveActiveCamera(uid, component);
             component.NextCameraAddress = null;
+            component.ClientSubnetInfoRoutes.Clear();
         }
     }
 
@@ -92,34 +128,73 @@ public sealed class SurveillanceCameraMonitorSystem : EntitySystem
     }
 
     // This is to ensure that there's no delay in ensuring that a camera is deactivated.
-    private void OnSurveillanceCameraDeactivate(SurveillanceCameraDeactivateEvent args)
+    private void OnSurveillanceCameraDeactivate(EntityUid uid, SurveillanceCameraMonitorComponent monitor, SurveillanceCameraDeactivateEvent args)
     {
-        if (!TryComp(args.Camera, out SurveillanceCameraComponent? camera))
-        {
-            return;
-        }
-
-        // Get all monitors currently viewing this camera.
-        // Set the monitor's active camera to null.
-        // Update UI state.
-
-        foreach (var monitorUid in camera.ActiveMonitors)
-        {
-            if (!TryComp(monitorUid, out SurveillanceCameraMonitorComponent? monitor))
-            {
-                continue;
-            }
-
-            monitor.ActiveCamera = null;
-            UpdateUserInterface(monitorUid, monitor);
-        }
+        monitor.ActiveCamera = null;
+        UpdateUserInterface(uid, monitor);
     }
 
     private void OnBoundUiClose(EntityUid uid, SurveillanceCameraMonitorComponent component, BoundUIClosedEvent args)
     {
         RemoveViewer(uid, args.Entity, component);
+
+        foreach (var viewerSet in component.ClientSubnetInfoRoutes.Values)
+        {
+            if (viewerSet.Contains(args.Entity))
+            {
+                viewerSet.Remove(args.Entity);
+                break;
+            }
+        }
     }
     #endregion
+
+    private void RouteCameraInfoToClient(EntityUid uid, EntityUid player, string subnet,
+        SurveillanceCameraMonitorComponent? monitor = null)
+    {
+        if (!Resolve(uid, ref monitor))
+        {
+            return;
+        }
+
+        if (!monitor.ClientSubnetInfoRoutes.ContainsKey(subnet))
+        {
+            monitor.ClientSubnetInfoRoutes.Add(subnet, new HashSet<EntityUid>());
+        }
+
+        monitor.ClientSubnetInfoRoutes[subnet].Add(player);
+
+        var payload = new NetworkPayload()
+        {
+            {DeviceNetworkConstants.Command, SurveillanceCameraSystem.CameraPingSubnetMessage}
+        };
+        _deviceNetworkSystem.QueuePacket(uid, null, payload);
+    }
+
+    private void SendCameraInfoToClient(EntityUid uid, SurveillanceCameraInfo info,
+        SurveillanceCameraMonitorComponent? monitor = null)
+    {
+        if (!Resolve(uid, ref monitor)
+            || !monitor.ClientSubnetInfoRoutes.ContainsKey(info.Subnet))
+        {
+            return;
+        }
+
+        foreach (var clientEntity in monitor.ClientSubnetInfoRoutes[info.Subnet])
+        {
+            if (!TryComp(clientEntity, out ActorComponent? actor))
+            {
+                continue;
+            }
+
+            var message = new SurveillanceCameraMonitorInfoMessage(info);
+
+            _userInterface.TrySendUiMessage(uid,
+                SurveillanceCameraMonitorUiKey.Key,
+                message,
+                actor.PlayerSession);
+        }
+    }
 
     // Adds a viewer to the camera and the monitor.
     private void AddViewer(EntityUid uid, EntityUid player, SurveillanceCameraMonitorComponent? monitor = null)

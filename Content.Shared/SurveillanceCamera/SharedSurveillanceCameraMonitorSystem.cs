@@ -37,9 +37,9 @@ public sealed class SurveillanceCameraMonitorUiState : BoundUserInterfaceState
 
     // Currently available subnets. Does not send the entirety of the possible
     // cameras to view because that could be really, really large
-    public List<string> Subnets { get; }
+    public HashSet<string> Subnets { get; }
 
-    public SurveillanceCameraMonitorUiState(EntityUid? activeCamera, List<string> subnets)
+    public SurveillanceCameraMonitorUiState(EntityUid? activeCamera, HashSet<string> subnets)
     {
         ActiveCamera = activeCamera;
         Subnets = subnets;
@@ -69,11 +69,11 @@ public sealed class SurveillanceCameraMonitorSubnetRequestMessage : BoundUserInt
 }
 
 [Serializable, NetSerializable]
-public sealed class SurveillanceCameraMonitorSubnetInfoMessage : BoundUserInterfaceMessage
+public sealed class SurveillanceCameraMonitorInfoMessage : BoundUserInterfaceMessage
 {
-    public List<SurveillanceCameraInfo> SubnetInfo { get; }
+    public SurveillanceCameraInfo SubnetInfo { get; }
 
-    public SurveillanceCameraMonitorSubnetInfoMessage(List<SurveillanceCameraInfo> subnetInfo)
+    public SurveillanceCameraMonitorInfoMessage(SurveillanceCameraInfo subnetInfo)
     {
         SubnetInfo = subnetInfo;
     }

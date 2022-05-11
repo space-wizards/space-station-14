@@ -1,5 +1,6 @@
 namespace Content.Server.SurveillanceCamera;
 
+[Friend(typeof(SurveillanceCameraSystem))]
 public sealed class SurveillanceCameraComponent : Component
 {
     // AIs shouldn't be added here,
@@ -24,11 +25,15 @@ public sealed class SurveillanceCameraComponent : Component
     // AI, etc.)
     public HashSet<EntityUid> ActiveMonitors { get; } = new();
 
+    // If this camera is active or not. Deactivating a camera
+    // will not allow it to obtain any new viewers.
+    public bool Active { get; set; } = true;
+
     // This one isn't easy to deal with. Will require a UI
     // to change/set this so mapping these in isn't
     // the most terrible thing possible.
     [ViewVariables(VVAccess.ReadWrite)]
-    public string Id { get; } = default!;
+    public string Name { get; } = default!;
 
     // This should probably be dependent on ApcDeviceNet,
     // which in turn routes to something connected
