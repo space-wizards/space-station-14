@@ -1,8 +1,20 @@
 ent-BasePDA = КПК
     .desc = Ассистент по персональным данным.
     .suffix = { "" }
-ent-AssistantPDA = КПК ассистента
-    .desc = Почему он не серый?
+ent-PassengerPDA = passenger PDA
+    .desc = Why isn't it gray?
+    .suffix = { "" }
+ent-TechnicalAssistantPDA = technical assistant PDA
+    .desc = Why isn't it yellow?
+    .suffix = { "" }
+ent-MedicalInternPDA = medical intern PDA
+    .desc = Why isn't it white?
+    .suffix = { "" }
+ent-SecurityCadetPDA = security cadet PDA
+    .desc = Why isn't it red?
+    .suffix = { "" }
+ent-ServiceWorkerPDA = service worker PDA
+    .desc = Why isn't it gray?
     .suffix = { "" }
 ent-ChefPDA = КПК повара
     .desc = Покрыт жиром и мукой.
@@ -91,4 +103,3 @@ ent-ClearPDA = чистый КПК
 ent-SyndiPDA = КПК синдиката
     .desc = Окей, пора стать продуктивным членом... о, круто, я плохой парень, пора убивать людей!
     .suffix = { "" }
-    

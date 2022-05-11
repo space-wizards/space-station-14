@@ -245,7 +245,7 @@
   parent: ClothingUniformBase
   id: ClothingUniformJumpsuitHoSGrey
   name: head of security's grey jumpsuit
-  description: A grey jumpsuit of Head of Security, which make him look somewhat like an assistant.
+  description: A grey jumpsuit of Head of Security, which make him look somewhat like a passenger.
   components:
   - type: Sprite
     sprite: Clothing/Uniforms/Jumpsuit/hos_grey.rsi
@@ -789,7 +789,7 @@
     sprite: Clothing/Uniforms/Jumpsuit/operative.rsi
   - type: Clothing
     sprite: Clothing/Uniforms/Jumpsuit/operative.rsi
-    
+
 - type: entity
   parent: ClothingUniformBase
   id: ClothingUniformJumpsuitAtmos
@@ -800,5 +800,5 @@
     sprite: Clothing/Uniforms/Jumpsuit/atmos.rsi
   - type: Clothing
     sprite: Clothing/Uniforms/Jumpsuit/atmos.rsi
-    
-    
+
+

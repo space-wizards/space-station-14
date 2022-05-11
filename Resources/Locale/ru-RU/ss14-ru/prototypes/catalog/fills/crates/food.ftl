@@ -4,3 +4,6 @@ ent-CrateFoodPizza = экстренная доставка пиццы
 ent-CrateFoodMRE = ящик ИРП
     .desc = Армейские обеды, которыми можно накормить целый отдел.
     .suffix = { "" }
+ent-CrateFoodCooking = kitchen supplies crate
+    .desc = Extra kitchen supplies, in case the botanists are absent.
+    .suffix = { "" }

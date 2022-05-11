@@ -44,7 +44,7 @@ namespace Content.Server.GameTicking
             _configurationManager.OnValueChanged(CCVars.GameDummyTicker, value => DummyTicker = value, true);
             _configurationManager.OnValueChanged(CCVars.GameLobbyDuration, value => LobbyDuration = TimeSpan.FromSeconds(value), true);
             _configurationManager.OnValueChanged(CCVars.GameDisallowLateJoins,
-                value => { DisallowLateJoin = value; UpdateLateJoinStatus(); UpdateJobsAvailable(); }, true);
+                value => { DisallowLateJoin = value; UpdateLateJoinStatus(); }, true);
             _configurationManager.OnValueChanged(CCVars.StationOffset, value => StationOffset = value, true);
             _configurationManager.OnValueChanged(CCVars.StationRotation, value => StationRotation = value, true);
             _configurationManager.OnValueChanged(CCVars.MaxStationOffset, value => MaxStationOffset = value, true);

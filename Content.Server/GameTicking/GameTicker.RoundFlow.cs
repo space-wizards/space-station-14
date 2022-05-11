@@ -1,20 +1,21 @@
 using System.Linq;
 using System.Threading.Tasks;
+using Content.Server.Announcements;
 using Content.Server.GameTicking.Events;
 using Content.Server.Ghost;
 using Content.Server.Maps;
 using Content.Server.Mind;
 using Content.Server.Players;
-using Content.Server.Station;
 using Content.Shared.CCVar;
 using Content.Shared.Coordinates;
 using Content.Shared.GameTicking;
 using Content.Shared.Preferences;
-using Content.Shared.Station;
+using Content.Shared.Sound;
 using JetBrains.Annotations;
 using Prometheus;
 using Robust.Server.Maps;
 using Robust.Server.Player;
+using Robust.Shared.Audio;
 using Robust.Shared.Map;
 using Robust.Shared.Network;
 using Robust.Shared.Player;
@@ -205,7 +206,7 @@ namespace Content.Server.GameTicking
             // MapInitialize *before* spawning players, our codebase is too shit to do it afterwards...
             _mapManager.DoMapInitialize(DefaultMap);
 
-            SpawnPlayers(readyPlayers, origReadyPlayers, profiles, force);
+            SpawnPlayers(readyPlayers, origReadyPlayers.Select(x => x.UserId), profiles, force);
 
             _roundStartDateTime = DateTime.UtcNow;
             RunLevel = GameRunLevel.InRound;
@@ -214,7 +215,7 @@ namespace Content.Server.GameTicking
             SendStatusToAll();
             ReqWindowAttentionAll();
             UpdateLateJoinStatus();
-            UpdateJobsAvailable();
+            AnnounceRound();
 
 #if EXCEPTION_TOLERANCE
             }
@@ -427,8 +428,6 @@ namespace Content.Server.GameTicking
             // So clients' entity systems can clean up too...
             RaiseNetworkEvent(ev, Filter.Broadcast());
 
-            _spawnedPositions.Clear();
-            _manifest.Clear();
             DisallowLateJoin = false;
         }
 
@@ -468,6 +467,25 @@ namespace Content.Server.GameTicking
         public TimeSpan RoundDuration()
         {
             return _gameTiming.RealTime.Subtract(_roundStartTimeSpan);
+        }
+
+        private void AnnounceRound()
+        {
+            if (_preset == null) return;
+
+            foreach (var proto in _prototypeManager.EnumeratePrototypes<RoundAnnouncementPrototype>())
+            {
+                if (!proto.GamePresets.Contains(_preset.ID)) continue;
+
+                if (proto.Message != null)
+                    _chatManager.DispatchStationAnnouncement(Loc.GetString(proto.Message), playDefaultSound: false);
+
+                if (proto.Sound != null)
+                    SoundSystem.Play(Filter.Broadcast(), proto.Sound.GetSound());
+
+                // Only play one because A
+                break;
+            }
         }
     }
 

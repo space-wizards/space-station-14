@@ -7,6 +7,7 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Map;
 using Robust.Shared.Physics;
+using Content.Server.Climbing;
 
 namespace Content.IntegrationTests.Tests.GameObjects.Components.Movement
 {
@@ -59,7 +60,7 @@ namespace Content.IntegrationTests.Tests.GameObjects.Components.Movement
 
                 // Now let's make the player enter a climbing transitioning state.
                 climbing.IsClimbing = true;
-                climbing.TryMoveTo(entityManager.GetComponent<TransformComponent>(human).WorldPosition, entityManager.GetComponent<TransformComponent>(table).WorldPosition);
+                EntitySystem.Get<ClimbSystem>().MoveEntityToward(human, table, climbing:climbing);
                 var body = entityManager.GetComponent<IPhysBody>(human);
                 // TODO: Check it's climbing
 

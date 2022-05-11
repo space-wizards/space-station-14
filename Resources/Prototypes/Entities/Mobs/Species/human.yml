@@ -180,7 +180,7 @@
       Arms:
         points: 2
         required: false
-             
+
   - type: Physics
     bodyType: KinematicController
   - type: Fixtures
@@ -191,12 +191,9 @@
       mass: 70
       restitution: 0.0
       mask:
-      - Impassable
-      - MobImpassable
-      - VaultImpassable
-      - SmallImpassable
+      - MobMask
       layer:
-      - Opaque
+      - MobLayer
   - type: AtmosExposed
   - type: Flammable
     fireSpread: true
@@ -309,13 +306,13 @@
 #  - type: Recyclable Turns out turning off recycler safeties without considering the instagib is a bad idea
 #    safe: false
   - type: Speech
+    speechSounds: Alto
   - type: Vocal
   - type: Emoting
   - type: Grammar
     attributes:
       proper: true
   - type: StandingState
-
 
 - type: entity
   save: false
@@ -414,23 +411,20 @@
       - map: [ "pocket2" ]
       - map: ["hand-left"]
       - map: ["hand-right"]
-    - type: Markings 
+    - type: Markings
     - type: Physics
       bodyType: Dynamic
     - type: Fixtures
       fixtures:
       - shape:
           !type:PhysShapeAabb
-            bounds: "-0.35,-0.35,0.35,0.35"
+          bounds: "-0.35,-0.35,0.35,0.35"
         mass: 70
         restitution: 0.0
         mask:
-        - Impassable
-        - MobImpassable
-        - VaultImpassable
-        - SmallImpassable
+        - MobMask
         layer:
-        - Opaque
+        - MobLayer
     - type: HumanoidAppearance
     - type: Body
       template: HumanoidTemplate

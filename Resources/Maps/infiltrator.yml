@@ -7271,36 +7271,6 @@ entities:
     type: Transform
   - locked: False
     type: Lock
-  - fixtures:
-    - shape: !type:PolygonShape
-        vertices:
-        - 0.25,-0.48
-        - 0.25,0.48
-        - -0.25,0.48
-        - -0.25,-0.48
-      mask:
-      - Impassable
-      - SmallImpassable
-      layer:
-      - MobImpassable
-      - ThrownItem
-      - SmallImpassable
-      - Opaque
-      mass: 70
-    type: Fixtures
-  - isPlaceable: False
-    type: PlaceableSurface
-  - containers:
-      EntityStorageComponent: !type:Container
-        ents:
-        - 701
-        - 702
-        - 703
-        - 720
-        - 714
-        - 751
-        - 711
-    type: ContainerContainer
 - uid: 693
   type: TableWood
   components:
@@ -7327,23 +7297,6 @@ entities:
     type: Transform
   - locked: False
     type: Lock
-  - fixtures:
-    - shape: !type:PolygonShape
-        vertices:
-        - 0.25,-0.48
-        - 0.25,0.48
-        - -0.25,0.48
-        - -0.25,-0.48
-      mask:
-      - Impassable
-      - SmallImpassable
-      layer:
-      - MobImpassable
-      - ThrownItem
-      - SmallImpassable
-      - Opaque
-      mass: 70
-    type: Fixtures
   - isPlaceable: False
     type: PlaceableSurface
   - containers:
@@ -7364,23 +7317,6 @@ entities:
     type: Transform
   - locked: False
     type: Lock
-  - fixtures:
-    - shape: !type:PolygonShape
-        vertices:
-        - 0.25,-0.48
-        - 0.25,0.48
-        - -0.25,0.48
-        - -0.25,-0.48
-      mask:
-      - Impassable
-      - SmallImpassable
-      layer:
-      - MobImpassable
-      - ThrownItem
-      - SmallImpassable
-      - Opaque
-      mass: 70
-    type: Fixtures
   - isPlaceable: False
     type: PlaceableSurface
   - containers:
@@ -7401,23 +7337,6 @@ entities:
     type: Transform
   - locked: False
     type: Lock
-  - fixtures:
-    - shape: !type:PolygonShape
-        vertices:
-        - 0.25,-0.48
-        - 0.25,0.48
-        - -0.25,0.48
-        - -0.25,-0.48
-      mask:
-      - Impassable
-      - SmallImpassable
-      layer:
-      - MobImpassable
-      - ThrownItem
-      - SmallImpassable
-      - Opaque
-      mass: 70
-    type: Fixtures
   - isPlaceable: False
     type: PlaceableSurface
   - containers:

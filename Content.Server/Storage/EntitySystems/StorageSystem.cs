@@ -191,6 +191,9 @@ namespace Content.Server.Storage.EntitySystems
             if (!storageComp.ClickInsert)
                 return;
 
+            if (TryComp(uid, out LockComponent? lockComponent) && lockComponent.Locked)
+                return;
+
             Logger.DebugS(storageComp.LoggerName, $"Storage (UID {uid}) attacked by user (UID {args.User}) with entity (UID {args.Used}).");
 
             if (HasComp<PlaceableSurfaceComponent>(uid))
@@ -207,6 +210,9 @@ namespace Content.Server.Storage.EntitySystems
         private void OnActivate(EntityUid uid, ServerStorageComponent storageComp, ActivateInWorldEvent args)
         {
             if (!TryComp<ActorComponent>(args.User, out var actor))
+                return;
+
+            if (TryComp(uid, out LockComponent? lockComponent) && lockComponent.Locked)
                 return;
 
             OpenStorageUI(uid, args.User, storageComp);
