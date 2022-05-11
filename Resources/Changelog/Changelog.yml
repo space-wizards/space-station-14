@@ -1,9 +1,4 @@
 Entries:
-- author: metalgearsloth
-  changes:
-  - {message: Healing (via ointments etc.) now takes time., type: Tweak}
-  id: 999
-  time: '2022-02-07T03:14:46.0000000+00:00'
 - author: mirrorcult
   changes:
   - {message: 'Plasma, tritium, and carbon dioxide are now harmful to breathe in.',
@@ -3038,3 +3033,9 @@ Entries:
   - {message: Atmos yeets should make a lot more sense now, type: Tweak}
   id: 1498
   time: '2022-05-10T15:02:40.0000000+00:00'
+- author: Peptide90
+  changes:
+  - {message: Added a new vending machine for snacks. Mr Changs! Enjoy the fortune
+      cookies., type: Add}
+  id: 1499
+  time: '2022-05-11T07:17:25.0000000+00:00'
