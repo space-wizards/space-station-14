@@ -59,11 +59,13 @@ namespace Content.Client.Tools.Components
 
                 var fuelCap = _parent.FuelCapacity;
                 var fuel = _parent.Fuel;
+                var lit = _parent.Lit;
 
                 _label.SetMarkup(Loc.GetString("welder-component-on-examine-detailed-message",
                                                ("colorName", fuel < fuelCap / 4f ? "darkorange" : "orange"),
-                                               ("fuelLeft", Math.Round(fuel)),
-                                               ("fuelCapacity", fuelCap)));
+                                               ("fuelLeft", Math.Round(fuel, 1)),
+                                               ("fuelCapacity", fuelCap),
+                                               ("status", Loc.GetString(lit ? "welder-component-on-examine-welder-lit-message" : "welder-component-on-examine-welder-not-lit-message"))));
             }
         }
     }
