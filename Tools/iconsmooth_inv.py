@@ -69,7 +69,7 @@ out_states = conversion_mode.states
 subtile_ofx = [1, 0, 1, 0]
 subtile_ofy = [1, 0, 0, 1]
 
-for i in range(8):
+for i in [7, 6, 5, 4, 3, 2, 1, 0]:
     for j in range(4):
         target_tile = out_states[i][j]
         if target_tile != -1:
