@@ -294,7 +294,7 @@ namespace Content.Server.GameTicking
             {
                 _humanoidAppearanceSystem.UpdateFromProfile(entity, profile);
                 EntityManager.GetComponent<MetaDataComponent>(entity).EntityName = profile.Name;
-                if (profile.FlavorText != "")
+                if (profile.FlavorText != "" && _configurationManager.GetCVar<bool>("ic.flavor_text"))
                 {
                     EntityManager.AddComponent<FlavorTextComponent>(entity).Content = profile.FlavorText;
                 }

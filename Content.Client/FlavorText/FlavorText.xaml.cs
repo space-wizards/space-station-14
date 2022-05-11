@@ -8,7 +8,7 @@ namespace Content.Client.FlavorText
     [GenerateTypedNameReferences]
     public sealed partial class FlavorText : Control
     {
-        // TODO: Figure out a different way to have CFlavorTextImput accessed that isn't... this
+        // TODO: Figure out a different way to have CFlavorTextInput accessed that isn't... this
         public LineEdit FlavorTextInput => CFlavorTextInput;
 
         public Action<string>? OnFlavorTextChanged;
