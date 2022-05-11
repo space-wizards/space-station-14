@@ -20,3 +20,24 @@
     contents:
     - id: BoxMRE
       amount: 6
+
+- type: entity
+  id: CrateFoodCooking
+  name: kitchen supplies crate
+  description: Extra kitchen supplies, in case the botanists are absent.
+  parent: CratePlastic
+  components:
+  - type: StorageFill
+    contents:
+    - id: ReagentContainerFlour
+      amount: 3
+    - id: ReagentContainerMilk
+      amount: 4
+    - id: ReagentContainerMilkSoy
+      amount: 1
+    - id: ReagentContainerSugar
+      amount: 1
+    - id: FoodCondimentBottleEnzyme
+      amount: 1
+    - id: LargeBeaker
+      amount: 1

@@ -823,23 +823,6 @@ entities:
   - pos: -11.5,21.5
     parent: 854
     type: Transform
-  - fixtures:
-    - shape: !type:PolygonShape
-        vertices:
-        - 0.25,-0.48
-        - 0.25,0.48
-        - -0.25,0.48
-        - -0.25,-0.48
-      mask:
-      - Impassable
-      - SmallImpassable
-      layer:
-      - MobImpassable
-      - ThrownItem
-      - SmallImpassable
-      - Opaque
-      mass: 70
-    type: Fixtures
   - isPlaceable: False
     type: PlaceableSurface
   - containers:

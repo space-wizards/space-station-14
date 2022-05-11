@@ -1,36 +1,4 @@
 Entries:
-- author: scaly-chimp
-  changes:
-  - {message: adds a portable flasher for security to lock down areas, type: Add}
-  id: 994
-  time: '2022-02-06T15:59:42.0000000+00:00'
-- author: mirrorcult
-  changes:
-  - {message: 'The L6 Saw, C20r, Bojevic, and Grenade Launcher are no longer purchasable
-      without another traitor''s help. Do something more creative.', type: Tweak}
-  - {message: Holoparasites cost 14TC down from 16TC., type: Tweak}
-  id: 995
-  time: '2022-02-06T23:46:06.0000000+00:00'
-- author: Lamrr
-  changes:
-  - {message: NanoTrasen has finally discovered the recipe for storage racks., type: Fix}
-  id: 996
-  time: '2022-02-07T01:51:57.0000000+00:00'
-- author: Macoron
-  changes:
-  - {message: Add more random xeno artifacts effects., type: Add}
-  id: 997
-  time: '2022-02-07T02:26:10.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - {message: Airlock construction / deconstruction now takes longer., type: Tweak}
-  id: 998
-  time: '2022-02-07T03:06:11.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - {message: Healing (via ointments etc.) now takes time., type: Tweak}
-  id: 999
-  time: '2022-02-07T03:14:46.0000000+00:00'
 - author: mirrorcult
   changes:
   - {message: 'Plasma, tritium, and carbon dioxide are now harmful to breathe in.',
@@ -3036,3 +3004,38 @@ Entries:
       The number of plates trashed in disposal has decreased by 1000%., type: Tweak}
   id: 1493
   time: '2022-05-10T01:12:14.0000000+00:00'
+- author: vulppine
+  changes:
+  - {message: 'NanoTrasen vending machine vendors appear to have changed their policies
+      on some items within vending machines, and gave the boards a redesign. Explore
+      the new, possibly hidden options on your local vending machine today!', type: Tweak}
+  id: 1494
+  time: '2022-05-10T02:22:58.0000000+00:00'
+- author: mirrorcult
+  changes:
+  - {message: Assistants no longer assist. They are merely Passengers on this great
+      station., type: Tweak}
+  id: 1495
+  time: '2022-05-10T03:35:09.0000000+00:00'
+- author: Veritius
+  changes:
+  - {message: Removed drones as ghost roles for the time being, type: Remove}
+  id: 1496
+  time: '2022-05-10T06:50:54.0000000+00:00'
+- author: lapatison
+  changes:
+  - {message: 'Orderable from cargo `kitchen supplies crate`, that stores several
+      bags of milk and flour and other supplements.', type: Add}
+  id: 1497
+  time: '2022-05-10T08:03:13.0000000+00:00'
+- author: Tomeno
+  changes:
+  - {message: Atmos yeets should make a lot more sense now, type: Tweak}
+  id: 1498
+  time: '2022-05-10T15:02:40.0000000+00:00'
+- author: Peptide90
+  changes:
+  - {message: Added a new vending machine for snacks. Mr Changs! Enjoy the fortune
+      cookies., type: Add}
+  id: 1499
+  time: '2022-05-11T07:17:25.0000000+00:00'

@@ -18,11 +18,6 @@
   - type: Physics
     canCollide: false
   - type: Fixtures
-    fixtures:
-    - shape:
-        !type:PhysShapeAabb {}
-      layer:
-      - Passable
   - type: Damageable
     damageContainer: Inorganic
   - type: Destructible
@@ -136,14 +131,6 @@
     state: chapel
   - type: Tag
     tags: [ Carpet ]
-  - type: Physics
-    canCollide: false
-  - type: Fixtures
-    fixtures:
-    - shape:
-        !type:PhysShapeAabb {}
-      layer:
-      - Passable
   - type: Damageable
     damageContainer: Inorganic
   - type: Destructible
