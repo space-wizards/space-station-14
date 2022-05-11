@@ -13,7 +13,7 @@
       mask:
       - FullTileMask
       layer:
-      - FullTileMask
+      - WallLayer
   - type: InteractionOutline
   - type: Anchorable
   - type: Sprite
@@ -50,7 +50,7 @@
       mask:
       - FullTileMask
       layer:
-      - FullTileMask
+      - GlassLayer
   - type: Transform
     anchored: true
   - type: Sprite
