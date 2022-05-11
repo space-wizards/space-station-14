@@ -1,22 +1,4 @@
 Entries:
-- author: mirrorcult
-  changes:
-  - {message: 'Plasma, tritium, and carbon dioxide are now harmful to breathe in.',
-    type: Add}
-  - {message: It may take time for you to stop suffocating once entering an oxygenated
-      area., type: Tweak}
-  - {message: Slimepeople no longer have to breathe., type: Add}
-  id: 1000
-  time: '2022-02-07T04:48:15.0000000+00:00'
-- author: mirrorcult
-  changes:
-  - {message: Slimepeople now take extra pressure damage., type: Tweak}
-  - {message: 'Slimepeople are now hurt by water, and are not affected by acids on
-      touch.', type: Add}
-  - {message: Slimepeople are now resistant against blunt and poison damage., type: Tweak}
-  - {message: 'Slimepeople are now weak to slash, piercing, and cold damage.', type: Tweak}
-  id: 1001
-  time: '2022-02-07T04:48:20.0000000+00:00'
 - author: Emisse
   changes:
   - {message: 'Bagel Station, a comfy midpop station, has been introduced.', type: Add}
@@ -3039,3 +3021,15 @@ Entries:
       cookies., type: Add}
   id: 1499
   time: '2022-05-11T07:17:25.0000000+00:00'
+- author: HoofedEar
+  changes:
+  - {message: You are now less likely to accidentally stuff yourself in a closet or
+      crate., type: Tweak}
+  id: 1500
+  time: '2022-05-11T20:46:59.0000000+00:00'
+- author: ike709
+  changes:
+  - {message: Fixed lighters not having a flame, type: Fix}
+  - {message: Welders/Lighters now say if they're lit while you're holding them, type: Tweak}
+  id: 1501
+  time: '2022-05-11T20:48:07.0000000+00:00'
