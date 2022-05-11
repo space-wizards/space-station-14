@@ -6,6 +6,7 @@ using Content.Shared.Chemistry.Reagent;
 using Content.Shared.IoC;
 using Content.Shared.Localizations;
 using Content.Shared.Maps;
+using Content.Shared.Markings;
 using Robust.Shared.ContentPack;
 using Robust.Shared.IoC;
 using Robust.Shared.Log;
@@ -38,6 +39,7 @@ namespace Content.Shared.Entry
             _initTileDefinitions();
             CheckReactions();
             IoCManager.Resolve<SpriteAccessoryManager>().Initialize();
+            IoCManager.Resolve<MarkingManager>().Initialize();
         }
 
         private void CheckReactions()

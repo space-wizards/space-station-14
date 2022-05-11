@@ -8,6 +8,7 @@
     contents:
       - id: ClothingMaskBreath
       - id: EmergencyOxygenTankFilled
+      - id: SpaceMedipen
       - id: EmergencyMedipen
       - id: Flare
       - id: FoodSnackChocolate
@@ -26,6 +27,7 @@
     contents:
       - id: ClothingMaskBreath
       - id: ExtendedEmergencyOxygenTankFilled
+      - id: SpaceMedipen
       - id: EmergencyMedipen
       - id: Flare
       - id: FoodSnackChocolate
@@ -45,6 +47,7 @@
     contents:
       - id: ClothingMaskGasSecurity
       - id: EmergencyOxygenTankFilled
+      - id: SpaceMedipen
       - id: EmergencyMedipen
       - id: Flare
       - id: FoodSnackChocolate
@@ -64,6 +67,7 @@
     contents:
       - id: ClothingMaskBreathMedical
       - id: EmergencyOxygenTankFilled
+      - id: SpaceMedipen
       - id: EmergencyMedipen
       - id: Flare
       - id: FoodSnackChocolate
@@ -88,6 +92,26 @@
     contents:
       - id: ClothingMaskBreath
       - id: EmergencyOxygenTankFilled
+      - id: SpaceMedipen
       - id: EmergencyMedipen
       - id: Flare
       - id: FoodSnackChocolate
+
+- type: entity
+  name: extended-capacity survival box
+  parent: BoxCardboard
+  id: BoxSurvivalSyndicate
+  description: It's a box with basic internals inside. This one is labelled to contain an extended-capacity tank.
+  components:
+  - type: StorageFill
+    contents:
+      - id: ClothingMaskGasSyndicate
+      - id: ExtendedEmergencyOxygenTankFilled
+      - id: SpaceMedipen
+      - id: EmergencyMedipen
+      - id: Flare
+      - id: FoodSnackChocolate
+  - type: Sprite
+    layers:
+      - state: internals
+      - state: extendedtank

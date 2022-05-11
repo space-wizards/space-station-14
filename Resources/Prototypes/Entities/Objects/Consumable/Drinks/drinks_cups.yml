@@ -206,7 +206,7 @@
     sprite: Objects/Consumable/Drinks/lean.rsi
 
 - type: entity
-  parent: DrinkGlassBase
+  parent: DrinkBaseCup
   id: DrinkWaterCup
   name: water cup
   description: A paper water cup.

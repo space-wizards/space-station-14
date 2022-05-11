@@ -76,19 +76,20 @@
   id: UplinkExplosiveGrenadeFlash
   category: Explosives
   itemId: GrenadeFlashBang
-  price: 4
+  price: 2
 
 - type: uplinkListing
   id: UplinkSyndieMiniBomb
   category: Explosives
   itemId: SyndieMiniBomb
-  price: 6
+  price: 7
 
 - type: uplinkListing
   id: UplinkGrenadePenguin
   category: Explosives
   itemId: MobGrenadePenguin
   price: 6
+  surplus: false # got wrecked by penguins from surplus crate
 
 - type: uplinkListing
   id: UplinkC4
@@ -170,6 +171,7 @@
   id: UplinkHypopen
   category: Utility
   itemId: Hypopen
+  listingName: Hypopen
   description: A chemical hypospray disguised as a pen, capable of instantly injecting up to 15u of reagents. Starts empty.
   price: 4
 
@@ -203,6 +205,29 @@
   price: 40
   icon: /Textures/Objects/Weapons/Guns/LMGs/l6.rsi/icon.png
 
+- type: uplinkListing
+  id: UplinkZombieBundle
+  category: Bundles
+  itemId: ClothingBackpackDuffelZombieBundle
+  price: 50
+  icon: /Textures/Structures/Wallmounts/signs.rsi/bio.png
+
+- type: uplinkListing
+  id: UplinkSurplusBundle
+  category: Bundles
+  itemId: CrateSyndicateSurplusBundle
+  description: Contains 50 telecrystals worth of completely random Syndicate items. It can be useless junk or really good.
+  price: 20
+  surplus: false
+
+- type: uplinkListing
+  id: UplinkSuperSurplusBundle
+  category: Bundles
+  itemId: CrateSyndicateSuperSurplusBundle
+  description: Contains 125 telecrystals worth of completely random Syndicate items.
+  price: 40
+  surplus: false
+
 #- type: uplinkListing
 #  id: UplinkCarbineBundle
 #  category: Bundles
@@ -216,7 +241,7 @@
   id: UplinkToolbox
   category: Tools
   itemId: ToolboxSyndicateFilled
-  price: 5
+  price: 2
 
 - type: uplinkListing
   id: UplinkSyndicateJawsOfLife
@@ -261,11 +286,26 @@
   price: 8
 
 - type: uplinkListing
+  id: UplinkClothingShoesBootsMagSyndie
+  category: Armor
+  itemId: ClothingShoesBootsMagSyndie
+  description: A pair of magnetic boots that will keep you on the ground if the gravity fails or is sabotaged, giving you a mobility advantage. If activated with gravity they will protect from slips, but they will slow you down.
+  price: 2
+
+- type: uplinkListing
   id: UplinkEVASyndie
   category: Armor
   itemId: BoxSyndicateEVA
   description: A simple EVA suit that offers no protection other than what's needed to survive in space.
   price: 4
+
+- type: uplinkListing
+  id: UplinkClothingOuterHardsuitJuggernaut
+  category: Armor
+  itemId: ClothingOuterHardsuitJuggernaut
+  description: Hyper resilient armor made of materials tested in the Tau chromosphere facility. The only thing that's going to be slowing you down is this suit... and tasers.
+  price: 12
+
 
 # Misc
 
@@ -346,3 +386,18 @@
   itemId: NocturineChemistryBottle
   description: A chemical that makes it very hard for your target to stand up.
   price: 5
+
+- type: uplinkListing
+  id: UplinkSyndicateStamp
+  category: Misc
+  itemId: RubberStampSyndicate
+  price: 2
+
+- type: uplinkListing
+  id: UplinkSyndicateSegwayCrate
+  category: Misc
+  itemId: CrateFunSyndicateSegway
+  listingName: syndicate segway
+  description: Be an enemy of the corporation, in style!
+  price: 5
+  surplus: false

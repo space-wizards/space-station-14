@@ -175,6 +175,27 @@
           prefix: s_ar
 
 - type: entity
+  name: antique power cell prototype
+  description: A small cell that self recharges. Used in old laser arms research.
+  id: PowerCellAntiqueProto
+  parent: PowerCellSmallBase
+  components:
+    - type: Sprite
+      sprite: Objects/Power/PowerCells/power_cell_small_autorecharge.rsi
+      layers:
+        - state: s_ar
+    - type: Battery
+      maxCharge: 60
+      startingCharge: 60
+    - type: BatterySelfRecharger
+      autoRecharge: true
+      autoRechargeRate: 5
+    - type: Appearance
+      visuals:
+        - type: PowerCellVisualizer
+          prefix: s_ar
+          
+- type: entity
   name: medium standard power cell
   description: A rechargeable standardized power cell, size M. This is the cheapest kind you can find.
   id: PowerCellMediumStandard

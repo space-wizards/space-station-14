@@ -1,7 +1,9 @@
-diagnoser_printing.ogg taken from https://freesound.org/people/RobSp1derp1g/sounds/615419/ and edited
+circuitprinter.ogg taken from https://freesound.org/people/OroborosNZ/sounds/273649/ and https://freesound.org/people/170048@virtualwindow.co.za/sounds/408041/ and edited
 
-vaccinator_running.ogg taken from https://freesound.org/people/RutgerMuller/sounds/365413/ and edited
+diagnoser_printing.ogg taken from https://freesound.org/people/RobSp1derp1g/sounds/615419/ and edited
 
 uniformprinter.ogg taken from https://freesound.org/people/sukaton/sounds/60640/ and edited
 
-circuitprinter.ogg taken from https://freesound.org/people/OroborosNZ/sounds/273649/ and https://freesound.org/people/170048@virtualwindow.co.za/sounds/408041/ and edited
+vaccinator_running.ogg taken from https://freesound.org/people/RutgerMuller/sounds/365413/ and edited
+
+vending_jingle.ogg made by github.com/hubismal licensed under CC-BY-3.0

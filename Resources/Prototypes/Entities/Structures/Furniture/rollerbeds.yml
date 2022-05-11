@@ -22,15 +22,12 @@
     - type: Physics
     - type: Fixtures
       fixtures:
-        - shape:
-            !type:PhysShapeCircle
-            radius: 0.35
-          mass: 30
-          mask:
-            - Impassable
-            - SmallImpassable
-          layer:
-            - Opaque
+      - shape:
+          !type:PhysShapeCircle
+          radius: 0.35
+        mass: 30
+        mask:
+        - MobMask
     - type: Damageable
     - type: Destructible
       thresholds:

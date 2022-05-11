@@ -30,6 +30,8 @@ namespace Content.Client.Administration
         private DefaultWindow? _plainWindow;
         private readonly Dictionary<NetUserId, BwoinkPanel> _activePanelMap = new();
 
+        public bool IsOpen => (_adminWindow?.IsOpen ?? false) || (_plainWindow?.IsOpen ?? false);
+
         protected override void OnBwoinkTextMessage(BwoinkTextMessage message, EntitySessionEventArgs eventArgs)
         {
             base.OnBwoinkTextMessage(message, eventArgs);
@@ -117,6 +119,12 @@ namespace Content.Client.Administration
             }
 
             EnsurePlain(channelId.Value);
+        }
+
+        public void Close()
+        {
+            _adminWindow?.Close();
+            _plainWindow?.Close();
         }
 
         private void SelectChannel(NetUserId uid)

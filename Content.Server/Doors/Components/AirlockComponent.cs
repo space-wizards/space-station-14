@@ -3,7 +3,7 @@ using System.Threading;
 using Content.Server.Doors.Systems;
 using Content.Server.Power.Components;
 using Content.Server.VendingMachines;
-using Content.Server.WireHacking;
+// using Content.Server.WireHacking;
 using Content.Shared.Doors;
 using Content.Shared.Doors.Components;
 using Content.Shared.Sound;
@@ -14,8 +14,8 @@ using Robust.Shared.Maths;
 using Robust.Shared.Player;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
-using static Content.Shared.Wires.SharedWiresComponent;
-using static Content.Shared.Wires.SharedWiresComponent.WiresAction;
+// using static Content.Shared.Wires.SharedWiresComponent;
+// using static Content.Shared.Wires.SharedWiresComponent.WiresAction;
 
 namespace Content.Server.Doors.Components
 {
@@ -24,7 +24,7 @@ namespace Content.Server.Doors.Components
     /// </summary>
     [RegisterComponent]
     [ComponentReference(typeof(SharedAirlockComponent))]
-    public sealed class AirlockComponent : SharedAirlockComponent, IWires
+    public sealed class AirlockComponent : SharedAirlockComponent
     {
         [Dependency] private readonly IEntityManager _entityManager = default!;
 
@@ -65,8 +65,8 @@ namespace Content.Server.Doors.Components
             set
             {
                 _powerWiresPulsed = value;
-                UpdateWiresStatus();
-                UpdatePowerCutStatus();
+                // UpdateWiresStatus();
+                // UpdatePowerCutStatus();
             }
         }
 
@@ -83,16 +83,26 @@ namespace Content.Server.Doors.Components
             }
         }
 
-        private bool _boltLightsWirePulsed = true;
+        private bool _boltLightsEnabled = true;
+
+        public bool BoltLightsEnabled
+        {
+            get => _boltLightsEnabled;
+            set
+            {
+                _boltLightsEnabled = value;
+                UpdateBoltLightStatus();
+            }
+        }
 
         [ViewVariables(VVAccess.ReadWrite)]
-        private bool BoltLightsVisible
+        public bool BoltLightsVisible
         {
-            get => _boltLightsWirePulsed && BoltsDown && IsPowered()
+            get => _boltLightsEnabled && BoltsDown && IsPowered()
                 && _entityManager.TryGetComponent<DoorComponent>(Owner, out var doorComponent) && doorComponent.State == DoorState.Closed;
             set
             {
-                _boltLightsWirePulsed = value;
+                _boltLightsEnabled = value;
                 UpdateBoltLightStatus();
             }
         }
@@ -142,228 +152,6 @@ namespace Content.Server.Doors.Components
             {
                 appearanceComponent.SetData(DoorVisuals.BoltLights, BoltLightsVisible);
             }
-        }
-
-        public void UpdateWiresStatus()
-        {
-            if (!_entityManager.TryGetComponent<WiresComponent>(Owner, out var wiresComponent)) return;
-
-            var mainPowerCut = wiresComponent.IsWireCut(Wires.MainPower);
-            var backupPowerCut = wiresComponent.IsWireCut(Wires.BackupPower);
-            var statusLightState = PowerWiresPulsed ? StatusLightState.BlinkingFast : StatusLightState.On;
-            StatusLightData powerLight;
-            if (mainPowerCut && backupPowerCut)
-            {
-                powerLight = new StatusLightData(Color.DarkGoldenrod, StatusLightState.Off, "POWER");
-            }
-            else if (mainPowerCut != backupPowerCut)
-            {
-                powerLight = new StatusLightData(Color.Gold, statusLightState, "POWER");
-            }
-            else
-            {
-                powerLight = new StatusLightData(Color.Yellow, statusLightState, "POWER");
-            }
-
-            var boltStatus =
-                new StatusLightData(Color.Red, BoltsDown ? StatusLightState.On : StatusLightState.Off, "BOLT");
-            var boltLightsStatus = new StatusLightData(Color.Lime,
-                _boltLightsWirePulsed ? StatusLightState.On : StatusLightState.Off, "BOLT LED");
-
-            var timingStatus =
-                new StatusLightData(Color.Orange, (AutoCloseDelayModifier <= 0) ? StatusLightState.Off :
-                                                    !MathHelper.CloseToPercent(AutoCloseDelayModifier, 1.0f) ? StatusLightState.BlinkingSlow :
-                                                    StatusLightState.On,
-                                                    "TIME");
-
-            var safetyStatus =
-                new StatusLightData(Color.Red, Safety ? StatusLightState.On : StatusLightState.Off, "SAFETY");
-
-            wiresComponent.SetStatus(AirlockWireStatus.PowerIndicator, powerLight);
-            wiresComponent.SetStatus(AirlockWireStatus.BoltIndicator, boltStatus);
-            wiresComponent.SetStatus(AirlockWireStatus.BoltLightIndicator, boltLightsStatus);
-            wiresComponent.SetStatus(AirlockWireStatus.AIControlIndicator, new StatusLightData(Color.Purple, StatusLightState.BlinkingSlow, "AI CTRL"));
-            wiresComponent.SetStatus(AirlockWireStatus.TimingIndicator, timingStatus);
-            wiresComponent.SetStatus(AirlockWireStatus.SafetyIndicator, safetyStatus);
-        }
-
-        private void UpdatePowerCutStatus()
-        {
-            if (!_entityManager.TryGetComponent<ApcPowerReceiverComponent>(Owner, out var receiverComponent))
-            {
-                return;
-            }
-
-            if (PowerWiresPulsed)
-            {
-                receiverComponent.PowerDisabled = true;
-                return;
-            }
-
-            if (!_entityManager.TryGetComponent<WiresComponent>(Owner, out var wiresComponent))
-            {
-                return;
-            }
-
-            receiverComponent.PowerDisabled =
-                wiresComponent.IsWireCut(Wires.MainPower) &&
-                wiresComponent.IsWireCut(Wires.BackupPower);
-        }
-
-        private enum Wires
-        {
-            /// <summary>
-            /// Pulsing turns off power for <see cref="AirlockComponent.PowerWiresTimeout"/>.
-            /// Cutting turns off power permanently if <see cref="BackupPower"/> is also cut.
-            /// Mending restores power.
-            /// </summary>
-            MainPower,
-
-            /// <see cref="MainPower"/>
-            BackupPower,
-
-            /// <summary>
-            /// Pulsing causes for bolts to toggle (but only raise if power is on)
-            /// Cutting causes Bolts to drop
-            /// Mending does nothing
-            /// </summary>
-            Bolts,
-
-            /// <summary>
-            /// Pulsing causes light to toggle
-            /// Cutting causes light to go out
-            /// Mending causes them to go on again
-            /// </summary>
-            BoltLight,
-
-            // Placeholder for when AI is implemented
-            // aaaaany day now.
-            AIControl,
-
-            /// <summary>
-            /// Pulsing causes door to close faster
-            /// Cutting disables door timer, causing door to stop closing automatically
-            /// Mending restores door timer
-            /// </summary>
-            Timing,
-
-            /// <summary>
-            /// Pulsing toggles safety
-            /// Cutting disables safety
-            /// Mending enables safety
-            /// </summary>
-            Safety,
-        }
-
-        public void RegisterWires(WiresComponent.WiresBuilder builder)
-        {
-            builder.CreateWire(Wires.MainPower);
-            builder.CreateWire(Wires.BackupPower);
-            builder.CreateWire(Wires.Bolts);
-            builder.CreateWire(Wires.BoltLight);
-            builder.CreateWire(Wires.Timing);
-            builder.CreateWire(Wires.Safety);
-
-            UpdateWiresStatus();
-        }
-
-        public void WiresUpdate(WiresUpdateEventArgs args)
-        {
-            if (!_entityManager.TryGetComponent<DoorComponent>(Owner, out var doorComponent))
-            {
-                return;
-            }
-
-            if (args.Action == Pulse)
-            {
-                switch (args.Identifier)
-                {
-                    case Wires.MainPower:
-                    case Wires.BackupPower:
-                        PowerWiresPulsed = true;
-                        _powerWiresPulsedTimerCancel.Cancel();
-                        _powerWiresPulsedTimerCancel = new CancellationTokenSource();
-                        Owner.SpawnTimer(TimeSpan.FromSeconds(PowerWiresTimeout),
-                            () => PowerWiresPulsed = false,
-                            _powerWiresPulsedTimerCancel.Token);
-                        break;
-                    case Wires.Bolts:
-                        if (!BoltsDown)
-                        {
-                            SetBoltsWithAudio(true);
-                        }
-                        else
-                        {
-                            if (IsPowered()) // only raise again if powered
-                            {
-                                SetBoltsWithAudio(false);
-                            }
-                        }
-
-                        break;
-                    case Wires.BoltLight:
-                        // we need to change the property here to set the appearance again
-                        BoltLightsVisible = !_boltLightsWirePulsed;
-                        break;
-                    case Wires.Timing:
-                        // This is permanent, until the wire gets cut & mended.
-                        AutoCloseDelayModifier = 0.5f;
-                        EntitySystem.Get<AirlockSystem>().UpdateAutoClose(Owner, this);
-                        break;
-                    case Wires.Safety:
-                        Safety = !Safety;
-                        Dirty();
-                        break;
-                }
-            }
-
-            else if (args.Action == Mend)
-            {
-                switch (args.Identifier)
-                {
-                    case Wires.MainPower:
-                    case Wires.BackupPower:
-                        // mending power wires instantly restores power
-                        _powerWiresPulsedTimerCancel?.Cancel();
-                        PowerWiresPulsed = false;
-                        break;
-                    case Wires.BoltLight:
-                        BoltLightsVisible = true;
-                        break;
-                    case Wires.Timing:
-                        AutoCloseDelayModifier = 1;
-                        EntitySystem.Get<AirlockSystem>().UpdateAutoClose(Owner, this);
-                        break;
-                    case Wires.Safety:
-                        Safety = true;
-                        Dirty();
-                        break;
-                }
-            }
-
-            else if (args.Action == Cut)
-            {
-                switch (args.Identifier)
-                {
-                    case Wires.Bolts:
-                        SetBoltsWithAudio(true);
-                        break;
-                    case Wires.BoltLight:
-                        BoltLightsVisible = false;
-                        break;
-                    case Wires.Timing:
-                        AutoCloseDelayModifier = 0; // disable auto close
-                        EntitySystem.Get<AirlockSystem>().UpdateAutoClose(Owner, this);
-                        break;
-                    case Wires.Safety:
-                        Safety = false;
-                        Dirty();
-                        break;
-                }
-            }
-
-            UpdateWiresStatus();
-            UpdatePowerCutStatus();
         }
 
         public void SetBoltsWithAudio(bool newBolts)
