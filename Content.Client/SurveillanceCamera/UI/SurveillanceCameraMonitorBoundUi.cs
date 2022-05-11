@@ -9,6 +9,8 @@ public sealed class SurveillanceCameraMonitorBoundUi : BoundUserInterface
 
     private SurveillanceCameraMonitorWindow? _window;
     private EntityUid? _currentCamera;
+    private string _currentSubnet = default!;
+    private readonly HashSet<string> _knownAddresses = new();
 
     public SurveillanceCameraMonitorBoundUi(ClientUserInterfaceComponent owner, object uiKey) : base(owner, uiKey)
     {
@@ -49,15 +51,21 @@ public sealed class SurveillanceCameraMonitorBoundUi : BoundUserInterface
 
         _currentCamera = cast.ActiveCamera;
 
+        if (_currentSubnet != cast.ActiveSubnet)
+        {
+            _knownAddresses.Clear();
+            _currentSubnet = cast.ActiveSubnet;
+        }
+
         if (cast.ActiveCamera == null)
         {
-            _window.UpdateState(null, cast.Subnets);
+            _window.UpdateState(null, cast.Subnets, _currentSubnet);
         }
         else
         {
             if (_entityManager.TryGetComponent(cast.ActiveCamera, out EyeComponent eye))
             {
-                _window.UpdateState(eye.Eye, cast.Subnets);
+                _window.UpdateState(eye.Eye, cast.Subnets, _currentSubnet);
             }
         }
 
@@ -65,6 +73,24 @@ public sealed class SurveillanceCameraMonitorBoundUi : BoundUserInterface
 
     protected override void ReceiveMessage(BoundUserInterfaceMessage message)
     {
+        switch (message)
+        {
+            case SurveillanceCameraMonitorInfoMessage infoMessage:
+                if (infoMessage.Info.Subnet != _currentSubnet)
+                {
+                    return;
+                }
+
+                if (_knownAddresses.Contains(infoMessage.Info.Address))
+                {
+                    return;
+                }
+
+                _knownAddresses.Add(infoMessage.Info.Address);
+
+                _window!.AddCameraToList(infoMessage.Info.Name, infoMessage.Info.Address);
+                break;
+        }
     }
 
     protected override void Dispose(bool disposing)

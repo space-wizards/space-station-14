@@ -45,11 +45,7 @@ public sealed class SurveillanceCameraSystem : SharedSurveillanceCameraSystem
             return;
         }
 
-        if (!args.Data.TryGetValue(CameraSubnetData, out string? subnet)
-            || subnet != component.Subnet)
-        {
-            return;
-        }
+
 
         if (args.Data.TryGetValue(DeviceNetworkConstants.Command, out string? command))
         {
@@ -68,8 +64,15 @@ public sealed class SurveillanceCameraSystem : SharedSurveillanceCameraSystem
                 case CameraPingMessage:
                     payload[DeviceNetworkConstants.Command] = CameraPingMessage;
                     break;
-                case CameraDataMessage:
                 case CameraPingSubnetMessage:
+                    if (!args.Data.TryGetValue(CameraSubnetData, out string? subnet)
+                        || subnet != component.Subnet)
+                    {
+                        return;
+                    }
+
+                    goto case CameraDataMessage;
+                case CameraDataMessage:
                     payload[DeviceNetworkConstants.Command] = CameraDataMessage;
                     break;
                 default:

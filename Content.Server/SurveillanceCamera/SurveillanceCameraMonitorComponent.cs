@@ -13,8 +13,8 @@ public sealed class SurveillanceCameraMonitorComponent : Component
     // Set of viewers currently looking at this monitor.
     public HashSet<EntityUid> Viewers { get; } = new();
 
-    // Routes for subnet data.
-    public Dictionary<string, HashSet<EntityUid>> ClientSubnetInfoRoutes { get; }= new();
+    // Current active subnet.
+    public string ActiveSubnet { get; set; } = default!;
 
     // The subnets known by this camera monitor.
     public HashSet<string> KnownSubnets { get; } = new();

@@ -14,6 +14,7 @@ public sealed partial class SurveillanceCameraMonitorWindow : DefaultWindow
     public event Action<string>? CameraSelected;
     public event Action<string>? SubnetOpened;
 
+
     public SurveillanceCameraMonitorWindow()
     {
         RobustXamlLoader.Load(this);
@@ -27,7 +28,7 @@ public sealed partial class SurveillanceCameraMonitorWindow : DefaultWindow
 
     // The UI class should get the eye from the entity, and then
     // pass it here so that the UI can change its view.
-    public void UpdateState(IEye? eye, List<string> subnets)
+    public void UpdateState(IEye? eye, HashSet<string> subnets, string activeSubnet)
     {
         CameraView.Eye = eye;
 
@@ -44,6 +45,21 @@ public sealed partial class SurveillanceCameraMonitorWindow : DefaultWindow
                 AddSubnet(subnet);
             }
         }
+
+        if (SubnetSelector.SelectedMetadata != null
+            && activeSubnet != (string) SubnetSelector.SelectedMetadata)
+        {
+            for (var i = 0; i < SubnetSelector.ItemCount; i++)
+            {
+                if ((string) SubnetSelector.GetItemMetadata(i)! == activeSubnet)
+                {
+                    SubnetList.DisposeAllChildren();
+                    SubnetList.RemoveAllChildren();
+
+                    SubnetSelector.Select(i);
+                }
+            }
+        }
     }
 
     private int AddSubnet(string subnet)
@@ -54,41 +70,10 @@ public sealed partial class SurveillanceCameraMonitorWindow : DefaultWindow
         return SubnetSelector.ItemCount - 1;
     }
 
-    // When a subnet is queried from the client UI, it should
-    // populate that subnet's tree with the nodes that indicate
-    // the cameras in that subnet.
-    //
-    // The issue with this is that this would require caching in the
-    // camera system itself, which... is that ideal to do? Is it OK?
-    // I don't have a problem treating the system like a true
-    // singleton for just a simple cache, but the issue relates to
-    // if the DeviceNet portion of it should be axed or not.
-    public void SubnetSelected(List<SurveillanceCameraInfo> subnetInfo)
+    public void AddCameraToList(string name, string address)
     {
-        if (subnetInfo.Count == 0)
-        {
-            return;
-        }
-
-        var subnet = subnetInfo[0].Subnet;
-
-        if (SubnetSelector.SelectedMetadata == null
-            || subnet != (string) SubnetSelector.SelectedMetadata)
-        {
-            return;
-        }
-
-        foreach (var camera in subnetInfo)
-        {
-            if (camera.Subnet != subnet)
-            {
-                continue;
-            }
-
-            var button = CreateCameraButton(camera.Name, camera.Address);
-
-            SubnetList.AddChild(button);
-        }
+        var button = CreateCameraButton(name, address);
+        SubnetList.AddChild(button);
     }
 
     private Button CreateCameraButton(string name, string address)

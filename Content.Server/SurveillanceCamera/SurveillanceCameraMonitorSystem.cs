@@ -14,9 +14,6 @@ public sealed class SurveillanceCameraMonitorSystem : EntitySystem
     [Dependency] private readonly UserInterfaceSystem _userInterface = default!;
     [Dependency] private readonly DeviceNetworkSystem _deviceNetworkSystem = default!;
 
-    // who to route subnet data to based on camera data packets received
-    private readonly Dictionary<string, HashSet<EntityUid>> _subnetCameraRouting = new();
-
     public override void Initialize()
     {
         SubscribeLocalEvent<SurveillanceCameraMonitorComponent, SurveillanceCameraDeactivateEvent>(OnSurveillanceCameraDeactivate);
@@ -45,14 +42,9 @@ public sealed class SurveillanceCameraMonitorSystem : EntitySystem
     private void OnSubnetRequest(EntityUid uid, SurveillanceCameraMonitorComponent component,
         SurveillanceCameraMonitorSubnetRequestMessage args)
     {
-        if (!component.KnownSubnets.Contains(args.Subnet))
-        {
-            return;
-        }
-
         if (args.Session.AttachedEntity != null)
         {
-            RouteCameraInfoToClient(uid, args.Session.AttachedEntity.Value, args.Subnet, component);
+            SetActiveSubnet(uid, args.Subnet, component);
         }
     }
 
@@ -78,7 +70,8 @@ public sealed class SurveillanceCameraMonitorSystem : EntitySystem
                     break;
                 case SurveillanceCameraSystem.CameraDataMessage:
                     if (!args.Data.TryGetValue(SurveillanceCameraSystem.CameraNameData, out string? name)
-                        || !args.Data.TryGetValue(SurveillanceCameraSystem.CameraSubnetData, out string? subnetData))
+                        || !args.Data.TryGetValue(SurveillanceCameraSystem.CameraSubnetData, out string? subnetData)
+                        || component.ActiveSubnet != subnetData)
                     {
                         return;
                     }
@@ -118,7 +111,7 @@ public sealed class SurveillanceCameraMonitorSystem : EntitySystem
         {
             RemoveActiveCamera(uid, component);
             component.NextCameraAddress = null;
-            component.ClientSubnetInfoRoutes.Clear();
+            component.ActiveSubnet = string.Empty;
         }
     }
 
@@ -137,36 +130,36 @@ public sealed class SurveillanceCameraMonitorSystem : EntitySystem
     private void OnBoundUiClose(EntityUid uid, SurveillanceCameraMonitorComponent component, BoundUIClosedEvent args)
     {
         RemoveViewer(uid, args.Entity, component);
-
-        foreach (var viewerSet in component.ClientSubnetInfoRoutes.Values)
-        {
-            if (viewerSet.Contains(args.Entity))
-            {
-                viewerSet.Remove(args.Entity);
-                break;
-            }
-        }
     }
     #endregion
 
-    private void RouteCameraInfoToClient(EntityUid uid, EntityUid player, string subnet,
+    private void SetActiveSubnet(EntityUid uid, string subnet,
         SurveillanceCameraMonitorComponent? monitor = null)
     {
-        if (!Resolve(uid, ref monitor))
+        if (!Resolve(uid, ref monitor)
+            || !monitor.KnownSubnets.Contains(subnet))
         {
             return;
         }
 
-        if (!monitor.ClientSubnetInfoRoutes.ContainsKey(subnet))
-        {
-            monitor.ClientSubnetInfoRoutes.Add(subnet, new HashSet<EntityUid>());
-        }
+        monitor.ActiveSubnet = subnet;
+        UpdateUserInterface(uid, monitor);
 
-        monitor.ClientSubnetInfoRoutes[subnet].Add(player);
+        RequestSubnetInfo(uid, subnet);
+    }
+
+    private void RequestSubnetInfo(EntityUid uid, string subnet, SurveillanceCameraMonitorComponent? monitor = null)
+    {
+        if (!Resolve(uid, ref monitor)
+            || !monitor.KnownSubnets.Contains(subnet))
+        {
+            return;
+        }
 
         var payload = new NetworkPayload()
         {
-            {DeviceNetworkConstants.Command, SurveillanceCameraSystem.CameraPingSubnetMessage}
+            {DeviceNetworkConstants.Command, SurveillanceCameraSystem.CameraPingSubnetMessage},
+            {SurveillanceCameraSystem.CameraSubnetData, subnet}
         };
         _deviceNetworkSystem.QueuePacket(uid, null, payload);
     }
@@ -174,26 +167,16 @@ public sealed class SurveillanceCameraMonitorSystem : EntitySystem
     private void SendCameraInfoToClient(EntityUid uid, SurveillanceCameraInfo info,
         SurveillanceCameraMonitorComponent? monitor = null)
     {
-        if (!Resolve(uid, ref monitor)
-            || !monitor.ClientSubnetInfoRoutes.ContainsKey(info.Subnet))
+        if (!Resolve(uid, ref monitor))
         {
             return;
         }
 
-        foreach (var clientEntity in monitor.ClientSubnetInfoRoutes[info.Subnet])
-        {
-            if (!TryComp(clientEntity, out ActorComponent? actor))
-            {
-                continue;
-            }
+        var message = new SurveillanceCameraMonitorInfoMessage(info);
 
-            var message = new SurveillanceCameraMonitorInfoMessage(info);
-
-            _userInterface.TrySendUiMessage(uid,
-                SurveillanceCameraMonitorUiKey.Key,
-                message,
-                actor.PlayerSession);
-        }
+        _userInterface.TrySendUiMessage(uid,
+            SurveillanceCameraMonitorUiKey.Key,
+            message);
     }
 
     // Adds a viewer to the camera and the monitor.
@@ -328,6 +311,7 @@ public sealed class SurveillanceCameraMonitorSystem : EntitySystem
 
         AddViewer(uid, player);
         UpdateUserInterface(uid, monitor, player);
+        RequestSubnetInfo(uid, monitor.ActiveSubnet, monitor);
     }
 
     private void UpdateUserInterface(EntityUid uid, SurveillanceCameraMonitorComponent? monitor = null, EntityUid? player = null)
@@ -344,7 +328,7 @@ public sealed class SurveillanceCameraMonitorSystem : EntitySystem
             session = actor.PlayerSession;
         }
 
-        var state = new SurveillanceCameraMonitorUiState(monitor.ActiveCamera, monitor.KnownSubnets);
+        var state = new SurveillanceCameraMonitorUiState(monitor.ActiveCamera, monitor.KnownSubnets, monitor.ActiveSubnet);
         _userInterface.TrySetUiState(uid, SurveillanceCameraMonitorUiKey.Key, state, session);
     }
 }
