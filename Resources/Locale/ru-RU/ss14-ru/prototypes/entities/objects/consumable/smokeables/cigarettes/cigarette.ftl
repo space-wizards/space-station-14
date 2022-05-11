@@ -1,6 +1,6 @@
 ent-Cigarette = сигарета
-    .desc = Свиток с табаком и никотином.
+    .desc = Скрутка с табаком и никотином.
     .suffix = { "" }
-ent-CigaretteSyndicate = cigarette
-    .suffix = syndicate
+ent-CigaretteSyndicate = сигарета
+    .suffix = синдикат
     .desc = { ent-Cigarette.desc }
