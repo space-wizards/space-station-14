@@ -165,6 +165,7 @@ namespace Content.Client.Audio
         private void StartAmbience()
         {
             EndAmbience();
+            if (!CanPlayCollection(_currentCollection)) return;
             var file = _robustRandom.Pick(_currentCollection.PickFiles).ToString();
             _ambientStream = SoundSystem.Play(Filter.Local(), file, _ambientParams.WithVolume(_ambientParams.Volume + _configManager.GetCVar(CCVars.AmbienceVolume)));
         }
@@ -173,6 +174,16 @@ namespace Content.Client.Audio
         {
             _ambientStream?.Stop();
             _ambientStream = null;
+        }
+
+        private bool CanPlayCollection(SoundCollectionPrototype collection)
+        {
+            if (collection.ID == _spaceAmbience.ID)
+                return _configManager.GetCVar(CCVars.SpaceAmbienceEnabled);
+            if (collection.ID == _stationAmbience.ID)
+                return _configManager.GetCVar(CCVars.StationAmbienceEnabled);
+
+            return true;
         }
 
         private void StationAmbienceCVarChanged(bool enabled)
