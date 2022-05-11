@@ -730,9 +730,8 @@
             bounds: "-0.5,-0.5,0.5,0.5"
           layer:
             - Impassable
-            - VaultImpassable
           mask:
-            - Impassable
+            - FullTileMask
     - type: Airtight
     - type: Sprite
       sprite: Structures/Magic/forcewall.rsi
