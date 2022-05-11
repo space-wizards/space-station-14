@@ -62,7 +62,7 @@ public sealed partial class TriggerSystem
         _fixtures.TryCreateFixture(body, new Fixture(body, component.Shape)
         {
             // TODO: Should probably have these settable via datafield but I'm lazy and it's a pain
-            CollisionLayer = (int) (CollisionGroup.MobImpassable | CollisionGroup.SmallImpassable | CollisionGroup.VaultImpassable), Hard = false, ID = TriggerOnProximityComponent.FixtureID
+            CollisionLayer = (int) (CollisionGroup.MidImpassable | CollisionGroup.LowImpassable | CollisionGroup.HighImpassable), Hard = false, ID = TriggerOnProximityComponent.FixtureID
         });
     }
 

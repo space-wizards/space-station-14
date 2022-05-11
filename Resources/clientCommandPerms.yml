@@ -17,6 +17,7 @@
 
 - Flags: MAPPING
   Commands:
+    - griddrag
     - showmarkers
     - showsubfloor
     - showsubfloorforever

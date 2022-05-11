@@ -1,20 +1,12 @@
-using System;
-using System.Collections.Generic;
 using System.Linq;
 using Content.Client.GameTicking.Managers;
 using Content.Client.HUD.UI;
 using Content.Shared.Roles;
-using Content.Shared.Station;
 using Robust.Client.Console;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.CustomControls;
 using Robust.Client.Utility;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Localization;
-using Robust.Shared.Log;
-using Robust.Shared.Maths;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
 using static Robust.Client.UserInterface.Controls.BoxContainer;
@@ -26,10 +18,10 @@ namespace Content.Client.LateJoin
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
         [Dependency] private readonly IClientConsoleHost _consoleHost = default!;
 
-        public event Action<(StationId, string)> SelectedId;
+        public event Action<(EntityUid, string)> SelectedId;
 
-        private readonly Dictionary<StationId, Dictionary<string, JobButton>> _jobButtons = new();
-        private readonly Dictionary<StationId, Dictionary<string, BoxContainer>> _jobCategories = new();
+        private readonly Dictionary<EntityUid, Dictionary<string, JobButton>> _jobButtons = new();
+        private readonly Dictionary<EntityUid, Dictionary<string, BoxContainer>> _jobCategories = new();
         private readonly List<ScrollContainer> _jobLists = new();
 
         private readonly Control _base;
@@ -57,7 +49,7 @@ namespace Content.Client.LateJoin
             {
                 var (station, jobId) = x;
                 Logger.InfoS("latejoin", $"Late joining as ID: {jobId}");
-                _consoleHost.ExecuteCommand($"joingame {CommandParsing.Escape(jobId)} {station.Id}");
+                _consoleHost.ExecuteCommand($"joingame {CommandParsing.Escape(jobId)} {station}");
                 Close();
             };
 
@@ -209,7 +201,7 @@ namespace Content.Client.LateJoin
 
                         var jobLabel = new Label
                         {
-                            Text = job.Value >= 0 ?
+                            Text = job.Value != null ?
                                 Loc.GetString("late-join-gui-job-slot-capped", ("jobName", prototype.Name), ("amount", job.Value)) :
                                 Loc.GetString("late-join-gui-job-slot-uncapped", ("jobName", prototype.Name))
                         };
@@ -234,7 +226,7 @@ namespace Content.Client.LateJoin
             }
         }
 
-        private void JobsAvailableUpdated(IReadOnlyDictionary<StationId, Dictionary<string, int>> _)
+        private void JobsAvailableUpdated(IReadOnlyDictionary<EntityUid, Dictionary<string, uint?>> _)
         {
             RebuildUI();
         }
@@ -255,9 +247,9 @@ namespace Content.Client.LateJoin
     sealed class JobButton : ContainerButton
     {
         public string JobId { get; }
-        public int Amount { get; }
+        public uint? Amount { get; }
 
-        public JobButton(string jobId, int amount)
+        public JobButton(string jobId, uint? amount)
         {
             JobId = jobId;
             Amount = amount;

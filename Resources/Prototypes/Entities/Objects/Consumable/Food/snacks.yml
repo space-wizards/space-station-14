@@ -189,6 +189,73 @@
     color: white
   - type: Food
     trash: FoodPacketSyndiTrash
+    
+- type: entity
+  name: chow mein
+  parent: FoodSnackBase
+  id: FoodSnackChowMein
+  description: A salty fried noodle snack. Looks like they forgot the vegetables.
+  components:
+  - type: Sprite
+    state: chinese1
+  - type: Item
+    color: red
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 30 # Room for extra condiments
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 10
+        - ReagentId: Soysauce
+          Quantity: 2
+  - type: Food
+    trash: FoodPacketChowMeinTrash
+          
+- type: entity
+  name: dan dan noodles
+  parent: FoodSnackBase
+  id: FoodSnackDanDanNoodles
+  description: A spicy Sichuan noodle snack. The chili oil slick pools on top.
+  components:
+  - type: Sprite
+    state: chinese2
+  - type: Item
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 30 # Room for extra condiments
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 10
+        - ReagentId: CapsaicinOil
+          Quantity: 2
+        - ReagentId: Soysauce
+          Quantity: 2
+  - type: Food
+    trash: FoodPacketDanDanTrash
+
+- type: entity
+  name: fortune cookie
+  parent: FoodSnackBase
+  id: FoodSnackCookieFortune
+  description: A boring cardboard tasting snack with a fortune inside. Surprise! You're boring too.
+  components:
+  - type: Sprite
+    state: cookie_fortune
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 1
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 1
+  - type: Item
+    sprite: Objects/Consumable/Food/snacks.rsi
+    HeldPrefix: packet
+    size: 1
+  - type: Food
+    trash: FoodCookieFortune
 
 - type: entity
   name: nutribrick
@@ -396,6 +463,40 @@
   components:
   - type: Sprite
     state: syndicakes-trash
+  - type: Item
+    color: white
+
+- type: entity
+  noSpawn: true
+  parent: FoodPacketTrash
+  id: FoodPacketChowMeinTrash
+  name: empty chow mein box
+  components:
+  - type: Sprite
+    state: chinese1
+  - type: Item
+    color: red
+    
+- type: entity
+  noSpawn: true
+  parent: FoodPacketTrash
+  id: FoodPacketDanDanTrash
+  name: empty dan dan box
+  components:
+  - type: Sprite
+    state: chinese2
+  - type: Item
+    color: white
+    
+- type: entity
+  noSpawn: true
+  parent: FoodPacketTrash
+  id: FoodCookieFortune
+  name: cookie fortune
+  description: "The fortune reads: The end is near...and it's all your fault."
+  components:
+  - type: Sprite
+    state: fortune
   - type: Item
     color: white
 
