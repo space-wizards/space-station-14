@@ -61,7 +61,7 @@ namespace Content.Server.Storage.Components
 
         [ViewVariables]
         [DataField("EnteringRange")]
-        private float _enteringRange = -0.4f;
+        private float _enteringRange = -0.18f;
 
         [DataField("showContents")]
         private bool _showContents;
