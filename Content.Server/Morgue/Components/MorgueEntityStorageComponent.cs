@@ -71,7 +71,7 @@ namespace Content.Server.Morgue.Components
         {
             if (!EntitySystem.Get<SharedInteractionSystem>().InRangeUnobstructed(Owner,
                 _entMan.GetComponent<TransformComponent>(Owner).Coordinates.Offset(_entMan.GetComponent<TransformComponent>(Owner).LocalRotation.GetCardinalDir()),
-                collisionMask: TrayCanOpenMask 
+                collisionMask: TrayCanOpenMask
             ))
             {
                 if (!silent)
