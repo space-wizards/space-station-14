@@ -1,9 +1,4 @@
 Entries:
-- author: Emisse
-  changes:
-  - {message: 'Bagel Station, a comfy midpop station, has been introduced.', type: Add}
-  id: 1002
-  time: '2022-02-07T16:07:24.0000000+00:00'
 - author: Rane
   changes:
   - {message: 'Added lingzhi and ambrosia vulgaris, two more potent but slightly dangerous
@@ -3033,3 +3028,9 @@ Entries:
   - {message: Welders/Lighters now say if they're lit while you're holding them, type: Tweak}
   id: 1501
   time: '2022-05-11T20:48:07.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: A variety of different paintings can now be found across the station.,
+    type: Add}
+  id: 1502
+  time: '2022-05-11T23:46:22.0000000+00:00'
