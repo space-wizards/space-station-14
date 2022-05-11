@@ -19,11 +19,11 @@
     fixtures:
     - shape:
         !type:PhysShapeAabb
-          bounds: "-0.4,-0.4,0.4,0.4"
-      layer:
-      - SmallImpassable
+        bounds: "-0.4,-0.4,0.4,0.4"
       mask:
-      - SmallImpassable
+      - ItemMask
+      layer:
+      - SlipLayer
       hard: false
   - type: Appearance
     visuals:

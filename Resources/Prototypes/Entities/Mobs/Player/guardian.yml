@@ -43,9 +43,9 @@
         radius: 0.35
       mass: 10
       mask:
-      - VaultImpassable
+      - FlyingMobMask
       layer:
-      - Opaque
+      - FlyingMobLayer
   - type: Damageable
     damageContainer: Biological
   - type: MobState

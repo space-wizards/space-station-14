@@ -22,14 +22,11 @@
     fixtures:
     - shape:
         !type:PhysShapeAabb
-          bounds: "-0.25,-0.45,0.25,0.45"
+        bounds: "-0.25,-0.45,0.25,0.45"
       mask:
-      - Impassable
-      - VaultImpassable
-      - SmallImpassable
+      - FullTileMask
       layer:
-      - Opaque
-      - MobImpassable
+      - WallLayer
       mass: 100
   - type: Destructible
     thresholds:

@@ -205,13 +205,13 @@
       id: "slips"
       hard: false
       layer:
-      - SmallImpassable
+      - SlipLayer
     - shape:
         !type:PhysShapeAabb
         bounds: "-0.4,-0.3,0.4,0.3"
       mass: 2.5
       mask:
-      - SmallImpassable
+      - ItemMask
 
 - type: entity
   parent: BasePDA

@@ -19,13 +19,12 @@
     fixtures:
     - shape:
         !type:PhysShapeAabb
-          bounds: "-0.25,-0.5,0.25,0.5"
+        bounds: "-0.25,-0.5,0.25,0.5"
       mass: 25
-      layer:
-      - SmallImpassable
-      - Opaque
       mask:
-      - MobMask
+      - MachineMask
+      layer:
+      - MachineLayer
   - type: Construction
     graph: Machine
     node: machine

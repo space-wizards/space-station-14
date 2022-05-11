@@ -60,7 +60,7 @@ namespace Content.Server.Atmos.EntitySystems
                 {
                     foreach (var (_, fixture) in fixtures.Fixtures)
                     {
-                        _physics.AddCollisionMask(fixtures, fixture, (int) CollisionGroup.VaultImpassable);
+                        _physics.AddCollisionMask(fixtures, fixture, (int) CollisionGroup.TableLayer);
                     }
                 }
             }
@@ -79,7 +79,7 @@ namespace Content.Server.Atmos.EntitySystems
 
             foreach (var fixture in fixtures.Fixtures.Values)
             {
-                _physics.RemoveCollisionMask(fixtures, fixture, (int) CollisionGroup.VaultImpassable);
+                _physics.RemoveCollisionMask(fixtures, fixture, (int) CollisionGroup.TableLayer);
             }
 
             // TODO: Make them dynamic type? Ehh but they still want movement so uhh make it non-predicted like weightless?

@@ -34,12 +34,9 @@
           bounds: "-1.2,-1.2,1.2,1"
       mass: 500
       mask:
-      - Impassable
+      - LargeMobMask
       layer:
-      - Opaque
-      - Impassable
-      - MobImpassable
-      - VaultImpassable
+      - WallLayer
   - type: Repairable
     fuelCost: 10
     doAfterDelay: 5

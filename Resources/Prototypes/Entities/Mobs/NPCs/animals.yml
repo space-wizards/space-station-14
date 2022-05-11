@@ -26,11 +26,9 @@
         radius: 0.25
       mass: 5
       mask:
-      - Impassable
-      - MobImpassable #Bullets?!
-      - SmallImpassable
+      - FlyingMobMask
       layer:
-      - Opaque
+      - FlyingMobLayer
   - type: Appearance
     visuals:
     - type: DamageStateVisualizer
@@ -90,11 +88,9 @@
         radius: 0.1
       mass: 5
       mask:
-      - Impassable
-      - MobImpassable #Bullets?!
-      - SmallImpassable
+      - FlyingMobMask
       layer:
-      - Opaque
+      - FlyingMobLayer
   - type: MobState
     thresholds:
       0: !type:NormalMobState {}
@@ -291,11 +287,9 @@
         radius: 0.2
       mass: 5
       mask:
-      - Impassable
-      - MobImpassable #Bullets?!
-      - SmallImpassable
+      - FlyingMobMask
       layer:
-      - Opaque
+      - FlyingMobLayer
   - type: MobState
     thresholds:
       0: !type:NormalMobState {}
@@ -341,11 +335,9 @@
         radius: 0.40
       mass: 45
       mask:
-      - Impassable
-      - MobImpassable
-      - SmallImpassable
+      - MobMask
       layer:
-      - Opaque
+      - MobLayer
   - type: Appearance
     visuals:
     - type: DamageStateVisualizer
@@ -400,11 +392,9 @@
         radius: 0.35
       mass: 5
       mask:
-      - Impassable
-      - MobImpassable #Bullets!?
-      - SmallImpassable
+      - MobMask
       layer:
-      - Opaque
+      - MobLayer
   - type: Appearance
     visuals:
     - type: DamageStateVisualizer
@@ -518,11 +508,9 @@
         radius: 0.48
       mass: 20
       mask:
-      - Impassable
-      - MobImpassable
-      - SmallImpassable
+      - MobMask
       layer:
-      - Opaque
+      - MobLayer
   - type: Appearance
     visuals:
     - type: DamageStateVisualizer
@@ -554,16 +542,14 @@
   - type: Physics
   - type: Fixtures
     fixtures:
-      - shape:
-          !type:PhysShapeCircle
-          radius: 0.25
-        mass: 60
-        mask:
-          - Impassable
-          - MobImpassable #Bullets?!
-          - SmallImpassable
-        layer:
-          - Opaque
+    - shape:
+        !type:PhysShapeCircle
+        radius: 0.25
+      mass: 60
+      mask:
+      - MobMask
+      layer:
+      - MobLayer
   - type: Appearance
     visuals:
       - type: DamageStateVisualizer
@@ -686,10 +672,9 @@
         radius: 0.2
       mass: 10
       mask:
-      - SmallImpassable
-      - MobImpassable
+      - SmallMobMask
       layer:
-      - Opaque
+      - SmallMobLayer
   - type: MobState
     thresholds:
       0: !type:NormalMobState {}
@@ -829,11 +814,9 @@
         radius: 0.2
       mass: 5
       mask:
-      - Impassable
-      - MobImpassable #Bullets?!
-      - SmallImpassable
+      - MobMask
       layer:
-      - Opaque
+      - MobLayer
   - type: Appearance
     visuals:
     - type: DamageStateVisualizer
@@ -879,11 +862,9 @@
         radius: 0.2
       mass: 5
       mask:
-      - Impassable
-      - MobImpassable #Bullets?!
-      - SmallImpassable
+      - MobMask
       layer:
-      - Opaque
+      - MobLayer
   - type: Appearance
     visuals:
     - type: DamageStateVisualizer
@@ -924,11 +905,9 @@
         radius: 0.2
       mass: 2
       mask:
-      - Impassable
-      - MobImpassable #Bullets?!
-      - SmallImpassable
+      - SmallMobMask
       layer:
-      - Opaque
+      - SmallMobLayer
   - type: Appearance
     visuals:
     - type: DamageStateVisualizer
@@ -972,11 +951,9 @@
         radius: 0.25
       mass: 5
       mask:
-      - Impassable
-      - MobImpassable #Bullets?!
-      - SmallImpassable
+      - FlyingMobMask
       layer:
-      - Opaque
+      - FlyingMobLayer
   - type: Appearance
     visuals:
     - type: DamageStateVisualizer
@@ -1017,11 +994,9 @@
         radius: 0.25
       mass: 10
       mask:
-      - Impassable
-      - MobImpassable #Bullets?!
-      - SmallImpassable
+      - MobMask
       layer:
-      - Opaque
+      - MobLayer
   - type: Appearance
     visuals:
     - type: DamageStateVisualizer
@@ -1068,11 +1043,9 @@
         radius: 0.25
       mass: 10
       mask:
-      - Impassable
-      - MobImpassable #Bullets?!
-      - SmallImpassable
+      - MobMask
       layer:
-      - Opaque
+      - MobLayer
   - type: Appearance
     visuals:
     - type: DamageStateVisualizer
@@ -1125,11 +1098,9 @@
         radius: 0.25
       mass: 8
       mask:
-      - Impassable
-      - MobImpassable #Bullets?!
-      - SmallImpassable
+      - SmallMobMask
       layer:
-      - Opaque
+      - SmallMobLayer
   - type: Appearance
     visuals:
     - type: RotationVisualizer
@@ -1175,11 +1146,9 @@
         radius: 0.35
       mass: 25
       mask:
-      - Impassable
-      - MobImpassable #Bullets?!
-      - SmallImpassable
+      - MobMask
       layer:
-      - Opaque
+      - MobLayer
   - type: Appearance
     visuals:
     - type: DamageStateVisualizer
@@ -1240,12 +1209,9 @@
         radius: 0.35
       mass: 10
       mask:
-      - Impassable
-      - MobImpassable
-      - VaultImpassable
-      - SmallImpassable
+      - MobMask
       layer:
-      - Opaque
+      - MobLayer
   - type: Appearance
     visuals:
     - type: DamageStateVisualizer
@@ -1299,12 +1265,9 @@
         radius: 0.35
       mass: 10
       mask:
-      - Impassable
-      - MobImpassable
-      - VaultImpassable
-      - SmallImpassable
+      - MobMask
       layer:
-      - Opaque
+      - MobLayer
   - type: Appearance
     visuals:
     - type: DamageStateVisualizer
@@ -1358,12 +1321,9 @@
         radius: 0.35
       mass: 10
       mask:
-      - Impassable
-      - MobImpassable
-      - VaultImpassable
-      - SmallImpassable
+      - MobMask
       layer:
-      - Opaque
+      - MobLayer
   - type: Appearance
     visuals:
     - type: DamageStateVisualizer
