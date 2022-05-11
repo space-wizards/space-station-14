@@ -36,12 +36,9 @@
         radius: 0.35
       mass: 20
       mask:
-      - Impassable
-      - MobImpassable
-      - VaultImpassable
-      - SmallImpassable
+      - MobMask
       layer:
-      - Opaque
+      - MobLayer
   - type: MovementSpeedModifier
     baseWalkSpeed : 4
     baseSprintSpeed : 3
@@ -135,10 +132,9 @@
         radius: 0.35
       mass: 20
       mask:
-      - SmallImpassable
-      - MobImpassable
+      - SmallMobMask
       layer:
-      - Opaque
+      - SmallMobLayer
   - type: Appearance
     visuals:
       - type: GenericEnumVisualizer
@@ -215,12 +211,9 @@
         radius: 1
       mass: 500
       mask:
-      - SmallImpassable
-      - MobImpassable
-      - VaultImpassable
-      - Impassable
+      - LargeMobMask
       layer:
-      - Opaque
+      - LargeMobLayer
   - type: Appearance
     visuals:
     - type: DamageStateVisualizer

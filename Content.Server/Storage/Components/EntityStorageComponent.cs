@@ -42,9 +42,9 @@ namespace Content.Server.Storage.Components
         ///     Collision masks that get removed when the storage gets opened.
         /// </summary>
         private const int MasksToRemove = (int) (
-            CollisionGroup.MobImpassable |
-            CollisionGroup.VaultImpassable |
-            CollisionGroup.SmallImpassable);
+            CollisionGroup.MidImpassable |
+            CollisionGroup.HighImpassable |
+            CollisionGroup.LowImpassable);
 
         /// <summary>
         ///     Collision masks that were removed from ANY layer when the storage was opened;

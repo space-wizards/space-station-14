@@ -35,7 +35,7 @@ public sealed class ClimbSystem : SharedClimbSystem
     [Dependency] private readonly StunSystem _stunSystem = default!;
     
     private const string ClimbingFixtureName = "climb";
-    private const int ClimbingCollisionGroup = (int) CollisionGroup.VaultImpassable;
+    private const int ClimbingCollisionGroup = (int) CollisionGroup.TableLayer;
     
     private readonly Dictionary<EntityUid, List<Fixture>> _fixtureRemoveQueue = new();
 
