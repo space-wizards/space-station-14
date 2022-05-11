@@ -3,7 +3,7 @@ using System.Threading;
 using Content.Server.Chat.Managers;
 using Content.Server.Players;
 using Content.Server.Roles;
-using Content.Server.Station;
+using Content.Server.Station.Components;
 using Content.Server.Suspicion;
 using Content.Server.Suspicion.Roles;
 using Content.Server.Traitor.Uplink;
@@ -14,7 +14,6 @@ using Content.Shared.EntityList;
 using Content.Shared.GameTicking;
 using Content.Shared.Maps;
 using Content.Shared.MobState.Components;
-using Content.Shared.Random.Helpers;
 using Content.Shared.Roles;
 using Content.Shared.Sound;
 using Content.Shared.Suspicion;
@@ -222,7 +221,7 @@ public sealed class SuspicionRuleSystem : GameRuleSystem
 
         var susLoot = _prototypeManager.Index<EntityLootTablePrototype>(SuspicionLootTable);
 
-        foreach (var (_, mapGrid) in EntityManager.EntityQuery<StationComponent, IMapGridComponent>(true))
+        foreach (var (_, mapGrid) in EntityManager.EntityQuery<StationMemberComponent, IMapGridComponent>(true))
         {
             // I'm so sorry.
             var tiles = mapGrid.Grid.GetAllTiles().ToArray();

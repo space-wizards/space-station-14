@@ -4,7 +4,7 @@ barsign-component-name = bar sign
 
 ## The Harmbaton
 barsign-prototype-name-harmbaton = The Harmbaton
-barsign-prototype-description-harmbaton = A great dining experience for both security members and assistants.
+barsign-prototype-description-harmbaton = A great dining experience for both security members and passengers.
 
 ## The Singulo
 barsign-prototype-name-singulo = The Singulo

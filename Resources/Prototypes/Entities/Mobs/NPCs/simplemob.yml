@@ -52,12 +52,9 @@
         radius: 0.35
       mass: 20
       mask:
-      - Impassable
-      - MobImpassable #Bullets?!
-      - VaultImpassable
-      - SmallImpassable
+      - MobMask
       layer:
-      - Opaque
+      - MobLayer
   - type: SolutionContainerManager
   - type: Bloodstream
     bloodlossDamage:

@@ -347,6 +347,7 @@ namespace Content.Client.Entry
             "DoorRemote",
             "InteractionPopup",
             "HealthAnalyzer",
+            "Thirst",
             "Wires"
         };
     }

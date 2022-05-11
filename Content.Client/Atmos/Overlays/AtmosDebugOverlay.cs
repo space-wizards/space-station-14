@@ -115,17 +115,32 @@ namespace Content.Client.Atmos.Overlays
                                 CheckAndShowBlockDir(AtmosDirection.South);
                                 CheckAndShowBlockDir(AtmosDirection.East);
                                 CheckAndShowBlockDir(AtmosDirection.West);
+
+                                void DrawPressureDirection(
+                                    DrawingHandleWorld handle,
+                                    AtmosDirection d,
+                                    TileRef t,
+                                    Color color)
+                                {
+                                    // Account for South being 0.
+                                    var atmosAngle = d.ToAngle() - Angle.FromDegrees(90);
+                                    var atmosAngleOfs = atmosAngle.ToVec() * 0.4f;
+                                    var tileCentre = new Vector2(t.X + 0.5f, t.Y + 0.5f);
+                                    var basisA = tileCentre;
+                                    var basisB = tileCentre + atmosAngleOfs;
+                                    handle.DrawLine(basisA, basisB, color);
+                                }
+
                                 // -- Pressure Direction --
                                 if (data.PressureDirection != AtmosDirection.Invalid)
                                 {
-                                    // Account for South being 0.
-                                    var atmosAngle = data.PressureDirection.ToAngle() - Angle.FromDegrees(90);
-                                    var atmosAngleOfs = atmosAngle.ToVec() * 0.4f;
-                                    var tileCentre = new Vector2(tile.X + 0.5f, tile.Y + 0.5f);
-                                    var basisA = tileCentre;
-                                    var basisB = tileCentre + atmosAngleOfs;
-                                    drawHandle.DrawLine(basisA, basisB, Color.Blue);
+                                    DrawPressureDirection(drawHandle, data.PressureDirection, tile, Color.Blue);
                                 }
+                                else if (data.LastPressureDirection != AtmosDirection.Invalid)
+                                {
+                                    DrawPressureDirection(drawHandle, data.LastPressureDirection, tile, Color.LightGray);
+                                }
+
                                 // -- Excited Groups --
                                 if (data.InExcitedGroup)
                                 {

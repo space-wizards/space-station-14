@@ -29,7 +29,7 @@ namespace Content.Server.Storage.Components
     [Virtual]
     [ComponentReference(typeof(IActivate))]
     [ComponentReference(typeof(IStorageComponent))]
-    public class EntityStorageComponent : Component, IActivate, IStorageComponent, IInteractUsing
+    public class EntityStorageComponent : Component, IActivate, IStorageComponent
     {
         [Dependency] private readonly IEntityManager _entMan = default!;
 
@@ -42,9 +42,9 @@ namespace Content.Server.Storage.Components
         ///     Collision masks that get removed when the storage gets opened.
         /// </summary>
         private const int MasksToRemove = (int) (
-            CollisionGroup.MobImpassable |
-            CollisionGroup.VaultImpassable |
-            CollisionGroup.SmallImpassable);
+            CollisionGroup.MidImpassable |
+            CollisionGroup.HighImpassable |
+            CollisionGroup.LowImpassable);
 
         /// <summary>
         ///     Collision masks that were removed from ANY layer when the storage was opened;
@@ -71,15 +71,6 @@ namespace Content.Server.Storage.Components
 
         [DataField("open")]
         public bool Open;
-
-        [DataField("weldingQuality", customTypeSerializer:typeof(PrototypeIdSerializer<ToolQualityPrototype>))]
-        private string _weldingQuality = "Welding";
-
-        [DataField("CanWeldShut")]
-        private bool _canWeldShut = true;
-
-        [DataField("IsWeldedShut")]
-        private bool _isWeldedShut;
 
         [DataField("closeSound")]
         private SoundSpecifier _closeSound = new SoundPathSpecifier("/Audio/Effects/closetclose.ogg");
@@ -116,32 +107,7 @@ namespace Content.Server.Storage.Components
         }
 
         [ViewVariables(VVAccess.ReadWrite)]
-        public bool IsWeldedShut
-        {
-            get => _isWeldedShut;
-            set
-            {
-                if (_isWeldedShut == value) return;
-
-                _isWeldedShut = value;
-                UpdateAppearance();
-            }
-        }
-
-        private bool _beingWelded;
-
-        [ViewVariables(VVAccess.ReadWrite)]
-        public bool CanWeldShut
-        {
-            get => _canWeldShut;
-            set
-            {
-                if (_canWeldShut == value) return;
-
-                _canWeldShut = value;
-                UpdateAppearance();
-            }
-        }
+        public bool IsWeldedShut;
 
         [ViewVariables(VVAccess.ReadWrite)]
         public float EnteringRange
@@ -165,8 +131,6 @@ namespace Content.Server.Storage.Components
             {
                 EntitySystem.Get<PlaceableSurfaceSystem>().SetPlaceable(Owner, Open, surface);
             }
-
-            UpdateAppearance();
         }
 
         public virtual void Activate(ActivateEventArgs eventArgs)
@@ -296,15 +260,6 @@ namespace Content.Server.Storage.Components
                 SoundSystem.Play(Filter.Pvs(Owner), _openSound.GetSound(), Owner);
         }
 
-        private void UpdateAppearance()
-        {
-            if (_entMan.TryGetComponent(Owner, out AppearanceComponent? appearance))
-            {
-                appearance.SetData(StorageVisuals.CanWeld, _canWeldShut);
-                appearance.SetData(StorageVisuals.Welded, _isWeldedShut);
-            }
-        }
-
         private void ModifyComponents()
         {
             if (!_isCollidableWhenOpen && _entMan.TryGetComponent<FixturesComponent?>(Owner, out var manager)
@@ -407,48 +362,6 @@ namespace Content.Server.Storage.Components
             }
 
             return Contents.CanInsert(entity);
-        }
-
-        async Task<bool> IInteractUsing.InteractUsing(InteractUsingEventArgs eventArgs)
-        {
-            if (_beingWelded)
-                return false;
-
-            if (Open)
-            {
-                _beingWelded = false;
-                return false;
-            }
-
-            if (!CanWeldShut)
-            {
-                _beingWelded = false;
-                return false;
-            }
-
-            if (Contents.Contains(eventArgs.User))
-            {
-                _beingWelded = false;
-                Owner.PopupMessage(eventArgs.User, Loc.GetString("entity-storage-component-already-contains-user-message"));
-                return false;
-            }
-
-            if (_beingWelded)
-                return false;
-
-            _beingWelded = true;
-
-            var toolSystem = EntitySystem.Get<ToolSystem>();
-
-            if (!await toolSystem.UseTool(eventArgs.Using, eventArgs.User, Owner, 1f, 1f, _weldingQuality))
-            {
-                _beingWelded = false;
-                return false;
-            }
-
-            _beingWelded = false;
-            IsWeldedShut ^= true;
-            return true;
         }
 
         protected virtual IEnumerable<EntityUid> DetermineCollidingEntities()
