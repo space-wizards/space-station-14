@@ -6,6 +6,7 @@ using Content.Server.Nutrition.EntitySystems;
 using Content.Shared.Inventory;
 using JetBrains.Annotations;
 using Robust.Shared.Physics.Dynamics;
+using Robust.Shared.Prototypes;
 
 
 namespace Content.Server.Chemistry.EntitySystems
@@ -13,6 +14,7 @@ namespace Content.Server.Chemistry.EntitySystems
     [UsedImplicitly]
     internal sealed class SolutionInjectOnCollideSystem : EntitySystem
     {
+        [Dependency] private readonly IPrototypeManager _protoManager = default!;
         [Dependency] private readonly SolutionContainerSystem _solutionsSystem = default!;
         [Dependency] private readonly BloodstreamSystem _bloodstreamSystem = default!;
         [Dependency] private readonly InventorySystem _inventorySystem = default!;
@@ -32,34 +34,29 @@ namespace Content.Server.Chemistry.EntitySystems
 
         private void HandleInjection(EntityUid uid, SolutionInjectOnCollideComponent component, StartCollideEvent args)
         {
+            var target = args.OtherFixture.Body.Owner;
 
-            if (!EntityManager.TryGetComponent<BloodstreamComponent?>(args.OtherFixture.Body.Owner, out var bloodstream) ||
+            if (!args.OtherFixture.Body.Hard ||
+                !EntityManager.TryGetComponent<BloodstreamComponent>(target, out var bloodstream) ||
                 !_solutionsSystem.TryGetInjectableSolution(component.Owner, out var solution)) return;
 
-            //TODO : Implement the armor check in another PR
-            if (!component.CanPenetrateHelmet &&
-               !component.CanPenetrateArmor &&
-               IsFaceBlocked(args.OtherFixture.Body.Owner))
-                return;
+            if (component.BlockSlots != 0x0 && TryComp<InventoryComponent>(target, out var inventory))
+            {
+                var containerEnumerator = new InventorySystem.ContainerSlotEnumerator(target, inventory.TemplateId, _protoManager, _inventorySystem, component.BlockSlots);
+
+                while (containerEnumerator.MoveNext(out var container))
+                {
+                    if (!container.ContainedEntity.HasValue) continue;
+                    return;
+                }
+            }
 
             var solRemoved = solution.SplitSolution(component.TransferAmount);
             var solRemovedVol = solRemoved.TotalVolume;
 
             var solToInject = solRemoved.SplitSolution(solRemovedVol * component.TransferEfficiency);
 
-            _bloodstreamSystem.TryAddToChemicals((args.OtherFixture.Body).Owner, solToInject, bloodstream);
-        }
-
-        public bool IsFaceBlocked(EntityUid uid )
-        {
-            IngestionBlockerComponent blocker;
-
-            return _inventorySystem.TryGetSlotEntity(uid, "mask", out var maskUid)
-                   && EntityManager.TryGetComponent(maskUid, out blocker)
-                   && blocker.Enabled
-                   || _inventorySystem.TryGetSlotEntity(uid, "head", out var headUid)
-                   && EntityManager.TryGetComponent(headUid, out blocker)
-                   && blocker.Enabled;
+            _bloodstreamSystem.TryAddToChemicals(target, solToInject, bloodstream);
         }
     }
 }
