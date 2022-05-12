@@ -8,15 +8,18 @@ using Content.Shared.Interaction.Events;
 using Robust.Server.GameObjects;
 using Content.Server.Players;
 using Content.Server.GameTicking;
-using Content.Shared.Popups;
 using Content.Server.Popups;
 using Content.Shared.Standing;
+using Robust.Shared.Player;
 
 namespace Content.Server.Morgue
 {
     [UsedImplicitly]
     public sealed class MorgueSystem : EntitySystem
     {
+        [Dependency] private readonly GameTicker _ticker = default!;
+        [Dependency] private readonly PopupSystem _popup = default!;
+        [Dependency] private readonly StandingStateSystem _stando = default!;
 
         private float _accumulatedFrameTime;
 
@@ -37,24 +40,27 @@ namespace Content.Server.Morgue
             var victim = args.Victim;
             if (TryComp(victim, out ActorComponent? actor) && actor.PlayerSession.ContentData()?.Mind is { } mind)
             {
-                Get<GameTicker>().OnGhostAttempt(mind, false);
+                _ticker.OnGhostAttempt(mind, false);
 
                 if (mind.OwnedEntity is { Valid: true } entity)
                 {
-                    entity.PopupMessage(Loc.GetString("crematorium-entity-storage-component-suicide-message"));
+                    _popup.PopupEntity(Loc.GetString("crematorium-entity-storage-component-suicide-message"), entity, Filter.Pvs(entity, entityManager: EntityManager));
                 }
             }
 
-            victim.PopupMessageOtherClients(Loc.GetString("crematorium-entity-storage-component-suicide-message-others", ("victim", victim)));
+            _popup.PopupEntity(
+                Loc.GetString("crematorium-entity-storage-component-suicide-message-others", ("victim", victim)),
+                victim,
+                Filter.Pvs(victim, entityManager: EntityManager).RemoveWhereAttachedEntity(e => e == victim));
 
             if (component.CanInsert(victim))
             {
                 component.Insert(victim);
-                Get<StandingStateSystem>().Down(victim, false);
+                _stando.Down(victim, false);
             }
             else
             {
-                
+
                 EntityManager.DeleteEntity(victim);
             }
 

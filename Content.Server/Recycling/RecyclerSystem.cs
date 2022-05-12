@@ -23,6 +23,8 @@ namespace Content.Server.Recycling
     {
         [Dependency] private readonly IGameTiming _timing = default!;
         [Dependency] private readonly AmbientSoundSystem _ambience = default!;
+        [Dependency] private readonly GameTicker _ticker = default!;
+        [Dependency] private readonly PopupSystem _popup = default!;
         [Dependency] private readonly TagSystem _tags = default!;
 
         private const float RecyclerSoundCooldown = 0.8f;
@@ -42,15 +44,16 @@ namespace Content.Server.Recycling
             if (TryComp(victim, out ActorComponent? actor) &&
                 actor.PlayerSession.ContentData()?.Mind is { } mind)
             {
-                Get<GameTicker>().OnGhostAttempt(mind, false);
+                _ticker.OnGhostAttempt(mind, false);
                 if (mind.OwnedEntity is { Valid: true } entity)
                 {
-                    entity.PopupMessage(Loc.GetString("recycler-component-suicide-message"));
+                    _popup.PopupEntity(Loc.GetString("recycler-component-suicide-message"), entity, Filter.Pvs(entity, entityManager: EntityManager));
                 }
             }
 
-            victim.PopupMessageOtherClients(Loc.GetString("recycler-component-suicide-message-others",
-                ("victim", victim)));
+            _popup.PopupEntity(Loc.GetString("recycler-component-suicide-message-others", ("victim", victim)),
+                victim,
+                Filter.Pvs(victim, entityManager: EntityManager).RemoveWhereAttachedEntity(e => e == victim));
 
             if (TryComp<SharedBodyComponent?>(victim, out var body))
             {
