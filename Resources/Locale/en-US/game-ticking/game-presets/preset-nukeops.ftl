@@ -1,4 +1,7 @@
-﻿nukeops-all-ops-dead = All nuclear operatives have been killed.
+﻿nukeops-title = Nuclear Operatives
+nukeops-description = Nuclear operatives have targeted the station. Try to keep them from arming and detonating the nuke by protecting the nuke disk!
+
+nukeops-all-ops-dead = All nuclear operatives have been killed.
 nukeops-nuke-exploded = The nuke exploded.
 nukeops-ops-won = The nuclear operatives were successful!
 nukeops-crew-won = The crew managed to defeat the nuclear operatives.
