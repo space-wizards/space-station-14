@@ -24,9 +24,9 @@
         !type:PhysShapeAabb
         bounds: "-0.25,-0.45,0.25,0.45"
       mask:
-      - FullTileMask
+      - MachineMask
       layer:
-      - WallLayer
+      - MachineLayer
       mass: 100
   - type: Destructible
     thresholds:
