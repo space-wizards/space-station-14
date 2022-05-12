@@ -66,7 +66,7 @@ namespace Content.Client.Popups
             _userInterfaceManager.PopupRoot.AddChild(label);
             label.Measure(Vector2.Infinity);
 
-            var mapCoordinates = _eyeManager.ScreenToMap(coordinates.Position / label.UIScale - label.DesiredSize / 2);
+            var mapCoordinates = _eyeManager.ScreenToMap(coordinates.Position);
             label.InitialPos = mapCoordinates;
             LayoutContainer.SetPosition(label, label.InitialPos.Position);
             _aliveLabels.Add(label);
@@ -204,7 +204,7 @@ namespace Content.Client.Popups
 
                 Vector2 position;
                 if (Entity == null)
-                    position = InitialPos.Position;
+                    position = _eyeManager.WorldToScreen(InitialPos.Position) / UIScale - DesiredSize / 2;
                 else if (_entityManager.TryGetComponent(Entity.Value, out TransformComponent xform))
                     position = (_eyeManager.CoordinatesToScreen(xform.Coordinates).Position / UIScale) - DesiredSize / 2;
                 else

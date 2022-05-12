@@ -197,7 +197,6 @@ namespace Content.Client.Entry
             "SignalReceiver",
             "SignalSwitch",
             "SignalTransmitter",
-            "SignalButton",
             "SignalLinker",
             "ItemCabinet",
             "FireExtinguisher",
@@ -348,6 +347,7 @@ namespace Content.Client.Entry
             "InteractionPopup",
             "HealthAnalyzer",
             "Thirst",
+            "CanEscapeInventory",
             "Wires"
         };
     }

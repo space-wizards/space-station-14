@@ -22,13 +22,6 @@
   - type: AccessReader
     access: [["Engineering"]]
   - type: InteractionOutline
-  - type: Physics
-  - type: Fixtures
-    fixtures:
-      - shape:
-          !type:PhysShapeAabb
-            bounds: "-0.25,-0.25,0.3,0.25"
-        layer: [ Passable ]
   - type: Transform
     anchored: true
   - type: Sprite
@@ -75,3 +68,4 @@
     maxChargeRate: 5000
     supplyRampTolerance: 1000
     supplyRampRate: 500
+  - type: WallMount

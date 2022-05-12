@@ -163,8 +163,15 @@
       - !type:HealthChange
         damage:
           types:
-            Asphyxiation: -3
-            Bloodloss: -2
+            Asphyxiation: -3.5
+            Bloodloss: -3
+      - !type:AdjustReagent
+        conditions:
+        - !type:ReagentThreshold
+          reagent: Lexorin
+          min: 1
+        reagent: Lexorin
+        amount: -3
 
 # this ones a doozy
 - type: reagent
@@ -422,7 +429,7 @@
       - !type:HealthChange
         damage:
           types:
-            Poison: -1
+            Poison: -4
       - !type:AdjustReagent
         conditions:
         - !type:ReagentThreshold

@@ -26,11 +26,9 @@
         radius: 0.25
       mass: 5
       mask:
-      - Impassable
-      - MobImpassable #Bullets?!
-      - SmallImpassable
+      - FlyingMobMask
       layer:
-      - Opaque
+      - FlyingMobLayer
   - type: Appearance
     visuals:
     - type: DamageStateVisualizer
@@ -90,11 +88,9 @@
         radius: 0.1
       mass: 5
       mask:
-      - Impassable
-      - MobImpassable #Bullets?!
-      - SmallImpassable
+      - FlyingMobMask
       layer:
-      - Opaque
+      - FlyingMobLayer
   - type: MobState
     thresholds:
       0: !type:NormalMobState {}
@@ -291,11 +287,9 @@
         radius: 0.2
       mass: 5
       mask:
-      - Impassable
-      - MobImpassable #Bullets?!
-      - SmallImpassable
+      - FlyingMobMask
       layer:
-      - Opaque
+      - FlyingMobLayer
   - type: MobState
     thresholds:
       0: !type:NormalMobState {}
@@ -341,11 +335,9 @@
         radius: 0.40
       mass: 45
       mask:
-      - Impassable
-      - MobImpassable
-      - SmallImpassable
+      - MobMask
       layer:
-      - Opaque
+      - MobLayer
   - type: Appearance
     visuals:
     - type: DamageStateVisualizer
@@ -400,11 +392,9 @@
         radius: 0.35
       mass: 5
       mask:
-      - Impassable
-      - MobImpassable #Bullets!?
-      - SmallImpassable
+      - MobMask
       layer:
-      - Opaque
+      - MobLayer
   - type: Appearance
     visuals:
     - type: DamageStateVisualizer
@@ -497,6 +487,7 @@
       path: /Audio/Animals/goose_honk.ogg
   - type: Bloodstream
     bloodMaxVolume: 100
+  - type: Puller
 
 - type: entity
   name: gorilla
@@ -518,11 +509,9 @@
         radius: 0.48
       mass: 20
       mask:
-      - Impassable
-      - MobImpassable
-      - SmallImpassable
+      - MobMask
       layer:
-      - Opaque
+      - MobLayer
   - type: Appearance
     visuals:
     - type: DamageStateVisualizer
@@ -535,6 +524,7 @@
       amount: 4
   - type: Bloodstream
     bloodMaxVolume: 300
+  - type: Puller
 
 - type: entity
   name: kangaroo
@@ -554,16 +544,14 @@
   - type: Physics
   - type: Fixtures
     fixtures:
-      - shape:
-          !type:PhysShapeCircle
-          radius: 0.25
-        mass: 60
-        mask:
-          - Impassable
-          - MobImpassable #Bullets?!
-          - SmallImpassable
-        layer:
-          - Opaque
+    - shape:
+        !type:PhysShapeCircle
+        radius: 0.25
+      mass: 60
+      mask:
+      - MobMask
+      layer:
+      - MobLayer
   - type: Appearance
     visuals:
       - type: DamageStateVisualizer
@@ -571,7 +559,8 @@
         # SKIPPY NO!
         crit: kangaroo-dead
         dead: kangaroo-dead
-
+  - type: Puller
+  
 - type: entity
   name: boxing kangaroo
   parent: MobKangaroo
@@ -652,6 +641,7 @@
     - id: FoodMeat
       amount: 3
   - type: MonkeyAccent
+  - type: Puller
 
 - type: entity
   name: mouse
@@ -686,10 +676,9 @@
         radius: 0.2
       mass: 10
       mask:
-      - SmallImpassable
-      - MobImpassable
+      - SmallMobMask
       layer:
-      - Opaque
+      - SmallMobLayer
   - type: MobState
     thresholds:
       0: !type:NormalMobState {}
@@ -758,6 +747,7 @@
   - type: Bloodstream
     bloodMaxVolume: 50
   - type: DiseaseCarrier #The other class lab animal and disease vector
+  - type: CanEscapeInventory
 
 
 - type: entity
@@ -829,11 +819,9 @@
         radius: 0.2
       mass: 5
       mask:
-      - Impassable
-      - MobImpassable #Bullets?!
-      - SmallImpassable
+      - MobMask
       layer:
-      - Opaque
+      - MobLayer
   - type: Appearance
     visuals:
     - type: DamageStateVisualizer
@@ -879,11 +867,9 @@
         radius: 0.2
       mass: 5
       mask:
-      - Impassable
-      - MobImpassable #Bullets?!
-      - SmallImpassable
+      - MobMask
       layer:
-      - Opaque
+      - MobLayer
   - type: Appearance
     visuals:
     - type: DamageStateVisualizer
@@ -924,11 +910,9 @@
         radius: 0.2
       mass: 2
       mask:
-      - Impassable
-      - MobImpassable #Bullets?!
-      - SmallImpassable
+      - SmallMobMask
       layer:
-      - Opaque
+      - SmallMobLayer
   - type: Appearance
     visuals:
     - type: DamageStateVisualizer
@@ -972,11 +956,9 @@
         radius: 0.25
       mass: 5
       mask:
-      - Impassable
-      - MobImpassable #Bullets?!
-      - SmallImpassable
+      - FlyingMobMask
       layer:
-      - Opaque
+      - FlyingMobLayer
   - type: Appearance
     visuals:
     - type: DamageStateVisualizer
@@ -1017,11 +999,9 @@
         radius: 0.25
       mass: 10
       mask:
-      - Impassable
-      - MobImpassable #Bullets?!
-      - SmallImpassable
+      - MobMask
       layer:
-      - Opaque
+      - MobLayer
   - type: Appearance
     visuals:
     - type: DamageStateVisualizer
@@ -1068,11 +1048,9 @@
         radius: 0.25
       mass: 10
       mask:
-      - Impassable
-      - MobImpassable #Bullets?!
-      - SmallImpassable
+      - MobMask
       layer:
-      - Opaque
+      - MobLayer
   - type: Appearance
     visuals:
     - type: DamageStateVisualizer
@@ -1125,11 +1103,9 @@
         radius: 0.25
       mass: 8
       mask:
-      - Impassable
-      - MobImpassable #Bullets?!
-      - SmallImpassable
+      - SmallMobMask
       layer:
-      - Opaque
+      - SmallMobLayer
   - type: Appearance
     visuals:
     - type: RotationVisualizer
@@ -1175,11 +1151,9 @@
         radius: 0.35
       mass: 25
       mask:
-      - Impassable
-      - MobImpassable #Bullets?!
-      - SmallImpassable
+      - MobMask
       layer:
-      - Opaque
+      - MobLayer
   - type: Appearance
     visuals:
     - type: DamageStateVisualizer
@@ -1201,6 +1175,7 @@
     successChance: 0.5
     interactSuccessString: petting-success-tarantula
     interactFailureString: petting-failure-generic
+  - type: Puller
 
 - type: entity
   name: tarantula
@@ -1240,12 +1215,9 @@
         radius: 0.35
       mass: 10
       mask:
-      - Impassable
-      - MobImpassable
-      - VaultImpassable
-      - SmallImpassable
+      - MobMask
       layer:
-      - Opaque
+      - MobLayer
   - type: Appearance
     visuals:
     - type: DamageStateVisualizer
@@ -1299,12 +1271,9 @@
         radius: 0.35
       mass: 10
       mask:
-      - Impassable
-      - MobImpassable
-      - VaultImpassable
-      - SmallImpassable
+      - MobMask
       layer:
-      - Opaque
+      - MobLayer
   - type: Appearance
     visuals:
     - type: DamageStateVisualizer
@@ -1358,12 +1327,9 @@
         radius: 0.35
       mass: 10
       mask:
-      - Impassable
-      - MobImpassable
-      - VaultImpassable
-      - SmallImpassable
+      - MobMask
       layer:
-      - Opaque
+      - MobLayer
   - type: Appearance
     visuals:
     - type: DamageStateVisualizer

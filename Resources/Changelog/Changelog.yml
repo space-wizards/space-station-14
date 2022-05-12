@@ -1,86 +1,6 @@
 Entries:
 - author: metalgearsloth
   changes:
-  - {message: Healing (via ointments etc.) now takes time., type: Tweak}
-  id: 999
-  time: '2022-02-07T03:14:46.0000000+00:00'
-- author: mirrorcult
-  changes:
-  - {message: 'Plasma, tritium, and carbon dioxide are now harmful to breathe in.',
-    type: Add}
-  - {message: It may take time for you to stop suffocating once entering an oxygenated
-      area., type: Tweak}
-  - {message: Slimepeople no longer have to breathe., type: Add}
-  id: 1000
-  time: '2022-02-07T04:48:15.0000000+00:00'
-- author: mirrorcult
-  changes:
-  - {message: Slimepeople now take extra pressure damage., type: Tweak}
-  - {message: 'Slimepeople are now hurt by water, and are not affected by acids on
-      touch.', type: Add}
-  - {message: Slimepeople are now resistant against blunt and poison damage., type: Tweak}
-  - {message: 'Slimepeople are now weak to slash, piercing, and cold damage.', type: Tweak}
-  id: 1001
-  time: '2022-02-07T04:48:20.0000000+00:00'
-- author: Emisse
-  changes:
-  - {message: 'Bagel Station, a comfy midpop station, has been introduced.', type: Add}
-  id: 1002
-  time: '2022-02-07T16:07:24.0000000+00:00'
-- author: Rane
-  changes:
-  - {message: 'Added lingzhi and ambrosia vulgaris, two more potent but slightly dangerous
-      medicinal plants.', type: Add}
-  - {message: 'Instead of kelotane and nutriment, aloe now yields dermaline and...
-      wait for it... aloe!', type: Tweak}
-  id: 1003
-  time: '2022-02-07T19:43:21.0000000+00:00'
-- author: ElectroJr
-  changes:
-  - {message: Gas mixers now properly animate when on., type: Fix}
-  id: 1004
-  time: '2022-02-07T20:42:07.0000000+00:00'
-- author: router
-  changes:
-  - {message: Conveyor assemblies now only cost 5 steel to craft., type: Tweak}
-  id: 1005
-  time: '2022-02-08T00:32:22.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - {message: Portable flasher now has its animation., type: Add}
-  id: 1006
-  time: '2022-02-08T03:08:22.0000000+00:00'
-- author: TheDarkElites
-  changes:
-  - {message: PDAs now have ringtones, type: Add}
-  id: 1007
-  time: '2022-02-08T09:39:23.0000000+00:00'
-- author: Lamrr
-  changes:
-  - {message: 'Bring in the scrap heap with the new salvage specialist role! Tasked
-      with running salvage operations, this exciting but not very new gameplay will
-      be coming to a NanoTrasen station near you sometime soon.', type: Add}
-  id: 1008
-  time: '2022-02-08T10:01:16.0000000+00:00'
-- author: Schiene
-  changes:
-  - {message: 'The Mothership, a Syndicate Vessel.', type: Add}
-  id: 1009
-  time: '2022-02-08T10:23:11.0000000+00:00'
-- author: hubismal
-  changes:
-  - {message: 'Fires now burn brightly, meaning fires and people affected by fire
-      are much more noticeable.', type: Tweak}
-  id: 1010
-  time: '2022-02-08T10:43:34.0000000+00:00'
-- author: Peptide90
-  changes:
-  - {message: 'Shutters can now be constructed from the construction menu (G)! Add
-      glass before final step for windowed, or steel for radiation shutters.', type: Add}
-  id: 1011
-  time: '2022-02-08T10:49:48.0000000+00:00'
-- author: metalgearsloth
-  changes:
   - {message: NanoTrasen has recalled the defective ringers., type: Fix}
   id: 1012
   time: '2022-02-08T11:15:06.0000000+00:00'
@@ -3038,3 +2958,78 @@ Entries:
   - {message: Atmos yeets should make a lot more sense now, type: Tweak}
   id: 1498
   time: '2022-05-10T15:02:40.0000000+00:00'
+- author: Peptide90
+  changes:
+  - {message: Added a new vending machine for snacks. Mr Changs! Enjoy the fortune
+      cookies., type: Add}
+  id: 1499
+  time: '2022-05-11T07:17:25.0000000+00:00'
+- author: HoofedEar
+  changes:
+  - {message: You are now less likely to accidentally stuff yourself in a closet or
+      crate., type: Tweak}
+  id: 1500
+  time: '2022-05-11T20:46:59.0000000+00:00'
+- author: ike709
+  changes:
+  - {message: Fixed lighters not having a flame, type: Fix}
+  - {message: Welders/Lighters now say if they're lit while you're holding them, type: Tweak}
+  id: 1501
+  time: '2022-05-11T20:48:07.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: A variety of different paintings can now be found across the station.,
+    type: Add}
+  id: 1502
+  time: '2022-05-11T23:46:22.0000000+00:00'
+- author: ShadowCommander
+  changes:
+  - {message: Fixed vending machines colliding and pushing out vended items., type: Fix}
+  - {message: Fixed climbing onto tables to bypass windoors and firelocks., type: Fix}
+  id: 1503
+  time: '2022-05-12T00:24:01.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Can no longer hug yourself., type: Tweak}
+  id: 1504
+  time: '2022-05-12T02:56:02.0000000+00:00'
+- author: ShadowCommander
+  changes:
+  - {message: Chapel's carpet doesn't block movement anymore., type: Fix}
+  id: 1505
+  time: '2022-05-12T06:10:16.0000000+00:00'
+- author: Peptide90
+  changes:
+  - {message: All mobs will now slow down when damaged enough. No more carps terrorising
+      the crew as easy., type: Tweak}
+  - {message: Lots of mobs now can't pull things. Carps and ticks should be less abusive
+      now., type: Tweak}
+  id: 1506
+  time: '2022-05-12T07:41:18.0000000+00:00'
+- author: keronshb
+  changes:
+  - {message: Animals can now escape inventory by moving, type: Add}
+  id: 1507
+  time: '2022-05-12T07:58:27.0000000+00:00'
+- author: PJB3005
+  changes:
+  - {message: Added suppermatter. Goes great with a glass of syndicate bomb!, type: Add}
+  id: 1508
+  time: '2022-05-12T09:44:17.0000000+00:00'
+- author: HoofedEar
+  changes:
+  - {message: Cargo ordering computers and telepads now use machine linking. Be sure
+      to link them together before starting your shift!, type: Tweak}
+  id: 1509
+  time: '2022-05-12T10:24:24.0000000+00:00'
+- author: Daemon
+  changes:
+  - {message: Added the salami lid (won't fit), type: Add}
+  id: 1510
+  time: '2022-05-12T10:24:49.0000000+00:00'
+- author: Peptide90
+  changes:
+  - {message: 'Cat Ears have arrived. Gives you the UwUs. Find it in a maint spawner,
+      salvage crate or traitor uplink.', type: Add}
+  id: 1511
+  time: '2022-05-12T10:53:01.0000000+00:00'
