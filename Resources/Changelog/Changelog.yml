@@ -1,11 +1,4 @@
 Entries:
-- author: Lamrr
-  changes:
-  - {message: 'Bring in the scrap heap with the new salvage specialist role! Tasked
-      with running salvage operations, this exciting but not very new gameplay will
-      be coming to a NanoTrasen station near you sometime soon.', type: Add}
-  id: 1008
-  time: '2022-02-08T10:01:16.0000000+00:00'
 - author: Schiene
   changes:
   - {message: 'The Mothership, a Syndicate Vessel.', type: Add}
@@ -3035,3 +3028,8 @@ Entries:
   - {message: Animals can now escape inventory by moving, type: Add}
   id: 1507
   time: '2022-05-12T07:58:27.0000000+00:00'
+- author: PJB3005
+  changes:
+  - {message: Added suppermatter. Goes great with a glass of syndicate bomb!, type: Add}
+  id: 1508
+  time: '2022-05-12T09:44:17.0000000+00:00'
