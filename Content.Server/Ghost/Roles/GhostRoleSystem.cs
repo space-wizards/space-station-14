@@ -53,6 +53,8 @@ namespace Content.Server.Ghost.Roles
             SubscribeLocalEvent<GhostTakeoverAvailableComponent, MindAddedMessage>(OnMindAdded);
             SubscribeLocalEvent<GhostTakeoverAvailableComponent, MindRemovedMessage>(OnMindRemoved);
             SubscribeLocalEvent<GhostTakeoverAvailableComponent, MobStateChangedEvent>(OnMobStateChanged);
+            SubscribeLocalEvent<GhostRoleComponent, ComponentInit>(OnInit);
+            SubscribeLocalEvent<GhostRoleComponent, ComponentShutdown>(OnShutdown);
             _playerManager.PlayerStatusChanged += PlayerStatusChanged;
         }
 
@@ -265,6 +267,18 @@ namespace Content.Server.Ghost.Roles
             _openUis.Clear();
             _ghostRoles.Clear();
             _nextRoleIdentifier = 0;
+        }
+
+        private void OnInit(EntityUid uid, GhostRoleComponent role, ComponentInit args)
+        {
+            if (role.RoleRules == "")
+                role.RoleRules = Loc.GetString("ghost-role-component-default-rules");
+            RegisterGhostRole(role);
+        }
+
+        private void OnShutdown(EntityUid uid, GhostRoleComponent role, ComponentShutdown args)
+        {
+            UnregisterGhostRole(role);
         }
     }
 
