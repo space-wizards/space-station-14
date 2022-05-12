@@ -15,12 +15,10 @@
     fixtures:
     - shape:
         !type:PhysShapeAabb {}
+      mask:
+      - FullTileMask
       layer:
-      - Opaque
-      - Impassable
-      - MobImpassable
-      - VaultImpassable
-      - SmallImpassable
+      - WallLayer
   - type: Tag
     tags:
     - Wooden

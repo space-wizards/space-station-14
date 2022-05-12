@@ -1,9 +1,9 @@
 ﻿- type: reagent
   id: Desoxyephedrine
-  name: desoxyephedrine
+  name: reagent-name-desoxyephedrine
   group: Narcotics
-  desc: Desoxyephedrine is a potent stimulant with dangerous side-effects if too much is consumed.
-  physicalDesc: translucent
+  desc: reagent-desc-desoxyephedrine
+  physicalDesc: reagent-physical-desc-translucent
   color: "#FAFAFA"
   boilingPoint: 212.0  # Dexosyephedrine vape when?
   meltingPoint: 170.0
@@ -42,10 +42,10 @@
 
 - type: reagent
   id: Ephedrine
-  name: ephedrine
+  name: reagent-name-ephedrine
   group: Narcotics
-  desc: Increases stun resistance and movement speed, giving you hand cramps. Overdose deals toxin damage and inhibits breathing.
-  physicalDesc: powdery
+  desc: reagent-desc-ephedrine
+  physicalDesc: reagent-physical-desc-powdery
   color: "#D2FFFA"
   boilingPoint: 255.0
   meltingPoint: 36.0
@@ -79,11 +79,11 @@
 
 - type: reagent
   id: THC
-  name: THC
+  name: reagent-name-thc
   group: Narcotics
-  desc: The main psychoactive compound in cannabis.
+  desc: reagent-desc-thc
   color: "#808080"
-  physicalDesc: crystalline
+  physicalDesc: reagent-physical-desc-crystalline
   plantMetabolism:
   - !type:PlantAdjustNutrition
     amount: -5
@@ -92,46 +92,46 @@
 
 - type: reagent
   id: THCOil
-  name: THC oil
+  name: reagent-name-thc-oil
   group: Narcotics
-  desc: Pure THC oil, extracted from the leaves of the cannabis plant. Much stronger than in it's natural form and can be used to numb chronic pain in patients.
-  physicalDesc: skunky
+  desc: reagent-desc-thc-oil
+  physicalDesc: reagent-physical-desc-skunky
   color: "#DAA520"
 
 - type: reagent
   id: Nicotine
-  name: Nicotine
+  name: reagent-name-nicotine
   group: Narcotics
-  desc: Dangerous and highly addictive.
+  desc: reagent-desc-nicotine
   color: "#C0C0C0"
-  physicalDesc: strong smelling
+  physicalDesc: reagent-physical-desc-strong-smelling
   plantMetabolism:
   - !type:PlantAdjustHealth
     amount: -5
 
 - type: reagent
   id: Impedrezene
-  name: impedrezene
+  name: reagent-name-impedrezene
   group: Narcotics
-  desc: A narcotic that impedes one's ability by slowing down the higher brain cell functions. Causes massive brain damage.
-  physicalDesc: acrid
+  desc: reagent-desc-impedrezene
+  physicalDesc: reagent-physical-desc-acrid
   color: "#215263"
 
 - type: reagent
   id: SpaceDrugs
-  name: space drugs
+  name: reagent-name-space-drugs
   group: Narcotics
-  desc: An illegal compound which induces a number of effects such as loss of balance and visual artefacts.
-  physicalDesc: syrupy
+  desc: reagent-desc-space-drugs
+  physicalDesc: reagent-physical-desc-syrupy
   color: "#63806e"
 
 # Probably replace this one with sleeping chem when putting someone in a comatose state is easier
 - type: reagent
   id: Nocturine
-  name: nocturine
+  name: reagent-name-nocturine
   group: Narcotics
-  desc: Makes you feel very tired and unable to stand up. Basically, it's bone hurting juice.
-  physicalDesc: powdery
+  desc: reagent-desc-nocturine
+  physicalDesc: reagent-physical-desc-powdery
   color: "#128e80"
   boilingPoint: 444.0
   meltingPoint: 128.0

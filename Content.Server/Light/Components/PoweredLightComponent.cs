@@ -10,6 +10,7 @@ using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 using Robust.Shared.Prototypes;
 using Robust.Shared.ViewVariables;
+using Content.Shared.MachineLinking;
 
 namespace Content.Server.Light.Components
 {
@@ -61,5 +62,14 @@ namespace Content.Server.Light.Components
         public TimeSpan LastThunk;
         [ViewVariables]
         public TimeSpan? LastGhostBlink;
+
+        [DataField("onPort", customTypeSerializer: typeof(PrototypeIdSerializer<ReceiverPortPrototype>))]
+        public string OnPort = "On";
+
+        [DataField("offPort", customTypeSerializer: typeof(PrototypeIdSerializer<ReceiverPortPrototype>))]
+        public string OffPort = "Off";
+
+        [DataField("togglePort", customTypeSerializer: typeof(PrototypeIdSerializer<ReceiverPortPrototype>))]
+        public string TogglePort = "Toggle";
     }
 }

@@ -5,6 +5,7 @@ using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.CustomControls;
 using Robust.Client.UserInterface.XAML;
 using Robust.Client.Graphics;
+using Robust.Shared.Prototypes;
 
 namespace Content.Client.MachineLinking.UI
 {
@@ -12,18 +13,20 @@ namespace Content.Client.MachineLinking.UI
     public sealed partial class SignalPortSelectorMenu : DefaultWindow
     {
         private SignalPortSelectorBoundUserInterface _bui;
-        private LinksRender links;
+        private LinksRender _links;
 
-        private ButtonGroup buttonGroup = new();
+        private ButtonGroup _buttonGroup = new();
+        private IPrototypeManager _protoMan;
 
         public SignalPortSelectorMenu(SignalPortSelectorBoundUserInterface boundUserInterface)
         {
             RobustXamlLoader.Load(this);
             _bui = boundUserInterface;
-            links = new(ButtonContainerLeft, ButtonContainerRight);
-            ContainerMiddle.AddChild(links);
+            _links = new(ButtonContainerLeft, ButtonContainerRight);
+            ContainerMiddle.AddChild(_links);
             ButtonClear.OnPressed += _ => _bui.OnClearPressed();
             ButtonLinkDefault.OnPressed += _ => _bui.OnLinkDefaultPressed();
+            _protoMan = IoCManager.Resolve<IPrototypeManager>();
         }
 
         public void UpdateState(SignalPortsState state)
@@ -32,7 +35,14 @@ namespace Content.Client.MachineLinking.UI
             ButtonContainerLeft.DisposeAllChildren();
             foreach (var port in state.TransmitterPorts)
             {
-                var portButton = new Button() { Text = port, ToggleMode = true, Group = buttonGroup };
+                var proto = _protoMan.Index<TransmitterPortPrototype>(port);
+                var portButton = new Button()
+                {
+                    Text = Loc.GetString(proto.Name),
+                    ToolTip = Loc.GetString(proto.Description),
+                    ToggleMode = true,
+                    Group = _buttonGroup
+                };
                 portButton.OnPressed += _ => _bui.OnTransmitterPortSelected(port);
                 ButtonContainerLeft.AddChild(portButton);
             }
@@ -41,12 +51,19 @@ namespace Content.Client.MachineLinking.UI
             ButtonContainerRight.DisposeAllChildren();
             foreach (var port in state.ReceiverPorts)
             {
-                var portButton = new Button() { Text = port, ToggleMode = true, Group = buttonGroup };
+                var proto = _protoMan.Index<ReceiverPortPrototype>(port);
+                var portButton = new Button()
+                {
+                    Text = Loc.GetString(proto.Name),
+                    ToolTip = Loc.GetString(proto.Description),
+                    ToggleMode = true,
+                    Group = _buttonGroup
+                };
                 portButton.OnPressed += _ => _bui.OnReceiverPortSelected(port);
                 ButtonContainerRight.AddChild(portButton);
             }
 
-            links.Links = state.Links;
+            _links.Links = state.Links;
         }
 
         private sealed class LinksRender : Control
