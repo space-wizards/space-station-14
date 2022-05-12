@@ -5,14 +5,14 @@ namespace Content.Shared.CharacterAppearance
     [Serializable, NetSerializable]
     public enum HumanoidVisualLayers : byte
     {
-        TailBehind,
+        Tail,
         Hair,
         FacialHair,
         Chest,
         Head,
         Snout,
-        Frills,
-        Horns,
+        HeadSide, // side parts (i.e., frills)
+        HeadTop,  // top parts (i.e., ears)
         Eyes,
         RArm,
         LArm,
@@ -22,7 +22,6 @@ namespace Content.Shared.CharacterAppearance
         LLeg,
         RFoot,
         LFoot,
-        TailFront,
         Handcuffs,
         StencilMask,
         Fire,

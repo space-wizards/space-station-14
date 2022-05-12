@@ -335,3 +335,30 @@
           DefaultPrototype: CryostasisBeaker
           ExamineName: Cryostasis Beaker
 
+- type: entity
+  id: OreProcessorMachineCircuitboard
+  parent: BaseMachineCircuitboard
+  name: ore processor machine board
+  components:
+    - type: MachineBoard
+      prototype: OreProcessor
+      requirements:
+        MatterBin: 1
+        Manipulator: 1
+        Laser: 2
+      materialRequirements:
+        Glass: 1
+
+- type: entity
+  id: MicrowaveMachineCircuitboard
+  parent: BaseMachineCircuitboard
+  name: microwave machine board
+  components:
+    - type: MachineBoard
+      prototype: KitchenMicrowave
+      requirements:
+        MatterBin: 1
+        Laser: 1
+      materialRequirements:
+        Glass: 2
+        Cable: 2

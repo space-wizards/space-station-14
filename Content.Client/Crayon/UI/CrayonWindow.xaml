@@ -3,6 +3,7 @@
             MinSize="250 300"
             SetSize="250 300">
     <BoxContainer Orientation="Vertical">
+        <ColorSelectorSliders Name="ColorSelector" Visible="False" />
         <LineEdit Name="Search" />
         <ScrollContainer VerticalExpand="True">
             <GridContainer Name="Grid" Columns="6">

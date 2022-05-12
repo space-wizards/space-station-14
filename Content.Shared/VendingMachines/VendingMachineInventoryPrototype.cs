@@ -25,5 +25,11 @@ namespace Content.Shared.VendingMachines
 
         [DataField("startingInventory")]
         public Dictionary<string, uint> StartingInventory { get; } = new();
+
+        [DataField("emaggedInventory")]
+        public Dictionary<string, uint>? EmaggedInventory { get; }
+
+        [DataField("contrabandInventory")]
+        public Dictionary<string, uint>? ContrabandInventory { get; }
     }
 }
