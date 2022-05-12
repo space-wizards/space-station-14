@@ -1,6 +1,7 @@
 ﻿using System.Linq;
 using Content.Server.Chat.Managers;
 using Content.Server.Nuke;
+using Content.Server.RoundEnd;
 using Content.Server.Station.Components;
 using Content.Server.Station.Systems;
 using Content.Shared.CCVar;
@@ -27,6 +28,7 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
     [Dependency] private readonly IMapManager _mapManager = default!;
     [Dependency] private readonly StationSpawningSystem _stationSpawningSystem = default!;
     [Dependency] private readonly StationSystem _stationSystem = default!;
+    [Dependency] private readonly RoundEndSystem _roundEndSystem = default!;
 
     private Dictionary<Mind.Mind, bool> _aliveNukeops = new();
     private bool _opsWon;
@@ -47,7 +49,7 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
     private void OnNukeExploded(NukeExplodedEvent ev)
     {
         _opsWon = true;
-        GameTicker.EndRound(Loc.GetString("nukeops-nuke-exploded"));
+        _roundEndSystem.EndRound();
     }
 
     private void OnRoundEndText(RoundEndTextAppendEvent ev)
@@ -68,7 +70,7 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
 
         if (_aliveNukeops.Values.All(x => !x))
         {
-            GameTicker.EndRound(Loc.GetString("nukeops-all-ops-dead"));
+            _roundEndSystem.EndRound();
         }
     }
 
