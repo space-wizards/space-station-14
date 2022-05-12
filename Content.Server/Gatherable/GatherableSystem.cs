@@ -32,15 +32,9 @@ public sealed class GatherableSystem : EntitySystem
     private void OnInteractUsing(EntityUid uid, GatherableComponent component, InteractUsingEvent args)
     {
         if (!TryComp<GatheringToolComponent>(args.Used, out var tool) ||
-            component.ToolWhitelist?.IsValid(args.Used) == false)
+            component.ToolWhitelist?.IsValid(args.Used) == false ||
+            tool.GatheringEntities.TryGetValue(uid, out var cancelToken))
             return;
-
-        if (tool.GatheringEntities.TryGetValue(uid, out var cancelToken))
-        {
-            cancelToken.Cancel();
-            tool.GatheringEntities.Remove(uid);
-            return;
-        }
 
         // Can't gather too many entities at once.
         if (tool.MaxGatheringEntities < tool.GatheringEntities.Count + 1)
@@ -75,18 +69,19 @@ public sealed class GatherableSystem : EntitySystem
 
         // Spawn the loot!
         if (component.MappedLoot == null) return;
-        foreach (var pair in component.MappedLoot)
+
+        var playerPos = Transform(ev.Player).MapPosition;
+
+        foreach (var (tag, table) in component.MappedLoot)
         {
-            if (pair.Key != "All")
+            if (tag != "All")
             {
-                if (!_tagSystem.HasTag(tool.Owner, pair.Key)) continue;
+                if (!_tagSystem.HasTag(tool.Owner, tag)) continue;
             }
-            var getLoot = _prototypeManager.Index<EntityLootTablePrototype>(pair.Value);
+            var getLoot = _prototypeManager.Index<EntityLootTablePrototype>(table);
             var spawnLoot = getLoot.GetSpawns();
-            var playerPos = Transform(ev.Player).MapPosition;
             var spawnPos = playerPos.Offset(_random.NextVector2(0.3f));
-            EntityManager.SpawnEntity(spawnLoot[0], spawnPos);
-            tool.GatheringEntities.Remove(uid);
+            Spawn(spawnLoot[0], spawnPos);
         }
     }
 
