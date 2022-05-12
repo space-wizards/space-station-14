@@ -17,7 +17,7 @@
       map: ["enum.StorageVisualLayers.Door"]
     - state: welded
       visible: false
-      map: ["enum.StorageVisualLayers.Welded"]
+      map: ["enum.WeldableLayers.BaseWelded"]
   - type: MovedByPressure
   - type: DamageOnHighSpeedImpact
     damage:
@@ -31,16 +31,14 @@
     fixtures:
     - shape:
         !type:PhysShapeAabb
-          bounds: "-0.25,-0.48,0.25,0.48"
+        bounds: "-0.25,-0.48,0.25,0.48"
       mass: 70
       mask:
-      - Impassable
-      - SmallImpassable
+      - MachineMask
       layer:
-      - Opaque
-      - MobImpassable
-      - SmallImpassable
+      - MachineLayer
   - type: EntityStorage
+  - type: Weldable
   - type: PlaceableSurface
     placeCentered: true
   - type: Damageable

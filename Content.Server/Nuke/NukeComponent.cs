@@ -107,7 +107,7 @@ namespace Content.Server.Nuke
         /// <summary>
         ///     Time until explosion in seconds.
         /// </summary>
-        [ViewVariables]
+        [ViewVariables(VVAccess.ReadWrite)]
         public float RemainingTime;
 
         /// <summary>

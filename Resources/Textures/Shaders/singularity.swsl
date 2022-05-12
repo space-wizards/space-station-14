@@ -1,33 +1,45 @@
-//Gravitational lensing effect. Edited from https://unionassets.com/blog/the-effect-of-the-gravitational-lens-195 to be Clyde based (based on what)
+//Gravitational lensing effect. Loosely inspired by https://unionassets.com/blog/the-effect-of-the-gravitational-lens-195 to be Clyde based (based on what)
 
 uniform sampler2D SCREEN_TEXTURE;
-uniform highp vec2 positionInput;
 uniform highp vec2 renderScale;
-uniform highp float falloff;
-uniform highp float intensity;
+uniform highp float maxDistance;
+uniform lowp int count;
 
-
+uniform highp float[5] falloffPower;
+uniform highp float[5] intensity;
+uniform highp vec2[5] position;
+// the `5`s in the array lengths correspond to the upper limit on the simultaneous distortion sources that can be present on screen at a time. 
+// If you want to change this, make sure to change all of them here, in the for loop, and, in whatever overlay assigns the uniforms
+// (apparently #define is an unknown preprocessor directive)
 
 void fragment() {
-	highp float distanceToCenter = length((FRAGCOORD.xy - positionInput) / renderScale);
 
-	highp vec2 finalCoords = FRAGCOORD.xy - positionInput;
-	highp float deformation = (pow(intensity, 2.0)*500.0) / pow(distanceToCenter, pow(falloff, 0.5));
-	if(deformation > 0.8) //Edit this for inward effect
-		deformation = pow(deformation, 0.3);
-	if(deformation > 0.001){
-		finalCoords *= 1.0-deformation; //Change this to 1+deformation for inward effect
-		finalCoords += positionInput;
-		//float darkenCircleSize = 600; //Calculate optional darkening effect (darker the closer we are to the center of the singularity)
-		//float alph = (distanceToCenter-30)/(darkenCircleSize-30);
-		//float darkening = 0.9-(alph*0.9);
+    highp vec2 finalCoords = FRAGCOORD.xy;
+    highp vec2 delta;
+    highp float distance;
+    highp float deformation;
+    
+    for (int i = 0; i < 5 && i < count; i++) {
+    
+        delta = FRAGCOORD.xy - position[i];
+	    distance = length(delta / renderScale);
 
-		//Darkening effect optional (Darker the closer you are to the center)
-		//COLOR = mix(texture(SCREEN_TEXTURE, finalCoords*SCREEN_PIXEL_SIZE), vec4(0.0, 0.0, 0.0, 1.0), darkening);
-		COLOR = zTextureSpec(SCREEN_TEXTURE, finalCoords*SCREEN_PIXEL_SIZE);
-	}
-	else{
-		COLOR = zTextureSpec(SCREEN_TEXTURE, FRAGCOORD.xy*SCREEN_PIXEL_SIZE);
-	}
+        deformation = intensity[i] / pow(distance, falloffPower[i]);
+        
+        // ensure deformation goes to zero at max distance
+        // avoids long-range single-pixel shifts that are noticeable when leaving PVS.
+        
+        if (distance >= maxDistance) {
+            deformation = 0.0;
+        } else {
+            deformation *= (1.0 - pow(distance/maxDistance, 4.0));
+        }
+        
+        if(deformation > 0.8)
+            deformation = pow(deformation, 0.3);
 
+        finalCoords -= deformation * delta;
+    }
+    
+    COLOR = zTextureSpec(SCREEN_TEXTURE, finalCoords*SCREEN_PIXEL_SIZE );
 }

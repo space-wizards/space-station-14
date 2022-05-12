@@ -77,8 +77,9 @@ namespace Content.Server.BarSign.Systems
             var newPrototype = _random.Pick(prototypes);
 
             var meta = Comp<MetaDataComponent>(owner);
-            meta.EntityName = newPrototype.Name != string.Empty ? newPrototype.Name : Loc.GetString("barsign-component-name");
-            meta.EntityDescription = newPrototype.Description;
+            var name = newPrototype.Name != string.Empty ? newPrototype.Name : "barsign-component-name";
+            meta.EntityName = Loc.GetString(name);
+            meta.EntityDescription = Loc.GetString(newPrototype.Description);
 
             component.CurrentSign = newPrototype.ID;
             return newPrototype;

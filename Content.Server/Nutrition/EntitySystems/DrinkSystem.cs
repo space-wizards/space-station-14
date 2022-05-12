@@ -194,8 +194,6 @@ namespace Content.Server.Nutrition.EntitySystems
             // cannot stack do-afters
             if (drink.CancelToken != null)
             {
-                drink.CancelToken.Cancel();
-                drink.CancelToken = null;
                 return true;
             }
 

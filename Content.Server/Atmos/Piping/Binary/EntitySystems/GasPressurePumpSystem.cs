@@ -67,7 +67,7 @@ namespace Content.Server.Atmos.Piping.Binary.EntitySystems
 
             var outputStartingPressure = outlet.Air.Pressure;
 
-            if (MathHelper.CloseToPercent(pump.TargetPressure, outputStartingPressure))
+            if (outputStartingPressure >= pump.TargetPressure)
             {
                 appearance?.SetData(PumpVisuals.Enabled, false);
                 _ambientSoundSystem.SetAmbience(pump.Owner, false);
