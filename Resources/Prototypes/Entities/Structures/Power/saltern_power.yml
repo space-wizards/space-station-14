@@ -25,7 +25,6 @@
   parent: BaseAPC
   id: SalternAPC
   components:
-  - type: WallMount
   - type: Battery
     maxCharge: 12000
     startingCharge: 2000

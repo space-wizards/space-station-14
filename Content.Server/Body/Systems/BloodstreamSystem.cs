@@ -226,6 +226,14 @@ public sealed class BloodstreamSystem : EntitySystem
         return (component.BloodSolution.CurrentVolume / component.BloodSolution.MaxVolume).Float();
     }
 
+    public void SetBloodLossThreshold(EntityUid uid, float threshold, BloodstreamComponent? comp = null)
+    {
+        if (!Resolve(uid, ref comp))
+            return;
+
+        comp.BloodlossThreshold = threshold;
+    }
+
     /// <summary>
     ///     Attempts to modify the blood level of this entity directly.
     /// </summary>

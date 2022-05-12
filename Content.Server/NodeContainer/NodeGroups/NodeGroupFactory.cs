@@ -55,7 +55,7 @@ namespace Content.Server.NodeContainer.NodeGroups
         }
     }
 
-    public enum NodeGroupID
+    public enum NodeGroupID : byte
     {
         Default,
         HVPower,

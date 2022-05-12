@@ -15,6 +15,14 @@
   iconOn: Objects/Tools/flashlight.rsi/flashlight-on.png
   event: !type:ToggleActionEvent
 
+- type: instantAction
+  id: ToggleSuitHelmet
+  name: action-name-hardsuit
+  description: action-description-hardsuit
+  itemIconStyle: BigItem
+  useDelay: 1 # equip noise spam.
+  event: !type:ToggleClothingEvent
+
 - type: entityTargetAction
   id: Disarm
   name: action-name-disarm

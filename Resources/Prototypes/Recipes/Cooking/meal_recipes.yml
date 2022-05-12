@@ -171,8 +171,8 @@
   time: 30
   solids:
     FoodDough: 1
-    FoodCheeseSlice: 4
-    FoodTomato: 1
+    FoodCheeseSlice: 1
+    FoodTomato: 4
 
 - type: microwaveMealRecipe
   id: RecipeMushroomPizza

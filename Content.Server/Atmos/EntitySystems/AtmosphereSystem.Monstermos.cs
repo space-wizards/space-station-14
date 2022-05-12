@@ -547,18 +547,17 @@ namespace Content.Server.Atmos.EntitySystems
                 var amount = transferDirections[i];
                 var otherTile = tile.AdjacentTiles[i];
                 if (otherTile?.Air == null) continue;
-                if (amount > 0)
-                {
-                    // Everything that calls this method already ensures that Air will not be null.
-                    if (tile.Air!.TotalMoles < amount)
-                        FinalizeEqNeighbors(gridAtmosphere, tile, transferDirections);
+                if (amount <= 0) continue;
 
-                    otherTile.MonstermosInfo[direction.GetOpposite()] = 0;
-                    Merge(otherTile.Air, tile.Air.Remove(amount));
-                    InvalidateVisuals(tile.GridIndex, tile.GridIndices);
-                    InvalidateVisuals(otherTile.GridIndex, otherTile.GridIndices);
-                    ConsiderPressureDifference(gridAtmosphere, tile, otherTile, amount);
-                }
+                // Everything that calls this method already ensures that Air will not be null.
+                if (tile.Air!.TotalMoles < amount)
+                    FinalizeEqNeighbors(gridAtmosphere, tile, transferDirections);
+
+                otherTile.MonstermosInfo[direction.GetOpposite()] = 0;
+                Merge(otherTile.Air, tile.Air.Remove(amount));
+                InvalidateVisuals(tile.GridIndex, tile.GridIndices);
+                InvalidateVisuals(otherTile.GridIndex, otherTile.GridIndices);
+                ConsiderPressureDifference(gridAtmosphere, tile, direction, amount);
             }
         }
 

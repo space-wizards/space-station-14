@@ -107,6 +107,12 @@
     sprite: Clothing/Head/Hats/chefhat.rsi
   - type: Clothing
     sprite: Clothing/Head/Hats/chefhat.rsi
+  - type: Storage
+    capacity: 5
+  - type: UserInterface
+    interfaces:
+      - key: enum.StorageUiKey.Key
+        type: StorageBoundUserInterface
 
 - type: entity
   parent: ClothingHeadBase

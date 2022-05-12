@@ -28,6 +28,13 @@
     sprite: Clothing/OuterClothing/Suits/emergency.rsi
   - type: Clothing
     sprite: Clothing/OuterClothing/Suits/emergency.rsi
+  - type: ClothingSpeedModifier
+    walkModifier: 0.5
+    sprintModifier: 0.5
+  - type: TemperatureProtection
+    coefficient: 0.5
+  - type: ToggleableClothing
+    clothingPrototype: ClothingHeadHelmetEVA
 
 - type: entity
   parent: ClothingOuterBase
@@ -39,7 +46,7 @@
     sprite: Clothing/OuterClothing/Suits/fire.rsi
   - type: PressureProtection
     highPressureMultiplier: 0.65
-    lowPressureMultiplier: 25
+    lowPressureMultiplier: 1000
   - type: Clothing
     sprite: Clothing/OuterClothing/Suits/fire.rsi
   - type: Armor
@@ -52,7 +59,7 @@
     sprintModifier: 0.7
   - type: TemperatureProtection
     coefficient: 0.01
-    
+
 - type: entity
   parent: ClothingOuterBase
   id: ClothingOuterSuitRad
@@ -130,7 +137,7 @@
     sprite: Clothing/OuterClothing/Suits/atmos_firesuit.rsi
   - type: PressureProtection
     highPressureMultiplier: 0.45
-    lowPressureMultiplier: 25
+    lowPressureMultiplier: 1000
   - type: TemperatureProtection
     coefficient: 0.01
   - type: Clothing
@@ -142,4 +149,4 @@
         Heat: 0.35
   - type: ClothingSpeedModifier
     walkModifier: 0.7
-    sprintModifier: 0.7 
+    sprintModifier: 0.75

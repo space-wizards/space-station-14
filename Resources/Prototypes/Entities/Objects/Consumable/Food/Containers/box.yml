@@ -6,7 +6,7 @@
 # an alpha color which -Y- said he would implement.
 
 - type: entity
-  parent: BaseItem
+  parent: BoxCardboard
   id: FoodBoxDonut
   name: donut box
   description: Mmm, Donuts.
@@ -50,7 +50,7 @@
 # Egg
 
 - type: entity
-  parent: BaseItem
+  parent: BoxCardboard
   id: FoodContainerEgg
   name: egg carton
   description: Don't drop 'em!
@@ -66,6 +66,7 @@
       - Egg
   - type: Item
     sprite: Objects/Consumable/Food/egg.rsi
+    state: box-closed
     size: 12
   - type: StorageFill
     contents:
@@ -138,7 +139,7 @@
 # Since you could open pizza boxes in the stack.
 
 - type: entity
-  parent: BaseItem
+  parent: BoxCardboard
   id: FoodBoxPizza
   name: pizza box
   components:
@@ -152,7 +153,6 @@
     netsync: false
   - type: EntityStorage
     Capacity: 8
-    CanWeldShut: false
   - type: PlaceableSurface
     placeCentered: true
   - type: Item
@@ -219,7 +219,7 @@
 # Nugget
 
 - type: entity
-  parent: BaseItem
+  parent: BoxCardboard
   id: FoodBoxNugget
   name: chicken nuggets
   description: You suddenly have an urge to trade on the intergalactic stock market.
@@ -258,7 +258,7 @@
 # Donkpocket
 
 - type: entity
-  parent: BaseItem
+  parent: BoxCardboard
   id: FoodBoxDonkpocket
   name: box of donk-pockets
   description: 'Instructions: Heat in microwave. Product will cool if not eaten within seven minutes.'

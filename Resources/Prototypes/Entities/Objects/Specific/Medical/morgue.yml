@@ -34,12 +34,11 @@
     fixtures:
     - shape:
         !type:PhysShapeAabb
-          bounds: "-0.25,-0.4,0.25,0.1"
+        bounds: "-0.25,-0.4,0.25,0.1"
       mass: 5
       mask:
       - Impassable
   - type: BodyBagEntityStorage
-    CanWeldShut: false
     Capacity: 1
     IsCollidableWhenOpen: true
     closeSound:

@@ -2,7 +2,6 @@ using System;
 using System.Linq;
 using Content.Server.Disposal.Unit.Components;
 using Content.Server.Disposal.Unit.EntitySystems;
-using Content.Shared.Acts;
 using Content.Shared.Construction.Components;
 using Content.Shared.Disposal.Components;
 using Content.Shared.Popups;
@@ -18,7 +17,7 @@ using Robust.Shared.ViewVariables;
 
 namespace Content.Server.Disposal.Tube.Components
 {
-    public abstract class DisposalTubeComponent : Component, IDisposalTubeComponent, IBreakAct
+    public abstract class DisposalTubeComponent : Component, IDisposalTubeComponent
     {
         [Dependency] private readonly IEntityManager _entMan = default!;
 
@@ -73,7 +72,7 @@ namespace Content.Server.Disposal.Tube.Components
             return true;
         }
 
-        private void Disconnect()
+        public void Disconnect()
         {
             if (!_connected)
             {
@@ -108,7 +107,7 @@ namespace Content.Server.Disposal.Tube.Components
             }
 
             var state = Anchored
-                ? DisposalTubeVisualState.Anchored 
+                ? DisposalTubeVisualState.Anchored
                 : DisposalTubeVisualState.Free;
 
             appearance.SetData(DisposalTubeVisuals.VisualState, state);
@@ -169,11 +168,6 @@ namespace Content.Server.Disposal.Tube.Components
         {
             base.OnRemove();
 
-            Disconnect();
-        }
-
-        void IBreakAct.OnBreak(BreakageEventArgs eventArgs)
-        {
             Disconnect();
         }
     }

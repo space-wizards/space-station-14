@@ -43,7 +43,7 @@ public abstract class SharedActionsSystem : EntitySystem
     }
 
     #region ComponentStateManagement
-    protected virtual void Dirty(ActionType action)
+    public virtual void Dirty(ActionType action)
     {
         if (action.AttachedEntity == null)
             return;

@@ -56,4 +56,10 @@ entities:
     fixtures: []
     bodyType: Dynamic
     type: Physics
+- uid: 1
+  type: SpawnPointLatejoin
+  components:
+  - parent: 0
+    pos: 0,0
+    type: Transform
 ...

@@ -16,8 +16,8 @@
         radius: 0.4
       mass: 500
       layer:
+      - HalfWallLayer
       - Opaque
-      - VaultImpassable
   - type: Climbable
 
 - type: entity
@@ -36,11 +36,10 @@
     fixtures:
     - shape:
         !type:PhysShapeAabb
-          bounds: "-0.35,-1.3,0.35,-0.5"
+        bounds: "-0.35,-1.3,0.35,-0.5"
       mass: 500
       layer:
-      - Opaque
-      - Impassable
+      - WallLayer
 
 - type: entity
   parent: BaseTree
@@ -53,11 +52,10 @@
     fixtures:
     - shape:
         !type:PhysShapeAabb
-          bounds: "-0.1,-1.0,0.1,-0.4"
+        bounds: "-0.1,-1.0,0.1,-0.4"
       mass: 500
       layer:
-      - Opaque
-      - Impassable
+      - WallLayer
 
 - type: entity
   parent: BaseTree
@@ -70,11 +68,10 @@
     fixtures:
     - shape:
         !type:PhysShapeAabb
-          bounds: "-0.18,-1.9,0.18,-1.2"
+        bounds: "-0.18,-1.9,0.18,-1.2"
       mass: 500
       layer:
-      - Opaque
-      - Impassable
+      - WallLayer
 
 - type: entity
   parent: BaseTree
@@ -87,11 +84,10 @@
     fixtures:
     - shape:
         !type:PhysShapeAabb
-          bounds: "-0.1,-1.5,0.1,-0.8"
+        bounds: "-0.1,-1.5,0.1,-0.8"
       mass: 500
       layer:
-      - Opaque
-      - Impassable
+      - WallLayer
 
 - type: entity
   parent: BaseRock
@@ -312,11 +308,10 @@
     fixtures:
     - shape:
         !type:PhysShapeAabb
-          bounds: "-0.8,-1.5,0.8,-0.8"
+        bounds: "-0.8,-1.5,0.8,-0.8"
       mass: 500
       layer:
-      - Opaque
-      - Impassable
+      - WallLayer
 
 - type: entity
   parent: BaseTreeConifer
