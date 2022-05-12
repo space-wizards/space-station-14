@@ -1,12 +1,4 @@
 Entries:
-- author: Rane
-  changes:
-  - {message: 'Added lingzhi and ambrosia vulgaris, two more potent but slightly dangerous
-      medicinal plants.', type: Add}
-  - {message: 'Instead of kelotane and nutriment, aloe now yields dermaline and...
-      wait for it... aloe!', type: Tweak}
-  id: 1003
-  time: '2022-02-07T19:43:21.0000000+00:00'
 - author: ElectroJr
   changes:
   - {message: Gas mixers now properly animate when on., type: Fix}
@@ -3034,3 +3026,9 @@ Entries:
     type: Add}
   id: 1502
   time: '2022-05-11T23:46:22.0000000+00:00'
+- author: ShadowCommander
+  changes:
+  - {message: Fixed vending machines colliding and pushing out vended items., type: Fix}
+  - {message: Fixed climbing onto tables to bypass windoors and firelocks., type: Fix}
+  id: 1503
+  time: '2022-05-12T00:24:01.0000000+00:00'
