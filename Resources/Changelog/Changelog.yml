@@ -1,10 +1,4 @@
 Entries:
-- author: Lamrr
-  changes:
-  - {message: 'A new line of reinforced tiles have been released, enjoy the fresh
-      new graphical depth.', type: Tweak}
-  id: 1013
-  time: '2022-02-08T18:08:23.0000000+00:00'
 - author: mirrorcult
   changes:
   - {message: Mappers can now add decals to maps using the Decal Placer menu., type: Add}
@@ -3034,3 +3028,9 @@ Entries:
       hit without a helmet, type: Add}
   id: 1512
   time: '2022-05-12T10:59:03.0000000+00:00'
+- author: UKNOWH
+  changes:
+  - {message: 'Added tranqulizer, flare, & flash shotgun shell recipes. You can now
+      print them at the sec tech fab and med tech fab!', type: Add}
+  id: 1513
+  time: '2022-05-12T12:24:02.0000000+00:00'
