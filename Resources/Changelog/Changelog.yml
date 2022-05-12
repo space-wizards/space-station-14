@@ -1,11 +1,4 @@
 Entries:
-- author: WlarusFromDaSpace
-  changes:
-  - {message: Added Emergency Access to airlocks, type: Add}
-  - {message: Door remotes can now put airlocks they have access for to emergency
-      access mode, type: Add}
-  id: 1020
-  time: '2022-02-09T03:13:35.0000000+00:00'
 - author: ElectroJr
   changes:
   - {message: 'Removed targeting dummy, as limb-damage is still not yet implemented.',
@@ -3033,3 +3026,9 @@ Entries:
       randomize on character selection.', type: Tweak}
   id: 1519
   time: '2022-05-12T23:43:15.0000000+00:00'
+- author: Ripmorld
+  changes:
+  - {message: You can now print various powercells in protolathes, type: Add}
+  - {message: You get more Licoxide the bigger the powercell you juice, type: Tweak}
+  id: 1520
+  time: '2022-05-12T23:49:52.0000000+00:00'
