@@ -57,6 +57,8 @@
         #  - Heh
       - id: SalvageHumanCorpse
         prob: 0.1
+      - id: LidSalami
+        prob: 0.1
         # Interesting (1%)
         #  - Ammo
       - id: BoxMagnum
@@ -73,6 +75,8 @@
         #  - Skub
       - id: Skub
         prob: 0.001
+      - id: ClothingHeadHatCatEars
+        prob: 0.01
         # TRAITOR EQUIPMENT (0.01%)
       - id: Telecrystal10
         prob: 0.0001

@@ -3,7 +3,7 @@
 - type: job
   id: ChiefMedicalOfficer
   name: "chief medical officer"
-  head: true
+  weight: 10
   startingGear: CMOGear
   departments:
   - Command

@@ -139,6 +139,8 @@ namespace Content.Client.Chat.Managers
             _stateManager.OnStateChanged += _ => UpdateChannelPermissions();
         }
 
+        public IReadOnlyDictionary<EntityUid, List<SpeechBubble>> GetSpeechBubbles() => _activeSpeechBubbles;
+
         public void PostInject()
         {
             _adminMgr.AdminStatusUpdated += UpdateChannelPermissions;

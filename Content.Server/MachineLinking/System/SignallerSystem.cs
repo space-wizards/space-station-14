@@ -1,8 +1,5 @@
 using Content.Server.MachineLinking.Components;
-using Content.Server.MachineLinking.Events;
-using Content.Shared.Interaction;
 using JetBrains.Annotations;
-using Robust.Shared.GameObjects;
 using Content.Shared.Interaction.Events;
 
 namespace Content.Server.MachineLinking.System
@@ -10,6 +7,7 @@ namespace Content.Server.MachineLinking.System
     [UsedImplicitly]
     public sealed class SignallerSystem : EntitySystem
     {
+        [Dependency] private readonly SignalLinkerSystem _signalSystem = default!;
         public override void Initialize()
         {
             base.Initialize();
@@ -19,16 +17,14 @@ namespace Content.Server.MachineLinking.System
 
         private void OnInit(EntityUid uid, SignallerComponent component, ComponentInit args)
         {
-            var transmitter = EnsureComp<SignalTransmitterComponent>(uid);
-            if (!transmitter.Outputs.ContainsKey(SignallerComponent.Port))
-                transmitter.AddPort(SignallerComponent.Port);
+            _signalSystem.EnsureTransmitterPorts(uid, component.Port);
         }
 
         private void OnUseInHand(EntityUid uid, SignallerComponent component, UseInHandEvent args)
         {
             if (args.Handled)
                 return;
-            RaiseLocalEvent(uid, new InvokePortEvent(SignallerComponent.Port), false);
+            _signalSystem.InvokePort(uid, component.Port);
             args.Handled = true;
         }   
     }

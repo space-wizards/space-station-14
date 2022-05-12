@@ -6,19 +6,19 @@
     Flammable:
       methods: [ Touch ]
       effects:
-      - !type:FlammableReaction
+        - !type:FlammableReaction
   plantMetabolism:
-  - !type:PlantAdjustWeeds
-    amount: -2
-  - !type:PlantAdjustHealth
-    amount: -2
+    - !type:PlantAdjustWeeds
+      amount: -2
+    - !type:PlantAdjustHealth
+      amount: -2
 
 - type: reagent
   id: Thermite
-  name: thermite
+  name: reagent-name-thermite
   parent: BasePyrotechnic
-  desc: A mixture that becomes extremely hot when ignited, and which can burn straight through walls when applied and ignited. It'll slowly inflict burn damage to anybody dumb enough to ingest it, but can't be ignited inside inside said dumb person.
-  physicalDesc: grainy
+  desc: reagent-desc-thermite
+  physicalDesc: reagent-physical-desc-grainy
   color: "#757245"
   boilingPoint: 2977.0 # Aluminum oxide
   meltingPoint: 2030.0
@@ -35,10 +35,10 @@
 
 - type: reagent
   id: Napalm
-  name: napalm
+  name: reagent-name-napalm
   parent: BasePyrotechnic
-  desc: It's just a little flammable.
-  physicalDesc: soapy
+  desc: reagent-desc-napalm
+  physicalDesc: reagent-physical-desc-soapy
   color: "#FA00AF"
   tileReactions:
   - !type:FlammableTileReaction
@@ -61,10 +61,10 @@
 
 - type: reagent
   id: Phlogiston
-  name: phlogiston
+  name: reagent-name-phlogiston
   parent: BasePyrotechnic
-  desc: Catches you on fire and makes you ignite.
-  physicalDesc: burning
+  desc: reagent-desc-phlogiston
+  physicalDesc: reagent-physical-desc-burning
   color: "#D4872A"
   metabolisms:
     Poison:
@@ -87,10 +87,10 @@
 
 - type: reagent
   id: ChlorineTrifluoride
-  name: CLF3
+  name: reagent-name-chlorine-trifluoride
   parent: BasePyrotechnic
-  desc: You really, REALLY don't want to get this shit anywhere near you.
-  physicalDesc: blazing
+  desc: reagent-desc-chlorine-trifluoride
+  physicalDesc: reagent-physical-desc-blazing
   color: "#FFC8C8"
   tileReactions:
   - !type:PryTileReaction
@@ -121,20 +121,20 @@
 
 - type: reagent
   id: FoamingAgent
-  name: foaming agent
+  name: reagent-name-foaming-agent
   parent: BasePyrotechnic
-  desc: Makes foam such as that's required in metal foam grenades.
-  physicalDesc: foamy
+  desc: reagent-desc-foaming-agent
+  physicalDesc: reagent-physical-desc-foamy
   color: "#215263"
   boilingPoint: 418.0 # I went with ammonium lauryl sulfate as the basis for this
   meltingPoint: 7.4 # I made this up
 
 - type: reagent
   id: WeldingFuel
-  name: welding fuel
+  name: reagent-name-welding-fuel
   parent: BasePyrotechnic
-  desc: Used by welders to weld.
-  physicalDesc: oily
+  desc: reagent-desc-welding-fuel
+  physicalDesc: reagent-physical-desc-oily
   color: "#a76b1c"
   boilingPoint: -84.7 # Acetylene. Close enough.
   meltingPoint: -80.7
@@ -152,10 +152,10 @@
 
 - type: reagent
   id: Fluorosurfactant
-  name: fluorosurfactant
+  name: reagent-name-fluorosurfactant
   parent: BasePyrotechnic
-  desc: A perfluoronated sulfonic acid that forms a foam when mixed with water.
-  physicalDesc: opaque
+  desc: reagent-desc-fluorosurfactant
+  physicalDesc: reagent-physical-desc-opaque
   color: "#9e6b38"
   boilingPoint: 190.0 # Perfluorooctanoic Acid.
   meltingPoint: 45.0

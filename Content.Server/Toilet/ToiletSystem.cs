@@ -9,6 +9,7 @@ using Content.Shared.Body.Components;
 using Content.Shared.Body.Part;
 using Content.Shared.Examine;
 using Content.Shared.Interaction;
+using Content.Shared.Interaction.Events;
 using Content.Shared.Toilet;
 using Content.Shared.Tools.Components;
 using Robust.Shared.Audio;
@@ -35,8 +36,14 @@ namespace Content.Server.Toilet
             SubscribeLocalEvent<ToiletComponent, InteractUsingEvent>(OnInteractUsing);
             SubscribeLocalEvent<ToiletComponent, InteractHandEvent>(OnInteractHand);
             SubscribeLocalEvent<ToiletComponent, ExaminedEvent>(OnExamine);
+            SubscribeLocalEvent<ToiletComponent, SuicideEvent>(OnSuicide);
             SubscribeLocalEvent<ToiletPryFinished>(OnToiletPried);
             SubscribeLocalEvent<ToiletPryInterrupted>(OnToiletInterrupt);
+        }
+
+        private void OnSuicide(EntityUid uid, ToiletComponent component, SuicideEvent args)
+        {
+            Suicide(component.Owner, uid, component);
         }
 
         private void OnInit(EntityUid uid, ToiletComponent component, ComponentInit args)
