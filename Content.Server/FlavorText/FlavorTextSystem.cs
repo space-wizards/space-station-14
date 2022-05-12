@@ -17,6 +17,7 @@ namespace Content.Server.FlavorText
 
         private void OnGetExamineVerbs(EntityUid uid, FlavorTextComponent component, GetVerbsEvent<ExamineVerb> args)
         {
+            // TODO: Hide if identity isn't visible (when identity is merged)
             var detailsRange = _examineSystem.IsInDetailsRange(args.User, uid);
 
             var verb = new ExamineVerb()
