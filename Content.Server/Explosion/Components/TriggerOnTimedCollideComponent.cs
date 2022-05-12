@@ -1,7 +1,7 @@
 ﻿namespace Content.Server.Explosion.Components;
 
 /// <summary>
-/// Triggers when the entity is overlapped
+/// Triggers when the entity is overlapped for the specified duration.
 /// </summary>
 [RegisterComponent]
 public sealed class TriggerOnTimedCollideComponent : Component

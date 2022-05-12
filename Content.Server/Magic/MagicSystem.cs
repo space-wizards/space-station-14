@@ -115,10 +115,11 @@ public sealed class MagicSystem : EntitySystem
 
     private void TeachSpell(EntityUid uid, SpellbookComponent component, LearnDoAfterComplete ev)
     {
+        component.CancelToken = null;
+
         if (ev.User == null)
             return;
 
-        component.CancelToken = null;
         _actionsSystem.AddActions(ev.User, component.Spells, uid);
     }
 

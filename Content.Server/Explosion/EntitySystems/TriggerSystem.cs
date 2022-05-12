@@ -84,7 +84,7 @@ namespace Content.Server.Explosion.EntitySystems
 
         private void OnActivate(EntityUid uid, TriggerOnActivateComponent component, ActivateInWorldEvent args)
         {
-            Trigger(component.Owner);
+            Trigger(component.Owner, args.User);
         }
 
         public void Trigger(EntityUid trigger, EntityUid? user = null)

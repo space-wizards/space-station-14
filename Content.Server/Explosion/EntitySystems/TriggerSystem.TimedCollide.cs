@@ -36,7 +36,6 @@ public sealed partial class TriggerSystem
 
     private void UpdateTimedCollide(float frameTime)
     {
-        base.Update(frameTime);
         foreach (var trigger in Active)
         {
             if (!TryComp(trigger, out TriggerOnTimedCollideComponent? component))

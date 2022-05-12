@@ -9,5 +9,4 @@ public sealed class RuneMagicEvent : InstantActionEvent
     /// </summary>
     [DataField("rune", required: true)]
     public string RunePrototype = default!;
-
 }

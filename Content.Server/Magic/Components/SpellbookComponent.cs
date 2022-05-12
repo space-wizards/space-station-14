@@ -13,6 +13,9 @@ public sealed class SpellbookComponent : Component
     [ViewVariables]
     public readonly List<ActionType> Spells = new();
 
+    /// <summary>
+    /// The three fields below is just used for initialisation.
+    /// </summary>
     [DataField("worldSpells", customTypeSerializer: typeof(PrototypeIdDictionarySerializer<int, WorldTargetActionPrototype>))]
     public readonly Dictionary<string, int> WorldSpells = new();
 
