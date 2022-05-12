@@ -1,0 +1,5 @@
+- type: entity
+  id: TetherEntity
+  components:
+  - type: Physics
+  - type: Fixtures
