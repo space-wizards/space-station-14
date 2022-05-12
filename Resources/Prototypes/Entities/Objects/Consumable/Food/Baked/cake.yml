@@ -670,7 +670,6 @@
           Quantity: 12
   - type: Food
     transferAmount: 3
-    trash: ""
   - type: PointLight
     color: "#FFFF00"
     radius: 1.4
