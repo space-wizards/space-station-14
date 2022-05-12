@@ -21,6 +21,9 @@
   prototype: MobReptilian
   dollPrototype: MobReptilianDummy
   skinColoration: Hues
+  maleFirstNames: names_reptilian_male
+  femaleFirstNames: names_reptilian_female
+  naming: FirstDashFirst
 
 - type: species
   id: SlimePerson
