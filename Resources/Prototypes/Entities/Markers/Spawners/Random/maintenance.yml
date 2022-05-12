@@ -100,5 +100,6 @@
         - Welder
         - FlareGun
         - Spear
+        - LidSalami
       chance: 0.6
       offset: 0.0
