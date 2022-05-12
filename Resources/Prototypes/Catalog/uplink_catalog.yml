@@ -284,7 +284,7 @@
   itemId: ClothingBackpackDuffelSyndicateHardsuitBundle
   description: The Syndicate's well known armored blood red hardsuit, capable of space walks and bullet resistant.
   price: 8
-
+  
 - type: uplinkListing
   id: UplinkClothingShoesBootsMagSyndie
   category: Armor
