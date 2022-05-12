@@ -5,7 +5,7 @@
   minPlayers: 35
   maxPlayers: 70
   stations:
-    Station: #TODO: Mapper, add a BecomesStation component to the primary grid of the map.
+    Marathon:
       mapNameTemplate: '{0} Marathon Station {1}'
       nameGenerator:
         !type:NanotrasenNameGenerator
