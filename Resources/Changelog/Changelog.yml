@@ -1,10 +1,4 @@
 Entries:
-- author: Rane
-  changes:
-  - {message: The cursed locker in a certain salvage map has been replaced with something
-      else., type: Tweak}
-  id: 1019
-  time: '2022-02-09T03:02:15.0000000+00:00'
 - author: WlarusFromDaSpace
   changes:
   - {message: Added Emergency Access to airlocks, type: Add}
@@ -3033,3 +3027,9 @@ Entries:
       than zombies and much easier to kill.', type: Add}
   id: 1518
   time: '2022-05-12T23:35:55.0000000+00:00'
+- author: DogZeroX
+  changes:
+  - {message: 'Naming machine fixed, now you can get a reptilian name when clicking
+      randomize on character selection.', type: Tweak}
+  id: 1519
+  time: '2022-05-12T23:43:15.0000000+00:00'
