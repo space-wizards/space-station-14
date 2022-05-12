@@ -348,7 +348,9 @@ namespace Content.Client.Entry
             "InteractionPopup",
             "HealthAnalyzer",
             "Thirst",
-            "Wires"
+            "Wires",
+            "SurveillanceCameraMonitor",
+            "SurveillanceCamera"
         };
     }
 }

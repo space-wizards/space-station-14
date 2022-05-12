@@ -14,6 +14,7 @@ public sealed partial class SurveillanceCameraMonitorWindow : DefaultWindow
     public event Action<string>? CameraSelected;
     public event Action<string>? SubnetOpened;
 
+    private ScalingViewport? _cameraView;
 
     public SurveillanceCameraMonitorWindow()
     {
@@ -30,7 +31,7 @@ public sealed partial class SurveillanceCameraMonitorWindow : DefaultWindow
     // pass it here so that the UI can change its view.
     public void UpdateState(IEye? eye, HashSet<string> subnets, string activeSubnet)
     {
-        CameraView.Eye = eye;
+        SetCameraView(eye);
 
         // if the subnet count is unequal, that means
         // we have to rebuild the subnets
@@ -59,6 +60,28 @@ public sealed partial class SurveillanceCameraMonitorWindow : DefaultWindow
                     SubnetSelector.Select(i);
                 }
             }
+        }
+    }
+
+    private void SetCameraView(IEye? eye)
+    {
+        if (eye == null)
+        {
+            CameraViewBox.DisposeAllChildren();
+            CameraViewBox.RemoveAllChildren();
+            _cameraView = null;
+        }
+        else if (_cameraView != null)
+        {
+            _cameraView.Eye = eye;
+        }
+        else
+        {
+            _cameraView = new()
+            {
+                Eye = eye,
+                MouseFilter = MouseFilterMode.Ignore
+            };
         }
     }
 

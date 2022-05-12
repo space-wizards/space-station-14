@@ -1,5 +1,4 @@
-<DefaultWindow xmlns="https://spacestation14.io"
-               xmlns:viewport="clr-namespace:Content.Client.Viewport">
+<DefaultWindow xmlns="https://spacestation14.io">
     <BoxContainer Orientation="Horizontal">
         <Control MaxWidth="200">
             <!-- lazy -->
@@ -8,8 +7,6 @@
                 <BoxContainer Name="SubnetList" Orientation="Vertical" />
             </ScrollContainer>
         </Control>
-        <Control Margin="5 5 5 5">
-            <viewport:ScalingViewport Name="CameraView" MouseFilter="Ignore" />
-        </Control>
+        <Control Margin="5 5 5 5" Name="CameraViewBox" />
     </BoxContainer>
 </DefaultWindow>

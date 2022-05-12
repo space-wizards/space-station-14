@@ -3,7 +3,7 @@ using Robust.Client.GameObjects;
 
 namespace Content.Client.SurveillanceCamera.UI;
 
-public sealed class SurveillanceCameraMonitorBoundUi : BoundUserInterface
+public sealed class SurveillanceCameraMonitorBoundUserInterface : BoundUserInterface
 {
     [Dependency] private readonly IEntityManager _entityManager = default!;
 
@@ -12,7 +12,7 @@ public sealed class SurveillanceCameraMonitorBoundUi : BoundUserInterface
     private string _currentSubnet = default!;
     private readonly HashSet<string> _knownAddresses = new();
 
-    public SurveillanceCameraMonitorBoundUi(ClientUserInterfaceComponent owner, object uiKey) : base(owner, uiKey)
+    public SurveillanceCameraMonitorBoundUserInterface(ClientUserInterfaceComponent owner, object uiKey) : base(owner, uiKey)
     {
         IoCManager.InjectDependencies(this);
     }
@@ -23,8 +23,16 @@ public sealed class SurveillanceCameraMonitorBoundUi : BoundUserInterface
 
         _window = new SurveillanceCameraMonitorWindow();
 
+        if (State != null)
+        {
+            UpdateState(State);
+        }
+
+        _window.OpenCentered();
+
         _window.CameraSelected += OnCameraSelected;
         _window.SubnetOpened += OnSubnetRequest;
+        _window.OnClose += Close;
     }
 
     private void OnCameraSelected(string address)
@@ -93,6 +101,7 @@ public sealed class SurveillanceCameraMonitorBoundUi : BoundUserInterface
         }
     }
 
+    /*
     protected override void Dispose(bool disposing)
     {
         base.Dispose(disposing);
@@ -102,4 +111,5 @@ public sealed class SurveillanceCameraMonitorBoundUi : BoundUserInterface
             _window?.Dispose();
         }
     }
+    */
 }

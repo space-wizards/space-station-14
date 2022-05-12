@@ -1,5 +1,7 @@
 namespace Content.Server.SurveillanceCamera;
 
+[RegisterComponent]
+[Friend(typeof(SurveillanceCameraMonitorSystem))]
 public sealed class SurveillanceCameraMonitorComponent : Component
 {
     // Currently active camera viewed by this monitor.
@@ -10,12 +12,14 @@ public sealed class SurveillanceCameraMonitorComponent : Component
     // should be set to null.
     public string? NextCameraAddress { get; set; }
 
+    [ViewVariables]
     // Set of viewers currently looking at this monitor.
     public HashSet<EntityUid> Viewers { get; } = new();
 
     // Current active subnet.
     public string ActiveSubnet { get; set; } = default!;
 
+    [ViewVariables]
     // The subnets known by this camera monitor.
     public HashSet<string> KnownSubnets { get; } = new();
 }

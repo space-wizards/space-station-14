@@ -52,7 +52,7 @@ public sealed class SurveillanceCameraSystem : SharedSurveillanceCameraSystem
             var payload = new NetworkPayload()
             {
                 { DeviceNetworkConstants.Command, "" },
-                { CameraNameData, component.Id },
+                { CameraNameData, component.CameraId },
                 { CameraSubnetData, component.Subnet }
             };
 

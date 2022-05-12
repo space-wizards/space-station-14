@@ -1,6 +1,8 @@
 using Content.Server.DeviceNetwork;
 using Content.Server.DeviceNetwork.Systems;
 using Content.Server.Power.Components;
+using Content.Server.UserInterface;
+using Content.Server.Wires;
 using Content.Shared.Interaction;
 using Content.Shared.SurveillanceCamera;
 using Robust.Server.GameObjects;
@@ -18,11 +20,12 @@ public sealed class SurveillanceCameraMonitorSystem : EntitySystem
     {
         SubscribeLocalEvent<SurveillanceCameraMonitorComponent, SurveillanceCameraDeactivateEvent>(OnSurveillanceCameraDeactivate);
         SubscribeLocalEvent<SurveillanceCameraMonitorComponent, BoundUIClosedEvent>(OnBoundUiClose);
-        SubscribeLocalEvent<SurveillanceCameraMonitorComponent, InteractHandEvent>(OnInteractHand);
         SubscribeLocalEvent<SurveillanceCameraMonitorComponent, PowerChangedEvent>(OnPowerChanged);
         SubscribeLocalEvent<SurveillanceCameraMonitorComponent, SurveillanceCameraMonitorSwitchMessage>(OnSwitchMessage);
         SubscribeLocalEvent<SurveillanceCameraMonitorComponent, DeviceNetworkPacketEvent>(OnPacketReceived);
         SubscribeLocalEvent<SurveillanceCameraMonitorComponent, SurveillanceCameraMonitorSubnetRequestMessage>(OnSubnetRequest);
+        SubscribeLocalEvent<SurveillanceCameraMonitorComponent, ComponentStartup>(OnComponentStartup);
+        SubscribeLocalEvent<SurveillanceCameraMonitorComponent, AfterActivatableUIOpenEvent>(OnToggleInterface);
     }
 
     // TODO:
@@ -38,6 +41,11 @@ public sealed class SurveillanceCameraMonitorSystem : EntitySystem
     // the updated states over to viewing clients.
 
     #region Event Handling
+
+    private void OnComponentStartup(EntityUid uid, SurveillanceCameraMonitorComponent component, ComponentStartup args)
+    {
+        PingCameraNetwork(uid, component);
+    }
 
     private void OnSubnetRequest(EntityUid uid, SurveillanceCameraMonitorComponent component,
         SurveillanceCameraMonitorSubnetRequestMessage args)
@@ -117,7 +125,13 @@ public sealed class SurveillanceCameraMonitorSystem : EntitySystem
 
     private void OnInteractHand(EntityUid uid, SurveillanceCameraMonitorComponent component, InteractHandEvent args)
     {
-        TryOpenUserInterface(uid, args.User);
+        TryOpenUserInterface(uid, args.User, component);
+    }
+
+    private void OnToggleInterface(EntityUid uid, SurveillanceCameraMonitorComponent component,
+        AfterActivatableUIOpenEvent args)
+    {
+        TryOpenUserInterface(uid, args.User, component);
     }
 
     // This is to ensure that there's no delay in ensuring that a camera is deactivated.
@@ -132,6 +146,20 @@ public sealed class SurveillanceCameraMonitorSystem : EntitySystem
         RemoveViewer(uid, args.Entity, component);
     }
     #endregion
+
+    private void PingCameraNetwork(EntityUid uid, SurveillanceCameraMonitorComponent? monitor = null)
+    {
+        if (!Resolve(uid, ref monitor))
+        {
+            return;
+        }
+
+        var payload = new NetworkPayload()
+        {
+            { DeviceNetworkConstants.Command, SurveillanceCameraSystem.CameraPingMessage }
+        };
+        _deviceNetworkSystem.QueuePacket(uid, null, payload);
+    }
 
     private void SetActiveSubnet(EntityUid uid, string subnet,
         SurveillanceCameraMonitorComponent? monitor = null)
@@ -310,7 +338,6 @@ public sealed class SurveillanceCameraMonitorSystem : EntitySystem
         _userInterface.GetUiOrNull(uid, SurveillanceCameraMonitorUiKey.Key)?.Open(actor.PlayerSession);
 
         AddViewer(uid, player);
-        UpdateUserInterface(uid, monitor, player);
         RequestSubnetInfo(uid, monitor.ActiveSubnet, monitor);
     }
 
@@ -329,6 +356,6 @@ public sealed class SurveillanceCameraMonitorSystem : EntitySystem
         }
 
         var state = new SurveillanceCameraMonitorUiState(monitor.ActiveCamera, monitor.KnownSubnets, monitor.ActiveSubnet);
-        _userInterface.TrySetUiState(uid, SurveillanceCameraMonitorUiKey.Key, state, session);
+        _userInterface.TrySetUiState(uid, SurveillanceCameraMonitorUiKey.Key, state);
     }
 }

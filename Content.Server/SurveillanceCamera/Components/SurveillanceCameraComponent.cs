@@ -1,5 +1,6 @@
 namespace Content.Server.SurveillanceCamera;
 
+[RegisterComponent]
 [Friend(typeof(SurveillanceCameraSystem))]
 public sealed class SurveillanceCameraComponent : Component
 {
@@ -34,7 +35,7 @@ public sealed class SurveillanceCameraComponent : Component
     // the most terrible thing possible.
     [ViewVariables(VVAccess.ReadWrite)]
     [DataField("id")]
-    public string Id { get; } = default!;
+    public string CameraId { get; } = default!;
 
     // This should probably be dependent on ApcDeviceNet,
     // which in turn routes to something connected
