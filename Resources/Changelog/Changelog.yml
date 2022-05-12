@@ -1,199 +1,4 @@
 Entries:
-- author: router
-  changes:
-  - {message: Replaced all ingot mints to fix a typo in their stamping. All "Nanotransen"
-      gold and silver bars have been melted down and reformed., type: Fix}
-  - {message: Removed Herobrine., type: Remove}
-  id: 987
-  time: '2022-02-05T19:23:06.0000000+00:00'
-- author: Peptide90
-  changes:
-  - {message: Massive list of changes and fixes for NSS Pillar. See Github for list.,
-    type: Fix}
-  id: 988
-  time: '2022-02-05T21:27:43.0000000+00:00'
-- author: Rane
-  changes:
-  - {message: Brig access is now the least privileged form of security access and
-      given to lawyers. It may take a while for stations to update their airlock software
-      to the latest version., type: Tweak}
-  id: 989
-  time: '2022-02-05T23:08:15.0000000+00:00'
-- author: moony
-  changes:
-  - {message: Hopefully fix pillar spawning., type: Fix}
-  id: 990
-  time: '2022-02-06T02:22:28.0000000+00:00'
-- author: mirrorcult
-  changes:
-  - {message: Directional windows no longer look weird when viewed while rotated.,
-    type: Tweak}
-  id: 991
-  time: '2022-02-06T02:25:13.0000000+00:00'
-- author: Peptide90
-  changes:
-  - {message: 'NSS Pillar minor update! Check out changes to security, permabrig and
-      salvage among other things.', type: Tweak}
-  id: 992
-  time: '2022-02-06T12:56:41.0000000+00:00'
-- author: lajolico
-  changes:
-  - {message: Lasers can now pass through glass airlocks, type: Add}
-  id: 993
-  time: '2022-02-06T13:48:31.0000000+00:00'
-- author: scaly-chimp
-  changes:
-  - {message: adds a portable flasher for security to lock down areas, type: Add}
-  id: 994
-  time: '2022-02-06T15:59:42.0000000+00:00'
-- author: mirrorcult
-  changes:
-  - {message: 'The L6 Saw, C20r, Bojevic, and Grenade Launcher are no longer purchasable
-      without another traitor''s help. Do something more creative.', type: Tweak}
-  - {message: Holoparasites cost 14TC down from 16TC., type: Tweak}
-  id: 995
-  time: '2022-02-06T23:46:06.0000000+00:00'
-- author: Lamrr
-  changes:
-  - {message: NanoTrasen has finally discovered the recipe for storage racks., type: Fix}
-  id: 996
-  time: '2022-02-07T01:51:57.0000000+00:00'
-- author: Macoron
-  changes:
-  - {message: Add more random xeno artifacts effects., type: Add}
-  id: 997
-  time: '2022-02-07T02:26:10.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - {message: Airlock construction / deconstruction now takes longer., type: Tweak}
-  id: 998
-  time: '2022-02-07T03:06:11.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - {message: Healing (via ointments etc.) now takes time., type: Tweak}
-  id: 999
-  time: '2022-02-07T03:14:46.0000000+00:00'
-- author: mirrorcult
-  changes:
-  - {message: 'Plasma, tritium, and carbon dioxide are now harmful to breathe in.',
-    type: Add}
-  - {message: It may take time for you to stop suffocating once entering an oxygenated
-      area., type: Tweak}
-  - {message: Slimepeople no longer have to breathe., type: Add}
-  id: 1000
-  time: '2022-02-07T04:48:15.0000000+00:00'
-- author: mirrorcult
-  changes:
-  - {message: Slimepeople now take extra pressure damage., type: Tweak}
-  - {message: 'Slimepeople are now hurt by water, and are not affected by acids on
-      touch.', type: Add}
-  - {message: Slimepeople are now resistant against blunt and poison damage., type: Tweak}
-  - {message: 'Slimepeople are now weak to slash, piercing, and cold damage.', type: Tweak}
-  id: 1001
-  time: '2022-02-07T04:48:20.0000000+00:00'
-- author: Emisse
-  changes:
-  - {message: 'Bagel Station, a comfy midpop station, has been introduced.', type: Add}
-  id: 1002
-  time: '2022-02-07T16:07:24.0000000+00:00'
-- author: Rane
-  changes:
-  - {message: 'Added lingzhi and ambrosia vulgaris, two more potent but slightly dangerous
-      medicinal plants.', type: Add}
-  - {message: 'Instead of kelotane and nutriment, aloe now yields dermaline and...
-      wait for it... aloe!', type: Tweak}
-  id: 1003
-  time: '2022-02-07T19:43:21.0000000+00:00'
-- author: ElectroJr
-  changes:
-  - {message: Gas mixers now properly animate when on., type: Fix}
-  id: 1004
-  time: '2022-02-07T20:42:07.0000000+00:00'
-- author: router
-  changes:
-  - {message: Conveyor assemblies now only cost 5 steel to craft., type: Tweak}
-  id: 1005
-  time: '2022-02-08T00:32:22.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - {message: Portable flasher now has its animation., type: Add}
-  id: 1006
-  time: '2022-02-08T03:08:22.0000000+00:00'
-- author: TheDarkElites
-  changes:
-  - {message: PDAs now have ringtones, type: Add}
-  id: 1007
-  time: '2022-02-08T09:39:23.0000000+00:00'
-- author: Lamrr
-  changes:
-  - {message: 'Bring in the scrap heap with the new salvage specialist role! Tasked
-      with running salvage operations, this exciting but not very new gameplay will
-      be coming to a NanoTrasen station near you sometime soon.', type: Add}
-  id: 1008
-  time: '2022-02-08T10:01:16.0000000+00:00'
-- author: Schiene
-  changes:
-  - {message: 'The Mothership, a Syndicate Vessel.', type: Add}
-  id: 1009
-  time: '2022-02-08T10:23:11.0000000+00:00'
-- author: hubismal
-  changes:
-  - {message: 'Fires now burn brightly, meaning fires and people affected by fire
-      are much more noticeable.', type: Tweak}
-  id: 1010
-  time: '2022-02-08T10:43:34.0000000+00:00'
-- author: Peptide90
-  changes:
-  - {message: 'Shutters can now be constructed from the construction menu (G)! Add
-      glass before final step for windowed, or steel for radiation shutters.', type: Add}
-  id: 1011
-  time: '2022-02-08T10:49:48.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - {message: NanoTrasen has recalled the defective ringers., type: Fix}
-  id: 1012
-  time: '2022-02-08T11:15:06.0000000+00:00'
-- author: Lamrr
-  changes:
-  - {message: 'A new line of reinforced tiles have been released, enjoy the fresh
-      new graphical depth.', type: Tweak}
-  id: 1013
-  time: '2022-02-08T18:08:23.0000000+00:00'
-- author: mirrorcult
-  changes:
-  - {message: Mappers can now add decals to maps using the Decal Placer menu., type: Add}
-  id: 1014
-  time: '2022-02-08T20:54:41.0000000+00:00'
-- author: Fishfish458
-  changes:
-  - {message: 'Added inflatable doors, which can now be found in the engineer Tool
-      Vend', type: Add}
-  id: 1015
-  time: '2022-02-08T21:54:14.0000000+00:00'
-- author: Rane
-  changes:
-  - {message: 'Added galaxythistle and fly amanita, two more plants with powerful
-      chemical effects.', type: Add}
-  - {message: You can now wear ambrosia vulgaris in your head slot., type: Add}
-  id: 1016
-  time: '2022-02-08T21:54:28.0000000+00:00'
-- author: Rane
-  changes:
-  - {message: Tricord no longer heals airloss or radiation damage., type: Tweak}
-  id: 1017
-  time: '2022-02-09T00:46:49.0000000+00:00'
-- author: Peptide90
-  changes:
-  - {message: Added a new light fixture that can be constructed - the small light
-      post., type: Add}
-  id: 1018
-  time: '2022-02-09T00:47:33.0000000+00:00'
-- author: Rane
-  changes:
-  - {message: The cursed locker in a certain salvage map has been replaced with something
-      else., type: Tweak}
-  id: 1019
-  time: '2022-02-09T03:02:15.0000000+00:00'
 - author: WlarusFromDaSpace
   changes:
   - {message: Added Emergency Access to airlocks, type: Add}
@@ -3038,3 +2843,193 @@ Entries:
   - {message: Added construction recipe for glass airlocks, type: Add}
   id: 1486
   time: '2022-05-09T05:52:19.0000000+00:00'
+- author: PJB3005
+  changes:
+  - {message: Removed the new parallax background., type: Remove}
+  id: 1487
+  time: '2022-05-09T09:15:42.0000000+00:00'
+- author: Daemon
+  changes:
+  - {message: Nanotrasen automated messages will no longer tell you to press the wrong
+      button., type: Tweak}
+  id: 1488
+  time: '2022-05-09T21:38:43.0000000+00:00'
+- author: Peptide90
+  changes:
+  - {message: 'Splitstation minor update. More hidden drip, intern spawn points, power
+      monitoring, removed spawn shuttle, paramedic void suit.', type: Tweak}
+  id: 1489
+  time: '2022-05-09T21:39:35.0000000+00:00'
+- author: DogZeroX
+  changes:
+  - {message: "Space Wind \u2122 has been removed (until it is fixed or there's a\
+      \ better alternative), you will no longer be pushed by explosive decompression\
+      \ or airflows.", type: Remove}
+  id: 1490
+  time: '2022-05-09T22:35:42.0000000+00:00'
+- author: Tomeno
+  changes:
+  - {message: Icon smoothing for asteroid rocks, type: Add}
+  id: 1491
+  time: '2022-05-10T00:41:28.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Audio now plays signalling roundstart., type: Add}
+  id: 1492
+  time: '2022-05-10T00:44:38.0000000+00:00'
+- author: DogZeroX
+  changes:
+  - {message: Pizzas no longer have a curse that forces them to come with a plate.
+      The number of plates trashed in disposal has decreased by 1000%., type: Tweak}
+  id: 1493
+  time: '2022-05-10T01:12:14.0000000+00:00'
+- author: vulppine
+  changes:
+  - {message: 'NanoTrasen vending machine vendors appear to have changed their policies
+      on some items within vending machines, and gave the boards a redesign. Explore
+      the new, possibly hidden options on your local vending machine today!', type: Tweak}
+  id: 1494
+  time: '2022-05-10T02:22:58.0000000+00:00'
+- author: mirrorcult
+  changes:
+  - {message: Assistants no longer assist. They are merely Passengers on this great
+      station., type: Tweak}
+  id: 1495
+  time: '2022-05-10T03:35:09.0000000+00:00'
+- author: Veritius
+  changes:
+  - {message: Removed drones as ghost roles for the time being, type: Remove}
+  id: 1496
+  time: '2022-05-10T06:50:54.0000000+00:00'
+- author: lapatison
+  changes:
+  - {message: 'Orderable from cargo `kitchen supplies crate`, that stores several
+      bags of milk and flour and other supplements.', type: Add}
+  id: 1497
+  time: '2022-05-10T08:03:13.0000000+00:00'
+- author: Tomeno
+  changes:
+  - {message: Atmos yeets should make a lot more sense now, type: Tweak}
+  id: 1498
+  time: '2022-05-10T15:02:40.0000000+00:00'
+- author: Peptide90
+  changes:
+  - {message: Added a new vending machine for snacks. Mr Changs! Enjoy the fortune
+      cookies., type: Add}
+  id: 1499
+  time: '2022-05-11T07:17:25.0000000+00:00'
+- author: HoofedEar
+  changes:
+  - {message: You are now less likely to accidentally stuff yourself in a closet or
+      crate., type: Tweak}
+  id: 1500
+  time: '2022-05-11T20:46:59.0000000+00:00'
+- author: ike709
+  changes:
+  - {message: Fixed lighters not having a flame, type: Fix}
+  - {message: Welders/Lighters now say if they're lit while you're holding them, type: Tweak}
+  id: 1501
+  time: '2022-05-11T20:48:07.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: A variety of different paintings can now be found across the station.,
+    type: Add}
+  id: 1502
+  time: '2022-05-11T23:46:22.0000000+00:00'
+- author: ShadowCommander
+  changes:
+  - {message: Fixed vending machines colliding and pushing out vended items., type: Fix}
+  - {message: Fixed climbing onto tables to bypass windoors and firelocks., type: Fix}
+  id: 1503
+  time: '2022-05-12T00:24:01.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Can no longer hug yourself., type: Tweak}
+  id: 1504
+  time: '2022-05-12T02:56:02.0000000+00:00'
+- author: ShadowCommander
+  changes:
+  - {message: Chapel's carpet doesn't block movement anymore., type: Fix}
+  id: 1505
+  time: '2022-05-12T06:10:16.0000000+00:00'
+- author: Peptide90
+  changes:
+  - {message: All mobs will now slow down when damaged enough. No more carps terrorising
+      the crew as easy., type: Tweak}
+  - {message: Lots of mobs now can't pull things. Carps and ticks should be less abusive
+      now., type: Tweak}
+  id: 1506
+  time: '2022-05-12T07:41:18.0000000+00:00'
+- author: keronshb
+  changes:
+  - {message: Animals can now escape inventory by moving, type: Add}
+  id: 1507
+  time: '2022-05-12T07:58:27.0000000+00:00'
+- author: PJB3005
+  changes:
+  - {message: Added suppermatter. Goes great with a glass of syndicate bomb!, type: Add}
+  id: 1508
+  time: '2022-05-12T09:44:17.0000000+00:00'
+- author: HoofedEar
+  changes:
+  - {message: Cargo ordering computers and telepads now use machine linking. Be sure
+      to link them together before starting your shift!, type: Tweak}
+  id: 1509
+  time: '2022-05-12T10:24:24.0000000+00:00'
+- author: Daemon
+  changes:
+  - {message: Added the salami lid (won't fit), type: Add}
+  id: 1510
+  time: '2022-05-12T10:24:49.0000000+00:00'
+- author: Peptide90
+  changes:
+  - {message: 'Cat Ears have arrived. Gives you the UwUs. Find it in a maint spawner,
+      salvage crate or traitor uplink.', type: Add}
+  id: 1511
+  time: '2022-05-12T10:53:01.0000000+00:00'
+- author: Ripmorld
+  changes:
+  - {message: Pie will now transfer a small part of their solutions into whoever was
+      hit without a helmet, type: Add}
+  id: 1512
+  time: '2022-05-12T10:59:03.0000000+00:00'
+- author: UKNOWH
+  changes:
+  - {message: 'Added tranqulizer, flare, & flash shotgun shell recipes. You can now
+      print them at the sec tech fab and med tech fab!', type: Add}
+  id: 1513
+  time: '2022-05-12T12:24:02.0000000+00:00'
+- author: Veritius
+  changes:
+  - {message: Adds power sinks, type: Add}
+  id: 1514
+  time: '2022-05-12T13:12:35.0000000+00:00'
+- author: TimrodDX
+  changes:
+  - {message: Several areas on Delta Station now have decals., type: Add}
+  - {message: Interns can now spawn on Delta Station., type: Add}
+  - {message: Delta Station's wiring should be more stable than before., type: Tweak}
+  id: 1515
+  time: '2022-05-12T13:30:15.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Filing cabinets now have proper collision and an outline., type: Fix}
+  id: 1516
+  time: '2022-05-12T22:04:03.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Barratry has received a small update., type: Tweak}
+  id: 1517
+  time: '2022-05-12T22:05:02.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: 'Added Skeletons, your lovely local undead spesspals. 97% less murderous
+      than zombies and much easier to kill.', type: Add}
+  id: 1518
+  time: '2022-05-12T23:35:55.0000000+00:00'
+- author: DogZeroX
+  changes:
+  - {message: 'Naming machine fixed, now you can get a reptilian name when clicking
+      randomize on character selection.', type: Tweak}
+  id: 1519
+  time: '2022-05-12T23:43:15.0000000+00:00'

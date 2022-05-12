@@ -36,12 +36,9 @@
         radius: 0.35
       mass: 20
       mask:
-      - Impassable
-      - MobImpassable
-      - VaultImpassable
-      - SmallImpassable
+      - MobMask
       layer:
-      - Opaque
+      - MobLayer
   - type: MovementSpeedModifier
     baseWalkSpeed : 4
     baseSprintSpeed : 3
@@ -85,15 +82,15 @@
     interfaces:
     - key: enum.StrippingUiKey.Key
       type: StrippableBoundUserInterface
-  - type: GhostTakeoverAvailable
-    makeSentient: true
-    name: Maintenance Drone
-    description: Maintain the station. Ignore other beings except drones.
-    rules: |
-     You are bound by these laws both in-game and out-of-character:
-     1. You may not involve yourself in the matters of another being, even if such matters conflict with Law Two or Law Three, unless the other being is another Drone.
-     2. You may not harm any being, regardless of intent or circumstance.
-     3. Your goals are to build, maintain, repair, improve, and power to the best of your abilities, You must never actively work against these goals.
+  #- type: GhostTakeoverAvailable
+  #  makeSentient: true
+  #  name: Maintenance Drone
+  #  description: Maintain the station. Ignore other beings except drones.
+  #  rules: |
+  #   You are bound by these laws both in-game and out-of-character:
+  #   1. You may not involve yourself in the matters of another being, even if such matters conflict with Law Two or Law Three, unless the other being is another Drone.
+  #   2. You may not harm any being, regardless of intent or circumstance.
+  #   3. Your goals are to build, maintain, repair, improve, and power to the best of your abilities, You must never actively work against these goals.
   - type: MovementSpeedModifier
     baseWalkSpeed : 5
     baseSprintSpeed : 5
@@ -135,10 +132,9 @@
         radius: 0.35
       mass: 20
       mask:
-      - SmallImpassable
-      - MobImpassable
+      - SmallMobMask
       layer:
-      - Opaque
+      - SmallMobLayer
   - type: Appearance
     visuals:
       - type: GenericEnumVisualizer
@@ -215,12 +211,9 @@
         radius: 1
       mass: 500
       mask:
-      - SmallImpassable
-      - MobImpassable
-      - VaultImpassable
-      - Impassable
+      - LargeMobMask
       layer:
-      - Opaque
+      - LargeMobLayer
   - type: Appearance
     visuals:
     - type: DamageStateVisualizer

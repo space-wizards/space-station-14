@@ -29,16 +29,6 @@
     interfaces:
     - key: enum.TransferAmountUiKey.Key
       type: TransferAmountBoundUserInterface
-  - type: Physics
-    bodyType: Dynamic
-  - type: Fixtures
-    fixtures:
-    - shape:
-        !type:PhysShapeAabb
-          bounds: "-0.25,-0.25,0.25,0.25"
-      mass: 5
-      mask:
-      - Impassable
   - type: Spillable
     solution: bucket
   - type: DrawableSolution

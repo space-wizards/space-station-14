@@ -1,7 +1,7 @@
 
 
 - type: latheRecipe
-  id: ClothingUniformJumpsuitColorGrey #Assistant
+  id: ClothingUniformJumpsuitColorGrey # Tide
   icon:
     sprite: Clothing/Uniforms/Jumpsuit/Color/grey.rsi
     state: icon
@@ -551,7 +551,7 @@
   completetime: 4
   materials:
     Cloth: 300
-    
+
 - type: latheRecipe
   id: ClothingOuterWinterCap
   icon:
@@ -562,7 +562,7 @@
   materials:
     Cloth: 300
     Durathread: 300
-    
+
 - type: latheRecipe
   id: ClothingOuterWinterCE
   icon:
@@ -573,7 +573,7 @@
   materials:
     Cloth: 300
     Durathread: 300
-    
+
 - type: latheRecipe
   id: ClothingOuterWinterCMO
   icon:
@@ -584,7 +584,7 @@
   materials:
     Cloth: 300
     Durathread: 300
-    
+
 - type: latheRecipe
   id: ClothingOuterWinterHoP
   icon:
@@ -595,7 +595,7 @@
   materials:
     Cloth: 300
     Durathread: 300
-    
+
 - type: latheRecipe
   id: ClothingOuterWinterHoS
   icon:
@@ -606,7 +606,7 @@
   materials:
     Cloth: 300
     Durathread: 300
-    
+
 - type: latheRecipe
   id: ClothingOuterWinterQM
   icon:
@@ -617,7 +617,7 @@
   materials:
     Cloth: 300
     Durathread: 300
-    
+
 - type: latheRecipe
   id: ClothingOuterWinterRD
   icon:
@@ -628,4 +628,4 @@
   materials:
     Cloth: 300
     Durathread: 300
-     
+
