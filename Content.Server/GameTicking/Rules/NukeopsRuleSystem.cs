@@ -1,11 +1,10 @@
 ﻿using System.Linq;
 using Content.Server.Chat.Managers;
-using Content.Server.Nukeops;
-using Content.Shared.Access;
-using Content.Shared.Access.Components;
+using Content.Server.Nuke;
 using Content.Shared.Access.Systems;
 using Content.Shared.CCVar;
 using Content.Shared.Inventory;
+using Content.Shared.MobState;
 using Content.Shared.Roles;
 using Robust.Server.Maps;
 using Robust.Server.Player;
@@ -13,6 +12,7 @@ using Robust.Shared.Configuration;
 using Robust.Shared.Map;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
+using Robust.Shared.Utility;
 
 namespace Content.Server.GameTicking.Rules;
 
@@ -27,6 +27,8 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
     [Dependency] private readonly InventorySystem _inventorySystem = default!;
     [Dependency] private readonly AccessSystem _accessSystem = default!;
 
+    private Dictionary<Mind.Mind, bool> _aliveNukeops = new();
+    private bool _opsWon;
 
     public override string Prototype => "Nukeops";
 
@@ -36,11 +38,43 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
 
         SubscribeLocalEvent<RoundStartAttemptEvent>(OnStartAttempt);
         SubscribeLocalEvent<RulePlayerSpawningEvent>(OnPlayersSpawning);
-        //SubscribeLocalEvent<RoundEndTextAppendEvent>(OnRoundEndText);
+        SubscribeLocalEvent<MobStateChangedEvent>(OnMobStateChanged);
+        SubscribeLocalEvent<RoundEndTextAppendEvent>(OnRoundEndText);
+        SubscribeAllEvent<NukeExplodedEvent>(OnNukeExploded);
+    }
+
+    private void OnNukeExploded(NukeExplodedEvent ev)
+    {
+        _opsWon = true;
+        GameTicker.EndRound(Loc.GetString("nukeops-nuke-exploded"));
+    }
+
+    private void OnRoundEndText(RoundEndTextAppendEvent ev)
+    {
+        ev.AddLine(_opsWon ? Loc.GetString("nukeops-ops-won") : Loc.GetString("nukeops-crew-won"));
+        ev.AddLine(Loc.GetString("nukeops-list-start"));
+        foreach (var nukeop in _aliveNukeops)
+        {
+            ev.AddLine($"- {nukeop.Key.Session?.Name}");
+        }
+    }
+
+    private void OnMobStateChanged(MobStateChangedEvent ev)
+    {
+        if (!_aliveNukeops.TryFirstOrNull(x => x.Key.OwnedEntity == ev.Entity, out var op)) return;
+
+        _aliveNukeops[op.Value.Key] = op.Value.Key.CharacterDeadIC;
+
+        if (_aliveNukeops.Values.All(x => !x))
+        {
+            GameTicker.EndRound(Loc.GetString("nukeops-all-ops-dead"));
+        }
     }
 
     private void OnPlayersSpawning(RulePlayerSpawningEvent ev)
     {
+        _aliveNukeops.Clear();
+
         var numOps = (int)Math.Min(Math.Floor((double)ev.PlayerPool.Count / _cfg.GetCVar(CCVars.NukeopsPlayersPerOp)),
             _cfg.GetCVar(CCVars.NukeopsMaxOps));
         var ops = new IPlayerSession[numOps];
@@ -49,8 +83,7 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
             ops[i] = _random.PickAndTake(ev.PlayerPool);
         }
 
-        //todo make configurable
-        var map = "/Maps/knightshuttle.yml";
+        var map = "/Maps/syndiepuddle.yml";
         var (_, grid) = _mapLoader.LoadBlueprint(GameTicker.DefaultMap, map, new MapLoadOptions
         {
             Offset = new Vector2(-500, -500)
@@ -66,11 +99,8 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
             return;
         }
 
-        //todo spawners
-        var gear = _prototypeManager.Index<StartingGearPrototype>("NukeopsGear");
-        var accessLevel = _prototypeManager.Index<AccessLevelPrototype>("NuclearOperative");
-        var roles = _prototypeManager.EnumeratePrototypes<NukeopsRolePrototype>().ToList();
-        var spawnpos = new EntityCoordinates(_mapManager.GetGridEuid(grid.Value), Vector2.Zero);
+        var gear = _prototypeManager.Index<StartingGearPrototype>("SyndicateOperativeGearFull");
+        var spawnpos = new EntityCoordinates(_mapManager.GetGridEuid(grid.Value), new Vector2(1.5f, -4.5f));
         for (var i = 0; i < ops.Length; i++)
         {
             var session = ops[i];
@@ -87,16 +117,7 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
             newMind.TransferTo(mob);
             GameTicker.EquipStartingGear(mob, gear, null);
 
-            //todo make this a preference
-            var role = _random.Pick(roles);
-
-            var duffel = EntityManager.SpawnEntity(role.Back, spawnpos);
-            _inventorySystem.TryEquip(mob, duffel, "back", true, true);
-
-            if (_inventorySystem.TryGetSlotEntity(mob, "id", out var idUid))
-            {
-                _accessSystem.TrySetTags(idUid.Value, new[] { accessLevel.ID });
-            }
+            _aliveNukeops.Add(newMind, true);
 
             GameTicker.PlayerJoinGame(session);
         }
@@ -111,27 +132,21 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
         var minPlayers = _cfg.GetCVar(CCVars.NukeopsMinPlayers);
         if (!ev.Forced && ev.Players.Length < minPlayers)
         {
-            _chatManager.DispatchServerAnnouncement(Loc.GetString("traitor-not-enough-ready-players", ("readyPlayersCount", ev.Players.Length), ("minimumPlayers", minPlayers)));
+            _chatManager.DispatchServerAnnouncement(Loc.GetString("nukeops-not-enough-ready-players", ("readyPlayersCount", ev.Players.Length), ("minimumPlayers", minPlayers)));
             ev.Cancel();
             return;
         }
 
         if (ev.Players.Length == 0)
         {
-            _chatManager.DispatchServerAnnouncement(Loc.GetString("traitor-no-one-ready"));
+            _chatManager.DispatchServerAnnouncement(Loc.GetString("nukeops-no-one-ready"));
             ev.Cancel();
             return;
         }
     }
 
 
-    public override void Started()
-    {
-        throw new NotImplementedException();
-    }
+    public override void Started(){ _opsWon = false; }
 
-    public override void Ended()
-    {
-        throw new NotImplementedException();
-    }
+    public override void Ended(){ }
 }
