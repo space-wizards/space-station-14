@@ -1,15 +1,16 @@
 ﻿using System.Linq;
 using Content.Server.Chat.Managers;
 using Content.Server.Nuke;
-using Content.Shared.Access.Systems;
+using Content.Server.Station.Components;
+using Content.Server.Station.Systems;
 using Content.Shared.CCVar;
-using Content.Shared.Inventory;
 using Content.Shared.MobState;
 using Content.Shared.Roles;
 using Robust.Server.Maps;
 using Robust.Server.Player;
 using Robust.Shared.Configuration;
 using Robust.Shared.Map;
+using Robust.Shared.Physics.Collision.Shapes;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Utility;
@@ -24,8 +25,8 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
     [Dependency] private readonly IChatManager _chatManager = default!;
     [Dependency] private readonly IMapLoader _mapLoader = default!;
     [Dependency] private readonly IMapManager _mapManager = default!;
-    [Dependency] private readonly InventorySystem _inventorySystem = default!;
-    [Dependency] private readonly AccessSystem _accessSystem = default!;
+    [Dependency] private readonly StationSpawningSystem _stationSpawningSystem = default!;
+    [Dependency] private readonly StationSystem _stationSystem = default!;
 
     private Dictionary<Mind.Mind, bool> _aliveNukeops = new();
     private bool _opsWon;
@@ -84,9 +85,18 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
         }
 
         var map = "/Maps/syndiepuddle.yml";
+
+        var aabbs = _stationSystem.Stations.SelectMany(x =>
+            Comp<StationDataComponent>(x).Grids.Select(x => _mapManager.GetGridComp(x).Grid.WorldBounds)).ToArray();
+        var aabb = aabbs[0];
+        for (int i = 1; i < aabbs.Length; i++)
+        {
+            aabb.Union(aabbs[i]);
+        }
+
         var (_, grid) = _mapLoader.LoadBlueprint(GameTicker.DefaultMap, map, new MapLoadOptions
         {
-            Offset = new Vector2(-500, -500)
+            Offset = aabb.Center + Math.Max(aabb.Height, aabb.Width)/2 + new Vector2(-500, -500)
         });
 
         if (!grid.HasValue)
@@ -115,7 +125,7 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
             EntityManager.GetComponent<MetaDataComponent>(mob).EntityName = name;
 
             newMind.TransferTo(mob);
-            GameTicker.EquipStartingGear(mob, gear, null);
+            _stationSpawningSystem.EquipStartingGear(mob, gear, null);
 
             _aliveNukeops.Add(newMind, true);
 
@@ -123,7 +133,6 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
         }
     }
 
-    // todo paul do loc
     private void OnStartAttempt(RoundStartAttemptEvent ev)
     {
         if (!Enabled)

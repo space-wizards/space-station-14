@@ -65,17 +65,131 @@ grids:
   - ind: 0,-1
     tiles: MQAAADEAAAAxAAAAMQAAADEAAAAAAAAAMAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADEAAAAlAAAAJQAAACUAAAAxAAAAAAAAADAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAxAAAAMQAAACUAAAAlAAAAMQAAAAAAAAAwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAMQAAADEAAAAxAAAAMQAAADEAAAAAAAAAMAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADEAAAAlAAAAMQAAADEAAAAxAAAAMAAAADAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAxAAAAJQAAADEAAAAxAAAAMQAAAAAAAAAwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAMQAAACUAAAAxAAAAMQAAADEAAAAAAAAAMAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADEAAAAlAAAAMQAAACUAAAAxAAAAAAAAADAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAxAAAAMQAAADEAAAAlAAAAMQAAAAAAAAAwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAMQAAACUAAAAlAAAAJQAAADEAAAAAAAAAMAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADEAAAAlAAAAJQAAACUAAAAxAAAAAAAAADAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAlAAAAJQAAACUAAAAlAAAAMQAAADAAAAAwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAJQAAACUAAAAlAAAAMQAAADEAAAAAAAAAMAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACUAAAAlAAAAJQAAADEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAlAAAAJQAAACUAAAAxAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAMQAAADEAAAAxAAAAMQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==
   - ind: 0,-2
-    tiles: AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAMQAAADEAAAAxAAAAMQAAADEAAAAAAAAAMAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==
+    tiles: AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAMQAAADEAAAAxAAAAMQAAADEAAAAwAAAAMAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==
   - ind: -1,-2
-    tiles: AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAMAAAAAAAAAAxAAAAMQAAAA==
+    tiles: AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAMAAAADAAAAAxAAAAMQAAAA==
 entities:
 - uid: 0
-  type: WallReinforced
+  type: ReinforcedWindow
   components:
-  - pos: 4.5,-8.5
+  - pos: -0.5,-0.5
     parent: 22
     type: Transform
 - uid: 1
+  type: ReinforcedWindow
+  components:
+  - pos: 0.5,-0.5
+    parent: 22
+    type: Transform
+- uid: 2
+  type: ReinforcedWindow
+  components:
+  - pos: 1.5,-0.5
+    parent: 22
+    type: Transform
+- uid: 3
+  type: ReinforcedWindow
+  components:
+  - pos: 2.5,-0.5
+    parent: 22
+    type: Transform
+- uid: 4
+  type: ReinforcedWindow
+  components:
+  - pos: 3.5,-0.5
+    parent: 22
+    type: Transform
+- uid: 5
+  type: ReinforcedWindow
+  components:
+  - pos: 3.5,-1.5
+    parent: 22
+    type: Transform
+- uid: 6
+  type: ReinforcedWindow
+  components:
+  - pos: 3.5,-2.5
+    parent: 22
+    type: Transform
+- uid: 7
+  type: ReinforcedWindow
+  components:
+  - pos: -0.5,-1.5
+    parent: 22
+    type: Transform
+- uid: 8
+  type: ReinforcedWindow
+  components:
+  - pos: -0.5,-2.5
+    parent: 22
+    type: Transform
+- uid: 9
+  type: WallReinforced
+  components:
+  - pos: -0.5,-3.5
+    parent: 22
+    type: Transform
+- uid: 10
+  type: WallReinforced
+  components:
+  - pos: -1.5,-3.5
+    parent: 22
+    type: Transform
+- uid: 11
+  type: WallReinforced
+  components:
+  - pos: -1.5,-4.5
+    parent: 22
+    type: Transform
+- uid: 12
+  type: ReinforcedWindow
+  components:
+  - pos: 4.5,-5.5
+    parent: 22
+    type: Transform
+- uid: 13
+  type: ReinforcedWindow
+  components:
+  - pos: 4.5,-6.5
+    parent: 22
+    type: Transform
+- uid: 14
+  type: WallReinforced
+  components:
+  - pos: -1.5,-7.5
+    parent: 22
+    type: Transform
+- uid: 15
+  type: WallReinforced
+  components:
+  - pos: -1.5,-8.5
+    parent: 22
+    type: Transform
+- uid: 16
+  type: WallReinforced
+  components:
+  - pos: 0.5,-7.5
+    parent: 22
+    type: Transform
+- uid: 17
+  type: WallReinforced
+  components:
+  - pos: 1.5,-7.5
+    parent: 22
+    type: Transform
+- uid: 18
+  type: WallReinforced
+  components:
+  - pos: -0.5,-7.5
+    parent: 22
+    type: Transform
+- uid: 19
+  type: WallReinforced
+  components:
+  - pos: 2.5,-8.5
+    parent: 22
+    type: Transform
+- uid: 20
   type: ComputerShuttleSyndie
   components:
   - pos: 1.5,-1.5
@@ -85,124 +199,10 @@ entities:
       board: !type:Container
         ents: []
     type: ContainerContainer
-- uid: 2
-  type: WallReinforced
-  components:
-  - pos: 2.5,-8.5
-    parent: 22
-    type: Transform
-- uid: 3
-  type: WallReinforced
-  components:
-  - pos: -0.5,-7.5
-    parent: 22
-    type: Transform
-- uid: 4
-  type: WallReinforced
-  components:
-  - pos: 1.5,-7.5
-    parent: 22
-    type: Transform
-- uid: 5
-  type: WallReinforced
-  components:
-  - pos: 0.5,-7.5
-    parent: 22
-    type: Transform
-- uid: 6
-  type: WallReinforced
-  components:
-  - pos: -1.5,-8.5
-    parent: 22
-    type: Transform
-- uid: 7
-  type: WallReinforced
-  components:
-  - pos: -1.5,-7.5
-    parent: 22
-    type: Transform
-- uid: 8
-  type: ReinforcedWindow
-  components:
-  - pos: 4.5,-6.5
-    parent: 22
-    type: Transform
-- uid: 9
-  type: ReinforcedWindow
-  components:
-  - pos: 4.5,-5.5
-    parent: 22
-    type: Transform
-- uid: 10
-  type: WallReinforced
-  components:
-  - pos: -1.5,-4.5
-    parent: 22
-    type: Transform
-- uid: 11
-  type: WallReinforced
-  components:
-  - pos: -1.5,-3.5
-    parent: 22
-    type: Transform
-- uid: 12
-  type: WallReinforced
-  components:
-  - pos: -0.5,-3.5
-    parent: 22
-    type: Transform
-- uid: 13
-  type: ReinforcedWindow
-  components:
-  - pos: -0.5,-2.5
-    parent: 22
-    type: Transform
-- uid: 14
-  type: ReinforcedWindow
-  components:
-  - pos: -0.5,-1.5
-    parent: 22
-    type: Transform
-- uid: 15
-  type: ReinforcedWindow
-  components:
-  - pos: 3.5,-2.5
-    parent: 22
-    type: Transform
-- uid: 16
-  type: ReinforcedWindow
-  components:
-  - pos: 3.5,-1.5
-    parent: 22
-    type: Transform
-- uid: 17
-  type: ReinforcedWindow
-  components:
-  - pos: 3.5,-0.5
-    parent: 22
-    type: Transform
-- uid: 18
-  type: ReinforcedWindow
-  components:
-  - pos: 2.5,-0.5
-    parent: 22
-    type: Transform
-- uid: 19
-  type: ReinforcedWindow
-  components:
-  - pos: 1.5,-0.5
-    parent: 22
-    type: Transform
-- uid: 20
-  type: ReinforcedWindow
-  components:
-  - pos: 0.5,-0.5
-    parent: 22
-    type: Transform
 - uid: 21
-  type: ReinforcedWindow
+  type: WallReinforced
   components:
-  - pos: -0.5,-0.5
+  - pos: 4.5,-8.5
     parent: 22
     type: Transform
 - uid: 22
@@ -645,6 +645,8 @@ entities:
     type: AmbientSound
   - canCollide: False
     type: Physics
+  - fixtures: []
+    type: Fixtures
 - uid: 55
   type: CableApcExtension
   components:
@@ -657,6 +659,8 @@ entities:
     type: AmbientSound
   - canCollide: False
     type: Physics
+  - fixtures: []
+    type: Fixtures
 - uid: 56
   type: CableApcExtension
   components:
@@ -665,6 +669,8 @@ entities:
     type: Transform
   - canCollide: False
     type: Physics
+  - fixtures: []
+    type: Fixtures
 - uid: 57
   type: CableApcExtension
   components:
@@ -677,6 +683,8 @@ entities:
     type: AmbientSound
   - canCollide: False
     type: Physics
+  - fixtures: []
+    type: Fixtures
 - uid: 58
   type: CableApcExtension
   components:
@@ -689,6 +697,8 @@ entities:
     type: AmbientSound
   - canCollide: False
     type: Physics
+  - fixtures: []
+    type: Fixtures
 - uid: 59
   type: CableApcExtension
   components:
@@ -701,6 +711,8 @@ entities:
     type: AmbientSound
   - canCollide: False
     type: Physics
+  - fixtures: []
+    type: Fixtures
 - uid: 60
   type: CableApcExtension
   components:
@@ -713,6 +725,8 @@ entities:
     type: AmbientSound
   - canCollide: False
     type: Physics
+  - fixtures: []
+    type: Fixtures
 - uid: 61
   type: CableApcExtension
   components:
@@ -725,6 +739,8 @@ entities:
     type: AmbientSound
   - canCollide: False
     type: Physics
+  - fixtures: []
+    type: Fixtures
 - uid: 62
   type: CableApcExtension
   components:
@@ -737,6 +753,8 @@ entities:
     type: AmbientSound
   - canCollide: False
     type: Physics
+  - fixtures: []
+    type: Fixtures
 - uid: 63
   type: CableApcExtension
   components:
@@ -749,6 +767,8 @@ entities:
     type: AmbientSound
   - canCollide: False
     type: Physics
+  - fixtures: []
+    type: Fixtures
 - uid: 64
   type: CableApcExtension
   components:
@@ -761,6 +781,8 @@ entities:
     type: AmbientSound
   - canCollide: False
     type: Physics
+  - fixtures: []
+    type: Fixtures
 - uid: 65
   type: CableApcExtension
   components:
@@ -769,6 +791,8 @@ entities:
     type: Transform
   - canCollide: False
     type: Physics
+  - fixtures: []
+    type: Fixtures
 - uid: 66
   type: CableApcExtension
   components:
@@ -777,6 +801,8 @@ entities:
     type: Transform
   - canCollide: False
     type: Physics
+  - fixtures: []
+    type: Fixtures
 - uid: 67
   type: CableApcExtension
   components:
@@ -785,6 +811,8 @@ entities:
     type: Transform
   - canCollide: False
     type: Physics
+  - fixtures: []
+    type: Fixtures
 - uid: 68
   type: CableApcExtension
   components:
@@ -793,6 +821,8 @@ entities:
     type: Transform
   - canCollide: False
     type: Physics
+  - fixtures: []
+    type: Fixtures
 - uid: 69
   type: CableApcExtension
   components:
@@ -805,6 +835,8 @@ entities:
     type: AmbientSound
   - canCollide: False
     type: Physics
+  - fixtures: []
+    type: Fixtures
 - uid: 70
   type: CableApcExtension
   components:
@@ -813,6 +845,8 @@ entities:
     type: Transform
   - canCollide: False
     type: Physics
+  - fixtures: []
+    type: Fixtures
 - uid: 71
   type: CableMV
   components:
@@ -821,6 +855,8 @@ entities:
     type: Transform
   - canCollide: False
     type: Physics
+  - fixtures: []
+    type: Fixtures
 - uid: 72
   type: CableMV
   components:
@@ -833,6 +869,8 @@ entities:
     type: AmbientSound
   - canCollide: False
     type: Physics
+  - fixtures: []
+    type: Fixtures
 - uid: 73
   type: CableMV
   components:
@@ -845,6 +883,8 @@ entities:
     type: AmbientSound
   - canCollide: False
     type: Physics
+  - fixtures: []
+    type: Fixtures
 - uid: 74
   type: SalternSubstation
   components:
@@ -885,6 +925,8 @@ entities:
     type: AmbientSound
   - canCollide: False
     type: Physics
+  - fixtures: []
+    type: Fixtures
 - uid: 77
   type: CableHV
   components:
@@ -897,6 +939,8 @@ entities:
     type: AmbientSound
   - canCollide: False
     type: Physics
+  - fixtures: []
+    type: Fixtures
 - uid: 78
   type: Table
   components:
@@ -1054,6 +1098,8 @@ entities:
     type: Transform
   - canCollide: False
     type: Physics
+  - fixtures: []
+    type: Fixtures
 - uid: 100
   type: CableApcExtension
   components:
@@ -1062,6 +1108,8 @@ entities:
     type: Transform
   - canCollide: False
     type: Physics
+  - fixtures: []
+    type: Fixtures
 - uid: 101
   type: CableApcExtension
   components:
@@ -1070,6 +1118,8 @@ entities:
     type: Transform
   - canCollide: False
     type: Physics
+  - fixtures: []
+    type: Fixtures
 - uid: 102
   type: CableApcExtension
   components:
@@ -1078,6 +1128,8 @@ entities:
     type: Transform
   - canCollide: False
     type: Physics
+  - fixtures: []
+    type: Fixtures
 - uid: 103
   type: CableApcExtension
   components:
@@ -1086,6 +1138,8 @@ entities:
     type: Transform
   - canCollide: False
     type: Physics
+  - fixtures: []
+    type: Fixtures
 - uid: 104
   type: CableApcExtension
   components:
@@ -1094,6 +1148,8 @@ entities:
     type: Transform
   - canCollide: False
     type: Physics
+  - fixtures: []
+    type: Fixtures
 - uid: 105
   type: CableApcExtension
   components:
@@ -1102,6 +1158,8 @@ entities:
     type: Transform
   - canCollide: False
     type: Physics
+  - fixtures: []
+    type: Fixtures
 - uid: 106
   type: CableApcExtension
   components:
@@ -1110,6 +1168,8 @@ entities:
     type: Transform
   - canCollide: False
     type: Physics
+  - fixtures: []
+    type: Fixtures
 - uid: 107
   type: CableApcExtension
   components:
@@ -1118,6 +1178,8 @@ entities:
     type: Transform
   - canCollide: False
     type: Physics
+  - fixtures: []
+    type: Fixtures
 - uid: 108
   type: WallReinforced
   components:
@@ -1258,6 +1320,8 @@ entities:
     type: Transform
   - canCollide: False
     type: Physics
+  - fixtures: []
+    type: Fixtures
 - uid: 127
   type: Grille
   components:
@@ -1276,6 +1340,8 @@ entities:
     type: AmbientSound
   - canCollide: False
     type: Physics
+  - fixtures: []
+    type: Fixtures
 - uid: 129
   type: CableApcExtension
   components:
@@ -1288,6 +1354,8 @@ entities:
     type: AmbientSound
   - canCollide: False
     type: Physics
+  - fixtures: []
+    type: Fixtures
 - uid: 130
   type: CableApcExtension
   components:
@@ -1300,6 +1368,8 @@ entities:
     type: AmbientSound
   - canCollide: False
     type: Physics
+  - fixtures: []
+    type: Fixtures
 - uid: 131
   type: PoweredSmallLight
   components:
@@ -1394,6 +1464,8 @@ entities:
     type: AmbientSound
   - canCollide: False
     type: Physics
+  - fixtures: []
+    type: Fixtures
 - uid: 140
   type: GasVentPump
   components:
@@ -1649,4 +1721,64 @@ entities:
   - pos: -0.5,-15.5
     parent: 22
     type: Transform
+- uid: 168
+  type: Thruster
+  components:
+  - rot: 3.141592653589793 rad
+    pos: -2.5,-16.5
+    parent: 22
+    type: Transform
+  - enabled: False
+    type: AmbientSound
+- uid: 169
+  type: Thruster
+  components:
+  - rot: 3.141592653589793 rad
+    pos: -3.5,-16.5
+    parent: 22
+    type: Transform
+  - enabled: False
+    type: AmbientSound
+- uid: 170
+  type: Thruster
+  components:
+  - rot: 3.141592653589793 rad
+    pos: 5.5,-16.5
+    parent: 22
+    type: Transform
+  - enabled: False
+    type: AmbientSound
+- uid: 171
+  type: Thruster
+  components:
+  - rot: 3.141592653589793 rad
+    pos: 6.5,-16.5
+    parent: 22
+    type: Transform
+  - enabled: False
+    type: AmbientSound
+- uid: 172
+  type: Thruster
+  components:
+  - pos: 5.5,-4.5
+    parent: 22
+    type: Transform
+  - enabled: False
+    type: AmbientSound
+- uid: 173
+  type: Thruster
+  components:
+  - pos: -2.5,-4.5
+    parent: 22
+    type: Transform
+  - enabled: False
+    type: AmbientSound
+- uid: 174
+  type: Gyroscope
+  components:
+  - pos: 0.5,-11.5
+    parent: 22
+    type: Transform
+  - enabled: False
+    type: AmbientSound
 ...
