@@ -1008,7 +1008,7 @@ entities:
         ents: []
     type: ContainerContainer
 - uid: 87
-  type: NuclearBomb
+  type: NuclearBombUnanchored
   components:
   - pos: -0.5,-4.5
     parent: 22
