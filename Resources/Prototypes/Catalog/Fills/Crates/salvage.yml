@@ -37,6 +37,8 @@
         prob: 0.1
       - id: SheetPlasma
         prob: 0.1
+      - id: WelderIndustrialAdvanced
+        prob: 0.1
         #  - Service
       - id: CrayonBox
         prob: 0.1

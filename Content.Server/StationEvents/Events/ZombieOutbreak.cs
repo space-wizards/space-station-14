@@ -2,6 +2,7 @@ using Robust.Shared.Random;
 using Content.Server.Chat.Managers;
 using Content.Server.Disease.Zombie.Components;
 using Content.Shared.MobState.Components;
+using Content.Shared.Sound;
 
 namespace Content.Server.StationEvents.Events
 {
@@ -18,7 +19,7 @@ namespace Content.Server.StationEvents.Events
         public override int EarliestStart => 50;
         public override float Weight => WeightLow / 2;
 
-        public override string? StartAudio => "/Audio/Announcements/bloblarm.ogg";
+        public override SoundSpecifier? StartAudio => new SoundPathSpecifier("/Audio/Announcements/bloblarm.ogg");
         protected override float EndAfter => 1.0f;
 
         public override int? MaxOccurrences => 1;

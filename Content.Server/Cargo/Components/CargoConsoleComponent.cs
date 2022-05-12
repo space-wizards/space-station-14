@@ -68,7 +68,6 @@ namespace Content.Server.Cargo.Components
         {
             base.Initialize();
 
-            Owner.EnsureComponentWarn(out GalacticMarketComponent _);
             Owner.EnsureComponentWarn(out CargoOrderDatabaseComponent _);
 
             if (UserInterface != null)

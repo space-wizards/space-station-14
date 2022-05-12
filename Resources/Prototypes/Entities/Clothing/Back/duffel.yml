@@ -14,9 +14,14 @@
     Slots:
     - back
   - type: Storage
-    capacity: 100
-    storageSoundCollection:
-      collection: storageRustle
+    capacity: 120
+  - type: ClothingSpeedModifier
+    walkModifier: 1
+    sprintModifier: 0.9
+  - type: UserInterface
+    interfaces:
+    - key: enum.StorageUiKey.Key
+      type: StorageBoundUserInterface
 
 - type: entity
   parent: ClothingBackpackDuffel
@@ -61,6 +66,8 @@
     sprite: Clothing/Back/Duffels/clown.rsi
   - type: Clothing
     sprite: Clothing/Back/Duffels/clown.rsi
+    storageOpenSound:
+      collection: BikeHorn
 
 - type: entity
   parent: ClothingBackpackDuffel
@@ -94,6 +101,10 @@
     sprite: Clothing/Back/Duffels/mime.rsi
   - type: Clothing
     sprite: Clothing/Back/Duffels/mime.rsi
+    storageOpenSound:
+      collection: null    
+    storageInsertSound:
+      collection: null      
 
 - type: entity
   parent: ClothingBackpackDuffel

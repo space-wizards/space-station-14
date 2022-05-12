@@ -307,7 +307,7 @@
 
 - type: entity
   id: DrinkCanPack
-  parent: BaseItem
+  parent: BaseStorageItem
   name: 6pack
   components:
   - type: Sprite

@@ -1,0 +1,20 @@
+<DefaultWindow
+    xmlns="https://spacestation14.io"
+    Title="{Loc 'power-monitoring-window-title'}">
+    <BoxContainer Orientation="Vertical" VerticalExpand="True">
+        <GridContainer Columns="2">
+            <!-- Grid is used here to align things. -->
+            <Label Text="{Loc 'power-monitoring-window-total-sources'}"/><Label Name="TotalSourcesNum" Text="?"/>
+            <Label Text="{Loc 'power-monitoring-window-total-loads'}"/><Label Name="TotalLoadsNum" Text="?"/>
+        </GridContainer>
+        <TabContainer Name="MasterTabContainer" VerticalExpand="True">
+            <ItemList Name="SourcesList" VerticalExpand="True">
+            </ItemList>
+            <BoxContainer Orientation="Vertical" VerticalExpand="True">
+                <CheckBox Margin="8 8" Name="ShowInactiveConsumersCheckBox" Text="{Loc 'power-monitoring-window-show-inactive-consumers'}" />
+                <ItemList Name="LoadsList" VerticalExpand="True">
+                </ItemList>
+            </BoxContainer>
+        </TabContainer>
+    </BoxContainer>
+</DefaultWindow>
