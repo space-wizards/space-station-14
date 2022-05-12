@@ -1,20 +1,17 @@
+using System.Threading;
 using Content.Server.Body.Components;
 using Content.Server.Cloning;
-using Content.Server.Construction;
 using Content.Server.DoAfter;
 using Content.Server.Mind.Components;
 using Content.Server.Popups;
 using Content.Server.Preferences.Managers;
 using Content.Shared.Actions;
-using Content.Shared.Actions.ActionTypes;
 using Content.Shared.CharacterAppearance.Systems;
 using Content.Shared.Preferences;
 using Content.Shared.Species;
 using Content.Shared.Verbs;
-using Robust.Server.GameObjects;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Utility;
 
 /// <remarks>
 /// Fair warning, this is all kinda shitcode, but it'll have to wait for a major
@@ -31,18 +28,31 @@ namespace Content.Server.Body.Systems
         [Dependency] private readonly SharedActionsSystem _actions = default!;
         [Dependency] private readonly PopupSystem _popupSystem = default!;
         [Dependency] private readonly DoAfterSystem _doAfterSystem = default!;
-        [Dependency] private readonly ConstructionSystem _construction = default!;
-        [Dependency] private readonly SharedHumanoidAppearanceSystem _humanoidAppeareance = default!;
+        [Dependency] private readonly SharedHumanoidAppearanceSystem _humanoidAppearance = default!;
+
+        private const float SelfReassembleMultiplier = 2f;
 
         public override void Initialize()
         {
             base.Initialize();
 
             SubscribeLocalEvent<BodyReassembleComponent, PartGibbedEvent>(OnPartGibbed);
-            SubscribeLocalEvent<BodyReassembleComponent, ReassembleActionEvent>(OnReassembleAction);
+            SubscribeLocalEvent<BodyReassembleComponent, ReassembleActionEvent>(StartReassemblyAction);
 
             SubscribeLocalEvent<BodyReassembleComponent, GetVerbsEvent<AlternativeVerb>>(AddReassembleVerbs);
-            SubscribeLocalEvent<ReassembleDoAfterComplete>(Reassemble);
+            SubscribeLocalEvent<BodyReassembleComponent, ReassembleCompleteEvent>(ReassembleComplete);
+            SubscribeLocalEvent<BodyReassembleComponent, ReassembleCancelledEvent>(ReassembleCancelled);
+        }
+
+        private void StartReassemblyAction(EntityUid uid, BodyReassembleComponent component, ReassembleActionEvent args)
+        {
+            args.Handled = true;
+            StartReassembly(uid, component, SelfReassembleMultiplier);
+        }
+
+        private void ReassembleCancelled(EntityUid uid, BodyReassembleComponent component, ReassembleCancelledEvent args)
+        {
+            component.CancelToken = null;
         }
 
         private void OnPartGibbed(EntityUid uid, BodyReassembleComponent component, PartGibbedEvent args)
@@ -60,24 +70,30 @@ namespace Content.Server.Body.Systems
             _actions.AddAction(uid, component.ReassembleAction, null);
         }
 
-        private void OnReassembleAction(EntityUid uid, BodyReassembleComponent component, ReassembleActionEvent args)
+        private void StartReassembly(EntityUid uid, BodyReassembleComponent component, float multiplier = 1f)
         {
-            if (!GetNearbyParts(uid, uid, component, out var partList))
+            if (component.CancelToken != null)
+                return;
+
+            if (!GetNearbyParts(uid, component, out var partList))
                 return;
 
             if (partList == null)
                 return;
 
-            var doAfterTime = component.DoAfterTime * 2;
+            var doAfterTime = component.DoAfterTime * multiplier;
+            var cancelToken = new CancellationTokenSource();
+            component.CancelToken = cancelToken;
 
-            var doAfterEventArgs = new DoAfterEventArgs(component.Owner, doAfterTime, default, component.Owner)
+            var doAfterEventArgs = new DoAfterEventArgs(component.Owner, doAfterTime, cancelToken.Token, component.Owner)
             {
                 BreakOnTargetMove = true,
                 BreakOnUserMove = true,
                 BreakOnDamage = true,
                 BreakOnStun = true,
                 NeedHand = false,
-                BroadcastFinishedEvent = new ReassembleDoAfterComplete(uid, uid, partList),
+                TargetCancelledEvent = new ReassembleCancelledEvent(),
+                TargetFinishedEvent = new ReassembleCompleteEvent(uid, uid, partList),
             };
 
             _doAfterSystem.DoAfter(doAfterEventArgs);
@@ -91,46 +107,29 @@ namespace Content.Server.Body.Systems
             if (!args.CanAccess || !args.CanInteract)
                 return;
 
-            if (!TryComp<ActorComponent?>(args.User, out var actor))
+            if (!TryComp<MindComponent>(uid, out var mind) ||
+                !mind.HasMind ||
+                component.CancelToken != null)
                 return;
 
-            if (!TryComp<MindComponent>(uid, out var mind) || !mind.HasMind)
-                return;
-
-            var doAfterTime = component.DoAfterTime;
             // doubles the time if you reconstruct yourself
-            if (args.User == uid)
-                doAfterTime *= 2;
+            var multiplier = args.User == uid ? SelfReassembleMultiplier : 1f;
 
             // Custom verb
-            AlternativeVerb custom = new();
-            custom.Text = Loc.GetString("reassemble-action");
-            custom.Act = () =>
+            AlternativeVerb custom = new()
             {
-                if (!GetNearbyParts(args.User, uid, component, out var partList))
-                    return;
-
-                if (partList == null)
-                    return;
-
-                var doAfterEventArgs = new DoAfterEventArgs(component.Owner, doAfterTime, default, component.Owner)
+                Text = Loc.GetString("reassemble-action"),
+                Act = () =>
                 {
-                    BreakOnTargetMove = true,
-                    BreakOnUserMove = true,
-                    BreakOnDamage = true,
-                    BreakOnStun = true,
-                    NeedHand = false,
-                    BroadcastFinishedEvent = new ReassembleDoAfterComplete(uid, args.User, partList),
-                };
-
-                _doAfterSystem.DoAfter(doAfterEventArgs);
+                    StartReassembly(uid, component, multiplier);
+                },
+                IconEntity = uid,
+                Priority = 1
             };
-            custom.IconEntity = uid;
-            custom.Priority = 1;
             args.Verbs.Add(custom);
         }
 
-        private bool GetNearbyParts(EntityUid user, EntityUid uid, BodyReassembleComponent component, out HashSet<EntityUid>? partList)
+        private bool GetNearbyParts(EntityUid uid, BodyReassembleComponent component, out HashSet<EntityUid>? partList)
         {
             partList = new HashSet<EntityUid>();
 
@@ -138,35 +137,31 @@ namespace Content.Server.Body.Systems
                 return false;
 
             // Ensures all of the old body part pieces are there
-            var nearby = _construction.EnumerateNearby(user);
-            bool notFound;
+            var xformQuery = GetEntityQuery<TransformComponent>();
+            var notFound = true;
+            var bodyXform = xformQuery.GetComponent(uid);
+
             foreach (var part in component.BodyParts)
             {
-                notFound = true;
-                foreach (var entity in nearby)
-                {
-                    if (part == entity || part == component.Owner)
-                    {
-                        notFound = false;
-                        partList.Add(part);
-                    }
-                }
-                if (notFound)
-                {
-                    _popupSystem.PopupEntity(Loc.GetString("reassemble-fail"), uid, Filter.Entities(uid));
-                    return false;
-                }
+                if (!xformQuery.TryGetComponent(part, out var xform) ||
+                    !bodyXform.Coordinates.InRange(EntityManager, xform.Coordinates, 2f)) continue;
+
+                notFound = false;
+                partList.Add(part);
+            }
+
+            if (notFound)
+            {
+                _popupSystem.PopupEntity(Loc.GetString("reassemble-fail"), uid, Filter.Entities(uid));
+                return false;
             }
 
             return true;
         }
 
-        private void Reassemble(ReassembleDoAfterComplete args)
+        private void ReassembleComplete(EntityUid uid, BodyReassembleComponent component, ReassembleCompleteEvent args)
         {
-            var uid = args.Uid;
-
-            if (!TryComp<BodyReassembleComponent>(args.Uid, out var component) || component == null)
-                return;
+            component.CancelToken = null;
 
             if (component.DNA == null)
                 return;
@@ -175,7 +170,7 @@ namespace Content.Server.Body.Systems
             var speciesProto = _prototype.Index<SpeciesPrototype>(component.DNA.Value.Profile.Species).Prototype;
             var mob = EntityManager.SpawnEntity(speciesProto, EntityManager.GetComponent<TransformComponent>(component.Owner).MapPosition);
 
-            _humanoidAppeareance.UpdateFromProfile(mob, component.DNA.Value.Profile);
+            _humanoidAppearance.UpdateFromProfile(mob, component.DNA.Value.Profile);
             MetaData(mob).EntityName = component.DNA.Value.Profile.Name;
 
             if (TryComp<MindComponent>(uid, out var mindcomp) && mindcomp.Mind != null)
@@ -195,7 +190,7 @@ namespace Content.Server.Body.Systems
         /// the dna for reassembly later
         /// </summary>
         /// <param name="uid"> the entity that the player will transfer to</param>
-        /// <param name="body"> the entity whose DNA is being saved</param> 
+        /// <param name="body"> the entity whose DNA is being saved</param>
         private void UpdateDNAEntry(EntityUid uid, EntityUid body)
         {
             if (!TryComp<BodyReassembleComponent>(uid, out var skelBodyComp) || !TryComp<MindComponent>(body, out var mindcomp))
@@ -211,20 +206,29 @@ namespace Content.Server.Body.Systems
             skelBodyComp.DNA = new ClonerDNAEntry(mindcomp.Mind, profile);
         }
 
-        private sealed class ReassembleDoAfterComplete : EntityEventArgs
+        private sealed class ReassembleCompleteEvent : EntityEventArgs
         {
-            public readonly EntityUid Uid; //the entity being reassembled
-            public readonly EntityUid User; //the user performing the reassembly
+            /// <summary>
+            /// The entity being reassembled
+            /// </summary>
+            public readonly EntityUid Uid;
+
+            /// <summary>
+            /// The user performing the reassembly
+            /// </summary>
+            public readonly EntityUid User;
             public readonly HashSet<EntityUid> PartList;
 
-            public ReassembleDoAfterComplete(EntityUid uid, EntityUid user, HashSet<EntityUid> partList)
+            public ReassembleCompleteEvent(EntityUid uid, EntityUid user, HashSet<EntityUid> partList)
             {
                 Uid = uid;
                 User = user;
                 PartList = partList;
             }
         }
+
+        private sealed class ReassembleCancelledEvent : EntityEventArgs {}
     }
 }
 
-public class ReassembleActionEvent : InstantActionEvent { }
+public sealed class ReassembleActionEvent : InstantActionEvent { }

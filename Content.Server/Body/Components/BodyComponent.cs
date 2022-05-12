@@ -87,17 +87,16 @@ namespace Content.Server.Body.Components
         {
             var gibs = base.Gib(gibParts);
 
-            /// <remarks>
-            /// This needs to be done in this for loop or else it just doesn't work. I don't know why
-            /// I don't know how, but putting it in the one below just causes all of the events to not
-            /// be raised.
-            /// </remarks>
+            var xform = _entMan.GetComponent<TransformComponent>(Owner);
+            var coordinates = xform.Coordinates;
+
+            // These have already been forcefully removed from containers so run it here.
             foreach (var part in gibs)
             {
                 _entMan.EventBus.RaiseLocalEvent(part, new PartGibbedEvent(Owner, gibs));
             }
 
-            SoundSystem.Play(Filter.Pvs(Owner), _gibSound.GetSound(), _entMan.GetComponent<TransformComponent>(Owner).Coordinates, AudioHelpers.WithVariation(0.025f));
+            SoundSystem.Play(Filter.Pvs(Owner, entityManager: _entMan), _gibSound.GetSound(), coordinates, AudioHelpers.WithVariation(0.025f));
 
             if (_entMan.TryGetComponent(Owner, out ContainerManagerComponent? container))
             {
@@ -106,7 +105,7 @@ namespace Content.Server.Body.Components
                     foreach (var ent in cont.ContainedEntities)
                     {
                         cont.ForceRemove(ent);
-                        _entMan.GetComponent<TransformComponent>(ent).Coordinates = _entMan.GetComponent<TransformComponent>(Owner).Coordinates;
+                        _entMan.GetComponent<TransformComponent>(ent).Coordinates = coordinates;
                         ent.RandomOffset(0.25f);
                     }
                 }

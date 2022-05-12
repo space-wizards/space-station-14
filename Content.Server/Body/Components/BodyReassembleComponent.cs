@@ -1,3 +1,4 @@
+using System.Threading;
 using Content.Server.Cloning;
 using Content.Shared.Actions.ActionTypes;
 
@@ -17,6 +18,7 @@ namespace Content.Server.Body.Components
         /// The default time it takes to reassemble itself
         /// </summary>
         [ViewVariables]
+        [DataField("delay")]
         public float DoAfterTime = 5f;
 
         /// <summary>
@@ -25,7 +27,9 @@ namespace Content.Server.Body.Components
         [ViewVariables]
         public HashSet<EntityUid>? BodyParts = null;
 
-        [DataField("action")] 
+        [DataField("action")]
         public InstantAction? ReassembleAction = null;
+
+        public CancellationTokenSource? CancelToken = null;
     }
 }
