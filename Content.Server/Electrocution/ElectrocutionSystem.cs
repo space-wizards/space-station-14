@@ -22,6 +22,7 @@ using Content.Shared.StatusEffect;
 using Content.Shared.Stunnable;
 using Content.Shared.Tag;
 using Content.Shared.Weapons.Melee;
+using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
@@ -388,6 +389,7 @@ namespace Content.Server.Electrocution
             {
                 _popupSystem.PopupEntity(Loc.GetString("electrocuted-component-mob-shocked-by-source-popup-others",
                         ("mob", uid), ("source", (sourceUid.Value))), uid, filter);
+                PlayElectrocutionSound(uid, sourceUid.Value);
             }
             else
             {
@@ -439,6 +441,16 @@ namespace Content.Server.Electrocution
                 return;
 
             SetInsulatedSiemensCoefficient(uid, _random.Pick(randomInsulation.List), insulated);
+        }
+
+        private void PlayElectrocutionSound(EntityUid targetUid, EntityUid sourceUid, ElectrifiedComponent? electrified = null)
+        {
+            if (!Resolve(sourceUid, ref electrified) || !electrified.PlaySoundOnShock)
+            {
+                return;
+            }
+
+            SoundSystem.Play(Filter.Pvs(targetUid), electrified.ShockNoises.GetSound(), targetUid, AudioParams.Default.WithVolume(electrified.ShockVolume));
         }
     }
 }

@@ -22,14 +22,11 @@
     fixtures:
     - shape:
         !type:PhysShapeAabb
-          bounds: "-0.25,-0.45,0.25,0.45"
+        bounds: "-0.25,-0.45,0.25,0.45"
       mask:
-      - Impassable
-      - VaultImpassable
-      - SmallImpassable
+      - MachineMask
       layer:
-      - Opaque
-      - MobImpassable
+      - MachineLayer
       mass: 100
   - type: Destructible
     thresholds:
@@ -811,6 +808,40 @@
 
 - type: entity
   parent: VendingMachine
+  id: VendingMachineChang
+  name: Mr. Chang
+  description: A self-serving Chinese food machine, for all your Chinese food needs.
+  components:
+  - type: VendingMachine
+    pack: ChangInventory
+  - type: Advertise
+    pack: ChangAds
+  - type: Speech
+  - type: Sprite
+    sprite: Structures/Machines/VendingMachines/changs.rsi
+    layers:
+    - state: "off"
+      map: ["enum.VendingMachineVisualLayers.Unlit"]
+    - state: "off"
+      map: ["enum.VendingMachineVisualLayers.BaseUnshaded"]
+      shader: unshaded
+    - texture: Structures/Machines/VendingMachines/maintenance_panel.png
+      map: ["enum.WiresVisualLayers.MaintenancePanel"]
+  - type: Appearance
+    visuals:
+    - type: VendingMachineVisualizer
+      normalUnshaded: true
+      broken: true
+    - type: WiresVisualizer
+  - type: PointLight
+    radius: 1.5
+    energy: 1.6
+    color: "#ffe599"
+
+# job clothing
+
+- type: entity
+  parent: VendingMachine
   id: VendingMachineHydrobe
   name: HyDrobe
   description: A machine with a catchy name. It dispenses botany related clothing and gear.
@@ -932,7 +963,6 @@
   components:
   - type: VendingMachine
     pack: PietyVendInventory
-    emagPack: PietyVendEmagInventory
   - type: Sprite
     sprite: Structures/Machines/VendingMachines/chapdrobe.rsi
     layers:

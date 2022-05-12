@@ -160,7 +160,6 @@ namespace Content.Client.Doors
             var door = _entMan.GetComponent<DoorComponent>(component.Owner);
             var unlitVisible = true;
             var boltedVisible = false;
-            var weldedVisible = false;
             var emergencyLightsVisible = false;
 
             if (component.TryGetData(DoorVisuals.BaseRSI, out string baseRsi))
@@ -210,7 +209,6 @@ namespace Content.Client.Doors
                     animPlayer.Play(DenyAnimation, AnimationKey);
                     break;
                 case DoorState.Welded:
-                    weldedVisible = true;
                     break;
                 case DoorState.Emagging:
                     animPlayer.Play(EmaggingAnimation, AnimationKey);
@@ -236,7 +234,6 @@ namespace Content.Client.Doors
             if (!_simpleVisuals)
             {
                 sprite.LayerSetVisible(DoorVisualLayers.BaseUnlit, unlitVisible && state != DoorState.Closed && state != DoorState.Welded);
-                sprite.LayerSetVisible(DoorVisualLayers.BaseWelded, weldedVisible);
                 sprite.LayerSetVisible(DoorVisualLayers.BaseBolted, unlitVisible && boltedVisible);
                 if (_emergencyAccessLayer)
                 {
@@ -255,7 +252,6 @@ namespace Content.Client.Doors
     {
         Base,
         BaseUnlit,
-        BaseWelded,
         BaseBolted,
         BaseEmergencyAccess,
     }

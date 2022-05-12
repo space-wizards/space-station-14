@@ -25,7 +25,7 @@ namespace Content.Shared.Speech
         public string? SpeechSounds;
 
         [DataField("audioParams")]
-        public AudioParams AudioParams = AudioParams.Default.WithVolume(5f);
+        public AudioParams AudioParams = AudioParams.Default.WithVolume(6f).WithRolloffFactor(4.5f);
 
         [ViewVariables(VVAccess.ReadWrite)]
         [DataField("soundCooldownTime")]
