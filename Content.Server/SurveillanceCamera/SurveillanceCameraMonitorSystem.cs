@@ -35,6 +35,25 @@ public sealed class SurveillanceCameraMonitorSystem : EntitySystem
     // - Should monitors be the ones that deal in view subscriptions?
     //   (probably not!)
 
+    /// ROUTING:
+    ///
+    /// Monitor freq: General frequency for cameras, routers, and monitors to speak on.
+    ///
+    /// Subnet freqs: Frequency for each specific subnet. Routers ping cameras here,
+    ///               cameras ping back on monitor frequency. When a monitor
+    ///               selects a subnet, it saves that subnet's frequency
+    ///               so it can connect to the camera. All outbound cameras
+    ///               always speak on the monitor frequency and will not
+    ///               do broadcast pings - whatever talks to it, talks to it.
+    ///
+    /// Surveillance camera monitor - [ monitor freq ] -> Router
+    /// Router - [ subnet freq ] -> Camera
+    /// Camera - [ monitor freq ] -> Router
+    /// Router - [ monitor freq ] -> Monitor
+    ///
+    /// Current selected router will dictate the camera frequency to connect to.
+    ///
+
     // If this event is sent, the camera has already cleared the view subscriptions.
     // Deactivation can occur for any reason (deletion, power off, etc.,) but the
     // result is always the same: the monitor must update any viewers and send
@@ -69,7 +88,7 @@ public sealed class SurveillanceCameraMonitorSystem : EntitySystem
             switch (command)
             {
                 case SurveillanceCameraSystem.CameraConnectMessage:
-                    if (component.NextCameraAddress == args.Address)
+                    if (component.NextCameraAddress == args.SenderAddress)
                     {
                         TrySwitchCameraByUid(uid, args.Sender, component);
                     }
@@ -86,7 +105,7 @@ public sealed class SurveillanceCameraMonitorSystem : EntitySystem
 
                     var info = new SurveillanceCameraInfo()
                     {
-                        Address = args.Address,
+                        Address = args.SenderAddress,
                         Name = name,
                         Subnet = subnetData
                     };
@@ -107,10 +126,10 @@ public sealed class SurveillanceCameraMonitorSystem : EntitySystem
 
     private void OnSwitchMessage(EntityUid uid, SurveillanceCameraMonitorComponent component, SurveillanceCameraMonitorSwitchMessage message)
     {
-        if (component.NextCameraAddress == null)
-        {
-            TrySwitchCameraByAddress(uid, message.Address, component);
-        }
+        // there would be a null check here, but honestly
+        // whichever one is the "latest" switch message gets to
+        // do the switch
+        TrySwitchCameraByAddress(uid, message.Address, component);
     }
 
     private void OnPowerChanged(EntityUid uid, SurveillanceCameraMonitorComponent component, PowerChangedEvent args)

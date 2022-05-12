@@ -26,7 +26,9 @@ public sealed class SurveillanceCameraSystem : SharedSurveillanceCameraSystem
     // towards the sender that pinged the camera.
     public const string CameraDataMessage = "surveillance_camera_data";
     public const string CameraConnectMessage = "surveillance_camera_connect";
+    public const string CameraSubnetConnectMessage = "surveillance_camera_subnet_connect";
 
+    public const string CameraAddressData = "surveillance_camera_data_origin";
     public const string CameraNameData = "surveillance_camera_data_name";
     public const string CameraSubnetData = "surveillance_camera_data_subnet";
 
@@ -64,19 +66,6 @@ public sealed class SurveillanceCameraSystem : SharedSurveillanceCameraSystem
                 case CameraPingMessage:
                     payload[DeviceNetworkConstants.Command] = CameraPingMessage;
                     break;
-                case CameraPingSubnetMessage:
-                    if (!args.Data.TryGetValue(CameraSubnetData, out string? subnet)
-                        || subnet != component.Subnet)
-                    {
-                        return;
-                    }
-
-                    goto case CameraDataMessage;
-                case CameraDataMessage:
-                    payload[DeviceNetworkConstants.Command] = CameraDataMessage;
-                    break;
-                default:
-                    return;
             }
 
             _deviceNetworkSystem.QueuePacket(
