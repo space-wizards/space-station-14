@@ -1,10 +1,4 @@
 Entries:
-- author: Peptide90
-  changes:
-  - {message: Added a new light fixture that can be constructed - the small light
-      post., type: Add}
-  id: 1018
-  time: '2022-02-09T00:47:33.0000000+00:00'
 - author: Rane
   changes:
   - {message: The cursed locker in a certain salvage map has been replaced with something
@@ -3033,3 +3027,9 @@ Entries:
   - {message: Barratry has received a small update., type: Tweak}
   id: 1517
   time: '2022-05-12T22:05:02.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: 'Added Skeletons, your lovely local undead spesspals. 97% less murderous
+      than zombies and much easier to kill.', type: Add}
+  id: 1518
+  time: '2022-05-12T23:35:55.0000000+00:00'
