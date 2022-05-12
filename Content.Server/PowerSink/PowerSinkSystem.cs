@@ -2,6 +2,7 @@
 using Content.Server.Power.Components;
 using Content.Shared.Body.Events;
 using Content.Shared.Examine;
+using Robust.Shared.Utility;
 
 namespace Content.Server.PowerSink
 {
@@ -14,48 +15,41 @@ namespace Content.Server.PowerSink
             base.Initialize();
 
             SubscribeLocalEvent<PowerSinkComponent, ExaminedEvent>(OnExamine);
-            SubscribeLocalEvent<PowerSinkComponent, AnchorStateChangedEvent>(OnAnchorChange);
         }
 
         private void OnExamine(EntityUid uid, PowerSinkComponent component, ExaminedEvent args)
         {
-            var battery = Comp<BatteryComponent>(component.Owner);
-            if (!TryComp<PowerSinkComponent>(uid, out var powerSinkComponent))
+            if (!args.IsInDetailsRange || !TryComp<PowerConsumerComponent>(uid, out var consumer))
                 return;
-            if (args.IsInDetailsRange)
-            {
-                var drainAmount = (int) Comp<PowerConsumerComponent>(component.Owner).NetworkLoad.ReceivingPower / 1000;
-                args.PushMarkup(
-                    Loc.GetString(
-                        "powersink-examine-drain-amount",
-                        ("amount", drainAmount),
-                        ("markupDrainColor", "orange")
-                    )
-                    );
-            }
-        }
 
-        private void OnAnchorChange(EntityUid uid, PowerSinkComponent component, ref AnchorStateChangedEvent args)
-        {
-            component.IsAnchored = args.Anchored;
+            var drainAmount = (int) consumer.NetworkLoad.ReceivingPower / 1000;
+            args.PushMarkup(
+                Loc.GetString(
+                    "powersink-examine-drain-amount",
+                    ("amount", drainAmount),
+                    ("markupDrainColor", "orange"))
+            );
         }
 
         public override void Update(float frameTime)
         {
-            foreach (var comp in EntityManager.EntityQuery<PowerSinkComponent>())
+            var toRemove = new RemQueue<(PowerSinkComponent Sink, BatteryComponent Battery)>();
+
+            // Realistically it's gonna be like <5 per station.
+            foreach (var (comp, networkLoad, battery, xform) in EntityManager.EntityQuery<PowerSinkComponent, PowerConsumerComponent, BatteryComponent, TransformComponent>())
             {
-                if (comp.IsAnchored)
-                {
-                    if(TryComp<PowerConsumerComponent>(comp.Owner, out var networkLoad) && TryComp<BatteryComponent>(comp.Owner, out var battery))
-                    {
-                        battery.CurrentCharge += networkLoad.NetworkLoad.ReceivingPower / 1000;
-                        if (battery.CurrentCharge >= battery.MaxCharge)
-                        {
-                            _explosionSystem.QueueExplosion(comp.Owner, "Default", 5 * (battery.MaxCharge / 2500000), 0.5f, 10, canCreateVacuum: false);
-                            EntityManager.RemoveComponent(comp.Owner, comp);
-                        }
-                    }
-                }
+                if (!xform.Anchored) continue;
+
+                battery.CurrentCharge += networkLoad.NetworkLoad.ReceivingPower / 1000;
+                if (battery.CurrentCharge < battery.MaxCharge) continue;
+
+                toRemove.Add((comp, battery));
+            }
+
+            foreach (var (comp, battery) in toRemove)
+            {
+                _explosionSystem.QueueExplosion(comp.Owner, "Default", 5 * (battery.MaxCharge / 2500000), 0.5f, 10, canCreateVacuum: false);
+                EntityManager.RemoveComponent(comp.Owner, comp);
             }
         }
     }

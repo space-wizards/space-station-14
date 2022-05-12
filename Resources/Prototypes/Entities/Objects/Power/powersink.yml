@@ -14,6 +14,7 @@
           nodeGroupID: HVPower
     - type: Transform
       anchored: true
+    - type: Physics
     - type: Fixtures
       fixtures:
       - shape:
@@ -21,9 +22,9 @@
           bounds: "-0.40,-0.40,0.40,0.40"
         mass: 15
         mask:
-        - SmallImpassable
+        - MachineMask
         layer:
-        - MobImpassable
+        - MachineLayer
     - type: Destructible
       thresholds:
       - trigger:
