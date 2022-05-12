@@ -1,12 +1,5 @@
-using System;
-using Robust.Shared.Analyzers;
-using Robust.Shared.GameObjects;
 using Robust.Shared.GameStates;
-using Robust.Shared.Maths;
-using Robust.Shared.Players;
 using Robust.Shared.Serialization;
-using Robust.Shared.Serialization.Manager.Attributes;
-using Robust.Shared.ViewVariables;
 
 namespace Content.Shared.Placeable
 {
@@ -25,11 +18,6 @@ namespace Content.Shared.Placeable
         [ViewVariables]
         [DataField("positionOffset")]
         public Vector2 PositionOffset { get; set; }
-
-        public override ComponentState GetComponentState()
-        {
-            return new PlaceableSurfaceComponentState(IsPlaceable,PlaceCentered, PositionOffset);
-        }
     }
 
     [Serializable, NetSerializable]

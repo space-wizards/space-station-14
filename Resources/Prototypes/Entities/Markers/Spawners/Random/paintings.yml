@@ -1,0 +1,20 @@
+- type: entity
+  parent: MarkerBase
+  id: RandomPainting
+  name: random painting spawner
+  components:
+  - type: Sprite
+    layers:
+      - state: red
+      - texture: Structures/Wallmounts/paintings.rsi/painting8.png
+  - type: RandomSpawner
+    offset: 0
+    prototypes:
+      - PaintingPersistenceOfMemory
+      - PaintingTheSonOfMan
+      - PaintingTheKiss
+      - PaintingTheScream
+      - PaintingTheGreatWave
+      - PaintingCafeTerraceAtNight
+      - PaintingNightHawks
+    chance: 1

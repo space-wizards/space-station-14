@@ -38,10 +38,10 @@ public sealed class ReagentEntry
     public ReagentEntry(ReagentPrototype proto)
     {
         Id = proto.ID;
-        Name = proto.Name;
+        Name = proto.LocalizedName;
         Group = proto.Group;
-        Description = proto.Description;
-        PhysicalDescription = proto.PhysicalDescription;
+        Description = proto.LocalizedDescription;
+        PhysicalDescription = proto.LocalizedPhysicalDescription;
         SubstanceColor = proto.SubstanceColor.ToHex();
         Metabolisms = proto.Metabolisms;
     }

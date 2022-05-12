@@ -6,12 +6,15 @@ using Content.Server.Power.Components;
 using Content.Server.Power.EntitySystems;
 using Content.Server.UserInterface;
 using Content.Server.VendingMachines;
-using Content.Server.WireHacking;
+// using Content.Server.WireHacking;
+using Content.Shared.ActionBlocker;
+using Content.Shared.Interaction;
 using Content.Shared.Singularity.Components;
 using Robust.Server.GameObjects;
 using Robust.Shared.Map;
 using Robust.Shared.Utility;
-using static Content.Shared.Wires.SharedWiresComponent;
+using Robust.Shared.ViewVariables;
+// using static Content.Shared.Wires.SharedWiresComponent;
 using Timer = Robust.Shared.Timing.Timer;
 
 namespace Content.Server.ParticleAccelerator.Components
@@ -23,7 +26,7 @@ namespace Content.Server.ParticleAccelerator.Components
     ///     Also contains primary logic for actual PA behavior, part scanning, etc...
     /// </summary>
     [RegisterComponent]
-    public sealed class ParticleAcceleratorControlBoxComponent : ParticleAcceleratorPartComponent, IWires
+    public sealed class ParticleAcceleratorControlBoxComponent : ParticleAcceleratorPartComponent
     {
         [Dependency] private readonly IEntityManager _entMan = default!;
         [Dependency] private readonly IMapManager _mapManager = default!;
@@ -103,7 +106,7 @@ namespace Content.Server.ParticleAccelerator.Components
         {
             base.Startup();
 
-            UpdateWireStatus();
+            // UpdateWireStatus();
         }
 
         // This is the power state for the PA control box itself.
@@ -185,12 +188,14 @@ namespace Content.Server.ParticleAccelerator.Components
 
             UserInterface?.SetState(state);
         }
+
         protected override void OnRemove()
         {
             UserInterface?.CloseAll();
             base.OnRemove();
         }
 
+        /*
         void IWires.RegisterWires(WiresComponent.WiresBuilder builder)
         {
             builder.CreateWire(ParticleAcceleratorControlBoxWires.Toggle);
@@ -308,6 +313,7 @@ namespace Content.Server.ParticleAccelerator.Components
             wires.SetStatus(ParticleAcceleratorWireStatus.Limiter, limiterLight);
             wires.SetStatus(ParticleAcceleratorWireStatus.Strength, strengthLight);
         }
+        */
 
         public void RescanParts()
         {

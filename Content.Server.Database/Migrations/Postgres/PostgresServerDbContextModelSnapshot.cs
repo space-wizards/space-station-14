@@ -595,6 +595,10 @@ namespace Content.Server.Database.Migrations.Postgres
                         .HasColumnType("text")
                         .HasColumnName("hair_name");
 
+                    b.Property<JsonDocument>("Markings")
+                        .HasColumnType("jsonb")
+                        .HasColumnName("markings");
+
                     b.Property<int>("PreferenceId")
                         .HasColumnType("integer")
                         .HasColumnName("preference_id");

@@ -99,9 +99,10 @@ namespace Content.Server.Atmos.EntitySystems
         private AtmosDebugOverlayData ConvertTileToData(TileAtmosphere? tile)
         {
             var gases = new float[Atmospherics.TotalNumberOfGases];
+
             if (tile?.Air == null)
             {
-                return new AtmosDebugOverlayData(0, gases, AtmosDirection.Invalid, false, tile?.BlockedAirflow ?? AtmosDirection.Invalid);
+                return new AtmosDebugOverlayData(0, gases, AtmosDirection.Invalid, tile?.LastPressureDirection ?? AtmosDirection.Invalid, false, tile?.BlockedAirflow ?? AtmosDirection.Invalid);
             }
             else
             {
@@ -109,7 +110,7 @@ namespace Content.Server.Atmos.EntitySystems
                 {
                     gases[i] = tile.Air.GetMoles(i);
                 }
-                return new AtmosDebugOverlayData(tile.Air.Temperature, gases, tile.PressureDirection, tile.ExcitedGroup != null, tile.BlockedAirflow);
+                return new AtmosDebugOverlayData(tile.Air.Temperature, gases, tile.PressureDirection, tile.LastPressureDirection, tile.ExcitedGroup != null, tile.BlockedAirflow);
             }
         }
 
