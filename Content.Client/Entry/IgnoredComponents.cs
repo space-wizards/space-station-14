@@ -348,6 +348,7 @@ namespace Content.Client.Entry
             "InteractionPopup",
             "HealthAnalyzer",
             "Thirst",
+            "CanEscapeInventory",
             "Wires"
         };
     }
