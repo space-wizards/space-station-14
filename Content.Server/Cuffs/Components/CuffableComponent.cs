@@ -1,5 +1,3 @@
-using System;
-using System.Collections.Generic;
 using System.Linq;
 using Content.Server.DoAfter;
 using Content.Server.Hands.Components;
@@ -8,21 +6,17 @@ using Content.Shared.Alert;
 using Content.Shared.Cuffs.Components;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Interaction;
-using Content.Shared.Interaction.Helpers;
 using Content.Shared.Popups;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.Containers;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Localization;
-using Robust.Shared.Log;
-using Robust.Shared.Maths;
 using Robust.Shared.Player;
-using Robust.Shared.ViewVariables;
 
 namespace Content.Server.Cuffs.Components
 {
+    [ByRefEvent]
+    public readonly struct CuffedStateChangeEvent {}
+
     [RegisterComponent]
     [ComponentReference(typeof(SharedCuffableComponent))]
     public sealed class CuffableComponent : SharedCuffableComponent
@@ -45,9 +39,6 @@ namespace Content.Server.Cuffs.Components
         /// </summary>
         [ViewVariables(VVAccess.ReadOnly)]
         public Container Container { get; set; } = default!;
-
-        // TODO: Make a component message
-        public event Action? OnCuffedStateChanged;
 
         private bool _uncuffing;
 
@@ -115,17 +106,19 @@ namespace Content.Server.Cuffs.Components
             CanStillInteract = _entMan.TryGetComponent(Owner, out HandsComponent? ownerHands) && ownerHands.Hands.Count() > CuffedHandCount;
             _sysMan.GetEntitySystem<ActionBlockerSystem>().UpdateCanMove(Owner);
 
-            OnCuffedStateChanged?.Invoke();
+            var ev = new CuffedStateChangeEvent();
+            _entMan.EventBus.RaiseLocalEvent(Owner, ref ev);
             UpdateAlert();
             UpdateHeldItems();
-            Dirty();
+            Dirty(_entMan);
             return true;
         }
 
         public void CuffedStateChanged()
         {
             UpdateAlert();
-            OnCuffedStateChanged?.Invoke();
+            var ev = new CuffedStateChangeEvent();
+            _entMan.EventBus.RaiseLocalEvent(Owner, ref ev);
         }
 
         /// <summary>
@@ -270,9 +263,10 @@ namespace Content.Server.Cuffs.Components
 
                 CanStillInteract = _entMan.TryGetComponent(Owner, out HandsComponent? handsComponent) && handsComponent.SortedHands.Count() > CuffedHandCount;
                 _sysMan.GetEntitySystem<ActionBlockerSystem>().UpdateCanMove(Owner);
-                OnCuffedStateChanged?.Invoke();
+                var ev = new CuffedStateChangeEvent();
+                _entMan.EventBus.RaiseLocalEvent(Owner, ref ev);
                 UpdateAlert();
-                Dirty();
+                Dirty(_entMan);
 
                 if (CuffedHandCount == 0)
                 {
