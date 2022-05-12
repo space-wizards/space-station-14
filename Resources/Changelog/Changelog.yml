@@ -1,9 +1,4 @@
 Entries:
-- author: metalgearsloth
-  changes:
-  - {message: NanoTrasen has recalled the defective ringers., type: Fix}
-  id: 1012
-  time: '2022-02-08T11:15:06.0000000+00:00'
 - author: Lamrr
   changes:
   - {message: 'A new line of reinforced tiles have been released, enjoy the fresh
@@ -3033,3 +3028,9 @@ Entries:
       salvage crate or traitor uplink.', type: Add}
   id: 1511
   time: '2022-05-12T10:53:01.0000000+00:00'
+- author: Ripmorld
+  changes:
+  - {message: Pie will now transfer a small part of their solutions into whoever was
+      hit without a helmet, type: Add}
+  id: 1512
+  time: '2022-05-12T10:59:03.0000000+00:00'
