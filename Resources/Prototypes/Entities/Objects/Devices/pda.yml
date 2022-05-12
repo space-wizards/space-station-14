@@ -70,12 +70,72 @@
 
 - type: entity
   parent: BasePDA
-  id: AssistantPDA
-  name: assistant PDA
+  id: PassengerPDA
+  name: passenger PDA
   description: Why isn't it gray?
   components:
   - type: PDA
-    id: AssistantIDCard
+    id: PassengerIDCard
+
+- type: entity
+  parent: BasePDA
+  id: TechnicalAssistantPDA
+  name: technical assistant PDA
+  description: Why isn't it yellow?
+  components:
+  - type: PDA
+    id: TechnicalAssistantIDCard
+  - type: Appearance
+    visuals:
+    - type: PDAVisualizer
+      state: pda-interntech
+  - type: Icon
+    state: pda-interntech
+
+- type: entity
+  parent: BasePDA
+  id: MedicalInternPDA
+  name: medical intern PDA
+  description: Why isn't it white?
+  components:
+  - type: PDA
+    id: MedicalInternIDCard
+  - type: Appearance
+    visuals:
+    - type: PDAVisualizer
+      state: pda-internmed
+  - type: Icon
+    state: pda-internmed
+
+- type: entity
+  parent: BasePDA
+  id: SecurityCadetPDA
+  name: security cadet PDA
+  description: Why isn't it red?
+  components:
+  - type: PDA
+    id: SecurityCadetIDCard
+  - type: Appearance
+    visuals:
+    - type: PDAVisualizer
+      state: pda-interncadet
+  - type: Icon
+    state: pda-interncadet
+
+- type: entity
+  parent: BasePDA
+  id: ServiceWorkerPDA
+  name: service worker PDA
+  description: Why isn't it gray?
+  components:
+  - type: PDA
+    id: ServiceWorkerIDCard
+  - type: Appearance
+    visuals:
+    - type: PDAVisualizer
+      state: pda-internservice
+  - type: Icon
+    state: pda-internservice
 
 - type: entity
   parent: BasePDA
@@ -145,13 +205,13 @@
       id: "slips"
       hard: false
       layer:
-      - SmallImpassable
+      - SlipLayer
     - shape:
         !type:PhysShapeAabb
         bounds: "-0.4,-0.3,0.4,0.3"
       mass: 2.5
       mask:
-      - SmallImpassable
+      - ItemMask
 
 - type: entity
   parent: BasePDA
@@ -301,13 +361,14 @@
   components:
   - type: PDA
     id: CaptainIDCard
+    penSlot:
+      startingItem: PenCap    
   - type: Appearance
     visuals:
       - type: PDAVisualizer
         state: pda-captain
   - type: Icon
     state: pda-captain
-
 
 - type: entity
   parent: BasePDA
@@ -317,13 +378,14 @@
   components:
   - type: PDA
     id: HoPIDCard
+    penSlot:
+      startingItem: PenHop    
   - type: Appearance
     visuals:
       - type: PDAVisualizer
         state: pda-hop
   - type: Icon
     state: pda-hop
-
 
 - type: entity
   parent: BasePDA
@@ -469,7 +531,7 @@
   parent: BasePDA
   id: SecurityPDA
   name: security PDA
-  description: Red to hide the stains of assistant blood.
+  description: Red to hide the stains of passenger blood.
   components:
   - type: PDA
     id: SecurityIDCard
@@ -481,7 +543,7 @@
     state: pda-security
 
 - type: entity
-  parent: AssistantPDA
+  parent: PassengerPDA
   id: CentcomPDA
   name: centcom PDA
   description: Colored the numbing grey of bureaucracy.
@@ -526,16 +588,16 @@
   parent: BasePDA
   id: ClearPDA
   name: clear PDA
-  description: 99 and 44/100ths percent pure plastic. 
+  description: 99 and 44/100ths percent pure plastic.
   components:
   - type: PDA
-    id: AssistantIDCard
+    id: PassengerIDCard
   - type: Appearance
     visuals:
       - type: PDAVisualizer
         state: pda-clear
   - type: Icon
-    state: pda-clear    
+    state: pda-clear
 
 - type: entity
   parent: BasePDA
@@ -551,4 +613,4 @@
         state: pda-syndi
   - type: Icon
     state: pda-syndi
-    
+

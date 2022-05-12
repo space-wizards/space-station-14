@@ -22,7 +22,7 @@ namespace Content.Server.Morgue.Components
     [ComponentReference(typeof(IActivate))]
     [ComponentReference(typeof(IStorageComponent))]
 #pragma warning disable 618
-    public sealed class CrematoriumEntityStorageComponent : MorgueEntityStorageComponent, ISuicideAct
+    public sealed class CrematoriumEntityStorageComponent : MorgueEntityStorageComponent
 #pragma warning restore 618
     {
         [Dependency] private readonly IEntityManager _entities = default!;
@@ -99,35 +99,6 @@ namespace Content.Server.Morgue.Components
                 SoundSystem.Play(Filter.Pvs(Owner), _cremateFinishSound.GetSound(), Owner);
 
             }, _cremateCancelToken.Token);
-        }
-
-        SuicideKind ISuicideAct.Suicide(EntityUid victim, IChatManager chat)
-        {
-            if (_entities.TryGetComponent(victim, out ActorComponent? actor) && actor.PlayerSession.ContentData()?.Mind is {} mind)
-            {
-                EntitySystem.Get<GameTicker>().OnGhostAttempt(mind, false);
-
-                if (mind.OwnedEntity is {Valid: true} entity)
-                {
-                    entity.PopupMessage(Loc.GetString("crematorium-entity-storage-component-suicide-message"));
-                }
-            }
-
-            victim.PopupMessageOtherClients(Loc.GetString("crematorium-entity-storage-component-suicide-message-others", ("victim", victim)));
-
-            if (CanInsert(victim))
-            {
-                Insert(victim);
-                EntitySystem.Get<StandingStateSystem>().Down(victim, false);
-            }
-            else
-            {
-                _entities.DeleteEntity(victim);
-            }
-
-            Cremate();
-
-            return SuicideKind.Heat;
         }
     }
 }

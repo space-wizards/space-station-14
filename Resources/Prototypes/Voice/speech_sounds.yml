@@ -52,3 +52,20 @@
   exclaimSound:
     path: /Audio/Machines/vending_jingle.ogg
 
+- type: speechSounds
+  id: Pai
+  saySound:
+    path: /Audio/Voice/Talk/pai.ogg
+  askSound:
+    path: /Audio/Voice/Talk/pai_ask.ogg
+  exclaimSound:
+    path: /Audio/Voice/Talk/pai_exclaim.ogg
+
+- type: speechSounds
+  id: Monkey
+  saySound:
+    path: /Audio/Animals/monkey_scream.ogg
+  askSound:
+    path: /Audio/Animals/monkey_scream.ogg
+  exclaimSound:
+    path: /Audio/Animals/monkey_scream.ogg

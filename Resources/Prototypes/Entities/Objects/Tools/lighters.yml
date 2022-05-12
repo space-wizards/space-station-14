@@ -21,7 +21,9 @@
     sprite: Objects/Tools/lighters.rsi
     layers:
     - state: icon_map
+      map: ["enum.WelderLayers.Base"]
     - state: lighter_flame
+      map: ["enum.WelderLayers.Flame"]
       shader: unshaded
       visible: false
     - state: basic_icon_top
@@ -58,6 +60,7 @@
     enabled: false
     radius: 1.1 #smallest possible
     color: orange
+  - type: Appearance
 
 
 - type: entity
@@ -80,7 +83,9 @@
     sprite: Objects/Tools/lighters.rsi
     layers:
     - state: icon_map
+      map: ["enum.WelderLayers.Base"]
     - state: lighter_flame
+      map: ["enum.WelderLayers.Flame"]
       shader: unshaded
       visible: false
     - state: cheap_icon_top

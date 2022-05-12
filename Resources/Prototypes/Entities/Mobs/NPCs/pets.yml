@@ -21,11 +21,9 @@
         radius: 0.35
       mass: 10
       mask:
-      - Impassable
-      - MobImpassable #Bullets?!
-      - SmallImpassable
+      - MobMask
       layer:
-      - Opaque
+      - MobLayer
   - type: Appearance
     visuals:
     - type: DamageStateVisualizer
@@ -48,6 +46,7 @@
       gender: epicene
   - type: SentienceTarget
     flavorKind: corgi
+  - type: Puller
 
 - type: entity
   name: corrupted corgi
@@ -224,11 +223,9 @@
         radius: 0.35
       mass: 10
       mask:
-      - Impassable
-      - MobImpassable #Bullets?!
-      - SmallImpassable
+      - MobMask
       layer:
-      - Opaque
+      - MobLayer
   - type: Appearance
     visuals:
     - type: DamageStateVisualizer
@@ -376,11 +373,9 @@
         radius: 0.35
       mass: 10
       mask:
-      - Impassable
-      - MobImpassable #Bullets?!
-      - SmallImpassable
+      - MobMask
       layer:
-      - Opaque
+      - MobLayer
   - type: Appearance
     visuals:
     - type: DamageStateVisualizer
@@ -421,12 +416,9 @@
         radius: 0.35
       mass: 10
       mask:
-      - Impassable
-      - MobImpassable
-      - VaultImpassable
-      - SmallImpassable
+      - MobMask
       layer:
-      - Opaque
+      - MobLayer
   - type: Appearance
     visuals:
     - type: DamageStateVisualizer
@@ -478,12 +470,9 @@
         radius: 0.35
       mass: 10
       mask:
-      - Impassable
-      - MobImpassable
-      - VaultImpassable
-      - SmallImpassable
+      - MobMask
       layer:
-      - Opaque
+      - MobLayer
   - type: Appearance
     visuals:
     - type: DamageStateVisualizer
@@ -524,12 +513,9 @@
         radius: 0.35
       mass: 10
       mask:
-      - Impassable
-      - MobImpassable
-      - SmallImpassable
-      - VaultImpassable
+      - MobMask
       layer:
-      - Opaque
+      - MobLayer
   - type: Appearance
     visuals:
     - type: DamageStateVisualizer
@@ -604,12 +590,9 @@
         radius: 0.35
       mass: 10
       mask:
-      - Impassable
-      - MobImpassable
-      - SmallImpassable
-      - VaultImpassable
+      - MobMask
       layer:
-      - Opaque
+      - MobLayer
   - type: Appearance
     visuals:
     - type: DamageStateVisualizer

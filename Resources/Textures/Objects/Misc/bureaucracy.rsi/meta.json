@@ -204,6 +204,12 @@
     {
       "name": "pen"
     },
+    {
+      "name": "pen_cap"
+    },
+    {
+      "name": "pen_hop"
+    },      
 	{
       "name": "overpriced_pen"
     },

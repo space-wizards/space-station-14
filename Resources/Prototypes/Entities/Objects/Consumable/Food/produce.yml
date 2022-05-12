@@ -191,13 +191,13 @@
       id: "slips"
       hard: false
       layer:
-        - SmallImpassable
+      - SlipLayer
     - shape:
         !type:PhysShapeAabb
         bounds: "-0.2,-0.2,0.2,0.2"
       mass: 5
       mask:
-        - SmallImpassable
+      - ItemMask
   - type: Tag
     tags:
     - Recyclable
