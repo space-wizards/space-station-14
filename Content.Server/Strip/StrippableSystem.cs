@@ -20,8 +20,9 @@ namespace Content.Server.Strip
     {
         [Dependency] private readonly SharedHandsSystem _handsSystem = default!;
         [Dependency] private readonly InventorySystem _inventorySystem = default!;
-        [Dependency] private readonly SharedPopupSystem _popupSystem = default!;
         [Dependency] private readonly DoAfterSystem _doAfterSystem = default!;
+
+        // TODO: ECS popups. Not all of these have ECS equivalents yet.
 
         public override void Initialize()
         {
@@ -314,15 +315,15 @@ namespace Content.Server.Strip
                 if (!_inventorySystem.HasSlot(component.Owner, slot))
                     return false;
 
-                if (!_inventorySystem.TryGetSlotEntity(component.Owner, slot, out var item))
+                if (!_inventorySystem.TryGetSlotEntity(component.Owner, slot, out _))
                 {
-                    user.PopupMessageCursor(Loc.GetString("strippable-component-item-slot-free-message",("uid", component.Owner)));
+                    user.PopupMessageCursor(Loc.GetString("strippable-component-item-slot-free-message", ("uid", component.Owner)));
                     return false;
                 }
 
                 if (!_inventorySystem.CanUnequip(user, component.Owner, slot, out _))
                 {
-                    user.PopupMessageCursor(Loc.GetString("strippable-component-cannot-unequip-message",("uid", component.Owner)));
+                    user.PopupMessageCursor(Loc.GetString("strippable-component-cannot-unequip-message", ("uid", component.Owner)));
                     return false;
                 }
 
@@ -392,7 +393,7 @@ namespace Content.Server.Strip
             var result = await _doAfterSystem.WaitDoAfter(doAfterArgs);
             if (result != DoAfterStatus.Finished) return;
 
-            if (!hands.Hands.TryGetValue(handName, out var hand) || hand.HeldEntity is not EntityUid held)
+            if (!hands.Hands.TryGetValue(handName, out var hand) || hand.HeldEntity is not { } held)
                 return;
 
             _handsSystem.TryDrop(component.Owner, hand, checkActionBlocker: false, handsComp: hands);
