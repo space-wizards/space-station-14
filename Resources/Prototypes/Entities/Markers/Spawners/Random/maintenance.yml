@@ -19,6 +19,7 @@
         - BalloonCorgi
         - PonderingOrb
         - Skub
+        - ClothingHeadHatCatEars
       rareChance: 0.01
       prototypes:
         - Lighter
