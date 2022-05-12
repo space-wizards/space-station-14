@@ -14,7 +14,7 @@ namespace Content.Server.Recycling.Components
     // TODO: Add sound and safe beep
     [RegisterComponent]
     [Friend(typeof(RecyclerSystem))]
-    public sealed class RecyclerComponent : Component, ISuicideAct
+    public sealed class RecyclerComponent : Component
     {
         [Dependency] private readonly IEntityManager _entMan = default!;
 
@@ -42,27 +42,6 @@ namespace Content.Server.Recycling.Components
             {
                 appearance.SetData(RecyclerVisuals.Bloody, false);
             }
-        }
-
-        SuicideKind ISuicideAct.Suicide(EntityUid victim, IChatManager chat)
-        {
-            if (_entMan.TryGetComponent(victim, out ActorComponent? actor) &&
-                actor.PlayerSession.ContentData()?.Mind is { } mind)
-            {
-                EntitySystem.Get<GameTicker>().OnGhostAttempt(mind, false);
-                mind.OwnedEntity?.PopupMessage(Loc.GetString("recycler-component-suicide-message"));
-            }
-
-            victim.PopupMessageOtherClients(Loc.GetString("recycler-component-suicide-message-others",
-                ("victim", victim)));
-
-            if (_entMan.TryGetComponent<SharedBodyComponent?>(victim, out var body))
-            {
-                body.Gib(true);
-            }
-
-            EntitySystem.Get<RecyclerSystem>().Bloodstain(this);
-            return SuicideKind.Bloodloss;
         }
 
         /// <summary>

@@ -12,6 +12,7 @@ public sealed class ChatSystem : SharedChatSystem
 {
     [Dependency] private readonly IChatManager _manager = default!;
     [Dependency] private readonly IPlayerManager _player = default!;
+    [Dependency] private readonly ExamineSystem _examineSystem = default!;
 
     public override void FrameUpdate(float frameTime)
     {
@@ -23,6 +24,8 @@ public sealed class ChatSystem : SharedChatSystem
         var bubbles = _manager.GetSpeechBubbles();
         var playerPos = player != null ? Transform(player.Value).MapPosition : MapCoordinates.Nullspace;
 
+        var occluded = player != null && _examineSystem.IsOccluded(player.Value);
+
         foreach (var (ent, bubs) in bubbles)
         {
             if (ent == player)
@@ -33,7 +36,7 @@ public sealed class ChatSystem : SharedChatSystem
 
             var otherPos = Transform(ent).MapPosition;
 
-            if (!ExamineSystemShared.InRangeUnOccluded(
+            if (occluded && !ExamineSystemShared.InRangeUnOccluded(
                     playerPos,
                     otherPos, 0f,
                     (ent, player), predicate))

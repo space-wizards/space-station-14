@@ -1,0 +1,40 @@
+﻿- type: gameMap
+  id: packedstation
+  mapName: 'Packedstation'
+  mapPath: /Maps/packedstation.yml
+  minPlayers: 15
+  maxPlayers: 55
+  votable: false
+  stations:
+    Packed:
+      mapNameTemplate: '{0} Packedstation {1}'
+      nameGenerator:
+        !type:NanotrasenNameGenerator
+        prefixCreator: 'VG'
+      overflowJobs:
+        - Passenger
+      availableJobs:
+        CargoTechnician: [ 2, 3 ]
+        Passenger: [ -1, -1 ]
+        Bartender: [ 1, 1 ]
+        Botanist: [ 2, 2 ]
+        Chef: [ 1, 1 ]
+        Clown: [ 1, 1 ]
+        Janitor: [ 1, 1 ]
+        Mime: [ 1, 1 ]
+        Captain: [ 1, 1 ]
+        HeadOfPersonnel: [ 1, 1 ]
+        ChiefEngineer: [ 1, 1 ]
+        StationEngineer: [ 4, 6 ]
+        ChiefMedicalOfficer: [ 1, 1 ]
+        MedicalDoctor: [ 3, 4 ]
+        Chemist: [ 2, 2 ]
+        ResearchDirector: [ 1, 1 ]
+        Scientist: [ 3, 4 ]
+        HeadOfSecurity: [ 1, 1 ]
+        SecurityOfficer: [ 2, 3 ]
+        Chaplain: [ 1, 1 ]
+        Warden: [ 1, 1 ]
+        Librarian: [ 1, 1 ]
+        Lawyer: [ 1, 2 ]
+        Musician: [1, 1]

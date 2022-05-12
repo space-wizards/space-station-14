@@ -18,13 +18,12 @@
     fixtures:
     - shape:
         !type:PhysShapeAabb
-          bounds: "-0.3,-0.3,0.3,0.3"
+        bounds: "-0.3,-0.3,0.3,0.3"
       mass: 50
-      layer:
-      - VaultImpassable
       mask:
-      - Impassable
-      - SmallImpassable
+      - MachineMask
+      layer:
+      - MachineLayer
   - type: Damageable
     damageContainer: Inorganic
     damageModifierSet: Metallic

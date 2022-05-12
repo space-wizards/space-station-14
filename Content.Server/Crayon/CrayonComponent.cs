@@ -11,12 +11,9 @@ using Robust.Shared.ViewVariables;
 namespace Content.Server.Crayon
 {
     [RegisterComponent]
-    public sealed class CrayonComponent : SharedCrayonComponent, ISerializationHooks
+    public sealed class CrayonComponent : SharedCrayonComponent
     {
         [DataField("useSound")] public SoundSpecifier? UseSound;
-
-        [ViewVariables]
-        public Color Color { get; private set; }
 
         [ViewVariables(VVAccess.ReadWrite)]
         [DataField("selectableColor")]
@@ -34,10 +31,5 @@ namespace Content.Server.Crayon
         public bool DeleteEmpty = true;
 
         [ViewVariables] public BoundUserInterface? UserInterface => Owner.GetUIOrNull(CrayonUiKey.Key);
-
-        void ISerializationHooks.AfterDeserialization()
-        {
-            Color = Color.FromName(_color);
-        }
     }
 }

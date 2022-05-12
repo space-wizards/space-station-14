@@ -1,25 +1,19 @@
-﻿using System;
-using System.Collections.Generic;
 using Content.Server.MachineLinking.Components;
 using Content.Server.MachineLinking.Events;
+using Content.Server.MachineLinking.System;
 using Content.Server.Power.Components;
 using Content.Server.Recycling;
 using Content.Server.Recycling.Components;
 using Content.Shared.Conveyor;
 using Content.Shared.Item;
-using Content.Shared.Movement.Components;
-using Content.Shared.Popups;
-using Robust.Shared.Containers;
-using Robust.Shared.GameObjects;
-using Robust.Shared.Localization;
-using Robust.Shared.Maths;
-using Robust.Shared.Physics;
 
 namespace Content.Server.Conveyor
 {
     public sealed class ConveyorSystem : EntitySystem
     {
         [Dependency] private RecyclerSystem _recycler = default!;
+        [Dependency] private readonly SignalLinkerSystem _signalSystem = default!;
+
         public override void Initialize()
         {
             base.Initialize();
@@ -31,12 +25,8 @@ namespace Content.Server.Conveyor
 
         private void OnInit(EntityUid uid, ConveyorComponent component, ComponentInit args)
         {
-            var receiver = EnsureComp<SignalReceiverComponent>(uid);
-            foreach (string port in Enum.GetNames<ConveyorState>())
-                if (!receiver.Inputs.ContainsKey(port))
-                    receiver.AddPort(port);
+            _signalSystem.EnsureReceiverPorts(uid, component.ReversePort, component.ForwardPort, component.OffPort);
         }
-
 
         private void OnPowerChanged(EntityUid uid, ConveyorComponent component, PowerChangedEvent args)
         {
@@ -60,8 +50,12 @@ namespace Content.Server.Conveyor
 
         private void OnSignalReceived(EntityUid uid, ConveyorComponent component, SignalReceivedEvent args)
         {
-            if (Enum.TryParse(args.Port, out ConveyorState state))
-                SetState(component, state);
+            if (args.Port == component.OffPort)
+                SetState(component, ConveyorState.Off);
+            else if (args.Port == component.ForwardPort)
+                SetState(component, ConveyorState.Forward);
+            else if (args.Port == component.ReversePort)
+                SetState(component, ConveyorState.Reverse);
         }
 
         private void SetState(ConveyorComponent component, ConveyorState state)

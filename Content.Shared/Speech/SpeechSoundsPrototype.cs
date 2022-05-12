@@ -15,6 +15,11 @@ namespace Content.Shared.Speech
         [IdDataFieldAttribute]
         public string ID { get; } = default!;
 
+        //Variation is here instead of in SharedSpeechComponent since some sets of
+        //sounds may require more fine tuned pitch variation than others.
+        [DataField("variation")]
+        public float Variation { get; set; } = 0.1f;
+
         [DataField("saySound")]
         public SoundSpecifier SaySound { get; set; } = new SoundPathSpecifier("/Audio/Voice/Talk/speak_2.ogg");
 

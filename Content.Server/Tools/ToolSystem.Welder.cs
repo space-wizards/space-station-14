@@ -182,7 +182,8 @@ namespace Content.Server.Tools
                 args.PushMarkup(Loc.GetString("welder-component-on-examine-detailed-message",
                     ("colorName", fuel < capacity / FixedPoint2.New(4f) ? "darkorange" : "orange"),
                     ("fuelLeft", fuel),
-                    ("fuelCapacity", capacity)));
+                    ("fuelCapacity", capacity),
+                    ("status", string.Empty))); // Lit status is handled above
             }
         }
 
