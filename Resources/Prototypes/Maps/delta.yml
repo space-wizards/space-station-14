@@ -4,11 +4,11 @@
   mapPath: /Maps/delta.yml
   minPlayers: 60
   stations:
-    Station: #TODO: Mapper, add a BecomesStation component to the primary grid of the map.
+    Delta:
       mapNameTemplate: '{0} Delta Station {1}'
       nameGenerator:
         !type:NanotrasenNameGenerator
-        prefixCreator: '14'
+        prefixCreator: 'TG'
       overflowJobs:
         - Passenger
       availableJobs:
@@ -39,3 +39,7 @@
         SalvageSpecialist: [ 3, 3 ]
         Musician: [ 2, 2 ]
         AtmosphericTechnician: [ 1, 2 ]
+        TechnicalAssistant: [ 1, 2 ]
+        MedicalIntern: [ 1, 2 ]
+        ServiceWorker: [ 1, 2 ]
+        SecurityCadet: [ 1, 2 ]

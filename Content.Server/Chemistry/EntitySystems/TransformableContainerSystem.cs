@@ -55,9 +55,9 @@ namespace Content.Server.Chemistry.EntitySystems
                     sprite?.LayerSetSprite(0, spriteSpec);
                 }
 
-                string val = proto.Name + " glass";
+                string val = proto.LocalizedName + " glass";
                 EntityManager.GetComponent<MetaDataComponent>(owner).EntityName = val;
-                EntityManager.GetComponent<MetaDataComponent>(owner).EntityDescription = proto.Description;
+                EntityManager.GetComponent<MetaDataComponent>(owner).EntityDescription = proto.LocalizedDescription;
                 component.CurrentReagent = proto;
                 component.Transformed = true;
             }

@@ -172,6 +172,8 @@
      - SecurityTechnology
   unlockedRecipes:
     - ShellShotgunBeanbag
+    - ShellTranquilizer
+    - ShellShotgunFlash
     - CartridgePistolRubber
     - CartridgeMagnumRubber
     - CartridgeClRifleRubber
@@ -191,6 +193,7 @@
   unlockedRecipes:
     - CartridgePistol
     - ShellShotgun
+    - ShellShotgunFlare
     - CartridgeLRifle
     - CartridgeMagnum
 
