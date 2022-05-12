@@ -1,9 +1,4 @@
 Entries:
-- author: router
-  changes:
-  - {message: Conveyor assemblies now only cost 5 steel to craft., type: Tweak}
-  id: 1005
-  time: '2022-02-08T00:32:22.0000000+00:00'
 - author: metalgearsloth
   changes:
   - {message: Portable flasher now has its animation., type: Add}
@@ -3032,3 +3027,8 @@ Entries:
   - {message: Can no longer hug yourself., type: Tweak}
   id: 1504
   time: '2022-05-12T02:56:02.0000000+00:00'
+- author: ShadowCommander
+  changes:
+  - {message: Chapel's carpet doesn't block movement anymore., type: Fix}
+  id: 1505
+  time: '2022-05-12T06:10:16.0000000+00:00'
