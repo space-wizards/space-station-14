@@ -6,10 +6,11 @@
     ClothingBackpackDuffelEngineering: 2
     ClothingBackpackSatchelEngineering: 2
     ClothingBackpackEngineering: 2
-    ClothingUniformJumpsuitEngineering: 3
-    ClothingUniformJumpskirtEngineering: 3
-    ClothingShoesColorBlack: 3
+    ClothingUniformJumpsuitAtmos: 3
+    ClothingUniformJumpskirtAtmos: 3
+    ClothingShoesColorWhite: 3
     ClothingHeadsetEngineering: 2
-    ClothingOuterSuitFire: 2
     ClothingHeadHelmetFire: 2
+    ClothingOuterSuitFire: 2
     ClothingOuterWinterAtmos: 2
+    ClothingHandsGlovesCombat: 2

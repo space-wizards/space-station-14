@@ -91,6 +91,11 @@ namespace Content.Shared.Slippery
                 return false;
             }
 
+            if (EntityManager.HasComponent<KnockedDownComponent>(otherBody.Owner))
+            {
+                return false;
+            }
+
             var ev = new SlipAttemptEvent();
             RaiseLocalEvent(otherBody.Owner, ev, false);
             if (ev.Cancelled)

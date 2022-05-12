@@ -31,14 +31,21 @@
       type: InstrumentBoundUserInterface
   - type: Fixtures
     fixtures:
-      - shape:
-          !type:PhysShapeCircle
-          radius: 0.45
-        mass: 50
-        layer:
-          - SmallImpassable
-        mask:
-          - VaultImpassable
+    - shape:
+        !type:PhysShapeCircle
+        radius: 0.45
+      mass: 50
+      mask:
+      - Impassable
+      - HighImpassable
+      - MidImpassable
+      layer:
+      - Opaque
+      - HighImpassable
+      - MidImpassable
+      - BulletImpassable
+  - type: Transform
+    anchored: true
 
 - type: entity
   parent: BasePlaceableInstrument

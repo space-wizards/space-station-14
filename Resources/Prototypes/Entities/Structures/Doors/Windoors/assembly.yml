@@ -19,7 +19,7 @@
       mass: 30
       mask:
       - Impassable
-      - VaultImpassable
+      - HighImpassable
   - type: Anchorable
   - type: Pullable
   - type: Rotatable

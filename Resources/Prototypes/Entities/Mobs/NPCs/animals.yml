@@ -17,6 +17,8 @@
       state: bat
       sprite: Mobs/Animals/bat.rsi
   - type: Physics
+  - type: Speech
+    speechSounds: Squeak
   - type: Fixtures
     fixtures:
     - shape:
@@ -24,11 +26,9 @@
         radius: 0.25
       mass: 5
       mask:
-      - Impassable
-      - MobImpassable #Bullets?!
-      - SmallImpassable
+      - FlyingMobMask
       layer:
-      - Opaque
+      - FlyingMobLayer
   - type: Appearance
     visuals:
     - type: DamageStateVisualizer
@@ -58,6 +58,7 @@
     damage:
       types:
         Piercing: 5
+  - type: NoSlip
 
 - type: entity
   name: bee
@@ -73,9 +74,6 @@
   - type: MovementSpeedModifier
     baseWalkSpeed : 7
     baseSprintSpeed : 7
-  - type: RandomAppearance
-    # relic
-    key: enum.AsteroidRockVisuals.State
   - type: Sprite
     drawdepth: Mobs
     layers:
@@ -90,11 +88,9 @@
         radius: 0.1
       mass: 5
       mask:
-      - Impassable
-      - MobImpassable #Bullets?!
-      - SmallImpassable
+      - FlyingMobMask
       layer:
-      - Opaque
+      - FlyingMobLayer
   - type: MobState
     thresholds:
       0: !type:NormalMobState {}
@@ -111,6 +107,7 @@
     - Bee
   - type: Bloodstream
     bloodMaxVolume: 0.1
+  - type: NoSlip
 
 - type: entity
   name: bee
@@ -290,11 +287,9 @@
         radius: 0.2
       mass: 5
       mask:
-      - Impassable
-      - MobImpassable #Bullets?!
-      - SmallImpassable
+      - FlyingMobMask
       layer:
-      - Opaque
+      - FlyingMobLayer
   - type: MobState
     thresholds:
       0: !type:NormalMobState {}
@@ -318,6 +313,7 @@
       dead: dead
   - type: Bloodstream
     bloodMaxVolume: 0.1
+  - type: NoSlip
 
 - type: entity
   name: cow
@@ -339,11 +335,9 @@
         radius: 0.40
       mass: 45
       mask:
-      - Impassable
-      - MobImpassable
-      - SmallImpassable
+      - MobMask
       layer:
-      - Opaque
+      - MobLayer
   - type: Appearance
     visuals:
     - type: DamageStateVisualizer
@@ -398,18 +392,15 @@
         radius: 0.35
       mass: 5
       mask:
-      - Impassable
-      - MobImpassable #Bullets!?
-      - SmallImpassable
+      - MobMask
       layer:
-      - Opaque
+      - MobLayer
   - type: Appearance
     visuals:
     - type: DamageStateVisualizer
       normal: crab
       crit: dead
       dead: dead
-    - type: AsteroidRockVisualizer
   - type: Butcherable
     spawned:
     - id: FoodMeatCrab
@@ -496,6 +487,7 @@
       path: /Audio/Animals/goose_honk.ogg
   - type: Bloodstream
     bloodMaxVolume: 100
+  - type: Puller
 
 - type: entity
   name: gorilla
@@ -517,11 +509,9 @@
         radius: 0.48
       mass: 20
       mask:
-      - Impassable
-      - MobImpassable
-      - SmallImpassable
+      - MobMask
       layer:
-      - Opaque
+      - MobLayer
   - type: Appearance
     visuals:
     - type: DamageStateVisualizer
@@ -534,6 +524,7 @@
       amount: 4
   - type: Bloodstream
     bloodMaxVolume: 300
+  - type: Puller
 
 - type: entity
   name: kangaroo
@@ -553,16 +544,14 @@
   - type: Physics
   - type: Fixtures
     fixtures:
-      - shape:
-          !type:PhysShapeCircle
-          radius: 0.25
-        mass: 60
-        mask:
-          - Impassable
-          - MobImpassable #Bullets?!
-          - SmallImpassable
-        layer:
-          - Opaque
+    - shape:
+        !type:PhysShapeCircle
+        radius: 0.25
+      mass: 60
+      mask:
+      - MobMask
+      layer:
+      - MobLayer
   - type: Appearance
     visuals:
       - type: DamageStateVisualizer
@@ -570,13 +559,16 @@
         # SKIPPY NO!
         crit: kangaroo-dead
         dead: kangaroo-dead
-
+  - type: Puller
+  
 - type: entity
   name: boxing kangaroo
   parent: MobKangaroo
   id: MobKangarooBoxer
   description: A large marsupial herbivore. It has powerful hind legs and... boxing gloves?
   components:
+  - type: CombatMode
+    canDisarm: true
   - type: Sprite
     drawdepth: Mobs
     layers:
@@ -609,6 +601,8 @@
   parent: SimpleMobBase
   description: New church of neo-darwinists actually believe that EVERY animal evolved from a monkey. Tastes like pork, and killing them is both fun and relaxing.
   components:
+  - type: CombatMode
+    canDisarm: true
   - type: NameIdentifier
     group: Monkey
   - type: SentienceTarget
@@ -627,6 +621,8 @@
       state: monkey
       sprite: Mobs/Animals/monkey.rsi
   - type: Hands
+  - type: Speech
+    speechSounds: Monkey
   - type: Body
     template: PrimateTemplate
     preset: PrimatePreset
@@ -645,6 +641,7 @@
     - id: FoodMeat
       amount: 3
   - type: MonkeyAccent
+  - type: Puller
 
 - type: entity
   name: mouse
@@ -656,6 +653,8 @@
     makeSentient: true
     name: mouse
     description: A hungry and mischievous mouse.
+  - type: Speech
+    speechSounds: Squeak
   - type: Sprite
     drawdepth: FloorObjects
     layers:
@@ -677,10 +676,9 @@
         radius: 0.2
       mass: 10
       mask:
-      - SmallImpassable
-      - MobImpassable
+      - SmallMobMask
       layer:
-      - Opaque
+      - SmallMobLayer
   - type: MobState
     thresholds:
       0: !type:NormalMobState {}
@@ -801,7 +799,7 @@
   name: lizard #Weh
   parent: SimpleMobBase
   id: MobLizard
-  description: I think it's lost.
+  description: A harmless dragon.
   components:
   - type: MovementSpeedModifier
     baseWalkSpeed : 2
@@ -820,11 +818,9 @@
         radius: 0.2
       mass: 5
       mask:
-      - Impassable
-      - MobImpassable #Bullets?!
-      - SmallImpassable
+      - MobMask
       layer:
-      - Opaque
+      - MobLayer
   - type: Appearance
     visuals:
     - type: DamageStateVisualizer
@@ -842,10 +838,53 @@
     interactSuccessSound:
       path: /Audio/Animals/lizard_happy.ogg
   - type: Bloodstream
-    bloodMaxVolume: 50
+    bloodMaxVolume: 150
   - type: Damageable
     damageContainer: Biological
     damageModifierSet: Scale
+
+- type: entity
+  name: slug
+  parent: SimpleMobBase
+  id: MobSlug
+  description: And they called this a lizard?
+  components:
+  - type: MovementSpeedModifier
+    baseWalkSpeed : 2
+    baseSprintSpeed : 3
+  - type: Sprite
+    drawdepth: Mobs
+    layers:
+    - map: ["enum.DamageStateVisualLayers.Base"]
+      state: slug
+      sprite: Mobs/Animals/slug.rsi
+  - type: Physics
+  - type: Fixtures
+    fixtures:
+    - shape:
+        !type:PhysShapeCircle
+        radius: 0.2
+      mass: 5
+      mask:
+      - MobMask
+      layer:
+      - MobLayer
+  - type: Appearance
+    visuals:
+    - type: DamageStateVisualizer
+      normal: slug
+      crit: dead
+      dead: dead
+  - type: Butcherable
+    spawned:
+    - id: FoodMeat
+      amount: 1
+  - type: InteractionPopup
+    successChance: 0.3
+    interactSuccessString: petting-success-generic
+    interactFailureString: petting-failure-generic
+  - type: Bloodstream
+    bloodMaxVolume: 50
 
 - type: entity
   name: frog
@@ -870,11 +909,9 @@
         radius: 0.2
       mass: 2
       mask:
-      - Impassable
-      - MobImpassable #Bullets?!
-      - SmallImpassable
+      - SmallMobMask
       layer:
-      - Opaque
+      - SmallMobLayer
   - type: Appearance
     visuals:
     - type: DamageStateVisualizer
@@ -918,11 +955,9 @@
         radius: 0.25
       mass: 5
       mask:
-      - Impassable
-      - MobImpassable #Bullets?!
-      - SmallImpassable
+      - FlyingMobMask
       layer:
-      - Opaque
+      - FlyingMobLayer
   - type: Appearance
     visuals:
     - type: DamageStateVisualizer
@@ -941,6 +976,7 @@
       path: /Audio/Animals/parrot_raught.ogg
   - type: Bloodstream
     bloodMaxVolume: 50
+  - type: NoSlip
 
 - type: entity
   name: penguin
@@ -962,11 +998,9 @@
         radius: 0.25
       mass: 10
       mask:
-      - Impassable
-      - MobImpassable #Bullets?!
-      - SmallImpassable
+      - MobMask
       layer:
-      - Opaque
+      - MobLayer
   - type: Appearance
     visuals:
     - type: DamageStateVisualizer
@@ -1013,11 +1047,9 @@
         radius: 0.25
       mass: 10
       mask:
-      - Impassable
-      - MobImpassable #Bullets?!
-      - SmallImpassable
+      - MobMask
       layer:
-      - Opaque
+      - MobLayer
   - type: Appearance
     visuals:
     - type: DamageStateVisualizer
@@ -1070,11 +1102,9 @@
         radius: 0.25
       mass: 8
       mask:
-      - Impassable
-      - MobImpassable #Bullets?!
-      - SmallImpassable
+      - SmallMobMask
       layer:
-      - Opaque
+      - SmallMobLayer
   - type: Appearance
     visuals:
     - type: RotationVisualizer
@@ -1120,11 +1150,9 @@
         radius: 0.35
       mass: 25
       mask:
-      - Impassable
-      - MobImpassable #Bullets?!
-      - SmallImpassable
+      - MobMask
       layer:
-      - Opaque
+      - MobLayer
   - type: Appearance
     visuals:
     - type: DamageStateVisualizer
@@ -1146,6 +1174,7 @@
     successChance: 0.5
     interactSuccessString: petting-success-tarantula
     interactFailureString: petting-failure-generic
+  - type: Puller
 
 - type: entity
   name: tarantula
@@ -1185,12 +1214,9 @@
         radius: 0.35
       mass: 10
       mask:
-      - Impassable
-      - MobImpassable
-      - VaultImpassable
-      - SmallImpassable
+      - MobMask
       layer:
-      - Opaque
+      - MobLayer
   - type: Appearance
     visuals:
     - type: DamageStateVisualizer
@@ -1244,12 +1270,9 @@
         radius: 0.35
       mass: 10
       mask:
-      - Impassable
-      - MobImpassable
-      - VaultImpassable
-      - SmallImpassable
+      - MobMask
       layer:
-      - Opaque
+      - MobLayer
   - type: Appearance
     visuals:
     - type: DamageStateVisualizer
@@ -1303,12 +1326,9 @@
         radius: 0.35
       mass: 10
       mask:
-      - Impassable
-      - MobImpassable
-      - VaultImpassable
-      - SmallImpassable
+      - MobMask
       layer:
-      - Opaque
+      - MobLayer
   - type: Appearance
     visuals:
     - type: DamageStateVisualizer
@@ -1339,6 +1359,12 @@
   components:
   - type: InteractionPopup
     successChance: 1
+  - type: Butcherable
+    spawned:
+    - id: FoodMeat
+      amount: 3
+    - id: Telecrystal5
+      amount: 1
   - type: Grammar
     attributes:
       proper: true

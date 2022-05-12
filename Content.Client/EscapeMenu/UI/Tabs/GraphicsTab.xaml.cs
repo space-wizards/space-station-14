@@ -76,6 +76,7 @@ namespace Content.Client.EscapeMenu.UI.Tabs
             ShowHeldItemCheckBox.OnToggled += OnCheckBoxToggled;
             IntegerScalingCheckBox.OnToggled += OnCheckBoxToggled;
             ViewportLowResCheckBox.OnToggled += OnCheckBoxToggled;
+            ParallaxLowQualityCheckBox.OnToggled += OnCheckBoxToggled;
             FpsCounterCheckBox.OnToggled += OnCheckBoxToggled;
             ApplyButton.OnPressed += OnApplyButtonPressed;
             VSyncCheckBox.Pressed = _cfg.GetCVar(CVars.DisplayVSync);
@@ -87,6 +88,7 @@ namespace Content.Client.EscapeMenu.UI.Tabs
             ViewportStretchCheckBox.Pressed = _cfg.GetCVar(CCVars.ViewportStretch);
             IntegerScalingCheckBox.Pressed = _cfg.GetCVar(CCVars.ViewportSnapToleranceMargin) != 0;
             ViewportLowResCheckBox.Pressed = !_cfg.GetCVar(CCVars.ViewportScaleRender);
+            ParallaxLowQualityCheckBox.Pressed = _cfg.GetCVar(CCVars.ParallaxLowQuality);
             FpsCounterCheckBox.Pressed = _cfg.GetCVar(CCVars.HudFpsCounterVisible);
             ShowHeldItemCheckBox.Pressed = _cfg.GetCVar(CCVars.HudHeldItemShow);
 
@@ -123,6 +125,7 @@ namespace Content.Client.EscapeMenu.UI.Tabs
             _cfg.SetCVar(CCVars.ViewportSnapToleranceMargin,
                          IntegerScalingCheckBox.Pressed ? CCVars.ViewportSnapToleranceMargin.DefaultValue : 0);
             _cfg.SetCVar(CCVars.ViewportScaleRender, !ViewportLowResCheckBox.Pressed);
+            _cfg.SetCVar(CCVars.ParallaxLowQuality, ParallaxLowQualityCheckBox.Pressed);
             _cfg.SetCVar(CCVars.HudHeldItemShow, ShowHeldItemCheckBox.Pressed);
             _cfg.SetCVar(CCVars.HudFpsCounterVisible, FpsCounterCheckBox.Pressed);
             _cfg.SaveToFile();
@@ -151,6 +154,7 @@ namespace Content.Client.EscapeMenu.UI.Tabs
             var isVPScaleSame = (int) ViewportScaleSlider.Value == _cfg.GetCVar(CCVars.ViewportFixedScaleFactor);
             var isIntegerScalingSame = IntegerScalingCheckBox.Pressed == (_cfg.GetCVar(CCVars.ViewportSnapToleranceMargin) != 0);
             var isVPResSame = ViewportLowResCheckBox.Pressed == !_cfg.GetCVar(CCVars.ViewportScaleRender);
+            var isPLQSame = ParallaxLowQualityCheckBox.Pressed == _cfg.GetCVar(CCVars.ParallaxLowQuality);
             var isShowHeldItemSame = ShowHeldItemCheckBox.Pressed == _cfg.GetCVar(CCVars.HudHeldItemShow);
             var isFpsCounterVisibleSame = FpsCounterCheckBox.Pressed == _cfg.GetCVar(CCVars.HudFpsCounterVisible);
 
@@ -162,6 +166,7 @@ namespace Content.Client.EscapeMenu.UI.Tabs
                                    isVPScaleSame &&
                                    isIntegerScalingSame &&
                                    isVPResSame &&
+                                   isPLQSame &&
                                    isHudThemeSame &&
                                    isShowHeldItemSame &&
                                    isFpsCounterVisibleSame;

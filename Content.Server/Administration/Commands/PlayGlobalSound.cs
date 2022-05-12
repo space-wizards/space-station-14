@@ -21,6 +21,7 @@ public sealed class PlayGlobalSound : IConsoleCommand
     public void Execute(IConsoleShell shell, string argStr, string[] args)
     {
         Filter filter;
+        var audio = AudioParams.Default.WithVolume(-8);
 
         switch (args.Length)
         {
@@ -37,10 +38,24 @@ public sealed class PlayGlobalSound : IConsoleCommand
 
             // One or more users specified.
             default:
+                var volumeOffset = 0;
+
+                // Try to specify a new volume to play it at.
+                if (int.TryParse(args[1], out var volume))
+                {
+                    audio = audio.WithVolume(volume);
+                    volumeOffset = 1;
+                }
+                else
+                {
+                    shell.WriteError(Loc.GetString("play-global-sound-command-volume-parse", ("volume", args[1])));
+                    return;
+                }
+
                 filter = Filter.Empty();
 
                 // Skip the first argument, which is the sound path.
-                for (var i = 1; i < args.Length; i++)
+                for (var i = 1 + volumeOffset; i < args.Length; i++)
                 {
                     var username = args[i];
 
@@ -55,6 +70,6 @@ public sealed class PlayGlobalSound : IConsoleCommand
                 break;
         }
 
-        SoundSystem.Play(filter, args[0], AudioParams.Default);
+        SoundSystem.Play(filter, args[0], audio);
     }
 }

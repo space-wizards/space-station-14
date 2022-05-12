@@ -7,6 +7,6 @@
   suffix: AI
   components:
   - type: UtilityAI
-    startingGear: AssistantGear
+    startingGear: PassengerGear
     behaviorSets:
     - PathingDummy

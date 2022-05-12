@@ -1,5 +1,5 @@
 - type: entity
-  parent: ClothingOuterBase
+  parent: ClothingOuterStorageBase
   id: ClothingOuterCoatBomber
   name: bomber jacket
   description: A thick, well-worn WW2 leather bomber jacket.
@@ -8,11 +8,9 @@
     sprite: Clothing/OuterClothing/Coats/bomber.rsi
   - type: Clothing
     sprite: Clothing/OuterClothing/Coats/bomber.rsi
-  - type: Storage
-    capacity: 10
 
 - type: entity
-  parent: ClothingOuterBase
+  parent: ClothingOuterStorageBase
   id: ClothingOuterCoatDetective
   name: detective trenchcoat
   description: A rugged canvas trenchcoat, designed and created by TX Fabrication Corp. The coat is externally impact resistant - perfect for your next act of autodefenestration!
@@ -21,8 +19,6 @@
     sprite: Clothing/OuterClothing/Coats/detective.rsi
   - type: Clothing
     sprite: Clothing/OuterClothing/Coats/detective.rsi
-  - type: Storage
-    capacity: 10
   - type: Armor
     modifiers:
       coefficients:
@@ -32,7 +28,7 @@
         Heat: 0.9
 
 - type: entity
-  parent: ClothingOuterBase
+  parent: ClothingOuterStorageBase
   id: ClothingOuterCoatGentle
   name: gentle coat
   description: A gentle coat for a gentle man, or woman.
@@ -41,11 +37,9 @@
     sprite: Clothing/OuterClothing/Coats/gentlecoat.rsi
   - type: Clothing
     sprite: Clothing/OuterClothing/Coats/gentlecoat.rsi
-  - type: Storage
-    capacity: 10
 
 - type: entity
-  parent: ClothingOuterBase
+  parent: ClothingOuterStorageBase
   id: ClothingOuterCoatHoSTrench
   name: head of security's trenchcoat
   description: This trenchcoat was specifically designed for asserting superior authority.
@@ -54,8 +48,6 @@
     sprite: Clothing/OuterClothing/Coats/hos_trenchcoat.rsi
   - type: Clothing
     sprite: Clothing/OuterClothing/Coats/hos_trenchcoat.rsi
-  - type: Storage
-    capacity: 10
   - type: Armor
     modifiers:
       coefficients:
@@ -65,7 +57,7 @@
         Heat: 0.7
 
 - type: entity
-  parent: ClothingOuterBase
+  parent: ClothingOuterStorageBase
   id: ClothingOuterCoatInspector
   name: inspectors coat
   description: A strict inspector coat for being intimidating during inspections.
@@ -74,11 +66,9 @@
     sprite: Clothing/OuterClothing/Coats/insp_coat.rsi
   - type: Clothing
     sprite: Clothing/OuterClothing/Coats/insp_coat.rsi
-  - type: Storage
-    capacity: 10
 
 - type: entity
-  parent: ClothingOuterBase
+  parent: ClothingOuterStorageBase
   id: ClothingOuterCoatJensen
   name: jensen coat
   description: A jensen coat.
@@ -87,11 +77,9 @@
     sprite: Clothing/OuterClothing/Coats/jensencoat.rsi
   - type: Clothing
     sprite: Clothing/OuterClothing/Coats/jensencoat.rsi
-  - type: Storage
-    capacity: 10
 
 - type: entity
-  parent: ClothingOuterBase
+  parent: ClothingOuterStorageBase
   id: ClothingOuterCoatLab
   name: lab coat
   description: A suit that protects against minor chemical spills.
@@ -100,11 +88,9 @@
     sprite: Clothing/OuterClothing/Coats/labcoat.rsi
   - type: Clothing
     sprite: Clothing/OuterClothing/Coats/labcoat.rsi
-  - type: Storage
-    capacity: 10
 
 - type: entity
-  parent: ClothingOuterBase
+  parent: ClothingOuterStorageBase
   id: ClothingOuterCoatLabChem
   name: lab coat (chem)
   description: A suit that protects against minor chemical spills. Has an orange stripe on the shoulder.
@@ -113,11 +99,9 @@
     sprite: Clothing/OuterClothing/Coats/labcoat_chem.rsi
   - type: Clothing
     sprite: Clothing/OuterClothing/Coats/labcoat_chem.rsi
-  - type: Storage
-    capacity: 10
 
 - type: entity
-  parent: ClothingOuterBase
+  parent: ClothingOuterStorageBase
   id: ClothingOuterCoatLabCmo
   name: chief medical officer's lab coat
   description: Bluer than the standard model.
@@ -126,11 +110,9 @@
     sprite: Clothing/OuterClothing/Coats/labcoat_cmo.rsi
   - type: Clothing
     sprite: Clothing/OuterClothing/Coats/labcoat_cmo.rsi
-  - type: Storage
-    capacity: 10
 
 - type: entity
-  parent: ClothingOuterBase
+  parent: ClothingOuterStorageBase
   id: ClothingOuterCoatPirate
   name: pirate garb
   description: Yarr.
@@ -139,11 +121,9 @@
     sprite: Clothing/OuterClothing/Coats/pirate.rsi
   - type: Clothing
     sprite: Clothing/OuterClothing/Coats/pirate.rsi
-  - type: Storage
-    capacity: 10
 
 - type: entity
-  parent: ClothingOuterBase
+  parent: ClothingOuterStorageBase
   id: ClothingOuterCoatWarden
   name: warden's armored jacket
   description: A sturdy, utilitarian jacket designed to protect a warden from any brig-bound threats.
@@ -152,8 +132,6 @@
     sprite: Clothing/OuterClothing/Coats/warden.rsi
   - type: Clothing
     sprite: Clothing/OuterClothing/Coats/warden.rsi
-  - type: Storage
-    capacity: 10
   - type: Armor
     modifiers:
       coefficients:

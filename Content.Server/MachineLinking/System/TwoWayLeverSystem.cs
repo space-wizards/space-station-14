@@ -1,3 +1,4 @@
+using System;
 using Content.Server.MachineLinking.Components;
 using Content.Shared.Interaction;
 using Content.Shared.MachineLinking;
@@ -12,7 +13,7 @@ namespace Content.Server.MachineLinking.System
         {
             base.Initialize();
             SubscribeLocalEvent<TwoWayLeverComponent, ComponentInit>(OnInit);
-            SubscribeLocalEvent<TwoWayLeverComponent, InteractHandEvent>(OnInteractHand);
+            SubscribeLocalEvent<TwoWayLeverComponent, ActivateInWorldEvent>(OnActivated);
         }
 
         private void OnInit(EntityUid uid, TwoWayLeverComponent component, ComponentInit args)
@@ -20,7 +21,7 @@ namespace Content.Server.MachineLinking.System
             _signalSystem.EnsureTransmitterPorts(uid, component.LeftPort, component.RightPort, component.MiddlePort);
         }
 
-        private void OnInteractHand(EntityUid uid, TwoWayLeverComponent component, InteractHandEvent args)
+        private void OnActivated(EntityUid uid, TwoWayLeverComponent component, ActivateInWorldEvent args)
         {
             if (args.Handled)
                 return;
