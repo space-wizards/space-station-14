@@ -1,0 +1,21 @@
+- type: entityLootTable
+  id: MiningLootTable
+  entries:
+  - id: SteelOre1
+    prob: 0.25
+    orGroup: Asteroid
+  - id: GoldOre1
+    prob: 0.05
+    orGroup: Asteroid
+  - id: SpaceQuartz1
+    prob: 0.20
+    orGroup: Asteroid
+  - id: PlasmaOre1
+    prob: 0.10
+    orGroup: Asteroid
+  - id: SilverOre1
+    prob: 0.025
+    orGroup: Asteroid
+  - id: UraniumOre1
+    prob: 0.025
+    orGroup: Asteroid
