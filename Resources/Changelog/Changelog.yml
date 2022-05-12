@@ -1,9 +1,4 @@
 Entries:
-- author: TheDarkElites
-  changes:
-  - {message: PDAs now have ringtones, type: Add}
-  id: 1007
-  time: '2022-02-08T09:39:23.0000000+00:00'
 - author: Lamrr
   changes:
   - {message: 'Bring in the scrap heap with the new salvage specialist role! Tasked
@@ -3035,3 +3030,8 @@ Entries:
       now., type: Tweak}
   id: 1506
   time: '2022-05-12T07:41:18.0000000+00:00'
+- author: keronshb
+  changes:
+  - {message: Animals can now escape inventory by moving, type: Add}
+  id: 1507
+  time: '2022-05-12T07:58:27.0000000+00:00'
