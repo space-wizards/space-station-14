@@ -49,4 +49,5 @@ public enum SpeciesSkinColor
 {
     HumanToned,
     Hues,
+    TintedHues, //This gives a color tint to a humanoid's skin (10% saturation with full hue range). 
 }
