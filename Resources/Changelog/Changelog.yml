@@ -1,10 +1,4 @@
 Entries:
-- author: Peptide90
-  changes:
-  - {message: 'Shutters can now be constructed from the construction menu (G)! Add
-      glass before final step for windowed, or steel for radiation shutters.', type: Add}
-  id: 1011
-  time: '2022-02-08T10:49:48.0000000+00:00'
 - author: metalgearsloth
   changes:
   - {message: NanoTrasen has recalled the defective ringers., type: Fix}
@@ -3033,3 +3027,9 @@ Entries:
   - {message: Added the salami lid (won't fit), type: Add}
   id: 1510
   time: '2022-05-12T10:24:49.0000000+00:00'
+- author: Peptide90
+  changes:
+  - {message: 'Cat Ears have arrived. Gives you the UwUs. Find it in a maint spawner,
+      salvage crate or traitor uplink.', type: Add}
+  id: 1511
+  time: '2022-05-12T10:53:01.0000000+00:00'
