@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using Content.Server.WireHacking;
+using Content.Server.Wires;
 using Content.Shared.Construction;
 using Content.Shared.Examine;
 using JetBrains.Annotations;

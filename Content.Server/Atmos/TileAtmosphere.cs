@@ -59,6 +59,10 @@ namespace Content.Server.Atmos
         [ViewVariables]
         public AtmosDirection PressureDirection;
 
+        // For debug purposes.
+        [ViewVariables]
+        public AtmosDirection LastPressureDirection;
+
         [ViewVariables]
         public GridId GridIndex { get; }
 

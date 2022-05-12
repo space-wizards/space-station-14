@@ -33,6 +33,7 @@ namespace Content.Client.Entry
             "MeleeChemicalInjector",
             "Dice",
             "PaperLabel",
+            "PressureImmunity",
             "Construction",
             "PoweredLight",
             "Smes",
@@ -138,8 +139,10 @@ namespace Content.Client.Entry
             "Flash",
             "Docking",
             "Telecrystal",
+            "PowerMonitoringConsole",
             "RCD",
             "RCDAmmo",
+            "SurplusBundle",
             "CursedEntityStorage",
             "DiseaseArtifact",
             "Radio",
@@ -194,7 +197,6 @@ namespace Content.Client.Entry
             "SignalReceiver",
             "SignalSwitch",
             "SignalTransmitter",
-            "SignalButton",
             "SignalLinker",
             "ItemCabinet",
             "FireExtinguisher",
@@ -343,7 +345,10 @@ namespace Content.Client.Entry
             "EnergySword",
             "DoorRemote",
             "InteractionPopup",
-            "HealthAnalyzer"
+            "HealthAnalyzer",
+            "Thirst",
+            "CanEscapeInventory",
+            "Wires"
         };
     }
 }

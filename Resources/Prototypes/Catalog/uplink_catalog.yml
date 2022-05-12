@@ -89,6 +89,7 @@
   category: Explosives
   itemId: MobGrenadePenguin
   price: 6
+  surplus: false # got wrecked by penguins from surplus crate
 
 - type: uplinkListing
   id: UplinkC4
@@ -208,9 +209,24 @@
   id: UplinkZombieBundle
   category: Bundles
   itemId: ClothingBackpackDuffelZombieBundle
-  price: 40
+  price: 50
   icon: /Textures/Structures/Wallmounts/signs.rsi/bio.png
 
+- type: uplinkListing
+  id: UplinkSurplusBundle
+  category: Bundles
+  itemId: CrateSyndicateSurplusBundle
+  description: Contains 50 telecrystals worth of completely random Syndicate items. It can be useless junk or really good.
+  price: 20
+  surplus: false
+
+- type: uplinkListing
+  id: UplinkSuperSurplusBundle
+  category: Bundles
+  itemId: CrateSyndicateSuperSurplusBundle
+  description: Contains 125 telecrystals worth of completely random Syndicate items.
+  price: 40
+  surplus: false
 
 #- type: uplinkListing
 #  id: UplinkCarbineBundle
@@ -283,6 +299,12 @@
   description: A simple EVA suit that offers no protection other than what's needed to survive in space.
   price: 4
 
+- type: uplinkListing
+  id: UplinkClothingOuterHardsuitJuggernaut
+  category: Armor
+  itemId: ClothingOuterHardsuitJuggernaut
+  description: Hyper resilient armor made of materials tested in the Tau chromosphere facility. The only thing that's going to be slowing you down is this suit... and tasers.
+  price: 12
 
 
 # Misc
@@ -378,3 +400,4 @@
   listingName: syndicate segway
   description: Be an enemy of the corporation, in style!
   price: 5
+  surplus: false

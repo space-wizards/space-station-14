@@ -7,10 +7,12 @@
     Handcuffs: 8
     GrenadeFlashBang: 4
     Flash: 5
-    FoodDonutHomer: 12
-    FoodBoxDonut: 2
     FlashlightLantern: 4 #seclite
     ClothingEyesGlassesSunglasses: 2
     ClothingBeltSecurityWebbing: 5
     Zipties: 12
+  # security officers need to follow a diet regimen!
+  contrabandInventory:
+    FoodDonutHomer: 12
+    FoodBoxDonut: 2
     #box evidence
