@@ -66,6 +66,6 @@
     sprite: Objects/Vehicles/atv.rsi
     state: vehicle
   product: CrateFunATV
-  cost: 2500
+  cost: 6000
   category: Fun
   group: market

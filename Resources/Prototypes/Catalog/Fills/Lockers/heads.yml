@@ -55,6 +55,7 @@
       - id: ClothingNeckBronzeheart
       - id: ClothingNeckGoldmedal
       - id: RubberStampCaptain
+      - id: AntiqueLaserGun
 
 - type: entity
   id: LockerHeadOfPersonnelFilled
@@ -102,6 +103,7 @@
       - id: CigarCase
         prob: 0.15
       - id: DoorRemoteEngineering
+      - id: RubberStampCE
 
 - type: entity
   id: LockerChiefMedicalOfficerFilled

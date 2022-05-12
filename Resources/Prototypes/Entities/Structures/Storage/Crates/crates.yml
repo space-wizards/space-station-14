@@ -11,7 +11,7 @@
       map: ["enum.StorageVisualLayers.Door"]
     - state: welded
       visible: false
-      map: ["enum.StorageVisualLayers.Welded"]
+      map: ["enum.WeldableLayers.BaseWelded"]
   - type: Icon
     sprite: Structures/Storage/Crates/generic.rsi
     state: crate_icon
@@ -38,7 +38,7 @@
       map: ["enum.StorageVisualLayers.Door"]
     - state: welded
       visible: false
-      map: ["enum.StorageVisualLayers.Welded"]
+      map: ["enum.WeldableLayers.BaseWelded"]
   - type: Icon
     sprite: Structures/Storage/Crates/plastic.rsi
     state: plasticcrate_icon
@@ -64,7 +64,7 @@
       map: ["enum.StorageVisualLayers.Door"]
     - state: welded
       visible: false
-      map: ["enum.StorageVisualLayers.Welded"]
+      map: ["enum.WeldableLayers.BaseWelded"]
   - type: Icon
     sprite: Structures/Storage/Crates/freezer.rsi
     state: freezer_icon
@@ -90,7 +90,7 @@
       map: ["enum.StorageVisualLayers.Door"]
     - state: welded
       visible: false
-      map: ["enum.StorageVisualLayers.Welded"]
+      map: ["enum.WeldableLayers.BaseWelded"]
   - type: Icon
     sprite: Structures/Storage/Crates/hydro.rsi
     state: hydrocrate_icon
@@ -116,7 +116,7 @@
       map: ["enum.StorageVisualLayers.Door"]
     - state: welded
       visible: false
-      map: ["enum.StorageVisualLayers.Welded"]
+      map: ["enum.WeldableLayers.BaseWelded"]
   - type: Icon
     sprite: Structures/Storage/Crates/medical.rsi
     state: medicalcrate_icon
@@ -143,7 +143,7 @@
       map: ["enum.StorageVisualLayers.Door"]
     - state: welded
       visible: false
-      map: ["enum.StorageVisualLayers.Welded"]
+      map: ["enum.WeldableLayers.BaseWelded"]
   - type: Icon
     sprite: Structures/Storage/Crates/radiation.rsi
     state: radiationcrate_icon
@@ -169,7 +169,7 @@
       map: ["enum.StorageVisualLayers.Door"]
     - state: welded
       visible: false
-      map: ["enum.StorageVisualLayers.Welded"]
+      map: ["enum.WeldableLayers.BaseWelded"]
   - type: Icon
     sprite: Structures/Storage/Crates/o2.rsi
     state: o2crate_icon
@@ -195,7 +195,7 @@
       map: ["enum.StorageVisualLayers.Door"]
     - state: welded
       visible: false
-      map: ["enum.StorageVisualLayers.Welded"]
+      map: ["enum.WeldableLayers.BaseWelded"]
   - type: Icon
     sprite: Structures/Storage/Crates/electricalcrate.rsi
     state: electricalcrate_icon
@@ -221,7 +221,7 @@
       map: ["enum.StorageVisualLayers.Door"]
     - state: welded
       visible: false
-      map: ["enum.StorageVisualLayers.Welded"]
+      map: ["enum.WeldableLayers.BaseWelded"]
   - type: Icon
     sprite: Structures/Storage/Crates/engicrate.rsi
     state: engicrate_icon
@@ -247,7 +247,7 @@
       map: ["enum.StorageVisualLayers.Door"]
     - state: welded
       visible: false
-      map: ["enum.StorageVisualLayers.Welded"]
+      map: ["enum.WeldableLayers.BaseWelded"]
   - type: Icon
     sprite: Structures/Storage/Crates/scicrate.rsi
     state: scicrate_icon
@@ -273,7 +273,7 @@
       map: ["enum.StorageVisualLayers.Door"]
     - state: welded
       visible: false
-      map: ["enum.StorageVisualLayers.Welded"]
+      map: ["enum.WeldableLayers.BaseWelded"]
   - type: Icon
     sprite: Structures/Storage/Crates/surgerycrate.rsi
     state: surgerycrate_icon
@@ -304,7 +304,7 @@
       map: ["enum.StorageVisualLayers.Door"]
     - state: welded
       visible: false
-      map: ["enum.StorageVisualLayers.Welded"]
+      map: ["enum.WeldableLayers.BaseWelded"]
     - state: locked
       map: ["enum.StorageVisualLayers.Lock"]
       shader: unshaded
@@ -333,7 +333,7 @@
       map: ["enum.StorageVisualLayers.Door"]
     - state: welded
       visible: false
-      map: ["enum.StorageVisualLayers.Welded"]
+      map: ["enum.WeldableLayers.BaseWelded"]
     - state: locked
       map: ["enum.StorageVisualLayers.Lock"]
       shader: unshaded
@@ -362,7 +362,7 @@
       map: ["enum.StorageVisualLayers.Door"]
     - state: welded
       visible: false
-      map: ["enum.StorageVisualLayers.Welded"]
+      map: ["enum.WeldableLayers.BaseWelded"]
     - state: locked
       map: ["enum.StorageVisualLayers.Lock"]
       shader: unshaded
@@ -390,7 +390,7 @@
       map: ["enum.StorageVisualLayers.Door"]
     - state: welded
       visible: false
-      map: ["enum.StorageVisualLayers.Welded"]
+      map: ["enum.WeldableLayers.BaseWelded"]
     - state: locked
       map: ["enum.StorageVisualLayers.Lock"]
       shader: unshaded
@@ -419,7 +419,7 @@
       map: ["enum.StorageVisualLayers.Door"]
     - state: welded
       visible: false
-      map: ["enum.StorageVisualLayers.Welded"]
+      map: ["enum.WeldableLayers.BaseWelded"]
     - state: locked
       map: ["enum.StorageVisualLayers.Lock"]
       shader: unshaded
@@ -448,7 +448,7 @@
       map: ["enum.StorageVisualLayers.Door"]
     - state: welded
       visible: false
-      map: ["enum.StorageVisualLayers.Welded"]
+      map: ["enum.WeldableLayers.BaseWelded"]
     - state: locked
       map: ["enum.StorageVisualLayers.Lock"]
       shader: unshaded
@@ -476,7 +476,7 @@
       map: ["enum.StorageVisualLayers.Door"]
     - state: welded
       visible: false
-      map: ["enum.StorageVisualLayers.Welded"]
+      map: ["enum.WeldableLayers.BaseWelded"]
     - state: locked
       map: ["enum.StorageVisualLayers.Lock"]
       shader: unshaded
@@ -505,7 +505,7 @@
       map: ["enum.StorageVisualLayers.Door"]
     - state: welded
       visible: false
-      map: ["enum.StorageVisualLayers.Welded"]
+      map: ["enum.WeldableLayers.BaseWelded"]
     - state: locked
       map: ["enum.StorageVisualLayers.Lock"]
       shader: unshaded
@@ -560,7 +560,7 @@
       map: ["enum.StorageVisualLayers.Door"]
     - state: welded
       visible: false
-      map: ["enum.StorageVisualLayers.Welded"]
+      map: ["enum.WeldableLayers.BaseWelded"]
     - state: locked
       map: ["enum.StorageVisualLayers.Lock"]
       shader: unshaded
@@ -580,7 +580,6 @@
   components:
   - type: EntityStorage
     Capacity: 500
-    CanWeldShut: false
   - type: Sprite
     sprite: Structures/Storage/Crates/livestock.rsi
     layers:
@@ -620,15 +619,12 @@
     fixtures:
     - shape:
         !type:PhysShapeAabb
-          bounds: "-0.4,-0.4,0.4,0.29"
+        bounds: "-0.4,-0.4,0.4,0.29"
       mass: 75
       mask:
-      - Impassable
-      - SmallImpassable
+      - LargeMobMask
       layer:
-      - Opaque
-      - MobImpassable
-      - SmallImpassable
+      - LargeMobLayer
   - type: Construction
     graph: CrateLivestock
     node: cratelivestock

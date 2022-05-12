@@ -108,8 +108,6 @@ public sealed partial class ChemistrySystem
 
         if (component.CancelToken != null)
         {
-            component.CancelToken.Cancel();
-            component.CancelToken = null;
             args.Handled = true;
             return;
         }

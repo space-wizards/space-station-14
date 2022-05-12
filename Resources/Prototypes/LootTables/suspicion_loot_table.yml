@@ -1,0 +1,211 @@
+# These will be spawned randomly around the station
+- type: entityLootTable
+  id: SuspicionRule
+  entries:
+  - id: RifleAk
+    amount: 0
+    maxAmount: 5
+  - id: RifleBlackAk
+    amount: 0
+    maxAmount: 5
+  - id: RifleCarbine
+    amount: 0
+    maxAmount: 5
+  - id: RifleDallas
+    amount: 0
+    maxAmount: 5
+  - id: RifleSTS
+    amount: 0
+    maxAmount: 5
+  - id: RifleVintorez
+    amount: 0
+    maxAmount: 5
+  - id: RifleWintermute
+    amount: 0
+    maxAmount: 5
+  - id: RifleCalico
+    amount: 0
+    maxAmount: 5
+
+  - id: PistolClarissa
+    amount: 0
+    maxAmount: 5
+  - id: PistolColt
+    amount: 0
+    maxAmount: 5
+  - id: PistolGiskard
+    amount: 0
+    maxAmount: 5
+  - id: PistolHMPistol
+    amount: 0
+    maxAmount: 5
+  - id: PistolLamia
+    amount: 0
+    maxAmount: 5
+  - id: PistolMandella
+    amount: 0
+    maxAmount: 5
+  - id: PistolMk58
+    amount: 0
+    maxAmount: 5
+  - id: PistolMk58Wood
+    amount: 0
+    maxAmount: 5
+  - id: PistolMolly
+    amount: 0
+    maxAmount: 5
+  - id: PistolOlivaw
+    amount: 0
+    maxAmount: 5
+  - id: PistolPaco
+    amount: 0
+    maxAmount: 5
+
+  - id: ButchCleaver
+    maxAmount: 5
+  - id: Pickaxe
+    maxAmount: 5
+  - id: Spear
+    maxAmount: 5
+  - id: ToolboxEmergency
+    maxAmount: 5
+  - id: CrowbarRed
+    maxAmount: 5
+  - id: Stunbaton
+    maxAmount: 10
+
+  - id: RevolverDeckard
+    amount: 0
+    maxAmount: 5
+  - id: RevolverInspector
+    amount: 0
+    maxAmount: 5
+  - id: RevolverMateba
+    amount: 0
+    maxAmount: 5
+
+  - id: ShotgunBojevic
+    amount: 0
+    maxAmount: 5
+  - id: ShotgunDB
+    amount: 0
+    maxAmount: 5
+  - id: ShotgunBull
+    amount: 0
+    maxAmount: 5
+  - id: ShotgunGladstone
+    amount: 0
+    maxAmount: 5
+  - id: ShotgunRegulator
+    amount: 0
+    maxAmount: 5
+  - id: ShotgunPump
+    amount: 0
+    maxAmount: 5
+  - id: ShotgunSawn
+    amount: 0
+    maxAmount: 5
+
+  - id: SmgAtreides
+    amount: 0
+    maxAmount: 5
+  - id: SmgC20r
+    amount: 0
+    maxAmount: 5
+  - id: SmgDrozd
+    amount: 0
+    maxAmount: 5
+  - id: SmgWt550
+    amount: 0
+    maxAmount: 5
+  - id: SmgZoric
+    amount: 0
+    maxAmount: 5
+
+  - id: SniperBoltGun
+    amount: 0
+    maxAmount: 5
+  - id: SniperBoltGunWood
+    amount: 0
+    maxAmount: 5
+  - id: SniperHeavy
+    amount: 0
+    maxAmount: 5
+
+  - id: RedLaser
+    amount: 0
+    maxAmount: 5
+  - id: RedHeavyLaser
+    amount: 0
+    maxAmount: 1
+  - id: XrayLaser
+    amount: 0
+    maxAmount: 1
+  - id: LaserGun
+    amount: 0
+    maxAmount: 1
+  - id: LaserCannon
+    amount: 0
+    maxAmount: 1
+  - id: XrayCannon
+    amount: 0
+    maxAmount: 2
+  - id: TaserGun
+    amount: 0
+    maxAmount: 4
+
+  - id: LauncherChinaLake
+    prob: 0.30
+    maxAmount: 3
+
+  - id: LauncherRocket
+    prob: 0.20
+    maxAmount: 3
+
+  - id: ExGrenade
+    prob: 0.10
+    amount: 0
+    maxAmount: 2
+
+  - id: GrenadeFlashBang
+  - id: SyndieMiniBomb
+    prob: 0.05
+    amount: 0
+    maxAmount: 5
+
+  - id: GrenadeFlash
+  - id: GrenadeBlast
+  - id: GrenadeFrag
+  - id: GrenadeBaton
+  - id: SoapSyndie
+    amount: 0
+    maxAmount: 3
+
+
+    # Spawn a bunch of ammo around!
+  - id: MagazineSRifle
+    maxAmount: 15
+  - id: MagazineClRifle
+    maxAmount: 15
+  - id: MagazineClRifle10x24
+    maxAmount: 15
+  - id: MagazineClRiflePistol
+    maxAmount: 15
+  - id: MagazineLRifle
+    maxAmount: 15
+  - id: MagazinePistolCalicoTopMounted
+    maxAmount: 15
+  - id: MagazineShotgun
+    maxAmount: 15
+  - id: MagazinePistol
+    maxAmount: 15
+  - id: MagazineHCPistol
+    maxAmount: 15
+  - id: MagazineMagnum
+    maxAmount: 15
+  - id: MagazineMagnumSmg
+    maxAmount: 15
+  - id: RocketAmmo
+    maxAmount: 15
+  - id: GrenadeFrag
+    maxAmount: 15

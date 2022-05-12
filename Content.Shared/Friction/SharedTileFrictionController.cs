@@ -1,14 +1,14 @@
-using System;
 using Content.Shared.CCVar;
 using Content.Shared.Movement;
 using Content.Shared.Movement.Components;
 using JetBrains.Annotations;
 using Robust.Shared.Configuration;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
+using Robust.Shared.GameStates;
 using Robust.Shared.Map;
 using Robust.Shared.Physics.Controllers;
 using Robust.Shared.Physics.Dynamics;
+using Robust.Shared.Serialization;
+using Robust.Shared.Utility;
 
 
 namespace Content.Shared.Friction
@@ -31,6 +31,20 @@ namespace Content.Shared.Friction
 
             configManager.OnValueChanged(CCVars.TileFrictionModifier, SetFrictionModifier, true);
             configManager.OnValueChanged(CCVars.StopSpeed, SetStopSpeed, true);
+
+            SubscribeLocalEvent<TileFrictionModifierComponent, ComponentGetState>(OnGetState);
+            SubscribeLocalEvent<TileFrictionModifierComponent, ComponentHandleState>(OnHandleState);
+        }
+
+        private void OnHandleState(EntityUid uid, TileFrictionModifierComponent component, ref ComponentHandleState args)
+        {
+            if (args.Current is not TileFrictionComponentState tileState) return;
+            component.Modifier = tileState.Modifier;
+        }
+
+        private void OnGetState(EntityUid uid, TileFrictionModifierComponent component, ref ComponentGetState args)
+        {
+            args.State = new TileFrictionComponentState(component.Modifier);
         }
 
         private void SetStopSpeed(float value) => _stopSpeed = value;
@@ -50,16 +64,27 @@ namespace Content.Shared.Friction
         {
             base.UpdateBeforeMapSolve(prediction, mapComponent, frameTime);
 
+            var frictionQuery = GetEntityQuery<TileFrictionModifierComponent>();
+            var xformQuery = GetEntityQuery<TransformComponent>();
+
             foreach (var body in mapComponent.AwakeBodies)
             {
                 // Only apply friction when it's not a mob (or the mob doesn't have control)
-                if (body.Deleted ||
-                    prediction && !body.Predict ||
+                if (prediction && !body.Predict ||
                     body.BodyStatus == BodyStatus.InAir ||
                     Mover.UseMobMovement(body.Owner)) continue;
 
-                var surfaceFriction = GetTileFriction(body);
-                var bodyModifier = IoCManager.Resolve<IEntityManager>().GetComponentOrNull<TileFrictionModifierComponent>(body.Owner)?.Modifier ?? 1.0f;
+                if (body.LinearVelocity.Equals(Vector2.Zero) && body.AngularVelocity.Equals(0f)) continue;
+
+                DebugTools.Assert(!Deleted(body.Owner));
+                var surfaceFriction = GetTileFriction(body, xformQuery.GetComponent(body.Owner));
+                var bodyModifier = 1f;
+
+                if (frictionQuery.TryGetComponent(body.Owner, out var frictionComp))
+                {
+                    bodyModifier = frictionComp.Modifier;
+                }
+
                 var friction = _frictionModifier * surfaceFriction * bodyModifier;
 
                 ReduceLinearVelocity(prediction, body, friction, frameTime);
@@ -130,15 +155,13 @@ namespace Content.Shared.Friction
         }
 
         [Pure]
-        private float GetTileFriction(PhysicsComponent body)
+        private float GetTileFriction(PhysicsComponent body, TransformComponent xform)
         {
-            var transform = IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(body.Owner);
-            var coords = transform.Coordinates;
+            var coords = xform.Coordinates;
 
             // TODO: Make IsWeightless event-based; we already have grid traversals tracked so just raise events
-            if (body.BodyStatus == BodyStatus.InAir ||
-                body.Owner.IsWeightless(body, coords, _mapManager) ||
-                !_mapManager.TryGetGrid(transform.GridID, out var grid))
+            if (body.Owner.IsWeightless(body, coords, _mapManager) ||
+                !_mapManager.TryGetGrid(xform.GridID, out var grid))
                 return 0.0f;
 
             if (!coords.IsValid(EntityManager)) return 0.0f;
@@ -146,6 +169,17 @@ namespace Content.Shared.Friction
             var tile = grid.GetTileRef(coords);
             var tileDef = _tileDefinitionManager[tile.Tile.TypeId];
             return tileDef.Friction;
+        }
+
+        [NetSerializable, Serializable]
+        private sealed class TileFrictionComponentState : ComponentState
+        {
+            public float Modifier;
+
+            public TileFrictionComponentState(float modifier)
+            {
+                Modifier = modifier;
+            }
         }
     }
 }

@@ -59,9 +59,9 @@
     netsync: false
   - type: Tag
     tags:
-    - Recyclable
     - Trash
   - type: Recyclable
+  - type: SpaceGarbage
 
 - type: entity
   name: bowl

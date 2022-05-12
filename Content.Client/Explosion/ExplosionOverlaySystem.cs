@@ -1,5 +1,6 @@
 using Content.Shared.CCVar;
 using Content.Shared.Explosion;
+using Content.Shared.GameTicking;
 using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
 using Robust.Client.ResourceManagement;
@@ -34,6 +35,7 @@ public sealed class ExplosionOverlaySystem : EntitySystem
         SubscribeNetworkEvent<ExplosionEvent>(OnExplosion);
         SubscribeNetworkEvent<ExplosionOverlayUpdateEvent>(HandleExplosionUpdate);
         SubscribeLocalEvent<MapChangedEvent>(OnMapChanged);
+        SubscribeAllEvent<RoundRestartCleanupEvent>(OnReset);
 
         _cfg.OnValueChanged(CCVars.ExplosionPersistence, SetExplosionPersistence, true);
 
@@ -41,6 +43,21 @@ public sealed class ExplosionOverlaySystem : EntitySystem
         _overlay = new ExplosionOverlay();
         if (!overlayManager.HasOverlay<ExplosionOverlay>())
             overlayManager.AddOverlay(_overlay);
+    }
+
+    private void OnReset(RoundRestartCleanupEvent ev)
+    {
+        // Not sure if round restart cleans up client-side entities, but better safe than sorry.
+        foreach (var exp in _overlay.CompletedExplosions)
+        {
+            QueueDel(exp.LightEntity);
+        }
+        if (_overlay.ActiveExplosion != null)
+            QueueDel(_overlay.ActiveExplosion.LightEntity);
+        
+        _overlay.CompletedExplosions.Clear();
+        _overlay.ActiveExplosion = null;
+        _overlay.Index = 0;
     }
 
     private void OnMapChanged(MapChangedEvent ev)

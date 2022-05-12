@@ -25,7 +25,7 @@
 
 [color=#a4885c]8.[/color] Offensive/bad/out-of-character character names put you at the mercy of administrators, from receiving brain damage to becoming valid to straight up getting banned on the spot depending on how bad they are. Character names should be something a real person might have for a name.
 
-[color=#a4885c]9.[/color] Knowingly using exploits or other unintended game mechanics to powergame, slow down, or crash the server is [color=#ff0000]not allowed[/color].
+[color=#a4885c]9.[/color] Knowingly using exploits, external programs, or other unintended game mechanics to powergame, slow down, or crash the server is [color=#ff0000]not allowed[/color].
 
 [color=#a4885c]10.[/color] Multi-keying/Alts on the same server is [color=#ff0000]not allowed[/color].
 	- Admins may ask players in possession of multiple alt accounts to choose one to play on and ban the other accounts.

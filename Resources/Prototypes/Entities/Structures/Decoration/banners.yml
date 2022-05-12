@@ -18,13 +18,12 @@
         radius: 0.2
       mass: 25
       mask:
-        - SmallImpassable
-        - VaultImpassable
+      - MachineMask
       layer:
-        - Opaque
-        - MobImpassable
-        - SmallImpassable
-        - VaultImpassable
+      - Opaque
+      - MidImpassable
+      - HighImpassable
+      - BulletImpassable
   - type: InteractionOutline
 
 - type: entity
