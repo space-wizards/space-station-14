@@ -1,9 +1,4 @@
 Entries:
-- author: metalgearsloth
-  changes:
-  - {message: Portable flasher now has its animation., type: Add}
-  id: 1006
-  time: '2022-02-08T03:08:22.0000000+00:00'
 - author: TheDarkElites
   changes:
   - {message: PDAs now have ringtones, type: Add}
@@ -3032,3 +3027,11 @@ Entries:
   - {message: Chapel's carpet doesn't block movement anymore., type: Fix}
   id: 1505
   time: '2022-05-12T06:10:16.0000000+00:00'
+- author: Peptide90
+  changes:
+  - {message: All mobs will now slow down when damaged enough. No more carps terrorising
+      the crew as easy., type: Tweak}
+  - {message: Lots of mobs now can't pull things. Carps and ticks should be less abusive
+      now., type: Tweak}
+  id: 1506
+  time: '2022-05-12T07:41:18.0000000+00:00'
