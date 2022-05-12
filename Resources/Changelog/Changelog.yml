@@ -1,9 +1,4 @@
 Entries:
-- author: mirrorcult
-  changes:
-  - {message: Mappers can now add decals to maps using the Decal Placer menu., type: Add}
-  id: 1014
-  time: '2022-02-08T20:54:41.0000000+00:00'
 - author: Fishfish458
   changes:
   - {message: 'Added inflatable doors, which can now be found in the engineer Tool
@@ -3034,3 +3029,8 @@ Entries:
       print them at the sec tech fab and med tech fab!', type: Add}
   id: 1513
   time: '2022-05-12T12:24:02.0000000+00:00'
+- author: Veritius
+  changes:
+  - {message: Adds power sinks, type: Add}
+  id: 1514
+  time: '2022-05-12T13:12:35.0000000+00:00'
