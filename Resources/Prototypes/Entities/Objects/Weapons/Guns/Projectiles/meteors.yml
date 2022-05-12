@@ -29,13 +29,12 @@
     fixtures:
     - shape:
         !type:PhysShapeCircle
-          radius: 0.8
+        radius: 0.8
       mass: 200
       hard: true
       # Didn't use MapGrid for now as the bounds are stuffed.
       layer:
-        - Impassable
-        - SmallImpassable
-        - VaultImpassable
+      - LargeMobLayer
       mask:
-        - Impassable
+      - Impassable
+      - BulletImpassable

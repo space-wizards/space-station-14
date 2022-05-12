@@ -17,11 +17,11 @@ namespace Content.Shared.Standing
         public bool Standing { get; set; } = true;
 
         /// <summary>
-        ///     List of fixtures that had vault-impassable prior to an entity being downed. Required when re-adding the
-        ///     collision mask.
+        ///     List of fixtures that had their collision mask changed when the entity was downed.
+        ///     Required for re-adding the collision mask.
         /// </summary>
-        [DataField("vaultImpassableFixtures")]
-        public List<string> VaultImpassableFixtures = new();
+        [DataField("changedFixtures")]
+        public List<string> ChangedFixtures = new();
 
         public override ComponentState GetComponentState()
         {

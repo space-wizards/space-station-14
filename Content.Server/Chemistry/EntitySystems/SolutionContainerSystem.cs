@@ -87,7 +87,7 @@ public sealed partial class SolutionContainerSystem : EntitySystem
             ("wordedAmount", Loc.GetString(solutionHolder.Contents.Count == 1
                 ? "shared-solution-container-component-on-examine-worded-amount-one-reagent"
                 : "shared-solution-container-component-on-examine-worded-amount-multiple-reagents")),
-            ("desc", Loc.GetString(proto.PhysicalDescription))));
+            ("desc", proto.LocalizedPhysicalDescription)));
     }
 
     public void UpdateAppearance(EntityUid uid, Solution solution,

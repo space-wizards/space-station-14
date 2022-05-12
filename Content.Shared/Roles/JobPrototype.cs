@@ -46,8 +46,8 @@ namespace Content.Shared.Roles
         ///     Whether this job is a head.
         ///     The job system will try to pick heads before other jobs on the same priority level.
         /// </summary>
-        [DataField("head")]
-        public bool IsHead { get; private set; }
+        [DataField("weight")]
+        public int Weight { get; private set; }
 
         [DataField("startingGear", customTypeSerializer: typeof(PrototypeIdSerializer<StartingGearPrototype>))]
         public string? StartingGear { get; private set; }
