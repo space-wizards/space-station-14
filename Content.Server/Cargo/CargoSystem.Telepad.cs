@@ -63,9 +63,7 @@ public sealed partial class CargoSystem
 
     private void OnInit(EntityUid uid, CargoTelepadComponent telepad, ComponentInit args)
     {
-        var receiver = EnsureComp<SignalReceiverComponent>(uid);
-        if (!receiver.Inputs.ContainsKey("Order Receiver")) 
-            receiver.AddPort("Order Receiver");
+        _linker.EnsureReceiverPorts(uid, telepad.ReceiverPort);
     }
 
     private void SetEnabled(CargoTelepadComponent component, ApcPowerReceiverComponent? receiver = null,

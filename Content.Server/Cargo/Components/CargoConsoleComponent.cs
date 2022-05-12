@@ -4,17 +4,18 @@ using Content.Shared.Cargo;
 using Content.Shared.Cargo.Components;
 using Content.Shared.Sound;
 using Content.Server.MachineLinking.Components;
+using Content.Shared.MachineLinking;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.Map;
 using Robust.Shared.Player;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
 namespace Content.Server.Cargo.Components
 {
     [RegisterComponent]
     public sealed class CargoConsoleComponent : SharedCargoConsoleComponent
     {
-        [Dependency] private readonly IMapManager _mapManager = default!;
         [Dependency] private readonly IEntityManager _entMan = default!;
 
         private CargoBankAccount? _bankAccount;
@@ -56,6 +57,9 @@ namespace Content.Server.Cargo.Components
         private CargoSystem _cargoConsoleSystem = default!;
 
         [ViewVariables] private BoundUserInterface? UserInterface => Owner.GetUIOrNull(CargoConsoleUiKey.Key);
+
+        [DataField("senderPort", customTypeSerializer: typeof(PrototypeIdSerializer<TransmitterPortPrototype>))]
+        public string SenderPort = "OrderSender";
 
         protected override void Initialize()
         {
@@ -155,18 +159,18 @@ namespace Content.Server.Cargo.Components
                     // TODO replace with shuttle code
                     EntityUid? cargoTelepad = null;
 
-                    _entMan.TryGetComponent<SignalTransmitterComponent>(Owner, out var transmitter);
-                    if (transmitter.Outputs.TryGetValue("Order Sender", out var telepad) &&
+                    if (_entMan.TryGetComponent<SignalTransmitterComponent>(Owner, out var transmitter) &&
+                        transmitter.Outputs.TryGetValue(SenderPort, out var telepad) &&
                         telepad.Count > 0)
                     {
                         // use most recent link
                         var pad = telepad[^1].Uid;
-                        if (_entMan.HasComponent<CargoTelepadComponent>(pad) && 
-                            _entMan.TryGetComponent<ApcPowerReceiverComponent?>(pad, out var powerReceiver) && 
+                        if (_entMan.HasComponent<CargoTelepadComponent>(pad) &&
+                            _entMan.TryGetComponent<ApcPowerReceiverComponent?>(pad, out var powerReceiver) &&
                             powerReceiver.Powered)
                             cargoTelepad = pad;
                     }
-                    
+
                     if (cargoTelepad != null)
                     {
                         if (_entMan.TryGetComponent<CargoTelepadComponent?>(cargoTelepad.Value, out var telepadComponent))

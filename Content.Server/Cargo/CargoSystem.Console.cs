@@ -3,6 +3,7 @@ using Content.Server.Access.Systems;
 using Content.Server.Cargo.Components;
 using Content.Server.MachineLinking.Components;
 using Content.Server.MachineLinking.Events;
+using Content.Server.MachineLinking.System;
 using Content.Shared.Access.Components;
 using Content.Shared.Access.Systems;
 using Content.Shared.Cargo;
@@ -48,6 +49,7 @@ namespace Content.Server.Cargo
 
         [Dependency] private readonly IdCardSystem _idCardSystem = default!;
         [Dependency] private readonly AccessReaderSystem _accessReaderSystem = default!;
+        [Dependency] private readonly SignalLinkerSystem _linker = default!;
 
         private void InitializeConsole()
         {
@@ -57,9 +59,7 @@ namespace Content.Server.Cargo
         }
         private void OnInit(EntityUid uid, CargoConsoleComponent console, ComponentInit args)
         {
-            var receiver = EnsureComp<SignalTransmitterComponent>(uid);
-            if (!receiver.Outputs.ContainsKey("Order Sender"))
-                receiver.AddPort("Order Sender");
+            _linker.EnsureTransmitterPorts(uid, console.SenderPort);
         }
 
         private void Reset(RoundRestartCleanupEvent ev)
@@ -207,8 +207,6 @@ namespace Content.Server.Cargo
 
             if (!database.ApproveOrder(approverName, orderNumber))
                 return false;
-            
-            //RaiseLocalEvent(uid, new InvokePortEvent("Order Sender"), false);
 
             SyncComponentsWithId(id);
             return true;

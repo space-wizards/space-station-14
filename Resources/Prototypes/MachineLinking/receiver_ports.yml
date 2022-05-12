@@ -32,8 +32,13 @@
   id: Close
   name: signal-port-name-close
   description: signal-port-description-close
-  
+
 - type: receiverPort
   id: Trigger
   name: signal-port-name-trigger
   description: signal-port-description-trigger
+
+- type: receiverPort
+  id: OrderReceiver
+  name: signal-port-name-order-receiver
+  description: signal-port-description-order-receiver

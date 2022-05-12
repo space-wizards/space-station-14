@@ -21,3 +21,9 @@ signal-port-description-close = Closes a device.
 
 signal-port-name-trigger = Trigger
 signal-port-description-trigger = Triggers some mechanism on the device.
+
+signal-port-name-order-sender = Order sender
+signal-port-description-order-sender = Cargo console order sender
+
+signal-port-name-order-receiver = Order receiver
+signal-port-description-order-receiver = Cargo console order receiver
