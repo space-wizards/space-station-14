@@ -348,7 +348,8 @@ namespace Content.Client.Entry
             "HealthAnalyzer",
             "Thirst",
             "CanEscapeInventory",
-            "Wires"
+            "PowerSink",
+            "Wires",
         };
     }
 }

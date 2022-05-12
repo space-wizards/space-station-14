@@ -255,6 +255,12 @@
   itemId: ClothingBackpackDuffelSyndicateFilledMedical
   price: 5
 
+- type : uplinkListing
+  id: UplinkPowerSink
+  category: Tools
+  itemId: PowerSink
+  price: 5
+
 - type: uplinkListing
   id: UplinkCarpDehydrated
   category: Tools
