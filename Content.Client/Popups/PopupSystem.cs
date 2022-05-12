@@ -20,6 +20,7 @@ namespace Content.Client.Popups
         [Dependency] private readonly IEyeManager _eyeManager = default!;
         [Dependency] private readonly IMapManager _map = default!;
         [Dependency] private readonly IPlayerManager _playerManager = default!;
+        [Dependency] private readonly ExamineSystemShared _examineSystem = default!;
 
         private readonly List<PopupLabel> _aliveLabels = new();
 
@@ -72,8 +73,9 @@ namespace Content.Client.Popups
             _userInterfaceManager.PopupRoot.AddChild(label);
             label.Measure(Vector2.Infinity);
 
-            label.InitialPos = coordinates;
-
+            var mapCoordinates = _eyeManager.ScreenToMap(coordinates.Position);
+            label.InitialPos = mapCoordinates;
+            LayoutContainer.SetPosition(label, label.InitialPos.Position);
             _aliveLabels.Add(label);
         }
 
@@ -146,11 +148,13 @@ namespace Content.Client.Popups
             // ReSharper disable once ConvertToLocalFunction
             var predicate = static (EntityUid uid, (EntityUid? compOwner, EntityUid? attachedEntity) data)
                 => uid == data.compOwner || uid == data.attachedEntity;
+            var occluded = player != null && _examineSystem.IsOccluded(player.Value);
 
             for (var i = _aliveLabels.Count - 1; i >= 0; i--)
             {
                 var label = _aliveLabels[i];
-                if (label.TotalTime > PopupLifetime)
+                if (label.TotalTime > PopupLifetime ||
+                    label.Entity != null && Deleted(label.Entity))
                 {
                     label.Dispose();
                     _aliveLabels.RemoveAt(i);
@@ -165,7 +169,7 @@ namespace Content.Client.Popups
 
                 var otherPos = label.Entity != null ? Transform(label.Entity.Value).MapPosition : label.InitialPos.ToMap(EntityManager);
 
-                if (!ExamineSystemShared.InRangeUnOccluded(
+                if (occluded && !ExamineSystemShared.InRangeUnOccluded(
                         playerPos,
                         otherPos, 0f,
                         (label.Entity, player), predicate))
@@ -210,13 +214,9 @@ namespace Content.Client.Popups
 
                 EntityCoordinates coords;
                 if (Entity == null)
-                {
-                    coords = InitialPos;
-                }
-                else if (_entityManager.TryGetComponent(Entity.Value, out TransformComponent? xform))
-                {
-                    coords = xform.Coordinates;
-                }
+                    position = _eyeManager.WorldToScreen(InitialPos.Position) / UIScale - DesiredSize / 2;
+                else if (_entityManager.TryGetComponent(Entity.Value, out TransformComponent xform))
+                    position = (_eyeManager.CoordinatesToScreen(xform.Coordinates).Position / UIScale) - DesiredSize / 2;
                 else
                 {
                     // Entity has probably been deleted.

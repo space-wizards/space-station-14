@@ -52,12 +52,9 @@
         radius: 0.35
       mass: 20
       mask:
-      - Impassable
-      - MobImpassable #Bullets?!
-      - VaultImpassable
-      - SmallImpassable
+      - MobMask
       layer:
-      - Opaque
+      - MobLayer
   - type: SolutionContainerManager
   - type: Bloodstream
     bloodlossDamage:
@@ -127,7 +124,6 @@
   - type: Climbing
   - type: Flashable
   - type: Pullable
-  - type: Puller
   - type: Buckle
   - type: Recyclable
     safe: false
@@ -135,6 +131,12 @@
   - type: Alerts
   - type: NameIdentifier
     group: GenericNumber
+  - type: SlowOnDamage
+    speedModifierThresholds:
+      40: 0.8
+      60: 0.6
+      80: 0.4
+      90: 0.2
 
 - type: entity
   save: false

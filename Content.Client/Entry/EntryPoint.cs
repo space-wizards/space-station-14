@@ -105,6 +105,7 @@ namespace Content.Client.Entry
             prototypes.RegisterIgnore("worldSpell");
             prototypes.RegisterIgnore("entitySpell");
             prototypes.RegisterIgnore("instantSpell");
+            prototypes.RegisterIgnore("roundAnnouncement");
             prototypes.RegisterIgnore("wireLayout");
 
             ClientContentIoC.Register();

@@ -125,4 +125,10 @@ entities:
     type: Gravity
   - chunkCollection: {}
     type: DecalGrid
+- uid: 1
+  type: SpawnPointLatejoin
+  components:
+  - parent: 0
+    pos: 0,0
+    type: Transform
 ...

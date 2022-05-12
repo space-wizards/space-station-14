@@ -48,9 +48,9 @@ namespace Content.Server.AI.Pathfinding
 
         public const int TrackedCollisionLayers = (int)
             (CollisionGroup.Impassable |
-             CollisionGroup.MobImpassable |
-             CollisionGroup.SmallImpassable |
-             CollisionGroup.VaultImpassable);
+             CollisionGroup.MidImpassable |
+             CollisionGroup.LowImpassable |
+             CollisionGroup.HighImpassable);
 
         /// <summary>
         /// Ask for the pathfinder to gimme somethin

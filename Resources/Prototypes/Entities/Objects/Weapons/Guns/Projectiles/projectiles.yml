@@ -19,12 +19,11 @@
     fixtures:
     - shape:
         !type:PhysShapeAabb
-          bounds: "-0.1,-0.1,0.1,0.1"
+        bounds: "-0.1,-0.1,0.1,0.1"
       hard: false
       mask:
       - Impassable
-      layer:
-      - MobImpassable
+      - BulletImpassable
   - type: Projectile
     damage:
       types:
@@ -46,12 +45,11 @@
     fixtures:
     - shape:
         !type:PhysShapeAabb
-          bounds: "-0.15,-0.45,0.15,0.15"
+        bounds: "-0.15,-0.45,0.15,0.15"
       hard: false
       mask:
       - Impassable
-      layer:
-      - MobImpassable
+      - BulletImpassable
 
 - type: entity
   id: BulletBaseFlash
@@ -125,12 +123,11 @@
     fixtures:
     - shape:
         !type:PhysShapeAabb
-          bounds: "-0.2,-0.2,0.2,0.2"
+        bounds: "-0.2,-0.2,0.2,0.2"
       hard: false
       mask:
       - Impassable
-      layer:
-      - MobImpassable
+      - BulletImpassable
   - type: Ammo
     isProjectile: true
     ammoVelocity: 20
@@ -160,10 +157,11 @@
     fixtures:
     - shape:
         !type:PhysShapeAabb
-          bounds: "-0.2,-0.2,0.2,0.2"
+        bounds: "-0.2,-0.2,0.2,0.2"
       hard: false
       mask:
-        - Opaque
+      - Impassable
+      - Opaque
   - type: Projectile
     damage:
       types:
