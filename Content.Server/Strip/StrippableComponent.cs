@@ -11,7 +11,7 @@ namespace Content.Server.Strip
     {
         [ViewVariables]
         [DataField("openDelay")]
-        public float OpenDelay = 6f;
+        public float OpenDelay = 4f;
 
         [ViewVariables]
         [DataField("delay")]
