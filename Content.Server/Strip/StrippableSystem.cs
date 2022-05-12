@@ -38,6 +38,23 @@ namespace Content.Server.Strip
             SubscribeLocalEvent<StrippableComponent, StrippingInventoryButtonPressed>(OnStripInvButtonMessage);
             SubscribeLocalEvent<StrippableComponent, StrippingHandButtonPressed>(OnStripHandMessage);
             SubscribeLocalEvent<StrippableComponent, StrippingHandcuffButtonPressed>(OnStripHandcuffMessage);
+
+            SubscribeLocalEvent<StrippableComponent, OpenStrippingCompleteEvent>(OnOpenStripComplete);
+            SubscribeLocalEvent<StrippableComponent, OpenStrippingCancelledEvent>(OnOpenStripCancelled);
+        }
+
+        private void OnOpenStripCancelled(EntityUid uid, StrippableComponent component, OpenStrippingCancelledEvent args)
+        {
+            component.CancelTokens.Remove(args.User);
+        }
+
+        private void OnOpenStripComplete(EntityUid uid, StrippableComponent component, OpenStrippingCompleteEvent args)
+        {
+            component.CancelTokens.Remove(args.User);
+
+            if (!TryComp<ActorComponent>(args.User, out var actor)) return;
+
+            uid.GetUIOrNull(StrippingUiKey.Key)?.Open(actor.PlayerSession);
         }
 
         private void OnStripHandcuffMessage(EntityUid uid, StrippableComponent component, StrippingHandcuffButtonPressed args)
@@ -94,6 +111,33 @@ namespace Content.Server.Strip
                 else
                     TakeItemFromInventory(user, args.Slot, component);
             }
+        }
+
+        public void StartOpeningStripper(EntityUid user, StrippableComponent component)
+        {
+            if (component.CancelTokens.ContainsKey(user)) return;
+
+            if (TryComp<ActorComponent>(user, out var actor))
+            {
+                if (component.Owner.GetUIOrNull(StrippingUiKey.Key)?.SessionHasOpen(actor.PlayerSession) == true)
+                    return;
+            }
+
+            var token = new CancellationTokenSource();
+
+            var doAfterArgs = new DoAfterEventArgs(user, component.OpenDelay, token.Token, component.Owner)
+            {
+                BreakOnStun = true,
+                BreakOnDamage = true,
+                BreakOnTargetMove = true,
+                BreakOnUserMove = true,
+                NeedHand = true,
+                TargetCancelledEvent = new OpenStrippingCancelledEvent(user),
+                TargetFinishedEvent = new OpenStrippingCompleteEvent(user),
+            };
+
+            component.CancelTokens[user] = token;
+            _doAfterSystem.DoAfter(doAfterArgs);
         }
 
         private void OnCompInit(EntityUid uid, StrippableComponent component, ComponentInit args)
@@ -181,7 +225,7 @@ namespace Content.Server.Strip
             {
                 Text = Loc.GetString("strip-verb-get-data-text"),
                 IconTexture = "/Textures/Interface/VerbIcons/outfit.svg.192dpi.png",
-                Act = () => uid.GetUIOrNull(StrippingUiKey.Key)?.Open(actor.PlayerSession)
+                Act = () => StartOpeningStripper(args.User, component),
             };
             args.Verbs.Add(verb);
         }
@@ -399,6 +443,26 @@ namespace Content.Server.Strip
             _handsSystem.TryDrop(component.Owner, hand, checkActionBlocker: false, handsComp: hands);
             _handsSystem.PickupOrDrop(user, held, handsComp: userHands);
             // hand update will trigger strippable update
+        }
+
+        private sealed class OpenStrippingCompleteEvent
+        {
+            public readonly EntityUid User;
+
+            public OpenStrippingCompleteEvent(EntityUid user)
+            {
+                User = user;
+            }
+        }
+
+        private sealed class OpenStrippingCancelledEvent
+        {
+            public readonly EntityUid User;
+
+            public OpenStrippingCancelledEvent(EntityUid user)
+            {
+                User = user;
+            }
         }
     }
 }

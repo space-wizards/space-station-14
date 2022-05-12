@@ -1,7 +1,6 @@
-using Content.Server.UserInterface;
+using System.Threading;
 using Content.Shared.DragDrop;
 using Content.Shared.Strip.Components;
-using Robust.Server.GameObjects;
 
 namespace Content.Server.Strip
 {
@@ -11,15 +10,19 @@ namespace Content.Server.Strip
     public sealed class StrippableComponent : SharedStrippableComponent
     {
         [ViewVariables]
+        [DataField("openDelay")]
+        public float OpenDelay = 6f;
+
+        [ViewVariables]
         [DataField("delay")]
-        public float StripDelay = 6f;
+        public float StripDelay = 2f;
 
         public override bool Drop(DragDropEvent args)
         {
-            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(args.User, out ActorComponent? actor)) return false;
-
-            Owner.GetUIOrNull(StrippingUiKey.Key)?.Open(actor.PlayerSession);
+            IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<StrippableSystem>().StartOpeningStripper(args.User, this);
             return true;
         }
+
+        public Dictionary<EntityUid, CancellationTokenSource> CancelTokens = new();
     }
 }
