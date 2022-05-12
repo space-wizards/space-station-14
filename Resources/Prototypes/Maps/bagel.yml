@@ -4,7 +4,7 @@
   mapPath: /Maps/bagel.yml
   minPlayers: 35
   stations:
-    Dart: #TODO: Mapper, fix this name in your map file. (just change the name for every grid with a BecomesStation or PartOfStation component.)
+    Bagel:
       mapNameTemplate: '{0} Bagel Station {1}'
       nameGenerator:
         !type:NanotrasenNameGenerator

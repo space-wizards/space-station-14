@@ -295,11 +295,13 @@
       - CartridgeLRifle
       - CartridgeMagnum
       - ShellShotgunBeanbag
+      - ShellShotgunFlare
+      - ShellShotgunFlash
       - CartridgePistolRubber
       - CartridgeMagnumRubber
       - CartridgeClRifleRubber
       - CartridgeLRifleRubber
-      - CartridgeSRifleRubber #Everything below this is shared with other lathes
+      - CartridgeSRifleRubber  #Everything below this is shared with other lathes
       - FlashlightLantern
       - Bucket
       - MopItem
@@ -355,6 +357,7 @@
       - ClothingMaskSterile
       - DiseaseSwab
       - HandheldCrewMonitor
+      - ShellTranquilizer
       - Scalpel
       - Retractor
       - Cautery

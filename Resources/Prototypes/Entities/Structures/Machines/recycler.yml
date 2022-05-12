@@ -20,7 +20,7 @@
       id: brrt
       hard: false
       layer:
-      - FullTileMask
+      - FullTileLayer
     - shape:
         !type:PhysShapeAabb
         bounds: "-0.49,-0.49,0.49,0.49"
