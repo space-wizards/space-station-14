@@ -20,6 +20,7 @@ namespace Content.Client.Popups
         [Dependency] private readonly IUserInterfaceManager _userInterfaceManager = default!;
         [Dependency] private readonly IEyeManager _eyeManager = default!;
         [Dependency] private readonly IPlayerManager _playerManager = default!;
+        [Dependency] private readonly ExamineSystemShared _examineSystem = default!;
 
         private readonly List<PopupLabel> _aliveLabels = new();
 
@@ -141,6 +142,7 @@ namespace Content.Client.Popups
             // ReSharper disable once ConvertToLocalFunction
             var predicate = static (EntityUid uid, (EntityUid? compOwner, EntityUid? attachedEntity) data)
                 => uid == data.compOwner || uid == data.attachedEntity;
+            var occluded = player != null && _examineSystem.IsOccluded(player.Value);
 
             for (var i = _aliveLabels.Count - 1; i >= 0; i--)
             {
@@ -161,7 +163,7 @@ namespace Content.Client.Popups
 
                 var otherPos = label.Entity != null ? Transform(label.Entity.Value).MapPosition : label.InitialPos;
 
-                if (!ExamineSystemShared.InRangeUnOccluded(
+                if (occluded && !ExamineSystemShared.InRangeUnOccluded(
                         playerPos,
                         otherPos, 0f,
                         (label.Entity, player), predicate))
