@@ -45,12 +45,23 @@ public sealed class TetherGunSystem : SharedTetherGunSystem
 
         if (_dragging == null)
         {
+            var bodyQuery = GetEntityQuery<PhysicsComponent>();
+            var lowest = new List<(int DrawDepth, EntityUid Entity)>();
+
             foreach (var ent in _lookup.GetEntitiesIntersecting(mousePos))
             {
-                if (!TryComp<ClickableComponent>(ent, out var clickable) ||
-                    !clickable.CheckClick(mousePos.Position, out _, out _)) continue;
+                if (!bodyQuery.HasComponent(ent) ||
+                    !TryComp<ClickableComponent>(ent, out var clickable) ||
+                    !clickable.CheckClick(mousePos.Position, out var drawDepth, out _)) continue;
 
-                StartDragging(ent, mousePos);
+                lowest.Add((drawDepth, ent));
+            }
+
+            lowest.Sort((x, y) => y.DrawDepth.CompareTo(x.DrawDepth));
+
+            foreach (var ent in lowest)
+            {
+                StartDragging(ent.Entity, mousePos);
                 break;
             }
 

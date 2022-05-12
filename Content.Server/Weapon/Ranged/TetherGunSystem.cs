@@ -2,6 +2,7 @@ using Content.Shared.Administration;
 using Content.Shared.Weapons.Ranged;
 using Robust.Server.Console;
 using Robust.Server.Player;
+using Robust.Shared.Containers;
 using Robust.Shared.Map;
 using Robust.Shared.Physics;
 using Robust.Shared.Physics.Dynamics.Joints;
@@ -15,6 +16,7 @@ public sealed class TetherGunSystem : SharedTetherGunSystem
 {
     [Dependency] private readonly IConGroupController _admin = default!;
     [Dependency] private readonly IPlayerManager _playerManager = default!;
+    [Dependency] private readonly SharedContainerSystem _container = default!;
     [Dependency] private readonly SharedJointSystem _joints = default!;
 
     private Dictionary<ICommonSession, (EntityUid Entity, EntityUid Tether, Joint Joint)> _tethered = new();
@@ -50,7 +52,8 @@ public sealed class TetherGunSystem : SharedTetherGunSystem
             !Exists(msg.Entity) ||
             Deleted(msg.Entity) ||
             msg.Coordinates == MapCoordinates.Nullspace ||
-            _tethered.ContainsKey(args.SenderSession)) return;
+            _tethered.ContainsKey(args.SenderSession) ||
+            _container.IsEntityInContainer(msg.Entity)) return;
 
         var tether = Spawn("TetherEntity", msg.Coordinates);
 
