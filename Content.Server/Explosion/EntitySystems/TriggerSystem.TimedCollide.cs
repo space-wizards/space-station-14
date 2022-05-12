@@ -14,6 +14,7 @@ public sealed partial class TriggerSystem
     {
         SubscribeLocalEvent<TriggerOnTimedCollideComponent, StartCollideEvent>(OnTimerCollide);
         SubscribeLocalEvent<TriggerOnTimedCollideComponent, EndCollideEvent>(OnTimerEndCollide);
+        SubscribeLocalEvent<TriggerOnTimedCollideComponent, ComponentRemove>(OnComponentRemove);
     }
 
     private void OnTimerCollide(EntityUid uid, TriggerOnTimedCollideComponent component, StartCollideEvent args)
@@ -32,6 +33,11 @@ public sealed partial class TriggerSystem
         {
             Active.Remove(uid);
         }
+    }
+
+    private void OnComponentRemove(EntityUid uid, TriggerOnTimedCollideComponent component, ComponentRemove args)
+    {
+        Active.Remove(uid);
     }
 
     private void UpdateTimedCollide(float frameTime)
