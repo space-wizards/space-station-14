@@ -27,6 +27,7 @@ public sealed class SurveillanceCameraSystem : SharedSurveillanceCameraSystem
     public const string CameraDataMessage = "surveillance_camera_data";
     public const string CameraConnectMessage = "surveillance_camera_connect";
     public const string CameraSubnetConnectMessage = "surveillance_camera_subnet_connect";
+    public const string CameraSubnetDisconnectMessage = "surveillance_camera_subnet_disconnect";
 
     public const string CameraAddressData = "surveillance_camera_data_origin";
     public const string CameraNameData = "surveillance_camera_data_name";
@@ -47,20 +48,26 @@ public sealed class SurveillanceCameraSystem : SharedSurveillanceCameraSystem
             return;
         }
 
-
-
         if (args.Data.TryGetValue(DeviceNetworkConstants.Command, out string? command))
         {
             var payload = new NetworkPayload()
             {
                 { DeviceNetworkConstants.Command, "" },
+                { CameraAddressData, args.Address },
                 { CameraNameData, component.CameraId },
                 { CameraSubnetData, component.Subnet }
             };
 
+            var dest = args.SenderAddress;
+
             switch (command)
             {
                 case CameraConnectMessage:
+                    if (!args.Data.TryGetValue(CameraAddressData, out dest))
+                    {
+                        return;
+                    }
+
                     payload[DeviceNetworkConstants.Command] = CameraConnectMessage;
                     break;
                 case CameraPingMessage:
@@ -70,7 +77,7 @@ public sealed class SurveillanceCameraSystem : SharedSurveillanceCameraSystem
 
             _deviceNetworkSystem.QueuePacket(
                 uid,
-                args.Address,
+                dest,
                 payload);
         }
     }

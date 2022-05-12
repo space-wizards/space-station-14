@@ -19,7 +19,11 @@ public sealed class SurveillanceCameraMonitorComponent : Component
     // Current active subnet.
     public string ActiveSubnet { get; set; } = default!;
 
+    // Known cameras in this subnet by address with name values.
+    // This is cleared when the subnet is changed.
+    public Dictionary<string, string> KnownCameras = new();
+
     [ViewVariables]
     // The subnets known by this camera monitor.
-    public HashSet<string> KnownSubnets { get; } = new();
+    public Dictionary<string, string> KnownSubnets { get; } = new();
 }

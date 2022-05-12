@@ -42,11 +42,14 @@ public sealed class SurveillanceCameraMonitorUiState : BoundUserInterfaceState
     // Currently active subnet.
     public string ActiveSubnet { get; }
 
-    public SurveillanceCameraMonitorUiState(EntityUid? activeCamera, HashSet<string> subnets, string activeSubnet)
+    public IReadOnlySet<SurveillanceCameraInfo> Cameras { get; }
+
+    public SurveillanceCameraMonitorUiState(EntityUid? activeCamera, HashSet<string> subnets, string activeSubnet, IReadOnlySet<SurveillanceCameraInfo> cameras)
     {
         ActiveCamera = activeCamera;
         Subnets = subnets;
         ActiveSubnet = activeSubnet;
+        Cameras = cameras;
     }
 }
 
@@ -82,6 +85,16 @@ public sealed class SurveillanceCameraMonitorInfoMessage : BoundUserInterfaceMes
         Info = info;
     }
 }
+
+// Sent when the user requests that the cameras on the current subnet be refreshed.
+[Serializable, NetSerializable]
+public sealed class SurveillanceCameraRefreshCamerasMessage : BoundUserInterfaceMessage
+{}
+
+// Sent when the user requests that the subnets known by the monitor be refreshed.
+[Serializable, NetSerializable]
+public sealed class SurveillanceCameraRefreshSubnetsMessage : BoundUserInterfaceMessage
+{}
 
 [Serializable, NetSerializable]
 public sealed class SurveillanceCameraInfo

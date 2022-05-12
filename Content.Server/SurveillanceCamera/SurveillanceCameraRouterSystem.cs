@@ -31,19 +31,19 @@ public sealed class SurveillanceCameraRouterSystem : EntitySystem
                 ConnectCamera(uid, args.SenderAddress, address, router);
                 break;
             case SurveillanceCameraSystem.CameraSubnetConnectMessage:
-                AddMonitorToRoute(uid, args.Address, router);
+                AddMonitorToRoute(uid, args.SenderAddress, router);
                 PingSubnet(uid, router);
                 break;
+            case SurveillanceCameraSystem.CameraSubnetDisconnectMessage:
+                RemoveMonitorFromRoute(uid, args.SenderAddress, router);
+                break;
             case SurveillanceCameraSystem.CameraPingSubnetMessage:
+                PingSubnet(uid, router);
+                break;
+            case SurveillanceCameraSystem.CameraPingMessage:
                 SubnetPingResponse(uid, args.SenderAddress, router);
                 break;
             case SurveillanceCameraSystem.CameraDataMessage:
-                if (!args.Data.TryGetValue(SurveillanceCameraSystem.CameraNameData, out string? name)
-                    || !args.Data.TryGetValue(SurveillanceCameraSystem.CameraSubnetData, out string? subnet))
-                {
-                    return;
-                }
-
                 SendCameraInfo(uid, args.Data, router);
                 break;
         }
@@ -58,7 +58,7 @@ public sealed class SurveillanceCameraRouterSystem : EntitySystem
 
         var payload = new NetworkPayload()
         {
-            { DeviceNetworkConstants.Command, SurveillanceCameraSystem.CameraPingSubnetMessage },
+            { DeviceNetworkConstants.Command, SurveillanceCameraSystem.CameraSubnetData },
             { SurveillanceCameraSystem.CameraSubnetData, router.SubnetName }
         };
 
@@ -90,6 +90,16 @@ public sealed class SurveillanceCameraRouterSystem : EntitySystem
         }
 
         router.MonitorRoutes.Add(address);
+    }
+
+    private void RemoveMonitorFromRoute(EntityUid uid, string address, SurveillanceCameraRouterComponent? router = null)
+    {
+        if (!Resolve(uid, ref router))
+        {
+            return;
+        }
+
+        router.MonitorRoutes.Remove(address);
     }
 
     // Pings a subnet to get all camera information.
