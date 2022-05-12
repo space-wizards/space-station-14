@@ -1,9 +1,4 @@
 Entries:
-- author: ElectroJr
-  changes:
-  - {message: Gas mixers now properly animate when on., type: Fix}
-  id: 1004
-  time: '2022-02-07T20:42:07.0000000+00:00'
 - author: router
   changes:
   - {message: Conveyor assemblies now only cost 5 steel to craft., type: Tweak}
@@ -3032,3 +3027,8 @@ Entries:
   - {message: Fixed climbing onto tables to bypass windoors and firelocks., type: Fix}
   id: 1503
   time: '2022-05-12T00:24:01.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Can no longer hug yourself., type: Tweak}
+  id: 1504
+  time: '2022-05-12T02:56:02.0000000+00:00'
