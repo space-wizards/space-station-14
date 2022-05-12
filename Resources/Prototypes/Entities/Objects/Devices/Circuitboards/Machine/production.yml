@@ -30,6 +30,40 @@
           ExamineName: Glass Beaker
 
 - type: entity
+  id: SecurityTechFabCircuitboard
+  parent: BaseMachineCircuitboard
+  name: security techfab machine board
+  description: A machine printed circuit board for a security techfab
+  components:
+    - type: MachineBoard
+      prototype: SecurityTechFab
+      requirements:
+        MatterBin: 2
+        Manipulator: 2
+      tagRequirements:
+        GlassBeaker:
+          Amount: 2
+          DefaultPrototype: Beaker
+          ExamineName: Glass Beaker
+
+- type: entity
+  id: MedicalTechFabCircuitboard
+  parent: BaseMachineCircuitboard
+  name: medical techfab machine board
+  description: A machine printed circuit board for a medical techfab
+  components:
+    - type: MachineBoard
+      prototype: MedicalTechFab
+      requirements:
+        MatterBin: 2
+        Manipulator: 2
+      tagRequirements:
+        GlassBeaker:
+          Amount: 2
+          DefaultPrototype: Beaker
+          ExamineName: Glass Beaker
+
+- type: entity
   id: CircuitImprinterMachineCircuitboard
   parent: BaseMachineCircuitboard
   name: circuit imprinter machine board
