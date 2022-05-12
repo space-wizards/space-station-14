@@ -1,10 +1,4 @@
 Entries:
-- author: Fishfish458
-  changes:
-  - {message: 'Added inflatable doors, which can now be found in the engineer Tool
-      Vend', type: Add}
-  id: 1015
-  time: '2022-02-08T21:54:14.0000000+00:00'
 - author: Rane
   changes:
   - {message: 'Added galaxythistle and fly amanita, two more plants with powerful
@@ -3034,3 +3028,10 @@ Entries:
   - {message: Adds power sinks, type: Add}
   id: 1514
   time: '2022-05-12T13:12:35.0000000+00:00'
+- author: TimrodDX
+  changes:
+  - {message: Several areas on Delta Station now have decals., type: Add}
+  - {message: Interns can now spawn on Delta Station., type: Add}
+  - {message: Delta Station's wiring should be more stable than before., type: Tweak}
+  id: 1515
+  time: '2022-05-12T13:30:15.0000000+00:00'
