@@ -137,7 +137,7 @@ namespace Content.Server.Cloning
     // For example, GameTicker should be using this, and this should be using ICharacterProfile rather than HumanoidCharacterProfile.
     // It should carry a reference or copy of itself with the mobs that it affects.
     // See TODO in MedicalScannerComponent.
-    struct ClonerDNAEntry {
+    public struct ClonerDNAEntry {
         public Mind.Mind Mind;
         public HumanoidCharacterProfile Profile;
 

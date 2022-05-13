@@ -120,16 +120,8 @@ namespace Content.Client.Administration.UI
 
         public void OnBwoink(NetUserId channel)
         {
-            var open = IsOpen;
-            Open();
-
             ChannelSelector.RefreshDecorators();
             ChannelSelector.Sort();
-
-            if (!open)
-            {
-                SelectChannel(channel);
-            }
         }
 
         public void SelectChannel(NetUserId channel)

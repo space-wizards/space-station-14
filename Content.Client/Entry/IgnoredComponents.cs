@@ -346,6 +346,7 @@ namespace Content.Client.Entry
             "DoorRemote",
             "InteractionPopup",
             "HealthAnalyzer",
+            "BodyReassemble",
             "Thirst",
             "CanEscapeInventory",
             "PowerSink",

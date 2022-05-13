@@ -154,7 +154,7 @@ namespace Content.Server.GameTicking
             if (handleEv.Handled)
                 return handleEv.Result;
 
-            var playerEntity = mind.OwnedEntity;
+            var playerEntity = mind.CurrentEntity;
 
             var entities = IoCManager.Resolve<IEntityManager>();
             if (entities.HasComponent<GhostComponent>(playerEntity))
