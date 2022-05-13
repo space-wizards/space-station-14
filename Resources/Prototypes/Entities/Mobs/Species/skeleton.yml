@@ -221,6 +221,7 @@
         Burn:
           sprite: Mobs/Effects/burn_damage.rsi
   - type: CombatMode
+    canDisarm: true
   - type: Climbing
   - type: Cuffable
   - type: CharacterInfo
