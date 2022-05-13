@@ -33,8 +33,8 @@
         maxVol: 200
   - type: Injector
     injectOnly: false
-    transferAmount: 20.0
-    delay: 10.0
+    transferAmount: 25.0
+    delay: 7.0
   - type: Spillable
     solution: injector
   - type: ExaminableSolution
@@ -44,12 +44,8 @@
   - type: InjectableSolution
     solution: injector
   - type: SolutionTransfer
-    maxTransferAmount: 20
-    canChangeTransferAmount: true
-  - type: UserInterface
-    interfaces:
-    - key: enum.TransferAmountUiKey.Key
-      type: TransferAmountBoundUserInterface
+    maxTransferAmount: 25.0
+    canChangeTransferAmount: false
   - type: Damageable
     damageContainer: Inorganic
     damageModifierSet: Inflatable
