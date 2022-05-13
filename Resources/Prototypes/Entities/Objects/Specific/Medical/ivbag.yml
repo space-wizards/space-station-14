@@ -9,7 +9,8 @@
   parent: BaseItem
   name: iv bag
   id: BaseIVBag
-  description: An injectable IV bag that slowly drips its contents.
+  # description: An injectable IV bag that slowly drips its contents.
+  description: An injectable IV bag. Holds plenty of fluid.
   components:
   - type: Item
     sprite: Objects/Specific/Medical/ivbag.rsi
