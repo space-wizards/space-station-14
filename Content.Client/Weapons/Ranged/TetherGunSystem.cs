@@ -23,8 +23,35 @@ public sealed class TetherGunSystem : SharedTetherGunSystem
     /// The entity being dragged around.
     /// </summary>
     private EntityUid? _dragging;
+    private EntityUid? _tether;
 
     private MapCoordinates? _lastMousePosition;
+
+    public override void Initialize()
+    {
+        base.Initialize();
+        SubscribeNetworkEvent<PredictTetherEvent>(OnPredictTether);
+    }
+
+    private void OnPredictTether(PredictTetherEvent ev)
+    {
+        if (_dragging != ev.Entity) return;
+
+        _tether = ev.Entity;
+    }
+
+    public override void FrameUpdate(float frameTime)
+    {
+        base.FrameUpdate(frameTime);
+        if (!TryComp<PhysicsComponent>(_dragging, out var body)) return;
+
+        body.Predict = true;
+
+        if (TryComp<PhysicsComponent>(_tether, out var tetherBody))
+        {
+            tetherBody.Predict = true;
+        }
+    }
 
     public override void Update(float frameTime)
     {
@@ -69,10 +96,18 @@ public sealed class TetherGunSystem : SharedTetherGunSystem
         }
 
         if (!TryComp<TransformComponent>(_dragging!.Value, out var xform) ||
-            _lastMousePosition!.Value.MapId != xform.MapID)
+            _lastMousePosition!.Value.MapId != xform.MapID ||
+            !TryComp<PhysicsComponent>(_dragging, out var body))
         {
             StopDragging();
             return;
+        }
+
+        body.Predict = true;
+
+        if (TryComp<PhysicsComponent>(_tether, out var tetherBody))
+        {
+            tetherBody.Predict = true;
         }
 
         if (_lastMousePosition.Value.Position.EqualsApprox(mousePos.Position)) return;
@@ -92,6 +127,7 @@ public sealed class TetherGunSystem : SharedTetherGunSystem
         RaiseNetworkEvent(new StopTetherEvent());
         _dragging = null;
         _lastMousePosition = null;
+        _tether = null;
     }
 
     private void StartDragging(EntityUid uid, MapCoordinates coordinates)
