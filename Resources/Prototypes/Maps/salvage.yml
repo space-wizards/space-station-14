@@ -86,6 +86,12 @@
   size: 7.5
 
 - type: salvageMap
+  id: mediumCultVault
+  name: "Cult Vault"
+  mapPath: /Maps/Salvage/medium-cult-vault.yml
+  size: 8
+  
+- type: salvageMap
   id: tickColony
   name: "Space Tick colony"
   mapPath: /Maps/Salvage/tick-colony.yml
@@ -115,11 +121,6 @@
   mapPath: /Maps/Salvage/medium-crashed-shuttle.yml
   size: 9.5
   
-- type: salvageMap
-  id: mediumCultVault
-  name: "Cult Vault"
-  mapPath: /Maps/Salvage/medium-cult-vault.yml
-  size: 10.5
 
 # """Large""" maps
 
