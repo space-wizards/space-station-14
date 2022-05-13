@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using System.Linq;
 using Content.Server.GameTicking;
 using Content.Server.Ghost.Components;

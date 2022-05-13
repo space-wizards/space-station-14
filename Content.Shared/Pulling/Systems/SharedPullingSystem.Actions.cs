@@ -4,11 +4,8 @@ using Content.Shared.Physics.Pull;
 using Content.Shared.Pulling.Components;
 using Content.Shared.Pulling.Events;
 using Robust.Shared.Containers;
-using Robust.Shared.GameObjects;
 using Robust.Shared.Map;
-using Robust.Shared.IoC;
 using Robust.Shared.Physics;
-using Robust.Shared.Log;
 
 namespace Content.Shared.Pulling
 {

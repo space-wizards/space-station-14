@@ -1,6 +1,5 @@
 using System.Threading;
 using Content.Server.CPUJob.JobQueues.Queues;
-using Robust.Shared.GameObjects;
 
 namespace Content.Server.AI.LoadBalancer
 {

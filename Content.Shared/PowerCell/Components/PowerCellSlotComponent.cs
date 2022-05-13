@@ -1,7 +1,4 @@
 using Content.Shared.Containers.ItemSlots;
-using Robust.Shared.GameObjects;
-using Robust.Shared.Serialization.Manager.Attributes;
-using Robust.Shared.ViewVariables;
 
 namespace Content.Shared.PowerCell.Components;
 

@@ -1,4 +1,3 @@
-using Content.Server.Hands.Components;
 using Content.Shared.Hands;
 using Content.Shared.Hands.Components;
 using Content.Shared.Hands.EntitySystems;

@@ -1,8 +1,6 @@
 using Content.Server.DoAfter;
 using Content.Server.Engineering.Components;
-using Content.Server.Hands.Components;
 using Content.Shared.Hands.EntitySystems;
-using Content.Shared.Item;
 using Content.Shared.Verbs;
 using JetBrains.Annotations;
 namespace Content.Server.Engineering.EntitySystems
