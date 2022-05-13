@@ -2,9 +2,7 @@ using Content.Shared.Sound;
 using JetBrains.Annotations;
 using Robust.Shared.Map;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
-using System.Collections.Generic;
 using Content.Shared.Atmos;
 
 namespace Content.Shared.Maps

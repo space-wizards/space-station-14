@@ -1,4 +1,3 @@
-using System;
 using Content.Server.MachineLinking.Components;
 using Content.Shared.Interaction;
 using Content.Shared.MachineLinking;

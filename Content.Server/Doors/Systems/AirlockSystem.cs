@@ -7,9 +7,6 @@ using Content.Shared.Doors.Systems;
 using Content.Shared.Interaction;
 using Content.Shared.Popups;
 using Robust.Server.GameObjects;
-using Robust.Shared.GameObjects;
-using Robust.Shared.Localization;
-using System;
 
 namespace Content.Server.Doors.Systems
 {

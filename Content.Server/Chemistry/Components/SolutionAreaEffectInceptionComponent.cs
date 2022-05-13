@@ -1,7 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using Robust.Shared.GameObjects;
-using Robust.Shared.ViewVariables;
+﻿using System.Linq;
 
 namespace Content.Server.Chemistry.Components
 {

@@ -1,6 +1,4 @@
 using Content.Shared.Cargo.Components;
-using Robust.Shared.GameObjects;
-using Robust.Shared.Players;
 
 namespace Content.Server.Cargo.Components
 {

@@ -7,7 +7,6 @@ using Content.Server.Disposal.Unit.Components;
 using Content.Server.Disposal.Unit.EntitySystems;
 using Content.Server.DoAfter;
 using Content.Shared.Placeable;
-using Content.Server.Hands.Systems;
 using Robust.Shared.Containers;
 
 namespace Content.Server.Storage.EntitySystems

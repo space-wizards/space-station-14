@@ -1,13 +1,10 @@
 using Content.Shared.Movement;
-using Robust.Shared.GameObjects;
 using Content.Server.Storage.Components;
 using Content.Server.DoAfter;
 using Content.Server.Lock;
-using Robust.Shared.IoC;
 using Robust.Shared.Player;
 using Robust.Shared.Containers;
 using Content.Server.Popups;
-using Robust.Shared.Localization;
 
 namespace Content.Server.Resist;
 

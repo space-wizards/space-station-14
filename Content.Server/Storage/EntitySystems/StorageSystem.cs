@@ -1,6 +1,4 @@
 using System.Linq;
-using Content.Server.Disposal.Unit.Components;
-using Content.Server.Disposal.Unit.EntitySystems;
 using Content.Server.Hands.Components;
 using Content.Server.Storage.Components;
 using Content.Shared.Interaction;

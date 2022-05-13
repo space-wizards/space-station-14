@@ -4,8 +4,6 @@ using Content.Server.AI.WorldState.States;
 using Content.Server.Storage.Components;
 using Content.Shared.Interaction;
 using Robust.Shared.Containers;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
 
 namespace Content.Server.AI.Utility.Considerations.Containers
 {

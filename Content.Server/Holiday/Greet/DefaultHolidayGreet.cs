@@ -1,5 +1,4 @@
 using Content.Server.Holiday.Interfaces;
-using Robust.Shared.Localization;
 
 namespace Content.Server.Holiday.Greet
 {

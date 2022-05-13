@@ -1,5 +1,3 @@
-using Robust.Shared.GameObjects;
-
 namespace Content.Server.MachineLinking.Events
 {
     public sealed class PortDisconnectedEvent : EntityEventArgs

@@ -5,7 +5,6 @@ using Content.Server.AI.Components;
 using Content.Server.AI.Pathfinding;
 using Content.Server.AI.Pathfinding.Pathfinders;
 using Content.Server.CPUJob.JobQueues;
-using Content.Server.Doors.Components;
 using Content.Shared.Access.Systems;
 using Content.Shared.Doors.Components;
 using Content.Shared.Interaction;

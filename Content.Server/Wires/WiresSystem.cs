@@ -2,7 +2,6 @@ using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Threading;
 using Content.Server.DoAfter;
-using Content.Server.Hands.Systems;
 using Content.Server.Hands.Components;
 using Content.Server.Power.Components;
 using Content.Server.Tools;

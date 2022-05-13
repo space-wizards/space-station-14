@@ -1,13 +1,11 @@
-﻿using System;
-using System.IO;
+﻿using System.IO;
 using Lidgren.Network;
-using Robust.Shared.IoC;
 using Robust.Shared.Network;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.StationEvents
 {
-        public sealed class MsgStationEvents : NetMessage
+    public sealed class MsgStationEvents : NetMessage
         {
             public override MsgGroups MsgGroup => MsgGroups.Command;
 

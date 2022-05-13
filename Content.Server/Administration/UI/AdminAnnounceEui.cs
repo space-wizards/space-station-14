@@ -3,7 +3,6 @@ using Content.Server.Chat.Managers;
 using Content.Server.EUI;
 using Content.Shared.Administration;
 using Content.Shared.Eui;
-using Robust.Shared.IoC;
 
 namespace Content.Server.Administration.UI
 {

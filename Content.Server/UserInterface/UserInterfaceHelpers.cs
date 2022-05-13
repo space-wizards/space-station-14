@@ -1,6 +1,4 @@
 ﻿using Robust.Server.GameObjects;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
 
 namespace Content.Server.UserInterface
 {

@@ -1,6 +1,5 @@
 ﻿using Content.Server.DoAfter;
 using Content.Server.Kitchen.Components;
-using Content.Server.Popups;
 using Content.Shared.Body.Components;
 using Content.Shared.Interaction;
 using Content.Shared.MobState.Components;
