@@ -1,22 +1,26 @@
+
 using System.Linq;
-using Content.Server.Act;
 using Content.Server.Administration.Logs;
+using Content.Server.CombatMode;
 using Content.Server.Hands.Components;
 using Content.Server.Popups;
+using Content.Server.Pulling;
 using Content.Server.Stack;
 using Content.Server.Storage.Components;
 using Content.Server.Storage.EntitySystems;
 using Content.Server.Strip;
 using Content.Server.Stunnable;
 using Content.Shared.ActionBlocker;
-using Content.Shared.Database;
 using Content.Shared.Hands;
 using Content.Shared.Hands.Components;
-using Content.Shared.Stunnable;
+using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Input;
 using Content.Shared.Inventory;
 using Content.Shared.Physics.Pull;
 using Content.Shared.Popups;
+using Content.Shared.Pulling.Components;
+using Content.Shared.Stunnable;
+using Content.Shared.Throwing;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
 using Robust.Server.Player;
@@ -27,10 +31,6 @@ using Robust.Shared.Map;
 using Robust.Shared.Player;
 using Robust.Shared.Players;
 using Robust.Shared.Utility;
-using Content.Shared.Pulling.Components;
-using Content.Server.Pulling;
-using Content.Shared.Hands.EntitySystems;
-using Content.Shared.Throwing;
 
 namespace Content.Server.Hands.Systems
 {
