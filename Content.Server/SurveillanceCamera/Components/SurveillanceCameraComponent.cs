@@ -26,6 +26,7 @@ public sealed class SurveillanceCameraComponent : Component
     // AI, etc.)
     public HashSet<EntityUid> ActiveMonitors { get; } = new();
 
+    [ViewVariables]
     // If this camera is active or not. Deactivating a camera
     // will not allow it to obtain any new viewers.
     public bool Active { get; set; } = true;

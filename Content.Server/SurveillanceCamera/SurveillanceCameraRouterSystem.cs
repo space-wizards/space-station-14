@@ -1,20 +1,34 @@
 using Content.Server.DeviceNetwork;
 using Content.Server.DeviceNetwork.Systems;
+using Content.Shared.DeviceNetwork;
 using Content.Shared.SurveillanceCamera;
+using Robust.Shared.Prototypes;
 
 namespace Content.Server.SurveillanceCamera;
 
 public sealed class SurveillanceCameraRouterSystem : EntitySystem
 {
     [Dependency] private readonly DeviceNetworkSystem _deviceNetworkSystem = default!;
+    [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
     public override void Initialize()
     {
+        SubscribeLocalEvent<SurveillanceCameraRouterComponent, ComponentInit>(OnInitialize);
         SubscribeLocalEvent<SurveillanceCameraRouterComponent, DeviceNetworkPacketEvent>(OnPacketReceive);
+    }
+
+    private void OnInitialize(EntityUid uid, SurveillanceCameraRouterComponent router, ComponentInit args)
+    {
+        if (!_prototypeManager.TryIndex(router.SubnetFrequencyId, out DeviceFrequencyPrototype? subnetFrequency))
+        {
+            return;
+        }
+
+        router.SubnetFrequency = subnetFrequency.Frequency;
     }
 
     private void OnPacketReceive(EntityUid uid, SurveillanceCameraRouterComponent router, DeviceNetworkPacketEvent args)
     {
-        if (args.Address == null
+        if (string.IsNullOrEmpty(args.SenderAddress)
             || !args.Data.TryGetValue(DeviceNetworkConstants.Command, out string? command))
         {
             return;
@@ -128,7 +142,7 @@ public sealed class SurveillanceCameraRouterSystem : EntitySystem
 
         foreach (var address in router.MonitorRoutes)
         {
-            _deviceNetworkSystem.QueuePacket(uid, address, payload, router.MonitorFrequency);
+            _deviceNetworkSystem.QueuePacket(uid, address, payload);
         }
     }
 }

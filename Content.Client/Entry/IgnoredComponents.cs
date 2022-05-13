@@ -350,7 +350,8 @@ namespace Content.Client.Entry
             "Thirst",
             "Wires",
             "SurveillanceCameraMonitor",
-            "SurveillanceCamera"
+            "SurveillanceCamera",
+            "SurveillanceCameraRouter"
         };
     }
 }

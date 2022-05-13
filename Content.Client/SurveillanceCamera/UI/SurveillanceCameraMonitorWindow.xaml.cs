@@ -13,8 +13,24 @@ public sealed partial class SurveillanceCameraMonitorWindow : DefaultWindow
 {
     public event Action<string>? CameraSelected;
     public event Action<string>? SubnetOpened;
+    public event Action? CameraRefresh;
+    public event Action? SubnetRefresh;
 
     private ScalingViewport? _cameraView;
+
+    private string? SelectedSubnet
+    {
+        get
+        {
+            if (SubnetSelector.ItemCount == 0
+                || SubnetSelector.SelectedMetadata == null)
+            {
+                return null;
+            }
+
+            return (string) SubnetSelector.SelectedMetadata;
+        }
+    }
 
     public SurveillanceCameraMonitorWindow()
     {
@@ -25,41 +41,51 @@ public sealed partial class SurveillanceCameraMonitorWindow : DefaultWindow
             // piss
             SubnetOpened!((string) args.Button.SelectedMetadata!);
         };
+        SubnetRefreshButton.OnPressed += _ => SubnetRefresh!();
+        CameraRefreshButton.OnPressed += _ => CameraRefresh!();
     }
 
     // The UI class should get the eye from the entity, and then
     // pass it here so that the UI can change its view.
-    public void UpdateState(IEye? eye, HashSet<string> subnets, string activeSubnet)
+    public void UpdateState(IEye? eye, HashSet<string> subnets, string activeSubnet, IReadOnlySet<SurveillanceCameraInfo> cameras)
     {
         SetCameraView(eye);
 
+        if (SelectedSubnet != null && activeSubnet != SelectedSubnet)
+        {
+            SubnetList.DisposeAllChildren();
+            SubnetList.RemoveAllChildren();
+        }
+
         // if the subnet count is unequal, that means
-        // we have to rebuild the subnets
+        // we have to rebuild the subnet selector
         if (SubnetSelector.ItemCount != subnets.Count)
         {
             SubnetSelector.Clear();
-            SubnetList.DisposeAllChildren();
-            SubnetList.RemoveAllChildren();
 
             foreach (var subnet in subnets)
             {
-                AddSubnet(subnet);
+                var id = AddSubnet(subnet);
+                if (subnet == activeSubnet)
+                {
+                    SubnetSelector.Select(id);
+                }
             }
         }
 
-        if (SubnetSelector.SelectedMetadata != null
-            && activeSubnet != (string) SubnetSelector.SelectedMetadata)
-        {
-            for (var i = 0; i < SubnetSelector.ItemCount; i++)
-            {
-                if ((string) SubnetSelector.GetItemMetadata(i)! == activeSubnet)
-                {
-                    SubnetList.DisposeAllChildren();
-                    SubnetList.RemoveAllChildren();
+        PopulateCameraList(cameras);
+    }
 
-                    SubnetSelector.Select(i);
-                }
+    private void PopulateCameraList(IReadOnlySet<SurveillanceCameraInfo> cameras)
+    {
+        foreach (var camera in cameras)
+        {
+            if (camera.Subnet != SelectedSubnet)
+            {
+                continue;
             }
+
+            AddCameraToList(camera.Name, camera.Address);
         }
     }
 
@@ -79,9 +105,14 @@ public sealed partial class SurveillanceCameraMonitorWindow : DefaultWindow
         {
             _cameraView = new()
             {
+                ViewportSize = new Vector2i(500, 500),
+                VerticalExpand = true,
+                HorizontalExpand = true,
+                MinSize = new Vector2(500, 500),
                 Eye = eye,
                 MouseFilter = MouseFilterMode.Ignore
             };
+            CameraViewBox.AddChild(_cameraView);
         }
     }
 

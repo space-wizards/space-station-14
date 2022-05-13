@@ -1,4 +1,5 @@
 using Content.Server.DeviceNetwork;
+using Content.Server.DeviceNetwork.Components;
 using Content.Server.DeviceNetwork.Systems;
 using Content.Server.Power.Components;
 using Content.Shared.SurveillanceCamera;
@@ -42,8 +43,12 @@ public sealed class SurveillanceCameraSystem : SharedSurveillanceCameraSystem
 
     private void OnPacketReceived(EntityUid uid, SurveillanceCameraComponent component, DeviceNetworkPacketEvent args)
     {
-        // no broadcast allowed
-        if (args.Address == null || !component.Active)
+        if (!component.Active)
+        {
+            return;
+        }
+
+        if (!TryComp(uid, out DeviceNetworkComponent? deviceNet))
         {
             return;
         }
@@ -53,17 +58,18 @@ public sealed class SurveillanceCameraSystem : SharedSurveillanceCameraSystem
             var payload = new NetworkPayload()
             {
                 { DeviceNetworkConstants.Command, "" },
-                { CameraAddressData, args.Address },
+                { CameraAddressData, deviceNet.Address },
                 { CameraNameData, component.CameraId },
                 { CameraSubnetData, component.Subnet }
             };
 
-            var dest = args.SenderAddress;
+            var dest = "";
 
             switch (command)
             {
                 case CameraConnectMessage:
-                    if (!args.Data.TryGetValue(CameraAddressData, out dest))
+                    if (!args.Data.TryGetValue(CameraAddressData, out dest)
+                        || string.IsNullOrEmpty(args.Address))
                     {
                         return;
                     }
@@ -71,7 +77,8 @@ public sealed class SurveillanceCameraSystem : SharedSurveillanceCameraSystem
                     payload[DeviceNetworkConstants.Command] = CameraConnectMessage;
                     break;
                 case CameraPingMessage:
-                    payload[DeviceNetworkConstants.Command] = CameraPingMessage;
+                    dest = args.SenderAddress;
+                    payload[DeviceNetworkConstants.Command] = CameraDataMessage;
                     break;
             }
 

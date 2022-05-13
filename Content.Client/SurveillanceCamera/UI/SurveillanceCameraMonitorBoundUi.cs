@@ -32,6 +32,8 @@ public sealed class SurveillanceCameraMonitorBoundUserInterface : BoundUserInter
 
         _window.CameraSelected += OnCameraSelected;
         _window.SubnetOpened += OnSubnetRequest;
+        _window.CameraRefresh += OnCameraRefresh;
+        _window.SubnetRefresh += OnSubnetRefresh;
         _window.OnClose += Close;
     }
 
@@ -45,14 +47,19 @@ public sealed class SurveillanceCameraMonitorBoundUserInterface : BoundUserInter
         SendMessage(new SurveillanceCameraMonitorSubnetRequestMessage(subnet));
     }
 
+    private void OnCameraRefresh()
+    {
+        SendMessage(new SurveillanceCameraRefreshCamerasMessage());
+    }
+
+    private void OnSubnetRefresh()
+    {
+        SendMessage(new SurveillanceCameraRefreshSubnetsMessage());
+    }
+
     protected override void UpdateState(BoundUserInterfaceState state)
     {
         if (_window == null || state is not SurveillanceCameraMonitorUiState cast)
-        {
-            return;
-        }
-
-        if (cast.ActiveCamera == _currentCamera)
         {
             return;
         }
@@ -67,13 +74,13 @@ public sealed class SurveillanceCameraMonitorBoundUserInterface : BoundUserInter
 
         if (cast.ActiveCamera == null)
         {
-            _window.UpdateState(null, cast.Subnets, _currentSubnet);
+            _window.UpdateState(null, cast.Subnets, _currentSubnet, cast.Cameras);
         }
         else
         {
             if (_entityManager.TryGetComponent(cast.ActiveCamera, out EyeComponent eye))
             {
-                _window.UpdateState(eye.Eye, cast.Subnets, _currentSubnet);
+                _window.UpdateState(eye.Eye, cast.Subnets, _currentSubnet, cast.Cameras);
             }
         }
 
@@ -101,7 +108,6 @@ public sealed class SurveillanceCameraMonitorBoundUserInterface : BoundUserInter
         }
     }
 
-    /*
     protected override void Dispose(bool disposing)
     {
         base.Dispose(disposing);
@@ -111,5 +117,4 @@ public sealed class SurveillanceCameraMonitorBoundUserInterface : BoundUserInter
             _window?.Dispose();
         }
     }
-    */
 }

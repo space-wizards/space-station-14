@@ -81,7 +81,7 @@ public sealed class SurveillanceCameraMonitorSystem : EntitySystem
     private void OnPacketReceived(EntityUid uid, SurveillanceCameraMonitorComponent component,
         DeviceNetworkPacketEvent args)
     {
-        if (args.Address == null)
+        if (string.IsNullOrEmpty(args.SenderAddress))
         {
             return;
         }
@@ -111,12 +111,16 @@ public sealed class SurveillanceCameraMonitorSystem : EntitySystem
                         DisconnectFromSubnet(uid, subnetData);
                     }
 
-                    component.KnownCameras.Add(address, name);
+                    if (!component.KnownCameras.ContainsKey(address))
+                    {
+                        component.KnownCameras.Add(address, name);
+                    }
 
                     UpdateUserInterface(uid, component);
                     break;
                 case SurveillanceCameraSystem.CameraSubnetData:
-                    if (args.Data.TryGetValue(SurveillanceCameraSystem.CameraSubnetData, out string? subnet))
+                    if (args.Data.TryGetValue(SurveillanceCameraSystem.CameraSubnetData, out string? subnet)
+                        && !component.KnownSubnets.ContainsKey(subnet))
                     {
                         component.KnownSubnets.Add(subnet, args.SenderAddress);
                     }
@@ -159,13 +163,13 @@ public sealed class SurveillanceCameraMonitorSystem : EntitySystem
 
     private void OnInteractHand(EntityUid uid, SurveillanceCameraMonitorComponent component, InteractHandEvent args)
     {
-        TryOpenUserInterface(uid, args.User, component);
+        AfterOpenUserInterface(uid, args.User, component);
     }
 
     private void OnToggleInterface(EntityUid uid, SurveillanceCameraMonitorComponent component,
         AfterActivatableUIOpenEvent args)
     {
-        TryOpenUserInterface(uid, args.User, component);
+        AfterOpenUserInterface(uid, args.User, component);
     }
 
     // This is to ensure that there's no delay in ensuring that a camera is deactivated.
@@ -293,7 +297,7 @@ public sealed class SurveillanceCameraMonitorSystem : EntitySystem
             return;
         }
 
-        monitor.Viewers.Add(uid);
+        monitor.Viewers.Add(player);
 
         if (monitor.ActiveCamera != null)
         {
@@ -311,7 +315,7 @@ public sealed class SurveillanceCameraMonitorSystem : EntitySystem
             return;
         }
 
-        monitor.Viewers.Remove(uid);
+        monitor.Viewers.Remove(player);
 
         if (monitor.ActiveCamera != null)
         {
@@ -358,17 +362,20 @@ public sealed class SurveillanceCameraMonitorSystem : EntitySystem
     private void TrySwitchCameraByAddress(EntityUid uid, string address,
         SurveillanceCameraMonitorComponent? monitor = null)
     {
-        if (!Resolve(uid, ref monitor))
+        if (!Resolve(uid, ref monitor)
+            || !monitor.KnownSubnets.TryGetValue(monitor.ActiveSubnet, out var subnetAddress))
         {
             return;
         }
 
         var payload = new NetworkPayload()
         {
-            {DeviceNetworkConstants.Command, SurveillanceCameraSystem.CameraPingMessage}
+            {DeviceNetworkConstants.Command, SurveillanceCameraSystem.CameraConnectMessage},
+            {SurveillanceCameraSystem.CameraAddressData, address}
         };
+
         monitor.NextCameraAddress = address;
-        _deviceNetworkSystem.QueuePacket(uid, address, payload);
+        _deviceNetworkSystem.QueuePacket(uid, subnetAddress, payload);
     }
 
     // Attempts to switch over the current viewed camera on this monitor
@@ -405,7 +412,7 @@ public sealed class SurveillanceCameraMonitorSystem : EntitySystem
 
     // This is public primarily because it might be useful to have the ability to
     // have this component added to any entity, and have them open the BUI (somehow).
-    public void TryOpenUserInterface(EntityUid uid, EntityUid player, SurveillanceCameraMonitorComponent? monitor = null, ActorComponent? actor = null)
+    public void AfterOpenUserInterface(EntityUid uid, EntityUid player, SurveillanceCameraMonitorComponent? monitor = null, ActorComponent? actor = null)
     {
         if (!Resolve(uid, ref monitor)
             || !Resolve(player, ref actor))
@@ -413,10 +420,7 @@ public sealed class SurveillanceCameraMonitorSystem : EntitySystem
             return;
         }
 
-        _userInterface.GetUiOrNull(uid, SurveillanceCameraMonitorUiKey.Key)?.Open(actor.PlayerSession);
-
         AddViewer(uid, player);
-        RequestSubnetInfo(uid, monitor.ActiveSubnet, monitor);
     }
 
     private void UpdateUserInterface(EntityUid uid, SurveillanceCameraMonitorComponent? monitor = null, EntityUid? player = null)

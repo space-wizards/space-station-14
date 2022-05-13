@@ -10,17 +10,14 @@ public class SurveillanceCameraRouterComponent : Component
     [DataField("subnetName")]
     public string SubnetName { get; } = default!;
 
+    [ViewVariables]
     // The monitors to route to. This raises an issue related to
     // camera monitors disappearing before sending a D/C packet,
     // this could probably be refreshed every time a new monitor
     // is added or removed from active routing.
     public HashSet<string> MonitorRoutes { get; } = new();
 
-    // The frequency that talks to camera monitors.
-    public uint MonitorFrequency;
-    [DataField("monitorFrequency", customTypeSerializer:typeof(PrototypeIdSerializer<DeviceFrequencyPrototype>))]
-    public string MonitorFrequencyId { get; } = default!;
-
+    [ViewVariables]
     // The frequency that talks to this router's subnet.
     public uint SubnetFrequency;
     [DataField("subnetFrequency", customTypeSerializer:typeof(PrototypeIdSerializer<DeviceFrequencyPrototype>))]
