@@ -1,9 +1,4 @@
 Entries:
-- author: ElectroJr
-  changes:
-  - {message: Fixed syringes not working., type: Fix}
-  id: 1023
-  time: '2022-02-09T15:08:59.0000000+00:00'
 - author: Delete69
   changes:
   - {message: command decal color to departmental pallette, type: Add}
@@ -3033,3 +3028,10 @@ Entries:
   - {message: Sound effects on lobby start, type: Add}
   id: 1522
   time: '2022-05-13T00:13:07.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Skeleton skulls look more skeleton-y and skeletons also take slightly
+      less blunt damage., type: Tweak}
+  - {message: skeletons can now disarm, type: Fix}
+  id: 1523
+  time: '2022-05-13T02:20:43.0000000+00:00'
