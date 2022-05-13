@@ -5,11 +5,7 @@ using Content.Shared.Random.Helpers;
 using Content.Shared.Sound;
 using Robust.Shared.Audio;
 using Robust.Shared.Containers;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Log;
 using Robust.Shared.Player;
-using Robust.Shared.Serialization.Manager.Attributes;
 
 namespace Content.Server.Body.Components
 {
@@ -83,11 +79,20 @@ namespace Content.Server.Body.Components
             }
         }
 
-        public override void Gib(bool gibParts = false)
+        public override HashSet<EntityUid> Gib(bool gibParts = false)
         {
-            base.Gib(gibParts);
+            var gibs = base.Gib(gibParts);
 
-            SoundSystem.Play(Filter.Pvs(Owner), _gibSound.GetSound(), _entMan.GetComponent<TransformComponent>(Owner).Coordinates, AudioHelpers.WithVariation(0.025f));
+            var xform = _entMan.GetComponent<TransformComponent>(Owner);
+            var coordinates = xform.Coordinates;
+
+            // These have already been forcefully removed from containers so run it here.
+            foreach (var part in gibs)
+            {
+                _entMan.EventBus.RaiseLocalEvent(part, new PartGibbedEvent(Owner, gibs));
+            }
+
+            SoundSystem.Play(Filter.Pvs(Owner, entityManager: _entMan), _gibSound.GetSound(), coordinates, AudioHelpers.WithVariation(0.025f));
 
             if (_entMan.TryGetComponent(Owner, out ContainerManagerComponent? container))
             {
@@ -96,18 +101,41 @@ namespace Content.Server.Body.Components
                     foreach (var ent in cont.ContainedEntities)
                     {
                         cont.ForceRemove(ent);
-                        _entMan.GetComponent<TransformComponent>(ent).Coordinates = _entMan.GetComponent<TransformComponent>(Owner).Coordinates;
+                        _entMan.GetComponent<TransformComponent>(ent).Coordinates = coordinates;
                         ent.RandomOffset(0.25f);
                     }
                 }
             }
 
-            _entMan.EventBus.RaiseLocalEvent(Owner, new BeingGibbedEvent(), false);
+            _entMan.EventBus.RaiseLocalEvent(Owner, new BeingGibbedEvent(gibs), false);
             _entMan.QueueDeleteEntity(Owner);
+
+            return gibs;
         }
     }
 
     public sealed class BeingGibbedEvent : EntityEventArgs
     {
+        public readonly HashSet<EntityUid> GibbedParts;
+
+        public BeingGibbedEvent(HashSet<EntityUid> gibbedParts)
+        {
+            GibbedParts = gibbedParts;
+        }
+    }
+
+    /// <summary>
+    /// An event raised on all the parts of an entity when it's gibbed
+    /// </summary>
+    public sealed class PartGibbedEvent : EntityEventArgs
+    {
+        public EntityUid EntityToGib;
+        public readonly HashSet<EntityUid> GibbedParts;
+
+        public PartGibbedEvent(EntityUid entityToGib, HashSet<EntityUid> gibbedParts)
+        {
+            EntityToGib = entityToGib;
+            GibbedParts = gibbedParts;
+        }
     }
 }

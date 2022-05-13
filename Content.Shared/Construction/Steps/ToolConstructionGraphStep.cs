@@ -1,13 +1,7 @@
-using System.Linq;
 using Content.Shared.Examine;
 using Content.Shared.Tools;
-using Content.Shared.Tools.Components;
-using Robust.Shared.IoC;
-using Robust.Shared.Localization;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
-using Robust.Shared.Utility;
 
 namespace Content.Shared.Construction.Steps
 {

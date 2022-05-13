@@ -3,7 +3,6 @@ using Content.Server.Popups;
 using Content.Server.Storage.Components;
 using Content.Server.Tools.Systems;
 using Content.Shared.Destructible;
-using Content.Shared.Interaction;
 using Robust.Shared.Physics;
 using Robust.Shared.Player;
 

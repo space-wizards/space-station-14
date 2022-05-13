@@ -1,8 +1,5 @@
-using System;
-using System.Collections.Generic;
 using Content.Shared.Whitelist;
 using Robust.Shared.Serialization;
-using Robust.Shared.Serialization.Manager.Attributes;
 
 namespace Content.Shared.Storage.Components
 {

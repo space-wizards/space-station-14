@@ -5,7 +5,7 @@
   minPlayers: 0
   maxPlayers: 25
   stations:
-    Station: #TODO: Mapper, add a BecomesStation component to the primary grid of the map.
+    Atlas: 
       mapNameTemplate: '{0} Atlas {1}'
       nameGenerator:
         !type:NanotrasenNameGenerator

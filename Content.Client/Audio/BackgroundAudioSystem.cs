@@ -70,15 +70,18 @@ namespace Content.Client.Audio
         private void StateManagerOnStateChanged(StateChangedEventArgs args)
         {
             EndAmbience();
-            EndLobbyMusic();
+
             if (args.NewState is LobbyState && _configManager.GetCVar(CCVars.LobbyMusicEnabled))
             {
                 StartLobbyMusic();
+                return;
             }
             else if (args.NewState is GameScreen)
             {
                 StartAmbience();
             }
+
+            EndLobbyMusic();
         }
 
         private void OnJoin(object? sender, PlayerEventArgs args)
@@ -156,9 +159,17 @@ namespace Content.Client.Audio
                 StartLobbyMusic();
             }
         }
-        private void StartLobbyMusic()
+
+        public void RestartLobbyMusic()
         {
             EndLobbyMusic();
+            StartLobbyMusic();
+        }
+
+        public void StartLobbyMusic()
+        {
+            if (_lobbyStream != null) return;
+
             var file = _gameTicker.LobbySong;
             if (file == null) // We have not received the lobby song yet.
             {

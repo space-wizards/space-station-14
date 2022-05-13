@@ -1,18 +1,13 @@
-using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
 using Content.Shared.CCVar;
 using Content.Shared.CharacterAppearance;
-using Content.Shared.Dataset;
 using Content.Shared.GameTicking;
 using Content.Shared.Random.Helpers;
 using Content.Shared.Roles;
 using Content.Shared.Species;
 using Robust.Shared.Configuration;
 using Robust.Shared.Enums;
-using Robust.Shared.IoC;
-using Robust.Shared.Localization;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Serialization;
@@ -112,17 +107,15 @@ namespace Content.Shared.Preferences
 
         public static HumanoidCharacterProfile Random()
         {
+            var prototypeManager = IoCManager.Resolve<IPrototypeManager>();
             var random = IoCManager.Resolve<IRobustRandom>();
 
-            var species = random.Pick(IoCManager.Resolve<IPrototypeManager>()
+            var species = random.Pick(prototypeManager
                 .EnumeratePrototypes<SpeciesPrototype>().Where(x => x.RoundStart).ToArray()).ID;
             var sex = random.Prob(0.5f) ? Sex.Male : Sex.Female;
             var gender = sex == Sex.Male ? Gender.Male : Gender.Female;
 
-            var prototypeManager = IoCManager.Resolve<IPrototypeManager>();
-            var firstName = random.Pick(sex.FirstNames(prototypeManager).Values);
-            var lastName = random.Pick(prototypeManager.Index<DatasetPrototype>("names_last"));
-            var name = $"{firstName} {lastName}";
+            var name = sex.GetName(species, prototypeManager, random);
             var age = random.Next(MinimumAge, MaximumAge);
 
             return new HumanoidCharacterProfile(name, species, age, sex, gender, HumanoidCharacterAppearance.Random(sex), ClothingPreference.Jumpsuit, BackpackPreference.Backpack,
@@ -279,7 +272,7 @@ namespace Content.Shared.Preferences
             string name;
             if (string.IsNullOrEmpty(Name))
             {
-                name = RandomName();
+                name = Sex.GetName(Species);
             }
             else if (Name.Length > MaxNameLength)
             {
@@ -299,7 +292,7 @@ namespace Content.Shared.Preferences
 
             if (string.IsNullOrEmpty(name))
             {
-                name = RandomName();
+                name = Sex.GetName(Species);
             }
 
             var appearance = HumanoidCharacterAppearance.EnsureValid(Appearance, Species);
@@ -361,15 +354,6 @@ namespace Content.Shared.Preferences
 
             _antagPreferences.Clear();
             _antagPreferences.AddRange(antags);
-
-            string RandomName()
-            {
-                var random = IoCManager.Resolve<IRobustRandom>();
-                var protoMan = IoCManager.Resolve<IPrototypeManager>();
-                var firstName = random.Pick(Sex.FirstNames(protoMan).Values);
-                var lastName = random.Pick(protoMan.Index<DatasetPrototype>("names_last"));
-                return $"{firstName} {lastName}";
-            }
         }
 
         public override bool Equals(object? obj)

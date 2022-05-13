@@ -118,13 +118,13 @@ entities:
 - uid: 0
   type: WallSolid
   components:
-  - pos: -12.5,-3.5
+  - pos: -7.5,3.5
     parent: 30
     type: Transform
 - uid: 1
   type: WallSolid
   components:
-  - pos: -7.5,3.5
+  - pos: -12.5,-3.5
     parent: 30
     type: Transform
 - uid: 2
@@ -7667,10 +7667,10 @@ entities:
       - 0
       - 0
     - volume: 2500
-      temperature: 292.75668
+      temperature: 292.58105
       moles:
-      - 21.795322
-      - 81.99194
+      - 21.782127
+      - 81.94229
       - 0
       - 0
       - 0
@@ -7678,10 +7678,10 @@ entities:
       - 0
       - 0
     - volume: 2500
-      temperature: 292.02072
+      temperature: 291.9768
       moles:
-      - 21.74002
-      - 81.7839
+      - 21.736721
+      - 81.771484
       - 0
       - 0
       - 0
@@ -8019,10 +8019,10 @@ entities:
       - 0
       - 0
     - volume: 2500
-      temperature: 255.44853
+      temperature: 255.29314
       moles:
-      - 18.991932
-      - 71.44584
+      - 18.980255
+      - 71.40191
       - 0
       - 0
       - 0
@@ -8085,10 +8085,10 @@ entities:
       - 0
       - 0
     - volume: 2500
-      temperature: 283.09943
+      temperature: 282.47784
       moles:
-      - 21.069664
-      - 79.26208
+      - 21.022957
+      - 79.086365
       - 0
       - 0
       - 0
@@ -8294,6 +8294,8 @@ entities:
       - 0
       - 0
     type: GridAtmosphere
+  - id: Atlas
+    type: BecomesStation
 - uid: 31
   type: AirlockCommandGlassLocked
   components:
@@ -8429,6 +8431,12 @@ entities:
     parent: 30
     type: Transform
 - uid: 50
+  type: WallSolid
+  components:
+  - pos: -12.5,-1.5
+    parent: 30
+    type: Transform
+- uid: 51
   type: FloorDrain
   components:
   - pos: -1.5,19.5
@@ -8436,12 +8444,6 @@ entities:
     type: Transform
   - fixtures: []
     type: Fixtures
-- uid: 51
-  type: WallSolid
-  components:
-  - pos: -12.5,-1.5
-    parent: 30
-    type: Transform
 - uid: 52
   type: WallSolid
   components:
@@ -28639,9 +28641,9 @@ entities:
     parent: 30
     type: Transform
 - uid: 2370
-  type: WallSolid
+  type: Window
   components:
-  - pos: 2.5,-6.5
+  - pos: 2.5,-5.5
     parent: 30
     type: Transform
 - uid: 2371
@@ -28821,9 +28823,9 @@ entities:
     parent: 30
     type: Transform
 - uid: 2398
-  type: WallSolid
+  type: Window
   components:
-  - pos: 2.5,-5.5
+  - pos: 2.5,-6.5
     parent: 30
     type: Transform
 - uid: 2399
@@ -33826,27 +33828,27 @@ entities:
     parent: 30
     type: Transform
 - uid: 2961
-  type: SpawnPointLatejoin
+  type: CheapRollerBed
   components:
-  - pos: 18.5,-17.5
+  - pos: 1.4785833,-8.943417
     parent: 30
     type: Transform
 - uid: 2962
-  type: SpawnPointLatejoin
+  type: CheapRollerBed
   components:
-  - pos: 18.5,-16.5
+  - pos: 1.4785833,-9.396542
     parent: 30
     type: Transform
 - uid: 2963
-  type: SpawnPointLatejoin
+  type: CheapRollerBed
   components:
-  - pos: 19.5,-16.5
+  - pos: 8.472589,-2.0432668
     parent: 30
     type: Transform
 - uid: 2964
-  type: SpawnPointLatejoin
+  type: CheapRollerBed
   components:
-  - pos: 19.5,-17.5
+  - pos: 8.472589,-2.4338918
     parent: 30
     type: Transform
 - uid: 2965
@@ -75001,6 +75003,170 @@ entities:
   type: SpawnPointServiceWorker
   components:
   - pos: 1.5,16.5
+    parent: 30
+    type: Transform
+- uid: 7414
+  type: BedsheetMedical
+  components:
+  - pos: 9.5,-5.5
+    parent: 30
+    type: Transform
+- uid: 7415
+  type: BedsheetMedical
+  components:
+  - pos: 9.5,-4.5
+    parent: 30
+    type: Transform
+- uid: 7416
+  type: Grille
+  components:
+  - pos: 2.5,-6.5
+    parent: 30
+    type: Transform
+- uid: 7417
+  type: Grille
+  components:
+  - pos: 2.5,-5.5
+    parent: 30
+    type: Transform
+- uid: 7418
+  type: CableApcExtension
+  components:
+  - pos: 0.5,-5.5
+    parent: 30
+    type: Transform
+  - enabled: False
+    type: AmbientSound
+  - canCollide: False
+    type: Physics
+- uid: 7419
+  type: CableApcExtension
+  components:
+  - pos: 2.5,-7.5
+    parent: 30
+    type: Transform
+  - enabled: False
+    type: AmbientSound
+  - canCollide: False
+    type: Physics
+- uid: 7420
+  type: CableApcExtension
+  components:
+  - pos: 3.5,-9.5
+    parent: 30
+    type: Transform
+  - enabled: False
+    type: AmbientSound
+  - canCollide: False
+    type: Physics
+- uid: 7421
+  type: CableApcExtension
+  components:
+  - pos: 4.5,-9.5
+    parent: 30
+    type: Transform
+  - enabled: False
+    type: AmbientSound
+  - canCollide: False
+    type: Physics
+- uid: 7422
+  type: CableApcExtension
+  components:
+  - pos: -1.5,-4.5
+    parent: 30
+    type: Transform
+  - enabled: False
+    type: AmbientSound
+  - canCollide: False
+    type: Physics
+- uid: 7423
+  type: CableApcExtension
+  components:
+  - pos: -2.5,-3.5
+    parent: 30
+    type: Transform
+  - canCollide: False
+    type: Physics
+- uid: 7424
+  type: CableApcExtension
+  components:
+  - pos: -1.5,-5.5
+    parent: 30
+    type: Transform
+  - enabled: False
+    type: AmbientSound
+  - canCollide: False
+    type: Physics
+- uid: 7425
+  type: CableApcExtension
+  components:
+  - pos: -0.5,-5.5
+    parent: 30
+    type: Transform
+  - enabled: False
+    type: AmbientSound
+  - canCollide: False
+    type: Physics
+- uid: 7426
+  type: CableApcExtension
+  components:
+  - pos: -0.5,-7.5
+    parent: 30
+    type: Transform
+  - enabled: False
+    type: AmbientSound
+  - canCollide: False
+    type: Physics
+- uid: 7427
+  type: CableApcExtension
+  components:
+  - pos: -0.5,-6.5
+    parent: 30
+    type: Transform
+  - enabled: False
+    type: AmbientSound
+  - canCollide: False
+    type: Physics
+- uid: 7428
+  type: CableApcExtension
+  components:
+  - pos: -3.5,-6.5
+    parent: 30
+    type: Transform
+  - enabled: False
+    type: AmbientSound
+  - canCollide: False
+    type: Physics
+- uid: 7429
+  type: Poweredlight
+  components:
+  - rot: 1.5707963267948966 rad
+    pos: -2.5,-7.5
+    parent: 30
+    type: Transform
+  - powerLoad: 0
+    type: ApcPowerReceiver
+  - containers:
+      light_bulb: !type:ContainerSlot {}
+    type: ContainerContainer
+  - inputs:
+      On: []
+      Off: []
+      Toggle: []
+    type: SignalReceiver
+- uid: 7430
+  type: PottedPlantRandom
+  components:
+  - pos: 6.5,-9.5
+    parent: 30
+    type: Transform
+  - containers:
+      stash: !type:ContainerSlot {}
+    type: ContainerContainer
+- uid: 7431
+  type: ChairOfficeLight
+  components:
+  - pos: 8.5,-4.5
     parent: 30
     type: Transform
 ...

@@ -7,7 +7,6 @@ using Content.Shared.Access.Systems;
 using Content.Shared.Containers.ItemSlots;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Inventory;
-using Content.Shared.Item;
 using Content.Shared.PDA;
 using Content.Shared.Sandbox;
 using Robust.Server.Console;
@@ -15,11 +14,6 @@ using Robust.Server.GameObjects;
 using Robust.Server.Placement;
 using Robust.Server.Player;
 using Robust.Shared.Enums;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Network;
-using Robust.Shared.Prototypes;
-using Robust.Shared.ViewVariables;
 
 namespace Content.Server.Sandbox
 {

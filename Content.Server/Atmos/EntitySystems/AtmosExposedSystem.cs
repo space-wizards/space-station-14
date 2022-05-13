@@ -1,8 +1,3 @@
-using Content.Server.Atmos.Components;
-using Content.Server.Temperature.Components;
-using Content.Server.Temperature.Systems;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
 using Robust.Shared.Map;
 
 namespace Content.Server.Atmos.EntitySystems

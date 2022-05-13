@@ -1,4 +1,5 @@
-using Robust.Shared.GameObjects;
+using Content.Shared.MachineLinking;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
 namespace Content.Server.MachineLinking.Components
 {
@@ -8,6 +9,10 @@ namespace Content.Server.MachineLinking.Components
     [RegisterComponent]
     public sealed class SignallerComponent : Component
     {
-        public const string Port = "Pressed";
+        /// <summary>
+        ///     The port that gets signaled when the switch turns on.
+        /// </summary>
+        [DataField("port", customTypeSerializer: typeof(PrototypeIdSerializer<TransmitterPortPrototype>))]
+        public string Port = "Pressed";
     }
 }

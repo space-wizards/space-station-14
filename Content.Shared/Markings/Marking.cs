@@ -1,9 +1,4 @@
-using System;
-using System.Collections.Generic;
-using Robust.Shared.Maths;
 using Robust.Shared.Serialization;
-using Robust.Shared.Serialization.Manager.Attributes;
-using Robust.Shared.ViewVariables;
 
 namespace Content.Shared.Markings
 {

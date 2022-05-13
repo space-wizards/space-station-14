@@ -1,7 +1,5 @@
-﻿using System;
-using System.Threading;
+﻿using System.Threading;
 using Content.Shared.FixedPoint;
-using Robust.Shared.GameObjects;
 
 namespace Content.Server.DoAfter
 {
