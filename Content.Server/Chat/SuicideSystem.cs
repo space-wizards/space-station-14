@@ -1,9 +1,5 @@
-using Content.Server.Act;
 using Content.Server.Administration.Logs;
-using Content.Server.Chat.Managers;
-using Content.Server.GameTicking;
 using Content.Server.Hands.Components;
-using Content.Server.Players;
 using Content.Server.Popups;
 using Content.Shared.Damage;
 using Content.Shared.Damage.Prototypes;
@@ -13,138 +9,107 @@ using Content.Shared.Item;
 using Content.Shared.MobState.Components;
 using Content.Shared.Popups;
 using Content.Shared.Tag;
-using Robust.Server.Player;
-using Robust.Shared.Console;
-using Robust.Shared.Enums;
 using Robust.Shared.Prototypes;
-using System.Linq;
 
 namespace Content.Server.Chat
 {
     public sealed class SuicideSystem : EntitySystem
     {
         [Dependency] private readonly DamageableSystem _damageableSystem = default!;
-        [Dependency] private readonly IChatManager _chatManager = default!;
         [Dependency] private readonly EntityLookupSystem _entityLookupSystem = default!;
         [Dependency] private readonly AdminLogSystem _adminLogSystem = default!;
-        [Dependency] private readonly TagSystem _tagSystem = default!;
-        [Dependency] private readonly GameTicker _gameTicker = default!;
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
+        [Dependency] private readonly TagSystem _tagSystem = default!;
 
-        public void Suicide(IConsoleShell shell)
+        public bool Suicide(EntityUid victim)
         {
-            //TODO: Make this work without the console shell
-
-            var player = shell.Player as IPlayerSession;
-            if (player == null)
+            // Checks to see if the CannotSuicide tag exits, ghosts instead.
+            if (_tagSystem.HasTag(victim, "CannotSuicide"))
             {
-                shell.WriteLine(Loc.GetString("shell-cannot-run-command-from-server"));
-                return;
+                return false;
             }
 
-            if (player.Status != SessionStatus.InGame || player.AttachedEntity == null)
-                return;
-            var mind = player.ContentData()?.Mind;
-
-            // This check also proves mind not-null for at the end when the mob is ghosted.
-            if (mind?.OwnedComponent?.Owner is not { Valid: true } owner)
+            // Checks to see if the player is dead.
+            if (!EntityManager.TryGetComponent<MobStateComponent>(victim, out var mobState) || mobState.IsDead())
             {
-                shell.WriteLine("You don't have a mind!");
-                return;
+                return false;
             }
-
-            //Checks to see if the player is dead.
-            if (EntityManager.TryGetComponent<MobStateComponent>(owner, out var mobState) && mobState.IsDead())
-            {
-                shell.WriteLine(Loc.GetString("suicide-command-already-dead"));
-                return;
-            }
-
-            //Checks to see if the CannotSuicide tag exits, ghosts instead.
-            if (_tagSystem.HasTag(owner, "CannotSuicide"))
-            {
-                if (!_gameTicker.OnGhostAttempt(mind, true))
-                {
-                    shell?.WriteLine("You can't ghost right now.");
-                    return;
-                }
-                return;
-            }
-
-            //TODO: needs to check if the mob is actually alive
-            //TODO: maybe set a suicided flag to prevent resurrection?
 
             _adminLogSystem.Add(LogType.Suicide,
-                $"{EntityManager.ToPrettyString(player.AttachedEntity.Value):player} is committing suicide");
+                            $"{EntityManager.ToPrettyString(victim):player} is committing suicide");
 
-            var suicideEvent = new SuicideEvent(owner);
-            // Held item suicide
-            if (EntityManager.TryGetComponent(owner, out HandsComponent handsComponent)
+            var suicideEvent = new SuicideEvent(victim);
+
+            // If you are critical, you wouldn't be able to use your surroundings to suicide, so you do the default suicide
+            if (!mobState.IsCritical())
+            {
+                EnvironmentSuicideHandler(victim, suicideEvent);
+            }
+            DefaultSuicideHandler(victim, suicideEvent);
+
+            ApplyDeath(victim, suicideEvent.Kind!.Value);
+            return true;
+        }
+
+        /// <summary>
+        /// If not handled, does the default suicide, which is biting your own tongue
+        /// </summary>
+        /// <param name="victim">The person attempting to die</param>
+        private static void DefaultSuicideHandler(EntityUid victim, SuicideEvent suicideEvent)
+        {
+            if (suicideEvent.Handled) return;
+            var othersMessage = Loc.GetString("suicide-command-default-text-others", ("name", victim));
+            victim.PopupMessageOtherClients(othersMessage);
+
+            var selfMessage = Loc.GetString("suicide-command-default-text-self");
+            victim.PopupMessage(selfMessage);
+            suicideEvent.SetHandled(SuicideKind.Bloodloss);
+        }
+
+        /// <summary>
+        /// Raise event to attempt to use held item, or surrounding entities to commit suicide
+        /// </summary>
+        /// <param name="victim">The person attempting to die</param>
+        private void EnvironmentSuicideHandler(EntityUid victim, SuicideEvent suicideEvent)
+        {
+            // Suicide by held item
+            if (EntityManager.TryGetComponent(victim, out HandsComponent handsComponent)
                 && handsComponent.ActiveHandEntity is EntityUid item)
             {
                 RaiseLocalEvent(item, suicideEvent, false);
 
                 if (suicideEvent.Handled)
-                {
-                    ApplyDeath(owner, suicideEvent.Kind!.Value);
                     return;
-                }
             }
 
-            // Get all entities in range of the suicider
-            var entities = _entityLookupSystem.GetEntitiesInRange(owner, 1, LookupFlags.Approximate | LookupFlags.Anchored).ToArray();
-
-            if (entities.Length > 0)
+            // Suicide by nearby entity (ex: Microwave)
+            foreach (var entity in _entityLookupSystem.GetEntitiesInRange(victim, 1, LookupFlags.Approximate | LookupFlags.Anchored))
             {
-                foreach (var entity in entities)
-                {
-                    if (EntityManager.HasComponent<SharedItemComponent>(entity))
-                        continue;
-                    RaiseLocalEvent(entity, suicideEvent, false);
+                // Skip any nearby items that can be picked up, we already checked the active held item above
+                if (EntityManager.HasComponent<SharedItemComponent>(entity))
+                    continue;
 
-                    if (suicideEvent.Handled)
-                    {
-                        ApplyDeath(owner, suicideEvent.Kind!.Value);
-                        return;
-                    }
-                }
+                RaiseLocalEvent(entity, suicideEvent, false);
+
+                if (suicideEvent.Handled)
+                    break;
             }
-
-            // Default suicide, bite your tongue
-            var othersMessage = Loc.GetString("suicide-command-default-text-others", ("name", owner));
-            owner.PopupMessageOtherClients(othersMessage);
-
-            var selfMessage = Loc.GetString("suicide-command-default-text-self");
-            owner.PopupMessage(selfMessage);
-
-            ApplyDeath(owner, SuicideKind.Bloodloss);
-
-            // Prevent the player from returning to the body.
-            // Note that mind cannot be null because otherwise owner would be null.
-            _gameTicker.OnGhostAttempt(mind!, false);
         }
 
         private void ApplyDeath(EntityUid target, SuicideKind kind)
         {
-            if (kind == SuicideKind.Special) return;
-            // TODO SUICIDE ..heh.. anyway, someone should fix this mess.
-            DamageSpecifier damage = new(kind switch
-            {
-                SuicideKind.Blunt => _prototypeManager.Index<DamageTypePrototype>("Blunt"),
-                SuicideKind.Slash => _prototypeManager.Index<DamageTypePrototype>("Slash"),
-                SuicideKind.Piercing => _prototypeManager.Index<DamageTypePrototype>("Piercing"),
-                SuicideKind.Heat => _prototypeManager.Index<DamageTypePrototype>("Heat"),
-                SuicideKind.Shock => _prototypeManager.Index<DamageTypePrototype>("Shock"),
-                SuicideKind.Cold => _prototypeManager.Index<DamageTypePrototype>("Cold"),
-                SuicideKind.Poison => _prototypeManager.Index<DamageTypePrototype>("Poison"),
-                SuicideKind.Radiation => _prototypeManager.Index<DamageTypePrototype>("Radiation"),
-                SuicideKind.Asphyxiation => _prototypeManager.Index<DamageTypePrototype>("Asphyxiation"),
-                SuicideKind.Bloodloss => _prototypeManager.Index<DamageTypePrototype>("Bloodloss"),
-                _ => _prototypeManager.Index<DamageTypePrototype>("Blunt")
-            },
-                200);
+            if (kind == SuicideKind.Special)
+                return;
 
-            _damageableSystem.TryChangeDamage(target, damage, true);
+            if (!_prototypeManager.TryIndex<DamageTypePrototype>(kind.ToString(), out var damagePrototype))
+            {
+                const SuicideKind fallback = SuicideKind.Blunt;
+                Logger.Error(
+                    $"{nameof(SuicideSystem)} could not find the damage type prototype associated with {kind}. Falling back to {fallback}");
+                damagePrototype = _prototypeManager.Index<DamageTypePrototype>(fallback.ToString());
+            }
+            const int lethalAmountOfDamage = 200; // TODO: Would be nice to get this number from somewhere else
+            _damageableSystem.TryChangeDamage(target, new(damagePrototype, lethalAmountOfDamage), true);
         }
     }
 }
