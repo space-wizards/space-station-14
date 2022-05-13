@@ -1,10 +1,4 @@
 Entries:
-- author: ElectroJr
-  changes:
-  - {message: 'Removed targeting dummy, as limb-damage is still not yet implemented.',
-    type: Remove}
-  id: 1021
-  time: '2022-02-09T04:25:13.0000000+00:00'
 - author: Peptide90
   changes:
   - {message: 'More things now fit in the trashbag! Crayons, medipens, mice, broken
@@ -3032,3 +3026,10 @@ Entries:
   - {message: You get more Licoxide the bigger the powercell you juice, type: Tweak}
   id: 1520
   time: '2022-05-12T23:49:52.0000000+00:00'
+- author: ShuttleEnjoyer
+  changes:
+  - {message: 'Added a new Cargo crate with a shuttle console board, shuttle power
+      boards, a handheld GPS, and a single inflatable door.', type: Add}
+  - {message: Shuttle thrusters and gyroscopes cost less., type: Tweak}
+  id: 1521
+  time: '2022-05-13T00:11:36.0000000+00:00'
