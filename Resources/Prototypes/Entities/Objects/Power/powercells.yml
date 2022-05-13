@@ -226,11 +226,11 @@
       layers:
         - state: s_ar
     - type: Battery
-      maxCharge: 60
-      startingCharge: 60
+      maxCharge: 1200
+      startingCharge: 1200
     - type: BatterySelfRecharger
       autoRecharge: true
-      autoRechargeRate: 5
+      autoRechargeRate: 40
     - type: Appearance
       visuals:
         - type: PowerCellVisualizer
