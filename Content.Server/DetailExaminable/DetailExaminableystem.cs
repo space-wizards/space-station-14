@@ -2,9 +2,9 @@
 using Content.Shared.Verbs;
 using Robust.Shared.Utility;
 
-namespace Content.Server.FlavorText
+namespace Content.Server.DetailExaminable
 {
-    public sealed class DetailedExaminableSystem : EntitySystem
+    public sealed class DetailExaminableSystem : EntitySystem
     {
         [Dependency] private readonly ExamineSystemShared _examineSystem = default!;
 
@@ -12,10 +12,10 @@ namespace Content.Server.FlavorText
         {
             base.Initialize();
 
-            SubscribeLocalEvent<FlavorTextComponent, GetVerbsEvent<ExamineVerb>>(OnGetExamineVerbs);
+            SubscribeLocalEvent<DetailExaminableComponent, GetVerbsEvent<ExamineVerb>>(OnGetExamineVerbs);
         }
 
-        private void OnGetExamineVerbs(EntityUid uid, FlavorTextComponent component, GetVerbsEvent<ExamineVerb> args)
+        private void OnGetExamineVerbs(EntityUid uid, DetailExaminableComponent component, GetVerbsEvent<ExamineVerb> args)
         {
             // TODO: Hide if identity isn't visible (when identity is merged)
             var detailsRange = _examineSystem.IsInDetailsRange(args.User, uid);
@@ -28,10 +28,10 @@ namespace Content.Server.FlavorText
                     markup.AddMarkup(component.Content);
                     _examineSystem.SendExamineTooltip(args.User, uid, markup, false, false);
                 },
-                Text = Loc.GetString("flavortext-examinable-verb-text"),
+                Text = Loc.GetString("detail-examinable-verb-text"),
                 Category = VerbCategory.Examine,
                 Disabled = !detailsRange,
-                Message = Loc.GetString("flavortext-examinable-verb-disabled"),
+                Message = Loc.GetString("detail-examinable-verb-disabled"),
                 IconTexture = "/Textures/Interface/VerbIcons/examine.svg.192dpi.png"
             };
 

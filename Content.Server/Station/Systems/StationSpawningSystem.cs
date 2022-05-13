@@ -1,6 +1,6 @@
 ﻿using Content.Server.Access.Systems;
 using Content.Server.CharacterAppearance.Systems;
-using Content.Server.FlavorText;
+using Content.Server.DetailExaminable;
 using Content.Server.Hands.Components;
 using Content.Server.Hands.Systems;
 using Content.Server.PDA;
@@ -104,7 +104,7 @@ public sealed class StationSpawningSystem : EntitySystem
             EntityManager.GetComponent<MetaDataComponent>(entity).EntityName = profile.Name;
             if (profile.FlavorText != "" && _configurationManager.GetCVar(CCVars.FlavorText))
             {
-                EntityManager.AddComponent<FlavorTextComponent>(entity).Content = profile.FlavorText;
+                EntityManager.AddComponent<DetailExaminableComponent>(entity).Content = profile.FlavorText;
             }
         }
 
