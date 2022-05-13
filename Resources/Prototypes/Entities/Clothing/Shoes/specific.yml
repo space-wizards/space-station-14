@@ -38,7 +38,7 @@
       collection: footstep_clown
   - type: PointLight
     netsync: false
-    enabled: false
+    enabled: true 
     radius: 3
     energy: 2
     color: "#FFD800"   
