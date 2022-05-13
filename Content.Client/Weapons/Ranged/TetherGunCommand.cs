@@ -9,6 +9,12 @@ public sealed class TetherGunCommand : IConsoleCommand
     public string Help => $"{Command}";
     public void Execute(IConsoleShell shell, string argStr, string[] args)
     {
-        IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<TetherGunSystem>().Enabled ^= true;
+        var system = IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<TetherGunSystem>();
+        system.Enabled ^= true;
+
+        if (system.Enabled)
+            shell.WriteLine("Tether gun toggled on");
+        else
+            shell.WriteLine("Tether gun toggled off");
     }
 }

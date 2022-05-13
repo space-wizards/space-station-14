@@ -1,3 +1,4 @@
+using Content.Server.Ghost.Components;
 using Content.Shared.Administration;
 using Content.Shared.Weapons.Ranged;
 using Robust.Server.Console;
@@ -52,8 +53,7 @@ public sealed class TetherGunSystem : SharedTetherGunSystem
             !Exists(msg.Entity) ||
             Deleted(msg.Entity) ||
             msg.Coordinates == MapCoordinates.Nullspace ||
-            _tethered.ContainsKey(args.SenderSession) ||
-            _container.IsEntityInContainer(msg.Entity)) return;
+            _tethered.ContainsKey(args.SenderSession)) return;
 
         var tether = Spawn("TetherEntity", msg.Coordinates);
 
@@ -71,6 +71,11 @@ public sealed class TetherGunSystem : SharedTetherGunSystem
             xform.Anchored = false;
         }
 
+        if (_container.IsEntityInContainer(msg.Entity))
+        {
+            xform?.AttachToGridOrMap();
+        }
+
         if (TryComp<PhysicsComponent>(msg.Entity, out var body))
         {
             body.BodyStatus = BodyStatus.InAir;
@@ -81,9 +86,13 @@ public sealed class TetherGunSystem : SharedTetherGunSystem
         SharedJointSystem.LinearStiffness(5f, 0.7f, bodyA.Mass, bodyB.Mass, out var stiffness, out var damping);
         joint.Stiffness = stiffness;
         joint.Damping = damping;
-        joint.MaxForce = 5000f * bodyB.Mass;
+        joint.MaxForce = 10000f * bodyB.Mass;
 
         _tethered.Add(playerSession, (msg.Entity, tether, joint));
+        RaiseNetworkEvent(new PredictTetherEvent()
+        {
+            Entity = msg.Entity
+        }, args.SenderSession.ConnectedClient);
     }
 
     private void OnStopTether(StopTetherEvent msg, EntitySessionEventArgs args)
@@ -98,7 +107,8 @@ public sealed class TetherGunSystem : SharedTetherGunSystem
 
         RemComp<AdminFrozenComponent>(weh.Entity);
 
-        if (TryComp<PhysicsComponent>(weh.Entity, out var body))
+        if (TryComp<PhysicsComponent>(weh.Entity, out var body) &&
+            !HasComp<GhostComponent>(weh.Entity))
         {
             Timer.Spawn(1000, () =>
             {

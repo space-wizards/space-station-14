@@ -23,3 +23,12 @@ public sealed class TetherMoveEvent : EntityEventArgs
 {
     public MapCoordinates Coordinates;
 }
+
+/// <summary>
+/// Client can't know the tether's <see cref="EntityUid"/> in advance so needs to be told about it for prediction.
+/// </summary>
+[Serializable, NetSerializable]
+public sealed class PredictTetherEvent : EntityEventArgs
+{
+    public EntityUid Entity;
+}

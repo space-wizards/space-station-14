@@ -12,7 +12,7 @@ namespace Content.Shared.Audio
         [DataField("enabled")]
         public bool Enabled { get; set; } = true;
 
-        [DataField("sound", required: true)]
+        [DataField("sound", required: true), ViewVariables(VVAccess.ReadWrite)]
         public SoundSpecifier Sound = default!;
 
         /// <summary>

@@ -23,8 +23,35 @@ public sealed class TetherGunSystem : SharedTetherGunSystem
     /// The entity being dragged around.
     /// </summary>
     private EntityUid? _dragging;
+    private EntityUid? _tether;
 
     private MapCoordinates? _lastMousePosition;
+
+    public override void Initialize()
+    {
+        base.Initialize();
+        SubscribeNetworkEvent<PredictTetherEvent>(OnPredictTether);
+    }
+
+    private void OnPredictTether(PredictTetherEvent ev)
+    {
+        if (_dragging != ev.Entity) return;
+
+        _tether = ev.Entity;
+    }
+
+    public override void FrameUpdate(float frameTime)
+    {
+        base.FrameUpdate(frameTime);
+        if (!TryComp<PhysicsComponent>(_dragging, out var body)) return;
+
+        body.Predict = true;
+
+        if (TryComp<PhysicsComponent>(_tether, out var tetherBody))
+        {
+            tetherBody.Predict = true;
+        }
+    }
 
     public override void Update(float frameTime)
     {
@@ -46,18 +73,18 @@ public sealed class TetherGunSystem : SharedTetherGunSystem
         if (_dragging == null)
         {
             var bodyQuery = GetEntityQuery<PhysicsComponent>();
-            var lowest = new List<(int DrawDepth, EntityUid Entity)>();
+            var lowest = new List<(int DrawDepth, uint RenderOrder, EntityUid Entity)>();
 
-            foreach (var ent in _lookup.GetEntitiesIntersecting(mousePos))
+            foreach (var ent in _lookup.GetEntitiesIntersecting(mousePos, LookupFlags.Approximate | LookupFlags.Anchored))
             {
                 if (!bodyQuery.HasComponent(ent) ||
                     !TryComp<ClickableComponent>(ent, out var clickable) ||
-                    !clickable.CheckClick(mousePos.Position, out var drawDepth, out _)) continue;
+                    !clickable.CheckClick(mousePos.Position, out var drawDepth, out var renderOrder)) continue;
 
-                lowest.Add((drawDepth, ent));
+                lowest.Add((drawDepth, renderOrder, ent));
             }
 
-            lowest.Sort((x, y) => y.DrawDepth.CompareTo(x.DrawDepth));
+            lowest.Sort((x, y) => y.DrawDepth == x.DrawDepth ? y.RenderOrder.CompareTo(x.RenderOrder) : y.DrawDepth.CompareTo(x.DrawDepth));
 
             foreach (var ent in lowest)
             {
@@ -69,10 +96,18 @@ public sealed class TetherGunSystem : SharedTetherGunSystem
         }
 
         if (!TryComp<TransformComponent>(_dragging!.Value, out var xform) ||
-            _lastMousePosition!.Value.MapId != xform.MapID)
+            _lastMousePosition!.Value.MapId != xform.MapID ||
+            !TryComp<PhysicsComponent>(_dragging, out var body))
         {
             StopDragging();
             return;
+        }
+
+        body.Predict = true;
+
+        if (TryComp<PhysicsComponent>(_tether, out var tetherBody))
+        {
+            tetherBody.Predict = true;
         }
 
         if (_lastMousePosition.Value.Position.EqualsApprox(mousePos.Position)) return;
@@ -92,6 +127,7 @@ public sealed class TetherGunSystem : SharedTetherGunSystem
         RaiseNetworkEvent(new StopTetherEvent());
         _dragging = null;
         _lastMousePosition = null;
+        _tether = null;
     }
 
     private void StartDragging(EntityUid uid, MapCoordinates coordinates)
