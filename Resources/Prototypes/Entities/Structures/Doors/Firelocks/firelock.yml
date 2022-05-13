@@ -48,8 +48,7 @@
           !type:PhysShapeAabb
           bounds: "-0.49,-0.49,0.49,0.49"  # don't want this colliding with walls or they won't close
         mask:
-        - Impassable
-        - HighImpassable
+        - TabletopMachineMask
         layer:
         - AirlockLayer
     - type: Door

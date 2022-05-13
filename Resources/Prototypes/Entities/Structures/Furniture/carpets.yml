@@ -131,6 +131,9 @@
     state: chapel
   - type: Tag
     tags: [ Carpet ]
+  - type: Physics
+    canCollide: false
+  - type: Fixtures
   - type: Damageable
     damageContainer: Inorganic
   - type: Destructible

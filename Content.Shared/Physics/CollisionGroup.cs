@@ -26,7 +26,7 @@ public enum CollisionGroup
     // 32 possible groups
     AllMask = -1,
 
-    MobMask = Impassable | MidImpassable | LowImpassable,
+    MobMask = Impassable | HighImpassable | MidImpassable | LowImpassable,
     MobLayer = Opaque | BulletImpassable,
     SmallMobMask = Impassable | LowImpassable,
     SmallMobLayer = Opaque | BulletImpassable,
@@ -57,6 +57,7 @@ public enum CollisionGroup
     GlassLayer = Impassable | HighImpassable | MidImpassable | LowImpassable | BulletImpassable,
     HalfWallLayer = MidImpassable | LowImpassable,
     FullTileMask = Impassable | HighImpassable | MidImpassable | LowImpassable,
-
+    FullTileLayer = Opaque | HighImpassable | MidImpassable | LowImpassable | BulletImpassable,
+    
     SubfloorMask = Impassable | LowImpassable
 }
