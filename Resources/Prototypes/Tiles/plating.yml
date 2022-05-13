@@ -29,7 +29,7 @@
 - type: tile
   id: underplating
   name: haqrecyngvat [DO NOT USE]
-  texture: underplating
+  texture: deprecated
   base_turfs:
   - lattice
   is_subfloor: true
