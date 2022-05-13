@@ -3,6 +3,7 @@ using Content.Shared.Examine;
 using Content.Shared.Interaction;
 using Content.Shared.Damage;
 using Content.Shared.Damage;
+using Content.Server.Body.Components;
 using Robust.Server.Maps;
 using Robust.Shared.Configuration;
 using Robust.Shared.GameObjects;
@@ -64,7 +65,12 @@ public sealed class SalvageMobRestrictionsSystem : EntitySystem
     {
         foreach (EntityUid target in component.MobsToKill)
         {
-            if (TryComp(target, out DamageableComponent? dc))
+            if (TryComp(target, out BodyComponent? body))
+            {
+                // Just because.
+                body.Gib();
+            }
+            else if (TryComp(target, out DamageableComponent? dc))
             {
                 _damageableSystem.SetAllDamage(dc, 200);
             }
