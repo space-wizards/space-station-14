@@ -2,10 +2,10 @@ using Content.Shared.Actions.ActionTypes;
 using Robust.Shared.Containers;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
-namespace Content.Server.Body.Components
+namespace Content.Server.Polymorph.Components
 {
     [RegisterComponent]
-    public sealed class TransformationChildComponent : Component
+    public sealed class PolymorphedEntityComponent : Component
     {
         /// <summary>
         /// The original entity that the player will revert back into
@@ -19,10 +19,7 @@ namespace Content.Server.Body.Components
         [DataField("parentContainer")]
         public Container ParentContainer = default!;
 
-        [DataField("actionId", customTypeSerializer: typeof(PrototypeIdSerializer<InstantActionPrototype>))]
-        public string ActionId = "Revert";
-
-        [DataField("action")]
-        public InstantAction? Action = null;
+        [DataField("forced")]
+        public bool Forced = default!;
     }
 }
