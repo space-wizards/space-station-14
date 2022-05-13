@@ -4,7 +4,7 @@ using Robust.Shared.Utility;
 
 namespace Content.Server.FlavorText
 {
-    public sealed class FlavorTextSystem : EntitySystem
+    public sealed class DetailedExaminableSystem : EntitySystem
     {
         [Dependency] private readonly ExamineSystemShared _examineSystem = default!;
 

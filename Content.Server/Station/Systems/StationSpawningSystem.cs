@@ -1,4 +1,4 @@
-using Content.Server.Access.Systems;
+﻿using Content.Server.Access.Systems;
 using Content.Server.CharacterAppearance.Systems;
 using Content.Server.FlavorText;
 using Content.Server.Hands.Components;
@@ -7,6 +7,7 @@ using Content.Server.PDA;
 using Content.Server.Roles;
 using Content.Server.Station.Components;
 using Content.Shared.Access.Components;
+using Content.Shared.CCVar;
 using Content.Shared.Inventory;
 using Content.Shared.PDA;
 using Content.Shared.Preferences;
@@ -101,7 +102,7 @@ public sealed class StationSpawningSystem : EntitySystem
         {
             _humanoidAppearanceSystem.UpdateFromProfile(entity, profile);
             EntityManager.GetComponent<MetaDataComponent>(entity).EntityName = profile.Name;
-            if (profile.FlavorText != "" && _configurationManager.GetCVar<bool>("ic.flavor_text"))
+            if (profile.FlavorText != "" && _configurationManager.GetCVar(CCVars.FlavorText))
             {
                 EntityManager.AddComponent<FlavorTextComponent>(entity).Content = profile.FlavorText;
             }

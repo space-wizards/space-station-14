@@ -5,6 +5,7 @@ using Content.Client.CharacterAppearance;
 using Content.Client.Lobby.UI;
 using Content.Client.Message;
 using Content.Client.Stylesheets;
+using Content.Shared.CCVar;
 using Content.Shared.CharacterAppearance;
 using Content.Shared.CharacterAppearance.Systems;
 using Content.Shared.GameTicking;
@@ -465,14 +466,14 @@ namespace Content.Client.Preferences.UI
 
             #region FlavorText
 
-            if (_configurationManager.GetCVar<bool>("ic.flavor_text"))
+            if (_configurationManager.GetCVar(CCVars.FlavorText))
             {
-                var _flavorText = new FlavorText.FlavorText();
-                _tabContainer.AddChild(_flavorText);
+                var flavorText = new FlavorText.FlavorText();
+                _tabContainer.AddChild(flavorText);
                 _tabContainer.SetTabTitle(_tabContainer.ChildCount-1, Loc.GetString("humanoid-profile-editor-flavortext-tab"));
-                _flavorTextEdit = _flavorText.FlavorTextInput;
+                _flavorTextEdit = flavorText.CFlavorTextInput;
 
-                _flavorText.OnFlavorTextChanged += OnFlavorTextChange;
+                flavorText.OnFlavorTextChanged += OnFlavorTextChange;
             }
 
             #endregion FlavorText
