@@ -16,7 +16,6 @@ public sealed class PayloadSystem : EntitySystem
 {
     [Dependency] private readonly TagSystem _tagSystem = default!;
     [Dependency] private readonly SolutionContainerSystem _solutionSystem = default!;
-    [Dependency] private readonly SharedChemicalReactionSystem _chemistrySystem = default!;
     [Dependency] private readonly AdminLogSystem _logSystem = default!;
     [Dependency] private readonly IComponentFactory _componentFactory = default!;
     [Dependency] private readonly ISerializationManager _serializationManager = default!;
