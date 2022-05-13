@@ -3,7 +3,7 @@
 connecting-title = Space Station 14
 connecting-exit = Exit
 connecting-retry = Retry
-connecting-redial = Reload
+connecting-redial = Relaunch
 connecting-reconnect = Reconnect
 connecting-in-progress = Connecting to server...
 connecting-disconnected = Disconnected from server:
