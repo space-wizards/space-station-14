@@ -1,7 +1,6 @@
 using Content.Server.Botany.Components;
 using Content.Server.Chemistry.EntitySystems;
 using Content.Server.Popups;
-using Content.Shared.GameTicking;
 using JetBrains.Annotations;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;

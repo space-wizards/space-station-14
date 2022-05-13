@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using Content.Shared.Body.Components;
-using Robust.Shared.ViewVariables;
+﻿using Content.Shared.Body.Components;
 
 namespace Content.Shared.Body.Part
 {

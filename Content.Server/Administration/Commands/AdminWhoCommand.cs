@@ -4,7 +4,6 @@ using Content.Server.Afk;
 using Content.Shared.Administration;
 using Robust.Server.Player;
 using Robust.Shared.Console;
-using Robust.Shared.IoC;
 using Robust.Shared.Utility;
 
 namespace Content.Server.Administration.Commands;

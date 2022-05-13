@@ -1,7 +1,6 @@
 using Content.Shared.Audio;
 using JetBrains.Annotations;
 using Robust.Shared.Audio;
-using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 using Robust.Shared.Utility;

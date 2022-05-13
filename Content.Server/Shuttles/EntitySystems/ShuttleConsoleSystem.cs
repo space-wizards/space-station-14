@@ -1,4 +1,3 @@
-using System;
 using Content.Server.Popups;
 using Content.Server.Power.Components;
 using Content.Server.Shuttles.Components;

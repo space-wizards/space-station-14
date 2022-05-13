@@ -1,13 +1,7 @@
-using System;
 using Content.Server.UserInterface;
-using Content.Shared.Interaction;
 using Content.Shared.Sound;
 using Content.Shared.VendingMachines;
 using Robust.Server.GameObjects;
-using Robust.Shared.GameObjects;
-using Robust.Shared.Serialization.Manager.Attributes;
-using Robust.Shared.ViewVariables;
-using Content.Server.VendingMachines.Systems;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
 namespace Content.Server.VendingMachines

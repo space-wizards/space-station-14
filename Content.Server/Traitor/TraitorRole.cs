@@ -1,8 +1,6 @@
 using Content.Server.Chat.Managers;
 using Content.Server.Roles;
 using Content.Shared.Roles;
-using Robust.Shared.IoC;
-using Robust.Shared.Localization;
 
 namespace Content.Server.Traitor
 {

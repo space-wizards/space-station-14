@@ -1,9 +1,5 @@
 ﻿using Content.Server.Mind.Commands;
 using Robust.Server.Player;
-using Robust.Shared.GameObjects;
-using Robust.Shared.Serialization.Manager.Attributes;
-using Robust.Shared.ViewVariables;
-using Robust.Shared.Localization;
 
 namespace Content.Server.Ghost.Roles.Components
 {

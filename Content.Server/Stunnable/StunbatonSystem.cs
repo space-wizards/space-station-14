@@ -1,11 +1,9 @@
-using System;
 using System.Linq;
 using Content.Server.Power.Events;
 using Content.Server.PowerCell;
 using Content.Server.Speech.EntitySystems;
 using Content.Server.Stunnable.Components;
 using Content.Server.Weapon.Melee;
-using Content.Shared.ActionBlocker;
 using Content.Shared.Audio;
 using Content.Shared.Examine;
 using Content.Shared.Interaction.Events;
@@ -18,9 +16,6 @@ using Content.Shared.Stunnable;
 using Content.Shared.Throwing;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Localization;
 using Robust.Shared.Player;
 using Robust.Shared.Random;
 

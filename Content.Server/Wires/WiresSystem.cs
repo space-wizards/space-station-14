@@ -2,7 +2,6 @@ using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Threading;
 using Content.Server.DoAfter;
-using Content.Server.Hands.Systems;
 using Content.Server.Hands.Components;
 using Content.Server.Power.Components;
 using Content.Server.Tools;
@@ -24,12 +23,10 @@ namespace Content.Server.Wires;
 public sealed class WiresSystem : EntitySystem
 {
     [Dependency] private readonly IPrototypeManager _protoMan = default!;
-    [Dependency] private readonly AudioSystem _audioSystem = default!;
     [Dependency] private readonly UserInterfaceSystem _uiSystem = default!;
     [Dependency] private readonly ToolSystem _toolSystem = default!;
     [Dependency] private readonly SharedPopupSystem _popupSystem = default!;
     [Dependency] private readonly SharedInteractionSystem _interactionSystem = default!;
-    [Dependency] private readonly HandsSystem _handsSystem = default!;
     [Dependency] private readonly DoAfterSystem _doAfter = default!;
 
     private IRobustRandom _random = new RobustRandom();

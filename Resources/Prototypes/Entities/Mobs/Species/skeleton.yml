@@ -70,10 +70,6 @@
       color: "#ffffff"
       sprite: Mobs/Species/Skeleton/parts.rsi
       state: head_m
-    - map: [ "enum.HumanoidVisualLayers.Eyes" ]
-      color: "#008800"
-      sprite: Mobs/Customization/eyes.rsi
-      state: eyes
     - map: [ "enum.HumanoidVisualLayers.RArm" ]
       color: "#ffffff"
       sprite: Mobs/Species/Skeleton/parts.rsi
@@ -126,7 +122,6 @@
     - map: [ "shoes" ]
     - map: [ "ears" ]
     - map: [ "outerClothing" ]
-    - map: [ "eyes" ]
     - map: [ "belt" ]
     - map: [ "neck" ]
     - map: [ "back" ]
@@ -226,6 +221,7 @@
         Burn:
           sprite: Mobs/Effects/burn_damage.rsi
   - type: CombatMode
+    canDisarm: true
   - type: Climbing
   - type: Cuffable
   - type: CharacterInfo
@@ -278,10 +274,6 @@
           color: "#b8b8b8"
           sprite: Mobs/Species/Skeleton/parts.rsi
           state: head_m
-        - map: [ "enum.HumanoidVisualLayers.Eyes" ]
-          color: "#008800"
-          sprite: Mobs/Customization/eyes.rsi
-          state: eyes
         - map: [ "enum.HumanoidVisualLayers.RArm" ]
           color: "#b8b8b8"
           sprite: Mobs/Species/Skeleton/parts.rsi
@@ -334,18 +326,9 @@
         - map: [ "shoes" ]
         - map: [ "ears" ]
         - map: [ "outerClothing" ]
-        - map: [ "eyes" ]
         - map: [ "belt" ]
         - map: [ "neck" ]
         - map: [ "back" ]
-        - map: [ "enum.HumanoidVisualLayers.FacialHair" ]
-          state: shaved
-          sprite: Mobs/Customization/human_facial_hair.rsi
-          color: '#FFFFFF80'
-        - map: [ "enum.HumanoidVisualLayers.Hair" ]
-          state: bald
-          sprite: Mobs/Customization/human_hair.rsi
-          color: '#FFFFFF80'
         - map: [ "mask" ]
         - map: [ "head" ]
         - map: [ "pocket1" ]

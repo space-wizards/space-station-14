@@ -1,5 +1,4 @@
 using Content.Shared.Wires;
-using Robust.Shared.GameObjects;
 
 namespace Content.Server.Wires;
 

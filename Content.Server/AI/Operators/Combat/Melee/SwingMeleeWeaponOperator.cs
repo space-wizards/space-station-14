@@ -2,8 +2,6 @@ using Content.Server.CombatMode;
 using Content.Server.Hands.Components;
 using Content.Server.Interaction;
 using Content.Server.Weapon.Melee.Components;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
 
 namespace Content.Server.AI.Operators.Combat.Melee
 {

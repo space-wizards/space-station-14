@@ -1,8 +1,6 @@
 ﻿using Content.Shared.DragDrop;
 using Content.Shared.Examine;
 using Robust.Shared.Containers;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
 using Robust.Shared.Map;
 using static Content.Shared.Examine.ExamineSystemShared;
 using static Content.Shared.Interaction.SharedInteractionSystem;

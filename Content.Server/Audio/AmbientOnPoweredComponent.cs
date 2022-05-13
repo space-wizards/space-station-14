@@ -1,5 +1,4 @@
 using Content.Shared.Audio;
-using Robust.Shared.GameObjects;
 
 namespace Content.Server.Audio
 {

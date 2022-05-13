@@ -7,7 +7,6 @@ using Content.Server.Ghost.Roles.Components;
 using Content.Server.Mind.Components;
 using Robust.Server.GameObjects;
 using Robust.Shared.Player;
-using Content.Shared.Actions;
 using Content.Shared.Interaction.Events;
 
 namespace Content.Server.PAI

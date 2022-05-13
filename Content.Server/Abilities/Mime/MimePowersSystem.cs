@@ -7,7 +7,6 @@ using Content.Shared.Physics;
 using Content.Shared.Doors.Components;
 using Content.Shared.Maps;
 using Content.Shared.MobState.Components;
-using Content.Shared.Tag;
 using Robust.Shared.Player;
 using Robust.Shared.Physics;
 
@@ -18,7 +17,7 @@ namespace Content.Server.Abilities.Mime
         [Dependency] private readonly PopupSystem _popupSystem = default!;
         [Dependency] private readonly SharedActionsSystem _actionsSystem = default!;
         [Dependency] private readonly AlertsSystem _alertsSystem = default!;
-        [Dependency] private readonly TagSystem _tagSystem = default!;
+
         public override void Initialize()
         {
             base.Initialize();

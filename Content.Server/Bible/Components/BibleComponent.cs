@@ -1,7 +1,5 @@
 using Content.Shared.Damage;
 using Content.Shared.Sound;
-using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
-using Robust.Shared.Prototypes;
 
 namespace Content.Server.Bible.Components
 {
