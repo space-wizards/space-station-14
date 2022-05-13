@@ -26,6 +26,8 @@ namespace Content.Client.Launcher
 
             ReconnectButton.OnPressed += _ => _state.RetryConnect();
             RetryButton.OnPressed += _ => _state.RetryConnect();
+            RedialButton.OnPressed += _ => _state.Redial();
+            Redial2Button.OnPressed += _ => _state.Redial();
             ExitButton.OnPressed += _ => _state.Exit();
 
             var addr = state.Address;

@@ -23,16 +23,18 @@
                     </BoxContainer>
                     <BoxContainer Orientation="Vertical" Name="ConnectFail" Visible="False">
                         <Label Name="ConnectFailReason" Align="Center" />
-                        <Button Name="RetryButton" Text="{Loc 'connecting-retry'}"
-                                HorizontalAlignment="Center"
-                                VerticalExpand="True" VerticalAlignment="Bottom" />
+                        <BoxContainer Orientation="Horizontal" HorizontalAlignment="Center" VerticalExpand="True" VerticalAlignment="Bottom">
+                            <Button Name="RetryButton" Text="{Loc 'connecting-retry'}"/>
+                            <Button Name="RedialButton" Text="{Loc 'connecting-redial'}"/>
+                        </BoxContainer>
                     </BoxContainer>
                     <BoxContainer Orientation="Vertical" Name="Disconnected">
                         <Label Text="{Loc 'connecting-disconnected'}" Align="Center" />
                         <Label Name="DisconnectReason" Align="Center" />
-                        <Button Name="ReconnectButton" Text="{Loc 'connecting-reconnect'}"
-                                HorizontalAlignment="Center"
-                                VerticalExpand="True" VerticalAlignment="Bottom" />
+                        <BoxContainer Orientation="Horizontal" HorizontalAlignment="Center" VerticalExpand="True" VerticalAlignment="Bottom">
+                            <Button Name="ReconnectButton" Text="{Loc 'connecting-reconnect'}"/>
+                            <Button Name="Redial2Button" Text="{Loc 'connecting-redial'}"/>
+                        </BoxContainer>
                     </BoxContainer>
                 </Control>
                 <Label Name="ConnectingAddress" StyleClasses="LabelSubText" HorizontalAlignment="Center" />

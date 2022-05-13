@@ -3,6 +3,7 @@
 connecting-title = Space Station 14
 connecting-exit = Exit
 connecting-retry = Retry
+connecting-redial = Redial
 connecting-reconnect = Reconnect
 connecting-in-progress = Connecting to server...
 connecting-disconnected = Disconnected from server:
@@ -15,3 +16,6 @@ connecting-state-ResolvingHost = Resolving host
 connecting-state-EstablishingConnection = Establishing connection
 connecting-state-Handshake = Handshake
 connecting-state-Connected = Connected
+
+connecting-redial-reason-user = Redialling by user request...
+

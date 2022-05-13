@@ -88,6 +88,14 @@ namespace Content.Client.Launcher
             }
         }
 
+        public void Redial()
+        {
+            if (_gameController.LaunchState.Ss14Address != null)
+            {
+                _gameController.Redial(_gameController.LaunchState.Ss14Address, Loc.GetString("connecting-redial-reason-user"));
+            }
+        }
+
         public void Exit()
         {
             _gameController.Shutdown("Exit button pressed");
