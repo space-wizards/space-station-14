@@ -193,6 +193,15 @@
       - FlashPayload
       - Signaller
       - SignalTrigger
+      - PowerCellSmallStandard
+      - PowerCellSmallHigh
+      - PowerCellSmallSuper
+      - PowerCellMediumStandard
+      - PowerCellMediumHigh
+      - PowerCellMediumSuper
+      - PowerCellLargeStandard
+      - PowerCellLargeHigh
+      - PowerCellLargeSuper
   - type: ActivatableUI
     key: enum.LatheUiKey.Key #Yes only having 1 of them here doesn't break anything
   - type: ActivatableUIRequiresPower

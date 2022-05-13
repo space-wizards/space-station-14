@@ -1,35 +1,4 @@
 Entries:
-- author: Peptide90
-  changes:
-  - {message: Added a new light fixture that can be constructed - the small light
-      post., type: Add}
-  id: 1018
-  time: '2022-02-09T00:47:33.0000000+00:00'
-- author: Rane
-  changes:
-  - {message: The cursed locker in a certain salvage map has been replaced with something
-      else., type: Tweak}
-  id: 1019
-  time: '2022-02-09T03:02:15.0000000+00:00'
-- author: WlarusFromDaSpace
-  changes:
-  - {message: Added Emergency Access to airlocks, type: Add}
-  - {message: Door remotes can now put airlocks they have access for to emergency
-      access mode, type: Add}
-  id: 1020
-  time: '2022-02-09T03:13:35.0000000+00:00'
-- author: ElectroJr
-  changes:
-  - {message: 'Removed targeting dummy, as limb-damage is still not yet implemented.',
-    type: Remove}
-  id: 1021
-  time: '2022-02-09T04:25:13.0000000+00:00'
-- author: Peptide90
-  changes:
-  - {message: 'More things now fit in the trashbag! Crayons, medipens, mice, broken
-      plates and ramen cups.', type: Tweak}
-  id: 1022
-  time: '2022-02-09T15:07:14.0000000+00:00'
 - author: ElectroJr
   changes:
   - {message: Fixed syringes not working., type: Fix}
@@ -3033,3 +3002,34 @@ Entries:
   - {message: Barratry has received a small update., type: Tweak}
   id: 1517
   time: '2022-05-12T22:05:02.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: 'Added Skeletons, your lovely local undead spesspals. 97% less murderous
+      than zombies and much easier to kill.', type: Add}
+  id: 1518
+  time: '2022-05-12T23:35:55.0000000+00:00'
+- author: DogZeroX
+  changes:
+  - {message: 'Naming machine fixed, now you can get a reptilian name when clicking
+      randomize on character selection.', type: Tweak}
+  id: 1519
+  time: '2022-05-12T23:43:15.0000000+00:00'
+- author: Ripmorld
+  changes:
+  - {message: You can now print various powercells in protolathes, type: Add}
+  - {message: You get more Licoxide the bigger the powercell you juice, type: Tweak}
+  id: 1520
+  time: '2022-05-12T23:49:52.0000000+00:00'
+- author: ShuttleEnjoyer
+  changes:
+  - {message: 'Added a new Cargo crate with a shuttle console board, shuttle power
+      boards, a handheld GPS, and a single inflatable door.', type: Add}
+  - {message: Shuttle thrusters and gyroscopes cost less., type: Tweak}
+  id: 1521
+  time: '2022-05-13T00:11:36.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Lobby music now plays from round end summary, type: Tweak}
+  - {message: Sound effects on lobby start, type: Add}
+  id: 1522
+  time: '2022-05-13T00:13:07.0000000+00:00'
