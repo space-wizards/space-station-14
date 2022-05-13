@@ -8,6 +8,7 @@ using Content.Server.DeviceNetwork.Systems;
 using Content.Server.Power.Components;
 using Content.Shared.Atmos;
 using Content.Shared.Atmos.Monitor;
+using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
@@ -24,7 +25,7 @@ namespace Content.Server.Atmos.Monitor.Systems
         [Dependency] private readonly AtmosDeviceSystem _atmosDeviceSystem = default!;
         [Dependency] private readonly DeviceNetworkSystem _deviceNetSystem = default!;
         [Dependency] private readonly TransformSystem _transformSystem = default!;
-            [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
+        [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
 
         // Commands
         /// <summary>
