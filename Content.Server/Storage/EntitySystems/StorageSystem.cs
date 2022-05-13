@@ -375,7 +375,7 @@ namespace Content.Server.Storage.EntitySystems
                 UpdateStorageVisualization(uid, storageComp);
 
                 if (storageComp.StorageCloseSound is not null)
-                    SoundSystem.Play(Filter.Pvs(uid, entityManager: EntityManager), storageComp.StorageCloseSound.GetSound(), uid, AudioParams.Default);
+                    SoundSystem.Play(Filter.Pvs(uid, entityManager: EntityManager), storageComp.StorageCloseSound.GetSound(), uid, storageComp.StorageCloseSound.Params);
             }
         }
 
@@ -584,7 +584,7 @@ namespace Content.Server.Storage.EntitySystems
                 return;
 
             if (storageComp.StorageOpenSound is not null)
-                SoundSystem.Play(Filter.Pvs(uid, entityManager: EntityManager), storageComp.StorageOpenSound.GetSound(), uid, AudioParams.Default);
+                SoundSystem.Play(Filter.Pvs(uid, entityManager: EntityManager), storageComp.StorageOpenSound.GetSound(), uid, storageComp.StorageOpenSound.Params);
 
             Logger.DebugS(storageComp.LoggerName, $"Storage (UID {uid}) \"used\" by player session (UID {player.PlayerSession.AttachedEntity}).");
 
