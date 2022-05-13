@@ -1,6 +1,3 @@
-using Robust.Shared.GameObjects;
-using Robust.Shared.Maths;
-
 namespace Content.Shared.Movement.Components
 {
     // Does nothing except ensure uniqueness between mover components.

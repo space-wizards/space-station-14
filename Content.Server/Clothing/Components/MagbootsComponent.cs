@@ -1,15 +1,9 @@
-using Content.Shared.Actions;
 using Content.Shared.Clothing;
 using Content.Shared.Interaction;
 using Content.Shared.Inventory;
 using Content.Shared.Item;
-using JetBrains.Annotations;
 using Robust.Server.GameObjects;
 using Robust.Shared.Containers;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Serialization.Manager.Attributes;
-using Robust.Shared.ViewVariables;
 
 namespace Content.Server.Clothing.Components
 {

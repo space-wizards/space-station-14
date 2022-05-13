@@ -7,7 +7,6 @@ using Content.Server.MachineLinking.Components;
 using Content.Shared.MachineLinking;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
-using Robust.Shared.Map;
 using Robust.Shared.Player;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 

@@ -1,5 +1,4 @@
 ﻿using Content.Server.Body.Components;
-using Content.Server.Bed;
 using Content.Server.Chemistry.Components.SolutionManager;
 using Content.Server.Chemistry.EntitySystems;
 using Content.Shared.Body.Components;

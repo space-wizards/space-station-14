@@ -1,9 +1,6 @@
-using System;
 using System.Linq;
 using System.Threading;
 using Robust.Shared.Enums;
-using Robust.Shared.Localization;
-using Robust.Shared.ViewVariables;
 using Timer = Robust.Shared.Timing.Timer;
 
 namespace Content.Server.GameTicking

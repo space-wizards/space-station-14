@@ -1,9 +1,4 @@
 Entries:
-- author: Delete69
-  changes:
-  - {message: command decal color to departmental pallette, type: Add}
-  id: 1024
-  time: '2022-02-09T17:26:10.0000000+00:00'
 - author: TimrodDX
   changes:
   - {message: Packed Station is now significantly more colorful., type: Tweak}
@@ -3035,3 +3030,9 @@ Entries:
   - {message: skeletons can now disarm, type: Fix}
   id: 1523
   time: '2022-05-13T02:20:43.0000000+00:00'
+- author: mirrorcult
+  changes:
+  - {message: The rules have been slightly modified to make escalation rules for conflict
+      clearer., type: Tweak}
+  id: 1524
+  time: '2022-05-13T04:58:51.0000000+00:00'

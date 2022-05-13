@@ -1,4 +1,3 @@
-using System;
 using Content.Server.Climbing;
 using Content.Server.EUI;
 using Content.Server.Mind.Components;
@@ -12,12 +11,7 @@ using Content.Shared.Species;
 using Robust.Server.GameObjects;
 using Robust.Server.Player;
 using Robust.Shared.Containers;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Localization;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Serialization.Manager.Attributes;
-using Robust.Shared.ViewVariables;
 
 namespace Content.Server.Cloning.Components
 {

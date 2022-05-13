@@ -1,6 +1,4 @@
-﻿using Content.Shared.ActionBlocker;
-using Content.Shared.FixedPoint;
-using Robust.Shared.GameObjects;
+﻿using Content.Shared.FixedPoint;
 
 namespace Content.Shared.MobState.State
 {

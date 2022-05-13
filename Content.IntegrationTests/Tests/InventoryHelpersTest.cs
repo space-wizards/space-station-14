@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Threading.Tasks;
-using Content.Server.Inventory;
 using Content.Server.Stunnable;
 using Content.Shared.Inventory;
 using NUnit.Framework;

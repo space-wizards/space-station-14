@@ -1,5 +1,3 @@
-using System;
-using System.Collections.Generic;
 using System.Threading;
 using Content.Server.Access;
 using Content.Server.AI.Pathfinding.Pathfinders;
@@ -8,10 +6,7 @@ using Content.Server.CPUJob.JobQueues.Queues;
 using Content.Shared.Access.Systems;
 using Content.Shared.GameTicking;
 using Content.Shared.Physics;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
 using Robust.Shared.Map;
-using Robust.Shared.Maths;
 using Robust.Shared.Physics;
 using Robust.Shared.Utility;
 

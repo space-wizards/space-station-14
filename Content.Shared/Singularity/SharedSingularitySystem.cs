@@ -1,10 +1,6 @@
-using System;
 using Content.Shared.Ghost;
 using Content.Shared.Radiation;
 using Content.Shared.Singularity.Components;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Maths;
 using Robust.Shared.Physics;
 using Robust.Shared.Physics.Collision.Shapes;
 using Robust.Shared.Physics.Dynamics;

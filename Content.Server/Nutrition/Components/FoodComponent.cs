@@ -1,15 +1,10 @@
-using System;
 using System.Threading;
 using Content.Server.Chemistry.EntitySystems;
 using Content.Server.Nutrition.EntitySystems;
 using Content.Shared.FixedPoint;
 using Content.Shared.Sound;
-using Robust.Shared.Analyzers;
-using Robust.Shared.GameObjects;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
-using Robust.Shared.ViewVariables;
 
 namespace Content.Server.Nutrition.Components
 {

@@ -1,4 +1,3 @@
-using Content.Server.UserInterface;
 using Content.Shared.Lathe;
 using Content.Shared.Research.Prototypes;
 using Robust.Server.GameObjects;
