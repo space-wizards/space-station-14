@@ -10,7 +10,6 @@ using Content.Shared.Damage;
 using Content.Shared.MobState.Components;
 using Content.Server.Disease;
 using Content.Server.Weapons.Melee.ZombieTransfer.Components;
-using Content.Server.Body.Components;
 
 namespace Content.Server.Weapons.Melee.ZombieTransfer
 {

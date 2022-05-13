@@ -1,7 +1,5 @@
-﻿using System;
-using Content.Shared.Dataset;
+﻿using Content.Shared.Dataset;
 using Content.Shared.Species;
-using Robust.Shared.IoC;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 

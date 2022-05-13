@@ -9,7 +9,6 @@ using Content.Shared.Tag;
 using Content.Shared.FixedPoint;
 using Content.Shared.Audio;
 using Content.Shared.Random.Helpers;
-using Robust.Shared.Prototypes;
 using Robust.Shared.Player;
 using Robust.Shared.Timing;
 using Robust.Shared.Audio;

@@ -1,12 +1,7 @@
-using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Content.Server.Power.Components;
 using Robust.Server.GameObjects;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Localization;
-using Robust.Shared.Log;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 

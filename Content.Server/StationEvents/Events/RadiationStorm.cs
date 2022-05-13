@@ -1,4 +1,3 @@
-using System.Linq;
 using Content.Server.Radiation;
 using Content.Server.Station.Components;
 using Content.Server.Station.Systems;

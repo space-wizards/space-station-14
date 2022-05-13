@@ -1,5 +1,4 @@
 using Content.Shared.CombatMode;
-using Robust.Shared.GameObjects;
 
 namespace Content.Server.CombatMode
 {

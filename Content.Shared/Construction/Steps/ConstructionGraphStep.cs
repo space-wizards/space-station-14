@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using Content.Shared.Examine;
-using Robust.Shared.Serialization.Manager.Attributes;
+﻿using Content.Shared.Examine;
 
 namespace Content.Shared.Construction.Steps
 {

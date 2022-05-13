@@ -7,7 +7,6 @@ using Content.Shared.Physics;
 using Content.Shared.Doors.Components;
 using Content.Shared.Maps;
 using Content.Shared.MobState.Components;
-using Content.Shared.Tag;
 using Robust.Shared.Player;
 using Robust.Shared.Physics;
 

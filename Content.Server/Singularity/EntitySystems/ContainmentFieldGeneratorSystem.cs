@@ -2,8 +2,6 @@
 using Content.Server.Singularity.Components;
 using Content.Shared.Singularity.Components;
 using Content.Shared.Tag;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
 using Robust.Shared.Physics.Dynamics;
 
 namespace Content.Server.Singularity.EntitySystems
