@@ -20,13 +20,3 @@
   icon: Objects/Weapons/Throwable/bola.rsi/icon.png
   objectType: Item
 
-- type: construction
-  name: makeshift laser gun
-  id: MakeshiftLaser
-  graph: MakeshiftLaser
-  startNode: start
-  targetNode: makeshiftLaser
-  category: Weapons
-  description: A laser gun for blasting zombies.
-  icon: Objects/Weapons/Guns/Battery/makeshift.rsi/icon.png
-  objectType: Item
