@@ -4,6 +4,7 @@ using Content.Server.AI.Utils;
 using Content.Server.Clothing.Components;
 using Content.Server.Storage.Components;
 using JetBrains.Annotations;
+using Robust.Server.Containers;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
@@ -24,10 +25,10 @@ namespace Content.Server.AI.WorldState.States.Clothing
             {
                 return result;
             }
-
+            var containerSystem = IoCManager.Resolve<ContainerSystem>();
             foreach (var entity in Visibility.GetNearestEntities(entMan.GetComponent<TransformComponent>(Owner).Coordinates, typeof(ClothingComponent), controller.VisionRadius))
             {
-                if (entity.TryGetContainer(out var container))
+                if (containerSystem.TryGetContainingContainer(entity, out var container))
                 {
                     if (!entMan.HasComponent<EntityStorageComponent>(container.Owner))
                     {

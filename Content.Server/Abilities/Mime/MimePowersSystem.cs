@@ -18,7 +18,7 @@ namespace Content.Server.Abilities.Mime
         [Dependency] private readonly PopupSystem _popupSystem = default!;
         [Dependency] private readonly SharedActionsSystem _actionsSystem = default!;
         [Dependency] private readonly AlertsSystem _alertsSystem = default!;
-        [Dependency] private readonly TagSystem _tagSystem = default!;
+
         public override void Initialize()
         {
             base.Initialize();

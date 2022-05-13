@@ -31,7 +31,6 @@ public sealed partial class ExplosionSystem : EntitySystem
     [Dependency] private readonly IPlayerManager _playerManager = default!;
 
     [Dependency] private readonly DamageableSystem _damageableSystem = default!;
-    [Dependency] private readonly ContainerSystem _containerSystem = default!;
     [Dependency] private readonly NodeGroupSystem _nodeGroupSystem = default!;
     [Dependency] private readonly CameraRecoilSystem _recoilSystem = default!;
     [Dependency] private readonly EntityLookupSystem _entityLookup = default!;

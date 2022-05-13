@@ -16,7 +16,6 @@ namespace Content.Server.Atmos.EntitySystems
     [UsedImplicitly]
     public sealed class GasAnalyzableSystem : EntitySystem
     {
-        [Dependency] private readonly ToolSystem _toolSystem = default!;
         [Dependency] private readonly ExamineSystemShared _examineSystem = default!;
 
         public override void Initialize()

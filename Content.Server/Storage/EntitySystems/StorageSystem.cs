@@ -38,7 +38,6 @@ namespace Content.Server.Storage.EntitySystems
         [Dependency] private readonly IGameTiming _gameTiming = default!;
         [Dependency] private readonly IRobustRandom _random = default!;
         [Dependency] private readonly ContainerSystem _containerSystem = default!;
-        [Dependency] private readonly DisposalUnitSystem _disposalSystem = default!;
         [Dependency] private readonly DoAfterSystem _doAfterSystem = default!;
         [Dependency] private readonly EntityLookupSystem _entityLookupSystem = default!;
         [Dependency] private readonly InteractionSystem _interactionSystem = default!;

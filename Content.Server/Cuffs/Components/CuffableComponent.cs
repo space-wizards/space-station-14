@@ -7,6 +7,7 @@ using Content.Shared.Cuffs.Components;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Interaction;
 using Content.Shared.Popups;
+using Robust.Server.Containers;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.Containers;
@@ -23,6 +24,7 @@ namespace Content.Server.Cuffs.Components
     {
         [Dependency] private readonly IEntityManager _entMan = default!;
         [Dependency] private readonly IEntitySystemManager _sysMan = default!;
+        [Dependency] private readonly IComponentFactory _componentFactory = default!;
 
         /// <summary>
         /// How many of this entity's hands are currently cuffed.
@@ -45,8 +47,7 @@ namespace Content.Server.Cuffs.Components
         protected override void Initialize()
         {
             base.Initialize();
-
-            Container = ContainerHelpers.EnsureContainer<Container>(Owner, Name);
+            Container = _sysMan.GetEntitySystem<ContainerSystem>().EnsureContainer<Container>(Owner, _componentFactory.GetComponentName(GetType()));
             Owner.EnsureComponentWarn<HandsComponent>();
         }
 

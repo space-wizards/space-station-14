@@ -41,7 +41,6 @@ namespace Content.Server.Hands.Systems
         [Dependency] private readonly StackSystem _stackSystem = default!;
         [Dependency] private readonly HandVirtualItemSystem _virtualItemSystem = default!;
         [Dependency] private readonly ActionBlockerSystem _actionBlockerSystem = default!;
-        [Dependency] private readonly AdminLogSystem _logSystem = default!;
         [Dependency] private readonly StrippableSystem _strippableSystem = default!;
         [Dependency] private readonly SharedHandVirtualItemSystem _virtualSystem = default!;
         [Dependency] private readonly PopupSystem _popupSystem = default!;
