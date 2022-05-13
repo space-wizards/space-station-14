@@ -101,9 +101,7 @@
     sprite: Objects/Weapons/Guns/Battery/makeshift.rsi
   - type: BatteryBarrel
     fireCost: 240
-  - type: Construction
-    graph: MakeshiftLaser
-    node: makeshiftLaser
+
 
 - type: entity
   name: svalinn laser pistol
