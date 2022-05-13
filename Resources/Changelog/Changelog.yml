@@ -1,10 +1,4 @@
 Entries:
-- author: Peptide90
-  changes:
-  - {message: 'More things now fit in the trashbag! Crayons, medipens, mice, broken
-      plates and ramen cups.', type: Tweak}
-  id: 1022
-  time: '2022-02-09T15:07:14.0000000+00:00'
 - author: ElectroJr
   changes:
   - {message: Fixed syringes not working., type: Fix}
@@ -3033,3 +3027,9 @@ Entries:
   - {message: Shuttle thrusters and gyroscopes cost less., type: Tweak}
   id: 1521
   time: '2022-05-13T00:11:36.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Lobby music now plays from round end summary, type: Tweak}
+  - {message: Sound effects on lobby start, type: Add}
+  id: 1522
+  time: '2022-05-13T00:13:07.0000000+00:00'
