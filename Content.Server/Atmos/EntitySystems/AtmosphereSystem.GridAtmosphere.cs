@@ -55,11 +55,14 @@ public sealed partial class AtmosphereSystem
             {
                 try
                 {
-                    gridAtmosphere.Tiles.Add(indices, new TileAtmosphere(mapGrid.GridIndex, indices, (GasMixture) gridAtmosphere.UniqueMixes![mix].Clone()));
+                    gridAtmosphere.Tiles.Add(indices,
+                        new TileAtmosphere(mapGrid.GridIndex, indices,
+                            (GasMixture) gridAtmosphere.UniqueMixes![mix].Clone()));
                 }
                 catch (ArgumentOutOfRangeException)
                 {
-                    Logger.Error($"Error during atmos serialization! Tile at {indices} points to an unique mix ({mix}) out of range!");
+                    Logger.Error(
+                        $"Error during atmos serialization! Tile at {indices} points to an unique mix ({mix}) out of range!");
                     throw;
                 }
 
@@ -138,7 +141,8 @@ public sealed partial class AtmosphereSystem
         args.Handled = true;
     }
 
-    private void GridGetAllMixtures(EntityUid uid, GridAtmosphereComponent component, ref GetAllMixturesMethodEvent args)
+    private void GridGetAllMixtures(EntityUid uid, GridAtmosphereComponent component,
+        ref GetAllMixturesMethodEvent args)
     {
         if (args.Handled)
             return;
@@ -165,7 +169,8 @@ public sealed partial class AtmosphereSystem
         args.Handled = true;
     }
 
-    private void GridInvalidateTile(EntityUid uid, GridAtmosphereComponent component, ref InvalidateTileMethodEvent args)
+    private void GridInvalidateTile(EntityUid uid, GridAtmosphereComponent component,
+        ref InvalidateTileMethodEvent args)
     {
         if (args.Handled)
             return;
@@ -174,7 +179,8 @@ public sealed partial class AtmosphereSystem
         args.Handled = true;
     }
 
-    private void GridGetTileMixture(EntityUid uid, GridAtmosphereComponent component, ref GetTileMixtureMethodEvent args)
+    private void GridGetTileMixture(EntityUid uid, GridAtmosphereComponent component,
+        ref GetTileMixtureMethodEvent args)
     {
         if (args.Handled)
             return;
@@ -197,11 +203,12 @@ public sealed partial class AtmosphereSystem
         if (!component.Tiles.TryGetValue(args.Tile, out var tile))
             return;
 
-        args.Result = tile.Air is {} air ? React(air, tile) : ReactionResult.NoReaction;
+        args.Result = tile.Air is { } air ? React(air, tile) : ReactionResult.NoReaction;
         args.Handled = true;
     }
 
-    private void GridIsTileAirBlocked(EntityUid uid, GridAtmosphereComponent component, ref IsTileAirBlockedMethodEvent args)
+    private void GridIsTileAirBlocked(EntityUid uid, GridAtmosphereComponent component,
+        ref IsTileAirBlockedMethodEvent args)
     {
         if (args.Handled)
             return;
@@ -259,7 +266,8 @@ public sealed partial class AtmosphereSystem
         args.Handled = true;
     }
 
-    private void GridGetAdjacentTiles(EntityUid uid, GridAtmosphereComponent component, ref GetAdjacentTilesMethodEvent args)
+    private void GridGetAdjacentTiles(EntityUid uid, GridAtmosphereComponent component,
+        ref GetAdjacentTilesMethodEvent args)
     {
         if (args.Handled)
             return;
@@ -282,7 +290,8 @@ public sealed partial class AtmosphereSystem
         args.Handled = true;
     }
 
-    private void GridGetAdjacentTileMixtures(EntityUid uid, GridAtmosphereComponent component, ref GetAdjacentTileMixturesMethodEvent args)
+    private void GridGetAdjacentTileMixtures(EntityUid uid, GridAtmosphereComponent component,
+        ref GetAdjacentTileMixturesMethodEvent args)
     {
         if (args.Handled)
             return;
@@ -305,7 +314,8 @@ public sealed partial class AtmosphereSystem
         args.Handled = true;
     }
 
-    private void GridUpdateAdjacent(EntityUid uid, GridAtmosphereComponent component, ref UpdateAdjacentMethodEvent args)
+    private void GridUpdateAdjacent(EntityUid uid, GridAtmosphereComponent component,
+        ref UpdateAdjacentMethodEvent args)
     {
         if (args.Handled)
             return;
@@ -341,7 +351,8 @@ public sealed partial class AtmosphereSystem
             var tileBlockedEv = new IsTileAirBlockedMethodEvent(uid, tile.GridIndices, direction, mapGridComp);
             GridIsTileAirBlocked(uid, component, ref tileBlockedEv);
 
-            var adjacentBlockedEv = new IsTileAirBlockedMethodEvent(uid, adjacent.GridIndices, oppositeDirection, mapGridComp);
+            var adjacentBlockedEv =
+                new IsTileAirBlockedMethodEvent(uid, adjacent.GridIndices, oppositeDirection, mapGridComp);
             GridIsTileAirBlocked(uid, component, ref adjacentBlockedEv);
 
             if (!adjacent.BlockedAirflow.IsFlagSet(oppositeDirection) && !tileBlockedEv.Result)
@@ -362,7 +373,8 @@ public sealed partial class AtmosphereSystem
                 tile.AdjacentBits &= ~direction;
             }
 
-            DebugTools.Assert(!(tile.AdjacentBits.IsFlagSet(direction) ^ adjacent.AdjacentBits.IsFlagSet(oppositeDirection)));
+            DebugTools.Assert(!(tile.AdjacentBits.IsFlagSet(direction) ^
+                                adjacent.AdjacentBits.IsFlagSet(oppositeDirection)));
 
             if (!adjacent.AdjacentBits.IsFlagSet(adjacent.MonstermosInfo.CurrentTransferDirection))
                 adjacent.MonstermosInfo.CurrentTransferDirection = AtmosDirection.Invalid;
@@ -384,7 +396,8 @@ public sealed partial class AtmosphereSystem
         args.Handled = true;
     }
 
-    private void GridHotspotExtinguish(EntityUid uid, GridAtmosphereComponent component, ref HotspotExtinguishMethodEvent args)
+    private void GridHotspotExtinguish(EntityUid uid, GridAtmosphereComponent component,
+        ref HotspotExtinguishMethodEvent args)
     {
         if (args.Handled)
             return;
@@ -399,7 +412,8 @@ public sealed partial class AtmosphereSystem
         GridInvalidateTile(uid, component, ref ev);
     }
 
-    private void GridIsHotspotActive(EntityUid uid, GridAtmosphereComponent component, ref IsHotspotActiveMethodEvent args)
+    private void GridIsHotspotActive(EntityUid uid, GridAtmosphereComponent component,
+        ref IsHotspotActiveMethodEvent args)
     {
         if (args.Handled)
             return;
@@ -474,7 +488,8 @@ public sealed partial class AtmosphereSystem
         args.Handled = component.PipeNets.Remove(args.PipeNet);
     }
 
-    private void GridAddAtmosDevice(EntityUid uid, GridAtmosphereComponent component, ref AddAtmosDeviceMethodEvent args)
+    private void GridAddAtmosDevice(EntityUid uid, GridAtmosphereComponent component,
+        ref AddAtmosDeviceMethodEvent args)
     {
         if (args.Handled)
             return;
@@ -487,7 +502,8 @@ public sealed partial class AtmosphereSystem
         args.Result = true;
     }
 
-    private void GridRemoveAtmosDevice(EntityUid uid, GridAtmosphereComponent component, ref RemoveAtmosDeviceMethodEvent args)
+    private void GridRemoveAtmosDevice(EntityUid uid, GridAtmosphereComponent component,
+        ref RemoveAtmosDeviceMethodEvent args)
     {
         if (args.Handled)
             return;
@@ -511,8 +527,9 @@ public sealed partial class AtmosphereSystem
 
         foreach (var tile in mapGrid.GetAllTiles())
         {
-            if(!gridAtmosphere.Tiles.ContainsKey(tile.GridIndices))
-                gridAtmosphere.Tiles[tile.GridIndices] = new TileAtmosphere(tile.GridIndex, tile.GridIndices, new GasMixture(volume){Temperature = Atmospherics.T20C});
+            if (!gridAtmosphere.Tiles.ContainsKey(tile.GridIndices))
+                gridAtmosphere.Tiles[tile.GridIndices] = new TileAtmosphere(tile.GridIndex, tile.GridIndices,
+                    new GasMixture(volume) {Temperature = Atmospherics.T20C});
 
             gridAtmosphere.InvalidatedCoords.Add(tile.GridIndices);
         }
@@ -527,3 +544,4 @@ public sealed partial class AtmosphereSystem
             InvalidateVisuals(mapGrid.Index, position);
         }
     }
+}
