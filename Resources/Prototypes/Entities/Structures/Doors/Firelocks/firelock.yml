@@ -88,6 +88,7 @@
           type: WiresBoundUserInterface
     - type: Airtight
       fixVacuum: true
+      noAirWhenFullyAirBlocked: true
     - type: Occluder
     - type: Construction
       graph: Firelock
