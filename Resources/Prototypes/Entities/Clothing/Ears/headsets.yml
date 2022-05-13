@@ -111,12 +111,3 @@
   components:
   - type: Sprite
     sprite: Clothing/Ears/Headsets/service.rsi
-
-- type: entity
-  parent: ClothingHeadset
-  id: ClothingHeadsetSyndicate
-  name: syndicate headset
-  description: Headset used by syndicate agents.
-  components:
-    - type: Sprite
-      sprite: Clothing/Ears/Headsets/syndicate.rsi
