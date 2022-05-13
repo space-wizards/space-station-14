@@ -138,9 +138,16 @@ namespace Content.Shared.GameTicking
         public int RoundId { get; }
         public int PlayerCount { get; }
         public RoundEndPlayerInfo[] AllPlayersEndInfo { get; }
+        public string? LobbySong;
 
-        public RoundEndMessageEvent(string gamemodeTitle, string roundEndText, TimeSpan roundDuration, int roundId,
-            int playerCount, RoundEndPlayerInfo[] allPlayersEndInfo)
+        public RoundEndMessageEvent(
+            string gamemodeTitle,
+            string roundEndText,
+            TimeSpan roundDuration,
+            int roundId,
+            int playerCount,
+            RoundEndPlayerInfo[] allPlayersEndInfo,
+            string? lobbySong)
         {
             GamemodeTitle = gamemodeTitle;
             RoundEndText = roundEndText;
@@ -148,6 +155,7 @@ namespace Content.Shared.GameTicking
             RoundId = roundId;
             PlayerCount = playerCount;
             AllPlayersEndInfo = allPlayersEndInfo;
+            LobbySong = lobbySong;
         }
     }
 
