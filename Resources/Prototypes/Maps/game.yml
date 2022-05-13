@@ -1,7 +1,7 @@
 - type: gameMap
-  id: NSSPillar
+  id: nss_pillar_station
   mapName: 'NSS Pillar'
-  mapPath: /Maps/nss_pillar.yml
+  mapPath: /Maps/nss_pillar_station.yml
   minPlayers: 40
   stations:
     Pillar:
@@ -41,9 +41,9 @@
         AtmosphericTechnician: [ 1, 2 ]
 
 - type: gameMap
-  id: ssreach
+  id: ssreach_ship
   mapName: 'Reach'
-  mapPath: /Maps/ssreach.yml
+  mapPath: /Maps/ssreach_ship.yml
   minPlayers: 0
   maxPlayers: 15
   votable: false
@@ -73,9 +73,9 @@
         Musician: [1, 1]
 
 - type: gameMap
-  id: dart
+  id: dart_ship
   mapName: 'Dart'
-  mapPath: /Maps/dart.yml
+  mapPath: /Maps/dart_ship.yml
   minPlayers: 0
   votable: false
   stations:
@@ -89,9 +89,9 @@
         Captain: [ 1, 1 ]
 
 - type: gameMap
-  id: moonrise
+  id: moonrise_ship
   mapName: 'Moonrise ERC'
-  mapPath: /Maps/moonrise.yml
+  mapPath: /Maps/moonrise_ship.yml
   minPlayers: 0
   votable: false
   stations:
