@@ -46,18 +46,18 @@ public sealed class TetherGunSystem : SharedTetherGunSystem
         if (_dragging == null)
         {
             var bodyQuery = GetEntityQuery<PhysicsComponent>();
-            var lowest = new List<(int DrawDepth, EntityUid Entity)>();
+            var lowest = new List<(int DrawDepth, uint RenderOrder, EntityUid Entity)>();
 
-            foreach (var ent in _lookup.GetEntitiesIntersecting(mousePos))
+            foreach (var ent in _lookup.GetEntitiesIntersecting(mousePos, LookupFlags.Approximate | LookupFlags.Anchored))
             {
                 if (!bodyQuery.HasComponent(ent) ||
                     !TryComp<ClickableComponent>(ent, out var clickable) ||
-                    !clickable.CheckClick(mousePos.Position, out var drawDepth, out _)) continue;
+                    !clickable.CheckClick(mousePos.Position, out var drawDepth, out var renderOrder)) continue;
 
-                lowest.Add((drawDepth, ent));
+                lowest.Add((drawDepth, renderOrder, ent));
             }
 
-            lowest.Sort((x, y) => y.DrawDepth.CompareTo(x.DrawDepth));
+            lowest.Sort((x, y) => y.DrawDepth == x.DrawDepth ? y.RenderOrder.CompareTo(x.RenderOrder) : y.DrawDepth.CompareTo(x.DrawDepth));
 
             foreach (var ent in lowest)
             {

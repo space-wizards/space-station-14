@@ -52,8 +52,7 @@ public sealed class TetherGunSystem : SharedTetherGunSystem
             !Exists(msg.Entity) ||
             Deleted(msg.Entity) ||
             msg.Coordinates == MapCoordinates.Nullspace ||
-            _tethered.ContainsKey(args.SenderSession) ||
-            _container.IsEntityInContainer(msg.Entity)) return;
+            _tethered.ContainsKey(args.SenderSession)) return;
 
         var tether = Spawn("TetherEntity", msg.Coordinates);
 
@@ -69,6 +68,11 @@ public sealed class TetherGunSystem : SharedTetherGunSystem
         if (TryComp<TransformComponent>(msg.Entity, out var xform))
         {
             xform.Anchored = false;
+        }
+
+        if (_container.IsEntityInContainer(msg.Entity))
+        {
+            xform?.AttachToGridOrMap();
         }
 
         if (TryComp<PhysicsComponent>(msg.Entity, out var body))
