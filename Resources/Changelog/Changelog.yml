@@ -1,15 +1,4 @@
 Entries:
-- author: TimrodDX
-  changes:
-  - {message: Packed Station is now significantly more colorful., type: Tweak}
-  id: 1025
-  time: '2022-02-10T01:36:57.0000000+00:00'
-- author: Peptide90
-  changes:
-  - {message: Reduced the size of cartridges from 5 to 1 so you can fit more in a
-      trash bag., type: Tweak}
-  id: 1026
-  time: '2022-02-10T01:37:43.0000000+00:00'
 - author: Peptide90
   changes:
   - {message: Pilot seats can now be constructed. Bling up that homemade shuttle.,
@@ -3036,3 +3025,14 @@ Entries:
       clearer., type: Tweak}
   id: 1524
   time: '2022-05-13T04:58:51.0000000+00:00'
+- author: 20kdc
+  changes:
+  - {message: Salvage mobs will now die if they're off the salvage wreck when it despawns.,
+    type: Tweak}
+  id: 1525
+  time: '2022-05-13T19:01:30.0000000+00:00'
+- author: Veritius
+  changes:
+  - {message: Added character descriptions., type: Add}
+  id: 1526
+  time: '2022-05-13T22:58:45.0000000+00:00'
