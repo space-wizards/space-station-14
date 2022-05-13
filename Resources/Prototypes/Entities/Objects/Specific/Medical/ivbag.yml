@@ -1,0 +1,198 @@
+##
+##    IV Bags & Stands
+##
+
+
+#     IV Bag
+
+- type: entity
+  parent: BaseItem
+  name: iv bag
+  id: BaseIVBag
+  description: An injectable IV bag that slowly drips its contents.
+  components:
+  - type: Item
+    sprite: Objects/Specific/Medical/ivbag.rsi
+    HeldPrefix: bag
+    size: 10
+  - type: Sprite
+    sprite: Objects/Specific/Medical/ivbag.rsi
+    layers:
+      - state: bag_chem
+      - state: fluid1
+        map: ["enum.SolutionContainerLayers.Fill"]
+        visible: false
+  - type: Appearance
+    visuals:
+    - type: SolutionContainerVisualizer
+      maxFillLevels: 10
+      fillBaseName: fluid
+  - type: SolutionContainerManager
+    solutions:
+      injector:
+        maxVol: 200
+  - type: Injector
+    injectOnly: false
+    transferAmount: 20.0
+    delay: 10.0
+  - type: Spillable
+    solution: injector
+  - type: ExaminableSolution
+    solution: injector
+  - type: DrawableSolution
+    solution: injector
+  - type: InjectableSolution
+    solution: injector
+  - type: SolutionTransfer
+    maxTransferAmount: 20
+    canChangeTransferAmount: true
+  - type: UserInterface
+    interfaces:
+    - key: enum.TransferAmountUiKey.Key
+      type: TransferAmountBoundUserInterface
+  - type: Damageable
+    damageContainer: Inorganic
+    damageModifierSet: Inflatable
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 50
+
+#     Blood IVs
+
+- type: entity
+  parent: BaseIVBag
+  name: blood iv bag
+  suffix: Empty
+  id: IVBagBlood
+  description: An IV drip meant for blood. Type? Red.
+  components:
+  - type: Sprite
+    sprite: Objects/Specific/Medical/ivbag.rsi
+    layers:
+      - state: bag_blood
+      - state: fluid1
+        map: ["enum.SolutionContainerLayers.Fill"]
+        visible: false
+
+- type: entity
+  parent: IVBagBlood
+  name: blood iv bag
+  suffix: Filled
+  id: IVBagBloodFilled
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      injector:
+        reagents:
+        - ReagentId: Blood
+          Quantity: 200
+
+- type: entity
+  parent: BaseIVBag
+  name: slime iv bag
+  suffix: Empty
+  id: IVBagSlime
+  description: An IV drip meant for slime. Life essence for some, tasty snack for others.
+  components:
+  - type: Sprite
+    sprite: Objects/Specific/Medical/ivbag.rsi
+    layers:
+      - state: bag_slime
+      - state: fluid1
+        map: ["enum.SolutionContainerLayers.Fill"]
+        visible: false
+
+- type: entity
+  parent: IVBagSlime
+  name: slime iv bag
+  suffix: Filled
+  id: IVBagSlimeFilled
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      injector:
+        reagents:
+        - ReagentId: Slime
+          Quantity: 200
+
+
+#     Stand
+
+- type: entity
+  parent: BaseItem
+  name: stand parts
+  id: IVStandParts
+  description: A dismantled IV bag stand. Easy to put back together.
+  components:
+  - type: Sprite
+    sprite: Objects/Specific/Medical/ivbag.rsi
+    layers:
+      - state: stand_parts
+  - type: SpawnItemsOnUse
+    items:  # No instruction manual necessary.
+      - id: IVStand
+    sound:
+      path: /Audio/Effects/gen_hit.ogg
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 100
+      behaviors:
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
+      - !type:PlaySoundBehavior
+        sound:
+          path: /Audio/Effects/metalbreak.ogg
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          SheetSteel1:
+            min: 5
+            max: 5
+
+- type: entity
+  id: IVStand
+  parent: BaseStructureDynamic
+  name: stand
+  description: A medical-grade stand that holds IV bags.
+  components:
+  - type: Transform
+    noRot: true
+  - type: Sprite
+    noRot: true
+    netsync: false
+    sprite: Objects/Specific/Medical/ivbag.rsi
+    layers:
+    - state: stand
+  - type: MovedByPressure
+  - type: InteractionOutline
+  - type: Physics
+  - type: Fixtures
+    fixtures:
+    - shape:
+        !type:PhysShapeAabb
+        bounds: "-0.2,-0.45,0.2,0.0"
+      mass: 25 # rollers
+      mask:
+      - LowImpassable
+  - type: Damageable
+    damageContainer: Inorganic
+    damageModifierSet: Metallic
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 20
+      behaviors:
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
+      - !type:PlaySoundBehavior
+        sound:
+          path: /Audio/Effects/metalbreak.ogg
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          IVStandParts:
+            min: 1
+            max: 1

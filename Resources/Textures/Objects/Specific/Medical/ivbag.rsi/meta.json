@@ -1,0 +1,73 @@
+{
+  "version": 1,
+  "license": "CC-BY-NC-SA 3.0",
+  "copyright": "Taken from goonstation at commit https://github.com/goonstation/goonstation/commit/4059e4be90832b02b1228b1bee3db342094e4f1e",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "bag_chem"
+    },
+    {
+      "name": "bag_blood"
+    },
+    {
+      "name": "bag_slime"
+    },
+    {
+      "name": "fluid10"
+    },
+    {
+      "name": "fluid9"
+    },
+    {
+      "name": "fluid8"
+    },
+    {
+      "name": "fluid7"
+    },
+    {
+      "name": "fluid6"
+    },
+    {
+      "name": "fluid5"
+    },
+    {
+      "name": "fluid4"
+    },
+    {
+      "name": "fluid3"
+    },
+    {
+      "name": "fluid2"
+    },
+    {
+      "name": "fluid1"
+    },
+    {
+      "name": "stand"
+    },
+    {
+      "name": "stand_parts"
+    },
+    {
+      "name": "stand_bag_blood"
+    },
+    {
+      "name": "stand_bag_chem"
+    },
+    {
+      "name": "stand_bag_fluid"
+    },
+    {
+      "name": "bag-inhand-left",
+      "directions": 4
+    },
+    {
+      "name": "bag-inhand-right",
+      "directions": 4
+    }
+  ]
+}
