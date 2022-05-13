@@ -80,6 +80,9 @@ namespace Content.Server.Atmos
         [ViewVariables]
         public GasMixture? Air { get; set; }
 
+        [ViewVariables]
+        public float[]? MolesArchived;
+
         GasMixture IGasMixtureHolder.Air
         {
             get => Air ?? new GasMixture(Atmospherics.CellVolume){ Temperature = Temperature };
@@ -97,6 +100,7 @@ namespace Content.Server.Atmos
             GridIndex = gridIndex;
             GridIndices = gridIndices;
             Air = mixture;
+            MolesArchived = Air != null ? new float[Atmospherics.AdjustedNumberOfGases] : null;
 
             if(immutable)
                 Air?.MarkImmutable();

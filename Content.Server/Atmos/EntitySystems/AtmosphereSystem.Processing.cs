@@ -81,6 +81,7 @@ namespace Content.Server.Atmos.EntitySystems
                 {
                     tile.Air = new GasMixture(volume);
                     tile.Air.MarkImmutable();
+                    tile.MolesArchived = new float[Atmospherics.AdjustedNumberOfGases];
                     atmosphere.Tiles[indices] = tile;
 
                 } else if (isAirBlocked)
@@ -99,6 +100,7 @@ namespace Content.Server.Atmos.EntitySystems
                     if (nullAir)
                     {
                         tile.Air = null;
+                        tile.MolesArchived = null;
                         tile.Hotspot = new Hotspot();
                     }
                 }
@@ -114,9 +116,11 @@ namespace Content.Server.Atmos.EntitySystems
                     if (tile.Air?.Immutable ?? false)
                     {
                         tile.Air = null;
+                        tile.MolesArchived = null;
                     }
 
                     tile.Air ??= new GasMixture(volume){Temperature = Atmospherics.T20C};
+                    tile.MolesArchived ??= new float[Atmospherics.AdjustedNumberOfGases];
                 }
 
                 // We activate the tile.

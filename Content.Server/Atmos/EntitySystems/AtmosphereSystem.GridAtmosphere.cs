@@ -106,6 +106,7 @@ public sealed partial class AtmosphereSystem
 
                 // Copy a bunch of data over... Not great, maybe put this in TileAtmosphere?
                 newTileAtmosphere.Air = tileAtmosphere.Air?.Clone() ?? null;
+                newTileAtmosphere.MolesArchived = (float[]?)tileAtmosphere.MolesArchived?.Clone() ?? null;
                 newTileAtmosphere.Hotspot = tileAtmosphere.Hotspot;
                 newTileAtmosphere.HeatCapacity = tileAtmosphere.HeatCapacity;
                 newTileAtmosphere.Temperature = tileAtmosphere.Temperature;
@@ -446,6 +447,8 @@ public sealed partial class AtmosphereSystem
             Volume = GetVolumeForTiles(mapGridComp.Grid, 1),
             Temperature = Atmospherics.T20C
         };
+
+        tile.MolesArchived = new float[Atmospherics.AdjustedNumberOfGases];
 
         // Return early, let's not cause any funny NaNs.
         if (adjacent.Length == 0)
