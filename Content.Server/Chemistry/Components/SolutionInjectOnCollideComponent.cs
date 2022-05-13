@@ -1,6 +1,7 @@
 ﻿using System;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.FixedPoint;
+using Content.Shared.Inventory;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
@@ -23,5 +24,11 @@ namespace Content.Server.Chemistry.Components
 
         [DataField("transferEfficiency")]
         private float _transferEfficiency = 1f;
+
+        /// <summary>
+        /// If anything covers any of these slots then the injection fails.
+        /// </summary>
+        [DataField("blockSlots"), ViewVariables(VVAccess.ReadWrite)]
+        public SlotFlags BlockSlots = SlotFlags.MASK;
     }
 }

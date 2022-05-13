@@ -1,4 +1,4 @@
-﻿using Content.Shared.Atmos;
+using Content.Shared.Atmos;
 
 namespace Content.Server.Xenoarchaeology.XenoArtifacts.Effects.Components;
 
@@ -8,8 +8,6 @@ namespace Content.Server.Xenoarchaeology.XenoArtifacts.Effects.Components;
 [RegisterComponent]
 public sealed class TemperatureArtifactComponent : Component
 {
-    public override string Name => "TemperatureArtifact";
-
     [DataField("targetTemp")]
     public float TargetTemperature = Atmospherics.T0C;
 

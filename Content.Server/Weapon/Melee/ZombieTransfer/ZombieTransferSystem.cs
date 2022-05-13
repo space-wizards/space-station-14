@@ -17,7 +17,6 @@ namespace Content.Server.Weapons.Melee.ZombieTransfer
     public sealed class ZombieTransferSystem : EntitySystem
     {
         [Dependency] private readonly DiseaseSystem _disease = default!;
-        [Dependency] private readonly BodySystem _body = default!;
         [Dependency] private readonly BloodstreamSystem _bloodstream = default!;
         [Dependency] private readonly IRobustRandom _robustRandom = default!;
         public override void Initialize()

@@ -17,7 +17,6 @@ namespace Content.Server.Storage.EntitySystems
         [Dependency] private readonly DoAfterSystem _doAfterSystem = default!;
         [Dependency] private readonly DisposalUnitSystem _disposalUnitSystem = default!;
 
-        [Dependency] private readonly HandsSystem _handsSystem = default!;
         public override void Initialize()
         {
             base.Initialize();

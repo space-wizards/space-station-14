@@ -1,17 +1,12 @@
-using System;
-using Content.Server.Act;
 using Content.Server.Administration.Logs;
+using Content.Server.CombatMode;
 using Content.Server.Popups;
-using Content.Shared.Administration.Logs;
 using Content.Shared.Audio;
 using Content.Shared.Database;
 using Content.Shared.Popups;
 using Content.Shared.StatusEffect;
 using Content.Shared.Stunnable;
 using Robust.Shared.Audio;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Localization;
 using Robust.Shared.Player;
 using Robust.Shared.Random;
 

@@ -7,7 +7,7 @@ using Content.Shared.Wires;
 namespace Content.Server.Doors;
 
 [DataDefinition]
-public class DoorBoltLightWireAction : BaseWireAction
+public sealed class DoorBoltLightWireAction : BaseWireAction
 {
     [DataField("color")]
     private Color _statusColor = Color.Lime;

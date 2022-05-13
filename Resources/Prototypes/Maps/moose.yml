@@ -5,7 +5,7 @@
   minPlayers: 0
   maxPlayers: 35
   stations:
-    Station: #TODO: Mapper, add a BecomesStation component to the primary grid of the map.
+    Moose:
       mapNameTemplate: '{0} Moose Station {1}'
       nameGenerator:
         !type:NanotrasenNameGenerator

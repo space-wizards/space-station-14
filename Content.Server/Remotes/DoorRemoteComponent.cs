@@ -7,8 +7,6 @@ namespace Content.Server.Remotes
     [Friend(typeof(DoorRemoteSystem))]
     public sealed class DoorRemoteComponent : Component
     {
-        public override string Name => "DoorRemote";
-
         public OperatingMode Mode = OperatingMode.OpenClose;
 
         public enum OperatingMode : byte

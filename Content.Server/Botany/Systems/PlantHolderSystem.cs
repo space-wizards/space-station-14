@@ -20,7 +20,6 @@ namespace Content.Server.Botany.Systems
     public sealed class PlantHolderSystem : EntitySystem
     {
         [Dependency] private readonly BotanySystem _botanySystem = default!;
-        [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
         [Dependency] private readonly PopupSystem _popupSystem = default!;
         [Dependency] private readonly IGameTiming _gameTiming = default!;
         [Dependency] private readonly TagSystem _tagSystem = default!;
