@@ -169,7 +169,7 @@
   parent: BarSign
   components:
   - type: BarSign
-    current: TheLooseGoose
+    current: Goose
 
 - type: entity
   id: BarSignTheNet

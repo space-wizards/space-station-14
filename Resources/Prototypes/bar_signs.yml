@@ -113,7 +113,7 @@
   description: barsign-prototype-description-the-lightbulb
 
 - type: barSign
-  id: TheLooseGoose
+  id: Goose
   name: barsign-prototype-name-goose
   icon: "goose"
   description: barsign-prototype-description-goose
