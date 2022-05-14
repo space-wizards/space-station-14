@@ -80,6 +80,7 @@
   id: NitrogenTankFilled
   parent: RedOxygenTankFilled
   suffix: Filled
+  name: nitrogen tank
   components:
     - type: GasTank
       outputPressure: 101.325
