@@ -30,8 +30,6 @@ public sealed class MagicSystem : EntitySystem
     [Dependency] private readonly SharedDoorSystem _doorSystem = default!;
     [Dependency] private readonly DoAfterSystem _doAfter = default!;
 
-    private readonly List<EntityUid> ActiveWalls = new ();
-
     public override void Initialize()
     {
         base.Initialize();
@@ -78,12 +76,11 @@ public sealed class MagicSystem : EntitySystem
 
         foreach (var forcewall in EntityQuery<ForceWallSpellComponent>())
         {
-            forcewall.Timer += frameTime;
+            forcewall.Lifetime -= frameTime;
 
-            if (forcewall.Timer > forcewall.ForceWallCooldown)
+            if (forcewall.Lifetime <= 0)
             {
                 EntityManager.QueueDeleteEntity(forcewall.Owner);
-                ActiveWalls.Remove(forcewall.Owner);
             }
         }
     }
@@ -212,14 +209,9 @@ public sealed class MagicSystem : EntitySystem
         }
 
         SoundSystem.Play(Filter.Pvs(coords), args.ForceWallSound.GetSound(), AudioParams.Default.WithVolume(args.ForceWallVolume));
-        ActiveWalls.Add(Spawn(args.WallPrototype, coords));
-        ActiveWalls.Add(Spawn(args.WallPrototype, coordsPlus));
-        ActiveWalls.Add(Spawn(args.WallPrototype, coordsMinus));
-
-        foreach (var wall in ActiveWalls)
-        {
-            EnsureComp<ForceWallSpellComponent>(wall);
-        }
+        Spawn(args.WallPrototype, coords);
+        Spawn(args.WallPrototype, coordsPlus);
+        Spawn(args.WallPrototype, coordsMinus);
 
         args.Handled = true;
     }

@@ -718,6 +718,7 @@
   id: WallForce
   name: Force Wall
   components:
+    - type: ForceWallSpell
     - type: Tag
       tags:
         - Wall

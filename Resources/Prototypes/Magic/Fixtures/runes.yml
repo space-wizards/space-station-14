@@ -124,3 +124,10 @@
   components:
     - type: FlashOnTrigger
     - type: DeleteOnTrigger
+
+- type: entity
+  parent: CollideTimerRune
+  id: FlashRuneTimer
+  name: "flash timed rune"
+  components:
+    - type: FlashOnTrigger

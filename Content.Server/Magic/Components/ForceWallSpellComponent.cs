@@ -7,15 +7,9 @@ namespace Content.Server.Magic;
 public sealed class ForceWallSpellComponent : Component
 {
     /// <summary>
-    /// Timer for accumulation before the force wall is deleted.
-    /// </summary>
-    [ViewVariables]
-    public float Timer = 0f;
-
-    /// <summary>
     /// How long the force walls are active for.
     /// </summary>
     [ViewVariables]
-    [DataField("forceWallCooldown")]
-    public float ForceWallCooldown = 20f;
+    [DataField("lifetime")]
+    public float Lifetime = 20f;
 }
