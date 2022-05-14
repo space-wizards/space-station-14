@@ -61,11 +61,6 @@
     },
     {
       "name": "open",
-      "delays": [
-        [
-          1
-        ]
-      ]
     },
     {
       "name": "opening",
