@@ -54,7 +54,6 @@
     sprite: Objects\Tools\Toolboxes\toolbox_yellow.rsi
     state: icon
   product: CrateEngineeringElectricalSupplies
-  cost: 4000
+  cost: 5000
   category: Engineering
   group: market
-  
