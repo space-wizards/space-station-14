@@ -1,10 +1,4 @@
 Entries:
-- author: Swept
-  changes:
-  - {message: Flare Gun no longer spawns with a shotgun shell loaded, type: Fix}
-  - {message: Flare Gun now has a low chance to spawn in some lockers, type: Fix}
-  id: 1028
-  time: '2022-02-10T02:00:48.0000000+00:00'
 - author: SweptWasTaken
   changes:
   - {message: Fixes youtool deny state, type: Fix}
@@ -3039,3 +3033,8 @@ Entries:
       blunt vulnerability., type: Tweak}
   id: 1527
   time: '2022-05-14T01:31:34.0000000+00:00'
+- author: ShadowCommander
+  changes:
+  - {message: Fixed grabbing things through airlocks and windoors., type: Fix}
+  id: 1528
+  time: '2022-05-14T02:54:37.0000000+00:00'
