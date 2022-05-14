@@ -13,7 +13,7 @@
     <Control>
         <!-- Parallax background -->
         <parallax:ParallaxControl />
-        <TextureRect Access="Public" Name = "Background" Stretch="Scale"/>
+        <TextureRect Access="Public" Name = "Background" Stretch="KeepAspectCentered"/>
         <Control Margin="10 10 10 10" >
             <!-- Left Top Panel -->
                 <PanelContainer StyleClasses="AngleRect" HorizontalAlignment="Left" Name = "LeftSideTop" VerticalExpand="True"  VerticalAlignment="Top" >
