@@ -43,7 +43,7 @@
 - type: gameMap
   id: ssreach_ship
   mapName: 'Reach'
-  mapPath: /Maps/ssreach_ship.yml
+  mapPath: /Maps/ssreach.yml
   minPlayers: 0
   maxPlayers: 15
   votable: false
@@ -75,7 +75,7 @@
 - type: gameMap
   id: dart_ship
   mapName: 'Dart'
-  mapPath: /Maps/dart_ship.yml
+  mapPath: /Maps/dart.yml
   minPlayers: 0
   votable: false
   stations:
@@ -91,7 +91,7 @@
 - type: gameMap
   id: moonrise_ship
   mapName: 'Moonrise ERC'
-  mapPath: /Maps/moonrise_ship.yml
+  mapPath: /Maps/moonrise.yml
   minPlayers: 0
   votable: false
   stations:
