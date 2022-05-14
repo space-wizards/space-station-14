@@ -1,7 +1,7 @@
 ﻿- type: gameMap
   id: packed_station
   mapName: 'Packedstation'
-  mapPath: /Maps/packed_station.yml
+  mapPath: /Maps/packed.yml
   minPlayers: 15
   maxPlayers: 55
   votable: false

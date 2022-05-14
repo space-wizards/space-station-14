@@ -1,41 +1,46 @@
 - type: gameMap
-  id: barratry_station
-  mapName: 'Barratry'
-  mapPath: /Maps/barratry_station.yml
-  minPlayers: 40
+  id: moose_station
+  mapName: 'Moose Station'
+  mapPath: /Maps/moose.yml
+  minPlayers: 0
+  maxPlayers: 35
   stations:
     Station: #TODO: Mapper, add a BecomesStation component to the primary grid of the map.
-      mapNameTemplate: '{0} Barratry {1}'
+      mapNameTemplate: '{0} Moose Station {1}'
       nameGenerator:
         !type:NanotrasenNameGenerator
         prefixCreator: '14'
       overflowJobs:
         - Passenger
       availableJobs:
-        CargoTechnician: [ 3, 3 ]
+        CargoTechnician: [ 2, 2 ]
         Passenger: [ -1, -1 ]
-        Bartender: [ 2, 2 ]
-        Botanist: [ 3, 4]
-        Chef: [ 2, 2 ]
+        Bartender: [ 1, 1 ]
+        Botanist: [ 2, 2]
+        Chef: [ 1, 1 ]
         Clown: [ 1, 1 ]
-        Janitor: [ 2, 3 ]
+        Janitor: [ 1, 1 ]
         Mime: [ 1, 1 ]
         Captain: [ 1, 1 ]
         HeadOfPersonnel: [ 1, 1 ]
         ChiefEngineer: [ 1, 1 ]
-        StationEngineer: [ 5, 5 ]
+        StationEngineer: [ 3, 3 ]
         ChiefMedicalOfficer: [ 1, 1 ]
-        MedicalDoctor: [ 4, 4 ]
-        Chemist: [ 2, 3 ]
+        MedicalDoctor: [ 2, 2 ]
+        Chemist: [ 2, 2 ]
         ResearchDirector: [ 1, 1 ]
-        Scientist: [ 4, 4 ]
+        Scientist: [ 3, 3 ]
         HeadOfSecurity: [ 1, 1 ]
-        SecurityOfficer: [ 5, 5 ]
+        SecurityOfficer: [ 2, 2 ]
         Chaplain: [ 1, 1 ]
         Warden: [ 1, 1 ]
         Librarian: [ 1, 1 ]
-        Lawyer: [ 2, 2 ]
+        Lawyer: [ 1, 1 ]
         Quartermaster: [ 1, 1 ]
-        SalvageSpecialist: [ 3, 3 ]
+        SalvageSpecialist: [ 2, 2 ]
         Musician: [ 1, 1 ]
-        AtmosphericTechnician: [ 2, 3 ]
+        AtmosphericTechnician: [ 2, 2 ]
+        TechnicalAssistant: [ 1, 1 ]
+        MedicalIntern: [ 1, 1 ]
+        ServiceWorker: [ 1, 1 ]
+        SecurityCadet: [ 1, 1 ]

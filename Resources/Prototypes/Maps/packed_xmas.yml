@@ -1,7 +1,7 @@
 #- type: gameMap
 #  id: packed_station_xmas
 #  mapName: 'Packedmasstation'
-#  mapPath: /Maps/packed_station_xmas.yml
+#  mapPath: /Maps/packed_xmas.yml
 #  mapNameTemplate: '{0} Packedmasstation {1}'
 #  nameGenerator:
 #    !type:NanotrasenNameGenerator

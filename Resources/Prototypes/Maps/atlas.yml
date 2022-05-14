@@ -1,7 +1,7 @@
 - type: gameMap
   id: atlas_station
   mapName: 'Atlas'
-  mapPath: /Maps/atlas_station.yml
+  mapPath: /Maps/atlas.yml
   minPlayers: 0
   maxPlayers: 25
   stations:
