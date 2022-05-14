@@ -27,15 +27,14 @@ public sealed partial class TriggerSystem
         var otherUID = args.OtherFixture.Body.Owner;
         component.Colliding.Remove(otherUID);
 
-        if (component.Colliding.Count == 0)
-        {
+        if (component.Colliding.Count == 0 && HasComp<ActiveTriggerOnTimedCollideComponent>(uid))
             RemComp<ActiveTriggerOnTimedCollideComponent>(uid);
-        }
     }
 
     private void OnComponentRemove(EntityUid uid, TriggerOnTimedCollideComponent component, ComponentRemove args)
     {
-        RemComp<ActiveTriggerOnTimedCollideComponent>(uid);
+        if (HasComp<ActiveTriggerOnTimedCollideComponent>(uid))
+            RemComp<ActiveTriggerOnTimedCollideComponent>(uid);
     }
 
     private void UpdateTimedCollide(float frameTime)
