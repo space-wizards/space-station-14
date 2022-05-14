@@ -2,7 +2,7 @@
   id: BarSign
   parent: BaseStructure
   name: bar sign
-  suffix: [Random]
+  suffix: Random
   components:
   - type: WallMount
   - type: Sprite
