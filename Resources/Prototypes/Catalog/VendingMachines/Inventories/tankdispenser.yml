@@ -1,6 +1,6 @@
 - type: vendingMachineInventory
   id: TankDispenserEVAInventory
-  name: TankDispenser
+  name: TankDispenserEVA
   spriteName: tankdispenser
   startingInventory:
     OxygenTankFilled: 5
@@ -8,7 +8,7 @@
     
 - type: vendingMachineInventory
   id: TankDispenserEngineeringInventory
-  name: TankDispenser
+  name: TankDispenserEngineering
   spriteName: tankdispenser
   startingInventory:
     PlasmaTankFilled: 5
