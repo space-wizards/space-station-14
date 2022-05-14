@@ -11,6 +11,7 @@ using Content.Shared.Doors.Components;
 using Content.Shared.Doors.Systems;
 using Content.Shared.Interaction.Events;
 using Content.Shared.Maps;
+using Content.Shared.Storage;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.Map;
@@ -43,6 +44,7 @@ public sealed class MagicSystem : EntitySystem
         SubscribeLocalEvent<TeleportSpellEvent>(OnTeleportSpell);
         SubscribeLocalEvent<ForceWallSpellEvent>(OnForceWallSpell);
         SubscribeLocalEvent<KnockSpellEvent>(OnKnockSpell);
+        SubscribeLocalEvent<SpawnSpellEvent>(OnSpawnSpell);
     }
 
     private void OnInit(EntityUid uid, SpellbookComponent component, ComponentInit args)
@@ -245,6 +247,38 @@ public sealed class MagicSystem : EntitySystem
 
             if (TryComp<DoorComponent>(entity, out var doorComp) && doorComp.State is not DoorState.Open)
                 _doorSystem.StartOpening(doorComp.Owner);
+        }
+
+        args.Handled = true;
+    }
+
+    /// <summary>
+    /// Spawns entity prototypes from a list within range of click.
+    /// </summary>
+    /// <remarks>
+    /// It will offset mobs after the first mob based on the OffsetVector2 property supplied.
+    /// </remarks>
+    /// <param name="args"> The Spawn Spell Event args.</param>
+    private void OnSpawnSpell(SpawnSpellEvent args)
+    {
+        if (args.Handled)
+            return;
+
+        var transform = Transform(args.Performer);
+        var targetMapCoords = args.Target;
+
+        if (!_mapManager.TryGetGrid(transform.GridID, out var mapGrid))
+            return;
+
+        var getProtos = EntitySpawnCollection.GetSpawns(args.Contents);
+
+        //Loop through the supplied list of entity prototypes.
+        //Starting from initial click coordinates, spawning each uniquely on a new offset position.
+        var offsetCoords = targetMapCoords;
+        foreach (var proto in getProtos)
+        {
+            Spawn(proto, offsetCoords).SnapToGrid();
+            offsetCoords = offsetCoords.Offset(args.OffsetVector2);
         }
 
         args.Handled = true;

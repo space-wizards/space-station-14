@@ -9,3 +9,18 @@
     state: spell_default
   serverEvent: !type:RuneMagicEvent
     rune: FlashRune
+
+- type: worldTargetAction
+  id: SpawnSpell
+  name: spawnspell
+  description: "spawn spell"
+  useDelay: 10
+  itemIconStyle: BigAction
+  icon:
+    sprite: Objects/Magic/magicactions.rsi
+    state: spell_default
+  serverEvent: !type:SpawnSpellEvent
+    prototypes:
+      - id: WallVaultRock
+      - id: WallVaultAlien
+    offsetVector2: 0, -1

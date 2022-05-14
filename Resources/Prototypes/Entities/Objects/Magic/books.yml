@@ -19,6 +19,8 @@
     - type: Spellbook
       instantSpells:
         FlashRune: -1
+      worldSpells:
+        SpawnSpell: -1
 
 - type: entity
   id: ForceWallSpellbook
