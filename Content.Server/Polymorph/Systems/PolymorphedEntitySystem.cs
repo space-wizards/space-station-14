@@ -15,8 +15,6 @@ namespace Content.Server.Polymorph.Systems
     public sealed class PolymorphedEntitySystem : EntitySystem
     {
         [Dependency] private readonly ActionsSystem _actions = default!;
-        [Dependency] private readonly IEntityManager _entity = default!;
-        [Dependency] private readonly IPrototypeManager _proto = default!;
         [Dependency] private readonly ContainerSystem _container = default!;
 
         public override void Initialize()
@@ -48,15 +46,17 @@ namespace Content.Server.Polymorph.Systems
 
         private void OnStartup(EntityUid uid, PolymorphedEntityComponent component, AfterPolymorphEvent args)
         {
-            if (component.Forced)
+            if (component.Prototype.Forced)
                 return;
-            
-            var act = new InstantAction();
 
-            act.Event = new RevertTransformationActionEvent();
-            act.Name = "wacka wacka";
-            act.Description = "pac man";
-
+            var act = new InstantAction()
+            {
+                Event = new RevertTransformationActionEvent(),
+                EntityIcon = component.Parent,
+                Name = Loc.GetString("polymorph-revert-action-name"),
+                Description = Loc.GetString("polymorph-revert-action-description"),
+           };
+    
             _actions.AddAction(uid, act, null);
         }
 

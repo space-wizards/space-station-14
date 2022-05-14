@@ -4,6 +4,7 @@ using Content.Server.Mind.Components;
 using Content.Server.Polymorph.Components;
 using Content.Shared.Actions;
 using Content.Shared.Actions.ActionTypes;
+using Content.Shared.Polymorph;
 using Robust.Shared.Prototypes;
 
 namespace Content.Server.Polymorph.Systems
@@ -19,12 +20,12 @@ namespace Content.Server.Polymorph.Systems
             base.Initialize();
 
             SubscribeLocalEvent<PolymorphableComponent, ComponentStartup>(OnStartup);
-            SubscribeLocalEvent<PolymorphableComponent, PolymorphActionEvent>(Transform);
+            SubscribeLocalEvent<PolymorphableComponent, PolymorphActionEvent>(AfterPolymorphAction);
         }
 
-        public void Transform(EntityUid uid, PolymorphableComponent component, PolymorphActionEvent args)
+        private void AfterPolymorphAction(EntityUid uid, PolymorphableComponent component, PolymorphActionEvent args)
         {
-            var child = Spawn(args.Prototype, Transform(uid).Coordinates);
+            var child = Spawn(args.Prototype.Entity, Transform(uid).Coordinates);
 
             if (!TryComp<MindComponent>(uid, out var mind))
                 return;
@@ -36,53 +37,80 @@ namespace Content.Server.Polymorph.Systems
 
             var comp = AddComp<PolymorphedEntityComponent>(child);
             comp.Parent = uid;
-            comp.Forced = args.Forced;
+            comp.Prototype = args.Prototype;
 
+            //TODO: remove the container system altogether
             comp.ParentContainer.Insert(uid);
             RaiseLocalEvent(child, new AfterPolymorphEvent());
             mind.Mind.TransferTo(child);
         }
 
-        public void CreateTransformationAction(PolymorphableComponent component, string prototypeId, bool forced)
+        public void CreatePolymorphAction(string id, EntityUid target)
         {
-            var act = new InstantAction();
+            if (!_proto.TryIndex<PolymorphPrototype>(id, out var polyproto))
+                return;
 
-            act.Event = new PolymorphActionEvent(prototypeId, forced);
-            act.Name = "badda bing" + prototypeId;
-            act.Description = "badda boom" + prototypeId;
+            if (!_proto.TryIndex<EntityPrototype>(polyproto.Entity, out var entproto))
+                return;
 
-            _actions.AddAction(component.Owner, act, component.Owner);
+            var act = new InstantAction()
+            {
+                Event = new PolymorphActionEvent(polyproto),
+                Name = Loc.GetString("polymorph-self-action-name", ("target", entproto.Name)),
+                Description = Loc.GetString("polymorph-self-action-description", ("target", entproto.Name)),
+            };
+
+            _actions.AddAction(target, act, target);
         }
+
+        /*
+        public void RemovePolyMorphAction(PolymorphableComponent component, string prototypeId, bool forced)
+        {
+            if (!_proto.TryIndex<EntityPrototype>(prototypeId, out var prototype))
+                return;
+
+            var act = new InstantAction()
+            {
+                Event = new PolymorphActionEvent(prototypeId, forced),
+                Name = Loc.GetString("polymorph-self-action-name", ("target", prototype.Name)),
+                Description = Loc.GetString("polymorph-self-action-description", ("target", prototype.Name)),
+            };
+            
+            foreach(var action in component.PolymorphActions)
+            {
+                if(action == act)
+                {
+                    _actions.RemoveAction(component.Owner, action);
+                    return;
+                }
+            }    
+        }*/
 
         private void OnStartup(EntityUid uid, PolymorphableComponent component, ComponentStartup args)
         {
-            CreateTransformationAction(component, "MobMouse", false);
-            CreateTransformationAction(component, "MobCarp", true);
+            CreatePolymorphAction("mouse", component.Owner); //remove
+            CreatePolymorphAction("carp", component.Owner); //remove
+            //RemovePolyMorphAction(component, "MobCarp", false); //remove
         }
     }
-}
-
-/// <summary>
-/// This event is used to initialize the event in the polymorphedEntityComponent
-/// once all the information has been sent to it.
-/// </summary>
-public sealed class AfterPolymorphEvent : EventArgs { }
-
-public sealed class PolymorphActionEvent : InstantActionEvent
-{
-    /// <summary>
-    /// The prototype Id of the entity that the target will be polymorphed into
-    /// </summary>
-    public readonly string Prototype;
 
     /// <summary>
-    /// Whether or not the transformation is happening at will and if it can be reversed at will.
+    /// This event is used to initialize the info in polymorphedEntityComponent
+    /// once all the information has been sent to it.
     /// </summary>
-    public readonly bool Forced;
+    public sealed class AfterPolymorphEvent : EventArgs { }
 
-    public PolymorphActionEvent(string prototype, bool forced)
+    public sealed class PolymorphActionEvent : InstantActionEvent
     {
-        Prototype = prototype;
-        Forced = forced;
-    }
-};
+        /// <summary>
+        /// The polymorph prototype containing all the information about
+        /// the specific polymorph.
+        /// </summary>
+        public readonly PolymorphPrototype Prototype;
+
+        public PolymorphActionEvent(PolymorphPrototype prototype)
+        {
+            Prototype = prototype;
+        }
+    };
+}

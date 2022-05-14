@@ -1,0 +1,14 @@
+- type: polymorph
+  id: mouse
+  entity: MobMouse
+  forced: false
+
+- type: polymorph
+  id: mouseForced
+  entity: MobMouse
+  forced: true
+
+- type: polymorph
+  id: carp
+  entity: MobCarp
+  forced: false

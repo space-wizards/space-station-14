@@ -58,6 +58,8 @@ namespace Content.Client.Entry
             "ResearchClient",
             "IdCardConsole",
             "MimePowers",
+            "Polymorphable",
+            "PolymorphedEntity",
             "ThermalRegulator",
             "DiseaseMachineRunning",
             "DiseaseMachine",
