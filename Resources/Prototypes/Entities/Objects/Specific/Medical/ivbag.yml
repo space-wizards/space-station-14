@@ -162,7 +162,7 @@
     netsync: false
     sprite: Objects/Specific/Medical/ivbag.rsi
     layers:
-    - state: IV stand
+    - state: stand
   - type: Fixtures
     fixtures:
     - shape:
