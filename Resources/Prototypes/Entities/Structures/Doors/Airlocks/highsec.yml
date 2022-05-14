@@ -33,9 +33,8 @@
       mass: 100
       mask:
       - FullTileMask
-      - LowImpassable
       layer:
-      - AirlockLayer
+      - WallLayer
   - type: Door
     board: DoorElectronics
     crushDamage:
