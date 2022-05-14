@@ -328,8 +328,6 @@
       - TimerTrigger
       - Signaller
       - SignalTrigger
-  - type: Machine
-    board: SecurityTechFabCircuitboard
   - type: Lathe
     whitelist:
       tags:
@@ -395,8 +393,6 @@
       - CableStack
       - CableMVStack
       - CableHVStack
-  - type: Machine
-    board: MedicalTechFabCircuitboard
 
 - type: entity
   parent: Autolathe
