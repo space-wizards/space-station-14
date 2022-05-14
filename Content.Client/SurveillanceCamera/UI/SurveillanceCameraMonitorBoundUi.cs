@@ -13,6 +13,7 @@ public sealed class SurveillanceCameraMonitorBoundUserInterface : BoundUserInter
     private EntityUid? _currentCamera;
     private string _currentSubnet = default!;
     private readonly HashSet<string> _knownAddresses = new();
+    private readonly Dictionary<string, SurveillanceCameraInfo> _knownCameras = new();
 
     public SurveillanceCameraMonitorBoundUserInterface(ClientUserInterfaceComponent owner, object uiKey) : base(owner, uiKey)
     {
@@ -69,13 +70,21 @@ public sealed class SurveillanceCameraMonitorBoundUserInterface : BoundUserInter
 
         if (_currentSubnet != cast.ActiveSubnet)
         {
-            _knownAddresses.Clear();
+            _knownCameras.Clear();
             _currentSubnet = cast.ActiveSubnet;
+        }
+
+        foreach (var camera in cast.Cameras)
+        {
+            if (!_knownCameras.ContainsKey(camera.Address))
+            {
+                _knownCameras.Add(camera.Address, camera);
+            }
         }
 
         if (cast.ActiveCamera == null)
         {
-            _window.UpdateState(null, cast.Subnets, _currentSubnet, cast.Cameras);
+            _window.UpdateState(null, cast.Subnets, _currentSubnet, _knownCameras.Values);
 
             if (_currentCamera != null)
             {
@@ -99,30 +108,8 @@ public sealed class SurveillanceCameraMonitorBoundUserInterface : BoundUserInter
 
             if (_entityManager.TryGetComponent(cast.ActiveCamera, out EyeComponent eye))
             {
-                _window.UpdateState(eye.Eye, cast.Subnets, _currentSubnet, cast.Cameras);
+                _window.UpdateState(eye.Eye, cast.Subnets, _currentSubnet, _knownCameras.Values);
             }
-        }
-    }
-
-    protected override void ReceiveMessage(BoundUserInterfaceMessage message)
-    {
-        switch (message)
-        {
-            case SurveillanceCameraMonitorInfoMessage infoMessage:
-                if (infoMessage.Info.Subnet != _currentSubnet)
-                {
-                    return;
-                }
-
-                if (_knownAddresses.Contains(infoMessage.Info.Address))
-                {
-                    return;
-                }
-
-                _knownAddresses.Add(infoMessage.Info.Address);
-
-                _window!.AddCameraToList(infoMessage.Info.Name, infoMessage.Info.Address);
-                break;
         }
     }
 

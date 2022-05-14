@@ -182,10 +182,16 @@ public sealed class SurveillanceCameraSystem : SharedSurveillanceCameraSystem
             return;
         }
 
+        if (monitor != null)
+        {
+            oldCameraComponent.ActiveMonitors.Remove(monitor.Value);
+            newCameraComponent.ActiveMonitors.Add(monitor.Value);
+        }
+
         foreach (var player in players)
         {
-            RemoveActiveViewer(oldCamera, player, monitor, oldCameraComponent);
-            AddActiveViewer(newCamera, player, monitor, newCameraComponent);
+            RemoveActiveViewer(oldCamera, player, null, oldCameraComponent);
+            AddActiveViewer(newCamera, player, null, newCameraComponent);
         }
     }
 

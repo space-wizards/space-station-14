@@ -301,7 +301,7 @@ public sealed class SurveillanceCameraMonitorSystem : EntitySystem
 
         if (monitor.ActiveCamera != null)
         {
-            _surveillanceCameras.AddActiveViewer((EntityUid) monitor.ActiveCamera, player);
+            _surveillanceCameras.AddActiveViewer((EntityUid) monitor.ActiveCamera, player, uid);
         }
 
         UpdateUserInterface(uid, monitor, player);
@@ -319,7 +319,8 @@ public sealed class SurveillanceCameraMonitorSystem : EntitySystem
 
         if (monitor.ActiveCamera != null)
         {
-            _surveillanceCameras.RemoveActiveViewer((EntityUid) monitor.ActiveCamera, player);
+            EntityUid? monitorUid = monitor.Viewers.Count == 0 ? uid : null;
+            _surveillanceCameras.RemoveActiveViewer(monitor.ActiveCamera.Value, player, monitorUid);
         }
     }
 
@@ -336,7 +337,7 @@ public sealed class SurveillanceCameraMonitorSystem : EntitySystem
             return;
         }
 
-        _surveillanceCameras.AddActiveViewers(camera, monitor.Viewers);
+        _surveillanceCameras.AddActiveViewers(camera, monitor.Viewers, uid);
 
         monitor.ActiveCamera = camera;
 
@@ -352,7 +353,7 @@ public sealed class SurveillanceCameraMonitorSystem : EntitySystem
             return;
         }
 
-        _surveillanceCameras.SwitchActiveViewers((EntityUid) monitor.ActiveCamera, camera, monitor.Viewers);
+        _surveillanceCameras.SwitchActiveViewers(monitor.ActiveCamera.Value, camera, monitor.Viewers, uid);
 
         monitor.ActiveCamera = camera;
 
@@ -405,7 +406,7 @@ public sealed class SurveillanceCameraMonitorSystem : EntitySystem
             return;
         }
 
-        _surveillanceCameras.RemoveActiveViewers((EntityUid) monitor.ActiveCamera, monitor.Viewers);
+        _surveillanceCameras.RemoveActiveViewers((EntityUid) monitor.ActiveCamera, monitor.Viewers, uid);
 
         UpdateUserInterface(uid, monitor);
     }
