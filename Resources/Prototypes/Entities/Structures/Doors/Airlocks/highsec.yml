@@ -78,13 +78,10 @@
     thresholds:
     - trigger:
         !type:DamageTrigger
-        damage: 1000
+        damage: 1500
       behaviors:
       - !type:DoActsBehavior
         acts: ["Destruction"]
-  - type: Construction
-    graph: Airlock
-    node: airlock
   - type: IconSmooth
     key: walls
     mode: NoSprite
