@@ -12,15 +12,15 @@
     - type: Spellbook
 
 - type: entity
-  id: FlashRuneSpellbook
-  name: flash rune spellbook
+  id: SpawnSpellbook
+  name: spawn spellbook
   parent: BaseSpellbook
   components:
     - type: Spellbook
       instantSpells:
         FlashRune: -1
       worldSpells:
-        SpawnSpell: -1
+        SpawnMagicarpSpell: -1
 
 - type: entity
   id: ForceWallSpellbook
