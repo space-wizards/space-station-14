@@ -1340,6 +1340,7 @@
 - type: entity
   parent: VendingMachine
   id: VendingMachineTankDispenserEVA
+  suffix: EVA [O2, N2]
   name: gas tank dispenser
   description: A vendor for dispensing gas tanks.
   components:
@@ -1352,6 +1353,7 @@
 - type: entity
   parent: VendingMachine
   id: VendingMachineTankDispenserEngineering
+  suffix: ENG [O2, Plasma]
   name: gas tank dispenser
   description: A vendor for dispensing gas tanks. This one has an engineering livery.
   components:
@@ -1359,4 +1361,6 @@
     pack: TankDispenserEngineeringInventory
   - type: Sprite
     sprite: Structures/Machines/VendingMachines/tankdispenser.rsi #TODO add visualiser for remaining tanks as layers
-    state: dispenser
+    layers:
+    - state: dispenser
+    - state: dispensereng
