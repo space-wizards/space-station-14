@@ -1,13 +1,8 @@
-##
-##    IV Bags & Stands
-##
-
-
 #     IV Bag
 
 - type: entity
   parent: BaseItem
-  name: iv bag
+  name: IV bag
   id: BaseIVBag
   # description: An injectable IV bag that slowly drips its contents.
   description: An injectable IV bag. Holds plenty of fluid.
@@ -55,12 +50,17 @@
     - trigger:
         !type:DamageTrigger
         damage: 50
+      behaviors:
+      - !type:SpillBehavior
+        solution: injector
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
 
 #     Blood IVs
 
 - type: entity
   parent: BaseIVBag
-  name: blood iv bag
+  name: blood IV bag
   suffix: Empty
   id: IVBagBlood
   description: An IV drip meant for blood. Type? Red.
@@ -75,7 +75,7 @@
 
 - type: entity
   parent: IVBagBlood
-  name: blood iv bag
+  name: blood IV bag
   suffix: Filled
   id: IVBagBloodFilled
   components:
@@ -88,7 +88,7 @@
 
 - type: entity
   parent: BaseIVBag
-  name: slime iv bag
+  name: slime IV bag
   suffix: Empty
   id: IVBagSlime
   description: An IV drip meant for slime. Life essence for some, tasty snack for others.
@@ -103,7 +103,7 @@
 
 - type: entity
   parent: IVBagSlime
-  name: slime iv bag
+  name: slime IV bag
   suffix: Filled
   id: IVBagSlimeFilled
   components:
@@ -119,7 +119,7 @@
 
 - type: entity
   parent: BaseItem
-  name: stand parts
+  name: IV stand parts
   id: IVStandParts
   description: A dismantled IV bag stand. Easy to put back together.
   components:
@@ -162,10 +162,7 @@
     netsync: false
     sprite: Objects/Specific/Medical/ivbag.rsi
     layers:
-    - state: stand
-  - type: MovedByPressure
-  - type: InteractionOutline
-  - type: Physics
+    - state: IV stand
   - type: Fixtures
     fixtures:
     - shape:
