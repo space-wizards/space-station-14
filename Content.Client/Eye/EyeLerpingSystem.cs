@@ -36,9 +36,16 @@ public sealed class EyeLerpingSystem : EntitySystem
     {
         base.Initialize();
 
+        SubscribeLocalEvent<EyeComponent, ComponentShutdown>(OnEyeShutdown);
+
         UpdatesAfter.Add(typeof(TransformSystem));
         UpdatesAfter.Add(typeof(PhysicsSystem));
         UpdatesBefore.Add(typeof(EyeUpdateSystem));
+    }
+
+    private void OnEyeShutdown(EntityUid uid, EyeComponent component, ComponentShutdown args)
+    {
+        RemoveEye(uid);
     }
 
     public void AddEye(EntityUid uid)
@@ -51,7 +58,7 @@ public sealed class EyeLerpingSystem : EntitySystem
 
     public void RemoveEye(EntityUid uid)
     {
-        if (!_activeEyes.ContainsKey(uid))
+        if (_activeEyes.ContainsKey(uid))
         {
             _activeEyes.Remove(uid);
         }
