@@ -3,8 +3,8 @@
   name: TankDispenser
   spriteName: tankdispenser
   startingInventory:
-    AirTankFilled: 5
     OxygenTankFilled: 5
+    NitrogenTankFilled: 5
     
 - type: vendingMachineInventory
   id: TankDispenserEngineeringInventory
@@ -12,5 +12,4 @@
   spriteName: tankdispenser
   startingInventory:
     PlasmaTankFilled: 5
-    AirTankFilled: 5
     OxygenTankFilled: 5
