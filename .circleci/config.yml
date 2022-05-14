@@ -6,7 +6,7 @@ jobs:
       - image: cimg/base:2022.03 # the primary container, where your job's commands are run
     steps:
       - checkout
-      - run: git submodule update --init
+      - run:  git submodule update --init --recursive
 
 workflows:
   build-workflow:
