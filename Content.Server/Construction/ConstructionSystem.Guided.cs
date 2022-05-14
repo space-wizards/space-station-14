@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using Content.Server.Construction.Components;
 using Content.Shared.Construction;
 using Content.Shared.Construction.Prototypes;
@@ -6,8 +5,6 @@ using Content.Shared.Construction.Steps;
 using Content.Shared.Examine;
 using Content.Shared.Popups;
 using Content.Shared.Verbs;
-using Robust.Shared.GameObjects;
-using Robust.Shared.Localization;
 
 namespace Content.Server.Construction
 {

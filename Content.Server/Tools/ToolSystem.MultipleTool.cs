@@ -1,4 +1,3 @@
-using System;
 using System.Linq;
 using Content.Server.Tools.Components;
 using Content.Shared.Interaction;
@@ -6,12 +5,8 @@ using Content.Shared.Tools;
 using Content.Shared.Tools.Components;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
-using Robust.Shared.GameObjects;
 using Robust.Shared.GameStates;
-using Robust.Shared.IoC;
-using Robust.Shared.Localization;
 using Robust.Shared.Player;
-using Robust.Shared.Prototypes;
 
 namespace Content.Server.Tools
 {

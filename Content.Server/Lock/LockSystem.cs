@@ -1,8 +1,5 @@
-using Content.Server.Access.Components;
-using Content.Server.Access.Systems;
 using Content.Server.Storage.Components;
 using Content.Shared.Emag.Systems;
-using Content.Shared.Emag.Components;
 using Content.Shared.Access.Components;
 using Content.Shared.Access.Systems;
 using Content.Shared.Examine;
@@ -12,9 +9,6 @@ using Content.Shared.Storage;
 using Content.Shared.Verbs;
 using JetBrains.Annotations;
 using Robust.Shared.Audio;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Localization;
 using Robust.Shared.Player;
 
 namespace Content.Server.Lock

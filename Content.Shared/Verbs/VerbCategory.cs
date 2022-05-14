@@ -1,7 +1,5 @@
-using Robust.Shared.Localization;
 using Robust.Shared.Serialization;
 using Robust.Shared.Utility;
-using System;
 
 namespace Content.Shared.Verbs
 {

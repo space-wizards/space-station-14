@@ -1,12 +1,5 @@
-using System.Collections.Generic;
-using System.Linq;
 using Content.Server.Radiation.Systems;
-using Content.Shared.Radiation;
-using Content.Shared.Sound;
 using JetBrains.Annotations;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Map;
 
 namespace Content.Server.Radiation
 {

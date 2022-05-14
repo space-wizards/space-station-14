@@ -1,13 +1,7 @@
-using System;
-using System.Collections.Generic;
 using Content.Shared.ActionBlocker;
-using Content.Shared.Examine;
 using Content.Shared.Hands.Components;
 using Content.Shared.Interaction;
 using Robust.Shared.Containers;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Utility;
 
 namespace Content.Shared.Verbs
 {

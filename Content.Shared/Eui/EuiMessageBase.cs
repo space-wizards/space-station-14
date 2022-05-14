@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace Content.Shared.Eui
+﻿namespace Content.Shared.Eui
 {
     [Serializable]
     public abstract class EuiMessageBase

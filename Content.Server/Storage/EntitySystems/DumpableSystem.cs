@@ -7,7 +7,6 @@ using Content.Server.Disposal.Unit.Components;
 using Content.Server.Disposal.Unit.EntitySystems;
 using Content.Server.DoAfter;
 using Content.Shared.Placeable;
-using Content.Server.Hands.Systems;
 using Robust.Shared.Containers;
 
 namespace Content.Server.Storage.EntitySystems
@@ -17,7 +16,6 @@ namespace Content.Server.Storage.EntitySystems
         [Dependency] private readonly DoAfterSystem _doAfterSystem = default!;
         [Dependency] private readonly DisposalUnitSystem _disposalUnitSystem = default!;
 
-        [Dependency] private readonly HandsSystem _handsSystem = default!;
         public override void Initialize()
         {
             base.Initialize();

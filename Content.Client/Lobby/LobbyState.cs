@@ -18,6 +18,7 @@ using Robust.Client.Player;
 using Robust.Client.ResourceManagement;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
+using Robust.Shared.Configuration;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
@@ -42,6 +43,7 @@ namespace Content.Client.Lobby
         [Dependency] private readonly IClientPreferencesManager _preferencesManager = default!;
         [Dependency] private readonly IGameTiming _gameTiming = default!;
         [Dependency] private readonly IVoteManager _voteManager = default!;
+        [Dependency] private readonly IConfigurationManager _configurationManager = default!;
 
         [ViewVariables] private CharacterSetupGui? _characterSetup;
         [ViewVariables] private LobbyGui? _lobby;
@@ -52,7 +54,7 @@ namespace Content.Client.Lobby
         {
             _gameTicker = EntitySystem.Get<ClientGameTicker>();
             _characterSetup = new CharacterSetupGui(_entityManager, _resourceCache, _preferencesManager,
-                _prototypeManager);
+                _prototypeManager, _configurationManager);
             LayoutContainer.SetAnchorPreset(_characterSetup, LayoutContainer.LayoutPreset.Wide);
 
             _lobby = new LobbyGui(_entityManager, _preferencesManager);

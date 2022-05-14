@@ -840,6 +840,12 @@ namespace Content.Shared.CCVar
         public static readonly CVarDef<bool> RestrictedNames =
             CVarDef.Create("ic.restricted_names", true, CVar.SERVER | CVar.REPLICATED);
 
+        /// <summary>
+        /// Allows flavor text (character descriptions)
+        /// </summary>
+        public static readonly CVarDef<bool> FlavorText =
+            CVarDef.Create("ic.flavor_text", false, CVar.SERVER | CVar.REPLICATED);
+
         /*
          * Salvage
          */

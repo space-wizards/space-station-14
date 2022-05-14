@@ -1,6 +1,4 @@
-﻿using Robust.Shared.GameObjects;
-using Robust.Shared.Network;
-using Robust.Shared.ViewVariables;
+﻿using Robust.Shared.Network;
 
 namespace Content.Server.TraitorDeathMatch.Components
 {

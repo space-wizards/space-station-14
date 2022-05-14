@@ -1,22 +1,13 @@
-using System;
 using System.Threading.Tasks;
 using Content.Server.DoAfter;
 using Content.Server.Hands.Components;
-using Content.Shared.ActionBlocker;
 using Content.Shared.Cuffs.Components;
 using Content.Shared.Interaction;
-using Content.Shared.Interaction.Helpers;
 using Content.Shared.Popups;
 using Content.Shared.Sound;
 using Content.Shared.Stunnable;
 using Robust.Shared.Audio;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Localization;
-using Robust.Shared.Maths;
 using Robust.Shared.Player;
-using Robust.Shared.Serialization.Manager.Attributes;
-using Robust.Shared.ViewVariables;
 
 namespace Content.Server.Cuffs.Components
 {

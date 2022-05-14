@@ -1,4 +1,3 @@
-using System.Linq;
 using Content.Server.Radiation;
 using Content.Server.Station.Components;
 using Content.Server.Station.Systems;
@@ -16,7 +15,6 @@ namespace Content.Server.StationEvents.Events
         // Based on Goonstation style radiation storm with some TG elements (announcer, etc.)
 
         [Dependency] private readonly IEntityManager _entityManager = default!;
-        [Dependency] private readonly IMapManager _mapManager = default!;
         [Dependency] private readonly IRobustRandom _robustRandom = default!;
 
         private StationSystem _stationSystem = default!;

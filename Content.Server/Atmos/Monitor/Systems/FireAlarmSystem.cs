@@ -4,8 +4,6 @@ using Content.Shared.Atmos.Monitor;
 using Content.Shared.Interaction;
 using Content.Shared.Emag.Systems;
 using Robust.Server.GameObjects;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
 
 namespace Content.Server.Atmos.Monitor.Systems
 {

@@ -1,7 +1,6 @@
 using Content.Server.Disease.Components;
 using JetBrains.Annotations;
 using Content.Shared.Disease;
-using Robust.Shared.IoC;
 
 namespace Content.Server.Disease.Effects
 {
