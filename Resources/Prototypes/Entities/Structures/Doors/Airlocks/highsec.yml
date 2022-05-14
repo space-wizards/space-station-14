@@ -33,6 +33,7 @@
       mass: 100
       mask:
       - FullTileMask
+      - LowImpassable
       layer:
       - AirlockLayer
   - type: Door
