@@ -1,10 +1,4 @@
 Entries:
-- author: Peptide90
-  changes:
-  - {message: Pilot seats can now be constructed. Bling up that homemade shuttle.,
-    type: Add}
-  id: 1027
-  time: '2022-02-10T01:58:24.0000000+00:00'
 - author: Swept
   changes:
   - {message: Flare Gun no longer spawns with a shotgun shell loaded, type: Fix}
@@ -3036,3 +3030,12 @@ Entries:
   - {message: Added character descriptions., type: Add}
   id: 1526
   time: '2022-05-13T22:58:45.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Skeleton reassembly now works as intended and won't leave behind body
+      parts., type: Fix}
+  - {message: Skeletons no longer have eyes or eye colors., type: Fix}
+  - {message: Skeletons take slightly less barotrauma to scale with their increased
+      blunt vulnerability., type: Tweak}
+  id: 1527
+  time: '2022-05-14T01:31:34.0000000+00:00'
