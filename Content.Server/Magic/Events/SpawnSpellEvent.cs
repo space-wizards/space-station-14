@@ -19,13 +19,7 @@ public class SpawnSpellEvent : WorldTargetActionEvent
     [DataField("offsetVector2")]
     public Vector2 OffsetVector2;
 
-    [DataField("spawnType")]
-    public SpawnSpellEnum SpawnType = SpawnSpellEnum.SpawnOne;
+    [DataField("temporarySummon")]
+    public bool TemporarySummon = false;
 }
 
-public enum SpawnSpellEnum : byte
-{
-    SpawnOne,
-    SpawnLine,
-    SpawnCross
-}

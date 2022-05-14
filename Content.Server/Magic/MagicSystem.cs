@@ -79,9 +79,15 @@ public sealed class MagicSystem : EntitySystem
             forcewall.Lifetime -= frameTime;
 
             if (forcewall.Lifetime <= 0)
-            {
                 EntityManager.QueueDeleteEntity(forcewall.Owner);
-            }
+        }
+
+        foreach (var spawnedEntities in EntityQuery<SpawnSpellComponent>())
+        {
+            spawnedEntities.Lifetime -= frameTime;
+
+            if (spawnedEntities.Lifetime <= 0)
+                EntityManager.QueueDeleteEntity(spawnedEntities.Owner);
         }
     }
 
@@ -269,8 +275,12 @@ public sealed class MagicSystem : EntitySystem
         var offsetCoords = targetMapCoords;
         foreach (var proto in getProtos)
         {
-            Spawn(proto, offsetCoords).SnapToGrid();
+            var entity = Spawn(proto, offsetCoords);
+            entity.SnapToGrid();
             offsetCoords = offsetCoords.Offset(args.OffsetVector2);
+
+            if (args.TemporarySummon)
+                EnsureComp<SpawnSpellComponent>(entity);
         }
 
         args.Handled = true;
