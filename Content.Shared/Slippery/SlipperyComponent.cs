@@ -1,14 +1,7 @@
-using System;
-using System.Collections.Generic;
 using System.Linq;
 using Content.Shared.Sound;
-using Robust.Shared.GameObjects;
 using Robust.Shared.GameStates;
-using Robust.Shared.Maths;
-using Robust.Shared.Players;
 using Robust.Shared.Serialization;
-using Robust.Shared.Serialization.Manager.Attributes;
-using Robust.Shared.ViewVariables;
 
 namespace Content.Shared.Slippery
 {
@@ -16,7 +9,7 @@ namespace Content.Shared.Slippery
     [NetworkedComponent()]
     public sealed class SlipperyComponent : Component
     {
-        private float _paralyzeTime = 5f;
+        private float _paralyzeTime = 3f;
         private float _intersectPercentage = 0.3f;
         private float _requiredSlipSpeed = 3.5f;
         private float _launchForwardsMultiplier = 1f;

@@ -1,9 +1,5 @@
 using Content.Server.CombatMode;
 using Content.Server.Interaction;
-using Content.Shared.Interaction;
-using Content.Shared.Interaction.Helpers;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
 
 namespace Content.Server.AI.Operators.Inventory
 {

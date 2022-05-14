@@ -2,7 +2,6 @@
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
-using Content.Server.Decals;
 using Content.Shared.Decals;
 using Robust.Client.GameObjects;
 using Robust.Shared.GameObjects;
@@ -139,8 +138,8 @@ namespace Content.MapRenderer.Painters
 
         private (float x, float y) TransformLocalPosition(Vector2 position, IMapGrid grid)
         {
-            var xOffset = (int) Math.Abs(grid.LocalBounds.Left);
-            var yOffset = (int) Math.Abs(grid.LocalBounds.Bottom);
+            var xOffset = (int) Math.Abs(grid.LocalAABB.Left);
+            var yOffset = (int) Math.Abs(grid.LocalAABB.Bottom);
             var tileSize = grid.TileSize;
 
             var x = ((float) Math.Floor(position.X) + xOffset) * tileSize * TilePainter.TileImageSize;

@@ -2,7 +2,6 @@
 using Content.Server.Clothing.Components;
 using Content.Server.Inventory;
 using Content.Shared.Inventory;
-using Content.Shared.Item;
 using NUnit.Framework;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;

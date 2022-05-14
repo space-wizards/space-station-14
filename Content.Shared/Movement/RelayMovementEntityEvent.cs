@@ -1,5 +1,3 @@
-using Robust.Shared.GameObjects;
-
 namespace Content.Shared.Movement
 {
     public sealed class RelayMovementEntityEvent : EntityEventArgs

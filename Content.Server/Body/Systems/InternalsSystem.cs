@@ -1,7 +1,6 @@
 ﻿using Content.Server.Atmos.Components;
 using Content.Server.Body.Components;
 using Content.Shared.Atmos;
-using Robust.Shared.GameObjects;
 
 namespace Content.Server.Body.Systems;
 

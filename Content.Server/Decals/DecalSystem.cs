@@ -367,20 +367,41 @@ namespace Content.Server.Decals
                 var staleChunks = new Dictionary<GridId, HashSet<Vector2i>>();
 
                 // Get any chunks not in range anymore
+                // Then, remove them from previousSentChunks (for stuff like grids out of range)
+                // and also mark them as stale for networking.
+                var toRemoveGrids = new RemQueue<GridId>();
+                // Store the chunks for later to remove.
+
                 foreach (var (gridId, oldIndices) in _previousSentChunks[playerSession])
                 {
+                    // Mark the whole grid as stale and flag for removal.
                     if (!chunksInRange.TryGetValue(gridId, out var chunks))
                     {
-                        staleChunks[gridId] = oldIndices;
+                        toRemoveGrids.Add(gridId);
+
+                        // If grid was deleted then don't worry about sending it to the client.
+                        if (MapManager.TryGetGrid(gridId, out _))
+                            staleChunks[gridId] = oldIndices;
+
                         continue;
                     }
 
+                    var elmo = _chunkIndexPool.Get();
+
+                    // Get individual stale chunks.
                     foreach (var chunk in oldIndices)
                     {
                         if (chunks.Contains(chunk)) continue;
-                        var elmo = staleChunks.GetOrNew(gridId);
                         elmo.Add(chunk);
                     }
+
+                    if (elmo.Count == 0)
+                    {
+                        _chunkIndexPool.Return(elmo);
+                        continue;
+                    }
+
+                    staleChunks.Add(gridId, elmo);
                 }
 
                 var updatedChunks = _chunkViewerPool.Get();
@@ -395,8 +416,10 @@ namespace Content.Server.Decals
 
                     if (_dirtyChunks.TryGetValue(gridId, out var dirtyChunks))
                     {
-                        gridChunks.IntersectWith(dirtyChunks);
-                        newChunks.UnionWith(gridChunks);
+                        var inRange = new HashSet<Vector2i>();
+                        inRange.UnionWith(gridChunks);
+                        inRange.IntersectWith(dirtyChunks);
+                        newChunks.UnionWith(inRange);
                     }
 
                     if (newChunks.Count == 0)
@@ -405,20 +428,25 @@ namespace Content.Server.Decals
                         continue;
                     }
 
+                    // TODO: This is gonna have churn but mainly I want to fix the bugs rn.
+                    _previousSentChunks[playerSession][gridId] = gridChunks;
                     updatedChunks[gridId] = newChunks;
+                }
+
+                // We'll only remove stale grids after the above iteration.
+                foreach (var gridId in toRemoveGrids)
+                {
+                    _previousSentChunks[playerSession].Remove(gridId);
                 }
 
                 if (updatedChunks.Count == 0)
                 {
-                    ReturnToPool(chunksInRange);
+                    // ReturnToPool(chunksInRange);
                     // Even if updatedChunks is empty we'll still return it to the pool as it may have been allocated higher.
                     ReturnToPool(updatedChunks);
                 }
 
                 if (updatedChunks.Count == 0 && staleChunks.Count == 0) continue;
-
-                ReturnToPool(_previousSentChunks[playerSession]);
-                _previousSentChunks[playerSession] = chunksInRange;
 
                 //send all gridChunks to client
                 SendChunkUpdates(playerSession, updatedChunks, staleChunks);

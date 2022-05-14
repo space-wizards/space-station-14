@@ -1,11 +1,6 @@
 using Content.Shared.Smoking;
 using Content.Shared.Sound;
 using Content.Server.Light.EntitySystems;
-using Robust.Server.GameObjects;
-using Robust.Shared.Analyzers;
-using Robust.Shared.GameObjects;
-using Robust.Shared.Serialization.Manager.Attributes;
-using Robust.Shared.ViewVariables;
 
 namespace Content.Server.Light.Components
 {

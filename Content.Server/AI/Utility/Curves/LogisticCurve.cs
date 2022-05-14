@@ -1,5 +1,3 @@
-using System;
-
 namespace Content.Server.AI.Utility.Curves
 {
     public struct LogisticCurve : IResponseCurve

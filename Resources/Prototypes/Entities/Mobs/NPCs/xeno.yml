@@ -5,6 +5,8 @@
   parent: SimpleSpaceMobBase
   description: They mostly come at night. Mostly.
   components:
+  - type: CombatMode
+    canDisarm: true
   - type: UtilityAI
     behaviorSets:
     - Idle
@@ -32,12 +34,9 @@
         radius: 0.35
       mass: 120
       mask:
-      - Impassable
-      - MobImpassable
-      - VaultImpassable
-      - SmallImpassable
+      - MobMask
       layer:
-      - Opaque
+      - MobLayer
   - type: MobState
     thresholds:
       0: !type:NormalMobState {}

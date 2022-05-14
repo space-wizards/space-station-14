@@ -91,6 +91,9 @@ namespace Content.Server.Database
                 .Property(log => log.Id)
                 .ValueGeneratedOnAdd();
 
+            modelBuilder.Entity<AdminLog>()
+                .HasIndex(log => log.Date);
+
             modelBuilder.Entity<AdminLogPlayer>()
                 .HasOne(player => player.Player)
                 .WithMany(player => player.AdminLogs)
@@ -171,6 +174,8 @@ namespace Content.Server.Database
         {
             return query.Where(log => EF.Functions.Like(log.Message, "%" + searchText + "%"));
         }
+
+        public abstract int CountAdminLogs();
     }
 
     public class Preference
@@ -192,10 +197,12 @@ namespace Content.Server.Database
         public int Id { get; set; }
         public int Slot { get; set; }
         [Column("char_name")] public string CharacterName { get; set; } = null!;
+        public string FlavorText { get; set; } = null!;
         public int Age { get; set; }
         public string Sex { get; set; } = null!;
         public string Gender { get; set; } = null!;
         public string Species { get; set; } = null!;
+        [Column(TypeName = "jsonb")] public JsonDocument? Markings { get; set; } = null!;
         public string HairName { get; set; } = null!;
         public string HairColor { get; set; } = null!;
         public string FacialHairName { get; set; } = null!;

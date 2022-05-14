@@ -2,10 +2,6 @@ using Content.Server.Administration;
 using Content.Shared.Administration;
 using Content.Shared.Verbs;
 using Robust.Shared.Console;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Localization;
-using System.Linq;
 
 namespace Content.Server.Verbs.Commands
 {

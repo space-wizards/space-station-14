@@ -92,10 +92,7 @@
         bounds: "-0.25,-0.25,0.25,0.25"
       hard: false
       mask:
-      - Opaque
-      - Impassable
-      - MobImpassable
-      - SmallImpassable
+      - FullTileMask
   - type: Appearance
     visuals:
     - type: VaporVisualizer

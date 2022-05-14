@@ -1,6 +1,4 @@
-﻿using Robust.Shared.GameObjects;
-
-namespace Content.Server.Roles
+﻿namespace Content.Server.Roles
 {
     public abstract class RoleEvent : EntityEventArgs
     {

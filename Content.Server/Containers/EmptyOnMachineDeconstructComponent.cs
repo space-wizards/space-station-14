@@ -1,10 +1,3 @@
-using System;
-using System.Collections.Generic;
-using Robust.Shared.Containers;
-using Robust.Shared.GameObjects;
-using Robust.Shared.Serialization.Manager.Attributes;
-using Robust.Shared.ViewVariables;
-
 namespace Content.Server.Containers
 {
     /// <summary>

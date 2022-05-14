@@ -1,6 +1,4 @@
-﻿using System;
-using Content.Shared.Cooldown;
-using Robust.Shared.GameObjects;
+﻿using Content.Shared.Cooldown;
 
 namespace Content.Server.Cooldown
 {

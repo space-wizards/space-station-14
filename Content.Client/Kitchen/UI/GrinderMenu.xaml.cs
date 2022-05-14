@@ -124,7 +124,7 @@ namespace Content.Client.Kitchen.UI
             {
                 foreach (var reagent in reagents)
                 {
-                    var reagentName = _prototypeManager.TryIndex(reagent.ReagentId, out ReagentPrototype? proto) ? Loc.GetString($"{reagent.Quantity} {proto.Name}") : "???";
+                    var reagentName = _prototypeManager.TryIndex(reagent.ReagentId, out ReagentPrototype? proto) ? Loc.GetString($"{reagent.Quantity} {proto.LocalizedName}") : "???";
                     BeakerContentBox.BoxContents.AddItem(reagentName);
                 }
             }

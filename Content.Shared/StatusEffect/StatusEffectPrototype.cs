@@ -1,6 +1,5 @@
 ﻿using Content.Shared.Alert;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Serialization.Manager.Attributes;
 
 namespace Content.Shared.StatusEffect
 {
