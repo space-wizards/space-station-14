@@ -7,9 +7,6 @@ namespace Content.Server.Explosion.EntitySystems;
 
 public sealed partial class TriggerSystem
 {
-    //Stores the entity as active so the event can resolve for each UID colliding with this entity.
-    private readonly List<EntityUid> Active = new();
-
     private void InitializeTimedCollide()
     {
         SubscribeLocalEvent<TriggerOnTimedCollideComponent, StartCollideEvent>(OnTimerCollide);
@@ -19,7 +16,8 @@ public sealed partial class TriggerSystem
 
     private void OnTimerCollide(EntityUid uid, TriggerOnTimedCollideComponent component, StartCollideEvent args)
     {
-        Active.Add(uid);
+        //Ensures the entity trigger will have an active component
+        EnsureComp<ActiveTriggerOnTimedCollideComponent>(uid);
         var otherUID = args.OtherFixture.Body.Owner;
         component.Colliding.Add(otherUID, 0);
     }
@@ -31,27 +29,26 @@ public sealed partial class TriggerSystem
 
         if (component.Colliding.Count == 0)
         {
-            Active.Remove(uid);
+            RemComp<ActiveTriggerOnTimedCollideComponent>(uid);
         }
     }
 
     private void OnComponentRemove(EntityUid uid, TriggerOnTimedCollideComponent component, ComponentRemove args)
     {
-        Active.Remove(uid);
+        RemComp<ActiveTriggerOnTimedCollideComponent>(uid);
     }
 
     private void UpdateTimedCollide(float frameTime)
     {
-        foreach (var trigger in Active)
+        foreach (var (activeTrigger, triggerOnTimedCollide) in EntityQuery<ActiveTriggerOnTimedCollideComponent, TriggerOnTimedCollideComponent>())
         {
-            if (!TryComp(trigger, out TriggerOnTimedCollideComponent? component))
-                continue;
-            foreach (var (collidingEntity, collidingTimer) in component.Colliding)
+            foreach (var (collidingEntity, collidingTimer) in triggerOnTimedCollide.Colliding)
             {
-                component.Colliding[collidingEntity] += frameTime;
-                if (collidingTimer > component.Threshold)
+                triggerOnTimedCollide.Colliding[collidingEntity] += frameTime;
+                if (collidingTimer > triggerOnTimedCollide.Threshold)
                 {
-                    RaiseLocalEvent(trigger, new TriggerEvent(trigger, collidingEntity));
+                    RaiseLocalEvent(activeTrigger.Owner, new TriggerEvent(activeTrigger.Owner, collidingEntity));
+                    triggerOnTimedCollide.Colliding[collidingEntity] = 0;
                 }
             }
         }
