@@ -353,6 +353,9 @@ namespace Content.Client.Entry
             "CanEscapeInventory",
             "PowerSink",
             "Wires",
+            "SurveillanceCamera",
+            "SurveillanceCameraRouter",
+            "SurveillanceCameraMonitor",
         };
     }
 }

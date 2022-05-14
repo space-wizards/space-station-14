@@ -90,6 +90,13 @@ public sealed class SurveillanceCameraMonitorBoundUserInterface : BoundUserInter
                 _eyeLerpingSystem.AddEye(cast.ActiveCamera.Value);
                 _currentCamera = cast.ActiveCamera;
             }
+            else if (_currentCamera != cast.ActiveCamera)
+            {
+                _eyeLerpingSystem.RemoveEye(_currentCamera.Value);
+                _eyeLerpingSystem.AddEye(cast.ActiveCamera.Value);
+                _currentCamera = cast.ActiveCamera;
+            }
+
             if (_entityManager.TryGetComponent(cast.ActiveCamera, out EyeComponent eye))
             {
                 _window.UpdateState(eye.Eye, cast.Subnets, _currentSubnet, cast.Cameras);
