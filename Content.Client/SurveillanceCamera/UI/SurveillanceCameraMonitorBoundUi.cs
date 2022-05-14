@@ -1,3 +1,4 @@
+using Content.Client.Eye;
 using Content.Shared.SurveillanceCamera;
 using Robust.Client.GameObjects;
 
@@ -6,6 +7,7 @@ namespace Content.Client.SurveillanceCamera.UI;
 public sealed class SurveillanceCameraMonitorBoundUserInterface : BoundUserInterface
 {
     [Dependency] private readonly IEntityManager _entityManager = default!;
+    private EyeLerpingSystem _eyeLerpingSystem = default!;
 
     private SurveillanceCameraMonitorWindow? _window;
     private EntityUid? _currentCamera;
@@ -15,6 +17,7 @@ public sealed class SurveillanceCameraMonitorBoundUserInterface : BoundUserInter
     public SurveillanceCameraMonitorBoundUserInterface(ClientUserInterfaceComponent owner, object uiKey) : base(owner, uiKey)
     {
         IoCManager.InjectDependencies(this);
+        _eyeLerpingSystem = EntitySystem.Get<EyeLerpingSystem>();
     }
 
     protected override void Open()
@@ -64,8 +67,6 @@ public sealed class SurveillanceCameraMonitorBoundUserInterface : BoundUserInter
             return;
         }
 
-        _currentCamera = cast.ActiveCamera;
-
         if (_currentSubnet != cast.ActiveSubnet)
         {
             _knownAddresses.Clear();
@@ -75,15 +76,25 @@ public sealed class SurveillanceCameraMonitorBoundUserInterface : BoundUserInter
         if (cast.ActiveCamera == null)
         {
             _window.UpdateState(null, cast.Subnets, _currentSubnet, cast.Cameras);
+
+            if (_currentCamera != null)
+            {
+                _eyeLerpingSystem.RemoveEye(_currentCamera.Value);
+                _currentCamera = null;
+            }
         }
         else
         {
+            if (_currentCamera == null)
+            {
+                _eyeLerpingSystem.AddEye(cast.ActiveCamera.Value);
+                _currentCamera = cast.ActiveCamera;
+            }
             if (_entityManager.TryGetComponent(cast.ActiveCamera, out EyeComponent eye))
             {
                 _window.UpdateState(eye.Eye, cast.Subnets, _currentSubnet, cast.Cameras);
             }
         }
-
     }
 
     protected override void ReceiveMessage(BoundUserInterfaceMessage message)
