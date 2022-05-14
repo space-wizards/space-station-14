@@ -9,6 +9,10 @@
             !type:PhysShapeAabb
             bounds: "-0.4,-0.4,0.4,0.4"
           hard: false
+          mask:
+            - FullTileMask
+          layer:
+            - SlipLayer
     - type: CollisionWake
     - type: Physics
     - type: Clickable

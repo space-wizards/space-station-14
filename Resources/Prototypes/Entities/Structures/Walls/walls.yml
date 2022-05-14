@@ -728,10 +728,10 @@
         - shape:
             !type:PhysShapeAabb
             bounds: "-0.5,-0.5,0.5,0.5"
-          layer:
-            - GlassLayer
           mask:
             - FullTileMask
+          layer:
+            - GlassLayer
     - type: Airtight
     - type: Sprite
       sprite: Structures/Magic/forcewall.rsi
