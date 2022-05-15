@@ -1,9 +1,4 @@
 Entries:
-- author: Lamrr
-  changes:
-  - {message: High-voltage cables are now a little smoother., type: Tweak}
-  id: 1034
-  time: '2022-02-10T21:08:50.0000000+00:00'
 - author: Mith-randalf
   changes:
   - {message: 'Added some new, sensibly-sized signs.', type: Add}
@@ -3040,3 +3035,12 @@ Entries:
       a welder...please., type: Tweak}
   id: 1533
   time: '2022-05-15T02:07:59.0000000+00:00'
+- author: mirrorcult
+  changes:
+  - {message: Flashes and stunbatons now only have effect in combat mode., type: Tweak}
+  - {message: 'Stunbatons will no longer hurt people in combat mode, if they successfully
+      stun them. Harmbatoning is no longer possible while stunning at the same time.',
+    type: Tweak}
+  - {message: Stunbaton damage reduced., type: Tweak}
+  id: 1534
+  time: '2022-05-15T02:10:34.0000000+00:00'
