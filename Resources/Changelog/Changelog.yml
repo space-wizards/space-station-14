@@ -1,11 +1,4 @@
 Entries:
-- author: Spillhelm53
-  changes:
-  - {message: 'Fixes certain puddles not being able to evaporate, which had been slipping
-      people forever. The janitor''s *points at wet floor sign* schadenfreude  can
-      now return to its regular safe levels.', type: Fix}
-  id: 1033
-  time: '2022-02-10T21:07:22.0000000+00:00'
 - author: Lamrr
   changes:
   - {message: High-voltage cables are now a little smoother., type: Tweak}
@@ -3041,3 +3034,9 @@ Entries:
   - {message: made lobby background keep aspect when stretching, type: Tweak}
   id: 1532
   time: '2022-05-15T02:06:07.0000000+00:00'
+- author: Peptide90
+  changes:
+  - {message: Asteroids are now more robust. Use a pickaxe to break them instead of
+      a welder...please., type: Tweak}
+  id: 1533
+  time: '2022-05-15T02:07:59.0000000+00:00'
