@@ -3,14 +3,11 @@ using Content.Shared.Atmos;
 using Content.Shared.Atmos.EntitySystems;
 using Robust.Client.Graphics;
 using Robust.Shared.Enums;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
 using Robust.Shared.Map;
-using Robust.Shared.Maths;
 
 namespace Content.Client.Atmos.Overlays
 {
-    public sealed class AtmosDebugOverlay : Overlay
+    public sealed class AtmosDebugWorldspaceOverlay : Overlay
     {
         private readonly AtmosDebugOverlaySystem _atmosDebugOverlaySystem;
 
@@ -18,7 +15,7 @@ namespace Content.Client.Atmos.Overlays
 
         public override OverlaySpace Space => OverlaySpace.WorldSpace;
 
-        public AtmosDebugOverlay()
+        public AtmosDebugWorldspaceOverlay()
         {
             IoCManager.InjectDependencies(this);
 
@@ -54,8 +51,38 @@ namespace Content.Client.Atmos.Overlays
                         if (dataMaybeNull != null)
                         {
                             var data = (SharedAtmosDebugOverlaySystem.AtmosDebugOverlayData) dataMaybeNull!;
-                            if (pass == 0)
+
+                            if (pass == 0 && _atmosDebugOverlaySystem.CfgMode == AtmosDebugOverlayMode.Everything)
                             {
+                                var topValueToShow = _atmosDebugOverlaySystem.CfgScale + _atmosDebugOverlaySystem.CfgBase;
+                                for (var i = 0; i < Atmospherics.TotalNumberOfGases; i++)
+                                {
+                                    if (data.Moles[i] > topValueToShow)
+                                    {
+                                        topValueToShow = data.Moles[i];
+                                    }
+                                }
+
+                                // all the lines
+                                var lineZeroX = tile.X + 0.55f;
+                                var linesBottomY = tile.Y + 0.15f;
+                                var linesMaxLen = 0.4f;
+
+                                for (var i = 0; i < Atmospherics.TotalNumberOfGases; i++)
+                                {
+                                    if (data.Moles[i] == 0f) continue;
+                                    var lineBottom = new Vector2(lineZeroX + (0.05f * i), linesBottomY);
+                                    var interp = (float)
+                                        (Math.Log10(data.Moles[i] - _atmosDebugOverlaySystem.CfgBase) /
+                                                  Math.Log10(topValueToShow - _atmosDebugOverlaySystem.CfgBase));
+                                    if (interp < 0f) interp = 0.1f;
+                                    var lineTop = lineBottom + new Vector2(0, linesMaxLen * interp);
+                                    drawHandle.DrawLine(lineBottom, lineTop, Atmospherics.GasColors[(Gas) i]);
+                                }
+                            }
+                            else if (pass == 0)
+                            {
+
                                 // -- Mole Count --
                                 float total = 0;
                                 switch (_atmosDebugOverlaySystem.CfgMode) {
@@ -91,7 +118,7 @@ namespace Content.Client.Atmos.Overlays
                                         res = Color.InterpolateBetween(Color.LimeGreen, Color.Blue, (interp - 0.5f) * 2);
                                     }
                                 }
-                                res = res.WithAlpha(0.75f);
+                                res = res.WithAlpha(0.2f);
                                 drawHandle.DrawRect(Box2.FromDimensions(new Vector2(tile.X, tile.Y), new Vector2(1, 1)), res);
                             }
                             else if (pass == 1)
@@ -108,7 +135,7 @@ namespace Content.Client.Atmos.Overlays
                                         var tileCentre = new Vector2(tile.X + 0.5f, tile.Y + 0.5f);
                                         var basisA = tileCentre + atmosAngleOfs - atmosAngleOfsR90;
                                         var basisB = tileCentre + atmosAngleOfs + atmosAngleOfsR90;
-                                        drawHandle.DrawLine(basisA, basisB, Color.Azure);
+                                        drawHandle.DrawLine(basisA, basisB, new Color(96,32,32));
                                     }
                                 }
                                 CheckAndShowBlockDir(AtmosDirection.North);
@@ -122,35 +149,30 @@ namespace Content.Client.Atmos.Overlays
                                     TileRef t,
                                     Color color)
                                 {
+                                    var arrowFinLength = 0.3f;
+
                                     // Account for South being 0.
                                     var atmosAngle = d.ToAngle() - Angle.FromDegrees(90);
-                                    var atmosAngleOfs = atmosAngle.ToVec() * 0.4f;
-                                    var tileCentre = new Vector2(t.X + 0.5f, t.Y + 0.5f);
-                                    var basisA = tileCentre;
-                                    var basisB = tileCentre + atmosAngleOfs;
-                                    handle.DrawLine(basisA, basisB, color);
+
+                                    var atmosAngleOfs = atmosAngle.ToVec();
+                                    var arrowTip = new Vector2(t.X + 0.25f, t.Y + 0.75f) + atmosAngleOfs * 0.25f;
+                                    var arrowFinRightSide = arrowTip - (Angle.FromDegrees(25).RotateVec(atmosAngleOfs)
+                                        * arrowFinLength);
+                                    var arrowFinLeftSide = arrowTip - (Angle.FromDegrees(-25).RotateVec(atmosAngleOfs)
+                                        * arrowFinLength);
+
+                                    handle.DrawLine(arrowFinRightSide, arrowTip, color);
+                                    handle.DrawLine(arrowFinLeftSide, arrowTip, color);
                                 }
 
                                 // -- Pressure Direction --
                                 if (data.PressureDirection != AtmosDirection.Invalid)
                                 {
-                                    DrawPressureDirection(drawHandle, data.PressureDirection, tile, Color.Blue);
+                                    DrawPressureDirection(drawHandle, data.PressureDirection, tile, Color.Pink);
                                 }
                                 else if (data.LastPressureDirection != AtmosDirection.Invalid)
                                 {
-                                    DrawPressureDirection(drawHandle, data.LastPressureDirection, tile, Color.LightGray);
-                                }
-
-                                // -- Excited Groups --
-                                if (data.InExcitedGroup)
-                                {
-                                    var tilePos = new Vector2(tile.X, tile.Y);
-                                    var basisA = tilePos;
-                                    var basisB = tilePos + new Vector2(1.0f, 1.0f);
-                                    var basisC = tilePos + new Vector2(0.0f, 1.0f);
-                                    var basisD = tilePos + new Vector2(1.0f, 0.0f);
-                                    drawHandle.DrawLine(basisA, basisB, Color.Cyan);
-                                    drawHandle.DrawLine(basisC, basisD, Color.Cyan);
+                                    DrawPressureDirection(drawHandle, data.LastPressureDirection, tile, Color.Gray);
                                 }
                             }
                         }

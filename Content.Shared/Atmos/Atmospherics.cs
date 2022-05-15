@@ -271,6 +271,19 @@ namespace Content.Shared.Atmos
         public const float MaxTransferRate = 200;
 
         #endregion
+
+        /// <summary>
+        ///     Color to represent the gas, to be used as a display color in UIs.
+        ///     Currently only used in the debug overlay.
+        /// </summary>
+        public static readonly Dictionary<Gas, Color> GasColors = new(){
+            { Gas.Oxygen, Color.Aqua },
+            { Gas.Nitrogen, Color.Green },
+            { Gas.CarbonDioxide, Color.DarkGray },
+            { Gas.Plasma, Color.HotPink },
+            { Gas.Tritium, Color.Lime },
+            { Gas.WaterVapor, Color.LightGray }
+        };
     }
 
     /// <summary>

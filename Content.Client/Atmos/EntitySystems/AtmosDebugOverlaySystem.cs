@@ -42,8 +42,10 @@ namespace Content.Client.Atmos.EntitySystems
             SubscribeLocalEvent<GridRemovalEvent>(OnGridRemoved);
 
             var overlayManager = IoCManager.Resolve<IOverlayManager>();
-            if(!overlayManager.HasOverlay<AtmosDebugOverlay>())
-                overlayManager.AddOverlay(new AtmosDebugOverlay());
+            if(!overlayManager.HasOverlay<AtmosDebugWorldspaceOverlay>())
+                overlayManager.AddOverlay(new AtmosDebugWorldspaceOverlay());
+            if(!overlayManager.HasOverlay<AtmosDebugScreenspaceOverlay>())
+                overlayManager.AddOverlay(new AtmosDebugScreenspaceOverlay());
         }
 
         private void OnGridRemoved(GridRemovalEvent ev)
@@ -68,8 +70,10 @@ namespace Content.Client.Atmos.EntitySystems
         {
             base.Shutdown();
             var overlayManager = IoCManager.Resolve<IOverlayManager>();
-            if (overlayManager.HasOverlay<AtmosDebugOverlay>())
-                overlayManager.RemoveOverlay<AtmosDebugOverlay>();
+            if (overlayManager.HasOverlay<AtmosDebugWorldspaceOverlay>())
+                overlayManager.RemoveOverlay<AtmosDebugWorldspaceOverlay>();
+            if(!overlayManager.HasOverlay<AtmosDebugScreenspaceOverlay>())
+                overlayManager.RemoveOverlay<AtmosDebugScreenspaceOverlay>();
         }
 
         public void Reset(RoundRestartCleanupEvent ev)
@@ -99,6 +103,7 @@ namespace Content.Client.Atmos.EntitySystems
     {
         TotalMoles,
         GasMoles,
-        Temperature
+        Temperature,
+        Everything
     }
 }

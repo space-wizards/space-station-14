@@ -18,8 +18,11 @@ namespace Content.Shared.Atmos.EntitySystems
             public readonly AtmosDirection LastPressureDirection;
             public readonly bool InExcitedGroup;
             public readonly AtmosDirection BlockDirection;
+            public readonly bool IsHotspot;
 
-            public AtmosDebugOverlayData(float temperature, float[] moles, AtmosDirection pressureDirection, AtmosDirection lastPressureDirection, bool inExcited, AtmosDirection blockDirection)
+            public AtmosDebugOverlayData(float temperature, float[] moles, AtmosDirection pressureDirection,
+                AtmosDirection lastPressureDirection, bool inExcited, AtmosDirection blockDirection,
+                bool isHotspot)
             {
                 Temperature = temperature;
                 Moles = moles;
@@ -27,6 +30,7 @@ namespace Content.Shared.Atmos.EntitySystems
                 LastPressureDirection = lastPressureDirection;
                 InExcitedGroup = inExcited;
                 BlockDirection = blockDirection;
+                IsHotspot = isHotspot;
             }
         }
 

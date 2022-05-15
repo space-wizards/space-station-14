@@ -46,7 +46,7 @@ namespace Content.Client.Commands
     {
         public string Command => "atvmode";
         public string Description => "Sets the atmos debug mode. This will automatically reset the scale.";
-        public string Help => "atvmode <TotalMoles/GasMoles/Temperature> [<gas ID (for GasMoles)>]";
+        public string Help => "atvmode <TotalMoles/GasMoles/Temperature/Everything> [<gas ID (for GasMoles)>]";
         public void Execute(IConsoleShell shell, string argStr, string[] args)
         {
             if (args.Length < 1)
