@@ -50,12 +50,13 @@ namespace Content.Server.Voting.Managers
                 Options =
                 {
                     (Loc.GetString("ui-vote-restart-yes"), true),
-                    (Loc.GetString("ui-vote-restart-no"), false)
+                    (Loc.GetString("ui-vote-restart-no"), false),
+                    (Loc.GetString("ui-vote-restart-abstain"), false)
                 },
                 Duration = alone
                     ? TimeSpan.FromSeconds(_cfg.GetCVar(CCVars.VoteTimerAlone))
                     : TimeSpan.FromSeconds(_cfg.GetCVar(CCVars.VoteTimerRestart)),
-                InitiatorTimeout = TimeSpan.FromMinutes(3)
+                InitiatorTimeout = TimeSpan.FromMinutes(5)
             };
 
             if (alone)
@@ -92,10 +93,10 @@ namespace Content.Server.Voting.Managers
 
             foreach (var player in _playerManager.ServerSessions)
             {
-                if (player != initiator && !_afkManager.IsAfk(player))
+                if (player != initiator)
                 {
-                    // Everybody else defaults to a no vote.
-                    vote.CastVote(player, 1);
+                    // Everybody else defaults to an abstain vote to say they don't mind.
+                    vote.CastVote(player, 2);
                 }
             }
         }
