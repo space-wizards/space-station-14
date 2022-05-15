@@ -2,11 +2,7 @@ using Content.Server.Botany.Components;
 using Content.Server.Popups;
 using Content.Server.Power.Components;
 using Content.Shared.Interaction;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Localization;
 using Robust.Shared.Player;
-using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 
 namespace Content.Server.Botany.Systems;

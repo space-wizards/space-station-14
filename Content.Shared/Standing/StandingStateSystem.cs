@@ -12,6 +12,9 @@ namespace Content.Shared.Standing
     public sealed class StandingStateSystem : EntitySystem
     {
         [Dependency] private readonly IGameTiming _gameTiming = default!;
+        
+        // If StandingCollisionLayer value is ever changed to more than one layer, the logic needs to be edited.
+        private const int StandingCollisionLayer = (int) CollisionGroup.MidImpassable;
 
         public bool IsDown(EntityUid uid, StandingStateComponent? standingState = null)
         {
@@ -61,15 +64,16 @@ namespace Content.Shared.Standing
             // Seemed like the best place to put it
             appearance?.SetData(RotationVisuals.RotationState, RotationState.Horizontal);
 
+            // Change collision masks to allow going under certain entities like flaps and tables
             if (TryComp(uid, out FixturesComponent? fixtureComponent))
             {
                 foreach (var (key, fixture) in fixtureComponent.Fixtures)
                 {
-                    if ((fixture.CollisionMask & (int) CollisionGroup.VaultImpassable) == 0)
+                    if ((fixture.CollisionMask & StandingCollisionLayer) == 0)
                         continue;
 
-                    standingState.VaultImpassableFixtures.Add(key);
-                    fixture.CollisionMask &= ~(int) CollisionGroup.VaultImpassable;
+                    standingState.ChangedFixtures.Add(key);
+                    fixture.CollisionMask &= ~StandingCollisionLayer;
                 }
             }
 
@@ -111,13 +115,13 @@ namespace Content.Shared.Standing
 
             if (TryComp(uid, out FixturesComponent? fixtureComponent))
             {
-                foreach (var key in standingState.VaultImpassableFixtures)
+                foreach (var key in standingState.ChangedFixtures)
                 {
                     if (fixtureComponent.Fixtures.TryGetValue(key, out var fixture))
-                        fixture.CollisionMask |= (int) CollisionGroup.VaultImpassable;
+                        fixture.CollisionMask |= StandingCollisionLayer;
                 }
             }
-            standingState.VaultImpassableFixtures.Clear();
+            standingState.ChangedFixtures.Clear();
 
             return true;
         }

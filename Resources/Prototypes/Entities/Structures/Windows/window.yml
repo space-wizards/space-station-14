@@ -28,13 +28,10 @@
     fixtures:
     - shape:
         !type:PhysShapeAabb {}
-      layer:
-      - Impassable
-      - MobImpassable
-      - VaultImpassable
-      - SmallImpassable
       mask:
-      - VaultImpassable
+      - FullTileMask
+      layer:
+      - GlassLayer
   - type: Damageable
     damageContainer: Inorganic
     damageModifierSet: Glass
@@ -120,13 +117,10 @@
         !type:PhysShapeAabb
         bounds: "-0.49,-0.49,0.49,-0.3"
       mass: 50
-      layer:
-      - Impassable
-      - MobImpassable
-      - VaultImpassable
-      - SmallImpassable
       mask:
-      - VaultImpassable
+      - FullTileMask
+      layer:
+      - GlassLayer
   - type: Repairable
   - type: Damageable
     damageContainer: Inorganic

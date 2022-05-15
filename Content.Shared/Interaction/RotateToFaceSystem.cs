@@ -1,26 +1,7 @@
-using System;
-using System.Linq;
-using System.Threading.Tasks;
 using Content.Shared.ActionBlocker;
-using Content.Shared.Hands;
-using Content.Shared.Hands.Components;
 using Content.Shared.Buckle.Components;
 using Content.Shared.Rotatable;
-using Content.Shared.Inventory;
-using Content.Shared.Physics;
-using Content.Shared.Popups;
-using Content.Shared.Throwing;
-using Content.Shared.Timing;
-using Content.Shared.Verbs;
 using JetBrains.Annotations;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Localization;
-using Robust.Shared.Map;
-using Robust.Shared.Maths;
-using Robust.Shared.Physics;
-using Robust.Shared.Random;
-using Robust.Shared.Serialization;
 using Content.Shared.MobState.Components;
 
 namespace Content.Shared.Interaction

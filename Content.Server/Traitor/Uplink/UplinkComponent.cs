@@ -1,9 +1,5 @@
 using Content.Shared.Sound;
 using Content.Shared.Traitor.Uplink;
-using Robust.Shared.GameObjects;
-using Robust.Shared.Serialization.Manager.Attributes;
-using Robust.Shared.ViewVariables;
-using System;
 
 namespace Content.Server.Traitor.Uplink.Components
 {

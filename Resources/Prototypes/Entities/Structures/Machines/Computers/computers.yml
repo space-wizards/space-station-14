@@ -420,9 +420,9 @@
     fixtures:
     - shape:
         !type:PhysShapeAabb
-          bounds: "-0.25,-0.25,0.25,0.25"
+        bounds: "-0.25,-0.25,0.25,0.25"
       mass: 50
-      layer:
-      - SmallImpassable
       mask:
-      - Impassable
+      - TabletopMachineMask
+      layer:
+      - TabletopMachineLayer

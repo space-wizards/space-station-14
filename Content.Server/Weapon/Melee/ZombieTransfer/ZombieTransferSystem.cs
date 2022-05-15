@@ -10,14 +10,12 @@ using Content.Shared.Damage;
 using Content.Shared.MobState.Components;
 using Content.Server.Disease;
 using Content.Server.Weapons.Melee.ZombieTransfer.Components;
-using Content.Server.Body.Components;
 
 namespace Content.Server.Weapons.Melee.ZombieTransfer
 {
     public sealed class ZombieTransferSystem : EntitySystem
     {
         [Dependency] private readonly DiseaseSystem _disease = default!;
-        [Dependency] private readonly BodySystem _body = default!;
         [Dependency] private readonly BloodstreamSystem _bloodstream = default!;
         [Dependency] private readonly IRobustRandom _robustRandom = default!;
         public override void Initialize()

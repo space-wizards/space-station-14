@@ -1,6 +1,4 @@
-﻿using System;
-using Content.Shared.Weapons.Ranged.Components;
-using Robust.Shared.GameObjects;
+﻿using Content.Shared.Weapons.Ranged.Components;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.Weapons.Ranged.Barrels.Components

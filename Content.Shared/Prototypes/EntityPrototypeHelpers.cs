@@ -1,7 +1,4 @@
-﻿using System;
-using JetBrains.Annotations;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
+﻿using JetBrains.Annotations;
 using Robust.Shared.Prototypes;
 
 namespace Content.Shared.Prototypes

@@ -1,7 +1,5 @@
 using JetBrains.Annotations;
 using Lidgren.Network;
-using Robust.Shared.GameObjects;
-using Robust.Shared.Maths;
 using Robust.Shared.Network;
 
 namespace Content.Shared.Chat

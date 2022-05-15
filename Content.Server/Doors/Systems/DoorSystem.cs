@@ -18,6 +18,7 @@ using Robust.Shared.Containers;
 using Robust.Shared.Physics.Dynamics;
 using Robust.Shared.Player;
 using System.Linq;
+using Content.Server.Tools.Systems;
 using Content.Shared.Tools.Components;
 
 namespace Content.Server.Doors.Systems;
@@ -39,8 +40,8 @@ public sealed class DoorSystem : SharedDoorSystem
 
         SubscribeLocalEvent<DoorComponent, PryFinishedEvent>(OnPryFinished);
         SubscribeLocalEvent<DoorComponent, PryCancelledEvent>(OnPryCancelled);
-        SubscribeLocalEvent<DoorComponent, WeldFinishedEvent>(OnWeldFinished);
-        SubscribeLocalEvent<DoorComponent, WeldCancelledEvent>(OnWeldCancelled);
+        SubscribeLocalEvent<DoorComponent, WeldableAttemptEvent>(OnWeldAttempt);
+        SubscribeLocalEvent<DoorComponent, WeldableChangedEvent>(OnWeldChanged);
         SubscribeLocalEvent<DoorComponent, GotEmaggedEvent>(OnEmagged);
     }
 
@@ -129,32 +130,27 @@ public sealed class DoorSystem : SharedDoorSystem
             args.Handled = TryPryDoor(uid, args.Used, args.User, door);
             return;
         }
+    }
 
-        if (door.Weldable && tool.Qualities.Contains(door.WeldingQuality))
+    private void OnWeldAttempt(EntityUid uid, DoorComponent component, WeldableAttemptEvent args)
+    {
+        if (component.CurrentlyCrushing.Count > 0)
         {
-            args.Handled = TryWeldDoor(uid, args.Used, args.User, door);
+            args.Cancel();
+            return;
+        }
+        if (component.State != DoorState.Closed && component.State != DoorState.Welded)
+        {
+            args.Cancel();
         }
     }
 
-    /// <summary>
-    ///     Attempt to weld a door shut, or unweld it if it is already welded. This does not actually check if the user
-    ///     is holding the correct tool.
-    /// </summary>
-    private bool TryWeldDoor(EntityUid target, EntityUid used, EntityUid user, DoorComponent door)
+    private void OnWeldChanged(EntityUid uid, DoorComponent component, WeldableChangedEvent args)
     {
-        if (!door.Weldable || door.BeingWelded || door.CurrentlyCrushing.Count > 0)
-            return false;
-
-        // is the door in a weld-able state?
-        if (door.State != DoorState.Closed && door.State != DoorState.Welded)
-            return false;
-
-        // perform a do-after delay
-        door.BeingWelded = true;
-        _toolSystem.UseTool(used, user, target, 3f, 3f, door.WeldingQuality,
-                new WeldFinishedEvent(), new WeldCancelledEvent(), target);
-
-        return true; // we might not actually succeeded, but a do-after has started
+        if (component.State == DoorState.Closed)
+            SetState(uid, DoorState.Welded, component);
+        else if (component.State == DoorState.Welded)
+            SetState(uid, DoorState.Closed, component);
     }
 
     /// <summary>
@@ -180,24 +176,6 @@ public sealed class DoorSystem : SharedDoorSystem
                 new PryFinishedEvent(), new PryCancelledEvent(), target);
 
         return true; // we might not actually succeeded, but a do-after has started
-    }
-
-    private void OnWeldCancelled(EntityUid uid, DoorComponent door, WeldCancelledEvent args)
-    {
-        door.BeingWelded = false;
-    }
-
-    private void OnWeldFinished(EntityUid uid, DoorComponent door, WeldFinishedEvent args)
-    {
-        door.BeingWelded = false;
-
-        if (!door.Weldable)
-            return;
-
-        if (door.State == DoorState.Closed)
-            SetState(uid, DoorState.Welded, door);
-        else if (door.State == DoorState.Welded)
-            SetState(uid, DoorState.Closed, door);
     }
 
     private void OnPryCancelled(EntityUid uid, DoorComponent door, PryCancelledEvent args)
@@ -324,5 +302,4 @@ public sealed class DoorSystem : SharedDoorSystem
 
 public sealed class PryFinishedEvent : EntityEventArgs { }
 public sealed class PryCancelledEvent : EntityEventArgs { }
-public sealed class WeldFinishedEvent : EntityEventArgs { }
-public sealed class WeldCancelledEvent : EntityEventArgs { }
+
