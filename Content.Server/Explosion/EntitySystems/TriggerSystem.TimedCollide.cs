@@ -47,7 +47,7 @@ public sealed partial class TriggerSystem
                 if (collidingTimer > triggerOnTimedCollide.Threshold)
                 {
                     RaiseLocalEvent(activeTrigger.Owner, new TriggerEvent(activeTrigger.Owner, collidingEntity));
-                    triggerOnTimedCollide.Colliding[collidingEntity] = 0;
+                    triggerOnTimedCollide.Colliding[collidingEntity] -= triggerOnTimedCollide.Threshold;
                 }
             }
         }
