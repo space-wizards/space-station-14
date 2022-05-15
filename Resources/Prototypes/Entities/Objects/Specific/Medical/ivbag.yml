@@ -152,7 +152,7 @@
 - type: entity
   id: IVStand
   parent: BaseStructureDynamic
-  name: stand
+  name: IV stand
   description: A medical-grade stand that holds IV bags.
   components:
   - type: Transform

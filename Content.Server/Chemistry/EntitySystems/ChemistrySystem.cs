@@ -19,6 +19,7 @@ public sealed partial class ChemistrySystem : EntitySystem
         InitializeChemMaster();
         InitializeHypospray();
         InitializeInjector();
+        InitializeIVBag();
         InitializeReagentDispenser();
     }
 }
