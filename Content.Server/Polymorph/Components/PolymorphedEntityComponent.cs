@@ -18,8 +18,8 @@ namespace Content.Server.Polymorph.Components
         /// <summary>
         /// The original entity that the player will revert back into
         /// </summary>
-        [DataField("parent")]
-        public EntityUid? Parent = null;
+        [DataField("parent", required: true)]
+        public EntityUid Parent = new();
 
         /// <summary>
         /// The amount of time that has passed since the entity was created

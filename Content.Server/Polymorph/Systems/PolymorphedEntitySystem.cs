@@ -4,6 +4,7 @@ using Content.Server.Mind;
 using Content.Server.Mind.Commands;
 using Content.Server.Mind.Components;
 using Content.Server.Polymorph.Components;
+using Content.Server.Popups;
 using Content.Shared.Actions;
 using Content.Shared.Actions.ActionTypes;
 using Content.Shared.Damage;
@@ -11,6 +12,7 @@ using Content.Shared.MobState.Components;
 using Content.Shared.MobState.State;
 using Robust.Server.Containers;
 using Robust.Shared.Containers;
+using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 
 namespace Content.Server.Polymorph.Systems
@@ -20,6 +22,7 @@ namespace Content.Server.Polymorph.Systems
         [Dependency] private readonly ActionsSystem _actions = default!;
         [Dependency] private readonly ContainerSystem _container = default!;
         [Dependency] private readonly DamageableSystem _damageable = default!;
+        [Dependency] private readonly PopupSystem _popup = default!;
 
         public override void Initialize()
         {
@@ -40,40 +43,22 @@ namespace Content.Server.Polymorph.Systems
             if (!TryComp<PolymorphedEntityComponent>(uid, out var component))
                 return;
 
-            for(int i = 0; i < component.ParentContainer.ContainedEntities.Count; i++)
-            {
-                var entity = component.ParentContainer.ContainedEntities[i];
-                component.ParentContainer.Remove(entity);
+            _popup.PopupEntity(Loc.GetString("polymorph-revert-popup-generic", ("parent", uid), ("child", component.Parent)), component.Parent, Filter.Pvs(component.Parent));
 
-                if(entity == component.Parent)
+            component.ParentContainer.Remove(component.Parent);
+
+            if (TryComp<MindComponent>(uid, out var mind) && mind.Mind != null)
+            {
+                mind.Mind.TransferTo(component.Parent);
+
+                if (TryComp<DamageableComponent>(uid, out var damageParent) &&
+                    _damageable.GetScaledDamage(uid, component.Parent, out var damage) &&
+                    damage != null)
                 {
-                    if (TryComp<MindComponent>(uid, out var mind) && mind.Mind != null)
-                    {
-                        mind.Mind.TransferTo(entity);
-                        
-                    }
+                    _damageable.SetDamage(damageParent, damage);
                 }
             }
             QueueDel(uid);
-        }
-
-        public void GetRelativeDamage(EntityUid oldent, EntityUid newent)
-        {
-            if (!TryComp<DamageableComponent>(oldent, out var olddamage)
-                || !TryComp<DamageableComponent>(newent, out var newdamage))
-                return;
-
-            if (!TryComp<MobStateComponent>(oldent, out var oldstate))
-                return;
-            
-            int maxhealthold = 0;
-            foreach (var state in oldstate._highestToLowestStates)
-            {
-                if(state.Value.IsDead())
-                {
-                    maxhealthold = state.Key;
-                }
-            }
         }
 
         private void OnStartup(EntityUid uid, PolymorphedEntityComponent component, AfterPolymorphEvent args)
@@ -106,16 +91,14 @@ namespace Content.Server.Polymorph.Systems
                 entity.Time += frameTime;
 
                 if(entity.Prototype.Duration != null && entity.Time >= entity.Prototype.Duration)
-                {
                     Revert(entity.Owner);
-                }
 
-                if(entity.Prototype.RevertOnDeath &&
-                    TryComp<MobStateComponent>(entity.Owner, out var mob) &&
-                    mob.IsDead())
-                {
+                if (!TryComp<MobStateComponent>(entity.Owner, out var mob))
+                    continue;
+
+                if ((entity.Prototype.RevertOnDeath && mob.IsDead()) ||
+                    (entity.Prototype.RevertOnCrit && mob.IsCritical()))
                     Revert(entity.Owner);
-                }
             }
         }
     }

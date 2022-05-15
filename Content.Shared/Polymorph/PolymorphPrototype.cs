@@ -55,6 +55,12 @@ namespace Content.Shared.Polymorph
         public bool DropInventory = false;
 
         /// <summary>
+        /// Whether or not the polymorph reverts when the entity goes into crit.
+        /// </summary>
+        [DataField("revertOnCrit", serverOnly: true)]
+        public bool RevertOnCrit = true;
+
+        /// <summary>
         /// Whether or not the polymorph reverts when the entity dies.
         /// </summary>
         [DataField("revertOnDeath", serverOnly: true)]

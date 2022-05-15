@@ -1,4 +1,5 @@
 using Content.Shared.Actions.ActionTypes;
+using Content.Shared.Polymorph;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
 namespace Content.Server.Polymorph.Components
@@ -22,7 +23,7 @@ namespace Content.Server.Polymorph.Components
         /// <summary>
         /// The polymorphs that the entity starts out being able to do.
         /// </summary>
-        [DataField("innatePolymorphs")]
+        [DataField("innatePolymorphs", customTypeSerializer: typeof(PolymorphPrototype))]
         public List<string>? InnatePolymorphs = null;
     }
 }

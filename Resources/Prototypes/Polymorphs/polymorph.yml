@@ -7,8 +7,8 @@
 - type: polymorph
   id: chickenForced
   entity: MobChicken
-  forced: true
-  dropInventory: true
+  forced: false
+  dropInventory: false
   duration: 30
 
 - type: polymorph
