@@ -38,6 +38,7 @@ public sealed partial class AtmosphereSystem : SharedAtmosphereSystem
         InitializeCommands();
         InitializeCVars();
         InitializeGridAtmosphere();
+        InitializeMap();
 
 
         SubscribeLocalEvent<TileChangedEvent>(OnTileChanged);
@@ -53,15 +54,6 @@ public sealed partial class AtmosphereSystem : SharedAtmosphereSystem
 
     private void OnTileChanged(TileChangedEvent ev)
     {
-        // When a tile changes, we want to update it only if it's gone from
-        // space -> not space or vice versa. So if the old tile is the
-        // same as the new tile in terms of space-ness, ignore the change
-
-        if (ev.NewTile.IsSpace(_tileDefinitionManager) == ev.OldTile.IsSpace(_tileDefinitionManager))
-        {
-            return;
-        }
-
         InvalidateTile(ev.NewTile.GridIndex, ev.NewTile.GridIndices);
     }
 

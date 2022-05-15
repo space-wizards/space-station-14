@@ -55,9 +55,8 @@ public sealed partial class AtmosphereSystem
             {
                 try
                 {
-                    gridAtmosphere.Tiles.Add(indices,
-                        new TileAtmosphere(mapGrid.GridIndex, indices,
-                            (GasMixture) gridAtmosphere.UniqueMixes![mix].Clone()));
+                    gridAtmosphere.Tiles.Add(indices, new TileAtmosphere(mapGrid.GridIndex, indices,
+                            gridAtmosphere.UniqueMixes![mix].Clone()));
                 }
                 catch (ArgumentOutOfRangeException)
                 {
@@ -170,8 +169,7 @@ public sealed partial class AtmosphereSystem
         args.Handled = true;
     }
 
-    private void GridInvalidateTile(EntityUid uid, GridAtmosphereComponent component,
-        ref InvalidateTileMethodEvent args)
+    private void GridInvalidateTile(EntityUid uid, GridAtmosphereComponent component, ref InvalidateTileMethodEvent args)
     {
         if (args.Handled)
             return;
@@ -321,7 +319,9 @@ public sealed partial class AtmosphereSystem
         if (args.Handled)
             return;
 
-        if (!TryComp(uid, out IMapGridComponent? mapGridComp))
+        var mapGridComp = args.MapGridComponent;
+
+        if (!Resolve(uid, ref mapGridComp))
             return;
 
         var xform = Transform(uid);
@@ -340,7 +340,11 @@ public sealed partial class AtmosphereSystem
             var otherIndices = tile.GridIndices.Offset(direction);
 
             if (!component.Tiles.TryGetValue(otherIndices, out var adjacent))
-                adjacent = new TileAtmosphere(tile.GridIndex, otherIndices, GetTileMixture(uid, mapUid, args.Tile));
+            {
+                adjacent = new TileAtmosphere(tile.GridIndex, otherIndices,
+                    GetTileMixture(uid, mapUid, args.Tile),
+                    space:IsTileSpace(uid, mapUid, otherIndices, mapGridComp));
+            }
 
             tile.AdjacentTiles[direction.ToIndex()] = adjacent;
 

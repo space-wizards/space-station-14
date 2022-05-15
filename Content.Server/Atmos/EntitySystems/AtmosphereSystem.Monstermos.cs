@@ -81,7 +81,7 @@ namespace Content.Server.Atmos.EntitySystems
                     if(tileCount < Atmospherics.MonstermosHardTileLimit)
                         _equalizeTiles[tileCount++] = adj;
 
-                    if (adj.Air.Immutable && MonstermosDepressurization)
+                    if (adj.Space && MonstermosDepressurization)
                     {
                         // Looks like someone opened an airlock to space!
 
@@ -375,7 +375,7 @@ namespace Content.Server.Atmos.EntitySystems
                 otherTile.MonstermosInfo.LastCycle = cycleNum;
                 otherTile.MonstermosInfo.CurrentTransferDirection = AtmosDirection.Invalid;
                 // Tiles in the _depressurizeTiles array cannot have null air.
-                if (!otherTile.Air!.Immutable)
+                if (!otherTile.Space)
                 {
                     for (var j = 0; j < Atmospherics.Directions; j++)
                     {
@@ -425,12 +425,12 @@ namespace Content.Server.Atmos.EntitySystems
                 {
                     var direction = (AtmosDirection) (1 << j);
                     // Tiles in _depressurizeProgressionOrder cannot have null air.
-                    if (!otherTile.AdjacentBits.IsFlagSet(direction) && !otherTile.Air!.Immutable) continue;
+                    if (!otherTile.AdjacentBits.IsFlagSet(direction) && !otherTile.Space) continue;
                     var tile2 = otherTile.AdjacentTiles[j];
                     if (tile2?.MonstermosInfo.LastQueueCycle != queueCycle) continue;
                     DebugTools.Assert(tile2.AdjacentBits.IsFlagSet(direction.GetOpposite()));
                     if (tile2.MonstermosInfo.LastSlowQueueCycle == queueCycleSlow) continue;
-                    if(tile2.Air?.Immutable ?? false) continue;
+                    if(tile2.Space) continue;
                     tile2.MonstermosInfo.CurrentTransferDirection = direction.GetOpposite();
                     tile2.MonstermosInfo.CurrentTransferAmount = 0;
                     tile2.PressureSpecificTarget = otherTile.PressureSpecificTarget;

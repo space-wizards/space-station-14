@@ -108,7 +108,8 @@ public partial class AtmosphereSystem
         else
             RaiseLocalEvent(ref ev);
 
-        return ev.Mixture;
+        // Default to a space mixture... This is a space game, after all!
+        return ev.Mixture ?? GasMixture.SpaceGas;
     }
 
     public ReactionResult ReactTile(EntityUid gridId, Vector2i tile)
@@ -132,16 +133,17 @@ public partial class AtmosphereSystem
         var ev = new IsTileSpaceMethodEvent(gridUid, mapUid, tile, mapGridComp);
 
         // Try to let the grid (if any) handle it...
-        if(gridUid.HasValue)
+        if (gridUid.HasValue)
             RaiseLocalEvent(gridUid.Value, ref ev, false);
-
-        if(!mapUid.HasValue)
-            RaiseLocalEvent(ref ev);
 
         // If we didn't have a grid or the event wasn't handled
         // we let the map know, and also broadcast the event while at it!
-        else if(!ev.Handled)
+        if (mapUid.HasValue && !ev.Handled)
             RaiseLocalEvent(mapUid.Value, ref ev, true);
+
+        // We didn't have a map, and the event isn't handled, therefore broadcast the event.
+        else if (!mapUid.HasValue && !ev.Handled)
+            RaiseLocalEvent(ref ev);
 
         // If nothing handled the event, it'll default to true.
         // Oh well, this is a space game after all, deal with it!

@@ -40,6 +40,12 @@ namespace Content.Server.Atmos
         public bool Excited { get; set; }
 
         /// <summary>
+        ///     Whether this tile should be considered space.
+        /// </summary>
+        [ViewVariables]
+        public bool Space { get; set; }
+
+        /// <summary>
         ///     Adjacent tiles in the same order as <see cref="AtmosDirection"/>. (NSEW)
         /// </summary>
         [ViewVariables]
@@ -95,11 +101,12 @@ namespace Content.Server.Atmos
         [ViewVariables]
         public AtmosDirection BlockedAirflow { get; set; } = AtmosDirection.Invalid;
 
-        public TileAtmosphere(GridId gridIndex, Vector2i gridIndices, GasMixture? mixture = null, bool immutable = false)
+        public TileAtmosphere(GridId gridIndex, Vector2i gridIndices, GasMixture? mixture = null, bool immutable = false, bool space = false)
         {
             GridIndex = gridIndex;
             GridIndices = gridIndices;
             Air = mixture;
+            Space = space;
             MolesArchived = Air != null ? new float[Atmospherics.AdjustedNumberOfGases] : null;
 
             if(immutable)

@@ -61,8 +61,6 @@ namespace Content.Server.Atmos.EntitySystems
             var number = 0;
             while (atmosphere.CurrentRunInvalidatedCoordinates.TryDequeue(out var indices))
             {
-                //var tile = GetTileAtmosphere(atmosphere, indices);
-
                 if (!atmosphere.Tiles.TryGetValue(indices, out var tile))
                 {
                     tile = new TileAtmosphere(mapGrid.Index, indices, new GasMixture(volume){Temperature = Atmospherics.T20C});
@@ -77,11 +75,11 @@ namespace Content.Server.Atmos.EntitySystems
                 GridUpdateAdjacent(uid, atmosphere, ref updateAdjacentEv);
 
                 // Call this instead of the grid method as the map has a say on whether the tile is space or not.
-                if (IsTileSpace(uid, mapUid, indices, mapGridComp) && !isAirBlocked)
+                if (!mapGrid.TryGetTileRef(indices, out _) && !isAirBlocked)
                 {
-                    tile.Air = new GasMixture(volume);
-                    tile.Air.MarkImmutable();
-                    tile.MolesArchived = new float[Atmospherics.AdjustedNumberOfGases];
+                    tile.Air = GetTileMixture(null, mapUid, indices);
+                    tile.MolesArchived = tile.Air != null ? new float[Atmospherics.AdjustedNumberOfGases] : null;
+                    tile.Space = IsTileSpace(uid, mapUid, indices, mapGridComp);
                     atmosphere.Tiles[indices] = tile;
 
                 } else if (isAirBlocked)
@@ -113,10 +111,11 @@ namespace Content.Server.Atmos.EntitySystems
                     }
 
                     // Tile used to be space, but isn't anymore.
-                    if (tile.Air?.Immutable ?? false)
+                    if (tile.Space)
                     {
                         tile.Air = null;
                         tile.MolesArchived = null;
+                        tile.Space = false;
                     }
 
                     tile.Air ??= new GasMixture(volume){Temperature = Atmospherics.T20C};
@@ -135,12 +134,12 @@ namespace Content.Server.Atmos.EntitySystems
 
                 InvalidateVisuals(mapGrid.Index, indices);
 
-                for (var i = 0; i < Atmospherics.Directions; i++)
+                foreach (var adjacent in tile.AdjacentTiles)
                 {
-                    var direction = (AtmosDirection) (1 << i);
-                    var otherIndices = indices.Offset(direction);
-                    if (atmosphere.Tiles.TryGetValue(otherIndices, out var otherTile))
-                        AddActiveTile(atmosphere, otherTile);
+                    if (adjacent?.Air == null)
+                        continue;
+
+                    AddActiveTile(atmosphere, adjacent);
                 }
 
                 if (number++ < InvalidCoordinatesLagCheckIterations) continue;
