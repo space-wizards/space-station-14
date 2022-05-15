@@ -273,16 +273,18 @@ namespace Content.Shared.Atmos
         #endregion
 
         /// <summary>
-        ///     Color to represent the gas, to be used as a display color in UIs.
+        ///     Color to represent the gas in UIs and such.
         ///     Currently only used in the debug overlay.
+        ///
+        ///     Ordering needs to be the same as <see cref="Gas"/>.
         /// </summary>
-        public static readonly Dictionary<Gas, Color> GasColors = new(){
-            { Gas.Oxygen, Color.Aqua },
-            { Gas.Nitrogen, Color.Green },
-            { Gas.CarbonDioxide, Color.DarkGray },
-            { Gas.Plasma, Color.HotPink },
-            { Gas.Tritium, Color.Lime },
-            { Gas.WaterVapor, Color.LightGray }
+        public static readonly Color[] GasDisplayColors = {
+            Color.Aqua,         // Oxygen
+            Color.Green,        // Hydrogen
+            Color.DarkGray,     // CO2
+            Color.HotPink,      // Plasma
+            Color.Lime,         // Tritium
+            Color.LightGray     // H2O
         };
     }
 

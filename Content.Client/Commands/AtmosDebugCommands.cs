@@ -1,9 +1,7 @@
 using JetBrains.Annotations;
 using Content.Shared.Atmos;
-using System;
 using Content.Client.Atmos.EntitySystems;
 using Robust.Shared.Console;
-using Robust.Shared.GameObjects;
 
 namespace Content.Client.Commands
 {
@@ -42,37 +40,65 @@ namespace Content.Client.Commands
     }
 
     [UsedImplicitly]
-    internal sealed class AtvModeCommand : IConsoleCommand
+    internal sealed class AtvStyleCommand : IConsoleCommand
     {
-        public string Command => "atvmode";
-        public string Description => "Sets the atmos debug mode. This will automatically reset the scale.";
-        public string Help => "atvmode <TotalMoles/GasMoles/Temperature/Everything> [<gas ID (for GasMoles)>]";
+        public string Command => "atvstyle";
+        public string Description => "Sets the atmos debug overlay display style.";
+        public string Help => Command + " <" + string.Join("|", Enum.GetNames(typeof(AtmosDebugStyle))) + ">";
         public void Execute(IConsoleShell shell, string argStr, string[] args)
         {
-            if (args.Length < 1)
+            if (args.Length != 1)
             {
                 shell.WriteLine(Help);
                 return;
             }
-            if (!Enum.TryParse<AtmosDebugOverlayMode>(args[0], out var xMode))
+            if (!Enum.TryParse<AtmosDebugStyle>(args[0], out var style))
+            {
+                shell.WriteLine("Invalid style");
+                return;
+            }
+            var sys = EntitySystem.Get<AtmosDebugOverlaySystem>();
+            sys.CfgStyle = style;
+        }
+    }
+
+    [UsedImplicitly]
+    internal sealed class AtvModeCommand : IConsoleCommand
+    {
+        public string Command => "atvmode";
+        public string Description => "Adjust what to display in the atmos debug overlay.";
+        public string Help => Command + " <" + string.Join("|", Enum.GetNames(typeof(AtmosDebugShowMode))) + "> [<gas ID (for GasMoles)>]";
+        public void Execute(IConsoleShell shell, string argStr, string[] args)
+        {
+            var sys = EntitySystem.Get<AtmosDebugOverlaySystem>();
+
+            if (args.Length < 1)
+            {
+                shell.WriteLine(Help);
+                shell.WriteLine("The current modes are: " + sys.CfgMode);
+                return;
+            }
+            if (!Enum.TryParse<AtmosDebugShowMode>(args[0], out var xMode))
             {
                 shell.WriteLine("Invalid mode");
                 return;
             }
-            int xSpecificGas = 0;
-            float xBase = 0;
-            float xScale = Atmospherics.MolesCellStandard * 2;
-            if (xMode == AtmosDebugOverlayMode.GasMoles)
+
+            sys.SwitchMode(xMode);
+
+            if (sys.CfgStyle == AtmosDebugStyle.Graph)
+                return;
+
+            if (xMode == AtmosDebugShowMode.GasMoles)
             {
-                if (args.Length != 2)
+                if (args.Length == 2)
                 {
-                    shell.WriteLine("A target gas must be provided for this mode.");
-                    return;
-                }
-                if (!AtmosCommandUtils.TryParseGasID(args[1], out xSpecificGas))
-                {
-                    shell.WriteLine("Gas ID not parsable or out of range.");
-                    return;
+                    if (!AtmosCommandUtils.TryParseGasID(args[1], out var xSpecificGas))
+                    {
+                        shell.WriteLine("Gas ID not parsable or out of range.");
+                        return;
+                    }
+                    sys.CfgSpecificGas = xSpecificGas;
                 }
             }
             else
@@ -80,20 +106,8 @@ namespace Content.Client.Commands
                 if (args.Length != 1)
                 {
                     shell.WriteLine("No further information is required for this mode.");
-                    return;
-                }
-                if (xMode == AtmosDebugOverlayMode.Temperature)
-                {
-                    // Red is 100C, Green is 20C, Blue is -60C
-                    xBase = Atmospherics.T20C + 80;
-                    xScale = -160;
                 }
             }
-            var sys = EntitySystem.Get<AtmosDebugOverlaySystem>();
-            sys.CfgMode = xMode;
-            sys.CfgSpecificGas = xSpecificGas;
-            sys.CfgBase = xBase;
-            sys.CfgScale = xScale;
         }
     }
 

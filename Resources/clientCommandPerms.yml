@@ -2,6 +2,7 @@
   Commands:
     - atvrange
     - atvmode
+    - atvstyle
     - atvcbm
     - debugai
     - notify
