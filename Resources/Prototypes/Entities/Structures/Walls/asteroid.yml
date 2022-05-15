@@ -2,14 +2,17 @@
   id: AsteroidRock
   parent: BaseStructure
   name: asteroid rock
-  description: That's an asteroid
+  description: An asteroid.
   components:
-  - type: RandomAppearance
-    key: enum.AsteroidRockVisuals.State
-  - type: Mineable
+  - type: Gatherable
+    whitelist:
+      tags:
+        - Pickaxe
+    loot:
+      Pickaxe: MiningLootTable
   - type: Sprite
     sprite: Structures/Walls/asteroid_rock.rsi
-    state: 0
+    state: full
   - type: Damageable
     damageContainer: Inorganic
   - type: Destructible
@@ -24,19 +27,16 @@
     sizeX: 32
     sizeY: 32
   - type: Airtight
-  - type: Appearance
-    visuals:
-    - type: AsteroidRockVisualizer
   - type: Fixtures
     fixtures:
     - shape:
         !type:PhysShapeAabb
-          bounds: "-0.5,-0.5,0.5,0.5"
+        bounds: "-0.5,-0.5,0.5,0.5"
       mass: 100
       mask:
-      - Impassable
+      - FullTileMask
       layer:
-      - Opaque
-      - Impassable
-      - VaultImpassable
-      - SmallImpassable
+      - WallLayer
+  - type: IconSmooth
+    key: rock
+    base: rock_

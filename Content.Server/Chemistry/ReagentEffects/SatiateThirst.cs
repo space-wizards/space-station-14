@@ -1,8 +1,6 @@
-﻿using Content.Server.Nutrition.Components;
-using Content.Shared.Chemistry.Components;
+using Content.Server.Nutrition.Components;
 using Content.Shared.Chemistry.Reagent;
-using Robust.Shared.GameObjects;
-using Robust.Shared.Serialization.Manager.Attributes;
+using Content.Server.Nutrition.EntitySystems;
 
 namespace Content.Server.Chemistry.ReagentEffects
 {
@@ -21,7 +19,7 @@ namespace Content.Server.Chemistry.ReagentEffects
         public override void Effect(ReagentEffectArgs args)
         {
             if (args.EntityManager.TryGetComponent(args.SolutionEntity, out ThirstComponent? thirst))
-                thirst.UpdateThirst(HydrationFactor);
+                EntitySystem.Get<ThirstSystem>().UpdateThirst(thirst, HydrationFactor);
         }
     }
 }

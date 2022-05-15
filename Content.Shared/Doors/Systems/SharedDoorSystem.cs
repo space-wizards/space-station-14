@@ -1,7 +1,6 @@
 using Content.Shared.Access.Components;
 using Content.Shared.Damage;
 using Content.Shared.Doors.Components;
-using Content.Shared.Examine;
 using Content.Shared.Hands.Components;
 using Content.Shared.Interaction;
 using Content.Shared.Stunnable;
@@ -47,7 +46,6 @@ public abstract class SharedDoorSystem : EntitySystem
         SubscribeLocalEvent<DoorComponent, ComponentHandleState>(OnHandleState);
 
         SubscribeLocalEvent<DoorComponent, ActivateInWorldEvent>(OnActivate);
-        SubscribeLocalEvent<DoorComponent, ExaminedEvent>(OnExamine);
 
         SubscribeLocalEvent<DoorComponent, StartCollideEvent>(HandleCollide);
         SubscribeLocalEvent<DoorComponent, PreventCollideEvent>(PreventCollision);
@@ -170,13 +168,7 @@ public abstract class SharedDoorSystem : EntitySystem
     protected virtual void OnActivate(EntityUid uid, DoorComponent door, ActivateInWorldEvent args)
     {
         // avoid client-mispredicts, as the server will definitely handle this event
-        args.Handled = true; 
-    }
-
-    private void OnExamine(EntityUid uid, DoorComponent door, ExaminedEvent args)
-    {
-        if (door.State == DoorState.Welded)
-            args.PushText(Loc.GetString("door-component-examine-is-welded"));
+        args.Handled = true;
     }
 
     /// <summary>
@@ -433,7 +425,7 @@ public abstract class SharedDoorSystem : EntitySystem
             if (!otherPhysics.CanCollide)
                 continue;
 
-            if ((physics.CollisionMask & otherPhysics.CollisionLayer) == 0
+            if (otherPhysics.BodyType == BodyType.Static || (physics.CollisionMask & otherPhysics.CollisionLayer) == 0
                 && (otherPhysics.CollisionMask & physics.CollisionLayer) == 0)
                 continue;
 

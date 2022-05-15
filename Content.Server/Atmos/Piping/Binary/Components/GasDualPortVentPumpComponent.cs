@@ -1,9 +1,5 @@
-using System;
 using Content.Shared.Atmos;
 using Content.Shared.Atmos.Piping.Unary.Components;
-using Robust.Shared.GameObjects;
-using Robust.Shared.Serialization.Manager.Attributes;
-using Robust.Shared.ViewVariables;
 
 namespace Content.Server.Atmos.Piping.Binary.Components
 {

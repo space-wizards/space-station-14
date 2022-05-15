@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using Content.Server.Voting.Managers;
+﻿using Content.Server.Voting.Managers;
 using Robust.Server.Player;
 
 namespace Content.Server.Voting

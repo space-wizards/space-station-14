@@ -2,11 +2,7 @@ using Content.Shared.Singularity;
 using Content.Shared.Singularity.Components;
 using Content.Shared.Sound;
 using Robust.Shared.Audio;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
 using Robust.Shared.Player;
-using Robust.Shared.Serialization.Manager.Attributes;
-using Robust.Shared.ViewVariables;
 
 namespace Content.Server.Singularity.Components
 {
@@ -60,6 +56,7 @@ namespace Content.Server.Singularity.Components
                 _ => 0
             };
 
+        [DataField("moveAccumulator")]
         public float MoveAccumulator;
 
         // This is an interesting little workaround.

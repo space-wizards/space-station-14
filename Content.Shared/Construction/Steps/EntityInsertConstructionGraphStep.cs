@@ -1,7 +1,4 @@
-﻿using Robust.Shared.GameObjects;
-using Robust.Shared.Serialization.Manager.Attributes;
-
-namespace Content.Shared.Construction.Steps
+﻿namespace Content.Shared.Construction.Steps
 {
     [ImplicitDataDefinitionForInheritors]
     public abstract class EntityInsertConstructionGraphStep : ConstructionGraphStep

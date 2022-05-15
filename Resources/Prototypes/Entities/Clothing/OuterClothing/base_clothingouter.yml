@@ -12,12 +12,24 @@
 - type: entity
   abstract: true
   parent: ClothingOuterBase
+  id: ClothingOuterStorageBase
+  components:
+  - type: Storage
+    capacity: 10
+  - type: UserInterface
+    interfaces:
+    - key: enum.StorageUiKey.Key
+      type: StorageBoundUserInterface
+
+- type: entity
+  abstract: true
+  parent: ClothingOuterBase
   id: ClothingOuterHardsuitBase
   name: base hardsuit
   components:
   - type: PressureProtection
-    highPressureMultiplier: 0.5
-    lowPressureMultiplier: 100
+    highPressureMultiplier: 0.3
+    lowPressureMultiplier: 1000
   - type: TemperatureProtection
     coefficient: 0.001 # yes it needs to be this low, fires are fucking deadly apparently!!!!
   - type: ClothingSpeedModifier
@@ -34,3 +46,24 @@
         Heat: 0.90
         Radiation: 0.25
   - type: DiseaseProtection
+    protection: 0.05
+  - type: ToggleableClothing
+
+- type: entity
+  abstract: true
+  parent: ClothingOuterBase
+  id: ClothingOuterEVASuitBase
+  name: base EVA Suit
+  components:
+  - type: PressureProtection
+    highPressureMultiplier: 0.6
+    lowPressureMultiplier: 1000
+  - type: TemperatureProtection
+    coefficient: 0.01 # Not complete protection from fire
+  - type: ClothingSpeedModifier
+    walkModifier: 0.8
+    sprintModifier: 0.8
+  - type: Clothing
+    size: 30
+  - type: DiseaseProtection
+    protection: 0.05

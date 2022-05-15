@@ -1,5 +1,3 @@
-using System;
-using System.Collections.Generic;
 using Content.Server.Atmos.Monitor.Components;
 using Content.Server.Atmos.Piping.Components;
 using Content.Server.DeviceNetwork;
@@ -7,18 +5,14 @@ using Content.Server.DeviceNetwork.Components;
 using Content.Server.DeviceNetwork.Systems;
 using Content.Server.Popups;
 using Content.Server.Power.Components;
-using Content.Server.WireHacking;
+using Content.Server.Wires;
 using Content.Shared.Access.Components;
 using Content.Shared.Access.Systems;
 using Content.Shared.Atmos;
 using Content.Shared.Atmos.Monitor;
 using Content.Shared.Atmos.Monitor.Components;
 using Content.Shared.Interaction;
-using Content.Shared.Popups;
 using Robust.Server.GameObjects;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Localization;
 using Robust.Shared.Player;
 
 namespace Content.Server.Atmos.Monitor.Systems
@@ -42,9 +36,6 @@ namespace Content.Server.Atmos.Monitor.Systems
         [Dependency] private readonly SharedInteractionSystem _interactionSystem = default!;
 
         #region Device Network API
-
-        public const int Freq = AtmosMonitorSystem.AtmosMonitorApcFreq;
-
         /// <summary>
         ///     Command to set device data within the air alarm's network.
         /// </summary>
@@ -93,7 +84,7 @@ namespace Content.Server.Atmos.Monitor.Systems
                 [AirAlarmSetData] = data
             };
 
-            _deviceNet.QueuePacket(uid, address, Freq, payload);
+            _deviceNet.QueuePacket(uid, address, payload);
         }
 
         /// <summary>
@@ -110,7 +101,7 @@ namespace Content.Server.Atmos.Monitor.Systems
                 [DeviceNetworkConstants.Command] = AirAlarmSyncCmd
             };
 
-            _deviceNet.QueuePacket(uid, string.Empty, Freq, payload, true);
+            _deviceNet.QueuePacket(uid, null, payload);
         }
 
         /// <summary>
@@ -129,7 +120,7 @@ namespace Content.Server.Atmos.Monitor.Systems
                 [DeviceNetworkConstants.Command] = AirAlarmSyncCmd
             };
 
-            _deviceNet.QueuePacket(uid, address, Freq, payload);
+            _deviceNet.QueuePacket(uid, address, payload);
         }
 
         /// <summary>
@@ -148,7 +139,7 @@ namespace Content.Server.Atmos.Monitor.Systems
                 [AirAlarmSetMode] = mode
             };
 
-            _deviceNet.QueuePacket(uid, string.Empty, Freq, payload, true);
+            _deviceNet.QueuePacket(uid, null, payload);
         }
 
         #endregion
@@ -157,7 +148,7 @@ namespace Content.Server.Atmos.Monitor.Systems
 
         public override void Initialize()
         {
-            SubscribeLocalEvent<AirAlarmComponent, PacketSentEvent>(OnPacketRecv);
+            SubscribeLocalEvent<AirAlarmComponent, DeviceNetworkPacketEvent>(OnPacketRecv);
             SubscribeLocalEvent<AirAlarmComponent, AtmosDeviceUpdateEvent>(OnAtmosUpdate);
             SubscribeLocalEvent<AirAlarmComponent, AtmosMonitorAlarmEvent>(OnAtmosAlarm);
             SubscribeLocalEvent<AirAlarmComponent, PowerChangedEvent>(OnPowerChanged);
@@ -177,6 +168,10 @@ namespace Content.Server.Atmos.Monitor.Systems
                 ForceCloseAllInterfaces(uid);
                 component.CurrentModeUpdater = null;
                 component.DeviceData.Clear();
+            }
+            else
+            {
+                SyncAllDevices(uid);
             }
         }
 
@@ -262,7 +257,7 @@ namespace Content.Server.Atmos.Monitor.Systems
             if (!EntityManager.TryGetComponent(uid, out AccessReaderComponent reader) || user == null)
                 return false;
 
-            if (!_accessSystem.IsAllowed(reader, user.Value) && !component.FullAccess)
+            if (!_accessSystem.IsAllowed(reader, user.Value))
             {
                 _popup.PopupEntity(Loc.GetString("air-alarm-ui-access-denied"), user.Value, Filter.Entities(user.Value));
                 return false;
@@ -383,7 +378,7 @@ namespace Content.Server.Atmos.Monitor.Systems
             SetData(uid, address, devData);
         }
 
-        private void OnPacketRecv(EntityUid uid, AirAlarmComponent controller, PacketSentEvent args)
+        private void OnPacketRecv(EntityUid uid, AirAlarmComponent controller, DeviceNetworkPacketEvent args)
         {
             if (!args.Data.TryGetValue(DeviceNetworkConstants.Command, out string? cmd))
                 return;
@@ -400,7 +395,7 @@ namespace Content.Server.Atmos.Monitor.Systems
                     // _airAlarmDataSystem.UpdateDeviceData(uid, args.SenderAddress, data);
                     //
                     _uiSystem.TrySendUiMessage(uid, SharedAirAlarmInterfaceKey.Key, new AirAlarmUpdateDeviceDataMessage(args.SenderAddress, data));
-                    if (HasComp<WiresComponent>(uid)) controller.UpdateWires();
+                    // if (HasComp<WiresComponent>(uid)) controller.UpdateWires();
                     if (!controller.DeviceData.TryAdd(args.SenderAddress, data))
                         controller.DeviceData[args.SenderAddress] = data;
 

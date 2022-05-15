@@ -1,6 +1,3 @@
-using System;
-using System.Collections.Generic;
-
 namespace Content.Server.AI.Operators.Sequences
 {
     /// <summary>

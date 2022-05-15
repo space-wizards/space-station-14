@@ -1,10 +1,6 @@
-using System;
-using System.Collections.Generic;
 using Content.Server.Atmos.EntitySystems;
 using Content.Server.Atmos.Piping.Components;
 using JetBrains.Annotations;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
 using Robust.Shared.Timing;
 
 namespace Content.Server.Atmos.Piping.EntitySystems
@@ -26,6 +22,7 @@ namespace Content.Server.Atmos.Piping.EntitySystems
 
             SubscribeLocalEvent<AtmosDeviceComponent, ComponentInit>(OnDeviceInitialize);
             SubscribeLocalEvent<AtmosDeviceComponent, ComponentShutdown>(OnDeviceShutdown);
+            // Re-anchoring should be handled by the parent change.
             SubscribeLocalEvent<AtmosDeviceComponent, EntParentChangedMessage>(OnDeviceParentChanged);
             SubscribeLocalEvent<AtmosDeviceComponent, AnchorStateChangedEvent>(OnDeviceAnchorChanged);
         }
@@ -104,7 +101,7 @@ namespace Content.Server.Atmos.Piping.EntitySystems
             if (!component.RequireAnchored)
                 return;
 
-            if(EntityManager.GetComponent<TransformComponent>(component.Owner).Anchored)
+            if (args.Anchored)
                 JoinAtmosphere(component);
             else
                 LeaveAtmosphere(component);

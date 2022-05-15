@@ -1,5 +1,4 @@
 using Content.Server.Chat;
-using Content.Server.Chat.Managers;
 using Content.Shared.Actions;
 using Content.Shared.Actions.ActionTypes;
 using JetBrains.Annotations;
@@ -42,7 +41,7 @@ namespace Content.Server.Actions
         private void OnPlayerAttached(EntityUid uid, ActionsComponent component, PlayerAttachedEvent args)
         {
             // need to send state to new player.
-            component.Dirty();
+            Dirty(component);
         }
 
         protected override bool PerformBasicActions(EntityUid user, ActionType action)

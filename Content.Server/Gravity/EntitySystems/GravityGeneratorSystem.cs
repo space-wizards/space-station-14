@@ -1,13 +1,9 @@
-﻿using System;
-using Content.Server.Audio;
+﻿using Content.Server.Audio;
 using Content.Server.Power.Components;
 using Content.Shared.Gravity;
 using Content.Shared.Interaction;
 using Robust.Server.GameObjects;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
 using Robust.Shared.Map;
-using Robust.Shared.Maths;
 
 namespace Content.Server.Gravity.EntitySystems
 {

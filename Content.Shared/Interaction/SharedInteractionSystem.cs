@@ -45,7 +45,11 @@ namespace Content.Shared.Interaction
         [Dependency] private readonly RotateToFaceSystem _rotateToFaceSystem = default!;
         [Dependency] private readonly SharedPopupSystem _popupSystem = default!;
         [Dependency] private readonly UseDelaySystem _useDelay = default!;
+        [Dependency] private readonly SharedPhysicsSystem _physicsSystem = default!;
         [Dependency] protected readonly SharedContainerSystem ContainerSystem = default!;
+
+        private const CollisionGroup InRangeUnobstructedMask
+            = CollisionGroup.Impassable | CollisionGroup.InteractImpassable;
 
         public const float InteractionRange = 2;
         public const float InteractionRangeSquared = InteractionRange * InteractionRange;
@@ -271,17 +275,6 @@ namespace Content.Shared.Interaction
             if (message.Handled)
                 return;
 
-            var interactHandEventArgs = new InteractHandEventArgs(user, target);
-            var interactHandComps = AllComps<IInteractHand>(target).ToList();
-            foreach (var interactHandComp in interactHandComps)
-            {
-                // If an InteractHand returns a status completion we finish our interaction
-#pragma warning disable 618
-                if (interactHandComp.InteractHand(interactHandEventArgs))
-#pragma warning restore 618
-                    return;
-            }
-
             // Else we run Activate.
             InteractionActivate(user, target,
                 checkCanInteract: false,
@@ -339,7 +332,7 @@ namespace Content.Shared.Interaction
         public float UnobstructedDistance(
             MapCoordinates origin,
             MapCoordinates other,
-            int collisionMask = (int) CollisionGroup.Impassable,
+            int collisionMask = (int) InRangeUnobstructedMask,
             Ignored? predicate = null)
         {
             var dir = other.Position - origin.Position;
@@ -378,7 +371,7 @@ namespace Content.Shared.Interaction
             MapCoordinates origin,
             MapCoordinates other,
             float range = InteractionRange,
-            CollisionGroup collisionMask = CollisionGroup.Impassable,
+            CollisionGroup collisionMask = InRangeUnobstructedMask,
             Ignored? predicate = null)
         {
             // Have to be on same map regardless.
@@ -435,25 +428,13 @@ namespace Content.Shared.Interaction
             EntityUid origin,
             EntityUid other,
             float range = InteractionRange,
-            CollisionGroup collisionMask = CollisionGroup.Impassable,
+            CollisionGroup collisionMask = InRangeUnobstructedMask,
             Ignored? predicate = null,
             bool popup = false)
-        {
-            var originPosition = Transform(origin).MapPosition;
-            var transform = Transform(other);
-            var (position, rotation) = transform.GetWorldPositionRotation();
-            var mapPos = new MapCoordinates(position, transform.MapID);
-            var wallPredicate = AddAnchoredPredicate(other, mapPos, rotation, originPosition);
+        {;
+            Ignored combinedPredicate = e => e == origin || (predicate?.Invoke(e) ?? false);
 
-            Ignored combinedPredicate = e =>
-            {
-                return e == origin
-                    || e == other
-                    || (predicate?.Invoke(e) ?? false)
-                    || (wallPredicate?.Invoke(e) ?? false);
-            };
-
-            var inRange = InRangeUnobstructed(origin, mapPos, range, collisionMask, combinedPredicate, popup);
+            var inRange = InRangeUnobstructed(Transform(origin).MapPosition, other, range, collisionMask, combinedPredicate);
 
             if (!inRange && popup && _gameTiming.IsFirstTimePredicted)
             {
@@ -468,61 +449,48 @@ namespace Content.Shared.Interaction
             MapCoordinates origin,
             EntityUid target,
             float range = InteractionRange,
-            CollisionGroup collisionMask = CollisionGroup.Impassable,
+            CollisionGroup collisionMask = InRangeUnobstructedMask,
             Ignored? predicate = null)
         {
             var transform = Transform(target);
             var (position, rotation) = transform.GetWorldPositionRotation();
             var mapPos = new MapCoordinates(position, transform.MapID);
 
-            var wallPredicate = AddAnchoredPredicate(target, mapPos, rotation, origin);
+            HashSet<EntityUid> ignored = new();
+
+            bool ignoreAnchored = false;
+
+            if (HasComp<SharedItemComponent>(target) && TryComp(target, out PhysicsComponent? physics) && physics.CanCollide)
+            {
+                // If the target is an item, we ignore any colliding entities. Currently done so that if items get stuck
+                // inside of walls, users can still pick them up.
+                ignored.UnionWith(_sharedBroadphaseSystem.GetEntitiesIntersectingBody(target, (int) collisionMask, false, physics));
+            }
+            else if (TryComp(target, out WallMountComponent? wallMount))
+            {
+                // wall-mount exemptions may be restricted to a specific angle range.da
+
+                if (wallMount.Arc >= Math.Tau)
+                    ignoreAnchored = true;
+                else
+                {
+                    var angle = Angle.FromWorldVec(origin.Position - position);
+                    var angleDelta = (wallMount.Direction + rotation - angle).Reduced().FlipPositive();
+                    ignoreAnchored = angleDelta < wallMount.Arc / 2 || Math.Tau - angleDelta < wallMount.Arc / 2;
+                }
+
+                if (ignoreAnchored && _mapManager.TryFindGridAt(mapPos, out var grid))
+                    ignored.UnionWith(grid.GetAnchoredEntities(mapPos));
+            }
+
             Ignored combinedPredicate = e =>
             {
                 return e == target
                     || (predicate?.Invoke(e) ?? false)
-                    || (wallPredicate?.Invoke(e) ?? false);
+                    || ignored.Contains(e);
             };
 
             return InRangeUnobstructed(origin, mapPos, range, collisionMask, combinedPredicate);
-        }
-
-        /// <summary>
-        ///     If the target entity is either an item or a wall-mounted object, this will add a predicate to ignore any
-        ///     anchored entities on that tile.
-        /// </summary>
-        public Ignored? AddAnchoredPredicate(
-            EntityUid target,
-            MapCoordinates targetPosition,
-            Angle targetRotation,
-            MapCoordinates origin)
-        {
-            if (!_mapManager.TryFindGridAt(targetPosition, out var grid))
-                return null;
-
-            if (HasComp<SharedItemComponent>(target))
-            {
-                // Ignore anchored entities on that tile.
-                var colliding = new HashSet<EntityUid>(grid.GetAnchoredEntities(targetPosition));
-                return e => colliding.Contains(e);
-            }
-
-            if (!TryComp(target, out WallMountComponent? wallMount))
-                return null;
-
-            // wall-mount exemptions may be restricted to a specific angle range.
-            if (wallMount.Arc < 360)
-            {
-                var angle = Angle.FromWorldVec(origin.Position - targetPosition.Position);
-                var angleDelta = (wallMount.Direction + targetRotation - angle).Reduced().FlipPositive();
-                var inArc = angleDelta < wallMount.Arc / 2 || Math.Tau - angleDelta < wallMount.Arc / 2;
-
-                if (!inArc)
-                    return null;
-            }
-
-            // Ignore anchored entities on that tile.
-            var ignored = new HashSet<EntityUid>(grid.GetAnchoredEntities(targetPosition));
-            return e => ignored.Contains(e);
         }
 
         /// <summary>
@@ -553,7 +521,7 @@ namespace Content.Shared.Interaction
             EntityUid origin,
             EntityCoordinates other,
             float range = InteractionRange,
-            CollisionGroup collisionMask = CollisionGroup.Impassable,
+            CollisionGroup collisionMask = InRangeUnobstructedMask,
             Ignored? predicate = null,
             bool popup = false)
         {
@@ -588,7 +556,7 @@ namespace Content.Shared.Interaction
             EntityUid origin,
             MapCoordinates other,
             float range = InteractionRange,
-            CollisionGroup collisionMask = CollisionGroup.Impassable,
+            CollisionGroup collisionMask = InRangeUnobstructedMask,
             Ignored? predicate = null,
             bool popup = false)
         {

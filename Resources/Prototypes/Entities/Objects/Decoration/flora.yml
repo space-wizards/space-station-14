@@ -1,5 +1,28 @@
 - type: entity
+  id: BaseRock
+  description: Heavy as a really heavy thing.
+  abstract: true
+  components:
+  - type: Clickable
+  - type: Sprite
+    sprite: Objects/Decoration/Flora/flora_rockssolid.rsi
+    netsync: false
+  - type: Physics
+    bodyType: Static
+  - type: Fixtures
+    fixtures:
+    - shape:
+        !type:PhysShapeCircle
+        radius: 0.4
+      mass: 500
+      layer:
+      - HalfWallLayer
+      - Opaque
+  - type: Climbable
+
+- type: entity
   id: BaseTree
+  description: Yep, it's a tree.
   abstract: true
   components:
   - type: Clickable
@@ -13,11 +36,10 @@
     fixtures:
     - shape:
         !type:PhysShapeAabb
-          bounds: "-0.35,-1.3,0.35,-0.5"
+        bounds: "-0.35,-1.3,0.35,-0.5"
       mass: 500
       layer:
-      - Opaque
-      - Impassable
+      - WallLayer
 
 - type: entity
   parent: BaseTree
@@ -30,11 +52,10 @@
     fixtures:
     - shape:
         !type:PhysShapeAabb
-          bounds: "-0.1,-1.0,0.1,-0.4"
+        bounds: "-0.1,-1.0,0.1,-0.4"
       mass: 500
       layer:
-      - Opaque
-      - Impassable
+      - WallLayer
 
 - type: entity
   parent: BaseTree
@@ -47,11 +68,10 @@
     fixtures:
     - shape:
         !type:PhysShapeAabb
-          bounds: "-0.18,-1.9,0.18,-1.2"
+        bounds: "-0.18,-1.9,0.18,-1.2"
       mass: 500
       layer:
-      - Opaque
-      - Impassable
+      - WallLayer
 
 - type: entity
   parent: BaseTree
@@ -64,11 +84,34 @@
     fixtures:
     - shape:
         !type:PhysShapeAabb
-          bounds: "-0.1,-1.5,0.1,-0.8"
+        bounds: "-0.1,-1.5,0.1,-0.8"
       mass: 500
       layer:
-      - Opaque
-      - Impassable
+      - WallLayer
+
+- type: entity
+  parent: BaseRock
+  id: FloraRockSolid01
+  name: rock
+  components:
+  - type: Sprite
+    state: rocksolid01
+
+- type: entity
+  parent: BaseRock
+  id: FloraRockSolid02
+  name: rock
+  components:
+  - type: Sprite
+    state: rocksolid02
+
+- type: entity
+  parent: BaseRock
+  id: FloraRockSolid03
+  name: rock
+  components:
+  - type: Sprite
+    state: rocksolid03
 
 - type: entity
   parent: BaseTree
@@ -265,11 +308,10 @@
     fixtures:
     - shape:
         !type:PhysShapeAabb
-          bounds: "-0.8,-1.5,0.8,-0.8"
+        bounds: "-0.8,-1.5,0.8,-0.8"
       mass: 500
       layer:
-      - Opaque
-      - Impassable
+      - WallLayer
 
 - type: entity
   parent: BaseTreeConifer

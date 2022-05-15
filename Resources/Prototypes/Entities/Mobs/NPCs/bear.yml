@@ -24,11 +24,10 @@
         radius: 0.5
       mass: 100
       mask:
-      - Impassable
-      - MobImpassable
-      - SmallImpassable
+      - MobMask
       layer:
-      - Opaque
+      - MobLayer
+  - type: MovementIgnoreGravity
   - type: MobState
     thresholds:
       0: !type:NormalMobState {}
@@ -48,6 +47,14 @@
       prob: 0.3
   - type: Bloodstream
     bloodMaxVolume: 500
+  - type: CombatMode
+    disarmAction:
+      enabled: false
+      autoPopulate: false
+      name: action-name-disarm
+  - type: Temperature
+    heatDamageThreshold: 500
+    coldDamageThreshold: 0
   - type: UnarmedCombat
     range: 0.5
     arcwidth: 0
@@ -55,3 +62,5 @@
     damage:
       groups:
         Brute: 15
+  - type: ReplacementAccent
+    accent: genericAggressive

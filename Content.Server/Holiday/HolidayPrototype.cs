@@ -1,11 +1,8 @@
-using System;
 using Content.Server.Holiday.Celebrate;
 using Content.Server.Holiday.Greet;
 using Content.Server.Holiday.Interfaces;
 using Content.Server.Holiday.ShouldCelebrate;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Serialization.Manager.Attributes;
-using Robust.Shared.ViewVariables;
 
 namespace Content.Server.Holiday
 {
@@ -15,7 +12,7 @@ namespace Content.Server.Holiday
         [ViewVariables] [DataField("name")] public string Name { get; private set; } = string.Empty;
 
         [ViewVariables]
-        [DataField("id", required: true)]
+        [IdDataFieldAttribute]
         public string ID { get; } = default!;
 
         [ViewVariables]

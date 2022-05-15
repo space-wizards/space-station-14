@@ -1,7 +1,7 @@
 - type: entity
   id: Morgue
   name: morgue
-  description: Used to keep bodies in until someone fetches them. Includes a high-tech alert system for false-positives!
+  description: Used to store bodies until someone fetches them. Includes a high-tech alert system for false-positives!
   components:
   - type: Sprite
     netsync: false
@@ -21,20 +21,13 @@
     fixtures:
     - shape:
         !type:PhysShapeAabb
-          bounds: "-0.5,-0.5,0.5,0.5"
+        bounds: "-0.5,-0.5,0.5,0.5"
       mass: 25
       mask:
-       - Impassable
-       - MobImpassable
-       - VaultImpassable
-       - SmallImpassable
+      - MachineMask
       layer:
-       - Opaque
-       - MobImpassable
-       - VaultImpassable
-       - SmallImpassable
+      - WallLayer
   - type: MorgueEntityStorage
-    CanWeldShut: false
     IsCollidableWhenOpen: true
     Capacity: 1
     closeSound:
@@ -62,15 +55,12 @@
     bodyType: Static
   - type: Fixtures
     fixtures:
-      - shape:
-          !type:PhysShapeAabb
-          bounds: "-0.5,-0.5,0.5,0.5"
-        mass: 25
-        mask:
-          - Impassable
-          - MobImpassable
-          - VaultImpassable
-          - SmallImpassable
+    - shape:
+        !type:PhysShapeAabb
+        bounds: "-0.5,-0.5,0.5,0.5"
+      mass: 25
+      mask:
+      - Impassable
   - type: Sprite
     netsync: false
     sprite: Structures/Storage/morgue.rsi
@@ -103,20 +93,13 @@
     fixtures:
     - shape:
         !type:PhysShapeAabb
-          bounds: "-0.5,-0.5,0.5,0.5"
+        bounds: "-0.5,-0.5,0.5,0.5"
       mass: 25
       mask:
-       - Impassable
-       - MobImpassable
-       - VaultImpassable
-       - SmallImpassable
+      - MachineMask
       layer:
-       - Opaque
-       - MobImpassable
-       - VaultImpassable
-       - SmallImpassable
+      - MachineLayer
   - type: CrematoriumEntityStorage
-    CanWeldShut: false
     IsCollidableWhenOpen: true
     Capacity: 1
     closeSound:

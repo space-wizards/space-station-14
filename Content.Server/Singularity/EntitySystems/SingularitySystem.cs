@@ -1,14 +1,11 @@
-using System.Collections.Generic;
 using Content.Server.Ghost.Components;
 using Content.Server.Singularity.Components;
 using Content.Shared.Singularity;
 using Content.Shared.Singularity.Components;
 using JetBrains.Annotations;
+using Robust.Server.GameStates;
 using Robust.Shared.Containers;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
 using Robust.Shared.Map;
-using Robust.Shared.Maths;
 using Robust.Shared.Physics;
 using Robust.Shared.Physics.Dynamics;
 
@@ -20,6 +17,7 @@ namespace Content.Server.Singularity.EntitySystems
         [Dependency] private readonly EntityLookupSystem _lookup = default!;
         [Dependency] private readonly IMapManager _mapManager = default!;
         [Dependency] private readonly SharedContainerSystem _container = default!;
+        [Dependency] private readonly PVSOverrideSystem _pvs = default!;
 
         /// <summary>
         /// How much energy the singulo gains from destroying a tile.
@@ -36,6 +34,14 @@ namespace Content.Server.Singularity.EntitySystems
         {
             base.Initialize();
             SubscribeLocalEvent<ServerSingularityComponent, StartCollideEvent>(OnCollide);
+            SubscribeLocalEvent<SingularityDistortionComponent, ComponentStartup>(OnDistortionStartup);
+        }
+
+        private void OnDistortionStartup(EntityUid uid, SingularityDistortionComponent component, ComponentStartup args)
+        {
+            // to avoid distortion overlay pop-in, entities with distortion ignore PVS. Really this should probably be a
+            // PVS range-override, but this is good enough for now.
+            _pvs.AddGlobalOverride(uid);
         }
 
         protected override bool PreventCollide(EntityUid uid, SharedSingularityComponent component, PreventCollideEvent args)
@@ -191,12 +197,12 @@ namespace Content.Server.Singularity.EntitySystems
             {
                 // I tried having it so level 6 can de-anchor. BAD IDEA, MASSIVE LAG.
                 if (entity == component.Owner ||
-                    !EntityManager.TryGetComponent<PhysicsComponent?>(entity, out var collidableComponent) ||
+                    !TryComp<PhysicsComponent?>(entity, out var collidableComponent) ||
                     collidableComponent.BodyType == BodyType.Static) continue;
 
                 if (!CanPull(entity)) continue;
 
-                var vec = worldPos - EntityManager.GetComponent<TransformComponent>(entity).WorldPosition;
+                var vec = worldPos - Transform(entity).WorldPosition;
 
                 if (vec.Length < destroyRange - 0.01f) continue;
 

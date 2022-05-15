@@ -75,6 +75,19 @@
     color: "#c9c042"
   - type: Computer
     board: PowerComputerCircuitboard
+  - type: PowerMonitoringConsole
+  - type: NodeContainer
+    examinable: true
+    nodes:
+      hv:
+        !type:CableDeviceNode
+        nodeGroupID: HVPower
+  - type: ActivatableUI
+    key: enum.PowerMonitoringConsoleUiKey.Key
+  - type: UserInterface
+    interfaces:
+    - key: enum.PowerMonitoringConsoleUiKey.Key
+      type: PowerMonitoringConsoleBoundUserInterface
 
 - type: entity
   parent: ComputerBase
@@ -137,8 +150,9 @@
         - key: enum.CrewMonitoringUIKey.Key
           type: CrewMonitoringBoundUserInterface
     - type: CrewMonitoringConsole
-    - type: DeviceNetworkComponent
+    - type: DeviceNetwork
       deviceNetId: Wireless
+      receiveFrequencyId: SuitSensor
     - type: WirelessNetworkConnection
       range: 500
 
@@ -221,12 +235,15 @@
     radius: 1.5
     energy: 1.6
     color: "#3c5eb5"
+  - type: Tag
+    tags:
+    - EmagImmune
 
 - type: entity
   parent: ComputerBase
   id: computerBodyScanner
   name: body scanner computer
-  description: That's a body scanner.
+  description: A body scanner.
   components:
   - type: BodyScanner
   - type: ActivatableUI
@@ -345,70 +362,6 @@
       screen: supply
   - type: CargoConsole
   - type: CargoOrderDatabase
-  - type: GalacticMarket
-    products:
-      - MedicalSupplies
-      - MedicalChemistrySupplies
-      - EmergencyExplosive
-      - EmergencyFire
-      - EmergencyInternals
-      - EmergencyRadiation
-      - EmergencyInflatablewall
-      - ArmorySmg
-      - ArmoryShotgun
-      - SecurityArmor
-      - SecurityRiot
-      - SecurityLaser
-      - SecurityHelmet
-      - SecuritySupplies
-      - SecurityNonLethal
-      - SecurityRestraints
-      - HydroponicsTools
-      - HydroponicsSeeds
-      - HydroponicsSeedsExotic
-      - LivestockMonkeyCube
-      - LivestockCow
-      - LivestockChicken
-      - LivestockDuck
-      - LivestockGoat
-      - FoodPizza
-      - ServiceJanitorial
-      - ServiceLightsReplacement
-      - ServiceSmokeables
-      - ServiceCustomSmokable
-      - ServiceBureaucracy
-      - ServicePersonnel
-      - EngineeringCableLv
-      - EngineeringCableMv
-      - EngineeringCableHv
-      - EngineeringCableBulk
-      - EngineAmeShielding
-      - EngineAmeJar
-      - EngineAmeControl
-      - EngineSolar
-      - FunPlushies
-      - FunArtSupplies
-      - FunInstruments
-      - FunBoardGames
-      - MaterialSteel
-      - MaterialGlass
-      - MaterialPlastic
-      - MaterialPlasteel
-      - MaterialPlasma
-      - EngineSingularityEmitter
-      - EngineSingularityCollector
-      - EngineSingularityGenerator
-      - EngineSingularityContainment
-      - EngineParticleAccelerator
-      - ShuttleThruster
-      - ShuttleGyroscope
-      - AtmosphericsAir
-      - AtmosphericsOxygen
-      - AtmosphericsNitrogen
-      - AtmosphericsCarbonDioxide
-#      - AtmosphericsWaterVapor
-#      - AtmosphericsPlasma
-#      - AtmosphericsTritium
   - type: ActivatableUI
     key: enum.CargoConsoleUiKey.Key
   - type: ActivatableUIRequiresPower
@@ -449,8 +402,9 @@
   parent: BaseStructure
   id: ComputerTelevision
   name: wooden television
-  description: It is an old television displaying the station's cameras, if they worked.
+  description: It's an old television displaying the station's cameras, if they worked.
   components:
+  - type: InteractionOutline
   - type: Sprite
     sprite: Structures/Machines/computers.rsi
     layers:
@@ -466,9 +420,9 @@
     fixtures:
     - shape:
         !type:PhysShapeAabb
-          bounds: "-0.25,-0.25,0.25,0.25"
+        bounds: "-0.25,-0.25,0.25,0.25"
       mass: 50
-      layer:
-      - SmallImpassable
       mask:
-      - Impassable
+      - TabletopMachineMask
+      layer:
+      - TabletopMachineLayer

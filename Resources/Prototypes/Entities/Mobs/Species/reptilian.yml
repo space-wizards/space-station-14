@@ -9,16 +9,28 @@
   - type: Icon
     sprite: Mobs/Species/Reptilian/parts.rsi
     state: full
+  - type: Markings
+    layerPoints:
+      Tail:
+        points: 1
+        required: true
+        defaultMarkings: [LizardTailSmooth]
+      Snout:
+        points: 1
+        required: true
+        defaultMarkings: [LizardSnoutRound]
+      HeadTop:
+        points: 1
+        required: false
+      HeadSide:
+        points: 1
+        required: false
   - type: Sprite
     netsync: false
     noRot: true
     drawdepth: Mobs
     scale: 1, 1
     layers:
-      - map: [ "enum.HumanoidVisualLayers.TailBehind" ]
-        color: "#34a223"
-        state: tail_smooth_behind
-        sprite: Mobs/Customization/reptilian_parts.rsi
       - map: [ "enum.HumanoidVisualLayers.Chest" ]
         color: "#34a223"
         sprite: Mobs/Species/Reptilian/parts.rsi
@@ -28,9 +40,9 @@
         sprite: Mobs/Species/Reptilian/parts.rsi
         state: head_m
       - map: [ "enum.HumanoidVisualLayers.Snout" ]
-        color: "#34a223"
-        state: snout_round
-        sprite: Mobs/Customization/reptilian_parts.rsi
+        sprite: Mobs/Customization/masking_helpers.rsi
+        state: none
+        visible: false
       - map: [ "enum.HumanoidVisualLayers.Eyes" ]
         color: "#008800"
         sprite: Mobs/Customization/eyes.rsi
@@ -88,20 +100,21 @@
       - map: [ "ears" ]
       - map: [ "outerClothing" ]
       - map: [ "eyes" ]
-      - map: [ "enum.HumanoidVisualLayers.TailFront" ]
-        color: "#34a223"
-        state: tail_smooth_front
-        sprite: Mobs/Customization/reptilian_parts.rsi
       - map: [ "belt" ]
       - map: [ "neck" ]
       - map: [ "back" ]
-      - map: [ "enum.HumanoidVisualLayers.Frills" ]
-        state: frills_simple
-        color: "#34a223"
-        sprite: Mobs/Customization/reptilian_parts.rsi
-      - map: [ "enum.HumanoidVisualLayers.Horns" ]
-        state: horns_simple
-        sprite: Mobs/Customization/reptilian_parts.rsi
+      - map: [ "enum.HumanoidVisualLayers.HeadSide" ]
+        sprite: Mobs/Customization/masking_helpers.rsi
+        state: none
+        visible: false
+      - map: [ "enum.HumanoidVisualLayers.HeadTop" ]
+        sprite: Mobs/Customization/masking_helpers.rsi
+        state: none
+        visible: false
+      - map: [ "enum.HumanoidVisualLayers.Tail" ]
+        sprite: Mobs/Customization/masking_helpers.rsi
+        state: none
+        visible: false
       - map: [ "mask" ]
       - map: [ "head" ]
       - map: [ "pocket1" ]
@@ -135,19 +148,31 @@
   name: Urist McHands
   parent: MobHumanDummy
   id: MobReptilianDummy
-  abstract: true
+  noSpawn: true
   description: A dummy reptilian meant to be used in character setup.
   components:
+  - type: Markings
+    layerPoints:
+      Tail:
+        points: 1
+        required: true
+        defaultMarkings: [LizardTailSmooth]
+      Snout:
+        points: 1
+        required: true
+        defaultMarkings: [LizardSnoutRound]
+      HeadTop:
+        points: 1
+        required: false
+      HeadSide:
+        points: 1
+        required: false
   - type: Sprite
     netsync: false
     noRot: true
     drawdepth: Mobs
     scale: 1, 1
     layers:
-      - map: [ "enum.HumanoidVisualLayers.TailBehind" ]
-        color: "#34a223"
-        state: tail_smooth_behind
-        sprite: Mobs/Customization/reptilian_parts.rsi
       - map: [ "enum.HumanoidVisualLayers.Chest" ]
         color: "#34a223"
         sprite: Mobs/Species/Reptilian/parts.rsi
@@ -157,9 +182,9 @@
         sprite: Mobs/Species/Reptilian/parts.rsi
         state: head_m
       - map: [ "enum.HumanoidVisualLayers.Snout" ]
-        color: "#34a223"
-        state: snout_round
-        sprite: Mobs/Customization/reptilian_parts.rsi
+        sprite: Mobs/Customization/masking_helpers.rsi
+        state: none
+        visible: false
       - map: [ "enum.HumanoidVisualLayers.Eyes" ]
         color: "#008800"
         sprite: Mobs/Customization/eyes.rsi
@@ -217,19 +242,21 @@
       - map: [ "ears" ]
       - map: [ "outerClothing" ]
       - map: [ "eyes" ]
-      - map: [ "enum.HumanoidVisualLayers.TailFront" ]
-        color: "#34a223"
-        state: tail_smooth_front
-        sprite: Mobs/Customization/reptilian_parts.rsi
       - map: [ "belt" ]
       - map: [ "neck" ]
       - map: [ "back" ]
-      - map: [ "enum.HumanoidVisualLayers.Frills" ]
-        state: frills_simple
-        sprite: Mobs/Customization/reptilian_parts.rsi
-      - map: [ "enum.HumanoidVisualLayers.Horns" ]
-        state: horns_simple
-        sprite: Mobs/Customization/reptilian_parts.rsi
+      - map: [ "enum.HumanoidVisualLayers.HeadSide" ]
+        sprite: Mobs/Customization/masking_helpers.rsi
+        state: none
+        visible: false
+      - map: [ "enum.HumanoidVisualLayers.HeadTop" ]
+        sprite: Mobs/Customization/masking_helpers.rsi
+        state: none
+        visible: false
+      - map: [ "enum.HumanoidVisualLayers.Tail" ]
+        sprite: Mobs/Customization/masking_helpers.rsi
+        state: none
+        visible: false
       - map: [ "mask" ]
       - map: [ "head" ]
       - map: [ "pocket1" ]

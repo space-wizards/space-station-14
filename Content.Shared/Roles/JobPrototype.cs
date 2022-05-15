@@ -1,11 +1,7 @@
-using System;
-using System.Collections.Generic;
 using Content.Shared.Access;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.List;
-using Robust.Shared.ViewVariables;
 
 namespace Content.Shared.Roles
 {
@@ -18,7 +14,7 @@ namespace Content.Shared.Roles
         private string _name = string.Empty;
 
         [ViewVariables]
-        [DataField("id", required: true)]
+        [IdDataFieldAttribute]
         public string ID { get; } = default!;
 
         [DataField("supervisors")]
@@ -46,8 +42,8 @@ namespace Content.Shared.Roles
         ///     Whether this job is a head.
         ///     The job system will try to pick heads before other jobs on the same priority level.
         /// </summary>
-        [DataField("head")]
-        public bool IsHead { get; private set; }
+        [DataField("weight")]
+        public int Weight { get; private set; }
 
         [DataField("startingGear", customTypeSerializer: typeof(PrototypeIdSerializer<StartingGearPrototype>))]
         public string? StartingGear { get; private set; }

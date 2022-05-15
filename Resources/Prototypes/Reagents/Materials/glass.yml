@@ -3,33 +3,25 @@
   stack: Glass
   name: glass
   icon: Objects/Materials/Sheets/glass.rsi/glass.png
+  color: "#a8ccd7"
 
 - type: material
   id: ReinforcedGlass
   stack: ReinforcedGlass
   name: reinforced glass
   icon: Objects/Materials/Sheets/glass.rsi/rglass.png
+  color: "#549bb0"
 
 - type: material
   id: PlasmaGlass
   stack: PlasmaGlass
   name: plasma glass
   icon: Objects/Materials/Sheets/glass.rsi/pglass.png
+  color: "#b35989"
 
 - type: material
   id: ReinforcedPlasmaGlass
   stack: ReinforcedPlasmaGlass
   name: reinforced plasma glass
   icon: Objects/Materials/Sheets/glass.rsi/rpglass.png
-
-- type: material
-  id: TitaniumGlass
-  stack: TitaniumGlass
-  name: titanium glass
-  icon: Objects/Materials/Sheets/glass.rsi/titaniumglass.png
-
-- type: material
-  id: PlastitaniumGlass
-  stack: PlastitaniumGlass
-  name: plastitanium glass
-  icon: Objects/Materials/Sheets/glass.rsi/plastitaniumglass.png
+  color: "#8c4069"

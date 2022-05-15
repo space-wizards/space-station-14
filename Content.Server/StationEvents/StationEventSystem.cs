@@ -1,12 +1,8 @@
-using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Content.Server.Administration.Logs;
 using Content.Server.GameTicking;
 using Content.Server.StationEvents.Events;
-using Content.Shared;
-using Content.Shared.Administration.Logs;
 using Content.Shared.CCVar;
 using Content.Shared.Database;
 using Content.Shared.GameTicking;
@@ -15,13 +11,9 @@ using JetBrains.Annotations;
 using Robust.Server.Console;
 using Robust.Server.Player;
 using Robust.Shared.Configuration;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Localization;
 using Robust.Shared.Network;
 using Robust.Shared.Random;
 using Robust.Shared.Reflection;
-using Robust.Shared.Timing;
 
 namespace Content.Server.StationEvents
 {
@@ -207,7 +199,7 @@ namespace Content.Server.StationEvents
             if (!_conGroupController.CanCommand(player, "events"))
                 return;
 
-            var newMsg = _netManager.CreateNetMessage<MsgStationEvents>();
+            var newMsg = new MsgStationEvents();
             newMsg.Events = StationEvents.Select(e => e.Name).ToArray();
             _netManager.ServerSendMessage(newMsg, player.ConnectedClient);
         }

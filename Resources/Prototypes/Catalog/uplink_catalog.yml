@@ -25,6 +25,15 @@
   description: A rugged, robust operator handgun with inbuilt silencer. Use pistol magazines (.25 caseless).
   price: 8
 
+# Poor accuracy, slow to fire, cheap option
+- type: uplinkListing
+  id: UplinkRifleMosin
+  category: Weapons
+  itemId: SniperBoltGunWood
+  listingName: Surplus Rifle
+  description: A bolt action service rifle that has seen many wars. Not modern by any standard, hand loaded, and terrible recoil, but it is cheap.
+  price: 4
+
 #- type: uplinkListing
 #  id: UplinkCrossbowEnergyMini
 #  category: Weapons
@@ -67,31 +76,36 @@
   id: UplinkExplosiveGrenadeFlash
   category: Explosives
   itemId: GrenadeFlashBang
-  price: 4
+  price: 2
 
 - type: uplinkListing
   id: UplinkSyndieMiniBomb
   category: Explosives
   itemId: SyndieMiniBomb
-  price: 6
+  price: 7
 
 - type: uplinkListing
   id: UplinkGrenadePenguin
   category: Explosives
   itemId: MobGrenadePenguin
   price: 6
+  surplus: false # got wrecked by penguins from surplus crate
 
-#- type: uplinkListing
-#  id: UplinkExplosiveC4
-#  category: Weapons
-#  itemId: ExplosiveC4
-#  price: 5
+- type: uplinkListing
+  id: UplinkC4
+  category: Explosives
+  itemId: C4
+  price: 2
+  description: >
+    C-4 is plastic explosive of the common variety Composition C. You can use it to breach walls, airlocks or sabotage equipment.
+    It can be attached to almost all objects and has a modifiable timer with a minimum setting of 10 seconds.
 
-#- type: uplinkListing
-#  id: UplinkDuffelExplosiveC4
-#  category: Weapons
-#  itemId: DuffelExplosiveC4
-#  price: 15
+- type: uplinkListing
+  id: UplinkC4Bundle
+  category: Explosives
+  itemId: ClothingBackpackDuffelSyndicateC4tBundle
+  price: 12 # 25% off
+  description: Because sometimes quantity is quality. Contains 8 C-4 plastic explosives.
 
 # Ammo
 
@@ -116,6 +130,15 @@
   price: 2
   icon: /Textures/Objects/Weapons/Guns/Ammunition/SpeedLoaders/Magnum/magnum_sl.rsi/icon.png
 
+# For the mosin
+- type: uplinkListing
+  id: UplinkMosinAmmo
+  category: Ammo
+  itemId: BoxBulletLRifleSmall
+  description: A box of bullets for the surplus rifle.
+  price: 2
+
+
 #Utility
 
 - type: uplinkListing
@@ -136,9 +159,19 @@
   price: 8
 
 - type: uplinkListing
+  id: UplinkAgentIDCard
+  category: Utility
+  itemId: AgentIDCard
+  listingName: Agent ID Card
+  description: A modified ID card that can copy accesses from other cards and change its name and job title at-will.
+  icon: Objects/Misc/id_cards.rsi/default.png
+  price: 3
+
+- type: uplinkListing
   id: UplinkHypopen
   category: Utility
   itemId: Hypopen
+  listingName: Hypopen
   description: A chemical hypospray disguised as a pen, capable of instantly injecting up to 15u of reagents. Starts empty.
   price: 4
 
@@ -172,6 +205,29 @@
   price: 40
   icon: /Textures/Objects/Weapons/Guns/LMGs/l6.rsi/icon.png
 
+- type: uplinkListing
+  id: UplinkZombieBundle
+  category: Bundles
+  itemId: ClothingBackpackDuffelZombieBundle
+  price: 50
+  icon: /Textures/Structures/Wallmounts/signs.rsi/bio.png
+
+- type: uplinkListing
+  id: UplinkSurplusBundle
+  category: Bundles
+  itemId: CrateSyndicateSurplusBundle
+  description: Contains 50 telecrystals worth of completely random Syndicate items. It can be useless junk or really good.
+  price: 20
+  surplus: false
+
+- type: uplinkListing
+  id: UplinkSuperSurplusBundle
+  category: Bundles
+  itemId: CrateSyndicateSuperSurplusBundle
+  description: Contains 125 telecrystals worth of completely random Syndicate items.
+  price: 40
+  surplus: false
+
 #- type: uplinkListing
 #  id: UplinkCarbineBundle
 #  category: Bundles
@@ -185,7 +241,7 @@
   id: UplinkToolbox
   category: Tools
   itemId: ToolboxSyndicateFilled
-  price: 5
+  price: 2
 
 - type: uplinkListing
   id: UplinkSyndicateJawsOfLife
@@ -199,11 +255,17 @@
   itemId: ClothingBackpackDuffelSyndicateFilledMedical
   price: 5
 
+- type : uplinkListing
+  id: UplinkPowerSink
+  category: Tools
+  itemId: PowerSink
+  price: 5
+
 - type: uplinkListing
   id: UplinkCarpDehydrated
   category: Tools
   itemId: DehydratedSpaceCarp
-  price: 5
+  price: 3
 
 # Armor
 
@@ -225,14 +287,31 @@
 - type: uplinkListing
   id: UplinkHardsuitSyndie
   category: Armor
-  itemId: ClothingOuterHardsuitSyndie
-  price: 5
+  itemId: ClothingBackpackDuffelSyndicateHardsuitBundle
+  description: The Syndicate's well known armored blood red hardsuit, capable of space walks and bullet resistant.
+  price: 8
+  
+- type: uplinkListing
+  id: UplinkClothingShoesBootsMagSyndie
+  category: Armor
+  itemId: ClothingShoesBootsMagSyndie
+  description: A pair of magnetic boots that will keep you on the ground if the gravity fails or is sabotaged, giving you a mobility advantage. If activated with gravity they will protect from slips, but they will slow you down.
+  price: 2
 
 - type: uplinkListing
-  id: UplinkHardsuitSyndieHelmet
+  id: UplinkEVASyndie
   category: Armor
-  itemId: ClothingHeadHelmetHardsuitSyndie
-  price: 5
+  itemId: BoxSyndicateEVA
+  description: A simple EVA suit that offers no protection other than what's needed to survive in space.
+  price: 4
+
+- type: uplinkListing
+  id: UplinkClothingOuterHardsuitJuggernaut
+  category: Armor
+  itemId: ClothingOuterHardsuitJuggernaut
+  description: Hyper resilient armor made of materials tested in the Tau chromosphere facility. The only thing that's going to be slowing you down is this suit... and tasers.
+  price: 12
+
 
 # Misc
 
@@ -298,6 +377,15 @@
   category: Misc
   itemId: ClothingBackpackDuffelSyndicatePyjamaBundle
   price: 4
+  
+- type: uplinkListing
+  id: UplinkCatEars
+  category: Misc
+  itemId: ClothingHeadHatCatEars
+  listingName: Cat Ears
+  description: UwU.
+  price: 21
+
 
 - type: uplinkListing
   id: UplinkGigacancerScanner
@@ -306,10 +394,25 @@
   listingName: Ultragigacancer Health Analyzer
   description: Works like a normal health analyzer, other than giving everyone it scans ultragigacancer.
   price: 5
-  
+
 - type: uplinkListing
   id: UplinkNocturineChemistryBottle
   category: Misc
   itemId: NocturineChemistryBottle
   description: A chemical that makes it very hard for your target to stand up.
   price: 5
+
+- type: uplinkListing
+  id: UplinkSyndicateStamp
+  category: Misc
+  itemId: RubberStampSyndicate
+  price: 2
+
+- type: uplinkListing
+  id: UplinkSyndicateSegwayCrate
+  category: Misc
+  itemId: CrateFunSyndicateSegway
+  listingName: syndicate segway
+  description: Be an enemy of the corporation, in style!
+  price: 5
+  surplus: false

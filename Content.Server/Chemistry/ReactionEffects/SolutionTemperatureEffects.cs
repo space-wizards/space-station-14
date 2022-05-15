@@ -1,7 +1,5 @@
-using System;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.Reagent;
-using Robust.Shared.Serialization.Manager.Attributes;
 
 namespace Content.Server.Chemistry.ReactionEffects
 {

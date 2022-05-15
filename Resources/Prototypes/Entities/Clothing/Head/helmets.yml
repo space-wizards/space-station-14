@@ -9,9 +9,17 @@
   - type: Clothing
     sprite: Clothing/Head/Helmets/bombsuit.rsi
   - type: IngestionBlocker
+  - type: ExplosionResistance
+    resistance: 0.25 # +0.65 from body -> 90%
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.5
+        Slash: 0.8
+        Piercing: 0.8
 
 - type: entity
-  parent: ClothingHeadBase
+  parent: ClothingHeadEVAHelmetBase
   id: ClothingHeadHelmetCosmonaut
   name: cosmonaut helmet
   description: A deceptively well armored space helmet. Ancient design, but advanced manufacturing.
@@ -21,7 +29,7 @@
   - type: Clothing
     sprite: Clothing/Head/Helmets/cosmonaut.rsi
   - type: IngestionBlocker
-  
+
 - type: entity
   parent: ClothingHeadBase
   id: ClothingHeadHelmetCult
@@ -33,9 +41,16 @@
   - type: Clothing
     sprite: Clothing/Head/Helmets/cult.rsi
   - type: IngestionBlocker
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.8
+        Slash: 0.8
+        Piercing: 0.9
+        Heat: 0.8
 
 - type: entity
-  parent: ClothingHeadBase
+  parent: ClothingHeadEVAHelmetBase
   id: ClothingHeadHelmetEVA
   name: EVA helmet
   description: A basic helmet designed for extravehicular activies.
@@ -86,6 +101,12 @@
   - type: Clothing
     sprite: Clothing/Head/Helmets/light_riot.rsi
   - type: IngestionBlocker
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.8
+        Slash: 0.8
+        Piercing: 0.8
 
 - type: entity
   parent: ClothingHeadBase
@@ -98,7 +119,16 @@
   - type: Clothing
     sprite: Clothing/Head/Helmets/scaf.rsi
   - type: IngestionBlocker
-
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.8
+        Slash: 0.8
+        Piercing: 0.8
+  - type: Tag
+    tags:
+    - HidesHair
+    
 - type: entity
   parent: ClothingHeadBase
   id: ClothingHeadHelmetSpaceNinja
@@ -110,9 +140,12 @@
   - type: Clothing
     sprite: Clothing/Head/Helmets/spaceninja.rsi
   - type: IngestionBlocker
-
+  - type: Tag
+    tags:
+    - HidesHair
+    
 - type: entity
-  parent: ClothingHeadBase
+  parent: ClothingHeadEVAHelmetBase
   id: ClothingHeadHelmetSyndicate
   name: syndicate EVA helmet
   description: A stylish, robust syndicate helmet
@@ -157,9 +190,9 @@
   - type: Clothing
     sprite: Clothing/Head/Helmets/wizardhelm.rsi
   - type: IngestionBlocker
-  
+
 - type: entity
-  parent: ClothingHeadHardsuitWithLightBase # hardsuitlight base for light and protection
+  parent: ClothingHeadHardsuitWithLightBase
   id: ClothingHeadHelmetFire
   name: fire helmet
   description: An atmos techs best friend. Provides some heat resistance and looks cool.
@@ -168,15 +201,30 @@
     sprite: Clothing/Head/Helmets/firehelmet.rsi
   - type: Clothing
     sprite: Clothing/Head/Helmets/firehelmet.rsi
+    size: 5
+    canPickup: true
+    quickEquip: true
   - type: IngestionBlocker
   - type: PowerCellSlot
     cellSlot:
       startingItem: PowerCellSmallHigh
   - type: TemperatureProtection
     coefficient: 0.01
-    
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.90
+        Slash: 0.90
+        Piercing: 0.95
+        Heat: 0.65
+        Radiation: 1
+  - type: PressureProtection
+    highPressureMultiplier: 0.65
+    lowPressureMultiplier: 1000
+
+
 - type: entity
-  parent: ClothingHeadHardsuitWithLightBase # hardsuitlight base for light and protection
+  parent: ClothingHeadHardsuitWithLightBase
   id: ClothingHeadHelmetAtmosFire
   name: atmos fire helmet
   description: An atmos fire helmet, able to keep the user cool in any situation.
@@ -185,15 +233,29 @@
     sprite: Clothing/Head/Helmets/atmos_firehelmet.rsi
   - type: Clothing
     sprite: Clothing/Head/Helmets/atmos_firehelmet.rsi
+    size: 5
+    canPickup: true
+    quickEquip: true
   - type: IngestionBlocker
   - type: TemperatureProtection
-    coefficient: 0.005    
+    coefficient: 0.005
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.90
+        Slash: 0.90
+        Piercing: 0.95
+        Heat: 0.5
+        Radiation: .95
+  - type: PressureProtection
+    highPressureMultiplier: 0.45
+    lowPressureMultiplier: 1000
 
 - type: entity
   parent: ClothingHeadBase
   id: ClothingHeadHelmetLing
   name: chitinous helmet
-  description: Inflates the changeling's body into an all-consuming chitinous mass of armor. Provides extensive protection against physical damage, but less against other types. Its mass slows the changeling's movement, and maintaining its shape slows chemical generation.
+  description: Inflates the changeling's body into an all-consuming chitinous mass of armor.
   components:
   - type: Sprite
     sprite: Clothing/Head/Helmets/linghelmet.rsi
@@ -206,4 +268,25 @@
         Slash: 0.5
         Piercing: 0.5
         Heat: 0.9
-        
+
+- type: entity
+  parent: ClothingHeadEVAHelmetBase
+  id: ClothingHeadHelmetVoidParamed
+  name: Paramedic Void Helmet
+  description: A void helmet made for paramedics.
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/Helmets/paramedhelm.rsi
+  - type: Clothing
+    sprite: Clothing/Head/Helmets/paramedhelm.rsi
+  - type: IngestionBlocker
+  - type: DiseaseProtection
+    protection: 0.15
+  - type: TemperatureProtection
+    coefficient: 0.1
+  - type: Armor
+    modifiers:
+      coefficients:
+        Slash: 0.95
+        Heat: 0.90
+        Radiation: 0.75

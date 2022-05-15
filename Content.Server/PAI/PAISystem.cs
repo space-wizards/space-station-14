@@ -1,18 +1,12 @@
 using Content.Shared.Examine;
 using Content.Shared.PAI;
 using Content.Shared.Verbs;
-using Content.Shared.Instruments;
 using Content.Server.Popups;
 using Content.Server.Instruments;
 using Content.Server.Ghost.Roles.Components;
 using Content.Server.Mind.Components;
 using Robust.Server.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Log;
-using Robust.Shared.GameObjects;
-using Robust.Shared.Localization;
 using Robust.Shared.Player;
-using Content.Shared.Actions;
 using Content.Shared.Interaction.Events;
 
 namespace Content.Server.PAI
@@ -21,7 +15,6 @@ namespace Content.Server.PAI
     {
         [Dependency] private readonly PopupSystem _popupSystem = default!;
         [Dependency] private readonly InstrumentSystem _instrumentSystem = default!;
-        [Dependency] private readonly SharedActionsSystem _actionsSystem = default!;
 
         public override void Initialize()
         {
@@ -32,21 +25,6 @@ namespace Content.Server.PAI
             SubscribeLocalEvent<PAIComponent, MindAddedMessage>(OnMindAdded);
             SubscribeLocalEvent<PAIComponent, MindRemovedMessage>(OnMindRemoved);
             SubscribeLocalEvent<PAIComponent, GetVerbsEvent<ActivationVerb>>(AddWipeVerb);
-
-            SubscribeLocalEvent<PAIComponent, ComponentStartup>(OnStartup);
-            SubscribeLocalEvent<PAIComponent, ComponentShutdown>(OnShutdown);
-        }
-
-        private void OnStartup(EntityUid uid, PAIComponent component, ComponentStartup args)
-        {
-            if (component.MidiAction != null)
-                _actionsSystem.AddAction(uid, component.MidiAction, null);
-        }
-
-        private void OnShutdown(EntityUid uid, PAIComponent component, ComponentShutdown args)
-        {
-            if (component.MidiAction != null)
-                _actionsSystem.RemoveAction(uid, component.MidiAction);
         }
 
         private void OnExamined(EntityUid uid, PAIComponent component, ExaminedEvent args)
@@ -119,12 +97,13 @@ namespace Content.Server.PAI
         private void PAITurningOff(EntityUid uid)
         {
             UpdatePAIAppearance(uid, PAIStatus.Off);
+
             //  Close the instrument interface if it was open
             //  before closing
-            if (EntityManager.TryGetComponent<ServerUserInterfaceComponent>(uid, out var serverUi))
-                if (EntityManager.TryGetComponent<ActorComponent>(uid, out var actor))
-                    if (serverUi.TryGetBoundUserInterface(InstrumentUiKey.Key,out var bui))
-                        bui.Close(actor.PlayerSession);
+            if (HasComp<ActiveInstrumentComponent>(uid) && TryComp<ActorComponent>(uid, out var actor))
+            {
+                _instrumentSystem.ToggleInstrumentUi(uid, actor.PlayerSession);
+            }
 
             //  Stop instrument
             if (EntityManager.TryGetComponent<InstrumentComponent>(uid, out var instrument)) _instrumentSystem.Clean(uid, instrument);

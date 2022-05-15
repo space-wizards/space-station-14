@@ -21,6 +21,7 @@ namespace Content.Server.Fluids.EntitySystems
         {
             base.Initialize();
 
+            // Shouldn't need re-anchoring.
             SubscribeLocalEvent<PuddleComponent, AnchorStateChangedEvent>(OnAnchorChanged);
             SubscribeLocalEvent<PuddleComponent, ExaminedEvent>(HandlePuddleExamined);
             SubscribeLocalEvent<PuddleComponent, SolutionChangedEvent>(OnUpdate);

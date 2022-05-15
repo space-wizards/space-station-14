@@ -43,9 +43,9 @@
         radius: 0.35
       mass: 10
       mask:
-      - VaultImpassable
+      - FlyingMobMask
       layer:
-      - Opaque
+      - FlyingMobLayer
   - type: Damageable
     damageContainer: Biological
   - type: MobState
@@ -72,6 +72,9 @@
     interactSuccessString: petting-success-holo
     interactFailureString: petting-failure-holo
     successChance: 0.7
+  - type: Tag
+    tags:
+      - CannotSuicide
 
 # From the uplink injector
 - type: entity

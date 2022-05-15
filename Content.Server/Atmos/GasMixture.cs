@@ -1,15 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using System.Runtime.CompilerServices;
-using Content.Server.Atmos.EntitySystems;
 using Content.Server.Atmos.Reactions;
 using Content.Shared.Atmos;
-using Robust.Shared.GameObjects;
-using Robust.Shared.Maths;
 using Robust.Shared.Serialization;
-using Robust.Shared.Serialization.Manager.Attributes;
-using Robust.Shared.ViewVariables;
 
 namespace Content.Server.Atmos
 {
@@ -18,7 +11,7 @@ namespace Content.Server.Atmos
     /// </summary>
     [Serializable]
     [DataDefinition]
-    public sealed class GasMixture : IEquatable<GasMixture>, ICloneable, ISerializationHooks
+    public sealed class GasMixture : IEquatable<GasMixture>, ISerializationHooks
     {
         public static GasMixture SpaceGas => new() {Volume = Atmospherics.CellVolume, Temperature = Atmospherics.TCMB, Immutable = true};
 
@@ -296,7 +289,7 @@ namespace Content.Server.Atmos
             return hashCode.ToHashCode();
         }
 
-        public object Clone()
+        public GasMixture Clone()
         {
             var newMixture = new GasMixture()
             {

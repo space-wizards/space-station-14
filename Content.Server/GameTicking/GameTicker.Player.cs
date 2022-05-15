@@ -1,16 +1,10 @@
-using System;
 using Content.Server.Players;
-using Content.Server.Roles;
-using Content.Server.Station;
 using Content.Shared.GameTicking;
 using Content.Shared.GameWindow;
 using Content.Shared.Preferences;
-using Content.Shared.Station;
 using JetBrains.Annotations;
 using Robust.Server.Player;
 using Robust.Shared.Enums;
-using Robust.Shared.IoC;
-using Robust.Shared.Localization;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
 
@@ -106,11 +100,13 @@ namespace Content.Server.GameTicking
                     break;
                 }
             }
+            //When the status of a player changes, update the server info text
+            UpdateInfoText();
 
             async void SpawnWaitPrefs()
             {
                 await _prefsManager.WaitPreferencesLoaded(session);
-                SpawnPlayer(session, StationId.Invalid);
+                SpawnPlayer(session, EntityUid.Invalid);
             }
 
             async void AddPlayerToDb(Guid id)
@@ -149,12 +145,22 @@ namespace Content.Server.GameTicking
             RaiseNetworkEvent(GetStatusMsg(session), client);
             RaiseNetworkEvent(GetInfoMsg(), client);
             RaiseNetworkEvent(GetPlayerStatus(), client);
-            RaiseNetworkEvent(GetJobsAvailable(), client);
+            RaiseLocalEvent(new PlayerJoinedLobbyEvent(session));
         }
 
         private void ReqWindowAttentionAll()
         {
             RaiseNetworkEvent(new RequestWindowAttentionEvent());
+        }
+    }
+
+    public sealed class PlayerJoinedLobbyEvent : EntityEventArgs
+    {
+        public readonly IPlayerSession PlayerSession;
+
+        public PlayerJoinedLobbyEvent(IPlayerSession playerSession)
+        {
+            PlayerSession = playerSession;
         }
     }
 }

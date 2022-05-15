@@ -1,5 +1,4 @@
 using Content.Server.Tabletop.Components;
-using Content.Shared.ActionBlocker;
 using Content.Shared.Interaction;
 using Content.Shared.Tabletop;
 using Content.Shared.Tabletop.Events;
@@ -8,9 +7,6 @@ using JetBrains.Annotations;
 using Robust.Server.GameObjects;
 using Robust.Server.Player;
 using Robust.Shared.Enums;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Localization;
 using Robust.Shared.Map;
 
 namespace Content.Server.Tabletop
@@ -103,11 +99,8 @@ namespace Content.Server.Tabletop
 
                 var gamerUid = (gamer).Owner;
 
-                if (actor.PlayerSession.Status > SessionStatus.Connected || CanSeeTable(gamerUid, gamer.Tabletop)
-                                                                         || !StunnedOrNoHands(gamerUid))
-                    continue;
-
-                CloseSessionFor(actor.PlayerSession, gamer.Tabletop);
+                if (actor.PlayerSession.Status != SessionStatus.InGame || !CanSeeTable(gamerUid, gamer.Tabletop))
+                    CloseSessionFor(actor.PlayerSession, gamer.Tabletop);
             }
         }
     }

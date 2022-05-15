@@ -6,18 +6,19 @@
   components:
   - type: Transform
     anchored: true
+    noRot: true
   - type: Physics
     bodyType: Static
   - type: Fixtures
     fixtures:
     - shape:
-        !type:PhysShapeAabb {}
+        !type:PhysShapeAabb
+        bounds: "-0.45,-0.45,0.45,0.45"
       mass: 50
-      layer:
-      - Impassable
-      - SmallImpassable
       mask:
-      - VaultImpassable
+      - MachineMask
+      layer:
+      - GlassAirlockLayer
   - type: InteractionOutline
   - type: Construction
     graph: Girder
@@ -25,9 +26,6 @@
   - type: Sprite
     sprite: Structures/Walls/solid.rsi
     state: wall_girder
-  - type: Tag
-    tags:
-    - ExplosivePassable
   - type: Damageable
     damageContainer: Inorganic
     damageModifierSet: Metallic

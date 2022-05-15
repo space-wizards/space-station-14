@@ -136,7 +136,7 @@
       state_open: atmos_open
       state_closed: atmos_door
   - type: AccessReader
-    access: [ [ "Engineering" ] ]
+    access: [ [ "Atmospherics" ] ]
 
 # Engineer
 - type: entity
@@ -167,6 +167,8 @@
       state_closed: freezer_door
   - type: AccessReader
     access: [ [ "Kitchen" ] ]
+  - type: ExplosionResistance
+    resistance: 0.90
 
 # Botanist
 - type: entity

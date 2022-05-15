@@ -1,5 +1,4 @@
 ﻿using Robust.Shared.Prototypes;
-using Robust.Shared.Serialization.Manager.Attributes;
 
 namespace Content.Shared.Damage.Prototypes;
 
@@ -9,7 +8,7 @@ namespace Content.Shared.Damage.Prototypes;
 [Prototype("examinableDamage")]
 public sealed class ExaminableDamagePrototype : IPrototype
 {
-    [DataField("id", required: true)]
+    [IdDataFieldAttribute]
     public string ID { get; } = default!;
 
     /// <summary>

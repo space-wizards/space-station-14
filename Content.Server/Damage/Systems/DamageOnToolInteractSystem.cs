@@ -1,12 +1,10 @@
 using Content.Server.Administration.Logs;
 using Content.Server.Damage.Components;
 using Content.Server.Tools.Components;
-using Content.Shared.Administration.Logs;
 using Content.Shared.Damage;
 using Content.Shared.Database;
 using Content.Shared.Interaction;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
+using Content.Shared.Tools.Components;
 
 namespace Content.Server.Damage.Systems
 {

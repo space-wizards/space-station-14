@@ -1,30 +1,41 @@
+using Content.Shared.ActionBlocker;
 using Content.Shared.Cuffs.Components;
 using Content.Shared.DragDrop;
 using Content.Shared.Interaction.Events;
 using Content.Shared.Inventory.Events;
 using Content.Shared.Item;
 using Content.Shared.Movement;
+using Content.Shared.Physics.Pull;
 using Content.Shared.Pulling.Components;
-using Robust.Shared.GameObjects;
 
 namespace Content.Shared.Cuffs
 {
     public abstract class SharedCuffableSystem : EntitySystem
     {
+        [Dependency] private readonly ActionBlockerSystem _blocker = default!;
+
         public override void Initialize()
         {
             base.Initialize();
             SubscribeLocalEvent<SharedCuffableComponent, StopPullingEvent>(HandleStopPull);
-            SubscribeLocalEvent<SharedCuffableComponent, MovementAttemptEvent>(HandleMoveAttempt);
+            SubscribeLocalEvent<SharedCuffableComponent, UpdateCanMoveEvent>(HandleMoveAttempt);
             SubscribeLocalEvent<SharedCuffableComponent, UseAttemptEvent>(OnUseAttempt);
             SubscribeLocalEvent<SharedCuffableComponent, InteractionAttemptEvent>(OnInteractAttempt);
             SubscribeLocalEvent<SharedCuffableComponent, IsEquippingAttemptEvent>(OnEquipAttempt);
             SubscribeLocalEvent<SharedCuffableComponent, IsUnequippingAttemptEvent>(OnUnequipAttempt);
             SubscribeLocalEvent<SharedCuffableComponent, DropAttemptEvent>(OnDropAttempt);
             SubscribeLocalEvent<SharedCuffableComponent, PickupAttemptEvent>(OnPickupAttempt);
+            SubscribeLocalEvent<SharedCuffableComponent, PullStartedMessage>(OnPull);
+            SubscribeLocalEvent<SharedCuffableComponent, PullStoppedMessage>(OnPull);
         }
 
-        private void HandleMoveAttempt(EntityUid uid, SharedCuffableComponent component, MovementAttemptEvent args)
+        private void OnPull(EntityUid uid, SharedCuffableComponent component, PullMessage args)
+        {
+            if (!component.CanStillInteract)
+                _blocker.UpdateCanMove(uid);
+        }
+
+        private void HandleMoveAttempt(EntityUid uid, SharedCuffableComponent component, UpdateCanMoveEvent args)
         {
             if (component.CanStillInteract || !EntityManager.TryGetComponent(uid, out SharedPullableComponent? pullable) || !pullable.BeingPulled)
                 return;

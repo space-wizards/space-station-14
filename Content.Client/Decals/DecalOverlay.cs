@@ -19,6 +19,8 @@ namespace Content.Client.Decals
 
         public override OverlaySpace Space => OverlaySpace.WorldSpaceBelowEntities;
 
+        private readonly Dictionary<string, Texture> _cachedTextures = new(64);
+
         public DecalOverlay(
             DecalSystem decals,
             SharedTransformSystem transforms,
@@ -37,14 +39,14 @@ namespace Content.Client.Decals
 
         protected override void Draw(in OverlayDrawArgs args)
         {
+            // Shouldn't need to clear cached textures unless the prototypes get reloaded.
             var handle = args.WorldHandle;
-
-            Dictionary<string, Texture> cachedTextures = new();
-
             var xformQuery = _entManager.GetEntityQuery<TransformComponent>();
 
             foreach (var (gridId, zIndexDictionary) in _decals.DecalRenderIndex)
             {
+                if (zIndexDictionary.Count == 0) continue;
+
                 var gridUid = _mapManager.GetGridEuid(gridId);
                 var xform = xformQuery.GetComponent(gridUid);
 
@@ -54,11 +56,11 @@ namespace Content.Client.Decals
                 {
                     foreach (var (_, decal) in decals)
                     {
-                        if (!cachedTextures.TryGetValue(decal.Id, out var texture))
+                        if (!_cachedTextures.TryGetValue(decal.Id, out var texture))
                         {
-                            var sprite = _prototypeManager.Index<DecalPrototype>(decal.Id).Sprite;
+                            var sprite = GetDecalSprite(decal.Id);
                             texture = _sprites.Frame0(sprite);
-                            cachedTextures[decal.Id] = texture;
+                            _cachedTextures[decal.Id] = texture;
                         }
 
                         if (decal.Angle.Equals(Angle.Zero))
@@ -67,6 +69,17 @@ namespace Content.Client.Decals
                             handle.DrawTexture(texture, decal.Coordinates, decal.Angle, decal.Color);
                     }
                 }
+            }
+        }
+
+        public SpriteSpecifier GetDecalSprite(string id)
+        {
+            if (_prototypeManager.TryIndex<DecalPrototype>(id, out var proto))
+                return proto.Sprite;
+            else
+            {
+                Logger.Error($"Unknown decal prototype: {id}");
+                return new SpriteSpecifier.Texture(new ResourcePath("/Textures/noSprite.png"));
             }
         }
     }

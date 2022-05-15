@@ -1,16 +1,15 @@
-using System;
 using Content.Server.Administration.Logs;
 using Content.Server.DeviceNetwork;
 using Content.Server.DeviceNetwork.Systems;
 using Content.Server.Ghost;
 using Content.Server.Light.Components;
 using Content.Server.MachineLinking.Events;
+using Content.Server.MachineLinking.System;
 using Content.Server.Power.Components;
 using Content.Server.Temperature.Components;
 using Content.Shared.Audio;
 using Content.Shared.Damage;
 using Content.Shared.Database;
-using Content.Shared.Hands.Components;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Interaction;
 using Content.Shared.Light;
@@ -24,7 +23,7 @@ using Robust.Shared.Timing;
 namespace Content.Server.Light.EntitySystems
 {
     /// <summary>
-    ///     System for the PoweredLightComponens
+    ///     System for the PoweredLightComponents
     /// </summary>
     public sealed class PoweredLightSystem : EntitySystem
     {
@@ -35,8 +34,11 @@ namespace Content.Server.Light.EntitySystems
         [Dependency] private readonly SharedPopupSystem _popupSystem = default!;
         [Dependency] private readonly AdminLogSystem _logSystem = default!;
         [Dependency] private readonly SharedHandsSystem _handsSystem = default!;
+        [Dependency] private readonly SignalLinkerSystem _signalSystem = default!;
+        [Dependency] private readonly SharedContainerSystem _containerSystem = default!;
 
         private static readonly TimeSpan ThunkDelay = TimeSpan.FromSeconds(2);
+        public const string LightBulbContainer = "light_bulb";
 
         public override void Initialize()
         {
@@ -50,14 +52,15 @@ namespace Content.Server.Light.EntitySystems
             SubscribeLocalEvent<PoweredLightComponent, DamageChangedEvent>(HandleLightDamaged);
 
             SubscribeLocalEvent<PoweredLightComponent, SignalReceivedEvent>(OnSignalReceived);
-            SubscribeLocalEvent<PoweredLightComponent, PacketSentEvent>(OnPacketReceived);
+            SubscribeLocalEvent<PoweredLightComponent, DeviceNetworkPacketEvent>(OnPacketReceived);
 
             SubscribeLocalEvent<PoweredLightComponent, PowerChangedEvent>(OnPowerChanged);
         }
 
         private void OnInit(EntityUid uid, PoweredLightComponent light, ComponentInit args)
         {
-            light.LightBulbContainer = light.Owner.EnsureContainer<ContainerSlot>("light_bulb");
+            light.LightBulbContainer = _containerSystem.EnsureContainer<ContainerSlot>(uid, LightBulbContainer);
+            _signalSystem.EnsureReceiverPorts(uid, light.OnPort, light.OffPort, light.TogglePort);
         }
 
         private void OnMapInit(EntityUid uid, PoweredLightComponent light, MapInitEvent args)
@@ -161,7 +164,7 @@ namespace Content.Server.Light.EntitySystems
                 return null;
 
             // check if light has bulb
-            if (GetBulb(uid, light) is not {Valid: true} bulb)
+            if (GetBulb(uid, light) is not { Valid: true } bulb)
                 return null;
 
             // try to remove bulb from container
@@ -238,7 +241,6 @@ namespace Content.Server.Light.EntitySystems
             }
             else
             {
-                powerReceiver.Load = (light.On && lightBulb.State == LightBulbState.Normal) ? lightBulb.PowerUse : 0;
 
                 switch (lightBulb.State)
                 {
@@ -269,6 +271,8 @@ namespace Content.Server.Light.EntitySystems
                         appearance?.SetData(PoweredLightVisuals.BulbState, PoweredLightState.Burned);
                         break;
                 }
+
+                powerReceiver.Load = (light.On && lightBulb.State == LightBulbState.Normal) ? lightBulb.PowerUse : 0;
             }
         }
 
@@ -328,19 +332,19 @@ namespace Content.Server.Light.EntitySystems
 
         private void OnSignalReceived(EntityUid uid, PoweredLightComponent component, SignalReceivedEvent args)
         {
-            switch (args.Port)
-            {
-                case "state":
-                    ToggleLight(uid, component);
-                    break;
-            }
+            if (args.Port == component.OffPort)
+                SetState(uid, false, component);
+            else if (args.Port == component.OnPort)
+                SetState(uid, true, component);
+            else if (args.Port == component.TogglePort)
+                ToggleLight(uid, component);
         }
 
         /// <summary>
         /// Turns the light on or of when receiving a <see cref="DeviceNetworkConstants.CmdSetState"/> command.
         /// The light is turned on or of according to the <see cref="DeviceNetworkConstants.StateEnabled"/> value
-         /// </summary>
-        private void OnPacketReceived(EntityUid uid, PoweredLightComponent component, PacketSentEvent args)
+        /// </summary>
+        private void OnPacketReceived(EntityUid uid, PoweredLightComponent component, DeviceNetworkPacketEvent args)
         {
             if (!args.Data.TryGetValue(DeviceNetworkConstants.Command, out string? command) || command != DeviceNetworkConstants.CmdSetState) return;
             if (!args.Data.TryGetValue(DeviceNetworkConstants.StateEnabled, out bool enabled)) return;
@@ -348,7 +352,7 @@ namespace Content.Server.Light.EntitySystems
             SetState(uid, enabled, component);
         }
 
-        private void SetLight(EntityUid uid, bool value, Color? color = null, PoweredLightComponent? light = null, float? radius = null, float? energy = null, float? softness=null)
+        private void SetLight(EntityUid uid, bool value, Color? color = null, PoweredLightComponent? light = null, float? radius = null, float? energy = null, float? softness = null)
         {
             if (!Resolve(uid, ref light))
                 return;

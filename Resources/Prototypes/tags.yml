@@ -4,6 +4,9 @@
   id: AirAlarmElectronics
 
 - type: Tag
+  id: ATVKeys
+
+- type: Tag
   id: Baguette
 
 - type: Tag
@@ -41,6 +44,9 @@
 
 - type: Tag
   id: CanPilot
+
+- type: Tag
+  id: CannotSuicide
 
 - type: Tag
   id: CaptainSabre
@@ -88,6 +94,9 @@
   id: CrowbarRed
 
 - type: Tag
+  id: Cryobeaker
+
+- type: Tag
   id: ConveyorAssembly
 
 - type: Tag
@@ -118,10 +127,16 @@
   id: Donut
 
 - type: Tag
+  id: Drone
+
+- type: Tag
   id: DroneUsable
 
 - type: Tag
   id: Egg
+
+- type: Tag
+  id: EmagImmune
 
 - type: Tag
   id: EmitterBolt
@@ -143,6 +158,9 @@
 
 - type: Tag
   id: Flashlight
+
+- type: Tag
+  id: Folder
 
 - type: Tag
   id: FootstepSound
@@ -218,12 +236,15 @@
 
 - type: Tag
   id: Payload # for grenade/bomb crafting
-  
+
+- type: Tag
+  id: PaintableAirlock
+
 - type: Tag
   id: PercussionInstrument
 
 - type: Tag
-  id: Plastic
+  id: Pickaxe
 
 - type: Tag
   id: Pill
@@ -245,9 +266,18 @@
 
 - type: Tag
   id: PlantSampleTaker
+  
+- type: Tag
+  id: Plastic
 
 - type: Tag
   id: Powerdrill
+
+- type: Tag
+  id: PussyWagonKeys
+  
+- type: Tag
+  id: RawMaterial
 
 # Give this to something that doesn't need any special recycler behavior and just needs deleting.
 - type: Tag
@@ -264,6 +294,9 @@
 
 - type: Tag
   id: Screwdriver
+
+- type: Tag
+  id: SecwayKeys
 
 - type: Tag
   id: Sheet
@@ -287,6 +320,9 @@
   id: StringInstrument
 
 - type: Tag
+  id: SyndicateSegwayKeys
+
+- type: Tag
   id: Taser
 
 - type: Tag
@@ -294,6 +330,12 @@
 
 - type: Tag
   id: TrashBag
+
+- type: Tag
+  id: VehicleKey
+
+- type: Tag
+  id: WetFloorSign
 
 - type: Tag
   id: Wall
@@ -319,5 +361,3 @@
 - type: Tag
   id: Write
 
-- type: Tag
-  id: Drone

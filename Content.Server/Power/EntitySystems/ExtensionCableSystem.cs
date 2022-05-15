@@ -1,9 +1,5 @@
-using System;
-using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using Content.Server.Power.Components;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
 using Robust.Shared.Map;
 using Robust.Shared.Physics;
 
@@ -25,7 +21,10 @@ namespace Content.Server.Power.EntitySystems
 
             //Anchoring
             SubscribeLocalEvent<ExtensionCableReceiverComponent, AnchorStateChangedEvent>(OnReceiverAnchorStateChanged);
+            SubscribeLocalEvent<ExtensionCableReceiverComponent, ReAnchorEvent>(OnReceiverReAnchor);
+
             SubscribeLocalEvent<ExtensionCableProviderComponent, AnchorStateChangedEvent>(OnProviderAnchorStateChanged);
+            SubscribeLocalEvent<ExtensionCableProviderComponent, ReAnchorEvent>(OnProviderReAnchor);
         }
 
         #region Provider
@@ -41,14 +40,7 @@ namespace Content.Server.Power.EntitySystems
 
         private void OnProviderStarted(EntityUid uid, ExtensionCableProviderComponent provider, ComponentStartup args)
         {
-            foreach (var receiver in FindAvailableReceivers(uid, provider.TransferRange))
-            {
-                receiver.Provider?.LinkedReceivers.Remove(receiver);
-                receiver.Provider = provider;
-                provider.LinkedReceivers.Add(receiver);
-                RaiseLocalEvent(receiver.Owner, new ProviderConnectedEvent(provider), broadcast: false);
-                RaiseLocalEvent(uid, new ReceiverConnectedEvent(receiver), broadcast: false);
-            }
+            Connect(uid, provider);
         }
 
         private void OnProviderShutdown(EntityUid uid, ExtensionCableProviderComponent provider, ComponentShutdown args)
@@ -61,32 +53,42 @@ namespace Content.Server.Power.EntitySystems
                 if (MetaData(grid.GridEntityId).EntityLifeStage > EntityLifeStage.MapInitialized) return;
             }
 
-            provider.Connectable = false;
-            ResetReceivers(provider);
+            Disconnect(uid, provider);
         }
 
         private void OnProviderAnchorStateChanged(EntityUid uid, ExtensionCableProviderComponent provider, ref AnchorStateChangedEvent args)
         {
             if (args.Anchored)
-            {
-                provider.Connectable = true;
-
-                // same as OnProviderStarted
-                foreach (var receiver in FindAvailableReceivers(uid, provider.TransferRange))
-                {
-                    receiver.Provider?.LinkedReceivers.Remove(receiver);
-                    receiver.Provider = provider;
-                    provider.LinkedReceivers.Add(receiver);
-                    RaiseLocalEvent(receiver.Owner, new ProviderConnectedEvent(provider), broadcast: false);
-                    RaiseLocalEvent(uid, new ReceiverConnectedEvent(receiver), broadcast: false);
-                }
-            }
+                Connect(uid, provider);
             else
+                Disconnect(uid, provider);
+        }
+
+        private void Connect(EntityUid uid, ExtensionCableProviderComponent provider)
+        {
+            provider.Connectable = true;
+
+            foreach (var receiver in FindAvailableReceivers(uid, provider.TransferRange))
             {
-                // same as OnProviderShutdown
-                provider.Connectable = false;
-                ResetReceivers(provider);
+                receiver.Provider?.LinkedReceivers.Remove(receiver);
+                receiver.Provider = provider;
+                provider.LinkedReceivers.Add(receiver);
+                RaiseLocalEvent(receiver.Owner, new ProviderConnectedEvent(provider), broadcast: false);
+                RaiseLocalEvent(uid, new ReceiverConnectedEvent(receiver), broadcast: false);
             }
+        }
+
+        private void Disconnect(EntityUid uid, ExtensionCableProviderComponent provider)
+        {
+            // same as OnProviderShutdown
+            provider.Connectable = false;
+            ResetReceivers(provider);
+        }
+
+        private void OnProviderReAnchor(EntityUid uid, ExtensionCableProviderComponent component, ref ReAnchorEvent args)
+        {
+            Disconnect(uid, component);
+            Connect(uid, component);
         }
 
         private void ResetReceivers(ExtensionCableProviderComponent provider)
@@ -179,35 +181,47 @@ namespace Content.Server.Power.EntitySystems
 
         private void OnReceiverShutdown(EntityUid uid, ExtensionCableReceiverComponent receiver, ComponentShutdown args)
         {
-            if (receiver.Provider == null) return;
-
-            receiver.Provider.LinkedReceivers.Remove(receiver);
-            RaiseLocalEvent(uid, new ProviderDisconnectedEvent(receiver.Provider), broadcast: false);
-            RaiseLocalEvent(receiver.Provider.Owner, new ReceiverDisconnectedEvent(receiver), broadcast: false);
+            Disconnect(uid, receiver);
         }
 
         private void OnReceiverAnchorStateChanged(EntityUid uid, ExtensionCableReceiverComponent receiver, ref AnchorStateChangedEvent args)
         {
             if (args.Anchored)
             {
-                receiver.Connectable = true;
-                if (receiver.Provider == null)
-                {
-                    TryFindAndSetProvider(receiver);
-                }
+                Connect(uid, receiver);
             }
             else
             {
-                receiver.Connectable = false;
-                RaiseLocalEvent(uid, new ProviderDisconnectedEvent(receiver.Provider), broadcast: false);
-                if (receiver.Provider != null)
-                {
-                    RaiseLocalEvent(receiver.Provider.Owner, new ReceiverDisconnectedEvent(receiver), broadcast: false);
-                    receiver.Provider.LinkedReceivers.Remove(receiver);
-                }
-
-                receiver.Provider = null;
+                Disconnect(uid, receiver);
             }
+        }
+
+        private void OnReceiverReAnchor(EntityUid uid, ExtensionCableReceiverComponent receiver, ref ReAnchorEvent args)
+        {
+            Disconnect(uid, receiver);
+            Connect(uid, receiver);
+        }
+
+        private void Connect(EntityUid uid, ExtensionCableReceiverComponent receiver)
+        {
+            receiver.Connectable = true;
+            if (receiver.Provider == null)
+            {
+                TryFindAndSetProvider(receiver);
+            }
+        }
+
+        private void Disconnect(EntityUid uid, ExtensionCableReceiverComponent receiver)
+        {
+            receiver.Connectable = false;
+            RaiseLocalEvent(uid, new ProviderDisconnectedEvent(receiver.Provider), broadcast: false);
+            if (receiver.Provider != null)
+            {
+                RaiseLocalEvent(receiver.Provider.Owner, new ReceiverDisconnectedEvent(receiver), broadcast: false);
+                receiver.Provider.LinkedReceivers.Remove(receiver);
+            }
+
+            receiver.Provider = null;
         }
 
         private void TryFindAndSetProvider(ExtensionCableReceiverComponent receiver, TransformComponent? xform = null)

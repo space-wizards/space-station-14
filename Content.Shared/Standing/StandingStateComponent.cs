@@ -1,12 +1,6 @@
-using System;
 using Content.Shared.Sound;
-using Robust.Shared.Analyzers;
-using Robust.Shared.GameObjects;
 using Robust.Shared.GameStates;
-using Robust.Shared.Players;
 using Robust.Shared.Serialization;
-using Robust.Shared.Serialization.Manager.Attributes;
-using Robust.Shared.ViewVariables;
 
 namespace Content.Shared.Standing
 {
@@ -18,9 +12,15 @@ namespace Content.Shared.Standing
         [DataField("downSoundCollection")]
         public SoundSpecifier DownSoundCollection { get; } = new SoundCollectionSpecifier("BodyFall");
 
-        [ViewVariables]
         [DataField("standing")]
         public bool Standing { get; set; } = true;
+
+        /// <summary>
+        ///     List of fixtures that had their collision mask changed when the entity was downed.
+        ///     Required for re-adding the collision mask.
+        /// </summary>
+        [DataField("changedFixtures")]
+        public List<string> ChangedFixtures = new();
 
         public override ComponentState GetComponentState()
         {

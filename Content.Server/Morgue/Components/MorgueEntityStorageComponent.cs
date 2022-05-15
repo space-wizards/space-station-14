@@ -1,10 +1,7 @@
-using System.Collections.Generic;
 using Content.Server.Storage.Components;
 using Content.Shared.Body.Components;
 using Content.Shared.Directions;
-using Content.Shared.Examine;
 using Content.Shared.Interaction;
-using Content.Shared.Interaction.Helpers;
 using Content.Shared.Morgue;
 using Content.Shared.Physics;
 using Content.Shared.Popups;
@@ -13,17 +10,10 @@ using Content.Shared.Standing;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.Containers;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Localization;
 using Robust.Shared.Map;
-using Robust.Shared.Maths;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
-using Robust.Shared.Utility;
-using Robust.Shared.ViewVariables;
 
 namespace Content.Server.Morgue.Components
 {
@@ -32,11 +22,11 @@ namespace Content.Server.Morgue.Components
     [ComponentReference(typeof(IActivate))]
     [ComponentReference(typeof(IStorageComponent))]
     [Virtual]
-#pragma warning disable 618
-    public class MorgueEntityStorageComponent : EntityStorageComponent, IExamine
-#pragma warning restore 618
+    public class MorgueEntityStorageComponent : EntityStorageComponent
     {
         [Dependency] private readonly IEntityManager _entMan = default!;
+
+        private const CollisionGroup TrayCanOpenMask = CollisionGroup.Impassable | CollisionGroup.MidImpassable;
 
         [ViewVariables(VVAccess.ReadWrite)]
         [DataField("trayPrototype", customTypeSerializer:typeof(PrototypeIdSerializer<EntityPrototype>))]
@@ -81,7 +71,7 @@ namespace Content.Server.Morgue.Components
         {
             if (!EntitySystem.Get<SharedInteractionSystem>().InRangeUnobstructed(Owner,
                 _entMan.GetComponent<TransformComponent>(Owner).Coordinates.Offset(_entMan.GetComponent<TransformComponent>(Owner).LocalRotation.GetCardinalDir()),
-                collisionMask: CollisionGroup.Impassable | CollisionGroup.VaultImpassable
+                collisionMask: TrayCanOpenMask
             ))
             {
                 if (!silent)
@@ -177,31 +167,6 @@ namespace Content.Server.Morgue.Components
                 appearance.TryGetData(MorgueVisuals.HasSoul, out bool hasSoul) && hasSoul)
             {
                 SoundSystem.Play(Filter.Pvs(Owner), _occupantHasSoulAlarmSound.GetSound(), Owner);
-            }
-        }
-
-        void IExamine.Examine(FormattedMessage message, bool inDetailsRange)
-        {
-            if (!_entMan.TryGetComponent<AppearanceComponent>(Owner, out var appearance)) return;
-
-            if (inDetailsRange)
-            {
-                if (appearance.TryGetData(MorgueVisuals.HasSoul, out bool hasSoul) && hasSoul)
-                {
-                    message.AddMarkup(Loc.GetString("morgue-entity-storage-component-on-examine-details-body-has-soul"));
-                }
-                else if (appearance.TryGetData(MorgueVisuals.HasMob, out bool hasMob) && hasMob)
-                {
-                    message.AddMarkup(Loc.GetString("morgue-entity-storage-component-on-examine-details-body-has-no-soul"));
-                }
-                else if (appearance.TryGetData(MorgueVisuals.HasContents, out bool hasContents) && hasContents)
-                {
-                    message.AddMarkup(Loc.GetString("morgue-entity-storage-component-on-examine-details-has-contents"));
-                }
-                else
-                {
-                    message.AddMarkup(Loc.GetString("morgue-entity-storage-component-on-examine-details-empty"));
-                }
             }
         }
     }

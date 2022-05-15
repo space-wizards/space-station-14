@@ -1,6 +1,4 @@
-﻿using Robust.Shared.GameObjects;
-
-namespace Content.Server.Destructible.Thresholds.Behaviors
+﻿namespace Content.Server.Destructible.Thresholds.Behaviors
 {
     public interface IThresholdBehavior
     {

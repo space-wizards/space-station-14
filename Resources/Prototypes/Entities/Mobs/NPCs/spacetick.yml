@@ -27,13 +27,11 @@
     - shape:
         !type:PhysShapeCircle
         radius: 0.20
-      mass: 5
+      mass: 2.5
       mask:
-      - Impassable
-      - MobImpassable
-      - SmallImpassable
+      - SmallMobMask
       layer:
-      - Opaque
+      - SmallMobLayer
   - type: MobState
     thresholds:
       0: !type:NormalMobState {}
@@ -50,6 +48,11 @@
       amount: 1
   - type: Bloodstream
     bloodMaxVolume: 50
+  - type: CombatMode
+    disarmAction:
+      enabled: false
+      autoPopulate: false
+      name: action-name-disarm
   - type: UnarmedCombat
     range: 0.5
     arcwidth: 0
@@ -57,7 +60,6 @@
     damage:
       groups:
         Brute: 2
-
   - type: MeleeChemicalInjector
   - type: SolutionContainerManager
     solutions:
@@ -71,3 +73,22 @@
     solution: melee
   - type: SolutionTransfer
     maxTransferAmount: 5
+  - type: GhostTakeoverAvailable
+    makeSentient: true
+    name: space tick
+    description: |
+      Wreak havoc on the station!
+  - type: ReplacementAccent
+    accent: genericAggressive
+
+- type: entity
+  id: MobTickSalvage
+  parent: MobTick
+  suffix: "Salvage Ruleset"
+  components:
+  - type: GhostTakeoverAvailable
+    name: space tick on salvage wreck
+    description: |
+      Defend the loot inside the salvage wreck!
+  - type: SalvageMobRestrictions
+

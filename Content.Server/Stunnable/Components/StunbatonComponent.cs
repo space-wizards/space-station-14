@@ -1,7 +1,4 @@
 using Content.Shared.Sound;
-using Robust.Shared.GameObjects;
-using Robust.Shared.Serialization.Manager.Attributes;
-using Robust.Shared.ViewVariables;
 
 namespace Content.Server.Stunnable.Components
 {
@@ -28,7 +25,7 @@ namespace Content.Server.Stunnable.Components
 
         [ViewVariables(VVAccess.ReadWrite)]
         [DataField("energyPerUse")]
-        public float EnergyPerUse { get; set; } = 50;
+        public float EnergyPerUse { get; set; } = 350;
 
         [ViewVariables(VVAccess.ReadWrite)]
         [DataField("onThrowStunChance")]

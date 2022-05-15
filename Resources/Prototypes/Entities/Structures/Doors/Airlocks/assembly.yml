@@ -10,22 +10,23 @@
     sprite: Structures/Doors/Airlocks/Standard/basic.rsi
     state: "assembly"
   - type: Physics
+    fixedRotation: false
   - type: Fixtures
     fixtures:
     - shape:
         !type:PhysShapeAabb
-          bounds: "-0.49,-0.49,0.49,0.49"
+        bounds: "-0.45,-0.45,0.45,0.45"
       mass: 100
       mask:
-      - MobMask
+      - FullTileMask
       layer:
-      - MobImpassable
-      - VaultImpassable
+      - HumanoidBlockLayer
   - type: Anchorable
     delay: 2
   - type: Pullable
   - type: Transform
     anchored: true
+    noRot: true
   - type: Damageable
     damageContainer: Inorganic
     damageModifierSet: Metallic

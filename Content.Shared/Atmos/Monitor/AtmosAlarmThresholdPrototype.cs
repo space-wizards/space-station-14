@@ -1,10 +1,5 @@
-using System;
-using Content.Shared.Atmos.Monitor;
-using Robust.Shared.Log;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
-using Robust.Shared.Serialization.Manager.Attributes;
-using Robust.Shared.ViewVariables;
 
 namespace Content.Shared.Atmos.Monitor
 {
@@ -14,7 +9,7 @@ namespace Content.Shared.Atmos.Monitor
     [Serializable, NetSerializable]
     public sealed class AtmosAlarmThreshold : IPrototype, ISerializationHooks
     {
-        [DataField("id", required: true)]
+        [IdDataFieldAttribute]
         public string ID { get; } = default!;
         [ViewVariables]
         [DataField("ignore")]

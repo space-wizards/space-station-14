@@ -18,10 +18,11 @@
   - type: OnUseTimerTrigger
     delay: 3.5
   - type: Explosive
-    devastationRange: 0
-    heavyImpactRange: 2
-    lightImpactRange: 4
-    flashRange: 7
+    explosionType: Default
+    maxIntensity: 10
+    intensitySlope: 3
+    totalIntensity: 120 # about a ~4 tile radius
+    canCreateVacuum: false
   - type: ExplodeOnTrigger
   - type: Damageable
     damageContainer: Inorganic
@@ -80,7 +81,7 @@
 
 - type: entity
   name: Syndicate minibomb
-  description: A syndicate manufactured explosive used to sow destruction and chaos.
+  description: A precision sabotage explosive for quickly destroying a machine, dead body, or whatever else needs to go.
   parent: BaseItem
   id: SyndieMiniBomb
   components:
@@ -92,12 +93,12 @@
   - type: Item
     size: 5
   - type: OnUseTimerTrigger
-    delay: 5
+    delay: 10
   - type: Explosive
-    devastationRange: 1
-    heavyImpactRange: 3
-    lightImpactRange: 5
-    flashRange: 10
+    explosionType: Default
+    totalIntensity: 200
+    intensitySlope: 30 #Will destroy the tile under it reliably, space 1-2 more to rods. Only does any significant damage in a 5-tile cross.
+    maxIntensity: 60
   - type: ExplodeOnTrigger
   - type: Damageable
     damageContainer: Inorganic
@@ -112,7 +113,8 @@
   - type: Appearance
     visuals:
     - type: TimerTriggerVisualizer
-
+      countdown_sound:
+        path: /Audio/Effects/minibombcountdown.ogg
 - type: entity
   name: the nuclear option
   description: Please don't throw it, think of the children.
@@ -129,9 +131,10 @@
   - type: OnUseTimerTrigger
     delay: 5
   - type: Explosive
-    devastationRange: 25
-    heavyImpactRange: 25
-    flashRange: 50
+    explosionType: Default
+    totalIntensity: 20000 # ~15 tile radius.
+    intensitySlope: 5
+    maxIntensity: 50
   - type: ExplodeOnTrigger
   - type: Damageable
     damageContainer: Inorganic

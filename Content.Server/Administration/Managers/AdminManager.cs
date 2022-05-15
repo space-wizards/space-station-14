@@ -1,5 +1,3 @@
-using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
@@ -15,8 +13,6 @@ using Robust.Shared.Configuration;
 using Robust.Shared.Console;
 using Robust.Shared.ContentPack;
 using Robust.Shared.Enums;
-using Robust.Shared.IoC;
-using Robust.Shared.Localization;
 using Robust.Shared.Network;
 using Robust.Shared.Utility;
 using YamlDotNet.RepresentationModel;
@@ -259,7 +255,7 @@ namespace Content.Server.Administration.Managers
         // NOTE: Also sends commands list for non admins..
         private void UpdateAdminStatus(IPlayerSession session)
         {
-            var msg = _netMgr.CreateNetMessage<MsgUpdateAdminStatus>();
+            var msg = new MsgUpdateAdminStatus();
 
             var commands = new List<string>(_anyCommands);
 

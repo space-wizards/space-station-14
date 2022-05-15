@@ -4,10 +4,7 @@ using Content.Shared.Hands.Components;
 using Content.Shared.Physics;
 using Content.Shared.Physics.Pull;
 using Robust.Shared.Containers;
-using Robust.Shared.GameObjects;
 using Robust.Shared.GameStates;
-using Robust.Shared.IoC;
-using Robust.Shared.Log;
 using Robust.Shared.Physics;
 using Robust.Shared.Physics.Dynamics;
 using System.Linq;
@@ -28,7 +25,7 @@ namespace Content.Shared.Throwing
         public override void Initialize()
         {
             base.Initialize();
-            SubscribeLocalEvent<ThrownItemComponent, PhysicsSleepMessage>(HandleSleep);
+            SubscribeLocalEvent<ThrownItemComponent, PhysicsSleepEvent>(OnSleep);
             SubscribeLocalEvent<ThrownItemComponent, StartCollideEvent>(HandleCollision);
             SubscribeLocalEvent<ThrownItemComponent, PreventCollideEvent>(PreventCollision);
             SubscribeLocalEvent<ThrownItemComponent, ThrownEvent>(ThrowItem);
@@ -87,7 +84,7 @@ namespace Content.Shared.Throwing
             }
         }
 
-        private void HandleSleep(EntityUid uid, ThrownItemComponent thrownItem, PhysicsSleepMessage message)
+        private void OnSleep(EntityUid uid, ThrownItemComponent thrownItem, ref PhysicsSleepEvent @event)
         {
             StopThrow(uid, thrownItem);
         }

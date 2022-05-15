@@ -1,5 +1,3 @@
-using System;
-using System.Collections.Generic;
 using Content.Server.Administration.Logs;
 using Content.Server.NodeContainer;
 using Content.Server.NodeContainer.EntitySystems;
@@ -22,10 +20,7 @@ using Content.Shared.StatusEffect;
 using Content.Shared.Stunnable;
 using Content.Shared.Tag;
 using Content.Shared.Weapons.Melee;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Localization;
-using Robust.Shared.Maths;
+using Robust.Shared.Audio;
 using Robust.Shared.Physics.Dynamics;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
@@ -170,7 +165,7 @@ namespace Content.Server.Electrocution
             if (electrified.NoWindowInTile)
             {
                 foreach (var entity in transform.Coordinates.GetEntitiesInTile(
-                    LookupFlags.Approximate | LookupFlags.IncludeAnchored, _entityLookup))
+                    LookupFlags.Approximate | LookupFlags.Anchored, _entityLookup))
                 {
                     if (_tagSystem.HasTag(entity, "Window"))
                         return false;
@@ -183,8 +178,18 @@ namespace Content.Server.Electrocution
 
             var targets = new List<(EntityUid entity, int depth)>();
             GetChainedElectrocutionTargets(targetUid, targets);
-            if (!electrified.RequirePower)
+            if (!electrified.RequirePower || electrified.UsesApcPower)
             {
+                // Does it use APC power for its electrification check? Check if it's powered, and then
+                // attempt an electrocution if all the checks succeed.
+
+                if (electrified.UsesApcPower &&
+                    (!TryComp(uid, out ApcPowerReceiverComponent? power)
+                     || !power.Powered))
+                {
+                    return false;
+                }
+
                 var lastRet = true;
                 for (var i = targets.Count - 1; i >= 0; i--)
                 {
@@ -378,6 +383,7 @@ namespace Content.Server.Electrocution
             {
                 _popupSystem.PopupEntity(Loc.GetString("electrocuted-component-mob-shocked-by-source-popup-others",
                         ("mob", uid), ("source", (sourceUid.Value))), uid, filter);
+                PlayElectrocutionSound(uid, sourceUid.Value);
             }
             else
             {
@@ -429,6 +435,16 @@ namespace Content.Server.Electrocution
                 return;
 
             SetInsulatedSiemensCoefficient(uid, _random.Pick(randomInsulation.List), insulated);
+        }
+
+        private void PlayElectrocutionSound(EntityUid targetUid, EntityUid sourceUid, ElectrifiedComponent? electrified = null)
+        {
+            if (!Resolve(sourceUid, ref electrified) || !electrified.PlaySoundOnShock)
+            {
+                return;
+            }
+
+            SoundSystem.Play(Filter.Pvs(targetUid), electrified.ShockNoises.GetSound(), targetUid, AudioParams.Default.WithVolume(electrified.ShockVolume));
         }
     }
 }

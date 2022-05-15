@@ -1,7 +1,5 @@
-﻿using System;
-using Content.Shared.Eui;
+﻿using Content.Shared.Eui;
 using Robust.Server.Player;
-using Robust.Shared.IoC;
 using Robust.Shared.Network;
 
 
@@ -83,7 +81,7 @@ namespace Content.Server.EUI
         public void SendMessage(EuiMessageBase message)
         {
             var netMgr = IoCManager.Resolve<IServerNetManager>();
-            var msg = netMgr.CreateNetMessage<MsgEuiMessage>();
+            var msg = new MsgEuiMessage();
             msg.Id = Id;
             msg.Message = message;
 
@@ -111,7 +109,7 @@ namespace Content.Server.EUI
             var state = GetNewState();
 
             var netMgr = IoCManager.Resolve<IServerNetManager>();
-            var msg = netMgr.CreateNetMessage<MsgEuiState>();
+            var msg = new MsgEuiState();
             msg.Id = Id;
             msg.State = state;
 

@@ -7,7 +7,6 @@
   components:
   - type: StorageFill
     contents:
-      - id: ClothingHeadHelmetHardsuitSalvage
       - id: ClothingOuterHardsuitSalvage
       - id: ClothingMaskBreath
       - id: OxygenTankFilled
@@ -24,7 +23,7 @@
 - type: entity
   id: CrateSalvageAssortedGoodies
   suffix: Filled, Salvage Random
-  abstract: true # You should use SalvageMaterialCrateSpawner instead
+  noSpawn: true # You should use SalvageMaterialCrateSpawner instead
   parent: CrateGenericSteel
   components:
   - type: StorageFill
@@ -37,6 +36,8 @@
       - id: OxygenTankFilled
         prob: 0.1
       - id: SheetPlasma
+        prob: 0.1
+      - id: WelderIndustrialAdvanced
         prob: 0.1
         #  - Service
       - id: CrayonBox
@@ -56,6 +57,8 @@
         #  - Heh
       - id: SalvageHumanCorpse
         prob: 0.1
+      - id: LidSalami
+        prob: 0.1
         # Interesting (1%)
         #  - Ammo
       - id: BoxMagnum
@@ -72,6 +75,8 @@
         #  - Skub
       - id: Skub
         prob: 0.001
+      - id: ClothingHeadHatCatEars
+        prob: 0.01
         # TRAITOR EQUIPMENT (0.01%)
       - id: Telecrystal10
         prob: 0.0001

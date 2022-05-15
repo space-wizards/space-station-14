@@ -1,20 +1,14 @@
-﻿using System;
 using Content.Server.Access.Systems;
 using Content.Server.DeviceNetwork;
 using Content.Server.DeviceNetwork.Components;
 using Content.Server.DeviceNetwork.Systems;
 using Content.Server.Popups;
-using Content.Shared.ActionBlocker;
 using Content.Shared.Damage;
 using Content.Shared.Examine;
-using Content.Shared.Inventory;
 using Content.Shared.Inventory.Events;
 using Content.Shared.Medical.SuitSensor;
 using Content.Shared.MobState.Components;
 using Content.Shared.Verbs;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Localization;
 using Robust.Shared.Map;
 using Robust.Shared.Player;
 using Robust.Shared.Random;
@@ -30,7 +24,7 @@ namespace Content.Server.Medical.SuitSensors
         [Dependency] private readonly DeviceNetworkSystem _deviceNetworkSystem = default!;
         [Dependency] private readonly IGameTiming _gameTiming = default!;
 
-        private const float UpdateRate = 0.5f;
+        private const float UpdateRate = 1f;
         private float _updateDif;
 
         public override void Initialize()
@@ -58,8 +52,11 @@ namespace Content.Server.Medical.SuitSensors
             var sensors = EntityManager.EntityQuery<SuitSensorComponent, DeviceNetworkComponent>();
             foreach (var (sensor, device) in sensors)
             {
+                if (device.TransmitFrequency is not uint frequency)
+                    continue;
+
                 // check if sensor is ready to update
-                if (curTime - sensor.LastUpdate < TimeSpan.FromSeconds(sensor.UpdateRate))
+                if (curTime - sensor.LastUpdate < sensor.UpdateRate)
                     continue;
                 sensor.LastUpdate = curTime;
 
@@ -70,7 +67,7 @@ namespace Content.Server.Medical.SuitSensors
 
                 // broadcast it to device network
                 var payload = SuitSensorToPacket(status);
-                _deviceNetworkSystem.QueuePacket(sensor.Owner, DeviceNetworkConstants.NullAddress, device.Frequency, payload, true);
+                _deviceNetworkSystem.QueuePacket(sensor.Owner, null, payload, device: device);
             }
         }
 

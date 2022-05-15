@@ -90,6 +90,14 @@
         - map: [ "head" ]
         - map: [ "pocket1" ]
         - map: [ "pocket2" ]
+    - type: Markings
+      layerPoints:
+       Legs:
+        points: 2
+        required: false
+       Arms:
+        points: 4
+        required: false
     - type: Body
       template: HumanoidTemplate
       preset: SlimePreset
@@ -145,7 +153,7 @@
   name: Urist McHands
   parent: MobHumanDummy
   id: MobSlimePersonDummy
-  abstract: true
+  noSpawn: true
   description: A dummy slime meant to be used in character setup.
   components:
     - type: Sprite

@@ -1,12 +1,8 @@
-﻿using System.Collections.Generic;
-using Content.Shared.Chemistry.Reagent;
+﻿using Content.Shared.Chemistry.Reagent;
 using Content.Shared.FixedPoint;
-using Robust.Shared.Localization;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.Dictionary;
-using Robust.Shared.ViewVariables;
 
 namespace Content.Shared.Kitchen
 {
@@ -17,7 +13,7 @@ namespace Content.Shared.Kitchen
     public sealed class FoodRecipePrototype : IPrototype
     {
         [ViewVariables]
-        [DataField("id", required: true)]
+        [IdDataFieldAttribute]
         public string ID { get; } = default!;
 
         [DataField("name")]

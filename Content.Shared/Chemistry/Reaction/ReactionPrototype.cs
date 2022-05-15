@@ -1,13 +1,9 @@
-using System.Collections.Generic;
-using Content.Shared.Administration.Logs;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Database;
 using Content.Shared.FixedPoint;
 using Content.Shared.Sound;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.Dictionary;
-using Robust.Shared.ViewVariables;
 
 namespace Content.Shared.Chemistry.Reaction
 {
@@ -18,7 +14,7 @@ namespace Content.Shared.Chemistry.Reaction
     public sealed class ReactionPrototype : IPrototype, IComparable<ReactionPrototype>
     {
         [ViewVariables]
-        [DataField("id", required: true)]
+        [IdDataFieldAttribute]
         public string ID { get; } = default!;
 
         [DataField("name")]

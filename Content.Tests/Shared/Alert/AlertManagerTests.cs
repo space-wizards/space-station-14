@@ -1,7 +1,6 @@
 using System.IO;
 using Content.Shared.Alert;
 using NUnit.Framework;
-using NUnit.Framework.Interfaces;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Prototypes;
@@ -16,13 +15,11 @@ namespace Content.Tests.Shared.Alert
     {
         const string PROTOTYPES = @"
 - type: alert
-  name: AlertLowPressure
-  alertType: LowPressure
+  id: LowPressure
   icon: /Textures/Interface/Alerts/Pressure/lowpressure.png
 
 - type: alert
-  name: AlertHighPressure
-  alertType: HighPressure
+  id: HighPressure
   icon: /Textures/Interface/Alerts/Pressure/highpressure.png
 ";
 

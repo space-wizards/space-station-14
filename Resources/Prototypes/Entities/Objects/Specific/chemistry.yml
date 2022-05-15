@@ -1,6 +1,7 @@
 - type: entity
   parent: BaseItem
   id: BaseBeaker
+  abstract: true
   components:
   - type: Tag
     tags:
@@ -143,7 +144,11 @@
         solution: beaker
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
-        
+  - type: Tag
+    tags:
+    - GlassBeaker
+    - Cryobeaker
+
 - type: entity
   name: bluespace beaker
   parent: BaseBeaker
@@ -268,11 +273,13 @@
     solutions:
       food:
         maxVol: 50
+  - type: Extractable
+    grindableSolutionName: food
 
 - type: entity
   name: pill canister
   id: PillCanister
-  parent: BaseItem
+  parent: BaseStorageItem
   description: Holds up to 12 pills.
   components:
   - type: Sprite

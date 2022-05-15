@@ -1,10 +1,7 @@
-using System;
 using Content.Shared.Audio;
 using Content.Shared.Hands.Components;
 using Content.Shared.Rotation;
 using Robust.Shared.Audio;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
 using Robust.Shared.Player;
 using Robust.Shared.Timing;
 using Robust.Shared.Physics;
@@ -15,6 +12,9 @@ namespace Content.Shared.Standing
     public sealed class StandingStateSystem : EntitySystem
     {
         [Dependency] private readonly IGameTiming _gameTiming = default!;
+        
+        // If StandingCollisionLayer value is ever changed to more than one layer, the logic needs to be edited.
+        private const int StandingCollisionLayer = (int) CollisionGroup.MidImpassable;
 
         public bool IsDown(EntityUid uid, StandingStateComponent? standingState = null)
         {
@@ -55,7 +55,7 @@ namespace Content.Shared.Standing
                 return false;
 
             standingState.Standing = false;
-            standingState.Dirty();
+            Dirty(standingState);
             RaiseLocalEvent(uid, new DownedEvent(), false);
 
             if (!_gameTiming.IsFirstTimePredicted)
@@ -64,11 +64,16 @@ namespace Content.Shared.Standing
             // Seemed like the best place to put it
             appearance?.SetData(RotationVisuals.RotationState, RotationState.Horizontal);
 
+            // Change collision masks to allow going under certain entities like flaps and tables
             if (TryComp(uid, out FixturesComponent? fixtureComponent))
             {
-                foreach (var fixture in fixtureComponent.Fixtures.Values)
+                foreach (var (key, fixture) in fixtureComponent.Fixtures)
                 {
-                    fixture.CollisionMask &= ~(int) CollisionGroup.VaultImpassable;
+                    if ((fixture.CollisionMask & StandingCollisionLayer) == 0)
+                        continue;
+
+                    standingState.ChangedFixtures.Add(key);
+                    fixture.CollisionMask &= ~StandingCollisionLayer;
                 }
             }
 
@@ -110,11 +115,13 @@ namespace Content.Shared.Standing
 
             if (TryComp(uid, out FixturesComponent? fixtureComponent))
             {
-                foreach (var fixture in fixtureComponent.Fixtures.Values)
+                foreach (var key in standingState.ChangedFixtures)
                 {
-                    fixture.CollisionMask |= (int) CollisionGroup.VaultImpassable;
+                    if (fixtureComponent.Fixtures.TryGetValue(key, out var fixture))
+                        fixture.CollisionMask |= StandingCollisionLayer;
                 }
             }
+            standingState.ChangedFixtures.Clear();
 
             return true;
         }

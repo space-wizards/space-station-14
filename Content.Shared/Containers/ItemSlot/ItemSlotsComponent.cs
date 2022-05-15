@@ -1,16 +1,10 @@
 using Content.Shared.Sound;
 using Content.Shared.Whitelist;
-using Robust.Shared.Analyzers;
 using Robust.Shared.Audio;
 using Robust.Shared.Containers;
-using Robust.Shared.GameObjects;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
-using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
-using Robust.Shared.ViewVariables;
-using System;
-using System.Collections.Generic;
 
 namespace Content.Shared.Containers.ItemSlots
 {
@@ -115,6 +109,13 @@ namespace Content.Shared.Containers.ItemSlots
         [DataField("locked", readOnly: true)]
         [ViewVariables(VVAccess.ReadWrite)]
         public bool Locked = false;
+
+        /// <summary>
+        ///     Whether the item slots system will attempt to insert item from the user's hands into this slot when interacted with.
+        ///     It doesn't block other insertion methods, like verbs.
+        /// </summary>
+        [DataField("insertOnInteract")]
+        public bool InsertOnInteract = true;
 
         /// <summary>
         ///     Whether the item slots system will attempt to eject this item to the user's hands when interacted with.

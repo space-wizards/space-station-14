@@ -21,10 +21,11 @@
         !type:PhysShapeAabb
         bounds: "-0.49,-0.49,0.49,0.49"
       mass: 100
-      layer:
-      - VaultImpassable
       mask:
-      - Impassable
+      - TabletopMachineMask
+      layer:
+      - HighImpassable
+      - MidImpassable
   - type: Damageable
     damageContainer: Inorganic
     damageModifierSet: Metallic
@@ -56,11 +57,12 @@
         !type:PhysShapeAabb
         bounds: "-0.49,-0.49,0.49,0.49"
       mass: 100
+      mask:
+      - TabletopMachineMask
       layer:
       - Opaque
-      - VaultImpassable
-      mask:
-      - Impassable
+      - HighImpassable
+      - MidImpassable
   - type: Occluder
     sizeX: 32
     sizeY: 32

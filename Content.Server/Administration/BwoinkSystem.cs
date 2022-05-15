@@ -1,27 +1,20 @@
-using System;
-using System.Collections.Concurrent;
-using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
-using System.Net.Http.Json;
 using System.Text;
 using System.Text.Json;
 using System.Text.Json.Nodes;
-using System.Threading;
 using Content.Server.Administration.Managers;
 using Content.Shared.Administration;
 using Content.Shared.CCVar;
 using JetBrains.Annotations;
-using Robust.Shared.GameObjects;
-using Robust.Shared.Localization;
 using Robust.Server.Player;
 using Robust.Shared;
 using Robust.Shared.Configuration;
-using Robust.Shared.IoC;
-using Robust.Shared.Log;
 using Robust.Shared.Network;
 using Robust.Shared.Utility;
 using System.Text.Json.Serialization;
+using Content.Server.GameTicking.Events;
+using Content.Server.GameTicking;
 
 namespace Content.Server.Administration
 {
@@ -32,6 +25,7 @@ namespace Content.Server.Administration
         [Dependency] private readonly IAdminManager _adminManager = default!;
         [Dependency] private readonly IConfigurationManager _config = default!;
         [Dependency] private readonly IPlayerLocator _playerLocator = default!;
+        [Dependency] private readonly GameTicker _gameTicker = default!;
 
         private ISawmill _sawmill = default!;
         private readonly HttpClient _httpClient = new();
@@ -50,6 +44,13 @@ namespace Content.Server.Administration
             _config.OnValueChanged(CVars.GameHostName, OnServerNameChanged, true);
             _sawmill = IoCManager.Resolve<ILogManager>().GetSawmill("AHELP");
             _maxAdditionalChars = GenerateAHelpMessage("", "", true, true).Length + Header("").Length;
+
+            SubscribeLocalEvent<RoundStartingEvent>(RoundStarting);
+        }
+
+        private void RoundStarting(RoundStartingEvent ev)
+        {
+            _relayMessages.Clear();
         }
 
         private void OnServerNameChanged(string obj)
@@ -94,7 +95,7 @@ namespace Content.Server.Administration
 
             var payload = new WebhookPayload()
             {
-                Username = oldMessage.username,
+                Username = $"R:{_gameTicker.RoundId}|N:{oldMessage.username}",
                 Content = oldMessage.content
             };
 

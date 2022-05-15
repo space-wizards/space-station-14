@@ -1,6 +1,4 @@
 using Content.Server.Administration.Logs;
-using Content.Server.Doors.Components;
-using Content.Server.Doors.Systems;
 using Content.Server.Explosion.Components;
 using Content.Server.Flash;
 using Content.Server.Flash.Components;
@@ -36,7 +34,6 @@ namespace Content.Server.Explosion.EntitySystems
         [Dependency] private readonly ExplosionSystem _explosions = default!;
         [Dependency] private readonly FixtureSystem _fixtures = default!;
         [Dependency] private readonly FlashSystem _flashSystem = default!;
-        [Dependency] private readonly DoorSystem _sharedDoorSystem = default!;
         [Dependency] private readonly SharedBroadphaseSystem _broadphase = default!;
         [Dependency] private readonly AdminLogSystem _logSystem = default!;
 
@@ -46,41 +43,19 @@ namespace Content.Server.Explosion.EntitySystems
 
             InitializeProximity();
             InitializeOnUse();
+            InitializeSignal();
 
             SubscribeLocalEvent<TriggerOnCollideComponent, StartCollideEvent>(OnTriggerCollide);
 
             SubscribeLocalEvent<DeleteOnTriggerComponent, TriggerEvent>(HandleDeleteTrigger);
             SubscribeLocalEvent<ExplodeOnTriggerComponent, TriggerEvent>(HandleExplodeTrigger);
             SubscribeLocalEvent<FlashOnTriggerComponent, TriggerEvent>(HandleFlashTrigger);
-            SubscribeLocalEvent<ToggleDoorOnTriggerComponent, TriggerEvent>(HandleDoorTrigger);
         }
 
-        #region Explosions
         private void HandleExplodeTrigger(EntityUid uid, ExplodeOnTriggerComponent component, TriggerEvent args)
         {
-            if (!EntityManager.TryGetComponent(uid, out ExplosiveComponent? explosiveComponent)) return;
-
-            Explode(uid, explosiveComponent, args.User);
+            _explosions.TriggerExplosive(uid, user: args.User);
         }
-
-        // You really shouldn't call this directly (TODO Change that when ExplosionHelper gets changed).
-        public void Explode(EntityUid uid, ExplosiveComponent component, EntityUid? user = null)
-        {
-            if (component.Exploding)
-            {
-                return;
-            }
-
-            component.Exploding = true;
-            _explosions.SpawnExplosion(uid,
-                component.DevastationRange,
-                component.HeavyImpactRange,
-                component.LightImpactRange,
-                component.FlashRange,
-                user);
-            EntityManager.QueueDeleteEntity(uid);
-        }
-        #endregion
 
         #region Flash
         private void HandleFlashTrigger(EntityUid uid, FlashOnTriggerComponent component, TriggerEvent args)
@@ -93,11 +68,6 @@ namespace Content.Server.Explosion.EntitySystems
         private void HandleDeleteTrigger(EntityUid uid, DeleteOnTriggerComponent component, TriggerEvent args)
         {
             EntityManager.QueueDeleteEntity(uid);
-        }
-
-        private void HandleDoorTrigger(EntityUid uid, ToggleDoorOnTriggerComponent component, TriggerEvent args)
-        {
-            _sharedDoorSystem.TryToggleDoor(uid);
         }
 
         private void OnTriggerCollide(EntityUid uid, TriggerOnCollideComponent component, StartCollideEvent args)

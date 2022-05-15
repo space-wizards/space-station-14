@@ -1,7 +1,8 @@
-using System.Collections.Generic;
 using System.Linq;
+using Content.Server.Administration;
 using Content.Server.GameTicking.Rules;
-using Robust.Shared.ViewVariables;
+using Content.Shared.Administration;
+using Robust.Shared.Console;
 
 namespace Content.Server.GameTicking
 {
@@ -13,6 +14,34 @@ namespace Content.Server.GameTicking
 
         [ViewVariables] private readonly HashSet<GameRulePrototype> _startedGameRules = new();
         public IEnumerable<GameRulePrototype> StartedGameRules => _startedGameRules;
+
+        private void InitializeGameRules()
+        {
+            // Add game rule command.
+            _consoleHost.RegisterCommand("addgamerule",
+                string.Empty,
+                "addgamerule <rules>",
+                AddGameRuleCommand);
+
+            // End game rule command.
+            _consoleHost.RegisterCommand("endgamerule",
+                string.Empty,
+                "endgamerule <rules>",
+                EndGameRuleCommand);
+
+            // Clear game rules command.
+            _consoleHost.RegisterCommand("cleargamerules",
+                string.Empty,
+                "cleargamerules",
+                ClearGameRulesCommand);
+        }
+
+        private void ShutdownGameRules()
+        {
+            _consoleHost.UnregisterCommand("addgamerule");
+            _consoleHost.UnregisterCommand("endgamerule");
+            _consoleHost.UnregisterCommand("cleargamerules");
+        }
 
         /// <summary>
         ///     Game rules can be 'started' separately from being added. 'Starting' them usually
@@ -97,6 +126,50 @@ namespace Content.Server.GameTicking
                 EndGameRule(rule);
             }
         }
+
+        #region Command Implementations
+
+        [AdminCommand(AdminFlags.Fun)]
+        private void AddGameRuleCommand(IConsoleShell shell, string argstr, string[] args)
+        {
+            if (args.Length == 0)
+                return;
+
+            foreach (var ruleId in args)
+            {
+                if (!_prototypeManager.TryIndex<GameRulePrototype>(ruleId, out var rule))
+                    continue;
+
+                AddGameRule(rule);
+
+                // Start rule if we're already in the middle of a round.
+                if(RunLevel == GameRunLevel.InRound)
+                    StartGameRule(rule);
+            }
+        }
+
+        [AdminCommand(AdminFlags.Fun)]
+        private void EndGameRuleCommand(IConsoleShell shell, string argstr, string[] args)
+        {
+            if (args.Length == 0)
+                return;
+
+            foreach (var ruleId in args)
+            {
+                if (!_prototypeManager.TryIndex<GameRulePrototype>(ruleId, out var rule))
+                    continue;
+
+                EndGameRule(rule);
+            }
+        }
+
+        [AdminCommand(AdminFlags.Fun)]
+        private void ClearGameRulesCommand(IConsoleShell shell, string argstr, string[] args)
+        {
+            ClearGameRules();
+        }
+        
+        #endregion
     }
 
     /// <summary>

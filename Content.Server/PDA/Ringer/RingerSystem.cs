@@ -1,16 +1,9 @@
 using Content.Server.UserInterface;
 using Content.Shared.PDA.Ringer;
-using Robust.Shared.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Server.Player;
 using Robust.Shared.Player;
-using System;
-using System.Collections.Generic;
-using Content.Shared.Audio;
 using Content.Shared.PDA;
-using Content.Shared.Sound;
-using Robust.Shared.IoC;
-using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Utility;
 
@@ -36,7 +29,7 @@ namespace Content.Server.PDA.Ringer
 
         private void RingerPlayRingtone(EntityUid uid, RingerComponent ringer, RingerPlayRingtoneMessage args)
         {
-            ringer.IsPlaying = true;
+            EnsureComp<ActiveRingerComponent>(uid);
             UpdateRingerUserInterface(ringer);
         }
 
@@ -90,7 +83,7 @@ namespace Content.Server.PDA.Ringer
         private void UpdateRingerUserInterface(RingerComponent ringer)
         {
             var ui = ringer.Owner.GetUIOrNull(RingerUiKey.Key);
-            ui?.SetState(new RingerUpdateState(ringer.IsPlaying, ringer.Ringtone));
+            ui?.SetState(new RingerUpdateState(HasComp<ActiveRingerComponent>(ringer.Owner), ringer.Ringtone));
         }
 
         public bool ToggleRingerUI(RingerComponent ringer, IPlayerSession session)
@@ -102,12 +95,10 @@ namespace Content.Server.PDA.Ringer
 
         public override void Update(float frameTime) //Responsible for actually playing the ringtone
         {
-            foreach(var ringer in EntityManager.EntityQuery<RingerComponent>())
-            {
-                // If this is perf problem then something something custom tracking via hashset.
-                if (!ringer.IsPlaying)
-                    continue;
+            var remove = new RemQueue<EntityUid>();
 
+            foreach(var (_, ringer) in EntityManager.EntityQuery<ActiveRingerComponent, RingerComponent>())
+            {
                 ringer.TimeElapsed += frameTime;
 
                 if (ringer.TimeElapsed < NoteDelay) continue;
@@ -125,12 +116,17 @@ namespace Content.Server.PDA.Ringer
 
                 if (ringer.NoteCount > 3)
                 {
-                    ringer.IsPlaying = false;
+                    remove.Add(ringer.Owner);
                     UpdateRingerUserInterface(ringer);
                     ringer.TimeElapsed = 0;
                     ringer.NoteCount = 0;
                     break;
                 }
+            }
+
+            foreach (var ent in remove)
+            {
+                RemComp<ActiveRingerComponent>(ent);
             }
         }
 

@@ -1,12 +1,7 @@
-using System;
 using Content.Shared.DragDrop;
 using Content.Shared.Interaction;
-using Robust.Shared.GameObjects;
 using Robust.Shared.GameStates;
-using Robust.Shared.IoC;
 using Robust.Shared.Serialization;
-using Robust.Shared.Serialization.Manager.Attributes;
-using Robust.Shared.ViewVariables;
 
 namespace Content.Shared.Buckle.Components
 {
@@ -62,6 +57,8 @@ namespace Content.Shared.Buckle.Components
     public sealed class BuckleChangeEvent : EntityEventArgs
     {
         public EntityUid Strap;
+
+        public EntityUid BuckledEntity;
         public bool Buckling;
     }
 

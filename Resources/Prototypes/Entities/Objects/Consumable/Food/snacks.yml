@@ -95,7 +95,6 @@
   parent: FoodSnackBase
   id: FoodSnackChocolateBar
   description: Tastes like cardboard.
-  abstract: true
   components:
   - type: Sprite
     state: chocolatebar-open
@@ -133,7 +132,6 @@
   parent: FoodSnackBase
   id: FoodSnackEnergyBar
   description: An energy bar with a lot of punch.
-  abstract: true
   components:
   - type: Sprite
     state: energybar-open
@@ -191,11 +189,146 @@
     color: white
   - type: Food
     trash: FoodPacketSyndiTrash
+    
+- type: entity
+  name: chow mein
+  parent: FoodSnackBase
+  id: FoodSnackChowMein
+  description: A salty fried noodle snack. Looks like they forgot the vegetables.
+  components:
+  - type: Sprite
+    state: chinese1
+  - type: Item
+    color: red
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 30 # Room for extra condiments
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 10
+        - ReagentId: Soysauce
+          Quantity: 2
+  - type: Food
+    trash: FoodPacketChowMeinTrash
+          
+- type: entity
+  name: dan dan noodles
+  parent: FoodSnackBase
+  id: FoodSnackDanDanNoodles
+  description: A spicy Sichuan noodle snack. The chili oil slick pools on top.
+  components:
+  - type: Sprite
+    state: chinese2
+  - type: Item
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 30 # Room for extra condiments
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 10
+        - ReagentId: CapsaicinOil
+          Quantity: 2
+        - ReagentId: Soysauce
+          Quantity: 2
+  - type: Food
+    trash: FoodPacketDanDanTrash
+
+- type: entity
+  name: fortune cookie
+  parent: FoodSnackBase
+  id: FoodSnackCookieFortune
+  description: A boring cardboard tasting snack with a fortune inside. Surprise! You're boring too.
+  components:
+  - type: Sprite
+    state: cookie_fortune
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 1
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 1
+  - type: Item
+    sprite: Objects/Consumable/Food/snacks.rsi
+    HeldPrefix: packet
+    size: 1
+  - type: Food
+    trash: FoodCookieFortune
+
+- type: entity
+  name: nutribrick
+  parent: FoodSnackBase
+  id: FoodSnackNutribrick
+  description: A carefully synthesized brick designed to contain the highest ratio of nutriment to volume. Tastes like shit.
+  components:
+  - type: Item
+    size: 10
+  - type: Sprite
+    state: nutribrick
+  - type: SpawnItemsOnUse
+    items:
+      - id: FoodPacketMRETrash
+      - id: FoodSnackNutribrickOpen
+    sound:
+      path: /Audio/Effects/unwrap.ogg
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 30
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 25
+
+- type: entity
+  name: nutribrick
+  parent: FoodSnackNutribrick
+  id: FoodSnackNutribrickOpen
+  components:
+  - type: Sprite
+    state: nutribrick-open
+  - type: Food
+
+- type: entity
+  name: brownie
+  parent: FoodSnackBase
+  id: FoodSnackMREBrownie
+  description: A precisely mixed brownie, made to withstand blunt trauma and harsh conditions. Tastes like shit.
+  components:
+  - type: Item
+    size: 10
+  - type: Sprite
+    state: mre-brownie
+  - type: SpawnItemsOnUse
+    items:
+      - id: FoodPacketMRETrash
+      - id: FoodSnackMREBrownieOpen
+    sound:
+      path: /Audio/Effects/unwrap.ogg
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 15
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 10
+        - ReagentId: Theobromine
+          Quantity: 3
+
+- type: entity
+  name: brownie
+  parent: FoodSnackMREBrownie
+  id: FoodSnackMREBrownieOpen
+  components:
+  - type: Sprite
+    state: mre-brownie-open
+  - type: Food
 
 # Trash
 
 - type: entity
-  abstract: true
+  noSpawn: true
   parent: BaseItem
   id: FoodPacketTrash
   description: This is rubbish.
@@ -208,12 +341,12 @@
     HeldPrefix: packet
   - type: Tag
     tags:
-    - Recyclable
     - Trash
   - type: Recyclable
+  - type: SpaceGarbage
 
 - type: entity
-  abstract: true
+  noSpawn: true
   parent: FoodPacketTrash
   id: FoodPacketBoritosTrash
   name: boritos bag
@@ -224,7 +357,7 @@
     color: blue
 
 - type: entity
-  abstract: true
+  noSpawn: true
   parent: FoodPacketTrash
   id: FoodPacketCheesieTrash
   name: cheesie honkers
@@ -235,7 +368,7 @@
     color: orange
 
 - type: entity
-  abstract: true
+  noSpawn: true
   parent: FoodPacketTrash
   id: FoodPacketChipsTrash
   name: chips
@@ -246,7 +379,7 @@
     color: green
 
 - type: entity
-  abstract: true
+  noSpawn: true
   parent: FoodPacketTrash
   id: FoodPacketChocolateTrash
   name: chocolate wrapper
@@ -257,7 +390,7 @@
     color: red
 
 - type: entity
-  abstract: true
+  noSpawn: true
   parent: FoodPacketTrash
   id: FoodPacketEnergyTrash
   name: energybar wrapper
@@ -268,7 +401,7 @@
     color: green
 
 - type: entity
-  abstract: true
+  noSpawn: true
   parent: FoodPacketTrash
   id: FoodPacketPistachioTrash
   name: pistachios packet
@@ -279,7 +412,7 @@
     color: green
 
 - type: entity
-  abstract: true
+  noSpawn: true
   parent: FoodPacketTrash
   id: FoodPacketPopcornTrash
   name: popcorn box
@@ -290,7 +423,7 @@
     state: blue
 
 - type: entity
-  abstract: true
+  noSpawn: true
   parent: FoodPacketTrash
   id: FoodPacketRaisinsTrash
   name: 4no raisins
@@ -301,7 +434,7 @@
     color: red
 
 - type: entity
-  abstract: true
+  noSpawn: true
   parent: FoodPacketTrash
   id: FoodPacketSemkiTrash
   name: semki packet
@@ -312,7 +445,7 @@
     color: orange
 
 - type: entity
-  abstract: true
+  noSpawn: true
   parent: FoodPacketTrash
   id: FoodPacketSusTrash
   name: sus jerky
@@ -323,7 +456,7 @@
     color: red
 
 - type: entity
-  abstract: true
+  noSpawn: true
   parent: FoodPacketTrash
   id: FoodPacketSyndiTrash
   name: syndi-cakes box
@@ -332,3 +465,47 @@
     state: syndicakes-trash
   - type: Item
     color: white
+
+- type: entity
+  noSpawn: true
+  parent: FoodPacketTrash
+  id: FoodPacketChowMeinTrash
+  name: empty chow mein box
+  components:
+  - type: Sprite
+    state: chinese1
+  - type: Item
+    color: red
+    
+- type: entity
+  noSpawn: true
+  parent: FoodPacketTrash
+  id: FoodPacketDanDanTrash
+  name: empty dan dan box
+  components:
+  - type: Sprite
+    state: chinese2
+  - type: Item
+    color: white
+    
+- type: entity
+  noSpawn: true
+  parent: FoodPacketTrash
+  id: FoodCookieFortune
+  name: cookie fortune
+  description: "The fortune reads: The end is near...and it's all your fault."
+  components:
+  - type: Sprite
+    state: fortune
+  - type: Item
+    color: white
+
+- type: entity
+  noSpawn: true
+  parent: FoodPacketTrash
+  id: FoodPacketMRETrash
+  name: MRE wrapper
+  description: A general purpose wrapper for a variety of military food goods.
+  components:
+  - type: Sprite
+    state: mre-wrapper

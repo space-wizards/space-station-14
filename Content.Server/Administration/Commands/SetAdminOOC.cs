@@ -4,9 +4,6 @@ using Content.Server.Preferences.Managers;
 using Content.Shared.Administration;
 using Robust.Server.Player;
 using Robust.Shared.Console;
-using Robust.Shared.IoC;
-using Robust.Shared.Localization;
-using Robust.Shared.Maths;
 
 namespace Content.Server.Administration.Commands
 {

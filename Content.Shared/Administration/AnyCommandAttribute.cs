@@ -1,5 +1,4 @@
-﻿using System;
-using JetBrains.Annotations;
+﻿using JetBrains.Annotations;
 using Robust.Shared.Console;
 
 namespace Content.Shared.Administration

@@ -29,6 +29,23 @@
     interfaces:
     - key: enum.InstrumentUiKey.Key
       type: InstrumentBoundUserInterface
+  - type: Fixtures
+    fixtures:
+    - shape:
+        !type:PhysShapeCircle
+        radius: 0.45
+      mass: 50
+      mask:
+      - Impassable
+      - HighImpassable
+      - MidImpassable
+      layer:
+      - Opaque
+      - HighImpassable
+      - MidImpassable
+      - BulletImpassable
+  - type: Transform
+    anchored: true
 
 - type: entity
   parent: BasePlaceableInstrument
@@ -84,6 +101,18 @@
     program: 19
   - type: Sprite
     state: church-organ
+
+- type: entity
+  name: tuba
+  parent: BasePlaceableInstrumentRotatable
+  id: TubaInstrument
+  description: The big daddy of the brass family. Standing next to its majesty makes you feel insecure.
+  components:
+  - type: Instrument
+    program: 58
+  - type: Sprite
+    state: tuba
+
 
 - type: entity
   parent: BasePlaceableInstrument

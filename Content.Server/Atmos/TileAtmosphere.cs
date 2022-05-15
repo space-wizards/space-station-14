@@ -2,8 +2,6 @@ using Content.Server.Atmos.EntitySystems;
 using Content.Shared.Atmos;
 using Content.Shared.Maps;
 using Robust.Shared.Map;
-using Robust.Shared.Maths;
-using Robust.Shared.ViewVariables;
 
 namespace Content.Server.Atmos
 {
@@ -11,6 +9,7 @@ namespace Content.Server.Atmos
     ///     Internal Atmos class that stores data about the atmosphere in a grid.
     ///     You shouldn't use this directly, use <see cref="AtmosphereSystem"/> instead.
     /// </summary>
+    [Friend(typeof(AtmosphereSystem))]
     public sealed class TileAtmosphere : IGasMixtureHolder
     {
         [ViewVariables]
@@ -57,6 +56,10 @@ namespace Content.Server.Atmos
 
         [ViewVariables]
         public AtmosDirection PressureDirection;
+
+        // For debug purposes.
+        [ViewVariables]
+        public AtmosDirection LastPressureDirection;
 
         [ViewVariables]
         public GridId GridIndex { get; }

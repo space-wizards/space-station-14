@@ -2,10 +2,8 @@ using System.Linq;
 using Content.Shared.Damage.Prototypes;
 using Content.Shared.FixedPoint;
 using Content.Shared.Inventory;
-using Robust.Shared.GameObjects;
+using Content.Shared.Radiation.Events;
 using Robust.Shared.GameStates;
-using Robust.Shared.IoC;
-using Robust.Shared.Log;
 using Robust.Shared.Prototypes;
 
 namespace Content.Shared.Damage
@@ -19,6 +17,7 @@ namespace Content.Shared.Damage
             SubscribeLocalEvent<DamageableComponent, ComponentInit>(DamageableInit);
             SubscribeLocalEvent<DamageableComponent, ComponentHandleState>(DamageableHandleState);
             SubscribeLocalEvent<DamageableComponent, ComponentGetState>(DamageableGetState);
+            SubscribeLocalEvent<DamageableComponent, OnIrradiatedEvent>(OnIrradiated);
         }
 
         /// <summary>
@@ -107,9 +106,9 @@ namespace Content.Shared.Damage
         ///     null if the user had no applicable components that can take damage.
         /// </returns>
         public DamageSpecifier? TryChangeDamage(EntityUid? uid, DamageSpecifier damage, bool ignoreResistances = false,
-            bool interruptsDoAfters = true)
+            bool interruptsDoAfters = true, DamageableComponent? damageable = null)
         {
-            if (!EntityManager.TryGetComponent<DamageableComponent>(uid, out var damageable))
+            if (!uid.HasValue || !Resolve(uid.Value, ref damageable, false))
             {
                 // TODO BODY SYSTEM pass damage onto body system
                 return null;
@@ -186,9 +185,33 @@ namespace Content.Shared.Damage
             DamageChanged(component, new DamageSpecifier());
         }
 
+        public void SetDamageModifierSetId(EntityUid uid, string damageModifierSetId, DamageableComponent? comp = null)
+        {
+            if (!Resolve(uid, ref comp))
+                return;
+
+            comp.DamageModifierSetId = damageModifierSetId;
+
+            Dirty(comp);
+        }
+
         private void DamageableGetState(EntityUid uid, DamageableComponent component, ref ComponentGetState args)
         {
             args.State = new DamageableComponentState(component.Damage.DamageDict, component.DamageModifierSetId);
+        }
+
+        private void OnIrradiated(EntityUid uid, DamageableComponent component, OnIrradiatedEvent args)
+        {
+            var damageValue = FixedPoint2.New(args.TotalRads);
+
+            // Radiation should really just be a damage group instead of a list of types.
+            DamageSpecifier damage = new();
+            foreach (var typeId in component.RadiationDamageTypeIDs)
+            {
+                damage.DamageDict.Add(typeId, damageValue);
+            }
+
+            TryChangeDamage(uid, damage);
         }
 
         private void DamageableHandleState(EntityUid uid, DamageableComponent component, ref ComponentHandleState args)

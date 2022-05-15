@@ -14,9 +14,10 @@
 - type: entity
   name: observer spawn point
   id: SpawnPointObserver
-  parent: SpawnPointJobBase
+  parent: MarkerBase
   components:
   - type: Sprite
+    sprite: Markers/jobs.rsi
     layers:
       - state: green
       - texture: Mobs/Ghosts/ghost_human.rsi/icon.png
@@ -76,16 +77,48 @@
 # Civilian
 
 - type: entity
-  id: SpawnPointAssistant
+  id: SpawnPointAssistant # TODO rename, but requires map changes.
   parent: SpawnPointJobBase
-  name: assistant
+  name: passenger
   components:
   - type: SpawnPoint
-    job_id: Assistant
+    job_id: Passenger
   - type: Sprite
     layers:
       - state: green
-      - state: assistant
+      - state: passenger
+
+- type: entity
+  id: SpawnPointTechnicalAssistant
+  parent: SpawnPointAssistant
+  name: technical assistant
+  components:
+  - type: SpawnPoint
+    job_id: TechnicalAssistant
+
+- type: entity
+  id: SpawnPointMedicalIntern
+  parent: SpawnPointAssistant
+  name: medical intern
+  components:
+  - type: SpawnPoint
+    job_id: MedicalIntern
+
+- type: entity
+  id: SpawnPointSecurityCadet
+  parent: SpawnPointAssistant
+  name: security cadet
+  components:
+  - type: SpawnPoint
+    job_id: SecurityCadet
+
+- type: entity
+  id: SpawnPointServiceWorker
+  parent: SpawnPointAssistant
+  name: service worker
+  components:
+  - type: SpawnPoint
+    job_id: ServiceWorker
 
 - type: entity
   id: SpawnPointBartender
@@ -158,7 +191,7 @@
     layers:
       - state: green
       - state: chaplain
-      
+
 - type: entity
   id: SpawnPointLibrarian
   parent: SpawnPointJobBase
@@ -181,7 +214,7 @@
   - type: Sprite
     layers:
       - state: green
-      - state: lawyer 
+      - state: lawyer
 
 - type: entity
   id: SpawnPointJanitor
@@ -258,6 +291,18 @@
     layers:
       - state: green
       - state: engineer
+
+- type: entity
+  id: SpawnPointAtmos
+  parent: SpawnPointJobBase
+  name: atmospherics
+  components:
+    - type: SpawnPoint
+      job_id: AtmosphericTechnician
+    - type: Sprite
+      layers:
+        - state: green
+        - state: atmospherics
 
 # Medical
 

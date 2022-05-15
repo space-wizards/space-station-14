@@ -1,4 +1,3 @@
-using System;
 using Content.Shared.Eui;
 using Robust.Shared.Serialization;
 
@@ -30,6 +29,17 @@ namespace Content.Shared.Ghost.Roles
         public uint Identifier { get; }
 
         public GhostRoleTakeoverRequestMessage(uint identifier)
+        {
+            Identifier = identifier;
+        }
+    }
+
+    [NetSerializable, Serializable]
+    public sealed class GhostRoleFollowRequestMessage : EuiMessageBase
+    {
+        public uint Identifier { get; }
+
+        public GhostRoleFollowRequestMessage(uint identifier)
         {
             Identifier = identifier;
         }

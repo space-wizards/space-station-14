@@ -1,10 +1,8 @@
-﻿using System.Linq;
+using System.Linq;
 using System.Text;
 using Content.Server.Administration.Logs;
 using Content.Server.Administration.Managers;
 using Content.Server.Chat.Managers;
-using Content.Server.Disease;
-using Content.Server.Disease.Components;
 using Content.Server.Ghost.Components;
 using Content.Server.Headset;
 using Content.Server.Players;
@@ -14,9 +12,7 @@ using Content.Shared.ActionBlocker;
 using Content.Shared.CCVar;
 using Content.Shared.Chat;
 using Content.Shared.Database;
-using Content.Shared.Disease.Components;
 using Content.Shared.Inventory;
-using Content.Shared.Popups;
 using Robust.Server.Player;
 using Robust.Shared.Configuration;
 using Robust.Shared.Console;
@@ -32,7 +28,7 @@ namespace Content.Server.Chat;
 ///     ChatSystem is responsible for in-simulation chat handling, such as whispering, speaking, emoting, etc.
 ///     ChatSystem depends on ChatManager to actually send the messages.
 /// </summary>
-public sealed class ChatSystem : EntitySystem
+public sealed class ChatSystem : SharedChatSystem
 {
     [Dependency] private readonly IConfigurationManager _configurationManager = default!;
     [Dependency] private readonly IChatManager _chatManager = default!;
@@ -82,23 +78,28 @@ public sealed class ChatSystem : EntitySystem
             return;
         }
 
-        if (!CanSendInGame(message, shell, player))
-            return;
-
-        message = SanitizeInGameICMessage(source, message, out var emoteStr);
-
-        // Is this -actually- an emote, and is a player sending it?
-        if (player != null && emoteStr != message && emoteStr != null)
-        {
-            SendEntityEmote(source, emoteStr, hideChat);
-            return;
-        }
-
         // Sus
         if (player?.AttachedEntity is { Valid: true } entity && source != entity)
         {
             return;
         }
+
+        if (!CanSendInGame(message, shell, player))
+            return;
+
+        bool shouldCapitalize = (desiredType != InGameICChatType.Emote);
+
+        message = SanitizeInGameICMessage(source, message, out var emoteStr, shouldCapitalize);
+
+        // Was there an emote in the message? If so, send it.
+        if (player != null && emoteStr != message && emoteStr != null)
+        {
+            SendEntityEmote(source, emoteStr, hideChat);
+        }
+
+        // This can happen if the entire string is sanitized out.
+        if (string.IsNullOrEmpty(message))
+            return;
 
         // Otherwise, send whatever type.
         switch (desiredType)
@@ -291,10 +292,11 @@ public sealed class ChatSystem : EntitySystem
     }
 
     // ReSharper disable once InconsistentNaming
-    private string SanitizeInGameICMessage(EntityUid source, string message, out string? emoteStr)
+    private string SanitizeInGameICMessage(EntityUid source, string message, out string? emoteStr, bool capitalize = true)
     {
         var newMessage = message.Trim();
-        newMessage = SanitizeMessageCapital(source, newMessage);
+        if (capitalize)
+            newMessage = SanitizeMessageCapital(source, newMessage);
         newMessage = FormattedMessage.EscapeText(newMessage);
 
         _sanitizer.TrySanitizeOutSmilies(newMessage, source, out newMessage, out emoteStr);
@@ -331,6 +333,10 @@ public sealed class ChatSystem : EntitySystem
     {
         if (message.StartsWith(';'))
         {
+            // Special case for ";" messages
+            if (message.Length == 1)
+                return "";
+
             // Remove semicolon
             message = message.Substring(1).TrimStart();
 
