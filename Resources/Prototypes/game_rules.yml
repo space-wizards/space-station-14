@@ -8,6 +8,9 @@
   id: MaxTimeRestart
 
 - type: gameRule
+  id: Nukeops
+
+- type: gameRule
   id: Suspicion
 
 - type: gameRule
@@ -18,6 +21,3 @@
 
 - type: gameRule
   id: Sandbox
-
-- type: gameRule
-  id: Nukeops

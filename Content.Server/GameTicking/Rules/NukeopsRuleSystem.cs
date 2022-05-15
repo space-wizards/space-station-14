@@ -98,7 +98,7 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
 
         var (_, grid) = _mapLoader.LoadBlueprint(GameTicker.DefaultMap, map, new MapLoadOptions
         {
-            Offset = aabb.Center + Math.Max(aabb.Height, aabb.Width)/2 + new Vector2(-500, -500)
+            Offset = aabb.Center + MathF.Max(aabb.Height, aabb.Width)*2.5f
         });
 
         if (!grid.HasValue)
