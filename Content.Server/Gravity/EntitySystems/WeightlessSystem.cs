@@ -21,7 +21,7 @@ namespace Content.Server.Gravity.EntitySystems
 
             SubscribeLocalEvent<RoundRestartCleanupEvent>(Reset);
             SubscribeLocalEvent<GravityChangedMessage>(GravityChanged);
-            SubscribeLocalEvent<EntParentChangedMessage>(EntParentChanged);
+            SubscribeLocalEvent<AlertsComponent, EntParentChangedMessage>(EntParentChanged);
             SubscribeLocalEvent<AlertsComponent, AlertSyncEvent>(HandleAlertSyncEvent);
         }
 
@@ -94,13 +94,8 @@ namespace Content.Server.Gravity.EntitySystems
             _alertsSystem.ClearAlert(euid, AlertType.Weightless);
         }
 
-        private void EntParentChanged(ref EntParentChangedMessage ev)
+        private void EntParentChanged(EntityUid uid, AlertsComponent status, ref EntParentChangedMessage ev)
         {
-            if (!EntityManager.TryGetComponent(ev.Entity, out AlertsComponent? status))
-            {
-                return;
-            }
-
             if (ev.OldParent is {Valid: true} old &&
                 EntityManager.TryGetComponent(old, out IMapGridComponent? mapGrid))
             {
