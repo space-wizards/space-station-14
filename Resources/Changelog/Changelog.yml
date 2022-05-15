@@ -1,10 +1,4 @@
 Entries:
-- author: ElectroJr
-  changes:
-  - {message: Mobs that need to breathe once again suffocate while in critical condition.,
-    type: Fix}
-  id: 1032
-  time: '2022-02-10T19:04:05.0000000+00:00'
 - author: Spillhelm53
   changes:
   - {message: 'Fixes certain puddles not being able to evaporate, which had been slipping
@@ -3042,3 +3036,8 @@ Entries:
       under airlocks safely.', type: Tweak}
   id: 1531
   time: '2022-05-14T04:05:04.0000000+00:00'
+- author: JustinTrotter
+  changes:
+  - {message: made lobby background keep aspect when stretching, type: Tweak}
+  id: 1532
+  time: '2022-05-15T02:06:07.0000000+00:00'
