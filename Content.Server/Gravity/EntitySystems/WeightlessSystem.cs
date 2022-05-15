@@ -32,12 +32,12 @@ namespace Content.Server.Gravity.EntitySystems
 
         public void AddAlert(AlertsComponent status)
         {
-            var gridId = EntityManager.GetComponent<TransformComponent>(status.Owner).GridID;
-            var alerts = _alerts.GetOrNew(gridId);
+            var xform = Transform(status.Owner);
+            var alerts = _alerts.GetOrNew(xform.GridID);
 
             alerts.Add(status);
 
-            if (_mapManager.TryGetGrid(EntityManager.GetComponent<TransformComponent>(status.Owner).GridID, out var grid))
+            if (_mapManager.TryGetGrid(xform.GridID, out var grid))
             {
                 if (EntityManager.GetComponent<GravityComponent>(grid.GridEntityId).Enabled)
                 {
@@ -96,6 +96,7 @@ namespace Content.Server.Gravity.EntitySystems
 
         private void EntParentChanged(EntityUid uid, AlertsComponent status, ref EntParentChangedMessage ev)
         {
+            // First, update the `_alerts` dictionary
             if (ev.OldParent is {Valid: true} old &&
                 EntityManager.TryGetComponent(old, out IMapGridComponent? mapGrid))
             {
@@ -107,10 +108,19 @@ namespace Content.Server.Gravity.EntitySystems
                 }
             }
 
-            var newGrid = EntityManager.GetComponent<TransformComponent>(ev.Entity).GridID;
+            var newGrid = ev.Transform.GridID;
             var newStatuses = _alerts.GetOrNew(newGrid);
 
             newStatuses.Add(status);
+
+            // then update the actual alert.
+            // only showing the alert is the user is on a grid that is explicitly missing gravity.
+            if (!_mapManager.TryGetGrid(newGrid, out var grid)
+                || !TryComp(grid.GridEntityId, out GravityComponent? gravity)
+                || gravity.Enabled)
+                RemoveWeightless(status.Owner);
+            else
+                AddWeightless(status.Owner);
         }
 
         private void HandleAlertSyncEvent(EntityUid uid, AlertsComponent component, AlertSyncEvent args)
