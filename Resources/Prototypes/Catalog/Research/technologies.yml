@@ -125,6 +125,7 @@
     - VaccinatorMachineCircuitboard
     - DiagnoserMachineCircuitboard
     - HandheldCrewMonitor
+    - MedicalTechFabMachineCircuitboard
 
 - type: technology
   name: "advanced life support systems"
@@ -159,6 +160,7 @@
     - Handcuffs
     - Stunbaton
     - FlashPayload
+    - SecurityTechFabMachineCircuitboard
 
 - type: technology
   name: "non-lethal technology"

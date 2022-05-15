@@ -80,6 +80,38 @@
         ExamineName: Glass Beaker
 
 - type: entity
+  id: SecurityTechFabMachineCircuitboard
+  parent: BaseMachineCircuitboard
+  name: security techfab machine board
+  components:
+    - type: MachineBoard
+      prototype: SecurityTechFab
+      requirements:
+        MatterBin: 1
+        Manipulator: 1
+      tagRequirements:
+        GlassBeaker:
+          Amount: 2
+          DefaultPrototype: Beaker
+          ExamineName: Glass Beaker
+
+- type: entity
+  id: MedicalTechFabMachineCircuitboard
+  parent: BaseMachineCircuitboard
+  name: medical techfab machine board
+  components:
+    - type: MachineBoard
+      prototype: MedicalTechFab
+      requirements:
+        MatterBin: 1
+        Manipulator: 1
+      tagRequirements:
+        GlassBeaker:
+          Amount: 2
+          DefaultPrototype: Beaker
+          ExamineName: Glass Beaker
+
+- type: entity
   id: UniformPrinterMachineCircuitboard
   parent: BaseMachineCircuitboard
   name: uniform printer machine board

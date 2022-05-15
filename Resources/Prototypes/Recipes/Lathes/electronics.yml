@@ -119,6 +119,24 @@
      Glass: 900
 
 - type: latheRecipe
+  id: SecurityTechFabMachineCircuitboard
+  icon: Objects/Misc/module.rsi/id_mod.png
+  result: SecurityTechFabMachineCircuitboard
+  completetime: 4
+  materials:
+    Steel: 100
+    Glass: 900
+
+- type: latheRecipe
+  id: MedicalTechFabMachineCircuitboard
+  icon: Objects/Misc/module.rsi/id_mod.png
+  result: MedicalTechFabMachineCircuitboard
+  completetime: 4
+  materials:
+    Steel: 100
+    Glass: 900
+
+- type: latheRecipe
   id: UniformPrinterMachineCircuitboard
   icon: Objects/Misc/module.rsi/id_mod.png
   result: UniformPrinterMachineCircuitboard

@@ -262,6 +262,8 @@
       - DawInstrumentMachineCircuitboard
       - StasisBedMachineCircuitboard
       - OreProcessorMachineCircuitboard
+      - MedicalTechFabMachineCircuitboard
+      - SecurityTechFabMachineCircuitboard
   - type: Machine
     board: CircuitImprinterMachineCircuitboard
   - type: Lathe
