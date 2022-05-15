@@ -1,9 +1,4 @@
 Entries:
-- author: Mith-randalf
-  changes:
-  - {message: 'Added some new, sensibly-sized signs.', type: Add}
-  id: 1035
-  time: '2022-02-10T21:08:56.0000000+00:00'
 - author: Fishfish458
   changes:
   - {message: Added more clothes to the ClothesMate to make greytide less grey, type: Add}
@@ -3044,3 +3039,9 @@ Entries:
   - {message: Stunbaton damage reduced., type: Tweak}
   id: 1534
   time: '2022-05-15T02:10:34.0000000+00:00'
+- author: ShadowCommander
+  changes:
+  - {message: Fixed not being able to climb after being cloned or ejected from a medical
+      scanner., type: Fix}
+  id: 1535
+  time: '2022-05-15T09:57:13.0000000+00:00'
