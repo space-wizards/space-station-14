@@ -480,6 +480,15 @@
   spritePath: ginfizzglass.rsi
 
 - type: reagent
+  id: GingerAmaretto
+  name: ginger amaretto
+  parent: BaseAlcohol
+  desc: Refreshingly lemony, deliciously dry.
+  physicalDesc: strong-smelling
+  color: "#664300"
+  spritePath: gingeramarettoglass.rsi
+
+- type: reagent
   id: GinTonic
   name: gin and tonic
   parent: BaseAlcohol
@@ -487,6 +496,24 @@
   physicalDesc: strong-smelling
   color: "#004166"
   spritePath: gintonicglass.rsi
+
+- type: reagent
+  id: Godfather
+  name: godfather
+  parent: BaseAlcohol
+  desc: A classic from old Italy and enjoyed by gangsters, pray the orange peel doesnt end up in your mouth.  
+  physicalDesc: strong-smelling
+  color: "#004166"
+  spritePath: godfatherglass.rsi
+
+- type: reagent
+  id: Godmother
+  name: godmother
+  parent: BaseAlcohol
+  desc:   A lovely fresh smelling cocktail, a true Sicilian delight.  
+  physicalDesc: strong-smelling
+  color: "#004166"
+  spritePath: godmotherglass.rsi
 
 - type: reagent
   id: Goldschlager
@@ -559,6 +586,15 @@
   physicalDesc: cloudy
   color: "#664300"
   spritePath: irishcoffeeglass.rsi
+
+- type: reagent
+  id: Kamikaze
+  name: kamikaze
+  parent: BaseAlcohol
+  desc: Divinely windy.
+  physicalDesc: creamy
+  color: "#664300"
+  spritePath: kamikazeglass.rsi
 
 - type: reagent
   id: KiraSpecial
@@ -648,6 +684,24 @@
   desc: Artisanal homemade liquor. What could go wrong?
   physicalDesc: strong-smelling
   color: "#d1d7d155"
+
+- type: reagent
+  id: MoscowMule
+  name: moscowmule
+  parent: BaseAlcohol
+  desc: A chilly drink that reminds you of the Derelict.
+  physicalDesc: strong-smelling
+  color: "#d1d7d155"
+  spritePath: moscowmuleglass.rsi
+
+- type: reagent
+  id: Narsour
+  name: narsour
+  parent: BaseAlcohol
+  desc: A new hit cocktail inspired by THE ARM Breweries will have you shouting Fuu ma'jin in no time!
+  physicalDesc: strong-smelling
+  color: "#d1d7d155"
+  spritePath: narsourglass.rsi
 
 - type: reagent
   id: Neurotoxin

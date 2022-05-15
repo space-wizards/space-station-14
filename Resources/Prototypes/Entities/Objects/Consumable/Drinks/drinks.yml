@@ -827,6 +827,23 @@
 
 - type: entity
   parent: DrinkGlassBase
+  id: DrinkGingerAmarettoGlass
+  name: ginger amaretto glass
+  description: The sprig of rosemary adds a nice aroma to the drink, and isn't just to be pretentious afterall!
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 50
+        reagents:
+        - ReagentId: GingerAmaretto
+          Quantity: 50
+  - type: Drink
+  - type: Sprite
+    sprite: Objects/Consumable/Drinks/gingeramarettoglass.rsi
+
+- type: entity
+  parent: DrinkGlassBase
   id: DrinkGinTonicglass
   name: gin and tonic
   description: A mild but still great cocktail. Drink up, like a true Englishman.
@@ -841,6 +858,40 @@
   - type: Drink
   - type: Sprite
     sprite: Objects/Consumable/Drinks/gintonicglass.rsi
+
+- type: entity
+  parent: DrinkGlassBase
+  id: DrinkGodfatherglass
+  name: godfather glass
+  description: A classic from old Italy and enjoyed by gangsters, pray the orange peel doesnt end up in your mouth. 
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 50
+        reagents:
+        - ReagentId: Godfather
+          Quantity: 50
+  - type: Drink
+  - type: Sprite
+    sprite: Objects/Consumable/Drinks/godfatherglass.rsi
+
+- type: entity
+  parent: DrinkGlassBase
+  id: DrinkGodmotherglass
+  name: godmother glass
+  description: A lovely fresh smelling cocktail, a true Sicilian delight.
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 50
+        reagents:
+        - ReagentId: Godmother
+          Quantity: 50
+  - type: Drink
+  - type: Sprite
+    sprite: Objects/Consumable/Drinks/godmotherglass.rsi
 
 - type: entity
   parent: DrinkGlassBase
@@ -1122,6 +1173,22 @@
           Quantity: 50
   - type: Sprite
     sprite: Objects/Consumable/Drinks/kahluaglass.rsi
+
+- type: entity
+  parent: DrinkGlassBase
+  id: DrinkKamikazeGlass
+  name: kamikaze glass
+  description: Divinely windy.
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 50
+        reagents:
+        - ReagentId: Kamikaze
+          Quantity: 50
+  - type: Sprite
+    sprite: Objects/Consumable/Drinks/kamikazeglass.rsi
 
 - type: entity
   parent: DrinkGlassBase
@@ -1694,6 +1761,40 @@
   - type: Drink
   - type: Sprite
     sprite: Objects/Consumable/Drinks/glass_clear.rsi
+
+- type: entity
+  parent: DrinkGlassBase
+  id: DrinkMoscowMuleGlass
+  name: moscow mule glass
+  description: A chilly drink that reminds you of the Derelict.
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 50
+        reagents:
+        - ReagentId: MoscowMule
+          Quantity: 50
+  - type: Drink
+  - type: Sprite
+    sprite: Objects/Consumable/Drinks/moscowmuleglass.rsi
+
+- type: entity
+  parent: DrinkGlassBase
+  id: DrinkNarsourGlass
+  name: narsour glass
+  description: A new hit cocktail inspired by THE ARM Breweries will have you shouting Fuu ma'jin in no time!
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 50
+        reagents:
+        - ReagentId: Narsour
+          Quantity: 50
+  - type: Drink
+  - type: Sprite
+    sprite: Objects/Consumable/Drinks/narsourglass.rsi
 
 - type: entity
   parent: DrinkGlassBase

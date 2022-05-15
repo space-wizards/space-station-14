@@ -307,6 +307,20 @@
     GinFizz: 3
 
 - type: reaction
+  id: GingerAmaretto
+  reactants:
+    Amaretto:
+      amount: 1
+    SolDry:
+      amount: 1
+    JuiceLemon:
+      amount: 1
+    Ice:
+      amount: 1
+  products:
+    GingerAmaretto: 4
+
+- type: reaction
   id: GinTonic
   reactants:
     Gin:
@@ -315,6 +329,26 @@
       amount: 1
   products:
     GinTonic: 3
+
+- type: reaction
+  id: Godfather
+  reactants:
+    Amaretto:
+      amount: 1
+    Whiskey:
+      amount: 1
+  products:
+    Godfather: 2
+
+- type: reaction
+  id: Godmother
+  reactants:
+    Amaretto:
+      amount: 1
+    Vodka:
+      amount: 1
+  products:
+    Godmother: 2
 
 - type: reaction
   id: Goldschlager
@@ -419,6 +453,18 @@
     IrishCream: 3
 
 - type: reaction
+  id: Kamikaze
+  reactants:
+    Vodka:
+      amount: 1
+    TripleSec:
+      amount: 1
+    JuiceLime:
+      amount: 1
+  products:
+    Kamikaze: 3
+
+- type: reaction
   id: Lemonade
   reactants:
     JuiceLemon:
@@ -513,6 +559,32 @@
       amount: 1
   products:
     Moonshine: 3
+
+- type: reaction
+  id: MoscowMule
+  reactants:
+    SolDry:
+      amount: 5
+    Vodka:
+      amount: 5
+    JuiceLime:
+      amount: 1
+    Ice:
+      amount: 1
+  products:
+    MoscowMule: 10
+
+- type: reaction
+  id: Narsour
+  reactants:
+    Blood:
+      amount: 1
+    DemonsBlood:
+      amount: 1
+    JuiceLemon:
+      amount: 1
+  products:
+    Narsour: 1
 
 - type: reaction
   id: NuclearCola
