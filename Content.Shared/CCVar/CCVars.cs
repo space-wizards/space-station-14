@@ -259,7 +259,7 @@ namespace Content.Shared.CCVar
          */
 
         public static readonly CVarDef<int> NukeopsMinPlayers =
-            CVarDef.Create("nukeops.min_players", 5);
+            CVarDef.Create("nukeops.min_players", 15);
 
         public static readonly CVarDef<int> NukeopsMaxOps =
             CVarDef.Create("nukeops.max_ops", 6);
