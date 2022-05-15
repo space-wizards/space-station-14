@@ -49,9 +49,9 @@ namespace Content.Server.Voting.Managers
                 Title = Loc.GetString("ui-vote-restart-title"),
                 Options =
                 {
-                    (Loc.GetString("ui-vote-restart-yes"), true),
-                    (Loc.GetString("ui-vote-restart-no"), false),
-                    (Loc.GetString("ui-vote-restart-abstain"), false)
+                    (Loc.GetString("ui-vote-restart-yes"), "yes"),
+                    (Loc.GetString("ui-vote-restart-no"), "no"),
+                    (Loc.GetString("ui-vote-restart-abstain"), "abstain")
                 },
                 Duration = alone
                     ? TimeSpan.FromSeconds(_cfg.GetCVar(CCVars.VoteTimerAlone))
@@ -68,12 +68,12 @@ namespace Content.Server.Voting.Managers
 
             vote.OnFinished += (_, _) =>
             {
-                var votesYes = vote.VotesPerOption[true];
-                var votesNo = vote.VotesPerOption[false];
+                var votesYes = vote.VotesPerOption["yes"];
+                var votesNo = vote.VotesPerOption["no"];
                 var total = votesYes + votesNo;
 
                 var ratioRequired = _cfg.GetCVar(CCVars.VoteRestartRequiredRatio);
-                if (votesYes / (float) total >= ratioRequired)
+                if (total > 0 && votesYes / (float) total >= ratioRequired)
                 {
                     _chatManager.DispatchServerAnnouncement(Loc.GetString("ui-vote-restart-succeeded"));
                     EntitySystem.Get<RoundEndSystem>().EndRound();
