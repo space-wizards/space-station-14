@@ -280,6 +280,7 @@ public sealed class MagicSystem : EntitySystem
     /// <param name="mapCoords"> Map Coordinates where the entities will spawn</param>
     /// <param name="temporarySummon"> Check to see if the entities should self delete</param>
     /// <param name="offsetVector2"> A Vector2 offset that the entities will spawn in</param>
+    /// <param name="lifetime"> Sets the <see cref="SpawnSpellComponent"/> lifetime from the <see cref="SpawnSpellEvent"/> args</param>
     /// <param name="random"> Resolves param, check out <see cref="EntitySpawnEntry"/> for what to put on the prototype</param>
     private void SpawnSpellHelper(List<EntitySpawnEntry> entityEntries, MapCoordinates mapCoords, bool temporarySummon, Vector2 offsetVector2, float lifetime, IRobustRandom? random)
     {
