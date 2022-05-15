@@ -28,7 +28,7 @@
   - type: Barotrauma
     damage:
       types:
-        Blunt: 0.7 #per second, scales with pressure and other constants.
+        Blunt: 0.4 #per second, scales with pressure and other constants.
   - type: DamageOnHighSpeedImpact
     damage:
       types:
@@ -70,6 +70,10 @@
       color: "#ffffff"
       sprite: Mobs/Species/Skeleton/parts.rsi
       state: head_m
+    - map: ["enum.HumanoidVisualLayers.Eyes"]
+      color: "#008800"
+      sprite: Mobs/Customization/eyes.rsi
+      state: no_eyes
     - map: [ "enum.HumanoidVisualLayers.RArm" ]
       color: "#ffffff"
       sprite: Mobs/Species/Skeleton/parts.rsi
@@ -122,6 +126,7 @@
     - map: [ "shoes" ]
     - map: [ "ears" ]
     - map: [ "outerClothing" ]
+    - map: [ "eyes" ]
     - map: [ "belt" ]
     - map: [ "neck" ]
     - map: [ "back" ]
@@ -274,6 +279,10 @@
           color: "#b8b8b8"
           sprite: Mobs/Species/Skeleton/parts.rsi
           state: head_m
+        - map: ["enum.HumanoidVisualLayers.Eyes"]
+          color: "#008800"
+          sprite: Mobs/Customization/eyes.rsi
+          state: no_eyes
         - map: [ "enum.HumanoidVisualLayers.RArm" ]
           color: "#b8b8b8"
           sprite: Mobs/Species/Skeleton/parts.rsi
@@ -326,6 +335,7 @@
         - map: [ "shoes" ]
         - map: [ "ears" ]
         - map: [ "outerClothing" ]
+        - map: ["eyes"]
         - map: [ "belt" ]
         - map: [ "neck" ]
         - map: [ "back" ]

@@ -11,6 +11,7 @@ using Robust.Shared.Enums;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Serialization;
+using Robust.Shared.Utility;
 
 namespace Content.Shared.Preferences
 {
@@ -23,12 +24,14 @@ namespace Content.Shared.Preferences
         public const int MinimumAge = 18;
         public const int MaximumAge = 120;
         public const int MaxNameLength = 32;
+        public const int MaxDescLength = 512;
 
         private readonly Dictionary<string, JobPriority> _jobPriorities;
         private readonly List<string> _antagPreferences;
 
         private HumanoidCharacterProfile(
             string name,
+            string flavortext,
             string species,
             int age,
             Sex sex,
@@ -41,6 +44,7 @@ namespace Content.Shared.Preferences
             List<string> antagPreferences)
         {
             Name = name;
+            FlavorText = flavortext;
             Species = species;
             Age = age;
             Sex = sex;
@@ -58,7 +62,7 @@ namespace Content.Shared.Preferences
             HumanoidCharacterProfile other,
             Dictionary<string, JobPriority> jobPriorities,
             List<string> antagPreferences)
-            : this(other.Name, other.Species, other.Age, other.Sex, other.Gender, other.Appearance, other.Clothing, other.Backpack,
+            : this(other.Name, other.FlavorText, other.Species, other.Age, other.Sex, other.Gender, other.Appearance, other.Clothing, other.Backpack,
                 jobPriorities, other.PreferenceUnavailable, antagPreferences)
         {
         }
@@ -71,6 +75,7 @@ namespace Content.Shared.Preferences
 
         public HumanoidCharacterProfile(
             string name,
+            string flavortext,
             string species,
             int age,
             Sex sex,
@@ -81,7 +86,7 @@ namespace Content.Shared.Preferences
             IReadOnlyDictionary<string, JobPriority> jobPriorities,
             PreferenceUnavailableMode preferenceUnavailable,
             IReadOnlyList<string> antagPreferences)
-            : this(name, species, age, sex, gender, appearance, clothing, backpack, new Dictionary<string, JobPriority>(jobPriorities),
+            : this(name, flavortext, species, age, sex, gender, appearance, clothing, backpack, new Dictionary<string, JobPriority>(jobPriorities),
                 preferenceUnavailable, new List<string>(antagPreferences))
         {
         }
@@ -90,6 +95,7 @@ namespace Content.Shared.Preferences
         {
             return new(
                 "John Doe",
+                "",
                 SpeciesManager.DefaultSpecies,
                 MinimumAge,
                 Sex.Male,
@@ -118,7 +124,7 @@ namespace Content.Shared.Preferences
             var name = sex.GetName(species, prototypeManager, random);
             var age = random.Next(MinimumAge, MaximumAge);
 
-            return new HumanoidCharacterProfile(name, species, age, sex, gender, HumanoidCharacterAppearance.Random(sex), ClothingPreference.Jumpsuit, BackpackPreference.Backpack,
+            return new HumanoidCharacterProfile(name, "", species, age, sex, gender, HumanoidCharacterAppearance.Random(sex), ClothingPreference.Jumpsuit, BackpackPreference.Backpack,
                 new Dictionary<string, JobPriority>
                 {
                     {SharedGameTicker.FallbackOverflowJob, JobPriority.High}
@@ -126,6 +132,7 @@ namespace Content.Shared.Preferences
         }
 
         public string Name { get; private set; }
+        public string FlavorText { get; private set; }
         public string Species { get; private set; }
         public int Age { get; private set; }
         public Sex Sex { get; private set; }
@@ -141,6 +148,11 @@ namespace Content.Shared.Preferences
         public HumanoidCharacterProfile WithName(string name)
         {
             return new(this) { Name = name };
+        }
+
+        public HumanoidCharacterProfile WithFlavorText(string flavorText)
+        {
+            return new(this) { FlavorText = flavorText };
         }
 
         public HumanoidCharacterProfile WithAge(int age)
@@ -295,6 +307,16 @@ namespace Content.Shared.Preferences
                 name = Sex.GetName(Species);
             }
 
+            string flavortext;
+            if (FlavorText.Length > MaxDescLength)
+            {
+                flavortext = FormattedMessage.RemoveMarkup(FlavorText)[..MaxDescLength];
+            }
+            else
+            {
+                flavortext = FormattedMessage.RemoveMarkup(FlavorText);
+            }
+
             var appearance = HumanoidCharacterAppearance.EnsureValid(Appearance, Species);
 
             var prefsUnavailableMode = PreferenceUnavailable switch
@@ -336,6 +358,7 @@ namespace Content.Shared.Preferences
                 .ToList();
 
             Name = name;
+            FlavorText = flavortext;
             Age = age;
             Sex = sex;
             Gender = gender;

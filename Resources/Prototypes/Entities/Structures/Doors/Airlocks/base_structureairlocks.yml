@@ -69,6 +69,7 @@
       type: WiresBoundUserInterface
   - type: Airtight
     fixVacuum: true
+    noAirWhenFullyAirBlocked: false
   - type: Occluder
   - type: Damageable
     damageContainer: Inorganic
