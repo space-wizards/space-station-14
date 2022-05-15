@@ -1,3 +1,4 @@
+using System.Linq;
 using System.Net;
 using System.Net.Sockets;
 using System.Text;
@@ -109,6 +110,33 @@ namespace Content.Server.Administration.Commands
             {
                 targetPlayer.ConnectedClient.Disconnect(banDef.DisconnectMessage);
             }
+        }
+
+        public CompletionResult GetCompletion(IConsoleShell shell, string[] args)
+        {
+            if (args.Length == 1)
+            {
+                var playerMgr = IoCManager.Resolve<IPlayerManager>();
+                var options = playerMgr.ServerSessions.Select(c => c.Name).OrderBy(c => c).ToArray();
+                return new CompletionResult(options, "<name/user ID>");
+            }
+
+            if (args.Length == 2)
+                return CompletionResult.FromHint("<reason>");
+
+            if (args.Length == 3)
+            {
+                var durations = new[]
+                {
+                    "0",
+                    "1440",
+                    "10080",
+                };
+
+                return new CompletionResult(durations, "[duration, empty/0 = permanent]");
+            }
+
+            return CompletionResult.Empty;
         }
     }
 }
