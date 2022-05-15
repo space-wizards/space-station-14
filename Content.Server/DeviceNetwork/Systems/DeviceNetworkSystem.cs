@@ -3,6 +3,7 @@ using Content.Shared.DeviceNetwork;
 using JetBrains.Annotations;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
+using Robust.Shared.Utility;
 using System.Buffers;
 using System.Diagnostics.CodeAnalysis;
 using static Content.Server.DeviceNetwork.Components.DeviceNetworkComponent;
@@ -20,7 +21,7 @@ namespace Content.Server.DeviceNetwork.Systems
         [Dependency] private readonly IPrototypeManager _protoMan = default!;
         [Dependency] private readonly SharedTransformSystem _transformSystem = default!;
 
-        private readonly Dictionary<ConnectionType, DeviceNet> _networks = new();
+        private readonly DeviceNet[] _networks = new DeviceNet[4]; // Number of ConnectionType enum values
         private readonly Queue<DeviceNetworkPacketEvent> _packets = new();
 
         public override void Initialize()
@@ -29,6 +30,11 @@ namespace Content.Server.DeviceNetwork.Systems
 
             SubscribeLocalEvent<DeviceNetworkComponent, MapInitEvent>(OnMapInit);
             SubscribeLocalEvent<DeviceNetworkComponent, ComponentShutdown>(OnNetworkShutdown);
+
+            InitNetwork(ConnectionType.Private);
+            InitNetwork(ConnectionType.Wired);
+            InitNetwork(ConnectionType.Wireless);
+            InitNetwork(ConnectionType.Apc);
         }
 
         public override void Update(float frameTime)
@@ -61,6 +67,9 @@ namespace Content.Server.DeviceNetwork.Systems
                 _packets.Enqueue(new DeviceNetworkPacketEvent(device.DeviceNetId, address, frequency.Value, device.Address, uid, data));
         }
 
+        private void InitNetwork(ConnectionType connectionType) =>
+            _networks[(int) connectionType] = new(connectionType, _random);
+
         /// <summary>
         /// Automatically attempt to connect some devices when a map starts.
         /// </summary>
@@ -83,21 +92,16 @@ namespace Content.Server.DeviceNetwork.Systems
             if (device.AutoConnect)
                 ConnectDevice(uid, device);
         }
-        private DeviceNet GetNetwork(ConnectionType connectionType)
-        {
-            if (!_networks.TryGetValue(connectionType, out var network))
-            {
-                network = new(connectionType, _random);
-                _networks[connectionType] = network;
-            }
-            return network;
-        }
+
+        private DeviceNet GetNetwork(ConnectionType connectionType) =>
+            _networks[(int) connectionType];
+
         /// <summary>
         /// Automatically disconnect when an entity with a DeviceNetworkComponent shuts down.
         /// </summary>
         private void OnNetworkShutdown(EntityUid uid, DeviceNetworkComponent component, ComponentShutdown args)
         {
-            DisconnectDevice(uid, component, false);
+            GetNetwork(component.DeviceNetId).Remove(component);
         }
 
         /// <summary>
@@ -127,6 +131,62 @@ namespace Content.Server.DeviceNetwork.Systems
             return GetNetwork(device.DeviceNetId).Remove(device);
         }
 
+        public void SetReceiveFrequency(EntityUid uid, uint? frequency, DeviceNetworkComponent? device = null)
+        {
+            if (!Resolve(uid, ref device, false))
+                return;
+
+            if (device.ReceiveFrequency == frequency) return;
+
+            var deviceNet = GetNetwork(device.DeviceNetId);
+            deviceNet.Remove(device);
+            device.ReceiveFrequency = frequency;
+            deviceNet.Add(device);
+        }
+
+        public void SetTransmitFrequency(EntityUid uid, uint? frequency, DeviceNetworkComponent? device = null)
+        {
+            if (Resolve(uid, ref device, false))
+                device.TransmitFrequency = frequency;
+        }
+
+        public void SetReceiveAll(EntityUid uid, bool receiveAll, DeviceNetworkComponent? device = null)
+        {
+            if (!Resolve(uid, ref device, false))
+                return;
+
+            if (device.ReceiveAll == receiveAll) return;
+
+            var deviceNet = GetNetwork(device.DeviceNetId);
+            deviceNet.Remove(device);
+            device.ReceiveAll = receiveAll;
+            deviceNet.Add(device);
+        }
+
+        public void SetAddress(EntityUid uid, string address, DeviceNetworkComponent? device = null)
+        {
+            if (!Resolve(uid, ref device, false))
+                return;
+
+            if (device.Address == address && device.CustomAddress == true) return;
+
+            var deviceNet = GetNetwork(device.DeviceNetId);
+            deviceNet.Remove(device);
+            device.CustomAddress = true;
+            device.Address = address;
+            deviceNet.Add(device);
+        }
+
+        public void RandomizeAddress(EntityUid uid, DeviceNetworkComponent? device = null)
+        {
+            if (!Resolve(uid, ref device, false))
+                return;
+            var deviceNet = GetNetwork(device.DeviceNetId);
+            deviceNet.Remove(device);
+            device.CustomAddress = false;
+            deviceNet.Add(device);
+        }
+
         /// <summary>
         ///     Try to find a device on a network using its address.
         /// </summary>
@@ -142,7 +202,7 @@ namespace Content.Server.DeviceNetwork.Systems
                 {
                     var deviceCopy = ArrayPool<DeviceNetworkComponent>.Shared.Rent(devices.Count);
                     devices.CopyTo(deviceCopy);
-                    SendToConnections(deviceCopy, packet);
+                    SendToConnections(deviceCopy.AsSpan(0, devices.Count), packet);
                     ArrayPool<DeviceNetworkComponent>.Shared.Return(deviceCopy);
                 }
             }
@@ -153,7 +213,7 @@ namespace Content.Server.DeviceNetwork.Systems
                 {
                     totalDevices += devices.Count;
                 }
-                if (TryGetDevice(packet.NetId, packet.Address, out var device) && device.ReceiveFrequency == packet.Frequency)
+                if (TryGetDevice(packet.NetId, packet.Address, out var device) && !device.ReceiveAll && device.ReceiveFrequency == packet.Frequency)
                 {
                     totalDevices += 1;
                 }
@@ -166,12 +226,12 @@ namespace Content.Server.DeviceNetwork.Systems
                 {
                     deviceCopy[totalDevices - 1] = device;
                 }
-                SendToConnections(deviceCopy, packet);
+                SendToConnections(deviceCopy.AsSpan(0, totalDevices), packet);
                 ArrayPool<DeviceNetworkComponent>.Shared.Return(deviceCopy);
             }
         }
 
-        private void SendToConnections(DeviceNetworkComponent[] connections, DeviceNetworkPacketEvent packet)
+        private void SendToConnections(ReadOnlySpan<DeviceNetworkComponent> connections, DeviceNetworkPacketEvent packet)
         {
             var xform = Transform(packet.Sender);
 
