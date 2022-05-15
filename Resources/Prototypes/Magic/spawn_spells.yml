@@ -13,5 +13,5 @@
     prototypes:
       - id: MobCarpMagic
         amount: 3
-    offsetVector2: 0, -1
+    offsetVector2: 0, 1
     temporarySummon: false #This is redundant but I also want to use this prototype as an example

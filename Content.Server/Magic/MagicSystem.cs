@@ -17,6 +17,7 @@ using Robust.Shared.Audio;
 using Robust.Shared.Map;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Random;
 
 namespace Content.Server.Magic;
 
@@ -29,6 +30,7 @@ public sealed class MagicSystem : EntitySystem
     [Dependency] private readonly EntityLookupSystem _lookup = default!;
     [Dependency] private readonly SharedDoorSystem _doorSystem = default!;
     [Dependency] private readonly DoAfterSystem _doAfter = default!;
+    [Dependency] private readonly IRobustRandom _random = default!;
 
     public override void Initialize()
     {
@@ -262,28 +264,40 @@ public sealed class MagicSystem : EntitySystem
         if (args.Handled)
             return;
 
-        var transform = Transform(args.Performer);
         var targetMapCoords = args.Target;
 
-        if (!_mapManager.TryGetGrid(transform.GridID, out var mapGrid))
-            return;
+        SpawnSpellHelper(args.Contents, targetMapCoords, args.TemporarySummon, args.OffsetVector2, _random);
 
-        var getProtos = EntitySpawnCollection.GetSpawns(args.Contents);
+        args.Handled = true;
+    }
 
-        //Loop through the supplied list of entity prototypes.
-        //Starting from initial click coordinates, spawning each uniquely on a new offset position.
-        var offsetCoords = targetMapCoords;
+    /// <summary>
+    /// Loops through a supplied list of entity prototypes and spawns them
+    /// </summary>
+    /// <remarks>
+    /// If an offset of 0, 0 is supplied then the entities will all spawn on the same tile.
+    /// Any other offset will spawn entities starting from the source Map Coordinates and will increment the supplied
+    /// offset
+    /// </remarks>
+    /// <param name="entityEntries"> The list of Entities to spawn in</param>
+    /// <param name="mapCoords"> Map Coordinates where the entities will spawn</param>
+    /// <param name="temporarySummon"> Check to see if the entities should self delete</param>
+    /// <param name="offsetVector2"> A Vector2 offset that the entities will spawn in</param>
+    /// <param name="random"> Resolves param, check out <see cref="EntitySpawnEntry"/> for what to put on the prototype</param>
+    private void SpawnSpellHelper(List<EntitySpawnEntry> entityEntries, MapCoordinates mapCoords, bool temporarySummon, Vector2 offsetVector2, IRobustRandom? random)
+    {
+        var getProtos = EntitySpawnCollection.GetSpawns(entityEntries, random);
+
+        var offsetCoords = mapCoords;
         foreach (var proto in getProtos)
         {
             var entity = Spawn(proto, offsetCoords);
             entity.SnapToGrid();
-            offsetCoords = offsetCoords.Offset(args.OffsetVector2);
+            offsetCoords = offsetCoords.Offset(offsetVector2);
 
-            if (args.TemporarySummon)
+            if (temporarySummon)
                 EnsureComp<SpawnSpellComponent>(entity);
         }
-
-        args.Handled = true;
     }
 
     #endregion
