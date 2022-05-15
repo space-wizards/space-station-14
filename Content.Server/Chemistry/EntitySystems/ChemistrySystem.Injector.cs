@@ -1,4 +1,3 @@
-using System;
 using System.Threading;
 using Content.Server.Body.Components;
 using Content.Server.Chemistry.Components;

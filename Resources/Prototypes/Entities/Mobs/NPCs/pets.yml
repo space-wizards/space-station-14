@@ -46,6 +46,7 @@
       gender: epicene
   - type: SentienceTarget
     flavorKind: corgi
+  - type: Puller
 
 - type: entity
   name: corrupted corgi

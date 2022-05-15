@@ -1,10 +1,6 @@
-using System.Collections.Generic;
-using System.Linq;
 using Content.Server.NodeContainer.NodeGroups;
 using Content.Server.NodeContainer.Nodes;
 using Content.Server.Power.Components;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
 
 namespace Content.Server.Power.NodeGroups
 {

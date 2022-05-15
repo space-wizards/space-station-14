@@ -1,19 +1,13 @@
 using System.Linq;
-using Content.Server.Act;
-using Content.Server.Chat.Managers;
 using Content.Server.Chemistry.Components.SolutionManager;
 using Content.Server.Chemistry.EntitySystems;
-using Content.Server.Popups;
 using Content.Server.Power.Components;
 using Content.Server.Temperature.Components;
 using Content.Server.Temperature.Systems;
 using Content.Server.UserInterface;
-using Content.Shared.Body.Components;
-using Content.Shared.Body.Part;
 using Content.Shared.FixedPoint;
 using Content.Shared.Kitchen;
 using Content.Shared.Kitchen.Components;
-using Content.Shared.Popups;
 using Content.Shared.Power;
 using Content.Shared.Sound;
 using Content.Shared.Tag;
@@ -25,7 +19,7 @@ using Robust.Shared.Player;
 namespace Content.Server.Kitchen.Components
 {
     [RegisterComponent]
-    public sealed class MicrowaveComponent : SharedMicrowaveComponent, ISuicideAct
+    public sealed class MicrowaveComponent : SharedMicrowaveComponent
     {
         [Dependency] private readonly IEntityManager _entities = default!;
 
@@ -96,6 +90,12 @@ namespace Content.Server.Kitchen.Components
             {
                 UserInterface.OnReceiveMessage += UserInterfaceOnReceiveMessage;
             }
+        }
+
+        public void SetCookTime(uint cookTime)
+        {
+            _currentCookTimerTime = cookTime;
+            UIDirty = true;
         }
 
         private void UserInterfaceOnReceiveMessage(ServerBoundUserInterfaceMessage message)
@@ -193,7 +193,7 @@ namespace Content.Server.Kitchen.Components
 
         // ReSharper disable once InconsistentNaming
         // ReSharper disable once IdentifierTypo
-        private void Wzhzhzh()
+        public void Wzhzhzh()
         {
             if (!HasContents)
             {
@@ -211,7 +211,10 @@ namespace Content.Server.Kitchen.Components
                 _entities.EventBus.RaiseLocalEvent(item, ev, false);
 
                 if (ev.Handled)
+                {
+                    UIDirty = true;
                     return;
+                }
 
                 var tagSys = EntitySystem.Get<TagSystem>();
 
@@ -439,59 +442,9 @@ namespace Content.Server.Kitchen.Components
             return true;
         }
 
-        private void ClickSound()
+        public void ClickSound()
         {
             SoundSystem.Play(Filter.Pvs(Owner), _clickSound.GetSound(), Owner, AudioParams.Default.WithVolume(-2f));
-        }
-
-        SuicideKind ISuicideAct.Suicide(EntityUid victim, IChatManager chat)
-        {
-            var headCount = 0;
-
-            if (_entities.TryGetComponent<SharedBodyComponent?>(victim, out var body))
-            {
-                var headSlots = body.GetSlotsOfType(BodyPartType.Head);
-
-                foreach (var slot in headSlots)
-                {
-                    var part = slot.Part;
-
-                    if (part == null ||
-                        !body.TryDropPart(slot, out var dropped))
-                    {
-                        continue;
-                    }
-
-                    foreach (var droppedPart in dropped.Values)
-                    {
-                        if (droppedPart.PartType != BodyPartType.Head)
-                        {
-                            continue;
-                        }
-
-                        Storage.Insert(droppedPart.Owner);
-                        headCount++;
-                    }
-                }
-            }
-
-            var othersMessage = headCount > 1
-                ? Loc.GetString("microwave-component-suicide-multi-head-others-message", ("victim", victim))
-                : Loc.GetString("microwave-component-suicide-others-message", ("victim", victim));
-
-            victim.PopupMessageOtherClients(othersMessage);
-
-            var selfMessage = headCount > 1
-                ? Loc.GetString("microwave-component-suicide-multi-head-message")
-                : Loc.GetString("microwave-component-suicide-message");
-
-            victim.PopupMessage(selfMessage);
-
-            _currentCookTimerTime = 10;
-            ClickSound();
-            UIDirty = true;
-            Wzhzhzh();
-            return SuicideKind.Heat;
         }
     }
 

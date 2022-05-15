@@ -6,7 +6,7 @@ using Content.Shared.Wires;
 namespace Content.Server.Access;
 
 [DataDefinition]
-public class AccessWireAction : BaseWireAction
+public sealed class AccessWireAction : BaseWireAction
 {
     [DataField("color")]
     private Color _statusColor = Color.Green;

@@ -1,15 +1,10 @@
 ﻿using System.Linq;
 using Content.Server.Cleanable;
-using Content.Server.Coordinates.Helpers;
 using Content.Server.Decals;
 using Content.Shared.Chemistry.Reaction;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.FixedPoint;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
 using Robust.Shared.Map;
-using Robust.Shared.Maths;
-using Robust.Shared.Serialization.Manager.Attributes;
 
 namespace Content.Server.Chemistry.TileReactions
 {

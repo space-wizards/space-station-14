@@ -1,9 +1,5 @@
-using System;
 using System.Diagnostics.CodeAnalysis;
 using JetBrains.Annotations;
-using Robust.Shared.GameObjects;
-using Robust.Shared.Localization;
-using Robust.Shared.Maths;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.Wires

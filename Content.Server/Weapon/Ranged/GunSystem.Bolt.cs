@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using Content.Server.Weapon.Ranged.Ammunition.Components;
 using Content.Server.Weapon.Ranged.Barrels.Components;
 using Content.Shared.Examine;
@@ -8,9 +7,7 @@ using Content.Shared.Verbs;
 using Content.Shared.Weapons.Ranged.Barrels.Components;
 using Robust.Shared.Audio;
 using Robust.Shared.Containers;
-using Robust.Shared.GameObjects;
 using Robust.Shared.GameStates;
-using Robust.Shared.Localization;
 using Robust.Shared.Map;
 using Robust.Shared.Player;
 

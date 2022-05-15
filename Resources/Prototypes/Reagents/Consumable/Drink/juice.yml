@@ -1,32 +1,32 @@
 - type: reagent
   id: JuiceApple
-  name: apple juice
+  name: reagent-name-juice-apple
   parent: BaseDrink
-  desc: It's a little piece of Eden.
-  physicalDesc: crisp
+  desc: reagent-desc-juice-apple
+  physicalDesc: reagent-physical-desc-crisp
   color: "#FDAD01"
 
 - type: reagent
   id: JuiceBanana
-  name: banana juice
+  name: reagent-name-juice-banana
   parent: BaseDrink
-  desc: The raw essence of a banana. HONK.
-  physicalDesc: crisp
+  desc: reagent-desc-juice-banana
+  physicalDesc: reagent-physical-desc-crisp
   color: "#FFE777"
 
 - type: reagent
   id: JuiceBerry
-  name: berry juice
+  name: reagent-name-juice-berry
   parent: BaseDrink
-  desc: A delicious blend of several different kinds of berries.
-  physicalDesc: sweet
+  desc: reagent-desc-juice-berry
+  physicalDesc: reagent-physical-desc-sweet
   color: "#660099"
 
 - type: reagent
   id: JuiceBerryPoison
-  name: poison berry juice
-  desc: A surprisingly tasty juice blended from various kinds of very deadly and toxic berries.
-  physicalDesc: sickly
+  name: reagent-name-juice-berry-poison
+  desc: reagent-desc-juice-berry-poison
+  physicalDesc: reagent-physical-desc-sickly
   color: "#6600CC"
   metabolisms:
     Drink:
@@ -52,34 +52,34 @@
 
 - type: reagent
   id: JuiceCarrot
-  name: carrot juice
+  name: reagent-name-juice-carrot
   parent: BaseDrink
-  desc: It's like a carrot, but less crunchy.
-  physicalDesc: crisp
+  desc: reagent-desc-juice-carrot
+  physicalDesc: reagent-physical-desc-crisp
   color: "#FF8820"
 
 - type: reagent
   id: JuiceGrape
-  name: grape juice
+  name: reagent-name-juice-grape
   parent: BaseDrink
-  desc: Freshly squeezed juice from red grapes. Quite sweet.
-  physicalDesc: crisp
+  desc: reagent-desc-juice-grape
+  physicalDesc: reagent-physical-desc-crisp
   color: "#512284"
 
 - type: reagent
   id: JuiceLemon
-  name: lemon juice
+  name: reagent-name-juice-lemon
   parent: BaseDrink
-  desc: This juice is VERY sour.
-  physicalDesc: citric
+  desc: reagent-desc-juice-lemon
+  physicalDesc: reagent-physical-desc-citric
   color: "#fff690"
 
 - type: reagent
   id: JuiceLime
-  name: lime juice
+  name: reagent-name-juice-lime
   parent: BaseDrink
-  desc: The sweet-sour juice of limes.
-  physicalDesc: citric
+  desc: reagent-desc-juice-lime
+  physicalDesc: reagent-physical-desc-citric
   color: "#99bb43"
 
 # /datum/reagent/drink/orangejuice/on_mob_life(var/mob/living/M)
@@ -92,40 +92,40 @@
 
 - type: reagent
   id: JuiceOrange
-  name: orange juice
+  name: reagent-name-juice-orange
   parent: BaseDrink
-  desc: Both delicious AND rich in Vitamin C. What more do you need?
-  physicalDesc: citric
+  desc: reagent-desc-juice-orange
+  physicalDesc: reagent-physical-desc-citric
   color: "#E78108"
 
 - type: reagent
   id: JuicePineapple
-  name: pineapple juice
+  name: reagent-name-juice-pineapple
   parent: BaseDrink
-  desc: The delicious juice of a pineapple.
-  physicalDesc: tropical
+  desc: reagent-desc-juice-pineapple
+  physicalDesc: reagent-physical-desc-tropical
   color: yellow
 
 - type: reagent
   id: JuicePotato
-  name: potato juice
+  name: reagent-name-juice-potato
   parent: BaseDrink
-  desc: Juice of the potato. Bleh.
-  physicalDesc: starchy
+  desc: reagent-desc-juice-potato
+  physicalDesc: reagent-physical-desc-starchy
   color: "#302000"
 
 - type: reagent
   id: JuiceTomato
-  name: tomato juice
+  name: reagent-name-juice-tomato
   parent: BaseDrink
-  desc: Tomatoes made into juice. What a waste of good tomatoes, huh?
-  physicalDesc: saucey
+  desc: reagent-desc-juice-tomato
+  physicalDesc: reagent-physical-desc-saucey
   color: "#731008"
 
 - type: reagent
   id: JuiceWatermelon
-  name: water melon juice
+  name: reagent-name-juice-watermelon
   parent: BaseDrink
-  desc: The delicious juice of a watermelon.
-  physicalDesc: sweet
+  desc: reagent-desc-juice-watermelon
+  physicalDesc: reagent-physical-desc-sweet
   color: "#EF3520"

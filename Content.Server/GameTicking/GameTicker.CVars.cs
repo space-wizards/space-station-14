@@ -1,6 +1,4 @@
-using System;
 using Content.Shared.CCVar;
-using Robust.Shared.ViewVariables;
 
 namespace Content.Server.GameTicking
 {

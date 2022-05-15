@@ -327,7 +327,7 @@ namespace Content.Server.GameTicking
             // This ordering mechanism isn't great (no ordering of minds) but functions
             var listOfPlayerInfoFinal = listOfPlayerInfo.OrderBy(pi => pi.PlayerOOCName).ToArray();
             _playersInGame.Clear();
-            RaiseNetworkEvent(new RoundEndMessageEvent(gamemodeTitle, roundEndText, roundDuration, RoundId, listOfPlayerInfoFinal.Length, listOfPlayerInfoFinal));
+            RaiseNetworkEvent(new RoundEndMessageEvent(gamemodeTitle, roundEndText, roundDuration, RoundId, listOfPlayerInfoFinal.Length, listOfPlayerInfoFinal, LobbySong));
             SendDiscordEndRoundAlert(roundDuration);
         }
 
@@ -354,6 +354,7 @@ namespace Content.Server.GameTicking
             RandomizeLobbyBackground();
             ResettingCleanup();
             SendDiscordNewRoundAlert();
+            SoundSystem.Play(Filter.Broadcast(), new SoundCollectionSpecifier("RoundEnd").GetSound());
 
             if (!LobbyEnabled)
             {

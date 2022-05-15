@@ -1,12 +1,7 @@
-using System;
 using Content.Shared.ActionBlocker;
-using Robust.Shared.GameObjects;
 using Robust.Shared.GameStates;
-using Robust.Shared.IoC;
-using Robust.Shared.Log;
 using Robust.Shared.Map;
 using Robust.Shared.Serialization;
-using Robust.Shared.ViewVariables;
 
 namespace Content.Shared.Shuttles.Components
 {

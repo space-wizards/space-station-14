@@ -1,10 +1,8 @@
 using Content.Server.DeviceNetwork.Components;
 using Content.Server.NodeContainer;
 using JetBrains.Annotations;
-using Robust.Shared.GameObjects;
 using Content.Server.Power.EntitySystems;
 using Content.Server.Power.Nodes;
-using Robust.Shared.IoC;
 
 namespace Content.Server.DeviceNetwork.Systems
 {

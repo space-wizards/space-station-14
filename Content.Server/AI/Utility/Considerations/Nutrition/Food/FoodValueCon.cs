@@ -2,8 +2,6 @@ using Content.Server.AI.WorldState;
 using Content.Server.AI.WorldState.States;
 using Content.Server.Chemistry.EntitySystems;
 using Content.Server.Nutrition.Components;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
 
 namespace Content.Server.AI.Utility.Considerations.Nutrition.Food
 {
