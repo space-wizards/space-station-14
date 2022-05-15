@@ -1,5 +1,3 @@
-using Content.Shared.Damage;
-
 namespace Content.Server.Bed.Components
 {
     [RegisterComponent]

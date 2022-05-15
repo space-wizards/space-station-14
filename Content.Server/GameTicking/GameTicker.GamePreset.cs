@@ -1,4 +1,3 @@
-using System;
 using System.Diagnostics.CodeAnalysis;
 using Content.Server.GameTicking.Presets;
 using Content.Server.GameTicking.Rules;
@@ -8,8 +7,6 @@ using Content.Shared.Damage;
 using Content.Shared.Damage.Prototypes;
 using Content.Shared.MobState.Components;
 using Robust.Server.Player;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
 
 namespace Content.Server.GameTicking
 {
@@ -154,7 +151,7 @@ namespace Content.Server.GameTicking
             if (handleEv.Handled)
                 return handleEv.Result;
 
-            var playerEntity = mind.OwnedEntity;
+            var playerEntity = mind.CurrentEntity;
 
             var entities = IoCManager.Resolve<IEntityManager>();
             if (entities.HasComponent<GhostComponent>(playerEntity))

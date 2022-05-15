@@ -1,11 +1,7 @@
-using System.Collections.Generic;
 using Content.Server.AI.Pathfinding.Pathfinders;
 using Content.Shared.AI;
 using JetBrains.Annotations;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
 using Robust.Shared.Map;
-using Robust.Shared.Maths;
 
 namespace Content.Server.AI.Pathfinding
 {

@@ -1,6 +1,4 @@
-﻿using System;
-using Content.Shared.Atmos;
-using Robust.Shared.ViewVariables;
+﻿using Content.Shared.Atmos;
 
 namespace Content.Server.Atmos
 {

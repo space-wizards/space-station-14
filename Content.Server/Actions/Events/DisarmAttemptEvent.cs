@@ -1,5 +1,3 @@
-using Robust.Shared.GameObjects;
-
 namespace Content.Server.Actions.Events
 {
     public sealed class DisarmAttemptEvent : CancellableEntityEventArgs
