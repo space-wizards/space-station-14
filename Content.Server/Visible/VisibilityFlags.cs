@@ -1,5 +1,3 @@
-using System;
-
 namespace Content.Server.Visible
 {
     [Flags]

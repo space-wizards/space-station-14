@@ -28,3 +28,6 @@ ent-ClothingHeadHatShrineMaidenWig = парик святой девы
 ent-ClothingHeadHatCone = предупредительный конус
     .desc = Этот конус пытается вас о чем-то предупредить!
     .suffix = { "" }
+ent-ClothingHeadHatCatEars = cat ears
+    .desc = NYAH!
+    .suffix = { "" }

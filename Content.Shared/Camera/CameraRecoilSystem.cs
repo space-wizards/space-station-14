@@ -1,8 +1,4 @@
-using System;
 using JetBrains.Annotations;
-using Robust.Shared.GameObjects;
-using Robust.Shared.Log;
-using Robust.Shared.Maths;
 using Robust.Shared.Player;
 using Robust.Shared.Serialization;
 

@@ -1,13 +1,7 @@
 using Content.Shared.Damage.Prototypes;
-using Robust.Shared.IoC;
-using Robust.Shared.Log;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.Dictionary;
 using Robust.Shared.Utility;
-using Robust.Shared.ViewVariables;
-using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Text.Json.Serialization;
 using Content.Shared.FixedPoint;

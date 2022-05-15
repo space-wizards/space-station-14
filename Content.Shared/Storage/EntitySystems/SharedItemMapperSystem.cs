@@ -1,9 +1,6 @@
-﻿using System.Collections.Generic;
-using Content.Shared.Storage.Components;
+﻿using Content.Shared.Storage.Components;
 using JetBrains.Annotations;
 using Robust.Shared.Containers;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
 
 namespace Content.Shared.Storage.EntitySystems
 {

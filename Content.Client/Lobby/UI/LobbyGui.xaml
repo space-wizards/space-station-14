@@ -11,9 +11,8 @@
          xmlns:lobbyUi="clr-namespace:Content.Client.Lobby.UI"
          xmlns:info="clr-namespace:Content.Client.Info">
     <Control>
-        <!-- Parallax background -->
-        <parallax:ParallaxControl />
-        <TextureRect Access="Public" Name = "Background" Stretch="Scale"/>
+        <!-- Background -->
+        <TextureRect Access="Public" Name = "Background" Stretch="KeepAspectCovered"/>
         <Control Margin="10 10 10 10" >
             <!-- Left Top Panel -->
                 <PanelContainer StyleClasses="AngleRect" HorizontalAlignment="Left" Name = "LeftSideTop" VerticalExpand="True"  VerticalAlignment="Top" >

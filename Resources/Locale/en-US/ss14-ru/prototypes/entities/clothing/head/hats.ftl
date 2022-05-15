@@ -118,3 +118,6 @@ ent-ClothingHeadPaperSack = papersack hat
 ent-ClothingHeadPaperSackSmile = smiling papersack hat
     .desc = A paper sack with crude holes cut out for eyes and a sketchy smile drawn on the front. Not creepy at all.
     .suffix = { "" }
+ent-ClothingHeadFishCap = fishing cap
+    .desc = Women fear me. Fish fear me. Men turn their eyes away from me. As I walk no beast dares make a sound in my presence. I am alone on this barren Earth.
+    .suffix = { "" }

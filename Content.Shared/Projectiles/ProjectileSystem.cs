@@ -1,4 +1,3 @@
-using Robust.Shared.GameObjects;
 using Robust.Shared.Physics.Dynamics;
 
 namespace Content.Shared.Projectiles

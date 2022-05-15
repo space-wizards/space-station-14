@@ -1,6 +1,9 @@
 ent-RedLaser = red laser
     .desc = { "" }
     .suffix = { "" }
+ent-RedMediumLaser = red medium laser
+    .desc = { "" }
+    .suffix = { "" }
 ent-Pulse = pulse
     .desc = { "" }
     .suffix = { "" }

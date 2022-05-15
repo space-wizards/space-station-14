@@ -1,12 +1,10 @@
 #nullable enable annotations
 using System.Threading.Tasks;
-using Content.Client.Items.Components;
 using Content.Server.Hands.Components;
 using Content.Server.Interaction;
 using Content.Shared.Hands.Components;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Interaction;
-using Content.Shared.Item;
 using Content.Shared.Weapons.Melee;
 using NUnit.Framework;
 using Robust.Shared.Containers;

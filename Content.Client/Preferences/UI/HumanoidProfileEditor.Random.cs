@@ -29,9 +29,8 @@ namespace Content.Client.Preferences.UI
         private void RandomizeName()
         {
             if (Profile == null) return;
-            var firstName = _random.Pick(Profile.Sex.FirstNames(_prototypeManager).Values);
-            var lastName = _random.Pick(Profile.Sex.LastNames(_prototypeManager).Values);
-            SetName($"{firstName} {lastName}");
+            var name = Profile.Sex.GetName(Profile.Species, _prototypeManager, _random);
+            SetName(name);
             UpdateNameEdit();
         }
     }

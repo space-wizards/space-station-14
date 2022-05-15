@@ -244,7 +244,7 @@
   id: PercussionInstrument
 
 - type: Tag
-  id: Plastic
+  id: Pickaxe
 
 - type: Tag
   id: Pill
@@ -266,6 +266,9 @@
 
 - type: Tag
   id: PlantSampleTaker
+  
+- type: Tag
+  id: Plastic
 
 - type: Tag
   id: Powerdrill

@@ -1,11 +1,9 @@
-using System;
 using Content.Shared.Chemistry.Components;
-using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.Kitchen.Components
 {
-    
+
     public abstract class SharedReagentGrinderComponent : Component
     {
         public static string BeakerSlotId = "ReagentGrinder-reagentContainerContainer";

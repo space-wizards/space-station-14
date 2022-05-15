@@ -7,3 +7,6 @@ ent-MobCarpMagic = мэджикарп
 ent-MobCarpHolo = голокарп
     .desc = Карп из голографической энергии.
     .suffix = { "" }
+ent-MobCarpSalvage = { ent-MobCarp }
+    .suffix = Salvage Ruleset
+    .desc = { ent-MobCarp.desc }

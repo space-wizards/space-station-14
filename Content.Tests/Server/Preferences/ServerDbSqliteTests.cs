@@ -35,14 +35,20 @@ namespace Content.Tests.Server.Preferences
   - Aaliyah
 
 - type: dataset
-  id: names_last
+  id: names_last_male
   values:
-  - Ackerley";
+  - Ackerley
+
+- type: dataset
+  id: names_last_female
+  values:
+  - Ackerla";
 
         private static HumanoidCharacterProfile CharlieCharlieson()
         {
             return new(
                 "Charlie Charlieson",
+                "The biggest boy around.",
                 "Human",
                 21,
                 Sex.Male,

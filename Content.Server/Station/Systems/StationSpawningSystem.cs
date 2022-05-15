@@ -1,20 +1,22 @@
 ﻿using Content.Server.Access.Systems;
 using Content.Server.CharacterAppearance.Systems;
+using Content.Server.DetailExaminable;
 using Content.Server.Hands.Components;
 using Content.Server.Hands.Systems;
 using Content.Server.PDA;
 using Content.Server.Roles;
 using Content.Server.Station.Components;
 using Content.Shared.Access.Components;
+using Content.Shared.CCVar;
 using Content.Shared.Inventory;
 using Content.Shared.PDA;
 using Content.Shared.Preferences;
 using Content.Shared.Roles;
 using Content.Shared.Species;
 using JetBrains.Annotations;
+using Robust.Shared.Configuration;
 using Robust.Shared.Map;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Random;
 using Robust.Shared.Utility;
 
 namespace Content.Server.Station.Systems;
@@ -26,9 +28,8 @@ namespace Content.Server.Station.Systems;
 [PublicAPI]
 public sealed class StationSpawningSystem : EntitySystem
 {
-    [Dependency] private readonly IMapManager _mapManager = default!;
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
-    [Dependency] private readonly IRobustRandom _random = default!;
+    [Dependency] private readonly IConfigurationManager _configurationManager = default!;
     [Dependency] private readonly HandsSystem _handsSystem = default!;
     [Dependency] private readonly HumanoidAppearanceSystem _humanoidAppearanceSystem = default!;
     [Dependency] private readonly IdCardSystem _cardSystem = default!;
@@ -100,6 +101,10 @@ public sealed class StationSpawningSystem : EntitySystem
         {
             _humanoidAppearanceSystem.UpdateFromProfile(entity, profile);
             EntityManager.GetComponent<MetaDataComponent>(entity).EntityName = profile.Name;
+            if (profile.FlavorText != "" && _configurationManager.GetCVar(CCVars.FlavorText))
+            {
+                EntityManager.AddComponent<DetailExaminableComponent>(entity).Content = profile.FlavorText;
+            }
         }
 
         foreach (var jobSpecial in job?.Prototype.Special ?? Array.Empty<JobSpecial>())

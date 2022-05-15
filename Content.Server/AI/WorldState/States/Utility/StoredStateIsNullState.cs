@@ -1,5 +1,3 @@
-using System;
-
 namespace Content.Server.AI.WorldState.States.Utility
 {
     public sealed class StoredStateIsNullState : PlanningStateData<Type>

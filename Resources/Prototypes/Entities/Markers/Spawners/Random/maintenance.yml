@@ -19,6 +19,7 @@
         - BalloonCorgi
         - PonderingOrb
         - Skub
+        - ClothingHeadHatCatEars
       rareChance: 0.01
       prototypes:
         - Lighter
@@ -100,5 +101,6 @@
         - Welder
         - FlareGun
         - Spear
+        - LidSalami
       chance: 0.6
       offset: 0.0
