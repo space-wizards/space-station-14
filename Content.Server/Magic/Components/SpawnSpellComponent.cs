@@ -6,6 +6,7 @@
 [RegisterComponent]
 public class SpawnSpellComponent : Component
 {
+    [ViewVariables]
     [DataField("lifetime")]
-    public float Lifetime = 2f;
+    public float Lifetime = 10f;
 }

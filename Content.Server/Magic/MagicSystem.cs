@@ -1,10 +1,8 @@
-﻿using Content.Server.Construction.Conditions;
-using Content.Server.Coordinates.Helpers;
+﻿using Content.Server.Coordinates.Helpers;
 using Content.Server.Decals;
 using Content.Server.DoAfter;
 using Content.Server.Doors.Components;
 using Content.Server.Magic.Events;
-using Content.Server.Wieldable;
 using Content.Shared.Actions;
 using Content.Shared.Actions.ActionTypes;
 using Content.Shared.Doors.Components;
@@ -12,7 +10,6 @@ using Content.Shared.Doors.Systems;
 using Content.Shared.Interaction.Events;
 using Content.Shared.Maps;
 using Content.Shared.Storage;
-using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.Map;
 using Robust.Shared.Player;
@@ -266,7 +263,7 @@ public sealed class MagicSystem : EntitySystem
 
         var targetMapCoords = args.Target;
 
-        SpawnSpellHelper(args.Contents, targetMapCoords, args.TemporarySummon, args.OffsetVector2, _random);
+        SpawnSpellHelper(args.Contents, targetMapCoords, args.TemporarySummon, args.OffsetVector2, args.Lifetime, _random);
 
         args.Handled = true;
     }
@@ -284,7 +281,7 @@ public sealed class MagicSystem : EntitySystem
     /// <param name="temporarySummon"> Check to see if the entities should self delete</param>
     /// <param name="offsetVector2"> A Vector2 offset that the entities will spawn in</param>
     /// <param name="random"> Resolves param, check out <see cref="EntitySpawnEntry"/> for what to put on the prototype</param>
-    private void SpawnSpellHelper(List<EntitySpawnEntry> entityEntries, MapCoordinates mapCoords, bool temporarySummon, Vector2 offsetVector2, IRobustRandom? random)
+    private void SpawnSpellHelper(List<EntitySpawnEntry> entityEntries, MapCoordinates mapCoords, bool temporarySummon, Vector2 offsetVector2, float lifetime, IRobustRandom? random)
     {
         var getProtos = EntitySpawnCollection.GetSpawns(entityEntries, random);
 
@@ -296,7 +293,10 @@ public sealed class MagicSystem : EntitySystem
             offsetCoords = offsetCoords.Offset(offsetVector2);
 
             if (temporarySummon)
-                EnsureComp<SpawnSpellComponent>(entity);
+            {
+                var comp = EnsureComp<SpawnSpellComponent>(entity);
+                comp.Lifetime = lifetime;
+            }
         }
     }
 
