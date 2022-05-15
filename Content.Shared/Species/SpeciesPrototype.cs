@@ -48,8 +48,11 @@ public sealed class SpeciesPrototype : IPrototype
     [DataField("femaleFirstNames")]
     public string FemaleFirstNames { get; } = "names_first_female";
 
-    [DataField("lastNames")]
-    public string LastNames { get; } = "names_last";
+    [DataField("maleLastNames")]
+    public string MaleLastNames { get; } = "names_last_male";
+
+    [DataField("femaleLastNames")]
+    public string FemaleLastNames { get; } = "names_last_female";
 
     [DataField("naming")]
     public SpeciesNaming Naming { get; } = SpeciesNaming.FirstLast;
@@ -59,7 +62,7 @@ public enum SpeciesSkinColor : byte
 {
     HumanToned,
     Hues,
-    TintedHues, //This gives a color tint to a humanoid's skin (10% saturation with full hue range). 
+    TintedHues, //This gives a color tint to a humanoid's skin (10% saturation with full hue range).
 }
 
 public enum SpeciesNaming : byte
