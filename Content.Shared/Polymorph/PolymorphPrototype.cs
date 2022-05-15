@@ -34,48 +34,30 @@ namespace Content.Shared.Polymorph
         public string Entity = string.Empty;
 
         /// <summary>
+        /// The duration of the transformation
+        /// can be null if there is not one
+        /// </summary>
+        [DataField("duration", serverOnly: true)]
+        public int? Duration = null;
+
+        /// <summary>
         /// whether or not the target can transform as will
         /// set to true for things like polymorph spells and curses
         /// </summary>
         [DataField("forced", serverOnly: true)]
         public bool Forced = false;
 
-        /*
         /// <summary>
-        /// Since disease isn't mapped to metabolism or anything,
-        /// it needs something to control its tickrate
+        /// Whether or not the target will drop their inventory
+        /// when they are polymorphed (includes items in hands)
         /// </summary>
-        public float Accumulator = 0f;
+        [DataField("dropInventory", serverOnly: true)]
+        public bool DropInventory = false;
+
         /// <summary>
-        /// List of effects the disease has that will
-        /// run every second (by default anyway)
+        /// Whether or not the polymorph reverts when the entity dies.
         /// </summary>
-        [DataField("effects", serverOnly: true)]
-        public readonly List<DiseaseEffect> Effects = new(0);
-        /// <summary>
-        /// List of SPECIFIC CURES the disease has that will
-        /// be checked every second.
-        /// Stuff like spaceacillin operates outside this.
-        /// </summary>
-        [DataField("cures", serverOnly: true)]
-        public readonly List<DiseaseCure> Cures = new(0);
-        /// <summary>
-        /// This flatly reduces the probabilty disease medicine
-        /// has to cure it every tick. Although, since spaceacillin is
-        /// used as a reference and it has 0.15 chance, this is
-        /// a base 33% reduction in cure chance
-        /// </summary>
-        [DataField("cureResist", serverOnly: true)]
-        public float CureResist = 0.05f;
-        /// <summary>
-        /// Whether the disease can infect other people.
-        /// Since this isn't just a virology thing, this
-        /// primary determines what sort of disease it is.
-        /// This also affects things like the vaccine machine.
-        /// You can't print a cancer vaccine
-        /// </summary>
-        [DataField("infectious", serverOnly: true)]
-        public bool Infectious = true;
-        */
+        [DataField("revertOnDeath", serverOnly: true)]
+        public bool RevertOnDeath = true;
     }
 }

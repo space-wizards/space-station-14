@@ -22,6 +22,13 @@ namespace Content.Server.Polymorph.Components
         public EntityUid? Parent = null;
 
         /// <summary>
+        /// The amount of time that has passed since the entity was created
+        /// used for tracking the duration
+        /// </summary>
+        [DataField("time")]
+        public float Time = 0;
+
+        /// <summary>
         /// The container that holds the parent entity while transformed
         /// </summary>
         [DataField("parentContainer")]

@@ -6,6 +6,9 @@ using Content.Server.Mind.Components;
 using Content.Server.Polymorph.Components;
 using Content.Shared.Actions;
 using Content.Shared.Actions.ActionTypes;
+using Content.Shared.Damage;
+using Content.Shared.MobState.Components;
+using Content.Shared.MobState.State;
 using Robust.Server.Containers;
 using Robust.Shared.Containers;
 using Robust.Shared.Prototypes;
@@ -16,6 +19,7 @@ namespace Content.Server.Polymorph.Systems
     {
         [Dependency] private readonly ActionsSystem _actions = default!;
         [Dependency] private readonly ContainerSystem _container = default!;
+        [Dependency] private readonly DamageableSystem _damageable = default!;
 
         public override void Initialize()
         {
@@ -23,11 +27,19 @@ namespace Content.Server.Polymorph.Systems
 
             SubscribeLocalEvent<PolymorphedEntityComponent, ComponentInit>(OnComponentInit);
             SubscribeLocalEvent<PolymorphedEntityComponent, AfterPolymorphEvent>(OnStartup);
-            SubscribeLocalEvent<PolymorphedEntityComponent, RevertTransformationActionEvent>(Revert);
+            SubscribeLocalEvent<PolymorphedEntityComponent, RevertPolymorphActionEvent>(OnRevertPolymorphActionEvent);
         }
 
-        public void Revert(EntityUid uid, PolymorphedEntityComponent component, RevertTransformationActionEvent args)
+        private void OnRevertPolymorphActionEvent(EntityUid uid, PolymorphedEntityComponent component, RevertPolymorphActionEvent args)
         {
+            Revert(uid);
+        }
+
+        public void Revert(EntityUid uid)
+        {
+            if (!TryComp<PolymorphedEntityComponent>(uid, out var component))
+                return;
+
             for(int i = 0; i < component.ParentContainer.ContainedEntities.Count; i++)
             {
                 var entity = component.ParentContainer.ContainedEntities[i];
@@ -38,10 +50,30 @@ namespace Content.Server.Polymorph.Systems
                     if (TryComp<MindComponent>(uid, out var mind) && mind.Mind != null)
                     {
                         mind.Mind.TransferTo(entity);
+                        
                     }
                 }
             }
             QueueDel(uid);
+        }
+
+        public void GetRelativeDamage(EntityUid oldent, EntityUid newent)
+        {
+            if (!TryComp<DamageableComponent>(oldent, out var olddamage)
+                || !TryComp<DamageableComponent>(newent, out var newdamage))
+                return;
+
+            if (!TryComp<MobStateComponent>(oldent, out var oldstate))
+                return;
+            
+            int maxhealthold = 0;
+            foreach (var state in oldstate._highestToLowestStates)
+            {
+                if(state.Value.IsDead())
+                {
+                    maxhealthold = state.Key;
+                }
+            }
         }
 
         private void OnStartup(EntityUid uid, PolymorphedEntityComponent component, AfterPolymorphEvent args)
@@ -51,7 +83,7 @@ namespace Content.Server.Polymorph.Systems
 
             var act = new InstantAction()
             {
-                Event = new RevertTransformationActionEvent(),
+                Event = new RevertPolymorphActionEvent(),
                 EntityIcon = component.Parent,
                 Name = Loc.GetString("polymorph-revert-action-name"),
                 Description = Loc.GetString("polymorph-revert-action-description"),
@@ -64,7 +96,29 @@ namespace Content.Server.Polymorph.Systems
         {
             component.ParentContainer = _container.EnsureContainer<Container>(uid, component.Name);
         }
-    }
-}
 
-public sealed class RevertTransformationActionEvent : InstantActionEvent { };
+        public override void Update(float frameTime)
+        {
+            base.Update(frameTime);
+
+            foreach (var entity in EntityQuery<PolymorphedEntityComponent>())
+            {
+                entity.Time += frameTime;
+
+                if(entity.Prototype.Duration != null && entity.Time >= entity.Prototype.Duration)
+                {
+                    Revert(entity.Owner);
+                }
+
+                if(entity.Prototype.RevertOnDeath &&
+                    TryComp<MobStateComponent>(entity.Owner, out var mob) &&
+                    mob.IsDead())
+                {
+                    Revert(entity.Owner);
+                }
+            }
+        }
+    }
+
+    public sealed class RevertPolymorphActionEvent : InstantActionEvent { };
+}
