@@ -118,3 +118,6 @@ ent-ClothingHeadPaperSack = шапка из бумажного пакета
 ent-ClothingHeadPaperSackSmile = улыбающаяся шапка из бумажного пакета
     .desc = Бумажный пакет с грубо вырезанными отверстиями для глаз и нарисованной улыбкой на лицевой стороне. Совсем не жуткая.
     .suffix = { "" }
+ent-ClothingHeadFishCap = fishing cap
+    .desc = Women fear me. Fish fear me. Men turn their eyes away from me. As I walk no beast dares make a sound in my presence. I am alone on this barren Earth.
+    .suffix = { "" }

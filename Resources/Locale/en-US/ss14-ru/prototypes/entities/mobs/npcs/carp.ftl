@@ -7,3 +7,6 @@ ent-MobCarpMagic = magicarp
 ent-MobCarpHolo = holocarp
     .desc = Carp made out of holographic energies.
     .suffix = { "" }
+ent-MobCarpSalvage = { ent-MobCarp }
+    .suffix = Salvage Ruleset
+    .desc = { ent-MobCarp.desc }

@@ -28,3 +28,6 @@ ent-CrateEngineeringGenerator = ящик с генератором
 ent-CrateEngineeringSolar = ящик со сборными солнечными панелями
     .desc = { ent-CrateEngineering.desc }
     .suffix = { "" }
+ent-CrateEngineeringShuttle = shuttle power crate
+    .desc = { ent-CrateEngineeringSecure.desc }
+    .suffix = { "" }

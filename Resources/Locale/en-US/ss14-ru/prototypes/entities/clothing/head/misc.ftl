@@ -28,3 +28,6 @@ ent-ClothingHeadHatShrineMaidenWig = shrine maiden's wig
 ent-ClothingHeadHatCone = warning cone
     .desc = This cone is trying to warn you of something!
     .suffix = { "" }
+ent-ClothingHeadHatCatEars = cat ears
+    .desc = NYAH!
+    .suffix = { "" }
