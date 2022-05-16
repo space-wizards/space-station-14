@@ -23,7 +23,7 @@ public sealed partial class PathfindingSystem
 
     public override void Initialize()
     {
-        SubscribeLocalEvent<RoundRestartCleanupEvent>(Reset);
+        SubscribeLocalEvent<RoundRestartCleanupEvent>(OnRoundRestart);
         SubscribeLocalEvent<CollisionChangeEvent>(OnCollisionChange);
         SubscribeLocalEvent<MoveEvent>(OnMoveEvent);
         SubscribeLocalEvent<AccessReaderChangeEvent>(OnAccessChange);
@@ -206,7 +206,7 @@ public sealed partial class PathfindingSystem
         return true;
     }
 
-    public void Reset(RoundRestartCleanupEvent ev)
+    public void OnRoundRestart(RoundRestartCleanupEvent ev)
     {
         _collidableUpdateQueue.Clear();
         _moveUpdateQueue.Clear();
