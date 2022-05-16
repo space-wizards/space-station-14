@@ -1,11 +1,14 @@
 ﻿using Content.Shared.Chat.TypingIndicator;
 using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
+using Robust.Shared.Prototypes;
 
 namespace Content.Client.Chat.TypingIndicator;
 
 public sealed class TypingIndicatorVisualizerSystem : VisualizerSystem<TypingIndicatorComponent>
 {
+    [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
+
     public override void Initialize()
     {
         base.Initialize();
@@ -17,9 +20,14 @@ public sealed class TypingIndicatorVisualizerSystem : VisualizerSystem<TypingInd
         if (!TryComp(uid, out SpriteComponent? sprite))
             return;
 
+        if (!_prototypeManager.TryIndex<TypingIndicatorPrototype>(component.Prototype, out var proto))
+        {
+            Logger.Error($"Unknown typing indicator id: {component.Prototype}");
+            return;
+        }
+
         var layer = sprite.LayerMapReserveBlank(TypingIndicatorLayers.Base);
-        sprite.LayerSetRSI(layer, "Effects/speech.rsi");
-        sprite.LayerSetState(layer, "default0");
+        sprite.LayerSetSprite(layer, proto.Icon);
         sprite.LayerSetVisible(layer, false);
         sprite.LayerSetShader(layer, "unshaded");
         sprite.LayerSetOffset(layer, new Vector2(0.5f, 0.5f));
@@ -33,6 +41,9 @@ public sealed class TypingIndicatorVisualizerSystem : VisualizerSystem<TypingInd
             return;
 
         args.Component.TryGetData(TypingIndicatorVisuals.IsTyping, out bool isTyping);
-        sprite.LayerSetVisible(TypingIndicatorLayers.Base, isTyping);
+        if (sprite.LayerMapTryGet(TypingIndicatorLayers.Base, out var layer))
+        {
+            sprite.LayerSetVisible(layer, isTyping);
+        }
     }
 }

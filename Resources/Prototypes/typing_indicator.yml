@@ -1,0 +1,5 @@
+﻿- type: typingIndicator
+  id: default
+  icon:
+    sprite: /Textures/Effects/speech.rsi
+    state: default0

@@ -4,7 +4,7 @@ namespace Content.Shared.Chat.TypingIndicator;
 
 /// <summary>
 ///     Networked event from client.
-///     Raised on server when client started/stopped typing in chat input field.
+///     Send to server when client started/stopped typing in chat input field.
 /// </summary>
 [Serializable, NetSerializable]
 public sealed class TypingChangedEvent : EntityEventArgs
