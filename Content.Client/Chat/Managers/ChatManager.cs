@@ -438,7 +438,7 @@ namespace Content.Client.Chat.Managers
         {
             if (!_entityManager.EntityExists(msg.SenderEntity))
             {
-                _sawmill.Warning("Got local chat message with invalid sender entity: {0}", msg.SenderEntity);
+                _sawmill.Debug("Got local chat message with invalid sender entity: {0}", msg.SenderEntity);
                 return;
             }
 
