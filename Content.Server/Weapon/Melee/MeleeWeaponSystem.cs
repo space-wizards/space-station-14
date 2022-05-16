@@ -13,6 +13,7 @@ using Content.Shared.Database;
 using Content.Shared.Hands;
 using Content.Shared.Interaction;
 using Content.Shared.Inventory;
+using Content.Shared.Inventory.Events;
 using Content.Shared.Item;
 using Content.Shared.Physics;
 using Content.Shared.Weapons.Melee;
@@ -42,10 +43,10 @@ namespace Content.Server.Weapon.Melee
             SubscribeLocalEvent<MeleeWeaponComponent, ClickAttackEvent>(OnClickAttack);
             SubscribeLocalEvent<MeleeWeaponComponent, WideAttackEvent>(OnWideAttack);
             SubscribeLocalEvent<MeleeChemicalInjectorComponent, MeleeHitEvent>(OnChemicalInjectorHit);
-            SubscribeLocalEvent<MeleeChemicalInjectorComponent, DidEquipHandEvent>(OnDidEquipHandEvent);
+            SubscribeLocalEvent<MeleeChemicalInjectorComponent, PickupAttemptEvent>(OnPickupAttemptEvent);
         }
 
-        private void OnDidEquipHandEvent(EntityUid uid, MeleeChemicalInjectorComponent component, DidEquipHandEvent args)
+        private void OnPickupAttemptEvent(EntityUid uid, MeleeChemicalInjectorComponent component, PickupAttemptEvent args)
         {
             if (component.RequiredProtection == null)
                 return;
