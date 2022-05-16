@@ -15,10 +15,6 @@
     bodyType: KinematicController
   - type: HeatResistance
   - type: CombatMode
-    disarmAction:
-      name: Disarm
-      enabled: false
-      autoPopulate: false
   - type: Internals
   - type: Examiner
   - type: Speech

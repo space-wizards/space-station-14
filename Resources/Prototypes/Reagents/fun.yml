@@ -21,9 +21,9 @@
       - !type:AdjustReagent
         conditions:
         - !type:ReagentThreshold
-          reagent: CarpToxin
+          reagent: CarpoToxin
           min: 1
-        reagent: CarpToxin
+        reagent: CarpoToxin
         amount: -3
 
 - type: reagent

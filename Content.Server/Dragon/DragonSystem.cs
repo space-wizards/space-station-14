@@ -148,7 +148,7 @@ namespace Content.Server.Dragon
                 _popupSystem.PopupEntity(Loc.GetString("devour-action-popup-message-structure"), dragonuid, Filter.Entities(dragonuid));
                 component.CancelToken = new CancellationTokenSource();
 
-                _doAfterSystem.DoAfter(new DoAfterEventArgs(dragonuid, component.DevourTimer, component.CancelToken.Token, target)
+                _doAfterSystem.DoAfter(new DoAfterEventArgs(dragonuid, component.DevourTime, component.CancelToken.Token, target)
                 {
                     UserFinishedEvent = new DragonDevourComplete(dragonuid, target),
                     UserCancelledEvent = new DragonDevourCancelledEvent(),
@@ -161,6 +161,8 @@ namespace Content.Server.Dragon
 
         private void OnDragonSpawnAction(EntityUid dragonuid, DragonComponent component, DragonSpawnActionEvent args)
         {
+            if (component.SpawnPrototype == null) return;
+
             // If dragon has spawns then add one.
             if (component.SpawnsLeft > 0)
             {

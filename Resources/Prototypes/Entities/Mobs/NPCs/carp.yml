@@ -80,10 +80,6 @@
     name: Sentient Carp
     description: Help the dragon flood the station with carps!
   - type: CombatMode
-    disarmAction:
-      name: Disarm
-      enabled: false
-      autoPopulate: false
 
 - type: entity
   name: magicarp

@@ -44,14 +44,14 @@ namespace Content.Server.Dragon
         /// </remarks>
         /// </summary>
         [DataField("devourTime")]
-        public float DevourTimer = 15f;
+        public float DevourTime = 15f;
 
         [DataField("spawnCount")] public int SpawnsLeft = 2;
 
         [DataField("maxSpawnCount")] public int MaxSpawns = 2;
 
         [DataField("spawnProto", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
-        public string? SpawnPrototype;
+        public string? SpawnPrototype = "MobCarpSentient";
 
         [DataField("deathSound")]
         public SoundSpecifier? DeathSound = new SoundPathSpecifier("/Audio/Animals/sound_creatures_space_dragon_roar.ogg");
