@@ -2,7 +2,6 @@
 using Robust.Client.Player;
 using Robust.Shared.Console;
 using Robust.Shared.ContentPack;
-using Robust.Shared.Utility;
 
 namespace Content.Client.Administration.Commands;
 
@@ -27,26 +26,7 @@ public sealed class PlayGlobalSoundCommand : IConsoleCommand
             var hint = Loc.GetString("play-global-sound-command-arg-path");
             var res = IoCManager.Resolve<IResourceManager>();
 
-            var curPath = args[0];
-            if (curPath == "")
-                curPath = "/";
-
-            var resPath = new ResourcePath(curPath);
-
-            if (!curPath.EndsWith("/"))
-                resPath = (resPath / "..").Clean();
-
-            var options = res.ContentGetDirectoryEntries(resPath)
-                .OrderBy(c => c)
-                .Select(c =>
-                {
-                    var opt = (resPath / c).ToString();
-
-                    if (c.EndsWith("/"))
-                        return new CompletionOption(opt + "/", Flags: CompletionOptionFlags.PartialCompletion);
-
-                    return new CompletionOption(opt);
-                });
+            var options = CompletionHelper.ContentFilePath(args[0], res);
 
             return CompletionResult.FromHintOptions(options, hint);
         }
