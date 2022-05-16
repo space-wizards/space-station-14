@@ -1,11 +1,4 @@
 Entries:
-- author: Fishfish458
-  changes:
-  - {message: Added more clothes to the ClothesMate to make greytide less grey, type: Add}
-  - {message: Job AutoDrobes are now coming to stations near you! Dress for the job.,
-    type: Add}
-  id: 1036
-  time: '2022-02-10T21:58:31.0000000+00:00'
 - author: mirrorcult
   changes:
   - {message: Lack of oxygen is now slightly less deadly., type: Tweak}
@@ -3045,3 +3038,9 @@ Entries:
       scanner., type: Fix}
   id: 1535
   time: '2022-05-15T09:57:13.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Restart round votes now default to abstain and 60 second timer. Cooldown
+      is also set to 5 minutes., type: Tweak}
+  id: 1536
+  time: '2022-05-16T03:33:14.0000000+00:00'

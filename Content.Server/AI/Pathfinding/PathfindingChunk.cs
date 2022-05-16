@@ -17,7 +17,7 @@ namespace Content.Server.AI.Pathfinding
     public sealed class PathfindingChunk
     {
         public TimeSpan LastUpdate { get; private set; }
-        public GridId GridId { get; }
+        public EntityUid GridId { get; }
 
         public Vector2i Indices => _indices;
         private readonly Vector2i _indices;
@@ -27,7 +27,7 @@ namespace Content.Server.AI.Pathfinding
         public PathfindingNode[,] Nodes => _nodes;
         private readonly PathfindingNode[,] _nodes = new PathfindingNode[ChunkSize,ChunkSize];
 
-        public PathfindingChunk(GridId gridId, Vector2i indices)
+        public PathfindingChunk(EntityUid gridId, Vector2i indices)
         {
             GridId = gridId;
             _indices = indices;
@@ -57,10 +57,10 @@ namespace Content.Server.AI.Pathfinding
                 .RaiseEvent(EventSource.Local, new PathfindingChunkUpdateMessage(this));
         }
 
-        public IEnumerable<PathfindingChunk> GetNeighbors()
+        public IEnumerable<PathfindingChunk> GetNeighbors(IEntityManager? entManager = null)
         {
-            var pathfindingSystem = EntitySystem.Get<PathfindingSystem>();
-            var chunkGrid = pathfindingSystem.Graph[GridId];
+            IoCManager.Resolve(ref entManager);
+            var chunkGrid = entManager.GetComponent<GridPathfindingComponent>(GridId).Graph;
 
             for (var x = -1; x <= 1; x++)
             {

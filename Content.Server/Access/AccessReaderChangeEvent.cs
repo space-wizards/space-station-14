@@ -1,12 +1,12 @@
 namespace Content.Server.Access
 {
-    public sealed class AccessReaderChangeMessage : EntityEventArgs
+    public sealed class AccessReaderChangeEvent : EntityEventArgs
     {
         public EntityUid Sender { get; }
 
         public bool Enabled { get; }
 
-        public AccessReaderChangeMessage(EntityUid entity, bool enabled)
+        public AccessReaderChangeEvent(EntityUid entity, bool enabled)
         {
             Sender = entity;
             Enabled = enabled;
