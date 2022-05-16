@@ -7,3 +7,9 @@ public enum TypingIndicatorVisuals : byte
 {
     IsTyping
 }
+
+[Serializable]
+public enum TypingIndicatorLayers : byte
+{
+    Base
+}
