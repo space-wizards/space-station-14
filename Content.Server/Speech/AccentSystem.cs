@@ -1,9 +1,5 @@
 using System.Text.RegularExpressions;
 using Content.Server.Chat;
-using Content.Server.Chat.Managers;
-using Content.Server.Speech.Components;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
 
 namespace Content.Server.Speech
 {

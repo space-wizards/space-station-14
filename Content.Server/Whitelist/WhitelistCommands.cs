@@ -5,10 +5,7 @@ using Content.Shared.CCVar;
 using Robust.Server.Player;
 using Robust.Shared.Configuration;
 using Robust.Shared.Console;
-using Robust.Shared.IoC;
-using Robust.Shared.Localization;
 using Robust.Shared.Network;
-using Robust.Shared.Player;
 
 namespace Content.Server.Whitelist;
 

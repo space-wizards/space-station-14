@@ -1,8 +1,5 @@
 using Content.Shared.Research.Components;
 using Content.Shared.Research.Prototypes;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Players;
 
 namespace Content.Server.Research.Components
 {

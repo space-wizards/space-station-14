@@ -28,6 +28,13 @@
     sprite: Clothing/OuterClothing/Suits/emergency.rsi
   - type: Clothing
     sprite: Clothing/OuterClothing/Suits/emergency.rsi
+  - type: ClothingSpeedModifier
+    walkModifier: 0.5
+    sprintModifier: 0.5
+  - type: TemperatureProtection
+    coefficient: 0.5
+  - type: ToggleableClothing
+    clothingPrototype: ClothingHeadHelmetEVA
 
 - type: entity
   parent: ClothingOuterBase
@@ -52,7 +59,7 @@
     sprintModifier: 0.7
   - type: TemperatureProtection
     coefficient: 0.01
-    
+
 - type: entity
   parent: ClothingOuterBase
   id: ClothingOuterSuitRad

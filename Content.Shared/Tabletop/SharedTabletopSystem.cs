@@ -1,7 +1,6 @@
 using Content.Shared.ActionBlocker;
 using Content.Shared.Hands.Components;
 using Content.Shared.Interaction;
-using Content.Shared.Stunnable;
 using Content.Shared.Tabletop.Components;
 using Robust.Shared.Network;
 using Robust.Shared.Serialization;

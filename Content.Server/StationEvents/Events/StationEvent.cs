@@ -1,15 +1,12 @@
-using System.Linq;
 using Content.Server.Administration.Logs;
 using Content.Server.Atmos.EntitySystems;
 using Content.Server.Chat.Managers;
-using Content.Server.Station;
+using Content.Server.Station.Components;
+using Content.Server.Station.Systems;
 using Content.Shared.Database;
-using Content.Shared.Station;
+using Content.Shared.Sound;
 using Robust.Shared.Audio;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
 using Robust.Shared.Map;
-using Robust.Shared.Maths;
 using Robust.Shared.Player;
 using Robust.Shared.Random;
 
@@ -51,12 +48,12 @@ namespace Content.Server.StationEvents.Events
         /// <summary>
         ///     Starting audio of the event.
         /// </summary>
-        public virtual string? StartAudio { get; set; } = null;
+        public virtual SoundSpecifier? StartAudio { get; set; } = new SoundPathSpecifier("/Audio/Announcements/attention.ogg");
 
         /// <summary>
         ///     Ending audio of the event.
         /// </summary>
-        public virtual string? EndAudio { get; } = null;
+        public virtual SoundSpecifier? EndAudio { get; } = null;
 
         public virtual AudioParams AudioParams { get; } = AudioParams.Default.WithVolume(-10f);
 
@@ -137,7 +134,7 @@ namespace Content.Server.StationEvents.Events
 
             if (StartAudio != null)
             {
-                SoundSystem.Play(Filter.Broadcast(), StartAudio, AudioParams);
+                SoundSystem.Play(Filter.Broadcast(), StartAudio.GetSound(), AudioParams);
             }
 
             Announced = true;
@@ -160,7 +157,7 @@ namespace Content.Server.StationEvents.Events
 
             if (EndAudio != null)
             {
-                SoundSystem.Play(Filter.Broadcast(), EndAudio, AudioParams);
+                SoundSystem.Play(Filter.Broadcast(), EndAudio.GetSound(), AudioParams);
             }
 
             Started = false;
@@ -188,26 +185,30 @@ namespace Content.Server.StationEvents.Events
         }
 
 
-        public static bool TryFindRandomTile(out Vector2i tile, out StationId targetStation, out EntityUid targetGrid, out EntityCoordinates targetCoords, IRobustRandom? robustRandom = null, IEntityManager? entityManager = null)
+        public static bool TryFindRandomTile(out Vector2i tile, out EntityUid targetStation, out EntityUid targetGrid, out EntityCoordinates targetCoords, IRobustRandom? robustRandom = null, IEntityManager? entityManager = null, IMapManager? mapManager = null, StationSystem? stationSystem = null)
         {
             tile = default;
-            robustRandom ??= IoCManager.Resolve<IRobustRandom>();
-            entityManager ??= IoCManager.Resolve<IEntityManager>();
+            IoCManager.Resolve(ref robustRandom, ref entityManager, ref mapManager);
+            entityManager.EntitySysManager.Resolve(ref stationSystem);
 
             targetCoords = EntityCoordinates.Invalid;
-            targetStation = robustRandom.Pick(entityManager.EntityQuery<StationComponent>().ToArray()).Station;
-            var t = targetStation; // thanks C#
-            var possibleTargets = entityManager.EntityQuery<StationComponent>()
-                .Where(x => x.Station == t).ToArray();
-            targetGrid = robustRandom.Pick(possibleTargets).Owner;
+            targetStation = robustRandom.Pick(stationSystem.Stations);
+            var possibleTargets = entityManager.GetComponent<StationDataComponent>(targetStation).Grids;
+            if (possibleTargets.Count == 0)
+            {
+                targetGrid = EntityUid.Invalid;
+                return false;
+            }
 
-            if (!entityManager.TryGetComponent<IMapGridComponent>(targetGrid!, out var gridComp))
+            targetGrid = robustRandom.Pick(possibleTargets);
+
+            if (!entityManager.TryGetComponent<IMapGridComponent>(targetGrid, out var gridComp))
                 return false;
             var grid = gridComp.Grid;
 
             var atmosphereSystem = EntitySystem.Get<AtmosphereSystem>();
             var found = false;
-            var gridBounds = grid.WorldBounds;
+            var gridBounds = grid.WorldAABB;
             var gridPos = grid.WorldPosition;
 
             for (var i = 0; i < 10; i++)

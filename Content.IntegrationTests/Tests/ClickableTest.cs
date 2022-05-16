@@ -1,16 +1,12 @@
 ﻿using System;
-using System.Linq;
 using System.Threading.Tasks;
 using Content.Client.Clickable;
-using Content.Server.GameTicking;
 using NUnit.Framework;
 using Robust.Client.Graphics;
 using Robust.Server.GameObjects;
 using Robust.Shared;
 using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
 using Robust.Shared.Map;
-using Robust.Shared.Maths;
 
 namespace Content.IntegrationTests.Tests
 {

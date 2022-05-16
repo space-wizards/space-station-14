@@ -1,7 +1,6 @@
 using System.IO;
 using Content.Shared.Alert;
 using NUnit.Framework;
-using NUnit.Framework.Interfaces;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Prototypes;

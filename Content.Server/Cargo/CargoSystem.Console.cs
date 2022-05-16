@@ -1,13 +1,11 @@
-using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using Content.Server.Access.Systems;
 using Content.Server.Cargo.Components;
+using Content.Server.MachineLinking.System;
 using Content.Shared.Access.Components;
 using Content.Shared.Access.Systems;
 using Content.Shared.Cargo;
 using Content.Shared.GameTicking;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
 
 namespace Content.Server.Cargo
 {
@@ -35,7 +33,7 @@ namespace Content.Server.Cargo
         /// <summary>
         /// Used to assign IDs to bank accounts. Incremental counter.
         /// </summary>
-        private int _accountIndex = 0;
+        private int _accountIndex;
         /// <summary>
         /// Enumeration of all bank accounts.
         /// </summary>
@@ -49,11 +47,17 @@ namespace Content.Server.Cargo
 
         [Dependency] private readonly IdCardSystem _idCardSystem = default!;
         [Dependency] private readonly AccessReaderSystem _accessReaderSystem = default!;
+        [Dependency] private readonly SignalLinkerSystem _linker = default!;
 
         private void InitializeConsole()
         {
+            SubscribeLocalEvent<CargoConsoleComponent, ComponentInit>(OnInit);
             SubscribeLocalEvent<RoundRestartCleanupEvent>(Reset);
             Reset();
+        }
+        private void OnInit(EntityUid uid, CargoConsoleComponent console, ComponentInit args)
+        {
+            _linker.EnsureTransmitterPorts(uid, console.SenderPort);
         }
 
         private void Reset(RoundRestartCleanupEvent ev)

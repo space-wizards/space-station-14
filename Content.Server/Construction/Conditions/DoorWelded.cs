@@ -1,12 +1,7 @@
-using System.Collections.Generic;
 using Content.Shared.Construction;
 using Content.Shared.Doors.Components;
 using Content.Shared.Examine;
 using JetBrains.Annotations;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Localization;
-using Robust.Shared.Serialization.Manager.Attributes;
 
 namespace Content.Server.Construction.Conditions
 {

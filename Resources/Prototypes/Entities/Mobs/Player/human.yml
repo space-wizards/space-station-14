@@ -51,3 +51,4 @@
     description: Inspect the station, jot down performance reviews for heads of staff, bug the Captain.
   - type: UtilityAI
     startingGear: CentcomGear
+  - type: RandomHumanoidAppearance

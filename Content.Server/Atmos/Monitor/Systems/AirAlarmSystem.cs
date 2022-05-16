@@ -1,5 +1,3 @@
-using System;
-using System.Collections.Generic;
 using Content.Server.Atmos.Monitor.Components;
 using Content.Server.Atmos.Piping.Components;
 using Content.Server.DeviceNetwork;
@@ -7,18 +5,14 @@ using Content.Server.DeviceNetwork.Components;
 using Content.Server.DeviceNetwork.Systems;
 using Content.Server.Popups;
 using Content.Server.Power.Components;
-using Content.Server.WireHacking;
+using Content.Server.Wires;
 using Content.Shared.Access.Components;
 using Content.Shared.Access.Systems;
 using Content.Shared.Atmos;
 using Content.Shared.Atmos.Monitor;
 using Content.Shared.Atmos.Monitor.Components;
 using Content.Shared.Interaction;
-using Content.Shared.Popups;
 using Robust.Server.GameObjects;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Localization;
 using Robust.Shared.Player;
 
 namespace Content.Server.Atmos.Monitor.Systems
@@ -263,7 +257,7 @@ namespace Content.Server.Atmos.Monitor.Systems
             if (!EntityManager.TryGetComponent(uid, out AccessReaderComponent reader) || user == null)
                 return false;
 
-            if (!_accessSystem.IsAllowed(reader, user.Value) && !component.FullAccess)
+            if (!_accessSystem.IsAllowed(reader, user.Value))
             {
                 _popup.PopupEntity(Loc.GetString("air-alarm-ui-access-denied"), user.Value, Filter.Entities(user.Value));
                 return false;
@@ -401,7 +395,7 @@ namespace Content.Server.Atmos.Monitor.Systems
                     // _airAlarmDataSystem.UpdateDeviceData(uid, args.SenderAddress, data);
                     //
                     _uiSystem.TrySendUiMessage(uid, SharedAirAlarmInterfaceKey.Key, new AirAlarmUpdateDeviceDataMessage(args.SenderAddress, data));
-                    if (HasComp<WiresComponent>(uid)) controller.UpdateWires();
+                    // if (HasComp<WiresComponent>(uid)) controller.UpdateWires();
                     if (!controller.DeviceData.TryAdd(args.SenderAddress, data))
                         controller.DeviceData[args.SenderAddress] = data;
 

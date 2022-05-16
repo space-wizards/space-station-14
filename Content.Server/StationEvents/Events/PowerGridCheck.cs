@@ -1,5 +1,6 @@
 using System.Threading;
 using Content.Server.Power.Components;
+using Content.Shared.Sound;
 using JetBrains.Annotations;
 using Robust.Shared.Audio;
 using Robust.Shared.Player;
@@ -20,7 +21,7 @@ namespace Content.Server.StationEvents.Events
         public override int? MaxOccurrences => 3;
         public override string StartAnnouncement => Loc.GetString("station-event-power-grid-check-start-announcement");
         protected override string EndAnnouncement => Loc.GetString("station-event-power-grid-check-end-announcement");
-        public override string? StartAudio => "/Audio/Announcements/power_off.ogg";
+        public override SoundSpecifier? StartAudio => new SoundPathSpecifier("/Audio/Announcements/power_off.ogg");
 
         // If you need EndAudio it's down below. Not set here because we can't play it at the normal time without spamming sounds.
 

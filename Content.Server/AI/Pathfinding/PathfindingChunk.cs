@@ -1,10 +1,5 @@
-using System;
-using System.Collections.Generic;
 using System.Linq;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
 using Robust.Shared.Map;
-using Robust.Shared.Maths;
 using Robust.Shared.Timing;
 
 namespace Content.Server.AI.Pathfinding

@@ -1,5 +1,3 @@
-using Robust.Shared.GameObjects;
-
 namespace Content.Shared.Interaction.Events;
 
 public sealed class ChangeDirectionAttemptEvent : CancellableEntityEventArgs

@@ -1,18 +1,3 @@
-using Content.Server.GameTicking;
-using Content.Server.Ghost.Components;
-using Content.Shared.Examine;
-using Content.Shared.Ghost;
-using Content.Shared.MobState.Components;
-using Robust.Shared.Analyzers;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Localization;
-using Robust.Shared.Map;
-using Robust.Shared.Serialization.Manager.Attributes;
-using Robust.Shared.Timing;
-using Robust.Shared.Utility;
-using Robust.Shared.ViewVariables;
-
 namespace Content.Server.Mind.Components
 {
     /// <summary>

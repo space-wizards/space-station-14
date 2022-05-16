@@ -1,7 +1,4 @@
-using System;
 using JetBrains.Annotations;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
 
 namespace Content.Server.GameTicking.Rules;
 

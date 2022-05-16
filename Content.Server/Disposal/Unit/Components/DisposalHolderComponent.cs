@@ -1,16 +1,10 @@
-using System.Collections.Generic;
 using Content.Server.Atmos;
 using Content.Server.Disposal.Tube.Components;
 using Content.Shared.Atmos;
 using Content.Shared.Body.Components;
 using Content.Shared.Item;
 using Robust.Shared.Containers;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Maths;
 using Robust.Shared.Physics;
-using Robust.Shared.Serialization.Manager.Attributes;
-using Robust.Shared.ViewVariables;
 
 namespace Content.Server.Disposal.Unit.Components
 {

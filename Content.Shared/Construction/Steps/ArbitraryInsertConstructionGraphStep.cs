@@ -1,6 +1,4 @@
 ﻿using Content.Shared.Examine;
-using Robust.Shared.Localization;
-using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Utility;
 
 namespace Content.Shared.Construction.Steps

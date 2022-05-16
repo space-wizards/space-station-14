@@ -1,34 +1,18 @@
 using System.Linq;
-using System.Text;
 using Content.Server.Administration.Logs;
 using Content.Server.Administration.Managers;
-using Content.Server.Ghost.Components;
-using Content.Server.Headset;
 using Content.Server.MoMMI;
-using Content.Server.Players;
 using Content.Server.Preferences.Managers;
-using Content.Server.Radio.EntitySystems;
-using Content.Server.Disease;
-using Content.Server.Disease.Components;
-using Content.Shared.Disease.Components;
-using Content.Shared.ActionBlocker;
 using Content.Shared.Administration;
 using Content.Shared.CCVar;
 using Content.Shared.Chat;
 using Content.Shared.Database;
-using Content.Shared.Inventory;
-using Content.Shared.Popups;
-using Robust.Server.GameObjects;
 using Robust.Server.Player;
 using Robust.Shared.Audio;
 using Robust.Shared.Configuration;
-using Robust.Shared.Console;
 using Robust.Shared.Network;
 using Robust.Shared.Player;
-using Robust.Shared.Players;
-using Robust.Shared.Random;
 using Robust.Shared.Utility;
-using static Content.Server.Chat.Managers.IChatManager;
 
 namespace Content.Server.Chat.Managers
 {

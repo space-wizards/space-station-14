@@ -1,11 +1,7 @@
 using Content.Server.Nutrition.Components;
 using Content.Server.Popups;
 using Content.Shared.Interaction;
-using Content.Shared.Interaction.Helpers;
 using Robust.Shared.Audio;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Localization;
 using Robust.Shared.Player;
 using Robust.Shared.Random;
 

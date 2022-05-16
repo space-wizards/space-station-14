@@ -1,7 +1,7 @@
 - type: job
   id: Captain
   name: "captain"
-  head: true
+  weight: 20
   startingGear: CaptainGear
   departments:
   - Command

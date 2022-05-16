@@ -1,5 +1,3 @@
-using Content.Server.Atmos.EntitySystems;
-
 namespace Content.Server.Atmos.Components
 {
     // Unfortunately can't be friends yet due to magboots.
