@@ -10,6 +10,7 @@ using Content.Shared.Damage;
 using Content.Shared.Sound;
 using Content.Shared.Audio;
 using Content.Shared.Database;
+using Content.Shared.DoAfter;
 using Content.Shared.Hands;
 using Content.Shared.Interaction;
 using Content.Shared.Inventory;
@@ -48,7 +49,7 @@ namespace Content.Server.Weapon.Melee
 
         private void OnGettingPickedUpAttemptEvent(EntityUid uid, MeleeChemicalInjectorComponent component, GettingPickedUpAttemptEvent args)
         {
-            if (component.RequiredProtection == null)
+            if (component.RequiredProtection == null || args.Cancelled)
                 return;
             if (!_inventorySystem.TryGetSlotEntity(args.User, "gloves", out EntityUid? protection)
                 || !component.RequiredProtection.IsValid((EntityUid) protection))
