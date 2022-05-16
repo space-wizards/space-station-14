@@ -4,8 +4,7 @@ using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototy
 namespace Content.Shared.Polymorph
 {
     /// <summary>
-    /// Diseases encompass everything from viruses to cancers to heart disease.
-    /// It's not just a virology thing.
+    /// Polymorphs generally describe any type of transformation that can be applied to an entity.
     /// </summary>
     [Prototype("polymorph")]
     [DataDefinition]
@@ -31,6 +30,13 @@ namespace Content.Shared.Polymorph
         /// </summary>
         [DataField("entity", required: true, serverOnly: true, customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
         public string Entity = string.Empty;
+
+        /// <summary>
+        /// The delay between the polymorph's uses in seconds
+        /// Slightly weird as of right now.
+        /// </summary>
+        [DataField("delay", serverOnly: true)]
+        public int Delay = 60;
 
         /// <summary>
         /// The duration of the transformation in seconds

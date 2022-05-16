@@ -64,6 +64,7 @@ namespace Content.Server.Polymorph.Systems
                 EntityIcon = component.Parent,
                 Name = Loc.GetString("polymorph-revert-action-name"),
                 Description = Loc.GetString("polymorph-revert-action-description"),
+                UseDelay = TimeSpan.FromSeconds(component.Prototype.Delay),
            };
     
             _actions.AddAction(uid, act, null);
