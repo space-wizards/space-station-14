@@ -727,7 +727,7 @@ namespace Content.Shared.CCVar
         ///     The required ratio of the server that must agree for a restart round vote to go through.
         /// </summary>
         public static readonly CVarDef<float> VoteRestartRequiredRatio =
-            CVarDef.Create("vote.restart_required_ratio", 0.8f, CVar.SERVERONLY);
+            CVarDef.Create("vote.restart_required_ratio", 0.7f, CVar.SERVERONLY);
 
         /// <summary>
         ///     The delay which two votes of the same type are allowed to be made by separate people, in seconds.
@@ -746,7 +746,7 @@ namespace Content.Shared.CCVar
         ///     Sets the duration of the restart vote timer.
         /// </summary>
         public static readonly CVarDef<int>
-            VoteTimerRestart = CVarDef.Create("vote.timerrestart", 30, CVar.SERVERONLY);
+            VoteTimerRestart = CVarDef.Create("vote.timerrestart", 60, CVar.SERVERONLY);
 
         /// <summary>
         ///     Sets the duration of the gamemode/preset vote timer.
