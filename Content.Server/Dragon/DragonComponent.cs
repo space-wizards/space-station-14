@@ -46,7 +46,7 @@ namespace Content.Server.Dragon
         [DataField("devourTime")]
         public float DevourTimer = 15f;
 
-        [DataField("spawnCount")] public int SpawnsLeft;
+        [DataField("spawnCount")] public int SpawnsLeft = 2;
 
         [DataField("maxSpawnCount")] public int MaxSpawns = 2;
 

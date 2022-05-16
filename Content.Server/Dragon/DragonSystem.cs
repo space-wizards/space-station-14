@@ -66,6 +66,8 @@ namespace Content.Server.Dragon
 
         private void OnStartup(EntityUid uid, DragonComponent component, ComponentStartup args)
         {
+            component.SpawnsLeft = Math.Min(component.SpawnsLeft, component.MaxSpawns);
+
             //Dragon doesn't actually chew, since he sends targets right into his stomach.
             //I did it mom, I added ERP content into upstream. Legally!
             component.DragonStomach = _containerSystem.EnsureContainer<Container>(uid, "dragon-stomach");
