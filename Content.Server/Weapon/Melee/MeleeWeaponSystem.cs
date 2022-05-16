@@ -12,6 +12,8 @@ using Content.Shared.Audio;
 using Content.Shared.Database;
 using Content.Shared.Hands;
 using Content.Shared.Interaction;
+using Content.Shared.Inventory;
+using Content.Shared.Item;
 using Content.Shared.Physics;
 using Content.Shared.Weapons.Melee;
 using Robust.Shared.Audio;
@@ -30,6 +32,7 @@ namespace Content.Server.Weapon.Melee
         [Dependency] private SolutionContainerSystem _solutionsSystem = default!;
         [Dependency] private readonly AdminLogSystem _logSystem = default!;
         [Dependency] private readonly BloodstreamSystem _bloodstreamSystem = default!;
+        [Dependency] private readonly InventorySystem _inventorySystem = default!;
 
         public override void Initialize()
         {
@@ -39,7 +42,24 @@ namespace Content.Server.Weapon.Melee
             SubscribeLocalEvent<MeleeWeaponComponent, ClickAttackEvent>(OnClickAttack);
             SubscribeLocalEvent<MeleeWeaponComponent, WideAttackEvent>(OnWideAttack);
             SubscribeLocalEvent<MeleeChemicalInjectorComponent, MeleeHitEvent>(OnChemicalInjectorHit);
+            SubscribeLocalEvent<MeleeChemicalInjectorComponent, DidEquipHandEvent>(OnDidEquipHandEvent);
         }
+
+        private void OnDidEquipHandEvent(EntityUid uid, MeleeChemicalInjectorComponent component, DidEquipHandEvent args)
+        {
+            if (component.RequiredProtection == null)
+                return;
+            if (!_inventorySystem.TryGetSlotEntity(args.User, "gloves", out EntityUid? protection)
+                || !component.RequiredProtection.IsValid((EntityUid) protection))
+            {
+                //this is probably ugly for some of you , but I can't figure out a cleaner way to do it
+                List<EntityUid> thisList = new List<EntityUid>();
+                thisList.Add(args.User);
+                MeleeHitEvent thisEvent = new MeleeHitEvent(thisList, args.User);
+                TryInjectChemical(args.User,component,thisEvent);
+            }
+        }
+
 
         private void OnHandSelected(EntityUid uid, MeleeWeaponComponent comp, HandSelectedEvent args)
         {
@@ -229,6 +249,11 @@ namespace Content.Server.Weapon.Melee
         }
 
         private void OnChemicalInjectorHit(EntityUid owner, MeleeChemicalInjectorComponent comp, MeleeHitEvent args)
+        {
+            TryInjectChemical(owner, comp, args);
+        }
+
+        private void TryInjectChemical(EntityUid owner, MeleeChemicalInjectorComponent comp, MeleeHitEvent args)
         {
             if (!_solutionsSystem.TryGetInjectableSolution(owner, out var solutionContainer))
                 return;

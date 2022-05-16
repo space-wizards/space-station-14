@@ -1,4 +1,5 @@
 ﻿using Content.Shared.FixedPoint;
+using Content.Shared.Whitelist;
 
 namespace Content.Server.Chemistry.Components
 {
@@ -14,5 +15,8 @@ namespace Content.Server.Chemistry.Components
 
         [DataField("transferEfficiency")]
         private float _transferEfficiency = 1f;
+
+        [DataField("requiredProtection")]
+        public EntityWhitelist? RequiredProtection;
     }
 }
