@@ -118,7 +118,7 @@ namespace Content.Server.Administration.Commands
             {
                 var playerMgr = IoCManager.Resolve<IPlayerManager>();
                 var options = playerMgr.ServerSessions.Select(c => c.Name).OrderBy(c => c).ToArray();
-                return new CompletionResult(options, "<name/user ID>");
+                return CompletionResult.FromHintOptions(options, "<name/user ID>");
             }
 
             if (args.Length == 2)
@@ -126,14 +126,14 @@ namespace Content.Server.Administration.Commands
 
             if (args.Length == 3)
             {
-                var durations = new[]
+                var durations = new CompletionOption[]
                 {
-                    "0",
-                    "1440",
-                    "10080",
+                    new("0", "Permanent"),
+                    new("1440", "1 day"),
+                    new("10080", "1 week"),
                 };
 
-                return new CompletionResult(durations, "[duration, empty/0 = permanent]");
+                return CompletionResult.FromHintOptions(durations, "[duration]");
             }
 
             return CompletionResult.Empty;
