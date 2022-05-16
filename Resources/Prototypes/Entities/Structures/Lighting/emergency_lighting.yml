@@ -2,7 +2,7 @@
   id: EmergencyLight
   name: emergency light
   description: A small red light with an internal battery that turns on as soon as it stops receiving any power.
-  parent: WallLight
+  parent: AlwaysPoweredWallLight
   components:
   - type: PointLight
     enabled: false
@@ -25,5 +25,6 @@
     visuals:
     - type: EmergencyLightVisualizer
   placement:
+    mode: SnapgridCenter
     snap:
     - Wallmount

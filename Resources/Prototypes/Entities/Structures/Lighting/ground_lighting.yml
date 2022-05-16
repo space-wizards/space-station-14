@@ -40,8 +40,8 @@
   parent: BaseLightStructure
   id: LightPostSmall
   name: post light
-  description: "An unpowered light."
-  suffix: Unpowered
+  description: "An always powered light."
+  suffix: Always Powered
   components:
   - type: Construction
     graph: LightFixture
@@ -63,7 +63,7 @@
   id: PoweredLightPostSmallEmpty
   name: post light
   description: "A small light post."
-  suffix: Empty, Powered
+  suffix: Empty
   parent: BaseLightStructure
   components:
   - type: Sprite
@@ -95,7 +95,7 @@
   id: PoweredLightPostSmall
   name: post light
   description: "A light fixture. Draws power and produces light when equipped with a light tube."
-  suffix: Powered
+  suffix: 
   parent: PoweredLightPostSmallEmpty
   components:
   - type: Sprite
