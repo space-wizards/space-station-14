@@ -118,7 +118,7 @@ namespace Content.Server.StationEvents.Events
                 return false;
             }
 
-            var bounds = mapGrid.LocalBounds;
+            var bounds = mapGrid.LocalAABB;
             var randomX = _robustRandom.Next((int) bounds.Left, (int) bounds.Right);
             var randomY = _robustRandom.Next((int) bounds.Bottom, (int) bounds.Top);
 

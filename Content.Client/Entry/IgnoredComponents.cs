@@ -173,6 +173,8 @@ namespace Content.Client.Entry
             "ExaminableSolution",
             "DrawableSolution",
             "InjectableSolution",
+            "SalvageMobRestrictions",
+            "SalvageMobRestrictionsGrid",
             "Barotrauma",
             "GasVentPump",
             "GasPassiveVent",

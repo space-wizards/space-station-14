@@ -38,7 +38,6 @@ namespace Content.Server.Weapon.Melee
             SubscribeLocalEvent<MeleeWeaponComponent, HandSelectedEvent>(OnHandSelected);
             SubscribeLocalEvent<MeleeWeaponComponent, ClickAttackEvent>(OnClickAttack);
             SubscribeLocalEvent<MeleeWeaponComponent, WideAttackEvent>(OnWideAttack);
-            SubscribeLocalEvent<MeleeWeaponComponent, AfterInteractEvent>(OnAfterInteract);
             SubscribeLocalEvent<MeleeChemicalInjectorComponent, MeleeHitEvent>(OnChemicalInjectorHit);
         }
 
@@ -204,41 +203,6 @@ namespace Content.Server.Weapon.Melee
             RaiseLocalEvent(owner, new RefreshItemCooldownEvent(comp.LastAttackTime, comp.CooldownEnd), false);
         }
 
-        /// <summary>
-        ///     Used for melee weapons that want some behavior on AfterInteract,
-        ///     but also want the cooldown (stun batons, flashes)
-        /// </summary>
-        private void OnAfterInteract(EntityUid owner, MeleeWeaponComponent comp, AfterInteractEvent args)
-        {
-            if (args.Handled || !args.CanReach)
-                return;
-
-            var curTime = _gameTiming.CurTime;
-
-            if (curTime < comp.CooldownEnd)
-            {
-                return;
-            }
-
-            if (!args.Target.HasValue)
-                return;
-
-            var location = EntityManager.GetComponent<TransformComponent>(args.User).Coordinates;
-            var diff = args.ClickLocation.ToMapPos(EntityManager) - location.ToMapPos(EntityManager);
-            var angle = Angle.FromWorldVec(diff);
-
-            var hitEvent = new MeleeInteractEvent(args.Target.Value, args.User);
-            RaiseLocalEvent(owner, hitEvent, false);
-
-            if (!hitEvent.CanInteract) return;
-            SendAnimation(comp.ClickArc, angle, args.User, owner, new List<EntityUid>() { args.Target.Value }, comp.ClickAttackEffect, false);
-
-            comp.LastAttackTime = curTime;
-            comp.CooldownEnd = comp.LastAttackTime + TimeSpan.FromSeconds(comp.CooldownTime);
-
-            RaiseLocalEvent(owner, new RefreshItemCooldownEvent(comp.LastAttackTime, comp.CooldownEnd), false);
-        }
-
         private HashSet<EntityUid> ArcRayCast(Vector2 position, Angle angle, float arcWidth, float range, MapId mapId, EntityUid ignore)
         {
             var widthRad = Angle.FromDegrees(arcWidth);
@@ -345,35 +309,6 @@ namespace Content.Server.Weapon.Melee
         public MeleeHitEvent(List<EntityUid> hitEntities, EntityUid user)
         {
             HitEntities = hitEntities;
-            User = user;
-        }
-    }
-
-    /// <summary>
-    ///     Raised directed on the melee weapon entity used to attack something in combat mode,
-    ///     whether through a click attack or wide attack.
-    /// </summary>
-    public sealed class MeleeInteractEvent : EntityEventArgs
-    {
-        /// <summary>
-        ///     The entity interacted with.
-        /// </summary>
-        public EntityUid Entity { get; }
-
-        /// <summary>
-        ///     The user who interacted using the melee weapon.
-        /// </summary>
-        public EntityUid User { get; }
-
-        /// <summary>
-        ///     Modified by the event handler to specify whether they could successfully interact with the entity.
-        ///     Used to know whether to send the hit animation or not.
-        /// </summary>
-        public bool CanInteract { get; set; } = false;
-
-        public MeleeInteractEvent(EntityUid entity, EntityUid user)
-        {
-            Entity = entity;
             User = user;
         }
     }

@@ -200,7 +200,10 @@ namespace Content.Shared.Maps
 
             foreach (var ent in query)
             {
-                var body = entManager.GetComponent<PhysicsComponent>(ent);
+                // Yes, this can fail. Welp!
+                if (!entManager.TryGetComponent(ent, out PhysicsComponent? body))
+                    continue;
+
                 if (body.CanCollide && body.Hard && (body.CollisionLayer & (int) CollisionGroup.Impassable) != 0)
                     return true;
 
