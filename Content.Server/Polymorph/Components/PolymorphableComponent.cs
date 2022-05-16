@@ -1,5 +1,6 @@
 using Content.Shared.Actions.ActionTypes;
 using Content.Shared.Polymorph;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
 namespace Content.Server.Polymorph.Components
 {
