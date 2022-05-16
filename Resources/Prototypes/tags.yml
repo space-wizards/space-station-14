@@ -361,3 +361,5 @@
 - type: Tag
   id: Write
 
+- type: Tag
+  id: NettleProtection #for gloves and gloves only

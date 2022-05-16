@@ -109,6 +109,9 @@
   - type: Clothing
     sprite: Clothing/Hands/Gloves/leather.rsi
     HeatResistance: 1400
+  - type: Tag
+    tags:
+    - NettleProtection
 
 - type: entity
   parent: ClothingHandsBase
