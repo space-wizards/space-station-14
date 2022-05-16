@@ -47,7 +47,7 @@ namespace Content.Client.Administration.UI
                     Title = $"{sel.CharacterName} / {sel.Username}";
                 }
 
-                foreach (var li in ChannelSelector.PlayerItemList)
+                foreach (var li in ChannelSelector.ItemList)
                     li.Text = FormatTabTitle(li);
             };
 
@@ -127,7 +127,7 @@ namespace Content.Client.Administration.UI
         public void SelectChannel(NetUserId channel)
         {
             var pi = ChannelSelector
-                .PlayerItemList
+                .ItemList
                 .FirstOrDefault(i => ((PlayerInfo) i.Metadata!).SessionId == channel);
 
             if (pi is not null)
