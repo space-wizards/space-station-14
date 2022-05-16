@@ -16,7 +16,7 @@ public sealed partial class PathfindingSystem
     [Dependency] private readonly IMapManager _mapManager = default!;
 
     // Queued pathfinding graph updates
-    private readonly Queue<CollisionChangeMessage> _collidableUpdateQueue = new();
+    private readonly Queue<CollisionChangeEvent> _collidableUpdateQueue = new();
     private readonly Queue<MoveEvent> _moveUpdateQueue = new();
     private readonly Queue<AccessReaderChangeEvent> _accessReaderUpdateQueue = new();
     private readonly Queue<TileRef> _tileUpdateQueue = new();
@@ -24,11 +24,11 @@ public sealed partial class PathfindingSystem
     public override void Initialize()
     {
         SubscribeLocalEvent<RoundRestartCleanupEvent>(Reset);
-        SubscribeLocalEvent<CollisionChangeMessage>(QueueCollisionChangeMessage);
-        SubscribeLocalEvent<MoveEvent>(QueueMoveEvent);
-        SubscribeLocalEvent<AccessReaderChangeEvent>(QueueAccessChangeMessage);
+        SubscribeLocalEvent<CollisionChangeEvent>(OnCollisionChange);
+        SubscribeLocalEvent<MoveEvent>(OnMoveEvent);
+        SubscribeLocalEvent<AccessReaderChangeEvent>(OnAccessChange);
         SubscribeLocalEvent<GridAddEvent>(OnGridAdd);
-        SubscribeLocalEvent<TileChangedEvent>(QueueTileChange);
+        SubscribeLocalEvent<TileChangedEvent>(OnTileChange);
 
         // Handle all the base grid changes
         // Anything that affects traversal (i.e. collision layer) is handled separately.
@@ -39,22 +39,22 @@ public sealed partial class PathfindingSystem
         EnsureComp<GridPathfindingComponent>(ev.EntityUid);
     }
 
-    private void QueueCollisionChangeMessage(CollisionChangeMessage collisionMessage)
+    private void OnCollisionChange(ref CollisionChangeEvent collisionEvent)
     {
-        _collidableUpdateQueue.Enqueue(collisionMessage);
+        _collidableUpdateQueue.Enqueue(collisionEvent);
     }
 
-    private void QueueMoveEvent(ref MoveEvent moveEvent)
+    private void OnMoveEvent(ref MoveEvent moveEvent)
     {
         _moveUpdateQueue.Enqueue(moveEvent);
     }
 
-    private void QueueTileChange(TileChangedEvent ev)
+    private void OnTileChange(TileChangedEvent ev)
     {
         _tileUpdateQueue.Enqueue(ev.NewTile);
     }
 
-    private void QueueAccessChangeMessage(AccessReaderChangeEvent message)
+    private void OnAccessChange(AccessReaderChangeEvent message)
     {
         _accessReaderUpdateQueue.Enqueue(message);
     }
@@ -64,7 +64,7 @@ public sealed partial class PathfindingSystem
         var chunkX = (int) (Math.Floor((float) tile.X / PathfindingChunk.ChunkSize) * PathfindingChunk.ChunkSize);
         var chunkY = (int) (Math.Floor((float) tile.Y / PathfindingChunk.ChunkSize) * PathfindingChunk.ChunkSize);
         var vector2i = new Vector2i(chunkX, chunkY);
-        var comp = Comp<GridPathfindingComponent>(tile.GridIndex);
+        var comp = Comp<GridPathfindingComponent>(tile.GridUid);
         var chunks = comp.Graph;
 
         if (!chunks.TryGetValue(vector2i, out var chunk))
@@ -108,7 +108,7 @@ public sealed partial class PathfindingSystem
 
     private bool IsRelevant(TransformComponent xform, PhysicsComponent physics)
     {
-        return xform.GridID != GridId.Invalid && (PathfindingSystem.TrackedCollisionLayers & physics.CollisionLayer) != 0;
+        return xform.GridID != GridId.Invalid && (TrackedCollisionLayers & physics.CollisionLayer) != 0;
     }
 
     /// <summary>
@@ -116,7 +116,7 @@ public sealed partial class PathfindingSystem
     /// </summary>
     /// The node will filter it to the correct category (if possible)
     /// <param name="entity"></param>
-    private void HandleEntityAdd(EntityUid entity)
+    private void OnEntityAdd(EntityUid entity)
     {
         if (!TryComp<TransformComponent>(entity, out var xform) ||
             !EntityManager.TryGetComponent(entity, out PhysicsComponent? physics) ||
@@ -130,7 +130,7 @@ public sealed partial class PathfindingSystem
 
         var chunk = GetOrCreateChunk(tileRef);
         var node = chunk.GetNode(tileRef);
-        node.AddEntity(entity, physics);
+        node.AddEntity(entity, physics, EntityManager);
     }
 
     private void OnEntityRemove(EntityUid entity)
@@ -147,7 +147,7 @@ public sealed partial class PathfindingSystem
     /// When an entity moves around we'll remove it from its old node and add it to its new node (if applicable)
     /// </summary>
     /// <param name="moveEvent"></param>
-    private void HandleEntityMove(MoveEvent moveEvent)
+    private void OnEntityMove(MoveEvent moveEvent)
     {
         // If we've moved to space or the likes then remove us.
         if (!TryComp<TransformComponent>(moveEvent.Sender, out var xform) ||
@@ -171,7 +171,7 @@ public sealed partial class PathfindingSystem
         if (_mapManager.TryGetGrid(gridId, out var grid))
         {
             var newNode = GetNode(grid.GetTileRef(moveEvent.OldPosition));
-            newNode.AddEntity(moveEvent.Sender, physics);
+            newNode.AddEntity(moveEvent.Sender, physics, EntityManager);
         }
     }
 
@@ -217,18 +217,19 @@ public sealed partial class PathfindingSystem
     private void ProcessGridUpdates()
     {
         var totalUpdates = 0;
+        var metaQuery = GetEntityQuery<MetaDataComponent>();
 
         foreach (var update in _collidableUpdateQueue)
         {
-            if (Deleted(update.Owner)) continue;
+            if (Deleted(update.Body.Owner, metaQuery)) continue;
 
             if (update.CanCollide)
             {
-                HandleEntityAdd(update.Owner);
+                OnEntityAdd(update.Body.Owner);
             }
             else
             {
-                OnEntityRemove(update.Owner);
+                OnEntityRemove(update.Body.Owner);
             }
 
             totalUpdates++;
@@ -240,7 +241,7 @@ public sealed partial class PathfindingSystem
         {
             if (update.Enabled)
             {
-                HandleEntityAdd(update.Sender);
+                OnEntityAdd(update.Sender);
             }
             else
             {
@@ -272,7 +273,7 @@ public sealed partial class PathfindingSystem
 
         for (var i = 0; i < moveUpdateCount; i++)
         {
-            HandleEntityMove(_moveUpdateQueue.Dequeue());
+            OnEntityMove(_moveUpdateQueue.Dequeue());
         }
 
         DebugTools.Assert(_moveUpdateQueue.Count < 1000);
