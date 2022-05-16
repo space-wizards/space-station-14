@@ -16,7 +16,6 @@ public sealed partial class PathfindingSystem
     [Dependency] private readonly IMapManager _mapManager = default!;
 
     // Queued pathfinding graph updates
-    private readonly Queue<CollisionChangeEvent> _collidableUpdateQueue = new();
     private readonly Queue<MoveEvent> _moveUpdateQueue = new();
     private readonly Queue<AccessReaderChangeEvent> _accessReaderUpdateQueue = new();
     private readonly Queue<TileRef> _tileUpdateQueue = new();
@@ -41,7 +40,14 @@ public sealed partial class PathfindingSystem
 
     private void OnCollisionChange(ref CollisionChangeEvent collisionEvent)
     {
-        _collidableUpdateQueue.Enqueue(collisionEvent);
+        if (collisionEvent.CanCollide)
+        {
+            OnEntityAdd(collisionEvent.Body.Owner);
+        }
+        else
+        {
+            OnEntityRemove(collisionEvent.Body.Owner);
+        }
     }
 
     private void OnMoveEvent(ref MoveEvent moveEvent)
@@ -116,11 +122,12 @@ public sealed partial class PathfindingSystem
     /// </summary>
     /// The node will filter it to the correct category (if possible)
     /// <param name="entity"></param>
-    private void OnEntityAdd(EntityUid entity)
+    private void OnEntityAdd(EntityUid entity, TransformComponent? xform = null, PhysicsComponent? physics = null)
     {
-        if (!TryComp<TransformComponent>(entity, out var xform) ||
-            !EntityManager.TryGetComponent(entity, out PhysicsComponent? physics) ||
-            !IsRelevant(xform, physics) ||
+        if (!Resolve(entity, ref xform, false) ||
+            !Resolve(entity, ref physics, false)) return;
+
+        if (!IsRelevant(xform, physics) ||
             !_mapManager.TryGetGrid(xform.GridID, out var grid))
         {
             return;
@@ -133,11 +140,10 @@ public sealed partial class PathfindingSystem
         node.AddEntity(entity, physics, EntityManager);
     }
 
-    private void OnEntityRemove(EntityUid entity)
+    private void OnEntityRemove(EntityUid entity, TransformComponent? xform = null)
     {
-        var xform = Transform(entity);
-
-        if (!_mapManager.TryGetGrid(xform.GridID, out var grid)) return;
+        if (!Resolve(entity, ref xform, false) ||
+            !_mapManager.TryGetGrid(xform.GridID, out var grid)) return;
 
         var node = GetNode(grid.GetTileRef(xform.Coordinates));
         node.RemoveEntity(entity);
@@ -149,13 +155,14 @@ public sealed partial class PathfindingSystem
     /// <param name="moveEvent"></param>
     private void OnEntityMove(MoveEvent moveEvent)
     {
+        if (!TryComp<TransformComponent>(moveEvent.Sender, out var xform)) return;
+
         // If we've moved to space or the likes then remove us.
-        if (!TryComp<TransformComponent>(moveEvent.Sender, out var xform) ||
-            !TryComp<PhysicsComponent>(moveEvent.Sender, out var physics) ||
+        if (!TryComp<PhysicsComponent>(moveEvent.Sender, out var physics) ||
             !IsRelevant(xform, physics) ||
             moveEvent.NewPosition.GetGridId(EntityManager) == GridId.Invalid)
         {
-            OnEntityRemove(moveEvent.Sender);
+            OnEntityRemove(moveEvent.Sender, xform);
             return;
         }
 
@@ -208,7 +215,6 @@ public sealed partial class PathfindingSystem
 
     public void OnRoundRestart(RoundRestartCleanupEvent ev)
     {
-        _collidableUpdateQueue.Clear();
         _moveUpdateQueue.Clear();
         _accessReaderUpdateQueue.Clear();
         _tileUpdateQueue.Clear();
@@ -217,35 +223,21 @@ public sealed partial class PathfindingSystem
     private void ProcessGridUpdates()
     {
         var totalUpdates = 0;
-        var metaQuery = GetEntityQuery<MetaDataComponent>();
-
-        foreach (var update in _collidableUpdateQueue)
-        {
-            if (Deleted(update.Body.Owner, metaQuery)) continue;
-
-            if (update.CanCollide)
-            {
-                OnEntityAdd(update.Body.Owner);
-            }
-            else
-            {
-                OnEntityRemove(update.Body.Owner);
-            }
-
-            totalUpdates++;
-        }
-
-        _collidableUpdateQueue.Clear();
+        var bodyQuery = GetEntityQuery<PhysicsComponent>();
+        var xformQuery = GetEntityQuery<TransformComponent>();
 
         foreach (var update in _accessReaderUpdateQueue)
         {
+            if (!xformQuery.TryGetComponent(update.Sender, out var xform) ||
+                !bodyQuery.TryGetComponent(update.Sender, out var body)) continue;
+
             if (update.Enabled)
             {
-                OnEntityAdd(update.Sender);
+                OnEntityAdd(update.Sender, xform, body);
             }
             else
             {
-                OnEntityRemove(update.Sender);
+                OnEntityRemove(update.Sender, xform);
             }
 
             totalUpdates++;
