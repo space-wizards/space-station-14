@@ -23,6 +23,7 @@
       - !type:DoActsBehavior
         acts: ["Destruction"]
   - type: SubFloorHide
+  - type: Appearance
   - type: Electrified
     onHandInteract: false
     onInteractUsing: false # wire-cutting handled separately.
