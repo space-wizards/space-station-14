@@ -43,11 +43,13 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
         SubscribeLocalEvent<RulePlayerSpawningEvent>(OnPlayersSpawning);
         SubscribeLocalEvent<MobStateChangedEvent>(OnMobStateChanged);
         SubscribeLocalEvent<RoundEndTextAppendEvent>(OnRoundEndText);
-        SubscribeAllEvent<NukeExplodedEvent>(OnNukeExploded);
+        SubscribeLocalEvent<NukeExplodedEvent>(OnNukeExploded);
     }
 
     private void OnNukeExploded(NukeExplodedEvent ev)
     {
+    	if (!Enabled) return;
+    
         _opsWon = true;
         _roundEndSystem.EndRound();
     }
