@@ -257,7 +257,6 @@ namespace Content.Server.Weapon.Melee
 
         private void TryInjectChemical(EntityUid owner, MeleeChemicalInjectorComponent comp, MeleeHitEvent args)
         {
-            Console.WriteLine("Flag 0");
             if (!_solutionsSystem.TryGetInjectableSolution(owner, out var solutionContainer))
                 return;
 
@@ -270,10 +269,8 @@ namespace Content.Server.Weapon.Melee
                 if (EntityManager.TryGetComponent<BloodstreamComponent?>(entity, out var bloodstream))
                     hitBloodstreams.Add(bloodstream);
             }
-            Console.WriteLine("Flag 1");
             if (hitBloodstreams.Count < 1)
                 return;
-            Console.WriteLine("Flag 2");
             var removedSolution = solutionContainer.SplitSolution(comp.TransferAmount * hitBloodstreams.Count);
             var removedVol = removedSolution.TotalVolume;
             var solutionToInject = removedSolution.SplitSolution(removedVol * comp.TransferEfficiency);
