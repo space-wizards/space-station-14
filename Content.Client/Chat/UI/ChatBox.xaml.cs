@@ -522,6 +522,9 @@ namespace Content.Client.Chat.UI
 
         private void Input_OnTextEntered(LineEdit.LineEditEventArgs args)
         {
+            // Warn typing indicator about entered text
+            EntitySystem.Get<TypingIndicatorSystem>().ClientSubmittedChatText();
+
             if (!string.IsNullOrWhiteSpace(args.Text))
             {
                 var (prefixChannel, text) = SplitInputContents();

@@ -20,6 +20,12 @@ public sealed class TypingIndicatorSystem : SharedTypingIndicatorSystem
         _lastTextChange = _time.CurTime;
     }
 
+    public void ClientSubmittedChatText()
+    {
+        // client entered text - hide typing indicator
+        ClientUpdateTyping(false);
+    }
+
     public override void Update(float frameTime)
     {
         base.Update(frameTime);
