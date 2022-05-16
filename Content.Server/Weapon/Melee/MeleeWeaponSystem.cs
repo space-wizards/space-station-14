@@ -43,21 +43,21 @@ namespace Content.Server.Weapon.Melee
             SubscribeLocalEvent<MeleeWeaponComponent, ClickAttackEvent>(OnClickAttack);
             SubscribeLocalEvent<MeleeWeaponComponent, WideAttackEvent>(OnWideAttack);
             SubscribeLocalEvent<MeleeChemicalInjectorComponent, MeleeHitEvent>(OnChemicalInjectorHit);
-            SubscribeLocalEvent<MeleeChemicalInjectorComponent, PickupAttemptEvent>(OnPickupAttemptEvent);
+            SubscribeLocalEvent<MeleeChemicalInjectorComponent, GettingPickedUpAttemptEvent>(OnGettingPickedUpAttemptEvent);
         }
 
-        private void OnPickupAttemptEvent(EntityUid uid, MeleeChemicalInjectorComponent component, PickupAttemptEvent args)
+        private void OnGettingPickedUpAttemptEvent(EntityUid uid, MeleeChemicalInjectorComponent component, GettingPickedUpAttemptEvent args)
         {
             if (component.RequiredProtection == null)
                 return;
             if (!_inventorySystem.TryGetSlotEntity(args.User, "gloves", out EntityUid? protection)
                 || !component.RequiredProtection.IsValid((EntityUid) protection))
             {
-                //this is probably ugly for some of you , but I can't figure out a cleaner way to do it
+                //this is probably ugly, but I can't figure out a cleaner way to do it
                 List<EntityUid> thisList = new List<EntityUid>();
                 thisList.Add(args.User);
                 MeleeHitEvent thisEvent = new MeleeHitEvent(thisList, args.User);
-                TryInjectChemical(args.User,component,thisEvent);
+                TryInjectChemical(uid ,component ,thisEvent);
             }
         }
 
@@ -256,6 +256,7 @@ namespace Content.Server.Weapon.Melee
 
         private void TryInjectChemical(EntityUid owner, MeleeChemicalInjectorComponent comp, MeleeHitEvent args)
         {
+            Console.WriteLine("Flag 0");
             if (!_solutionsSystem.TryGetInjectableSolution(owner, out var solutionContainer))
                 return;
 
@@ -268,10 +269,10 @@ namespace Content.Server.Weapon.Melee
                 if (EntityManager.TryGetComponent<BloodstreamComponent?>(entity, out var bloodstream))
                     hitBloodstreams.Add(bloodstream);
             }
-
+            Console.WriteLine("Flag 1");
             if (hitBloodstreams.Count < 1)
                 return;
-
+            Console.WriteLine("Flag 2");
             var removedSolution = solutionContainer.SplitSolution(comp.TransferAmount * hitBloodstreams.Count);
             var removedVol = removedSolution.TotalVolume;
             var solutionToInject = removedSolution.SplitSolution(removedVol * comp.TransferEfficiency);
