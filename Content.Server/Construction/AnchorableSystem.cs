@@ -63,7 +63,7 @@ namespace Content.Server.Construction
             if (!Resolve(usingUid, ref usingTool))
                 return false;
 
-            if (!(await Valid(uid, userUid, usingUid, true, anchorable, usingTool)))
+            if (!await Valid(uid, userUid, usingUid, true, anchorable, usingTool))
             {
                 return false;
             }
