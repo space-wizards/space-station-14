@@ -6,6 +6,11 @@
   placement:
     mode: SnapgridCenter
   components:
+  - type: MeleeSound
+    sounds:
+      Brute:
+        path:
+          "/Audio/Effects/glass_hit.ogg"
   - type: Construction
     graph: Computer
     node: computer

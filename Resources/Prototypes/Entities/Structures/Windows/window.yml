@@ -8,6 +8,11 @@
     snap:
     - Window
   components:
+  - type: MeleeSound
+    sounds:
+      Brute:
+        path:
+          "/Audio/Effects/glass_hit.ogg"
   - type: WallMount
     arc: 360 # interact despite grilles
   - type: Tag
