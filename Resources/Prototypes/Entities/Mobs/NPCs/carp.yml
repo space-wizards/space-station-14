@@ -131,7 +131,7 @@
     name: syndicate space carp
     description: |
       Work for your syndicate owner and get payed with the blood of those damn greys!
-      - type: Sprite
+  - type: Sprite
     drawdepth: Mobs
     layers:
     - map: ["enum.DamageStateVisualLayers.Base"]
