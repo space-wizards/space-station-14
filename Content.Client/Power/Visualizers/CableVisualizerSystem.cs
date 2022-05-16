@@ -16,7 +16,7 @@ public sealed partial class CableVisualizerSystem : EntitySystem
 
     private void OnAppearanceChanged(EntityUid uid, CableVisualizerComponent component, ref AppearanceChangeEvent args)
     {
-        if (!TryComp(uid, out SpriteComponent? sprite))
+        if (args.Sprite == null)
             return;
 
         if (args.Component.TryGetData(SubFloorVisuals.Covered, out bool isUnderCover)
@@ -32,7 +32,7 @@ public sealed partial class CableVisualizerSystem : EntitySystem
         if (!args.Component.TryGetData(WireVisVisuals.ConnectedMask, out WireVisDirFlags mask))
             mask = WireVisDirFlags.None;
 
-        sprite.LayerSetState(0, $"{component.StateBase}{(int) mask}");
+        args.Sprite.LayerSetState(0, $"{component.StatePrefix}{(int) mask}");
     }
 
 }
