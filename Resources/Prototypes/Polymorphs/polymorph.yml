@@ -9,5 +9,11 @@
   entity: MobChicken
   forced: true
   dropInventory: true
+
+- type: polymorph
+  id: monkey
+  entity: MobMonkey
+  forced: true
+  dropInventory: true
   revertOnCrit: true
   revertOnDeath: true
