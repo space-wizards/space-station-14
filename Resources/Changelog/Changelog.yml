@@ -1,9 +1,4 @@
 Entries:
-- author: mirrorcult
-  changes:
-  - {message: Lack of oxygen is now slightly less deadly., type: Tweak}
-  id: 1037
-  time: '2022-02-10T21:58:41.0000000+00:00'
 - author: Rane
   changes:
   - {message: 'Maintenance drones are a new ghost role. They are unlocked with Avionics
@@ -3044,3 +3039,8 @@ Entries:
       is also set to 5 minutes., type: Tweak}
   id: 1536
   time: '2022-05-16T03:33:14.0000000+00:00'
+- author: themias
+  changes:
+  - {message: The Light Replacer can now be placed in the Janibelt., type: Tweak}
+  id: 1537
+  time: '2022-05-16T23:53:26.0000000+00:00'
