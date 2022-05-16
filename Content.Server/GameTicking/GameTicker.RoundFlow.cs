@@ -7,7 +7,6 @@ using Content.Server.Maps;
 using Content.Server.Mind;
 using Content.Server.Players;
 using Content.Shared.CCVar;
-using Content.Shared.Coordinates;
 using Content.Shared.GameTicking;
 using Content.Shared.Preferences;
 using Content.Shared.Sound;
@@ -123,7 +122,6 @@ namespace Content.Server.GameTicking
 
             RaiseLocalEvent(new PostGameMapLoad(map, targetMapId, entities, gridIds, stationName));
 
-            _spawnPoint = _mapManager.GetGrid(gridIds[0]).ToCoordinates();
             return (entities, gridIds);
         }
 

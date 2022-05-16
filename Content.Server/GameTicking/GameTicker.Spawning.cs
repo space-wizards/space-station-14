@@ -6,6 +6,7 @@ using Content.Server.Players;
 using Content.Server.Roles;
 using Content.Server.Spawners.Components;
 using Content.Server.Speech.Components;
+using Content.Shared.Coordinates;
 using Content.Shared.Database;
 using Content.Shared.GameTicking;
 using Content.Shared.Ghost;
@@ -23,9 +24,6 @@ namespace Content.Server.GameTicking
     public sealed partial class GameTicker
     {
         private const string ObserverPrototypeName = "MobObserver";
-
-        [ViewVariables(VVAccess.ReadWrite), Obsolete("Due for removal when observer spawning is refactored.")]
-        private EntityCoordinates _spawnPoint;
 
         // Mainly to avoid allocations.
         private readonly List<EntityCoordinates> _possiblePositions = new();
@@ -222,8 +220,6 @@ namespace Content.Server.GameTicking
         #region Spawn Points
         public EntityCoordinates GetObserverSpawnPoint()
         {
-            var location = _spawnPoint;
-
             _possiblePositions.Clear();
 
             foreach (var (point, transform) in EntityManager.EntityQuery<SpawnPointComponent, TransformComponent>(true))
@@ -232,10 +228,13 @@ namespace Content.Server.GameTicking
                     _possiblePositions.Add(transform.Coordinates);
             }
 
-            if (_possiblePositions.Count != 0)
-                location = _robustRandom.Pick(_possiblePositions);
+            if (_possiblePositions.Count == 0)
+            {
+                Logger.WarningS("Spawning", $"Could not find any spawn points for observers");
+                return _mapManager.GetAllGrids().First().ToCoordinates();
+            }
 
-            return location;
+            return _robustRandom.Pick(_possiblePositions);
         }
         #endregion
     }
