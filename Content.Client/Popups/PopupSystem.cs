@@ -10,7 +10,6 @@ using Robust.Client.UserInterface.Controls;
 using Robust.Shared.Map;
 using Robust.Shared.Player;
 using Robust.Shared.Timing;
-using Robust.Shared.Utility;
 
 namespace Content.Client.Popups
 {
@@ -43,7 +42,10 @@ namespace Content.Client.Popups
 
         public void PopupCoordinates(string message, EntityCoordinates coordinates)
         {
-            PopupMessage(message, _eyeManager.CoordinatesToScreen(coordinates));
+            var mapCoords = coordinates.ToMap(EntityManager);
+            if (_eyeManager.CurrentMap != mapCoords.MapId)
+                return;
+            PopupMessage(message, _eyeManager.MapToScreen(mapCoords));
         }
 
         public void PopupEntity(string message, EntityUid uid)
@@ -52,6 +54,9 @@ namespace Content.Client.Popups
                 return;
 
             var transform = EntityManager.GetComponent<TransformComponent>(uid);
+            if (_eyeManager.CurrentMap != transform.MapID)
+                return; // TODO: entity may be outside of PVS, but enter PVS at a later time. So the pop-up should still get tracked?
+
             PopupMessage(message, _eyeManager.CoordinatesToScreen(transform.Coordinates), uid);
         }
 
@@ -205,15 +210,21 @@ namespace Content.Client.Popups
                 TotalTime += eventArgs.DeltaSeconds;
 
                 Vector2 position;
-                if (Entity == null)
+                if (Entity == null && InitialPos.MapId == _eyeManager.CurrentMap)
+                {
+                    Visible = true;
                     position = _eyeManager.WorldToScreen(InitialPos.Position) / UIScale - DesiredSize / 2;
-                else if (_entityManager.TryGetComponent(Entity.Value, out TransformComponent xform))
+                }
+                else if (_entityManager.TryGetComponent(Entity, out TransformComponent xform) && xform.MapID == _eyeManager.CurrentMap)
+                {
+                    Visible = true;
                     position = (_eyeManager.CoordinatesToScreen(xform.Coordinates).Position / UIScale) - DesiredSize / 2;
+                }
                 else
                 {
-                    // Entity has probably been deleted.
                     Visible = false;
-                    TotalTime += PopupLifetime;
+                    if (Entity != null && _entityManager.Deleted(Entity))
+                        TotalTime += PopupLifetime;
                     return;
                 }
 
