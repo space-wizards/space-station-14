@@ -28,9 +28,9 @@ public sealed class TypingIndicatorVisualizerSystem : VisualizerSystem<TypingInd
 
         var layer = sprite.LayerMapReserveBlank(TypingIndicatorLayers.Base);
         sprite.LayerSetSprite(layer, proto.Icon);
+        sprite.LayerSetShader(layer, proto.Shader);
+        sprite.LayerSetOffset(layer, proto.Offset);
         sprite.LayerSetVisible(layer, false);
-        sprite.LayerSetShader(layer, "unshaded");
-        sprite.LayerSetOffset(layer, new Vector2(0.5f, 0.5f));
     }
 
     protected override void OnAppearanceChange(EntityUid uid, TypingIndicatorComponent component, ref AppearanceChangeEvent args)

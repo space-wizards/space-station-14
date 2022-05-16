@@ -3,3 +3,9 @@
   icon:
     sprite: /Textures/Effects/speech.rsi
     state: default0
+
+- type: typingIndicator
+  id: robot
+  icon:
+    sprite: /Textures/Effects/speech.rsi
+    state: robot0

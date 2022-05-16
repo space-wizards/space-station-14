@@ -9,12 +9,16 @@ namespace Content.Shared.Chat.TypingIndicator;
 [Prototype("typingIndicator")]
 public sealed class TypingIndicatorPrototype : IPrototype
 {
-    [ViewVariables]
     [IdDataFieldAttribute]
     public string ID { get; } = default!;
 
-    [ViewVariables]
     [DataField("icon", required: true)]
     public SpriteSpecifier Icon = SpriteSpecifier.Invalid;
+
+    [DataField("offset")]
+    public Vector2 Offset = new(0.5f, 0.5f);
+
+    [DataField("shader")]
+    public string Shader = "unshaded";
 
 }
