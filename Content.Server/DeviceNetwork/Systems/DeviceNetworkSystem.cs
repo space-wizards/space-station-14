@@ -184,6 +184,7 @@ namespace Content.Server.DeviceNetwork.Systems
             var deviceNet = GetNetwork(device.DeviceNetId);
             deviceNet.Remove(device);
             device.CustomAddress = false;
+            device.Address = "";
             deviceNet.Add(device);
         }
 
@@ -209,22 +210,26 @@ namespace Content.Server.DeviceNetwork.Systems
             else
             {
                 var totalDevices = 0;
+                var hasTargetedDevice = false;
                 if (network.ReceiveAllDevices.TryGetValue(packet.Frequency, out var devices))
                 {
                     totalDevices += devices.Count;
                 }
-                if (TryGetDevice(packet.NetId, packet.Address, out var device) && !device.ReceiveAll && device.ReceiveFrequency == packet.Frequency)
+                if (TryGetDevice(packet.NetId, packet.Address, out var device) &&
+                    !device.ReceiveAll &&
+                    device.ReceiveFrequency == packet.Frequency)
                 {
                     totalDevices += 1;
+                    hasTargetedDevice = true;
                 }
                 var deviceCopy = ArrayPool<DeviceNetworkComponent>.Shared.Rent(totalDevices);
-                if(devices != null)
+                if (devices != null)
                 {
                     devices.CopyTo(deviceCopy);
                 }
-                if(device != null)
+                if (hasTargetedDevice)
                 {
-                    deviceCopy[totalDevices - 1] = device;
+                    deviceCopy[totalDevices - 1] = device!;
                 }
                 SendToConnections(deviceCopy.AsSpan(0, totalDevices), packet);
                 ArrayPool<DeviceNetworkComponent>.Shared.Return(deviceCopy);
