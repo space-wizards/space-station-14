@@ -36,14 +36,16 @@ public sealed class PlayGlobalSoundCommand : IConsoleCommand
             if (!curPath.EndsWith("/"))
                 resPath = (resPath / "..").Clean();
 
-            var options = GetDirEntries(res, resPath)
+            var options = res.ContentGetDirectoryEntries(resPath)
                 .OrderBy(c => c)
                 .Select(c =>
                 {
-                    if (c.EndsWith("/"))
-                        return new CompletionOption(c, Flags: CompletionOptionFlags.PartialCompletion);
+                    var opt = (resPath / c).ToString();
 
-                    return new CompletionOption(c);
+                    if (c.EndsWith("/"))
+                        return new CompletionOption(opt + "/", Flags: CompletionOptionFlags.PartialCompletion);
+
+                    return new CompletionOption(opt);
                 });
 
             return CompletionResult.FromHintOptions(options, hint);
@@ -62,22 +64,5 @@ public sealed class PlayGlobalSoundCommand : IConsoleCommand
         }
 
         return CompletionResult.Empty;
-    }
-
-    private static IEnumerable<string> GetDirEntries(IResourceManager mgr, ResourcePath path)
-    {
-        var countDirs = path.EnumerateSegments().Count();
-
-        var options = mgr.ContentFindFiles(path).Select(c =>
-        {
-            var segCount = c.EnumerateSegments().Count();
-            var newPath = (path / c.EnumerateSegments().Skip(countDirs).First()).ToString();
-            if (segCount > countDirs + 1)
-                newPath += "/";
-
-            return newPath;
-        }).Distinct();
-
-        return options;
     }
 }
