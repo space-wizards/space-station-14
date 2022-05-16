@@ -89,7 +89,7 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
         var map = "/Maps/syndiepuddle.yml";
 
         var aabbs = _stationSystem.Stations.SelectMany(x =>
-            Comp<StationDataComponent>(x).Grids.Select(x => _mapManager.GetGridComp(x).Grid.WorldBounds)).ToArray();
+            Comp<StationDataComponent>(x).Grids.Select(x => _mapManager.GetGridComp(x).Grid.WorldBounds.CalcBoundingBox())).ToArray();
         var aabb = aabbs[0];
         for (int i = 1; i < aabbs.Length; i++)
         {
