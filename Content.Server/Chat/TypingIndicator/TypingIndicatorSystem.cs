@@ -6,8 +6,6 @@ namespace Content.Server.Chat.TypingIndicator;
 
 public sealed class TypingIndicatorSystem : SharedTypingIndicatorSystem
 {
-    [Dependency] private readonly IPlayerManager _playerManager = default!;
-
     public override void Initialize()
     {
         base.Initialize();
@@ -17,7 +15,10 @@ public sealed class TypingIndicatorSystem : SharedTypingIndicatorSystem
 
     private void OnPlayerAttached(PlayerAttachedEvent ev)
     {
+        // when player poses entity we want to add typing indicators
+        // we also need appearance component to sync visual state
         EnsureComp<TypingIndicatorComponent>(ev.Entity);
+        EnsureComp<ServerAppearanceComponent>(ev.Entity);
     }
 
 
