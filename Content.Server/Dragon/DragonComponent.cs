@@ -1,7 +1,11 @@
-using Content.Shared.Actions;
 using Content.Shared.Actions.ActionTypes;
 using Robust.Shared.Containers;
 using System.Threading;
+using Content.Shared.Chemistry.Reagent;
+using Content.Shared.Sound;
+using Content.Shared.Storage;
+using Robust.Shared.Prototypes;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
 namespace Content.Server.Dragon
 {
@@ -11,7 +15,7 @@ namespace Content.Server.Dragon
         /// <summary>
         /// The chemical ID injected upon devouring
         /// </summary>
-        [DataField("devourChemical")]
+        [DataField("devourChemical", customTypeSerializer: typeof(PrototypeIdSerializer<ReagentPrototype>))]
         public string DevourChem = "Ichor";
 
         /// <summary>
@@ -20,36 +24,36 @@ namespace Content.Server.Dragon
         [DataField("devourHealRate")]
         public float DevourHealRate = 15f;
 
-        /// <summary>
-        /// Defines the devour action
-        /// </summary>
-        [DataField("devourAction", required: true)]
-        public EntityTargetAction DevourAction = new();
+        [DataField("devourActionId", customTypeSerializer: typeof(PrototypeIdSerializer<EntityTargetActionPrototype>))]
+        public string DevourActionId = "DragonDevour";
+
+        [DataField("devourAction")]
+        public EntityTargetAction? DevourAction;
+
+        [DataField("spawnActionId", customTypeSerializer: typeof(PrototypeIdSerializer<InstantActionPrototype>))]
+        public string SpawnActionId = "DragonSpawn";
+
+        [DataField("spawnAction")]
+        public InstantAction? SpawnAction;
 
         /// <summary>
-        /// Defines the carp birthing action
+        /// The amount of time it takes to devour something
+        /// <remarks>
+        /// NOTE: original intended design was to increase this proportionally with damage thresholds, but those proved quite difficult to get consistently. right now it devours the structure at a fixed timer.
+        /// </remarks>
         /// </summary>
-        [DataField("carpBirthAction", required: true)]
-        public InstantAction CarpBirthAction = new();
-
-        // The amount of time it takes to devour something
-        // NOTE: original inteded design was to increase this proportionaly with damage thresholds, but those proved quite difficult to get consistently.
-        // right now it devours the structure at a fixed timer.
         [DataField("devourTime")]
         public float DevourTimer = 15f;
 
-        /// <summary>
-        /// The carp prototype
-        /// </summary>
-        [DataField("carpProto")]
-        public string CarpProto = default!;
+        [DataField("spawns")]
+        public EntitySpawnEntry Spawns = new();
 
-        /// <summary>
-        /// The amount of carps the dragon is ready to hatch
-        /// </summary>
-        public int EggsLeft = 2;
+        [DataField("deathSound")]
+        public SoundSpecifier? DeathSound = new SoundPathSpecifier("/Audio/Animals/sound_creatures_space_dragon_roar.ogg");
 
-        //Token for interrupting the action
+        [DataField("devourSound")]
+        public SoundSpecifier? DevourSound = new SoundPathSpecifier("/Audio/Effects/sound_magic_demon_consume.ogg");
+
         public CancellationTokenSource? CancelToken;
 
         /// <summary>
@@ -58,15 +62,10 @@ namespace Content.Server.Dragon
         public Container DragonStomach = default!;
     }
 
-    public sealed class DevourActionEvent : PerformEntityTargetActionEvent
+    public sealed class DragonDevourAction : EntityTargetAction
     {
-        
+        public EntityUid Target;
     }
 
-    public sealed class CarpBirthEvent: PerformActionEvent
-    {
-
-    }
-
-
+    public sealed class DragonSpawnAction : InstantAction {}
 }

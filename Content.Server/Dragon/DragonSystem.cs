@@ -1,6 +1,4 @@
-using Content.Server.Body.Components;
 using Content.Server.Body.Systems;
-using Content.Server.Destructible;
 using Content.Server.DoAfter;
 using Content.Server.Popups;
 using Content.Shared.Actions;
@@ -14,6 +12,7 @@ using Robust.Shared.Audio;
 using Robust.Shared.Containers;
 using Robust.Shared.Player;
 using System.Threading;
+using Content.Shared.MobState.State;
 
 namespace Content.Server.Dragon
 {
@@ -31,11 +30,11 @@ namespace Content.Server.Dragon
             base.Initialize();
 
             SubscribeLocalEvent<DragonComponent, ComponentStartup>(OnStartup);
-            SubscribeLocalEvent<DragonComponent, DevourActionEvent>(OnDevourAction);
-            SubscribeLocalEvent<DragonComponent, CarpBirthEvent>(OnCarpBirthAction);
+            SubscribeLocalEvent<DragonComponent, DragonDevourAction>(OnDevourAction);
+            SubscribeLocalEvent<DragonComponent, DragonSpawnAction>(OnCarpSpawnAction);
 
-            SubscribeLocalEvent<TargetDevourSuccessfulEvent>(OnBuildingDevourSuccessful);
-            SubscribeLocalEvent<TargetDevourCancelledEvent>(OnBuildingDevourCancelled);
+            SubscribeLocalEvent<DragonComponent, DragonDevourComplete>(OnBuildingDevourComplete);
+            SubscribeLocalEvent<DragonComponent, TargetDevourCancelledEvent>(OnBuildingDevourCancelled);
             SubscribeLocalEvent<DragonComponent, MobStateChangedEvent>(OnMobStateChanged);
         }
 
@@ -43,29 +42,26 @@ namespace Content.Server.Dragon
         {
             //Empties the stomach upon death
             //TODO: Do this when the dragon gets butchered instead
-            if (args.CurrentMobState.IsDead())
+            if (component.DeathSound != null && args.CurrentMobState.IsDead())
             {
-                SoundSystem.Play(Filter.Pvs(uid), "/Audio/Animals/sound_creatures_space_dragon_roar.ogg");
+                SoundSystem.Play(Filter.Pvs(uid, entityManager: EntityManager), component.DeathSound.GetSound());
                 component.DragonStomach.EmptyContainer();
             }
         }
 
-        /// <summary>
-        /// On cancellation of a non-alive entity devour attempt
-        /// </summary> 
-        private void OnBuildingDevourCancelled(TargetDevourCancelledEvent args)
+        private void OnBuildingDevourCancelled(EntityUid uid, DragonComponent component, TargetDevourCancelledEvent args)
         {
-            args.DragonComponent.CancelToken = null;
+            component.CancelToken = null;
         }
 
-        /// <summary>
-        /// On a sucsessful non-alive entity devour attempt
-        /// </summary>
-        private void OnBuildingDevourSuccessful(TargetDevourSuccessfulEvent args)
+        private void OnBuildingDevourComplete(EntityUid uid, DragonComponent component, DragonDevourComplete args)
         {
+            component.CancelToken = null;
             //TODO: Figure out a better way of removing structures via devour that still entails standing still and waiting for a DoAfter. Somehow.
             EntityManager.QueueDeleteEntity(args.Target);
-            SoundSystem.Play(Filter.Pvs(args.User), "/Audio/Effects/sound_magic_demon_consume.ogg");
+
+            if (component.DevourSound != null)
+                SoundSystem.Play(Filter.Pvs(args.User, entityManager: EntityManager), component.DevourSound.GetSound());
         }
 
         private void OnStartup(EntityUid uid, DragonComponent component, ComponentStartup args)
@@ -73,23 +69,28 @@ namespace Content.Server.Dragon
             //Dragon doesn't actually chew, since he sends targets right into his stomach.
             //I did it mom, I added ERP content into upstream. Legally!
             component.DragonStomach = _containerSystem.EnsureContainer<Container>(uid, "dragon-stomach");
+
             if (component.DevourAction != null)
                 _actionsSystem.AddAction(uid, component.DevourAction, null);
-            if (component.CarpBirthAction != null)
-                _actionsSystem.AddAction(uid, component.CarpBirthAction, null);
+
+            if (component.SpawnAction != null)
+                _actionsSystem.AddAction(uid, component.SpawnAction, null);
+
             // Announces the dragon's spawn with a global bellowing sound
             // NOTE: good idea(?)
-            SoundSystem.Play(Filter.Broadcast(), "/Audio/Animals/sound_creatures_space_dragon_roar.ogg");
+            SoundSystem.Play(Filter.Pvs(uid, 4f, EntityManager), "/Audio/Animals/sound_creatures_space_dragon_roar.ogg");
         }
 
         /// <summary>
         /// The devour action
         /// </summary>
-        private void OnDevourAction(EntityUid dragonuid, DragonComponent dragoncomp, PerformEntityTargetActionEvent args)
+        private void OnDevourAction(EntityUid dragonuid, DragonComponent component, DragonDevourAction args)
         {
+            if (component.CancelToken != null) return;
+
             var target = args.Target;
-            var ichorInjection = new Solution(dragoncomp.DevourChem, dragoncomp.DevourHealRate);
-            var halfedIchorInjection = new Solution(dragoncomp.DevourChem, dragoncomp.DevourHealRate / 2);
+            var ichorInjection = new Solution(component.DevourChem, component.DevourHealRate);
+            var halfedIchorInjection = new Solution(component.DevourChem, component.DevourHealRate / 2);
 
             //Check if the target is valid. The effects should be possible to accomplish on either a wall or a body.
             //Eating bodies is instant, the wall requires a doAfter.
@@ -97,100 +98,89 @@ namespace Content.Server.Dragon
             //NOTE: I honestly don't know much on how one detects valid eating targets, so right now I am using a body component to tell them apart
             //That way dragons can't devour guardians and other dragons. Yet.
 
-            if (EntityManager.TryGetComponent(target, out MobStateComponent targetstate))
+            if (EntityManager.TryGetComponent(target, out MobStateComponent? targetState))
             {
-                if (targetstate.CurrentState != null)
+                switch (targetState.CurrentState)
                 {
-                    //You can only devour dead or crit targets
-                    if (targetstate.CurrentState.IsIncapacitated())
-                    {
-                        if (EntityManager.TryGetComponent(dragonuid, out DamageableComponent dragonhealth))
+                    case SharedCriticalMobState:
+                    case SharedDeadMobState:
+                        if (!EntityManager.HasComponent<DamageableComponent>(dragonuid)) return;
+
+                        // Recover spawns.
+                        component.Spawns.Amount += 1;
+
+                        //Humanoid devours allow dragon to get eggs, corpses included
+                        if (EntityManager.HasComponent<HumanoidAppearanceComponent>(target))
                         {
-                            //Humanoid devours allow dragon to get eggs, corpses included
-                            if (EntityManager.TryGetComponent(target, out HumanoidAppearanceComponent humanoid))
-                            {
-                                dragoncomp.EggsLeft++;
-                                //inject the healing chemical into the system. Yes the dragon just fucking drinks his own blood.
-                                _bloodstreamSystem.TryAddToChemicals(dragonuid, ichorInjection);
-                                //Sends the human entity into the stomach so it can be revived later. Withold further comments.
-                                dragoncomp.DragonStomach.Insert(target);
-                                SoundSystem.Play(Filter.Pvs(dragonuid), "/Audio/Effects/sound_magic_demon_consume.ogg");
+                            // inject the healing chemical into the system.
+                            _bloodstreamSystem.TryAddToChemicals(dragonuid, ichorInjection);
+                            // Sends the human entity into the stomach so it can be revived later.
+                            component.DragonStomach.Insert(target);
+                            SoundSystem.Play(Filter.Pvs(dragonuid, entityManager: EntityManager), "/Audio/Effects/sound_magic_demon_consume.ogg");
 
-                            }
-                            //Non-humanoid mobs can only heal dragon for half the normal amount
-                            else
-                            {
-                                //heal HALF the damage
-                                _bloodstreamSystem.TryAddToChemicals(dragonuid, halfedIchorInjection);
-                                //Sends the non-human entity into the stomach
-                                //NOTE: I am a bit conflicted on this, and only really adding this because force-delete is bad, is this needed?
-                                dragoncomp.DragonStomach.Insert(target);
-                                SoundSystem.Play(Filter.Pvs(dragonuid), "/Audio/Effects/sound_magic_demon_consume.ogg");
-                            }
                         }
-                        else return;
+                        //Non-humanoid mobs can only heal dragon for half the normal amount
+                        else
+                        {
+                            // heal HALF the damage
+                            _bloodstreamSystem.TryAddToChemicals(dragonuid, halfedIchorInjection);
+                            // Sends the non-human entity into the stomach
+                            // NOTE: I am a bit conflicted on this, and only really adding this because force-delete is bad, is this needed?
+                            component.DragonStomach.Insert(target);
+                            SoundSystem.Play(Filter.Pvs(dragonuid, entityManager: EntityManager), "/Audio/Effects/sound_magic_demon_consume.ogg");
+                        }
 
-                    }
-                    else _popupSystem.PopupEntity(Loc.GetString("devour-action-popup-message-fail-target-alive"), dragonuid, Filter.Entities(dragonuid));
-                    return;
+                        return;
+                    default:
+                        _popupSystem.PopupEntity(Loc.GetString("devour-action-popup-message-fail-target-alive"), dragonuid, Filter.Entities(dragonuid));
+                        break;
                 }
-                else return;
+
+                return;
             }
-            // If it is a structure it goes through the motions of DoAfter
-            else if (EntityManager.TryGetComponent(target, out TagComponent tags))
+
+            // If it can be built- it can be destoryed
+            if (_tagSystem.HasTag(target, "RCDDeconstructWhitelist"))
             {
-                // If it can be built- it can be destoryed
-                if (_tagSystem.HasTag(target, "RCDDeconstructWhitelist"))
+                _popupSystem.PopupEntity(Loc.GetString("devour-action-popup-message-structure"), dragonuid, Filter.Entities(dragonuid));
+                component.CancelToken = new CancellationTokenSource();
+
+                _doAfterSystem.DoAfter(new DoAfterEventArgs(dragonuid, component.DevourTimer, component.CancelToken.Token, target)
                 {
-                    _popupSystem.PopupEntity(Loc.GetString("devour-action-popup-message-structure"), dragonuid, Filter.Entities(dragonuid));
-                    dragoncomp.CancelToken = new CancellationTokenSource();
-                    _doAfterSystem.DoAfter(new DoAfterEventArgs(dragonuid, dragoncomp.DevourTimer, dragoncomp.CancelToken.Token, target)
-                    {
-                        BroadcastFinishedEvent = new TargetDevourSuccessfulEvent(dragonuid, target),
-                        BroadcastCancelledEvent = new TargetDevourCancelledEvent(dragoncomp),
-                        BreakOnTargetMove = true,
-                        BreakOnUserMove = true,
-                        BreakOnStun = true,
-                    });
-                }
-                else return;
+                    TargetFinishedEvent = new DragonDevourComplete(dragonuid, target),
+                    TargetCancelledEvent = new TargetDevourCancelledEvent(),
+                    BreakOnTargetMove = true,
+                    BreakOnUserMove = true,
+                    BreakOnStun = true,
+                });
             }
-            else _popupSystem.PopupEntity(Loc.GetString("devour-action-popup-message-fail-target-no-body"), dragonuid, Filter.Entities(dragonuid));
-            return;
         }
 
-        private void OnCarpBirthAction(EntityUid dragonuid, DragonComponent component, CarpBirthEvent args)
+        private void OnCarpSpawnAction(EntityUid dragonuid, DragonComponent component, DragonSpawnAction args)
         {
-            //If dragon has eggs, remove one, spawn carp
-            if (component.EggsLeft > 0)
+            // If dragon has eggs, remove one, spawn carp
+            if (component.Spawns.Amount > 0)
             {
-                Spawn(component.CarpProto, Transform(dragonuid).Coordinates);
-                component.EggsLeft--;
+                Spawn(component.Spawns.PrototypeId, Transform(dragonuid).Coordinates);
+                component.Spawns.Amount--;
+                return;
             }
-            else _popupSystem.PopupEntity(Loc.GetString("birth-carp-action-popup-message-fail-no-eggs"), dragonuid, Filter.Entities(dragonuid));
-            return;
+
+            _popupSystem.PopupEntity(Loc.GetString("dragon-spawn-action-popup-message-fail-no-eggs"), dragonuid, Filter.Entities(dragonuid));
         }
 
-        private sealed class TargetDevourSuccessfulEvent : EntityEventArgs
-        { 
+        private sealed class DragonDevourComplete : EntityEventArgs
+        {
             public EntityUid User { get; }
             public EntityUid Target { get; }
 
-            public TargetDevourSuccessfulEvent(EntityUid user, EntityUid target)
+            public DragonDevourComplete(EntityUid user, EntityUid target)
             {
                  User = user;
                  Target = target;
             }
         }
 
-        private sealed class TargetDevourCancelledEvent : EntityEventArgs
-        {
-            public readonly DragonComponent DragonComponent;
-
-            public TargetDevourCancelledEvent(DragonComponent dragon)
-            {
-                DragonComponent = dragon;
-            }
-        }
+        private sealed class TargetDevourCancelledEvent : EntityEventArgs {}
     }
 }
