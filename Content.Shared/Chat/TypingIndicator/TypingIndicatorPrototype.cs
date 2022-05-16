@@ -12,8 +12,11 @@ public sealed class TypingIndicatorPrototype : IPrototype
     [IdDataFieldAttribute]
     public string ID { get; } = default!;
 
-    [DataField("icon", required: true)]
-    public SpriteSpecifier Icon = SpriteSpecifier.Invalid;
+    [DataField("spritePath")]
+    public ResourcePath SpritePath = new("/Textures/Effects/speech.rsi");
+
+    [DataField("typingState", required: true)]
+    public string TypingState = default!;
 
     [DataField("offset")]
     public Vector2 Offset = new(0.5f, 0.5f);

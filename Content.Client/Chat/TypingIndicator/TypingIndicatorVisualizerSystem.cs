@@ -27,7 +27,8 @@ public sealed class TypingIndicatorVisualizerSystem : VisualizerSystem<TypingInd
         }
 
         var layer = sprite.LayerMapReserveBlank(TypingIndicatorLayers.Base);
-        sprite.LayerSetSprite(layer, proto.Icon);
+        sprite.LayerSetRSI(layer, proto.SpritePath);
+        sprite.LayerSetState(layer, proto.TypingState);
         sprite.LayerSetShader(layer, proto.Shader);
         sprite.LayerSetOffset(layer, proto.Offset);
         sprite.LayerSetVisible(layer, false);
