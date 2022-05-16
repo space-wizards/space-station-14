@@ -260,12 +260,18 @@
   category: Tools
   itemId: PowerSink
   price: 5
+  
+- type: uplinkListing
+  id: UplinkSyndicateCarpDehydrated
+  category: Tools
+  itemId: DehydratedSyndicateSpaceCarp
+  price: 3
 
 - type: uplinkListing
   id: UplinkCarpDehydrated
   category: Tools
   itemId: DehydratedSpaceCarp
-  price: 3
+  price: 2
 
 # Armor
 
