@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace Content.Shared.MobState
+﻿namespace Content.Shared.MobState
 {
     public static class DamageStateHelpers
     {

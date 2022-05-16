@@ -1,6 +1,6 @@
 - type: species
   id: Human
-  name: Human
+  name: species-name-human
   roundStart: true
   prototype: MobHuman
   dollPrototype: MobHumanDummy
@@ -8,7 +8,7 @@
 
 - type: species
   id: Dwarf
-  name: Dwarf
+  name: species-name-dwarf
   roundStart: true
   prototype: MobDwarf
   dollPrototype: MobDwarfDummy
@@ -16,19 +16,30 @@
 
 - type: species
   id: Reptilian
-  name: Reptilian
+  name: species-name-reptilian
   roundStart: true
   prototype: MobReptilian
   dollPrototype: MobReptilianDummy
   skinColoration: Hues
+  maleFirstNames: names_reptilian_male
+  femaleFirstNames: names_reptilian_female
+  naming: FirstDashFirst
 
 - type: species
   id: SlimePerson
-  name: Slime Person
+  name: species-name-slime
   roundStart: true
   prototype: MobSlimePerson
   dollPrototype: MobSlimePersonDummy
   skinColoration: Hues
+
+- type: species
+  id: Skeleton
+  name: Skeleton
+  roundStart: false #unspooky, change it in october
+  prototype: MobSkeletonPerson
+  dollPrototype: MobSkeletonPersonDummy
+  skinColoration: TintedHues
 
 #- type: species
 #  id: Vox
@@ -37,4 +48,3 @@
 #  prototype: MobVox
 #  dollPrototype: MobVoxDummy
 #  skinColoration: Hues
-

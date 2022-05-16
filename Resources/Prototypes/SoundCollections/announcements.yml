@@ -1,0 +1,5 @@
+- type: soundCollection
+  id: RoundEnd
+  files:
+  - /Audio/Announcements/RoundEnd/apc_destroyed.ogg
+  - /Audio/Announcements/RoundEnd/bangin_donk.ogg

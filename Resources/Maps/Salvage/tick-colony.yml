@@ -704,8 +704,8 @@ entities:
         radius: 0.35
       mask:
       - Impassable
-      - MobImpassable
-      - SmallImpassable
+      - MidImpassable
+      - LowImpassable
       layer:
       - Opaque
       mass: 70
@@ -956,8 +956,8 @@ entities:
         radius: 0.35
       mask:
       - Impassable
-      - MobImpassable
-      - SmallImpassable
+      - MidImpassable
+      - LowImpassable
       layer:
       - Opaque
       mass: 70
@@ -1208,8 +1208,8 @@ entities:
         radius: 0.35
       mask:
       - Impassable
-      - MobImpassable
-      - SmallImpassable
+      - MidImpassable
+      - LowImpassable
       layer:
       - Opaque
       mass: 70

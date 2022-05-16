@@ -1,5 +1,4 @@
 ﻿using Content.Shared.Damage;
-using Robust.Shared.GameObjects;
 
 namespace Content.Server.Armor
 {

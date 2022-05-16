@@ -1,7 +1,4 @@
 using Content.Shared.Damage;
-using Robust.Shared.Analyzers;
-using Robust.Shared.GameObjects;
-using Robust.Shared.Serialization.Manager.Attributes;
 
 namespace Content.Server.Climbing.Components;
 
@@ -34,5 +31,5 @@ public sealed class GlassTableComponent : Component
     /// <summary>
     ///     How long should someone who climbs on this table be stunned for?
     /// </summary>
-    public float StunTime = 5.0f;
+    public float StunTime = 2.0f;
 }

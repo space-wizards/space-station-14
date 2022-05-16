@@ -86,7 +86,7 @@
   components:
   - type: StorageFill
     contents:
-      - id: AssistantPDA
+      - id: PassengerPDA
         amount: 6
   - type: Sprite
     layers:
@@ -106,7 +106,7 @@
   components:
   - type: StorageFill
     contents:
-      - id: AssistantIDCard
+      - id: PassengerIDCard
         amount: 6
   - type: Sprite
     layers:
@@ -144,6 +144,7 @@
     contents:
       - id: ClothingMaskBreath
       - id: EmergencyOxygenTankFilled
+      - id: SpaceMedipen
       - id: EmergencyMedipen
       - id: Flare
       - id: FoodSnackChocolate

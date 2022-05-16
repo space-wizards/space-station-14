@@ -1,6 +1,4 @@
-using System;
 using Content.Shared.Damage;
-using Robust.Shared.Serialization.Manager.Attributes;
 
 namespace Content.Server.Destructible.Thresholds.Triggers
 {

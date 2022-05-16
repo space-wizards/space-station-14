@@ -1,8 +1,5 @@
-using System;
 using Content.Shared.GameTicking;
-using Robust.Shared.GameObjects;
 using Robust.Shared.Map;
-using Robust.Shared.Maths;
 
 namespace Content.Server.Tabletop
 {

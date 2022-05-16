@@ -1,12 +1,5 @@
-using System.Collections.Generic;
 using Content.Server.Shuttles.EntitySystems;
 using Content.Shared.Damage;
-using Robust.Shared.Analyzers;
-using Robust.Shared.GameObjects;
-using Robust.Shared.Maths;
-using Robust.Shared.Physics.Collision.Shapes;
-using Robust.Shared.Serialization.Manager.Attributes;
-using Robust.Shared.ViewVariables;
 
 namespace Content.Server.Shuttles.Components
 {

@@ -1,13 +1,7 @@
-using System;
-using System.Collections.Generic;
 using Content.Shared.Sound;
 using Content.Shared.Tools;
 using Content.Shared.Tools.Components;
-using Robust.Shared.GameObjects;
-using Robust.Shared.Localization;
-using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Utility;
-using Robust.Shared.ViewVariables;
 
 namespace Content.Server.Tools.Components
 {

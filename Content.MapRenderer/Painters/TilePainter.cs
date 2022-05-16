@@ -31,7 +31,7 @@ namespace Content.MapRenderer.Painters
             var stopwatch = new Stopwatch();
             stopwatch.Start();
 
-            var bounds = grid.LocalBounds;
+            var bounds = grid.LocalAABB;
             var xOffset = Math.Abs(bounds.Left);
             var yOffset = Math.Abs(bounds.Bottom);
             var tileSize = grid.TileSize * TileImageSize;
