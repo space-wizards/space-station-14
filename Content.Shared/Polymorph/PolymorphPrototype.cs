@@ -17,7 +17,7 @@ namespace Content.Shared.Polymorph
         [DataField("name")]
         public string Name { get; } = string.Empty;
 
-        [ParentDataFieldAttribute(typeof(AbstractPrototypeIdSerializer<PolymorphPrototype>))]
+        [ParentDataField(typeof(AbstractPrototypeIdSerializer<PolymorphPrototype>))]
         public string? Parent { get; private set; }
 
         [NeverPushInheritance]

@@ -123,6 +123,7 @@
   - type: DoAfter
   - type: Climbing
   - type: Flashable
+  - type: Polymorphable
   - type: Pullable
   - type: Buckle
   - type: Recyclable
