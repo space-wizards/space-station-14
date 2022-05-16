@@ -1,6 +1,7 @@
 using Content.Shared.Alert;
 using Content.Shared.GameTicking;
 using Content.Shared.Gravity;
+using Content.Shared.Movement.Components;
 using JetBrains.Annotations;
 using Robust.Shared.Map;
 using Robust.Shared.Utility;
@@ -113,13 +114,15 @@ namespace Content.Server.Gravity.EntitySystems
 
             newStatuses.Add(status);
 
-            // then update the actual alert.
-            // only showing the alert is the user is on a grid that is explicitly missing gravity.
-            if (!_mapManager.TryGetGrid(newGrid, out var grid)
-                || !TryComp(grid.GridEntityId, out GravityComponent? gravity)
-                || gravity.Enabled)
+            // then update the actual alert. The alert is only removed if either the player is on a grid with gravity,
+            // or if they ignore gravity-based movement altogether.
+            // TODO: update this when planets and the like are added.
+            // TODO: update alert when the ignore-gravity component is added or removed.
+            if (_mapManager.TryGetGrid(newGrid, out var grid)
+                && TryComp(grid.GridEntityId, out GravityComponent? gravity)
+                && gravity.Enabled)
                 RemoveWeightless(status.Owner);
-            else
+            else if (!HasComp<MovementIgnoreGravityComponent>(uid))
                 AddWeightless(status.Owner);
         }
 
