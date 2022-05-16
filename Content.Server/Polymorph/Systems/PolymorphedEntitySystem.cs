@@ -34,8 +34,6 @@ namespace Content.Server.Polymorph.Systems
             if (!TryComp<PolymorphedEntityComponent>(uid, out var component))
                 return;
 
-            _popup.PopupEntity(Loc.GetString("polymorph-revert-popup-generic", ("parent", uid), ("child", component.Parent)), component.Parent, Filter.Pvs(component.Parent));
-
             Transform(component.Parent).AttachParent(Transform(uid).ParentUid);
             Transform(component.Parent).Coordinates = Transform(uid).Coordinates;
 
@@ -50,6 +48,8 @@ namespace Content.Server.Polymorph.Systems
             {
                 mind.Mind.TransferTo(component.Parent);
             }
+
+            _popup.PopupEntity(Loc.GetString("polymorph-revert-popup-generic", ("parent", uid), ("child", component.Parent)), component.Parent, Filter.Pvs(component.Parent));
             QueueDel(uid);
         }
 

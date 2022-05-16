@@ -113,7 +113,7 @@ namespace Content.Server.Polymorph.Systems
             EnsurePausesdMap();
             Transform(target).AttachParent(Transform(_mapManager.GetMapEntityId(PausedMap)));
             
-            _popup.PopupEntity(Loc.GetString("polymorph-popup-generic", ("parent", target), ("child", child)), target, Filter.Pvs(target));
+            _popup.PopupEntity(Loc.GetString("polymorph-popup-generic", ("parent", target), ("child", child)), child, Filter.Pvs(child));
         }
 
         public void CreatePolymorphAction(string id, EntityUid target)
