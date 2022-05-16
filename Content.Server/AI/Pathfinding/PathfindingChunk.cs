@@ -57,9 +57,9 @@ namespace Content.Server.AI.Pathfinding
                 .RaiseEvent(EventSource.Local, new PathfindingChunkUpdateMessage(this));
         }
 
-        public IEnumerable<PathfindingChunk> GetNeighbors()
+        public IEnumerable<PathfindingChunk> GetNeighbors(IEntityManager? entManager = null)
         {
-            var entManager = IoCManager.Resolve<IEntityManager>();
+            IoCManager.Resolve(ref entManager);
             var chunkGrid = entManager.GetComponent<GridPathfindingComponent>(GridId).Graph;
 
             for (var x = -1; x <= 1; x++)

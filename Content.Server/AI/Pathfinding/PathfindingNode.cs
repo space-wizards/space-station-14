@@ -82,7 +82,7 @@ namespace Content.Server.AI.Pathfinding
             }
         }
 
-        public PathfindingNode? GetNeighbor(Direction direction)
+        public PathfindingNode? GetNeighbor(Direction direction, IEntityManager? entManager = null)
         {
             var chunkXOffset = TileRef.X - ParentChunk.Indices.X;
             var chunkYOffset = TileRef.Y - ParentChunk.Indices.Y;
