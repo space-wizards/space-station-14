@@ -1,13 +1,8 @@
-using System;
-using System.Linq;
 using Content.Server.GameTicking;
 using Content.Server.Projectiles.Components;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
+using Content.Shared.Sound;
 using Robust.Shared.Map;
-using Robust.Shared.Maths;
 using Robust.Shared.Random;
-using Robust.Shared.Timing;
 
 namespace Content.Server.StationEvents.Events
 {
@@ -27,7 +22,7 @@ namespace Content.Server.StationEvents.Events
         public override string StartAnnouncement =>  Loc.GetString("station-event-meteor-swarm-start-announcement");
         protected override string EndAnnouncement => Loc.GetString("station-event-meteor-swarm-ebd-announcement");
 
-        public override string? StartAudio => "/Audio/Announcements/bloblarm.ogg";
+        public override SoundSpecifier? StartAudio => new SoundPathSpecifier("/Audio/Announcements/meteors.ogg");
 
         protected override float StartAfter => 30f;
         protected override float EndAfter => float.MaxValue;

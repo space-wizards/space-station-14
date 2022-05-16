@@ -1,9 +1,6 @@
 using Content.Shared.PDA;
 using Content.Shared.Traitor.Uplink;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
 using Robust.Shared.Prototypes;
-using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 
 namespace Content.Server.Traitor.Uplink

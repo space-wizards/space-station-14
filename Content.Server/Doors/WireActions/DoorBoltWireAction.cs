@@ -6,7 +6,7 @@ using Content.Shared.Wires;
 namespace Content.Server.Doors;
 
 [DataDefinition]
-public class DoorBoltWireAction : BaseWireAction
+public sealed class DoorBoltWireAction : BaseWireAction
 {
     [DataField("color")]
     private Color _statusColor = Color.Red;
@@ -55,10 +55,17 @@ public class DoorBoltWireAction : BaseWireAction
 
     public override bool Pulse(EntityUid user, Wire wire)
     {
-        if (IsPowered(wire.Owner)
-            && EntityManager.TryGetComponent<AirlockComponent>(wire.Owner, out var door))
+        if (EntityManager.TryGetComponent<AirlockComponent>(wire.Owner, out var door))
         {
-            door.SetBoltsWithAudio(!door.BoltsDown);
+            if (IsPowered(wire.Owner))
+            {
+                door.SetBoltsWithAudio(!door.BoltsDown);
+            }
+            else if (!door.BoltsDown)
+            {
+                door.SetBoltsWithAudio(true);
+            }
+
         }
 
         return true;

@@ -50,6 +50,7 @@ public interface IButtonBarView
 
     // Info top button
     event Action InfoButtonPressed;
+    void SetInfoRed(bool value);
 }
 
 internal sealed partial class GameHud
@@ -321,4 +322,12 @@ internal sealed partial class GameHud
 
     /// <inheritdoc />
     public event Action? InfoButtonPressed;
+
+    public void SetInfoRed(bool value)
+    {
+        if (value)
+            _buttonInfo.StyleClasses.Add(TopButton.StyleClassRedTopButton);
+        else
+            _buttonInfo.StyleClasses.Remove(TopButton.StyleClassRedTopButton);
+    }
 }

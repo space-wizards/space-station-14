@@ -25,11 +25,9 @@
         radius: 0.40
       mass: 20
       mask:
-      - Impassable
-      - MobImpassable
-      - SmallImpassable
+      - MobMask
       layer:
-      - Opaque
+      - MobLayer
   - type: MobState
     thresholds:
       0: !type:NormalMobState {}
@@ -122,10 +120,20 @@
         radius: 0.40
       mass: 5
       mask:
-        - Impassable
-        - MobImpassable
-        - SmallImpassable
+      - MobMask
       layer:
-        - Opaque
+      - Opaque
   - type: GhostTakeoverAvailable
     name: holocarp
+
+- type: entity
+  id: MobCarpSalvage
+  parent: MobCarp
+  suffix: "Salvage Ruleset"
+  components:
+  - type: GhostTakeoverAvailable
+    name: space carp on salvage wreck
+    description: |
+      Defend the loot inside the salvage wreck!
+  - type: SalvageMobRestrictions
+

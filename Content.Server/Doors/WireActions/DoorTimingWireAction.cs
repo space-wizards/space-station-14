@@ -6,7 +6,7 @@ using Content.Shared.Wires;
 namespace Content.Server.Doors;
 
 [DataDefinition]
-public class DoorTimingWireAction : BaseWireAction
+public sealed class DoorTimingWireAction : BaseWireAction
 {
     [DataField("color")]
     private Color _statusColor = Color.Orange;

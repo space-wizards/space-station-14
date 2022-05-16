@@ -1,5 +1,4 @@
 using System.Diagnostics.CodeAnalysis;
-using Robust.Shared.GameObjects;
 
 namespace Content.Server.Chat.Managers;
 

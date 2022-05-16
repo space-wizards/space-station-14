@@ -1,6 +1,4 @@
 using System.Linq;
-using Content.Server.Disposal.Unit.Components;
-using Content.Server.Disposal.Unit.EntitySystems;
 using Content.Server.Hands.Components;
 using Content.Server.Storage.Components;
 using Content.Shared.Interaction;
@@ -38,7 +36,6 @@ namespace Content.Server.Storage.EntitySystems
         [Dependency] private readonly IGameTiming _gameTiming = default!;
         [Dependency] private readonly IRobustRandom _random = default!;
         [Dependency] private readonly ContainerSystem _containerSystem = default!;
-        [Dependency] private readonly DisposalUnitSystem _disposalSystem = default!;
         [Dependency] private readonly DoAfterSystem _doAfterSystem = default!;
         [Dependency] private readonly EntityLookupSystem _entityLookupSystem = default!;
         [Dependency] private readonly InteractionSystem _interactionSystem = default!;
@@ -191,6 +188,9 @@ namespace Content.Server.Storage.EntitySystems
             if (!storageComp.ClickInsert)
                 return;
 
+            if (TryComp(uid, out LockComponent? lockComponent) && lockComponent.Locked)
+                return;
+
             Logger.DebugS(storageComp.LoggerName, $"Storage (UID {uid}) attacked by user (UID {args.User}) with entity (UID {args.Used}).");
 
             if (HasComp<PlaceableSurfaceComponent>(uid))
@@ -207,6 +207,9 @@ namespace Content.Server.Storage.EntitySystems
         private void OnActivate(EntityUid uid, ServerStorageComponent storageComp, ActivateInWorldEvent args)
         {
             if (!TryComp<ActorComponent>(args.User, out var actor))
+                return;
+
+            if (TryComp(uid, out LockComponent? lockComponent) && lockComponent.Locked)
                 return;
 
             OpenStorageUI(uid, args.User, storageComp);
@@ -369,7 +372,7 @@ namespace Content.Server.Storage.EntitySystems
                 UpdateStorageVisualization(uid, storageComp);
 
                 if (storageComp.StorageCloseSound is not null)
-                    SoundSystem.Play(Filter.Pvs(uid, entityManager: EntityManager), storageComp.StorageCloseSound.GetSound(), uid, AudioParams.Default);
+                    SoundSystem.Play(Filter.Pvs(uid, entityManager: EntityManager), storageComp.StorageCloseSound.GetSound(), uid, storageComp.StorageCloseSound.Params);
             }
         }
 
@@ -578,7 +581,7 @@ namespace Content.Server.Storage.EntitySystems
                 return;
 
             if (storageComp.StorageOpenSound is not null)
-                SoundSystem.Play(Filter.Pvs(uid, entityManager: EntityManager), storageComp.StorageOpenSound.GetSound(), uid, AudioParams.Default);
+                SoundSystem.Play(Filter.Pvs(uid, entityManager: EntityManager), storageComp.StorageOpenSound.GetSound(), uid, storageComp.StorageOpenSound.Params);
 
             Logger.DebugS(storageComp.LoggerName, $"Storage (UID {uid}) \"used\" by player session (UID {player.PlayerSession.AttachedEntity}).");
 

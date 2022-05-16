@@ -6,9 +6,6 @@ using Content.Server.Nutrition.Components;
 using Content.Server.Popups;
 using Content.Shared.Nutrition.Components;
 using Content.Shared.Verbs;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Localization;
 using Robust.Shared.Player;
 
 namespace Content.Server.Animals.Systems

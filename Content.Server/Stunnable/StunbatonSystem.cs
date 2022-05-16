@@ -1,11 +1,9 @@
-using System;
 using System.Linq;
 using Content.Server.Power.Events;
 using Content.Server.PowerCell;
 using Content.Server.Speech.EntitySystems;
 using Content.Server.Stunnable.Components;
 using Content.Server.Weapon.Melee;
-using Content.Shared.ActionBlocker;
 using Content.Shared.Audio;
 using Content.Shared.Examine;
 using Content.Shared.Interaction.Events;
@@ -18,9 +16,6 @@ using Content.Shared.Stunnable;
 using Content.Shared.Throwing;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Localization;
 using Robust.Shared.Player;
 using Robust.Shared.Random;
 
@@ -39,7 +34,6 @@ namespace Content.Server.Stunnable
             base.Initialize();
 
             SubscribeLocalEvent<StunbatonComponent, MeleeHitEvent>(OnMeleeHit);
-            SubscribeLocalEvent<StunbatonComponent, MeleeInteractEvent>(OnMeleeInteract);
             SubscribeLocalEvent<StunbatonComponent, UseInHandEvent>(OnUseInHand);
             SubscribeLocalEvent<StunbatonComponent, ThrowDoHitEvent>(OnThrowCollide);
             SubscribeLocalEvent<StunbatonComponent, PowerCellChangedEvent>(OnPowerCellChanged);
@@ -48,7 +42,7 @@ namespace Content.Server.Stunnable
 
         private void OnMeleeHit(EntityUid uid, StunbatonComponent comp, MeleeHitEvent args)
         {
-            if (!comp.Activated || !args.HitEntities.Any())
+            if (!comp.Activated || !args.HitEntities.Any() || args.Handled)
                 return;
 
             if (!_cellSystem.TryGetBatteryFromSlot(uid, out var battery) || !battery.TryUseCharge(comp.EnergyPerUse))
@@ -59,19 +53,9 @@ namespace Content.Server.Stunnable
                 StunEntity(entity, comp);
                 SendPowerPulse(entity, args.User, uid);
             }
-        }
 
-        private void OnMeleeInteract(EntityUid uid, StunbatonComponent comp, MeleeInteractEvent args)
-        {
-            if (!comp.Activated)
-                return;
-
-            if (!_cellSystem.TryGetBatteryFromSlot(uid, out var battery) || !battery.TryUseCharge(comp.EnergyPerUse))
-                return;
-
-            args.CanInteract = true;
-            StunEntity(args.Entity, comp);
-            SendPowerPulse(args.Entity, args.User, uid);
+            // No combat should occur if we successfully stunned.
+            args.Handled = true;
         }
 
         private void OnUseInHand(EntityUid uid, StunbatonComponent comp, UseInHandEvent args)

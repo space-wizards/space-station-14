@@ -35,7 +35,7 @@
       "name": "gold"
     },
     {
-      "name": "idassistant"
+      "name": "idpassenger"
     },
     {
       "name": "idatmospherictechnician"
@@ -138,6 +138,18 @@
     },
     {
       "name": "idmusician"
+    },
+    {
+      "name": "idintern-cadet"
+    },
+    {
+      "name": "idintern-med"
+    },
+    {
+      "name": "idintern-service"
+    },
+    {
+      "name": "idintern-tech"
     },
     {
       "name": "orange"

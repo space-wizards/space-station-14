@@ -1,7 +1,4 @@
-﻿using System.Collections.Generic;
-using Robust.Shared.ViewVariables;
-
-namespace Content.Server.Atmos
+﻿namespace Content.Server.Atmos
 {
     public sealed class ExcitedGroup
     {

@@ -3,10 +3,7 @@ using Content.Server.Mind.Components;
 using Content.Server.Objectives.Interfaces;
 using Content.Shared.MobState.Components;
 using JetBrains.Annotations;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
 using Robust.Shared.Random;
-using Robust.Shared.Serialization.Manager.Attributes;
 
 namespace Content.Server.Objectives.Conditions
 {

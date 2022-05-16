@@ -545,7 +545,7 @@ namespace Content.Shared.CCVar
         ///     Whether gas differences will move entities.
         /// </summary>
         public static readonly CVarDef<bool> SpaceWind =
-            CVarDef.Create("atmos.space_wind", true, CVar.SERVERONLY);
+            CVarDef.Create("atmos.space_wind", false, CVar.SERVERONLY);
 
         /// <summary>
         ///     Divisor from maxForce (pressureDifference * 2.25f) to force applied on objects.
@@ -839,6 +839,12 @@ namespace Content.Shared.CCVar
         /// </summary>
         public static readonly CVarDef<bool> RestrictedNames =
             CVarDef.Create("ic.restricted_names", true, CVar.SERVER | CVar.REPLICATED);
+
+        /// <summary>
+        /// Allows flavor text (character descriptions)
+        /// </summary>
+        public static readonly CVarDef<bool> FlavorText =
+            CVarDef.Create("ic.flavor_text", false, CVar.SERVER | CVar.REPLICATED);
 
         /*
          * Salvage

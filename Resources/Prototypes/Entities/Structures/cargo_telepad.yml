@@ -14,12 +14,10 @@
     fixtures:
     - shape:
         !type:PhysShapeAabb
-          bounds: "-0.45,-0.45,0.45,0.00"
+        bounds: "-0.45,-0.45,0.45,0.00"
       mass: 25
-      layer:
-      - Passable
       mask:
-      - VaultImpassable
+      - MachineMask
   - type: Sprite
     netsync: false
     sprite: Structures/cargo_telepad.rsi

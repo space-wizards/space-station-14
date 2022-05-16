@@ -404,6 +404,7 @@
   name: wooden television
   description: It's an old television displaying the station's cameras, if they worked.
   components:
+  - type: InteractionOutline
   - type: Sprite
     sprite: Structures/Machines/computers.rsi
     layers:
@@ -419,9 +420,9 @@
     fixtures:
     - shape:
         !type:PhysShapeAabb
-          bounds: "-0.25,-0.25,0.25,0.25"
+        bounds: "-0.25,-0.25,0.25,0.25"
       mass: 50
-      layer:
-      - SmallImpassable
       mask:
-      - Impassable
+      - TabletopMachineMask
+      layer:
+      - TabletopMachineLayer

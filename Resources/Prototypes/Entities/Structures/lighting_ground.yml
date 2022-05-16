@@ -7,12 +7,13 @@
     fixtures:
     - shape:
         !type:PhysShapeAabb
-          bounds: "0.17,0.25,-0.17,-0.30"
+        bounds: "0.17,0.25,-0.17,-0.30"
       mass: 25
-      layer:
-      - MobImpassable
       mask:
-      - Impassable
+      - MachineMask
+      layer:
+      - MidImpassable
+      - LowImpassable
   - type: Damageable
     damageContainer: Inorganic
     damageModifierSet: Metallic
