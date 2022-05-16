@@ -1,4 +1,3 @@
-using Content.Shared.Disease;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
@@ -34,7 +33,7 @@ namespace Content.Shared.Polymorph
         public string Entity = string.Empty;
 
         /// <summary>
-        /// The duration of the transformation
+        /// The duration of the transformation in seconds
         /// can be null if there is not one
         /// </summary>
         [DataField("duration", serverOnly: true)]

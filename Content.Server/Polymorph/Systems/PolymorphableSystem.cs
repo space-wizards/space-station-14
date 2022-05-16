@@ -11,13 +11,14 @@ using Content.Shared.Damage;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Polymorph;
 using Robust.Shared.Containers;
+using Robust.Shared.Map;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
 
 namespace Content.Server.Polymorph.Systems
 {
-    public sealed class PolymorphableSystem : EntitySystem
+    public sealed partial class PolymorphableSystem : EntitySystem
     {
         [Dependency] private readonly ActionsSystem _actions = default!;
         [Dependency] private readonly IEntityManager _entity = default!;
@@ -26,6 +27,7 @@ namespace Content.Server.Polymorph.Systems
         [Dependency] private readonly SharedHandsSystem _sharedHands = default!;
         [Dependency] private readonly DamageableSystem _damageable = default!;
         [Dependency] private readonly PopupSystem _popup = default!;
+        [Dependency] private readonly IMapManager _mapManager = default!;
 
         public override void Initialize()
         {
@@ -33,14 +35,12 @@ namespace Content.Server.Polymorph.Systems
 
             SubscribeLocalEvent<PolymorphableComponent, ComponentStartup>(OnStartup);
             SubscribeLocalEvent<PolymorphableComponent, PolymorphActionEvent>(OnPolymorphActionEvent);
+
+            InitializeMap();
         }
 
-        // most of this is placeholder stuff meant for testing. make sure this is gone
         private void OnStartup(EntityUid uid, PolymorphableComponent component, ComponentStartup args)
         {
-            CreatePolymorphAction("mouse", component.Owner); //remove
-            CreatePolymorphAction("chickenForced", component.Owner); //remove
-
             if (component.InnatePolymorphs != null)
             {
                 foreach (var morph in component.InnatePolymorphs)
@@ -76,10 +76,13 @@ namespace Content.Server.Polymorph.Systems
 
             var child = Spawn(proto.Entity, Transform(target).Coordinates);
             MakeSentientCommand.MakeSentient(child, _entity);
-            var comp = AddComp<PolymorphedEntityComponent>(child);
+
+            var comp = EnsureComp<PolymorphedEntityComponent>(child);
             comp.Parent = target;
             comp.Prototype = proto;
+            RaiseLocalEvent(child, new PolymorphComponentSetupEvent());
 
+            //Transfers all damage from the original to the new one
             if (TryComp<DamageableComponent>(child, out var damageParent) &&
                 _damageable.GetScaledDamage(target, child, out var damage) &&
                 damage != null)
@@ -104,13 +107,12 @@ namespace Content.Server.Polymorph.Systems
                 }
             }
 
-            //TODO: remove the container system altogether
-            comp.ParentContainer.Insert(target);
-            RaiseLocalEvent(child, new AfterPolymorphEvent());
-
             if (TryComp<MindComponent>(target, out var mind) && mind.Mind != null)
                 mind.Mind.TransferTo(child);
 
+            EnsurePausesdMap();
+            Transform(target).AttachParent(Transform(_mapManager.GetMapEntityId(PausedMap)));
+            
             _popup.PopupEntity(Loc.GetString("polymorph-popup-generic", ("parent", target), ("child", child)), target, Filter.Pvs(target));
         }
 
@@ -156,10 +158,9 @@ namespace Content.Server.Polymorph.Systems
     }
 
     /// <summary>
-    /// This event is used to initialize the info in polymorphedEntityComponent
-    /// once all the information has been sent to it.
+    /// Used after the polymorphedEntity component has it's data set up.
     /// </summary>
-    public sealed class AfterPolymorphEvent : EventArgs { }
+    public sealed class PolymorphComponentSetupEvent : InstantActionEvent { };
 
     public sealed class PolymorphActionEvent : InstantActionEvent
     {

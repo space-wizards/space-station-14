@@ -1,17 +1,13 @@
 - type: polymorph
   id: mouse
   entity: MobMouse
-  forced: false
-  dropInventory: true
-
-- type: polymorph
-  id: chickenForced
-  entity: MobChicken
-  forced: false
-  dropInventory: false
+  forced: true
   duration: 30
 
 - type: polymorph
-  id: carp
-  entity: MobCarp
-  forced: false
+  id: chicken
+  entity: MobChicken
+  forced: true
+  dropInventory: true
+  revertOnCrit: true
+  revertOnDeath: true

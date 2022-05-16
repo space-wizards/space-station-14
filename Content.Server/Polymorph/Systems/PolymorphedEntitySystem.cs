@@ -1,7 +1,4 @@
 using Content.Server.Actions;
-using Content.Server.Body.Components;
-using Content.Server.Mind;
-using Content.Server.Mind.Commands;
 using Content.Server.Mind.Components;
 using Content.Server.Polymorph.Components;
 using Content.Server.Popups;
@@ -9,18 +6,13 @@ using Content.Shared.Actions;
 using Content.Shared.Actions.ActionTypes;
 using Content.Shared.Damage;
 using Content.Shared.MobState.Components;
-using Content.Shared.MobState.State;
-using Robust.Server.Containers;
-using Robust.Shared.Containers;
 using Robust.Shared.Player;
-using Robust.Shared.Prototypes;
 
 namespace Content.Server.Polymorph.Systems
 {
     public sealed class PolymorphedEntitySystem : EntitySystem
     {
         [Dependency] private readonly ActionsSystem _actions = default!;
-        [Dependency] private readonly ContainerSystem _container = default!;
         [Dependency] private readonly DamageableSystem _damageable = default!;
         [Dependency] private readonly PopupSystem _popup = default!;
 
@@ -28,8 +20,7 @@ namespace Content.Server.Polymorph.Systems
         {
             base.Initialize();
 
-            SubscribeLocalEvent<PolymorphedEntityComponent, ComponentInit>(OnComponentInit);
-            SubscribeLocalEvent<PolymorphedEntityComponent, AfterPolymorphEvent>(OnStartup);
+            SubscribeLocalEvent<PolymorphedEntityComponent, PolymorphComponentSetupEvent>(OnInit);
             SubscribeLocalEvent<PolymorphedEntityComponent, RevertPolymorphActionEvent>(OnRevertPolymorphActionEvent);
         }
 
@@ -45,23 +36,24 @@ namespace Content.Server.Polymorph.Systems
 
             _popup.PopupEntity(Loc.GetString("polymorph-revert-popup-generic", ("parent", uid), ("child", component.Parent)), component.Parent, Filter.Pvs(component.Parent));
 
-            component.ParentContainer.Remove(component.Parent);
+            Transform(component.Parent).AttachParent(Transform(uid).ParentUid);
+            Transform(component.Parent).Coordinates = Transform(uid).Coordinates;
+
+            if (TryComp<DamageableComponent>(component.Parent, out var damageParent) &&
+                _damageable.GetScaledDamage(uid, component.Parent, out var damage) &&
+                damage != null)
+            {
+                _damageable.SetDamage(damageParent, damage);
+            }
 
             if (TryComp<MindComponent>(uid, out var mind) && mind.Mind != null)
             {
                 mind.Mind.TransferTo(component.Parent);
-
-                if (TryComp<DamageableComponent>(uid, out var damageParent) &&
-                    _damageable.GetScaledDamage(uid, component.Parent, out var damage) &&
-                    damage != null)
-                {
-                    _damageable.SetDamage(damageParent, damage);
-                }
             }
             QueueDel(uid);
         }
 
-        private void OnStartup(EntityUid uid, PolymorphedEntityComponent component, AfterPolymorphEvent args)
+        private void OnInit(EntityUid uid, PolymorphedEntityComponent component, PolymorphComponentSetupEvent args)
         {
             if (component.Prototype.Forced)
                 return;
@@ -75,11 +67,6 @@ namespace Content.Server.Polymorph.Systems
            };
     
             _actions.AddAction(uid, act, null);
-        }
-
-        private void OnComponentInit(EntityUid uid, PolymorphedEntityComponent component, ComponentInit args)
-        {
-            component.ParentContainer = _container.EnsureContainer<Container>(uid, component.Name);
         }
 
         public override void Update(float frameTime)

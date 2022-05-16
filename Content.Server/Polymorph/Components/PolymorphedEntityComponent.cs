@@ -1,6 +1,4 @@
-using Content.Shared.Actions.ActionTypes;
 using Content.Shared.Polymorph;
-using Robust.Shared.Containers;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
 namespace Content.Server.Polymorph.Components
@@ -27,11 +25,5 @@ namespace Content.Server.Polymorph.Components
         /// </summary>
         [DataField("time")]
         public float Time = 0;
-
-        /// <summary>
-        /// The container that holds the parent entity while transformed
-        /// </summary>
-        [DataField("parentContainer")]
-        public Container ParentContainer = default!;
     }
 }
