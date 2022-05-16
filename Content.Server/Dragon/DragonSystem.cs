@@ -30,11 +30,11 @@ namespace Content.Server.Dragon
             base.Initialize();
 
             SubscribeLocalEvent<DragonComponent, ComponentStartup>(OnStartup);
-            SubscribeLocalEvent<DragonComponent, DragonDevourAction>(OnDevourAction);
-            SubscribeLocalEvent<DragonComponent, DragonSpawnAction>(OnCarpSpawnAction);
+            SubscribeLocalEvent<DragonComponent, DragonDevourActionEvent>(OnDevourAction);
+            SubscribeLocalEvent<DragonComponent, DragonSpawnActionEvent>(OnDragonSpawnAction);
 
-            SubscribeLocalEvent<DragonComponent, DragonDevourComplete>(OnBuildingDevourComplete);
-            SubscribeLocalEvent<DragonComponent, TargetDevourCancelledEvent>(OnBuildingDevourCancelled);
+            SubscribeLocalEvent<DragonComponent, DragonDevourComplete>(OnDragonDevourComplete);
+            SubscribeLocalEvent<DragonComponent, DragonDevourCancelledEvent>(OnDragonDevourCancelled);
             SubscribeLocalEvent<DragonComponent, MobStateChangedEvent>(OnMobStateChanged);
         }
 
@@ -49,12 +49,12 @@ namespace Content.Server.Dragon
             }
         }
 
-        private void OnBuildingDevourCancelled(EntityUid uid, DragonComponent component, TargetDevourCancelledEvent args)
+        private void OnDragonDevourCancelled(EntityUid uid, DragonComponent component, DragonDevourCancelledEvent args)
         {
             component.CancelToken = null;
         }
 
-        private void OnBuildingDevourComplete(EntityUid uid, DragonComponent component, DragonDevourComplete args)
+        private void OnDragonDevourComplete(EntityUid uid, DragonComponent component, DragonDevourComplete args)
         {
             component.CancelToken = null;
             //TODO: Figure out a better way of removing structures via devour that still entails standing still and waiting for a DoAfter. Somehow.
@@ -84,10 +84,11 @@ namespace Content.Server.Dragon
         /// <summary>
         /// The devour action
         /// </summary>
-        private void OnDevourAction(EntityUid dragonuid, DragonComponent component, DragonDevourAction args)
+        private void OnDevourAction(EntityUid dragonuid, DragonComponent component, DragonDevourActionEvent args)
         {
-            if (component.CancelToken != null) return;
+            if (component.CancelToken != null || args.Handled) return;
 
+            args.Handled = true;
             var target = args.Target;
             var ichorInjection = new Solution(component.DevourChem, component.DevourHealRate);
             var halfedIchorInjection = new Solution(component.DevourChem, component.DevourHealRate / 2);
@@ -107,7 +108,7 @@ namespace Content.Server.Dragon
                         if (!EntityManager.HasComponent<DamageableComponent>(dragonuid)) return;
 
                         // Recover spawns.
-                        component.Spawns.Amount += 1;
+                        component.SpawnsLeft = Math.Min(component.SpawnsLeft + 1, component.MaxSpawns);
 
                         //Humanoid devours allow dragon to get eggs, corpses included
                         if (EntityManager.HasComponent<HumanoidAppearanceComponent>(target))
@@ -139,7 +140,7 @@ namespace Content.Server.Dragon
                 return;
             }
 
-            // If it can be built- it can be destoryed
+            // If it can be built- it can be destroyed
             if (_tagSystem.HasTag(target, "RCDDeconstructWhitelist"))
             {
                 _popupSystem.PopupEntity(Loc.GetString("devour-action-popup-message-structure"), dragonuid, Filter.Entities(dragonuid));
@@ -147,8 +148,8 @@ namespace Content.Server.Dragon
 
                 _doAfterSystem.DoAfter(new DoAfterEventArgs(dragonuid, component.DevourTimer, component.CancelToken.Token, target)
                 {
-                    TargetFinishedEvent = new DragonDevourComplete(dragonuid, target),
-                    TargetCancelledEvent = new TargetDevourCancelledEvent(),
+                    UserFinishedEvent = new DragonDevourComplete(dragonuid, target),
+                    UserCancelledEvent = new DragonDevourCancelledEvent(),
                     BreakOnTargetMove = true,
                     BreakOnUserMove = true,
                     BreakOnStun = true,
@@ -156,13 +157,13 @@ namespace Content.Server.Dragon
             }
         }
 
-        private void OnCarpSpawnAction(EntityUid dragonuid, DragonComponent component, DragonSpawnAction args)
+        private void OnDragonSpawnAction(EntityUid dragonuid, DragonComponent component, DragonSpawnActionEvent args)
         {
-            // If dragon has eggs, remove one, spawn carp
-            if (component.Spawns.Amount > 0)
+            // If dragon has spawns then add one.
+            if (component.SpawnsLeft > 0)
             {
-                Spawn(component.Spawns.PrototypeId, Transform(dragonuid).Coordinates);
-                component.Spawns.Amount--;
+                Spawn(component.SpawnPrototype, Transform(dragonuid).Coordinates);
+                component.SpawnsLeft--;
                 return;
             }
 
@@ -181,6 +182,6 @@ namespace Content.Server.Dragon
             }
         }
 
-        private sealed class TargetDevourCancelledEvent : EntityEventArgs {}
+        private sealed class DragonDevourCancelledEvent : EntityEventArgs {}
     }
 }

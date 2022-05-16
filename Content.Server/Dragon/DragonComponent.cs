@@ -1,6 +1,7 @@
 using Content.Shared.Actions.ActionTypes;
 using Robust.Shared.Containers;
 using System.Threading;
+using Content.Shared.Actions;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Sound;
 using Content.Shared.Storage;
@@ -45,8 +46,12 @@ namespace Content.Server.Dragon
         [DataField("devourTime")]
         public float DevourTimer = 15f;
 
-        [DataField("spawns")]
-        public EntitySpawnEntry Spawns = new();
+        [DataField("spawnCount")] public int SpawnsLeft;
+
+        [DataField("maxSpawnCount")] public int MaxSpawns = 2;
+
+        [DataField("spawnProto", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
+        public string? SpawnPrototype;
 
         [DataField("deathSound")]
         public SoundSpecifier? DeathSound = new SoundPathSpecifier("/Audio/Animals/sound_creatures_space_dragon_roar.ogg");
@@ -62,10 +67,7 @@ namespace Content.Server.Dragon
         public Container DragonStomach = default!;
     }
 
-    public sealed class DragonDevourAction : EntityTargetAction
-    {
-        public EntityUid Target;
-    }
+    public sealed class DragonDevourActionEvent : EntityTargetActionEvent {}
 
-    public sealed class DragonSpawnAction : InstantAction {}
+    public sealed class DragonSpawnActionEvent : InstantActionEvent {}
 }

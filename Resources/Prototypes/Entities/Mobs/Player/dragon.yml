@@ -47,11 +47,9 @@
         radius: 0.40
       mass: 50
       mask:
-      - Impassable
-      - MobImpassable
-      - SmallImpassable
+      - FlyingMobMask
       layer:
-      - Opaque
+      - FlyingMobLayer
   - type: MobState
     thresholds:
       0: !type:NormalMobState {}
@@ -100,9 +98,10 @@
       groups:
         Brute: 45
   - type: Dragon
-    carpProto: MobCarpSentient
+    spawnsLeft: 2
+    spawnsProto: MobCarpSentient
     devourAction:
-      event: !type:DevourActionEvent
+      event: !type:DragonDevourActionEvent
       icon: Interface/Actions/devour.png
       name: action-name-devour
       description: action-description-devour
@@ -112,10 +111,9 @@
         components:
         - MobState
         - Tag
-    carpBirthAction:
-      event: !type:CarpBirthEvent
+    spawnAction:
+      event: !type:DragonSpawnActionEvent
       icon: Interface/Actions/carpbirth.png
       name: action-name-carp-birth
       description: action-description-carp-birth
-      useDelay: 2
-  
+      useDelay: 5
