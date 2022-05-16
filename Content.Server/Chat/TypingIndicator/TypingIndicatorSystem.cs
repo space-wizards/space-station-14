@@ -1,29 +1,38 @@
 ﻿using Content.Shared.Chat.TypingIndicator;
 using Robust.Server.GameObjects;
-using Robust.Server.Player;
 
 namespace Content.Server.Chat.TypingIndicator;
 
+// Server-side typing system
+// It receives networked typing events from clients
+// And sync typing indicator using appearance component
 public sealed class TypingIndicatorSystem : SharedTypingIndicatorSystem
 {
     public override void Initialize()
     {
         base.Initialize();
         SubscribeLocalEvent<PlayerAttachedEvent>(OnPlayerAttached);
+        SubscribeLocalEvent<TypingIndicatorComponent, PlayerDetachedEvent>(OnPlayerDetached);
         SubscribeNetworkEvent<TypingChangedEvent>(OnClientTypingChanged);
     }
 
     private void OnPlayerAttached(PlayerAttachedEvent ev)
     {
-        // when player poses entity we want to add typing indicators
-        // we also need appearance component to sync visual state
+        // when player poses entity we want to make sure that there is typing indicator
         EnsureComp<TypingIndicatorComponent>(ev.Entity);
+        // we also need appearance component to sync visual state
         EnsureComp<ServerAppearanceComponent>(ev.Entity);
     }
 
+    private void OnPlayerDetached(EntityUid uid, TypingIndicatorComponent component, PlayerDetachedEvent args)
+    {
+        // player left entity body - hide typing indicator
+        SetTypingIndicatorEnabled(uid, false);
+    }
 
     private void OnClientTypingChanged(TypingChangedEvent ev)
     {
+        // just make sure that this entity still exist
         if (!Exists(ev.Uid))
         {
             Logger.Warning($"Client attached entity {ev.Uid} from TypingChangedEvent doesn't exist on server.");

@@ -4,6 +4,7 @@ using Robust.Shared.Timing;
 
 namespace Content.Client.Chat.TypingIndicator;
 
+// Client-side typing system tracks user input in chat box
 public sealed class TypingIndicatorSystem : SharedTypingIndicatorSystem
 {
     [Dependency] private readonly IGameTiming _time = default!;
