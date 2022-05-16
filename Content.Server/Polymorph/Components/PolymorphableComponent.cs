@@ -22,7 +22,7 @@ namespace Content.Server.Polymorph.Components
         /// <summary>
         /// The polymorphs that the entity starts out being able to do.
         /// </summary>
-        [DataField("innatePolymorphs", customTypeSerializer: typeof(PolymorphPrototype))]
+        [DataField("innatePolymorphs"))]
         public List<string>? InnatePolymorphs = null;
     }
 }
