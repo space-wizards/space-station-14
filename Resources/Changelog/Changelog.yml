@@ -1,10 +1,4 @@
 Entries:
-- author: Peptide90
-  changes:
-  - {message: Added another SMES to Saltern as well as a small drone room at engineering.,
-    type: Tweak}
-  id: 1043
-  time: '2022-02-11T23:00:23.0000000+00:00'
 - author: ElectroJr
   changes:
   - {message: Fixed T-Ray scanners sometimes causing sub-floor entities to get stuck
@@ -3041,3 +3035,8 @@ Entries:
       attack instead.', type: Tweak}
   id: 1542
   time: '2022-05-17T09:57:28.0000000+00:00'
+- author: mirrorcult
+  changes:
+  - {message: Sandbox can no longer be voted as a game preset., type: Tweak}
+  id: 1543
+  time: '2022-05-17T18:05:51.0000000+00:00'
