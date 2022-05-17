@@ -134,7 +134,7 @@
     attributes:
       proper: true
       gender: male
- - type: Butcherable
+  - type: Butcherable
     spawned:
     - id: FoodMeatCorgi
       amount: 2
