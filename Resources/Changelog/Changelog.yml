@@ -1,10 +1,4 @@
 Entries:
-- author: ElectroJr
-  changes:
-  - {message: Fixed T-Ray scanners sometimes causing sub-floor entities to get stuck
-      in a visible state., type: Fix}
-  id: 1044
-  time: '2022-02-11T23:00:33.0000000+00:00'
 - author: Fishfish458
   changes:
   - {message: Added a small energy dagger for purchase on Syndicate uplink., type: Add}
@@ -3040,3 +3034,8 @@ Entries:
   - {message: Sandbox can no longer be voted as a game preset., type: Tweak}
   id: 1543
   time: '2022-05-17T18:05:51.0000000+00:00'
+- author: mirrorcult
+  changes:
+  - {message: A new chime plays for station announcements., type: Tweak}
+  id: 1544
+  time: '2022-05-17T22:05:32.0000000+00:00'
