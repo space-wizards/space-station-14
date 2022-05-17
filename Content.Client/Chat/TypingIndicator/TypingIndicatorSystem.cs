@@ -23,7 +23,7 @@ public sealed class TypingIndicatorSystem : SharedTypingIndicatorSystem
 
     public void ClientSubmittedChatText()
     {
-        // client entered text - hide typing indicator
+        // client submitted text - hide typing indicator
         ClientUpdateTyping(false);
     }
 
@@ -54,7 +54,7 @@ public sealed class TypingIndicatorSystem : SharedTypingIndicatorSystem
         if (playerPawn == null)
             return;
 
-        // send a networked event to player
+        // send a networked event to server
         RaiseNetworkEvent(new TypingChangedEvent(playerPawn.Value, isClientTyping));
     }
 }
