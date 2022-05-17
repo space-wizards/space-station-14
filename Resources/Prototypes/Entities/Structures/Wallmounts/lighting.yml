@@ -5,7 +5,7 @@
   suffix: Unpowered
   components:
   - type: MeleeSound
-    sounds:
+    soundGroups:
       Brute:
         path:
           "/Audio/Effects/glass_hit.ogg"

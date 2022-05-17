@@ -33,6 +33,8 @@ namespace Content.Server.Weapon.Melee
         [Dependency] private readonly AdminLogSystem _logSystem = default!;
         [Dependency] private readonly BloodstreamSystem _bloodstreamSystem = default!;
 
+        private const float DamagePitchVariation = 0.15f;
+
         public override void Initialize()
         {
             base.Initialize();
@@ -225,12 +227,17 @@ namespace Content.Server.Weapon.Melee
             {
                 if (type == null && damageSoundComp.NoDamageSound != null)
                 {
-                    SoundSystem.Play(Filter.Pvs(target, entityManager: EntityManager), damageSoundComp.NoDamageSound.GetSound(), target, AudioHelpers.WithVariation(0.25f));
+                    SoundSystem.Play(Filter.Pvs(target, entityManager: EntityManager), damageSoundComp.NoDamageSound.GetSound(), target, AudioHelpers.WithVariation(DamagePitchVariation));
                     playedSound = true;
                 }
-                else if (type != null && damageSoundComp.Sounds.TryGetValue(type, out var damageSound))
+                else if (type != null && damageSoundComp.SoundTypes?.TryGetValue(type, out var damageSoundType) == true)
                 {
-                    SoundSystem.Play(Filter.Pvs(target, entityManager: EntityManager), damageSound.GetSound(), target, AudioHelpers.WithVariation(0.25f));
+                    SoundSystem.Play(Filter.Pvs(target, entityManager: EntityManager), damageSoundType!.GetSound(), target, AudioHelpers.WithVariation(DamagePitchVariation));
+                    playedSound = true;
+                }
+                else if (type != null && damageSoundComp.SoundGroups?.TryGetValue(type, out var damageSoundGroup) == true)
+                {
+                    SoundSystem.Play(Filter.Pvs(target, entityManager: EntityManager), damageSoundGroup!.GetSound(), target, AudioHelpers.WithVariation(DamagePitchVariation));
                     playedSound = true;
                 }
             }
@@ -240,7 +247,7 @@ namespace Content.Server.Weapon.Melee
             {
                 if (hitSoundOverride != null)
                 {
-                    SoundSystem.Play(Filter.Pvs(target, entityManager: EntityManager), hitSoundOverride.GetSound(), target, AudioHelpers.WithVariation(0.25f));
+                    SoundSystem.Play(Filter.Pvs(target, entityManager: EntityManager), hitSoundOverride.GetSound(), target, AudioHelpers.WithVariation(DamagePitchVariation));
                     playedSound = true;
                 }
                 else if (hitSound != null)
@@ -255,7 +262,8 @@ namespace Content.Server.Weapon.Melee
             {
                 switch (type)
                 {
-                    // Heat is part of both so
+                    // Unfortunately heat returns caustic group so can't just use the damagegroup in that instance.
+                    case "Burn":
                     case "Heat":
                     case "Cold":
                         SoundSystem.Play(Filter.Pvs(target, entityManager: EntityManager), "/Audio/Items/welder.ogg", target);

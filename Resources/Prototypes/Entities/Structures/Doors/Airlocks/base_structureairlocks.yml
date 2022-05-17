@@ -5,7 +5,7 @@
   description: It opens, it closes, and maybe crushes you.
   components:
   - type: MeleeSound
-    sounds:
+    soundGroups:
       Brute:
         path:
           "/Audio/Weapons/smash.ogg"

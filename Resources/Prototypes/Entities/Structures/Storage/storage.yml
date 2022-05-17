@@ -5,7 +5,7 @@
   description: A rack for storing things on.
   components:
   - type: MeleeSound
-    sounds:
+    soundGroups:
       Brute:
         path:
           "/Audio/Weapons/dodgeball.ogg"

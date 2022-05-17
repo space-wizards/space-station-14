@@ -1,4 +1,6 @@
+using Content.Shared.Damage.Prototypes;
 using Content.Shared.Sound;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.Dictionary;
 
 namespace Content.Server.Weapon.Melee.Components;
 
@@ -9,13 +11,23 @@ namespace Content.Server.Weapon.Melee.Components;
 public sealed class MeleeSoundComponent : Component
 {
     /// <summary>
-    /// Specified sounds to apply when the entity takes damage. Will fallback to defaults if none specified.
+    /// Specified sounds to apply when the entity takes damage with the specified group.
+    /// Will fallback to defaults if none specified.
     /// </summary>
-    [DataField("sounds", required: true)]
-    public Dictionary<string, SoundSpecifier> Sounds = new();
+    [DataField("soundGroups",
+        customTypeSerializer: typeof(PrototypeIdDictionarySerializer<SoundSpecifier, DamageGroupPrototype>))]
+    public Dictionary<string, SoundSpecifier>? SoundGroups;
+
+    /// <summary>
+    /// Specified sounds to apply when the entity takes damage with the specified type.
+    /// Will fallback to defaults if none specified.
+    /// </summary>
+    [DataField("soundTypes",
+        customTypeSerializer: typeof(PrototypeIdDictionarySerializer<SoundSpecifier, DamageTypePrototype>))]
+    public Dictionary<string, SoundSpecifier>? SoundTypes;
 
     /// <summary>
     /// Sound that plays if no damage is done.
     /// </summary>
-    [DataField("noDamageSound")] public SoundSpecifier? NoDamageSound = null;
+    [DataField("noDamageSound")] public SoundSpecifier? NoDamageSound;
 }

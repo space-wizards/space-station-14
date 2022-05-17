@@ -8,7 +8,7 @@
       - Wall
   components:
     - type: MeleeSound
-      sounds:
+      soundGroups:
         Brute:
           path:
             "/Audio/Weapons/slash.ogg"
