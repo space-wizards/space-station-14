@@ -4,8 +4,8 @@
         "x": 32,
         "y": 32
     },
-    "license": "CC-BY-SA-3.0",
-    "copyright": "https://github.com/unitystation/unitystation/blob/develop/UnityProject/Assets/Textures/items/drinks/mug_gromit.asset",
+    "license": "CC-BY-SA-3.0, Created By https://github.com/ksivte",
+    "copyright": "https://github.com/unitystation/unitystation/blob/221bbcc50edf4e63dc71ac6fd5152664a6b6745a/UnityProject/Assets/Textures/items/drinks/mug_gromit.png",
     "states": [
         {
             "name": "icon-3"
