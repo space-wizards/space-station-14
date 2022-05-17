@@ -34,7 +34,7 @@
         Emagged: fire_emagged
       hideOnDepowered: ["fireAlarmState"]
     - type: WiresVisualizer
-    - type: AlertLevelDisplayVisualizer
+  - type: AlertLevelDisplay
       alertVisuals:
         green: fire_0
         blue: fire_1

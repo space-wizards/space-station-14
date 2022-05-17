@@ -24,7 +24,8 @@ namespace Content.Server.Entry
             "HandheldGPS",
             "ToggleableLightVisuals",
             "PotencyVisuals",
-            "PaperVisuals"
+            "PaperVisuals",
+            "AlertLevelDisplay"
         };
     }
 }
