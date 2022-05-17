@@ -83,7 +83,7 @@
   parent: DrinkBaseCup
   id: DrinkMugGromit
   name: gromit mug
-  description: A plain white mug.
+  description: You can see a funny dog on it.
   components:
   - type: Sprite
     sprite: Objects/Consumable/Drinks/mug_gromit.rsi
