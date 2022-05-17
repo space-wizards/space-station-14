@@ -374,7 +374,9 @@ namespace Content.IntegrationTests
             for (var i = 0; i < ticks; i++)
             {
                 await server.WaitRunTicks(1);
+                await Task.Delay(1);
                 await client.WaitRunTicks(1);
+                await Task.Delay(1);
             }
         }
 

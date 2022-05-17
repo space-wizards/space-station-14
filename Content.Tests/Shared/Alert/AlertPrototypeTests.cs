@@ -1,8 +1,9 @@
-﻿using System;
+using System;
 using System.IO;
 using Content.Shared.Alert;
 using NUnit.Framework;
 using Robust.Shared.IoC;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.Manager;
 using Robust.Shared.Serialization.Markdown.Mapping;
 using Robust.Shared.Utility;
@@ -27,6 +28,7 @@ namespace Content.Tests.Shared.Alert
         public void OneTimeSetUp()
         {
             IoCManager.Resolve<ISerializationManager>().Initialize();
+            IoCManager.Resolve<IPrototypeManager>().Initialize();
         }
 
         [Test]
