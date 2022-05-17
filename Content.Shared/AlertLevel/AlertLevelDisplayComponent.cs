@@ -1,4 +1,4 @@
-namespace Content.Client.AlertLevel;
+namespace Content.Shared.AlertLevel;
 
 [RegisterComponent]
 public sealed class AlertLevelDisplayComponent : Component

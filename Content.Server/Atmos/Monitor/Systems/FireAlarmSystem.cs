@@ -18,18 +18,6 @@ namespace Content.Server.Atmos.Monitor.Systems
         {
             SubscribeLocalEvent<FireAlarmComponent, InteractHandEvent>(OnInteractHand);
             SubscribeLocalEvent<FireAlarmComponent, GotEmaggedEvent>(OnEmagged);
-            SubscribeLocalEvent<AlertLevelChangedEvent>(OnAlertLevelChanged);
-        }
-
-        private void OnAlertLevelChanged(AlertLevelChangedEvent args)
-        {
-            foreach (var entity in EntityManager.EntityQuery<FireAlarmComponent>())
-            {
-                if (TryComp(entity.Owner, out AppearanceComponent? appearance))
-                {
-                    appearance.SetData(AlertLevelDisplay.CurrentLevel, args.AlertLevel);
-                }
-            }
         }
 
         private void OnInteractHand(EntityUid uid, FireAlarmComponent component, InteractHandEvent args)
