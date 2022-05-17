@@ -732,7 +732,7 @@
           mask:
             - FullTileMask
           layer:
-            - GlassLayer
+            - WallLayer
     - type: Airtight
     - type: Sprite
       sprite: Structures/Magic/forcewall.rsi

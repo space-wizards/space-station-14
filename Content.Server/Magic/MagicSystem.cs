@@ -161,8 +161,8 @@ public sealed class MagicSystem : EntitySystem
         else
         {
             var mapEntity = _mapManager.GetMapEntityIdOrThrow(args.Target.MapId);
-            transform.WorldPosition = args.Target.Position;
             transform.AttachParent(mapEntity);
+            transform.WorldPosition = args.Target.Position;
             SoundSystem.Play(Filter.Pvs(args.Target), args.BlinkSound.GetSound());
         }
 
