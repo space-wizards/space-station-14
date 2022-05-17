@@ -69,6 +69,9 @@ namespace Content.Shared.Throwing
 
         private void HandleCollision(EntityUid uid, ThrownItemComponent component, StartCollideEvent args)
         {
+            if (args.OtherFixture.Hard == false)
+                return;
+
             var thrower = component.Thrower;
             var otherBody = args.OtherFixture.Body;
 
