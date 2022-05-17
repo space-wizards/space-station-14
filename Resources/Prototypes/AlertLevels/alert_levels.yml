@@ -10,6 +10,12 @@
     red:
       announcement: alert-level-red-announcement
       sound: /Audio/Misc/notice1.ogg
+    violet:
+      announcement: alert-level-violet-announcement
+      sound: /Audio/Misc/notice1.ogg
+    yellow:
+      announcement: alert-level-yellow-announcement
+      sound: /Audio/Misc/notice1.ogg
     delta:
       announcement: alert-level-delta-announcement
       selectable: false
