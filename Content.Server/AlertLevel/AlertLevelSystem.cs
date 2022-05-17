@@ -65,7 +65,7 @@ public sealed class AlertLevelSystem : EntitySystem
 
         var stationName = dataComponent.EntityName;
 
-        var name = Loc.GetString($"alert-level-{level}");
+        var name = Loc.GetString($"alert-level-{level}").ToLower();
 
         // Announcement text. Is passed into announcementFull.
         var announcement = Loc.GetString(detail.Announcement);

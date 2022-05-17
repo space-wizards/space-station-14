@@ -3,11 +3,15 @@
   defaultLevel: green
   levels:
     green:
-      announcement: "Alert level green"
+      announcement: alert-level-green-announcement
     blue:
-      announcement: "Alert level blue"
+      announcement: alert-level-blue-announcement
+      sound: /Audio/Misc/notice1.ogg
     red:
-      announcement: "Alert level red"
+      announcement: alert-level-red-announcement
+      sound: /Audio/Misc/notice1.ogg
     delta:
-      announcement: "Alert level delta"
+      announcement: alert-level-delta-announcement
+      selectable: false
+      sound: /Audio/Misc/notice1.ogg
       disableSelection: true
