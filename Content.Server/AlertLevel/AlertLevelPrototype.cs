@@ -44,6 +44,6 @@ public sealed class AlertLevelDetail
     [DataField("sound")] public SoundSpecifier? Sound { get; }
 
     // The color that this alert level will show in-game in chat.
-    [DataField("color")] public Color Color { get; } = Color.White;
+    [DataField("color")] public string Color { get; } = default!;
 }
 

@@ -7,7 +7,7 @@ alert-level-blue = Blue
 alert-level-blue-announcement = There is an unknown threat on the station. Security is allowed to perform random checks. Crewmembers are advised to follow commands issued by any relevant authority.
 
 alert-level-red = Red
-alert-level-red-announcement = There is a known threat on the station. Security is allowed to use lethal force if necessary. Crewmembers should find a safe place to shelter in.
+alert-level-red-announcement = There is a known threat on the station. Security is allowed to use lethal force if necessary. Crewmembers should find a safe place to shelter in, and are advised to follow any present authorities.
 
 alert-level-violet = Violet
 alert-level-violet-announcement = There is a viral threat on the station. Medical staff are advised to isolate crewmembers with any symptoms. Crewmembers are advised to distance themselves from others and perform safety measures to prevent further spread.
