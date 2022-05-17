@@ -81,6 +81,16 @@
 
 - type: entity
   parent: DrinkBaseCup
+  id: DrinkMugGromit
+  name: gromit mug
+  description: A plain white mug.
+  components:
+  - type: Sprite
+    sprite: Objects/Consumable/Drinks/mug_gromit.rsi
+    state: icon-3
+
+- type: entity
+  parent: DrinkBaseCup
   id: DrinkMugHeart
   name: mug heart
   description: A white mug, it prominently features a red heart.
