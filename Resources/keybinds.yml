@@ -17,9 +17,6 @@ binds:
   type: State
   key: MouseLeft
   canFocus: true
-- function: WideAttack
-  type: State
-  key: Space
 - function: ShowDebugMonitors
   type: Toggle
   key: F3

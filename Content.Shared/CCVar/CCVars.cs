@@ -820,6 +820,9 @@ namespace Content.Shared.CCVar
         public static readonly CVarDef<bool> ChatSanitizerEnabled =
             CVarDef.Create("chat.chat_sanitizer_enabled", true, CVar.SERVERONLY);
 
+        public static readonly CVarDef<bool> ChatShowTypingIndicator =
+            CVarDef.Create("chat.show_typing_indicator", true, CVar.CLIENTONLY);
+
         /*
          * AFK
          */
