@@ -22,12 +22,6 @@ public sealed class AlertLevelSystem : EntitySystem
     public override void Initialize()
     {
         SubscribeLocalEvent<StationInitializedEvent>(OnStationInitialize);
-        SubscribeLocalEvent<AlertLevelComponent, ComponentShutdown>(OnComponentRemove_DEBUG);
-    }
-
-    private void OnComponentRemove_DEBUG(EntityUid uid, AlertLevelComponent comp, ComponentShutdown args)
-    {
-        throw new Exception("fucked");
     }
 
     private void OnStationInitialize(StationInitializedEvent args)
