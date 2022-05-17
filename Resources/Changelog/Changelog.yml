@@ -1,10 +1,4 @@
 Entries:
-- author: Rane
-  changes:
-  - {message: Drones should be much less likely to get flung through walls by atmos
-      now., type: Fix}
-  id: 1039
-  time: '2022-02-11T00:45:08.0000000+00:00'
 - author: TimrodDX
   changes:
   - {message: Packed Station now has departmental wardrobe vendors. Collect them all!,
@@ -3043,3 +3037,8 @@ Entries:
   - {message: More dynamic melee weapon sound range., type: Tweak}
   id: 1538
   time: '2022-05-17T03:49:07.0000000+00:00'
+- author: ike709
+  changes:
+  - {message: Reduced lighter size from 3 to 2, type: Tweak}
+  id: 1539
+  time: '2022-05-17T04:29:17.0000000+00:00'
