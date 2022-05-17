@@ -222,7 +222,8 @@
 - type: entity
   name: sawn-off shotgun
   parent: LauncherBase
-  id: ShotgunSawn
+  id: ShotgunSawnEmpty
+  suffix: Empty
   description: Omar's coming!
   components:
   - type: Sprite
@@ -244,7 +245,6 @@
     currentSelector: Single
     allSelectors:
     - Single
-    fillPrototype: ShellShotgun
     fireRate: 8.0
     capacity: 2
     minAngle: 7
@@ -264,3 +264,16 @@
   - type: Appearance
     visuals:
     - type: BarrelBoltVisualizer
+  - type: Construction
+    graph: ShotgunSawn
+    node: shotgunsawn
+
+- type: entity
+  name: sawn-off shotgun
+  parent: ShotgunSawnEmpty
+  id: ShotgunSawn
+  suffix:
+  description: Omar's coming!
+  components:
+  - type: BoltActionBarrel
+    fillPrototype: ShellShotgun

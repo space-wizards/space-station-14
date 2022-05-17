@@ -1,0 +1,21 @@
+- type: constructionGraph
+  id: ShotgunSawn
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: shotgunsawn
+          steps:
+            - prototype: ShotgunDB
+              icon:
+                sprite: Objects/Weapons/Guns/Shotguns/db_shotgun.rsi
+                state: icon
+              name: double-barreled shotgun
+            - prototype: SawElectric
+              icon:
+                sprite: Objects/Specific/Medical/Surgery/saw.rsi
+                state: electric
+              name: circular saw
+              doAfter: 5
+    - node: shotgunsawn
+      entity: ShotgunSawnEmpty

@@ -47,3 +47,16 @@
   icon:
     sprite: Objects/Specific/Medical/medical.rsi
     state: gauze
+
+- type: construction
+  name: sawn-off shotgun
+  id: ShotgunSawn
+  graph: ShotgunSawn
+  startNode: start
+  targetNode: shotgunsawn
+  category: Weapons
+  objectType: Item
+  description: Make sure to unload the gun.
+  icon:
+    sprite: Objects/Weapons/Guns/Shotguns/sawn.rsi
+    state: icon
