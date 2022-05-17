@@ -33,6 +33,9 @@
                         <Button Name="ReconnectButton" Text="{Loc 'connecting-reconnect'}"
                                 HorizontalAlignment="Center"
                                 VerticalExpand="True" VerticalAlignment="Bottom" />
+                        <Button Name="RedialButton" Text="{Loc 'connecting-redial'}"
+                                HorizontalAlignment="Center"
+                                VerticalExpand="True" VerticalAlignment="Bottom" />
                     </BoxContainer>
                 </Control>
                 <Label Name="ConnectingAddress" StyleClasses="LabelSubText" HorizontalAlignment="Center" />

@@ -25,6 +25,12 @@ namespace Content.Client.Launcher
             Stylesheet = IoCManager.Resolve<IStylesheetManager>().SheetSpace;
 
             ReconnectButton.OnPressed += _ => _state.RetryConnect();
+            // Redial shouldn't fail, but if it does, try a reconnect (maybe we're being run from debug)
+            RedialButton.OnPressed += _ =>
+            {
+                if (!_state.Redial())
+                    _state.RetryConnect();
+            };
             RetryButton.OnPressed += _ => _state.RetryConnect();
             ExitButton.OnPressed += _ => _state.Exit();
 
@@ -37,6 +43,11 @@ namespace Content.Client.Launcher
             state.ConnectionStateChanged += ConnectionStateChanged;
 
             ConnectionStateChanged(state.ConnectionState);
+
+            // Redial flag setup
+            var edim = IoCManager.Resolve<ExtendedDisconnectInformationManager>();
+            edim.LastNetDisconnectedArgsChanged += LastNetDisconnectedArgsChanged;
+            LastNetDisconnectedArgsChanged(edim.LastNetDisconnectedArgs);
         }
 
         private void ConnectFailReasonChanged(string? reason)
@@ -44,6 +55,13 @@ namespace Content.Client.Launcher
             ConnectFailReason.Text = reason == null
                 ? null
                 : Loc.GetString("connecting-fail-reason", ("reason", reason));
+        }
+
+        private void LastNetDisconnectedArgsChanged(NetDisconnectedArgs? args)
+        {
+            var redialFlag = args?.RedialFlag ?? false;
+            RedialButton.Visible = redialFlag;
+            ReconnectButton.Visible = !redialFlag;
         }
 
         private void OnPageChanged(LauncherConnecting.Page page)
