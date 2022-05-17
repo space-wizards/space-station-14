@@ -5,7 +5,7 @@ using Robust.Shared.Prototypes;
 namespace Content.Server.AlertLevel;
 
 // Alert levels.
-[Prototype("alertLevel")]
+[Prototype("alertLevels")]
 public sealed class AlertLevelPrototype : IPrototype
 {
     [IdDataField] public string ID { get; } = default!;

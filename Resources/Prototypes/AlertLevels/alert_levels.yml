@@ -1,4 +1,4 @@
-- type: alertLevel
+- type: alertLevels
   id: stationAlerts
   defaultLevel: green
   levels:
