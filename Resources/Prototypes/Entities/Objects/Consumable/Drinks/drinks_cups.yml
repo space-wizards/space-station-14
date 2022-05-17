@@ -81,7 +81,7 @@
 
 - type: entity
   parent: DrinkBaseCup
-  id: DrinkMugGromit
+  id: DrinkMugDog
   name: gromit mug
   description: You can see a funny dog on it.
   components:
