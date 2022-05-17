@@ -1,14 +1,6 @@
 Entries:
 - author: Peptide90
   changes:
-  - {message: 'Pillar now has a complete atmos recycling loop, role based autodrobes
-      and new spawn points.', type: Add}
-  - {message: 'This is a minor update, major update coming in approx 1 week with massive
-      changes.', type: Tweak}
-  id: 1042
-  time: '2022-02-11T23:00:06.0000000+00:00'
-- author: Peptide90
-  changes:
   - {message: Added another SMES to Saltern as well as a small drone room at engineering.,
     type: Tweak}
   id: 1043
@@ -3041,3 +3033,11 @@ Entries:
   - {message: Fixed client crash when someone was cream pied., type: Fix}
   id: 1541
   time: '2022-05-17T09:56:17.0000000+00:00'
+- author: mirrorcult
+  changes:
+  - {message: The wide attack keybind has been removed., type: Remove}
+  - {message: 'Combat has been slightly reworked. Click on an entity to directly attack
+      it. Click anywhere else (or on an entity out of range), and you''ll do a wide
+      attack instead.', type: Tweak}
+  id: 1542
+  time: '2022-05-17T09:57:28.0000000+00:00'
