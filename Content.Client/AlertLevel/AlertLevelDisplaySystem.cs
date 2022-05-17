@@ -12,26 +12,25 @@ public sealed class AlertLevelDisplaySystem : EntitySystem
     {
         base.Initialize();
 
-        SubscribeLocalEvent<AlertLevelDisplayComponent, ComponentInit>(OnInit);
         SubscribeLocalEvent<AlertLevelDisplayComponent, AppearanceChangeEvent>(OnAppearanceChange);
     }
 
-    private void OnInit(EntityUid uid, AlertLevelDisplayComponent component, ComponentInit args)
+    private void OnAppearanceChange(EntityUid uid, AlertLevelDisplayComponent component, ref AppearanceChangeEvent args)
     {
-         if (!EntityManager.TryGetComponent(uid, out SpriteComponent? sprite))
-         {
-             return;
-         }
-
-         var layer = sprite.AddLayer(new RSI.StateId(component.AlertVisuals.Values.First()));
-         sprite.LayerMapSet(AlertLevelDisplay.Layer, layer);
-    }
-
-    private void OnAppearanceChange(EntityUid uid, AlertLevelDisplayComponent component, AppearanceChangeEvent args)
-    {
-        if (!args.AppearanceData.TryGetValue(AlertLevelDisplay.CurrentLevel, out var level)
-            || !EntityManager.TryGetComponent(component.Owner, out SpriteComponent? sprite))
+        if (!EntityManager.TryGetComponent(component.Owner, out SpriteComponent? sprite))
         {
+            return;
+        }
+
+        if (!sprite.LayerMapTryGet(AlertLevelDisplay.Layer, out _))
+        {
+            var layer = sprite.AddLayer(new RSI.StateId(component.AlertVisuals.Values.First()));
+            sprite.LayerMapSet(AlertLevelDisplay.Layer, layer);
+        }
+
+        if (!args.AppearanceData.TryGetValue(AlertLevelDisplay.CurrentLevel, out var level))
+        {
+            sprite.LayerSetState(AlertLevelDisplay.Layer, new RSI.StateId(component.AlertVisuals.Values.First()));
             return;
         }
 
