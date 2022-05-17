@@ -63,6 +63,7 @@
                 </BoxContainer>
                 <Control MinSize="0 8" />
                 <CheckBox Name="LobbyMusicCheckBox" Text="{Loc 'ui-options-lobby-music'}" />
+                <CheckBox Name="AdminSoundsCheckBox" Text="{Loc 'ui-options-admin-sounds'}" />
             </BoxContainer>
         </BoxContainer>
         <hudUi:StripeBack HasBottomEdge="False" HasMargins="False">

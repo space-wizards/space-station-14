@@ -364,6 +364,13 @@ namespace Content.Shared.CCVar
             CVarDef.Create("ambience.lobbymusicenabled", true, CVar.ARCHIVE | CVar.CLIENTONLY);
 
         /*
+         * Admin sounds
+         */
+
+        public static readonly CVarDef<bool> AdminSoundsEnabled =
+            CVarDef.Create("audio.adminsoundsenabled", true, CVar.ARCHIVE | CVar.CLIENTONLY);
+
+        /*
          * HUD
          */
 
