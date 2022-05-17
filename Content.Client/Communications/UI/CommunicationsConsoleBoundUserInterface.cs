@@ -19,6 +19,10 @@ namespace Content.Client.Communications.UI
 
         public bool CountdownStarted { get; private set; }
 
+        public bool AlertLevelSelectable { get; private set; }
+
+        public string CurrentLevel { get; private set; } = default!;
+
         public int Countdown => _expectedCountdownTime == null
             ? 0 : Math.Max((int)_expectedCountdownTime.Value.Subtract(_gameTiming.CurTime).TotalSeconds, 0);
         private TimeSpan? _expectedCountdownTime;
@@ -34,6 +38,12 @@ namespace Content.Client.Communications.UI
             _menu = new CommunicationsConsoleMenu(this);
             _menu.OnClose += Close;
             _menu.OpenCentered();
+        }
+
+        public void AlertLevelSelected(string level)
+        {
+            if (AlertLevelSelectable)
+                SendMessage(new CommunicationsConsoleSelectAlertLevelMessage(level));
         }
 
         public void EmergencyShuttleButtonPressed()
@@ -71,10 +81,13 @@ namespace Content.Client.Communications.UI
             CanCall = commsState.CanCall;
             _expectedCountdownTime = commsState.ExpectedCountdownEnd;
             CountdownStarted = commsState.CountdownStarted;
+            AlertLevelSelectable = commsState.AlertLevels != null;
+            CurrentLevel = commsState.CurrentAlert;
 
             if (_menu != null)
             {
                 _menu.UpdateCountdown();
+                _menu.UpdateAlertLevels(commsState.AlertLevels, CurrentLevel);
                 _menu.EmergencyShuttleButton.Disabled = !CanCall;
                 _menu.AnnounceButton.Disabled = !CanAnnounce;
             }

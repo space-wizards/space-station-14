@@ -1,0 +1,13 @@
+- type: alertLevel
+  id: stationAlerts
+  defaultLevel: green
+  levels:
+    green:
+      announcement: "Alert level green"
+    blue:
+      announcement: "Alert level blue"
+    red:
+      announcement: "Alert level red"
+    delta:
+      announcement: "Alert level delta"
+      disableSelection: true
