@@ -7,10 +7,10 @@ namespace Content.Client.Bed
     {
         protected override void OnAppearanceChange(EntityUid uid, StasisBedVisualsComponent component, ref AppearanceChangeEvent args)
         {
-            if (args.Sprite != null
+            if (TryComp(uid, out SpriteComponent? sprite)
                 && args.Component.TryGetData(StasisBedVisuals.IsOn, out bool isOn))
             {
-                args.Sprite.LayerSetVisible(StasisBedVisualLayers.IsOn, isOn);
+                sprite.LayerSetVisible(StasisBedVisualLayers.IsOn, isOn);
             }
         }
     }

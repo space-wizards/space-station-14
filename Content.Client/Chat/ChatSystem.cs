@@ -28,12 +28,6 @@ public sealed class ChatSystem : SharedChatSystem
 
         foreach (var (ent, bubs) in bubbles)
         {
-            if (Deleted(ent))
-            {
-                SetBubbles(bubs, false);
-                continue;
-            }
-
             if (ent == player)
             {
                 SetBubbles(bubs, true);

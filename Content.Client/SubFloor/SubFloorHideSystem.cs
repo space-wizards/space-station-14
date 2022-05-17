@@ -31,7 +31,7 @@ public sealed class SubFloorHideSystem : SharedSubFloorHideSystem
 
     private void OnAppearanceChanged(EntityUid uid, SubFloorHideComponent component, ref AppearanceChangeEvent args)
     {
-        if (args.Sprite == null)
+        if (!TryComp(uid, out SpriteComponent? sprite))
             return;
 
         args.Component.TryGetData(SubFloorVisuals.Covered, out bool covered);
@@ -43,7 +43,7 @@ public sealed class SubFloorHideSystem : SharedSubFloorHideSystem
         var transparency = scannerRevealed ? component.ScannerTransparency : 1f;
 
         // set visibility & color of each layer
-        foreach (var layer in args.Sprite.AllLayers)
+        foreach (var layer in sprite.AllLayers)
         {
             // pipe connection visuals are updated AFTER this, and may re-hide some layers
             layer.Visible = revealed; 
@@ -53,16 +53,16 @@ public sealed class SubFloorHideSystem : SharedSubFloorHideSystem
         }
 
         // Is there some layer that is always visible?
-        if (args.Sprite.LayerMapTryGet(SubfloorLayers.FirstLayer, out var firstLayer))
+        if (sprite.LayerMapTryGet(SubfloorLayers.FirstLayer, out var firstLayer))
         {
-            var layer = args.Sprite[firstLayer];
+            var layer = sprite[firstLayer];
             layer.Visible = true;
             layer.Color = layer.Color.WithAlpha(1f);
-            args.Sprite.Visible = true;
+            sprite.Visible = true;
             return;
         }
 
-        args.Sprite.Visible = revealed;
+        sprite.Visible = revealed;
     }
 
     private void UpdateAll()

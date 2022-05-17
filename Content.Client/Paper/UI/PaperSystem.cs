@@ -8,16 +8,16 @@ public sealed class PaperSystem : VisualizerSystem<PaperVisualsComponent>
 {
     protected override void OnAppearanceChange(EntityUid uid, PaperVisualsComponent component, ref AppearanceChangeEvent args)
     {
-        if (args.Sprite == null)
+        if (!TryComp(uid, out SpriteComponent? sprite))
             return;
 
         if (args.Component.TryGetData(PaperVisuals.Status , out PaperStatus writingStatus))
-            args.Sprite.LayerSetVisible(PaperVisualLayers.Writing, writingStatus == PaperStatus.Written);
+            sprite.LayerSetVisible(PaperVisualLayers.Writing, writingStatus == PaperStatus.Written);
 
         if (args.Component.TryGetData(PaperVisuals.Stamp, out string stampState))
         {
-            args.Sprite.LayerSetState(PaperVisualLayers.Stamp, stampState);
-            args.Sprite.LayerSetVisible(PaperVisualLayers.Stamp, true);
+            sprite.LayerSetState(PaperVisualLayers.Stamp, stampState);
+            sprite.LayerSetVisible(PaperVisualLayers.Stamp, true);
         }
     }
 }

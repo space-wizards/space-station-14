@@ -11,18 +11,16 @@ namespace Content.Client.Vehicle
     {
         protected override void OnAppearanceChange(EntityUid uid, VehicleVisualsComponent component, ref AppearanceChangeEvent args)
         {
-            if (args.Sprite == null)
-                return;
-
             /// First check is for the sprite itself
-            if (args.Component.TryGetData(VehicleVisuals.DrawDepth, out int drawDepth))
+            if (TryComp(uid, out SpriteComponent? sprite)
+                && args.Component.TryGetData(VehicleVisuals.DrawDepth, out int drawDepth) && sprite != null)
             {
-                args.Sprite.DrawDepth = drawDepth;
+                sprite.DrawDepth = drawDepth;
             }
             /// Set vehicle layer to animated or not (i.e. are the wheels turning or not)
             if (args.Component.TryGetData(VehicleVisuals.AutoAnimate, out bool autoAnimate))
             {
-                args.Sprite.LayerSetAutoAnimated(VehicleVisualLayers.AutoAnimate, autoAnimate);
+                sprite?.LayerSetAutoAnimated(VehicleVisualLayers.AutoAnimate, autoAnimate);
             }
         }
     }

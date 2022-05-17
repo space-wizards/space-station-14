@@ -63,6 +63,9 @@ namespace Content.Shared.SubFloor
                 var xform = Transform(uid);
                 _trayScannerSystem.OnSubfloorAnchored(uid, component, xform);
                 UpdateFloorCover(uid, component, xform);
+
+                if (component.IsUnderCover)
+                    UpdateAppearance(uid, component);
             }
             else if (component.IsUnderCover)
             {

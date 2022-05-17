@@ -1,4 +1,4 @@
-using Content.Shared.Wall;
+﻿using Content.Shared.Wall;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
 using Robust.Shared.GameObjects;
@@ -26,16 +26,14 @@ namespace Content.Client.Wall
             var entities = IoCManager.Resolve<IEntityManager>();
             if (!entities.TryGetComponent(entity, out ISpriteComponent? sprite)) return;
 
-            var index = sprite.LayerMapReserveBlank(ReinforcedWallVisualLayers.Deconstruction);
-
             if (stage < 0)
             {
-                sprite.LayerSetVisible(index, false);
+                sprite.LayerSetVisible(ReinforcedWallVisualLayers.Deconstruction, false);
                 return;
             }
 
-            sprite.LayerSetVisible(index, true);
-            sprite.LayerSetState(index, $"reinf_construct-{stage}");
+            sprite.LayerSetVisible(ReinforcedWallVisualLayers.Deconstruction, true);
+            sprite.LayerSetState(ReinforcedWallVisualLayers.Deconstruction, $"reinf_construct-{stage}");
         }
     }
 

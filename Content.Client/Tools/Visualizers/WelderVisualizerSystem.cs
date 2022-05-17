@@ -1,4 +1,4 @@
-using Content.Client.Tools.Components;
+﻿using Content.Client.Tools.Components;
 using Content.Shared.Tools.Components;
 using Robust.Client.GameObjects;
 
@@ -8,12 +8,14 @@ public sealed class WelderVisualizerSystem : VisualizerSystem<WelderComponent>
 {
     protected override void OnAppearanceChange(EntityUid uid, WelderComponent component, ref AppearanceChangeEvent args)
     {
-        if (args.Sprite == null)
+        base.OnAppearanceChange(uid, component, ref args);
+
+        if (!TryComp(uid, out SpriteComponent? sprite))
             return;
 
         if (args.Component.TryGetData(WelderVisuals.Lit, out bool isLit))
         {
-            args.Sprite.LayerSetVisible(WelderLayers.Flame, isLit);
+            sprite.LayerSetVisible(WelderLayers.Flame, isLit);
         }
     }
 }

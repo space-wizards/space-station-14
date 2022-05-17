@@ -4,7 +4,6 @@ namespace Content.Server.Climbing.Components;
 
 [RegisterComponent]
 [ComponentReference(typeof(SharedClimbingComponent))]
-[Friend(typeof(ClimbSystem))]
 public sealed class ClimbingComponent : SharedClimbingComponent
 {
     [ViewVariables(VVAccess.ReadWrite)]

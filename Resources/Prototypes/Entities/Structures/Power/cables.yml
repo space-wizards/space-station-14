@@ -23,7 +23,6 @@
       - !type:DoActsBehavior
         acts: ["Destruction"]
   - type: SubFloorHide
-  - type: Appearance
   - type: Electrified
     onHandInteract: false
     onInteractUsing: false # wire-cutting handled separately.
@@ -75,8 +74,10 @@
             max: 1
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
-  - type: CableVisualizer
-    statePrefix: hvcable_
+  - type: Appearance
+    visuals:
+    - type: CableVisualizer
+      base: hvcable_
   - type: AmbientSound
     enabled: true
     volume: -15
@@ -125,8 +126,10 @@
             max: 1
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
-  - type: CableVisualizer
-    statePrefix: mvcable_
+  - type: Appearance
+    visuals:
+    - type: CableVisualizer
+      base: mvcable_
   - type: AmbientSound
     enabled: true
     volume: -16
@@ -178,8 +181,10 @@
             max: 1
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
-  - type: CableVisualizer
-    statePrefix: lvcable_
+  - type: Appearance
+    visuals:
+    - type: CableVisualizer
+      base: lvcable_
   - type: AmbientSound
     enabled: true
     volume: -17

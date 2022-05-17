@@ -8,7 +8,6 @@ ui-vote-restart-succeeded = Restart vote succeeded.
 ui-vote-restart-failed = Restart vote failed (need { TOSTRING($ratio, "P0") }).
 ui-vote-restart-yes = Yes
 ui-vote-restart-no = No
-ui-vote-restart-abstain = Abstain
 
 ui-vote-gamemode-title = Next gamemode
 ui-vote-gamemode-tie = Tie for gamemode vote! Picking... { $picked }

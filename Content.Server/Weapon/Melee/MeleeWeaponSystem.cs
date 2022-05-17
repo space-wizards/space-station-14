@@ -10,8 +10,17 @@ using Content.Shared.Damage;
 using Content.Shared.Sound;
 using Content.Shared.Audio;
 using Content.Shared.Database;
+<<<<<<< HEAD
 using Content.Shared.Hands;
 using Content.Shared.Interaction;
+=======
+using Content.Shared.DoAfter;
+using Content.Shared.Hands;
+using Content.Shared.Interaction;
+using Content.Shared.Inventory;
+using Content.Shared.Inventory.Events;
+using Content.Shared.Item;
+>>>>>>> parent of b960f4925 (Updated branch)
 using Content.Shared.Physics;
 using Content.Shared.Weapons.Melee;
 using Robust.Shared.Audio;
@@ -30,6 +39,10 @@ namespace Content.Server.Weapon.Melee
         [Dependency] private SolutionContainerSystem _solutionsSystem = default!;
         [Dependency] private readonly AdminLogSystem _logSystem = default!;
         [Dependency] private readonly BloodstreamSystem _bloodstreamSystem = default!;
+<<<<<<< HEAD
+=======
+        [Dependency] private readonly InventorySystem _inventorySystem = default!;
+>>>>>>> parent of b960f4925 (Updated branch)
 
         public override void Initialize()
         {
@@ -39,7 +52,24 @@ namespace Content.Server.Weapon.Melee
             SubscribeLocalEvent<MeleeWeaponComponent, ClickAttackEvent>(OnClickAttack);
             SubscribeLocalEvent<MeleeWeaponComponent, WideAttackEvent>(OnWideAttack);
             SubscribeLocalEvent<MeleeChemicalInjectorComponent, MeleeHitEvent>(OnChemicalInjectorHit);
+            SubscribeLocalEvent<MeleeChemicalInjectorComponent, GettingPickedUpAttemptEvent>(OnGettingPickedUpAttemptEvent);
         }
+
+        private void OnGettingPickedUpAttemptEvent(EntityUid uid, MeleeChemicalInjectorComponent component, GettingPickedUpAttemptEvent args)
+        {
+            if (component.RequiredProtection == null || args.Cancelled)
+                return;
+            if (!_inventorySystem.TryGetSlotEntity(args.User, "gloves", out EntityUid? protection)
+                || !component.RequiredProtection.IsValid((EntityUid) protection))
+            {
+                //this is probably ugly, but I can't figure out a cleaner way to do it
+                List<EntityUid> thisList = new List<EntityUid>();
+                thisList.Add(args.User);
+                MeleeHitEvent thisEvent = new MeleeHitEvent(thisList, args.User);
+                TryInjectChemical(uid ,component ,thisEvent);
+            }
+        }
+
 
         private void OnHandSelected(EntityUid uid, MeleeWeaponComponent comp, HandSelectedEvent args)
         {
@@ -230,6 +260,11 @@ namespace Content.Server.Weapon.Melee
 
         private void OnChemicalInjectorHit(EntityUid owner, MeleeChemicalInjectorComponent comp, MeleeHitEvent args)
         {
+            TryInjectChemical(owner, comp, args);
+        }
+
+        private void TryInjectChemical(EntityUid owner, MeleeChemicalInjectorComponent comp, MeleeHitEvent args)
+        {
             if (!_solutionsSystem.TryGetInjectableSolution(owner, out var solutionContainer))
                 return;
 
@@ -242,10 +277,8 @@ namespace Content.Server.Weapon.Melee
                 if (EntityManager.TryGetComponent<BloodstreamComponent?>(entity, out var bloodstream))
                     hitBloodstreams.Add(bloodstream);
             }
-
             if (hitBloodstreams.Count < 1)
                 return;
-
             var removedSolution = solutionContainer.SplitSolution(comp.TransferAmount * hitBloodstreams.Count);
             var removedVol = removedSolution.TotalVolume;
             var solutionToInject = removedSolution.SplitSolution(removedVol * comp.TransferEfficiency);

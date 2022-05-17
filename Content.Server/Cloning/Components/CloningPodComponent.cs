@@ -186,7 +186,7 @@ namespace Content.Server.Cloning.Components
             CapturedMind = null;
             CloningProgress = 0f;
             UpdateStatus(CloningPodStatus.Idle);
-            EntitySystem.Get<ClimbSystem>().ForciblySetClimbing(entity, Owner);
+            EntitySystem.Get<ClimbSystem>().ForciblySetClimbing(entity);
         }
 
         public void UpdateStatus(CloningPodStatus status)

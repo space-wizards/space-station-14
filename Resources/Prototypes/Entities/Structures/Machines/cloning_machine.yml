@@ -59,4 +59,3 @@
     interfaces:
       - key: enum.CloningPodUIKey.Key
         type: CloningPodBoundUserInterface
-  - type: Climbable

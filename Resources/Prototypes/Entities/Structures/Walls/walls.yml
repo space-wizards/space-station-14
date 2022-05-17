@@ -360,9 +360,10 @@
         node: girder
       - !type:DoActsBehavior
         acts: ["Destruction"]
-  - type: IconSmooth
+  - type: ReinforcedWall
     key: walls
-    base: reinf_over
+    base: solid
+    reinforcedBase: reinf_over
   - type: Appearance
     visuals:
       - type: ReinforcedWallVisualizer

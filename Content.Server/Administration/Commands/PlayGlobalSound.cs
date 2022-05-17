@@ -52,30 +52,21 @@ public sealed class PlayGlobalSound : IConsoleCommand
                     return;
                 }
 
-                // No users specified so play for them all.
-                if (args.Length == 2)
-                {
-                    filter = Filter.Empty().AddAllPlayers(_playerManager);
-                }
-                else
-                {
-                    filter = Filter.Empty();
+                filter = Filter.Empty();
 
-                    // Skip the first argument, which is the sound path.
-                    for (var i = 1 + volumeOffset; i < args.Length; i++)
+                // Skip the first argument, which is the sound path.
+                for (var i = 1 + volumeOffset; i < args.Length; i++)
+                {
+                    var username = args[i];
+
+                    if (!_playerManager.TryGetSessionByUsername(username, out var session))
                     {
-                        var username = args[i];
-
-                        if (!_playerManager.TryGetSessionByUsername(username, out var session))
-                        {
-                            shell.WriteError(Loc.GetString("play-global-sound-command-player-not-found", ("username", username)));
-                            continue;
-                        }
-
-                        filter.AddPlayer(session);
+                        shell.WriteError(Loc.GetString("play-global-sound-command-player-not-found", ("username", username)));
+                        continue;
                     }
-                }
 
+                    filter.AddPlayer(session);
+                }
                 break;
         }
 

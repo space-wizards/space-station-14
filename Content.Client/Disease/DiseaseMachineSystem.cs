@@ -11,15 +11,13 @@ namespace Content.Client.Disease
     {
         protected override void OnAppearanceChange(EntityUid uid, DiseaseMachineVisualsComponent component, ref AppearanceChangeEvent args)
         {
-            if (args.Sprite == null)
-                return;
-
-            if (args.Component.TryGetData(DiseaseMachineVisuals.IsOn, out bool isOn)
+            if (TryComp(uid, out SpriteComponent? sprite)
+                && args.Component.TryGetData(DiseaseMachineVisuals.IsOn, out bool isOn)
                 && args.Component.TryGetData(DiseaseMachineVisuals.IsRunning, out bool isRunning))
             {
                 var state = isRunning ? component.RunningState : component.IdleState;
-                args.Sprite.LayerSetVisible(DiseaseMachineVisualLayers.IsOn, isOn);
-                args.Sprite.LayerSetState(DiseaseMachineVisualLayers.IsRunning, state);
+                sprite.LayerSetVisible(DiseaseMachineVisualLayers.IsOn, isOn);
+                sprite.LayerSetState(DiseaseMachineVisualLayers.IsRunning, state);
             }
         }
     }

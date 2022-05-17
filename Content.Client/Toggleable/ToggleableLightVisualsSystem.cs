@@ -29,11 +29,11 @@ public sealed class ToggleableLightVisualsSystem : VisualizerSystem<ToggleableLi
         var modulate = args.Component.TryGetData(ToggleableLightVisuals.Color, out Color color);
 
         // Update the item's sprite
-        if (args.Sprite != null && args.Sprite.LayerMapTryGet(component.SpriteLayer, out var layer))
+        if (TryComp(uid, out SpriteComponent? sprite) && sprite.LayerMapTryGet(component.SpriteLayer, out var layer))
         {
-            args.Sprite.LayerSetVisible(layer, enabled);
+            sprite.LayerSetVisible(layer, enabled);
             if (modulate)
-                args.Sprite.LayerSetColor(layer, color);
+                sprite.LayerSetColor(layer, color);
         }
 
         // Update any point-lights
