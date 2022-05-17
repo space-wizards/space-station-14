@@ -4,11 +4,6 @@
   name: airlock
   description: It opens, it closes, and maybe crushes you.
   components:
-  - type: MeleeSound
-    soundGroups:
-      Brute:
-        path:
-          "/Audio/Weapons/smash.ogg"
   - type: InteractionOutline
   - type: Sprite
     netsync: false

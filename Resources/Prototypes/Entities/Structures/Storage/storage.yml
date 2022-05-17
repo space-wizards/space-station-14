@@ -4,11 +4,6 @@
   name: rack
   description: A rack for storing things on.
   components:
-  - type: MeleeSound
-    soundGroups:
-      Brute:
-        path:
-          "/Audio/Weapons/dodgeball.ogg"
   - type: Construction
     graph: Rack
     node: Rack

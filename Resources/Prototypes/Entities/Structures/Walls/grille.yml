@@ -4,11 +4,6 @@
   name: grille
   description: A flimsy framework of iron rods.
   components:
-    - type: MeleeSound
-      soundGroups:
-        Brute:
-          path:
-            "/Audio/Weapons/grille_hit.ogg"
     - type: Tag
       tags:
         - RCDDeconstructWhitelist
