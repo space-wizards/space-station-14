@@ -1,5 +1,7 @@
-﻿using Content.Shared.Chat.TypingIndicator;
+﻿using Content.Shared.CCVar;
+using Content.Shared.Chat.TypingIndicator;
 using Robust.Client.Player;
+using Robust.Shared.Configuration;
 using Robust.Shared.Timing;
 
 namespace Content.Client.Chat.TypingIndicator;
@@ -9,13 +11,24 @@ public sealed class TypingIndicatorSystem : SharedTypingIndicatorSystem
 {
     [Dependency] private readonly IGameTiming _time = default!;
     [Dependency] private readonly IPlayerManager _playerManager = default!;
+    [Dependency] private readonly IConfigurationManager _cfg = default!;
 
     private readonly TimeSpan _typingTimeout = TimeSpan.FromSeconds(2);
     private TimeSpan _lastTextChange;
     private bool _isClientTyping;
 
+    public override void Initialize()
+    {
+        base.Initialize();
+        _cfg.OnValueChanged(CCVars.ChatShowTypingIndicator, OnShowTypingChanged);
+    }
+
     public void ClientChangedChatText()
     {
+        // don't update it if player don't want to show typing indicator
+        if (!_cfg.GetCVar(CCVars.ChatShowTypingIndicator))
+            return;
+
         // client typed something - show typing indicator
         ClientUpdateTyping(true);
         _lastTextChange = _time.CurTime;
@@ -23,6 +36,10 @@ public sealed class TypingIndicatorSystem : SharedTypingIndicatorSystem
 
     public void ClientSubmittedChatText()
     {
+        // don't update it if player don't want to show typing
+        if (!_cfg.GetCVar(CCVars.ChatShowTypingIndicator))
+            return;
+
         // client submitted text - hide typing indicator
         ClientUpdateTyping(false);
     }
@@ -56,5 +73,14 @@ public sealed class TypingIndicatorSystem : SharedTypingIndicatorSystem
 
         // send a networked event to server
         RaiseNetworkEvent(new TypingChangedEvent(playerPawn.Value, isClientTyping));
+    }
+
+    private void OnShowTypingChanged(bool showTyping)
+    {
+        // hide typing indicator immediately if player don't want to show it anymore
+        if (!showTyping)
+        {
+            ClientUpdateTyping(false);
+        }
     }
 }
