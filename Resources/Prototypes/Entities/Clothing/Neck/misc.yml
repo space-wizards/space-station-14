@@ -19,6 +19,7 @@
     sprite: Clothing/Neck/Misc/stethoscope.rsi
   - type: Clothing
     sprite: Clothing/Neck/Misc/stethoscope.rsi
+  - type: Stethoscope
 
 - type: entity
   parent: ClothingNeckBase
@@ -40,4 +41,4 @@
   - type: Sprite
     sprite: Clothing/Neck/Misc/lawyerbadge.rsi
   - type: Clothing
-    sprite: Clothing/Neck/Misc/lawyerbadge.rsi   
+    sprite: Clothing/Neck/Misc/lawyerbadge.rsi
