@@ -115,7 +115,7 @@
 - type: entity
   name: Ian
   parent: MobCorgi
-  id: MobCorgiOld
+  id: MobCorgiIan
   description: Favorite pet corgi.
   components:
   - type: Sprite
