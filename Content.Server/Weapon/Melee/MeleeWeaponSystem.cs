@@ -10,17 +10,9 @@ using Content.Shared.Damage;
 using Content.Shared.Sound;
 using Content.Shared.Audio;
 using Content.Shared.Database;
-<<<<<<< HEAD
 using Content.Shared.Hands;
-using Content.Shared.Interaction;
-=======
-using Content.Shared.DoAfter;
-using Content.Shared.Hands;
-using Content.Shared.Interaction;
 using Content.Shared.Inventory;
-using Content.Shared.Inventory.Events;
 using Content.Shared.Item;
->>>>>>> parent of b960f4925 (Updated branch)
 using Content.Shared.Physics;
 using Content.Shared.Weapons.Melee;
 using Robust.Shared.Audio;
@@ -39,10 +31,8 @@ namespace Content.Server.Weapon.Melee
         [Dependency] private SolutionContainerSystem _solutionsSystem = default!;
         [Dependency] private readonly AdminLogSystem _logSystem = default!;
         [Dependency] private readonly BloodstreamSystem _bloodstreamSystem = default!;
-<<<<<<< HEAD
-=======
         [Dependency] private readonly InventorySystem _inventorySystem = default!;
->>>>>>> parent of b960f4925 (Updated branch)
+
 
         public override void Initialize()
         {
