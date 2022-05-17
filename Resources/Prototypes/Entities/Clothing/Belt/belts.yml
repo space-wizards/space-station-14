@@ -193,6 +193,8 @@
         - Soap
         - Flashlight
         - CigPack
+      components:
+        - LightReplacer
   - type: ItemMapper
     mapLayers:
       bottle:

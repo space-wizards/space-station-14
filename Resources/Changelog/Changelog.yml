@@ -1,33 +1,4 @@
 Entries:
-- author: Mith-randalf
-  changes:
-  - {message: 'Added some new, sensibly-sized signs.', type: Add}
-  id: 1035
-  time: '2022-02-10T21:08:56.0000000+00:00'
-- author: Fishfish458
-  changes:
-  - {message: Added more clothes to the ClothesMate to make greytide less grey, type: Add}
-  - {message: Job AutoDrobes are now coming to stations near you! Dress for the job.,
-    type: Add}
-  id: 1036
-  time: '2022-02-10T21:58:31.0000000+00:00'
-- author: mirrorcult
-  changes:
-  - {message: Lack of oxygen is now slightly less deadly., type: Tweak}
-  id: 1037
-  time: '2022-02-10T21:58:41.0000000+00:00'
-- author: Rane
-  changes:
-  - {message: 'Maintenance drones are a new ghost role. They are unlocked with Avionics
-      research, or can be found in drone storage rooms.', type: Add}
-  id: 1038
-  time: '2022-02-10T22:15:06.0000000+00:00'
-- author: Rane
-  changes:
-  - {message: Drones should be much less likely to get flung through walls by atmos
-      now., type: Fix}
-  id: 1039
-  time: '2022-02-11T00:45:08.0000000+00:00'
 - author: TimrodDX
   changes:
   - {message: Packed Station now has departmental wardrobe vendors. Collect them all!,
@@ -3044,3 +3015,30 @@ Entries:
   - {message: Stunbaton damage reduced., type: Tweak}
   id: 1534
   time: '2022-05-15T02:10:34.0000000+00:00'
+- author: ShadowCommander
+  changes:
+  - {message: Fixed not being able to climb after being cloned or ejected from a medical
+      scanner., type: Fix}
+  id: 1535
+  time: '2022-05-15T09:57:13.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Restart round votes now default to abstain and 60 second timer. Cooldown
+      is also set to 5 minutes., type: Tweak}
+  id: 1536
+  time: '2022-05-16T03:33:14.0000000+00:00'
+- author: themias
+  changes:
+  - {message: The Light Replacer can now be placed in the Janibelt., type: Tweak}
+  id: 1537
+  time: '2022-05-16T23:53:26.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: More dynamic melee weapon sound range., type: Tweak}
+  id: 1538
+  time: '2022-05-17T03:49:07.0000000+00:00'
+- author: ike709
+  changes:
+  - {message: Reduced lighter size from 3 to 2, type: Tweak}
+  id: 1539
+  time: '2022-05-17T04:29:17.0000000+00:00'
