@@ -13,8 +13,6 @@ public sealed class AlertLevelSystem : EntitySystem
 {
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
     [Dependency] private readonly IChatManager _chatManager = default!;
-    [Dependency] private readonly AdminLogSystem _adminLogSystem = default!;
-    [Dependency] private readonly StationSystem _stationSystem = default!;
 
     // Until stations are a prototype, this is how it's going to have to be.
     public const string DefaultAlertLevelSet = "stationAlerts";
@@ -44,7 +42,14 @@ public sealed class AlertLevelSystem : EntitySystem
         SetLevel(args.Station, defaultLevel, false, false);
     }
 
-    // Set the alert level based on the station's entity ID.
+    /// <summary>
+    /// Set the alert level based on the station's entity ID.
+    /// </summary>
+    /// <param name="station">Station entity UID.</param>
+    /// <param name="level">Level to change the station's alert level to.</param>
+    /// <param name="playSound">Play the alert level's sound.</param>
+    /// <param name="announce">Say the alert level's announcement.</param>
+    /// <param name="force">Force the alert change. This applies if the alert level is not selectable or not.</param>
     public void SetLevel(EntityUid station, string level, bool playSound, bool announce, bool force = false, MetaDataComponent? dataComponent = null, AlertLevelComponent? component = null)
     {
         if (!Resolve(station, ref component, ref dataComponent)
@@ -86,6 +91,7 @@ public sealed class AlertLevelSystem : EntitySystem
             {
                 color = Color.White;
             }
+
             _chatManager.DispatchStationAnnouncement(announcementFull, playDefaultSound: playDefault,
                 colorOverride: color, sender: stationName);
         }
