@@ -63,7 +63,7 @@ namespace Content.Shared.Throwing
             }
             var fixture = fixturesComponent.Fixtures.Values.First();
             var shape = fixture.Shape;
-            var throwingFixture = new Fixture(physicsComponent, shape) { CollisionLayer = (int) CollisionGroup.ThrownItem, Hard = false, ID = ThrowingFixture };
+            var throwingFixture = new Fixture(physicsComponent, shape) { CollisionMask = (int) CollisionGroup.ThrownItem, Hard = false, ID = ThrowingFixture };
             _fixtures.TryCreateFixture(physicsComponent, throwingFixture, manager: fixturesComponent);
         }
 
