@@ -1,15 +1,4 @@
 Entries:
-- author: TimrodDX
-  changes:
-  - {message: Packed Station now has departmental wardrobe vendors. Collect them all!,
-    type: Add}
-  id: 1040
-  time: '2022-02-11T05:12:34.0000000+00:00'
-- author: DubiousDoggo
-  changes:
-  - {message: weh now weh on interact, type: Fix}
-  id: 1041
-  time: '2022-02-11T22:59:05.0000000+00:00'
 - author: Peptide90
   changes:
   - {message: 'Pillar now has a complete atmos recycling loop, role based autodrobes
@@ -3042,3 +3031,13 @@ Entries:
   - {message: Reduced lighter size from 3 to 2, type: Tweak}
   id: 1539
   time: '2022-05-17T04:29:17.0000000+00:00'
+- author: Macoron
+  changes:
+  - {message: Added chat typing indicator., type: Add}
+  id: 1540
+  time: '2022-05-17T09:55:19.0000000+00:00'
+- author: ShadowCommander
+  changes:
+  - {message: Fixed client crash when someone was cream pied., type: Fix}
+  id: 1541
+  time: '2022-05-17T09:56:17.0000000+00:00'
