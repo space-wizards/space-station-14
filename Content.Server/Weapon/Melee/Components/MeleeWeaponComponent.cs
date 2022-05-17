@@ -9,7 +9,7 @@ namespace Content.Server.Weapon.Melee.Components
     {
         [ViewVariables(VVAccess.ReadWrite)]
         [DataField("hitSound")]
-        public SoundSpecifier HitSound { get; set; } = new SoundCollectionSpecifier("GenericHit");
+        public SoundSpecifier? HitSound;
 
         [ViewVariables(VVAccess.ReadWrite)]
         [DataField("missSound")]

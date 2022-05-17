@@ -345,6 +345,7 @@ namespace Content.Client.Entry
             "Artifact",
             "RandomArtifactSprite",
             "EnergySword",
+            "MeleeSound",
             "DoorRemote",
             "InteractionPopup",
             "HealthAnalyzer",
