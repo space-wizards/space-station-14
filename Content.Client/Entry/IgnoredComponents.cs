@@ -354,7 +354,7 @@ namespace Content.Client.Entry
             "Spellbook",
             "TriggerOnActivate",
             "TriggerOnTimedCollide",
-            "ForceWallSpell",
+            "TimedDespawn",
         };
     }
 }

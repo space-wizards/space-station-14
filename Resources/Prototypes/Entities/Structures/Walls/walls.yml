@@ -718,7 +718,8 @@
   id: WallForce
   name: Force Wall
   components:
-    - type: ForceWallSpell
+    - type: TimedDespawn
+      lifetime: 20
     - type: Tag
       tags:
         - Wall

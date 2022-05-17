@@ -3,6 +3,7 @@ using Content.Server.Decals;
 using Content.Server.DoAfter;
 using Content.Server.Doors.Components;
 using Content.Server.Magic.Events;
+using Content.Server.Spawners.Components;
 using Content.Shared.Actions;
 using Content.Shared.Actions.ActionTypes;
 using Content.Shared.Doors.Components;
@@ -66,27 +67,6 @@ public sealed class MagicSystem : EntitySystem
             var spell = new EntityTargetAction(_prototypeManager.Index<EntityTargetActionPrototype>(id));
             _actionsSystem.SetCharges(spell, charges < 0 ? null : charges);
             component.Spells.Add(spell);
-        }
-    }
-
-    public override void Update(float frameTime)
-    {
-        base.Update(frameTime);
-
-        foreach (var forcewall in EntityQuery<ForceWallSpellComponent>())
-        {
-            forcewall.Lifetime -= frameTime;
-
-            if (forcewall.Lifetime <= 0)
-                EntityManager.QueueDeleteEntity(forcewall.Owner);
-        }
-
-        foreach (var spawnedEntities in EntityQuery<SpawnSpellComponent>())
-        {
-            spawnedEntities.Lifetime -= frameTime;
-
-            if (spawnedEntities.Lifetime <= 0)
-                EntityManager.QueueDeleteEntity(spawnedEntities.Owner);
         }
     }
 
@@ -295,7 +275,7 @@ public sealed class MagicSystem : EntitySystem
 
             if (temporarySummon)
             {
-                var comp = EnsureComp<SpawnSpellComponent>(entity);
+                var comp = EnsureComp<TimedDespawnComponent>(entity);
                 comp.Lifetime = lifetime;
             }
         }
