@@ -1,6 +1,7 @@
 using System.Threading;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.FixedPoint;
+using Robust.Shared.Map;
 
 namespace Content.Server.Chemistry.Components
 {
@@ -12,23 +13,7 @@ namespace Content.Server.Chemistry.Components
     [RegisterComponent]
     public sealed class IVBagComponent : SharedIVBagComponent
     {
-        public const string SolutionName = "injector";
-
-        /// <summary>
-        /// Whether or not the injector is able to draw from containers or if it's a single use
-        /// device that can only inject.
-        /// </summary>
-        [ViewVariables]
-        [DataField("injectOnly")]
-        public bool InjectOnly;
-
-        /// <summary>
-        /// Amount to inject or draw on each usage. If the injector is inject only, it will
-        /// attempt to inject it's entire contents upon use.
-        /// </summary>
-        [ViewVariables(VVAccess.ReadWrite)]
-        [DataField("transferAmount")]
-        public FixedPoint2 TransferAmount = FixedPoint2.New(5);
+        public const string SolutionName = "ivbag";
 
         /// <summary>
         /// Injection delay (seconds) when the target is a mob.
@@ -38,8 +23,48 @@ namespace Content.Server.Chemistry.Components
         /// in combat mode.
         /// </remarks>
         [ViewVariables(VVAccess.ReadWrite)]
-        [DataField("delay")]
-        public float Delay = 5;
+        [DataField("injectDelay")]
+        public float InjectDelay = 3.5f;
+
+        /// <summary>
+        /// The delay after injection before solution flow begins.
+        /// </summary>
+        [ViewVariables(VVAccess.ReadWrite)]
+        [DataField("startDelay")]
+        public float StartDelay = 3f;
+
+        /// <summary>
+        /// The delay between flows after flowing has begun.
+        /// </summary>
+        [ViewVariables(VVAccess.ReadWrite)]
+        [DataField("flowDelay")]
+        public float FlowDelay = 1f;
+
+        /// <summary>
+        /// Amount of solution to flow into a bloodstream per interval.
+        /// </summary>
+        [ViewVariables]
+        public FixedPoint2 FlowAmount = FixedPoint2.New(1);
+
+        /// <summary>
+        /// Amount of solution to transfer into containers.
+        /// </summary>
+        [ViewVariables(VVAccess.ReadWrite)]
+        public FixedPoint2 TransferAmount = FixedPoint2.New(10);
+
+
+        /// <summary>
+        /// Does the bag think it's injected into a mob?
+        /// </summary>
+        [ViewVariables]
+        public bool Connected = false;
+
+        /// <summary>
+        /// What mob is the IV connected to?
+        /// </summary>
+        [ViewVariables]
+        public EntityUid Mob;
+
 
         /// <summary>
         ///     Token for interrupting a do-after action (e.g., injection another player). If not null, implies
@@ -49,10 +74,10 @@ namespace Content.Server.Chemistry.Components
 
         private IVBagToggleMode _toggleState;
 
+
         /// <summary>
         /// The state of the injector. Determines it's attack behavior. Containers must have the
-        /// right SolutionCaps to support injection/drawing. For InjectOnly injectors this should
-        /// only ever be set to Inject
+        /// right SolutionCaps to support injection/drawing.
         /// </summary>
         [ViewVariables(VVAccess.ReadWrite)]
         public IVBagToggleMode ToggleState

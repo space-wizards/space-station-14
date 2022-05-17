@@ -19,12 +19,14 @@ namespace Content.Shared.Chemistry.Components
             public FixedPoint2 CurrentVolume { get; }
             public FixedPoint2 TotalVolume { get; }
             public IVBagToggleMode CurrentMode { get; }
+            public bool Connected { get; }
 
-            public IVBagComponentState(FixedPoint2 currentVolume, FixedPoint2 totalVolume, SharedIVBagComponent.IVBagToggleMode currentMode)
+            public IVBagComponentState(FixedPoint2 currentVolume, FixedPoint2 totalVolume, SharedIVBagComponent.IVBagToggleMode currentMode, bool bConnected)
             {
                 CurrentVolume = currentVolume;
                 TotalVolume = totalVolume;
                 CurrentMode = currentMode;
+                Connected = bConnected;
             }
         }
 

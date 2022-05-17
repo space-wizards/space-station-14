@@ -4,8 +4,7 @@
   parent: BaseItem
   name: IV bag
   id: BaseIVBag
-  # description: An injectable IV bag that slowly drips its contents.
-  description: An injectable IV bag. Holds plenty of fluid.
+  description: An injectable IV bag that slowly drips its contents.
   components:
   - type: Item
     sprite: Objects/Specific/Medical/ivbag.rsi
@@ -25,20 +24,20 @@
       fillBaseName: fluid
   - type: SolutionContainerManager
     solutions:
-      injector:
+      ivbag:
         maxVol: 200
-  - type: Injector
+  - type: IVBag
     injectOnly: false
     transferAmount: 25.0
     delay: 7.0
   - type: Spillable
-    solution: injector
+    solution: ivbag
   - type: ExaminableSolution
-    solution: injector
+    solution: ivbag
   - type: DrawableSolution
-    solution: injector
+    solution: ivbag
   - type: InjectableSolution
-    solution: injector
+    solution: ivbag
   - type: SolutionTransfer
     maxTransferAmount: 25.0
     canChangeTransferAmount: false
@@ -52,7 +51,7 @@
         damage: 50
       behaviors:
       - !type:SpillBehavior
-        solution: injector
+        solution: ivbag
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
 
@@ -81,7 +80,7 @@
   components:
   - type: SolutionContainerManager
     solutions:
-      injector:
+      ivbag:
         reagents:
         - ReagentId: Blood
           Quantity: 200
@@ -109,7 +108,7 @@
   components:
   - type: SolutionContainerManager
     solutions:
-      injector:
+      ivbag:
         reagents:
         - ReagentId: Slime
           Quantity: 200
