@@ -40,11 +40,12 @@ namespace Content.Client.Communications.UI
             AnnounceButton.Disabled = !owner.CanAnnounce;
 
             AlertLevelButton = new OptionButton();
-            AlertLevelButton.OnPressed += _ =>
+            AlertLevelButton.OnItemSelected += args =>
             {
-                if (AlertLevelButton.ItemCount != 0 && AlertLevelButton.SelectedMetadata != null)
+                var metadata = AlertLevelButton.GetItemMetadata(args.Id);
+                if (metadata != null && metadata is string cast)
                 {
-                    Owner.AlertLevelSelected((string) AlertLevelButton.SelectedMetadata);
+                    Owner.AlertLevelSelected(cast);
                 }
             };
 

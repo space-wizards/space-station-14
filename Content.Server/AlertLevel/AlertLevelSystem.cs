@@ -22,6 +22,12 @@ public sealed class AlertLevelSystem : EntitySystem
     public override void Initialize()
     {
         SubscribeLocalEvent<StationInitializedEvent>(OnStationInitialize);
+        SubscribeLocalEvent<AlertLevelComponent, ComponentShutdown>(OnComponentRemove_DEBUG);
+    }
+
+    private void OnComponentRemove_DEBUG(EntityUid uid, AlertLevelComponent comp, ComponentShutdown args)
+    {
+        throw new Exception("fucked");
     }
 
     private void OnStationInitialize(StationInitializedEvent args)
@@ -67,16 +73,35 @@ public sealed class AlertLevelSystem : EntitySystem
         // The full announcement to be spat out into chat.
         var announcementFull = Loc.GetString("alert-level-announcement", ("name", name), ("announcement", announcement));
 
+        var playDefault = false;
+        if (playSound)
+        {
+            if (detail.Sound != null)
+            {
+                SoundSystem.Play(Filter.Broadcast(), detail.Sound.GetSound());
+            }
+            else
+            {
+                playDefault = true;
+            }
+        }
+
         if (announce)
         {
-            _chatManager.DispatchStationAnnouncement(announcementFull, playDefaultSound: false,
+            _chatManager.DispatchStationAnnouncement(announcementFull, playDefaultSound: playDefault,
                 colorOverride: detail.Color, sender: stationName);
         }
 
-        if (playSound && detail.Sound != null)
-        {
-            SoundSystem.Play(Filter.Broadcast(), detail.Sound.GetSound());
-        }
+        RaiseLocalEvent(new AlertLevelChangedEvent(level));
     }
 }
 
+public sealed class AlertLevelChangedEvent : EntityEventArgs
+{
+    public string AlertLevel { get; }
+
+    public AlertLevelChangedEvent(string alertLevel)
+    {
+        AlertLevel = alertLevel;
+    }
+}

@@ -47,6 +47,7 @@ namespace Content.Server.Communications
             }
 
             _entityManager.EventBus.SubscribeEvent<RoundEndSystemChangedEvent>(EventSource.Local, this, (s) => UpdateBoundInterface());
+            _entityManager.EventBus.SubscribeEvent<AlertLevelChangedEvent>(EventSource.Local, this, _ => UpdateBoundInterface());
         }
 
         protected override void Startup()
@@ -67,7 +68,7 @@ namespace Content.Server.Communications
                 var stationUid = StationSystem.GetOwningStation(Owner);
                 if (stationUid != null)
                 {
-                    if (_entityManager.TryGetComponent(Owner, out AlertLevelComponent alerts)
+                    if (_entityManager.TryGetComponent(stationUid.Value, out AlertLevelComponent? alerts)
                         && alerts.AlertLevels != null)
                     {
                         if (alerts.IsSelectable)

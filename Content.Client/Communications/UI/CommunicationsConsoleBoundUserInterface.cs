@@ -43,7 +43,10 @@ namespace Content.Client.Communications.UI
         public void AlertLevelSelected(string level)
         {
             if (AlertLevelSelectable)
+            {
+                CurrentLevel = level;
                 SendMessage(new CommunicationsConsoleSelectAlertLevelMessage(level));
+            }
         }
 
         public void EmergencyShuttleButtonPressed()
