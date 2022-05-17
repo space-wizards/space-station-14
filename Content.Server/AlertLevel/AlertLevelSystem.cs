@@ -87,13 +87,9 @@ public sealed class AlertLevelSystem : EntitySystem
 
         if (announce)
         {
-            if (!Color.TryFromName(detail.Color, out var color))
-            {
-                color = Color.White;
-            }
 
             _chatManager.DispatchStationAnnouncement(announcementFull, playDefaultSound: playDefault,
-                colorOverride: color, sender: stationName);
+                colorOverride: detail.Color, sender: stationName);
         }
 
         RaiseLocalEvent(new AlertLevelChangedEvent(level));

@@ -56,6 +56,6 @@ public sealed class AlertLevelDetail
     /// <summary>
     /// The color that this alert level will show in-game in chat.
     /// </summary>
-    [DataField("color")] public string Color { get; } = default!;
+    [DataField("color")] public Color Color { get; } = Color.White;
 }
 

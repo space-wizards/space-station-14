@@ -1,9 +1,15 @@
 namespace Content.Server.AlertLevel;
 
-// Alert level component. This is the component given to a station.
+/// <summary>
+/// Alert level component. This is the component given to a station to
+/// signify its alert level state.
+/// </summary>
 [RegisterComponent]
 public sealed class AlertLevelComponent : Component
 {
+    /// <summary>
+    /// The current set of alert levels on the station.
+    /// </summary>
     [ViewVariables]
     public AlertLevelPrototype? AlertLevels;
 
@@ -11,8 +17,14 @@ public sealed class AlertLevelComponent : Component
     [DataField("alertLevelPrototype")]
     public string AlertLevelPrototype = default!;
 
+    /// <summary>
+    /// The current level on the station.
+    /// </summary>
     [ViewVariables] public string CurrentLevel = default!;
 
+    /// <summary>
+    /// If the level can be selected on the station.
+    /// </summary>
     [ViewVariables]
     public bool IsSelectable
     {
