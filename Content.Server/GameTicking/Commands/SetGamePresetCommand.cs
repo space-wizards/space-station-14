@@ -15,7 +15,7 @@ namespace Content.Server.GameTicking.Commands
         {
             if (args.Length != 1)
             {
-                shell.WriteError(Loc.GetString("shell-wrong-arguments-number"));
+                shell.WriteError(Loc.GetString("shell-wrong-arguments-number-need-specific", ("properAmount", 1), ("currentAmount", args.Length)));
                 return;
             }
 
