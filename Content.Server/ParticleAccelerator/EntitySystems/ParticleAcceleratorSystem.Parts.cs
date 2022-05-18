@@ -15,7 +15,7 @@ namespace Content.Server.ParticleAccelerator.EntitySystems
         private static void BodyTypeChanged(
             EntityUid uid,
             ParticleAcceleratorPartComponent component,
-            PhysicsBodyTypeChangedEvent args)
+            ref PhysicsBodyTypeChangedEvent args)
         {
             component.OnAnchorChanged();
         }

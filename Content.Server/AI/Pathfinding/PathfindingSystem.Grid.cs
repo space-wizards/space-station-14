@@ -34,9 +34,15 @@ public sealed partial class PathfindingSystem
         // Anything that affects traversal (i.e. collision layer) is handled separately.
     }
 
-    private void OnBodyTypeChange(PhysicsBodyTypeChangedEvent ev)
+    private void OnBodyTypeChange(ref PhysicsBodyTypeChangedEvent ev)
     {
-        // var node = Transform(ev.)
+        var xform = Transform(ev.Entity);
+
+        if (!IsRelevant(xform, ev.Component)) return;
+
+        var node = GetNode(xform);
+        node?.RemoveEntity(ev.Entity);
+        node?.AddEntity(ev.Entity, ev.Component, EntityManager);
     }
 
     private void OnGridAdd(GridAddEvent ev)
@@ -96,6 +102,8 @@ public sealed partial class PathfindingSystem
 
         return newChunk;
     }
+
+
 
     /// <summary>
     /// Return the corresponding PathfindingNode for this tile
@@ -162,6 +170,18 @@ public sealed partial class PathfindingSystem
 
         var node = GetNode(grid.GetTileRef(coordinates));
         node.RemoveEntity(entity);
+    }
+
+    private PathfindingNode? GetNode(TransformComponent xform)
+    {
+        if (!_mapManager.TryGetGrid(xform.GridID, out var grid)) return null;
+        return GetNode(grid.GetTileRef(xform.Coordinates));
+    }
+
+    private PathfindingNode? GetNode(EntityCoordinates coordinates)
+    {
+        if (!_mapManager.TryGetGrid(coordinates.GetGridId(EntityManager), out var grid)) return null;
+        return GetNode(grid.GetTileRef(coordinates));
     }
 
     /// <summary>
