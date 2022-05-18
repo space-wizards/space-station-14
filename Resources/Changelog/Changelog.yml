@@ -1,10 +1,4 @@
 Entries:
-- author: Peptide90
-  changes:
-  - {message: Added new spawners for mappers to use. Now there's a random chance of
-      what might appear in maint and secret spots..., type: Add}
-  id: 1051
-  time: '2022-02-13T09:52:12.0000000+00:00'
 - author: mirrorcult
   changes:
   - {message: Potassium/water explosions nerfed, type: Tweak}
@@ -3037,3 +3031,11 @@ Entries:
     type: Add}
   id: 1550
   time: '2022-05-18T04:05:32.0000000+00:00'
+- author: ike709
+  changes:
+  - {message: 'Added space ambience, with two songs. Go throw yourself out into space
+      a few times.', type: Add}
+  - {message: Added audio settings to disable station ambience and/or space ambience.,
+    type: Add}
+  id: 1551
+  time: '2022-05-18T04:21:16.0000000+00:00'
