@@ -8,7 +8,6 @@ using Content.Shared.Examine;
 using Content.Shared.FixedPoint;
 using JetBrains.Annotations;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Utility;
 
 namespace Content.Server.Chemistry.EntitySystems;
 

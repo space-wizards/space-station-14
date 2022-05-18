@@ -5,9 +5,6 @@ using Content.Shared.Foldable;
 using Content.Shared.Verbs;
 using JetBrains.Annotations;
 using Robust.Shared.Containers;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Localization;
 
 namespace Content.Server.Foldable
 {

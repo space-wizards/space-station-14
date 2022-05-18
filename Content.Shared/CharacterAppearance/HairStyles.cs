@@ -1,7 +1,3 @@
-using System;
-using System.Collections.Generic;
-using Robust.Shared.Maths;
-
 namespace Content.Shared.CharacterAppearance
 {
     public static class HairStyles

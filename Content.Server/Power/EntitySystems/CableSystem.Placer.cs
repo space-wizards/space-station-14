@@ -1,9 +1,7 @@
 using Content.Server.Power.Components;
 using Content.Server.Stack;
 using Content.Shared.Interaction;
-using Content.Shared.Interaction.Helpers;
 using Content.Shared.Maps;
-using Robust.Shared.GameObjects;
 
 namespace Content.Server.Power.EntitySystems;
 

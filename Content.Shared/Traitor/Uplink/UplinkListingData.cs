@@ -1,8 +1,6 @@
 using Content.Shared.PDA;
-using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization;
 using Robust.Shared.Utility;
-using System;
 
 namespace Content.Shared.Traitor.Uplink
 {

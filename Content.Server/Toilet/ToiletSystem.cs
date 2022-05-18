@@ -1,4 +1,3 @@
-using Content.Server.Act;
 using Content.Server.Buckle.Components;
 using Content.Server.Popups;
 using Content.Server.Storage.Components;
@@ -13,9 +12,6 @@ using Content.Shared.Interaction.Events;
 using Content.Shared.Toilet;
 using Content.Shared.Tools.Components;
 using Robust.Shared.Audio;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Localization;
 using Robust.Shared.Player;
 using Robust.Shared.Random;
 
@@ -43,7 +39,34 @@ namespace Content.Server.Toilet
 
         private void OnSuicide(EntityUid uid, ToiletComponent component, SuicideEvent args)
         {
-            Suicide(component.Owner, uid, component);
+            if (args.Handled) return;
+
+            // Check that victim has a head
+            if (EntityManager.TryGetComponent<SharedBodyComponent>(args.Victim, out var body) &&
+                body.HasPartOfType(BodyPartType.Head))
+            {
+                var othersMessage = Loc.GetString("toilet-component-suicide-head-message-others",
+                    ("victim", args.Victim), ("owner", uid));
+                _popupSystem.PopupEntity(othersMessage, uid, Filter.Pvs(args.Victim).RemoveWhereAttachedEntity(puid => puid == args.Victim));
+
+                var selfMessage = Loc.GetString("toilet-component-suicide-head-message",
+                    ("owner", uid));
+                _popupSystem.PopupEntity(selfMessage, uid, Filter.Entities(args.Victim));
+
+                args.SetHandled(SuicideKind.Asphyxiation);
+            }
+            else
+            {
+                var othersMessage = Loc.GetString("toilet-component-suicide-message-others",
+                    ("victim", args.Victim), ("owner", uid));
+                _popupSystem.PopupEntity(othersMessage, uid, Filter.Pvs(uid).RemoveWhereAttachedEntity(puid => puid == args.Victim));
+
+                var selfMessage = Loc.GetString("toilet-component-suicide-message",
+                    ("owner", uid));
+                _popupSystem.PopupEntity(selfMessage, uid, Filter.Entities(args.Victim));
+
+                args.SetHandled(SuicideKind.Blunt);
+            }
         }
 
         private void OnInit(EntityUid uid, ToiletComponent component, ComponentInit args)
@@ -127,37 +150,6 @@ namespace Content.Server.Toilet
                     var msg = Loc.GetString("toilet-component-on-examine-found-hidden-item");
                     args.PushMarkup(msg);
                 }
-            }
-        }
-
-        public SuicideKind Suicide(EntityUid uid, EntityUid victimUid, ToiletComponent? component = null,
-            MetaDataComponent? meta = null, MetaDataComponent? victimMeta = null)
-        {
-            // check that victim even have head
-            if (EntityManager.TryGetComponent<SharedBodyComponent>(victimUid, out var body) &&
-                body.HasPartOfType(BodyPartType.Head))
-            {
-                var othersMessage = Loc.GetString("toilet-component-suicide-head-message-others",
-                    ("victim", victimUid),("owner", uid));
-                _popupSystem.PopupEntity(othersMessage, uid, Filter.Pvs(victimUid).RemoveWhereAttachedEntity(puid => puid == victimUid));
-
-                var selfMessage = Loc.GetString("toilet-component-suicide-head-message",
-                    ("owner", uid));
-                _popupSystem.PopupEntity(selfMessage, uid, Filter.Entities(victimUid));
-
-                return SuicideKind.Asphyxiation;
-            }
-            else
-            {
-                var othersMessage = Loc.GetString("toilet-component-suicide-message-others",
-                    ("victim", victimUid),("owner", uid));
-                _popupSystem.PopupEntity(othersMessage, uid, Filter.Pvs(uid).RemoveWhereAttachedEntity(puid => puid == victimUid));
-
-                var selfMessage = Loc.GetString("toilet-component-suicide-message",
-                    ("owner", uid));
-                _popupSystem.PopupEntity(selfMessage, uid, Filter.Entities(victimUid));
-
-                return SuicideKind.Blunt;
             }
         }
 

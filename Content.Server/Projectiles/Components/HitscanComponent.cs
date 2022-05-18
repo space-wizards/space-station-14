@@ -1,17 +1,11 @@
-using System;
 using Content.Shared.Damage;
 using Content.Shared.Physics;
 using Content.Shared.Sound;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
 using Robust.Shared.Map;
-using Robust.Shared.Maths;
 using Robust.Shared.Player;
-using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Timing;
-using Robust.Shared.ViewVariables;
 
 namespace Content.Server.Projectiles.Components
 {

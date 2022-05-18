@@ -1,11 +1,7 @@
 using Content.Server.Hands.Components;
 using Content.Server.Nutrition.Components;
 using Content.Shared.Hands.EntitySystems;
-using Content.Shared.Item;
 using Content.Shared.Nutrition.Components;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Random;
 
 namespace Content.Server.AI.Operators.Nutrition
 {

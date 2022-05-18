@@ -4,7 +4,6 @@ using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Database;
 using Content.Shared.FixedPoint;
 using Robust.Shared.Audio;
-using Robust.Shared.GameObjects;
 using Robust.Shared.Player;
 
 namespace Content.Server.Chemistry.EntitySystems

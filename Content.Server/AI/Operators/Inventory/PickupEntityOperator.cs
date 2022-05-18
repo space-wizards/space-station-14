@@ -1,12 +1,7 @@
-using Content.Server.Hands.Components;
 using Content.Server.Interaction;
 using Content.Shared.Hands.EntitySystems;
-using Content.Shared.Interaction;
-using Content.Shared.Interaction.Helpers;
 using Content.Shared.Item;
 using Robust.Shared.Containers;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
 
 namespace Content.Server.AI.Operators.Inventory
 {

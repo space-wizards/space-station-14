@@ -1,4 +1,4 @@
-using System;
+using System.Linq;
 using System.Net;
 using System.Net.Sockets;
 using System.Text;
@@ -6,7 +6,6 @@ using Content.Server.Database;
 using Content.Shared.Administration;
 using Robust.Server.Player;
 using Robust.Shared.Console;
-using Robust.Shared.IoC;
 
 
 namespace Content.Server.Administration.Commands
@@ -111,6 +110,33 @@ namespace Content.Server.Administration.Commands
             {
                 targetPlayer.ConnectedClient.Disconnect(banDef.DisconnectMessage);
             }
+        }
+
+        public CompletionResult GetCompletion(IConsoleShell shell, string[] args)
+        {
+            if (args.Length == 1)
+            {
+                var playerMgr = IoCManager.Resolve<IPlayerManager>();
+                var options = playerMgr.ServerSessions.Select(c => c.Name).OrderBy(c => c).ToArray();
+                return CompletionResult.FromHintOptions(options, "<name/user ID>");
+            }
+
+            if (args.Length == 2)
+                return CompletionResult.FromHint("<reason>");
+
+            if (args.Length == 3)
+            {
+                var durations = new CompletionOption[]
+                {
+                    new("0", "Permanent"),
+                    new("1440", "1 day"),
+                    new("10080", "1 week"),
+                };
+
+                return CompletionResult.FromHintOptions(durations, "[duration]");
+            }
+
+            return CompletionResult.Empty;
         }
     }
 }

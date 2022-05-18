@@ -173,6 +173,8 @@ namespace Content.Client.Entry
             "ExaminableSolution",
             "DrawableSolution",
             "InjectableSolution",
+            "SalvageMobRestrictions",
+            "SalvageMobRestrictionsGrid",
             "Barotrauma",
             "GasVentPump",
             "GasPassiveVent",
@@ -345,12 +347,15 @@ namespace Content.Client.Entry
             "Artifact",
             "RandomArtifactSprite",
             "EnergySword",
+            "MeleeSound",
             "DoorRemote",
             "InteractionPopup",
             "HealthAnalyzer",
+            "BodyReassemble",
             "Thirst",
             "CanEscapeInventory",
-            "Wires"
+            "PowerSink",
+            "Wires",
         };
     }
 }

@@ -1,6 +1,5 @@
 using Content.Server.Explosion.Components;
 using Content.Server.MachineLinking.Events;
-using Content.Server.MachineLinking.Components;
 using Content.Server.MachineLinking.System;
 
 namespace Content.Server.Explosion.EntitySystems

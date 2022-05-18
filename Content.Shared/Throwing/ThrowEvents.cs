@@ -1,8 +1,3 @@
-using System;
-using JetBrains.Annotations;
-using Robust.Shared.Analyzers;
-using Robust.Shared.GameObjects;
-
 namespace Content.Shared.Throwing
 {
     /// <summary>

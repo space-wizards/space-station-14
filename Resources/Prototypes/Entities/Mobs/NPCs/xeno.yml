@@ -79,6 +79,8 @@
     rules: You are an antagonist, smack, slash, and wack!
   - type: ReplacementAccent
     accent: xeno
+  - type: TypingIndicator
+    proto: alien
   - type: Temperature
     heatDamageThreshold: 360
     coldDamageThreshold: -150

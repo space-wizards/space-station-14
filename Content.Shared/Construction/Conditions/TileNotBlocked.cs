@@ -1,9 +1,6 @@
 using Content.Shared.Maps;
 using JetBrains.Annotations;
-using Robust.Shared.GameObjects;
 using Robust.Shared.Map;
-using Robust.Shared.Maths;
-using Robust.Shared.Serialization.Manager.Attributes;
 
 namespace Content.Shared.Construction.Conditions
 {

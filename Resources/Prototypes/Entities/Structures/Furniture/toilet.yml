@@ -5,6 +5,11 @@
   parent: SeatBase
   description: The HT-451, a torque rotation-based, waste disposal unit for small matter. This one seems remarkably clean.
   components:
+  - type: MeleeSound
+    soundGroups:
+      Brute:
+        path:
+          "/Audio/Weapons/slash.ogg"
   - type: Anchorable
   - type: Sprite
     sprite: Structures/Furniture/toilet.rsi

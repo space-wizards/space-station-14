@@ -47,6 +47,14 @@
       type: NukeBoundUserInterface
 
 - type: entity
+  parent: NuclearBomb
+  id: NuclearBombUnanchored
+  suffix: unanchored
+  components:
+    - type: Transform
+      anchored: false
+
+- type: entity
   parent: StorageTank
   id: NuclearBombKeg
   name: nuclear fission explosive

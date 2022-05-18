@@ -9,14 +9,9 @@ using Content.Shared.Database;
 using Content.Shared.Decals;
 using Content.Shared.Interaction;
 using Content.Shared.Interaction.Events;
-using Content.Shared.Interaction.Helpers;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
-using Robust.Shared.GameObjects;
 using Robust.Shared.GameStates;
-using Robust.Shared.IoC;
-using Robust.Shared.Localization;
-using Robust.Shared.Maths;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 

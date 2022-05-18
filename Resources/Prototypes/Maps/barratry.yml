@@ -4,7 +4,7 @@
   mapPath: /Maps/barratry.yml
   minPlayers: 40
   stations:
-    Station: #TODO: Mapper, add a BecomesStation component to the primary grid of the map.
+    Barratry:
       mapNameTemplate: '{0} Barratry {1}'
       nameGenerator:
         !type:NanotrasenNameGenerator
@@ -23,7 +23,7 @@
         Captain: [ 1, 1 ]
         HeadOfPersonnel: [ 1, 1 ]
         ChiefEngineer: [ 1, 1 ]
-        StationEngineer: [ 5, 5 ]
+        StationEngineer: [ 4, 5 ]
         ChiefMedicalOfficer: [ 1, 1 ]
         MedicalDoctor: [ 4, 4 ]
         Chemist: [ 2, 3 ]
@@ -39,3 +39,7 @@
         SalvageSpecialist: [ 3, 3 ]
         Musician: [ 1, 1 ]
         AtmosphericTechnician: [ 2, 3 ]
+        TechnicalAssistant: [ 1, 2 ]
+        MedicalIntern: [ 1, 2 ]
+        ServiceWorker: [ 1, 2 ]
+        SecurityCadet: [ 1, 2 ]
