@@ -17,30 +17,30 @@ public sealed class AlertLevelDisplaySystem : EntitySystem
 
     private void OnAppearanceChange(EntityUid uid, AlertLevelDisplayComponent component, ref AppearanceChangeEvent args)
     {
-        if (!EntityManager.TryGetComponent(component.Owner, out SpriteComponent? sprite))
+        if (args.Sprite == null)
         {
             return;
         }
 
-        if (!sprite.LayerMapTryGet(AlertLevelDisplay.Layer, out _))
+        if (!args.Sprite.LayerMapTryGet(AlertLevelDisplay.Layer, out _))
         {
-            var layer = sprite.AddLayer(new RSI.StateId(component.AlertVisuals.Values.First()));
-            sprite.LayerMapSet(AlertLevelDisplay.Layer, layer);
+            var layer = args.Sprite.AddLayer(new RSI.StateId(component.AlertVisuals.Values.First()));
+            args.Sprite.LayerMapSet(AlertLevelDisplay.Layer, layer);
         }
 
         if (!args.AppearanceData.TryGetValue(AlertLevelDisplay.CurrentLevel, out var level))
         {
-            sprite.LayerSetState(AlertLevelDisplay.Layer, new RSI.StateId(component.AlertVisuals.Values.First()));
+            args.Sprite.LayerSetState(AlertLevelDisplay.Layer, new RSI.StateId(component.AlertVisuals.Values.First()));
             return;
         }
 
         if (component.AlertVisuals.TryGetValue((string) level, out var visual))
         {
-            sprite.LayerSetState(AlertLevelDisplay.Layer, new RSI.StateId(visual));
+            args.Sprite.LayerSetState(AlertLevelDisplay.Layer, new RSI.StateId(visual));
         }
         else
         {
-            sprite.LayerSetState(AlertLevelDisplay.Layer, new RSI.StateId(component.AlertVisuals.Values.First()));
+            args.Sprite.LayerSetState(AlertLevelDisplay.Layer, new RSI.StateId(component.AlertVisuals.Values.First()));
         }
     }
 }
