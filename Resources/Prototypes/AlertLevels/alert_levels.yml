@@ -8,7 +8,7 @@
     blue:
       announcement: alert-level-blue-announcement
       sound: /Audio/Misc/notice1.ogg
-      color: Blue
+      color: DodgerBlue
     red:
       announcement: alert-level-red-announcement
       sound: /Audio/Misc/notice1.ogg
