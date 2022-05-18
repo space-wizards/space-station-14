@@ -75,6 +75,21 @@
           - 4.75217098 # oxygen
           - 17.8772147 # nitrogen
         temperature: 293.15
+        
+- type: entity
+  id: NitrogenTankFilled
+  parent: RedOxygenTankFilled
+  suffix: Filled
+  name: nitrogen tank
+  components:
+    - type: GasTank
+      outputPressure: 101.325
+      air:
+        volume: 70
+        moles:
+          - 0 # oxygen
+          - 22.6293856 # nitrogen
+        temperature: 293.15
 
 - type: entity
   id: PlasmaTankFilled

@@ -28,8 +28,8 @@
 # TODO kill underplating and all its usages since it is deprecated
 - type: tile
   id: underplating
-  name: underplating
-  texture: underplating
+  name: haqrecyngvat [DO NOT USE]
+  texture: deprecated
   base_turfs:
   - lattice
   is_subfloor: true

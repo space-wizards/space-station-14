@@ -27,6 +27,8 @@ namespace Content.Server.Nutrition.EntitySystems
             {
                 _spillableSystem.SpillAt(creamPie.Owner, solution, "PuddleSmear", false);
             }
+
+            EntityManager.QueueDeleteEntity(uid);
         }
 
         protected override void CreamedEntity(EntityUid uid, CreamPiedComponent creamPied, ThrowHitByEvent args)
