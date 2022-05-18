@@ -1,8 +1,14 @@
+#==Suffix Guide==
+#Always Powered - light doesn't need power to give off life
+#Empty - on map init, light spawns without bulb
+#Blue/Sodium/etc. - the color of the light
+
+#Basic lights
 - type: entity
-  id: WallLight
+  id: AlwaysPoweredWallLight
   name: light
-  description: "An unpowered light."
-  suffix: Unpowered
+  description: "An always powered light."
+  suffix: Always powered
   components:
   - type: MeleeSound
     soundGroups:
@@ -61,8 +67,8 @@
   name: light
   description: "A light fixture. Draws power and produces light when equipped with a light tube."
   id: PoweredlightEmpty
-  suffix: Powered, Empty
-  parent: WallLight
+  suffix: Empty
+  parent: AlwaysPoweredWallLight
   components:
   - type: Sprite
     sprite: Structures/Wallmounts/Lighting/light_tube.rsi
@@ -89,7 +95,7 @@
 - type: entity
   id: Poweredlight
   description: "A light fixture. Draws power and produces light when equipped with a light tube."
-  suffix: Powered
+  suffix: 
   parent: PoweredlightEmpty
   components:
   - type: Sprite
@@ -100,10 +106,11 @@
       types:
         Heat: 5
 
+#LED lights
 - type: entity
   id: PoweredlightLED
   description: "A light fixture. Draws power and produces light when equipped with a light tube."
-  suffix: Powered, LED
+  suffix: LED
   parent: Poweredlight
   components:
   - type: PoweredLight
@@ -113,9 +120,9 @@
         Heat: 5
 
 - type: entity
-  parent: WallLight
-  id: UnpoweredLightLED
-  suffix: Unpowered, LED
+  parent: AlwaysPoweredWallLight
+  id: AlwaysPoweredLightLED
+  suffix: Always Powered, LED
   components:
   - type: PointLight
     radius: 10
@@ -123,10 +130,11 @@
     softness: 0.9
     color: "#EEEEFF"
 
+#Exterior lights
 - type: entity
   id: PoweredlightExterior
   description: "A light fixture. Draws power and produces light when equipped with a light tube."
-  suffix: Powered, Exterior Blue
+  suffix: Blue
   parent: Poweredlight
   components:
   - type: PoweredLight
@@ -136,9 +144,9 @@
         Heat: 5
 
 - type: entity
-  parent: WallLight
-  id: UnpoweredLightExterior
-  suffix: Unpowered, Exterior Blue
+  parent: AlwaysPoweredWallLight
+  id: AlwaysPoweredLightExterior
+  suffix: Always Powered, Blue
   components:
   - type: PointLight
     radius: 12
@@ -146,11 +154,11 @@
     softness: 0.5
     color: "#B4FCF0"
 
-
+#Sodium lights
 - type: entity
   id: PoweredlightSodium
   description: "A light fixture. Draws power and produces light when equipped with a light tube."
-  suffix: Powered, Sodium Orange
+  suffix: Sodium
   parent: Poweredlight
   components:
   - type: PoweredLight
@@ -160,9 +168,9 @@
         Heat: 5
 
 - type: entity
-  parent: WallLight
-  id: UnpoweredLightSodium
-  suffix: Unpowered, Sodium Orange
+  parent: AlwaysPoweredWallLight
+  id: AlwaysPoweredLightSodium
+  suffix: Always Powered, Sodium
   components:
   - type: PointLight
     radius: 10
@@ -170,12 +178,13 @@
     softness: 0.5
     color: "#FFAF38"
 
+#Small lights
 - type: entity
   name: small light
-  description: "An unpowered light."
+  description: "An always powered light."
   id: SmallLight
-  suffix: Unpowered
-  parent: WallLight
+  suffix: Always Powered
+  parent: AlwaysPoweredWallLight
   components:
     - type: AmbientSound
       volume: -15
@@ -220,7 +229,7 @@
   name: small light
   description: "A light fixture. Draws power and produces light when equipped with a light bulb."
   id: PoweredSmallLightEmpty
-  suffix: Powered, Empty
+  suffix: Empty
   parent: SmallLight
   components:
   - type: Sprite
@@ -246,7 +255,7 @@
 
 - type: entity
   id: PoweredSmallLight
-  suffix: Powered
+  suffix: 
   parent: PoweredSmallLightEmpty
   components:
   - type: Sprite
@@ -256,3 +265,35 @@
     damage:
       types:
         Heat: 5
+
+#Emergency Lights
+- type: entity
+  id: EmergencyLight
+  name: emergency light
+  description: A small red light with an internal battery that turns on as soon as it stops receiving any power.
+  parent: AlwaysPoweredWallLight
+  components:
+  - type: PointLight
+    enabled: false
+    radius: 10
+    energy: 2.5
+    offset: "0, 0.5"
+    color: "#FF4020"
+    mask: /Textures/Effects/LightMasks/cone.png
+  - type: ApcPowerReceiver
+  - type: ExtensionCableReceiver
+  - type: Battery
+    maxCharge: 30000
+    startingCharge: 0
+  - type: EmergencyLight
+  - type: Sprite
+    sprite: Structures/Wallmounts/Lighting/emergency_light.rsi
+    layers:
+    - state: emergency_light_off
+  - type: Appearance
+    visuals:
+    - type: EmergencyLightVisualizer
+  placement:
+    mode: SnapgridCenter
+    snap:
+    - Wallmount
