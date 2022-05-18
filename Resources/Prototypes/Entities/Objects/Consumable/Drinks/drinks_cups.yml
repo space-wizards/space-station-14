@@ -82,11 +82,11 @@
 - type: entity
   parent: DrinkBaseCup
   id: DrinkMugDog
-  name: gromit mug
-  description: You can see a funny dog on it.
+  name: funny dog mug
+  description: It looks like a cartoon beagle.
   components:
   - type: Sprite
-    sprite: Objects/Consumable/Drinks/mug_gromit.rsi
+    sprite: Objects/Consumable/Drinks/mug_dog.rsi
     state: icon-3
 
 - type: entity
