@@ -1,9 +1,4 @@
 Entries:
-- author: Willhelm53
-  changes:
-  - {message: 'Added a new lobby song, "Vibe Ace" by Kevin MacLeod.', type: Add}
-  id: 1054
-  time: '2022-02-13T12:17:03.0000000+00:00'
 - author: DubiousDoggo
   changes:
   - {message: Added an upright piano for all your saloon tunes, type: Add}
@@ -3036,3 +3031,8 @@ Entries:
       an entity, type: Tweak}
   id: 1553
   time: '2022-05-18T07:22:09.0000000+00:00'
+- author: Daemon
+  changes:
+  - {message: Added wacky zany funny humorous dog mug reagent container, type: Add}
+  id: 1554
+  time: '2022-05-18T18:21:38.0000000+00:00'
