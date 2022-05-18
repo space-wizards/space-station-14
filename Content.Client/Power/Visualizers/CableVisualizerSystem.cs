@@ -19,12 +19,9 @@ public sealed partial class CableVisualizerSystem : EntitySystem
         if (args.Sprite == null)
             return;
 
-        if (args.Component.TryGetData(SubFloorVisuals.Covered, out bool isUnderCover)
-            && isUnderCover
-            && args.Component.TryGetData(SubFloorVisuals.ScannerRevealed, out bool revealed)
-            && !revealed)
+        if (!args.Sprite.Visible)
         {
-            // This entity is below a floor and is not even visible to the user -> don't bother updating sprite data.
+            // This entity is probably below a floor and is not even visible to the user -> don't bother updating sprite data.
             // Note that if the subfloor visuals change, then another AppearanceChangeEvent will get triggered.
             return;
         }
