@@ -42,7 +42,7 @@ namespace Content.Client.Audio
         private IPlayingAudioStream? _lobbyStream;
 
         private SoundCollectionPrototype _currentCollection = default!;
-        private readonly CancellationTokenSource _timerCancelTokenSource = new();
+        private CancellationTokenSource _timerCancelTokenSource = new();
 
         private SoundCollectionPrototype _spaceAmbience = default!;
         private SoundCollectionPrototype _stationAmbience = default!;
