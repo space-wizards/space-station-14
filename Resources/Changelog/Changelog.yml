@@ -1,9 +1,4 @@
 Entries:
-- author: Peptide90
-  changes:
-  - {message: Added new windoors and glass external / docking airlocks!, type: Add}
-  id: 1059
-  time: '2022-02-14T03:20:30.0000000+00:00'
 - author: Willhelm53
   changes:
   - {message: "Added the ability to pet dogs, cats, and various other animals around\
@@ -3042,3 +3037,10 @@ Entries:
   - {message: Kitchen crates from cargo now come with bowls instead of beakers., type: Tweak}
   id: 1558
   time: '2022-05-18T22:18:47.0000000+00:00'
+- author: magmodius
+  changes:
+  - {message: 'Due to reports of infighting over them, Nanotran has decided to prevent
+      future such events by supply cargo with a crate holding insulated gloves. It
+      is labelled "Electrical Supplies Crate," and costs 4500 points.', type: Add}
+  id: 1559
+  time: '2022-05-18T22:30:11.0000000+00:00'
