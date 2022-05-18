@@ -5,6 +5,7 @@ connecting-exit = Exit
 connecting-retry = Retry
 connecting-reconnect = Reconnect
 connecting-redial = Relaunch
+connecting-redial-wait = Please wait: { TOSTRING($time, "G3") }
 connecting-in-progress = Connecting to server...
 connecting-disconnected = Disconnected from server:
 connecting-tip = Don't die!

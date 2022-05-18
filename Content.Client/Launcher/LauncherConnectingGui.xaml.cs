@@ -4,6 +4,7 @@ using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.XAML;
 using Robust.Shared.IoC;
+using Robust.Shared.Timing;
 using Robust.Shared.Localization;
 using Robust.Shared.Network;
 
@@ -12,7 +13,9 @@ namespace Content.Client.Launcher
     [GenerateTypedNameReferences]
     public sealed partial class LauncherConnectingGui : Control
     {
+        private const float RedialWaitTimeSeconds = 15f;
         private readonly LauncherConnecting _state;
+        private float _redialWaitTime = RedialWaitTimeSeconds;
 
         public LauncherConnectingGui(LauncherConnecting state)
         {
@@ -62,6 +65,22 @@ namespace Content.Client.Launcher
             var redialFlag = args?.RedialFlag ?? false;
             RedialButton.Visible = redialFlag;
             ReconnectButton.Visible = !redialFlag;
+        }
+
+        protected override void FrameUpdate(FrameEventArgs args)
+        {
+            base.FrameUpdate(args);
+            _redialWaitTime -= args.DeltaSeconds;
+            if (_redialWaitTime <= 0)
+            {
+                RedialButton.Disabled = false;
+                RedialButton.Text = Loc.GetString("connecting-redial");
+            }
+            else
+            {
+                RedialButton.Disabled = true;
+                RedialButton.Text = Loc.GetString("connecting-redial-wait", ("time", _redialWaitTime));
+            }
         }
 
         private void OnPageChanged(LauncherConnecting.Page page)

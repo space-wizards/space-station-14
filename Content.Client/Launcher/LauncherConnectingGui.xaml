@@ -34,6 +34,7 @@
                                 HorizontalAlignment="Center"
                                 VerticalExpand="True" VerticalAlignment="Bottom" />
                         <Button Name="RedialButton" Text="{Loc 'connecting-redial'}"
+                                Disabled="True"
                                 HorizontalAlignment="Center"
                                 VerticalExpand="True" VerticalAlignment="Bottom" />
                     </BoxContainer>
