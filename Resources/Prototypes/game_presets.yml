@@ -13,7 +13,7 @@
     - sandbox
   name: sandbox-title
   description: sandbox-description
-  showInVote: true
+  showInVote: false
   rules:
     - Sandbox
 

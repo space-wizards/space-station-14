@@ -208,7 +208,7 @@ namespace Content.Server.StationEvents.Events
 
             var atmosphereSystem = EntitySystem.Get<AtmosphereSystem>();
             var found = false;
-            var gridBounds = grid.WorldBounds;
+            var gridBounds = grid.WorldAABB;
             var gridPos = grid.WorldPosition;
 
             for (var i = 0; i < 10; i++)

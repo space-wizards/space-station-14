@@ -6,6 +6,7 @@ namespace Content.Server.Atmos.Piping.Trinary.Components
     public sealed class GasFilterComponent : Component
     {
         [ViewVariables(VVAccess.ReadWrite)]
+        [DataField("enabled")]
         public bool Enabled { get; set; } = true;
 
         [ViewVariables(VVAccess.ReadWrite)]

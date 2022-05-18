@@ -10,6 +10,11 @@
   description: "An always powered light."
   suffix: Always powered
   components:
+  - type: MeleeSound
+    soundGroups:
+      Brute:
+        path:
+          "/Audio/Effects/glass_hit.ogg"
   - type: Transform
     anchored: true
   - type: Clickable
