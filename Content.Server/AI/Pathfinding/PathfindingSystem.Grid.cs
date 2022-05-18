@@ -28,9 +28,15 @@ public sealed partial class PathfindingSystem
         SubscribeLocalEvent<AccessReaderChangeEvent>(OnAccessChange);
         SubscribeLocalEvent<GridAddEvent>(OnGridAdd);
         SubscribeLocalEvent<TileChangedEvent>(OnTileChange);
+        SubscribeLocalEvent<PhysicsBodyTypeChangedEvent>(OnBodyTypeChange);
 
         // Handle all the base grid changes
         // Anything that affects traversal (i.e. collision layer) is handled separately.
+    }
+
+    private void OnBodyTypeChange(PhysicsBodyTypeChangedEvent ev)
+    {
+        // var node = Transform(ev.)
     }
 
     private void OnGridAdd(GridAddEvent ev)
@@ -149,6 +155,15 @@ public sealed partial class PathfindingSystem
         node.RemoveEntity(entity);
     }
 
+    private void OnEntityRemove(EntityUid entity, EntityCoordinates coordinates)
+    {
+        var gridId = coordinates.GetGridId(EntityManager);
+        if (!_mapManager.TryGetGrid(gridId, out var grid)) return;
+
+        var node = GetNode(grid.GetTileRef(coordinates));
+        node.RemoveEntity(entity);
+    }
+
     /// <summary>
     /// When an entity moves around we'll remove it from its old node and add it to its new node (if applicable)
     /// </summary>
@@ -162,22 +177,17 @@ public sealed partial class PathfindingSystem
             !IsRelevant(xform, physics) ||
             moveEvent.NewPosition.GetGridId(EntityManager) == GridId.Invalid)
         {
-            OnEntityRemove(moveEvent.Sender, xform);
+            OnEntityRemove(moveEvent.Sender, moveEvent.OldPosition);
             return;
         }
 
-        var oldGridId = moveEvent.OldPosition.GetGridId(EntityManager);
         var gridId = moveEvent.NewPosition.GetGridId(EntityManager);
 
-        if (_mapManager.TryGetGrid(oldGridId, out var oldGrid))
-        {
-            var oldNode = GetNode(oldGrid.GetTileRef(moveEvent.OldPosition));
-            oldNode.RemoveEntity(moveEvent.Sender);
-        }
+        OnEntityRemove(moveEvent.Sender, moveEvent.OldPosition);
 
         if (_mapManager.TryGetGrid(gridId, out var grid))
         {
-            var newNode = GetNode(grid.GetTileRef(moveEvent.OldPosition));
+            var newNode = GetNode(grid.GetTileRef(moveEvent.NewPosition));
             newNode.AddEntity(moveEvent.Sender, physics, EntityManager);
         }
     }
