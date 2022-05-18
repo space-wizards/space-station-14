@@ -63,7 +63,7 @@ namespace Content.Client.Popups
 
         private void PopupMessage(string message, EntityCoordinates coordinates, EntityUid? entity = null)
         {
-            var label = new PopupLabel(_eyeManager, EntityManager, _map)
+            var label = new PopupLabel(_eyeManager, EntityManager)
             {
                 Entity = entity,
                 Text = message,
@@ -73,8 +73,7 @@ namespace Content.Client.Popups
             _userInterfaceManager.PopupRoot.AddChild(label);
             label.Measure(Vector2.Infinity);
 
-            var mapCoordinates = _eyeManager.ScreenToMap(coordinates.Position);
-            label.InitialPos = mapCoordinates;
+            label.InitialPos = coordinates;
             LayoutContainer.SetPosition(label, label.InitialPos.Position);
             _aliveLabels.Add(label);
         }
@@ -186,7 +185,6 @@ namespace Content.Client.Popups
         {
             private readonly IEyeManager _eyeManager;
             private readonly IEntityManager _entityManager;
-            private readonly IMapManager _mapManager;
 
             public float TotalTime { get; private set; }
             /// <summary>
@@ -198,11 +196,10 @@ namespace Content.Client.Popups
             public EntityCoordinates InitialPos { get; set; }
             public EntityUid? Entity { get; set; }
 
-            public PopupLabel(IEyeManager eyeManager, IEntityManager entityManager, IMapManager mapManager)
+            public PopupLabel(IEyeManager eyeManager, IEntityManager entityManager)
             {
                 _eyeManager = eyeManager;
                 _entityManager = entityManager;
-                _mapManager = mapManager;
                 ShadowOffsetXOverride = 1;
                 ShadowOffsetYOverride = 1;
                 FontColorShadowOverride = Color.Black;
@@ -212,11 +209,12 @@ namespace Content.Client.Popups
             {
                 TotalTime += eventArgs.DeltaSeconds;
 
-                EntityCoordinates coords;
+                ScreenCoordinates screenCoords;
+
                 if (Entity == null)
-                    position = _eyeManager.WorldToScreen(InitialPos.Position) / UIScale - DesiredSize / 2;
+                    screenCoords = _eyeManager.CoordinatesToScreen(InitialPos);
                 else if (_entityManager.TryGetComponent(Entity.Value, out TransformComponent xform))
-                    position = (_eyeManager.CoordinatesToScreen(xform.Coordinates).Position / UIScale) - DesiredSize / 2;
+                    screenCoords = _eyeManager.CoordinatesToScreen(xform.Coordinates);
                 else
                 {
                     // Entity has probably been deleted.
@@ -225,8 +223,7 @@ namespace Content.Client.Popups
                     return;
                 }
 
-                var position = _eyeManager.CoordinatesToScreen(coords).Position / UIScale - DesiredSize / 2;
-
+                var position = screenCoords.Position / UIScale - DesiredSize / 2;
                 LayoutContainer.SetPosition(this, position - (0, 20 * (TotalTime * TotalTime + TotalTime)));
 
                 if (TotalTime > 0.5f)
