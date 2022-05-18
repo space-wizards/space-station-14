@@ -10,8 +10,6 @@ namespace Content.Server.Administration.Commands;
 [AdminCommand(AdminFlags.Fun)]
 public sealed class PolymorphCommand : IConsoleCommand
 {
-    [Dependency] private readonly IPrototypeManager _proto = default!;
-
     public string Command => "polymorph";
 
     public string Description => Loc.GetString("polymorph-command-description");
@@ -32,7 +30,9 @@ public sealed class PolymorphCommand : IConsoleCommand
             return;
         }
 
-        if (!_proto.TryIndex<PolymorphPrototype>(args[1], out var polyproto))
+        var protoManager = IoCManager.Resolve<IPrototypeManager>();
+
+        if (!protoManager.TryIndex<PolymorphPrototype>(args[1], out var polyproto))
         {
             shell.WriteError(Loc.GetString("polymorph-not-valid-prototype-error"));
             return;
@@ -41,7 +41,7 @@ public sealed class PolymorphCommand : IConsoleCommand
         var entityManager = IoCManager.Resolve<IEntityManager>();
         var polySystem = entityManager.EntitySysManager.GetEntitySystem<PolymorphableSystem>();
 
-        entityUid.EnsureComponent<PolymorphableComponent>();
+        entityManager.EnsureComponent<PolymorphableComponent>(entityUid);
         polySystem.PolymorphEntity(entityUid, polyproto);
     }
 }

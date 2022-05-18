@@ -1,17 +1,17 @@
 - type: polymorph
-  id: mouse
+  id: Mouse
   entity: MobMouse
   forced: true
   duration: 30
 
 - type: polymorph
-  id: chicken
+  id: Chicken
   entity: MobChicken
   forced: true
   dropInventory: true
 
 - type: polymorph
-  id: monkey
+  id: Monkey
   entity: MobMonkey
   forced: true
   dropInventory: true
