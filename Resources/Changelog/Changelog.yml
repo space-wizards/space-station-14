@@ -1,12 +1,4 @@
 Entries:
-- author: Rane
-  changes:
-  - {message: 'Added Circuit Imprinters. These machines are used to print all machine
-      circuit boards, instead of the protolathe.', type: Add}
-  - {message: 'Circuit board recipes tweaked. They now use a lot of glass, a bit of
-      metal, and a little bit of gold for the rarest ones.', type: Tweak}
-  id: 1053
-  time: '2022-02-13T11:21:29.0000000+00:00'
 - author: Willhelm53
   changes:
   - {message: 'Added a new lobby song, "Vibe Ace" by Kevin MacLeod.', type: Add}
@@ -3038,3 +3030,9 @@ Entries:
   - {message: No more bangin' donks allowed, type: Remove}
   id: 1552
   time: '2022-05-18T04:53:37.0000000+00:00'
+- author: mirrorcult
+  changes:
+  - {message: Ghosts now always have a consistent directional sprite while orbiting
+      an entity, type: Tweak}
+  id: 1553
+  time: '2022-05-18T07:22:09.0000000+00:00'
