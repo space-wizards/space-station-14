@@ -110,7 +110,9 @@ namespace Content.Client.Audio
         {
             EndAmbience();
             _currentCollection = newAmbience;
-            Timer.Spawn(1500, StartAmbience);
+            _timerCancelTokenSource.Cancel();
+            _timerCancelTokenSource = new();
+            Timer.Spawn(1500, StartAmbience, _timerCancelTokenSource.Token);
         }
 
         private void StateManagerOnStateChanged(StateChangedEventArgs args)
