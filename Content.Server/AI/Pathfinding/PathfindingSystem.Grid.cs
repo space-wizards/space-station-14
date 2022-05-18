@@ -194,22 +194,19 @@ public sealed partial class PathfindingSystem
 
         // If we've moved to space or the likes then remove us.
         if (!TryComp<PhysicsComponent>(moveEvent.Sender, out var physics) ||
-            !IsRelevant(xform, physics) ||
-            moveEvent.NewPosition.GetGridId(EntityManager) == GridId.Invalid)
+            !IsRelevant(xform, physics))
         {
             OnEntityRemove(moveEvent.Sender, moveEvent.OldPosition);
             return;
         }
 
-        var gridId = moveEvent.NewPosition.GetGridId(EntityManager);
+        var oldNode = GetNode(moveEvent.OldPosition);
+        var newNode = GetNode(moveEvent.NewPosition);
 
-        OnEntityRemove(moveEvent.Sender, moveEvent.OldPosition);
+        if (oldNode?.Equals(newNode) == true) return;
 
-        if (_mapManager.TryGetGrid(gridId, out var grid))
-        {
-            var newNode = GetNode(grid.GetTileRef(moveEvent.NewPosition));
-            newNode.AddEntity(moveEvent.Sender, physics, EntityManager);
-        }
+        oldNode?.RemoveEntity(moveEvent.Sender);
+        newNode?.AddEntity(moveEvent.Sender, physics, EntityManager);
     }
 
     // TODO: Need to rethink the pathfinder utils (traversable etc.). Maybe just chuck them all in PathfindingSystem
