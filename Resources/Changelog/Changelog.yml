@@ -1,9 +1,4 @@
 Entries:
-- author: mirrorcult
-  changes:
-  - {message: Drones can now wear hats. Go wild., type: Add}
-  id: 1046
-  time: '2022-02-12T15:44:50.0000000+00:00'
 - author: ElectroJr
   changes:
   - {message: 'Salvage crew can breathe easy, a bug causing CO2 poisoning on some
@@ -3039,3 +3034,9 @@ Entries:
   - {message: Fixed pies colliding with puddles., type: Fix}
   id: 1545
   time: '2022-05-18T02:24:58.0000000+00:00'
+- author: themias
+  changes:
+  - {message: Small mobs like mice and drones are rendered at the correct layer.,
+    type: Fix}
+  id: 1546
+  time: '2022-05-18T02:26:28.0000000+00:00'
