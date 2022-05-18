@@ -255,6 +255,19 @@ namespace Content.Shared.CCVar
             CVarDef.Create("traitordm.starting_balance", 20);
 
         /*
+         * Nukeops
+         */
+
+        public static readonly CVarDef<int> NukeopsMinPlayers =
+            CVarDef.Create("nukeops.min_players", 15);
+
+        public static readonly CVarDef<int> NukeopsMaxOps =
+            CVarDef.Create("nukeops.max_ops", 6);
+
+        public static readonly CVarDef<int> NukeopsPlayersPerOp =
+            CVarDef.Create("nukeops.players_per_op", 5);
+
+        /*
          * Console
          */
 
@@ -727,7 +740,7 @@ namespace Content.Shared.CCVar
         ///     The required ratio of the server that must agree for a restart round vote to go through.
         /// </summary>
         public static readonly CVarDef<float> VoteRestartRequiredRatio =
-            CVarDef.Create("vote.restart_required_ratio", 0.8f, CVar.SERVERONLY);
+            CVarDef.Create("vote.restart_required_ratio", 0.7f, CVar.SERVERONLY);
 
         /// <summary>
         ///     The delay which two votes of the same type are allowed to be made by separate people, in seconds.
@@ -746,7 +759,7 @@ namespace Content.Shared.CCVar
         ///     Sets the duration of the restart vote timer.
         /// </summary>
         public static readonly CVarDef<int>
-            VoteTimerRestart = CVarDef.Create("vote.timerrestart", 30, CVar.SERVERONLY);
+            VoteTimerRestart = CVarDef.Create("vote.timerrestart", 60, CVar.SERVERONLY);
 
         /// <summary>
         ///     Sets the duration of the gamemode/preset vote timer.
@@ -819,6 +832,9 @@ namespace Content.Shared.CCVar
 
         public static readonly CVarDef<bool> ChatSanitizerEnabled =
             CVarDef.Create("chat.chat_sanitizer_enabled", true, CVar.SERVERONLY);
+
+        public static readonly CVarDef<bool> ChatShowTypingIndicator =
+            CVarDef.Create("chat.show_typing_indicator", true, CVar.CLIENTONLY);
 
         /*
          * AFK

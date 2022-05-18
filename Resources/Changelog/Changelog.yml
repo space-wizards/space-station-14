@@ -1,103 +1,4 @@
 Entries:
-- author: ElectroJr
-  changes:
-  - {message: Mobs that need to breathe once again suffocate while in critical condition.,
-    type: Fix}
-  id: 1032
-  time: '2022-02-10T19:04:05.0000000+00:00'
-- author: Spillhelm53
-  changes:
-  - {message: 'Fixes certain puddles not being able to evaporate, which had been slipping
-      people forever. The janitor''s *points at wet floor sign* schadenfreude  can
-      now return to its regular safe levels.', type: Fix}
-  id: 1033
-  time: '2022-02-10T21:07:22.0000000+00:00'
-- author: Lamrr
-  changes:
-  - {message: High-voltage cables are now a little smoother., type: Tweak}
-  id: 1034
-  time: '2022-02-10T21:08:50.0000000+00:00'
-- author: Mith-randalf
-  changes:
-  - {message: 'Added some new, sensibly-sized signs.', type: Add}
-  id: 1035
-  time: '2022-02-10T21:08:56.0000000+00:00'
-- author: Fishfish458
-  changes:
-  - {message: Added more clothes to the ClothesMate to make greytide less grey, type: Add}
-  - {message: Job AutoDrobes are now coming to stations near you! Dress for the job.,
-    type: Add}
-  id: 1036
-  time: '2022-02-10T21:58:31.0000000+00:00'
-- author: mirrorcult
-  changes:
-  - {message: Lack of oxygen is now slightly less deadly., type: Tweak}
-  id: 1037
-  time: '2022-02-10T21:58:41.0000000+00:00'
-- author: Rane
-  changes:
-  - {message: 'Maintenance drones are a new ghost role. They are unlocked with Avionics
-      research, or can be found in drone storage rooms.', type: Add}
-  id: 1038
-  time: '2022-02-10T22:15:06.0000000+00:00'
-- author: Rane
-  changes:
-  - {message: Drones should be much less likely to get flung through walls by atmos
-      now., type: Fix}
-  id: 1039
-  time: '2022-02-11T00:45:08.0000000+00:00'
-- author: TimrodDX
-  changes:
-  - {message: Packed Station now has departmental wardrobe vendors. Collect them all!,
-    type: Add}
-  id: 1040
-  time: '2022-02-11T05:12:34.0000000+00:00'
-- author: DubiousDoggo
-  changes:
-  - {message: weh now weh on interact, type: Fix}
-  id: 1041
-  time: '2022-02-11T22:59:05.0000000+00:00'
-- author: Peptide90
-  changes:
-  - {message: 'Pillar now has a complete atmos recycling loop, role based autodrobes
-      and new spawn points.', type: Add}
-  - {message: 'This is a minor update, major update coming in approx 1 week with massive
-      changes.', type: Tweak}
-  id: 1042
-  time: '2022-02-11T23:00:06.0000000+00:00'
-- author: Peptide90
-  changes:
-  - {message: Added another SMES to Saltern as well as a small drone room at engineering.,
-    type: Tweak}
-  id: 1043
-  time: '2022-02-11T23:00:23.0000000+00:00'
-- author: ElectroJr
-  changes:
-  - {message: Fixed T-Ray scanners sometimes causing sub-floor entities to get stuck
-      in a visible state., type: Fix}
-  id: 1044
-  time: '2022-02-11T23:00:33.0000000+00:00'
-- author: Fishfish458
-  changes:
-  - {message: Added a small energy dagger for purchase on Syndicate uplink., type: Add}
-  id: 1045
-  time: '2022-02-12T10:42:10.0000000+00:00'
-- author: mirrorcult
-  changes:
-  - {message: Drones can now wear hats. Go wild., type: Add}
-  id: 1046
-  time: '2022-02-12T15:44:50.0000000+00:00'
-- author: ElectroJr
-  changes:
-  - {message: 'Salvage crew can breathe easy, a bug causing CO2 poisoning on some
-      salvage maps has been fixed.', type: Fix}
-  id: 1047
-  time: '2022-02-12T22:08:54.0000000+00:00'
-- author: Delete69
-  changes:
-  - {message: fixes generic bio-closet closed and open state, type: Add}
-  id: 1048
-  time: '2022-02-12T22:18:07.0000000+00:00'
 - author: Willhelm53
   changes:
   - {message: Fixed bucket "set transferAmount" behaviour with reagent tanks., type: Fix}
@@ -3042,3 +2943,101 @@ Entries:
       under airlocks safely.', type: Tweak}
   id: 1531
   time: '2022-05-14T04:05:04.0000000+00:00'
+- author: JustinTrotter
+  changes:
+  - {message: made lobby background keep aspect when stretching, type: Tweak}
+  id: 1532
+  time: '2022-05-15T02:06:07.0000000+00:00'
+- author: Peptide90
+  changes:
+  - {message: Asteroids are now more robust. Use a pickaxe to break them instead of
+      a welder...please., type: Tweak}
+  id: 1533
+  time: '2022-05-15T02:07:59.0000000+00:00'
+- author: mirrorcult
+  changes:
+  - {message: Flashes and stunbatons now only have effect in combat mode., type: Tweak}
+  - {message: 'Stunbatons will no longer hurt people in combat mode, if they successfully
+      stun them. Harmbatoning is no longer possible while stunning at the same time.',
+    type: Tweak}
+  - {message: Stunbaton damage reduced., type: Tweak}
+  id: 1534
+  time: '2022-05-15T02:10:34.0000000+00:00'
+- author: ShadowCommander
+  changes:
+  - {message: Fixed not being able to climb after being cloned or ejected from a medical
+      scanner., type: Fix}
+  id: 1535
+  time: '2022-05-15T09:57:13.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Restart round votes now default to abstain and 60 second timer. Cooldown
+      is also set to 5 minutes., type: Tweak}
+  id: 1536
+  time: '2022-05-16T03:33:14.0000000+00:00'
+- author: themias
+  changes:
+  - {message: The Light Replacer can now be placed in the Janibelt., type: Tweak}
+  id: 1537
+  time: '2022-05-16T23:53:26.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: More dynamic melee weapon sound range., type: Tweak}
+  id: 1538
+  time: '2022-05-17T03:49:07.0000000+00:00'
+- author: ike709
+  changes:
+  - {message: Reduced lighter size from 3 to 2, type: Tweak}
+  id: 1539
+  time: '2022-05-17T04:29:17.0000000+00:00'
+- author: Macoron
+  changes:
+  - {message: Added chat typing indicator., type: Add}
+  id: 1540
+  time: '2022-05-17T09:55:19.0000000+00:00'
+- author: ShadowCommander
+  changes:
+  - {message: Fixed client crash when someone was cream pied., type: Fix}
+  id: 1541
+  time: '2022-05-17T09:56:17.0000000+00:00'
+- author: mirrorcult
+  changes:
+  - {message: The wide attack keybind has been removed., type: Remove}
+  - {message: 'Combat has been slightly reworked. Click on an entity to directly attack
+      it. Click anywhere else (or on an entity out of range), and you''ll do a wide
+      attack instead.', type: Tweak}
+  id: 1542
+  time: '2022-05-17T09:57:28.0000000+00:00'
+- author: mirrorcult
+  changes:
+  - {message: Sandbox can no longer be voted as a game preset., type: Tweak}
+  id: 1543
+  time: '2022-05-17T18:05:51.0000000+00:00'
+- author: mirrorcult
+  changes:
+  - {message: A new chime plays for station announcements., type: Tweak}
+  id: 1544
+  time: '2022-05-17T22:05:32.0000000+00:00'
+- author: ShadowCommander
+  changes:
+  - {message: Fixed pies colliding with puddles., type: Fix}
+  id: 1545
+  time: '2022-05-18T02:24:58.0000000+00:00'
+- author: themias
+  changes:
+  - {message: Small mobs like mice and drones are rendered at the correct layer.,
+    type: Fix}
+  id: 1546
+  time: '2022-05-18T02:26:28.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Made anchoring not spammable., type: Tweak}
+  id: 1547
+  time: '2022-05-18T02:35:44.0000000+00:00'
+- author: Peptide90
+  changes:
+  - {message: 'Added the gas tank dispenser (and engineer variant). Look out for it
+      in EVA storage, Engineering and other locations. (Entity only, no map changes).',
+    type: Add}
+  id: 1548
+  time: '2022-05-18T02:46:35.0000000+00:00'

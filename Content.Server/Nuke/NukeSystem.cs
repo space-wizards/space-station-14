@@ -419,6 +419,8 @@ namespace Content.Server.Nuke
                 component.IntensitySlope,
                 component.MaxIntensity);
 
+            RaiseLocalEvent(new NukeExplodedEvent());
+
             EntityManager.DeleteEntity(uid);
         }
 
@@ -435,4 +437,6 @@ namespace Content.Server.Nuke
         }
         #endregion
     }
+
+    public sealed class NukeExplodedEvent : EntityEventArgs {}
 }
