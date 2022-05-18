@@ -45,7 +45,7 @@ public sealed class MagicSystem : EntitySystem
         SubscribeLocalEvent<ForceWallSpellEvent>(OnForceWallSpell);
         SubscribeLocalEvent<KnockSpellEvent>(OnKnockSpell);
         SubscribeLocalEvent<SpawnSpellEvent>(OnSpawnSpell);
-        SubscribeLocalEvent<PreventCollideComponent, PreventCollideEvent>(OnPreventCollide);
+
     }
 
     private void OnInit(EntityUid uid, SpellbookComponent component, ComponentInit args)
@@ -210,14 +210,6 @@ public sealed class MagicSystem : EntitySystem
         var forceWall = Spawn(args.WallPrototype, coordinates);
         var comp = EnsureComp<PreventCollideComponent>(forceWall);
         comp.Uid = args.Performer;
-    }
-
-    private void OnPreventCollide(EntityUid uid, PreventCollideComponent component, PreventCollideEvent args)
-    {
-        var otherUid = args.BodyB.Owner;
-
-        if (component.Uid == otherUid)
-            args.Cancel();
     }
 
     /// <summary>

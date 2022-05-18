@@ -11,6 +11,7 @@ public sealed class SharedPreventCollideSystem : EntitySystem
 
         SubscribeLocalEvent<PreventCollideComponent, ComponentGetState>(OnGetState);
         SubscribeLocalEvent<PreventCollideComponent, ComponentHandleState>(OnHandleState);
+        SubscribeLocalEvent<PreventCollideComponent, PreventCollideEvent>(OnPreventCollide);
     }
 
     private void OnGetState(EntityUid uid, PreventCollideComponent component, ref ComponentGetState args)
@@ -24,6 +25,14 @@ public sealed class SharedPreventCollideSystem : EntitySystem
             return;
 
         component.Uid = state.Uid;
+    }
+
+    private void OnPreventCollide(EntityUid uid, PreventCollideComponent component, PreventCollideEvent args)
+    {
+        var otherUid = args.BodyB.Owner;
+
+        if (component.Uid == otherUid)
+            args.Cancel();
     }
 
 }
