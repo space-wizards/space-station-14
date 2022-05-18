@@ -90,21 +90,24 @@ public sealed class AlertLevelSystem : EntitySystem
     {
         if (!Resolve(station, ref component, ref dataComponent)
             || component.AlertLevels == null
-            || !component.AlertLevels.Levels.TryGetValue(level, out var detail)
-            || !force
-            && !detail.Selectable
-            || component.CurrentDelay > 0)
+            || !component.AlertLevels.Levels.TryGetValue(level, out var detail))
         {
             return;
         }
 
-        component.CurrentLevel = level;
-
         if (!force)
         {
+            if (!detail.Selectable
+                || component.CurrentDelay > 0)
+            {
+                return;
+            }
+
             component.CurrentDelay = AlertLevelComponent.Delay;
             component.ActiveDelay = true;
         }
+
+        component.CurrentLevel = level;
 
         var stationName = dataComponent.EntityName;
 
