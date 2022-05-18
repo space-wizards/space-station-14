@@ -326,6 +326,21 @@
   heatCapacity: 10000
 
 - type: tile
+  id: FloorArcadeBlue2
+  name: blue arcade floor
+  texture: arcadeblue2
+  base_turfs:
+  - plating
+  is_subfloor: false
+  can_crowbar: true
+  footstep_sounds:
+    collection: footstep_floor
+  friction: 0.40
+  item_drop: FloorTileItemArcadeBlue2
+  thermalConductivity: 0.04
+  heatCapacity: 10000
+
+- type: tile
   id: FloorArcadeRed
   name: red arcade floor
   texture: arcadered
@@ -352,6 +367,36 @@
     collection: footstep_floor
   friction: 0.40
   item_drop: FloorTileItemEighties
+  thermalConductivity: 0.04
+  heatCapacity: 10000
+  
+- type: tile
+  id: FloorCarpetClown
+  name: clown carpet floor
+  texture: carpetclown
+  base_turfs:
+  - plating
+  is_subfloor: false
+  can_crowbar: true
+  footstep_sounds:
+    collection: footstep_floor
+  friction: 0.40
+  item_drop: FloorTileItemCarpetClown
+  thermalConductivity: 0.04
+  heatCapacity: 10000
+  
+- type: tile
+  id: FloorBoxing
+  name: boxing ring floor
+  texture: boxing
+  base_turfs:
+  - plating
+  is_subfloor: false
+  can_crowbar: true
+  footstep_sounds:
+    collection: footstep_floor
+  friction: 0.40
+  item_drop: FloorTileItemBoxing
   thermalConductivity: 0.04
   heatCapacity: 10000
 

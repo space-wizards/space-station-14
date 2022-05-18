@@ -102,6 +102,11 @@
   id: FloorTileStackArcadeBlue
   name: blue arcade tile
   spawn: FloorTileItemArcadeBlue
+  
+- type: stack
+  id: FloorTileStackArcadeBlue2
+  name: blue arcade tile
+  spawn: FloorTileItemArcadeBlue2
 
 - type: stack
   id: FloorTileStackArcadeRed
@@ -147,6 +152,17 @@
   id: FloorCarpetPink
   name: pink carpet tile
   spawn: FloorCarpetItemPink
+  
+- type: stack
+  id: FloorTileStackCarpetClown
+  name: clown carpet tile
+  spawn: FloorTileItemCarpetClown
+
+  
+- type: stack
+  id: FloorTileStackBoxing
+  name: boxing ring tile
+  spawn: FloorTileItemBoxing
 
 - type: stack
   id: FloorTileElevatorShaft

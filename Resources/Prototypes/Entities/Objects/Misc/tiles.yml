@@ -386,6 +386,22 @@
       - FloorArcadeBlue
   - type: Stack
     stackType: FloorTileStackArcadeBlue
+    
+- type: entity
+  name: blue arcade floor
+  parent: FloorTileItemBase
+  id: FloorTileItemArcadeBlue2
+  components:
+  - type: Sprite
+    state: arcadeblue2
+  - type: Item
+    HeldPrefix: generic
+  - type: FloorTile
+    outputs:
+      - plating
+      - FloorArcadeBlue2
+  - type: Stack
+    stackType: FloorTileStackArcadeBlue2
 
 - type: entity
   name: red arcade floor
@@ -418,6 +434,38 @@
       - FloorEighties
   - type: Stack
     stackType: FloorTileStackEighties
+    
+- type: entity
+  name: clown carpet floor
+  parent: FloorTileItemBase
+  id: FloorTileItemCarpetClown
+  components:
+  - type: Sprite
+    state: carpetclown
+  - type: Item
+    HeldPrefix: generc
+  - type: FloorTile
+    outputs:
+      - plating
+      - FloorCarpetClown
+  - type: Stack
+    stackType: FloorTileStackCarpetClown
+    
+- type: entity
+  name: boxing ring floor
+  parent: FloorTileItemBase
+  id: FloorTileItemBoxing
+  components:
+  - type: Sprite
+    state: boxing
+  - type: Item
+    HeldPrefix: generic
+  - type: FloorTile
+    outputs:
+      - plating
+      - FloorBoxing
+  - type: Stack
+    stackType: FloorTileStackBoxing
 
 # Shuttles
 - type: entity
