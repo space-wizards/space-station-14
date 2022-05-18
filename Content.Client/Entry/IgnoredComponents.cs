@@ -321,6 +321,8 @@ namespace Content.Client.Entry
             "Armor",
             "AtmosMonitor",
             "AtmosAlarmable",
+            "LandMine",
+            "GhostKickUserOnTrigger",
             "FireAlarm",
             "AirAlarm",
             "RadarConsole",

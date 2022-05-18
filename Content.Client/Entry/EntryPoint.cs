@@ -6,6 +6,7 @@ using Content.Client.Chat.Managers;
 using Content.Client.EscapeMenu;
 using Content.Client.Eui;
 using Content.Client.Flash;
+using Content.Client.GhostKick;
 using Content.Client.HUD;
 using Content.Client.Info;
 using Content.Client.Input;
@@ -127,6 +128,7 @@ namespace Content.Client.Entry
             IoCManager.Resolve<ChangelogManager>().Initialize();
             IoCManager.Resolve<RulesManager>().Initialize();
             IoCManager.Resolve<ViewportManager>().Initialize();
+            IoCManager.Resolve<GhostKickManager>().Initialize();
 
             IoCManager.InjectDependencies(this);
 
