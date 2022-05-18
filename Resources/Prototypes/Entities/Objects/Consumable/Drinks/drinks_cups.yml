@@ -81,6 +81,16 @@
 
 - type: entity
   parent: DrinkBaseCup
+  id: DrinkMugDog
+  name: funny dog mug
+  description: It looks like a cartoon beagle.
+  components:
+  - type: Sprite
+    sprite: Objects/Consumable/Drinks/mug_dog.rsi
+    state: icon-3
+
+- type: entity
+  parent: DrinkBaseCup
   id: DrinkMugHeart
   name: mug heart
   description: A white mug, it prominently features a red heart.
