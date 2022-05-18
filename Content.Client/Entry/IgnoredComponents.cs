@@ -355,7 +355,6 @@ namespace Content.Client.Entry
             "TriggerOnActivate",
             "TriggerOnTimedCollide",
             "TimedDespawn",
-            "PreventCollideComponent",
         };
     }
 }
