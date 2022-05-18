@@ -1,10 +1,4 @@
 Entries:
-- author: ElectroJr
-  changes:
-  - {message: 'Salvage crew can breathe easy, a bug causing CO2 poisoning on some
-      salvage maps has been fixed.', type: Fix}
-  id: 1047
-  time: '2022-02-12T22:08:54.0000000+00:00'
 - author: Delete69
   changes:
   - {message: fixes generic bio-closet closed and open state, type: Add}
@@ -3040,3 +3034,8 @@ Entries:
     type: Fix}
   id: 1546
   time: '2022-05-18T02:26:28.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Made anchoring not spammable., type: Tweak}
+  id: 1547
+  time: '2022-05-18T02:35:44.0000000+00:00'
