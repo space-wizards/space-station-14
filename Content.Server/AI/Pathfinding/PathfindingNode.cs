@@ -255,7 +255,7 @@ namespace Content.Server.AI.Pathfinding
                 // Which may or may not be intended?
                 if (entMan.TryGetComponent(entity, out AccessReaderComponent? accessReader) && !_accessReaders.ContainsKey(entity))
                 {
-                    _accessReaders.Add(entity, accessReader);
+                    _accessReaders.TryAdd(entity, accessReader);
                     ParentChunk.Dirty();
                 }
                 return;
@@ -263,13 +263,14 @@ namespace Content.Server.AI.Pathfinding
 
             DebugTools.Assert((PathfindingSystem.TrackedCollisionLayers & physicsComponent.CollisionLayer) != 0);
 
-            if (physicsComponent.BodyType != BodyType.Static)
+            if (physicsComponent.BodyType != BodyType.Static ||
+                !physicsComponent.Hard)
             {
-                _physicsLayers.Add(entity, physicsComponent.CollisionLayer);
+                _physicsLayers.TryAdd(entity, physicsComponent.CollisionLayer);
             }
             else
             {
-                _blockedCollidables.Add(entity, physicsComponent.CollisionLayer);
+                _blockedCollidables.TryAdd(entity, physicsComponent.CollisionLayer);
                 GenerateMask();
                 ParentChunk.Dirty();
             }
@@ -285,18 +286,19 @@ namespace Content.Server.AI.Pathfinding
             // There's no guarantee that the entity isn't deleted
             // 90% of updates are probably entities moving around
             // Entity can't be under multiple categories so just checking each once is fine.
-            if (_physicsLayers.ContainsKey(entity))
+            if (_physicsLayers.Remove(entity))
             {
-                _physicsLayers.Remove(entity);
+                return;
             }
-            else if (_accessReaders.ContainsKey(entity))
+
+            if (_accessReaders.Remove(entity))
             {
-                _accessReaders.Remove(entity);
                 ParentChunk.Dirty();
+                return;
             }
-            else if (_blockedCollidables.ContainsKey(entity))
+
+            if (_blockedCollidables.Remove(entity))
             {
-                _blockedCollidables.Remove(entity);
                 GenerateMask();
                 ParentChunk.Dirty();
             }

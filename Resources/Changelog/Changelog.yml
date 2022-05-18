@@ -1,49 +1,4 @@
 Entries:
-- author: Peptide90
-  changes:
-  - {message: Added new spawners for mappers to use. Now there's a random chance of
-      what might appear in maint and secret spots..., type: Add}
-  id: 1051
-  time: '2022-02-13T09:52:12.0000000+00:00'
-- author: mirrorcult
-  changes:
-  - {message: Potassium/water explosions nerfed, type: Tweak}
-  - {message: Water has been removed from the soda and chem dispensers, type: Tweak}
-  id: 1052
-  time: '2022-02-13T10:12:48.0000000+00:00'
-- author: Rane
-  changes:
-  - {message: 'Added Circuit Imprinters. These machines are used to print all machine
-      circuit boards, instead of the protolathe.', type: Add}
-  - {message: 'Circuit board recipes tweaked. They now use a lot of glass, a bit of
-      metal, and a little bit of gold for the rarest ones.', type: Tweak}
-  id: 1053
-  time: '2022-02-13T11:21:29.0000000+00:00'
-- author: Willhelm53
-  changes:
-  - {message: 'Added a new lobby song, "Vibe Ace" by Kevin MacLeod.', type: Add}
-  id: 1054
-  time: '2022-02-13T12:17:03.0000000+00:00'
-- author: DubiousDoggo
-  changes:
-  - {message: Added an upright piano for all your saloon tunes, type: Add}
-  - {message: Retuned the church organ to sound more churchy, type: Fix}
-  - {message: Updated piano sprite to stop violating laws of physics, type: Fix}
-  id: 1055
-  time: '2022-02-13T22:35:56.0000000+00:00'
-- author: Rane
-  changes:
-  - {message: Added plant bags to botany! They can more easily manage their huge harvests
-      and dump everything on kitchen or chemistry's desk now., type: Add}
-  id: 1056
-  time: '2022-02-13T22:36:01.0000000+00:00'
-- author: Rane
-  changes:
-  - {message: Drones should no longer get pushed through walls and their propulsion
-      works in zero-gravity., type: Fix}
-  - {message: Drone movement speed reduced by 1/6., type: Tweak}
-  id: 1057
-  time: '2022-02-13T22:36:07.0000000+00:00'
 - author: ElectroJr
   changes:
   - {message: Fixed being unable to deconstruct windoors., type: Fix}
@@ -3037,3 +2992,49 @@ Entries:
     type: Add}
   id: 1550
   time: '2022-05-18T04:05:32.0000000+00:00'
+- author: ike709
+  changes:
+  - {message: 'Added space ambience, with two songs. Go throw yourself out into space
+      a few times.', type: Add}
+  - {message: Added audio settings to disable station ambience and/or space ambience.,
+    type: Add}
+  id: 1551
+  time: '2022-05-18T04:21:16.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: No more bangin' donks allowed, type: Remove}
+  id: 1552
+  time: '2022-05-18T04:53:37.0000000+00:00'
+- author: mirrorcult
+  changes:
+  - {message: Ghosts now always have a consistent directional sprite while orbiting
+      an entity, type: Tweak}
+  id: 1553
+  time: '2022-05-18T07:22:09.0000000+00:00'
+- author: Daemon
+  changes:
+  - {message: Added wacky zany funny humorous dog mug reagent container, type: Add}
+  id: 1554
+  time: '2022-05-18T18:21:38.0000000+00:00'
+- author: TimrodDX
+  changes:
+  - {message: Delta Station's security department has been completely re-designed
+      based on a design from the original SS13 mapper!, type: Add}
+  - {message: Delta Station's cargo lobby has been temporarily redone based on a design
+      created in-round by a player! It will remain this way until the next major map
+      update., type: Add}
+  - {message: Delta Station's cargo computers start machine linked by default now.,
+    type: Tweak}
+  - {message: Delta's Station's atmos should be more stable than it was., type: Tweak}
+  id: 1555
+  time: '2022-05-18T18:23:11.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Nukies are now playable., type: Fix}
+  id: 1556
+  time: '2022-05-18T21:48:00.0000000+00:00'
+- author: themias
+  changes:
+  - {message: Hard hat lights now function properly., type: Fix}
+  id: 1557
+  time: '2022-05-18T22:00:29.0000000+00:00'
