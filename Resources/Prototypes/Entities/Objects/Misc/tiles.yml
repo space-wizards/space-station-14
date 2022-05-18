@@ -53,6 +53,25 @@
   - type: Construction
     graph: TileSteel
     node: steeltile
+    
+- type: entity
+  name: steel tile
+  parent: FloorTileItemBase
+  id: FloorTileItemMetalDiamond
+  components:
+  - type: Sprite
+    state: metaldiamond
+  - type: Item
+    HeldPrefix: steel
+  - type: FloorTile
+    outputs:
+      - plating
+      - FloorMetalDiamond
+  - type: Stack
+    stackType: FloorTileMetalDiamond
+#  - type: Construction
+#    graph: TileSteel
+#    node: steeltile
 
 - type: entity
   name: wood floor
@@ -443,13 +462,29 @@
   - type: Sprite
     state: carpetclown
   - type: Item
-    HeldPrefix: generc
+    HeldPrefix: generic
   - type: FloorTile
     outputs:
       - plating
       - FloorCarpetClown
   - type: Stack
     stackType: FloorTileStackCarpetClown
+    
+- type: entity
+  name: office carpet floor
+  parent: FloorTileItemBase
+  id: FloorTileItemCarpetOffice
+  components:
+  - type: Sprite
+    state: carpetoffice
+  - type: Item
+    HeldPrefix: generic
+  - type: FloorTile
+    outputs:
+      - plating
+      - FloorCarpetOffice
+  - type: Stack
+    stackType: FloorTileStackCarpetOffice
     
 - type: entity
   name: boxing ring floor
@@ -466,6 +501,22 @@
       - FloorBoxing
   - type: Stack
     stackType: FloorTileStackBoxing
+    
+- type: entity
+  name: gym floor
+  parent: FloorTileItemBase
+  id: FloorTileItemGym
+  components:
+  - type: Sprite
+    state: gym
+  - type: Item
+    HeldPrefix: generic
+  - type: FloorTile
+    outputs:
+      - plating
+      - FloorGym
+  - type: Stack
+    stackType: FloorTileStackGym
 
 # Shuttles
 - type: entity

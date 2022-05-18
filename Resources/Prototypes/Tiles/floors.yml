@@ -14,6 +14,21 @@
   item_drop: FloorTileItemSteel
   thermalConductivity: 0.04
   heatCapacity: 10000
+  
+- type: tile
+  id: FloorMetalDiamond
+  name: diamond plate floor
+  texture: "metaldiamond"
+  base_turfs:
+  - plating
+  is_subfloor: false
+  can_crowbar: true
+  footstep_sounds:
+    collection: footstep_floor
+  friction: 0.30
+  item_drop: FloorTileItemMetalDiamond
+  thermalConductivity: 0.04
+  heatCapacity: 10000
 
 - type: tile
   id: floor_wood
@@ -386,6 +401,21 @@
   heatCapacity: 10000
   
 - type: tile
+  id: FloorCarpetOffice
+  name: office carpet floor
+  texture: carpetoffice
+  base_turfs:
+  - plating
+  is_subfloor: false
+  can_crowbar: true
+  footstep_sounds:
+    collection: footstep_floor
+  friction: 0.40
+  item_drop: FloorTileItemCarpetOffice
+  thermalConductivity: 0.04
+  heatCapacity: 10000
+  
+- type: tile
   id: FloorBoxing
   name: boxing ring floor
   texture: boxing
@@ -397,6 +427,21 @@
     collection: footstep_floor
   friction: 0.40
   item_drop: FloorTileItemBoxing
+  thermalConductivity: 0.04
+  heatCapacity: 10000
+  
+- type: tile
+  id: FloorGym
+  name: gym floor
+  texture: gym
+  base_turfs:
+  - plating
+  is_subfloor: false
+  can_crowbar: true
+  footstep_sounds:
+    collection: footstep_floor
+  friction: 0.40
+  item_drop: FloorTileItemGym
   thermalConductivity: 0.04
   heatCapacity: 10000
 

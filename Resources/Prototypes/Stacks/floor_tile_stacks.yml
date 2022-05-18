@@ -2,6 +2,11 @@
   id: FloorTileSteel
   name: steel tile
   spawn: FloorTileItemSteel
+  
+- type: stack
+  id: FloorTileMetalDiamond
+  name: steel tile
+  spawn: FloorTileItemMetalDiamond
 
 - type: stack
   id: FloorTileWood
@@ -158,11 +163,20 @@
   name: clown carpet tile
   spawn: FloorTileItemCarpetClown
 
+- type: stack
+  id: FloorTileStackCarpetOffice
+  name: office carpet tile
+  spawn: FloorTileItemCarpetOffice
   
 - type: stack
   id: FloorTileStackBoxing
   name: boxing ring tile
   spawn: FloorTileItemBoxing
+  
+- type: stack
+  id: FloorTileStackGym
+  name: gym floor tile
+  spawn: FloorTileItemGym
 
 - type: stack
   id: FloorTileElevatorShaft
