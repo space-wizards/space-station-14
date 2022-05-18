@@ -16,7 +16,7 @@
       id: "slips"
       hard: false
       layer:
-        - SmallImpassable
+        - LowImpassable
   - type: Sprite
     drawdepth: FloorObjects
     sprite: Objects/Misc/uglymine.rsi
