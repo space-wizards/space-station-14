@@ -170,4 +170,31 @@
   conditions:
     - !type:StealCondition
       prototype: AntiqueLaserGun
-      
+
+- type: objective
+  id: MedicalTechFabStealObjective
+  issuer: syndicate
+  difficultyOverride: 2.75
+  prob: 0.1
+  requirements:
+    - !type:TraitorRequirement {}
+    - !type:IncompatibleConditionsRequirement
+      conditions:
+        - DieCondition
+  conditions:
+    - !type:StealCondition
+      prototype: MedicalTechFabMachineCircuitboard
+
+- type: objective
+  id: SecurityTechFabStealObjective
+  issuer: syndicate
+  difficultyOverride: 2.75
+  prob: 0.1
+  requirements:
+    - !type:TraitorRequirement {}
+    - !type:IncompatibleConditionsRequirement
+      conditions:
+        - DieCondition
+  conditions:
+    - !type:StealCondition
+      prototype: SecurityTechFabMachineCircuitboard
