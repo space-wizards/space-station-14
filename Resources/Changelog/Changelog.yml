@@ -1,11 +1,4 @@
 Entries:
-- author: DubiousDoggo
-  changes:
-  - {message: Added an upright piano for all your saloon tunes, type: Add}
-  - {message: Retuned the church organ to sound more churchy, type: Fix}
-  - {message: Updated piano sprite to stop violating laws of physics, type: Fix}
-  id: 1055
-  time: '2022-02-13T22:35:56.0000000+00:00'
 - author: Rane
   changes:
   - {message: Added plant bags to botany! They can more easily manage their huge harvests
@@ -3036,3 +3029,15 @@ Entries:
   - {message: Added wacky zany funny humorous dog mug reagent container, type: Add}
   id: 1554
   time: '2022-05-18T18:21:38.0000000+00:00'
+- author: TimrodDX
+  changes:
+  - {message: Delta Station's security department has been completely re-designed
+      based on a design from the original SS13 mapper!, type: Add}
+  - {message: Delta Station's cargo lobby has been temporarily redone based on a design
+      created in-round by a player! It will remain this way until the next major map
+      update., type: Add}
+  - {message: Delta Station's cargo computers start machine linked by default now.,
+    type: Tweak}
+  - {message: Delta's Station's atmos should be more stable than it was., type: Tweak}
+  id: 1555
+  time: '2022-05-18T18:23:11.0000000+00:00'
