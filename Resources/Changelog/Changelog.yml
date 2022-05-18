@@ -1,10 +1,4 @@
 Entries:
-- author: mirrorcult
-  changes:
-  - {message: Potassium/water explosions nerfed, type: Tweak}
-  - {message: Water has been removed from the soda and chem dispensers, type: Tweak}
-  id: 1052
-  time: '2022-02-13T10:12:48.0000000+00:00'
 - author: Rane
   changes:
   - {message: 'Added Circuit Imprinters. These machines are used to print all machine
@@ -3039,3 +3033,8 @@ Entries:
     type: Add}
   id: 1551
   time: '2022-05-18T04:21:16.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: No more bangin' donks allowed, type: Remove}
+  id: 1552
+  time: '2022-05-18T04:53:37.0000000+00:00'
