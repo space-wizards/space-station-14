@@ -85,14 +85,15 @@ public sealed class AlertLevelSystem : EntitySystem
     /// <param name="playSound">Play the alert level's sound.</param>
     /// <param name="announce">Say the alert level's announcement.</param>
     /// <param name="force">Force the alert change. This applies if the alert level is not selectable or not.</param>
-    public void SetLevel(EntityUid station, string level, bool playSound, bool announce, bool force = false, MetaDataComponent? dataComponent = null, AlertLevelComponent? component = null)
+    public void SetLevel(EntityUid station, string level, bool playSound, bool announce, bool force = false,
+        MetaDataComponent? dataComponent = null, AlertLevelComponent? component = null)
     {
         if (!Resolve(station, ref component, ref dataComponent)
             || component.AlertLevels == null
             || !component.AlertLevels.Levels.TryGetValue(level, out var detail)
-            || !detail.Selectable
-            || component.CurrentDelay > 0
-            && !force)
+            || !force
+            && !detail.Selectable
+            || component.CurrentDelay > 0)
         {
             return;
         }

@@ -91,9 +91,9 @@ namespace Content.Client.Communications.UI
             {
                 _menu.UpdateCountdown();
                 _menu.UpdateAlertLevels(commsState.AlertLevels, CurrentLevel);
+                _menu.AlertLevelButton.Disabled = !AlertLevelSelectable;
                 _menu.EmergencyShuttleButton.Disabled = !CanCall;
                 _menu.AnnounceButton.Disabled = !CanAnnounce;
-                _menu.AlertLevelButton.Disabled = !AlertLevelSelectable;
             }
         }
 
