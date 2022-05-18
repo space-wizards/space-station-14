@@ -1,11 +1,4 @@
 Entries:
-- author: Rane
-  changes:
-  - {message: Drones should no longer get pushed through walls and their propulsion
-      works in zero-gravity., type: Fix}
-  - {message: Drone movement speed reduced by 1/6., type: Tweak}
-  id: 1057
-  time: '2022-02-13T22:36:07.0000000+00:00'
 - author: ElectroJr
   changes:
   - {message: Fixed being unable to deconstruct windoors., type: Fix}
@@ -3040,3 +3033,8 @@ Entries:
   - {message: Nukies are now playable., type: Fix}
   id: 1556
   time: '2022-05-18T21:48:00.0000000+00:00'
+- author: themias
+  changes:
+  - {message: Hard hat lights now function properly., type: Fix}
+  id: 1557
+  time: '2022-05-18T22:00:29.0000000+00:00'
