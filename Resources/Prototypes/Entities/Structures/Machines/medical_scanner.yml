@@ -54,3 +54,4 @@
     interfaces:
     - key: enum.MedicalScannerUiKey.Key
       type: MedicalScannerBoundUserInterface
+  - type: Climbable
