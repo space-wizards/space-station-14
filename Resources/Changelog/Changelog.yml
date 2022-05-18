@@ -1,12 +1,6 @@
 Entries:
 - author: Rane
   changes:
-  - {message: Added plant bags to botany! They can more easily manage their huge harvests
-      and dump everything on kitchen or chemistry's desk now., type: Add}
-  id: 1056
-  time: '2022-02-13T22:36:01.0000000+00:00'
-- author: Rane
-  changes:
   - {message: Drones should no longer get pushed through walls and their propulsion
       works in zero-gravity., type: Fix}
   - {message: Drone movement speed reduced by 1/6., type: Tweak}
@@ -3041,3 +3035,8 @@ Entries:
   - {message: Delta's Station's atmos should be more stable than it was., type: Tweak}
   id: 1555
   time: '2022-05-18T18:23:11.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Nukies are now playable., type: Fix}
+  id: 1556
+  time: '2022-05-18T21:48:00.0000000+00:00'
