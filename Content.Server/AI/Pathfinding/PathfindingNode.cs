@@ -255,7 +255,7 @@ namespace Content.Server.AI.Pathfinding
                 // Which may or may not be intended?
                 if (entMan.TryGetComponent(entity, out AccessReaderComponent? accessReader) && !_accessReaders.ContainsKey(entity))
                 {
-                    _accessReaders.Add(entity, accessReader);
+                    _accessReaders.TryAdd(entity, accessReader);
                     ParentChunk.Dirty();
                 }
                 return;
@@ -265,11 +265,11 @@ namespace Content.Server.AI.Pathfinding
 
             if (physicsComponent.BodyType != BodyType.Static)
             {
-                _physicsLayers.Add(entity, physicsComponent.CollisionLayer);
+                _physicsLayers.TryAdd(entity, physicsComponent.CollisionLayer);
             }
             else
             {
-                _blockedCollidables.Add(entity, physicsComponent.CollisionLayer);
+                _blockedCollidables.TryAdd(entity, physicsComponent.CollisionLayer);
                 GenerateMask();
                 ParentChunk.Dirty();
             }
