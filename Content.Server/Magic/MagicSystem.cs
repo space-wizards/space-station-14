@@ -10,9 +10,11 @@ using Content.Shared.Doors.Components;
 using Content.Shared.Doors.Systems;
 using Content.Shared.Interaction.Events;
 using Content.Shared.Maps;
+using Content.Shared.Physics;
 using Content.Shared.Storage;
 using Robust.Shared.Audio;
 using Robust.Shared.Map;
+using Robust.Shared.Physics.Dynamics;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
@@ -43,6 +45,7 @@ public sealed class MagicSystem : EntitySystem
         SubscribeLocalEvent<ForceWallSpellEvent>(OnForceWallSpell);
         SubscribeLocalEvent<KnockSpellEvent>(OnKnockSpell);
         SubscribeLocalEvent<SpawnSpellEvent>(OnSpawnSpell);
+        SubscribeLocalEvent<PreventCollideComponent, PreventCollideEvent>(OnPreventCollide);
     }
 
     private void OnInit(EntityUid uid, SpellbookComponent component, ComponentInit args)
@@ -152,6 +155,7 @@ public sealed class MagicSystem : EntitySystem
     /// <summary>
     /// Spawns 3 walls in front of the caster in a 3x1/1x3 pattern
     /// Disappears after a set amount of time
+    /// Allows caster to walk through them freely.
     /// </summary>
     /// <param name="args"></param>
     private void OnForceWallSpell(ForceWallSpellEvent args)
@@ -194,11 +198,26 @@ public sealed class MagicSystem : EntitySystem
         }
 
         SoundSystem.Play(Filter.Pvs(coords), args.ForceWallSound.GetSound(), AudioParams.Default.WithVolume(args.ForceWallVolume));
-        Spawn(args.WallPrototype, coords);
-        Spawn(args.WallPrototype, coordsPlus);
-        Spawn(args.WallPrototype, coordsMinus);
+        ForceWallSpawnHelper(args, coords);
+        ForceWallSpawnHelper(args, coordsPlus);
+        ForceWallSpawnHelper(args, coordsMinus);
 
         args.Handled = true;
+    }
+
+    private void ForceWallSpawnHelper(ForceWallSpellEvent args, EntityCoordinates coordinates)
+    {
+        var forceWall = Spawn(args.WallPrototype, coordinates);
+        var comp = EnsureComp<PreventCollideComponent>(forceWall);
+        comp.Uid = args.Performer;
+    }
+
+    private void OnPreventCollide(EntityUid uid, PreventCollideComponent component, PreventCollideEvent args)
+    {
+        var otherUid = args.BodyB.Owner;
+
+        if (component.Uid == otherUid)
+            args.Cancel();
     }
 
     /// <summary>
