@@ -90,7 +90,8 @@ public sealed class AlertLevelSystem : EntitySystem
     {
         if (!Resolve(station, ref component, ref dataComponent)
             || component.AlertLevels == null
-            || !component.AlertLevels.Levels.TryGetValue(level, out var detail))
+            || !component.AlertLevels.Levels.TryGetValue(level, out var detail)
+            || component.CurrentLevel == level)
         {
             return;
         }
