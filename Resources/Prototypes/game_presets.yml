@@ -13,7 +13,7 @@
     - sandbox
   name: sandbox-title
   description: sandbox-description
-  showInVote: true
+  showInVote: false
   rules:
     - Sandbox
 
@@ -57,3 +57,13 @@
   rules:
     - TraitorDeathMatch
     - MaxTimeRestart
+
+- type: gamePreset
+  id: Nukeops
+  alias:
+    - nukeops
+  name: nukeops-title
+  description: nukeops-description
+  showInVote: false
+  rules:
+    - Nukeops

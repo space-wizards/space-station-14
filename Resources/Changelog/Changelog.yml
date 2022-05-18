@@ -1,75 +1,4 @@
 Entries:
-- author: Peptide90
-  changes:
-  - {message: Added another SMES to Saltern as well as a small drone room at engineering.,
-    type: Tweak}
-  id: 1043
-  time: '2022-02-11T23:00:23.0000000+00:00'
-- author: ElectroJr
-  changes:
-  - {message: Fixed T-Ray scanners sometimes causing sub-floor entities to get stuck
-      in a visible state., type: Fix}
-  id: 1044
-  time: '2022-02-11T23:00:33.0000000+00:00'
-- author: Fishfish458
-  changes:
-  - {message: Added a small energy dagger for purchase on Syndicate uplink., type: Add}
-  id: 1045
-  time: '2022-02-12T10:42:10.0000000+00:00'
-- author: mirrorcult
-  changes:
-  - {message: Drones can now wear hats. Go wild., type: Add}
-  id: 1046
-  time: '2022-02-12T15:44:50.0000000+00:00'
-- author: ElectroJr
-  changes:
-  - {message: 'Salvage crew can breathe easy, a bug causing CO2 poisoning on some
-      salvage maps has been fixed.', type: Fix}
-  id: 1047
-  time: '2022-02-12T22:08:54.0000000+00:00'
-- author: Delete69
-  changes:
-  - {message: fixes generic bio-closet closed and open state, type: Add}
-  id: 1048
-  time: '2022-02-12T22:18:07.0000000+00:00'
-- author: Willhelm53
-  changes:
-  - {message: Fixed bucket "set transferAmount" behaviour with reagent tanks., type: Fix}
-  id: 1049
-  time: '2022-02-12T22:18:35.0000000+00:00'
-- author: mirrorcult
-  changes:
-  - {message: Microwaves now heat up the solutions of entities inside them., type: Add}
-  - {message: 'Microwaves can no longer have reagents put inside them directly. If
-      a recipe calls for reagents, add another item that contains those reagents into
-      the microwave.', type: Remove}
-  - {message: Hot Ramen now must be heated up before it can be created., type: Tweak}
-  - {message: NanoTrasen recommends that you do not put your ID in the microwave.,
-    type: Add}
-  - {message: NanoTrasen HEAVILY recommends that you do not put batteries in the microwave.,
-    type: Add}
-  id: 1050
-  time: '2022-02-13T00:53:54.0000000+00:00'
-- author: Peptide90
-  changes:
-  - {message: Added new spawners for mappers to use. Now there's a random chance of
-      what might appear in maint and secret spots..., type: Add}
-  id: 1051
-  time: '2022-02-13T09:52:12.0000000+00:00'
-- author: mirrorcult
-  changes:
-  - {message: Potassium/water explosions nerfed, type: Tweak}
-  - {message: Water has been removed from the soda and chem dispensers, type: Tweak}
-  id: 1052
-  time: '2022-02-13T10:12:48.0000000+00:00'
-- author: Rane
-  changes:
-  - {message: 'Added Circuit Imprinters. These machines are used to print all machine
-      circuit boards, instead of the protolathe.', type: Add}
-  - {message: 'Circuit board recipes tweaked. They now use a lot of glass, a bit of
-      metal, and a little bit of gold for the rarest ones.', type: Tweak}
-  id: 1053
-  time: '2022-02-13T11:21:29.0000000+00:00'
 - author: Willhelm53
   changes:
   - {message: 'Added a new lobby song, "Vibe Ace" by Kevin MacLeod.', type: Add}
@@ -3041,3 +2970,69 @@ Entries:
       attack instead.', type: Tweak}
   id: 1542
   time: '2022-05-17T09:57:28.0000000+00:00'
+- author: mirrorcult
+  changes:
+  - {message: Sandbox can no longer be voted as a game preset., type: Tweak}
+  id: 1543
+  time: '2022-05-17T18:05:51.0000000+00:00'
+- author: mirrorcult
+  changes:
+  - {message: A new chime plays for station announcements., type: Tweak}
+  id: 1544
+  time: '2022-05-17T22:05:32.0000000+00:00'
+- author: ShadowCommander
+  changes:
+  - {message: Fixed pies colliding with puddles., type: Fix}
+  id: 1545
+  time: '2022-05-18T02:24:58.0000000+00:00'
+- author: themias
+  changes:
+  - {message: Small mobs like mice and drones are rendered at the correct layer.,
+    type: Fix}
+  id: 1546
+  time: '2022-05-18T02:26:28.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Made anchoring not spammable., type: Tweak}
+  id: 1547
+  time: '2022-05-18T02:35:44.0000000+00:00'
+- author: Peptide90
+  changes:
+  - {message: 'Added the gas tank dispenser (and engineer variant). Look out for it
+      in EVA storage, Engineering and other locations. (Entity only, no map changes).',
+    type: Add}
+  id: 1548
+  time: '2022-05-18T02:46:35.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Polymorphing! Your local spacemen might find themselves turning into
+      a variety of different things., type: Add}
+  id: 1549
+  time: '2022-05-18T04:05:22.0000000+00:00'
+- author: vulppine
+  changes:
+  - {message: 'NanoTrasen has installed a new alert readiness system into its stations!
+      Use these to indicate to your fellow crewmembers when the station is going OK,
+      or is in a flurry of viral infections, hostile activity, and imminent destruction!',
+    type: Add}
+  id: 1550
+  time: '2022-05-18T04:05:32.0000000+00:00'
+- author: ike709
+  changes:
+  - {message: 'Added space ambience, with two songs. Go throw yourself out into space
+      a few times.', type: Add}
+  - {message: Added audio settings to disable station ambience and/or space ambience.,
+    type: Add}
+  id: 1551
+  time: '2022-05-18T04:21:16.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: No more bangin' donks allowed, type: Remove}
+  id: 1552
+  time: '2022-05-18T04:53:37.0000000+00:00'
+- author: mirrorcult
+  changes:
+  - {message: Ghosts now always have a consistent directional sprite while orbiting
+      an entity, type: Tweak}
+  id: 1553
+  time: '2022-05-18T07:22:09.0000000+00:00'
