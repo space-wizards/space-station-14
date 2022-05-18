@@ -80,6 +80,10 @@ namespace Content.Client.EscapeMenu.UI.Tabs
         }
 
         private void OnAdminSoundsCheckToggled(BaseButton.ButtonEventArgs args)
+        {
+            UpdateChanges();
+        }
+        
         private void OnStationAmbienceCheckToggled(BaseButton.ButtonEventArgs args)
         {
             UpdateChanges();
