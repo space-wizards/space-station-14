@@ -1,9 +1,4 @@
 Entries:
-- author: ElectroJr
-  changes:
-  - {message: Fixed being unable to deconstruct windoors., type: Fix}
-  id: 1058
-  time: '2022-02-14T02:44:22.0000000+00:00'
 - author: Peptide90
   changes:
   - {message: Added new windoors and glass external / docking airlocks!, type: Add}
@@ -3038,3 +3033,12 @@ Entries:
   - {message: Hard hat lights now function properly., type: Fix}
   id: 1557
   time: '2022-05-18T22:00:29.0000000+00:00'
+- author: abregado
+  changes:
+  - {message: allow players to configure the amount of material to add to a regular
+      bowl., type: Add}
+  - {message: kitchen crate comes with a kitchen knife in case there is no vending
+      machine in the kitchen., type: Tweak}
+  - {message: Kitchen crates from cargo now come with bowls instead of beakers., type: Tweak}
+  id: 1558
+  time: '2022-05-18T22:18:47.0000000+00:00'
