@@ -26,17 +26,11 @@
   wires:  
   - !type:PowerWireAction
     pulseTimeout: 10
-  - !type:PowerWireAction
-    pulseTimeout: 10
-  - !type:PowerWireAction
-    pulseTimeout: 10
-  - !type:PowerWireAction
-    pulseTimeout: 10
   - !type:DoorBoltWireAction
   - !type:DoorBoltLightWireAction
   - !type:DoorTimingWireAction
   - !type:DoorSafetyWireAction
-  dummyWires: 2 
+  dummyWires: 5
   
 - type: wireLayout
   id: Vending
