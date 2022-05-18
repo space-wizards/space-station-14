@@ -14,6 +14,7 @@ public sealed class AlertLevelSystem : EntitySystem
 {
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
     [Dependency] private readonly IChatManager _chatManager = default!;
+    [Dependency] private readonly StationSystem _stationSystem = default!;
 
     // Until stations are a prototype, this is how it's going to have to be.
     public const string DefaultAlertLevelSet = "stationAlerts";
@@ -21,6 +22,20 @@ public sealed class AlertLevelSystem : EntitySystem
     public override void Initialize()
     {
         SubscribeLocalEvent<StationInitializedEvent>(OnStationInitialize);
+    }
+
+    public override void Update(float time)
+    {
+        foreach (var station in _stationSystem.Stations)
+        {
+            if (!TryComp(station, out AlertLevelComponent? alert)
+                || alert.CurrentDelay <= 0)
+            {
+                continue;
+            }
+
+            alert.CurrentDelay--;
+        }
     }
 
     private void OnStationInitialize(StationInitializedEvent args)
@@ -56,12 +71,19 @@ public sealed class AlertLevelSystem : EntitySystem
         if (!Resolve(station, ref component, ref dataComponent)
             || component.AlertLevels == null
             || !component.AlertLevels.Levels.TryGetValue(level, out var detail)
-            || (!detail.Selectable && !force))
+            || !detail.Selectable
+            || component.CurrentDelay > 0
+            && !force)
         {
             return;
         }
 
         component.CurrentLevel = level;
+
+        if (!force)
+        {
+            component.CurrentDelay = AlertLevelComponent.Delay;
+        }
 
         var stationName = dataComponent.EntityName;
 

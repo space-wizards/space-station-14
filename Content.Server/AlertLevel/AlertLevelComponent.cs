@@ -20,7 +20,10 @@ public sealed class AlertLevelComponent : Component
     /// <summary>
     /// The current level on the station.
     /// </summary>
-    [ViewVariables] public string CurrentLevel = default!;
+    [ViewVariables(VVAccess.ReadWrite)] public string CurrentLevel = default!;
+
+    [ViewVariables] public const float Delay = 30;
+    [ViewVariables] public float CurrentDelay = 30;
 
     /// <summary>
     /// If the level can be selected on the station.
