@@ -18,7 +18,7 @@ namespace Content.Client.Communications.UI
         public readonly Button AnnounceButton;
         public readonly Button EmergencyShuttleButton;
         private readonly RichTextLabel _countdownLabel;
-        private readonly OptionButton AlertLevelButton;
+        public readonly OptionButton AlertLevelButton;
 
         public CommunicationsConsoleMenu(CommunicationsConsoleBoundUserInterface owner)
         {
@@ -48,6 +48,7 @@ namespace Content.Client.Communications.UI
                     Owner.AlertLevelSelected(cast);
                 }
             };
+            AlertLevelButton.Disabled = !owner.AlertLevelSelectable;
 
             _countdownLabel = new RichTextLabel(){MinSize = new Vector2(0, 200)};
             EmergencyShuttleButton = new Button();

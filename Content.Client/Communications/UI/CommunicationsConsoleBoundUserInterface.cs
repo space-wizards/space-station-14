@@ -84,7 +84,7 @@ namespace Content.Client.Communications.UI
             CanCall = commsState.CanCall;
             _expectedCountdownTime = commsState.ExpectedCountdownEnd;
             CountdownStarted = commsState.CountdownStarted;
-            AlertLevelSelectable = commsState.AlertLevels != null;
+            AlertLevelSelectable = commsState.AlertLevels != null && !float.IsNaN(commsState.CurrentAlertDelay) && commsState.CurrentAlertDelay <= 0;
             CurrentLevel = commsState.CurrentAlert;
 
             if (_menu != null)
@@ -93,6 +93,7 @@ namespace Content.Client.Communications.UI
                 _menu.UpdateAlertLevels(commsState.AlertLevels, CurrentLevel);
                 _menu.EmergencyShuttleButton.Disabled = !CanCall;
                 _menu.AnnounceButton.Disabled = !CanAnnounce;
+                _menu.AlertLevelButton.Disabled = !AlertLevelSelectable;
             }
         }
 

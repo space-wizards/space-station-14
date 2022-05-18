@@ -48,6 +48,7 @@ namespace Content.Server.Communications
 
             _entityManager.EventBus.SubscribeEvent<RoundEndSystemChangedEvent>(EventSource.Local, this, (s) => UpdateBoundInterface());
             _entityManager.EventBus.SubscribeEvent<AlertLevelChangedEvent>(EventSource.Local, this, _ => UpdateBoundInterface());
+            _entityManager.EventBus.SubscribeEvent<AlertLevelDelayFinishedEvent>(EventSource.Local, this, _ => UpdateBoundInterface());
         }
 
         protected override void Startup()
@@ -65,6 +66,7 @@ namespace Content.Server.Communications
 
                 List<string>? levels = null;
                 string currentLevel = default!;
+                float currentDelay = 0;
                 var stationUid = StationSystem.GetOwningStation(Owner);
                 if (stationUid != null)
                 {
@@ -84,10 +86,11 @@ namespace Content.Server.Communications
                         }
 
                         currentLevel = alerts.CurrentLevel;
+                        currentDelay = AlertLevelSystem.GetAlertLevelDelay(stationUid.Value, alerts);
                     }
                 }
 
-                UserInterface?.SetState(new CommunicationsConsoleInterfaceState(CanAnnounce(), system.CanCall(), levels, currentLevel, system.ExpectedCountdownEnd));
+                UserInterface?.SetState(new CommunicationsConsoleInterfaceState(CanAnnounce(), system.CanCall(), levels, currentLevel, currentDelay, system.ExpectedCountdownEnd));
             }
         }
 

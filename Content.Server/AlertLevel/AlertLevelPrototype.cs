@@ -33,7 +33,7 @@ public sealed class AlertLevelDetail
     /// <summary>
     /// What is announced upon this alert level change. Can be a localized string.
     /// </summary>
-    [DataField("announcement")] public string Announcement { get; } = default!;
+    [DataField("announcement")] public string Announcement { get; } = string.Empty;
 
     /// <summary>
     /// Whether this alert level is selectable from a communications console.

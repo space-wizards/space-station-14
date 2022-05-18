@@ -28,9 +28,18 @@ public sealed class AlertLevelSystem : EntitySystem
     {
         foreach (var station in _stationSystem.Stations)
         {
-            if (!TryComp(station, out AlertLevelComponent? alert)
-                || alert.CurrentDelay <= 0)
+            if (!TryComp(station, out AlertLevelComponent? alert))
             {
+                continue;
+            }
+
+            if (alert.CurrentDelay <= 0)
+            {
+                if (alert.ActiveDelay)
+                {
+                    RaiseLocalEvent(new AlertLevelDelayFinishedEvent());
+                    alert.ActiveDelay = false;
+                }
                 continue;
             }
 
@@ -55,7 +64,17 @@ public sealed class AlertLevelSystem : EntitySystem
             defaultLevel = alertLevelComponent.AlertLevels.Levels.Keys.First();
         }
 
-        SetLevel(args.Station, defaultLevel, false, false);
+        SetLevel(args.Station, defaultLevel, false, false, true);
+    }
+
+    public float GetAlertLevelDelay(EntityUid station, AlertLevelComponent? alert = null)
+    {
+        if (!Resolve(station, ref alert))
+        {
+            return float.NaN;
+        }
+
+        return alert.CurrentDelay;
     }
 
     /// <summary>
@@ -83,6 +102,7 @@ public sealed class AlertLevelSystem : EntitySystem
         if (!force)
         {
             component.CurrentDelay = AlertLevelComponent.Delay;
+            component.ActiveDelay = true;
         }
 
         var stationName = dataComponent.EntityName;
@@ -118,6 +138,9 @@ public sealed class AlertLevelSystem : EntitySystem
         RaiseLocalEvent(new AlertLevelChangedEvent(level));
     }
 }
+
+public sealed class AlertLevelDelayFinishedEvent : EntityEventArgs
+{}
 
 public sealed class AlertLevelChangedEvent : EntityEventArgs
 {
