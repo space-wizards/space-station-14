@@ -4,6 +4,7 @@ using Content.Client.Chat.Managers;
 using Content.Client.Clickable;
 using Content.Client.EscapeMenu;
 using Content.Client.Eui;
+using Content.Client.GhostKick;
 using Content.Client.HUD;
 using Content.Client.Info;
 using Content.Client.Items.Managers;
@@ -43,6 +44,7 @@ namespace Content.Client.IoC
             IoCManager.Register<ViewportManager, ViewportManager>();
             IoCManager.Register<IGamePrototypeLoadManager, GamePrototypeLoadManager>();
             IoCManager.Register<NetworkResourceManager>();
+            IoCManager.Register<GhostKickManager>();
         }
     }
 }

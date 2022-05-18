@@ -21,6 +21,7 @@
       effects:
       - !type:WashCreamPieReaction
   - type: Flashable
+  - type: Polymorphable
   - type: Hands
   - type: MovementSpeedModifier
   - type: MovedByPressure

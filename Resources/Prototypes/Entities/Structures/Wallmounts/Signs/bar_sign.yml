@@ -3,6 +3,11 @@
   parent: BaseStructure
   name: bar sign
   components:
+  - type: MeleeSound
+    soundGroups:
+      Brute:
+        path:
+          "/Audio/Effects/glass_hit.ogg"
   - type: WallMount
   - type: Sprite
     drawdepth: Objects
