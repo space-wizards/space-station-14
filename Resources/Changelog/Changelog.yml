@@ -1,9 +1,4 @@
 Entries:
-- author: Fishfish458
-  changes:
-  - {message: Added a small energy dagger for purchase on Syndicate uplink., type: Add}
-  id: 1045
-  time: '2022-02-12T10:42:10.0000000+00:00'
 - author: mirrorcult
   changes:
   - {message: Drones can now wear hats. Go wild., type: Add}
@@ -3039,3 +3034,8 @@ Entries:
   - {message: A new chime plays for station announcements., type: Tweak}
   id: 1544
   time: '2022-05-17T22:05:32.0000000+00:00'
+- author: ShadowCommander
+  changes:
+  - {message: Fixed pies colliding with puddles., type: Fix}
+  id: 1545
+  time: '2022-05-18T02:24:58.0000000+00:00'
