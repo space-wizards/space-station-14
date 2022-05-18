@@ -1,9 +1,4 @@
 Entries:
-- author: Delete69
-  changes:
-  - {message: fixes generic bio-closet closed and open state, type: Add}
-  id: 1048
-  time: '2022-02-12T22:18:07.0000000+00:00'
 - author: Willhelm53
   changes:
   - {message: Fixed bucket "set transferAmount" behaviour with reagent tanks., type: Fix}
@@ -3039,3 +3034,10 @@ Entries:
   - {message: Made anchoring not spammable., type: Tweak}
   id: 1547
   time: '2022-05-18T02:35:44.0000000+00:00'
+- author: Peptide90
+  changes:
+  - {message: 'Added the gas tank dispenser (and engineer variant). Look out for it
+      in EVA storage, Engineering and other locations. (Entity only, no map changes).',
+    type: Add}
+  id: 1548
+  time: '2022-05-18T02:46:35.0000000+00:00'
