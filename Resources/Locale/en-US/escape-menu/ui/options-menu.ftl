@@ -17,6 +17,8 @@ ui-options-ambience-volume = Ambience volume:
 ui-options-ambience-max-sounds = Ambience simultaneous sounds:
 ui-options-lobby-music = Lobby Music
 ui-options-admin-sounds = Play Admin Sounds
+ui-options-station-ambience = Station Ambience
+ui-options-space-ambience = Space Ambience
 ui-options-volume-label = Volume
 ui-options-volume-percent = { TOSTRING($volume, "P0") }
 

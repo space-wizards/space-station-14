@@ -57,3 +57,13 @@
   rules:
     - TraitorDeathMatch
     - MaxTimeRestart
+
+- type: gamePreset
+  id: Nukeops
+  alias:
+    - nukeops
+  name: nukeops-title
+  description: nukeops-description
+  showInVote: true
+  rules:
+    - Nukeops

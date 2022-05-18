@@ -1,0 +1,46 @@
+﻿- type: entity
+  id: BaseLandMine
+  abstract: true
+  components:
+  - type: Clickable
+  - type: InteractionOutline
+  - type: MovedByPressure
+  - type: Physics
+    bodyType: Static
+    fixedRotation: true
+  - type: Fixtures
+    fixtures:
+    - shape:
+        !type:PhysShapeAabb
+        bounds: "-0.2,-0.2,0.2,0.2"
+      id: "slips"
+      hard: false
+      layer:
+        - LowImpassable
+  - type: Sprite
+    drawdepth: FloorObjects
+    sprite: Objects/Misc/uglymine.rsi
+    state: uglymine
+  - type: LandMine
+  - type: StepTrigger
+    requiredTriggeredSpeed: 0
+
+- type: entity
+  name: kick mine
+  parent: BaseLandMine
+  id: LandMineKick
+  components:
+  - type: GhostKickUserOnTrigger
+
+- type: entity
+  name: explosive mine
+  parent: BaseLandMine
+  id: LandMineExplosive
+  components:
+  - type: ExplodeOnTrigger
+  - type: Explosive
+    explosionType: Default
+    maxIntensity: 10
+    intensitySlope: 3
+    totalIntensity: 120 # about a ~4 tile radius
+    canCreateVacuum: false
