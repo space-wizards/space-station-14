@@ -29,13 +29,20 @@ namespace Content.Server.Polymorph.Systems
             Revert(uid);
         }
 
+        /// <summary>
+        /// Reverts a polymorphed entity back into its original form
+        /// </summary>
+        /// <param name="uid">The entityuid of the entity being reverted</param>
         public void Revert(EntityUid uid)
         {
             if (!TryComp<PolymorphedEntityComponent>(uid, out var component))
                 return;
 
-            Transform(component.Parent).AttachParent(Transform(uid).ParentUid);
-            Transform(component.Parent).Coordinates = Transform(uid).Coordinates;
+            var uidXform = Transform(uid);
+            var parentXform = Transform(component.Parent);
+
+            parentXform.AttachParent(uidXform.ParentUid);
+            parentXform.Coordinates = uidXform.Coordinates;
 
             if (TryComp<DamageableComponent>(component.Parent, out var damageParent) &&
                 _damageable.GetScaledDamage(uid, component.Parent, out var damage) &&

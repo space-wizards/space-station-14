@@ -1,21 +1,16 @@
 using Content.Server.Polymorph.Components;
 using Content.Server.Polymorph.Systems;
-using Content.Server.Speech.EntitySystems;
 using Content.Shared.Administration;
 using Content.Shared.Polymorph;
 using Robust.Shared.Console;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Localization;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Random;
 
 namespace Content.Server.Administration.Commands;
 
 [AdminCommand(AdminFlags.Fun)]
 public sealed class PolymorphCommand : IConsoleCommand
 {
-    [Dependency] private IPrototypeManager _proto = default!;
+    [Dependency] private readonly IPrototypeManager _proto = default!;
 
     public string Command => "polymorph";
 
@@ -27,11 +22,9 @@ public sealed class PolymorphCommand : IConsoleCommand
     {
         if (args.Length != 2)
         {
-            shell.WriteLine(Loc.GetString("shell-wrong-arguments-number"));
+            shell.WriteError(Loc.GetString("shell-wrong-arguments-number"));
             return;
         }
-
-        var entityManager = IoCManager.Resolve<IEntityManager>();
 
         if (!EntityUid.TryParse(args[0], out var entityUid))
         {
@@ -45,9 +38,10 @@ public sealed class PolymorphCommand : IConsoleCommand
             return;
         }
 
-        var polySys = EntitySystem.Get<PolymorphableSystem>();
+        var entityManager = IoCManager.Resolve<IEntityManager>();
+        var polySystem = entityManager.EntitySysManager.GetEntitySystem<PolymorphableSystem>();
 
         entityUid.EnsureComponent<PolymorphableComponent>();
-        polySys.PolymorphEntity(entityUid, polyproto);
+        polySystem.PolymorphEntity(entityUid, polyproto);
     }
 }

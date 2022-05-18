@@ -8,17 +8,10 @@ namespace Content.Server.Polymorph.Components
     public sealed class PolymorphableComponent : Component
     {
         /// <summary>
-        /// Whether or not the user is currently transformed
-        /// </summary>
-        [DataField("polymorphed")]
-        public bool Polymorphed = false;
-
-        /// <summary>
         /// A list of all the polymorphs that the entity has.
         /// Used to manage them and remove them if needed.
         /// </summary>
-        [DataField("polymorphActions")]
-        public Dictionary<string, InstantAction> PolymorphActions = new();
+        public Dictionary<string, InstantAction>? PolymorphActions = null;
 
         /// <summary>
         /// The polymorphs that the entity starts out being able to do.

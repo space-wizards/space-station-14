@@ -20,8 +20,9 @@ namespace Content.Server.Polymorph.Systems
 {
     public sealed partial class PolymorphableSystem : EntitySystem
     {
+        private readonly ISawmill _saw = default!;
+
         [Dependency] private readonly ActionsSystem _actions = default!;
-        [Dependency] private readonly IEntityManager _entity = default!;
         [Dependency] private readonly IPrototypeManager _proto = default!;
         [Dependency] private readonly ServerInventorySystem _inventory = default!;
         [Dependency] private readonly SharedHandsSystem _sharedHands = default!;
@@ -62,20 +63,30 @@ namespace Content.Server.Polymorph.Systems
         /// <param name="id">The id of the polymorph prototype</param>
         public void PolymorphEntity(EntityUid target, String id)
         {
-            if (!_proto.TryIndex<PolymorphPrototype>(id, out var prototype))
+            if (!_proto.TryIndex<PolymorphPrototype>(id, out var proto))
+            {
+                _saw.Error("Invalid polymorph prototype");
                 return;
+            }
 
-            PolymorphEntity(target, prototype);
+            PolymorphEntity(target, proto);
         }
 
+        /// <summary>
+        /// Polymorphs the target entity into the specific polymorph prototype
+        /// </summary>
+        /// <param name="target">The entity that will be transformed</param>
+        /// <param name="proto">The polymorph prototype</param>
         public void PolymorphEntity(EntityUid target, PolymorphPrototype proto)
         {
             // mostly just for vehicles
             if (TryComp<BuckleComponent>(target, out var buckle))
                 buckle.TryUnbuckle(target, true);
 
-            var child = Spawn(proto.Entity, Transform(target).Coordinates);
-            MakeSentientCommand.MakeSentient(child, _entity);
+            var targetTransformComp = Transform(target);
+
+            var child = Spawn(proto.Entity, targetTransformComp.Coordinates);
+            MakeSentientCommand.MakeSentient(child, EntityManager);
 
             var comp = EnsureComp<PolymorphedEntityComponent>(child);
             comp.Parent = target;
@@ -110,8 +121,10 @@ namespace Content.Server.Polymorph.Systems
             if (TryComp<MindComponent>(target, out var mind) && mind.Mind != null)
                 mind.Mind.TransferTo(child);
 
+            //Ensures a map to banish the entity to
             EnsurePausesdMap();
-            Transform(target).AttachParent(Transform(_mapManager.GetMapEntityId(PausedMap)));
+            if(PausedMap != null)
+                targetTransformComp.AttachParent(Transform(PausedMap.Value));
             
             _popup.PopupEntity(Loc.GetString("polymorph-popup-generic", ("parent", target), ("child", child)), child, Filter.Pvs(child));
         }
@@ -119,11 +132,15 @@ namespace Content.Server.Polymorph.Systems
         public void CreatePolymorphAction(string id, EntityUid target)
         {
             if (!_proto.TryIndex<PolymorphPrototype>(id, out var polyproto))
+            {
+                _saw.Error("Invalid polymorph prototype");
                 return;
-            if (!_proto.TryIndex<EntityPrototype>(polyproto.Entity, out var entproto))
-                return;
+            }
+                
             if (!TryComp<PolymorphableComponent>(target, out var polycomp))
                 return;
+
+            var entproto = _proto.Index<EntityPrototype>(polyproto.Entity);
 
             var act = new InstantAction()
             {
@@ -134,6 +151,9 @@ namespace Content.Server.Polymorph.Systems
                 ItemIconStyle = ItemActionIconStyle.NoItem,
             };
 
+            if (polycomp.PolymorphActions == null)
+                polycomp.PolymorphActions = new();
+
             polycomp.PolymorphActions.Add(id, act);
             _actions.AddAction(target, act, target);
         }
@@ -142,18 +162,14 @@ namespace Content.Server.Polymorph.Systems
         {
             if (!_proto.TryIndex<PolymorphPrototype>(id, out var polyproto))
                 return;
-
             if (!TryComp<PolymorphableComponent>(target, out var comp))
                 return;
+            if (comp.PolymorphActions == null)
+                return;
 
-            foreach (var action in comp.PolymorphActions)
-            {
-                if (action.Key == id)
-                {
-                    _actions.RemoveAction(target, action.Value);
-                    return;
-                }
-            }
+            comp.PolymorphActions.TryGetValue(id, out var val);
+            if (val != null)
+                _actions.RemoveAction(target, val);
         }
     }
 
@@ -168,7 +184,7 @@ namespace Content.Server.Polymorph.Systems
         /// The polymorph prototype containing all the information about
         /// the specific polymorph.
         /// </summary>
-        public readonly PolymorphPrototype Prototype = new();
+        public readonly PolymorphPrototype Prototype;
 
         public PolymorphActionEvent(PolymorphPrototype prototype)
         {

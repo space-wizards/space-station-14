@@ -1,16 +1,14 @@
-using Content.Server.Actions;
-using Content.Server.Buckle.Components;
-using Content.Server.Inventory;
-using Content.Server.Mind.Commands;
 using Content.Shared.GameTicking;
-using Robust.Shared.Map;
 
 namespace Content.Server.Polymorph.Systems
 {
     public sealed partial class PolymorphableSystem : EntitySystem
     {
-        public MapId PausedMap { get; private set; }  = MapId.Nullspace;
+        public EntityUid? PausedMap { get; private set; } = null;
 
+        /// <summary>
+        /// Used to subscribe to the round restart event
+        /// </summary>
         private void InitializeMap()
         {
             SubscribeLocalEvent<RoundRestartCleanupEvent>(OnRoundRestart);
@@ -18,23 +16,26 @@ namespace Content.Server.Polymorph.Systems
 
         private void OnRoundRestart(RoundRestartCleanupEvent _)
         {
-            if (PausedMap == MapId.Nullspace || !_mapManager.MapExists(PausedMap))
+            if (PausedMap == null || !Exists(PausedMap))
                 return;
 
-            _mapManager.DeleteMap(PausedMap);
+            EntityManager.DeleteEntity(PausedMap.Value);
         }
 
+        /// <summary>
+        /// Used internally to ensure a paused map that is
+        /// stores polymorphed entities.
+        /// </summary>
         private void EnsurePausesdMap()
         {
-            if (PausedMap != MapId.Nullspace && _mapManager.MapExists(PausedMap))
+            if (PausedMap != null && Exists(PausedMap))
                 return;
+            
+            var newmap = _mapManager.CreateMap();
+            _mapManager.SetMapPaused(newmap, true);
+            PausedMap = _mapManager.GetMapEntityId(newmap);
 
-            PausedMap = _mapManager.CreateMap();
-            _mapManager.SetMapPaused(PausedMap, true);
-
-            var mapComp = EntityManager.GetComponent<IMapComponent>(_mapManager.GetMapEntityId(PausedMap));
-
-            mapComp.Dirty();
+            Dirty(PausedMap.Value);
         }
     }
 }
