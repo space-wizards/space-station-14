@@ -7,11 +7,12 @@ using Robust.Shared.Utility;
 
 namespace Content.Server.AI.Pathfinding;
 
-/// <summary>
-/// Handles pathfinding while on a grid.
-/// </summary>
 public sealed partial class PathfindingSystem
 {
+    /*
+     * Handles pathfinding while on a grid.
+     */
+
     [Dependency] private readonly AccessReaderSystem _accessReader = default!;
     [Dependency] private readonly IMapManager _mapManager = default!;
 
