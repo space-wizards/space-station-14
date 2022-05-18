@@ -35,7 +35,7 @@ public enum CollisionGroup
     SmallMobMask = Impassable | LowImpassable,
     SmallMobLayer = Opaque | BulletImpassable,
     // Birds/other small flyers
-    FlyingMobMask = Impassable,
+    FlyingMobMask = Impassable | HighImpassable,
     FlyingMobLayer = Opaque | BulletImpassable,
 
     // Mechs
@@ -56,7 +56,7 @@ public enum CollisionGroup
     TabletopMachineLayer = Opaque | HighImpassable | BulletImpassable,
 
     // Airlocks, windoors, firelocks
-    GlassAirlockLayer = Impassable | HighImpassable | MidImpassable | BulletImpassable | InteractImpassable,
+    GlassAirlockLayer = HighImpassable | MidImpassable | BulletImpassable | InteractImpassable,
     AirlockLayer = Opaque | GlassAirlockLayer,
 
     // Airlock assembly
