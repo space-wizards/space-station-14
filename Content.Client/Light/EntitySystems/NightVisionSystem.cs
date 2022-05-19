@@ -34,17 +34,17 @@ public sealed class NightVisionSystem : SharedNightVisionSystem
         if (!TryComp(ev.Entity, out NightVisionComponent? component))
             return;
 
-        _light.Enabled = !component.IsEnabled;
+        EnableShadows(!component.IsEnabled);
     }
 
     private void OnPlayerDetached(EntityUid uid, NightVisionComponent component, PlayerDetachedEvent args)
     {
-        _light.Enabled = true;
+        EnableShadows(true);
     }
 
     private void OnRemove(EntityUid uid, NightVisionComponent component, ComponentRemove args)
     {
-        _light.Enabled = true;
+        EnableShadows(true);
     }
 
     private void UpdateNightVision(EntityUid uid, NightVisionComponent? component = null)
@@ -56,6 +56,14 @@ public sealed class NightVisionSystem : SharedNightVisionSystem
         if (localPlayerPawn == null || localPlayerPawn != uid)
             return;
 
-        _light.Enabled = !component.IsEnabled;
+        EnableShadows(!component.IsEnabled);
+    }
+
+    private void EnableShadows(bool isEnabled)
+    {
+        _light.DrawShadows = isEnabled;
+
+        var color = isEnabled ? Color.Black : Color.White;
+        _light.AmbientLightColor = Color.FromSrgb(color);
     }
 }
