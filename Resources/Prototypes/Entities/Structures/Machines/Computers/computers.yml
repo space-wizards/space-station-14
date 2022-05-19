@@ -408,7 +408,7 @@
       visuals:
         - type: ComputerVisualizer
           key: tech_key
-          screen: detective_television
+          screen: cameras
     - type: Computer
       board: SurveillanceCameraMonitorCircuitboard
     - type: DeviceNetwork
@@ -425,10 +425,6 @@
       interfaces:
         - key: enum.SurveillanceCameraMonitorUiKey.Key
           type: SurveillanceCameraMonitorBoundUserInterface
-    - type: Sprite
-      sprite: Structures/Machines/computers.rsi
-      layers:
-        - state: television
 
 - type: entity
   parent: BaseStructure
