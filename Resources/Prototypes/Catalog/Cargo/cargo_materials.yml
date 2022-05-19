@@ -6,7 +6,7 @@
     sprite: Structures/Storage/tanks.rsi
     state: watertank
   product: CrateMaterialWaterTank
-  cost: 5000
+  cost: 2000
   category: Materials
   group: market
   
@@ -18,7 +18,7 @@
     sprite: Structures/Storage/tanks.rsi
     state: fueltank
   product: CrateMaterialFuelTank
-  cost: 5000
+  cost: 2000
   category: Materials
   group: market
 
