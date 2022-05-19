@@ -9,7 +9,7 @@
             <ScrollContainer VerticalExpand="True">
                 <ItemList Name="SubnetList" />
             </ScrollContainer>
-            <Button Name="CameraRefreshButton" Text="{Loc 'surveillance-camera-monitor-ui-refresh-camera'}" />
+            <Button Name="CameraRefreshButton" Text="{Loc 'surveillance-camera-monitor-ui-refresh-cameras'}" />
         </BoxContainer>
         <Control VerticalExpand="True" HorizontalExpand="True" Margin="5 5 5 5" Name="CameraViewBox">
             <!-- TODO: This should be a textured box so there can be static.
