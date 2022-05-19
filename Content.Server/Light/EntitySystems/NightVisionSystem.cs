@@ -31,6 +31,7 @@ public sealed class NightVisionSystem : SharedNightVisionSystem
     private void OnToggle(EntityUid uid, NightVisionComponent component, NightVisionToggleEvent args)
     {
         component.IsEnabled = !component.IsEnabled;
+        _actions.SetToggled(component.Action, component.IsEnabled);
         Dirty(component);
     }
 
