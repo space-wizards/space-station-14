@@ -1,10 +1,4 @@
 Entries:
-- author: Willhelm53
-  changes:
-  - {message: "Added the ability to pet dogs, cats, and various other animals around\
-      \ the station \U0001F60A", type: Add}
-  id: 1060
-  time: '2022-02-14T03:20:47.0000000+00:00'
 - author: Lamrr
   changes:
   - {message: Commemorate your favourite event with the new memorial object., type: Add}
@@ -3044,3 +3038,8 @@ Entries:
       is labelled "Electrical Supplies Crate," and costs 4500 points.', type: Add}
   id: 1559
   time: '2022-05-18T22:30:11.0000000+00:00'
+- author: moony
+  changes:
+  - {message: Secret gamemode added, type: Add}
+  id: 1560
+  time: '2022-05-19T04:44:24.0000000+00:00'
