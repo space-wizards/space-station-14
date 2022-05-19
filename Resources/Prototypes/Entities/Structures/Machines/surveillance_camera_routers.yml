@@ -22,3 +22,75 @@
     - type: SurveillanceCameraRouter
       subnetName: "SubnetTest"
       subnetFrequency: SurveillanceCameraSubnetTest
+
+- type: entity
+  parent: SurveillanceCameraRouterBase
+  id: SurveillanceCameraRouterEngineering
+  suffix: Engineering
+  components:
+    - type: SurveillanceCameraRouter
+      subnetName: "Engineering"
+      subnetFrequency: SurveillanceCameraEngineering
+
+- type: entity
+  parent: SurveillanceCameraRouterBase
+  id: SurveillanceCameraRouterSecurity
+  suffix: Security
+  components:
+    - type: SurveillanceCameraRouter
+      subnetName: "Security"
+      subnetFrequency: SurveillanceCameraSecurity
+
+- type: entity
+  parent: SurveillanceCameraRouterBase
+  id: SurveillanceCameraRouterScience
+  suffix: Science
+  components:
+    - type: SurveillanceCameraRouter
+      subnetName: "Science"
+      subnetFrequency: SurveillanceCameraScience
+
+- type: entity
+  parent: SurveillanceCameraRouterBase
+  id: SurveillanceCameraRouterSupply
+  suffix: Supply
+  components:
+    - type: SurveillanceCameraRouter
+      subnetName: "Supply"
+      subnetFrequency: SurveillanceCameraSupply
+
+- type: entity
+  parent: SurveillanceCameraRouterBase
+  id: SurveillanceCameraRouterCommand
+  suffix: Command
+  components:
+    - type: SurveillanceCameraRouter
+      subnetName: "Command"
+      subnetFrequency: SurveillanceCameraCommand
+
+- type: entity
+  parent: SurveillanceCameraRouterBase
+  id: SurveillanceCameraRouterService
+  suffix: Service
+  components:
+    - type: SurveillanceCameraRouter
+      subnetName: "Service"
+      subnetFrequency: SurveillanceCameraService
+
+- type: entity
+  parent: SurveillanceCameraRouterBase
+  id: SurveillanceCameraRouterMedical
+  suffix: Medical
+  components:
+    - type: SurveillanceCameraRouter
+      subnetName: "Medical"
+      subnetFrequency: SurveillanceCameraMedical
+
+- type: entity
+  parent: SurveillanceCameraRouterBase
+  id: SurveillanceCameraRouterGeneral
+  suffix: General
+  components:
+    - type: SurveillanceCameraRouter
+      subnetName: "General"
+      subnetFrequency: SurveillanceCameraGeneral
