@@ -404,6 +404,11 @@
   name: monitor
   description: A surveillance camera monitor. You're watching them. Maybe.
   components:
+    - type: Appearance
+      visuals:
+        - type: ComputerVisualizer
+          key: tech_key
+          screen: detective_television
     - type: DeviceNetwork
       deviceNetId: Wired
       receiveFrequencyId: SurveillanceCamera
@@ -422,8 +427,6 @@
       sprite: Structures/Machines/computers.rsi
       layers:
         - state: television
-        - state: detective_television
-          shader: unshaded
 
 - type: entity
   parent: BaseStructure
