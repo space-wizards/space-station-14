@@ -34,7 +34,7 @@
     receiveFrequencyId: SurveillanceCameraSubnetTest
     transmitFrequencyId: SurveillanceCamera
   - type: SurveillanceCamera
-    id: "test"
+    id: "camera"
 
 - type: entity
   parent: SurveillanceCameraBase
@@ -47,7 +47,7 @@
     receiveFrequencyId: SurveillanceCameraEngineering
     transmitFrequencyId: SurveillanceCamera
   - type: SurveillanceCamera
-    id: "test"
+    id: "camera"
 
 - type: entity
   parent: SurveillanceCameraBase
@@ -60,7 +60,7 @@
     receiveFrequencyId: SurveillanceCameraSecurity
     transmitFrequencyId: SurveillanceCamera
   - type: SurveillanceCamera
-    id: "test"
+    id: "camera"
 
 - type: entity
   parent: SurveillanceCameraBase
@@ -73,7 +73,7 @@
     receiveFrequencyId: SurveillanceCameraScience
     transmitFrequencyId: SurveillanceCamera
   - type: SurveillanceCamera
-    id: "test"
+    id: "camera"
 
 - type: entity
   parent: SurveillanceCameraBase
@@ -86,7 +86,7 @@
     receiveFrequencyId: SurveillanceCameraSupply
     transmitFrequencyId: SurveillanceCamera
   - type: SurveillanceCamera
-    id: "test"
+    id: "camera"
 
 - type: entity
   parent: SurveillanceCameraBase
@@ -99,7 +99,7 @@
     receiveFrequencyId: SurveillanceCameraScience
     transmitFrequencyId: SurveillanceCamera
   - type: SurveillanceCamera
-    id: "test"
+    id: "camera"
 
 - type: entity
   parent: SurveillanceCameraBase
@@ -112,7 +112,7 @@
     receiveFrequencyId: SurveillanceCameraCommand
     transmitFrequencyId: SurveillanceCamera
   - type: SurveillanceCamera
-    id: "test"
+    id: "camera"
 
 - type: entity
   parent: SurveillanceCameraBase
@@ -125,7 +125,7 @@
     receiveFrequencyId: SurveillanceCameraService
     transmitFrequencyId: SurveillanceCamera
   - type: SurveillanceCamera
-    id: "test"
+    id: "camera"
 
 - type: entity
   parent: SurveillanceCameraBase
@@ -138,7 +138,7 @@
     receiveFrequencyId: SurveillanceCameraMedical
     transmitFrequencyId: SurveillanceCamera
   - type: SurveillanceCamera
-    id: "test"
+    id: "camera"
 
 - type: entity
   parent: SurveillanceCameraBase
@@ -151,4 +151,4 @@
     receiveFrequencyId: SurveillanceCameraGeneral
     transmitFrequencyId: SurveillanceCamera
   - type: SurveillanceCamera
-    id: "test"
+    id: "camera"
