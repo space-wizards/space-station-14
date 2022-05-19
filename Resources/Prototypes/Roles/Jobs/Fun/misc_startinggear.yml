@@ -118,3 +118,19 @@
   satchel: ClothingBackpackDuffelSyndicateOperative
   duffelbag: ClothingBackpackDuffelSyndicateOperative
   
+- type: startingGear
+  id: SyndicateOperativeMedicFull
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitOperative
+    back: ClothingBackpackDuffelSyndicateOperative
+    mask: ClothingMaskBreathMedical
+    eyes: ClothingEyesHudMedical
+    ears: ClothingHeadsetAltSyndicate
+    gloves: ClothingHandsGlovesCombat
+    outerClothing: ClothingOuterHardsuitSyndieElite
+    shoes: ClothingShoesBootsCombat
+    id: SyndiPDA
+    pocket1:
+    belt: ClothingBeltMilitaryWebbingMedFilled
+  innerclothingskirt: ClothingUniformJumpsuitOperative
+  duffelbag: ClothingBackpackDuffelSyndicateFilledMedical
