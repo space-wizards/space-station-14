@@ -14,6 +14,43 @@ namespace Content.Server.Chemistry.Components
     public sealed class IVBagComponent : SharedIVBagComponent
     {
         public const string SolutionName = "ivbag";
+        public CancellationTokenSource? FlowCancel;
+        public CancellationTokenSource? InjectCancel;
+
+
+        /// <summary> Does the bag think it's injected into a mob? </summary>
+        [ViewVariables]
+        public bool Connected = false;
+
+        /// <summary> What mob is the IV connected to? </summary>
+        [ViewVariables]
+        public EntityUid? Mob;
+
+
+        /// <summary> The delay after injection before solution flow begins. </summary>
+        [ViewVariables(VVAccess.ReadWrite)]
+        [DataField("flowStartDelay")]
+        public TimeSpan FlowStartDelay = TimeSpan.FromSeconds(2);
+
+        /// <summary> The delay between flows after flowing has begun. </summary>
+        [ViewVariables(VVAccess.ReadWrite)]
+        [DataField("flowDelay")]
+        public TimeSpan FlowDelay = TimeSpan.FromSeconds(1.5);
+
+        /// <summary> The chem:blood ratio when flowing contents. </summary>
+        [ViewVariables(VVAccess.ReadWrite)]
+        [DataField("flowChemRatio")]
+        public FixedPoint2 ChemRatio = 0.1f; // Mostly blood (for balance).
+
+        /// <summary> Amount of solution to flow into a bloodstream per interval. </summary>
+        [ViewVariables(VVAccess.ReadWrite)]
+        [DataField("flowAmount")]
+        public FixedPoint2 FlowAmount = FixedPoint2.New(2);
+
+        /// <summary> Amount of solution to transfer into containers. </summary>
+        [ViewVariables(VVAccess.ReadWrite)]
+        public FixedPoint2 PourAmount = FixedPoint2.New(10);
+
 
         /// <summary>
         /// Injection delay (seconds) when the target is a mob.
@@ -24,53 +61,7 @@ namespace Content.Server.Chemistry.Components
         /// </remarks>
         [ViewVariables(VVAccess.ReadWrite)]
         [DataField("injectDelay")]
-        public float InjectDelay = 3.5f;
-
-        /// <summary>
-        /// The delay after injection before solution flow begins.
-        /// </summary>
-        [ViewVariables(VVAccess.ReadWrite)]
-        [DataField("startDelay")]
-        public float StartDelay = 3f;
-
-        /// <summary>
-        /// The delay between flows after flowing has begun.
-        /// </summary>
-        [ViewVariables(VVAccess.ReadWrite)]
-        [DataField("flowDelay")]
-        public float FlowDelay = 1f;
-
-        /// <summary>
-        /// Amount of solution to flow into a bloodstream per interval.
-        /// </summary>
-        [ViewVariables]
-        public FixedPoint2 FlowAmount = FixedPoint2.New(1);
-
-        /// <summary>
-        /// Amount of solution to transfer into containers.
-        /// </summary>
-        [ViewVariables(VVAccess.ReadWrite)]
-        public FixedPoint2 TransferAmount = FixedPoint2.New(10);
-
-
-        /// <summary>
-        /// Does the bag think it's injected into a mob?
-        /// </summary>
-        [ViewVariables]
-        public bool Connected = false;
-
-        /// <summary>
-        /// What mob is the IV connected to?
-        /// </summary>
-        [ViewVariables]
-        public EntityUid Mob;
-
-
-        /// <summary>
-        ///     Token for interrupting a do-after action (e.g., injection another player). If not null, implies
-        ///     component is currently "in use".
-        /// </summary>
-        public CancellationTokenSource? CancelToken;
+        public float InjectDelay = 4f;
 
         private IVBagToggleMode _toggleState;
 

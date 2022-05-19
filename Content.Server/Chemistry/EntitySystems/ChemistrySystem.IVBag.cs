@@ -4,16 +4,22 @@ using Content.Server.Chemistry.Components;
 using Content.Server.Chemistry.Components.SolutionManager;
 using Content.Server.CombatMode;
 using Content.Server.DoAfter;
+using Content.Shared.Audio;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Database;
+using Content.Shared.Examine;
 using Content.Shared.FixedPoint;
 using Content.Shared.Hands;
 using Content.Shared.Interaction;
 using Content.Shared.Interaction.Events;
 using Content.Shared.MobState.Components;
+using Robust.Server.GameObjects;
+using Robust.Shared.Audio;
 using Robust.Shared.GameStates;
 using Robust.Shared.Player;
+using Robust.Shared.Utility;
+using Timer = Robust.Shared.Timing.Timer;
 
 namespace Content.Server.Chemistry.EntitySystems;
 
@@ -27,30 +33,128 @@ public sealed partial class ChemistrySystem
         SubscribeLocalEvent<IVBagComponent, UseInHandEvent>(OnInjectorUse);
         SubscribeLocalEvent<IVBagComponent, AfterInteractEvent>(OnInjectorAfterInteract);
         SubscribeLocalEvent<IVBagComponent, ComponentGetState>(OnInjectorGetState);
+        SubscribeLocalEvent<IVBagComponent, ExaminedEvent>(OnExamined);
+        SubscribeLocalEvent<IVBagComponent, ActivateInWorldEvent>(OnWorldActivate);
 
         SubscribeLocalEvent<BagInjectionCompleteEvent>(OnBagInjectionComplete);
         SubscribeLocalEvent<BagInjectionCancelledEvent>(OnBagInjectionCancelled);
+
     }
 
     private static void OnBagInjectionCancelled(BagInjectionCancelledEvent ev)
     {
-        ev.Component.CancelToken = null;
+        ev.Component.InjectCancel = null;
     }
 
     private void OnBagInjectionComplete(BagInjectionCompleteEvent ev)
     {
-        ev.Component.CancelToken = null;
+        ev.Component.InjectCancel = null;
         UseInjector(ev.Target, ev.User, ev.Component);
     }
 
-    private void UseInjector(EntityUid target, EntityUid user, IVBagComponent component)
+    private static void OnInjectorDeselected(EntityUid uid, IVBagComponent component, HandDeselectedEvent args)
     {
+        component.InjectCancel?.Cancel();
+        component.InjectCancel = null;
+    }
+
+    private void OnInjectorStartup(EntityUid uid, IVBagComponent component, ComponentStartup args)
+    {
+        Dirty(component);
+    }
+
+    private void OnInjectorUse(EntityUid uid, IVBagComponent component, UseInHandEvent args)
+    {
+        if (args.Handled) return;
+
+        Toggle(component, args.User);
+        args.Handled = true;
+    }
+
+    private void OnWorldActivate(EntityUid uid, IVBagComponent bagComp, ActivateInWorldEvent args)
+    {
+        if (!EntityManager.TryGetComponent(args.User, out ActorComponent? actor))
+            return;
+
+        Toggle(bagComp, args.User);
+        args.Handled = true;
+    }
+
+    private void OnExamined(EntityUid uid, IVBagComponent bagComp, ExaminedEvent args)
+    {
+        string modeLabel;
+
+        switch (bagComp.ToggleState)
+        {
+            case SharedIVBagComponent.IVBagToggleMode.Inject:
+                modeLabel = "injector-inject-text";
+                break;
+            case SharedIVBagComponent.IVBagToggleMode.Draw:
+                modeLabel = "injector-draw-text";
+                break;
+            case SharedIVBagComponent.IVBagToggleMode.Closed:
+                modeLabel = "ivbag-closed-text";
+                break;
+            default:
+                modeLabel = "injector-invalid-injector-toggle-mode";
+                throw new ArgumentOutOfRangeException();
+        }
+
+        args.PushMarkup(Loc.GetString("ivbag-state-examine",
+            ("mode", Loc.GetString(modeLabel))));
+
+        if (bagComp.Connected && bagComp.Mob is { Valid: true } mob)
+            args.PushMarkup(Loc.GetString("ivbag-connected-examine",
+                ("color", Color.White.ToHexNoAlpha()),
+                ("target", mob)));
+    }
+
+    /// <summary>
+    /// Toggle between inject/draw/closed states.
+    /// </summary>
+    private void Toggle(IVBagComponent bagComp, EntityUid user)
+    {
+        string msg;
+        switch (bagComp.ToggleState)
+        {
+            case SharedIVBagComponent.IVBagToggleMode.Inject:
+                bagComp.ToggleState = SharedIVBagComponent.IVBagToggleMode.Draw;
+                msg = "ivbag-component-drawing-text";
+                break;
+            case SharedIVBagComponent.IVBagToggleMode.Draw:
+                bagComp.ToggleState = SharedIVBagComponent.IVBagToggleMode.Closed;
+                msg = "ivbag-component-closed-text";
+                break;
+            case SharedIVBagComponent.IVBagToggleMode.Closed:
+                bagComp.ToggleState = SharedIVBagComponent.IVBagToggleMode.Inject;
+                msg = "ivbag-component-injecting-text";
+                break;
+            default:
+                throw new ArgumentOutOfRangeException();
+        }
+
+        // Reset the flow timer after toggling.
+        if (bagComp.Mob is { Valid: true } mob)
+        {
+            Disconnect(bagComp, false);
+            Connect(bagComp, mob, user);
+        }
+
+        _popup.PopupEntity(Loc.GetString(msg), bagComp.Owner, Filter.Entities(user));
+    }
+
+    private bool UseInjector(EntityUid target, EntityUid user, IVBagComponent component)
+    {
+        // Halt any existing flows.
+        if (component.Connected)
+            Disconnect(component);
+
         // Handle injecting/drawing for solutions
         if (component.ToggleState == SharedIVBagComponent.IVBagToggleMode.Inject)
         {
-            if (TryComp<BloodstreamComponent>(target, out var bloodstream))
+            if (HasComp<BloodstreamComponent>(target))
             {
-                DripIntoMob(component, bloodstream, user);
+                Connect(component, target, user);
             }
             else if (_solutions.TryGetRefillableSolution(target, out var refillableSolution))
             {
@@ -62,28 +166,37 @@ public sealed partial class ChemistrySystem
             }
             else
             {
-                _popup.PopupEntity(Loc.GetString("injector-component-cannot-transfer-message",
-                    ("target", target)), component.Owner, Filter.Entities(user));
+                // _popup.PopupEntity(Loc.GetString("injector-component-cannot-transfer-message",
+                    // ("target", target)), component.Owner, Filter.Entities(user));
+                return false;
             }
         }
         else if (component.ToggleState == SharedIVBagComponent.IVBagToggleMode.Draw)
         {
-            if (_solutions.TryGetDrawableSolution(target, out var drawableSolution))
+            if (HasComp<BloodstreamComponent>(target))
+            {
+                Connect(component, target, user);
+            }
+            else if (_solutions.TryGetDrawableSolution(target, out var drawableSolution))
             {
                 TryDraw(component, target, drawableSolution, user);
             }
             else
             {
-                _popup.PopupEntity(Loc.GetString("injector-component-cannot-draw-message",
-                    ("target", target)), component.Owner, Filter.Entities(user));
+                // _popup.PopupEntity(Loc.GetString("injector-component-cannot-draw-message",
+                    // ("target", target)), component.Owner, Filter.Entities(user));
+                return false;
             }
         }
-    }
+        else if (component.ToggleState == SharedIVBagComponent.IVBagToggleMode.Closed)
+        {
+            if (HasComp<BloodstreamComponent>(target))
+            {
+                Connect(component, target, user);
+            }
+        }
 
-    private static void OnInjectorDeselected(EntityUid uid, IVBagComponent component, HandDeselectedEvent args)
-    {
-        component.CancelToken?.Cancel();
-        component.CancelToken = null;
+        return true;
     }
 
     private void OnSolutionChange(EntityUid uid, IVBagComponent component, SolutionChangedEvent args)
@@ -105,7 +218,7 @@ public sealed partial class ChemistrySystem
     {
         if (args.Handled || !args.CanReach) return;
 
-        if (component.CancelToken != null)
+        if (component.InjectCancel != null)
         {
             args.Handled = true;
             return;
@@ -127,44 +240,8 @@ public sealed partial class ChemistrySystem
             return;
         }
 
-        UseInjector(target, args.User, component);
-        args.Handled = true;
-    }
-
-    private void OnInjectorStartup(EntityUid uid, IVBagComponent component, ComponentStartup args)
-    {
-        Dirty(component);
-    }
-
-    private void OnInjectorUse(EntityUid uid, IVBagComponent component, UseInHandEvent args)
-    {
-        if (args.Handled) return;
-
-        Toggle(component, args.User);
-        args.Handled = true;
-    }
-
-    /// <summary>
-    /// Toggle between draw/inject state if applicable
-    /// </summary>
-    private void Toggle(IVBagComponent component, EntityUid user)
-    {
-        string msg;
-        switch (component.ToggleState)
-        {
-            case SharedIVBagComponent.IVBagToggleMode.Inject:
-                component.ToggleState = SharedIVBagComponent.IVBagToggleMode.Draw;
-                msg = "injector-component-drawing-text";
-                break;
-            case SharedIVBagComponent.IVBagToggleMode.Draw:
-                component.ToggleState = SharedIVBagComponent.IVBagToggleMode.Inject;
-                msg = "injector-component-injecting-text";
-                break;
-            default:
-                throw new ArgumentOutOfRangeException();
-        }
-
-        _popup.PopupEntity(Loc.GetString(msg), component.Owner, Filter.Entities(user));
+        // Don't override default behaviors (like table placing) if injection failed.
+        args.Handled = UseInjector(target, args.User, component);
     }
 
     /// <summary>
@@ -215,9 +292,9 @@ public sealed partial class ChemistrySystem
                     $"{EntityManager.ToPrettyString(user):user} is attempting to inject themselves with a solution {SolutionContainerSystem.ToPrettyString(solution):solution}.");
         }
 
-        component.CancelToken = new CancellationTokenSource();
+        component.InjectCancel = new CancellationTokenSource();
 
-        _doAfter.DoAfter(new DoAfterEventArgs(user, actualDelay, component.CancelToken.Token, target)
+        _doAfter.DoAfter(new DoAfterEventArgs(user, actualDelay, component.InjectCancel.Token, target)
         {
             BreakOnUserMove = true,
             BreakOnDamage = true,
@@ -238,72 +315,208 @@ public sealed partial class ChemistrySystem
     }
 
     /// <summary>
-    /// Inject both blood and chems into a mob's bloodstream and chemstream respectively.
+    /// Begin the continuous flow timer with an initial delay.
     /// </summary>
-    private void DripIntoMob(IVBagComponent component, BloodstreamComponent targetBloodstream, EntityUid user)
+    private void Connect(IVBagComponent component, EntityUid target, EntityUid user)
     {
-        if (!_solutions.TryGetSolution(component.Owner, IVBagComponent.SolutionName, out var bagSolution))
+        DebugTools.AssertNotNull(target);
+        component.Mob = target;
+        component.Connected = true;
+
+        component.FlowCancel = new CancellationTokenSource();
+        Timer.Spawn(component.FlowStartDelay, () => FlowTimerCallback(component), component.FlowCancel.Token);
+    }
+
+    /// <summary>
+    /// Kill the flow timer and disconnect from the connected mob (if there is one).
+    /// </summary>
+    private void Disconnect(IVBagComponent bagComp, bool bPainfully = false)
+    {
+        // If it's not set to 'Closed' then rip it out.
+        if (bPainfully && bagComp.Connected && bagComp.Mob is { Valid: true } mob
+            && bagComp.ToggleState != SharedIVBagComponent.IVBagToggleMode.Closed)
+        {
+            if (TryComp<BloodstreamComponent>(mob, out var bloodstream))
+            {
+                // Deal just enough blood damage to spill some blood.
+                _blood.TryModifyBloodLevel(mob, -(bloodstream.BleedPuddleThreshold + 1f), bloodstream);
+
+                SoundSystem.Play(Filter.Pvs(mob), bloodstream.InstantBloodSound.GetSound(), mob,
+                    AudioHelpers.WithVariation(0f).WithVolume(1f).WithMaxDistance(2f));
+
+                _popup.PopupEntity(Loc.GetString("ivbag-component-ripout-text",
+                    ("bag", bagComp.Owner)), bagComp.Owner, Filter.Pvs(bagComp.Owner));
+            }
+        }
+
+        bagComp.Mob = null;
+        bagComp.Connected = false;
+        bagComp.FlowCancel?.Cancel();
+        bagComp.FlowCancel = null;
+    }
+
+    /// <summary>
+    /// Repetitive IV drip transfer timer.
+    /// </summary>
+    private void FlowTimerCallback(IVBagComponent bagComp)
+    {
+        if (bagComp.Deleted) return;
+
+        // Must have a bloodstream and uh.. exist.
+        if (bagComp.Mob is not { Valid: true } mob ||
+            !TryComp<BloodstreamComponent>(mob, out var bloodstream))
+        {
+            Disconnect(bagComp);
             return;
+        }
+
+        TimeSpan delay;
+        switch (bagComp.ToggleState)
+        {
+            case IVBagComponent.IVBagToggleMode.Inject:
+                DripInjectMob(bagComp, bloodstream);
+                delay = bagComp.FlowDelay;
+                break;
+            case IVBagComponent.IVBagToggleMode.Draw:
+                DripDrawMob(bagComp, bloodstream);
+                // TODO: Drawing is faster on dead things.
+                delay = bagComp.FlowDelay;
+                break;
+            case IVBagComponent.IVBagToggleMode.Closed:
+                delay = TimeSpan.FromSeconds(1);
+                break;
+            default:
+                throw new ArgumentOutOfRangeException();
+        }
+
+        DebugTools.AssertNotNull(bagComp.FlowCancel);
+        Timer.Spawn(bagComp.FlowDelay, () => FlowTimerCallback(bagComp), bagComp.FlowCancel!.Token);
+    }
+
+    /// <summary>
+    /// Inject both blood and chems into a mob's bloodstream and chemstream respectively using a flexible ratio.
+    /// </summary>
+    private bool DripInjectMob(IVBagComponent bagComp, BloodstreamComponent bloodstream)
+    {
+        if (!_solutions.TryGetSolution(bagComp.Owner, IVBagComponent.SolutionName, out var bagSolution))
+            return false;
 
         // Don't bother dripping if there's nothing to drip.
         var bagVolume = bagSolution.TotalVolume;
-        var dripAmount = FixedPoint2.Min(component.FlowAmount, bagVolume);
-        if (bagVolume <= 0 || dripAmount <= 0)
+        var dripAmount = FixedPoint2.Min(bagVolume, bagComp.FlowAmount);
+        if (dripAmount <= 0)
+            return false;
+
+        // Drip at most this much of either type (chem/blood).
+        var dripQuota = FixedPoint2.Min(dripAmount, bagVolume);
+        var debugText = "iv injected";
+
+        // Blood should be removed temporarily so that only chems remain.
+        var bloodInBag = bagSolution.RemoveReagent(bloodstream.BloodReagent, bagVolume);
+        var bloodCanInject = FixedPoint2.Min(dripQuota, bloodInBag, bloodstream.BloodSolution.AvailableVolume);
+
+        // Only chems should remain in the bag now. Blood is returned later.
+        var chemInBag = bagSolution.TotalVolume;
+        var chemCanInject = FixedPoint2.Min(dripQuota, chemInBag, bloodstream.ChemicalSolution.AvailableVolume);
+
+        // Try to meet the overall quota if either part is lacking.
+        var chemQuota = FixedPoint2.Min(dripQuota * bagComp.ChemRatio, chemCanInject, dripQuota);
+        var bloodQuota = dripQuota - chemQuota; // Fill the rest with blood.
+        if (bloodQuota > bloodCanInject)
         {
-            // StopDripping();
-            return;
+            // Blood deficit. Fill the gap with chems.
+            bloodQuota = bloodCanInject;
+            chemQuota = FixedPoint2.Min(dripQuota - bloodQuota, chemCanInject);
         }
 
-        // Allow injecting blood directly into the bloodstream.
-        var bloodReagent = targetBloodstream.BloodReagent;
-        var bloodSolution = targetBloodstream.BloodSolution;
-        var bloodCanFill = bloodSolution.AvailableVolume;
+        var bloodToInject = FixedPoint2.Min(bloodQuota, bloodCanInject);
+        var chemToInject = FixedPoint2.Min(chemQuota, chemCanInject);
 
-        // Allow injecting chems into the chem stream simultaneously.
-        var chemSolution = targetBloodstream.ChemicalSolution;
-        var chemCanFill = chemSolution.AvailableVolume;
-
-        // The bag is trying to drip this, though there may not be room.
-        var theDrip = _solutions.SplitSolution(user, bagSolution, dripAmount);
-
-        // Attempt to transfer any blood from the drip.
-        var bloodDrip = theDrip.GetReagentQuantity(bloodReagent);
-        var bloodToInject = theDrip.RemoveReagent(bloodReagent, FixedPoint2.Min(bloodCanFill, bloodDrip));
-
-        if (bloodDrip > 0)
+        // Inject the chems.
+        if (chemToInject > 0)
         {
-            // Return leftover blood to the bag.
-            if (bloodToInject < bloodDrip)
+            _blood.TryAddToChemicals(bloodstream.Owner,
+                _solutions.SplitSolution(bagComp.Owner, bagSolution, chemToInject),
+                    bloodstream);
+
+            bloodstream.ChemicalSolution.DoEntityReaction(bloodstream.Owner, ReactionMethod.Injection);
+
+            Console.WriteLine("[IV] injected chems from drip: " + chemToInject);
+            debugText += "  [ " + chemToInject + "u chems ]";
+        }
+
+        // Inject or at least return the blood we removed.
+        if (bloodInBag > 0)
+        {
+            // Inject the blood.
+            if (bloodToInject > 0)
             {
-                bagSolution.AddReagent(bloodReagent, bloodDrip - bloodToInject);
-                Console.WriteLine("[IV] returned blood overflow from drip: " + (bloodDrip - bloodToInject));
+                _blood.TryModifyBloodLevel(bloodstream.Owner, bloodToInject, bloodstream);
+                Console.WriteLine("[IV] injected blood from drip: " + bloodToInject);
+                debugText += "  [ " + bloodToInject + "u blood ]";
+                bloodInBag -= bloodToInject;
             }
 
-            _blood.TryModifyBloodLevel(targetBloodstream.Owner, bloodToInject, targetBloodstream);
+            // Make sure all leftover blood returns to the bag.
+            _solutions.TryAddReagent(bagComp.Owner, bagSolution, bloodstream.BloodReagent, bloodInBag, out var _);
+            Console.WriteLine("[IV] returned blood overflow from drip: " + bloodInBag);
         }
 
-        // Only chems should remain now. Attempt to transfer them.
-        var chemDrip = theDrip.TotalVolume;
-        var chemToInject = FixedPoint2.Min(chemCanFill, chemDrip);
+        bool anyInjections = (bloodToInject + chemToInject > 0);
+        if (anyInjections)
+            _popup.PopupEntity(debugText, bagComp.Owner, Filter.Pvs(bagComp.Owner));
 
-        if (chemDrip > 0)
+        Dirty(bagComp);
+        return anyInjections;
+    }
+
+    /// <summary>
+    /// Draw both from a target's blood and chemstream, with a ratio determining how much of each.
+    /// </summary>
+    private bool DripDrawMob(IVBagComponent bagComp, BloodstreamComponent bloodstream)
+    {
+        if (!_solutions.TryGetSolution(bagComp.Owner, IVBagComponent.SolutionName, out var bagSolution))
+            return false;
+
+        var debugText = "iv drawn";
+
+        // Don't bother dripping if we're full.
+        var bagCanFill = bagSolution.AvailableVolume;
+        var dripQuota = FixedPoint2.Min(bagCanFill, bagComp.FlowAmount);
+        if (dripQuota <= 0)
+            return false;
+
+        // Try to drain at most a fixed percentage of chems. (for balance)
+        var chemSolution = bloodstream.ChemicalSolution;
+        var chemDrip = _solutions.SplitSolution(bloodstream.Owner, chemSolution, dripQuota * bagComp.ChemRatio);
+
+        if (chemDrip.TotalVolume > 0 && _solutions.TryAddSolution(bagComp.Owner, bagSolution, chemDrip))
         {
-            // Return chem overflow to the bag so the remaining volume will fit.
-            if (chemToInject < chemDrip)
-            {
-                bagSolution.AddSolution(_solutions.SplitSolution(user, theDrip, chemDrip - chemToInject));
-                Console.WriteLine("[IV] returned chem overflow from drip: " + (chemDrip - chemToInject));
-            }
-
-            _blood.TryAddToChemicals(targetBloodstream.Owner, theDrip, targetBloodstream);
-            theDrip.DoEntityReaction(targetBloodstream.Owner, ReactionMethod.Injection);
+            bagSolution.DoEntityReaction(bagComp.Owner, ReactionMethod.Injection);
+            dripQuota -= chemDrip.TotalVolume;
+            debugText += "  [ " + chemDrip.TotalVolume + "u chems ]";
         }
 
-        var debugText = "dripped " + bloodToInject + "u blood, " + chemToInject + "u chems";
-        _popup.PopupEntity(debugText, component.Owner, Filter.Entities(user));
+        // Drain the rest of the drip quota from their bloodstream.
+        // This ensures 100% of the drip will be blood if there were no chems.
+        if (dripQuota > 0)
+        {
+            var bloodReagent = bloodstream.BloodReagent;
+            var bloodSolution = bloodstream.BloodSolution;
+            var bloodToDraw = FixedPoint2.Min(bloodSolution.TotalVolume, dripQuota);
 
-        Dirty(component);
-        AfterInject(component);
+            if (bloodToDraw > 0)
+            {
+                _solutions.TryAddReagent(bagComp.Owner, bagSolution, bloodReagent, bloodToDraw, out var _);
+                bloodSolution.RemoveReagent(bloodReagent, bloodToDraw);
+                debugText += "  [ " + bloodToDraw + "u blood ]";
+            }
+        }
+
+        _popup.PopupEntity(debugText, bagComp.Owner, Filter.Pvs(bagComp.Owner));
+
+        Dirty(bagComp);
+        return true;
     }
 
     private void TryInject(IVBagComponent component, EntityUid targetEntity, Solution targetSolution, EntityUid user, bool asRefill)
@@ -315,12 +528,12 @@ public sealed partial class ChemistrySystem
         }
 
         // Get transfer amount. May be smaller than _transferAmount if not enough room
-        var realTransferAmount = FixedPoint2.Min(component.TransferAmount, targetSolution.AvailableVolume);
+        var realTransferAmount = FixedPoint2.Min(component.PourAmount, targetSolution.AvailableVolume);
 
         if (realTransferAmount <= 0)
         {
-            _popup.PopupEntity(Loc.GetString("injector-component-target-already-full-message", ("target", targetEntity)),
-                component.Owner, Filter.Entities(user));
+            _popup.PopupEntity(Loc.GetString("injector-component-target-already-full-message",
+                ("target", targetEntity)), component.Owner, Filter.Entities(user));
             return;
         }
 
@@ -373,14 +586,14 @@ public sealed partial class ChemistrySystem
         {
             if (bagSolution != null)
             {
-                _popup.PopupEntity(Loc.GetString("The {$target} was already full.",
+                _popup.PopupEntity(Loc.GetString("injector-component-target-already-full-message",
                     ("target", component.Owner)), component.Owner, Filter.Entities(user));
             }
             return;
         }
 
         // Get transfer amount. May be smaller than _transferAmount if not enough room
-        var realTransferAmount = FixedPoint2.Min(component.TransferAmount, targetSolution.DrawAvailable, bagSolution.AvailableVolume);
+        var realTransferAmount = FixedPoint2.Min(component.PourAmount, targetSolution.DrawAvailable, bagSolution.AvailableVolume);
 
         if (realTransferAmount <= 0)
         {

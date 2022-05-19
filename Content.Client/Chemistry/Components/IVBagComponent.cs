@@ -78,6 +78,7 @@ namespace Content.Client.Chemistry.Components
                 {
                     IVBagToggleMode.Draw => Loc.GetString("injector-draw-text"),
                     IVBagToggleMode.Inject => Loc.GetString("injector-inject-text"),
+                    IVBagToggleMode.Closed => Loc.GetString("ivbag-closed-text"),
                     _ => Loc.GetString("injector-invalid-injector-toggle-mode")
                 };
                 _label.SetMarkup(Loc.GetString("injector-volume-label",

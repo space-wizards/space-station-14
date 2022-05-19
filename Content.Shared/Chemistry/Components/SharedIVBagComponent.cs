@@ -33,7 +33,8 @@ namespace Content.Shared.Chemistry.Components
         public enum IVBagToggleMode : byte
         {
             Inject,
-            Draw
+            Draw,
+            Closed
         }
     }
 }
