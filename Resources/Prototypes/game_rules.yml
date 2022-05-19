@@ -21,3 +21,6 @@
 
 - type: gameRule
   id: Sandbox
+
+- type: gameRule
+  id: Secret

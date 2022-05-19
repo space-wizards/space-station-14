@@ -1,28 +1,4 @@
 Entries:
-- author: Willhelm53
-  changes:
-  - {message: "Added the ability to pet dogs, cats, and various other animals around\
-      \ the station \U0001F60A", type: Add}
-  id: 1060
-  time: '2022-02-14T03:20:47.0000000+00:00'
-- author: Lamrr
-  changes:
-  - {message: Commemorate your favourite event with the new memorial object., type: Add}
-  id: 1061
-  time: '2022-02-14T03:20:53.0000000+00:00'
-- author: mirrorcult
-  changes:
-  - {message: 'Adds Examine Buttons/Verbs, which are special verbs that show up on
-      the examine tooltip window.', type: Add}
-  - {message: Converted multitool power examination to to the Examine Verb system.,
-    type: Tweak}
-  id: 1062
-  time: '2022-02-14T03:20:58.0000000+00:00'
-- author: Peptide90
-  changes:
-  - {message: 'Pillar Update V4! See github pull request #6705 for changelog.', type: Add}
-  id: 1063
-  time: '2022-02-14T16:47:25.0000000+00:00'
 - author: Ygg01
   changes:
   - {message: Puddles are now expanding. More work for the janitor!, type: Fix}
@@ -3044,3 +3020,25 @@ Entries:
       is labelled "Electrical Supplies Crate," and costs 4500 points.', type: Add}
   id: 1559
   time: '2022-05-18T22:30:11.0000000+00:00'
+- author: moony
+  changes:
+  - {message: Secret gamemode added, type: Add}
+  id: 1560
+  time: '2022-05-19T04:44:24.0000000+00:00'
+- author: DogZeroX
+  changes:
+  - {message: Multiplied the amount of power used by laser guns., type: Tweak}
+  id: 1561
+  time: '2022-05-19T05:51:55.0000000+00:00'
+- author: abregado
+  changes:
+  - {message: telepads will no longer collide when anchored, type: Fix}
+  id: 1562
+  time: '2022-05-19T10:08:20.0000000+00:00'
+- author: Rane
+  changes:
+  - {message: 'Mice can no longer escape inventory while they are dead, stunned, or
+      similar. The invincible mouse revenant that could break men''s hands even after
+      death is no more.', type: Fix}
+  id: 1563
+  time: '2022-05-19T15:29:03.0000000+00:00'
