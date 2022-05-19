@@ -39,8 +39,6 @@ namespace Content.Server.Interaction
             SubscribeNetworkEvent<DragDropRequestEvent>(HandleDragDropRequestEvent);
 
             CommandBinds.Builder
-                .Bind(ContentKeyFunctions.WideAttack,
-                    new PointerInputCmdHandler(HandleWideAttack))
                 .Bind(ContentKeyFunctions.TryPullObject,
                     new PointerInputCmdHandler(HandleTryPullObject))
                 .Register<InteractionSystem>();
@@ -127,21 +125,6 @@ namespace Content.Server.Interaction
             }
         }
         #endregion
-
-        private bool HandleWideAttack(ICommonSession? session, EntityCoordinates coords, EntityUid uid)
-        {
-            // client sanitization
-            if (!ValidateClientInput(session, coords, uid, out var userEntity))
-            {
-                Logger.InfoS("system.interaction", $"WideAttack input validation failed");
-                return true;
-            }
-
-            if (TryComp(userEntity, out CombatModeComponent? combatMode) && combatMode.IsInCombatMode)
-                DoAttack(userEntity.Value, coords, true);
-
-            return true;
-        }
 
         /// <summary>
         /// Entity will try and use their active hand at the target location.
