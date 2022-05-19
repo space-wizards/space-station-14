@@ -17,8 +17,8 @@ public sealed partial class SurveillanceCameraMonitorWindow : DefaultWindow
     public event Action? CameraRefresh;
     public event Action? SubnetRefresh;
 
-    private ScalingViewport? _cameraView;
-    private FixedEye _defaultEye = new();
+    private readonly FixedEye _defaultEye = new();
+    private readonly Dictionary<string, int> _subnetMap = new();
 
     private string? SelectedSubnet
     {
@@ -48,7 +48,6 @@ public sealed partial class SurveillanceCameraMonitorWindow : DefaultWindow
         {
             // piss
             SubnetOpened!((string) args.Button.SelectedMetadata!);
-            SubnetSelector.SelectId(args.Id);
         };
         SubnetRefreshButton.OnPressed += _ => SubnetRefresh!();
         CameraRefreshButton.OnPressed += _ => CameraRefresh!();
@@ -84,11 +83,13 @@ public sealed partial class SurveillanceCameraMonitorWindow : DefaultWindow
             foreach (var subnet in subnets)
             {
                 var id = AddSubnet(subnet);
-                if (subnet == activeSubnet)
-                {
-                    SubnetSelector.Select(id);
-                }
+                _subnetMap.Add(subnet, id);
             }
+        }
+
+        if (_subnetMap.TryGetValue(activeSubnet, out var subnetId))
+        {
+            SubnetSelector.Select(subnetId);
         }
 
         PopulateCameraList(cameras);

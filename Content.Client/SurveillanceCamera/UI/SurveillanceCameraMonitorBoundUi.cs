@@ -7,11 +7,10 @@ namespace Content.Client.SurveillanceCamera.UI;
 public sealed class SurveillanceCameraMonitorBoundUserInterface : BoundUserInterface
 {
     [Dependency] private readonly IEntityManager _entityManager = default!;
-    private EyeLerpingSystem _eyeLerpingSystem = default!;
+    private readonly EyeLerpingSystem _eyeLerpingSystem = default!;
 
     private SurveillanceCameraMonitorWindow? _window;
     private EntityUid? _currentCamera;
-    private string _currentSubnet = default!;
 
     public SurveillanceCameraMonitorBoundUserInterface(ClientUserInterfaceComponent owner, object uiKey) : base(owner, uiKey)
     {
@@ -66,11 +65,9 @@ public sealed class SurveillanceCameraMonitorBoundUserInterface : BoundUserInter
             return;
         }
 
-        _currentSubnet = cast.ActiveSubnet;
-
         if (cast.ActiveCamera == null)
         {
-            _window.UpdateState(null, cast.Subnets, _currentSubnet, cast.Cameras);
+            _window.UpdateState(null, cast.Subnets, cast.ActiveSubnet, cast.Cameras);
 
             if (_currentCamera != null)
             {
@@ -94,7 +91,7 @@ public sealed class SurveillanceCameraMonitorBoundUserInterface : BoundUserInter
 
             if (_entityManager.TryGetComponent(cast.ActiveCamera, out EyeComponent eye))
             {
-                _window.UpdateState(eye.Eye, cast.Subnets, _currentSubnet, cast.Cameras);
+                _window.UpdateState(eye.Eye, cast.Subnets, cast.ActiveSubnet, cast.Cameras);
             }
         }
     }
