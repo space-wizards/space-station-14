@@ -1,9 +1,4 @@
 Entries:
-- author: Lamrr
-  changes:
-  - {message: Commemorate your favourite event with the new memorial object., type: Add}
-  id: 1061
-  time: '2022-02-14T03:20:53.0000000+00:00'
 - author: mirrorcult
   changes:
   - {message: 'Adds Examine Buttons/Verbs, which are special verbs that show up on
@@ -3043,3 +3038,8 @@ Entries:
   - {message: Secret gamemode added, type: Add}
   id: 1560
   time: '2022-05-19T04:44:24.0000000+00:00'
+- author: DogZeroX
+  changes:
+  - {message: Multiplied the amount of power used by laser guns., type: Tweak}
+  id: 1561
+  time: '2022-05-19T05:51:55.0000000+00:00'
