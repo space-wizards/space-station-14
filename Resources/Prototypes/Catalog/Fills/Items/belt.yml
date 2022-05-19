@@ -83,3 +83,12 @@
   - type: StorageFill
     contents:
       - id: CaptainSabre
+
+- type: entity
+  id: ClothingBeltMilitaryWebbingMedFilled
+  parent: ClothingBeltMilitaryWebbingMed
+  suffix: Filled
+  components:
+  - type: StorageFill
+    contents:
+      - id: SyndiHypo
