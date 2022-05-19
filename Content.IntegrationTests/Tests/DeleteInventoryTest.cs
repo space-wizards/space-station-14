@@ -7,6 +7,7 @@ using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Map;
+using Robust.Shared.Maths;
 
 namespace Content.IntegrationTests.Tests
 {
@@ -19,29 +20,30 @@ namespace Content.IntegrationTests.Tests
         public async Task Test()
         {
             var server = StartServer();
+            await server.WaitIdleAsync();
+            var entManager = server.ResolveDependency<IEntityManager>();
+            var mapManager = server.ResolveDependency<IMapManager>();
+            var invSystem = server.ResolveDependency<IEntitySystemManager>().GetEntitySystem<InventorySystem>();
 
             await server.WaitAssertion(() =>
             {
                 // Spawn everything.
-                var mapMan = IoCManager.Resolve<IMapManager>();
-                var invSystem = IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<InventorySystem>();
+                var mapId = mapManager.CreateMap();
+                var coordinates = new MapCoordinates(Vector2.Zero, mapId);
 
-                mapMan.CreateNewMapEntity(MapId.Nullspace);
+                var container = entManager.SpawnEntity(null, coordinates);
+                entManager.AddComponent<ServerInventoryComponent>(container);
+                entManager.AddComponent<ContainerManagerComponent>(container);
 
-                var entMgr = IoCManager.Resolve<IEntityManager>();
-                var container = entMgr.SpawnEntity(null, MapCoordinates.Nullspace);
-                entMgr.AddComponent<ServerInventoryComponent>(container);
-                entMgr.AddComponent<ContainerManagerComponent>(container);
-
-                var child = entMgr.SpawnEntity(null, MapCoordinates.Nullspace);
-                var item = entMgr.AddComponent<ItemComponent>(child);
+                var child = entManager.SpawnEntity(null, coordinates);
+                var item = entManager.AddComponent<ItemComponent>(child);
                 item.SlotFlags = SlotFlags.HEAD;
 
                 // Equip item.
                 Assert.That(invSystem.TryEquip(container, child, "head"), Is.True);
 
                 // Delete parent.
-                entMgr.DeleteEntity(container);
+                entManager.DeleteEntity(container);
 
                 // Assert that child item was also deleted.
                 Assert.That(item.Deleted, Is.True);

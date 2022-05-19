@@ -5,6 +5,7 @@ using Content.Shared.Tag;
 using NUnit.Framework;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Map;
+using Robust.Shared.Maths;
 using Robust.Shared.Prototypes;
 
 namespace Content.IntegrationTests.Tests.Tag
@@ -59,8 +60,8 @@ namespace Content.IntegrationTests.Tests.Tag
 
             await server.WaitPost(() =>
             {
-                sMapManager.CreateNewMapEntity(MapId.Nullspace);
-                sTagDummy = sEntityManager.SpawnEntity(TagEntityId, MapCoordinates.Nullspace);
+                var mapid = sMapManager.CreateMap();
+                sTagDummy = sEntityManager.SpawnEntity(TagEntityId, new MapCoordinates(Vector2.Zero, mapid));
                 sTagComponent = sEntityManager.GetComponent<TagComponent>(sTagDummy);
             });
 
