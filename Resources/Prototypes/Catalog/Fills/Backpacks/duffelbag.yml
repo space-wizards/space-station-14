@@ -22,11 +22,11 @@
   - type: StorageFill
     contents:
       - id: Hemostat
-      - id: Saw
+      - id: SawAdvanced
       - id: Drill
       - id: Cautery
       - id: Retractor
-      - id: Scalpel
+      - id: ScalpelAdvanced
 
 - type: entity
   parent: ClothingBackpackDuffelSyndicateAmmo
