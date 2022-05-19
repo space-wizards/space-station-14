@@ -1,9 +1,4 @@
 Entries:
-- author: Peptide90
-  changes:
-  - {message: 'Pillar Update V4! See github pull request #6705 for changelog.', type: Add}
-  id: 1063
-  time: '2022-02-14T16:47:25.0000000+00:00'
 - author: Ygg01
   changes:
   - {message: Puddles are now expanding. More work for the janitor!, type: Fix}
@@ -3040,3 +3035,10 @@ Entries:
   - {message: telepads will no longer collide when anchored, type: Fix}
   id: 1562
   time: '2022-05-19T10:08:20.0000000+00:00'
+- author: Rane
+  changes:
+  - {message: 'Mice can no longer escape inventory while they are dead, stunned, or
+      similar. The invincible mouse revenant that could break men''s hands even after
+      death is no more.', type: Fix}
+  id: 1563
+  time: '2022-05-19T15:29:03.0000000+00:00'
