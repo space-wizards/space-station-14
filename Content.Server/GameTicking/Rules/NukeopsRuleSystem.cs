@@ -83,8 +83,10 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
 
         _aliveNukeops.Clear();
 
-        var numOps = (int)Math.Min(Math.Floor((double)ev.PlayerPool.Count / _cfg.GetCVar(CCVars.NukeopsPlayersPerOp)),
-            _cfg.GetCVar(CCVars.NukeopsMaxOps));
+        // Between 1 and <max op count>: needs at least n players per op.
+        var numOps = Math.Max(1,
+            (int)Math.Min(
+                Math.Floor((double)ev.PlayerPool.Count / _cfg.GetCVar(CCVars.NukeopsPlayersPerOp)), _cfg.GetCVar(CCVars.NukeopsMaxOps)));
         var ops = new IPlayerSession[numOps];
         for (var i = 0; i < numOps; i++)
         {

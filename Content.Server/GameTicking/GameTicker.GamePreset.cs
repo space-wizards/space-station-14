@@ -1,4 +1,5 @@
 using System.Diagnostics.CodeAnalysis;
+using System.Linq;
 using Content.Server.GameTicking.Presets;
 using Content.Server.GameTicking.Rules;
 using Content.Server.Ghost.Components;
@@ -24,7 +25,7 @@ namespace Content.Server.GameTicking
             if (!startAttempt.Cancelled)
                 return true;
 
-            var presetTitle = _preset != null ? Loc.GetString(_preset.ModeTitle) : string.Empty;
+            var presetTitle = Preset != null ? Loc.GetString(Preset.ModeTitle) : string.Empty;
 
             void FailedPresetRestart()
             {
@@ -36,7 +37,7 @@ namespace Content.Server.GameTicking
 
             if (_configurationManager.GetCVar(CCVars.GameLobbyFallbackEnabled))
             {
-                var oldPreset = _preset;
+                var oldPreset = Preset;
                 ClearGameRules();
                 SetGamePreset(_configurationManager.GetCVar(CCVars.GameLobbyFallbackPreset));
                 AddGamePresetRules();
@@ -48,7 +49,7 @@ namespace Content.Server.GameTicking
                 _chatManager.DispatchServerAnnouncement(
                     Loc.GetString("game-ticker-start-round-cannot-start-game-mode-fallback",
                         ("failedGameMode", presetTitle),
-                        ("fallbackMode", Loc.GetString(_preset!.ModeTitle))));
+                        ("fallbackMode", Loc.GetString(Preset!.ModeTitle))));
 
                 if (startAttempt.Cancelled)
                 {
@@ -136,7 +137,8 @@ namespace Content.Server.GameTicking
 
         private void StartGamePresetRules()
         {
-            foreach (var rule in _addedGameRules)
+            // May be touched by the preset during init.
+            foreach (var rule in _addedGameRules.ToArray())
             {
                 StartGameRule(rule);
             }
