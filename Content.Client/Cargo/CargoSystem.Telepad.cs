@@ -50,7 +50,7 @@ public sealed partial class CargoSystem
 
     private void OnCargoAppChange(EntityUid uid, CargoTelepadComponent component, ref AppearanceChangeEvent args)
     {
-        OnChangeData(args.Component);
+        OnChangeData(args.Component, args.Sprite);
     }
 
     private void OnCargoAnimComplete(EntityUid uid, CargoTelepadComponent component, AnimationCompletedEvent args)
@@ -60,9 +60,10 @@ public sealed partial class CargoSystem
         OnChangeData(appearance);
     }
 
-    private void OnChangeData(AppearanceComponent component)
+    private void OnChangeData(AppearanceComponent component, SpriteComponent? sprite = null)
     {
-        if (!TryComp<SpriteComponent>(component.Owner, out var sprite)) return;
+        if (!Resolve(component.Owner, ref sprite))
+            return;
 
         component.TryGetData(CargoTelepadVisuals.State, out CargoTelepadState? state);
         AnimationPlayerComponent? player = null;
