@@ -1,2 +1,2 @@
-escape-inventory-component-start-resisting = You start struggling to escape!
-escape-inventory-component-start-resisting-target = Something is struggling to get out of your inventory!
+escape-inventory-component-start-resisting = Вы начинаете вырываться на свободу!
+escape-inventory-component-start-resisting-target = Что-то пытается выбраться из вашего инвентаря!

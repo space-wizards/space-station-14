@@ -1,4 +1,4 @@
-reagent-name-blood = blood
-reagent-desc-blood = I hope this is ketchup.
-reagent-name-slime = slime
-reagent-desc-slime = You thought this was gradient blood at first, but you were mistaken.
+reagent-name-blood = кровь
+reagent-desc-blood = Я надеюсь, что это кетчуп.
+reagent-name-slime = слизь
+reagent-desc-slime = Сначала вам показалось, что это градиент крови, но вы ошиблись.

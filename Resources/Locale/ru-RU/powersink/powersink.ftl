@@ -1,1 +1,1 @@
-powersink-examine-drain-amount = The power sink is draining [color={ $markupDrainColor }]{ $amount } kW[/color].
+powersink-examine-drain-amount = Поглотитель энергии вытягивает [color={ $markupDrainColor }]{ $amount } кВт[/color].

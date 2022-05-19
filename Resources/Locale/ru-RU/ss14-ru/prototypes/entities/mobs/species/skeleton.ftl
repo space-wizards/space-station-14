@@ -1,6 +1,6 @@
-ent-MobSkeletonPersonBase = Urist McSkelly
-    .desc = A miserable pile of bones.
+ent-MobSkeletonPersonBase = Урист МакСкелли
+    .desc = Жалкая кучка костей.
     .suffix = { "" }
-ent-MobSkeletonPersonDummy = Urist McSkelly
-    .desc = A dummy skeleton meant to be used in character setup.
+ent-MobSkeletonPersonDummy = Урист МакСкелли
+    .desc = Манекен-скелет, используемый при создании персонажа.
     .suffix = { "" }

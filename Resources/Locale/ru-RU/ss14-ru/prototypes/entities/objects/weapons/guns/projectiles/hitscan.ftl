@@ -1,10 +1,10 @@
 ent-RedLaser = красный лазер
     .desc = { "" }
     .suffix = { "" }
-ent-RedMediumLaser = red medium laser
+ent-RedMediumLaser = средний красный лазер
     .desc = { "" }
     .suffix = { "" }
-ent-Pulse = pulse
+ent-Pulse = импульс
     .desc = { "" }
     .suffix = { "" }
 ent-RedHeavyLaser = мощный красный лазер
