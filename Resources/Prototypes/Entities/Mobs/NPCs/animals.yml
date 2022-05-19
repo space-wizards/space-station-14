@@ -1443,7 +1443,7 @@
     totalIntensity: 225
   - type: ExplodeOnTrigger
 
-  - type: entity
+- type: entity
   name: possum
   parent: SimpleMobBase
   id: MobPossum

@@ -40,7 +40,6 @@
 #  itemId: CrossbowEnergyMini
 #  price: 8
 
-
 - type: uplinkListing
   id: UplinkEsword
   category: Weapons
@@ -85,9 +84,9 @@
   price: 7
 
 - type: uplinkListing
-  id: UplinkGrenadePenguin
+  id: UplinkPenguinGrenade
   category: Explosives
-  itemId: MobGrenadePenguin
+  itemId: MobPenguinGrenade
   price: 6
   surplus: false # got wrecked by penguins from surplus crate
 
@@ -290,7 +289,7 @@
   itemId: ClothingBackpackDuffelSyndicateHardsuitBundle
   description: The Syndicate's well known armored blood red hardsuit, capable of space walks and bullet resistant.
   price: 8
-  
+
 - type: uplinkListing
   id: UplinkClothingShoesBootsMagSyndie
   category: Armor
@@ -377,7 +376,7 @@
   category: Misc
   itemId: ClothingBackpackDuffelSyndicatePyjamaBundle
   price: 4
-  
+
 - type: uplinkListing
   id: UplinkCatEars
   category: Misc
