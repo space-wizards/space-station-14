@@ -363,7 +363,7 @@
   - type: Sprite
     sprite: Clothing/Head/Hardsuits/syndiecommander.rsi
   - type: Clothing
-    sprite: Clothing/Head/Hardsuits/syndiecommader.rsi
+    sprite: Clothing/Head/Hardsuits/syndiecommander.rsi
   - type: PointLight
     color: green
   - type: PressureProtection

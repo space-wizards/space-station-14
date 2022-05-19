@@ -14,7 +14,6 @@ namespace Content.Server.AI.Pathfinding
             base.Initialize();
             AStarPathfindingJob.DebugRoute += DispatchAStarDebug;
             JpsPathfindingJob.DebugRoute += DispatchJpsDebug;
-            SubscribeNetworkEvent<SharedAiDebug.RequestPathfindingGraphMessage>(DispatchGraph);
         }
 
         public override void Shutdown()
@@ -86,37 +85,6 @@ namespace Content.Server.AI.Pathfinding
                 routeDebug.TimeTaken
             );
 
-            RaiseNetworkEvent(systemMessage);
-        }
-
-        private void DispatchGraph(SharedAiDebug.RequestPathfindingGraphMessage message)
-        {
-            var pathfindingSystem = EntityManager.EntitySysManager.GetEntitySystem<PathfindingSystem>();
-            var mapManager = IoCManager.Resolve<IMapManager>();
-            var result = new Dictionary<int, List<Vector2>>();
-
-            var idx = 0;
-
-            foreach (var (gridId, chunks) in pathfindingSystem.Graph)
-            {
-                var gridManager = mapManager.GetGrid(gridId);
-
-                foreach (var chunk in chunks.Values)
-                {
-                    var nodes = new List<Vector2>();
-                    foreach (var node in chunk.Nodes)
-                    {
-                        var worldTile = gridManager.GridTileToWorldPos(node.TileRef.GridIndices);
-
-                        nodes.Add(worldTile);
-                    }
-
-                    result.Add(idx, nodes);
-                    idx++;
-                }
-            }
-
-            var systemMessage = new SharedAiDebug.PathfindingGraphMessage(result);
             RaiseNetworkEvent(systemMessage);
         }
     }
