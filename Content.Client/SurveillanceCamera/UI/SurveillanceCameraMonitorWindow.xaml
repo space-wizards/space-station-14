@@ -1,15 +1,15 @@
 <DefaultWindow xmlns="https://spacestation14.io"
                xmlns:viewport="clr-namespace:Content.Client.Viewport"
-               Title="Remember to localize this, dumpy">
+               Title="{Loc 'surveillance-camera-monitor-ui-window'}">
     <BoxContainer Orientation="Horizontal">
         <BoxContainer Orientation="Vertical" MaxWidth="200" VerticalExpand="True">
             <!-- lazy -->
             <OptionButton Name="SubnetSelector" />
-            <Button Name="SubnetRefreshButton" Text="Refresh subnets" />
+            <Button Name="SubnetRefreshButton" Text="{Loc 'surveillance-camera-monitor-refresh-subnets'}" />
             <ScrollContainer VerticalExpand="True">
                 <ItemList Name="SubnetList" />
             </ScrollContainer>
-            <Button Name="CameraRefreshButton" Text="Refresh cameras" />
+            <Button Name="CameraRefreshButton" Text="{Loc 'surveillance-camera-monitor-refresh-camera'}" />
         </BoxContainer>
         <Control VerticalExpand="True" HorizontalExpand="True" Margin="5 5 5 5" Name="CameraViewBox">
             <!-- TODO: This should be a textured box so there can be static.
