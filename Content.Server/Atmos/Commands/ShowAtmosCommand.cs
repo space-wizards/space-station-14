@@ -3,12 +3,11 @@ using Content.Server.Atmos.EntitySystems;
 using Content.Shared.Administration;
 using Robust.Server.Player;
 using Robust.Shared.Console;
-using Robust.Shared.GameObjects;
 
 namespace Content.Server.Atmos.Commands
 {
     [AdminCommand(AdminFlags.Debug)]
-    public class ShowAtmos : IConsoleCommand
+    public sealed class ShowAtmos : IConsoleCommand
     {
         public string Command => "showatmos";
         public string Description => "Toggles seeing atmos debug overlay.";

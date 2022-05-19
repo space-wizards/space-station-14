@@ -1,22 +1,18 @@
-﻿using System;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Prototypes;
+﻿using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.Cargo.Components
 {
+    [Virtual]
     public class SharedCargoConsoleComponent : Component
     {
         [Dependency] protected readonly IPrototypeManager PrototypeManager = default!;
-
-        public sealed override string Name => "CargoConsole";
 
         /// <summary>
         ///    Sends away or requests shuttle
         /// </summary>
         [Serializable, NetSerializable]
-        public class CargoConsoleShuttleMessage : BoundUserInterfaceMessage
+        public sealed class CargoConsoleShuttleMessage : BoundUserInterfaceMessage
         {
             public CargoConsoleShuttleMessage()
             {
@@ -27,7 +23,7 @@ namespace Content.Shared.Cargo.Components
         ///     Add order to database.
         /// </summary>
         [Serializable, NetSerializable]
-        public class CargoConsoleAddOrderMessage : BoundUserInterfaceMessage
+        public sealed class CargoConsoleAddOrderMessage : BoundUserInterfaceMessage
         {
             public string Requester;
             public string Reason;
@@ -47,7 +43,7 @@ namespace Content.Shared.Cargo.Components
         ///     Remove order from database.
         /// </summary>
         [Serializable, NetSerializable]
-        public class CargoConsoleRemoveOrderMessage : BoundUserInterfaceMessage
+        public sealed class CargoConsoleRemoveOrderMessage : BoundUserInterfaceMessage
         {
             public int OrderNumber;
 
@@ -61,7 +57,7 @@ namespace Content.Shared.Cargo.Components
         ///     Set order in database as approved.
         /// </summary>
         [Serializable, NetSerializable]
-        public class CargoConsoleApproveOrderMessage : BoundUserInterfaceMessage
+        public sealed class CargoConsoleApproveOrderMessage : BoundUserInterfaceMessage
         {
             public int OrderNumber;
 
@@ -79,7 +75,7 @@ namespace Content.Shared.Cargo.Components
     }
 
     [NetSerializable, Serializable]
-    public class CargoConsoleInterfaceState : BoundUserInterfaceState
+    public sealed class CargoConsoleInterfaceState : BoundUserInterfaceState
     {
         public readonly bool RequestOnly;
         public readonly int BankId;

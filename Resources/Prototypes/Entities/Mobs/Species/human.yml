@@ -4,12 +4,13 @@
   name: Urist McHands
   id: MobHumanBase
   description: A miserable pile of secrets.
-  abstract: true
+  noSpawn: true
   components:
   - type: Tag
     tags:
     - CanPilot
     - FootstepSound
+    - DoorBumpOpener
   - type: Reactive
     groups:
       Flammable: [ Touch ]
@@ -21,13 +22,14 @@
       effects:
       - !type:WashCreamPieReaction
   - type: Flashable
+  - type: Polymorphable
   - type: Hands
   - type: MovementSpeedModifier
   - type: MovedByPressure
   - type: Barotrauma
     damage:
       types:
-        Blunt: 1 #per second, scales with pressure and other constants.
+        Blunt: 0.7 #per second, scales with pressure and other constants.
   - type: DamageOnHighSpeedImpact
     damage:
       types:
@@ -43,16 +45,26 @@
       types:
         Blunt: 2
   # Organs
-  - type: SolutionContainerManager
-    solutions:
-      bloodstream:
-        maxVol: 250
   - type: InjectableSolution
-    solution: bloodstream
+    solution: chemicals
   - type: DrawableSolution
     solution: bloodstream
+  - type: HealthExaminable
+    examinableTypes:
+    - Blunt
+    - Slash
+    - Piercing
+    - Heat
+    - Shock
   - type: Bloodstream
-    max_volume: 100
+    bloodlossDamage:
+      types:
+        Bloodloss:
+          1
+    bloodlossHealDamage:
+      types:
+        Bloodloss:
+          -0.25
   - type: StatusEffects
     allowed:
     - Stun
@@ -60,6 +72,8 @@
     - SlowedDown
     - Stutter
     - Electrocution
+    - PressureImmunity
+  - type: DiseaseCarrier
   # Other
   - type: Inventory
   - type: Clickable
@@ -150,6 +164,24 @@
     - map: [ "head" ]
     - map: [ "pocket1" ]
     - map: [ "pocket2" ]
+  - type: Markings
+    layerPoints:
+      Tail:
+        points: 0
+        required: false
+      HeadTop:
+        points: 0
+        required: false
+      Chest:
+        points: 1
+        required: false
+      Legs:
+        points: 2
+        required: false
+      Arms:
+        points: 2
+        required: false
+
   - type: Physics
     bodyType: KinematicController
   - type: Fixtures
@@ -160,12 +192,9 @@
       mass: 70
       restitution: 0.0
       mask:
-      - Impassable
-      - MobImpassable
-      - VaultImpassable
-      - SmallImpassable
+      - MobMask
       layer:
-      - Opaque
+      - MobLayer
   - type: AtmosExposed
   - type: Flammable
     fireSpread: true
@@ -198,18 +227,6 @@
     shiveringHeatRegulation: 2000
     normalBodyTemperature: 310.15
     thermalRegulationTemperatureThreshold: 25
-  - type: Respirator
-    needsGases:
-      Oxygen: 0.00060763888
-    producesGases:
-      Oxygen: 0.00045572916
-      CarbonDioxide: 0.00015190972
-    damage:
-      types:
-        Asphyxiation: 1
-    damageRecovery:
-      types:
-        Asphyxiation: -1
   - type: Internals
   - type: MobState
     thresholds:
@@ -242,7 +259,6 @@
       fireStackAlternateState: 3
     - type: CreamPiedVisualizer
       state: creampie_human
-    - type: HandsVisualizer
     - type: DamageVisualizer
       thresholds: [20, 40, 100]
       targetLayers:
@@ -284,21 +300,26 @@
       type: StrippableBoundUserInterface
   - type: Puller
   - type: Butcherable
-    meat: FoodMeat
-  - type: Recyclable
-    safe: false
+    butcheringType: Spike # TODO human.
+    spawned:
+    - id: FoodMeat
+      amount: 5
+#  - type: Recyclable Turns out turning off recycler safeties without considering the instagib is a bad idea
+#    safe: false
   - type: Speech
+    speechSounds: Alto
+  - type: Vocal
   - type: Emoting
   - type: Grammar
     attributes:
       proper: true
   - type: StandingState
-  - type: DoorBumpOpener
+
 - type: entity
   save: false
   name: Urist McHands
   id: MobHumanDummy
-  abstract: true
+  noSpawn: true
   description: A dummy human meant to be used in character setup.
   components:
     - type: Hands
@@ -391,22 +412,20 @@
       - map: [ "pocket2" ]
       - map: ["hand-left"]
       - map: ["hand-right"]
+    - type: Markings
     - type: Physics
       bodyType: Dynamic
     - type: Fixtures
       fixtures:
       - shape:
           !type:PhysShapeAabb
-            bounds: "-0.35,-0.35,0.35,0.35"
+          bounds: "-0.35,-0.35,0.35,0.35"
         mass: 70
         restitution: 0.0
         mask:
-        - Impassable
-        - MobImpassable
-        - VaultImpassable
-        - SmallImpassable
+        - MobMask
         layer:
-        - Opaque
+        - MobLayer
     - type: HumanoidAppearance
     - type: Body
       template: HumanoidTemplate

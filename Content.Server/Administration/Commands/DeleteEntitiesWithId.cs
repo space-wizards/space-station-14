@@ -1,13 +1,11 @@
 using System.Linq;
 using Content.Shared.Administration;
 using Robust.Shared.Console;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
 
 namespace Content.Server.Administration.Commands
 {
     [AdminCommand(AdminFlags.Spawn)]
-    public class DeleteEntitiesWithId : IConsoleCommand
+    public sealed class DeleteEntitiesWithId : IConsoleCommand
     {
         public string Command => "deleteewi";
         public string Description => "Deletes entities with the specified prototype ID.";

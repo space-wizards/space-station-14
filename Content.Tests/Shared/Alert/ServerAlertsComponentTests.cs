@@ -1,4 +1,3 @@
-using System;
 using System.IO;
 using Content.Server.Alert;
 using Content.Shared.Alert;
@@ -12,18 +11,16 @@ namespace Content.Tests.Shared.Alert
 {
     [TestFixture]
     [TestOf(typeof(AlertsComponent))]
-    public class ServerAlertsComponentTests : ContentUnitTest
+    public sealed class ServerAlertsComponentTests : ContentUnitTest
     {
         const string PROTOTYPES = @"
 - type: alert
-  name: AlertLowPressure
-  alertType: LowPressure
+  id: LowPressure
   category: Pressure
   icon: /Textures/Interface/Alerts/Pressure/lowpressure.png
 
 - type: alert
-  name: AlertHighPressure
-  alertType: HighPressure
+  id: HighPressure
   category: Pressure
   icon: /Textures/Interface/Alerts/Pressure/highpressure.png
 ";
@@ -42,7 +39,7 @@ namespace Content.Tests.Shared.Alert
             var factory = IoCManager.Resolve<IComponentFactory>();
             factory.RegisterClass<AlertsComponent>();
             prototypeManager.LoadFromStream(new StringReader(PROTOTYPES));
-            prototypeManager.Resync();
+            prototypeManager.ResolveResults();
 
             var entSys = IoCManager.Resolve<IEntitySystemManager>();
             entSys.LoadExtraSystemType<ServerAlertsSystem>();

@@ -3,12 +3,11 @@ using Content.Server.EUI;
 using Content.Shared.Administration;
 using Robust.Server.Player;
 using Robust.Shared.Console;
-using Robust.Shared.IoC;
 
 namespace Content.Server.Administration.Commands
 {
     [AdminCommand(AdminFlags.Admin)]
-    public class AnnounceUiCommand : IConsoleCommand
+    public sealed class AnnounceUiCommand : IConsoleCommand
     {
         public string Command => "announceui";
 

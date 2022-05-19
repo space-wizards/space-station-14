@@ -4,6 +4,11 @@
   name: grille
   description: A flimsy framework of iron rods.
   components:
+    - type: MeleeSound
+      soundGroups:
+        Brute:
+          path:
+            "/Audio/Weapons/grille_hit.ogg"
     - type: Tag
       tags:
         - RCDDeconstructWhitelist
@@ -17,7 +22,7 @@
       sprite: Structures/Walls/grille.rsi
       state: grille
     - type: Construction
-      graph: grille
+      graph: Grille
       node: grille
       deconstructionTarget: start
     - type: Damageable
@@ -45,16 +50,19 @@
       bodyType: Static
     - type: Fixtures
       fixtures:
-        - shape:
-            !type:PhysShapeAabb
-            bounds: "-0.5,-0.5,0.5,0.5"
-          layer:
-            - Impassable
-            - MobImpassable
-            - VaultImpassable
-            - SmallImpassable
+      - shape:
+          !type:PhysShapeAabb
+          bounds: "-0.5,-0.5,0.5,0.5"
+        layer:
+        - GlassLayer
     - type: Destructible
       thresholds:
+        - trigger:
+            !type:DamageTrigger
+            damage: 50 #excess damage (nuke?). avoid computational cost of spawning entities.
+          behaviors:
+            - !type:DoActsBehavior
+              acts: ["Destruction"]
         - trigger:
             !type:DamageTrigger
             damage: 20
@@ -82,7 +90,7 @@
       tags:
         - RCDDeconstructWhitelist
     - type: Construction
-      graph: grille
+      graph: Grille
       node: grilleBroken
       deconstructionTarget: start
     - type: Fixtures # overwrite BaseStructure parent.

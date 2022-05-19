@@ -1,9 +1,6 @@
 ﻿using Content.Server.Body.Components;
 using Content.Shared.Body.Prototypes;
-using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.Reagent;
-using Robust.Shared.GameObjects;
-using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
 namespace Content.Server.Chemistry.ReagentEffectConditions
@@ -11,7 +8,7 @@ namespace Content.Server.Chemistry.ReagentEffectConditions
     /// <summary>
     ///     Requires that the metabolizing organ is or is not tagged with a certain MetabolizerType
     /// </summary>
-    public class OrganType : ReagentEffectCondition
+    public sealed class OrganType : ReagentEffectCondition
     {
         [DataField("type", required: true, customTypeSerializer: typeof(PrototypeIdSerializer<MetabolizerTypePrototype>))]
         public string Type = default!;

@@ -1,15 +1,11 @@
-using System;
 using System.Threading;
 using Content.Server.Chat.Managers;
 using Robust.Server.Player;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Localization;
 using Timer = Robust.Shared.Timing.Timer;
 
 namespace Content.Server.GameTicking.Rules;
 
-public class InactivityTimeRestartRuleSystem : GameRuleSystem
+public sealed class InactivityTimeRestartRuleSystem : GameRuleSystem
 {
     [Dependency] private readonly IChatManager _chatManager = default!;
     [Dependency] private readonly IPlayerManager _playerManager = default!;
@@ -28,12 +24,12 @@ public class InactivityTimeRestartRuleSystem : GameRuleSystem
         SubscribeLocalEvent<GameRunLevelChangedEvent>(RunLevelChanged);
     }
 
-    public override void Added()
+    public override void Started()
     {
         _playerManager.PlayerStatusChanged += PlayerStatusChanged;
     }
 
-    public override void Removed()
+    public override void Ended()
     {
         _playerManager.PlayerStatusChanged -= PlayerStatusChanged;
 

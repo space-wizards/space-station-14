@@ -1,5 +1,3 @@
-using System;
-
 namespace Content.Shared.Chat
 {
     /// <summary>
@@ -16,54 +14,64 @@ namespace Content.Shared.Chat
         Local = 1 << 0,
 
         /// <summary>
+        ///     Chat heard by players right next to each other
+        /// </summary>
+        Whisper = 1 << 1,
+
+        /// <summary>
         ///     Messages from the server
         /// </summary>
-        Server = 1 << 1,
+        Server = 1 << 2,
 
         /// <summary>
         ///     Damage messages
         /// </summary>
-        Damage = 1 << 2,
+        Damage = 1 << 3,
 
         /// <summary>
         ///     Radio messages
         /// </summary>
-        Radio = 1 << 3,
+        Radio = 1 << 4,
+
+        /// <summary>
+        ///     Local out-of-character channel
+        /// </summary>
+        LOOC = 1 << 5,
 
         /// <summary>
         ///     Out-of-character channel
         /// </summary>
-        OOC = 1 << 4,
+        OOC = 1 << 6,
 
         /// <summary>
         ///     Visual events the player can see.
         ///     Basically like visual_message in SS13.
         /// </summary>
-        Visual = 1 << 5,
+        Visual = 1 << 7,
 
         /// <summary>
         ///     Emotes
         /// </summary>
-        Emotes = 1 << 6,
+        Emotes = 1 << 8,
 
         /// <summary>
         ///     Deadchat
         /// </summary>
-        Dead = 1 << 7,
+        Dead = 1 << 9,
 
         /// <summary>
         ///     Admin chat
         /// </summary>
-        Admin = 1 << 8,
+        Admin = 1 << 10,
 
         /// <summary>
         ///     Unspecified.
         /// </summary>
-        Unspecified = 1 << 9,
+        Unspecified = 1 << 11,
 
         /// <summary>
         ///     Channels considered to be IC.
         /// </summary>
-        IC = Local | Radio | Dead | Emotes | Damage | Visual,
+        IC = Local | Whisper | Radio | Dead | Emotes | Damage | Visual,
     }
 }

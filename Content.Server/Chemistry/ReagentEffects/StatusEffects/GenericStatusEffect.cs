@@ -1,11 +1,6 @@
-﻿using System;
-using Content.Shared.Chemistry.Components;
-using Content.Shared.Chemistry.Reagent;
+﻿using Content.Shared.Chemistry.Reagent;
 using Content.Shared.StatusEffect;
 using JetBrains.Annotations;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Serialization.Manager.Attributes;
 
 namespace Content.Server.Chemistry.ReagentEffects.StatusEffects
 {
@@ -19,7 +14,7 @@ namespace Content.Server.Chemistry.ReagentEffects.StatusEffects
     ///     Can be used for things like adding accents or something. I don't know. Go wild.
     /// </remarks>
     [UsedImplicitly]
-    public class GenericStatusEffect : ReagentEffect
+    public sealed class GenericStatusEffect : ReagentEffect
     {
         [DataField("key", required: true)]
         public string Key = default!;

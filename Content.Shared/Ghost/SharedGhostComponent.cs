@@ -1,18 +1,11 @@
-using System;
-using Robust.Shared.GameObjects;
 using Robust.Shared.GameStates;
-using Robust.Shared.Players;
 using Robust.Shared.Serialization;
-using Robust.Shared.Serialization.Manager.Attributes;
-using Robust.Shared.ViewVariables;
 
 namespace Content.Shared.Ghost
 {
     [NetworkedComponent()]
-    public class SharedGhostComponent : Component
+    public abstract class SharedGhostComponent : Component
     {
-        public override string Name => "Ghost";
-
         [ViewVariables(VVAccess.ReadWrite)]
         public bool CanGhostInteract
         {
@@ -67,7 +60,7 @@ namespace Content.Shared.Ghost
     }
 
     [Serializable, NetSerializable]
-    public class GhostComponentState : ComponentState
+    public sealed class GhostComponentState : ComponentState
     {
         public bool CanReturnToBody { get; }
         public bool CanGhostInteract { get; }

@@ -1,8 +1,9 @@
-﻿<SS14Window xmlns="https://spacestation14.io"
+﻿<DefaultWindow xmlns="https://spacestation14.io"
             Title="{Loc 'crayon-window-title'}"
             MinSize="250 300"
             SetSize="250 300">
     <BoxContainer Orientation="Vertical">
+        <ColorSelectorSliders Name="ColorSelector" Visible="False" />
         <LineEdit Name="Search" />
         <ScrollContainer VerticalExpand="True">
             <GridContainer Name="Grid" Columns="6">
@@ -10,4 +11,4 @@
             </GridContainer>
         </ScrollContainer>
     </BoxContainer>
-</SS14Window>
+</DefaultWindow>

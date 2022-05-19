@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using Content.Shared.Damage.Prototypes;
+﻿using Content.Shared.Damage.Prototypes;
 using Robust.Shared.Serialization;
-using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.Dictionary;
 
 namespace Content.Shared.Damage
@@ -15,6 +12,7 @@ namespace Content.Shared.Damage
     /// </summary>
     [DataDefinition]
     [Serializable, NetSerializable]
+    [Virtual]
     public class DamageModifierSet
     {
         [DataField("coefficients", customTypeSerializer: typeof(PrototypeIdDictionarySerializer<float, DamageTypePrototype>))]

@@ -8,11 +8,13 @@
   - type: Sprite
     sprite: Structures/Power/Generation/Singularity/generator.rsi
     state: icon
+    netsync: false
   - type: SingularityGenerator
   - type: InteractionOutline
   - type: Clickable
   - type: Physics
     bodyType: Static
+    fixedRotation: false
   - type: Fixtures
     fixtures:
     - shape:
@@ -21,11 +23,12 @@
           radius: 0.45
       mass: 25
       # Keep an eye on ParticlesProjectile when adjusting these
+      mask:
+      - MachineMask
       layer:
       - Opaque
-      mask:
-      - MobImpassable
   - type: Transform
     anchored: true
+    noRot: true
   - type: Anchorable
   - type: Pullable

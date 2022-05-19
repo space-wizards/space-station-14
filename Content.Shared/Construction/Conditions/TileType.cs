@@ -1,17 +1,13 @@
-﻿using System.Collections.Generic;
-using Content.Shared.Maps;
+﻿using Content.Shared.Maps;
 using JetBrains.Annotations;
-using Robust.Shared.GameObjects;
 using Robust.Shared.Map;
-using Robust.Shared.Maths;
-using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Utility;
 
 namespace Content.Shared.Construction.Conditions
 {
     [UsedImplicitly]
     [DataDefinition]
-    public class TileType : IConstructionCondition
+    public sealed class TileType : IConstructionCondition
     {
         [DataField("targets")]
         public List<string> TargetTiles { get; } = new();

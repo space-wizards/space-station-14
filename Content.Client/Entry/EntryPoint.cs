@@ -6,6 +6,7 @@ using Content.Client.Chat.Managers;
 using Content.Client.EscapeMenu;
 using Content.Client.Eui;
 using Content.Client.Flash;
+using Content.Client.GhostKick;
 using Content.Client.HUD;
 using Content.Client.Info;
 using Content.Client.Input;
@@ -52,7 +53,7 @@ using Robust.Shared.Timing;
 
 namespace Content.Client.Entry
 {
-    public class EntryPoint : GameClient
+    public sealed class EntryPoint : GameClient
     {
         [Dependency] private readonly IPlayerManager _playerManager = default!;
         [Dependency] private readonly IBaseClient _baseClient = default!;
@@ -77,7 +78,6 @@ namespace Content.Client.Entry
             factory.RegisterClass<SharedLatheComponent>();
             factory.RegisterClass<SharedSpawnPointComponent>();
             factory.RegisterClass<SharedVendingMachineComponent>();
-            factory.RegisterClass<SharedWiresComponent>();
             factory.RegisterClass<SharedCargoConsoleComponent>();
             factory.RegisterClass<SharedReagentDispenserComponent>();
             factory.RegisterClass<SharedChemMasterComponent>();
@@ -95,12 +95,20 @@ namespace Content.Client.Entry
             prototypes.RegisterIgnore("aiFaction");
             prototypes.RegisterIgnore("gameMap");
             prototypes.RegisterIgnore("behaviorSet");
+            prototypes.RegisterIgnore("lobbyBackground");
             prototypes.RegisterIgnore("advertisementsPack");
             prototypes.RegisterIgnore("metabolizerType");
             prototypes.RegisterIgnore("metabolismGroup");
             prototypes.RegisterIgnore("salvageMap");
             prototypes.RegisterIgnore("gamePreset");
             prototypes.RegisterIgnore("gameRule");
+            prototypes.RegisterIgnore("worldSpell");
+            prototypes.RegisterIgnore("entitySpell");
+            prototypes.RegisterIgnore("instantSpell");
+            prototypes.RegisterIgnore("roundAnnouncement");
+            prototypes.RegisterIgnore("wireLayout");
+            prototypes.RegisterIgnore("alertLevels");
+            prototypes.RegisterIgnore("nukeopsRole");
 
             ClientContentIoC.Register();
 
@@ -114,13 +122,13 @@ namespace Content.Client.Entry
             factory.GenerateNetIds();
 
             IoCManager.Resolve<IClientAdminManager>().Initialize();
-            IoCManager.Resolve<IParallaxManager>().LoadParallax();
             IoCManager.Resolve<IBaseClient>().PlayerJoinedServer += SubscribePlayerAttachmentEvents;
             IoCManager.Resolve<IStylesheetManager>().Initialize();
             IoCManager.Resolve<IScreenshotHook>().Initialize();
             IoCManager.Resolve<ChangelogManager>().Initialize();
             IoCManager.Resolve<RulesManager>().Initialize();
             IoCManager.Resolve<ViewportManager>().Initialize();
+            IoCManager.Resolve<GhostKickManager>().Initialize();
 
             IoCManager.InjectDependencies(this);
 
@@ -176,6 +184,7 @@ namespace Content.Client.Entry
             ContentContexts.SetupContexts(inputMan.Contexts);
 
             IoCManager.Resolve<IGameHud>().Initialize();
+            IoCManager.Resolve<IParallaxManager>().LoadParallax(); // Have to do this later because prototypes are needed.
 
             var overlayMgr = IoCManager.Resolve<IOverlayManager>();
             overlayMgr.AddOverlay(new ParallaxOverlay());
@@ -186,13 +195,12 @@ namespace Content.Client.Entry
             overlayMgr.AddOverlay(new RadiationPulseOverlay());
 
             IoCManager.Resolve<IChatManager>().Initialize();
-            IoCManager.Resolve<ISandboxManager>().Initialize();
             IoCManager.Resolve<IClientPreferencesManager>().Initialize();
             IoCManager.Resolve<IStationEventManager>().Initialize();
             IoCManager.Resolve<EuiManager>().Initialize();
-            IoCManager.Resolve<ActionManager>().Initialize();
             IoCManager.Resolve<IVoteManager>().Initialize();
             IoCManager.Resolve<IGamePrototypeLoadManager>().Initialize();
+            IoCManager.Resolve<NetworkResourceManager>().Initialize();
 
             _baseClient.RunLevelChanged += (_, args) =>
             {

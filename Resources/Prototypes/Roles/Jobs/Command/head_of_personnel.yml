@@ -1,6 +1,7 @@
 - type: job
   id: HeadOfPersonnel
   name: "head of personnel"
+  weight: 20
   startingGear: HoPGear
   departments:
   - Command
@@ -14,6 +15,8 @@
   - HeadOfPersonnel
   - Security # HoPcurity strikes again
   - Service
+  - Quartermaster
+  - Salvage
   - Cargo
   - Maintenance
   - Janitor

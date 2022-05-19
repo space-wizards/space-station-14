@@ -1,14 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
-using Robust.Shared.Serialization.Manager.Attributes;
-using Robust.Shared.ViewVariables;
+﻿using System.Diagnostics.CodeAnalysis;
 
 namespace Content.Shared.Construction
 {
     [Serializable]
     [DataDefinition]
-    public class ConstructionGraphNode
+    public sealed class ConstructionGraphNode
     {
         [DataField("actions", serverOnly: true)]
         private IGraphAction[] _actions = Array.Empty<IGraphAction>();

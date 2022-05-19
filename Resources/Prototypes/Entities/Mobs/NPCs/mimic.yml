@@ -27,16 +27,12 @@
     fixtures:
     - shape:
         !type:PhysShapeAabb
-          bounds: "-0.35,-0.35,0.35,0.35"
+        bounds: "-0.35,-0.35,0.35,0.35"
       mass: 100
       mask:
-      - Impassable
-      - MobImpassable
-      - VaultImpassable
-      - SmallImpassable
+      - MobMask
       layer:
-      - Opaque
-      - MobImpassable
+      - MachineLayer
   - type: CharacterInfo
   - type: HumanoidAppearance
   - type: AnimationPlayer
@@ -46,4 +42,7 @@
     arc: fist
     damage:
       types:
-        Blunt: 90
+        Blunt: 20
+  - type: MovementSpeedModifier
+    baseWalkSpeed : 1
+    baseSprintSpeed : 1

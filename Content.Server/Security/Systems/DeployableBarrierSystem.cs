@@ -2,13 +2,10 @@ using Content.Server.Lock;
 using Content.Server.Storage.Components;
 using Content.Shared.Security;
 using Robust.Server.GameObjects;
-using Robust.Shared.GameObjects;
-using System;
-using Robust.Shared.IoC;
 
 namespace Content.Server.Security.Systems
 {
-    public class DeployableBarrierSystem : EntitySystem
+    public sealed class DeployableBarrierSystem : EntitySystem
     {
         public override void Initialize()
         {

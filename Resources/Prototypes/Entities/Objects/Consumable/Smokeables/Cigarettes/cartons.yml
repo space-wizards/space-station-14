@@ -21,6 +21,11 @@
     visuals:
       - type: BagOpenCloseVisualizer
         openIcon: open
+  - type: Tag
+    tags:
+    - Trash
+  - type: Recyclable
+  - type: SpaceGarbage
 
 - type: entity
   id: CigCartonRed

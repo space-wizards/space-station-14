@@ -1,6 +1,5 @@
-using Content.Server.Access.Components;
-using Content.Server.Access.Systems;
 using Content.Server.Storage.Components;
+using Content.Shared.Emag.Systems;
 using Content.Shared.Access.Components;
 using Content.Shared.Access.Systems;
 using Content.Shared.Examine;
@@ -10,9 +9,6 @@ using Content.Shared.Storage;
 using Content.Shared.Verbs;
 using JetBrains.Annotations;
 using Robust.Shared.Audio;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Localization;
 using Robust.Shared.Player;
 
 namespace Content.Server.Lock
@@ -21,7 +17,7 @@ namespace Content.Server.Lock
     /// Handles (un)locking and examining of Lock components
     /// </summary>
     [UsedImplicitly]
-    public class LockSystem : EntitySystem
+    public sealed class LockSystem : EntitySystem
     {
         [Dependency] private readonly AccessReaderSystem _accessReader = default!;
 
@@ -32,7 +28,8 @@ namespace Content.Server.Lock
             SubscribeLocalEvent<LockComponent, ComponentStartup>(OnStartup);
             SubscribeLocalEvent<LockComponent, ActivateInWorldEvent>(OnActivated);
             SubscribeLocalEvent<LockComponent, ExaminedEvent>(OnExamined);
-            SubscribeLocalEvent<LockComponent, GetAlternativeVerbsEvent>(AddToggleLockVerb);
+            SubscribeLocalEvent<LockComponent, GetVerbsEvent<AlternativeVerb>>(AddToggleLockVerb);
+            SubscribeLocalEvent<LockComponent, GotEmaggedEvent>(OnEmagged);
         }
 
         private void OnStartup(EntityUid uid, LockComponent lockComp, ComponentStartup args)
@@ -169,18 +166,36 @@ namespace Content.Server.Lock
             return true;
         }
 
-        private void AddToggleLockVerb(EntityUid uid, LockComponent component, GetAlternativeVerbsEvent args)
+        private void AddToggleLockVerb(EntityUid uid, LockComponent component, GetVerbsEvent<AlternativeVerb> args)
         {
             if (!args.CanAccess || !args.CanInteract || !CanToggleLock(uid, args.User))
                 return;
 
-            Verb verb = new();
+            AlternativeVerb verb = new();
             verb.Act = component.Locked ?
                 () => TryUnlock(uid, args.User, component) :
                 () => TryLock(uid, args.User, component);
             verb.Text = Loc.GetString(component.Locked ? "toggle-lock-verb-unlock" : "toggle-lock-verb-lock");
             // TODO VERB ICONS need padlock open/close icons.
             args.Verbs.Add(verb);
+        }
+
+        private void OnEmagged(EntityUid uid, LockComponent component, GotEmaggedEvent args)
+        {
+            if (component.Locked == true)
+            {
+                if (component.UnlockSound != null)
+                {
+                    SoundSystem.Play(Filter.Pvs(component.Owner), component.UnlockSound.GetSound(), component.Owner, AudioParams.Default.WithVolume(-5));
+                }
+
+                if (EntityManager.TryGetComponent(component.Owner, out AppearanceComponent? appearanceComp))
+                {
+                    appearanceComp.SetData(StorageVisuals.Locked, false);
+                }
+                EntityManager.RemoveComponent<LockComponent>(uid); //Literally destroys the lock as a tell it was emagged
+                args.Handled = true;
+            }
         }
     }
 }

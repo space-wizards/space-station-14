@@ -3,14 +3,11 @@ using Content.Server.Disposal.Tube.Components;
 using Content.Shared.Administration;
 using Robust.Server.Player;
 using Robust.Shared.Console;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Localization;
 
 namespace Content.Server.Disposal
 {
     [AdminCommand(AdminFlags.Debug)]
-    public class TubeConnectionsCommand : IConsoleCommand
+    public sealed class TubeConnectionsCommand : IConsoleCommand
     {
         public string Command => "tubeconnections";
         public string Description => Loc.GetString("tube-connections-command-description");

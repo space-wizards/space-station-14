@@ -3,12 +3,11 @@ using Content.Server.Players;
 using Content.Shared.Administration;
 using Robust.Server.Player;
 using Robust.Shared.Console;
-using Robust.Shared.IoC;
 
 namespace Content.Server.Objectives.Commands
 {
     [AdminCommand(AdminFlags.Admin)]
-    public class RemoveObjectiveCommand : IConsoleCommand
+    public sealed class RemoveObjectiveCommand : IConsoleCommand
     {
         public string Command => "rmobjective";
         public string Description => "Removes an objective from the player's mind.";

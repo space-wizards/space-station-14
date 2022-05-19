@@ -1,5 +1,3 @@
-using System;
-using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Content.Server.GameTicking;
@@ -11,12 +9,8 @@ using Content.Server.Roles;
 using Content.Shared.MobState.Components;
 using Robust.Server.GameObjects;
 using Robust.Server.Player;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Log;
 using Robust.Shared.Network;
 using Robust.Shared.Utility;
-using Robust.Shared.ViewVariables;
 
 namespace Content.Server.Mind
 {
@@ -35,7 +29,7 @@ namespace Content.Server.Mind
         private readonly ISet<Role> _roles = new HashSet<Role>();
 
         private readonly List<Objective> _objectives = new();
-        
+
         public string Briefing = String.Empty;
 
         /// <summary>
@@ -222,6 +216,11 @@ namespace Content.Server.Mind
 
             return _roles.Any(role => role.GetType() == t);
         }
+
+        /// <summary>
+        ///     Gets the current job
+        /// </summary>
+        public Job? CurrentJob => _roles.OfType<Job>().SingleOrDefault();
 
         /// <summary>
         /// Adds an objective to this mind.

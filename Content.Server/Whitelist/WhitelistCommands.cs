@@ -5,15 +5,12 @@ using Content.Shared.CCVar;
 using Robust.Server.Player;
 using Robust.Shared.Configuration;
 using Robust.Shared.Console;
-using Robust.Shared.IoC;
-using Robust.Shared.Localization;
 using Robust.Shared.Network;
-using Robust.Shared.Player;
 
 namespace Content.Server.Whitelist;
 
 [AdminCommand(AdminFlags.Ban)]
-public class AddWhitelistCommand : IConsoleCommand
+public sealed class AddWhitelistCommand : IConsoleCommand
 {
     public string Command => "whitelistadd";
     public string Description => Loc.GetString("command-whitelistadd-description");
@@ -42,7 +39,7 @@ public class AddWhitelistCommand : IConsoleCommand
 }
 
 [AdminCommand(AdminFlags.Ban)]
-public class RemoveWhitelistCommand : IConsoleCommand
+public sealed class RemoveWhitelistCommand : IConsoleCommand
 {
     public string Command => "whitelistremove";
     public string Description => Loc.GetString("command-whitelistremove-description");
@@ -71,7 +68,7 @@ public class RemoveWhitelistCommand : IConsoleCommand
 }
 
 [AdminCommand(AdminFlags.Ban)]
-public class KickNonWhitelistedCommand : IConsoleCommand
+public sealed class KickNonWhitelistedCommand : IConsoleCommand
 {
     public string Command => "kicknonwhitelisted";
     public string Description => Loc.GetString("command-kicknonwhitelisted-description");

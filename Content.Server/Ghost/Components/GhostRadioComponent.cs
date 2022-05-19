@@ -1,23 +1,16 @@
-using System.Collections.Generic;
 using Content.Server.Radio.Components;
 using Content.Shared.Chat;
 using Robust.Server.GameObjects;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Localization;
 using Robust.Shared.Network;
-using Robust.Shared.Serialization.Manager.Attributes;
 
 namespace Content.Server.Ghost.Components
 {
     [RegisterComponent]
     [ComponentReference(typeof(IRadio))]
-    public class GhostRadioComponent : Component, IRadio
+    public sealed class GhostRadioComponent : Component, IRadio
     {
         [Dependency] private readonly IServerNetManager _netManager = default!;
         [Dependency] private readonly IEntityManager _entMan = default!;
-
-        public override string Name => "GhostRadio";
 
         [DataField("channels")]
         private List<int> _channels = new(){1459};
@@ -31,7 +24,7 @@ namespace Content.Server.Ghost.Components
 
             var playerChannel = actor.PlayerSession.ConnectedClient;
 
-            var msg = _netManager.CreateNetMessage<MsgChatMessage>();
+            var msg = new MsgChatMessage();
 
             msg.Channel = ChatChannel.Radio;
             msg.Message = message;

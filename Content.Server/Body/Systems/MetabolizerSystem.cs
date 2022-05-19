@@ -10,15 +10,13 @@ using Content.Shared.Database;
 using Content.Shared.FixedPoint;
 using Content.Shared.MobState.Components;
 using JetBrains.Annotations;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 
 namespace Content.Server.Body.Systems
 {
     [UsedImplicitly]
-    public class MetabolizerSystem : EntitySystem
+    public sealed class MetabolizerSystem : EntitySystem
     {
         [Dependency] private readonly SolutionContainerSystem _solutionContainerSystem = default!;
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
@@ -30,6 +28,7 @@ namespace Content.Server.Body.Systems
             base.Initialize();
 
             SubscribeLocalEvent<MetabolizerComponent, ComponentInit>(OnMetabolizerInit);
+            SubscribeLocalEvent<MetabolizerComponent, ApplyMetabolicMultiplierEvent>(OnApplyMetabolicMultiplier);
         }
 
         private void OnMetabolizerInit(EntityUid uid, MetabolizerComponent component, ComponentInit args)
@@ -50,6 +49,18 @@ namespace Content.Server.Body.Systems
             }
         }
 
+        private void OnApplyMetabolicMultiplier(EntityUid uid, MetabolizerComponent component, ApplyMetabolicMultiplierEvent args)
+        {
+            if (args.Apply)
+            {
+                component.UpdateFrequency *= args.Multiplier;
+                return;
+            }
+            component.UpdateFrequency /= args.Multiplier;
+            // Reset the accumulator properly
+            if (component.AccumulatedFrametime >= component.UpdateFrequency)
+                component.AccumulatedFrametime = component.UpdateFrequency;
+        }
         public override void Update(float frameTime)
         {
             base.Update(frameTime);
@@ -77,6 +88,8 @@ namespace Content.Server.Body.Systems
             // First step is get the solution we actually care about
             Solution? solution = null;
             EntityUid? solutionEntityUid = null;
+            EntityUid? bodyEntityUid = mech?.Body?.Owner;
+
             SolutionContainerManagerComponent? manager = null;
 
             if (meta.SolutionOnBody)
@@ -144,6 +157,10 @@ namespace Content.Server.Body.Systems
                     if (entry.MetabolismRate > mostToRemove)
                         mostToRemove = entry.MetabolismRate;
 
+                    mostToRemove *= group.MetabolismRateModifier;
+
+                    mostToRemove = FixedPoint2.Clamp(mostToRemove, 0, reagent.Quantity);
+
                     // if it's possible for them to be dead, and they are,
                     // then we shouldn't process any effects, but should probably
                     // still remove reagents
@@ -153,7 +170,8 @@ namespace Content.Server.Body.Systems
                             continue;
                     }
 
-                    var args = new ReagentEffectArgs(solutionEntityUid.Value, (meta).Owner, solution, proto, entry.MetabolismRate,
+                    var actualEntity = bodyEntityUid != null ? bodyEntityUid.Value : solutionEntityUid.Value;
+                    var args = new ReagentEffectArgs(actualEntity, (meta).Owner, solution, proto, mostToRemove,
                         EntityManager, null);
 
                     // do all effects, if conditions apply
@@ -164,9 +182,8 @@ namespace Content.Server.Body.Systems
 
                         if (effect.ShouldLog)
                         {
-                            var entity = args.SolutionEntity;
                             _logSystem.Add(LogType.ReagentEffect, effect.LogImpact,
-                                $"Metabolism effect {effect.GetType().Name:effect} of reagent {args.Reagent.Name:reagent} applied on entity {entity} at {Transform(entity).Coordinates:coordinates}");
+                                $"Metabolism effect {effect.GetType().Name:effect} of reagent {args.Reagent.LocalizedName:reagent} applied on entity {actualEntity:entity} at {Transform(actualEntity).Coordinates:coordinates}");
                         }
 
                         effect.Effect(args);
@@ -178,5 +195,14 @@ namespace Content.Server.Body.Systems
                     _solutionContainerSystem.TryRemoveReagent(solutionEntityUid.Value, solution, reagent.ReagentId, mostToRemove);
             }
         }
+    }
+    public sealed class ApplyMetabolicMultiplierEvent : EntityEventArgs
+    {
+        // The entity whose metabolism is being modified
+        public  EntityUid Uid;
+        // What the metabolism's update rate will be multiplied by
+        public  float Multiplier;
+        // Apply this multiplier or ignore / reset it?
+        public bool Apply;
     }
 }

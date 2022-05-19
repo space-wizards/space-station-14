@@ -1,16 +1,12 @@
 ﻿using Content.Server.Atmos.Components;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.ViewVariables;
 
 namespace Content.Server.Body.Components
 {
     [RegisterComponent]
-    public class InternalsComponent : Component
+    public sealed class InternalsComponent : Component
     {
         [Dependency] private readonly IEntityManager _entMan = default!;
 
-        public override string Name => "Internals";
         [ViewVariables] public EntityUid? GasTankEntity { get; set; }
         [ViewVariables] public EntityUid? BreathToolEntity { get; set; }
 

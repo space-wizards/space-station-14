@@ -22,8 +22,8 @@
     caliber: LRifle
     capacity: 10
     fireRate: 1.0
-    minAngle: 5
-    maxAngle: 45
+    minAngle: 0
+    maxAngle: 60
     angleIncrease: 20
     angleDecay: 15
     soundGunshot:
@@ -32,36 +32,34 @@
       path: /Audio/Weapons/Guns/Empty/empty.ogg
     soundInsert:
       path: /Audio/Weapons/Guns/MagIn/bullet_insert.ogg
+  - type: Appearance
+    visuals:
+    - type: BarrelBoltVisualizer
+  - type: RangedWeapon
 
 - type: entity
   name: Kardashev-Mosin
   parent: SniperBase
   id: SniperBoltGun
-  description: Weapon for hunting, or endless trench warfare.
+  description: A weapon for hunting, or endless trench warfare.
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/Snipers/bolt_gun.rsi
   - type: Item
     sprite: Objects/Weapons/Guns/Snipers/bolt_gun.rsi
-  - type: RangedWeapon
   - type: BoltActionBarrel
-  - type: Appearance
-    visuals:
-    - type: BarrelBoltVisualizer
+    capacity: 5
 
 - type: entity
   name: Kardashev-Mosin
-  parent: SniperBase
+  parent: SniperBoltGun
   id: SniperBoltGunWood
-  description: Weapon for hunting, or endless trench warfare.
+  description: A weapon for hunting, or endless trench warfare.
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/Snipers/bolt_gun_wood.rsi
-  - type: RangedWeapon
-  - type: BoltActionBarrel
-  - type: Appearance
-    visuals:
-    - type: BarrelBoltVisualizer
+  - type: Item
+    sprite: Objects/Weapons/Guns/Snipers/bolt_gun_wood.rsi
 
 - type: entity
   name: Hristov
@@ -71,11 +69,54 @@
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/Snipers/heavy_sniper.rsi
-  - type: RangedWeapon
+  - type: Item
+    sprite: Objects/Weapons/Guns/Snipers/heavy_sniper.rsi
   - type: BoltActionBarrel
     caliber: AntiMaterial
     capacity: 1
     fillPrototype: CartridgeAntiMaterial
-  - type: Appearance
-    visuals:
-    - type: BarrelBoltVisualizer
+
+- type: entity
+  name: flintlock pistol
+  parent: SniperBase
+  id: FlintlockPistol
+  description: A pirate's companion. Yarrr!
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Snipers/flintlock.rsi
+  - type: BoltActionBarrel
+    caliber: AntiMaterial
+    capacity: 1
+    fireRate: 1.0
+    minAngle: 20
+    maxAngle: 80
+    angleIncrease: 20
+    angleDecay: 15
+    fillPrototype: CartridgeAntiMaterial
+    soundInsert:
+      path: /Audio/Weapons/Guns/MagIn/bullet_insert.ogg
+  - type: Item
+    icon: Objects/Weapons/Guns/Snipers/flintlock.rsi
+
+
+- type: entity
+  name: musket
+  parent: SniperBase
+  id: Musket
+  description: This should've been in a museum long before you were born.
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Snipers/musket.rsi
+  - type: BoltActionBarrel
+    caliber: AntiMaterial
+    capacity: 1
+    fireRate: 1.0
+    minAngle: 10
+    maxAngle: 60
+    angleIncrease: 20
+    angleDecay: 15
+    fillPrototype: CartridgeAntiMaterial
+    soundInsert:
+      path: /Audio/Weapons/Guns/MagIn/bullet_insert.ogg
+  - type: Item
+    icon: Objects/Weapons/Guns/Snipers/musket.rsi

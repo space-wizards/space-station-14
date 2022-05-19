@@ -1,11 +1,8 @@
-using System;
 using System.Text;
 using Content.Server.Administration;
 using Content.Server.AI.EntitySystems;
 using Content.Shared.Administration;
 using Robust.Shared.Console;
-using Robust.Shared.GameObjects;
-using Robust.Shared.Localization;
 
 namespace Content.Server.AI.Commands
 {
@@ -87,8 +84,6 @@ namespace Content.Server.AI.Commands
                     shell.WriteLine(Loc.GetString("faction-command-unknown-faction-argument-error"));
                     break;
             }
-
-            return;
         }
     }
 }

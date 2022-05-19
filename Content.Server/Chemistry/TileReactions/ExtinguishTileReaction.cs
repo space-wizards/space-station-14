@@ -1,22 +1,16 @@
-﻿using System;
-using Content.Server.Atmos;
-using Content.Server.Atmos.EntitySystems;
+﻿using Content.Server.Atmos.EntitySystems;
 using Content.Shared.Atmos;
-using Content.Shared.Chemistry;
 using Content.Shared.Chemistry.Reaction;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.FixedPoint;
-using Content.Shared.Maps;
 using JetBrains.Annotations;
-using Robust.Shared.GameObjects;
 using Robust.Shared.Map;
-using Robust.Shared.Serialization.Manager.Attributes;
 
 namespace Content.Server.Chemistry.TileReactions
 {
     [UsedImplicitly]
     [DataDefinition]
-    public class ExtinguishTileReaction : ITileReaction
+    public sealed class ExtinguishTileReaction : ITileReaction
     {
         [DataField("coolingTemperature")] private float _coolingTemperature = 2f;
 

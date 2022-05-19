@@ -9,18 +9,9 @@
     sprite: Structures/dispensers.rsi
     drawdepth: SmallObjects
     state: soda
-  - type: Fixtures
-    fixtures:
-    - shape:
-        !type:PhysShapeAabb
-          bounds: "-0.4,-0.3,0.4,0.3"
-      mass: 25
-      mask:
-        - Impassable
-        - VaultImpassable
-      layer:
-        - Opaque
-        - MobImpassable
-        - SmallImpassable
+    netsync: false
   - type: ReagentDispenser
     pack: SodaDispenserInventory
+    emagPack: SodaDispenserEmagInventory
+  - type: Transform
+    noRot: false 

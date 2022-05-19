@@ -1,5 +1,5 @@
 - type: constructionGraph
-  id: window
+  id: Window
   start: start
   graph:
     - node: start
@@ -11,6 +11,12 @@
               doAfter: 2
 
         - to: reinforcedWindow
+          steps:
+            - material: ReinforcedGlass
+              amount: 2
+              doAfter: 2
+
+        - to: tintedWindow
           steps:
             - material: ReinforcedGlass
               amount: 2
@@ -45,6 +51,29 @@
 
     - node: reinforcedWindow
       entity: ReinforcedWindow
+      edges:
+        - to: start
+          completed:
+            - !type:SpawnPrototype
+              prototype: SheetRGlass1
+              amount: 2
+            - !type:DeleteEntity {}
+          steps:
+            - tool: Welding
+              doAfter: 5
+            - tool: Screwing
+              doAfter: 1
+            - tool: Prying
+              doAfter: 2
+            - tool: Welding
+              doAfter: 5
+            - tool: Screwing
+              doAfter: 1
+            - tool: Anchoring
+              doAfter: 2
+
+    - node: tintedWindow
+      entity: TintedWindow
       edges:
         - to: start
           completed:
@@ -91,10 +120,14 @@
               amount: 2
             - !type:DeleteEntity {}
           steps:
+            - tool: Welding
+              doAfter: 5
             - tool: Screwing
               doAfter: 2
             - tool: Prying
               doAfter: 3
+            - tool: Welding
+              doAfter: 5
             - tool: Screwing
               doAfter: 2
             - tool: Anchoring

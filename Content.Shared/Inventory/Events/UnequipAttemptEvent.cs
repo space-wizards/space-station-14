@@ -1,8 +1,6 @@
-using Robust.Shared.GameObjects;
-
 namespace Content.Shared.Inventory.Events;
 
-public class UnequipAttemptEventBase : CancellableEntityEventArgs
+public abstract class UnequipAttemptEventBase : CancellableEntityEventArgs
 {
     /// <summary>
     /// The entity performing the action. NOT necessarily the same as the entity whose equipment is being removed..
@@ -39,7 +37,7 @@ public class UnequipAttemptEventBase : CancellableEntityEventArgs
     }
 }
 
-public class BeingUnequippedAttemptEvent : UnequipAttemptEventBase
+public sealed class BeingUnequippedAttemptEvent : UnequipAttemptEventBase
 {
     public BeingUnequippedAttemptEvent(EntityUid unequipee, EntityUid unEquipTarget, EntityUid equipment,
         SlotDefinition slotDefinition) : base(unequipee, unEquipTarget, equipment, slotDefinition)
@@ -47,7 +45,7 @@ public class BeingUnequippedAttemptEvent : UnequipAttemptEventBase
     }
 }
 
-public class IsUnequippingAttemptEvent : UnequipAttemptEventBase
+public sealed class IsUnequippingAttemptEvent : UnequipAttemptEventBase
 {
     public IsUnequippingAttemptEvent(EntityUid unequipee, EntityUid unEquipTarget, EntityUid equipment,
         SlotDefinition slotDefinition) : base(unequipee, unEquipTarget, equipment, slotDefinition)

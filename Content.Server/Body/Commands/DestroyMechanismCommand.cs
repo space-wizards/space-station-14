@@ -3,14 +3,12 @@ using Content.Shared.Administration;
 using Content.Shared.Body.Components;
 using Robust.Server.Player;
 using Robust.Shared.Console;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
 using Robust.Shared.Random;
 
 namespace Content.Server.Body.Commands
 {
     [AdminCommand(AdminFlags.Fun)]
-    class DestroyMechanismCommand : IConsoleCommand
+    sealed class DestroyMechanismCommand : IConsoleCommand
     {
         public string Command => "destroymechanism";
         public string Description => "Destroys a mechanism from your entity";

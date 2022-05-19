@@ -1,10 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
 using Content.Shared.DragDrop;
 using Content.Shared.Emoting;
 using Content.Shared.Interaction.Events;
 using Content.Shared.Item;
-using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.Ghost
@@ -21,7 +18,6 @@ namespace Content.Shared.Ghost
             SubscribeLocalEvent<SharedGhostComponent, UseAttemptEvent>(OnAttempt);
             SubscribeLocalEvent<SharedGhostComponent, InteractionAttemptEvent>(OnAttempt);
             SubscribeLocalEvent<SharedGhostComponent, EmoteAttemptEvent>(OnAttempt);
-            SubscribeLocalEvent<SharedGhostComponent, AttackAttemptEvent>(OnAttempt);
             SubscribeLocalEvent<SharedGhostComponent, DropAttemptEvent>(OnAttempt);
             SubscribeLocalEvent<SharedGhostComponent, PickupAttemptEvent>(OnAttempt);
         }
@@ -43,7 +39,7 @@ namespace Content.Shared.Ghost
     /// Response is sent via <see cref="GhostWarpsResponseEvent"/>
     /// </summary>
     [Serializable, NetSerializable]
-    public class GhostWarpsRequestEvent : EntityEventArgs
+    public sealed class GhostWarpsRequestEvent : EntityEventArgs
     {
     }
 
@@ -52,7 +48,7 @@ namespace Content.Shared.Ghost
     /// Contains players, and locations a ghost can warp to
     /// </summary>
     [Serializable, NetSerializable]
-    public class GhostWarpsResponseEvent : EntityEventArgs
+    public sealed class GhostWarpsResponseEvent : EntityEventArgs
     {
         public GhostWarpsResponseEvent(List<string> locations, Dictionary<EntityUid, string> players)
         {
@@ -75,7 +71,7 @@ namespace Content.Shared.Ghost
     /// A client to server request for their ghost to be warped to a location
     /// </summary>
     [Serializable, NetSerializable]
-    public class GhostWarpToLocationRequestEvent : EntityEventArgs
+    public sealed class GhostWarpToLocationRequestEvent : EntityEventArgs
     {
         /// <summary>
         /// The location name to warp to.
@@ -92,7 +88,7 @@ namespace Content.Shared.Ghost
     ///  A client to server request for their ghost to be warped to an entity
     /// </summary>
     [Serializable, NetSerializable]
-    public class GhostWarpToTargetRequestEvent : EntityEventArgs
+    public sealed class GhostWarpToTargetRequestEvent : EntityEventArgs
     {
         public EntityUid Target { get; }
 
@@ -106,7 +102,7 @@ namespace Content.Shared.Ghost
     /// A client to server request for their ghost to return to body
     /// </summary>
     [Serializable, NetSerializable]
-    public class GhostReturnToBodyRequest : EntityEventArgs
+    public sealed class GhostReturnToBodyRequest : EntityEventArgs
     {
     }
 
@@ -114,7 +110,7 @@ namespace Content.Shared.Ghost
     /// A server to client update with the available ghost role count
     /// </summary>
     [Serializable, NetSerializable]
-    public class GhostUpdateGhostRoleCountEvent : EntityEventArgs
+    public sealed class GhostUpdateGhostRoleCountEvent : EntityEventArgs
     {
         public int AvailableGhostRoles { get; }
 

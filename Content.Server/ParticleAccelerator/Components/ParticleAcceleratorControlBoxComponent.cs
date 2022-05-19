@@ -1,27 +1,15 @@
-using System;
-using System.Collections.Generic;
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Threading;
-using Content.Server.Popups;
 using Content.Server.Power.Components;
 using Content.Server.Power.EntitySystems;
 using Content.Server.UserInterface;
-using Content.Server.VendingMachines;
-using Content.Server.WireHacking;
-using Content.Shared.ActionBlocker;
-using Content.Shared.Interaction;
+// using Content.Server.WireHacking;
 using Content.Shared.Singularity.Components;
 using Robust.Server.GameObjects;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Localization;
 using Robust.Shared.Map;
-using Robust.Shared.Maths;
-using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Utility;
-using Robust.Shared.ViewVariables;
-using static Content.Shared.Wires.SharedWiresComponent;
+// using static Content.Shared.Wires.SharedWiresComponent;
 using Timer = Robust.Shared.Timing.Timer;
 
 namespace Content.Server.ParticleAccelerator.Components
@@ -32,14 +20,11 @@ namespace Content.Server.ParticleAccelerator.Components
     ///     Is the computer thing people interact with to control the PA.
     ///     Also contains primary logic for actual PA behavior, part scanning, etc...
     /// </summary>
-    [ComponentReference(typeof(IActivate))]
     [RegisterComponent]
-    public class ParticleAcceleratorControlBoxComponent : ParticleAcceleratorPartComponent, IActivate, IWires
+    public sealed class ParticleAcceleratorControlBoxComponent : ParticleAcceleratorPartComponent
     {
         [Dependency] private readonly IEntityManager _entMan = default!;
         [Dependency] private readonly IMapManager _mapManager = default!;
-
-        public override string Name => "ParticleAcceleratorControlBox";
 
         [ViewVariables]
         private BoundUserInterface? UserInterface => Owner.GetUIOrNull(ParticleAcceleratorControlBoxUiKey.Key);
@@ -112,30 +97,16 @@ namespace Content.Server.ParticleAccelerator.Components
             _apcPowerReceiverComponent!.Load = 250;
         }
 
-        [Obsolete("Component Messages are deprecated, use Entity Events instead.")]
-        public override void HandleMessage(ComponentMessage message, IComponent? component)
-        {
-#pragma warning disable 618
-            base.HandleMessage(message, component);
-#pragma warning restore 618
-            switch (message)
-            {
-                case PowerChangedMessage powerChanged:
-                    OnPowerStateChanged(powerChanged);
-                    break;
-            }
-        }
-
         protected override void Startup()
         {
             base.Startup();
 
-            UpdateWireStatus();
+            // UpdateWireStatus();
         }
 
         // This is the power state for the PA control box itself.
         // Keep in mind that the PA itself can keep firing as long as the HV cable under the power box has... power.
-        private void OnPowerStateChanged(PowerChangedMessage e)
+        public void OnPowerStateChanged(PowerChangedEvent e)
         {
             UpdateAppearance();
 
@@ -148,13 +119,6 @@ namespace Content.Server.ParticleAccelerator.Components
         private void UserInterfaceOnOnReceiveMessage(ServerBoundUserInterfaceMessage obj)
         {
             if (!ConsolePowered)
-            {
-                return;
-            }
-
-
-            if (obj.Session.AttachedEntity is not {Valid: true} attached ||
-                !EntitySystem.Get<ActionBlockerSystem>().CanInteract(attached))
             {
                 return;
             }
@@ -220,35 +184,13 @@ namespace Content.Server.ParticleAccelerator.Components
             UserInterface?.SetState(state);
         }
 
-        void IActivate.Activate(ActivateEventArgs eventArgs)
-        {
-            if (!_entMan.TryGetComponent(eventArgs.User, out ActorComponent? actor))
-            {
-                return;
-            }
-
-            if (_entMan.TryGetComponent<WiresComponent?>(Owner, out var wires) && wires.IsPanelOpen)
-            {
-                wires.OpenInterface(actor.PlayerSession);
-            }
-            else
-            {
-                if (!ConsolePowered)
-                {
-                    return;
-                }
-
-                UserInterface?.Toggle(actor.PlayerSession);
-                UpdateUI();
-            }
-        }
-
         protected override void OnRemove()
         {
             UserInterface?.CloseAll();
             base.OnRemove();
         }
 
+        /*
         void IWires.RegisterWires(WiresComponent.WiresBuilder builder)
         {
             builder.CreateWire(ParticleAcceleratorControlBoxWires.Toggle);
@@ -366,6 +308,7 @@ namespace Content.Server.ParticleAccelerator.Components
             wires.SetStatus(ParticleAcceleratorWireStatus.Limiter, limiterLight);
             wires.SetStatus(ParticleAcceleratorWireStatus.Strength, strengthLight);
         }
+        */
 
         public void RescanParts()
         {

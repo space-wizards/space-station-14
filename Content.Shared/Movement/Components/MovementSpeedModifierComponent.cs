@@ -1,10 +1,5 @@
 using Content.Shared.Movement.EntitySystems;
-using Robust.Shared.Analyzers;
-using Robust.Shared.Containers;
-using Robust.Shared.GameObjects;
 using Robust.Shared.GameStates;
-using Robust.Shared.Serialization.Manager.Attributes;
-using Robust.Shared.ViewVariables;
 
 namespace Content.Shared.Movement.Components
 {
@@ -14,8 +9,6 @@ namespace Content.Shared.Movement.Components
     {
         public const float DefaultBaseWalkSpeed = 3.0f;
         public const float DefaultBaseSprintSpeed = 5.0f;
-
-        public override string Name => "MovementSpeedModifier";
 
         [ViewVariables]
         public float WalkSpeedModifier = 1.0f;

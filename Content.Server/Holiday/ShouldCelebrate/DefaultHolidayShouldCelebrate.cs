@@ -1,9 +1,8 @@
-using System;
-using System.Globalization;
 using Content.Server.Holiday.Interfaces;
 
 namespace Content.Server.Holiday.ShouldCelebrate
 {
+    [Virtual]
     public class DefaultHolidayShouldCelebrate : IHolidayShouldCelebrate
     {
         public virtual bool ShouldCelebrate(DateTime date, HolidayPrototype holiday)

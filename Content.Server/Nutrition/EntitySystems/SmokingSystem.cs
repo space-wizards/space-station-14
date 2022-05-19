@@ -1,5 +1,5 @@
-using System.Collections.Generic;
 using System.Linq;
+using Content.Server.Atmos.EntitySystems;
 using Content.Server.Body.Components;
 using Content.Server.Body.Systems;
 using Content.Server.Chemistry.EntitySystems;
@@ -11,16 +11,15 @@ using Content.Shared.FixedPoint;
 using Content.Shared.Smoking;
 using Content.Shared.Temperature;
 using Robust.Shared.Containers;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
 
 namespace Content.Server.Nutrition.EntitySystems
 {
-    public partial class SmokingSystem : EntitySystem
+    public sealed partial class SmokingSystem : EntitySystem
     {
         [Dependency] private readonly ReactiveSystem _reactiveSystem = default!;
         [Dependency] private readonly SolutionContainerSystem _solutionContainerSystem = default!;
         [Dependency] private readonly BloodstreamSystem _bloodstreamSystem = default!;
+        [Dependency] private readonly AtmosphereSystem _atmos = default!;
 
         private const float UpdateTimer = 3f;
 
@@ -80,7 +79,7 @@ namespace Content.Server.Nutrition.EntitySystems
 
             foreach (var uid in _active.ToArray())
             {
-                if (!EntityManager.TryGetComponent(uid, out SmokableComponent? smokable))
+                if (!TryComp(uid, out SmokableComponent? smokable))
                 {
                     _active.Remove(uid);
                     continue;
@@ -90,6 +89,12 @@ namespace Content.Server.Nutrition.EntitySystems
                 {
                     _active.Remove(uid);
                     continue;
+                }
+
+                if (smokable.ExposeTemperature > 0 && smokable.ExposeVolume > 0)
+                {
+                    var transform = Transform(uid);
+                    _atmos.HotspotExpose(transform.Coordinates, smokable.ExposeTemperature, smokable.ExposeVolume, true);
                 }
 
                 var inhaledSolution = _solutionContainerSystem.SplitSolution(uid, solution, smokable.InhaleAmount * _timer);
@@ -105,11 +110,11 @@ namespace Content.Server.Nutrition.EntitySystems
                 // This is awful. I hate this so much.
                 // TODO: Please, someone refactor containers and free me from this bullshit.
                 if (!smokable.Owner.TryGetContainerMan(out var containerManager) ||
-                    !EntityManager.TryGetComponent(containerManager.Owner, out BloodstreamComponent? bloodstream))
+                    !TryComp(containerManager.Owner, out BloodstreamComponent? bloodstream))
                     continue;
 
                 _reactiveSystem.ReactionEntity(containerManager.Owner, ReactionMethod.Ingestion, inhaledSolution);
-                _bloodstreamSystem.TryAddToBloodstream(containerManager.Owner, inhaledSolution, bloodstream);
+                _bloodstreamSystem.TryAddToChemicals(containerManager.Owner, inhaledSolution, bloodstream);
             }
 
             _timer -= UpdateTimer;
@@ -119,7 +124,7 @@ namespace Content.Server.Nutrition.EntitySystems
     /// <summary>
     ///     Directed event raised when the smokable solution is empty.
     /// </summary>
-    public class SmokableSolutionEmptyEvent : EntityEventArgs
+    public sealed class SmokableSolutionEmptyEvent : EntityEventArgs
     {
     }
 }

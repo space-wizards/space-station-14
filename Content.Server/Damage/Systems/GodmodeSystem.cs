@@ -1,15 +1,12 @@
-using System.Collections.Generic;
 using Content.Server.Atmos.Components;
 using Content.Shared.Damage;
 using Content.Shared.GameTicking;
 using JetBrains.Annotations;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
 
 namespace Content.Server.Damage.Systems
 {
     [UsedImplicitly]
-    public class GodmodeSystem : EntitySystem
+    public sealed class GodmodeSystem : EntitySystem
     {
         private readonly Dictionary<EntityUid, OldEntityInformation> _entities = new();
         [Dependency] private readonly DamageableSystem _damageableSystem = default!;
@@ -95,7 +92,7 @@ namespace Content.Server.Damage.Systems
             }
         }
 
-        public class OldEntityInformation
+        public sealed class OldEntityInformation
         {
             public OldEntityInformation(EntityUid entity, IEntityManager entityManager)
             {

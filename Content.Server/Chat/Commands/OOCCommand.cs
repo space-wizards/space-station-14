@@ -1,14 +1,12 @@
-using Content.Server.Administration;
 using Content.Server.Chat.Managers;
 using Content.Shared.Administration;
 using Robust.Server.Player;
 using Robust.Shared.Console;
-using Robust.Shared.IoC;
 
 namespace Content.Server.Chat.Commands
 {
     [AnyCommand]
-    internal class OOCCommand : IConsoleCommand
+    internal sealed class OOCCommand : IConsoleCommand
     {
         public string Command => "ooc";
         public string Description => "Send Out Of Character chat messages.";
@@ -16,11 +14,9 @@ namespace Content.Server.Chat.Commands
 
         public void Execute(IConsoleShell shell, string argStr, string[] args)
         {
-            var player = (IPlayerSession?) shell.Player;
-
-            if (player == null)
+            if (shell.Player is not IPlayerSession player)
             {
-                shell.WriteError("You can't run this command locally.");
+                shell.WriteError("This command cannot be run from the server.");
                 return;
             }
 
@@ -31,8 +27,7 @@ namespace Content.Server.Chat.Commands
             if (string.IsNullOrEmpty(message))
                 return;
 
-            var chat = IoCManager.Resolve<IChatManager>();
-            chat.SendOOC(player, message);
+            IoCManager.Resolve<IChatManager>().TrySendOOCMessage(player, message, OOCChatType.OOC);
         }
     }
 }

@@ -1,24 +1,20 @@
-﻿using Content.Server.AI.EntitySystems;
-using Content.Server.GameTicking;
+using Content.Server.AI.EntitySystems;
+using Content.Server.Station.Systems;
 using Content.Shared.Movement.Components;
 using Content.Shared.Roles;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
 using Robust.Shared.Map;
-using Robust.Shared.Maths;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Serialization.Manager.Attributes;
-using Robust.Shared.ViewVariables;
 
 namespace Content.Server.AI.Components
 {
     [RegisterComponent]
     [ComponentReference(typeof(IMobMoverComponent))]
+    [Virtual]
     public class AiControllerComponent : Component, IMobMoverComponent, IMoverComponent
     {
         [DataField("logic")] private float _visionRadius = 8.0f;
 
-        public override string Name => "AiController";
+        public bool CanMove { get; set; } = true;
 
         // TODO: Need to ECS a lot more of the AI first before we can ECS this
         /// <summary>
@@ -69,11 +65,11 @@ namespace Content.Server.AI.Components
 
             if (StartingGearPrototype != null)
             {
-                var gameTicker = EntitySystem.Get<GameTicker>();
+                var stationSpawning = EntitySystem.Get<StationSpawningSystem>();
                 var protoManager = IoCManager.Resolve<IPrototypeManager>();
 
                 var startingGear = protoManager.Index<StartingGearPrototype>(StartingGearPrototype);
-                gameTicker.EquipStartingGear(Owner, startingGear, null);
+                stationSpawning.EquipStartingGear(Owner, startingGear, null);
             }
         }
 

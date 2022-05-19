@@ -23,13 +23,11 @@
     - shape:
         !type:PhysShapeCircle
         radius: 0.40
-      mass: 50
+      mass: 20
       mask:
-      - Impassable
-      - MobImpassable
-      - SmallImpassable
+      - MobMask
       layer:
-      - Opaque
+      - MobLayer
   - type: MobState
     thresholds:
       0: !type:NormalMobState {}
@@ -43,8 +41,36 @@
       crit: crit
       dead: dead
   - type: Butcherable
-    meat: FoodMeat # TODO: CrapMeat or FishMeat
-    pieces: 2
+    # TODO: CrapMeat or FishMeat # - 2022-02-17 LMAO crap meat
+    spawned:
+    - id: FoodMeat
+      amount: 2
+  - type: UnarmedCombat
+    range: 1.5
+    arcwidth: 0
+    arc: bite
+    hitSound:
+      path: /Audio/Effects/bite.ogg
+    damage:
+      types:
+        Piercing: 5
+        Slash: 10
+  - type: CombatMode
+    disarmAction:
+      enabled: false
+      autoPopulate: false
+      name: action-name-disarm
+  - type: GhostTakeoverAvailable
+    makeSentient: true
+    name: space carp
+    description: |
+      If you're a salvage spawn, defend the loot inside!
+      Otherwise, wreak havoc on the station!
+  - type: ReplacementAccent
+    accent: genericAggressive
+  - type: TypingIndicator
+    proto: alien
+  - type: NoSlip
 
 - type: entity
   name: magicarp
@@ -58,6 +84,10 @@
     - map: ["enum.DamageStateVisualLayers.Base"]
       state: alive
       sprite: Mobs/Aliens/Carps/magic.rsi
+  - type: GhostTakeoverAvailable
+    name: magicarp
+  - type: TypingIndicator
+    proto: guardian
 
 - type: entity
   name: holocarp
@@ -79,8 +109,22 @@
         radius: 0.40
       mass: 5
       mask:
-        - Impassable
-        - MobImpassable
-        - SmallImpassable
+      - MobMask
       layer:
-        - Opaque
+      - Opaque
+  - type: GhostTakeoverAvailable
+    name: holocarp
+  - type: TypingIndicator
+    proto: robot
+
+- type: entity
+  id: MobCarpSalvage
+  parent: MobCarp
+  suffix: "Salvage Ruleset"
+  components:
+  - type: GhostTakeoverAvailable
+    name: space carp on salvage wreck
+    description: |
+      Defend the loot inside the salvage wreck!
+  - type: SalvageMobRestrictions
+

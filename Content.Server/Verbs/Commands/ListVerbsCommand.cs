@@ -1,15 +1,12 @@
-﻿using Content.Server.Administration;
+using Content.Server.Administration;
 using Content.Shared.Administration;
 using Content.Shared.Verbs;
 using Robust.Shared.Console;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Localization;
 
 namespace Content.Server.Verbs.Commands
 {
     [AdminCommand(AdminFlags.Admin)]
-    public class ListVerbsCommand : IConsoleCommand
+    public sealed class ListVerbsCommand : IConsoleCommand
     {
         public string Command => "listverbs";
         public string Description => Loc.GetString("list-verbs-command-description");
@@ -65,14 +62,11 @@ namespace Content.Server.Verbs.Commands
                 return;
             }
 
-            var verbs = verbSystem.GetLocalVerbs(target, playerEntity.Value, VerbType.All, true);
+            var verbs = verbSystem.GetLocalVerbs(target, playerEntity.Value, Verb.VerbTypes);
 
-            foreach (var (type, set) in verbs)
+            foreach (var verb in verbs)
             {
-                foreach (var verb in set)
-                {
-                    shell.WriteLine(Loc.GetString("list-verbs-verb-listing", ("type", type), ("verb", verb.Text)));
-                }
+                shell.WriteLine(Loc.GetString("list-verbs-verb-listing", ("type", verb.GetType().Name), ("verb", verb.Text)));
             }
         }
     }

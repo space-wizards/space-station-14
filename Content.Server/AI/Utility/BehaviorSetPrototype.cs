@@ -1,18 +1,15 @@
-using System.Collections.Generic;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Serialization.Manager.Attributes;
-using Robust.Shared.ViewVariables;
 
 namespace Content.Server.AI.Utility
 {
     [Prototype("behaviorSet")]
-    public class BehaviorSetPrototype : IPrototype
+    public sealed class BehaviorSetPrototype : IPrototype
     {
         /// <summary>
         ///     Name of the BehaviorSet.
         /// </summary>
         [ViewVariables]
-        [DataField("id", required: true)]
+        [IdDataFieldAttribute]
         public string ID { get; } = default!;
 
         /// <summary>

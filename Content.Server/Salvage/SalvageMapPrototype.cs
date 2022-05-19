@@ -1,17 +1,13 @@
-using System.Collections.Generic;
-using System.Linq;
-using Content.Server.Objectives.Interfaces;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Serialization.Manager.Attributes;
-using Robust.Shared.ViewVariables;
+using Robust.Shared.Utility;
 
 namespace Content.Server.Salvage
 {
     [Prototype("salvageMap")]
-    public class SalvageMapPrototype : IPrototype
+    public sealed class SalvageMapPrototype : IPrototype
     {
         [ViewVariables]
-        [DataField("id", required: true)]
+        [IdDataFieldAttribute]
         public string ID { get; } = default!;
 
         /// <summary>
@@ -19,7 +15,7 @@ namespace Content.Server.Salvage
         /// </summary>
         [ViewVariables]
         [DataField("mapPath", required: true)]
-        public string MapPath { get; } = default!;
+        public ResourcePath MapPath { get; } = default!;
 
         /// <summary>
         /// Size *from 0,0* in units of the map (used to determine if it fits)

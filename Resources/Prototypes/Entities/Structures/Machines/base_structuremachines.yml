@@ -5,19 +5,21 @@
   components:
   - type: InteractionOutline
   - type: Anchorable
+    delay: 2
   - type: Physics
     bodyType: Static
+  - type: Transform
+    noRot: true
   - type: Fixtures
     fixtures:
     - shape:
         !type:PhysShapeAabb
-          bounds: "-0.45,-0.45,0.45,0.45"
+        bounds: "-0.45,-0.45,0.45,0.45"
       mass: 25
-      layer:
-      - MobMask
-      - Opaque
       mask:
-      - MobMask
+      - MachineMask
+      layer:
+      - MachineLayer
   - type: Damageable
     damageContainer: Inorganic
     damageModifierSet: Metallic
@@ -39,4 +41,5 @@
   id: BaseMachinePowered
   components:
   - type: ApcPowerReceiver
+    powerLoad: 1000
   - type: ExtensionCableReceiver

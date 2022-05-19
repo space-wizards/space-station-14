@@ -8,6 +8,16 @@
   - type: Transform
     anchored: true
   - type: ReagentGrinder
+    beakerSlot:
+      insertSound: /Audio/Machines/machine_switch.ogg
+      ejectSound: /Audio/Machines/machine_switch.ogg
+      soundOptions:
+        volume: -2
+      whitelist:
+        components:
+        - FitsInDispenser
+  - type: ActivatableUI
+    key: enum.ReagentGrinderUiKey.Key
   - type: UserInterface
     interfaces:
     - key: enum.ReagentGrinderUiKey.Key
@@ -20,13 +30,15 @@
     fixtures:
     - shape:
         !type:PhysShapeAabb
-          bounds: "-0.08,-0.35,0.15,0.25"
-      layer:
-      - SmallImpassable
+        bounds: "-0.08,-0.35,0.15,0.25"
       mask:
-      - VaultImpassable
+      - TabletopMachineMask
+      layer:
+      - TabletopMachineLayer
   - type: Sprite
     netsync: false
     sprite: Structures/Machines/juicer.rsi
     state: juicer0
     drawdepth: SmallObjects
+  - type: ApcPowerReceiver
+    powerLoad: 300

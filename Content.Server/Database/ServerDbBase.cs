@@ -1,5 +1,3 @@
-using System;
-using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Linq;
 using System.Net;
@@ -9,14 +7,11 @@ using System.Threading.Tasks;
 using Content.Server.Administration.Logs;
 using Content.Shared.Administration.Logs;
 using Content.Shared.CharacterAppearance;
+using Content.Shared.Markings;
 using Content.Shared.Preferences;
-using Content.Shared.Species;
 using Microsoft.EntityFrameworkCore;
 using Robust.Shared.Enums;
-using Robust.Shared.IoC;
-using Robust.Shared.Maths;
 using Robust.Shared.Network;
-using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
 
 namespace Content.Server.Database
@@ -178,8 +173,26 @@ namespace Content.Server.Database
             if (Enum.TryParse<Gender>(profile.Gender, true, out var genderVal))
                 gender = genderVal;
 
+            // ReSharper disable once ConditionalAccessQualifierIsNonNullableAccordingToAPIContract
+            var markingsRaw = profile.Markings?.Deserialize<List<string>>();
+
+            List<Marking> markings = new();
+            if (markingsRaw != null)
+            {
+                foreach (var marking in markingsRaw)
+                {
+                    var parsed = Marking.ParseFromDbString(marking);
+
+                    if (parsed is null) continue;
+
+                    markings.Add(parsed);
+                }
+            }
+            var markingsSet = new MarkingsSet(markings);
+
             return new HumanoidCharacterProfile(
                 profile.CharacterName,
+                profile.FlavorText,
                 profile.Species,
                 profile.Age,
                 sex,
@@ -191,7 +204,8 @@ namespace Content.Server.Database
                     profile.FacialHairName,
                     Color.FromHex(profile.FacialHairColor),
                     Color.FromHex(profile.EyeColor),
-                    Color.FromHex(profile.SkinColor)
+                    Color.FromHex(profile.SkinColor),
+                    markingsSet
                 ),
                 clothing,
                 backpack,
@@ -204,10 +218,17 @@ namespace Content.Server.Database
         private static Profile ConvertProfiles(HumanoidCharacterProfile humanoid, int slot)
         {
             var appearance = (HumanoidCharacterAppearance) humanoid.CharacterAppearance;
+            List<string> markingStrings = new();
+            foreach (var marking in appearance.Markings)
+            {
+                markingStrings.Add(marking.ToString());
+            }
+            var markings = JsonSerializer.SerializeToDocument(markingStrings);
 
             var entity = new Profile
             {
                 CharacterName = humanoid.Name,
+                FlavorText = humanoid.FlavorText,
                 Species = humanoid.Species,
                 Age = humanoid.Age,
                 Sex = humanoid.Sex.ToString(),
@@ -220,6 +241,7 @@ namespace Content.Server.Database
                 SkinColor = appearance.SkinColor.ToHex(),
                 Clothing = humanoid.Clothing.ToString(),
                 Backpack = humanoid.Backpack.ToString(),
+                Markings = markings,
                 Slot = slot,
                 PreferenceUnavailable = (DbPreferenceUnavailableMode) humanoid.PreferenceUnavailable
             };
@@ -294,14 +316,47 @@ namespace Content.Server.Database
         /// <param name="address">The ip address of the user.</param>
         /// <param name="userId">The id of the user.</param>
         /// <param name="hwId">The HWId of the user.</param>
+        /// <param name="includeUnbanned">Include pardoned and expired bans.</param>
         /// <returns>The user's ban history.</returns>
         public abstract Task<List<ServerBanDef>> GetServerBansAsync(
             IPAddress? address,
             NetUserId? userId,
-            ImmutableArray<byte>? hwId);
+            ImmutableArray<byte>? hwId,
+            bool includeUnbanned);
 
         public abstract Task AddServerBanAsync(ServerBanDef serverBan);
         public abstract Task AddServerUnbanAsync(ServerUnbanDef serverUnban);
+        #endregion
+
+        #region Role Bans
+        /*
+         * ROLE BANS
+         */
+        /// <summary>
+        ///     Looks up a role ban by id.
+        ///     This will return a pardoned role ban as well.
+        /// </summary>
+        /// <param name="id">The role ban id to look for.</param>
+        /// <returns>The role ban with the given id or null if none exist.</returns>
+        public abstract Task<ServerRoleBanDef?> GetServerRoleBanAsync(int id);
+
+        /// <summary>
+        ///     Looks up an user's role ban history.
+        ///     This will return pardoned role bans based on the <see cref="includeUnbanned"/> bool.
+        ///     Requires one of <see cref="address"/>, <see cref="userId"/>, or <see cref="hwId"/> to not be null.
+        /// </summary>
+        /// <param name="address">The IP address of the user.</param>
+        /// <param name="userId">The NetUserId of the user.</param>
+        /// <param name="hwId">The Hardware Id of the user.</param>
+        /// <param name="includeUnbanned">Whether expired and pardoned bans are included.</param>
+        /// <returns>The user's role ban history.</returns>
+        public abstract Task<List<ServerRoleBanDef>> GetServerRoleBansAsync(IPAddress? address,
+            NetUserId? userId,
+            ImmutableArray<byte>? hwId,
+            bool includeUnbanned);
+
+        public abstract Task AddServerRoleBanAsync(ServerRoleBanDef serverRoleBan);
+        public abstract Task AddServerRoleUnbanAsync(ServerRoleUnbanDef serverRoleUnban);
         #endregion
 
         #region Player Records
@@ -365,11 +420,28 @@ namespace Content.Server.Database
         /*
          * CONNECTION LOG
          */
-        public abstract Task AddConnectionLogAsync(
+        public abstract Task<int> AddConnectionLogAsync(
             NetUserId userId,
             string userName,
             IPAddress address,
-            ImmutableArray<byte> hwId);
+            ImmutableArray<byte> hwId,
+            ConnectionDenyReason? denied);
+
+        public async Task AddServerBanHitsAsync(int connection, IEnumerable<ServerBanDef> bans)
+        {
+            await using var db = await GetDb();
+
+            foreach (var ban in bans)
+            {
+                db.DbContext.ServerBanHit.Add(new ServerBanHit
+                {
+                    ConnectionId = connection, BanId = ban.Id!.Value
+                });
+            }
+
+            await db.DbContext.SaveChangesAsync();
+        }
+
         #endregion
 
         #region Admin Ranks
@@ -450,7 +522,7 @@ namespace Content.Server.Database
             await db.DbContext.SaveChangesAsync(cancel);
         }
 
-        public virtual async Task<int> AddNewRound(params Guid[] playerIds)
+        public virtual async Task<int> AddNewRound(Server server, params Guid[] playerIds)
         {
             await using var db = await GetDb();
 
@@ -460,7 +532,8 @@ namespace Content.Server.Database
 
             var round = new Round
             {
-                Players = players
+                Players = players,
+                ServerId = server.Id
             };
 
             db.DbContext.Round.Add(round);
@@ -523,6 +596,27 @@ namespace Content.Server.Database
         #endregion
 
         #region Admin Logs
+
+        public async Task<Server> AddOrGetServer(string serverName)
+        {
+            await using var db = await GetDb();
+            var server = await db.DbContext.Server.Where(server => server.Name.Equals(serverName)).SingleOrDefaultAsync();
+            if (server != default)
+            {
+                return server;
+            }
+
+            server = new Server
+            {
+                Name = serverName
+            };
+
+            db.DbContext.Server.Add(server);
+
+            await db.DbContext.SaveChangesAsync();
+
+            return server;
+        }
 
         public virtual async Task AddAdminLogs(List<QueuedLog> logs)
         {
@@ -699,6 +793,121 @@ namespace Content.Server.Database
             await using var db = await GetDb();
             var entry = await db.DbContext.Whitelist.SingleAsync(w => w.UserId == player);
             db.DbContext.Whitelist.Remove(entry);
+            await db.DbContext.SaveChangesAsync();
+        }
+
+        public async Task<DateTime?> GetLastReadRules(NetUserId player)
+        {
+            await using var db = await GetDb();
+
+            return await db.DbContext.Player
+                .Where(dbPlayer => dbPlayer.UserId == player)
+                .Select(dbPlayer => dbPlayer.LastReadRules)
+                .SingleOrDefaultAsync();
+        }
+
+        public async Task SetLastReadRules(NetUserId player, DateTime date)
+        {
+            await using var db = await GetDb();
+
+            var dbPlayer = await db.DbContext.Player.Where(dbPlayer => dbPlayer.UserId == player).SingleOrDefaultAsync();
+            if (dbPlayer == null)
+            {
+                return;
+            }
+
+            dbPlayer.LastReadRules = date;
+            await db.DbContext.SaveChangesAsync();
+        }
+
+        #endregion
+
+        #region Uploaded Resources Logs
+
+        public async Task AddUploadedResourceLogAsync(NetUserId user, DateTime date, string path, byte[] data)
+        {
+            await using var db = await GetDb();
+
+            db.DbContext.UploadedResourceLog.Add(new UploadedResourceLog() { UserId = user, Date = date, Path = path, Data = data });
+            await db.DbContext.SaveChangesAsync();
+        }
+
+        public async Task PurgeUploadedResourceLogAsync(int days)
+        {
+            await using var db = await GetDb();
+
+            var date = DateTime.Now.Subtract(TimeSpan.FromDays(days));
+
+            await foreach (var log in db.DbContext.UploadedResourceLog
+                               .Where(l => date > l.Date)
+                               .AsAsyncEnumerable())
+            {
+                db.DbContext.UploadedResourceLog.Remove(log);
+            }
+
+            await db.DbContext.SaveChangesAsync();
+        }
+
+        #endregion
+
+        #region Admin Notes
+
+        public virtual async Task<int> AddAdminNote(AdminNote note)
+        {
+            await using var db = await GetDb();
+            db.DbContext.AdminNotes.Add(note);
+            await db.DbContext.SaveChangesAsync();
+            return note.Id;
+        }
+
+        public async Task<AdminNote?> GetAdminNote(int id)
+        {
+            await using var db = await GetDb();
+            return await db.DbContext.AdminNotes
+                .Where(note => note.Id == id)
+                .Include(note => note.Round)
+                .Include(note => note.CreatedBy)
+                .Include(note => note.LastEditedBy)
+                .Include(note => note.DeletedBy)
+                .Include(note => note.Player)
+                .SingleOrDefaultAsync();
+        }
+
+        public async Task<List<AdminNote>> GetAdminNotes(Guid player)
+        {
+            await using var db = await GetDb();
+            return await db.DbContext.AdminNotes
+                .Where(note => note.PlayerUserId == player)
+                .Where(note => !note.Deleted)
+                .Include(note => note.Round)
+                .Include(note => note.CreatedBy)
+                .Include(note => note.LastEditedBy)
+                .Include(note => note.Player)
+                .ToListAsync();
+        }
+
+        public async Task DeleteAdminNote(int id, Guid deletedBy, DateTime deletedAt)
+        {
+            await using var db = await GetDb();
+
+            var note = await db.DbContext.AdminNotes.Where(note => note.Id == id).SingleAsync();
+
+            note.Deleted = true;
+            note.DeletedById = deletedBy;
+            note.DeletedAt = deletedAt;
+
+            await db.DbContext.SaveChangesAsync();
+        }
+
+        public async Task EditAdminNote(int id, string message, Guid editedBy, DateTime editedAt)
+        {
+            await using var db = await GetDb();
+
+            var note = await db.DbContext.AdminNotes.Where(note => note.Id == id).SingleAsync();
+            note.Message = message;
+            note.LastEditedById = editedBy;
+            note.LastEditedAt = editedAt;
+
             await db.DbContext.SaveChangesAsync();
         }
 

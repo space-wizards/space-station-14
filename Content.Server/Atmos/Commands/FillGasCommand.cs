@@ -3,14 +3,12 @@ using Content.Server.Atmos.EntitySystems;
 using Content.Shared.Administration;
 using Content.Shared.Atmos;
 using Robust.Shared.Console;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
 using Robust.Shared.Map;
 
 namespace Content.Server.Atmos.Commands
 {
     [AdminCommand(AdminFlags.Debug)]
-    public class FillGas : IConsoleCommand
+    public sealed class FillGas : IConsoleCommand
     {
         public string Command => "fillgas";
         public string Description => "Adds gas to all tiles in a grid.";

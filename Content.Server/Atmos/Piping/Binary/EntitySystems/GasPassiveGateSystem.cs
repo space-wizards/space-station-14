@@ -1,17 +1,18 @@
-using System;
+using Content.Server.Atmos.EntitySystems;
 using Content.Server.Atmos.Piping.Binary.Components;
 using Content.Server.Atmos.Piping.Components;
 using Content.Server.NodeContainer;
 using Content.Server.NodeContainer.Nodes;
 using Content.Shared.Atmos;
 using JetBrains.Annotations;
-using Robust.Shared.GameObjects;
 
 namespace Content.Server.Atmos.Piping.Binary.EntitySystems
 {
     [UsedImplicitly]
-    public class GasPassiveGateSystem : EntitySystem
+    public sealed class GasPassiveGateSystem : EntitySystem
     {
+        [Dependency] private readonly AtmosphereSystem _atmosphereSystem = default!;
+
         public override void Initialize()
         {
             base.Initialize();
@@ -46,7 +47,7 @@ namespace Content.Server.Atmos.Piping.Binary.EntitySystems
                 var transferMoles = pressureDelta * outlet.Air.Volume / (inlet.Air.Temperature * Atmospherics.R);
 
                 // Actually transfer the gas.
-                outlet.AssumeAir(inlet.Air.Remove(transferMoles));
+                _atmosphereSystem.Merge(outlet.Air, inlet.Air.Remove(transferMoles));
             }
         }
     }

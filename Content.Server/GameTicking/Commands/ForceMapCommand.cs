@@ -1,17 +1,12 @@
 ﻿using Content.Server.Administration;
 using Content.Server.Maps;
 using Content.Shared.Administration;
-using Content.Shared.CCVar;
-using Robust.Shared.Configuration;
 using Robust.Shared.Console;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Localization;
 
 namespace Content.Server.GameTicking.Commands
 {
     [AdminCommand(AdminFlags.Round)]
-    class ForceMapCommand : IConsoleCommand
+    sealed class ForceMapCommand : IConsoleCommand
     {
         public string Command => "forcemap";
         public string Description => "forcemap-command-description";

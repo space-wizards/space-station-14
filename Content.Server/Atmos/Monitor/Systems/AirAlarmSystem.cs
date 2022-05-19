@@ -1,5 +1,3 @@
-using System;
-using System.Collections.Generic;
 using Content.Server.Atmos.Monitor.Components;
 using Content.Server.Atmos.Piping.Components;
 using Content.Server.DeviceNetwork;
@@ -7,18 +5,14 @@ using Content.Server.DeviceNetwork.Components;
 using Content.Server.DeviceNetwork.Systems;
 using Content.Server.Popups;
 using Content.Server.Power.Components;
-using Content.Server.WireHacking;
+using Content.Server.Wires;
 using Content.Shared.Access.Components;
 using Content.Shared.Access.Systems;
 using Content.Shared.Atmos;
 using Content.Shared.Atmos.Monitor;
 using Content.Shared.Atmos.Monitor.Components;
 using Content.Shared.Interaction;
-using Content.Shared.Popups;
 using Robust.Server.GameObjects;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Localization;
 using Robust.Shared.Player;
 
 namespace Content.Server.Atmos.Monitor.Systems
@@ -32,7 +26,7 @@ namespace Content.Server.Atmos.Monitor.Systems
     // data key. In response, a packet will be transmitted
     // with the response type as its command, and the
     // response data in its data key.
-    public class AirAlarmSystem : EntitySystem
+    public sealed class AirAlarmSystem : EntitySystem
     {
         [Dependency] private readonly DeviceNetworkSystem _deviceNet = default!;
         [Dependency] private readonly AtmosMonitorSystem _atmosMonitorSystem = default!;
@@ -42,9 +36,6 @@ namespace Content.Server.Atmos.Monitor.Systems
         [Dependency] private readonly SharedInteractionSystem _interactionSystem = default!;
 
         #region Device Network API
-
-        public const int Freq = AtmosMonitorSystem.AtmosMonitorApcFreq;
-
         /// <summary>
         ///     Command to set device data within the air alarm's network.
         /// </summary>
@@ -93,7 +84,7 @@ namespace Content.Server.Atmos.Monitor.Systems
                 [AirAlarmSetData] = data
             };
 
-            _deviceNet.QueuePacket(uid, address, Freq, payload);
+            _deviceNet.QueuePacket(uid, address, payload);
         }
 
         /// <summary>
@@ -110,7 +101,7 @@ namespace Content.Server.Atmos.Monitor.Systems
                 [DeviceNetworkConstants.Command] = AirAlarmSyncCmd
             };
 
-            _deviceNet.QueuePacket(uid, string.Empty, Freq, payload, true);
+            _deviceNet.QueuePacket(uid, null, payload);
         }
 
         /// <summary>
@@ -129,7 +120,7 @@ namespace Content.Server.Atmos.Monitor.Systems
                 [DeviceNetworkConstants.Command] = AirAlarmSyncCmd
             };
 
-            _deviceNet.QueuePacket(uid, address, Freq, payload);
+            _deviceNet.QueuePacket(uid, address, payload);
         }
 
         /// <summary>
@@ -148,7 +139,7 @@ namespace Content.Server.Atmos.Monitor.Systems
                 [AirAlarmSetMode] = mode
             };
 
-            _deviceNet.QueuePacket(uid, string.Empty, Freq, payload, true);
+            _deviceNet.QueuePacket(uid, null, payload);
         }
 
         #endregion
@@ -157,7 +148,7 @@ namespace Content.Server.Atmos.Monitor.Systems
 
         public override void Initialize()
         {
-            SubscribeLocalEvent<AirAlarmComponent, PacketSentEvent>(OnPacketRecv);
+            SubscribeLocalEvent<AirAlarmComponent, DeviceNetworkPacketEvent>(OnPacketRecv);
             SubscribeLocalEvent<AirAlarmComponent, AtmosDeviceUpdateEvent>(OnAtmosUpdate);
             SubscribeLocalEvent<AirAlarmComponent, AtmosMonitorAlarmEvent>(OnAtmosAlarm);
             SubscribeLocalEvent<AirAlarmComponent, PowerChangedEvent>(OnPowerChanged);
@@ -166,6 +157,7 @@ namespace Content.Server.Atmos.Monitor.Systems
             SubscribeLocalEvent<AirAlarmComponent, AirAlarmUpdateAlarmThresholdMessage>(OnUpdateThreshold);
             SubscribeLocalEvent<AirAlarmComponent, AirAlarmUpdateDeviceDataMessage>(OnUpdateDeviceData);
             SubscribeLocalEvent<AirAlarmComponent, BoundUIClosedEvent>(OnClose);
+            SubscribeLocalEvent<AirAlarmComponent, ComponentShutdown>(OnShutdown);
             SubscribeLocalEvent<AirAlarmComponent, InteractHandEvent>(OnInteract);
         }
 
@@ -177,6 +169,10 @@ namespace Content.Server.Atmos.Monitor.Systems
                 component.CurrentModeUpdater = null;
                 component.DeviceData.Clear();
             }
+            else
+            {
+                SyncAllDevices(uid);
+            }
         }
 
         private void OnClose(EntityUid uid, AirAlarmComponent component, BoundUIClosedEvent args)
@@ -184,6 +180,11 @@ namespace Content.Server.Atmos.Monitor.Systems
             component.ActivePlayers.Remove(args.Session.UserId);
             if (component.ActivePlayers.Count == 0)
                 RemoveActiveInterface(uid);
+        }
+
+        private void OnShutdown(EntityUid uid, AirAlarmComponent component, ComponentShutdown args)
+        {
+            _activeUserInterfaces.Remove(uid);
         }
 
         private void OnInteract(EntityUid uid, AirAlarmComponent component, InteractHandEvent args)
@@ -256,7 +257,7 @@ namespace Content.Server.Atmos.Monitor.Systems
             if (!EntityManager.TryGetComponent(uid, out AccessReaderComponent reader) || user == null)
                 return false;
 
-            if (!_accessSystem.IsAllowed(reader, user.Value) && !component.FullAccess)
+            if (!_accessSystem.IsAllowed(reader, user.Value))
             {
                 _popup.PopupEntity(Loc.GetString("air-alarm-ui-access-denied"), user.Value, Filter.Entities(user.Value));
                 return false;
@@ -310,6 +311,7 @@ namespace Content.Server.Atmos.Monitor.Systems
 
             _atmosMonitorSystem.SetThreshold(uid, type, threshold, gas);
 
+            // TODO: Use BUI states instead...
             _uiSystem.TrySendUiMessage(uid, SharedAirAlarmInterfaceKey.Key, new AirAlarmUpdateAlarmThresholdMessage(type, threshold, gas));
         }
 
@@ -353,6 +355,7 @@ namespace Content.Server.Atmos.Monitor.Systems
                 controller.CurrentModeUpdater = null;
 
             // controller.SendMessage(new AirAlarmUpdateAlarmModeMessage(mode));
+            // TODO: Use BUI states instead...
             _uiSystem.TrySendUiMessage(uid, SharedAirAlarmInterfaceKey.Key, new AirAlarmUpdateAlarmModeMessage(mode));
 
 
@@ -375,7 +378,7 @@ namespace Content.Server.Atmos.Monitor.Systems
             SetData(uid, address, devData);
         }
 
-        private void OnPacketRecv(EntityUid uid, AirAlarmComponent controller, PacketSentEvent args)
+        private void OnPacketRecv(EntityUid uid, AirAlarmComponent controller, DeviceNetworkPacketEvent args)
         {
             if (!args.Data.TryGetValue(DeviceNetworkConstants.Command, out string? cmd))
                 return;
@@ -392,7 +395,7 @@ namespace Content.Server.Atmos.Monitor.Systems
                     // _airAlarmDataSystem.UpdateDeviceData(uid, args.SenderAddress, data);
                     //
                     _uiSystem.TrySendUiMessage(uid, SharedAirAlarmInterfaceKey.Key, new AirAlarmUpdateDeviceDataMessage(args.SenderAddress, data));
-                    if (controller.WiresComponent != null) controller.UpdateWires();
+                    // if (HasComp<WiresComponent>(uid)) controller.UpdateWires();
                     if (!controller.DeviceData.TryAdd(args.SenderAddress, data))
                         controller.DeviceData[args.SenderAddress] = data;
 
@@ -444,6 +447,7 @@ namespace Content.Server.Atmos.Monitor.Systems
         {
             if (!Resolve(uid, ref netConn)) return;
 
+            // TODO: Use BUI states instead...
             _uiSystem.TrySendUiMessage(uid, SharedAirAlarmInterfaceKey.Key, new AirAlarmSetAddressMessage(netConn.Address));
         }
 
@@ -468,6 +472,7 @@ namespace Content.Server.Atmos.Monitor.Systems
 
                 var airData = new AirAlarmAirData(monitor.TileGas.Pressure, monitor.TileGas.Temperature, monitor.TileGas.TotalMoles, monitor.LastAlarmState, gases);
 
+                // TODO: Use BUI states instead...
                 _uiSystem.TrySendUiMessage(uid, SharedAirAlarmInterfaceKey.Key, new AirAlarmUpdateAirDataMessage(airData));
             }
         }
@@ -480,6 +485,7 @@ namespace Content.Server.Atmos.Monitor.Systems
             if (!Resolve(uid, ref monitor, ref power, ref controller)
                 || !power.Powered) return;
 
+            // TODO: Use BUI states instead...
             _uiSystem.TrySendUiMessage(uid, SharedAirAlarmInterfaceKey.Key, new AirAlarmUpdateAlarmModeMessage(controller.CurrentMode));
         }
 
@@ -496,6 +502,7 @@ namespace Content.Server.Atmos.Monitor.Systems
                 && monitor.GasThresholds == null)
                 return;
 
+            // TODO: Use BUI states instead...
             if (monitor.PressureThreshold != null)
             {
                 _uiSystem.TrySendUiMessage(uid, SharedAirAlarmInterfaceKey.Key, new AirAlarmUpdateAlarmThresholdMessage(AtmosMonitorThresholdType.Pressure, monitor.PressureThreshold));
@@ -530,6 +537,7 @@ namespace Content.Server.Atmos.Monitor.Systems
                 _timer = 0f;
                 foreach (var uid in _activeUserInterfaces)
                 {
+                    // TODO: Awful idea, use BUI states instead...
                     SendAirData(uid);
                     _uiSystem.TrySetUiState(uid, SharedAirAlarmInterfaceKey.Key, new AirAlarmUIState());
                 }

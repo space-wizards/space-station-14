@@ -1,6 +1,4 @@
 ﻿using Content.Server.Light.EntitySystems;
-using Robust.Shared.Analyzers;
-using Robust.Shared.GameObjects;
 
 namespace Content.Server.Light.Components
 {
@@ -11,8 +9,7 @@ namespace Content.Server.Light.Components
     ///     state of an entity.
     /// </summary>
     [RegisterComponent, Friend(typeof(PoweredLightSystem))]
-    public class LitOnPoweredComponent : Component
+    public sealed class LitOnPoweredComponent : Component
     {
-        public override string Name => "LitOnPowered";
     }
 }

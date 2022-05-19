@@ -1,11 +1,13 @@
 using Content.Server.Buckle.Components;
 using Content.Server.Interaction;
+using Content.Shared.Destructible;
+using Content.Shared.Interaction;
+using Content.Shared.Storage;
 using Content.Shared.Verbs;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Localization;
+using Robust.Shared.Containers;
+
 
 namespace Content.Server.Buckle.Systems
 {
@@ -18,14 +20,32 @@ namespace Content.Server.Buckle.Systems
         {
             base.Initialize();
 
-            SubscribeLocalEvent<StrapComponent, GetInteractionVerbsEvent>(AddStrapVerbs);
+            SubscribeLocalEvent<StrapComponent, GetVerbsEvent<InteractionVerb>>(AddStrapVerbs);
+            SubscribeLocalEvent<StrapComponent, ContainerGettingInsertedAttemptEvent>(OnInsertAttempt);
+            SubscribeLocalEvent<StrapComponent, InteractHandEvent>(OnInteractHand);
+            SubscribeLocalEvent<StrapComponent, DestructionEventArgs>(OnDestroy);
+        }
+
+        private void OnInsertAttempt(EntityUid uid, StrapComponent component, ContainerGettingInsertedAttemptEvent args)
+        {
+            // If someone is attempting to put this item inside of a backpack, ensure that it has no entities strapped to it.
+            if (HasComp<SharedStorageComponent>(args.Container.Owner) && component.BuckledEntities.Count != 0)
+                args.Cancel();
+        }
+
+        private void OnInteractHand(EntityUid uid, StrapComponent component, InteractHandEvent args)
+        {
+            if (!TryComp<BuckleComponent>(args.User, out var buckle))
+                return;
+
+            buckle.ToggleBuckle(args.User, uid);
         }
 
         // TODO ECS BUCKLE/STRAP These 'Strap' verbs are an incestuous mess of buckle component and strap component
         // functions. Whenever these are fully ECSed, maybe do it in a way that allows for these verbs to be handled in
         // a sensible manner in a single system?
 
-        private void AddStrapVerbs(EntityUid uid, StrapComponent component, GetInteractionVerbsEvent args)
+        private void AddStrapVerbs(EntityUid uid, StrapComponent component, GetVerbsEvent<InteractionVerb> args)
         {
             if (args.Hands == null || !args.CanAccess || !args.CanInteract || !component.Enabled)
                 return;
@@ -41,7 +61,7 @@ namespace Content.Server.Buckle.Systems
                 if (!_interactionSystem.InRangeUnobstructed(args.User, args.Target, range: buckledComp.Range))
                     continue;
 
-                Verb verb = new()
+                InteractionVerb verb = new()
                 {
                     Act = () => buckledComp.TryUnbuckle(args.User),
                     Category = VerbCategory.Unbuckle
@@ -67,7 +87,7 @@ namespace Content.Server.Buckle.Systems
                 component.HasSpace(buckle) &&
                 _interactionSystem.InRangeUnobstructed(args.User, args.Target, range: buckle.Range))
             {
-                Verb verb = new()
+                InteractionVerb verb = new()
                 {
                     Act = () => buckle.TryBuckle(args.User, args.Target),
                     Category = VerbCategory.Buckle,
@@ -87,7 +107,7 @@ namespace Content.Server.Buckle.Systems
                 if (!_interactionSystem.InRangeUnobstructed(@using, args.Target, usingBuckle.Range, predicate: Ignored))
                     return;
 
-                Verb verb = new()
+                InteractionVerb verb = new()
                 {
                     Act = () => usingBuckle.TryBuckle(args.User, args.Target),
                     Category = VerbCategory.Buckle,
@@ -99,6 +119,11 @@ namespace Content.Server.Buckle.Systems
 
                 args.Verbs.Add(verb);
             }
+        }
+
+        private void OnDestroy(EntityUid uid, StrapComponent component, DestructionEventArgs args)
+        {
+            component.RemoveAll();
         }
     }
 }

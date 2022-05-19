@@ -1,7 +1,4 @@
-using System;
 using JetBrains.Annotations;
-using Robust.Shared.Analyzers;
-using Robust.Shared.GameObjects;
 
 namespace Content.Shared.Interaction
 {
@@ -22,7 +19,7 @@ namespace Content.Shared.Interaction
         void Activate(ActivateEventArgs eventArgs);
     }
 
-    public class ActivateEventArgs : EventArgs, ITargetedInteractEventArgs
+    public sealed class ActivateEventArgs : EventArgs, ITargetedInteractEventArgs
     {
         public ActivateEventArgs(EntityUid user, EntityUid target)
         {
@@ -38,7 +35,7 @@ namespace Content.Shared.Interaction
     ///     Raised when an entity is activated in the world.
     /// </summary>
     [PublicAPI]
-    public class ActivateInWorldEvent : HandledEntityEventArgs, ITargetedInteractEventArgs
+    public sealed class ActivateInWorldEvent : HandledEntityEventArgs, ITargetedInteractEventArgs
     {
         /// <summary>
         ///     Entity that activated the target world entity.

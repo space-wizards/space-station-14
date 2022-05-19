@@ -1,7 +1,4 @@
 ﻿using Content.Server.Power.Pow3r;
-using Robust.Shared.GameObjects;
-using Robust.Shared.Serialization.Manager.Attributes;
-using Robust.Shared.ViewVariables;
 
 namespace Content.Server.Power.Components
 {
@@ -15,7 +12,7 @@ namespace Content.Server.Power.Components
     [RegisterComponent]
     public sealed class PowerNetworkBatteryComponent : Component
     {
-        public override string Name => "PowerNetworkBattery";
+        [ViewVariables] public float LastSupply = 0f;
 
         [DataField("maxChargeRate")]
         [ViewVariables(VVAccess.ReadWrite)]

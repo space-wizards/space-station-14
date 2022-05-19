@@ -1,10 +1,9 @@
-using System;
 using System.Globalization;
 using Content.Server.Holiday.Interfaces;
 
 namespace Content.Server.Holiday.ShouldCelebrate
 {
-    public class ChineseNewYear : IHolidayShouldCelebrate
+    public sealed class ChineseNewYear : IHolidayShouldCelebrate
     {
         public bool ShouldCelebrate(DateTime date, HolidayPrototype holiday)
         {

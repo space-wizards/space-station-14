@@ -15,7 +15,7 @@ namespace Content.Client.NodeContainer
     public sealed class NodeGroupSystem : EntitySystem
     {
         [Dependency] private readonly IOverlayManager _overlayManager = default!;
-        [Dependency] private readonly IEntityLookup _entityLookup = default!;
+        [Dependency] private readonly EntityLookupSystem _entityLookup = default!;
         [Dependency] private readonly IMapManager _mapManager = default!;
         [Dependency] private readonly IInputManager _inputManager = default!;
         [Dependency] private readonly IResourceCache _resourceCache = default!;
@@ -57,6 +57,14 @@ namespace Content.Client.NodeContainer
             foreach (var group in ev.Groups)
             {
                 Groups.Add(group.NetId, group);
+            }
+
+            foreach (var (groupId, debugData) in ev.GroupDataUpdates)
+            {
+                if (Groups.TryGetValue(groupId, out var group))
+                {
+                    group.DebugData = debugData;
+                }
             }
 
             Entities = Groups.Values

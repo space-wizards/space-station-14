@@ -1,20 +1,15 @@
-using System;
 using Content.Server.GameTicking;
 using Content.Server.Ghost;
 using Content.Server.Ghost.Components;
 using Content.Server.Mind.Components;
 using Content.Shared.Examine;
-using Content.Shared.Ghost;
 using Content.Shared.MobState.Components;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Localization;
 using Robust.Shared.Map;
 using Robust.Shared.Timing;
 
 namespace Content.Server.Mind;
 
-public class MindSystem : EntitySystem
+public sealed class MindSystem : EntitySystem
 {
     [Dependency] private readonly IMapManager _mapManager = default!;
     [Dependency] private readonly GameTicker _gameTicker = default!;
@@ -89,16 +84,23 @@ public class MindSystem : EntitySystem
                 // Use a regular timer here because the entity has probably been deleted.
                 Timer.Spawn(0, () =>
                 {
+                    // Make extra sure the round didn't end between spawning the timer and it being executed.
+                    if (_gameTicker.RunLevel != GameRunLevel.InRound)
+                        return;
+
                     // Async this so that we don't throw if the grid we're on is being deleted.
                     var gridId = spawnPosition.GetGridId(EntityManager);
-                    if (gridId == GridId.Invalid || !_mapManager.GridExists(gridId))
+                    if (!spawnPosition.IsValid(EntityManager) || gridId == GridId.Invalid || !_mapManager.GridExists(gridId))
                     {
-                        spawnPosition = EntitySystem.Get<GameTicker>().GetObserverSpawnPoint();
+                        spawnPosition = _gameTicker.GetObserverSpawnPoint();
                     }
 
                     var ghost = Spawn("MobObserver", spawnPosition);
                     var ghostComponent = Comp<GhostComponent>(ghost);
                     _ghostSystem.SetCanReturnToBody(ghostComponent, false);
+
+                    // Log these to make sure they're not causing the GameTicker round restart bugs...
+                    Logger.DebugS("mind", $"Entity \"{ToPrettyString(uid)}\" for {mind.Mind?.CharacterName} was deleted, spawned \"{ToPrettyString(ghost)}\".");
 
                     if (mind.Mind == null)
                         return;

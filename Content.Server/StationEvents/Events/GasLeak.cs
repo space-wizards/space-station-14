@@ -1,12 +1,7 @@
 using Content.Server.Atmos.EntitySystems;
 using Content.Shared.Atmos;
-using Content.Shared.Station;
 using Robust.Shared.Audio;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Log;
 using Robust.Shared.Map;
-using Robust.Shared.Maths;
 using Robust.Shared.Player;
 using Robust.Shared.Random;
 
@@ -19,13 +14,10 @@ namespace Content.Server.StationEvents.Events
 
         public override string Name => "GasLeak";
 
-        public override string StartAnnouncement =>
-            "Attention crew, there is a gas leak on the station. We advise you to avoid the area and wear suit internals in the meantime.";
+        public override string StartAnnouncement => Loc.GetString("station-event-gas-leak-start-announcement");
 
-        // Sourced from https://github.com/vgstation-coders/vgstation13/blob/2c5a491446ab824a8fbbf39bcf656b590e0228df/sound/misc/bloblarm.ogg
-        public override string StartAudio => "/Audio/Announcements/bloblarm.ogg";
 
-        protected override string EndAnnouncement => "The source of the gas leak has been fixed. Please be cautious around areas with gas remaining.";
+        protected override string EndAnnouncement => Loc.GetString("station-event-gas-leak-end-announcement");
 
         private static readonly Gas[] LeakableGases = {
             Gas.Plasma,
@@ -35,6 +27,10 @@ namespace Content.Server.StationEvents.Events
         public override int EarliestStart => 10;
 
         public override int MinimumPlayers => 5;
+
+        public override float Weight => WeightLow;
+
+        public override int? MaxOccurrences => 1;
 
         /// <summary>
         ///     Give people time to get their internals on.
@@ -58,7 +54,7 @@ namespace Content.Server.StationEvents.Events
 
         // Event variables
 
-        private StationId _targetStation;
+        private EntityUid _targetStation;
 
         private EntityUid _targetGrid;
 

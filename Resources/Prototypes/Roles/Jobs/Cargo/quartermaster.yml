@@ -1,14 +1,17 @@
 - type: job
   id: Quartermaster
   name: "quartermaster"
+  weight: 10
   startingGear: QuartermasterGear
   departments:
   - Cargo
   icon: "QuarterMaster"
   supervisors: "the head of personnel"
+  canBeAntag: false
   access:
   - Cargo
- # - Quartermaster
+  - Salvage
+  - Quartermaster
   - Maintenance
   - External
 

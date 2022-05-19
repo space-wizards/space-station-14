@@ -1,13 +1,5 @@
-using Content.Shared.Movement.Components;
-using Robust.Shared.GameObjects;
-using Robust.Shared.Players;
 using Robust.Shared.Serialization;
-using Robust.Shared.ViewVariables;
-using System;
-using Robust.Shared.Analyzers;
 using Robust.Shared.GameStates;
-using Robust.Shared.Timing;
-using Robust.Shared.IoC;
 
 namespace Content.Shared.Chemistry.Components
 {
@@ -16,9 +8,6 @@ namespace Content.Shared.Chemistry.Components
     [NetworkedComponent]
     public sealed class MovespeedModifierMetabolismComponent : Component
     {
-        [ViewVariables]
-        public override string Name => "MovespeedModifierMetabolism";
-
         [ViewVariables]
         public float WalkSpeedModifier { get; set; }
 
@@ -37,7 +26,7 @@ namespace Content.Shared.Chemistry.Components
         }
 
         [Serializable, NetSerializable]
-        public class MovespeedModifierMetabolismComponentState : ComponentState
+        public sealed class MovespeedModifierMetabolismComponentState : ComponentState
         {
             public float WalkSpeedModifier { get; }
             public float SprintSpeedModifier { get; }

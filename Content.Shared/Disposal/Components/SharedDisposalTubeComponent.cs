@@ -1,5 +1,4 @@
-﻿using System;
-using Robust.Shared.Serialization;
+﻿using Robust.Shared.Serialization;
 
 namespace Content.Shared.Disposal.Components
 {
@@ -14,6 +13,5 @@ namespace Content.Shared.Disposal.Components
     {
         Free = 0,
         Anchored,
-        Broken,
     }
 }

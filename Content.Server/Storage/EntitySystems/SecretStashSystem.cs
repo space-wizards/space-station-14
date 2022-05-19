@@ -1,19 +1,18 @@
-﻿using Content.Server.Clothing.Components;
 using Content.Server.Popups;
 using Content.Server.Storage.Components;
-using Content.Shared.Acts;
+using Content.Shared.Destructible;
 using Content.Shared.Hands.Components;
+using Content.Shared.Hands.EntitySystems;
+using Content.Shared.Item;
 using Robust.Shared.Containers;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Localization;
 using Robust.Shared.Player;
 
 namespace Content.Server.Storage.EntitySystems
 {
-    public class SecretStashSystem : EntitySystem
+    public sealed class SecretStashSystem : EntitySystem
     {
         [Dependency] private readonly PopupSystem _popupSystem = default!;
+        [Dependency] private readonly SharedHandsSystem _handsSystem = default!;
 
         public override void Initialize()
         {
@@ -55,7 +54,7 @@ namespace Content.Server.Storage.EntitySystems
         /// </summary>
         /// <returns>True if item was hidden inside stash</returns>
         public bool TryHideItem(EntityUid uid, EntityUid userUid, EntityUid itemToHideUid,
-            SecretStashComponent? component = null, ItemComponent? item = null,
+            SecretStashComponent? component = null, SharedItemComponent? item = null,
             MetaDataComponent? itemMeta = null, SharedHandsComponent? hands = null)
         {
             if (!Resolve(uid, ref component))
@@ -85,7 +84,7 @@ namespace Content.Server.Storage.EntitySystems
             }
 
             // try to move item from hands to stash container
-            if (!hands.Drop(itemToHideUid, container))
+            if (!_handsSystem.TryDropIntoContainer(userUid, itemToHideUid, container))
             {
                 return false;
             }
@@ -117,13 +116,7 @@ namespace Content.Server.Storage.EntitySystems
                 return false;
             }
 
-            // get item inside container
-            var itemUid = container.ContainedEntity;
-            if (!EntityManager.TryGetComponent(itemUid, out ItemComponent? item))
-            {
-                return false;
-            }
-            hands.PutInHandOrDrop(item);
+            _handsSystem.PickupOrDrop(userUid, container.ContainedEntity.Value, handsComp: hands);
 
             // show success message
             var successMsg = Loc.GetString("comp-secret-stash-action-get-item-found-something",

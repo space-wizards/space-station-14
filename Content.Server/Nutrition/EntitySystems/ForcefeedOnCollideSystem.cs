@@ -1,11 +1,9 @@
 using Content.Server.Nutrition.Components;
 using Content.Shared.Throwing;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
 
 namespace Content.Server.Nutrition.EntitySystems
 {
-    public class ForcefeedOnCollideSystem : EntitySystem
+    public sealed class ForcefeedOnCollideSystem : EntitySystem
     {
         [Dependency] private readonly FoodSystem _foodSystem = default!;
 

@@ -1,7 +1,5 @@
 using Content.Server.Hands.Components;
 using JetBrains.Annotations;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
 
 namespace Content.Server.AI.WorldState.States.Inventory
 {
@@ -15,7 +13,7 @@ namespace Content.Server.AI.WorldState.States.Inventory
 
         public override EntityUid? GetValue()
         {
-            return IoCManager.Resolve<IEntityManager>().GetComponentOrNull<HandsComponent>(Owner)?.GetActiveHand?.Owner;
+            return IoCManager.Resolve<IEntityManager>().GetComponentOrNull<HandsComponent>(Owner)?.ActiveHandEntity;
         }
     }
 }

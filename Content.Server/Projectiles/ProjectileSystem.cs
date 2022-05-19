@@ -7,9 +7,6 @@ using Content.Shared.Database;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Maths;
 using Robust.Shared.Physics.Dynamics;
 using Robust.Shared.Player;
 
@@ -66,8 +63,7 @@ namespace Content.Server.Projectiles
             }
 
             // Damaging it can delete it
-            if (!EntityManager.GetComponent<MetaDataComponent>(otherEntity).EntityDeleted &&
-                EntityManager.HasComponent<CameraRecoilComponent>(otherEntity))
+            if (!Deleted(otherEntity) && HasComp<CameraRecoilComponent>(otherEntity))
             {
                 var direction = args.OurFixture.Body.LinearVelocity.Normalized;
                 _cameraRecoil.KickCamera(otherEntity, direction);

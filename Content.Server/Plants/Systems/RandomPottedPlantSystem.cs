@@ -1,12 +1,10 @@
 using Content.Server.Plants.Components;
 using Robust.Server.GameObjects;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
 using Robust.Shared.Random;
 
 namespace Content.Server.Plants.Systems
 {
-    public class RandomPottedPlantSystem : EntitySystem
+    public sealed class RandomPottedPlantSystem : EntitySystem
     {
         [Dependency] private readonly IRobustRandom _random = default!;
 

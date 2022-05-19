@@ -1,27 +1,13 @@
-using System.Collections.Generic;
-using Content.Server.Atmos.Piping.Components;
-using Content.Server.Power.Components;
 using Content.Shared.Atmos;
 using Content.Shared.Atmos.Monitor;
 using Content.Shared.Sound;
-using Robust.Shared.GameObjects;
-using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
-using Robust.Shared.ViewVariables;
 
 namespace Content.Server.Atmos.Monitor.Components
 {
     [RegisterComponent]
-    public class AtmosMonitorComponent : Component
+    public sealed class AtmosMonitorComponent : Component
     {
-        public override string Name => "AtmosMonitor";
-
-        // Requires power. No logic related to this will be performed here, however,
-        // save for ensuring that the data is valid upon set.
-        // This is how the system discovers entities that are alarmable.
-        [ComponentDependency] public readonly ApcPowerReceiverComponent? PowerRecvComponent = default!;
-        [ComponentDependency] public readonly AtmosDeviceComponent? AtmosDeviceComponent = default!;
-
         // Whether this monitor can send alarms,
         // or recieve atmos command events.
         //

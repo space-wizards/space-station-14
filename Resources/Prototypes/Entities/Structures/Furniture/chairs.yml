@@ -14,14 +14,14 @@
     fixtures:
     - shape:
         !type:PhysShapeCircle
-          radius: 0.2
-      mask:
-      - Impassable
-      - SmallImpassable
+        radius: 0.2
       mass: 10
+      mask:
+      - TableMask
   - type: Sprite
     sprite: Structures/Furniture/chairs.rsi
     noRot: true
+    netsync: false
   - type: Strap
     position: Stand
     buckleOffset: "0,0.15"
@@ -53,7 +53,7 @@
   - type: Sprite
     state: chair
   - type: Construction
-    graph: seat
+    graph: Seat
     node: chair
 
 - type: entity
@@ -66,7 +66,7 @@
   - type: Sprite
     state: stool
   - type: Construction
-    graph: seat
+    graph: Seat
     node: stool
 
 - type: entity
@@ -82,7 +82,7 @@
   - type: Sprite
     state: bar
   - type: Construction
-    graph: seat
+    graph: Seat
     node: stoolBar
 
 - type: entity
@@ -95,7 +95,7 @@
   - type: Sprite
     state: office-white
   - type: Construction
-    graph: seat
+    graph: Seat
     node: chairOffice
 
 - type: entity
@@ -106,7 +106,7 @@
   - type: Sprite
     state: office-dark
   - type: Construction
-    graph: seat
+    graph: Seat
     node: chairOfficeDark
 
 - type: entity
@@ -121,8 +121,24 @@
   - type: Sprite
     state: comfy
   - type: Construction
-    graph: seat
+    graph: Seat
     node: chairComfy
+
+- type: entity
+  name: pilot seat
+  id: ChairPilotSeat
+  parent: SeatBase
+  description: The pilot seat of a prestigious ship.
+  components:
+  - type: Transform
+    anchored: true
+  - type: Anchorable
+  - type: Rotatable
+  - type: Sprite
+    state: shuttle
+  - type: Construction
+    graph: Seat
+    node: chairPilotSeat
 
 - type: entity
   name: wooden chair
@@ -133,7 +149,7 @@
     state: wooden
   - type: Rotatable
   - type: Construction
-    graph: seat
+    graph: Seat
     node: chairWood
   - type: Damageable
     damageModifierSet: Wood
@@ -158,15 +174,42 @@
     - Wooden
 
 - type: entity
-  name: pilot seat
-  id: ChairPilotSeat
+  name: ritual chair
+  id: ChairRitual
   parent: SeatBase
-  description: The pilot seat of a prestigious ship.
+  description: Looks uncomfortable.
   components:
-  - type: Transform
-    anchored: true
   - type: Anchorable
   - type: Rotatable
   - type: Sprite
-    state: shuttle
-    netsync: false
+    state: ritual
+  - type: Construction
+    graph: RitualSeat
+    node: chairRitual
+
+- type: entity
+  name: cursed chair
+  id: ChairCursed
+  parent: SeatBase
+  description: It's staring back.
+  components:
+  - type: Anchorable
+  - type: Rotatable
+  - type: Sprite
+    state: cursed
+  - type: Strap
+    buckleSound:
+      collection: MaleScreams
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 50
+      behaviors:
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
+      - !type:PlaySoundBehavior
+        sound:
+          path: /Audio/Voice/Human/womanlaugh.ogg
+    graph: RitualSeat
+    node: chairCursed

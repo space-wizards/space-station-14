@@ -1,15 +1,10 @@
-using Robust.Shared.GameObjects;
-using Robust.Shared.Serialization.Manager.Attributes;
-using Robust.Shared.ViewVariables;
-
 namespace Content.Server.Guardian
 {
     /// <summary>
     /// Given to guardians to monitor their link with the host
     /// </summary>
     [RegisterComponent]
-    [ComponentProtoName("Guardian")]
-    public class GuardianComponent : Component
+    public sealed class GuardianComponent : Component
     {
         /// <summary>
         /// The guardian host entity

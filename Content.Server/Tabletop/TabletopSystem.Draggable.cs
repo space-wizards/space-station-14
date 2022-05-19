@@ -1,16 +1,15 @@
 using Content.Server.Tabletop.Components;
 using Content.Shared.Tabletop;
+using Content.Shared.Tabletop.Components;
 using Content.Shared.Tabletop.Events;
 using Robust.Server.Player;
-using Robust.Shared.GameObjects;
 using Robust.Shared.GameStates;
 using Robust.Shared.Map;
-using Robust.Shared.Maths;
 using DrawDepth = Content.Shared.DrawDepth.DrawDepth;
 
 namespace Content.Server.Tabletop
 {
-    public partial class TabletopSystem
+    public sealed partial class TabletopSystem
     {
         public void InitializeDraggable()
         {
@@ -34,18 +33,7 @@ namespace Content.Server.Tabletop
             if (!session.Players.ContainsKey(playerSession))
                 return;
 
-            // Return if can not see table or stunned/no hands
-            if (!EntityManager.EntityExists(msg.TableUid))
-                return;
-
-            if (!CanSeeTable(playerEntity, msg.TableUid) || StunnedOrNoHands(playerEntity))
-                return;
-
-            // Check if moved entity exists and has tabletop draggable component
-            if (!EntityManager.EntityExists(msg.MovedEntityUid))
-                return;
-
-            if (!EntityManager.HasComponent<TabletopDraggableComponent>(msg.MovedEntityUid))
+            if (!CanSeeTable(playerEntity, msg.TableUid) || !CanDrag(playerEntity, msg.MovedEntityUid, out _))
                 return;
 
             // TODO: some permission system, disallow movement if you're not permitted to move the item
@@ -56,13 +44,14 @@ namespace Content.Server.Tabletop
             transform.Coordinates = entityCoordinates;
         }
 
-        private void OnDraggingPlayerChanged(TabletopDraggingPlayerChangedEvent msg)
+        private void OnDraggingPlayerChanged(TabletopDraggingPlayerChangedEvent msg, EntitySessionEventArgs args)
         {
             var dragged = msg.DraggedEntityUid;
 
             if (!EntityManager.TryGetComponent<TabletopDraggableComponent?>(dragged, out var draggableComponent)) return;
 
-            draggableComponent.DraggingPlayer = msg.DraggingPlayer;
+            draggableComponent.DraggingPlayer = msg.IsDragging ? args.SenderSession.UserId : null;
+            Dirty(draggableComponent);
 
             if (!EntityManager.TryGetComponent<AppearanceComponent?>(dragged, out var appearance)) return;
 

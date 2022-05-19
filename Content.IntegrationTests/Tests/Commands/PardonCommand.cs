@@ -1,5 +1,4 @@
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Content.Server.Database;
@@ -11,7 +10,7 @@ namespace Content.IntegrationTests.Tests.Commands
 {
     [TestFixture]
     [TestOf(typeof(PardonCommand))]
-    public class PardonCommand : ContentIntegrationTest
+    public sealed class PardonCommand : ContentIntegrationTest
     {
         private static readonly TimeSpan MarginOfError = TimeSpan.FromMinutes(1);
 

@@ -1,14 +1,10 @@
-using System;
-using Robust.Shared.GameObjects;
-using Robust.Shared.Maths;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.CharacterAppearance.Components
 {
+    [Virtual]
     public class SharedMagicMirrorComponent : Component
     {
-        public override string Name => "MagicMirror";
-
         [Serializable, NetSerializable]
         public enum MagicMirrorUiKey
         {
@@ -16,7 +12,7 @@ namespace Content.Shared.CharacterAppearance.Components
         }
 
         [Serializable, NetSerializable]
-        public class HairSelectedMessage : BoundUserInterfaceMessage
+        public sealed class HairSelectedMessage : BoundUserInterfaceMessage
         {
             public readonly string HairId;
             public readonly bool IsFacialHair;
@@ -29,7 +25,7 @@ namespace Content.Shared.CharacterAppearance.Components
         }
 
         [Serializable, NetSerializable]
-        public class HairColorSelectedMessage : BoundUserInterfaceMessage
+        public sealed class HairColorSelectedMessage : BoundUserInterfaceMessage
         {
             public (byte r, byte g, byte b) HairColor;
             public readonly bool IsFacialHair;
@@ -42,7 +38,7 @@ namespace Content.Shared.CharacterAppearance.Components
         }
 
         [Serializable, NetSerializable]
-        public class EyeColorSelectedMessage : BoundUserInterfaceMessage
+        public sealed class EyeColorSelectedMessage : BoundUserInterfaceMessage
         {
             public (byte r, byte g, byte b) EyeColor;
 
@@ -53,7 +49,7 @@ namespace Content.Shared.CharacterAppearance.Components
         }
 
         [Serializable, NetSerializable]
-        public class MagicMirrorInitialDataMessage : BoundUserInterfaceMessage
+        public sealed class MagicMirrorInitialDataMessage : BoundUserInterfaceMessage
         {
             public readonly Color HairColor;
             public readonly Color FacialHairColor;

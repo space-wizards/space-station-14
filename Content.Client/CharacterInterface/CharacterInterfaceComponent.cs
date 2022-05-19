@@ -12,10 +12,8 @@ namespace Content.Client.CharacterInterface
     /// user interfaces into a single window and keybind for the user
     /// </summary>
     [RegisterComponent]
-    public class CharacterInterfaceComponent : Component
+    public sealed class CharacterInterfaceComponent : Component
     {
-        public override string Name => "Character Interface Component";
-
         /// <summary>
         ///     Window to hold each of the character interfaces
         /// </summary>
@@ -29,7 +27,7 @@ namespace Content.Client.CharacterInterface
         /// <summary>
         /// A window that collects and shows all the individual character user interfaces
         /// </summary>
-        public class CharacterWindow : SS14Window
+        public sealed class CharacterWindow : DefaultWindow
         {
             private readonly List<ICharacterUI> _windowComponents;
 

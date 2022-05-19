@@ -1,14 +1,13 @@
 - type: entity
   id: CrateGeneric
   parent: BaseStructureDynamic
-  abstract: true
+  noSpawn: true
   name: crate
   description: A large container for items.
   components:
   - type: Transform
     noRot: true
   - type: Sprite
-    noRot: true
     netsync: false
     sprite: Structures/Storage/Crates/generic.rsi
     layers:
@@ -17,26 +16,22 @@
       map: ["enum.StorageVisualLayers.Door"]
     - state: welded
       visible: false
-      map: ["enum.StorageVisualLayers.Welded"]
+      map: ["enum.WeldableLayers.BaseWelded"]
   - type: InteractionOutline
   - type: Physics
   - type: Fixtures
     fixtures:
     - shape:
         !type:PhysShapeAabb
-          bounds: "-0.4,-0.4,0.4,0.29"
+        bounds: "-0.4,-0.4,0.4,0.29"
       mass: 25
       mask:
-      - Impassable
-      - VaultImpassable
-      - SmallImpassable
+      - MachineMask
       layer:
-      - Opaque
-      - MobImpassable
-      - SmallImpassable
+      - MachineLayer
   - type: EntityStorage
     Capacity: 500
-    CanWeldShut: true
+  - type: Weldable
   - type: PlaceableSurface
   - type: Damageable
     damageContainer: Inorganic
@@ -66,14 +61,13 @@
 - type: entity
   id: CrateBaseSecure
   parent: BaseStructureDynamic
-  abstract: true
+  noSpawn: true
   name: crate
   description: A large container for items.
   components:
   - type: Transform
     noRot: true
   - type: Sprite
-    noRot: true
     netsync: false
     sprite: Structures/Storage/Crates/generic.rsi
     layers:
@@ -82,26 +76,22 @@
       map: ["enum.StorageVisualLayers.Door"]
     - state: welded
       visible: false
-      map: ["enum.StorageVisualLayers.Welded"]
+      map: ["enum.WeldableLayers.BaseWelded"]
   - type: InteractionOutline
   - type: Physics
   - type: Fixtures
     fixtures:
     - shape:
         !type:PhysShapeAabb
-          bounds: "-0.4,-0.4,0.4,0.29"
+        bounds: "-0.4,-0.4,0.4,0.29"
       mass: 25
       mask:
-      - Impassable
-      - VaultImpassable
-      - SmallImpassable
+      - MachineMask
       layer:
-      - Opaque
-      - MobImpassable
-      - SmallImpassable
+      - MachineLayer
   - type: EntityStorage
     Capacity: 500
-    CanWeldShut: true
+  - type: Weldable
   - type: PlaceableSurface
   - type: Damageable
     damageContainer: Inorganic

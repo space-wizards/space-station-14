@@ -1,0 +1,114 @@
+- type: entity
+  noSpawn: true
+  parent: ClothingBackpackSatchel
+  id: ClothingBackpackSatchelFilled
+  components:
+  - type: StorageFill
+    contents:
+      - id: BoxSurvival
+
+#- type: entity
+#  noSpawn: true
+#  parent: ClothingBackpackSatchelClown
+#  id: ClothingBackpackSatchelClownFilled
+#  components:
+#  - type: StorageFill
+#    contents:
+#      - id: BoxHug
+
+- type: entity
+  noSpawn: true
+  parent: ClothingBackpackSatchelSecurity
+  id: ClothingBackpackSatchelSecurityFilled
+  components:
+  - type: StorageFill
+    contents:
+      - id: BoxSurvivalSecurity
+      - id: Flash
+
+- type: entity
+  noSpawn: true
+  parent: ClothingBackpackSatchelMedical
+  id: ClothingBackpackSatchelMedicalFilled
+  components:
+  - type: StorageFill
+    contents:
+      - id: BoxSurvivalMedical
+
+- type: entity
+  noSpawn: true
+  parent: ClothingBackpackSatchelCaptain
+  id: ClothingBackpackSatchelCaptainFilled
+  components:
+  - type: StorageFill
+    contents:
+      - id: BoxSurvival
+      #- name: StationCharter
+      #- name: TelescopicBaton
+
+- type: entity
+  noSpawn: true
+  parent: ClothingBackpackSatchelEngineering
+  id: ClothingBackpackSatchelEngineeringFilled
+  components:
+  - type: StorageFill
+    contents:
+      - id: BoxSurvivalEngineering
+
+- type: entity
+  noSpawn: true
+  parent: ClothingBackpackSatchelScience
+  id: ClothingBackpackSatchelScienceFilled
+  components:
+  - type: StorageFill
+    contents:
+      - id: BoxSurvival
+
+- type: entity
+  noSpawn: true
+  parent: ClothingBackpackSatchelHydroponics
+  id: ClothingBackpackSatchelHydroponicsFilled
+  components:
+  - type: StorageFill
+    contents:
+      - id: BoxSurvival
+
+- type: entity
+  noSpawn: true
+  parent: ClothingBackpackSatchelChemistry
+  id: ClothingBackpackSatchelChemistryFilled
+  components:
+  - type: StorageFill
+    contents:
+      - id: BoxSurvival
+
+- type: entity
+  noSpawn: true
+  parent: ClothingBackpackSatchel
+  id: ClothingBackpackSatchelChaplainFilled
+  components:
+  - type: StorageFill
+    contents:
+      - id: BoxSurvival
+      - id: Bible
+      - id: RubberStampChaplain
+
+- type: entity
+  noSpawn: true
+  parent: ClothingBackpackSatchel
+  id: ClothingBackpackSatchelMusicianFilled
+  components:
+    - type: StorageFill
+      contents:
+        - id: BoxSurvival
+        - id: AcousticGuitarInstrument
+        - id: SaxophoneInstrument
+
+- type: entity
+  noSpawn: true
+  parent: ClothingBackpackSatchel
+  id: ClothingBackpackSatchelDrone
+  components:
+  - type: Tag
+    tags:
+    - Drone

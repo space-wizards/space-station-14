@@ -4,12 +4,10 @@ using Content.Shared.Hands.Components;
 using Content.Shared.Physics;
 using Content.Shared.Physics.Pull;
 using Robust.Shared.Containers;
-using Robust.Shared.GameObjects;
 using Robust.Shared.GameStates;
-using Robust.Shared.IoC;
-using Robust.Shared.Log;
 using Robust.Shared.Physics;
 using Robust.Shared.Physics.Dynamics;
+using System.Linq;
 
 namespace Content.Shared.Throwing
 {
@@ -27,7 +25,7 @@ namespace Content.Shared.Throwing
         public override void Initialize()
         {
             base.Initialize();
-            SubscribeLocalEvent<ThrownItemComponent, PhysicsSleepMessage>(HandleSleep);
+            SubscribeLocalEvent<ThrownItemComponent, PhysicsSleepEvent>(OnSleep);
             SubscribeLocalEvent<ThrownItemComponent, StartCollideEvent>(HandleCollision);
             SubscribeLocalEvent<ThrownItemComponent, PreventCollideEvent>(PreventCollision);
             SubscribeLocalEvent<ThrownItemComponent, ThrownEvent>(ThrowItem);
@@ -54,21 +52,26 @@ namespace Content.Shared.Throwing
 
         private void ThrowItem(EntityUid uid, ThrownItemComponent component, ThrownEvent args)
         {
-            if (!EntityManager.TryGetComponent(component.Owner, out PhysicsComponent? physicsComponent) ||
-                physicsComponent.Fixtures.Count != 1) return;
+            if (!EntityManager.TryGetComponent(component.Owner, out FixturesComponent? fixturesComponent) ||
+                fixturesComponent.Fixtures.Count != 1) return;
+            if (!EntityManager.TryGetComponent(component.Owner, out PhysicsComponent? physicsComponent)) return;
 
-            if (_fixtures.GetFixtureOrNull(physicsComponent, ThrowingFixture) != null)
+            if (fixturesComponent.Fixtures.ContainsKey(ThrowingFixture))
             {
                 Logger.Error($"Found existing throwing fixture on {component.Owner}");
                 return;
             }
-
-            var shape = physicsComponent.Fixtures[0].Shape;
-            _fixtures.CreateFixture(physicsComponent, new Fixture(physicsComponent, shape) {CollisionLayer = (int) CollisionGroup.ThrownItem, Hard = false, ID = ThrowingFixture});
+            var fixture = fixturesComponent.Fixtures.Values.First();
+            var shape = fixture.Shape;
+            var throwingFixture = new Fixture(physicsComponent, shape) { CollisionMask = (int) CollisionGroup.ThrownItem, Hard = false, ID = ThrowingFixture };
+            _fixtures.TryCreateFixture(physicsComponent, throwingFixture, manager: fixturesComponent);
         }
 
         private void HandleCollision(EntityUid uid, ThrownItemComponent component, StartCollideEvent args)
         {
+            if (args.OtherFixture.Hard == false)
+                return;
+
             var thrower = component.Thrower;
             var otherBody = args.OtherFixture.Body;
 
@@ -84,7 +87,7 @@ namespace Content.Shared.Throwing
             }
         }
 
-        private void HandleSleep(EntityUid uid, ThrownItemComponent thrownItem, PhysicsSleepMessage message)
+        private void OnSleep(EntityUid uid, ThrownItemComponent thrownItem, ref PhysicsSleepEvent @event)
         {
             StopThrow(uid, thrownItem);
         }

@@ -1,10 +1,6 @@
-﻿using System;
 using System.Threading.Tasks;
 using Content.Server.Hands.Components;
-using Content.Shared.Item;
 using Content.Shared.Stunnable;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
 using Robust.Shared.Map;
 using Robust.Shared.Timing;
 
@@ -30,7 +26,7 @@ namespace Content.Server.DoAfter
 
         // NeedHand
         private readonly string? _activeHand;
-        private readonly SharedItemComponent? _activeItem;
+        private readonly EntityUid? _activeItem;
 
         public DoAfter(DoAfterEventArgs eventArgs, IEntityManager entityManager)
         {
@@ -42,7 +38,7 @@ namespace Content.Server.DoAfter
                 UserGrid = entityManager.GetComponent<TransformComponent>(eventArgs.User).Coordinates;
             }
 
-            if (eventArgs.BreakOnTargetMove)
+            if (eventArgs.Target != null && eventArgs.BreakOnTargetMove)
             {
                 // Target should never be null if the bool is set.
                 TargetGrid = entityManager.GetComponent<TransformComponent>(eventArgs.Target!.Value).Coordinates;
@@ -52,8 +48,8 @@ namespace Content.Server.DoAfter
             // (or if there is no item there we need to keep it free).
             if (eventArgs.NeedHand && entityManager.TryGetComponent(eventArgs.User, out HandsComponent? handsComponent))
             {
-                _activeHand = handsComponent.ActiveHand;
-                _activeItem = handsComponent.GetActiveHand;
+                _activeHand = handsComponent.ActiveHand?.Name;
+                _activeItem = handsComponent.ActiveHandEntity;
             }
 
             Tcs = new TaskCompletionSource<DoAfterStatus>();
@@ -122,8 +118,9 @@ namespace Content.Server.DoAfter
                 return true;
             }
 
-            if (EventArgs.BreakOnTargetMove && !entityManager.GetComponent<TransformComponent>(EventArgs.Target!.Value).Coordinates.InRange(
-                entityManager, TargetGrid, EventArgs.MovementThreshold))
+            if (EventArgs.Target != null &&
+                EventArgs.BreakOnTargetMove &&
+                !entityManager.GetComponent<TransformComponent>(EventArgs.Target!.Value).Coordinates.InRange(entityManager, TargetGrid, EventArgs.MovementThreshold))
             {
                 return true;
             }
@@ -151,13 +148,13 @@ namespace Content.Server.DoAfter
                 }
                 else
                 {
-                    var currentActiveHand = handsComponent.ActiveHand;
+                    var currentActiveHand = handsComponent.ActiveHand?.Name;
                     if (_activeHand != currentActiveHand)
                     {
                         return true;
                     }
 
-                    var currentItem = handsComponent.GetActiveHand;
+                    var currentItem = handsComponent.ActiveHandEntity;
                     if (_activeItem != currentItem)
                     {
                         return true;

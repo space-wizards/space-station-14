@@ -1,14 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
 using System.Text;
 using Content.Client.Resources;
 using Robust.Client.Graphics;
 using Robust.Client.Input;
 using Robust.Client.ResourceManagement;
 using Robust.Shared.Enums;
-using Robust.Shared.GameObjects;
 using Robust.Shared.Map;
-using Robust.Shared.Maths;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
 using static Content.Shared.NodeContainer.NodeVis;
@@ -18,7 +14,7 @@ namespace Content.Client.NodeContainer
     public sealed class NodeVisualizationOverlay : Overlay
     {
         private readonly NodeGroupSystem _system;
-        private readonly IEntityLookup _lookup;
+        private readonly EntityLookupSystem _lookup;
         private readonly IMapManager _mapManager;
         private readonly IInputManager _inputManager;
         private readonly IEntityManager _entityManager;
@@ -36,7 +32,7 @@ namespace Content.Client.NodeContainer
 
         public NodeVisualizationOverlay(
             NodeGroupSystem system,
-            IEntityLookup lookup,
+            EntityLookupSystem lookup,
             IMapManager mapManager,
             IInputManager inputManager,
             IResourceCache cache,
@@ -90,6 +86,7 @@ namespace Content.Client.NodeContainer
             sb.Append($"node: {node.Name}\n");
             sb.Append($"type: {node.Type}\n");
             sb.Append($"grid pos: {gridTile}\n");
+            sb.Append(group.DebugData);
 
             args.ScreenHandle.DrawString(_font, mousePos + (20, -20), sb.ToString());
         }
@@ -111,30 +108,33 @@ namespace Content.Client.NodeContainer
 
             // Group visible nodes by grid tiles.
             var worldAABB = overlayDrawArgs.WorldAABB;
-            _lookup.FastEntitiesIntersecting(map, ref worldAABB, entity =>
+            var xformQuery = _entityManager.GetEntityQuery<TransformComponent>();
+
+            foreach (var grid in _mapManager.FindGridsIntersecting(map, worldAABB))
             {
-                if (!_system.Entities.TryGetValue(entity, out var nodeData))
-                    return;
-
-                var gridId = _entityManager.GetComponent<TransformComponent>(entity).GridID;
-                var grid = _mapManager.GetGrid(gridId);
-                var gridDict = _gridIndex.GetOrNew(gridId);
-                var coords = _entityManager.GetComponent<TransformComponent>(entity).Coordinates;
-
-                // TODO: This probably shouldn't be capable of returning NaN...
-                if (float.IsNaN(coords.Position.X) || float.IsNaN(coords.Position.Y))
-                    return;
-
-                var tile = gridDict.GetOrNew(grid.TileIndicesFor(coords));
-
-                foreach (var (group, nodeDatum) in nodeData)
+                foreach (var entity in _lookup.GetEntitiesIntersecting(grid.Index, worldAABB))
                 {
-                    if (!_system.Filtered.Contains(group.GroupId))
+                    if (!_system.Entities.TryGetValue(entity, out var nodeData))
+                        continue;
+
+                    var gridDict = _gridIndex.GetOrNew(grid.Index);
+                    var coords = xformQuery.GetComponent(entity).Coordinates;
+
+                    // TODO: This probably shouldn't be capable of returning NaN...
+                    if (float.IsNaN(coords.Position.X) || float.IsNaN(coords.Position.Y))
+                        continue;
+
+                    var tile = gridDict.GetOrNew(grid.TileIndicesFor(coords));
+
+                    foreach (var (group, nodeDatum) in nodeData)
                     {
-                        tile.Add((group, nodeDatum));
+                        if (!_system.Filtered.Contains(group.GroupId))
+                        {
+                            tile.Add((group, nodeDatum));
+                        }
                     }
                 }
-            });
+            }
 
             foreach (var (gridId, gridDict) in _gridIndex)
             {

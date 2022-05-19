@@ -1,17 +1,13 @@
-using System;
-using System.Collections.Generic;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
-using Robust.Shared.Serialization.Manager.Attributes;
-using Robust.Shared.ViewVariables;
 
 namespace Content.Shared.VendingMachines
 {
     [Serializable, NetSerializable, Prototype("vendingMachineInventory")]
-    public class VendingMachineInventoryPrototype : IPrototype
+    public sealed class VendingMachineInventoryPrototype : IPrototype
     {
         [ViewVariables]
-        [DataField("id", required: true)]
+        [IdDataFieldAttribute]
         public string ID { get; } = default!;
 
         [DataField("name")]
@@ -25,5 +21,11 @@ namespace Content.Shared.VendingMachines
 
         [DataField("startingInventory")]
         public Dictionary<string, uint> StartingInventory { get; } = new();
+
+        [DataField("emaggedInventory")]
+        public Dictionary<string, uint>? EmaggedInventory { get; }
+
+        [DataField("contrabandInventory")]
+        public Dictionary<string, uint>? ContrabandInventory { get; }
     }
 }

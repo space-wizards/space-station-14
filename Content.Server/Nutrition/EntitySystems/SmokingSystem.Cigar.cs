@@ -2,11 +2,10 @@ using Content.Server.Nutrition.Components;
 using Content.Shared.Interaction;
 using Content.Shared.Smoking;
 using Content.Shared.Temperature;
-using Robust.Shared.GameObjects;
 
 namespace Content.Server.Nutrition.EntitySystems
 {
-    public partial class SmokingSystem
+    public sealed partial class SmokingSystem
     {
         private void InitializeCigars()
         {
@@ -56,6 +55,7 @@ namespace Content.Server.Nutrition.EntitySystems
         {
             var targetEntity = args.Target;
             if (targetEntity == null ||
+                !args.CanReach ||
                 !EntityManager.TryGetComponent(uid, out SmokableComponent? smokable) ||
                 smokable.State == SmokableState.Lit)
                 return;

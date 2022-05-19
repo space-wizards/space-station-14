@@ -1,9 +1,4 @@
-using System;
-using Robust.Shared.Analyzers;
-using Robust.Shared.GameObjects;
 using Robust.Shared.GameStates;
-using Robust.Shared.IoC;
-using Robust.Shared.Log;
 using Robust.Shared.Map;
 using Robust.Shared.Physics.Dynamics.Joints;
 using Robust.Shared.Serialization;
@@ -14,10 +9,8 @@ namespace Content.Shared.Pulling.Components
     [NetworkedComponent()]
     [Friend(typeof(SharedPullingStateManagementSystem))]
     [RegisterComponent]
-    public class SharedPullableComponent : Component
+    public sealed class SharedPullableComponent : Component
     {
-        public override string Name => "Pullable";
-
         public float? MaxDistance => PullJoint?.MaxLength;
 
         /// <summary>
@@ -31,7 +24,7 @@ namespace Content.Shared.Pulling.Components
         /// </summary>
         public DistanceJoint? PullJoint { get; set; }
 
-        public bool BeingPulled => Puller != default;
+        public bool BeingPulled => Puller != null;
 
         public EntityCoordinates? MovingTo { get; set; }
 
@@ -78,15 +71,9 @@ namespace Content.Shared.Pulling.Components
             EntitySystem.Get<SharedPullingStateManagementSystem>().ForceRelationship(comp, this);
         }
 
-        protected override void Shutdown()
-        {
-            EntitySystem.Get<SharedPullingStateManagementSystem>().ForceDisconnectPullable(this);
-            base.Shutdown();
-        }
-
         protected override void OnRemove()
         {
-            if (Puller != default)
+            if (Puller != null)
             {
                 // This is absolute paranoia but it's also absolutely necessary. Too many puller state bugs. - 20kdc
                 Logger.ErrorS("c.go.c.pulling", "PULLING STATE CORRUPTION IMMINENT IN PULLABLE {0} - OnRemove called when Puller is set!", Owner);
@@ -96,7 +83,7 @@ namespace Content.Shared.Pulling.Components
     }
 
     [Serializable, NetSerializable]
-    public class PullableComponentState : ComponentState
+    public sealed class PullableComponentState : ComponentState
     {
         public readonly EntityUid? Puller;
 

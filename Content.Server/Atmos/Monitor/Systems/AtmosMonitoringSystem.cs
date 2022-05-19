@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using Content.Server.Atmos.Monitor.Components;
 using Content.Server.Atmos.EntitySystems;
 using Content.Server.Atmos.Piping.EntitySystems;
@@ -9,11 +8,7 @@ using Content.Server.DeviceNetwork.Systems;
 using Content.Server.Power.Components;
 using Content.Shared.Atmos;
 using Content.Shared.Atmos.Monitor;
-using Robust.Server.GameObjects;
-using Robust.Shared.GameObjects;
 using Robust.Shared.Audio;
-using Robust.Shared.IoC;
-using Robust.Shared.Maths;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 
@@ -23,7 +18,7 @@ namespace Content.Server.Atmos.Monitor.Systems
     // to it via local APC net, and starts sending updates of the
     // current atmosphere. Monitors fire (which always triggers as
     // a danger), and atmos (which triggers based on set thresholds).
-    public class AtmosMonitorSystem : EntitySystem
+    public sealed class AtmosMonitorSystem : EntitySystem
     {
         [Dependency] private readonly AtmosphereSystem _atmosphereSystem = default!;
         [Dependency] private readonly AtmosDeviceSystem _atmosDeviceSystem = default!;
@@ -62,11 +57,6 @@ namespace Content.Server.Atmos.Monitor.Systems
         /// </summary>
         public const string AtmosMonitorAlarmNetMax = "atmos_monitor_alarm_net_max";
 
-        /// <summary>
-        ///     Frequency (all prototypes that use AtmosMonitor should use this)
-        /// </summary>
-        public const int AtmosMonitorApcFreq = 1621;
-
         public override void Initialize()
         {
             SubscribeLocalEvent<AtmosMonitorComponent, ComponentInit>(OnAtmosMonitorInit);
@@ -76,7 +66,7 @@ namespace Content.Server.Atmos.Monitor.Systems
             SubscribeLocalEvent<AtmosMonitorComponent, TileFireEvent>(OnFireEvent);
             SubscribeLocalEvent<AtmosMonitorComponent, PowerChangedEvent>(OnPowerChangedEvent);
             SubscribeLocalEvent<AtmosMonitorComponent, BeforePacketSentEvent>(BeforePacketRecv);
-            SubscribeLocalEvent<AtmosMonitorComponent, PacketSentEvent>(OnPacketRecv);
+            SubscribeLocalEvent<AtmosMonitorComponent, DeviceNetworkPacketEvent>(OnPacketRecv);
         }
 
         private void OnAtmosMonitorInit(EntityUid uid, AtmosMonitorComponent component, ComponentInit args)
@@ -98,10 +88,10 @@ namespace Content.Server.Atmos.Monitor.Systems
 
         private void OnAtmosMonitorStartup(EntityUid uid, AtmosMonitorComponent component, ComponentStartup args)
         {
-            if (component.PowerRecvComponent == null
-                && component.AtmosDeviceComponent != null)
+            if (!HasComp<ApcPowerReceiverComponent>(uid)
+                && TryComp<AtmosDeviceComponent>(uid, out var atmosDeviceComponent))
             {
-                _atmosDeviceSystem.LeaveAtmosphere(component.AtmosDeviceComponent);
+                _atmosDeviceSystem.LeaveAtmosphere(atmosDeviceComponent);
                 return;
             }
 
@@ -142,7 +132,7 @@ namespace Content.Server.Atmos.Monitor.Systems
                 coords = coords.Offset(rotPos);
                 transform.Coordinates = coords;
 
-                appearance.SetData("offset", -rotPos);
+                appearance.SetData("offset", - new Vector2(0, -1));
 
                 transform.Anchored = true;
             }
@@ -158,7 +148,7 @@ namespace Content.Server.Atmos.Monitor.Systems
             if (!component.NetEnabled) args.Cancel();
         }
 
-        private void OnPacketRecv(EntityUid uid, AtmosMonitorComponent component, PacketSentEvent args)
+        private void OnPacketRecv(EntityUid uid, AtmosMonitorComponent component, DeviceNetworkPacketEvent args)
         {
             // sync the internal 'last alarm state' from
             // the other alarms, so that we can calculate
@@ -204,28 +194,29 @@ namespace Content.Server.Atmos.Monitor.Systems
 
         private void OnPowerChangedEvent(EntityUid uid, AtmosMonitorComponent component, PowerChangedEvent args)
         {
-            if (!args.Powered)
+            if (TryComp<AtmosDeviceComponent>(uid, out var atmosDeviceComponent))
             {
-                if (component.AtmosDeviceComponent != null
-                    && component.AtmosDeviceComponent.JoinedGrid != null)
+                if (!args.Powered)
                 {
-                    _atmosDeviceSystem.LeaveAtmosphere(component.AtmosDeviceComponent);
-                    component.TileGas = null;
-                }
+                    if (atmosDeviceComponent.JoinedGrid != null)
+                    {
+                        _atmosDeviceSystem.LeaveAtmosphere(atmosDeviceComponent);
+                        component.TileGas = null;
+                    }
 
-                // clear memory when power cycled
-                component.LastAlarmState = AtmosMonitorAlarmType.Normal;
-                component.NetworkAlarmStates.Clear();
-            }
-            else if (args.Powered)
-            {
-                if (component.AtmosDeviceComponent != null
-                    && component.AtmosDeviceComponent.JoinedGrid == null)
+                    // clear memory when power cycled
+                    component.LastAlarmState = AtmosMonitorAlarmType.Normal;
+                    component.NetworkAlarmStates.Clear();
+                }
+                else if (args.Powered)
                 {
-                    _atmosDeviceSystem.JoinAtmosphere(component.AtmosDeviceComponent);
-                    var coords = Transform(component.Owner).Coordinates;
-                    var air = _atmosphereSystem.GetTileMixture(coords);
-                    component.TileGas = air;
+                    if (atmosDeviceComponent.JoinedGrid == null)
+                    {
+                        _atmosDeviceSystem.JoinAtmosphere(atmosDeviceComponent);
+                        var coords = Transform(component.Owner).Coordinates;
+                        var air = _atmosphereSystem.GetTileMixture(coords);
+                        component.TileGas = air;
+                    }
                 }
             }
 
@@ -236,10 +227,10 @@ namespace Content.Server.Atmos.Monitor.Systems
             }
         }
 
-        private void OnFireEvent(EntityUid uid, AtmosMonitorComponent component, TileFireEvent args)
+        private void OnFireEvent(EntityUid uid, AtmosMonitorComponent component, ref TileFireEvent args)
         {
-            if (component.PowerRecvComponent == null
-                || !component.PowerRecvComponent.Powered)
+            if (!TryComp<ApcPowerReceiverComponent>(uid, out var powerReceiverComponent)
+                || !powerReceiverComponent.Powered)
                 return;
 
             // if we're monitoring for atmos fire, then we make it similar to a smoke detector
@@ -261,15 +252,15 @@ namespace Content.Server.Atmos.Monitor.Systems
 
         private void OnAtmosUpdate(EntityUid uid, AtmosMonitorComponent component, AtmosDeviceUpdateEvent args)
         {
-            if (component.PowerRecvComponent == null
-                || !component.PowerRecvComponent.Powered)
+            if (!TryComp<ApcPowerReceiverComponent>(uid, out var powerReceiverComponent)
+                || !powerReceiverComponent.Powered)
                 return;
 
             // can't hurt
             // (in case something is making AtmosDeviceUpdateEvents
             // outside the typical device loop)
-            if (component.AtmosDeviceComponent == null
-                || component.AtmosDeviceComponent.JoinedGrid == null)
+            if (!TryComp<AtmosDeviceComponent>(uid, out var atmosDeviceComponent)
+                || atmosDeviceComponent.JoinedGrid == null)
                 return;
 
             // if we're not monitoring atmos, don't bother
@@ -388,7 +379,7 @@ namespace Content.Server.Atmos.Monitor.Systems
                 [AtmosMonitorAlarmSrc] = prototype != null ? prototype.ID : string.Empty
             };
 
-            _deviceNetSystem.QueuePacket(monitor.Owner, string.Empty, AtmosMonitorApcFreq, payload, true);
+            _deviceNetSystem.QueuePacket(monitor.Owner, null, payload);
             monitor.NetworkAlarmStates.Clear();
 
             Alert(uid, AtmosMonitorAlarmType.Normal, null, monitor);
@@ -410,7 +401,7 @@ namespace Content.Server.Atmos.Monitor.Systems
                 [AtmosMonitorAlarmSrc] = prototype != null ? prototype.ID : string.Empty
             };
 
-            _deviceNetSystem.QueuePacket(monitor.Owner, string.Empty, AtmosMonitorApcFreq, payload, true);
+            _deviceNetSystem.QueuePacket(monitor.Owner, null, payload);
         }
 
         /// <summary>
@@ -444,7 +435,7 @@ namespace Content.Server.Atmos.Monitor.Systems
                 [AtmosMonitorAlarmSrc] = source
             };
 
-            _deviceNetSystem.QueuePacket(monitor.Owner, string.Empty, AtmosMonitorApcFreq, payload, true);
+            _deviceNetSystem.QueuePacket(monitor.Owner, null, payload);
         }
 
         /// <summary>
@@ -474,7 +465,7 @@ namespace Content.Server.Atmos.Monitor.Systems
         }
     }
 
-    public class AtmosMonitorAlarmEvent : EntityEventArgs
+    public sealed class AtmosMonitorAlarmEvent : EntityEventArgs
     {
         public AtmosMonitorAlarmType Type { get; }
         public AtmosMonitorAlarmType HighestNetworkType { get; }

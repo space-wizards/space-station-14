@@ -96,6 +96,14 @@
       ]
     },
     {
+      "name": "atmos_tritium",
+      "delays": [
+        [
+          1
+        ]
+      ]
+    },
+    {
       "name": "atmos_waste",
       "delays": [
         [
@@ -373,6 +381,168 @@
     },
     {
       "name": "direction_sec",
+      "directions": 4,
+      "delays": [
+        [
+          1
+        ],
+        [
+          1
+        ],
+        [
+          1
+        ],
+        [
+          1
+        ]
+      ]
+    },
+    {
+      "name": "direction_brig",
+      "directions": 4,
+      "delays": [
+        [
+          1
+        ],
+        [
+          1
+        ],
+        [
+          1
+        ],
+        [
+          1
+        ]
+      ]
+    },
+    {
+      "name": "direction_chapel",
+      "directions": 4,
+      "delays": [
+        [
+          1
+        ],
+        [
+          1
+        ],
+        [
+          1
+        ],
+        [
+          1
+        ]
+      ]
+    },
+    {
+      "name": "direction_hydro",
+      "directions": 4,
+      "delays": [
+        [
+          1
+        ],
+        [
+          1
+        ],
+        [
+          1
+        ],
+        [
+          1
+        ]
+      ]
+    },
+    {
+      "name": "direction_dorms",
+      "directions": 4,
+      "delays": [
+        [
+          1
+        ],
+        [
+          1
+        ],
+        [
+          1
+        ],
+        [
+          1
+        ]
+      ]
+    },
+    {
+      "name": "direction_cryo",
+      "directions": 4,
+      "delays": [
+        [
+          1
+        ],
+        [
+          1
+        ],
+        [
+          1
+        ],
+        [
+          1
+        ]
+      ]
+    },
+    {
+      "name": "direction_gravity",
+      "directions": 4,
+      "delays": [
+        [
+          1
+        ],
+        [
+          1
+        ],
+        [
+          1
+        ],
+        [
+          1
+        ]
+      ]
+    },
+    {
+      "name": "direction_salvage",
+      "directions": 4,
+      "delays": [
+        [
+          1
+        ],
+        [
+          1
+        ],
+        [
+          1
+        ],
+        [
+          1
+        ]
+      ]
+    },
+    {
+      "name": "direction_solar",
+      "directions": 4,
+      "delays": [
+        [
+          1
+        ],
+        [
+          1
+        ],
+        [
+          1
+        ],
+        [
+          1
+        ]
+      ]
+    },
+    {
+      "name": "direction_wash",
       "directions": 4,
       "delays": [
         [
@@ -799,6 +969,126 @@
     },
     {
       "name": "xenolab",
+      "delays": [
+        [
+          1
+        ]
+      ]
+    },
+    {
+      "name": "zomlab",
+      "delays": [
+        [
+          1
+        ]
+      ]
+    },
+    {
+      "name": "small_secure_red",
+      "delays": [
+        [
+          1
+        ]
+      ]
+    },
+    {
+      "name": "small_secure",
+      "delays": [
+        [
+          1
+        ]
+      ]
+    },
+    {
+      "name": "medium_secure_red",
+      "delays": [
+        [
+          1
+        ]
+      ]
+    },
+    {
+      "name": "medium_blank",
+      "delays": [
+        [
+          1
+        ]
+      ]
+    },
+    {
+      "name": "medium_magnetics",
+      "delays": [
+        [
+          1
+        ]
+      ]
+    },
+    {
+      "name": "medium_danger",
+      "delays": [
+        [
+          1
+        ]
+      ]
+    },
+    {
+      "name": "medium_explosives",
+      "delays": [
+        [
+          1
+        ]
+      ]
+    },
+    {
+      "name": "medium_cryogenics",
+      "delays": [
+        [
+          1
+        ]
+      ]
+    },
+    {
+      "name": "medium_electrical",
+      "delays": [
+        [
+          1
+        ]
+      ]
+    },
+    {
+      "name": "medium_biohazard",
+      "delays": [
+        [
+          1
+        ]
+      ]
+    },
+    {
+      "name": "medium_radiation",
+      "delays": [
+        [
+          1
+        ]
+      ]
+    },
+    {
+      "name": "medium_flammable",
+      "delays": [
+        [
+          1
+        ]
+      ]
+    },
+    {
+      "name": "medium_laser",
+      "delays": [
+        [
+          1
+        ]
+      ]
+    },
+    {
+      "name": "medium_secure",
       "delays": [
         [
           1

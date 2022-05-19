@@ -4,19 +4,15 @@ using Content.Server.Chemistry.EntitySystems;
 using Content.Shared.FixedPoint;
 using Content.Shared.Foam;
 using Content.Shared.Inventory;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Serialization.Manager.Attributes;
 
 namespace Content.Server.Chemistry.Components
 {
     [RegisterComponent]
     [ComponentReference(typeof(SolutionAreaEffectComponent))]
-    public class FoamSolutionAreaEffectComponent : SolutionAreaEffectComponent
+    public sealed class FoamSolutionAreaEffectComponent : SolutionAreaEffectComponent
     {
         [Dependency] private readonly IEntityManager _entMan = default!;
 
-        public override string Name => "FoamSolutionAreaEffect";
         public new const string SolutionName = "solutionArea";
 
         [DataField("foamedMetalPrototype")] private string? _foamedMetalPrototype;
@@ -62,10 +58,10 @@ namespace Content.Server.Chemistry.Components
 
             var cloneSolution = solution.Clone();
             var transferAmount = FixedPoint2.Min(cloneSolution.TotalVolume * solutionFraction * (1 - protection),
-                bloodstream.Solution.AvailableVolume);
+                bloodstream.ChemicalSolution.AvailableVolume);
             var transferSolution = cloneSolution.SplitSolution(transferAmount);
 
-            bloodstreamSys.TryAddToBloodstream(entity, transferSolution, bloodstream);
+            bloodstreamSys.TryAddToChemicals(entity, transferSolution, bloodstream);
         }
 
         protected override void OnKill()

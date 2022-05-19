@@ -9,7 +9,7 @@ using Robust.Shared.Serialization.Manager.Attributes;
 namespace Content.Client.Conveyor.Visualizers
 {
     [UsedImplicitly]
-    public class ConveyorVisualizer : AppearanceVisualizer
+    public sealed class ConveyorVisualizer : AppearanceVisualizer
     {
         [DataField("state_running")]
         private string? _stateRunning;
@@ -34,7 +34,7 @@ namespace Content.Client.Conveyor.Visualizers
                 {
                     ConveyorState.Off => _stateStopped,
                     ConveyorState.Forward => _stateRunning,
-                    ConveyorState.Reversed => _stateReversed,
+                    ConveyorState.Reverse => _stateReversed,
                     _ => throw new ArgumentOutOfRangeException()
                 };
 

@@ -1,13 +1,6 @@
-using System;
-using Robust.Shared.GameObjects;
 using Robust.Shared.GameStates;
-using Robust.Shared.IoC;
 using Robust.Shared.Map;
-using Robust.Shared.Maths;
-using Robust.Shared.Players;
 using Robust.Shared.Serialization;
-using Robust.Shared.Serialization.Manager.Attributes;
-using Robust.Shared.ViewVariables;
 
 namespace Content.Shared.Movement.Components
 {
@@ -17,10 +10,8 @@ namespace Content.Shared.Movement.Components
     [RegisterComponent]
     [ComponentReference(typeof(IMobMoverComponent))]
     [NetworkedComponent()]
-    public class SharedPlayerMobMoverComponent : Component, IMobMoverComponent
+    public sealed class SharedPlayerMobMoverComponent : Component, IMobMoverComponent
     {
-        public override string Name => "PlayerMobMover";
-
         private float _stepSoundDistance;
         [DataField("grabRange")]
         private float _grabRange = IMobMoverComponent.GrabRangeDefault;

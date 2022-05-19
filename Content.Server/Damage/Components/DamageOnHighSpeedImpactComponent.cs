@@ -1,9 +1,5 @@
-using System;
 using Content.Shared.Damage;
 using Content.Shared.Sound;
-using Robust.Shared.GameObjects;
-using Robust.Shared.Serialization.Manager.Attributes;
-using Robust.Shared.ViewVariables;
 
 namespace Content.Server.Damage.Components
 {
@@ -13,8 +9,6 @@ namespace Content.Server.Damage.Components
     [RegisterComponent]
     internal sealed class DamageOnHighSpeedImpactComponent : Component
     {
-        public override string Name => "DamageOnHighSpeedImpact";
-
         [DataField("minimumSpeed")]
         public float MinimumSpeed { get; set; } = 20f;
         [DataField("factor")]

@@ -4,23 +4,39 @@
   abstract: true
   components:
   - type: Sprite
+    netsync: false
     layers:
     - state: icon
     - state: light-icon
       shader: unshaded
       visible: false
+      map: [ "light" ]
   - type: Clothing
     HeldPrefix: off
   - type: PointLight
+    netsync: false
     enabled: false
+    mask: /Textures/Effects/LightMasks/cone.png
+    autoRot: true
     radius: 3
   - type: Appearance
     visuals:
       - type: FlashLightVisualizer
   - type: HandheldLight
-  - type: ItemActions
-    actions:
-      - actionType: ToggleLight
+    addPrefix: false
+  - type: ToggleableLightVisuals
+    spriteLayer: light
+    inhandVisuals:
+      left:
+      - state: on-inhand-left
+        shader: unshaded
+      right:
+      - state: on-inhand-right
+        shader: unshaded
+    clothingVisuals:
+      head:
+      - state: on-equipped-HELMET
+        shader: unshaded
   - type: PowerCellSlot
     cellSlot:
       startingItem: PowerCellSmallHigh

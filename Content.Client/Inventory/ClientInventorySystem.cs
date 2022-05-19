@@ -25,6 +25,7 @@ using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Maths;
 using Robust.Shared.Prototypes;
+using Content.Shared.Interaction.Events;
 
 namespace Content.Client.Inventory
 {
@@ -45,7 +46,7 @@ namespace Content.Client.Inventory
         /// Stores delegates used to create controls for a given <see cref="InventoryTemplatePrototype"/>.
         /// </summary>
         private readonly
-            Dictionary<string, Func<EntityUid, Dictionary<string, List<ItemSlotButton>>, (SS14Window window, Control bottomLeft, Control bottomRight, Control
+            Dictionary<string, Func<EntityUid, Dictionary<string, List<ItemSlotButton>>, (DefaultWindow window, Control bottomLeft, Control bottomRight, Control
                 topQuick)>>
             _uiGenerateDelegates = new();
 
@@ -67,21 +68,17 @@ namespace Content.Client.Inventory
             SubscribeLocalEvent<ClientInventoryComponent, DidEquipEvent>(OnDidEquip);
             SubscribeLocalEvent<ClientInventoryComponent, DidUnequipEvent>(OnDidUnequip);
 
+            SubscribeLocalEvent<ClothingComponent, UseInHandEvent>(OnUseInHand);
+
             _config.OnValueChanged(CCVars.HudTheme, UpdateHudTheme);
         }
 
-        public override bool TryEquip(EntityUid actor, EntityUid target, EntityUid itemUid, string slot, bool silent = false, bool force = false,
-            InventoryComponent? inventory = null, SharedItemComponent? item = null)
+        private void OnUseInHand(EntityUid uid, ClothingComponent component, UseInHandEvent args)
         {
-            if(!target.IsClientSide() && !actor.IsClientSide() && !itemUid.IsClientSide()) RaiseNetworkEvent(new TryEquipNetworkMessage(actor, target, itemUid, slot, silent, force));
-            return base.TryEquip(actor, target, itemUid, slot, silent, force, inventory, item);
-        }
+            if (args.Handled || !component.QuickEquip)
+                return;
 
-        public override bool TryUnequip(EntityUid actor, EntityUid target, string slot, [NotNullWhen(true)] out EntityUid? removedItem, bool silent = false, bool force = false,
-            InventoryComponent? inventory = null)
-        {
-            if(!target.IsClientSide() && !actor.IsClientSide()) RaiseNetworkEvent(new TryUnequipNetworkMessage(actor, target, slot, silent, force));
-            return base.TryUnequip(actor, target, slot, out removedItem, silent, force, inventory);
+            QuickEquip(uid, component, args);
         }
 
         private void OnDidUnequip(EntityUid uid, ClientInventoryComponent component, DidUnequipEvent args)
@@ -199,34 +196,32 @@ namespace Content.Client.Inventory
             if (!Resolve(uid, ref hands, false))
                 return;
 
-            if (!hands.TryGetActiveHeldEntity(out var heldEntity))
+            if (hands.ActiveHandEntity is not EntityUid heldEntity)
                 return;
 
             if(!TryGetSlotContainer(uid, slot, out var containerSlot, out var slotDef, inventoryComponent))
                 return;
 
-            _itemSlotManager.HoverInSlot(button, heldEntity.Value,
-                CanEquip(uid, heldEntity.Value, slot, out _, slotDef, inventoryComponent) &&
-                containerSlot.CanInsert(heldEntity.Value, EntityManager));
+            _itemSlotManager.HoverInSlot(button, heldEntity,
+                CanEquip(uid, heldEntity, slot, out _, slotDef, inventoryComponent) &&
+                containerSlot.CanInsert(heldEntity, EntityManager));
         }
 
         private void HandleSlotButtonPressed(EntityUid uid, string slot, ItemSlotButton button,
             GUIBoundKeyEventArgs args)
         {
-            if (TryGetSlotEntity(uid, slot, out var itemUid))
-            {
-                if (!_itemSlotManager.OnButtonPressed(args, itemUid.Value) && args.Function == EngineKeyFunctions.UIClick)
-                {
-                    RaiseNetworkEvent(new UseSlotNetworkMessage(uid, slot));
-                }
+            if (TryGetSlotEntity(uid, slot, out var itemUid) && _itemSlotManager.OnButtonPressed(args, itemUid.Value))
                 return;
-            }
 
-            if (args.Function != EngineKeyFunctions.UIClick) return;
-            TryEquipActiveHandTo(uid, slot);
+            if (args.Function != EngineKeyFunctions.UIClick)
+                return;
+
+            // only raise event if either itemUid is not null, or the user is holding something
+            if (itemUid != null || TryComp(uid, out SharedHandsComponent? hands) && hands.ActiveHandEntity != null)
+                EntityManager.RaisePredictiveEvent(new UseSlotNetworkMessage(slot)); 
         }
 
-        private bool TryGetUIElements(EntityUid uid, [NotNullWhen(true)] out SS14Window? invWindow,
+        private bool TryGetUIElements(EntityUid uid, [NotNullWhen(true)] out DefaultWindow? invWindow,
             [NotNullWhen(true)] out Control? invBottomLeft, [NotNullWhen(true)] out Control? invBottomRight,
             [NotNullWhen(true)] out Control? invTopQuick, ClientInventoryComponent? component = null)
         {
@@ -245,12 +240,16 @@ namespace Content.Client.Inventory
             {
                 _uiGenerateDelegates[component.TemplateId] = genfunc = (entityUid, list) =>
                 {
-                    var window = new SS14Window()
+                    var window = new DefaultWindow()
                     {
                         Title = Loc.GetString("human-inventory-window-title"),
                         Resizable = false
                     };
-                    window.OnClose += () => _gameHud.InventoryButtonDown = false;
+                    window.OnClose += () =>
+                    {
+                        _gameHud.InventoryButtonDown = false;
+                        _gameHud.TopInventoryQuickButtonContainer.Visible = false;
+                    };
                     var windowContents = new LayoutContainer
                     {
                         MinSize = (ButtonSize * 4 + ButtonSeparation * 3 + RightSeparation,
@@ -268,7 +267,7 @@ namespace Content.Client.Inventory
                                 if (e.Function != EngineKeyFunctions.UIClick &&
                                     e.Function != ContentKeyFunctions.ActivateItemInWorld)
                                     return;
-                                RaiseNetworkEvent(new OpenSlotStorageNetworkMessage(entityUid, definition.Name));
+                                RaiseNetworkEvent(new OpenSlotStorageNetworkMessage(definition.Name));
                             }
                         };
                         btn.OnHover = (_) =>
@@ -353,6 +352,7 @@ namespace Content.Client.Inventory
         private void HandleOpenInventoryMenu()
         {
             _gameHud.InventoryButtonDown = !_gameHud.InventoryButtonDown;
+            _gameHud.TopInventoryQuickButtonContainer.Visible = _gameHud.InventoryButtonDown;
         }
     }
 }

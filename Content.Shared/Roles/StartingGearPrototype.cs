@@ -1,14 +1,11 @@
-using System.Collections.Generic;
 using Content.Shared.Preferences;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
-using Robust.Shared.ViewVariables;
 
 namespace Content.Shared.Roles
 {
     [Prototype("startingGear")]
-    public class StartingGearPrototype : IPrototype
+    public sealed class StartingGearPrototype : IPrototype
     {
         // TODO: Custom TypeSerializer for dictionary value prototype IDs
         [DataField("equipment")] private Dictionary<string, string> _equipment = new();
@@ -33,7 +30,7 @@ namespace Content.Shared.Roles
         private Dictionary<string, string> _inHand = new(0);
 
         [ViewVariables]
-        [DataField("id", required: true)]
+        [IdDataFieldAttribute]
         public string ID { get; } = string.Empty;
 
         public string GetGear(string slot, HumanoidCharacterProfile? profile)

@@ -16,24 +16,39 @@
     sprite: Objects/Devices/pda.rsi
     state: pda
   - type: Clothing
-    QuickEquip: false
+    quickEquip: false
     size: 10
     Slots:
     - idcard
     - Belt
   - type: UnpoweredFlashlight
+    toggleAction:
+      name: action-name-toggle-light
+      description: action-description-toggle-light
+      icon: Objects/Tools/flashlight.rsi/flashlight.png
+      iconOn: Objects/Tools/flashlight.rsi/flashlight-on.png
+      event: !type:ToggleActionEvent
   - type: PointLight
     enabled: false
     radius: 2.5
     softness: 5
     mask: /Textures/Effects/LightMasks/cone.png
     autoRot: true
+  - type: Ringer
+  - type: ActivatableUI
+    key: enum.PDAUiKey.Key
   - type: UserInterface
     interfaces:
     - key: enum.PDAUiKey.Key
       type: PDABoundUserInterface
     - key: enum.UplinkUiKey.Key
       type: UplinkBoundUserInterface
+    - key: enum.RingerUiKey.Key
+      type: RingerBoundUserInterface
+    - key: enum.InstrumentUiKey.Key
+      type: InstrumentBoundUserInterface
+    - key: enum.HealthAnalyzerUiKey.Key
+      type: HealthAnalyzerBoundUserInterface
   - type: PDA
     penSlot:
       startingItem: Pen
@@ -47,16 +62,80 @@
       whitelist:
         components:
         - IdCard
-  - type: DoorBumpOpener
+  - type: Tag
+    tags:
+    - DoorBumpOpener
+  - type: Input
+    context: "human"
 
 - type: entity
   parent: BasePDA
-  id: AssistantPDA
-  name: assistant PDA
+  id: PassengerPDA
+  name: passenger PDA
   description: Why isn't it gray?
   components:
   - type: PDA
-    id: AssistantIDCard
+    id: PassengerIDCard
+
+- type: entity
+  parent: BasePDA
+  id: TechnicalAssistantPDA
+  name: technical assistant PDA
+  description: Why isn't it yellow?
+  components:
+  - type: PDA
+    id: TechnicalAssistantIDCard
+  - type: Appearance
+    visuals:
+    - type: PDAVisualizer
+      state: pda-interntech
+  - type: Icon
+    state: pda-interntech
+
+- type: entity
+  parent: BasePDA
+  id: MedicalInternPDA
+  name: medical intern PDA
+  description: Why isn't it white?
+  components:
+  - type: PDA
+    id: MedicalInternIDCard
+  - type: Appearance
+    visuals:
+    - type: PDAVisualizer
+      state: pda-internmed
+  - type: Icon
+    state: pda-internmed
+
+- type: entity
+  parent: BasePDA
+  id: SecurityCadetPDA
+  name: security cadet PDA
+  description: Why isn't it red?
+  components:
+  - type: PDA
+    id: SecurityCadetIDCard
+  - type: Appearance
+    visuals:
+    - type: PDAVisualizer
+      state: pda-interncadet
+  - type: Icon
+    state: pda-interncadet
+
+- type: entity
+  parent: BasePDA
+  id: ServiceWorkerPDA
+  name: service worker PDA
+  description: Why isn't it gray?
+  components:
+  - type: PDA
+    id: ServiceWorkerIDCard
+  - type: Appearance
+    visuals:
+    - type: PDAVisualizer
+      state: pda-internservice
+  - type: Icon
+    state: pda-internservice
 
 - type: entity
   parent: BasePDA
@@ -113,6 +192,8 @@
     state: pda-clown
   - type: Slippery
     paralyzeTime: 4
+    launchForwardsMultiplier: 9.0
+  - type: StepTrigger
   - type: CollisionWake
     enabled: false
   - type: Physics
@@ -125,13 +206,13 @@
       id: "slips"
       hard: false
       layer:
-      - SmallImpassable
+      - SlipLayer
     - shape:
         !type:PhysShapeAabb
         bounds: "-0.4,-0.3,0.4,0.3"
       mass: 2.5
       mask:
-      - SmallImpassable
+      - ItemMask
 
 - type: entity
   parent: BasePDA
@@ -200,6 +281,21 @@
 
 - type: entity
   parent: BasePDA
+  id: SalvagePDA
+  name: salvage PDA
+  description: Smells like ash.
+  components:
+  - type: PDA
+    id: SalvageIDCard
+  - type: Appearance
+    visuals:
+      - type: PDAVisualizer
+        state: pda-miner
+  - type: Icon
+    state: pda-miner
+
+- type: entity
+  parent: BasePDA
   id: BartenderPDA
   name: bartender PDA
   description: Smells like beer.
@@ -213,6 +309,35 @@
   - type: Icon
     state: pda-bartender
 
+- type: entity
+  parent: BasePDA
+  id: LibrarianPDA
+  name: librarian PDA
+  description: Smells like books.
+  components:
+  - type: PDA
+    id: LibrarianIDCard
+  - type: Appearance
+    visuals:
+      - type: PDAVisualizer
+        state: pda-library
+  - type: Icon
+    state: pda-library
+
+- type: entity
+  parent: BasePDA
+  id: LawyerPDA
+  name: lawyer PDA
+  description: For lawyers to poach dubious clients.
+  components:
+  - type: PDA
+    id: LawyerIDCard
+  - type: Appearance
+    visuals:
+      - type: PDAVisualizer
+        state: pda-lawyer
+  - type: Icon
+    state: pda-lawyer
 
 - type: entity
   parent: BasePDA
@@ -237,13 +362,14 @@
   components:
   - type: PDA
     id: CaptainIDCard
+    penSlot:
+      startingItem: PenCap
   - type: Appearance
     visuals:
       - type: PDAVisualizer
         state: pda-captain
   - type: Icon
     state: pda-captain
-
 
 - type: entity
   parent: BasePDA
@@ -253,13 +379,14 @@
   components:
   - type: PDA
     id: HoPIDCard
+    penSlot:
+      startingItem: PenHop
   - type: Appearance
     visuals:
       - type: PDAVisualizer
         state: pda-hop
   - type: Icon
     state: pda-hop
-
 
 - type: entity
   parent: BasePDA
@@ -296,7 +423,7 @@
   parent: BasePDA
   id: CMOPDA
   name: chief medical officer PDA
-  description: Extraordinarily shiny and sterile.
+  description: Extraordinarily shiny and sterile. Has a built-in health analyzer.
   components:
   - type: PDA
     id: CMOIDCard
@@ -306,12 +433,14 @@
         state: pda-cmo
   - type: Icon
     state: pda-cmo
+  - type: HealthAnalyzer
+    scanDelay: 1
 
 - type: entity
   parent: BasePDA
   id: MedicalPDA
   name: medical PDA
-  description: Shiny and sterile.
+  description: Shiny and sterile. Has a built-in health analyzer.
   components:
   - type: PDA
     id: MedicalIDCard
@@ -321,6 +450,8 @@
         state: pda-medical
   - type: Icon
     state: pda-medical
+  - type: HealthAnalyzer
+    scanDelay: 1.2
 
 - type: entity
   parent: BasePDA
@@ -401,7 +532,7 @@
   parent: BasePDA
   id: SecurityPDA
   name: security PDA
-  description: Red to hide the stains of assistant blood.
+  description: Red to hide the stains of passenger blood.
   components:
   - type: PDA
     id: SecurityIDCard
@@ -413,10 +544,74 @@
     state: pda-security
 
 - type: entity
-  parent: AssistantPDA
+  parent: PassengerPDA
   id: CentcomPDA
   name: centcom PDA
   description: Colored the numbing grey of bureaucracy.
   components:
   - type: PDA
     id: CentcomIDCardSyndie
+
+- type: entity
+  parent: BasePDA
+  id: MusicianPDA
+  name: musician PDA
+  description: It fills you with inspiration.
+  components:
+  - type: PDA
+    id: MusicianIDCard
+  - type: Appearance
+    visuals:
+    - type: PDAVisualizer
+      state: pda-musician
+  - type: Instrument
+    allowPercussion: false
+    handheld: true
+    bank: 1
+    program: 2
+
+- type: entity
+  parent: BasePDA
+  id: AtmosPDA
+  name: atmos PDA
+  description: Still smells like plasma.
+  components:
+  - type: PDA
+    id: AtmosIDCard
+  - type: Appearance
+    visuals:
+      - type: PDAVisualizer
+        state: pda-atmos
+  - type: Icon
+    state: pda-atmos
+
+- type: entity
+  parent: BasePDA
+  id: ClearPDA
+  name: clear PDA
+  description: 99 and 44/100ths percent pure plastic.
+  components:
+  - type: PDA
+    id: PassengerIDCard
+  - type: Appearance
+    visuals:
+      - type: PDAVisualizer
+        state: pda-clear
+  - type: Icon
+    state: pda-clear
+
+- type: entity
+  parent: BasePDA
+  id: SyndiPDA
+  name: syndicate PDA
+  description: Ok, time to be a productive member of- oh cool I'm a bad guy time to kill people!
+  components:
+  - type: PDA
+    id: SyndicateIDCard
+  - type: Appearance
+    visuals:
+      - type: PDAVisualizer
+        state: pda-syndi
+  - type: Icon
+    state: pda-syndi
+

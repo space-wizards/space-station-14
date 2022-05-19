@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using Content.Client.Lathe.Components;
+using Content.Shared.Lathe;
 using Content.Shared.Materials;
 using Content.Shared.Research.Prototypes;
 using Robust.Client.UserInterface;
@@ -12,7 +13,7 @@ using static Robust.Client.UserInterface.Controls.BoxContainer;
 
 namespace Content.Client.Lathe.UI
 {
-    public class LatheMenu : SS14Window
+    public sealed class LatheMenu : DefaultWindow
     {
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
 
@@ -35,7 +36,7 @@ namespace Content.Client.Lathe.UI
 
             Owner = owner;
 
-            Title = "Lathe Menu";
+            Title = "Lathe Menu"; // TODO Replace this with the name of the lathe itself
 
             var vBox = new BoxContainer
             {

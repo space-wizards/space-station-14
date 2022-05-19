@@ -2,15 +2,13 @@
 using Content.Shared.Chemistry.Reagent;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
 
 namespace Content.Server.Chemistry.EntitySystems
 {
     [UsedImplicitly]
-    public class TransformableContainerSystem : EntitySystem
+    public sealed class TransformableContainerSystem : EntitySystem
     {
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
         [Dependency] private readonly SolutionContainerSystem _solutionsSystem = default!;
@@ -55,9 +53,9 @@ namespace Content.Server.Chemistry.EntitySystems
                     sprite?.LayerSetSprite(0, spriteSpec);
                 }
 
-                string val = proto.Name + " glass";
+                string val = proto.LocalizedName + " glass";
                 EntityManager.GetComponent<MetaDataComponent>(owner).EntityName = val;
-                EntityManager.GetComponent<MetaDataComponent>(owner).EntityDescription = proto.Description;
+                EntityManager.GetComponent<MetaDataComponent>(owner).EntityDescription = proto.LocalizedDescription;
                 component.CurrentReagent = proto;
                 component.Transformed = true;
             }

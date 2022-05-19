@@ -1,18 +1,15 @@
-using System;
-using System.Collections.Generic;
 using Content.Shared.Containers.ItemSlots;
-using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization;
-using Robust.Shared.Serialization.Manager.Attributes;
 
 namespace Content.Shared.Access.Components
 {
-    public class SharedIdCardConsoleComponent : Component
+    public abstract class SharedIdCardConsoleComponent : Component
     {
-        public override string Name => "IdCardConsole";
-
         public const int MaxFullNameLength = 256;
         public const int MaxJobTitleLength = 256;
+
+        public static string PrivilegedIdCardSlotId = "IdCardConsole-privilegedId";
+        public static string TargetIdCardSlotId = "IdCardConsole-targetId";
 
         [DataField("privilegedIdSlot")]
         public ItemSlot PrivilegedIdSlot = new();
@@ -20,25 +17,8 @@ namespace Content.Shared.Access.Components
         [DataField("targetIdSlot")]
         public ItemSlot TargetIdSlot = new();
 
-        public enum UiButton
-        {
-            PrivilegedId,
-            TargetId,
-        }
-
         [Serializable, NetSerializable]
-        public class IdButtonPressedMessage : BoundUserInterfaceMessage
-        {
-            public readonly UiButton Button;
-
-            public IdButtonPressedMessage(UiButton button)
-            {
-                Button = button;
-            }
-        }
-
-        [Serializable, NetSerializable]
-        public class WriteToTargetIdMessage : BoundUserInterfaceMessage
+        public sealed class WriteToTargetIdMessage : BoundUserInterfaceMessage
         {
             public readonly string FullName;
             public readonly string JobTitle;
@@ -53,7 +33,7 @@ namespace Content.Shared.Access.Components
         }
 
         [Serializable, NetSerializable]
-        public class IdCardConsoleBoundUserInterfaceState : BoundUserInterfaceState
+        public sealed class IdCardConsoleBoundUserInterfaceState : BoundUserInterfaceState
         {
             public readonly string PrivilegedIdName;
             public readonly bool IsPrivilegedIdPresent;

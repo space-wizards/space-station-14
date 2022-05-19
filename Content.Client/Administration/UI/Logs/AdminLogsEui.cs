@@ -1,19 +1,17 @@
 ﻿using System.Linq;
 using Content.Client.Eui;
-using Content.Shared.Administration;
 using Content.Shared.Administration.Logs;
 using Content.Shared.Eui;
 using JetBrains.Annotations;
 using Robust.Client.Graphics;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
-using Robust.Shared.IoC;
-using static Content.Shared.Administration.AdminLogsEuiMsg;
+using static Content.Shared.Administration.Logs.AdminLogsEuiMsg;
 
 namespace Content.Client.Administration.UI.Logs;
 
 [UsedImplicitly]
-public class AdminLogsEui : BaseEui
+public sealed class AdminLogsEui : BaseEui
 {
     [Dependency] private readonly IClyde _clyde = default!;
     [Dependency] private readonly IUserInterfaceManager _uiManager = default!;

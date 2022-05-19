@@ -1,5 +1,5 @@
 - type: constructionGraph
-  id: railing
+  id: Railing
   start: start
   graph:
     - node: start

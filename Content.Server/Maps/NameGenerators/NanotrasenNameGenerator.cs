@@ -1,12 +1,10 @@
 using JetBrains.Annotations;
-using Robust.Shared.IoC;
 using Robust.Shared.Random;
-using Robust.Shared.Serialization.Manager.Attributes;
 
 namespace Content.Server.Maps.NameGenerators;
 
 [UsedImplicitly]
-public class NanotrasenNameGenerator : GameMapNameGenerator
+public sealed class NanotrasenNameGenerator : StationNameGenerator
 {
     /// <summary>
     ///     Where the map comes from. Should be a two or three letter code, for example "VG" for Packedstation.

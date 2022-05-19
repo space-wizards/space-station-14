@@ -1,13 +1,10 @@
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.FixedPoint;
-using Robust.Shared.IoC;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Serialization.Manager.Attributes;
-using Robust.Shared.ViewVariables;
 
 namespace Content.Shared.Chemistry.Components
 {
-    public partial class Solution
+    public sealed partial class Solution
     {
 
         /// <summary>

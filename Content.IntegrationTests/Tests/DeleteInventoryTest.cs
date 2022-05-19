@@ -2,7 +2,6 @@
 using Content.Server.Clothing.Components;
 using Content.Server.Inventory;
 using Content.Shared.Inventory;
-using Content.Shared.Item;
 using NUnit.Framework;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
@@ -12,7 +11,7 @@ using Robust.Shared.Map;
 namespace Content.IntegrationTests.Tests
 {
     [TestFixture]
-    public class DeleteInventoryTest : ContentIntegrationTest
+    public sealed class DeleteInventoryTest : ContentIntegrationTest
     {
         // Test that when deleting an entity with an InventoryComponent,
         // any equipped items also get deleted.

@@ -1,9 +1,5 @@
 ﻿using Content.Server.Gravity.EntitySystems;
 using Content.Shared.Gravity;
-using Robust.Shared.Analyzers;
-using Robust.Shared.GameObjects;
-using Robust.Shared.Serialization.Manager.Attributes;
-using Robust.Shared.ViewVariables;
 
 namespace Content.Server.Gravity
 {
@@ -11,8 +7,6 @@ namespace Content.Server.Gravity
     [Friend(typeof(GravityGeneratorSystem))]
     public sealed class GravityGeneratorComponent : SharedGravityGeneratorComponent
     {
-        public override string Name => "GravityGenerator";
-
         // 1% charge per second.
         [ViewVariables(VVAccess.ReadWrite)] [DataField("chargeRate")] public float ChargeRate { get; set; } = 0.01f;
         // The gravity generator has two power values.

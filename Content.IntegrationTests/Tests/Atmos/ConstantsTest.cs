@@ -10,7 +10,7 @@ namespace Content.IntegrationTests.Tests.Atmos
 {
     [TestFixture]
     [TestOf(typeof(Atmospherics))]
-    public class ConstantsTest : ContentIntegrationTest
+    public sealed class ConstantsTest : ContentIntegrationTest
     {
         [Test]
         public async Task TotalGasesTest()

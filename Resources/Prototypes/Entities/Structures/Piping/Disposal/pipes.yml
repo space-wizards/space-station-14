@@ -8,12 +8,20 @@
     snap:
     - Disposal
   components:
+  - type: Sprite
+    netsync: false
   - type: SubFloorHide
   - type: Clickable
   - type: InteractionOutline
   - type: Physics
     bodyType: Static
   - type: Fixtures
+    fixtures:
+    - shape:
+        !type:PhysShapeAabb
+        bounds: "-0.25,-0.5,0.25,0.5"
+      mask:
+      - SubfloorMask
   - type: Transform
     anchored: true
   - type: Anchorable
@@ -24,21 +32,43 @@
     thresholds:
     - trigger:
         !type:DamageTrigger
-        damage: 100
+        damage: 100 #excess damage (nuke?). avoid computational cost of spawning entities.
+      behaviors:
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
+    - trigger:
+        !type:DamageTrigger
+        damage: 50
       behaviors:
       - !type:DoActsBehavior
         acts: ["Breakage"]
+      - !type:ChangeConstructionNodeBehavior
+        node: broken
   - type: Rotatable
   - type: Pullable
 
 - type: entity
   id: DisposalHolder
-  abstract: true
+  noSpawn: true
   name: disposal holder
   components:
   - type: DisposalHolder
 
 # Pipes
+
+- type: entity
+  id: DisposalPipeBroken
+  parent: DisposalPipeBase
+  name: broken disposal pipe
+  description: A BBP (big broken pipe)
+  components:
+  - type: Sprite
+    drawdepth: ThickPipe
+    sprite: Structures/Piping/disposal.rsi
+    state: pipe-b
+  - type: Construction
+    graph: DisposalPipe
+    node: broken
 
 - type: entity
   id: DisposalPipe
@@ -53,19 +83,12 @@
   - type: DisposalTransit
   - type: Appearance
     visuals:
-    - type: TrayScannerSubFloorVisualizer
-    - type: SubFloorShowLayerVisualizer
     - type: DisposalVisualizer
       state_free: conpipe-s
       state_anchored: pipe-s
-      state_broken: pipe-b
-  - type: Physics
-  - type: Fixtures
-    fixtures:
-    - shape:
-        !type:PhysShapeAabb
-          bounds: "-0.25,-0.5,0.25,0.5"
-      layer: [ Underplating ]
+  - type: Construction
+    graph: DisposalPipe
+    node: pipe
 
 - type: entity
   id: DisposalTagger
@@ -80,23 +103,18 @@
   - type: DisposalTagger
   - type: Appearance
     visuals:
-    - type: TrayScannerSubFloorVisualizer
-    - type: SubFloorShowLayerVisualizer
     - type: DisposalVisualizer
       state_free: conpipe-tagger
       state_anchored: pipe-tagger
-      state_broken: pipe-b
+  - type: ActivatableUI
+    key: enum.DisposalTaggerUiKey.Key
   - type: UserInterface
     interfaces:
     - key: enum.DisposalTaggerUiKey.Key
       type: DisposalTaggerBoundUserInterface
-  - type: Physics
-  - type: Fixtures
-    fixtures:
-      - shape:
-          !type:PhysShapeAabb
-            bounds: "-0.25,-0.5,0.25,0.5"
-        layer: [ Underplating ]
+  - type: Construction
+    graph: DisposalPipe
+    node: tagger
 
 - type: entity
   id: DisposalTrunk
@@ -111,19 +129,19 @@
   - type: DisposalEntry
   - type: Appearance
     visuals:
-    - type: TrayScannerSubFloorVisualizer
-    - type: SubFloorShowLayerVisualizer
     - type: DisposalVisualizer
       state_free: conpipe-t
       state_anchored: pipe-t
-      state_broken: pipe-b
-  - type: Physics
   - type: Fixtures
     fixtures:
-      - shape:
-          !type:PhysShapeAabb
-            bounds: "-0.25,-0.5,0.25,0.4"
-        layer: [ Underplating ]
+    - shape:
+        !type:PhysShapeAabb
+        bounds: "-0.25,-0.5,0.25,0.4"
+      mask:
+      - SubfloorMask
+  - type: Construction
+    graph: DisposalPipe
+    node: trunk
 
 - type: entity
   id: DisposalRouter
@@ -142,25 +160,27 @@
     - 180
   - type: Appearance
     visuals:
-    - type: TrayScannerSubFloorVisualizer
-    - type: SubFloorShowLayerVisualizer
     - type: DisposalVisualizer
       state_free: conpipe-j1s
       state_anchored: pipe-j1s
-      state_broken: pipe-b
   - type: Flippable
     mirrorEntity: DisposalRouterFlipped
+  - type: ActivatableUI
+    key: enum.DisposalRouterUiKey.Key
   - type: UserInterface
     interfaces:
     - key: enum.DisposalRouterUiKey.Key
       type: DisposalRouterBoundUserInterface
-  - type: Physics
   - type: Fixtures
     fixtures:
-      - shape:
-          !type:PhysShapeAabb
-            bounds: "-0.5,-0.5,0.25,0.5"
-        layer: [ Underplating ]
+    - shape:
+        !type:PhysShapeAabb
+        bounds: "-0.5,-0.5,0.25,0.5"
+      mask:
+      - SubfloorMask
+  - type: Construction
+    graph: DisposalPipe
+    node: router
 
 - type: entity
   id: DisposalRouterFlipped
@@ -178,21 +198,18 @@
     - 180
   - type: Appearance
     visuals:
-    - type: TrayScannerSubFloorVisualizer
-    - type: SubFloorShowLayerVisualizer
     - type: DisposalVisualizer
       state_free: conpipe-j2s
       state_anchored: pipe-j2s
-      state_broken: pipe-b
   - type: Flippable
     mirrorEntity: DisposalRouter
-  - type: Physics
   - type: Fixtures
     fixtures:
     - shape:
         !type:PhysShapeAabb
-          bounds: "-0.25,-0.5,0.5,0.5"
-      layer: [ Underplating ]
+        bounds: "-0.25,-0.5,0.5,0.5"
+      mask:
+      - SubfloorMask
 
 - type: entity
   id: DisposalJunction
@@ -211,21 +228,21 @@
     - 180
   - type: Appearance
     visuals:
-    - type: TrayScannerSubFloorVisualizer
-    - type: SubFloorShowLayerVisualizer
     - type: DisposalVisualizer
       state_free: conpipe-j1
       state_anchored: pipe-j1
-      state_broken: pipe-b
   - type: Flippable
     mirrorEntity: DisposalJunctionFlipped
-  - type: Physics
   - type: Fixtures
     fixtures:
     - shape:
         !type:PhysShapeAabb
-          bounds: "-0.5,-0.5,0.25,0.5"
-      layer: [ Underplating ]
+        bounds: "-0.5,-0.5,0.25,0.5"
+      mask:
+      - SubfloorMask
+  - type: Construction
+    graph: DisposalPipe
+    node: junction
 
 - type: entity
   id: DisposalJunctionFlipped
@@ -243,21 +260,18 @@
     - 180
   - type: Appearance
     visuals:
-    - type: TrayScannerSubFloorVisualizer
-    - type: SubFloorShowLayerVisualizer
     - type: DisposalVisualizer
       state_free: conpipe-j2
       state_anchored: pipe-j2
-      state_broken: pipe-b
   - type: Flippable
     mirrorEntity: DisposalJunction
-  - type: Physics
   - type: Fixtures
     fixtures:
     - shape:
         !type:PhysShapeAabb
-          bounds: "-0.25,-0.5,0.5,0.5"
-      layer: [ Underplating ]
+        bounds: "-0.25,-0.5,0.5,0.5"
+      mask:
+      - SubfloorMask
 
 - type: entity
   id: DisposalYJunction
@@ -276,19 +290,19 @@
     - -90
   - type: Appearance
     visuals:
-    - type: TrayScannerSubFloorVisualizer
-    - type: SubFloorShowLayerVisualizer
     - type: DisposalVisualizer
       state_free: conpipe-y
       state_anchored: pipe-y
-      state_broken: pipe-b
-  - type: Physics
   - type: Fixtures
     fixtures:
     - shape:
         !type:PhysShapeAabb
-          bounds: "-0.5,-0.5,0.5,0.25"
-      layer: [ Underplating ]
+        bounds: "-0.5,-0.5,0.5,0.25"
+      mask:
+      - SubfloorMask
+  - type: Construction
+    graph: DisposalPipe
+    node: yJunction
 
 - type: entity
   id: DisposalBend
@@ -303,16 +317,16 @@
   - type: DisposalBend
   - type: Appearance
     visuals:
-    - type: TrayScannerSubFloorVisualizer
-    - type: SubFloorShowLayerVisualizer
     - type: DisposalVisualizer
       state_free: conpipe-c
       state_anchored: pipe-c
-      state_broken: pipe-b
-  - type: Physics
   - type: Fixtures
     fixtures:
     - shape:
         !type:PhysShapeAabb
-          bounds: "-0.5,-0.5,0.25,0.25"
-      layer: [ Underplating ]
+        bounds: "-0.5,-0.5,0.25,0.25"
+      mask:
+      - SubfloorMask
+  - type: Construction
+    graph: DisposalPipe
+    node: bend

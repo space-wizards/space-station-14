@@ -1,19 +1,13 @@
 using Content.Client.Message;
+using Content.Shared.Containers.ItemSlots;
 using Content.Shared.PDA;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
-using Robust.Client.UserInterface.Controls;
-using Robust.Client.UserInterface.CustomControls;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Localization;
-using Robust.Shared.Prototypes;
-using static Robust.Client.UserInterface.Controls.BoxContainer;
 
 namespace Content.Client.PDA
 {
     [UsedImplicitly]
-    public class PDABoundUserInterface : BoundUserInterface
+    public sealed class PDABoundUserInterface : BoundUserInterface
     {
         private PDAMenu? _menu;
 
@@ -35,17 +29,27 @@ namespace Content.Client.PDA
 
             _menu.EjectIdButton.OnPressed += _ =>
             {
-                SendMessage(new PDAEjectIDMessage());
+                SendMessage(new ItemSlotButtonPressedEvent(PDAComponent.PDAIdSlotId));
             };
 
             _menu.EjectPenButton.OnPressed += _ =>
             {
-                SendMessage(new PDAEjectPenMessage());
+                SendMessage(new ItemSlotButtonPressedEvent(PDAComponent.PDAPenSlotId));
             };
 
             _menu.ActivateUplinkButton.OnPressed += _ =>
             {
                 SendMessage(new PDAShowUplinkMessage());
+            };
+
+            _menu.ActivateMusicButton.OnPressed += _ =>
+            {
+                SendMessage(new PDAShowMusicMessage());
+            };
+
+            _menu.AccessRingtoneButton.OnPressed += _ =>
+            {
+                SendMessage(new PDAShowRingtoneMessage());
             };
 
         }
@@ -86,6 +90,7 @@ namespace Content.Client.PDA
                     _menu.EjectIdButton.Visible = msg.PDAOwnerInfo.IdOwner != null || msg.PDAOwnerInfo.JobTitle != null;
                     _menu.EjectPenButton.Visible = msg.HasPen;
                     _menu.ActivateUplinkButton.Visible = msg.HasUplink;
+                    _menu.ActivateMusicButton.Visible = msg.CanPlayMusic;
 
                     break;
                 }

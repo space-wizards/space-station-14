@@ -1,9 +1,6 @@
-using System;
 using System.Diagnostics.CodeAnalysis;
 using Content.Shared.Alert;
-using Robust.Shared.GameObjects;
 using Robust.Shared.GameStates;
-using Robust.Shared.IoC;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
@@ -32,13 +29,12 @@ namespace Content.Shared.StatusEffect
             base.Update(frameTime);
 
             var curTime = _gameTiming.CurTime;
-            foreach (var status in EntityManager.EntityQuery<StatusEffectsComponent>(false))
+            foreach (var (_, status) in EntityManager.EntityQuery<ActiveStatusEffectsComponent, StatusEffectsComponent>())
             {
-                if (status.ActiveEffects.Count == 0) continue;
                 foreach (var state in status.ActiveEffects.ToArray())
                 {
                     // if we're past the end point of the effect
-                    if (_gameTiming.CurTime > state.Value.Cooldown.Item2)
+                    if (curTime > state.Value.Cooldown.Item2)
                     {
                         TryRemoveStatusEffect(status.Owner, state.Key, status);
                     }
@@ -48,28 +44,39 @@ namespace Content.Shared.StatusEffect
 
         private void OnGetState(EntityUid uid, StatusEffectsComponent component, ref ComponentGetState args)
         {
-            args.State = new StatusEffectsComponentState(component.ActiveEffects, component.AllowedEffects);
+            // Using new(...) To avoid mispredictions due to MergeImplicitData. This will mean the server-side code is
+            // slightly slower, and really this function should just be overridden by the client...
+            args.State = new StatusEffectsComponentState(new(component.ActiveEffects), new(component.AllowedEffects));
         }
 
         private void OnHandleState(EntityUid uid, StatusEffectsComponent component, ref ComponentHandleState args)
         {
-            if (args.Current is StatusEffectsComponentState state)
+            if (args.Current is not StatusEffectsComponentState state)
+                return;
+
+            component.AllowedEffects = new(state.AllowedEffects);
+
+            // Remove non-existent effects.
+            foreach (var effect in component.ActiveEffects.Keys)
             {
-                component.AllowedEffects = state.AllowedEffects;
-
-                foreach (var effect in state.ActiveEffects)
+                if (!state.ActiveEffects.ContainsKey(effect))
                 {
-                    // don't bother with anything if we already have it
-                    if (component.ActiveEffects.ContainsKey(effect.Key))
-                    {
-                        component.ActiveEffects[effect.Key] = effect.Value;
-                        continue;
-                    }
-
-                    var time = effect.Value.Cooldown.Item2 - effect.Value.Cooldown.Item1;
-                    //TODO: Not sure how to handle refresh here.
-                    TryAddStatusEffect(uid, effect.Key, time, true);
+                    TryRemoveStatusEffect(uid, effect, component);
                 }
+            }
+
+            foreach (var effect in state.ActiveEffects)
+            {
+                // don't bother with anything if we already have it
+                if (component.ActiveEffects.ContainsKey(effect.Key))
+                {
+                    component.ActiveEffects[effect.Key] = effect.Value;
+                    continue;
+                }
+
+                var time = effect.Value.Cooldown.Item2 - effect.Value.Cooldown.Item1;
+
+                TryAddStatusEffect(uid, effect.Key, time, true, component);
             }
         }
 
@@ -140,7 +147,7 @@ namespace Content.Shared.StatusEffect
         /// <remarks>
         ///     This obviously does not add any actual 'effects' on its own. Use the generic overload,
         ///     which takes in a component type, if you want to automatically add and remove a component.
-        /// 
+        ///
         ///     If the effect already exists, it will simply replace the cooldown with the new one given.
         ///     If you want special 'effect merging' behavior, do it your own damn self!
         /// </remarks>
@@ -179,6 +186,7 @@ namespace Content.Shared.StatusEffect
             else
             {
                 status.ActiveEffects.Add(key, new StatusEffectState(cooldown, refresh, null));
+                EnsureComp<ActiveStatusEffectsComponent>(uid);
             }
 
             if (proto.Alert != null)
@@ -187,7 +195,7 @@ namespace Content.Shared.StatusEffect
                 _alertsSystem.ShowAlert(uid, proto.Alert.Value, null, cooldown1);
             }
 
-            status.Dirty();
+            Dirty(status);
             // event?
             return true;
         }
@@ -260,8 +268,12 @@ namespace Content.Shared.StatusEffect
             }
 
             status.ActiveEffects.Remove(key);
+            if (status.ActiveEffects.Count == 0)
+            {
+                RemComp<ActiveStatusEffectsComponent>(uid);
+            }
 
-            status.Dirty();
+            Dirty(status);
             // event?
             return true;
         }
@@ -285,6 +297,7 @@ namespace Content.Shared.StatusEffect
                     failed = true;
             }
 
+            Dirty(status);
             return failed;
         }
 
@@ -352,6 +365,7 @@ namespace Content.Shared.StatusEffect
                 _alertsSystem.ShowAlert(uid, proto.Alert.Value, null, cooldown);
             }
 
+            Dirty(status);
             return true;
         }
 
@@ -387,6 +401,7 @@ namespace Content.Shared.StatusEffect
                 _alertsSystem.ShowAlert(uid, proto.Alert.Value, null, cooldown);
             }
 
+            Dirty(status);
             return true;
         }
 
@@ -406,6 +421,8 @@ namespace Content.Shared.StatusEffect
                 return false;
 
             status.ActiveEffects[key].Cooldown = (_gameTiming.CurTime, _gameTiming.CurTime + time);
+
+            Dirty(status);
             return true;
         }
 

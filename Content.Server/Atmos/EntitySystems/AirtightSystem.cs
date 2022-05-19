@@ -1,27 +1,24 @@
 using Content.Server.Atmos.Components;
-using Content.Server.Kudzu;
+using Content.Server.Explosion.EntitySystems;
 using Content.Shared.Atmos;
 using JetBrains.Annotations;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
 using Robust.Shared.Map;
-using Robust.Shared.Maths;
 
 namespace Content.Server.Atmos.EntitySystems
 {
     [UsedImplicitly]
-    public class AirtightSystem : EntitySystem
+    public sealed class AirtightSystem : EntitySystem
     {
         [Dependency] private readonly IMapManager _mapManager = default!;
         [Dependency] private readonly AtmosphereSystem _atmosphereSystem = default!;
-        [Dependency] private readonly SpreaderSystem _spreaderSystem = default!;
+        [Dependency] private readonly ExplosionSystem _explosionSystem = default!;
 
         public override void Initialize()
         {
             SubscribeLocalEvent<AirtightComponent, ComponentInit>(OnAirtightInit);
             SubscribeLocalEvent<AirtightComponent, ComponentShutdown>(OnAirtightShutdown);
-            SubscribeLocalEvent<AirtightComponent, MapInitEvent>(OnMapInit);
             SubscribeLocalEvent<AirtightComponent, AnchorStateChangedEvent>(OnAirtightPositionChanged);
+            SubscribeLocalEvent<AirtightComponent, ReAnchorEvent>(OnAirtightReAnchor);
             SubscribeLocalEvent<AirtightComponent, RotateEvent>(OnAirtightRotated);
         }
 
@@ -31,7 +28,7 @@ namespace Content.Server.Atmos.EntitySystems
 
             if (airtight.FixAirBlockedDirectionInitialize)
             {
-                var rotateEvent = new RotateEvent(airtight.Owner, Angle.Zero, xform.WorldRotation);
+                var rotateEvent = new RotateEvent(airtight.Owner, Angle.Zero, xform.LocalRotation, xform);
                 OnAirtightRotated(uid, airtight, ref rotateEvent);
             }
 
@@ -53,18 +50,11 @@ namespace Content.Server.Atmos.EntitySystems
             }
 
             SetAirblocked(airtight, false, xform);
-
-            InvalidatePosition(airtight.LastPosition.Item1, airtight.LastPosition.Item2, airtight.FixVacuum);
-            RaiseLocalEvent(new AirtightChanged(airtight));
-        }
-
-        private void OnMapInit(EntityUid uid, AirtightComponent airtight, MapInitEvent args)
-        {
         }
 
         private void OnAirtightPositionChanged(EntityUid uid, AirtightComponent airtight, ref AnchorStateChangedEvent args)
         {
-            var xform = EntityManager.GetComponent<TransformComponent>(uid);
+            var xform = Transform(uid);
 
             var gridId = xform.GridID;
             var coords = xform.Coordinates;
@@ -75,6 +65,16 @@ namespace Content.Server.Atmos.EntitySystems
             // Update and invalidate new position.
             airtight.LastPosition = (gridId, tilePos);
             InvalidatePosition(gridId, tilePos);
+        }
+
+        private void OnAirtightReAnchor(EntityUid uid, AirtightComponent airtight, ref ReAnchorEvent args)
+        {
+            foreach (var gridId in new[] { args.OldGrid, args.GridId })
+            {
+                // Update and invalidate new position.
+                airtight.LastPosition = (gridId, args.TilePos);
+                InvalidatePosition(gridId, args.TilePos);
+            }
         }
 
         private void OnAirtightRotated(EntityUid uid, AirtightComponent airtight, ref RotateEvent ev)
@@ -113,6 +113,9 @@ namespace Content.Server.Atmos.EntitySystems
             if (!gridId.IsValid())
                 return;
 
+            var query = EntityManager.GetEntityQuery<AirtightComponent>();
+            _explosionSystem.UpdateAirtightMap(gridId, pos, query);
+            // TODO make atmos system use query
             _atmosphereSystem.UpdateAdjacent(gridId, pos);
             _atmosphereSystem.InvalidateTile(gridId, pos);
 
@@ -141,7 +144,7 @@ namespace Content.Server.Atmos.EntitySystems
         }
     }
 
-    public class AirtightChanged : EntityEventArgs
+    public sealed class AirtightChanged : EntityEventArgs
     {
         public AirtightComponent Airtight;
 

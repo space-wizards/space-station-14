@@ -1,14 +1,12 @@
 using Content.Server.Administration;
 using Content.Shared.Administration;
 using Robust.Shared.Console;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
 using Robust.Shared.Map;
 
 namespace Content.Server.Decals.Commands
 {
     [AdminCommand(AdminFlags.Mapping)]
-    public class RemoveDecalCommand : IConsoleCommand
+    public sealed class RemoveDecalCommand : IConsoleCommand
     {
         public string Command => "rmdecal";
         public string Description => "removes a decal";

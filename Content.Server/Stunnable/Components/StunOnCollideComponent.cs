@@ -1,7 +1,3 @@
-using Robust.Shared.Analyzers;
-using Robust.Shared.GameObjects;
-using Robust.Shared.Serialization.Manager.Attributes;
-
 namespace Content.Server.Stunnable.Components
 {
     /// <summary>
@@ -11,7 +7,6 @@ namespace Content.Server.Stunnable.Components
     public sealed class StunOnCollideComponent : Component
     {
         // TODO: Can probably predict this.
-        public override string Name => "StunOnCollide";
 
         // See stunsystem for what these do
         [DataField("stunAmount")]

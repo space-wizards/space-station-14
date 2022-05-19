@@ -1,13 +1,11 @@
 using Content.Shared.PDA;
-using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization;
 using Robust.Shared.Utility;
-using System;
 
 namespace Content.Shared.Traitor.Uplink
 {
     [Serializable, NetSerializable]
-    public class UplinkListingData : ComponentState, IEquatable<UplinkListingData>
+    public sealed class UplinkListingData : ComponentState, IEquatable<UplinkListingData>
     {
         public readonly string ItemId;
         public readonly int Price;

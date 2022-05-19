@@ -1,7 +1,5 @@
-using System;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.Reagent;
-using Robust.Shared.Serialization.Manager.Attributes;
 
 namespace Content.Server.Chemistry.ReactionEffects
 {
@@ -9,7 +7,7 @@ namespace Content.Server.Chemistry.ReactionEffects
     ///     Sets the temperature of the solution involved with the reaction to a new value.
     /// </summary>
     [DataDefinition]
-    public class SetSolutionTemperatureEffect : ReagentEffect
+    public sealed class SetSolutionTemperatureEffect : ReagentEffect
     {
         /// <summary>
         ///     The temperature to set the solution to.
@@ -30,6 +28,7 @@ namespace Content.Server.Chemistry.ReactionEffects
     ///     Adjusts the temperature of the solution involved in the reaction.
     /// </summary>
     [DataDefinition]
+    [Virtual]
     public class AdjustSolutionTemperatureEffect : ReagentEffect
     {
         /// <summary>
@@ -53,7 +52,7 @@ namespace Content.Server.Chemistry.ReactionEffects
         [DataField("scaled")] private bool _scaled;
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="solution"></param>
         /// <returns></returns>
@@ -83,7 +82,7 @@ namespace Content.Server.Chemistry.ReactionEffects
     /// <summary>
     ///     Adjusts the thermal energy of the solution involved in the reaction.
     /// </summary>
-    public class AdjustSolutionThermalEnergyEffect : AdjustSolutionTemperatureEffect
+    public sealed class AdjustSolutionThermalEnergyEffect : AdjustSolutionTemperatureEffect
     {
         protected override float GetDeltaT(Solution solution)
         {

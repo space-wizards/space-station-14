@@ -5,7 +5,7 @@
   parent: StorageTank
   name: fuel tank
   suffix: Empty
-  description: A fuel tank. It is used to store high amounts of fuel.
+  description: A fuel tank. It's used to store high amounts of fuel.
   components:
   - type: Sprite
     sprite: Structures/Storage/tanks.rsi
@@ -19,12 +19,8 @@
       types:
         Heat: 10
   - type: Explosive
-    # The explosive component is independent of the stored liquid :/
-    # I dream of a day where all grenades/explosives will be reagent dependent.
-    devastationRange: 0
-    heavyImpactRange: 2
-    lightImpactRange: 6
-    flashRange: 5
+    explosionType: Default
+    totalIntensity: 120 # ~ 5 tile radius
 
 - type: entity
   id: WeldingFuelTankFull
@@ -47,7 +43,7 @@
   parent: StorageTank
   name: water tank
   suffix: Empty
-  description: "A water tank. It is used to store high amounts of water."
+  description: "A water tank. It's used to store high amounts of water."
   components:
   - type: Sprite
     sprite: Structures/Storage/tanks.rsi
@@ -64,3 +60,42 @@
         reagents:
         - ReagentId: Water
           Quantity: 1500
+
+- type: entity
+  parent: WaterTankFull
+  id: WaterCooler
+  name: water cooler
+  description: Seems like a good place to stand and waste time.
+  components:
+  - type: Sprite
+    sprite: Structures/Storage/tanks.rsi
+    state: watercooler
+  - type: SolutionContainerManager
+    solutions:
+      tank:
+        reagents:
+        - ReagentId: Water
+          Quantity: 500
+
+- type: entity
+  parent: StorageTank
+  id: WaterTankHighCapacity
+  name: high-capacity water tank
+  suffix: Full
+  description: A highly pressurized water tank made to hold gargantuan amounts of water.
+  components:
+  - type: Sprite
+    sprite: Structures/Storage/tanks.rsi
+    state: highwatertank
+  - type: SolutionContainerManager
+    solutions:
+      tank:
+        reagents:
+        - ReagentId: Water
+#         This is *100, 000* on /tg/
+          Quantity: 10000
+        maxVol: 10000
+#   It's pressurized...
+  - type: ReagentTank
+    transferAmount: 100
+

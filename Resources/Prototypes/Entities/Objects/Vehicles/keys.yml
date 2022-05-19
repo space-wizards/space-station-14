@@ -1,0 +1,75 @@
+- type: entity
+  parent: BaseItem
+  id: VehicleKeyPussyWagon
+  name: janicart keys
+  description: Interesting design.
+  components:
+  - type: Item
+    size: 2
+  - type: Tag
+    tags:
+    - VehicleKey
+    - PussyWagonKeys
+  - type: Sprite
+    sprite: Objects/Vehicles/pussywagon.rsi
+    state: keys
+    netsync: false
+
+- type: entity
+  parent: VehicleKeyPussyWagon
+  id: VehicleKeySecway
+  name: secway keys
+  description: The keys to the future.
+  components:
+  - type: Tag
+    tags:
+    - VehicleKey
+    - SecwayKeys
+  - type: Sprite
+    sprite: Objects/Vehicles/secway.rsi
+    state: keys
+    netsync: false
+
+- type: entity
+  parent: VehicleKeyPussyWagon
+  id: VehicleKeyATV
+  name: ATV keys
+  description: Think this looks like just one key? ATV keys means "actually two vehicle keys."
+  components:
+  - type: Tag
+    tags:
+    - VehicleKey
+    - ATVKeys
+  - type: Sprite
+    sprite: Objects/Vehicles/atv.rsi
+    state: keys
+    netsync: false
+
+- type: entity
+  parent: VehicleKeyATV
+  id: VehicleKeySkeleton
+  name: vehicle skeleton keys
+  description: Unlock any vehicle.
+  components:
+  - type: Tag
+    tags:
+    - VehicleKey
+    - PussyWagonKeys
+    - SecwayKeys
+    - ATVKeys
+    - SyndicateSegwayKeys
+
+- type: entity
+  parent: VehicleKeyPussyWagon
+  id: VehicleKeySyndicateSegway
+  name: syndicate segway keys
+  description: Patterned after the iconic EMAG design.
+  components:
+    - type: Tag
+      tags:
+        - VehicleKey
+        - SyndicateSegwayKeys
+    - type: Sprite
+      sprite: Objects/Vehicles/syndicatesegway.rsi
+      state: keys
+      netsync: false

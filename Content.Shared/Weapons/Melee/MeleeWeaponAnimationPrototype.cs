@@ -1,8 +1,5 @@
-using System;
-using Robust.Shared.Maths;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Serialization.Manager.Attributes;
-using Robust.Shared.ViewVariables;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
 namespace Content.Shared.Weapons.Melee
 {
@@ -10,7 +7,7 @@ namespace Content.Shared.Weapons.Melee
     public sealed class MeleeWeaponAnimationPrototype : IPrototype
     {
         [ViewVariables]
-        [DataField("id", required: true)]
+        [IdDataFieldAttribute]
         public string ID { get; } = default!;
 
         [ViewVariables]
@@ -18,7 +15,7 @@ namespace Content.Shared.Weapons.Melee
         public string State { get; } = string.Empty;
 
         [ViewVariables]
-        [DataField("prototype")]
+        [DataField("prototype", customTypeSerializer:typeof(PrototypeIdSerializer<EntityPrototype>))]
         public string Prototype { get; } = "WeaponArc";
 
         [ViewVariables]

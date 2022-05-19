@@ -1,19 +1,15 @@
 using Content.Shared.Verbs;
 using Content.Server.Chemistry.Components;
 using JetBrains.Annotations;
-using Robust.Shared.GameObjects;
-using Robust.Shared.Localization;
 using Robust.Server.GameObjects;
-using System.Collections.Generic;
-using Content.Shared.Chemistry.Reagent;
+using Content.Shared.Chemistry.Components;
 using Content.Shared.FixedPoint;
 using Content.Shared.Popups;
-using Robust.Shared.IoC;
 
 namespace Content.Server.Chemistry.EntitySystems
 {
-	[UsedImplicitly]
-    public class SolutionTransferSystem : EntitySystem
+    [UsedImplicitly]
+    public sealed class SolutionTransferSystem : EntitySystem
     {
         /// <summary>
         ///     Default transfer amounts for the set-transfer verb.
@@ -24,10 +20,10 @@ namespace Content.Server.Chemistry.EntitySystems
         {
             base.Initialize();
 
-            SubscribeLocalEvent<SolutionTransferComponent, GetAlternativeVerbsEvent>(AddSetTransferVerbs);
+            SubscribeLocalEvent<SolutionTransferComponent, GetVerbsEvent<AlternativeVerb>>(AddSetTransferVerbs);
         }
 
-        private void AddSetTransferVerbs(EntityUid uid, SolutionTransferComponent component, GetAlternativeVerbsEvent args)
+        private void AddSetTransferVerbs(EntityUid uid, SolutionTransferComponent component, GetVerbsEvent<AlternativeVerb> args)
         {
             if (!args.CanAccess || !args.CanInteract || !component.CanChangeTransferAmount)
                 return;
@@ -36,7 +32,7 @@ namespace Content.Server.Chemistry.EntitySystems
                 return;
 
             // Custom transfer verb
-            Verb custom = new();
+            AlternativeVerb custom = new();
             custom.Text = Loc.GetString("comp-solution-transfer-verb-custom-amount");
             custom.Category = VerbCategory.SetTransferAmount;
             custom.Act = () => component.UserInterface?.Open(actor.PlayerSession);
@@ -50,7 +46,7 @@ namespace Content.Server.Chemistry.EntitySystems
                 if ( amount < component.MinimumTransferAmount.Int() || amount > component.MaximumTransferAmount.Int())
                     continue;
 
-                Verb verb = new();
+                AlternativeVerb verb = new();
                 verb.Text = Loc.GetString("comp-solution-transfer-verb-amount", ("amount", amount));
                 verb.Category = VerbCategory.SetTransferAmount;
                 verb.Act = () =>
@@ -65,6 +61,87 @@ namespace Content.Server.Chemistry.EntitySystems
 
                 args.Verbs.Add(verb);
             }
+        }
+
+        /// <summary>
+        /// Transfer from a solution to another.
+        /// </summary>
+        /// <returns>The actual amount transferred.</returns>
+        public FixedPoint2 Transfer(EntityUid user,
+            EntityUid sourceEntity,
+            Solution source,
+            EntityUid targetEntity,
+            Solution target,
+            FixedPoint2 amount)
+        {
+            var transferAttempt = new SolutionTransferAttemptEvent(sourceEntity, targetEntity);
+
+            // Check if the source is cancelling the transfer
+            RaiseLocalEvent(sourceEntity, transferAttempt);
+            if (transferAttempt.Cancelled)
+            {
+                sourceEntity.PopupMessage(user, transferAttempt.CancelReason!);
+                return FixedPoint2.Zero;
+            }
+
+            if (source.DrainAvailable == 0)
+            {
+                sourceEntity.PopupMessage(user,
+                    Loc.GetString("comp-solution-transfer-is-empty", ("target", sourceEntity)));
+                return FixedPoint2.Zero;
+            }
+
+            // Check if the target is cancelling the transfer
+            RaiseLocalEvent(targetEntity, transferAttempt);
+            if (transferAttempt.Cancelled)
+            {
+                sourceEntity.PopupMessage(user, transferAttempt.CancelReason!);
+                return FixedPoint2.Zero;
+            }
+
+            if (target.AvailableVolume == 0)
+            {
+                targetEntity.PopupMessage(user,
+                    Loc.GetString("comp-solution-transfer-is-full", ("target", targetEntity)));
+                return FixedPoint2.Zero;
+            }
+
+            var actualAmount = FixedPoint2.Min(amount, FixedPoint2.Min(source.DrainAvailable, target.AvailableVolume));
+
+            var solutionSystem = Get<SolutionContainerSystem>();
+            var solution = solutionSystem.Drain(sourceEntity, source, actualAmount);
+            solutionSystem.Refill(targetEntity, target, solution);
+
+            return actualAmount;
+        }
+    }
+
+    /// <summary>
+    /// Raised when attempting to transfer from one solution to another.
+    /// </summary>
+    public sealed class SolutionTransferAttemptEvent : CancellableEntityEventArgs
+    {
+        public SolutionTransferAttemptEvent(EntityUid from, EntityUid to)
+        {
+            From = from;
+            To = to;
+        }
+
+        public EntityUid From { get; }
+        public EntityUid To { get; }
+
+        /// <summary>
+        /// Why the transfer has been cancelled.
+        /// </summary>
+        public string? CancelReason { get; private set; }
+
+        /// <summary>
+        /// Cancels the transfer.
+        /// </summary>
+        public void Cancel(string reason)
+        {
+            base.Cancel();
+            CancelReason = reason;
         }
     }
 }

@@ -2,14 +2,12 @@
 using Content.Server.Atmos.Components;
 using Content.Shared.Administration;
 using Robust.Shared.Console;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
 using Robust.Shared.Map;
 
 namespace Content.Server.Atmos.Commands
 {
     [AdminCommand(AdminFlags.Debug)]
-    public class AddUnsimulatedAtmosCommand : IConsoleCommand
+    public sealed class AddUnsimulatedAtmosCommand : IConsoleCommand
     {
         public string Command => "addunsimulatedatmos";
         public string Description => "Adds unimulated atmos support to a grid.";

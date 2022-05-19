@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
+﻿using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Content.Server.Database;
 using Content.Shared.Administration.Logs;
@@ -9,7 +7,7 @@ using Prometheus;
 
 namespace Content.Server.Administration.Logs;
 
-public partial class AdminLogSystem
+public sealed partial class AdminLogSystem
 {
     private const int MaxRoundsCached = 3;
     private const int LogListInitialSize = 30_000;

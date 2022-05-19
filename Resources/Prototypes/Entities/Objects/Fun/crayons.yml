@@ -9,12 +9,24 @@
     tags:
     - Write
     - Crayon
+    - Trash
+  - type: Recyclable
+  - type: SpaceGarbage
   - type: UserInterface
     interfaces:
     - key: enum.CrayonUiKey.Key
       type: CrayonBoundUserInterface
   - type: Crayon
     capacity: 5
+  - type: Food
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 3
+        - ReagentId: MindbreakerToxin
+          Quantity: 2
 
 - type: entity
   parent: Crayon
@@ -36,6 +48,8 @@
     - Write
     - Crayon
     - CrayonWhite
+    - Recyclable
+    - Trash
 
 - type: entity
   parent: Crayon
@@ -57,6 +71,31 @@
     - Write
     - Crayon
     - CrayonWhite
+    - Recyclable
+    - Trash
+
+- type: entity
+  parent: Crayon
+  id: CrayonRainbow
+  name: rainbow crayon
+  components:
+  - type: Sprite
+    sprite: Objects/Fun/crayons.rsi
+    state: rainbow
+  - type: Item
+    sprite: Objects/Fun/crayons.rsi
+    size: 1
+    HeldPrefix: rainbow
+  - type: Crayon
+    color: Red
+    selectableColor: true
+    capacity: 30
+  - type: Tag
+    tags:
+    - Write
+    - Crayon
+    - Recyclable
+    - Trash
 
 - type: entity
   parent: Crayon
@@ -78,6 +117,8 @@
     - Write
     - Crayon
     - CrayonBlack
+    - Recyclable
+    - Trash
 
 - type: entity
   parent: Crayon
@@ -99,6 +140,8 @@
     - Write
     - Crayon
     - CrayonRed
+    - Recyclable
+    - Trash
 
 - type: entity
   parent: Crayon
@@ -120,6 +163,8 @@
     - Write
     - Crayon
     - CrayonOrange
+    - Recyclable
+    - Trash
 
 - type: entity
   parent: Crayon
@@ -141,6 +186,8 @@
     - Write
     - Crayon
     - CrayonYellow
+    - Recyclable
+    - Trash
 
 - type: entity
   parent: Crayon
@@ -162,6 +209,8 @@
     - Write
     - Crayon
     - CrayonGreen
+    - Recyclable
+    - Trash
 
 - type: entity
   parent: Crayon
@@ -183,6 +232,8 @@
     - Write
     - Crayon
     - CrayonBlue
+    - Recyclable
+    - Trash
 
 - type: entity
   parent: Crayon
@@ -204,6 +255,8 @@
     - Write
     - Crayon
     - CrayonPurple
+    - Recyclable
+    - Trash
 
 - type: entity
   parent: BoxCardboard

@@ -1,14 +1,12 @@
-using System;
 using Content.Shared.Alert;
 using Content.Shared.Damage;
 using Content.Shared.FixedPoint;
 using Content.Shared.MobState.Components;
 using Content.Shared.MobState.State;
-using Robust.Shared.GameObjects;
 
 namespace Content.Server.MobState.States
 {
-    public class NormalMobState : SharedNormalMobState
+    public sealed class NormalMobState : SharedNormalMobState
     {
         public override void UpdateState(EntityUid entity, FixedPoint2 threshold, IEntityManager entityManager)
         {
@@ -26,11 +24,10 @@ namespace Content.Server.MobState.States
 
             short modifier = 0;
 
-            if (stateComponent.TryGetEarliestIncapacitatedState(threshold, out _, out var earliestThreshold))
+            if (stateComponent.TryGetEarliestIncapacitatedState(threshold, out _, out var earliestThreshold) && damageable.TotalDamage != 0)
             {
-                modifier = (short) (damageable.TotalDamage / (earliestThreshold / 7f));
+                modifier = (short)(damageable.TotalDamage / (earliestThreshold / 5) + 1);
             }
-
             EntitySystem.Get<AlertsSystem>().ShowAlert(entity, AlertType.HumanHealth, modifier);
         }
     }

@@ -1,5 +1,3 @@
-using System;
-using System.Collections.Generic;
 using System.Linq;
 using Content.Server.Administration.Logs;
 using Content.Server.Atmos.Components;
@@ -9,12 +7,10 @@ using Content.Shared.Alert;
 using Content.Shared.Damage;
 using Content.Shared.Database;
 using Content.Shared.Inventory;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
 
 namespace Content.Server.Temperature.Systems
 {
-    public class TemperatureSystem : EntitySystem
+    public sealed class TemperatureSystem : EntitySystem
     {
         [Dependency] private readonly DamageableSystem _damageableSystem = default!;
         [Dependency] private readonly AtmosphereSystem _atmosphereSystem = default!;
@@ -55,10 +51,12 @@ namespace Content.Server.Temperature.Systems
 
             foreach (var comp in ShouldUpdateDamage)
             {
-                if (comp.Deleted || comp.Paused)
+                MetaDataComponent? metaData = null;
+
+                if (Deleted(comp.Owner, metaData) || Paused(comp.Owner, metaData))
                     continue;
 
-                ChangeDamage((comp).Owner, comp);
+                ChangeDamage(comp.Owner, comp);
             }
 
             ShouldUpdateDamage.Clear();
@@ -199,7 +197,7 @@ namespace Content.Server.Temperature.Systems
         }
     }
 
-    public class OnTemperatureChangeEvent : EntityEventArgs
+    public sealed class OnTemperatureChangeEvent : EntityEventArgs
     {
         public float CurrentTemperature { get; }
         public float LastTemperature { get; }
@@ -213,7 +211,7 @@ namespace Content.Server.Temperature.Systems
         }
     }
 
-    public class ModifyChangedTemperatureEvent : EntityEventArgs, IInventoryRelayEvent
+    public sealed class ModifyChangedTemperatureEvent : EntityEventArgs, IInventoryRelayEvent
     {
         public SlotFlags TargetSlots { get; } = ~SlotFlags.POCKET;
 

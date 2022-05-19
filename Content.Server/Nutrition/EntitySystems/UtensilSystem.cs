@@ -1,11 +1,7 @@
 using Content.Server.Nutrition.Components;
 using Content.Server.Popups;
 using Content.Shared.Interaction;
-using Content.Shared.Interaction.Helpers;
 using Robust.Shared.Audio;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Localization;
 using Robust.Shared.Player;
 using Robust.Shared.Random;
 
@@ -14,11 +10,12 @@ namespace Content.Server.Nutrition.EntitySystems
     /// <summary>
     /// Handles usage of the utensils on the food items
     /// </summary>
-    internal class UtensilSystem : EntitySystem
+    internal sealed class UtensilSystem : EntitySystem
     {
         [Dependency] private readonly IRobustRandom _robustRandom = default!;
         [Dependency] private readonly FoodSystem _foodSystem = default!;
         [Dependency] private readonly PopupSystem _popupSystem = default!;
+        [Dependency] private readonly SharedInteractionSystem _interactionSystem = default!;
 
         public override void Initialize()
         {
@@ -32,7 +29,7 @@ namespace Content.Server.Nutrition.EntitySystems
         /// </summary>
         private void OnAfterInteract(EntityUid uid, UtensilComponent component, AfterInteractEvent ev)
         {
-            if (ev.Target == null)
+            if (ev.Target == null || !ev.CanReach)
                 return;
 
             if (TryUseUtensil(ev.User, ev.Target.Value, component))
@@ -51,10 +48,10 @@ namespace Content.Server.Nutrition.EntitySystems
                 return false;
             }
 
-            if (!user.InRangeUnobstructed(target, popup: true))
+            if (!_interactionSystem.InRangeUnobstructed(user, target, popup: true))
                 return false;
 
-            return _foodSystem.TryUseFood(target, user);
+            return _foodSystem.TryFeed(user, target, food);
         }
 
         /// <summary>

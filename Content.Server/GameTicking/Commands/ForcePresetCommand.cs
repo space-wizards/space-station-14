@@ -1,14 +1,11 @@
 ﻿using Content.Server.Administration;
-using Content.Server.GameTicking.Presets;
 using Content.Shared.Administration;
 using Robust.Shared.Console;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
 
 namespace Content.Server.GameTicking.Commands
 {
     [AdminCommand(AdminFlags.Round)]
-    class ForcePresetCommand : IConsoleCommand
+    sealed class ForcePresetCommand : IConsoleCommand
     {
         public string Command => "forcepreset";
         public string Description => "Forces a specific game preset to start for the current lobby.";
@@ -38,6 +35,7 @@ namespace Content.Server.GameTicking.Commands
 
             ticker.SetGamePreset(type, true);
             shell.WriteLine($"Forced the game to start with preset {name}.");
+            ticker.UpdateInfoText();
         }
     }
 }

@@ -7,18 +7,27 @@
   - type: InteractionOutline
   - type: Physics
     bodyType: Static
+  - type: Transform
+    anchored: true
+    noRot: true
   - type: Fixtures
     fixtures:
     - shape:
         !type:PhysShapeAabb
-          bounds: "-0.45,-0.45,0.45,0.00"
+        bounds: "-0.45,-0.45,0.45,0.00"
       mass: 25
-      layer:
-      - Passable
+      mask:
+      - MachineMask
   - type: Sprite
+    netsync: false
     sprite: Structures/cargo_telepad.rsi
-    state: offline
     drawdepth: FloorObjects
+    layers:
+    - state: offline
+      map: ["enum.CargoTelepadLayers.Base"]
+    - state: idle
+      map: [ "enum.CargoTelepadLayers.Beam" ]
+      shader: unshaded
   - type: Damageable
     damageContainer: Inorganic
     damageModifierSet: Metallic
@@ -36,5 +45,7 @@
       - !type:DoActsBehavior
         acts: ["Destruction"]
   - type: ApcPowerReceiver
+    powerLoad: 1000 # TODO if we keep this make it spike power draw when teleporting
   - type: ExtensionCableReceiver
   - type: CargoTelepad
+  - type: Appearance

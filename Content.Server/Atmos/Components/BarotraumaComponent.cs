@@ -1,8 +1,5 @@
 using Content.Shared.Damage;
 using Content.Shared.FixedPoint;
-using Robust.Shared.GameObjects;
-using Robust.Shared.Serialization.Manager.Attributes;
-using Robust.Shared.ViewVariables;
 
 namespace Content.Server.Atmos.Components
 {
@@ -10,10 +7,8 @@ namespace Content.Server.Atmos.Components
     ///     Barotrauma: injury because of changes in air pressure.
     /// </summary>
     [RegisterComponent]
-    public class BarotraumaComponent : Component
+    public sealed class BarotraumaComponent : Component
     {
-        public override string Name => "Barotrauma";
-
         [DataField("damage", required: true)]
         [ViewVariables(VVAccess.ReadWrite)]
         public DamageSpecifier Damage = default!;
@@ -26,5 +21,11 @@ namespace Content.Server.Atmos.Components
         ///     Used to keep track of when damage starts/stops. Useful for logs.
         /// </summary>
         public bool TakingDamage = false;
+
+        /// <summary>
+        ///     These are the inventory slots that are checked for pressure protection. If a slot is missing protection, no protection is applied.
+        /// </summary>
+        [DataField("protectionSlots")]
+        public List<string> ProtectionSlots = new() { "head", "outerClothing" }; 
     }
 }

@@ -1,17 +1,11 @@
-using System;
-using Content.Shared.Movement.Components;
-using Robust.Shared.GameObjects;
 using Robust.Shared.GameStates;
 using Robust.Shared.Serialization;
-using Robust.Shared.ViewVariables;
 
 namespace Content.Shared.Nutrition.Components
 {
     [NetworkedComponent()]
     public abstract class SharedHungerComponent : Component
     {
-        public sealed override string Name => "Hunger";
-
         [ViewVariables]
         public abstract HungerThreshold CurrentHungerThreshold { get; }
 

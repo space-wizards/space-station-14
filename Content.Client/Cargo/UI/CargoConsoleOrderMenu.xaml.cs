@@ -8,7 +8,7 @@ using Robust.Shared.IoC;
 namespace Content.Client.Cargo.UI
 {
     [GenerateTypedNameReferences]
-    partial class CargoConsoleOrderMenu : SS14Window
+    sealed partial class CargoConsoleOrderMenu : DefaultWindow
     {
         public CargoConsoleOrderMenu()
         {

@@ -1,6 +1,4 @@
 using Content.Shared.Flash;
-using Robust.Shared.Analyzers;
-using Robust.Shared.GameObjects;
 
 namespace Content.Server.Flash.Components
 {

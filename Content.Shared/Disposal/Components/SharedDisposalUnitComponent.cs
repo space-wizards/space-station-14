@@ -1,18 +1,11 @@
-using System;
-using System.Collections.Generic;
-using Content.Shared.DragDrop;
-using Robust.Shared.GameObjects;
 using Robust.Shared.GameStates;
-using Robust.Shared.Players;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.Disposal.Components
 {
     [NetworkedComponent]
-    public abstract class SharedDisposalUnitComponent : Component, IDragDropOn
+    public abstract class SharedDisposalUnitComponent : Component
     {
-        public override string Name => "DisposalUnit";
-
         // TODO: Could maybe turn the contact off instead far more cheaply as farseer (though not box2d) had support for it?
         // Need to suss it out.
         /// <summary>
@@ -85,7 +78,7 @@ namespace Content.Shared.Disposal.Components
         }
 
         [Serializable, NetSerializable]
-        public class DisposalUnitBoundUserInterfaceState : BoundUserInterfaceState, IEquatable<DisposalUnitBoundUserInterfaceState>
+        public sealed class DisposalUnitBoundUserInterfaceState : BoundUserInterfaceState, IEquatable<DisposalUnitBoundUserInterfaceState>
         {
             public readonly string UnitName;
             public readonly string UnitState;
@@ -119,7 +112,7 @@ namespace Content.Shared.Disposal.Components
         ///     Message data sent from client to server when a disposal unit ui button is pressed.
         /// </summary>
         [Serializable, NetSerializable]
-        public class UiButtonPressedMessage : BoundUserInterfaceMessage
+        public sealed class UiButtonPressedMessage : BoundUserInterfaceMessage
         {
             public readonly UiButton Button;
 
@@ -134,13 +127,5 @@ namespace Content.Shared.Disposal.Components
         {
             Key
         }
-
-        // TODO: Unfortunately these aren't really ECS yet so soontm
-        public virtual bool CanDragDropOn(DragDropEvent eventArgs)
-        {
-            return EntitySystem.Get<SharedDisposalUnitSystem>().CanInsert(this, eventArgs.Dragged);
-        }
-
-        public abstract bool DragDropOn(DragDropEvent eventArgs);
     }
 }

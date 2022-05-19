@@ -4,14 +4,11 @@ using Content.Server.Preferences.Managers;
 using Content.Shared.Administration;
 using Robust.Server.Player;
 using Robust.Shared.Console;
-using Robust.Shared.IoC;
-using Robust.Shared.Localization;
-using Robust.Shared.Maths;
 
 namespace Content.Server.Administration.Commands
 {
     [AdminCommand(AdminFlags.Admin)]
-    internal class SetAdminOOC : IConsoleCommand
+    internal sealed class SetAdminOOC : IConsoleCommand
     {
         public string Command => "setadminooc";
         public string Description => Loc.GetString("set-admin-ooc-command-description", ("command", Command));

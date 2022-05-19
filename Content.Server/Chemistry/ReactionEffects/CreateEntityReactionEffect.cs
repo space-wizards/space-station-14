@@ -1,13 +1,11 @@
 using Content.Shared.Chemistry.Reagent;
-using Robust.Shared.GameObjects;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
 namespace Content.Server.Chemistry.ReactionEffects;
 
 [DataDefinition]
-public class CreateEntityReactionEffect : ReagentEffect
+public sealed class CreateEntityReactionEffect : ReagentEffect
 {
     /// <summary>
     ///     What entity to create.

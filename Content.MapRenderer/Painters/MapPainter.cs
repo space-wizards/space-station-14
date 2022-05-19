@@ -20,7 +20,7 @@ using SpriteComponent = Robust.Server.GameObjects.SpriteComponent;
 
 namespace Content.MapRenderer.Painters
 {
-    public class MapPainter : ContentIntegrationTest
+    public sealed class MapPainter : ContentIntegrationTest
     {
         public async IAsyncEnumerable<Image> Paint(string map)
         {
@@ -114,7 +114,7 @@ namespace Content.MapRenderer.Painters
                 var tileXSize = grid.TileSize * TilePainter.TileImageSize;
                 var tileYSize = grid.TileSize * TilePainter.TileImageSize;
 
-                var bounds = grid.LocalBounds;
+                var bounds = grid.LocalAABB;
 
                 var left = bounds.Left;
                 var right = bounds.Right;

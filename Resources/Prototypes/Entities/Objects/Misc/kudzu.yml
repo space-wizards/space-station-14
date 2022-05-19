@@ -7,6 +7,11 @@
     snap:
       - Wall
   components:
+    - type: MeleeSound
+      soundGroups:
+        Brute:
+          path:
+            "/Audio/Weapons/slash.ogg"
     - type: Sprite
       sprite: Objects/Misc/kudzu.rsi
       state: kudzu_11
@@ -27,7 +32,7 @@
           !type:PhysShapeAabb
           bounds: "-0.5,-0.5,0.5,0.5"
         layer:
-          - MobImpassable
+        - MidImpassable
     - type: Damageable
       damageModifierSet: Wood
     - type: Destructible
@@ -67,6 +72,7 @@
     - type: AtmosExposed
     - type: Spreader
       growthResult: Kudzu
+      chance: 1
     - type: GrowingKudzu
       growthTickSkipChance: 0.1666
     - type: SlowContacts

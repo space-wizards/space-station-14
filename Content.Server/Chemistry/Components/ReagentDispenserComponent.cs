@@ -1,30 +1,17 @@
-using System;
-using System.Collections.Generic;
 using System.Linq;
-using Content.Server.Chemistry.Components.SolutionManager;
 using Content.Server.Chemistry.EntitySystems;
-using Content.Server.Hands.Components;
 using Content.Server.Power.Components;
 using Content.Server.UserInterface;
-using Content.Shared.ActionBlocker;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.Dispenser;
-using Content.Shared.Containers.ItemSlots;
 using Content.Shared.FixedPoint;
-using Content.Shared.Interaction;
-using Content.Shared.Popups;
 using Content.Shared.Sound;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Localization;
-using Robust.Shared.Log;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Serialization.Manager.Attributes;
-using Robust.Shared.ViewVariables;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
 namespace Content.Server.Chemistry.Components
 {
@@ -35,9 +22,8 @@ namespace Content.Server.Chemistry.Components
     /// Messages sent from the client are used to handle ui button presses.
     /// </summary>
     [RegisterComponent]
-    [ComponentReference(typeof(IActivate))]
     [ComponentReference(typeof(SharedReagentDispenserComponent))]
-    public class ReagentDispenserComponent : SharedReagentDispenserComponent, IActivate
+    public sealed class ReagentDispenserComponent : SharedReagentDispenserComponent
     {
         private static ReagentInventoryComparer _comparer = new();
         public static string SolutionName = "reagent";
@@ -45,7 +31,11 @@ namespace Content.Server.Chemistry.Components
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
         [Dependency] private readonly IEntityManager _entities = default!;
 
-        [ViewVariables] [DataField("pack")] private string _packPrototypeId = "";
+        [ViewVariables] [DataField("pack", customTypeSerializer:typeof(PrototypeIdSerializer<ReagentDispenserInventoryPrototype>))] private string _packPrototypeId = "";
+
+        [ViewVariables] [DataField("emagPack", customTypeSerializer:typeof(PrototypeIdSerializer<ReagentDispenserInventoryPrototype>))] public string EmagPackPrototypeId = "";
+
+        public bool AlreadyEmagged = false;
 
         [DataField("clickSound")]
         private SoundSpecifier _clickSound = new SoundPathSpecifier("/Audio/Machines/machine_switch.ogg");
@@ -84,20 +74,6 @@ namespace Content.Server.Chemistry.Components
             InitializeFromPrototype();
         }
 
-        [Obsolete("Component Messages are deprecated, use Entity Events instead.")]
-        public override void HandleMessage(ComponentMessage message, IComponent? component)
-        {
-#pragma warning disable 618
-            base.HandleMessage(message, component);
-#pragma warning restore 618
-            switch (message)
-            {
-                case PowerChangedMessage powerChanged:
-                    OnPowerChanged(powerChanged);
-                    break;
-            }
-        }
-
         /// <summary>
         /// Checks to see if the <c>pack</c> defined in this components yaml prototype
         /// exists. If so, it fills the reagent inventory list.
@@ -119,7 +95,25 @@ namespace Content.Server.Chemistry.Components
             Inventory.Sort(_comparer);
         }
 
-        private void OnPowerChanged(PowerChangedMessage e)
+        public void AddFromPrototype(string pack)
+        {
+            if (string.IsNullOrEmpty(pack)) return;
+
+            if (!_prototypeManager.TryIndex(pack, out ReagentDispenserInventoryPrototype? packPrototype))
+            {
+                return;
+            }
+
+            foreach (var entry in packPrototype.Inventory)
+            {
+                Inventory.Add(new ReagentDispenserInventoryEntry(entry));
+            }
+
+            Inventory.Sort(_comparer);
+        }
+
+
+        public void OnPowerChanged()
         {
             UpdateUserInterface();
         }
@@ -136,21 +130,14 @@ namespace Content.Server.Chemistry.Components
                 return;
             }
 
-            var msg = (UiButtonPressedMessage) obj.Message;
-            var needsPower = msg.Button switch
-            {
-                UiButton.Eject => false,
-                _ => true,
-            };
+            if (obj.Message is not UiButtonPressedMessage msg )
+                return;
 
-            if (!PlayerCanUseDispenser(obj.Session.AttachedEntity, needsPower))
+            if (!PlayerCanUseDispenser(obj.Session.AttachedEntity, true))
                 return;
 
             switch (msg.Button)
             {
-                case UiButton.Eject:
-                    EntitySystem.Get<ItemSlotsSystem>().TryEjectToHands(Owner, BeakerSlot, obj.Session.AttachedEntity);
-                    break;
                 case UiButton.Clear:
                     TryClear();
                     break;
@@ -207,11 +194,6 @@ namespace Content.Server.Chemistry.Components
             if (playerEntity == null)
                 return false;
 
-            var actionBlocker = EntitySystem.Get<ActionBlockerSystem>();
-
-            //Check if player can interact in their current state
-            if (!actionBlocker.CanInteract(playerEntity.Value) || !actionBlocker.CanUse(playerEntity.Value))
-                return false;
             //Check if device is powered
             if (needsPower && !Powered)
                 return false;
@@ -278,36 +260,12 @@ namespace Content.Server.Chemistry.Components
             UpdateUserInterface();
         }
 
-        /// <summary>
-        /// Called when you click the owner entity with an empty hand. Opens the UI client-side if possible.
-        /// </summary>
-        /// <param name="args">Data relevant to the event such as the actor which triggered it.</param>
-        void IActivate.Activate(ActivateEventArgs args)
-        {
-            if (!_entities.TryGetComponent(args.User, out ActorComponent? actor))
-            {
-                return;
-            }
-
-            if (!_entities.TryGetComponent(args.User, out HandsComponent? hands))
-            {
-                Owner.PopupMessage(args.User, Loc.GetString("reagent-dispenser-component-activate-no-hands"));
-                return;
-            }
-
-            var activeHandEntity = hands.GetActiveHand?.Owner;
-            if (activeHandEntity == null)
-            {
-                UserInterface?.Open(actor.PlayerSession);
-            }
-        }
-
         private void ClickSound()
         {
             SoundSystem.Play(Filter.Pvs(Owner), _clickSound.GetSound(), Owner, AudioParams.Default.WithVolume(-2f));
         }
 
-        private class ReagentInventoryComparer : Comparer<ReagentDispenserInventoryEntry>
+        private sealed class ReagentInventoryComparer : Comparer<ReagentDispenserInventoryEntry>
         {
             public override int Compare(ReagentDispenserInventoryEntry x, ReagentDispenserInventoryEntry y)
             {

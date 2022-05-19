@@ -1,19 +1,11 @@
-﻿using System.Collections.Generic;
-using Content.Server.Body.Systems;
-using Content.Shared.Body.Components;
+﻿using Content.Server.Body.Systems;
 using Content.Shared.FixedPoint;
-using Robust.Shared.Analyzers;
-using Robust.Shared.GameObjects;
-using Robust.Shared.Serialization.Manager.Attributes;
-using Robust.Shared.ViewVariables;
 
 namespace Content.Server.Body.Components
 {
     [RegisterComponent, Friend(typeof(StomachSystem))]
-    public class StomachComponent : Component
+    public sealed class StomachComponent : Component
     {
-        public override string Name => "Stomach";
-
         public float AccumulatedFrameTime;
 
         /// <summary>
@@ -26,7 +18,7 @@ namespace Content.Server.Body.Components
         ///     What solution should this stomach push reagents into, on the body?
         /// </summary>
         [DataField("bodySolutionName")]
-        public string BodySolutionName = BloodstreamSystem.DefaultSolutionName;
+        public string BodySolutionName = BloodstreamComponent.DefaultChemicalsSolutionName;
 
         /// <summary>
         ///     Initial internal solution storage volume
@@ -50,7 +42,7 @@ namespace Content.Server.Body.Components
         /// <summary>
         ///     Used to track quantity changes when ingesting & digesting reagents
         /// </summary>
-        public class ReagentDelta
+        public sealed class ReagentDelta
         {
             public readonly string ReagentId;
             public readonly FixedPoint2 Quantity;

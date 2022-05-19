@@ -1,24 +1,9 @@
-using System;
 using System.Linq;
-using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
-using Content.Shared.GameTicking;
-using Content.Shared.Input;
 using Content.Shared.Physics.Pull;
 using Content.Shared.Pulling.Components;
-using Content.Shared.Pulling.Events;
 using JetBrains.Annotations;
-using Robust.Shared.Containers;
-using Robust.Shared.GameObjects;
-using Robust.Shared.Input.Binding;
-using Robust.Shared.IoC;
-using Robust.Shared.Log;
 using Robust.Shared.Map;
-using Robust.Shared.Maths;
 using Robust.Shared.Physics;
-using Robust.Shared.Physics.Dynamics.Joints;
-using Robust.Shared.Players;
-using Robust.Shared.Utility;
 
 namespace Content.Shared.Pulling
 {
@@ -27,9 +12,23 @@ namespace Content.Shared.Pulling
     /// Because pulling state is such a mess to get right, all writes to pulling state must go through this class.
     /// </summary>
     [UsedImplicitly]
-    public class SharedPullingStateManagementSystem : EntitySystem
+    public sealed class SharedPullingStateManagementSystem : EntitySystem
     {
         [Dependency] private readonly SharedJointSystem _jointSystem = default!;
+        [Dependency] private readonly SharedPhysicsSystem _physics = default!;
+
+        public override void Initialize()
+        {
+            base.Initialize();
+
+            SubscribeLocalEvent<SharedPullableComponent, ComponentShutdown>(OnShutdown);
+        }
+
+        private void OnShutdown(EntityUid uid, SharedPullableComponent component, ComponentShutdown args)
+        {
+            if (component.Puller != null)
+                ForceRelationship(null, component);
+        }
 
         // A WARNING:
         // The following 2 functions are the most internal part of the pulling system's relationship management.
@@ -103,7 +102,7 @@ namespace Content.Shared.Pulling
                 pullable.Puller = puller.Owner;
 
                 // Joint startup
-                var union = pullerPhysics.GetWorldAABB().Union(pullablePhysics.GetWorldAABB());
+                var union = _physics.GetHardAABB(pullerPhysics).Union(_physics.GetHardAABB(pullablePhysics));
                 var length = Math.Max(union.Size.X, union.Size.Y) * 0.75f;
 
                 pullable.PullJoint = _jointSystem.CreateDistanceJoint(pullablePhysics.Owner, pullerPhysics.Owner, id:$"pull-joint-{pullablePhysics.Owner}");
@@ -121,8 +120,8 @@ namespace Content.Shared.Pulling
                 RaiseLocalEvent(pullable.Owner, message);
 
                 // Networking
-                puller.Dirty();
-                pullable.Dirty();
+                Dirty(puller);
+                Dirty(pullable);
             }
         }
 

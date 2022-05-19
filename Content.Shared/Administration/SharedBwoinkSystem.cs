@@ -1,9 +1,6 @@
 ﻿#nullable enable
-using System;
 using Robust.Shared.Network;
 using Robust.Shared.Serialization;
-using Robust.Shared.GameObjects;
-using Robust.Shared.Log;
 
 namespace Content.Shared.Administration
 {

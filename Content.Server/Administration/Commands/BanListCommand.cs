@@ -1,16 +1,14 @@
-﻿using System;
-using System.Text;
+﻿using System.Text;
 using Content.Server.Database;
 using Content.Shared.Administration;
 using Robust.Server.Player;
 using Robust.Shared.Console;
-using Robust.Shared.IoC;
 using Robust.Shared.Network;
 
 namespace Content.Server.Administration.Commands
 {
     [AdminCommand(AdminFlags.Ban)]
-    public class BanListCommand : IConsoleCommand
+    public sealed class BanListCommand : IConsoleCommand
     {
         public string Command => "banlist";
         public string Description => "Lists somebody's bans";

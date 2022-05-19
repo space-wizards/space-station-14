@@ -1,21 +1,15 @@
-﻿using System.Collections.Generic;
-using System.Threading.Tasks;
-using Content.Shared.Construction;
+﻿using Content.Shared.Construction;
 using Content.Shared.Examine;
 using JetBrains.Annotations;
 using Robust.Server.Containers;
 using Robust.Shared.Containers;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Localization;
-using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Utility;
 
 namespace Content.Server.Construction.Conditions
 {
     [UsedImplicitly]
     [DataDefinition]
-    public class ContainerEmpty : IGraphCondition
+    public sealed class ContainerEmpty : IGraphCondition
     {
         [DataField("container")]
         public string Container { get; } = string.Empty;

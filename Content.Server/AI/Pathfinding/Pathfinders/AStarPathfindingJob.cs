@@ -1,5 +1,3 @@
-using System;
-using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using Content.Server.CPUJob.JobQueues;
@@ -9,7 +7,7 @@ using Robust.Shared.Utility;
 
 namespace Content.Server.AI.Pathfinding.Pathfinders
 {
-    public class AStarPathfindingJob : Job<Queue<TileRef>>
+    public sealed class AStarPathfindingJob : Job<Queue<TileRef>>
     {
 #if DEBUG
         public static event Action<SharedAiDebug.AStarRouteDebug>? DebugRoute;

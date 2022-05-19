@@ -22,7 +22,7 @@ using Robust.Client.UserInterface.CustomControls;
 namespace Content.Client.EscapeMenu.UI.Tabs
 {
     [GenerateTypedNameReferences]
-    public partial class KeyRebindTab : Control
+    public sealed partial class KeyRebindTab : Control
     {
         // List of key functions that must be registered as toggle instead.
         private static readonly HashSet<BoundKeyFunction> ToggleFunctions = new()
@@ -107,9 +107,8 @@ namespace Content.Client.EscapeMenu.UI.Tabs
 
             AddHeader("ui-options-header-interaction-basic");
             AddButton(EngineKeyFunctions.Use);
-            AddButton(ContentKeyFunctions.WideAttack);
-            AddButton(ContentKeyFunctions.ActivateItemInHand);
-            AddButton(ContentKeyFunctions.AltActivateItemInHand);
+            AddButton(ContentKeyFunctions.UseItemInHand);
+            AddButton(ContentKeyFunctions.AltUseItemInHand);
             AddButton(ContentKeyFunctions.ActivateItemInWorld);
             AddButton(ContentKeyFunctions.AltActivateItemInWorld);
             AddButton(ContentKeyFunctions.Drop);
@@ -128,6 +127,7 @@ namespace Content.Client.EscapeMenu.UI.Tabs
             AddHeader("ui-options-header-ui");
             AddButton(ContentKeyFunctions.FocusChat);
             AddButton(ContentKeyFunctions.FocusLocalChat);
+            AddButton(ContentKeyFunctions.FocusWhisperChat);
             AddButton(ContentKeyFunctions.FocusRadio);
             AddButton(ContentKeyFunctions.FocusOOC);
             AddButton(ContentKeyFunctions.FocusAdminChat);
@@ -144,6 +144,7 @@ namespace Content.Client.EscapeMenu.UI.Tabs
             AddButton(ContentKeyFunctions.OpenEntitySpawnWindow);
             AddButton(ContentKeyFunctions.OpenSandboxWindow);
             AddButton(ContentKeyFunctions.OpenTileSpawnWindow);
+            AddButton(ContentKeyFunctions.OpenDecalSpawnWindow);
             AddButton(ContentKeyFunctions.OpenAdminMenu);
 
             AddHeader("ui-options-header-misc");

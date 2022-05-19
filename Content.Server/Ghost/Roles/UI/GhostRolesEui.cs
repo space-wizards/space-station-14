@@ -1,11 +1,10 @@
 using Content.Server.EUI;
 using Content.Shared.Eui;
 using Content.Shared.Ghost.Roles;
-using Robust.Shared.GameObjects;
 
 namespace Content.Server.Ghost.Roles.UI
 {
-    public class GhostRolesEui : BaseEui
+    public sealed class GhostRolesEui : BaseEui
     {
         public override GhostRolesEuiState GetNewState()
         {
@@ -21,7 +20,9 @@ namespace Content.Server.Ghost.Roles.UI
                 case GhostRoleTakeoverRequestMessage req:
                     EntitySystem.Get<GhostRoleSystem>().Takeover(Player, req.Identifier);
                     break;
-
+                case GhostRoleFollowRequestMessage req:
+                    EntitySystem.Get<GhostRoleSystem>().Follow(Player, req.Identifier);
+                    break;
                 case GhostRoleWindowCloseMessage _:
                     Closed();
                     break;

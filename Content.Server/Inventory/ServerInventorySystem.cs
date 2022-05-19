@@ -1,69 +1,46 @@
-using Content.Server.Atmos;
-using Content.Server.Hands.Components;
-using Content.Server.Interaction;
+using Content.Server.Clothing.Components;
 using Content.Server.Storage.Components;
+using Content.Server.Storage.EntitySystems;
 using Content.Server.Temperature.Systems;
+using Content.Shared.Interaction.Events;
 using Content.Shared.Inventory;
 using Content.Shared.Inventory.Events;
-using Robust.Shared.Containers;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Map;
 using InventoryComponent = Content.Shared.Inventory.InventoryComponent;
 
 namespace Content.Server.Inventory
 {
-    class ServerInventorySystem : InventorySystem
+    public sealed class ServerInventorySystem : InventorySystem
     {
-        [Dependency] private readonly InteractionSystem _interactionSystem = default!;
+        [Dependency] private readonly StorageSystem _storageSystem = default!;
 
         public override void Initialize()
         {
             base.Initialize();
 
-            SubscribeLocalEvent<InventoryComponent, HighPressureEvent>(RelayInventoryEvent);
-            SubscribeLocalEvent<InventoryComponent, LowPressureEvent>(RelayInventoryEvent);
             SubscribeLocalEvent<InventoryComponent, ModifyChangedTemperatureEvent>(RelayInventoryEvent);
 
-            SubscribeNetworkEvent<TryEquipNetworkMessage>(OnNetworkEquip);
-            SubscribeNetworkEvent<TryUnequipNetworkMessage>(OnNetworkUnequip);
+            SubscribeLocalEvent<ClothingComponent, UseInHandEvent>(OnUseInHand);
+
             SubscribeNetworkEvent<OpenSlotStorageNetworkMessage>(OnOpenSlotStorage);
-            SubscribeNetworkEvent<UseSlotNetworkMessage>(OnUseSlot);
         }
 
-        private void OnUseSlot(UseSlotNetworkMessage ev)
+        private void OnUseInHand(EntityUid uid, ClothingComponent component, UseInHandEvent args)
         {
-            if (!TryComp<HandsComponent>(ev.Uid, out var hands) || !TryGetSlotEntity(ev.Uid, ev.Slot, out var itemUid))
+            if (args.Handled || !component.QuickEquip)
                 return;
 
-            var activeHand = hands.GetActiveHand;
-            if (activeHand != null)
-            {
-                _interactionSystem.InteractUsing(ev.Uid, activeHand.Owner, itemUid.Value,
-                    new EntityCoordinates());
-            }
-            else if (TryUnequip(ev.Uid, ev.Slot))
-            {
-                hands.PutInHand(itemUid.Value);
-            }
+            QuickEquip(uid, component, args);
         }
 
-        private void OnOpenSlotStorage(OpenSlotStorageNetworkMessage ev)
+        private void OnOpenSlotStorage(OpenSlotStorageNetworkMessage ev, EntitySessionEventArgs args)
         {
-            if (TryGetSlotEntity(ev.Uid, ev.Slot, out var entityUid) && TryComp<ServerStorageComponent>(entityUid, out var storageComponent))
+            if (args.SenderSession.AttachedEntity is not EntityUid { Valid: true } uid)
+                    return;
+
+            if (TryGetSlotEntity(uid, ev.Slot, out var entityUid) && TryComp<ServerStorageComponent>(entityUid, out var storageComponent))
             {
-                storageComponent.OpenStorageUI(ev.Uid);
+                _storageSystem.OpenStorageUI(entityUid.Value, uid, storageComponent);
             }
-        }
-
-        private void OnNetworkUnequip(TryUnequipNetworkMessage ev)
-        {
-            TryUnequip(ev.Actor, ev.Target, ev.Slot, ev.Silent, ev.Force);
-        }
-
-        private void OnNetworkEquip(TryEquipNetworkMessage ev)
-        {
-            TryEquip(ev.Actor, ev.Target, ev.ItemUid, ev.Slot, ev.Silent, ev.Force);
         }
     }
 }

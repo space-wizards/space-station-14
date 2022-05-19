@@ -1,11 +1,7 @@
-using System;
 using Content.Server.Weapon.Ranged.Ammunition.Components;
 using Content.Shared.Examine;
 using Content.Shared.Weapons.Ranged.Barrels.Components;
-using Robust.Shared.GameObjects;
-using Robust.Shared.Localization;
 using Robust.Shared.Map;
-using Robust.Shared.Maths;
 
 namespace Content.Server.Weapon.Ranged;
 

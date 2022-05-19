@@ -1,11 +1,6 @@
-using System;
-using System.Collections.Generic;
 using Content.Server.AI.EntitySystems;
 using Content.Server.AI.Utility.Actions;
 using Content.Server.AI.Utility.AiLogic;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Log;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Reflection;
 
@@ -28,7 +23,6 @@ namespace Content.Server.AI.Utility
     internal sealed class NpcBehaviorManager : INpcBehaviorManager
     {
         [Dependency] private readonly IDynamicTypeFactory _typeFactory = default!;
-        [Dependency] private readonly IEntityManager _entityManager = default!;
 
         private readonly NpcActionComparer _comparer = new();
 
@@ -159,7 +153,7 @@ namespace Content.Server.AI.Utility
             npc.AvailableActions.Sort(_comparer);
         }
 
-        private class NpcActionComparer : Comparer<IAiUtility>
+        private sealed class NpcActionComparer : Comparer<IAiUtility>
         {
             public override int Compare(IAiUtility? x, IAiUtility? y)
             {

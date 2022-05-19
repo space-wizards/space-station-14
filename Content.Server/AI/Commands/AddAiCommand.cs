@@ -5,13 +5,11 @@ using Content.Server.AI.Utility.AiLogic;
 using Content.Shared.Administration;
 using Content.Shared.Movement.Components;
 using Robust.Shared.Console;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
 
 namespace Content.Server.AI.Commands
 {
     [AdminCommand(AdminFlags.Fun)]
-    public class AddAiCommand : IConsoleCommand
+    public sealed class AddAiCommand : IConsoleCommand
     {
         [Dependency] private readonly IEntityManager _entities = default!;
 

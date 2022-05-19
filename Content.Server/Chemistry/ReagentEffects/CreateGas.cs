@@ -2,12 +2,10 @@
 using Content.Shared.Atmos;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Database;
-using Robust.Shared.GameObjects;
-using Robust.Shared.Serialization.Manager.Attributes;
 
 namespace Content.Server.Chemistry.ReagentEffects;
 
-public class CreateGas : ReagentEffect
+public sealed class CreateGas : ReagentEffect
 {
     [DataField("gas", required: true)]
     public Gas Gas = default!;

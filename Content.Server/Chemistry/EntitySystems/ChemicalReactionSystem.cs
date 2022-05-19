@@ -4,12 +4,11 @@ using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Database;
 using Content.Shared.FixedPoint;
 using Robust.Shared.Audio;
-using Robust.Shared.GameObjects;
 using Robust.Shared.Player;
 
 namespace Content.Server.Chemistry.EntitySystems
 {
-    public class ChemicalReactionSystem : SharedChemicalReactionSystem
+    public sealed class ChemicalReactionSystem : SharedChemicalReactionSystem
     {
         protected override void OnReaction(Solution solution, ReactionPrototype reaction, ReagentPrototype randomReagent, EntityUid owner, FixedPoint2 unitReactions)
         {

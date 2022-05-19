@@ -1,12 +1,10 @@
 ﻿using Content.Shared.Administration;
 using Robust.Shared.Console;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
 
 namespace Content.Server.Administration.Commands
 {
     [AdminCommand(AdminFlags.Spawn)]
-    public class DeleteEntityCommand : IConsoleCommand
+    public sealed class DeleteEntityCommand : IConsoleCommand
     {
         public string Command => "deleteentity";
         public string Description => "Deletes an entity with the given id.";

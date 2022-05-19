@@ -5,20 +5,13 @@ using Content.Server.Traitor.Uplink.Components;
 using Content.Shared.Interaction;
 using Content.Shared.Inventory;
 using Content.Shared.Popups;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Localization;
-using InventoryComponent = Content.Shared.Inventory.InventoryComponent;
 
 namespace Content.Server.TraitorDeathMatch.Components
 {
     [RegisterComponent]
-    public class TraitorDeathMatchRedemptionComponent : Component, IInteractUsing
+    public sealed class TraitorDeathMatchRedemptionComponent : Component, IInteractUsing
     {
         [Dependency] private readonly IEntityManager _entMan = default!;
-
-        /// <inheritdoc />
-        public override string Name => "TraitorDeathMatchRedemption";
 
         async Task<bool> IInteractUsing.InteractUsing(InteractUsingEventArgs eventArgs)
         {

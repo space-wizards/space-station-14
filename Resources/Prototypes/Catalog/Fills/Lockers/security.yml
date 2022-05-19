@@ -6,27 +6,19 @@
   - type: StorageFill
     contents:
       - id: FlashlightSeclite
-        prob: 1
       - id: TaserGun
         prob: 0.3
       - id: ClothingHeadHatWarden
-        prob: 1
       - id: ClothingHeadHatBeretWarden
-        prob: 1
       - id: ClothingBeltSecurityFilled
-        prob: 1
       - id: Flash
-        prob: 1
       - id: ClothingEyesGlassesSecurity
-        prob: 1
       - id: ClothingHeadsetAltSecurity
-        prob: 1
       - id: ClothingHandsGlovesCombat
-        prob: 1
       - id: ClothingShoesBootsJack
-        prob: 1
       - id: ClothingOuterCoatWarden
-        prob: 1
+      - id: ClothingOuterWinterWarden
+      - id: RubberStampWarden
 
 - type: entity
   id: LockerSecurityFilled
@@ -40,21 +32,14 @@
       - id: ClothingUniformJumpsuitSecGrey
         prob: 0.3
       - id: ClothingHeadHelmetHelmet
-        prob: 1
       - id: ClothingOuterArmorBulletproof
-        prob: 1
       - id: ClothingBeltSecurityFilled
-        prob: 1
       - id: Flash
         prob: 0.5
       - id: ClothingEyesGlassesSecurity
-        prob: 1
       - id: ClothingHeadsetSecurity
-        prob: 1
       - id: ClothingHandsGlovesColorBlack
-        prob: 1
       - id: ClothingShoesBootsJack
-        prob: 1
 
 - type: entity
   id: LockerDetectiveFilled
@@ -64,15 +49,10 @@
   - type: StorageFill
     contents:
       - id: ClothingHeadHatFedoraBrown
-        prob: 1
       - id: ClothingNeckTieDet
-        prob: 1
       - id: ClothingOuterVestDetective
-        prob: 1
       - id: ClothingOuterCoatDetective
-        prob: 1
       - id: FlashlightSeclite
-        prob: 1
 
 - type: entity
   id: ClosetBombFilled
@@ -82,8 +62,5 @@
   - type: StorageFill
     contents:
       - id: ClothingHeadHelmetBombSuit
-        prob: 1
       - id: ClothingOuterSuitBomb
-        prob: 1
       - id: ClothingMaskGas
-        prob: 1

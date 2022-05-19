@@ -37,7 +37,7 @@
 - type: cargoProduct
   name: "DIY lung cancer crate"
   id: ServiceCustomSmokable
-  description: "Want to get a little creative with what you use to destroy your lungs? Then this crate is for you! Has everything you need to roll your own Cigarettes."
+  description: "Want to get a little creative with what you use to destroy your lungs? Then this crate is for you! Has everything you need to roll your own cigarettes."
   icon:
     sprite: Objects/Consumable/Smokeables/Cigarettes/Cartons/green.rsi
     state: closed
@@ -54,6 +54,18 @@
     sprite: Objects/Misc/bureaucracy.rsi
     state: pen
   product: CrateServiceBureaucracy
+  cost: 1000
+  category: Service
+  group: market
+  
+- type: cargoProduct
+  name: "personnel crate"
+  id: ServicePersonnel
+  description: "Contains a box of blank ID cards and PDAs"
+  icon:
+    sprite: Objects/Misc/id_cards.rsi
+    state: default
+  product: CrateServicePersonnel
   cost: 1000
   category: Service
   group: market

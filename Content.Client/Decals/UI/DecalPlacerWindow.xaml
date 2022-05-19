@@ -1,0 +1,29 @@
+﻿<DefaultWindow xmlns="https://spacestation14.io"
+               xmlns:ui="clr-namespace:Content.Client.Decals.UI"
+               Title="{Loc 'decal-placer-window-title'}"
+               MinSize="250 500"
+               SetSize="250 500">
+    <BoxContainer Orientation="Vertical">
+        <LineEdit Name="Search" />
+        <ScrollContainer VerticalExpand="True">
+            <GridContainer Name="Grid" Columns="6">
+                <!-- Decals get added here by code -->
+            </GridContainer>
+        </ScrollContainer>
+
+        <BoxContainer Orientation="Vertical">
+            <ColorSelectorSliders Name="ColorPicker" IsAlphaVisible="True" />
+            <Button Name="PickerOpen" Text="{Loc 'decal-placer-window-palette'}" />
+        </BoxContainer>
+        <CheckBox Name="EnableColor" Text="{Loc 'decal-placer-window-use-color'}" />
+        <CheckBox Name="EnableSnap" Text="{Loc 'decal-placer-window-enable-snap'}" />
+        <CheckBox Name="EnableCleanable" Text="{Loc 'decal-placer-window-enable-cleanable'}" />
+        <BoxContainer Name="SpinBoxContainer" Orientation="Horizontal">
+            <Label Text="{Loc 'decal-placer-window-rotation'}" Margin="0 0 0 1" />
+        </BoxContainer>
+        <BoxContainer Orientation="Horizontal">
+            <Label Text="{Loc 'decal-placer-window-zindex'}" Margin="0 0 0 1" />
+            <SpinBox Name="ZIndexSpinBox" HorizontalExpand ="True" />
+        </BoxContainer>
+    </BoxContainer>
+</DefaultWindow>

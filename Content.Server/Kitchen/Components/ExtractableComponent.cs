@@ -1,9 +1,5 @@
 ﻿using Content.Server.Kitchen.EntitySystems;
 using Content.Shared.Chemistry.Components;
-using Robust.Shared.Analyzers;
-using Robust.Shared.GameObjects;
-using Robust.Shared.Serialization.Manager.Attributes;
-using Robust.Shared.ViewVariables;
 
 namespace Content.Server.Kitchen.Components
 {
@@ -12,15 +8,13 @@ namespace Content.Server.Kitchen.Components
     /// </summary>
     [RegisterComponent]
     [Friend(typeof(ReagentGrinderSystem))]
-    public class ExtractableComponent : Component
+    public sealed class ExtractableComponent : Component
     {
-        public override string Name => "Extractable";
-
         [ViewVariables]
-        [DataField("juiceSolution")] 
+        [DataField("juiceSolution")]
         public Solution? JuiceSolution;
 
-        [ViewVariables] 
+        [ViewVariables]
         [DataField("grindableSolutionName")]
         public string? GrindableSolution;
     }

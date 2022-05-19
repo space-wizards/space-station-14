@@ -1,5 +1,3 @@
-using System;
-using System.Collections.Generic;
 using Content.Server.Ghost.Components;
 using Content.Server.Players;
 using Content.Server.Pointing.Components;
@@ -8,16 +6,13 @@ using Content.Shared.Input;
 using Content.Shared.Interaction;
 using Content.Shared.Interaction.Helpers;
 using Content.Shared.MobState.Components;
+using Content.Shared.Pointing;
 using Content.Shared.Popups;
-using Content.Shared.Verbs;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
 using Robust.Server.Player;
 using Robust.Shared.Enums;
-using Robust.Shared.GameObjects;
 using Robust.Shared.Input.Binding;
-using Robust.Shared.IoC;
-using Robust.Shared.Localization;
 using Robust.Shared.Map;
 using Robust.Shared.Player;
 using Robust.Shared.Players;
@@ -194,7 +189,7 @@ namespace Content.Server.Pointing.EntitySystems
         {
             base.Initialize();
 
-            SubscribeLocalEvent<GetOtherVerbsEvent>(AddPointingVerb);
+            SubscribeNetworkEvent<PointingAttemptEvent>(OnPointAttempt);
 
             _playerManager.PlayerStatusChanged += OnPlayerStatusChanged;
 
@@ -203,26 +198,9 @@ namespace Content.Server.Pointing.EntitySystems
                 .Register<PointingSystem>();
         }
 
-        private void AddPointingVerb(GetOtherVerbsEvent args)
+        private void OnPointAttempt(PointingAttemptEvent ev, EntitySessionEventArgs args)
         {
-            if (args.Hands == null)
-                return;
-
-            //Check if the object is already being pointed at
-            if (HasComp<PointingArrowComponent>(args.Target))
-                return;
-
-            var transform = Transform(args.Target);
-
-            if (!EntityManager.TryGetComponent<ActorComponent?>(args.User, out var actor)  ||
-                !InRange(args.User, transform.Coordinates))
-                return;
-
-            Verb verb = new();
-            verb.Text = Loc.GetString("pointing-verb-get-data-text");
-            verb.IconTexture = "/Textures/Interface/VerbIcons/point.svg.192dpi.png";
-            verb.Act = () => TryPoint(actor.PlayerSession, transform.Coordinates, args.Target);
-            args.Verbs.Add(verb);
+            TryPoint(args.SenderSession, Transform(ev.Target).Coordinates, ev.Target);
         }
 
         public override void Shutdown()
@@ -235,7 +213,7 @@ namespace Content.Server.Pointing.EntitySystems
 
         public override void Update(float frameTime)
         {
-            foreach (var component in EntityManager.EntityQuery<PointingArrowComponent>())
+            foreach (var component in EntityManager.EntityQuery<PointingArrowComponent>(true))
             {
                 component.Update(frameTime);
             }

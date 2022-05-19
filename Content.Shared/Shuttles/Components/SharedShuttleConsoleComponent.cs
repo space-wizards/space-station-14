@@ -1,4 +1,3 @@
-using Robust.Shared.GameObjects;
 using Robust.Shared.GameStates;
 
 namespace Content.Shared.Shuttles.Components
@@ -9,6 +8,5 @@ namespace Content.Shared.Shuttles.Components
     [NetworkedComponent()]
     public abstract class SharedShuttleConsoleComponent : Component
     {
-        public override string Name => "ShuttleConsole";
     }
 }

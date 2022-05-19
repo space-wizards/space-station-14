@@ -24,7 +24,7 @@
     - sandbox
   name: sandbox-title
   description: sandbox-description
-  showInVote: true
+  showInVote: false
   rules:
     - Sandbox
 
@@ -45,7 +45,6 @@
     - sus
   name: suspicion-title
   description: suspicion-description
-  showInVote: true
   rules:
     - Suspicion
 
@@ -69,3 +68,13 @@
   rules:
     - TraitorDeathMatch
     - MaxTimeRestart
+
+- type: gamePreset
+  id: Nukeops
+  alias:
+    - nukeops
+  name: nukeops-title
+  description: nukeops-description
+  showInVote: true
+  rules:
+    - Nukeops

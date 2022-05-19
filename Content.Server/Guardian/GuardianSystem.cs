@@ -1,22 +1,16 @@
-using Content.Server.Actions;
 using Content.Server.DoAfter;
-using Content.Server.Hands.Components;
 using Content.Server.Popups;
 using Content.Shared.Actions;
-using Content.Shared.Actions.Components;
 using Content.Shared.Audio;
 using Content.Shared.Damage;
 using Content.Shared.Examine;
+using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Interaction;
 using Content.Shared.Interaction.Events;
 using Content.Shared.MobState;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.Containers;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Localization;
-using Robust.Shared.Log;
 using Robust.Shared.Player;
 using Robust.Shared.Utility;
 
@@ -30,6 +24,8 @@ namespace Content.Server.Guardian
         [Dependency] private readonly DoAfterSystem _doAfterSystem = default!;
         [Dependency] private readonly PopupSystem _popupSystem = default!;
         [Dependency] private readonly DamageableSystem _damageSystem = default!;
+        [Dependency] private readonly SharedActionsSystem _actionSystem = default!;
+        [Dependency] private readonly SharedHandsSystem _handsSystem = default!;
 
         public override void Initialize()
         {
@@ -50,7 +46,20 @@ namespace Content.Server.Guardian
             SubscribeLocalEvent<GuardianHostComponent, MobStateChangedEvent>(OnHostStateChange);
             SubscribeLocalEvent<GuardianHostComponent, ComponentShutdown>(OnHostShutdown);
 
+            SubscribeLocalEvent<GuardianHostComponent, GuardianToggleActionEvent>(OnPerformAction);
+
             SubscribeLocalEvent<GuardianComponent, AttackAttemptEvent>(OnGuardianAttackAttempt);
+        }
+
+        private void OnPerformAction(EntityUid uid, GuardianHostComponent component, GuardianToggleActionEvent args)
+        {
+            if (args.Handled)
+                return;
+
+            if (component.HostedGuardian != null)
+                ToggleGuardian(component);
+
+            args.Handled = true;
         }
 
         private void OnGuardianUnplayer(EntityUid uid, GuardianComponent component, PlayerDetachedEvent args)
@@ -74,12 +83,14 @@ namespace Content.Server.Guardian
         private void OnHostInit(EntityUid uid, GuardianHostComponent component, ComponentInit args)
         {
             component.GuardianContainer = uid.EnsureContainer<ContainerSlot>("GuardianContainer");
+            _actionSystem.AddAction(uid, component.Action, null);
         }
 
         private void OnHostShutdown(EntityUid uid, GuardianHostComponent component, ComponentShutdown args)
         {
             if (component.HostedGuardian == null) return;
             EntityManager.QueueDeleteEntity(component.HostedGuardian.Value);
+            _actionSystem.RemoveAction(uid, component.Action);
         }
 
         private void OnGuardianAttackAttempt(EntityUid uid, GuardianComponent component, AttackAttemptEvent args)
@@ -118,7 +129,7 @@ namespace Content.Server.Guardian
 
         private void OnCreatorInteract(EntityUid uid, GuardianCreatorComponent component, AfterInteractEvent args)
         {
-            if (args.Handled || args.Target == null) return;
+            if (args.Handled || args.Target == null || !args.CanReach) return;
             args.Handled = true;
             UseCreator(args.User, args.Target.Value, component);
         }
@@ -151,9 +162,6 @@ namespace Content.Server.Guardian
                 return;
             }
 
-            // Can't work without actions
-            EntityManager.EnsureComponent<ServerActionsComponent>(target);
-
             if (component.Injecting) return;
 
             component.Injecting = true;
@@ -173,10 +181,8 @@ namespace Content.Server.Guardian
 
             if (comp.Deleted ||
                 comp.Used ||
-                !TryComp<HandsComponent>(ev.User, out var hands) ||
-                !hands.IsHolding(comp.Owner) ||
-                HasComp<GuardianHostComponent>(ev.Target) ||
-                !TryComp<SharedActionsComponent>(ev.Target, out var actions))
+                !_handsSystem.IsHolding(ev.User, comp.Owner, out _) ||
+                HasComp<GuardianHostComponent>(ev.Target))
             {
                 comp.Injecting = false;
                 return;
@@ -194,8 +200,6 @@ namespace Content.Server.Guardian
             {
                 guardianComponent.Host = ev.Target;
 
-                // Grant the user the recall action and notify them
-                actions.Grant(ActionType.ManifestGuardian);
                 SoundSystem.Play(Filter.Entities(ev.Target), "/Audio/Effects/guardian_inject.ogg", ev.Target);
 
                 _popupSystem.PopupEntity(Loc.GetString("guardian-created"), ev.Target, Filter.Entities(ev.Target));

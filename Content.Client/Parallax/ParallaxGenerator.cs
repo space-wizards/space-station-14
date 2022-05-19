@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Globalization;
@@ -14,11 +15,11 @@ using Color = Robust.Shared.Maths.Color;
 
 namespace Content.Client.Parallax
 {
-    public class ParallaxGenerator
+    public sealed class ParallaxGenerator
     {
         private readonly List<Layer> Layers = new();
 
-        public static Image<Rgba32> GenerateParallax(TomlTable config, Size size, ISawmill sawmill, List<Image<Rgba32>>? debugLayerDump)
+        public static Image<Rgba32> GenerateParallax(TomlTable config, Size size, ISawmill sawmill, List<Image<Rgba32>>? debugLayerDump, CancellationToken cancel = default)
         {
             sawmill.Debug("Generating parallax!");
             var generator = new ParallaxGenerator();
@@ -27,10 +28,11 @@ namespace Content.Client.Parallax
             sawmill.Debug("Timing start!");
             var sw = new Stopwatch();
             sw.Start();
-            var image = new Image<Rgba32>(Configuration.Default, size.Width, size.Height, new Rgba32(0, 0, 0, 255));
+            var image = new Image<Rgba32>(Configuration.Default, size.Width, size.Height, new Rgba32(0, 0, 0, 0));
             var count = 0;
             foreach (var layer in generator.Layers)
             {
+                cancel.ThrowIfCancellationRequested();
                 layer.Apply(image);
                 debugLayerDump?.Add(image.Clone());
                 sawmill.Debug("Layer {0} done!", count++);
@@ -48,6 +50,16 @@ namespace Content.Client.Parallax
             {
                 switch (((TomlValue<string>) layerArray.Get("type")).Value)
                 {
+                    case "clear":
+                        var layerClear = new LayerClear(layerArray);
+                        Layers.Add(layerClear);
+                        break;
+
+                    case "toalpha":
+                        var layerToAlpha = new LayerToAlpha(layerArray);
+                        Layers.Add(layerToAlpha);
+                        break;
+
                     case "noise":
                         var layerNoise = new LayerNoise(layerArray);
                         Layers.Add(layerNoise);
@@ -69,7 +81,53 @@ namespace Content.Client.Parallax
             public abstract void Apply(Image<Rgba32> bitmap);
         }
 
-        private class LayerNoise : Layer
+        private abstract class LayerConversion : Layer
+        {
+            public abstract Color ConvertColor(Color input);
+
+            public override void Apply(Image<Rgba32> bitmap)
+            {
+                var span = bitmap.GetPixelSpan();
+
+                for (var y = 0; y < bitmap.Height; y++)
+                {
+                    for (var x = 0; x < bitmap.Width; x++)
+                    {
+                        var i = y * bitmap.Width + x;
+                        span[i] = ConvertColor(span[i].ConvertImgSharp()).ConvertImgSharp();
+                    }
+                }
+            }
+        }
+
+        private sealed class LayerClear : LayerConversion
+        {
+            private readonly Color Color = Color.Black;
+
+            public LayerClear(TomlTable table)
+            {
+                if (table.TryGetValue("color", out var tomlObject))
+                {
+                    Color = Color.FromHex(((TomlValue<string>) tomlObject).Value);
+                }
+            }
+
+            public override Color ConvertColor(Color input) => Color;
+        }
+
+        private sealed class LayerToAlpha : LayerConversion
+        {
+            public LayerToAlpha(TomlTable table)
+            {
+            }
+
+            public override Color ConvertColor(Color input)
+            {
+                return new Color(input.R, input.G, input.B, MathF.Min(input.R + input.G + input.B, 1.0f));
+            }
+        }
+
+        private sealed class LayerNoise : Layer
         {
             private readonly Color InnerColor = Color.White;
             private readonly Color OuterColor = Color.Black;
@@ -197,7 +255,7 @@ namespace Content.Client.Parallax
             }
         }
 
-        private class LayerPoints : Layer
+        private sealed class LayerPoints : Layer
         {
             private readonly int Seed = 1234;
             private readonly int PointCount = 100;

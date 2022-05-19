@@ -9,9 +9,14 @@
     sprite: Clothing/Head/Hoods/Bio/general.rsi
   - type: Clothing
     sprite: Clothing/Head/Hoods/Bio/general.rsi
+  - type: DiseaseProtection
+    protection: 0.15
+  - type: Tag
+    tags:
+    - HidesHair
 
 - type: entity
-  parent: ClothingHeadBase
+  parent: ClothingHeadHatHoodBioGeneral
   id: ClothingHeadHatHoodBioCmo
   name: bio hood
   suffix: CMO
@@ -21,9 +26,11 @@
     sprite: Clothing/Head/Hoods/Bio/cmo.rsi
   - type: Clothing
     sprite: Clothing/Head/Hoods/Bio/cmo.rsi
+  - type: DiseaseProtection
+    protection: 0.25
 
 - type: entity
-  parent: ClothingHeadBase
+  parent: ClothingHeadHatHoodBioGeneral
   id: ClothingHeadHatHoodBioJanitor
   name: bio hood
   suffix: Janitor
@@ -34,8 +41,9 @@
   - type: Clothing
     sprite: Clothing/Head/Hoods/Bio/janitor.rsi
 
+
 - type: entity
-  parent: ClothingHeadBase
+  parent: ClothingHeadHatHoodBioGeneral
   id: ClothingHeadHatHoodBioScientist
   name: bio hood
   suffix: Science
@@ -47,7 +55,7 @@
     sprite: Clothing/Head/Hoods/Bio/scientist.rsi
 
 - type: entity
-  parent: ClothingHeadBase
+  parent: ClothingHeadHatHoodBioGeneral
   id: ClothingHeadHatHoodBioSecurity
   name: bio hood
   suffix: Security
@@ -59,7 +67,7 @@
     sprite: Clothing/Head/Hoods/Bio/security.rsi
 
 - type: entity
-  parent: ClothingHeadBase
+  parent: ClothingHeadHatHoodBioGeneral
   id: ClothingHeadHatHoodBioVirology
   name: bio hood
   suffix: Virology
@@ -69,6 +77,8 @@
     sprite: Clothing/Head/Hoods/Bio/virology.rsi
   - type: Clothing
     sprite: Clothing/Head/Hoods/Bio/virology.rsi
+  - type: DiseaseProtection
+    protection: 0.25
 
 - type: entity
   parent: ClothingHeadBase
@@ -106,7 +116,7 @@
 - type: entity
   parent: ClothingHeadBase
   id: ClothingHeadHatHoodRad
-  name: rad
+  name: radiation hood
   description: A hood of the hazmat suit, designed for protection from high radioactivity.
   components:
   - type: Sprite

@@ -1,6 +1,4 @@
-﻿using Robust.Shared.GameObjects;
-
-namespace Content.Server.NodeContainer.Nodes
+﻿namespace Content.Server.NodeContainer.Nodes
 {
     /// <summary>
     ///     A <see cref="Node"/> that implements this will have its <see cref="RotateEvent(RotateEvent)"/> called when its
@@ -9,8 +7,8 @@ namespace Content.Server.NodeContainer.Nodes
     public interface IRotatableNode
     {
         /// <summary>
-        ///     Rotates this <see cref="Node"/>.
+        ///     Rotates this <see cref="Node"/>. Returns true if the node's connections need to be updated.
         /// </summary>
-        void RotateEvent(ref RotateEvent ev);
+        bool RotateEvent(ref RotateEvent ev);
     }
 }

@@ -2,11 +2,10 @@ using Content.Server.Light.Components;
 using Content.Server.Power.Components;
 using Content.Server.Power.EntitySystems;
 using Robust.Server.GameObjects;
-using Robust.Shared.GameObjects;
 
 namespace Content.Server.Light.EntitySystems
 {
-    public class LitOnPoweredSystem : EntitySystem
+    public sealed class LitOnPoweredSystem : EntitySystem
     {
         public override void Initialize()
         {

@@ -14,7 +14,7 @@ using Robust.Shared.Log;
 
 namespace Content.Client.Alerts.UI;
 
-public class AlertsFramePresenter : IDisposable
+public sealed class AlertsFramePresenter : IDisposable
 {
     [Dependency] private readonly IEntitySystemManager _systemManager = default!;
     [Dependency] private readonly IUserInterfaceManager _userInterfaceManager = default!;

@@ -1,7 +1,4 @@
 using Content.Server.Objectives.Interfaces;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Localization;
 using Robust.Shared.Utility;
 
 namespace Content.Server.Objectives.Conditions
@@ -16,16 +13,17 @@ namespace Content.Server.Objectives.Conditions
             get
             {
                 var targetName = string.Empty;
+                var jobName = Target?.CurrentJob?.Name ?? "Unknown";
 
                 if (Target == null)
-                    return Loc.GetString("objective-condition-kill-person-title", ("targetName", targetName));
+                    return Loc.GetString("objective-condition-kill-person-title", ("targetName", targetName), ("job", jobName));
 
                 if (Target.CharacterName != null)
                     targetName = Target.CharacterName;
                 else if (Target.OwnedEntity is {Valid: true} owned)
                     targetName = IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(owned).EntityName;
 
-                return Loc.GetString("objective-condition-kill-person-title", ("targetName", targetName));
+                return Loc.GetString("objective-condition-kill-person-title", ("targetName", targetName), ("job", jobName));
             }
         }
 
@@ -35,7 +33,7 @@ namespace Content.Server.Objectives.Conditions
 
         public float Progress => (Target?.CharacterDeadIC ?? true) ? 1f : 0f;
 
-        public float Difficulty => 2.25f;
+        public float Difficulty => 2f;
 
         public bool Equals(IObjectiveCondition? other)
         {

@@ -1,15 +1,9 @@
-using System;
-using System.Collections.Generic;
 using System.Threading;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Log;
-using Robust.Shared.Maths;
 using Timer = Robust.Shared.Timing.Timer;
 
 namespace Content.Server.Singularity.Components
 {
-    public class ContainmentFieldConnection : IDisposable
+    public sealed class ContainmentFieldConnection : IDisposable
     {
         public readonly ContainmentFieldGeneratorComponent Generator1;
         public readonly ContainmentFieldGeneratorComponent Generator2;

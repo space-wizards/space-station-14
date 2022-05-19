@@ -8,7 +8,7 @@ using Robust.Shared.Prototypes;
 
 namespace Content.Client.Crayon.UI
 {
-    public class CrayonBoundUserInterface : BoundUserInterface
+    public sealed class CrayonBoundUserInterface : BoundUserInterface
     {
         public CrayonBoundUserInterface(ClientUserInterfaceComponent owner, object uiKey) : base(owner, uiKey)
         {
@@ -40,6 +40,11 @@ namespace Content.Client.Crayon.UI
             SendMessage(new CrayonSelectMessage(state));
         }
 
+        public void SelectColor(Color color)
+        {
+            SendMessage(new CrayonColorMessage(color));
+        }
+
         protected override void Dispose(bool disposing)
         {
             base.Dispose(disposing);
@@ -47,6 +52,7 @@ namespace Content.Client.Crayon.UI
             if (disposing)
             {
                 _menu?.Close();
+                _menu = null;
             }
         }
     }

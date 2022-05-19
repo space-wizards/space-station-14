@@ -83,7 +83,7 @@
             "name": "ShaftMiner"
         },
         {
-            "name": "Assistant"
+            "name": "Passenger"
         },
         {
             "name": "ChiefEngineer"
@@ -108,6 +108,21 @@
         },
         {
             "name": "Mime"
+        },
+        {
+            "name": "Musician"
+        },
+        {
+            "name": "MedicalIntern"
+        },
+        {
+            "name": "TechnicalAssistant"
+        },
+        {
+            "name": "ServiceWorker"
+        },
+        {
+            "name": "SecurityCadet"
         }
     ]
 }

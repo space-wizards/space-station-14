@@ -1,15 +1,11 @@
-using System;
 using JetBrains.Annotations;
-using Robust.Shared.GameObjects;
-using Robust.Shared.Log;
-using Robust.Shared.Maths;
 using Robust.Shared.Player;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.Camera;
 
 [UsedImplicitly]
-public class CameraRecoilSystem : EntitySystem
+public sealed class CameraRecoilSystem : EntitySystem
 {
     /// <summary>
     ///     Maximum rate of magnitude restore towards 0 kick.
@@ -33,7 +29,7 @@ public class CameraRecoilSystem : EntitySystem
 
     private readonly ISawmill _log;
 
-    protected CameraRecoilSystem(IEntityManager entityManager)
+    private CameraRecoilSystem(IEntityManager entityManager)
     : base(entityManager)
     {
         _log = Logger.GetSawmill($"ecs.systems.{nameof(CameraRecoilSystem)}");
@@ -55,8 +51,7 @@ public class CameraRecoilSystem : EntitySystem
         if (!EntityManager.HasComponent<CameraRecoilComponent>(euid))
             return;
 
-        //TODO: This should only be sent to clients registered as viewers to the entity.
-        RaiseNetworkEvent(new CameraKickEvent(euid, kickback), Filter.Broadcast());
+        RaiseNetworkEvent(new CameraKickEvent(euid, kickback), Filter.Entities(euid));
     }
 
     public override void FrameUpdate(float frameTime)
@@ -119,7 +114,7 @@ public class CameraRecoilSystem : EntitySystem
 
 [Serializable]
 [NetSerializable]
-public class CameraKickEvent : EntityEventArgs
+public sealed class CameraKickEvent : EntityEventArgs
 {
     public readonly EntityUid Euid;
     public readonly Vector2 Recoil;

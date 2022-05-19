@@ -1,21 +1,7 @@
-using System;
-using Content.Shared.Examine;
 using Content.Shared.Sound;
-using Content.Shared.Weapons.Ranged.Barrels.Components;
-using Robust.Server.GameObjects;
-using Robust.Shared.Analyzers;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Localization;
-using Robust.Shared.Log;
-using Robust.Shared.Map;
-using Robust.Shared.Maths;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
-using Robust.Shared.Serialization.Manager.Attributes;
-using Robust.Shared.Serialization.TypeSerializers.Implementations;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
-using Robust.Shared.Timing;
 using Robust.Shared.Utility;
 
 namespace Content.Server.Weapon.Ranged.Ammunition.Components
@@ -25,7 +11,6 @@ namespace Content.Server.Weapon.Ranged.Ammunition.Components
     /// Generally used for bullets but can be used for other things like bananas
     /// </summary>
     [RegisterComponent]
-    [ComponentProtoName("Ammo")]
     [Friend(typeof(GunSystem))]
     public sealed class AmmoComponent : Component, ISerializationHooks
     {
@@ -82,7 +67,7 @@ namespace Content.Server.Weapon.Ranged.Ammunition.Components
         [DataField("ammoVelocity")]
         public float Velocity { get; } = 20f;
 
-        [DataField("muzzleFlash", customTypeSerializer:typeof(ResourcePathSerializer))]
+        [DataField("muzzleFlash")]
         public ResourcePath? MuzzleFlashSprite = new("Objects/Weapons/Guns/Projectiles/bullet_muzzle.png");
 
         [DataField("soundCollectionEject")]
@@ -115,6 +100,7 @@ namespace Content.Server.Weapon.Ranged.Ammunition.Components
         Pistol,
         A35, // Placeholder?
         LRifle,
+        HRifle,
         Magnum,
         AntiMaterial,
         Shotgun,

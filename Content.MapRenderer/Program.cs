@@ -17,17 +17,13 @@ namespace Content.MapRenderer
 
         private static readonly MapPainter MapPainter = new();
 
-#pragma warning disable CA1825
-        private static readonly string[] ForceRender = {"saltern"};
-#pragma warning restore CA1825
-
-        internal static async Task Main()
+        internal static async Task Main(string[] args)
         {
-            await Run();
-        }
+            if (args.Length == 0)
+            {
+                Console.WriteLine("Didn't specify any maps to paint! Provide map names (as map prototype names).");
+            }
 
-        private static async Task Run()
-        {
             // var created = Environment.GetEnvironmentVariable(MapsAddedEnvKey);
             // var modified = Environment.GetEnvironmentVariable(MapsModifiedEnvKey);
             //
@@ -55,7 +51,7 @@ namespace Content.MapRenderer
             //     }
             // }
 
-            var maps = new List<string>(ForceRender);
+            // var maps = new List<string>();
 
             // foreach (var node in files)
             // {
@@ -70,6 +66,11 @@ namespace Content.MapRenderer
             //     maps.Add(fileName);
             // }
 
+            await Run(new List<string>(args));
+        }
+
+        private static async Task Run(List<string> maps)
+        {
             Console.WriteLine($"Creating images for {maps.Count} maps");
 
             var mapNames = new List<string>();
@@ -77,13 +78,14 @@ namespace Content.MapRenderer
             {
                 Console.WriteLine($"Painting map {map}");
 
+                int i = 0;
                 await foreach (var grid in MapPainter.Paint(map))
                 {
                     var directory = DirectoryExtensions.MapImages().FullName;
                     Directory.CreateDirectory(directory);
 
                     var fileName = Path.GetFileNameWithoutExtension(map);
-                    var savePath = $"{directory}{Path.DirectorySeparatorChar}{fileName}.png";
+                    var savePath = $"{directory}{Path.DirectorySeparatorChar}{fileName}-{i}.png";
 
                     Console.WriteLine($"Writing grid of size {grid.Width}x{grid.Height} to {savePath}");
 
@@ -91,6 +93,7 @@ namespace Content.MapRenderer
                     grid.Dispose();
 
                     mapNames.Add(fileName);
+                    i++;
                 }
             }
 

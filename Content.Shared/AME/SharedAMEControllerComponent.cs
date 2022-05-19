@@ -1,15 +1,12 @@
-﻿using System;
-using Robust.Shared.GameObjects;
-using Robust.Shared.Serialization;
+﻿using Robust.Shared.Serialization;
 
 namespace Content.Shared.AME
 {
+    [Virtual]
     public class SharedAMEControllerComponent : Component
     {
-        public override string Name => "AMEController";
-
         [Serializable, NetSerializable]
-        public class AMEControllerBoundUserInterfaceState : BoundUserInterfaceState
+        public sealed class AMEControllerBoundUserInterfaceState : BoundUserInterfaceState
         {
             public readonly bool HasPower;
             public readonly bool IsMaster;
@@ -32,7 +29,7 @@ namespace Content.Shared.AME
         }
 
         [Serializable, NetSerializable]
-        public class UiButtonPressedMessage : BoundUserInterfaceMessage
+        public sealed class UiButtonPressedMessage : BoundUserInterfaceMessage
         {
             public readonly UiButton Button;
 

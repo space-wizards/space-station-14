@@ -4,16 +4,12 @@ using Content.Shared.Construction;
 using JetBrains.Annotations;
 using Robust.Server.Containers;
 using Robust.Shared.Containers;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Log;
-using Robust.Shared.Serialization.Manager.Attributes;
 
 namespace Content.Server.Construction.Completions
 {
     [UsedImplicitly]
     [DataDefinition]
-    public class BuildComputer : IGraphAction
+    public sealed class BuildComputer : IGraphAction
     {
         [DataField("container")] public string Container { get; private set; } = string.Empty;
 

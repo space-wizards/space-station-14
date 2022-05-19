@@ -1,6 +1,4 @@
-using Content.Server.Hands.Components;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
+using Content.Shared.Hands.EntitySystems;
 
 namespace Content.Server.AI.Operators.Inventory
 {
@@ -16,19 +14,12 @@ namespace Content.Server.AI.Operators.Inventory
 
         public override Outcome Execute(float frameTime)
         {
-            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(_owner, out HandsComponent? handsComponent))
-            {
-                return Outcome.Failed;
-            }
+            var sys = IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<SharedHandsSystem>();
+
             // TODO: If in clothing then click on it
-            foreach (var hand in handsComponent.ActivePriorityEnumerable())
-            {
-                if (handsComponent.GetItem(hand)?.Owner == _entity)
-                {
-                    handsComponent.ActiveHand = hand;
-                    return Outcome.Success;
-                }
-            }
+
+            if (sys.TrySelect(_owner, _entity))
+                return Outcome.Success;
 
             // TODO: Get free hand count; if no hands free then fail right here
 

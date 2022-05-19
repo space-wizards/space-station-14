@@ -4,6 +4,11 @@
   id: GlowstickBase
   description: Useful for raves and emergencies.
   components:
+    - type: Tag
+      tags:
+      - Trash
+    - type: Recyclable
+    - type: SpaceGarbage
     - type: ExpendableLight
       spentName: spent green glowstick
       spentDesc: It looks like this glowstick has stopped glowing. How tragic.

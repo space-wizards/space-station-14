@@ -1,13 +1,10 @@
-﻿using System;
-using Content.Shared.FixedPoint;
-using Robust.Shared.Map;
-using Robust.Shared.Maths;
+﻿using Robust.Shared.Map;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.Medical.SuitSensor
 {
     [Serializable, NetSerializable]
-    public class SuitSensorStatus
+    public sealed class SuitSensorStatus
     {
         public SuitSensorStatus(string name, string job)
         {

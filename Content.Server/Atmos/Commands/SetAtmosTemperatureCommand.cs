@@ -3,14 +3,12 @@ using Content.Server.Atmos.EntitySystems;
 using Content.Shared.Administration;
 using Content.Shared.Atmos;
 using Robust.Shared.Console;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
 using Robust.Shared.Map;
 
 namespace Content.Server.Atmos.Commands
 {
     [AdminCommand(AdminFlags.Debug)]
-    public class SetAtmosTemperatureCommand : IConsoleCommand
+    public sealed class SetAtmosTemperatureCommand : IConsoleCommand
     {
         public string Command => "setatmostemp";
         public string Description => "Sets a grid's temperature (in kelvin).";

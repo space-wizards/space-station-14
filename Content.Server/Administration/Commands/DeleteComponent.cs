@@ -1,12 +1,10 @@
 ﻿using Content.Shared.Administration;
 using Robust.Shared.Console;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
 
 namespace Content.Server.Administration.Commands
 {
     [AdminCommand(AdminFlags.VarEdit)]
-    public class DeleteComponent : IConsoleCommand
+    public sealed class DeleteComponent : IConsoleCommand
     {
         public string Command => "deletecomponent";
         public string Description => "Deletes all instances of the specified component.";

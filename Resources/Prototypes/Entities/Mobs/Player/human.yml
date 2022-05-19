@@ -5,18 +5,28 @@
   id: MobHuman
   description: A miserable pile of secrets.
   components:
+  - type: CombatMode
+    canDisarm: true
+  - type: InteractionPopup
+    successChance: 1
+    interactSuccessString: hugging-success-generic
+    interactSuccessSound: /Audio/Effects/hug.ogg
+    messagePerceivedByOthers: hugging-success-generic-others
   - type: Mind
     showExamineInfo: true
   - type: Input
     context: "human"
   - type: PlayerMobMover
   - type: PlayerInputMover
+  - type: Respirator
+    damage:
+      types:
+        Asphyxiation: 1.5
+    damageRecovery:
+      types:
+        Asphyxiation: -1.5
   - type: Alerts
   - type: Actions
-    innateActions:
-      - CombatMode
-      - Disarm
-      - HumanScream
   - type: Eye
   - type: CameraRecoil
   - type: Examiner
@@ -34,10 +44,11 @@
     sprite: Markers/jobs.rsi
     state: centcom
   - type: GhostRoleMobSpawner
-    prototype: HumanMob_CentcomOfficial
+    prototype: MobHumanCentcomOfficial
     deleteOnSpawn: true
     makeSentient: false
     name: centcom official
     description: Inspect the station, jot down performance reviews for heads of staff, bug the Captain.
   - type: UtilityAI
     startingGear: CentcomGear
+  - type: RandomHumanoidAppearance

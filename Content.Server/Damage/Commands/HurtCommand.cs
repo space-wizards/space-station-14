@@ -7,14 +7,12 @@ using Content.Shared.Damage;
 using Content.Shared.Damage.Prototypes;
 using Robust.Server.Player;
 using Robust.Shared.Console;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
 using Robust.Shared.Prototypes;
 
 namespace Content.Server.Damage.Commands
 {
     [AdminCommand(AdminFlags.Fun)]
-    class HurtCommand : IConsoleCommand
+    sealed class HurtCommand : IConsoleCommand
     {
         public string Command => "hurt";
         public string Description => "Ouch";

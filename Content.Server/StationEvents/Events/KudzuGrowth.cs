@@ -1,28 +1,25 @@
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Localization;
-using Robust.Shared.Log;
 using Robust.Shared.Map;
-using Robust.Shared.Maths;
 using Robust.Shared.Random;
 
 namespace Content.Server.StationEvents.Events;
 
-public class KudzuGrowth : StationEvent
+public sealed class KudzuGrowth : StationEvent
 {
-    [Dependency] private IRobustRandom _robustRandom = default!;
-    [Dependency] private IEntityManager _entityManager = default!;
+    [Dependency] private readonly IRobustRandom _robustRandom = default!;
+    [Dependency] private readonly IEntityManager _entityManager = default!;
 
     public override string Name => "KudzuGrowth";
 
     public override string? StartAnnouncement =>
         Loc.GetString("station-event-kudzu-growth-start-announcement");
 
-    public override string? StartAudio => "/Audio/Announcements/bloblarm.ogg";
-
     public override int EarliestStart => 15;
 
     public override int MinimumPlayers => 15;
+
+    public override float Weight => WeightLow;
+
+    public override int? MaxOccurrences => 2;
 
     // Get players to scatter a bit looking for it.
     protected override float StartAfter => 50f;

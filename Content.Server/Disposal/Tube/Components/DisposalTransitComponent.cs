@@ -1,18 +1,13 @@
-﻿using System;
-using Content.Server.Disposal.Unit.Components;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Maths;
+﻿using Content.Server.Disposal.Unit.Components;
 
 namespace Content.Server.Disposal.Tube.Components
 {
     // TODO: Different types of tubes eject in random direction with no exit point
     [RegisterComponent]
     [ComponentReference(typeof(IDisposalTubeComponent))]
+    [Virtual]
     public class DisposalTransitComponent : DisposalTubeComponent
     {
-        public override string Name => "DisposalTransit";
-
         protected override Direction[] ConnectableDirections()
         {
             var rotation = IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(Owner).LocalRotation;

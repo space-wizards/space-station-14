@@ -1,8 +1,4 @@
-using System.Collections.Generic;
 using Content.Shared.Shuttles.Components;
-using Robust.Shared.GameObjects;
-using Robust.Shared.Maths;
-using Robust.Shared.ViewVariables;
 
 namespace Content.Server.Shuttles.Components
 {
@@ -10,10 +6,10 @@ namespace Content.Server.Shuttles.Components
     public sealed class ShuttleComponent : SharedShuttleComponent
     {
         /// <summary>
-        /// The cached impulse available for each cardinal direction
+        /// The cached thrust available for each cardinal direction
         /// </summary>
         [ViewVariables]
-        public readonly float[] LinearThrusterImpulse = new float[4];
+        public readonly float[] LinearThrust = new float[4];
 
         /// <summary>
         /// The thrusters contributing to each direction for impulse.

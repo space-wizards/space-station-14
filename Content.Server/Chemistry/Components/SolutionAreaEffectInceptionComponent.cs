@@ -1,7 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using Robust.Shared.GameObjects;
-using Robust.Shared.ViewVariables;
+﻿using System.Linq;
 
 namespace Content.Server.Chemistry.Components
 {
@@ -11,10 +8,8 @@ namespace Content.Server.Chemistry.Components
     /// </summary>
     /// <remarks> It should only be manually added to an entity by the <see cref="SolutionAreaEffectComponent"/> and not with a prototype.</remarks>
     [RegisterComponent]
-    public class SolutionAreaEffectInceptionComponent : Component
+    public sealed class SolutionAreaEffectInceptionComponent : Component
     {
-        public override string Name => "AreaEffectInception";
-
         private const float ReactionDelay = 1.5f;
 
         private readonly HashSet<SolutionAreaEffectComponent> _group = new();

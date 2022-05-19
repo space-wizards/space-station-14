@@ -1,24 +1,16 @@
-using System;
 using System.Linq;
-using Content.Server.Construction.Components;
 using Content.Server.Disposal.Unit.Components;
 using Content.Server.Disposal.Unit.EntitySystems;
-using Content.Shared.Acts;
+using Content.Shared.Construction.Components;
 using Content.Shared.Disposal.Components;
 using Content.Shared.Popups;
 using Content.Shared.Sound;
 using Robust.Shared.Containers;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Localization;
-using Robust.Shared.Maths;
 using Robust.Shared.Physics;
-using Robust.Shared.Serialization.Manager.Attributes;
-using Robust.Shared.ViewVariables;
 
 namespace Content.Server.Disposal.Tube.Components
 {
-    public abstract class DisposalTubeComponent : Component, IDisposalTubeComponent, IBreakAct
+    public abstract class DisposalTubeComponent : Component, IDisposalTubeComponent
     {
         [Dependency] private readonly IEntityManager _entMan = default!;
 
@@ -26,7 +18,6 @@ namespace Content.Server.Disposal.Tube.Components
         public TimeSpan LastClang;
 
         private bool _connected;
-        private bool _broken;
         [DataField("clangSound")] public SoundSpecifier ClangSound = new SoundPathSpecifier("/Audio/Effects/clang.ogg");
 
         /// <summary>
@@ -51,7 +42,7 @@ namespace Content.Server.Disposal.Tube.Components
         // TODO: Make disposal pipes extend the grid
         private void Connect()
         {
-            if (_connected || _broken)
+            if (_connected)
             {
                 return;
             }
@@ -66,11 +57,6 @@ namespace Content.Server.Disposal.Tube.Components
                 return false;
             }
 
-            if (_broken)
-            {
-                return false;
-            }
-
             if (!ConnectableDirections().Contains(direction))
             {
                 return false;
@@ -79,7 +65,7 @@ namespace Content.Server.Disposal.Tube.Components
             return true;
         }
 
-        private void Disconnect()
+        public void Disconnect()
         {
             if (!_connected)
             {
@@ -113,11 +99,9 @@ namespace Content.Server.Disposal.Tube.Components
                 return;
             }
 
-            var state = _broken
-                ? DisposalTubeVisualState.Broken
-                : Anchored
-                    ? DisposalTubeVisualState.Anchored
-                    : DisposalTubeVisualState.Free;
+            var state = Anchored
+                ? DisposalTubeVisualState.Anchored
+                : DisposalTubeVisualState.Free;
 
             appearance.SetData(DisposalTubeVisuals.VisualState, state);
         }
@@ -178,13 +162,6 @@ namespace Content.Server.Disposal.Tube.Components
             base.OnRemove();
 
             Disconnect();
-        }
-
-        void IBreakAct.OnBreak(BreakageEventArgs eventArgs)
-        {
-            _broken = true; // TODO: Repair
-            Disconnect();
-            UpdateVisualState();
         }
     }
 }

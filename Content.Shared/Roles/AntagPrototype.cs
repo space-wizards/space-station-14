@@ -1,6 +1,4 @@
 using Robust.Shared.Prototypes;
-using Robust.Shared.Serialization.Manager.Attributes;
-using Robust.Shared.ViewVariables;
 
 namespace Content.Shared.Roles
 {
@@ -8,10 +6,10 @@ namespace Content.Shared.Roles
     ///     Describes information for a single antag.
     /// </summary>
     [Prototype("antag")]
-    public class AntagPrototype : IPrototype
+    public sealed class AntagPrototype : IPrototype
     {
         [ViewVariables]
-        [DataField("id", required: true)]
+        [IdDataFieldAttribute]
         public string ID { get; } = default!;
 
         /// <summary>

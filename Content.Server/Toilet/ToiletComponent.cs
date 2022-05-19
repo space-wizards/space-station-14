@@ -1,16 +1,11 @@
-using Content.Server.Act;
-using Content.Server.Chat.Managers;
 using Content.Shared.Sound;
 using Content.Shared.Tools;
-using Robust.Shared.GameObjects;
-using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
 namespace Content.Server.Toilet
 {
     [RegisterComponent]
-    [ComponentProtoName("Toilet")]
-    public sealed class ToiletComponent : Component, ISuicideAct
+    public sealed class ToiletComponent : Component
     {
         [DataField("pryLidTime")]
         public float PryLidTime = 1f;
@@ -24,12 +19,5 @@ namespace Content.Server.Toilet
         public bool LidOpen = false;
         public bool IsSeatUp = false;
         public bool IsPrying = false;
-
-        // todo: move me to ECS
-        SuicideKind ISuicideAct.Suicide(EntityUid victim, IChatManager chat)
-        {
-            return EntitySystem.Get<ToiletSystem>().Suicide(Owner, victim, this);
-        }
-
     }
 }

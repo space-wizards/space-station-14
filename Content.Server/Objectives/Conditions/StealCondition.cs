@@ -1,22 +1,16 @@
-using System;
 using Content.Server.Containers;
 using Content.Server.Objectives.Interfaces;
 using JetBrains.Annotations;
 using Robust.Shared.Containers;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Localization;
-using Robust.Shared.Log;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
-using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Utility;
 
 namespace Content.Server.Objectives.Conditions
 {
     [UsedImplicitly]
     [DataDefinition]
-    public class StealCondition : IObjectiveCondition, ISerializationHooks
+    public sealed class StealCondition : IObjectiveCondition, ISerializationHooks
     {
         private Mind.Mind? _mind;
         [DataField("prototype")] private string _prototypeId = string.Empty;
@@ -65,7 +59,7 @@ namespace Content.Server.Objectives.Conditions
             }
         }
 
-        public float Difficulty => 2f;
+        public float Difficulty => 2.25f;
 
         public bool Equals(IObjectiveCondition? other)
         {

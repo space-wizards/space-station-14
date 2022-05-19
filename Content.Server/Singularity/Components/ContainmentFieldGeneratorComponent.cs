@@ -1,21 +1,15 @@
-using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Content.Shared.Physics;
 using Content.Shared.Singularity.Components;
 using Robust.Server.GameObjects;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Log;
-using Robust.Shared.Maths;
 using Robust.Shared.Physics;
-using Robust.Shared.ViewVariables;
 
 namespace Content.Server.Singularity.Components
 {
     [RegisterComponent]
     [ComponentReference(typeof(SharedContainmentFieldGeneratorComponent))]
-    public class ContainmentFieldGeneratorComponent : SharedContainmentFieldGeneratorComponent
+    public sealed class ContainmentFieldGeneratorComponent : SharedContainmentFieldGeneratorComponent
     {
         [Dependency] private readonly IEntityManager _entMan = default!;
 
@@ -58,9 +52,6 @@ namespace Content.Server.Singularity.Components
             }
         }
 
-        [ComponentDependency] private readonly PhysicsComponent? _collidableComponent = default;
-        [ComponentDependency] private readonly PointLightComponent? _pointLightComponent = default;
-
         private Tuple<Direction, ContainmentFieldConnection>? _connection1;
         private Tuple<Direction, ContainmentFieldConnection>? _connection2;
 
@@ -69,7 +60,7 @@ namespace Content.Server.Singularity.Components
 
         public void OnAnchoredChanged()
         {
-            if(_collidableComponent?.BodyType != BodyType.Static)
+            if(_entMan.TryGetComponent<PhysicsComponent>(Owner, out var physicsComponent) && physicsComponent.BodyType != BodyType.Static)
             {
                 _connection1?.Item2.Dispose();
                 _connection2?.Item2.Dispose();
@@ -91,7 +82,7 @@ namespace Content.Server.Singularity.Components
         private bool TryGenerateFieldConnection([NotNullWhen(true)] ref Tuple<Direction, ContainmentFieldConnection>? propertyFieldTuple)
         {
             if (propertyFieldTuple != null) return false;
-            if(_collidableComponent?.BodyType != BodyType.Static) return false;
+            if(_entMan.TryGetComponent<PhysicsComponent>(Owner, out var physicsComponent) && physicsComponent.BodyType != BodyType.Static) return false;
 
             foreach (var direction in new[] {Direction.North, Direction.East, Direction.South, Direction.West})
             {
@@ -166,10 +157,10 @@ namespace Content.Server.Singularity.Components
 
         public void UpdateConnectionLights()
         {
-            if (_pointLightComponent != null)
+            if (_entMan.TryGetComponent<PointLightComponent>(Owner, out var pointLightComponent))
             {
                 bool hasAnyConnection = (_connection1 != null) || (_connection2 != null);
-                _pointLightComponent.Enabled = hasAnyConnection;
+                pointLightComponent.Enabled = hasAnyConnection;
             }
         }
 

@@ -1,10 +1,9 @@
-using System;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.Cargo
 {
     [NetSerializable, Serializable]
-    public class CargoOrderData
+    public sealed class CargoOrderData
     {
         public int OrderNumber;
         public string Requester;

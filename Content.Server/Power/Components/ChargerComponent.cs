@@ -1,10 +1,5 @@
-using System;
 using Content.Shared.Containers.ItemSlots;
 using Content.Shared.Power;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Serialization.Manager.Attributes;
-using Robust.Shared.ViewVariables;
 
 namespace Content.Server.Power.Components
 {
@@ -12,8 +7,6 @@ namespace Content.Server.Power.Components
     public sealed class ChargerComponent : Component
     {
         [Dependency] private readonly IEntityManager _entMan = default!;
-
-        public override string Name => "Charger";
 
         [ViewVariables]
         public BatteryComponent? HeldBattery;

@@ -1,5 +1,3 @@
-using System;
-using Robust.Shared.GameObjects;
 using Robust.Shared.GameStates;
 using Robust.Shared.Serialization;
 
@@ -9,8 +7,6 @@ namespace Content.Shared.Projectiles
     public abstract class SharedProjectileComponent : Component
     {
         private bool _ignoreShooter = true;
-        public override string Name => "Projectile";
-
         public EntityUid Shooter { get; protected set; }
 
         public bool IgnoreShooter
@@ -26,7 +22,7 @@ namespace Content.Shared.Projectiles
         }
 
         [NetSerializable, Serializable]
-        protected class ProjectileComponentState : ComponentState
+        protected sealed class ProjectileComponentState : ComponentState
         {
             public ProjectileComponentState(EntityUid shooter, bool ignoreShooter)
             {

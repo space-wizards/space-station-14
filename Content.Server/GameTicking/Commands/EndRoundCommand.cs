@@ -1,14 +1,11 @@
-﻿using System;
-using Content.Server.Administration;
+﻿using Content.Server.Administration;
 using Content.Shared.Administration;
 using Robust.Shared.Console;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
 
 namespace Content.Server.GameTicking.Commands
 {
     [AdminCommand(AdminFlags.Round)]
-    class EndRoundCommand : IConsoleCommand
+    sealed class EndRoundCommand : IConsoleCommand
     {
         public string Command => "endround";
         public string Description => "Ends the round and moves the server to PostRound.";

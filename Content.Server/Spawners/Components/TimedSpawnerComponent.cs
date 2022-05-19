@@ -1,23 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Threading;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
+﻿using System.Threading;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Serialization;
-using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.List;
-using Robust.Shared.ViewVariables;
 
 namespace Content.Server.Spawners.Components
 {
     [RegisterComponent]
-    public class TimedSpawnerComponent : Component, ISerializationHooks
+    public sealed class TimedSpawnerComponent : Component, ISerializationHooks
     {
         [Dependency] private readonly IRobustRandom _robustRandom = default!;
-
-        public override string Name => "TimedSpawner";
 
         [ViewVariables(VVAccess.ReadWrite)]
         [DataField("prototypes", customTypeSerializer:typeof(PrototypeIdListSerializer<EntityPrototype>))]

@@ -2,14 +2,14 @@
 using Content.Server.Singularity.Components;
 using Content.Shared.Singularity.Components;
 using Content.Shared.Tag;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
 using Robust.Shared.Physics.Dynamics;
 
 namespace Content.Server.Singularity.EntitySystems
 {
     public sealed class ContainmentFieldGeneratorSystem : EntitySystem
     {
+        [Dependency] private readonly TagSystem _tags = default!;
+
         public override void Initialize()
         {
             base.Initialize();
@@ -40,7 +40,7 @@ namespace Content.Server.Singularity.EntitySystems
 
         private void HandleGeneratorCollide(EntityUid uid, ContainmentFieldGeneratorComponent component, StartCollideEvent args)
         {
-            if (args.OtherFixture.Body.Owner.HasTag("EmitterBolt")) {
+            if (_tags.HasTag(args.OtherFixture.Body.Owner, "EmitterBolt")) {
                 component.ReceivePower(6);
             }
         }
@@ -57,7 +57,7 @@ namespace Content.Server.Singularity.EntitySystems
         private static void BodyTypeChanged(
             EntityUid uid,
             ContainmentFieldGeneratorComponent component,
-            PhysicsBodyTypeChangedEvent args)
+            ref PhysicsBodyTypeChangedEvent args)
         {
             component.OnAnchoredChanged();
         }

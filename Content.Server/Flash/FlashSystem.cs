@@ -1,21 +1,16 @@
-using System;
-using System.Collections.Generic;
 using Content.Server.Flash.Components;
 using Content.Server.Stunnable;
 using Content.Server.Weapon.Melee;
 using Content.Shared.Examine;
 using Content.Shared.Flash;
 using Content.Shared.Interaction;
-using Content.Shared.Interaction.Helpers;
+using Content.Shared.Interaction.Events;
 using Content.Shared.Inventory;
 using Content.Shared.Physics;
 using Content.Shared.Popups;
 using Content.Shared.Sound;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Localization;
 using Robust.Shared.Player;
 using Robust.Shared.Timing;
 using InventoryComponent = Content.Shared.Inventory.InventoryComponent;
@@ -24,21 +19,49 @@ namespace Content.Server.Flash
 {
     internal sealed class FlashSystem : SharedFlashSystem
     {
-        [Dependency] private readonly IEntityLookup _entityLookup = default!;
+        [Dependency] private readonly EntityLookupSystem _entityLookup = default!;
         [Dependency] private readonly IGameTiming _gameTiming = default!;
         [Dependency] private readonly StunSystem _stunSystem = default!;
         [Dependency] private readonly InventorySystem _inventorySystem = default!;
+        [Dependency] private readonly MetaDataSystem _metaSystem = default!;
+        [Dependency] private readonly SharedInteractionSystem _interactionSystem = default!;
 
         public override void Initialize()
         {
             base.Initialize();
-
             SubscribeLocalEvent<FlashComponent, MeleeHitEvent>(OnFlashMeleeHit);
-            SubscribeLocalEvent<FlashComponent, MeleeInteractEvent>(OnFlashMeleeInteract);
             SubscribeLocalEvent<FlashComponent, UseInHandEvent>(OnFlashUseInHand);
             SubscribeLocalEvent<FlashComponent, ExaminedEvent>(OnFlashExamined);
+
             SubscribeLocalEvent<InventoryComponent, FlashAttemptEvent>(OnInventoryFlashAttempt);
+
             SubscribeLocalEvent<FlashImmunityComponent, FlashAttemptEvent>(OnFlashImmunityFlashAttempt);
+
+            SubscribeLocalEvent<FlashableComponent, ComponentStartup>(OnFlashableStartup);
+            SubscribeLocalEvent<FlashableComponent, ComponentShutdown>(OnFlashableShutdown);
+            SubscribeLocalEvent<FlashableComponent, MetaFlagRemoveAttemptEvent>(OnMetaFlagRemoval);
+            SubscribeLocalEvent<FlashableComponent, PlayerAttachedEvent>(OnPlayerAttached);
+        }
+
+        private void OnPlayerAttached(EntityUid uid, FlashableComponent component, PlayerAttachedEvent args)
+        {
+            Dirty(component);
+        }
+
+        private void OnMetaFlagRemoval(EntityUid uid, FlashableComponent component, ref MetaFlagRemoveAttemptEvent args)
+        {
+            if (component.LifeStage == ComponentLifeStage.Running)
+                args.ToRemove &= ~MetaDataFlags.EntitySpecific;
+        }
+
+        private void OnFlashableStartup(EntityUid uid, FlashableComponent component, ComponentStartup args)
+        {
+            _metaSystem.AddFlag(uid, MetaDataFlags.EntitySpecific);
+        }
+
+        private void OnFlashableShutdown(EntityUid uid, FlashableComponent component, ComponentShutdown args)
+        {
+            _metaSystem.RemoveFlag(uid, MetaDataFlags.EntitySpecific);
         }
 
         private void OnFlashMeleeHit(EntityUid uid, FlashComponent comp, MeleeHitEvent args)
@@ -52,20 +75,6 @@ namespace Content.Server.Flash
             foreach (var e in args.HitEntities)
             {
                 Flash(e, args.User, uid, comp.FlashDuration, comp.SlowTo);
-            }
-        }
-
-        private void OnFlashMeleeInteract(EntityUid uid, FlashComponent comp, MeleeInteractEvent args)
-        {
-            if (!UseFlash(comp, args.User))
-            {
-                return;
-            }
-
-            if (EntityManager.HasComponent<FlashableComponent>(args.Entity))
-            {
-                args.CanInteract = true;
-                Flash(args.Entity, args.User, uid, comp.FlashDuration, comp.SlowTo);
             }
         }
 
@@ -124,7 +133,7 @@ namespace Content.Server.Flash
             {
                 flashable.LastFlash = _gameTiming.CurTime;
                 flashable.Duration = flashDuration / 1000f; // TODO: Make this sane...
-                flashable.Dirty();
+                Dirty(flashable);
 
                 _stunSystem.TrySlowdown(target, TimeSpan.FromSeconds(flashDuration/1000f), true,
                     slowTo, slowTo);
@@ -153,7 +162,7 @@ namespace Content.Server.Flash
             foreach (var entity in flashableEntities)
             {
                 // Check for unobstructed entities while ignoring the mobs with flashable components.
-                if (!transform.InRangeUnobstructed(entity, range, CollisionGroup.Opaque, (e) => flashableEntities.Contains(e)))
+                if (!_interactionSystem.InRangeUnobstructed(entity, transform.MapPosition, range, CollisionGroup.Opaque, (e) => flashableEntities.Contains(e)))
                     continue;
 
                 Flash(entity, user, source, duration, slowTo, displayPopup);
@@ -186,9 +195,12 @@ namespace Content.Server.Flash
 
         private void OnInventoryFlashAttempt(EntityUid uid, InventoryComponent component, FlashAttemptEvent args)
         {
+            // Forward the event to a worn helmet, if one is equipped.
+            if (_inventorySystem.TryGetSlotEntity(uid, "head", out var maskSlotEntity, component))
+                RaiseLocalEvent(maskSlotEntity.Value, args);
             // Forward the event to the glasses, if any.
-            if(_inventorySystem.TryGetSlotEntity(uid, "eyes", out var slotEntity, component))
-                RaiseLocalEvent(slotEntity.Value, args);
+            if(!args.Cancelled && _inventorySystem.TryGetSlotEntity(uid, "eyes", out var eyeSlotEntity, component))
+                RaiseLocalEvent(eyeSlotEntity.Value, args);
         }
 
         private void OnFlashImmunityFlashAttempt(EntityUid uid, FlashImmunityComponent component, FlashAttemptEvent args)
@@ -198,7 +210,7 @@ namespace Content.Server.Flash
         }
     }
 
-    public class FlashAttemptEvent : CancellableEntityEventArgs
+    public sealed class FlashAttemptEvent : CancellableEntityEventArgs
     {
         public readonly EntityUid Target;
         public readonly EntityUid? User;

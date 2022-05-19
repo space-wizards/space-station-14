@@ -7,6 +7,7 @@
     mode: AlignTileAny
   components:
   - type: AmbientSound
+    volume: -6
     range: 7
     sound:
       path: /Audio/Ambience/Objects/gravity_gen_hum.ogg
@@ -30,15 +31,12 @@
     fixtures:
     - shape:
         !type:PhysShapeAabb
-          bounds: "-1.5,-1.5,1.5,1.5"
+        bounds: "-1.5,-1.5,1.5,1.5"
       mass: 500
       mask:
-      - Impassable
+      - LargeMobMask
       layer:
-      - Opaque
-      - Impassable
-      - MobImpassable
-      - VaultImpassable
+      - WallLayer
   - type: Repairable
     fuelCost: 10
     doAfterDelay: 5
@@ -51,8 +49,8 @@
       - !type:DoActsBehavior
         acts: ["Breakage"]
   - type: GravityGenerator
-    idlePower: 15
-    activePower: 500
+    idlePower: 50
+    activePower: 2500
     lightRadiusMin: 0.75
     lightRadiusMax: 2.5
   - type: UserInterface

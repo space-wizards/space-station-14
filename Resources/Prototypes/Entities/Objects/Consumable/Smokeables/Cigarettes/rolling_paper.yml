@@ -1,5 +1,5 @@
 - type: entity
-  parent: BaseItem
+  parent: BaseStorageItem
   name: pack of rolling paper
   id: PackPaperRolling
   description: A pack of thin pieces of paper used to make fine smokeables.
@@ -58,6 +58,9 @@
   - type: Tag
     tags:
     - RollingPaper
+    - Trash
+  - type: Recyclable
+  - type: SpaceGarbage
 
 - type: entity
   id: CigaretteFilter
@@ -78,3 +81,5 @@
   - type: Tag
     tags:
     - CigFilter
+    - Trash
+  - type: Recyclable

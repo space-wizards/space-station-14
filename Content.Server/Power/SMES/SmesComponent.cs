@@ -1,11 +1,8 @@
-using System;
 using Content.Server.Power.Components;
 using Content.Shared.Power;
 using Content.Shared.Rounding;
 using Content.Shared.SMES;
 using Robust.Server.GameObjects;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
 using Robust.Shared.Timing;
 
 namespace Content.Server.Power.SMES
@@ -16,12 +13,10 @@ namespace Content.Server.Power.SMES
     ///     Code interfacing with the powernet is handled in <see cref="BatteryStorageComponent"/> and <see cref="BatteryDischargerComponent"/>.
     /// </summary>
     [RegisterComponent]
-    public class SmesComponent : Component
+    public sealed class SmesComponent : Component
     {
         [Dependency] private readonly IEntityManager _entMan = default!;
         [Dependency] private readonly IGameTiming _gameTiming = default!;
-
-        public override string Name => "Smes";
 
         private int _lastChargeLevel;
 

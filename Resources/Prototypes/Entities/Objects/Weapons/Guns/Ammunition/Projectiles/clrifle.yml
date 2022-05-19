@@ -2,7 +2,7 @@
   id: BulletClRifle
   name: bullet (.25 caseless)
   parent: BulletBase
-  abstract: true
+  noSpawn: true
   components:
   - type: Projectile
     damage:
@@ -13,7 +13,7 @@
   id: BulletClRifleFlash
   name: bullet (.25 caseless flash)
   parent: BulletBaseFlash
-  abstract: true
+  noSpawn: true
   components:
   - type: Projectile
     damage:
@@ -24,7 +24,7 @@
   id: BulletClRifleHV
   name: bullet (.25 caseless high-velocity)
   parent: BulletBaseHV
-  abstract: true
+  noSpawn: true
   components:
   - type: Projectile
     damage:
@@ -35,7 +35,7 @@
   id: BulletClRiflePractice
   name: bullet (.25 caseless practice)
   parent: BulletBasePractice
-  abstract: true
+  noSpawn: true
   components:
   - type: Projectile
     damage:
@@ -46,7 +46,7 @@
   id: BulletClRifleRubber
   name: bullet (.25 caseless rubber)
   parent: BulletBaseRubber
-  abstract: true
+  noSpawn: true
   components:
   - type: Projectile
     damage:

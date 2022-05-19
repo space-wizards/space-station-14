@@ -1,7 +1,4 @@
-﻿using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-
-namespace Content.Shared.Transform
+﻿namespace Content.Shared.Transform
 {
     public static class TransformExtensions
     {

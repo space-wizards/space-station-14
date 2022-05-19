@@ -1,9 +1,5 @@
-using System;
-using Robust.Shared.GameObjects;
 using Robust.Shared.GameStates;
 using Robust.Shared.Serialization;
-using Robust.Shared.Serialization.Manager.Attributes;
-using Robust.Shared.ViewVariables;
 
 namespace Content.Shared.PowerCell;
 
@@ -13,7 +9,6 @@ namespace Content.Shared.PowerCell;
 /// </summary>
 [NetworkedComponent]
 [RegisterComponent]
-[ComponentProtoName("PowerCell")]
 public sealed class PowerCellComponent : Component
 {
     public const string SolutionName = "powerCell";

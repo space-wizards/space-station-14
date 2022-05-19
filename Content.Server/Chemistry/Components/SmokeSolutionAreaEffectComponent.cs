@@ -5,18 +5,15 @@ using Content.Shared.Chemistry;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.FixedPoint;
 using Content.Shared.Smoking;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
 
 namespace Content.Server.Chemistry.Components
 {
     [RegisterComponent]
     [ComponentReference(typeof(SolutionAreaEffectComponent))]
-    public class SmokeSolutionAreaEffectComponent : SolutionAreaEffectComponent
+    public sealed class SmokeSolutionAreaEffectComponent : SolutionAreaEffectComponent
     {
         [Dependency] private readonly IEntityManager _entMan = default!;
 
-        public override string Name => "SmokeSolutionAreaEffect";
         public new const string SolutionName = "solutionArea";
 
         protected override void UpdateVisuals()
@@ -42,7 +39,7 @@ namespace Content.Server.Chemistry.Components
 
             var chemistry = EntitySystem.Get<ReactiveSystem>();
             var cloneSolution = solution.Clone();
-            var transferAmount = FixedPoint2.Min(cloneSolution.TotalVolume * solutionFraction, bloodstream.Solution.AvailableVolume);
+            var transferAmount = FixedPoint2.Min(cloneSolution.TotalVolume * solutionFraction, bloodstream.ChemicalSolution.AvailableVolume);
             var transferSolution = cloneSolution.SplitSolution(transferAmount);
 
             foreach (var reagentQuantity in transferSolution.Contents.ToArray())
@@ -52,7 +49,7 @@ namespace Content.Server.Chemistry.Components
             }
 
             var bloodstreamSys = EntitySystem.Get<BloodstreamSystem>();
-            bloodstreamSys.TryAddToBloodstream(entity, transferSolution, bloodstream);
+            bloodstreamSys.TryAddToChemicals(entity, transferSolution, bloodstream);
         }
 
 

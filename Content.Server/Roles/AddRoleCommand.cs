@@ -4,14 +4,13 @@ using Content.Shared.Administration;
 using Content.Shared.Roles;
 using Robust.Server.Player;
 using Robust.Shared.Console;
-using Robust.Shared.IoC;
 using Robust.Shared.Prototypes;
 using System.Linq;
 
 namespace Content.Server.Roles
 {
     [AdminCommand(AdminFlags.Fun)]
-    public class AddRoleCommand : IConsoleCommand
+    public sealed class AddRoleCommand : IConsoleCommand
     {
         public string Command => "addrole";
 

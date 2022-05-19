@@ -1,14 +1,11 @@
-﻿using System;
-using Content.Server.Body.Components;
+﻿using Content.Server.Body.Components;
 using Content.Server.Temperature.Components;
 using Content.Server.Temperature.Systems;
 using Content.Shared.ActionBlocker;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
 
 namespace Content.Server.Body.Systems;
 
-public class ThermalRegulatorSystem : EntitySystem
+public sealed class ThermalRegulatorSystem : EntitySystem
 {
     [Dependency] private readonly TemperatureSystem _tempSys = default!;
     [Dependency] private readonly ActionBlockerSystem _actionBlockerSys = default!;

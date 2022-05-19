@@ -2,7 +2,6 @@ using System;
 using System.Threading.Tasks;
 using Content.Server.GameTicking;
 using Content.Server.GameTicking.Commands;
-using Content.Shared;
 using Content.Shared.CCVar;
 using NUnit.Framework;
 using Robust.Shared.Configuration;
@@ -13,7 +12,7 @@ namespace Content.IntegrationTests.Tests.Commands
 {
     [TestFixture]
     [TestOf(typeof(RestartRoundNowCommand))]
-    public class RestartRoundNowTest : ContentIntegrationTest
+    public sealed class RestartRoundNowTest : ContentIntegrationTest
     {
         [Test]
         [TestCase(true)]

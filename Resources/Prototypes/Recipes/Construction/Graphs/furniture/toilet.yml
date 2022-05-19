@@ -1,5 +1,5 @@
 - type: constructionGraph
-  id: toilet
+  id: Toilet
   start: start
   graph:
     - node: start
@@ -12,6 +12,7 @@
               amount: 5
               doAfter: 1
     - node: toilet
+      entity: ToiletEmpty
       edges:
         - to: start
           completed:
@@ -19,7 +20,7 @@
               prototype: SheetSteel1
               amount: 5
             - !type:EmptyAllContainers {}
-            - !type:DeleteEntity {}
+            - !type:DestroyEntity {}
           conditions:
             - !type:EntityAnchored
               anchored: false

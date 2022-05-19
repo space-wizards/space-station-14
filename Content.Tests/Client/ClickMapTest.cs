@@ -1,4 +1,3 @@
-using Content.Client;
 using Content.Client.Clickable;
 using NUnit.Framework;
 using SixLabors.ImageSharp;
@@ -7,7 +6,7 @@ using SixLabors.ImageSharp.PixelFormats;
 namespace Content.Tests.Client
 {
     [TestFixture]
-    public class ClickMapTest
+    public sealed class ClickMapTest
     {
         [Test]
         public void TestBasic()

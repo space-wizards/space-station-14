@@ -1,5 +1,3 @@
-using System;
-using System.Collections.Generic;
 using System.Linq;
 using Content.Server.Chat.Managers;
 using Content.Server.Objectives.Interfaces;
@@ -16,10 +14,6 @@ using Content.Shared.Traitor.Uplink;
 using Robust.Server.Player;
 using Robust.Shared.Audio;
 using Robust.Shared.Configuration;
-using Robust.Shared.IoC;
-using Robust.Shared.Localization;
-using Robust.Shared.Log;
-using Robust.Shared.Maths;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
@@ -27,7 +21,7 @@ using Robust.Shared.Utility;
 
 namespace Content.Server.GameTicking.Rules;
 
-public class TraitorRuleSystem : GameRuleSystem
+public sealed class TraitorRuleSystem : GameRuleSystem
 {
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
@@ -43,6 +37,8 @@ public class TraitorRuleSystem : GameRuleSystem
 
     private const string TraitorPrototypeID = "Traitor";
 
+    public int TotalTraitors => _traitors.Count;
+
     public override void Initialize()
     {
         base.Initialize();
@@ -52,9 +48,9 @@ public class TraitorRuleSystem : GameRuleSystem
         SubscribeLocalEvent<RoundEndTextAppendEvent>(OnRoundEndText);
     }
 
-    public override void Added() { }
+    public override void Started() {}
 
-    public override void Removed()
+    public override void Ended()
     {
         _traitors.Clear();
     }

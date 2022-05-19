@@ -1,10 +1,6 @@
 using Content.Shared.Popups;
 using Content.Shared.Rotatable;
 using Content.Shared.Verbs;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Localization;
-using Robust.Shared.Maths;
 using Robust.Shared.Physics;
 
 namespace Content.Server.Rotatable
@@ -12,15 +8,15 @@ namespace Content.Server.Rotatable
     /// <summary>
     ///     Handles verbs for the <see cref="RotatableComponent"/> and <see cref="FlippableComponent"/> components.
     /// </summary>
-    public class RotatableSystem : EntitySystem
+    public sealed class RotatableSystem : EntitySystem
     {
         public override void Initialize()
         {
-            SubscribeLocalEvent<FlippableComponent, GetOtherVerbsEvent>(AddFlipVerb);
-            SubscribeLocalEvent<RotatableComponent, GetOtherVerbsEvent>(AddRotateVerbs);
+            SubscribeLocalEvent<FlippableComponent, GetVerbsEvent<Verb>>(AddFlipVerb);
+            SubscribeLocalEvent<RotatableComponent, GetVerbsEvent<Verb>>(AddRotateVerbs);
         }
 
-        private void AddFlipVerb(EntityUid uid, FlippableComponent component, GetOtherVerbsEvent args)
+        private void AddFlipVerb(EntityUid uid, FlippableComponent component, GetVerbsEvent<Verb> args)
         {
             if (!args.CanAccess || !args.CanInteract || component.MirrorEntity == null)
                 return;
@@ -32,7 +28,7 @@ namespace Content.Server.Rotatable
             args.Verbs.Add(verb);
         }
 
-        private void AddRotateVerbs(EntityUid uid, RotatableComponent component, GetOtherVerbsEvent args)
+        private void AddRotateVerbs(EntityUid uid, RotatableComponent component, GetVerbsEvent<Verb> args)
         {
             if (!args.CanAccess || !args.CanInteract)
                 return;

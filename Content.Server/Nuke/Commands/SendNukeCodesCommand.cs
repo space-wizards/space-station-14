@@ -2,13 +2,12 @@
 using Content.Shared.Administration;
 using JetBrains.Annotations;
 using Robust.Shared.Console;
-using Robust.Shared.GameObjects;
 
 namespace Content.Server.Nuke.Commands
 {
     [UsedImplicitly]
     [AdminCommand(AdminFlags.Fun)]
-    public class SendNukeCodesCommand : IConsoleCommand
+    public sealed class SendNukeCodesCommand : IConsoleCommand
     {
         public string Command => "nukecodes";
         public string Description => "Send nuke codes to the communication console";

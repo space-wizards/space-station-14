@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Concurrent;
-using System.Collections.Generic;
+﻿using System.Collections.Concurrent;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
@@ -13,14 +11,11 @@ using Content.Shared.Database;
 using Prometheus;
 using Robust.Shared;
 using Robust.Shared.Configuration;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Log;
 using Robust.Shared.Reflection;
 
 namespace Content.Server.Administration.Logs;
 
-public partial class AdminLogSystem : SharedAdminLogSystem
+public sealed partial class AdminLogSystem : SharedAdminLogSystem
 {
     [Dependency] private readonly IConfigurationManager _configuration = default!;
     [Dependency] private readonly IEntityManager _entityManager = default!;
@@ -108,6 +103,7 @@ public partial class AdminLogSystem : SharedAdminLogSystem
         }
 
         SubscribeLocalEvent<RoundStartingEvent>(RoundStarting);
+        SubscribeLocalEvent<GameRunLevelChangedEvent>(RunLevelChanged);
     }
 
     public override async void Shutdown()
@@ -181,7 +177,7 @@ public partial class AdminLogSystem : SharedAdminLogSystem
 
     private async Task SaveLogs()
     {
-        _accumulatedFrameTime = 0;
+        _accumulatedFrameTime = 0f;
 
         // TODO ADMIN LOGS array pool
         var copy = new List<QueuedLog>(_logQueue.Count + _preRoundLogQueue.Count);
@@ -232,14 +228,21 @@ public partial class AdminLogSystem : SharedAdminLogSystem
 
     private void RoundStarting(RoundStartingEvent ev)
     {
-        Interlocked.Exchange(ref _currentLogId, 0);
         CacheNewRound();
+    }
 
-        if (_metricsEnabled)
+    private void RunLevelChanged(GameRunLevelChangedEvent ev)
+    {
+        if (ev.New == GameRunLevel.PreRoundLobby)
         {
-            PreRoundQueueCapReached.Set(0);
-            QueueCapReached.Set(0);
-            LogsSent.Set(0);
+            Interlocked.Exchange(ref _currentLogId, 0);
+
+            if (_metricsEnabled)
+            {
+                PreRoundQueueCapReached.Set(0);
+                QueueCapReached.Set(0);
+                LogsSent.Set(0);
+            }
         }
     }
 

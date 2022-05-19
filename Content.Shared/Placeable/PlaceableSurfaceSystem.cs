@@ -1,20 +1,26 @@
-using Content.Shared.Hands.Components;
+using Content.Shared.Storage.Components;
+using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Interaction;
-using Robust.Shared.GameObjects;
 using Robust.Shared.GameStates;
-using Robust.Shared.IoC;
-using Robust.Shared.Maths;
 
 namespace Content.Shared.Placeable
 {
-    public class PlaceableSurfaceSystem : EntitySystem
+    public sealed class PlaceableSurfaceSystem : EntitySystem
     {
+        [Dependency] private readonly SharedHandsSystem _handsSystem = default!;
+
         public override void Initialize()
         {
             base.Initialize();
 
-            SubscribeLocalEvent<PlaceableSurfaceComponent, InteractUsingEvent>(OnInteractUsing);
+            SubscribeLocalEvent<PlaceableSurfaceComponent, AfterInteractUsingEvent>(OnAfterInteractUsing);
+            SubscribeLocalEvent<PlaceableSurfaceComponent, ComponentGetState>(OnGetState);
             SubscribeLocalEvent<PlaceableSurfaceComponent, ComponentHandleState>(OnHandleState);
+        }
+
+        private void OnGetState(EntityUid uid, PlaceableSurfaceComponent component, ref ComponentGetState args)
+        {
+            args.State = new PlaceableSurfaceComponentState(component.IsPlaceable, component.PlaceCentered, component.PositionOffset);
         }
 
         public void SetPlaceable(EntityUid uid, bool isPlaceable, PlaceableSurfaceComponent? surface = null)
@@ -23,7 +29,7 @@ namespace Content.Shared.Placeable
                 return;
 
             surface.IsPlaceable = isPlaceable;
-            surface.Dirty();
+            Dirty(surface);
         }
 
         public void SetPlaceCentered(EntityUid uid, bool placeCentered, PlaceableSurfaceComponent? surface = null)
@@ -32,7 +38,7 @@ namespace Content.Shared.Placeable
                 return;
 
             surface.PlaceCentered = placeCentered;
-            surface.Dirty();
+            Dirty(surface);
         }
 
         public void SetPositionOffset(EntityUid uid, Vector2 offset, PlaceableSurfaceComponent? surface = null)
@@ -41,30 +47,29 @@ namespace Content.Shared.Placeable
                 return;
 
             surface.PositionOffset = offset;
-            surface.Dirty();
+            Dirty(surface);
         }
 
-        private void OnInteractUsing(EntityUid uid, PlaceableSurfaceComponent surface, InteractUsingEvent args)
+        private void OnAfterInteractUsing(EntityUid uid, PlaceableSurfaceComponent surface, AfterInteractUsingEvent args)
         {
-            if (args.Handled)
+            if (args.Handled || !args.CanReach)
                 return;
 
             if (!surface.IsPlaceable)
                 return;
 
-            if(!EntityManager.TryGetComponent<SharedHandsComponent?>(args.User, out var handComponent))
+            // 99% of the time they want to dump the stuff inside on the table, they can manually place with q if they really need to.
+            // Just causes prediction CBT otherwise.
+            if (HasComp<DumpableComponent>(args.Used))
                 return;
 
-            if (!args.ClickLocation.IsValid(EntityManager))
-                return;
-
-            if(!handComponent.TryDropEntity(args.Used, EntityManager.GetComponent<TransformComponent>(surface.Owner).Coordinates))
+            if (!_handsSystem.TryDrop(args.User, args.Used))
                 return;
 
             if (surface.PlaceCentered)
-                EntityManager.GetComponent<TransformComponent>(args.Used).LocalPosition = EntityManager.GetComponent<TransformComponent>(args.Target).LocalPosition + surface.PositionOffset;
+                Transform(args.Used).LocalPosition = Transform(uid).LocalPosition + surface.PositionOffset;
             else
-                EntityManager.GetComponent<TransformComponent>(args.Used).Coordinates = args.ClickLocation;
+                Transform(args.Used).Coordinates = args.ClickLocation;
 
             args.Handled = true;
         }

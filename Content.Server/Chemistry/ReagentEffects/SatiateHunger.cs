@@ -1,8 +1,5 @@
 ﻿using Content.Server.Nutrition.Components;
-using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.Reagent;
-using Robust.Shared.GameObjects;
-using Robust.Shared.Serialization.Manager.Attributes;
 
 namespace Content.Server.Chemistry.ReagentEffects
 {
@@ -10,7 +7,7 @@ namespace Content.Server.Chemistry.ReagentEffects
     /// Attempts to find a HungerComponent on the target,
     /// and to update it's hunger values.
     /// </summary>
-    public class SatiateHunger : ReagentEffect
+    public sealed class SatiateHunger : ReagentEffect
     {
         /// <summary>
         ///     How much hunger is satiated when 1u of the reagent is metabolized

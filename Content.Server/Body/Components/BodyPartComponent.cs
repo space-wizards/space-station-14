@@ -1,15 +1,12 @@
 using Content.Shared.Body.Components;
 using Content.Shared.Random.Helpers;
 using Robust.Shared.Containers;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Log;
 
 namespace Content.Server.Body.Components
 {
     [RegisterComponent]
     [ComponentReference(typeof(SharedBodyPartComponent))]
-    public class BodyPartComponent : SharedBodyPartComponent
+    public sealed class BodyPartComponent : SharedBodyPartComponent
     {
         [Dependency] private readonly IEntityManager _entMan = default!;
 

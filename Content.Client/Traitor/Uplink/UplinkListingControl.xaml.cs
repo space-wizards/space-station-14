@@ -8,7 +8,7 @@ using Robust.Shared.Maths;
 namespace Content.Client.Traitor.Uplink
 {
     [GenerateTypedNameReferences]
-    public partial class UplinkListingControl : Control
+    public sealed partial class UplinkListingControl : Control
     {
 
         public UplinkListingControl(string itemName, string itemDescription,

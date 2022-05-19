@@ -3,13 +3,11 @@ using Content.Shared.Administration;
 using Content.Shared.CCVar;
 using Robust.Shared.Configuration;
 using Robust.Shared.Console;
-using Robust.Shared.IoC;
-using Robust.Shared.Localization;
 
 namespace Content.Server.Chat.Commands;
 
 [AdminCommand(AdminFlags.Server)]
-public class SetOOCCommand : IConsoleCommand
+public sealed class SetOOCCommand : IConsoleCommand
 {
     public string Command => "setooc";
     public string Description => Loc.GetString("set-ooc-command-description");

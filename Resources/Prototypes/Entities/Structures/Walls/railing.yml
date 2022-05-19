@@ -20,10 +20,10 @@
         !type:PhysShapeAabb
         bounds: "-0.49,-0.49,0.49,-0.3"
       mass: 50
-      layer:
-      - SmallImpassable
       mask:
-      - Impassable
+      - TableMask
+      layer:
+      - TableLayer
   - type: InteractionOutline
   - type: Repairable
   - type: Damageable
@@ -47,7 +47,7 @@
         acts: [ "Destruction" ]
   - type: Climbable
   - type: Construction
-    graph: railing
+    graph: Railing
     node: railing
 
 - type: entity
@@ -72,18 +72,18 @@
         !type:PhysShapeAabb
         bounds: "-0.49,-0.49,0.49,-0.3"
       mass: 50
-      layer:
-      - SmallImpassable
       mask:
-      - Impassable
+      - TableMask
+      layer:
+      - TableLayer
     - shape:
         !type:PhysShapeAabb
         bounds: "0.49,0.49,0.3,-0.49"
       mass: 50
-      layer:
-      - SmallImpassable
       mask:
-      - Impassable
+      - TableMask
+      layer:
+      - TableLayer
   - type: InteractionOutline
   - type: Repairable
   - type: Damageable
@@ -107,7 +107,7 @@
         acts: [ "Destruction" ]
   - type: Climbable
   - type: Construction
-    graph: railing
+    graph: Railing
     node: railingCorner
 
 - type: entity
@@ -132,10 +132,10 @@
         !type:PhysShapeAabb
         bounds: "-0.49,0.49,-0.3,0.3"
       mass: 50
-      layer:
-      - SmallImpassable
       mask:
-      - Impassable
+      - TableMask
+      layer:
+      - TableLayer
   - type: InteractionOutline
   - type: Repairable
   - type: Damageable
@@ -159,6 +159,6 @@
         acts: [ "Destruction" ]
   - type: Climbable
   - type: Construction
-    graph: railing
+    graph: Railing
     node: railingCornerSmall
 

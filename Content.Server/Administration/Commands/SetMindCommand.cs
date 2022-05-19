@@ -3,14 +3,11 @@ using Content.Server.Players;
 using Content.Shared.Administration;
 using Robust.Server.Player;
 using Robust.Shared.Console;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Localization;
 
 namespace Content.Server.Administration.Commands
 {
     [AdminCommand(AdminFlags.Admin)]
-    class SetMindCommand : IConsoleCommand
+    sealed class SetMindCommand : IConsoleCommand
     {
         public string Command => "setmind";
 

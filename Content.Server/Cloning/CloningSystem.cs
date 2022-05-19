@@ -1,15 +1,9 @@
-using System.Collections.Generic;
 using System.Linq;
 using Content.Server.Cloning.Components;
 using Content.Server.Mind.Components;
 using Content.Server.Power.Components;
 using Content.Shared.GameTicking;
-using Content.Shared.Interaction;
 using Content.Shared.Preferences;
-using Robust.Server.GameObjects;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Maths;
 using Robust.Shared.Timing;
 using static Content.Shared.Cloning.SharedCloningPodComponent;
 
@@ -28,7 +22,6 @@ namespace Content.Server.Cloning
             base.Initialize();
 
             SubscribeLocalEvent<RoundRestartCleanupEvent>(Reset);
-            SubscribeLocalEvent<CloningPodComponent, ActivateInWorldEvent>(HandleActivate);
             SubscribeLocalEvent<BeingClonedComponent, MindAddedMessage>(HandleMindAdded);
         }
 
@@ -43,17 +36,6 @@ namespace Content.Server.Cloning
             mind.TransferTo(entity, ghostCheckOverride: true);
             mind.UnVisit();
             ClonesWaitingForMind.Remove(mind);
-        }
-
-        private void HandleActivate(EntityUid uid, CloningPodComponent component, ActivateInWorldEvent args)
-        {
-            if (!component.Powered ||
-                !EntityManager.TryGetComponent(args.User, out ActorComponent? actor))
-            {
-                return;
-            }
-
-            component.UserInterface?.Open(actor.PlayerSession);
         }
 
         private void HandleMindAdded(EntityUid uid, BeingClonedComponent component, MindAddedMessage message)
@@ -155,7 +137,7 @@ namespace Content.Server.Cloning
     // For example, GameTicker should be using this, and this should be using ICharacterProfile rather than HumanoidCharacterProfile.
     // It should carry a reference or copy of itself with the mobs that it affects.
     // See TODO in MedicalScannerComponent.
-    struct ClonerDNAEntry {
+    public struct ClonerDNAEntry {
         public Mind.Mind Mind;
         public HumanoidCharacterProfile Profile;
 

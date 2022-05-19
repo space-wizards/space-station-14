@@ -1,7 +1,4 @@
-using Robust.Shared.GameObjects;
 using Robust.Shared.GameStates;
-using Robust.Shared.Serialization.Manager.Attributes;
-using Robust.Shared.ViewVariables;
 
 namespace Content.Shared.Chemistry.Components
 {
@@ -12,10 +9,8 @@ namespace Content.Shared.Chemistry.Components
     /// <see cref="Dispenser.SharedReagentDispenserComponent"/>
     [RegisterComponent]
     [NetworkedComponent] // only needed for white-lists. Client doesn't actually need Solution data;
-    public class FitsInDispenserComponent : Component
+    public sealed class FitsInDispenserComponent : Component
     {
-        public override string Name => "FitsInDispenser";
-
         /// <summary>
         /// Solution name that will interact with ReagentDispenserComponent.
         /// </summary>

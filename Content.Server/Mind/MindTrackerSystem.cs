@@ -1,12 +1,5 @@
-using System;
-using System.Collections.Generic;
-using Content.Server.GameTicking;
 using Content.Server.Mind.Components;
 using Content.Shared.GameTicking;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.ViewVariables;
-using Robust.Shared.Player;
 
 namespace Content.Server.Mind
 {
@@ -17,7 +10,7 @@ namespace Content.Server.Mind
     /// The Minds themselves contain metadata about their owners.
     /// Anyway, this is because disconnected people and ghost roles have been breaking round end statistics for way too long.
     /// </summary>
-    public class MindTrackerSystem : EntitySystem
+    public sealed class MindTrackerSystem : EntitySystem
     {
         [ViewVariables]
         public readonly HashSet<Mind> AllMinds = new();

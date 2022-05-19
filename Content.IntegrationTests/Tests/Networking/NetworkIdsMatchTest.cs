@@ -1,9 +1,5 @@
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using NUnit.Framework;
-using Robust.Server.Player;
-using Robust.Shared.Enums;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Network;
@@ -11,7 +7,7 @@ using Robust.Shared.Network;
 namespace Content.IntegrationTests.Tests.Networking
 {
     [TestFixture]
-    class NetworkIdsMatchTest : ContentIntegrationTest
+    sealed class NetworkIdsMatchTest : ContentIntegrationTest
     {
         [Test]
         public async Task TestConnect()
@@ -20,7 +16,7 @@ namespace Content.IntegrationTests.Tests.Networking
             var server = StartServer();
 
             await ConnectNetworking(client, server);
-            
+
             var clientCompFactory = client.ResolveDependency<IComponentFactory>();
             var serverCompFactory = server.ResolveDependency<IComponentFactory>();
 

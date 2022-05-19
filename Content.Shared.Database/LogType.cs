@@ -62,4 +62,13 @@ public enum LogType
     AtmosRatioChanged = 58,
     Emitter = 59,
     GhostRoleTaken = 60,
+    Chat = 61,
+    Action = 62,
+    RCD = 63,
+    Construction = 64,
+    Trigger = 65,
+    Anchor = 66,
+    Unanchor = 67,
+    // haha so funny
+    Emag = 69,
 }

@@ -1,18 +1,12 @@
-using System;
-using Content.Server.Atmos.Piping.Trinary.EntitySystems;
 using Content.Shared.Atmos;
-using Robust.Shared.GameObjects;
-using Robust.Shared.Serialization.Manager.Attributes;
-using Robust.Shared.ViewVariables;
 
 namespace Content.Server.Atmos.Piping.Trinary.Components
 {
     [RegisterComponent]
-    public class GasFilterComponent : Component
+    public sealed class GasFilterComponent : Component
     {
-        public override string Name => "GasFilter";
-
         [ViewVariables(VVAccess.ReadWrite)]
+        [DataField("enabled")]
         public bool Enabled { get; set; } = true;
 
         [ViewVariables(VVAccess.ReadWrite)]
@@ -28,7 +22,12 @@ namespace Content.Server.Atmos.Piping.Trinary.Components
         public string OutletName { get; set; } = "outlet";
 
         [ViewVariables(VVAccess.ReadWrite)]
+
+        [DataField("transferRate")]
         public float TransferRate { get; set; } = Atmospherics.MaxTransferRate;
+
+        [DataField("maxTransferRate")]
+        public float MaxTransferRate { get; set; } = Atmospherics.MaxTransferRate;
 
         [ViewVariables(VVAccess.ReadWrite)]
         public Gas? FilteredGas { get; set; }

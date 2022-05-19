@@ -1,12 +1,15 @@
 - type: entity
   id: CigPackBase
-  parent: BaseItem
+  parent: BaseStorageItem
   name: cigarette pack
   abstract: true
   components:
   - type: Tag
     tags:
     - CigPack
+    - Trash
+  - type: Recyclable
+  - type: SpaceGarbage
   - type: Storage
     capacity: 6
   - type: Item
@@ -91,4 +94,23 @@
     - state: closed
   - type: Item
     sprite: Objects/Consumable/Smokeables/Cigarettes/Packs/black.rsi
+    size: 6
+
+- type: entity
+  id: CigPackSyndicate
+  parent: CigPackBase
+  name: Syndicate Smokes packet
+  description: Elite cigarettes for elite agents. Infused with medicine for when you need to do more than calm your nerves.
+  components:
+  - type: StorageFill
+    contents:
+    - id: CigaretteSyndicate
+      amount: 6
+  - type: Sprite
+    netsync: false
+    sprite: Objects/Consumable/Smokeables/Cigarettes/Packs/syndicate.rsi
+    layers:
+    - state: closed
+  - type: Item
+    sprite: Objects/Consumable/Smokeables/Cigarettes/Packs/syndicate.rsi
     size: 6

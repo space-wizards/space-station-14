@@ -1,8 +1,3 @@
-using System.Collections.Generic;
-using Robust.Shared.GameObjects;
-using Robust.Shared.Serialization.Manager.Attributes;
-using Robust.Shared.ViewVariables;
-
 namespace Content.Shared.Access.Components
 {
     /// <summary>
@@ -10,10 +5,8 @@ namespace Content.Shared.Access.Components
     ///     and allows checking if something or somebody is authorized with these access levels.
     /// </summary>
     [RegisterComponent]
-    public class AccessReaderComponent : Component
+    public sealed class AccessReaderComponent : Component
     {
-        public override string Name => "AccessReader";
-
         /// <summary>
         ///     Whether this reader is enabled or not. If disabled, all access
         ///     checks will pass.

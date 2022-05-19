@@ -3,17 +3,14 @@ using Content.Server.DoAfter;
 using Content.Server.Engineering.Components;
 using Content.Server.Stack;
 using Content.Shared.Interaction;
-using Content.Shared.Interaction.Helpers;
 using Content.Shared.Stacks;
 using JetBrains.Annotations;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
 using Robust.Shared.Map;
 
 namespace Content.Server.Engineering.EntitySystems
 {
     [UsedImplicitly]
-    public class SpawnAfterInteractSystem : EntitySystem
+    public sealed class SpawnAfterInteractSystem : EntitySystem
     {
         [Dependency] private readonly IMapManager _mapManager = default!;
         [Dependency] private readonly DoAfterSystem _doAfterSystem = default!;
@@ -37,7 +34,7 @@ namespace Content.Server.Engineering.EntitySystems
 
             bool IsTileClear()
             {
-                return tileRef.Tile.IsEmpty == false && args.User.InRangeUnobstructed(args.ClickLocation, popup: true);
+                return tileRef.Tile.IsEmpty == false;
             }
 
             if (!IsTileClear())

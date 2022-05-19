@@ -5,6 +5,8 @@
   placement:
     mode: SnapgridCenter
   components:
+  - type: WallMount
+    arc: 360
   - type: Clickable
   - type: InteractionOutline
   - type: Rotatable
@@ -29,3 +31,4 @@
   - type: Sprite
     drawdepth: WallTops
     sprite: Structures/Wallmounts/signs.rsi
+    netsync: false

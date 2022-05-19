@@ -1,8 +1,5 @@
-using Robust.Shared.GameObjects;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
-using Robust.Shared.ViewVariables;
 
 namespace Content.Server.Guardian
 {
@@ -10,7 +7,6 @@ namespace Content.Server.Guardian
     /// Creates a GuardianComponent attached to the user's GuardianHost.
     /// </summary>
     [RegisterComponent]
-    [ComponentProtoName("GuardianCreator")]
     public sealed class GuardianCreatorComponent : Component
     {
         /// <summary>

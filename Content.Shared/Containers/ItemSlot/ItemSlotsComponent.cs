@@ -1,16 +1,10 @@
 using Content.Shared.Sound;
 using Content.Shared.Whitelist;
-using Robust.Shared.Analyzers;
 using Robust.Shared.Audio;
 using Robust.Shared.Containers;
-using Robust.Shared.GameObjects;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
-using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
-using Robust.Shared.ViewVariables;
-using System;
-using System.Collections.Generic;
 
 namespace Content.Shared.Containers.ItemSlots
 {
@@ -20,10 +14,8 @@ namespace Content.Shared.Containers.ItemSlots
     /// </summary>
     [RegisterComponent]
     [Friend(typeof(ItemSlotsSystem))]
-    public class ItemSlotsComponent : Component
+    public sealed class ItemSlotsComponent : Component
     {
-        public override string Name => "ItemSlots";
-
         /// <summary>
         ///     The dictionary that stores all of the item slots whose interactions will be managed by the <see
         ///     cref="ItemSlotsSystem"/>.
@@ -69,7 +61,7 @@ namespace Content.Shared.Containers.ItemSlots
     /// </summary>
     [DataDefinition]
     [Friend(typeof(ItemSlotsSystem))]
-    public class ItemSlot
+    public sealed class ItemSlot
     {
         [DataField("whitelist")]
         public EntityWhitelist? Whitelist;
@@ -84,7 +76,7 @@ namespace Content.Shared.Containers.ItemSlots
         ///     Options used for playing the insert/eject sounds.
         /// </summary>
         [DataField("soundOptions")]
-        public AudioParams SoundOptions = AudioParams.Default; 
+        public AudioParams SoundOptions = AudioParams.Default;
 
         /// <summary>
         ///     The name of this item slot. This will be shown to the user in the verb menu.
@@ -117,6 +109,13 @@ namespace Content.Shared.Containers.ItemSlots
         [DataField("locked", readOnly: true)]
         [ViewVariables(VVAccess.ReadWrite)]
         public bool Locked = false;
+
+        /// <summary>
+        ///     Whether the item slots system will attempt to insert item from the user's hands into this slot when interacted with.
+        ///     It doesn't block other insertion methods, like verbs.
+        /// </summary>
+        [DataField("insertOnInteract")]
+        public bool InsertOnInteract = true;
 
         /// <summary>
         ///     Whether the item slots system will attempt to eject this item to the user's hands when interacted with.
@@ -156,7 +155,7 @@ namespace Content.Shared.Containers.ItemSlots
         public string? EjectVerbText;
 
         [ViewVariables]
-        public ContainerSlot ContainerSlot = default!;
+        public ContainerSlot? ContainerSlot = default!;
 
         /// <summary>
         ///     If this slot belongs to some de-constructible component, should the item inside the slot be ejected upon
@@ -192,10 +191,10 @@ namespace Content.Shared.Containers.ItemSlots
         [DataField("swap")]
         public bool Swap = true;
 
-        public string ID => ContainerSlot.ID;
+        public string? ID => ContainerSlot?.ID;
 
         // Convenience properties
-        public bool HasItem => ContainerSlot.ContainedEntity != null;
-        public EntityUid? Item => ContainerSlot.ContainedEntity;
+        public bool HasItem => ContainerSlot?.ContainedEntity != null;
+        public EntityUid? Item => ContainerSlot?.ContainedEntity;
     }
 }

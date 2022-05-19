@@ -32,6 +32,8 @@ namespace Content.Client.Chat.Managers
             public SpeechBubble.SpeechType Type;
         }
 
+        private ISawmill _sawmill = default!;
+
         /// <summary>
         ///     The max amount of chars allowed to fit in a single speech bubble.
         /// </summary>
@@ -130,6 +132,8 @@ namespace Content.Client.Chat.Managers
 
         public void Initialize()
         {
+            _sawmill = Logger.GetSawmill("chat");
+            _sawmill.Level = LogLevel.Info;
             _netManager.RegisterNetMessage<MsgChatMessage>(OnChatMessage);
 
             _speechBubbleRoot = new LayoutContainer();
@@ -138,6 +142,8 @@ namespace Content.Client.Chat.Managers
             _speechBubbleRoot.SetPositionFirst();
             _stateManager.OnStateChanged += _ => UpdateChannelPermissions();
         }
+
+        public IReadOnlyDictionary<EntityUid, List<SpeechBubble>> GetSpeechBubbles() => _activeSpeechBubbles;
 
         public void PostInject()
         {
@@ -188,6 +194,8 @@ namespace Content.Client.Chat.Managers
             // can always send/recieve OOC
             SelectableChannels |= ChatSelectChannel.OOC;
             FilterableChannels |= ChatChannel.OOC;
+            SelectableChannels |= ChatSelectChannel.LOOC;
+            FilterableChannels |= ChatChannel.LOOC;
 
             // can always hear server (nobody can actually send server messages).
             FilterableChannels |= ChatChannel.Server;
@@ -196,6 +204,7 @@ namespace Content.Client.Chat.Managers
             {
                 // can always hear local / radio / emote when in the game
                 FilterableChannels |= ChatChannel.Local;
+                FilterableChannels |= ChatChannel.Whisper;
                 FilterableChannels |= ChatChannel.Radio;
                 FilterableChannels |= ChatChannel.Emotes;
 
@@ -204,6 +213,7 @@ namespace Content.Client.Chat.Managers
                 if (!IsGhost)
                 {
                     SelectableChannels |= ChatSelectChannel.Local;
+                    SelectableChannels |= ChatSelectChannel.Whisper;
                     SelectableChannels |= ChatSelectChannel.Radio;
                     SelectableChannels |= ChatSelectChannel.Emotes;
                 }
@@ -318,6 +328,10 @@ namespace Content.Client.Chat.Managers
                     _consoleHost.ExecuteCommand(text.ToString());
                     break;
 
+                case ChatSelectChannel.LOOC:
+                    _consoleHost.ExecuteCommand($"looc \"{CommandParsing.Escape(str)}\"");
+                    break;
+
                 case ChatSelectChannel.OOC:
                     _consoleHost.ExecuteCommand($"ooc \"{CommandParsing.Escape(str)}\"");
                     break;
@@ -336,7 +350,7 @@ namespace Content.Client.Chat.Managers
                     else if (_adminMgr.HasFlag(AdminFlags.Admin))
                         _consoleHost.ExecuteCommand($"dsay \"{CommandParsing.Escape(str)}\"");
                     else
-                        Logger.WarningS("chat", "Tried to speak on deadchat without being ghost or admin.");
+                        _sawmill.Warning("Tried to speak on deadchat without being ghost or admin.");
                     break;
 
                 case ChatSelectChannel.Radio:
@@ -345,6 +359,10 @@ namespace Content.Client.Chat.Managers
 
                 case ChatSelectChannel.Local:
                     _consoleHost.ExecuteCommand($"say \"{CommandParsing.Escape(str)}\"");
+                    break;
+
+                case ChatSelectChannel.Whisper:
+                    _consoleHost.ExecuteCommand($"whisper \"{CommandParsing.Escape(str)}\"");
                     break;
 
                 default:
@@ -379,7 +397,7 @@ namespace Content.Client.Chat.Managers
 
                 if (!storedMessage.Read)
                 {
-                    Logger.Debug($"Message filtered: {storedMessage.Channel}: {storedMessage.Message}");
+                    _sawmill.Debug($"Message filtered: {storedMessage.Channel}: {storedMessage.Message}");
                     if (!_unreadMessages.TryGetValue(msg.Channel, out var count))
                         count = 0;
 
@@ -399,6 +417,10 @@ namespace Content.Client.Chat.Managers
                     AddSpeechBubble(msg, SpeechBubble.SpeechType.Say);
                     break;
 
+                case ChatChannel.Whisper:
+                    AddSpeechBubble(msg, SpeechBubble.SpeechType.Whisper);
+                    break;
+
                 case ChatChannel.Dead:
                     if (!IsGhost)
                         break;
@@ -416,7 +438,7 @@ namespace Content.Client.Chat.Managers
         {
             if (!_entityManager.EntityExists(msg.SenderEntity))
             {
-                Logger.WarningS("chat", "Got local chat message with invalid sender entity: {0}", msg.SenderEntity);
+                _sawmill.Debug("Got local chat message with invalid sender entity: {0}", msg.SenderEntity);
                 return;
             }
 

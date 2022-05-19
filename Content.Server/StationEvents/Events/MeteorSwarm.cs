@@ -1,13 +1,8 @@
-using System;
-using System.Linq;
 using Content.Server.GameTicking;
 using Content.Server.Projectiles.Components;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
+using Content.Shared.Sound;
 using Robust.Shared.Map;
-using Robust.Shared.Maths;
 using Robust.Shared.Random;
-using Robust.Shared.Timing;
 
 namespace Content.Server.StationEvents.Events
 {
@@ -24,10 +19,10 @@ namespace Content.Server.StationEvents.Events
         public override int? MaxOccurrences => 2;
         public override int MinimumPlayers => 20;
 
-        public override string StartAnnouncement => "Meteors are on a collision course with the station. Brace for impact.";
-        protected override string EndAnnouncement => "The meteor swarm has passed. Please return to your stations.";
+        public override string StartAnnouncement =>  Loc.GetString("station-event-meteor-swarm-start-announcement");
+        protected override string EndAnnouncement => Loc.GetString("station-event-meteor-swarm-ebd-announcement");
 
-        public override string? StartAudio => "/Audio/Announcements/bloblarm.ogg";
+        public override SoundSpecifier? StartAudio => new SoundPathSpecifier("/Audio/Announcements/meteors.ogg");
 
         protected override float StartAfter => 30f;
         protected override float EndAfter => float.MaxValue;

@@ -1,6 +1,6 @@
-using System;
 using System.Threading;
 using Content.Server.Administration.Logs;
+using Content.Server.Power.Components;
 using Content.Server.Power.EntitySystems;
 using Content.Server.Projectiles.Components;
 using Content.Server.Singularity.Components;
@@ -11,12 +11,7 @@ using Content.Shared.Interaction;
 using Content.Shared.Popups;
 using Content.Shared.Singularity.Components;
 using JetBrains.Annotations;
-using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Localization;
-using Robust.Shared.Log;
 using Robust.Shared.Physics;
 using Robust.Shared.Player;
 using Robust.Shared.Random;
@@ -26,7 +21,7 @@ using Timer = Robust.Shared.Timing.Timer;
 namespace Content.Server.Singularity.EntitySystems
 {
     [UsedImplicitly]
-    public class EmitterSystem : EntitySystem
+    public sealed class EmitterSystem : EntitySystem
     {
         [Dependency] private readonly IRobustRandom _random = default!;
         [Dependency] private readonly AdminLogSystem _adminLog = default!;
@@ -94,7 +89,7 @@ namespace Content.Server.Singularity.EntitySystems
         public void SwitchOff(EmitterComponent component)
         {
             component.IsOn = false;
-            if (component.PowerConsumer != null) component.PowerConsumer.DrawRate = 0;
+            if (TryComp<PowerConsumerComponent>(component.Owner, out var powerConsumer)) powerConsumer.DrawRate = 0;
             PowerOff(component);
             UpdateAppearance(component);
         }
@@ -102,7 +97,7 @@ namespace Content.Server.Singularity.EntitySystems
         public void SwitchOn(EmitterComponent component)
         {
             component.IsOn = true;
-            if (component.PowerConsumer != null) component.PowerConsumer.DrawRate = component.PowerUseActive;
+            if (TryComp<PowerConsumerComponent>(component.Owner, out var powerConsumer)) powerConsumer.DrawRate = component.PowerUseActive;
             // Do not directly PowerOn().
             // OnReceivedPowerChanged will get fired due to DrawRate change which will turn it on.
             UpdateAppearance(component);
@@ -149,7 +144,8 @@ namespace Content.Server.Singularity.EntitySystems
             // and thus not firing
             DebugTools.Assert(component.IsPowered);
             DebugTools.Assert(component.IsOn);
-            DebugTools.Assert(component.PowerConsumer != null && (component.PowerConsumer.DrawRate <= component.PowerConsumer.ReceivedPower));
+            DebugTools.Assert(TryComp<PowerConsumerComponent>(component.Owner, out var powerConsumer) &&
+                              powerConsumer.DrawRate <= powerConsumer.ReceivedPower);
 
             Fire(component);
 
@@ -205,7 +201,7 @@ namespace Content.Server.Singularity.EntitySystems
 
         private void UpdateAppearance(EmitterComponent component)
         {
-            if (component.Appearance == null)
+            if (!TryComp<AppearanceComponent>(component.Owner, out var appearanceComponent))
             {
                 return;
             }
@@ -224,7 +220,7 @@ namespace Content.Server.Singularity.EntitySystems
                 state = EmitterVisualState.Off;
             }
 
-            component.Appearance.SetData(EmitterVisuals.VisualState, state);
+            appearanceComponent.SetData(EmitterVisuals.VisualState, state);
         }
     }
 }

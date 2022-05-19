@@ -16,15 +16,14 @@
     fixtures:
     - shape:
         !type:PhysShapeAabb
-          bounds: "-0.25,-0.5,0.25,0.5"
+        bounds: "-0.25,-0.5,0.25,0.5"
       mass: 25
-      layer:
-      - SmallImpassable
-      - Opaque
       mask:
-      - MobMask
+      - MachineMask
+      layer:
+      - MachineLayer
   - type: Construction
-    graph: machine
+    graph: Machine
     node: machine
   - type: Destructible
     thresholds:
@@ -42,6 +41,8 @@
   - type: Wires
     BoardName: "CloningPod"
     LayoutId: CloningPod
+  - type: ApcPowerReceiver
+    powerLoad: 2000
   - type: Appearance
     visuals:
       - type: GenericEnumVisualizer
@@ -52,7 +53,10 @@
           enum.CloningPodStatus.NoMind: pod_e
           enum.CloningPodStatus.Gore: pod_g
           enum.CloningPodStatus.Idle: pod_0
+  - type: ActivatableUI
+    key: enum.CloningPodUIKey.Key #Ejecting doesn't require power so I didn't give it that component
   - type: UserInterface
     interfaces:
       - key: enum.CloningPodUIKey.Key
         type: CloningPodBoundUserInterface
+  - type: Climbable

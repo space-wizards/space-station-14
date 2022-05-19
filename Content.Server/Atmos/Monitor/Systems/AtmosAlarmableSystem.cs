@@ -3,18 +3,17 @@ using Content.Server.DeviceNetwork;
 using Content.Server.DeviceNetwork.Components;
 using Content.Server.DeviceNetwork.Systems;
 using Content.Shared.Atmos.Monitor;
-using Robust.Shared.GameObjects;
 
 namespace Content.Server.Atmos.Monitor.Systems
 {
-    public class AtmosAlarmableSystem : EntitySystem
+    public sealed class AtmosAlarmableSystem : EntitySystem
     {
         public override void Initialize()
         {
-            SubscribeLocalEvent<AtmosAlarmableComponent, PacketSentEvent>(OnPacketRecv);
+            SubscribeLocalEvent<AtmosAlarmableComponent, DeviceNetworkPacketEvent>(OnPacketRecv);
         }
 
-        private void OnPacketRecv(EntityUid uid, AtmosAlarmableComponent component, PacketSentEvent args)
+        private void OnPacketRecv(EntityUid uid, AtmosAlarmableComponent component, DeviceNetworkPacketEvent args)
         {
             if (component.IgnoreAlarms) return;
 

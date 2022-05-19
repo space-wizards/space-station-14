@@ -1,8 +1,5 @@
-using System;
-using System.Collections.Generic;
 using Content.Server.GameTicking.Rules;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.List;
 
 namespace Content.Server.GameTicking.Presets
@@ -11,9 +8,9 @@ namespace Content.Server.GameTicking.Presets
     ///     A round-start setup preset, such as which antagonists to spawn.
     /// </summary>
     [Prototype("gamePreset")]
-    public class GamePresetPrototype : IPrototype
+    public sealed class GamePresetPrototype : IPrototype
     {
-        [DataField("id", required:true)]
+        [IdDataFieldAttribute]
         public string ID { get; } = default!;
 
         [DataField("alias")]

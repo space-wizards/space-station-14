@@ -1,16 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using Robust.Shared.Prototypes;
-using Robust.Shared.Serialization.Manager.Attributes;
-using Robust.Shared.ViewVariables;
+﻿using Robust.Shared.Prototypes;
 
 namespace Content.Server.Advertisements
 {
     [Serializable, Prototype("advertisementsPack")]
-    public class AdvertisementsPackPrototype : IPrototype
+    public sealed class AdvertisementsPackPrototype : IPrototype
     {
         [ViewVariables]
-        [DataField("id", required: true)]
+        [IdDataFieldAttribute]
         public string ID { get; } = default!;
 
         [DataField("advertisements")]

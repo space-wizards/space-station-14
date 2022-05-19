@@ -2,6 +2,8 @@
   name: cell recharger
   id: PowerCellRecharger
   components:
+  - type: Transform
+    anchored: true
   - type: Sprite
     netsync: false
     sprite: Structures/Power/cell_recharger.rsi
@@ -22,8 +24,11 @@
     visuals:
     - type: PowerChargerVisualizer
   - type: Anchorable
+  - type: Pullable
   - type: Clickable
   - type: InteractionOutline
+  - type: Physics
+    bodyType: Static
 
 - type: entity
   name: recharger
@@ -57,6 +62,7 @@
   - type: Icon
     sprite: Structures/Power/wall_recharger.rsi
     state: empty
+  - type: WallMount
   - type: Charger
     transferEfficiency: 0.95
     chargerSlot:

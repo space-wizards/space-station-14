@@ -1,18 +1,12 @@
-using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Content.Server.Database;
-using Content.Shared;
 using Content.Shared.CCVar;
 using Content.Shared.Preferences;
 using Content.Shared.Roles;
 using Content.Shared.Species;
 using Robust.Server.Player;
 using Robust.Shared.Configuration;
-using Robust.Shared.IoC;
-using Robust.Shared.Log;
-using Robust.Shared.Maths;
 using Robust.Shared.Network;
 using Robust.Shared.Prototypes;
 
@@ -23,7 +17,7 @@ namespace Content.Server.Preferences.Managers
     /// Sends <see cref="MsgPreferencesAndSettings"/> before the client joins the lobby.
     /// Receives <see cref="MsgSelectCharacter"/> and <see cref="MsgUpdateCharacter"/> at any time.
     /// </summary>
-    public class ServerPreferencesManager : IServerPreferencesManager
+    public sealed class ServerPreferencesManager : IServerPreferencesManager
     {
         [Dependency] private readonly IServerNetManager _netManager = default!;
         [Dependency] private readonly IConfigurationManager _cfg = default!;
@@ -198,7 +192,7 @@ namespace Content.Server.Preferences.Managers
                     var prefs = await GetOrCreatePreferencesAsync(session.UserId);
                     prefsData.Prefs = prefs;
 
-                    var msg = _netManager.CreateNetMessage<MsgPreferencesAndSettings>();
+                    var msg = new MsgPreferencesAndSettings();
                     msg.Preferences = prefs;
                     msg.Settings = new GameSettings
                     {

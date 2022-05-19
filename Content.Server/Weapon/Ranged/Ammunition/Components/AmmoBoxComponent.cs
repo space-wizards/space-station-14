@@ -1,9 +1,5 @@
-using System.Collections.Generic;
-using Robust.Shared.Analyzers;
 using Robust.Shared.Containers;
-using Robust.Shared.GameObjects;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
 namespace Content.Server.Weapon.Ranged.Ammunition.Components
@@ -12,7 +8,6 @@ namespace Content.Server.Weapon.Ranged.Ammunition.Components
     /// Stores ammo and can quickly transfer ammo into a magazine.
     /// </summary>
     [RegisterComponent]
-    [ComponentProtoName("AmmoBox")]
     [Friend(typeof(GunSystem))]
     public sealed class AmmoBoxComponent : Component
     {

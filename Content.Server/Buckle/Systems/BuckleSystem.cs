@@ -6,9 +6,6 @@ using Content.Shared.Verbs;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
 using Robust.Shared.Containers;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Localization;
 
 namespace Content.Server.Buckle.Systems
 {
@@ -34,15 +31,15 @@ namespace Content.Server.Buckle.Systems
 
             SubscribeLocalEvent<BuckleComponent, InteractHandEvent>(HandleInteractHand);
 
-            SubscribeLocalEvent<BuckleComponent, GetInteractionVerbsEvent>(AddUnbuckleVerb);
+            SubscribeLocalEvent<BuckleComponent, GetVerbsEvent<InteractionVerb>>(AddUnbuckleVerb);
         }
 
-        private void AddUnbuckleVerb(EntityUid uid, BuckleComponent component, GetInteractionVerbsEvent args)
+        private void AddUnbuckleVerb(EntityUid uid, BuckleComponent component, GetVerbsEvent<InteractionVerb> args)
         {
             if (!args.CanAccess || !args.CanInteract || !component.Buckled)
                 return;
 
-            Verb verb = new()
+            InteractionVerb verb = new()
             {
                 Act = () => component.TryUnbuckle(args.User),
                 Text = Loc.GetString("verb-categories-unbuckle"),
@@ -94,7 +91,7 @@ namespace Content.Server.Buckle.Systems
                     continue;
                 }
                 buckled.ReAttach(strap);
-                buckled.Dirty();
+                Dirty(buckled);
             }
         }
 

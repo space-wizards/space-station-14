@@ -1,15 +1,15 @@
 using Content.Server.Atmos.Components;
-using Content.Shared.Verbs;
+using Content.Server.UserInterface;
+using Content.Shared.Actions;
+using Content.Shared.Interaction.Events;
+using Content.Shared.Toggleable;
+using Content.Shared.Examine;
 using JetBrains.Annotations;
-using Robust.Server.GameObjects;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Localization;
 
 namespace Content.Server.Atmos.EntitySystems
 {
     [UsedImplicitly]
-    public class GasTankSystem : EntitySystem
+    public sealed class GasTankSystem : EntitySystem
     {
         [Dependency] private readonly AtmosphereSystem _atmosphereSystem = default!;
 
@@ -19,19 +19,45 @@ namespace Content.Server.Atmos.EntitySystems
         public override void Initialize()
         {
             base.Initialize();
-            SubscribeLocalEvent<GasTankComponent, GetActivationVerbsEvent>(AddOpenUIVerb);
+            SubscribeLocalEvent<GasTankComponent, BeforeActivatableUIOpenEvent>(BeforeUiOpen);
+            SubscribeLocalEvent<GasTankComponent, GetItemActionsEvent>(OnGetActions);
+            SubscribeLocalEvent<GasTankComponent, ExaminedEvent>(OnExamined);
+            SubscribeLocalEvent<GasTankComponent, ToggleActionEvent>(OnActionToggle);
+            SubscribeLocalEvent<GasTankComponent, DroppedEvent>(OnDropped);
         }
 
-        private void AddOpenUIVerb(EntityUid uid, GasTankComponent component, GetActivationVerbsEvent args)
+        private void BeforeUiOpen(EntityUid uid, GasTankComponent component, BeforeActivatableUIOpenEvent args)
         {
-            if (!args.CanAccess ||  !EntityManager.TryGetComponent<ActorComponent?>(args.User, out var actor))
+            // Only initial update includes output pressure information, to avoid overwriting client-input as the updates come in.
+            component.UpdateUserInterface(true);
+        }
+
+        private void OnDropped(EntityUid uid, GasTankComponent component, DroppedEvent args)
+        {
+            component.DisconnectFromInternals(args.User);
+        }
+
+        private void OnGetActions(EntityUid uid, GasTankComponent component, GetItemActionsEvent args)
+        {
+            args.Actions.Add(component.ToggleAction);
+        }
+
+        private void OnExamined(EntityUid uid, GasTankComponent component, ExaminedEvent args)
+        {
+            if (args.IsInDetailsRange)
+                args.PushMarkup(Loc.GetString("comp-gas-tank-examine", ("pressure", Math.Round(component.Air?.Pressure ?? 0))));
+            if (component.IsConnected)
+                args.PushMarkup(Loc.GetString("comp-gas-tank-connected"));
+        }
+
+        private void OnActionToggle(EntityUid uid, GasTankComponent component, ToggleActionEvent args)
+        {
+            if (args.Handled)
                 return;
 
-            Verb verb = new();
-            verb.Act = () => component.OpenInterface(actor.PlayerSession);
-            verb.Text = Loc.GetString("control-verb-open-control-panel-text");
-            // TODO VERBS add "open UI" icon?
-            args.Verbs.Add(verb);
+            component.ToggleInternals();
+
+            args.Handled = true;
         }
 
         public override void Update(float frameTime)
@@ -46,8 +72,12 @@ namespace Content.Server.Atmos.EntitySystems
             foreach (var gasTank in EntityManager.EntityQuery<GasTankComponent>())
             {
                 _atmosphereSystem.React(gasTank.Air, gasTank);
-                gasTank.CheckStatus();
-                gasTank.UpdateUserInterface();
+                gasTank.CheckStatus(_atmosphereSystem);
+
+                if (gasTank.UserInterface != null && gasTank.UserInterface.SubscribedSessions.Count > 0)
+                {
+                    gasTank.UpdateUserInterface();
+                }
             }
         }
     }

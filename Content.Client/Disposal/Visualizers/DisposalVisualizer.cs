@@ -10,16 +10,13 @@ using Robust.Shared.Serialization.Manager.Attributes;
 namespace Content.Client.Disposal.Visualizers
 {
     [UsedImplicitly]
-    public class DisposalVisualizer : AppearanceVisualizer
+    public sealed class DisposalVisualizer : AppearanceVisualizer
     {
         [DataField("state_free")]
         private string? _stateFree;
 
         [DataField("state_anchored")]
         private string? _stateAnchored;
-
-        [DataField("state_broken")]
-        private string? _stateBroken;
 
         private void ChangeState(AppearanceComponent appearance)
         {
@@ -38,7 +35,6 @@ namespace Content.Client.Disposal.Visualizers
             {
                 DisposalTubeVisualState.Free => _stateFree,
                 DisposalTubeVisualState.Anchored => _stateAnchored,
-                DisposalTubeVisualState.Broken => _stateBroken,
                 _ => throw new ArgumentOutOfRangeException()
             };
 

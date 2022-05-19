@@ -1,10 +1,5 @@
 ﻿using Content.Server.Body.Components;
-using Content.Server.Body.Systems;
 using Content.Shared.Inventory;
-using Robust.Shared.Analyzers;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Serialization.Manager.Attributes;
 
 namespace Content.Server.Atmos.Components
 {
@@ -12,7 +7,8 @@ namespace Content.Server.Atmos.Components
     /// Used in internals as breath tool.
     /// </summary>
     [RegisterComponent]
-    public class BreathToolComponent : Component
+    [ComponentProtoName("BreathMask")]
+    public sealed class BreathToolComponent : Component
     {
         [Dependency] private readonly IEntityManager _entities = default!;
 
@@ -21,8 +17,6 @@ namespace Content.Server.Atmos.Components
         /// </summary>
         [DataField("allowedSlots")]
         public SlotFlags AllowedSlots = SlotFlags.MASK;
-
-        public override string Name => "BreathMask";
         public bool IsFunctional;
         public EntityUid ConnectedInternalsEntity;
 

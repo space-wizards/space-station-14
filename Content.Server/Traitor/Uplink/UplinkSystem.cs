@@ -1,26 +1,20 @@
 using System.Linq;
-using Content.Server.Hands.Components;
 using Content.Server.Traitor.Uplink.Account;
 using Content.Server.Traitor.Uplink.Components;
 using Content.Server.UserInterface;
-using Content.Shared.ActionBlocker;
-using Content.Shared.Hands.Components;
+using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Interaction;
 using Content.Shared.Inventory;
-using Content.Shared.Item;
 using Content.Shared.PDA;
 using Content.Shared.Traitor.Uplink;
 using Robust.Server.GameObjects;
 using Robust.Server.Player;
 using Robust.Shared.Audio;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Log;
 using Robust.Shared.Player;
 
 namespace Content.Server.Traitor.Uplink
 {
-    public class UplinkSystem : EntitySystem
+    public sealed class UplinkSystem : EntitySystem
     {
         [Dependency]
         private readonly UplinkAccountsSystem _accounts = default!;
@@ -28,6 +22,7 @@ namespace Content.Server.Traitor.Uplink
         private readonly UplinkListingSytem _listing = default!;
 
         [Dependency] private readonly InventorySystem _inventorySystem = default!;
+        [Dependency] private readonly SharedHandsSystem _handsSystem = default!;
 
         public override void Initialize()
         {
@@ -89,10 +84,6 @@ namespace Content.Server.Traitor.Uplink
             if (!EntityManager.TryGetComponent(args.User, out ActorComponent? actor))
                 return;
 
-            var actionBlocker = EntitySystem.Get<ActionBlockerSystem>();
-            if (!actionBlocker.CanInteract(uid) || !actionBlocker.CanUse(uid))
-                return;
-
             ToggleUplinkUI(component, actor.PlayerSession);
             args.Handled = true;
         }
@@ -127,11 +118,7 @@ namespace Content.Server.Traitor.Uplink
                 return;
             }
 
-            if (EntityManager.TryGetComponent(player, out HandsComponent? hands) &&
-                EntityManager.TryGetComponent(entity.Value, out SharedItemComponent? item))
-            {
-                hands.PutInHandOrDrop(item);
-            }
+            _handsSystem.PickupOrDrop(player, entity.Value);
 
             SoundSystem.Play(Filter.SinglePlayer(message.Session), uplink.BuySuccessSound.GetSound(),
                 uplink.Owner, AudioParams.Default.WithVolume(-8f));
@@ -153,8 +140,7 @@ namespace Content.Server.Traitor.Uplink
                 return;
 
             // try to put it into players hands
-            if (EntityManager.TryGetComponent(player, out SharedHandsComponent? hands))
-                hands.TryPutInAnyHand(tcUid.Value);
+            _handsSystem.PickupOrDrop(player, tcUid.Value);
 
             // play buying sound
             SoundSystem.Play(Filter.SinglePlayer(args.Session), uplink.BuySuccessSound.GetSound(),
@@ -221,14 +207,10 @@ namespace Content.Server.Traitor.Uplink
             }
 
             // Also check hands
-            if (EntityManager.TryGetComponent(user, out HandsComponent? hands))
+            foreach (var item in _handsSystem.EnumerateHeld(user))
             {
-                var heldItems = hands.GetAllHeldItems();
-                foreach (var item in heldItems)
-                {
-                    if (EntityManager.HasComponent<PDAComponent>(item.Owner))
-                        return item.Owner;
-                }
+                if (HasComp<PDAComponent>(item))
+                    return item;
             }
 
             return null;

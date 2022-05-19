@@ -1,12 +1,10 @@
-﻿using System;
-using Content.Shared.Weapons.Ranged.Components;
-using Robust.Shared.GameObjects;
+﻿using Content.Shared.Weapons.Ranged.Components;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.Weapons.Ranged.Barrels.Components
 {
     [Serializable, NetSerializable]
-    public class RevolverBarrelComponentState : ComponentState
+    public sealed class RevolverBarrelComponentState : ComponentState
     {
         public int CurrentSlot { get; }
         public FireRateSelector FireRateSelector { get; }

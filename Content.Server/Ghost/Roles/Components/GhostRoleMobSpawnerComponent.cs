@@ -1,12 +1,9 @@
-﻿using System;
-using Content.Server.Mind.Commands;
+﻿using Content.Server.Mind.Commands;
 using Content.Server.Mind.Components;
 using JetBrains.Annotations;
 using Robust.Server.Player;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Serialization.Manager.Attributes;
-using Robust.Shared.ViewVariables;
+using Robust.Shared.Prototypes;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
 namespace Content.Server.Ghost.Roles.Components
 {
@@ -14,11 +11,9 @@ namespace Content.Server.Ghost.Roles.Components
     ///     Allows a ghost to take this role, spawning a new entity.
     /// </summary>
     [RegisterComponent, ComponentReference(typeof(GhostRoleComponent))]
-    public class GhostRoleMobSpawnerComponent : GhostRoleComponent
+    public sealed class GhostRoleMobSpawnerComponent : GhostRoleComponent
     {
         [Dependency] private readonly IEntityManager _entMan = default!;
-
-        public override string Name => "GhostRoleMobSpawner";
 
         [ViewVariables(VVAccess.ReadWrite)] [DataField("deleteOnSpawn")]
         private bool _deleteOnSpawn = true;
@@ -31,7 +26,7 @@ namespace Content.Server.Ghost.Roles.Components
 
         [CanBeNull]
         [ViewVariables(VVAccess.ReadWrite)]
-        [DataField("prototype")]
+        [DataField("prototype", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
         public string? Prototype { get; private set; }
 
         public override bool Take(IPlayerSession session)

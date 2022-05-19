@@ -5,61 +5,22 @@
   icon: Objects/Materials/Sheets/metal.rsi/steel.png
 
 - type: material
-  id: Adamantine
-  stack: Adamantine
-  name: adamantine
-  icon: Objects/Materials/ingots.rsi/adamantine.png
-
-- type: material
-  id: Copper
-  stack: Copper
-  name: copper
-  icon: Objects/Materials/ingots.rsi/copper.png
-
-- type: material
   id: Gold
   stack: Gold
   name: gold
   icon: Objects/Materials/ingots.rsi/gold.png
-
-- type: material
-  id: Hydrogen
-  stack: Hydrogen
-  name: hydrogen
-  icon: Objects/Materials/ingots.rsi/hydrogen.png
-
-- type: material
-  id: Iron
-  stack: Iron
-  name: iron
-  icon: Objects/Materials/ingots.rsi/iron.png
+  color: "#FFD700"
 
 - type: material
   id: Silver
   stack: Silver
   name: silver
   icon: Objects/Materials/ingots.rsi/silver.png
+  color: "#C0C0C0"
 
 - type: material
   id: Plasteel
   stack: Plasteel
   name: plasteel
   icon: Objects/Materials/Sheets/metal.rsi/plasteel.png
-
-- type: material
-  id: Brass
-  stack: Brass
-  name: brass
-  icon: Objects/Materials/Sheets/metal.rsi/brass.png
-
-- type: material
-  id: Titanium
-  stack: Titanium
-  name: titanium
-  icon: Objects/Materials/Sheets/metal.rsi/titanium.png
-
-- type: material
-  id: Plastitanium
-  stack: Plastitanium
-  name: plastitanium
-  icon: Objects/Materials/Sheets/metal.rsi/plastitanium.png
+  color: "#696969" #Okay, this is epic

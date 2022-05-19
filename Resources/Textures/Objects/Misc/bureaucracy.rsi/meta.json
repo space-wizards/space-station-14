@@ -1,24 +1,12 @@
 {
   "version": 1,
   "license": "CC-BY-SA-3.0",
-  "copyright": "Taken from tgstation at https://github.com/tgstation/tgstation/commit/e1142f20f5e4661cb6845cfcf2dd69f864d67432",
+  "copyright": "Taken from tgstation at https://github.com/tgstation/tgstation/commit/e1142f20f5e4661cb6845cfcf2dd69f864d67432. stamp-syndicate is a modified version of stamp-warden. paper_stamp-syndicate by Veritius.",
   "size": {
     "x": 32,
     "y": 32
   },
   "states": [
-    {
-      "name": "chestdrawer"
-    },
-    {
-      "name": "chestdrawer-open",
-      "delays": [
-        [
-          0.5,
-          0.1
-        ]
-      ]
-    },
     {
       "name": "clipboard"
     },
@@ -44,34 +32,16 @@
       "name": "envelope_torn_overlay"
     },
     {
-      "name": "filingcabinet"
+      "name": "folder-base"
     },
     {
-      "name": "filingcabinet-open",
-      "delays": [
-        [
-          0.5,
-          0.1
-        ]
-      ]
+      "name": "folder-colormap"
     },
     {
-      "name": "folder"
+      "name": "folder-white"
     },
     {
-      "name": "folder_blue"
-    },
-    {
-      "name": "folder_paper"
-    },
-    {
-      "name": "folder_red"
-    },
-    {
-      "name": "folder_white"
-    },
-    {
-      "name": "folder_yellow"
+      "name": "folder-overlay-paper"
     },
     {
       "name": "label_cart"
@@ -175,10 +145,16 @@
       "name": "paper_stamp-rd"
     },
     {
+      "name": "paper_stamp-syndicate"
+    },
+    {
       "name": "paper_stamp-trader"
     },
     {
       "name": "paper_stamp-warden"
+    },
+    {
+      "name": "paper_stamp-generic"
     },
     {
       "name": "paper_talisman"
@@ -227,6 +203,15 @@
     },
     {
       "name": "pen"
+    },
+    {
+      "name": "pen_cap"
+    },
+    {
+      "name": "pen_hop"
+    },      
+	{
+      "name": "overpriced_pen"
     },
     {
       "name": "pen_blue"
@@ -288,22 +273,13 @@
       "name": "stamp-rd"
     },
     {
+      "name": "stamp-syndicate"
+    },
+    {
       "name": "stamp-trader"
     },
     {
       "name": "stamp-warden"
-    },
-    {
-      "name": "tallcabinet"
-    },
-    {
-      "name": "tallcabinet-open",
-      "delays": [
-        [
-          0.5,
-          0.1
-        ]
-      ]
     },
     {
       "name": "clipboard-equipped-BELT",

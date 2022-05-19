@@ -1,5 +1,3 @@
-using System;
-using System.Collections.Generic;
 using Content.Shared.Body.Components;
 using Content.Shared.Body.Part;
 
@@ -16,8 +14,14 @@ namespace Content.Shared.CharacterAppearance
                 case BodyPartType.Torso:
                     yield return HumanoidVisualLayers.Chest;
                     break;
+                case BodyPartType.Tail:
+                    yield return HumanoidVisualLayers.Tail;
+                    break;
                 case BodyPartType.Head:
                     yield return HumanoidVisualLayers.Head;
+                    yield return HumanoidVisualLayers.Snout;
+                    yield return HumanoidVisualLayers.HeadSide;
+                    yield return HumanoidVisualLayers.HeadTop;
                     yield return HumanoidVisualLayers.Eyes;
                     yield return HumanoidVisualLayers.FacialHair;
                     yield return HumanoidVisualLayers.Hair;

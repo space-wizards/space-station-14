@@ -1,12 +1,5 @@
-using System.Collections.Generic;
 using Content.Server.Shuttles.EntitySystems;
 using Content.Shared.Damage;
-using Robust.Shared.Analyzers;
-using Robust.Shared.GameObjects;
-using Robust.Shared.Maths;
-using Robust.Shared.Physics.Collision.Shapes;
-using Robust.Shared.Serialization.Manager.Attributes;
-using Robust.Shared.ViewVariables;
 
 namespace Content.Server.Shuttles.Components
 {
@@ -14,8 +7,6 @@ namespace Content.Server.Shuttles.Components
     [Friend(typeof(ThrusterSystem))]
     public sealed class ThrusterComponent : Component
     {
-        public override string Name => "Thruster";
-
         /// <summary>
         /// Whether the thruster has been force to be enabled / disabled (e.g. VV, interaction, etc.)
         /// </summary>
@@ -49,9 +40,9 @@ namespace Content.Server.Shuttles.Components
         /// </summary>
         public bool IsOn;
 
-        [ViewVariables]
-        [DataField("impulse")]
-        public float Impulse = 450f;
+        [ViewVariables(VVAccess.ReadWrite)]
+        [DataField("thrust")]
+        public float Thrust = 750f;
 
         [ViewVariables]
         [DataField("thrusterType")]
@@ -69,6 +60,9 @@ namespace Content.Server.Shuttles.Components
         /// How much damage is done per second to anything colliding with our thrust.
         /// </summary>
         [ViewVariables] [DataField("damage")] public DamageSpecifier? Damage = new();
+
+        [ViewVariables] [DataField("requireSpace")]
+        public bool RequireSpace = true;
 
         // Used for burns
 

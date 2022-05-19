@@ -1,5 +1,4 @@
 using Content.Server.Tabletop.Components;
-using Content.Shared.ActionBlocker;
 using Content.Shared.Interaction;
 using Content.Shared.Tabletop;
 using Content.Shared.Tabletop.Events;
@@ -8,15 +7,12 @@ using JetBrains.Annotations;
 using Robust.Server.GameObjects;
 using Robust.Server.Player;
 using Robust.Shared.Enums;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Localization;
 using Robust.Shared.Map;
 
 namespace Content.Server.Tabletop
 {
     [UsedImplicitly]
-    public partial class TabletopSystem : SharedTabletopSystem
+    public sealed partial class TabletopSystem : SharedTabletopSystem
     {
         [Dependency] private readonly IMapManager _mapManager = default!;
         [Dependency] private readonly ViewSubscriberSystem _viewSubscriberSystem = default!;
@@ -28,7 +24,7 @@ namespace Content.Server.Tabletop
             SubscribeLocalEvent<TabletopGameComponent, ComponentShutdown>(OnGameShutdown);
             SubscribeLocalEvent<TabletopGamerComponent, PlayerDetachedEvent>(OnPlayerDetached);
             SubscribeLocalEvent<TabletopGamerComponent, ComponentShutdown>(OnGamerShutdown);
-            SubscribeLocalEvent<TabletopGameComponent, GetActivationVerbsEvent>(AddPlayGameVerb);
+            SubscribeLocalEvent<TabletopGameComponent, GetVerbsEvent<ActivationVerb>>(AddPlayGameVerb);
 
             InitializeMap();
             InitializeDraggable();
@@ -37,7 +33,7 @@ namespace Content.Server.Tabletop
         /// <summary>
         /// Add a verb that allows the player to start playing a tabletop game.
         /// </summary>
-        private void AddPlayGameVerb(EntityUid uid, TabletopGameComponent component, GetActivationVerbsEvent args)
+        private void AddPlayGameVerb(EntityUid uid, TabletopGameComponent component, GetVerbsEvent<ActivationVerb> args)
         {
             if (!args.CanAccess || !args.CanInteract)
                 return;
@@ -45,7 +41,7 @@ namespace Content.Server.Tabletop
             if (!EntityManager.TryGetComponent<ActorComponent?>(args.User, out var actor))
                 return;
 
-            Verb verb = new();
+            ActivationVerb verb = new();
             verb.Text = Loc.GetString("tabletop-verb-play-game");
             verb.IconTexture = "/Textures/Interface/VerbIcons/die.svg.192dpi.png";
             verb.Act = () => OpenSessionFor(actor.PlayerSession, uid);
@@ -58,9 +54,7 @@ namespace Content.Server.Tabletop
             if (!EntityManager.TryGetComponent(args.User, out ActorComponent? actor))
                 return;
 
-            // Check that the entity can interact with the game board.
-            if(_actionBlockerSystem.CanInteract(args.User))
-                OpenSessionFor(actor.PlayerSession, uid);
+            OpenSessionFor(actor.PlayerSession, uid);
         }
 
         private void OnGameShutdown(EntityUid uid, TabletopGameComponent component, ComponentShutdown args)
@@ -105,11 +99,8 @@ namespace Content.Server.Tabletop
 
                 var gamerUid = (gamer).Owner;
 
-                if (actor.PlayerSession.Status > SessionStatus.Connected || CanSeeTable(gamerUid, gamer.Tabletop)
-                                                                         || !StunnedOrNoHands(gamerUid))
-                    continue;
-
-                CloseSessionFor(actor.PlayerSession, gamer.Tabletop);
+                if (actor.PlayerSession.Status != SessionStatus.InGame || !CanSeeTable(gamerUid, gamer.Tabletop))
+                    CloseSessionFor(actor.PlayerSession, gamer.Tabletop);
             }
         }
     }

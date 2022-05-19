@@ -2,12 +2,10 @@ using Content.Server.CombatMode;
 using Content.Server.Hands.Components;
 using Content.Server.Interaction;
 using Content.Server.Weapon.Melee.Components;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
 
 namespace Content.Server.AI.Operators.Combat.Melee
 {
-    public class SwingMeleeWeaponOperator : AiOperator
+    public sealed class SwingMeleeWeaponOperator : AiOperator
     {
         [Dependency] private readonly IEntityManager _entMan = default!;
 
@@ -66,12 +64,12 @@ namespace Content.Server.AI.Operators.Combat.Melee
                 return Outcome.Success;
             }
 
-            if (!_entMan.TryGetComponent(_owner, out HandsComponent? hands) || hands.GetActiveHand == null)
+            if (!_entMan.TryGetComponent(_owner, out HandsComponent? hands) || hands.ActiveHandEntity == null)
             {
                 return Outcome.Failed;
             }
 
-            var meleeWeapon = hands.GetActiveHand.Owner;
+            var meleeWeapon = hands.ActiveHandEntity;
             _entMan.TryGetComponent(meleeWeapon, out MeleeWeaponComponent? meleeWeaponComponent);
 
             if ((_entMan.GetComponent<TransformComponent>(_target).Coordinates.Position - _entMan.GetComponent<TransformComponent>(_owner).Coordinates.Position).Length >

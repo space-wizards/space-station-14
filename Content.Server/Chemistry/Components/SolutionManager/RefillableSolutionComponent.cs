@@ -1,6 +1,3 @@
-using Robust.Shared.GameObjects;
-using Robust.Shared.Serialization.Manager.Attributes;
-using Robust.Shared.ViewVariables;
 using Content.Shared.FixedPoint;
 
 namespace Content.Server.Chemistry.Components.SolutionManager
@@ -11,10 +8,8 @@ namespace Content.Server.Chemistry.Components.SolutionManager
     ///     tank of a car.
     /// </summary>
     [RegisterComponent]
-    public class RefillableSolutionComponent : Component
+    public sealed class RefillableSolutionComponent : Component
     {
-        public override string Name => "RefillableSolution";
-
         /// <summary>
         /// Solution name that can added to easily.
         /// </summary>

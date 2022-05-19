@@ -1,11 +1,10 @@
 using Content.Server.EUI;
 using Content.Shared.Cloning;
 using Content.Shared.Eui;
-using Robust.Shared.GameObjects;
 
 namespace Content.Server.Cloning
 {
-    public class AcceptCloningEui : BaseEui
+    public sealed class AcceptCloningEui : BaseEui
     {
         private readonly Mind.Mind _mind;
 

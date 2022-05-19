@@ -4,8 +4,6 @@ using Content.Shared.Administration;
 using Content.Shared.Maps;
 using Robust.Server.Player;
 using Robust.Shared.Console;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
 using Robust.Shared.Map;
 
 namespace Content.Server.Interaction
@@ -14,7 +12,7 @@ namespace Content.Server.Interaction
     /// <see cref="TilePryingComponent.TryPryTile"/>
     /// </summary>
     [AdminCommand(AdminFlags.Debug)]
-    class TilePryCommand : IConsoleCommand
+    sealed class TilePryCommand : IConsoleCommand
     {
         [Dependency] private readonly IEntityManager _entities = default!;
 

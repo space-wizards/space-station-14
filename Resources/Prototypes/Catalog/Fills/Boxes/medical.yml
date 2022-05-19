@@ -12,10 +12,6 @@
     layers:
       - state: box
       - state: syringe
-  - type: Item
-    size: 30
-  - type: Storage
-    capacity: 30
 
 - type: entity
   name: pill canister box
@@ -31,10 +27,6 @@
     layers:
       - state: box
       - state: pillbox
-  - type: Item
-    size: 30
-  - type: Storage
-    capacity: 30
 
 - type: entity
   name: sterile box
@@ -65,3 +57,31 @@
     layers:
       - state: box
       - state: latex
+
+- type: entity
+  name: mouth swab box
+  parent: BoxCardboard
+  id: BoxMouthSwab
+  components:
+  - type: StorageFill
+    contents:
+      - id: DiseaseSwab
+        amount: 30
+
+- type: entity
+  name: body bag box
+  parent: BoxCardboard
+  id: BoxBodyBag
+  description: Contains body bags.
+  components:
+  - type: StorageFill
+    contents:
+      - id: BodyBag_Folded
+        amount: 5
+  - type: Sprite
+    layers:
+      - state: box
+      - state: bodybags
+    whitelist:
+      tags:
+        - BodyBag

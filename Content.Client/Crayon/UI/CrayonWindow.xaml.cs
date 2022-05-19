@@ -15,7 +15,7 @@ using static Robust.Client.UserInterface.Controls.BaseButton;
 namespace Content.Client.Crayon.UI
 {
     [GenerateTypedNameReferences]
-    public partial class CrayonWindow : SS14Window
+    public sealed partial class CrayonWindow : DefaultWindow
     {
         public CrayonBoundUserInterface Owner { get; }
 
@@ -30,6 +30,16 @@ namespace Content.Client.Crayon.UI
             Owner = owner;
 
             Search.OnTextChanged += _ => RefreshList();
+            ColorSelector.OnColorChanged += SelectColor;
+        }
+
+        private void SelectColor(Color color)
+        {
+            _color = color;
+
+            Owner.SelectColor(color);
+
+            RefreshList();
         }
 
         private void RefreshList()
@@ -86,7 +96,14 @@ namespace Content.Client.Crayon.UI
         public void UpdateState(CrayonBoundUserInterfaceState state)
         {
             _selected = state.Selected;
+            ColorSelector.Visible = state.SelectableColor;
             _color = state.Color;
+
+            if (ColorSelector.Visible)
+            {
+                ColorSelector.Color = state.Color;
+            }
+
             RefreshList();
         }
 

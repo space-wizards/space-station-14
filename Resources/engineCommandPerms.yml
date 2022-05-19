@@ -34,6 +34,7 @@
   - rmcompc
   - vv
   - scale
+  - spin
 
 - Flags: DEBUG
   Commands:
@@ -66,6 +67,7 @@
   - showpos
   - showray
   - showchunkbb
+  - showgridnodes
   - entfo
   - sggcell
   - ldrsc
@@ -103,6 +105,7 @@
   - savemap
   - tpgrid
   - gridtc
+  - togglespritenetsync
 
 - Flags: ADMIN
   Commands:

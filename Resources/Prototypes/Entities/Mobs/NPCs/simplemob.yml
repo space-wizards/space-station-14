@@ -4,6 +4,9 @@
   id: SimpleSpaceMobBase # Mob without barotrauma, freezing and asphyxiation (for space carps!?)
   suffix: AI
   components:
+  - type: Tag
+    tags:
+    - DoorBumpOpener
   - type: Reactive
     groups:
       Flammable: [Touch]
@@ -22,6 +25,13 @@
   - type: MovementSpeedModifier
     baseWalkSpeed : 4
     baseSprintSpeed : 4
+  - type: HealthExaminable
+    examinableTypes:
+    - Blunt
+    - Slash
+    - Piercing
+    - Heat
+    - Shock
   - type: MovedByPressure
   - type: DamageOnHighSpeedImpact
     damage:
@@ -32,6 +42,7 @@
   - type: Sprite
     noRot: true
     drawdepth: Mobs
+    netsync: false
   - type: Clickable
   - type: InteractionOutline
   - type: Physics
@@ -44,15 +55,21 @@
         radius: 0.35
       mass: 20
       mask:
-      - Impassable
-      - MobImpassable #Bullets?!
-      - VaultImpassable
-      - SmallImpassable
+      - MobMask
       layer:
-      - Opaque
+      - MobLayer
   - type: SolutionContainerManager
   - type: Bloodstream
-    max_volume: 100
+    bloodlossDamage:
+      types:
+        Bloodloss:
+          1
+    bloodlossHealDamage:
+      types:
+        Bloodloss:
+          -0.25
+  - type: DrawableSolution
+    solution: bloodstream
   - type: Damageable
     damageContainer: Biological
   - type: AtmosExposed
@@ -64,7 +81,7 @@
         Heat: 1 #per second, scales with number of fire 'stacks'
   - type: Temperature
     heatDamageThreshold: 360
-    coldDamageThreshold: 260
+    coldDamageThreshold: 0
     currentTemperature: 310.15
     coldDamage:
       types:
@@ -106,18 +123,24 @@
       sprite: Mobs/Effects/onfire.rsi
       normalState: Generic_mob_burning
   - type: Actions
-    innateActions:
-      - CombatMode
   - type: DoAfter
   - type: Climbing
   - type: Flashable
+  - type: Polymorphable
   - type: Pullable
-  - type: Puller
   - type: Buckle
   - type: Recyclable
     safe: false
   - type: StandingState
   - type: Alerts
+  - type: NameIdentifier
+    group: GenericNumber
+  - type: SlowOnDamage
+    speedModifierThresholds:
+      40: 0.8
+      60: 0.6
+      80: 0.4
+      90: 0.2
 
 - type: entity
   save: false
@@ -152,17 +175,12 @@
     normalBodyTemperature: 310.15
     thermalRegulationTemperatureThreshold: 25
   - type: Respirator
-    needsGases:
-      Oxygen: 0.00060763888
-    producesGases:
-      Oxygen: 0.00045572916
-      CarbonDioxide: 0.00015190972
     damage:
       types:
-        Asphyxiation: 1
+        Asphyxiation: 3
     damageRecovery:
       types:
-        Asphyxiation: -1
+        Asphyxiation: -1.5
   - type: Temperature
     heatDamageThreshold: 360
     coldDamageThreshold: 260
@@ -174,3 +192,5 @@
     heatDamage:
       types:
         Heat : 1 #per second, scales with temperature & other constants
+  - type: Bloodstream
+    bloodMaxVolume: 150

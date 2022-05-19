@@ -1,0 +1,116 @@
+- type: constructionGraph
+  id: DoorGraph
+  start: start
+  graph:
+    - node: start
+      actions:
+        - !type:DestroyEntity {}
+      edges:
+        - to: metalDoor
+          completed:
+            - !type:SnapToGrid { }
+          steps:
+            - material: Steel
+              amount: 20
+              doAfter: 15
+        - to: woodDoor
+          completed:
+            - !type:SnapToGrid { }
+          steps:
+            - material: WoodPlank
+              amount: 20
+              doAfter: 15
+        - to: plasmaDoor
+          completed:
+            - !type:SnapToGrid { }
+          steps:
+            - material: Plasma
+              amount: 20
+              doAfter: 15
+        - to: goldDoor
+          completed:
+            - !type:SnapToGrid { }
+          steps:
+            - material: Gold
+              amount: 20
+              doAfter: 15
+        - to: silverDoor
+          completed:
+            - !type:SnapToGrid { }
+          steps:
+            - material: Silver
+              amount: 20
+              doAfter: 15
+        - to: paperDoor
+          completed:
+            - !type:SnapToGrid { }
+          steps:
+            - material: Paper
+              amount: 20
+              doAfter: 15
+    - node: metalDoor
+      entity: MetalDoor
+      edges:
+        - to: start
+          completed:
+            - !type:SpawnPrototype
+              prototype: SheetSteel1
+              amount: 20
+          steps:
+            - tool: Anchoring
+              doAfter: 15
+    - node: woodDoor
+      entity: WoodDoor
+      edges:
+        - to: start
+          completed:
+            - !type:SpawnPrototype
+              prototype: MaterialWoodPlank1
+              amount: 20
+          steps:
+            - tool: Anchoring
+              doAfter: 15
+    - node: plasmaDoor
+      entity: PlasmaDoor
+      edges:
+        - to: start
+          completed:
+            - !type:SpawnPrototype
+              prototype: SheetPlasma
+              amount: 20
+          steps:
+            - tool: Anchoring
+              doAfter: 15
+    - node: goldDoor
+      entity: GoldDoor
+      edges:
+        - to: start
+          completed:
+            - !type:SpawnPrototype
+              prototype: IngotGold1
+              amount: 20
+          steps:
+            - tool: Anchoring
+              doAfter: 15
+    - node: silverDoor
+      entity: SilverDoor
+      edges:
+        - to: start
+          completed:
+            - !type:SpawnPrototype
+              prototype: IngotSilver1
+              amount: 20
+          steps:
+            - tool: Anchoring
+              doAfter: 15
+    - node: paperDoor
+      entity: PaperDoor
+      edges:
+        - to: start
+          completed:
+            - !type:SpawnPrototype
+              prototype: SheetPaper1
+              amount: 20
+          steps:
+            - tool: Anchoring
+              doAfter: 15

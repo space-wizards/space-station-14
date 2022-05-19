@@ -1,8 +1,3 @@
-using System;
-using System.Collections.Generic;
-using Content.Shared.Atmos;
-using Content.Shared.Atmos.Monitor;
-using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.Atmos.Monitor.Components
@@ -63,15 +58,15 @@ namespace Content.Shared.Atmos.Monitor.Components
     // would be nice to include the entire state here
     // but it's already handled by messages
     [Serializable, NetSerializable]
-    public class AirAlarmUIState : BoundUserInterfaceState
+    public sealed class AirAlarmUIState : BoundUserInterfaceState
     {}
 
     [Serializable, NetSerializable]
-    public class AirAlarmResyncAllDevicesMessage : BoundUserInterfaceMessage
+    public sealed class AirAlarmResyncAllDevicesMessage : BoundUserInterfaceMessage
     {}
 
     [Serializable, NetSerializable]
-    public class AirAlarmSetAddressMessage : BoundUserInterfaceMessage
+    public sealed class AirAlarmSetAddressMessage : BoundUserInterfaceMessage
     {
         public string Address { get; }
 
@@ -82,7 +77,7 @@ namespace Content.Shared.Atmos.Monitor.Components
     }
 
     [Serializable, NetSerializable]
-    public class AirAlarmUpdateAirDataMessage : BoundUserInterfaceMessage
+    public sealed class AirAlarmUpdateAirDataMessage : BoundUserInterfaceMessage
     {
         public AirAlarmAirData AirData;
 
@@ -93,7 +88,7 @@ namespace Content.Shared.Atmos.Monitor.Components
     }
 
     [Serializable, NetSerializable]
-    public class AirAlarmUpdateAlarmModeMessage : BoundUserInterfaceMessage
+    public sealed class AirAlarmUpdateAlarmModeMessage : BoundUserInterfaceMessage
     {
         public AirAlarmMode Mode { get; }
 
@@ -104,7 +99,7 @@ namespace Content.Shared.Atmos.Monitor.Components
     }
 
     [Serializable, NetSerializable]
-    public class AirAlarmUpdateDeviceDataMessage : BoundUserInterfaceMessage
+    public sealed class AirAlarmUpdateDeviceDataMessage : BoundUserInterfaceMessage
     {
         public string Address { get; }
         public IAtmosDeviceData Data { get; }
@@ -117,7 +112,7 @@ namespace Content.Shared.Atmos.Monitor.Components
     }
 
     [Serializable, NetSerializable]
-    public class AirAlarmUpdateAlarmThresholdMessage : BoundUserInterfaceMessage
+    public sealed class AirAlarmUpdateAlarmThresholdMessage : BoundUserInterfaceMessage
     {
         public AtmosAlarmThreshold Threshold { get; }
         public AtmosMonitorThresholdType Type { get; }

@@ -4,6 +4,7 @@ using Content.Client.Stylesheets;
 using Content.Shared.CharacterAppearance;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
+using Robust.Client.Graphics;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.CustomControls;
@@ -18,7 +19,7 @@ using static Robust.Client.UserInterface.Controls.BoxContainer;
 namespace Content.Client.CharacterAppearance
 {
     [UsedImplicitly]
-    public class MagicMirrorBoundUserInterface : BoundUserInterface
+    public sealed class MagicMirrorBoundUserInterface : BoundUserInterface
     {
         private MagicMirrorWindow? _window;
 
@@ -72,87 +73,6 @@ namespace Content.Client.CharacterAppearance
         }
     }
 
-    public class ColorSlider : Control
-    {
-        private readonly Slider _slider;
-        private readonly LineEdit _textBox;
-        private byte _colorValue;
-        private bool _ignoreEvents;
-
-        public event Action? OnValueChanged;
-
-        public byte ColorValue
-        {
-            get => _colorValue;
-            set
-            {
-                _ignoreEvents = true;
-                _colorValue = value;
-                _slider.Value = value;
-                _textBox.Text = value.ToString();
-                _ignoreEvents = false;
-            }
-        }
-
-        public ColorSlider(string styleClass)
-        {
-            _slider = new Slider
-            {
-                StyleClasses = {styleClass},
-                HorizontalExpand = true,
-                VerticalAlignment = VAlignment.Center,
-                MaxValue = byte.MaxValue
-            };
-            _textBox = new LineEdit
-            {
-                MinSize = (50, 0)
-            };
-
-            AddChild(new BoxContainer
-            {
-                Orientation = LayoutOrientation.Horizontal,
-                Children =
-                {
-                    _slider,
-                    _textBox
-                }
-            });
-
-            _slider.OnValueChanged += _ =>
-            {
-                if (_ignoreEvents)
-                {
-                    return;
-                }
-
-                _colorValue = (byte) _slider.Value;
-                _textBox.Text = _colorValue.ToString();
-
-                OnValueChanged?.Invoke();
-            };
-
-            _textBox.OnTextChanged += ev =>
-            {
-                if (_ignoreEvents)
-                {
-                    return;
-                }
-
-                if (int.TryParse(ev.Text, out var result))
-                {
-                    result = MathHelper.Clamp(result, 0, byte.MaxValue);
-
-                    _ignoreEvents = true;
-                    _colorValue = (byte) result;
-                    _slider.Value = result;
-                    _ignoreEvents = false;
-
-                    OnValueChanged?.Invoke();
-                }
-            };
-        }
-    }
-
     public sealed class HairStylePicker : Control
     {
         [Dependency] private readonly SpriteAccessoryManager _spriteAccessoryManager = default!;
@@ -163,10 +83,7 @@ namespace Content.Client.CharacterAppearance
         private readonly ItemList _items;
 
         private readonly Control _colorContainer;
-        private readonly ColorSlider _colorSliderR;
-        private readonly ColorSlider _colorSliderG;
-        private readonly ColorSlider _colorSliderB;
-
+        private readonly ColorSelectorSliders _colorSelectors;
         private Color _lastColor;
         private SpriteAccessoryCategories _categories;
 
@@ -181,9 +98,7 @@ namespace Content.Client.CharacterAppearance
             _colorContainer.Visible = canColor;
             _lastColor = color;
 
-            _colorSliderR.ColorValue = color.RByte;
-            _colorSliderG.ColorValue = color.GByte;
-            _colorSliderB.ColorValue = color.BByte;
+            _colorSelectors.Color = color;
 
             foreach (var item in _items)
             {
@@ -217,14 +132,8 @@ namespace Content.Client.CharacterAppearance
                 Orientation = LayoutOrientation.Vertical
             };
             vBox.AddChild(_colorContainer);
-            _colorContainer.AddChild(_colorSliderR = new ColorSlider(StyleNano.StyleClassSliderRed));
-            _colorContainer.AddChild(_colorSliderG = new ColorSlider(StyleNano.StyleClassSliderGreen));
-            _colorContainer.AddChild(_colorSliderB = new ColorSlider(StyleNano.StyleClassSliderBlue));
-
-            Action colorValueChanged = ColorValueChanged;
-            _colorSliderR.OnValueChanged += colorValueChanged;
-            _colorSliderG.OnValueChanged += colorValueChanged;
-            _colorSliderB.OnValueChanged += colorValueChanged;
+            _colorContainer.AddChild(_colorSelectors = new ());
+            _colorSelectors.OnColorChanged += color => ColorValueChanged(color);
 
             _items = new ItemList
             {
@@ -235,14 +144,8 @@ namespace Content.Client.CharacterAppearance
             _items.OnItemSelected += ItemSelected;
         }
 
-        private void ColorValueChanged()
+        private void ColorValueChanged(Color newColor)
         {
-            var newColor = new Color(
-                _colorSliderR.ColorValue,
-                _colorSliderG.ColorValue,
-                _colorSliderB.ColorValue
-            );
-
             OnHairColorPicked?.Invoke(newColor);
             _lastColor = newColor;
             UpdateStylePickerColor();
@@ -276,13 +179,11 @@ namespace Content.Client.CharacterAppearance
         // ColorSlider
     }
 
-    public class EyeColorPicker : Control
+    public sealed class EyeColorPicker : Control
     {
         public event Action<Color>? OnEyeColorPicked;
 
-        private readonly ColorSlider _colorSliderR;
-        private readonly ColorSlider _colorSliderG;
-        private readonly ColorSlider _colorSliderB;
+        private readonly ColorSelectorSliders _colorSelectors;
 
         private Color _lastColor;
 
@@ -290,9 +191,7 @@ namespace Content.Client.CharacterAppearance
         {
             _lastColor = color;
 
-            _colorSliderR.ColorValue = color.RByte;
-            _colorSliderG.ColorValue = color.GByte;
-            _colorSliderB.ColorValue = color.BByte;
+            _colorSelectors.Color = color;
         }
 
         public EyeColorPicker()
@@ -303,24 +202,13 @@ namespace Content.Client.CharacterAppearance
             };
             AddChild(vBox);
 
-            vBox.AddChild(_colorSliderR = new ColorSlider(StyleNano.StyleClassSliderRed));
-            vBox.AddChild(_colorSliderG = new ColorSlider(StyleNano.StyleClassSliderGreen));
-            vBox.AddChild(_colorSliderB = new ColorSlider(StyleNano.StyleClassSliderBlue));
+            vBox.AddChild(_colorSelectors = new ColorSelectorSliders());
 
-            Action colorValueChanged = ColorValueChanged;
-            _colorSliderR.OnValueChanged += colorValueChanged;
-            _colorSliderG.OnValueChanged += colorValueChanged;
-            _colorSliderB.OnValueChanged += colorValueChanged;
+            _colorSelectors.OnColorChanged += ColorValueChanged;
         }
 
-        private void ColorValueChanged()
+        private void ColorValueChanged(Color newColor)
         {
-            var newColor = new Color(
-                _colorSliderR.ColorValue,
-                _colorSliderG.ColorValue,
-                _colorSliderB.ColorValue
-            );
-
             OnEyeColorPicked?.Invoke(newColor);
 
             _lastColor = newColor;
@@ -329,7 +217,7 @@ namespace Content.Client.CharacterAppearance
         // ColorSlider
     }
 
-    public class MagicMirrorWindow : SS14Window
+    public sealed class MagicMirrorWindow : DefaultWindow
     {
         private readonly HairStylePicker _hairStylePicker;
         private readonly HairStylePicker _facialHairStylePicker;

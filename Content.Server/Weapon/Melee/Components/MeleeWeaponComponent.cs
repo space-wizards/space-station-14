@@ -1,20 +1,15 @@
-using System;
 using Content.Shared.Damage;
 using Content.Shared.Sound;
-using Robust.Shared.GameObjects;
-using Robust.Shared.Serialization.Manager.Attributes;
-using Robust.Shared.ViewVariables;
 
 namespace Content.Server.Weapon.Melee.Components
 {
     [RegisterComponent]
+    [Virtual]
     public class MeleeWeaponComponent : Component
     {
-        public override string Name => "MeleeWeapon";
-
         [ViewVariables(VVAccess.ReadWrite)]
         [DataField("hitSound")]
-        public SoundSpecifier HitSound { get; set; } = new SoundCollectionSpecifier("GenericHit");
+        public SoundSpecifier? HitSound;
 
         [ViewVariables(VVAccess.ReadWrite)]
         [DataField("missSound")]

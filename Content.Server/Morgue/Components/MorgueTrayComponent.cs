@@ -1,16 +1,11 @@
 ﻿using Content.Shared.Interaction;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.ViewVariables;
 
 namespace Content.Server.Morgue.Components
 {
     [RegisterComponent]
     [ComponentReference(typeof(IActivate))]
-    public class MorgueTrayComponent : Component, IActivate
+    public sealed class MorgueTrayComponent : Component, IActivate
     {
-        public override string Name => "MorgueTray";
-
         [ViewVariables]
         public EntityUid Morgue { get; set; }
 

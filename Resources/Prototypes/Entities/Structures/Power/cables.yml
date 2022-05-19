@@ -5,14 +5,6 @@
     mode: SnapgridCenter
   components:
   - type: Clickable
-  - type: Physics
-  - type: Fixtures
-    fixtures:
-      - shape:
-          !type:PhysShapeAabb
-            bounds: "-0.5,-0.5,0.5,0.5"
-        layer:
-        - Underplating
   - type: InteractionOutline
   - type: Transform
     anchored: true
@@ -26,13 +18,15 @@
     thresholds:
     - trigger:
         !type:DamageTrigger
-        damage: 100
+        damage: 50
       behaviors:
       - !type:DoActsBehavior
         acts: ["Destruction"]
   - type: SubFloorHide
+  - type: Appearance
   - type: Electrified
     onHandInteract: false
+    onInteractUsing: false # wire-cutting handled separately.
     onBump: false
     requirePower: true
     highVoltageNode: power
@@ -67,6 +61,12 @@
     - trigger:
         !type:DamageTrigger
         damage: 100
+      behaviors: #excess damage (nuke?). avoid computational cost of spawning entities.
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+    - trigger:
+        !type:DamageTrigger
+        damage: 50
       behaviors:
       - !type:SpawnEntitiesBehavior
         spawn:
@@ -75,11 +75,14 @@
             max: 1
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
-  - type: Appearance
-    visuals:
-    - type: TrayScannerSubFloorVisualizer
-    - type: CableVisualizer
-      base: hvcable_
+  - type: CableVisualizer
+    statePrefix: hvcable_
+  - type: AmbientSound
+    enabled: true
+    volume: -15
+    range: 2
+    sound:
+      path: /Audio/Ambience/Objects/emf_buzz.ogg
 
 - type: entity
   parent: CableBase
@@ -108,6 +111,12 @@
     - trigger:
         !type:DamageTrigger
         damage: 100
+      behaviors: #excess damage (nuke?). avoid computational cost of spawning entities.
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+    - trigger:
+        !type:DamageTrigger
+        damage: 50
       behaviors:
       - !type:SpawnEntitiesBehavior
         spawn:
@@ -116,11 +125,14 @@
             max: 1
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
-  - type: Appearance
-    visuals:
-    - type: TrayScannerSubFloorVisualizer
-    - type: CableVisualizer
-      base: mvcable_
+  - type: CableVisualizer
+    statePrefix: mvcable_
+  - type: AmbientSound
+    enabled: true
+    volume: -16
+    range: 2
+    sound:
+      path: /Audio/Ambience/Objects/emf_buzz.ogg
 
 - type: entity
   parent: CableBase
@@ -152,6 +164,12 @@
     - trigger:
         !type:DamageTrigger
         damage: 100
+      behaviors: #excess damage (nuke?). avoid computational cost of spawning entities.
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+    - trigger:
+        !type:DamageTrigger
+        damage: 50
       behaviors:
       - !type:SpawnEntitiesBehavior
         spawn:
@@ -160,8 +178,11 @@
             max: 1
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
-  - type: Appearance
-    visuals:
-    - type: TrayScannerSubFloorVisualizer
-    - type: CableVisualizer
-      base: lvcable_
+  - type: CableVisualizer
+    statePrefix: lvcable_
+  - type: AmbientSound
+    enabled: true
+    volume: -17
+    range: 2
+    sound:
+      path: /Audio/Ambience/Objects/emf_buzz.ogg

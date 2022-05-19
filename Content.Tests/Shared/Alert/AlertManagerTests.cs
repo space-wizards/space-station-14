@@ -1,7 +1,6 @@
 using System.IO;
 using Content.Shared.Alert;
 using NUnit.Framework;
-using NUnit.Framework.Interfaces;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Prototypes;
@@ -12,17 +11,15 @@ using Robust.Shared.Utility;
 namespace Content.Tests.Shared.Alert
 {
     [TestFixture, TestOf(typeof(AlertsSystem))]
-    public class AlertManagerTests : ContentUnitTest
+    public sealed class AlertManagerTests : ContentUnitTest
     {
         const string PROTOTYPES = @"
 - type: alert
-  name: AlertLowPressure
-  alertType: LowPressure
+  id: LowPressure
   icon: /Textures/Interface/Alerts/Pressure/lowpressure.png
 
 - type: alert
-  name: AlertHighPressure
-  alertType: HighPressure
+  id: HighPressure
   icon: /Textures/Interface/Alerts/Pressure/highpressure.png
 ";
 

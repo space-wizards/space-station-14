@@ -1,4 +1,3 @@
-﻿using System;
 using Content.Server.Chemistry.Components;
 using Content.Server.Chemistry.EntitySystems;
 using Content.Server.Coordinates.Helpers;
@@ -8,13 +7,9 @@ using Content.Shared.Database;
 using Content.Shared.Sound;
 using JetBrains.Annotations;
 using Robust.Shared.Audio;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Log;
 using Robust.Shared.Map;
 using Robust.Shared.Player;
 using Robust.Shared.Serialization;
-using Robust.Shared.Serialization.Manager.Attributes;
 
 namespace Content.Server.Chemistry.ReactionEffects
 {
@@ -43,13 +38,6 @@ namespace Content.Server.Chemistry.ReactionEffects
         /// Used to calculate dilution. Increasing this makes the reagents more diluted.
         /// </summary>
         [DataField("reagentDilutionFactor")] private float _reagentDilutionFactor = 1f;
-
-        /// <summary>
-        /// Used to calculate concentration. Reagents get linearly more concentrated as the range goes from
-        /// _reagentDilutionStart to zero. When the range is zero the reagents volume gets multiplied by this.
-        /// </summary>
-        [DataField("reagentMaxConcentrationFactor")]
-        private float _reagentMaxConcentrationFactor = 2;
 
         /// <summary>
         /// How many seconds will the effect stay, counting after fully spreading.

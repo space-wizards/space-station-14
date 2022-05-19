@@ -1,9 +1,6 @@
 using Content.Shared.PDA;
 using Content.Shared.Traitor.Uplink;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
 using Robust.Shared.Prototypes;
-using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 
 namespace Content.Server.Traitor.Uplink
@@ -11,7 +8,7 @@ namespace Content.Server.Traitor.Uplink
     /// <summary>
     ///     Contains and controls all items in traitors uplink shop
     /// </summary>
-    public class UplinkListingSytem : EntitySystem
+    public sealed class UplinkListingSytem : EntitySystem
     {
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
 

@@ -1,12 +1,10 @@
-﻿using System;
-using Content.Shared.Weapons.Ranged.Components;
-using Robust.Shared.GameObjects;
+﻿using Content.Shared.Weapons.Ranged.Components;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.Weapons.Ranged.Barrels.Components
 {
     [Serializable, NetSerializable]
-    public class PumpBarrelComponentState : ComponentState
+    public sealed class PumpBarrelComponentState : ComponentState
     {
         public (bool chambered, bool spent) Chamber { get; }
         public FireRateSelector FireRateSelector { get; }

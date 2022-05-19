@@ -1,8 +1,6 @@
-﻿using Robust.Shared.GameObjects;
-
-namespace Content.Shared.Speech
+﻿namespace Content.Shared.Speech
 {
-    public class SpeakAttemptEvent : CancellableEntityEventArgs
+    public sealed class SpeakAttemptEvent : CancellableEntityEventArgs
     {
         public SpeakAttemptEvent(EntityUid uid)
         {

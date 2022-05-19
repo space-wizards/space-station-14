@@ -1,17 +1,10 @@
-using Robust.Shared.GameObjects;
-using Robust.Shared.Maths;
-using Robust.Shared.Serialization.Manager.Attributes;
-using Robust.Shared.ViewVariables;
-using System;
-
 namespace Content.Server.Salvage
 {
     /// <summary>
     ///     A salvage magnet.
     /// </summary>
     [RegisterComponent]
-    [ComponentProtoName("SalvageMagnet")]
-    public class SalvageMagnetComponent : Component
+    public sealed class SalvageMagnetComponent : Component
     {
         /// <summary>
         ///     Offset relative to magnet that salvage should spawn.

@@ -1,9 +1,6 @@
-﻿using System;
-using Robust.Shared.ViewVariables;
-
-namespace Content.Server.Cargo
+﻿namespace Content.Server.Cargo
 {
-    public class CargoBankAccount : ICargoBankAccount
+    public sealed class CargoBankAccount : ICargoBankAccount
     {
         [ViewVariables]
         public int Id { get; }

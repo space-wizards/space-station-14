@@ -1,0 +1,129 @@
+- type: entity
+  parent: ClothingBackpack
+  id: ClothingBackpackFilled
+  noSpawn: true
+  components:
+  - type: StorageFill
+    contents:
+      - id: BoxSurvival
+
+#This should be temporary, at least until briefcases can spawn in hands.
+
+- type: entity
+  noSpawn: true
+  parent: ClothingBackpack
+  id: ClothingBackpackBriefcaseFilled
+  components:
+  - type: StorageFill
+    contents:
+      - id: BoxSurvival
+      - id: BriefcaseBrownFilled
+
+- type: entity
+  noSpawn: true
+  parent: ClothingBackpackClown
+  id: ClothingBackpackClownFilled
+  components:
+  - type: StorageFill
+    contents:
+      - id: BoxHug
+      - id: RubberStampClown
+      - id: CrayonRainbow
+
+- type: entity
+  noSpawn: true
+  parent: ClothingBackpackSecurity
+  id: ClothingBackpackSecurityFilled
+  components:
+  - type: StorageFill
+    contents:
+      - id: BoxSurvivalSecurity
+      - id: Flash
+
+- type: entity
+  noSpawn: true
+  parent: ClothingBackpackMedical
+  id: ClothingBackpackMedicalFilled
+  components:
+  - type: StorageFill
+    contents:
+      - id: BoxSurvivalMedical
+
+- type: entity
+  noSpawn: true
+  parent: ClothingBackpackCaptain
+  id: ClothingBackpackCaptainFilled
+  components:
+  - type: StorageFill
+    contents:
+      - id: BoxSurvival
+      #- name: StationCharter
+      #- name: TelescopicBaton
+
+- type: entity
+  noSpawn: true
+  parent: ClothingBackpackEngineering
+  id: ClothingBackpackEngineeringFilled
+  components:
+  - type: StorageFill
+    contents:
+      - id: BoxSurvivalEngineering
+
+- type: entity
+  noSpawn: true
+  parent: ClothingBackpackScience
+  id: ClothingBackpackScienceFilled
+  components:
+  - type: StorageFill
+    contents:
+      - id: BoxSurvival
+
+- type: entity
+  noSpawn: true
+  parent: ClothingBackpackHydroponics
+  id: ClothingBackpackHydroponicsFilled
+  components:
+  - type: StorageFill
+    contents:
+      - id: BoxSurvival
+
+- type: entity
+  noSpawn: true
+  parent: ClothingBackpackMime
+  id: ClothingBackpackMimeFilled
+  components:
+  - type: StorageFill
+    contents:
+      - id: BoxSurvival
+      - id: RubberStampMime
+
+- type: entity
+  noSpawn: true
+  parent: ClothingBackpackChemistry
+  id: ClothingBackpackChemistryFilled
+  components:
+  - type: StorageFill
+    contents:
+      - id: BoxSurvival
+
+- type: entity
+  noSpawn: true
+  parent: ClothingBackpack
+  id: ClothingBackpackChaplainFilled
+  components:
+  - type: StorageFill
+    contents:
+      - id: BoxSurvival
+      - id: Bible
+      - id: RubberStampChaplain
+
+- type: entity
+  noSpawn: true
+  parent: ClothingBackpack
+  id: ClothingBackpackMusicianFilled
+  components:
+    - type: StorageFill
+      contents:
+        - id: BoxSurvival
+        - id: AcousticGuitarInstrument
+        - id: SaxophoneInstrument

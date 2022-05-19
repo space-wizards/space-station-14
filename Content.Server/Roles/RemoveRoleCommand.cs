@@ -4,13 +4,12 @@ using Content.Shared.Administration;
 using Content.Shared.Roles;
 using Robust.Server.Player;
 using Robust.Shared.Console;
-using Robust.Shared.IoC;
 using Robust.Shared.Prototypes;
 
 namespace Content.Server.Roles
 {
     [AdminCommand(AdminFlags.Fun)]
-    public class RemoveRoleCommand : IConsoleCommand
+    public sealed class RemoveRoleCommand : IConsoleCommand
     {
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
 

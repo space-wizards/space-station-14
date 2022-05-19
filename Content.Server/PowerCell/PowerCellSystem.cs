@@ -8,15 +8,12 @@ using Content.Shared.PowerCell;
 using Content.Shared.PowerCell.Components;
 using Content.Shared.Rounding;
 using Robust.Shared.Containers;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Localization;
-using System;
 using System.Diagnostics.CodeAnalysis;
+using Content.Server.Kitchen.Components;
 
 namespace Content.Server.PowerCell;
 
-public class PowerCellSystem : SharedPowerCellSystem
+public sealed class PowerCellSystem : SharedPowerCellSystem
 {
     [Dependency] private readonly SolutionContainerSystem _solutionsSystem = default!;
     [Dependency] private readonly ExplosionSystem _explosionSystem = default!;
@@ -31,6 +28,26 @@ public class PowerCellSystem : SharedPowerCellSystem
         SubscribeLocalEvent<PowerCellComponent, SolutionChangedEvent>(OnSolutionChange);
 
         SubscribeLocalEvent<PowerCellComponent, ExaminedEvent>(OnCellExamined);
+
+        // funny
+        SubscribeLocalEvent<PowerCellSlotComponent, BeingMicrowavedEvent>(OnSlotMicrowaved);
+        SubscribeLocalEvent<BatteryComponent, BeingMicrowavedEvent>(OnMicrowaved);
+    }
+
+    private void OnSlotMicrowaved(EntityUid uid, PowerCellSlotComponent component, BeingMicrowavedEvent args)
+    {
+        if (component.CellSlot.Item == null)
+            return;
+
+        RaiseLocalEvent(component.CellSlot.Item.Value, args, false);
+    }
+
+    private void OnMicrowaved(EntityUid uid, BatteryComponent component, BeingMicrowavedEvent args)
+    {
+        args.Handled = true;
+
+        // What the fuck are you doing???
+        Explode(uid, component);
     }
 
     private void OnChargeChanged(EntityUid uid, PowerCellComponent component, ChargeChangedEvent args)
@@ -67,10 +84,10 @@ public class PowerCellSystem : SharedPowerCellSystem
         if (!Resolve(uid, ref battery))
             return;
 
-        var heavy = (int) Math.Ceiling(Math.Sqrt(battery.CurrentCharge) / 60);
-        var light = (int) Math.Ceiling(Math.Sqrt(battery.CurrentCharge) / 30);
+        var radius = MathF.Min(5, MathF.Ceiling(MathF.Sqrt(battery.CurrentCharge) / 30));
+        battery.CurrentCharge = 0;
 
-        _explosionSystem.SpawnExplosion(uid, 0, heavy, light, light * 2);
+        _explosionSystem.TriggerExplosive(uid, radius: radius);
         QueueDel(uid);
     }
 

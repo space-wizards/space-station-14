@@ -26,7 +26,7 @@ namespace Content.Client.Chemistry.UI
     /// Client-side UI used to control a <see cref="SharedChemMasterComponent"/>
     /// </summary>
     [GenerateTypedNameReferences]
-    public partial class ChemMasterWindow : SS14Window
+    public sealed partial class ChemMasterWindow : DefaultWindow
     {
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
         public event Action<string>? OnLabelEntered;
@@ -162,7 +162,7 @@ namespace Content.Client.Chemistry.UI
                 //Try to the prototype for the given reagent. This gives us it's name.
                 if (_prototypeManager.TryIndex(reagent.ReagentId, out ReagentPrototype? proto))
                 {
-                    name = proto.Name;
+                    name = proto.LocalizedName;
                 }
 
                 if (proto != null)
@@ -197,7 +197,7 @@ namespace Content.Client.Chemistry.UI
             if (!state.BufferReagents.Any())
             {
                 BufferInfo.Children.Add(new Label { Text = Loc.GetString("chem-master-window-buffer-empty-text") });
-                
+
                 return;
             }
 
@@ -222,7 +222,7 @@ namespace Content.Client.Chemistry.UI
                 //Try to the prototype for the given reagent. This gives us it's name.
                 if (_prototypeManager.TryIndex(reagent.ReagentId, out ReagentPrototype? proto))
                 {
-                    name = proto.Name;
+                    name = proto.LocalizedName;
                 }
 
                 if (proto != null)
@@ -267,7 +267,7 @@ namespace Content.Client.Chemistry.UI
         }
     }
 
-    public class ChemButton : Button
+    public sealed class ChemButton : Button
     {
         public FixedPoint2 Amount { get; set; }
         public bool IsBuffer = true;

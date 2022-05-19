@@ -1,19 +1,12 @@
-using System;
 using System.Collections;
-using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.FixedPoint;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Maths;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
-using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 using Robust.Shared.Utility;
-using Robust.Shared.ViewVariables;
 
 namespace Content.Shared.Chemistry.Components
 {
@@ -22,7 +15,7 @@ namespace Content.Shared.Chemistry.Components
     /// </summary>
     [Serializable, NetSerializable]
     [DataDefinition]
-    public partial class Solution : IEnumerable<Solution.ReagentQuantity>, ISerializationHooks
+    public sealed partial class Solution : IEnumerable<Solution.ReagentQuantity>, ISerializationHooks
     {
         // Most objects on the station hold only 1 or 2 reagents
         [ViewVariables]
@@ -43,6 +36,11 @@ namespace Content.Shared.Chemistry.Components
         public float Temperature { get; set; } = 293.15f;
 
         public Color Color => GetColor();
+
+        /// <summary>
+        ///     The name of this solution, if it is contained in some <see cref="SolutionContainerManagerComponent"/>
+        /// </summary>
+        public string? Name;
 
         /// <summary>
         ///     Constructs an empty solution (ex. an empty beaker).
@@ -167,34 +165,41 @@ namespace Content.Shared.Chemistry.Components
             return FixedPoint2.New(0);
         }
 
-        public void RemoveReagent(string reagentId, FixedPoint2 quantity)
+        /// <summary>
+        ///     Attempts to remove an amount of reagent from the solution.
+        /// </summary>
+        /// <param name="reagentId">The reagent to be removed.</param>
+        /// <param name="quantity">The amount of reagent to remove.</param>
+        /// <returns>How much reagent was actually removed. Zero if the reagent is not present on the solution.</returns>
+        public FixedPoint2 RemoveReagent(string reagentId, FixedPoint2 quantity)
         {
             if(quantity <= 0)
-                return;
+                return FixedPoint2.Zero;
 
             for (var i = 0; i < Contents.Count; i++)
             {
                 var reagent = Contents[i];
+
                 if(reagent.ReagentId != reagentId)
                     continue;
-                if (!IoCManager.Resolve<IPrototypeManager>().TryIndex(reagentId, out ReagentPrototype? proto))
-                    proto = new ReagentPrototype();
 
                 var curQuantity = reagent.Quantity;
                 var newQuantity = curQuantity - quantity;
+
                 if (newQuantity <= 0)
                 {
                     Contents.RemoveSwap(i);
                     TotalVolume -= curQuantity;
-                }
-                else
-                {
-                    Contents[i] = new ReagentQuantity(reagentId, newQuantity);
-                    TotalVolume -= quantity;
+                    return curQuantity;
                 }
 
-                return;
+                Contents[i] = new ReagentQuantity(reagentId, newQuantity);
+                TotalVolume -= quantity;
+                return quantity;
             }
+
+            // Reagent is not on the solution...
+            return FixedPoint2.Zero;
         }
 
         /// <summary>
