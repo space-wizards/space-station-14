@@ -130,16 +130,4 @@ public sealed partial class SurveillanceCameraMonitorWindow : DefaultWindow
     {
         CameraSelected!((string) SubnetList[args.ItemIndex].Metadata!);
     }
-
-    private Button CreateCameraButton(string name, string address)
-    {
-        var button = new Button()
-        {
-            Text = $"{name} - {address}"
-        };
-
-        button.OnPressed += _ => CameraSelected!(address);
-
-        return button;
-    }
 }

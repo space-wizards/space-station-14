@@ -31,13 +31,6 @@ public sealed class SurveillanceCameraMonitorSystem : EntitySystem
         SubscribeLocalEvent<SurveillanceCameraMonitorComponent, SurveillanceCameraRefreshSubnetsMessage>(OnRefreshSubnetsMessage);
     }
 
-    // TODO:
-    //
-    // - What happens if a monitor is depowered?
-    // - What happens if a camera is removed?
-    // - Should monitors be the ones that deal in view subscriptions?
-    //   (probably not!)
-
     /// ROUTING:
     ///
     /// Monitor freq: General frequency for cameras, routers, and monitors to speak on.
@@ -275,21 +268,6 @@ public sealed class SurveillanceCameraMonitorSystem : EntitySystem
         _deviceNetworkSystem.QueuePacket(uid, address, payload);
     }
 
-    private void SendCameraInfoToClient(EntityUid uid, SurveillanceCameraInfo info,
-        SurveillanceCameraMonitorComponent? monitor = null)
-    {
-        if (!Resolve(uid, ref monitor))
-        {
-            return;
-        }
-
-        var message = new SurveillanceCameraMonitorInfoMessage(info);
-
-        _userInterface.TrySendUiMessage(uid,
-            SurveillanceCameraMonitorUiKey.Key,
-            message);
-    }
-
     // Adds a viewer to the camera and the monitor.
     private void AddViewer(EntityUid uid, EntityUid player, SurveillanceCameraMonitorComponent? monitor = null)
     {
@@ -437,18 +415,6 @@ public sealed class SurveillanceCameraMonitorSystem : EntitySystem
             && TryComp(player, out ActorComponent? actor))
         {
             session = actor.PlayerSession;
-        }
-
-        var cameras = new HashSet<SurveillanceCameraInfo>();
-
-        foreach (var (address, name) in monitor.KnownCameras)
-        {
-            cameras.Add(new SurveillanceCameraInfo()
-            {
-                Address = address,
-                Name = name,
-                Subnet = monitor.ActiveSubnet
-            });
         }
 
         var state = new SurveillanceCameraMonitorUiState(monitor.ActiveCamera, monitor.KnownSubnets.Keys.ToHashSet(), monitor.ActiveSubnet, monitor.KnownCameras);

@@ -4,30 +4,6 @@ namespace Content.Shared.SurveillanceCamera;
 
 // Camera monitor state. If the camera is null, there should be a blank
 // space where the camera is.
-//
-// Server side, whenever a camera is disabled, it should raise an event
-// that eventually leads to anything actively monitoring that camera
-// (so, any monitors) getting a null camera in this UI state.
-//
-// Monitors should store any entities currently viewing it,
-// Cameras should store any monitors currently showing it.
-//
-// When a monitor has somebody move away from it, it should
-// remove the user from its active viewers, which in turn
-// removes the user from entities actively looking through
-// the camera's eye
-//
-// Which should be authorative, the camera monitor or the camera itself?
-//
-// Camera monitor would have a list of viewers and an active camera,
-// where the monitor system manages the view subscriptions
-//
-// Camera would have a list of viewers, where the camera system
-// manages the view subscriptions.
-//
-// I think that SurveillanceCameraComponent should be an object
-// that stores information about the camera as well as an eye storage
-// (but this could just be replaced with an EyeComponent tbh)
 [Serializable, NetSerializable]
 public sealed class SurveillanceCameraMonitorUiState : BoundUserInterfaceState
 {
@@ -76,17 +52,6 @@ public sealed class SurveillanceCameraMonitorSubnetRequestMessage : BoundUserInt
     }
 }
 
-[Serializable, NetSerializable]
-public sealed class SurveillanceCameraMonitorInfoMessage : BoundUserInterfaceMessage
-{
-    public SurveillanceCameraInfo Info { get; }
-
-    public SurveillanceCameraMonitorInfoMessage(SurveillanceCameraInfo info)
-    {
-        Info = info;
-    }
-}
-
 // Sent when the user requests that the cameras on the current subnet be refreshed.
 [Serializable, NetSerializable]
 public sealed class SurveillanceCameraRefreshCamerasMessage : BoundUserInterfaceMessage
@@ -96,14 +61,6 @@ public sealed class SurveillanceCameraRefreshCamerasMessage : BoundUserInterface
 [Serializable, NetSerializable]
 public sealed class SurveillanceCameraRefreshSubnetsMessage : BoundUserInterfaceMessage
 {}
-
-[Serializable, NetSerializable]
-public sealed class SurveillanceCameraInfo
-{
-    public string Address { get; set; } = default!;
-    public string Name { get; set; } = default!;
-    public string Subnet { get; set; } = default!;
-}
 
 [Serializable, NetSerializable]
 public enum SurveillanceCameraMonitorUiKey : byte
