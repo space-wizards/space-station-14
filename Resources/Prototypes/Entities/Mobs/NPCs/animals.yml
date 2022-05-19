@@ -1,6 +1,10 @@
 # Bounds Guide
 #1D2L3U4R
 
+## Base animals go here (Cat, Dog, Duck [Quack Quack])
+## One-of-a-kind and named pets should go in pets.yml
+# Please take the time to put them in alphabetical order based on id
+
 - type: entity
   name: bat
   parent: SimpleMobBase
@@ -113,7 +117,7 @@
   name: bee
   suffix: Angry
   parent: MobBee
-  id: MobAngryBee
+  id: MobBeeAngry
   description: How nice a bee. Oh no, it looks angry and wants my pizza.
   components:
   - type: CombatMode
@@ -138,131 +142,6 @@
     - SimpleHostile
   - type: Bloodstream
     bloodMaxVolume: 0.1
-
-
-- type: entity
-  name: chicken
-  parent: SimpleMobBase
-  id: MobChicken
-  description: Comes before an egg, and IS a dinosaur!
-  components:
-  - type: Sprite
-    drawdepth: Mobs
-    layers:
-    - map: ["enum.DamageStateVisualLayers.Base"]
-      state: chicken-0
-      sprite: Mobs/Animals/chicken.rsi
-  - type: Appearance
-    visuals:
-    - type: DamageStateVisualizer
-      normal: chicken-0
-      crit: dead-0
-      dead: dead-0
-  - type: Butcherable
-    spawned:
-    - id: FoodMeatChicken
-      amount: 1
-  - type: InteractionPopup
-    successChance: 0.8
-    interactSuccessString: petting-success-bird
-    interactFailureString: petting-failure-generic
-    interactSuccessSound:
-      path: /Audio/Animals/chicken_cluck_happy.ogg
-  - type: Bloodstream
-    bloodMaxVolume: 100
-
-- type: entity
-  name: mallard duck #Quack
-  parent: SimpleMobBase
-  id: MobDuckMallard
-  description: An adorable mallard duck, it's fluffy and soft!
-  components:
-  - type: Sprite
-    drawdepth: Mobs
-    layers:
-    - map: ["enum.DamageStateVisualLayers.Base"]
-      state: duck-0
-      sprite: Mobs/Animals/duck.rsi
-  - type: Appearance
-    visuals:
-    - type: DamageStateVisualizer
-      normal: duck-0
-      crit: dead-0
-      dead: dead-0
-  - type: Butcherable
-    spawned:
-    - id: FoodMeatDuck
-      amount: 1
-  - type: InteractionPopup
-    successChance: 0.9
-    interactSuccessString: petting-success-bird
-    interactFailureString: petting-failure-generic
-    interactSuccessSound:
-      path: /Audio/Animals/duck_quack_happy.ogg
-  - type: Bloodstream
-    bloodMaxVolume: 100
-
-- type: entity
-  name: white duck #Quack
-  parent: SimpleMobBase
-  id: MobDuckWhite
-  description: An adorable white duck, it's fluffy and soft!
-  components:
-  - type: Sprite
-    drawdepth: Mobs
-    layers:
-    - map: ["enum.DamageStateVisualLayers.Base"]
-      state: duck-1
-      sprite: Mobs/Animals/duck.rsi
-  - type: Appearance
-    visuals:
-    - type: DamageStateVisualizer
-      normal: duck-1
-      crit: dead-1
-      dead: dead-1
-  - type: Butcherable
-    spawned:
-    - id: FoodMeatDuck
-      amount: 1
-  - type: InteractionPopup
-    successChance: 0.9
-    interactSuccessString: petting-success-bird
-    interactFailureString: petting-failure-generic
-    interactSuccessSound:
-      path: /Audio/Animals/duck_quack_happy.ogg
-  - type: Bloodstream
-    bloodMaxVolume: 100
-
-- type: entity
-  name: brown duck #Quack
-  parent: SimpleMobBase
-  id: MobDuckBrown
-  description: An adorable brown duck, it's fluffy and soft!
-  components:
-  - type: Sprite
-    drawdepth: Mobs
-    layers:
-    - map: ["enum.DamageStateVisualLayers.Base"]
-      state: duck-2
-      sprite: Mobs/Animals/duck.rsi
-  - type: Appearance
-    visuals:
-    - type: DamageStateVisualizer
-      normal: duck-2
-      crit: dead-2
-      dead: dead-2
-  - type: Butcherable
-    spawned:
-    - id: FoodMeatDuck
-      amount: 1
-  - type: InteractionPopup
-    successChance: 0.9
-    interactSuccessString: petting-success-bird
-    interactFailureString: petting-failure-generic
-    interactSuccessSound:
-      path: /Audio/Animals/duck_quack_happy.ogg
-  - type: Bloodstream
-    bloodMaxVolume: 100
 
 - type: entity
   name: butterfly
@@ -314,6 +193,287 @@
   - type: Bloodstream
     bloodMaxVolume: 0.1
   - type: NoSlip
+
+- type: entity
+  name: cat
+  parent: SimpleMobBase
+  id: MobCat
+  description: Feline pet, very funny.
+  components:
+  - type: Sprite
+    drawdepth: Mobs
+    sprite: Mobs/Pets/cat.rsi
+    layers:
+    - map: ["enum.DamageStateVisualLayers.Base"]
+      state: cat
+  - type: Physics
+  - type: Fixtures
+    fixtures:
+    - shape:
+        !type:PhysShapeCircle
+        radius: 0.35
+      mass: 10
+      mask:
+      - MobMask
+      layer:
+      - MobLayer
+  - type: Appearance
+    visuals:
+    - type: DamageStateVisualizer
+      normal: cat
+      crit: cat_dead
+      dead: cat_dead
+  - type: Butcherable
+    spawned:
+    - id: FoodMeat
+      amount: 3
+  - type: ReplacementAccent
+    accent: cat
+  - type: InteractionPopup
+    successChance: 0.7
+    interactSuccessString: petting-success-cat
+    interactFailureString: petting-failure-generic
+    interactSuccessSound:
+      path: /Audio/Animals/cat_meow.ogg
+  - type: Grammar
+    attributes:
+      gender: epicene
+
+- type: entity
+  name: calico cat
+  id: MobCatCalico
+  parent: MobCat
+  description: Feline pet, very funny.
+  components:
+  - type: Sprite
+    drawdepth: Mobs
+    sprite: Mobs/Pets/cat.rsi
+    layers:
+    - map: ["enum.DamageStateVisualLayers.Base"]
+      state: cat2
+  - type: Appearance
+    visuals:
+    - type: DamageStateVisualizer
+      normal: cat2
+      crit: cat2_dead
+      dead: cat2_dead
+  - type: Grammar
+    attributes:
+      gender: epicene
+
+- type: entity
+  name: caracal cat
+  id: MobCatCaracal
+  parent: MobCat
+  description: Hilarious.
+  components:
+  - type: Sprite
+    drawdepth: Mobs
+    sprite: Mobs/Pets/caracal.rsi
+    layers:
+    - map: ["enum.DamageStateVisualLayers.Base"]
+      state: caracal_flop
+  - type: Appearance
+    visuals:
+    - type: DamageStateVisualizer
+      normal: caracal_flop
+      crit: caracal_dead
+      dead: caracal_dead
+  - type: Grammar
+    attributes:
+      gender: epicene
+
+- type: entity
+  name: space cat
+  id: MobCatSpace
+  parent: MobCat
+  description: Feline pet, prepared for the worst.
+  components:
+  - type: Sprite
+    drawdepth: Mobs
+    sprite: Mobs/Pets/cat.rsi
+    layers:
+    - map: ["enum.DamageStateVisualLayers.Base"]
+      state: spacecat
+  - type: Appearance
+    visuals:
+    - type: DamageStateVisualizer
+      normal: spacecat
+      crit: spacecat_dead
+      dead: spacecat_dead
+  - type: InteractionPopup
+    successChance: 0.7
+    interactSuccessString: petting-success-space-cat
+    interactFailureString: petting-failure-generic
+    interactSuccessSound:
+      path: /Audio/Animals/cat_meow.ogg
+  - type: Grammar
+    attributes:
+      gender: epicene
+
+- type: entity
+  name: chicken
+  parent: SimpleMobBase
+  id: MobChicken
+  description: Comes before an egg, and IS a dinosaur!
+  components:
+  - type: Sprite
+    drawdepth: Mobs
+    layers:
+    - map: ["enum.DamageStateVisualLayers.Base"]
+      state: chicken-0
+      sprite: Mobs/Animals/chicken.rsi
+  - type: Appearance
+    visuals:
+    - type: DamageStateVisualizer
+      normal: chicken-0
+      crit: dead-0
+      dead: dead-0
+  - type: Butcherable
+    spawned:
+    - id: FoodMeatChicken
+      amount: 1
+  - type: InteractionPopup
+    successChance: 0.8
+    interactSuccessString: petting-success-bird
+    interactFailureString: petting-failure-generic
+    interactSuccessSound:
+      path: /Audio/Animals/chicken_cluck_happy.ogg
+  - type: Bloodstream
+    bloodMaxVolume: 100
+
+- type: entity
+  name: corgi
+  parent: SimpleMobBase
+  id: MobCorgi
+  description: Finally, a space corgi!
+  components:
+  - type: Sprite
+    drawdepth: Mobs
+    sprite: Mobs/Pets/corgi.rsi
+    layers:
+    - map: ["enum.DamageStateVisualLayers.Base"]
+      state: corgi
+  - type: Physics
+  - type: Fixtures
+    fixtures:
+    - shape:
+        !type:PhysShapeCircle
+        radius: 0.35
+      mass: 10
+      mask:
+      - MobMask
+      layer:
+      - MobLayer
+  - type: Appearance
+    visuals:
+    - type: DamageStateVisualizer
+      normal: corgi
+      crit: corgi_dead
+      dead: corgi_dead
+  - type: Butcherable
+    spawned:
+    - id: FoodMeat
+      amount: 2
+  - type: ReplacementAccent
+    accent: dog
+  - type: InteractionPopup
+    interactSuccessString: petting-success-dog
+    interactFailureString: petting-failure-generic
+    interactSuccessSound:
+      path: /Audio/Animals/small_dog_bark_happy.ogg
+  - type: Grammar
+    attributes:
+      gender: epicene
+  - type: SentienceTarget
+    flavorKind: corgi
+  - type: Puller
+
+- type: entity
+  name: corrupted corgi
+  parent: MobCorgi
+  id: MobCorgiNarsi
+  description: Ian! No!
+  components:
+  - type: Sprite
+    drawdepth: Mobs
+    sprite: Mobs/Pets/corgi.rsi
+    layers:
+    - map: ["enum.DamageStateVisualLayers.Base"]
+      state: narsian
+  - type: Appearance
+    visuals:
+    - type: DamageStateVisualizer
+      normal: narsian
+      crit: narsian_dead
+      dead: narsian_dead
+  - type: UnarmedCombat
+    range: 1.5
+    arcwidth: 0
+    arc: bite
+    damage:
+      types:
+        Piercing: 5
+        Slash: 5
+  - type: UtilityAI
+    behaviorSets:
+    - UnarmedAttackHostiles
+  - type: AiFactionTag
+    factions:
+    - SimpleHostile
+  - type: InteractionPopup
+    successChance: 0 # Override the automatic success that would normally be inherited from MobCorgi.
+    interactSuccessString: petting-success-corrupted-corgi # Normally impossible but added an easter egg just in case.
+    interactFailureString: petting-failure-corrupted-corgi
+  - type: Grammar
+    attributes:
+      gender: epicene
+  - type: Bloodstream
+    bloodReagent: DemonsBlood
+    bloodlossDamage:
+      types:
+        Bloodloss:
+          1
+    bloodlossHealDamage:
+      types:
+        Bloodloss:
+          -0.25
+  - type: Damageable
+    damageContainer: Biological
+    damageModifierSet: Infernal
+  - type: Temperature
+    heatDamageThreshold: 4000 #They come from hell, so...
+    coldDamageThreshold: 260
+    currentTemperature: 310.15
+    coldDamage:
+      types:
+        Cold : 1 #per second, scales with temperature & other constants
+    specificHeat: 42
+    heatDamage:
+      types:
+        Heat : 1 #per second, scales with temperature & other constants
+
+- type: entity
+  name: corgi puppy
+  parent: MobCorgi
+  id: MobCorgiPuppy
+  description: A little corgi! Aww...
+  components:
+  - type: Sprite
+    drawdepth: Mobs
+    sprite: Mobs/Pets/corgi.rsi
+    layers:
+    - map: ["enum.DamageStateVisualLayers.Base"]
+      state: puppy
+  - type: Appearance
+    visuals:
+    - type: DamageStateVisualizer
+      normal: puppy
+      crit: puppy_dead
+      dead: puppy_dead
+  - type: Grammar
+    attributes:
+      gender: epicene
 
 - type: entity
   name: cow
@@ -410,6 +570,299 @@
     interactFailureString: petting-failure-crab
   - type: Bloodstream
     bloodMaxVolume: 50
+
+- type: entity
+  name: brown duck #Quack
+  parent: SimpleMobBase
+  id: MobDuckBrown
+  description: An adorable brown duck, it's fluffy and soft!
+  components:
+  - type: Sprite
+    drawdepth: Mobs
+    layers:
+    - map: ["enum.DamageStateVisualLayers.Base"]
+      state: duck-2
+      sprite: Mobs/Animals/duck.rsi
+  - type: Appearance
+    visuals:
+    - type: DamageStateVisualizer
+      normal: duck-2
+      crit: dead-2
+      dead: dead-2
+  - type: Butcherable
+    spawned:
+    - id: FoodMeatDuck
+      amount: 1
+  - type: InteractionPopup
+    successChance: 0.9
+    interactSuccessString: petting-success-bird
+    interactFailureString: petting-failure-generic
+    interactSuccessSound:
+      path: /Audio/Animals/duck_quack_happy.ogg
+  - type: Bloodstream
+    bloodMaxVolume: 100
+
+- type: entity
+  name: mallard duck #Quack
+  parent: SimpleMobBase
+  id: MobDuckMallard
+  description: An adorable mallard duck, it's fluffy and soft!
+  components:
+  - type: Sprite
+    drawdepth: Mobs
+    layers:
+    - map: ["enum.DamageStateVisualLayers.Base"]
+      state: duck-0
+      sprite: Mobs/Animals/duck.rsi
+  - type: Appearance
+    visuals:
+    - type: DamageStateVisualizer
+      normal: duck-0
+      crit: dead-0
+      dead: dead-0
+  - type: Butcherable
+    spawned:
+    - id: FoodMeatDuck
+      amount: 1
+  - type: InteractionPopup
+    successChance: 0.9
+    interactSuccessString: petting-success-bird
+    interactFailureString: petting-failure-generic
+    interactSuccessSound:
+      path: /Audio/Animals/duck_quack_happy.ogg
+  - type: Bloodstream
+    bloodMaxVolume: 100
+
+- type: entity
+  name: white duck #Quack
+  parent: SimpleMobBase
+  id: MobDuckWhite
+  description: An adorable white duck, it's fluffy and soft!
+  components:
+  - type: Sprite
+    drawdepth: Mobs
+    layers:
+    - map: ["enum.DamageStateVisualLayers.Base"]
+      state: duck-1
+      sprite: Mobs/Animals/duck.rsi
+  - type: Appearance
+    visuals:
+    - type: DamageStateVisualizer
+      normal: duck-1
+      crit: dead-1
+      dead: dead-1
+  - type: Butcherable
+    spawned:
+    - id: FoodMeatDuck
+      amount: 1
+  - type: InteractionPopup
+    successChance: 0.9
+    interactSuccessString: petting-success-bird
+    interactFailureString: petting-failure-generic
+    interactSuccessSound:
+      path: /Audio/Animals/duck_quack_happy.ogg
+  - type: Bloodstream
+    bloodMaxVolume: 100
+
+- type: entity
+  name: ferret
+  parent: SimpleMobBase
+  id: MobFerret
+  description: Just a silly little guy!
+  components:
+  - type: Sprite
+    drawdepth: Mobs
+    sprite: Mobs/Pets/ferret.rsi
+    layers:
+    - map: ["enum.DamageStateVisualLayers.Base"]
+      state: ferret
+  - type: Physics
+  - type: Fixtures
+    fixtures:
+    - shape:
+        !type:PhysShapeCircle
+        radius: 0.35
+      mass: 10
+      mask:
+      - MobMask
+      layer:
+      - MobLayer
+  - type: Appearance
+    visuals:
+    - type: DamageStateVisualizer
+      normal: ferret
+      crit: ferret_dead
+      dead: ferret_dead
+  - type: Butcherable
+    spawned:
+    - id: FoodMeat
+      amount: 3
+  - type: InteractionPopup
+    successChance: 0.8
+    interactDelay: 1.5 # Avoids overlapping SFX due to spam - these SFX are a little longer than the typical 1 second.
+    interactSuccessString: petting-success-soft-floofy
+    interactFailureString: petting-failure-generic
+    interactSuccessSound:
+      path: /Audio/Animals/ferret_happy.ogg
+  - type: Grammar
+    attributes:
+      gender: epicene
+
+- type: entity
+  name: fox
+  parent: SimpleMobBase
+  id: MobFox
+  description: They're a fox.
+  components:
+  - type: Sprite
+    drawdepth: Mobs
+    sprite: Mobs/Animals/fox.rsi
+    layers:
+    - map: ["enum.DamageStateVisualLayers.Base"]
+      state: fox
+  - type: Physics
+  - type: Fixtures
+    fixtures:
+    - shape:
+        !type:PhysShapeCircle
+        radius: 0.35
+      mass: 10
+      mask:
+      - MobMask
+      layer:
+      - MobLayer
+  - type: Appearance
+    visuals:
+    - type: DamageStateVisualizer
+      normal: fox
+      crit: fox_dead
+      dead: fox_dead
+  - type: Butcherable
+    spawned:
+    - id: FoodMeat
+      amount: 3
+  - type: InteractionPopup
+    successChance: 0.5
+    interactSuccessString: petting-success-soft-floofy
+    interactFailureString: petting-failure-generic
+    interactSuccessSound:
+      path: /Audio/Animals/fox_squeak.ogg
+  - type: Grammar
+    attributes:
+      gender: epicene
+  - type: Bloodstream
+    bloodMaxVolume: 100
+
+- type: entity
+  name: frog
+  parent: SimpleMobBase
+  id: MobFrog
+  description: Hop hop hop. Lookin' moist.
+  components:
+  - type: MovementSpeedModifier
+    baseWalkSpeed : 4
+    baseSprintSpeed : 6
+  - type: Sprite
+    drawdepth: Mobs
+    layers:
+    - map: ["enum.DamageStateVisualLayers.Base"]
+      state: frog
+      sprite: Mobs/Animals/frog.rsi
+  - type: Physics
+  - type: Fixtures
+    fixtures:
+    - shape:
+        !type:PhysShapeCircle
+        radius: 0.2
+      mass: 2
+      mask:
+      - SmallMobMask
+      layer:
+      - SmallMobLayer
+  - type: Appearance
+    visuals:
+    - type: DamageStateVisualizer
+      normal: frog
+      crit: dead
+      dead: dead
+  - type: Butcherable
+    spawned:
+    - id: FoodMeat
+      amount: 1
+  - type: InteractionPopup
+    successChance: 0.6
+    interactSuccessString: petting-success-frog
+    interactFailureString: petting-failure-generic
+    interactSuccessSound:
+      path: /Audio/Animals/frog_ribbit.ogg
+  - type: Bloodstream
+    bloodMaxVolume: 50
+
+# Code unique spider prototypes or combine them all into one spider and get a
+# random sprite state when you spawn it.
+- type: entity
+  name: tarantula
+  parent: SimpleMobBase
+  id: MobGiantSpider
+  description: Widely recognized to be the literal worst thing in existence.
+  components:
+  - type: Sprite
+    drawdepth: Mobs
+    layers:
+    - map: ["enum.DamageStateVisualLayers.Base"]
+      state: tarantula
+      sprite: Mobs/Animals/spider.rsi
+  - type: Physics
+  - type: Fixtures
+    fixtures:
+    - shape:
+        !type:PhysShapeCircle
+        radius: 0.35
+      mass: 25
+      mask:
+      - MobMask
+      layer:
+      - MobLayer
+  - type: Appearance
+    visuals:
+    - type: DamageStateVisualizer
+      normal: tarantula
+      crit: tarantula_dead
+      dead: tarantula_dead
+  - type: Butcherable
+    spawned:
+    - id: FoodMeatSpider
+      amount: 2
+  - type: CombatMode
+    disarmAction:
+      enabled: false
+      autoPopulate: false
+      name: action-name-disarm
+  - type: ReplacementAccent
+    accent: xeno
+  - type: InteractionPopup
+    successChance: 0.5
+    interactSuccessString: petting-success-tarantula
+    interactFailureString: petting-failure-generic
+  - type: Puller
+
+- type: entity
+  name: tarantula
+  parent: MobGiantSpider
+  id: MobGiantSpiderAngry
+  suffix: Angry
+  components:
+    - type: AiFactionTag
+      factions:
+        - Xeno
+    - type: UtilityAI
+      behaviorSets:
+        - Idle
+        - UnarmedAttackHostiles
+    - type: GhostTakeoverAvailable
+      makeSentient: true
+      name: giant spider
+      description: Wreak havoc on the station's inhabitants!
 
 - type: entity
   name: goat
@@ -593,6 +1046,54 @@
   - type: AiFactionTag
     factions:
     - SimpleHostile
+
+- type: entity
+  name: lizard #Weh
+  parent: SimpleMobBase
+  id: MobLizard
+  description: A harmless dragon.
+  components:
+  - type: MovementSpeedModifier
+    baseWalkSpeed : 2
+    baseSprintSpeed : 3
+  - type: Sprite
+    drawdepth: Mobs
+    layers:
+    - map: ["enum.DamageStateVisualLayers.Base"]
+      state: lizard
+      sprite: Mobs/Animals/lizard.rsi
+  - type: Physics
+  - type: Fixtures
+    fixtures:
+    - shape:
+        !type:PhysShapeCircle
+        radius: 0.2
+      mass: 5
+      mask:
+      - MobMask
+      layer:
+      - MobLayer
+  - type: Appearance
+    visuals:
+    - type: DamageStateVisualizer
+      normal: lizard
+      crit: dead
+      dead: dead
+  - type: Butcherable
+    spawned:
+    - id: FoodMeat
+      amount: 1
+  - type: InteractionPopup
+    successChance: 0.3
+    interactSuccessString: petting-success-reptile
+    interactFailureString: petting-failure-generic
+    interactSuccessSound:
+      path: /Audio/Animals/lizard_happy.ogg
+  - type: Bloodstream
+    bloodMaxVolume: 150
+  - type: Damageable
+    damageContainer: Biological
+    damageModifierSet: Scale
 
 - type: entity
   name: monkey
@@ -792,142 +1293,6 @@
     bloodMaxVolume: 50
   - type: DiseaseCarrier
 
-- type: entity
-  name: lizard #Weh
-  parent: SimpleMobBase
-  id: MobLizard
-  description: A harmless dragon.
-  components:
-  - type: MovementSpeedModifier
-    baseWalkSpeed : 2
-    baseSprintSpeed : 3
-  - type: Sprite
-    drawdepth: Mobs
-    layers:
-    - map: ["enum.DamageStateVisualLayers.Base"]
-      state: lizard
-      sprite: Mobs/Animals/lizard.rsi
-  - type: Physics
-  - type: Fixtures
-    fixtures:
-    - shape:
-        !type:PhysShapeCircle
-        radius: 0.2
-      mass: 5
-      mask:
-      - MobMask
-      layer:
-      - MobLayer
-  - type: Appearance
-    visuals:
-    - type: DamageStateVisualizer
-      normal: lizard
-      crit: dead
-      dead: dead
-  - type: Butcherable
-    spawned:
-    - id: FoodMeat
-      amount: 1
-  - type: InteractionPopup
-    successChance: 0.3
-    interactSuccessString: petting-success-reptile
-    interactFailureString: petting-failure-generic
-    interactSuccessSound:
-      path: /Audio/Animals/lizard_happy.ogg
-  - type: Bloodstream
-    bloodMaxVolume: 150
-  - type: Damageable
-    damageContainer: Biological
-    damageModifierSet: Scale
-
-- type: entity
-  name: slug
-  parent: SimpleMobBase
-  id: MobSlug
-  description: And they called this a lizard?
-  components:
-  - type: MovementSpeedModifier
-    baseWalkSpeed : 2
-    baseSprintSpeed : 3
-  - type: Sprite
-    drawdepth: Mobs
-    layers:
-    - map: ["enum.DamageStateVisualLayers.Base"]
-      state: slug
-      sprite: Mobs/Animals/slug.rsi
-  - type: Physics
-  - type: Fixtures
-    fixtures:
-    - shape:
-        !type:PhysShapeCircle
-        radius: 0.2
-      mass: 5
-      mask:
-      - MobMask
-      layer:
-      - MobLayer
-  - type: Appearance
-    visuals:
-    - type: DamageStateVisualizer
-      normal: slug
-      crit: dead
-      dead: dead
-  - type: Butcherable
-    spawned:
-    - id: FoodMeat
-      amount: 1
-  - type: InteractionPopup
-    successChance: 0.3
-    interactSuccessString: petting-success-generic
-    interactFailureString: petting-failure-generic
-  - type: Bloodstream
-    bloodMaxVolume: 50
-
-- type: entity
-  name: frog
-  parent: SimpleMobBase
-  id: MobFrog
-  description: Hop hop hop. Lookin' moist.
-  components:
-  - type: MovementSpeedModifier
-    baseWalkSpeed : 4
-    baseSprintSpeed : 6
-  - type: Sprite
-    drawdepth: Mobs
-    layers:
-    - map: ["enum.DamageStateVisualLayers.Base"]
-      state: frog
-      sprite: Mobs/Animals/frog.rsi
-  - type: Physics
-  - type: Fixtures
-    fixtures:
-    - shape:
-        !type:PhysShapeCircle
-        radius: 0.2
-      mass: 2
-      mask:
-      - SmallMobMask
-      layer:
-      - SmallMobLayer
-  - type: Appearance
-    visuals:
-    - type: DamageStateVisualizer
-      normal: frog
-      crit: dead
-      dead: dead
-  - type: Butcherable
-    spawned:
-    - id: FoodMeat
-      amount: 1
-  - type: InteractionPopup
-    successChance: 0.6
-    interactSuccessString: petting-success-frog
-    interactFailureString: petting-failure-generic
-    interactSuccessSound:
-      path: /Audio/Animals/frog_ribbit.ogg
-  - type: Bloodstream
-    bloodMaxVolume: 50
-
 # Would be cool to have some functionality for the parrot to be able to sit on stuff
 - type: entity
   name: parrot
@@ -1018,7 +1383,7 @@
 - type: entity
   name: grenade penguin
   parent: SimpleMobBase
-  id: MobGrenadePenguin
+  id: MobPenguinGrenade
   description: A small penguin with a grenade strapped around its neck. Harvested by the Syndicate from icy shit-hole planets.
   components:
   - type: MovementSpeedModifier
@@ -1078,120 +1443,7 @@
     totalIntensity: 225
   - type: ExplodeOnTrigger
 
-  # I have included a snake_hiss.ogg sound file so if you want to use that be my guest
-- type: entity
-  name: snake
-  parent: SimpleMobBase
-  id: MobSnake
-  description: Hissss! Bites aren't poisonous.
-  components:
-  - type: Sprite
-    drawdepth: Mobs
-    layers:
-    - map: ["enum.DamageStateVisualLayers.Base"]
-      state: snake
-      sprite: Mobs/Animals/snake.rsi
-  - type: Physics
-  - type: Fixtures
-    fixtures:
-    - shape:
-        !type:PhysShapeCircle
-        radius: 0.25
-      mass: 8
-      mask:
-      - SmallMobMask
-      layer:
-      - SmallMobLayer
-  - type: Appearance
-    visuals:
-    - type: RotationVisualizer
-    - type: DamageStateVisualizer
-      normal: snake
-# It's death animation is animated so hopefully this should push for separation between "dying" and "death" states.
-     # looks stupid, Rotation visualizer for now
-     # dead: dead
-     # crit: dead
-  - type: Butcherable
-    spawned:
-    - id: FoodMeat
-      amount: 1
-  - type: InteractionPopup
-    successChance: 0.6
-    interactSuccessString: petting-success-reptile
-    interactFailureString: petting-failure-generic
-  - type: Bloodstream
-    bloodMaxVolume: 50
-  - type: Damageable
-    damageContainer: Biological
-    damageModifierSet: Scale
-
-# Code unique spider prototypes or combine them all into one spider and get a
-# random sprite state when you spawn it.
-- type: entity
-  name: tarantula
-  parent: SimpleMobBase
-  id: MobGiantSpider
-  description: Widely recognized to be the literal worst thing in existence.
-  components:
-  - type: Sprite
-    drawdepth: Mobs
-    layers:
-    - map: ["enum.DamageStateVisualLayers.Base"]
-      state: tarantula
-      sprite: Mobs/Animals/spider.rsi
-  - type: Physics
-  - type: Fixtures
-    fixtures:
-    - shape:
-        !type:PhysShapeCircle
-        radius: 0.35
-      mass: 25
-      mask:
-      - MobMask
-      layer:
-      - MobLayer
-  - type: Appearance
-    visuals:
-    - type: DamageStateVisualizer
-      normal: tarantula
-      crit: tarantula_dead
-      dead: tarantula_dead
-  - type: Butcherable
-    spawned:
-    - id: FoodMeatSpider
-      amount: 2
-  - type: CombatMode
-    disarmAction:
-      enabled: false
-      autoPopulate: false
-      name: action-name-disarm
-  - type: ReplacementAccent
-    accent: xeno
-  - type: InteractionPopup
-    successChance: 0.5
-    interactSuccessString: petting-success-tarantula
-    interactFailureString: petting-failure-generic
-  - type: Puller
-
-- type: entity
-  name: tarantula
-  parent: MobGiantSpider
-  id: MobGiantSpiderAngry
-  suffix: Angry
-  components:
-    - type: AiFactionTag
-      factions:
-        - Xeno
-    - type: UtilityAI
-      behaviorSets:
-        - Idle
-        - UnarmedAttackHostiles
-    - type: GhostTakeoverAvailable
-      makeSentient: true
-      name: giant spider
-      description: Wreak havoc on the station's inhabitants!
-
-- type: entity
+  - type: entity
   name: possum
   parent: SimpleMobBase
   id: MobPossum
@@ -1278,301 +1530,6 @@
       gender: epicene
 
 - type: entity
-  name: fox
-  parent: SimpleMobBase
-  id: MobFox
-  description: They're a fox.
-  components:
-  - type: Sprite
-    drawdepth: Mobs
-    sprite: Mobs/Animals/fox.rsi
-    layers:
-    - map: ["enum.DamageStateVisualLayers.Base"]
-      state: fox
-  - type: Physics
-  - type: Fixtures
-    fixtures:
-    - shape:
-        !type:PhysShapeCircle
-        radius: 0.35
-      mass: 10
-      mask:
-      - MobMask
-      layer:
-      - MobLayer
-  - type: Appearance
-    visuals:
-    - type: DamageStateVisualizer
-      normal: fox
-      crit: fox_dead
-      dead: fox_dead
-  - type: Butcherable
-    spawned:
-    - id: FoodMeat
-      amount: 3
-  - type: InteractionPopup
-    successChance: 0.5
-    interactSuccessString: petting-success-soft-floofy
-    interactFailureString: petting-failure-generic
-    interactSuccessSound:
-      path: /Audio/Animals/fox_squeak.ogg
-  - type: Grammar
-    attributes:
-      gender: epicene
-  - type: Bloodstream
-    bloodMaxVolume: 100
-
-- type: entity
-  name: corgi
-  parent: SimpleMobBase
-  id: MobCorgi
-  description: Finally, a space corgi!
-  components:
-  - type: Sprite
-    drawdepth: Mobs
-    sprite: Mobs/Pets/corgi.rsi
-    layers:
-    - map: ["enum.DamageStateVisualLayers.Base"]
-      state: corgi
-  - type: Physics
-  - type: Fixtures
-    fixtures:
-    - shape:
-        !type:PhysShapeCircle
-        radius: 0.35
-      mass: 10
-      mask:
-      - MobMask
-      layer:
-      - MobLayer
-  - type: Appearance
-    visuals:
-    - type: DamageStateVisualizer
-      normal: corgi
-      crit: corgi_dead
-      dead: corgi_dead
-  - type: Butcherable
-    spawned:
-    - id: FoodMeat
-      amount: 2
-  - type: ReplacementAccent
-    accent: dog
-  - type: InteractionPopup
-    interactSuccessString: petting-success-dog
-    interactFailureString: petting-failure-generic
-    interactSuccessSound:
-      path: /Audio/Animals/small_dog_bark_happy.ogg
-  - type: Grammar
-    attributes:
-      gender: epicene
-  - type: SentienceTarget
-    flavorKind: corgi
-  - type: Puller
-
-- type: entity
-  name: corrupted corgi
-  parent: MobCorgi
-  id: MobCorgiNarsi
-  description: Ian! No!
-  components:
-  - type: Sprite
-    drawdepth: Mobs
-    sprite: Mobs/Pets/corgi.rsi
-    layers:
-    - map: ["enum.DamageStateVisualLayers.Base"]
-      state: narsian
-  - type: Appearance
-    visuals:
-    - type: DamageStateVisualizer
-      normal: narsian
-      crit: narsian_dead
-      dead: narsian_dead
-  - type: UnarmedCombat
-    range: 1.5
-    arcwidth: 0
-    arc: bite
-    damage:
-      types:
-        Piercing: 5
-        Slash: 5
-  - type: UtilityAI
-    behaviorSets:
-    - UnarmedAttackHostiles
-  - type: AiFactionTag
-    factions:
-    - SimpleHostile
-  - type: InteractionPopup
-    successChance: 0 # Override the automatic success that would normally be inherited from MobCorgi.
-    interactSuccessString: petting-success-corrupted-corgi # Normally impossible but added an easter egg just in case.
-    interactFailureString: petting-failure-corrupted-corgi
-  - type: Grammar
-    attributes:
-      gender: epicene
-  - type: Bloodstream
-    bloodReagent: DemonsBlood
-    bloodlossDamage:
-      types:
-        Bloodloss:
-          1
-    bloodlossHealDamage:
-      types:
-        Bloodloss:
-          -0.25
-  - type: Damageable
-    damageContainer: Biological
-    damageModifierSet: Infernal
-  - type: Temperature
-    heatDamageThreshold: 4000 #They come from hell, so...
-    coldDamageThreshold: 260
-    currentTemperature: 310.15
-    coldDamage:
-      types:
-        Cold : 1 #per second, scales with temperature & other constants
-    specificHeat: 42
-    heatDamage:
-      types:
-        Heat : 1 #per second, scales with temperature & other constants
-
-- type: entity
-  name: corgi puppy
-  parent: MobCorgi
-  id: MobCorgiPuppy
-  description: A little corgi! Aww...
-  components:
-  - type: Sprite
-    drawdepth: Mobs
-    sprite: Mobs/Pets/corgi.rsi
-    layers:
-    - map: ["enum.DamageStateVisualLayers.Base"]
-      state: puppy
-  - type: Appearance
-    visuals:
-    - type: DamageStateVisualizer
-      normal: puppy
-      crit: puppy_dead
-      dead: puppy_dead
-  - type: Grammar
-    attributes:
-      gender: epicene
-
-- type: entity
-  name: cat
-  parent: SimpleMobBase
-  id: MobCat
-  description: Feline pet, very funny.
-  components:
-  - type: Sprite
-    drawdepth: Mobs
-    sprite: Mobs/Pets/cat.rsi
-    layers:
-    - map: ["enum.DamageStateVisualLayers.Base"]
-      state: cat
-  - type: Physics
-  - type: Fixtures
-    fixtures:
-    - shape:
-        !type:PhysShapeCircle
-        radius: 0.35
-      mass: 10
-      mask:
-      - MobMask
-      layer:
-      - MobLayer
-  - type: Appearance
-    visuals:
-    - type: DamageStateVisualizer
-      normal: cat
-      crit: cat_dead
-      dead: cat_dead
-  - type: Butcherable
-    spawned:
-    - id: FoodMeat
-      amount: 3
-  - type: ReplacementAccent
-    accent: cat
-  - type: InteractionPopup
-    successChance: 0.7
-    interactSuccessString: petting-success-cat
-    interactFailureString: petting-failure-generic
-    interactSuccessSound:
-      path: /Audio/Animals/cat_meow.ogg
-  - type: Grammar
-    attributes:
-      gender: epicene
-
-- type: entity
-  name: calico cat
-  id: MobCatCalico
-  parent: MobCat
-  description: Feline pet, very funny.
-  components:
-  - type: Sprite
-    drawdepth: Mobs
-    sprite: Mobs/Pets/cat.rsi
-    layers:
-    - map: ["enum.DamageStateVisualLayers.Base"]
-      state: cat2
-  - type: Appearance
-    visuals:
-    - type: DamageStateVisualizer
-      normal: cat2
-      crit: cat2_dead
-      dead: cat2_dead
-  - type: Grammar
-    attributes:
-      gender: epicene
-
-- type: entity
-  name: space cat
-  id: MobCatSpace
-  parent: MobCat
-  description: Feline pet, prepared for the worst.
-  components:
-  - type: Sprite
-    drawdepth: Mobs
-    sprite: Mobs/Pets/cat.rsi
-    layers:
-    - map: ["enum.DamageStateVisualLayers.Base"]
-      state: spacecat
-  - type: Appearance
-    visuals:
-    - type: DamageStateVisualizer
-      normal: spacecat
-      crit: spacecat_dead
-      dead: spacecat_dead
-  - type: InteractionPopup
-    successChance: 0.7
-    interactSuccessString: petting-success-space-cat
-    interactFailureString: petting-failure-generic
-    interactSuccessSound:
-      path: /Audio/Animals/cat_meow.ogg
-  - type: Grammar
-    attributes:
-      gender: epicene
-
-- type: entity
-  name: caracal cat
-  id: MobCatCaracal
-  parent: MobCat
-  description: Hilarious.
-  components:
-  - type: Sprite
-    drawdepth: Mobs
-    sprite: Mobs/Pets/caracal.rsi
-    layers:
-    - map: ["enum.DamageStateVisualLayers.Base"]
-      state: caracal_flop
-  - type: Appearance
-    visuals:
-    - type: DamageStateVisualizer
-      normal: caracal_flop
-      crit: caracal_dead
-      dead: caracal_dead
-  - type: Grammar
-    attributes:
-      gender: epicene
-
-- type: entity
   name: sloth
   parent: SimpleMobBase
   id: MobSloth
@@ -1619,24 +1576,27 @@
       gender: epicene
 
 - type: entity
-  name: ferret
+  name: slug
   parent: SimpleMobBase
-  id: MobFerret
-  description: Just a silly little guy!
+  id: MobSlug
+  description: And they called this a lizard?
   components:
+  - type: MovementSpeedModifier
+    baseWalkSpeed : 2
+    baseSprintSpeed : 3
   - type: Sprite
     drawdepth: Mobs
-    sprite: Mobs/Pets/ferret.rsi
     layers:
     - map: ["enum.DamageStateVisualLayers.Base"]
-      state: ferret
+      state: slug
+      sprite: Mobs/Animals/slug.rsi
   - type: Physics
   - type: Fixtures
     fixtures:
     - shape:
         !type:PhysShapeCircle
-        radius: 0.35
-      mass: 10
+        radius: 0.2
+      mass: 5
       mask:
       - MobMask
       layer:
@@ -1644,20 +1604,63 @@
   - type: Appearance
     visuals:
     - type: DamageStateVisualizer
-      normal: ferret
-      crit: ferret_dead
-      dead: ferret_dead
+      normal: slug
+      crit: dead
+      dead: dead
   - type: Butcherable
     spawned:
     - id: FoodMeat
-      amount: 3
+      amount: 1
   - type: InteractionPopup
-    successChance: 0.8
-    interactDelay: 1.5 # Avoids overlapping SFX due to spam - these SFX are a little longer than the typical 1 second.
-    interactSuccessString: petting-success-soft-floofy
+    successChance: 0.3
+    interactSuccessString: petting-success-generic
     interactFailureString: petting-failure-generic
-    interactSuccessSound:
-      path: /Audio/Animals/ferret_happy.ogg
-  - type: Grammar
-    attributes:
-      gender: epicene
+  - type: Bloodstream
+    bloodMaxVolume: 50
+
+  # I have included a snake_hiss.ogg sound file so if you want to use that be my guest
+- type: entity
+  name: snake
+  parent: SimpleMobBase
+  id: MobSnake
+  description: Hissss! Bites aren't poisonous.
+  components:
+  - type: Sprite
+    drawdepth: Mobs
+    layers:
+    - map: ["enum.DamageStateVisualLayers.Base"]
+      state: snake
+      sprite: Mobs/Animals/snake.rsi
+  - type: Physics
+  - type: Fixtures
+    fixtures:
+    - shape:
+        !type:PhysShapeCircle
+        radius: 0.25
+      mass: 8
+      mask:
+      - SmallMobMask
+      layer:
+      - SmallMobLayer
+  - type: Appearance
+    visuals:
+    - type: RotationVisualizer
+    - type: DamageStateVisualizer
+      normal: snake
+# It's death animation is animated so hopefully this should push for separation between "dying" and "death" states.
+     # looks stupid, Rotation visualizer for now
+     # dead: dead
+     # crit: dead
+  - type: Butcherable
+    spawned:
+    - id: FoodMeat
+      amount: 1
+  - type: InteractionPopup
+    successChance: 0.6
+    interactSuccessString: petting-success-reptile
+    interactFailureString: petting-failure-generic
+  - type: Bloodstream
+    bloodMaxVolume: 50
+  - type: Damageable
+    damageContainer: Biological
+    damageModifierSet: Scale

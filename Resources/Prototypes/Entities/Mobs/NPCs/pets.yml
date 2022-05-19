@@ -1,49 +1,81 @@
 # Bounds Guide
 #1D2L3U4R
 
-- type: entity
-  name: Morty
-  parent: MobPossum
-  id: MobPossumMorty
-  description: The station's resident Didelphis virginiana. A sensitive but resilient kind of guy.
-  components:
-  - type: InteractionPopup
-    successChance: 1.0 # Hey, c'mon, this is Morty we're talking about here.
-  - type: Grammar
-    attributes:
-      proper: true
-      gender: male
+## One-of-a-kind and named pets should go here (Ian, Poly, DaemonDuck [Quack Quack])
+## Base animals should go in animals.yml
+# Please take the time to put them in alphabetical order based on id
 
 - type: entity
-  name: Morticia
-  parent: MobRaccoon
-  id: MobRaccoonMorticia
-  description: A powerful creature of the night. Her eyeshadow is always on point.
+  name: bingus
+  parent: SimpleMobBase
+  id: MobCatBingus
+  description: Bingus my beloved...
   components:
-  - type: InteractionPopup
-    successChance: 0.7
-  - type: Grammar
-    attributes:
-      proper: true
-      gender: female
-
-- type: entity
-  name: Renault
-  parent: MobFox
-  id: MobFoxRenault
-  description: The captain's trustworthy fox.
-  components:
-  - type: InteractionPopup
-    successChance: 1
+  - type: Sprite
+    drawdepth: Mobs
+    sprite: Mobs/Pets/bingus.rsi
+    layers:
+    - map: ["enum.DamageStateVisualLayers.Base"]
+      state: bingus
+  - type: Physics
+  - type: Fixtures
+    fixtures:
+    - shape:
+        !type:PhysShapeCircle
+        radius: 0.35
+      mass: 10
+      mask:
+      - MobMask
+      layer:
+      - MobLayer
+  - type: Appearance
+    visuals:
+    - type: DamageStateVisualizer
+      normal: bingus
+      crit: bingus_dead
+      dead: bingus_dead
   - type: Butcherable
     spawned:
     - id: FoodMeat
-      amount: 3
-    - id: Telecrystal5
-      amount: 1
+      amount: 2
+  - type: InteractionPopup
+    successChance: 0.9
+    interactSuccessString: petting-success-cat
+    interactFailureString: petting-failure-generic
+    interactSuccessSound:
+      path: /Audio/Animals/cat_meow.ogg
   - type: Grammar
     attributes:
-      proper: true
+      gender: epicene
+
+- type: entity
+  name: Exception
+  id: MobCatException
+  parent: MobCatCalico
+  description: Ask nicely, and maybe they'll give you one of their spare lives.
+  components:
+  - type: Grammar
+    attributes:
+      gender: male
+
+- type: entity
+  name: Floppa
+  id: MobCatFloppa
+  parent: MobCatCaracal
+  description: He out here.
+  components:
+  - type: Grammar
+    attributes:
+      gender: male
+
+- type: entity
+  name: Runtime
+  parent: MobCat
+  id: MobCatRuntime
+  description: Professional mouse hunter. Escape artist.
+  components:
+  - type: Grammar
+    attributes:
       gender: female
 
 - type: entity
@@ -120,36 +152,6 @@
       gender: female
 
 - type: entity
-  name: Runtime
-  parent: MobCat
-  id: MobCatRuntime
-  description: Professional mouse hunter. Escape artist.
-  components:
-  - type: Grammar
-    attributes:
-      gender: female
-
-- type: entity
-  name: Exception
-  id: MobCatException
-  parent: MobCatCalico
-  description: Ask nicely, and maybe they'll give you one of their spare lives.
-  components:
-  - type: Grammar
-    attributes:
-      gender: male
-
-- type: entity
-  name: Floppa
-  id: MobCatFloppa
-  parent: MobCatCaracal
-  description: He out here.
-  components:
-  - type: Grammar
-    attributes:
-      gender: male
-
-- type: entity
   name: Bandito
   parent: MobFerret
   id: MobBandito
@@ -160,47 +162,23 @@
       gender: male
 
 - type: entity
-  name: bingus
-  parent: SimpleMobBase
-  id: MobCatBingus
-  description: Bingus my beloved...
+  name: Renault
+  parent: MobFox
+  id: MobFoxRenault
+  description: The captain's trustworthy fox.
   components:
-  - type: Sprite
-    drawdepth: Mobs
-    sprite: Mobs/Pets/bingus.rsi
-    layers:
-    - map: ["enum.DamageStateVisualLayers.Base"]
-      state: bingus
-  - type: Physics
-  - type: Fixtures
-    fixtures:
-    - shape:
-        !type:PhysShapeCircle
-        radius: 0.35
-      mass: 10
-      mask:
-      - MobMask
-      layer:
-      - MobLayer
-  - type: Appearance
-    visuals:
-    - type: DamageStateVisualizer
-      normal: bingus
-      crit: bingus_dead
-      dead: bingus_dead
+  - type: InteractionPopup
+    successChance: 1
   - type: Butcherable
     spawned:
     - id: FoodMeat
-      amount: 2
-  - type: InteractionPopup
-    successChance: 0.9
-    interactSuccessString: petting-success-cat
-    interactFailureString: petting-failure-generic
-    interactSuccessSound:
-      path: /Audio/Animals/cat_meow.ogg
+      amount: 3
+    - id: Telecrystal5
+      amount: 1
   - type: Grammar
     attributes:
-      gender: epicene
+      proper: true
+      gender: female
 
 - type: entity
   name: mcgriff
@@ -278,6 +256,32 @@
     attributes:
       proper: true
       gender: male
+
+- type: entity
+  name: Morty
+  parent: MobPossum
+  id: MobPossumMorty
+  description: The station's resident Didelphis virginiana. A sensitive but resilient kind of guy.
+  components:
+  - type: InteractionPopup
+    successChance: 1.0 # Hey, c'mon, this is Morty we're talking about here.
+  - type: Grammar
+    attributes:
+      proper: true
+      gender: male
+
+- type: entity
+  name: Morticia
+  parent: MobRaccoon
+  id: MobRaccoonMorticia
+  description: A powerful creature of the night. Her eyeshadow is always on point.
+  components:
+  - type: InteractionPopup
+    successChance: 0.7
+  - type: Grammar
+    attributes:
+      proper: true
+      gender: female
 
 - type: entity
   name: Walter
