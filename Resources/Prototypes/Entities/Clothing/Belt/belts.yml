@@ -462,7 +462,7 @@
   description: A set of tactical webbing worn by Gorlax Marauder medic operatives.
   components:
   - type: Sprite
-    sprite: Clothing/Belt/militarywebbingweb.rsi
+    sprite: Clothing/Belt/militarywebbingmed.rsi
   - type: Clothing
     sprite: Clothing/Belt/militarywebbingmed.rsi
   - type: Storage
