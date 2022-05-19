@@ -465,6 +465,8 @@
     sprite: Clothing/Belt/militarywebbingweb.rsi
   - type: Clothing
     sprite: Clothing/Belt/militarywebbingmed.rsi
+  - type: Storage
+    capacity: 60
     
 - type: entity
   parent: ClothingBeltBase
