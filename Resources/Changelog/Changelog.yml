@@ -1,12 +1,4 @@
 Entries:
-- author: mirrorcult
-  changes:
-  - {message: 'Adds Examine Buttons/Verbs, which are special verbs that show up on
-      the examine tooltip window.', type: Add}
-  - {message: Converted multitool power examination to to the Examine Verb system.,
-    type: Tweak}
-  id: 1062
-  time: '2022-02-14T03:20:58.0000000+00:00'
 - author: Peptide90
   changes:
   - {message: 'Pillar Update V4! See github pull request #6705 for changelog.', type: Add}
@@ -3043,3 +3035,8 @@ Entries:
   - {message: Multiplied the amount of power used by laser guns., type: Tweak}
   id: 1561
   time: '2022-05-19T05:51:55.0000000+00:00'
+- author: abregado
+  changes:
+  - {message: telepads will no longer collide when anchored, type: Fix}
+  id: 1562
+  time: '2022-05-19T10:08:20.0000000+00:00'
