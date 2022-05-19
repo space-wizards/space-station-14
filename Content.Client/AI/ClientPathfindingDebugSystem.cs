@@ -335,7 +335,7 @@ namespace Content.Client.AI
                 {
                     Regions[gridId][chunk].Add(region, nodes);
                     _regionColors[gridId][chunk][region] = new Color(robustRandom.NextFloat(), robustRandom.NextFloat(),
-                        robustRandom.NextFloat(), 0.3f);
+                        robustRandom.NextFloat(), 0.5f);
                 }
             }
         }

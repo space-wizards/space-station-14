@@ -16,3 +16,6 @@ ent-CrateEngineeringCableHV = HV cable crate
 ent-CrateEngineeringCableBulk = bulk cable crate
     .desc = { ent-CrateElectrical.desc }
     .suffix = { "" }
+ent-CrateEngineeringElectricalSupplies = Electrical Supplies Crate
+    .desc = { ent-CrateElectrical.desc }
+    .suffix = { "" }

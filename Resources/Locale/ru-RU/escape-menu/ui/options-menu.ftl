@@ -15,6 +15,8 @@ ui-options-midi-volume = MIDI (Инструменты) громкость:
 ui-options-ambience-volume = Громкость окружения:
 ui-options-ambience-max-sounds = Кол-во одновременных звуков окружения:
 ui-options-lobby-music = Музыка в лобби
+ui-options-station-ambience = Station Ambience
+ui-options-space-ambience = Space Ambience
 ui-options-volume-label = Громкость
 ui-options-volume-percent = { TOSTRING($volume, "P0") }
 

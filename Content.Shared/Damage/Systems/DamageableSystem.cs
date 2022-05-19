@@ -2,6 +2,7 @@ using System.Linq;
 using Content.Shared.Damage.Prototypes;
 using Content.Shared.FixedPoint;
 using Content.Shared.Inventory;
+using Content.Shared.MobState.Components;
 using Content.Shared.Radiation.Events;
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
@@ -233,6 +234,45 @@ namespace Content.Shared.Damage
                 component.Damage = newDamage;
                 DamageChanged(component, delta);
             }
+        }
+
+        /// <summary>
+        /// Takes the damage from one entity and scales it relative to the health of another
+        /// </summary>
+        /// <param name="ent1">The entity whose damage will be scaled</param>
+        /// <param name="ent2">The entity whose health the damage will scale to</param>
+        /// <param name="damage">The newly scaled damage. Can be null</param>
+        public bool GetScaledDamage(EntityUid ent1, EntityUid ent2, out DamageSpecifier? damage)
+        {
+            damage = null;
+
+            if (!TryComp<DamageableComponent>(ent1, out var olddamage))
+                return false;
+
+            if (!TryComp<MobStateComponent>(ent1, out var oldstate) ||
+                !TryComp<MobStateComponent>(ent2, out var newstate))
+                return false;
+
+            int ent1DeadState = 0;
+            foreach (var state in oldstate._highestToLowestStates)
+            {
+                if (state.Value.IsDead())
+                {
+                    ent1DeadState = state.Key;
+                }
+            }
+
+            int ent2DeadState = 0;
+            foreach (var state in newstate._highestToLowestStates)
+            {
+                if (state.Value.IsDead())
+                {
+                    ent2DeadState = state.Key;
+                }
+            }
+
+            damage = (olddamage.Damage / ent1DeadState) * ent2DeadState;
+            return true;
         }
     }
 
