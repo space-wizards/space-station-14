@@ -22,9 +22,10 @@
     mode: SnapgridCenter
     snap:
       - Wallmount
-      -
+
 - type: entity
   parent: SurveillanceCameraBase
+  id: SurveillanceCameraSubnetTest
   name: camera
   suffix: SubnetTest
   components:
@@ -34,6 +35,120 @@
     transmitFrequencyId: SurveillanceCamera
   - type: SurveillanceCamera
     id: "test"
-    subnet: "subnet"
 
+- type: entity
+  parent: SurveillanceCameraBase
+  id: SurveillanceCameraEngineering
+  name: camera
+  suffix: Engineering
+  components:
+  - type: DeviceNetwork
+    deviceNetId: Wired
+    receiveFrequencyId: SurveillanceCameraEngineering
+    transmitFrequencyId: SurveillanceCamera
+  - type: SurveillanceCamera
+    id: "test"
 
+- type: entity
+  parent: SurveillanceCameraBase
+  id: SurveillanceCameraSecurity
+  name: camera
+  suffix: Security
+  components:
+  - type: DeviceNetwork
+    deviceNetId: Wired
+    receiveFrequencyId: SurveillanceCameraSecurity
+    transmitFrequencyId: SurveillanceCamera
+  - type: SurveillanceCamera
+    id: "test"
+
+- type: entity
+  parent: SurveillanceCameraBase
+  id: SurveillanceCameraScience
+  name: camera
+  suffix: Science
+  components:
+  - type: DeviceNetwork
+    deviceNetId: Wired
+    receiveFrequencyId: SurveillanceCameraScience
+    transmitFrequencyId: SurveillanceCamera
+  - type: SurveillanceCamera
+    id: "test"
+
+- type: entity
+  parent: SurveillanceCameraBase
+  id: SurveillanceCameraSupply
+  name: camera
+  suffix: Supply
+  components:
+  - type: DeviceNetwork
+    deviceNetId: Wired
+    receiveFrequencyId: SurveillanceCameraSupply
+    transmitFrequencyId: SurveillanceCamera
+  - type: SurveillanceCamera
+    id: "test"
+
+- type: entity
+  parent: SurveillanceCameraBase
+  id: SurveillanceCameraScience
+  name: camera
+  suffix: Science
+  components:
+  - type: DeviceNetwork
+    deviceNetId: Wired
+    receiveFrequencyId: SurveillanceCameraScience
+    transmitFrequencyId: SurveillanceCamera
+  - type: SurveillanceCamera
+    id: "test"
+
+- type: entity
+  parent: SurveillanceCameraBase
+  id: SurveillanceCameraCommand
+  name: camera
+  suffix: Command
+  components:
+  - type: DeviceNetwork
+    deviceNetId: Wired
+    receiveFrequencyId: SurveillanceCameraCommand
+    transmitFrequencyId: SurveillanceCamera
+  - type: SurveillanceCamera
+    id: "test"
+
+- type: entity
+  parent: SurveillanceCameraBase
+  id: SurveillanceCameraService
+  name: camera
+  suffix: Service
+  components:
+  - type: DeviceNetwork
+    deviceNetId: Wired
+    receiveFrequencyId: SurveillanceCameraService
+    transmitFrequencyId: SurveillanceCamera
+  - type: SurveillanceCamera
+    id: "test"
+
+- type: entity
+  parent: SurveillanceCameraBase
+  id: SurveillanceCameraMedical
+  name: camera
+  suffix: Medical
+  components:
+  - type: DeviceNetwork
+    deviceNetId: Wired
+    receiveFrequencyId: SurveillanceCameraMedical
+    transmitFrequencyId: SurveillanceCamera
+  - type: SurveillanceCamera
+    id: "test"
+
+- type: entity
+  parent: SurveillanceCameraBase
+  id: SurveillanceCameraGeneral
+  name: camera
+  suffix: General
+  components:
+  - type: DeviceNetwork
+    deviceNetId: Wired
+    receiveFrequencyId: SurveillanceCameraGeneral
+    transmitFrequencyId: SurveillanceCamera
+  - type: SurveillanceCamera
+    id: "test"

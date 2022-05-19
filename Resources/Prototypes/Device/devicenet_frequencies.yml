@@ -6,7 +6,47 @@
 - type: deviceFrequency
   id: SurveillanceCameraSubnetTest
   name: device-frequency-prototype-name-surveillance-camera
-  frequency: 1930 # i only have so many of these, y'know?
+  frequency: 1930
+
+- type: deviceFrequency
+  id: SurveillanceCameraEngineering
+  name: device-frequency-prototype-name-surveillance-camera
+  frequency: 1931
+
+- type: deviceFrequency
+  id: SurveillanceCameraSecurity
+  name: device-frequency-prototype-name-surveillance-camera
+  frequency: 1932
+
+- type: deviceFrequency
+  id: SurveillanceCameraScience
+  name: device-frequency-prototype-name-surveillance-camera
+  frequency: 1933
+
+- type: deviceFrequency
+  id: SurveillanceCameraSupply
+  name: device-frequency-prototype-name-surveillance-camera
+  frequency: 1934
+
+- type: deviceFrequency
+  id: SurveillanceCameraCommand
+  name: device-frequency-prototype-name-surveillance-camera
+  frequency: 1935
+
+- type: deviceFrequency
+  id: SurveillanceCameraService
+  name: device-frequency-prototype-name-surveillance-camera
+  frequency: 1936
+
+- type: deviceFrequency
+  id: SurveillanceCameraMedical
+  name: device-frequency-prototype-name-surveillance-camera
+  frequency: 1930
+
+- type: deviceFrequency
+  id: SurveillanceCameraGeneral
+  name: device-frequency-prototype-name-surveillance-camera
+  frequency: 1937
 
 - type: deviceFrequency
   id: AtmosMonitor

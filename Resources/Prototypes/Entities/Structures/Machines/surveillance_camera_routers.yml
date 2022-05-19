@@ -9,7 +9,6 @@
       receiveFrequencyId: SurveillanceCamera
       transmitFrequencyId: SurveillanceCamera
     - type: WiredNetworkConnection
-
     - type: Sprite
       sprite: Structures/Machines/server.rsi
       layers:
@@ -17,6 +16,7 @@
 
 - type: entity
   parent: SurveillanceCameraRouterBase
+  id: SurveillanceCameraRouterSubnetTest
   suffix: SubnetTest
   components:
     - type: SurveillanceCameraRouter
