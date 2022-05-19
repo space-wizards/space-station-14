@@ -47,11 +47,12 @@ public sealed partial class SurveillanceCameraMonitorWindow : DefaultWindow
         SubnetSelector.OnItemSelected += args =>
         {
             // piss
-            SubnetOpened!((string) args.Button.SelectedMetadata!);
+            SubnetOpened!((string) args.Button.GetItemMetadata(args.Id)!);
         };
         SubnetRefreshButton.OnPressed += _ => SubnetRefresh!();
         CameraRefreshButton.OnPressed += _ => CameraRefresh!();
     }
+
 
     // The UI class should get the eye from the entity, and then
     // pass it here so that the UI can change its view.
@@ -79,6 +80,7 @@ public sealed partial class SurveillanceCameraMonitorWindow : DefaultWindow
         if (SubnetSelector.ItemCount != subnets.Count)
         {
             SubnetSelector.Clear();
+            _subnetMap.Clear();
 
             foreach (var subnet in subnets)
             {
