@@ -44,6 +44,14 @@ public sealed class SurveillanceCameraRouterSystem : EntitySystem
 
                 ConnectCamera(uid, args.SenderAddress, address, router);
                 break;
+            case SurveillanceCameraSystem.CameraHeartbeatMessage:
+                if (!args.Data.TryGetValue(SurveillanceCameraSystem.CameraAddressData, out string? camera))
+                {
+                    return;
+                }
+
+                SendHeartbeat(uid, args.SenderAddress, camera, router);
+                break;
             case SurveillanceCameraSystem.CameraSubnetConnectMessage:
                 AddMonitorToRoute(uid, args.SenderAddress, router);
                 PingSubnet(uid, router);
@@ -61,6 +69,23 @@ public sealed class SurveillanceCameraRouterSystem : EntitySystem
                 SendCameraInfo(uid, args.Data, router);
                 break;
         }
+    }
+
+    private void SendHeartbeat(EntityUid uid, string origin, string destination,
+        SurveillanceCameraRouterComponent? router = null)
+    {
+        if (!Resolve(uid, ref router))
+        {
+            return;
+        }
+
+        var payload = new NetworkPayload()
+        {
+            { DeviceNetworkConstants.Command, SurveillanceCameraSystem.CameraHeartbeatMessage },
+            { SurveillanceCameraSystem.CameraAddressData, origin }
+        };
+
+        _deviceNetworkSystem.QueuePacket(uid, destination, payload, router.SubnetFrequency);
     }
 
     private void SubnetPingResponse(EntityUid uid, string origin, SurveillanceCameraRouterComponent? router = null)
@@ -126,7 +151,8 @@ public sealed class SurveillanceCameraRouterSystem : EntitySystem
 
         var payload = new NetworkPayload()
         {
-            { DeviceNetworkConstants.Command, SurveillanceCameraSystem.CameraPingMessage }
+            { DeviceNetworkConstants.Command, SurveillanceCameraSystem.CameraPingMessage },
+            { SurveillanceCameraSystem.CameraSubnetData, router.SubnetName }
         };
 
         _deviceNetworkSystem.QueuePacket(uid, null, payload, router.SubnetFrequency);

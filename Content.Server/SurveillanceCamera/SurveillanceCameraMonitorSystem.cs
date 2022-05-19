@@ -31,6 +31,38 @@ public sealed class SurveillanceCameraMonitorSystem : EntitySystem
         SubscribeLocalEvent<SurveillanceCameraMonitorComponent, SurveillanceCameraRefreshSubnetsMessage>(OnRefreshSubnetsMessage);
     }
 
+    private const float _maxHeartbeatTime = 300f;
+    private const float _heartbeatDelay = 30f;
+    private HashSet<EntityUid> _activeMonitors = new();
+    private List<EntityUid> _toRemove = new();
+
+    public override void Update(float frameTime)
+    {
+        foreach (var uid in _activeMonitors)
+        {
+            if (!TryComp(uid, out SurveillanceCameraMonitorComponent? monitor))
+            {
+                _toRemove.Add(uid);
+                continue;
+            }
+
+            monitor.LastHeartbeatSent += frameTime;
+            SendHeartbeat(uid, monitor);
+            monitor.LastHeartbeat += frameTime;
+
+            if (monitor.LastHeartbeat > _maxHeartbeatTime)
+            {
+                DisconnectCamera(uid, true, monitor);
+                _toRemove.Add(uid);
+            }
+        }
+
+        foreach (var uid in _toRemove)
+        {
+            _activeMonitors.Remove(uid);
+        }
+    }
+
     /// ROUTING:
     ///
     /// Monitor freq: General frequency for cameras, routers, and monitors to speak on.
@@ -46,17 +78,8 @@ public sealed class SurveillanceCameraMonitorSystem : EntitySystem
     /// Router - [ subnet freq ] -> Camera
     /// Camera - [ monitor freq ] -> Router
     /// Router - [ monitor freq ] -> Monitor
-    ///
-    /// Current selected router will dictate the camera frequency to connect to.
-    ///
-
-    // If this event is sent, the camera has already cleared the view subscriptions.
-    // Deactivation can occur for any reason (deletion, power off, etc.,) but the
-    // result is always the same: the monitor must update any viewers and send
-    // the updated states over to viewing clients.
 
     #region Event Handling
-
     private void OnComponentStartup(EntityUid uid, SurveillanceCameraMonitorComponent component, ComponentStartup args)
     {
         RefreshSubnets(uid, component);
@@ -87,9 +110,17 @@ public sealed class SurveillanceCameraMonitorSystem : EntitySystem
                     if (component.NextCameraAddress == args.SenderAddress)
                     {
                         TrySwitchCameraByUid(uid, args.Sender, component);
+                        component.ActiveCameraAddress = args.SenderAddress;
                     }
 
                     component.NextCameraAddress = null;
+                    break;
+                case SurveillanceCameraSystem.CameraHeartbeatMessage:
+                    if (args.SenderAddress == component.ActiveCameraAddress)
+                    {
+                        component.LastHeartbeat = 0;
+                    }
+
                     break;
                 case SurveillanceCameraSystem.CameraDataMessage:
                     if (!args.Data.TryGetValue(SurveillanceCameraSystem.CameraNameData, out string? name)
@@ -155,11 +186,6 @@ public sealed class SurveillanceCameraMonitorSystem : EntitySystem
         }
     }
 
-    private void OnInteractHand(EntityUid uid, SurveillanceCameraMonitorComponent component, InteractHandEvent args)
-    {
-        AfterOpenUserInterface(uid, args.User, component);
-    }
-
     private void OnToggleInterface(EntityUid uid, SurveillanceCameraMonitorComponent component,
         AfterActivatableUIOpenEvent args)
     {
@@ -169,8 +195,7 @@ public sealed class SurveillanceCameraMonitorSystem : EntitySystem
     // This is to ensure that there's no delay in ensuring that a camera is deactivated.
     private void OnSurveillanceCameraDeactivate(EntityUid uid, SurveillanceCameraMonitorComponent monitor, SurveillanceCameraDeactivateEvent args)
     {
-        monitor.ActiveCamera = null;
-        UpdateUserInterface(uid, monitor);
+        DisconnectCamera(uid, false, monitor);
     }
 
     private void OnBoundUiClose(EntityUid uid, SurveillanceCameraMonitorComponent component, BoundUIClosedEvent args)
@@ -178,6 +203,42 @@ public sealed class SurveillanceCameraMonitorSystem : EntitySystem
         RemoveViewer(uid, args.Entity, component);
     }
     #endregion
+
+    private void SendHeartbeat(EntityUid uid, SurveillanceCameraMonitorComponent? monitor = null)
+    {
+        if (!Resolve(uid, ref monitor)
+            || monitor.LastHeartbeatSent < _heartbeatDelay
+            || !monitor.KnownSubnets.TryGetValue(monitor.ActiveSubnet, out var subnetAddress))
+        {
+            return;
+        }
+
+        var payload = new NetworkPayload()
+        {
+            { DeviceNetworkConstants.Command, SurveillanceCameraSystem.CameraHeartbeatMessage },
+            { SurveillanceCameraSystem.CameraAddressData, monitor.ActiveCameraAddress }
+        };
+
+        _deviceNetworkSystem.QueuePacket(uid, subnetAddress, payload);
+    }
+
+    private void DisconnectCamera(EntityUid uid, bool removeViewers, SurveillanceCameraMonitorComponent? monitor = null)
+    {
+        if (!Resolve(uid, ref monitor))
+        {
+            return;
+        }
+
+        if (removeViewers)
+        {
+            RemoveActiveCamera(uid, monitor);
+        }
+
+        monitor.ActiveCamera = null;
+        monitor.ActiveCameraAddress = string.Empty;
+        _activeMonitors.Remove(uid);
+        UpdateUserInterface(uid, monitor);
+    }
 
     private void RefreshSubnets(EntityUid uid, SurveillanceCameraMonitorComponent? monitor = null)
     {
@@ -319,6 +380,8 @@ public sealed class SurveillanceCameraMonitorSystem : EntitySystem
         _surveillanceCameras.AddActiveViewers(camera, monitor.Viewers, uid);
 
         monitor.ActiveCamera = camera;
+
+        _activeMonitors.Add(uid);
 
         UpdateUserInterface(uid, monitor);
     }

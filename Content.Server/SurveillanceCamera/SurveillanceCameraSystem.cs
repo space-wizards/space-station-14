@@ -20,6 +20,11 @@ public sealed class SurveillanceCameraSystem : SharedSurveillanceCameraSystem
     // before connecting fully.
     public const string CameraPingMessage = "surveillance_camera_ping";
 
+    // Camera heartbeat. Monitors ping this to ensure that a camera is still able to
+    // be contacted. If this doesn't get sent after some time, the monitor will
+    // automatically disconnect.
+    public const string CameraHeartbeatMessage = "surveillance_camera_heartbeat";
+
     // Surveillance camera data. This generally should contain nothing
     // except for the subnet that this camera is on -
     // this is because of the fact that the PacketEvent already
@@ -57,13 +62,13 @@ public sealed class SurveillanceCameraSystem : SharedSurveillanceCameraSystem
         {
             var payload = new NetworkPayload()
             {
-                { DeviceNetworkConstants.Command, "" },
+                { DeviceNetworkConstants.Command, string.Empty },
                 { CameraAddressData, deviceNet.Address },
                 { CameraNameData, component.CameraId },
-                { CameraSubnetData, component.Subnet }
+                { CameraSubnetData, string.Empty }
             };
 
-            var dest = "";
+            var dest = string.Empty;
 
             switch (command)
             {
@@ -76,8 +81,23 @@ public sealed class SurveillanceCameraSystem : SharedSurveillanceCameraSystem
 
                     payload[DeviceNetworkConstants.Command] = CameraConnectMessage;
                     break;
+                case CameraHeartbeatMessage:
+                    if (!args.Data.TryGetValue(CameraAddressData, out dest)
+                        || string.IsNullOrEmpty(args.Address))
+                    {
+                        return;
+                    }
+
+                    payload[DeviceNetworkConstants.Command] = CameraHeartbeatMessage;
+                    break;
                 case CameraPingMessage:
+                    if (!args.Data.TryGetValue(CameraSubnetData, out string? subnet))
+                    {
+                        return;
+                    }
+
                     dest = args.SenderAddress;
+                    payload[CameraSubnetData] = subnet;
                     payload[DeviceNetworkConstants.Command] = CameraDataMessage;
                     break;
             }
