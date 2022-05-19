@@ -41,12 +41,12 @@
 - type: deviceFrequency
   id: SurveillanceCameraMedical
   name: device-frequency-prototype-name-surveillance-camera
-  frequency: 1930
+  frequency: 1937
 
 - type: deviceFrequency
   id: SurveillanceCameraGeneral
   name: device-frequency-prototype-name-surveillance-camera
-  frequency: 1937
+  frequency: 1938
 
 - type: deviceFrequency
   id: AtmosMonitor

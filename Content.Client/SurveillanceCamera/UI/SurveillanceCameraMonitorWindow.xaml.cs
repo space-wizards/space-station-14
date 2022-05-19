@@ -48,6 +48,7 @@ public sealed partial class SurveillanceCameraMonitorWindow : DefaultWindow
         {
             // piss
             SubnetOpened!((string) args.Button.SelectedMetadata!);
+            SubnetSelector.SelectId(args.Id);
         };
         SubnetRefreshButton.OnPressed += _ => SubnetRefresh!();
         CameraRefreshButton.OnPressed += _ => CameraRefresh!();

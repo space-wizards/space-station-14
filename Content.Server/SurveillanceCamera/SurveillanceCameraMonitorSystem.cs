@@ -275,6 +275,7 @@ public sealed class SurveillanceCameraMonitorSystem : EntitySystem
         }
 
         DisconnectFromSubnet(uid, monitor.ActiveSubnet);
+        DisconnectCamera(uid, true, monitor);
         monitor.ActiveSubnet = subnet;
         monitor.KnownCameras.Clear();
         UpdateUserInterface(uid, monitor);
@@ -341,7 +342,7 @@ public sealed class SurveillanceCameraMonitorSystem : EntitySystem
 
         if (monitor.ActiveCamera != null)
         {
-            _surveillanceCameras.AddActiveViewer((EntityUid) monitor.ActiveCamera, player, uid);
+            _surveillanceCameras.AddActiveViewer(monitor.ActiveCamera., player, uid);
         }
 
         UpdateUserInterface(uid, monitor, player);
@@ -448,7 +449,7 @@ public sealed class SurveillanceCameraMonitorSystem : EntitySystem
             return;
         }
 
-        _surveillanceCameras.RemoveActiveViewers((EntityUid) monitor.ActiveCamera, monitor.Viewers, uid);
+        _surveillanceCameras.RemoveActiveViewers(monitor.ActiveCamera.Value, monitor.Viewers, uid);
 
         UpdateUserInterface(uid, monitor);
     }
