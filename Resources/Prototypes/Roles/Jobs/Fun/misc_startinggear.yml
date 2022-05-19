@@ -122,15 +122,17 @@
   id: SyndicateOperativeMedicFull
   equipment:
     jumpsuit: ClothingUniformJumpsuitOperative
-    back: ClothingBackpackDuffelSyndicateOperative
+    back: ClothingBackpackDuffelSyndicateFilledMedical
     mask: ClothingMaskBreathMedical
     eyes: ClothingEyesHudMedical
     ears: ClothingHeadsetAltSyndicate
     gloves: ClothingHandsGlovesCombat
     outerClothing: ClothingOuterHardsuitSyndieElite
-    shoes: ClothingShoesBootsCombat
+    shoes: ClothingShoesBootsMagSyndie
     id: SyndiPDA
-    pocket1:
+    pocket1: DoubleEmergencyOxygenTankFilled
+    pocket2: HandheldHealthAnalyzer
     belt: ClothingBeltMilitaryWebbingMedFilled
-  innerclothingskirt: ClothingUniformJumpsuitOperative
+  innerclothingskirt: ClothingUniformJumpskirtOperative
+  satchel: ClothingBackpackDuffelSyndicateFilledMedical
   duffelbag: ClothingBackpackDuffelSyndicateFilledMedical
