@@ -1,4 +1,4 @@
-reagent-name-acetone = acetone
-reagent-desc-acetone = A slick, slightly carcinogenic liquid. Has a multitude of mundane uses in everyday life.
-reagent-name-phenol = phenol
-reagent-desc-phenol = An aromatic ring of carbon with a hydroxyl group. A useful precursor to some medicines, but has no healing properties on its own.
+reagent-name-acetone = ацетон
+reagent-desc-acetone = Прозрачная, слегка канцерогенная жидкость. Имеет множество простых способов применения в повседневной жизни.
+reagent-name-phenol = фенол
+reagent-desc-phenol = Ароматическое кольцо углерода с гидроксильной группой. Полезный ингредиент для ряда лекарств, но сам по себе не обладает лечебными свойствами.
