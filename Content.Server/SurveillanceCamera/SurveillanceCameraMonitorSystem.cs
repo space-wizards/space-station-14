@@ -342,7 +342,7 @@ public sealed class SurveillanceCameraMonitorSystem : EntitySystem
 
         if (monitor.ActiveCamera != null)
         {
-            _surveillanceCameras.AddActiveViewer(monitor.ActiveCamera., player, uid);
+            _surveillanceCameras.AddActiveViewer(monitor.ActiveCamera.Value, player, uid);
         }
 
         UpdateUserInterface(uid, monitor, player);
