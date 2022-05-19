@@ -262,7 +262,7 @@ namespace Content.Server.GameTicking
             RunLevel = GameRunLevel.PostRound;
 
             //Tell every client the round has ended.
-            var gamemodeTitle = _preset != null ? Loc.GetString(_preset.ModeTitle) : string.Empty;
+            var gamemodeTitle = Preset != null ? Loc.GetString(Preset.ModeTitle) : string.Empty;
 
             // Let things add text here.
             var textEv = new RoundEndTextAppendEvent();
@@ -469,11 +469,11 @@ namespace Content.Server.GameTicking
 
         private void AnnounceRound()
         {
-            if (_preset == null) return;
+            if (Preset == null) return;
 
             foreach (var proto in _prototypeManager.EnumeratePrototypes<RoundAnnouncementPrototype>())
             {
-                if (!proto.GamePresets.Contains(_preset.ID)) continue;
+                if (!proto.GamePresets.Contains(Preset.ID)) continue;
 
                 if (proto.Message != null)
                     _chatManager.DispatchStationAnnouncement(Loc.GetString(proto.Message), playDefaultSound: false);
