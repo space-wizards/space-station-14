@@ -1,0 +1,9 @@
+ent-BaseLandMine = { "" }
+    .desc = { "" }
+    .suffix = { "" }
+ent-LandMineKick = kick mine
+    .desc = { ent-BaseLandMine.desc }
+    .suffix = { "" }
+ent-LandMineExplosive = explosive mine
+    .desc = { ent-BaseLandMine.desc }
+    .suffix = { "" }
