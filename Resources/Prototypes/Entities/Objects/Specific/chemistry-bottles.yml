@@ -154,3 +154,15 @@
         - ReagentId: Nocturine
           Quantity: 30
 
+- type: entity
+  id: EphedrineChemistryBottle
+  name: ephedrine bottle
+  parent: BaseChemistryEmptyBottle
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      drink: # This solution name and target volume is hard-coded in ChemMasterComponent
+        maxVol: 30
+        reagents:
+        - ReagentId: Ephedrine
+          Quantity: 30
