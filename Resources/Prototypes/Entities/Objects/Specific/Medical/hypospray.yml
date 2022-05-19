@@ -23,7 +23,7 @@
   name: gorlax hypospray
   parent: BaseItem
   description: Using reverse engineered designs from NT, Cybersun produced these in limited quantities for gorlax marauder operatives.
-  id: Hypospray
+  id: SyndiHypo
   components:
   - type: Sprite
     sprite: Objects/Specific/Medical/syndihypo.rsi
