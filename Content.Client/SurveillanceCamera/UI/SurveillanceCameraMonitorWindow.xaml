@@ -5,11 +5,11 @@
         <BoxContainer Orientation="Vertical" MaxWidth="200" VerticalExpand="True">
             <!-- lazy -->
             <OptionButton Name="SubnetSelector" />
-            <Button Name="SubnetRefreshButton" Text="{Loc 'surveillance-camera-monitor-refresh-subnets'}" />
+            <Button Name="SubnetRefreshButton" Text="{Loc 'surveillance-camera-monitor-ui-refresh-subnets'}" />
             <ScrollContainer VerticalExpand="True">
                 <ItemList Name="SubnetList" />
             </ScrollContainer>
-            <Button Name="CameraRefreshButton" Text="{Loc 'surveillance-camera-monitor-refresh-camera'}" />
+            <Button Name="CameraRefreshButton" Text="{Loc 'surveillance-camera-monitor-ui-refresh-camera'}" />
         </BoxContainer>
         <Control VerticalExpand="True" HorizontalExpand="True" Margin="5 5 5 5" Name="CameraViewBox">
             <!-- TODO: This should be a textured box so there can be static.
