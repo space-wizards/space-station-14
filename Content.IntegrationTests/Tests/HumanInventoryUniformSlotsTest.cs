@@ -4,6 +4,7 @@ using NUnit.Framework;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Map;
+using Robust.Shared.Maths;
 
 namespace Content.IntegrationTests.Tests
 {
@@ -58,28 +59,26 @@ namespace Content.IntegrationTests.Tests
         {
             var options = new ServerIntegrationOptions{ExtraPrototypes = Prototypes};
             var server = StartServer(options);
+            await server.WaitIdleAsync();
 
+            var invSystem = server.ResolveDependency<IEntitySystemManager>().GetEntitySystem<InventorySystem>();
+            var entityMan = server.ResolveDependency<IEntityManager>();
+            var mapMan = server.ResolveDependency<IMapManager>();
             EntityUid human = default;
             EntityUid uniform = default;
             EntityUid idCard = default;
             EntityUid pocketItem = default;
 
-            InventorySystem invSystem = default!;
-
             server.Assert(() =>
             {
-                invSystem = IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<InventorySystem>();
-                var mapMan = IoCManager.Resolve<IMapManager>();
+                var mapId = mapMan.CreateMap();
+                var coordinates = new MapCoordinates(Vector2.Zero, mapId);
 
-                mapMan.CreateNewMapEntity(MapId.Nullspace);
-
-                var entityMan = IoCManager.Resolve<IEntityManager>();
-
-                human = entityMan.SpawnEntity("HumanDummy", MapCoordinates.Nullspace);
-                uniform = entityMan.SpawnEntity("UniformDummy", MapCoordinates.Nullspace);
-                idCard = entityMan.SpawnEntity("IDCardDummy", MapCoordinates.Nullspace);
-                pocketItem = entityMan.SpawnEntity("FlashlightDummy", MapCoordinates.Nullspace);
-                var tooBigItem = entityMan.SpawnEntity("ToolboxDummy", MapCoordinates.Nullspace);
+                human = entityMan.SpawnEntity("HumanDummy", coordinates);
+                uniform = entityMan.SpawnEntity("UniformDummy", coordinates);
+                idCard = entityMan.SpawnEntity("IDCardDummy", coordinates);
+                pocketItem = entityMan.SpawnEntity("FlashlightDummy", coordinates);
+                var tooBigItem = entityMan.SpawnEntity("ToolboxDummy", coordinates);
 
 
                 Assert.That(invSystem.CanEquip(human, uniform, "jumpsuit", out _));
@@ -95,8 +94,8 @@ namespace Content.IntegrationTests.Tests
                 Assert.That(invSystem.CanEquip(human, tooBigItem, "pocket1", out _), Is.False); // Still failing!
                 Assert.That(invSystem.TryEquip(human, pocketItem, "pocket1"));
 
-                Assert.That(IsDescendant(idCard, human));
-                Assert.That(IsDescendant(pocketItem, human));
+                Assert.That(IsDescendant(idCard, human, entityMan));
+                Assert.That(IsDescendant(pocketItem, human, entityMan));
 
                 // Now drop the jumpsuit.
                 Assert.That(invSystem.TryUnequip(human, "jumpsuit"));
@@ -107,9 +106,9 @@ namespace Content.IntegrationTests.Tests
             server.Assert(() =>
             {
                 // Items have been dropped!
-                Assert.That(IsDescendant(uniform, human), Is.False);
-                Assert.That(IsDescendant(idCard, human), Is.False);
-                Assert.That(IsDescendant(pocketItem, human), Is.False);
+                Assert.That(IsDescendant(uniform, human, entityMan), Is.False);
+                Assert.That(IsDescendant(idCard, human, entityMan), Is.False);
+                Assert.That(IsDescendant(pocketItem, human, entityMan), Is.False);
 
                 // Ensure everything null here.
                 Assert.That(!invSystem.TryGetSlotEntity(human, "jumpsuit", out _));
@@ -120,9 +119,9 @@ namespace Content.IntegrationTests.Tests
             await server.WaitIdleAsync();
         }
 
-        private static bool IsDescendant(EntityUid descendant, EntityUid parent)
+        private static bool IsDescendant(EntityUid descendant, EntityUid parent, IEntityManager entManager)
         {
-            var tmpParent = IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(descendant).Parent;
+            var tmpParent = entManager.GetComponent<TransformComponent>(descendant).Parent;
             while (tmpParent != null)
             {
                 if (tmpParent.Owner == parent)
