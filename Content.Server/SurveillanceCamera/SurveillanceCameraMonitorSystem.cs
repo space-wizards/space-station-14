@@ -134,6 +134,7 @@ public sealed class SurveillanceCameraMonitorSystem : EntitySystem
     private void OnRefreshCamerasMessage(EntityUid uid, SurveillanceCameraMonitorComponent component,
         SurveillanceCameraRefreshCamerasMessage message)
     {
+        component.KnownCameras.Clear();
         RequestActiveSubnetInfo(uid, component);
     }
 
@@ -450,7 +451,7 @@ public sealed class SurveillanceCameraMonitorSystem : EntitySystem
             });
         }
 
-        var state = new SurveillanceCameraMonitorUiState(monitor.ActiveCamera, monitor.KnownSubnets.Keys.ToHashSet(), monitor.ActiveSubnet, cameras);
+        var state = new SurveillanceCameraMonitorUiState(monitor.ActiveCamera, monitor.KnownSubnets.Keys.ToHashSet(), monitor.ActiveSubnet, monitor.KnownCameras);
         _userInterface.TrySetUiState(uid, SurveillanceCameraMonitorUiKey.Key, state);
     }
 }

@@ -21,7 +21,7 @@ public sealed class SurveillanceCameraMonitorComponent : Component
 
     // Known cameras in this subnet by address with name values.
     // This is cleared when the subnet is changed.
-    public Dictionary<string, string> KnownCameras = new();
+    public Dictionary<string, string> KnownCameras { get; } = new();
 
     [ViewVariables]
     // The subnets known by this camera monitor.

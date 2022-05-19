@@ -55,7 +55,7 @@ public sealed partial class SurveillanceCameraMonitorWindow : DefaultWindow
 
     // The UI class should get the eye from the entity, and then
     // pass it here so that the UI can change its view.
-    public void UpdateState(IEye? eye, HashSet<string> subnets, string activeSubnet, IEnumerable<SurveillanceCameraInfo> cameras)
+    public void UpdateState(IEye? eye, HashSet<string> subnets, string activeSubnet, Dictionary<string, string> cameras)
     {
         SetCameraView(eye);
 
@@ -93,18 +93,13 @@ public sealed partial class SurveillanceCameraMonitorWindow : DefaultWindow
         PopulateCameraList(cameras);
     }
 
-    private void PopulateCameraList(IEnumerable<SurveillanceCameraInfo> cameras)
+    private void PopulateCameraList(Dictionary<string, string> cameras)
     {
         SubnetList.Clear();
 
-        foreach (var camera in cameras)
+        foreach (var (address, name) in cameras)
         {
-            if (camera.Subnet != SelectedSubnet)
-            {
-                continue;
-            }
-
-            AddCameraToList(camera.Name, camera.Address);
+            AddCameraToList(name, address);
         }
 
         SubnetList.SortItemsByText();

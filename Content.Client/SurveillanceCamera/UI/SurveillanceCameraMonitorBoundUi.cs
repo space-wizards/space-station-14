@@ -12,8 +12,6 @@ public sealed class SurveillanceCameraMonitorBoundUserInterface : BoundUserInter
     private SurveillanceCameraMonitorWindow? _window;
     private EntityUid? _currentCamera;
     private string _currentSubnet = default!;
-    private readonly HashSet<string> _knownAddresses = new();
-    private readonly Dictionary<string, SurveillanceCameraInfo> _knownCameras = new();
 
     public SurveillanceCameraMonitorBoundUserInterface(ClientUserInterfaceComponent owner, object uiKey) : base(owner, uiKey)
     {
@@ -68,23 +66,11 @@ public sealed class SurveillanceCameraMonitorBoundUserInterface : BoundUserInter
             return;
         }
 
-        if (_currentSubnet != cast.ActiveSubnet)
-        {
-            _knownCameras.Clear();
-            _currentSubnet = cast.ActiveSubnet;
-        }
-
-        foreach (var camera in cast.Cameras)
-        {
-            if (!_knownCameras.ContainsKey(camera.Address))
-            {
-                _knownCameras.Add(camera.Address, camera);
-            }
-        }
+        _currentSubnet = cast.ActiveSubnet;
 
         if (cast.ActiveCamera == null)
         {
-            _window.UpdateState(null, cast.Subnets, _currentSubnet, _knownCameras.Values);
+            _window.UpdateState(null, cast.Subnets, _currentSubnet, cast.Cameras);
 
             if (_currentCamera != null)
             {
@@ -108,7 +94,7 @@ public sealed class SurveillanceCameraMonitorBoundUserInterface : BoundUserInter
 
             if (_entityManager.TryGetComponent(cast.ActiveCamera, out EyeComponent eye))
             {
-                _window.UpdateState(eye.Eye, cast.Subnets, _currentSubnet, _knownCameras.Values);
+                _window.UpdateState(eye.Eye, cast.Subnets, _currentSubnet, cast.Cameras);
             }
         }
     }

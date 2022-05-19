@@ -42,9 +42,10 @@ public sealed class SurveillanceCameraMonitorUiState : BoundUserInterfaceState
     // Currently active subnet.
     public string ActiveSubnet { get; }
 
-    public HashSet<SurveillanceCameraInfo> Cameras { get; }
+    // Known cameras, by address and name.
+    public Dictionary<string, string> Cameras { get; }
 
-    public SurveillanceCameraMonitorUiState(EntityUid? activeCamera, HashSet<string> subnets, string activeSubnet, HashSet<SurveillanceCameraInfo> cameras)
+    public SurveillanceCameraMonitorUiState(EntityUid? activeCamera, HashSet<string> subnets, string activeSubnet, Dictionary<string, string> cameras)
     {
         ActiveCamera = activeCamera;
         Subnets = subnets;
