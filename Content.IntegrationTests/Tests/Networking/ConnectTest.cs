@@ -35,14 +35,7 @@ namespace Content.IntegrationTests.Tests.Networking
             client.Post(() => IoCManager.Resolve<IClientNetManager>().ClientConnect(null, 0, null));
 
             // Run some ticks for the handshake to complete and such.
-
-            for (var i = 0; i < 10; i++)
-            {
-                server.RunTicks(1);
-                await server.WaitIdleAsync();
-                client.RunTicks(1);
-                await client.WaitIdleAsync();
-            }
+            await RunTicksSync(client, server, 50);
 
             await Task.WhenAll(client.WaitIdleAsync(), server.WaitIdleAsync());
 
