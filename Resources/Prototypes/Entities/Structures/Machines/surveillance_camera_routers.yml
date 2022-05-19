@@ -1,0 +1,24 @@
+- type: entity
+  parent: BaseMachinePowered
+  id: SurveillanceCameraRouterBase
+  name: router
+  description: A surveillance camera router. It routes. Perhaps.
+  components:
+    - type: DeviceNetwork
+      deviceNetId: Wired
+      receiveFrequencyId: SurveillanceCamera
+      transmitFrequencyId: SurveillanceCamera
+    - type: WiredNetworkConnection
+
+    - type: Sprite
+      sprite: Structures/Machines/server.rsi
+      layers:
+        - state: server
+
+- type: entity
+  parent: SurveillanceCameraRouterBase
+  suffix: SubnetTest
+  components:
+    - type: SurveillanceCameraRouter
+      subnetName: "SubnetTest"
+      subnetFrequency: SurveillanceCameraSubnetTest

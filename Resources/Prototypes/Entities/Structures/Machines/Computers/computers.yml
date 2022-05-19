@@ -399,6 +399,33 @@
     color: "#b89f25"
 
 - type: entity
+  parent: ComputerBase
+  id: SurveillanceCameraMonitor
+  name: monitor
+  description: A surveillance camera monitor. You're watching them. Maybe.
+  components:
+    - type: DeviceNetwork
+      deviceNetId: Wired
+      receiveFrequencyId: SurveillanceCamera
+      transmitFrequencyId: SurveillanceCamera
+    - type: WiredNetworkConnection
+    - type: SurveillanceCameraMonitor
+    - type: ActivatableUI
+      key: enum.SurveillanceCameraMonitorUiKey.Key
+    - type: Transform
+      anchored: true
+    - type: UserInterface
+      interfaces:
+        - key: enum.SurveillanceCameraMonitorUiKey.Key
+          type: SurveillanceCameraMonitorBoundUserInterface
+    - type: Sprite
+      sprite: Structures/Machines/computers.rsi
+      layers:
+        - state: television
+        - state: detective_television
+          shader: unshaded
+
+- type: entity
   parent: BaseStructure
   id: ComputerTelevision
   name: wooden television
