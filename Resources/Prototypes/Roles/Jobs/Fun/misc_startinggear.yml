@@ -95,7 +95,7 @@
     id: AgentIDCard
     pocket1: ExtendedEmergencyOxygenTankFilled
     belt: ClothingBeltMilitaryWebbing
-  innerclothingskirt: ClothingUniformJumpsuitOperative
+  innerclothingskirt: ClothingUniformJumpskirtOperative
   satchel: ClothingBackpackDuffelSyndicateOperative
   duffelbag: ClothingBackpackDuffelSyndicateOperative
 
@@ -114,7 +114,7 @@
     id: SyndiPDA
     pocket1: ExtendedEmergencyOxygenTankFilled
     belt: ClothingBeltMilitaryWebbing
-  innerclothingskirt: ClothingUniformJumpsuitOperative
+  innerclothingskirt: ClothingUniformJumpskirtOperative
   satchel: ClothingBackpackDuffelSyndicateOperative
   duffelbag: ClothingBackpackDuffelSyndicateOperative
   
