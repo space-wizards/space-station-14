@@ -24,6 +24,7 @@
   - type: Appearance
   - type: Eye
     drawFov: false
+  - type: NightVision
   - type: Input
     context: "ghost"
   - type: Examiner
