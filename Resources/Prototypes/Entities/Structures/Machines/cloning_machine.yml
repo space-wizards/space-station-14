@@ -21,7 +21,7 @@
       mask:
       - MachineMask
       layer:
-      - MachineLayer
+      - MedicalMachineLayer
   - type: Construction
     graph: Machine
     node: machine
@@ -59,4 +59,3 @@
     interfaces:
       - key: enum.CloningPodUIKey.Key
         type: CloningPodBoundUserInterface
-  - type: Climbable
