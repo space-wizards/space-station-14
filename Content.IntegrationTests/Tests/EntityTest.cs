@@ -45,12 +45,7 @@ namespace Content.IntegrationTests.Tests
 
                 mapManager.AddUninitializedMap(mapId);
 
-                var gridId = new GridId(1);
-
-                if (!mapManager.TryGetGrid(gridId, out grid))
-                {
-                    grid = mapManager.CreateGrid(mapId, gridId);
-                }
+                grid = mapManager.CreateGrid(mapId);
 
                 var tileDefinition = tileDefinitionManager["underplating"];
                 var tile = new Tile(tileDefinition.TileId);
@@ -136,12 +131,7 @@ namespace Content.IntegrationTests.Tests
 
                 mapManager.AddUninitializedMap(mapId);
 
-                var gridId = new GridId(1);
-
-                if (!mapManager.TryGetGrid(gridId, out grid))
-                {
-                    grid = mapManager.CreateGrid(mapId, gridId);
-                }
+                grid = mapManager.CreateGrid(mapId);
 
                 var tileDefinition = tileDefinitionManager["underplating"];
                 var tile = new Tile(tileDefinition.TileId);
@@ -239,12 +229,7 @@ namespace Content.IntegrationTests.Tests
 
                 mapManager.AddUninitializedMap(mapId);
 
-                var gridId = new GridId(1);
-
-                if (!mapManager.TryGetGrid(gridId, out grid))
-                {
-                    grid = mapManager.CreateGrid(mapId, gridId);
-                }
+                grid = mapManager.CreateGrid(mapId);
 
                 var tileDefinition = tileDefinitionManager["underplating"];
                 var tile = new Tile(tileDefinition.TileId);

@@ -18,7 +18,7 @@ namespace Content.Server.Atmos.Commands
         public void Execute(IConsoleShell shell, string argStr, string[] args)
         {
             var player = shell.Player as IPlayerSession;
-            GridId gridId;
+            EntityUid gridId;
             Gas? gas = null;
 
             var entMan = IoCManager.Resolve<IEntityManager>();
@@ -41,7 +41,7 @@ namespace Content.Server.Atmos.Commands
 
                     gridId = entMan.GetComponent<TransformComponent>(playerEntity).GridID;
 
-                    if (gridId == GridId.Invalid)
+                    if (gridId == EntityUid.Invalid)
                     {
                         shell.WriteLine("You aren't on a grid to delete gas from.");
                         return;
@@ -51,7 +51,7 @@ namespace Content.Server.Atmos.Commands
                 }
                 case 1:
                 {
-                    if (!int.TryParse(args[0], out var number))
+                    if (!EntityUid.TryParse(args[0], out var number))
                     {
                         // Argument is a gas
                         if (player == null)
@@ -68,7 +68,7 @@ namespace Content.Server.Atmos.Commands
 
                         gridId = entMan.GetComponent<TransformComponent>(playerEntity).GridID;
 
-                        if (gridId == GridId.Invalid)
+                        if (gridId == EntityUid.Invalid)
                         {
                             shell.WriteLine("You aren't on a grid to delete gas from.");
                             return;
@@ -85,27 +85,20 @@ namespace Content.Server.Atmos.Commands
                     }
 
                     // Argument is a grid
-                    gridId = new GridId(number);
-
-                    if (gridId == GridId.Invalid)
-                    {
-                        shell.WriteLine($"{gridId} is not a valid grid id.");
-                        return;
-                    }
-
+                    gridId = number;
                     break;
                 }
                 case 2:
                 {
-                    if (!int.TryParse(args[0], out var first))
+                    if (!EntityUid.TryParse(args[0], out var first))
                     {
                         shell.WriteLine($"{args[0]} is not a valid integer for a grid id.");
                         return;
                     }
 
-                    gridId = new GridId(first);
+                    gridId = first;
 
-                    if (gridId == GridId.Invalid)
+                    if (gridId == EntityUid.Invalid)
                     {
                         shell.WriteLine($"{gridId} is not a valid grid id.");
                         return;
