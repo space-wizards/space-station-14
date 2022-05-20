@@ -138,7 +138,7 @@ public sealed class SurveillanceCameraSystem : SharedSurveillanceCameraSystem
         }
 
         Verb verb = new();
-        verb.Text = Loc.GetString("surveillance-camera-setup-verb");
+        verb.Text = Loc.GetString("surveillance-camera-setup");
         verb.Act = () => OpenSetupInterface(uid, verbs.User, component);
         verbs.Verbs.Add(verb);
     }

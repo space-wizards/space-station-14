@@ -24,7 +24,6 @@
   suffix: SubnetTest
   components:
     - type: SurveillanceCameraRouter
-      subnetName: "SubnetTest"
       subnetFrequency: SurveillanceCameraSubnetTest
 
 - type: entity
@@ -49,7 +48,6 @@
   suffix: Engineering
   components:
     - type: SurveillanceCameraRouter
-      subnetName: "Engineering"
       subnetFrequency: SurveillanceCameraEngineering
 
 - type: entity
@@ -58,7 +56,6 @@
   suffix: Security
   components:
     - type: SurveillanceCameraRouter
-      subnetName: "Security"
       subnetFrequency: SurveillanceCameraSecurity
 
 - type: entity
@@ -67,7 +64,6 @@
   suffix: Science
   components:
     - type: SurveillanceCameraRouter
-      subnetName: "Science"
       subnetFrequency: SurveillanceCameraScience
 
 - type: entity
@@ -76,7 +72,6 @@
   suffix: Supply
   components:
     - type: SurveillanceCameraRouter
-      subnetName: "Supply"
       subnetFrequency: SurveillanceCameraSupply
 
 - type: entity
@@ -85,7 +80,6 @@
   suffix: Command
   components:
     - type: SurveillanceCameraRouter
-      subnetName: "Command"
       subnetFrequency: SurveillanceCameraCommand
 
 - type: entity
@@ -94,7 +88,6 @@
   suffix: Service
   components:
     - type: SurveillanceCameraRouter
-      subnetName: "Service"
       subnetFrequency: SurveillanceCameraService
 
 - type: entity
@@ -103,7 +96,6 @@
   suffix: Medical
   components:
     - type: SurveillanceCameraRouter
-      subnetName: "Medical"
       subnetFrequency: SurveillanceCameraMedical
 
 - type: entity
@@ -112,5 +104,4 @@
   suffix: General
   components:
     - type: SurveillanceCameraRouter
-      subnetName: "General"
       subnetFrequency: SurveillanceCameraGeneral

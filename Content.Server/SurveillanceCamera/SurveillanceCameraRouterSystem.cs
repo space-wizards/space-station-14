@@ -33,7 +33,6 @@ public sealed class SurveillanceCameraRouterSystem : EntitySystem
             return;
         }
 
-        router.SubnetName = Loc.GetString(subnetFrequency.Name ?? "INVALID");
         router.SubnetFrequency = subnetFrequency.Frequency;
     }
 
@@ -100,7 +99,7 @@ public sealed class SurveillanceCameraRouterSystem : EntitySystem
         }
 
         Verb verb = new();
-        verb.Text = Loc.GetString("surveillance-camera-setup-verb");
+        verb.Text = Loc.GetString("surveillance-camera-setup");
         verb.Act = () => OpenSetupInterface(uid, verbs.User, component);
         verbs.Verbs.Add(verb);
     }
@@ -126,7 +125,6 @@ public sealed class SurveillanceCameraRouterSystem : EntitySystem
 
             component.SubnetFrequencyId = component.AvailableNetworks[args.Network];
             component.SubnetFrequency = frequency.Frequency;
-            component.SubnetName = Loc.GetString(frequency.Name ?? "INVALID");
             UpdateSetupInterface(uid, component);
         }
 

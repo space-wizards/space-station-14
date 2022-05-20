@@ -145,7 +145,7 @@ public sealed partial class SurveillanceCameraMonitorWindow : DefaultWindow
         var name = subnet;
         if (_prototypeManager.TryIndex<DeviceFrequencyPrototype>(subnet, out var frequency))
         {
-            name = frequency.Name ?? subnet;
+            name = Loc.GetString(frequency.Name ?? subnet);
         }
 
         SubnetSelector.AddItem(name);
