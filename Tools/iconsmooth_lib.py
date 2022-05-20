@@ -115,3 +115,53 @@ conversion_modes = {
 
 all_conv = "tg/citadel/vxa/vxap/rt_states"
 
+def parse_size(sz):
+    if sz.find("x") == -1:
+        szi = int(sz)
+        return szi, szi
+    sp = sz.split("x")
+    return int(sp[0]), int(sp[1])
+
+def parse_metric_mode_base(mm):
+    if mm.find(".") == -1:
+        # infer point as being in the centre
+        tile_w, tile_h = parse_size(mm)
+        return tile_w, tile_h, tile_w // 2, tile_h // 2
+    sp = mm.split(".")
+    tile_w, tile_h = parse_size(sp[0])
+    subtile_w, subtile_h = parse_size(sp[1])
+    return tile_w, tile_h, subtile_w, subtile_h
+
+def parse_metric_mode(mm):
+    tile_w, tile_h, subtile_w, subtile_h = parse_metric_mode_base(mm)
+
+    # Infer remainder from subtile
+    # This is for uneven geometries
+    #
+    # SUB |
+    # ----+----
+    #     | REM
+    #
+    remtile_w = tile_w - subtile_w
+    remtile_h = tile_h - subtile_h
+    return tile_w, tile_h, subtile_w, subtile_h, remtile_w, remtile_h
+
+explain_mm = """
+- Metrics -
+METRICS is of one of the following forms:
+ TILESIZE
+ TILEWxTILEH
+ TILESIZE.SUBTILEWxSUBTILEH
+
+These metrics define the tile's size and divide it up as so:
+
+SUB |
+----+----
+    | REM
+
+SUB is either specified as the subtile width/height, or defaults to being half of the tile size.
+REM is computed from subtracting the subtile size from the tile size.
+"""
+
+explain_prefix = "Resources/Textures/Structures/catwalk.rsi/catwalk_"
+

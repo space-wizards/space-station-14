@@ -25,26 +25,24 @@ import PIL.Image
 import sys
 import iconsmooth_lib
 
-if len(sys.argv) != 4:
-    raise Exception("iconsmooth_rt2vxap.py INPREFIX (i.e. Resources/Textures/Structures/catwalk.rsi/catwalk_) <" + iconsmooth_lib.all_conv + "> out.png")
-
+if len(sys.argv) != 5:
+    print("iconsmooth_inv.py INPREFIX METRICS <" + iconsmooth_lib.all_conv + "> out.png")
+    print("INPREFIX is something like, say, " + iconsmooth_lib.explain_prefix)
+    print(iconsmooth_lib.explain_mm)
+    raise Exception("see printed help")
 # Input detail configuration
 input_prefix = sys.argv[1]
-conversion_mode = iconsmooth_lib.conversion_modes[sys.argv[2]]
-output_name = sys.argv[3]
+metric_mode = sys.argv[2]
+conversion_mode = iconsmooth_lib.conversion_modes[sys.argv[3]]
+output_name = sys.argv[4]
+
+tile_w, tile_h, subtile_w, subtile_h, remtile_w, remtile_h = iconsmooth_lib.parse_metric_mode(metric_mode)
 
 # Source loading
 tiles = []
 
 for j in range(8):
     src_img = PIL.Image.open(input_prefix + str(j) + ".png")
-    # Infer
-    tile_w = src_img.size[0] // 2
-    tile_h = src_img.size[1] // 2
-    subtile_w = tile_w // 2
-    subtile_h = tile_h // 2
-    remtile_w = tile_w - subtile_w
-    remtile_h = tile_h - subtile_h
 
     tile_a = PIL.Image.new("RGBA", (remtile_w, remtile_h))
     tile_a.paste(src_img, (-subtile_w, -subtile_h))
