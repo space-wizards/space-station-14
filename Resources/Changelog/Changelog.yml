@@ -1,9 +1,4 @@
 Entries:
-- author: mirrorcult
-  changes:
-  - {message: Drones and monkeys now have unique identifiers in their names., type: Add}
-  id: 1065
-  time: '2022-02-15T02:41:08.0000000+00:00'
 - author: Zumorica
   changes:
   - {message: Atmos tickrate has been reduced significantly. Air "moves slower" now.,
@@ -3041,3 +3036,9 @@ Entries:
   - {message: Fixed disabling OOC not disabling the Discord relay, type: Fix}
   id: 1564
   time: '2022-05-20T03:18:28.0000000+00:00'
+- author: 20kdc
+  changes:
+  - {message: 'Thanks to an enslaved magical schism, lobby music track x-ceed - flip-flap
+      (also known as title1) is now in higher quality at the same size.', type: Fix}
+  id: 1565
+  time: '2022-05-20T14:40:00.0000000+00:00'
