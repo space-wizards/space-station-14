@@ -36,5 +36,16 @@ namespace Content.Shared.Chemistry.Components
             Draw,
             Closed
         }
+
+        public static string FlowStateName(IVBagToggleMode state)
+        {
+            return state switch
+            {
+                IVBagToggleMode.Inject => Loc.GetString("ivbag-state-inject"),
+                IVBagToggleMode.Draw => Loc.GetString("ivbag-state-draw"),
+                IVBagToggleMode.Closed => Loc.GetString("ivbag-state-closed"),
+                _ => throw new ArgumentOutOfRangeException()
+            };
+        }
     }
 }

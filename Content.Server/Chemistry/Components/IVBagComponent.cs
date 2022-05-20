@@ -18,38 +18,15 @@ namespace Content.Server.Chemistry.Components
         public CancellationTokenSource? InjectCancel;
 
 
-        /// <summary> Does the bag think it's injected into a mob? </summary>
+        /// <summary> Is the bag injected into a mob? </summary>
         [ViewVariables]
         public bool Connected = false;
 
         /// <summary> What mob is the IV connected to? </summary>
         [ViewVariables]
-        public EntityUid? Mob;
-
-
-        /// <summary> The delay after injection before solution flow begins. </summary>
-        [ViewVariables(VVAccess.ReadWrite)]
-        [DataField("flowStartDelay")]
-        public TimeSpan FlowStartDelay = TimeSpan.FromSeconds(2);
-
-        /// <summary> The delay between flows after flowing has begun. </summary>
-        [ViewVariables(VVAccess.ReadWrite)]
-        [DataField("flowDelay")]
-        public TimeSpan FlowDelay = TimeSpan.FromSeconds(1.5);
-
-        /// <summary> The chem:blood ratio when flowing contents. </summary>
-        [ViewVariables(VVAccess.ReadWrite)]
-        [DataField("flowChemRatio")]
-        public FixedPoint2 ChemRatio = 0.1f; // Mostly blood (for balance).
-
-        /// <summary> Amount of solution to flow into a bloodstream per interval. </summary>
-        [ViewVariables(VVAccess.ReadWrite)]
-        [DataField("flowAmount")]
-        public FixedPoint2 FlowAmount = FixedPoint2.New(2);
-
-        /// <summary> Amount of solution to transfer into containers. </summary>
-        [ViewVariables(VVAccess.ReadWrite)]
-        public FixedPoint2 PourAmount = FixedPoint2.New(10);
+        public EntityUid? Target;
+        public TransformComponent? TargetPos;
+        public const float BreakDistance = 2.25f;
 
 
         /// <summary>
@@ -61,17 +38,41 @@ namespace Content.Server.Chemistry.Components
         /// </remarks>
         [ViewVariables(VVAccess.ReadWrite)]
         [DataField("injectDelay")]
-        public float InjectDelay = 4f;
+        public float InjectDelay = 3.5f;
+
+        /// <summary> The delay after injection before solution flow begins. </summary>
+        [ViewVariables(VVAccess.ReadWrite)]
+        public TimeSpan FlowStartDelay = TimeSpan.FromSeconds(2.0f);
+
+
+        /// <summary> A list of delays the player can choose from. </summary>
+        public static int[] FlowDelayOptions = { 2, 3, 4, 6, 10 };
+
+        /// <summary> The delay between flows after flowing has begun. </summary>
+        [ViewVariables(VVAccess.ReadWrite)]
+        public TimeSpan FlowDelay = TimeSpan.FromSeconds(FlowDelayOptions[0]);
+
+        /// <summary> Amount of solution to flow into a bloodstream per interval. </summary>
+        [ViewVariables(VVAccess.ReadWrite)]
+        public FixedPoint2 FlowAmount = FixedPoint2.New(3.0f);
+
+        /// <summary> The limit of chems per drip when connected to a mob. </summary>
+        [ViewVariables(VVAccess.ReadWrite)]
+        public FixedPoint2 FlowChem = FixedPoint2.New(0.2f); // Mostly blood (for balance).
+
+        /// <summary> Amount of solution to transfer into containers. </summary>
+        [ViewVariables(VVAccess.ReadWrite)]
+        public FixedPoint2 PourAmount = FixedPoint2.New(10f);
+
 
         private IVBagToggleMode _toggleState;
-
 
         /// <summary>
         /// The state of the injector. Determines it's attack behavior. Containers must have the
         /// right SolutionCaps to support injection/drawing.
         /// </summary>
         [ViewVariables(VVAccess.ReadWrite)]
-        public IVBagToggleMode ToggleState
+        public IVBagToggleMode FlowState
         {
             get => _toggleState;
             set

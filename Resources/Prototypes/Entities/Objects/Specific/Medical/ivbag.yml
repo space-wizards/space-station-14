@@ -11,6 +11,7 @@
     HeldPrefix: bag
     size: 10
   - type: Sprite
+    netsync: false
     sprite: Objects/Specific/Medical/ivbag.rsi
     layers:
       - state: bag_chem
@@ -65,6 +66,7 @@
   description: An IV drip meant for blood. Type? Red.
   components:
   - type: Sprite
+    netsync: false
     sprite: Objects/Specific/Medical/ivbag.rsi
     layers:
       - state: bag_blood
@@ -93,6 +95,7 @@
   description: An IV drip meant for slime. Life essence for some, tasty snack for others.
   components:
   - type: Sprite
+    netsync: false
     sprite: Objects/Specific/Medical/ivbag.rsi
     layers:
       - state: bag_slime
@@ -123,6 +126,7 @@
   description: A dismantled IV bag stand. Easy to put back together.
   components:
   - type: Sprite
+    netsync: false
     sprite: Objects/Specific/Medical/ivbag.rsi
     layers:
       - state: stand_parts
