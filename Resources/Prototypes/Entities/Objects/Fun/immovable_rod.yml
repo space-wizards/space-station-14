@@ -39,13 +39,3 @@
   - type: ImmovableRod
     minSpeed: 1
     maxSpeed: 5
-
-- type: entity
-  id: ImmovableRodUp
-  suffix: Up
-  parent: ImmovableRod
-  components:
-  - type: ImmovableRod
-    directionOverride: 90
-    minSpeed: 1
-    maxSpeed: 1
