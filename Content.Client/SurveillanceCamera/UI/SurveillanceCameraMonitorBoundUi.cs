@@ -8,6 +8,7 @@ public sealed class SurveillanceCameraMonitorBoundUserInterface : BoundUserInter
 {
     [Dependency] private readonly IEntityManager _entityManager = default!;
     private readonly EyeLerpingSystem _eyeLerpingSystem = default!;
+    private readonly SurveillanceCameraSystem _surveillanceCameraSystem;
 
     private SurveillanceCameraMonitorWindow? _window;
     private EntityUid? _currentCamera;
@@ -16,6 +17,7 @@ public sealed class SurveillanceCameraMonitorBoundUserInterface : BoundUserInter
     {
         IoCManager.InjectDependencies(this);
         _eyeLerpingSystem = EntitySystem.Get<EyeLerpingSystem>();
+        _surveillanceCameraSystem = EntitySystem.Get<SurveillanceCameraSystem>();
     }
 
     protected override void Open()
@@ -36,6 +38,7 @@ public sealed class SurveillanceCameraMonitorBoundUserInterface : BoundUserInter
         _window.CameraRefresh += OnCameraRefresh;
         _window.SubnetRefresh += OnSubnetRefresh;
         _window.OnClose += Close;
+        _window.CameraSwitchTimer += OnCameraSwitchTimer;
     }
 
     private void OnCameraSelected(string address)
@@ -46,6 +49,11 @@ public sealed class SurveillanceCameraMonitorBoundUserInterface : BoundUserInter
     private void OnSubnetRequest(string subnet)
     {
         SendMessage(new SurveillanceCameraMonitorSubnetRequestMessage(subnet));
+    }
+
+    private void OnCameraSwitchTimer()
+    {
+        _surveillanceCameraSystem.AddTimer(Owner.Owner, _window!.OnSwitchTimerComplete);
     }
 
     private void OnCameraRefresh()

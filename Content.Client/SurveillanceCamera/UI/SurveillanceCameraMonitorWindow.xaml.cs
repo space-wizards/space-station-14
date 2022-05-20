@@ -19,6 +19,7 @@ public sealed partial class SurveillanceCameraMonitorWindow : DefaultWindow
     public event Action<string>? SubnetOpened;
     public event Action? CameraRefresh;
     public event Action? SubnetRefresh;
+    public event Action? CameraSwitchTimer;
 
     private readonly FixedEye _defaultEye = new();
     private readonly Dictionary<string, int> _subnetMap = new();
@@ -122,6 +123,17 @@ public sealed partial class SurveillanceCameraMonitorWindow : DefaultWindow
     {
         CameraView.Eye = eye ?? _defaultEye;
         CameraView.Visible = eye != null;
+        CameraViewBackground.Visible = true;
+
+        if (eye != null)
+        {
+            CameraSwitchTimer!();
+        }
+    }
+
+    public void OnSwitchTimerComplete()
+    {
+        CameraViewBackground.Visible = false;
     }
 
     private int AddSubnet(string subnet)
