@@ -1,13 +1,11 @@
-using System.ComponentModel;
-
 namespace Content.Client.SurveillanceCamera;
 
-public class SurveillanceCameraSystem : EntitySystem
+public sealed class SurveillanceCameraSystem : EntitySystem
 {
-    private Dictionary<EntityUid, CameraSwitchTiming> _activeTimers = new();
-    private List<EntityUid> _toRemove = new();
+    private readonly Dictionary<EntityUid, CameraSwitchTiming> _activeTimers = new();
+    private readonly List<EntityUid> _toRemove = new();
 
-    private const float InitialTime = 50;
+    private const float InitialTime = 30;
 
     public override void Update(float frameTime)
     {
