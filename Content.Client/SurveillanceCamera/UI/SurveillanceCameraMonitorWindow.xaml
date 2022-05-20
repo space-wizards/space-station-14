@@ -2,7 +2,7 @@
                xmlns:viewport="clr-namespace:Content.Client.Viewport"
                Title="{Loc 'surveillance-camera-monitor-ui-window'}">
     <BoxContainer Orientation="Horizontal">
-        <BoxContainer Orientation="Vertical" MaxWidth="200" VerticalExpand="True">
+        <BoxContainer Orientation="Vertical" MaxWidth="500" VerticalExpand="True">
             <!-- lazy -->
             <OptionButton Name="SubnetSelector" />
             <Button Name="SubnetRefreshButton" Text="{Loc 'surveillance-camera-monitor-ui-refresh-subnets'}" />

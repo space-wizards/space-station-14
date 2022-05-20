@@ -9,6 +9,10 @@
       receiveFrequencyId: SurveillanceCamera
       transmitFrequencyId: SurveillanceCamera
     - type: WiredNetworkConnection
+    - type: UserInterface
+      interfaces:
+        - key: enum.SurveillanceCameraSetupUiKey.Router
+          type: SurveillanceCameraSetupBoundUi
     - type: Sprite
       sprite: Structures/Machines/server.rsi
       layers:

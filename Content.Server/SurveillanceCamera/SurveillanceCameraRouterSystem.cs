@@ -126,6 +126,7 @@ public sealed class SurveillanceCameraRouterSystem : EntitySystem
 
             component.SubnetFrequencyId = component.AvailableNetworks[args.Network];
             component.SubnetFrequency = frequency.Frequency;
+            component.SubnetName = Loc.GetString(frequency.Name ?? "INVALID");
             UpdateSetupInterface(uid, component);
         }
 
@@ -178,7 +179,7 @@ public sealed class SurveillanceCameraRouterSystem : EntitySystem
 
     private void SubnetPingResponse(EntityUid uid, string origin, SurveillanceCameraRouterComponent? router = null)
     {
-        if (!Resolve(uid, ref router))
+        if (!Resolve(uid, ref router) || router.SubnetFrequencyId == null)
         {
             return;
         }
@@ -186,7 +187,7 @@ public sealed class SurveillanceCameraRouterSystem : EntitySystem
         var payload = new NetworkPayload()
         {
             { DeviceNetworkConstants.Command, SurveillanceCameraSystem.CameraSubnetData },
-            { SurveillanceCameraSystem.CameraSubnetData, router.SubnetName }
+            { SurveillanceCameraSystem.CameraSubnetData, router.SubnetFrequencyId }
         };
 
         _deviceNetworkSystem.QueuePacket(uid, origin, payload);
