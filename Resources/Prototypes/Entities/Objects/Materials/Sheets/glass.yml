@@ -244,7 +244,7 @@
   components:
   - type: Material
     materials:
-      PlastitaniumGlass: 600
+      PlastitaniumGlass: 500
   - type: Stack
     stackType: PlastitaniumGlass
   - type: Sprite
