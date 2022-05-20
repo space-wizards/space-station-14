@@ -44,6 +44,11 @@ namespace Content.Server.AI.Pathfinding.Pathfinders
                 return null;
             }
 
+            var entManager = IoCManager.Resolve<IEntityManager>();
+
+            if (entManager.Deleted(_pathfindingArgs.Start.GridIndex))
+                return null;
+
             var frontier = new PriorityQueue<ValueTuple<float, PathfindingNode>>(new PathfindingComparer());
             var costSoFar = new Dictionary<PathfindingNode, float>();
             var cameFrom = new Dictionary<PathfindingNode, PathfindingNode>();
