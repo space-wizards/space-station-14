@@ -96,5 +96,7 @@
         amount: 2
       - id: EphedrineChemistryBottle
         amount: 2
+      - id: OmnizineChemistryBottle
+        amount: 2
       - id: MedkitCombatFilled  
       
