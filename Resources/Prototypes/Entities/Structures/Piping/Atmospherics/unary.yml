@@ -218,7 +218,6 @@
           enabledState: freezer_on
     - type: GasThermoMachine
       mode: Freezer
-      minTemperature: 73.15
     - type: Machine
       board: ThermomachineFreezerMachineCircuitBoard
 
@@ -244,6 +243,5 @@
           enabledState: heater_on
     - type: GasThermoMachine
       mode: Heater
-      maxTemperature: 573.15 # This is changed when parts are refreshed.
     - type: Machine
       board: ThermomachineHeaterMachineCircuitBoard
