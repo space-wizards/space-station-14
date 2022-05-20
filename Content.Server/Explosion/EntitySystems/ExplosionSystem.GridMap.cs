@@ -11,7 +11,7 @@ public sealed partial class ExplosionSystem : EntitySystem
     /// <summary>
     ///     Set of tiles of each grid that are directly adjacent to space, along with the directions that face space.
     /// </summary>
-    private Dictionary<GridId, Dictionary<Vector2i, NeighborFlag>> _gridEdges = new();
+    private Dictionary<EntityUid, Dictionary<Vector2i, NeighborFlag>> _gridEdges = new();
 
     /// <summary>
     ///     On grid startup, prepare a map of grid edges.
@@ -42,8 +42,8 @@ public sealed partial class ExplosionSystem : EntitySystem
     /// </summary>
     public (Dictionary<Vector2i, BlockedSpaceTile>, ushort) TransformGridEdges(
         MapCoordinates epicentre,
-        GridId? referenceGrid,
-        List<GridId> localGrids,
+        EntityUid? referenceGrid,
+        List<EntityUid> localGrids,
         float maxDistance)
     {
         Dictionary<Vector2i, BlockedSpaceTile> transformedEdges = new();
@@ -373,10 +373,10 @@ public sealed class BlockedSpaceTile
     public sealed class GridEdgeData
     {
         public Vector2i Tile;
-        public GridId? Grid;
+        public EntityUid? Grid;
         public Box2Rotated Box;
 
-        public GridEdgeData(Vector2i tile, GridId? grid, Vector2 center, Angle angle, float size)
+        public GridEdgeData(Vector2i tile, EntityUid? grid, Vector2 center, Angle angle, float size)
         {
             Tile = tile;
             Grid = grid;

@@ -39,9 +39,9 @@ public sealed partial class ExplosionSystem : EntitySystem
     //
     // We then need this data for every tile on a grid. So this mess of a variable maps the Grid ID and Vector2i grid
     // indices to this tile-data struct.
-    private Dictionary<GridId, Dictionary<Vector2i, TileData>> _airtightMap = new();
+    private Dictionary<EntityUid, Dictionary<Vector2i, TileData>> _airtightMap = new();
 
-    public void UpdateAirtightMap(GridId gridId, Vector2i tile, EntityQuery<AirtightComponent>? query = null)
+    public void UpdateAirtightMap(EntityUid gridId, Vector2i tile, EntityQuery<AirtightComponent>? query = null)
     {
         if (_mapManager.TryGetGrid(gridId, out var grid))
             UpdateAirtightMap(grid, tile, query);

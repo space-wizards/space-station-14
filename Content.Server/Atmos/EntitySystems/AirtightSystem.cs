@@ -108,7 +108,7 @@ namespace Content.Server.Atmos.EntitySystems
             InvalidatePosition(airtight.LastPosition.Item1, airtight.LastPosition.Item2, airtight.FixVacuum && !airtight.AirBlocked);
         }
 
-        public void InvalidatePosition(GridId gridId, Vector2i pos, bool fixVacuum = false)
+        public void InvalidatePosition(EntityUid gridId, Vector2i pos, bool fixVacuum = false)
         {
             if (!gridId.IsValid())
                 return;

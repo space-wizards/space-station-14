@@ -30,7 +30,7 @@ namespace Content.Server.Salvage
         private static readonly TimeSpan DetachingTime = TimeSpan.FromSeconds(30);
         private static readonly TimeSpan CooldownTime = TimeSpan.FromMinutes(1);
 
-        private readonly Dictionary<GridId, SalvageGridState> _salvageGridStates = new();
+        private readonly Dictionary<EntityUid, SalvageGridState> _salvageGridStates = new();
 
         public override void Initialize()
         {

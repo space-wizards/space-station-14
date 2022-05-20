@@ -46,7 +46,7 @@ namespace Content.Server.AI.Pathfinding.Accessible
         /// Regions are groups of nodes with the same profile (for pathfinding purposes)
         /// i.e. same collision, not-space, same access, etc.
         /// </summary>
-        private readonly Dictionary<GridId, Dictionary<PathfindingChunk, HashSet<PathfindingRegion>>> _regions =
+        private readonly Dictionary<EntityUid, Dictionary<PathfindingChunk, HashSet<PathfindingRegion>>> _regions =
             new();
 
         /// <summary>
@@ -709,7 +709,7 @@ namespace Content.Server.AI.Pathfinding.Accessible
         }
 
 #if DEBUG
-        private void SendRegionsDebugMessage(GridId gridId)
+        private void SendRegionsDebugMessage(EntityUid gridId)
         {
             if (_subscribedSessions.Count == 0) return;
             var grid = _mapManager.GetGrid(gridId);
@@ -757,7 +757,7 @@ namespace Content.Server.AI.Pathfinding.Accessible
         /// <param name="gridId"></param>
         /// <param name="regions"></param>
         /// <param name="cached"></param>
-        private void SendRegionCacheMessage(GridId gridId, IEnumerable<PathfindingRegion> regions, bool cached)
+        private void SendRegionCacheMessage(EntityUid gridId, IEnumerable<PathfindingRegion> regions, bool cached)
         {
             if (_subscribedSessions.Count == 0) return;
 

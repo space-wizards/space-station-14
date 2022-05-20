@@ -1,4 +1,4 @@
-﻿using Robust.Shared.Map;
+using Robust.Shared.Map;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.Atmos.EntitySystems
@@ -84,11 +84,11 @@ namespace Content.Shared.Atmos.EntitySystems
         [Serializable, NetSerializable]
         public sealed class GasOverlayMessage : EntityEventArgs
         {
-            public GridId GridId { get; }
+            public EntityUid GridId { get; }
 
             public List<(Vector2i, GasOverlayData)> OverlayData { get; }
 
-            public GasOverlayMessage(GridId gridIndices, List<(Vector2i,GasOverlayData)> overlayData)
+            public GasOverlayMessage(EntityUid gridIndices, List<(Vector2i,GasOverlayData)> overlayData)
             {
                 GridId = gridIndices;
                 OverlayData = overlayData;

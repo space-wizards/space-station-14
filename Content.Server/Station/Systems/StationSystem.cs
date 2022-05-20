@@ -84,9 +84,9 @@ public sealed class StationSystem : EntitySystem
 
     private void OnPostGameMapLoad(PostGameMapLoad ev)
     {
-        var dict = new Dictionary<string, List<GridId>>();
+        var dict = new Dictionary<string, List<EntityUid>>();
 
-        void AddGrid(string station, GridId grid)
+        void AddGrid(string station, EntityUid grid)
         {
             if (dict.ContainsKey(station))
             {
@@ -94,7 +94,7 @@ public sealed class StationSystem : EntitySystem
             }
             else
             {
-                dict[station] = new List<GridId> {grid};
+                dict[station] = new List<EntityUid> {grid};
             }
         }
 
@@ -309,7 +309,7 @@ public sealed class StationSystem : EntitySystem
             return CompOrNull<StationMemberComponent>(entity)?.Station;
         }
 
-        if (xform.GridID == GridId.Invalid)
+        if ((xform.GridUid ?? EntityUid.Invalid) == EntityUid.Invalid)
         {
             Logger.Debug("A");
             return null;
@@ -348,7 +348,7 @@ public sealed class StationGridAddedEvent : EntityEventArgs
     /// <summary>
     /// ID of the grid added to the station.
     /// </summary>
-    public GridId GridId;
+    public EntityUid GridId;
 
     /// <summary>
     /// Indicates that the event was fired during station setup,
@@ -356,7 +356,7 @@ public sealed class StationGridAddedEvent : EntityEventArgs
     /// </summary>
     public bool IsSetup;
 
-    public StationGridAddedEvent(GridId gridId, bool isSetup)
+    public StationGridAddedEvent(EntityUid gridId, bool isSetup)
     {
         GridId = gridId;
         IsSetup = isSetup;
@@ -372,9 +372,9 @@ public sealed class StationGridRemovedEvent : EntityEventArgs
     /// <summary>
     /// ID of the grid removed from the station.
     /// </summary>
-    public GridId GridId;
+    public EntityUid GridId;
 
-    public StationGridRemovedEvent(GridId gridId)
+    public StationGridRemovedEvent(EntityUid gridId)
     {
         GridId = gridId;
     }

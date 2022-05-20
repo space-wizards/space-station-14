@@ -50,7 +50,7 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
             }
         }
 
-        private bool FindGasPortIn(GridId gridId, EntityCoordinates coordinates, [NotNullWhen(true)] out GasPortComponent? port)
+        private bool FindGasPortIn(EntityUid gridId, EntityCoordinates coordinates, [NotNullWhen(true)] out GasPortComponent? port)
         {
             port = null;
 

@@ -41,7 +41,7 @@ public sealed class ExplosionGridTileFlood : ExplosionTileFlood
         float intensityStepSize,
         int typeIndex,
         Dictionary<Vector2i, NeighborFlag> edgeTiles,
-        GridId? referenceGrid,
+        EntityUid? referenceGrid,
         Matrix3 spaceMatrix,
         Angle spaceAngle)
     {

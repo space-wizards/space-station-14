@@ -7,7 +7,7 @@ namespace Content.Server.Atmos.Components
     [RegisterComponent]
     public sealed class AirtightComponent : Component
     {
-        public (GridId Grid, Vector2i Tile) LastPosition { get; set; }
+        public (EntityUid Grid, Vector2i Tile) LastPosition { get; set; }
 
         [DataField("airBlockedDirection", customTypeSerializer: typeof(FlagSerializer<AtmosDirectionFlags>))]
         [ViewVariables]

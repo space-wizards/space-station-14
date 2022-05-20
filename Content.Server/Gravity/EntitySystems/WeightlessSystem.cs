@@ -14,7 +14,7 @@ namespace Content.Server.Gravity.EntitySystems
         [Dependency] private readonly IMapManager _mapManager = default!;
         [Dependency] private readonly AlertsSystem _alertsSystem = default!;
 
-        private readonly Dictionary<GridId, List<AlertsComponent>> _alerts = new();
+        private readonly Dictionary<EntityUid, List<AlertsComponent>> _alerts = new();
 
         public override void Initialize()
         {

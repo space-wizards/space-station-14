@@ -35,7 +35,7 @@ namespace Content.Client.IconSmoothing
             {
                 component.LastPosition = _mapManager.TryGetGrid(xform.GridID, out var grid)
                     ? (xform.GridID, grid.TileIndicesFor(xform.Coordinates))
-                    : (GridId.Invalid, new Vector2i(0, 0));
+                    : (EntityUid.Invalid, new Vector2i(0, 0));
 
                 DirtyNeighbours(uid, component);
             }
@@ -118,7 +118,7 @@ namespace Content.Client.IconSmoothing
             else
             {
                 // Entity is no longer valid, update around the last position it was at.
-                if (comp.LastPosition is not (GridId gridId, Vector2i oldPos))
+                if (comp.LastPosition is not (EntityUid gridId, Vector2i oldPos))
                     return;
 
                 if (!_mapManager.TryGetGrid(gridId, out grid))

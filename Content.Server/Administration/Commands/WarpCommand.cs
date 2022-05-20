@@ -107,7 +107,8 @@ namespace Content.Server.Administration.Commands
                     }))
                     .FirstOrDefault();
 
-                if (found.GetGridId(entMan) != GridId.Invalid)
+                var entityUid = found.GetGridUid(entMan);
+                if (entityUid != EntityUid.Invalid && entityUid is not null)
                 {
                     entMan.GetComponent<TransformComponent>(playerEntity).Coordinates = found;
                     if (entMan.TryGetComponent(playerEntity, out IPhysBody? physics))

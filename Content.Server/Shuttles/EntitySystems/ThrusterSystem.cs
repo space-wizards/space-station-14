@@ -309,7 +309,7 @@ namespace Content.Server.Shuttles.EntitySystems
         /// <summary>
         /// Tries to disable the thruster.
         /// </summary>
-        public void DisableThruster(EntityUid uid, ThrusterComponent component, GridId gridId, TransformComponent? xform = null, Angle? angle = null)
+        public void DisableThruster(EntityUid uid, ThrusterComponent component, EntityUid gridId, TransformComponent? xform = null, Angle? angle = null)
         {
             if (!component.IsOn ||
                 !Resolve(uid, ref xform) ||

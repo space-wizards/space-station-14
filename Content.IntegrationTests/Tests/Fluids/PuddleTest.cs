@@ -92,7 +92,7 @@ namespace Content.IntegrationTests.Tests.Fluids
 
             MapId sMapId = default;
             IMapGrid sGrid;
-            GridId sGridId = default;
+            EntityUid sGridId = default;
             EntityUid sGridEntity = default;
             EntityCoordinates sCoordinates = default;
 

@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
@@ -25,8 +25,8 @@ namespace Content.MapRenderer.Painters
         private readonly IEntityManager _sEntityManager;
         private readonly IMapManager _sMapManager;
 
-        private readonly ConcurrentDictionary<GridId, List<EntityData>> _entities;
-        private readonly Dictionary<GridId, List<DecalData>> _decals;
+        private readonly ConcurrentDictionary<EntityUid, List<EntityData>> _entities;
+        private readonly Dictionary<EntityUid, List<DecalData>> _decals;
 
         public GridPainter(ClientIntegrationInstance client, ServerIntegrationInstance server)
         {
@@ -63,12 +63,12 @@ namespace Content.MapRenderer.Painters
             Console.WriteLine($"{nameof(GridPainter)} painted grid {grid.Index} in {(int) stopwatch.Elapsed.TotalMilliseconds} ms");
         }
 
-        private ConcurrentDictionary<GridId, List<EntityData>> GetEntities()
+        private ConcurrentDictionary<EntityUid, List<EntityData>> GetEntities()
         {
             var stopwatch = new Stopwatch();
             stopwatch.Start();
 
-            var components = new ConcurrentDictionary<GridId, List<EntityData>>();
+            var components = new ConcurrentDictionary<EntityUid, List<EntityData>>();
 
             foreach (var entity in _sEntityManager.GetEntities())
             {
@@ -106,12 +106,12 @@ namespace Content.MapRenderer.Painters
             return components;
         }
 
-        private Dictionary<GridId, List<DecalData>> GetDecals()
+        private Dictionary<EntityUid, List<DecalData>> GetDecals()
         {
             var stopwatch = new Stopwatch();
             stopwatch.Start();
 
-            var decals = new Dictionary<GridId, List<DecalData>>();
+            var decals = new Dictionary<EntityUid, List<DecalData>>();
 
             foreach (var grid in _sMapManager.GetAllGrids())
             {

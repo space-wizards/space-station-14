@@ -1,4 +1,4 @@
-﻿using System.Threading.Tasks;
+using System.Threading.Tasks;
 using Content.Server.Atmos.Components;
 using Content.Server.Body.Components;
 using Content.Server.Body.Systems;
@@ -61,7 +61,7 @@ namespace Content.IntegrationTests.Tests.Body
             MetabolizerSystem metaSys = default;
 
             MapId mapId;
-            GridId? grid = null;
+            EntityUid? grid = null;
             SharedBodyComponent body = default;
             EntityUid human = default;
             GridAtmosphereComponent relevantAtmos = default;
@@ -138,7 +138,7 @@ namespace Content.IntegrationTests.Tests.Body
             var entityManager = server.ResolveDependency<IEntityManager>();
 
             MapId mapId;
-            GridId? grid = null;
+            EntityUid? grid = null;
             RespiratorComponent respirator = null;
             EntityUid human = default;
 

@@ -129,7 +129,7 @@ public sealed partial class PathfindingSystem
 
     private bool IsRelevant(TransformComponent xform, PhysicsComponent physics)
     {
-        return xform.GridID != GridId.Invalid && (TrackedCollisionLayers & physics.CollisionLayer) != 0;
+        return (xform.GridUid ?? EntityUid.Invalid) != EntityUid.Invalid && (TrackedCollisionLayers & physics.CollisionLayer) != 0;
     }
 
     /// <summary>

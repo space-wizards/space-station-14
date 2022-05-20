@@ -1,8 +1,6 @@
 using Content.Shared.Decals;
 using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
-using Robust.Shared.Map;
-using Robust.Shared.Utility;
 
 namespace Content.Client.Decals
 {
@@ -13,8 +11,8 @@ namespace Content.Client.Decals
         [Dependency] private readonly SpriteSystem _sprites = default!;
 
         private DecalOverlay _overlay = default!;
-        public Dictionary<GridId, SortedDictionary<int, SortedDictionary<uint, Decal>>> DecalRenderIndex = new();
-        private Dictionary<GridId, Dictionary<uint, int>> DecalZIndexIndex = new();
+        public Dictionary<EntityUid, SortedDictionary<int, SortedDictionary<uint, Decal>>> DecalRenderIndex = new();
+        private Dictionary<EntityUid, Dictionary<uint, int>> DecalZIndexIndex = new();
 
         public override void Initialize()
         {
@@ -58,13 +56,13 @@ namespace Content.Client.Decals
             _overlayManager.RemoveOverlay(_overlay);
         }
 
-        protected override bool RemoveDecalHook(GridId gridId, uint uid)
+        protected override bool RemoveDecalHook(EntityUid gridId, uint uid)
         {
             RemoveDecalFromRenderIndex(gridId, uid);
             return base.RemoveDecalHook(gridId, uid);
         }
 
-        private void RemoveDecalFromRenderIndex(GridId gridId, uint uid)
+        private void RemoveDecalFromRenderIndex(EntityUid gridId, uint uid)
         {
             var zIndex = DecalZIndexIndex[gridId][uid];
 

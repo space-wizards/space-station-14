@@ -12,7 +12,7 @@ namespace Content.Shared.Maps
         /// <summary>
         ///     Attempts to get the turf at map indices with grid id or null if no such turf is found.
         /// </summary>
-        public static TileRef GetTileRef(this Vector2i vector2i, GridId gridId, IMapManager? mapManager = null)
+        public static TileRef GetTileRef(this Vector2i vector2i, EntityUid gridId, IMapManager? mapManager = null)
         {
             if (!gridId.IsValid())
                 return default;
@@ -98,7 +98,7 @@ namespace Content.Shared.Maps
             return coordinates.ToVector2i(entityManager, mapManager).PryTile(coordinates.GetGridId(entityManager));
         }
 
-        public static bool PryTile(this Vector2i indices, GridId gridId,
+        public static bool PryTile(this Vector2i indices, EntityUid gridId,
             IMapManager? mapManager = null, ITileDefinitionManager? tileDefinitionManager = null, IEntityManager? entityManager = null)
         {
             mapManager ??= IoCManager.Resolve<IMapManager>();
@@ -175,7 +175,7 @@ namespace Content.Shared.Maps
         /// <summary>
         ///     Helper that returns all entities in a turf.
         /// </summary>
-        public static IEnumerable<EntityUid> GetEntitiesInTile(this Vector2i indices, GridId gridId, LookupFlags flags = LookupFlags.Anchored, EntityLookupSystem? lookupSystem = null)
+        public static IEnumerable<EntityUid> GetEntitiesInTile(this Vector2i indices, EntityUid gridId, LookupFlags flags = LookupFlags.Anchored, EntityLookupSystem? lookupSystem = null)
         {
             return GetEntitiesInTile(indices.GetTileRef(gridId), flags, lookupSystem);
         }

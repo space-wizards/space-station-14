@@ -1,4 +1,4 @@
-﻿using Content.Server.Audio;
+using Content.Server.Audio;
 using Content.Server.Power.Components;
 using Content.Shared.Gravity;
 using Content.Shared.Interaction;
@@ -180,8 +180,8 @@ namespace Content.Server.Gravity.EntitySystems
 
         private void UpdateGravityActive(GravityGeneratorComponent grav, bool shake)
         {
-            var gridId = EntityManager.GetComponent<TransformComponent>(grav.Owner).GridID;
-            if (gridId == GridId.Invalid)
+            var gridId = EntityManager.GetComponent<TransformComponent>(grav.Owner).GridUid ?? EntityUid.Invalid;
+            if (gridId == EntityUid.Invalid)
                 return;
 
             var grid = _mapManager.GetGrid(gridId);

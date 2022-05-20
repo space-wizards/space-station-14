@@ -197,17 +197,17 @@ namespace Content.Client.AI
         private readonly Dictionary<int, Color> _graphColors = new();
 
         // Cached regions
-        public readonly Dictionary<GridId, Dictionary<int, List<Vector2>>> CachedRegions =
+        public readonly Dictionary<EntityUid, Dictionary<int, List<Vector2>>> CachedRegions =
                     new();
 
-        private readonly Dictionary<GridId, Dictionary<int, Color>> _cachedRegionColors =
+        private readonly Dictionary<EntityUid, Dictionary<int, Color>> _cachedRegionColors =
                      new();
 
         // Regions
-        public readonly Dictionary<GridId, Dictionary<int, Dictionary<int, List<Vector2>>>> Regions =
+        public readonly Dictionary<EntityUid, Dictionary<int, Dictionary<int, List<Vector2>>>> Regions =
                     new();
 
-        private readonly Dictionary<GridId, Dictionary<int, Dictionary<int, Color>>> _regionColors =
+        private readonly Dictionary<EntityUid, Dictionary<int, Dictionary<int, Color>>> _regionColors =
                      new();
 
         // Route debugging
@@ -260,7 +260,7 @@ namespace Content.Client.AI
 
         #region Regions
         //Server side debugger should increment every region
-        public void UpdateCachedRegions(GridId gridId, Dictionary<int, List<Vector2>> messageRegions, bool cached)
+        public void UpdateCachedRegions(EntityUid gridId, Dictionary<int, List<Vector2>> messageRegions, bool cached)
         {
             if (!CachedRegions.ContainsKey(gridId))
             {
@@ -317,7 +317,7 @@ namespace Content.Client.AI
             }
         }
 
-        public void UpdateRegions(GridId gridId, Dictionary<int, Dictionary<int, List<Vector2>>> messageRegions)
+        public void UpdateRegions(EntityUid gridId, Dictionary<int, Dictionary<int, List<Vector2>>> messageRegions)
         {
             if (!Regions.ContainsKey(gridId))
             {

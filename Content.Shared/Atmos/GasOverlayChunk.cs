@@ -10,7 +10,7 @@ namespace Content.Shared.Atmos
         /// <summary>
         ///     Grid for this chunk
         /// </summary>
-        public GridId GridIndices { get; }
+        public EntityUid GridIndices { get; }
 
         /// <summary>
         ///     Origin of this chunk
@@ -21,7 +21,7 @@ namespace Content.Shared.Atmos
 
         public GameTick LastUpdate { get; private set; }
 
-        public GasOverlayChunk(GridId gridIndices, Vector2i vector2i)
+        public GasOverlayChunk(EntityUid gridIndices, Vector2i vector2i)
         {
             GridIndices = gridIndices;
             Vector2i = vector2i;

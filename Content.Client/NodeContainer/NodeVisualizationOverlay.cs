@@ -20,7 +20,7 @@ namespace Content.Client.NodeContainer
         private readonly IEntityManager _entityManager;
 
         private readonly Dictionary<(int, int), NodeRenderData> _nodeIndex = new();
-        private readonly Dictionary<GridId, Dictionary<Vector2i, List<(GroupData, NodeDatum)>>> _gridIndex = new ();
+        private readonly Dictionary<EntityUid, Dictionary<Vector2i, List<(GroupData, NodeDatum)>>> _gridIndex = new ();
 
         private readonly Font _font;
 
