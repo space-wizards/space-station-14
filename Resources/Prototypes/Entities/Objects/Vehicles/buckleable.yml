@@ -288,8 +288,6 @@
       tags:
         - Security
         - Brig
-        - Maintenance
-        - Service
     - type: Strap
       buckleOffset: "0.15, -0.05"
       maxBuckleDistance: 1
