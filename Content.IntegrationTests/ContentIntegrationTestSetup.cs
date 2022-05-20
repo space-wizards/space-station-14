@@ -1,4 +1,5 @@
-﻿using NUnit.Framework;
+﻿using System;
+using NUnit.Framework;
 
 [SetUpFixture]
 // ReSharper disable once CheckNamespace
@@ -11,5 +12,7 @@ public sealed class ContentIntegrationTestSetup
 
         robustSetup.Shutdown();
         robustSetup.PrintTestPoolingInfo();
+
+        GC.Collect();
     }
 }
