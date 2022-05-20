@@ -18,6 +18,10 @@ Marhaba.ogg (Marhaba) by Ian Alex Mac is licensed under CC-BY-NC-SA 3.0. It was 
 
 Comet-Haley.ogg (Comet Haley) by Stellardrone is licensed under CC-BY-NC-SA 3.0. It was converted from MP3 to OGG. The source can be found here: https://freemusicarchive.org/music/Stellardrone/Light_Years_1227/07_Comet_Halley
 
-Flip Flap.ogg (Flip Flap) by X-ceed is licensed by soundimage.org and is free for non-commercial use. It was converted from MP3 to OGG. The source is here http://aminet.net/package/mods/xceed/Flipflap
+mod.flip-flap.ogg (Flip Flap) by X-ceed is licensed under a short but clear license (see flip-flap.txt) and is free for non-commercial use. The source can be found here: http://aminet.net/package/mods/xceed/Flipflap
+It was converted from MOD to WAV using Schism Tracker, in 16 Bit, Non-Interpolated mode, no output equalizer settings, Ramp volume at start of sample enabled.
+From there it was converted to OGG Vorbis with `ffmpeg -i flip-flap.wav -q 2.9 flip-flap-renc.ogg` (quality scale chosen to match size of the OGG file being replaced).
+Non-interpolated mode was chosen as the module has a high enough sample rate to balance it out, but seems muffled in other interpolation modes.
+If "Ramp volume at start of sample" is not enabled, a clicking phenomenon results.
 
 Monument.ogg (Monument) by Six Umbrellas is licensed under CC-BY-NC-SA 3.0. It was downloaded as an OGG the source can be found here: https://sixumbrellas.bandcamp.com/album/the-psychedelic-and
