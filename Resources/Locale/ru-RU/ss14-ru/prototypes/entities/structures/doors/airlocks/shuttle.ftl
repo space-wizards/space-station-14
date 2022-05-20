@@ -1,6 +1,6 @@
-ent-AirlockShuttle = external airlock
-    .desc = Necessary for connecting two space craft together.
-    .suffix = Docking
-ent-AirlockGlassShuttle = external airlock
-    .desc = Necessary for connecting two space craft together.
-    .suffix = Glass, Docking
+ent-AirlockShuttle = наружный воздушный шлюз
+    .desc = Необходим для соединения двух космических кораблей вместе.
+    .suffix = Стыковочный
+ent-AirlockGlassShuttle = наружный воздушный шлюз
+    .desc = Необходим для соединения двух космических кораблей вместе.
+    .suffix = Стеклянный, Стыковочный

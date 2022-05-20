@@ -1,9 +1,9 @@
 ent-BaseLandMine = { "" }
     .desc = { "" }
     .suffix = { "" }
-ent-LandMineKick = kick mine
+ent-LandMineKick = кикающая мина
     .desc = { ent-BaseLandMine.desc }
     .suffix = { "" }
-ent-LandMineExplosive = explosive mine
+ent-LandMineExplosive = взрывная мина
     .desc = { ent-BaseLandMine.desc }
     .suffix = { "" }
