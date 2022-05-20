@@ -1,10 +1,4 @@
 Entries:
-- author: Ygg01
-  changes:
-  - {message: Puddles are now expanding. More work for the janitor!, type: Fix}
-  - {message: Spillable Water tank, type: Fix}
-  id: 1064
-  time: '2022-02-15T02:22:26.0000000+00:00'
 - author: mirrorcult
   changes:
   - {message: Drones and monkeys now have unique identifiers in their names., type: Add}
@@ -3042,3 +3036,8 @@ Entries:
       death is no more.', type: Fix}
   id: 1563
   time: '2022-05-19T15:29:03.0000000+00:00'
+- author: ike709
+  changes:
+  - {message: Fixed disabling OOC not disabling the Discord relay, type: Fix}
+  id: 1564
+  time: '2022-05-20T03:18:28.0000000+00:00'
