@@ -18,9 +18,12 @@ public sealed class NewGunSystem : SharedNewGunSystem
     [Dependency] private readonly IInputManager _inputManager = default!;
     [Dependency] private readonly IPlayerManager _player = default!;
     [Dependency] private readonly InputSystem _inputSystem = default!;
-    [Dependency] private readonly CombatModeSystem _combatMode = default!;
 
-    private bool _hasShotOnce = false;
+    /// <summary>
+    /// Due to the fact you may be re-running already predicted ticks and fire for the first time
+    /// We need to track if we need to send the server our shot.
+    /// </summary>
+    private bool _firstShot = true;
 
     public override void Initialize()
     {
@@ -32,75 +35,57 @@ public sealed class NewGunSystem : SharedNewGunSystem
     private void OnHandleState(EntityUid uid, NewGunComponent component, ref ComponentHandleState args)
     {
         if (args.Current is not NewGunComponentState state) return;
-
-        if (state.NextFire < component.NextFire) return;
-
-        component.NextFire = state.NextFire;
-    }
-
-    private void StopShooting(NewGunComponent? gun = null)
-    {
-        _hasShotOnce = false;
-
-        if (gun != null)
-        {
-            gun.ShotCounter = 0;
-            gun.AttemptedShotLastTick = false;
-        }
     }
 
     public override void Update(float frameTime)
     {
         base.Update(frameTime);
 
-        var entity = _player.LocalPlayer?.ControlledEntity;
-        if (!EntityManager.TryGetComponent(entity, out SharedHandsComponent? hands) ||
-            hands.ActiveHandEntity is not { } held)
+        var entityNull = _player.LocalPlayer?.ControlledEntity;
+
+        if (entityNull == null)
         {
-            StopShooting();
+            _firstShot = true;
             return;
         }
 
-        if (!EntityManager.TryGetComponent(held, out NewGunComponent? gun))
+        var entity = entityNull.Value;
+        var gun = GetGun(entity);
+
+        if (gun == null)
         {
+            _firstShot = true;
+            return;
+        }
+
+        if (_inputSystem.CmdStates.GetState(EngineKeyFunctions.Use) != BoundKeyState.Down)
+        {
+            _firstShot = true;
             StopShooting(gun);
             return;
-        }
-
-        var state = _inputSystem.CmdStates.GetState(EngineKeyFunctions.Use);
-        if (!_combatMode.IsInCombatMode() || state != BoundKeyState.Down)
-        {
-            StopShooting(gun);
-            return;
-        }
-
-        if (!_hasShotOnce)
-        {
-            gun.NextFire = Timing.CurTime;
         }
 
         var mousePos = _eyeManager.ScreenToMap(_inputManager.MouseScreenPosition);
+        gun.ShootCoordinates = mousePos;
 
-        if (TryShoot(entity.Value, gun, mousePos, out var shots))
+        if (AttemptShoot(entity, gun))
         {
             if (PredictedShoot)
             {
+                Sawmill.Debug($"Sending shoot request tick {Timing.CurTick} / {Timing.CurTime}");
+
                 RaiseNetworkEvent(new RequestShootEvent()
                 {
-                    FirstShot = !_hasShotOnce,
-                    Gun = gun.Owner,
                     Coordinates = mousePos,
-                    Shots = shots,
+                    Gun = gun.Owner,
                 });
-
-                Sawmill.Debug($"Sending shoot request at {Timing.CurTime} / tick {Timing.CurTick}");
             }
 
-            _hasShotOnce = true;
+            _firstShot = false;
         }
     }
 
-    private bool PredictedShoot => !_hasShotOnce || Timing.IsFirstTimePredicted;
+    private bool PredictedShoot => (_firstShot || Timing.IsFirstTimePredicted) && Timing.InPrediction;
 
     protected override void PlaySound(EntityUid gun, string? sound, EntityUid? user = null)
     {

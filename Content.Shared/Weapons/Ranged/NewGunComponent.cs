@@ -1,5 +1,6 @@
 using Content.Shared.Sound;
 using Robust.Shared.GameStates;
+using Robust.Shared.Map;
 
 namespace Content.Shared.Weapons.Ranged;
 
@@ -10,10 +11,10 @@ public sealed class NewGunComponent : Component
     public SoundSpecifier? SoundGunshot = new SoundPathSpecifier("/Audio/Weapons/Guns/Gunshots/smg.ogg");
 
     /// <summary>
-    /// Used for tracking whether we're still shooting continuously.
+    /// Where the gun is being requested to shoot.
     /// </summary>
     [ViewVariables]
-    public bool AttemptedShotLastTick;
+    public MapCoordinates? ShootCoordinates = null;
 
     /// <summary>
     /// Used for tracking semi-auto / burst
@@ -25,7 +26,7 @@ public sealed class NewGunComponent : Component
     /// How many times it shoots per second.
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite), DataField("fireRate")]
-    public float FireRate = 2f;
+    public float FireRate = 12f;
 
     [ViewVariables, DataField("nextFire")]
     public TimeSpan NextFire = TimeSpan.Zero;

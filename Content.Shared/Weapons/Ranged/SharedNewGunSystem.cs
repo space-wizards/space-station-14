@@ -1,13 +1,18 @@
+using Content.Shared.CombatMode;
+using Content.Shared.Hands.Components;
 using Robust.Shared.GameStates;
 using Robust.Shared.Map;
 using Robust.Shared.Serialization;
 using Robust.Shared.Timing;
+using Robust.Shared.Utility;
 
 namespace Content.Shared.Weapons.Ranged;
 
 public abstract class SharedNewGunSystem : EntitySystem
 {
     [Dependency] protected readonly IGameTiming Timing = default!;
+    [Dependency] private readonly SharedCombatModeSystem _combatMode = default!;
+
     protected ISawmill Sawmill = default!;
 
     public override void Initialize()
@@ -24,38 +29,62 @@ public abstract class SharedNewGunSystem : EntitySystem
         };
     }
 
-    /// <summary>
-    /// Tries to shoot a single time at the specified coordinates.
-    /// </summary>
-    public bool TryShoot(EntityUid user, NewGunComponent gun, MapCoordinates coordinates, out int shots)
+    protected NewGunComponent? GetGun(EntityUid entity)
     {
-        // TODO: Validate method
-        if (gun.FireRate <= 0f)
+        if (!EntityManager.TryGetComponent(entity, out SharedHandsComponent? hands) ||
+            hands.ActiveHandEntity is not { } held)
         {
-            shots = 0;
-            return false;
+            return null;
         }
 
-        gun.AttemptedShotLastTick = true;
+        if (!EntityManager.TryGetComponent(held, out NewGunComponent? gun))
+            return null;
+
+        if (!_combatMode.IsInCombatMode(entity))
+            return null;
+
+        return gun;
+    }
+
+    protected void StopShooting(NewGunComponent gun)
+    {
+        if (gun.ShotCounter == 0) return;
+
+        Sawmill.Debug($"Stopped shooting {ToPrettyString(gun.Owner)}");
+        gun.ShotCounter = 0;
+        gun.ShootCoordinates = null;
+    }
+
+    protected virtual bool AttemptShoot(EntityUid user, NewGunComponent gun)
+    {
+        if (gun.FireRate <= 0f)
+            return false;
+
+        if (gun.ShootCoordinates == null)
+            return false;
+
         var curTime = Timing.CurTime;
 
+        // Need to do this to play the clicking sound for empty automatic weapons
+        // but not play anything for burst fire.
         if (gun.NextFire > curTime)
-        {
-            shots = 0;
             return false;
-        }
 
-        shots = 0;
+        // First shot
+        if (gun.ShotCounter == 0 && gun.NextFire < curTime)
+            gun.NextFire = curTime;
+
+        var shots = 0;
 
         while (gun.NextFire <= curTime)
         {
             shots++;
+            Sawmill.Debug($"Shooting at {gun.NextFire}");
             gun.NextFire += TimeSpan.FromSeconds(1f / gun.FireRate);
         }
 
         // Shoot confirmed
         gun.ShotCounter += shots;
-        Sawmill.Debug($"Set next fire to {gun.NextFire}");
 
         // Predicted sound moment
         PlaySound(gun.Owner, gun.SoundGunshot?.GetSound(), user);
@@ -72,10 +101,8 @@ public abstract class SharedNewGunSystem : EntitySystem
     [Serializable, NetSerializable]
     public sealed class RequestShootEvent : EntityEventArgs
     {
-        public bool FirstShot;
         public EntityUid Gun;
         public MapCoordinates Coordinates;
-        public int Shots;
     }
 
     [Serializable, NetSerializable]
