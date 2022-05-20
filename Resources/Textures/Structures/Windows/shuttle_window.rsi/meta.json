@@ -1,10 +1,15 @@
 {
   "version": 1,
+"license": "CC-BY-SA-3.0",
+ "copyright": "Taken from tg station at commit https://github.com/tgstation/tgstation/blob/master/icons/obj/smooth_structures/shuttle_window.dmi and modified by blankmann",
   "size": {
     "x": 32,
     "y": 32
   },
   "states": [
+    {
+      "name": "full"
+    },
     {
       "name": "shuttle_window-0"
     },
@@ -19,9 +24,6 @@
     },
     {
       "name": "shuttle_window-4"
-    },
-    {
-      "name": "shuttle_window-5"
     },
     {
       "name": "shuttle_window-6"
