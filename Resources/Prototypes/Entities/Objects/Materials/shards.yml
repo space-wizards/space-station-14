@@ -102,7 +102,7 @@
 - type: entity
   parent: ShardBase
   id: ShardGlassPlastitanium
-  name: titanium glass shard
+  name: plastitanium glass shard
   description: A small piece of plastitanium glass. It looks sharp, you wouldn't want to step on it barefoot.
   components:
   - type: Sprite
