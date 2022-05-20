@@ -26,7 +26,7 @@ public sealed class NewGunComponent : Component
     /// How many times it shoots per second.
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite), DataField("fireRate")]
-    public float FireRate = 12f;
+    public float FireRate = 6f;
 
     [ViewVariables, DataField("nextFire")]
     public TimeSpan NextFire = TimeSpan.Zero;

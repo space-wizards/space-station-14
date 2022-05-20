@@ -35,6 +35,8 @@ public sealed class NewGunSystem : SharedNewGunSystem
     private void OnHandleState(EntityUid uid, NewGunComponent component, ref ComponentHandleState args)
     {
         if (args.Current is not NewGunComponentState state) return;
+
+        component.NextFire = state.NextFire;
     }
 
     public override void Update(float frameTime)
@@ -85,7 +87,7 @@ public sealed class NewGunSystem : SharedNewGunSystem
         }
     }
 
-    private bool PredictedShoot => (_firstShot || Timing.IsFirstTimePredicted) && Timing.InPrediction;
+    private bool PredictedShoot => (_firstShot || (Timing.IsFirstTimePredicted && Timing.InPrediction));
 
     protected override void PlaySound(EntityUid gun, string? sound, EntityUid? user = null)
     {

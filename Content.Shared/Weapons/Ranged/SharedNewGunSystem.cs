@@ -79,7 +79,6 @@ public abstract class SharedNewGunSystem : EntitySystem
         while (gun.NextFire <= curTime)
         {
             shots++;
-            Sawmill.Debug($"Shooting at {gun.NextFire}");
             gun.NextFire += TimeSpan.FromSeconds(1f / gun.FireRate);
         }
 
