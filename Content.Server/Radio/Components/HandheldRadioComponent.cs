@@ -19,11 +19,11 @@ namespace Content.Server.Radio.Components
 
         private bool _radioOn;
         [DataField("channels")]
-        private List<int> _channels = new(){1459};
+        private List<int> _channels = new(){0};
 
         [ViewVariables(VVAccess.ReadWrite)]
         [DataField("broadcastChannel")]
-        public int BroadcastFrequency { get; set; } = 1459;
+        public int BroadcastFrequency { get; set; } = 0;
 
         [ViewVariables(VVAccess.ReadWrite)] [DataField("listenRange")] public int ListenRange { get; private set; } = 7;
 
@@ -80,12 +80,12 @@ namespace Content.Server.Radio.Components
             }
         }
 
-        public void Listen(string message, EntityUid speaker)
+        public void Listen(string message, EntityUid speaker, int channel)
         {
-            Broadcast(message, speaker);
+            Broadcast(message, speaker, channel);
         }
 
-        public void Broadcast(string message, EntityUid speaker)
+        public void Broadcast(string message, EntityUid speaker, int channel)
         {
             _radioSystem.SpreadMessage(this, speaker, message, BroadcastFrequency);
         }

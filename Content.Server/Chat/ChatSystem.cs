@@ -89,6 +89,8 @@ public sealed class ChatSystem : SharedChatSystem
 
         bool shouldCapitalize = (desiredType != InGameICChatType.Emote);
 
+        int channel;
+        (message, channel) = RadioPrefix(source, message);
         message = SanitizeInGameICMessage(source, message, out var emoteStr, shouldCapitalize);
 
         // Was there an emote in the message? If so, send it.
@@ -105,10 +107,10 @@ public sealed class ChatSystem : SharedChatSystem
         switch (desiredType)
         {
             case InGameICChatType.Speak:
-                SendEntitySpeak(source, message, hideChat);
+                SendEntitySpeak(source, message, hideChat, channel);
                 break;
             case InGameICChatType.Whisper:
-                SendEntityWhisper(source, message, hideChat);
+                SendEntityWhisper(source, message, hideChat, channel);
                 break;
             case InGameICChatType.Emote:
                 SendEntityEmote(source, message, hideChat);
@@ -142,12 +144,12 @@ public sealed class ChatSystem : SharedChatSystem
 
     #region Private API
 
-    private void SendEntitySpeak(EntityUid source, string message, bool hideChat = false)
+    private void SendEntitySpeak(EntityUid source, string message, bool hideChat = false, int channel = 0)
     {
         if (!_actionBlocker.CanSpeak(source)) return;
         message = TransformSpeech(source, message);
 
-        _listener.PingListeners(source, message);
+        _listener.PingListeners(source, message, channel);
         var messageWrap = Loc.GetString("chat-manager-entity-say-wrap-message",
             ("entityName", Name(source)));
 
@@ -158,12 +160,12 @@ public sealed class ChatSystem : SharedChatSystem
         _logs.Add(LogType.Chat, LogImpact.Low, $"Say from {ToPrettyString(source):user}: {message}");
     }
 
-    private void SendEntityWhisper(EntityUid source, string message, bool hideChat = false)
+    private void SendEntityWhisper(EntityUid source, string message, bool hideChat = false, int channel = 0)
     {
         if (!_actionBlocker.CanSpeak(source)) return;
 
         message = TransformSpeech(source, message);
-        _listener.PingListeners(source, message);
+        _listener.PingListeners(source, message, channel);
         var obfuscatedMessage = ObfuscateMessageReadability(message, 0.2f);
 
         var transformSource = Transform(source);
@@ -329,19 +331,76 @@ public sealed class ChatSystem : SharedChatSystem
             .Select(p => p.ConnectedClient);
     }
 
-    private string SanitizeMessageCapital(EntityUid source, string message)
+    private (string, int) RadioPrefix(EntityUid source, string message)
     {
-        if (message.StartsWith(';'))
+        bool channelMessage = message.StartsWith(':') || message.StartsWith('.');
+        bool radioMessage = message.StartsWith(';') || channelMessage;
+        if (radioMessage)
         {
-            // Special case for ";" messages
+            // Special case for empty messages
             if (message.Length == 1)
-                return "";
+                return ("", -1);
 
-            // Remove semicolon
-            message = message.Substring(1).TrimStart();
+            // Look for a prefix indicating a destination radio channel.
+            int chan = -1;
+            Console.WriteLine(channelMessage + " " + (message.Length >= 2));
+            if (channelMessage && message.Length >= 2)
+            {
+                switch (message[1])
+                {
+                case 'c':
+                    // Command
+                    chan = 1;
+                    break;
+                case 'y':
+                    // CentCom
+                    chan = 2;
+                    break;
+                case 'e':
+                    // Engineering
+                    chan = 3;
+                    break;
+                case 'm':
+                    // Medical
+                    chan = 4;
+                    break;
+                case 'n':
+                    // Science
+                    chan = 5;
+                    break;
+                case 's':
+                    // Security
+                    chan = 6;
+                    break;
+                case 'v':
+                    // Service
+                    chan = 7;
+                    break;
+                case 'u':
+                    // Supply
+                    chan = 8;
+                    break;
+                case 't':
+                    // Syndicate
+                    chan = 9;
+                    break;
+                default:
+                    _popup.PopupEntity(Loc.GetString("chat-manager-no-such-channel"), source, Filter.Entities(source));
+                    chan = -1;
+                    break;
+                }
 
-            // Capitalize first letter
-            message = message[0].ToString().ToUpper() + message.Remove(0, 1);
+                // Strip message prefix.
+                var parts = message.Split(' ').ToList();
+                parts.RemoveAt(0);
+                message = string.Join(" ", parts);
+            }
+            else
+            {
+                // Remove semicolon
+                message = message.Substring(1).TrimStart();
+                chan = 0;
+            }
 
             if (_inventory.TryGetSlotEntity(source, "ears", out var entityUid) &&
                 TryComp(entityUid, out HeadsetComponent? headset))
@@ -352,13 +411,16 @@ public sealed class ChatSystem : SharedChatSystem
             {
                 _popup.PopupEntity(Loc.GetString("chat-manager-no-headset-on-message"), source, Filter.Entities(source));
             }
-        }
-        else
-        {
-            // Capitalize first letter
-            message = message[0].ToString().ToUpper() + message.Remove(0, 1);
-        }
 
+            return (message, chan);
+        }
+        return (message, -1);
+    }
+
+    private string SanitizeMessageCapital(EntityUid source, string message)
+    {
+        // Capitalize first letter
+        message = message[0].ToString().ToUpper() + message.Remove(0, 1);
         return message;
     }
 

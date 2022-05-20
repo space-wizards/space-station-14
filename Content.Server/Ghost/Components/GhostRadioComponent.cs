@@ -33,6 +33,6 @@ namespace Content.Server.Ghost.Components
             _netManager.ServerSendMessage(msg, playerChannel);
         }
 
-        public void Broadcast(string message, EntityUid speaker) { }
+        public void Broadcast(string message, EntityUid speaker, int channel) { }
     }
 }

@@ -6,6 +6,6 @@ namespace Content.Server.Radio.Components
 
         void Receive(string message, int channel, EntityUid speaker);
 
-        void Broadcast(string message, EntityUid speaker);
+        void Broadcast(string message, EntityUid speaker, int channel);
     }
 }

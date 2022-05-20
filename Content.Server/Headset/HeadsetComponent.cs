@@ -20,11 +20,11 @@ namespace Content.Server.Headset
         private RadioSystem _radioSystem = default!;
 
         [DataField("channels")]
-        private List<int> _channels = new(){1459};
+        private List<int> _channels = new(){0};
 
         [ViewVariables(VVAccess.ReadWrite)]
         [DataField("broadcastChannel")]
-        public int BroadcastFrequency { get; set; } = 1459;
+        public int BroadcastFrequency { get; set; } = 0;
 
         [ViewVariables(VVAccess.ReadWrite)]
         [DataField("listenRange")]
@@ -65,14 +65,16 @@ namespace Content.Server.Headset
             }
         }
 
-        public void Listen(string message, EntityUid speaker)
+        public void Listen(string message, EntityUid speaker, int channel)
         {
-            Broadcast(message, speaker);
+            Broadcast(message, speaker, channel);
         }
 
-        public void Broadcast(string message, EntityUid speaker)
+        public void Broadcast(string message, EntityUid speaker, int channel)
         {
-            _radioSystem.SpreadMessage(this, speaker, message, BroadcastFrequency);
+            var destChannel = channel == 0 ? BroadcastFrequency : channel;
+            if (_channels.Contains(destChannel))
+                _radioSystem.SpreadMessage(this, speaker, message, destChannel);
             RadioRequested = false;
         }
     }

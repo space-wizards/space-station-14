@@ -10,6 +10,6 @@ namespace Content.Server.Radio.Components
 
         bool CanListen(string message, EntityUid source);
 
-        void Listen(string message, EntityUid speaker);
+        void Listen(string message, EntityUid speaker, int channel = 0);
     }
 }

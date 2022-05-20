@@ -6,14 +6,14 @@ namespace Content.Server.Radio.EntitySystems
     [UsedImplicitly]
     public sealed class ListeningSystem : EntitySystem
     {
-        public void PingListeners(EntityUid source, string message)
+        public void PingListeners(EntityUid source, string message, int channel)
         {
             foreach (var listener in EntityManager.EntityQuery<IListen>(true))
             {
                 // TODO: Map Position distance
                 if (listener.CanListen(message, source))
                 {
-                    listener.Listen(message, source);
+                    listener.Listen(message, source, channel);
                 }
             }
         }
