@@ -83,8 +83,29 @@
 
 - type: entity
   name: C-20r sub machine gun
+  parent: BaseItem
+  id: SmgC20rNew
+  description: A firearm that is often used by the infamous nuclear operatives.
+  components:
+    - type: Sprite
+      sprite: Objects/Weapons/Guns/SMGs/c20r.rsi
+      layers:
+        - state: base
+          map: ["enum.RangedBarrelVisualLayers.Base"]
+        - state: bolt-closed
+          map: ["enum.RangedBarrelVisualLayers.Bolt"]
+        - state: mag-0
+          map: ["enum.RangedBarrelVisualLayers.Mag"]
+    - type: Item
+      size: 24
+      sprite: Objects/Weapons/Guns/SMGs/c20r.rsi
+    - type: NewGun
+
+- type: entity
+  name: C-20r sub machine gun
   parent: SmgBase
   id: SmgC20r
+  suffix: old
   description: A firearm that is often used by the infamous nuclear operatives.
   components:
   - type: Sprite

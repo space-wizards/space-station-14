@@ -11,6 +11,7 @@ using Content.Shared.Interaction;
 using Content.Shared.Item;
 using Content.Shared.Pulling.Components;
 using Content.Shared.Weapons.Melee;
+using Content.Shared.Weapons.Ranged;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
 using Robust.Shared.Containers;
@@ -201,6 +202,10 @@ namespace Content.Server.Interaction
             if (TryComp(user, out HandsComponent? hands))
             {
                 var item = hands.ActiveHandEntity;
+
+                // Can't melee attack with guns, just makes it easier.
+                if (HasComp<NewGunComponent>(item))
+                    return;
 
                 if (item != null && !Deleted(item.Value))
                 {
