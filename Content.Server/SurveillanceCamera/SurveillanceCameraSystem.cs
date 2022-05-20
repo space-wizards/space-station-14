@@ -1,16 +1,24 @@
+using Content.Server.Administration.Managers;
 using Content.Server.DeviceNetwork;
 using Content.Server.DeviceNetwork.Components;
 using Content.Server.DeviceNetwork.Systems;
+using Content.Server.Ghost.Components;
 using Content.Server.Power.Components;
+using Content.Shared.DeviceNetwork;
 using Content.Shared.SurveillanceCamera;
+using Content.Shared.Verbs;
 using Robust.Server.GameObjects;
+using Robust.Shared.Prototypes;
 
 namespace Content.Server.SurveillanceCamera;
 
 public sealed class SurveillanceCameraSystem : SharedSurveillanceCameraSystem
 {
+    [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
+    [Dependency] private readonly IAdminManager _adminManager = default!;
     [Dependency] private readonly ViewSubscriberSystem _viewSubscriberSystem = default!;
     [Dependency] private readonly DeviceNetworkSystem _deviceNetworkSystem = default!;
+    [Dependency] private readonly UserInterfaceSystem _userInterface = default!;
 
     // Pings a surveillance camera subnet. All cameras will always respond
     // with a data message if they are on the same subnet.
@@ -44,6 +52,9 @@ public sealed class SurveillanceCameraSystem : SharedSurveillanceCameraSystem
         SubscribeLocalEvent<SurveillanceCameraComponent, ComponentShutdown>(OnShutdown);
         SubscribeLocalEvent<SurveillanceCameraComponent, PowerChangedEvent>(OnPowerChanged);
         SubscribeLocalEvent<SurveillanceCameraComponent, DeviceNetworkPacketEvent>(OnPacketReceived);
+        SubscribeLocalEvent<SurveillanceCameraComponent, SurveillanceCameraSetupSetName>(OnSetName);
+        SubscribeLocalEvent<SurveillanceCameraComponent, SurveillanceCameraSetupSetNetwork>(OnSetNetwork);
+        SubscribeLocalEvent<SurveillanceCameraComponent, GetVerbsEvent<Verb>>(AddVerbs);
     }
 
     private void OnPacketReceived(EntityUid uid, SurveillanceCameraComponent component, DeviceNetworkPacketEvent args)
@@ -109,6 +120,31 @@ public sealed class SurveillanceCameraSystem : SharedSurveillanceCameraSystem
         }
     }
 
+    private void AddVerbs(EntityUid uid, SurveillanceCameraComponent component, GetVerbsEvent<Verb> verbs)
+    {
+        if (!TryComp(verbs.User, out ActorComponent? actor))
+        {
+            return;
+        }
+
+        if (HasComp<GhostComponent>(verbs.User) && !_adminManager.IsAdmin(actor.PlayerSession))
+        {
+            return;
+        }
+
+        if (component.NameSet && component.NetworkSet)
+        {
+            return;
+        }
+
+        Verb verb = new();
+        verb.Text = Loc.GetString("surveillance-camera-setup-verb");
+        verb.Act = () => OpenSetupInterface(uid, verbs.User, component);
+        verbs.Verbs.Add(verb);
+    }
+
+
+
     private void OnPowerChanged(EntityUid camera, SurveillanceCameraComponent component, PowerChangedEvent args)
     {
         SetActive(camera, args.Powered, component);
@@ -117,6 +153,86 @@ public sealed class SurveillanceCameraSystem : SharedSurveillanceCameraSystem
     private void OnShutdown(EntityUid camera, SurveillanceCameraComponent component, ComponentShutdown args)
     {
         Deactivate(camera, component);
+    }
+
+    private void OnSetName(EntityUid uid, SurveillanceCameraComponent component, SurveillanceCameraSetupSetName args)
+    {
+        if (args.UiKey is not SurveillanceCameraSetupUiKey key
+            || key != SurveillanceCameraSetupUiKey.Camera)
+        {
+            return;
+        }
+
+        component.CameraId = args.Name;
+        component.NameSet = true;
+        UpdateSetupInterface(uid, component);
+    }
+
+    private void OnSetNetwork(EntityUid uid, SurveillanceCameraComponent component,
+        SurveillanceCameraSetupSetNetwork args)
+    {
+        if (args.UiKey is not SurveillanceCameraSetupUiKey key
+            || key != SurveillanceCameraSetupUiKey.Camera)
+        {
+            return;
+        }
+        if (args.Network < 0 || args.Network >= component.AvailableNetworks.Count)
+        {
+            return;
+        }
+
+        if (!_prototypeManager.TryIndex<DeviceFrequencyPrototype>(component.AvailableNetworks[args.Network],
+                out var frequency))
+        {
+            return;
+        }
+
+        _deviceNetworkSystem.SetReceiveFrequency(uid, frequency.Frequency);
+        component.NetworkSet = true;
+        UpdateSetupInterface(uid, component);
+    }
+
+    private void OpenSetupInterface(EntityUid uid, EntityUid player, SurveillanceCameraComponent? camera = null, ActorComponent? actor = null)
+    {
+        if (!Resolve(uid, ref camera)
+            || !Resolve(player, ref actor))
+        {
+            return;
+        }
+
+        _userInterface.GetUiOrNull(uid, SurveillanceCameraSetupUiKey.Camera)!.Open(actor.PlayerSession);
+        UpdateSetupInterface(uid, camera);
+    }
+
+    private void UpdateSetupInterface(EntityUid uid, SurveillanceCameraComponent? camera = null, DeviceNetworkComponent? deviceNet = null)
+    {
+        if (!Resolve(uid, ref camera, ref deviceNet))
+        {
+            return;
+        }
+
+        if (camera.NameSet && camera.NetworkSet)
+        {
+            _userInterface.TryCloseAll(uid, SurveillanceCameraSetupUiKey.Camera);
+            return;
+        }
+
+        if (camera.AvailableNetworks.Count == 0)
+        {
+            if (deviceNet.ReceiveFrequencyId != null)
+            {
+                camera.AvailableNetworks.Add(deviceNet.ReceiveFrequencyId);
+            }
+            else if (!camera.NetworkSet)
+            {
+                _userInterface.TryCloseAll(uid, SurveillanceCameraSetupUiKey.Camera);
+                return;
+            }
+        }
+
+        var state = new SurveillanceCameraSetupBoundUiState(camera.CameraId, deviceNet.ReceiveFrequencyId ?? string.Empty,
+            camera.AvailableNetworks, camera.NameSet, camera.NetworkSet);
+        _userInterface.TrySetUiState(uid, SurveillanceCameraSetupUiKey.Camera, state);
     }
 
     // If the camera deactivates for any reason, it must have all viewers removed,

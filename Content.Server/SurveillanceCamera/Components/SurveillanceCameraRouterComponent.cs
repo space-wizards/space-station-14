@@ -8,7 +8,7 @@ public class SurveillanceCameraRouterComponent : Component
 {
     // The name of the subnet connected to this router.
     [DataField("subnetName")]
-    public string SubnetName { get; } = string.Empty;
+    public string SubnetName { get; set; } = string.Empty;
 
     [ViewVariables]
     // The monitors to route to. This raises an issue related to
@@ -21,5 +21,7 @@ public class SurveillanceCameraRouterComponent : Component
     // The frequency that talks to this router's subnet.
     public uint SubnetFrequency;
     [DataField("subnetFrequency", customTypeSerializer:typeof(PrototypeIdSerializer<DeviceFrequencyPrototype>))]
-    public string SubnetFrequencyId { get; } = string.Empty;
+    public string? SubnetFrequencyId { get; set;  }
+
+    [DataField("setupAvailableNetworks")] public List<string> AvailableNetworks { get; } = new();
 }

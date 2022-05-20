@@ -67,3 +67,54 @@ public enum SurveillanceCameraMonitorUiKey : byte
 {
     Key
 }
+
+// SETUP
+
+[Serializable, NetSerializable]
+public sealed class SurveillanceCameraSetupBoundUiState : BoundUserInterfaceState
+{
+    public string Name { get; }
+    public string Network { get; }
+    public List<string> Networks { get; }
+    public bool NameDisabled { get; }
+    public bool NetworkDisabled { get; }
+
+    public SurveillanceCameraSetupBoundUiState(string name, string network, List<string> networks, bool nameDisabled, bool networkDisabled)
+    {
+        Name = name;
+        Network = network;
+        Networks = networks;
+        NameDisabled = nameDisabled;
+        NetworkDisabled = networkDisabled;
+    }
+}
+
+[Serializable, NetSerializable]
+public sealed class SurveillanceCameraSetupSetName : BoundUserInterfaceMessage
+{
+    public string Name { get; }
+
+    public SurveillanceCameraSetupSetName(string name)
+    {
+        Name = name;
+    }
+}
+
+[Serializable, NetSerializable]
+public sealed class SurveillanceCameraSetupSetNetwork : BoundUserInterfaceMessage
+{
+    public int Network { get; }
+
+    public SurveillanceCameraSetupSetNetwork(int network)
+    {
+        Network = network;
+    }
+}
+
+
+[Serializable, NetSerializable]
+public enum SurveillanceCameraSetupUiKey
+{
+    Camera,
+    Router
+}

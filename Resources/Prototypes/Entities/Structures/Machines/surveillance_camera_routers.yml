@@ -25,6 +25,22 @@
 
 - type: entity
   parent: SurveillanceCameraRouterBase
+  id: SurveillanceCameraRouterConstructed
+  suffix: Constructed
+  components:
+    - type: SurveillanceCameraRouter
+      setupAvailableNetworks:
+        - SurveillanceCameraEngineering
+        - SurveillanceCameraSecurity
+        - SurveillanceCameraService
+        - SurveillanceCameraSupply
+        - SurveillanceCameraScience
+        - SurveillanceCameraGeneral
+        - SurveillanceCameraMedical
+        - SurveillanceCameraCommand
+
+- type: entity
+  parent: SurveillanceCameraRouterBase
   id: SurveillanceCameraRouterEngineering
   suffix: Engineering
   components:

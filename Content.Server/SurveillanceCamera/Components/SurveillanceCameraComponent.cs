@@ -36,7 +36,7 @@ public sealed class SurveillanceCameraComponent : Component
     // the most terrible thing possible.
     [ViewVariables(VVAccess.ReadWrite)]
     [DataField("id")]
-    public string CameraId { get; } = default!;
+    public string CameraId { get; set;  } = "camera";
 
     // This should probably be dependent on ApcDeviceNet,
     // which in turn routes to something connected
@@ -46,4 +46,15 @@ public sealed class SurveillanceCameraComponent : Component
     [ViewVariables(VVAccess.ReadWrite)]
     [DataField("subnet")]
     public string Subnet { get; } = default!;
+
+    [ViewVariables(VVAccess.ReadWrite)]
+    [DataField("nameSet")]
+    public bool NameSet { get; set; }
+
+    [ViewVariables(VVAccess.ReadWrite)]
+    [DataField("networkSet")]
+    public bool NetworkSet { get; set; }
+
+    // This has to be device network frequency prototypes.
+    [DataField("setupAvailableNetworks")] public List<string> AvailableNetworks { get; } = new();
 }

@@ -18,6 +18,10 @@
     sprite: Structures/Wallmounts/camera.rsi
     layers:
       - state: camera
+  - type: UserInterface
+    interfaces:
+      - key: enum.SurveillanceCameraSetupUiKey.Camera
+        type: SurveillanceCameraSetupBoundUi
   placement:
     mode: SnapgridCenter
     snap:
@@ -34,7 +38,26 @@
     receiveFrequencyId: SurveillanceCameraSubnetTest
     transmitFrequencyId: SurveillanceCamera
   - type: SurveillanceCamera
-    id: "camera"
+
+- type: entity
+  parent: SurveillanceCameraBase
+  id: SurveillanceCameraConstructed
+  name: camera
+  suffix: Constructed
+  components:
+    - type: DeviceNetwork
+      deviceNetId: Wired
+      transmitFrequencyId: SurveillanceCamera
+    - type: SurveillanceCamera
+      setupAvailableNetworks:
+        - SurveillanceCameraEngineering
+        - SurveillanceCameraSecurity
+        - SurveillanceCameraService
+        - SurveillanceCameraSupply
+        - SurveillanceCameraScience
+        - SurveillanceCameraGeneral
+        - SurveillanceCameraMedical
+        - SurveillanceCameraCommand
 
 - type: entity
   parent: SurveillanceCameraBase
@@ -47,7 +70,7 @@
     receiveFrequencyId: SurveillanceCameraEngineering
     transmitFrequencyId: SurveillanceCamera
   - type: SurveillanceCamera
-    id: "camera"
+    networkSet: true
 
 - type: entity
   parent: SurveillanceCameraBase
@@ -60,7 +83,7 @@
     receiveFrequencyId: SurveillanceCameraSecurity
     transmitFrequencyId: SurveillanceCamera
   - type: SurveillanceCamera
-    id: "camera"
+    networkSet: true
 
 - type: entity
   parent: SurveillanceCameraBase
@@ -73,7 +96,7 @@
     receiveFrequencyId: SurveillanceCameraScience
     transmitFrequencyId: SurveillanceCamera
   - type: SurveillanceCamera
-    id: "camera"
+    networkSet: true
 
 - type: entity
   parent: SurveillanceCameraBase
@@ -86,7 +109,7 @@
     receiveFrequencyId: SurveillanceCameraSupply
     transmitFrequencyId: SurveillanceCamera
   - type: SurveillanceCamera
-    id: "camera"
+    networkSet: true
 
 - type: entity
   parent: SurveillanceCameraBase
@@ -99,7 +122,7 @@
     receiveFrequencyId: SurveillanceCameraScience
     transmitFrequencyId: SurveillanceCamera
   - type: SurveillanceCamera
-    id: "camera"
+    networkSet: true
 
 - type: entity
   parent: SurveillanceCameraBase
@@ -112,7 +135,7 @@
     receiveFrequencyId: SurveillanceCameraCommand
     transmitFrequencyId: SurveillanceCamera
   - type: SurveillanceCamera
-    id: "camera"
+    networkSet: true
 
 - type: entity
   parent: SurveillanceCameraBase
@@ -125,7 +148,7 @@
     receiveFrequencyId: SurveillanceCameraService
     transmitFrequencyId: SurveillanceCamera
   - type: SurveillanceCamera
-    id: "camera"
+    networkSet: true
 
 - type: entity
   parent: SurveillanceCameraBase
@@ -138,7 +161,7 @@
     receiveFrequencyId: SurveillanceCameraMedical
     transmitFrequencyId: SurveillanceCamera
   - type: SurveillanceCamera
-    id: "camera"
+    networkSet: true
 
 - type: entity
   parent: SurveillanceCameraBase
@@ -151,4 +174,4 @@
     receiveFrequencyId: SurveillanceCameraGeneral
     transmitFrequencyId: SurveillanceCamera
   - type: SurveillanceCamera
-    id: "camera"
+    networkSet: true
