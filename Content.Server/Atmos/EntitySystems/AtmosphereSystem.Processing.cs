@@ -70,7 +70,7 @@ namespace Content.Server.Atmos.EntitySystems
                 GridUpdateAdjacent(uid, atmosphere, ref updateAdjacentEv);
 
                 // Call this instead of the grid method as the map has a say on whether the tile is space or not.
-                if ((!mapGrid.TryGetTileRef(indices, out var t) || t.Tile == Tile.Empty) && !isAirBlocked)
+                if ((!mapGrid.TryGetTileRef(indices, out var t) || t.IsSpace(_tileDefinitionManager)) && !isAirBlocked)
                 {
                     tile.Air = GetTileMixture(null, mapUid, indices);
                     tile.MolesArchived = tile.Air != null ? new float[Atmospherics.AdjustedNumberOfGases] : null;
