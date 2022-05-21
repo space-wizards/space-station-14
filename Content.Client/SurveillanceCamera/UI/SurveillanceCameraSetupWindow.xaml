@@ -3,11 +3,11 @@
     <BoxContainer Orientation="Vertical">
         <BoxContainer Name="NamingSection">
             <LineEdit HorizontalExpand="True" Name="DeviceName" />
-            <Button Name="NameConfirm" Text="{Loc 'surveillance-camera-ui-set'}"/>
+            <Button Name="NameConfirm" Text="{Loc 'surveillance-camera-setup-ui-set'}"/>
         </BoxContainer>
         <BoxContainer Name="NetworkSection">
             <OptionButton HorizontalExpand="True" Name="NetworkSelector" />
-            <Button Name="NetworkConfirm" Text="{Loc 'surveillance-camera-ui-set'}" />
+            <Button Name="NetworkConfirm" Text="{Loc 'surveillance-camera-setup-ui-set'}" />
         </BoxContainer>
     </BoxContainer>
 </DefaultWindow>
