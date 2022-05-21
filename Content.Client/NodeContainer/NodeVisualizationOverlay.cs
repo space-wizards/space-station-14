@@ -112,12 +112,12 @@ namespace Content.Client.NodeContainer
 
             foreach (var grid in _mapManager.FindGridsIntersecting(map, worldAABB))
             {
-                foreach (var entity in _lookup.GetEntitiesIntersecting(grid.Index, worldAABB))
+                foreach (var entity in _lookup.GetEntitiesIntersecting(grid.GridEntityId, worldAABB))
                 {
                     if (!_system.Entities.TryGetValue(entity, out var nodeData))
                         continue;
 
-                    var gridDict = _gridIndex.GetOrNew(grid.Index);
+                    var gridDict = _gridIndex.GetOrNew(grid.GridEntityId);
                     var coords = xformQuery.GetComponent(entity).Coordinates;
 
                     // TODO: This probably shouldn't be capable of returning NaN...

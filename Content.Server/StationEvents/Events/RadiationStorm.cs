@@ -112,7 +112,7 @@ namespace Content.Server.StationEvents.Events
 
         private bool TryFindRandomGrid(IMapGrid mapGrid, out EntityCoordinates coordinates)
         {
-            if (!mapGrid.Index.IsValid())
+            if (!(mapGrid.GridEntityId).IsValid())
             {
                 coordinates = default;
                 return false;

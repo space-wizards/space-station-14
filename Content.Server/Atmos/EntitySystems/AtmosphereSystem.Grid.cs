@@ -297,7 +297,7 @@ namespace Content.Server.Atmos.EntitySystems
             foreach (var (position, tile) in gridAtmosphere.Tiles.ToArray())
             {
                 UpdateAdjacent(mapGrid, gridAtmosphere, tile);
-                InvalidateVisuals(mapGrid.Index, position);
+                InvalidateVisuals(mapGrid.GridEntityId, position);
             }
         }
 
@@ -480,7 +480,7 @@ namespace Content.Server.Atmos.EntitySystems
             // attempts to get the tile atmosphere for it before it has been revalidated by atmos.
             // The tile atmosphere will get revalidated on the next atmos tick, however.
 
-            return tileAtmosphere ?? new TileAtmosphere(mapGrid.Index, tile, new GasMixture(Atmospherics.CellVolume) {Temperature = Atmospherics.TCMB}, true);
+            return tileAtmosphere ?? new TileAtmosphere(mapGrid.GridEntityId, tile, new GasMixture(Atmospherics.CellVolume) {Temperature = Atmospherics.TCMB}, true);
         }
 
         #endregion
@@ -1566,7 +1566,7 @@ namespace Content.Server.Atmos.EntitySystems
                 return false;
             }
 
-            tuple = (grid.Index, grid.TileIndicesFor(coordinates));
+            tuple = (grid.GridEntityId, grid.TileIndicesFor(coordinates));
             return true;
         }
 

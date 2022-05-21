@@ -20,12 +20,12 @@ namespace Content.Client.Administration.UI.Tabs.AtmosTab
 
         protected override void EnteredTree()
         {
-            _data = IoCManager.Resolve<IMapManager>().GetAllGrids().Where(g => (int) g.Index != 0);
+            _data = IoCManager.Resolve<IMapManager>().GetAllGrids().Where(g => (int) g.GridEntityId != 0);
             foreach (var grid in _data)
             {
                 var player = IoCManager.Resolve<IPlayerManager>().LocalPlayer?.ControlledEntity;
                 var playerGrid = IoCManager.Resolve<IEntityManager>().GetComponentOrNull<TransformComponent>(player)?.GridUid;
-                GridOptions.AddItem($"{grid.Index} {(playerGrid == grid.Index ? " (Current)" : "")}");
+                GridOptions.AddItem($"{grid.GridEntityId} {(playerGrid == grid.GridEntityId ? " (Current)" : "")}");
             }
 
             GridOptions.OnItemSelected += eventArgs => GridOptions.SelectId(eventArgs.Id);
@@ -37,7 +37,7 @@ namespace Content.Client.Administration.UI.Tabs.AtmosTab
             if (_data == null)
                 return;
             var dataList = _data.ToList();
-            var selectedGrid = dataList[GridOptions.SelectedId].Index;
+            var selectedGrid = dataList[GridOptions.SelectedId].GridEntityId;
             IoCManager.Resolve<IClientConsoleHost>().ExecuteCommand($"addatmos {selectedGrid}");
         }
     }

@@ -524,14 +524,14 @@ namespace Content.Server.Decals
 
                 foreach (var grid in MapManager.FindGridsIntersecting(mapId, bounds))
                 {
-                    if (!chunks.ContainsKey(grid.Index))
-                        chunks[grid.Index] = _chunkIndexPool.Get();
+                    if (!chunks.ContainsKey(grid.GridEntityId))
+                        chunks[grid.GridEntityId] = _chunkIndexPool.Get();
 
                     var enumerator = new ChunkIndicesEnumerator(_transform.GetInvWorldMatrix(grid.GridEntityId, xformQuery).TransformBox(bounds), ChunkSize);
 
                     while (enumerator.MoveNext(out var indices))
                     {
-                        chunks[grid.Index].Add(indices.Value);
+                        chunks[grid.GridEntityId].Add(indices.Value);
                     }
                 }
             }

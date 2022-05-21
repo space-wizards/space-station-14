@@ -63,7 +63,7 @@ public sealed class ExplosionGridTileFlood : ExplosionTileFlood
             }
         }
 
-        if (referenceGrid == Grid.Index)
+        if (referenceGrid == Grid.GridEntityId)
             return;
 
         _needToTransform = true;

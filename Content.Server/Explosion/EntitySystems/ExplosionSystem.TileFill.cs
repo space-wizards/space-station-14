@@ -47,7 +47,7 @@ public sealed partial class ExplosionSystem : EntitySystem
             candidateGrid.TryGetTileRef(candidateGrid.WorldToTile(epicenter.Position), out var tileRef) &&
             !tileRef.Tile.IsEmpty)
         {
-            epicentreGrid = candidateGrid.Index;
+            epicentreGrid = candidateGrid.GridEntityId;
             initialTile = tileRef.GridIndices;
         }
         else if (referenceGrid != null)
@@ -278,7 +278,7 @@ public sealed partial class ExplosionSystem : EntitySystem
             if (TryComp(grid.GridEntityId, out PhysicsComponent? physics) && physics.Mass > mass)
             {
                 mass = physics.Mass;
-                referenceGrid = grid.Index;
+                referenceGrid = grid.GridEntityId;
             }
         }
 
@@ -305,7 +305,7 @@ public sealed partial class ExplosionSystem : EntitySystem
             if (TryComp(grid.GridEntityId, out PhysicsComponent? physics) && physics.Mass > mass)
             {
                 mass = physics.Mass;
-                referenceGrid = grid.Index;
+                referenceGrid = grid.GridEntityId;
             }
         }
 

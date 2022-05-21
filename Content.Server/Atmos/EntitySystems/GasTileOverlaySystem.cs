@@ -204,7 +204,7 @@ namespace Content.Server.Atmos.EntitySystems
 
             foreach (var grid in _mapManager.FindGridsIntersecting(xform.MapID, worldBounds))
             {
-                if (!_overlay.TryGetValue(grid.Index, out var chunks))
+                if (!_overlay.TryGetValue(grid.GridEntityId, out var chunks))
                 {
                     continue;
                 }

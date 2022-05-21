@@ -61,7 +61,7 @@ public sealed class FluidSpill : ContentIntegrationTest
         {
             mapId = mapManager.CreateMap();
             var grid = mapManager.CreateGrid(mapId);
-            gridId = grid.Index;
+            gridId = grid.GridEntityId;
 
             for (var x = 0; x < 3; x++)
             {
@@ -133,7 +133,7 @@ public sealed class FluidSpill : ContentIntegrationTest
                 }
             }
 
-            gridId = grid.Index;
+            gridId = grid.GridEntityId;
         });
 
         await server.WaitAssertion(() =>

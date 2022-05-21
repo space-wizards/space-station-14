@@ -48,19 +48,19 @@ namespace Content.MapRenderer.Painters
             var stopwatch = new Stopwatch();
             stopwatch.Start();
 
-            if (!_entities.TryGetValue(grid.Index, out var entities))
+            if (!_entities.TryGetValue(grid.GridEntityId, out var entities))
             {
-                Console.WriteLine($"No entities found on grid {grid.Index}");
+                Console.WriteLine($"No entities found on grid {grid.GridEntityId}");
                 return;
             }
 
             // Decals are always painted before entities, and are also optional.
-            if (_decals.TryGetValue(grid.Index, out var decals))
+            if (_decals.TryGetValue(grid.GridEntityId, out var decals))
                 _decalPainter.Run(gridCanvas, decals);
 
 
             _entityPainter.Run(gridCanvas, entities);
-            Console.WriteLine($"{nameof(GridPainter)} painted grid {grid.Index} in {(int) stopwatch.Elapsed.TotalMilliseconds} ms");
+            Console.WriteLine($"{nameof(GridPainter)} painted grid {grid.GridEntityId} in {(int) stopwatch.Elapsed.TotalMilliseconds} ms");
         }
 
         private ConcurrentDictionary<EntityUid, List<EntityData>> GetEntities()
@@ -126,7 +126,7 @@ namespace Content.MapRenderer.Painters
                         foreach (var (_, decal) in list)
                         {
                             var (x, y) = TransformLocalPosition(decal.Coordinates, grid);
-                            decals.GetOrNew(grid.Index).Add(new DecalData(decal, x, y));
+                            decals.GetOrNew(grid.GridEntityId).Add(new DecalData(decal, x, y));
                         }
                     }
                 }

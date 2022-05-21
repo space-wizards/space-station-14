@@ -93,7 +93,6 @@ namespace Content.IntegrationTests.Tests.Fluids
             MapId sMapId = default;
             IMapGrid sGrid;
             EntityUid sGridId = default;
-            EntityUid sGridEntity = default;
             EntityCoordinates sCoordinates = default;
 
             // Spawn a paused map with one tile to spawn puddles on
@@ -102,9 +101,8 @@ namespace Content.IntegrationTests.Tests.Fluids
                 sMapId = sMapManager.CreateMap();
                 sMapManager.SetMapPaused(sMapId, true);
                 sGrid = sMapManager.CreateGrid(sMapId);
-                sGridId = sGrid.Index;
-                sGridEntity = sGrid.GridEntityId;
-                entityManager.GetComponent<MetaDataComponent>(sGridEntity).EntityPaused = true; // See https://github.com/space-wizards/RobustToolbox/issues/1444
+                sGridId = sGrid.GridEntityId;
+                entityManager.GetComponent<MetaDataComponent>(sGridId).EntityPaused = true; // See https://github.com/space-wizards/RobustToolbox/issues/1444
 
                 var tileDefinition = sTileDefinitionManager["underplating"];
                 var tile = new Tile(tileDefinition.TileId);
