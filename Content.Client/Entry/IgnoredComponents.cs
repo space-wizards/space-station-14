@@ -45,6 +45,7 @@ namespace Content.Client.Entry
             "DiseaseDiagnoser",
             "DiseaseVaccine",
             "DiseaseVaccineCreator",
+            "ImmovableRod",
             "DiseaseZombie",
             "DiseaseBuildup",
             "ZombieTransfer",
