@@ -57,7 +57,6 @@ namespace Content.Client.Entry
             "ResearchServer",
             "ResearchPointSource",
             "ResearchClient",
-            "IdCardConsole",
             "MimePowers",
             "Polymorphable",
             "PolymorphedEntity",
