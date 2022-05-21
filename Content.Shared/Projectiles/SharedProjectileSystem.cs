@@ -2,8 +2,10 @@ using Robust.Shared.Physics.Dynamics;
 
 namespace Content.Shared.Projectiles
 {
-    public sealed class ProjectileSystem : EntitySystem
+    public abstract class SharedProjectileSystem : EntitySystem
     {
+        public const string ProjectileFixture = "projectile";
+
         public override void Initialize()
         {
             base.Initialize();
