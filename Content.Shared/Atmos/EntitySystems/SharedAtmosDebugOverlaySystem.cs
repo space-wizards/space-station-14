@@ -16,10 +16,10 @@ namespace Content.Shared.Atmos.EntitySystems
             public readonly float[] Moles;
             public readonly AtmosDirection PressureDirection;
             public readonly AtmosDirection LastPressureDirection;
-            public readonly bool InExcitedGroup;
+            public readonly int InExcitedGroup;
             public readonly AtmosDirection BlockDirection;
 
-            public AtmosDebugOverlayData(float temperature, float[] moles, AtmosDirection pressureDirection, AtmosDirection lastPressureDirection, bool inExcited, AtmosDirection blockDirection)
+            public AtmosDebugOverlayData(float temperature, float[] moles, AtmosDirection pressureDirection, AtmosDirection lastPressureDirection, int inExcited, AtmosDirection blockDirection)
             {
                 Temperature = temperature;
                 Moles = moles;

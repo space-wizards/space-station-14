@@ -29,7 +29,7 @@ public sealed class TemperatureArtifactSystem : EntitySystem
         if (component.EffectAdjacentTiles && transform.GridUid != null)
         {
             var adjacent = _atmosphereSystem.GetAdjacentTileMixtures(transform.GridUid.Value,
-                _transformSystem.GetGridOrMapTilePosition(uid, transform), invalidate: true);
+                _transformSystem.GetGridOrMapTilePosition(uid, transform), excite: true);
 
             foreach (var mixture in adjacent)
             {

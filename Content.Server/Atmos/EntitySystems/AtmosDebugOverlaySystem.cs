@@ -98,7 +98,7 @@ namespace Content.Server.Atmos.EntitySystems
 
             if (tile?.Air == null)
             {
-                return new AtmosDebugOverlayData(0, gases, AtmosDirection.Invalid, tile?.LastPressureDirection ?? AtmosDirection.Invalid, false, tile?.BlockedAirflow ?? AtmosDirection.Invalid);
+                return new AtmosDebugOverlayData(0, gases, AtmosDirection.Invalid, tile?.LastPressureDirection ?? AtmosDirection.Invalid, 0, tile?.BlockedAirflow ?? AtmosDirection.Invalid);
             }
             else
             {
@@ -106,7 +106,7 @@ namespace Content.Server.Atmos.EntitySystems
                 {
                     gases[i] = tile.Air.GetMoles(i);
                 }
-                return new AtmosDebugOverlayData(tile.Air.Temperature, gases, tile.PressureDirection, tile.LastPressureDirection, tile.ExcitedGroup != null, tile.BlockedAirflow);
+                return new AtmosDebugOverlayData(tile.Air.Temperature, gases, tile.PressureDirection, tile.LastPressureDirection, tile.ExcitedGroup?.GetHashCode() ?? 0, tile.BlockedAirflow);
             }
         }
 

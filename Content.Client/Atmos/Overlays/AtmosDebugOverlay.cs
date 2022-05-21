@@ -142,15 +142,19 @@ namespace Content.Client.Atmos.Overlays
                                 }
 
                                 // -- Excited Groups --
-                                if (data.InExcitedGroup)
+                                if (data.InExcitedGroup != 0)
                                 {
                                     var tilePos = new Vector2(tile.X, tile.Y);
                                     var basisA = tilePos;
                                     var basisB = tilePos + new Vector2(1.0f, 1.0f);
                                     var basisC = tilePos + new Vector2(0.0f, 1.0f);
                                     var basisD = tilePos + new Vector2(1.0f, 0.0f);
-                                    drawHandle.DrawLine(basisA, basisB, Color.Cyan);
-                                    drawHandle.DrawLine(basisC, basisD, Color.Cyan);
+                                    var color = Color.White // Use first three bytes for an unique color... Good enough?
+                                        .WithRed(   data.InExcitedGroup & 0x000F)
+                                        .WithGreen((data.InExcitedGroup & 0x00F0) >>4)
+                                        .WithBlue( (data.InExcitedGroup & 0x0F00) >>8);
+                                    drawHandle.DrawLine(basisA, basisB, color);
+                                    drawHandle.DrawLine(basisC, basisD, color);
                                 }
                             }
                         }

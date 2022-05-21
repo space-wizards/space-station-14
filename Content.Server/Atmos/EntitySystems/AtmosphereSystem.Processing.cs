@@ -1,14 +1,9 @@
-using System;
-using System.Collections.Generic;
 using Content.Server.Atmos.Components;
 using Content.Server.Atmos.Piping.Components;
 using Content.Server.NodeContainer.NodeGroups;
 using Content.Shared.Atmos;
 using Content.Shared.Maps;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
 using Robust.Shared.Map;
-using Robust.Shared.Maths;
 using Robust.Shared.Timing;
 
 namespace Content.Server.Atmos.EntitySystems
@@ -75,13 +70,11 @@ namespace Content.Server.Atmos.EntitySystems
                 GridUpdateAdjacent(uid, atmosphere, ref updateAdjacentEv);
 
                 // Call this instead of the grid method as the map has a say on whether the tile is space or not.
-                if (!mapGrid.TryGetTileRef(indices, out _) && !isAirBlocked)
+                if ((!mapGrid.TryGetTileRef(indices, out var t) || t.Tile == Tile.Empty) && !isAirBlocked)
                 {
                     tile.Air = GetTileMixture(null, mapUid, indices);
                     tile.MolesArchived = tile.Air != null ? new float[Atmospherics.AdjustedNumberOfGases] : null;
-                    tile.Space = IsTileSpace(uid, mapUid, indices, mapGridComp);
-                    atmosphere.Tiles[indices] = tile;
-
+                    tile.Space = IsTileSpace(null, mapUid, indices, mapGridComp);
                 } else if (isAirBlocked)
                 {
                     var nullAir = false;
@@ -134,12 +127,13 @@ namespace Content.Server.Atmos.EntitySystems
 
                 InvalidateVisuals(mapGrid.Index, indices);
 
-                foreach (var adjacent in tile.AdjacentTiles)
+                for (var i = 0; i < Atmospherics.Directions; i++)
                 {
-                    if (adjacent?.Air == null)
-                        continue;
+                    var direction = (AtmosDirection) (1 << i);
+                    var otherIndices = indices.Offset(direction);
 
-                    AddActiveTile(atmosphere, adjacent);
+                    if (atmosphere.Tiles.TryGetValue(otherIndices, out var otherTile))
+                        AddActiveTile(atmosphere, otherTile);
                 }
 
                 if (number++ < InvalidCoordinatesLagCheckIterations) continue;

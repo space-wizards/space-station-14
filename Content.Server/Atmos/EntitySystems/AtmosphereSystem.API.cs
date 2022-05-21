@@ -10,12 +10,12 @@ namespace Content.Server.Atmos.EntitySystems;
 
 public partial class AtmosphereSystem
 {
-    public GasMixture? GetContainingMixture(EntityUid uid, bool ignoreExposed = false, bool invalidate = false, TransformComponent? transform = null)
+    public GasMixture? GetContainingMixture(EntityUid uid, bool ignoreExposed = false, bool excite = false, TransformComponent? transform = null)
     {
         if (!ignoreExposed)
         {
             // Used for things like disposals/cryo to change which air people are exposed to.
-            var ev = new AtmosExposedGetAirEvent(uid, invalidate);
+            var ev = new AtmosExposedGetAirEvent(uid, excite);
 
             // Give the entity itself a chance to handle this.
             RaiseLocalEvent(uid, ref ev, false);
@@ -25,7 +25,7 @@ public partial class AtmosphereSystem
 
             // We need to get the parent now, so we need the transform... If the parent is invalid, we can't do much else.
             if(!Resolve(uid, ref transform) || !transform.ParentUid.IsValid() || transform.MapUid == null)
-                return GetTileMixture(null, null, Vector2i.Zero, invalidate);
+                return GetTileMixture(null, null, Vector2i.Zero, excite);
 
             // Give the parent entity a chance to handle the event...
             RaiseLocalEvent(transform.ParentUid, ref ev, false);
@@ -37,7 +37,7 @@ public partial class AtmosphereSystem
         // Oops, we did a little bit of code duplication...
         else if(!Resolve(uid, ref transform))
         {
-            return GetTileMixture(null, null, Vector2i.Zero, invalidate);
+            return GetTileMixture(null, null, Vector2i.Zero, excite);
         }
 
 
@@ -45,7 +45,7 @@ public partial class AtmosphereSystem
         var mapUid = transform.MapUid;
         var position = _transformSystem.GetGridOrMapTilePosition(uid, transform);
 
-        return GetTileMixture(gridUid, mapUid, position, invalidate);
+        return GetTileMixture(gridUid, mapUid, position, excite);
     }
 
     public bool HasAtmosphere(EntityUid gridUid)
@@ -72,9 +72,9 @@ public partial class AtmosphereSystem
         return ev.Simulated;
     }
 
-    public IEnumerable<GasMixture> GetAllMixtures(EntityUid gridUid, bool invalidate = false)
+    public IEnumerable<GasMixture> GetAllMixtures(EntityUid gridUid, bool excite = false)
     {
-        var ev = new GetAllMixturesMethodEvent(gridUid, invalidate);
+        var ev = new GetAllMixturesMethodEvent(gridUid, excite);
         RaiseLocalEvent(gridUid, ref ev);
 
         if(!ev.Handled)
@@ -90,9 +90,9 @@ public partial class AtmosphereSystem
         RaiseLocalEvent(gridUid, ref ev);
     }
 
-    public GasMixture? GetTileMixture(EntityUid? gridUid, EntityUid? mapUid, Vector2i tile, bool invalidate = false)
+    public GasMixture? GetTileMixture(EntityUid? gridUid, EntityUid? mapUid, Vector2i tile, bool excite = false)
     {
-        var ev = new GetTileMixtureMethodEvent(gridUid, mapUid, tile, invalidate);
+        var ev = new GetTileMixtureMethodEvent(gridUid, mapUid, tile, excite);
 
         // If we've been passed a grid, try to let it handle it.
         if(gridUid.HasValue)
@@ -160,17 +160,17 @@ public partial class AtmosphereSystem
         return GetHeatCapacity(GetTileMixture(gridUid, mapUid, tile) ?? GasMixture.SpaceGas);
     }
 
-    public IEnumerable<Vector2i> GetAdjacentTiles(EntityUid gridUid, Vector2i tile, bool includeBlocked = false)
+    public IEnumerable<Vector2i> GetAdjacentTiles(EntityUid gridUid, Vector2i tile)
     {
-        var ev = new GetAdjacentTilesMethodEvent(gridUid, tile, includeBlocked);
+        var ev = new GetAdjacentTilesMethodEvent(gridUid, tile);
         RaiseLocalEvent(gridUid, ref ev);
 
         return ev.Result ?? Enumerable.Empty<Vector2i>();
     }
 
-    public IEnumerable<GasMixture> GetAdjacentTileMixtures(EntityUid gridUid, Vector2i tile, bool includeBlocked = false, bool invalidate = false)
+    public IEnumerable<GasMixture> GetAdjacentTileMixtures(EntityUid gridUid, Vector2i tile, bool includeBlocked = false, bool excite = false)
     {
-        var ev = new GetAdjacentTileMixturesMethodEvent(gridUid, tile, includeBlocked, invalidate);
+        var ev = new GetAdjacentTileMixturesMethodEvent(gridUid, tile, includeBlocked, excite);
         RaiseLocalEvent(gridUid, ref ev);
 
         return ev.Result ?? Enumerable.Empty<GasMixture>();
@@ -249,13 +249,13 @@ public partial class AtmosphereSystem
         (EntityUid Grid, bool Simulated = false, bool Handled = false);
 
     [ByRefEvent] private record struct GetAllMixturesMethodEvent
-        (EntityUid Grid, bool Invalidate = false, IEnumerable<GasMixture>? Mixtures = null, bool Handled = false);
+        (EntityUid Grid, bool Excite = false, IEnumerable<GasMixture>? Mixtures = null, bool Handled = false);
 
     [ByRefEvent] private record struct InvalidateTileMethodEvent
         (EntityUid Grid, Vector2i Tile, bool Handled = false);
 
     [ByRefEvent] private record struct GetTileMixtureMethodEvent
-        (EntityUid? GridUid, EntityUid? MapUid, Vector2i Tile, bool Invalidate = false, GasMixture? Mixture = null, bool Handled = false);
+        (EntityUid? GridUid, EntityUid? MapUid, Vector2i Tile, bool Excite = false, GasMixture? Mixture = null, bool Handled = false);
 
     [ByRefEvent] private record struct ReactTileMethodEvent
         (EntityUid GridId, Vector2i Tile, ReactionResult Result = default, bool Handled = false);
@@ -267,10 +267,10 @@ public partial class AtmosphereSystem
         (EntityUid? Grid, EntityUid? Map, Vector2i Tile, IMapGridComponent? MapGridComponent = null, bool Result = true, bool Handled = false);
 
     [ByRefEvent] private record struct GetAdjacentTilesMethodEvent
-        (EntityUid Grid, Vector2i Tile, bool IncludeBlocked, IEnumerable<Vector2i>? Result = null, bool Handled = false);
+        (EntityUid Grid, Vector2i Tile, IEnumerable<Vector2i>? Result = null, bool Handled = false);
 
     [ByRefEvent] private record struct GetAdjacentTileMixturesMethodEvent
-        (EntityUid Grid, Vector2i Tile, bool IncludeBlocked, bool Invalidate,
+        (EntityUid Grid, Vector2i Tile, bool IncludeBlocked, bool Excite,
             IEnumerable<GasMixture>? Result = null, bool Handled = false);
 
     [ByRefEvent] private record struct UpdateAdjacentMethodEvent

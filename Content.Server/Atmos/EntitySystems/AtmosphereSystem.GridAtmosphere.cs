@@ -156,8 +156,9 @@ public sealed partial class AtmosphereSystem
 
                 if (invalidate)
                 {
-                    var ev = new InvalidateTileMethodEvent(gridUid, indices);
-                    GridInvalidateTile(gridUid, grid, ref ev);
+                    //var ev = new InvalidateTileMethodEvent(gridUid, indices);
+                    //GridInvalidateTile(gridUid, grid, ref ev);
+                    AddActiveTile(grid, tile);
                 }
 
                 yield return tile.Air;
@@ -165,7 +166,7 @@ public sealed partial class AtmosphereSystem
         }
 
         // Return the enumeration over all the tiles in the atmosphere.
-        args.Mixtures = EnumerateMixtures(uid, component, args.Invalidate);
+        args.Mixtures = EnumerateMixtures(uid, component, args.Excite);
         args.Handled = true;
     }
 
@@ -187,7 +188,7 @@ public sealed partial class AtmosphereSystem
         if (!component.Tiles.TryGetValue(args.Tile, out var tile))
             return; // Do NOT handle the event if we don't have that tile, the map will handle it instead.
 
-        if (args.Invalidate)
+        if (args.Excite)
             component.InvalidatedCoords.Add(args.Tile);
 
         args.Mixture = tile.Air;
@@ -252,16 +253,11 @@ public sealed partial class AtmosphereSystem
         if (!Resolve(uid, ref mapGridComp))
             return;
 
-        // If the grid does not have that tile, let's not handle this.
-        if (!mapGridComp.Grid.TryGetTileRef(args.Tile, out var tileRef))
+        // We don't have that tile, so let the map handle it.
+        if (!component.Tiles.TryGetValue(args.Tile, out var tile))
             return;
 
-        // If the tile is marked as "space", let's not handle this either. The map should handle it instead.
-        if (((ContentTileDefinition) _tileDefinitionManager[tileRef.Tile.TypeId]).IsSpace)
-            return;
-
-        // The tile is, in fact, not space!
-        args.Result = false;
+        args.Result = tile.Space;
         args.Handled = true;
     }
 
@@ -346,11 +342,9 @@ public sealed partial class AtmosphereSystem
                     space:IsTileSpace(uid, mapUid, otherIndices, mapGridComp));
             }
 
-            tile.AdjacentTiles[direction.ToIndex()] = adjacent;
-
             var oppositeDirection = direction.GetOpposite();
 
-            adjacent.AdjacentTiles[oppositeDirection.ToIndex()] = tile;
+            adjacent.BlockedAirflow = GetBlockedDirections(mapGridComp.Grid, adjacent.GridIndices);
 
             // Pass in IMapGridComponent so we don't have to resolve it for every adjacent direction.
             var tileBlockedEv = new IsTileAirBlockedMethodEvent(uid, tile.GridIndices, direction, mapGridComp);
@@ -363,19 +357,23 @@ public sealed partial class AtmosphereSystem
             if (!adjacent.BlockedAirflow.IsFlagSet(oppositeDirection) && !tileBlockedEv.Result)
             {
                 adjacent.AdjacentBits |= oppositeDirection;
+                adjacent.AdjacentTiles[oppositeDirection.ToIndex()] = tile;
             }
             else
             {
                 adjacent.AdjacentBits &= ~oppositeDirection;
+                adjacent.AdjacentTiles[oppositeDirection.ToIndex()] = null;
             }
 
             if (!tile.BlockedAirflow.IsFlagSet(direction) && !adjacentBlockedEv.Result)
             {
                 tile.AdjacentBits |= direction;
+                tile.AdjacentTiles[direction.ToIndex()] = adjacent;
             }
             else
             {
                 tile.AdjacentBits &= ~direction;
+                tile.AdjacentTiles[direction.ToIndex()] = null;
             }
 
             DebugTools.Assert(!(tile.AdjacentBits.IsFlagSet(direction) ^
@@ -413,8 +411,9 @@ public sealed partial class AtmosphereSystem
         tile.Hotspot = new Hotspot();
         args.Handled = true;
 
-        var ev = new InvalidateTileMethodEvent(uid, args.Tile);
-        GridInvalidateTile(uid, component, ref ev);
+        //var ev = new InvalidateTileMethodEvent(uid, args.Tile);
+        //GridInvalidateTile(uid, component, ref ev);
+        AddActiveTile(component, tile);
     }
 
     private void GridIsHotspotActive(EntityUid uid, GridAtmosphereComponent component,
