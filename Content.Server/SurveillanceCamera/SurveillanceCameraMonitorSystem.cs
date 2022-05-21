@@ -29,6 +29,7 @@ public sealed class SurveillanceCameraMonitorSystem : EntitySystem
         SubscribeLocalEvent<SurveillanceCameraMonitorComponent, AfterActivatableUIOpenEvent>(OnToggleInterface);
         SubscribeLocalEvent<SurveillanceCameraMonitorComponent, SurveillanceCameraRefreshCamerasMessage>(OnRefreshCamerasMessage);
         SubscribeLocalEvent<SurveillanceCameraMonitorComponent, SurveillanceCameraRefreshSubnetsMessage>(OnRefreshSubnetsMessage);
+        SubscribeLocalEvent<SurveillanceCameraMonitorComponent, SurveillanceCameraDisconnectMessage>(OnDisconnectMessage);
     }
 
     private const float _maxHeartbeatTime = 300f;
@@ -153,6 +154,12 @@ public sealed class SurveillanceCameraMonitorSystem : EntitySystem
                     break;
             }
         }
+    }
+
+    private void OnDisconnectMessage(EntityUid uid, SurveillanceCameraMonitorComponent component,
+        SurveillanceCameraDisconnectMessage message)
+    {
+        DisconnectCamera(uid, true, component);
     }
 
     private void OnRefreshCamerasMessage(EntityUid uid, SurveillanceCameraMonitorComponent component,

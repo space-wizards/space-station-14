@@ -62,6 +62,11 @@ public sealed class SurveillanceCameraRefreshCamerasMessage : BoundUserInterface
 public sealed class SurveillanceCameraRefreshSubnetsMessage : BoundUserInterfaceMessage
 {}
 
+// Sent when the user wants to disconnect the monitor from the camera.
+[Serializable, NetSerializable]
+public sealed class SurveillanceCameraDisconnectMessage : BoundUserInterfaceMessage
+{}
+
 [Serializable, NetSerializable]
 public enum SurveillanceCameraMonitorUiKey : byte
 {
