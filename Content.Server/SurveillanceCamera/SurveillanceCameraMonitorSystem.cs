@@ -110,8 +110,8 @@ public sealed class SurveillanceCameraMonitorSystem : EntitySystem
                 case SurveillanceCameraSystem.CameraConnectMessage:
                     if (component.NextCameraAddress == args.SenderAddress)
                     {
-                        TrySwitchCameraByUid(uid, args.Sender, component);
                         component.ActiveCameraAddress = args.SenderAddress;
+                        TrySwitchCameraByUid(uid, args.Sender, component);
                     }
 
                     component.NextCameraAddress = null;
