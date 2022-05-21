@@ -1,17 +1,4 @@
 Entries:
-- author: mirrorcult
-  changes:
-  - {message: Drones can now wear hats again. Sorry about the delay., type: Add}
-  id: 1074
-  time: '2022-02-18T02:42:33.0000000+00:00'
-- author: mirrorcult
-  changes:
-  - {message: 'Vitamin now helps with bleeding, and Protein now helps recover your
-      blood level faster.', type: Add}
-  - {message: 'Blood puddles evaporate much, much slower.', type: Tweak}
-  - {message: Iron/tranex tweaked slightly., type: Tweak}
-  id: 1075
-  time: '2022-02-18T02:42:47.0000000+00:00'
 - author: Rane
   changes:
   - {message: Added emags to the traitor uplink., type: Add}
@@ -3027,3 +3014,14 @@ Entries:
   - {message: Fixed equipping items inside a locker., type: Fix}
   id: 1573
   time: '2022-05-21T17:39:13.0000000+00:00'
+- author: Veritius
+  changes:
+  - {message: Removed security access from the syndicate segway, type: Fix}
+  id: 1574
+  time: '2022-05-21T20:35:16.0000000+00:00'
+- author: ike709
+  changes:
+  - {message: Fixed being able to use multitools on airlocks without first opening
+      the wiring panel with a screwdriver, type: Fix}
+  id: 1575
+  time: '2022-05-21T20:35:47.0000000+00:00'
