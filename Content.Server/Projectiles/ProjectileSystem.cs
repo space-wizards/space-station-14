@@ -1,5 +1,8 @@
 using Content.Server.Administration.Logs;
 using Content.Server.Projectiles.Components;
+using Content.Server.Weapon.Melee;
+using Content.Server.Weapon.Ranged;
+using Content.Shared.Audio;
 using Content.Shared.Body.Components;
 using Content.Shared.Camera;
 using Content.Shared.Damage;
@@ -9,15 +12,17 @@ using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.Physics.Dynamics;
 using Robust.Shared.Player;
+using Robust.Shared.Prototypes;
 
 namespace Content.Server.Projectiles
 {
     [UsedImplicitly]
-    internal sealed class ProjectileSystem : EntitySystem
+    public sealed class ProjectileSystem : EntitySystem
     {
         [Dependency] private readonly DamageableSystem _damageableSystem = default!;
         [Dependency] private readonly AdminLogSystem _adminLogSystem = default!;
         [Dependency] private readonly CameraRecoilSystem _cameraRecoil = default!;
+        [Dependency] private readonly GunSystem _guns = default!;
 
         public override void Initialize()
         {
@@ -35,42 +40,25 @@ namespace Content.Server.Projectiles
 
             var otherEntity = args.OtherFixture.Body.Owner;
 
-            var coordinates = EntityManager.GetComponent<TransformComponent>(args.OtherFixture.Body.Owner).Coordinates;
-            var playerFilter = Filter.Pvs(coordinates);
+            var modifiedDamage = _damageableSystem.TryChangeDamage(otherEntity, component.Damage);
+            component.DamagedEntity = true;
 
-            if (!EntityManager.GetComponent<MetaDataComponent>(otherEntity).EntityDeleted && component.SoundHitSpecies != null &&
-                EntityManager.HasComponent<SharedBodyComponent>(otherEntity))
-            {
-                SoundSystem.Play(playerFilter, component.SoundHitSpecies.GetSound(), coordinates);
-            }
-            else
-            {
-                var soundHit = component.SoundHit?.GetSound();
+            if (modifiedDamage is not null && EntityManager.EntityExists(component.Shooter))
+                _adminLogSystem.Add(LogType.BulletHit,
+                    HasComp<ActorComponent>(otherEntity) ? LogImpact.Extreme : LogImpact.High,
+                    $"Projectile {ToPrettyString(component.Owner):projectile} shot by {ToPrettyString(component.Shooter):user} hit {ToPrettyString(otherEntity):target} and dealt {modifiedDamage.Total:damage} damage");
 
-                if (!string.IsNullOrEmpty(soundHit))
-                    SoundSystem.Play(playerFilter, soundHit, coordinates);
-            }
-
-            if (!EntityManager.GetComponent<MetaDataComponent>(otherEntity).EntityDeleted)
-            {
-                var dmg = _damageableSystem.TryChangeDamage(otherEntity, component.Damage);
-                component.DamagedEntity = true;
-
-                if (dmg is not null && EntityManager.EntityExists(component.Shooter))
-                    _adminLogSystem.Add(LogType.BulletHit,
-                        HasComp<ActorComponent>(otherEntity) ? LogImpact.Extreme : LogImpact.High,
-                        $"Projectile {ToPrettyString(component.Owner):projectile} shot by {ToPrettyString(component.Shooter):user} hit {ToPrettyString(otherEntity):target} and dealt {dmg.Total:damage} damage");
-            }
+            _guns.PlaySound(otherEntity, modifiedDamage, component.SoundHit, component.ForceSound);
 
             // Damaging it can delete it
-            if (!Deleted(otherEntity) && HasComp<CameraRecoilComponent>(otherEntity))
+            if (HasComp<CameraRecoilComponent>(otherEntity))
             {
                 var direction = args.OurFixture.Body.LinearVelocity.Normalized;
                 _cameraRecoil.KickCamera(otherEntity, direction);
             }
 
             if (component.DeleteOnCollide)
-                EntityManager.QueueDeleteEntity(uid);
+                QueueDel(uid);
         }
 
         public override void Update(float frameTime)
