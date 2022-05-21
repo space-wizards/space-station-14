@@ -1,4 +1,4 @@
-<SS14Window xmlns="https://spacestation14.io"
+<DefaultWindow xmlns="https://spacestation14.io"
             Title="{Loc 'comp-ringer-ui-menu-title'}"
             MinSize="256 128"
             SetSize="256 128">
@@ -70,4 +70,4 @@
                 </BoxContainer>
             </PanelContainer>
         </BoxContainer>
-</SS14Window>
+</DefaultWindow>
