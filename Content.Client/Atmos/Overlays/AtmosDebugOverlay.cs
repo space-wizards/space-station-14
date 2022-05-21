@@ -141,10 +141,11 @@ namespace Content.Client.Atmos.Overlays
                                     DrawPressureDirection(drawHandle, data.LastPressureDirection, tile, Color.LightGray);
                                 }
 
+                                var tilePos = new Vector2(tile.X, tile.Y);
+
                                 // -- Excited Groups --
                                 if (data.InExcitedGroup != 0)
                                 {
-                                    var tilePos = new Vector2(tile.X, tile.Y);
                                     var basisA = tilePos;
                                     var basisB = tilePos + new Vector2(1.0f, 1.0f);
                                     var basisC = tilePos + new Vector2(0.0f, 1.0f);
@@ -155,6 +156,12 @@ namespace Content.Client.Atmos.Overlays
                                         .WithBlue( (data.InExcitedGroup & 0x0F00) >>8);
                                     drawHandle.DrawLine(basisA, basisB, color);
                                     drawHandle.DrawLine(basisC, basisD, color);
+                                }
+
+                                // -- Space Tiles --
+                                if (data.IsSpace)
+                                {
+                                    drawHandle.DrawCircle(tilePos + Vector2.One/2, 0.125f, Color.Orange);
                                 }
                             }
                         }
