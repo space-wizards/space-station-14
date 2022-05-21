@@ -4,6 +4,7 @@ using Content.Shared.Body.Components;
 using Content.Shared.Camera;
 using Content.Shared.Damage;
 using Content.Shared.Database;
+using Content.Shared.Projectiles;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
@@ -13,7 +14,7 @@ using Robust.Shared.Player;
 namespace Content.Server.Projectiles
 {
     [UsedImplicitly]
-    internal sealed class ProjectileSystem : EntitySystem
+    public sealed class ProjectileSystem : SharedProjectileSystem
     {
         [Dependency] private readonly DamageableSystem _damageableSystem = default!;
         [Dependency] private readonly AdminLogSystem _adminLogSystem = default!;
@@ -28,7 +29,7 @@ namespace Content.Server.Projectiles
         private void HandleCollide(EntityUid uid, ProjectileComponent component, StartCollideEvent args)
         {
             // This is so entities that shouldn't get a collision are ignored.
-            if (!args.OtherFixture.Hard || component.DamagedEntity)
+            if (args.OurFixture.ID != ProjectileFixture || !args.OtherFixture.Hard || component.DamagedEntity)
             {
                 return;
             }
@@ -36,7 +37,7 @@ namespace Content.Server.Projectiles
             var otherEntity = args.OtherFixture.Body.Owner;
 
             var coordinates = EntityManager.GetComponent<TransformComponent>(args.OtherFixture.Body.Owner).Coordinates;
-            var playerFilter = Filter.Pvs(coordinates);
+            var playerFilter = Filter.Pvs(coordinates, entityMan: EntityManager);
 
             if (!EntityManager.GetComponent<MetaDataComponent>(otherEntity).EntityDeleted && component.SoundHitSpecies != null &&
                 EntityManager.HasComponent<SharedBodyComponent>(otherEntity))
