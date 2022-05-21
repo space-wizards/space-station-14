@@ -57,10 +57,10 @@ public sealed class NewGunSystem : SharedNewGunSystem
     }
 
 
-    protected override void PlaySound(EntityUid gun, string? sound, EntityUid? user = null)
+    protected override void PlaySound(NewGunComponent gun, string? sound, int shots, EntityUid? user = null)
     {
         if (sound == null) return;
 
-        SoundSystem.Play(Filter.Pvs(gun).RemoveWhereAttachedEntity(e => e == user), sound, gun);
+        SoundSystem.Play(Filter.Pvs(gun.Owner).RemoveWhereAttachedEntity(e => e == user), sound, gun.Owner);
     }
 }

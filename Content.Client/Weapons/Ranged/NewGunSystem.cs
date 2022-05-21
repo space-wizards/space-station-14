@@ -1,5 +1,7 @@
 using Content.Client.CombatMode;
 using Content.Shared.Hands.Components;
+using Content.Shared.Input;
+using Content.Shared.Pulling;
 using Content.Shared.Weapons.Ranged;
 using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
@@ -8,6 +10,7 @@ using Robust.Client.Player;
 using Robust.Shared.Audio;
 using Robust.Shared.GameStates;
 using Robust.Shared.Input;
+using Robust.Shared.Input.Binding;
 using Robust.Shared.Player;
 
 namespace Content.Client.Weapons.Ranged;
@@ -18,12 +21,6 @@ public sealed class NewGunSystem : SharedNewGunSystem
     [Dependency] private readonly IInputManager _inputManager = default!;
     [Dependency] private readonly IPlayerManager _player = default!;
     [Dependency] private readonly InputSystem _inputSystem = default!;
-
-    /// <summary>
-    /// Due to the fact you may be re-running already predicted ticks and fire for the first time
-    /// We need to track if we need to send the server our shot.
-    /// </summary>
-    private bool _firstShot = true;
 
     public override void Initialize()
     {
@@ -37,6 +34,7 @@ public sealed class NewGunSystem : SharedNewGunSystem
         if (args.Current is not NewGunComponentState state) return;
 
         component.NextFire = state.NextFire;
+        component.ShotCounter = state.ShotCounter;
     }
 
     public override void Update(float frameTime)
@@ -47,7 +45,6 @@ public sealed class NewGunSystem : SharedNewGunSystem
 
         if (entityNull == null)
         {
-            _firstShot = true;
             return;
         }
 
@@ -56,23 +53,22 @@ public sealed class NewGunSystem : SharedNewGunSystem
 
         if (gun == null)
         {
-            _firstShot = true;
             return;
         }
 
         if (_inputSystem.CmdStates.GetState(EngineKeyFunctions.Use) != BoundKeyState.Down)
         {
-            _firstShot = true;
             StopShooting(gun);
             return;
         }
 
         var mousePos = _eyeManager.ScreenToMap(_inputManager.MouseScreenPosition);
         gun.ShootCoordinates = mousePos;
+        var oldShotCounter = gun.ShotCounter;
 
         if (AttemptShoot(entity, gun))
         {
-            if (PredictedShoot)
+            if (IsPredictedShot(gun, oldShotCounter))
             {
                 Sawmill.Debug($"Sending shoot request tick {Timing.CurTick} / {Timing.CurTime}");
 
@@ -82,16 +78,17 @@ public sealed class NewGunSystem : SharedNewGunSystem
                     Gun = gun.Owner,
                 });
             }
-
-            _firstShot = false;
         }
     }
 
-    private bool PredictedShoot => (_firstShot || (Timing.IsFirstTimePredicted && Timing.InPrediction));
-
-    protected override void PlaySound(EntityUid gun, string? sound, EntityUid? user = null)
+    private bool IsPredictedShot(NewGunComponent gun, int shots)
     {
-        if (sound == null || user == null || !PredictedShoot) return;
-        SoundSystem.Play(Filter.Local(), sound, gun);
+        return (shots == 0 || (Timing.IsFirstTimePredicted && Timing.InPrediction));
+    }
+
+    protected override void PlaySound(NewGunComponent gun, string? sound, int shots, EntityUid? user = null)
+    {
+        if (sound == null || user == null || !IsPredictedShot(gun, shots)) return;
+        SoundSystem.Play(Filter.Local(), sound, gun.Owner);
     }
 }

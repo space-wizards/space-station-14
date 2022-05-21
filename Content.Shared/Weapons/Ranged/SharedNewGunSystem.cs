@@ -4,7 +4,6 @@ using Robust.Shared.GameStates;
 using Robust.Shared.Map;
 using Robust.Shared.Serialization;
 using Robust.Shared.Timing;
-using Robust.Shared.Utility;
 
 namespace Content.Shared.Weapons.Ranged;
 
@@ -26,6 +25,7 @@ public abstract class SharedNewGunSystem : EntitySystem
         args.State = new NewGunComponentState
         {
             NextFire = component.NextFire,
+            ShotCounter = component.ShotCounter,
         };
     }
 
@@ -53,9 +53,10 @@ public abstract class SharedNewGunSystem : EntitySystem
         Sawmill.Debug($"Stopped shooting {ToPrettyString(gun.Owner)}");
         gun.ShotCounter = 0;
         gun.ShootCoordinates = null;
+        Dirty(gun);
     }
 
-    protected virtual bool AttemptShoot(EntityUid user, NewGunComponent gun)
+    protected bool AttemptShoot(EntityUid user, NewGunComponent gun)
     {
         if (gun.FireRate <= 0f)
             return false;
@@ -82,17 +83,19 @@ public abstract class SharedNewGunSystem : EntitySystem
             gun.NextFire += TimeSpan.FromSeconds(1f / gun.FireRate);
         }
 
+        var oldShots = gun.ShotCounter;
+
         // Shoot confirmed
         gun.ShotCounter += shots;
 
         // Predicted sound moment
-        PlaySound(gun.Owner, gun.SoundGunshot?.GetSound(), user);
+        PlaySound(gun, gun.SoundGunshot?.GetSound(), oldShots, user);
         Dirty(gun);
 
         return true;
     }
 
-    protected abstract void PlaySound(EntityUid gun, string? sound, EntityUid? user = null);
+    protected abstract void PlaySound(NewGunComponent gun, string? sound, int shots, EntityUid? user = null);
 
     /// <summary>
     /// Raised on the client to indicate it'd like to shoot.
@@ -107,6 +110,8 @@ public abstract class SharedNewGunSystem : EntitySystem
     [Serializable, NetSerializable]
     protected sealed class NewGunComponentState : ComponentState
     {
+        public string? SoundGunshot;
         public TimeSpan NextFire;
+        public int ShotCounter;
     }
 }
