@@ -99,3 +99,73 @@
   - type: Stack
     stackType: Plasteel
     count: 1
+
+- type: entity
+  parent: SheetMetalBase
+  id: SheetTitanium
+  name: titanium
+  suffix: Full
+  components:
+  - type: Material
+    materials:
+      Titanium: 100
+  - type: Stack
+    stackType: Steel
+  - type: Sprite
+    state: titanium_3
+  - type: Item
+    HeldPrefix: titanium
+  - type: Appearance
+    visuals:
+    - type: StackVisualizer
+      stackLayers:
+      - titanium
+      - titanium_2
+      - titanium_3
+
+- type: entity
+  parent: SheetTitanium
+  id: SheetTitanium1
+  name: titanium
+  suffix: Single
+  components:
+  - type: Sprite
+    state: titanium
+  - type: Stack
+    stackType: Titanium
+    count: 1
+
+- type: entity
+  parent: SheetMetalBase
+  id: SheetPlastitanium
+  name: plastitanium
+  suffix: Full
+  components:
+  - type: Material
+    materials:
+      Titanium: 100
+  - type: Stack
+    stackType: Steel
+  - type: Sprite
+    state: titanium_3
+  - type: Item
+    HeldPrefix: plastitanium
+  - type: Appearance
+    visuals:
+    - type: StackVisualizer
+      stackLayers:
+      - plastitanium
+      - plastitanium_2
+      - plastitanium_3
+
+- type: entity
+  parent: SheetPlastitanium
+  id: SheetPlastitanium1
+  name: plastitanium
+  suffix: Single
+  components:
+  - type: Sprite
+    state: plastitanium
+  - type: Stack
+    stackType: Plastitanium
+    count: 1
