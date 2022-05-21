@@ -278,6 +278,7 @@
     - CircuitImprinterMachineCircuitboard
     - UniformPrinterMachineCircuitboard
     - SurveillanceCameraRouterCircuitboard
+    - SurveillanceCameraWirelessRouterCircuitboard
     - AirAlarmElectronics
     - FireAlarmElectronics
 

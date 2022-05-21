@@ -1,7 +1,7 @@
 - type: entity
   parent: BaseMachinePowered
   id: SurveillanceCameraRouterBase
-  name: router
+  name: camera router
   description: A surveillance camera router. It routes. Perhaps.
   components:
     - type: DeviceNetwork
@@ -110,3 +110,46 @@
   components:
     - type: SurveillanceCameraRouter
       subnetFrequency: SurveillanceCameraGeneral
+
+- type: entity
+  parent: BaseMachinePowered
+  id: SurveillanceCameraWirelessRouterBase
+  name: wireless camera router
+  description: A wireless surveillance camera router. It routes. Perhaps.
+  components:
+    - type: DeviceNetwork
+      deviceNetId: Wireless
+      receiveFrequencyId: SurveillanceCamera
+      transmitFrequencyId: SurveillanceCamera
+    - type: WirelessNetworkConnection
+      range: 200
+    - type: UserInterface
+      interfaces:
+        - key: enum.SurveillanceCameraSetupUiKey.Router
+          type: SurveillanceCameraSetupBoundUi
+    - type: Construction
+      graph: Machine
+      node: machine
+    - type: Machine
+      board: SurveillanceCameraWirelessRouterCircuitboard
+    - type: Sprite
+      sprite: Structures/Machines/server.rsi
+      layers:
+        - state: server
+
+- type: entity
+  parent: SurveillanceCameraWirelessRouterBase
+  id: SurveillanceCameraWirelessRouterConstructed
+  suffix: Constructed
+  components:
+    - type: SurveillanceCameraRouter
+      setupAvailableNetworks:
+        - SurveillanceCameraEntertainment
+
+- type: entity
+  parent: SurveillanceCameraWirelessRouterBase
+  id: SurveillanceCameraWirelessRouterEntertainment
+  suffix: Entertainment
+  components:
+    - type: SurveillanceCameraRouter
+      subnetFrequency: SurveillanceCameraEntertainment

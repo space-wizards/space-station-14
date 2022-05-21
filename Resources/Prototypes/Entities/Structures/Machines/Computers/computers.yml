@@ -401,7 +401,7 @@
 - type: entity
   parent: ComputerBase
   id: ComputerSurveillanceCameraMonitor
-  name: monitor
+  name: camera monitor
   description: A surveillance camera monitor. You're watching them. Maybe.
   components:
     - type: Appearance
@@ -416,6 +416,35 @@
       receiveFrequencyId: SurveillanceCamera
       transmitFrequencyId: SurveillanceCamera
     - type: WiredNetworkConnection
+    - type: SurveillanceCameraMonitor
+    - type: ActivatableUI
+      key: enum.SurveillanceCameraMonitorUiKey.Key
+    - type: Transform
+      anchored: true
+    - type: UserInterface
+      interfaces:
+        - key: enum.SurveillanceCameraMonitorUiKey.Key
+          type: SurveillanceCameraMonitorBoundUserInterface
+
+- type: entity
+  parent: ComputerBase
+  id: ComputerSurveillanceWirelessCameraMonitor
+  name: wireless camera monitor
+  description: A wireless surveillance camera monitor. You're watching them. Maybe.
+  components:
+    - type: Appearance
+      visuals:
+        - type: ComputerVisualizer
+          key: tech_key
+          screen: cameras
+    - type: Computer
+      board: SurveillanceWirelessCameraMonitorCircuitboard
+    - type: DeviceNetwork
+      deviceNetId: Wireless
+      receiveFrequencyId: SurveillanceCamera
+      transmitFrequencyId: SurveillanceCamera
+    - type: WirelessNetworkConnection
+      range: 200
     - type: SurveillanceCameraMonitor
     - type: ActivatableUI
       key: enum.SurveillanceCameraMonitorUiKey.Key

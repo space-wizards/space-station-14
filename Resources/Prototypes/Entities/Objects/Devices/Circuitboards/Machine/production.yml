@@ -407,5 +407,14 @@
       prototype: SurveillanceCameraRouterConstructed
       requirements:
         Manipulator: 4
-      materialRequirements:
-        Glass: 1
+
+- type: entity
+  id: SurveillanceCameraWirelessRouterCircuitboard
+  parent: BaseMachineCircuitboard
+  name: Surveillance camera wireless router board
+  description: A machine printed circuit board for a surveillance camera wireless router
+  components:
+    - type: MachineBoard
+      prototype: SurveillanceCameraWirelessRouterConstructed
+      requirements:
+        Manipulator: 4

@@ -1,0 +1,50 @@
+- type: entity
+  parent: BaseStructureDynamic
+  id: SurveillanceWirelessCameraBase
+  name: wireless camera
+  description: A camera. It's watching you. Kinda.
+  components:
+    - type: InteractionOutline
+    - type: Eye
+    - type: WirelessNetworkConnection
+      range: 200
+    - type: Transform
+    - type: Damageable
+      damageContainer: Inorganic
+      damageModifierSet: Metallic
+    - type: Rotatable
+    - type: Fixtures
+      fixtures:
+        - shape:
+            !type:PhysShapeCircle
+            radius: 0.45
+          mass: 50
+          mask:
+            - MachineMask
+          layer:
+            - MidImpassable
+            - LowImpassable
+    - type: Sprite
+      noRot: true
+      sprite: Structures/monitors.rsi
+      layers:
+        - map: [ "enum.SurveillanceCameraVisuals.Key" ]
+          state: mobilevision
+    - type: UserInterface
+      interfaces:
+        - key: enum.SurveillanceCameraSetupUiKey.Camera
+          type: SurveillanceCameraSetupBoundUi
+  placement:
+    mode: SnapgridCenter
+
+- type: entity
+  parent: SurveillanceWirelessCameraBase
+  suffix: Entertainment
+  id: SurveillanceWirelessCameraEntertainment
+  components:
+    - type: DeviceNetwork
+      deviceNetId: Wireless
+      receiveFrequencyId: SurveillanceCameraEntertainment
+      transmitFrequencyId: SurveillanceCamera
+    - type: SurveillanceCamera
+      networkSet: true
