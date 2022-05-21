@@ -33,6 +33,7 @@
     mode: SnapgridCenter
 
 - type: entity
+  abstract: true
   id: SurveillanceWirelessCameraAnchoredBase
   parent: SurveillanceWirelessCameraBase
   suffix: Anchored
@@ -50,8 +51,9 @@
           state: television
 
 - type: entity
-  id: SurveillanceWirelessCameraEntertainmentMovable
-  parent: SurveillanceWirelessCameraMovableBase
+  abstract: true
+  id: SurveillanceWirelessCameraMovableBase
+  parent: SurveillanceWirelessCameraBase
   suffix: Movable
   components:
     - type: Machine
