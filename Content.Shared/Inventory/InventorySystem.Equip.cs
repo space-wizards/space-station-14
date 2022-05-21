@@ -144,7 +144,7 @@ public abstract partial class InventorySystem
             return;
         }
 
-        if (_handsSystem.TryDrop(actor, hands.ActiveHand!, doDropInteraction: false, handsComp: hands))
+        if (_handsSystem.CanDropHeld(actor, hands.ActiveHand!, checkActionBlocker: false))
             TryEquip(actor, actor, held.Value, ev.Slot, predicted: true, inventory: inventory);
     }
 
