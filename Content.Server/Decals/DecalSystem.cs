@@ -122,10 +122,10 @@ namespace Content.Server.Decals
 
             foreach (var uid in toDelete)
             {
-                RemoveDecalInternal(args.NewTile.GridIndex, uid);
+                RemoveDecalInternal( args.NewTile.GridUid, uid);
             }
 
-            DirtyChunk(args.NewTile.GridIndex, indices);
+            DirtyChunk(args.NewTile.GridUid, indices);
         }
 
         private void OnPlayerStatusChanged(object? sender, SessionStatusEventArgs e)

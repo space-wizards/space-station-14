@@ -1,4 +1,4 @@
-﻿using Content.Server.Atmos.EntitySystems;
+using Content.Server.Atmos.EntitySystems;
 using Content.Shared.Chemistry.Reaction;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.FixedPoint;
@@ -20,12 +20,12 @@ namespace Content.Server.Chemistry.TileReactions
 
             var atmosphereSystem = EntitySystem.Get<AtmosphereSystem>();
 
-            var environment = atmosphereSystem.GetTileMixture(tile.GridIndex, tile.GridIndices, true);
-            if (environment == null || !atmosphereSystem.IsHotspotActive(tile.GridIndex, tile.GridIndices))
+            var environment = atmosphereSystem.GetTileMixture(tile.GridUid, tile.GridIndices, true);
+            if (environment == null || !atmosphereSystem.IsHotspotActive(tile.GridUid, tile.GridIndices))
                 return FixedPoint2.Zero;
 
             environment.Temperature *= MathF.Max(_temperatureMultiplier * reactVolume.Float(), 1f);
-            atmosphereSystem.React(tile.GridIndex, tile.GridIndices);
+            atmosphereSystem.React(tile.GridUid, tile.GridIndices);
 
             return reactVolume;
         }

@@ -121,7 +121,7 @@ public sealed partial class PathfindingSystem
 
     private void OnTileUpdate(TileRef tile)
     {
-        if (!_mapManager.GridExists(tile.GridIndex)) return;
+        if (!_mapManager.GridExists(tile.GridUid)) return;
 
         var node = GetNode(tile);
         node.UpdateTile(tile);

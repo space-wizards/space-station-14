@@ -1,4 +1,4 @@
-﻿using System.Linq;
+using System.Linq;
 using Content.Server.Cleanable;
 using Content.Server.Decals;
 using Content.Shared.Chemistry.Reaction;
@@ -39,9 +39,9 @@ namespace Content.Server.Chemistry.TileReactions
             }
 
             var decalSystem = EntitySystem.Get<DecalSystem>();
-            foreach (var (uid, _) in decalSystem.GetDecalsInRange(tile.GridIndex, tile.GridIndices+new Vector2(0.5f, 0.5f), validDelegate: x => x.Cleanable))
+            foreach (var (uid, _) in decalSystem.GetDecalsInRange(tile.GridUid, tile.GridIndices+new Vector2(0.5f, 0.5f), validDelegate: x => x.Cleanable))
             {
-                decalSystem.RemoveDecal(tile.GridIndex, uid);
+                decalSystem.RemoveDecal(tile.GridUid, uid);
             }
 
             return amount;

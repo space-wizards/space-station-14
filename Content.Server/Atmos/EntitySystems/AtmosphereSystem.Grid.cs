@@ -289,7 +289,7 @@ namespace Content.Server.Atmos.EntitySystems
             foreach (var tile in mapGrid.GetAllTiles())
             {
                 if(!gridAtmosphere.Tiles.ContainsKey(tile.GridIndices))
-                    gridAtmosphere.Tiles[tile.GridIndices] = new TileAtmosphere(tile.GridIndex, tile.GridIndices, new GasMixture(volume){Temperature = Atmospherics.T20C});
+                    gridAtmosphere.Tiles[tile.GridIndices] = new TileAtmosphere(tile.GridUid, tile.GridIndices, new GasMixture(volume){Temperature = Atmospherics.T20C});
 
                 InvalidateTile(gridAtmosphere, tile.GridIndices);
             }

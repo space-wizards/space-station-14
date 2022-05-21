@@ -128,7 +128,7 @@ namespace Content.Shared.Maps
 
             if (!tileDef.CanCrowbar) return false;
 
-            var mapGrid = mapManager.GetGrid(tileRef.GridIndex);
+            var mapGrid = mapManager.GetGrid(tileRef.GridUid);
 
             var plating = tileDefinitionManager[tileDef.BaseTurfs[^1]];
 
@@ -139,7 +139,7 @@ namespace Content.Shared.Maps
              var (x, y) = ((mapGrid.TileSize - 2 * margin) * robustRandom.NextFloat() + margin, (mapGrid.TileSize - 2 * margin) * robustRandom.NextFloat() + margin);
 
             //Actually spawn the relevant tile item at the right position and give it some random offset.
-            var tileItem = entityManager.SpawnEntity(tileDef.ItemDropPrototypeName, indices.ToEntityCoordinates(tileRef.GridIndex, mapManager).Offset(new Vector2(x, y)));
+            var tileItem = entityManager.SpawnEntity(tileDef.ItemDropPrototypeName, indices.ToEntityCoordinates(tileRef.GridUid, mapManager).Offset(new Vector2(x, y)));
             entityManager.GetComponent<TransformComponent>(tileItem).LocalRotation = robustRandom.NextDouble() * Math.Tau;
 
             return true;
@@ -156,7 +156,7 @@ namespace Content.Shared.Maps
             if (!GetWorldTileBox(turf, out var worldBox))
                 return Enumerable.Empty<EntityUid>();
 
-            return lookupSystem.GetEntitiesIntersecting(turf.GridIndex, worldBox, flags);
+            return lookupSystem.GetEntitiesIntersecting(turf.GridUid, worldBox, flags);
         }
 
         /// <summary>
@@ -196,7 +196,7 @@ namespace Content.Shared.Maps
                 return false;
 
             var entManager = IoCManager.Resolve<IEntityManager>();
-            var query = physics.GetEntitiesIntersecting(turf.GridIndex, worldBox);
+            var query = physics.GetEntitiesIntersecting(turf.GridUid, worldBox);
 
             foreach (var ent in query)
             {
@@ -218,7 +218,7 @@ namespace Content.Shared.Maps
         {
             mapManager ??= IoCManager.Resolve<IMapManager>();
 
-            return turf.GridIndices.ToEntityCoordinates(turf.GridIndex, mapManager);
+            return turf.GridIndices.ToEntityCoordinates(turf.GridUid, mapManager);
         }
 
         /// <summary>
@@ -228,7 +228,7 @@ namespace Content.Shared.Maps
         {
             var map = IoCManager.Resolve<IMapManager>();
 
-            if (map.TryGetGrid(turf.GridIndex, out var tileGrid))
+            if (map.TryGetGrid(turf.GridUid, out var tileGrid))
             {
                 // This is scaled to 90 % so it doesn't encompass walls on other tiles.
                 var tileBox = Box2.UnitCentered.Scale(0.9f);

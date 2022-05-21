@@ -102,7 +102,7 @@ namespace Content.Server.Shuttles.EntitySystems
             if (e.NewTile.IsSpace(_tileDefManager) || !e.OldTile.IsSpace(_tileDefManager)) return;
 
             var tilePos = e.NewTile.GridIndices;
-            var grid = _mapManager.GetGrid(e.NewTile.GridIndex);
+            var grid = _mapManager.GetGrid(e.NewTile.GridUid);
             var xformQuery = GetEntityQuery<TransformComponent>();
             var thrusterQuery = GetEntityQuery<ThrusterComponent>();
 

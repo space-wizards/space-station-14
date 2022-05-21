@@ -29,16 +29,16 @@ namespace Content.Server.AI.Pathfinding
             var route = new List<Vector2>();
             foreach (var tile in routeDebug.Route)
             {
-                var tileGrid = mapManager.GetGrid(tile.GridIndex).GridTileToLocal(tile.GridIndices);
+                var tileGrid = mapManager.GetGrid(tile.GridUid).GridTileToLocal(tile.GridIndices);
                 route.Add(tileGrid.ToMapPos(EntityManager));
             }
 
             var cameFrom = new Dictionary<Vector2, Vector2>();
             foreach (var (from, to) in routeDebug.CameFrom)
             {
-                var tileOneGrid = mapManager.GetGrid(from.GridIndex).GridTileToLocal(from.GridIndices);
+                var tileOneGrid = mapManager.GetGrid(from.GridUid).GridTileToLocal(from.GridIndices);
                 var tileOneWorld = tileOneGrid.ToMapPos(EntityManager);
-                var tileTwoGrid = mapManager.GetGrid(to.GridIndex).GridTileToLocal(to.GridIndices);
+                var tileTwoGrid = mapManager.GetGrid(to.GridUid).GridTileToLocal(to.GridIndices);
                 var tileTwoWorld = tileTwoGrid.ToMapPos(EntityManager);
                 cameFrom[tileOneWorld] = tileTwoWorld;
             }
@@ -46,7 +46,7 @@ namespace Content.Server.AI.Pathfinding
             var gScores = new Dictionary<Vector2, float>();
             foreach (var (tile, score) in routeDebug.GScores)
             {
-                var tileGrid = mapManager.GetGrid(tile.GridIndex).GridTileToLocal(tile.GridIndices);
+                var tileGrid = mapManager.GetGrid(tile.GridUid).GridTileToLocal(tile.GridIndices);
                 gScores[tileGrid.ToMapPos(EntityManager)] = score;
             }
 
@@ -67,14 +67,14 @@ namespace Content.Server.AI.Pathfinding
             var route = new List<Vector2>();
             foreach (var tile in routeDebug.Route)
             {
-                var tileGrid = mapManager.GetGrid(tile.GridIndex).GridTileToLocal(tile.GridIndices);
+                var tileGrid = mapManager.GetGrid(tile.GridUid).GridTileToLocal(tile.GridIndices);
                 route.Add(tileGrid.ToMapPos(EntityManager));
             }
 
             var jumpNodes = new List<Vector2>();
             foreach (var tile in routeDebug.JumpNodes)
             {
-                var tileGrid = mapManager.GetGrid(tile.GridIndex).GridTileToLocal(tile.GridIndices);
+                var tileGrid = mapManager.GetGrid(tile.GridUid).GridTileToLocal(tile.GridIndices);
                 jumpNodes.Add(tileGrid.ToMapPos(EntityManager));
             }
 

@@ -230,10 +230,10 @@ public sealed partial class ExplosionSystem : EntitySystem
 
         var tileRef = ev.NewTile;
 
-        if (!_gridEdges.TryGetValue(tileRef.GridIndex, out var edges))
+        if (!_gridEdges.TryGetValue(tileRef.GridUid, out var edges))
         {
             edges = new();
-            _gridEdges[tileRef.GridIndex] = edges;
+            _gridEdges[tileRef.GridUid] = edges;
         }
 
         if (tileRef.Tile.IsEmpty)
