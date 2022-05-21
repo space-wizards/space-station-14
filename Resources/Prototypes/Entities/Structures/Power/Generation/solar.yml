@@ -5,6 +5,11 @@
   placement:
     mode: SnapgridCenter
   components:
+  - type: MeleeSound
+    soundGroups:
+      Brute:
+        path:
+          "/Audio/Effects/glass_hit.ogg"
   - type: Clickable
   - type: InteractionOutline
   - type: Transform
