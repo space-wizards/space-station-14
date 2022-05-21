@@ -1,9 +1,4 @@
 Entries:
-- author: HoofedEar
-  changes:
-  - {message: Moved makeshift cuffs into Tools category, type: Tweak}
-  id: 1067
-  time: '2022-02-16T03:11:54.0000000+00:00'
 - author: mirrorcult
   changes:
   - {message: Drones can no longer emote at all. You ruined it., type: Remove}
@@ -3042,3 +3037,8 @@ Entries:
       so use as a last resort., type: Add}
   id: 1566
   time: '2022-05-20T20:18:54.0000000+00:00'
+- author: mirrorcult
+  changes:
+  - {message: The rod beckons., type: Add}
+  id: 1567
+  time: '2022-05-21T02:43:26.0000000+00:00'
