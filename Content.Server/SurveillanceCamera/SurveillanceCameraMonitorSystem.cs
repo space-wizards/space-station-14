@@ -200,7 +200,12 @@ public sealed class SurveillanceCameraMonitorSystem : EntitySystem
 
     private void OnBoundUiClose(EntityUid uid, SurveillanceCameraMonitorComponent component, BoundUIClosedEvent args)
     {
-        RemoveViewer(uid, args.Entity, component);
+        if (args.Session.AttachedEntity == null)
+        {
+            return;
+        }
+
+        RemoveViewer(uid, args.Session.AttachedEntity.Value, component);
     }
     #endregion
 
