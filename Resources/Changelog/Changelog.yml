@@ -1,10 +1,4 @@
 Entries:
-- author: You
-  changes:
-  - {message: NanoTrasen has issued a uniform and cloak for their representatives.,
-    type: Add}
-  id: 1070
-  time: '2022-02-16T18:07:14.0000000+00:00'
 - author: ElectroJr
   changes:
   - {message: Fixed being able to interact with entities through walls when the station
@@ -3043,3 +3037,8 @@ Entries:
     type: Fix}
   id: 1569
   time: '2022-05-21T07:46:08.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Bullets now have flyby sounds, type: Add}
+  id: 1570
+  time: '2022-05-21T08:04:47.0000000+00:00'
