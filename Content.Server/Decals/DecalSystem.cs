@@ -168,7 +168,7 @@ namespace Content.Server.Decals
             if (!ev.Coordinates.IsValid(EntityManager))
                 return;
 
-            var gridId = ev.Coordinates.GetGridId(EntityManager);
+            var gridId = ev.Coordinates.GetGridUid(EntityManager);
 
             if (!gridId.IsValid())
                 return;
@@ -205,7 +205,7 @@ namespace Content.Server.Decals
             if (!PrototypeManager.HasIndex<DecalPrototype>(decal.Id))
                 return false;
 
-            var gridId = coordinates.GetGridId(EntityManager);
+            var gridId = coordinates.GetGridUid(EntityManager);
             if (!MapManager.TryGetGrid(gridId, out var grid))
                 return false;
 
@@ -250,7 +250,7 @@ namespace Content.Server.Decals
 
         public bool SetDecalPosition(EntityUid gridId, uint uid, EntityCoordinates coordinates)
         {
-            return SetDecalPosition(gridId, uid, coordinates.GetGridId(EntityManager), coordinates.Position);
+            return SetDecalPosition(gridId, uid, coordinates.GetGridUid(EntityManager), coordinates.Position);
         }
 
         public bool SetDecalPosition(EntityUid gridId, uint uid, EntityUid newGridId, Vector2 position)

@@ -231,7 +231,7 @@ namespace Content.Shared.Movement
             if (!CanSound() || !_tags.HasTag(mover.Owner, "FootstepSound")) return false;
 
             var coordinates = xform.Coordinates;
-            var gridId = coordinates.GetGridUid(EntityManager) ?? EntityUid.Invalid;
+            var gridId = coordinates.GetGridUid(EntityManager);
             var distanceNeeded = mover.Sprinting ? StepSoundMoveDistanceRunning : StepSoundMoveDistanceWalking;
 
             // Handle footsteps.

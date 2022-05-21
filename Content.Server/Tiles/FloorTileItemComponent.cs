@@ -65,7 +65,7 @@ namespace Content.Server.Tiles
             var locationMap = location.ToMap(_entMan);
             if (locationMap.MapId == MapId.Nullspace)
                 return true;
-            mapManager.TryGetGrid(location.GetGridId(_entMan), out var mapGrid);
+            mapManager.TryGetGrid(location.GetGridUid(_entMan), out var mapGrid);
 
             if (_outputTiles == null)
                 return true;

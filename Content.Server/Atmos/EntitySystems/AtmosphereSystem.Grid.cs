@@ -1578,7 +1578,7 @@ namespace Content.Server.Atmos.EntitySystems
                 return false;
             }
 
-            var gridId = coordinates.GetGridId(EntityManager);
+            var gridId = coordinates.GetGridUid(EntityManager);
 
             if (!_mapManager.TryGetGrid(gridId, out var grid))
             {

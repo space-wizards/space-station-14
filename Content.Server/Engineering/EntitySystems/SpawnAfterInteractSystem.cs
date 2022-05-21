@@ -27,7 +27,7 @@ namespace Content.Server.Engineering.EntitySystems
         {
             if (string.IsNullOrEmpty(component.Prototype))
                 return;
-            if (!_mapManager.TryGetGrid(args.ClickLocation.GetGridId(EntityManager), out var grid))
+            if (!_mapManager.TryGetGrid(args.ClickLocation.GetGridUid(EntityManager), out var grid))
                 return;
             if (!grid.TryGetTileRef(args.ClickLocation, out var tileRef))
                 return;

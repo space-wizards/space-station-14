@@ -41,7 +41,7 @@ namespace Content.Shared.Maps
 
             mapManager ??= IoCManager.Resolve<IMapManager>();
 
-            if (!mapManager.TryGetGrid(coordinates.GetGridId(entityManager), out var grid))
+            if (!mapManager.TryGetGrid(coordinates.GetGridUid(entityManager), out var grid))
                 return null;
 
 
@@ -95,7 +95,7 @@ namespace Content.Shared.Maps
             entityManager ??= IoCManager.Resolve<IEntityManager>();
             mapManager ??= IoCManager.Resolve<IMapManager>();
 
-            return coordinates.ToVector2i(entityManager, mapManager).PryTile(coordinates.GetGridId(entityManager));
+            return coordinates.ToVector2i(entityManager, mapManager).PryTile(coordinates.GetGridUid(entityManager));
         }
 
         public static bool PryTile(this Vector2i indices, EntityUid gridId,

@@ -166,7 +166,7 @@ public sealed partial class PathfindingSystem
 
     private void OnEntityRemove(EntityUid entity, EntityCoordinates coordinates)
     {
-        var gridId = coordinates.GetGridId(EntityManager);
+        var gridId = coordinates.GetGridUid(EntityManager);
         if (!_mapManager.TryGetGrid(gridId, out var grid)) return;
 
         var node = GetNode(grid.GetTileRef(coordinates));
@@ -181,7 +181,7 @@ public sealed partial class PathfindingSystem
 
     private PathfindingNode? GetNode(EntityCoordinates coordinates)
     {
-        if (!_mapManager.TryGetGrid(coordinates.GetGridId(EntityManager), out var grid)) return null;
+        if (!_mapManager.TryGetGrid(coordinates.GetGridUid(EntityManager), out var grid)) return null;
         return GetNode(grid.GetTileRef(coordinates));
     }
 
@@ -215,7 +215,7 @@ public sealed partial class PathfindingSystem
     // Also look at increasing tile cost the more physics entities are on it
     public bool CanTraverse(EntityUid entity, EntityCoordinates coordinates)
     {
-        var gridId = coordinates.GetGridId(EntityManager);
+        var gridId = coordinates.GetGridUid(EntityManager);
         var tile = _mapManager.GetGrid(gridId).GetTileRef(coordinates);
         var node = GetNode(tile);
         return CanTraverse(entity, node);

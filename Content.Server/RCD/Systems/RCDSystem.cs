@@ -73,11 +73,11 @@ namespace Content.Server.RCD.Systems
                 return;
             // Try to fix it (i.e. if clicking on space)
             // Note: Ideally there'd be a better way, but there isn't right now.
-            var gridID = clickLocationMod.GetGridId(EntityManager);
+            var gridID = clickLocationMod.GetGridUid(EntityManager);
             if (!gridID.IsValid())
             {
                 clickLocationMod = clickLocationMod.AlignWithClosestGridTile();
-                gridID = clickLocationMod.GetGridId(EntityManager);
+                gridID = clickLocationMod.GetGridUid(EntityManager);
             }
             // Check if fixing it failed / get final grid ID
             if (!gridID.IsValid())
