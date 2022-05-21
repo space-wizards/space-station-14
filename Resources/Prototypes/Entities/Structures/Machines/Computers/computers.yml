@@ -456,30 +456,40 @@
           type: SurveillanceCameraMonitorBoundUserInterface
 
 - type: entity
-  parent: BaseStructure
+  parent: ComputerSurveillanceWirelessCameraMonitor
   id: ComputerTelevision
   name: wooden television
-  description: It's an old television displaying the station's cameras, if they worked.
+  description: Finally, some decent reception around here...
   components:
-  - type: InteractionOutline
-  - type: Sprite
-    sprite: Structures/Machines/computers.rsi
-    layers:
-    - state: television
-    - state: detective_television
-      shader: unshaded
-    visuals:
-  - type: PointLight
-    radius: 1.5
-    energy: 1.6
-    color: "#b89f25"
-  - type: Fixtures
-    fixtures:
-    - shape:
-        !type:PhysShapeAabb
-        bounds: "-0.25,-0.25,0.25,0.25"
-      mass: 50
-      mask:
-      - TabletopMachineMask
-      layer:
-      - TabletopMachineLayer
+    - type: Appearance
+      visuals:
+        - type: ComputerVisualizer
+          body: television
+          bodyBroken: television_broken
+          screen: detective_television
+    - type: Sprite
+      sprite: Structures/Machines/computers.rsi
+      layers:
+        - map: [ "enum.ComputerVisualizer+Layers.KeyboardOn" ]
+          visible: false
+        - map: [ "enum.ComputerVisualizer+Layers.Keyboard" ]
+          visible: false
+        - map: [ "enum.ComputerVisualizer+Layers.Body"]
+          state: television
+        - map: [ "enum.ComputerVisualizer+Layers.Screen" ]
+          state: detective_television
+          shader: unshaded
+    - type: PointLight
+      radius: 1.5
+      energy: 1.6
+      color: "#b89f25"
+    - type: Fixtures
+      fixtures:
+        - shape:
+            !type:PhysShapeAabb
+            bounds: "-0.25,-0.25,0.25,0.25"
+          mass: 50
+          mask:
+            - TabletopMachineMask
+          layer:
+            - TabletopMachineLayer
