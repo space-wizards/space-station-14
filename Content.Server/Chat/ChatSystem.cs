@@ -343,7 +343,6 @@ public sealed class ChatSystem : SharedChatSystem
 
             // Look for a prefix indicating a destination radio channel.
             int chan = -1;
-            Console.WriteLine(channelMessage + " " + (message.Length >= 2));
             if (channelMessage && message.Length >= 2)
             {
                 switch (message[1])
