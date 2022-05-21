@@ -406,7 +406,7 @@
     - type: MachineBoard
       prototype: SurveillanceCameraRouterConstructed
       requirements:
-        Manipulator: 4
+        Capacitor: 4
 
 - type: entity
   id: SurveillanceCameraWirelessRouterCircuitboard
@@ -417,4 +417,34 @@
     - type: MachineBoard
       prototype: SurveillanceCameraWirelessRouterConstructed
       requirements:
-        Manipulator: 4
+        Capacitor: 4
+
+- type: entity
+  id: SurveillanceWirelessCameraMovableCircuitboard
+  parent: BaseMachineCircuitboard
+  name: movable wireless camera board
+  description: A machine printed circuit board for a movable wireless camera
+  components:
+    - type: MachineBoard
+      prototype: SurveillanceWirelessCameraMovableConstructed
+      requirements:
+        Laser: 1
+        Capacitor: 4
+      materialRequirements:
+        Glass: 2
+        Cable: 2
+
+- type: entity
+  id: SurveillanceWirelessCameraAnchoredCircuitboard
+  parent: BaseMachineCircuitboard
+  name: wireless camera board
+  description: A machine printed circuit board for a wireless camera
+  components:
+    - type: MachineBoard
+      prototype: SurveillanceWirelessCameraAnchoredConstructed
+      requirements:
+        Laser: 1
+        Capacitor: 4
+      materialRequirements:
+        Glass: 2
+        Cable: 2

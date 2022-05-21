@@ -279,6 +279,8 @@
     - UniformPrinterMachineCircuitboard
     - SurveillanceCameraRouterCircuitboard
     - SurveillanceCameraWirelessRouterCircuitboard
+    - SurveillanceWirelessCameraMovableCircuitboard
+    - SurveillanceWirelessCameraAnchoredCircuitboard
     - AirAlarmElectronics
     - FireAlarmElectronics
 

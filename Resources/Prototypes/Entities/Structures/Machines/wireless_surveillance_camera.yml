@@ -1,14 +1,17 @@
 - type: entity
+  abstract: true
   parent: BaseStructureDynamic
   id: SurveillanceWirelessCameraBase
   name: wireless camera
   description: A camera. It's watching you. Kinda.
   components:
+    - type: Construction
+      graph: Machine
+      node: machine
     - type: InteractionOutline
     - type: Eye
     - type: WirelessNetworkConnection
       range: 200
-    - type: Transform
     - type: Damageable
       damageContainer: Inorganic
       damageModifierSet: Metallic
@@ -22,15 +25,6 @@
           mass: 50
           mask:
             - MachineMask
-          layer:
-            - MidImpassable
-            - LowImpassable
-    - type: Sprite
-      noRot: true
-      sprite: Structures/monitors.rsi
-      layers:
-        - map: [ "enum.SurveillanceCameraVisuals.Key" ]
-          state: television
     - type: UserInterface
       interfaces:
         - key: enum.SurveillanceCameraSetupUiKey.Camera
@@ -39,12 +33,68 @@
     mode: SnapgridCenter
 
 - type: entity
-  id: SurveillanceWirelessCameraEntertainment
+  id: SurveillanceWirelessCameraAnchoredBase
   parent: SurveillanceWirelessCameraBase
-  suffix: Entertainment
+  suffix: Anchored
   components:
+    - type: Machine
+      board: SurveillanceWirelessCameraAnchoredCircuitboard
+    - type: Anchorable
     - type: Transform
       anchored: true
+    - type: Sprite
+      noRot: true
+      sprite: Structures/monitors.rsi
+      layers:
+        - map: [ "enum.SurveillanceCameraVisuals.Key" ]
+          state: television
+
+- type: entity
+  id: SurveillanceWirelessCameraEntertainmentMovable
+  parent: SurveillanceWirelessCameraMovableBase
+  suffix: Movable
+  components:
+    - type: Machine
+      board: SurveillanceWirelessCameraMovableCircuitboard
+    - type: Transform
+    - type: Sprite
+      noRot: true
+      sprite: Structures/monitors.rsi
+      layers:
+        - map: [ "enum.SurveillanceCameraVisuals.Key" ]
+          state: mobilevision
+
+- type: entity
+  parent: SurveillanceWirelessCameraAnchoredBase
+  suffix: Constructed, Anchored
+  id: SurveillanceWirelessCameraAnchoredConstructed
+  components:
+    - type: DeviceNetwork
+      deviceNetId: Wireless
+      receiveFrequencyId: SurveillanceCamera
+      transmitFrequencyId: SurveillanceCamera
+    - type: SurveillanceCamera
+      setupAvailableNetworks:
+        - SurveillanceCameraEntertainment
+
+- type: entity
+  parent: SurveillanceWirelessCameraMovableBase
+  suffix: Constructed, Movable
+  id: SurveillanceWirelessCameraMovableConstructed
+  components:
+    - type: DeviceNetwork
+      deviceNetId: Wireless
+      receiveFrequencyId: SurveillanceCameraEntertainment
+      transmitFrequencyId: SurveillanceCamera
+    - type: SurveillanceCamera
+      setupAvailableNetworks:
+        - SurveillanceCameraEntertainment
+
+- type: entity
+  parent: SurveillanceWirelessCameraAnchoredBase
+  suffix: Entertainment, Anchored
+  id: SurveillanceWirelessCameraAnchoredEntertainment
+  components:
     - type: DeviceNetwork
       deviceNetId: Wireless
       receiveFrequencyId: SurveillanceCameraEntertainment
@@ -53,9 +103,9 @@
       networkSet: true
 
 - type: entity
-  parent: SurveillanceWirelessCameraBase
+  parent: SurveillanceWirelessCameraMovableBase
   suffix: Entertainment, Movable
-  id: SurveillanceWirelessCameraEntertainmentMovable
+  id: SurveillanceWirelessCameraMovableEntertainment
   components:
     - type: DeviceNetwork
       deviceNetId: Wireless
@@ -63,9 +113,3 @@
       transmitFrequencyId: SurveillanceCamera
     - type: SurveillanceCamera
       networkSet: true
-    - type: Sprite
-      noRot: true
-      sprite: Structures/monitors.rsi
-      layers:
-        - map: [ "enum.SurveillanceCameraVisuals.Key" ]
-          state: mobilevision
