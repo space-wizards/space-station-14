@@ -13,6 +13,7 @@
       damageContainer: Inorganic
       damageModifierSet: Metallic
     - type: Rotatable
+      rotateWhileAnchored: true
     - type: Fixtures
       fixtures:
         - shape:
@@ -29,7 +30,7 @@
       sprite: Structures/monitors.rsi
       layers:
         - map: [ "enum.SurveillanceCameraVisuals.Key" ]
-          state: mobilevision
+          state: television
     - type: UserInterface
       interfaces:
         - key: enum.SurveillanceCameraSetupUiKey.Camera
@@ -38,9 +39,23 @@
     mode: SnapgridCenter
 
 - type: entity
+  id: SurveillanceWirelessCameraEntertainment
   parent: SurveillanceWirelessCameraBase
   suffix: Entertainment
-  id: SurveillanceWirelessCameraEntertainment
+  components:
+    - type: Transform
+      anchored: true
+    - type: DeviceNetwork
+      deviceNetId: Wireless
+      receiveFrequencyId: SurveillanceCameraEntertainment
+      transmitFrequencyId: SurveillanceCamera
+    - type: SurveillanceCamera
+      networkSet: true
+
+- type: entity
+  parent: SurveillanceWirelessCameraBase
+  suffix: Entertainment, Movable
+  id: SurveillanceWirelessCameraEntertainmentMovable
   components:
     - type: DeviceNetwork
       deviceNetId: Wireless
@@ -48,3 +63,9 @@
       transmitFrequencyId: SurveillanceCamera
     - type: SurveillanceCamera
       networkSet: true
+    - type: Sprite
+      noRot: true
+      sprite: Structures/monitors.rsi
+      layers:
+        - map: [ "enum.SurveillanceCameraVisuals.Key" ]
+          state: mobilevision
