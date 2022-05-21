@@ -1,3 +1,6 @@
+# NOTE! All mobs that come out of this should have Salvage rulesets.
+# These rulesets exist because Salvage mobs kept harassing the station and going out of control.
+
 - type: entity
   name: Salvage Material Crate Spawner
   id: SalvageMaterialCrateSpawner
@@ -56,21 +59,21 @@
         - texture: Mobs/Aliens/Carps/space.rsi/icon.png
     - type: RandomSpawner
       prototypes:
-        - MobCarp
-        - MobCarp
-        - MobCarp
-        - MobCarp
-        - MobCarp
-        - MobTick
-        - MobTick
-        - MobTick
+        - MobCarpSalvage
+        - MobCarpSalvage
+        - MobCarpSalvage
+        - MobCarpSalvage
+        - MobCarpSalvage
+        - MobTickSalvage
+        - MobTickSalvage
+        - MobTickSalvage
         - PlushieCarp
         - DehydratedSpaceCarp
       chance: 0.25
       offset: 0.2
 
 - type: entity #I made this in case someone decided to make a terrifying space tick swarm for salvage. that someone may be me -EG404
-  name: Space Tick Spawner
+  name: Salvage Space Tick Spawner
   id: SpaceTickSpawner
   parent: MarkerBase
   suffix: 100
@@ -81,7 +84,7 @@
         - texture: Mobs/Aliens/Xenos/spacetick.rsi/icon.png
     - type: ConditionalSpawner
       prototypes:
-        - MobTick
+        - MobTickSalvage
 
 - type: entity
   id: SalvageMobSpawner75
@@ -90,14 +93,14 @@
   components:
   - type: RandomSpawner
     prototypes:
-    - MobCarp
-    - MobCarp
-    - MobCarp
-    - MobCarp
-    - MobCarp
-    - MobTick
-    - MobTick
-    - MobTick
+    - MobCarpSalvage
+    - MobCarpSalvage
+    - MobCarpSalvage
+    - MobCarpSalvage
+    - MobCarpSalvage
+    - MobTickSalvage
+    - MobTickSalvage
+    - MobTickSalvage
     - PlushieCarp
     - DehydratedSpaceCarp
     chance: 0.75

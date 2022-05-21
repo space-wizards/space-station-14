@@ -38934,7 +38934,7 @@ entities:
     parent: 131
     type: Transform
 - uid: 2703
-  type: WallLight
+  type: AlwaysPoweredWallLight
   components:
   - pos: 39.5,-11.5
     parent: 131

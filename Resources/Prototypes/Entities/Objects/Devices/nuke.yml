@@ -38,6 +38,8 @@
       whitelist:
         components:
         - NukeDisk
+    alertLevelOnActivate: delta
+    alertLevelOnDeactivate: green
   - type: InteractionOutline
   - type: ActivatableUI
     key: enum.NukeUiKey.Key
@@ -45,6 +47,14 @@
     interfaces:
     - key: enum.NukeUiKey.Key
       type: NukeBoundUserInterface
+
+- type: entity
+  parent: NuclearBomb
+  id: NuclearBombUnanchored
+  suffix: unanchored
+  components:
+    - type: Transform
+      anchored: false
 
 - type: entity
   parent: StorageTank

@@ -68,6 +68,8 @@
       Otherwise, wreak havoc on the station!
   - type: ReplacementAccent
     accent: genericAggressive
+  - type: TypingIndicator
+    proto: alien
   - type: NoSlip
 
 - type: entity
@@ -84,6 +86,8 @@
       sprite: Mobs/Aliens/Carps/magic.rsi
   - type: GhostTakeoverAvailable
     name: magicarp
+  - type: TypingIndicator
+    proto: guardian
 
 - type: entity
   name: holocarp
@@ -110,3 +114,17 @@
       - Opaque
   - type: GhostTakeoverAvailable
     name: holocarp
+  - type: TypingIndicator
+    proto: robot
+
+- type: entity
+  id: MobCarpSalvage
+  parent: MobCarp
+  suffix: "Salvage Ruleset"
+  components:
+  - type: GhostTakeoverAvailable
+    name: space carp on salvage wreck
+    description: |
+      Defend the loot inside the salvage wreck!
+  - type: SalvageMobRestrictions
+

@@ -1,4 +1,4 @@
-﻿using Content.Shared.Cabinet;
+using Content.Shared.Cabinet;
 using Robust.Client.GameObjects;
 
 namespace Content.Client.Cabinet;
@@ -7,13 +7,15 @@ public sealed class ItemCabinetSystem : VisualizerSystem<ItemCabinetVisualsCompo
 {
     protected override void OnAppearanceChange(EntityUid uid, ItemCabinetVisualsComponent component, ref AppearanceChangeEvent args)
     {
-        if (TryComp(uid, out SpriteComponent? sprite)
-            && args.Component.TryGetData(ItemCabinetVisuals.IsOpen, out bool isOpen)
+        if (args.Sprite == null)
+            return;
+
+        if (args.Component.TryGetData(ItemCabinetVisuals.IsOpen, out bool isOpen)
             && args.Component.TryGetData(ItemCabinetVisuals.ContainsItem, out bool contains))
         {
             var state = isOpen ? component.OpenState : component.ClosedState;
-            sprite.LayerSetState(ItemCabinetVisualLayers.Door, state);
-            sprite.LayerSetVisible(ItemCabinetVisualLayers.ContainsItem, contains);
+            args.Sprite.LayerSetState(ItemCabinetVisualLayers.Door, state);
+            args.Sprite.LayerSetVisible(ItemCabinetVisualLayers.ContainsItem, contains);
         }
     }
 }

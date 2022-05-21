@@ -8,15 +8,13 @@ public sealed class WeldableVisualizerSystem : VisualizerSystem<WeldableComponen
 {
     protected override void OnAppearanceChange(EntityUid uid, WeldableComponent component, ref AppearanceChangeEvent args)
     {
-        base.OnAppearanceChange(uid, component, ref args);
-
-        if (!TryComp(uid, out SpriteComponent? sprite))
+        if (args.Sprite == null)
             return;
 
         args.Component.TryGetData(WeldableVisuals.IsWelded, out bool isWelded);
-        if (sprite.LayerMapTryGet(WeldableLayers.BaseWelded, out var layer))
+        if (args.Sprite.LayerMapTryGet(WeldableLayers.BaseWelded, out var layer))
         {
-            sprite.LayerSetVisible(layer, isWelded);
+            args.Sprite.LayerSetVisible(layer, isWelded);
         }
     }
 }
