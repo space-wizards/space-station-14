@@ -80,11 +80,11 @@ public sealed partial class SurveillanceCameraMonitorWindow : DefaultWindow
 
         if (subnets.Count == 0)
         {
-            SubnetSelector.Visible = false;
+            SubnetSelector.Disabled = true;
             return;
         }
 
-        SubnetSelector.Visible = true;
+        SubnetSelector.Disabled = false;
 
         // That way, we have *a* subnet selected if this is ever opened.
         if (string.IsNullOrEmpty(activeSubnet))
@@ -134,18 +134,17 @@ public sealed partial class SurveillanceCameraMonitorWindow : DefaultWindow
         CameraViewBackground.Visible = true;
         CameraDisconnectButton.Disabled = eye == null;
 
-        if (eye == null)
+        if (eye != null)
         {
             CameraStatus.Text = Loc.GetString("surveillance-camera-monitor-ui-status",
                     ("status", Loc.GetString("surveillance-camera-monitor-ui-status-connecting")),
                     ("address", _currentAddress));
+            CameraSwitchTimer!();
         }
-
-        if (eye != null)
+        else
         {
             CameraStatus.Text = Loc.GetString("surveillance-camera-monitor-ui-status",
-                ("status", Loc.GetString("surveillance-camera-monitor-ui-status-disconnected")));
-            CameraSwitchTimer!();
+                    ("status", Loc.GetString("surveillance-camera-monitor-ui-status-disconnected")));
         }
     }
 
