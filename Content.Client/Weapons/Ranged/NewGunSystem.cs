@@ -83,7 +83,7 @@ public sealed class NewGunSystem : SharedNewGunSystem
 
     private bool IsPredictedShot(NewGunComponent gun, int shots)
     {
-        return (shots == 0 || (Timing.IsFirstTimePredicted && Timing.InPrediction));
+        return shots == 0 || (Timing.IsFirstTimePredicted && Timing.InPrediction);
     }
 
     protected override void PlaySound(NewGunComponent gun, string? sound, int shots, EntityUid? user = null)
