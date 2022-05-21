@@ -54,7 +54,7 @@ tilemap:
   47: floor_wood
   48: lattice
   49: plating
-  50: underplating
+  50: plating
 grids:
 - settings:
     chunksize: 16
