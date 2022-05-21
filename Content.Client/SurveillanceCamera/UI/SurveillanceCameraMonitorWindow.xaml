@@ -2,7 +2,7 @@
                xmlns:viewport="clr-namespace:Content.Client.Viewport"
                Title="{Loc 'surveillance-camera-monitor-ui-window'}">
     <BoxContainer Orientation="Horizontal">
-        <BoxContainer Orientation="Vertical" MinWidth="400" VerticalExpand="True">
+        <BoxContainer Orientation="Vertical" MinWidth="250" VerticalExpand="True">
             <!-- lazy -->
             <OptionButton Name="SubnetSelector" />
             <Button Name="SubnetRefreshButton" Text="{Loc 'surveillance-camera-monitor-ui-refresh-subnets'}" />
@@ -10,8 +10,8 @@
                 <ItemList Name="SubnetList" />
             </ScrollContainer>
             <Button Name="CameraRefreshButton" Text="{Loc 'surveillance-camera-monitor-ui-refresh-cameras'}" />
-            <Label Name="CameraStatus" />
             <Button Name="CameraDisconnectButton" Text="{Loc 'surveillance-camera-monitor-ui-disconnect'}" />
+            <Label Name="CameraStatus" />
         </BoxContainer>
         <Control VerticalExpand="True" HorizontalExpand="True" Margin="5 5 5 5" Name="CameraViewBox">
             <viewport:ScalingViewport Name="CameraView"

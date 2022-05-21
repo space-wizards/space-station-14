@@ -158,7 +158,9 @@ public sealed class SurveillanceCameraSystem : EntitySystem
     private void OnSetName(EntityUid uid, SurveillanceCameraComponent component, SurveillanceCameraSetupSetName args)
     {
         if (args.UiKey is not SurveillanceCameraSetupUiKey key
-            || key != SurveillanceCameraSetupUiKey.Camera)
+            || key != SurveillanceCameraSetupUiKey.Camera
+            || string.IsNullOrEmpty(args.Name)
+            || args.Name.Length > 32)
         {
             return;
         }

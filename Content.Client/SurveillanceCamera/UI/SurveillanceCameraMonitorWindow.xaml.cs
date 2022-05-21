@@ -177,7 +177,7 @@ public sealed partial class SurveillanceCameraMonitorWindow : DefaultWindow
     private void AddCameraToList(string name, string address)
     {
         // var button = CreateCameraButton(name, address);
-        var item = SubnetList.AddItem($"{name} - {address}");
+        var item = SubnetList.AddItem($"{name}\n{address}");
         item.Metadata = address;
     }
 
