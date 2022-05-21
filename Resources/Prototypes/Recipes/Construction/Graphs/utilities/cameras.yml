@@ -50,7 +50,7 @@
             - !type:SpawnPrototype
               prototype: SheetSteel1
               amount: 2
-            - !type: DeleteEntity{}
+            - !type:DeleteEntity {}
           steps:
             - tool: Welding
               doAfter: 2

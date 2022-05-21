@@ -1,3 +1,17 @@
+- type: construction
+  name: camera
+  id: camera
+  graph: SurveillanceCamera
+  startNode: start
+  targetNode: camera
+  category: Utilities
+  description: "Surveillance camera. It's watching. Soon."
+  icon:
+    sprite: Structures/Wallmounts/camera.rsi
+    state: camera
+  objectType: Structure
+  placementMode: SnapgridCenter
+
 # POWER
 - type: construction
   name: APC
@@ -457,4 +471,4 @@
   icon:
     sprite: Structures/Piping/Atmospherics/gasmixer.rsi
     state: gasMixer
-  
+
