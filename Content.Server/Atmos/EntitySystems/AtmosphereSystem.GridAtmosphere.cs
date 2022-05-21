@@ -248,11 +248,6 @@ public sealed partial class AtmosphereSystem
         if (args.Handled)
             return;
 
-        var mapGridComp = args.MapGridComponent;
-
-        if (!Resolve(uid, ref mapGridComp))
-            return;
-
         // We don't have that tile, so let the map handle it.
         if (!component.Tiles.TryGetValue(args.Tile, out var tile))
             return;

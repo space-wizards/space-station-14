@@ -79,7 +79,9 @@ namespace Content.Server.Atmos.EntitySystems
                 {
                     var nullAir = false;
 
-                    foreach (var airtight in GetObstructingComponents(mapGrid, indices))
+                    var enumerator = GetObstructingComponentsEnumerator(mapGrid, indices);
+
+                    while (enumerator.MoveNext(out var airtight))
                     {
                         if (!airtight.NoAirWhenFullyAirBlocked)
                             continue;

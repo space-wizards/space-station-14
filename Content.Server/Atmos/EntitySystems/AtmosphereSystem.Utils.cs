@@ -18,9 +18,11 @@ public partial class AtmosphereSystem
     {
         var value = false;
 
-        foreach (var airtightComponent in GetObstructingComponents(mapGrid, indices))
+        var enumerator = GetObstructingComponentsEnumerator(mapGrid, indices);
+
+        while (enumerator.MoveNext(out var airtight))
         {
-            value |= airtightComponent.FixVacuum;
+            value |= airtight.FixVacuum;
         }
 
         return value;
@@ -38,23 +40,11 @@ public partial class AtmosphereSystem
     }
 
     /// <summary>
-    ///     Gets all obstructing AirtightComponent instances in a specific tile.
+    ///     Gets all obstructing <see cref="AirtightComponent"/> instances in a specific tile.
     /// </summary>
     /// <param name="mapGrid">The grid where to get the tile.</param>
     /// <param name="tile">The indices of the tile.</param>
-    /// <returns></returns>
-    public IEnumerable<AirtightComponent> GetObstructingComponents(IMapGrid mapGrid, Vector2i tile)
-    {
-        var airQuery = GetEntityQuery<AirtightComponent>();
-        var enumerator = mapGrid.GetAnchoredEntitiesEnumerator(tile);
-
-        while (enumerator.MoveNext(out var uid))
-        {
-            if (!airQuery.TryGetComponent(uid.Value, out var airtight)) continue;
-            yield return airtight;
-        }
-    }
-
+    /// <returns>The enumerator for the airtight components.</returns>
     public AtmosObstructionEnumerator GetObstructingComponentsEnumerator(IMapGrid mapGrid, Vector2i tile)
     {
         var ancEnumerator = mapGrid.GetAnchoredEntitiesEnumerator(tile);
@@ -68,10 +58,12 @@ public partial class AtmosphereSystem
     {
         var value = AtmosDirection.Invalid;
 
-        foreach (var airtightComponent in GetObstructingComponents(mapGrid, indices))
+        var enumerator = GetObstructingComponentsEnumerator(mapGrid, indices);
+
+        while (enumerator.MoveNext(out var airtight))
         {
-            if(airtightComponent.AirBlocked)
-                value |= airtightComponent.AirBlockedDirection;
+            if(airtight.AirBlocked)
+                value |= airtight.AirBlockedDirection;
         }
 
         return value;
