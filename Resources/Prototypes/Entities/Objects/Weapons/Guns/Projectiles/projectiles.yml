@@ -114,6 +114,11 @@
   parent: BulletBase
   noSpawn: true
   components:
+  - type: FlyBySound
+    sound:
+      collection: EnergyMiss
+      params:
+        volume: 5
   - type: Sprite
     noRot: true
     sprite: Objects/Weapons/Guns/Projectiles/spark.rsi

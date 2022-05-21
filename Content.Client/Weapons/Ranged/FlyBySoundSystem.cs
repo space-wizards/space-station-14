@@ -1,3 +1,4 @@
+using Content.Client.Projectiles;
 using Content.Shared.Weapons.Ranged;
 using Robust.Client.Player;
 using Robust.Shared.Audio;
@@ -12,8 +13,6 @@ public sealed class FlyBySoundSystem : SharedFlyBySoundSystem
     [Dependency] private readonly IPlayerManager _player = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
 
-    public const float FlyBySoundChance = 0.25f;
-
     public override void Initialize()
     {
         base.Initialize();
@@ -24,10 +23,14 @@ public sealed class FlyBySoundSystem : SharedFlyBySoundSystem
     {
         var attachedEnt = _player.LocalPlayer?.ControlledEntity;
 
-        if (attachedEnt == null || args.OtherFixture.Body.Owner != attachedEnt) return;
+        // If it's not our ent or we shot it.
+        if (attachedEnt == null ||
+            args.OtherFixture.Body.Owner != attachedEnt ||
+            TryComp<ProjectileComponent>(args.OurFixture.Body.Owner, out var projectile) &&
+            projectile.Shooter == attachedEnt) return;
 
         if (args.OurFixture.ID != FlyByFixture ||
-            !_random.Prob(FlyBySoundChance)) return;
+            !_random.Prob(component.Prob)) return;
 
         SoundSystem.Play(Filter.Local(), component.Sound.GetSound(), uid, component.Sound.Params);
     }

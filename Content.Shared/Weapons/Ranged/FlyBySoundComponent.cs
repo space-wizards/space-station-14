@@ -10,6 +10,12 @@ namespace Content.Shared.Weapons.Ranged;
 [RegisterComponent, NetworkedComponent]
 public sealed class FlyBySoundComponent : Component
 {
+    /// <summary>
+    /// Probability that the sound plays
+    /// </summary>
+    [ViewVariables(VVAccess.ReadWrite), DataField("prob")]
+    public float Prob = 0.75f;
+
     [ViewVariables(VVAccess.ReadWrite), DataField("sound")]
     public SoundSpecifier Sound = new SoundCollectionSpecifier("BulletMiss")
     {
