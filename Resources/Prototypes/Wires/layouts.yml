@@ -23,7 +23,7 @@
 
 - type: wireLayout
   id: HighSec
-  wires:  
+  wires:
   - !type:PowerWireAction
     pulseTimeout: 10
   - !type:DoorBoltWireAction
@@ -31,7 +31,7 @@
   - !type:DoorTimingWireAction
   - !type:DoorSafetyWireAction
   dummyWires: 5
-  
+
 - type: wireLayout
   id: Vending
   wires:
@@ -62,3 +62,9 @@
   - !type:ArcadeOverflowWireAction
   - !type:ArcadePlayerInvincibleWireAction
   - !type:ArcadeEnemyInvincibleWireAction
+
+- type: wireLayout
+  id: SurveillanceCamera
+  dummyWires: 4
+  wires:
+  - !type:PowerWireAction

@@ -3,6 +3,11 @@
   name: camera
   description: A surveillance camera. It's watching you. Kinda.
   components:
+  - type: Clickable
+  - type: InteractionOutline
+  - type: Construction
+    graph: SurveillanceCamera
+    node: camera
   - type: WallMount
   - type: ApcPowerReceiver
   - type: ExtensionCableReceiver
@@ -10,6 +15,9 @@
   - type: WiredNetworkConnection
   - type: Transform
     anchored: true
+  - type: Wires
+    alwaysRandomize: true
+    LayoutId: SurveillanceCamera
   - type: Damageable
     damageContainer: Inorganic
     damageModifierSet: Metallic
@@ -29,6 +37,8 @@
     interfaces:
       - key: enum.SurveillanceCameraSetupUiKey.Camera
         type: SurveillanceCameraSetupBoundUi
+      - key: enum.WiresUiKey.Key
+        type: WiresBoundUserInterface
   placement:
     mode: SnapgridCenter
     snap:
@@ -182,3 +192,30 @@
     transmitFrequencyId: SurveillanceCamera
   - type: SurveillanceCamera
     networkSet: true
+
+- type: entity
+  id: SurveillanceCameraAssembly
+  name: camera
+  description: A surveillance camera. Doesn't seem to be watching anybody any time soon. Probably.
+  components:
+    - type: Clickable
+    - type: InteractionOutline
+    - type: Construction
+      graph: SurveillanceCamera
+      node: assembly
+    - type: WallMount
+    - type: Transform
+      anchored: true
+    - type: Damageable
+      damageContainer: Inorganic
+      damageModifierSet: Metallic
+    - type: Sprite
+      drawdepth: WallMountedItems
+      sprite: Structures/Wallmounts/camera.rsi
+      layers:
+        - map: [ "enum.SurveillanceCameraVisuals.Key" ]
+          state: camera
+  placement:
+    mode: SnapgridCenter
+    snap:
+      - Wallmount
