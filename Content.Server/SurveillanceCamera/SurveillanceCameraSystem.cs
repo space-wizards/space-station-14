@@ -12,7 +12,7 @@ using Robust.Shared.Prototypes;
 
 namespace Content.Server.SurveillanceCamera;
 
-public sealed class SurveillanceCameraSystem : SharedSurveillanceCameraSystem
+public sealed class SurveillanceCameraSystem : EntitySystem
 {
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
     [Dependency] private readonly IAdminManager _adminManager = default!;
@@ -257,6 +257,8 @@ public sealed class SurveillanceCameraSystem : SharedSurveillanceCameraSystem
 
         // Send a local event that's broadcasted everywhere afterwards.
         RaiseLocalEvent(ev);
+
+        UpdateVisuals(camera, component);
     }
 
     public void SetActive(EntityUid camera, bool setting, SurveillanceCameraComponent? component = null)
@@ -274,6 +276,8 @@ public sealed class SurveillanceCameraSystem : SharedSurveillanceCameraSystem
         {
             Deactivate(camera, component);
         }
+
+        UpdateVisuals(camera, component);
     }
 
     public void AddActiveViewer(EntityUid camera, EntityUid player, EntityUid? monitor = null, SurveillanceCameraComponent? component = null, ActorComponent? actor = null)
@@ -292,6 +296,8 @@ public sealed class SurveillanceCameraSystem : SharedSurveillanceCameraSystem
         {
             component.ActiveMonitors.Add(monitor.Value);
         }
+
+        UpdateVisuals(camera, component);
     }
 
     public void AddActiveViewers(EntityUid camera, HashSet<EntityUid> players, EntityUid? monitor = null, SurveillanceCameraComponent? component = null)
@@ -346,6 +352,8 @@ public sealed class SurveillanceCameraSystem : SharedSurveillanceCameraSystem
         {
             component.ActiveMonitors.Remove(monitor.Value);
         }
+
+        UpdateVisuals(camera, component);
     }
 
     public void RemoveActiveViewers(EntityUid camera, HashSet<EntityUid> players, EntityUid? monitor = null, SurveillanceCameraComponent? component = null)
@@ -359,6 +367,28 @@ public sealed class SurveillanceCameraSystem : SharedSurveillanceCameraSystem
         {
             RemoveActiveViewer(camera, player, monitor, component);
         }
+    }
+
+    private void UpdateVisuals(EntityUid camera, SurveillanceCameraComponent? component = null, AppearanceComponent? appearance = null)
+    {
+        if (!Resolve(camera, ref component, ref appearance))
+        {
+            return;
+        }
+
+        var key = SurveillanceCameraVisuals.Disabled;
+
+        if (component.Active)
+        {
+            key = SurveillanceCameraVisuals.Active;
+        }
+
+        if (component.ActiveViewers.Count > 0 || component.ActiveMonitors.Count > 0)
+        {
+            key = SurveillanceCameraVisuals.InUse;
+        }
+
+        appearance.SetData(SurveillanceCameraVisuals.Key, key);
     }
 }
 

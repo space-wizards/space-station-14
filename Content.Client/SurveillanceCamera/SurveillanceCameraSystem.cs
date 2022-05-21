@@ -1,55 +1,29 @@
+using Content.Shared.SurveillanceCamera;
+using Robust.Client.GameObjects;
+
 namespace Content.Client.SurveillanceCamera;
 
-public sealed class SurveillanceCameraSystem : EntitySystem
+public sealed class SurveillanceCameraVisualsSystem : EntitySystem
 {
-    private readonly Dictionary<EntityUid, CameraSwitchTiming> _activeTimers = new();
-    private readonly List<EntityUid> _toRemove = new();
-
-    private const float InitialTime = 30;
-
-    public override void Update(float frameTime)
+    public override void Initialize()
     {
-        foreach (var (uid, timing) in _activeTimers)
-        {
-            timing.TimeLeft -= frameTime;
+        base.Initialize();
 
-            if (timing.TimeLeft <= 0)
-            {
-                _toRemove.Add(uid);
-            }
-        }
-
-        foreach (var uid in _toRemove)
-        {
-            _activeTimers[uid].OnFinish();
-            _activeTimers.Remove(uid);
-        }
-
-        _toRemove.Clear();
+        SubscribeLocalEvent<SurveillanceCameraVisualsComponent, AppearanceChangeEvent>(OnAppearanceChange);
     }
 
-    public void AddTimer(EntityUid uid, Action onFinish)
+    private void OnAppearanceChange(EntityUid uid, SurveillanceCameraVisualsComponent component,
+        ref AppearanceChangeEvent args)
     {
-        var timing = new CameraSwitchTiming(InitialTime, onFinish);
-        if (_activeTimers.ContainsKey(uid))
+        if (!args.AppearanceData.TryGetValue(SurveillanceCameraVisuals.Key, out var data)
+            || data is not SurveillanceCameraVisuals key
+            || args.Sprite == null
+            || !args.Sprite.LayerMapTryGet(SurveillanceCameraVisuals.Key, out int layer)
+            || !component.CameraSprites.TryGetValue(key, out var state))
         {
-            _activeTimers[uid] = timing;
+            return;
         }
-        else
-        {
-            _activeTimers.Add(uid, timing);
-        }
-    }
 
-    private sealed class CameraSwitchTiming
-    {
-        public float TimeLeft;
-        public Action OnFinish;
-
-        public CameraSwitchTiming(float timeLeft, Action onFinish)
-        {
-            TimeLeft = timeLeft;
-            OnFinish = onFinish;
-        }
+        args.Sprite.LayerSetState(layer, state);
     }
 }

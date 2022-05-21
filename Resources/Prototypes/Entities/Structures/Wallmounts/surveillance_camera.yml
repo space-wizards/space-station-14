@@ -17,7 +17,14 @@
     drawdepth: WallMountedItems
     sprite: Structures/Wallmounts/camera.rsi
     layers:
-      - state: camera
+      - map: [ "enum.SurveillanceCameraVisuals.Key" ]
+        state: camera
+  - type: Appearance
+  - type: SurveillanceCameraVisuals
+    sprites:
+      Active: camera
+      Disabled: camera_off
+      InUse: camera_in_use
   - type: UserInterface
     interfaces:
       - key: enum.SurveillanceCameraSetupUiKey.Camera
