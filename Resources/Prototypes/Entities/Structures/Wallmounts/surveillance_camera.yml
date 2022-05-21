@@ -214,7 +214,7 @@
       sprite: Structures/Wallmounts/camera.rsi
       layers:
         - map: [ "enum.SurveillanceCameraVisuals.Key" ]
-          state: camera
+          state: camera_off
   placement:
     mode: SnapgridCenter
     snap:

@@ -22,6 +22,7 @@ public sealed partial class SurveillanceCameraSetupWindow : DefaultWindow
 
         NetworkConfirm.OnPressed += _ => OnNetworkConfirm!(NetworkSelector.SelectedId);
         NameConfirm.OnPressed += _ => OnNameConfirm!(DeviceName.Text);
+        NetworkSelector.OnItemSelected += args => NetworkSelector.SelectId(args.Id);
     }
 
     public void HideNameSelector() => NamingSection.Visible = false;
