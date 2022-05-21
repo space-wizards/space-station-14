@@ -80,11 +80,16 @@ public sealed partial class SurveillanceCameraMonitorWindow : DefaultWindow
 
         if (subnets.Count == 0)
         {
+            SubnetSelector.AddItem(string.Empty);
             SubnetSelector.Disabled = true;
             return;
         }
 
-        SubnetSelector.Disabled = false;
+        if (SubnetSelector.Disabled && subnets.Count != 0)
+        {
+            SubnetSelector.Clear();
+            SubnetSelector.Disabled = false;
+        }
 
         // That way, we have *a* subnet selected if this is ever opened.
         if (string.IsNullOrEmpty(activeSubnet))
@@ -143,8 +148,7 @@ public sealed partial class SurveillanceCameraMonitorWindow : DefaultWindow
         }
         else
         {
-            CameraStatus.Text = Loc.GetString("surveillance-camera-monitor-ui-status",
-                    ("status", Loc.GetString("surveillance-camera-monitor-ui-status-disconnected")));
+            CameraStatus.Text = Loc.GetString("surveillance-camera-monitor-ui-status-disconnected");
         }
     }
 
