@@ -1,12 +1,4 @@
 Entries:
-- author: Rane
-  changes:
-  - {message: 'Most healthy foods now contain some vitamins and proteins, which have
-      a chance to heal you slightly.', type: Add}
-  - {message: 'There are new recipes using nettles, fly amanita, or plasma sheets.',
-    type: Add}
-  id: 1073
-  time: '2022-02-18T01:27:57.0000000+00:00'
 - author: mirrorcult
   changes:
   - {message: Drones can now wear hats again. Sorry about the delay., type: Add}
@@ -3030,3 +3022,8 @@ Entries:
   - {message: Added 3 new lobby themes from the original!, type: Add}
   id: 1572
   time: '2022-05-21T15:19:59.0000000+00:00'
+- author: rok-povsic
+  changes:
+  - {message: Fixed equipping items inside a locker., type: Fix}
+  id: 1573
+  time: '2022-05-21T17:39:13.0000000+00:00'
