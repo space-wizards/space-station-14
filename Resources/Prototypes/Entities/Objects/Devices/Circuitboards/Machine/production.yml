@@ -396,3 +396,16 @@
       materialRequirements:
         Glass: 2
         Cable: 2
+
+- type: entity
+  id: SurveillanceCameraRouterCircuitboard
+  parent: BaseMachineCircuitboard
+  name: Surveillance camera router board
+  description: A machine printed circuit board for a surveillance camera router
+  components:
+    - type: MachineBoard
+      prototype: SurveillanceCameraRouterConstructed
+      requirements:
+        Manipulator: 4
+      materialRequirements:
+        Glass: 1

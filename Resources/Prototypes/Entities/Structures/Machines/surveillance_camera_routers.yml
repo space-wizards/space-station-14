@@ -13,6 +13,11 @@
       interfaces:
         - key: enum.SurveillanceCameraSetupUiKey.Router
           type: SurveillanceCameraSetupBoundUi
+    - type: Construction
+      graph: Machine
+      node: machine
+    - type: Machine
+      board: SurveillanceCameraRouterCircuitboard
     - type: Sprite
       sprite: Structures/Machines/server.rsi
       layers:

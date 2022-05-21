@@ -8,6 +8,9 @@
   - type: Construction
     graph: SurveillanceCamera
     node: camera
+  - type: Electrified
+    enabled: false
+    usesApcPower: true
   - type: WallMount
   - type: ApcPowerReceiver
   - type: ExtensionCableReceiver
