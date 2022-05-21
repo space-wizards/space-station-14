@@ -41,6 +41,14 @@ public sealed class SurveillanceCameraMonitorSystem : EntitySystem
         }
     }
 
+    public void RemoveTimer(EntityUid uid)
+    {
+        if (_activeTimers.ContainsKey(uid))
+        {
+            _activeTimers.Remove(uid);
+        }
+    }
+
     private sealed class CameraSwitchTiming
     {
         public float TimeLeft;

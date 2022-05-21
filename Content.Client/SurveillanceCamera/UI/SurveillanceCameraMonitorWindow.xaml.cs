@@ -23,7 +23,9 @@ public sealed partial class SurveillanceCameraMonitorWindow : DefaultWindow
     public event Action? CameraRefresh;
     public event Action? SubnetRefresh;
     public event Action? CameraSwitchTimer;
+    public event Action? CameraDisconnect;
 
+    private string _currentAddress = string.Empty;
     private readonly FixedEye _defaultEye = new();
     private readonly Dictionary<string, int> _subnetMap = new();
 
@@ -65,13 +67,15 @@ public sealed partial class SurveillanceCameraMonitorWindow : DefaultWindow
         };
         SubnetRefreshButton.OnPressed += _ => SubnetRefresh!();
         CameraRefreshButton.OnPressed += _ => CameraRefresh!();
+        CameraDisconnectButton.OnPressed += _ => CameraDisconnect!();
     }
 
 
     // The UI class should get the eye from the entity, and then
     // pass it here so that the UI can change its view.
-    public void UpdateState(IEye? eye, HashSet<string> subnets, string activeSubnet, Dictionary<string, string> cameras)
+    public void UpdateState(IEye? eye, HashSet<string> subnets, string activeAddress, string activeSubnet, Dictionary<string, string> cameras)
     {
+        _currentAddress = activeAddress;
         SetCameraView(eye);
 
         if (subnets.Count == 0)
@@ -128,9 +132,19 @@ public sealed partial class SurveillanceCameraMonitorWindow : DefaultWindow
         CameraView.Eye = eye ?? _defaultEye;
         CameraView.Visible = eye != null;
         CameraViewBackground.Visible = true;
+        CameraDisconnectButton.Disabled = eye == null;
+
+        if (eye == null)
+        {
+            CameraStatus.Text = Loc.GetString("surveillance-camera-monitor-ui-status",
+                    ("status", Loc.GetString("surveillance-camera-monitor-ui-status-connecting")),
+                    ("address", _currentAddress));
+        }
 
         if (eye != null)
         {
+            CameraStatus.Text = Loc.GetString("surveillance-camera-monitor-ui-status",
+                ("status", Loc.GetString("surveillance-camera-monitor-ui-status-disconnected")));
             CameraSwitchTimer!();
         }
     }
@@ -138,6 +152,9 @@ public sealed partial class SurveillanceCameraMonitorWindow : DefaultWindow
     public void OnSwitchTimerComplete()
     {
         CameraViewBackground.Visible = false;
+        CameraStatus.Text = Loc.GetString("surveillance-camera-monitor-ui-status",
+                            ("status", Loc.GetString("surveillance-camera-monitor-ui-status-connected")),
+                            ("address", _currentAddress));
     }
 
     private int AddSubnet(string subnet)

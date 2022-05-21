@@ -10,10 +10,10 @@
                 <ItemList Name="SubnetList" />
             </ScrollContainer>
             <Button Name="CameraRefreshButton" Text="{Loc 'surveillance-camera-monitor-ui-refresh-cameras'}" />
+            <Label Name="CameraStatus" />
+            <Button Name="CameraDisconnectButton" Text="{Loc 'surveillance-camera-monitor-ui-disconnect'}" />
         </BoxContainer>
         <Control VerticalExpand="True" HorizontalExpand="True" Margin="5 5 5 5" Name="CameraViewBox">
-            <!-- TODO: This should be a textured box so there can be static.
-                 Also, find an animated texture of static. -->
             <viewport:ScalingViewport Name="CameraView"
                                       VerticalExpand="True"
                                       HorizontalExpand="True"

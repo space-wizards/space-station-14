@@ -39,6 +39,7 @@ public sealed class SurveillanceCameraMonitorBoundUserInterface : BoundUserInter
         _window.SubnetRefresh += OnSubnetRefresh;
         _window.OnClose += Close;
         _window.CameraSwitchTimer += OnCameraSwitchTimer;
+        _window.CameraDisconnect += OnCameraDisconnect;
     }
 
     private void OnCameraSelected(string address)
@@ -66,6 +67,11 @@ public sealed class SurveillanceCameraMonitorBoundUserInterface : BoundUserInter
         SendMessage(new SurveillanceCameraRefreshSubnetsMessage());
     }
 
+    private void OnCameraDisconnect()
+    {
+        SendMessage(new SurveillanceCameraDisconnectMessage());
+    }
+
     protected override void UpdateState(BoundUserInterfaceState state)
     {
         if (_window == null || state is not SurveillanceCameraMonitorUiState cast)
@@ -75,10 +81,11 @@ public sealed class SurveillanceCameraMonitorBoundUserInterface : BoundUserInter
 
         if (cast.ActiveCamera == null)
         {
-            _window.UpdateState(null, cast.Subnets, cast.ActiveSubnet, cast.Cameras);
+            _window.UpdateState(null, cast.Subnets, cast.ActiveAddress, cast.ActiveSubnet, cast.Cameras);
 
             if (_currentCamera != null)
             {
+                _surveillanceCameraMonitorSystem.RemoveTimer(Owner.Owner);
                 _eyeLerpingSystem.RemoveEye(_currentCamera.Value);
                 _currentCamera = null;
             }
@@ -99,7 +106,7 @@ public sealed class SurveillanceCameraMonitorBoundUserInterface : BoundUserInter
 
             if (_entityManager.TryGetComponent(cast.ActiveCamera, out EyeComponent eye))
             {
-                _window.UpdateState(eye.Eye, cast.Subnets, cast.ActiveSubnet, cast.Cameras);
+                _window.UpdateState(eye.Eye, cast.Subnets, cast.ActiveAddress, cast.ActiveSubnet, cast.Cameras);
             }
         }
     }
