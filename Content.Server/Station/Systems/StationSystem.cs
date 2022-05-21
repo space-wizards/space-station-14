@@ -220,11 +220,11 @@ public sealed class StationSystem : EntitySystem
 
         var stationMember = AddComp<StationMemberComponent>(mapGrid);
         stationMember.Station = station;
-        stationData.Grids.Add(gridComponent.GridIndex);
+        stationData.Grids.Add(gridComponent.Owner);
 
-        RaiseLocalEvent(station, new StationGridAddedEvent(gridComponent.GridIndex, false));
+        RaiseLocalEvent(station, new StationGridAddedEvent(gridComponent.Owner, false));
 
-        _sawmill.Info($"Adding grid {mapGrid}:{gridComponent.GridIndex} to station {Name(station)} ({station})");
+        _sawmill.Info($"Adding grid {mapGrid}:{gridComponent.Owner} to station {Name(station)} ({station})");
     }
 
     /// <summary>
@@ -243,10 +243,10 @@ public sealed class StationSystem : EntitySystem
             throw new ArgumentException("Tried to use a non-station entity as a station!", nameof(station));
 
         RemComp<StationMemberComponent>(mapGrid);
-        stationData.Grids.Remove(gridComponent.GridIndex);
+        stationData.Grids.Remove(gridComponent.Owner);
 
-        RaiseLocalEvent(station, new StationGridRemovedEvent(gridComponent.GridIndex));
-        _sawmill.Info($"Removing grid {mapGrid}:{gridComponent.GridIndex} from station {Name(station)} ({station})");
+        RaiseLocalEvent(station, new StationGridRemovedEvent(gridComponent.Owner));
+        _sawmill.Info($"Removing grid {mapGrid}:{gridComponent.Owner} from station {Name(station)} ({station})");
     }
 
     /// <summary>
@@ -309,13 +309,13 @@ public sealed class StationSystem : EntitySystem
             return CompOrNull<StationMemberComponent>(entity)?.Station;
         }
 
-        if ((xform.GridUid ?? EntityUid.Invalid) == EntityUid.Invalid)
+        if (xform.GridUid == EntityUid.Invalid)
         {
             Logger.Debug("A");
             return null;
         }
 
-        var grid = _mapManager.GetGridEuid(xform.GridID);
+        var grid = _mapManager.GetGridEuid(xform.GridUid);
 
         return CompOrNull<StationMemberComponent>(grid)?.Station;
     }

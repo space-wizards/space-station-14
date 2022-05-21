@@ -44,7 +44,7 @@ public sealed class SpreaderSystem : EntitySystem
         if (!EntityManager.TryGetComponent<TransformComponent>(blocker, out var transform))
             return; // how did we get here?
 
-        if (!_mapManager.TryGetGrid(transform.GridID, out var grid)) return;
+        if (!_mapManager.TryGetGrid(transform.GridUid, out var grid)) return;
 
         for (var i = 0; i < Atmospherics.Directions; i++)
         {
@@ -89,7 +89,7 @@ public sealed class SpreaderSystem : EntitySystem
 
         if (spreader.Enabled == false) return false;
 
-        if (!_mapManager.TryGetGrid(transform.GridID, out var grid)) return false;
+        if (!_mapManager.TryGetGrid(transform.GridUid, out var grid)) return false;
 
         var didGrow = false;
 

@@ -90,14 +90,14 @@ namespace Content.MapRenderer.Painters
                 }
 
                 var transform = _sEntityManager.GetComponent<TransformComponent>(entity);
-                if (_cMapManager.TryGetGrid(transform.GridID, out var grid))
+                if (_cMapManager.TryGetGrid(transform.GridUid, out var grid))
                 {
                     var position = transform.LocalPosition;
 
                     var (x, y) = TransformLocalPosition(position, grid);
                     var data = new EntityData(sprite, x, y);
 
-                    components.GetOrAdd(transform.GridID, _ => new List<EntityData>()).Add(data);
+                    components.GetOrAdd(transform.GridUid, _ => new List<EntityData>()).Add(data);
                 }
             }
 

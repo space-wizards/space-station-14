@@ -44,7 +44,7 @@ namespace Content.Server.Atmos.EntitySystems
             var xform = Transform(uid);
 
             // If the grid is deleting no point updating atmos.
-            if (_mapManager.TryGetGrid(xform.GridID, out var grid))
+            if (_mapManager.TryGetGrid(xform.GridUid, out var grid))
             {
                 if (MetaData(grid.GridEntityId).EntityLifeStage > EntityLifeStage.MapInitialized) return;
             }
@@ -56,7 +56,7 @@ namespace Content.Server.Atmos.EntitySystems
         {
             var xform = Transform(uid);
 
-            var gridId = xform.GridID;
+            var gridId = xform.GridUid;
             var coords = xform.Coordinates;
 
             var grid = _mapManager.GetGrid(gridId);
@@ -100,11 +100,11 @@ namespace Content.Server.Atmos.EntitySystems
         {
             if (!Resolve(airtight.Owner, ref xform)) return;
 
-            if (!xform.Anchored || !xform.GridID.IsValid())
+            if (!xform.Anchored || !xform.GridUid.IsValid())
                 return;
 
-            var grid = _mapManager.GetGrid(xform.GridID);
-            airtight.LastPosition = (xform.GridID, grid.TileIndicesFor(xform.Coordinates));
+            var grid = _mapManager.GetGrid(xform.GridUid);
+            airtight.LastPosition = (xform.GridUid, grid.TileIndicesFor(xform.Coordinates));
             InvalidatePosition(airtight.LastPosition.Item1, airtight.LastPosition.Item2, airtight.FixVacuum && !airtight.AirBlocked);
         }
 

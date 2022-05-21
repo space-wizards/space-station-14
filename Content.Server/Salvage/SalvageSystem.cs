@@ -80,7 +80,7 @@ namespace Content.Server.Salvage
             if (component.MagnetState.StateType == MagnetStateType.Inactive) return;
 
             var magnetTranform = EntityManager.GetComponent<TransformComponent>(component.Owner);
-            if (!_salvageGridStates.TryGetValue(magnetTranform.GridID, out var salvageGridState))
+            if (!_salvageGridStates.TryGetValue(magnetTranform.GridUid, out var salvageGridState))
             {
                 return;
             }
@@ -119,7 +119,7 @@ namespace Content.Server.Salvage
                     break;
                 case MagnetStateType.Holding:
                     var magnetTranform = EntityManager.GetComponent<TransformComponent>(component.Owner);
-                    if (_salvageGridStates.TryGetValue(magnetTranform.GridID, out var salvageGridState))
+                    if (_salvageGridStates.TryGetValue(magnetTranform.GridUid, out var salvageGridState))
                     {
                         var remainingTime = component.MagnetState.Until - salvageGridState.CurrentTime;
                         args.PushMarkup(Loc.GetString("salvage-system-magnet-examined-active", ("timeLeft", remainingTime.TotalSeconds)));
@@ -150,10 +150,10 @@ namespace Content.Server.Salvage
                     ShowPopup("salvage-system-report-activate-success", component, user);
                     var magnetTranform = EntityManager.GetComponent<TransformComponent>(component.Owner);
                     SalvageGridState? gridState;
-                    if (!_salvageGridStates.TryGetValue(magnetTranform.GridID, out gridState))
+                    if (!_salvageGridStates.TryGetValue(magnetTranform.GridUid, out gridState))
                     {
                         gridState = new SalvageGridState();
-                        _salvageGridStates[magnetTranform.GridID] = gridState;
+                        _salvageGridStates[magnetTranform.GridUid] = gridState;
                     }
                     gridState.ActiveMagnets.Add(component);
                     component.MagnetState = new MagnetState(MagnetStateType.Attaching, gridState.CurrentTime + AttachingTime);
@@ -185,7 +185,7 @@ namespace Content.Server.Salvage
             }
 
             var parentTransform = salvageTransform.Parent!;
-            foreach (var player in Filter.Empty().AddInGrid(salvageTransform.GridID, EntityManager).Recipients)
+            foreach (var player in Filter.Empty().AddInGrid(salvageTransform.GridUid, EntityManager).Recipients)
             {
                 if (player.AttachedEntity.HasValue)
                 {
@@ -207,7 +207,7 @@ namespace Content.Server.Salvage
             angle = Angle.Zero;
             var tsc = Transform(component.Owner);
             coords = new EntityCoordinates(component.Owner, component.Offset).ToMap(EntityManager);
-            var grid = tsc.GridID;
+            var grid = tsc.GridUid;
             if (_mapManager.TryGetGrid(grid, out var magnetGrid))
             {
                 angle = magnetGrid.WorldRotation;

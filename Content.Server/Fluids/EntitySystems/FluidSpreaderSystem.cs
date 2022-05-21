@@ -1,4 +1,4 @@
-﻿using System.Diagnostics.CodeAnalysis;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Content.Server.Chemistry.EntitySystems;
 using Content.Server.Fluids.Components;
@@ -103,7 +103,7 @@ public sealed class FluidSpreaderSystem : EntitySystem
         var prototypeName = metadataOriginal.EntityPrototype!.ID;
         var visitedTiles = new HashSet<Vector2i>();
 
-        if (!_mapManager.TryGetGrid(transformOrig.GridID, out var mapGrid))
+        if (!_mapManager.TryGetGrid(transformOrig.GridUid, out var mapGrid))
             return;
 
         // skip origin puddle

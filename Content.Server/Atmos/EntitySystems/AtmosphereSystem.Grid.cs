@@ -40,7 +40,7 @@ namespace Content.Server.Atmos.EntitySystems
                 {
                     try
                     {
-                        gridAtmosphere.Tiles.Add(indices, new TileAtmosphere(mapGrid.GridIndex, indices, (GasMixture) gridAtmosphere.UniqueMixes![mix].Clone()));
+                        gridAtmosphere.Tiles.Add(indices, new TileAtmosphere(mapGrid.Owner, indices, (GasMixture) gridAtmosphere.UniqueMixes![mix].Clone()));
                     }
                     catch (ArgumentOutOfRangeException)
                     {
@@ -1376,7 +1376,7 @@ namespace Content.Server.Atmos.EntitySystems
 
         public bool AddAtmosDevice(AtmosDeviceComponent atmosDevice)
         {
-            var grid = Comp<TransformComponent>(atmosDevice.Owner).GridID;
+            var grid = Comp<TransformComponent>(atmosDevice.Owner).GridUid;
 
             if (!_mapManager.TryGetGrid(grid, out var mapGrid))
                 return false;

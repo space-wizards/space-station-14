@@ -35,7 +35,7 @@ namespace Content.Server.Construction.Commands
                         return;
                     }
 
-                    gridId = entityManager.GetComponent<TransformComponent>(playerEntity).GridID;
+                    gridId = entityManager.GetComponent<TransformComponent>(playerEntity).GridUid;
                     break;
                 case 1:
                     if (!EntityUid.TryParse(args[0], out var id))

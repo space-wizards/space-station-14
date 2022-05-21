@@ -34,7 +34,7 @@ sealed class TileReplaceCommand : IConsoleCommand
                     return;
                 }
 
-                gridId = entityManager.GetComponent<TransformComponent>(playerEntity).GridID;
+                gridId = entityManager.GetComponent<TransformComponent>(playerEntity).GridUid;
                 tileIdA = args[0];
                 tileIdB = args[1];
                 break;

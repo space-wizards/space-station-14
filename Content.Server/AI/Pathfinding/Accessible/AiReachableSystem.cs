@@ -168,10 +168,10 @@ namespace Content.Server.AI.Pathfinding.Accessible
         {
             var xform = EntityManager.GetComponent<TransformComponent>(target);
             // TODO: Handle this gracefully instead of just failing.
-            if (!xform.GridID.IsValid())
+            if (!xform.GridUid.IsValid())
                 return false;
 
-            var targetTile = _mapManager.GetGrid(xform.GridID).GetTileRef(xform.Coordinates);
+            var targetTile = _mapManager.GetGrid(xform.GridUid).GetTileRef(xform.Coordinates);
             var targetNode = _pathfindingSystem.GetNode(targetTile);
 
             var collisionMask = 0;
@@ -206,10 +206,10 @@ namespace Content.Server.AI.Pathfinding.Accessible
         {
             var xform = EntityManager.GetComponent<TransformComponent>(entity);
 
-            if (xform.GridID != targetNode.TileRef.GridIndex)
+            if (xform.GridUid != targetNode.TileRef.GridUid)
                 return false;
 
-            var entityTile = _mapManager.GetGrid(xform.GridID).GetTileRef(xform.Coordinates);
+            var entityTile = _mapManager.GetGrid(xform.GridUid).GetTileRef(xform.Coordinates);
             var entityNode = _pathfindingSystem.GetNode(entityTile);
             var entityRegion = GetRegion(entityNode);
             var targetRegion = GetRegion(targetNode);
@@ -421,12 +421,12 @@ namespace Content.Server.AI.Pathfinding.Accessible
         {
             var xform = EntityManager.GetComponent<TransformComponent>(entity);
 
-            if (!xform.GridID.IsValid())
+            if (!xform.GridUid.IsValid())
             {
                 return null;
             }
 
-            var entityTile = _mapManager.GetGrid(xform.GridID).GetTileRef(xform.Coordinates);
+            var entityTile = _mapManager.GetGrid(xform.GridUid).GetTileRef(xform.Coordinates);
             var entityNode = _pathfindingSystem.GetNode(entityTile);
             return GetRegion(entityNode);
         }

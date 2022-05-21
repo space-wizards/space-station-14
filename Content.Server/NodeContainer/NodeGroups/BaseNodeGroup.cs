@@ -75,7 +75,7 @@ namespace Content.Server.NodeContainer.NodeGroups
         public virtual void Initialize(Node sourceNode)
         {
             // TODO: Can we get rid of this GridId?
-            GridId = IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(sourceNode.Owner).GridID;
+            GridId = IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(sourceNode.Owner).GridUid;
         }
 
         /// <summary>

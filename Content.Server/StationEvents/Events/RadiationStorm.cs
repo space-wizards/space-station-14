@@ -86,7 +86,7 @@ namespace Content.Server.StationEvents.Events
                 if (!_entityManager.TryGetComponent<IMapGridComponent>(stationEnt, out var grid))
                     return;
 
-                if (mapManager.IsGridPaused(grid.GridIndex))
+                if (mapManager.IsGridPaused(grid.Owner))
                     return;
 
                 SpawnPulse(grid.Grid);

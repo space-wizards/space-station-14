@@ -33,7 +33,7 @@ namespace Content.Server.Construction.Commands
                         return;
                     }
 
-                    gridId = xformQuery.GetComponent(playerEntity).GridID;
+                    gridId = xformQuery.GetComponent(playerEntity).GridUid;
                     break;
                 case 1:
                     if (!EntityUid.TryParse(args[0], out var id))

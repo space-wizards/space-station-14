@@ -34,11 +34,11 @@ namespace Content.Server.Gravity.EntitySystems
         public void AddAlert(AlertsComponent status)
         {
             var xform = Transform(status.Owner);
-            var alerts = _alerts.GetOrNew(xform.GridID);
+            var alerts = _alerts.GetOrNew(xform.GridUid);
 
             alerts.Add(status);
 
-            if (_mapManager.TryGetGrid(xform.GridID, out var grid))
+            if (_mapManager.TryGetGrid(xform.GridUid, out var grid))
             {
                 if (EntityManager.GetComponent<GravityComponent>(grid.GridEntityId).Enabled)
                 {
@@ -53,7 +53,7 @@ namespace Content.Server.Gravity.EntitySystems
 
         public void RemoveAlert(AlertsComponent status)
         {
-            var grid = EntityManager.GetComponent<TransformComponent>(status.Owner).GridID;
+            var grid = EntityManager.GetComponent<TransformComponent>(status.Owner).GridUid;
             if (!_alerts.TryGetValue(grid, out var statuses))
             {
                 return;
@@ -101,7 +101,7 @@ namespace Content.Server.Gravity.EntitySystems
             if (ev.OldParent is {Valid: true} old &&
                 EntityManager.TryGetComponent(old, out IMapGridComponent? mapGrid))
             {
-                var oldGrid = mapGrid.GridIndex;
+                var oldGrid = mapGrid.Owner;
 
                 if (_alerts.TryGetValue(oldGrid, out var oldStatuses))
                 {
@@ -109,7 +109,7 @@ namespace Content.Server.Gravity.EntitySystems
                 }
             }
 
-            var newGrid = ev.Transform.GridID;
+            var newGrid = ev.Transform.GridUid;
             var newStatuses = _alerts.GetOrNew(newGrid);
 
             newStatuses.Add(status);

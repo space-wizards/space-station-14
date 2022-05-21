@@ -129,7 +129,7 @@ public sealed partial class PathfindingSystem
 
     private bool IsRelevant(TransformComponent xform, PhysicsComponent physics)
     {
-        return (xform.GridUid ?? EntityUid.Invalid) != EntityUid.Invalid && (TrackedCollisionLayers & physics.CollisionLayer) != 0;
+        return xform.GridUid != EntityUid.Invalid && (TrackedCollisionLayers & physics.CollisionLayer) != 0;
     }
 
     /// <summary>
@@ -143,7 +143,7 @@ public sealed partial class PathfindingSystem
             !Resolve(entity, ref physics, false)) return;
 
         if (!IsRelevant(xform, physics) ||
-            !_mapManager.TryGetGrid(xform.GridID, out var grid))
+            !_mapManager.TryGetGrid(xform.GridUid, out var grid))
         {
             return;
         }
@@ -158,7 +158,7 @@ public sealed partial class PathfindingSystem
     private void OnEntityRemove(EntityUid entity, TransformComponent? xform = null)
     {
         if (!Resolve(entity, ref xform, false) ||
-            !_mapManager.TryGetGrid(xform.GridID, out var grid)) return;
+            !_mapManager.TryGetGrid(xform.GridUid, out var grid)) return;
 
         var node = GetNode(grid.GetTileRef(xform.Coordinates));
         node.RemoveEntity(entity);
@@ -175,7 +175,7 @@ public sealed partial class PathfindingSystem
 
     private PathfindingNode? GetNode(TransformComponent xform)
     {
-        if (!_mapManager.TryGetGrid(xform.GridID, out var grid)) return null;
+        if (!_mapManager.TryGetGrid(xform.GridUid, out var grid)) return null;
         return GetNode(grid.GetTileRef(xform.Coordinates));
     }
 
