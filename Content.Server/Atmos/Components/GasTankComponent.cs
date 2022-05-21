@@ -29,7 +29,20 @@ namespace Content.Server.Atmos.Components
 
         [ViewVariables] public BoundUserInterface? UserInterface;
 
-        [DataField("ruptureSound")] private SoundSpecifier _ruptureSound = new SoundPathSpecifier("Audio/Effects/spray.ogg");
+        [ViewVariables(VVAccess.ReadWrite), DataField("ruptureSound")] private SoundSpecifier _ruptureSound = new SoundPathSpecifier("/Audio/Effects/spray.ogg");
+
+        [ViewVariables(VVAccess.ReadWrite), DataField("connectSound")] private SoundSpecifier? _connectSound =
+            new SoundPathSpecifier("/Audio/Effects/internals.ogg")
+            {
+                Params = AudioParams.Default.WithVolume(10f),
+            };
+
+        [ViewVariables(VVAccess.ReadWrite), DataField("disconnectSound")] private SoundSpecifier? _disconnectSound;
+
+        /// <summary>
+        /// Cancel toggles sounds if we re-toggle again.
+        /// </summary>
+        private IPlayingAudioStream? _stream;
 
         [DataField("air")] [ViewVariables] public GasMixture Air { get; set; } = new();
 
@@ -131,6 +144,11 @@ namespace Content.Server.Atmos.Components
             if (internals == null) return;
             IsConnected = internals.TryConnectTank(Owner);
             EntitySystem.Get<SharedActionsSystem>().SetToggled(ToggleAction, IsConnected);
+            _stream?.Stop();
+
+            if (_connectSound != null)
+                _stream = SoundSystem.Play(Filter.Pvs(Owner, entityManager: _entMan), _connectSound.GetSound(), Owner, _connectSound.Params);
+
             UpdateUserInterface();
         }
 
@@ -140,6 +158,11 @@ namespace Content.Server.Atmos.Components
             IsConnected = false;
             EntitySystem.Get<SharedActionsSystem>().SetToggled(ToggleAction, false);
             GetInternalsComponent(owner)?.DisconnectTank();
+            _stream?.Stop();
+
+            if (_disconnectSound != null)
+                _stream = SoundSystem.Play(Filter.Pvs(Owner, entityManager: _entMan), _disconnectSound.GetSound(), Owner, _disconnectSound.Params);
+
             UpdateUserInterface();
         }
 
