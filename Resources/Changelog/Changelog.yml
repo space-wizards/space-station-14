@@ -1,18 +1,4 @@
 Entries:
-- author: mirrorcult
-  changes:
-  - {message: 'Bleeding has been added. Weapons that deal brute damage, especially
-      slashing or piercing damage, may cause you to directly lose blood or start bleeding.
-      When bleeding, you will take bloodloss damage, which is now healed by Dexalin
-      and Dexalin Plus.', type: Add}
-  - {message: 'Bloodloss damage is slowly healed over time, as is bleeding and total
-      blood levels.', type: Add}
-  - {message: 'Added Tranexamic Acid, made from inaprovaline, sulfuric acid, and glucose,
-      which helps stop bleeding.', type: Add}
-  - {message: Gauze now actually helps stop bleeding., type: Add}
-  - {message: Iron now replenishes your blood levels., type: Tweak}
-  id: 1072
-  time: '2022-02-17T22:00:42.0000000+00:00'
 - author: Rane
   changes:
   - {message: 'Most healthy foods now contain some vitamins and proteins, which have
@@ -3039,3 +3025,8 @@ Entries:
   - {message: Fixed pressure pump multiplying transferred moles by 8., type: Fix}
   id: 1571
   time: '2022-05-21T08:37:44.0000000+00:00'
+- author: Todd
+  changes:
+  - {message: Added 3 new lobby themes from the original!, type: Add}
+  id: 1572
+  time: '2022-05-21T15:19:59.0000000+00:00'
