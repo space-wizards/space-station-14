@@ -33,13 +33,15 @@ public sealed class NewGunSystem : SharedNewGunSystem
     {
         if (args.Current is not NewGunComponentState state) return;
 
+        Sawmill.Debug($"Handle state: setting shot count from {component.ShotCounter} to {state.ShotCounter}");
         component.NextFire = state.NextFire;
         component.ShotCounter = state.ShotCounter;
     }
 
     public override void Update(float frameTime)
     {
-        base.Update(frameTime);
+        if (!Timing.IsFirstTimePredicted)
+            return;
 
         var entityNull = _player.LocalPlayer?.ControlledEntity;
 
@@ -58,37 +60,29 @@ public sealed class NewGunSystem : SharedNewGunSystem
 
         if (_inputSystem.CmdStates.GetState(EngineKeyFunctions.Use) != BoundKeyState.Down)
         {
-            StopShooting(gun);
+            if (gun.ShotCounter != 0)
+                EntityManager.RaisePredictiveEvent(new RequestStopShootEvent() { Gun = gun.Owner });
             return;
         }
 
+        if (gun.NextFire > Timing.CurTime)
+            return;
+
         var mousePos = _eyeManager.ScreenToMap(_inputManager.MouseScreenPosition);
-        gun.ShootCoordinates = mousePos;
         var oldShotCounter = gun.ShotCounter;
 
-        if (AttemptShoot(entity, gun))
+        Sawmill.Debug($"Sending shoot request tick {Timing.CurTick} / {Timing.CurTime}");
+
+        EntityManager.RaisePredictiveEvent(new RequestShootEvent()
         {
-            if (IsPredictedShot(gun, oldShotCounter))
-            {
-                Sawmill.Debug($"Sending shoot request tick {Timing.CurTick} / {Timing.CurTime}");
-
-                RaiseNetworkEvent(new RequestShootEvent()
-                {
-                    Coordinates = mousePos,
-                    Gun = gun.Owner,
-                });
-            }
-        }
-    }
-
-    private bool IsPredictedShot(NewGunComponent gun, int shots)
-    {
-        return shots == 0 || (Timing.IsFirstTimePredicted && Timing.InPrediction);
+            Coordinates = mousePos,
+            Gun = gun.Owner,
+        });
     }
 
     protected override void PlaySound(NewGunComponent gun, string? sound, int shots, EntityUid? user = null)
     {
-        if (sound == null || user == null || !IsPredictedShot(gun, shots)) return;
+        if (sound == null || user == null || !Timing.IsFirstTimePredicted) return;
         SoundSystem.Play(Filter.Local(), sound, gun.Owner);
     }
 }
