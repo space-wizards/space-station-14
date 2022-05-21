@@ -442,8 +442,8 @@ public sealed class WiresSystem : EntitySystem
             return;
 
         if (component.IsPanelOpen &&
-            _toolSystem.HasQuality(args.Used, "Cutting", tool) ||
-            _toolSystem.HasQuality(args.Used, "Pulsing", tool))
+            (_toolSystem.HasQuality(args.Used, "Cutting", tool) ||
+            _toolSystem.HasQuality(args.Used, "Pulsing", tool)))
         {
             if (EntityManager.TryGetComponent(args.User, out ActorComponent? actor))
             {
