@@ -80,13 +80,13 @@ namespace Content.Shared.Item
 
         [DataField("unequipSound")]
         public SoundSpecifier? UnequipSound = default!;
-        
+
         /// <summary>
         ///     Rsi of the sprite shown on the player when this item is in their hands. Used to generate a default entry for <see cref="InhandVisuals"/>
         /// </summary>
         [ViewVariables(VVAccess.ReadWrite)]
         [DataField("sprite")]
-        public readonly string? RsiPath;
+        public string? RsiPath;
 
         public void RemovedFromSlot()
         {

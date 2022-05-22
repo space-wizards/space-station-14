@@ -100,5 +100,23 @@ public sealed class ItemSystem : SharedItemSystem
         result = new() { layer };
         return true;
     }
+
+    /// <summary>
+    ///     Copy in-hand and clothing visuals from another item
+    /// </summary>
+    public void CopyVisuals(EntityUid uid, SharedItemComponent otherItem, SharedItemComponent? item = null)
+    {
+        if (!Resolve(uid, ref item))
+            return;
+
+        item.RsiPath = otherItem.RsiPath;
+        item.ClothingVisuals = otherItem.ClothingVisuals;
+        item.InhandVisuals = otherItem.InhandVisuals;
+
+        // TODO: beware, this actually a setter with some dirty logic inside
+        item.EquippedPrefix = otherItem.EquippedPrefix;
+
+        VisualsChanged(uid, item);
+    }
     #endregion
 }

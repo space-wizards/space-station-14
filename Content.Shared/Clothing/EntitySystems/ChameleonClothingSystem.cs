@@ -28,7 +28,7 @@ public sealed class ChameleonClothingSystem : EntitySystem
         if (!Resolve(uid, ref appearance, ref component))
             return;
 
-        var protoId = "ClothingUniformJumpsuitClown";
+        var protoId = "ClothingUniformJumpskirtResearchDirector";
         if (!_proto.TryIndex(protoId, out EntityPrototype? proto))
             return;
 
