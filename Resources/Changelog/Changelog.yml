@@ -1,15 +1,6 @@
 Entries:
 - author: mirrorcult
   changes:
-  - {message: Entities that are gibbed now spill all of their blood and chems., type: Add}
-  - {message: 'Smaller butcherable entities like carp or dogs are now butchered using
-      sharp objects (knives, fire axe, etc) rather than the meat spike.', type: Tweak}
-  - {message: 'More items (axes, sabres) can now chop logs or harvest ligenous plants.',
-    type: Tweak}
-  id: 1085
-  time: '2022-02-18T22:57:42.0000000+00:00'
-- author: mirrorcult
-  changes:
   - {message: Health examine now actually accurately assesses damage., type: Fix}
   - {message: Moved the "is pale" text to health examinations., type: Tweak}
   - {message: Examining someone's health now will tell you if they are still bleeding.,
@@ -3022,3 +3013,8 @@ Entries:
   - {message: Barratry has received several tweaks., type: Tweak}
   id: 1584
   time: '2022-05-22T19:29:27.0000000+00:00'
+- author: themias
+  changes:
+  - {message: The medical scanner is now climbable, type: Fix}
+  id: 1585
+  time: '2022-05-22T20:43:06.0000000+00:00'
