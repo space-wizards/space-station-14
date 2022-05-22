@@ -40,14 +40,14 @@ namespace Content.Server.Atmos.Piping.Unary.Components
         ///     cref="MinTemperatureDelta"/>.
         /// </summary>
         [ViewVariables(VVAccess.ReadWrite)]
-        public float MinTemperature = 88.15f;
+        public float MinTemperature;
 
         /// <summary>
         ///     Current maximum temperature, calculated from <see cref="InitialMaxTemperature"/> and <see
         ///     cref="MaxTemperatureDelta"/>.
         /// </summary>
         [ViewVariables(VVAccess.ReadWrite)]
-        public float MaxTemperature = Atmospherics.T20C;
+        public float MaxTemperature;
 
         /// <summary>
         ///     Minimum temperature the device can reach with a 0 total laser quality. Usually the quality will be at
@@ -55,7 +55,7 @@ namespace Content.Server.Atmos.Piping.Unary.Components
         /// </summary>
         [DataField("baseMinTemperature")]
         [ViewVariables(VVAccess.ReadWrite)]
-        public float BaseMinTemperature = 259.85f;
+        public float BaseMinTemperature = 96.625f; // Selected so that tier-1 parts can reach 73.15k 
 
         /// <summary>
         ///     Maximum temperature the device can reach with a 0 total laser quality. Usually the quality will be at
@@ -70,13 +70,13 @@ namespace Content.Server.Atmos.Piping.Unary.Components
         /// </summary>
         [DataField("minTemperatureDelta")]
         [ViewVariables(VVAccess.ReadWrite)]
-        public float MinTemperatureDelta = 66.7f;
+        public float MinTemperatureDelta = 23.475f; // selected so that tier-4 parts can reach TCMB
 
         /// <summary>
         ///     Change in maximum temperature, per unit machine part quality.
         /// </summary>
         [DataField("maxTemperatureDelta")]
         [ViewVariables(VVAccess.ReadWrite)]
-        public float MaxTemperatureDelta = 3 * Atmospherics.T20C;
+        public float MaxTemperatureDelta = 300;
     }
 }

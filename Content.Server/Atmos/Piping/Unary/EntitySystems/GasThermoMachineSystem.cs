@@ -96,12 +96,12 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
 
             switch (component.Mode)
             {
-                // 1172.6K with stock parts.
+                // 593.15K with stock parts.
                 case ThermoMachineMode.Heater:
                     component.MaxTemperature = component.BaseMaxTemperature + component.MaxTemperatureDelta * laserRating;
                     component.MinTemperature = Atmospherics.T20C;
                     break;
-                // 193.15K / -100C with stock parts.
+                // 73.15 with stock parts.
                 case ThermoMachineMode.Freezer:
                     component.MinTemperature = MathF.Max(
                         component.BaseMinTemperature - component.MinTemperatureDelta * laserRating, Atmospherics.TCMB);
