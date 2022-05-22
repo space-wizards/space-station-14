@@ -1,3 +1,4 @@
+using Content.Shared.Actions.ActionTypes;
 using Content.Shared.Sound;
 using Robust.Shared.GameStates;
 using Robust.Shared.Map;
@@ -14,7 +15,7 @@ public sealed class NewGunComponent : Component
     public SoundSpecifier? SoundEmpty = new SoundPathSpecifier("/Audio/Weapons/Guns/Empty/empty.ogg");
 
     /// <summary>
-    /// Sound played when toggling the <see cref="SelectiveFire"/> for this gun.
+    /// Sound played when toggling the <see cref="SelectedMode"/> for this gun.
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite), DataField("soundSelective")]
     public SoundSpecifier? SoundSelectiveToggle;
@@ -47,14 +48,17 @@ public sealed class NewGunComponent : Component
     /// <summary>
     /// What firemodes can be selected.
     /// </summary>
-    [ViewVariables(VVAccess.ReadWrite), DataField("availableSelectiveFire")]
-    public SelectiveFire AvailableSelectiveFire = SelectiveFire.Safety | SelectiveFire.FullAuto;
+    [ViewVariables(VVAccess.ReadWrite), DataField("availableModes")]
+    public SelectiveFire AvailableModes = SelectiveFire.Safety | SelectiveFire.FullAuto;
 
     /// <summary>
     /// What firemode is currently selected.
     /// </summary>
-    [ViewVariables(VVAccess.ReadWrite), DataField("selectiveFire")]
-    public SelectiveFire SelectiveFire = SelectiveFire.FullAuto;
+    [ViewVariables(VVAccess.ReadWrite), DataField("selectedMode")]
+    public SelectiveFire SelectedMode = SelectiveFire.FullAuto;
+
+    [DataField("selectModeAction")]
+    public InstantAction? SelectModeAction;
 
     /// <summary>
     /// Used for sloth's debugging. Will be removed on undraft.
