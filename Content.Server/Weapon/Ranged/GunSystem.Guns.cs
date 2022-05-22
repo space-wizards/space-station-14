@@ -1,26 +1,16 @@
-using System;
-using System.Collections.Generic;
 using System.Linq;
-using Content.Server.Administration.Logs;
-using Content.Server.Atmos.EntitySystems;
 using Content.Server.CombatMode;
 using Content.Server.Hands.Components;
 using Content.Server.Interaction.Components;
 using Content.Server.Projectiles.Components;
-using Content.Server.Stunnable;
 using Content.Server.Weapon.Ranged.Ammunition.Components;
 using Content.Server.Weapon.Ranged.Barrels.Components;
 using Content.Shared.Camera;
-using Content.Shared.Damage;
 using Content.Shared.Database;
-using Content.Shared.Examine;
+using Content.Shared.Interaction.Events;
 using Content.Shared.Popups;
-using Content.Shared.Weapons.Ranged.Components;
 using Robust.Shared.Audio;
-using Robust.Shared.GameObjects;
-using Robust.Shared.Localization;
 using Robust.Shared.Map;
-using Robust.Shared.Maths;
 using Robust.Shared.Physics;
 using Robust.Shared.Player;
 using Robust.Shared.Utility;
@@ -29,6 +19,11 @@ namespace Content.Server.Weapon.Ranged;
 
 public sealed partial class GunSystem
 {
+    private void OnMeleeAttempt(EntityUid uid, ServerRangedWeaponComponent component, ref MeleeAttackAttemptEvent args)
+    {
+        args.Cancelled = true;
+    }
+
     /// <summary>
     /// Tries to fire a round of ammo out of the weapon.
     /// </summary>
@@ -149,6 +144,7 @@ public sealed partial class GunSystem
     }
 
     #region Firing
+
     /// <summary>
     /// Handles firing one or many projectiles
     /// </summary>
@@ -253,5 +249,6 @@ public sealed partial class GunSystem
             hitscan.FireEffects(shooter, hitscan.MaxLength, angle);
         }
     }
+
     #endregion
 }

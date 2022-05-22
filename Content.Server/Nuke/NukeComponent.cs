@@ -44,6 +44,9 @@ namespace Content.Server.Nuke
         [DataField("alertTime")]
         public float AlertSoundTime = 10.0f;
 
+        [DataField("alertLevelOnActivate")] public string AlertLevelOnActivate = default!;
+        [DataField("alertLevelOnDeactivate")] public string AlertLevelOnDeactivate = default!;
+
         [DataField("keypadPressSound")]
         public SoundSpecifier KeypadPressSound = new SoundPathSpecifier("/Audio/Machines/Nuke/general_beep.ogg");
 
@@ -107,7 +110,7 @@ namespace Content.Server.Nuke
         /// <summary>
         ///     Time until explosion in seconds.
         /// </summary>
-        [ViewVariables]
+        [ViewVariables(VVAccess.ReadWrite)]
         public float RemainingTime;
 
         /// <summary>

@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using Content.Shared.Eui;
+﻿using Content.Shared.Eui;
 using Robust.Server.Player;
 using Robust.Shared.Enums;
-using Robust.Shared.IoC;
-using Robust.Shared.Log;
 using Robust.Shared.Network;
 using Robust.Shared.Utility;
 

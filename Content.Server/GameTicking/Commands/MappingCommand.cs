@@ -67,7 +67,7 @@ namespace Content.Server.GameTicking.Commands
             if (args.Length <= 1)
                 shell.ExecuteCommand($"addmap {mapId} false");
             else
-                shell.ExecuteCommand($"loadmap {mapId} \"{CommandParsing.Escape(args[1])}\"");
+                shell.ExecuteCommand($"loadmap {mapId} \"{CommandParsing.Escape(args[1])}\" 0 0 0 true");
 
             // was the map actually created?
             if (!mapManager.MapExists(mapId))
@@ -85,10 +85,7 @@ namespace Content.Server.GameTicking.Commands
 
             shell.ExecuteCommand("sudo cvar events.enabled false");
             shell.ExecuteCommand($"tp 0 0 {mapId}");
-            shell.RemoteExecuteCommand("showmarkers");
-            shell.RemoteExecuteCommand("togglelight");
-            shell.RemoteExecuteCommand("showsubfloorforever");
-            shell.RemoteExecuteCommand("loadmapacts");
+            shell.RemoteExecuteCommand("mappingclientsidesetup");
             mapManager.SetMapPaused(mapId, true);
 
             if (args.Length == 2)

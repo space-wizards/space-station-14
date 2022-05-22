@@ -27,9 +27,6 @@
   - type: IconSmooth
     key: walls
     base: brick
-  - type: Occluder
-    sizeX: 32
-    sizeY: 32
 
 - type: entity
   parent: WallBase
@@ -363,10 +360,9 @@
         node: girder
       - !type:DoActsBehavior
         acts: ["Destruction"]
-  - type: ReinforcedWall
+  - type: IconSmooth
     key: walls
-    base: solid
-    reinforcedBase: reinf_over
+    base: reinf_over
   - type: Appearance
     visuals:
       - type: ReinforcedWallVisualizer
@@ -501,14 +497,10 @@
           - "-0.5,-0.5"
           - "0.5,0.5"
           - "0.5,-0.5"
-      layer:
-      - Opaque
-      - Impassable
-      - MobImpassable
-      - VaultImpassable
-      - SmallImpassable
       mask:
-      - Impassable
+      - FullTileMask
+      layer:
+      - WallLayer
   - type: Destructible
     thresholds:
     - trigger:
@@ -649,3 +641,74 @@
   - type: IconSmooth
     key: walls
     base: wood
+
+
+# Vault Walls
+
+- type: entity
+  parent: WallBase
+  id: WallVaultAlien
+  name: alien vault wall
+  description: A mysterious ornate looking wall. There may be ancient dangers inside. 
+  components:
+  - type: Sprite
+    sprite: Structures/Walls/vault.rsi
+    state: alienvault
+  - type: Icon
+    sprite: Structures/Walls/vault.rsi
+    state: alienvault
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 500
+      behaviors:
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+    
+- type: entity
+  parent: WallVaultAlien
+  id: WallVaultRock
+  name: rock vault wall
+  components:
+  - type: Sprite
+    sprite: Structures/Walls/vault.rsi
+    state: rockvault
+  - type: Icon
+    sprite: Structures/Walls/vault.rsi
+    state: rockvault
+    
+- type: entity
+  parent: WallVaultAlien
+  id: WallVaultSandstone
+  name: sandstone vault wall
+  components:
+  - type: Sprite
+    sprite: Structures/Walls/vault.rsi
+    state: sandstonevault
+  - type: Icon
+    sprite: Structures/Walls/vault.rsi
+    state: sandstonevault
+
+
+# Mime
+
+- type: entity
+  id: WallInvisible
+  name: Invisible Wall
+  components:
+  - type: Tag
+    tags:
+      - Wall
+  - type: Physics
+    bodyType: Static
+  - type: Fixtures
+    fixtures:
+    - shape:
+        !type:PhysShapeAabb
+          bounds: "-0.5,-0.5,0.5,0.5"
+      mask:
+      - FullTileMask
+      layer:
+      - GlassLayer
+  - type: Airtight

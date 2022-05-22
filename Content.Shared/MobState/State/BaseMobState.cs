@@ -1,6 +1,4 @@
 ﻿using Content.Shared.FixedPoint;
-using Robust.Shared.GameObjects;
-using Robust.Shared.Serialization.Manager.Attributes;
 
 namespace Content.Shared.MobState.State
 {

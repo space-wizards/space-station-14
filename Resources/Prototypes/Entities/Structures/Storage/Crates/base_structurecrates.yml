@@ -16,25 +16,22 @@
       map: ["enum.StorageVisualLayers.Door"]
     - state: welded
       visible: false
-      map: ["enum.StorageVisualLayers.Welded"]
+      map: ["enum.WeldableLayers.BaseWelded"]
   - type: InteractionOutline
   - type: Physics
   - type: Fixtures
     fixtures:
     - shape:
         !type:PhysShapeAabb
-          bounds: "-0.4,-0.4,0.4,0.29"
+        bounds: "-0.4,-0.4,0.4,0.29"
       mass: 25
       mask:
-      - Impassable
-      - SmallImpassable
+      - MachineMask
       layer:
-      - Opaque
-      - MobImpassable
-      - SmallImpassable
+      - MachineLayer
   - type: EntityStorage
     Capacity: 500
-    CanWeldShut: true
+  - type: Weldable
   - type: PlaceableSurface
   - type: Damageable
     damageContainer: Inorganic
@@ -79,25 +76,22 @@
       map: ["enum.StorageVisualLayers.Door"]
     - state: welded
       visible: false
-      map: ["enum.StorageVisualLayers.Welded"]
+      map: ["enum.WeldableLayers.BaseWelded"]
   - type: InteractionOutline
   - type: Physics
   - type: Fixtures
     fixtures:
     - shape:
         !type:PhysShapeAabb
-          bounds: "-0.4,-0.4,0.4,0.29"
+        bounds: "-0.4,-0.4,0.4,0.29"
       mass: 25
       mask:
-      - Impassable
-      - SmallImpassable
+      - MachineMask
       layer:
-      - Opaque
-      - MobImpassable
-      - SmallImpassable
+      - MachineLayer
   - type: EntityStorage
     Capacity: 500
-    CanWeldShut: true
+  - type: Weldable
   - type: PlaceableSurface
   - type: Damageable
     damageContainer: Inorganic

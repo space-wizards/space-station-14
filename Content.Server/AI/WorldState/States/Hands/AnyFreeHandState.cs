@@ -1,8 +1,5 @@
-using Content.Server.Hands.Components;
 using Content.Shared.Hands.EntitySystems;
 using JetBrains.Annotations;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
 
 namespace Content.Server.AI.WorldState.States.Hands
 {

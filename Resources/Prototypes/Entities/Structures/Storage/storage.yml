@@ -4,6 +4,11 @@
   name: rack
   description: A rack for storing things on.
   components:
+  - type: MeleeSound
+    soundGroups:
+      Brute:
+        path:
+          "/Audio/Weapons/dodgeball.ogg"
   - type: Construction
     graph: Rack
     node: Rack
@@ -18,13 +23,12 @@
     fixtures:
     - shape:
         !type:PhysShapeAabb
-          bounds: "-0.3,-0.3,0.3,0.3"
+        bounds: "-0.3,-0.3,0.3,0.3"
       mass: 50
-      layer:
-      - VaultImpassable
       mask:
-      - Impassable
-      - SmallImpassable
+      - MachineMask
+      layer:
+      - MachineLayer
   - type: Damageable
     damageContainer: Inorganic
     damageModifierSet: Metallic

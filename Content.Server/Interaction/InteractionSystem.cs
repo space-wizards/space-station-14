@@ -1,25 +1,26 @@
-using System.Linq;
-using System.Threading.Tasks;
 using Content.Server.Administration.Logs;
 using Content.Server.CombatMode;
 using Content.Server.Hands.Components;
 using Content.Server.Pulling;
 using Content.Server.Storage.Components;
+using Content.Server.Weapon.Ranged.Barrels.Components;
 using Content.Shared.ActionBlocker;
 using Content.Shared.Database;
 using Content.Shared.DragDrop;
 using Content.Shared.Input;
 using Content.Shared.Interaction;
+using Content.Shared.Interaction.Events;
 using Content.Shared.Item;
 using Content.Shared.Pulling.Components;
-using Content.Shared.Timing;
 using Content.Shared.Weapons.Melee;
+using Content.Shared.Weapons.Ranged.Components;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
 using Robust.Shared.Containers;
 using Robust.Shared.Input.Binding;
 using Robust.Shared.Map;
 using Robust.Shared.Players;
+using static Content.Shared.Storage.SharedStorageComponent;
 
 namespace Content.Server.Interaction
 {
@@ -32,6 +33,7 @@ namespace Content.Server.Interaction
         [Dependency] private readonly ActionBlockerSystem _actionBlockerSystem = default!;
         [Dependency] private readonly PullingSystem _pullSystem = default!;
         [Dependency] private readonly AdminLogSystem _adminLogSystem = default!;
+        [Dependency] private readonly UserInterfaceSystem _uiSystem = default!;
 
         public override void Initialize()
         {
@@ -40,8 +42,6 @@ namespace Content.Server.Interaction
             SubscribeNetworkEvent<DragDropRequestEvent>(HandleDragDropRequestEvent);
 
             CommandBinds.Builder
-                .Bind(ContentKeyFunctions.WideAttack,
-                    new PointerInputCmdHandler(HandleWideAttack))
                 .Bind(ContentKeyFunctions.TryPullObject,
                     new PointerInputCmdHandler(HandleTryPullObject))
                 .Register<InteractionSystem>();
@@ -71,7 +71,7 @@ namespace Content.Server.Interaction
                 return false;
 
             // we don't check if the user can access the storage entity itself. This should be handed by the UI system.
-            return storage.SubscribedSessions.Contains(actor.PlayerSession);
+            return _uiSystem.SessionHasOpenUi(container.Owner, StorageUiKey.Key, actor.PlayerSession);
         }
 
         #region Drag drop
@@ -128,21 +128,6 @@ namespace Content.Server.Interaction
             }
         }
         #endregion
-
-        private bool HandleWideAttack(ICommonSession? session, EntityCoordinates coords, EntityUid uid)
-        {
-            // client sanitization
-            if (!ValidateClientInput(session, coords, uid, out var userEntity))
-            {
-                Logger.InfoS("system.interaction", $"WideAttack input validation failed");
-                return true;
-            }
-
-            if (TryComp(userEntity, out CombatModeComponent? combatMode) && combatMode.IsInCombatMode)
-                DoAttack(userEntity.Value, coords, true);
-
-            return true;
-        }
 
         /// <summary>
         /// Entity will try and use their active hand at the target location.
@@ -220,8 +205,13 @@ namespace Content.Server.Interaction
             {
                 var item = hands.ActiveHandEntity;
 
-                if (item != null && !Deleted(item.Value))
+                if (!Deleted(item))
                 {
+                    var meleeVee = new MeleeAttackAttemptEvent();
+                    RaiseLocalEvent(item.Value, ref meleeVee);
+
+                    if (meleeVee.Cancelled) return;
+
                     if (wideAttack)
                     {
                         var ev = new WideAttackEvent(item.Value, user, coordinates);

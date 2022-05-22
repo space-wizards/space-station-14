@@ -2,24 +2,15 @@ using Content.Server.Chat.Managers;
 using Content.Server.GameTicking;
 using Content.Shared.CCVar;
 using Content.Shared.Examine;
-using Content.Shared.GameTicking;
 using Content.Shared.Interaction;
 using Content.Shared.Popups;
 using Robust.Server.Maps;
 using Robust.Shared.Configuration;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Localization;
-using Robust.Shared.Log;
 using Robust.Shared.Map;
-using Robust.Shared.Maths;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
-using Robust.Shared.Timing;
 using Robust.Shared.Utility;
-using System;
-using System.Collections.Generic;
 using System.Linq;
 
 namespace Content.Server.Salvage
@@ -198,8 +189,13 @@ namespace Content.Server.Salvage
             {
                 if (player.AttachedEntity.HasValue)
                 {
-                    var playerTransform = EntityManager.GetComponent<TransformComponent>(player.AttachedEntity.Value);
-                    playerTransform.AttachParent(parentTransform);
+                    var playerEntityUid = player.AttachedEntity.Value;
+                    if (HasComp<SalvageMobRestrictionsComponent>(playerEntityUid))
+                    {
+                        // Salvage mobs are NEVER immune (even if they're from a different salvage, they shouldn't be here)
+                        continue;
+                    }
+                    Transform(playerEntityUid).AttachParent(parentTransform);
                 }
             }
             EntityManager.QueueDeleteEntity(salvage);

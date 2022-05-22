@@ -1,4 +1,3 @@
-using System.IO;
 using Content.Server.Administration;
 using Content.Server.Administration.Managers;
 using Content.Server.Afk;
@@ -10,17 +9,16 @@ using Content.Server.Connection;
 using Content.Server.Database;
 using Content.Server.EUI;
 using Content.Server.GameTicking;
+using Content.Server.GhostKick;
 using Content.Server.GuideGenerator;
 using Content.Server.Info;
 using Content.Server.IoC;
+using Content.Server.LandMines;
 using Content.Server.Maps;
 using Content.Server.NodeContainer.NodeGroups;
 using Content.Server.Preferences.Managers;
-using Content.Server.Sandbox;
 using Content.Server.Voting.Managers;
-using Content.Shared.Actions;
 using Content.Shared.Administration;
-using Content.Shared.Alert;
 using Content.Shared.CCVar;
 using Content.Shared.Kitchen;
 using Robust.Server;
@@ -29,9 +27,7 @@ using Robust.Server.Player;
 using Robust.Shared.Configuration;
 using Robust.Server.ServerStatus;
 using Robust.Shared.ContentPack;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Log;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
 
@@ -51,6 +47,7 @@ namespace Content.Server.Entry
                 new[] { "Content.Client", "Content.Shared", "Content.Shared.Database" });
 
             var factory = IoCManager.Resolve<IComponentFactory>();
+            var prototypes = IoCManager.Resolve<IPrototypeManager>();
 
             factory.DoAutoRegistrations();
 
@@ -58,6 +55,8 @@ namespace Content.Server.Entry
             {
                 factory.RegisterIgnore(ignoreName);
             }
+
+            prototypes.RegisterIgnore("parallax");
 
             ServerContentIoC.Register();
 
@@ -88,6 +87,8 @@ namespace Content.Server.Entry
                 IoCManager.Resolve<INodeGroupFactory>().Initialize();
                 IoCManager.Resolve<IGamePrototypeLoadManager>().Initialize();
                 IoCManager.Resolve<NetworkResourceManager>().Initialize();
+                IoCManager.Resolve<GhostKickManager>().Initialize();
+
                 _voteManager.Initialize();
             }
         }

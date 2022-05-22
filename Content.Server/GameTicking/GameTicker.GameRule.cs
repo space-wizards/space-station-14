@@ -1,10 +1,8 @@
-using System.Collections.Generic;
 using System.Linq;
 using Content.Server.Administration;
 using Content.Server.GameTicking.Rules;
 using Content.Shared.Administration;
 using Robust.Shared.Console;
-using Robust.Shared.ViewVariables;
 
 namespace Content.Server.GameTicking
 {

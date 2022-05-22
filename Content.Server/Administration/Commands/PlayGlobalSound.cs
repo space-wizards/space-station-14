@@ -21,6 +21,7 @@ public sealed class PlayGlobalSound : IConsoleCommand
     public void Execute(IConsoleShell shell, string argStr, string[] args)
     {
         Filter filter;
+        var audio = AudioParams.Default.WithVolume(-8);
 
         switch (args.Length)
         {
@@ -37,24 +38,47 @@ public sealed class PlayGlobalSound : IConsoleCommand
 
             // One or more users specified.
             default:
-                filter = Filter.Empty();
+                var volumeOffset = 0;
 
-                // Skip the first argument, which is the sound path.
-                for (var i = 1; i < args.Length; i++)
+                // Try to specify a new volume to play it at.
+                if (int.TryParse(args[1], out var volume))
                 {
-                    var username = args[i];
-
-                    if (!_playerManager.TryGetSessionByUsername(username, out var session))
-                    {
-                        shell.WriteError(Loc.GetString("play-global-sound-command-player-not-found", ("username", username)));
-                        continue;
-                    }
-
-                    filter.AddPlayer(session);
+                    audio = audio.WithVolume(volume);
+                    volumeOffset = 1;
                 }
+                else
+                {
+                    shell.WriteError(Loc.GetString("play-global-sound-command-volume-parse", ("volume", args[1])));
+                    return;
+                }
+
+                // No users specified so play for them all.
+                if (args.Length == 2)
+                {
+                    filter = Filter.Empty().AddAllPlayers(_playerManager);
+                }
+                else
+                {
+                    filter = Filter.Empty();
+
+                    // Skip the first argument, which is the sound path.
+                    for (var i = 1 + volumeOffset; i < args.Length; i++)
+                    {
+                        var username = args[i];
+
+                        if (!_playerManager.TryGetSessionByUsername(username, out var session))
+                        {
+                            shell.WriteError(Loc.GetString("play-global-sound-command-player-not-found", ("username", username)));
+                            continue;
+                        }
+
+                        filter.AddPlayer(session);
+                    }
+                }
+
                 break;
         }
 
-        SoundSystem.Play(filter, args[0], AudioParams.Default);
+        SoundSystem.Play(filter, args[0], audio);
     }
 }

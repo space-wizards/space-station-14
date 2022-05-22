@@ -14,17 +14,16 @@
     recolor: true
   - type: Clickable
   - type: Evaporation
-  - type: Slippery
   - type: Physics
   - type: Fixtures
     fixtures:
     - shape:
         !type:PhysShapeAabb
-          bounds: "-0.4,-0.4,0.4,0.4"
-      layer:
-      - SmallImpassable
+        bounds: "-0.4,-0.4,0.4,0.4"
       mask:
-      - SmallImpassable
+      - ItemMask
+      layer:
+      - SlipLayer
       hard: false
   - type: Appearance
     visuals:
@@ -56,6 +55,9 @@
   - type: Appearance
     visuals:
     - type: PuddleVisualizer
+  - type: Slippery
+    launchForwardsMultiplier: 2.0
+  - type: StepTrigger
 
 - type: entity
   name: puddle
@@ -72,6 +74,9 @@
     visuals:
     - type: PuddleVisualizer
       recolor: true
+  - type: Slippery
+    launchForwardsMultiplier: 2.0
+  - type: StepTrigger
 
 - type: entity
   name: puddle
@@ -87,6 +92,9 @@
   - type: Appearance
     visuals:
     - type: PuddleVisualizer
+  - type: Slippery
+    launchForwardsMultiplier: 2.0
+  - type: StepTrigger
 
 - type: entity
   id: PuddleBlood
@@ -99,7 +107,6 @@
     state: splatter-0
     netsync: false
   - type: Puddle
-    slipThreshold: 20
     overflowVolume: 50
     opacityModifier: 8
   - type: Evaporation
@@ -131,6 +138,9 @@
   - type: Appearance
     visuals:
     - type: PuddleVisualizer
+  - type: Slippery
+    launchForwardsMultiplier: 2.0
+  - type: StepTrigger
 
 - type: entity
   name: toxins vomit
@@ -154,6 +164,9 @@
   - type: Appearance
     visuals:
     - type: PuddleVisualizer
+  - type: Slippery
+    launchForwardsMultiplier: 2.0
+  - type: StepTrigger
 
 - type: entity
   name: writing
@@ -170,4 +183,6 @@
   - type: Appearance
     visuals:
     - type: PuddleVisualizer
-
+  - type: Slippery
+    launchForwardsMultiplier: 2.0
+  - type: StepTrigger

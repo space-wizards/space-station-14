@@ -21,11 +21,9 @@
         radius: 0.35
       mass: 10
       mask:
-      - Impassable
-      - MobImpassable #Bullets?!
-      - SmallImpassable
+      - MobMask
       layer:
-      - Opaque
+      - MobLayer
   - type: Appearance
     visuals:
     - type: DamageStateVisualizer
@@ -34,7 +32,7 @@
       dead: corgi_dead
   - type: Butcherable
     spawned:
-    - id: FoodMeatCorgi
+    - id: FoodMeat
       amount: 2
   - type: ReplacementAccent
     accent: dog
@@ -48,6 +46,7 @@
       gender: epicene
   - type: SentienceTarget
     flavorKind: corgi
+  - type: Puller
 
 - type: entity
   name: corrupted corgi
@@ -116,7 +115,7 @@
 - type: entity
   name: Ian
   parent: MobCorgi
-  id: MobCorgiOld
+  id: MobCorgiIan
   description: Favorite pet corgi.
   components:
   - type: Sprite
@@ -135,7 +134,11 @@
     attributes:
       proper: true
       gender: male
-
+  - type: Butcherable
+    spawned:
+    - id: FoodMeatCorgi
+      amount: 2
+      
 - type: entity
   name: Old Ian
   parent: MobCorgi
@@ -224,11 +227,9 @@
         radius: 0.35
       mass: 10
       mask:
-      - Impassable
-      - MobImpassable #Bullets?!
-      - SmallImpassable
+      - MobMask
       layer:
-      - Opaque
+      - MobLayer
   - type: Appearance
     visuals:
     - type: DamageStateVisualizer
@@ -376,11 +377,9 @@
         radius: 0.35
       mass: 10
       mask:
-      - Impassable
-      - MobImpassable #Bullets?!
-      - SmallImpassable
+      - MobMask
       layer:
-      - Opaque
+      - MobLayer
   - type: Appearance
     visuals:
     - type: DamageStateVisualizer
@@ -421,12 +420,9 @@
         radius: 0.35
       mass: 10
       mask:
-      - Impassable
-      - MobImpassable
-      - VaultImpassable
-      - SmallImpassable
+      - MobMask
       layer:
-      - Opaque
+      - MobLayer
   - type: Appearance
     visuals:
     - type: DamageStateVisualizer
@@ -478,12 +474,9 @@
         radius: 0.35
       mass: 10
       mask:
-      - Impassable
-      - MobImpassable
-      - VaultImpassable
-      - SmallImpassable
+      - MobMask
       layer:
-      - Opaque
+      - MobLayer
   - type: Appearance
     visuals:
     - type: DamageStateVisualizer
@@ -524,12 +517,9 @@
         radius: 0.35
       mass: 10
       mask:
-      - Impassable
-      - MobImpassable
-      - SmallImpassable
-      - VaultImpassable
+      - MobMask
       layer:
-      - Opaque
+      - MobLayer
   - type: Appearance
     visuals:
     - type: DamageStateVisualizer
@@ -604,12 +594,9 @@
         radius: 0.35
       mass: 10
       mask:
-      - Impassable
-      - MobImpassable
-      - SmallImpassable
-      - VaultImpassable
+      - MobMask
       layer:
-      - Opaque
+      - MobLayer
   - type: Appearance
     visuals:
     - type: DamageStateVisualizer

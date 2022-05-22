@@ -1,4 +1,4 @@
-﻿using Content.Shared.Atmos;
+using Content.Shared.Atmos;
 
 namespace Content.Server.Xenoarchaeology.XenoArtifacts.Effects.Components;
 
@@ -8,8 +8,6 @@ namespace Content.Server.Xenoarchaeology.XenoArtifacts.Effects.Components;
 [RegisterComponent]
 public sealed class GasArtifactComponent : Component
 {
-    public override string Name => "GasArtifact";
-
     /// <summary>
     ///     Gas that will be spawned when artifact activated.
     ///     If null it will be picked on startup from <see cref="PossibleGases"/>.

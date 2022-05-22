@@ -1,21 +1,21 @@
 - type: job
-  id: Assistant
-  name: "assistant"
-  startingGear: AssistantGear
+  id: Passenger
+  name: "passenger"
+  startingGear: PassengerGear
   departments:
   - Civilian
-  icon: "Assistant"
+  icon: "Passenger"
   supervisors: "absolutely everyone"
   access:
   - Maintenance
 
 - type: startingGear
-  id: AssistantGear
+  id: PassengerGear
   equipment:
     jumpsuit: ClothingUniformJumpsuitColorGrey
     back: ClothingBackpackFilled
     shoes: ClothingShoesColorBlack
-    id: AssistantPDA
+    id: PassengerPDA
     ears: ClothingHeadsetService
   innerclothingskirt: ClothingUniformJumpskirtColorGrey
   satchel: ClothingBackpackSatchelFilled

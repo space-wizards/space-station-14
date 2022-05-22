@@ -1,7 +1,4 @@
-using Content.Server.UserInterface;
-using Content.Shared.AirlockPainter;
 using Content.Shared.Sound;
-using Robust.Server.GameObjects;
 
 namespace Content.Server.AirlockPainter
 {

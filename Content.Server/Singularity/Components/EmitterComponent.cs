@@ -1,11 +1,5 @@
-using System;
 using System.Threading;
-using Content.Server.Power.Components;
-using Content.Shared.Access.Components;
 using Content.Shared.Sound;
-using Robust.Shared.GameObjects;
-using Robust.Shared.Serialization.Manager.Attributes;
-using Robust.Shared.ViewVariables;
 
 
 namespace Content.Server.Singularity.Components

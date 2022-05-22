@@ -1,5 +1,4 @@
 using Content.Shared.Hands;
-using Robust.Shared.GameObjects;
 
 namespace Content.Server.Weapon.Ranged
 {

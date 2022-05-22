@@ -8,7 +8,7 @@ using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototy
 namespace Content.Server.Chemistry.ReactionEffects
 {
     [DataDefinition]
-    public class ExplosionReactionEffect : ReagentEffect
+    public sealed class ExplosionReactionEffect : ReagentEffect
     {
         /// <summary>
         ///     The type of explosion. Determines damage types and tile break chance scaling.

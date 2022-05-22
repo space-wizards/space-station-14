@@ -1,4 +1,3 @@
-using System;
 using JetBrains.Annotations;
 
 namespace Content.Server.NodeContainer.NodeGroups

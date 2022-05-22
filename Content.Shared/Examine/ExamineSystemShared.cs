@@ -102,6 +102,14 @@ namespace Content.Shared.Examine
             return ExamineRange;
         }
 
+        /// <summary>
+        /// True if occluders are drawn for this entity, otherwise false.
+        /// </summary>
+        public bool IsOccluded(EntityUid uid)
+        {
+            return TryComp<SharedEyeComponent>(uid, out var eye) && eye.DrawFov;
+        }
+
         public static bool InRangeUnOccluded(MapCoordinates origin, MapCoordinates other, float range, Ignored? predicate, bool ignoreInsideBlocker = true, IEntityManager? entMan = null)
         {
             // No, rider. This is better.

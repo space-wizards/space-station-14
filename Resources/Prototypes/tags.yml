@@ -160,6 +160,9 @@
   id: Flashlight
 
 - type: Tag
+  id: Folder
+
+- type: Tag
   id: FootstepSound
 
 - type: Tag
@@ -241,7 +244,7 @@
   id: PercussionInstrument
 
 - type: Tag
-  id: Plastic
+  id: Pickaxe
 
 - type: Tag
   id: Pill
@@ -263,12 +266,18 @@
 
 - type: Tag
   id: PlantSampleTaker
+  
+- type: Tag
+  id: Plastic
 
 - type: Tag
   id: Powerdrill
 
 - type: Tag
   id: PussyWagonKeys
+  
+- type: Tag
+  id: RawMaterial
 
 # Give this to something that doesn't need any special recycler behavior and just needs deleting.
 - type: Tag
@@ -311,6 +320,9 @@
   id: StringInstrument
 
 - type: Tag
+  id: SyndicateSegwayKeys
+
+- type: Tag
   id: Taser
 
 - type: Tag
@@ -348,3 +360,4 @@
 
 - type: Tag
   id: Write
+
