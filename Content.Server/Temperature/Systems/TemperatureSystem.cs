@@ -1,5 +1,3 @@
-using System;
-using System.Collections.Generic;
 using System.Linq;
 using Content.Server.Administration.Logs;
 using Content.Server.Atmos.Components;
@@ -9,8 +7,6 @@ using Content.Shared.Alert;
 using Content.Shared.Damage;
 using Content.Shared.Database;
 using Content.Shared.Inventory;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
 
 namespace Content.Server.Temperature.Systems
 {

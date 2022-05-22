@@ -1,7 +1,4 @@
-using System;
-using Robust.Shared.GameObjects;
 using Robust.Shared.GameStates;
-using Robust.Shared.Localization;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.Atmos.Components

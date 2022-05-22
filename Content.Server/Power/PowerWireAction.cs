@@ -1,16 +1,8 @@
-using System;
-using System.Threading;
-using System.Threading.Tasks;
-using Content.Server.DoAfter;
 using Content.Server.Electrocution;
 using Content.Server.Power.Components;
 using Content.Server.Wires;
 using Content.Shared.Power;
 using Content.Shared.Wires;
-using Robust.Shared.GameObjects;
-using Robust.Shared.Maths;
-using Robust.Shared.Serialization;
-using Robust.Shared.Serialization.Manager.Attributes;
 
 namespace Content.Server.Power;
 

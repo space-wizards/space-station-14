@@ -5,7 +5,6 @@ using Content.Shared.Info;
 using Robust.Server.Player;
 using Robust.Shared.Configuration;
 using Robust.Shared.Console;
-using Robust.Shared.IoC;
 using Robust.Shared.Network;
 
 namespace Content.Server.Info;

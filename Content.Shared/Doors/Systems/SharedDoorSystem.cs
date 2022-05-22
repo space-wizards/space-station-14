@@ -1,7 +1,6 @@
 using Content.Shared.Access.Components;
 using Content.Shared.Damage;
 using Content.Shared.Doors.Components;
-using Content.Shared.Examine;
 using Content.Shared.Hands.Components;
 using Content.Shared.Interaction;
 using Content.Shared.Stunnable;

@@ -12,7 +12,6 @@ using Content.Shared.Pulling.Events;
 using Content.Shared.Speech;
 using Content.Shared.Standing;
 using Content.Shared.Throwing;
-using Robust.Shared.GameObjects;
 
 namespace Content.Shared.MobState.EntitySystems
 {

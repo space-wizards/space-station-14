@@ -83,3 +83,20 @@
   - type: StorageFill
     contents:
       - id: CaptainSabre
+
+- type: entity
+  id: ClothingBeltMilitaryWebbingMedFilled
+  parent: ClothingBeltMilitaryWebbingMed
+  suffix: Filled
+  components:
+  - type: StorageFill
+    contents:
+      - id: SyndiHypo
+      - id: EpinephrineChemistryBottle
+        amount: 2
+      - id: EphedrineChemistryBottle
+        amount: 2
+      - id: OmnizineChemistryBottle
+        amount: 1
+      - id: MedkitCombatFilled  
+      

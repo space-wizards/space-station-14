@@ -1,6 +1,4 @@
-using System.Collections.Generic;
 using Content.Server.AI.Pathfinding.Pathfinders;
-using Robust.Shared.GameObjects;
 using Robust.Shared.Map;
 
 namespace Content.Server.AI.Pathfinding.Accessible
@@ -13,7 +11,7 @@ namespace Content.Server.AI.Pathfinding.Accessible
         /// <summary>
         /// Gets all of the tiles in range that can we access
         /// </summary>
-        /// If you want Dikstra then add distances.
+        /// If you want Dijkstra then add distances.
         /// Doesn't use the JobQueue as it will generally be encapsulated by other jobs
         /// <param name="pathfindingArgs"></param>
         /// <param name="range"></param>

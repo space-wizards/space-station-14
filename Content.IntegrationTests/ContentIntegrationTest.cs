@@ -29,6 +29,9 @@ namespace Content.IntegrationTests
             // Avoid funny race conditions with the database.
             (CCVars.DatabaseSynchronous.Name, "true", false),
 
+            // No artificial database delay, as it can make tests fail.
+            (CCVars.DatabaseSqliteDelay.Name, "0", false),
+
             // Disable holidays as some of them might mess with the map at round start.
             (CCVars.HolidaysEnabled.Name, "false", false),
 
@@ -36,7 +39,7 @@ namespace Content.IntegrationTests
             (CCVars.GameMap.Name, "empty", true),
 
             // Makes sure IGameMapManager actually listens.
-            (CCVars.GameMapForced.Name, "true", true)
+            (CCVars.GameMapForced.Name, "true", true),
         };
 
         private static void SetServerTestCvars(IntegrationOptions options)

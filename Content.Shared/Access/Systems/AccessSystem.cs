@@ -1,6 +1,4 @@
 using Content.Shared.Access.Components;
-using Robust.Shared.GameObjects;
-using System.Collections.Generic;
 using Robust.Shared.Prototypes;
 
 namespace Content.Shared.Access.Systems

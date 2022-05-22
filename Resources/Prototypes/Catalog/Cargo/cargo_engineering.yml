@@ -45,3 +45,15 @@
   cost: 3000
   category: Engineering
   group: market
+
+- type: cargoProduct
+  name: "electrical supplies crate"
+  id: EngineeringElectricalSupplies
+  description: "N.T. is not responsible for any workplace infighting relating to the insulated gloves included within these crates."
+  icon:
+    sprite: Objects/Tools/Toolboxes/toolbox_yellow.rsi
+    state: icon
+  product: CrateEngineeringElectricalSupplies
+  cost: 4500
+  category: Engineering
+  group: market

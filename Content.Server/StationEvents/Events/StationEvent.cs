@@ -1,4 +1,3 @@
-using System.Linq;
 using Content.Server.Administration.Logs;
 using Content.Server.Atmos.EntitySystems;
 using Content.Server.Chat.Managers;
@@ -209,7 +208,7 @@ namespace Content.Server.StationEvents.Events
 
             var atmosphereSystem = EntitySystem.Get<AtmosphereSystem>();
             var found = false;
-            var gridBounds = grid.WorldBounds;
+            var gridBounds = grid.WorldAABB;
             var gridPos = grid.WorldPosition;
 
             for (var i = 0; i < 10; i++)

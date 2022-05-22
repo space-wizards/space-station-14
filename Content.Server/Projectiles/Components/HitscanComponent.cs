@@ -1,17 +1,12 @@
-using System;
+using Content.Server.Weapon.Ranged;
 using Content.Shared.Damage;
 using Content.Shared.Physics;
 using Content.Shared.Sound;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
 using Robust.Shared.Map;
-using Robust.Shared.Maths;
 using Robust.Shared.Player;
-using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Timing;
-using Robust.Shared.ViewVariables;
 
 namespace Content.Server.Projectiles.Components
 {
@@ -44,8 +39,12 @@ namespace Content.Server.Projectiles.Components
         private string? _muzzleFlash;
         [DataField("impactFlash")]
         private string? _impactFlash;
-        [DataField("soundHitWall")]
-        private SoundSpecifier _soundHitWall = new SoundPathSpecifier("/Audio/Weapons/Guns/Hits/laser_sear_wall.ogg");
+
+        [DataField("soundHit")]
+        public SoundSpecifier? SoundHit;
+
+        [DataField("soundForce")]
+        public bool ForceSound = false;
 
         public void FireEffects(EntityUid user, float distance, Angle angle, EntityUid? hitEntity = null)
         {
@@ -84,14 +83,6 @@ namespace Content.Server.Projectiles.Components
                 {
                     effectSystem.CreateParticle(muzzleEffect);
                 }
-            }
-
-            if (hitEntity != null && _soundHitWall != null)
-            {
-                // TODO: No wall component so ?
-                var offset = localAngle.ToVec().Normalized / 2;
-                var coordinates = localCoordinates.Offset(offset);
-                SoundSystem.Play(Filter.Pvs(coordinates), _soundHitWall.GetSound(), coordinates);
             }
 
             Owner.SpawnTimer((int) _deathTime.TotalMilliseconds, () =>

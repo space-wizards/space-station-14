@@ -1,6 +1,4 @@
-﻿using System;
-using System.Runtime.CompilerServices;
-using Robust.Shared.Maths;
+﻿using System.Runtime.CompilerServices;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.Atmos

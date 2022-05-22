@@ -1,5 +1,4 @@
 ﻿using Content.Server.Roles;
-﻿using Robust.Shared.Localization;
 
 namespace Content.Server.Ghost
 {

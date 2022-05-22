@@ -7,6 +7,7 @@
     Shock: 1.2
   flatReductions:
     Blunt: 5
+    Heat: 5
 
 # Like metallic, but without flat reduction so it can be damaged with fists.
 - type: damageModifierSet
@@ -122,7 +123,7 @@
 - type: damageModifierSet
   id: Skeleton
   coefficients:
-    Blunt: 2.5
+    Blunt: 2.0
     Slash: 1.5
     Piercing: 1.2
     Cold: 0.0

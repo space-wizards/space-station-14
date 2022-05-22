@@ -1,4 +1,3 @@
-using System.Linq;
 using Content.Server.Stunnable;
 using Content.Server.UserInterface;
 using Content.Shared.Instruments;

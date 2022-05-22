@@ -1,6 +1,5 @@
 using Content.Server.Chat.Managers;
 using Content.Shared.Roles;
-using Robust.Shared.IoC;
 
 namespace Content.Server.Suspicion.Roles
 {

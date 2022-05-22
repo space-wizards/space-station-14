@@ -1,14 +1,8 @@
-using System;
-using Content.Shared.CharacterAppearance;
 using Content.Shared.CharacterAppearance.Systems;
 using Content.Shared.Species;
-using Robust.Shared.Analyzers;
 using Robust.Shared.Enums;
-using Robust.Shared.GameObjects;
 using Robust.Shared.GameStates;
 using Robust.Shared.Serialization;
-using Robust.Shared.Serialization.Manager.Attributes;
-using Robust.Shared.ViewVariables;
 
 namespace Content.Shared.CharacterAppearance.Components
 {

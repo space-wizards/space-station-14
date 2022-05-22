@@ -1,7 +1,3 @@
-using Robust.Shared.Analyzers;
-using Robust.Shared.GameObjects;
-using Robust.Shared.Serialization.Manager.Attributes;
-
 namespace Content.Server.Stunnable.Components
 {
     /// <summary>
@@ -27,5 +23,10 @@ namespace Content.Server.Stunnable.Components
 
         [DataField("runSpeedMultiplier")]
         public float RunSpeedMultiplier = 1f;
+
+        /// <summary>
+        /// Fixture we track for the collision.
+        /// </summary>
+        [ViewVariables, DataField("fixture")] public string FixtureID = "projectile";
     }
 }
