@@ -59,10 +59,10 @@
 
 - type: reagent
   id: Ethanol
-  name: ethanol
+  name: reagent-name-ethanol
   parent: BaseAlcohol
-  desc: A simple alcohol, makes you drunk if consumed, flammable.
-  physicalDesc: strong-smelling
+  desc: reagent-desc-ethanol
+  physicalDesc: reagent-physical-desc-strong-smelling
   color: "#b05b3c"
   boilingPoint: 78.2
   meltingPoint: -114.1
