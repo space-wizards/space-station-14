@@ -123,6 +123,7 @@ public sealed partial class GunSystem : EntitySystem
 
         // SubscribeLocalEvent<ServerRangedWeaponComponent, ExaminedEvent>(OnGunExamine);
         SubscribeNetworkEvent<FirePosEvent>(OnFirePos);
+        SubscribeLocalEvent<ServerRangedWeaponComponent, MeleeAttackAttemptEvent>(OnMeleeAttempt);
     }
 
     private void OnFirePos(FirePosEvent msg, EntitySessionEventArgs args)

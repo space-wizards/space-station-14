@@ -9,6 +9,7 @@ using Content.Shared.Database;
 using Content.Shared.DragDrop;
 using Content.Shared.Input;
 using Content.Shared.Interaction;
+using Content.Shared.Interaction.Events;
 using Content.Shared.Item;
 using Content.Shared.Pulling.Components;
 using Content.Shared.Weapons.Melee;
@@ -204,10 +205,13 @@ namespace Content.Server.Interaction
             {
                 var item = hands.ActiveHandEntity;
 
-                if (HasComp<ServerRangedBarrelComponent>(item)) return;
-
-                if (item != null && !Deleted(item.Value))
+                if (!Deleted(item))
                 {
+                    var meleeVee = new MeleeAttackAttemptEvent();
+                    RaiseLocalEvent(item.Value, ref meleeVee);
+
+                    if (meleeVee.Cancelled) return;
+
                     if (wideAttack)
                     {
                         var ev = new WideAttackEvent(item.Value, user, coordinates);
