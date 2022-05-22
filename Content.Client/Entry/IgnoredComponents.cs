@@ -41,6 +41,7 @@ namespace Content.Client.Entry
             "Healing",
             "Material",
             "RandomAppearance",
+            "TriggerOnBeingExploded",
             "DiseaseProtection",
             "DiseaseDiagnoser",
             "DiseaseVaccine",

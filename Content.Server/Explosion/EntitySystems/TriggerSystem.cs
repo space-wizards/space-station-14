@@ -10,6 +10,7 @@ using Robust.Shared.Player;
 using Content.Shared.Sound;
 using Content.Shared.Trigger;
 using Content.Shared.Database;
+using Content.Shared.Explosion;
 
 namespace Content.Server.Explosion.EntitySystems
 {
@@ -46,6 +47,7 @@ namespace Content.Server.Explosion.EntitySystems
             InitializeSignal();
 
             SubscribeLocalEvent<TriggerOnCollideComponent, StartCollideEvent>(OnTriggerCollide);
+            SubscribeLocalEvent<TriggerOnBeingExplodedComponent, GetExplosionResistanceEvent>(OnExplode);
 
             SubscribeLocalEvent<DeleteOnTriggerComponent, TriggerEvent>(HandleDeleteTrigger);
             SubscribeLocalEvent<ExplodeOnTriggerComponent, TriggerEvent>(HandleExplodeTrigger);
@@ -78,6 +80,10 @@ namespace Content.Server.Explosion.EntitySystems
             Trigger(component.Owner);
         }
 
+        private void OnExplode(EntityUid uid, TriggerOnBeingExplodedComponent component, GetExplosionResistanceEvent args)
+        {
+            Trigger(uid);
+        }
 
         public bool Trigger(EntityUid trigger, EntityUid? user = null)
         {

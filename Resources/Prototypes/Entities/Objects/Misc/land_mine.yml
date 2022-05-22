@@ -7,6 +7,7 @@
   - type: Anchorable
   - type: Pullable
   - type: MovedByPressure
+  - type: TriggerOnBeingExploded
   - type: Physics
     bodyType: Static
     fixedRotation: true
@@ -20,7 +21,7 @@
       layer:
         - LowImpassable
   - type: Sprite
-    drawdepth: FloorObjects
+    drawdepth: Items
     sprite: Objects/Misc/uglymine.rsi
     state: uglymine
   - type: Damageable
