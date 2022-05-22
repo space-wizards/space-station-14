@@ -352,6 +352,12 @@ namespace Content.Server.StationEvents
                 return false;
             }
 
+            if (stationEvent.LastRun != TimeSpan.Zero && currentTime.TotalMinutes <
+                stationEvent.ReoccurenceDelay + stationEvent.LastRun.Minutes)
+            {
+                return false;
+            }
+
             return true;
         }
 
