@@ -1,9 +1,4 @@
 Entries:
-- author: Rane
-  changes:
-  - {message: The recycler should dispose of most of most trash items now., type: Add}
-  id: 1082
-  time: '2022-02-18T06:00:57.0000000+00:00'
 - author: Fishfish458
   changes:
   - {message: Added craftable doors for most materials you can and can't get your
@@ -3021,3 +3016,11 @@ Entries:
   - {message: More gun impact sounds have been added., type: Tweak}
   id: 1581
   time: '2022-05-22T08:23:37.0000000+00:00'
+- author: Rane
+  changes:
+  - {message: Glucose and sugar are now the same thing., type: Tweak}
+  - {message: Alcohols now metabolize into some ethanol., type: Add}
+  - {message: Heavily caffeinated drinks metabolize into some theobromine instead
+      of directly containing theobromine in their containers., type: Tweak}
+  id: 1582
+  time: '2022-05-22T08:25:38.0000000+00:00'
