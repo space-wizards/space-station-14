@@ -1,11 +1,4 @@
 Entries:
-- author: mirrorcult
-  changes:
-  - {message: You can now examine the health of entities by using an examine verb.
-      This means you no longer have to hop in a scanning machine just to judge someone's
-      health., type: Add}
-  id: 1079
-  time: '2022-02-18T03:26:05.0000000+00:00'
 - author: Rane
   changes:
   - {message: 'Drones bleed oil, and xenos bleed fluorosulfuric acid.', type: Add}
@@ -3023,3 +3016,8 @@ Entries:
   - {message: Drag-drop no longer possible in combat mode., type: Tweak}
   id: 1578
   time: '2022-05-22T02:31:46.0000000+00:00'
+- author: DogZeroX
+  changes:
+  - {message: 'New lobby song: Spac Stac by Hayabusa', type: Add}
+  id: 1579
+  time: '2022-05-22T02:49:15.0000000+00:00'
