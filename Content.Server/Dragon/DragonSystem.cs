@@ -109,9 +109,6 @@ namespace Content.Server.Dragon
                     case SharedDeadMobState:
                         if (!EntityManager.HasComponent<DamageableComponent>(dragonuid)) return;
 
-                        // Recover spawns.
-                        component.SpawnsLeft = Math.Min(component.SpawnsLeft + 1, component.MaxSpawns);
-
                         //Humanoid devours allow dragon to get eggs, corpses included
                         if (EntityManager.HasComponent<HumanoidAppearanceComponent>(target))
                         {
@@ -120,9 +117,10 @@ namespace Content.Server.Dragon
                             // Sends the human entity into the stomach so it can be revived later.
                             component.DragonStomach.Insert(target);
                             SoundSystem.Play(Filter.Pvs(dragonuid, entityManager: EntityManager), "/Audio/Effects/sound_magic_demon_consume.ogg");
-
+                            // Add a spawn for a consumed humanoid
+                            component.SpawnsLeft = Math.Min(component.SpawnsLeft + 1, component.MaxSpawns);
                         }
-                        //Non-humanoid mobs can only heal dragon for half the normal amount
+                        //Non-humanoid mobs can only heal dragon for half the normal amount, with no additional spawn tickets
                         else
                         {
                             // heal HALF the damage
