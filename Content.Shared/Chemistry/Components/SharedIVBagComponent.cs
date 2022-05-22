@@ -10,6 +10,9 @@ namespace Content.Shared.Chemistry.Components
     [NetworkedComponent, ComponentProtoName("IVBag")]
     public abstract class SharedIVBagComponent : Component
     {
+        /// <summary> Disconnect bags that are this far away from their target. </summary>
+        public const float BreakDistance = 2.25f;
+
         /// <summary>
         /// Component data used for net updates. Used by client for item status ui
         /// </summary>

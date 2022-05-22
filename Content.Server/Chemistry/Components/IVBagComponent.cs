@@ -18,15 +18,15 @@ namespace Content.Server.Chemistry.Components
         public CancellationTokenSource? InjectCancel;
 
 
-        /// <summary> Is the bag injected into a mob? </summary>
+        /// <summary> Does the bag assume it's injected into a mob? </summary>
         [ViewVariables]
         public bool Connected = false;
 
         /// <summary> What mob is the IV connected to? </summary>
         [ViewVariables]
         public EntityUid? Target;
+        public TransformComponent? BagPos;
         public TransformComponent? TargetPos;
-        public const float BreakDistance = 2.25f;
 
 
         /// <summary>

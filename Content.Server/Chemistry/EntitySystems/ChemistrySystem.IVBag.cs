@@ -41,15 +41,16 @@ public sealed partial class ChemistrySystem
     private void InitializeIVBag()
     {
         SubscribeLocalEvent<IVBagComponent, ComponentStartup>(OnBagStartup);
+        SubscribeLocalEvent<IVBagComponent, ComponentRemove>(OnBagRemove);
         SubscribeLocalEvent<IVBagComponent, ComponentGetState>(OnBagGetState);
         SubscribeLocalEvent<IVBagComponent, SolutionChangedEvent>(OnSolutionChange);
-        SubscribeLocalEvent<IVBagComponent, MoveEvent>(HandleBagMove);
 
         SubscribeLocalEvent<IVBagComponent, HandDeselectedEvent>(OnBagDeselected);
         SubscribeLocalEvent<IVBagComponent, UseInHandEvent>(OnBagUse);
         SubscribeLocalEvent<IVBagComponent, AfterInteractEvent>(OnBagAfterInteract);
         SubscribeLocalEvent<IVBagComponent, ActivateInWorldEvent>(OnWorldActivate);
-        SubscribeLocalEvent<IVBagComponent, ContainerGettingInsertedAttemptEvent>(OnInsertAttempt);
+        SubscribeLocalEvent<IVBagComponent, ContainerIsInsertingAttemptEvent>(OnContainerInsert);
+        SubscribeLocalEvent<IVBagComponent, ContainerIsRemovingAttemptEvent>(OnContainerRemove);
         // SubscribeLocalEvent<IVBagComponent, DragDropEvent>(HandleDragDropOn); // TODO: stand interactions
 
         SubscribeLocalEvent<IVBagComponent, ExaminedEvent>(OnExamined);
@@ -58,13 +59,114 @@ public sealed partial class ChemistrySystem
 
         SubscribeLocalEvent<BagInjectionCompleteEvent>(OnBagInjectionComplete);
         SubscribeLocalEvent<BagInjectionCancelledEvent>(OnBagInjectionCancelled);
+
+        // External
+        SubscribeLocalEvent<IVBagComponent, MoveEvent>(HandleBagMove);
+        SubscribeLocalEvent<IVHolderComponent, MoveEvent>(HandleBagHolderMove);
+        SubscribeLocalEvent<IVTargetComponent, MoveEvent>(HandleBagTargetMove);
     }
 
 
-    #region IV Bag Verbs
+    #region IV Movement
 
     /// <summary>
-    ///     Add an alt-click interaction for disconnection.
+    /// Distance check (and maybe more).
+    /// </summary>
+    public bool ShouldDisconnectBag(EntityCoordinates posA, EntityCoordinates posB)
+    {
+        return !posA.InRange(EntityManager, posB, IVBagComponent.BreakDistance);
+    }
+
+    /// <summary>
+    /// Rip out the bag if it moves too far while connected.
+    /// </summary>
+    private void HandleBagMove(EntityUid uid, IVBagComponent bagComp, ref MoveEvent args)
+    {
+        if (!bagComp.Connected || bagComp.TargetPos == null)
+            return;
+
+        if (ShouldDisconnectBag(args.NewPosition, bagComp.TargetPos.Coordinates))
+            DisconnectBag(bagComp, true); // tomfromtheshowtomandjerryscreaming.ogg
+    }
+
+    /// <summary>
+    /// Rip out the bag if it moves too far while connected.
+    /// </summary>
+    private void HandleBagHolderMove(EntityUid uid, IVHolderComponent holdComp, ref MoveEvent args)
+    {
+        if (holdComp.Bag is not { Valid: true } || holdComp.BagPos == null)
+            return;
+
+        if (ShouldDisconnectBag(args.NewPosition, holdComp.BagPos.Coordinates))
+            DisconnectBag(CompOrNull<IVBagComponent>(holdComp.Bag), true); // tomfromtheshowtomandjerryscreaming.ogg
+    }
+
+    /// <summary>
+    /// Rip out of the target if it moves too far away from the bag.
+    /// </summary>
+    private void HandleBagTargetMove(EntityUid uid, IVTargetComponent tgtComp, ref MoveEvent args)
+    {
+        var bags = tgtComp.Bags;
+        var bagCount = (bags == null ? 0 : bags.Count);
+
+        if (bagCount == 0)
+        {
+            EntityManager.RemoveComponent<IVTargetComponent>(uid);
+            return;
+        }
+
+        EntityUid bag;
+        for (int i = bagCount - 1; i >= 0; i--)
+        {
+            bag = bags![i];
+            if (TryComp<IVBagComponent>(bag, out var bagComp))
+            {
+                if (bagComp.BagPos == null || ShouldDisconnectBag(args.NewPosition, bagComp.BagPos.Coordinates))
+                    DisconnectBag(bagComp, true);
+            }
+            else
+            {
+                tgtComp.RemoveBag(bag);
+            }
+        }
+    }
+
+    private void OnContainerInsert(EntityUid uid, IVBagComponent bagComp, ContainerIsInsertingAttemptEvent args)
+    {
+        if (HasComp<ServerStorageComponent>(args.Container.Owner))
+        {
+            // Don't allow people to drip IVs from their backpack.
+            // We don't need powergamers with 20u healchem per second tanking everything.
+            DisconnectBag(bagComp, true);
+            Console.WriteLine("[IV] inserted into storage container");
+        }
+        else
+        {
+            // We must relay the MoveEvent to the parent.
+            AddComp<IVHolderComponent>(args.Container.Owner).SetBag(bagComp.Owner);
+            Console.WriteLine("[IV] inserted into hands or something like that: " + bagComp.Owner);
+        }
+    }
+
+    private void OnContainerRemove(EntityUid uid, IVBagComponent bagComp, ContainerIsRemovingAttemptEvent args)
+    {
+        // Remove the associated IVHolderComponent instance from the container.
+        foreach (var held in AllComps<IVHolderComponent>(uid))
+        {
+            if (!held.Deleted && held.Bag == uid)
+            {
+                Console.WriteLine("[IV] removing an IVHolderComponent instance from container: " + args.Container.Owner);
+                EntityManager.RemoveComponent(uid, held);
+                // return;
+            }
+        }
+    }
+
+    #endregion
+
+
+    /// <summary>
+    /// Add an alt-click interaction for disconnection.
     /// </summary>
     private void OnGetAltVerbs(EntityUid uid, IVBagComponent bagComp, GetVerbsEvent<AlternativeVerb> args)
     {
@@ -74,14 +176,14 @@ public sealed partial class ChemistrySystem
         args.Verbs.Add(new AlternativeVerb()
         {
             Text = Loc.GetString("ivbag-verb-disconnect"),
-            Act = () => Disconnect(bagComp, false, args.User),
+            Act = () => DisconnectBag(bagComp, false, args.User),
             IconTexture = "/Textures/Interface/VerbIcons/eject.svg.192dpi.png",
             Priority = 911
         });
     }
 
     /// <summary>
-    ///     Add manual interactions for setting drip rate and flow valve.
+    /// Add manual interactions for setting drip rate and flow valve.
     /// </summary>
     private void OnGetVerbs(EntityUid uid, IVBagComponent bagComp, GetVerbsEvent<Verb> args)
     {
@@ -141,23 +243,6 @@ public sealed partial class ChemistrySystem
         }
     }
 
-    #endregion
-
-
-
-    private void OnInsertAttempt(EntityUid uid, IVBagComponent bagComp, ContainerGettingInsertedAttemptEvent args)
-    {
-        if (bagComp.Connected)
-            return;
-
-        // Don't allow people to drip IVs from their backpack.
-        // We don't need powergamers with 20u healchem per second tanking everything.
-        if (HasComp<ServerStorageComponent>(args.Container.Owner))
-        {
-            // Console.WriteLine("[IV] tried to insert into storage container");
-            Disconnect(bagComp, true);
-        }
-    }
 
     private void OnWorldActivate(EntityUid uid, IVBagComponent bagComp, ActivateInWorldEvent args)
     {
@@ -195,26 +280,16 @@ public sealed partial class ChemistrySystem
         component.InjectCancel = null;
     }
 
-    /// <summary>
-    ///     Rip out the bag if it moves too far while connected.
-    /// </summary>
-    private void HandleBagMove(EntityUid uid, IVBagComponent bagComp, ref MoveEvent args)
+    private void OnBagStartup(EntityUid uid, IVBagComponent bagComp, ComponentStartup args)
     {
-        if (!bagComp.Connected || bagComp.TargetPos == null)
-            return;
-
-        args.NewPosition.TryDistance(EntityManager, bagComp.TargetPos.Coordinates, out var dist);
-        Console.WriteLine("distance: " + dist);
-
-        if (!args.NewPosition.InRange(EntityManager, bagComp.TargetPos.Coordinates, IVBagComponent.BreakDistance))
-        {
-            Disconnect(bagComp, true); // tomfromtheshowtomandjerryscreaming.ogg
-        }
+        bagComp.BagPos = Comp<TransformComponent>(uid);
+        Dirty(bagComp);
     }
 
-    private void OnBagStartup(EntityUid uid, IVBagComponent component, ComponentStartup args)
+    private void OnBagRemove(EntityUid uid, IVBagComponent bagComp, ComponentRemove args)
     {
-        Dirty(component);
+        if (TryComp<IVTargetComponent>(bagComp.Target, out var tgtComp))
+            tgtComp.ValidateBags(true);
     }
 
     private void OnSolutionChange(EntityUid uid, IVBagComponent component, SolutionChangedEvent args)
@@ -244,7 +319,7 @@ public sealed partial class ChemistrySystem
     }
 
     /// <summary>
-    ///     Set the inject/draw/closed state and provide a popup.
+    /// Set the inject/draw/closed state and provide a popup.
     /// </summary>
     private void SetFlowState(IVBagComponent bagComp, EntityUid user, IVBagComponent.IVBagToggleMode newState)
     {
@@ -270,7 +345,7 @@ public sealed partial class ChemistrySystem
     }
 
     /// <summary>
-    ///     Toggle between inject/draw/closed states.
+    /// Toggle between inject/draw/closed states.
     /// </summary>
     private void Toggle(IVBagComponent bagComp, EntityUid user)
     {
@@ -293,23 +368,24 @@ public sealed partial class ChemistrySystem
 
         if (bagComp.InjectCancel != null)
         {
-            args.Handled = true;
+            bagComp.InjectCancel.Cancel();
+            bagComp.InjectCancel = null;
+            // args.Handled = true;
             return;
         }
-
 
         if (bagComp.Connected)
         {
             if (target == bagComp.Target)
             {
-                // Quickly remove the needle upon double-activate.
-                Disconnect(bagComp, ripOut: false);
+                // Quickly remove the needle if connected to the same target.
+                DisconnectBag(bagComp, ripOut: false);
                 return;
             }
             else if (HasComp<DisposalUnitComponent>(target))
             {
-                // Disconnect if put in a trash bin. Otherwise it takes a long time to disconnect.
-                Disconnect(bagComp, ripOut: true);
+                // Disconnect if put in a trash bin. Otherwise it has to travel the whole way.
+                DisconnectBag(bagComp, ripOut: true);
                 return;
             }
         }
@@ -318,7 +394,7 @@ public sealed partial class ChemistrySystem
         if (HasComp<MobStateComponent>(target) ||
             HasComp<BloodstreamComponent>(target))
         {
-            Disconnect(bagComp, true); // switching target
+            DisconnectBag(bagComp, true); // switching target
             InjectDoAfter(bagComp, args.User, target);
             args.Handled = true;
             return;
@@ -335,7 +411,7 @@ public sealed partial class ChemistrySystem
     {
         if (HasComp<BloodstreamComponent>(target))
         {
-            Connect(bagComp, target, user);
+            ConnectBag(bagComp, target, user);
             return true;
         }
 
@@ -370,7 +446,7 @@ public sealed partial class ChemistrySystem
     }
 
     /// <summary>
-    ///     Send informative pop-up messages and wait for a do-after to complete.
+    /// Send informative pop-up messages and wait for a do-after to complete.
     /// </summary>
     private void InjectDoAfter(IVBagComponent component, EntityUid user, EntityUid target)
     {
@@ -382,7 +458,7 @@ public sealed partial class ChemistrySystem
 
         // Halt any existing flows.
         if (component.Connected)
-            Disconnect(component, true);
+            DisconnectBag(component, true);
 
         var actualDelay = MathF.Max(component.InjectDelay, 1f);
         if (user != target)
@@ -443,65 +519,89 @@ public sealed partial class ChemistrySystem
         });
     }
 
+
     /// <summary>
-    ///     Begin the continuous flow timer with an initial delay.
+    /// Register movement tracking component onto the target.
     /// </summary>
-    private void Connect(IVBagComponent bagComp, EntityUid target, EntityUid user)
+    private void AddTargetBag(EntityUid target, IVBagComponent bagComp)
+    {
+        var tgtComp = EnsureComp<IVTargetComponent>(target);
+        tgtComp.ValidateBags(removeComp: false);
+        tgtComp.AddBag(bagComp.Owner);
+    }
+
+    private void RemoveTargetBag(EntityUid target, IVBagComponent bagComp)
+    {
+
+    }
+
+
+    /// <summary>
+    /// Begin the continuous flow timer with an initial delay.
+    /// </summary>
+    private void ConnectBag(IVBagComponent bagComp, EntityUid target, EntityUid user)
     {
         DebugTools.AssertNotNull(target);
+        AddTargetBag(target, bagComp);
 
         bagComp.Target = target;
-        bagComp.TargetPos = EntityManager.GetComponent<TransformComponent>(target);
+        bagComp.TargetPos = Comp<TransformComponent>(target);
         bagComp.Connected = true;
 
         SetFlowTimer(bagComp, bagComp.FlowStartDelay, cancelPrevious: true);
     }
 
     /// <summary>
-    ///     Kill the flow timer and disconnect from the connected mob (if there is one).
+    /// Kill the flow timer and disconnect from the connected mob (if there is one).
     /// </summary>
-    private void Disconnect(IVBagComponent bagComp, bool ripOut = false, EntityUid? remoteUser = null)
+    private void DisconnectBag(IVBagComponent? bagComp, bool ripOut = false, EntityUid? remoteUser = null)
     {
+        if (bagComp == null)
+            return;
+
         if (bagComp.Connected)
         {
-            if (bagComp.Target is { Valid: true } mob)
+            if (bagComp.Target is { Valid: true } target)
             {
                 if (ripOut && bagComp.FlowState != SharedIVBagComponent.IVBagToggleMode.Closed
-                    && TryComp<BloodstreamComponent>(mob, out var bloodstream))
+                    && TryComp<BloodstreamComponent>(target, out var bloodstream))
                 {
                     // Deal just enough blood damage to spill some blood.
-                    _blood.TryModifyBloodLevel(mob, -(bloodstream.BleedPuddleThreshold + 1f), bloodstream);
+                    _blood.TryModifyBloodLevel(target, -(bloodstream.BleedPuddleThreshold + 1f), bloodstream);
 
-                    SoundSystem.Play(Filter.Pvs(mob), bloodstream.InstantBloodSound.GetSound(), mob,
+                    SoundSystem.Play(Filter.Pvs(target), bloodstream.InstantBloodSound.GetSound(), target,
                         AudioHelpers.WithVariation(0f).WithVolume(1f).WithMaxDistance(2f));
 
                     _popup.PopupEntity(Loc.GetString("ivbag-component-ripout-text",
-                        ("bag", bagComp.Owner)), mob, Filter.Pvs(mob));
+                        ("bag", bagComp.Owner)), target, Filter.Pvs(target));
                 }
                 else
                 {
                     // Safely pull out.
                     EntityUid[] sendTo = (remoteUser is { Valid: true } user)
-                        ? new EntityUid[] { mob, user }
-                        : new EntityUid[] { mob };
+                        ? new EntityUid[] { target, user }
+                        : new EntityUid[] { target };
 
                     _popup.PopupEntity(Loc.GetString("ivbag-component-remove-text",
-                        ("bag", bagComp.Owner)), mob, Filter.Entities(sendTo));
+                        ("bag", bagComp.Owner)), target, Filter.Entities(sendTo));
                 }
+
+                if (TryComp<IVTargetComponent>(target, out var tgtComp))
+                    tgtComp.RemoveBag(bagComp.Owner);
             }
 
+            bagComp.Connected = false;
             bagComp.Target = null;
             bagComp.TargetPos = null;
-            bagComp.Connected = false;
         }
 
-        // Let the bag spill continuously if ripped out while in inject mode.
-        if (bagComp.FlowState != SharedIVBagComponent.IVBagToggleMode.Inject)
-            StopFlowTimer(bagComp);
+        // TODO: Let the bag spill continuously if ripped out while in inject mode.
+        // if (bagComp.FlowState != SharedIVBagComponent.IVBagToggleMode.Inject)
+        StopFlowTimer(bagComp);
     }
 
     /// <summary>
-    ///     Set an existing timer, or create a new timer and set its initial delay.
+    /// Set an existing timer, or create a new timer and set its initial delay.
     /// </summary>
     private void SetFlowTimer(IVBagComponent bagComp, TimeSpan initialDelay, bool cancelPrevious = true)
     {
@@ -515,7 +615,7 @@ public sealed partial class ChemistrySystem
     }
 
     /// <summary>
-    ///     Force the dripping to stop.
+    /// Force the dripping to stop.
     /// </summary>
     private void StopFlowTimer(IVBagComponent bagComp)
     {
@@ -527,7 +627,7 @@ public sealed partial class ChemistrySystem
     }
 
     /// <summary>
-    ///     Self-repeating IV drip transfer timer.
+    /// Self-repeating IV drip transfer timer.
     /// </summary>
     private void FlowTimerCallback(IVBagComponent bagComp)
     {
@@ -573,14 +673,14 @@ public sealed partial class ChemistrySystem
         }*/
         else
         {
-            Disconnect(bagComp);
+            DisconnectBag(bagComp);
         }
 
         SetFlowTimer(bagComp, bagComp.FlowDelay, cancelPrevious: false);
     }
 
     /// <summary>
-    ///     Inject both blood and chems into a mob's bloodstream, with a limit on chems.
+    /// Inject both blood and chems into a mob's bloodstream, with a limit on chems.
     /// </summary>
     private bool FlowIntoMob(IVBagComponent bagComp, BloodstreamComponent bloodstream)
     {
@@ -652,7 +752,7 @@ public sealed partial class ChemistrySystem
     }
 
     /// <summary>
-    ///     Draw both from a target's blood and chemstream, with a limit on chems.
+    /// Draw both from a target's blood and chemstream, with a limit on chems.
     /// </summary>
     private bool FlowFromMob(IVBagComponent bagComp, BloodstreamComponent bloodstream)
     {
@@ -746,7 +846,7 @@ public sealed partial class ChemistrySystem
     {
         // Rip out if trying to interact with solutions while connected.
         if (bagComp.Connected)
-            Disconnect(bagComp, true);
+            DisconnectBag(bagComp, true);
 
         // Automatically close the syringe after completely draining it.
         if (_solutions.TryGetSolution(bagComp.Owner, IVBagComponent.SolutionName, out var solution)
@@ -760,7 +860,7 @@ public sealed partial class ChemistrySystem
     {
         // Rip out if trying to interact with solutions while connected.
         if (bagComp.Connected)
-            Disconnect(bagComp, true);
+            DisconnectBag(bagComp, true);
 
         // Automatically set syringe to inject after completely filling it.
         if (_solutions.TryGetSolution(bagComp.Owner, IVBagComponent.SolutionName, out var solution)
