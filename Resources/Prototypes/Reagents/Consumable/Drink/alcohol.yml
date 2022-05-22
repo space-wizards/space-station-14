@@ -782,7 +782,6 @@
   physicalDesc: reagent-physical-desc-cloudy
   color: "#664300"
   spritePath: irishcoffeeglass.rsi
-<<<<<<< HEAD
 
 - type: reagent
   id: Kamikaze
@@ -801,16 +800,6 @@
   physicalDesc: strong-smelling
   color: "#CCCC99"
   spritePath: kiraspecial.rsi
-=======
-  metabolisms:
-    Drink:
-      effects:
-      - !type:SatiateThirst
-        factor: 2
-      - !type:AdjustReagent
-        reagent: Ethanol
-        amount: 0.15
->>>>>>> 6fa431cfce29228bd7f6eab96a427425d9d16290
 
 - type: reagent
   id: LongIslandIcedTea
