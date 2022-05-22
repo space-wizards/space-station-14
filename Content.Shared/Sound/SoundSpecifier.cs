@@ -10,7 +10,7 @@ namespace Content.Shared.Sound
     [ImplicitDataDefinitionForInheritors]
     public abstract class SoundSpecifier
     {
-        [DataField("params")]
+        [ViewVariables(VVAccess.ReadWrite), DataField("params")]
         public AudioParams Params = AudioParams.Default;
 
         public abstract string GetSound();
