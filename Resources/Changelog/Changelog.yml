@@ -1,19 +1,4 @@
 Entries:
-- author: Peptide90
-  changes:
-  - {message: Packed has a bunch of small updates! Bar and kitchen have windoors now
-      so they have better access., type: Tweak}
-  - {message: Medbay has shutters to stop the greytide. Engineering now have drones.
-      Salvage have their own room and spawns now., type: Tweak}
-  - {message: Arrivals has been tweaked to have shuttle docks! And more resistance
-      to being spaced., type: Tweak}
-  id: 1077
-  time: '2022-02-18T02:43:43.0000000+00:00'
-- author: Slorktainer
-  changes:
-  - {message: Round-end restart time increased to one minute., type: Tweak}
-  id: 1078
-  time: '2022-02-18T02:45:50.0000000+00:00'
 - author: mirrorcult
   changes:
   - {message: You can now examine the health of entities by using an examine verb.
@@ -3027,3 +3012,14 @@ Entries:
       restart the client for you.', type: Tweak}
   id: 1576
   time: '2022-05-22T01:56:19.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Add gas tank internals connection sound, type: Add}
+  id: 1577
+  time: '2022-05-22T02:31:37.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Melee combat no longer possible with guns (for now)., type: Tweak}
+  - {message: Drag-drop no longer possible in combat mode., type: Tweak}
+  id: 1578
+  time: '2022-05-22T02:31:46.0000000+00:00'
