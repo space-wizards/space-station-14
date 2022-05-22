@@ -359,6 +359,8 @@ namespace Content.Client.Entry
             "CanEscapeInventory",
             "PowerSink",
             "Wires",
+            "InvisibleWall",
+            "HolosignProjector",
         };
     }
 }
