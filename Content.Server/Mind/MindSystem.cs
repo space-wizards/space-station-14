@@ -90,7 +90,7 @@ public sealed class MindSystem : EntitySystem
 
                     // Async this so that we don't throw if the grid we're on is being deleted.
                     var gridId = spawnPosition.GetGridId(EntityManager);
-                    if (!spawnPosition.IsValid(EntityManager) || gridId == GridId.Invalid || !_mapManager.GridExists(gridId))
+                    if (!spawnPosition.IsValid(EntityManager) || gridId == GridId.Invalid || !_mapManager.GridExists(gridId) || spawnPosition.Position == Vector2.Zero)
                     {
                         spawnPosition = _gameTicker.GetObserverSpawnPoint();
                     }
