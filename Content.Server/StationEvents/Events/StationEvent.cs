@@ -71,7 +71,7 @@ namespace Content.Server.StationEvents.Events
         /// <summary>
         ///     In minutes, the amount of time before the same event can occur again
         /// </summary>
-        public virtual int ReoccurenceDelay { get; } = 30;
+        public virtual int ReoccurrenceDelay { get; } = 30;
 
         /// <summary>
         ///     When in the lifetime to call Start().

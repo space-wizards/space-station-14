@@ -353,7 +353,7 @@ namespace Content.Server.StationEvents
             }
 
             if (stationEvent.LastRun != TimeSpan.Zero && currentTime.TotalMinutes <
-                stationEvent.ReoccurenceDelay + stationEvent.LastRun.Minutes)
+                stationEvent.ReoccurrenceDelay + stationEvent.LastRun.Minutes)
             {
                 return false;
             }
