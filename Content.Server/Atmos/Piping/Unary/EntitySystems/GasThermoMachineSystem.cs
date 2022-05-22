@@ -101,7 +101,7 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
                     component.MaxTemperature = component.BaseMaxTemperature + component.MaxTemperatureDelta * laserRating;
                     component.MinTemperature = Atmospherics.T20C;
                     break;
-                // 73.15 with stock parts.
+                // 73.15K with stock parts.
                 case ThermoMachineMode.Freezer:
                     component.MinTemperature = MathF.Max(
                         component.BaseMinTemperature - component.MinTemperatureDelta * laserRating, Atmospherics.TCMB);
