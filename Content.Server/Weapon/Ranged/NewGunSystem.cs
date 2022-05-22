@@ -9,7 +9,7 @@ namespace Content.Server.Weapon.Ranged;
 
 public sealed class NewGunSystem : SharedNewGunSystem
 {
-    protected override void PlaySound(NewGunComponent gun, string? sound, int shots, EntityUid? user = null)
+    protected override void PlaySound(NewGunComponent gun, string? sound, EntityUid? user = null)
     {
         if (sound == null) return;
 

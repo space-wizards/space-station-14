@@ -10,6 +10,15 @@ public sealed class NewGunComponent : Component
     [ViewVariables(VVAccess.ReadWrite), DataField("soundGunshot")]
     public SoundSpecifier? SoundGunshot = new SoundPathSpecifier("/Audio/Weapons/Guns/Gunshots/smg.ogg");
 
+    [ViewVariables(VVAccess.ReadWrite), DataField("soundEmpty")]
+    public SoundSpecifier? SoundEmpty = new SoundPathSpecifier("/Audio/Weapons/Guns/Empty/empty.ogg");
+
+    /// <summary>
+    /// Sound played when toggling the <see cref="SelectiveFire"/> for this gun.
+    /// </summary>
+    [ViewVariables(VVAccess.ReadWrite), DataField("soundSelective")]
+    public SoundSpecifier? SoundSelectiveToggle;
+
     /// <summary>
     /// Where the gun is being requested to shoot.
     /// </summary>
@@ -35,14 +44,31 @@ public sealed class NewGunComponent : Component
     [ViewVariables, DataField("nextFire")]
     public TimeSpan NextFire = TimeSpan.Zero;
 
+    /// <summary>
+    /// What firemodes can be selected.
+    /// </summary>
+    [ViewVariables(VVAccess.ReadWrite), DataField("availableSelectiveFire")]
+    public SelectiveFire AvailableSelectiveFire = SelectiveFire.Safety | SelectiveFire.FullAuto;
+
+    /// <summary>
+    /// What firemode is currently selected.
+    /// </summary>
     [ViewVariables(VVAccess.ReadWrite), DataField("selectiveFire")]
     public SelectiveFire SelectiveFire = SelectiveFire.FullAuto;
+
+    /// <summary>
+    /// Used for sloth's debugging. Will be removed on undraft.
+    /// </summary>
+    [ViewVariables(VVAccess.ReadWrite)]
+    public int FakeAmmo = 30;
 }
 
+[Flags]
 public enum SelectiveFire : byte
 {
-    Safety = 0,
-    SemiAuto = 1 << 0,
+    Invalid = 0,
+    Safety = 1 << 0,
+    SemiAuto = 1 << 1,
     Burst = 1 << 2,
     FullAuto = 1 << 3, // Not in the building!
 }

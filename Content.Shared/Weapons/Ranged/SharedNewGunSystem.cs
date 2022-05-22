@@ -1,5 +1,8 @@
 using Content.Shared.CombatMode;
+using Content.Shared.Examine;
 using Content.Shared.Hands.Components;
+using Content.Shared.Sound;
+using Content.Shared.Verbs;
 using Robust.Shared.GameStates;
 using Robust.Shared.Map;
 using Robust.Shared.Serialization;
@@ -8,12 +11,15 @@ using Robust.Shared.Utility;
 
 namespace Content.Shared.Weapons.Ranged;
 
-public abstract class SharedNewGunSystem : EntitySystem
+public abstract partial class SharedNewGunSystem : EntitySystem
 {
     [Dependency] protected readonly IGameTiming Timing = default!;
     [Dependency] private readonly SharedCombatModeSystem _combatMode = default!;
 
     protected ISawmill Sawmill = default!;
+
+    protected const float EmptyNextFire = 0.3f;
+    protected const float InteractNextFire = 0.3f;
 
     public override void Initialize()
     {
@@ -21,6 +27,12 @@ public abstract class SharedNewGunSystem : EntitySystem
         SubscribeLocalEvent<NewGunComponent, ComponentGetState>(OnGetState);
         SubscribeAllEvent<RequestShootEvent>(OnShootRequest);
         SubscribeAllEvent<RequestStopShootEvent>(OnStopShootRequest);
+        SubscribeLocalEvent<NewGunComponent, ComponentHandleState>(OnHandleState);
+
+        // Interactions
+        SubscribeLocalEvent<NewGunComponent, GetVerbsEvent<AlternativeVerb>>(OnAltVerb);
+
+        SubscribeLocalEvent<NewGunComponent, ExaminedEvent>(OnExamine);
     }
     private void OnShootRequest(RequestShootEvent msg, EntitySessionEventArgs args)
     {
@@ -49,7 +61,22 @@ public abstract class SharedNewGunSystem : EntitySystem
         {
             NextFire = component.NextFire,
             ShotCounter = component.ShotCounter,
+            FakeAmmo = component.FakeAmmo,
+            SelectiveFire = component.SelectiveFire,
+            AvailableSelectiveFire = component.AvailableSelectiveFire,
         };
+    }
+
+    private void OnHandleState(EntityUid uid, NewGunComponent component, ref ComponentHandleState args)
+    {
+        if (args.Current is not NewGunComponentState state) return;
+
+        Sawmill.Debug($"Handle state: setting shot count from {component.ShotCounter} to {state.ShotCounter}");
+        component.NextFire = state.NextFire;
+        component.ShotCounter = state.ShotCounter;
+        component.FakeAmmo = state.FakeAmmo;
+        component.SelectiveFire = state.SelectiveFire;
+        component.AvailableSelectiveFire = state.AvailableSelectiveFire;
     }
 
     protected NewGunComponent? GetGun(EntityUid entity)
@@ -79,24 +106,30 @@ public abstract class SharedNewGunSystem : EntitySystem
         Dirty(gun);
     }
 
-    protected bool AttemptShoot(EntityUid user, NewGunComponent gun)
+    private void AttemptShoot(EntityUid user, NewGunComponent gun)
     {
-        if (gun.FireRate <= 0f)
-            return false;
+        if (gun.FireRate <= 0f) return;
 
-        if (gun.ShootCoordinates == null)
-            return false;
+        if (gun.ShootCoordinates == null) return;
 
         var curTime = Timing.CurTime;
 
         // Need to do this to play the clicking sound for empty automatic weapons
         // but not play anything for burst fire.
-        if (gun.NextFire > curTime)
-            return false;
+        if (gun.NextFire > curTime) return;
 
         // First shot
         if (gun.ShotCounter == 0 && gun.NextFire < curTime)
             gun.NextFire = curTime;
+
+        // Firing on empty. We won't spam the empty sounds at the firerate, just at a reduced rate.
+        if (gun.SelectiveFire == SelectiveFire.Safety || gun.FakeAmmo == 0)
+        {
+            PlaySound(gun, gun.SoundEmpty?.GetSound(), user);
+            gun.NextFire += TimeSpan.FromSeconds(EmptyNextFire);
+            Dirty(gun);
+            return;
+        }
 
         var shots = 0;
         var fireRate = TimeSpan.FromSeconds(1f / gun.FireRate);
@@ -111,9 +144,6 @@ public abstract class SharedNewGunSystem : EntitySystem
         // Don't do this in the loop so we still reset NextFire.
         switch (gun.SelectiveFire)
         {
-            case SelectiveFire.Safety:
-                shots = 0;
-                break;
             case SelectiveFire.SemiAuto:
                 shots = Math.Min(shots, 1 - gun.ShotCounter);
                 break;
@@ -122,25 +152,27 @@ public abstract class SharedNewGunSystem : EntitySystem
                 break;
             case SelectiveFire.FullAuto:
                 break;
+            default:
+                throw new ArgumentOutOfRangeException($"No implemented shooting behavior for {gun.SelectiveFire}!");
         }
+
+        // Remove ammo
+        shots = Math.Min(shots, gun.FakeAmmo);
+        gun.FakeAmmo -= shots;
 
         DebugTools.Assert(shots >= 0);
 
-        if (shots <= 0) return false;
-
-        var oldShots = gun.ShotCounter;
+        if (shots <= 0) return;
 
         // Shoot confirmed
         gun.ShotCounter += shots;
 
         // Predicted sound moment
-        PlaySound(gun, gun.SoundGunshot?.GetSound(), oldShots, user);
+        PlaySound(gun, gun.SoundGunshot?.GetSound(), user);
         Dirty(gun);
-
-        return true;
     }
 
-    protected abstract void PlaySound(NewGunComponent gun, string? sound, int shots, EntityUid? user = null);
+    protected abstract void PlaySound(NewGunComponent gun, string? sound, EntityUid? user = null);
 
     /// <summary>
     /// Raised on the client to indicate it'd like to shoot.
@@ -161,8 +193,10 @@ public abstract class SharedNewGunSystem : EntitySystem
     [Serializable, NetSerializable]
     protected sealed class NewGunComponentState : ComponentState
     {
-        public string? SoundGunshot;
         public TimeSpan NextFire;
         public int ShotCounter;
+        public int FakeAmmo;
+        public SelectiveFire SelectiveFire;
+        public SelectiveFire AvailableSelectiveFire;
     }
 }
