@@ -1,123 +1,134 @@
 - type: reagent
   id: Cola
-  name: cola
+  name: reagent-name-cola
   parent: BaseSoda
-  desc: A sweet, carbonated soft drink. Caffeine free.
-  physicalDesc: fizzy
+  desc: reagent-desc-cola
+  physicalDesc: reagent-physical-desc-fizzy
   color: "#422912"
 
 - type: reagent
   id: ChangelingSting
-  name: changeling sting
+  name: reagent-name-changeling-sting
   parent: BaseSoda
-  desc: You take a tiny sip and feel a burning sensation...
-  physicalDesc: fizzy
+  desc: reagent-desc-changeling-sting
+  physicalDesc: reagent-physical-desc-fizzy
   color: "#2E6671"
 
 - type: reagent
   id: DrGibb
-  name: Dr. Gibb
+  name: reagent-name-dr-gibb
   parent: BaseSoda
-  desc: A delicious blend of 42 different flavours.
-  physicalDesc: fizzy
+  desc: reagent-desc-dr-gibb
+  physicalDesc: reagent-physical-desc-fizzy
   color: "#102000"
 
 - type: reagent
   id: EnergyDrink
-  name: Energy Drink
+  name: reagent-name-energy-drink
   parent: BaseSoda
-  desc: A dose of energy! Nanotrasen is not responsible if you grow avian appendages.
-  physicalDesc: fizzy
+  desc: reagent-desc-energy-drink
+  physicalDesc: reagent-physical-desc-fizzy
   color: "#ffffbf"
+  metabolisms:
+    Drink:
+      effects:
+      - !type:SatiateThirst
+        factor: 2
+      - !type:AdjustReagent
+        reagent: Theobromine
+        amount: 0.05
 
 - type: reagent
   id: GrapeSoda
-  name: grape soda
+  name: reagent-name-grape-soda
   parent: BaseSoda
-  desc: It's Graaaaaape!
-  physicalDesc: fizzy
+  desc: reagent-desc-grape-soda
+  physicalDesc: reagent-physical-desc-fizzy
   color: "#ae94a6"
 
 - type: reagent
   id: IceCream
-  name: ice cream
+  name: reagent-name-ice-cream
   parent: BaseSoda
-  desc: It was either this or the microwave, and nobody wants ice cream soup!
-  physicalDesc: creamy
+  desc: reagent-desc-ice-cream
+  physicalDesc: reagent-physical-desc-creamy
   color: "#fffbd6"
   spritePath: icecreamglass.rsi
 
 - type: reagent
   id: LemonLime
-  name: lemon-lime
+  name: reagent-name-lemon-lime
   parent: BaseSoda
-  desc: tangy lime and lemon soda
-  physicalDesc: fizzy
+  desc: reagent-desc-lemon-lime
+  physicalDesc: reagent-physical-desc-fizzy
   color: "#878F00"
   spritePath: lemonlime.rsi
 
 - type: reagent
   id: PwrGame
-  name: Pwr Game
+  name: reagent-name-pwr-game
   parent: BaseSoda
-  desc: The only drink with the PWR that true gamers crave.
-  physicalDesc: fizzy
+  desc: reagent-desc-pwr-game
+  physicalDesc: reagent-physical-desc-fizzy
   color: "#9385bf"
 
 - type: reagent
   id: RootBeer
-  name: root beer
+  name: reagent-name-root-beer
   parent: BaseSoda
-  desc: A very sweet, carbonated drink reminiscent of sarsparilla. Goes well with ice cream.
-  physicalDesc: fizzy
+  desc: reagent-desc-root-beer
+  physicalDesc: reagent-physical-desc-fizzy
   color: "#381c07"
   spritePath: rootbeerglass.rsi
 
 - type: reagent
   id: RootBeerFloat
-  name: root beer float
+  name: reagent-name-root-beer-float
   parent: BaseSoda
-  desc: Root beer, but now with ice cream on top. It truly is the magnum opus of Canadian summertime drinks.
-  physicalDesc: fizzy and creamy
+  desc: reagent-desc-root-beer-float
+  physicalDesc: reagent-physical-desc-fizzy and creamy
   color: "#4f361f"
   spritePath: rootbeerfloatglass.rsi
 
 - type: reagent
   id: SpaceMountainWind
-  name: Space Mountain Wind
+  name: reagent-name-space-mountain-wind
   parent: BaseSoda
-  desc: Blows right through you like a space wind.
-  physicalDesc: fizzy
+  desc: reagent-desc-space-mountain-wind
+  physicalDesc: reagent-physical-desc-fizzy
   color: "#102000"
 
 - type: reagent
   id: SpaceUp
-  name: Space-Up
+  name: reagent-name-space-up
   parent: BaseSoda
-  desc: Tastes like a hull breach in your mouth.
-  physicalDesc: fizzy
+  desc: reagent-desc-space-up
+  physicalDesc: reagent-physical-desc-fizzy
   color: "#00FF00"
 
 - type: reagent
   id: Starkist
-  name: starkist
+  name: reagent-name-starkist
   parent: BaseSoda
-  desc: A sweet, orange flavored soft drink.
-  physicalDesc: fizzy
+  desc: reagent-desc-starkist
+  physicalDesc: reagent-physical-desc-fizzy
   color: "#9F3400"
 
 - type: reagent
   id: FourteenLoko
-  name: Fourteen Loko
+  name: reagent-name-fourteen-loko
   parent: BaseSoda
-  desc: A highly processed liquid substance barely-passing intergalatic health standards for a soft drink.
-  physicalDesc: fizzy
+  desc: reagent-desc-fourteen-loko
+  physicalDesc: reagent-physical-desc-fizzy
   color: "#deb928"
   metabolisms:
     Drink:
       effects:
       - !type:SatiateThirst
         factor: 2
+      - !type:AdjustReagent
+        reagent: Theobromine
+        amount: 0.1
     Poison:
       effects:
       - !type:HealthChange

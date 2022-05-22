@@ -1,4 +1,3 @@
-using System.Linq;
 using Content.Server.Chat.Managers;
 using Content.Server.Disease.Components;
 using Content.Server.Disease;

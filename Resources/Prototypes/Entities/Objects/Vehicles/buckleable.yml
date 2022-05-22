@@ -31,10 +31,9 @@
       mass: 180
       restitution: 0.0
       mask:
-      - Impassable
-      - VaultImpassable
+      - MobMask
       layer:
-      - VaultImpassable
+      - MobLayer
   - type: VehicleVisuals
   - type: Appearance
   - type: Repairable
@@ -287,8 +286,6 @@
       noRot: true
     - type: Access
       tags:
-        - Security
-        - Brig
         - Maintenance
         - Service
     - type: Strap

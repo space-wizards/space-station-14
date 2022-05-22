@@ -1,19 +1,13 @@
-using System.Collections.Generic;
 using System.Threading.Tasks;
 using Content.Server.Stack;
 using Content.Shared.Audio;
 using Content.Shared.Interaction;
-using Content.Shared.Interaction.Helpers;
 using Content.Shared.Maps;
 using Content.Shared.Sound;
 using Robust.Shared.Audio;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
 using Robust.Shared.Map;
-using Robust.Shared.Maths;
 using Robust.Shared.Player;
 using Robust.Shared.Random;
-using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.List;
 
 namespace Content.Server.Tiles

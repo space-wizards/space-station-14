@@ -6,10 +6,7 @@ using Content.Shared.FixedPoint;
 using Content.Shared.Physics;
 using Content.Shared.Vapor;
 using JetBrains.Annotations;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
 using Robust.Shared.Map;
-using Robust.Shared.Maths;
 using Robust.Shared.Physics.Dynamics;
 using Robust.Shared.Prototypes;
 

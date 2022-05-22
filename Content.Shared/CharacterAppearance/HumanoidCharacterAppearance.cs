@@ -1,7 +1,6 @@
 ﻿using Content.Shared.Markings;
 using Robust.Shared.Random;
 using Robust.Shared.Serialization;
-using System.Linq;
 
 namespace Content.Shared.CharacterAppearance
 {

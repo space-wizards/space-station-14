@@ -5,6 +5,7 @@
   description: If you can see this you're probably dead!
   abstract: true
   components:
+  - type: FlyBySound
   - type: Clickable
   - type: Sprite
     netsync: false
@@ -19,12 +20,12 @@
     fixtures:
     - shape:
         !type:PhysShapeAabb
-          bounds: "-0.1,-0.1,0.1,0.1"
+        bounds: "-0.1,-0.1,0.1,0.1"
       hard: false
+      id: projectile
       mask:
       - Impassable
-      layer:
-      - MobImpassable
+      - BulletImpassable
   - type: Projectile
     damage:
       types:
@@ -46,12 +47,12 @@
     fixtures:
     - shape:
         !type:PhysShapeAabb
-          bounds: "-0.15,-0.45,0.15,0.15"
+        bounds: "-0.15,-0.45,0.15,0.15"
       hard: false
+      id: projectile
       mask:
       - Impassable
-      layer:
-      - MobImpassable
+      - BulletImpassable
 
 - type: entity
   id: BulletBaseFlash
@@ -113,6 +114,11 @@
   parent: BulletBase
   noSpawn: true
   components:
+  - type: FlyBySound
+    sound:
+      collection: EnergyMiss
+      params:
+        volume: 5
   - type: Sprite
     noRot: true
     sprite: Objects/Weapons/Guns/Projectiles/spark.rsi
@@ -125,12 +131,12 @@
     fixtures:
     - shape:
         !type:PhysShapeAabb
-          bounds: "-0.2,-0.2,0.2,0.2"
+        bounds: "-0.2,-0.2,0.2,0.2"
       hard: false
+      id: projectile
       mask:
       - Impassable
-      layer:
-      - MobImpassable
+      - BulletImpassable
   - type: Ammo
     isProjectile: true
     ammoVelocity: 20
@@ -141,6 +147,7 @@
         Heat: 5
     soundHit:
       path: "/Audio/Weapons/Guns/Hits/taser_hit.ogg"
+    soundForce: true
   - type: StunOnCollide
     stunAmount: 5
     knockdownAmount: 5
@@ -160,10 +167,12 @@
     fixtures:
     - shape:
         !type:PhysShapeAabb
-          bounds: "-0.2,-0.2,0.2,0.2"
+        bounds: "-0.2,-0.2,0.2,0.2"
       hard: false
+      id: projectile
       mask:
-        - Opaque
+      - Impassable
+      - Opaque
   - type: Projectile
     damage:
       types:

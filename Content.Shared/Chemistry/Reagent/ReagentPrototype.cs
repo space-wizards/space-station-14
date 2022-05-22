@@ -1,22 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text.Json.Serialization;
+﻿using System.Text.Json.Serialization;
 using Content.Shared.Administration.Logs;
 using Content.Shared.Body.Prototypes;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.Reaction;
 using Content.Shared.Database;
 using Content.Shared.FixedPoint;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
 using Robust.Shared.Map;
-using Robust.Shared.Maths;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
-using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.Dictionary;
-using Robust.Shared.ViewVariables;
 
 namespace Content.Shared.Chemistry.Reagent
 {
@@ -29,7 +22,10 @@ namespace Content.Shared.Chemistry.Reagent
         public string ID { get; } = default!;
 
         [DataField("name", required: true)]
-        public string Name { get; } = default!;
+        private string Name { get; } = default!;
+
+        [ViewVariables(VVAccess.ReadOnly)]
+        public string LocalizedName => Loc.GetString(Name);
 
         [DataField("group")]
         public string Group { get; } = "Unknown";
@@ -42,10 +38,16 @@ namespace Content.Shared.Chemistry.Reagent
         public bool Abstract { get; private set; }
 
         [DataField("desc", required: true)]
-        public string Description { get; } = default!;
+        private string Description { get; } = default!;
+
+        [ViewVariables(VVAccess.ReadOnly)]
+        public string LocalizedDescription => Loc.GetString(Description);
 
         [DataField("physicalDesc", required: true)]
-        public string PhysicalDescription { get; } = default!;
+        private string PhysicalDescription { get; } = default!;
+
+        [ViewVariables(VVAccess.ReadOnly)]
+        public string LocalizedPhysicalDescription => Loc.GetString(PhysicalDescription);
 
         [DataField("color")]
         public Color SubstanceColor { get; } = Color.White;

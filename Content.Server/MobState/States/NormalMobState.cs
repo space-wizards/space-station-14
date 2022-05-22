@@ -1,10 +1,8 @@
-using System;
 using Content.Shared.Alert;
 using Content.Shared.Damage;
 using Content.Shared.FixedPoint;
 using Content.Shared.MobState.Components;
 using Content.Shared.MobState.State;
-using Robust.Shared.GameObjects;
 
 namespace Content.Server.MobState.States
 {

@@ -3,7 +3,6 @@ using Content.Shared.Sound;
 using Content.Shared.Containers.ItemSlots;
 using Robust.Shared.Audio;
 using Robust.Shared.Utility;
-using Content.Shared.Whitelist;
 
 namespace Content.Shared.Vehicle.Components
 {

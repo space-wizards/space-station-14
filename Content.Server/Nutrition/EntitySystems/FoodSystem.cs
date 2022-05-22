@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using System.Threading;
 using Content.Server.Body.Components;
 using Content.Server.Body.Systems;
@@ -79,8 +78,6 @@ namespace Content.Server.Nutrition.EntitySystems
             // if currently being used to feed, cancel that action.
             if (food.CancelToken != null)
             {
-                food.CancelToken.Cancel();
-                food.CancelToken = null;
                 return true;
             }
 

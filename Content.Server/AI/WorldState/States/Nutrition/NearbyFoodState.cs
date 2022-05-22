@@ -1,12 +1,9 @@
-using System.Collections.Generic;
 using Content.Server.AI.Components;
 using Content.Server.AI.Utils;
 using Content.Server.Nutrition.Components;
 using Content.Server.Storage.Components;
 using JetBrains.Annotations;
 using Robust.Shared.Containers;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
 
 namespace Content.Server.AI.WorldState.States.Nutrition
 {

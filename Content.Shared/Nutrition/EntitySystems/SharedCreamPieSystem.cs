@@ -1,10 +1,7 @@
-using System;
 using Content.Shared.Nutrition.Components;
 using Content.Shared.Stunnable;
 using Content.Shared.Throwing;
 using JetBrains.Annotations;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
 
 namespace Content.Shared.Nutrition.EntitySystems
 {
@@ -31,8 +28,6 @@ namespace Content.Shared.Nutrition.EntitySystems
             creamPie.Splatted = true;
 
             SplattedCreamPie(uid, creamPie);
-
-            EntityManager.QueueDeleteEntity(uid);
         }
 
         protected virtual void SplattedCreamPie(EntityUid uid, CreamPieComponent creamPie) {}

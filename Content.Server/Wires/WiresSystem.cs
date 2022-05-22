@@ -2,7 +2,6 @@ using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Threading;
 using Content.Server.DoAfter;
-using Content.Server.Hands.Systems;
 using Content.Server.Hands.Components;
 using Content.Server.Power.Components;
 using Content.Server.Tools;
@@ -23,15 +22,14 @@ namespace Content.Server.Wires;
 
 public sealed class WiresSystem : EntitySystem
 {
-    [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly IPrototypeManager _protoMan = default!;
-    [Dependency] private readonly AudioSystem _audioSystem = default!;
     [Dependency] private readonly UserInterfaceSystem _uiSystem = default!;
     [Dependency] private readonly ToolSystem _toolSystem = default!;
     [Dependency] private readonly SharedPopupSystem _popupSystem = default!;
     [Dependency] private readonly SharedInteractionSystem _interactionSystem = default!;
-    [Dependency] private readonly HandsSystem _handsSystem = default!;
     [Dependency] private readonly DoAfterSystem _doAfter = default!;
+
+    private IRobustRandom _random = new RobustRandom();
 
     // This is where all the wire layouts are stored.
     [ViewVariables] private readonly Dictionary<string, WireLayout> _layouts = new();
@@ -444,8 +442,8 @@ public sealed class WiresSystem : EntitySystem
             return;
 
         if (component.IsPanelOpen &&
-            _toolSystem.HasQuality(args.Used, "Cutting", tool) ||
-            _toolSystem.HasQuality(args.Used, "Pulsing", tool))
+            (_toolSystem.HasQuality(args.Used, "Cutting", tool) ||
+            _toolSystem.HasQuality(args.Used, "Pulsing", tool)))
         {
             if (EntityManager.TryGetComponent(args.User, out ActorComponent? actor))
             {
@@ -824,6 +822,7 @@ public sealed class WiresSystem : EntitySystem
     private void Reset(RoundRestartCleanupEvent args)
     {
         _layouts.Clear();
+        _random = new RobustRandom();
     }
     #endregion
 

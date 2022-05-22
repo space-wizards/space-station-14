@@ -2,7 +2,6 @@ using System.Linq;
 using Content.Server.Body.Components;
 using Content.Server.Chemistry.Components.SolutionManager;
 using Content.Server.Chemistry.EntitySystems;
-using Content.Server.Bed;
 using Content.Shared.Administration.Logs;
 using Content.Shared.Body.Components;
 using Content.Shared.Chemistry.Components;
@@ -184,7 +183,7 @@ namespace Content.Server.Body.Systems
                         if (effect.ShouldLog)
                         {
                             _logSystem.Add(LogType.ReagentEffect, effect.LogImpact,
-                                $"Metabolism effect {effect.GetType().Name:effect} of reagent {args.Reagent.Name:reagent} applied on entity {actualEntity:entity} at {Transform(actualEntity).Coordinates:coordinates}");
+                                $"Metabolism effect {effect.GetType().Name:effect} of reagent {args.Reagent.LocalizedName:reagent} applied on entity {actualEntity:entity} at {Transform(actualEntity).Coordinates:coordinates}");
                         }
 
                         effect.Effect(args);

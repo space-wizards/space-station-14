@@ -1,4 +1,3 @@
-using System.Linq;
 using Content.Server.Body.Components;
 using Content.Server.Chemistry.EntitySystems;
 using Content.Server.Chemistry.ReactionEffects;

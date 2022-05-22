@@ -1,12 +1,5 @@
-using Robust.Shared.GameObjects;
-using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 using Robust.Shared.Audio;
-using Content.Shared.Sound;
-using Content.Shared.Speech;
-using Robust.Shared.Prototypes;
-using Robust.Shared.Timing;
-using System;
 
 namespace Content.Shared.Speech
 {
@@ -25,7 +18,7 @@ namespace Content.Shared.Speech
         public string? SpeechSounds;
 
         [DataField("audioParams")]
-        public AudioParams AudioParams = AudioParams.Default.WithVolume(5f);
+        public AudioParams AudioParams = AudioParams.Default.WithVolume(6f).WithRolloffFactor(4.5f);
 
         [ViewVariables(VVAccess.ReadWrite)]
         [DataField("soundCooldownTime")]

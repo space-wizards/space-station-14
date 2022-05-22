@@ -1,3 +1,7 @@
+monkey_scream.ogg from
+https://github.com/goonstation/goonstation/blob/4059e4be90832b02b1228b1bee3db342094e4f1e/sound/voice/screams/monkey_scream.ogg
+licensed under CC BY-NC-SA 3.0
+
 The following sounds were used from freesound:
 
 cat_meow.ogg: modified from "Meow 4.wav" by freesound user "TRNGLE" (https://freesound.org/people/TRNGLE/sounds/368006/) licensed under CCBY 3.0. The original audio was trimmed, split to mono, and converted from WAV to OGG format.
