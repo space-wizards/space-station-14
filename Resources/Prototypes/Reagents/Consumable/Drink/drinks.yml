@@ -37,7 +37,6 @@
   spritePath: cafe_latte.rsi
 
 - type: reagent
-<<<<<<< HEAD
   id: CreamSoda
   name: cream soda
   parent: BaseDrink
@@ -50,11 +49,9 @@
   id: GreenTea
   name: reagent-name-green-tea
   parent: BaseDrink
-=======
   id: GreenTea
   name: reagent-name-green-tea
   parent: BaseDrink
->>>>>>> master
   desc: reagent-desc-green-tea
   physicalDesc: reagent-physical-desc-aromatic
   color: "#C33F00"
