@@ -8,7 +8,7 @@ namespace Content.Server.Weapon.Ranged;
 /// Plays the specified sound upon receiving damage of that type.
 /// </summary>
 [RegisterComponent]
-public sealed class RangedSoundComponent : Component
+public sealed class RangedDamageSoundComponent : Component
 {
     // TODO: Limb damage changing sound type.
 

@@ -350,7 +350,7 @@ namespace Content.Client.Entry
             "RandomArtifactSprite",
             "EnergySword",
             "MeleeSound",
-            "RangedSound",
+            "RangedDamageSound",
             "DoorRemote",
             "InteractionPopup",
             "HealthAnalyzer",

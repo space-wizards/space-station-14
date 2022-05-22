@@ -45,9 +45,11 @@ namespace Content.Server.Projectiles
             component.DamagedEntity = true;
 
             if (modifiedDamage is not null && EntityManager.EntityExists(component.Shooter))
+            {
                 _adminLogSystem.Add(LogType.BulletHit,
                     HasComp<ActorComponent>(otherEntity) ? LogImpact.Extreme : LogImpact.High,
                     $"Projectile {ToPrettyString(component.Owner):projectile} shot by {ToPrettyString(component.Shooter):user} hit {ToPrettyString(otherEntity):target} and dealt {modifiedDamage.Total:damage} damage");
+            }
 
             _guns.PlaySound(otherEntity, modifiedDamage, component.SoundHit, component.ForceSound);
 

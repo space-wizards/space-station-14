@@ -9,7 +9,7 @@
     snap:
     - Wall
   components:
-  - type: RangedSound
+  - type: RangedDamageSound
     soundGroups:
       Brute:
         collection:
