@@ -1,0 +1,150 @@
+{
+  "version": 1,
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "plastitaniumglass_table-0"
+    },
+    {
+      "name": "plastitaniumglass_table-1"
+    },
+    {
+      "name": "plastitaniumglass_table-2"
+    },
+    {
+      "name": "plastitaniumglass_table-3"
+    },
+    {
+      "name": "plastitaniumglass_table-4"
+    },
+    {
+      "name": "plastitaniumglass_table-5"
+    },
+    {
+      "name": "plastitaniumglass_table-6"
+    },
+    {
+      "name": "plastitaniumglass_table-7"
+    },
+    {
+      "name": "plastitaniumglass_table-8"
+    },
+    {
+      "name": "plastitaniumglass_table-9"
+    },
+    {
+      "name": "plastitaniumglass_table-10"
+    },
+    {
+      "name": "plastitaniumglass_table-11"
+    },
+    {
+      "name": "plastitaniumglass_table-12"
+    },
+    {
+      "name": "plastitaniumglass_table-13"
+    },
+    {
+      "name": "plastitaniumglass_table-14"
+    },
+    {
+      "name": "plastitaniumglass_table-15"
+    },
+    {
+      "name": "plastitaniumglass_table-21"
+    },
+    {
+      "name": "plastitaniumglass_table-23"
+    },
+    {
+      "name": "plastitaniumglass_table-29"
+    },
+    {
+      "name": "plastitaniumglass_table-31"
+    },
+    {
+      "name": "plastitaniumglass_table-38"
+    },
+    {
+      "name": "plastitaniumglass_table-39"
+    },
+    {
+      "name": "plastitaniumglass_table-46"
+    },
+    {
+      "name": "plastitaniumglass_table-47"
+    },
+    {
+      "name": "plastitaniumglass_table-55"
+    },
+    {
+      "name": "plastitaniumglass_table-63"
+    },
+    {
+      "name": "plastitaniumglass_table-74"
+    },
+    {
+      "name": "plastitaniumglass_table-75"
+    },
+    {
+      "name": "plastitaniumglass_table-78"
+    },
+    {
+      "name": "plastitaniumglass_table-79"
+    },
+    {
+      "name": "plastitaniumglass_table-95"
+    },
+    {
+      "name": "plastitaniumglass_table-110"
+    },
+    {
+      "name": "plastitaniumglass_table-111"
+    },
+    {
+      "name": "plastitaniumglass_table-127"
+    },
+    {
+      "name": "plastitaniumglass_table-137"
+    },
+    {
+      "name": "plastitaniumglass_table-139"
+    },
+    {
+      "name": "plastitaniumglass_table-141"
+    },
+    {
+      "name": "plastitaniumglass_table-143"
+    },
+    {
+      "name": "plastitaniumglass_table-157"
+    },
+    {
+      "name": "plastitaniumglass_table-159"
+    },
+    {
+      "name": "plastitaniumglass_table-175"
+    },
+    {
+      "name": "plastitaniumglass_table-191"
+    },
+    {
+      "name": "plastitaniumglass_table-203"
+    },
+    {
+      "name": "plastitaniumglass_table-207"
+    },
+    {
+      "name": "plastitaniumglass_table-223"
+    },
+    {
+      "name": "plastitaniumglass_table-239"
+    },
+    {
+      "name": "plastitaniumglass_table-255"
+    }
+  ]
+}

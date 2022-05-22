@@ -1,0 +1,150 @@
+{
+  "version": 1,
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "titaniumglass_table-0"
+    },
+    {
+      "name": "titaniumglass_table-1"
+    },
+    {
+      "name": "titaniumglass_table-2"
+    },
+    {
+      "name": "titaniumglass_table-3"
+    },
+    {
+      "name": "titaniumglass_table-4"
+    },
+    {
+      "name": "titaniumglass_table-5"
+    },
+    {
+      "name": "titaniumglass_table-6"
+    },
+    {
+      "name": "titaniumglass_table-7"
+    },
+    {
+      "name": "titaniumglass_table-8"
+    },
+    {
+      "name": "titaniumglass_table-9"
+    },
+    {
+      "name": "titaniumglass_table-10"
+    },
+    {
+      "name": "titaniumglass_table-11"
+    },
+    {
+      "name": "titaniumglass_table-12"
+    },
+    {
+      "name": "titaniumglass_table-13"
+    },
+    {
+      "name": "titaniumglass_table-14"
+    },
+    {
+      "name": "titaniumglass_table-15"
+    },
+    {
+      "name": "titaniumglass_table-21"
+    },
+    {
+      "name": "titaniumglass_table-23"
+    },
+    {
+      "name": "titaniumglass_table-29"
+    },
+    {
+      "name": "titaniumglass_table-31"
+    },
+    {
+      "name": "titaniumglass_table-38"
+    },
+    {
+      "name": "titaniumglass_table-39"
+    },
+    {
+      "name": "titaniumglass_table-46"
+    },
+    {
+      "name": "titaniumglass_table-47"
+    },
+    {
+      "name": "titaniumglass_table-55"
+    },
+    {
+      "name": "titaniumglass_table-63"
+    },
+    {
+      "name": "titaniumglass_table-74"
+    },
+    {
+      "name": "titaniumglass_table-75"
+    },
+    {
+      "name": "titaniumglass_table-78"
+    },
+    {
+      "name": "titaniumglass_table-79"
+    },
+    {
+      "name": "titaniumglass_table-95"
+    },
+    {
+      "name": "titaniumglass_table-110"
+    },
+    {
+      "name": "titaniumglass_table-111"
+    },
+    {
+      "name": "titaniumglass_table-127"
+    },
+    {
+      "name": "titaniumglass_table-137"
+    },
+    {
+      "name": "titaniumglass_table-139"
+    },
+    {
+      "name": "titaniumglass_table-141"
+    },
+    {
+      "name": "titaniumglass_table-143"
+    },
+    {
+      "name": "titaniumglass_table-157"
+    },
+    {
+      "name": "titaniumglass_table-159"
+    },
+    {
+      "name": "titaniumglass_table-175"
+    },
+    {
+      "name": "titaniumglass_table-191"
+    },
+    {
+      "name": "titaniumglass_table-203"
+    },
+    {
+      "name": "titaniumglass_table-207"
+    },
+    {
+      "name": "titaniumglass_table-223"
+    },
+    {
+      "name": "titaniumglass_table-239"
+    },
+    {
+      "name": "titaniumglass_table-255"
+    }
+  ]
+}
