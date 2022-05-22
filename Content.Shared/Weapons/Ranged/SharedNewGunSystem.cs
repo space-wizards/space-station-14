@@ -18,6 +18,28 @@ public abstract class SharedNewGunSystem : EntitySystem
     {
         Sawmill = Logger.GetSawmill("gun");
         SubscribeLocalEvent<NewGunComponent, ComponentGetState>(OnGetState);
+        SubscribeAllEvent<RequestShootEvent>(OnShootRequest);
+        SubscribeAllEvent<RequestStopShootEvent>(OnStopShootRequest);
+    }
+    private void OnShootRequest(RequestShootEvent msg, EntitySessionEventArgs args)
+    {
+        var user = args.SenderSession.AttachedEntity;
+
+        if (user == null) return;
+
+        var gun = GetGun(user.Value);
+
+        if (gun?.Owner != msg.Gun) return;
+
+        gun.ShootCoordinates = msg.Coordinates;
+        Sawmill.Debug($"Set shoot coordinates to {gun.ShootCoordinates}");
+        AttemptShoot(user.Value, gun);
+    }
+
+    private void OnStopShootRequest(RequestStopShootEvent ev)
+    {
+        // TODO validate input
+        StopShooting(Comp<NewGunComponent>(ev.Gun));
     }
 
     private void OnGetState(EntityUid uid, NewGunComponent component, ref ComponentGetState args)
@@ -105,6 +127,12 @@ public abstract class SharedNewGunSystem : EntitySystem
     {
         public EntityUid Gun;
         public MapCoordinates Coordinates;
+    }
+
+    [Serializable, NetSerializable]
+    public sealed class RequestStopShootEvent : EntityEventArgs
+    {
+        public EntityUid Gun;
     }
 
     [Serializable, NetSerializable]
