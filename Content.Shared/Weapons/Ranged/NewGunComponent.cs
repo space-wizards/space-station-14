@@ -24,7 +24,7 @@ public sealed class NewGunComponent : Component
     /// Where the gun is being requested to shoot.
     /// </summary>
     [ViewVariables]
-    public MapCoordinates? ShootCoordinates = null;
+    public EntityCoordinates? ShootCoordinates = null;
 
     /// <summary>
     /// Used for tracking semi-auto / burst

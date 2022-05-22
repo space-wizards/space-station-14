@@ -100,6 +100,7 @@
       size: 24
       sprite: Objects/Weapons/Guns/SMGs/c20r.rsi
     - type: NewGun
+    - type: RevolverAmmoProvider
 
 - type: entity
   name: C-20r sub machine gun

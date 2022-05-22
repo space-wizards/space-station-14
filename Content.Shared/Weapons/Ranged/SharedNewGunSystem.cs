@@ -1,3 +1,4 @@
+using System.Linq;
 using Content.Shared.Actions;
 using Content.Shared.CombatMode;
 using Content.Shared.Examine;
@@ -5,6 +6,7 @@ using Content.Shared.Hands.Components;
 using Content.Shared.Popups;
 using Content.Shared.Sound;
 using Content.Shared.Verbs;
+using Robust.Shared.Containers;
 using Robust.Shared.GameStates;
 using Robust.Shared.Map;
 using Robust.Shared.Serialization;
@@ -17,12 +19,12 @@ public abstract partial class SharedNewGunSystem : EntitySystem
 {
     [Dependency] protected readonly IGameTiming Timing = default!;
     [Dependency] protected readonly SharedActionsSystem Actions = default!;
+    [Dependency] protected readonly SharedContainerSystem Containers = default!;
     [Dependency] private readonly SharedCombatModeSystem _combatMode = default!;
     [Dependency] protected readonly SharedPopupSystem PopupSystem = default!;
 
     protected ISawmill Sawmill = default!;
 
-    protected const float EmptyNextFire = 0.3f;
     protected const float InteractNextFire = 0.3f;
 
     public override void Initialize()
@@ -32,6 +34,9 @@ public abstract partial class SharedNewGunSystem : EntitySystem
         SubscribeAllEvent<RequestShootEvent>(OnShootRequest);
         SubscribeAllEvent<RequestStopShootEvent>(OnStopShootRequest);
         SubscribeLocalEvent<NewGunComponent, ComponentHandleState>(OnHandleState);
+
+        // Ammo providers
+        InitializeRevolver();
 
         // Interactions
         SubscribeLocalEvent<NewGunComponent, GetVerbsEvent<AlternativeVerb>>(OnAltVerb);
@@ -115,7 +120,9 @@ public abstract partial class SharedNewGunSystem : EntitySystem
     {
         if (gun.FireRate <= 0f) return;
 
-        if (gun.ShootCoordinates == null) return;
+        var toCoordinates = gun.ShootCoordinates;
+
+        if (toCoordinates == null) return;
 
         var curTime = Timing.CurTime;
 
@@ -126,15 +133,6 @@ public abstract partial class SharedNewGunSystem : EntitySystem
         // First shot
         if (gun.ShotCounter == 0 && gun.NextFire < curTime)
             gun.NextFire = curTime;
-
-        // Firing on empty. We won't spam the empty sounds at the firerate, just at a reduced rate.
-        if (gun.SelectedMode == SelectiveFire.Safety || gun.FakeAmmo == 0)
-        {
-            PlaySound(gun, gun.SoundEmpty?.GetSound(), user);
-            gun.NextFire += TimeSpan.FromSeconds(EmptyNextFire);
-            Dirty(gun);
-            return;
-        }
 
         var shots = 0;
         var fireRate = TimeSpan.FromSeconds(1f / gun.FireRate);
@@ -161,25 +159,89 @@ public abstract partial class SharedNewGunSystem : EntitySystem
                 throw new ArgumentOutOfRangeException($"No implemented shooting behavior for {gun.SelectedMode}!");
         }
 
-        // Remove ammo
-        shots = Math.Min(shots, gun.FakeAmmo);
-        gun.FakeAmmo -= shots;
+        var fromCoordinates = Transform(user).Coordinates;
 
+        // TODO: Just change this to use Ammo
+        // Make cartridge inherit ammo
+        // Have a thing that returns the bullets from ammo (AKA handles cloning for cartridges) + deletion.
+
+        // Remove ammo
+        var ev = new TakeAmmoEvent
+        {
+            Shots = shots,
+            Ammo = new List<(EntityUid Entity, int Shots)>(shots),
+            Coordinates = fromCoordinates,
+        };
+
+        RaiseLocalEvent(gun.Owner, ev);
+        DebugTools.Assert(ev.Shots <= shots);
         DebugTools.Assert(shots >= 0);
 
-        if (shots <= 0) return;
+        if (ev.Shots <= 0)
+        {
+            // Play empty gun sounds if relevant
+            // If they're firing an existing clip then don't play anything.
+            if (gun.ShotCounter == 0 && (gun.SelectedMode == SelectiveFire.Safety || shots > 0))
+            {
+                PlaySound(gun, gun.SoundEmpty?.GetSound(), user);
+                Dirty(gun);
+                return;
+            }
+
+            return;
+        }
 
         // Shoot confirmed
-        gun.ShotCounter += shots;
+        gun.ShotCounter += ev.Shots;
+
+        Shoot(ev.Ammo, fromCoordinates, toCoordinates, user);
 
         // Predicted sound moment
         PlaySound(gun, gun.SoundGunshot?.GetSound(), user);
         Dirty(gun);
     }
 
+    protected abstract void Shoot(
+        List<(EntityUid Entity, int Shots)> ammo,
+        EntityCoordinates fromCoordinates,
+        EntityCoordinates toCoordinates,
+        EntityUid? user = null);
+
+    public void Shoot(
+        EntityUid ammo,
+        EntityCoordinates fromCoordinates,
+        EntityCoordinates toCoordinates,
+        EntityUid? user = null)
+    {
+        Shoot(new List<(EntityUid, int)>(1) {(ammo, 1)}, fromCoordinates, toCoordinates, user);
+    }
+
+    public void Shoot(List<EntityUid> ammo,
+        EntityCoordinates fromCoordinates,
+        EntityCoordinates toCoordinates,
+        EntityUid? user = null)
+    {
+        var actualAmmo = ammo.Select(o => (o, 1)).ToList();
+        Shoot(actualAmmo, fromCoordinates, toCoordinates, user);
+    }
+
     protected abstract void PlaySound(NewGunComponent gun, string? sound, EntityUid? user = null);
 
     protected abstract void Popup(string message, NewGunComponent gun, EntityUid? user);
+
+    /// <summary>
+    /// Raised on a gun when it would like to take the specified amount of ammo.
+    /// </summary>
+    public sealed class TakeAmmoEvent : EntityEventArgs
+    {
+        public int Shots;
+        public List<EntityUid> Ammo = default!;
+
+        /// <summary>
+        /// Coordinates to spawn the ammo at.
+        /// </summary>
+        public EntityCoordinates Coordinates;
+    }
 
     /// <summary>
     /// Raised on the client to indicate it'd like to shoot.
@@ -188,7 +250,7 @@ public abstract partial class SharedNewGunSystem : EntitySystem
     public sealed class RequestShootEvent : EntityEventArgs
     {
         public EntityUid Gun;
-        public MapCoordinates Coordinates;
+        public EntityCoordinates Coordinates;
     }
 
     [Serializable, NetSerializable]

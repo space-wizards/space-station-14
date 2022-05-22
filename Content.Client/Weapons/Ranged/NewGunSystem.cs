@@ -5,6 +5,7 @@ using Robust.Client.Input;
 using Robust.Client.Player;
 using Robust.Shared.Audio;
 using Robust.Shared.Input;
+using Robust.Shared.Map;
 using Robust.Shared.Player;
 
 namespace Content.Client.Weapons.Ranged;
@@ -61,6 +62,17 @@ public sealed class NewGunSystem : SharedNewGunSystem
             Coordinates = mousePos,
             Gun = gun.Owner,
         });
+    }
+
+    protected override void Shoot(EntityUid user, List<EntityUid> ammo, EntityCoordinates coordinates)
+    {
+        // Rather than splitting client / server for every ammo provider it's easier
+        // to just delete the spawned entities. This is for programmer sanity despite the wasted perf.
+        // This also means any ammo specific stuff can be grabbed as necessary.
+        foreach (var ent in ammo)
+        {
+            Del(ent);
+        }
     }
 
     protected override void PlaySound(NewGunComponent gun, string? sound, EntityUid? user = null)
