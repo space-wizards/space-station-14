@@ -1,9 +1,4 @@
 Entries:
-- author: Rane
-  changes:
-  - {message: Added emags to the traitor uplink., type: Add}
-  id: 1076
-  time: '2022-02-18T02:43:24.0000000+00:00'
 - author: Peptide90
   changes:
   - {message: Packed has a bunch of small updates! Bar and kitchen have windoors now
@@ -3025,3 +3020,10 @@ Entries:
       the wiring panel with a screwdriver, type: Fix}
   id: 1575
   time: '2022-05-21T20:35:47.0000000+00:00'
+- author: 20kdc
+  changes:
+  - {message: 'When the server shuts down or you fail to connect because of a key
+      error, the button shown will say `Relaunch` rather than `Reconnect` and will
+      restart the client for you.', type: Tweak}
+  id: 1576
+  time: '2022-05-22T01:56:19.0000000+00:00'
