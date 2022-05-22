@@ -7,6 +7,7 @@ using Content.Server.Weapon.Ranged.Ammunition.Components;
 using Content.Server.Weapon.Ranged.Barrels.Components;
 using Content.Shared.Camera;
 using Content.Shared.Database;
+using Content.Shared.Interaction.Events;
 using Content.Shared.Popups;
 using Robust.Shared.Audio;
 using Robust.Shared.Map;
@@ -18,6 +19,11 @@ namespace Content.Server.Weapon.Ranged;
 
 public sealed partial class GunSystem
 {
+    private void OnMeleeAttempt(EntityUid uid, ServerRangedWeaponComponent component, ref MeleeAttackAttemptEvent args)
+    {
+        args.Cancelled = true;
+    }
+
     /// <summary>
     /// Tries to fire a round of ammo out of the weapon.
     /// </summary>
@@ -138,6 +144,7 @@ public sealed partial class GunSystem
     }
 
     #region Firing
+
     /// <summary>
     /// Handles firing one or many projectiles
     /// </summary>
@@ -242,5 +249,6 @@ public sealed partial class GunSystem
             hitscan.FireEffects(shooter, hitscan.MaxLength, angle);
         }
     }
+
     #endregion
 }

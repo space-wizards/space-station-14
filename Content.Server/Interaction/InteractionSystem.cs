@@ -3,14 +3,17 @@ using Content.Server.CombatMode;
 using Content.Server.Hands.Components;
 using Content.Server.Pulling;
 using Content.Server.Storage.Components;
+using Content.Server.Weapon.Ranged.Barrels.Components;
 using Content.Shared.ActionBlocker;
 using Content.Shared.Database;
 using Content.Shared.DragDrop;
 using Content.Shared.Input;
 using Content.Shared.Interaction;
+using Content.Shared.Interaction.Events;
 using Content.Shared.Item;
 using Content.Shared.Pulling.Components;
 using Content.Shared.Weapons.Melee;
+using Content.Shared.Weapons.Ranged.Components;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
 using Robust.Shared.Containers;
@@ -202,8 +205,13 @@ namespace Content.Server.Interaction
             {
                 var item = hands.ActiveHandEntity;
 
-                if (item != null && !Deleted(item.Value))
+                if (!Deleted(item))
                 {
+                    var meleeVee = new MeleeAttackAttemptEvent();
+                    RaiseLocalEvent(item.Value, ref meleeVee);
+
+                    if (meleeVee.Cancelled) return;
+
                     if (wideAttack)
                     {
                         var ev = new WideAttackEvent(item.Value, user, coordinates);
