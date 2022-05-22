@@ -152,7 +152,6 @@
   products:
     Ipecac: 2
 
-
 - type: reaction
   id: TranexamicAcid
   reactants:
