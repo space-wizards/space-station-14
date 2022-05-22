@@ -8,6 +8,7 @@
   - type: Sprite
     sprite: Structures/Holo/wetfloor.rsi
     state: icon
+    netsync: false
   - type: InvisibleWall
 
 - type: entity
@@ -19,6 +20,7 @@
   - type: Sprite
     sprite: Structures/Holo/holofan.rsi
     state: icon
+    netsync: false
   - type: Fixtures
     fixtures:
     - shape:
