@@ -11,7 +11,7 @@ namespace Content.Server.Holosign
         public int CurrentCharges = 6;
 
         [ViewVariables(VVAccess.ReadWrite)]
-        [DataField("signProto")]
+        [DataField("signProto", customeTypeSerializer: (typeof(PrototypeIdSeralizer<EntityPrototype>)))]
         public string SignProto = "HolosignWetFloor";
 
         [ViewVariables(VVAccess.ReadWrite)]
