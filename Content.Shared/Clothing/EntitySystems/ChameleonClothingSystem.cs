@@ -1,10 +1,13 @@
 ﻿using Content.Shared.Clothing.Components;
 using Content.Shared.Verbs;
+using Robust.Shared.Prototypes;
 
 namespace Content.Shared.Clothing.EntitySystems;
 
 public sealed class ChameleonClothingSystem : EntitySystem
 {
+    [Dependency] private readonly IPrototypeManager _proto = default!;
+
     public override void Initialize()
     {
         base.Initialize();
@@ -25,6 +28,15 @@ public sealed class ChameleonClothingSystem : EntitySystem
         if (!Resolve(uid, ref appearance, ref component))
             return;
 
-        appearance.SetData(ChameleonVisuals.ClothingId, "ClothingUniformJumpsuitClown");
+        var protoId = "ClothingUniformJumpsuitClown";
+        if (!_proto.TryIndex(protoId, out EntityPrototype? proto))
+            return;
+
+        // copy name and description
+        var meta = MetaData(uid);
+        meta.EntityName = proto.Name;
+        meta.EntityDescription = proto.Description;
+
+        appearance.SetData(ChameleonVisuals.ClothingId, protoId);
     }
 }

@@ -12,14 +12,15 @@ public sealed class ChameleonClothingVisualizerSystem : VisualizerSystem<Chamele
     {
         base.OnAppearanceChange(uid, component, ref args);
 
-        if (!TryComp(uid, out SpriteComponent? sprite))
-            return;
         if (!args.Component.TryGetData(ChameleonVisuals.ClothingId, out string? protoId))
             return;
         if (!_proto.TryIndex(protoId, out EntityPrototype? proto))
             return;
-        if (!proto.TryGetComponent<SpriteComponent>(out var otherSprite))
-            return;
-        sprite.CopyFrom(otherSprite);
+
+        // world sprite icon
+        if (TryComp(uid, out SpriteComponent? sprite) && proto.TryGetComponent(out SpriteComponent? otherSprite))
+        {
+            sprite.CopyFrom(otherSprite);
+        }
     }
 }
