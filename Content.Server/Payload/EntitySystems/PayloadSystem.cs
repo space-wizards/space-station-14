@@ -135,5 +135,7 @@ public sealed class PayloadSystem : EntitySystem
         _solutionSystem.TryAddSolution(beakerB, solutionB, tmpSol);
         solutionA.MaxVolume -= solutionB.MaxVolume;
         _solutionSystem.UpdateChemicals(beakerA, solutionA, false);
+
+        args.Handled = true;
     }
 }
