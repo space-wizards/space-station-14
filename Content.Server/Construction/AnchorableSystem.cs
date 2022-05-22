@@ -1,3 +1,4 @@
+using System.Threading;
 using System.Threading.Tasks;
 using Content.Server.Administration.Logs;
 using Content.Server.Coordinates.Helpers;
@@ -17,13 +18,81 @@ namespace Content.Server.Construction
         [Dependency] private readonly ToolSystem _toolSystem = default!;
         [Dependency] private readonly PullingSystem _pullingSystem = default!;
 
+        public override void Initialize()
+        {
+            base.Initialize();
+            SubscribeLocalEvent<AnchorableComponent, TryAnchorCompletedEvent>(OnAnchorComplete2);
+            SubscribeLocalEvent<AnchorableComponent, TryAnchorCancelledEvent>(OnAnchorCancelled2);
+            SubscribeLocalEvent<AnchorableComponent, TryUnanchorCompletedEvent>(OnUnanchorComplete2);
+            SubscribeLocalEvent<AnchorableComponent, TryUnanchorCancelledEvent>(OnUnanchorCancelled2);
+        }
+
+        private void OnUnanchorCancelled2(EntityUid uid, AnchorableComponent component, TryUnanchorCancelledEvent args)
+        {
+            component.CancelToken = null;
+        }
+
+        private void OnUnanchorComplete2(EntityUid uid, AnchorableComponent component, TryUnanchorCompletedEvent args)
+        {
+            component.CancelToken = null;
+            var xform = Transform(uid);
+
+            RaiseLocalEvent(uid, new BeforeUnanchoredEvent(args.User, args.Using), false);
+
+            xform.Anchored = false;
+
+            RaiseLocalEvent(uid, new UserUnanchoredEvent(args.User, args.Using), false);
+
+            _adminLogs.Add(
+                LogType.Action,
+                LogImpact.Low,
+                $"{EntityManager.ToPrettyString(args.User):user} unanchored {EntityManager.ToPrettyString(uid):anchored} using {EntityManager.ToPrettyString(args.Using):using}"
+            );
+        }
+
+        private void OnAnchorCancelled2(EntityUid uid, AnchorableComponent component, TryAnchorCancelledEvent args)
+        {
+            component.CancelToken = null;
+        }
+
+        private void OnAnchorComplete2(EntityUid uid, AnchorableComponent component, TryAnchorCompletedEvent args)
+        {
+            component.CancelToken = null;
+            var xform = Transform(uid);
+
+            // Snap rotation to cardinal (multiple of 90)
+            var rot = xform.LocalRotation;
+            xform.LocalRotation = Math.Round(rot / (Math.PI / 2)) * (Math.PI / 2);
+
+            if (TryComp<SharedPullableComponent>(uid, out var pullable) && pullable.Puller != null)
+            {
+                _pullingSystem.TryStopPull(pullable);
+            }
+
+            if (component.Snap)
+                xform.Coordinates = xform.Coordinates.SnapToGrid();
+
+            RaiseLocalEvent(uid, new BeforeAnchoredEvent(args.User, args.Using), false);
+
+            xform.Anchored = true;
+
+            RaiseLocalEvent(uid, new UserAnchoredEvent(args.User, args.Using), false);
+
+            _adminLogs.Add(
+                LogType.Action,
+                LogImpact.Low,
+                $"{EntityManager.ToPrettyString(args.User):user} anchored {EntityManager.ToPrettyString(uid):anchored} using {EntityManager.ToPrettyString(args.Using):using}"
+            );
+        }
+
         /// <summary>
         ///     Checks if a tool can change the anchored status.
         /// </summary>
         /// <returns>true if it is valid, false otherwise</returns>
-        private async Task<bool> Valid(EntityUid uid, EntityUid userUid, EntityUid usingUid, bool anchoring, AnchorableComponent? anchorable = null, ToolComponent? usingTool = null)
+        private bool Valid(EntityUid uid, EntityUid userUid, EntityUid usingUid, bool anchoring, AnchorableComponent? anchorable = null, ToolComponent? usingTool = null)
         {
-            if (!Resolve(uid, ref anchorable))
+            if (!Resolve(uid, ref anchorable) ||
+                anchorable.CancelToken != null)
                 return false;
 
             if (!Resolve(usingUid, ref usingTool))
@@ -41,111 +110,106 @@ namespace Content.Server.Construction
             if (attempt.Cancelled)
                 return false;
 
-            return await _toolSystem.UseTool(usingUid, userUid, uid, 0f, anchorable.Delay + attempt.Delay, anchorable.Tool, toolComponent:usingTool);
+            return true;
         }
 
         /// <summary>
         ///     Tries to anchor the entity.
         /// </summary>
         /// <returns>true if anchored, false otherwise</returns>
-        public async Task<bool> TryAnchor(EntityUid uid, EntityUid userUid, EntityUid usingUid,
+        private void TryAnchor(EntityUid uid, EntityUid userUid, EntityUid usingUid,
             AnchorableComponent? anchorable = null,
             TransformComponent? transform = null,
             SharedPullableComponent? pullable = null,
             ToolComponent? usingTool = null)
         {
-            if (!Resolve(uid, ref anchorable, ref transform))
-                return false;
+            if (!Resolve(uid, ref anchorable, ref transform)) return;
 
             // Optional resolves.
             Resolve(uid, ref pullable, false);
 
-            if (!Resolve(usingUid, ref usingTool))
-                return false;
+            if (!Resolve(usingUid, ref usingTool)) return;
 
-            if (!(await Valid(uid, userUid, usingUid, true, anchorable, usingTool)))
-            {
-                return false;
-            }
+            if (!Valid(uid, userUid, usingUid, true, anchorable, usingTool)) return;
 
-            // Snap rotation to cardinal (multiple of 90)
-            var rot = transform.LocalRotation;
-            transform.LocalRotation = Math.Round(rot / (Math.PI / 2)) * (Math.PI / 2);
+            anchorable.CancelToken = new CancellationTokenSource();
 
-            if (pullable is { Puller: {} })
-            {
-                _pullingSystem.TryStopPull(pullable);
-            }
-
-            if (anchorable.Snap)
-                transform.Coordinates = transform.Coordinates.SnapToGrid();
-
-            RaiseLocalEvent(uid, new BeforeAnchoredEvent(userUid, usingUid), false);
-
-            transform.Anchored = true;
-
-            RaiseLocalEvent(uid, new UserAnchoredEvent(userUid, usingUid), false);
-
-            _adminLogs.Add(
-                LogType.Action,
-                LogImpact.Low,
-                $"{EntityManager.ToPrettyString(userUid):user} anchored {EntityManager.ToPrettyString(uid):anchored} using {EntityManager.ToPrettyString(usingUid):using}"
-            );
-
-            return true;
+            _toolSystem.UseTool(usingUid, userUid, uid, 0f, anchorable.Delay, usingTool.Qualities,
+                new TryAnchorCompletedEvent(), new TryAnchorCancelledEvent(), uid, cancelToken: anchorable.CancelToken.Token);
         }
 
         /// <summary>
         ///     Tries to unanchor the entity.
         /// </summary>
         /// <returns>true if unanchored, false otherwise</returns>
-        public async Task<bool> TryUnAnchor(EntityUid uid, EntityUid userUid, EntityUid usingUid,
+        private void TryUnAnchor(EntityUid uid, EntityUid userUid, EntityUid usingUid,
             AnchorableComponent? anchorable = null,
             TransformComponent? transform = null,
             ToolComponent? usingTool = null)
         {
-            if (!Resolve(uid, ref anchorable, ref transform))
-                return false;
+            if (!Resolve(uid, ref anchorable, ref transform) ||
+                anchorable.CancelToken != null)
+                return;
 
-            if (!Resolve(usingUid, ref usingTool))
-                return false;
+            if (!Resolve(usingUid, ref usingTool)) return;
 
-            if (!(await Valid(uid, userUid, usingUid, false)))
-            {
-                return false;
-            }
+            if (!Valid(uid, userUid, usingUid, false)) return;
 
-            RaiseLocalEvent(uid, new BeforeUnanchoredEvent(userUid, usingUid), false);
+            anchorable.CancelToken = new CancellationTokenSource();
 
-            transform.Anchored = false;
-
-            RaiseLocalEvent(uid, new UserUnanchoredEvent(userUid, usingUid), false);
-
-            _adminLogs.Add(
-                LogType.Action,
-                LogImpact.Low,
-                $"{EntityManager.ToPrettyString(userUid):user} unanchored {EntityManager.ToPrettyString(uid):anchored} using {EntityManager.ToPrettyString(usingUid):using}"
-            );
-
-            return true;
+            _toolSystem.UseTool(usingUid, userUid, uid, 0f, anchorable.Delay, usingTool.Qualities,
+                new TryUnanchorCompletedEvent(), new TryUnanchorCancelledEvent(), uid, cancelToken: anchorable.CancelToken.Token);
         }
 
         /// <summary>
         ///     Tries to toggle the anchored status of this component's owner.
         /// </summary>
         /// <returns>true if toggled, false otherwise</returns>
-        public override async Task<bool> TryToggleAnchor(EntityUid uid, EntityUid userUid, EntityUid usingUid,
+        public override void TryToggleAnchor(EntityUid uid, EntityUid userUid, EntityUid usingUid,
             AnchorableComponent? anchorable = null,
             TransformComponent? transform = null,
             SharedPullableComponent? pullable = null,
             ToolComponent? usingTool = null)
         {
             if (!Resolve(uid, ref transform))
-                return false;
+                return;
 
-            return transform.Anchored ?
-                await TryUnAnchor(uid, userUid, usingUid, anchorable, transform, usingTool) :
-                await TryAnchor(uid, userUid, usingUid, anchorable, transform, pullable, usingTool);
+            if (transform.Anchored)
+            {
+                TryUnAnchor(uid, userUid, usingUid, anchorable, transform, usingTool);
+            }
+            else
+            {
+                TryAnchor(uid, userUid, usingUid, anchorable, transform, pullable, usingTool);
+            }
+        }
+
+        private abstract class AnchorEvent : EntityEventArgs
+        {
+            public EntityUid User;
+            public EntityUid Using;
+
+            public readonly TransformComponent Transform = default!;
+        }
+
+        private sealed class TryUnanchorCompletedEvent : AnchorEvent
+        {
+
+        }
+
+        private sealed class TryUnanchorCancelledEvent : AnchorEvent
+        {
+
+        }
+
+        private sealed class TryAnchorCompletedEvent : AnchorEvent
+        {
+
+        }
+
+        private sealed class TryAnchorCancelledEvent : AnchorEvent
+        {
+
         }
     }
 }

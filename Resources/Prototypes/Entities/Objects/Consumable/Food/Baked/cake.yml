@@ -485,7 +485,7 @@
           Quantity: 20
         - ReagentId: Vitamin
           Quantity: 5
-        - ReagentId: Glucose
+        - ReagentId: Sugar
           Quantity: 15
 
 - type: entity
@@ -510,7 +510,7 @@
           Quantity: 4
         - ReagentId: Vitamin
           Quantity: 1
-        - ReagentId: Glucose
+        - ReagentId: Sugar
           Quantity: 3
 # Tastes like sweetness, cake, vanilla.
 
@@ -537,7 +537,7 @@
           Quantity: 20
         - ReagentId: Vitamin
           Quantity: 5
-        - ReagentId: Glucose
+        - ReagentId: Sugar
           Quantity: 15
 
 - type: entity
@@ -562,7 +562,7 @@
           Quantity: 4
         - ReagentId: Vitamin
           Quantity: 1
-        - ReagentId: Glucose
+        - ReagentId: Sugar
           Quantity: 3
 # Tastes like sweetness, cake, clown.
 

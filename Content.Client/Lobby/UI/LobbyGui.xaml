@@ -11,9 +11,8 @@
          xmlns:lobbyUi="clr-namespace:Content.Client.Lobby.UI"
          xmlns:info="clr-namespace:Content.Client.Info">
     <Control>
-        <!-- Parallax background -->
-        <parallax:ParallaxControl />
-        <TextureRect Access="Public" Name = "Background" Stretch="Scale"/>
+        <!-- Background -->
+        <TextureRect Access="Public" Name = "Background" Stretch="KeepAspectCovered"/>
         <Control Margin="10 10 10 10" >
             <!-- Left Top Panel -->
                 <PanelContainer StyleClasses="AngleRect" HorizontalAlignment="Left" Name = "LeftSideTop" VerticalExpand="True"  VerticalAlignment="Top" >
@@ -41,7 +40,7 @@
                 <BoxContainer Orientation="Vertical">
                 <!-- Top row -->
                 <BoxContainer Orientation="Horizontal" MinSize="0 40" Name="HeaderContainer" Access="Public">
-                    <Label Margin="8 0 0 0" StyleClasses="LabelHeadingBigger" VAlign="Center" Text="{Loc 'ui-lobby-title'}" />
+                    <Label Margin="8 0 0 0" StyleClasses="LabelHeadingBigger" VAlign="Center" Text="{Loc 'ui-lobby-title'} " />
                     <Label Name="ServerName" Access="Public" StyleClasses="LabelHeadingBigger" VAlign="Center" />
                 </BoxContainer>
                 <!-- Gold line -->

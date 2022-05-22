@@ -57,7 +57,7 @@ namespace Content.Server.Singularity.EntitySystems
         private static void BodyTypeChanged(
             EntityUid uid,
             ContainmentFieldGeneratorComponent component,
-            PhysicsBodyTypeChangedEvent args)
+            ref PhysicsBodyTypeChangedEvent args)
         {
             component.OnAnchoredChanged();
         }
