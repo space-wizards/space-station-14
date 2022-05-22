@@ -768,4 +768,18 @@
   - type: Clothing
     sprite: Clothing/Uniforms/Jumpsuit/atmos.rsi
 
+- type: entity
+  parent: ClothingUniformBase
+  id: ClothingUniformJumpsuitChameleon
+  name: black jumpsuit
+  description: A generic black jumpsuit with no rank markings.
+  suffix: Chameleon
+  components:
+    - type: Sprite
+      sprite: Clothing/Uniforms/Jumpsuit/Color/black.rsi
+    - type: Clothing
+      sprite: Clothing/Uniforms/Jumpsuit/Color/black.rsi
+    - type: ChameleonClothing
+    - type: Appearance
+
 
