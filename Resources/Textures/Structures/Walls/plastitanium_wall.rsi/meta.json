@@ -1,0 +1,225 @@
+{
+  "version": 1,
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "plastitanium_wall-0"
+    },
+    {
+      "name": "plastitanium_wall-1"
+    },
+    {
+      "name": "plastitanium_wall-2"
+    },
+    {
+      "name": "plastitanium_wall-3"
+    },
+    {
+      "name": "plastitanium_wall-4"
+    },
+    {
+      "name": "plastitanium_wall-5"
+    },
+    {
+      "name": "plastitanium_wall-5-d"
+    },
+    {
+      "name": "plastitanium_wall-6"
+    },
+    {
+      "name": "plastitanium_wall-6-d"
+    },
+    {
+      "name": "plastitanium_wall-7"
+    },
+    {
+      "name": "plastitanium_wall-8"
+    },
+    {
+      "name": "plastitanium_wall-9"
+    },
+    {
+      "name": "plastitanium_wall-9-d"
+    },
+    {
+      "name": "plastitanium_wall-10"
+    },
+    {
+      "name": "plastitanium_wall-10-d"
+    },
+    {
+      "name": "plastitanium_wall-11"
+    },
+    {
+      "name": "plastitanium_wall-12"
+    },
+    {
+      "name": "plastitanium_wall-13"
+    },
+    {
+      "name": "plastitanium_wall-14"
+    },
+    {
+      "name": "plastitanium_wall-15"
+    },
+    {
+      "name": "plastitanium_wall-21"
+    },
+    {
+      "name": "plastitanium_wall-21-d"
+    },
+    {
+      "name": "plastitanium_wall-23"
+    },
+    {
+      "name": "plastitanium_wall-29"
+    },
+    {
+      "name": "plastitanium_wall-31"
+    },
+    {
+      "name": "plastitanium_wall-38"
+    },
+    {
+      "name": "plastitanium_wall-38-d"
+    },
+    {
+      "name": "plastitanium_wall-39"
+    },
+    {
+      "name": "plastitanium_wall-46"
+    },
+    {
+      "name": "plastitanium_wall-47"
+    },
+    {
+      "name": "plastitanium_wall-55"
+    },
+    {
+      "name": "plastitanium_wall-63"
+    },
+    {
+      "name": "plastitanium_wall-74"
+    },
+    {
+      "name": "plastitanium_wall-74-d"
+    },
+    {
+      "name": "plastitanium_wall-75"
+    },
+    {
+      "name": "plastitanium_wall-78"
+    },
+    {
+      "name": "plastitanium_wall-79"
+    },
+    {
+      "name": "plastitanium_wall-95"
+    },
+    {
+      "name": "plastitanium_wall-110"
+    },
+    {
+      "name": "plastitanium_wall-111"
+    },
+    {
+      "name": "plastitanium_wall-127"
+    },
+    {
+      "name": "plastitanium_wall-137"
+    },
+    {
+      "name": "plastitanium_wall-137-d"
+    },
+    {
+      "name": "plastitanium_wall-139"
+    },
+    {
+      "name": "plastitanium_wall-141"
+    },
+    {
+      "name": "plastitanium_wall-143"
+    },
+    {
+      "name": "plastitanium_wall-157"
+    },
+    {
+      "name": "plastitanium_wall-159"
+    },
+    {
+      "name": "plastitanium_wall-175"
+    },
+    {
+      "name": "plastitanium_wall-191"
+    },
+    {
+      "name": "plastitanium_wall-203"
+    },
+    {
+      "name": "plastitanium_wall-207"
+    },
+    {
+      "name": "plastitanium_wall-223"
+    },
+    {
+      "name": "plastitanium_wall-239"
+    },
+    {
+      "name": "plastitanium_wall-255"
+    },
+    {
+      "name": "fwall_open"
+    },
+    {
+      "name": "fwall_opening",
+      "delays": [
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "fwall_closing",
+      "delays": [
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "r_wall-1"
+    },
+    {
+      "name": "r_wall-2"
+    },
+    {
+      "name": "r_wall-3"
+    },
+    {
+      "name": "r_wall-4"
+    },
+    {
+      "name": "r_wall-5"
+    },
+    {
+      "name": "r_wall-6"
+    },
+    {
+      "name": "map-overspace"
+    },
+    {
+      "name": "map-shuttle_nd"
+    }
+  ]
+}
