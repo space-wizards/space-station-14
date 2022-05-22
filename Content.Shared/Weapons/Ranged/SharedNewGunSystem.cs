@@ -4,6 +4,7 @@ using Robust.Shared.GameStates;
 using Robust.Shared.Map;
 using Robust.Shared.Serialization;
 using Robust.Shared.Timing;
+using Robust.Shared.Utility;
 
 namespace Content.Shared.Weapons.Ranged;
 
@@ -98,12 +99,34 @@ public abstract class SharedNewGunSystem : EntitySystem
             gun.NextFire = curTime;
 
         var shots = 0;
+        var fireRate = TimeSpan.FromSeconds(1f / gun.FireRate);
 
         while (gun.NextFire <= curTime)
         {
+            gun.NextFire += fireRate;
             shots++;
-            gun.NextFire += TimeSpan.FromSeconds(1f / gun.FireRate);
         }
+
+        // Get how many shots we're actually allowed to make, due to clip size or otherwise.
+        // Don't do this in the loop so we still reset NextFire.
+        switch (gun.SelectiveFire)
+        {
+            case SelectiveFire.Safety:
+                shots = 0;
+                break;
+            case SelectiveFire.SemiAuto:
+                shots = Math.Min(shots, 1 - gun.ShotCounter);
+                break;
+            case SelectiveFire.Burst:
+                shots = Math.Min(shots, 3 - gun.ShotCounter);
+                break;
+            case SelectiveFire.FullAuto:
+                break;
+        }
+
+        DebugTools.Assert(shots >= 0);
+
+        if (shots <= 0) return false;
 
         var oldShots = gun.ShotCounter;
 
