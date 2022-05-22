@@ -19,6 +19,7 @@
       - !type:AdjustReagent
         reagent: Ethanol
         amount: 0.3
+<<<<<<< HEAD
 
 - type: reagent
   id: Amaretto
@@ -28,6 +29,8 @@
   physicalDesc: strong-smelling
   color: "#a66e60"
   spritePath: amarettoglass.rsi
+=======
+>>>>>>> master
 
 - type: reagent
   id: Ale
@@ -63,6 +66,7 @@
       - !type:AdjustReagent
         reagent: Ethanol
         amount: 0.1
+<<<<<<< HEAD
 
 - type: reagent
   id: Champagne
@@ -72,6 +76,8 @@
   physicalDesc: strong-smelling
   color: "#0000CD"
   spritePath: champagneglass.rsi
+=======
+>>>>>>> master
 
 - type: reagent
   id: Cognac
@@ -234,6 +240,7 @@
       - !type:AdjustReagent
         reagent: Ethanol
         amount: 0.2
+<<<<<<< HEAD
 
 - type: reagent
   id: TripleSec
@@ -243,6 +250,8 @@
   physicalDesc: strong-smelling
   color: "#FFA500"
   spritePath: triplesecglass.rsi
+=======
+>>>>>>> master
 
 - type: reagent
   id: Vermouth
@@ -466,6 +475,7 @@
       - !type:AdjustReagent
         reagent: Ethanol
         amount: 0.2
+<<<<<<< HEAD
 
 - type: reagent
   id: BlankPaper
@@ -475,6 +485,8 @@
   physicalDesc: strong-smelling
   color: "#360000"
   spritePath: blankpaperglass.rsi
+=======
+>>>>>>> master
 
 - type: reagent
   id: BloodyMary
@@ -601,6 +613,7 @@
   spritePath: erikasurprise.rsi
 
 - type: reagent
+<<<<<<< HEAD
   id: FetchingFizz
   name: fetching fizz
   parent: BaseAlcohol
@@ -613,6 +626,11 @@
   id: GargleBlaster
   name: reagent-name-gargle-blaster
   parent: BaseAlcohol
+=======
+  id: GargleBlaster
+  name: reagent-name-gargle-blaster
+  parent: BaseAlcohol
+>>>>>>> master
   desc: reagent-desc-gargle-blaster
   physicalDesc: reagent-physical-desc-volatile
   color: "#9cc8b4"
@@ -629,6 +647,7 @@
 - type: reagent
   id: GinFizz
   name: reagent-name-gin-fizz
+<<<<<<< HEAD
   parent: BaseAlcohol
   desc: reagent-desc-gin-fizz
   physicalDesc: reagent-physical-desc-strong-smelling
@@ -646,11 +665,25 @@
 - type: reagent
   id: GingerAmaretto
   name: ginger amaretto
+=======
+>>>>>>> master
   parent: BaseAlcohol
-  desc: Refreshingly lemony, deliciously dry.
-  physicalDesc: strong-smelling
+  desc: reagent-desc-gin-fizz
+  physicalDesc: reagent-physical-desc-strong-smelling
   color: "#664300"
+<<<<<<< HEAD
   spritePath: gingeramarettoglass.rsi
+=======
+  spritePath: ginfizzglass.rsi
+  metabolisms:
+    Drink:
+      effects:
+      - !type:SatiateThirst
+        factor: 2
+      - !type:AdjustReagent
+        reagent: Ethanol
+        amount: 0.15
+>>>>>>> master
 
 - type: reagent
   id: GinTonic
@@ -668,6 +701,7 @@
       - !type:AdjustReagent
         reagent: Ethanol
         amount: 0.15
+<<<<<<< HEAD
 
 - type: reagent
   id: Godfather
@@ -686,6 +720,8 @@
   physicalDesc: strong-smelling
   color: "#004166"
   spritePath: godmotherglass.rsi
+=======
+>>>>>>> master
 
 - type: reagent
   id: Goldschlager
@@ -782,6 +818,7 @@
   physicalDesc: reagent-physical-desc-cloudy
   color: "#664300"
   spritePath: irishcoffeeglass.rsi
+<<<<<<< HEAD
 
 - type: reagent
   id: Kamikaze
@@ -800,6 +837,16 @@
   physicalDesc: strong-smelling
   color: "#CCCC99"
   spritePath: kiraspecial.rsi
+=======
+  metabolisms:
+    Drink:
+      effects:
+      - !type:SatiateThirst
+        factor: 2
+      - !type:AdjustReagent
+        reagent: Ethanol
+        amount: 0.15
+>>>>>>> master
 
 - type: reagent
   id: LongIslandIcedTea
@@ -895,6 +942,7 @@
   parent: BaseAlcohol
   desc: reagent-desc-moonshine
   physicalDesc: reagent-physical-desc-strong-smelling
+<<<<<<< HEAD
   color: "#d1d7d155"
   metabolisms:
     Drink:
@@ -922,6 +970,17 @@
   physicalDesc: strong-smelling
   color: "#d1d7d155"
   spritePath: narsourglass.rsi
+=======
+  color: "#d1d7d155"
+  metabolisms:
+    Drink:
+      effects:
+      - !type:SatiateThirst
+        factor: 2
+      - !type:AdjustReagent
+        reagent: Ethanol
+        amount: 0.25
+>>>>>>> master
 
 - type: reagent
   id: Neurotoxin

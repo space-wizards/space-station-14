@@ -37,6 +37,7 @@
   spritePath: cafe_latte.rsi
 
 - type: reagent
+<<<<<<< HEAD
   id: CreamSoda
   name: cream soda
   parent: BaseDrink
@@ -49,6 +50,11 @@
   id: GreenTea
   name: reagent-name-green-tea
   parent: BaseDrink
+=======
+  id: GreenTea
+  name: reagent-name-green-tea
+  parent: BaseDrink
+>>>>>>> master
   desc: reagent-desc-green-tea
   physicalDesc: reagent-physical-desc-aromatic
   color: "#C33F00"
@@ -211,6 +217,7 @@
   color: "#619494"
 
 - type: reagent
+<<<<<<< HEAD
   id: SolDry
   name: sol dry
   parent: BaseDrink
@@ -223,6 +230,11 @@
   id: SoyLatte
   name: reagent-name-soy-latte
   parent: BaseDrink
+=======
+  id: SoyLatte
+  name: reagent-name-soy-latte
+  parent: BaseDrink
+>>>>>>> master
   desc: reagent-desc-soy-latte
   physicalDesc: reagent-physical-desc-strong-smelling
   color: "#664300"
