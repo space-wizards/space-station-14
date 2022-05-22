@@ -39,5 +39,5 @@
       layer:
       - WallLayer
   - type: IconSmooth
-    key: rock
+    key: walls
     base: rock_
