@@ -39,10 +39,11 @@ namespace Content.Server.Atmos.Components
 
         [ViewVariables(VVAccess.ReadWrite), DataField("disconnectSound")] private SoundSpecifier? _disconnectSound;
 
-        /// <summary>
-        /// Cancel toggles sounds if we re-toggle again.
-        /// </summary>
-        private IPlayingAudioStream? _stream;
+        // Cancel toggles sounds if we re-toggle again.
+
+        private IPlayingAudioStream? _connectStream;
+        private IPlayingAudioStream? _disconnectStream;
+
 
         [DataField("air")] [ViewVariables] public GasMixture Air { get; set; } = new();
 
@@ -144,10 +145,10 @@ namespace Content.Server.Atmos.Components
             if (internals == null) return;
             IsConnected = internals.TryConnectTank(Owner);
             EntitySystem.Get<SharedActionsSystem>().SetToggled(ToggleAction, IsConnected);
-            _stream?.Stop();
+            _connectStream?.Stop();
 
             if (_connectSound != null)
-                _stream = SoundSystem.Play(Filter.Pvs(Owner, entityManager: _entMan), _connectSound.GetSound(), Owner, _connectSound.Params);
+                _connectStream = SoundSystem.Play(Filter.Pvs(Owner, entityManager: _entMan), _connectSound.GetSound(), Owner, _connectSound.Params);
 
             UpdateUserInterface();
         }
@@ -158,10 +159,10 @@ namespace Content.Server.Atmos.Components
             IsConnected = false;
             EntitySystem.Get<SharedActionsSystem>().SetToggled(ToggleAction, false);
             GetInternalsComponent(owner)?.DisconnectTank();
-            _stream?.Stop();
+            _disconnectStream?.Stop();
 
             if (_disconnectSound != null)
-                _stream = SoundSystem.Play(Filter.Pvs(Owner, entityManager: _entMan), _disconnectSound.GetSound(), Owner, _disconnectSound.Params);
+                _disconnectStream = SoundSystem.Play(Filter.Pvs(Owner, entityManager: _entMan), _disconnectSound.GetSound(), Owner, _disconnectSound.Params);
 
             UpdateUserInterface();
         }
