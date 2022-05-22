@@ -63,19 +63,19 @@ namespace Content.Server.Voting
         /// </summary>
         /// <param name="optionId">The integer ID of the option.</param>
         /// <returns>True if the option ID is valid, false otherwise.</returns>
-        bool IsValidOption(int optionId);
+        bool IsValidOption(byte optionId);
 
         /// <summary>
         /// Cast a vote for a specific player.
         /// </summary>
         /// <param name="session">The player session to vote for.</param>
         /// <param name="optionId">
-        /// The integer option ID to vote for. If null, "no vote" is selected (abstaining).
+        /// The integer option ID to vote for. If this entry has already been voted for, that vote is retracted.
         /// </param>
         /// <exception cref="ArgumentOutOfRangeException">
         /// <paramref name="optionId"/> is not a valid option ID.
         /// </exception>
-        void CastVote(IPlayerSession session, int? optionId);
+        void CastVote(IPlayerSession session, byte optionId);
 
         /// <summary>
         /// Cancel this vote.

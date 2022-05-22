@@ -15,7 +15,8 @@ namespace Content.Shared.Voting
         public TimeSpan EndTime; // Server RealTime.
         public (ushort votes, string name)[] Options = default!;
         public bool IsYourVoteDirty;
-        public byte? YourVote;
+        public int voteCount;
+        public byte[]? YourVote;
 
         public override void ReadFromBuffer(NetIncomingMessage buffer)
         {
@@ -40,7 +41,12 @@ namespace Content.Shared.Voting
             IsYourVoteDirty = buffer.ReadBoolean();
             if (IsYourVoteDirty)
             {
-                YourVote = buffer.ReadBoolean() ? buffer.ReadByte() : null;
+                if(buffer.ReadBoolean()) {
+                    int count = buffer.ReadInt32();
+                    YourVote = buffer.ReadBytes(count);
+                } else {
+                    YourVote = null;
+                }
             }
         }
 
@@ -68,10 +74,11 @@ namespace Content.Shared.Voting
             buffer.Write(IsYourVoteDirty);
             if (IsYourVoteDirty)
             {
-                buffer.Write(YourVote.HasValue);
-                if (YourVote.HasValue)
+                buffer.Write(YourVote != null);
+                if (YourVote != null)
                 {
-                    buffer.Write(YourVote.Value);
+                    buffer.Write(YourVote.Length);
+                    buffer.Write(YourVote);
                 }
             }
         }

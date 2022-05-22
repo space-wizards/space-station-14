@@ -120,7 +120,7 @@ namespace Content.Server.Voting
                 return;
             }
 
-            if (!int.TryParse(args[1], out var voteOption))
+            if (!byte.TryParse(args[1], out var voteOption))
             {
                 shell.WriteError(Loc.GetString("vote-command-on-execute-error-invalid-vote-options"));
                 return;
@@ -133,22 +133,13 @@ namespace Content.Server.Voting
                 return;
             }
 
-            int? optionN;
-            if (voteOption == -1)
-            {
-                optionN = null;
-            }
-            else if (vote.IsValidOption(voteOption))
-            {
-                optionN = voteOption;
-            }
-            else
+            if (!vote.IsValidOption(voteOption))
             {
                 shell.WriteError(Loc.GetString("vote-command-on-execute-error-invalid-option"));
                 return;
             }
 
-            vote.CastVote((IPlayerSession) shell.Player!, optionN);
+            vote.CastVote((IPlayerSession) shell.Player!, voteOption);
         }
     }
 

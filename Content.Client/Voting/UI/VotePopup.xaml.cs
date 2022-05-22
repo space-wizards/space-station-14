@@ -41,7 +41,7 @@ namespace Content.Client.Voting.UI
                 };
                 _voteButtons[i] = button;
                 VoteOptionsContainer.AddChild(button);
-                var i1 = i;
+                var i1 = (byte)i;
                 button.OnPressed += _ => _voteManager.SendCastVote(vote.Id, i1);
             }
         }
@@ -56,7 +56,7 @@ namespace Content.Client.Voting.UI
                 var entry = _vote.Entries[i];
                 _voteButtons[i].Text = Loc.GetString("ui-vote-button", ("text", entry.Text), ("votes", entry.Votes));
 
-                if (_vote.OurVote == i)
+                if (_vote.OurVote?.Contains((byte)i) ?? false)
                     _voteButtons[i].Pressed = true;
             }
         }

@@ -17,7 +17,7 @@ namespace Content.Client.Voting
     public interface IVoteManager
     {
         void Initialize();
-        void SendCastVote(int voteId, int option);
+        void SendCastVote(int voteId, byte option);
         void ClearPopupContainer();
         void SetPopupContainer(Control container);
         bool CanCallVote { get; }
@@ -145,7 +145,7 @@ namespace Content.Client.Voting
 
             // Update vote data from incoming.
             if (message.IsYourVoteDirty)
-                existingVote.OurVote = message.YourVote;
+                existingVote.OurVote = message.YourVote?.ToHashSet();
             // On the server, most of these params can't change.
             // It can't hurt to just re-set this stuff since I'm lazy and the server is sending it anyways, so...
             existingVote.Initiator = message.VoteInitiator;
@@ -193,12 +193,20 @@ namespace Content.Client.Voting
             CanCallStandardVotesChanged?.Invoke();
         }
 
-        public void SendCastVote(int voteId, int option)
+        public void SendCastVote(int voteId, byte option)
         {
             var data = _votes[voteId];
             // Update immediately to avoid any funny reconciliation bugs.
             // See also code in server side to avoid bulldozing this.
-            data.OurVote = option;
+            if(data.OurVote != null) {
+                if(!data.OurVote.Remove(option))
+                    data.OurVote.Add(option);
+                if(data.OurVote.Count() == 0)
+                    data.OurVote = null;
+            } else {
+                data.OurVote = new HashSet<byte>(option);
+            }
+
             _console.LocalShell.RemoteExecuteCommand($"vote {voteId} {option}");
         }
 
@@ -211,7 +219,7 @@ namespace Content.Client.Voting
             public TimeSpan EndTime;
             public string Title = "";
             public string Initiator = "";
-            public int? OurVote;
+            public HashSet<byte>? OurVote;
             public int Id;
 
             public ActiveVote(int voteId)

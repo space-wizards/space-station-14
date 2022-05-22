@@ -86,38 +86,47 @@ namespace Content.Server.Voting.Managers
                 // Clear votes from disconnected players.
                 foreach (var voteReg in _votes.Values)
                 {
-                    CastVote(voteReg, e.Session, null);
+                    ClearVote(voteReg, e.Session);
                 }
             }
         }
 
-        private void CastVote(VoteReg v, IPlayerSession player, int? option)
+        private void ClearVote(VoteReg v, IPlayerSession player) {
+            if(v.CastVotes.TryGetValue(player, out var votes)) {
+                foreach(var vote in votes) {
+                    v.Entries[vote].Votes -= 1;
+                }
+                SetDirty(v, player);
+            }
+        }
+
+        private void CastVote(VoteReg v, IPlayerSession player, byte option)
         {
             if (!IsValidOption(v, option))
                 throw new ArgumentOutOfRangeException(nameof(option), "Invalid vote option ID");
 
-            if (v.CastVotes.TryGetValue(player, out var existingOption))
-            {
-                v.Entries[existingOption].Votes -= 1;
+            if(v.CastVotes.TryGetValue(player, out var alreadyCast)) {
+                if(!alreadyCast.Remove(option))
+                    alreadyCast.Add(option);
+                if(alreadyCast.Count() == 0)
+                    v.CastVotes.Remove(player);
+            } else {
+                v.CastVotes.Add(player, new HashSet<byte>(option));
             }
 
-            if (option != null)
-            {
-                v.Entries[option.Value].Votes += 1;
-                v.CastVotes[player] = option.Value;
-            }
-            else
-            {
-                v.CastVotes.Remove(player);
-            }
 
+            SetDirty(v, player);
+        }
+
+        private void SetDirty(VoteReg v, IPlayerSession player) {
             v.VotesDirty.Add(player);
             v.Dirty = true;
         }
 
-        private bool IsValidOption(VoteReg voteReg, int? option)
+
+        private bool IsValidOption(VoteReg voteReg, byte option)
         {
-            return option == null || option >= 0 && option < voteReg.Entries.Length;
+            return option >= 0 && option < voteReg.Entries.Length;
         }
 
         public void Update()
@@ -246,7 +255,7 @@ namespace Content.Server.Voting.Managers
                 msg.IsYourVoteDirty = dirty;
                 if (dirty)
                 {
-                    msg.YourVote = (byte) cast;
+                    msg.YourVote = cast.ToArray();
                 }
             }
 
@@ -404,7 +413,7 @@ namespace Content.Server.Voting.Managers
         private sealed class VoteReg
         {
             public readonly int Id;
-            public readonly Dictionary<IPlayerSession, int> CastVotes = new();
+            public readonly Dictionary<IPlayerSession, HashSet<byte>> CastVotes = new();
             public readonly VoteEntry[] Entries;
             public readonly string Title;
             public readonly string InitiatorText;
@@ -484,12 +493,12 @@ namespace Content.Server.Voting.Managers
                 VotesPerOption = new VoteDict(reg);
             }
 
-            public bool IsValidOption(int optionId)
+            public bool IsValidOption(byte optionId)
             {
                 return _mgr.IsValidOption(_reg, optionId);
             }
 
-            public void CastVote(IPlayerSession session, int? optionId)
+            public void CastVote(IPlayerSession session, byte optionId)
             {
                 _mgr.CastVote(_reg, session, optionId);
             }
