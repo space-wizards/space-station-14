@@ -1,1 +1,1 @@
-{"version": 1, "size": {"x": 32, "y": 32}, "license": "CC-BY-SA-3.0", "copyright": "https://github.com/tgstation/tgstation/blob/master/icons/obj/drinks.dmi?raw=true", "states": [{"name": "icon"}]}
+{"version": 1, "size": {"x": 32, "y": 32}, "license": "CC-BY-SA-3.0", "copyright": "https://github.com/tgstation/tgstation/pull/65464/commits/c8555f60d5f3145ef6444f9c5e85b71b7ac0d1a1", "states": [{"name": "icon", "delays": [[1.0, 1.0, 1.0, 1.0]]}]}
