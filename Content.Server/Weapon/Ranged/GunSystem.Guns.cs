@@ -10,6 +10,7 @@ using Content.Shared.Audio;
 using Content.Shared.Camera;
 using Content.Shared.Damage;
 using Content.Shared.Database;
+using Content.Shared.Interaction.Events;
 using Content.Shared.Popups;
 using Content.Shared.Sound;
 using Robust.Shared.Audio;
@@ -22,6 +23,11 @@ namespace Content.Server.Weapon.Ranged;
 
 public sealed partial class GunSystem
 {
+    private void OnMeleeAttempt(EntityUid uid, ServerRangedWeaponComponent component, ref MeleeAttackAttemptEvent args)
+    {
+        args.Cancelled = true;
+    }
+
     /// <summary>
     /// Tries to fire a round of ammo out of the weapon.
     /// </summary>
@@ -142,6 +148,7 @@ public sealed partial class GunSystem
     }
 
     #region Firing
+
     /// <summary>
     /// Handles firing one or many projectiles
     /// </summary>
@@ -257,7 +264,7 @@ public sealed partial class GunSystem
     {
         // Like projectiles and melee,
         // 1. Entity specific sound
-        // 2. Hitscan's sound
+        // 2. Ammo's sound
         // 3. Nothing
         var playedSound = false;
 
