@@ -1,10 +1,4 @@
 Entries:
-- author: mirrorcult
-  changes:
-  - {message: 'A small amount of reagents from your chemstream are now spilled when
-      losing blood. Use that information wisely, detectives.', type: Tweak}
-  id: 1081
-  time: '2022-02-18T06:00:50.0000000+00:00'
 - author: Rane
   changes:
   - {message: The recycler should dispose of most of most trash items now., type: Add}
@@ -3022,3 +3016,8 @@ Entries:
     type: Add}
   id: 1580
   time: '2022-05-22T03:55:19.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: More gun impact sounds have been added., type: Tweak}
+  id: 1581
+  time: '2022-05-22T08:23:37.0000000+00:00'
