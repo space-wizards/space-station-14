@@ -17334,23 +17334,23 @@ entities:
           color: '#FFFFFFFF'
           id: WarningLine
           coordinates: -26,-15
-        573:
+        572:
           color: '#D381C996'
           id: CheckerNWSE
           coordinates: -3,-23
-        574:
+        573:
           color: '#D381C996'
           id: CheckerNWSE
           coordinates: -4,-23
-        575:
+        574:
           color: '#D381C996'
           id: CheckerNWSE
           coordinates: -5,-23
-        576:
+        575:
           color: '#D381C996'
           id: CheckerNWSE
           coordinates: -6,-23
-        577:
+        576:
           color: '#D381C996'
           id: CheckerNWSE
           coordinates: -4,-22
@@ -29404,11 +29404,21 @@ entities:
     parent: 852
     type: Transform
 - uid: 2361
-  type: WallSolid
+  type: SubstationBasic
   components:
   - pos: 0.5,-8.5
     parent: 852
     type: Transform
+  - containers:
+    - machine_parts
+    - machine_board
+    type: Construction
+  - containers:
+      machine_board: !type:Container
+        ents: []
+      machine_parts: !type:Container
+        ents: []
+    type: ContainerContainer
 - uid: 2362
   type: VendingMachineCoffee
   components:
@@ -38919,6 +38929,8 @@ entities:
   - pos: 20.5,10.5
     parent: 852
     type: Transform
+  - canCollide: False
+    type: Physics
   - inputs:
       OrderReceiver: []
     type: SignalReceiver
@@ -81917,16 +81929,11 @@ entities:
     parent: 852
     type: Transform
 - uid: 7168
-  type: RevolverDeckard
+  type: CableMV
   components:
-  - pos: 7.412092,24.6081
+  - pos: 0.5,-8.5
     parent: 852
     type: Transform
-  - containers:
-      Content.Server.Weapon.Ranged.Barrels.Components.BoltActionBarrelComponent-ammo-container: !type:Container
-        ents: []
-      Content.Server.Weapon.Ranged.Barrels.Components.BoltActionBarrelComponent-chamber-container: !type:ContainerSlot {}
-    type: ContainerContainer
 - uid: 7169
   type: TableReinforced
   components:
@@ -83542,15 +83549,11 @@ entities:
     parent: 852
     type: Transform
 - uid: 7371
-  type: LaserPistolSvalinn
+  type: CableHV
   components:
-  - pos: -4.5033793,-23.335238
+  - pos: 0.5,-8.5
     parent: 852
     type: Transform
-  - containers:
-      Content.Server.Weapon.Ranged.Barrels.Components.BatteryBarrelComponent-ammo-container: !type:ContainerSlot {}
-      cellslot_cell_container: !type:ContainerSlot {}
-    type: ContainerContainer
 - uid: 7372
   type: Lamp
   components:
@@ -85453,21 +85456,11 @@ entities:
     parent: 852
     type: Transform
 - uid: 7596
-  type: SubstationBasic
+  type: Window
   components:
-  - pos: -0.5,-8.5
+  - pos: 8.5,-11.5
     parent: 852
     type: Transform
-  - containers:
-    - machine_parts
-    - machine_board
-    type: Construction
-  - containers:
-      machine_board: !type:Container
-        ents: []
-      machine_parts: !type:Container
-        ents: []
-    type: ContainerContainer
 - uid: 7597
   type: RandomSpawner
   components:
@@ -87341,7 +87334,7 @@ entities:
       stash: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 7822
-  type: ReinforcedWindow
+  type: Window
   components:
   - pos: 8.5,-7.5
     parent: 852
@@ -96289,12 +96282,6 @@ entities:
   type: MopBucket
   components:
   - pos: 26.48231,1.5389521
-    parent: 852
-    type: Transform
-- uid: 8882
-  type: ReinforcedWindow
-  components:
-  - pos: 8.5,-11.5
     parent: 852
     type: Transform
 - uid: 8883
