@@ -24,7 +24,7 @@
       mask:
       - MachineMask
       layer:
-      - MedicalMachineLayer
+      - MachineLayer
   - type: Construction
     graph: Machine
     node: machine
@@ -54,3 +54,4 @@
     interfaces:
     - key: enum.MedicalScannerUiKey.Key
       type: MedicalScannerBoundUserInterface
+  - type: Climbable

@@ -46,9 +46,6 @@ public enum CollisionGroup
     MachineMask = Impassable | MidImpassable | LowImpassable,
     MachineLayer = Opaque | MidImpassable | LowImpassable | BulletImpassable,
 
-    // Medical scanner, cloning machine
-    MedicalMachineLayer = Opaque | BulletImpassable,
-
     // Tables that SmallMobs can go under
     TableMask = Impassable | MidImpassable,
     TableLayer = MidImpassable,
