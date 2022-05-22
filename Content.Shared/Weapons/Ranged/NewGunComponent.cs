@@ -18,7 +18,7 @@ public sealed class NewGunComponent : Component
     /// Sound played when toggling the <see cref="SelectedMode"/> for this gun.
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite), DataField("soundSelective")]
-    public SoundSpecifier? SoundSelectiveToggle;
+    public SoundSpecifier? SoundSelectiveToggle = new SoundPathSpecifier("/Audio/Weapons/Guns/Misc/selector.ogg");
 
     /// <summary>
     /// Where the gun is being requested to shoot.

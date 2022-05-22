@@ -22,26 +22,12 @@ public abstract partial class SharedNewGunSystem
 
         AlternativeVerb verb = new()
         {
-            Act = () => CycleFire(component),
+            Act = () => CycleFire(component, args.User),
             Text = $"Cycle to {GetNextMode(component)}",
             IconTexture = "/Textures/Interface/VerbIcons/fold.svg.192dpi.png",
         };
 
         args.Verbs.Add(verb);
-    }
-
-    private void SelectFire(NewGunComponent component, SelectiveFire fire)
-    {
-        component.SelectedMode = fire;
-        var curTime = Timing.CurTime;
-        var cooldown = TimeSpan.FromSeconds(InteractNextFire);
-
-        if (component.NextFire < curTime)
-            component.NextFire = curTime + cooldown;
-        else
-            component.NextFire += cooldown;
-
-        Dirty(component);
     }
 
     private SelectiveFire GetNextMode(NewGunComponent component)
@@ -58,18 +44,32 @@ public abstract partial class SharedNewGunSystem
         return modes[(index + 1) % modes.Count];
     }
 
+    public void SelectFire(NewGunComponent component, SelectiveFire fire, EntityUid? user = null)
+    {
+        component.SelectedMode = fire;
+        var curTime = Timing.CurTime;
+        var cooldown = TimeSpan.FromSeconds(InteractNextFire);
+
+        if (component.NextFire < curTime)
+            component.NextFire = curTime + cooldown;
+        else
+            component.NextFire += cooldown;
+
+        PlaySound(component, component.SoundSelectiveToggle?.GetSound(), user);
+        Dirty(component);
+    }
+
     /// <summary>
     /// Cycles the gun's <see cref="SelectiveFire"/> to the next available one.
     /// </summary>
-    /// <param name="component"></param>
-    private void CycleFire(NewGunComponent component)
+    public void CycleFire(NewGunComponent component, EntityUid? user = null)
     {
         // Noop
         if (component.SelectedMode == component.AvailableModes) return;
 
         DebugTools.Assert((component.AvailableModes & component.SelectedMode) == component.SelectedMode);
         var nextMode = GetNextMode(component);
-        SelectFire(component, nextMode);
+        SelectFire(component, nextMode, user);
     }
 
     private void OnGetActions(EntityUid uid, NewGunComponent component, GetItemActionsEvent args)
