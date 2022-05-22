@@ -163,6 +163,7 @@
     state: empty
   - type: Item
     size: 8
+  - type: TriggerOnBeingExploded
   - type: PayloadCase
   - type: Construction
     graph: ModularGrenadeGraph
