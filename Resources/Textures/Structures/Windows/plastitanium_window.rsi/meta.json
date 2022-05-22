@@ -1,0 +1,150 @@
+{
+  "version": 1,
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "plastitanium_window-0"
+    },
+    {
+      "name": "plastitanium_window-1"
+    },
+    {
+      "name": "plastitanium_window-2"
+    },
+    {
+      "name": "plastitanium_window-3"
+    },
+    {
+      "name": "plastitanium_window-4"
+    },
+    {
+      "name": "plastitanium_window-5"
+    },
+    {
+      "name": "plastitanium_window-6"
+    },
+    {
+      "name": "plastitanium_window-7"
+    },
+    {
+      "name": "plastitanium_window-8"
+    },
+    {
+      "name": "plastitanium_window-9"
+    },
+    {
+      "name": "plastitanium_window-10"
+    },
+    {
+      "name": "plastitanium_window-11"
+    },
+    {
+      "name": "plastitanium_window-12"
+    },
+    {
+      "name": "plastitanium_window-13"
+    },
+    {
+      "name": "plastitanium_window-14"
+    },
+    {
+      "name": "plastitanium_window-15"
+    },
+    {
+      "name": "plastitanium_window-21"
+    },
+    {
+      "name": "plastitanium_window-23"
+    },
+    {
+      "name": "plastitanium_window-29"
+    },
+    {
+      "name": "plastitanium_window-31"
+    },
+    {
+      "name": "plastitanium_window-38"
+    },
+    {
+      "name": "plastitanium_window-39"
+    },
+    {
+      "name": "plastitanium_window-46"
+    },
+    {
+      "name": "plastitanium_window-47"
+    },
+    {
+      "name": "plastitanium_window-55"
+    },
+    {
+      "name": "plastitanium_window-63"
+    },
+    {
+      "name": "plastitanium_window-74"
+    },
+    {
+      "name": "plastitanium_window-75"
+    },
+    {
+      "name": "plastitanium_window-78"
+    },
+    {
+      "name": "plastitanium_window-79"
+    },
+    {
+      "name": "plastitanium_window-95"
+    },
+    {
+      "name": "plastitanium_window-110"
+    },
+    {
+      "name": "plastitanium_window-111"
+    },
+    {
+      "name": "plastitanium_window-127"
+    },
+    {
+      "name": "plastitanium_window-137"
+    },
+    {
+      "name": "plastitanium_window-139"
+    },
+    {
+      "name": "plastitanium_window-141"
+    },
+    {
+      "name": "plastitanium_window-143"
+    },
+    {
+      "name": "plastitanium_window-157"
+    },
+    {
+      "name": "plastitanium_window-159"
+    },
+    {
+      "name": "plastitanium_window-175"
+    },
+    {
+      "name": "plastitanium_window-191"
+    },
+    {
+      "name": "plastitanium_window-203"
+    },
+    {
+      "name": "plastitanium_window-207"
+    },
+    {
+      "name": "plastitanium_window-223"
+    },
+    {
+      "name": "plastitanium_window-239"
+    },
+    {
+      "name": "plastitanium_window-255"
+    }
+  ]
+}
