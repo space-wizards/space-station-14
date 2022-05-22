@@ -1,4 +1,5 @@
 using Content.Shared.Interaction.Events;
+using Content.Shared.Examine;
 using Content.Server.Coordinates.Helpers;
 
 namespace Content.Server.Holosign
@@ -12,7 +13,7 @@ namespace Content.Server.Holosign
             foreach (var projector in EntityQuery<HolosignProjectorComponent>())
             {
                 if (projector.CurrentCharges == projector.Charges)
-                    return;
+                    continue;
 
                 projector.Accumulator += frameTime;
                 if (projector.Accumulator < projector.RechargeTime.TotalSeconds)
@@ -28,6 +29,19 @@ namespace Content.Server.Holosign
         {
             base.Initialize();
             SubscribeLocalEvent<HolosignProjectorComponent, UseInHandEvent>(OnUse);
+            SubscribeLocalEvent<HolosignProjectorComponent, ExaminedEvent>(OnExamine);
+        }
+
+        private void OnExamine(EntityUid uid, HolosignProjectorComponent component, ExaminedEvent args)
+        {
+            float timeRemaining = ((float) component.RechargeTime.TotalSeconds - component.Accumulator);
+            args.PushMarkup(Loc.GetString("emag-charges-remaining", ("charges", component.CurrentCharges)));
+            if (component.CurrentCharges == component.Charges)
+            {
+                args.PushMarkup(Loc.GetString("emag-max-charges"));
+                return;
+            }
+            args.PushMarkup(Loc.GetString("emag-recharging", ("seconds", Math.Round(timeRemaining))));
         }
 
         private void OnUse(EntityUid uid, HolosignProjectorComponent component, UseInHandEvent args)
