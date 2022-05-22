@@ -49,7 +49,7 @@ namespace Content.Server.Holosign
             if (component.CurrentCharges == 0)
                 return;
 
-            EntityManager.SpawnEntity(component.SignProto, Transform(args.User).Coordinates.SnapToGrid());
+            EntityManager.SpawnEntity(component.SignProto, TryComp(uid, out TransformComponent? transform));
             component.CurrentCharges--;
         }
     }
