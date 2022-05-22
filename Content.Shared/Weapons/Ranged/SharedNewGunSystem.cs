@@ -179,6 +179,8 @@ public abstract partial class SharedNewGunSystem : EntitySystem
 
     protected abstract void PlaySound(NewGunComponent gun, string? sound, EntityUid? user = null);
 
+    protected abstract void Popup(string message, NewGunComponent gun, EntityUid? user);
+
     /// <summary>
     /// Raised on the client to indicate it'd like to shoot.
     /// </summary>

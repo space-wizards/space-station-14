@@ -68,4 +68,10 @@ public sealed class NewGunSystem : SharedNewGunSystem
         if (sound == null || user == null || !Timing.IsFirstTimePredicted) return;
         SoundSystem.Play(Filter.Local(), sound, gun.Owner);
     }
+
+    protected override void Popup(string message, NewGunComponent gun, EntityUid? user)
+    {
+        if (user == null) return;
+        PopupSystem.PopupEntity(message, gun.Owner, Filter.Entities(user.Value));
+    }
 }
