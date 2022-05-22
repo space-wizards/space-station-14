@@ -1,3 +1,5 @@
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
+
 namespace Content.Server.Holosign
 {
     [RegisterComponent]
