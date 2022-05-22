@@ -110,10 +110,10 @@ namespace Content.Server.Voting.Managers
                 if(!preset.ShowInVote)
                     continue;
 
-                if(_playerManager.PlayerCount < (preset.MinPlayers ?? Int32.MinValue))
+                if(_playerManager.PlayerCount < (preset.MinPlayers ?? int.MinValue))
                     continue;
 
-                if(_playerManager.PlayerCount > (preset.MaxPlayers ?? Int32.MaxValue))
+                if(_playerManager.PlayerCount > (preset.MaxPlayers ?? int.MaxValue))
                     continue;
 
                 presets[preset.ID] = preset.ModeTitle;
