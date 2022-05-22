@@ -1,9 +1,4 @@
 Entries:
-- author: Rane
-  changes:
-  - {message: 'Drones bleed oil, and xenos bleed fluorosulfuric acid.', type: Add}
-  id: 1080
-  time: '2022-02-18T06:00:45.0000000+00:00'
 - author: mirrorcult
   changes:
   - {message: 'A small amount of reagents from your chemstream are now spilled when
@@ -3021,3 +3016,9 @@ Entries:
   - {message: 'New lobby song: Spac Stac by Hayabusa', type: Add}
   id: 1579
   time: '2022-05-22T02:49:15.0000000+00:00'
+- author: Putnam
+  changes:
+  - {message: Game presets can now be limited by player count (both min and max),
+    type: Add}
+  id: 1580
+  time: '2022-05-22T03:55:19.0000000+00:00'
