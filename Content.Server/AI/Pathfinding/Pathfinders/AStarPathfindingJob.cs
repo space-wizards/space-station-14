@@ -16,17 +16,20 @@ namespace Content.Server.AI.Pathfinding.Pathfinders
         private readonly PathfindingNode? _startNode;
         private PathfindingNode? _endNode;
         private readonly PathfindingArgs _pathfindingArgs;
+        private readonly IEntityManager _entityManager;
 
         public AStarPathfindingJob(
             double maxTime,
             PathfindingNode startNode,
             PathfindingNode endNode,
             PathfindingArgs pathfindingArgs,
-            CancellationToken cancellationToken) : base(maxTime, cancellationToken)
+            CancellationToken cancellationToken,
+            IEntityManager entityManager) : base(maxTime, cancellationToken)
         {
             _startNode = startNode;
             _endNode = endNode;
             _pathfindingArgs = pathfindingArgs;
+            _entityManager = entityManager;
         }
 
         protected override async Task<Queue<TileRef>?> Process()
@@ -44,9 +47,7 @@ namespace Content.Server.AI.Pathfinding.Pathfinders
                 return null;
             }
 
-            var entManager = IoCManager.Resolve<IEntityManager>();
-
-            if (entManager.Deleted(_pathfindingArgs.Start.GridIndex))
+            if (_entityManager.Deleted(_pathfindingArgs.Start.GridIndex))
                 return null;
 
             var frontier = new PriorityQueue<ValueTuple<float, PathfindingNode>>(new PathfindingComparer());
