@@ -393,7 +393,7 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 27
-  type: SuspicionGrenadesSpawner
+  type: Skub
   components:
   - rot: 4.371139006309477E-08 rad
     pos: 0.5,-15.5
