@@ -30,10 +30,10 @@ namespace Content.Server.Communications
         public override void Initialize()
         {
             // All events that refresh the BUI
-            SubscribeLocalEvent<CommunicationsConsoleComponent, ComponentInit>((_, comp, _) => UpdateBoundUserInterface(comp));
-            SubscribeLocalEvent<CommunicationsConsoleComponent, RoundEndSystemChangedEvent>((_, comp, _) => UpdateBoundUserInterface(comp));
-            SubscribeLocalEvent<CommunicationsConsoleComponent, AlertLevelChangedEvent>((_, comp, _) => UpdateBoundUserInterface(comp));
-            SubscribeLocalEvent<CommunicationsConsoleComponent, AlertLevelDelayFinishedEvent>((_, comp, _) => UpdateBoundUserInterface(comp));
+            SubscribeLocalEvent<CommunicationsConsoleComponent, ComponentInit>((uid, comp, _) => UpdateBoundUserInterface(uid, comp));
+            SubscribeLocalEvent<CommunicationsConsoleComponent, RoundEndSystemChangedEvent>((uid, comp, _) => UpdateBoundUserInterface(uid, comp));
+            SubscribeLocalEvent<CommunicationsConsoleComponent, AlertLevelChangedEvent>((uid, comp, _) => UpdateBoundUserInterface(uid, comp));
+            SubscribeLocalEvent<CommunicationsConsoleComponent, AlertLevelDelayFinishedEvent>((uid, comp, _) => UpdateBoundUserInterface(uid, comp));
 
             // Messages from the BUI
             SubscribeLocalEvent<CommunicationsConsoleComponent, CommunicationsConsoleSelectAlertLevelMessage>(OnSelectAlertLevelMessage);
@@ -50,7 +50,7 @@ namespace Content.Server.Communications
                 {
                     // TODO: Find a less ass way of refreshing the UI
                     if (!comp.AlreadyRefreshed) return;
-                    UpdateBoundUserInterface(comp);
+                    UpdateBoundUserInterface(comp.Owner, comp);
                     comp.AlreadyRefreshed = true;
                     return;
                 }
@@ -60,10 +60,8 @@ namespace Content.Server.Communications
             base.Update(frameTime);
         }
 
-        private void UpdateBoundUserInterface(CommunicationsConsoleComponent comp)
+        private void UpdateBoundUserInterface(EntityUid uid, CommunicationsConsoleComponent comp)
         {
-            var uid = comp.Owner;
-
             var stationUid = _stationSystem.GetOwningStation(uid);
             List<string>? levels = null;
             string currentLevel = default!;
@@ -160,7 +158,7 @@ namespace Content.Server.Communications
 
             comp.AnnouncementCooldownRemaining = comp.DelayBetweenAnnouncements;
             comp.AlreadyRefreshed = false;
-            UpdateBoundUserInterface(comp);
+            UpdateBoundUserInterface(uid, comp);
 
             msg += "\n" + Loc.GetString("communicationsconsole-announcement-sent-by") + " " + author;
             _chatManager.DispatchStationAnnouncement(msg, Loc.GetString(comp.AnnouncementDisplayName), colorOverride: comp.AnnouncementColor);
