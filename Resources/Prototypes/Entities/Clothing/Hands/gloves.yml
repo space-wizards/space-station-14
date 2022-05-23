@@ -111,7 +111,7 @@
     HeatResistance: 1400
   - type: Tag
     tags:
-    - NettleProtection
+    - PointyObjectProtection
 
 - type: entity
   parent: ClothingHandsBase

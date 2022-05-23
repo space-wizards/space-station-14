@@ -52,11 +52,8 @@ namespace Content.Server.Weapon.Melee
             if (!_inventorySystem.TryGetSlotEntity(args.User, "gloves", out EntityUid? protection)
                 || !component.RequiredProtection.IsValid((EntityUid) protection))
             {
-                //this is probably ugly, but I can't figure out a cleaner way to do it
-                List<EntityUid> thisList = new List<EntityUid>();
-                thisList.Add(args.User);
-                MeleeHitEvent thisEvent = new MeleeHitEvent(thisList, args.User);
-                TryInjectChemical(uid ,component ,thisEvent);
+                IEnumerable<EntityUid> hitEntity = new List<EntityUid>((int) args.User);
+                TryInjectChemical(uid ,component , hitEntity);
             }
         }
 
@@ -250,16 +247,16 @@ namespace Content.Server.Weapon.Melee
 
         private void OnChemicalInjectorHit(EntityUid owner, MeleeChemicalInjectorComponent comp, MeleeHitEvent args)
         {
-            TryInjectChemical(owner, comp, args);
+            TryInjectChemical(owner, comp, args.HitEntities);
         }
 
-        private void TryInjectChemical(EntityUid owner, MeleeChemicalInjectorComponent comp, MeleeHitEvent args)
+        private void TryInjectChemical(EntityUid owner, MeleeChemicalInjectorComponent comp, IEnumerable<EntityUid> hitEntityUids)
         {
             if (!_solutionsSystem.TryGetInjectableSolution(owner, out var solutionContainer))
                 return;
 
             var hitBloodstreams = new List<BloodstreamComponent>();
-            foreach (var entity in args.HitEntities)
+            foreach (var entity in hitEntityUids)
             {
                 if (Deleted(entity))
                     continue;

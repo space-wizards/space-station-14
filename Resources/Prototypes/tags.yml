@@ -266,7 +266,7 @@
 
 - type: Tag
   id: PlantSampleTaker
-  
+
 - type: Tag
   id: Plastic
 
@@ -275,7 +275,7 @@
 
 - type: Tag
   id: PussyWagonKeys
-  
+
 - type: Tag
   id: RawMaterial
 
@@ -362,4 +362,4 @@
   id: Write
 
 - type: Tag
-  id: NettleProtection #for gloves and gloves only
+  id: PointyObjectProtection #for gloves and gloves only
