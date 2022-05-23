@@ -1,150 +1,46 @@
 {
   "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Taken from tgstation at commit https://github.com/placeholder and modified by blankmann",
   "size": {
     "x": 32,
     "y": 32
   },
   "states": [
     {
-      "name": "shuttle_window-0"
+      "name": "swindowfull"
     },
     {
-      "name": "shuttle_window-1"
+      "name": "swindow0",
+      "directions": 4
     },
     {
-      "name": "shuttle_window-2"
+      "name": "swindow1",
+      "directions": 4
     },
     {
-      "name": "shuttle_window-3"
+      "name": "swindow2",
+      "directions": 4
     },
     {
-      "name": "shuttle_window-4"
+      "name": "swindow3",
+      "directions": 4
     },
     {
-      "name": "shuttle_window-5"
+      "name": "swindow4",
+      "directions": 4
     },
     {
-      "name": "shuttle_window-6"
+      "name": "swindow5",
+      "directions": 4
     },
     {
-      "name": "shuttle_window-7"
+      "name": "swindow6",
+      "directions": 4
     },
     {
-      "name": "shuttle_window-8"
-    },
-    {
-      "name": "shuttle_window-9"
-    },
-    {
-      "name": "shuttle_window-10"
-    },
-    {
-      "name": "shuttle_window-11"
-    },
-    {
-      "name": "shuttle_window-12"
-    },
-    {
-      "name": "shuttle_window-13"
-    },
-    {
-      "name": "shuttle_window-14"
-    },
-    {
-      "name": "shuttle_window-15"
-    },
-    {
-      "name": "shuttle_window-21"
-    },
-    {
-      "name": "shuttle_window-23"
-    },
-    {
-      "name": "shuttle_window-29"
-    },
-    {
-      "name": "shuttle_window-31"
-    },
-    {
-      "name": "shuttle_window-38"
-    },
-    {
-      "name": "shuttle_window-39"
-    },
-    {
-      "name": "shuttle_window-46"
-    },
-    {
-      "name": "shuttle_window-47"
-    },
-    {
-      "name": "shuttle_window-55"
-    },
-    {
-      "name": "shuttle_window-63"
-    },
-    {
-      "name": "shuttle_window-74"
-    },
-    {
-      "name": "shuttle_window-75"
-    },
-    {
-      "name": "shuttle_window-78"
-    },
-    {
-      "name": "shuttle_window-79"
-    },
-    {
-      "name": "shuttle_window-95"
-    },
-    {
-      "name": "shuttle_window-110"
-    },
-    {
-      "name": "shuttle_window-111"
-    },
-    {
-      "name": "shuttle_window-127"
-    },
-    {
-      "name": "shuttle_window-137"
-    },
-    {
-      "name": "shuttle_window-139"
-    },
-    {
-      "name": "shuttle_window-141"
-    },
-    {
-      "name": "shuttle_window-143"
-    },
-    {
-      "name": "shuttle_window-157"
-    },
-    {
-      "name": "shuttle_window-159"
-    },
-    {
-      "name": "shuttle_window-175"
-    },
-    {
-      "name": "shuttle_window-191"
-    },
-    {
-      "name": "shuttle_window-203"
-    },
-    {
-      "name": "shuttle_window-207"
-    },
-    {
-      "name": "shuttle_window-223"
-    },
-    {
-      "name": "shuttle_window-239"
-    },
-    {
-      "name": "shuttle_window-255"
+      "name": "swindow7",
+      "directions": 4
     }
   ]
 }
