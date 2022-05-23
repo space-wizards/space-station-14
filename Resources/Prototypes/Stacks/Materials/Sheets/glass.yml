@@ -29,7 +29,7 @@
   spawn: SheetTGlass1
 
 - type: stack
-  id: PastitaniumGlass
+  id: PlastitaniumGlass
   name: plastitanium glass
   icon: /Textures/Objects/Materials/Sheets/glass.rsi/plastitaniumglass.png
   spawn: SheetPTGlass1
