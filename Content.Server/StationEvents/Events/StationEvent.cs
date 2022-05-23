@@ -1,6 +1,7 @@
 using Content.Server.Administration.Logs;
 using Content.Server.Atmos.EntitySystems;
 using Content.Server.Chat.Managers;
+using Content.Server.GameTicking;
 using Content.Server.Station.Components;
 using Content.Server.Station.Systems;
 using Content.Shared.Database;
@@ -24,6 +25,11 @@ namespace Content.Server.StationEvents.Events
         ///     If the event has started and is currently running.
         /// </summary>
         public bool Running { get; set; }
+
+        /// <summary>
+        ///     The time when this event last ran.
+        /// </summary>
+        public TimeSpan LastRun { get; set; } = TimeSpan.Zero;
 
         /// <summary>
         ///     Human-readable name for the event.
@@ -61,6 +67,11 @@ namespace Content.Server.StationEvents.Events
         ///     In minutes, when is the first round time this event can start
         /// </summary>
         public virtual int EarliestStart { get; } = 5;
+
+        /// <summary>
+        ///     In minutes, the amount of time before the same event can occur again
+        /// </summary>
+        public virtual int ReoccurrenceDelay { get; } = 30;
 
         /// <summary>
         ///     When in the lifetime to call Start().
@@ -112,6 +123,7 @@ namespace Content.Server.StationEvents.Events
         {
             Started = true;
             Occurrences += 1;
+            LastRun = EntitySystem.Get<GameTicker>().RoundDuration();
 
             EntitySystem.Get<AdminLogSystem>()
                 .Add(LogType.EventStarted, LogImpact.High, $"Event startup: {Name}");
