@@ -17,7 +17,11 @@ namespace Content.Server.Atmos.Piping.Unary.Components
 
         [ViewVariables(VVAccess.ReadWrite)]
         [DataField("inlet")]
-        public string InletName { get; set; } = "pipe";
+        public string Inlet { get; set; } = "pipe";
+
+        [ViewVariables(VVAccess.ReadWrite)]
+        [DataField("outlet")]
+        public string Outlet { get; set; } = "pipe";
 
         [ViewVariables(VVAccess.ReadWrite)]
         [DataField("pumpDirection")]

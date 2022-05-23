@@ -47,10 +47,17 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
                 return;
             }
 
+            var nodeName = vent.PumpDirection switch
+            {
+                VentPumpDirection.Releasing => vent.Inlet,
+                VentPumpDirection.Siphoning => vent.Outlet,
+                _ => throw new ArgumentOutOfRangeException()
+            };
+
             if (!vent.Enabled
                 || !TryComp(uid, out AtmosDeviceComponent? device)
                 || !TryComp(uid, out NodeContainerComponent? nodeContainer)
-                || !nodeContainer.TryGetNode(vent.InletName, out PipeNode? pipe))
+                || !nodeContainer.TryGetNode(nodeName, out PipeNode? pipe))
             {
                 return;
             }
