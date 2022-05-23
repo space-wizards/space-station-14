@@ -74,6 +74,44 @@
     node: woodtile
 
 - type: entity
+  name: titanium tile
+  parent: FloorTileItemBase
+  id: FloorTileItemTitanium
+  components:
+  - type: Sprite
+    state: titanium
+  - type: Item
+    HeldPrefix: steel
+  - type: FloorTile
+    outputs:
+      - plating
+      - floor_titanium
+  - type: Stack
+    stackType: FloorTileItemTitanium
+  - type: Construction
+    graph: TileTitanium
+    node: titaniumtile
+
+- type: entity
+  name: plastitanium tile
+  parent: FloorTileItemBase
+  id: FloorTileItemPlastitanium
+  components:
+  - type: Sprite
+    state: plastitanium
+  - type: Item
+    HeldPrefix: steel
+  - type: FloorTile
+    outputs:
+      - plating
+      - floor_plastitanium
+  - type: Stack
+    stackType: FloorTileItemPlastitanium
+  - type: Construction
+    graph: TilePlastitanium
+    node: plastitaniumtile
+
+- type: entity
   name: white tile
   parent: FloorTileItemBase
   id: FloorTileItemWhite
@@ -110,6 +148,70 @@
   - type: Construction
     graph: TileDark
     node: darktile
+
+- type: entity
+  name: red plastitanium floor
+  parent: FloorTileItemBase
+  id: FloorTileItemRedPlastitanium
+  components:
+  - type: Sprite
+    state: plastitanium_red
+  - type: Item
+    HeldPrefix: plastitanium_red
+  - type: FloorTile
+    outputs:
+      - plating
+      - floor_plastitanium_red
+  - type: Stack
+    stackType: FloorTilePlastitaniumRed
+
+- type: entity
+  name: blue titanium floor
+  parent: FloorTileItemBase
+  id: FloorTileItemBlueTitanium
+  components:
+  - type: Sprite
+    state: titanium_blue
+  - type: Item
+    HeldPrefix: titanium_blue
+  - type: FloorTile
+    outputs:
+      - plating
+      - floor_titanium_blue
+  - type: Stack
+    stackType: FloorTileTitaniumBlue
+
+- type: entity
+  name: purple titanium floor
+  parent: FloorTileItemBase
+  id: FloorTileItemPurpleTitanium
+  components:
+  - type: Sprite
+    state: titanium_purple
+  - type: Item
+    HeldPrefix: titanium_purple
+  - type: FloorTile
+    outputs:
+      - plating
+      - floor_titanium_purple
+  - type: Stack
+    stackType: FloorTileTitaniumPurple
+
+- type: entity
+  name: yellow titanium floor
+  parent: FloorTileItemBase
+  id: FloorTileItemYellowTitanium
+  components:
+  - type: Sprite
+    state: titanium_yellow
+  - type: Item
+    HeldPrefix: titanium_yellow
+  - type: FloorTile
+    outputs:
+      - plating
+      - floor_titanium_yellow
+  - type: Stack
+    stackType: FloorTileTitaniumYellow
 
 - type: entity
   name: techmaint floor
