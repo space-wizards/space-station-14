@@ -35,7 +35,8 @@ public sealed class PowerWireAction : BaseWireAction
 
         if (IsPowered(wire.Owner))
         {
-            if (WiresSystem.TryGetData(wire.Owner, PowerWireActionKey.Pulsed, out bool pulsed)
+            if (!AllWiresMended(wire.Owner)
+                || WiresSystem.TryGetData(wire.Owner, PowerWireActionKey.Pulsed, out bool pulsed)
                 && pulsed)
             {
                 lightState = StatusLightState.BlinkingSlow;
