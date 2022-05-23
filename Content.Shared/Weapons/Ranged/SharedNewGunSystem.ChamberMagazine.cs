@@ -27,20 +27,11 @@ public abstract partial class SharedNewGunSystem
                 args.Ammo.Add(EnsureComp<NewAmmoComponent>(ent.Value));
                 component.Chamber.Remove(ent.Value);
             }
-            else
-            {
-                args.Shots -= 1;
-            }
 
             // Pass an event on to re-fill the chamber
             if (component.Magazine.ContainedEntity != null)
             {
-                var ev = new TakeAmmoEvent
-                {
-                    Ammo = new List<IShootable>(),
-                    Coordinates = args.Coordinates,
-                    Shots = 1,
-                };
+                var ev = new TakeAmmoEvent(1, new List<IShootable>(), args.Coordinates);
 
                 RaiseLocalEvent(component.Magazine.ContainedEntity.Value, ev);
 
@@ -50,5 +41,7 @@ public abstract partial class SharedNewGunSystem
                 }
             }
         }
+
+        Dirty(component);
     }
 }

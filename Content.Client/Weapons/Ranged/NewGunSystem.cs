@@ -17,6 +17,12 @@ public sealed class NewGunSystem : SharedNewGunSystem
     [Dependency] private readonly IPlayerManager _player = default!;
     [Dependency] private readonly InputSystem _inputSystem = default!;
 
+    // TODO: Move to ballistic partial
+    public override void ManualCycle(BallisticAmmoProviderComponent component, MapCoordinates coordinates)
+    {
+        return;
+    }
+
     public override void Initialize()
     {
         base.Initialize();

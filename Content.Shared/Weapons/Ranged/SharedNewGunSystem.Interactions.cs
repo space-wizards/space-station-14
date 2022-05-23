@@ -20,10 +20,12 @@ public abstract partial class SharedNewGunSystem
         if (!args.CanAccess || !args.CanInteract || component.SelectedMode == component.AvailableModes)
             return;
 
+        var nextMode = GetNextMode(component);
+
         AlternativeVerb verb = new()
         {
-            Act = () => CycleFire(component, args.User),
-            Text = $"Cycle to {GetNextMode(component)}",
+            Act = () => SelectFire(component, nextMode, args.User),
+            Text = $"Change to {nextMode}",
             IconTexture = "/Textures/Interface/VerbIcons/fold.svg.192dpi.png",
         };
 
@@ -46,6 +48,9 @@ public abstract partial class SharedNewGunSystem
 
     public void SelectFire(NewGunComponent component, SelectiveFire fire, EntityUid? user = null)
     {
+        if (component.SelectedMode == fire) return;
+
+        DebugTools.Assert((component.AvailableModes  & fire) != 0x0);
         component.SelectedMode = fire;
         var curTime = Timing.CurTime;
         var cooldown = TimeSpan.FromSeconds(InteractNextFire);
@@ -86,12 +91,14 @@ public abstract partial class SharedNewGunSystem
     {
         if (component.SelectedMode == component.AvailableModes) return null;
 
+        var nextMode = GetNextMode(component);
+
         var action = new InstantAction()
         {
             Icon = new SpriteSpecifier.Texture(new ResourcePath("Interface/Actions/scream.png")),
-            Name = "Toggle mode",
-            Description = "Toggles the mode for this gun",
-            Event = new CycleModeEvent(),
+            Name = "Cycle mode",
+            Description = $"Cycle the mode for this gun to {nextMode}",
+            Event = new CycleModeEvent(nextMode),
             Keywords = new HashSet<string>()
             {
                 "gun",
@@ -123,11 +130,16 @@ public abstract partial class SharedNewGunSystem
 
     private sealed class CycleModeEvent : InstantActionEvent
     {
+        public SelectiveFire Mode;
 
+        public CycleModeEvent(SelectiveFire mode)
+        {
+            Mode = mode;
+        }
     }
 
     private void OnCycleMode(EntityUid uid, NewGunComponent component, CycleModeEvent args)
     {
-        CycleFire(component);
+        SelectFire(component, args.Mode, args.Performer);
     }
 }

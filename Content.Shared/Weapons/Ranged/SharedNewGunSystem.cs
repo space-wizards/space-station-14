@@ -155,6 +155,9 @@ public abstract partial class SharedNewGunSystem : EntitySystem
         // Don't do this in the loop so we still reset NextFire.
         switch (gun.SelectedMode)
         {
+            case SelectiveFire.Safety:
+                shots = 0;
+                break;
             case SelectiveFire.SemiAuto:
                 shots = Math.Min(shots, 1 - gun.ShotCounter);
                 break;
@@ -174,18 +177,13 @@ public abstract partial class SharedNewGunSystem : EntitySystem
         // Have a thing that returns the bullets from ammo (AKA handles cloning for cartridges) + deletion.
 
         // Remove ammo
-        var ev = new TakeAmmoEvent
-        {
-            Shots = shots,
-            Ammo = new List<IShootable>(shots),
-            Coordinates = fromCoordinates,
-        };
+        var ev = new TakeAmmoEvent(shots, new List<IShootable>(), fromCoordinates);
 
         RaiseLocalEvent(gun.Owner, ev);
-        DebugTools.Assert(ev.Shots <= shots);
+        DebugTools.Assert(ev.Ammo.Count <= shots);
         DebugTools.Assert(shots >= 0);
 
-        if (ev.Shots <= 0)
+        if (ev.Ammo.Count <= 0)
         {
             // Play empty gun sounds if relevant
             // If they're firing an existing clip then don't play anything.
@@ -200,7 +198,7 @@ public abstract partial class SharedNewGunSystem : EntitySystem
         }
 
         // Shoot confirmed
-        gun.ShotCounter += ev.Shots;
+        gun.ShotCounter += ev.Ammo.Count;
 
         Shoot(ev.Ammo, fromCoordinates, toCoordinates.Value, user);
 
@@ -271,13 +269,20 @@ public abstract partial class SharedNewGunSystem : EntitySystem
     /// </summary>
     public sealed class TakeAmmoEvent : EntityEventArgs
     {
-        public int Shots;
-        public List<IShootable> Ammo = default!;
+        public readonly int Shots;
+        public List<IShootable> Ammo;
 
         /// <summary>
         /// Coordinates to spawn the ammo at.
         /// </summary>
         public EntityCoordinates Coordinates;
+
+        public TakeAmmoEvent(int shots, List<IShootable> ammo, EntityCoordinates coordinates)
+        {
+            Shots = shots;
+            Ammo = ammo;
+            Coordinates = coordinates;
+        }
     }
 
     /// <summary>

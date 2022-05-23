@@ -52,10 +52,6 @@ public partial class SharedNewGunSystem
                     component.Chambers[index] = false;
                     args.Ammo.Add(EnsureComp<NewAmmoComponent>(ent));
                 }
-                else
-                {
-                    args.Shots -= 1;
-                }
             }
             else if (component.AmmoSlots[index] != null)
             {
@@ -64,10 +60,6 @@ public partial class SharedNewGunSystem
                 component.AmmoSlots[index] = null;
                 args.Ammo.Add(EnsureComp<NewAmmoComponent>(ent.Value));
                 Transform(ent.Value).Coordinates = args.Coordinates;
-            }
-            else
-            {
-                args.Shots -= 1;
             }
         }
 

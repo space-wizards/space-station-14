@@ -19,13 +19,10 @@ public abstract partial class SharedNewGunSystem
     {
         var ent = component.Magazine.ContainedEntity;
 
-        if (ent == null)
-        {
-            args.Shots = 0;
-            return;
-        }
+        if (ent == null) return;
 
         // Pass the event onwards.
         RaiseLocalEvent(ent.Value, args);
+        // Should be Dirtied by what other ammoprovider is handling it.
     }
 }
