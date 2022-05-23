@@ -43,7 +43,7 @@ public sealed class AlertLevelSystem : EntitySystem
                 continue;
             }
 
-            alert.CurrentDelay--;
+            alert.CurrentDelay -= time;
         }
     }
 

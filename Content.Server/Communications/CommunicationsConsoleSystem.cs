@@ -9,14 +9,12 @@ using Content.Shared.Access.Components;
 using Content.Shared.Access.Systems;
 using Content.Shared.Communications;
 using Robust.Shared.Player;
-using Robust.Shared.Timing;
 
 namespace Content.Server.Communications
 {
     public sealed class CommunicationsConsoleSystem : EntitySystem
     {
         [Dependency] private readonly IChatManager _chatManager = default!;
-        [Dependency] private readonly IEntityManager _entityManager = default!;
         [Dependency] private readonly RoundEndSystem _roundEndSystem = default!;
         [Dependency] private readonly AlertLevelSystem _alertLevelSystem = default!;
         [Dependency] private readonly StationSystem _stationSystem = default!;
@@ -48,10 +46,10 @@ namespace Content.Server.Communications
                 if (comp.AnnouncementCooldownRemaining <= 0f)
                 {
                     // TODO: Find a less ass way of refreshing the UI
-                    if (!comp.AlreadyRefreshed) return;
+                    if (comp.AlreadyRefreshed) continue;
                     UpdateBoundUserInterface(comp);
                     comp.AlreadyRefreshed = true;
-                    return;
+                    continue;
                 }
                 comp.AnnouncementCooldownRemaining -= frameTime;
             }
@@ -70,7 +68,7 @@ namespace Content.Server.Communications
 
             if (stationUid != null)
             {
-                if (_entityManager.TryGetComponent(stationUid.Value, out AlertLevelComponent alertComp) &&
+                if (EntityManager.TryGetComponent(stationUid.Value, out AlertLevelComponent alertComp) &&
                     alertComp.AlertLevels != null)
                 {
                     if (alertComp.IsSelectable)
@@ -109,7 +107,7 @@ namespace Content.Server.Communications
 
         private bool CanUse(EntityUid user, EntityUid console)
         {
-            if (_entityManager.TryGetComponent<AccessReaderComponent>(console, out var accessReaderComponent) && accessReaderComponent.Enabled)
+            if (EntityManager.TryGetComponent<AccessReaderComponent>(console, out var accessReaderComponent) && accessReaderComponent.Enabled)
             {
                 return _accessReaderSystem.IsAllowed(accessReaderComponent, user);
             }
