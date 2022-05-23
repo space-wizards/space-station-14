@@ -102,7 +102,7 @@ public sealed class StationSystem : EntitySystem
         foreach (var grid in ev.Grids)
         {
             // We still setup the grid
-            if (!TryComp<BecomesStationComponent>(_mapManager.GetGridEuid(grid), out var becomesStation))
+            if (!TryComp<BecomesStationComponent>(grid, out var becomesStation))
                 continue;
 
             AddGrid(becomesStation.Id, grid);
@@ -121,7 +121,7 @@ public sealed class StationSystem : EntitySystem
         // Iterate over all PartOfStation
         foreach (var grid in ev.Grids)
         {
-            if (!TryComp<PartOfStationComponent>(_mapManager.GetGridEuid(grid), out var partOfStation))
+            if (!TryComp<PartOfStationComponent>(grid, out var partOfStation))
                 continue;
 
             AddGrid(partOfStation.Id, grid);
@@ -134,7 +134,7 @@ public sealed class StationSystem : EntitySystem
                 stationConfig = ev.GameMap.Stations[id];
             else
                 _sawmill.Error($"The station {id} in map {ev.GameMap.ID} does not have an associated station config!");
-            InitializeNewStation(stationConfig, gridIds.Select(x => _mapManager.GetGridEuid(x)), ev.StationName);
+            InitializeNewStation(stationConfig, gridIds, ev.StationName);
         }
     }
 
@@ -315,9 +315,7 @@ public sealed class StationSystem : EntitySystem
             return null;
         }
 
-        var grid = _mapManager.GetGridEuid(xform.GridEntityId);
-
-        return CompOrNull<StationMemberComponent>(grid)?.Station;
+        return CompOrNull<StationMemberComponent>(xform.GridEntityId)?.Station;
     }
 }
 

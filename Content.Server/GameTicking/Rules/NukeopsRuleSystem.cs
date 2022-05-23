@@ -1,4 +1,4 @@
-﻿using System.Linq;
+using System.Linq;
 using Content.Server.Chat.Managers;
 using Content.Server.Nuke;
 using Content.Server.RoundEnd;
@@ -126,7 +126,6 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
             return;
         }
 
-        var gridUid = _mapManager.GetGridEuid(gridId.Value);
         // TODO: Loot table or something
         var commanderGear = _prototypeManager.Index<StartingGearPrototype>("SyndicateCommanderGearFull");
         var starterGear = _prototypeManager.Index<StartingGearPrototype>("SyndicateOperativeGearFull");
@@ -136,14 +135,14 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
         // Forgive me for hardcoding prototypes
         foreach (var (_, meta, xform) in EntityManager.EntityQuery<SpawnPointComponent, MetaDataComponent, TransformComponent>(true))
         {
-            if (meta.EntityPrototype?.ID != "SpawnPointNukies" || xform.ParentUid != gridUid) continue;
+            if (meta.EntityPrototype?.ID != "SpawnPointNukies" || xform.ParentUid != (EntityUid)gridId.Value) continue;
 
             spawns.Add(xform.Coordinates);
         }
 
         if (spawns.Count == 0)
         {
-            spawns.Add(EntityManager.GetComponent<TransformComponent>(gridUid).Coordinates);
+            spawns.Add(EntityManager.GetComponent<TransformComponent>(gridId.Value).Coordinates);
             Logger.WarningS("nukies", $"Fell back to default spawn for nukies!");
         }
 

@@ -275,10 +275,10 @@ namespace Content.Server.Salvage
                 Report("salvage-system-announcement-spawn-debris-disintegrated");
                 return false;
             }
-            var salvageEntityId = _mapManager.GetGridEuid(gridId.Value);
-            component.AttachedEntity = salvageEntityId;
 
-            var pulledTransform = EntityManager.GetComponent<TransformComponent>(salvageEntityId);
+            component.AttachedEntity = (EntityUid)gridId.Value;
+
+            var pulledTransform = EntityManager.GetComponent<TransformComponent>(gridId.Value);
             pulledTransform.WorldRotation = spAngle;
 
             Report("salvage-system-announcement-arrived", ("timeLeft", HoldTime.TotalSeconds));
