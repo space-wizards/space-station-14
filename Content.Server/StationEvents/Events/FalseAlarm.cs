@@ -1,5 +1,4 @@
 ﻿using JetBrains.Annotations;
-using Robust.Shared.GameObjects;
 
 namespace Content.Server.StationEvents.Events
 {

@@ -111,8 +111,7 @@ namespace Content.Client.Chat.UI
                 _verticalOffsetAchieved = MathHelper.Lerp(_verticalOffsetAchieved, VerticalOffset, 10 * args.DeltaSeconds);
             }
 
-            if (!_entityManager.TryGetComponent<TransformComponent>(_senderEntity, out var xform)
-                    || !xform.Coordinates.IsValid(_entityManager))
+            if (!_entityManager.TryGetComponent<TransformComponent>(_senderEntity, out var xform) || xform.MapID != _eyeManager.CurrentMap)
             {
                 Modulate = Color.White.WithAlpha(0);
                 return;
@@ -128,7 +127,6 @@ namespace Content.Client.Chat.UI
                 // Make opaque otherwise, because it might have been hidden before
                 Modulate = Color.White;
             }
-
 
             var worldPos = xform.WorldPosition;
             var scale = _eyeManager.MainViewport.GetRenderScale();

@@ -55,6 +55,7 @@
       - id: ClothingNeckBronzeheart
       - id: ClothingNeckGoldmedal
       - id: RubberStampCaptain
+      - id: AntiqueLaserGun
 
 - type: entity
   id: LockerHeadOfPersonnelFilled
@@ -127,6 +128,7 @@
       - id: HandheldCrewMonitor
       - id: DoorRemoteMedical
       - id: RubberStampCMO
+      - id: MedicalTechFabCircuitboard
 
 - type: entity
   id: LockerResearchDirectorFilled
@@ -184,3 +186,4 @@
       - id: ClothingUniformJumpskirtHosFormal
       - id: ClothingUniformJumpsuitHosFormal
       - id: RubberStampHos
+      - id: SecurityTechFabCircuitboard

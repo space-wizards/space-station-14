@@ -271,7 +271,7 @@ namespace Content.Server.Shuttles.EntitySystems
                         {
                             ID = BurnFixture,
                             Hard = false,
-                            CollisionLayer = (int) CollisionGroup.MobImpassable
+                            CollisionLayer = (int) CollisionGroup.FullTileMask
                         };
 
                         _fixtureSystem.TryCreateFixture(physicsComponent, fixture);

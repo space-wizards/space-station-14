@@ -1,8 +1,4 @@
 ﻿using Content.Shared.Singularity.Components;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Log;
-using Robust.Shared.Serialization.Manager.Attributes;
 
 namespace Content.Server.ParticleAccelerator.Components
 {

@@ -1,8 +1,5 @@
 ﻿using Content.Server.Nutrition.Components;
-using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.Reagent;
-using Robust.Shared.GameObjects;
-using Robust.Shared.Serialization.Manager.Attributes;
 
 namespace Content.Server.Chemistry.ReagentEffects
 {

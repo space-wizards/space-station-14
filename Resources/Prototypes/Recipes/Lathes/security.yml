@@ -136,3 +136,37 @@
   completetime: 2
   materials:
     Steel: 30
+
+- type: latheRecipe
+  id: ShellShotgunFlare
+  icon:
+    sprite: Objects/Weapons/Guns/Ammunition/Casings/shotgun_shell_flare.rsi
+    state: base
+  result: ShellShotgunFlare
+  completetime: 2
+  materials:
+    Plastic: 20
+    Steel: 5
+
+- type: latheRecipe
+  id: ShellTranquilizer
+  icon:
+    sprite: Objects/Weapons/Guns/Ammunition/Casings/shotgun_shell_practice.rsi
+    state: base
+  result: ShellTranquilizer
+  completetime: 4
+  materials:
+    Plastic: 15
+    Steel: 10
+    Glass: 5
+
+- type: latheRecipe
+  id: ShellShotgunFlash
+  icon:
+    sprite: Objects/Weapons/Guns/Ammunition/Casings/shotgun_shell_flash.rsi
+    state: base
+  result: ShellShotgunFlash
+  completetime: 2
+  materials:
+    Plastic: 20
+    Steel: 5

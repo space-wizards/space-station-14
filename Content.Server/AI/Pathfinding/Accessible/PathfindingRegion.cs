@@ -1,6 +1,3 @@
-using System;
-using System.Collections.Generic;
-
 namespace Content.Server.AI.Pathfinding.Accessible
 {
     /// <summary>

@@ -1,6 +1,4 @@
-﻿using Robust.Shared.GameObjects;
-
-namespace Content.Server.Atmos.Components
+﻿namespace Content.Server.Atmos.Components
 {
     [RegisterComponent]
     [ComponentReference(typeof(IAtmosphereComponent))]

@@ -1,8 +1,4 @@
-﻿using System;
-using Robust.Shared.GameObjects;
-using Robust.Shared.ViewVariables;
-
-namespace Content.Shared.Weapons.Ranged.Components
+﻿namespace Content.Shared.Weapons.Ranged.Components
 {
     public abstract class SharedRangedBarrelComponent : Component
     {

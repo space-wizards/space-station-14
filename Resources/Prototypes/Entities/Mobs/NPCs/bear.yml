@@ -24,11 +24,9 @@
         radius: 0.5
       mass: 100
       mask:
-      - Impassable
-      - MobImpassable
-      - SmallImpassable
+      - MobMask
       layer:
-      - Opaque
+      - MobLayer
   - type: MovementIgnoreGravity
   - type: MobState
     thresholds:

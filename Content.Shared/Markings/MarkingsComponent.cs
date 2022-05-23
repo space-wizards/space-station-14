@@ -1,7 +1,4 @@
-using System.Collections.Generic;
 using Content.Shared.CharacterAppearance;
-using Robust.Shared.GameObjects;
-using Robust.Shared.Serialization.Manager.Attributes;
 
 namespace Content.Shared.Markings
 {

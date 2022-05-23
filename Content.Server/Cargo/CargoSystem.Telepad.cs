@@ -4,8 +4,6 @@ using Content.Server.Paper;
 using Content.Server.Power.Components;
 using Content.Shared.Cargo;
 using Robust.Shared.Audio;
-using Robust.Shared.GameObjects;
-using Robust.Shared.Localization;
 using Robust.Shared.Player;
 
 namespace Content.Server.Cargo;
@@ -16,6 +14,7 @@ public sealed partial class CargoSystem
 
     private void InitializeTelepad()
     {
+        SubscribeLocalEvent<CargoTelepadComponent, ComponentInit>(OnInit);
         SubscribeLocalEvent<CargoTelepadComponent, PowerChangedEvent>(OnTelepadPowerChange);
         // Shouldn't need re-anchored event
         SubscribeLocalEvent<CargoTelepadComponent, AnchorStateChangedEvent>(OnTelepadAnchorChange);
@@ -55,6 +54,11 @@ public sealed partial class CargoSystem
             appearance?.SetData(CargoTelepadVisuals.State, CargoTelepadState.Teleporting);
             comp.Accumulator = comp.Delay;
         }
+    }
+
+    private void OnInit(EntityUid uid, CargoTelepadComponent telepad, ComponentInit args)
+    {
+        _linker.EnsureReceiverPorts(uid, telepad.ReceiverPort);
     }
 
     private void SetEnabled(CargoTelepadComponent component, ApcPowerReceiverComponent? receiver = null,

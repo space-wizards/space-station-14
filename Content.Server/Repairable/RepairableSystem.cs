@@ -1,15 +1,9 @@
 using Content.Server.Administration.Logs;
 using Content.Server.Tools;
-using Content.Server.Tools.Components;
-using Content.Shared.Administration.Logs;
 using Content.Shared.Damage;
 using Content.Shared.Database;
 using Content.Shared.Interaction;
 using Content.Shared.Popups;
-using Content.Shared.Tools.Components;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Localization;
 
 namespace Content.Server.Repairable
 {

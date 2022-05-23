@@ -16,7 +16,7 @@
     fixtures:
     - shape:
         !type:PhysShapeCircle
-          radius: 0.35
+        radius: 0.35
       mass: 5
       mask:
       - GhostImpassable

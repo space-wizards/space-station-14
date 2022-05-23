@@ -1,10 +1,8 @@
 using Content.Server.Chemistry.Components;
 using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Emag.Systems;
-using Content.Shared.Chemistry.Dispenser;
 using JetBrains.Annotations;
 using Robust.Shared.Containers;
-using Robust.Shared.Prototypes;
 
 namespace Content.Server.Chemistry.EntitySystems
 {

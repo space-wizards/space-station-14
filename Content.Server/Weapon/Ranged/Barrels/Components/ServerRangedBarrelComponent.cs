@@ -1,12 +1,6 @@
-using System;
 using Content.Shared.Sound;
 using Content.Shared.Weapons.Ranged.Components;
-using Robust.Shared.Analyzers;
-using Robust.Shared.GameObjects;
-using Robust.Shared.Log;
-using Robust.Shared.Maths;
 using Robust.Shared.Serialization;
-using Robust.Shared.Serialization.Manager.Attributes;
 
 namespace Content.Server.Weapon.Ranged.Barrels.Components
 {

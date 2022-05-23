@@ -8,7 +8,7 @@
     neck: BedsheetCult
     outerClothing: ClothingOuterArmorCult
     shoes: ClothingShoesCult
-    id: AssistantPDA
+    id: PassengerPDA
     ears: ClothingHeadsetService
   innerclothingskirt: ClothingUniformJumpskirtColorBlack
   satchel: ClothingBackpackSatchelFilled
@@ -22,7 +22,7 @@
     head: ClothingHeadHatHoodCulthood
     outerClothing: ClothingOuterRobesCult
     shoes: ClothingShoesColorRed
-    id: AssistantPDA
+    id: PassengerPDA
     ears: ClothingHeadsetService
   innerclothingskirt: ClothingUniformJumpskirtColorBlack
   satchel: ClothingBackpackSatchelFilled

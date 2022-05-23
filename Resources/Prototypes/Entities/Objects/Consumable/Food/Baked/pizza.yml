@@ -6,7 +6,6 @@
   abstract: true
   components:
   - type: Food
-    trash: FoodPlate
   - type: Sprite
     sprite: Objects/Consumable/Food/Baked/pizza.rsi
     netsync: false
@@ -33,7 +32,6 @@
   abstract: true
   components:
   - type: Food
-    trash: FoodPlateSmall
   - type: Sprite
     sprite: Objects/Consumable/Food/Baked/pizza.rsi
     netsync: false
@@ -63,7 +61,6 @@
   components:
   - type: Sprite
     layers:
-    - state: plate-pizza
     - state: margherita
   - type: SliceableFood
     slice: FoodPizzaMargheritaSlice
@@ -76,7 +73,6 @@
   components:
   - type: Sprite
     layers:
-    - state: plate-slice
     - state: margherita-slice
 # Tastes like crust, tomato, cheese.
 
@@ -88,7 +84,6 @@
   components:
   - type: Sprite
     layers:
-    - state: plate-pizza
     - state: meat
   - type: SliceableFood
     slice: FoodPizzaMeatSlice
@@ -101,7 +96,6 @@
   components:
   - type: Sprite
     layers:
-    - state: plate-slice
     - state: meat-slice
 # Tastes like crust, tomato, cheese, meat.
 
@@ -113,7 +107,6 @@
   components:
   - type: Sprite
     layers:
-    - state: plate-pizza
     - state: mushroom
   - type: SliceableFood
     slice: FoodPizzaMushroomSlice
@@ -126,7 +119,6 @@
   components:
   - type: Sprite
     layers:
-    - state: plate-slice
     - state: mushroom-slice
 # Tastes like crust, tomato, cheese, mushroom.
 
@@ -138,7 +130,6 @@
   components:
   - type: Sprite
     layers:
-    - state: plate-pizza
     - state: vegetable
   - type: SliceableFood
     slice: FoodPizzaVegetableSlice
@@ -151,7 +142,6 @@
   components:
   - type: Sprite
     layers:
-    - state: plate-slice
     - state: vegetable-slice
 # Tastes like crust, tomato, cheese, carrot.
 
@@ -163,7 +153,6 @@
   components:
   - type: Sprite
     layers:
-    - state: plate-pizza
     - state: donkpocket
   - type: SliceableFood
     slice: FoodPizzaDonkpocketSlice
@@ -188,7 +177,6 @@
   components:
   - type: Sprite
     layers:
-    - state: plate-slice
     - state: donkpocket-slice
   - type: SolutionContainerManager
     solutions:
@@ -211,7 +199,6 @@
   components:
   - type: Sprite
     layers:
-    - state: plate-pizza
     - state: dank
   - type: SliceableFood
     slice: FoodPizzaDankSlice
@@ -235,7 +222,6 @@
   components:
   - type: Sprite
     layers:
-    - state: plate-slice
     - state: dank-slice
   - type: SolutionContainerManager
     solutions:
@@ -258,7 +244,6 @@
   components:
   - type: Sprite
     layers:
-    - state: plate-pizza
     - state: sassysage
   - type: SliceableFood
     slice: FoodPizzaSassysageSlice
@@ -271,7 +256,6 @@
   components:
   - type: Sprite
     layers:
-    - state: plate-slice
     - state: sassysage-slice
 # Tastes like crust, tomato, cheese, sausage, sass.
 
@@ -283,7 +267,6 @@
   components:
   - type: Sprite
     layers:
-    - state: plate-pizza
     - state: pineapple
   - type: SliceableFood
     slice: FoodPizzaPineappleSlice
@@ -296,7 +279,6 @@
   components:
   - type: Sprite
     layers:
-    - state: plate-slice
     - state: pineapple-slice
 # Tastes like crust, tomato, cheese, pineapple, ham.
 
@@ -309,7 +291,6 @@
   components:
   - type: Sprite
     layers:
-    - state: plate-pizza
     - state: arnold
   - type: SliceableFood
     slice: FoodPizzaArnoldSlice
@@ -335,7 +316,6 @@
   components:
   - type: Sprite
     layers:
-    - state: plate-slice
     - state: arnold-slice
   - type: SolutionContainerManager
     solutions:
@@ -361,7 +341,6 @@
   components:
   - type: Sprite
     layers:
-    - state: plate-slice
     - state: moldy-slice
   - type: SolutionContainerManager
     solutions:

@@ -13,10 +13,10 @@
     fixtures:
     - shape:
         !type:PhysShapeAabb
-          bounds: "-0.45,-0.45,0.45,0.20"
+        bounds: "-0.45,-0.45,0.45,0.20"
       mass: 50
-      layer:
-      - SmallImpassable
       mask:
-      - Impassable
+      - FullTileMask
+      layer:
+      - WallLayer
   - type: InteractionOutline

@@ -5,9 +5,11 @@ using Content.Server.Throwing;
 using Content.Server.UserInterface;
 using Content.Shared.Interaction;
 using Content.Shared.Interaction.Events;
+using Content.Shared.Maps;
 using Content.Shared.Throwing;
 using JetBrains.Annotations;
 using Robust.Shared.Audio;
+using Robust.Shared.Map;
 using Robust.Shared.Player;
 using Robust.Shared.Random;
 
@@ -19,7 +21,9 @@ namespace Content.Server.Sound
     [UsedImplicitly]
     public sealed class EmitSoundSystem : EntitySystem
     {
+        [Dependency] private readonly IMapManager _mapManager = default!;
         [Dependency] private readonly IRobustRandom _random = default!;
+        [Dependency] private readonly ITileDefinitionManager _tileDefMan = default!;
 
         /// <inheritdoc />
         public override void Initialize()
@@ -40,6 +44,13 @@ namespace Content.Server.Sound
 
         private void HandleEmitSoundOnLand(EntityUid eUI, BaseEmitSoundComponent component, LandEvent arg)
         {
+            if (!TryComp<TransformComponent>(eUI, out var xform) ||
+                !_mapManager.TryGetGrid(xform.GridID, out var grid)) return;
+
+            var tile = grid.GetTileRef(xform.Coordinates);
+
+            if (tile.IsSpace(_tileDefMan)) return;
+
             TryEmitSound(component);
         }
 

@@ -38,7 +38,6 @@ namespace Content.Server.Weapon.Melee.EnergySword
 
             // Overrides basic blunt damage with burn+slash as set in yaml
             args.BonusDamage = comp.LitDamageBonus;
-            args.HitSoundOverride = comp.HitSound;
         }
 
         private void OnUseInHand(EntityUid uid, EnergySwordComponent comp, UseInHandEvent args)

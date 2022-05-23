@@ -9,7 +9,6 @@ using Content.Shared.Database;
 using Content.Shared.Explosion;
 using Content.Shared.GameTicking;
 using Content.Shared.Throwing;
-using Robust.Server.Containers;
 using Robust.Server.Player;
 using Robust.Shared.Audio;
 using Robust.Shared.Configuration;
@@ -31,7 +30,6 @@ public sealed partial class ExplosionSystem : EntitySystem
     [Dependency] private readonly IPlayerManager _playerManager = default!;
 
     [Dependency] private readonly DamageableSystem _damageableSystem = default!;
-    [Dependency] private readonly ContainerSystem _containerSystem = default!;
     [Dependency] private readonly NodeGroupSystem _nodeGroupSystem = default!;
     [Dependency] private readonly CameraRecoilSystem _recoilSystem = default!;
     [Dependency] private readonly EntityLookupSystem _entityLookup = default!;

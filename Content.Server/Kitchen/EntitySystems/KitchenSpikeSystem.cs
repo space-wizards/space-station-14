@@ -7,14 +7,12 @@ using Content.Shared.Interaction;
 using Content.Shared.MobState.Components;
 using Content.Shared.Nutrition.Components;
 using Robust.Shared.Audio;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Localization;
 using Robust.Shared.Player;
-using System;
 using Content.Shared.Storage;
 using Robust.Shared.Random;
 using static Content.Shared.Kitchen.Components.SharedKitchenSpikeComponent;
+using Content.Shared.Interaction.Events;
+using Content.Shared.Popups;
 
 namespace Content.Server.Kitchen.EntitySystems
 {
@@ -35,6 +33,20 @@ namespace Content.Server.Kitchen.EntitySystems
             //DoAfter
             SubscribeLocalEvent<KitchenSpikeComponent, SpikingFinishedEvent>(OnSpikingFinished);
             SubscribeLocalEvent<KitchenSpikeComponent, SpikingFailEvent>(OnSpikingFail);
+
+            SubscribeLocalEvent<KitchenSpikeComponent, SuicideEvent>(OnSuicide);
+        }
+
+        private void OnSuicide(EntityUid uid, KitchenSpikeComponent component, SuicideEvent args)
+        {
+            if (args.Handled) return;
+            args.SetHandled(SuicideKind.Piercing);
+            var victim = args.Victim;
+            var othersMessage = Loc.GetString("comp-kitchen-spike-suicide-other", ("victim", victim));
+            victim.PopupMessageOtherClients(othersMessage);
+
+            var selfMessage = Loc.GetString("comp-kitchen-spike-suicide-self");
+            victim.PopupMessage(selfMessage);
         }
 
         private void OnSpikingFail(EntityUid uid, KitchenSpikeComponent component, SpikingFailEvent args)

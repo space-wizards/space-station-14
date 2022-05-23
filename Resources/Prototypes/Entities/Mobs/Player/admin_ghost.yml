@@ -29,7 +29,7 @@
         bounds: "-0.35,-0.35,0.35,0.35"
       mass: 5
       mask:
-        - GhostImpassable
+      - GhostImpassable
   - type: Body
     template: AGhostTemplate
     preset: HumanPreset

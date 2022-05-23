@@ -1,17 +1,10 @@
-using System;
 using Content.Server.Weapon.Ranged.Ammunition.Components;
 using Content.Shared.Sound;
-using Content.Shared.Weapons.Ranged.Barrels.Components;
-using Robust.Shared.Analyzers;
 using Robust.Shared.Containers;
-using Robust.Shared.GameObjects;
 using Robust.Shared.GameStates;
-using Robust.Shared.Map;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
-using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
-using Robust.Shared.ViewVariables;
 
 namespace Content.Server.Weapon.Ranged.Barrels.Components
 {

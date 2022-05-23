@@ -32,11 +32,9 @@
             radius: 0.45
           mass: 150
           mask:
-            - Impassable
+          - MachineMask
           layer:
-            - Opaque
-            - MobImpassable
-            - SmallImpassable
+          - MachineLayer
     - type: Icon
       sprite: Structures/Storage/Crates/artifact.rsi
       state: artifact_container_icon

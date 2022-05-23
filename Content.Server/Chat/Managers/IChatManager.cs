@@ -1,9 +1,6 @@
 using Content.Shared.Chat;
 using Robust.Server.Player;
-using Robust.Shared.Console;
-using Robust.Shared.GameObjects;
 using Robust.Shared.Network;
-using Robust.Shared.Players;
 
 namespace Content.Server.Chat.Managers
 {

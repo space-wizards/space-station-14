@@ -26,6 +26,8 @@ namespace Content.Server.Morgue.Components
     {
         [Dependency] private readonly IEntityManager _entMan = default!;
 
+        private const CollisionGroup TrayCanOpenMask = CollisionGroup.Impassable | CollisionGroup.MidImpassable;
+
         [ViewVariables(VVAccess.ReadWrite)]
         [DataField("trayPrototype", customTypeSerializer:typeof(PrototypeIdSerializer<EntityPrototype>))]
         private string? _trayPrototypeId;
@@ -69,7 +71,7 @@ namespace Content.Server.Morgue.Components
         {
             if (!EntitySystem.Get<SharedInteractionSystem>().InRangeUnobstructed(Owner,
                 _entMan.GetComponent<TransformComponent>(Owner).Coordinates.Offset(_entMan.GetComponent<TransformComponent>(Owner).LocalRotation.GetCardinalDir()),
-                collisionMask: CollisionGroup.Impassable | CollisionGroup.VaultImpassable
+                collisionMask: TrayCanOpenMask
             ))
             {
                 if (!silent)

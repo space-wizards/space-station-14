@@ -1,9 +1,5 @@
-using System;
-using Content.Shared.Movement.Components;
-using Robust.Shared.GameObjects;
 using Robust.Shared.GameStates;
 using Robust.Shared.Serialization;
-using Robust.Shared.ViewVariables;
 
 namespace Content.Shared.Nutrition.Components
 {

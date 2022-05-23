@@ -1,5 +1,3 @@
-using System.Diagnostics;
-using Content.Server.Act;
 using Content.Server.Actions.Events;
 using Content.Server.Administration.Logs;
 using Content.Server.Hands.Components;
@@ -11,10 +9,6 @@ using Content.Shared.CombatMode;
 using Content.Shared.Database;
 using JetBrains.Annotations;
 using Robust.Shared.Audio;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Localization;
-using Robust.Shared.Maths;
 using Robust.Shared.Player;
 using Robust.Shared.Random;
 

@@ -1,4 +1,3 @@
-using System;
 using System.Threading;
 using Content.Server.Body.Components;
 using Content.Server.Chemistry.Components;
@@ -108,8 +107,6 @@ public sealed partial class ChemistrySystem
 
         if (component.CancelToken != null)
         {
-            component.CancelToken.Cancel();
-            component.CancelToken = null;
             args.Handled = true;
             return;
         }

@@ -1,6 +1,4 @@
-﻿using Content.Shared.Inventory.Events;
-
-namespace Content.Shared.Inventory;
+﻿namespace Content.Shared.Inventory;
 
 public partial class InventorySystem
 {

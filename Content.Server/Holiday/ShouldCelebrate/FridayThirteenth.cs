@@ -1,4 +1,3 @@
-using System;
 using Content.Server.Holiday.Interfaces;
 using JetBrains.Annotations;
 

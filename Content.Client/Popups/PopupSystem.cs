@@ -10,7 +10,6 @@ using Robust.Client.UserInterface.Controls;
 using Robust.Shared.Map;
 using Robust.Shared.Player;
 using Robust.Shared.Timing;
-using Robust.Shared.Utility;
 
 namespace Content.Client.Popups
 {
@@ -19,7 +18,9 @@ namespace Content.Client.Popups
         [Dependency] private readonly IInputManager _inputManager = default!;
         [Dependency] private readonly IUserInterfaceManager _userInterfaceManager = default!;
         [Dependency] private readonly IEyeManager _eyeManager = default!;
+        [Dependency] private readonly IMapManager _map = default!;
         [Dependency] private readonly IPlayerManager _playerManager = default!;
+        [Dependency] private readonly ExamineSystemShared _examineSystem = default!;
 
         private readonly List<PopupLabel> _aliveLabels = new();
 
@@ -42,7 +43,10 @@ namespace Content.Client.Popups
 
         public void PopupCoordinates(string message, EntityCoordinates coordinates)
         {
-            PopupMessage(message, _eyeManager.CoordinatesToScreen(coordinates));
+            var mapCoords = coordinates.ToMap(EntityManager);
+            if (_eyeManager.CurrentMap != mapCoords.MapId)
+                return;
+            PopupMessage(message, _eyeManager.MapToScreen(mapCoords));
         }
 
         public void PopupEntity(string message, EntityUid uid)
@@ -51,10 +55,19 @@ namespace Content.Client.Popups
                 return;
 
             var transform = EntityManager.GetComponent<TransformComponent>(uid);
+            if (_eyeManager.CurrentMap != transform.MapID)
+                return; // TODO: entity may be outside of PVS, but enter PVS at a later time. So the pop-up should still get tracked?
+
             PopupMessage(message, _eyeManager.CoordinatesToScreen(transform.Coordinates), uid);
         }
 
-        public void PopupMessage(string message, ScreenCoordinates coordinates, EntityUid? entity = null)
+        private void PopupMessage(string message, ScreenCoordinates coordinates, EntityUid? entity = null)
+        {
+            var mapCoords = _eyeManager.ScreenToMap(coordinates);
+            PopupMessage(message, EntityCoordinates.FromMap(_map, mapCoords), entity);
+        }
+
+        private void PopupMessage(string message, EntityCoordinates coordinates, EntityUid? entity = null)
         {
             var label = new PopupLabel(_eyeManager, EntityManager)
             {
@@ -66,8 +79,7 @@ namespace Content.Client.Popups
             _userInterfaceManager.PopupRoot.AddChild(label);
             label.Measure(Vector2.Infinity);
 
-            var mapCoordinates = _eyeManager.ScreenToMap(coordinates.Position / label.UIScale - label.DesiredSize / 2);
-            label.InitialPos = mapCoordinates;
+            label.InitialPos = coordinates;
             LayoutContainer.SetPosition(label, label.InitialPos.Position);
             _aliveLabels.Add(label);
         }
@@ -141,11 +153,13 @@ namespace Content.Client.Popups
             // ReSharper disable once ConvertToLocalFunction
             var predicate = static (EntityUid uid, (EntityUid? compOwner, EntityUid? attachedEntity) data)
                 => uid == data.compOwner || uid == data.attachedEntity;
+            var occluded = player != null && _examineSystem.IsOccluded(player.Value);
 
             for (var i = _aliveLabels.Count - 1; i >= 0; i--)
             {
                 var label = _aliveLabels[i];
-                if (label.TotalTime > PopupLifetime)
+                if (label.TotalTime > PopupLifetime ||
+                    label.Entity != null && Deleted(label.Entity))
                 {
                     label.Dispose();
                     _aliveLabels.RemoveAt(i);
@@ -158,9 +172,9 @@ namespace Content.Client.Popups
                     continue;
                 }
 
-                var otherPos = label.Entity != null ? Transform(label.Entity.Value).MapPosition : label.InitialPos;
+                var otherPos = label.Entity != null ? Transform(label.Entity.Value).MapPosition : label.InitialPos.ToMap(EntityManager);
 
-                if (!ExamineSystemShared.InRangeUnOccluded(
+                if (occluded && !ExamineSystemShared.InRangeUnOccluded(
                         playerPos,
                         otherPos, 0f,
                         (label.Entity, player), predicate))
@@ -185,7 +199,7 @@ namespace Content.Client.Popups
             /// <remarks>
             /// Yes that's right it's not technically MapCoordinates.
             /// </remarks>
-            public MapCoordinates InitialPos { get; set; }
+            public EntityCoordinates InitialPos { get; set; }
             public EntityUid? Entity { get; set; }
 
             public PopupLabel(IEyeManager eyeManager, IEntityManager entityManager)
@@ -201,19 +215,22 @@ namespace Content.Client.Popups
             {
                 TotalTime += eventArgs.DeltaSeconds;
 
-                Vector2 position;
+                ScreenCoordinates screenCoords;
+
                 if (Entity == null)
-                    position = InitialPos.Position;
+                    screenCoords = _eyeManager.CoordinatesToScreen(InitialPos);
                 else if (_entityManager.TryGetComponent(Entity.Value, out TransformComponent xform))
-                    position = (_eyeManager.CoordinatesToScreen(xform.Coordinates).Position / UIScale) - DesiredSize / 2;
+                    screenCoords = _eyeManager.CoordinatesToScreen(xform.Coordinates);
                 else
                 {
-                    // Entity has probably been deleted.
                     Visible = false;
-                    TotalTime += PopupLifetime;
+                    if (Entity != null && _entityManager.Deleted(Entity))
+                        TotalTime += PopupLifetime;
                     return;
                 }
 
+                Visible = true;
+                var position = screenCoords.Position / UIScale - DesiredSize / 2;
                 LayoutContainer.SetPosition(this, position - (0, 20 * (TotalTime * TotalTime + TotalTime)));
 
                 if (TotalTime > 0.5f)

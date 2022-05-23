@@ -2,8 +2,6 @@ using Content.Server.Atmos.EntitySystems;
 using Content.Shared.Atmos;
 using Content.Shared.Maps;
 using Robust.Shared.Map;
-using Robust.Shared.Maths;
-using Robust.Shared.ViewVariables;
 
 namespace Content.Server.Atmos
 {
@@ -58,6 +56,10 @@ namespace Content.Server.Atmos
 
         [ViewVariables]
         public AtmosDirection PressureDirection;
+
+        // For debug purposes.
+        [ViewVariables]
+        public AtmosDirection LastPressureDirection;
 
         [ViewVariables]
         public GridId GridIndex { get; }

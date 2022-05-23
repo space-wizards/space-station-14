@@ -1,14 +1,9 @@
-using System;
-using System.Collections.Generic;
 using Content.Server.Administration;
 using Content.Shared.Administration;
 using Content.Shared.Decals;
 using Content.Shared.Maps;
 using Robust.Shared.Console;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
 using Robust.Shared.Map;
-using Robust.Shared.Maths;
 using Robust.Shared.Prototypes;
 
 namespace Content.Server.Decals.Commands

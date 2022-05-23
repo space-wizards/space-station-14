@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using Content.Shared.ActionBlocker;
+﻿using Content.Shared.ActionBlocker;
 using Content.Shared.DragDrop;
 using Content.Shared.Hands.Components;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.Strip.Components
@@ -26,12 +22,12 @@ namespace Content.Shared.Strip.Components
         }
 
         public abstract bool Drop(DragDropEvent args);
+    }
 
-        [NetSerializable, Serializable]
-        public enum StrippingUiKey
-        {
-            Key,
-        }
+    [NetSerializable, Serializable]
+    public enum StrippingUiKey : byte
+    {
+        Key,
     }
 
     [NetSerializable, Serializable]

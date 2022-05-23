@@ -1,8 +1,3 @@
-using Robust.Shared.GameObjects;
-using Robust.Shared.Analyzers;
-using Robust.Shared.ViewVariables;
-using Robust.Shared.Serialization.Manager.Attributes;
-
 namespace Content.Server.Nutrition.EntitySystems;
 
 /// <summary>

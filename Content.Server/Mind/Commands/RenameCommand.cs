@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
-using Content.Server.Access.Systems;
+﻿using Content.Server.Access.Systems;
 using Content.Server.Administration;
 using Content.Server.Cloning;
 using Content.Server.Mind.Components;
@@ -11,8 +9,6 @@ using Content.Shared.PDA;
 using Robust.Server.GameObjects;
 using Robust.Server.Player;
 using Robust.Shared.Console;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
 
 namespace Content.Server.Mind.Commands;
 

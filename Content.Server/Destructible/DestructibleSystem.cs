@@ -10,7 +10,6 @@ using JetBrains.Annotations;
 using Robust.Server.GameObjects;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
-using System;
 using Content.Shared.Destructible;
 
 namespace Content.Server.Destructible

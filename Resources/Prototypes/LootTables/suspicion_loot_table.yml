@@ -26,7 +26,6 @@
   - id: RifleCalico
     amount: 0
     maxAmount: 5
-
   - id: PistolClarissa
     amount: 0
     maxAmount: 5
@@ -161,6 +160,10 @@
   - id: LauncherRocket
     prob: 0.20
     maxAmount: 3
+
+  - id: LidSalami
+    amount: 0
+    maxAmount: 10
 
   - id: ExGrenade
     prob: 0.10

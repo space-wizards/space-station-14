@@ -18,6 +18,7 @@ namespace Content.Client.Communications.UI
         public readonly Button AnnounceButton;
         public readonly Button EmergencyShuttleButton;
         private readonly RichTextLabel _countdownLabel;
+        public readonly OptionButton AlertLevelButton;
 
         public CommunicationsConsoleMenu(CommunicationsConsoleBoundUserInterface owner)
         {
@@ -38,6 +39,17 @@ namespace Content.Client.Communications.UI
             AnnounceButton.OnPressed += (_) => Owner.AnnounceButtonPressed(_messageInput.Text.Trim());
             AnnounceButton.Disabled = !owner.CanAnnounce;
 
+            AlertLevelButton = new OptionButton();
+            AlertLevelButton.OnItemSelected += args =>
+            {
+                var metadata = AlertLevelButton.GetItemMetadata(args.Id);
+                if (metadata != null && metadata is string cast)
+                {
+                    Owner.AlertLevelSelected(cast);
+                }
+            };
+            AlertLevelButton.Disabled = !owner.AlertLevelSelectable;
+
             _countdownLabel = new RichTextLabel(){MinSize = new Vector2(0, 200)};
             EmergencyShuttleButton = new Button();
             EmergencyShuttleButton.OnPressed += (_) => Owner.EmergencyShuttleButtonPressed();
@@ -52,6 +64,7 @@ namespace Content.Client.Communications.UI
             vbox.AddChild(_messageInput);
             vbox.AddChild(new Control(){MinSize = new Vector2(0,10), HorizontalExpand = true});
             vbox.AddChild(AnnounceButton);
+            vbox.AddChild(AlertLevelButton);
             vbox.AddChild(new Control(){MinSize = new Vector2(0,10), HorizontalExpand = true});
             vbox.AddChild(_countdownLabel);
             vbox.AddChild(EmergencyShuttleButton);
@@ -70,6 +83,34 @@ namespace Content.Client.Communications.UI
 
             UpdateCountdown();
             Timer.SpawnRepeating(1000, UpdateCountdown, _timerCancelTokenSource.Token);
+        }
+
+        // The current alert could make levels unselectable, so we need to ensure that the UI reacts properly.
+        // If the current alert is unselectable, the only item in the alerts list will be
+        // the current alert. Otherwise, it will be the list of alerts, with the current alert
+        // selected.
+        public void UpdateAlertLevels(List<string>? alerts, string currentAlert)
+        {
+            AlertLevelButton.Clear();
+
+            if (alerts == null)
+            {
+                AlertLevelButton.AddItem(Loc.GetString($"alert-level-{currentAlert}"));
+                AlertLevelButton.SetItemMetadata(AlertLevelButton.ItemCount - 1, currentAlert);
+            }
+            else
+            {
+                foreach (var alert in alerts)
+                {
+                     AlertLevelButton.AddItem(Loc.GetString($"alert-level-{alert}"));
+                     AlertLevelButton.SetItemMetadata(AlertLevelButton.ItemCount - 1, alert);
+
+                     if (alert == currentAlert)
+                     {
+                         AlertLevelButton.Select(AlertLevelButton.ItemCount - 1);
+                     }
+                }
+            }
         }
 
         public void UpdateCountdown()

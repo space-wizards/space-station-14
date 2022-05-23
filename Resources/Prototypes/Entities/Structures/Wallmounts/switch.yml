@@ -40,9 +40,11 @@
   - type: Sprite
     sprite: Structures/Wallmounts/switch.rsi
     state: dead
-  - type: SignalButton
   - type: UseDelay
     delay: 0.5 # prevent light-toggling auto-clickers.
+  - type: SignalSwitch
+    onPort: Pressed
+    offPort: Pressed
   - type: Rotatable
   - type: Construction
     graph: SignalButtonGraph

@@ -1,7 +1,5 @@
-﻿using System;
-using System.Threading;
+﻿using System.Threading;
 using Content.Shared.FixedPoint;
-using Robust.Shared.GameObjects;
 
 namespace Content.Server.DoAfter
 {
@@ -111,7 +109,7 @@ namespace Content.Server.DoAfter
             CancelToken = cancelToken;
             Target = target;
             MovementThreshold = 0.1f;
-            DamageThreshold = 0;
+            DamageThreshold = 1.0;
 
             if (Target == null)
             {

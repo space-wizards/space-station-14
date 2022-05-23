@@ -1,12 +1,8 @@
-using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using Content.Server.Construction;
 using Content.Server.Construction.Components;
 using Content.Server.Ghost.Components;
 using Content.Server.Storage.EntitySystems;
-using Content.Server.Tools;
 using Content.Shared.Body.Components;
 using Content.Shared.Foldable;
 using Content.Shared.Interaction;
@@ -16,12 +12,10 @@ using Content.Shared.Placeable;
 using Content.Shared.Popups;
 using Content.Shared.Sound;
 using Content.Shared.Storage;
-using Content.Shared.Tools;
 using Robust.Shared.Audio;
 using Robust.Shared.Containers;
 using Robust.Shared.Physics;
 using Robust.Shared.Player;
-using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
 namespace Content.Server.Storage.Components
 {
@@ -42,9 +36,9 @@ namespace Content.Server.Storage.Components
         ///     Collision masks that get removed when the storage gets opened.
         /// </summary>
         private const int MasksToRemove = (int) (
-            CollisionGroup.MobImpassable |
-            CollisionGroup.VaultImpassable |
-            CollisionGroup.SmallImpassable);
+            CollisionGroup.MidImpassable |
+            CollisionGroup.HighImpassable |
+            CollisionGroup.LowImpassable);
 
         /// <summary>
         ///     Collision masks that were removed from ANY layer when the storage was opened;
@@ -61,7 +55,7 @@ namespace Content.Server.Storage.Components
 
         [ViewVariables]
         [DataField("EnteringRange")]
-        private float _enteringRange = -0.4f;
+        private float _enteringRange = -0.18f;
 
         [DataField("showContents")]
         private bool _showContents;

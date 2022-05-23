@@ -15,13 +15,12 @@
     fixtures:
     - shape:
         !type:PhysShapeAabb
-          bounds: "-0.45,-0.45,0.45,0.45"
+        bounds: "-0.45,-0.45,0.45,0.45"
       mass: 100
       mask:
-      - MobMask
+      - FullTileMask
       layer:
-      - MobImpassable
-      - VaultImpassable
+      - HumanoidBlockLayer
   - type: Anchorable
     delay: 2
   - type: Pullable

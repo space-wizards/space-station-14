@@ -84,17 +84,17 @@
         visible: false
         map: [ "light" ]
   - type: Physics
+    canCollide: true
   - type: Fixtures
     fixtures:
     - shape:
         !type:PhysShapeAabb
-          bounds: "-0.2, -0.5, 0.2, 0.5"
+        bounds: "-0.2, -0.5, 0.2, 0.5"
       mass: 20
       mask:
-      - Impassable
+      - MachineMask
       layer:
-      - Opaque
-      - Impassable
+      - MachineLayer
   - type: PointLight
     enabled: false
     radius: 8
@@ -153,10 +153,10 @@
   - type: Fixtures
     fixtures:
     - shape:
-        !type:PhysShapeAabb {}
+        !type:PhysShapeAabb
+        bounds: "-0.2, -0.5, 0.2, 0.5"
+      mass: 20
+      mask:
+      - MachineMask
       layer:
-      - Opaque
-      - Impassable
-      - MobImpassable
-      - VaultImpassable
-      - SmallImpassable
+      - MachineLayer

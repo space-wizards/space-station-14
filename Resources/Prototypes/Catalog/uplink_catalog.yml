@@ -255,6 +255,12 @@
   itemId: ClothingBackpackDuffelSyndicateFilledMedical
   price: 5
 
+- type : uplinkListing
+  id: UplinkPowerSink
+  category: Tools
+  itemId: PowerSink
+  price: 5
+
 - type: uplinkListing
   id: UplinkCarpDehydrated
   category: Tools
@@ -284,7 +290,7 @@
   itemId: ClothingBackpackDuffelSyndicateHardsuitBundle
   description: The Syndicate's well known armored blood red hardsuit, capable of space walks and bullet resistant.
   price: 8
-
+  
 - type: uplinkListing
   id: UplinkClothingShoesBootsMagSyndie
   category: Armor
@@ -371,6 +377,15 @@
   category: Misc
   itemId: ClothingBackpackDuffelSyndicatePyjamaBundle
   price: 4
+  
+- type: uplinkListing
+  id: UplinkCatEars
+  category: Misc
+  itemId: ClothingHeadHatCatEars
+  listingName: Cat Ears
+  description: UwU.
+  price: 21
+
 
 - type: uplinkListing
   id: UplinkGigacancerScanner

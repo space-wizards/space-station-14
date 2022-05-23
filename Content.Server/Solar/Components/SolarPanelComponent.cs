@@ -1,12 +1,4 @@
-using System;
-using Content.Server.Power.Components;
 using Content.Server.Solar.EntitySystems;
-using Robust.Server.GameObjects;
-using Robust.Shared.Analyzers;
-using Robust.Shared.GameObjects;
-using Robust.Shared.Serialization.Manager.Attributes;
-using Robust.Shared.Timing;
-using Robust.Shared.ViewVariables;
 
 namespace Content.Server.Solar.Components
 {

@@ -1,4 +1,3 @@
-using System.Linq;
 using Content.Shared.Drone;
 using Content.Server.Drone.Components;
 using Content.Shared.Actions;
@@ -22,7 +21,6 @@ using Content.Server.UserInterface;
 using Robust.Shared.Player;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Storage;
-using Robust.Shared.Map;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;
 

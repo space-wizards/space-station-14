@@ -1,7 +1,7 @@
 using System.Diagnostics.CodeAnalysis;
-using System.Linq;
 using Content.Server.Body.Components;
 using Content.Server.GameTicking;
+using Content.Server.Kitchen.Components;
 using Content.Server.Mind.Components;
 using Content.Shared.Body.Components;
 using Content.Shared.MobState.Components;
@@ -20,6 +20,7 @@ namespace Content.Server.Body.Systems
             base.Initialize();
             SubscribeLocalEvent<BodyComponent, RelayMoveInputEvent>(OnRelayMoveInput);
             SubscribeLocalEvent<BodyComponent, ApplyMetabolicMultiplierEvent>(OnApplyMetabolicMultiplier);
+            SubscribeLocalEvent<BodyComponent, BeingMicrowavedEvent>(OnBeingMicrowaved);
         }
 
         private void OnRelayMoveInput(EntityUid uid, BodyComponent component, RelayMoveInputEvent args)
@@ -45,6 +46,18 @@ namespace Content.Server.Body.Systems
             {
                 RaiseLocalEvent(mechanism.Owner, args, false);
             }
+        }
+
+        private void OnBeingMicrowaved(EntityUid uid, BodyComponent component, BeingMicrowavedEvent args)
+        {
+            if (args.Handled)
+                return;
+
+            // Don't microwave animals, kids
+            Transform(uid).AttachToGridOrMap();
+            component.Gib();
+
+            args.Handled = true;
         }
 
         /// <summary>

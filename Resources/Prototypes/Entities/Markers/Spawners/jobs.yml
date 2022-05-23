@@ -14,9 +14,10 @@
 - type: entity
   name: observer spawn point
   id: SpawnPointObserver
-  parent: SpawnPointJobBase
+  parent: MarkerBase
   components:
   - type: Sprite
+    sprite: Markers/jobs.rsi
     layers:
       - state: green
       - texture: Mobs/Ghosts/ghost_human.rsi/icon.png
@@ -76,16 +77,16 @@
 # Civilian
 
 - type: entity
-  id: SpawnPointAssistant
+  id: SpawnPointAssistant # TODO rename, but requires map changes.
   parent: SpawnPointJobBase
-  name: assistant
+  name: passenger
   components:
   - type: SpawnPoint
-    job_id: Assistant
+    job_id: Passenger
   - type: Sprite
     layers:
       - state: green
-      - state: assistant
+      - state: passenger
 
 - type: entity
   id: SpawnPointTechnicalAssistant

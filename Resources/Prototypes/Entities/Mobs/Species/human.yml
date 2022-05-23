@@ -6,6 +6,15 @@
   description: A miserable pile of secrets.
   noSpawn: true
   components:
+  - type: RangedDamageSound
+    soundGroups:
+      Brute:
+        collection:
+          MeatBulletImpact
+    soundTypes:
+      Heat:
+        collection:
+          MeatLaserImpact
   - type: Tag
     tags:
     - CanPilot
@@ -22,6 +31,7 @@
       effects:
       - !type:WashCreamPieReaction
   - type: Flashable
+  - type: Polymorphable
   - type: Hands
   - type: MovementSpeedModifier
   - type: MovedByPressure
@@ -191,12 +201,9 @@
       mass: 70
       restitution: 0.0
       mask:
-      - Impassable
-      - MobImpassable
-      - VaultImpassable
-      - SmallImpassable
+      - MobMask
       layer:
-      - Opaque
+      - MobLayer
   - type: AtmosExposed
   - type: Flammable
     fireSpread: true
@@ -421,16 +428,13 @@
       fixtures:
       - shape:
           !type:PhysShapeAabb
-            bounds: "-0.35,-0.35,0.35,0.35"
+          bounds: "-0.35,-0.35,0.35,0.35"
         mass: 70
         restitution: 0.0
         mask:
-        - Impassable
-        - MobImpassable
-        - VaultImpassable
-        - SmallImpassable
+        - MobMask
         layer:
-        - Opaque
+        - MobLayer
     - type: HumanoidAppearance
     - type: Body
       template: HumanoidTemplate

@@ -73,7 +73,7 @@
   - type: RangedWeapon
   - type: BatteryBarrel
     minAngle: 10
-    fireCost: 40
+    fireCost: 80
   - type: Appearance
     visuals:
     - type: MagVisualizer
@@ -97,10 +97,11 @@
         map: ["enum.RangedBarrelVisualLayers.MagUnshaded"]
         shader: unshaded
   - type: Item
-    size: 24
+    size: 48
     sprite: Objects/Weapons/Guns/Battery/makeshift.rsi
   - type: BatteryBarrel
-    fireCost: 120
+    fireCost: 240
+
 
 - type: entity
   name: svalinn laser pistol
@@ -121,7 +122,7 @@
     size: 12
     sprite: Objects/Weapons/Guns/Battery/svalinn.rsi
   - type: BatteryBarrel
-    fireCost: 25
+    fireCost: 50
 
 - type: entity
   name: PDW-10 pulse pistol
@@ -142,7 +143,7 @@
     size: 12
     sprite: Objects/Weapons/Guns/Battery/pulse_pistol.rsi
   - type: BatteryBarrel
-    fireCost: 25
+    fireCost: 50
     ammoPrototype: Pulse
     soundGunshot:
       path: /Audio/Weapons/Guns/Gunshots/laser_cannon.ogg
@@ -172,7 +173,8 @@
     size: 24
     sprite: Objects/Weapons/Guns/Battery/cog.rsi
   - type: BatteryBarrel
-    fireCost: 120
+    fireCost: 280
+    ammoPrototype: RedMediumLaser
 
 - type: entity
   name: nightfall laser rifle
@@ -193,7 +195,8 @@
     size: 24
     sprite: Objects/Weapons/Guns/Battery/nightfall.rsi
   - type: BatteryBarrel
-    fireCost: 6
+    fireCost: 200
+    ammoPrototype: RedMediumLaser
   - type: Appearance
     visuals:
     - type: MagVisualizer
@@ -220,7 +223,7 @@
     size: 24
     sprite: Objects/Weapons/Guns/Battery/pulse_carbine.rsi
   - type: BatteryBarrel
-    fireCost: 120
+    fireCost: 240
     ammoPrototype: Pulse
     soundGunshot:
       path: /Audio/Weapons/Guns/Gunshots/laser_cannon.ogg
@@ -250,7 +253,7 @@
     size: 24
     sprite: Objects/Weapons/Guns/Battery/pulse_rifle.rsi
   - type: BatteryBarrel
-    fireCost: 6
+    fireCost: 200
     ammoPrototype: Pulse
     soundGunshot:
       path: /Audio/Weapons/Guns/Gunshots/laser_cannon.ogg
@@ -280,7 +283,8 @@
     size: 24
     sprite: Objects/Weapons/Guns/Battery/laser_cannon.rsi
   - type: BatteryBarrel
-    fireCost: 4000
+    fireCost: 18000
+    fireRate: 1
     ammoPrototype: RedHeavyLaser
     soundGunshot:
       path: /Audio/Weapons/Guns/Gunshots/laser_cannon.ogg
@@ -310,7 +314,8 @@
     size: 24
     sprite: Objects/Weapons/Guns/Battery/xray.rsi
   - type: BatteryBarrel
-    fireCost: 6000
+    fireRate: 0.5
+    fireCost: 54000
     ammoPrototype: XrayLaser
     soundGunshot:
       path: /Audio/Weapons/Guns/Gunshots/laser3.ogg
@@ -355,13 +360,50 @@
   - type: BatteryBarrel
     minAngle: 5
     angleIncrease: 20
-    fireCost: 360
+    fireCost: 620
     ammoPrototype: BulletTaser
     soundGunshot:
       path: /Audio/Weapons/Guns/Gunshots/taser.ogg
   - type: PowerCellSlot
     descFormatString : "" # empty string for no examine-text (cell is not ejectable)
     cellSlot:
+      soundOptions:
+        volume: -2
+      locked: true
+  - type: Appearance
+    visuals:
+    - type: MagVisualizer
+      magState: mag
+      steps: 5
+      zeroVisible: true
+
+- type: entity
+  name: antique laser gun
+  parent: BatteryGunSmall
+  id: AntiqueLaserGun
+  description: This is an antique laser gun. All craftsmanship is of the highest quality. It is decorated with assistant leather and chrome. The object menaces with spikes of energy.
+  components:
+  - type: Sprite
+    netsync: false
+    sprite: Objects/Weapons/Guns/Battery/antiquelasergun.rsi
+    layers:
+      - state: base
+        map: ["enum.RangedBarrelVisualLayers.Base"]
+      - state: mag-unshaded-4
+        map: ["enum.RangedBarrelVisualLayers.MagUnshaded"]
+        shader: unshaded
+  - type: Item
+    size: 12
+    sprite: Objects/Weapons/Guns/Battery/antiquelasergun.rsi
+  - type: BatteryBarrel
+    fireCost: 240
+    soundGunshot:
+      path: /Audio/Weapons/Guns/Gunshots/laser_cannon.ogg
+  - type: RangedWeapon    
+  - type: PowerCellSlot
+    descFormatString : "" # empty string for no examine-text (cell is not ejectable)
+    cellSlot:
+      startingItem: PowerCellAntiqueProto
       soundOptions:
         volume: -2
       locked: true

@@ -360,10 +360,9 @@
         node: girder
       - !type:DoActsBehavior
         acts: ["Destruction"]
-  - type: ReinforcedWall
+  - type: IconSmooth
     key: walls
-    base: solid
-    reinforcedBase: reinf_over
+    base: reinf_over
   - type: Appearance
     visuals:
       - type: ReinforcedWallVisualizer
@@ -498,14 +497,10 @@
           - "-0.5,-0.5"
           - "0.5,0.5"
           - "0.5,-0.5"
-      layer:
-      - Opaque
-      - Impassable
-      - MobImpassable
-      - VaultImpassable
-      - SmallImpassable
       mask:
-      - Impassable
+      - FullTileMask
+      layer:
+      - WallLayer
   - type: Destructible
     thresholds:
     - trigger:
@@ -712,10 +707,8 @@
     - shape:
         !type:PhysShapeAabb
           bounds: "-0.5,-0.5,0.5,0.5"
-      layer:
-      - Impassable
-      - VaultImpassable
-      - SmallImpassable
       mask:
-      - Impassable
+      - FullTileMask
+      layer:
+      - GlassLayer
   - type: Airtight

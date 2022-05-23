@@ -4,8 +4,10 @@
   mapPath: /Maps/Test/empty.yml
   minPlayers: 0
   votable: false
-  overflowJobs:
-    - Assistant
-  availableJobs:
-    Assistant: [ -1, -1 ]
-
+  stations:
+    Station: #TODO: Add a BecomesStation to empty.yml
+      mapNameTemplate: "Empty"
+      overflowJobs:
+        - Passenger
+      availableJobs:
+        Passenger: [ -1, -1 ]

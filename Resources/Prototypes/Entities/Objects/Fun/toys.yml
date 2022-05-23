@@ -257,8 +257,8 @@
 
 - type: entity
   parent: BaseItem
-  id: ToyAssistant
-  name: assistant toy
+  id: ToyAssistant # TODO rename but needs map changes
+  name: passenger toy
   description: Grey tide world wide!
   components:
   - type: Sprite

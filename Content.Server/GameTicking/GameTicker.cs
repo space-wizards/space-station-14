@@ -1,16 +1,15 @@
 using Content.Server.Administration.Logs;
 using Content.Server.Administration.Managers;
-using Content.Server.CharacterAppearance.Systems;
 using Content.Server.Chat.Managers;
 using Content.Server.Database;
 using Content.Server.Ghost;
 using Content.Server.Maps;
-using Content.Server.PDA;
 using Content.Server.Preferences.Managers;
-using Content.Server.Station;
+using Content.Server.Station.Systems;
 using Content.Shared.Chat;
 using Content.Shared.Damage;
 using Content.Shared.GameTicking;
+using Content.Shared.Roles;
 using Robust.Server;
 using Robust.Server.Maps;
 using Robust.Server.ServerStatus;
@@ -53,8 +52,9 @@ namespace Content.Server.GameTicking
             InitializeLobbyMusic();
             InitializeLobbyBackground();
             InitializeGamePreset();
+            DebugTools.Assert(_prototypeManager.Index<JobPrototype>(FallbackOverflowJob).Name == Loc.GetString(FallbackOverflowJobName),
+                "Overflow role does not have the correct name!");
             InitializeGameRules();
-            InitializeJobController();
             InitializeUpdates();
 
             _initialized = true;
@@ -97,7 +97,6 @@ namespace Content.Server.GameTicking
         [Dependency] private readonly IGameTiming _gameTiming = default!;
         [Dependency] private readonly IConfigurationManager _configurationManager = default!;
         [Dependency] private readonly IChatManager _chatManager = default!;
-        [Dependency] private readonly IServerNetManager _netManager = default!;
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
         [Dependency] private readonly IRobustRandom _robustRandom = default!;
         [Dependency] private readonly IServerPreferencesManager _prefsManager = default!;
@@ -111,9 +110,9 @@ namespace Content.Server.GameTicking
         [Dependency] private readonly IRuntimeLog _runtimeLog = default!;
 #endif
         [Dependency] private readonly StationSystem _stationSystem = default!;
+        [Dependency] private readonly StationSpawningSystem _stationSpawning = default!;
+        [Dependency] private readonly StationJobsSystem _stationJobs = default!;
         [Dependency] private readonly AdminLogSystem _adminLogSystem = default!;
-        [Dependency] private readonly HumanoidAppearanceSystem _humanoidAppearanceSystem = default!;
-        [Dependency] private readonly PDASystem _pdaSystem = default!;
         [Dependency] private readonly DamageableSystem _damageable = default!;
         [Dependency] private readonly GhostSystem _ghosts = default!;
         [Dependency] private readonly RoleBanManager _roleBanManager = default!;

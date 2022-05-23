@@ -434,3 +434,14 @@
     sprite: Clothing/Head/Hats/papersacksmile.rsi
   - type: Clothing
     sprite: Clothing/Head/Hats/papersacksmile.rsi
+
+- type: entity
+  parent: ClothingHeadBase
+  id: ClothingHeadFishCap
+  name: fishing cap
+  description: Women fear me. Fish fear me. Men turn their eyes away from me. As I walk no beast dares make a sound in my presence. I am alone on this barren Earth.
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/Hats/fishcap.rsi
+  - type: Clothing
+    sprite: Clothing/Head/Hats/fishcap.rsi

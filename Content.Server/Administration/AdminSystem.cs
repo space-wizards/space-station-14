@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using Content.Server.Administration.Managers;
@@ -9,8 +8,6 @@ using Content.Shared.Administration.Events;
 using Robust.Server.GameObjects;
 using Robust.Server.Player;
 using Robust.Shared.Enums;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
 using Robust.Shared.Network;
 
 namespace Content.Server.Administration
