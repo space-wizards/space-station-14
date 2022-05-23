@@ -22,7 +22,7 @@ namespace Content.Server.Communications
         /// Fluent ID for the announcement title
         /// </summary>
         [DataField("title", required: true)]
-        public string AnnouncementDisplayName = "communicationsconsole-announcement-title";
+        public string AnnouncementDisplayName = "communicationsconsole-announcement-title-station";
 
         /// <summary>
         /// Announcement color
