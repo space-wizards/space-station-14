@@ -1,5 +1,4 @@
 using System.Globalization;
-using System.Threading;
 using Content.Server.Access.Systems;
 using Content.Server.AlertLevel;
 using Content.Server.Chat.Managers;
@@ -11,7 +10,6 @@ using Content.Shared.Access.Systems;
 using Content.Shared.Communications;
 using Robust.Shared.Player;
 using Robust.Shared.Timing;
-using Timer = Robust.Shared.Timing.Timer;
 
 namespace Content.Server.Communications
 {
@@ -29,19 +27,37 @@ namespace Content.Server.Communications
 
         private const int MaxMessageLength = 256;
 
-        private TimeSpan _delayBetweenShuttleCalls = TimeSpan.FromSeconds(120);
-        private TimeSpan _shuttleStatusLastChanged = TimeSpan.Zero;
-
         public override void Initialize()
         {
+            // All events that refresh the BUI
+            SubscribeLocalEvent<CommunicationsConsoleComponent, ComponentInit>((_, comp, _) => UpdateBoundUserInterface(comp));
             SubscribeLocalEvent<CommunicationsConsoleComponent, RoundEndSystemChangedEvent>((_, comp, _) => UpdateBoundUserInterface(comp));
             SubscribeLocalEvent<CommunicationsConsoleComponent, AlertLevelChangedEvent>((_, comp, _) => UpdateBoundUserInterface(comp));
             SubscribeLocalEvent<CommunicationsConsoleComponent, AlertLevelDelayFinishedEvent>((_, comp, _) => UpdateBoundUserInterface(comp));
 
+            // Messages from the BUI
             SubscribeLocalEvent<CommunicationsConsoleComponent, CommunicationsConsoleSelectAlertLevelMessage>(OnSelectAlertLevelMessage);
             SubscribeLocalEvent<CommunicationsConsoleComponent, CommunicationsConsoleAnnounceMessage>(OnAnnounceMessage);
-            SubscribeLocalEvent<CommunicationsConsoleComponent, CommunicationsConsoleCallEmergencyShuttleMessage>((uid, _, args) => OnCallShuttleMessage(uid, args));
-            SubscribeLocalEvent<CommunicationsConsoleComponent, CommunicationsConsoleRecallEmergencyShuttleMessage>((uid, _, args) => OnRecallShuttleMessage(uid, args));
+            SubscribeLocalEvent<CommunicationsConsoleComponent, CommunicationsConsoleCallEmergencyShuttleMessage>(OnCallShuttleMessage);
+            SubscribeLocalEvent<CommunicationsConsoleComponent, CommunicationsConsoleRecallEmergencyShuttleMessage>(OnRecallShuttleMessage);
+        }
+
+        public override void Update(float frameTime)
+        {
+            foreach (var comp in EntityManager.EntityQuery<CommunicationsConsoleComponent>())
+            {
+                if (comp.AnnouncementCooldownRemaining <= 0f)
+                {
+                    // TODO: Find a less ass way of refreshing the UI
+                    if (!comp.AlreadyRefreshed) return;
+                    UpdateBoundUserInterface(comp);
+                    comp.AlreadyRefreshed = true;
+                    return;
+                }
+                comp.AnnouncementCooldownRemaining -= frameTime;
+            }
+
+            base.Update(frameTime);
         }
 
         private void UpdateBoundUserInterface(CommunicationsConsoleComponent comp)
@@ -78,7 +94,7 @@ namespace Content.Server.Communications
             comp.UserInterface?.SetState(
                 new CommunicationsConsoleInterfaceState(
                     CanAnnounce(comp),
-                    _roundEndSystem.CanCall(),
+                    CanCall(comp),
                     levels,
                     currentLevel,
                     currentDelay,
@@ -89,15 +105,28 @@ namespace Content.Server.Communications
 
         private bool CanAnnounce(CommunicationsConsoleComponent comp)
         {
-            if (comp.LastAnnouncementTime == TimeSpan.Zero)
+            return comp.AnnouncementCooldownRemaining <= 0f;
+        }
+
+        private bool CanUse(EntityUid user, EntityUid console)
+        {
+            if (_entityManager.TryGetComponent<AccessReaderComponent>(console, out var accessReaderComponent) && accessReaderComponent.Enabled)
             {
-                return true;
+                return _accessReaderSystem.IsAllowed(accessReaderComponent, user);
             }
-            return _gameTiming.CurTime >= comp.LastAnnouncementTime + TimeSpan.FromSeconds(comp.DelayBetweenAnnouncements);
+            return true;
+        }
+
+        private bool CanCall(CommunicationsConsoleComponent comp)
+        {
+            return comp.CanCallShuttle && _roundEndSystem.CanCall();
         }
 
         private void OnSelectAlertLevelMessage(EntityUid uid, CommunicationsConsoleComponent comp, CommunicationsConsoleSelectAlertLevelMessage message)
         {
+            if (message.Session.AttachedEntity is not {Valid: true} mob) return;
+            if (!CanUse(mob, uid)) return;
+
             var stationUid = _stationSystem.GetOwningStation(uid);
             if (stationUid != null)
             {
@@ -105,44 +134,64 @@ namespace Content.Server.Communications
             }
         }
 
-        private void OnAnnounceMessage(EntityUid uid, CommunicationsConsoleComponent comp, CommunicationsConsoleAnnounceMessage message)
+        private void OnAnnounceMessage(EntityUid uid, CommunicationsConsoleComponent comp,
+            CommunicationsConsoleAnnounceMessage message)
         {
-            if (!CanAnnounce(comp))
-            {
-                return;
-            }
-
-            comp.LastAnnouncementTime = _gameTiming.CurTime;
-            UpdateBoundUserInterface(comp);
-
             var msg = message.Message.Length <= MaxMessageLength ? message.Message.Trim() : $"{message.Message.Trim().Substring(0, MaxMessageLength)}...";
             var author = Loc.GetString("communicationsconsole-announcement-unknown-sender");
-            if (message.Session.AttachedEntity is {Valid: true} mob && _idCardSystem.TryFindIdCard(mob, out var id))
+            if (message.Session.AttachedEntity is {Valid: true} mob)
             {
-                if (_entityManager.TryGetComponent<AccessReaderComponent>(uid, out var accessReaderComponent) && accessReaderComponent.Enabled)
+                if (!CanAnnounce(comp))
                 {
-                    if (!_accessReaderSystem.IsAllowed(accessReaderComponent, mob))
-                    {
-                        _popupSystem.PopupEntity(Loc.GetString("communicationsconsole-permission-denied"), uid, Filter.Entities(mob));
-                        return;
-                    }
+                    return;
                 }
 
-                author = $"{id.FullName} ({CultureInfo.CurrentCulture.TextInfo.ToTitleCase(id.JobTitle ?? string.Empty)})".Trim();
+                if (_idCardSystem.TryFindIdCard(mob, out var id))
+                {
+                    author = $"{id.FullName} ({CultureInfo.CurrentCulture.TextInfo.ToTitleCase(id.JobTitle ?? string.Empty)})".Trim();
+                }
+
+                if (!CanUse(mob, uid))
+                {
+                    _popupSystem.PopupEntity(Loc.GetString("communicationsconsole-permission-denied"), uid, Filter.Entities(mob));
+                    return;
+                }
             }
 
+            comp.AnnouncementCooldownRemaining = comp.DelayBetweenAnnouncements;
+            comp.AlreadyRefreshed = false;
+            UpdateBoundUserInterface(comp);
+
             msg += "\n" + Loc.GetString("communicationsconsole-announcement-sent-by") + " " + author;
-            _chatManager.DispatchStationAnnouncement(msg, Loc.GetString(comp.AnnouncementDisplayName));
+            _chatManager.DispatchStationAnnouncement(msg, Loc.GetString(comp.AnnouncementDisplayName), colorOverride: comp.AnnouncementColor);
         }
 
-        private void OnCallShuttleMessage(EntityUid uid, CommunicationsConsoleCallEmergencyShuttleMessage message)
+        private void OnCallShuttleMessage(EntityUid uid, CommunicationsConsoleComponent comp, CommunicationsConsoleCallEmergencyShuttleMessage message)
         {
-            _roundEndSystem.RequestRoundEnd(uid);
+            if (!comp.CanCallShuttle) return;
+            if (message.Session.AttachedEntity is not {Valid: true} mob) return;
+            if (CanUse(mob, uid))
+            {
+                _roundEndSystem.RequestRoundEnd(uid);
+            }
+            else
+            {
+                _popupSystem.PopupEntity(Loc.GetString("communicationsconsole-permission-denied"), uid, Filter.Entities(mob));
+            }
         }
 
-        private void OnRecallShuttleMessage(EntityUid uid, CommunicationsConsoleRecallEmergencyShuttleMessage message)
+        private void OnRecallShuttleMessage(EntityUid uid, CommunicationsConsoleComponent comp, CommunicationsConsoleRecallEmergencyShuttleMessage message)
         {
-            _roundEndSystem.CancelRoundEndCountdown(uid);
+            if (!comp.CanCallShuttle) return;
+            if (message.Session.AttachedEntity is not {Valid: true} mob) return;
+            if (CanUse(mob, uid))
+            {
+                _roundEndSystem.CancelRoundEndCountdown(uid);
+            }
+            else
+            {
+                _popupSystem.PopupEntity(Loc.GetString("communicationsconsole-permission-denied"), uid, Filter.Entities(mob));
+            }
         }
     }
 }

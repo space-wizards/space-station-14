@@ -281,7 +281,7 @@
   - type: AccessReader
     access: [[ "Command" ]]
   - type: CommunicationsConsole
-    announcementTitle: communicationsconsole-announcement-title-nanotrasen
+    title: communicationsconsole-announcement-title-station
   - type: ActivatableUI
     key: enum.CommunicationsConsoleUiKey.Key
   - type: ActivatableUIRequiresPower
@@ -305,7 +305,9 @@
   - type: AccessReader
     access: [[ "NuclearOperative" ]]
   - type: CommunicationsConsole
-    announcementTitle: communicationsconsole-announcement-title-nukie
+    title: communicationsconsole-announcement-title-nukie
+    color: "#ff0000"
+    canShuttle: false
   - type: Computer
     board: SyndicateCommsComputerCircuitboard
   - type: PointLight

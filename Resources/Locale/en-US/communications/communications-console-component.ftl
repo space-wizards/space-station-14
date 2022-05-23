@@ -12,5 +12,6 @@ communicationsconsole-announcement-sent-by = Sent by
 communicationsconsole-announcement-unknown-sender = Unknown
 
 # Comms console variant titles
-communicationsconsole-announcement-title-nanotrasen = Communications Console
+communicationsconsole-announcement-title-station = Communications Console
+communicationsconsole-announcement-title-centcom = Central Command
 communicationsconsole-announcement-title-nukie = Syndicate Nuclear Operative
