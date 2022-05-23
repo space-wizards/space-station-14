@@ -36,7 +36,7 @@
   physicalDesc: reagent-physical-desc-shiny
   color: "#77b58e"
   boilingPoint: 290.0 # Glycerin
-  meltingPoint: 18.2 
+  meltingPoint: 18.2
   tileReactions:
     - !type:SpillTileReaction
       paralyzeTime: 3

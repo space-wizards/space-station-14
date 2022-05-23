@@ -14,7 +14,7 @@
     sprite: Objects/Specific/Janitorial/soap.rsi
   - type: Slippery
     paralyzeTime: 2
-    launchForwardsMultiplier: 6.0
+    launchForwardsMultiplier: 1.5
   - type: StepTrigger
     intersectRatio: 0.2
   - type: CollisionWake

@@ -1,6 +1,8 @@
 using Content.Shared.Administration.Logs;
 using Content.Shared.Database;
+using Content.Shared.DragDrop;
 using Content.Shared.Inventory;
+using Content.Shared.Standing;
 using Content.Shared.StatusEffect;
 using Content.Shared.StepTrigger;
 using Content.Shared.Stunnable;
@@ -58,7 +60,9 @@ namespace Content.Shared.Slippery
             var ev = new SlipAttemptEvent();
             RaiseLocalEvent(other, ev, false);
             if (ev.Cancelled)
+            {
                 return;
+            }
 
             if (TryComp(other, out PhysicsComponent? physics))
                 physics.LinearVelocity *= component.LaunchForwardsMultiplier;
