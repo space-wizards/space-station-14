@@ -1,71 +1,12 @@
 {
   "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Taken from tgstation at commit https://github.com/tgstation/tgstation/commit/b525e9162af318a9cc8146f513dd5af8a9819c72 and modified by blankmann",
   "size": {
     "x": 32,
     "y": 32
   },
   "states": [
-    {
-      "name": "large"
-    },
-    {
-      "name": "medium"
-    },
-    {
-      "name": "small"
-    },
-    {
-      "name": "tiny",
-      "directions": 4
-    },
-    {
-      "name": "shiv"
-    },
-    {
-      "name": "plasmalarge"
-    },
-    {
-      "name": "plasmamedium"
-    },
-    {
-      "name": "plasmasmall"
-    },
-    {
-      "name": "plasmatiny",
-      "directions": 4
-    },
-    {
-      "name": "plasmashiv"
-    },
-    {
-      "name": "titaniumlarge"
-    },
-    {
-      "name": "titaniummedium"
-    },
-    {
-      "name": "titaniumsmall"
-    },
-    {
-      "name": "titaniumtiny",
-      "directions": 4
-    },
-    {
-      "name": "titaniumshiv"
-    },
-    {
-      "name": "plastitaniumlarge"
-    },
-    {
-      "name": "plastitaniummedium"
-    },
-    {
-      "name": "plastitaniumsmall"
-    },
-    {
-      "name": "plastitaniumtiny",
-      "directions": 4
-    },
     {
       "name": "plastitaniumshiv"
     }
