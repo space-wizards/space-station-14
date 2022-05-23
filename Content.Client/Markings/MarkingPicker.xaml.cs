@@ -349,9 +349,9 @@ namespace Content.Client.Markings
                 );
                 colorSelector.Color = currentColor;
                 _currentMarkingColors.Add(currentColor);
-                int colorIndex = _currentMarkingColors.IndexOf(currentColor);
+                var colorIndex = _currentMarkingColors.Count - 1;
 
-                Action<Color> colorChanged = delegate(Color color)
+                Action<Color> colorChanged = _ =>
                 {
                     _currentMarkingColors[colorIndex] = colorSelector.Color;
 
