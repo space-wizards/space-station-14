@@ -240,6 +240,7 @@ public sealed class WiresSystem : EntitySystem
             SetOrCreateWireLayout(uid, component);
 
         UpdateUserInterface(uid);
+        UpdateAppearance(uid);
     }
     #endregion
 
