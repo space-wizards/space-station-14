@@ -130,6 +130,7 @@
   - type: Pullable
   - type: Buckle
   - type: Recyclable
+  - type: DiseaseCarrier
     safe: false
   - type: StandingState
   - type: Alerts
