@@ -17,3 +17,22 @@
   dropInventory: true
   revertOnCrit: true
   revertOnDeath: true
+
+# this is a test for transferring some visual appearance stuff
+- type: polymorph
+  id: TestHumanMorph
+  entity: MobHuman
+  transferName: true
+  transferHumanoidAppearance: true
+  transferInventory: true
+
+- type: polymorph
+  id: ZombieGeneric
+  entity: MobMonkey 
+  forced: true
+  transferDamage: false
+  transferName: true
+  transferHumanoidAppearance: true
+  transferInventory: true
+  revertOnCrit: false
+  revertOnDeath: false

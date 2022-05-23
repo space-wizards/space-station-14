@@ -53,6 +53,30 @@ namespace Content.Shared.Polymorph
         public bool Forced = false;
 
         /// <summary>
+        /// Whether or not the entity transfers it's damage between forms.
+        /// </summary>
+        [DataField("transferDamage", serverOnly: true)]
+        public bool TransferDamage = true;
+
+        /// <summary>
+        /// Whether or not the entity transfers it's name between forms.
+        /// </summary>
+        [DataField("transferName", serverOnly: true)]
+        public bool TransferName = false;
+
+        /// <summary>
+        /// Whether or not the entity transfers it's hair, skin color, hair color, etc.
+        /// </summary>
+        [DataField("transferHumanoidAppearance", serverOnly: true)]
+        public bool TransferHumanoidAppearance = false;
+
+        /// <summary>
+        /// Whether or not the entity transfers it's inventory and equipment between forms.
+        /// </summary>
+        [DataField("transferInventory", serverOnly: true)]
+        public bool TransferInventory = false;
+
+        /// <summary>
         /// Whether or not the target will drop their inventory
         /// when they are polymorphed (includes items in hands)
         /// </summary>

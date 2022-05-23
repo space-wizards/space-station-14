@@ -7,6 +7,8 @@ using Content.Server.Polymorph.Components;
 using Content.Server.Popups;
 using Content.Shared.Actions;
 using Content.Shared.Actions.ActionTypes;
+using Content.Shared.CharacterAppearance.Components;
+using Content.Shared.CharacterAppearance.Systems;
 using Content.Shared.Damage;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Polymorph;
@@ -27,8 +29,8 @@ namespace Content.Server.Polymorph.Systems
         [Dependency] private readonly ServerInventorySystem _inventory = default!;
         [Dependency] private readonly SharedHandsSystem _sharedHands = default!;
         [Dependency] private readonly DamageableSystem _damageable = default!;
-        [Dependency] private readonly PopupSystem _popup = default!;
         [Dependency] private readonly IMapManager _mapManager = default!;
+        [Dependency] private readonly SharedHumanoidAppearanceSystem _sharedHuApp = default!;
 
         public override void Initialize()
         {
@@ -61,15 +63,15 @@ namespace Content.Server.Polymorph.Systems
         /// </summary>
         /// <param name="target">The entity that will be transformed</param>
         /// <param name="id">The id of the polymorph prototype</param>
-        public void PolymorphEntity(EntityUid target, String id)
+        public EntityUid? PolymorphEntity(EntityUid target, String id)
         {
             if (!_proto.TryIndex<PolymorphPrototype>(id, out var proto))
             {
                 _saw.Error("Invalid polymorph prototype");
-                return;
+                return null;
             }
 
-            PolymorphEntity(target, proto);
+            return PolymorphEntity(target, proto);
         }
 
         /// <summary>
@@ -77,8 +79,12 @@ namespace Content.Server.Polymorph.Systems
         /// </summary>
         /// <param name="target">The entity that will be transformed</param>
         /// <param name="proto">The polymorph prototype</param>
-        public void PolymorphEntity(EntityUid target, PolymorphPrototype proto)
+        public EntityUid? PolymorphEntity(EntityUid target, PolymorphPrototype proto)
         {
+            /// This is the big papa function. This handles the transformation, moving the old entity
+            /// logic and conditions specified in the prototype, and everything else that may be needed.
+            /// I am clinically insane - emo
+
             // mostly just for vehicles
             if (TryComp<BuckleComponent>(target, out var buckle))
                 buckle.TryUnbuckle(target, true);
@@ -93,40 +99,84 @@ namespace Content.Server.Polymorph.Systems
             comp.Prototype = proto;
             RaiseLocalEvent(child, new PolymorphComponentSetupEvent());
 
+            var targetXform = Transform(target);
+            var childXform = Transform(child);
+            childXform.LocalRotation = targetXform.LocalRotation;
+
             //Transfers all damage from the original to the new one
-            if (TryComp<DamageableComponent>(child, out var damageParent) &&
+            if (proto.TransferDamage &&
+                TryComp<DamageableComponent>(child, out var damageParent) &&
                 _damageable.GetScaledDamage(target, child, out var damage) &&
                 damage != null)
             {
                 _damageable.SetDamage(damageParent, damage);
             }
 
-            if (proto.DropInventory)
+            if (proto.DropInventory || proto.TransferInventory)
             {
-                //drops everything in the user's inventory
                 if (_inventory.TryGetContainerSlotEnumerator(target, out var enumerator))
                 {
+                    Dictionary<string, EntityUid?> inventoryEntities = new();
+                    var slots = _inventory.GetSlots(target);
                     while (enumerator.MoveNext(out var containerSlot))
                     {
+                        //records all the entities stored in each of the target's slots
+                        foreach (var slot in slots)
+                        {
+                            if (_inventory.TryGetSlotContainer(child, slot.Name, out var conslot, out var _) &&
+                                conslot.ID == containerSlot.ID)
+                            {
+                                inventoryEntities.Add(slot.Name, containerSlot.ContainedEntity);
+                            }
+                        }
+                        //drops everything in the target's inventory on the ground
                         containerSlot.EmptyContainer();
+                    }
+
+                    /// this is the specific code which takes the data about all the entities we stored earlier
+                    /// and actually equips all of it to the new entity
+                    if (proto.TransferInventory)
+                    {
+                        foreach (var item in inventoryEntities)
+                        {
+                            if (item.Value != null)
+                                _inventory.TryEquip(child, item.Value.Value, item.Key, true);
+                        }
                     }
                 }
                 //drops everything in the user's hands
                 foreach (var hand in _sharedHands.EnumerateHeld(target))
                 {
                     hand.TryRemoveFromContainer();
+                    if (proto.TransferInventory)
+                        _sharedHands.TryPickupAnyHand(child, hand);
                 }
             }
 
+            if (proto.TransferName &&
+                TryComp<MetaDataComponent>(target, out var targetMeta) &&
+                TryComp<MetaDataComponent>(child, out var childMeta))
+            {
+                childMeta.EntityName = targetMeta.EntityName;
+            }
+
+            if (proto.TransferHumanoidAppearance &&
+                TryComp<HumanoidAppearanceComponent>(target, out var targetHuApp) &&
+                TryComp<HumanoidAppearanceComponent>(child, out var childHuApp))
+            {
+                _sharedHuApp.UpdateAppearance(child, targetHuApp.Appearance);
+                _sharedHuApp.ForceAppearanceUpdate(child);
+            }
+
             if (TryComp<MindComponent>(target, out var mind) && mind.Mind != null)
-                mind.Mind.TransferTo(child);
+                    mind.Mind.TransferTo(child);
 
             //Ensures a map to banish the entity to
             EnsurePausesdMap();
-            if(PausedMap != null)
+            if (PausedMap != null)
                 targetTransformComp.AttachParent(Transform(PausedMap.Value));
-            
-            _popup.PopupEntity(Loc.GetString("polymorph-popup-generic", ("parent", target), ("child", child)), child, Filter.Pvs(child));
+
+            return child;
         }
 
         public void CreatePolymorphAction(string id, EntityUid target)
@@ -136,7 +186,7 @@ namespace Content.Server.Polymorph.Systems
                 _saw.Error("Invalid polymorph prototype");
                 return;
             }
-                
+
             if (!TryComp<PolymorphableComponent>(target, out var polycomp))
                 return;
 
