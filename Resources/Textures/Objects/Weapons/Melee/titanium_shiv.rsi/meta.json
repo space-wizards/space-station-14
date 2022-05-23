@@ -1,0 +1,73 @@
+{
+  "version": 1,
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "large"
+    },
+    {
+      "name": "medium"
+    },
+    {
+      "name": "small"
+    },
+    {
+      "name": "tiny",
+      "directions": 4
+    },
+    {
+      "name": "shiv"
+    },
+    {
+      "name": "plasmalarge"
+    },
+    {
+      "name": "plasmamedium"
+    },
+    {
+      "name": "plasmasmall"
+    },
+    {
+      "name": "plasmatiny",
+      "directions": 4
+    },
+    {
+      "name": "plasmashiv"
+    },
+    {
+      "name": "titaniumlarge"
+    },
+    {
+      "name": "titaniummedium"
+    },
+    {
+      "name": "titaniumsmall"
+    },
+    {
+      "name": "titaniumtiny",
+      "directions": 4
+    },
+    {
+      "name": "titaniumshiv"
+    },
+    {
+      "name": "plastitaniumlarge"
+    },
+    {
+      "name": "plastitaniummedium"
+    },
+    {
+      "name": "plastitaniumsmall"
+    },
+    {
+      "name": "plastitaniumtiny",
+      "directions": 4
+    },
+    {
+      "name": "plastitaniumshiv"
+    }
+  ]
+}
