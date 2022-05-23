@@ -34,7 +34,7 @@ public abstract partial class SharedNewGunSystem
 
     private void OnBallisticExamine(EntityUid uid, BallisticAmmoProviderComponent component, ExaminedEvent args)
     {
-        args.PushMarkup($"It has [color=yellow]{GetShots(component)}[/yellow] ammo.");
+        args.PushMarkup($"It has [color={AmmoExamineColor}]{GetShots(component)}[/yellow] ammo.");
     }
 
     // Not implemented here as the client will replay it a billion times.

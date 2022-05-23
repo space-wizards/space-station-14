@@ -10,6 +10,7 @@ using Robust.Shared.Containers;
 using Robust.Shared.GameStates;
 using Robust.Shared.Map;
 using Robust.Shared.Player;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Serialization;
 using Robust.Shared.Timing;
@@ -21,6 +22,7 @@ public abstract partial class SharedNewGunSystem : EntitySystem
 {
     [Dependency] protected readonly IGameTiming Timing = default!;
     [Dependency] protected readonly IMapManager MapManager = default!;
+    [Dependency] protected readonly IPrototypeManager ProtoManager = default!;
     [Dependency] protected readonly IRobustRandom Random = default!;
     [Dependency] protected readonly SharedActionsSystem Actions = default!;
     [Dependency] protected readonly SharedContainerSystem Containers = default!;
@@ -31,6 +33,10 @@ public abstract partial class SharedNewGunSystem : EntitySystem
 
     protected const float InteractNextFire = 0.3f;
     public const float EjectOffset = 0.4f;
+    public string AmmoExamineColor = "yellow";
+    public string FireRateExamineColor = "yellow";
+    public string SafetyExamineColor = "lightgreen";
+    public string ModeExamineColor = "cyan";
 
     public override void Initialize()
     {
@@ -42,6 +48,7 @@ public abstract partial class SharedNewGunSystem : EntitySystem
 
         // Ammo providers
         InitializeBallistic();
+        InitializeBattery();
         InitializeChamberMagazine();
         InitializeMagazine();
         InitializeRevolver();

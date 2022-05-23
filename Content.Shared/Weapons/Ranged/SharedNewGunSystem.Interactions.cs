@@ -10,9 +10,9 @@ public abstract partial class SharedNewGunSystem
 {
     private void OnExamine(EntityUid uid, NewGunComponent component, ExaminedEvent args)
     {
-        var selectColor = component.SelectedMode == SelectiveFire.Safety ? "lightgreen" : "cyan";
+        var selectColor = component.SelectedMode == SelectiveFire.Safety ? SafetyExamineColor : ModeExamineColor;
         args.PushMarkup($"Current selected fire mode is [color={selectColor}]{component.SelectedMode}[/color].");
-        args.PushMarkup($"Fire rate is [color=yellow]{component.FireRate}[/color] per second.");
+        args.PushMarkup($"Fire rate is [color={FireRateExamineColor}]{component.FireRate}[/color] per second.");
     }
 
     private void OnAltVerb(EntityUid uid, NewGunComponent component, GetVerbsEvent<AlternativeVerb> args)
