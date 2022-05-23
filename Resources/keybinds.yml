@@ -101,6 +101,10 @@ binds:
 - function: EditorRotateObject
   type: State
   key: MouseMiddle
+- function: EditorCopyObject
+  type: State
+  mod1: Shift
+  key: MouseMiddle
 - function: SwapHands
   type: State
   key: X
