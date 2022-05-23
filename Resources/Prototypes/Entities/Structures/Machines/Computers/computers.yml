@@ -278,7 +278,10 @@
     - type: ComputerVisualizer
       key: generic_key
       screen: comm
+  - type: AccessReader
+    access: [[ "Command" ]]
   - type: CommunicationsConsole
+    announcementTitle: communicationsconsole-announcement-title
   - type: ActivatableUI
     key: enum.CommunicationsConsoleUiKey.Key
   - type: ActivatableUIRequiresPower

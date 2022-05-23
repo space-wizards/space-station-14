@@ -9,10 +9,22 @@ namespace Content.Server.Communications
     {
         public TimeSpan LastAnnouncementTime;
 
+        /// <summary>
+        /// Fluent ID for the announcement title
+        /// </summary>
+        [ViewVariables(VVAccess.ReadWrite)]
         [DataField("announcementTitle", required: true)]
-        public string? AnnouncementDisplayName;
+        public string AnnouncementDisplayName = "communicationsconsole-announcement-title";
+        /// <summary>
+        /// Time in seconds between announcement delays on a per-console basis
+        /// </summary>
+        [ViewVariables(VVAccess.ReadWrite)]
         [DataField("announcementDelay")]
-        public TimeSpan DelayBetweenAnnouncements = TimeSpan.FromSeconds(90);
+        public int DelayBetweenAnnouncements = 90;
+        /// <summary>
+        /// Disable altering the station alert level (for syndicate comms consoles and such)
+        /// </summary>
+        [ViewVariables(VVAccess.ReadWrite)]
         [DataField("canAlterAlertLevel")]
         public bool CanAlterAlertLevel = false;
 
