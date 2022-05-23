@@ -85,7 +85,7 @@
     solutions:
       food:
         reagents:
-        - ReagentId: Glucose
+        - ReagentId: Sugar
           Quantity: 10
   - type: Produce
     seedId: sugarcane

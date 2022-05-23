@@ -9,6 +9,15 @@
     snap:
     - Wall
   components:
+  - type: RangedDamageSound
+    soundGroups:
+      Brute:
+        collection:
+          MetalBulletImpact
+    soundTypes:
+      Heat:
+        collection:
+          MetalLaserImpact
   - type: Tag
     tags:
     - Wall

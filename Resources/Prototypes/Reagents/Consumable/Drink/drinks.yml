@@ -5,6 +5,14 @@
   desc: reagent-desc-coffee
   physicalDesc: reagent-physical-desc-aromatic
   color: "#664300"
+  metabolisms:
+    Drink:
+      effects:
+      - !type:SatiateThirst
+        factor: 2
+      - !type:AdjustReagent
+        reagent: Theobromine
+        amount: 0.05
 
 - type: reagent
   id: Cream
@@ -72,6 +80,14 @@
   physicalDesc: reagent-physical-desc-aromatic
   color: "#104038"
   spritePath: icedteaglass.rsi
+  metabolisms:
+    Drink:
+      effects:
+      - !type:SatiateThirst
+        factor: 2
+      - !type:AdjustReagent
+        reagent: Theobromine
+        amount: 0.05
 
 - type: reagent
   id: Lemonade
@@ -201,6 +217,14 @@
   desc: reagent-desc-tea
   physicalDesc: reagent-physical-desc-aromatic
   color: "#8a5a3a"
+  metabolisms:
+    Drink:
+      effects:
+      - !type:SatiateThirst
+        factor: 2
+      - !type:AdjustReagent
+        reagent: Theobromine
+        amount: 0.05
 
 - type: reagent
   id: TonicWater
@@ -275,3 +299,21 @@
       effects:
         - !type:SatiateThirst
           factor: 1
+
+- type: reagent
+  id: KiraSpecial
+  name: kira special
+  parent: BaseDrink
+  desc: Long live the guy who everyone had mistaken for a girl. Baka!
+  physicalDesc: strong-smelling
+  color: "#CCCC99"
+  spritePath: kiraspecial.rsi
+
+- type: reagent
+  id: Rewriter
+  name: rewriter
+  parent: BaseDrink
+  desc: The secret of the sanctuary of the Librarian...
+  physicalDesc: strong-smelling
+  color: "#485000"
+  spritePath: rewriter.rsi
