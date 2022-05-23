@@ -81,7 +81,6 @@ namespace Content.Server.Communications
                     _roundEndSystem.CanCall(),
                     levels,
                     currentLevel,
-                    comp.CanAlterAlertLevel,
                     currentDelay,
                     _roundEndSystem.ExpectedCountdownEnd
                     )
@@ -99,8 +98,6 @@ namespace Content.Server.Communications
 
         private void OnSelectAlertLevelMessage(EntityUid uid, CommunicationsConsoleComponent comp, CommunicationsConsoleSelectAlertLevelMessage message)
         {
-            if (!comp.CanAlterAlertLevel) return;
-
             var stationUid = _stationSystem.GetOwningStation(uid);
             if (stationUid != null)
             {

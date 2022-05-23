@@ -21,12 +21,6 @@ namespace Content.Server.Communications
         [ViewVariables(VVAccess.ReadWrite)]
         [DataField("announcementDelay")]
         public int DelayBetweenAnnouncements = 90;
-        /// <summary>
-        /// Disable altering the station alert level (for syndicate comms consoles and such)
-        /// </summary>
-        [ViewVariables(VVAccess.ReadWrite)]
-        [DataField("canAlterAlertLevel")]
-        public bool CanAlterAlertLevel = false;
 
         public BoundUserInterface? UserInterface => Owner.GetUIOrNull(CommunicationsConsoleUiKey.Key);
     }
