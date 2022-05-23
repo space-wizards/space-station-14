@@ -129,6 +129,7 @@ public sealed class PowerWireAction : BaseWireAction
             return true;
         }
 
+        var allCut = AllWiresCut(wire.Owner);
         // always set this to true
         SetElectrified(wire.Owner, true, electrified);
 
@@ -139,13 +140,13 @@ public sealed class PowerWireAction : BaseWireAction
         // electrocution continues - unless cancelled
         //
         // if the power is disabled however, just don't bother
-        if (timed && IsPowered(wire.Owner))
+        if (timed && IsPowered(wire.Owner) && !allCut)
         {
             WiresSystem.StartWireAction(wire.Owner, _pulseTimeout, PowerWireActionKey.ElectrifiedCancel, new TimedWireEvent(AwaitElectrifiedCancel, wire));
         }
         else
         {
-            if (AllWiresCut(wire.Owner))
+            if (allCut)
             {
                 SetElectrified(wire.Owner, false, electrified);
             }
