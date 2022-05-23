@@ -18,6 +18,9 @@ namespace Content.Shared.Power
         Pulsed,
         Electrified,
         PulseCancel,
-        ElectrifiedCancel
+        ElectrifiedCancel,
+        MainWire,
+        WireCount,
+        CutWires
     }
 }

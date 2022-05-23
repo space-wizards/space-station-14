@@ -27,7 +27,7 @@ public sealed class PowerWireAction : BaseWireAction
     public override StatusLightData? GetStatusLightData(Wire wire)
     {
         StatusLightState lightState = StatusLightState.Off;
-        if (WiresSystem.TryGetData(wire.Owner, PowerWireActionInternalKeys.MainWire, out int main)
+        if (WiresSystem.TryGetData(wire.Owner, PowerWireActionKey.MainWire, out int main)
             && main != wire.Id)
         {
             return null;
@@ -57,14 +57,14 @@ public sealed class PowerWireAction : BaseWireAction
 
     private bool AllWiresCut(EntityUid owner)
     {
-        return WiresSystem.TryGetData(owner, PowerWireActionInternalKeys.CutWires, out int? cut)
-            && WiresSystem.TryGetData(owner, PowerWireActionInternalKeys.WireCount, out int? count)
+        return WiresSystem.TryGetData(owner, PowerWireActionKey.CutWires, out int? cut)
+            && WiresSystem.TryGetData(owner, PowerWireActionKey.WireCount, out int? count)
             && count == cut;
     }
 
     private bool AllWiresMended(EntityUid owner)
     {
-        return WiresSystem.TryGetData(owner, PowerWireActionInternalKeys.CutWires, out int? cut)
+        return WiresSystem.TryGetData(owner, PowerWireActionKey.CutWires, out int? cut)
                && cut == 0;
     }
 
@@ -83,8 +83,8 @@ public sealed class PowerWireAction : BaseWireAction
             return;
         }
 
-        if (WiresSystem.TryGetData(owner, PowerWireActionInternalKeys.CutWires, out int? cut)
-            && WiresSystem.TryGetData(owner, PowerWireActionInternalKeys.WireCount, out int? count))
+        if (WiresSystem.TryGetData(owner, PowerWireActionKey.CutWires, out int? cut)
+            && WiresSystem.TryGetData(owner, PowerWireActionKey.WireCount, out int? count))
         {
             if (AllWiresCut(owner))
             {
@@ -105,10 +105,10 @@ public sealed class PowerWireAction : BaseWireAction
 
     private void SetWireCuts(EntityUid owner, bool isCut)
     {
-        if (WiresSystem.TryGetData(owner, PowerWireActionInternalKeys.CutWires, out int? cut))
+        if (WiresSystem.TryGetData(owner, PowerWireActionKey.CutWires, out int? cut))
         {
             cut = isCut ? cut + 1 : cut - 1;
-            WiresSystem.SetData(owner, PowerWireActionInternalKeys.CutWires, cut);
+            WiresSystem.SetData(owner, PowerWireActionKey.CutWires, cut);
         }
     }
 
@@ -166,17 +166,17 @@ public sealed class PowerWireAction : BaseWireAction
     // in WiresComponent or ApcPowerReceiverComponent.
     public override bool AddWire(Wire wire, int count)
     {
-        if (!WiresSystem.HasData(wire.Owner, PowerWireActionInternalKeys.CutWires))
+        if (!WiresSystem.HasData(wire.Owner, PowerWireActionKey.CutWires))
         {
-            WiresSystem.SetData(wire.Owner, PowerWireActionInternalKeys.CutWires, 0);
+            WiresSystem.SetData(wire.Owner, PowerWireActionKey.CutWires, 0);
         }
 
         if (count == 1)
         {
-            WiresSystem.SetData(wire.Owner, PowerWireActionInternalKeys.MainWire, wire.Id);
+            WiresSystem.SetData(wire.Owner, PowerWireActionKey.MainWire, wire.Id);
         }
 
-        WiresSystem.SetData(wire.Owner, PowerWireActionInternalKeys.WireCount, count);
+        WiresSystem.SetData(wire.Owner, PowerWireActionKey.WireCount, count);
 
         return true;
     }
@@ -257,12 +257,5 @@ public sealed class PowerWireAction : BaseWireAction
     {
         WiresSystem.SetData(wire.Owner, PowerWireActionKey.Pulsed, false);
         SetPower(wire.Owner, false);
-    }
-
-    private enum PowerWireActionInternalKeys : byte
-    {
-        MainWire,
-        WireCount,
-        CutWires
     }
 }
