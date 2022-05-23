@@ -15,6 +15,43 @@
       entity: FloorTileItemSteel
 
 - type: constructionGraph
+  id: TileTitanium
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: titaniumtile
+          completed:
+            - !type:SetStackCount
+              amount: 4
+          steps:
+            # Needs StackType ID
+            - material: Titanium
+              amount: 1
+    - node: woodtile
+      entity: FloorTileItemTitanium
+
+- type: constructionGraph
+  id: TilePlastitanium
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: plastitaniumtile
+          completed:
+            - !type:SetStackCount
+              amount: 4
+          steps:
+            # Needs StackType ID
+            - material: Plastitanium
+              amount: 1
+    - node: woodtile
+      entity: FloorTileItemPlastitanium
+
+- type: constructionGraph
+  id: TileWhite
+
+- type: constructionGraph
   id: TileWood
   start: start
   graph:
