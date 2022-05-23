@@ -1,0 +1,41 @@
+- type: constructionGraph
+  id: Spear
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: tglassshiv
+          steps:
+            - material: Cloth
+              amount: 2
+              doAfter: 1
+            - prototype: ShardGlassTitanium
+              name: Titanium Glass Shard
+              icon: 
+                sprite: Objects/Materials/Shards/shard.rsi
+                state: shard1
+              amount: 2
+              doAfter: 1
+    - node: tglassshiv
+      entity: TGlassShiv
+
+- type: constructionGraph
+  id: PTGlassShiv
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: ptglassshiv
+          steps:
+            - material: Cloth
+              amount: 2
+              doAfter: 2
+            - prototype: ShardGlassPlastitanium
+              name: Plastitanium Glass Shard
+              icon: 
+                sprite: Objects/Materials/Shards/shard.rsi
+                state: shard1
+              amount: 2
+              doAfter: 1
+    - node: ptglassshiv
+      entity: PTGlassShiv
