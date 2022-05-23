@@ -1,12 +1,4 @@
 Entries:
-- author: mirrorcult
-  changes:
-  - {message: Health examine now actually accurately assesses damage., type: Fix}
-  - {message: Moved the "is pale" text to health examinations., type: Tweak}
-  - {message: Examining someone's health now will tell you if they are still bleeding.,
-    type: Add}
-  id: 1086
-  time: '2022-02-19T06:03:15.0000000+00:00'
 - author: Rane
   changes:
   - {message: You will no longer drop items on the ground when trying to smart equip
@@ -3018,3 +3010,9 @@ Entries:
   - {message: The medical scanner is now climbable, type: Fix}
   id: 1585
   time: '2022-05-22T20:43:06.0000000+00:00'
+- author: ike709
+  changes:
+  - {message: Added a reoccurrence delay to station events. By default no event will
+      reoccur twice within 30 minutes., type: Tweak}
+  id: 1586
+  time: '2022-05-23T01:01:54.0000000+00:00'
