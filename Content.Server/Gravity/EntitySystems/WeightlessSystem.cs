@@ -34,11 +34,11 @@ namespace Content.Server.Gravity.EntitySystems
         public void AddAlert(AlertsComponent status)
         {
             var xform = Transform(status.Owner);
-            var alerts = _alerts.GetOrNew(xform.GridUid);
+            var alerts = _alerts.GetOrNew(xform.GridEntityId);
 
             alerts.Add(status);
 
-            if (_mapManager.TryGetGrid(xform.GridUid, out var grid))
+            if (_mapManager.TryGetGrid(xform.GridEntityId, out var grid))
             {
                 if (EntityManager.GetComponent<GravityComponent>(grid.GridEntityId).Enabled)
                 {
@@ -53,7 +53,7 @@ namespace Content.Server.Gravity.EntitySystems
 
         public void RemoveAlert(AlertsComponent status)
         {
-            var grid = EntityManager.GetComponent<TransformComponent>(status.Owner).GridUid;
+            var grid = EntityManager.GetComponent<TransformComponent>(status.Owner).GridEntityId;
             if (!_alerts.TryGetValue(grid, out var statuses))
             {
                 return;
@@ -109,7 +109,7 @@ namespace Content.Server.Gravity.EntitySystems
                 }
             }
 
-            var newGrid = ev.Transform.GridUid;
+            var newGrid = ev.Transform.GridEntityId;
             var newStatuses = _alerts.GetOrNew(newGrid);
 
             newStatuses.Add(status);

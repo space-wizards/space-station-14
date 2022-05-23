@@ -94,10 +94,10 @@ namespace Content.Server.Chemistry.EntitySystems
             vapor.Timer += frameTime;
             vapor.ReactTimer += frameTime;
 
-            if (vapor.ReactTimer >= ReactTime && EntityManager.GetComponent<TransformComponent>(vapor.Owner).GridUid.IsValid())
+            if (vapor.ReactTimer >= ReactTime && EntityManager.GetComponent<TransformComponent>(vapor.Owner).GridEntityId.IsValid())
             {
                 vapor.ReactTimer = 0;
-                var mapGrid = _mapManager.GetGrid(EntityManager.GetComponent<TransformComponent>(entity).GridUid);
+                var mapGrid = _mapManager.GetGrid(EntityManager.GetComponent<TransformComponent>(entity).GridEntityId);
 
                 var tile = mapGrid.GetTileRef(EntityManager.GetComponent<TransformComponent>(entity).Coordinates.ToVector2i(EntityManager, _mapManager));
                 foreach (var reagentQuantity in contents.Contents.ToArray())

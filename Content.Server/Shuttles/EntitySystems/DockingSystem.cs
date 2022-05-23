@@ -99,7 +99,7 @@ namespace Content.Server.Shuttles.EntitySystems
 
             // Assume the docking port itself (and its body) is valid
 
-            if (!_mapManager.TryGetGrid(dockingXform.GridUid, out var grid) ||
+            if (!_mapManager.TryGetGrid(dockingXform.GridEntityId, out var grid) ||
                 !HasComp<ShuttleComponent>(grid.GridEntityId)) return null;
 
             var transform = body.GetTransform();
@@ -128,7 +128,7 @@ namespace Content.Server.Shuttles.EntitySystems
 
             while (enumerator.MoveNext(out var otherGrid))
             {
-                if (otherGrid.GridEntityId == dockingXform.GridUid) continue;
+                if (otherGrid.GridEntityId == dockingXform.GridEntityId) continue;
 
                 foreach (var ent in otherGrid.GetAnchoredEntities(enlargedAABB))
                 {
@@ -200,8 +200,8 @@ namespace Content.Server.Shuttles.EntitySystems
             dockA.DockedWith = null;
 
             // If these grids are ever invalid then need to look at fixing ordering for unanchored events elsewhere.
-            var gridAUid = _mapManager.GetGrid(EntityManager.GetComponent<TransformComponent>(dockA.Owner).GridUid).GridEntityId;
-            var gridBUid = _mapManager.GetGrid(EntityManager.GetComponent<TransformComponent>(dockB.Owner).GridUid).GridEntityId;
+            var gridAUid = _mapManager.GetGrid(EntityManager.GetComponent<TransformComponent>(dockA.Owner).GridEntityId).GridEntityId;
+            var gridBUid = _mapManager.GetGrid(EntityManager.GetComponent<TransformComponent>(dockB.Owner).GridEntityId).GridEntityId;
 
             var msg = new UndockEvent
             {
@@ -337,8 +337,8 @@ namespace Content.Server.Shuttles.EntitySystems
             var dockAXform = EntityManager.GetComponent<TransformComponent>(dockA.Owner);
             var dockBXform = EntityManager.GetComponent<TransformComponent>(dockB.Owner);
 
-            var gridA = _mapManager.GetGrid(dockAXform.GridUid).GridEntityId;
-            var gridB = _mapManager.GetGrid(dockBXform.GridUid).GridEntityId;
+            var gridA = _mapManager.GetGrid(dockAXform.GridEntityId).GridEntityId;
+            var gridB = _mapManager.GetGrid(dockBXform.GridEntityId).GridEntityId;
 
             SharedJointSystem.LinearStiffness(
                 2f,

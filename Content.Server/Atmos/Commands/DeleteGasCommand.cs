@@ -39,7 +39,7 @@ namespace Content.Server.Atmos.Commands
                         return;
                     }
 
-                    gridId = entMan.GetComponent<TransformComponent>(playerEntity).GridUid;
+                    gridId = entMan.GetComponent<TransformComponent>(playerEntity).GridEntityId;
 
                     if (gridId == EntityUid.Invalid)
                     {
@@ -66,7 +66,7 @@ namespace Content.Server.Atmos.Commands
                             return;
                         }
 
-                        gridId = entMan.GetComponent<TransformComponent>(playerEntity).GridUid;
+                        gridId = entMan.GetComponent<TransformComponent>(playerEntity).GridEntityId;
 
                         if (gridId == EntityUid.Invalid)
                         {

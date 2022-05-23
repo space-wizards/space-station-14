@@ -1376,7 +1376,7 @@ namespace Content.Server.Atmos.EntitySystems
 
         public bool AddAtmosDevice(AtmosDeviceComponent atmosDevice)
         {
-            var grid = Comp<TransformComponent>(atmosDevice.Owner).GridUid;
+            var grid = Comp<TransformComponent>(atmosDevice.Owner).GridEntityId;
 
             if (!_mapManager.TryGetGrid(grid, out var mapGrid))
                 return false;
@@ -1578,7 +1578,7 @@ namespace Content.Server.Atmos.EntitySystems
                 return false;
             }
 
-            var gridId = coordinates.GetGridUid(EntityManager);
+            var gridId = coordinates.GetGridEntityId(EntityManager);
 
             if (!_mapManager.TryGetGrid(gridId, out var grid))
             {

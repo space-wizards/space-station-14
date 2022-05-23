@@ -50,9 +50,9 @@ namespace Content.Server.Projectiles.Components
             var mapManager = IoCManager.Resolve<IMapManager>();
 
             // We'll get the effects relative to the grid / map of the firer
-            var gridOrMap = _entMan.GetComponent<TransformComponent>(user).GridUid == EntityUid.Invalid ?
+            var gridOrMap = _entMan.GetComponent<TransformComponent>(user).GridEntityId == EntityUid.Invalid ?
                 mapManager.GetMapEntityId(_entMan.GetComponent<TransformComponent>(user).MapID) :
-                mapManager.GetGrid(_entMan.GetComponent<TransformComponent>(user).GridUid).GridEntityId;
+                mapManager.GetGrid(_entMan.GetComponent<TransformComponent>(user).GridEntityId).GridEntityId;
 
             var parentXform = _entMan.GetComponent<TransformComponent>(gridOrMap);
 

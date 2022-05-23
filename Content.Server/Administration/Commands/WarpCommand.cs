@@ -57,7 +57,7 @@ namespace Content.Server.Administration.Commands
 
                 var mapManager = IoCManager.Resolve<IMapManager>();
                 var currentMap = entMan.GetComponent<TransformComponent>(playerEntity).MapID;
-                var currentGrid = entMan.GetComponent<TransformComponent>(playerEntity).GridUid;
+                var currentGrid = entMan.GetComponent<TransformComponent>(playerEntity).GridEntityId;
 
                 var found = entMan.EntityQuery<WarpPointComponent>(true)
                     .Where(p => p.Location == location)
@@ -67,8 +67,8 @@ namespace Content.Server.Administration.Commands
                         // Sort so that warp points on the same grid/map are first.
                         // So if you have two maps loaded with the same warp points,
                         // it will prefer the warp points on the map you're currently on.
-                        var aGrid = a.GetGridUid(entMan);
-                        var bGrid = b.GetGridUid(entMan);
+                        var aGrid = a.GetGridEntityId(entMan);
+                        var bGrid = b.GetGridEntityId(entMan);
 
                         if (aGrid == bGrid)
                         {
@@ -107,7 +107,7 @@ namespace Content.Server.Administration.Commands
                     }))
                     .FirstOrDefault();
 
-                var entityUid = found.GetGridUid(entMan);
+                var entityUid = found.GetGridEntityId(entMan);
                 if (entityUid != EntityUid.Invalid)
                 {
                     entMan.GetComponent<TransformComponent>(playerEntity).Coordinates = found;

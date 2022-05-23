@@ -24,7 +24,7 @@ namespace Content.Shared.Movement.Components
                 (body?.BodyType & (BodyType.Static | BodyType.Kinematic)) != 0) return false;
 
             var transform = entityManager.GetComponent<TransformComponent>(entity);
-            var gridId = transform.GridUid;
+            var gridId = transform.GridEntityId;
 
             if (!gridId.IsValid())
             {

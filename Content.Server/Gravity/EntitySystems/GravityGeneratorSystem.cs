@@ -180,7 +180,7 @@ namespace Content.Server.Gravity.EntitySystems
 
         private void UpdateGravityActive(GravityGeneratorComponent grav, bool shake)
         {
-            var gridId = EntityManager.GetComponent<TransformComponent>(grav.Owner).GridUid;
+            var gridId = EntityManager.GetComponent<TransformComponent>(grav.Owner).GridEntityId;
             if (gridId == EntityUid.Invalid)
                 return;
 

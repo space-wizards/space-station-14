@@ -15,7 +15,7 @@ namespace Content.Server.Coordinates.Helpers
         {
             IoCManager.Resolve(ref entMan, ref mapManager);
 
-            var gridId = coordinates.GetGridUid(entMan);
+            var gridId = coordinates.GetGridEntityId(entMan);
 
             var tileSize = 1f;
 
