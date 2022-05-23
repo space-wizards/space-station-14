@@ -140,7 +140,7 @@ public sealed class AlertLevelSystem : EntitySystem
                 colorOverride: detail.Color, sender: stationName);
         }
 
-        RaiseLocalEvent(new AlertLevelChangedEvent(level));
+        RaiseLocalEvent(new AlertLevelChangedEvent(station, level));
     }
 }
 
@@ -149,10 +149,12 @@ public sealed class AlertLevelDelayFinishedEvent : EntityEventArgs
 
 public sealed class AlertLevelChangedEvent : EntityEventArgs
 {
+    public EntityUid Station { get; }
     public string AlertLevel { get; }
 
-    public AlertLevelChangedEvent(string alertLevel)
+    public AlertLevelChangedEvent(EntityUid station, string alertLevel)
     {
+        Station = station;
         AlertLevel = alertLevel;
     }
 }

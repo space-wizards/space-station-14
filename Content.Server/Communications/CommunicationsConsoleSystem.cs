@@ -27,9 +27,9 @@ namespace Content.Server.Communications
         public override void Initialize()
         {
             // All events that refresh the BUI
+            SubscribeLocalEvent<AlertLevelChangedEvent>(OnAlertLevelChanged);
             SubscribeLocalEvent<CommunicationsConsoleComponent, ComponentInit>((_, comp, _) => UpdateBoundUserInterface(comp));
             SubscribeLocalEvent<CommunicationsConsoleComponent, RoundEndSystemChangedEvent>((_, comp, _) => UpdateBoundUserInterface(comp));
-            SubscribeLocalEvent<CommunicationsConsoleComponent, AlertLevelChangedEvent>((_, comp, _) => UpdateBoundUserInterface(comp));
             SubscribeLocalEvent<CommunicationsConsoleComponent, AlertLevelDelayFinishedEvent>((_, comp, _) => UpdateBoundUserInterface(comp));
 
             // Messages from the BUI
@@ -55,6 +55,18 @@ namespace Content.Server.Communications
             }
 
             base.Update(frameTime);
+        }
+
+        private void OnAlertLevelChanged(AlertLevelChangedEvent args)
+        {
+            foreach (var comp in EntityManager.EntityQuery<CommunicationsConsoleComponent>())
+            {
+                var entStation = _stationSystem.GetOwningStation(comp.Owner);
+                if (args.Station == entStation)
+                {
+                    UpdateBoundUserInterface(comp);
+                }
+            }
         }
 
         private void UpdateBoundUserInterface(CommunicationsConsoleComponent comp)
