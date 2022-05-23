@@ -7661,7 +7661,7 @@ entities:
     parent: 73
     type: Transform
 - uid: 769
-  type: ComputerComms
+  type: SyndicateComputerComms
   components:
   - rot: -1.5707963267948966 rad
     pos: 1.5,-3.5
