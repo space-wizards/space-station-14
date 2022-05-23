@@ -122,8 +122,8 @@
   result: SheetPlastitanium1
   completetime: 2
   materials:
-    Titanium: 50
-    Plasma: 50
+    Titanium: 100
+    Plasma: 100
     
 - type: latheRecipe
   id: SheetPlastitanium30
