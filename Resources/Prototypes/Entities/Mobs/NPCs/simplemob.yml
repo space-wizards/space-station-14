@@ -129,8 +129,8 @@
   - type: Polymorphable
   - type: Pullable
   - type: Buckle
-  - type: Recyclable
   - type: DiseaseCarrier
+  - type: Recyclable
     safe: false
   - type: StandingState
   - type: Alerts
