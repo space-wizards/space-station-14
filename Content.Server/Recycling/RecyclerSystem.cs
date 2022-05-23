@@ -8,7 +8,6 @@ using Content.Shared.Audio;
 using Content.Shared.Body.Components;
 using Content.Shared.Emag.Systems;
 using Content.Shared.Interaction.Events;
-using Content.Shared.Popups;
 using Content.Shared.Recycling;
 using Content.Shared.Tag;
 using Robust.Server.GameObjects;

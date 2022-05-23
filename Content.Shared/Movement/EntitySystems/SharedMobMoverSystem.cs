@@ -1,9 +1,6 @@
 using Content.Shared.CCVar;
 using Content.Shared.Movement.Components;
 using Robust.Shared.Configuration;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Maths;
 using Robust.Shared.Physics;
 using Robust.Shared.Physics.Dynamics;
 

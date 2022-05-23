@@ -1,7 +1,5 @@
 using Content.Shared.Gravity;
 using JetBrains.Annotations;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
 
 namespace Content.Server.Gravity.EntitySystems
 {

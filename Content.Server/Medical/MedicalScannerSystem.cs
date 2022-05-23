@@ -15,8 +15,6 @@ using Content.Shared.MobState.Components;
 using Content.Shared.Movement;
 using Content.Shared.Preferences;
 using Content.Shared.Verbs;
-using JetBrains.Annotations;
-using Robust.Server.GameObjects;
 using Robust.Shared.Containers;
 using Robust.Shared.Network;
 using Robust.Shared.Player;
@@ -269,7 +267,7 @@ namespace Content.Server.Medical
             if (scannerComponent.BodyContainer.ContainedEntity is not {Valid: true} contained) return;
 
             scannerComponent.BodyContainer.Remove(contained);
-            _climbSystem.ForciblySetClimbing(contained);
+            _climbSystem.ForciblySetClimbing(contained, uid);
             UpdateUserInterface(uid, scannerComponent);
             UpdateAppearance(scannerComponent.Owner, scannerComponent);
         }

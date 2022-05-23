@@ -2,7 +2,6 @@ using System.Linq;
 using Content.Server.Power.Components;
 using Content.Server.UserInterface;
 using Content.Shared.Arcade;
-using Content.Shared.Interaction;
 using Robust.Server.GameObjects;
 using Robust.Server.Player;
 using Robust.Shared.Random;

@@ -1,9 +1,4 @@
-using System.Collections.Generic;
-using Content.Server.Power.Components;
 using Content.Shared.Atmos.Monitor;
-using Robust.Shared.GameObjects;
-using Robust.Shared.Serialization.Manager.Attributes;
-using Robust.Shared.ViewVariables;
 
 namespace Content.Server.Atmos.Monitor.Components
 {

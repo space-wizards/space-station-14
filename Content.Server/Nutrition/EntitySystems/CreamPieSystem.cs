@@ -1,5 +1,4 @@
 using Content.Server.Chemistry.EntitySystems;
-using Content.Server.Fluids.Components;
 using Content.Server.Fluids.EntitySystems;
 using Content.Server.Nutrition.Components;
 using Content.Server.Popups;
@@ -10,9 +9,6 @@ using Content.Shared.Popups;
 using Content.Shared.Throwing;
 using JetBrains.Annotations;
 using Robust.Shared.Audio;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Localization;
 using Robust.Shared.Player;
 
 namespace Content.Server.Nutrition.EntitySystems
@@ -31,6 +27,8 @@ namespace Content.Server.Nutrition.EntitySystems
             {
                 _spillableSystem.SpillAt(creamPie.Owner, solution, "PuddleSmear", false);
             }
+
+            EntityManager.QueueDeleteEntity(uid);
         }
 
         protected override void CreamedEntity(EntityUid uid, CreamPiedComponent creamPied, ThrowHitByEvent args)

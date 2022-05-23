@@ -1,9 +1,6 @@
 using Content.Shared.Damage;
 using Content.Shared.Tools;
-using Robust.Shared.GameObjects;
-using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
-using Robust.Shared.ViewVariables;
 
 namespace Content.Server.Repairable
 {

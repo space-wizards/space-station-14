@@ -1,8 +1,6 @@
-using System.Collections.Generic;
 using Content.Server.Explosion.Components;
 using Content.Shared.Physics;
 using Content.Shared.Trigger;
-using Robust.Shared.GameObjects;
 using Robust.Shared.Physics.Dynamics;
 using Robust.Shared.Utility;
 

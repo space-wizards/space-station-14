@@ -17,6 +17,7 @@
       - id: ClothingHandsGlovesCombat
       - id: ClothingShoesBootsJack
       - id: ClothingOuterCoatWarden
+      - id: ClothingOuterWinterWarden
       - id: RubberStampWarden
 
 - type: entity

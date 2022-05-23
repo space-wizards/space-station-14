@@ -1,6 +1,5 @@
 ﻿using Content.Server.Explosion.EntitySystems;
 using Content.Server.Power.Components;
-using Content.Shared.Body.Events;
 using Content.Shared.Examine;
 using Robust.Shared.Utility;
 

@@ -1,6 +1,5 @@
 ﻿using Content.Shared.Movement.EntitySystems;
 using Content.Shared.Nutrition.Components;
-using Robust.Shared.GameObjects;
 
 namespace Content.Shared.Nutrition.EntitySystems
 {

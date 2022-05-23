@@ -1,6 +1,4 @@
 ﻿using Content.Server.Light.EntitySystems;
-using Robust.Shared.Analyzers;
-using Robust.Shared.GameObjects;
 
 namespace Content.Server.Light.Components
 {

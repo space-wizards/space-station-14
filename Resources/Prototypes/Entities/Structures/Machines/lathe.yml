@@ -193,6 +193,15 @@
       - FlashPayload
       - Signaller
       - SignalTrigger
+      - PowerCellSmallStandard
+      - PowerCellSmallHigh
+      - PowerCellSmallSuper
+      - PowerCellMediumStandard
+      - PowerCellMediumHigh
+      - PowerCellMediumSuper
+      - PowerCellLargeStandard
+      - PowerCellLargeHigh
+      - PowerCellLargeSuper
   - type: ActivatableUI
     key: enum.LatheUiKey.Key #Yes only having 1 of them here doesn't break anything
   - type: ActivatableUIRequiresPower
@@ -319,6 +328,8 @@
       - TimerTrigger
       - Signaller
       - SignalTrigger
+  - type: Machine
+    board: SecurityTechFabCircuitboard
   - type: Lathe
     whitelist:
       tags:
@@ -384,6 +395,8 @@
       - CableStack
       - CableMVStack
       - CableHVStack
+  - type: Machine
+    board: MedicalTechFabCircuitboard
 
 - type: entity
   parent: Autolathe

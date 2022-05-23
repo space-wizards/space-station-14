@@ -1,7 +1,5 @@
 using JetBrains.Annotations;
-using Robust.Shared.IoC;
 using Robust.Shared.Random;
-using Robust.Shared.Serialization.Manager.Attributes;
 
 namespace Content.Server.Maps.NameGenerators;
 

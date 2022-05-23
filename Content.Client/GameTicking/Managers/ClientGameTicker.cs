@@ -1,3 +1,4 @@
+using Content.Client.Audio;
 using Content.Client.Lobby;
 using Content.Client.RoundEnd;
 using Content.Client.Viewport;
@@ -121,6 +122,12 @@ namespace Content.Client.GameTicking.Managers
 
         private void RoundEnd(RoundEndMessageEvent message)
         {
+            if (message.LobbySong != null)
+            {
+                LobbySong = message.LobbySong;
+                Get<BackgroundAudioSystem>().StartLobbyMusic();
+            }
+
             //This is not ideal at all, but I don't see an immediately better fit anywhere else.
             var roundEnd = new RoundEndSummaryWindow(message.GamemodeTitle, message.RoundEndText, message.RoundDuration, message.RoundId, message.AllPlayersEndInfo);
         }

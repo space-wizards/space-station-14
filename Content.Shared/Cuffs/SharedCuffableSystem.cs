@@ -7,7 +7,6 @@ using Content.Shared.Item;
 using Content.Shared.Movement;
 using Content.Shared.Physics.Pull;
 using Content.Shared.Pulling.Components;
-using Robust.Shared.GameObjects;
 
 namespace Content.Shared.Cuffs
 {

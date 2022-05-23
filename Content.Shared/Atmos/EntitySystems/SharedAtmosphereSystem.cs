@@ -1,7 +1,4 @@
-﻿using System.Collections.Generic;
-using Content.Shared.Atmos.Prototypes;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
+﻿using Content.Shared.Atmos.Prototypes;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
 

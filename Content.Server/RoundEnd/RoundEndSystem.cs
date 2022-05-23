@@ -1,4 +1,3 @@
-using System;
 using System.Threading;
 using Content.Server.Administration.Logs;
 using Content.Server.Chat.Managers;
@@ -6,9 +5,6 @@ using Content.Server.GameTicking;
 using Content.Shared.Database;
 using Content.Shared.GameTicking;
 using Robust.Shared.Audio;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Localization;
 using Robust.Shared.Player;
 using Robust.Shared.Timing;
 using Timer = Robust.Shared.Timing.Timer;

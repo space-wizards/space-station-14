@@ -6,12 +6,10 @@ using Content.Shared.CCVar;
 using Content.Shared.Coordinates;
 using NUnit.Framework;
 using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
 using Robust.Shared.Log;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Timing;
 
 namespace Content.IntegrationTests.Tests
 {
@@ -70,7 +68,7 @@ namespace Content.IntegrationTests.Tests
                 //Generate list of non-abstract prototypes to test
                 foreach (var prototype in prototypeMan.EnumeratePrototypes<EntityPrototype>())
                 {
-                    if (prototype.NoSpawn || prototype.Abstract)
+                    if (prototype.Abstract)
                     {
                         continue;
                     }

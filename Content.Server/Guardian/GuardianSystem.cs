@@ -1,5 +1,4 @@
 using Content.Server.DoAfter;
-using Content.Server.Hands.Components;
 using Content.Server.Popups;
 using Content.Shared.Actions;
 using Content.Shared.Audio;

@@ -1,6 +1,4 @@
-﻿using System;
-using Content.Shared.Tabletop.Components;
-using Robust.Shared.GameObjects;
+﻿using Content.Shared.Tabletop.Components;
 using Robust.Shared.Map;
 using Robust.Shared.Serialization;
 

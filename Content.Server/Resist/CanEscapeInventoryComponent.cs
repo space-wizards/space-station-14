@@ -1,7 +1,3 @@
-using Robust.Shared.GameObjects;
-using Robust.Shared.Serialization.Manager.Attributes;
-using Robust.Shared.ViewVariables;
-using Robust.Shared.Analyzers;
 using System.Threading;
 
 namespace Content.Server.Resist;

@@ -1,8 +1,6 @@
 using Content.Server.Atmos.Components;
-using Content.Server.NodeContainer.NodeGroups;
 using Content.Server.NodeContainer.Nodes;
 using Content.Server.NodeContainer;
-using Content.Server.Tools;
 using Content.Shared.Atmos.Components;
 using Content.Shared.Examine;
 using Content.Shared.Temperature;
@@ -16,7 +14,6 @@ namespace Content.Server.Atmos.EntitySystems
     [UsedImplicitly]
     public sealed class GasAnalyzableSystem : EntitySystem
     {
-        [Dependency] private readonly ToolSystem _toolSystem = default!;
         [Dependency] private readonly ExamineSystemShared _examineSystem = default!;
 
         public override void Initialize()

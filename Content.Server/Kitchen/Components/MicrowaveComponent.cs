@@ -1,19 +1,13 @@
 using System.Linq;
-using Content.Server.Act;
-using Content.Server.Chat.Managers;
 using Content.Server.Chemistry.Components.SolutionManager;
 using Content.Server.Chemistry.EntitySystems;
-using Content.Server.Popups;
 using Content.Server.Power.Components;
 using Content.Server.Temperature.Components;
 using Content.Server.Temperature.Systems;
 using Content.Server.UserInterface;
-using Content.Shared.Body.Components;
-using Content.Shared.Body.Part;
 using Content.Shared.FixedPoint;
 using Content.Shared.Kitchen;
 using Content.Shared.Kitchen.Components;
-using Content.Shared.Popups;
 using Content.Shared.Power;
 using Content.Shared.Sound;
 using Content.Shared.Tag;
@@ -217,7 +211,10 @@ namespace Content.Server.Kitchen.Components
                 _entities.EventBus.RaiseLocalEvent(item, ev, false);
 
                 if (ev.Handled)
+                {
+                    UIDirty = true;
                     return;
+                }
 
                 var tagSys = EntitySystem.Get<TagSystem>();
 
