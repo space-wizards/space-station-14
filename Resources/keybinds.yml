@@ -103,8 +103,7 @@ binds:
   key: MouseMiddle
 - function: EditorCopyObject
   type: State
-  mod1: Shift
-  key: MouseMiddle
+  key: P
 - function: SwapHands
   type: State
   key: X
