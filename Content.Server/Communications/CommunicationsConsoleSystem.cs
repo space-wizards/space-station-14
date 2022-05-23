@@ -15,7 +15,6 @@ namespace Content.Server.Communications
 {
     public sealed class CommunicationsConsoleSystem : EntitySystem
     {
-        [Dependency] private readonly IGameTiming _gameTiming = default!;
         [Dependency] private readonly IChatManager _chatManager = default!;
         [Dependency] private readonly IEntityManager _entityManager = default!;
         [Dependency] private readonly RoundEndSystem _roundEndSystem = default!;
