@@ -162,7 +162,7 @@ namespace Content.Client.Sandbox
             if (!CanSandbox())
                 return false;
 
-            // Try copy entity
+            // Try copy entity.
             if (uid.IsValid()
                 && EntityManager.TryGetComponent(uid, out MetaDataComponent? comp)
                 && !comp.EntityDeleted)
@@ -183,7 +183,7 @@ namespace Content.Client.Sandbox
                 return true;
             }
 
-            // Try copy tile
+            // Try copy tile.
             if (!_mapManager.TryFindGridAt(coords.ToMap(EntityManager), out var grid) || !grid.TryGetTileRef(coords, out var tileRef))
                 return false;
 
