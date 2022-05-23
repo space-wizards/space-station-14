@@ -86,7 +86,7 @@
 - type: entity
   name: multiple rocket launcher
   parent: LauncherBase
-  id: LauncherMultipleRocket
+  id: WeaponLauncherMultipleRocket
   description: A modified ancient rocket-propelled grenade launcher.
   components:
   - type: Sprite

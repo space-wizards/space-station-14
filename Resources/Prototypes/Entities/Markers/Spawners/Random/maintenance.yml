@@ -69,7 +69,7 @@
         - ClothingBeltUtilityFilled
         - Shovel
         - Welder
-        - FlareGun
+        - WeaponFlareGun
         - SheetSteel
         - SheetPlastic
       chance: 0.6
