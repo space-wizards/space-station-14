@@ -54,24 +54,36 @@ public sealed class NewGunSystem : SharedNewGunSystem
             return;
 
         var mousePos = _eyeManager.ScreenToMap(_inputManager.MouseScreenPosition);
+        EntityCoordinates coordinates;
+
+        if (MapManager.TryFindGridAt(mousePos, out var grid))
+        {
+            coordinates = EntityCoordinates.FromMap(grid.GridEntityId, mousePos, EntityManager);
+        }
+        else
+        {
+            coordinates = EntityCoordinates.FromMap(MapManager.GetMapEntityId(mousePos.MapId), mousePos, EntityManager);
+        }
 
         Sawmill.Debug($"Sending shoot request tick {Timing.CurTick} / {Timing.CurTime}");
 
         EntityManager.RaisePredictiveEvent(new RequestShootEvent()
         {
-            Coordinates = mousePos,
+            Coordinates = coordinates,
             Gun = gun.Owner,
         });
     }
 
-    protected override void Shoot(EntityUid user, List<EntityUid> ammo, EntityCoordinates coordinates)
+    public override void Shoot(List<IShootable> ammo, EntityCoordinates fromCoordinates, EntityCoordinates toCoordinates, EntityUid? user = null)
     {
         // Rather than splitting client / server for every ammo provider it's easier
         // to just delete the spawned entities. This is for programmer sanity despite the wasted perf.
         // This also means any ammo specific stuff can be grabbed as necessary.
         foreach (var ent in ammo)
         {
-            Del(ent);
+            if (ent is NewAmmoComponent entAmmo)
+                Del(entAmmo.Owner);
+
         }
     }
 

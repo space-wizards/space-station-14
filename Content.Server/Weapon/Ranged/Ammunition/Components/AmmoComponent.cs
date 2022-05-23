@@ -1,4 +1,5 @@
 using Content.Shared.Sound;
+using Content.Shared.Weapons.Ranged;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
@@ -12,7 +13,7 @@ namespace Content.Server.Weapon.Ranged.Ammunition.Components
     /// </summary>
     [RegisterComponent]
     [Friend(typeof(GunSystem))]
-    public sealed class AmmoComponent : Component, ISerializationHooks
+    public sealed class AmmoComponent : Component, SharedNewGunSystem.IShootable, ISerializationHooks
     {
         [DataField("caliber")]
         public BallisticCaliber Caliber { get; } = BallisticCaliber.Unspecified;

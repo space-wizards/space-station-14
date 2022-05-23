@@ -1,44 +1,65 @@
 using Content.Server.Projectiles.Components;
 using Content.Shared.Weapons.Ranged;
+using Content.Shared.Weapons.Ranged.Barrels.Components;
 using Robust.Shared.Audio;
 using Robust.Shared.Map;
 using Robust.Shared.Player;
+using Robust.Shared.Utility;
 
 namespace Content.Server.Weapon.Ranged;
 
 public sealed class NewGunSystem : SharedNewGunSystem
 {
-    protected override void Shoot(EntityUid user, List<EntityUid> ammo, EntityCoordinates coordinates, float velocity)
+    public override void Shoot(List<IShootable> ammo, EntityCoordinates fromCoordinates, EntityCoordinates toCoordinates, EntityUid? user = null)
     {
-        List<Angle>? sprayAngleChange = null;
-        if (ammo.Count > 1)
+        // TODO recoil / spread
+        var direction = (toCoordinates.ToMapPos(EntityManager) - fromCoordinates.ToMapPos(EntityManager));
+
+        // I must be high because this was getting tripped even when true.
+        // DebugTools.Assert(direction != Vector2.Zero);
+
+        foreach (var shootable in ammo)
         {
-            evenSpreadAngle *= component.SpreadRatio;
-            sprayAngleChange = Linspace(-evenSpreadAngle / 2, evenSpreadAngle / 2, count);
+            switch (shootable)
+            {
+                // Cartridge shoots something itself
+                case CartridgeAmmoComponent cartridge:
+                    DebugTools.Assert(!cartridge.Spent);
+                    var uid = Spawn(cartridge.Prototype, fromCoordinates);
+                    ShootProjectile(uid, direction, user);
+
+                    if (TryComp<AppearanceComponent>(cartridge.Owner, out var appearance))
+                    {
+                        appearance.SetData(AmmoVisuals.Spent, true);
+                    }
+
+                    cartridge.Spent = true;
+                    EjectCartridge(cartridge.Owner);
+                    Dirty(cartridge);
+                    break;
+                // Ammo shoots itself
+                case NewAmmoComponent newAmmo:
+                    ShootProjectile(newAmmo.Owner, direction, user);
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
+        }
+    }
+
+    private void ShootProjectile(EntityUid uid, Vector2 direction, EntityUid? user = null)
+    {
+        var physics = EnsureComp<PhysicsComponent>(uid);
+        physics.BodyStatus = BodyStatus.InAir;
+        physics.LinearVelocity = direction.Normalized * 30f;
+
+        if (user != null)
+        {
+            var projectile = EnsureComp<ProjectileComponent>(uid);
+            projectile.IgnoreEntity(user.Value);
         }
 
-        foreach (var ent in ammo)
-        {
-            Angle projectileAngle;
-
-            if (sprayAngleChange != null)
-            {
-                projectileAngle = angle + sprayAngleChange[i];
-            }
-            else
-            {
-                projectileAngle = angle;
-            }
-
-            var physics = EnsureComp<PhysicsComponent>(ent);
-            physics.BodyStatus = BodyStatus.InAir;
-            physics.LinearVelocity = projectileAngle.ToVec() * velocity;
-
-            var projectile = EnsureComp<ProjectileComponent>(ent);
-            projectile.IgnoreEntity(user);
-
-            Transform(ent).WorldRotation = new Angle(projectileAngle.ToWorldVec());
-        }
+        Transform(uid).WorldRotation = direction.ToWorldAngle();
     }
 
     protected override void PlaySound(NewGunComponent gun, string? sound, EntityUid? user = null)

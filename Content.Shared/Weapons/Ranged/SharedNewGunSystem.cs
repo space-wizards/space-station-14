@@ -1,14 +1,16 @@
-using System.Linq;
 using Content.Shared.Actions;
+using Content.Shared.Audio;
 using Content.Shared.CombatMode;
 using Content.Shared.Examine;
 using Content.Shared.Hands.Components;
 using Content.Shared.Popups;
-using Content.Shared.Sound;
 using Content.Shared.Verbs;
+using Robust.Shared.Audio;
 using Robust.Shared.Containers;
 using Robust.Shared.GameStates;
 using Robust.Shared.Map;
+using Robust.Shared.Player;
+using Robust.Shared.Random;
 using Robust.Shared.Serialization;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
@@ -18,6 +20,8 @@ namespace Content.Shared.Weapons.Ranged;
 public abstract partial class SharedNewGunSystem : EntitySystem
 {
     [Dependency] protected readonly IGameTiming Timing = default!;
+    [Dependency] protected readonly IMapManager MapManager = default!;
+    [Dependency] protected readonly IRobustRandom Random = default!;
     [Dependency] protected readonly SharedActionsSystem Actions = default!;
     [Dependency] protected readonly SharedContainerSystem Containers = default!;
     [Dependency] private readonly SharedCombatModeSystem _combatMode = default!;
@@ -26,6 +30,7 @@ public abstract partial class SharedNewGunSystem : EntitySystem
     protected ISawmill Sawmill = default!;
 
     protected const float InteractNextFire = 0.3f;
+    public const float EjectOffset = 0.4f;
 
     public override void Initialize()
     {
@@ -169,7 +174,7 @@ public abstract partial class SharedNewGunSystem : EntitySystem
         var ev = new TakeAmmoEvent
         {
             Shots = shots,
-            Ammo = new List<(EntityUid Entity, int Shots)>(shots),
+            Ammo = new List<IShootable>(shots),
             Coordinates = fromCoordinates,
         };
 
@@ -194,18 +199,12 @@ public abstract partial class SharedNewGunSystem : EntitySystem
         // Shoot confirmed
         gun.ShotCounter += ev.Shots;
 
-        Shoot(ev.Ammo, fromCoordinates, toCoordinates, user);
+        Shoot(ev.Ammo, fromCoordinates, toCoordinates.Value, user);
 
         // Predicted sound moment
         PlaySound(gun, gun.SoundGunshot?.GetSound(), user);
         Dirty(gun);
     }
-
-    protected abstract void Shoot(
-        List<(EntityUid Entity, int Shots)> ammo,
-        EntityCoordinates fromCoordinates,
-        EntityCoordinates toCoordinates,
-        EntityUid? user = null);
 
     public void Shoot(
         EntityUid ammo,
@@ -213,16 +212,23 @@ public abstract partial class SharedNewGunSystem : EntitySystem
         EntityCoordinates toCoordinates,
         EntityUid? user = null)
     {
-        Shoot(new List<(EntityUid, int)>(1) {(ammo, 1)}, fromCoordinates, toCoordinates, user);
+        var shootable = EnsureComp<NewAmmoComponent>(ammo);
+        Shoot(new List<IShootable>(1) { shootable }, fromCoordinates, toCoordinates, user);
     }
 
-    public void Shoot(List<EntityUid> ammo,
+    public abstract void Shoot(
+        List<IShootable> ammo,
+        EntityCoordinates fromCoordinates,
+        EntityCoordinates toCoordinates,
+        EntityUid? user = null);
+
+    public void Shoot(
+        IShootable ammo,
         EntityCoordinates fromCoordinates,
         EntityCoordinates toCoordinates,
         EntityUid? user = null)
     {
-        var actualAmmo = ammo.Select(o => (o, 1)).ToList();
-        Shoot(actualAmmo, fromCoordinates, toCoordinates, user);
+        Shoot(new List<IShootable>(1) { ammo }, fromCoordinates, toCoordinates, user);
     }
 
     protected abstract void PlaySound(NewGunComponent gun, string? sound, EntityUid? user = null);
@@ -230,12 +236,40 @@ public abstract partial class SharedNewGunSystem : EntitySystem
     protected abstract void Popup(string message, NewGunComponent gun, EntityUid? user);
 
     /// <summary>
+    /// Drops a single cartridge / shell
+    /// </summary>
+    public void EjectCartridge(
+        EntityUid entity,
+        bool playSound = true)
+    {
+        var offsetPos = (Random.NextVector2(EjectOffset));
+
+        var xform = Transform(entity);
+
+        var coordinates = xform.Coordinates;
+        coordinates = coordinates.Offset(offsetPos);
+
+        xform.LocalRotation = Random.NextAngle();
+        xform.Coordinates = coordinates;
+
+        string? sound = null;
+
+        if (TryComp<CartridgeAmmoComponent>(entity, out var cartridge))
+        {
+            sound = cartridge.EjectSound?.GetSound();
+        }
+
+        if (sound != null && playSound)
+            SoundSystem.Play(Filter.Pvs(entity, entityManager: EntityManager), sound, coordinates, AudioHelpers.WithVariation(0.05f).WithVolume(-1f));
+    }
+
+    /// <summary>
     /// Raised on a gun when it would like to take the specified amount of ammo.
     /// </summary>
     public sealed class TakeAmmoEvent : EntityEventArgs
     {
         public int Shots;
-        public List<EntityUid> Ammo = default!;
+        public List<IShootable> Ammo = default!;
 
         /// <summary>
         /// Coordinates to spawn the ammo at.
@@ -267,5 +301,13 @@ public abstract partial class SharedNewGunSystem : EntitySystem
         public int FakeAmmo;
         public SelectiveFire SelectiveFire;
         public SelectiveFire AvailableSelectiveFire;
+    }
+
+    /// <summary>
+    /// Interface that says this can be shot from a gun. Exists to facilitate hitscan OR prototype shooting.
+    /// </summary>
+    public interface IShootable
+    {
+
     }
 }

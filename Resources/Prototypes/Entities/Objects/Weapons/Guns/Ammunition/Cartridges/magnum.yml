@@ -22,6 +22,8 @@
   name: cartridge (.40 magnum)
   parent: CartridgeMagnumBase
   components:
+  - type: CartridgeAmmo
+    proto: BulletMagnum
   - type: Ammo
     projectile: BulletMagnum
 

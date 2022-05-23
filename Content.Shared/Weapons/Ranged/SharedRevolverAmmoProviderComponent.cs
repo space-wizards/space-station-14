@@ -33,7 +33,7 @@ public abstract class SharedRevolverAmmoProviderComponent : AmmoProviderComponen
     public bool?[] Chambers = Array.Empty<bool?>();
 
     [DataField("fillProto", customTypeSerializer:typeof(PrototypeIdSerializer<EntityPrototype>))]
-    public string? FillPrototype = "BulletMagnum";
+    public string? FillPrototype = "CartridgeMagnum";
 
     [ViewVariables, DataField("soundEject")]
     public SoundSpecifier SoundEject = new SoundPathSpecifier("/Audio/Weapons/Guns/MagOut/revolver_magout.ogg");

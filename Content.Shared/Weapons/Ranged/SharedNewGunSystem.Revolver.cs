@@ -50,7 +50,7 @@ public partial class SharedNewGunSystem
                 {
                     var ent = Spawn(component.FillPrototype, args.Coordinates);
                     component.Chambers[index] = false;
-                    args.Ammo.Add(ent);
+                    args.Ammo.Add(EnsureComp<NewAmmoComponent>(ent));
                 }
                 else
                 {
@@ -62,7 +62,7 @@ public partial class SharedNewGunSystem
                 var ent = component.AmmoSlots[index]!;
                 component.AmmoContainer.Remove(ent.Value);
                 component.AmmoSlots[index] = null;
-                args.Ammo.Add(ent.Value);
+                args.Ammo.Add(EnsureComp<NewAmmoComponent>(ent.Value));
                 Transform(ent.Value).Coordinates = args.Coordinates;
             }
             else
