@@ -55,7 +55,7 @@
 - type: entity
   name: retro laser gun
   parent: BatteryGunSmall
-  id: LaserGun
+  id: WeaponLaserGun
   description: A weapon using light amplified by the stimulated emission of radiation.
   components:
   - type: Sprite
@@ -84,7 +84,7 @@
 - type: entity
   name: makeshift laser gun
   parent: BatteryGunMedium
-  id: MakeshiftLaser
+  id: WeaponMakeshiftLaser
   description: Better pray it won't burn your hands off.
   components:
   - type: Sprite
@@ -104,30 +104,9 @@
 
 
 - type: entity
-  name: svalinn laser pistol
-  parent: BatteryGunSmall
-  id: LaserPistolSvalinn
-  description: A cheap and widely used laser pistol.
-  components:
-  - type: Sprite
-    netsync: false
-    sprite: Objects/Weapons/Guns/Battery/svalinn.rsi
-    layers:
-      - state: base
-        map: ["enum.RangedBarrelVisualLayers.Base"]
-      - state: mag-unshaded-4
-        map: ["enum.RangedBarrelVisualLayers.MagUnshaded"]
-        shader: unshaded
-  - type: Item
-    size: 12
-    sprite: Objects/Weapons/Guns/Battery/svalinn.rsi
-  - type: BatteryBarrel
-    fireCost: 50
-
-- type: entity
   name: PDW-10 pulse pistol
   parent: BatteryGunSmall
-  id: PulsePistolPdw
+  id: WeaponPulsePistolPdw
   description: A state of the art energy pistol favoured as a sidearm by the NT-ERT operatives.
   components:
   - type: Sprite
@@ -157,7 +136,7 @@
 - type: entity
   name: cog laser carbine
   parent: BatteryGunMedium
-  id: LaserRifleCog
+  id: WeaponLaserRifleCog
   description: Favoured by Nanotrasen Security for being cheap and easy to use.
   components:
   - type: Sprite
@@ -176,38 +155,11 @@
     fireCost: 280
     ammoPrototype: RedMediumLaser
 
-- type: entity
-  name: nightfall laser rifle
-  parent: BatteryGunMedium
-  id: LaserRifleSniper
-  description: A scoped high capacity laser rifle.
-  components:
-  - type: Sprite
-    netsync: false
-    sprite: Objects/Weapons/Guns/Battery/nightfall.rsi
-    layers:
-      - state: base
-        map: ["enum.RangedBarrelVisualLayers.Base"]
-      - state: mag-unshaded-4
-        map: ["enum.RangedBarrelVisualLayers.MagUnshaded"]
-        shader: unshaded
-  - type: Item
-    size: 24
-    sprite: Objects/Weapons/Guns/Battery/nightfall.rsi
-  - type: BatteryBarrel
-    fireCost: 200
-    ammoPrototype: RedMediumLaser
-  - type: Appearance
-    visuals:
-    - type: MagVisualizer
-      magState: mag
-      steps: 5
-      zeroVisible: true
 
 - type: entity
   name: DEAC-12 pulse carbine
   parent: BatteryGunMedium
-  id: PulseCarbineDeac
+  id: WeaponPulseCarbineDeac
   description: A high tech energy carbine favoured by the NT-ERT operatives.
   components:
   - type: Sprite
@@ -237,7 +189,7 @@
 - type: entity
   name: destroyer pulse rifle
   parent: BatteryGunMedium
-  id: PulseRifleDeathSquad
+  id: WeaponPulseRifleDestroyer
   description: A weapon that fully lives up to its name. 
   components:
   - type: Sprite
@@ -267,7 +219,7 @@
 - type: entity
   name: laser cannon
   parent: BatteryGunLarge
-  id: LaserCannon
+  id: WeaponLaserCannon
   description: A heavy duty, high powered laser weapon.
   components:
   - type: Sprite
@@ -298,7 +250,7 @@
 - type: entity
   name: x-ray cannon
   parent: BatteryGunLarge
-  id: XrayCannon
+  id: WeaponXrayCannon
   description: An experimental weapon that uses concentrated x-ray energy against its target.
   components:
   - type: Sprite
@@ -335,7 +287,7 @@
 - type: entity
   name: taser
   parent: BatteryGunSmall
-  id: TaserGun
+  id: WeaponTaser
   description: A low-capacity, energy-based stun gun used by security teams to subdue targets at range.
   components:
   - type: Tag
@@ -380,7 +332,7 @@
 - type: entity
   name: antique laser gun
   parent: BatteryGunSmall
-  id: AntiqueLaserGun
+  id: WeaponAntiqueLaser
   description: This is an antique laser gun. All craftsmanship is of the highest quality. It is decorated with assistant leather and chrome. The object menaces with spikes of energy.
   components:
   - type: Sprite

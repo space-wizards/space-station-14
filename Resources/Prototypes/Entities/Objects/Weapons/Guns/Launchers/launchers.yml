@@ -13,7 +13,7 @@
 - type: entity
   name: china lake
   parent: LauncherBase
-  id: LauncherChinaLake
+  id: WeaponLauncherChinaLake
   description: PLOOP
   components:
   - type: Sprite
@@ -48,7 +48,7 @@
 - type: entity
   name: RPG-7
   parent: LauncherBase
-  id: LauncherRocket
+  id: WeaponLauncherRocket
   description: A modified ancient rocket-propelled grenade launcher.
   components:
   - type: Sprite

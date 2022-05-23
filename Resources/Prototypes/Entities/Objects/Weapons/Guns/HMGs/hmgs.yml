@@ -43,7 +43,7 @@
 
 - type: entity
   name: minigun
-  id: Minigun
+  id: WeaponMinigun
   parent: HMGBase
   description: Vzzzzzt! Rahrahrahrah! Vrrrrr!
   components:

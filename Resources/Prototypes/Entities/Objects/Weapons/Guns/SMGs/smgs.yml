@@ -43,7 +43,7 @@
 - type: entity
   name: Atreides
   parent: SmgBase
-  id: SmgAtreides
+  id: WeaponSmgAtreides
   description: Pla-ket-ket-ket-ket!
   components:
   - type: Sprite
@@ -84,7 +84,7 @@
 - type: entity
   name: C-20r sub machine gun
   parent: SmgBase
-  id: SmgC20r
+  id: WeaponSmgC20r
   description: A firearm that is often used by the infamous nuclear operatives.
   components:
   - type: Sprite
@@ -127,7 +127,7 @@
 - type: entity
   name: Drozd
   parent: SmgBase
-  id: SmgDrozd
+  id: WeaponSubMachineGunDrozd
   description: An excellent fully automatic Heavy SMG.
   components:
   - type: Sprite
@@ -169,7 +169,7 @@
 - type: entity
   name: WT550
   parent: SmgBase
-  id: SmgWt550
+  id: WeaponSubMachineGunWt550
   description: An excellent SMG, produced by NanoTrasen's Small Arms Division.
   components:
   - type: Sprite
@@ -208,47 +208,9 @@
       zeroVisible: true
 
 - type: entity
-  name: Zoric
-  parent: SmgBase
-  id: SmgZoric
-  description: A compact, robust SMG that uses high caliber rounds.
-  components:
-  - type: Sprite
-    sprite: Objects/Weapons/Guns/SMGs/zoric.rsi
-    layers:
-    - state: base
-      map: ["enum.RangedBarrelVisualLayers.Base"]
-    - state: bolt-closed
-      map: ["enum.RangedBarrelVisualLayers.Bolt"]
-    - state: mag-0
-      map: ["enum.RangedBarrelVisualLayers.Mag"]
-  - type: Icon
-    sprite: Objects/Weapons/Guns/SMGs/zoric.rsi
-  - type: Item
-    size: 24
-    sprite: Objects/Weapons/Guns/SMGs/zoric.rsi
-  - type: RangedWeapon
-  - type: MagazineBarrel
-    currentSelector: Automatic
-    allSelectors:
-    - Automatic
-    fireRate: 8
-    caliber: Magnum
-    magazineTypes:
-    - Smg
-    magFillPrototype: MagazineMagnumSmg
-  - type: Appearance
-    visuals:
-    - type: BarrelBoltVisualizer
-    - type: MagVisualizer
-      magState: mag
-      steps: 1
-      zeroVisible: true
-
-- type: entity
   name: Drozd
-  parent: SmgDrozd
-  id: SmgDrozdRiot
+  parent: WeaponSubMachineGunDrozd
+  id: WeaponSubMachineGunDrozdRubber
   description: An excellent fully automatic Heavy SMG.
   suffix: Non-Lethal
   components:
