@@ -271,6 +271,40 @@
   canBuildInImpassable: false
   conditions:
     - !type:TileNotBlocked
+
+- type: construction
+  name: titanium glass table
+  id: TableTitaniumGlass
+  graph: Table
+  startNode: start
+  targetNode: TableTitaniumGlass
+  category: Furniture
+  description: A square piece of titanium glass standing on some metal legs. Probably not stainless.
+  icon:
+    sprite: Structures/Furniture/Tables/titaniumglass_table.rsi
+    state: full
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  conditions:
+    - !type:TileNotBlocked
+
+- type: construction
+  name: plastitanium glass table
+  id: TablePlastitaniumGlass
+  graph: Table
+  startNode: start
+  targetNode: TablePlastitaniumGlass
+  category: Furniture
+  description: A square piece of plastitanium glass standing on four metal legs. Ridiculously expensive.
+  icon:
+    sprite: Structures/Furniture/Tables/plastitaniumglass_table.rsi
+    state: full
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  conditions:
+    - !type:TileNotBlocked
     
 - type: construction
   name: metal counter
