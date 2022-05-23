@@ -1,16 +1,4 @@
 Entries:
-- author: Rane
-  changes:
-  - {message: You will no longer drop items on the ground when trying to smart equip
-      them while stunned., type: Fix}
-  id: 1087
-  time: '2022-02-19T19:16:15.0000000+00:00'
-- author: mirrorcult
-  changes:
-  - {message: Warping to an entity using the ghost warp menu will now automatically
-      make you start following the entity., type: Tweak}
-  id: 1088
-  time: '2022-02-19T19:16:27.0000000+00:00'
 - author: mirrorcult
   changes:
   - {message: 'Ghosts now orbit around entities they follow, rather than just sitting
@@ -3016,3 +3004,14 @@ Entries:
       reoccur twice within 30 minutes., type: Tweak}
   id: 1586
   time: '2022-05-23T01:01:54.0000000+00:00'
+- author: themias
+  changes:
+  - {message: Gibbing an entity in the microwave no longer locks its UI, type: Fix}
+  id: 1587
+  time: '2022-05-23T19:39:52.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: All base animals around the station can now carry diseases. Have fun
+      giving all the beloved station pets cancer., type: Tweak}
+  id: 1588
+  time: '2022-05-23T19:40:16.0000000+00:00'
