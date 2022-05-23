@@ -29,8 +29,8 @@ namespace Content.Server.Communications
             // All events that refresh the BUI
             SubscribeLocalEvent<AlertLevelChangedEvent>(OnAlertLevelChanged);
             SubscribeLocalEvent<CommunicationsConsoleComponent, ComponentInit>((_, comp, _) => UpdateBoundUserInterface(comp));
-            SubscribeLocalEvent<RoundEndSystemChangedEvent>((_) => boink());
-            SubscribeLocalEvent<AlertLevelDelayFinishedEvent>(( _) => boink());
+            SubscribeLocalEvent<RoundEndSystemChangedEvent>(_ => OnGenericBroadcastEvent());
+            SubscribeLocalEvent<AlertLevelDelayFinishedEvent>(_ => OnGenericBroadcastEvent());
 
             // Messages from the BUI
             SubscribeLocalEvent<CommunicationsConsoleComponent, CommunicationsConsoleSelectAlertLevelMessage>(OnSelectAlertLevelMessage);
@@ -57,7 +57,7 @@ namespace Content.Server.Communications
             base.Update(frameTime);
         }
 
-        private void boink()
+        private void OnGenericBroadcastEvent()
         {
             foreach (var comp in EntityManager.EntityQuery<CommunicationsConsoleComponent>())
             {
