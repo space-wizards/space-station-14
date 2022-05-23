@@ -227,8 +227,6 @@ public sealed class PowerWireAction : BaseWireAction
 
         SetPower(wire.Owner, true);
 
-        // AwaitPulseCancel(wire.Owner, wire, _doAfterSystem.WaitDoAfter(doAfter));
-
         return true;
     }
 
