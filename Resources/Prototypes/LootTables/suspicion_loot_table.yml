@@ -2,10 +2,10 @@
 - type: entityLootTable
   id: SuspicionRule
   entries:
-  - id: RifleAk
+  - id: WeaponRifleAk
     amount: 0
     maxAmount: 5
-  - id: RifleBulldog
+  - id: WeaponRifleBulldog
     amount: 0
     maxAmount: 5
   - id: WeaponRifleWintermute
@@ -20,7 +20,7 @@
   - id: WeaponPistolMandella
     amount: 0
     maxAmount: 5
-  - id: PistolMk58
+  - id: WeaponPistolMk58
     amount: 0
     maxAmount: 5
   - id: ButchCleaver
@@ -78,7 +78,7 @@
   - id: WeaponSniperMosin
     amount: 0
     maxAmount: 5
-  - id: SniperHristov
+  - id: WeaponSniperHristov
     amount: 0
     maxAmount: 5
 
