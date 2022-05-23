@@ -155,7 +155,7 @@
   components:
   - type: StorageFill
     contents:
-      - id: WeaponTaserGun
+      - id: WeaponTaser
       - id: ClothingHeadHatBeretHoS
       - id: ClothingHeadHatHoshat
       - id: ClothingNeckCloakHos

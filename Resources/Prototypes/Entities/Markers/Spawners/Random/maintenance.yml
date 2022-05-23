@@ -100,7 +100,7 @@
         - Crowbar
         - Shovel
         - Welder
-        - FlareGun
+        - WeaponFlareGun
         - Spear
         - LidSalami
       chance: 0.6
