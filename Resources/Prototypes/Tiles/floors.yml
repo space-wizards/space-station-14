@@ -420,6 +420,7 @@
   name: boxing ring floor
   texture: boxing
   variants: 4
+  placementVariants: [0, 1, 2, 3]
   base_turfs:
   - plating
   is_subfloor: false
@@ -436,6 +437,7 @@
   name: gym floor
   texture: gym
   variants: 4
+  placementVariants: [0, 1, 2, 3]
   base_turfs:
   - plating
   is_subfloor: false
