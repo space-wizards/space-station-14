@@ -419,6 +419,7 @@
   id: FloorBoxing
   name: boxing ring floor
   texture: boxing
+  variants: 4
   base_turfs:
   - plating
   is_subfloor: false
@@ -434,6 +435,7 @@
   id: FloorGym
   name: gym floor
   texture: gym
+  variants: 4
   base_turfs:
   - plating
   is_subfloor: false
