@@ -378,6 +378,7 @@ namespace Content.Server.StationEvents
             foreach (var stationEvent in _stationEvents)
             {
                 stationEvent.Occurrences = 0;
+                stationEvent.LastRun = TimeSpan.Zero;
             }
 
             _timeUntilNextEvent = MinimumTimeUntilFirstEvent;
