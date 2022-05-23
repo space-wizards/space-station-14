@@ -94,6 +94,95 @@
     Plasma: 3000
 
 - type: latheRecipe
+  id: SheetTitanium
+  icon:
+    sprite: Objects/Materials/Sheets/metal.rsi
+    state: titanium
+  result: SheetTitanium1
+  completetime: 2
+  materials:
+    Titanium: 100
+    
+- type: latheRecipe
+  id: SheetTitanium30
+  icon:
+    sprite: Objects/Materials/Sheets/metal.rsi
+    state: titanium_3
+  result: SheetTitanium
+  completetime: 2
+  materials:
+    Titanium: 3000
+
+
+- type: latheRecipe
+  id: SheetPlastitanium
+  icon:
+    sprite: Objects/Materials/Sheets/metal.rsi
+    state: plastitanium
+  result: SheetPlastitanium1
+  completetime: 2
+  materials:
+    Titanium: 50
+    Plasma: 50
+    
+- type: latheRecipe
+  id: SheetPlastitanium30
+  icon:
+    sprite: Objects/Materials/Sheets/metal.rsi
+    state: plastitanium_3
+  result: SheetPlastitanium
+  completetime: 2
+  materials:
+    Titanium: 3000
+    Plasma: 3000
+
+- type: latheRecipe
+  id: SheetPTGlass
+  icon:
+    sprite: Objects/Materials/Sheets/glass.rsi
+    state: plastitaniumglass
+  result: SheetPTGlass1
+  completetime: 2
+  materials:
+    Glass: 300
+    Plasma: 300
+    Titanium: 150
+    
+- type: latheRecipe
+  id: SheetPTGlass30
+  icon:
+    sprite: Objects/Materials/Sheets/glass.rsi
+    state: plastitaniumglass_3
+  result: SheetPTGlass
+  completetime: 2
+  materials:
+    Glass: 3000
+    Plasma: 3000
+    Titanium: 1500
+
+- type: latheRecipe
+  id: SheetTGlass
+  icon:
+    sprite: Objects/Materials/Sheets/glass.rsi
+    state: titaniumglass
+  result: SheetTGlass1
+  completetime: 2
+  materials:
+    Glass: 250
+    Titanium: 150
+    
+- type: latheRecipe
+  id: SheetTGlass30
+  icon:
+    sprite: Objects/Materials/Sheets/metal.rsi
+    state: titaniumglass_3
+  result: SheetTGlass
+  completetime: 2
+  materials:
+    Glass: 2500
+    Titanium: 1500
+
+- type: latheRecipe
   id: SheetUranium1
   icon:
     sprite: Objects/Materials/Sheets/other.rsi
