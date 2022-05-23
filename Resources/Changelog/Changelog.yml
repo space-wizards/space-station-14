@@ -1,10 +1,4 @@
 Entries:
-- author: Peptide90
-  changes:
-  - {message: Pillar V4.1 - Atmos fixed. Misc changes. Exterior airlocks swapped to
-      glass. Some decal changes. Other misc fixes., type: Tweak}
-  id: 1091
-  time: '2022-02-19T19:24:15.0000000+00:00'
 - author: Elijahrane
   changes:
   - {message: 'Added security techfabs, which print the security weapons and equipment
@@ -3014,3 +3008,8 @@ Entries:
     type: Fix}
   id: 1590
   time: '2022-05-23T23:03:27.0000000+00:00'
+- author: keronshb
+  changes:
+  - {message: Balanced slipping speed so items don't go mach 5., type: Tweak}
+  id: 1591
+  time: '2022-05-23T23:11:17.0000000+00:00'
