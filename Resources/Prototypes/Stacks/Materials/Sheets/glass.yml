@@ -5,6 +5,12 @@
   spawn: SheetGlass1
 
 - type: stack
+  id: PlasmaGlass
+  name: plasma glass
+  icon: /Textures/Objects/Materials/Sheets/glass.rsi/pglass.png
+  spawn: SheetPGlass1
+
+- type: stack
   id: ReinforcedGlass
   name: reinforced glass
   icon: /Textures/Objects/Materials/Sheets/glass.rsi/rglass.png
