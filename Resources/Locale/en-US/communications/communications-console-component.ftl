@@ -11,8 +11,6 @@ communicationsconsole-permission-denied = Permission denied
 communicationsconsole-announcement-sent-by = Sent by
 communicationsconsole-announcement-unknown-sender = Unknown
 
-# NT comms console
-communicationsconsole-announcement-title = Communications Console
-
-# Syndie comms console
-communicationsconsole-announcement-title = Syndicate
+# Comms console variant titles
+communicationsconsole-announcement-title-nanotrasen = Communications Console
+communicationsconsole-announcement-title-nukie = Syndicate Nuclear Operative

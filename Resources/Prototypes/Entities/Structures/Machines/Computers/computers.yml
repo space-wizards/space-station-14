@@ -281,7 +281,7 @@
   - type: AccessReader
     access: [[ "Command" ]]
   - type: CommunicationsConsole
-    announcementTitle: communicationsconsole-announcement-title
+    announcementTitle: communicationsconsole-announcement-title-nanotrasen
   - type: ActivatableUI
     key: enum.CommunicationsConsoleUiKey.Key
   - type: ActivatableUIRequiresPower
@@ -295,6 +295,16 @@
     radius: 1.5
     energy: 1.6
     color: "#3c5eb5"
+
+- type: entity
+  parent: ComputerComms
+  name: syndicate communications computer
+  description: This can be used for various important functions. Still under development.
+  components:
+  - type: AccessReader
+    access: [[ "NuclearOperative" ]]
+  - type: CommunicationsConsole
+    announcementTitle: communicationsconsole-announcement-title-nukie
 
 - type: entity
   parent: ComputerBase

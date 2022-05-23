@@ -44,7 +44,7 @@ namespace Content.Server.Communications
             SubscribeLocalEvent<CommunicationsConsoleComponent, CommunicationsConsoleRecallEmergencyShuttleMessage>((uid, _, args) => OnRecallShuttleMessage(uid, args));
         }
 
-        public void UpdateBoundUserInterface(CommunicationsConsoleComponent comp)
+        private void UpdateBoundUserInterface(CommunicationsConsoleComponent comp)
         {
             var uid = comp.Owner;
 
