@@ -61,6 +61,12 @@ public sealed class PowerWireAction : BaseWireAction
             && count == cut;
     }
 
+    private bool AllWiresMended(EntityUid owner)
+    {
+        return WiresSystem.TryGetData(owner, PowerWireActionInternalKeys.CutWires, out int? cut)
+               && cut == 0;
+    }
+
     // I feel like these two should be within ApcPowerReceiverComponent at this point.
     // Getting it from a dictionary is significantly more expensive.
     private void SetPower(EntityUid owner, bool pulsed)
@@ -114,35 +120,37 @@ public sealed class PowerWireAction : BaseWireAction
         electrified.Enabled = setting;
     }
 
-    /// <returns>false if failed, true otherwise</returns>
+    /// <returns>false if failed, true otherwise, or if the entity cannot be electrified</returns>
     private bool TrySetElectrocution(EntityUid user, Wire wire, bool timed = false)
     {
-        if (EntityManager.TryGetComponent<ApcPowerReceiverComponent>(wire.Owner, out var power)
-            && EntityManager.TryGetComponent<ElectrifiedComponent>(wire.Owner, out var electrified))
+        if (!EntityManager.TryGetComponent<ElectrifiedComponent>(wire.Owner, out var electrified))
         {
-            // always set this to true
-            SetElectrified(wire.Owner, true, electrified);
+            return true;
+        }
 
-            // if we were electrified, then return false
-            var electrifiedAttempt = _electrocutionSystem.TryDoElectrifiedAct(wire.Owner, user);
+        // always set this to true
+        SetElectrified(wire.Owner, true, electrified);
 
-            // if this is timed, we set up a doAfter so that the
-            // electrocution continues - unless cancelled
-            //
-            // if the power is disabled however, just don't bother
-            if (timed && IsPowered(wire.Owner))
-            {
-                WiresSystem.StartWireAction(wire.Owner, _pulseTimeout, PowerWireActionKey.ElectrifiedCancel, new TimedWireEvent(AwaitElectrifiedCancel, wire));
-            }
-            else
+        // if we were electrified, then return false
+        var electrifiedAttempt = _electrocutionSystem.TryDoElectrifiedAct(wire.Owner, user);
+
+        // if this is timed, we set up a doAfter so that the
+        // electrocution continues - unless cancelled
+        //
+        // if the power is disabled however, just don't bother
+        if (timed && IsPowered(wire.Owner))
+        {
+            WiresSystem.StartWireAction(wire.Owner, _pulseTimeout, PowerWireActionKey.ElectrifiedCancel, new TimedWireEvent(AwaitElectrifiedCancel, wire));
+        }
+        else
+        {
+            if (AllWiresCut(wire.Owner))
             {
                 SetElectrified(wire.Owner, false, electrified);
             }
-
-            return !electrifiedAttempt;
         }
 
-        return false;
+        return !electrifiedAttempt;
     }
 
     public override void Initialize()
@@ -239,8 +247,10 @@ public sealed class PowerWireAction : BaseWireAction
 
     private void AwaitElectrifiedCancel(Wire wire)
     {
-        WiresSystem.SetData(wire.Owner, PowerWireActionKey.Electrified, false);
-        SetElectrified(wire.Owner, false);
+        if (AllWiresMended(wire.Owner))
+        {
+            SetElectrified(wire.Owner, false);
+        }
     }
 
     private void AwaitPulseCancel(Wire wire)
