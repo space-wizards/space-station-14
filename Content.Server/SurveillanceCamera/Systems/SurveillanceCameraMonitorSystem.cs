@@ -37,6 +37,8 @@ public sealed class SurveillanceCameraMonitorSystem : EntitySystem
     private HashSet<EntityUid> _activeMonitors = new();
     private List<EntityUid> _toRemove = new();
 
+    /* This is commented out because it is currently useless, this is not how device networks work when wired.
+       In the future though, if that behavior is implemented, then this should be uncommented.
     public override void Update(float frameTime)
     {
         foreach (var uid in _activeMonitors)
@@ -63,6 +65,7 @@ public sealed class SurveillanceCameraMonitorSystem : EntitySystem
             _activeMonitors.Remove(uid);
         }
     }
+    */
 
     /// ROUTING:
     ///
