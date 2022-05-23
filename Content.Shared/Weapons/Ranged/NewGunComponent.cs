@@ -5,8 +5,8 @@ using Robust.Shared.Map;
 
 namespace Content.Shared.Weapons.Ranged;
 
-[RegisterComponent, NetworkedComponent]
-public sealed class NewGunComponent : Component
+[RegisterComponent, NetworkedComponent, Virtual]
+public class NewGunComponent : Component
 {
     [ViewVariables(VVAccess.ReadWrite), DataField("soundGunshot")]
     public SoundSpecifier? SoundGunshot = new SoundPathSpecifier("/Audio/Weapons/Guns/Gunshots/smg.ogg");

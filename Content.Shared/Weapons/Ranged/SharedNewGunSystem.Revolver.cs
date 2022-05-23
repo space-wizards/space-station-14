@@ -81,7 +81,7 @@ public partial class SharedNewGunSystem
 
     private void OnRevolverInit(EntityUid uid, SharedRevolverAmmoProviderComponent component, ComponentInit args)
     {
-        component.AmmoContainer = Containers.EnsureContainer<Container>(uid, "revolver-ammo-container");
+        component.AmmoContainer = Containers.EnsureContainer<Container>(uid, "revolver-ammo");
         component.AmmoSlots = new EntityUid?[component.Capacity];
         component.Chambers = new bool?[component.Capacity];
 

@@ -24,16 +24,19 @@ public sealed class NewGunSystem : SharedNewGunSystem
             {
                 // Cartridge shoots something itself
                 case CartridgeAmmoComponent cartridge:
-                    DebugTools.Assert(!cartridge.Spent);
-                    var uid = Spawn(cartridge.Prototype, fromCoordinates);
-                    ShootProjectile(uid, direction, user);
-
-                    if (TryComp<AppearanceComponent>(cartridge.Owner, out var appearance))
+                    if (!cartridge.Spent)
                     {
-                        appearance.SetData(AmmoVisuals.Spent, true);
+                        var uid = Spawn(cartridge.Prototype, fromCoordinates);
+                        ShootProjectile(uid, direction, user);
+
+                        if (TryComp<AppearanceComponent>(cartridge.Owner, out var appearance))
+                        {
+                            appearance.SetData(AmmoVisuals.Spent, true);
+                        }
+
+                        cartridge.Spent = true;
                     }
 
-                    cartridge.Spent = true;
                     EjectCartridge(cartridge.Owner);
                     Dirty(cartridge);
                     break;

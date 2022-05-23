@@ -41,6 +41,9 @@ public abstract partial class SharedNewGunSystem : EntitySystem
         SubscribeLocalEvent<NewGunComponent, ComponentHandleState>(OnHandleState);
 
         // Ammo providers
+        InitializeBallistic();
+        InitializeChamberMagazine();
+        InitializeMagazine();
         InitializeRevolver();
 
         // Interactions
