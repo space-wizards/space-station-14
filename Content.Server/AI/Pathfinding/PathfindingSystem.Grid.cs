@@ -7,11 +7,12 @@ using Robust.Shared.Utility;
 
 namespace Content.Server.AI.Pathfinding;
 
-/// <summary>
-/// Handles pathfinding while on a grid.
-/// </summary>
 public sealed partial class PathfindingSystem
 {
+    /*
+     * Handles pathfinding while on a grid.
+     */
+
     [Dependency] private readonly AccessReaderSystem _accessReader = default!;
     [Dependency] private readonly IMapManager _mapManager = default!;
 
@@ -28,9 +29,21 @@ public sealed partial class PathfindingSystem
         SubscribeLocalEvent<AccessReaderChangeEvent>(OnAccessChange);
         SubscribeLocalEvent<GridAddEvent>(OnGridAdd);
         SubscribeLocalEvent<TileChangedEvent>(OnTileChange);
+        SubscribeLocalEvent<PhysicsBodyTypeChangedEvent>(OnBodyTypeChange);
 
         // Handle all the base grid changes
         // Anything that affects traversal (i.e. collision layer) is handled separately.
+    }
+
+    private void OnBodyTypeChange(ref PhysicsBodyTypeChangedEvent ev)
+    {
+        var xform = Transform(ev.Entity);
+
+        if (!IsRelevant(xform, ev.Component)) return;
+
+        var node = GetNode(xform);
+        node?.RemoveEntity(ev.Entity);
+        node?.AddEntity(ev.Entity, ev.Component, EntityManager);
     }
 
     private void OnGridAdd(GridAddEvent ev)
@@ -91,6 +104,8 @@ public sealed partial class PathfindingSystem
         return newChunk;
     }
 
+
+
     /// <summary>
     /// Return the corresponding PathfindingNode for this tile
     /// </summary>
@@ -149,6 +164,27 @@ public sealed partial class PathfindingSystem
         node.RemoveEntity(entity);
     }
 
+    private void OnEntityRemove(EntityUid entity, EntityCoordinates coordinates)
+    {
+        var gridId = coordinates.GetGridId(EntityManager);
+        if (!_mapManager.TryGetGrid(gridId, out var grid)) return;
+
+        var node = GetNode(grid.GetTileRef(coordinates));
+        node.RemoveEntity(entity);
+    }
+
+    private PathfindingNode? GetNode(TransformComponent xform)
+    {
+        if (!_mapManager.TryGetGrid(xform.GridID, out var grid)) return null;
+        return GetNode(grid.GetTileRef(xform.Coordinates));
+    }
+
+    private PathfindingNode? GetNode(EntityCoordinates coordinates)
+    {
+        if (!_mapManager.TryGetGrid(coordinates.GetGridId(EntityManager), out var grid)) return null;
+        return GetNode(grid.GetTileRef(coordinates));
+    }
+
     /// <summary>
     /// When an entity moves around we'll remove it from its old node and add it to its new node (if applicable)
     /// </summary>
@@ -159,27 +195,19 @@ public sealed partial class PathfindingSystem
 
         // If we've moved to space or the likes then remove us.
         if (!TryComp<PhysicsComponent>(moveEvent.Sender, out var physics) ||
-            !IsRelevant(xform, physics) ||
-            moveEvent.NewPosition.GetGridId(EntityManager) == GridId.Invalid)
+            !IsRelevant(xform, physics))
         {
-            OnEntityRemove(moveEvent.Sender, xform);
+            OnEntityRemove(moveEvent.Sender, moveEvent.OldPosition);
             return;
         }
 
-        var oldGridId = moveEvent.OldPosition.GetGridId(EntityManager);
-        var gridId = moveEvent.NewPosition.GetGridId(EntityManager);
+        var oldNode = GetNode(moveEvent.OldPosition);
+        var newNode = GetNode(moveEvent.NewPosition);
 
-        if (_mapManager.TryGetGrid(oldGridId, out var oldGrid))
-        {
-            var oldNode = GetNode(oldGrid.GetTileRef(moveEvent.OldPosition));
-            oldNode.RemoveEntity(moveEvent.Sender);
-        }
+        if (oldNode?.Equals(newNode) == true) return;
 
-        if (_mapManager.TryGetGrid(gridId, out var grid))
-        {
-            var newNode = GetNode(grid.GetTileRef(moveEvent.OldPosition));
-            newNode.AddEntity(moveEvent.Sender, physics, EntityManager);
-        }
+        oldNode?.RemoveEntity(moveEvent.Sender);
+        newNode?.AddEntity(moveEvent.Sender, physics, EntityManager);
     }
 
     // TODO: Need to rethink the pathfinder utils (traversable etc.). Maybe just chuck them all in PathfindingSystem

@@ -31,7 +31,7 @@
     fixtures:
     - shape:
         !type:PhysShapeCircle
-        radius: 0.35
+        radius: 0.25
       mass: 120
       mask:
       - MobMask
@@ -88,6 +88,8 @@
   - type: Tag
     tags:
       - CannotSuicide
+      - DoorBumpOpener
+      - FootstepSound
   - type: NoSlip
 
 - type: entity
