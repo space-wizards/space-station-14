@@ -14,7 +14,7 @@ public sealed class ChameleonBoundUserInterface : BoundUserInterface
     protected override void Open()
     {
         base.Open();
-        _menu = new ChameleonMenu();
+        _menu = new ChameleonMenu(new []{"ClothingUniformJumpskirtResearchDirector"});
         _menu.OnClose += Close;
         _menu.OpenCentered();
     }
