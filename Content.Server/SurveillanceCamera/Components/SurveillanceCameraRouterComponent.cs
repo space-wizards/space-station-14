@@ -6,6 +6,8 @@ namespace Content.Server.SurveillanceCamera;
 [RegisterComponent]
 public class SurveillanceCameraRouterComponent : Component
 {
+    [ViewVariables] public bool Active { get; set; } = true;
+
     // The name of the subnet connected to this router.
     [DataField("subnetName")]
     public string SubnetName { get; set; } = string.Empty;

@@ -3,6 +3,7 @@ using Content.Server.DeviceNetwork;
 using Content.Server.DeviceNetwork.Components;
 using Content.Server.DeviceNetwork.Systems;
 using Content.Server.Ghost.Components;
+using Content.Server.Power.Components;
 using Content.Shared.DeviceNetwork;
 using Content.Shared.SurveillanceCamera;
 using Content.Shared.Verbs;
@@ -23,6 +24,7 @@ public sealed class SurveillanceCameraRouterSystem : EntitySystem
         SubscribeLocalEvent<SurveillanceCameraRouterComponent, DeviceNetworkPacketEvent>(OnPacketReceive);
         SubscribeLocalEvent<SurveillanceCameraRouterComponent, SurveillanceCameraSetupSetNetwork>(OnSetNetwork);
         SubscribeLocalEvent<SurveillanceCameraRouterComponent, GetVerbsEvent<Verb>>(AddVerbs);
+        SubscribeLocalEvent<SurveillanceCameraRouterComponent, PowerChangedEvent>(OnPowerChanged);
     }
 
     private void OnInitialize(EntityUid uid, SurveillanceCameraRouterComponent router, ComponentInit args)
@@ -38,7 +40,8 @@ public sealed class SurveillanceCameraRouterSystem : EntitySystem
 
     private void OnPacketReceive(EntityUid uid, SurveillanceCameraRouterComponent router, DeviceNetworkPacketEvent args)
     {
-        if (string.IsNullOrEmpty(args.SenderAddress)
+        if (!router.Active
+            || string.IsNullOrEmpty(args.SenderAddress)
             || !args.Data.TryGetValue(DeviceNetworkConstants.Command, out string? command))
         {
             return;
@@ -79,6 +82,11 @@ public sealed class SurveillanceCameraRouterSystem : EntitySystem
                 SendCameraInfo(uid, args.Data, router);
                 break;
         }
+    }
+
+    private void OnPowerChanged(EntityUid uid, SurveillanceCameraRouterComponent component, PowerChangedEvent args)
+    {
+        component.Active = args.Powered;
     }
 
     private void AddVerbs(EntityUid uid, SurveillanceCameraRouterComponent component, GetVerbsEvent<Verb> verbs)

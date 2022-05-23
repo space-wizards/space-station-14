@@ -419,6 +419,7 @@
     - type: SurveillanceCameraMonitor
     - type: ActivatableUI
       key: enum.SurveillanceCameraMonitorUiKey.Key
+    - type: ActivatableUIRequiresPower
     - type: Transform
       anchored: true
     - type: UserInterface
