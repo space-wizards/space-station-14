@@ -1,12 +1,4 @@
 Entries:
-- author: Macoron
-  changes:
-  - {message: Added more xeno artifact triggers. Test them with hot or electrical
-      objects., type: Add}
-  - {message: Temperature changing artifacts are much deadlier than before. Isolate
-      them as soon as possible., type: Tweak}
-  id: 1090
-  time: '2022-02-19T19:16:50.0000000+00:00'
 - author: Peptide90
   changes:
   - {message: Pillar V4.1 - Atmos fixed. Misc changes. Exterior airlocks swapped to
@@ -3014,3 +3006,11 @@ Entries:
   - {message: Servers can now specify their own rules file, type: Add}
   id: 1589
   time: '2022-05-23T19:43:09.0000000+00:00'
+- author: Rane
+  changes:
+  - {message: Ported vomiting from the Nyanotrasen fork. Several new and old diseases
+      and chems now cause vomiting., type: Add}
+  - {message: The vomit puddle sprite no longer loses its color as it evaporates.,
+    type: Fix}
+  id: 1590
+  time: '2022-05-23T23:03:27.0000000+00:00'
