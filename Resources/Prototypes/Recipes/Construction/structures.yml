@@ -196,7 +196,7 @@
     - !type:NoWindowsInTile
   icon:
     sprite: Structures/Windows/shuttle_window.rsi
-    state: swindowfull
+    state: full
   objectType: Structure
   placementMode: SnapgridCenter
   canRotate: false
