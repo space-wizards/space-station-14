@@ -1,19 +1,24 @@
+using System.Threading;
 using Content.Client.GameTicking.Managers;
 using Content.Client.Lobby;
 using Content.Client.Viewport;
 using Content.Shared;
 using Content.Shared.Audio;
 using Content.Shared.CCVar;
+using Content.Shared.Maps;
 using JetBrains.Annotations;
 using Robust.Client;
+using Robust.Client.Player;
 using Robust.Client.State;
 using Robust.Shared.Audio;
 using Robust.Shared.Configuration;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
+using Robust.Shared.Map;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
+using Timer = Robust.Shared.Timing.Timer;
 
 namespace Content.Client.Audio
 {
@@ -26,8 +31,9 @@ namespace Content.Client.Audio
         [Dependency] private readonly IStateManager _stateManager = default!;
         [Dependency] private readonly IBaseClient _client = default!;
         [Dependency] private readonly ClientGameTicker _gameTicker = default!;
-
-        private SoundCollectionPrototype _ambientCollection = default!;
+        [Dependency] private readonly IMapManager _mapManager = default!;
+        [Dependency] private readonly ITileDefinitionManager _tileDefMan = default!;
+        [Dependency] private readonly IPlayerManager _playMan = default!;
 
         private readonly AudioParams _ambientParams = new(-10f, 1, "Master", 0, 0, 0, true, 0f);
         private readonly AudioParams _lobbyParams = new(-5f, 1, "Master", 0, 0, 0, true, 0f);
@@ -35,14 +41,26 @@ namespace Content.Client.Audio
         private IPlayingAudioStream? _ambientStream;
         private IPlayingAudioStream? _lobbyStream;
 
+        private SoundCollectionPrototype _currentCollection = default!;
+        private CancellationTokenSource _timerCancelTokenSource = new();
+
+        private SoundCollectionPrototype _spaceAmbience = default!;
+        private SoundCollectionPrototype _stationAmbience = default!;
+
         public override void Initialize()
         {
             base.Initialize();
 
-            _ambientCollection = _prototypeManager.Index<SoundCollectionPrototype>("AmbienceBase");
+            _stationAmbience = _prototypeManager.Index<SoundCollectionPrototype>("StationAmbienceBase");
+            _spaceAmbience = _prototypeManager.Index<SoundCollectionPrototype>("SpaceAmbienceBase");
+            _currentCollection = _stationAmbience;
 
             _configManager.OnValueChanged(CCVars.AmbienceVolume, AmbienceCVarChanged);
             _configManager.OnValueChanged(CCVars.LobbyMusicEnabled, LobbyMusicCVarChanged);
+            _configManager.OnValueChanged(CCVars.StationAmbienceEnabled, StationAmbienceCVarChanged);
+            _configManager.OnValueChanged(CCVars.SpaceAmbienceEnabled, SpaceAmbienceCVarChanged);
+
+            SubscribeLocalEvent<EntParentChangedMessage>(EntParentChanged);
 
             _stateManager.OnStateChanged += StateManagerOnStateChanged;
 
@@ -65,6 +83,36 @@ namespace Content.Client.Audio
 
             EndAmbience();
             EndLobbyMusic();
+        }
+
+        private void EntParentChanged(ref EntParentChangedMessage message)
+        {
+            if(_playMan.LocalPlayer is null || _playMan.LocalPlayer.ControlledEntity != message.Entity) return;
+            if (!TryComp<TransformComponent>(message.Entity, out var xform) ||
+                !_mapManager.TryGetGrid(xform.GridID, out var grid)) return;
+
+            var tileDef = (ContentTileDefinition) _tileDefMan[grid.GetTileRef(xform.Coordinates).Tile.TypeId];
+
+            if(_currentCollection.ID == _spaceAmbience.ID)
+            {
+                if (!tileDef.Sturdy) return;
+                ChangeAmbience(_stationAmbience);
+
+            }
+            else // currently station
+            {
+                if (tileDef.Sturdy) return;
+                ChangeAmbience(_spaceAmbience);
+            }
+        }
+
+        private void ChangeAmbience(SoundCollectionPrototype newAmbience)
+        {
+            EndAmbience();
+            _currentCollection = newAmbience;
+            _timerCancelTokenSource.Cancel();
+            _timerCancelTokenSource = new();
+            Timer.Spawn(1500, StartAmbience, _timerCancelTokenSource.Token);
         }
 
         private void StateManagerOnStateChanged(StateChangedEventArgs args)
@@ -122,7 +170,8 @@ namespace Content.Client.Audio
         private void StartAmbience()
         {
             EndAmbience();
-            var file = _robustRandom.Pick(_ambientCollection.PickFiles).ToString();
+            if (!CanPlayCollection(_currentCollection)) return;
+            var file = _robustRandom.Pick(_currentCollection.PickFiles).ToString();
             _ambientStream = SoundSystem.Play(Filter.Local(), file, _ambientParams.WithVolume(_ambientParams.Volume + _configManager.GetCVar(CCVars.AmbienceVolume)));
         }
 
@@ -130,6 +179,40 @@ namespace Content.Client.Audio
         {
             _ambientStream?.Stop();
             _ambientStream = null;
+        }
+
+        private bool CanPlayCollection(SoundCollectionPrototype collection)
+        {
+            if (collection.ID == _spaceAmbience.ID)
+                return _configManager.GetCVar(CCVars.SpaceAmbienceEnabled);
+            if (collection.ID == _stationAmbience.ID)
+                return _configManager.GetCVar(CCVars.StationAmbienceEnabled);
+
+            return true;
+        }
+
+        private void StationAmbienceCVarChanged(bool enabled)
+        {
+            if (enabled && _stateManager.CurrentState is GameScreen && _currentCollection.ID == _stationAmbience.ID)
+            {
+                StartAmbience();
+            }
+            else if(_currentCollection.ID == _stationAmbience.ID)
+            {
+                EndAmbience();
+            }
+        }
+
+        private void SpaceAmbienceCVarChanged(bool enabled)
+        {
+            if (enabled && _stateManager.CurrentState is GameScreen && _currentCollection.ID == _spaceAmbience.ID)
+            {
+                StartAmbience();
+            }
+            else if(_currentCollection.ID == _spaceAmbience.ID)
+            {
+                EndAmbience();
+            }
         }
 
         private void LobbyMusicCVarChanged(bool musicEnabled)

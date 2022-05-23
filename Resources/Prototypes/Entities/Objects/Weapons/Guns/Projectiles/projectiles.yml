@@ -5,6 +5,7 @@
   description: If you can see this you're probably dead!
   abstract: true
   components:
+  - type: FlyBySound
   - type: Clickable
   - type: Sprite
     netsync: false
@@ -21,6 +22,7 @@
         !type:PhysShapeAabb
         bounds: "-0.1,-0.1,0.1,0.1"
       hard: false
+      id: projectile
       mask:
       - Impassable
       - BulletImpassable
@@ -47,6 +49,7 @@
         !type:PhysShapeAabb
         bounds: "-0.15,-0.45,0.15,0.15"
       hard: false
+      id: projectile
       mask:
       - Impassable
       - BulletImpassable
@@ -111,6 +114,11 @@
   parent: BulletBase
   noSpawn: true
   components:
+  - type: FlyBySound
+    sound:
+      collection: EnergyMiss
+      params:
+        volume: 5
   - type: Sprite
     noRot: true
     sprite: Objects/Weapons/Guns/Projectiles/spark.rsi
@@ -125,6 +133,7 @@
         !type:PhysShapeAabb
         bounds: "-0.2,-0.2,0.2,0.2"
       hard: false
+      id: projectile
       mask:
       - Impassable
       - BulletImpassable
@@ -138,6 +147,7 @@
         Heat: 5
     soundHit:
       path: "/Audio/Weapons/Guns/Hits/taser_hit.ogg"
+    soundForce: true
   - type: StunOnCollide
     stunAmount: 5
     knockdownAmount: 5
@@ -159,6 +169,7 @@
         !type:PhysShapeAabb
         bounds: "-0.2,-0.2,0.2,0.2"
       hard: false
+      id: projectile
       mask:
       - Impassable
       - Opaque
