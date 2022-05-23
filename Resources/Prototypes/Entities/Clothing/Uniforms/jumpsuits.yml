@@ -781,5 +781,9 @@
       sprite: Clothing/Uniforms/Jumpsuit/Color/black.rsi
     - type: ChameleonClothing
     - type: Appearance
+    - type: UserInterface
+      interfaces:
+        - key: enum.ChameleonUiKey.Key
+          type: ChameleonBoundUserInterface
 
 

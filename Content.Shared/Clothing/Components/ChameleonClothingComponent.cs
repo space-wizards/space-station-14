@@ -13,3 +13,9 @@ public enum ChameleonVisuals : byte
 {
     ClothingId
 }
+
+[Serializable, NetSerializable]
+public enum ChameleonUiKey : byte
+{
+    Key
+}
