@@ -75,9 +75,15 @@ public sealed class SurveillanceCameraMonitorSystem : EntitySystem
     ///               always speak on the monitor frequency and will not
     ///               do broadcast pings - whatever talks to it, talks to it.
     ///
+    /// How a camera is discovered:
+    ///
+    /// Subnet ping:
     /// Surveillance camera monitor - [ monitor freq ] -> Router
+    /// Router -> camera discovery
     /// Router - [ subnet freq ] -> Camera
+    /// Camera -> router ping
     /// Camera - [ monitor freq ] -> Router
+    /// Router -> monitor data forward
     /// Router - [ monitor freq ] -> Monitor
 
     #region Event Handling

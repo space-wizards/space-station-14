@@ -1,5 +1,4 @@
 using Content.Shared.SurveillanceCamera;
-using Robust.Shared.Utility;
 
 namespace Content.Client.SurveillanceCamera;
 

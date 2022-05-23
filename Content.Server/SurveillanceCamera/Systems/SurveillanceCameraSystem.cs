@@ -47,6 +47,8 @@ public sealed class SurveillanceCameraSystem : EntitySystem
     public const string CameraNameData = "surveillance_camera_data_name";
     public const string CameraSubnetData = "surveillance_camera_data_subnet";
 
+    public const int CameraNameLimit = 32;
+
     public override void Initialize()
     {
         SubscribeLocalEvent<SurveillanceCameraComponent, ComponentShutdown>(OnShutdown);
@@ -160,7 +162,7 @@ public sealed class SurveillanceCameraSystem : EntitySystem
         if (args.UiKey is not SurveillanceCameraSetupUiKey key
             || key != SurveillanceCameraSetupUiKey.Camera
             || string.IsNullOrEmpty(args.Name)
-            || args.Name.Length > 32)
+            || args.Name.Length > CameraNameLimit)
         {
             return;
         }
