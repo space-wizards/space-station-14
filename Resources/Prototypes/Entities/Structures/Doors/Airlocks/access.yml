@@ -658,8 +658,6 @@
   components:
   - type: AccessReader
     access: [["Command"]]
-  - type: Wires
-    LayoutId: HighSec
 
 - type: entity
   parent: HighSecDoor
@@ -668,5 +666,3 @@
   components:
   - type: AccessReader
     access: [["Captain"]]
-  - type: Wires
-    LayoutId: HighSec
