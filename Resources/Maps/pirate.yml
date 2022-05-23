@@ -1618,15 +1618,6 @@ entities:
         - -0.49,-0.49
       mask:
       - Impassable
-      - MidImpassable
-      - HighImpassable
-      - LowImpassable
-      - InteractImpassable
-      layer:
-      - MidImpassable
-      - HighImpassable
-      - BulletImpassable
-      - InteractImpassable
       - Opaque
       mass: 100
     - shape: !type:PhysShapeCircle
@@ -4151,15 +4142,6 @@ entities:
         - -0.49,-0.49
       mask:
       - Impassable
-      - MidImpassable
-      - HighImpassable
-      - LowImpassable
-      - InteractImpassable
-      layer:
-      - MidImpassable
-      - HighImpassable
-      - BulletImpassable
-      - InteractImpassable
       - Opaque
       mass: 100
     - shape: !type:PhysShapeCircle

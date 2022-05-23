@@ -6,6 +6,15 @@
   description: A miserable pile of secrets.
   noSpawn: true
   components:
+  - type: RangedDamageSound
+    soundGroups:
+      Brute:
+        collection:
+          MeatBulletImpact
+    soundTypes:
+      Heat:
+        collection:
+          MeatLaserImpact
   - type: Tag
     tags:
     - CanPilot
