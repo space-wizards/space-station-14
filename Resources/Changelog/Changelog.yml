@@ -1,10 +1,4 @@
 Entries:
-- author: mirrorcult
-  changes:
-  - {message: 'Ghosts now orbit around entities they follow, rather than just sitting
-      on top of them.', type: Add}
-  id: 1089
-  time: '2022-02-19T19:16:44.0000000+00:00'
 - author: Macoron
   changes:
   - {message: Added more xeno artifact triggers. Test them with hot or electrical
@@ -3015,3 +3009,8 @@ Entries:
       giving all the beloved station pets cancer., type: Tweak}
   id: 1588
   time: '2022-05-23T19:40:16.0000000+00:00'
+- author: ike709
+  changes:
+  - {message: Servers can now specify their own rules file, type: Add}
+  id: 1589
+  time: '2022-05-23T19:43:09.0000000+00:00'
