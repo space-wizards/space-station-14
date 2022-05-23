@@ -306,6 +306,12 @@
     access: [[ "NuclearOperative" ]]
   - type: CommunicationsConsole
     announcementTitle: communicationsconsole-announcement-title-nukie
+  - type: Computer
+    board: SyndicateCommsComputerCircuitboard
+  - type: PointLight
+    radius: 1.5
+    energy: 1.6
+    color: "#f71713"
 
 - type: entity
   parent: ComputerBase
