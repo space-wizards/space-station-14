@@ -248,9 +248,9 @@ entities:
     parent: 60
     type: Transform
 - uid: 1
-  type: Catwalk
+  type: CableHV
   components:
-  - pos: 26.5,-64.5
+  - pos: 23.5,-63.5
     parent: 60
     type: Transform
 - uid: 2
@@ -266,9 +266,9 @@ entities:
     parent: 60
     type: Transform
 - uid: 4
-  type: Catwalk
+  type: CableHV
   components:
-  - pos: 30.5,-64.5
+  - pos: 25.5,-63.5
     parent: 60
     type: Transform
 - uid: 5
@@ -443,57 +443,57 @@ entities:
     parent: 60
     type: Transform
 - uid: 28
-  type: Catwalk
+  type: CableHV
   components:
-  - pos: 32.5,-64.5
+  - pos: 27.5,-63.5
     parent: 60
     type: Transform
 - uid: 29
-  type: Catwalk
+  type: CableHV
   components:
-  - pos: 28.5,-64.5
+  - pos: 29.5,-63.5
     parent: 60
     type: Transform
 - uid: 30
   type: Catwalk
   components:
-  - pos: 27.5,-64.5
+  - pos: 32.5,-64.5
     parent: 60
     type: Transform
 - uid: 31
   type: Catwalk
   components:
-  - pos: 25.5,-64.5
+  - pos: 34.5,-64.5
     parent: 60
     type: Transform
 - uid: 32
   type: Catwalk
   components:
-  - pos: 24.5,-64.5
+  - pos: 38.5,-64.5
     parent: 60
     type: Transform
 - uid: 33
   type: Catwalk
   components:
-  - pos: 23.5,-64.5
+  - pos: 40.5,-64.5
     parent: 60
     type: Transform
 - uid: 34
   type: Catwalk
   components:
-  - pos: 22.5,-64.5
+  - pos: 37.5,-68.5
     parent: 60
     type: Transform
 - uid: 35
   type: Catwalk
   components:
-  - pos: 21.5,-64.5
+  - pos: 39.5,-68.5
     parent: 60
     type: Transform
 - uid: 36
   type: Catwalk
   components:
-  - pos: 20.5,-64.5
+  - pos: 36.5,-64.5
     parent: 60
     type: Transform
 - uid: 37
@@ -592,7 +592,7 @@ entities:
 - uid: 50
   type: Catwalk
   components:
-  - pos: 29.5,-64.5
+  - pos: 42.5,-64.5
     parent: 60
     type: Transform
 - uid: 51
@@ -13483,9 +13483,9 @@ entities:
       -61,-19: 0
       -61,-18: 0
       -60,-27: 0
-      -60,-20: 0
+      -60,-20: 1
       -60,-19: 0
-      -60,-18: 0
+      -60,-18: 1
       -59,-27: 0
       -59,-20: 0
       -59,-19: 0
@@ -14092,7 +14092,7 @@ entities:
       19,-51: 0
       19,-50: 0
       19,-49: 0
-      -32,-40: 0
+      -32,-40: 1
       -32,-39: 0
       -32,-38: 0
       -32,-37: 0
@@ -15815,7 +15815,7 @@ entities:
       35,8: 0
       36,5: 0
       36,6: 0
-      36,7: 10
+      36,7: 18
       36,8: 0
       37,5: 0
       37,6: 0
@@ -15994,8 +15994,8 @@ entities:
       15,18: 0
       15,19: 0
       15,20: 0
-      0,-82: 0
-      0,-81: 0
+      0,-82: 1
+      0,-81: 19
       1,-82: 0
       1,-81: 0
       -1,-82: 0
@@ -16207,7 +16207,7 @@ entities:
       -7,33: 0
       -7,34: 0
       -7,35: 0
-      -7,36: 0
+      -7,36: 12
       -7,37: 0
       -7,38: 0
       -7,39: 0
@@ -18954,11 +18954,11 @@ entities:
       -67,-43: 0
       -67,-42: 0
       -66,-44: 0
-      -66,-43: 18
+      -66,-43: 20
       -66,-42: 0
       -66,-41: 0
       -65,-44: 0
-      -65,-43: 18
+      -65,-43: 20
       -65,-42: 0
       -65,-41: 0
       -35,74: 0
@@ -19162,7 +19162,7 @@ entities:
       68,-31: 0
       68,-30: 0
       68,-29: 0
-      68,-28: 19
+      68,-28: 21
       68,-27: 0
       68,-26: 0
       68,-25: 0
@@ -21633,39 +21633,39 @@ entities:
       -48,45: 0
       -47,40: 0
       -47,45: 0
-      -46,32: 20
+      -46,32: 22
       -46,33: 0
-      -46,34: 18
+      -46,34: 20
       -46,35: 0
       -46,36: 12
       -46,37: 0
       -46,38: 12
       -46,39: 0
-      -46,40: 19
+      -46,40: 21
       -46,41: 0
       -46,43: 0
       -46,44: 12
       -46,45: 0
-      -45,32: 20
+      -45,32: 22
       -45,33: 0
-      -45,34: 18
+      -45,34: 20
       -45,35: 0
       -45,36: 12
       -45,37: 0
       -45,38: 12
       -45,39: 0
-      -45,40: 19
+      -45,40: 21
       -45,44: 12
       -45,45: 0
-      -44,32: 20
+      -44,32: 22
       -44,33: 0
-      -44,34: 18
+      -44,34: 20
       -44,35: 0
       -44,36: 12
       -44,37: 0
       -44,38: 12
       -44,39: 0
-      -44,40: 19
+      -44,40: 21
       -44,41: 0
       -44,43: 0
       -44,44: 12
@@ -22080,10 +22080,10 @@ entities:
       - 0
       - 0
     - volume: 2500
-      temperature: 266.83328
+      temperature: 266.81445
       moles:
-      - 19.751488
-      - 74.30322
+      - 19.748741
+      - 74.292885
       - 0
       - 0
       - 0
@@ -22124,10 +22124,10 @@ entities:
       - 0
       - 0
     - volume: 2500
-      temperature: 260.42032
+      temperature: 260.4109
       moles:
-      - 18.976547
-      - 71.38797
+      - 18.975174
+      - 71.3828
       - 0
       - 0
       - 0
@@ -22135,10 +22135,10 @@ entities:
       - 0
       - 0
     - volume: 2500
-      temperature: 279.29474
+      temperature: 279.2924
       moles:
-      - 19.322474
-      - 72.68931
+      - 19.32213
+      - 72.68802
       - 0
       - 0
       - 0
@@ -22236,8 +22236,8 @@ entities:
     - volume: 2500
       temperature: 293.15
       moles:
-      - 20.11981
-      - 75.68881
+      - 21.611744
+      - 81.30133
       - 0
       - 0
       - 0
@@ -22247,8 +22247,30 @@ entities:
     - volume: 2500
       temperature: 293.15
       moles:
-      - 15.004604
-      - 56.445892
+      - 20.972345
+      - 78.895966
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+    - volume: 2500
+      temperature: 293.15
+      moles:
+      - 20.119812
+      - 75.68881
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+    - volume: 2500
+      temperature: 274.9969
+      moles:
+      - 20.460823
+      - 76.97167
       - 0
       - 0
       - 0
@@ -35190,9 +35212,9 @@ entities:
         ents: []
     type: ContainerContainer
 - uid: 1326
-  type: Catwalk
+  type: CableHV
   components:
-  - pos: 23.5,-68.5
+  - pos: 29.5,-67.5
     parent: 60
     type: Transform
 - uid: 1327
@@ -35216,13 +35238,13 @@ entities:
 - uid: 1330
   type: Catwalk
   components:
-  - pos: 41.5,-64.5
+  - pos: 23.5,-64.5
     parent: 60
     type: Transform
 - uid: 1331
   type: Catwalk
   components:
-  - pos: 39.5,-64.5
+  - pos: 22.5,-68.5
     parent: 60
     type: Transform
 - uid: 1332
@@ -35290,7 +35312,7 @@ entities:
 - uid: 1342
   type: Catwalk
   components:
-  - pos: 40.5,-64.5
+  - pos: 21.5,-64.5
     parent: 60
     type: Transform
 - uid: 1343
@@ -35300,15 +35322,11 @@ entities:
     parent: 60
     type: Transform
 - uid: 1344
-  type: CableHV
+  type: Catwalk
   components:
-  - pos: 36.5,-64.5
+  - pos: 28.5,-68.5
     parent: 60
     type: Transform
-  - canCollide: False
-    type: Physics
-  - fixtures: []
-    type: Fixtures
 - uid: 1345
   type: WindowReinforcedDirectional
   components:
@@ -35451,9 +35469,9 @@ entities:
         uid: 2881
     type: SignalReceiver
 - uid: 1358
-  type: Catwalk
+  type: CableHV
   components:
-  - pos: 24.5,-68.5
+  - pos: 30.5,-65.5
     parent: 60
     type: Transform
 - uid: 1359
@@ -35484,7 +35502,7 @@ entities:
 - uid: 1362
   type: Catwalk
   components:
-  - pos: 38.5,-64.5
+  - pos: 24.5,-68.5
     parent: 60
     type: Transform
 - uid: 1363
@@ -35500,9 +35518,9 @@ entities:
     parent: 60
     type: Transform
 - uid: 1365
-  type: Catwalk
+  type: CableHV
   components:
-  - pos: 25.5,-68.5
+  - pos: 28.5,-65.5
     parent: 60
     type: Transform
 - uid: 1366
@@ -35568,15 +35586,11 @@ entities:
     parent: 60
     type: Transform
 - uid: 1376
-  type: CableHV
+  type: Catwalk
   components:
-  - pos: 38.5,-64.5
+  - pos: 23.5,-68.5
     parent: 60
     type: Transform
-  - canCollide: False
-    type: Physics
-  - fixtures: []
-    type: Fixtures
 - uid: 1377
   type: Poweredlight
   components:
@@ -35650,9 +35664,9 @@ entities:
   - fixtures: []
     type: Fixtures
 - uid: 1384
-  type: Catwalk
+  type: CableHV
   components:
-  - pos: 26.5,-68.5
+  - pos: 26.5,-65.5
     parent: 60
     type: Transform
 - uid: 1385
@@ -35679,7 +35693,7 @@ entities:
 - uid: 1387
   type: Catwalk
   components:
-  - pos: 42.5,-64.5
+  - pos: 25.5,-64.5
     parent: 60
     type: Transform
 - uid: 1388
@@ -44316,7 +44330,7 @@ entities:
 - uid: 2251
   type: Catwalk
   components:
-  - pos: 34.5,-64.5
+  - pos: 33.5,-68.5
     parent: 60
     type: Transform
 - uid: 2252
@@ -44820,7 +44834,7 @@ entities:
 - uid: 2302
   type: Catwalk
   components:
-  - pos: 33.5,-64.5
+  - pos: 35.5,-68.5
     parent: 60
     type: Transform
 - uid: 2303
@@ -44928,10 +44942,9 @@ entities:
         uid: 6775
     type: SignalTransmitter
 - uid: 2314
-  type: WindowReinforcedDirectional
+  type: CableHV
   components:
-  - rot: 3.141592653589793 rad
-    pos: -46.5,10.5
+  - pos: 36.5,-69.5
     parent: 60
     type: Transform
 - uid: 2315
@@ -45822,15 +45835,11 @@ entities:
       Toggle: []
     type: SignalReceiver
 - uid: 2389
-  type: CableHV
+  type: Catwalk
   components:
-  - pos: 26.5,-64.5
+  - pos: 37.5,-64.5
     parent: 60
     type: Transform
-  - canCollide: False
-    type: Physics
-  - fixtures: []
-    type: Fixtures
 - uid: 2390
   type: Poweredlight
   components:
@@ -47982,23 +47991,15 @@ entities:
 - uid: 2587
   type: CableHV
   components:
-  - pos: 22.5,-64.5
+  - pos: 28.5,-63.5
     parent: 60
     type: Transform
-  - canCollide: False
-    type: Physics
-  - fixtures: []
-    type: Fixtures
 - uid: 2588
   type: CableHV
   components:
-  - pos: 21.5,-64.5
+  - pos: 26.5,-63.5
     parent: 60
     type: Transform
-  - canCollide: False
-    type: Physics
-  - fixtures: []
-    type: Fixtures
 - uid: 2589
   type: TableWood
   components:
@@ -48009,13 +48010,9 @@ entities:
 - uid: 2590
   type: CableHV
   components:
-  - pos: 20.5,-64.5
+  - pos: 24.5,-63.5
     parent: 60
     type: Transform
-  - canCollide: False
-    type: Physics
-  - fixtures: []
-    type: Fixtures
 - uid: 2591
   type: CableHV
   components:
@@ -48027,25 +48024,17 @@ entities:
   - fixtures: []
     type: Fixtures
 - uid: 2592
-  type: CableHV
+  type: Catwalk
   components:
-  - pos: 24.5,-64.5
+  - pos: 33.5,-64.5
     parent: 60
     type: Transform
-  - canCollide: False
-    type: Physics
-  - fixtures: []
-    type: Fixtures
 - uid: 2593
   type: CableHV
   components:
-  - pos: 23.5,-64.5
+  - pos: 30.5,-63.5
     parent: 60
     type: Transform
-  - canCollide: False
-    type: Physics
-  - fixtures: []
-    type: Fixtures
 - uid: 2594
   type: CableHV
   components:
@@ -48081,45 +48070,29 @@ entities:
     parent: 60
     type: Transform
 - uid: 2598
-  type: CableHV
+  type: Catwalk
   components:
-  - pos: 32.5,-64.5
+  - pos: 36.5,-68.5
     parent: 60
     type: Transform
-  - canCollide: False
-    type: Physics
-  - fixtures: []
-    type: Fixtures
 - uid: 2599
-  type: CableHV
+  type: Catwalk
   components:
-  - pos: 34.5,-64.5
+  - pos: 32.5,-68.5
     parent: 60
     type: Transform
-  - canCollide: False
-    type: Physics
-  - fixtures: []
-    type: Fixtures
 - uid: 2600
-  type: CableHV
+  type: Catwalk
   components:
-  - pos: 35.5,-64.5
+  - pos: 30.5,-68.5
     parent: 60
     type: Transform
-  - canCollide: False
-    type: Physics
-  - fixtures: []
-    type: Fixtures
 - uid: 2601
-  type: CableHV
+  type: Catwalk
   components:
-  - pos: 29.5,-64.5
+  - pos: 40.5,-68.5
     parent: 60
     type: Transform
-  - canCollide: False
-    type: Physics
-  - fixtures: []
-    type: Fixtures
 - uid: 2602
   type: ChairWood
   components:
@@ -48135,45 +48108,29 @@ entities:
     parent: 60
     type: Transform
 - uid: 2604
-  type: CableHV
+  type: Catwalk
   components:
-  - pos: 27.5,-64.5
+  - pos: 39.5,-64.5
     parent: 60
     type: Transform
-  - canCollide: False
-    type: Physics
-  - fixtures: []
-    type: Fixtures
 - uid: 2605
-  type: CableHV
+  type: Catwalk
   components:
-  - pos: 28.5,-64.5
+  - pos: 41.5,-64.5
     parent: 60
     type: Transform
-  - canCollide: False
-    type: Physics
-  - fixtures: []
-    type: Fixtures
 - uid: 2606
-  type: CableHV
+  type: Catwalk
   components:
-  - pos: 33.5,-64.5
+  - pos: 34.5,-68.5
     parent: 60
     type: Transform
-  - canCollide: False
-    type: Physics
-  - fixtures: []
-    type: Fixtures
 - uid: 2607
-  type: CableHV
+  type: Catwalk
   components:
-  - pos: 30.5,-64.5
+  - pos: 38.5,-68.5
     parent: 60
     type: Transform
-  - canCollide: False
-    type: Physics
-  - fixtures: []
-    type: Fixtures
 - uid: 2608
   type: KitchenMicrowave
   components:
@@ -53769,7 +53726,7 @@ entities:
 - uid: 3203
   type: Catwalk
   components:
-  - pos: 37.5,-64.5
+  - pos: 26.5,-68.5
     parent: 60
     type: Transform
 - uid: 3204
@@ -54673,7 +54630,7 @@ entities:
     parent: 60
     type: Transform
 - uid: 3335
-  type: AirlockExternalLocked
+  type: AirlockExternalGlassLocked
   components:
   - pos: 31.5,-56.5
     parent: 60
@@ -58659,7 +58616,7 @@ entities:
     parent: 60
     type: Transform
 - uid: 3870
-  type: AirlockExternalLocked
+  type: AirlockExternalGlassLocked
   components:
   - pos: -18.5,-38.5
     parent: 60
@@ -63271,7 +63228,7 @@ entities:
     parent: 60
     type: Transform
 - uid: 4379
-  type: WallReinforced
+  type: Grille
   components:
   - pos: -59.5,-19.5
     parent: 60
@@ -63283,7 +63240,7 @@ entities:
     parent: 60
     type: Transform
 - uid: 4381
-  type: WallReinforced
+  type: ReinforcedWindow
   components:
   - pos: -59.5,-17.5
     parent: 60
@@ -63386,9 +63343,9 @@ entities:
     parent: 60
     type: Transform
 - uid: 4394
-  type: AirlockExternalLocked
+  type: ReinforcedWindow
   components:
-  - pos: -57.5,-18.5
+  - pos: -59.5,-19.5
     parent: 60
     type: Transform
 - uid: 4395
@@ -64559,15 +64516,11 @@ entities:
       Toggle: []
     type: SignalReceiver
 - uid: 4538
-  type: CableHV
+  type: Catwalk
   components:
-  - pos: 25.5,-64.5
+  - pos: 35.5,-64.5
     parent: 60
     type: Transform
-  - canCollide: False
-    type: Physics
-  - fixtures: []
-    type: Fixtures
 - uid: 4539
   type: Poweredlight
   components:
@@ -71863,7 +71816,7 @@ entities:
     parent: 60
     type: Transform
 - uid: 5315
-  type: AirlockExternalGlassLocked
+  type: AirlockExternalLocked
   components:
   - pos: -31.5,-39.5
     parent: 60
@@ -72661,23 +72614,15 @@ entities:
 - uid: 5405
   type: CableHV
   components:
-  - pos: 23.5,-68.5
+  - pos: 30.5,-67.5
     parent: 60
     type: Transform
-  - canCollide: False
-    type: Physics
-  - fixtures: []
-    type: Fixtures
 - uid: 5406
   type: CableHV
   components:
-  - pos: 22.5,-68.5
+  - pos: 27.5,-67.5
     parent: 60
     type: Transform
-  - canCollide: False
-    type: Physics
-  - fixtures: []
-    type: Fixtures
 - uid: 5407
   type: Poweredlight
   components:
@@ -74051,10 +73996,9 @@ entities:
     parent: 60
     type: Transform
 - uid: 5545
-  type: WindowReinforcedDirectional
+  type: CableHV
   components:
-  - rot: -1.5707963267948966 rad
-    pos: -47.5,9.5
+  - pos: 38.5,-69.5
     parent: 60
     type: Transform
 - uid: 5546
@@ -74600,17 +74544,15 @@ entities:
     parent: 60
     type: Transform
 - uid: 5603
-  type: WindowReinforcedDirectional
+  type: CableHV
   components:
-  - rot: -1.5707963267948966 rad
-    pos: -47.5,8.5
+  - pos: 39.5,-69.5
     parent: 60
     type: Transform
 - uid: 5604
-  type: WindowReinforcedDirectional
+  type: CableHV
   components:
-  - rot: -1.5707963267948966 rad
-    pos: -47.5,7.5
+  - pos: 40.5,-69.5
     parent: 60
     type: Transform
 - uid: 5605
@@ -74746,18 +74688,11 @@ entities:
     parent: 60
     type: Transform
 - uid: 5622
-  type: LaserPistolSvalinn
+  type: ClothingNeckMantleRD
   components:
-  - pos: -40.511692,9.569364
+  - pos: -40.505436,9.535068
     parent: 60
     type: Transform
-  - canCollide: False
-    type: Physics
-  - containers:
-      BatteryBarrel-ammo-container: !type:ContainerSlot {}
-      cellslot_cell_container: !type:ContainerSlot {}
-      Content.Server.Weapon.Ranged.Barrels.Components.BatteryBarrelComponent-ammo-container: !type:ContainerSlot {}
-    type: ContainerContainer
 - uid: 5623
   type: FirelockGlass
   components:
@@ -77347,10 +77282,9 @@ entities:
     parent: 60
     type: Transform
 - uid: 5874
-  type: WindowReinforcedDirectional
+  type: AirlockExternalGlassLocked
   components:
-  - rot: 3.141592653589793 rad
-    pos: -47.5,10.5
+  - pos: -57.5,-18.5
     parent: 60
     type: Transform
 - uid: 5875
@@ -80196,23 +80130,15 @@ entities:
 - uid: 6131
   type: CableHV
   components:
-  - pos: 24.5,-68.5
+  - pos: 29.5,-65.5
     parent: 60
     type: Transform
-  - canCollide: False
-    type: Physics
-  - fixtures: []
-    type: Fixtures
 - uid: 6132
   type: CableHV
   components:
-  - pos: 25.5,-68.5
+  - pos: 27.5,-65.5
     parent: 60
     type: Transform
-  - canCollide: False
-    type: Physics
-  - fixtures: []
-    type: Fixtures
 - uid: 6133
   type: FirelockGlass
   components:
@@ -80393,22 +80319,37 @@ entities:
     parent: 60
     type: Transform
 - uid: 6154
-  type: AirlockExternalShuttleLocked
+  type: AirlockExternalGlassShuttleLocked
   components:
   - pos: 0.5,-81.5
     parent: 60
     type: Transform
   - fixtures:
+    - shape: !type:PolygonShape
+        vertices:
+        - 0.49,-0.49
+        - 0.49,0.49
+        - -0.49,0.49
+        - -0.49,-0.49
+      mask:
+      - Impassable
+      - MidImpassable
+      - HighImpassable
+      - LowImpassable
+      - InteractImpassable
+      layer:
+      - MidImpassable
+      - HighImpassable
+      - BulletImpassable
+      - InteractImpassable
+      - Opaque
+      mass: 100
     - shape: !type:PhysShapeCircle
         position: 0,-0.5
         radius: 0.2
       hard: False
       id: docking
     type: Fixtures
-  - containers:
-      board: !type:Container
-        ents: []
-    type: ContainerContainer
 - uid: 6155
   type: WallReinforced
   components:
@@ -80592,25 +80533,17 @@ entities:
     parent: 60
     type: Transform
 - uid: 6183
-  type: AirlockExternal
+  type: AirlockExternalGlassLocked
   components:
   - pos: 0.5,-80.5
     parent: 60
     type: Transform
-  - containers:
-      board: !type:Container
-        ents: []
-    type: ContainerContainer
 - uid: 6184
-  type: AirlockExternal
+  type: AirlockExternalGlassLocked
   components:
   - pos: 0.5,-78.5
     parent: 60
     type: Transform
-  - containers:
-      board: !type:Container
-        ents: []
-    type: ContainerContainer
 - uid: 6185
   type: Poweredlight
   components:
@@ -83197,13 +83130,9 @@ entities:
 - uid: 6461
   type: CableHV
   components:
-  - pos: 33.5,-68.5
+  - pos: 33.5,-69.5
     parent: 60
     type: Transform
-  - canCollide: False
-    type: Physics
-  - fixtures: []
-    type: Fixtures
 - uid: 6462
   type: Table
   components:
@@ -87544,85 +87473,53 @@ entities:
         ents: []
     type: ContainerContainer
 - uid: 6963
-  type: CableHV
+  type: Catwalk
   components:
-  - pos: 41.5,-64.5
+  - pos: 24.5,-64.5
     parent: 60
     type: Transform
-  - canCollide: False
-    type: Physics
-  - fixtures: []
-    type: Fixtures
 - uid: 6964
-  type: CableHV
+  type: Catwalk
   components:
-  - pos: 42.5,-64.5
+  - pos: 26.5,-64.5
     parent: 60
     type: Transform
-  - canCollide: False
-    type: Physics
-  - fixtures: []
-    type: Fixtures
 - uid: 6965
   type: CableHV
   components:
-  - pos: 40.5,-68.5
+  - pos: 25.5,-67.5
     parent: 60
     type: Transform
-  - canCollide: False
-    type: Physics
-  - fixtures: []
-    type: Fixtures
 - uid: 6966
-  type: CableHV
+  type: Catwalk
   components:
-  - pos: 40.5,-64.5
+  - pos: 22.5,-64.5
     parent: 60
     type: Transform
-  - canCollide: False
-    type: Physics
-  - fixtures: []
-    type: Fixtures
 - uid: 6967
   type: CableHV
   components:
-  - pos: 39.5,-68.5
+  - pos: 23.5,-67.5
     parent: 60
     type: Transform
-  - canCollide: False
-    type: Physics
-  - fixtures: []
-    type: Fixtures
 - uid: 6968
   type: CableHV
   components:
-  - pos: 38.5,-68.5
+  - pos: 22.5,-69.5
     parent: 60
     type: Transform
-  - canCollide: False
-    type: Physics
-  - fixtures: []
-    type: Fixtures
 - uid: 6969
   type: CableHV
   components:
-  - pos: 37.5,-68.5
+  - pos: 24.5,-69.5
     parent: 60
     type: Transform
-  - canCollide: False
-    type: Physics
-  - fixtures: []
-    type: Fixtures
 - uid: 6970
   type: CableHV
   components:
-  - pos: 36.5,-68.5
+  - pos: 26.5,-69.5
     parent: 60
     type: Transform
-  - canCollide: False
-    type: Physics
-  - fixtures: []
-    type: Fixtures
 - uid: 6971
   type: SignalButton
   components:
@@ -87658,83 +87555,51 @@ entities:
 - uid: 6973
   type: CableHV
   components:
-  - pos: 35.5,-68.5
+  - pos: 28.5,-69.5
     parent: 60
     type: Transform
-  - canCollide: False
-    type: Physics
-  - fixtures: []
-    type: Fixtures
 - uid: 6974
   type: CableHV
   components:
-  - pos: 34.5,-68.5
+  - pos: 30.5,-69.5
     parent: 60
     type: Transform
-  - canCollide: False
-    type: Physics
-  - fixtures: []
-    type: Fixtures
 - uid: 6975
   type: CableHV
   components:
-  - pos: 32.5,-68.5
+  - pos: 34.5,-69.5
     parent: 60
     type: Transform
-  - canCollide: False
-    type: Physics
-  - fixtures: []
-    type: Fixtures
 - uid: 6976
   type: CableHV
   components:
-  - pos: 29.5,-68.5
+  - pos: 20.5,-65.5
     parent: 60
     type: Transform
-  - canCollide: False
-    type: Physics
-  - fixtures: []
-    type: Fixtures
 - uid: 6977
   type: CableHV
   components:
-  - pos: 30.5,-68.5
+  - pos: 21.5,-63.5
     parent: 60
     type: Transform
-  - canCollide: False
-    type: Physics
-  - fixtures: []
-    type: Fixtures
 - uid: 6978
   type: CableHV
   components:
-  - pos: 28.5,-68.5
+  - pos: 22.5,-65.5
     parent: 60
     type: Transform
-  - canCollide: False
-    type: Physics
-  - fixtures: []
-    type: Fixtures
 - uid: 6979
   type: CableHV
   components:
-  - pos: 27.5,-68.5
+  - pos: 24.5,-65.5
     parent: 60
     type: Transform
-  - canCollide: False
-    type: Physics
-  - fixtures: []
-    type: Fixtures
 - uid: 6980
   type: CableHV
   components:
-  - pos: 26.5,-68.5
+  - pos: 25.5,-65.5
     parent: 60
     type: Transform
-  - canCollide: False
-    type: Physics
-  - fixtures: []
-    type: Fixtures
 - uid: 6981
   type: SpawnPointHeadOfPersonnel
   components:
@@ -88438,36 +88303,33 @@ entities:
     parent: 60
     type: Transform
 - uid: 7069
-  type: WindowReinforcedDirectional
+  type: CableHV
   components:
-  - rot: 1.5707963267948966 rad
-    pos: -46.5,7.5
+  - pos: 37.5,-69.5
     parent: 60
     type: Transform
 - uid: 7070
-  type: WindowReinforcedDirectional
+  type: WallReinforced
   components:
-  - rot: 1.5707963267948966 rad
-    pos: -46.5,8.5
+  - pos: -6.5,34.5
     parent: 60
     type: Transform
 - uid: 7071
-  type: WindowReinforcedDirectional
+  type: WallReinforced
   components:
-  - rot: 1.5707963267948966 rad
-    pos: -46.5,9.5
+  - pos: -6.5,35.5
     parent: 60
     type: Transform
 - uid: 7072
-  type: WindowReinforcedDirectional
+  type: Grille
   components:
-  - pos: -47.5,6.5
+  - pos: -59.5,-17.5
     parent: 60
     type: Transform
 - uid: 7073
-  type: WindowReinforcedDirectional
+  type: WallSolid
   components:
-  - pos: -46.5,6.5
+  - pos: 46.5,-38.5
     parent: 60
     type: Transform
 - uid: 7074
@@ -88485,13 +88347,13 @@ entities:
 - uid: 7076
   type: Catwalk
   components:
-  - pos: 36.5,-64.5
+  - pos: 27.5,-68.5
     parent: 60
     type: Transform
 - uid: 7077
   type: Catwalk
   components:
-  - pos: 35.5,-64.5
+  - pos: 29.5,-68.5
     parent: 60
     type: Transform
 - uid: 7078
@@ -92341,15 +92203,11 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 7565
-  type: CableHV
+  type: Catwalk
   components:
-  - pos: 37.5,-64.5
+  - pos: 25.5,-68.5
     parent: 60
     type: Transform
-  - canCollide: False
-    type: Physics
-  - fixtures: []
-    type: Fixtures
 - uid: 7566
   type: Grille
   components:
@@ -93116,15 +92974,11 @@ entities:
         ents: []
     type: ContainerContainer
 - uid: 7659
-  type: CableHV
+  type: Catwalk
   components:
-  - pos: 39.5,-64.5
+  - pos: 20.5,-64.5
     parent: 60
     type: Transform
-  - canCollide: False
-    type: Physics
-  - fixtures: []
-    type: Fixtures
 - uid: 7660
   type: Chair
   components:
@@ -93858,7 +93712,7 @@ entities:
       Toggle: []
     type: SignalReceiver
 - uid: 7741
-  type: AirlockExternalLocked
+  type: AirlockExternalGlassLocked
   components:
   - pos: -18.5,-35.5
     parent: 60
@@ -101340,9 +101194,9 @@ entities:
   - fixtures: []
     type: Fixtures
 - uid: 8583
-  type: Catwalk
+  type: CableHV
   components:
-  - pos: 22.5,-68.5
+  - pos: 28.5,-67.5
     parent: 60
     type: Transform
 - uid: 8584
@@ -104692,27 +104546,27 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 8981
-  type: Catwalk
+  type: CableHV
   components:
-  - pos: 27.5,-68.5
+  - pos: 23.5,-65.5
     parent: 60
     type: Transform
 - uid: 8982
-  type: Catwalk
+  type: CableHV
   components:
-  - pos: 28.5,-68.5
+  - pos: 21.5,-65.5
     parent: 60
     type: Transform
 - uid: 8983
-  type: Catwalk
+  type: CableHV
   components:
-  - pos: 29.5,-68.5
+  - pos: 20.5,-63.5
     parent: 60
     type: Transform
 - uid: 8984
-  type: Catwalk
+  type: CableHV
   components:
-  - pos: 30.5,-68.5
+  - pos: 22.5,-63.5
     parent: 60
     type: Transform
 - uid: 8985
@@ -104722,57 +104576,57 @@ entities:
     parent: 60
     type: Transform
 - uid: 8986
-  type: Catwalk
+  type: CableHV
   components:
-  - pos: 32.5,-68.5
+  - pos: 35.5,-69.5
     parent: 60
     type: Transform
 - uid: 8987
-  type: Catwalk
+  type: CableHV
   components:
-  - pos: 33.5,-68.5
+  - pos: 32.5,-69.5
     parent: 60
     type: Transform
 - uid: 8988
-  type: Catwalk
+  type: CableHV
   components:
-  - pos: 34.5,-68.5
+  - pos: 29.5,-69.5
     parent: 60
     type: Transform
 - uid: 8989
-  type: Catwalk
+  type: CableHV
   components:
-  - pos: 35.5,-68.5
+  - pos: 27.5,-69.5
     parent: 60
     type: Transform
 - uid: 8990
-  type: Catwalk
+  type: CableHV
   components:
-  - pos: 36.5,-68.5
+  - pos: 25.5,-69.5
     parent: 60
     type: Transform
 - uid: 8991
-  type: Catwalk
+  type: CableHV
   components:
-  - pos: 37.5,-68.5
+  - pos: 23.5,-69.5
     parent: 60
     type: Transform
 - uid: 8992
-  type: Catwalk
+  type: CableHV
   components:
-  - pos: 38.5,-68.5
+  - pos: 22.5,-67.5
     parent: 60
     type: Transform
 - uid: 8993
-  type: Catwalk
+  type: CableHV
   components:
-  - pos: 39.5,-68.5
+  - pos: 24.5,-67.5
     parent: 60
     type: Transform
 - uid: 8994
-  type: Catwalk
+  type: CableHV
   components:
-  - pos: 40.5,-68.5
+  - pos: 26.5,-67.5
     parent: 60
     type: Transform
 - uid: 8995
@@ -140617,6 +140471,8 @@ entities:
   - pos: 34.5,1.5
     parent: 60
     type: Transform
+  - canCollide: False
+    type: Physics
   - inputs:
       OrderReceiver: []
     type: SignalReceiver
@@ -141662,19 +141518,13 @@ entities:
     parent: 60
     type: Transform
 - uid: 12646
-  type: AirlockExternalLocked
+  type: AirlockExternalGlassLocked
   components:
   - pos: 40.5,2.5
     parent: 60
     type: Transform
 - uid: 12647
-  type: AirlockExternalLocked
-  components:
-  - pos: 40.5,0.5
-    parent: 60
-    type: Transform
-- uid: 12648
-  type: AirlockExternalShuttleLocked
+  type: AirlockExternalGlassShuttleLocked
   components:
   - rot: 1.5707963267948966 rad
     pos: 42.5,0.5
@@ -141689,10 +141539,15 @@ entities:
         - -0.49,-0.49
       mask:
       - Impassable
+      - MidImpassable
+      - HighImpassable
+      - LowImpassable
+      - InteractImpassable
       layer:
-      - Impassable
+      - MidImpassable
       - HighImpassable
       - BulletImpassable
+      - InteractImpassable
       - Opaque
       mass: 100
     - shape: !type:PhysShapeCircle
@@ -141701,8 +141556,8 @@ entities:
       hard: False
       id: docking
     type: Fixtures
-- uid: 12649
-  type: AirlockExternalShuttleLocked
+- uid: 12648
+  type: AirlockExternalGlassShuttleLocked
   components:
   - rot: 1.5707963267948966 rad
     pos: 42.5,2.5
@@ -141717,10 +141572,15 @@ entities:
         - -0.49,-0.49
       mask:
       - Impassable
+      - MidImpassable
+      - HighImpassable
+      - LowImpassable
+      - InteractImpassable
       layer:
-      - Impassable
+      - MidImpassable
       - HighImpassable
       - BulletImpassable
+      - InteractImpassable
       - Opaque
       mass: 100
     - shape: !type:PhysShapeCircle
@@ -141729,6 +141589,12 @@ entities:
       hard: False
       id: docking
     type: Fixtures
+- uid: 12649
+  type: AirlockExternalGlassLocked
+  components:
+  - pos: 40.5,0.5
+    parent: 60
+    type: Transform
 - uid: 12650
   type: ConveyorBelt
   components:
@@ -142889,25 +142755,25 @@ entities:
     parent: 60
     type: Transform
 - uid: 12748
-  type: AirlockExternalLocked
+  type: AirlockExternalGlassLocked
   components:
   - pos: 39.5,10.5
     parent: 60
     type: Transform
 - uid: 12749
-  type: AirlockExternalLocked
+  type: AirlockExternalGlassLocked
   components:
   - pos: 42.5,10.5
     parent: 60
     type: Transform
 - uid: 12750
-  type: AirlockExternalLocked
+  type: AirlockExternalGlassLocked
   components:
   - pos: 42.5,14.5
     parent: 60
     type: Transform
 - uid: 12751
-  type: AirlockExternalLocked
+  type: AirlockExternalGlassLocked
   components:
   - pos: 39.5,14.5
     parent: 60
@@ -177306,7 +177172,7 @@ entities:
         uid: 16378
     type: SignalReceiver
 - uid: 16381
-  type: AirlockExternalLocked
+  type: AirlockExternalGlassLocked
   components:
   - pos: -5.5,37.5
     parent: 60
@@ -177452,9 +177318,9 @@ entities:
   - fixtures: []
     type: Fixtures
 - uid: 16396
-  type: ReinforcedWindow
+  type: WallReinforced
   components:
-  - pos: -6.5,37.5
+  - pos: -6.5,36.5
     parent: 60
     type: Transform
 - uid: 16397
@@ -177543,7 +177409,7 @@ entities:
     parent: 60
     type: Transform
 - uid: 16407
-  type: AirlockExternalLocked
+  type: AirlockExternalGlassLocked
   components:
   - pos: -2.5,34.5
     parent: 60
@@ -177749,7 +177615,7 @@ entities:
     parent: 60
     type: Transform
 - uid: 16432
-  type: Grille
+  type: WallReinforced
   components:
   - pos: -6.5,37.5
     parent: 60
@@ -191089,9 +190955,9 @@ entities:
     parent: 60
     type: Transform
 - uid: 17910
-  type: AirlockExternalLocked
+  type: AirlockExternalGlassLocked
   components:
-  - pos: -25.5,50.5
+  - pos: -25.5,47.5
     parent: 60
     type: Transform
 - uid: 17911
@@ -191105,9 +190971,9 @@ entities:
   - fixtures: []
     type: Fixtures
 - uid: 17912
-  type: AirlockExternalLocked
+  type: AirlockExternalGlassLocked
   components:
-  - pos: -25.5,47.5
+  - pos: -25.5,50.5
     parent: 60
     type: Transform
 - uid: 17913
@@ -192332,9 +192198,9 @@ entities:
     parent: 60
     type: Transform
 - uid: 18063
-  type: WallReinforced
+  type: WallSolid
   components:
-  - pos: 8.5,-5.5
+  - pos: 8.5,-4.5
     parent: 60
     type: Transform
 - uid: 18064
@@ -192667,9 +192533,9 @@ entities:
     parent: 60
     type: Transform
 - uid: 18114
-  type: WallReinforced
+  type: WallSolid
   components:
-  - pos: 8.5,-4.5
+  - pos: 8.5,-5.5
     parent: 60
     type: Transform
 - uid: 18115
@@ -193533,7 +193399,7 @@ entities:
   - enabled: False
     type: AmbientSound
 - uid: 18207
-  type: AirlockCaptainGlassLocked
+  type: AirlockCaptainLocked
   components:
   - pos: -3.5,-1.5
     parent: 60
@@ -196887,9 +196753,9 @@ entities:
     parent: 60
     type: Transform
 - uid: 18543
-  type: RevolverDeckard
+  type: CableHV
   components:
-  - pos: -4.5524774,-3.3857722
+  - pos: 38.5,-67.5
     parent: 60
     type: Transform
 - uid: 18544
@@ -196899,9 +196765,9 @@ entities:
     parent: 60
     type: Transform
 - uid: 18545
-  type: TableWood
+  type: CableHV
   components:
-  - pos: -4.5,-3.5
+  - pos: 40.5,-67.5
     parent: 60
     type: Transform
 - uid: 18546
@@ -197271,15 +197137,11 @@ entities:
     parent: 60
     type: Transform
 - uid: 18585
-  type: SLMagnumHV
+  type: CableHV
   components:
-  - pos: -4.5212274,-3.5888972
+  - pos: 39.5,-67.5
     parent: 60
     type: Transform
-  - containers:
-      Content.Server.Weapon.Ranged.Ammunition.Components.SpeedLoaderComponent-container: !type:Container
-        ents: []
-    type: ContainerContainer
 - uid: 18586
   type: WindowReinforcedDirectional
   components:
@@ -199711,4 +199573,196 @@ entities:
     type: Transform
   - enabled: False
     type: AmbientSound
+- uid: 18866
+  type: Catwalk
+  components:
+  - pos: 27.5,-64.5
+    parent: 60
+    type: Transform
+- uid: 18867
+  type: Catwalk
+  components:
+  - pos: 28.5,-64.5
+    parent: 60
+    type: Transform
+- uid: 18868
+  type: Catwalk
+  components:
+  - pos: 29.5,-64.5
+    parent: 60
+    type: Transform
+- uid: 18869
+  type: Catwalk
+  components:
+  - pos: 30.5,-64.5
+    parent: 60
+    type: Transform
+- uid: 18870
+  type: CableHV
+  components:
+  - pos: 37.5,-67.5
+    parent: 60
+    type: Transform
+- uid: 18871
+  type: CableHV
+  components:
+  - pos: 36.5,-67.5
+    parent: 60
+    type: Transform
+- uid: 18872
+  type: CableHV
+  components:
+  - pos: 35.5,-67.5
+    parent: 60
+    type: Transform
+- uid: 18873
+  type: CableHV
+  components:
+  - pos: 34.5,-67.5
+    parent: 60
+    type: Transform
+- uid: 18874
+  type: CableHV
+  components:
+  - pos: 33.5,-67.5
+    parent: 60
+    type: Transform
+- uid: 18875
+  type: CableHV
+  components:
+  - pos: 32.5,-67.5
+    parent: 60
+    type: Transform
+- uid: 18876
+  type: CableHV
+  components:
+  - pos: 32.5,-65.5
+    parent: 60
+    type: Transform
+- uid: 18877
+  type: CableHV
+  components:
+  - pos: 33.5,-65.5
+    parent: 60
+    type: Transform
+- uid: 18878
+  type: CableHV
+  components:
+  - pos: 34.5,-65.5
+    parent: 60
+    type: Transform
+- uid: 18879
+  type: CableHV
+  components:
+  - pos: 35.5,-65.5
+    parent: 60
+    type: Transform
+- uid: 18880
+  type: CableHV
+  components:
+  - pos: 36.5,-65.5
+    parent: 60
+    type: Transform
+- uid: 18881
+  type: CableHV
+  components:
+  - pos: 37.5,-65.5
+    parent: 60
+    type: Transform
+- uid: 18882
+  type: CableHV
+  components:
+  - pos: 38.5,-65.5
+    parent: 60
+    type: Transform
+- uid: 18883
+  type: CableHV
+  components:
+  - pos: 39.5,-65.5
+    parent: 60
+    type: Transform
+- uid: 18884
+  type: CableHV
+  components:
+  - pos: 40.5,-65.5
+    parent: 60
+    type: Transform
+- uid: 18885
+  type: CableHV
+  components:
+  - pos: 41.5,-65.5
+    parent: 60
+    type: Transform
+- uid: 18886
+  type: CableHV
+  components:
+  - pos: 42.5,-65.5
+    parent: 60
+    type: Transform
+- uid: 18887
+  type: CableHV
+  components:
+  - pos: 42.5,-63.5
+    parent: 60
+    type: Transform
+- uid: 18888
+  type: CableHV
+  components:
+  - pos: 41.5,-63.5
+    parent: 60
+    type: Transform
+- uid: 18889
+  type: CableHV
+  components:
+  - pos: 40.5,-63.5
+    parent: 60
+    type: Transform
+- uid: 18890
+  type: CableHV
+  components:
+  - pos: 39.5,-63.5
+    parent: 60
+    type: Transform
+- uid: 18891
+  type: CableHV
+  components:
+  - pos: 38.5,-63.5
+    parent: 60
+    type: Transform
+- uid: 18892
+  type: CableHV
+  components:
+  - pos: 37.5,-63.5
+    parent: 60
+    type: Transform
+- uid: 18893
+  type: CableHV
+  components:
+  - pos: 36.5,-63.5
+    parent: 60
+    type: Transform
+- uid: 18894
+  type: CableHV
+  components:
+  - pos: 35.5,-63.5
+    parent: 60
+    type: Transform
+- uid: 18895
+  type: CableHV
+  components:
+  - pos: 34.5,-63.5
+    parent: 60
+    type: Transform
+- uid: 18896
+  type: CableHV
+  components:
+  - pos: 33.5,-63.5
+    parent: 60
+    type: Transform
+- uid: 18897
+  type: CableHV
+  components:
+  - pos: 32.5,-63.5
+    parent: 60
+    type: Transform
 ...
