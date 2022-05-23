@@ -5,61 +5,24 @@
   - id: RifleAk
     amount: 0
     maxAmount: 5
-  - id: RifleBlackAk
+  - id: RifleBulldog
     amount: 0
     maxAmount: 5
-  - id: RifleCarbine
+  - id: WeaponRifleWintermute
     amount: 0
     maxAmount: 5
-  - id: RifleDallas
+  - id: WeaponPistolClarissa
     amount: 0
     maxAmount: 5
-  - id: RifleSTS
+  - id: WeaponPistolHandmade
     amount: 0
     maxAmount: 5
-  - id: RifleVintorez
-    amount: 0
-    maxAmount: 5
-  - id: RifleWintermute
-    amount: 0
-    maxAmount: 5
-  - id: RifleCalico
-    amount: 0
-    maxAmount: 5
-  - id: PistolClarissa
-    amount: 0
-    maxAmount: 5
-  - id: PistolColt
-    amount: 0
-    maxAmount: 5
-  - id: PistolGiskard
-    amount: 0
-    maxAmount: 5
-  - id: PistolHMPistol
-    amount: 0
-    maxAmount: 5
-  - id: PistolLamia
-    amount: 0
-    maxAmount: 5
-  - id: PistolMandella
+  - id: WeaponPistolMandella
     amount: 0
     maxAmount: 5
   - id: PistolMk58
     amount: 0
     maxAmount: 5
-  - id: PistolMk58Wood
-    amount: 0
-    maxAmount: 5
-  - id: PistolMolly
-    amount: 0
-    maxAmount: 5
-  - id: PistolOlivaw
-    amount: 0
-    maxAmount: 5
-  - id: PistolPaco
-    amount: 0
-    maxAmount: 5
-
   - id: ButchCleaver
     maxAmount: 5
   - id: Pickaxe
@@ -73,61 +36,49 @@
   - id: Stunbaton
     maxAmount: 10
 
-  - id: RevolverDeckard
+  - id: WeaponRevolverDeckard
     amount: 0
     maxAmount: 5
-  - id: RevolverInspector
+  - id: WeaponRevolverInspector
     amount: 0
     maxAmount: 5
-  - id: RevolverMateba
-    amount: 0
-    maxAmount: 5
-
-  - id: ShotgunBojevic
-    amount: 0
-    maxAmount: 5
-  - id: ShotgunDB
-    amount: 0
-    maxAmount: 5
-  - id: ShotgunBull
-    amount: 0
-    maxAmount: 5
-  - id: ShotgunGladstone
-    amount: 0
-    maxAmount: 5
-  - id: ShotgunRegulator
-    amount: 0
-    maxAmount: 5
-  - id: ShotgunPump
-    amount: 0
-    maxAmount: 5
-  - id: ShotgunSawn
+  - id: WeaponRevolverMateba
     amount: 0
     maxAmount: 5
 
-  - id: SmgAtreides
+  - id: WeaponShotgunBojevic
     amount: 0
     maxAmount: 5
-  - id: SmgC20r
+  - id: WeaponShotgunDoubleBarreled
     amount: 0
     maxAmount: 5
-  - id: SmgDrozd
+  - id: WeaponShotgunGladstone
     amount: 0
     maxAmount: 5
-  - id: SmgWt550
+  - id: WeaponShotgunKammerer
     amount: 0
     maxAmount: 5
-  - id: SmgZoric
+  - id: WeaponShotgunSawn
     amount: 0
     maxAmount: 5
 
-  - id: SniperBoltGun
+  - id: WeaponSubMachineGunAtreides
     amount: 0
     maxAmount: 5
-  - id: SniperBoltGunWood
+  - id: WeaponSubMachineGunC20r
     amount: 0
     maxAmount: 5
-  - id: SniperHeavy
+  - id: WeaponSubMachineGunDrozd
+    amount: 0
+    maxAmount: 5
+  - id: WeaponSubMachineGunWt550
+    amount: 0
+    maxAmount: 5
+
+  - id: WeaponSniperMosin
+    amount: 0
+    maxAmount: 5
+  - id: SniperHristov
     amount: 0
     maxAmount: 5
 
@@ -140,24 +91,24 @@
   - id: XrayLaser
     amount: 0
     maxAmount: 1
-  - id: LaserGun
+  - id: WeaponLaserGun
     amount: 0
     maxAmount: 1
-  - id: LaserCannon
+  - id: WeaponLaserCannon
     amount: 0
     maxAmount: 1
-  - id: XrayCannon
+  - id: WeaponXrayCannon
     amount: 0
     maxAmount: 2
-  - id: TaserGun
+  - id: WeaponTaser
     amount: 0
     maxAmount: 4
 
-  - id: LauncherChinaLake
+  - id: WeaponLauncherChinaLake
     prob: 0.30
     maxAmount: 3
 
-  - id: LauncherRocket
+  - id: WeaponLauncherRocket
     prob: 0.20
     maxAmount: 3
 
