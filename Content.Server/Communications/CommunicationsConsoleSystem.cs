@@ -142,7 +142,11 @@ namespace Content.Server.Communications
         private void OnSelectAlertLevelMessage(EntityUid uid, CommunicationsConsoleComponent comp, CommunicationsConsoleSelectAlertLevelMessage message)
         {
             if (message.Session.AttachedEntity is not {Valid: true} mob) return;
-            if (!CanUse(mob, uid)) return;
+            if (!CanUse(mob, uid))
+            {
+                _popupSystem.PopupEntity(Loc.GetString("communicationsconsole-permission-denied"), uid, Filter.Entities(mob));
+                return;
+            }
 
             var stationUid = _stationSystem.GetOwningStation(uid);
             if (stationUid != null)
@@ -187,28 +191,24 @@ namespace Content.Server.Communications
         {
             if (!comp.CanCallShuttle) return;
             if (message.Session.AttachedEntity is not {Valid: true} mob) return;
-            if (CanUse(mob, uid))
-            {
-                _roundEndSystem.RequestRoundEnd(uid);
-            }
-            else
+            if (!CanUse(mob, uid))
             {
                 _popupSystem.PopupEntity(Loc.GetString("communicationsconsole-permission-denied"), uid, Filter.Entities(mob));
+                return;
             }
+            _roundEndSystem.RequestRoundEnd(uid);
         }
 
         private void OnRecallShuttleMessage(EntityUid uid, CommunicationsConsoleComponent comp, CommunicationsConsoleRecallEmergencyShuttleMessage message)
         {
             if (!comp.CanCallShuttle) return;
             if (message.Session.AttachedEntity is not {Valid: true} mob) return;
-            if (CanUse(mob, uid))
-            {
-                _roundEndSystem.CancelRoundEndCountdown(uid);
-            }
-            else
+            if (!CanUse(mob, uid))
             {
                 _popupSystem.PopupEntity(Loc.GetString("communicationsconsole-permission-denied"), uid, Filter.Entities(mob));
+                return;
             }
+            _roundEndSystem.CancelRoundEndCountdown(uid);
         }
     }
 }

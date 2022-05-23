@@ -302,6 +302,11 @@
   name: syndicate communications computer
   description: This can be used for various important functions. Still under development.
   components:
+  - type: Appearance
+    visuals:
+    - type: ComputerVisualizer
+      key: syndie_key
+      screen: comm_syndie
   - type: AccessReader
     access: [[ "NuclearOperative" ]]
   - type: CommunicationsConsole
