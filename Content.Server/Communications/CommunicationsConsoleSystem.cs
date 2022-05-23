@@ -38,7 +38,7 @@ namespace Content.Server.Communications
             SubscribeLocalEvent<CommunicationsConsoleComponent, AlertLevelChangedEvent>((_, comp, _) => UpdateBoundUserInterface(comp));
             SubscribeLocalEvent<CommunicationsConsoleComponent, AlertLevelDelayFinishedEvent>((_, comp, _) => UpdateBoundUserInterface(comp));
 
-            SubscribeLocalEvent<CommunicationsConsoleComponent, CommunicationsConsoleSelectAlertLevelMessage>((uid, _, args) => OnSelectAlertLevelMessage(uid, args));
+            SubscribeLocalEvent<CommunicationsConsoleComponent, CommunicationsConsoleSelectAlertLevelMessage>(OnSelectAlertLevelMessage);
             SubscribeLocalEvent<CommunicationsConsoleComponent, CommunicationsConsoleAnnounceMessage>(OnAnnounceMessage);
             SubscribeLocalEvent<CommunicationsConsoleComponent, CommunicationsConsoleCallEmergencyShuttleMessage>((uid, _, args) => OnCallShuttleMessage(uid, args));
             SubscribeLocalEvent<CommunicationsConsoleComponent, CommunicationsConsoleRecallEmergencyShuttleMessage>((uid, _, args) => OnRecallShuttleMessage(uid, args));
@@ -81,6 +81,7 @@ namespace Content.Server.Communications
                     _roundEndSystem.CanCall(),
                     levels,
                     currentLevel,
+                    comp.CanAlterAlertLevel,
                     currentDelay,
                     _roundEndSystem.ExpectedCountdownEnd
                     )
@@ -96,8 +97,10 @@ namespace Content.Server.Communications
             return _gameTiming.CurTime >= comp.LastAnnouncementTime + TimeSpan.FromSeconds(comp.DelayBetweenAnnouncements);
         }
 
-        private void OnSelectAlertLevelMessage(EntityUid uid, CommunicationsConsoleSelectAlertLevelMessage message)
+        private void OnSelectAlertLevelMessage(EntityUid uid, CommunicationsConsoleComponent comp, CommunicationsConsoleSelectAlertLevelMessage message)
         {
+            if (!comp.CanAlterAlertLevel) return;
+
             var stationUid = _stationSystem.GetOwningStation(uid);
             if (stationUid != null)
             {
