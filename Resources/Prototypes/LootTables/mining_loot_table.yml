@@ -13,6 +13,9 @@
   - id: PlasmaOre1
     prob: 0.10
     orGroup: Asteroid
+  - id: TitaniumOre1
+    prob: 0.20
+    orGroup: Asteroid
   - id: SilverOre1
     prob: 0.025
     orGroup: Asteroid
