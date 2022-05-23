@@ -537,7 +537,7 @@ public sealed class WiresSystem : EntitySystem
 
     private void UpdateAppearance(EntityUid uid, AppearanceComponent? appearance = null, WiresComponent? wires = null)
     {
-        if (!Resolve(uid, ref appearance, ref wires))
+        if (!Resolve(uid, ref appearance, ref wires, false))
             return;
 
         appearance.SetData(WiresVisuals.MaintenancePanelState, wires.IsPanelOpen && wires.IsPanelVisible);
