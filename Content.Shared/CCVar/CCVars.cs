@@ -21,7 +21,7 @@ namespace Content.Shared.CCVar
         ///     Name of the rules txt file in the "Resources/Server Info" dir. Include the extension.
         /// </summary>
         public static readonly CVarDef<string> RulesFile =
-            CVarDef.Create("server.rules_file", "Rules.txt",CVar.REPLICATED | CVar.SERVER);
+            CVarDef.Create("server.rules_file", "Rules.txt", CVar.REPLICATED | CVar.SERVER);
 
         /*
          * Ambience
