@@ -474,6 +474,78 @@
       - !type:DoActsBehavior
         acts: ["Destruction"]
 
+- type: entity
+  id: TableTitaniumGlass
+  parent: TableBase
+  name: titanium glass table
+  description: A square piece of titanium glass standing on some metal legs. Probably not stainless.
+  components:
+  - type: Sprite
+    sprite: Structures/Furniture/Tables/titaniumglass_table.rsi
+  - type: Icon
+    sprite: Structures/Furniture/Tables/titaniumglass_table.rsi
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 175
+      behaviors: 
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+    - trigger:
+        !type:DamageTrigger
+        damage: 75
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          path: /Audio/Effects/metalbreak.ogg
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          SheetTitanium1:
+            min: 2
+            max: 2
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+  - type: Construction
+    graph: Table
+    node: TableTitanium
+
+- type: entity
+  id: TablePlastitaniumGlass
+  parent: TableBase
+  name: plastitanium glass table
+  description: A square piece of plastitanium glass standing on four metal legs. Ridiculously expensive.
+  components:
+  - type: Sprite
+    sprite: Structures/Furniture/Tables/plastitaniumglass_table.rsi
+  - type: Icon
+    sprite: Structures/Furniture/Tables/plastitaniumglass_table.rsi
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 225
+      behaviors: 
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+    - trigger:
+        !type:DamageTrigger
+        damage: 100
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          path: /Audio/Effects/metalbreak.ogg
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          SheetPlastitanium1:
+            min: 1
+            max: 1
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+  - type: Construction
+    graph: Table
+    node: TablePlastitanium
+
 # counters
 
 - type: entity
