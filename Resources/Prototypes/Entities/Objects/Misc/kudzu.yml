@@ -74,7 +74,38 @@
       growthResult: Kudzu
       chance: 1
     - type: GrowingKudzu
-      growthTickSkipChance: 0.1666
+      growthTickSkipChance: 0.6
     - type: SlowContacts
       walkSpeedModifier: 0.2
       sprintSpeedModifier: 0.2
+
+- type: entity
+  id: KudzuPower
+  parent: Kudzu
+  name: kudzu
+  suffix: Power
+  description: A rapidly growing, dangerous plant. WHY ARE YOU STOPPING TO LOOK AT IT?!
+  components:
+    - type: Electrified
+      onHandInteract: false
+      onInteractUsing: false
+      onBump: true
+      requirePower: true
+      highVoltageNode: power
+      mediumVoltageNode: power
+      lowVoltageNode: power
+    - type: ApcPowerReceiver
+    - type: ExtensionCableReceiver
+    - type: Battery
+      maxCharge: 50000
+    - type: PowerConsumer
+      voltage: Apc
+      drawRate: 5000
+    - type: NodeContainer
+      nodes:
+        power:
+          !type:CableNode
+          nodeGroupID: Apc
+    - type: Spreader
+      growthResult: KudzuPower
+      chance: 0.25
