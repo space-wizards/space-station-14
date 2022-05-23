@@ -123,7 +123,7 @@ namespace Content.Server.StationEvents.Events
         {
             Started = true;
             Occurrences += 1;
-            LastRun = IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<GameTicker>().RoundDuration();
+            LastRun = EntitySystem.Get<GameTicker>().RoundDuration();
 
             EntitySystem.Get<AdminLogSystem>()
                 .Add(LogType.EventStarted, LogImpact.High, $"Event startup: {Name}");
