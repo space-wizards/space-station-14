@@ -156,3 +156,25 @@
   components:
   - type: Stack
     count: 1
+
+- type: entity
+  parent: OreBase
+  id: TitaniumOre
+  name: titanium ore
+  suffix: Full
+  components:
+  - type: Stack
+    stackType: TitaniumOre
+  - type: Sprite
+    state: titanium
+  - type: Material
+    materials:
+      Titanium: 500
+
+- type: entity
+  parent: TitaniumOre
+  id: TitaniumOre1
+  suffix: Single
+  components:
+  - type: Stack
+    count: 1
