@@ -91,6 +91,52 @@
     prefix: inhand
 
 - type: entity
+  name: titanium glass shiv
+  parent: BaseKnife
+  id: TitaniumGlassShiv
+  description: A crude stabbing device often seen in prisons.
+  components:
+  - type: Tag
+    tags:
+    - TitaniumGlassShiv
+    - Knife
+  - type: Sprite
+    sprite: Objects/Weapons/Melee/titanium_shiv.rsi
+    size: 2
+    state: icon
+  - type: MeleeWeapon
+    damage:
+      types:
+        Slash: 9
+  - type: Item
+    size: 10
+    sprite: Objects/Weapons/Melee/titanium_shiv.rsi
+    prefix: inhand
+
+- type: entity
+  name: plastitanium glass shiv
+  parent: BaseKnife
+  id: PlastitaniumGlassShiv
+  description: A crude stabbing device often seen in prisons.
+  components:
+  - type: Tag
+    tags:
+    - PlastitaniumGlassShiv
+    - Knife
+  - type: Sprite
+    sprite: Objects/Weapons/Melee/plastitanium_shiv.rsi
+    size: 2
+    state: icon
+  - type: MeleeWeapon
+    damage:
+      types:
+        Slash: 15
+  - type: Item
+    size: 10
+    sprite: Objects/Weapons/Melee/plastitanium_shiv.rsi
+    prefix: inhand
+
+- type: entity
   name: survival knife
   parent: CombatKnife
   id: SurvivalKnife
