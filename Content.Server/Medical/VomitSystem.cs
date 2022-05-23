@@ -54,19 +54,19 @@ namespace Content.Server.Medical
 
             _popupSystem.PopupEntity(Loc.GetString("disease-vomit", ("person", uid)), uid, Filter.Pvs(uid));
             // Get the solution of the puddle we spawned
-            _solutionSystem.TryGetSolution(puddle, puddleComp.SolutionName, out var puddleSolution);
+            if (!_solutionSystem.TryGetSolution(puddle, puddleComp.SolutionName, out var puddleSolution))
+                return;
             // Empty the stomach out into it
             foreach (var stomach in stomachList)
             {
-                if (puddleSolution != null && _solutionSystem.TryGetSolution(stomach.Comp.Owner, StomachSystem.DefaultSolutionName, out var sol))
+                if (_solutionSystem.TryGetSolution(stomach.Comp.Owner, StomachSystem.DefaultSolutionName, out var sol))
                     _solutionSystem.TryAddSolution(puddle, puddleSolution, sol);
             }
             // And the small bit of the chem stream from earlier
             if (TryComp<BloodstreamComponent>(uid, out var bloodStream))
             {
                 var temp = bloodStream.ChemicalSolution.SplitSolution(solutionSize);
-                if (puddleSolution != null)
-                    _solutionSystem.TryAddSolution(puddle, puddleSolution, temp);
+                _solutionSystem.TryAddSolution(puddle, puddleSolution, temp);
             }
         }
     }

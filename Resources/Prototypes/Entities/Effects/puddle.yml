@@ -149,9 +149,6 @@
           Quantity: 5
         - ReagentId: Water
           Quantity: 5
-  - type: Appearance
-    visuals:
-    - type: PuddleVisualizer
   - type: Slippery
     launchForwardsMultiplier: 2.0
   - type: StepTrigger
