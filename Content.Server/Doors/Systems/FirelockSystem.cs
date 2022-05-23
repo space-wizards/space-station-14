@@ -74,7 +74,7 @@ namespace Content.Server.Doors.Systems
             EntityQuery<ApcPowerReceiverComponent>? powerQuery = null,
             EntityQuery<AirtightComponent>? airtightQuery = null)
         {
-            if (!Resolve(uid, ref door, ref appearance))
+            if (!Resolve(uid, ref door, ref appearance, false))
                 return;
 
             // only bother to check pressure on doors that are some variation of closed.
@@ -190,7 +190,7 @@ namespace Content.Server.Doors.Systems
             EntityQuery<AirtightComponent>? airtightQuery = null)
         {
             airtightQuery ??= GetEntityQuery<AirtightComponent>();
-            if (!airtightQuery.Value.Resolve(uid, ref airtight))
+            if (!airtightQuery.Value.Resolve(uid, ref airtight, false))
                 return (false, false);
 
             if (!airtight.AirBlocked)
