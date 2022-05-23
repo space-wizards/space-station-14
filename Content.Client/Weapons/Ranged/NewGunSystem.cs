@@ -101,7 +101,7 @@ public sealed class NewGunSystem : SharedNewGunSystem
 
     protected override void Popup(string message, NewGunComponent gun, EntityUid? user)
     {
-        if (user == null) return;
+        if (user == null || !Timing.IsFirstTimePredicted) return;
         PopupSystem.PopupEntity(message, gun.Owner, Filter.Entities(user.Value));
     }
 }

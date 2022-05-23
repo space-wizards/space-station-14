@@ -62,6 +62,13 @@ public abstract partial class SharedNewGunSystem
 
         PlaySound(component, component.SoundSelectiveToggle?.GetSound(), user);
         Popup($"Selected {fire}", component, user);
+
+        if (component.SelectModeAction != null)
+        {
+            var nextMode = GetNextMode(component);
+            UpdateSelectModeAction(component.SelectModeAction, nextMode);
+        }
+
         Dirty(component);
     }
 
@@ -85,28 +92,15 @@ public abstract partial class SharedNewGunSystem
         if (action == null) return;
 
         args.Actions.Add(action);
+        component.SelectModeAction = action;
     }
 
-    private InstantAction? GetSelectModeAction(NewGunComponent component)
+    private void UpdateSelectModeAction(InstantAction? action, SelectiveFire mode)
     {
-        if (component.SelectedMode == component.AvailableModes) return null;
-
-        var nextMode = GetNextMode(component);
-
-        var action = new InstantAction()
-        {
-            Icon = new SpriteSpecifier.Texture(new ResourcePath("Interface/Actions/scream.png")),
-            Name = "Cycle mode",
-            Description = $"Cycle the mode for this gun to {nextMode}",
-            Event = new CycleModeEvent(nextMode),
-            Keywords = new HashSet<string>()
-            {
-                "gun",
-            },
-        };
+        if (action == null) return;
 
         // For the action we'll show our current mode as the icon I guess
-        switch (component.SelectedMode)
+        switch (mode)
         {
             case SelectiveFire.Safety:
                 action.Icon = new SpriteSpecifier.Texture(new ResourcePath("Interface/Actions/scream.png"));
@@ -122,8 +116,30 @@ public abstract partial class SharedNewGunSystem
                 break;
             default:
                 throw new ArgumentOutOfRangeException(
-                    $"No implemented select mode action for {component.SelectedMode}!");
+                    $"No implemented select mode action for {mode}!");
         }
+
+        action.Description = $"Cycle the mode for this gun to {mode}";
+        action.Event = new CycleModeEvent(mode);
+    }
+
+    private InstantAction? GetSelectModeAction(NewGunComponent component)
+    {
+        if (component.SelectedMode == component.AvailableModes) return null;
+
+        var nextMode = GetNextMode(component);
+
+        var action = new InstantAction()
+        {
+            Icon = new SpriteSpecifier.Texture(new ResourcePath("Interface/Actions/scream.png")),
+            Name = "Cycle mode",
+            Keywords = new HashSet<string>()
+            {
+                "gun",
+            },
+        };
+
+        UpdateSelectModeAction(action, nextMode);
 
         return action;
     }

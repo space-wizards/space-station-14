@@ -1,6 +1,6 @@
 namespace Content.Shared.Weapons.Ranged;
 
-public class SharedNewGunSystem_Battery
+public abstract partial class SharedNewGunSystem
 {
-    
+
 }
