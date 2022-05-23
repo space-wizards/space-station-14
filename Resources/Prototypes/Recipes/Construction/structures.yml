@@ -53,6 +53,24 @@
     - !type:TileNotBlocked
 
 - type: construction
+  name: durable wall
+  id: DurableWall
+  graph: Girder
+  startNode: start
+  targetNode: durableWall
+  category: Structures
+  description: Keeps the air in and the greytide out.
+  icon:
+    sprite: Structures/Walls/solid.rsi
+    state: statefull
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canRotate: false
+  canBuildInImpassable: false
+  conditions:
+    - !type:TileNotBlocked
+
+- type: construction
   name: grille
   id: Grille
   graph: Grille
@@ -163,6 +181,45 @@
   objectType: Structure
   placementMode: SnapgridCenter
   canRotate: false
+
+- type: construction
+  name: shuttle window
+  id: ShuttleWindow
+  graph: Window
+  startNode: start
+  targetNode: shuttleWindow
+  category: Structures
+  description: A tough, fancy window designed for shuttles.
+  canBuildInImpassable: true
+  conditions:
+    - !type:EmptyOrWindowValidInTile
+    - !type:NoWindowsInTile
+  icon:
+    sprite: Structures/Windows/shuttle_window.rsi
+    state: swindowfull
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canRotate: false
+
+- type: construction
+  name: plastitanium window
+  id: PlastitaniumWindow
+  graph: Window
+  startNode: start
+  targetNode: plastitaniumWindow
+  category: Structures
+  description: THE most fire resistant, stylish, and robust window on the market.
+  canBuildInImpassable: true
+  conditions:
+    - !type:EmptyOrWindowValidInTile
+    - !type:NoWindowsInTile
+  icon:
+    sprite: Structures/Windows/plastitanium_window.rsi
+    state: ptwindowfull
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canRotate: false
+
 
 - type: construction
   name: directional window
