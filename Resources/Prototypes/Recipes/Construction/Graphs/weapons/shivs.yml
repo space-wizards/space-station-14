@@ -8,7 +8,7 @@
           steps:
             - material: Cloth
               amount: 2
-              doAfter: 1
+              doAfter: 2
             - prototype: ShardGlassTitanium
               name: Titanium Glass Shard
               icon: 
