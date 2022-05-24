@@ -27,7 +27,7 @@ public sealed class SurveillanceCameraSetupBoundUi : BoundUserInterface
             _window.HideNameSelector();
         }
 
-        _window.Open();
+        _window.OpenCentered();
         _window.OnNameConfirm += SendDeviceName;
         _window.OnNetworkConfirm += SendSelectedNetwork;
 

@@ -121,7 +121,7 @@ public sealed class SurveillanceCameraSetupSetNetwork : BoundUserInterfaceMessag
 
 
 [Serializable, NetSerializable]
-public enum SurveillanceCameraSetupUiKey
+public enum SurveillanceCameraSetupUiKey : byte
 {
     Camera,
     Router
