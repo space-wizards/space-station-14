@@ -267,7 +267,7 @@ namespace Content.Server.Doors.Systems
             }
 
             // May also have to consider pressure on the same tile as the firelock.
-            if (airtight.AirBlockedDirection != AtmosDirection.All)
+            if (airtight.AirBlockedDirection == AtmosDirection.All)
                 return (holdingPressure, holdingFire);
 
             atmos = _atmosSystem.GetTileAtmosphere(gridAtmosphere, pos);
