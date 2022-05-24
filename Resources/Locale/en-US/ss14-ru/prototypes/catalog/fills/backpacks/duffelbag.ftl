@@ -43,3 +43,6 @@ ent-ClothingBackpackDuffelZombieBundle = syndicate zombie bundle
 ent-ClothingBackpackDuffelSyndicateOperative = operative duffelbag
     .desc = { ent-ClothingBackpackDuffelSyndicate.desc }
     .suffix = { "" }
+ent-ClothingBackpackDuffelSyndicateOperativeMedic = operative medic duffelbag
+    .desc = A large duffel bag for holding extra medical supplies.
+    .suffix = { "" }

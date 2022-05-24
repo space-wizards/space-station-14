@@ -142,3 +142,6 @@ ent-ClothingUniformJumpskirtOperative = operative jumpskirt
 ent-ClothingUniformJumpskirtAtmos = atmosheric technician jumpskirt
     .desc = I am at work. I can't leave work. Work is breathing. I am testing air quality.
     .suffix = { "" }
+ent-ClothingUniformJumpskirtJanimaid = janitorial maid uniform
+    .desc = For professionals, not the posers.
+    .suffix = { "" }
