@@ -109,7 +109,7 @@
     template: AnimalTemplate
     preset: AnimalPreset
   - type: Examiner
-  - type: UnarmedCombat
+  - type: MeleeWeapon
     range: 1.5
     arcwidth: 0
     arc: bite
