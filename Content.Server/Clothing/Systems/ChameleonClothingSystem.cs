@@ -17,6 +17,7 @@ public sealed class ChameleonClothingSystem : SharedChameleonClothingSystem
         base.Initialize();
         SubscribeLocalEvent<ChameleonClothingComponent, ComponentInit>(OnInit);
         SubscribeLocalEvent<ChameleonClothingComponent, GetVerbsEvent<InteractionVerb>>(OnVerb);
+        SubscribeLocalEvent<ChameleonClothingComponent, ChameleonPrototypeSelectedMessage>(OnSelected);
     }
 
     private void OnInit(EntityUid uid, ChameleonClothingComponent component, ComponentInit args)
@@ -34,6 +35,11 @@ public sealed class ChameleonClothingSystem : SharedChameleonClothingSystem
             Text = Loc.GetString("chameleon-component-verb-text"),
             Act = () => TryOpenUi(uid, args.User, component)
         });
+    }
+
+    private void OnSelected(EntityUid uid, ChameleonClothingComponent component, ChameleonPrototypeSelectedMessage args)
+    {
+        MimicPrototype(uid, args.SelectedId, component);
     }
 
     private void TryOpenUi(EntityUid uid, EntityUid user, ChameleonClothingComponent? component = null)
@@ -61,12 +67,13 @@ public sealed class ChameleonClothingSystem : SharedChameleonClothingSystem
     {
         if (!Resolve(uid, ref appearance, ref component))
             return;
+
+        // make sure that it is valid change
         if (!_proto.TryIndex(protoId, out EntityPrototype? proto))
             return;
-
-        // make sure that it is valid
         if (!proto.TryGetComponent(out ClothingComponent? clothing) || !clothing.SlotFlags.HasFlag(component.Slot))
             return;
+        component.SelectedId = protoId;
 
         // copy name and description
         var meta = MetaData(uid);

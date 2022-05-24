@@ -38,7 +38,7 @@ public sealed class ChameleonBoundUserInterface : BoundUserInterface
 
     private void OnIdSelected(string selectedId)
     {
-        Logger.Debug(selectedId);
+        SendMessage(new ChameleonPrototypeSelectedMessage(selectedId));
     }
 
     protected override void Dispose(bool disposing)
