@@ -28307,7 +28307,7 @@ entities:
     parent: 60
     type: Transform
 - uid: 727
-  type: WallMetal
+  type: WallSolidRust
   components:
   - rot: 3.141592653589793 rad
     pos: -18.5,-30.5
@@ -28472,7 +28472,7 @@ entities:
     parent: 60
     type: Transform
 - uid: 747
-  type: WallMetal
+  type: WallSolidRust
   components:
   - pos: -1.5,-25.5
     parent: 60
