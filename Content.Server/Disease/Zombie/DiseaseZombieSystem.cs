@@ -52,7 +52,6 @@ namespace Content.Server.Disease.Zombie
                 return;
 
             RemComp<DiseaseCarrierComponent>(uid);
-            RemComp<DiseaseBuildupComponent>(uid);
             RemComp<RespiratorComponent>(uid);
             RemComp<BarotraumaComponent>(uid);
             RemComp<HungerComponent>(uid);
