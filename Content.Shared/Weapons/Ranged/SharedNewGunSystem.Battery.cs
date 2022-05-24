@@ -1,14 +1,35 @@
 using Content.Shared.Examine;
+using Robust.Shared.GameStates;
 using Robust.Shared.Map;
+using Robust.Shared.Serialization;
 
 namespace Content.Shared.Weapons.Ranged;
 
 public abstract partial class SharedNewGunSystem
 {
-    private void InitializeBattery()
+    protected virtual void InitializeBattery()
     {
+        SubscribeLocalEvent<BatteryAmmoProviderComponent, ComponentGetState>(OnBatteryGetState);
+        SubscribeLocalEvent<BatteryAmmoProviderComponent, ComponentHandleState>(OnBatteryHandleState);
         SubscribeLocalEvent<BatteryAmmoProviderComponent, TakeAmmoEvent>(OnBatteryTakeAmmo);
         SubscribeLocalEvent<BatteryAmmoProviderComponent, ExaminedEvent>(OnBatteryExamine);
+    }
+
+    private void OnBatteryHandleState(EntityUid uid, BatteryAmmoProviderComponent component, ref ComponentHandleState args)
+    {
+        if (args.Current is not BatteryAmmoProviderComponentState state) return;
+
+        component.Shots = state.Shots;
+        component.MaxShots = state.MaxShots;
+    }
+
+    private void OnBatteryGetState(EntityUid uid, BatteryAmmoProviderComponent component, ref ComponentGetState args)
+    {
+        args.State = new BatteryAmmoProviderComponentState()
+        {
+            Shots = component.Shots,
+            MaxShots = component.MaxShots,
+        };
     }
 
     private void OnBatteryExamine(EntityUid uid, BatteryAmmoProviderComponent component, ExaminedEvent args)
@@ -44,5 +65,12 @@ public abstract partial class SharedNewGunSystem
             default:
                 throw new ArgumentOutOfRangeException();
         }
+    }
+
+    [Serializable, NetSerializable]
+    private sealed class BatteryAmmoProviderComponentState : ComponentState
+    {
+        public int Shots;
+        public int MaxShots;
     }
 }

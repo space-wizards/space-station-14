@@ -4,41 +4,11 @@ using Content.Shared.Weapons.Ranged.Barrels.Components;
 using Robust.Shared.Audio;
 using Robust.Shared.Map;
 using Robust.Shared.Player;
-using Robust.Shared.Utility;
 
 namespace Content.Server.Weapon.Ranged;
 
-public sealed class NewGunSystem : SharedNewGunSystem
+public sealed partial class NewGunSystem : SharedNewGunSystem
 {
-    // TODO: Move to ballistic partial
-    public override void ManualCycle(BallisticAmmoProviderComponent component, MapCoordinates coordinates)
-    {
-        EntityUid? ent = null;
-
-        if (component.Cycled)
-        {
-            // TODO: Combine with TakeAmmo
-            if (component.Entities.TryPop(out var existing))
-            {
-                component.Container.Remove(existing);
-                EnsureComp<NewAmmoComponent>(existing);
-            }
-            else if (component.UnspawnedCount > 0)
-            {
-                component.UnspawnedCount--;
-                ent = Spawn(component.FillProto, coordinates);
-                EnsureComp<NewAmmoComponent>(ent.Value);
-            }
-        }
-
-        component.Cycled = component.AutoCycle;
-
-        if (ent != null)
-        {
-            EjectCartridge(ent.Value);
-        }
-    }
-
     public override void Shoot(List<IShootable> ammo, EntityCoordinates fromCoordinates, EntityCoordinates toCoordinates, EntityUid? user = null)
     {
         // TODO recoil / spread
