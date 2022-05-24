@@ -57,6 +57,7 @@ namespace Content.Client.Entry
             "MimePowers",
             "Polymorphable",
             "PolymorphedEntity",
+            "Zombie",
             "ZombifyOnDeath",
             "ThermalRegulator",
             "DiseaseMachineRunning",

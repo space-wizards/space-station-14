@@ -1,8 +1,8 @@
 using Robust.Shared.Random;
 using Content.Server.Chat.Managers;
-using Content.Server.Disease.Zombie.Components;
 using Content.Shared.MobState.Components;
 using Content.Shared.Sound;
+using Content.Server.Zombies;
 
 namespace Content.Server.StationEvents.Events
 {
@@ -41,13 +41,15 @@ namespace Content.Server.StationEvents.Events
 
             var toInfect = _random.Next(1, 3);
 
+            var zombifysys = _entityManager.EntitySysManager.GetEntitySystem<ZombifyOnDeathSystem>();
+
             /// Now we give it to people in the list of dead entities earlier.
             foreach (var target in deadList)
             {
                 if (toInfect-- == 0)
                     break;
 
-                _entityManager.EnsureComponent<DiseaseZombieComponent>(target.Owner);
+                zombifysys.ZombifyEntity(target.Owner);
             }
             _chatManager.DispatchStationAnnouncement(Loc.GetString("station-event-zombie-outbreak-announcement"),
             playDefaultSound: false, colorOverride: Color.DarkMagenta);

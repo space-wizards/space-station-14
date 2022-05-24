@@ -2,31 +2,30 @@ using System.Linq;
 using Robust.Shared.Random;
 using Content.Server.Body.Systems;
 using Content.Server.Disease.Components;
-using Content.Server.Disease.Zombie.Components;
 using Content.Server.Drone.Components;
 using Content.Server.Weapon.Melee;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Damage;
 using Content.Shared.MobState.Components;
 using Content.Server.Disease;
-using Content.Server.Weapons.Melee.ZombieTransfer.Components;
 
-namespace Content.Server.Weapons.Melee.ZombieTransfer
+namespace Content.Server.Zombies
 {
-    public sealed class ZombieTransferSystem : EntitySystem
+    public sealed class ZombieSystem : EntitySystem
     {
         [Dependency] private readonly DiseaseSystem _disease = default!;
         [Dependency] private readonly BloodstreamSystem _bloodstream = default!;
+        [Dependency] private readonly ZombifyOnDeathSystem _zombify = default!;
         [Dependency] private readonly IRobustRandom _robustRandom = default!;
         public override void Initialize()
         {
             base.Initialize();
-            SubscribeLocalEvent<ZombieTransferComponent, MeleeHitEvent>(OnMeleeHit);
+            SubscribeLocalEvent<ZombieComponent, MeleeHitEvent>(OnMeleeHit);
         }
 
-        private void OnMeleeHit(EntityUid uid, ZombieTransferComponent component, MeleeHitEvent args)
+        private void OnMeleeHit(EntityUid uid, ZombieComponent component, MeleeHitEvent args)
         {
-            if (!EntityManager.TryGetComponent<DiseaseZombieComponent>(args.User, out var diseaseZombieComp))
+            if (!EntityManager.TryGetComponent<ZombieComponent>(args.User, out var diseaseZombieComp))
                 return;
 
             if (!args.HitEntities.Any())
@@ -37,18 +36,18 @@ namespace Content.Server.Weapons.Melee.ZombieTransfer
                 if (args.User == entity)
                     continue;
 
-                if (!HasComp<MobStateComponent>(entity) || HasComp<DroneComponent>(entity))
+                if (!TryComp<MobStateComponent>(entity, out var mobState) || HasComp<DroneComponent>(entity))
                     continue;
 
-                if (_robustRandom.Prob(diseaseZombieComp.Probability) && HasComp<DiseaseCarrierComponent>(entity))
+                if (_robustRandom.Prob(0.5f) && HasComp<DiseaseCarrierComponent>(entity))
                 {
-                    _disease.TryAddDisease(entity, "ZombieInfection");
+                    _disease.TryAddDisease(entity, "ActiveZombieVirus");
                 }
 
-                EntityManager.EnsureComponent<MobStateComponent>(entity, out var mobState);
-                if ((mobState.IsDead() || mobState.IsCritical()) && !HasComp<DiseaseZombieComponent>(entity)) //dead entities are eautomatically infected. MAYBE: have activated infect ability?
+                if ((mobState.IsDead() || mobState.IsCritical())
+                    && !HasComp<ZombieComponent>(entity))
                 {
-                    EntityManager.AddComponent<DiseaseZombieComponent>(entity);
+                    _zombify.ZombifyEntity(entity);
                     var dspec = new DamageSpecifier();
                     //these damages match the zombie claw
                     dspec.DamageDict.TryAdd("Slash", -12);

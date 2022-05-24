@@ -728,7 +728,6 @@
     damage:
       types:
         Blunt: 0.1
-  - type: HumanoidAppearance # no this doesnt make sense but its needed for vocal
   - type: Vocal
     # mice are gender neutral who cares
     maleScream: /Audio/Animals/mouse_squeak.ogg

@@ -18,6 +18,9 @@ using Content.Server.Inventory;
 using Content.Server.Mind.Components;
 using Content.Server.Chat.Managers;
 using Content.Server.Ghost.Roles.Components;
+using Content.Server.Hands.Components;
+using Content.Server.Mind.Commands;
+using Content.Shared.CombatMode;
 
 namespace Content.Server.Zombies
 {
@@ -58,31 +61,35 @@ namespace Content.Server.Zombies
         }
 
         /// <summary>
-        /// This is the general purpose function to call if you want to zombify
-        /// an entity.
+        /// This is the general purpose function to call if you want to zombify an entity.
+        /// It handles both humanoid and nonhumanoid transformation.
         /// </summary>
         /// <param name="target">the entity being zombified</param>
         public void ZombifyEntity(EntityUid target)
         {
+            var zombiecomp = EnsureComp<ZombifyOnDeathComponent>(target);
+            if (zombiecomp.Zombified)
+                return;
+            
             EntityUid zombie;
             /// The reasoning here is that for regular humanoids, doing a zombie polymorph
             /// to a random zombie type is the most interesting way to do it. For things like animals,
             /// the polymorph system doesn't really work at all, so they just use the old system of
             /// hacking off all of the component
-            if (TryComp<HumanoidAppearanceComponent>(target, out var huAppComp))
+            if (HasComp<HumanoidAppearanceComponent>(target))
             {
                 var foo = _polymorph.PolymorphEntity(target, "ZombieGeneric");
                 if (foo == null) return;
                 zombie = foo.Value;
 
-                if (!TryComp<HumanoidAppearanceComponent>(zombie, out var zomAppComp))
-                    return;
-                var skinColor = new Color(0.70f, 0.72f, 0.48f, 1);
-                _sharedHuApp.UpdateAppearance(zombie, zomAppComp.Appearance.WithSkinColor(skinColor));
+                if (TryComp<HumanoidAppearanceComponent>(zombie, out var zomAppComp))
+                    _sharedHuApp.UpdateAppearance(zombie, zomAppComp.Appearance.WithSkinColor(zombiecomp.SkinColor));
             }
             else
             {
                 zombie = target; //if it doesn't polymorph, then the zombie is just the target entity
+                MakeSentientCommand.MakeSentient(zombie, EntityManager);
+
                 RemComp<DiseaseCarrierComponent>(zombie);
                 RemComp<RespiratorComponent>(zombie);
                 RemComp<BarotraumaComponent>(zombie);
@@ -90,7 +97,7 @@ namespace Content.Server.Zombies
                 RemComp<ThirstComponent>(zombie);
 
                 EnsureComp<ReplacementAccentComponent>(zombie).Accent = "zombie";
-                EnsureComp<CombatModeComponent>(zombie);
+                var combatcomp = EnsureComp<CombatModeComponent>(zombie);
 
                 _damageable.SetDamageModifierSetId(zombie, "Zombie");
                 _bloodstream.SetBloodLossThreshold(zombie, 0f);
@@ -117,11 +124,15 @@ namespace Content.Server.Zombies
                 ghostcomp.RoleRules = Loc.GetString("zombie-role-rules");
             }
 
+            RemComp<HandsComponent>(zombie);
             foreach (var hand in _sharedHands.EnumerateHands(zombie))
             {
                 _sharedHands.SetActiveHand(zombie, hand);
                 _sharedHands.RemoveHand(zombie, hand.Name);
             }
+
+            EnsureComp<ZombieComponent>(zombie);
+            zombiecomp.Zombified = true;
         }
     }
 }

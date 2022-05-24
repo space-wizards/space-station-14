@@ -1,16 +1,20 @@
 - type: disease
-  id: ZombieInfection
-  name: Zombie Infection #This is the incubation period of the zombie disease.
+  id: ActiveZombieVirus
+  name: Zombie Virus
   infectious: false
   cureResist: 0.2
   effects:
     - !type:DiseaseHealthChange
-      probability: 0.01
+      probability: 0.075
+      reagent: toxin
+      amount: 0.5
+    - !type:DiseaseAdjustReagent
+      probability: 0.05
       damage:
         types:
-          Blunt: 2 #this is low but it goes for like 5 minutes so it's fine
+          Poison: 4
     - !type:DiseaseSnough
-      probability: 0.05
+      probability: 0.01
       snoughMessage: disease-cough
       snoughSound:
         collection: Coughs

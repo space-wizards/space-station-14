@@ -2,12 +2,13 @@
   name: Zombie
   id: MobZombieBase
   description: A miserable pile of flesh.
+  noSpawn: true
   components:
-  - type: GhostTakeoverAvailable
+  - type: GhostTakeoverAvailable #apparently these don't take Loc strings
     makeSentient: true
     name: zombie
-    description: zombie-role-desc
-    rules: zombie-role-rules
+    description: A malevolent creature of the dead.
+    rules: You are an antagonist. Search out the living and bite them in order to infect them and turn them into zombies. Work together with other the zombies to overtake the station.
   - type: RangedDamageSound
     soundGroups:
       Brute:
@@ -265,6 +266,7 @@
     range: 0.8
     arcwidth: 30
     arc: claw
+    clickArc: claw
     damage:
       types:
         Slash: 13
@@ -280,7 +282,7 @@
       type: StrippableBoundUserInterface
   - type: Puller
   - type: Speech
-    speechSounds: Alto
+    speechSounds: Baritone
   - type: Vocal
   - type: Emoting
   - type: Grammar
@@ -300,6 +302,7 @@
   - type: Examiner
   - type: ReplacementAccent
     accent: zombie
+  - type: Zombie
   - type: AiFactionTag
     factions:
     - NanoTrasen

@@ -240,7 +240,7 @@ namespace Content.Server.Polymorph.Systems
         /// The polymorph prototype containing all the information about
         /// the specific polymorph.
         /// </summary>
-        public readonly PolymorphPrototype Prototype;
+        public readonly PolymorphPrototype Prototype = new();
 
         public PolymorphActionEvent(PolymorphPrototype prototype)
         {
