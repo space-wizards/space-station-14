@@ -157,7 +157,14 @@ public sealed class SurveillanceCameraRouterSystem : EntitySystem
                 return;
             }
 
-            var state = new SurveillanceCameraSetupBoundUiState(router.SubnetName, deviceNet.ReceiveFrequencyId ?? string.Empty,
+            // C# compiler bug related to null coalescing?
+            uint freq = 0;
+            if (deviceNet.ReceiveFrequency != null)
+            {
+                freq = deviceNet.ReceiveFrequency.Value;
+            }
+
+            var state = new SurveillanceCameraSetupBoundUiState(router.SubnetName, freq,
                 router.AvailableNetworks, true, router.SubnetFrequencyId != null);
             _userInterface.TrySetUiState(uid, SurveillanceCameraSetupUiKey.Router, state);
         }

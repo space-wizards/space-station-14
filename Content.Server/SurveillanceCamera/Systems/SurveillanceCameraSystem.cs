@@ -230,7 +230,14 @@ public sealed class SurveillanceCameraSystem : EntitySystem
             }
         }
 
-        var state = new SurveillanceCameraSetupBoundUiState(camera.CameraId, deviceNet.ReceiveFrequencyId ?? string.Empty,
+        // C# compiler bug related to null coalescing?
+        uint freq = 0;
+        if (deviceNet.ReceiveFrequency != null)
+        {
+            freq = deviceNet.ReceiveFrequency.Value;
+        }
+
+        var state = new SurveillanceCameraSetupBoundUiState(camera.CameraId, freq,
             camera.AvailableNetworks, camera.NameSet, camera.NetworkSet);
         _userInterface.TrySetUiState(uid, SurveillanceCameraSetupUiKey.Camera, state);
     }

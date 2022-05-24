@@ -82,12 +82,12 @@ public enum SurveillanceCameraMonitorUiKey : byte
 public sealed class SurveillanceCameraSetupBoundUiState : BoundUserInterfaceState
 {
     public string Name { get; }
-    public string Network { get; }
+    public uint Network { get; }
     public List<string> Networks { get; }
     public bool NameDisabled { get; }
     public bool NetworkDisabled { get; }
 
-    public SurveillanceCameraSetupBoundUiState(string name, string network, List<string> networks, bool nameDisabled, bool networkDisabled)
+    public SurveillanceCameraSetupBoundUiState(string name, uint network, List<string> networks, bool nameDisabled, bool networkDisabled)
     {
         Name = name;
         Network = network;

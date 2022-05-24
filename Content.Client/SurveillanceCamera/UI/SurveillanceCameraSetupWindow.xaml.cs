@@ -38,7 +38,7 @@ public sealed partial class SurveillanceCameraSetupWindow : DefaultWindow
     }
 
     // Pass in a list of frequency prototype IDs.
-    public void LoadAvailableNetworks(string currentNetwork, List<string> networks)
+    public void LoadAvailableNetworks(uint currentNetwork, List<string> networks)
     {
         NetworkSelector.Clear();
 
@@ -49,19 +49,27 @@ public sealed partial class SurveillanceCameraSetupWindow : DefaultWindow
         }
 
         var id = 0;
+        var idList = new List<(int id, string networkName)>();
         foreach (var network in networks)
+        {
+            idList.Add((id, network));
+            id++;
+        }
+
+        idList.Sort((a, b) => a.networkName.CompareTo(b.networkName));
+
+        foreach (var (networkId, network) in idList)
         {
             if (!_prototypeManager.TryIndex(network, out DeviceFrequencyPrototype? frequency)
                 || frequency.Name == null)
             {
-                id++;
                 continue;
             }
 
-            NetworkSelector.AddItem(Loc.GetString(frequency.Name), id);
-            if (network == currentNetwork)
+            NetworkSelector.AddItem(Loc.GetString(frequency.Name), networkId);
+            if (frequency.Frequency == currentNetwork)
             {
-                NetworkSelector.SelectId(id);
+                NetworkSelector.SelectId(networkId);
             }
 
             id++;
