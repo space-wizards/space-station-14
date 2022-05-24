@@ -25,7 +25,7 @@ namespace Content.Server.Engineering.EntitySystems
 
         private async void HandleAfterInteract(EntityUid uid, SpawnAfterInteractComponent component, AfterInteractEvent args)
         {
-            if (!args.CanReach)
+            if (!args.CanReach && !component.IgnoreDistance)
                 return;
             if (string.IsNullOrEmpty(component.Prototype))
                 return;
