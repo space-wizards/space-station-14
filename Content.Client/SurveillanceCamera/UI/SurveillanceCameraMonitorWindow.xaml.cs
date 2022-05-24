@@ -17,6 +17,7 @@ namespace Content.Client.SurveillanceCamera.UI;
 public sealed partial class SurveillanceCameraMonitorWindow : DefaultWindow
 {
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
+    [Dependency] private readonly IResourceCache _resourceCache = default!;
 
     public event Action<string>? CameraSelected;
     public event Action<string>? SubnetOpened;
@@ -49,8 +50,8 @@ public sealed partial class SurveillanceCameraMonitorWindow : DefaultWindow
         IoCManager.InjectDependencies(this);
 
         // This could be done better. I don't want to deal with stylesheets at the moment.
-        var texture = IoCManager.Resolve<IResourceCache>().GetTexture("/Textures/Interface/Nano/square_black.png");
-        var shader = IoCManager.Resolve<IPrototypeManager>().Index<ShaderPrototype>("CameraStatic").Instance().Duplicate();
+        var texture = _resourceCache.GetTexture("/Textures/Interface/Nano/square_black.png");
+        var shader = _prototypeManager.Index<ShaderPrototype>("CameraStatic").Instance().Duplicate();
 
         CameraView.ViewportSize = new Vector2i(500, 500);
         CameraView.Eye = _defaultEye; // sure
@@ -80,7 +81,7 @@ public sealed partial class SurveillanceCameraMonitorWindow : DefaultWindow
 
         if (subnets.Count == 0)
         {
-            SubnetSelector.AddItem(string.Empty);
+            SubnetSelector.AddItem(Loc.GetString("surveillance-camera-monitor-ui-no-subnets"));
             SubnetSelector.Disabled = true;
             return;
         }
@@ -176,7 +177,6 @@ public sealed partial class SurveillanceCameraMonitorWindow : DefaultWindow
 
     private void AddCameraToList(string name, string address)
     {
-        // var button = CreateCameraButton(name, address);
         var item = SubnetList.AddItem($"{name}: {address}");
         item.Metadata = address;
     }
