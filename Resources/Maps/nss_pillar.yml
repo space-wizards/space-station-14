@@ -20256,10 +20256,10 @@ entities:
       - 0
       - 0
     - volume: 2500
-      temperature: 156.99333
+      temperature: 156.96262
       moles:
-      - 11.593847
-      - 43.614952
+      - 11.59154
+      - 43.60627
       - 0
       - 0
       - 0
@@ -20267,10 +20267,10 @@ entities:
       - 0
       - 0
     - volume: 2500
-      temperature: 186.53613
+      temperature: 186.49834
       moles:
-      - 13.813742
-      - 51.96598
+      - 13.810902
+      - 51.9553
       - 0
       - 0
       - 0
@@ -20278,10 +20278,10 @@ entities:
       - 0
       - 0
     - volume: 2500
-      temperature: 186.60178
+      temperature: 186.51315
       moles:
-      - 13.818674
-      - 51.984535
+      - 13.812015
+      - 51.959488
       - 0
       - 0
       - 0
@@ -20289,10 +20289,10 @@ entities:
       - 0
       - 0
     - volume: 2500
-      temperature: 157.40709
+      temperature: 157.05261
       moles:
-      - 11.624938
-      - 43.73191
+      - 11.598301
+      - 43.631706
       - 0
       - 0
       - 0
@@ -20300,10 +20300,10 @@ entities:
       - 0
       - 0
     - volume: 2500
-      temperature: 145.75864
+      temperature: 145.53777
       moles:
-      - 10.749655
-      - 40.43918
+      - 10.733058
+      - 40.376743
       - 0
       - 0
       - 0
@@ -20311,10 +20311,10 @@ entities:
       - 0
       - 0
     - volume: 2500
-      temperature: 129.24843
+      temperature: 129.1435
       moles:
-      - 9.509052
-      - 35.77215
+      - 9.501166
+      - 35.74248
       - 0
       - 0
       - 0
@@ -20322,10 +20322,10 @@ entities:
       - 0
       - 0
     - volume: 2500
-      temperature: 75.18617
+      temperature: 75.14751
       moles:
-      - 5.4467278
-      - 20.49007
+      - 5.443822
+      - 20.47914
       - 0
       - 0
       - 0
@@ -20333,10 +20333,10 @@ entities:
       - 0
       - 0
     - volume: 2500
-      temperature: 166.04654
+      temperature: 166.03687
       moles:
-      - 12.274121
-      - 46.174076
+      - 12.273395
+      - 46.171345
       - 0
       - 0
       - 0
@@ -20344,10 +20344,10 @@ entities:
       - 0
       - 0
     - volume: 2500
-      temperature: 75.22359
+      temperature: 75.15527
       moles:
-      - 5.449538
-      - 20.500645
+      - 5.4444056
+      - 20.481335
       - 0
       - 0
       - 0
@@ -20355,10 +20355,10 @@ entities:
       - 0
       - 0
     - volume: 2500
-      temperature: 166.0559
+      temperature: 166.03882
       moles:
-      - 12.274824
-      - 46.17672
+      - 12.2735405
+      - 46.171894
       - 0
       - 0
       - 0
@@ -20366,10 +20366,10 @@ entities:
       - 0
       - 0
     - volume: 2500
-      temperature: 129.35417
+      temperature: 129.16519
       moles:
-      - 9.516997
-      - 35.80204
+      - 9.502797
+      - 35.74862
       - 0
       - 0
       - 0
@@ -20377,10 +20377,10 @@ entities:
       - 0
       - 0
     - volume: 2500
-      temperature: 145.58717
+      temperature: 145.50214
       moles:
-      - 10.736771
-      - 40.39071
+      - 10.73038
+      - 40.366673
       - 0
       - 0
       - 0
@@ -21274,6 +21274,78 @@ entities:
         bodyB: 130
         bodyA: 12183
         id: docking23926
+        localAnchorB: -32.5,-32
+        localAnchorA: 1.5,1
+        referenceAngle: -3.8784267E-05
+        damping: 1110.888
+        stiffness: 9971.308
+      docking20860: !type:WeldJoint
+        bodyB: 9743
+        bodyA: 130
+        id: docking20860
+        localAnchorB: -2.5,0
+        localAnchorA: 10.5,-43
+        referenceAngle: -0.00039834913
+        damping: 103014.484
+        stiffness: 924655.9
+      docking20861: !type:WeldJoint
+        bodyB: 9742
+        bodyA: 130
+        id: docking20861
+        localAnchorB: 1.5,0
+        localAnchorA: 16.5,-43
+        referenceAngle: -0.00041914586
+        damping: 103014.484
+        stiffness: 924655.9
+      docking21179: !type:WeldJoint
+        bodyB: 130
+        bodyA: 9743
+        id: docking21179
+        localAnchorB: 10.5,-43
+        localAnchorA: -2.5,0
+        referenceAngle: 0.00039834913
+        damping: 251.67662
+        stiffness: 2259.0442
+      docking21180: !type:WeldJoint
+        bodyB: 130
+        bodyA: 9742
+        id: docking21180
+        localAnchorB: 16.5,-43
+        localAnchorA: 1.5,0
+        referenceAngle: 0.00041914586
+        damping: 250.80473
+        stiffness: 2251.2183
+      docking21387: !type:WeldJoint
+        bodyB: 12183
+        bodyA: 130
+        id: docking21387
+        localAnchorB: 0.5,1
+        localAnchorA: -33.5,-32
+        referenceAngle: 3.8784267E-05
+        damping: 103014.484
+        stiffness: 924655.9
+      docking21388: !type:WeldJoint
+        bodyB: 12183
+        bodyA: 130
+        id: docking21388
+        localAnchorB: 1.5,1
+        localAnchorA: -32.5,-32
+        referenceAngle: 3.8784267E-05
+        damping: 103014.484
+        stiffness: 924655.9
+      docking23626: !type:WeldJoint
+        bodyB: 130
+        bodyA: 12183
+        id: docking23626
+        localAnchorB: -33.5,-32
+        localAnchorA: 0.5,1
+        referenceAngle: -3.8784267E-05
+        damping: 1110.888
+        stiffness: 9971.308
+      docking23627: !type:WeldJoint
+        bodyB: 130
+        bodyA: 12183
+        id: docking23627
         localAnchorB: -32.5,-32
         localAnchorA: 1.5,1
         referenceAngle: -3.8784267E-05
@@ -35693,7 +35765,7 @@ entities:
   - fixtures: []
     type: Fixtures
 - uid: 2020
-  type: WallMetal
+  type: WallSolid
   components:
   - pos: 32.5,26.5
     parent: 130
@@ -36273,7 +36345,7 @@ entities:
     parent: 130
     type: Transform
 - uid: 2089
-  type: WallMetal
+  type: WallSolid
   components:
   - pos: 33.5,26.5
     parent: 130
@@ -36285,13 +36357,13 @@ entities:
     parent: 130
     type: Transform
 - uid: 2091
-  type: WallMetal
+  type: WallSolid
   components:
   - pos: 38.5,25.5
     parent: 130
     type: Transform
 - uid: 2092
-  type: WallMetal
+  type: WallSolid
   components:
   - pos: 38.5,24.5
     parent: 130
@@ -37023,7 +37095,7 @@ entities:
   - fixtures: []
     type: Fixtures
 - uid: 2194
-  type: WallMetal
+  type: WallSolid
   components:
   - pos: 31.5,24.5
     parent: 130
@@ -37109,7 +37181,7 @@ entities:
     parent: 130
     type: Transform
 - uid: 2206
-  type: WallMetal
+  type: WallSolid
   components:
   - pos: 31.5,23.5
     parent: 130
@@ -42521,13 +42593,13 @@ entities:
   - fixtures: []
     type: Fixtures
 - uid: 2948
-  type: WallMetal
+  type: WallSolid
   components:
   - pos: 36.5,26.5
     parent: 130
     type: Transform
 - uid: 2949
-  type: WallMetal
+  type: WallSolid
   components:
   - pos: 31.5,26.5
     parent: 130
@@ -47666,13 +47738,13 @@ entities:
   - fixtures: []
     type: Fixtures
 - uid: 3404
-  type: WallMetal
+  type: WallSolid
   components:
   - pos: 35.5,26.5
     parent: 130
     type: Transform
 - uid: 3405
-  type: WallMetal
+  type: WallSolid
   components:
   - pos: 37.5,26.5
     parent: 130
@@ -47714,7 +47786,7 @@ entities:
         ents: []
     type: ContainerContainer
 - uid: 3409
-  type: WallMetal
+  type: WallSolid
   components:
   - pos: 38.5,23.5
     parent: 130
@@ -76879,7 +76951,7 @@ entities:
     parent: 130
     type: Transform
 - uid: 6024
-  type: WallMetal
+  type: WallSolid
   components:
   - pos: 38.5,26.5
     parent: 130
@@ -107122,7 +107194,7 @@ entities:
     parent: 130
     type: Transform
 - uid: 8465
-  type: WallMetal
+  type: WallSolid
   components:
   - pos: 34.5,26.5
     parent: 130
@@ -108513,7 +108585,7 @@ entities:
     parent: 130
     type: Transform
 - uid: 8594
-  type: WallMetal
+  type: WallSolid
   components:
   - pos: 31.5,25.5
     parent: 130
@@ -111637,7 +111709,7 @@ entities:
     parent: 130
     type: Transform
 - uid: 8955
-  type: WallMetal
+  type: WallSolid
   components:
   - pos: 3.5,40.5
     parent: 130
@@ -116723,7 +116795,7 @@ entities:
     type: Transform
   - dockedWith: 9798
     type: Docking
-  - SecondsUntilStateChange: -202.10776
+  - SecondsUntilStateChange: -38.142303
     changeAirtight: False
     state: Opening
     type: Door
@@ -116742,7 +116814,7 @@ entities:
     type: Transform
   - dockedWith: 9799
     type: Docking
-  - SecondsUntilStateChange: -202.10776
+  - SecondsUntilStateChange: -38.142303
     changeAirtight: False
     state: Opening
     type: Door
@@ -119215,6 +119287,24 @@ entities:
         referenceAngle: -0.00041914586
         damping: 103014.484
         stiffness: 924655.9
+      docking20861: !type:WeldJoint
+        bodyB: 9742
+        bodyA: 130
+        id: docking20861
+        localAnchorB: 1.5,0
+        localAnchorA: 16.5,-43
+        referenceAngle: -0.00041914586
+        damping: 103014.484
+        stiffness: 924655.9
+      docking21180: !type:WeldJoint
+        bodyB: 130
+        bodyA: 9742
+        id: docking21180
+        localAnchorB: 16.5,-43
+        localAnchorA: 1.5,0
+        referenceAngle: 0.00041914586
+        damping: 250.80473
+        stiffness: 2251.2183
     type: Joint
 - uid: 9743
   components:
@@ -119511,6 +119601,24 @@ entities:
         referenceAngle: -0.00039834913
         damping: 103014.484
         stiffness: 924655.9
+      docking20860: !type:WeldJoint
+        bodyB: 9743
+        bodyA: 130
+        id: docking20860
+        localAnchorB: -2.5,0
+        localAnchorA: 10.5,-43
+        referenceAngle: -0.00039834913
+        damping: 103014.484
+        stiffness: 924655.9
+      docking21179: !type:WeldJoint
+        bodyB: 130
+        bodyA: 9743
+        id: docking21179
+        localAnchorB: 10.5,-43
+        localAnchorA: -2.5,0
+        referenceAngle: 0.00039834913
+        damping: 251.67662
+        stiffness: 2259.0442
     type: Joint
 - uid: 9744
   type: WallRiveted
@@ -119975,7 +120083,7 @@ entities:
     type: Transform
   - dockedWith: 9479
     type: Docking
-  - SecondsUntilStateChange: -202.10776
+  - SecondsUntilStateChange: -38.142303
     changeAirtight: False
     state: Opening
     type: Door
@@ -119995,7 +120103,7 @@ entities:
     type: Transform
   - dockedWith: 9480
     type: Docking
-  - SecondsUntilStateChange: -202.10776
+  - SecondsUntilStateChange: -38.142303
     changeAirtight: False
     state: Opening
     type: Door
@@ -121807,7 +121915,7 @@ entities:
     type: Transform
   - dockedWith: 12245
     type: Docking
-  - SecondsUntilStateChange: -202.10776
+  - SecondsUntilStateChange: -38.142303
     changeAirtight: False
     state: Opening
     type: Door
@@ -121826,7 +121934,7 @@ entities:
     type: Transform
   - dockedWith: 12246
     type: Docking
-  - SecondsUntilStateChange: -202.10776
+  - SecondsUntilStateChange: -38.142303
     changeAirtight: False
     state: Opening
     type: Door
@@ -145697,6 +145805,42 @@ entities:
         referenceAngle: -3.8784267E-05
         damping: 1110.888
         stiffness: 9971.308
+      docking21387: !type:WeldJoint
+        bodyB: 12183
+        bodyA: 130
+        id: docking21387
+        localAnchorB: 0.5,1
+        localAnchorA: -33.5,-32
+        referenceAngle: 3.8784267E-05
+        damping: 103014.484
+        stiffness: 924655.9
+      docking21388: !type:WeldJoint
+        bodyB: 12183
+        bodyA: 130
+        id: docking21388
+        localAnchorB: 1.5,1
+        localAnchorA: -32.5,-32
+        referenceAngle: 3.8784267E-05
+        damping: 103014.484
+        stiffness: 924655.9
+      docking23626: !type:WeldJoint
+        bodyB: 130
+        bodyA: 12183
+        id: docking23626
+        localAnchorB: -33.5,-32
+        localAnchorA: 0.5,1
+        referenceAngle: -3.8784267E-05
+        damping: 1110.888
+        stiffness: 9971.308
+      docking23627: !type:WeldJoint
+        bodyB: 130
+        bodyA: 12183
+        id: docking23627
+        localAnchorB: -32.5,-32
+        localAnchorA: 1.5,1
+        referenceAngle: -3.8784267E-05
+        damping: 1110.888
+        stiffness: 9971.308
     type: Joint
 - uid: 12184
   type: WallRiveted
@@ -146132,7 +146276,7 @@ entities:
     type: Transform
   - dockedWith: 10006
     type: Docking
-  - SecondsUntilStateChange: -202.10776
+  - SecondsUntilStateChange: -38.142303
     changeAirtight: False
     state: Opening
     type: Door
@@ -146152,7 +146296,7 @@ entities:
     type: Transform
   - dockedWith: 10007
     type: Docking
-  - SecondsUntilStateChange: -202.10776
+  - SecondsUntilStateChange: -38.142303
     changeAirtight: False
     state: Opening
     type: Door
@@ -153053,7 +153197,7 @@ entities:
     parent: 130
     type: Transform
 - uid: 12910
-  type: WallMetal
+  type: WallSolid
   components:
   - pos: 3.5,38.5
     parent: 130
@@ -153530,7 +153674,7 @@ entities:
     parent: 130
     type: Transform
 - uid: 12971
-  type: WallMetal
+  type: WallSolid
   components:
   - pos: 6.5,40.5
     parent: 130
@@ -153626,7 +153770,7 @@ entities:
     parent: 130
     type: Transform
 - uid: 12981
-  type: WallMetal
+  type: WallSolid
   components:
   - pos: 3.5,39.5
     parent: 130
@@ -199680,4 +199824,20 @@ entities:
   - pos: -83.5,-4.5
     parent: 130
     type: Transform
+- uid: 18086
+  type: OreProcessor
+  components:
+  - pos: -12.5,-24.5
+    parent: 130
+    type: Transform
+  - containers:
+    - machine_parts
+    - machine_board
+    type: Construction
+  - containers:
+      machine_board: !type:Container
+        ents: []
+      machine_parts: !type:Container
+        ents: []
+    type: ContainerContainer
 ...
