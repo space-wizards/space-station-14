@@ -14,8 +14,7 @@ public class NewAmmoComponent : Component, SharedNewGunSystem.IShootable
     // Muzzle flash stored on ammo because if we swap a gun to whatever we may want to override it.
 
     [ViewVariables, DataField("muzzleFlash")]
-    public SpriteSpecifier? MuzzleFlash =
-        new SpriteSpecifier.Texture(new ResourcePath("Objects/Weapons/Guns/Projectiles/bullet_muzzle.png"));
+    public ResourcePath? MuzzleFlash = new("Objects/Weapons/Guns/Projectiles/bullet_muzzle.png");
 }
 
 /// <summary>

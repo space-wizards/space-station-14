@@ -213,7 +213,7 @@ public abstract partial class SharedNewGunSystem : EntitySystem
         // Shoot confirmed
         gun.ShotCounter += ev.Ammo.Count;
 
-        Shoot(ev.Ammo, fromCoordinates, toCoordinates.Value, user);
+        Shoot(gun.Owner, ev.Ammo, fromCoordinates, toCoordinates.Value, user);
 
         // Predicted sound moment
         PlaySound(gun, gun.SoundGunshot?.GetSound(), user);
@@ -221,28 +221,31 @@ public abstract partial class SharedNewGunSystem : EntitySystem
     }
 
     public void Shoot(
+        EntityUid gun,
         EntityUid ammo,
         EntityCoordinates fromCoordinates,
         EntityCoordinates toCoordinates,
         EntityUid? user = null)
     {
         var shootable = EnsureComp<NewAmmoComponent>(ammo);
-        Shoot(new List<IShootable>(1) { shootable }, fromCoordinates, toCoordinates, user);
+        Shoot(gun, new List<IShootable>(1) { shootable }, fromCoordinates, toCoordinates, user);
     }
 
     public abstract void Shoot(
+        EntityUid gun,
         List<IShootable> ammo,
         EntityCoordinates fromCoordinates,
         EntityCoordinates toCoordinates,
         EntityUid? user = null);
 
     public void Shoot(
+    EntityUid gun,
         IShootable ammo,
         EntityCoordinates fromCoordinates,
         EntityCoordinates toCoordinates,
         EntityUid? user = null)
     {
-        Shoot(new List<IShootable>(1) { ammo }, fromCoordinates, toCoordinates, user);
+        Shoot(gun, new List<IShootable>(1) { ammo }, fromCoordinates, toCoordinates, user);
     }
 
     protected abstract void PlaySound(NewGunComponent gun, string? sound, EntityUid? user = null);
@@ -277,14 +280,14 @@ public abstract partial class SharedNewGunSystem : EntitySystem
             SoundSystem.Play(Filter.Pvs(entity, entityManager: EntityManager), sound, coordinates, AudioHelpers.WithVariation(0.05f).WithVolume(-1f));
     }
 
-    public void MuzzleFlash(EntityUid entity, NewAmmoComponent component, Angle angle, EntityUid? user = null)
+    public void MuzzleFlash(EntityUid gun, NewAmmoComponent component, EntityUid? user = null)
     {
         var sprite = component.MuzzleFlash?.ToString();
 
+        // TODO: AAAAA THIS MUZZLE FLASH CODE IS BAD
+        // NEEDS EFFECTS TO NOT BE BAD!
         if (sprite == null)
-        {
             return;
-        }
 
         var time = Timing.CurTime;
         var deathTime = time + TimeSpan.FromSeconds(MuzzleFlashLifetime);
@@ -296,10 +299,11 @@ public abstract partial class SharedNewGunSystem : EntitySystem
             EffectSprite = sprite,
             Born = time,
             DeathTime = deathTime,
-            AttachedEntityUid = entity,
+            AttachedEntityUid = gun,
             AttachedOffset = offset,
             //Rotated from east facing
             Rotation = -MathF.PI / 2f,
+            Color = Vector4.Multiply(new Vector4(255, 255, 255, 255), 1.0f),
             ColorDelta = new Vector4(0, 0, 0, -1500f),
             Shaded = false
         };

@@ -15,12 +15,13 @@ public sealed partial class NewGunSystem : SharedNewGunSystem
 {
     [Dependency] private readonly EffectSystem _effects = default!;
 
-    public override void Shoot(List<IShootable> ammo, EntityCoordinates fromCoordinates, EntityCoordinates toCoordinates, EntityUid? user = null)
+    public override void Shoot(EntityUid gun, List<IShootable> ammo, EntityCoordinates fromCoordinates, EntityCoordinates toCoordinates, EntityUid? user = null)
     {
         // TODO recoil / spread
         var fromMap = fromCoordinates.ToMap(EntityManager);
         var toMap = toCoordinates.ToMapPos(EntityManager);
         var mapDirection = toMap - fromMap.Position;
+        var entityDirection = Transform(fromCoordinates.EntityId).InvWorldMatrix.Transform(toMap) - fromCoordinates.Position;
 
         // I must be high because this was getting tripped even when true.
         // DebugTools.Assert(direction != Vector2.Zero);
@@ -40,6 +41,7 @@ public sealed partial class NewGunSystem : SharedNewGunSystem
                             appearance.SetData(AmmoVisuals.Spent, true);
 
                         cartridge.Spent = true;
+                        MuzzleFlash(gun, cartridge, user);
                     }
 
                     EjectCartridge(cartridge.Owner);
@@ -48,12 +50,11 @@ public sealed partial class NewGunSystem : SharedNewGunSystem
                 // Ammo shoots itself
                 case NewAmmoComponent newAmmo:
                     ShootProjectile(newAmmo.Owner, mapDirection, user);
+                    MuzzleFlash(gun, newAmmo, user);
                     break;
                 case HitscanPrototype hitscan:
                     var ray = new CollisionRay(fromMap.Position, mapDirection.Normalized, hitscan.CollisionMask);
                     var rayCastResults = Physics.IntersectRay(fromMap.MapId, ray, hitscan.MaxLength, user, false).ToList();
-
-                    var entityDirection = Transform(fromCoordinates.EntityId).InvWorldMatrix.Transform(toMap) - fromCoordinates.Position;
 
                     if (rayCastResults.Count >= 1)
                     {

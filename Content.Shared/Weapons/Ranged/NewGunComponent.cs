@@ -36,7 +36,7 @@ public class NewGunComponent : Component
     /// How many times it shoots per second.
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite), DataField("fireRate")]
-    public float FireRate = 6f;
+    public float FireRate = 8f;
 
     /// <summary>
     /// When the gun is next available to be shot.

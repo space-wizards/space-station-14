@@ -82,7 +82,7 @@ public sealed class NewGunSystem : SharedNewGunSystem
         });
     }
 
-    public override void Shoot(List<IShootable> ammo, EntityCoordinates fromCoordinates, EntityCoordinates toCoordinates, EntityUid? user = null)
+    public override void Shoot(EntityUid gun, List<IShootable> ammo, EntityCoordinates fromCoordinates, EntityCoordinates toCoordinates, EntityUid? user = null)
     {
         // Rather than splitting client / server for every ammo provider it's easier
         // to just delete the spawned entities. This is for programmer sanity despite the wasted perf.
@@ -92,14 +92,17 @@ public sealed class NewGunSystem : SharedNewGunSystem
             switch (ent)
             {
                 case CartridgeAmmoComponent cartridge:
-                    if (TryComp<AppearanceComponent>(cartridge.Owner, out var appearance))
+                    if (!cartridge.Spent)
                     {
-                        appearance.SetData(AmmoVisuals.Spent, true);
-                    }
+                        if (TryComp<AppearanceComponent>(cartridge.Owner, out var appearance))
+                            appearance.SetData(AmmoVisuals.Spent, true);
 
-                    cartridge.Spent = true;
+                        cartridge.Spent = true;
+                        MuzzleFlash(gun, cartridge, user);
+                    }
                     break;
                 case NewAmmoComponent newAmmo:
+                    MuzzleFlash(gun, newAmmo, user);
                     Del(newAmmo.Owner);
                     break;
             }
