@@ -1,12 +1,4 @@
 Entries:
-- author: Elijahrane
-  changes:
-  - {message: 'Added security techfabs, which print the security weapons and equipment
-      now instead of the protolathe.', type: Add}
-  - {message: Removed RCD recipe from the protolathe. You can still print more ammo
-      for them., type: Remove}
-  id: 1092
-  time: '2022-02-19T19:25:25.0000000+00:00'
 - author: HoofedEar
   changes:
   - {message: Mice can no longer harm things., type: Remove}
@@ -3013,3 +3005,8 @@ Entries:
   - {message: Balanced slipping speed so items don't go mach 5., type: Tweak}
   id: 1591
   time: '2022-05-23T23:11:17.0000000+00:00'
+- author: themias
+  changes:
+  - {message: Fixed an issue where drained power cells could still explode, type: Fix}
+  id: 1592
+  time: '2022-05-24T00:11:20.0000000+00:00'
