@@ -12,12 +12,6 @@ namespace Content.Shared.Administration
     [Serializable, NetSerializable]
     public sealed class AdminAnnounceEuiState : EuiStateBase
     {
-        private List<string>? StationList;
-
-        public AdminAnnounceEuiState(List<string>? stationList)
-        {
-            StationList = stationList;
-        }
     }
 
     public static class AdminAnnounceEuiMsg

@@ -11,8 +11,6 @@ namespace Content.Server.Administration.UI
     {
         [Dependency] private readonly IAdminManager _adminManager = default!;
         [Dependency] private readonly IChatManager _chatManager = default!;
-        [Dependency] private readonly EntityManager _entityManager = default!;
-        [Dependency] private readonly StationSystem _stationSystem = default!;
 
         public AdminAnnounceEui()
         {
@@ -26,12 +24,7 @@ namespace Content.Server.Administration.UI
 
         public override EuiStateBase GetNewState()
         {
-            List<string> stationOptions = new List<string>();
-            foreach (var station in _stationSystem.Stations)
-            {
-                stationOptions.Add(_entityManager.GetComponent<MetaDataComponent>(station).EntityName);
-            }
-            return new AdminAnnounceEuiState(stationOptions);
+            return new AdminAnnounceEuiState();
         }
 
         public override void HandleMessage(EuiMessageBase msg)
@@ -53,9 +46,10 @@ namespace Content.Server.Administration.UI
                         case AdminAnnounceType.Server:
                             _chatManager.DispatchServerAnnouncement(doAnnounce.Announcement);
                             break;
-                        //case AdminAnnounceType.Station:
-                        //    _chatManager.DispatchStationAnnouncement(doAnnounce.Announcement, doAnnounce.Announcer, colorOverride: Color.Gold);
-                        //    break;
+                        // TODO: Per-station announcement support
+                        case AdminAnnounceType.Station:
+                            _chatManager.DispatchGlobalStationAnnouncement(doAnnounce.Announcement, doAnnounce.Announcer, colorOverride: Color.Gold);
+                            break;
                     }
 
                     StateDirty();
