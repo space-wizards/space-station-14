@@ -17,14 +17,22 @@ namespace Content.Server.Chat.Managers
         void DispatchServerAnnouncement(string message, Color? colorOverride = null);
 
 
+        /// <summary>
+        ///     Station announcement to every player
+        /// </summary>
+        /// <param name="message">Contents of the announcement</param>
+        /// <param name="sender">Name of the sender (ie. CentComm)</param>
+        /// <param name="playDefaultSound">If the default 'PA' sound should be played.</param>
+        /// <param name="colorOverride">Override the color of the message being sent.</param>
         void DispatchGlobalStationAnnouncement(string message, string sender = "CentComm", bool playDefaultSound = true,
             Color? colorOverride = null);
 
         /// <summary>
-        ///     Station announcement to every player
+        ///     Station announcement to every player on a specific station
         /// </summary>
-        /// <param name="message"></param>
-        /// <param name="sender"></param>
+        /// <param name="source">The entity that the announcement should come from</param>
+        /// <param name="message">Contents of the announcement</param>
+        /// <param name="sender">Name of the sender (ie. CentComm)</param>
         /// <param name="playDefaultSound">If the default 'PA' sound should be played.</param>
         /// <param name="colorOverride">Override the color of the message being sent.</param>
         void DispatchStationAnnouncement(EntityUid source, string message, string sender = "CentComm", bool playDefaultSound = true,

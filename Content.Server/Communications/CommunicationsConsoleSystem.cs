@@ -183,8 +183,12 @@ namespace Content.Server.Communications
             comp.AlreadyRefreshed = false;
             UpdateBoundUserInterface(comp);
 
+            // allow admemes with vv
+            Loc.TryGetString("comp.AnnouncementDisplayName", out var title);
+            title ??= comp.AnnouncementDisplayName;
+
             msg += "\n" + Loc.GetString("communicationsconsole-announcement-sent-by") + " " + author;
-            _chatManager.DispatchStationAnnouncement(uid, msg, Loc.GetString(comp.AnnouncementDisplayName), colorOverride: comp.AnnouncementColor);
+            _chatManager.DispatchStationAnnouncement(uid, msg, title, colorOverride: comp.AnnouncementColor);
         }
 
         private void OnCallShuttleMessage(EntityUid uid, CommunicationsConsoleComponent comp, CommunicationsConsoleCallEmergencyShuttleMessage message)

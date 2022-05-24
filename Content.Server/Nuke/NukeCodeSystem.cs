@@ -75,13 +75,11 @@ namespace Content.Server.Nuke
                 wasSent = true;
             }
 
+            // TODO: Allow selecting a station for nuke codes
             if (wasSent)
             {
                 var msg = Loc.GetString("nuke-component-announcement-send-codes");
-                foreach (var station in _stationSystem.Stations)
-                {
-                    _chat.DispatchStationAnnouncement(station, msg, colorOverride: Color.Red);
-                }
+                _chat.DispatchGlobalStationAnnouncement(msg, colorOverride: Color.Red);
             }
 
             return wasSent;

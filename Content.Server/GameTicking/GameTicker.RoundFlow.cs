@@ -476,7 +476,7 @@ namespace Content.Server.GameTicking
                 if (!proto.GamePresets.Contains(Preset.ID)) continue;
 
                 if (proto.Message != null)
-                    _chatManager.DispatchServerAnnouncement(Loc.GetString(proto.Message));
+                    _chatManager.DispatchGlobalStationAnnouncement(Loc.GetString(proto.Message), playDefaultSound: true);
 
                 if (proto.Sound != null)
                     SoundSystem.Play(Filter.Broadcast(), proto.Sound.GetSound());
