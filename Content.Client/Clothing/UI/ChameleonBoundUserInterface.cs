@@ -22,7 +22,13 @@ public sealed class ChameleonBoundUserInterface : BoundUserInterface
 
         _menu = new ChameleonMenu(targets);
         _menu.OnClose += Close;
+        _menu.OnIdSelected += OnIdSelected;
         _menu.OpenCentered();
+    }
+
+    private void OnIdSelected(string selectedId)
+    {
+        Logger.Debug(selectedId);
     }
 
     protected override void Dispose(bool disposing)

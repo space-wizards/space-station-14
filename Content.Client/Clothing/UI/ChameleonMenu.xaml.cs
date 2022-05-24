@@ -14,6 +14,8 @@ public sealed partial class ChameleonMenu : DefaultWindow
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
     private readonly List<string> _possibleIds;
 
+    public event Action<string>? OnIdSelected;
+
     public ChameleonMenu(List<string> possibleIds)
     {
         RobustXamlLoader.Load(this);
@@ -36,12 +38,16 @@ public sealed partial class ChameleonMenu : DefaultWindow
 
         var group = new ButtonGroup();
         var spriteSys = EntitySystem.Get<SpriteSystem>();
+        var searchFilterLow = searchFilter.ToLowerInvariant();
 
         foreach (var id in _possibleIds)
         {
             if (!_prototypeManager.TryIndex(id, out EntityPrototype? proto))
                 continue;
-            if (!id.Contains(searchFilter) && !proto.Name.Contains(searchFilter))
+
+            var lowId = id.ToLowerInvariant();
+            var lowName = proto.Name.ToLowerInvariant();
+            if (!lowId.Contains(searchFilterLow) && !lowName.Contains(searchFilter))
                 continue;
 
             var button = new Button()
@@ -49,8 +55,10 @@ public sealed partial class ChameleonMenu : DefaultWindow
                 MinSize = new Vector2(48, 48),
                 HorizontalExpand = true,
                 Group = group,
-                StyleClasses = {StyleBase.ButtonSquare}
+                StyleClasses = {StyleBase.ButtonSquare},
+                ToggleMode = true
             };
+            button.OnPressed += _ => OnIdSelected?.Invoke(id);
             Grid.AddChild(button);
 
             var texture = spriteSys.GetPrototypeIcon(proto);
