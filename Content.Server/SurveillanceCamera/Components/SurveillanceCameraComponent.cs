@@ -1,3 +1,6 @@
+using Content.Shared.DeviceNetwork;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.List;
+
 namespace Content.Server.SurveillanceCamera;
 
 [RegisterComponent]
@@ -38,5 +41,6 @@ public sealed class SurveillanceCameraComponent : Component
     public bool NetworkSet { get; set; }
 
     // This has to be device network frequency prototypes.
-    [DataField("setupAvailableNetworks")] public List<string> AvailableNetworks { get; } = new();
+    [DataField("setupAvailableNetworks", customTypeSerializer:typeof(PrototypeIdListSerializer<DeviceFrequencyPrototype>))]
+    public List<string> AvailableNetworks { get; } = new();
 }
