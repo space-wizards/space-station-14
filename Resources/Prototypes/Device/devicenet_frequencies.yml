@@ -4,11 +4,6 @@
   frequency: 1926 # i only have so many of these, y'know?
 
 - type: deviceFrequency
-  id: SurveillanceCameraSubnetTest
-  name: device-frequency-prototype-name-surveillance-camera-test
-  frequency: 1930
-
-- type: deviceFrequency
   id: SurveillanceCameraEngineering
   name: device-frequency-prototype-name-surveillance-camera-engineering
   frequency: 1931
