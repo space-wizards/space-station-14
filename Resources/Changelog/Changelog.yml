@@ -1,9 +1,4 @@
 Entries:
-- author: HoofedEar
-  changes:
-  - {message: Mice can no longer harm things., type: Remove}
-  id: 1093
-  time: '2022-02-19T19:31:22.0000000+00:00'
 - author: Peptide90
   changes:
   - {message: Added prefilled contents to more first aid kits! Look out around the
@@ -3010,3 +3005,8 @@ Entries:
   - {message: Fixed an issue where drained power cells could still explode, type: Fix}
   id: 1592
   time: '2022-05-24T00:11:20.0000000+00:00'
+- author: ike709
+  changes:
+  - {message: Disabling lobby music now disables round-end music., type: Tweak}
+  id: 1593
+  time: '2022-05-24T21:45:17.0000000+00:00'
