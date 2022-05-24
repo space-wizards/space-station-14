@@ -103,6 +103,7 @@ namespace Content.Server.Chat.Managers
             var messageWrap = Loc.GetString("chat-manager-sender-announcement-wrap-message", ("sender", sender));
 
             var station = _stationSystem.GetOwningStation(source);
+            ChatMessageToAll(ChatChannel.Radio, message, messageWrap, colorOverride);
             if (station != null)
             {
                 _entityManager.TryGetComponent<StationDataComponent>(station, out var stationDataComp);
@@ -274,13 +275,16 @@ namespace Content.Server.Chat.Managers
         public void ChatMessageToManyFiltered(Filter filter, ChatChannel channel, string message, string messageWrap, EntityUid source,
             bool hideChat, Color? colorOverride = null)
         {
+            if(!filter.Recipients.Any()) return;
+
             var clients = new List<INetChannel>();
             var commonSessionEnum = filter.Recipients.GetEnumerator();
             while (true)
             {
-                if(!commonSessionEnum.MoveNext()) break;
                 clients.Add(commonSessionEnum.Current.ConnectedClient);
+                if (!commonSessionEnum.MoveNext()) break;
             }
+            commonSessionEnum.Dispose();
 
             ChatMessageToMany(channel, message, messageWrap, source, hideChat, clients);
         }
