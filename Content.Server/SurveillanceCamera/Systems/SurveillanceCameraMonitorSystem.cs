@@ -34,33 +34,25 @@ public sealed class SurveillanceCameraMonitorSystem : EntitySystem
 
     private const float _maxHeartbeatTime = 300f;
     private const float _heartbeatDelay = 30f;
-    private HashSet<EntityUid> _activeMonitors = new();
-    private List<EntityUid> _toRemove = new();
 
     public override void Update(float frameTime)
     {
-        foreach (var uid in _activeMonitors)
+        foreach (var (_, monitor) in EntityQuery<ActiveSurveillanceCameraMonitorComponent, SurveillanceCameraMonitorComponent>())
         {
-            if (!TryComp(uid, out SurveillanceCameraMonitorComponent? monitor))
+            if (Paused(monitor.Owner))
             {
-                _toRemove.Add(uid);
                 continue;
             }
 
             monitor.LastHeartbeatSent += frameTime;
-            SendHeartbeat(uid, monitor);
+            SendHeartbeat(monitor.Owner, monitor);
             monitor.LastHeartbeat += frameTime;
 
             if (monitor.LastHeartbeat > _maxHeartbeatTime)
             {
-                DisconnectCamera(uid, true, monitor);
-                _toRemove.Add(uid);
+                DisconnectCamera(monitor.Owner, true, monitor);
+                EntityManager.RemoveComponent<ActiveSurveillanceCameraMonitorComponent>(monitor.Owner);
             }
-        }
-
-        foreach (var uid in _toRemove)
-        {
-            _activeMonitors.Remove(uid);
         }
     }
 
@@ -254,7 +246,7 @@ public sealed class SurveillanceCameraMonitorSystem : EntitySystem
 
         monitor.ActiveCamera = null;
         monitor.ActiveCameraAddress = string.Empty;
-        _activeMonitors.Remove(uid);
+        EntityManager.RemoveComponent<ActiveSurveillanceCameraMonitorComponent>(uid);
         UpdateUserInterface(uid, monitor);
     }
 
@@ -400,7 +392,7 @@ public sealed class SurveillanceCameraMonitorSystem : EntitySystem
 
         monitor.ActiveCamera = camera;
 
-        _activeMonitors.Add(uid);
+        AddComp<ActiveSurveillanceCameraMonitorComponent>(uid);
 
         UpdateUserInterface(uid, monitor);
     }
