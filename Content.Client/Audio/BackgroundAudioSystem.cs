@@ -119,7 +119,7 @@ namespace Content.Client.Audio
         {
             EndAmbience();
 
-            if (args.NewState is LobbyState && _configManager.GetCVar(CCVars.LobbyMusicEnabled))
+            if (args.NewState is LobbyState)
             {
                 StartLobbyMusic();
                 return;
@@ -137,10 +137,7 @@ namespace Content.Client.Audio
             if (_stateManager.CurrentState is LobbyState)
             {
                 EndAmbience();
-                if (_configManager.GetCVar(CCVars.LobbyMusicEnabled))
-                {
-                    StartLobbyMusic();
-                }
+                StartLobbyMusic();
             }
             else
             {
@@ -237,7 +234,7 @@ namespace Content.Client.Audio
             {
                 return;
             }
-            if (_stateManager.CurrentState is LobbyState && _configManager.GetCVar(CCVars.LobbyMusicEnabled))
+            if (_stateManager.CurrentState is LobbyState)
             {
                 StartLobbyMusic();
             }
@@ -251,7 +248,7 @@ namespace Content.Client.Audio
 
         public void StartLobbyMusic()
         {
-            if (_lobbyStream != null) return;
+            if (_lobbyStream != null || !_configManager.GetCVar(CCVars.LobbyMusicEnabled)) return;
 
             var file = _gameTicker.LobbySong;
             if (file == null) // We have not received the lobby song yet.
