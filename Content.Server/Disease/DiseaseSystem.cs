@@ -110,8 +110,8 @@ namespace Content.Server.Disease
                         foreach (var effect in disease.Effects)
                         {
                             if (_random.Prob(effect.Probability)
-                                && disease.DiseaseSeverity > effect.MinSeverity
-                                && disease.DiseaseSeverity < effect.MaxSeverity)
+                                && disease.DiseaseSeverity >= effect.MinSeverity
+                                && disease.DiseaseSeverity <= effect.MaxSeverity)
                                 effect.Effect(args);
                         }
                     }
