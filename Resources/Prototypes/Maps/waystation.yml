@@ -2,7 +2,7 @@
   id: Waystation
   mapName: 'Waystation'
   mapPath: /Maps/waystation.yml
-  minPlayers: 0
+  minPlayers: 15
   maxPlayers: 50
   stations:
     Waystation:
@@ -25,7 +25,6 @@
         HeadOfPersonnel: [ 1, 1 ]
         ChiefEngineer: [ 1, 1 ]
         StationEngineer: [ 4, 4 ]
-        AtmosphericTechnician: [ 2, 2 ]
         ChiefMedicalOfficer: [ 1, 1 ]
         MedicalDoctor: [ 4, 4 ]
         Chemist: [ 2, 2 ]
@@ -33,14 +32,15 @@
         Scientist: [ 4, 4 ]
         HeadOfSecurity: [ 1, 1 ]
         SecurityOfficer: [ 4, 4 ]
-	Warden: [ 1, 1 ]
         Chaplain: [ 1, 1 ]
+        Warden: [ 1, 1 ]
         Librarian: [ 1, 1 ]
-        Musician: [ 1, 1 ]
         Lawyer: [ 2, 2 ]
-        SalvageSpecialist: [ 2, 2 ]
         Quartermaster: [ 1, 1 ]
-        TechnicalAssistant: [ 1, 2 ]
-        MedicalIntern: [ 1, 2 ]
-        ServiceWorker: [ 1, 2 ]
-        SecurityCadet: [ 1, 2 ]
+        SalvageSpecialist: [ 2, 2 ]
+        Musician: [ 1, 1 ]
+        AtmosphericTechnician: [ 2, 2 ]
+        TechnicalAssistant: [ 1, 1 ]
+        MedicalIntern: [ 1, 1 ]
+        ServiceWorker: [ 1, 1 ]
+        SecurityCadet: [ 1, 1 ]
