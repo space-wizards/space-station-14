@@ -19,6 +19,7 @@ using Content.Shared.Movement.EntitySystems;
 using Content.Shared.CharacterAppearance.Components;
 using Content.Shared.CharacterAppearance.Systems;
 using Content.Server.Weapons.Melee.ZombieTransfer.Components;
+using Content.Shared.Movement.Components;
 
 namespace Content.Server.Disease.Zombie
 {
@@ -52,7 +53,6 @@ namespace Content.Server.Disease.Zombie
                 return;
 
             RemComp<DiseaseCarrierComponent>(uid);
-            RemComp<DiseaseBuildupComponent>(uid);
             RemComp<RespiratorComponent>(uid);
             RemComp<BarotraumaComponent>(uid);
             RemComp<HungerComponent>(uid);

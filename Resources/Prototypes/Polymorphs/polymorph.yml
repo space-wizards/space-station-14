@@ -28,7 +28,7 @@
 
 - type: polymorph
   id: ZombieGeneric
-  entity: MobMonkey 
+  entity: MobZombieBase
   forced: true
   transferDamage: false
   transferName: true

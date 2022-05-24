@@ -11,6 +11,7 @@ using Content.Shared.CharacterAppearance.Components;
 using Content.Shared.CharacterAppearance.Systems;
 using Content.Shared.Damage;
 using Content.Shared.Hands.EntitySystems;
+using Content.Shared.Movement.Components;
 using Content.Shared.Polymorph;
 using Robust.Shared.Containers;
 using Robust.Shared.Map;
@@ -179,6 +180,11 @@ namespace Content.Server.Polymorph.Systems
             return child;
         }
 
+        /// <summary>
+        /// Creates a sidebar action for an entity to be able to polymorph at will
+        /// </summary>
+        /// <param name="id">The string of the id of the polymorph action</param>
+        /// <param name="target">The entity that will be gaining the action</param>
         public void CreatePolymorphAction(string id, EntityUid target)
         {
             if (!_proto.TryIndex<PolymorphPrototype>(id, out var polyproto))

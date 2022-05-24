@@ -1,0 +1,22 @@
+- type: disease
+  id: ZombieInfection
+  name: Zombie Infection #This is the incubation period of the zombie disease.
+  infectious: false
+  cureResist: 0.2
+  effects:
+    - !type:DiseaseHealthChange
+      probability: 0.01
+      damage:
+        types:
+          Blunt: 2 #this is low but it goes for like 5 minutes so it's fine
+    - !type:DiseaseSnough
+      probability: 0.05
+      snoughMessage: disease-cough
+      snoughSound:
+        collection: Coughs
+    - !type:DiseaseAddComponent
+      comp: ZombifyOnDeath
+  cures:
+    - !type:DiseaseReagentCure
+      reagent: Romerol
+      min: 5
