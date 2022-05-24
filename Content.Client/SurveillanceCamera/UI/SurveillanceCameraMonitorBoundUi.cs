@@ -7,7 +7,7 @@ namespace Content.Client.SurveillanceCamera.UI;
 public sealed class SurveillanceCameraMonitorBoundUserInterface : BoundUserInterface
 {
     [Dependency] private readonly IEntityManager _entityManager = default!;
-    private readonly EyeLerpingSystem _eyeLerpingSystem = default!;
+    private readonly EyeLerpingSystem _eyeLerpingSystem;
     private readonly SurveillanceCameraMonitorSystem _surveillanceCameraMonitorSystem;
 
     private SurveillanceCameraMonitorWindow? _window;

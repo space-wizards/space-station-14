@@ -31,22 +31,12 @@ public sealed class SurveillanceCameraMonitorSystem : EntitySystem
     public void AddTimer(EntityUid uid, Action onFinish)
     {
         var timing = new CameraSwitchTiming(InitialTime, onFinish);
-        if (_activeTimers.ContainsKey(uid))
-        {
-            _activeTimers[uid] = timing;
-        }
-        else
-        {
-            _activeTimers.Add(uid, timing);
-        }
+        _activeTimers[uid] = timing;
     }
 
     public void RemoveTimer(EntityUid uid)
     {
-        if (_activeTimers.ContainsKey(uid))
-        {
-            _activeTimers.Remove(uid);
-        }
+        _activeTimers.Remove(uid);
     }
 
     private sealed class CameraSwitchTiming
