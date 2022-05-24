@@ -20,12 +20,12 @@ public sealed class ChameleonClothingComponent : Component
 }
 
 [Serializable, NetSerializable]
-public sealed class ChameleonClothingBoundUserInterfaceState : BoundUserInterfaceState
+public sealed class ChameleonBoundUserInterfaceState : BoundUserInterfaceState
 {
     public readonly SlotFlags Slot;
     public readonly string SelectedId;
 
-    public ChameleonClothingBoundUserInterfaceState(SlotFlags slot, string selectedId)
+    public ChameleonBoundUserInterfaceState(SlotFlags slot, string selectedId)
     {
         Slot = slot;
         SelectedId = selectedId;

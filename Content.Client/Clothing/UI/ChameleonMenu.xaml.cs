@@ -12,33 +12,40 @@ namespace Content.Client.Clothing.UI;
 public sealed partial class ChameleonMenu : DefaultWindow
 {
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
-    private readonly List<string> _possibleIds;
-
     public event Action<string>? OnIdSelected;
 
-    public ChameleonMenu(List<string> possibleIds)
+    private List<string> _possibleIds = new();
+    private string _selectedId = "";
+    private string _searchFilter = "";
+
+    public ChameleonMenu()
     {
         RobustXamlLoader.Load(this);
         IoCManager.InjectDependencies(this);
 
         Search.OnTextChanged += OnSearchEntered;
+    }
 
+    public void UpdateState(List<string> possibleIds, string selectedId)
+    {
         _possibleIds = possibleIds;
-        FillGrid();
+        _selectedId = selectedId;
+        UpdateGrid();
     }
 
     private void OnSearchEntered(LineEdit.LineEditEventArgs obj)
     {
-        FillGrid(obj.Text);
+        _searchFilter = obj.Text;
+        UpdateGrid();
     }
 
-    private void FillGrid(string searchFilter = "")
+    private void UpdateGrid()
     {
         ClearGrid();
 
         var group = new ButtonGroup();
         var spriteSys = EntitySystem.Get<SpriteSystem>();
-        var searchFilterLow = searchFilter.ToLowerInvariant();
+        var searchFilterLow = _searchFilter.ToLowerInvariant();
 
         foreach (var id in _possibleIds)
         {
@@ -47,22 +54,23 @@ public sealed partial class ChameleonMenu : DefaultWindow
 
             var lowId = id.ToLowerInvariant();
             var lowName = proto.Name.ToLowerInvariant();
-            if (!lowId.Contains(searchFilterLow) && !lowName.Contains(searchFilter))
+            if (!lowId.Contains(searchFilterLow) && !lowName.Contains(_searchFilter))
                 continue;
 
-            var button = new Button()
+            var button = new Button
             {
                 MinSize = new Vector2(48, 48),
                 HorizontalExpand = true,
                 Group = group,
                 StyleClasses = {StyleBase.ButtonSquare},
-                ToggleMode = true
+                ToggleMode = true,
+                Pressed = _selectedId == id
             };
             button.OnPressed += _ => OnIdSelected?.Invoke(id);
             Grid.AddChild(button);
 
             var texture = spriteSys.GetPrototypeIcon(proto);
-            button.AddChild(new TextureRect()
+            button.AddChild(new TextureRect
             {
                 Stretch = TextureRect.StretchMode.KeepAspectCentered,
                 Texture = texture.Default

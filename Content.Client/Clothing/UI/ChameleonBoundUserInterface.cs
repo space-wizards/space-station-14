@@ -1,5 +1,5 @@
 ﻿using Content.Client.Clothing.Systems;
-using Content.Shared.Inventory;
+using Content.Shared.Clothing.Components;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
 
@@ -18,12 +18,22 @@ public sealed class ChameleonBoundUserInterface : BoundUserInterface
     {
         base.Open();
 
-        var targets = EntitySystem.Get<ChameleonClothingSystem>().GetValidItems(SlotFlags.INNERCLOTHING);
-
-        _menu = new ChameleonMenu(targets);
+        _menu = new ChameleonMenu();
         _menu.OnClose += Close;
         _menu.OnIdSelected += OnIdSelected;
         _menu.OpenCentered();
+    }
+
+    protected override void UpdateState(BoundUserInterfaceState state)
+    {
+        base.UpdateState(state);
+        if (state is not ChameleonBoundUserInterfaceState st)
+            return;
+
+        var chameleonSystem = EntitySystem.Get<ChameleonClothingSystem>();
+        var targets = chameleonSystem.GetValidItems(st.Slot);
+
+        _menu?.UpdateState(targets, st.SelectedId);
     }
 
     private void OnIdSelected(string selectedId)

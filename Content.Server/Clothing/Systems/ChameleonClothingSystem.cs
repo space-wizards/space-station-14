@@ -45,6 +45,15 @@ public sealed class ChameleonClothingSystem : SharedChameleonClothingSystem
         _uiSystem.TryToggleUi(uid, ChameleonUiKey.Key, actor.PlayerSession);
     }
 
+    private void UpdateUi(EntityUid uid, ChameleonClothingComponent? component = null)
+    {
+        if (!Resolve(uid, ref component))
+            return;
+
+        var state = new ChameleonBoundUserInterfaceState(component.Slot, component.SelectedId);
+        _uiSystem.TrySetUiState(uid, ChameleonUiKey.Key, state);
+    }
+
     /// <summary>
     ///     Change chameleon items name, description and sprite to mimic other entity prototype
     /// </summary>
@@ -66,5 +75,8 @@ public sealed class ChameleonClothingSystem : SharedChameleonClothingSystem
 
         // world, in hand and clothing sprite will be set by visualizer
         appearance.SetData(ChameleonVisuals.ClothingId, protoId);
+
+        // also update ui state
+        UpdateUi(uid, component);
     }
 }
