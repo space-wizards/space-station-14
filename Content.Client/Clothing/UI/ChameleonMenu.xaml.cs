@@ -12,23 +12,36 @@ namespace Content.Client.Clothing.UI;
 public sealed partial class ChameleonMenu : DefaultWindow
 {
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
+    private readonly List<string> _possibleIds;
 
     public ChameleonMenu(List<string> possibleIds)
     {
         RobustXamlLoader.Load(this);
         IoCManager.InjectDependencies(this);
 
-        FillGrid(possibleIds);
+        Search.OnTextChanged += OnSearchEntered;
+
+        _possibleIds = possibleIds;
+        FillGrid();
     }
 
-    private void FillGrid(List<string> possibleIds)
+    private void OnSearchEntered(LineEdit.LineEditEventArgs obj)
     {
+        FillGrid(obj.Text);
+    }
+
+    private void FillGrid(string searchFilter = "")
+    {
+        ClearGrid();
+
         var group = new ButtonGroup();
         var spriteSys = EntitySystem.Get<SpriteSystem>();
 
-        foreach (var id in possibleIds)
+        foreach (var id in _possibleIds)
         {
             if (!_prototypeManager.TryIndex(id, out EntityPrototype? proto))
+                continue;
+            if (!id.Contains(searchFilter) && !proto.Name.Contains(searchFilter))
                 continue;
 
             var button = new Button()
@@ -47,5 +60,10 @@ public sealed partial class ChameleonMenu : DefaultWindow
                 Texture = texture.Default
             });
         }
+    }
+
+    private void ClearGrid()
+    {
+        Grid.RemoveAllChildren();
     }
 }
