@@ -12,7 +12,8 @@ namespace Content.Server.Disease.Effects
     public sealed class DiseaseProgression : DiseaseEffect
     {
         /// <summary>
-        /// The rate that's increased over time. Defaults to 1% so the probability can be varied in yaml
+        /// How much to increase the rate by each time this effect happens. 0.01 is 1% progression, 0.1 is 10%, and so on
+        /// Use the probability field on the effect to make this more random
         /// </summary>
         [DataField("rate")]
         [ViewVariables(VVAccess.ReadWrite)]

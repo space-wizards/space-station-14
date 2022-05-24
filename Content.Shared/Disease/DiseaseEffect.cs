@@ -23,7 +23,11 @@ namespace Content.Shared.Disease
         public float MinSeverity
         {
             get => _minSeverity;
-            set => _minSeverity = Math.Clamp(value, 0.0f, 1.0f);
+            set
+            {
+                if (value > 1f) throw new ArgumentOutOfRangeException();
+                _minSeverity = Math.Clamp(value, 0.0f, 1.0f);
+            }
         }
 
         private float _minSeverity = 0.0f;
@@ -35,7 +39,11 @@ namespace Content.Shared.Disease
         public float MaxSeverity
         {
             get => _maxSeverity;
-            set => _maxSeverity = Math.Clamp(value, 0.0f, 1.0f);
+            set
+            {
+                if (value > 1f) throw new ArgumentOutOfRangeException();
+                _maxSeverity = Math.Clamp(value, 0.0f, 1.0f);
+            }
         }
 
         private float _maxSeverity = 1.0f;
