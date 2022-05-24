@@ -1,12 +1,6 @@
 Entries:
 - author: Peptide90
   changes:
-  - {message: Added prefilled contents to more first aid kits! Look out around the
-      station for them., type: Add}
-  id: 1094
-  time: '2022-02-19T22:22:21.0000000+00:00'
-- author: Peptide90
-  changes:
   - {message: Power requirements across the station have been increased. Make sure
       your engineers are competent., type: Tweak}
   - {message: AME no longer needs power to start., type: Tweak}
@@ -3010,3 +3004,8 @@ Entries:
   - {message: Disabling lobby music now disables round-end music., type: Tweak}
   id: 1593
   time: '2022-05-24T21:45:17.0000000+00:00'
+- author: Peptide90
+  changes:
+  - {message: HoP now has Brig access instead of Security access., type: Tweak}
+  id: 1594
+  time: '2022-05-24T21:53:49.0000000+00:00'
