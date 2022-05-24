@@ -38,12 +38,15 @@ namespace Content.Benchmarks
             IoCManager.Register<IEntitySystemManager, EntitySystemManager>();
             IoCManager.RegisterInstance<IReflectionManager>(new Mock<IReflectionManager>().Object);
 
-            var dummyReg = new ComponentRegistration("Dummy", typeof(DummyComponent));
+            var dummyReg = new ComponentRegistration(
+                "Dummy",
+                typeof(DummyComponent),
+                CompIdx.Index<DummyComponent>());
 
             var componentFactory = new Mock<IComponentFactory>();
             componentFactory.Setup(p => p.GetComponent<DummyComponent>()).Returns(new DummyComponent());
             componentFactory.Setup(p => p.GetRegistration(It.IsAny<DummyComponent>())).Returns(dummyReg);
-            componentFactory.Setup(p => p.GetAllRefTypes()).Returns(new[] {typeof(DummyComponent)});
+            componentFactory.Setup(p => p.GetAllRefTypes()).Returns(new[] {CompIdx.Index<DummyComponent>()});
 
             IoCManager.RegisterInstance<IComponentFactory>(componentFactory.Object);
 
