@@ -1,5 +1,7 @@
 using Content.Shared.Weapons.Ranged;
+using Robust.Shared.Audio;
 using Robust.Shared.Map;
+using Robust.Shared.Player;
 
 namespace Content.Server.Weapon.Ranged;
 
@@ -31,5 +33,10 @@ public sealed partial class NewGunSystem
         {
             EjectCartridge(ent.Value);
         }
+
+        var sound = component.SoundRack?.GetSound();
+
+        if (sound != null)
+            SoundSystem.Play(Filter.Pvs(component.Owner, entityManager: EntityManager), sound);
     }
 }

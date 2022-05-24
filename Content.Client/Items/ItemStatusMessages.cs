@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using Robust.Client.UserInterface;
-using Robust.Shared.GameObjects;
+﻿using Robust.Client.UserInterface;
 
 namespace Content.Client.Items
 {

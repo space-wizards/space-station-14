@@ -1,3 +1,4 @@
+using Content.Client.Items;
 using Content.Shared.Weapons.Ranged;
 using Content.Shared.Weapons.Ranged.Barrels.Components;
 using Robust.Client.GameObjects;
@@ -11,7 +12,7 @@ using Robust.Shared.Player;
 
 namespace Content.Client.Weapons.Ranged;
 
-public sealed class NewGunSystem : SharedNewGunSystem
+public sealed partial class NewGunSystem : SharedNewGunSystem
 {
     [Dependency] private readonly IEyeManager _eyeManager = default!;
     [Dependency] private readonly IInputManager _inputManager = default!;
@@ -19,16 +20,11 @@ public sealed class NewGunSystem : SharedNewGunSystem
     [Dependency] private readonly EffectSystem _effects = default!;
     [Dependency] private readonly InputSystem _inputSystem = default!;
 
-    // TODO: Move to ballistic partial
-    public override void ManualCycle(BallisticAmmoProviderComponent component, MapCoordinates coordinates)
-    {
-        return;
-    }
-
     public override void Initialize()
     {
         base.Initialize();
         UpdatesOutsidePrediction = true;
+        SubscribeLocalEvent<SharedAmmoCounterComponent, ItemStatusCollectMessage>(OnAmmoCounterCollect);
     }
 
     public override void Update(float frameTime)

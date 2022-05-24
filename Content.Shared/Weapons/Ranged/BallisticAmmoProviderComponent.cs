@@ -1,4 +1,4 @@
-using Content.Shared.Whitelist;
+using Content.Shared.Sound;
 using Robust.Shared.Containers;
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
@@ -9,9 +9,8 @@ namespace Content.Shared.Weapons.Ranged;
 [RegisterComponent, NetworkedComponent]
 public sealed class BallisticAmmoProviderComponent : Component
 {
-    // Will either spawn ammo as required or can potentially have stuff inserted
-    [ViewVariables, DataField("whitelist")]
-    public EntityWhitelist? Whitelist;
+    [ViewVariables(VVAccess.ReadOnly), DataField("soundRack")]
+    public SoundSpecifier? SoundRack = new SoundPathSpecifier("/Audio/Weapons/Guns/Cock/smg_cock.ogg");
 
     [ViewVariables, DataField("fillProto", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
     public string? FillProto;

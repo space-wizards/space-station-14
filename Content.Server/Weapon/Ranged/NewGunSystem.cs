@@ -96,7 +96,7 @@ public sealed partial class NewGunSystem : SharedNewGunSystem
     {
         var physics = EnsureComp<PhysicsComponent>(uid);
         physics.BodyStatus = BodyStatus.InAir;
-        physics.LinearVelocity = direction.Normalized * 30f;
+        physics.LinearVelocity = direction.Normalized * 20f;
 
         if (user != null)
         {

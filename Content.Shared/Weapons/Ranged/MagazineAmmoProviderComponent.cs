@@ -1,25 +1,16 @@
+using Content.Shared.Containers.ItemSlots;
 using Content.Shared.Sound;
-using Content.Shared.Whitelist;
-using Robust.Shared.Containers;
 
 namespace Content.Shared.Weapons.Ranged;
 
 [RegisterComponent]
 public sealed class MagazineAmmoProviderComponent : AmmoProviderComponent
 {
-    [ViewVariables(VVAccess.ReadWrite), DataField("soundMagInsert")]
-    public SoundSpecifier? SoundMagInsert;
-
-    [ViewVariables(VVAccess.ReadWrite), DataField("soundMagEject")]
-    public SoundSpecifier? SoundMagEject;
-
     [ViewVariables(VVAccess.ReadWrite), DataField("soundAutoEject")]
     public SoundSpecifier? SoundAutoEject = new SoundPathSpecifier("/Audio/Weapons/Guns/EmptyAlarm/smg_empty_alarm.ogg");
 
-    [ViewVariables, DataField("whitelist")]
-    public EntityWhitelist? Whitelist;
-
-    public ContainerSlot Magazine = default!;
+    [ViewVariables, DataField("magazineSlot")]
+    public ItemSlot Magazine = new();
 
     /// <summary>
     /// Should the magazine automatically eject when empty.
