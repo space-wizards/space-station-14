@@ -36,6 +36,7 @@ public abstract partial class SharedNewGunSystem : EntitySystem
 
     protected ISawmill Sawmill = default!;
 
+    protected const float MuzzleFlashLifetime = 0.2f;
     protected const float InteractNextFire = 0.3f;
     public const float EjectOffset = 0.4f;
     public string AmmoExamineColor = "yellow";
@@ -286,7 +287,7 @@ public abstract partial class SharedNewGunSystem : EntitySystem
         }
 
         var time = Timing.CurTime;
-        var deathTime = time + TimeSpan.FromMilliseconds(200);
+        var deathTime = time + TimeSpan.FromSeconds(MuzzleFlashLifetime);
         // Offset the sprite so it actually looks like it's coming from the gun
         var offset = new Vector2(0.0f, -0.5f);
 
@@ -382,8 +383,5 @@ public abstract partial class SharedNewGunSystem : EntitySystem
     /// <summary>
     /// Interface that says this can be shot from a gun. Exists to facilitate hitscan OR prototype shooting.
     /// </summary>
-    public interface IShootable
-    {
-
-    }
+    public interface IShootable {}
 }

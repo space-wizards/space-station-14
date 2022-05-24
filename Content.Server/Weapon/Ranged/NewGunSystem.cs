@@ -1,5 +1,6 @@
 using System.Linq;
 using Content.Server.Projectiles.Components;
+using Content.Shared.Damage;
 using Content.Shared.Database;
 using Content.Shared.Weapons.Ranged;
 using Content.Shared.Weapons.Ranged.Barrels.Components;
@@ -19,7 +20,8 @@ public sealed partial class NewGunSystem : SharedNewGunSystem
     {
         // TODO recoil / spread
         var fromMap = fromCoordinates.ToMap(EntityManager);
-        var direction = toCoordinates.ToMapPos(EntityManager) - fromMap.Position;
+        var toMap = toCoordinates.ToMapPos(EntityManager);
+        var mapDirection = toMap - fromMap.Position;
 
         // I must be high because this was getting tripped even when true.
         // DebugTools.Assert(direction != Vector2.Zero);
@@ -33,12 +35,10 @@ public sealed partial class NewGunSystem : SharedNewGunSystem
                     if (!cartridge.Spent)
                     {
                         var uid = Spawn(cartridge.Prototype, fromCoordinates);
-                        ShootProjectile(uid, direction, user);
+                        ShootProjectile(uid, mapDirection, user);
 
                         if (TryComp<AppearanceComponent>(cartridge.Owner, out var appearance))
-                        {
                             appearance.SetData(AmmoVisuals.Spent, true);
-                        }
 
                         cartridge.Spent = true;
                     }
@@ -48,25 +48,42 @@ public sealed partial class NewGunSystem : SharedNewGunSystem
                     break;
                 // Ammo shoots itself
                 case NewAmmoComponent newAmmo:
-                    ShootProjectile(newAmmo.Owner, direction, user);
+                    ShootProjectile(newAmmo.Owner, mapDirection, user);
                     break;
                 case HitscanPrototype hitscan:
-                    var ray = new CollisionRay(fromMap.Position, direction.Normalized * MathF.Min(20f, direction.Length), hitscan.CollisionMask);
+                    var ray = new CollisionRay(fromMap.Position, mapDirection.Normalized * MathF.Min(20f, mapDirection.Length), hitscan.CollisionMask);
                     var rayCastResults = Physics.IntersectRay(fromMap.MapId, ray, hitscan.MaxLength, user, false).ToList();
+
+                    var entityDirection = fromCoordinates.Position - Transform(fromCoordinates.EntityId).InvWorldMatrix.Transform(toMap);
 
                     if (rayCastResults.Count >= 1)
                     {
                         var result = rayCastResults[0];
                         var distance = result.Distance;
-                        FireEffects(user, distance, direction.ToAngle(), result.HitEntity);
-                        var dmg = Damageable.TryChangeDamage(result.HitEntity, hitscan.Damage);
+                        FireEffects(fromCoordinates, distance, entityDirection.ToAngle(), hitscan, result.HitEntity);
+
+                        var dmg = hitscan.Damage;
+
                         if (dmg != null)
-                            Logs.Add(LogType.HitScanHit,
-                                $"{ToPrettyString(user):user} hit {ToPrettyString(result.HitEntity):target} using hitscan and dealt {dmg.Total:damage} damage");
+                            dmg = Damageable.TryChangeDamage(result.HitEntity, dmg);
+
+                        if (dmg != null)
+                        {
+                            if (user != null)
+                            {
+                                Logs.Add(LogType.HitScanHit,
+                                    $"{ToPrettyString(user.Value):user} hit {ToPrettyString(result.HitEntity):target} using hitscan and dealt {dmg.Total:damage} damage");
+                            }
+                            else
+                            {
+                                Logs.Add(LogType.HitScanHit,
+                                    $"Hit {ToPrettyString(result.HitEntity):target} using hitscan and dealt {dmg.Total:damage} damage");
+                            }
+                        }
                     }
                     else
                     {
-                        FireEffects(user, hitscan.MaxLength, direction.ToAngle());
+                        FireEffects(fromCoordinates, hitscan.MaxLength, entityDirection.ToAngle(), hitscan);
                     }
                     break;
                 default:
@@ -115,23 +132,30 @@ public sealed partial class NewGunSystem : SharedNewGunSystem
     // TODO: Pseudo RNG so the client can predict these.
     #region Hitscan effects
 
-    public void FireEffects(MapCoordinates fromCoordinates, float distance, Angle angle, HitscanPrototype hitscan, EntityUid? hitEntity = null)
+    public void FireEffects(EntityCoordinates fromCoordinates, float distance, Angle angle, HitscanPrototype hitscan, EntityUid? hitEntity = null)
     {
-        // We'll get the effects relative to the grid / map of the firer
+        var startTime = Timing.CurTime;
+        var endTime = startTime + TimeSpan.FromSeconds(MuzzleFlashLifetime);
+        var color = new Vector4(hitscan.Color.R, hitscan.Color.G, hitscan.Color.B, hitscan.Color.A);
 
-        var afterEffect = AfterEffects(fromCoordinates, angle, distance, 1.0f);
-        CreateEffect(afterEffect);
+        // We'll get the effects relative to the grid / map of the firer
+        var afterEffect = TravelFlash(fromCoordinates, angle, distance, hitscan, startTime, endTime, color);
+
+        if (afterEffect != null)
+        {
+            CreateEffect(afterEffect);
+        }
 
         // if we're too close we'll stop the impact and muzzle / impact sprites from clipping
         if (distance > 1.0f)
         {
-            var impactEffect = ImpactFlash(distance, angle);
+            var impactEffect = ImpactFlash(fromCoordinates, angle.ToVec() * distance, hitscan, startTime, endTime, color);
             if (impactEffect != null)
             {
                 CreateEffect(impactEffect);
             }
 
-            var muzzleEffect = MuzzleFlash(fromCoordinates, angle);
+            var muzzleEffect = MuzzleFlash(fromCoordinates, angle, hitscan, startTime, endTime, color);
             if (muzzleEffect != null)
             {
                 CreateEffect(muzzleEffect);
@@ -148,24 +172,24 @@ public sealed partial class NewGunSystem : SharedNewGunSystem
         }
     }
 
-    private EffectSystemMessage? MuzzleFlash(EntityCoordinates grid, Angle angle, HitscanPrototype hitscan)
+    private EffectSystemMessage? MuzzleFlash(EntityCoordinates grid, Angle angle, HitscanPrototype hitscan, TimeSpan startTime, TimeSpan endTime, Vector4 color)
     {
-        if (hitscan.MuzzleFlash == null)
-        {
+        var sprite = hitscan.MuzzleFlash?.ToString();
+
+        if (sprite == null)
             return null;
-        }
 
         var offset = angle.ToVec().Normalized / 2;
 
         var message = new EffectSystemMessage
         {
-            EffectSprite = _muzzleFlash,
-            Born = _startTime,
-            DeathTime = _deathTime,
+            EffectSprite = sprite,
+            Born = startTime,
+            DeathTime = endTime,
             Coordinates = grid.Offset(offset),
             //Rotated from east facing
             Rotation = (float) angle.Theta,
-            Color = Vector4.Multiply(new Vector4(255, 255, 255, 750), ColorModifier),
+            Color = color,
             ColorDelta = new Vector4(0, 0, 0, -1500f),
             Shaded = false
         };
@@ -173,28 +197,38 @@ public sealed partial class NewGunSystem : SharedNewGunSystem
         return message;
     }
 
-    private EffectSystemMessage AfterEffects(EntityCoordinates origin, Angle angle, float distance, HitscanPrototype hitscan, float offset = 0.0f)
+    private EffectSystemMessage? TravelFlash(
+        EntityCoordinates origin,
+        Angle angle,
+        float distance,
+        HitscanPrototype hitscan,
+        TimeSpan startTime,
+        TimeSpan endTime,
+        Vector4 color)
     {
+        var sprite = hitscan.TravelFlash?.ToString();
+
+        if (sprite == null) return null;
+
         var midPointOffset = angle.ToVec() * distance / 2;
         var message = new EffectSystemMessage
         {
-            EffectSprite = _spriteName,
-            Born = _startTime,
-            DeathTime = _deathTime,
-            Size = new Vector2(distance - offset, 1f),
+            EffectSprite = sprite,
+            Born = startTime,
+            DeathTime = endTime,
+            Size = new Vector2(distance, 1f),
             Coordinates = origin.Offset(midPointOffset),
             //Rotated from east facing
             Rotation = (float) angle.Theta,
-            Color = Vector4.Multiply(new Vector4(255, 255, 255, 750), ColorModifier),
+            Color = color,
             ColorDelta = new Vector4(0, 0, 0, -1500f),
-
-            Shaded = false
+            Shaded = false,
         };
 
         return message;
     }
 
-    private EffectSystemMessage? ImpactFlash(float distance, Angle angle, HitscanPrototype hitscan)
+    private EffectSystemMessage? ImpactFlash(EntityCoordinates coordinates, Vector2 offset, HitscanPrototype hitscan, TimeSpan startTime, TimeSpan endTime, Vector4 color)
     {
         var impact = hitscan.ImpactFlash?.ToString();
 
@@ -203,15 +237,15 @@ public sealed partial class NewGunSystem : SharedNewGunSystem
 
         var message = new EffectSystemMessage
         {
-            EffectSprite = impact.ToString(),
-            Born = _startTime,
-            DeathTime = _deathTime,
-            Coordinates = _entMan.GetComponent<TransformComponent>(Owner).Coordinates.Offset(angle.ToVec() * distance),
+            EffectSprite = impact,
+            Born = startTime,
+            DeathTime = endTime,
+            Coordinates = coordinates.Offset(offset),
             //Rotated from east facing
-            Rotation = (float) angle.FlipPositive(),
-            Color = Vector4.Multiply(new Vector4(255, 255, 255, 750), ColorModifier),
+            Rotation = (float) offset.ToAngle().FlipPositive(),
+            Color = color,
             ColorDelta = new Vector4(0, 0, 0, -1500f),
-            Shaded = false
+            Shaded = false,
         };
 
         return message;

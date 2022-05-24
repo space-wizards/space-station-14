@@ -27,6 +27,9 @@ public sealed class HitscanPrototype : IPrototype, SharedNewGunSystem.IShootable
     [ViewVariables, DataField("collisionMask")]
     public int CollisionMask = (int) CollisionGroup.Opaque;
 
+    [ViewVariables(VVAccess.ReadWrite), DataField("color")]
+    public Color Color = Color.White;
+
     /// <summary>
     /// Try not to set this too high.
     /// </summary>
