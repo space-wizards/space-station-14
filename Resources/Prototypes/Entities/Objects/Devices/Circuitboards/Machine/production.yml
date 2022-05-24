@@ -417,6 +417,7 @@
     - type: MachineBoard
       prototype: SurveillanceCameraWirelessRouterConstructed
       requirements:
+        Laser: 1
         Capacitor: 4
 
 - type: entity

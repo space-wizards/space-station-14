@@ -1,4 +1,5 @@
 - type: entity
+  abstract: true
   parent: BaseMachinePowered
   id: SurveillanceCameraRouterBase
   name: camera router
@@ -22,14 +23,6 @@
       sprite: Structures/Machines/server.rsi
       layers:
         - state: server
-
-- type: entity
-  parent: SurveillanceCameraRouterBase
-  id: SurveillanceCameraRouterSubnetTest
-  suffix: SubnetTest
-  components:
-    - type: SurveillanceCameraRouter
-      subnetFrequency: SurveillanceCameraSubnetTest
 
 - type: entity
   parent: SurveillanceCameraRouterBase

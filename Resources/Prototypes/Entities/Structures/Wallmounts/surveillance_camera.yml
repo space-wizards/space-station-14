@@ -1,4 +1,5 @@
 - type: entity
+  abstract: true
   id: SurveillanceCameraBase
   name: camera
   description: A surveillance camera. It's watching you. Kinda.
@@ -46,18 +47,6 @@
     mode: SnapgridCenter
     snap:
       - Wallmount
-
-- type: entity
-  parent: SurveillanceCameraBase
-  id: SurveillanceCameraSubnetTest
-  name: camera
-  suffix: SubnetTest
-  components:
-  - type: DeviceNetwork
-    deviceNetId: Wired
-    receiveFrequencyId: SurveillanceCameraSubnetTest
-    transmitFrequencyId: SurveillanceCamera
-  - type: SurveillanceCamera
 
 - type: entity
   parent: SurveillanceCameraBase
