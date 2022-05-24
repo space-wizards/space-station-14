@@ -16,8 +16,8 @@ public sealed class SurveillanceCameraMonitorBoundUserInterface : BoundUserInter
     public SurveillanceCameraMonitorBoundUserInterface(ClientUserInterfaceComponent owner, object uiKey) : base(owner, uiKey)
     {
         IoCManager.InjectDependencies(this);
-        _eyeLerpingSystem = EntitySystem.Get<EyeLerpingSystem>();
-        _surveillanceCameraMonitorSystem = EntitySystem.Get<SurveillanceCameraMonitorSystem>();
+        _eyeLerpingSystem = _entityManager.EntitySysManager.GetEntitySystem<EyeLerpingSystem>();
+        _surveillanceCameraMonitorSystem = _entityManager.EntitySysManager.GetEntitySystem<SurveillanceCameraMonitorSystem>();
     }
 
     protected override void Open()
