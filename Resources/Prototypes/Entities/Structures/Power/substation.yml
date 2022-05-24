@@ -20,6 +20,7 @@
     maxCharge: 4000000
     startingCharge: 0
   - type: ExaminableBattery
+  - type: ExaminableAnchoredPower
   - type: PointLight
     radius: 1.5
     energy: 1.6

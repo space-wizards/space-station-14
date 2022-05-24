@@ -108,6 +108,7 @@ namespace Content.Client.Entry
             "TemperatureProtection",
             "DamageOnToolInteract",
             "ExaminableBattery",
+            "ExaminableAnchoredPower",
             "PottedPlantHide",
             "Lock",
             "PresetIdCard",
