@@ -945,7 +945,7 @@ namespace Content.Client.Preferences.UI
             UpdateAntagPreferences();
             UpdateMarkings();
 
-            _needUpdatePreview = true;
+            NeedsDummyRebuild = true;
 
             _preferenceUnavailableButton.SelectId((int) Profile.PreferenceUnavailable);
         }
