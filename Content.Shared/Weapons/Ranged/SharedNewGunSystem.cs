@@ -278,6 +278,13 @@ public abstract partial class SharedNewGunSystem : EntitySystem
 
         if (sound != null && playSound)
             SoundSystem.Play(Filter.Pvs(entity, entityManager: EntityManager), sound, coordinates, AudioHelpers.WithVariation(0.05f).WithVolume(-1f));
+
+        /*
+        if (HasComp<CollisionWakeComponent>(entity) && TryComp<PhysicsComponent>(entity, out var physics))
+        {
+            physics.Awake = false;
+        }
+        */
     }
 
     public void MuzzleFlash(EntityUid gun, NewAmmoComponent component, EntityUid? user = null)

@@ -100,10 +100,15 @@ public sealed class NewGunSystem : SharedNewGunSystem
                         cartridge.Spent = true;
                         MuzzleFlash(gun, cartridge, user);
                     }
+
+                    if (cartridge.Owner.IsClientSide())
+                        Del(cartridge.Owner);
+
                     break;
                 case NewAmmoComponent newAmmo:
                     MuzzleFlash(gun, newAmmo, user);
-                    Del(newAmmo.Owner);
+                    if (newAmmo.Owner.IsClientSide())
+                        Del(newAmmo.Owner);
                     break;
             }
         }
