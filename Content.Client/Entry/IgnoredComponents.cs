@@ -47,7 +47,6 @@ namespace Content.Client.Entry
             "DiseaseVaccineCreator",
             "ImmovableRod",
             "DiseaseZombie",
-            "DiseaseBuildup",
             "ZombieTransfer",
             "RangedMagazine",
             "RandomMetadata",
