@@ -12,7 +12,7 @@ public sealed partial class ChameleonMenu : DefaultWindow
 {
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
 
-    public ChameleonMenu(string[] possibleIds)
+    public ChameleonMenu(List<string> possibleIds)
     {
         RobustXamlLoader.Load(this);
         IoCManager.InjectDependencies(this);
@@ -20,7 +20,7 @@ public sealed partial class ChameleonMenu : DefaultWindow
         FillGrid(possibleIds);
     }
 
-    private void FillGrid(string[] possibleIds)
+    private void FillGrid(List<string> possibleIds)
     {
         var spriteSys = EntitySystem.Get<SpriteSystem>();
         foreach (var id in possibleIds)

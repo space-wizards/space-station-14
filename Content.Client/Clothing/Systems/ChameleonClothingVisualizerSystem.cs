@@ -26,6 +26,7 @@ public sealed class ChameleonClothingVisualizerSystem : VisualizerSystem<Chamele
             sprite.CopyFrom(otherSprite);
         }
 
+        // clothing and in-hand sprite icon
         if (TryComp(uid, out ClothingComponent? clothing) &&
             proto.TryGetComponent(out ClothingComponent? otherClothing))
         {
