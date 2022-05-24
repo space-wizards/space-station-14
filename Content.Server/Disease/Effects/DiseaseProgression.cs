@@ -5,9 +5,8 @@ using Content.Shared.Disease;
 namespace Content.Server.Disease.Effects
 {
     /// <summary>
-    /// Handles a disease which incubates over a period of time
-    /// before adding another component to the infected entity
-    /// currently used for zombie virus
+    /// Handles any disease with stages
+    /// You are gonna need this if you want the stage to work
     /// </summary>
     [UsedImplicitly]
     public sealed class DiseaseProgression : DiseaseEffect
@@ -19,27 +18,9 @@ namespace Content.Server.Disease.Effects
         [ViewVariables(VVAccess.ReadWrite)]
         public float Rate = 0.01f;
 
-        /// <summary>
-        /// The component that is added at the end of build up
-        /// </summary>
-        [DataField("comp")]
-        public string? Comp = null;
-
         public override void Effect(DiseaseEffectArgs args)
         {
-            args.EntityManager.EnsureComponent<DiseaseBuildupComponent>(args.DiseasedEntity, out var buildup);
-            if (buildup.Progression < 1) //increases steadily until 100%
-            {
-                buildup.Progression += Rate;
-            }
-            else if (Comp != null)//adds the component for the later stage of the disease.
-            {
-                EntityUid uid = args.DiseasedEntity;
-                var newComponent = (Component) IoCManager.Resolve<IComponentFactory>().GetComponent(Comp);
-                newComponent.Owner = uid;
-                if (!args.EntityManager.HasComponent(uid, newComponent.GetType()))
-                    args.EntityManager.AddComponent(uid, newComponent);
-            }
+            args.Disease.DiseaseSeverity = +Rate;
         }
     }
 }

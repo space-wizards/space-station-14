@@ -38,6 +38,8 @@
         collection: Coughs
     - !type:DiseaseProgression
       probability: 0.33
+    - !type:DiseaseAddComp
+      minSeverity: 0.9
       comp: DiseaseZombie
   cures:
     - !type:DiseaseReagentCure

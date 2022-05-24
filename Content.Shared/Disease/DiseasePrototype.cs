@@ -40,6 +40,7 @@ namespace Content.Shared.Disease
         /// <summary>
         /// This controls the progression of the disease, used to stage disease effects
         /// </summary>
+        [ViewVariables(VVAccess.ReadWrite)]
         public float DiseaseSeverity
         {
             get => _diseaseServerity;
