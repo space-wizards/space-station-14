@@ -2,6 +2,7 @@
 using Content.Server.Chat.Managers;
 using Content.Server.Ghost.Roles.Components;
 using Content.Server.Mind.Commands;
+using Content.Server.Station.Systems;
 using Content.Server.StationEvents.Components;
 using Robust.Shared.Random;
 
@@ -22,6 +23,7 @@ public sealed class RandomSentience : StationEvent
     public override void Startup()
     {
         base.Startup();
+        List<EntityUid> alreadyNotifiedStations = new();
 
         var targetList = _entityManager.EntityQuery<SentienceTargetComponent>().ToList();
         _random.Shuffle(targetList);
@@ -49,13 +51,27 @@ public sealed class RandomSentience : StationEvent
         var kind1 = groupList.Count > 0 ? groupList[0] : "???";
         var kind2 = groupList.Count > 1 ? groupList[1] : "???";
         var kind3 = groupList.Count > 2 ? groupList[2] : "???";
-        _chatManager.DispatchStationAnnouncement(
-            Loc.GetString("station-event-random-sentience-announcement",
-                ("kind1", kind1), ("kind2", kind2), ("kind3", kind3), ("amount", groupList.Count),
-                ("data", Loc.GetString($"random-sentience-event-data-{_random.Next(1, 6)}")),
-                ("strength", Loc.GetString($"random-sentience-event-strength-{_random.Next(1, 8)}"))),
-                playDefaultSound: false,
-                colorOverride: Color.Gold
-        );
+
+        var _stationSystem = EntitySystem.Get<StationSystem>();
+        foreach (var target in targetList)
+        {
+            var victimOwningStation = _stationSystem.GetOwningStation(target.Owner);
+            if (victimOwningStation != null)
+            {
+                if (!alreadyNotifiedStations.Contains((EntityUid) victimOwningStation))
+                {
+                    _chatManager.DispatchStationAnnouncement(
+                        (EntityUid) victimOwningStation,
+                        Loc.GetString("station-event-random-sentience-announcement",
+                            ("kind1", kind1), ("kind2", kind2), ("kind3", kind3), ("amount", groupList.Count),
+                            ("data", Loc.GetString($"random-sentience-event-data-{_random.Next(1, 6)}")),
+                            ("strength", Loc.GetString($"random-sentience-event-strength-{_random.Next(1, 8)}"))),
+                        playDefaultSound: false,
+                        colorOverride: Color.Gold
+                    );
+                    alreadyNotifiedStations.Add((EntityUid) victimOwningStation);
+                }
+            }
+        }
     }
 }

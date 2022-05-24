@@ -340,7 +340,7 @@ namespace Content.Server.Nuke
             var announcement = Loc.GetString("nuke-component-announcement-armed",
                 ("time", (int) component.RemainingTime));
             var sender = Loc.GetString("nuke-component-announcement-sender");
-            _chat.DispatchStationAnnouncement(announcement, sender, false, Color.Red);
+            _chat.DispatchStationAnnouncement(uid, announcement, sender, false, Color.Red);
 
             // todo: move it to announcements system
             SoundSystem.Play(Filter.Broadcast(), component.ArmSound.GetSound());
@@ -369,7 +369,7 @@ namespace Content.Server.Nuke
             // warn a crew
             var announcement = Loc.GetString("nuke-component-announcement-unarmed");
             var sender = Loc.GetString("nuke-component-announcement-sender");
-            _chat.DispatchStationAnnouncement(announcement, sender, false);
+            _chat.DispatchStationAnnouncement(uid, announcement, sender, false);
 
             // todo: move it to announcements system
             SoundSystem.Play(Filter.Broadcast(), component.DisarmSound.GetSound());

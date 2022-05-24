@@ -129,7 +129,7 @@ namespace Content.Server.StationEvents.Events
             if (StartAnnouncement != null)
             {
                 var chatManager = IoCManager.Resolve<IChatManager>();
-                chatManager.DispatchStationAnnouncement(StartAnnouncement, playDefaultSound: false, colorOverride: Color.Gold);
+                chatManager.DispatchGlobalStationAnnouncement(StartAnnouncement, playDefaultSound: false, colorOverride: Color.Gold);
             }
 
             if (StartAudio != null)
@@ -152,7 +152,7 @@ namespace Content.Server.StationEvents.Events
             if (EndAnnouncement != null)
             {
                 var chatManager = IoCManager.Resolve<IChatManager>();
-                chatManager.DispatchStationAnnouncement(EndAnnouncement, playDefaultSound: false, colorOverride: Color.Gold);
+                chatManager.DispatchGlobalStationAnnouncement(EndAnnouncement, playDefaultSound: false, colorOverride: Color.Gold);
             }
 
             if (EndAudio != null)

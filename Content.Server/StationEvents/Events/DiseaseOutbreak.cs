@@ -1,6 +1,7 @@
 using Content.Server.Chat.Managers;
 using Content.Server.Disease.Components;
 using Content.Server.Disease;
+using Content.Server.Station.Systems;
 using Content.Shared.Disease;
 using Content.Shared.MobState.Components;
 using Content.Shared.Sound;
@@ -34,6 +35,7 @@ public sealed class DiseaseOutbreak : StationEvent
 
     public override SoundSpecifier? StartAudio => new SoundPathSpecifier("/Audio/Announcements/outbreak7.ogg");
     protected override float EndAfter => 1.0f;
+
     /// <summary>
     /// Finds 2-5 random, alive entities that can host diseases
     /// and gives them a randomly selected disease.
@@ -42,6 +44,7 @@ public sealed class DiseaseOutbreak : StationEvent
     public override void Startup()
     {
         base.Startup();
+        List<EntityUid> alreadyNotifiedStations = new();
         List<DiseaseCarrierComponent> aliveList = new();
         foreach (var (carrier, mobState) in _entityManager.EntityQuery<DiseaseCarrierComponent, MobStateComponent>())
         {
@@ -59,15 +62,25 @@ public sealed class DiseaseOutbreak : StationEvent
             return;
 
         var diseaseSystem = EntitySystem.Get<DiseaseSystem>();
-        /// Now we give it to people in the list of living disease carriers earlier
+        // Now we give it to people in the list of living disease carriers earlier
+        var _stationSystem = EntitySystem.Get<StationSystem>();
         foreach (var target in aliveList)
         {
             if (toInfect-- == 0)
                 break;
 
             diseaseSystem.TryAddDisease(target.Owner, disease, target);
+
+            var victimOwningStation = _stationSystem.GetOwningStation(target.Owner);
+            if (victimOwningStation != null)
+            {
+                if (!alreadyNotifiedStations.Contains((EntityUid) victimOwningStation))
+                {
+                    _chatManager.DispatchStationAnnouncement((EntityUid) victimOwningStation, Loc.GetString("station-event-disease-outbreak-announcement"),
+                        playDefaultSound: false, colorOverride: Color.YellowGreen);
+                    alreadyNotifiedStations.Add((EntityUid) victimOwningStation);
+                }
+            }
         }
-        _chatManager.DispatchStationAnnouncement(Loc.GetString("station-event-disease-outbreak-announcement"),
-            playDefaultSound: false, colorOverride: Color.YellowGreen);
     }
 }

@@ -268,7 +268,7 @@ public sealed class StationSystem : EntitySystem
 
         if (loud)
         {
-            _chatManager.DispatchStationAnnouncement($"The station {oldName} has been renamed to {name}.");
+            _chatManager.DispatchStationAnnouncement(station, $"The station {oldName} has been renamed to {name}.");
         }
 
         RaiseLocalEvent(station, new StationRenamedEvent(oldName, name));

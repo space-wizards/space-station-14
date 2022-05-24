@@ -1,8 +1,11 @@
 using System.Linq;
+using Content.Server.Administration.Commands.Station;
 using Content.Server.Administration.Logs;
 using Content.Server.Administration.Managers;
 using Content.Server.MoMMI;
 using Content.Server.Preferences.Managers;
+using Content.Server.Station.Components;
+using Content.Server.Station.Systems;
 using Content.Shared.Administration;
 using Content.Shared.CCVar;
 using Content.Shared.Chat;
@@ -10,6 +13,7 @@ using Content.Shared.Database;
 using Robust.Server.Player;
 using Robust.Shared.Audio;
 using Robust.Shared.Configuration;
+using Robust.Shared.Map;
 using Robust.Shared.Network;
 using Robust.Shared.Player;
 using Robust.Shared.Utility;
@@ -34,6 +38,8 @@ namespace Content.Server.Chat.Managers
         [Dependency] private readonly IAdminManager _adminManager = default!;
         [Dependency] private readonly IServerPreferencesManager _preferencesManager = default!;
         [Dependency] private readonly IConfigurationManager _configurationManager = default!;
+        [Dependency] private readonly IMapManager _mapManager = default!;
+        [Dependency] private readonly IEntityManager _entityManager = default!;
 
         private AdminLogSystem _logs = default!;
 
@@ -81,13 +87,41 @@ namespace Content.Server.Chat.Managers
             _logs.Add(LogType.Chat, LogImpact.Low, $"Server announcement: {message}");
         }
 
-        public void DispatchStationAnnouncement(string message, string sender = "Central Command", bool playDefaultSound = true, Color? colorOverride = null)
+        public void DispatchGlobalStationAnnouncement(string message, string sender = "Central Command",
+            bool playDefaultSound = true, Color? colorOverride = null)
         {
-            var messageWrap = Loc.GetString("chat-manager-sender-announcement-wrap-message", ("sender", sender));
-            ChatMessageToAll(ChatChannel.Radio, message, messageWrap, colorOverride);
-            if (playDefaultSound)
+            var _stationSystem = EntitySystem.Get<StationSystem>();
+            foreach (var station in _stationSystem.Stations)
             {
-                SoundSystem.Play(Filter.Broadcast(), "/Audio/Announcements/announce.ogg", AudioParams.Default.WithVolume(-2f));
+                DispatchStationAnnouncement(station, message, sender, playDefaultSound, colorOverride);
+            }
+        }
+
+        public void DispatchStationAnnouncement(EntityUid source, string message, string sender = "Central Command", bool playDefaultSound = true, Color? colorOverride = null)
+        {
+            var _stationSystem = EntitySystem.Get<StationSystem>();
+            var messageWrap = Loc.GetString("chat-manager-sender-announcement-wrap-message", ("sender", sender));
+
+            var station = _stationSystem.GetOwningStation(source);
+            if (station != null)
+            {
+                _entityManager.TryGetComponent<StationDataComponent>(station, out var stationDataComp);
+                foreach (var grid in stationDataComp.Grids)
+                {
+                    ChatMessageToManyFiltered(Filter.BroadcastGrid(grid), ChatChannel.Radio, message, messageWrap, source, true, colorOverride);
+                    if (playDefaultSound)
+                    {
+                        SoundSystem.Play(Filter.BroadcastGrid(grid), "/Audio/Announcements/announce.ogg", AudioParams.Default.WithVolume(-2f));
+                    }
+                }
+            }
+            else
+            {
+                ChatMessageToManyFiltered(Filter.Pvs(source), ChatChannel.Radio, message, messageWrap, source, true, colorOverride);
+                if (playDefaultSound)
+                {
+                    SoundSystem.Play(Filter.Pvs(source), "/Audio/Announcements/announce.ogg", AudioParams.Default.WithVolume(-2f));
+                }
             }
 
             _logs.Add(LogType.Chat, LogImpact.Low, $"Station Announcement from {sender}: {message}");
@@ -235,6 +269,20 @@ namespace Content.Server.Chat.Managers
             msg.SenderEntity = source;
             msg.HideChat = hideChat;
             _netManager.ServerSendToMany(msg, clients);
+        }
+
+        public void ChatMessageToManyFiltered(Filter filter, ChatChannel channel, string message, string messageWrap, EntityUid source,
+            bool hideChat, Color? colorOverride = null)
+        {
+            var clients = new List<INetChannel>();
+            var commonSessionEnum = filter.Recipients.GetEnumerator();
+            while (true)
+            {
+                if(!commonSessionEnum.MoveNext()) break;
+                clients.Add(commonSessionEnum.Current.ConnectedClient);
+            }
+
+            ChatMessageToMany(channel, message, messageWrap, source, hideChat, clients);
         }
 
         public void ChatMessageToAll(ChatChannel channel, string message, string messageWrap, Color? colorOverride = null)

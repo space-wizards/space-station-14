@@ -40,8 +40,13 @@ namespace Content.Server.Roles
                 chat.DispatchServerMessage(session, Loc.GetString("job-greet-supervisors-warning", ("jobName", Name), ("supervisors", Prototype.Supervisors)));
 
                 if(Prototype.JoinNotifyCrew && Mind.CharacterName != null)
-                    chat.DispatchStationAnnouncement(Loc.GetString("job-greet-join-notify-crew", ("jobName", Name), ("characterName", Mind.CharacterName)),
-                        Loc.GetString("job-greet-join-notify-crew-announcer"), false);
+                    if (Mind.OwnedEntity != null)
+                    {
+                        chat.DispatchStationAnnouncement(Mind.OwnedEntity.Value,
+                            Loc.GetString("job-greet-join-notify-crew", ("jobName", Name),
+                                ("characterName", Mind.CharacterName)),
+                            Loc.GetString("job-greet-join-notify-crew-announcer"), false);
+                    }
             }
         }
     }
