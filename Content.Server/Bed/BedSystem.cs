@@ -7,6 +7,7 @@ using Content.Shared.Body.Components;
 using Content.Shared.Bed;
 using Content.Server.Power.Components;
 using Content.Shared.Emag.Systems;
+using Content.Shared.MobState.Components;
 
 namespace Content.Server.Bed
 {
@@ -54,6 +55,8 @@ namespace Content.Server.Bed
                 bedComponent.Accumulator -= bedComponent.HealTime;
                 foreach (EntityUid healedEntity in strapComponent.BuckledEntities)
                 {
+                    if (TryComp<MobStateComponent>(healedEntity, out var state) && state.IsDead())
+                        continue;
                     _damageableSystem.TryChangeDamage(healedEntity, bedComponent.Damage, true);
                 }
             }
