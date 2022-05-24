@@ -31,7 +31,7 @@ public sealed class ChameleonBoundUserInterface : BoundUserInterface
             return;
 
         var chameleonSystem = EntitySystem.Get<ChameleonClothingSystem>();
-        var targets = chameleonSystem.GetValidItems(st.Slot);
+        var targets = chameleonSystem.GetValidTargets(st.Slot);
 
         _menu?.UpdateState(targets, st.SelectedId);
     }
