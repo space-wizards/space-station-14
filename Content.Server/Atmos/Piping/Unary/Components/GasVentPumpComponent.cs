@@ -79,6 +79,12 @@ namespace Content.Server.Atmos.Piping.Unary.Components
         public float TargetPressureChange = Atmospherics.OneAtmosphere;
 
         #region Machine Linking
+        /// <summary>
+        ///     Whether or not machine linking is enabled for this component.
+        /// </summary>
+        [DataField("canLink")]
+        public readonly bool CanLink = false;
+
         [DataField("pressurizePort", customTypeSerializer: typeof(PrototypeIdSerializer<ReceiverPortPrototype>))]
         public string PressurizePort = "Pressurize";
 

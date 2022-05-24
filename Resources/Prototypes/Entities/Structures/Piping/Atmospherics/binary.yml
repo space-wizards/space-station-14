@@ -230,6 +230,7 @@
     - type: GasVentPump
       inlet: inlet
       outlet: outlet
+      canLink: true
     - type: Construction
       graph: GasBinary
       node: dualportventpump

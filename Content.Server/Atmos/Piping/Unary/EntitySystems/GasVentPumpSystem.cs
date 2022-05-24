@@ -205,11 +205,15 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
 
         private void OnInit(EntityUid uid, GasVentPumpComponent component, ComponentInit args)
         {
-            _signalSystem.EnsureReceiverPorts(uid, component.PressurizePort, component.DepressurizePort);
+            if (component.CanLink)
+                _signalSystem.EnsureReceiverPorts(uid, component.PressurizePort, component.DepressurizePort);
         }
 
         private void OnSignalReceived(EntityUid uid, GasVentPumpComponent component, SignalReceivedEvent args)
         {
+            if (!component.CanLink)
+                return;
+
             if (args.Port == component.PressurizePort)
             {
                 component.PumpDirection = VentPumpDirection.Releasing;
