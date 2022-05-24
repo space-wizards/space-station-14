@@ -4,6 +4,7 @@ using Content.Server.DeviceNetwork.Components;
 using Content.Server.DeviceNetwork.Systems;
 using Content.Server.Ghost.Components;
 using Content.Server.Power.Components;
+using Content.Shared.ActionBlocker;
 using Content.Shared.DeviceNetwork;
 using Content.Shared.SurveillanceCamera;
 using Content.Shared.Verbs;
@@ -15,7 +16,7 @@ namespace Content.Server.SurveillanceCamera;
 public sealed class SurveillanceCameraSystem : EntitySystem
 {
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
-    [Dependency] private readonly IAdminManager _adminManager = default!;
+    [Dependency] private readonly ActionBlockerSystem _actionBlocker = default!;
     [Dependency] private readonly ViewSubscriberSystem _viewSubscriberSystem = default!;
     [Dependency] private readonly DeviceNetworkSystem _deviceNetworkSystem = default!;
     [Dependency] private readonly UserInterfaceSystem _userInterface = default!;
@@ -124,12 +125,7 @@ public sealed class SurveillanceCameraSystem : EntitySystem
 
     private void AddVerbs(EntityUid uid, SurveillanceCameraComponent component, GetVerbsEvent<Verb> verbs)
     {
-        if (!TryComp(verbs.User, out ActorComponent? actor))
-        {
-            return;
-        }
-
-        if (HasComp<GhostComponent>(verbs.User) && !_adminManager.IsAdmin(actor.PlayerSession))
+        if (!_actionBlocker.CanInteract(verbs.User, uid))
         {
             return;
         }

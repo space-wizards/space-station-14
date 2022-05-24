@@ -11,9 +11,14 @@ public sealed class SurveillanceCameraMonitorSystem : EntitySystem
     {
         foreach (var (uid, timing) in _activeTimers)
         {
+            if (Paused(uid))
+            {
+                continue;
+            }
+
             timing.TimeLeft -= frameTime;
 
-            if (timing.TimeLeft <= 0)
+            if (timing.TimeLeft <= 0 || Deleted(uid))
             {
                 _toRemove.Add(uid);
             }
