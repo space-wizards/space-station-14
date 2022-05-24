@@ -255,6 +255,8 @@ public sealed class SurveillanceCameraSystem : EntitySystem
             RaiseLocalEvent(monitor, ev);
         }
 
+        component.ActiveMonitors.Clear();
+
         // Send a local event that's broadcasted everywhere afterwards.
         RaiseLocalEvent(ev);
 
