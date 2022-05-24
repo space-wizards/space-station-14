@@ -1,4 +1,5 @@
-﻿using Content.Shared.Clothing.Components;
+﻿using Content.Server.Clothing.Components;
+using Content.Shared.Clothing.Components;
 using Content.Shared.Clothing.EntitySystems;
 using Content.Shared.Verbs;
 using Robust.Server.GameObjects;
@@ -14,7 +15,13 @@ public sealed class ChameleonClothingSystem : SharedChameleonClothingSystem
     public override void Initialize()
     {
         base.Initialize();
+        SubscribeLocalEvent<ChameleonClothingComponent, ComponentInit>(OnInit);
         SubscribeLocalEvent<ChameleonClothingComponent, GetVerbsEvent<InteractionVerb>>(OnVerb);
+    }
+
+    private void OnInit(EntityUid uid, ChameleonClothingComponent component, ComponentInit args)
+    {
+        MimicPrototype(uid, component.SelectedId, component);
     }
 
     private void OnVerb(EntityUid uid, ChameleonClothingComponent component, GetVerbsEvent<InteractionVerb> args)
@@ -24,7 +31,7 @@ public sealed class ChameleonClothingSystem : SharedChameleonClothingSystem
 
         args.Verbs.Add(new InteractionVerb()
         {
-            Text = "Cham",
+            Text = Loc.GetString("chameleon-component-verb-text"),
             Act = () => TryOpenUi(uid, args.User, component)
         });
     }
@@ -46,6 +53,10 @@ public sealed class ChameleonClothingSystem : SharedChameleonClothingSystem
         if (!Resolve(uid, ref appearance, ref component))
             return;
         if (!_proto.TryIndex(protoId, out EntityPrototype? proto))
+            return;
+
+        // make sure that it is valid
+        if (!proto.TryGetComponent(out ClothingComponent? clothing) || !clothing.SlotFlags.HasFlag(component.Slot))
             return;
 
         // copy name and description
