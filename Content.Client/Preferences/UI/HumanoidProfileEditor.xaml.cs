@@ -555,6 +555,7 @@ namespace Content.Client.Preferences.UI
 
                     var color = Color.FromHsv(new Vector4(hue / 360, sat / 100, val / 100, 1.0f));
 
+                    CMarkings.CurrentSkinColor = color;
                     Profile = Profile.WithCharacterAppearance(Profile.Appearance.WithSkinColor(color));
                     break;
                 }
@@ -584,6 +585,7 @@ namespace Content.Client.Preferences.UI
                     newColor.Y = .1f;
                     color = Color.FromHsv(newColor);
 
+                    CMarkings.CurrentSkinColor = color;
                     Profile = Profile.WithCharacterAppearance(Profile.Appearance.WithSkinColor(color));
                     break;
                 }
@@ -834,7 +836,7 @@ namespace Content.Client.Preferences.UI
                 return;
             }
 
-            CMarkings.SetData(Profile.Appearance.Markings, Profile.Species);
+            CMarkings.SetData(Profile.Appearance.Markings, Profile.Species, Profile.Appearance.SkinColor);
         }
 
         private void UpdateSpecies()
