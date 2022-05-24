@@ -20,7 +20,7 @@ namespace Content.Server.Disease.Effects
 
         public override void Effect(DiseaseEffectArgs args)
         {
-            args.Disease.DiseaseSeverity = +Rate;
+            args.Disease.DiseaseSeverity += Rate;
         }
     }
 }
