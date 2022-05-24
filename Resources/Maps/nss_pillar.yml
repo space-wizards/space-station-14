@@ -34023,7 +34023,7 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 2021
-  type: WallMetal
+  type: WallSolidRust
   components:
   - pos: 32.5,26.5
     parent: 131
@@ -34601,7 +34601,7 @@ entities:
     parent: 131
     type: Transform
 - uid: 2090
-  type: WallMetal
+  type: WallSolidRust
   components:
   - pos: 33.5,26.5
     parent: 131
@@ -34613,13 +34613,13 @@ entities:
     parent: 131
     type: Transform
 - uid: 2092
-  type: WallMetal
+  type: WallSolidRust
   components:
   - pos: 38.5,25.5
     parent: 131
     type: Transform
 - uid: 2093
-  type: WallMetal
+  type: WallSolidRust
   components:
   - pos: 38.5,24.5
     parent: 131
@@ -35346,7 +35346,7 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 2195
-  type: WallMetal
+  type: WallSolidRust
   components:
   - pos: 31.5,24.5
     parent: 131
@@ -35430,7 +35430,7 @@ entities:
     parent: 131
     type: Transform
 - uid: 2207
-  type: WallMetal
+  type: WallSolidRust
   components:
   - pos: 31.5,23.5
     parent: 131
@@ -40718,13 +40718,13 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 2949
-  type: WallMetal
+  type: WallSolidRust
   components:
   - pos: 36.5,26.5
     parent: 131
     type: Transform
 - uid: 2950
-  type: WallMetal
+  type: WallSolidRust
   components:
   - pos: 31.5,26.5
     parent: 131
@@ -45234,13 +45234,13 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 3405
-  type: WallMetal
+  type: WallSolidRust
   components:
   - pos: 35.5,26.5
     parent: 131
     type: Transform
 - uid: 3406
-  type: WallMetal
+  type: WallSolidRust
   components:
   - pos: 37.5,26.5
     parent: 131
@@ -45280,7 +45280,7 @@ entities:
         ents: []
     type: ContainerContainer
 - uid: 3410
-  type: WallMetal
+  type: WallSolidRust
   components:
   - pos: 38.5,23.5
     parent: 131
@@ -71760,7 +71760,7 @@ entities:
     parent: 131
     type: Transform
 - uid: 6025
-  type: WallMetal
+  type: WallSolidRust
   components:
   - pos: 38.5,26.5
     parent: 131
@@ -101352,7 +101352,7 @@ entities:
     parent: 131
     type: Transform
 - uid: 8466
-  type: WallMetal
+  type: WallSolidRust
   components:
   - pos: 34.5,26.5
     parent: 131
@@ -102547,7 +102547,7 @@ entities:
     parent: 131
     type: Transform
 - uid: 8595
-  type: WallMetal
+  type: WallSolidRust
   components:
   - pos: 31.5,25.5
     parent: 131
@@ -105521,7 +105521,7 @@ entities:
     parent: 131
     type: Transform
 - uid: 8956
-  type: WallMetal
+  type: WallSolidRust
   components:
   - pos: 3.5,40.5
     parent: 131
@@ -144144,7 +144144,7 @@ entities:
     parent: 131
     type: Transform
 - uid: 12899
-  type: WallMetal
+  type: WallSolidRust
   components:
   - pos: 3.5,38.5
     parent: 131
@@ -144603,7 +144603,7 @@ entities:
     parent: 131
     type: Transform
 - uid: 12960
-  type: WallMetal
+  type: WallSolidRust
   components:
   - pos: 6.5,40.5
     parent: 131
@@ -144689,7 +144689,7 @@ entities:
     parent: 131
     type: Transform
 - uid: 12970
-  type: WallMetal
+  type: WallSolidRust
   components:
   - pos: 3.5,39.5
     parent: 131
