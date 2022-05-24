@@ -21,6 +21,7 @@ public abstract partial class SharedNewGunSystem
 
         component.Shots = state.Shots;
         component.MaxShots = state.MaxShots;
+        component.FireCost = state.FireCost;
     }
 
     private void OnBatteryGetState(EntityUid uid, BatteryAmmoProviderComponent component, ref ComponentGetState args)
@@ -29,6 +30,7 @@ public abstract partial class SharedNewGunSystem
         {
             Shots = component.Shots,
             MaxShots = component.MaxShots,
+            FireCost = component.FireCost,
         };
     }
 
@@ -61,7 +63,7 @@ public abstract partial class SharedNewGunSystem
                 var ent = Spawn(proj.Prototype, coordinates);
                 return EnsureComp<NewAmmoComponent>(ent);
             case HitscanBatteryAmmoProviderComponent hitscan:
-                throw new NotImplementedException();
+                return ProtoManager.Index<HitscanPrototype>(hitscan.Prototype);
             default:
                 throw new ArgumentOutOfRangeException();
         }
@@ -72,5 +74,6 @@ public abstract partial class SharedNewGunSystem
     {
         public int Shots;
         public int MaxShots;
+        public float FireCost;
     }
 }

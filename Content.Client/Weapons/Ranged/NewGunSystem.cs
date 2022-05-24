@@ -1,4 +1,5 @@
 using Content.Shared.Weapons.Ranged;
+using Content.Shared.Weapons.Ranged.Barrels.Components;
 using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
 using Robust.Client.Input;
@@ -15,6 +16,7 @@ public sealed class NewGunSystem : SharedNewGunSystem
     [Dependency] private readonly IEyeManager _eyeManager = default!;
     [Dependency] private readonly IInputManager _inputManager = default!;
     [Dependency] private readonly IPlayerManager _player = default!;
+    [Dependency] private readonly EffectSystem _effects = default!;
     [Dependency] private readonly InputSystem _inputSystem = default!;
 
     // TODO: Move to ballistic partial
@@ -87,9 +89,20 @@ public sealed class NewGunSystem : SharedNewGunSystem
         // This also means any ammo specific stuff can be grabbed as necessary.
         foreach (var ent in ammo)
         {
-            if (ent is NewAmmoComponent entAmmo)
-                Del(entAmmo.Owner);
+            switch (ent)
+            {
+                case CartridgeAmmoComponent cartridge:
+                    if (TryComp<AppearanceComponent>(cartridge.Owner, out var appearance))
+                    {
+                        appearance.SetData(AmmoVisuals.Spent, true);
+                    }
 
+                    cartridge.Spent = true;
+                    break;
+                case NewAmmoComponent newAmmo:
+                    Del(newAmmo.Owner);
+                    break;
+            }
         }
     }
 
@@ -103,5 +116,10 @@ public sealed class NewGunSystem : SharedNewGunSystem
     {
         if (user == null || !Timing.IsFirstTimePredicted) return;
         PopupSystem.PopupEntity(message, gun.Owner, Filter.Entities(user.Value));
+    }
+
+    protected override void CreateEffect(EffectSystemMessage message, EntityUid? user = null)
+    {
+        _effects.CreateEffect(message);
     }
 }

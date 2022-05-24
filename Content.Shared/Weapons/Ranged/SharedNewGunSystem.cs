@@ -1,6 +1,8 @@
 using Content.Shared.Actions;
+using Content.Shared.Administration.Logs;
 using Content.Shared.Audio;
 using Content.Shared.CombatMode;
+using Content.Shared.Damage;
 using Content.Shared.Examine;
 using Content.Shared.Hands.Components;
 using Content.Shared.Popups;
@@ -25,8 +27,11 @@ public abstract partial class SharedNewGunSystem : EntitySystem
     [Dependency] protected readonly IPrototypeManager ProtoManager = default!;
     [Dependency] protected readonly IRobustRandom Random = default!;
     [Dependency] protected readonly SharedActionsSystem Actions = default!;
-    [Dependency] protected readonly SharedContainerSystem Containers = default!;
+    [Dependency] protected readonly SharedAdminLogSystem Logs = default!;
     [Dependency] private readonly SharedCombatModeSystem _combatMode = default!;
+    [Dependency] protected readonly SharedContainerSystem Containers = default!;
+    [Dependency] protected readonly DamageableSystem Damageable = default!;
+    [Dependency] protected readonly SharedPhysicsSystem Physics = default!;
     [Dependency] protected readonly SharedPopupSystem PopupSystem = default!;
 
     protected ISawmill Sawmill = default!;
@@ -270,6 +275,62 @@ public abstract partial class SharedNewGunSystem : EntitySystem
         if (sound != null && playSound)
             SoundSystem.Play(Filter.Pvs(entity, entityManager: EntityManager), sound, coordinates, AudioHelpers.WithVariation(0.05f).WithVolume(-1f));
     }
+
+    public void MuzzleFlash(EntityUid entity, NewAmmoComponent component, Angle angle, EntityUid? user = null)
+    {
+        var sprite = component.MuzzleFlash?.ToString();
+
+        if (sprite == null)
+        {
+            return;
+        }
+
+        var time = Timing.CurTime;
+        var deathTime = time + TimeSpan.FromMilliseconds(200);
+        // Offset the sprite so it actually looks like it's coming from the gun
+        var offset = new Vector2(0.0f, -0.5f);
+
+        var message = new EffectSystemMessage
+        {
+            EffectSprite = sprite,
+            Born = time,
+            DeathTime = deathTime,
+            AttachedEntityUid = entity,
+            AttachedOffset = offset,
+            //Rotated from east facing
+            Rotation = -MathF.PI / 2f,
+            Color = Vector4.Multiply(new Vector4(255, 255, 255, 255), 1.0f),
+            ColorDelta = new Vector4(0, 0, 0, -1500f),
+            Shaded = false
+        };
+
+        CreateEffect(message, user);
+
+        /* TODO: Fix rotation when shooting sideways. This was the closest I got but still had issues.
+         * var time = _gameTiming.CurTime;
+        var deathTime = time + TimeSpan.FromMilliseconds(200);
+        var entityRotation = EntityManager.GetComponent<TransformComponent>(entity).WorldRotation;
+        var localAngle = entityRotation - (angle + MathF.PI / 2f);
+        // Offset the sprite so it actually looks like it's coming from the gun
+        var offset = localAngle.RotateVec(new Vector2(0.0f, -0.5f));
+
+        var message = new EffectSystemMessage
+        {
+            EffectSprite = component.MuzzleFlashSprite.ToString(),
+            Born = time,
+            DeathTime = deathTime,
+            AttachedEntityUid = entity,
+            AttachedOffset = offset,
+            //Rotated from east facing
+            Rotation = (float) (localAngle - MathF.PI / 2),
+            Color = Vector4.Multiply(new Vector4(255, 255, 255, 255), 1.0f),
+            ColorDelta = new Vector4(0, 0, 0, -1500f),
+            Shaded = false
+        };
+         */
+    }
+
+    protected abstract void CreateEffect(EffectSystemMessage message, EntityUid? user = null);
 
     /// <summary>
     /// Raised on a gun when it would like to take the specified amount of ammo.

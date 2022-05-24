@@ -1,6 +1,7 @@
 using Content.Shared.Sound;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
+using Robust.Shared.Utility;
 
 namespace Content.Shared.Weapons.Ranged;
 
@@ -10,7 +11,11 @@ namespace Content.Shared.Weapons.Ranged;
 [RegisterComponent, Virtual]
 public class NewAmmoComponent : Component, SharedNewGunSystem.IShootable
 {
+    // Muzzle flash stored on ammo because if we swap a gun to whatever we may want to override it.
 
+    [ViewVariables, DataField("muzzleFlash")]
+    public SpriteSpecifier? MuzzleFlash =
+        new SpriteSpecifier.Texture(new ResourcePath("Objects/Weapons/Guns/Projectiles/bullet_muzzle.png"));
 }
 
 /// <summary>
