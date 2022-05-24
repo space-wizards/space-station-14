@@ -107,12 +107,13 @@ namespace Content.Server.Chat.Managers
             if (station != null)
             {
                 _entityManager.TryGetComponent<StationDataComponent>(station, out var stationDataComp);
-                foreach (var grid in stationDataComp.Grids)
+                foreach (var gridEnt in stationDataComp.Grids)
                 {
-                    ChatMessageToManyFiltered(Filter.BroadcastGrid(grid), ChatChannel.Radio, message, messageWrap, source, true, colorOverride);
+                    var gridId = _mapManager.GetGridComp(gridEnt).GridIndex;
+                    ChatMessageToManyFiltered(Filter.BroadcastGrid(gridId), ChatChannel.Radio, message, messageWrap, source, true, colorOverride);
                     if (playDefaultSound)
                     {
-                        SoundSystem.Play(Filter.BroadcastGrid(grid), "/Audio/Announcements/announce.ogg", AudioParams.Default.WithVolume(-2f));
+                        SoundSystem.Play(Filter.BroadcastGrid(gridId), "/Audio/Announcements/announce.ogg", AudioParams.Default.WithVolume(-2f));
                     }
                 }
             }
@@ -281,8 +282,8 @@ namespace Content.Server.Chat.Managers
             var commonSessionEnum = filter.Recipients.GetEnumerator();
             while (true)
             {
-                clients.Add(commonSessionEnum.Current.ConnectedClient);
                 if (!commonSessionEnum.MoveNext()) break;
+                clients.Add(commonSessionEnum.Current.ConnectedClient);
             }
             commonSessionEnum.Dispose();
 
