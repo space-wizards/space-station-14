@@ -36,7 +36,7 @@ public abstract partial class SharedNewGunSystem : EntitySystem
 
     protected ISawmill Sawmill = default!;
 
-    protected const float MuzzleFlashLifetime = 0.2f;
+    protected const float MuzzleFlashLifetime = 1f;
     protected const float InteractNextFire = 0.3f;
     public const float EjectOffset = 0.4f;
     public string AmmoExamineColor = "yellow";
@@ -300,7 +300,6 @@ public abstract partial class SharedNewGunSystem : EntitySystem
             AttachedOffset = offset,
             //Rotated from east facing
             Rotation = -MathF.PI / 2f,
-            Color = Vector4.Multiply(new Vector4(255, 255, 255, 255), 1.0f),
             ColorDelta = new Vector4(0, 0, 0, -1500f),
             Shaded = false
         };

@@ -1,3 +1,50 @@
+- type: hitscan
+  id: RedLaser
+  damage:
+    types:
+      Heat: 15
+  muzzleFlash: Objects/Weapons/Guns/Projectiles/laser_muzzle.png
+  travelFlash: Objects/Weapons/Guns/Projectiles/laser.png
+  impactFlash: Objects/Weapons/Guns/Projectiles/laser_impact.png
+
+- type: hitscan
+  id: RedMediumLaser
+  damage:
+    types:
+      Heat: 20
+  muzzleFlash: Objects/Weapons/Guns/Projectiles/laser_muzzle.png
+  travelFlash: Objects/Weapons/Guns/Projectiles/laser.png
+  impactFlash: Objects/Weapons/Guns/Projectiles/laser_impact.png
+
+- type: hitscan
+  id: Pulse
+  damage:
+    types:
+      Heat: 25
+  travelFlash: Objects/Weapons/Guns/Projectiles/pulse.png
+  muzzleFlash: Objects/Weapons/Guns/Projectiles/pulse_muzzle.png
+  impactFlash: Objects/Weapons/Guns/Projectiles/pulse_impact.png
+
+- type: hitscan
+  id: RedHeavyLaser
+  damage:
+    types:
+      Heat: 45
+  muzzleFlash: Objects/Weapons/Guns/Projectiles/heavy_laser_muzzle.png
+  travelFlash: Objects/Weapons/Guns/Projectiles/heavy_laser.png
+  impactFlash: Objects/Weapons/Guns/Projectiles/heavy_laser_impact.png
+
+- type: hitscan
+  id: XrayLaser
+  muzzleFlash: Objects/Weapons/Guns/Projectiles/xray_muzzle.png
+  travelFlash: Objects/Weapons/Guns/Projectiles/xray.png
+  impactFlash: Objects/Weapons/Guns/Projectiles/xray_impact.png
+  damage:
+    types:
+      Heat: 60
+
+# DEPRECATED
+
 - type: entity
   name: red laser
   id: RedLaser

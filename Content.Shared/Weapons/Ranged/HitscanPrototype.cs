@@ -15,14 +15,16 @@ public sealed class HitscanPrototype : IPrototype, SharedNewGunSystem.IShootable
     [ViewVariables(VVAccess.ReadWrite), DataField("damage")]
     public DamageSpecifier? Damage;
 
+    // Tried making these spritespecifiers but alas, effectsystem is shit.
+
     [ViewVariables(VVAccess.ReadOnly), DataField("muzzleFlash")]
-    public SpriteSpecifier? MuzzleFlash;
+    public ResourcePath? MuzzleFlash;
 
     [ViewVariables(VVAccess.ReadOnly), DataField("travelFlash")]
-    public SpriteSpecifier? TravelFlash;
+    public ResourcePath? TravelFlash;
 
     [ViewVariables(VVAccess.ReadOnly), DataField("impactFlash")]
-    public SpriteSpecifier? ImpactFlash;
+    public ResourcePath? ImpactFlash;
 
     [ViewVariables, DataField("collisionMask")]
     public int CollisionMask = (int) CollisionGroup.Opaque;

@@ -1,6 +1,5 @@
 using System.Linq;
 using Content.Server.Projectiles.Components;
-using Content.Shared.Damage;
 using Content.Shared.Database;
 using Content.Shared.Weapons.Ranged;
 using Content.Shared.Weapons.Ranged.Barrels.Components;
@@ -51,10 +50,10 @@ public sealed partial class NewGunSystem : SharedNewGunSystem
                     ShootProjectile(newAmmo.Owner, mapDirection, user);
                     break;
                 case HitscanPrototype hitscan:
-                    var ray = new CollisionRay(fromMap.Position, mapDirection.Normalized * MathF.Min(20f, mapDirection.Length), hitscan.CollisionMask);
+                    var ray = new CollisionRay(fromMap.Position, mapDirection.Normalized, hitscan.CollisionMask);
                     var rayCastResults = Physics.IntersectRay(fromMap.MapId, ray, hitscan.MaxLength, user, false).ToList();
 
-                    var entityDirection = fromCoordinates.Position - Transform(fromCoordinates.EntityId).InvWorldMatrix.Transform(toMap);
+                    var entityDirection = Transform(fromCoordinates.EntityId).InvWorldMatrix.Transform(toMap) - fromCoordinates.Position;
 
                     if (rayCastResults.Count >= 1)
                     {
@@ -136,14 +135,16 @@ public sealed partial class NewGunSystem : SharedNewGunSystem
     {
         var startTime = Timing.CurTime;
         var endTime = startTime + TimeSpan.FromSeconds(MuzzleFlashLifetime);
-        var color = new Vector4(hitscan.Color.R, hitscan.Color.G, hitscan.Color.B, hitscan.Color.A);
+        var color = new Vector4(hitscan.Color.R * 255, hitscan.Color.G * 255, hitscan.Color.B * 255, hitscan.Color.A * 255);
 
         // We'll get the effects relative to the grid / map of the firer
         var afterEffect = TravelFlash(fromCoordinates, angle, distance, hitscan, startTime, endTime, color);
 
+        // Not predicted yet, SAD
         if (afterEffect != null)
         {
-            CreateEffect(afterEffect);
+            _effects.CreateParticle(afterEffect);
+            // CreateEffect(afterEffect);
         }
 
         // if we're too close we'll stop the impact and muzzle / impact sprites from clipping
@@ -152,23 +153,16 @@ public sealed partial class NewGunSystem : SharedNewGunSystem
             var impactEffect = ImpactFlash(fromCoordinates, angle.ToVec() * distance, hitscan, startTime, endTime, color);
             if (impactEffect != null)
             {
-                CreateEffect(impactEffect);
+                _effects.CreateParticle(impactEffect);
+                // CreateEffect(impactEffect);
             }
 
             var muzzleEffect = MuzzleFlash(fromCoordinates, angle, hitscan, startTime, endTime, color);
             if (muzzleEffect != null)
             {
-                CreateEffect(muzzleEffect);
+                _effects.CreateParticle(muzzleEffect);
+                // CreateEffect(muzzleEffect);
             }
-        }
-
-        // TODO: Sound
-        if (hitEntity != null)
-        {
-            // TODO: No wall component so ?
-            var offset = angle.ToVec().Normalized / 2;
-            var coordinates = fromCoordinates.Offset(offset);
-            // SoundSystem.Play(Filter.Pvs(coordinates), _soundHitWall.GetSound(), coordinates);
         }
     }
 
@@ -210,13 +204,13 @@ public sealed partial class NewGunSystem : SharedNewGunSystem
 
         if (sprite == null) return null;
 
-        var midPointOffset = angle.ToVec() * distance / 2;
+        var midPointOffset = angle.ToVec() * (distance + 0.5f) / 2;
         var message = new EffectSystemMessage
         {
             EffectSprite = sprite,
             Born = startTime,
             DeathTime = endTime,
-            Size = new Vector2(distance, 1f),
+            Size = new Vector2(distance - 1.5f, 1f),
             Coordinates = origin.Offset(midPointOffset),
             //Rotated from east facing
             Rotation = (float) angle.Theta,
