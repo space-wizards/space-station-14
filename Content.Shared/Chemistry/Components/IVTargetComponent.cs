@@ -27,9 +27,7 @@ namespace Content.Shared.Chemistry.Components
         /// </summary>
         public void AddBag(EntityUid bag)
         {
-            Bags ??= new();
-
-            if (!Bags.Contains(bag))
+            if (!(Bags ??= new()).Contains(bag))
                 Bags.Add(bag);
         }
 
@@ -38,17 +36,8 @@ namespace Content.Shared.Chemistry.Components
         /// </summary>
         public void RemoveBag(EntityUid bag)
         {
-            if (Bags != null)
-            {
-                Bags.Remove(bag);
-
-                if (Bags.Count == 0)
-                    _entMan.RemoveComponent<IVTargetComponent>(Owner);
-            }
-            else
-            {
+            if (Bags == null || (Bags.Remove(bag) && Bags.Count == 0))
                 _entMan.RemoveComponent<IVTargetComponent>(Owner);
-            }
         }
 
         /// <summary>
@@ -63,10 +52,9 @@ namespace Content.Shared.Chemistry.Components
             for (int i = Bags.Count - 1; i >= 0; i--)
             {
                 var bag = Bags[i];
-                if (bag is not { Valid: true }
-                    || !_entMan.HasComponent<SharedIVBagComponent>(bag))
+                if (bag is not { Valid: true })
                 {
-                    Console.WriteLine("[IV] IVTargetComponent - removed invalid bag:" + bag);
+                    // Logger.Info("[IV] IVTargetComponent - removed invalid bag:" + bag);
                     Bags.RemoveAt(i);
                 }
             }

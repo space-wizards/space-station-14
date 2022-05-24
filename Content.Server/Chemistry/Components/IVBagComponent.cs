@@ -6,16 +6,18 @@ using Robust.Shared.Map;
 namespace Content.Server.Chemistry.Components
 {
     /// <summary>
-    /// Server behavior for reagent injectors and syringes. Can optionally support both
-    /// injection and drawing or just injection. Can inject/draw reagents from solution
-    /// containers, and can directly inject into a mobs bloodstream.
+    /// Server behavior for IV bags. They inject and draw over time and
+    /// rip out if pulled too far or are put in containers. This is
+    /// accomplished with IVTargetComponent and IVHolderComponent.
     /// </summary>
     [RegisterComponent]
     public sealed class IVBagComponent : SharedIVBagComponent
     {
         public const string SolutionName = "ivbag";
+
         public CancellationTokenSource? FlowCancel;
         public CancellationTokenSource? InjectCancel;
+        public Boolean StartingUp;
 
 
         /// <summary> Does the bag assume it's injected into a mob? </summary>
@@ -42,11 +44,13 @@ namespace Content.Server.Chemistry.Components
 
         /// <summary> The delay after injection before solution flow begins. </summary>
         [ViewVariables(VVAccess.ReadWrite)]
+        [DataField("flowStartDelay")]
         public TimeSpan FlowStartDelay = TimeSpan.FromSeconds(2.0f);
 
 
         /// <summary> A list of delays the player can choose from. </summary>
-        public static int[] FlowDelayOptions = { 2, 3, 4, 6, 10 };
+        [DataField("flowDelayOptions")]
+        public static int[] FlowDelayOptions = { 1, 2, 3, 4, 6, 8 };
 
         /// <summary> The delay between flows after flowing has begun. </summary>
         [ViewVariables(VVAccess.ReadWrite)]
@@ -54,7 +58,7 @@ namespace Content.Server.Chemistry.Components
 
         /// <summary> Amount of solution to flow into a bloodstream per interval. </summary>
         [ViewVariables(VVAccess.ReadWrite)]
-        public FixedPoint2 FlowAmount = FixedPoint2.New(3.0f);
+        public FixedPoint2 FlowAmount = FixedPoint2.New(2.0f);
 
         /// <summary> The limit of chems per drip when connected to a mob. </summary>
         [ViewVariables(VVAccess.ReadWrite)]
