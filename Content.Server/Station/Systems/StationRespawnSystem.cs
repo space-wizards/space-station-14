@@ -70,7 +70,7 @@ public sealed class StationRespawnSystem : EntitySystem
 
     private void OnStationInitialized(StationInitializedEvent ev)
     {
-        AddComp<StationRespawnControllerComponent>(ev.Station);
+        EnsureComp<StationRespawnControllerComponent>(ev.Station);
     }
 
     private void OnStationGridAdded(EntityUid uid, StationRespawnControllerComponent component, StationGridAddedEvent args)
