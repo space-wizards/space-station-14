@@ -13,6 +13,8 @@
     size: 12
     sprite: Objects/Misc/nukedisk.rsi
     state: icon
+  - type: StationRespawn
+    alertStaff: true
 
 - type: entity
   name: nuclear authentication disk

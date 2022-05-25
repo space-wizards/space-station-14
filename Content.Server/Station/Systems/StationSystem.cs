@@ -220,7 +220,7 @@ public sealed class StationSystem : EntitySystem
 
         var stationMember = AddComp<StationMemberComponent>(mapGrid);
         stationMember.Station = station;
-        stationData.Grids.Add(gridComponent.GridIndex);
+        stationData.Grids.Add(gridComponent.Owner);
 
         RaiseLocalEvent(station, new StationGridAddedEvent(gridComponent.GridIndex, false));
 
@@ -243,7 +243,7 @@ public sealed class StationSystem : EntitySystem
             throw new ArgumentException("Tried to use a non-station entity as a station!", nameof(station));
 
         RemComp<StationMemberComponent>(mapGrid);
-        stationData.Grids.Remove(gridComponent.GridIndex);
+        stationData.Grids.Remove(gridComponent.Owner);
 
         RaiseLocalEvent(station, new StationGridRemovedEvent(gridComponent.GridIndex));
         _sawmill.Info($"Removing grid {mapGrid}:{gridComponent.GridIndex} from station {Name(station)} ({station})");
@@ -311,13 +311,33 @@ public sealed class StationSystem : EntitySystem
 
         if (xform.GridID == GridId.Invalid)
         {
-            Logger.Debug("A");
             return null;
         }
 
         var grid = _mapManager.GetGridEuid(xform.GridID);
 
         return CompOrNull<StationMemberComponent>(grid)?.Station;
+    }
+
+    public EntityUid? GetLargestGridOnStation(EntityUid station, StationDataComponent? stationData = null)
+    {
+        if (!Resolve(station, ref stationData))
+            throw new ArgumentException("Tried to use a non-station entity as a station!", nameof(station));
+
+        EntityUid? largestGrid = null;
+        var largestGridMass = 0.0f;
+
+        foreach (var gridEnt in stationData.Grids)
+        {
+            var mass = Comp<PhysicsComponent>(gridEnt).Mass;
+
+            if (!(mass >= largestGridMass)) continue;
+
+            largestGrid = gridEnt;
+            largestGridMass = mass;
+        }
+
+        return largestGrid;
     }
 }
 

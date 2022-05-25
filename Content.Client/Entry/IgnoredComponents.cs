@@ -160,6 +160,7 @@ namespace Content.Client.Entry
             "DisposalJunction",
             "DisposalBend",
             "Recycler",
+            "StationRespawn",
             "Conveyor",
             "Flippable",
             "Airtight",
