@@ -168,6 +168,16 @@
   price: 3
 
 - type: uplinkListing
+  id: UplinkChameleon
+  category: Utility
+  itemId: ClothingBackpackChameleonFill
+  listingName: Chameleon Kit
+  description: A backpack full of items that contain chameleon technology allowing you to disguise as pretty much anything on the station, and more!
+  price: 4
+  icon: /Textures/Clothing/Uniforms/Jumpsuit/rainbow.rsi/icon.png
+
+
+- type: uplinkListing
   id: UplinkHypopen
   category: Utility
   itemId: Hypopen
