@@ -1,20 +1,21 @@
-using Robust.Shared.Audio;
-using Robust.Shared.Player;
 using System.Linq;
 using Content.Server.Popups;
 using Content.Server.Power.Components;
+using Content.Server.Power.EntitySystems;
 using Content.Shared.Access.Components;
 using Content.Shared.Access.Systems;
-using Content.Shared.VendingMachines;
-using Robust.Server.GameObjects;
-using Robust.Shared.Prototypes;
-using Robust.Shared.Random;
 using Content.Shared.Destructible;
 using Content.Shared.Emag.Systems;
-using static Content.Shared.VendingMachines.SharedVendingMachineComponent;
 using Content.Shared.Throwing;
+using Content.Shared.VendingMachines;
+using Robust.Server.GameObjects;
+using Robust.Shared.Audio;
+using Robust.Shared.Player;
+using Robust.Shared.Prototypes;
+using Robust.Shared.Random;
+using static Content.Shared.VendingMachines.SharedVendingMachineComponent;
 
-namespace Content.Server.VendingMachines.Systems
+namespace Content.Server.VendingMachines
 {
     public sealed class VendingMachineSystem : EntitySystem
     {
@@ -49,7 +50,7 @@ namespace Content.Server.VendingMachines.Systems
 
         private void OnInventoryRequestMessage(EntityUid uid, VendingMachineComponent component, InventorySyncRequestMessage args)
         {
-            if (!IsPowered(uid, component))
+            if (!this.IsPowered(uid, EntityManager))
                 return;
 
             var inventory = new List<VendingMachineInventoryEntry>(component.Inventory);
@@ -62,7 +63,7 @@ namespace Content.Server.VendingMachines.Systems
 
         private void OnInventoryEjectMessage(EntityUid uid, VendingMachineComponent component, VendingMachineEjectMessage args)
         {
-            if (!IsPowered(uid, component))
+            if (!this.IsPowered(uid, EntityManager))
                 return;
 
             if (args.Session.AttachedEntity is not { Valid: true } entity || Deleted(entity))
@@ -89,18 +90,6 @@ namespace Content.Server.VendingMachines.Systems
 
             component.Emagged = true;
             args.Handled = true;
-        }
-
-        public bool IsPowered(EntityUid uid, VendingMachineComponent? vendComponent = null)
-        {
-            if (!Resolve(uid, ref vendComponent))
-                return false;
-
-            if (!TryComp<ApcPowerReceiverComponent>(vendComponent.Owner, out var receiver))
-            {
-                return false;
-            }
-            return receiver.Powered;
         }
 
         public void InitializeFromPrototype(EntityUid uid, VendingMachineComponent? vendComponent = null)
@@ -201,7 +190,7 @@ namespace Content.Server.VendingMachines.Systems
             if (!Resolve(uid, ref vendComponent))
                 return;
 
-            if (vendComponent.Ejecting || vendComponent.Broken || !IsPowered(uid, vendComponent))
+            if (vendComponent.Ejecting || vendComponent.Broken || !this.IsPowered(uid, EntityManager))
             {
                 return;
             }
@@ -276,7 +265,7 @@ namespace Content.Server.VendingMachines.Systems
             {
                 finalState = VendingMachineVisualState.Eject;
             }
-            else if (!IsPowered(uid, vendComponent))
+            else if (!this.IsPowered(uid, EntityManager))
             {
                 finalState = VendingMachineVisualState.Off;
             }
