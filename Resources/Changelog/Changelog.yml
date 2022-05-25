@@ -1,10 +1,4 @@
 Entries:
-- author: Lamrr
-  changes:
-  - {message: High-capacity water tanks have arrived! Botanists no longer have to
-      scavenge for water., type: Add}
-  id: 1102
-  time: '2022-02-20T01:07:08.0000000+00:00'
 - author: Peptide90
   changes:
   - {message: Holoparasites now have a unique name identifier., type: Tweak}
@@ -2996,3 +2990,10 @@ Entries:
   - {message: Buckets now hold 250u, type: Tweak}
   id: 1601
   time: '2022-05-25T19:45:12.0000000+00:00'
+- author: vulppine
+  changes:
+  - {message: Nanotrasen has finally found a manufacturer for mousetraps. We will
+      begin supplying your stations with these to help the battle against the mouse
+      menace!, type: Add}
+  id: 1602
+  time: '2022-05-25T20:16:34.0000000+00:00'
