@@ -171,8 +171,8 @@
   time: 30
   solids:
     FoodDough: 1
-    FoodCheeseSlice: 4
-    FoodTomato: 1
+    FoodCheeseSlice: 1
+    FoodTomato: 4
 
 - type: microwaveMealRecipe
   id: RecipeMushroomPizza
@@ -418,7 +418,7 @@
 #  result: FoodCandyCorn
 #  time: 5
 #  reagents:
-#    Glucose: 5
+#    Sugar: 5
 #  solids:
 #    FoodCorn: 1
 
@@ -603,3 +603,16 @@
   time: 10
   solids:
     FoodAloe: 1
+
+# Suppermatter
+- type: microwaveMealRecipe
+  id: RecipeSuppermatter
+  name: suppermatter recipe
+  result: FoodCakeSuppermatter
+  time: 30
+  solids:
+    FoodCakeBatter: 2
+  reagents:
+    Sugar: 30
+    Nitrogen: 10
+    Plasma: 10

@@ -22,14 +22,3 @@
   icon: /Textures/Objects/Materials/Sheets/glass.rsi/rpglass.png
   spawn: SheetRPGlass1
 
-- type: stack
-  id: TitaniumGlass
-  name: titanium glass
-  icon: /Textures/Objects/Materials/Sheets/glass.rsi/titaniumglass.png
-  spawn: SheetTitaniumGlass1
-
-- type: stack
-  id: PlastitaniumGlass
-  name: plastitanium glass
-  icon: /Textures/Objects/Materials/Sheets/glass.rsi/plastitaniumglass.png
-  spawn: SheetPlastitaniumGlass1

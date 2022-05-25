@@ -25,6 +25,10 @@ namespace Content.Server.Atmos.EntitySystems
         {
             SubscribeLocalEvent<PressureProtectionComponent, HighPressureEvent>(OnHighPressureEvent);
             SubscribeLocalEvent<PressureProtectionComponent, LowPressureEvent>(OnLowPressureEvent);
+
+            SubscribeLocalEvent<PressureImmunityComponent, HighPressureEvent>(OnHighPressureImmuneEvent);
+            SubscribeLocalEvent<PressureImmunityComponent, LowPressureEvent>(OnLowPressureImmuneEvent);
+
         }
 
         private void OnHighPressureEvent(EntityUid uid, PressureProtectionComponent component, HighPressureEvent args)
@@ -37,6 +41,24 @@ namespace Content.Server.Atmos.EntitySystems
         {
             args.Modifier += component.LowPressureModifier;
             args.Multiplier *= component.LowPressureMultiplier;
+        }
+
+
+        /// <summary>
+        /// Completely prevent high pressure damage
+        /// </summary>
+        private void OnHighPressureImmuneEvent(EntityUid uid, PressureImmunityComponent component, HighPressureEvent args)
+        {
+            args.Multiplier = 0;
+        }
+
+        /// <summary>
+        /// Completely prevent low pressure damage
+        /// </summary>
+        private void OnLowPressureImmuneEvent(EntityUid uid, PressureImmunityComponent component, LowPressureEvent args)
+        {
+            args.Modifier = 100;
+            args.Multiplier = 10000;
         }
 
         public float GetFeltLowPressure(BarotraumaComponent baro, float environmentPressure)

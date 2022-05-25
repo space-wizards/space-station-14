@@ -7,5 +7,6 @@ disease-meow = {CAPITALIZE($person)} meows.
 disease-hiss = {CAPITALIZE($person)} hisses.
 disease-beep= {CAPITALIZE($person)} beeps.
 disease-eaten-inside = You feel like you're being eaten from the inside.
-disease-steal-compulsion = You want to steal things.
+disease-banana-compulsion = You really want to eat some bananas.
 disease-beat-chest-compulsion = {CAPITALIZE(THE($person))} beats {POSS-ADJ($person)} chest.
+disease-vomit = {CAPITALIZE(THE($person))} vomits.

@@ -22,10 +22,6 @@
   id: Singularity
   kind: source
   path: "/Textures/Shaders/singularity.swsl"
-  params:
-    positionInput: 0,0
-    falloff: 5
-    intensity: 5
 
 - type: shader
   id: Radiation

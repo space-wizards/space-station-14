@@ -1,7 +1,4 @@
 using Robust.Shared.Containers;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Prototypes;
 
 namespace Content.Server.Containers
 {

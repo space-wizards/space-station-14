@@ -1,0 +1,25 @@
+# Clear to black.
+[[layers]]
+type = "clear"
+color = "#000000"
+
+# Dim background nebula stars.
+[[layers]]
+type = "points"
+seed = 3909
+closecolor = "#4B5072"
+count = 1500
+mask = true
+masknoise_type = "fbm"
+maskoctaves = 4
+maskpersistence = "0.5"
+maskpower = "0.35"
+masklacunarity = "1.5"
+maskfrequency = "3"
+maskthreshold = "0.0"
+maskseed = 3551
+
+# Colour-to-alpha.
+[[layers]]
+type = "toalpha"
+

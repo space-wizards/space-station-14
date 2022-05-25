@@ -25,9 +25,9 @@
         Slash: 2
   - type: Tag
     tags:
-    - Recyclable
     - Trash
   - type: Recyclable
+  - type: SpaceGarbage
   - type: Damageable
     damageContainer: Inorganic
     damageModifierSet: Glass

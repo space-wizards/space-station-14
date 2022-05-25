@@ -16,6 +16,12 @@
   - type: Physics
     bodyType: Static
   - type: Fixtures
+    fixtures:
+    - shape:
+        !type:PhysShapeAabb
+        bounds: "-0.25,-0.5,0.25,0.5"
+      mask:
+      - SubfloorMask
   - type: Transform
     anchored: true
   - type: Anchorable
@@ -60,13 +66,6 @@
     drawdepth: ThickPipe
     sprite: Structures/Piping/disposal.rsi
     state: pipe-b
-  - type: Physics
-  - type: Fixtures
-    fixtures:
-    - shape:
-        !type:PhysShapeAabb
-          bounds: "-0.25,-0.5,0.25,0.5"
-      layer: [ Underplating ]
   - type: Construction
     graph: DisposalPipe
     node: broken
@@ -87,13 +86,6 @@
     - type: DisposalVisualizer
       state_free: conpipe-s
       state_anchored: pipe-s
-  - type: Physics
-  - type: Fixtures
-    fixtures:
-    - shape:
-        !type:PhysShapeAabb
-          bounds: "-0.25,-0.5,0.25,0.5"
-      layer: [ Underplating ]
   - type: Construction
     graph: DisposalPipe
     node: pipe
@@ -120,13 +112,6 @@
     interfaces:
     - key: enum.DisposalTaggerUiKey.Key
       type: DisposalTaggerBoundUserInterface
-  - type: Physics
-  - type: Fixtures
-    fixtures:
-      - shape:
-          !type:PhysShapeAabb
-            bounds: "-0.25,-0.5,0.25,0.5"
-        layer: [ Underplating ]
   - type: Construction
     graph: DisposalPipe
     node: tagger
@@ -147,13 +132,13 @@
     - type: DisposalVisualizer
       state_free: conpipe-t
       state_anchored: pipe-t
-  - type: Physics
   - type: Fixtures
     fixtures:
-      - shape:
-          !type:PhysShapeAabb
-            bounds: "-0.25,-0.5,0.25,0.4"
-        layer: [ Underplating ]
+    - shape:
+        !type:PhysShapeAabb
+        bounds: "-0.25,-0.5,0.25,0.4"
+      mask:
+      - SubfloorMask
   - type: Construction
     graph: DisposalPipe
     node: trunk
@@ -186,13 +171,13 @@
     interfaces:
     - key: enum.DisposalRouterUiKey.Key
       type: DisposalRouterBoundUserInterface
-  - type: Physics
   - type: Fixtures
     fixtures:
-      - shape:
-          !type:PhysShapeAabb
-            bounds: "-0.5,-0.5,0.25,0.5"
-        layer: [ Underplating ]
+    - shape:
+        !type:PhysShapeAabb
+        bounds: "-0.5,-0.5,0.25,0.5"
+      mask:
+      - SubfloorMask
   - type: Construction
     graph: DisposalPipe
     node: router
@@ -218,13 +203,13 @@
       state_anchored: pipe-j2s
   - type: Flippable
     mirrorEntity: DisposalRouter
-  - type: Physics
   - type: Fixtures
     fixtures:
     - shape:
         !type:PhysShapeAabb
-          bounds: "-0.25,-0.5,0.5,0.5"
-      layer: [ Underplating ]
+        bounds: "-0.25,-0.5,0.5,0.5"
+      mask:
+      - SubfloorMask
 
 - type: entity
   id: DisposalJunction
@@ -248,13 +233,13 @@
       state_anchored: pipe-j1
   - type: Flippable
     mirrorEntity: DisposalJunctionFlipped
-  - type: Physics
   - type: Fixtures
     fixtures:
     - shape:
         !type:PhysShapeAabb
-          bounds: "-0.5,-0.5,0.25,0.5"
-      layer: [ Underplating ]
+        bounds: "-0.5,-0.5,0.25,0.5"
+      mask:
+      - SubfloorMask
   - type: Construction
     graph: DisposalPipe
     node: junction
@@ -280,13 +265,13 @@
       state_anchored: pipe-j2
   - type: Flippable
     mirrorEntity: DisposalJunction
-  - type: Physics
   - type: Fixtures
     fixtures:
     - shape:
         !type:PhysShapeAabb
-          bounds: "-0.25,-0.5,0.5,0.5"
-      layer: [ Underplating ]
+        bounds: "-0.25,-0.5,0.5,0.5"
+      mask:
+      - SubfloorMask
 
 - type: entity
   id: DisposalYJunction
@@ -308,13 +293,13 @@
     - type: DisposalVisualizer
       state_free: conpipe-y
       state_anchored: pipe-y
-  - type: Physics
   - type: Fixtures
     fixtures:
     - shape:
         !type:PhysShapeAabb
-          bounds: "-0.5,-0.5,0.5,0.25"
-      layer: [ Underplating ]
+        bounds: "-0.5,-0.5,0.5,0.25"
+      mask:
+      - SubfloorMask
   - type: Construction
     graph: DisposalPipe
     node: yJunction
@@ -335,13 +320,13 @@
     - type: DisposalVisualizer
       state_free: conpipe-c
       state_anchored: pipe-c
-  - type: Physics
   - type: Fixtures
     fixtures:
     - shape:
         !type:PhysShapeAabb
-          bounds: "-0.5,-0.5,0.25,0.25"
-      layer: [ Underplating ]
+        bounds: "-0.5,-0.5,0.25,0.25"
+      mask:
+      - SubfloorMask
   - type: Construction
     graph: DisposalPipe
     node: bend

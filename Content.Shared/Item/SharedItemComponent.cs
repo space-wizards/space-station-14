@@ -38,6 +38,20 @@ namespace Content.Shared.Item
         public Dictionary<string, List<PrototypeLayerData>> ClothingVisuals = new();
 
         /// <summary>
+        ///     Whether or not this item can be picked up.
+        /// </summary>
+        /// <remarks>
+        ///     This should almost always be true for items. But in some special cases, an item can be equipped but not
+        ///     picked up. E.g., hardsuit helmets are attached to the suit, so we want to disable things like the pickup
+        ///     verb.
+        /// </remarks>
+        [DataField("canPickup")]
+        public bool CanPickup = true;
+
+        [DataField("quickEquip")]
+        public bool QuickEquip = true;
+
+        /// <summary>
         ///     Part of the state of the sprite shown on the player when this item is in their hands or inventory.
         /// </summary>
         /// <remarks>
@@ -61,9 +75,12 @@ namespace Content.Shared.Item
         [DataField("Slots")]
         public SlotFlags SlotFlags = SlotFlags.PREVENTEQUIP; //Different from None, NONE allows equips if no slot flags are required
 
-        [DataField("EquipSound")]
+        [DataField("equipSound")]
         public SoundSpecifier? EquipSound { get; set; } = default!;
 
+        [DataField("unequipSound")]
+        public SoundSpecifier? UnequipSound = default!;
+        
         /// <summary>
         ///     Rsi of the sprite shown on the player when this item is in their hands. Used to generate a default entry for <see cref="InhandVisuals"/>
         /// </summary>

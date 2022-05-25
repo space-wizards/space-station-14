@@ -1,6 +1,4 @@
-using System;
 using Content.Shared.Targeting;
-using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.CombatMode

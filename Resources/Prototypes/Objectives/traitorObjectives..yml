@@ -156,3 +156,18 @@
   conditions:
     - !type:StealCondition
       prototype: FoodMeatCorgi
+
+- type: objective
+  id: CaptainGunStealObjective
+  issuer: syndicate
+  difficultyOverride: 2.75
+  prob: 0.1
+  requirements:
+    - !type:TraitorRequirement {}
+    - !type:IncompatibleConditionsRequirement
+      conditions:
+        - DieCondition
+  conditions:
+    - !type:StealCondition
+      prototype: AntiqueLaserGun
+      

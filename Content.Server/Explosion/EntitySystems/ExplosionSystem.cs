@@ -7,8 +7,8 @@ using Content.Shared.Camera;
 using Content.Shared.Damage;
 using Content.Shared.Database;
 using Content.Shared.Explosion;
+using Content.Shared.GameTicking;
 using Content.Shared.Throwing;
-using Robust.Server.Containers;
 using Robust.Server.Player;
 using Robust.Shared.Audio;
 using Robust.Shared.Configuration;
@@ -30,7 +30,6 @@ public sealed partial class ExplosionSystem : EntitySystem
     [Dependency] private readonly IPlayerManager _playerManager = default!;
 
     [Dependency] private readonly DamageableSystem _damageableSystem = default!;
-    [Dependency] private readonly ContainerSystem _containerSystem = default!;
     [Dependency] private readonly NodeGroupSystem _nodeGroupSystem = default!;
     [Dependency] private readonly CameraRecoilSystem _recoilSystem = default!;
     [Dependency] private readonly EntityLookupSystem _entityLookup = default!;
@@ -67,6 +66,8 @@ public sealed partial class ExplosionSystem : EntitySystem
         SubscribeLocalEvent<ExplosionResistanceComponent, GetExplosionResistanceEvent>(OnGetResistance);
         SubscribeLocalEvent<TileChangedEvent>(OnTileChanged);
 
+        SubscribeLocalEvent<RoundRestartCleanupEvent>(OnReset);
+
         // Handled by ExplosionSystem.Processing.cs
         SubscribeLocalEvent<MapChangedEvent>(OnMapChanged);
 
@@ -76,10 +77,18 @@ public sealed partial class ExplosionSystem : EntitySystem
         InitAirtightMap();
     }
 
+    private void OnReset(RoundRestartCleanupEvent ev)
+    {
+        _explosionQueue.Clear();
+        _activeExplosion = null;
+        _nodeGroupSystem.Snoozing = false;
+    }
+
     public override void Shutdown()
     {
         base.Shutdown();
         UnsubscribeCvars();
+        _nodeGroupSystem.Snoozing = false;
     }
 
     private void OnGetResistance(EntityUid uid, ExplosionResistanceComponent component, GetExplosionResistanceEvent args)

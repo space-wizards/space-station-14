@@ -1,11 +1,6 @@
-using System;
-using Robust.Shared.Analyzers;
 using Robust.Shared.Audio.Midi;
-using Robust.Shared.GameObjects;
 using Robust.Shared.GameStates;
 using Robust.Shared.Serialization;
-using Robust.Shared.Serialization.Manager.Attributes;
-using Robust.Shared.ViewVariables;
 
 namespace Content.Shared.Instruments;
 

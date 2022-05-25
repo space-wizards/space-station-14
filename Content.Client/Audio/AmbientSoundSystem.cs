@@ -135,12 +135,14 @@ namespace Content.Client.Audio
         {
             //TODO: Make this produce a hashset of nearby entities again.
             var sourceDict = new Dictionary<string, List<AmbientSoundComponent>>(16);
+            var ambientQuery = GetEntityQuery<AmbientSoundComponent>();
+            var xformQuery = GetEntityQuery<TransformComponent>();
 
             foreach (var entity in _lookup.GetEntitiesInRange(coordinates, _maxAmbientRange + RangeBuffer, LookupFlags.Anchored | LookupFlags.Approximate))
             {
-                if (!EntityManager.TryGetComponent(entity, out AmbientSoundComponent? ambientComp) ||
+                if (!ambientQuery.TryGetComponent(entity, out var ambientComp) ||
                     !ambientComp.Enabled ||
-                    !EntityManager.GetComponent<TransformComponent>(entity).Coordinates.TryDistance(EntityManager, coordinates, out var range) ||
+                    !xformQuery.GetComponent(entity).Coordinates.TryDistance(EntityManager, coordinates, out var range) ||
                     range > ambientComp.Range)
                 {
                     continue;

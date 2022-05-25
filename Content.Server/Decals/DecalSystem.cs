@@ -8,6 +8,7 @@ using Robust.Server.Player;
 using Robust.Shared.Enums;
 using Robust.Shared.Map;
 using Robust.Shared.Player;
+using Robust.Shared.Utility;
 
 namespace Content.Server.Decals
 {
@@ -15,6 +16,7 @@ namespace Content.Server.Decals
     {
         [Dependency] private readonly IPlayerManager _playerManager = default!;
         [Dependency] private readonly IAdminManager _adminManager = default!;
+        [Dependency] private readonly ITileDefinitionManager _tileDefMan = default!;
         [Dependency] private readonly SharedTransformSystem _transform = default!;
 
         private readonly Dictionary<GridId, HashSet<Vector2i>> _dirtyChunks = new();
@@ -37,10 +39,56 @@ namespace Content.Server.Decals
             base.Initialize();
 
             _playerManager.PlayerStatusChanged += OnPlayerStatusChanged;
-            MapManager.TileChanged += OnTileChanged;
+            SubscribeLocalEvent<TileChangedEvent>(OnTileChanged);
 
             SubscribeNetworkEvent<RequestDecalPlacementEvent>(OnDecalPlacementRequest);
             SubscribeNetworkEvent<RequestDecalRemovalEvent>(OnDecalRemovalRequest);
+            SubscribeLocalEvent<PostGridSplitEvent>(OnGridSplit);
+        }
+
+        private void OnGridSplit(ref PostGridSplitEvent ev)
+        {
+            // Transfer decals over to the new grid.
+            var enumerator = MapManager.GetGrid(ev.Grid).GetAllTilesEnumerator();
+            var oldChunkCollection = DecalGridChunkCollection(ev.OldGrid);
+            var chunkCollection = DecalGridChunkCollection(ev.Grid);
+
+            while (enumerator.MoveNext(out var tile))
+            {
+                var tilePos = (Vector2) tile.Value.GridIndices;
+                var chunkIndices = GetChunkIndices(tilePos);
+
+                if (!oldChunkCollection.ChunkCollection.TryGetValue(chunkIndices, out var oldChunk)) continue;
+
+                var bounds = new Box2(tilePos - 0.01f, tilePos + 1.01f);
+                var toRemove = new RemQueue<uint>();
+
+                foreach (var (oldUid, decal) in oldChunk)
+                {
+                    if (!bounds.Contains(decal.Coordinates)) continue;
+
+                    var uid = chunkCollection.NextUid++;
+                    var chunk = chunkCollection.ChunkCollection.GetOrNew(chunkIndices);
+
+                    chunk[uid] = decal;
+                    ChunkIndex[ev.Grid][uid] = chunkIndices;
+                    DirtyChunk(ev.Grid, chunkIndices);
+
+                    toRemove.Add(oldUid);
+                    ChunkIndex[ev.OldGrid].Remove(oldUid);
+                }
+
+                foreach (var uid in toRemove)
+                {
+                    oldChunk.Remove(uid);
+                }
+
+                if (oldChunk.Count == 0)
+                    oldChunkCollection.ChunkCollection.Remove(chunkIndices);
+
+                if (toRemove.List?.Count > 0)
+                    DirtyChunk(ev.OldGrid, chunkIndices);
+            }
         }
 
         public override void Shutdown()
@@ -48,23 +96,22 @@ namespace Content.Server.Decals
             base.Shutdown();
 
             _playerManager.PlayerStatusChanged -= OnPlayerStatusChanged;
-            MapManager.TileChanged -= OnTileChanged;
         }
 
-        private void OnTileChanged(object? sender, TileChangedEventArgs e)
+        private void OnTileChanged(TileChangedEvent args)
         {
-            if (!e.NewTile.IsSpace())
+            if (!args.NewTile.IsSpace(_tileDefMan))
                 return;
 
-            var chunkCollection = ChunkCollection(e.NewTile.GridIndex);
-            var indices = GetChunkIndices(e.NewTile.GridIndices);
+            var chunkCollection = ChunkCollection(args.Entity);
+            var indices = GetChunkIndices(args.NewTile.GridIndices);
             var toDelete = new HashSet<uint>();
             if (chunkCollection.TryGetValue(indices, out var chunk))
             {
                 foreach (var (uid, decal) in chunk)
                 {
                     if (new Vector2((int) Math.Floor(decal.Coordinates.X), (int) Math.Floor(decal.Coordinates.Y)) ==
-                        e.NewTile.GridIndices)
+                        args.NewTile.GridIndices)
                     {
                         toDelete.Add(uid);
                     }
@@ -75,10 +122,10 @@ namespace Content.Server.Decals
 
             foreach (var uid in toDelete)
             {
-                RemoveDecalInternal(e.NewTile.GridIndex, uid);
+                RemoveDecalInternal(args.NewTile.GridIndex, uid);
             }
 
-            DirtyChunk(e.NewTile.GridIndex, indices);
+            DirtyChunk(args.NewTile.GridIndex, indices);
         }
 
         private void OnPlayerStatusChanged(object? sender, SessionStatusEventArgs e)
@@ -127,9 +174,10 @@ namespace Content.Server.Decals
                 return;
 
             // remove all decals on the same tile
-            foreach (var decal in GetDecalsInRange(gridId, ev.Coordinates.Position))
+            foreach (var (uid, decal) in GetDecalsInRange(gridId, ev.Coordinates.Position))
             {
-                RemoveDecal(gridId, decal);
+                var chunkIndices = GetChunkIndices(decal.Coordinates);
+                RemoveDecal(gridId, uid);
             }
         }
 
@@ -158,10 +206,10 @@ namespace Content.Server.Decals
                 return false;
 
             var gridId = coordinates.GetGridId(EntityManager);
-            if (!gridId.IsValid())
+            if (!MapManager.TryGetGrid(gridId, out var grid))
                 return false;
 
-            if (MapManager.GetGrid(gridId).GetTileRef(coordinates).IsSpace())
+            if (grid.GetTileRef(coordinates).IsSpace(_tileDefMan))
                 return false;
 
             var chunkCollection = DecalGridChunkCollection(gridId);
@@ -178,9 +226,9 @@ namespace Content.Server.Decals
 
         public bool RemoveDecal(GridId gridId, uint uid) => RemoveDecalInternal(gridId, uid);
 
-        public HashSet<uint> GetDecalsInRange(GridId gridId, Vector2 position, float distance = 0.75f, Func<Decal, bool>? validDelegate = null)
+        public HashSet<(uint Index, Decal Decal)> GetDecalsInRange(GridId gridId, Vector2 position, float distance = 0.75f, Func<Decal, bool>? validDelegate = null)
         {
-            var uids = new HashSet<uint>();
+            var uids = new HashSet<(uint, Decal)>();
             var chunkCollection = ChunkCollection(gridId);
             var chunkIndices = GetChunkIndices(position);
             if (!chunkCollection.TryGetValue(chunkIndices, out var chunk))
@@ -193,7 +241,7 @@ namespace Content.Server.Decals
 
                 if (validDelegate == null || validDelegate(decal))
                 {
-                    uids.Add(uid);
+                    uids.Add((uid, decal));
                 }
             }
 
@@ -310,15 +358,54 @@ namespace Content.Server.Decals
         {
             base.Update(frameTime);
 
-
             foreach (var session in Filter.GetAllPlayers(_playerManager))
             {
                 if (session is not IPlayerSession { Status: SessionStatus.InGame } playerSession)
                     continue;
 
-                var chunks = GetChunksForSession(playerSession);
+                var chunksInRange = GetChunksForSession(playerSession);
+                var staleChunks = new Dictionary<GridId, HashSet<Vector2i>>();
+
+                // Get any chunks not in range anymore
+                // Then, remove them from previousSentChunks (for stuff like grids out of range)
+                // and also mark them as stale for networking.
+                var toRemoveGrids = new RemQueue<GridId>();
+                // Store the chunks for later to remove.
+
+                foreach (var (gridId, oldIndices) in _previousSentChunks[playerSession])
+                {
+                    // Mark the whole grid as stale and flag for removal.
+                    if (!chunksInRange.TryGetValue(gridId, out var chunks))
+                    {
+                        toRemoveGrids.Add(gridId);
+
+                        // If grid was deleted then don't worry about sending it to the client.
+                        if (MapManager.TryGetGrid(gridId, out _))
+                            staleChunks[gridId] = oldIndices;
+
+                        continue;
+                    }
+
+                    var elmo = _chunkIndexPool.Get();
+
+                    // Get individual stale chunks.
+                    foreach (var chunk in oldIndices)
+                    {
+                        if (chunks.Contains(chunk)) continue;
+                        elmo.Add(chunk);
+                    }
+
+                    if (elmo.Count == 0)
+                    {
+                        _chunkIndexPool.Return(elmo);
+                        continue;
+                    }
+
+                    staleChunks.Add(gridId, elmo);
+                }
+
                 var updatedChunks = _chunkViewerPool.Get();
-                foreach (var (gridId, gridChunks) in chunks)
+                foreach (var (gridId, gridChunks) in chunksInRange)
                 {
                     var newChunks = _chunkIndexPool.Get();
                     newChunks.UnionWith(gridChunks);
@@ -329,8 +416,10 @@ namespace Content.Server.Decals
 
                     if (_dirtyChunks.TryGetValue(gridId, out var dirtyChunks))
                     {
-                        gridChunks.IntersectWith(dirtyChunks);
-                        newChunks.UnionWith(gridChunks);
+                        var inRange = new HashSet<Vector2i>();
+                        inRange.UnionWith(gridChunks);
+                        inRange.IntersectWith(dirtyChunks);
+                        newChunks.UnionWith(inRange);
                     }
 
                     if (newChunks.Count == 0)
@@ -339,22 +428,28 @@ namespace Content.Server.Decals
                         continue;
                     }
 
+                    // TODO: This is gonna have churn but mainly I want to fix the bugs rn.
+                    _previousSentChunks[playerSession][gridId] = gridChunks;
                     updatedChunks[gridId] = newChunks;
+                }
+
+                // We'll only remove stale grids after the above iteration.
+                foreach (var gridId in toRemoveGrids)
+                {
+                    _previousSentChunks[playerSession].Remove(gridId);
                 }
 
                 if (updatedChunks.Count == 0)
                 {
-                    ReturnToPool(chunks);
+                    // ReturnToPool(chunksInRange);
                     // Even if updatedChunks is empty we'll still return it to the pool as it may have been allocated higher.
                     ReturnToPool(updatedChunks);
-                    continue;
                 }
 
-                ReturnToPool(_previousSentChunks[playerSession]);
-                _previousSentChunks[playerSession] = chunks;
+                if (updatedChunks.Count == 0 && staleChunks.Count == 0) continue;
 
                 //send all gridChunks to client
-                SendChunkUpdates(playerSession, updatedChunks);
+                SendChunkUpdates(playerSession, updatedChunks, staleChunks);
             }
 
             _dirtyChunks.Clear();
@@ -372,7 +467,10 @@ namespace Content.Server.Decals
             _chunkViewerPool.Return(chunks);
         }
 
-        private void SendChunkUpdates(IPlayerSession session, Dictionary<GridId, HashSet<Vector2i>> updatedChunks)
+        private void SendChunkUpdates(
+            IPlayerSession session,
+            Dictionary<GridId, HashSet<Vector2i>> updatedChunks,
+            Dictionary<GridId, HashSet<Vector2i>> staleChunks)
         {
             var updatedDecals = new Dictionary<GridId, Dictionary<Vector2i, Dictionary<uint, Decal>>>();
             foreach (var (gridId, chunks) in updatedChunks)
@@ -388,7 +486,7 @@ namespace Content.Server.Decals
                 updatedDecals[gridId] = gridChunks;
             }
 
-            RaiseNetworkEvent(new DecalChunkUpdateEvent{Data = updatedDecals}, Filter.SinglePlayer(session));
+            RaiseNetworkEvent(new DecalChunkUpdateEvent{Data = updatedDecals, RemovedChunks = staleChunks}, Filter.SinglePlayer(session));
         }
 
         private HashSet<EntityUid> GetSessionViewers(IPlayerSession session)

@@ -15,7 +15,6 @@
       proper: true
   - type: Tag
     tags:
-      - Familiar
       - DoorBumpOpener
   - type: Access
     tags:
@@ -64,7 +63,6 @@
       proper: true
   - type: Tag
     tags:
-      - Familiar
       - DoorBumpOpener
   - type: Access
     tags:

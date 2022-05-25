@@ -104,5 +104,7 @@
         amount: 2
       - !type:DeleteEntity
       steps:
+      - tool: Screwing
+        doAfter: 1
       - tool: Welding
-        doAfter: 1 
+        doAfter: 1

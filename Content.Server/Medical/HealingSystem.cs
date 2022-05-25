@@ -78,44 +78,42 @@ public sealed class HealingSystem : EntitySystem
     {
         if (args.Handled) return;
 
-        args.Handled = true;
-        Heal(uid, args.User, args.User, component);
+        if (TryHeal(uid, args.User, args.User, component))
+            args.Handled = true;
     }
 
     private void OnHealingAfterInteract(EntityUid uid, HealingComponent component, AfterInteractEvent args)
     {
         if (args.Handled || !args.CanReach || args.Target == null) return;
 
-        args.Handled = true;
-        Heal(uid, args.User, args.Target.Value, component);
+        if (TryHeal(uid, args.User, args.Target.Value, component))
+            args.Handled = true;
     }
 
-    private void Heal(EntityUid uid, EntityUid user, EntityUid target, HealingComponent component)
+    private bool TryHeal(EntityUid uid, EntityUid user, EntityUid target, HealingComponent component)
     {
         if (component.CancelToken != null)
         {
-            component.CancelToken?.Cancel();
-            component.CancelToken = null;
-            return;
+            return false;
         }
 
         if (TryComp<MobStateComponent>(target, out var state) && state.IsDead())
-            return;
+            return false;
 
         if (!TryComp<DamageableComponent>(target, out var targetDamage))
-            return;
+            return false;
 
         if (component.DamageContainerID is not null && !component.DamageContainerID.Equals(targetDamage.DamageContainerID))
-            return;
+            return false;
 
         if (user != target &&
             !_interactionSystem.InRangeUnobstructed(user, target, popup: true))
         {
-            return;
+            return false;
         }
 
         if (TryComp<SharedStackComponent>(component.Owner, out var stack) && stack.Count < 1)
-            return;
+            return false;
 
         component.CancelToken = new CancellationTokenSource();
 
@@ -148,6 +146,8 @@ public sealed class HealingSystem : EntitySystem
                 return true;
             },
         });
+
+        return true;
     }
 
     private sealed class HealingCompleteEvent : EntityEventArgs

@@ -32,15 +32,15 @@ namespace Content.Client.VendingMachines
             VendingMachine = vendingMachine;
 
             _menu = new VendingMachineMenu(this) {Title = entMan.GetComponent<MetaDataComponent>(Owner.Owner).EntityName};
-            _menu.Populate(VendingMachine.Inventory);
+            _menu.Populate(VendingMachine.AllInventory);
 
             _menu.OnClose += Close;
             _menu.OpenCentered();
         }
 
-        public void Eject(string id)
+        public void Eject(InventoryType type, string id)
         {
-            SendMessage(new VendingMachineEjectMessage(id));
+            SendMessage(new VendingMachineEjectMessage(type, id));
         }
 
         protected override void ReceiveMessage(BoundUserInterfaceMessage message)

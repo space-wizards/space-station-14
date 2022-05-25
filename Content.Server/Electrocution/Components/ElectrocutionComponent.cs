@@ -1,8 +1,4 @@
-﻿using Robust.Shared.Analyzers;
-using Robust.Shared.GameObjects;
-using Robust.Shared.Serialization.Manager.Attributes;
-
-namespace Content.Server.Electrocution
+﻿namespace Content.Server.Electrocution
 {
     /// <summary>
     /// Component for virtual electrocution entities (representing an in-progress shock).

@@ -1,6 +1,4 @@
 using JetBrains.Annotations;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
 using Content.Shared.Containers.ItemSlots;
 using Content.Shared.Chemistry.Components;
 

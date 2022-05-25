@@ -24,3 +24,6 @@
 
 - type: statusEffect
   id: Electrocution
+
+- type: statusEffect
+  id: PressureImmunity

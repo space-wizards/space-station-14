@@ -27,7 +27,7 @@
       compatibility: Biological
       mechanisms:
         - OrganHumanHeart
-        - OrganHumanLungs
+        - OrganVoxLungs
         - OrganHumanStomach
         - OrganHumanLiver
         - OrganHumanKidneys

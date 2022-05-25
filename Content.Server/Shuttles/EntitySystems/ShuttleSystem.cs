@@ -1,18 +1,17 @@
-using System.Collections.Generic;
 using Content.Server.Shuttles.Components;
 using Content.Shared.CCVar;
 using JetBrains.Annotations;
 using Robust.Shared.Configuration;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
 using Robust.Shared.Physics;
 
 namespace Content.Server.Shuttles.EntitySystems
 {
     [UsedImplicitly]
-    internal sealed class ShuttleSystem : EntitySystem
+    public sealed class ShuttleSystem : EntitySystem
     {
-        public const float TileMassMultiplier = 4f;
+        [Dependency] private readonly FixtureSystem _fixtures = default!;
+
+        public const float TileMassMultiplier = 0.5f;
 
         public float ShuttleMaxLinearSpeed;
 
@@ -74,11 +73,15 @@ namespace Content.Server.Shuttles.EntitySystems
             // Look this is jank but it's a placeholder until we design it.
             if (args.NewFixtures.Count == 0) return;
 
+            var manager = Comp<FixturesComponent>(args.NewFixtures[0].Body.Owner);
+
             foreach (var fixture in args.NewFixtures)
             {
-                fixture.Mass = fixture.Area * TileMassMultiplier;
-                fixture.Restitution = 0.1f;
+                _fixtures.SetMass(fixture, fixture.Area * TileMassMultiplier, manager, false);
+                _fixtures.SetRestitution(fixture, 0.1f, manager, false);
             }
+
+            _fixtures.FixtureUpdate(manager, args.NewFixtures[0].Body);
         }
 
         private void OnGridInit(GridInitializeEvent ev)

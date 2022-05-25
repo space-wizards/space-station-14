@@ -5,6 +5,7 @@ using Content.Shared.Examine;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
+using Robust.Client.Player;
 using Robust.Shared.GameStates;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
@@ -27,19 +28,18 @@ namespace Content.Client.DoAfter
     */
         [Dependency] private readonly IEyeManager _eyeManager = default!;
         [Dependency] private readonly IGameTiming _gameTiming = default!;
+        [Dependency] private readonly IPlayerManager _player = default!;
+        [Dependency] private readonly ExamineSystemShared _examineSystem = default!;
 
         /// <summary>
         ///     We'll use an excess time so stuff like finishing effects can show.
         /// </summary>
         public const float ExcessTime = 0.5f;
 
-        private EntityUid? _attachedEntity;
-
         public override void Initialize()
         {
             base.Initialize();
             UpdatesOutsidePrediction = true;
-            SubscribeLocalEvent<PlayerAttachSysMessage>(HandlePlayerAttached);
             SubscribeNetworkEvent<CancelledDoAfterMessage>(OnCancelledDoAfter);
             SubscribeLocalEvent<DoAfterComponent, ComponentStartup>(OnDoAfterStartup);
             SubscribeLocalEvent<DoAfterComponent, ComponentShutdown>(OnDoAfterShutdown);
@@ -109,11 +109,6 @@ namespace Content.Client.DoAfter
             if (!TryComp<DoAfterComponent>(ev.Uid, out var doAfter)) return;
 
             Cancel(doAfter, ev.ID);
-        }
-
-        private void HandlePlayerAttached(PlayerAttachSysMessage message)
-        {
-            _attachedEntity = message.AttachedEntity;
         }
 
         /// <summary>
@@ -196,17 +191,19 @@ namespace Content.Client.DoAfter
             base.Update(frameTime);
 
             var currentTime = _gameTiming.CurTime;
+            var attached = _player.LocalPlayer?.ControlledEntity;
 
             // Can't see any I guess?
-            if (_attachedEntity is not {Valid: true} entity || Deleted(entity))
+            if (attached == null || Deleted(attached))
                 return;
 
             // ReSharper disable once ConvertToLocalFunction
             var predicate = static (EntityUid uid, (EntityUid compOwner, EntityUid? attachedEntity) data)
                 => uid == data.compOwner || uid == data.attachedEntity;
 
+            var occluded = _examineSystem.IsOccluded(attached.Value);
             var viewbox = _eyeManager.GetWorldViewport().Enlarged(2.0f);
-            var entXform = Transform(entity);
+            var entXform = Transform(attached.Value);
             var playerPos = entXform.MapPosition;
 
             foreach (var (comp, xform) in EntityManager.EntityQuery<DoAfterComponent, TransformComponent>(true))
@@ -224,11 +221,12 @@ namespace Content.Client.DoAfter
 
                 var range = (compPos.Position - playerPos.Position).Length + 0.01f;
 
-                if (comp.Owner != _attachedEntity &&
+                if (occluded &&
+                    comp.Owner != attached &&
                     !ExamineSystemShared.InRangeUnOccluded(
                         playerPos,
                         compPos, range,
-                        (comp.Owner, _attachedEntity), predicate))
+                        (comp.Owner, attached), predicate))
                 {
                     Disable(comp);
                     continue;

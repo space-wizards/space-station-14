@@ -1,6 +1,5 @@
 using Content.Server.AI.EntitySystems;
-using Content.Server.GameTicking;
-using Content.Shared.ActionBlocker;
+using Content.Server.Station.Systems;
 using Content.Shared.Movement.Components;
 using Content.Shared.Roles;
 using Robust.Shared.Map;
@@ -66,11 +65,11 @@ namespace Content.Server.AI.Components
 
             if (StartingGearPrototype != null)
             {
-                var gameTicker = EntitySystem.Get<GameTicker>();
+                var stationSpawning = EntitySystem.Get<StationSpawningSystem>();
                 var protoManager = IoCManager.Resolve<IPrototypeManager>();
 
                 var startingGear = protoManager.Index<StartingGearPrototype>(StartingGearPrototype);
-                gameTicker.EquipStartingGear(Owner, startingGear, null);
+                stationSpawning.EquipStartingGear(Owner, startingGear, null);
             }
         }
 

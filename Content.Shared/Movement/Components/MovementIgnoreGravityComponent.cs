@@ -1,8 +1,6 @@
 using Content.Shared.Clothing;
 using Content.Shared.Gravity;
 using Content.Shared.Inventory;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
 using Robust.Shared.Map;
 using Robust.Shared.Physics;
 

@@ -9,14 +9,12 @@
       - id: ClothingOuterHardsuitSalvage
       - id: YellowOxygenTank
       - id: ClothingShoesBootsMag
-      - id: ClothingHeadHelmetHardsuitSalvage
-      - id: ClothingMaskGas
+      - id: ClothingMaskGasExplorer
 # Currently do not function as 'true' mesons, so they're useless for salvagers.
 #      - id: ClothingEyesGlassesMeson
       - id: ClothingBeltUtilityFilled
       - id: FlashlightSeclite
       - id: SurvivalKnife
       - id: ClothingOuterHardsuitSpatio
-      - id: ClothingHeadHelmetHardsuitSpatio
 
 

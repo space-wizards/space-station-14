@@ -8,14 +8,5 @@ namespace Content.Client.Pointing.Components
     [ComponentReference(typeof(SharedPointingArrowComponent))]
     public sealed class PointingArrowComponent : SharedPointingArrowComponent
     {
-        protected override void Startup()
-        {
-            base.Startup();
-
-            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner, out SpriteComponent? sprite))
-            {
-                sprite.DrawDepth = (int) DrawDepth.Overlays;
-            }
-        }
     }
 }

@@ -31,15 +31,12 @@
     fixtures:
     - shape:
         !type:PhysShapeAabb
-          bounds: "-1.5,-1.5,1.5,1.5"
+        bounds: "-1.5,-1.5,1.5,1.5"
       mass: 500
       mask:
-      - Impassable
+      - LargeMobMask
       layer:
-      - Opaque
-      - Impassable
-      - MobImpassable
-      - VaultImpassable
+      - WallLayer
   - type: Repairable
     fuelCost: 10
     doAfterDelay: 5

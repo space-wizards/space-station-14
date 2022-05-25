@@ -53,7 +53,8 @@ public sealed class RandomSentience : StationEvent
             Loc.GetString("station-event-random-sentience-announcement",
                 ("kind1", kind1), ("kind2", kind2), ("kind3", kind3), ("amount", groupList.Count),
                 ("data", Loc.GetString($"random-sentience-event-data-{_random.Next(1, 6)}")),
-                ("strength", Loc.GetString($"random-sentience-event-strength-{_random.Next(1, 8)}"))), 
+                ("strength", Loc.GetString($"random-sentience-event-strength-{_random.Next(1, 8)}"))),
+                playDefaultSound: false,
                 colorOverride: Color.Gold
         );
     }

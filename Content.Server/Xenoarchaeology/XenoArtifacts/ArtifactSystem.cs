@@ -49,6 +49,10 @@ public sealed class ArtifactSystem : EntitySystem
         if (!Resolve(uid, ref component))
             return false;
 
+        // check if artifact is under suppression field
+        if (component.IsSuppressed)
+            return false;
+
         // check if artifact isn't under cooldown
         var timeDif = _gameTiming.CurTime - component.LastActivationTime;
         if (timeDif.TotalSeconds < component.CooldownTime)

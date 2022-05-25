@@ -1,19 +1,14 @@
 using Content.Shared.Verbs;
 using Content.Server.Chemistry.Components;
 using JetBrains.Annotations;
-using Robust.Shared.GameObjects;
-using Robust.Shared.Localization;
 using Robust.Server.GameObjects;
-using System.Collections.Generic;
 using Content.Shared.Chemistry.Components;
-using Content.Shared.Chemistry.Reagent;
 using Content.Shared.FixedPoint;
 using Content.Shared.Popups;
-using Robust.Shared.IoC;
 
 namespace Content.Server.Chemistry.EntitySystems
 {
-	[UsedImplicitly]
+    [UsedImplicitly]
     public sealed class SolutionTransferSystem : EntitySystem
     {
         /// <summary>

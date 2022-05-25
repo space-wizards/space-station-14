@@ -2,6 +2,7 @@ using System.Diagnostics.CodeAnalysis;
 using Content.Server.Hands.Components;
 using Content.Server.Pulling;
 using Content.Shared.ActionBlocker;
+using Content.Shared.Vehicle.Components;
 using Content.Shared.Alert;
 using Content.Shared.Buckle.Components;
 using Content.Shared.Interaction;
@@ -288,6 +289,10 @@ namespace Content.Server.Buckle.Components
                 {
                     return false;
                 }
+                // If the strap is a vehicle and the rider is not the person unbuckling, return.
+                if (_entMan.TryGetComponent<VehicleComponent>(oldBuckledTo.Owner, out var vehicle) &&
+                        vehicle.Rider != user)
+                    return false;
             }
 
             BuckledTo = null;

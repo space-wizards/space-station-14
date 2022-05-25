@@ -1,4 +1,3 @@
-using System.Linq;
 using Content.Server.Body.Components;
 using Content.Server.Chemistry.EntitySystems;
 using Content.Server.Chemistry.ReactionEffects;
@@ -224,6 +223,14 @@ public sealed class BloodstreamSystem : EntitySystem
             return 0.0f;
 
         return (component.BloodSolution.CurrentVolume / component.BloodSolution.MaxVolume).Float();
+    }
+
+    public void SetBloodLossThreshold(EntityUid uid, float threshold, BloodstreamComponent? comp = null)
+    {
+        if (!Resolve(uid, ref comp))
+            return;
+
+        comp.BloodlossThreshold = threshold;
     }
 
     /// <summary>

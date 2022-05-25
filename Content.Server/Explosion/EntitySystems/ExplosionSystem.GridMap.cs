@@ -160,7 +160,7 @@ public sealed partial class ExplosionSystem : EntitySystem
                 // if this ever changes, this needs to do a try-get.
                 var data = new BlockedSpaceTile();
                 transformedEdges[tile] = data;
-                
+
                 data.UnblockedDirections = AtmosDirection.Invalid; // all directions are blocked automatically.
 
                 if ((dir & NeighborFlag.Cardinal) == 0)
@@ -225,10 +225,10 @@ public sealed partial class ExplosionSystem : EntitySystem
         if (!ev.NewTile.Tile.IsEmpty && !ev.OldTile.IsEmpty)
             return;
 
-        var tileRef = ev.NewTile;
-
-        if (!_mapManager.TryGetGrid(tileRef.GridIndex, out var grid))
+        if (!_mapManager.TryGetGrid(ev.Entity, out var grid))
             return;
+
+        var tileRef = ev.NewTile;
 
         if (!_gridEdges.TryGetValue(tileRef.GridIndex, out var edges))
         {

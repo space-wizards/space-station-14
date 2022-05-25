@@ -21,13 +21,6 @@
   color: "#7e009e"
 
 - type: material
-  id: Phoron
-  stack: Phoron
-  name: phoron
-  icon: Objects/Materials/Sheets/other.rsi/phoron.png
-  color: "#FF3300"
-
-- type: material
   id: Plastic
   stack: Plastic
   name: plastic
@@ -40,3 +33,10 @@
   name: wood
   icon: Objects/Materials/materials.rsi/wood.png
   color: "#966F33"
+  
+- type: material
+  id: Uranium
+  stack: Uranium
+  name: uranium
+  icon: Objects/Materials/Sheets/other.rsi/uranium.png
+  color: "#32a852"

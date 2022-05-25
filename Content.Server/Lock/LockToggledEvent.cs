@@ -1,5 +1,3 @@
-using Robust.Shared.GameObjects;
-
 namespace Content.Server.Lock
 {
     public sealed class LockToggledEvent : EntityEventArgs

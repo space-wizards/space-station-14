@@ -26,6 +26,7 @@ namespace Content.Client.Chat.Managers
         /// </summary>
         ChatBox? CurrentChatBox { get; }
 
+        IReadOnlyDictionary<EntityUid, List<SpeechBubble>> GetSpeechBubbles();
         IReadOnlyDictionary<ChatChannel, int> UnreadMessages { get; }
         IReadOnlyList<StoredChatMessage> History { get; }
         int MaxMessageLength { get; }

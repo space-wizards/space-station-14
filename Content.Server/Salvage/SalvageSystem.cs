@@ -2,24 +2,15 @@ using Content.Server.Chat.Managers;
 using Content.Server.GameTicking;
 using Content.Shared.CCVar;
 using Content.Shared.Examine;
-using Content.Shared.GameTicking;
 using Content.Shared.Interaction;
 using Content.Shared.Popups;
 using Robust.Server.Maps;
 using Robust.Shared.Configuration;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Localization;
-using Robust.Shared.Log;
 using Robust.Shared.Map;
-using Robust.Shared.Maths;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
-using Robust.Shared.Timing;
 using Robust.Shared.Utility;
-using System;
-using System.Collections.Generic;
 using System.Linq;
 
 namespace Content.Server.Salvage
@@ -198,28 +189,29 @@ namespace Content.Server.Salvage
             {
                 if (player.AttachedEntity.HasValue)
                 {
-                    var playerTransform = EntityManager.GetComponent<TransformComponent>(player.AttachedEntity.Value);
-                    playerTransform.AttachParent(parentTransform);
+                    var playerEntityUid = player.AttachedEntity.Value;
+                    if (HasComp<SalvageMobRestrictionsComponent>(playerEntityUid))
+                    {
+                        // Salvage mobs are NEVER immune (even if they're from a different salvage, they shouldn't be here)
+                        continue;
+                    }
+                    Transform(playerEntityUid).AttachParent(parentTransform);
                 }
             }
             EntityManager.QueueDeleteEntity(salvage);
         }
 
-        private bool TryGetSalvagePlacementLocation(out MapCoordinates coords, out Angle angle)
+        private void TryGetSalvagePlacementLocation(SalvageMagnetComponent component, out MapCoordinates coords, out Angle angle)
         {
             coords = MapCoordinates.Nullspace;
             angle = Angle.Zero;
-            foreach (var (smc, tsc) in EntityManager.EntityQuery<SalvageMagnetComponent, TransformComponent>(true))
+            var tsc = Transform(component.Owner);
+            coords = new EntityCoordinates(component.Owner, component.Offset).ToMap(EntityManager);
+            var grid = tsc.GridID;
+            if (_mapManager.TryGetGrid(grid, out var magnetGrid))
             {
-                coords = new EntityCoordinates(smc.Owner, smc.Offset).ToMap(EntityManager);
-                var grid = tsc.GridID;
-                if (_mapManager.TryGetGrid(grid, out var magnetGrid))
-                {
-                    angle = magnetGrid.WorldRotation;
-                }
-                return true;
+                angle = magnetGrid.WorldRotation;
             }
-            return false;
         }
 
         private IEnumerable<SalvageMapPrototype> GetAllSalvageMaps() =>
@@ -227,12 +219,7 @@ namespace Content.Server.Salvage
 
         private bool SpawnSalvage(SalvageMagnetComponent component)
         {
-            if (!TryGetSalvagePlacementLocation(out var spl, out var spAngle))
-            {
-                Report("salvage-system-announcement-spawn-magnet-lost");
-                return false;
-            }
-
+            TryGetSalvagePlacementLocation(component, out var spl, out var spAngle);
             SalvageMapPrototype? map = null;
 
             var forcedSalvage = _configurationManager.GetCVar<string>(CCVars.SalvageForced);

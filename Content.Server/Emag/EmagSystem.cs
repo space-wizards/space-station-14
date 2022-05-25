@@ -4,6 +4,7 @@ using Content.Shared.Emag.Components;
 using Content.Shared.Emag.Systems;
 using Content.Shared.Interaction;
 using Content.Shared.Popups;
+using Content.Shared.Tag;
 using Robust.Shared.Player;
 
 namespace Content.Server.Emag
@@ -12,6 +13,8 @@ namespace Content.Server.Emag
     {
         [Dependency] private readonly SharedPopupSystem _popupSystem = default!;
         [Dependency] private readonly SharedAdminLogSystem _adminLog = default!;
+
+        [Dependency] private readonly TagSystem _tagSystem = default!;
 
         public override void Initialize()
         {
@@ -47,6 +50,9 @@ namespace Content.Server.Emag
         private void OnAfterInteract(EntityUid uid, EmagComponent component, AfterInteractEvent args)
         {
             if (!args.CanReach || args.Target == null)
+                return;
+
+            if (_tagSystem.HasTag(args.Target.Value, "EmagImmune"))
                 return;
 
             if (component.Charges <= 0)

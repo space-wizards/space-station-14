@@ -1,10 +1,7 @@
-using System;
 using Content.Server.Stunnable.Components;
 using Content.Shared.Standing;
 using Content.Shared.StatusEffect;
 using JetBrains.Annotations;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
 using Robust.Shared.Physics.Dynamics;
 using Content.Shared.Throwing;
 
@@ -44,6 +41,8 @@ namespace Content.Server.Stunnable
         }
         private void HandleCollide(EntityUid uid, StunOnCollideComponent component, StartCollideEvent args)
         {
+            if (args.OurFixture.ID != component.FixtureID) return;
+
             TryDoCollideStun(uid, component, args.OtherFixture.Body.Owner);
         }
 

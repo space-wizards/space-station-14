@@ -1,0 +1,57 @@
+# Clear to black.
+[[layers]]
+type = "clear"
+color = "#000000"
+
+# Bright background nebula stars.
+[[layers]]
+type = "points"
+closecolor = "#7E86BF"
+count = 1000
+seed = 3472
+mask = true
+masknoise_type = "fbm"
+maskoctaves = 4
+maskpersistence = "0.5"
+maskpower = "0.35"
+masklacunarity = "1.5"
+maskfrequency = "3"
+maskthreshold = "0.37"
+maskseed = 3551
+
+# Bright background nebula stars, dim edge.
+[[layers]]
+type = "points"
+closecolor = "#3D415C"
+pointsize = 2
+count = 1000
+seed = 3472
+mask = true
+masknoise_type = "fbm"
+maskoctaves = 4
+maskpersistence = "0.5"
+maskpower = "0.35"
+masklacunarity = "1.5"
+maskfrequency = "3"
+maskthreshold = "0.37"
+maskseed = 3551
+
+# Couple of odd bright yellow-ish stars.
+[[layers]]
+type = "points"
+closecolor = "#FFD363"
+count = 30
+seed = 6454
+
+# And their dim edge.
+[[layers]]
+type = "points"
+closecolor = "#43371A"
+pointsize = 2
+count = 30
+seed = 6454
+
+# Colour-to-alpha.
+[[layers]]
+type = "toalpha"
+

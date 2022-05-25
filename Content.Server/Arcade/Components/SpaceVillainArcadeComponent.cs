@@ -1,11 +1,7 @@
 using Content.Server.Power.Components;
 using Content.Server.UserInterface;
-using Content.Server.VendingMachines;
-using Content.Server.WireHacking;
 using Content.Shared.Arcade;
-using Content.Shared.Interaction;
 using Content.Shared.Sound;
-using Content.Shared.Wires;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.Player;
@@ -16,7 +12,7 @@ using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototy
 namespace Content.Server.Arcade.Components
 {
     [RegisterComponent]
-    public sealed class SpaceVillainArcadeComponent : SharedSpaceVillainArcadeComponent, IWires
+    public sealed class SpaceVillainArcadeComponent : SharedSpaceVillainArcadeComponent
     {
         [Dependency] private readonly IRobustRandom _random = null!;
 
@@ -24,9 +20,9 @@ namespace Content.Server.Arcade.Components
         private bool Powered => _entityManager.TryGetComponent<ApcPowerReceiverComponent>(Owner, out var powerReceiverComponent) && powerReceiverComponent.Powered;
 
         [ViewVariables] private BoundUserInterface? UserInterface => Owner.GetUIOrNull(SpaceVillainArcadeUiKey.Key);
-        [ViewVariables] private bool _overflowFlag;
-        [ViewVariables] private bool _playerInvincibilityFlag;
-        [ViewVariables] private bool _enemyInvincibilityFlag;
+        [ViewVariables] public bool OverflowFlag;
+        [ViewVariables] public bool PlayerInvincibilityFlag;
+        [ViewVariables] public bool EnemyInvincibilityFlag;
         [ViewVariables] public SpaceVillainGame Game = null!;
 
         [DataField("newGameSound")] private SoundSpecifier _newGameSound = new SoundPathSpecifier("/Audio/Effects/Arcade/newgame.ogg");
@@ -61,7 +57,6 @@ namespace Content.Server.Arcade.Components
             "ToyMarauder", "ToyMauler", "ToyGygax", "ToyOdysseus", "ToyOwlman", "ToyDeathRipley",
             "ToyPhazon", "ToyFireRipley", "ToyReticence", "ToyRipley", "ToySeraph", "ToyDurand", "ToySkeleton"
         };
-
 
         protected override void Initialize()
         {
@@ -108,71 +103,6 @@ namespace Content.Server.Arcade.Components
                     UserInterface?.SendMessage(Game.GenerateMetaDataMessage());
                     break;
             }
-        }
-
-        public enum Wires
-        {
-            /// <summary>
-            /// Disables Max Health&Mana for both Enemy and Player.
-            /// </summary>
-            Overflow,
-            /// <summary>
-            /// Makes Player Invincible.
-            /// </summary>
-            PlayerInvincible,
-            /// <summary>
-            /// Makes Enemy Invincible.
-            /// </summary>
-            EnemyInvincible
-        }
-
-        public void RegisterWires(WiresComponent.WiresBuilder builder)
-        {
-            builder.CreateWire(Wires.Overflow);
-            builder.CreateWire(Wires.PlayerInvincible);
-            builder.CreateWire(Wires.EnemyInvincible);
-            builder.CreateWire(4);
-            builder.CreateWire(5);
-            builder.CreateWire(6);
-            IndicatorUpdate();
-        }
-
-        public void WiresUpdate(WiresUpdateEventArgs args)
-        {
-            var wire = (Wires) args.Identifier;
-            var value = args.Action != SharedWiresComponent.WiresAction.Mend;
-            switch (wire)
-            {
-                case Wires.Overflow:
-                    _overflowFlag = value;
-                    break;
-                case Wires.PlayerInvincible:
-                    _playerInvincibilityFlag = value;
-                    break;
-                case Wires.EnemyInvincible:
-                    _enemyInvincibilityFlag = value;
-                    break;
-            }
-
-            IndicatorUpdate();
-        }
-
-        public void IndicatorUpdate()
-        {
-            if (!_entityManager.TryGetComponent<WiresComponent>(Owner, out var wiresComponent)) return;
-
-            wiresComponent.SetStatus(Indicators.HealthManager,
-                new SharedWiresComponent.StatusLightData(Color.Purple,
-                    _playerInvincibilityFlag || _enemyInvincibilityFlag
-                        ? SharedWiresComponent.StatusLightState.BlinkingSlow
-                        : SharedWiresComponent.StatusLightState.On,
-                    "MNGR"));
-            wiresComponent.SetStatus(Indicators.HealthLimiter,
-                new SharedWiresComponent.StatusLightData(Color.Red,
-                    _overflowFlag
-                        ? SharedWiresComponent.StatusLightState.BlinkingSlow
-                        : SharedWiresComponent.StatusLightState.On,
-                    "LIMT"));
         }
 
         /// <summary>
@@ -247,7 +177,7 @@ namespace Content.Server.Arcade.Components
             /// </summary>
             private void ValidateVars()
             {
-                if (_owner._overflowFlag) return;
+                if (_owner.OverflowFlag) return;
 
                 if (_playerHp > _playerHpMax) _playerHp = _playerHpMax;
                 if (_playerMp > _playerMpMax) _playerMp = _playerMpMax;
@@ -271,7 +201,7 @@ namespace Content.Server.Arcade.Components
                                                                    ("enemyName", _enemyName),
                                                                    ("attackAmount", attackAmount));
                         SoundSystem.Play(Filter.Pvs(_owner.Owner), _owner._playerAttackSound.GetSound(), _owner.Owner, AudioParams.Default.WithVolume(-4f));
-                        if (!_owner._enemyInvincibilityFlag)
+                        if (!_owner.EnemyInvincibilityFlag)
                             _enemyHp -= attackAmount;
                         _turtleTracker -= _turtleTracker > 0 ? 1 : 0;
                         break;
@@ -282,7 +212,7 @@ namespace Content.Server.Arcade.Components
                                                                     ("magicPointAmount", pointAmount),
                                                                     ("healAmount", healAmount));
                         SoundSystem.Play(Filter.Pvs(_owner.Owner), _owner._playerHealSound.GetSound(), _owner.Owner, AudioParams.Default.WithVolume(-4f));
-                        if (!_owner._playerInvincibilityFlag)
+                        if (!_owner.PlayerInvincibilityFlag)
                             _playerMp -= pointAmount;
                         _playerHp += healAmount;
                         _turtleTracker++;
@@ -380,7 +310,7 @@ namespace Content.Server.Arcade.Components
                     _latestEnemyActionMessage = Loc.GetString("space-villain-game-enemy-throws-bomb-message",
                                                               ("enemyName", _enemyName),
                                                               ("damageReceived", boomAmount));
-                    if (_owner._playerInvincibilityFlag) return;
+                    if (_owner.PlayerInvincibilityFlag) return;
                     _playerHp -= boomAmount;
                     _turtleTracker--;
                 }
@@ -390,7 +320,7 @@ namespace Content.Server.Arcade.Components
                     _latestEnemyActionMessage = Loc.GetString("space-villain-game-enemy-steals-player-power-message",
                                                               ("enemyName", _enemyName),
                                                               ("stolenAmount", stealAmount));
-                    if (_owner._playerInvincibilityFlag) return;
+                    if (_owner.PlayerInvincibilityFlag) return;
                     _playerMp -= stealAmount;
                     _enemyMp += stealAmount;
                 }
@@ -409,7 +339,7 @@ namespace Content.Server.Arcade.Components
                         Loc.GetString("space-villain-game-enemy-attacks-message",
                                       ("enemyName", _enemyName),
                                       ("damageDealt", attackAmount));
-                    if (_owner._playerInvincibilityFlag) return;
+                    if (_owner.PlayerInvincibilityFlag) return;
                     _playerHp -= attackAmount;
                 }
             }

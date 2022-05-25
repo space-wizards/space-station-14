@@ -25,17 +25,3 @@
   name: reinforced plasma glass
   icon: Objects/Materials/Sheets/glass.rsi/rpglass.png
   color: "#8c4069"
-
-- type: material
-  id: TitaniumGlass
-  stack: TitaniumGlass
-  name: titanium glass
-  icon: Objects/Materials/Sheets/glass.rsi/titaniumglass.png
-  color: "#333135"
-
-- type: material
-  id: PlastitaniumGlass
-  stack: PlastitaniumGlass
-  name: plastitanium glass
-  icon: Objects/Materials/Sheets/glass.rsi/plastitaniumglass.png
-  color: "#232127"

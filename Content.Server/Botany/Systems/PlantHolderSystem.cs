@@ -9,7 +9,6 @@ using Content.Shared.Tag;
 using Content.Shared.FixedPoint;
 using Content.Shared.Audio;
 using Content.Shared.Random.Helpers;
-using Robust.Shared.Prototypes;
 using Robust.Shared.Player;
 using Robust.Shared.Timing;
 using Robust.Shared.Audio;
@@ -20,7 +19,6 @@ namespace Content.Server.Botany.Systems
     public sealed class PlantHolderSystem : EntitySystem
     {
         [Dependency] private readonly BotanySystem _botanySystem = default!;
-        [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
         [Dependency] private readonly PopupSystem _popupSystem = default!;
         [Dependency] private readonly IGameTiming _gameTiming = default!;
         [Dependency] private readonly TagSystem _tagSystem = default!;
@@ -32,6 +30,7 @@ namespace Content.Server.Botany.Systems
             base.Initialize();
             SubscribeLocalEvent<PlantHolderComponent, ExaminedEvent>(OnExamine);
             SubscribeLocalEvent<PlantHolderComponent, InteractUsingEvent>(OnInteractUsing);
+            SubscribeLocalEvent<PlantHolderComponent, InteractHandEvent>(OnInteractHand);
         }
 
         private void OnExamine(EntityUid uid, PlantHolderComponent component, ExaminedEvent args)
@@ -239,10 +238,10 @@ namespace Content.Server.Botany.Systems
             {
                 _popupSystem.PopupCursor(Loc.GetString("plant-holder-component-compost-message",
                     ("owner", uid),
-                    ("args.Used", args.Used)), Filter.Entities(args.User));
+                    ("usingItem", args.Used)), Filter.Entities(args.User));
                 _popupSystem.PopupEntity(Loc.GetString("plant-holder-component-compost-others-message",
                     ("user", args.User),
-                    ("args.Used", args.Used),
+                    ("usingItem", args.Used),
                     ("owner", uid)), uid, Filter.Pvs(args.User).RemoveWhereAttachedEntity(puid => puid == args.User));
 
                 if (_solutionSystem.TryGetSolution(args.Used, produce.SolutionName, out var solution2))
@@ -256,6 +255,11 @@ namespace Content.Server.Botany.Systems
 
                 EntityManager.QueueDeleteEntity(args.Used);
             }
+        }
+
+        private void OnInteractHand(EntityUid uid, PlantHolderComponent component, InteractHandEvent args)
+        {
+            component.DoHarvest(args.User);
         }
     }
 }

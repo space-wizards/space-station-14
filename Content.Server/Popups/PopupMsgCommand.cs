@@ -2,7 +2,6 @@
 using Content.Shared.Administration;
 using Content.Shared.Popups;
 using Robust.Shared.Console;
-using Robust.Shared.GameObjects;
 
 namespace Content.Server.Popups
 {

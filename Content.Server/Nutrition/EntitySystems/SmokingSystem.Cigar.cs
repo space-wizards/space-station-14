@@ -2,7 +2,6 @@ using Content.Server.Nutrition.Components;
 using Content.Shared.Interaction;
 using Content.Shared.Smoking;
 using Content.Shared.Temperature;
-using Robust.Shared.GameObjects;
 
 namespace Content.Server.Nutrition.EntitySystems
 {

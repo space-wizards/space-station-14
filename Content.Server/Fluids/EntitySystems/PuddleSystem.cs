@@ -4,7 +4,7 @@ using Content.Shared.Chemistry.Components;
 using Content.Shared.Examine;
 using Content.Shared.FixedPoint;
 using Content.Shared.Fluids;
-using Content.Shared.Slippery;
+using Content.Shared.StepTrigger;
 using JetBrains.Annotations;
 using Robust.Shared.Audio;
 using Robust.Shared.Player;
@@ -16,11 +16,13 @@ namespace Content.Server.Fluids.EntitySystems
     {
         [Dependency] private readonly SolutionContainerSystem _solutionContainerSystem = default!;
         [Dependency] private readonly FluidSpreaderSystem _fluidSpreaderSystem = default!;
+        [Dependency] private readonly StepTriggerSystem _stepTrigger = default!;
 
         public override void Initialize()
         {
             base.Initialize();
 
+            // Shouldn't need re-anchoring.
             SubscribeLocalEvent<PuddleComponent, AnchorStateChangedEvent>(OnAnchorChanged);
             SubscribeLocalEvent<PuddleComponent, ExaminedEvent>(HandlePuddleExamined);
             SubscribeLocalEvent<PuddleComponent, SolutionChangedEvent>(OnUpdate);
@@ -70,20 +72,20 @@ namespace Content.Server.Fluids.EntitySystems
         {
             if ((puddleComponent.SlipThreshold == FixedPoint2.New(-1) ||
                  puddleComponent.CurrentVolume < puddleComponent.SlipThreshold) &&
-                EntityManager.TryGetComponent(entityUid, out SlipperyComponent? oldSlippery))
+                TryComp(entityUid, out StepTriggerComponent? stepTrigger))
             {
-                oldSlippery.Slippery = false;
+                _stepTrigger.SetActive(entityUid, false, stepTrigger);
             }
             else if (puddleComponent.CurrentVolume >= puddleComponent.SlipThreshold)
             {
-                var newSlippery = EntityManager.EnsureComponent<SlipperyComponent>(entityUid);
-                newSlippery.Slippery = true;
+                var comp = EnsureComp<StepTriggerComponent>(entityUid);
+                _stepTrigger.SetActive(entityUid, true, comp);
             }
         }
 
         private void HandlePuddleExamined(EntityUid uid, PuddleComponent component, ExaminedEvent args)
         {
-            if (EntityManager.TryGetComponent<SlipperyComponent>(uid, out var slippery) && slippery.Slippery)
+            if (TryComp<StepTriggerComponent>(uid, out var slippery) && slippery.Active)
             {
                 args.PushText(Loc.GetString("puddle-component-examine-is-slipper-text"));
             }

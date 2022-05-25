@@ -1,13 +1,16 @@
 using Content.Client.Stylesheets;
+using Content.Shared.Examine;
 using Content.Shared.GameTicking;
 using Content.Shared.Popups;
 using Robust.Client.Graphics;
 using Robust.Client.Input;
+using Robust.Client.Player;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Shared.Map;
 using Robust.Shared.Player;
 using Robust.Shared.Timing;
+using Robust.Shared.Utility;
 
 namespace Content.Client.Popups
 {
@@ -16,8 +19,12 @@ namespace Content.Client.Popups
         [Dependency] private readonly IInputManager _inputManager = default!;
         [Dependency] private readonly IUserInterfaceManager _userInterfaceManager = default!;
         [Dependency] private readonly IEyeManager _eyeManager = default!;
+        [Dependency] private readonly IMapManager _map = default!;
+        [Dependency] private readonly IPlayerManager _playerManager = default!;
+        [Dependency] private readonly ExamineSystemShared _examineSystem = default!;
 
-        private readonly List<PopupLabel> _aliveLabels = new();
+        private readonly List<WorldPopupLabel> _aliveWorldLabels = new();
+        private readonly List<CursorPopupLabel> _aliveCursorLabels = new();
 
         public const float PopupLifetime = 3f;
 
@@ -33,12 +40,20 @@ namespace Content.Client.Popups
 
         public void PopupCursor(string message)
         {
-            PopupMessage(message, _inputManager.MouseScreenPosition);
+            var label = new CursorPopupLabel(_inputManager.MouseScreenPosition)
+            {
+                Text = message,
+                StyleClasses = { StyleNano.StyleClassPopupMessage },
+            };
+            _userInterfaceManager.PopupRoot.AddChild(label);
+            _aliveCursorLabels.Add(label);
         }
 
         public void PopupCoordinates(string message, EntityCoordinates coordinates)
         {
-            PopupMessage(message, _eyeManager.CoordinatesToScreen(coordinates));
+            if (_eyeManager.CurrentMap != Transform(coordinates.EntityId).MapID)
+                return;
+            PopupMessage(message, coordinates, null);
         }
 
         public void PopupEntity(string message, EntityUid uid)
@@ -47,12 +62,15 @@ namespace Content.Client.Popups
                 return;
 
             var transform = EntityManager.GetComponent<TransformComponent>(uid);
-            PopupMessage(message, _eyeManager.CoordinatesToScreen(transform.Coordinates), uid);
+            if (_eyeManager.CurrentMap != transform.MapID)
+                return; // TODO: entity may be outside of PVS, but enter PVS at a later time. So the pop-up should still get tracked?
+
+            PopupMessage(message, transform.Coordinates, uid);
         }
 
-        public void PopupMessage(string message, ScreenCoordinates coordinates, EntityUid? entity = null)
+        private void PopupMessage(string message, EntityCoordinates coordinates, EntityUid? entity = null)
         {
-            var label = new PopupLabel(_eyeManager, EntityManager)
+            var label = new WorldPopupLabel(_eyeManager, EntityManager)
             {
                 Entity = entity,
                 Text = message,
@@ -62,9 +80,8 @@ namespace Content.Client.Popups
             _userInterfaceManager.PopupRoot.AddChild(label);
             label.Measure(Vector2.Infinity);
 
-            label.InitialPos = coordinates.Position / label.UIScale - label.DesiredSize / 2;
-            LayoutContainer.SetPosition(label, label.InitialPos);
-            _aliveLabels.Add(label);
+            label.InitialPos = coordinates;
+            _aliveWorldLabels.Add(label);
         }
 
         #endregion
@@ -116,68 +133,145 @@ namespace Content.Client.Popups
 
         private void OnRoundRestart(RoundRestartCleanupEvent ev)
         {
-            foreach (var label in _aliveLabels)
+            foreach (var label in _aliveWorldLabels)
             {
                 label.Dispose();
             }
 
-            _aliveLabels.Clear();
+            _aliveWorldLabels.Clear();
         }
 
         #endregion
 
         public override void FrameUpdate(float frameTime)
         {
-            foreach (var l in _aliveLabels)
+            if (_aliveWorldLabels.Count == 0) return;
+
+            var player = _playerManager.LocalPlayer?.ControlledEntity;
+            var playerPos = player != null ? Transform(player.Value).MapPosition : MapCoordinates.Nullspace;
+
+            // ReSharper disable once ConvertToLocalFunction
+            var predicate = static (EntityUid uid, (EntityUid? compOwner, EntityUid? attachedEntity) data)
+                => uid == data.compOwner || uid == data.attachedEntity;
+            var occluded = player != null && _examineSystem.IsOccluded(player.Value);
+
+            for (var i = _aliveWorldLabels.Count - 1; i >= 0; i--)
             {
-                if (l.TotalTime > PopupLifetime)
-                    l.Dispose();
+                var label = _aliveWorldLabels[i];
+                if (label.TotalTime > PopupLifetime ||
+                    label.Entity != null && Deleted(label.Entity))
+                {
+                    label.Dispose();
+                    _aliveWorldLabels.RemoveSwap(i);
+                    continue;
+                }
+
+                if (label.Entity == player)
+                {
+                    label.Visible = true;
+                    continue;
+                }
+
+                var otherPos = label.Entity != null ? Transform(label.Entity.Value).MapPosition : label.InitialPos.ToMap(EntityManager);
+
+                if (occluded && !ExamineSystemShared.InRangeUnOccluded(
+                        playerPos,
+                        otherPos, 0f,
+                        (label.Entity, player), predicate))
+                {
+                    label.Visible = false;
+                    continue;
+                }
+
+                label.Visible = true;
             }
 
-            _aliveLabels.RemoveAll(l => l.Disposed);
+            for (var i = _aliveCursorLabels.Count - 1; i >= 0; i--)
+            {
+                var label = _aliveCursorLabels[i];
+                if (label.TotalTime > PopupLifetime)
+                {
+                    label.Dispose();
+                    _aliveCursorLabels.RemoveSwap(i);
+                }
+            }
         }
 
-        private sealed class PopupLabel : Label
+        private abstract class PopupLabel : Label
         {
-            private readonly IEyeManager _eyeManager;
-            private readonly IEntityManager _entityManager;
+            public float TotalTime { get; protected set; }
 
-            public float TotalTime { get; private set; }
-            public Vector2 InitialPos { get; set; }
-            public EntityUid? Entity { get; set; }
-
-            public PopupLabel(IEyeManager eyeManager, IEntityManager entityManager)
+            public PopupLabel()
             {
-                _eyeManager = eyeManager;
-                _entityManager = entityManager;
-                ShadowOffsetXOverride = 1;
-                ShadowOffsetYOverride = 1;
+                ShadowOffsetXOverride = ShadowOffsetYOverride = 1;
                 FontColorShadowOverride = Color.Black;
+                Measure(Vector2.Infinity);
             }
 
             protected override void FrameUpdate(FrameEventArgs eventArgs)
             {
                 TotalTime += eventArgs.DeltaSeconds;
+                if (TotalTime > 0.5f)
+                    Modulate = Color.White.WithAlpha(1f - 0.2f * MathF.Pow(TotalTime - 0.5f, 3f));
+            }
+        }
 
-                Vector2 position;
+        private sealed class CursorPopupLabel : PopupLabel
+        {
+            public Vector2 InitialPos { get; set; }
+
+            public CursorPopupLabel(ScreenCoordinates screenCoords) : base()
+            {
+                InitialPos = screenCoords.Position / UIScale - DesiredSize / 2;
+            }
+
+            protected override void FrameUpdate(FrameEventArgs eventArgs)
+            {
+                base.FrameUpdate(eventArgs);
+                LayoutContainer.SetPosition(this, InitialPos - (0, 20 * (TotalTime * TotalTime + TotalTime)));
+            }
+        }
+
+        private sealed class WorldPopupLabel : PopupLabel
+        {
+            private readonly IEyeManager _eyeManager;
+            private readonly IEntityManager _entityManager;
+
+            /// <summary>
+            /// The original Mapid and ScreenPosition of the label.
+            /// </summary>
+            /// <remarks>
+            /// Yes that's right it's not technically MapCoordinates.
+            /// </remarks>
+            public EntityCoordinates InitialPos { get; set; }
+            public EntityUid? Entity { get; set; }
+
+            public WorldPopupLabel(IEyeManager eyeManager, IEntityManager entityManager) : base()
+            {
+                _eyeManager = eyeManager;
+                _entityManager = entityManager;
+            }
+
+            protected override void FrameUpdate(FrameEventArgs eventArgs)
+            {
+                base.FrameUpdate(eventArgs);
+                ScreenCoordinates screenCoords;
+
                 if (Entity == null)
-                    position = InitialPos;
+                    screenCoords = _eyeManager.CoordinatesToScreen(InitialPos);
                 else if (_entityManager.TryGetComponent(Entity.Value, out TransformComponent xform))
-                    position = (_eyeManager.CoordinatesToScreen(xform.Coordinates).Position / UIScale) - DesiredSize / 2;
+                    screenCoords = _eyeManager.CoordinatesToScreen(xform.Coordinates);
                 else
                 {
-                    // Entity has probably been deleted.
                     Visible = false;
-                    TotalTime += PopupLifetime;
+                    if (Entity != null && _entityManager.Deleted(Entity))
+                        TotalTime += PopupLifetime;
                     return;
                 }
 
+                Visible = true;
+                var position = screenCoords.Position / UIScale - DesiredSize / 2;
                 LayoutContainer.SetPosition(this, position - (0, 20 * (TotalTime * TotalTime + TotalTime)));
-
-                if (TotalTime > 0.5f)
-                {
-                    Modulate = Color.White.WithAlpha(1f - 0.2f * (float)Math.Pow(TotalTime - 0.5f, 3f));
-                }
             }
         }
     }

@@ -12,9 +12,9 @@
       - type: BurnStateVisualizer
   - type: Tag
     tags:
-    - Recyclable
     - Trash
   - type: Recyclable
+  - type: SpaceGarbage
 
 # Base for all cigars and cigarettes.
 - type: entity

@@ -8,6 +8,11 @@
     snap:
     - Window
   components:
+  - type: MeleeSound
+    soundGroups:
+      Brute:
+        path:
+          "/Audio/Effects/glass_hit.ogg"
   - type: WallMount
     arc: 360 # interact despite grilles
   - type: Tag
@@ -28,13 +33,10 @@
     fixtures:
     - shape:
         !type:PhysShapeAabb {}
-      layer:
-      - Impassable
-      - MobImpassable
-      - VaultImpassable
-      - SmallImpassable
       mask:
-      - VaultImpassable
+      - FullTileMask
+      layer:
+      - GlassLayer
   - type: Damageable
     damageContainer: Inorganic
     damageModifierSet: Glass
@@ -69,7 +71,7 @@
     base: window
   - type: InteractionPopup
     interactSuccessString: comp-window-knock
-    popupPerceivedByOthers: true
+    messagePerceivedByOthers: comp-window-knock
     interactSuccessSound:
       path: /Audio/Effects/glass_knock.ogg
   - type: Construction
@@ -110,7 +112,7 @@
     state: window
   - type: InteractionPopup
     interactSuccessString: comp-window-knock
-    popupPerceivedByOthers: true
+    messagePerceivedByOthers: comp-window-knock
     interactSuccessSound:
       path: /Audio/Effects/glass_knock.ogg
   - type: Physics
@@ -120,13 +122,10 @@
         !type:PhysShapeAabb
         bounds: "-0.49,-0.49,0.49,-0.3"
       mass: 50
-      layer:
-      - Impassable
-      - MobImpassable
-      - VaultImpassable
-      - SmallImpassable
       mask:
-      - VaultImpassable
+      - FullTileMask
+      layer:
+      - GlassLayer
   - type: Repairable
   - type: Damageable
     damageContainer: Inorganic

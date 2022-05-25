@@ -1,5 +1,4 @@
-﻿using JetBrains.Annotations;
-using Robust.Shared.Prototypes;
+﻿using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
 
 namespace Content.Server.GameTicking.Prototypes;

@@ -26,6 +26,7 @@ namespace Content.Shared.SubFloor
             SubscribeLocalEvent<TileChangedEvent>(OnTileChanged);
             SubscribeLocalEvent<SubFloorHideComponent, ComponentStartup>(OnSubFloorStarted);
             SubscribeLocalEvent<SubFloorHideComponent, ComponentShutdown>(OnSubFloorTerminating);
+            // Like 80% sure this doesn't need to handle re-anchoring.
             SubscribeLocalEvent<SubFloorHideComponent, AnchorStateChangedEvent>(HandleAnchorChanged);
             SubscribeLocalEvent<SubFloorHideComponent, GettingInteractedWithAttemptEvent>(OnInteractionAttempt);
         }
@@ -62,9 +63,6 @@ namespace Content.Shared.SubFloor
                 var xform = Transform(uid);
                 _trayScannerSystem.OnSubfloorAnchored(uid, component, xform);
                 UpdateFloorCover(uid, component, xform);
-
-                if (component.IsUnderCover)
-                    UpdateAppearance(uid, component);
             }
             else if (component.IsUnderCover)
             {

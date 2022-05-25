@@ -116,7 +116,7 @@
   parent: PosterBase
   id: PosterContrabandGreyTide
   name: "Grey Tide"
-  description: "A rebellious poster symbolizing assistant solidarity."
+  description: "A rebellious poster symbolizing passenger solidarity."
   components:
   - type: Sprite
     state: poster8_contraband
@@ -861,7 +861,7 @@
   components:
   - type: Sprite
     state: poster37_legit
-    
+
 #maps
 
 - type: entity
@@ -881,7 +881,7 @@
   components:
   - type: Sprite
     state: deltamap
-    
+
 - type: entity
   parent: PosterBase
   id: PosterMapMarathon
@@ -889,7 +889,7 @@
   description: "A map of Marathon Station."
   components:
   - type: Sprite
-    state: marathonmap    
+    state: marathonmap
 
 - type: entity
   parent: PosterBase
@@ -899,7 +899,7 @@
   components:
   - type: Sprite
     state: moosemap
-    
+
 - type: entity
   parent: PosterBase
   id: PosterMapPacked
@@ -907,7 +907,7 @@
   description: "A map of Packed Station."
   components:
   - type: Sprite
-    state: packedmap  
+    state: packedmap
 
 - type: entity
   parent: PosterBase
@@ -917,7 +917,7 @@
   components:
   - type: Sprite
     state: pillarmap
-    
+
 - type: entity
   parent: PosterBase
   id: PosterMapSaltern
@@ -925,8 +925,8 @@
   description: "A map of Saltern Station."
   components:
   - type: Sprite
-    state: salternmap  
-    
+    state: salternmap
+
 - type: entity
   parent: PosterBase
   id: PosterMapSplit
@@ -934,5 +934,5 @@
   description: "A map of Split Station."
   components:
   - type: Sprite
-    state: splitmap 
-    
+    state: splitmap
+

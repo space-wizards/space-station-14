@@ -16,17 +16,12 @@
       fixtures:
       - shape:
           !type:PhysShapeAabb
-            bounds: "-0.25,-0.5,0.25,0.5"
+          bounds: "-0.25,-0.5,0.25,0.5"
         mass: 25
-        layer:
-          - Impassable
-          - MobImpassable
-          - VaultImpassable
-          - Opaque
         mask:
-          - Impassable
-          - MobImpassable
-          - VaultImpassable
+        - MachineMask
+        layer:
+        - MachineLayer
     - type: Clickable
     - type: InteractionOutline
     - type: Anchorable
@@ -69,17 +64,12 @@
       fixtures:
       - shape:
           !type:PhysShapeAabb
-            bounds: "-0.25,-0.5,0.25,0.5"
+          bounds: "-0.25,-0.5,0.25,0.5"
         mass: 25
-        layer:
-          - Impassable
-          - MobImpassable
-          - VaultImpassable
-          - Opaque
         mask:
-          - Impassable
-          - MobImpassable
-          - VaultImpassable
+        - MachineMask
+        layer:
+        - MachineLayer
     - type: Clickable
     - type: InteractionOutline
     - type: Anchorable

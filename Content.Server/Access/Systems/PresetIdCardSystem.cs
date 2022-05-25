@@ -1,11 +1,7 @@
 using Content.Server.Access.Components;
 using Content.Shared.Access.Systems;
 using Content.Shared.Roles;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Log;
 using Robust.Shared.Prototypes;
-using System;
 
 namespace Content.Server.Access.Systems
 {

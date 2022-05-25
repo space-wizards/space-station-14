@@ -5,8 +5,7 @@
   description: A cardboard box for storing things.
   components:
   - type: Sprite
-    layers:
-      - state: box
+    state: box
 
 - type: entity
   name: lightbulb box
@@ -87,7 +86,7 @@
   components:
   - type: StorageFill
     contents:
-      - id: AssistantPDA
+      - id: PassengerPDA
         amount: 6
   - type: Sprite
     layers:
@@ -107,7 +106,7 @@
   components:
   - type: StorageFill
     contents:
-      - id: AssistantIDCard
+      - id: PassengerIDCard
         amount: 6
   - type: Sprite
     layers:
@@ -145,12 +144,30 @@
     contents:
       - id: ClothingMaskBreath
       - id: EmergencyOxygenTankFilled
+      - id: SpaceMedipen
       - id: EmergencyMedipen
       - id: Flare
       - id: FoodSnackChocolate
   - type: Sprite
     layers:
       - state: box
+      - state: writing
+
+- type: entity
+  name: M.R.E.
+  parent: BoxCardboard
+  id: BoxMRE
+  description: A box of decades old military surplus rations. It is surprisingly not rotten.
+  components:
+  - type: StorageFill
+    contents:
+      - id: DrinkMREFlask
+      - id: FoodSnackNutribrick
+      - id: FoodSnackMREBrownie
+      - id: FoodCondimentPacketKetchup
+  - type: Sprite
+    layers:
+      - state: box_olive
       - state: writing
 
 - type: entity

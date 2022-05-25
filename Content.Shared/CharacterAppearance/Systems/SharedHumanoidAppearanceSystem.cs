@@ -1,9 +1,7 @@
-using System;
 using Content.Shared.Body.Part;
 using Content.Shared.CharacterAppearance.Components;
 using Content.Shared.Preferences;
 using Robust.Shared.Enums;
-using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Components.Localization;
 using Robust.Shared.GameStates;
 using Robust.Shared.Serialization;
@@ -18,10 +16,10 @@ namespace Content.Shared.CharacterAppearance.Systems
             SubscribeLocalEvent<HumanoidAppearanceComponent, ComponentHandleState>(OnAppearanceHandleState);
         }
 
-        public void UpdateFromProfile(EntityUid uid, ICharacterProfile profile)
+        public void UpdateFromProfile(EntityUid uid, ICharacterProfile profile, HumanoidAppearanceComponent? appearance=null)
         {
             var humanoid = (HumanoidCharacterProfile) profile;
-            UpdateAppearance(uid, humanoid.Appearance, humanoid.Sex, humanoid.Gender, humanoid.Species);
+            UpdateAppearance(uid, humanoid.Appearance, humanoid.Sex, humanoid.Gender, humanoid.Species, appearance);
         }
 
         // The magic mirror otherwise wouldn't work. (it directly modifies the component server-side)
@@ -46,6 +44,17 @@ namespace Content.Shared.CharacterAppearance.Systems
             component.Dirty();
 
             RaiseLocalEvent(uid, new ChangedHumanoidAppearanceEvent(appearance, sex, gender, species));
+        }
+
+        public void UpdateAppearance(EntityUid uid, HumanoidCharacterAppearance appearance, HumanoidAppearanceComponent? component = null)
+        {
+            if (!Resolve(uid, ref component)) return;
+
+            component.Appearance = appearance;
+
+            component.Dirty();
+
+            RaiseLocalEvent(uid, new ChangedHumanoidAppearanceEvent(appearance, component.Sex, component.Gender, component.Species));
         }
 
         private void OnAppearanceGetState(EntityUid uid, HumanoidAppearanceComponent component, ref ComponentGetState args)

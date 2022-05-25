@@ -1,8 +1,6 @@
 using Content.Shared.ActionBlocker;
 using Content.Shared.Movement.EntitySystems;
 using Content.Shared.Pulling.Components;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
 
 namespace Content.Shared.Pulling.Systems
 {

@@ -1,7 +1,6 @@
 using Content.Server.AI.WorldState;
 using Content.Server.AI.WorldState.States;
 using Content.Shared.Hands.Components;
-using System.Linq;
 
 namespace Content.Server.AI.Utility.Considerations.Hands
 {
