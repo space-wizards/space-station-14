@@ -14,15 +14,15 @@ namespace Content.Server.Power.Components
         /// </summary>
         [DataField("drawRate")]
         [ViewVariables(VVAccess.ReadWrite)]
-        public float DrawRate { get => NetworkLoad.DesiredPower; set => NetworkLoad.DesiredPower = value; }
+        public double DrawRate { get => NetworkLoad.DesiredPower; set => NetworkLoad.DesiredPower = value; }
 
         /// <summary>
         ///     How much power this is currently receiving from <see cref="PowerSupplierComponent"/>s.
         /// </summary>
         [ViewVariables]
-        public float ReceivedPower => NetworkLoad.ReceivingPower;
+        public double ReceivedPower => NetworkLoad.ReceivingPower;
 
-        public float LastReceived = float.NaN;
+        public double LastReceived = double.NaN;
 
         public PowerState.Load NetworkLoad { get; } = new();
 

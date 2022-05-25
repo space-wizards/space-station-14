@@ -125,8 +125,8 @@ namespace Content.Server.Power.NodeGroups
             // This is just recycling the multi-tool examine.
             var ps = _powerNetSystem.GetNetworkStatistics(NetworkNode);
 
-            float storageRatio = ps.InStorageCurrent / Math.Max(ps.InStorageMax, 1.0f);
-            float outStorageRatio = ps.OutStorageCurrent / Math.Max(ps.OutStorageMax, 1.0f);
+            double storageRatio = ps.InStorageCurrent / Math.Max(ps.InStorageMax, 1.0);
+            double outStorageRatio = ps.OutStorageCurrent / Math.Max(ps.OutStorageMax, 1.0);
             return @$"Current Supply: {ps.SupplyCurrent:G3}
 From Batteries: {ps.SupplyBatteries:G3}
 Theoretical Supply: {ps.SupplyTheoretical:G3}

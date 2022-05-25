@@ -37,9 +37,9 @@ namespace Content.Shared.APC
     {
         public readonly bool MainBreaker;
         public readonly ApcExternalPowerState ApcExternalPower;
-        public readonly float Charge;
+        public readonly double Charge;
 
-        public ApcBoundInterfaceState(bool mainBreaker, ApcExternalPowerState apcExternalPower, float charge)
+        public ApcBoundInterfaceState(bool mainBreaker, ApcExternalPowerState apcExternalPower, double charge)
         {
             MainBreaker = mainBreaker;
             ApcExternalPower = apcExternalPower;

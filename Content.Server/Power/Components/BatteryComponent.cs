@@ -12,17 +12,17 @@ namespace Content.Server.Power.Components
         /// <summary>
         /// Maximum charge of the battery in joules (ie. watt seconds)
         /// </summary>
-        [ViewVariables(VVAccess.ReadWrite)] public float MaxCharge { get => _maxCharge; set => SetMaxCharge(value); }
+        [ViewVariables(VVAccess.ReadWrite)] public double MaxCharge { get => _maxCharge; set => SetMaxCharge(value); }
         [DataField("maxCharge")]
-        private float _maxCharge;
+        private double _maxCharge;
 
         /// <summary>
         /// Current charge of the battery in joules (ie. watt seconds)
         /// </summary>
         [ViewVariables(VVAccess.ReadWrite)]
-        public float CurrentCharge { get => _currentCharge; set => SetCurrentCharge(value); }
+        public double CurrentCharge { get => _currentCharge; set => SetCurrentCharge(value); }
         [DataField("startingCharge")]
-        private float _currentCharge;
+        private double _currentCharge;
 
         /// <summary>
         /// True if the battery is fully charged.
@@ -32,7 +32,7 @@ namespace Content.Server.Power.Components
         /// <summary>
         ///     If sufficient charge is avaiable on the battery, use it. Otherwise, don't.
         /// </summary>
-        public virtual bool TryUseCharge(float chargeToUse)
+        public virtual bool TryUseCharge(double chargeToUse)
         {
             if (chargeToUse >= CurrentCharge)
             {
@@ -45,7 +45,7 @@ namespace Content.Server.Power.Components
             }
         }
 
-        public virtual float UseCharge(float toDeduct)
+        public virtual double UseCharge(double toDeduct)
         {
             var chargeChangedBy = Math.Min(CurrentCharge, toDeduct);
             CurrentCharge -= chargeChangedBy;
@@ -71,14 +71,14 @@ namespace Content.Server.Power.Components
             _entMan.EventBus.RaiseLocalEvent(Owner, new ChargeChangedEvent(), false);
         }
 
-        private void SetMaxCharge(float newMax)
+        private void SetMaxCharge(double newMax)
         {
             _maxCharge = Math.Max(newMax, 0);
             _currentCharge = Math.Min(_currentCharge, MaxCharge);
             OnChargeChanged();
         }
 
-        private void SetCurrentCharge(float newChargeAmount)
+        private void SetCurrentCharge(double newChargeAmount)
         {
             _currentCharge = MathHelper.Clamp(newChargeAmount, 0, MaxCharge);
             OnChargeChanged();

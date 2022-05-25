@@ -18,7 +18,7 @@ namespace Content.Server.Power.Components
         /// </summary>
         [ViewVariables(VVAccess.ReadWrite)]
         [DataField("powerLoad")]
-        public float Load { get => NetworkLoad.DesiredPower; set => NetworkLoad.DesiredPower = value; }
+        public double Load { get => NetworkLoad.DesiredPower; set => NetworkLoad.DesiredPower = value; }
 
         public ApcPowerProviderComponent? Provider = null;
 
@@ -58,7 +58,7 @@ namespace Content.Server.Power.Components
             DesiredPower = 5
         };
 
-        public float PowerReceived => NetworkLoad.ReceivingPower;
+        public double PowerReceived => NetworkLoad.ReceivingPower;
 
         protected override void OnRemove()
         {
@@ -74,9 +74,9 @@ namespace Content.Server.Power.Components
     public sealed class PowerChangedEvent : EntityEventArgs
     {
         public readonly bool Powered;
-        public readonly float ReceivingPower;
+        public readonly double ReceivingPower;
 
-        public PowerChangedEvent(bool powered, float receivingPower)
+        public PowerChangedEvent(bool powered, double receivingPower)
         {
             Powered = powered;
             ReceivingPower = receivingPower;

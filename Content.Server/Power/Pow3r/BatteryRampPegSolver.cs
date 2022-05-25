@@ -72,7 +72,7 @@ namespace Content.Server.Power.Pow3r
             foreach (var network in _sortBuffer)
             {
                 // Add up demand in network.
-                var demand = 0f;
+                var demand = 0.0;
                 foreach (var loadId in network.Loads)
                 {
                     var load = state.Loads[loadId];
@@ -112,8 +112,8 @@ namespace Content.Server.Power.Pow3r
                 DebugTools.Assert(demand >= 0);
 
                 // Add up supply in network.
-                var availableSupplySum = 0f;
-                var maxSupplySum = 0f;
+                var availableSupplySum = 0.0;
+                var maxSupplySum = 0.0;
                 foreach (var supplyId in network.Supplies)
                 {
                     var supply = state.Supplies[supplyId];

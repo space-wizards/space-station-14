@@ -12,11 +12,11 @@ namespace Content.Server.Power.Components
     [RegisterComponent]
     public sealed class PowerNetworkBatteryComponent : Component
     {
-        [ViewVariables] public float LastSupply = 0f;
+        [ViewVariables] public double LastSupply = 0f;
 
         [DataField("maxChargeRate")]
         [ViewVariables(VVAccess.ReadWrite)]
-        public float MaxChargeRate
+        public double MaxChargeRate
         {
             get => NetworkBattery.MaxChargeRate;
             set => NetworkBattery.MaxChargeRate = value;
@@ -24,7 +24,7 @@ namespace Content.Server.Power.Components
 
         [DataField("maxSupply")]
         [ViewVariables(VVAccess.ReadWrite)]
-        public float MaxSupply
+        public double MaxSupply
         {
             get => NetworkBattery.MaxSupply;
             set => NetworkBattery.MaxSupply = value;
@@ -32,7 +32,7 @@ namespace Content.Server.Power.Components
 
         [DataField("supplyRampTolerance")]
         [ViewVariables(VVAccess.ReadWrite)]
-        public float SupplyRampTolerance
+        public double SupplyRampTolerance
         {
             get => NetworkBattery.SupplyRampTolerance;
             set => NetworkBattery.SupplyRampTolerance = value;
@@ -40,7 +40,7 @@ namespace Content.Server.Power.Components
 
         [DataField("supplyRampRate")]
         [ViewVariables(VVAccess.ReadWrite)]
-        public float SupplyRampRate
+        public double SupplyRampRate
         {
             get => NetworkBattery.SupplyRampRate;
             set => NetworkBattery.SupplyRampRate = value;
@@ -48,7 +48,7 @@ namespace Content.Server.Power.Components
 
         [DataField("supplyRampPosition")]
         [ViewVariables(VVAccess.ReadWrite)]
-        public float SupplyRampPosition
+        public double SupplyRampPosition
         {
             get => NetworkBattery.SupplyRampPosition;
             set => NetworkBattery.SupplyRampPosition = value;
@@ -56,7 +56,7 @@ namespace Content.Server.Power.Components
 
         [DataField("currentSupply")]
         [ViewVariables(VVAccess.ReadWrite)]
-        public float CurrentSupply
+        public double CurrentSupply
         {
             get => NetworkBattery.CurrentSupply;
             set => NetworkBattery.CurrentSupply = value;
@@ -64,7 +64,7 @@ namespace Content.Server.Power.Components
 
         [DataField("currentReceiving")]
         [ViewVariables(VVAccess.ReadWrite)]
-        public float CurrentReceiving
+        public double CurrentReceiving
         {
             get => NetworkBattery.CurrentReceiving;
             set => NetworkBattery.CurrentReceiving = value;
@@ -72,7 +72,7 @@ namespace Content.Server.Power.Components
 
         [DataField("loadingNetworkDemand")]
         [ViewVariables(VVAccess.ReadWrite)]
-        public float LoadingNetworkDemand
+        public double LoadingNetworkDemand
         {
             get => NetworkBattery.LoadingNetworkDemand;
             set => NetworkBattery.LoadingNetworkDemand = value;
@@ -104,7 +104,7 @@ namespace Content.Server.Power.Components
 
         [DataField("efficiency")]
         [ViewVariables(VVAccess.ReadWrite)]
-        public float Efficiency
+        public double Efficiency
         {
             get => NetworkBattery.Efficiency;
             set => NetworkBattery.Efficiency = value;

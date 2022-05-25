@@ -85,7 +85,7 @@ namespace Content.Server.Electrocution
                 var ftAdjusted = Math.Min(frameTime, electrocution.TimeLeft);
 
                 electrocution.TimeLeft -= ftAdjusted;
-                electrocution.AccumulatedDamage += consumer.ReceivedPower * ElectrifiedDamagePerWatt * ftAdjusted;
+                electrocution.AccumulatedDamage += (float)(consumer.ReceivedPower * ElectrifiedDamagePerWatt * ftAdjusted);
 
                 if (MathHelper.CloseTo(electrocution.TimeLeft, 0))
                     finishedElectrocutionsQueue.Add(electrocution);

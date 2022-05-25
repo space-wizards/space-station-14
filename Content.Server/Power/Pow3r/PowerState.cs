@@ -345,27 +345,27 @@ namespace Content.Server.Power.Pow3r
             // == Static parameters ==
             [ViewVariables(VVAccess.ReadWrite)] public bool Enabled = true;
             [ViewVariables(VVAccess.ReadWrite)] public bool Paused;
-            [ViewVariables(VVAccess.ReadWrite)] public float MaxSupply;
+            [ViewVariables(VVAccess.ReadWrite)] public double MaxSupply;
 
-            [ViewVariables(VVAccess.ReadWrite)] public float SupplyRampRate = 5000;
-            [ViewVariables(VVAccess.ReadWrite)] public float SupplyRampTolerance = 5000;
+            [ViewVariables(VVAccess.ReadWrite)] public double SupplyRampRate = 5000;
+            [ViewVariables(VVAccess.ReadWrite)] public double SupplyRampTolerance = 5000;
 
             // == Runtime parameters ==
 
             // Actual power supplied last network update.
-            [ViewVariables(VVAccess.ReadWrite)] public float CurrentSupply;
+            [ViewVariables(VVAccess.ReadWrite)] public double CurrentSupply;
 
             // The amount of power we WANT to be supplying to match grid load.
             [ViewVariables(VVAccess.ReadWrite)] [JsonIgnore]
-            public float SupplyRampTarget;
+            public double SupplyRampTarget;
 
             // Position of the supply ramp.
-            [ViewVariables(VVAccess.ReadWrite)] public float SupplyRampPosition;
+            [ViewVariables(VVAccess.ReadWrite)] public double SupplyRampPosition;
 
             [ViewVariables] [JsonIgnore] public NodeId LinkedNetwork;
 
             // In-tick max supply thanks to ramp. Used during calculations.
-            [JsonIgnore] public float EffectiveMaxSupply;
+            [JsonIgnore] public double EffectiveMaxSupply;
         }
 
         public sealed class Load
@@ -375,10 +375,10 @@ namespace Content.Server.Power.Pow3r
             // == Static parameters ==
             [ViewVariables(VVAccess.ReadWrite)] public bool Enabled = true;
             [ViewVariables(VVAccess.ReadWrite)] public bool Paused;
-            [ViewVariables(VVAccess.ReadWrite)] public float DesiredPower;
+            [ViewVariables(VVAccess.ReadWrite)] public double DesiredPower;
 
             // == Runtime parameters ==
-            [ViewVariables(VVAccess.ReadWrite)] public float ReceivingPower;
+            [ViewVariables(VVAccess.ReadWrite)] public double ReceivingPower;
 
             [ViewVariables] [JsonIgnore] public NodeId LinkedNetwork;
         }
@@ -392,20 +392,20 @@ namespace Content.Server.Power.Pow3r
             [ViewVariables(VVAccess.ReadWrite)] public bool Paused;
             [ViewVariables(VVAccess.ReadWrite)] public bool CanDischarge = true;
             [ViewVariables(VVAccess.ReadWrite)] public bool CanCharge = true;
-            [ViewVariables(VVAccess.ReadWrite)] public float Capacity;
-            [ViewVariables(VVAccess.ReadWrite)] public float MaxChargeRate;
-            [ViewVariables(VVAccess.ReadWrite)] public float MaxThroughput; // 0 = infinite cuz imgui
-            [ViewVariables(VVAccess.ReadWrite)] public float MaxSupply;
-            [ViewVariables(VVAccess.ReadWrite)] public float SupplyRampTolerance = 5000;
-            [ViewVariables(VVAccess.ReadWrite)] public float SupplyRampRate = 5000;
-            [ViewVariables(VVAccess.ReadWrite)] public float Efficiency = 1;
+            [ViewVariables(VVAccess.ReadWrite)] public double Capacity;
+            [ViewVariables(VVAccess.ReadWrite)] public double MaxChargeRate;
+            [ViewVariables(VVAccess.ReadWrite)] public double MaxThroughput; // 0 = infinite cuz imgui
+            [ViewVariables(VVAccess.ReadWrite)] public double MaxSupply;
+            [ViewVariables(VVAccess.ReadWrite)] public double SupplyRampTolerance = 5000;
+            [ViewVariables(VVAccess.ReadWrite)] public double SupplyRampRate = 5000;
+            [ViewVariables(VVAccess.ReadWrite)] public double Efficiency = 1;
 
             // == Runtime parameters ==
-            [ViewVariables(VVAccess.ReadWrite)] public float SupplyRampPosition;
-            [ViewVariables(VVAccess.ReadWrite)] public float CurrentSupply;
-            [ViewVariables(VVAccess.ReadWrite)] public float CurrentStorage;
-            [ViewVariables(VVAccess.ReadWrite)] public float CurrentReceiving;
-            [ViewVariables(VVAccess.ReadWrite)] public float LoadingNetworkDemand;
+            [ViewVariables(VVAccess.ReadWrite)] public double SupplyRampPosition;
+            [ViewVariables(VVAccess.ReadWrite)] public double CurrentSupply;
+            [ViewVariables(VVAccess.ReadWrite)] public double CurrentStorage;
+            [ViewVariables(VVAccess.ReadWrite)] public double CurrentReceiving;
+            [ViewVariables(VVAccess.ReadWrite)] public double LoadingNetworkDemand;
 
             [ViewVariables(VVAccess.ReadWrite)] [JsonIgnore]
             public bool SupplyingMarked;
@@ -417,13 +417,13 @@ namespace Content.Server.Power.Pow3r
             public bool LoadingDemandMarked;
 
             [ViewVariables(VVAccess.ReadWrite)] [JsonIgnore]
-            public float TempMaxSupply;
+            public double TempMaxSupply;
 
             [ViewVariables(VVAccess.ReadWrite)] [JsonIgnore]
-            public float DesiredPower;
+            public double DesiredPower;
 
             [ViewVariables(VVAccess.ReadWrite)] [JsonIgnore]
-            public float SupplyRampTarget;
+            public double SupplyRampTarget;
 
             [ViewVariables(VVAccess.ReadWrite)] [JsonIgnore]
             public NodeId LinkedNetworkCharging;
@@ -448,8 +448,8 @@ namespace Content.Server.Power.Pow3r
             // "Supplying" means the network is connected to the OUTPUT port of the battery.
             [ViewVariables] public List<NodeId> BatteriesDischarging = new();
 
-            [ViewVariables] public float LastAvailableSupplySum = 0f;
-            [ViewVariables] public float LastMaxSupplySum = 0f;
+            [ViewVariables] public double LastAvailableSupplySum = 0f;
+            [ViewVariables] public double LastMaxSupplySum = 0f;
 
             [ViewVariables] [JsonIgnore] public int Height;
             [JsonIgnore] public bool HeightTouched;

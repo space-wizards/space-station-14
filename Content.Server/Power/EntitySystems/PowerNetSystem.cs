@@ -155,20 +155,20 @@ namespace Content.Server.Power.EntitySystems
             //  because there's all sorts of weirdness with them.
             // A full battery will still have the same max draw rate,
             //  but will likely have deliberately limited current draw rate.
-            float consumptionW = network.Loads.Sum(s => _powerState.Loads[s].DesiredPower);
+            double consumptionW = network.Loads.Sum(s => _powerState.Loads[s].DesiredPower);
             consumptionW += network.BatteriesCharging.Sum(s => _powerState.Batteries[s].CurrentReceiving);
 
             // This is interesting because LastMaxSupplySum seems to match LastAvailableSupplySum for some reason.
             // I suspect it's accounting for current supply rather than theoretical supply.
-            float maxSupplyW = network.Supplies.Sum(s => _powerState.Supplies[s].MaxSupply);
+            double maxSupplyW = network.Supplies.Sum(s => _powerState.Supplies[s].MaxSupply);
 
             // Battery stuff is more complex.
             // Without stealing PowerState, the most efficient way
             //  to grab the necessary discharge data is from
             //  PowerNetworkBatteryComponent (has Pow3r reference).
-            float supplyBatteriesW = 0.0f;
-            float storageCurrentJ = 0.0f;
-            float storageMaxJ = 0.0f;
+            double supplyBatteriesW = 0.0f;
+            double storageCurrentJ = 0.0f;
+            double storageMaxJ = 0.0f;
             foreach (var discharger in network.BatteriesDischarging)
             {
                 var nb = _powerState.Batteries[discharger];
@@ -178,8 +178,8 @@ namespace Content.Server.Power.EntitySystems
                 maxSupplyW += nb.MaxSupply;
             }
             // And charging
-            float outStorageCurrentJ = 0.0f;
-            float outStorageMaxJ = 0.0f;
+            double outStorageCurrentJ = 0.0f;
+            double outStorageMaxJ = 0.0f;
             foreach (var charger in network.BatteriesCharging)
             {
                 var nb = _powerState.Batteries[charger];
@@ -395,10 +395,10 @@ namespace Content.Server.Power.EntitySystems
     /// </summary>
     public sealed class PowerConsumerReceivedChanged : EntityEventArgs
     {
-        public float ReceivedPower { get; }
-        public float DrawRate { get; }
+        public double ReceivedPower { get; }
+        public double DrawRate { get; }
 
-        public PowerConsumerReceivedChanged(float receivedPower, float drawRate)
+        public PowerConsumerReceivedChanged(double receivedPower, double drawRate)
         {
             ReceivedPower = receivedPower;
             DrawRate = drawRate;
@@ -423,14 +423,14 @@ namespace Content.Server.Power.EntitySystems
 
     public struct NetworkPowerStatistics
     {
-        public float SupplyCurrent;
-        public float SupplyBatteries;
-        public float SupplyTheoretical;
-        public float Consumption;
-        public float InStorageCurrent;
-        public float InStorageMax;
-        public float OutStorageCurrent;
-        public float OutStorageMax;
+        public double SupplyCurrent;
+        public double SupplyBatteries;
+        public double SupplyTheoretical;
+        public double Consumption;
+        public double InStorageCurrent;
+        public double InStorageMax;
+        public double OutStorageCurrent;
+        public double OutStorageMax;
     }
 
 }

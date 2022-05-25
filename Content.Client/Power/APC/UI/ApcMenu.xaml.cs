@@ -55,8 +55,8 @@ namespace Content.Client.Power.APC.UI
 
             if (ChargeBar != null)
             {
-                ChargeBar.Value = castState.Charge;
-                UpdateChargeBarColor(castState.Charge);
+                ChargeBar.Value = (float)castState.Charge;
+                UpdateChargeBarColor((float)castState.Charge);
 
                 if (APCMenu != null)
                 {

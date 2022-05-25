@@ -47,7 +47,7 @@ namespace Content.Server.PowerSink
 
             foreach (var (comp, battery) in toRemove)
             {
-                _explosionSystem.QueueExplosion(comp.Owner, "Default", 5 * (battery.MaxCharge / 2500000), 0.5f, 10, canCreateVacuum: false);
+                _explosionSystem.QueueExplosion(comp.Owner, "Default", (float)(5 * (battery.MaxCharge / 2500000)), 0.5f, 10, canCreateVacuum: false);
                 EntityManager.RemoveComponent(comp.Owner, comp);
             }
         }

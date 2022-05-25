@@ -20,7 +20,7 @@
                 var rampDev = supply.SupplyRampTarget - supply.SupplyRampPosition;
                 if (Math.Abs(rampDev) > 0.001f)
                 {
-                    float newPos;
+                    double newPos;
                     if (rampDev > 0)
                     {
                         // Position below target, go up.
@@ -60,7 +60,7 @@
                 var rampDev = battery.SupplyRampTarget - battery.SupplyRampPosition;
                 if (Math.Abs(rampDev) > 0.001f)
                 {
-                    float newPos;
+                    double newPos;
                     if (rampDev > 0)
                     {
                         // Position below target, go up.

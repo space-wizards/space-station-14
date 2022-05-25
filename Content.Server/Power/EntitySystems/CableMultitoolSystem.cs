@@ -64,8 +64,8 @@ namespace Content.Server.Power.EntitySystems
                 var p = (IBasePowerNet) node.Value.NodeGroup;
                 var ps = _pnSystem.GetNetworkStatistics(p.NetworkNode);
 
-                float storageRatio = ps.InStorageCurrent / Math.Max(ps.InStorageMax, 1.0f);
-                float outStorageRatio = ps.OutStorageCurrent / Math.Max(ps.OutStorageMax, 1.0f);
+                double storageRatio = ps.InStorageCurrent / Math.Max(ps.InStorageMax, 1.0);
+                double outStorageRatio = ps.OutStorageCurrent / Math.Max(ps.OutStorageMax, 1.0);
                 return Loc.GetString("cable-multitool-system-statistics",
                     ("supplyc", ps.SupplyCurrent),
                     ("supplyb", ps.SupplyBatteries),

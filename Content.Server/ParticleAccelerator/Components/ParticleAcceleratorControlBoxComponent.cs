@@ -156,8 +156,8 @@ namespace Content.Server.ParticleAccelerator.Components
 
         public void UpdateUI()
         {
-            var draw = 0f;
-            var receive = 0f;
+            var draw = 0.0;
+            var receive = 0.0;
 
             if (_isEnabled)
             {

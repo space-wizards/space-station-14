@@ -37,7 +37,7 @@ namespace Content.Server.Gravity.EntitySystems
 
                 // Calculate charge rate based on power state and such.
                 // Negative charge rate means discharging.
-                float chargeRate;
+                double chargeRate;
                 if (gravGen.SwitchedOn)
                 {
                     if (powerReceiver.Powered)
@@ -61,7 +61,7 @@ namespace Content.Server.Gravity.EntitySystems
                 var updateGravity = gravGen.NeedGravityUpdate;
                 var shakeGravity = false;
                 var lastCharge = gravGen.Charge;
-                gravGen.Charge = Math.Clamp(gravGen.Charge + frameTime * chargeRate, 0, 1);
+                gravGen.Charge = (float)Math.Clamp(gravGen.Charge + frameTime * chargeRate, 0, 1);
                 if (chargeRate > 0)
                 {
                     // Charging.
@@ -91,7 +91,7 @@ namespace Content.Server.Gravity.EntitySystems
                 }
 
                 if (updateUI)
-                    UpdateUI(gravGen, powerReceiver, chargeRate);
+                    UpdateUI(gravGen, powerReceiver, (float)chargeRate);
 
                 if (updateGravity)
                 {

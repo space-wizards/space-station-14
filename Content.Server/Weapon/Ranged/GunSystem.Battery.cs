@@ -92,7 +92,7 @@ public sealed partial class GunSystem
         else if (TryComp(entity.Value, out HitscanComponent? hitscanComponent))
         {
             hitscanComponent.Damage *= energyRatio;
-            hitscanComponent.ColorModifier = energyRatio;
+            hitscanComponent.ColorModifier = (float)energyRatio;
         }
         else
         {
