@@ -1,9 +1,4 @@
 Entries:
-- author: Peptide90
-  changes:
-  - {message: Holoparasites now have a unique name identifier., type: Tweak}
-  id: 1103
-  time: '2022-02-20T01:07:28.0000000+00:00'
 - author: Rane
   changes:
   - {message: Drones can no longer throw., type: Remove}
@@ -2997,3 +2992,9 @@ Entries:
       menace!, type: Add}
   id: 1602
   time: '2022-05-25T20:16:34.0000000+00:00'
+- author: DogZeroX
+  changes:
+  - {message: 'Space clouds have cleared once again, and there are more stars than
+      before.', type: Add}
+  id: 1603
+  time: '2022-05-25T21:49:21.0000000+00:00'
