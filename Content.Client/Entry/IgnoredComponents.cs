@@ -349,6 +349,7 @@ namespace Content.Client.Entry
             "Artifact",
             "RandomArtifactSprite",
             "EnergySword",
+            "DeleteAfterTime",
             "MeleeSound",
             "RangedDamageSound",
             "DoorRemote",
