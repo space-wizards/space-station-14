@@ -198,6 +198,7 @@ public abstract partial class SharedNewGunSystem : EntitySystem
         RaiseLocalEvent(gun.Owner, ev);
         DebugTools.Assert(ev.Ammo.Count <= shots);
         DebugTools.Assert(shots >= 0);
+        UpdateAmmoCount(gun.Owner);
 
         if (ev.Ammo.Count <= 0)
         {
@@ -254,6 +255,11 @@ public abstract partial class SharedNewGunSystem : EntitySystem
     protected abstract void PlaySound(NewGunComponent gun, string? sound, EntityUid? user = null);
 
     protected abstract void Popup(string message, NewGunComponent gun, EntityUid? user);
+
+    /// <summary>
+    /// Call this whenever the ammo count for a gun changes.
+    /// </summary>
+    public virtual void UpdateAmmoCount(EntityUid uid, SharedAmmoCounterComponent? component = null) {}
 
     /// <summary>
     /// Drops a single cartridge / shell
