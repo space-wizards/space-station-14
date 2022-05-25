@@ -84,6 +84,9 @@
       path: /Audio/Machines/windoor_open.ogg
     denySound:
       path: /Audio/Machines/airlock_deny.ogg
+  - type: Electrified
+    enabled: false
+    usesApcPower: true
   - type: Wires
     BoardName: "Windoor Control"
     LayoutId: Windoors

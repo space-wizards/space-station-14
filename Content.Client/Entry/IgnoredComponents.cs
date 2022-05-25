@@ -119,7 +119,6 @@ namespace Content.Client.Entry
             "EmptyOnMachineDeconstruct",
             "ExplodeOnTrigger",
             "Utensil",
-            "UnarmedCombat",
             "TimedSpawner",
             "NodeContainer",
             "PowerSupplier",
@@ -348,6 +347,7 @@ namespace Content.Client.Entry
             "Artifact",
             "RandomArtifactSprite",
             "EnergySword",
+            "DeleteAfterTime",
             "MeleeSound",
             "RangedDamageSound",
             "DoorRemote",
@@ -357,6 +357,8 @@ namespace Content.Client.Entry
             "Thirst",
             "CanEscapeInventory",
             "PowerSink",
+            "Mousetrap",
+            "DamageOnTrigger",
             "Wires",
         };
     }

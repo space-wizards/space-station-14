@@ -44,6 +44,9 @@ public sealed class PowerCellSystem : SharedPowerCellSystem
 
     private void OnMicrowaved(EntityUid uid, BatteryComponent component, BeingMicrowavedEvent args)
     {
+        if (component.CurrentCharge == 0)
+            return;
+
         args.Handled = true;
 
         // What the fuck are you doing???
