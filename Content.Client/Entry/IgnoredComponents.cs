@@ -358,6 +358,8 @@ namespace Content.Client.Entry
             "Thirst",
             "CanEscapeInventory",
             "PowerSink",
+            "Mousetrap",
+            "DamageOnTrigger",
             "Wires",
         };
     }
