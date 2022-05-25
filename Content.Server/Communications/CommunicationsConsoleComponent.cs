@@ -25,7 +25,7 @@ namespace Content.Server.Communications
         /// </summary>
         [ViewVariables(VVAccess.ReadWrite)]
         [DataField("title", required: true)]
-        public string AnnouncementDisplayName = "communicationsconsole-announcement-title-station";
+        public string AnnouncementDisplayName = "comms-console-announcement-title-station";
 
         /// <summary>
         /// Announcement color

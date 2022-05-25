@@ -39,8 +39,8 @@ namespace Content.Server.Chat.Managers
         [Dependency] private readonly IServerPreferencesManager _preferencesManager = default!;
         [Dependency] private readonly IConfigurationManager _configurationManager = default!;
         [Dependency] private readonly IMapManager _mapManager = default!;
-        [Dependency] private static readonly IEntityManager _entityManager = default!;
-        private readonly StationSystem _stationSystem = _entityManager.EntitySysManager.GetEntitySystem<StationSystem>();
+        [Dependency] private readonly IEntityManager _entityManager = default!;
+        private StationSystem _stationSystem = default!;
 
         private AdminLogSystem _logs = default!;
 
@@ -54,6 +54,7 @@ namespace Content.Server.Chat.Managers
 
         public void Initialize()
         {
+            _stationSystem = _entityManager.EntitySysManager.GetEntitySystem<StationSystem>();
             _logs = EntitySystem.Get<AdminLogSystem>();
             _netManager.RegisterNetMessage<MsgChatMessage>();
 
@@ -120,7 +121,7 @@ namespace Content.Server.Chat.Managers
             ChatMessageToAll(ChatChannel.Radio, message, messageWrap, colorOverride);
             if (station != null)
             {
-                _entityManager.TryGetComponent<StationDataComponent>(station, out var stationDataComp);
+                if(!_entityManager.TryGetComponent<StationDataComponent>(station, out var stationDataComp)) return;
                 foreach (var gridEnt in stationDataComp.Grids)
                 {
                     var filter = Filter.BroadcastGrid(gridEnt);

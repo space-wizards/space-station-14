@@ -184,7 +184,7 @@ namespace Content.Server.Communications
             UpdateBoundUserInterface(comp);
 
             // allow admemes with vv
-            Loc.TryGetString("comp.AnnouncementDisplayName", out var title);
+            Loc.TryGetString(comp.AnnouncementDisplayName, out var title);
             title ??= comp.AnnouncementDisplayName;
 
             msg += "\n" + Loc.GetString("comms-console-announcement-sent-by") + " " + author;
