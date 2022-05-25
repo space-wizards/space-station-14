@@ -6,8 +6,7 @@ namespace Content.Server.Damage.Systems;
 
 // System for damage that occurs on specific triggers.
 // This is originally meant for mousetraps, but could
-// probably be extended to fit other triggers as well
-// if they're ever coded.
+// probably be extended to fit other triggers as well.
 public sealed class DamageOnTriggerSystem : EntitySystem
 {
     [Dependency] private readonly DamageableSystem _damageableSystem = default!;
