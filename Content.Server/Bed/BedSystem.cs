@@ -6,6 +6,7 @@ using Content.Shared.Buckle.Components;
 using Content.Shared.Body.Components;
 using Content.Shared.Bed;
 using Content.Server.Power.Components;
+using Content.Server.Power.EntitySystems;
 using Content.Shared.Emag.Systems;
 
 namespace Content.Server.Bed
@@ -74,7 +75,7 @@ namespace Content.Server.Bed
             if (!TryComp<SharedBodyComponent>(args.BuckledEntity, out var body))
                 return;
 
-            if (TryComp<ApcPowerReceiverComponent>(uid, out var power) && !power.Powered)
+            if (!this.IsPowered(uid, EntityManager))
                 return;
 
             var metabolicEvent = new ApplyMetabolicMultiplierEvent()
