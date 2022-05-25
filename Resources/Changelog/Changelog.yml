@@ -1,13 +1,6 @@
 Entries:
 - author: mirrorcult
   changes:
-  - {message: 'Being in disposals no longer exposes you to the air above the disposal
-      tube--you will now inhale, exhale, and be exposed to the gas inside the tube
-      itself.', type: Tweak}
-  id: 1099
-  time: '2022-02-20T00:42:02.0000000+00:00'
-- author: mirrorcult
-  changes:
   - {message: Orbiting/following works properly again., type: Tweak}
   id: 1100
   time: '2022-02-20T00:42:11.0000000+00:00'
@@ -2998,3 +2991,8 @@ Entries:
   - {message: Added a crate of mice to cargo., type: Add}
   id: 1598
   time: '2022-05-25T03:06:34.0000000+00:00'
+- author: Peptide90
+  changes:
+  - {message: NSS_Pillar minor map update. See Github PR 8386 for changelog., type: Tweak}
+  id: 1599
+  time: '2022-05-25T09:35:26.0000000+00:00'
