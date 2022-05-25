@@ -50,7 +50,7 @@ public sealed class MousetrapSystem : EntitySystem
             }
         }
 
-        if (TryComp(uid, out PhysicsComponent? physics))
+        if (TryComp(args.Tripper, out PhysicsComponent? physics))
         {
             // The idea here is inverse,
             // Small - big damage,
