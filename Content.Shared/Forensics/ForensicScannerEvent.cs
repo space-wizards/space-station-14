@@ -20,4 +20,9 @@ namespace Content.Shared.Forensics
     {
         Key
     }
+
+    [Serializable, NetSerializable]
+    public sealed class ForensicScannerPrintMessage : BoundUserInterfaceMessage
+    {
+    }
 }

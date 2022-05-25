@@ -3,6 +3,10 @@
             MinSize="250 100"
             SetSize="250 100">
     <BoxContainer Orientation="Vertical">
+        <Button Name="Print"
+                Access="Public"
+                Disabled="True"
+                Text="{Loc 'forensic-scanner-interface-print'}" />
         <Label
             Name="Diagnostics"
             Text="{Loc forensic-scanner-interface-no-data}"/>

@@ -16,6 +16,7 @@ namespace Content.Client.Forensics
 
         public void Populate(ForensicScannerUserMessage msg)
         {
+            Print.Disabled = false;
             var text = new StringBuilder();
 
             text.AppendLine(Loc.GetString("forensic-scanner-interface-fingerprints"));

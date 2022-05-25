@@ -1,8 +1,11 @@
-using System.Linq; // todo: remove this stinky LINQy
+using System.Linq;
+using System.Text; // todo: remove this stinky LINQy
 using System.Threading;
 using Content.Server.DoAfter;
+using Content.Server.Paper;
 using Content.Server.Popups;
 using Content.Shared.Forensics;
+using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Interaction;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
@@ -14,7 +17,9 @@ namespace Content.Server.Forensics
     {
         [Dependency] private readonly DoAfterSystem _doAfterSystem = default!;
         [Dependency] private readonly UserInterfaceSystem _uiSystem = default!;
-        [Dependency] private PopupSystem _popupSystem = default!;
+        [Dependency] private readonly PopupSystem _popupSystem = default!;
+        [Dependency] private readonly PaperSystem _paperSystem = default!;
+        [Dependency] private readonly SharedHandsSystem _handsSystem = default!;
 
         public override void Initialize()
         {
@@ -22,6 +27,7 @@ namespace Content.Server.Forensics
 
             SubscribeLocalEvent<ForensicScannerComponent, AfterInteractEvent>(OnAfterInteract);
             SubscribeLocalEvent<ForensicScannerComponent, AfterInteractUsingEvent>(OnAfterInteractUsing);
+            SubscribeLocalEvent<ForensicScannerComponent, ForensicScannerPrintMessage>(OnPrint);
             SubscribeLocalEvent<TargetScanSuccessfulEvent>(OnTargetScanSuccessful);
             SubscribeLocalEvent<ScanCancelledEvent>(OnScanCancelled);
         }
@@ -109,6 +115,39 @@ namespace Content.Server.Forensics
             ui.Open(actor.PlayerSession);
             ui.SendMessage(new ForensicScannerUserMessage(component.Fingerprints, component.Fibers));
         }
+
+        private void OnPrint(EntityUid uid, ForensicScannerComponent component, ForensicScannerPrintMessage args)
+        {
+            if (!args.Session.AttachedEntity.HasValue || (component.Fibers.Count == 0 && component.Fingerprints.Count == 0)) return;
+
+            // spawn a piece of paper.
+            var printed = EntityManager.SpawnEntity("Paper", Transform(args.Session.AttachedEntity.Value).Coordinates);
+            _handsSystem.PickupOrDrop(args.Session.AttachedEntity, printed, checkActionBlocker: false);
+
+            if (!TryComp<PaperComponent>(printed, out var paper))
+                return;
+
+            MetaData(printed).EntityName = Loc.GetString("forensic-scanner-report-title");
+
+            var text = new StringBuilder();
+
+            text.AppendLine(Loc.GetString("forensic-scanner-interface-fingerprints"));
+            foreach (var fingerprint in component.Fingerprints)
+            {
+                text.AppendLine(fingerprint);
+            }
+            text.AppendLine();
+            text.AppendLine(Loc.GetString("forensic-scanner-interface-fibers"));
+            foreach (var fiber in component.Fibers)
+            {
+                text.AppendLine(fiber);
+            }
+
+            _paperSystem.SetContent(printed, text.ToString());
+
+
+        }
+
         private sealed class ScanCancelledEvent : EntityEventArgs
         {
             public EntityUid Uid;
