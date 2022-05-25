@@ -1,3 +1,5 @@
+using Content.Shared.Containers.ItemSlots;
+using Content.Shared.Interaction;
 using Content.Shared.Verbs;
 using Content.Shared.Weapons.Ranged.Barrels.Components;
 using Robust.Shared.Audio;
@@ -14,6 +16,23 @@ public abstract partial class SharedNewGunSystem
     {
         SubscribeLocalEvent<MagazineAmmoProviderComponent, TakeAmmoEvent>(OnMagazineTakeAmmo);
         SubscribeLocalEvent<MagazineAmmoProviderComponent, GetVerbsEvent<Verb>>(OnMagazineVerb);
+        SubscribeLocalEvent<MagazineAmmoProviderComponent, ItemSlotChangedEvent>(OnMagazineSlotChange);
+        SubscribeLocalEvent<MagazineAmmoProviderComponent, ActivateInWorldEvent>(OnMagazineActivate);
+    }
+
+    private void OnMagazineActivate(EntityUid uid, MagazineAmmoProviderComponent component, ActivateInWorldEvent args)
+    {
+        var ent = GetMagazineEntity(uid);
+
+        if (ent == null) return;
+
+        RaiseLocalEvent(ent.Value, args);
+    }
+
+    private void OnMagazineSlotChange(EntityUid uid, MagazineAmmoProviderComponent component, ref ItemSlotChangedEvent args)
+    {
+        if (!TryComp<AppearanceComponent>(uid, out var appearance)) return;
+        appearance.SetData(MagazineBarrelVisuals.MagLoaded, GetMagazineEntity(uid) != null);
     }
 
     private EntityUid? GetMagazineEntity(EntityUid uid)
@@ -36,8 +55,13 @@ public abstract partial class SharedNewGunSystem
     private void OnMagazineTakeAmmo(EntityUid uid, MagazineAmmoProviderComponent component, TakeAmmoEvent args)
     {
         var ent = GetMagazineEntity(uid);
+        TryComp<AppearanceComponent>(uid, out var appearance);
 
-        if (ent == null) return;
+        if (ent == null)
+        {
+            appearance?.SetData(MagazineBarrelVisuals.MagLoaded, false);
+            return;
+        }
 
         // Pass the event onwards.
         RaiseLocalEvent(ent.Value, args);
@@ -53,7 +77,14 @@ public abstract partial class SharedNewGunSystem
                 SoundSystem.Play(Filter.Pvs(uid, entityManager: EntityManager), sound);
         }
 
-        // TODO: Update appearance based on mag provider; maybe make a switch statement or some shit?
+        // Copy the magazine's appearance data
+        appearance?.SetData(MagazineBarrelVisuals.MagLoaded, true);
+
+        if (appearance != null && TryComp<AppearanceComponent>(ent, out var magAppearance))
+        {
+            appearance.SetData(AmmoVisuals.AmmoCount, magAppearance.GetData<int>(AmmoVisuals.AmmoCount));
+            appearance.SetData(AmmoVisuals.AmmoMax, magAppearance.GetData<int>(AmmoVisuals.AmmoMax));
+        }
     }
 
     private void EjectMagazine(MagazineAmmoProviderComponent component)

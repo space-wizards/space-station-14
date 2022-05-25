@@ -1,4 +1,5 @@
 using Content.Shared.Sound;
+using Content.Shared.Whitelist;
 using Robust.Shared.Containers;
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
@@ -12,6 +13,9 @@ public sealed class BallisticAmmoProviderComponent : Component
     [ViewVariables(VVAccess.ReadOnly), DataField("soundRack")]
     public SoundSpecifier? SoundRack = new SoundPathSpecifier("/Audio/Weapons/Guns/Cock/smg_cock.ogg");
 
+    [ViewVariables(VVAccess.ReadOnly), DataField("soundInsert")]
+    public SoundSpecifier? SoundInsert = new SoundPathSpecifier("/Audio/Weapons/Guns/MagIn/bullet_insert.ogg");
+
     [ViewVariables, DataField("proto", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
     public string? FillProto;
 
@@ -20,6 +24,9 @@ public sealed class BallisticAmmoProviderComponent : Component
 
     [ViewVariables, DataField("unspawnedCount")]
     public int UnspawnedCount;
+
+    [ViewVariables(VVAccess.ReadWrite), DataField("whitelist")]
+    public EntityWhitelist? Whitelist;
 
     public Container Container = default!;
 

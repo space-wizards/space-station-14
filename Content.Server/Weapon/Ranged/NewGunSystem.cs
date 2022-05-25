@@ -108,11 +108,11 @@ public sealed partial class NewGunSystem : SharedNewGunSystem
         Transform(uid).WorldRotation = direction.ToWorldAngle();
     }
 
-    protected override void PlaySound(NewGunComponent gun, string? sound, EntityUid? user = null)
+    protected override void PlaySound(EntityUid gun, string? sound, EntityUid? user = null)
     {
         if (sound == null) return;
 
-        SoundSystem.Play(Filter.Pvs(gun.Owner).RemoveWhereAttachedEntity(e => e == user), sound, gun.Owner);
+        SoundSystem.Play(Filter.Pvs(gun).RemoveWhereAttachedEntity(e => e == user), sound, gun);
     }
 
     protected override void Popup(string message, NewGunComponent gun, EntityUid? user) {}

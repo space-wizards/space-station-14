@@ -1,9 +1,12 @@
 using Content.Shared.Examine;
+using Content.Shared.Interaction;
 using Content.Shared.Verbs;
 using Content.Shared.Weapons.Ranged.Barrels.Components;
+using Robust.Shared.Audio;
 using Robust.Shared.Containers;
 using Robust.Shared.GameStates;
 using Robust.Shared.Map;
+using Robust.Shared.Player;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.Weapons.Ranged;
@@ -19,6 +22,34 @@ public abstract partial class SharedNewGunSystem
 
         SubscribeLocalEvent<BallisticAmmoProviderComponent, ExaminedEvent>(OnBallisticExamine);
         SubscribeLocalEvent<BallisticAmmoProviderComponent, GetVerbsEvent<Verb>>(OnBallisticVerb);
+        SubscribeLocalEvent<BallisticAmmoProviderComponent, InteractUsingEvent>(OnBallisticInteractUsing);
+        SubscribeLocalEvent<BallisticAmmoProviderComponent, ActivateInWorldEvent>(OnBallisticActivate);
+    }
+
+    private void OnBallisticActivate(EntityUid uid, BallisticAmmoProviderComponent component, ActivateInWorldEvent args)
+    {
+        if (!component.Cycled)
+        {
+            component.Cycled = true;
+            return;
+        }
+
+        ManualCycle(component, Transform(uid).MapPosition);
+    }
+
+    private void OnBallisticInteractUsing(EntityUid uid, BallisticAmmoProviderComponent component, InteractUsingEvent args)
+    {
+        if (args.Handled || component.Whitelist?.IsValid(args.Used, EntityManager) != true) return;
+
+        if (GetShots(component) >= component.Capacity) return;
+
+        component.Entities.Push(args.Used);
+        component.Container.Insert(args.Used);
+        // Not predicted so
+        PlaySound(uid, component.SoundInsert?.GetSound(), args.User);
+        args.Handled = true;
+        UpdateBallisticAppearance(component);
+        Dirty(component);
     }
 
     private void OnBallisticVerb(EntityUid uid, BallisticAmmoProviderComponent component, GetVerbsEvent<Verb> args)
@@ -75,7 +106,7 @@ public abstract partial class SharedNewGunSystem
         }
     }
 
-    private int GetShots(BallisticAmmoProviderComponent component)
+    protected int GetShots(BallisticAmmoProviderComponent component)
     {
         return component.Entities.Count + component.UnspawnedCount;
     }
@@ -104,13 +135,17 @@ public abstract partial class SharedNewGunSystem
             }
         }
 
-        if (TryComp<AppearanceComponent>(uid, out var appearance))
+        UpdateBallisticAppearance(component);
+        Dirty(component);
+    }
+
+    protected void UpdateBallisticAppearance(BallisticAmmoProviderComponent component)
+    {
+        if (TryComp<AppearanceComponent>(component.Owner, out var appearance))
         {
             appearance.SetData(AmmoVisuals.AmmoCount, GetShots(component));
             appearance.SetData(AmmoVisuals.AmmoMax, component.Capacity);
         }
-
-        Dirty(component);
     }
 
     [Serializable, NetSerializable]

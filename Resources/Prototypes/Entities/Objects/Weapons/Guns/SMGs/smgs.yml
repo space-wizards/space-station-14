@@ -248,6 +248,7 @@
       gun-magazine:
         name: GunMagazine
         startingItem: MagazinePistolSmgTopMountedNew
+        # TODO: Whitelist
   - type: MagazineAmmoProvider
   - type: Appearance
     visuals:

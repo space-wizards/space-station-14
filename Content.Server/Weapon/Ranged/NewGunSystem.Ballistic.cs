@@ -1,4 +1,5 @@
 using Content.Shared.Weapons.Ranged;
+using Content.Shared.Weapons.Ranged.Barrels.Components;
 using Robust.Shared.Audio;
 using Robust.Shared.Map;
 using Robust.Shared.Player;
@@ -38,5 +39,10 @@ public sealed partial class NewGunSystem
 
         if (sound != null)
             SoundSystem.Play(Filter.Pvs(component.Owner, entityManager: EntityManager), sound);
+
+        if (TryComp<AppearanceComponent>(component.Owner, out var appearance))
+        {
+            appearance.SetData(AmmoVisuals.AmmoCount, GetShots(component));
+        }
     }
 }

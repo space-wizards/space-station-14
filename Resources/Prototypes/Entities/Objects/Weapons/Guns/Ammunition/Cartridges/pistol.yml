@@ -26,6 +26,9 @@
     proto: BulletPistol
   - type: Ammo
     projectile: BulletPistol
+  - type: Tag
+    tags:
+    - CartridgePistol
 
 - type: entity
   id: CartridgePistolFlash

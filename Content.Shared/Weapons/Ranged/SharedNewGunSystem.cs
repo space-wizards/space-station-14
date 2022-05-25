@@ -206,7 +206,7 @@ public abstract partial class SharedNewGunSystem : EntitySystem
             // If they're firing an existing clip then don't play anything.
             if (gun.ShotCounter == 0 && (gun.SelectedMode == SelectiveFire.Safety || shots > 0))
             {
-                PlaySound(gun, gun.SoundEmpty?.GetSound(), user);
+                PlaySound(gun.Owner, gun.SoundEmpty?.GetSound(), user);
                 Dirty(gun);
                 return;
             }
@@ -220,7 +220,7 @@ public abstract partial class SharedNewGunSystem : EntitySystem
         Shoot(gun.Owner, ev.Ammo, fromCoordinates, toCoordinates.Value, user);
 
         // Predicted sound moment
-        PlaySound(gun, gun.SoundGunshot?.GetSound(), user);
+        PlaySound(gun.Owner, gun.SoundGunshot?.GetSound(), user);
         Dirty(gun);
     }
 
@@ -252,7 +252,7 @@ public abstract partial class SharedNewGunSystem : EntitySystem
         Shoot(gun, new List<IShootable>(1) { ammo }, fromCoordinates, toCoordinates, user);
     }
 
-    protected abstract void PlaySound(NewGunComponent gun, string? sound, EntityUid? user = null);
+    protected abstract void PlaySound(EntityUid gun, string? sound, EntityUid? user = null);
 
     protected abstract void Popup(string message, NewGunComponent gun, EntityUid? user);
 

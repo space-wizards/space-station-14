@@ -152,10 +152,10 @@ public sealed partial class NewGunSystem : SharedNewGunSystem
         }
     }
 
-    protected override void PlaySound(NewGunComponent gun, string? sound, EntityUid? user = null)
+    protected override void PlaySound(EntityUid gun, string? sound, EntityUid? user = null)
     {
         if (sound == null || user == null || !Timing.IsFirstTimePredicted) return;
-        SoundSystem.Play(Filter.Local(), sound, gun.Owner);
+        SoundSystem.Play(Filter.Local(), sound, gun);
     }
 
     protected override void Popup(string message, NewGunComponent gun, EntityUid? user)
