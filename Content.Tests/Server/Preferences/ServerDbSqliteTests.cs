@@ -43,6 +43,7 @@ namespace Content.Tests.Server.Preferences
         {
             return new(
                 "Charlie Charlieson",
+                "The biggest boy around.",
                 "Human",
                 21,
                 Sex.Male,

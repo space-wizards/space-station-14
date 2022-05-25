@@ -138,24 +138,18 @@ namespace Content.Server.Body.Systems
 
             // Ensures all of the old body part pieces are there
             var xformQuery = GetEntityQuery<TransformComponent>();
-            var notFound = true;
             var bodyXform = xformQuery.GetComponent(uid);
 
             foreach (var part in component.BodyParts)
             {
                 if (!xformQuery.TryGetComponent(part, out var xform) ||
-                    !bodyXform.Coordinates.InRange(EntityManager, xform.Coordinates, 2f)) continue;
-
-                notFound = false;
+                    !bodyXform.Coordinates.InRange(EntityManager, xform.Coordinates,2f))
+                {
+                    _popupSystem.PopupEntity(Loc.GetString("reassemble-fail"), uid, Filter.Entities(uid));
+                    return false;
+                }
                 partList.Add(part);
             }
-
-            if (notFound)
-            {
-                _popupSystem.PopupEntity(Loc.GetString("reassemble-fail"), uid, Filter.Entities(uid));
-                return false;
-            }
-
             return true;
         }
 
@@ -163,7 +157,7 @@ namespace Content.Server.Body.Systems
         {
             component.CancelToken = null;
 
-            if (component.DNA == null)
+            if (component.DNA == null || component.BodyParts == null)
                 return;
 
             // Creates the new entity and transfers the mind component
@@ -177,7 +171,7 @@ namespace Content.Server.Body.Systems
                 mindcomp.Mind.TransferTo(mob);
 
             // Cleans up all the body part pieces
-            foreach (var entity in args.PartList)
+            foreach (var entity in component.BodyParts)
             {
                 EntityManager.DeleteEntity(entity);
             }

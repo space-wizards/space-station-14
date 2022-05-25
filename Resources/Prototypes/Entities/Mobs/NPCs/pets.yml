@@ -32,7 +32,7 @@
       dead: corgi_dead
   - type: Butcherable
     spawned:
-    - id: FoodMeatCorgi
+    - id: FoodMeat
       amount: 2
   - type: ReplacementAccent
     accent: dog
@@ -115,7 +115,7 @@
 - type: entity
   name: Ian
   parent: MobCorgi
-  id: MobCorgiOld
+  id: MobCorgiIan
   description: Favorite pet corgi.
   components:
   - type: Sprite
@@ -134,7 +134,11 @@
     attributes:
       proper: true
       gender: male
-
+  - type: Butcherable
+    spawned:
+    - id: FoodMeatCorgi
+      amount: 2
+      
 - type: entity
   name: Old Ian
   parent: MobCorgi

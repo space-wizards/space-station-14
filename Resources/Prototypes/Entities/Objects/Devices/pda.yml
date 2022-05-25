@@ -192,7 +192,8 @@
     state: pda-clown
   - type: Slippery
     paralyzeTime: 4
-    launchForwardsMultiplier: 9.0
+    launchForwardsMultiplier: 1.5
+  - type: StepTrigger
   - type: CollisionWake
     enabled: false
   - type: Physics
@@ -362,7 +363,7 @@
   - type: PDA
     id: CaptainIDCard
     penSlot:
-      startingItem: PenCap    
+      startingItem: PenCap
   - type: Appearance
     visuals:
       - type: PDAVisualizer
@@ -379,7 +380,7 @@
   - type: PDA
     id: HoPIDCard
     penSlot:
-      startingItem: PenHop    
+      startingItem: PenHop
   - type: Appearance
     visuals:
       - type: PDAVisualizer

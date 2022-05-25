@@ -8,6 +8,7 @@ namespace Content.Server.Atmos.Piping.Trinary.Components
     public sealed class GasMixerComponent : Component
     {
         [ViewVariables(VVAccess.ReadWrite)]
+        [DataField("enabled")]
         public bool Enabled = true;
 
         [ViewVariables(VVAccess.ReadWrite)]

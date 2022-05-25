@@ -1,9 +1,12 @@
 using System.Globalization;
+using System.Linq;
 using System.Threading;
 using Content.Server.Access.Systems;
+using Content.Server.AlertLevel;
 using Content.Server.Chat.Managers;
 using Content.Server.Power.Components;
 using Content.Server.RoundEnd;
+using Content.Server.Station.Systems;
 using Content.Server.UserInterface;
 using Content.Shared.Communications;
 using Robust.Server.GameObjects;
@@ -12,6 +15,7 @@ using Timer = Robust.Shared.Timing.Timer;
 
 namespace Content.Server.Communications
 {
+    // TODO: ECS
     [RegisterComponent]
     public sealed class CommunicationsConsoleComponent : SharedCommunicationsConsoleComponent, IEntityEventSubscriber
     {
@@ -24,6 +28,8 @@ namespace Content.Server.Communications
         private bool Powered => !_entities.TryGetComponent(Owner, out ApcPowerReceiverComponent? receiver) || receiver.Powered;
 
         private RoundEndSystem RoundEndSystem => EntitySystem.Get<RoundEndSystem>();
+        private AlertLevelSystem AlertLevelSystem => EntitySystem.Get<AlertLevelSystem>();
+        private StationSystem StationSystem => EntitySystem.Get<StationSystem>();
 
         [ViewVariables] private BoundUserInterface? UserInterface => Owner.GetUIOrNull(CommunicationsConsoleUiKey.Key);
 
@@ -41,6 +47,8 @@ namespace Content.Server.Communications
             }
 
             _entityManager.EventBus.SubscribeEvent<RoundEndSystemChangedEvent>(EventSource.Local, this, (s) => UpdateBoundInterface());
+            _entityManager.EventBus.SubscribeEvent<AlertLevelChangedEvent>(EventSource.Local, this, _ => UpdateBoundInterface());
+            _entityManager.EventBus.SubscribeEvent<AlertLevelDelayFinishedEvent>(EventSource.Local, this, _ => UpdateBoundInterface());
         }
 
         protected override void Startup()
@@ -56,7 +64,33 @@ namespace Content.Server.Communications
             {
                 var system = RoundEndSystem;
 
-                UserInterface?.SetState(new CommunicationsConsoleInterfaceState(CanAnnounce(), system.CanCall(), system.ExpectedCountdownEnd));
+                List<string>? levels = null;
+                string currentLevel = default!;
+                float currentDelay = 0;
+                var stationUid = StationSystem.GetOwningStation(Owner);
+                if (stationUid != null)
+                {
+                    if (_entityManager.TryGetComponent(stationUid.Value, out AlertLevelComponent? alerts)
+                        && alerts.AlertLevels != null)
+                    {
+                        if (alerts.IsSelectable)
+                        {
+                            levels = new();
+                            foreach (var (id, detail) in alerts.AlertLevels.Levels)
+                            {
+                                if (detail.Selectable)
+                                {
+                                    levels.Add(id);
+                                }
+                            }
+                        }
+
+                        currentLevel = alerts.CurrentLevel;
+                        currentDelay = AlertLevelSystem.GetAlertLevelDelay(stationUid.Value, alerts);
+                    }
+                }
+
+                UserInterface?.SetState(new CommunicationsConsoleInterfaceState(CanAnnounce(), system.CanCall(), levels, currentLevel, currentDelay, system.ExpectedCountdownEnd));
             }
         }
 
@@ -108,6 +142,14 @@ namespace Content.Server.Communications
 
                     message += $"\nSent by {author}";
                     _chatManager.DispatchStationAnnouncement(message, "Communications Console", colorOverride: Color.Gold);
+                    break;
+                case CommunicationsConsoleSelectAlertLevelMessage alertMsg:
+                    var stationUid = StationSystem.GetOwningStation(Owner);
+                    if (stationUid != null)
+                    {
+                        AlertLevelSystem.SetLevel(stationUid.Value, alertMsg.Level, true, true);
+                    }
+
                     break;
             }
         }

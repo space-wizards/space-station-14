@@ -21,6 +21,8 @@
         shader: unshaded
         map: [ "blade" ]
   - type: MeleeWeapon
+    hitSound:
+      path: /Audio/Weapons/eblade1.ogg
     damage:
       types:
         Blunt: 7

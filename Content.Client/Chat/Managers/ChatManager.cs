@@ -32,6 +32,8 @@ namespace Content.Client.Chat.Managers
             public SpeechBubble.SpeechType Type;
         }
 
+        private ISawmill _sawmill = default!;
+
         /// <summary>
         ///     The max amount of chars allowed to fit in a single speech bubble.
         /// </summary>
@@ -130,6 +132,8 @@ namespace Content.Client.Chat.Managers
 
         public void Initialize()
         {
+            _sawmill = Logger.GetSawmill("chat");
+            _sawmill.Level = LogLevel.Info;
             _netManager.RegisterNetMessage<MsgChatMessage>(OnChatMessage);
 
             _speechBubbleRoot = new LayoutContainer();
@@ -346,7 +350,7 @@ namespace Content.Client.Chat.Managers
                     else if (_adminMgr.HasFlag(AdminFlags.Admin))
                         _consoleHost.ExecuteCommand($"dsay \"{CommandParsing.Escape(str)}\"");
                     else
-                        Logger.WarningS("chat", "Tried to speak on deadchat without being ghost or admin.");
+                        _sawmill.Warning("Tried to speak on deadchat without being ghost or admin.");
                     break;
 
                 case ChatSelectChannel.Radio:
@@ -393,7 +397,7 @@ namespace Content.Client.Chat.Managers
 
                 if (!storedMessage.Read)
                 {
-                    Logger.Debug($"Message filtered: {storedMessage.Channel}: {storedMessage.Message}");
+                    _sawmill.Debug($"Message filtered: {storedMessage.Channel}: {storedMessage.Message}");
                     if (!_unreadMessages.TryGetValue(msg.Channel, out var count))
                         count = 0;
 
@@ -434,7 +438,7 @@ namespace Content.Client.Chat.Managers
         {
             if (!_entityManager.EntityExists(msg.SenderEntity))
             {
-                Logger.WarningS("chat", "Got local chat message with invalid sender entity: {0}", msg.SenderEntity);
+                _sawmill.Debug("Got local chat message with invalid sender entity: {0}", msg.SenderEntity);
                 return;
             }
 

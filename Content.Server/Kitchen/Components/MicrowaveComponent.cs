@@ -211,7 +211,11 @@ namespace Content.Server.Kitchen.Components
                 _entities.EventBus.RaiseLocalEvent(item, ev, false);
 
                 if (ev.Handled)
+                {
+                    _busy = false;
+                    UIDirty = true;
                     return;
+                }
 
                 var tagSys = EntitySystem.Get<TagSystem>();
 

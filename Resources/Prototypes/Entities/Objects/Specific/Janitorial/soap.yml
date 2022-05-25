@@ -14,8 +14,9 @@
     sprite: Objects/Specific/Janitorial/soap.rsi
   - type: Slippery
     paralyzeTime: 2
-    intersectPercentage: 0.2
-    launchForwardsMultiplier: 6.0
+    launchForwardsMultiplier: 1.5
+  - type: StepTrigger
+    intersectRatio: 0.2
   - type: CollisionWake
     enabled: false
   - type: Physics
@@ -69,6 +70,7 @@
   - type: Slippery
     paralyzeTime: 5
     launchForwardsMultiplier: 9.0
+  - type: StepTrigger
   - type: Item
     HeldPrefix: syndie
 
@@ -82,6 +84,7 @@
     state: gibs
   - type: Slippery
     paralyzeTime: 2
+  - type: StepTrigger
   - type: Item
     HeldPrefix: gibs
 
@@ -96,5 +99,6 @@
   - type: Slippery
     paralyzeTime: 7
     launchForwardsMultiplier: 9.0
+  - type: StepTrigger
   - type: Item
     HeldPrefix: omega
