@@ -1213,7 +1213,7 @@
     - shape:
         !type:PhysShapeCircle
         radius: 0.35
-      mass: 10
+      mass: 20
       mask:
       - MobMask
       layer:
