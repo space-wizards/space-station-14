@@ -507,7 +507,7 @@
     - shape:
         !type:PhysShapeCircle
         radius: 0.48
-      mass: 20
+      mass: 60
       mask:
       - MobMask
       layer:
@@ -560,7 +560,7 @@
         crit: kangaroo-dead
         dead: kangaroo-dead
   - type: Puller
-  
+
 - type: entity
   name: boxing kangaroo
   parent: MobKangaroo
@@ -997,7 +997,7 @@
     - shape:
         !type:PhysShapeCircle
         radius: 0.25
-      mass: 10
+      mass: 20
       mask:
       - MobMask
       layer:
@@ -1213,7 +1213,7 @@
     - shape:
         !type:PhysShapeCircle
         radius: 0.35
-      mass: 10
+      mass: 20
       mask:
       - MobMask
       layer:
@@ -1269,7 +1269,7 @@
     - shape:
         !type:PhysShapeCircle
         radius: 0.35
-      mass: 10
+      mass: 20
       mask:
       - MobMask
       layer:
@@ -1325,7 +1325,7 @@
     - shape:
         !type:PhysShapeCircle
         radius: 0.35
-      mass: 10
+      mass: 20
       mask:
       - MobMask
       layer:
