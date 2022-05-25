@@ -13,9 +13,9 @@
     QuickEquip: false
     Slots:
     - belt
-    size: 300
+    size: 175
   - type: Storage
-    capacity: 300
+    capacity: 175
     quickInsert: true
     areaInsert: true
     whitelist:
