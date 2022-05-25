@@ -20,7 +20,8 @@ using Content.Server.Chat.Managers;
 using Content.Server.Ghost.Roles.Components;
 using Content.Server.Hands.Components;
 using Content.Server.Mind.Commands;
-using Content.Shared.CombatMode;
+using Robust.Shared.Prototypes;
+using Content.Shared.Actions.ActionTypes;
 
 namespace Content.Server.Zombies
 {
@@ -97,7 +98,15 @@ namespace Content.Server.Zombies
                 RemComp<ThirstComponent>(zombie);
 
                 EnsureComp<ReplacementAccentComponent>(zombie).Accent = "zombie";
-                var combatcomp = EnsureComp<CombatModeComponent>(zombie);
+
+                RemComp<CombatModeComponent>(zombie);
+                AddComp<CombatModeComponent>(zombie);
+                /*
+                if (_proto.TryIndex("CombatModeToggle", out InstantActionPrototype? toggleProto))
+                {
+                    var combatcomp = EnsureComp<CombatModeComponent>(zombie);
+                    combatcomp.CombatToggleAction = new(toggleProto);
+                }*/
 
                 _damageable.SetDamageModifierSetId(zombie, "Zombie");
                 _bloodstream.SetBloodLossThreshold(zombie, 0f);

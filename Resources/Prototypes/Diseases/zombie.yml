@@ -6,13 +6,13 @@
   effects:
     - !type:DiseaseHealthChange
       probability: 0.075
-      reagent: toxin
-      amount: 0.5
-    - !type:DiseaseAdjustReagent
-      probability: 0.05
       damage:
         types:
-          Poison: 4
+          Blunt: 4
+    - !type:DiseaseAdjustReagent
+      probability: 0.05
+      reagent: Toxin
+      amount: 1
     - !type:DiseaseSnough
       probability: 0.01
       snoughMessage: disease-cough
