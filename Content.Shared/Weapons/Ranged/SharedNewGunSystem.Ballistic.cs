@@ -26,13 +26,8 @@ public abstract partial class SharedNewGunSystem
 
     private void OnBallisticActivate(EntityUid uid, BallisticAmmoProviderComponent component, ActivateInWorldEvent args)
     {
-        if (!component.Cycled)
-        {
-            component.Cycled = true;
-            return;
-        }
-
-        ManualCycle(component, Transform(uid).MapPosition);
+        ManualCycle(component, Transform(uid).MapPosition, args.User);
+        args.Handled = true;
     }
 
     private void OnBallisticInteractUsing(EntityUid uid, BallisticAmmoProviderComponent component, InteractUsingEvent args)
@@ -58,7 +53,7 @@ public abstract partial class SharedNewGunSystem
         {
             Text = "Cycle",
             Disabled = GetBallisticShots(component) == 0,
-            Act = () => ManualCycle(component, Transform(uid).MapPosition),
+            Act = () => ManualCycle(component, Transform(uid).MapPosition, args.User),
         });
     }
 
@@ -67,8 +62,33 @@ public abstract partial class SharedNewGunSystem
         args.PushMarkup($"It has [color={AmmoExamineColor}]{GetBallisticShots(component)}[/yellow] ammo.");
     }
 
-    // Not implemented here as the client will replay it a billion times.
-    public abstract void ManualCycle(BallisticAmmoProviderComponent component, MapCoordinates coordinates);
+    public void ManualCycle(BallisticAmmoProviderComponent component, MapCoordinates coordinates, EntityUid? user = null)
+    {
+        if (TryComp<NewGunComponent>(component.Owner, out var gunComp) &&
+            gunComp.NextFire > Timing.CurTime) return;
+
+        // Reset shotting for cycling
+        if (gunComp is { FireRate: > 0f })
+        {
+            gunComp.NextFire = Timing.CurTime + TimeSpan.FromSeconds(1 / gunComp.FireRate);
+        }
+
+        Dirty(component);
+        var sound = component.SoundRack?.GetSound();
+
+        if (sound != null)
+            PlaySound(component.Owner, sound, user);
+
+        component.Cycled = true;
+
+        if (component.Cycled)
+            Cycle(component, coordinates);
+
+        UpdateBallisticAppearance(component);
+        UpdateAmmoCount(component.Owner);
+    }
+
+    protected abstract void Cycle(BallisticAmmoProviderComponent component, MapCoordinates coordinates);
 
     private void OnBallisticGetState(EntityUid uid, BallisticAmmoProviderComponent component, ref ComponentGetState args)
     {
@@ -84,9 +104,9 @@ public abstract partial class SharedNewGunSystem
     {
         if (args.Current is not BallisticAmmoProviderComponentState state) return;
 
+        component.Cycled = state.Cycled;
         component.UnspawnedCount = state.UnspawnedCount;
         component.Entities = state.Entities;
-        component.Cycled = state.Cycled;
     }
 
     private void OnBallisticInit(EntityUid uid, BallisticAmmoProviderComponent component, ComponentInit args)
@@ -115,16 +135,36 @@ public abstract partial class SharedNewGunSystem
         {
             if (!component.Cycled) break;
 
-            if (component.Entities.TryPop(out var existing))
+            if (component.Entities.TryPop(out var entity))
             {
-                component.Container.Remove(existing);
-                args.Ammo.Add(EnsureComp<NewAmmoComponent>(existing));
+                // Leave the entity as is if it doesn't auto cycle
+                if (HasComp<CartridgeAmmoComponent>(entity) && component.AutoCycle)
+                {
+                    component.Entities.Pop();
+                    component.Container.Remove(entity);
+                }
+
+                args.Ammo.Add(EnsureComp<NewAmmoComponent>(entity));
             }
             else if (component.UnspawnedCount > 0)
             {
                 component.UnspawnedCount--;
-                var ent = Spawn(component.FillProto, args.Coordinates);
-                args.Ammo.Add(EnsureComp<NewAmmoComponent>(ent));
+                entity = Spawn(component.FillProto, args.Coordinates);
+                args.Ammo.Add(EnsureComp<NewAmmoComponent>(entity));
+
+                // Put it back in if it doesn't auto-cycle
+                if (HasComp<CartridgeAmmoComponent>(entity) && !component.AutoCycle)
+                {
+                    if (!entity.IsClientSide())
+                    {
+                        component.Entities.Push(entity);
+                        component.Container.Insert(entity);
+                    }
+                    else
+                    {
+                        component.UnspawnedCount++;
+                    }
+                }
             }
 
             if (!component.AutoCycle)
@@ -139,11 +179,9 @@ public abstract partial class SharedNewGunSystem
 
     protected void UpdateBallisticAppearance(BallisticAmmoProviderComponent component)
     {
-        if (Timing.IsFirstTimePredicted && TryComp<AppearanceComponent>(component.Owner, out var appearance))
-        {
-            appearance.SetData(AmmoVisuals.AmmoCount, GetBallisticShots(component));
-            appearance.SetData(AmmoVisuals.AmmoMax, component.Capacity);
-        }
+        if (!Timing.IsFirstTimePredicted || !TryComp<AppearanceComponent>(component.Owner, out var appearance)) return;
+        appearance.SetData(AmmoVisuals.AmmoCount, GetBallisticShots(component));
+        appearance.SetData(AmmoVisuals.AmmoMax, component.Capacity);
     }
 
     [Serializable, NetSerializable]

@@ -3,6 +3,8 @@
   id: CartridgeAntiMaterial
   name: cartridge (.60 anti-material)
   components:
+  - type: CartridgeAmmo
+    proto: BulletAntiMaterial
   - type: Ammo
     caliber: AntiMaterial
     projectile: BulletAntiMaterial

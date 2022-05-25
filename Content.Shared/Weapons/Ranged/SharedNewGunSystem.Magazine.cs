@@ -27,6 +27,7 @@ public abstract partial class SharedNewGunSystem
         if (ent == null) return;
 
         RaiseLocalEvent(ent.Value, args);
+        UpdateAmmoCount(uid);
     }
 
     private void OnMagazineSlotChange(EntityUid uid, MagazineAmmoProviderComponent component, ref ItemSlotChangedEvent args)

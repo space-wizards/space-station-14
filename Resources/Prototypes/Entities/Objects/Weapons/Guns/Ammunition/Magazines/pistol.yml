@@ -108,10 +108,12 @@
   parent: BaseItem
   components:
     - type: BallisticAmmoProvider
+      autoCycle: false
       proto: CartridgePistol
       whitelist:
         tags:
         - CartridgePistol
+    - type: AmmoCounter
     - type: Sprite
       sprite: Objects/Weapons/Guns/Ammunition/Magazine/Pistol/smg_mag_top_mounted.rsi
       netsync: false

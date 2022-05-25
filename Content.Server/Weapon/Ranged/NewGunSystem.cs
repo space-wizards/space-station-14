@@ -45,7 +45,10 @@ public sealed partial class NewGunSystem : SharedNewGunSystem
                         MuzzleFlash(gun, cartridge, user);
                     }
 
-                    EjectCartridge(cartridge.Owner);
+                    // Something like ballistic might want to leave it in the container still
+                    if (!Containers.IsEntityInContainer(cartridge.Owner))
+                        EjectCartridge(cartridge.Owner);
+
                     Dirty(cartridge);
                     break;
                 // Ammo shoots itself

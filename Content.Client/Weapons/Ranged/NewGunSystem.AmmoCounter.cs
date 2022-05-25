@@ -59,7 +59,8 @@ public sealed partial class NewGunSystem
     {
         // Don't use resolves because the method is shared and there's no compref and I'm trying to
         // share as much code as possible
-        if (!TryComp<AmmoCounterComponent>(uid, out var clientComp)) return;
+        if (!Timing.IsFirstTimePredicted ||
+            !TryComp<AmmoCounterComponent>(uid, out var clientComp)) return;
 
         UpdateAmmoCount(uid, clientComp);
     }
