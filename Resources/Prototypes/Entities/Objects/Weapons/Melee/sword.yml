@@ -67,6 +67,9 @@
   id: Claymore
   description: An ancient war blade.
   components:
+  - type: Tag
+    tags:
+      - IgnoreChameleon
   - type: Sharp
   - type: Sprite
     sprite: Objects/Weapons/Melee/claymore.rsi

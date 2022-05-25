@@ -64,7 +64,8 @@ public sealed partial class ChameleonMenu : DefaultWindow
                 Group = group,
                 StyleClasses = {StyleBase.ButtonSquare},
                 ToggleMode = true,
-                Pressed = _selectedId == id
+                Pressed = _selectedId == id,
+                ToolTip = proto.Name
             };
             button.OnPressed += _ => OnIdSelected?.Invoke(id);
             Grid.AddChild(button);

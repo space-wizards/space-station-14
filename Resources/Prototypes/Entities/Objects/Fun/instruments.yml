@@ -50,6 +50,7 @@
   - type: Tag
     tags:
     - StringInstrument
+    - IgnoreChameleon
   - type: Clothing
     size: 24
     quickEquip: false
