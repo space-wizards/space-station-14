@@ -8,6 +8,4 @@
   icon:
     sprite: Objects/Magic/magicactions.rsi
     state: shield
-  serverEvent: !type:SpawnMagicEvent
-    rune: WallForce
-    posData: !type:TargetInFront
+  serverEvent: !type:ForceWallSpellEvent

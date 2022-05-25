@@ -26,6 +26,7 @@ public sealed class MagicSystem : EntitySystem
     [Dependency] private readonly SharedActionsSystem _actionsSystem = default!;
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
     [Dependency] private readonly IMapManager _mapManager = default!;
+    [Dependency] private readonly DecalSystem _decals = default!;
     [Dependency] private readonly EntityLookupSystem _lookup = default!;
     [Dependency] private readonly SharedDoorSystem _doorSystem = default!;
     [Dependency] private readonly DoAfterSystem _doAfter = default!;
@@ -40,8 +41,9 @@ public sealed class MagicSystem : EntitySystem
         SubscribeLocalEvent<SpellbookComponent, LearnDoAfterComplete>(TeachSpell);
         SubscribeLocalEvent<SpellbookComponent, LearnDoAfterCancel>(OnLearnFail);
 
-        SubscribeLocalEvent<SpawnMagicEvent>(OnSpawnMagic);
+        SubscribeLocalEvent<RuneMagicEvent>(OnRuneMagic);
         SubscribeLocalEvent<TeleportSpellEvent>(OnTeleportSpell);
+        SubscribeLocalEvent<ForceWallSpellEvent>(OnForceWallSpell);
         SubscribeLocalEvent<KnockSpellEvent>(OnKnockSpell);
         SubscribeLocalEvent<SpawnSpellEvent>(OnSpawnSpell);
 
@@ -115,83 +117,15 @@ public sealed class MagicSystem : EntitySystem
 
     #region Spells
 
-    private void OnSpawnMagic(SpawnMagicEvent args)
+    private void OnRuneMagic(RuneMagicEvent args)
     {
         if (args.Handled)
             return;
 
         var transform = Transform(args.Performer);
-
-        foreach (var position in GetSpawnPositions(transform, args.Pos))
-        {
-            var ent = Spawn(args.Prototype, position.SnapToGrid(EntityManager, _mapManager));
-
-            if (args.PreventCollideWithCaster)
-            {
-                var comp = EnsureComp<PreventCollideComponent>(ent);
-                comp.Uid = args.Performer;
-            }
-        }
+        Spawn(args.RunePrototype, transform.Coordinates.SnapToGrid());
 
         args.Handled = true;
-    }
-
-    private List<EntityCoordinates> GetSpawnPositions(TransformComponent casterXform, MagicSpawnData data)
-    {
-        switch (data)
-        {
-            case TargetCasterPos caster:
-                return new List<EntityCoordinates>(1) {casterXform.Coordinates};
-            case TargetInFront front:
-            {
-                // This is shit but you get the idea.
-                var directionPos = casterXform.Coordinates.Offset(casterXform.LocalRotation.ToWorldVec().Normalized);
-
-                if (!_mapManager.TryGetGrid(casterXform.GridID, out var mapGrid))
-                    return new List<EntityCoordinates>();
-
-                if (!directionPos.TryGetTileRef(out var tileReference, EntityManager, _mapManager))
-                    return new List<EntityCoordinates>();
-
-                var tileIndex = tileReference.Value.GridIndices;
-                var coords = mapGrid.GridTileToLocal(tileIndex);
-                EntityCoordinates coordsPlus;
-                EntityCoordinates coordsMinus;
-
-                var dir = casterXform.LocalRotation.GetCardinalDir();
-                switch (dir)
-                {
-                    case Direction.North:
-                    case Direction.South:
-                    {
-                        coordsPlus = mapGrid.GridTileToLocal(tileIndex + (1, 0));
-                        coordsMinus = mapGrid.GridTileToLocal(tileIndex + (-1, 0));
-                        return new List<EntityCoordinates>()
-                        {
-                            coords,
-                            coordsPlus,
-                            coordsMinus,
-                        };
-                    }
-                    case Direction.East:
-                    case Direction.West:
-                    {
-                        coordsPlus = mapGrid.GridTileToLocal(tileIndex + (0, 1));
-                        coordsMinus = mapGrid.GridTileToLocal(tileIndex + (0, -1));
-                        return new List<EntityCoordinates>()
-                        {
-                            coords,
-                            coordsPlus,
-                            coordsMinus,
-                        };
-                    }
-                }
-
-                return new List<EntityCoordinates>();
-            }
-            default:
-                throw new ArgumentOutOfRangeException();
-        }
     }
 
     /// <summary>
@@ -221,6 +155,66 @@ public sealed class MagicSystem : EntitySystem
         }
 
         args.Handled = true;
+    }
+
+    /// <summary>
+    /// Spawns 3 walls in front of the caster in a 3x1/1x3 pattern
+    /// Disappears after a set amount of time
+    /// Allows caster to walk through them freely.
+    /// </summary>
+    /// <param name="args"></param>
+    private void OnForceWallSpell(ForceWallSpellEvent args)
+    {
+        if (args.Handled)
+            return;
+
+        var transform = Transform(args.Performer);
+        var directionPos = transform.Coordinates.Offset(transform.LocalRotation.ToWorldVec().Normalized);
+
+        if (!_mapManager.TryGetGrid(transform.GridID, out var mapGrid))
+            return;
+        if (!directionPos.TryGetTileRef(out var tileReference, EntityManager, _mapManager))
+            return;
+
+        var tileIndex = tileReference.Value.GridIndices;
+        var coords = mapGrid.GridTileToLocal(tileIndex);
+        EntityCoordinates coordsPlus;
+        EntityCoordinates coordsMinus;
+
+        var dir = transform.LocalRotation.GetCardinalDir();
+        switch (dir)
+        {
+            case Direction.North:
+            case Direction.South:
+            {
+                coordsPlus = mapGrid.GridTileToLocal(tileIndex + (1, 0));
+                coordsMinus = mapGrid.GridTileToLocal(tileIndex + (-1, 0));
+                break;
+            }
+            case Direction.East:
+            case Direction.West:
+            {
+                coordsPlus = mapGrid.GridTileToLocal(tileIndex + (0, 1));
+                coordsMinus = mapGrid.GridTileToLocal(tileIndex + (0, -1));
+                break;
+            }
+            default:
+                return;
+        }
+
+        SoundSystem.Play(Filter.Pvs(coords), args.ForceWallSound.GetSound(), AudioParams.Default.WithVolume(args.ForceWallVolume));
+        ForceWallSpawnHelper(args, coords);
+        ForceWallSpawnHelper(args, coordsPlus);
+        ForceWallSpawnHelper(args, coordsMinus);
+
+        args.Handled = true;
+    }
+
+    private void ForceWallSpawnHelper(ForceWallSpellEvent args, EntityCoordinates coordinates)
+    {
+        var forceWall = Spawn(args.WallPrototype, coordinates);
+        var comp = EnsureComp<PreventCollideComponent>(forceWall);
+        comp.Uid = args.Performer;
     }
 
     /// <summary>
