@@ -2,18 +2,16 @@ using Content.Shared.Examine;
 using Content.Shared.Interaction;
 using Content.Shared.Verbs;
 using Content.Shared.Weapons.Ranged.Barrels.Components;
-using Robust.Shared.Audio;
 using Robust.Shared.Containers;
 using Robust.Shared.GameStates;
 using Robust.Shared.Map;
-using Robust.Shared.Player;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.Weapons.Ranged;
 
 public abstract partial class SharedNewGunSystem
 {
-    private void InitializeBallistic()
+    protected virtual void InitializeBallistic()
     {
         SubscribeLocalEvent<BallisticAmmoProviderComponent, ComponentInit>(OnBallisticInit);
         SubscribeLocalEvent<BallisticAmmoProviderComponent, TakeAmmoEvent>(OnBallisticTakeAmmo);
@@ -41,7 +39,7 @@ public abstract partial class SharedNewGunSystem
     {
         if (args.Handled || component.Whitelist?.IsValid(args.Used, EntityManager) != true) return;
 
-        if (GetShots(component) >= component.Capacity) return;
+        if (GetBallisticShots(component) >= component.Capacity) return;
 
         component.Entities.Push(args.Used);
         component.Container.Insert(args.Used);
@@ -59,14 +57,14 @@ public abstract partial class SharedNewGunSystem
         args.Verbs.Add(new Verb()
         {
             Text = "Cycle",
-            Disabled = GetShots(component) == 0,
+            Disabled = GetBallisticShots(component) == 0,
             Act = () => ManualCycle(component, Transform(uid).MapPosition),
         });
     }
 
     private void OnBallisticExamine(EntityUid uid, BallisticAmmoProviderComponent component, ExaminedEvent args)
     {
-        args.PushMarkup($"It has [color={AmmoExamineColor}]{GetShots(component)}[/yellow] ammo.");
+        args.PushMarkup($"It has [color={AmmoExamineColor}]{GetBallisticShots(component)}[/yellow] ammo.");
     }
 
     // Not implemented here as the client will replay it a billion times.
@@ -106,7 +104,7 @@ public abstract partial class SharedNewGunSystem
         }
     }
 
-    protected int GetShots(BallisticAmmoProviderComponent component)
+    protected int GetBallisticShots(BallisticAmmoProviderComponent component)
     {
         return component.Entities.Count + component.UnspawnedCount;
     }
@@ -143,7 +141,7 @@ public abstract partial class SharedNewGunSystem
     {
         if (Timing.IsFirstTimePredicted && TryComp<AppearanceComponent>(component.Owner, out var appearance))
         {
-            appearance.SetData(AmmoVisuals.AmmoCount, GetShots(component));
+            appearance.SetData(AmmoVisuals.AmmoCount, GetBallisticShots(component));
             appearance.SetData(AmmoVisuals.AmmoMax, component.Capacity);
         }
     }

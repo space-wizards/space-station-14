@@ -12,7 +12,7 @@ public abstract partial class SharedNewGunSystem
 {
     private const string GunSlot = "gun-magazine";
 
-    private void InitializeMagazine()
+    protected virtual void InitializeMagazine()
     {
         SubscribeLocalEvent<MagazineAmmoProviderComponent, TakeAmmoEvent>(OnMagazineTakeAmmo);
         SubscribeLocalEvent<MagazineAmmoProviderComponent, GetVerbsEvent<Verb>>(OnMagazineVerb);
@@ -33,9 +33,10 @@ public abstract partial class SharedNewGunSystem
     {
         if (!TryComp<AppearanceComponent>(uid, out var appearance)) return;
         appearance.SetData(MagazineBarrelVisuals.MagLoaded, GetMagazineEntity(uid) != null);
+        UpdateAmmoCount(uid);
     }
 
-    private EntityUid? GetMagazineEntity(EntityUid uid)
+    protected EntityUid? GetMagazineEntity(EntityUid uid)
     {
         if (!Containers.TryGetContainer(uid, GunSlot, out var container) ||
             container is not ContainerSlot slot) return null;

@@ -250,6 +250,7 @@
         startingItem: MagazinePistolSmgTopMountedNew
         # TODO: Whitelist
   - type: MagazineAmmoProvider
+  - type: AmmoCounter
   - type: Appearance
     visuals:
       - type: MagVisualizer
