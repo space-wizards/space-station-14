@@ -1,9 +1,4 @@
 Entries:
-- author: mirrorcult
-  changes:
-  - {message: Orbiting/following works properly again., type: Tweak}
-  id: 1100
-  time: '2022-02-20T00:42:11.0000000+00:00'
 - author: Sergal
   changes:
   - {message: Fixed the round-end counter., type: Tweak}
@@ -2996,3 +2991,8 @@ Entries:
   - {message: NSS_Pillar minor map update. See Github PR 8386 for changelog., type: Tweak}
   id: 1599
   time: '2022-05-25T09:35:26.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Nukies now have a medic., type: Add}
+  id: 1600
+  time: '2022-05-25T19:42:02.0000000+00:00'
