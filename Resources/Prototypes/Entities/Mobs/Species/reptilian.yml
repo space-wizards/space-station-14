@@ -18,7 +18,7 @@
       Snout:
         points: 1
         required: true
-        defaultMarkings: [LizardSnoutRoun]
+        defaultMarkings: [LizardSnoutRound]
       HeadTop:
         points: 1
         required: false
@@ -160,7 +160,7 @@
       Snout:
         points: 1
         required: true
-        defaultMarkings: [LizardSnoutRoun]
+        defaultMarkings: [LizardSnoutRound]
       HeadTop:
         points: 1
         required: false

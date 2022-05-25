@@ -9,9 +9,6 @@ public sealed class MousetrapComponent : Component
     [ViewVariables]
     public bool IsActive;
 
-    [DataField("soundOnActivate")]
-    public SoundSpecifier SoundOnActivate = new SoundPathSpecifier("/Audio/Items/snap.ogg");
-
     // Entity prototypes that have other types of
     // damage applied when interacting with this.
     // It would be more fun to just do this

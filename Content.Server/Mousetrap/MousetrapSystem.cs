@@ -30,8 +30,6 @@ public sealed class MousetrapSystem : EntitySystem
             return;
         }
 
-        SoundSystem.Play(Filter.Pvs(uid), component.SoundOnActivate.GetSound());
-
         component.IsActive = false;
     }
 
@@ -78,8 +76,6 @@ public sealed class MousetrapSystem : EntitySystem
     private void OnStepTrigger(EntityUid uid, MousetrapComponent component, ref StepTriggeredEvent args)
     {
         Trigger(uid, component);
-
-
 
         UpdateVisuals(uid);
     }

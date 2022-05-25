@@ -24,6 +24,8 @@
           Blunt: 2 # really small otherwise
     - type: EmitSoundOnUse
       sound: "/Audio/Items/Handcuffs/cuff_end.ogg"
+    - type: EmitSoundOnTrigger
+      sound: "/Audio/Items/snap.ogg"
     - type: Item
       sprite: Objects/Devices/mousetrap.rsi
     - type: Appearance
