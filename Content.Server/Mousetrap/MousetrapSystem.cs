@@ -1,14 +1,8 @@
 using Content.Server.Damage.Systems;
-using Content.Shared.Damage;
-using Content.Shared.Interaction;
 using Content.Shared.Interaction.Events;
 using Content.Shared.Inventory;
 using Content.Shared.Mousetrap;
 using Content.Shared.StepTrigger;
-using Content.Shared.Tag;
-using Robust.Shared.Audio;
-using Robust.Shared.Physics;
-using Robust.Shared.Player;
 
 namespace Content.Server.Mousetrap;
 
@@ -60,7 +54,6 @@ public sealed class MousetrapSystem : EntitySystem
             // Small - big damage,
             // Large - small damage
             // yes i punched numbers into a calculator until the graph looked right
-            //var scaledDamage = -1000 * Math.Atan(physics.Mass * 1.5f) + (500 * Math.PI - 8);
             var scaledDamage = -50 * Math.Atan(physics.Mass - 10) + (25 * Math.PI);
             args.Damage *= scaledDamage;
         }

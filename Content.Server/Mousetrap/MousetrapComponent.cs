@@ -1,6 +1,3 @@
-using Content.Shared.Damage;
-using Content.Shared.Sound;
-
 namespace Content.Server.Mousetrap;
 
 [RegisterComponent]
