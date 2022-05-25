@@ -120,7 +120,6 @@ namespace Content.Client.Entry
             "EmptyOnMachineDeconstruct",
             "ExplodeOnTrigger",
             "Utensil",
-            "UnarmedCombat",
             "TimedSpawner",
             "NodeContainer",
             "PowerSupplier",

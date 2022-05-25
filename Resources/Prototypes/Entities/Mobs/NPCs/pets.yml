@@ -66,7 +66,7 @@
       normal: narsian
       crit: narsian_dead
       dead: narsian_dead
-  - type: UnarmedCombat
+  - type: MeleeWeapon
     range: 1.5
     arcwidth: 0
     arc: bite
