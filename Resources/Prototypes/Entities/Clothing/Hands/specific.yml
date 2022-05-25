@@ -1,20 +1,20 @@
 ﻿- type: entity
-  parent: ClothingMaskGas
-  id: ClothingMaskGasChameleon
-  name: gas mask
-  description: A face-covering mask that can be connected to an air supply.
+  parent: ClothingHandsBase
+  id: ClothingHandsChameleon
+  name: black gloves
+  description: Regular black gloves that do not keep you from frying.
   suffix: Chameleon
   components:
     - type: Tag
       tags:
         - IgnoreChameleon
     - type: Sprite
-      sprite: Clothing/Mask/gas.rsi
+      sprite: Clothing/Hands/Gloves/Color/black.rsi
     - type: Clothing
-      sprite: Clothing/Mask/gas.rsi
+      sprite: Clothing/Hands/Gloves/Color/black.rsi
     - type: ChameleonClothing
-      slot: [mask]
-      default: ClothingMaskGas
+      slot: [gloves]
+      default: ClothingHandsGlovesColorBlack
     - type: Appearance
     - type: UserInterface
       interfaces:

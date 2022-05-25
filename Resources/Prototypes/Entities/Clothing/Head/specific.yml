@@ -1,20 +1,20 @@
 ﻿- type: entity
   parent: ClothingHeadBase
   id: ClothingHeadHatChameleon
-  name: beaver hat
-  description: 'Gentlemen?'
+  name: beret
+  description: A beret, an artists favorite headwear.
+  suffix: Chameleon
   components:
     - type: Tag
       tags:
         - IgnoreChameleon
     - type: Sprite
-      netsync: false
-      sprite: Clothing/Head/Hats/beaver_hat.rsi
+      sprite: Clothing/Head/Hats/beret.rsi
     - type: Clothing
-      sprite: Clothing/Head/Hats/beaver_hat.rsi
+      sprite: Clothing/Head/Hats/beret.rsi
     - type: ChameleonClothing
       slot: [HEAD]
-      default: ClothingHeadHatBeaverHat
+      default: ClothingHeadHatBeret
     - type: Appearance
     - type: UserInterface
       interfaces:

@@ -1,20 +1,20 @@
 ﻿- type: entity
   parent: ClothingNeckBase
   id: ClothingNeckChameleon
-  name: red-tie
-  description: A neosilk clip-on red tie.
+  name: striped red scarf
+  description: A stylish striped red scarf. The perfect winter accessory for those with a keen fashion sense, and those who just can't handle a cold breeze on their necks.
   suffix: Chameleon
   components:
     - type: Tag
       tags:
         - IgnoreChameleon
     - type: Sprite
-      sprite: Clothing/Neck/Ties/redtie.rsi
+      sprite: Clothing/Neck/Scarfs/red.rsi
     - type: Clothing
-      sprite: Clothing/Neck/Ties/redtie.rsi
+      sprite: Clothing/Neck/Scarfs/red.rsi
     - type: ChameleonClothing
       slot: [neck]
-      default: ClothingNeckTieRed
+      default: ClothingNeckScarfStripedRed
     - type: Appearance
     - type: UserInterface
       interfaces:
