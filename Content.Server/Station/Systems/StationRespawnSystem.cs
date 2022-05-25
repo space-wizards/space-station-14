@@ -41,6 +41,9 @@ public sealed class StationRespawnSystem : EntitySystem
             if (respawn.AttachedStation is null || Deleted(respawn.AttachedStation))
                 continue;
 
+            if (Comp<StationDataComponent>(respawn.AttachedStation.Value).Grids.Count == 0)
+                continue;
+
             var tooFar = true;
             foreach (var grid in Comp<StationDataComponent>(respawn.AttachedStation.Value).Grids)
             {
@@ -100,7 +103,7 @@ public sealed class StationRespawnSystem : EntitySystem
 
         var respawnDest = _stationSystem.GetLargestGridOnStation(component.AttachedStation.Value);
 
-        if (respawnDest is null || Deleted(respawnDest))
+        if (respawnDest is null || Deleted(respawnDest) || Terminating(respawnDest.Value))
         {
             if (component.AlertStaff)
             {
