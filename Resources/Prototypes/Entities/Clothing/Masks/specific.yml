@@ -1,0 +1,21 @@
+﻿- type: entity
+  parent: ClothingMaskGas
+  id: ClothingMaskGasChameleon
+  name: gas mask
+  description: A face-covering mask that can be connected to an air supply.
+  components:
+    - type: Tag
+      tags:
+        - IgnoreChameleon
+    - type: Sprite
+      sprite: Clothing/Mask/gas.rsi
+    - type: Clothing
+      sprite: Clothing/Mask/gas.rsi
+    - type: ChameleonClothing
+      slot: [mask]
+      default: ClothingMaskGas
+    - type: Appearance
+    - type: UserInterface
+      interfaces:
+        - key: enum.ChameleonUiKey.Key
+          type: ChameleonBoundUserInterface
