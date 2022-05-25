@@ -259,7 +259,7 @@ public abstract partial class SharedNewGunSystem : EntitySystem
     /// <summary>
     /// Call this whenever the ammo count for a gun changes.
     /// </summary>
-    public virtual void UpdateAmmoCount(EntityUid uid, SharedAmmoCounterComponent? component = null) {}
+    public virtual void UpdateAmmoCount(EntityUid uid) {}
 
     /// <summary>
     /// Drops a single cartridge / shell
@@ -325,29 +325,6 @@ public abstract partial class SharedNewGunSystem : EntitySystem
         };
 
         CreateEffect(message, user);
-
-        /* TODO: Fix rotation when shooting sideways. This was the closest I got but still had issues.
-         * var time = _gameTiming.CurTime;
-        var deathTime = time + TimeSpan.FromMilliseconds(200);
-        var entityRotation = EntityManager.GetComponent<TransformComponent>(entity).WorldRotation;
-        var localAngle = entityRotation - (angle + MathF.PI / 2f);
-        // Offset the sprite so it actually looks like it's coming from the gun
-        var offset = localAngle.RotateVec(new Vector2(0.0f, -0.5f));
-
-        var message = new EffectSystemMessage
-        {
-            EffectSprite = component.MuzzleFlashSprite.ToString(),
-            Born = time,
-            DeathTime = deathTime,
-            AttachedEntityUid = entity,
-            AttachedOffset = offset,
-            //Rotated from east facing
-            Rotation = (float) (localAngle - MathF.PI / 2),
-            Color = Vector4.Multiply(new Vector4(255, 255, 255, 255), 1.0f),
-            ColorDelta = new Vector4(0, 0, 0, -1500f),
-            Shaded = false
-        };
-         */
     }
 
     protected abstract void CreateEffect(EffectSystemMessage message, EntityUid? user = null);
@@ -397,6 +374,12 @@ public abstract partial class SharedNewGunSystem : EntitySystem
         public int FakeAmmo;
         public SelectiveFire SelectiveFire;
         public SelectiveFire AvailableSelectiveFire;
+    }
+
+    [Serializable, NetSerializable]
+    protected sealed class HitscanEvent : EntityEventArgs
+    {
+        public List<(EntityCoordinates coordinates, Angle angle, SpriteSpecifier Sprite, float Distance)> Sprites = new();
     }
 
     /// <summary>

@@ -3,9 +3,15 @@
   damage:
     types:
       Heat: 15
-  muzzleFlash: Objects/Weapons/Guns/Projectiles/laser_muzzle.png
-  travelFlash: Objects/Weapons/Guns/Projectiles/laser.png
-  impactFlash: Objects/Weapons/Guns/Projectiles/laser_impact.png
+  muzzleFlash:
+    sprite: Objects/Weapons/Guns/projectiles2.rsi
+    state: muzzle_laser
+  travelFlash:
+    sprite: Objects/Weapons/Guns/projectiles2.rsi
+    state: beam
+  impactFlash:
+    sprite: Objects/Weapons/Guns/projectiles2.rsi
+    state: impact_laser
 
 - type: hitscan
   id: RedMediumLaser
@@ -30,9 +36,15 @@
   damage:
     types:
       Heat: 45
-  muzzleFlash: Objects/Weapons/Guns/Projectiles/heavy_laser_muzzle.png
-  travelFlash: Objects/Weapons/Guns/Projectiles/heavy_laser.png
-  impactFlash: Objects/Weapons/Guns/Projectiles/heavy_laser_impact.png
+  muzzleFlash:
+    sprite: Objects/Weapons/Guns/projectiles2.rsi
+    state: muzzle_beam_heavy
+  travelFlash:
+    sprite: Objects/Weapons/Guns/projectiles2.rsi
+    state: beam_heavy
+  impactFlash:
+    sprite: Objects/Weapons/Guns/projectiles2.rsi
+    state: impact_beam_heavy
 
 - type: hitscan
   id: XrayLaser

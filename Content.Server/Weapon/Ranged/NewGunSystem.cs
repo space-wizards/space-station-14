@@ -8,6 +8,7 @@ using Robust.Shared.Audio;
 using Robust.Shared.Map;
 using Robust.Shared.Physics;
 using Robust.Shared.Player;
+using Robust.Shared.Utility;
 
 namespace Content.Server.Weapon.Ranged;
 
@@ -134,116 +135,36 @@ public sealed partial class NewGunSystem : SharedNewGunSystem
 
     public void FireEffects(EntityCoordinates fromCoordinates, float distance, Angle angle, HitscanPrototype hitscan, EntityUid? hitEntity = null)
     {
-        var startTime = Timing.CurTime;
-        var endTime = startTime + TimeSpan.FromSeconds(MuzzleFlashLifetime);
-        var color = new Vector4(hitscan.Color.R * 255, hitscan.Color.G * 255, hitscan.Color.B * 255, hitscan.Color.A * 255);
+        // Lord
+        // Forgive me for the shitcode I am about to do
+        // Effects tempt me not
+        var sprites = new List<(EntityCoordinates coordinates, Angle angle, SpriteSpecifier sprite, float scale)>();
 
         // We'll get the effects relative to the grid / map of the firer
-        var afterEffect = TravelFlash(fromCoordinates, angle, distance, hitscan, startTime, endTime, color);
+        // TODO: Don't do muzzle or impact for short stuff
 
-        // Not predicted yet, SAD
-        if (afterEffect != null)
+        if (hitscan.MuzzleFlash != null)
         {
-            _effects.CreateParticle(afterEffect);
-            // CreateEffect(afterEffect);
+            sprites.Add((fromCoordinates.Offset(angle.ToVec().Normalized / 2), angle, hitscan.MuzzleFlash, 1f));
         }
 
-        // if we're too close we'll stop the impact and muzzle / impact sprites from clipping
-        if (distance > 1.0f)
+        if (hitscan.TravelFlash != null)
         {
-            var impactEffect = ImpactFlash(fromCoordinates, angle.ToVec() * distance, hitscan, startTime, endTime, color);
-            if (impactEffect != null)
-            {
-                _effects.CreateParticle(impactEffect);
-                // CreateEffect(impactEffect);
-            }
-
-            var muzzleEffect = MuzzleFlash(fromCoordinates, angle, hitscan, startTime, endTime, color);
-            if (muzzleEffect != null)
-            {
-                _effects.CreateParticle(muzzleEffect);
-                // CreateEffect(muzzleEffect);
-            }
+            sprites.Add((fromCoordinates.Offset(angle.ToVec() * (distance + 0.5f) / 2), angle, hitscan.TravelFlash, distance - 1.5f));
         }
-    }
 
-    private EffectSystemMessage? MuzzleFlash(EntityCoordinates grid, Angle angle, HitscanPrototype hitscan, TimeSpan startTime, TimeSpan endTime, Vector4 color)
-    {
-        var sprite = hitscan.MuzzleFlash?.ToString();
-
-        if (sprite == null)
-            return null;
-
-        var offset = angle.ToVec().Normalized / 2;
-
-        var message = new EffectSystemMessage
+        if (hitscan.ImpactFlash != null)
         {
-            EffectSprite = sprite,
-            Born = startTime,
-            DeathTime = endTime,
-            Coordinates = grid.Offset(offset),
-            //Rotated from east facing
-            Rotation = (float) angle.Theta,
-            Color = color,
-            ColorDelta = new Vector4(0, 0, 0, -1500f),
-            Shaded = false
-        };
+            sprites.Add((fromCoordinates.Offset(angle.ToVec() * distance), angle.FlipPositive(), hitscan.ImpactFlash, 1f));
+        }
 
-        return message;
-    }
-
-    private EffectSystemMessage? TravelFlash(
-        EntityCoordinates origin,
-        Angle angle,
-        float distance,
-        HitscanPrototype hitscan,
-        TimeSpan startTime,
-        TimeSpan endTime,
-        Vector4 color)
-    {
-        var sprite = hitscan.TravelFlash?.ToString();
-
-        if (sprite == null) return null;
-
-        var midPointOffset = angle.ToVec() * (distance + 0.5f) / 2;
-        var message = new EffectSystemMessage
+        if (sprites.Count > 0)
         {
-            EffectSprite = sprite,
-            Born = startTime,
-            DeathTime = endTime,
-            Size = new Vector2(distance - 1.5f, 1f),
-            Coordinates = origin.Offset(midPointOffset),
-            //Rotated from east facing
-            Rotation = (float) angle.Theta,
-            Color = color,
-            ColorDelta = new Vector4(0, 0, 0, -1500f),
-            Shaded = false,
-        };
-
-        return message;
-    }
-
-    private EffectSystemMessage? ImpactFlash(EntityCoordinates coordinates, Vector2 offset, HitscanPrototype hitscan, TimeSpan startTime, TimeSpan endTime, Vector4 color)
-    {
-        var impact = hitscan.ImpactFlash?.ToString();
-
-        if (impact == null)
-            return null;
-
-        var message = new EffectSystemMessage
-        {
-            EffectSprite = impact,
-            Born = startTime,
-            DeathTime = endTime,
-            Coordinates = coordinates.Offset(offset),
-            //Rotated from east facing
-            Rotation = (float) offset.ToAngle().FlipPositive(),
-            Color = color,
-            ColorDelta = new Vector4(0, 0, 0, -1500f),
-            Shaded = false,
-        };
-
-        return message;
+            RaiseNetworkEvent(new HitscanEvent()
+            {
+                Sprites = sprites,
+            }, Filter.Pvs(fromCoordinates, entityMan: EntityManager));
+        }
     }
 
     #endregion

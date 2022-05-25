@@ -1,6 +1,8 @@
+using Content.Client.Effects;
 using Content.Client.Items;
 using Content.Shared.Weapons.Ranged;
 using Content.Shared.Weapons.Ranged.Barrels.Components;
+using Robust.Client.Animations;
 using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
 using Robust.Client.Input;
@@ -9,6 +11,8 @@ using Robust.Shared.Audio;
 using Robust.Shared.Input;
 using Robust.Shared.Map;
 using Robust.Shared.Player;
+using Robust.Shared.Timing;
+using Robust.Shared.Utility;
 
 namespace Content.Client.Weapons.Ranged;
 
@@ -24,7 +28,45 @@ public sealed partial class NewGunSystem : SharedNewGunSystem
     {
         base.Initialize();
         UpdatesOutsidePrediction = true;
-        SubscribeLocalEvent<SharedAmmoCounterComponent, ItemStatusCollectMessage>(OnAmmoCounterCollect);
+        SubscribeLocalEvent<AmmoCounterComponent, ItemStatusCollectMessage>(OnAmmoCounterCollect);
+        SubscribeNetworkEvent<HitscanEvent>(OnHitscan);
+    }
+
+    private void OnHitscan(HitscanEvent ev)
+    {
+        // ALL I WANT IS AN ANIMATED EFFECT
+        foreach (var a in ev.Sprites)
+        {
+            if (a.Sprite is not SpriteSpecifier.Rsi rsi) continue;
+
+            var ent = Spawn(null, a.coordinates);
+            var sprite = AddComp<SpriteComponent>(ent);
+            EnsureComp<EffectVisualsComponent>(ent);
+            var xform = Transform(ent);
+            xform.LocalRotation = a.angle;
+            var layer = sprite.AddLayer(a.Sprite);
+            sprite.LayerMapSet(layer, layer);
+            sprite[layer].AutoAnimated = false;
+            sprite.Scale = new Vector2(a.Distance, 1f);
+
+            var anim = new Animation()
+            {
+                Length = TimeSpan.FromSeconds(0.48f),
+                AnimationTracks =
+                {
+                    new AnimationTrackSpriteFlick()
+                    {
+                        LayerKey = layer,
+                        KeyFrames =
+                        {
+                            new AnimationTrackSpriteFlick.KeyFrame(rsi.RsiState, 0f),
+                        }
+                    }
+                }
+            };
+
+            Get<AnimationPlayerSystem>().Play(ent, null, anim, "hitscan-effect");
+        }
     }
 
     public override void Update(float frameTime)
