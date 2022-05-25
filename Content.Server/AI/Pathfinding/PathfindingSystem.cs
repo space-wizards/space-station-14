@@ -36,7 +36,7 @@ namespace Content.Server.AI.Pathfinding
         {
             var startNode = GetNode(pathfindingArgs.Start);
             var endNode = GetNode(pathfindingArgs.End);
-            var job = new AStarPathfindingJob(0.003, startNode, endNode, pathfindingArgs, cancellationToken);
+            var job = new AStarPathfindingJob(0.003, startNode, endNode, pathfindingArgs, cancellationToken, EntityManager);
             _pathfindingQueue.EnqueueJob(job);
 
             return job;
