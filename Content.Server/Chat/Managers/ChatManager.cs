@@ -40,8 +40,8 @@ namespace Content.Server.Chat.Managers
         [Dependency] private readonly IConfigurationManager _configurationManager = default!;
         [Dependency] private readonly IMapManager _mapManager = default!;
         [Dependency] private readonly IEntityManager _entityManager = default!;
-        private StationSystem _stationSystem = default!;
 
+        private StationSystem _stationSystem = default!;
         private AdminLogSystem _logs = default!;
 
         /// <summary>
