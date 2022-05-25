@@ -12,7 +12,7 @@ public sealed class BallisticAmmoProviderComponent : Component
     [ViewVariables(VVAccess.ReadOnly), DataField("soundRack")]
     public SoundSpecifier? SoundRack = new SoundPathSpecifier("/Audio/Weapons/Guns/Cock/smg_cock.ogg");
 
-    [ViewVariables, DataField("fillProto", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
+    [ViewVariables, DataField("proto", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
     public string? FillProto;
 
     [ViewVariables(VVAccess.ReadWrite), DataField("capacity")]

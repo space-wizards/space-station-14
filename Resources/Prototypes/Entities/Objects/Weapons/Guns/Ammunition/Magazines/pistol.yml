@@ -99,6 +99,35 @@
       steps: 6
       zeroVisible: false
 
+- type: Tag
+  id: CartridgePistol
+
+- type: entity
+  id: MagazinePistolSmgTopMountedNew
+  name: WT550 magazine (.35 auto top-mounted)
+  parent: BaseItem
+  components:
+    - type: BallisticAmmoProvider
+      proto: CartridgePistol
+      whitelist:
+        tags:
+        - CartridgePistol
+    - type: Sprite
+      sprite: Objects/Weapons/Guns/Ammunition/Magazine/Pistol/smg_mag_top_mounted.rsi
+      netsync: false
+      layers:
+        - state: base
+          map: ["enum.RangedBarrelVisualLayers.Base"]
+        - state: mag-unshaded-1
+          map: ["enum.RangedBarrelVisualLayers.MagUnshaded"]
+          shader: unshaded
+    - type: Appearance
+      visuals:
+        - type: MagVisualizer
+          magState: mag
+          steps: 6
+          zeroVisible: false
+
 - type: entity
   id: MagazinePistolCalicoTopMounted
   name: Calico magazine (.35 auto top-mounted)

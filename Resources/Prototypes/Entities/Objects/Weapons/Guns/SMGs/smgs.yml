@@ -214,6 +214,50 @@
 
 - type: entity
   name: WT550
+  parent: BaseItem
+  id: SmgWt550New
+  description: An excellent SMG, produced by NanoTrasen's Small Arms Division.
+  suffix: new
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/SMGs/wt550.rsi
+    netsync: false
+    layers:
+      - state: base
+        map: ["enum.RangedBarrelVisualLayers.Base"]
+      - state: base-unshaded
+        map: ["enum.RangedBarrelVisualLayers.BaseUnshaded"]
+        shader: unshaded
+      - state: mag-0
+        map: ["enum.RangedBarrelVisualLayers.Mag"]
+      - state: mag-unshaded-0
+        map: ["enum.RangedBarrelVisualLayers.MagUnshaded"]
+        shader: unshaded
+  - type: Item
+    size: 24
+    sprite: Objects/Weapons/Guns/SMGs/wt550.rsi
+  - type: NewGun
+    fireRate: 8
+    availableModes:
+    - Safety
+    - FullAuto
+    selectedMode:
+    - FullAuto
+  - type: ItemSlots
+    slots:
+      gun-magazine:
+        name: GunMagazine
+        startingItem: MagazinePistolSmgTopMountedNew
+  - type: MagazineAmmoProvider
+  - type: Appearance
+    visuals:
+      - type: MagVisualizer
+        magState: mag
+        steps: 6
+        zeroVisible: true
+
+- type: entity
+  name: WT550
   parent: SmgBase
   id: SmgWt550
   description: An excellent SMG, produced by NanoTrasen's Small Arms Division.

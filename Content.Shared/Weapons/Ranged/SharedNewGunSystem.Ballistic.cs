@@ -1,5 +1,6 @@
 using Content.Shared.Examine;
 using Content.Shared.Verbs;
+using Content.Shared.Weapons.Ranged.Barrels.Components;
 using Robust.Shared.Containers;
 using Robust.Shared.GameStates;
 using Robust.Shared.Map;
@@ -101,6 +102,12 @@ public abstract partial class SharedNewGunSystem
             {
                 component.Cycled = false;
             }
+        }
+
+        if (TryComp<AppearanceComponent>(uid, out var appearance))
+        {
+            appearance.SetData(AmmoVisuals.AmmoCount, GetShots(component));
+            appearance.SetData(AmmoVisuals.AmmoMax, component.Capacity);
         }
 
         Dirty(component);

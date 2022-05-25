@@ -1,4 +1,5 @@
 using Content.Shared.Verbs;
+using Content.Shared.Weapons.Ranged.Barrels.Components;
 using Robust.Shared.Audio;
 using Robust.Shared.Containers;
 using Robust.Shared.Player;
@@ -7,17 +8,26 @@ namespace Content.Shared.Weapons.Ranged;
 
 public abstract partial class SharedNewGunSystem
 {
+    private const string GunSlot = "gun-magazine";
+
     private void InitializeMagazine()
     {
         SubscribeLocalEvent<MagazineAmmoProviderComponent, TakeAmmoEvent>(OnMagazineTakeAmmo);
         SubscribeLocalEvent<MagazineAmmoProviderComponent, GetVerbsEvent<Verb>>(OnMagazineVerb);
     }
 
+    private EntityUid? GetMagazineEntity(EntityUid uid)
+    {
+        if (!Containers.TryGetContainer(uid, GunSlot, out var container) ||
+            container is not ContainerSlot slot) return null;
+        return slot.ContainedEntity;
+    }
+
     private void OnMagazineVerb(EntityUid uid, MagazineAmmoProviderComponent component, GetVerbsEvent<Verb> args)
     {
         if (!args.CanInteract || !args.CanAccess) return;
 
-        var magEnt = component.Magazine.ContainerSlot?.ContainedEntity;
+        var magEnt = GetMagazineEntity(uid);
 
         if (magEnt != null)
             RaiseLocalEvent(magEnt.Value, args);
@@ -25,7 +35,7 @@ public abstract partial class SharedNewGunSystem
 
     private void OnMagazineTakeAmmo(EntityUid uid, MagazineAmmoProviderComponent component, TakeAmmoEvent args)
     {
-        var ent = component.Magazine.ContainerSlot?.ContainedEntity;
+        var ent = GetMagazineEntity(uid);
 
         if (ent == null) return;
 
@@ -43,14 +53,15 @@ public abstract partial class SharedNewGunSystem
                 SoundSystem.Play(Filter.Pvs(uid, entityManager: EntityManager), sound);
         }
 
+        // TODO: Update appearance based on mag provider; maybe make a switch statement or some shit?
     }
 
     private void EjectMagazine(MagazineAmmoProviderComponent component)
     {
-        var ent = component.Magazine.ContainerSlot?.ContainedEntity;
+        var ent = GetMagazineEntity(component.Owner);
 
         if (ent == null) return;
 
-        Slots.TryEject(component.Owner, component.Magazine, null, out _);
+        Slots.TryEject(component.Owner, GunSlot, null, out var a, excludeUserAudio: true);
     }
 }

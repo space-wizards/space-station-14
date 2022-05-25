@@ -336,13 +336,13 @@ namespace Content.Shared.Containers.ItemSlots
         {
             item = null;
 
-            /// This handles logic with the slot itself
+            // This handles logic with the slot itself
             if (!CanEject(slot))
                 return false;
 
             item = slot.Item;
 
-            /// This handles user logic
+            // This handles user logic
             if (user != null && item != null && !_actionBlockerSystem.CanPickup(user.Value, item.Value))
                 return false;
 
@@ -354,7 +354,7 @@ namespace Content.Shared.Containers.ItemSlots
         ///     Try to eject item from a slot.
         /// </summary>
         /// <returns>False if the id is not valid, the item slot is locked, or it has no item inserted</returns>
-        public bool TryEject(EntityUid uid, string id, EntityUid user,
+        public bool TryEject(EntityUid uid, string id, EntityUid? user,
             [NotNullWhen(true)] out EntityUid? item, ItemSlotsComponent? itemSlots = null, bool excludeUserAudio = false)
         {
             item = null;

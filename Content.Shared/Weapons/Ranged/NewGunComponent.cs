@@ -49,13 +49,13 @@ public class NewGunComponent : Component
     /// What firemodes can be selected.
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite), DataField("availableModes")]
-    public SelectiveFire AvailableModes = SelectiveFire.Safety | SelectiveFire.FullAuto;
+    public SelectiveFire AvailableModes = SelectiveFire.Safety | SelectiveFire.SemiAuto;
 
     /// <summary>
     /// What firemode is currently selected.
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite), DataField("selectedMode")]
-    public SelectiveFire SelectedMode = SelectiveFire.FullAuto;
+    public SelectiveFire SelectedMode = SelectiveFire.SemiAuto;
 
     [DataField("selectModeAction")]
     public InstantAction? SelectModeAction;

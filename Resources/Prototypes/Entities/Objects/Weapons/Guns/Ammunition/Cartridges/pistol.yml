@@ -22,6 +22,8 @@
   name: cartridge (.35 auto)
   parent: CartridgePistolBase
   components:
+  - type: CartridgeAmmo
+    proto: BulletPistol
   - type: Ammo
     projectile: BulletPistol
 
