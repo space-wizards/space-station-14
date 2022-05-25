@@ -1,7 +1,7 @@
 - type: entity
   name: mousetrap
   parent: BaseItem
-  id: mousetrap
+  id: Mousetrap
   components:
     - type: Sprite
       sprite: Objects/Devices/mousetrap.rsi
