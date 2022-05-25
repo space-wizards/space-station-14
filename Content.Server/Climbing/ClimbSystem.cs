@@ -33,10 +33,10 @@ public sealed class ClimbSystem : SharedClimbSystem
     [Dependency] private readonly PopupSystem _popupSystem = default!;
     [Dependency] private readonly SharedInteractionSystem _interactionSystem = default!;
     [Dependency] private readonly StunSystem _stunSystem = default!;
-    
+
     private const string ClimbingFixtureName = "climb";
-    private const int ClimbingCollisionGroup = (int) CollisionGroup.TableLayer;
-    
+    private const int ClimbingCollisionGroup = (int) (CollisionGroup.TableLayer | CollisionGroup.LowImpassable);
+
     private readonly Dictionary<EntityUid, List<Fixture>> _fixtureRemoveQueue = new();
 
     public override void Initialize()
@@ -111,42 +111,49 @@ public sealed class ClimbSystem : SharedClimbSystem
         });
     }
 
-    private void OnClimbFinished(EntityUid uid, ClimbingComponent climbingComp, ClimbFinishedEvent args)
+    private void OnClimbFinished(EntityUid uid, ClimbingComponent climbing, ClimbFinishedEvent args)
     {
-        if (!TryComp<PhysicsComponent>(uid, out var physicsComp)
-            || !TryComp<FixturesComponent>(uid, out var fixturesComp))
+        Climb(uid, args.User, args.Climbable, climbing: climbing);
+    }
+
+    private void Climb(EntityUid uid, EntityUid user, EntityUid climbable, bool silent = false, ClimbingComponent? climbing = null,
+        PhysicsComponent? physics = null, FixturesComponent? fixtures = null)
+    {
+        if (!Resolve(uid, ref climbing, ref physics, ref fixtures, false))
             return;
 
-        if (!ReplaceFixtures(climbingComp, physicsComp, fixturesComp))
+        if (!ReplaceFixtures(climbing, physics, fixtures))
             return;
 
-        climbingComp.IsClimbing = true;
+        climbing.IsClimbing = true;
 
-        MoveEntityToward(uid, args.Climbable, physicsComp, climbingComp);
+        MoveEntityToward(uid, climbable, physics, climbing);
         // we may potentially need additional logic since we're forcing a player onto a climbable
         // there's also the cases where the user might collide with the person they are forcing onto the climbable that i haven't accounted for
 
-        RaiseLocalEvent(uid, new StartClimbEvent(args.Climbable), false);
-        RaiseLocalEvent(args.Climbable, new ClimbedOnEvent(uid), false);
+        RaiseLocalEvent(uid, new StartClimbEvent(climbable), false);
+        RaiseLocalEvent(climbable, new ClimbedOnEvent(uid), false);
 
-        if (args.User == uid)
+        if (silent)
+            return;
+        if (user == uid)
         {
             var othersMessage = Loc.GetString("comp-climbable-user-climbs-other", ("user", uid),
-                ("climbable", args.Climbable));
+                ("climbable", climbable));
             uid.PopupMessageOtherClients(othersMessage);
 
-            var selfMessage = Loc.GetString("comp-climbable-user-climbs", ("climbable", args.Climbable));
+            var selfMessage = Loc.GetString("comp-climbable-user-climbs", ("climbable", climbable));
             uid.PopupMessage(selfMessage);
         }
         else
         {
-            var othersMessage = Loc.GetString("comp-climbable-user-climbs-force-other", ("user", args.User),
-                ("moved-user", uid), ("climbable", args.Climbable));
-            args.User.PopupMessageOtherClients(othersMessage);
+            var othersMessage = Loc.GetString("comp-climbable-user-climbs-force-other", ("user", user),
+                ("moved-user", uid), ("climbable", climbable));
+            user.PopupMessageOtherClients(othersMessage);
 
             var selfMessage = Loc.GetString("comp-climbable-user-climbs-force", ("moved-user", uid),
-                ("climbable", args.Climbable));
-            args.User.PopupMessage(selfMessage);
+                ("climbable", climbable));
+            user.PopupMessage(selfMessage);
         }
     }
 
@@ -179,10 +186,7 @@ public sealed class ClimbSystem : SharedClimbSystem
     {
         if (args.OurFixture.ID != ClimbingFixtureName
             || !component.IsClimbing
-            || component.OwnerIsTransitioning
-            || !TryComp<TransformComponent>(uid, out var transformComp)
-            || !TryComp<PhysicsComponent>(uid, out var physicsComp)
-            || !TryComp<FixturesComponent>(uid, out var fixturesComp))
+            || component.OwnerIsTransitioning)
             return;
 
         foreach (var fixture in args.OurFixture.Contacts.Keys)
@@ -194,13 +198,21 @@ public sealed class ClimbSystem : SharedClimbSystem
                 return;
         }
 
-        foreach (var (name, fixtureMask) in component.DisabledFixtureMasks)
+        StopClimb(uid, component);
+    }
+
+    private void StopClimb(EntityUid uid, ClimbingComponent? climbing = null, FixturesComponent? fixtures = null)
+    {
+        if (!Resolve(uid, ref climbing, ref fixtures, false))
+            return;
+
+        foreach (var (name, fixtureMask) in climbing.DisabledFixtureMasks)
         {
-            if (!fixturesComp.Fixtures.TryGetValue(name, out var fixture))
+            if (!fixtures.Fixtures.TryGetValue(name, out var fixture))
                 continue;
             fixture.CollisionMask |= fixtureMask;
         }
-        component.DisabledFixtureMasks.Clear();
+        climbing.DisabledFixtureMasks.Clear();
 
         if (!_fixtureRemoveQueue.TryGetValue(uid, out var removeQueue))
         {
@@ -208,10 +220,11 @@ public sealed class ClimbSystem : SharedClimbSystem
             _fixtureRemoveQueue.Add(uid, removeQueue);
         }
 
-        if (fixturesComp.Fixtures.TryGetValue(ClimbingFixtureName, out var climbingFixture))
+        if (fixtures.Fixtures.TryGetValue(ClimbingFixtureName, out var climbingFixture))
             removeQueue.Add(climbingFixture);
 
-        component.IsClimbing = false;
+        climbing.IsClimbing = false;
+        climbing.OwnerIsTransitioning = false;
     }
 
     /// <summary>
@@ -286,19 +299,16 @@ public sealed class ClimbSystem : SharedClimbSystem
         return true;
     }
 
-    public void ForciblySetClimbing(EntityUid uid, ClimbingComponent? component = null)
+    public void ForciblySetClimbing(EntityUid uid, EntityUid climbable, ClimbingComponent? component = null)
     {
-        if (!Resolve(uid, ref component, false))
-            return;
-        component.IsClimbing = true;
+        Climb(uid, uid, climbable, true, component);
     }
 
-    private static void OnBuckleChange(EntityUid uid, ClimbingComponent component, BuckleChangeEvent args)
+    private void OnBuckleChange(EntityUid uid, ClimbingComponent component, BuckleChangeEvent args)
     {
         if (!args.Buckling)
             return;
-        component.IsClimbing = false;
-        component.OwnerIsTransitioning = false;
+        StopClimb(uid, component);
     }
 
     private static void OnClimbingGetState(EntityUid uid, ClimbingComponent component, ref ComponentGetState args)
@@ -310,7 +320,7 @@ public sealed class ClimbSystem : SharedClimbSystem
     {
         if (TryComp<PhysicsComponent>(args.Climber, out var physics) && physics.Mass <= component.MassLimit)
             return;
-        
+
         _damageableSystem.TryChangeDamage(args.Climber, component.ClimberDamage);
         _damageableSystem.TryChangeDamage(uid, component.TableDamage);
         _stunSystem.TryParalyze(args.Climber, TimeSpan.FromSeconds(component.StunTime), true);
@@ -337,7 +347,7 @@ public sealed class ClimbSystem : SharedClimbSystem
             to = new Vector2(from.X, to.Y);
         else if (MathF.Abs(y) < 0.6f) // user climbed mostly horizontally so lets make it a clean straight line
             to = new Vector2(to.X, from.Y);
-        
+
         var velocity = (to - from).Length;
 
         if (velocity <= 0.0f) return;

@@ -387,19 +387,6 @@ namespace Content.Server.AI.Steering
                 movementVector += CollisionAvoidance(entity, movementVector, ignoredCollision);
             }
 
-            // TODO: Jesus this code is shit, slork is a cute dork, but the pathfinder should annotate this.
-            if (_mapManager.TryGetGrid(nextGrid.Value.EntityId, out var grid))
-            {
-                foreach (var ent in grid.GetAnchoredEntities(nextGrid.Value))
-                {
-                    if (HasComp<DoorComponent>(ent))
-                    {
-                        _interactionSystem.InteractHand(entity, ent);
-                        break;
-                    }
-                }
-            }
-
             // Group behaviors would also go here e.g. separation, cohesion, alignment
 
             // Move towards it

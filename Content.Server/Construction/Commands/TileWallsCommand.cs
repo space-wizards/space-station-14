@@ -1,6 +1,7 @@
 using Content.Server.Administration;
 using Content.Shared.Administration;
 using Content.Shared.Maps;
+using Content.Shared.Tag;
 using Robust.Server.Player;
 using Robust.Shared.Console;
 using Robust.Shared.Map;
@@ -15,6 +16,9 @@ namespace Content.Server.Construction.Commands
         public string Command => "tilewalls";
         public string Description => "Puts an underplating tile below every wall on a grid.";
         public string Help => $"Usage: {Command} <gridId> | {Command}";
+
+        public const string TilePrototypeID = "plating";
+        public const string WallTag = "Wall";
 
         public void Execute(IConsoleShell shell, string argStr, string[] args)
         {
@@ -61,8 +65,8 @@ namespace Content.Server.Construction.Commands
             }
 
             var tileDefinitionManager = IoCManager.Resolve<ITileDefinitionManager>();
-            var prototypeManager = IoCManager.Resolve<IPrototypeManager>();
-            var underplating = tileDefinitionManager["underplating"];
+            var tagSystem = EntitySystem.Get<TagSystem>();
+            var underplating = tileDefinitionManager[TilePrototypeID];
             var underplatingTile = new Tile(underplating.TileId);
             var changed = 0;
             foreach (var child in entityManager.GetComponent<TransformComponent>(grid.GridEntityId).ChildEntities)
@@ -72,18 +76,7 @@ namespace Content.Server.Construction.Commands
                     continue;
                 }
 
-                var prototype = entityManager.GetComponent<MetaDataComponent>(child).EntityPrototype;
-                while (true)
-                {
-                    if (prototype?.Parent == null)
-                    {
-                        break;
-                    }
-
-                    prototype = prototypeManager.Index<EntityPrototype>(prototype.Parent);
-                }
-
-                if (prototype?.ID != "base_wall")
+                if (!tagSystem.HasTag(child, WallTag))
                 {
                     continue;
                 }
@@ -98,7 +91,7 @@ namespace Content.Server.Construction.Commands
                 var tile = grid.GetTileRef(childTransform.Coordinates);
                 var tileDef = (ContentTileDefinition) tileDefinitionManager[tile.Tile.TypeId];
 
-                if (tileDef.ID == "underplating")
+                if (tileDef.ID == TilePrototypeID)
                 {
                     continue;
                 }

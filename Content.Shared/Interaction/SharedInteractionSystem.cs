@@ -48,6 +48,9 @@ namespace Content.Shared.Interaction
         [Dependency] private readonly SharedPhysicsSystem _physicsSystem = default!;
         [Dependency] protected readonly SharedContainerSystem ContainerSystem = default!;
 
+        private const CollisionGroup InRangeUnobstructedMask
+            = CollisionGroup.Impassable | CollisionGroup.InteractImpassable;
+
         public const float InteractionRange = 2;
         public const float InteractionRangeSquared = InteractionRange * InteractionRange;
 
@@ -189,7 +192,9 @@ namespace Content.Shared.Interaction
             // TODO COMBAT Consider using alt-interact for advanced combat? maybe alt-interact disarms?
             if (!altInteract && TryComp(user, out SharedCombatModeComponent? combatMode) && combatMode.IsInCombatMode)
             {
-                DoAttack(user, coordinates, false, target);
+                // Wide attack if there isn't a target or the target is out of range, click attack otherwise.
+                var shouldWideAttack = target == null || !InRangeUnobstructed(user, target.Value);
+                DoAttack(user, coordinates, shouldWideAttack, target);
                 return;
             }
 
@@ -329,7 +334,7 @@ namespace Content.Shared.Interaction
         public float UnobstructedDistance(
             MapCoordinates origin,
             MapCoordinates other,
-            int collisionMask = (int) CollisionGroup.Impassable,
+            int collisionMask = (int) InRangeUnobstructedMask,
             Ignored? predicate = null)
         {
             var dir = other.Position - origin.Position;
@@ -368,7 +373,7 @@ namespace Content.Shared.Interaction
             MapCoordinates origin,
             MapCoordinates other,
             float range = InteractionRange,
-            CollisionGroup collisionMask = CollisionGroup.Impassable,
+            CollisionGroup collisionMask = InRangeUnobstructedMask,
             Ignored? predicate = null)
         {
             // Have to be on same map regardless.
@@ -425,7 +430,7 @@ namespace Content.Shared.Interaction
             EntityUid origin,
             EntityUid other,
             float range = InteractionRange,
-            CollisionGroup collisionMask = CollisionGroup.Impassable,
+            CollisionGroup collisionMask = InRangeUnobstructedMask,
             Ignored? predicate = null,
             bool popup = false)
         {;
@@ -446,7 +451,7 @@ namespace Content.Shared.Interaction
             MapCoordinates origin,
             EntityUid target,
             float range = InteractionRange,
-            CollisionGroup collisionMask = CollisionGroup.Impassable,
+            CollisionGroup collisionMask = InRangeUnobstructedMask,
             Ignored? predicate = null)
         {
             var transform = Transform(target);
@@ -518,7 +523,7 @@ namespace Content.Shared.Interaction
             EntityUid origin,
             EntityCoordinates other,
             float range = InteractionRange,
-            CollisionGroup collisionMask = CollisionGroup.Impassable,
+            CollisionGroup collisionMask = InRangeUnobstructedMask,
             Ignored? predicate = null,
             bool popup = false)
         {
@@ -553,7 +558,7 @@ namespace Content.Shared.Interaction
             EntityUid origin,
             MapCoordinates other,
             float range = InteractionRange,
-            CollisionGroup collisionMask = CollisionGroup.Impassable,
+            CollisionGroup collisionMask = InRangeUnobstructedMask,
             Ignored? predicate = null,
             bool popup = false)
         {

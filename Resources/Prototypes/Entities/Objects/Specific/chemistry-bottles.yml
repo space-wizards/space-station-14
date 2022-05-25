@@ -154,3 +154,28 @@
         - ReagentId: Nocturine
           Quantity: 30
 
+- type: entity
+  id: EphedrineChemistryBottle
+  name: ephedrine bottle
+  parent: BaseChemistryEmptyBottle
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      drink: 
+        maxVol: 30
+        reagents:
+        - ReagentId: Ephedrine
+          Quantity: 30
+
+- type: entity
+  id: OmnizineChemistryBottle
+  name: omnizine bottle
+  parent: BaseChemistryEmptyBottle
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      drink: 
+        maxVol: 30
+        reagents:
+        - ReagentId: Omnizine
+          Quantity: 30

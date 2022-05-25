@@ -30,7 +30,6 @@ namespace Content.Server.Flash
         {
             base.Initialize();
             SubscribeLocalEvent<FlashComponent, MeleeHitEvent>(OnFlashMeleeHit);
-            SubscribeLocalEvent<FlashComponent, MeleeInteractEvent>(OnFlashMeleeInteract);
             SubscribeLocalEvent<FlashComponent, UseInHandEvent>(OnFlashUseInHand);
             SubscribeLocalEvent<FlashComponent, ExaminedEvent>(OnFlashExamined);
 
@@ -76,20 +75,6 @@ namespace Content.Server.Flash
             foreach (var e in args.HitEntities)
             {
                 Flash(e, args.User, uid, comp.FlashDuration, comp.SlowTo);
-            }
-        }
-
-        private void OnFlashMeleeInteract(EntityUid uid, FlashComponent comp, MeleeInteractEvent args)
-        {
-            if (!UseFlash(comp, args.User))
-            {
-                return;
-            }
-
-            if (EntityManager.HasComponent<FlashableComponent>(args.Entity))
-            {
-                args.CanInteract = true;
-                Flash(args.Entity, args.User, uid, comp.FlashDuration, comp.SlowTo);
             }
         }
 

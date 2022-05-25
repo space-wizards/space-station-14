@@ -267,7 +267,7 @@ namespace Content.Server.Medical
             if (scannerComponent.BodyContainer.ContainedEntity is not {Valid: true} contained) return;
 
             scannerComponent.BodyContainer.Remove(contained);
-            _climbSystem.ForciblySetClimbing(contained);
+            _climbSystem.ForciblySetClimbing(contained, uid);
             UpdateUserInterface(uid, scannerComponent);
             UpdateAppearance(scannerComponent.Owner, scannerComponent);
         }
