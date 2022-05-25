@@ -14,9 +14,8 @@
       requiredTriggeredSpeed: 0
     - type: Mousetrap
       specialDamage:
-        MobMouse:
-          types:
-            Blunt: 200 # insta death
+        types:
+          Blunt: 200 # insta death
       ignoreDamageIfInventorySlotsFilled:
         - shoes # shoes
     - type: DamageOnTrigger

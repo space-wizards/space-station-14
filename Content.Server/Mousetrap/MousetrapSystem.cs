@@ -4,6 +4,7 @@ using Content.Shared.Interaction.Events;
 using Content.Shared.Inventory;
 using Content.Shared.Mousetrap;
 using Content.Shared.StepTrigger;
+using Content.Shared.Tag;
 using Robust.Shared.Audio;
 using Robust.Shared.Player;
 
@@ -13,6 +14,7 @@ public sealed class MousetrapSystem : EntitySystem
 {
     [Dependency] private readonly DamageableSystem _damageableSystem = default!;
     [Dependency] private readonly InventorySystem _inventorySystem = default!;
+    [Dependency] private readonly TagSystem _tagSystem = default!;
 
     public override void Initialize()
     {
@@ -47,12 +49,9 @@ public sealed class MousetrapSystem : EntitySystem
             return;
         }
 
-        var prototype = Prototype(args.Tripper);
-
-        if (prototype != null
-            && component.SpecialDamageEntities.TryGetValue(prototype.ID, out var damage))
+        if (_tagSystem.HasTag(args.Tripper, "MousetrapSpecialDamage"))
         {
-            _damageableSystem.TryChangeDamage(args.Tripper, damage, true);
+            _damageableSystem.TryChangeDamage(args.Tripper, component.SpecialDamage, true);
             Trigger(uid, component);
             return;
         }

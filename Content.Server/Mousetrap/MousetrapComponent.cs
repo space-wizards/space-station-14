@@ -18,7 +18,7 @@ public sealed class MousetrapComponent : Component
     // based on scale/height of the entity,
     // but this might result in false positives.
     [DataField("specialDamage")]
-    public Dictionary<string, DamageSpecifier> SpecialDamageEntities = new();
+    public DamageSpecifier SpecialDamage = new();
 
     [DataField("ignoreDamageIfInventorySlotsFilled")]
     public List<string> IgnoreDamageIfSlotFilled = new();
