@@ -1,3 +1,4 @@
+using Content.Server.Damage.Systems;
 using Content.Shared.Damage;
 using Content.Shared.Interaction;
 using Content.Shared.Interaction.Events;
@@ -19,18 +20,9 @@ public sealed class MousetrapSystem : EntitySystem
     public override void Initialize()
     {
         SubscribeLocalEvent<MousetrapComponent, UseInHandEvent>(OnUseInHand);
+        SubscribeLocalEvent<MousetrapComponent, BeforeDamageOnTriggerEvent>(BeforeDamageOnTrigger);
         SubscribeLocalEvent<MousetrapComponent, StepTriggerAttemptEvent>(OnStepTriggerAttempt);
         SubscribeLocalEvent<MousetrapComponent, StepTriggeredEvent>(OnStepTrigger);
-    }
-
-    private void Trigger(EntityUid uid, MousetrapComponent? component = null)
-    {
-        if (!Resolve(uid, ref component))
-        {
-            return;
-        }
-
-        component.IsActive = false;
     }
 
     private void OnUseInHand(EntityUid uid, MousetrapComponent component, UseInHandEvent args)
@@ -42,18 +34,11 @@ public sealed class MousetrapSystem : EntitySystem
 
     private void OnStepTriggerAttempt(EntityUid uid, MousetrapComponent component, ref StepTriggerAttemptEvent args)
     {
-        if (!component.IsActive)
-        {
-            return;
-        }
+        args.Continue = component.IsActive;
+    }
 
-        if (_tagSystem.HasTag(args.Tripper, "MousetrapSpecialDamage"))
-        {
-            _damageableSystem.TryChangeDamage(args.Tripper, component.SpecialDamage, true);
-            Trigger(uid, component);
-            return;
-        }
-
+    private void BeforeDamageOnTrigger(EntityUid uid, MousetrapComponent component, BeforeDamageOnTriggerEvent args)
+    {
         foreach (var slot in component.IgnoreDamageIfSlotFilled)
         {
             if (!_inventorySystem.TryGetSlotContainer(args.Tripper, slot, out var container, out _))
@@ -65,17 +50,20 @@ public sealed class MousetrapSystem : EntitySystem
             // hurt the entity.
             if (container.ContainedEntity != null)
             {
-                Trigger(uid, component);
-                break;
+                args.Damage = new();
+                return;
             }
         }
 
-        args.Continue = component.IsActive;
+        if (_tagSystem.HasTag(args.Tripper, "MousetrapSpecialDamage"))
+        {
+            args.Damage = component.SpecialDamage;
+        }
     }
 
     private void OnStepTrigger(EntityUid uid, MousetrapComponent component, ref StepTriggeredEvent args)
     {
-        Trigger(uid, component);
+        component.IsActive = false;
 
         UpdateVisuals(uid);
     }

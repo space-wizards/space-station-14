@@ -17,18 +17,33 @@ public sealed class DamageOnTriggerSystem : EntitySystem
         SubscribeLocalEvent<DamageOnTriggerComponent, StepTriggeredEvent>(OnStepTrigger);
     }
 
-    public void OnStepTrigger(EntityUid uid, DamageOnTriggerComponent component, ref StepTriggeredEvent args)
+    private void OnStepTrigger(EntityUid uid, DamageOnTriggerComponent component, ref StepTriggeredEvent args)
     {
         OnDamageTrigger(uid, args.Tripper, component);
     }
 
-    public void OnDamageTrigger(EntityUid source, EntityUid target, DamageOnTriggerComponent? component = null)
+    private void OnDamageTrigger(EntityUid source, EntityUid target, DamageOnTriggerComponent? component = null)
     {
         if (!Resolve(source, ref component))
         {
             return;
         }
 
-        _damageableSystem.TryChangeDamage(target, component.Damage, component.IgnoreResistances);
+        var damage = new DamageSpecifier(component.Damage);
+        RaiseLocalEvent(source, new BeforeDamageOnTriggerEvent(damage, target));
+
+        _damageableSystem.TryChangeDamage(target, damage, component.IgnoreResistances);
+    }
+}
+
+public sealed class BeforeDamageOnTriggerEvent : EntityEventArgs
+{
+    public DamageSpecifier Damage { get; set;  }
+    public EntityUid Tripper { get; }
+
+    public BeforeDamageOnTriggerEvent(DamageSpecifier damage, EntityUid target)
+    {
+        Damage = damage;
+        Tripper = target;
     }
 }
