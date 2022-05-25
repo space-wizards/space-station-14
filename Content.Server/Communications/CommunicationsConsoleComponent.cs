@@ -12,6 +12,7 @@ namespace Content.Server.Communications
         /// </summary>
         [ViewVariables]
         public float AnnouncementCooldownRemaining;
+
         /// <summary>
         /// Has the UI already been refreshed after the announcement
         /// </summary>
