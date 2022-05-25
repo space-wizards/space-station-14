@@ -1,4 +1,5 @@
 using Content.Server.Damage.Systems;
+using Content.Server.Explosion.EntitySystems;
 using Content.Shared.Interaction.Events;
 using Content.Shared.Inventory;
 using Content.Shared.Mousetrap;
@@ -9,6 +10,7 @@ namespace Content.Server.Mousetrap;
 public sealed class MousetrapSystem : EntitySystem
 {
     [Dependency] private readonly InventorySystem _inventorySystem = default!;
+    [Dependency] private readonly TriggerSystem _triggerSystem = default!;
 
     public override void Initialize()
     {
@@ -62,6 +64,7 @@ public sealed class MousetrapSystem : EntitySystem
     private void OnStepTrigger(EntityUid uid, MousetrapComponent component, ref StepTriggeredEvent args)
     {
         component.IsActive = false;
+        _triggerSystem.Trigger(uid);
 
         UpdateVisuals(uid);
     }
