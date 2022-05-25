@@ -7,7 +7,9 @@ namespace Content.Server.Forensics
     {
         public CancellationTokenSource? CancelToken;
 
+        [ViewVariables(VVAccess.ReadOnly)]
         public List<string> Fingerprints = new();
+        [ViewVariables(VVAccess.ReadOnly)]
         public List<string> Fibers = new();
 
         [DataField("scanDelay")]

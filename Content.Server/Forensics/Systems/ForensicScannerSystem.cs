@@ -1,9 +1,12 @@
 using System.Linq; // todo: remove this stinky LINQy
 using System.Threading;
 using Content.Server.DoAfter;
+using Content.Server.Popups;
 using Content.Shared.Forensics;
 using Content.Shared.Interaction;
 using Robust.Server.GameObjects;
+using Robust.Shared.Audio;
+using Robust.Shared.Player;
 
 namespace Content.Server.Forensics
 {
@@ -11,12 +14,14 @@ namespace Content.Server.Forensics
     {
         [Dependency] private readonly DoAfterSystem _doAfterSystem = default!;
         [Dependency] private readonly UserInterfaceSystem _uiSystem = default!;
+        [Dependency] private PopupSystem _popupSystem = default!;
 
         public override void Initialize()
         {
             base.Initialize();
 
             SubscribeLocalEvent<ForensicScannerComponent, AfterInteractEvent>(OnAfterInteract);
+            SubscribeLocalEvent<ForensicScannerComponent, AfterInteractUsingEvent>(OnAfterInteractUsing);
             SubscribeLocalEvent<TargetScanSuccessfulEvent>(OnTargetScanSuccessful);
             SubscribeLocalEvent<ScanCancelledEvent>(OnScanCancelled);
         }
@@ -62,6 +67,38 @@ namespace Content.Server.Forensics
                 NeedHand = true
             });
         }
+
+        private void OnAfterInteractUsing(EntityUid uid, ForensicScannerComponent component, AfterInteractUsingEvent args)
+        {
+            if (args.Handled || !args.CanReach)
+                return;
+
+            if (!TryComp<ForensicPadComponent>(args.Used, out var pad))
+                return;
+
+            foreach (var fiber in component.Fibers)
+            {
+                if (fiber == pad.Sample)
+                {
+                    SoundSystem.Play(Filter.Pvs(uid), "/Audio/Machines/Nuke/angry_beep.ogg", uid);
+                    _popupSystem.PopupEntity(Loc.GetString("forensic-scanner-match-fiber"), uid, Filter.Entities(args.User));
+                    return;
+                }
+            }
+
+            foreach (var fingerprint in component.Fingerprints)
+            {
+                if (fingerprint == pad.Sample)
+                {
+                    SoundSystem.Play(Filter.Pvs(uid), "/Audio/Machines/Nuke/angry_beep.ogg", uid);
+                    _popupSystem.PopupEntity(Loc.GetString("forensic-scanner-match-fingerprint"), uid, Filter.Entities(args.User));
+                    return;
+                }
+            }
+            SoundSystem.Play(Filter.Pvs(uid), "/Audio/Machines/airlock_deny.ogg", uid);
+            _popupSystem.PopupEntity(Loc.GetString("forensic-scanner-match-none"), uid, Filter.Entities(args.User));
+        }
+
         private void OpenUserInterface(EntityUid user, ForensicScannerComponent component)
         {
             if (!TryComp<ActorComponent>(user, out var actor))
