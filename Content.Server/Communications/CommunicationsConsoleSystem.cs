@@ -167,15 +167,15 @@ namespace Content.Server.Communications
                     return;
                 }
 
-                if (_idCardSystem.TryFindIdCard(mob, out var id))
-                {
-                    author = $"{id.FullName} ({CultureInfo.CurrentCulture.TextInfo.ToTitleCase(id.JobTitle ?? string.Empty)})".Trim();
-                }
-
                 if (!CanUse(mob, uid))
                 {
                     _popupSystem.PopupEntity(Loc.GetString("comms-console-permission-denied"), uid, Filter.Entities(mob));
                     return;
+                }
+
+                if (_idCardSystem.TryFindIdCard(mob, out var id))
+                {
+                    author = $"{id.FullName} ({CultureInfo.CurrentCulture.TextInfo.ToTitleCase(id.JobTitle ?? string.Empty)})".Trim();
                 }
             }
 
