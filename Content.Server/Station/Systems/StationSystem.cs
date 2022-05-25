@@ -51,6 +51,7 @@ public sealed class StationSystem : EntitySystem
         SubscribeLocalEvent<PostGameMapLoad>(OnPostGameMapLoad);
         SubscribeLocalEvent<StationDataComponent, ComponentAdd>(OnStationStartup);
         SubscribeLocalEvent<StationDataComponent, ComponentShutdown>(OnStationDeleted);
+        SubscribeLocalEvent<StationMemberComponent, ComponentShutdown>(OnStationGridDeleted);
 
         _configurationManager.OnValueChanged(CCVars.StationOffset, x => _randomStationOffset = x, true);
         _configurationManager.OnValueChanged(CCVars.MaxStationOffset, x => _maxRandomStationOffset = x, true);
@@ -147,6 +148,16 @@ public sealed class StationSystem : EntitySystem
             Del(entity);
         }
     }
+
+    private void OnStationGridDeleted(EntityUid uid, StationMemberComponent component, ComponentShutdown args)
+    {
+        if (Deleted(component.Station))
+            return;
+
+        var data = Comp<StationDataComponent>(component.Station);
+        data.Grids.Remove(uid); // We don't exist anymore.
+    }
+
 
     #endregion Event handlers
 
