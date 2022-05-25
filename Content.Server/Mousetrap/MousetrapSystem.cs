@@ -62,7 +62,7 @@ public sealed class MousetrapSystem : EntitySystem
             // yes i punched numbers into a calculator until the graph looked right
             //var scaledDamage = -1000 * Math.Atan(physics.Mass * 1.5f) + (500 * Math.PI - 8);
             var scaledDamage = -50 * Math.Atan(physics.Mass - 10) + (25 * Math.PI);
-            args.Damage *= Math.Clamp(scaledDamage, 1f, 200f);
+            args.Damage *= scaledDamage;
         }
     }
 
