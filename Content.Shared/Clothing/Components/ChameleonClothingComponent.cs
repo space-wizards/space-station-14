@@ -14,7 +14,7 @@ namespace Content.Shared.Clothing.Components;
 public sealed class ChameleonClothingComponent : Component
 {
     /// <summary>
-    ///     Filter possible chameleon options by slot their clothing flag.
+    ///     Filter possible chameleon options by their slot flag.
     /// </summary>
     [ViewVariables(VVAccess.ReadOnly)]
     [DataField("slot", required: true)]
