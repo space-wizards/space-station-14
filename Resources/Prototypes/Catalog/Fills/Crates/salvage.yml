@@ -19,6 +19,7 @@
       - id: Crowbar
       - id: Wirecutter
       - id: ClothingBeltUtility
+      - id: OreBag
 
 - type: entity
   id: CrateSalvageAssortedGoodies
