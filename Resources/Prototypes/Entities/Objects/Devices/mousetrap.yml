@@ -13,15 +13,12 @@
       intersectRatio: 0.2
       requiredTriggeredSpeed: 0
     - type: Mousetrap
-      specialDamage:
-        types:
-          Blunt: 200 # insta death
       ignoreDamageIfInventorySlotsFilled:
         - shoes # shoes
     - type: DamageOnTrigger
       damage:
         types:
-          Blunt: 2 # really small otherwise
+          Blunt: 2 # base damage, scales based on mass
     - type: EmitSoundOnUse
       sound: "/Audio/Items/Handcuffs/cuff_end.ogg"
     - type: EmitSoundOnTrigger

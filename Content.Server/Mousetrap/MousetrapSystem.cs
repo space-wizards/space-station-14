@@ -7,15 +7,14 @@ using Content.Shared.Mousetrap;
 using Content.Shared.StepTrigger;
 using Content.Shared.Tag;
 using Robust.Shared.Audio;
+using Robust.Shared.Physics;
 using Robust.Shared.Player;
 
 namespace Content.Server.Mousetrap;
 
 public sealed class MousetrapSystem : EntitySystem
 {
-    [Dependency] private readonly DamageableSystem _damageableSystem = default!;
     [Dependency] private readonly InventorySystem _inventorySystem = default!;
-    [Dependency] private readonly TagSystem _tagSystem = default!;
 
     public override void Initialize()
     {
@@ -46,7 +45,7 @@ public sealed class MousetrapSystem : EntitySystem
                 continue;
             }
 
-            // Yes, this also means that wearing slippers won't
+            // This also means that wearing slippers won't
             // hurt the entity.
             if (container.ContainedEntity != null)
             {
@@ -55,9 +54,15 @@ public sealed class MousetrapSystem : EntitySystem
             }
         }
 
-        if (_tagSystem.HasTag(args.Tripper, "MousetrapSpecialDamage"))
+        if (TryComp(uid, out PhysicsComponent? physics))
         {
-            args.Damage = component.SpecialDamage;
+            // The idea here is inverse,
+            // Small - big damage,
+            // Large - small damage
+            // yes i punched numbers into a calculator until the graph looked right
+            //var scaledDamage = -1000 * Math.Atan(physics.Mass * 1.5f) + (500 * Math.PI - 8);
+            var scaledDamage = -50 * Math.Atan(physics.Mass - 10) + (25 * Math.PI);
+            args.Damage *= Math.Clamp(scaledDamage, 1f, 200f);
         }
     }
 
