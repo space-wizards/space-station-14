@@ -1,23 +1,4 @@
 Entries:
-- author: Rane
-  changes:
-  - {message: A scene in a recent stage play where a clown tragically sacrifices his
-      last banana peel to the grinder to save his mime friend from bleeding out has
-      popularized the concept of using pulped banana peels to treat bleeding., type: Add}
-  - {message: Tricordrazine no longer heals people with more than 50 damage., type: Tweak}
-  - {message: All status effect removals from chemicals are 3-4 times as effective
-      as they were before., type: Tweak}
-  - {message: Epinephrine medipens changed from 15 epinephrine to 12 epinephrine and
-      3u tranexamic acid., type: Tweak}
-  - {message: 'Anti-poison medipens changes from 5 epinephrine, 5 inaprovaline, 5
-      ultravasculine to 10 ultravasculine, 5 epinephrine.', type: Tweak}
-  id: 1096
-  time: '2022-02-19T23:56:08.0000000+00:00'
-- author: Macoron
-  changes:
-  - {message: Ghost roles window layout was improved., type: Tweak}
-  id: 1097
-  time: '2022-02-19T23:56:22.0000000+00:00'
 - author: Peptide90
   changes:
   - {message: Added random crate spawners. Expect to see some variation when they're
@@ -3007,3 +2988,14 @@ Entries:
   - {message: Dead bodies can no longer recover by lying in bed, type: Fix}
   id: 1595
   time: '2022-05-25T02:31:15.0000000+00:00'
+- author: ElectroJr
+  changes:
+  - {message: Fixed a bug causing some pop-ups to only appear in the upper left corner
+      of the screen., type: Fix}
+  id: 1596
+  time: '2022-05-25T02:33:48.0000000+00:00'
+- author: Peptide90
+  changes:
+  - {message: Added shot glasses to the bar vendor., type: Tweak}
+  id: 1597
+  time: '2022-05-25T02:34:08.0000000+00:00'
