@@ -42,7 +42,7 @@
   components:
     - type: StorageFill
       contents:
-        - id: BoxMousetraps
+        - id: BoxMousetrap
           amount: 1
 
 - type: entity
