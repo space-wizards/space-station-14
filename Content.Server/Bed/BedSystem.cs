@@ -43,8 +43,9 @@ namespace Content.Server.Bed
             foreach (var healingComp in EntityQuery<HealOnBuckleHealingComponent>(true))
             {
                 var bed = healingComp.Owner;
-                var bedComponent = EntityManager.GetComponent<HealOnBuckleComponent>(bed);
-                var strapComponent = EntityManager.GetComponent<StrapComponent>(bed);
+
+                if (!TryComp<HealOnBuckleComponent>(bed, out var bedComponent) || !TryComp<StrapComponent>(bed, out var strapComponent))
+                    continue;
 
                 bedComponent.Accumulator += frameTime;
 
@@ -55,8 +56,10 @@ namespace Content.Server.Bed
                 bedComponent.Accumulator -= bedComponent.HealTime;
                 foreach (EntityUid healedEntity in strapComponent.BuckledEntities)
                 {
-                    if (TryComp<MobStateComponent>(healedEntity, out var state) && state.IsDead())
+                    if ((TryComp<MobStateComponent>(healedEntity, out var state) && state.IsDead()) ||
+                        (TryComp<MetaDataComponent>(healedEntity, out var meta) && meta.EntityPaused))
                         continue;
+
                     _damageableSystem.TryChangeDamage(healedEntity, bedComponent.Damage, true);
                 }
             }
