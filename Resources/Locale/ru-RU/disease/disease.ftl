@@ -9,4 +9,4 @@ disease-beep = { CAPITALIZE($person) } пищит.
 disease-eaten-inside = Вы чувствуете, как будто вас поедают изнутри.
 disease-banana-compulsion = Вам хочется съесть несколько бананов.
 disease-beat-chest-compulsion = { CAPITALIZE($person) } бьёт { $person } в грудь.
-disease-vomit = { CAPITALIZE(THE($person)) } vomits.
+disease-vomit = { CAPITALIZE($person) } тошнит.

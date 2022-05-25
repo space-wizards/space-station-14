@@ -1,8 +1,8 @@
 ent-Hypospray = гипоспрей
     .desc = Стерильный инъектор для быстрого введения лекарств пациентам.
     .suffix = { "" }
-ent-SyndiHypo = gorlax hypospray
-    .desc = Using reverse engineered designs from NT, Cybersun produced these in limited quantities for gorlax marauder operatives.
+ent-SyndiHypo = горлакс гипоспрей
+    .desc = С помощью реверс-инжиниринга технологии NT, Cybersun выпускает их в ограниченном количестве для оперативников Мародеров Горлакса.
     .suffix = { "" }
 ent-ChemicalMedipen = химический медипен
     .desc = Стерильный инъектор для быстрого введения лекарств пациентам. Его нельзя перезаправить.
