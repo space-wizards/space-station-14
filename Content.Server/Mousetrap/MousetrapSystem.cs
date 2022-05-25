@@ -45,7 +45,7 @@ public sealed class MousetrapSystem : EntitySystem
             // hurt the entity.
             if (container.ContainedEntity != null)
             {
-                args.Damage = new();
+                args.Damage *= 0;
                 return;
             }
         }
