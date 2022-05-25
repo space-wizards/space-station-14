@@ -1,9 +1,7 @@
-using Content.Client.IoC;
 using Content.Client.Items;
-using Content.Client.Resources;
 using Content.Client.Stylesheets;
-using Content.Client.Weapons.Ranged.Barrels.Components;
-using Content.Shared.Weapons.Ranged;
+using Content.Shared.Weapons.Ranged.Barrels.Components;
+using Robust.Client.Graphics;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 
@@ -40,6 +38,18 @@ public sealed partial class NewGunSystem
         }
 
         component.Control = ev.Control;
+        UpdateAmmoCount(uid, component);
+    }
+
+    private void UpdateAmmoCount(EntityUid uid, AmmoCounterComponent component)
+    {
+        if (component.Control == null) return;
+
+        var ev = new UpdateAmmoCounterEvent()
+        {
+            Control = component.Control
+        };
+        RaiseLocalEvent(uid, ev);
     }
 
     public override void UpdateAmmoCount(EntityUid uid)
@@ -48,13 +58,7 @@ public sealed partial class NewGunSystem
         // share as much code as possible
         if (!TryComp<AmmoCounterComponent>(uid, out var clientComp)) return;
 
-        if (clientComp.Control == null) return;
-
-        var ev = new UpdateAmmoCounterEvent()
-        {
-            Control = clientComp.Control
-        };
-        RaiseLocalEvent(uid, ev);
+        UpdateAmmoCount(uid, clientComp);
     }
 
     /// <summary>
@@ -69,4 +73,93 @@ public sealed partial class NewGunSystem
     {
         public Control Control = default!;
     }
+
+    #region Controls
+
+    public sealed class BoxesStatusControl : Control
+    {
+        private readonly BoxContainer _bulletsList;
+        private readonly Label _ammoCount;
+
+        public BoxesStatusControl()
+        {
+            MinHeight = 15;
+            HorizontalExpand = true;
+            VerticalAlignment = VAlignment.Center;
+
+            AddChild(new BoxContainer
+            {
+                Orientation = BoxContainer.LayoutOrientation.Horizontal,
+                HorizontalExpand = true,
+                Children =
+                {
+                    new Control
+                    {
+                        HorizontalExpand = true,
+                        Children =
+                        {
+                            (_bulletsList = new BoxContainer
+                            {
+                                Orientation = BoxContainer.LayoutOrientation.Horizontal,
+                                VerticalAlignment = VAlignment.Center,
+                                SeparationOverride = 4
+                            }),
+                        }
+                    },
+                    new Control() { MinSize = (5, 0) },
+                    (_ammoCount = new Label
+                    {
+                        StyleClasses = { StyleNano.StyleClassItemStatus },
+                        HorizontalAlignment = HAlignment.Right,
+                    }),
+                }
+            });
+        }
+
+        public void Update(int count, int max)
+        {
+            _bulletsList.RemoveAllChildren();
+
+            _ammoCount.Visible = true;
+
+            _ammoCount.Text = $"x{count:00}";
+            max = Math.Min(max, 8);
+            FillBulletRow(_bulletsList, count, max);
+        }
+
+        private static void FillBulletRow(Control container, int count, int capacity)
+        {
+            var colorGone = Color.FromHex("#000000");
+            var color = Color.FromHex("#E00000");
+
+            // Draw the empty ones
+            for (var i = count; i < capacity; i++)
+            {
+                container.AddChild(new PanelContainer
+                {
+                    PanelOverride = new StyleBoxFlat()
+                    {
+                        BackgroundColor = colorGone,
+                    },
+                    MinSize = (10, 15),
+                });
+            }
+
+            // Draw the full ones, but limit the count to the capacity
+            count = Math.Min(count, capacity);
+            for (var i = 0; i < count; i++)
+            {
+                container.AddChild(new PanelContainer
+                {
+                    PanelOverride = new StyleBoxFlat()
+                    {
+                        BackgroundColor = color,
+                    },
+                    MinSize = (10, 15),
+                });
+            }
+        }
+    }
+
+    #endregion
 }

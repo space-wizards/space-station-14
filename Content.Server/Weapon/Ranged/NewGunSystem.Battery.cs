@@ -39,5 +39,6 @@ public sealed partial class NewGunSystem
 
         component.Shots = shots;
         component.MaxShots = maxShots;
+        UpdateBatteryAppearance(component.Owner, component);
     }
 }

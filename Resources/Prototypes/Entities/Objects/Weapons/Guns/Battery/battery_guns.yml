@@ -296,6 +296,7 @@
     size: 24
     sprite: Objects/Weapons/Guns/Battery/laser_cannon.rsi
   - type: NewGun
+    fireRate: 1
     soundGunshot:
       path: /Audio/Weapons/Guns/Gunshots/laser_cannon.ogg
   - type: HitscanBatteryAmmoProvider
@@ -304,6 +305,13 @@
   - type: Battery
     maxCharge: 750
     startingCharge: 750
+  - type: AmmoCounter
+  - type: Appearance
+    visuals:
+    - type: MagVisualizer
+      magState: mag
+      steps: 5
+      zeroVisible: false
 
 - type: entity
   name: laser cannon

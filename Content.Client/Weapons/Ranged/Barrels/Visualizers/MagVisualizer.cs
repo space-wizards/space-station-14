@@ -11,7 +11,6 @@ namespace Content.Client.Weapons.Ranged.Barrels.Visualizers
     [UsedImplicitly]
     public sealed class MagVisualizer : AppearanceVisualizer
     {
-        private bool _magLoaded;
         [DataField("magState")]
         private string? _magState;
         [DataField("steps")]
@@ -47,17 +46,17 @@ namespace Content.Client.Weapons.Ranged.Barrels.Visualizers
             // 3. Otherwise just do mag / unshaded as is
             var sprite = IoCManager.Resolve<IEntityManager>().GetComponent<ISpriteComponent>(component.Owner);
 
-            component.TryGetData(MagazineBarrelVisuals.MagLoaded, out _magLoaded);
-
-            if (_magLoaded)
+            if (!component.TryGetData(MagazineBarrelVisuals.MagLoaded, out bool magLoaded) ||
+                magLoaded)
             {
                 if (!component.TryGetData(AmmoVisuals.AmmoMax, out int capacity))
                 {
-                    return;
+                    capacity = _magSteps;
                 }
+
                 if (!component.TryGetData(AmmoVisuals.AmmoCount, out int current))
                 {
-                    return;
+                    current = _magSteps;
                 }
 
                 var step = ContentHelpers.RoundToLevels(current, capacity, _magSteps);

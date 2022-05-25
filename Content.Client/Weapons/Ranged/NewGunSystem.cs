@@ -11,7 +11,6 @@ using Robust.Shared.Audio;
 using Robust.Shared.Input;
 using Robust.Shared.Map;
 using Robust.Shared.Player;
-using Robust.Shared.Timing;
 using Robust.Shared.Utility;
 
 namespace Content.Client.Weapons.Ranged;
@@ -41,6 +40,7 @@ public sealed partial class NewGunSystem : SharedNewGunSystem
 
             var ent = Spawn(null, a.coordinates);
             var sprite = AddComp<SpriteComponent>(ent);
+            sprite.DrawDepth = (int) Shared.DrawDepth.DrawDepth.Effects;
             EnsureComp<EffectVisualsComponent>(ent);
             var xform = Transform(ent);
             xform.LocalRotation = a.angle;

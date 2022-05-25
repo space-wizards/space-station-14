@@ -1,4 +1,5 @@
 using Content.Shared.Examine;
+using Content.Shared.Weapons.Ranged.Barrels.Components;
 using Robust.Shared.GameStates;
 using Robust.Shared.Map;
 using Robust.Shared.Serialization;
@@ -52,7 +53,15 @@ public abstract partial class SharedNewGunSystem
             component.Shots--;
         }
 
+        UpdateBatteryAppearance(uid, component);
         Dirty(component);
+    }
+
+    protected virtual void UpdateBatteryAppearance(EntityUid uid, BatteryAmmoProviderComponent component)
+    {
+        if (!TryComp<AppearanceComponent>(uid, out var appearance)) return;
+        appearance.SetData(AmmoVisuals.AmmoCount, component.Shots);
+        appearance.SetData(AmmoVisuals.AmmoMax, component.MaxShots);
     }
 
     private IShootable GetShootable(BatteryAmmoProviderComponent component, EntityCoordinates coordinates)
