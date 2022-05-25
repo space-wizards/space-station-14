@@ -1,9 +1,4 @@
 Entries:
-- author: Sergal
-  changes:
-  - {message: Fixed the round-end counter., type: Tweak}
-  id: 1101
-  time: '2022-02-20T00:42:16.0000000+00:00'
 - author: Lamrr
   changes:
   - {message: High-capacity water tanks have arrived! Botanists no longer have to
@@ -2996,3 +2991,8 @@ Entries:
   - {message: Nukies now have a medic., type: Add}
   id: 1600
   time: '2022-05-25T19:42:02.0000000+00:00'
+- author: Emisse
+  changes:
+  - {message: Buckets now hold 250u, type: Tweak}
+  id: 1601
+  time: '2022-05-25T19:45:12.0000000+00:00'
