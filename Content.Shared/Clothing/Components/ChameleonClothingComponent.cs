@@ -14,14 +14,14 @@ namespace Content.Shared.Clothing.Components;
 public sealed class ChameleonClothingComponent : Component
 {
     /// <summary>
-    ///     Filter possible chameleon options by slot flag.
+    ///     Filter possible chameleon options by slot their clothing flag.
     /// </summary>
     [ViewVariables(VVAccess.ReadOnly)]
     [DataField("slot", required: true)]
     public SlotFlags Slot;
 
     /// <summary>
-    ///     EntityPrototype id that is selected as a chameleon target.
+    ///     EntityPrototype id that chameleon item is trying to mimic.
     /// </summary>
     [ViewVariables(VVAccess.ReadOnly)]
     [DataField("default", required: true, customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]

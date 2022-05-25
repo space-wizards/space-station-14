@@ -1,5 +1,4 @@
-﻿using Content.Server.Clothing.Components;
-using Content.Shared.Clothing.Components;
+﻿using Content.Shared.Clothing.Components;
 using Content.Shared.Clothing.EntitySystems;
 using Content.Shared.Verbs;
 using Robust.Server.GameObjects;
@@ -22,7 +21,7 @@ public sealed class ChameleonClothingSystem : SharedChameleonClothingSystem
 
     private void OnInit(EntityUid uid, ChameleonClothingComponent component, ComponentInit args)
     {
-        MimicPrototype(uid, component.SelectedId, component);
+        SetSelectedPrototype(uid, component.SelectedId, true, component);
     }
 
     private void OnVerb(EntityUid uid, ChameleonClothingComponent component, GetVerbsEvent<InteractionVerb> args)
@@ -39,7 +38,7 @@ public sealed class ChameleonClothingSystem : SharedChameleonClothingSystem
 
     private void OnSelected(EntityUid uid, ChameleonClothingComponent component, ChameleonPrototypeSelectedMessage args)
     {
-        MimicPrototype(uid, args.SelectedId, component);
+        SetSelectedPrototype(uid, args.SelectedId, component: component);
     }
 
     private void TryOpenUi(EntityUid uid, EntityUid user, ChameleonClothingComponent? component = null)
@@ -61,17 +60,23 @@ public sealed class ChameleonClothingSystem : SharedChameleonClothingSystem
     }
 
     /// <summary>
-    ///     Change chameleon items name, description and sprite to mimic other entity prototype
+    ///     Change chameleon items name, description and sprite to mimic other entity prototype.
     /// </summary>
-    public void MimicPrototype(EntityUid uid, string protoId, ChameleonClothingComponent? component = null, AppearanceComponent? appearance = null)
+    public void SetSelectedPrototype(EntityUid uid, string protoId, bool forceUpdate = false,
+        ChameleonClothingComponent? component = null, AppearanceComponent? appearance = null)
     {
         if (!Resolve(uid, ref appearance, ref component))
+            return;
+
+        // check that wasn't already selected
+        // forceUpdate on component init ignores this check
+        if (component.SelectedId == protoId && !forceUpdate)
             return;
 
         // make sure that it is valid change
         if (!_proto.TryIndex(protoId, out EntityPrototype? proto))
             return;
-        if (!proto.TryGetComponent(out ClothingComponent? clothing) || !clothing.SlotFlags.HasFlag(component.Slot))
+        if (!IsValidTarget(proto, component.Slot))
             return;
         component.SelectedId = protoId;
 

@@ -151,6 +151,9 @@
   id: FireAxe
 
 - type: Tag
+  id: IgnoreChameleon
+
+- type: Tag
   id: FirelockElectronics
 
 - type: Tag
@@ -266,7 +269,7 @@
 
 - type: Tag
   id: PlantSampleTaker
-  
+
 - type: Tag
   id: Plastic
 
@@ -275,7 +278,7 @@
 
 - type: Tag
   id: PussyWagonKeys
-  
+
 - type: Tag
   id: RawMaterial
 

@@ -1,32 +1,30 @@
 ﻿using Content.Shared.Clothing.Components;
 using Content.Shared.Inventory;
 using Content.Shared.Item;
+using Content.Shared.Tag;
 using Robust.Shared.Prototypes;
 
 namespace Content.Shared.Clothing.EntitySystems;
 
 public abstract class SharedChameleonClothingSystem : EntitySystem
 {
-    [Dependency] private readonly IPrototypeManager _proto = default!;
-
-    public bool IsValidTarget(EntityUid uid, string protoId, ChameleonClothingComponent? component = null)
+    /// <summary>
+    ///     Check if this entity prototype is valid target for chameleon item.
+    /// </summary>
+    public bool IsValidTarget(EntityPrototype proto, SlotFlags chameleonSlot = SlotFlags.NONE)
     {
-        if (!Resolve(uid, ref component))
-            return false;
-
-        if (!_proto.TryIndex(protoId, out EntityPrototype? proto))
-            return false;
-
-        return IsValidTarget(proto, component.Slot);
-    }
-
-    public bool IsValidTarget(EntityPrototype proto, SlotFlags slot = SlotFlags.NONE)
-    {
+        // check if entity is valid
         if (proto.Abstract || proto.NoSpawn)
             return false;
+
+        // check if it isn't marked as invalid chameleon target
+        if (proto.TryGetComponent(out TagComponent? tags) && tags.Tags.Contains("IgnoreChameleon"))
+            return false;
+
+        // check if it's valid clothing
         if (!proto.TryGetComponent("Clothing", out SharedItemComponent? clothing))
             return false;
-        if (!clothing.SlotFlags.HasFlag(slot))
+        if (!clothing.SlotFlags.HasFlag(chameleonSlot))
             return false;
 
         return true;
