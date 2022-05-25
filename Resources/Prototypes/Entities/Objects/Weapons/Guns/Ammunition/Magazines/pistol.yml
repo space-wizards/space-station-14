@@ -108,7 +108,6 @@
   parent: BaseItem
   components:
     - type: BallisticAmmoProvider
-      autoCycle: false
       proto: CartridgePistol
       whitelist:
         tags:
