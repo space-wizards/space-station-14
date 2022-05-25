@@ -55,7 +55,8 @@ namespace Content.Server.Chat.Managers
         public void Initialize()
         {
             _stationSystem = _entityManager.EntitySysManager.GetEntitySystem<StationSystem>();
-            _logs = EntitySystem.Get<AdminLogSystem>();
+            _logs = _entityManager.EntitySysManager.GetEntitySystem<AdminLogSystem>();
+
             _netManager.RegisterNetMessage<MsgChatMessage>();
 
             _configurationManager.OnValueChanged(CCVars.OocEnabled, OnOocEnabledChanged, true);
