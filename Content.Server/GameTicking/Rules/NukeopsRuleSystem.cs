@@ -2,6 +2,7 @@
 using Content.Server.Chat.Managers;
 using Content.Server.Nuke;
 using Content.Server.RoundEnd;
+using Content.Server.Spawners.Components;
 using Content.Server.Station.Components;
 using Content.Server.Station.Systems;
 using Content.Shared.CCVar;
@@ -48,14 +49,18 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
 
     private void OnNukeExploded(NukeExplodedEvent ev)
     {
-    	if (!Enabled) return;
-    
+    	if (!Enabled)
+            return;
+
         _opsWon = true;
         _roundEndSystem.EndRound();
     }
 
     private void OnRoundEndText(RoundEndTextAppendEvent ev)
     {
+        if (!Enabled)
+            return;
+
         ev.AddLine(_opsWon ? Loc.GetString("nukeops-ops-won") : Loc.GetString("nukeops-crew-won"));
         ev.AddLine(Loc.GetString("nukeops-list-start"));
         foreach (var nukeop in _aliveNukeops)
@@ -66,6 +71,9 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
 
     private void OnMobStateChanged(MobStateChangedEvent ev)
     {
+        if (!Enabled)
+            return;
+
         if (!_aliveNukeops.TryFirstOrNull(x => x.Key.OwnedEntity == ev.Entity, out var op)) return;
 
         _aliveNukeops[op.Value.Key] = op.Value.Key.CharacterDeadIC;
@@ -78,32 +86,37 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
 
     private void OnPlayersSpawning(RulePlayerSpawningEvent ev)
     {
+        if (!Enabled)
+            return;
+
         _aliveNukeops.Clear();
 
-        var numOps = (int)Math.Min(Math.Floor((double)ev.PlayerPool.Count / _cfg.GetCVar(CCVars.NukeopsPlayersPerOp)),
-            _cfg.GetCVar(CCVars.NukeopsMaxOps));
+        // Between 1 and <max op count>: needs at least n players per op.
+        var numOps = Math.Max(1,
+            (int)Math.Min(
+                Math.Floor((double)ev.PlayerPool.Count / _cfg.GetCVar(CCVars.NukeopsPlayersPerOp)), _cfg.GetCVar(CCVars.NukeopsMaxOps)));
         var ops = new IPlayerSession[numOps];
         for (var i = 0; i < numOps; i++)
         {
             ops[i] = _random.PickAndTake(ev.PlayerPool);
         }
 
-        var map = "/Maps/syndiepuddle.yml";
+        var map = "/Maps/infiltrator.yml";
 
         var aabbs = _stationSystem.Stations.SelectMany(x =>
-            Comp<StationDataComponent>(x).Grids.Select(x => _mapManager.GetGridComp(x).Grid.WorldBounds.CalcBoundingBox())).ToArray();
+            Comp<StationDataComponent>(x).Grids.Select(x => _mapManager.GetGridComp(x).Grid.WorldAABB)).ToArray();
         var aabb = aabbs[0];
         for (int i = 1; i < aabbs.Length; i++)
         {
             aabb.Union(aabbs[i]);
         }
 
-        var (_, grid) = _mapLoader.LoadBlueprint(GameTicker.DefaultMap, map, new MapLoadOptions
+        var (_, gridId) = _mapLoader.LoadBlueprint(GameTicker.DefaultMap, map, new MapLoadOptions
         {
-            Offset = aabb.Center + MathF.Max(aabb.Height, aabb.Width)*2.5f
+            Offset = aabb.Center + MathF.Max(aabb.Height / 2f, aabb.Width / 2f) * 2.5f
         });
 
-        if (!grid.HasValue)
+        if (!gridId.HasValue)
         {
             Logger.ErrorS("NUKEOPS", $"Gridid was null when loading \"{map}\", aborting.");
             foreach (var session in ops)
@@ -113,19 +126,52 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
             return;
         }
 
-        var gear = _prototypeManager.Index<StartingGearPrototype>("SyndicateOperativeGearFull");
-        var spawnpos = new EntityCoordinates(_mapManager.GetGridEuid(grid.Value), new Vector2(1.5f, -4.5f));
+        var gridUid = _mapManager.GetGridEuid(gridId.Value);
+        // TODO: Loot table or something
+        var commanderGear = _prototypeManager.Index<StartingGearPrototype>("SyndicateCommanderGearFull");
+        var starterGear = _prototypeManager.Index<StartingGearPrototype>("SyndicateOperativeGearFull");
+
+        var spawns = new List<EntityCoordinates>();
+
+        // Forgive me for hardcoding prototypes
+        foreach (var (_, meta, xform) in EntityManager.EntityQuery<SpawnPointComponent, MetaDataComponent, TransformComponent>(true))
+        {
+            if (meta.EntityPrototype?.ID != "SpawnPointNukies" || xform.ParentUid != gridUid) continue;
+
+            spawns.Add(xform.Coordinates);
+        }
+
+        if (spawns.Count == 0)
+        {
+            spawns.Add(EntityManager.GetComponent<TransformComponent>(gridUid).Coordinates);
+            Logger.WarningS("nukies", $"Fell back to default spawn for nukies!");
+        }
+
+        // TODO: This should spawn the nukies in regardless and transfer if possible; rest should go to shot roles.
         for (var i = 0; i < ops.Length; i++)
         {
+            string name;
+            StartingGearPrototype gear;
+
+            if (i == 0)
+            {
+                name = $"Commander";
+                gear = commanderGear;
+            }
+            else
+            {
+                name = $"Operator #{i}";
+                gear = starterGear;
+            }
+
             var session = ops[i];
-            var name = $"Operator #{i}";
             var newMind = new Mind.Mind(session.UserId)
             {
                 CharacterName = name
             };
             newMind.ChangeOwningPlayer(session.UserId);
 
-            var mob = EntityManager.SpawnEntity("MobHuman", spawnpos);
+            var mob = EntityManager.SpawnEntity("MobHuman", _random.Pick(spawns));
             EntityManager.GetComponent<MetaDataComponent>(mob).EntityName = name;
 
             newMind.TransferTo(mob);
@@ -159,7 +205,10 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
     }
 
 
-    public override void Started(){ _opsWon = false; }
+    public override void Started()
+    {
+        _opsWon = false;
+    }
 
-    public override void Ended(){ }
+    public override void Ended() { }
 }

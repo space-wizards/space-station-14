@@ -115,6 +115,10 @@ namespace Content.Server.Chat.Managers
 
         public void SendHookOOC(string sender, string message)
         {
+            if (!_oocEnabled && _configurationManager.GetCVar(CCVars.DisablingOOCDisablesRelay))
+            {
+                return;
+            }
             message = FormattedMessage.EscapeText(message);
             var messageWrap = Loc.GetString("chat-manager-send-hook-ooc-wrap-message", ("senderName", sender));
             ChatMessageToAll(ChatChannel.OOC, message, messageWrap);

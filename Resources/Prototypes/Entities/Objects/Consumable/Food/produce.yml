@@ -85,7 +85,7 @@
     solutions:
       food:
         reagents:
-        - ReagentId: Glucose
+        - ReagentId: Sugar
           Quantity: 10
   - type: Produce
     seedId: sugarcane
@@ -177,7 +177,7 @@
     sprite: Objects/Specific/Hydroponics/banana.rsi
     HeldPrefix: peel
   - type: Slippery
-    launchForwardsMultiplier: 6.0
+    launchForwardsMultiplier: 1.5
   - type: StepTrigger
     intersectRatio: 0.2
   - type: CollisionWake

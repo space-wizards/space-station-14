@@ -13,6 +13,7 @@ using Content.Shared.Verbs;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
+using Robust.Shared.Containers;
 using Robust.Shared.GameStates;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
@@ -47,6 +48,27 @@ namespace Content.Server.Light.EntitySystems
 
             SubscribeLocalEvent<HandheldLightComponent, GetItemActionsEvent>(OnGetActions);
             SubscribeLocalEvent<HandheldLightComponent, ToggleActionEvent>(OnToggleAction);
+
+            SubscribeLocalEvent<HandheldLightComponent, EntInsertedIntoContainerMessage>(OnEntInserted);
+            SubscribeLocalEvent<HandheldLightComponent, EntRemovedFromContainerMessage>(OnEntRemoved);
+        }
+
+        private void OnEntInserted(
+            EntityUid uid,
+            HandheldLightComponent component,
+            EntInsertedIntoContainerMessage args)
+        {
+            // Not guaranteed to be the correct container for our slot, I don't care.
+            UpdateLevel(component);
+        }
+
+        private void OnEntRemoved(
+            EntityUid uid,
+            HandheldLightComponent component,
+            EntRemovedFromContainerMessage args)
+        {
+            // Ditto above
+            UpdateLevel(component);
         }
 
         private void OnGetActions(EntityUid uid, HandheldLightComponent component, GetItemActionsEvent args)
@@ -256,13 +278,18 @@ namespace Content.Server.Light.EntitySystems
             if (component.Activated && !battery.TryUseCharge(component.Wattage * frameTime))
                 TurnOff(component, false);
 
-            var level = GetLevel(component);
+            UpdateLevel(component);
+        }
 
-            if (level != component.LastLevel)
-            {
-                component.LastLevel = level;
-                component.Dirty(EntityManager);
-            }
+        private void UpdateLevel(HandheldLightComponent comp)
+        {
+            var level = GetLevel(comp);
+
+            if (level == comp.LastLevel)
+                return;
+
+            comp.LastLevel = level;
+            Dirty(comp);
         }
     }
 }

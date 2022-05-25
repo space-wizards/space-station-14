@@ -30,15 +30,34 @@ namespace Content.Server.GameTicking
         // Mainly to avoid allocations.
         private readonly List<EntityCoordinates> _possiblePositions = new();
 
-        private void SpawnPlayers(List<IPlayerSession> readyPlayers, IEnumerable<NetUserId> origReadyPlayers,
-            Dictionary<NetUserId, HumanoidCharacterProfile> profiles, bool force)
+        private void SpawnPlayers(List<IPlayerSession> readyPlayers, Dictionary<NetUserId, HumanoidCharacterProfile> profiles, bool force)
         {
             // Allow game rules to spawn players by themselves if needed. (For example, nuke ops or wizard)
             RaiseLocalEvent(new RulePlayerSpawningEvent(readyPlayers, profiles, force));
 
+            var playerNetIds = readyPlayers.Select(o => o.UserId).ToHashSet();
+
+            // RulePlayerSpawning feeds a readonlydictionary of profiles.
+            // We need to take these players out of the pool of players available as they've been used.
+            if (readyPlayers.Count != profiles.Count)
+            {
+                var toRemove = new RemQueue<NetUserId>();
+
+                foreach (var (player, _) in profiles)
+                {
+                    if (playerNetIds.Contains(player)) continue;
+                    toRemove.Add(player);
+                }
+
+                foreach (var player in toRemove)
+                {
+                    profiles.Remove(player);
+                }
+            }
+
             var assignedJobs = _stationJobs.AssignJobs(profiles, _stationSystem.Stations.ToList());
 
-            _stationJobs.AssignOverflowJobs(ref assignedJobs, origReadyPlayers, profiles, _stationSystem.Stations.ToList());
+            _stationJobs.AssignOverflowJobs(ref assignedJobs, playerNetIds, profiles, _stationSystem.Stations.ToList());
 
             // Spawn everybody in!
             foreach (var (player, (job, station)) in assignedJobs)
