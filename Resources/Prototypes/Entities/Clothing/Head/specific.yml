@@ -1,0 +1,22 @@
+﻿- type: entity
+  parent: ClothingHeadBase
+  id: ClothingHeadHatChameleon
+  name: beaver hat
+  description: 'Gentlemen?'
+  components:
+    - type: Tag
+      tags:
+        - IgnoreChameleon
+    - type: Sprite
+      netsync: false
+      sprite: Clothing/Head/Hats/beaver_hat.rsi
+    - type: Clothing
+      sprite: Clothing/Head/Hats/beaver_hat.rsi
+    - type: ChameleonClothing
+      slot: [HEAD]
+      default: ClothingHeadHatBeaverHat
+    - type: Appearance
+    - type: UserInterface
+      interfaces:
+        - key: enum.ChameleonUiKey.Key
+          type: ChameleonBoundUserInterface

@@ -69,7 +69,7 @@ namespace Content.Shared.Item
             }
         }
         [DataField("HeldPrefix")]
-        private string? _equippedPrefix;
+        public string? _equippedPrefix;
 
         [ViewVariables]
         [DataField("Slots")]

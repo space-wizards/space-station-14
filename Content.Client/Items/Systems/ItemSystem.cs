@@ -102,7 +102,7 @@ public sealed class ItemSystem : SharedItemSystem
     }
 
     /// <summary>
-    ///     Copy in-hand and clothing visuals from another item
+    ///     Copy in-hand and clothing visuals from another item.
     /// </summary>
     public void CopyVisuals(EntityUid uid, SharedItemComponent otherItem, SharedItemComponent? item = null)
     {
@@ -113,8 +113,11 @@ public sealed class ItemSystem : SharedItemSystem
         item.ClothingVisuals = otherItem.ClothingVisuals;
         item.InhandVisuals = otherItem.InhandVisuals;
 
-        // TODO: beware, this actually a setter with some dirty logic inside
-        item.EquippedPrefix = otherItem.EquippedPrefix;
+        // TODO: beware, there is EquippedPrefix setter which marks entity dirty on set
+        // so it resync data from server and drop override from chameleon visualizer
+        // right now I set it directly bypassing setter
+        // this probably will broke something latter, but please just remove setter from clothing
+        item._equippedPrefix = otherItem.EquippedPrefix;
 
         VisualsChanged(uid, item);
     }
