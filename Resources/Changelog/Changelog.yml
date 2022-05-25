@@ -1,10 +1,4 @@
 Entries:
-- author: Peptide90
-  changes:
-  - {message: Added random crate spawners. Expect to see some variation when they're
-      mapped in., type: Add}
-  id: 1098
-  time: '2022-02-19T23:56:48.0000000+00:00'
 - author: mirrorcult
   changes:
   - {message: 'Being in disposals no longer exposes you to the air above the disposal
@@ -2999,3 +2993,8 @@ Entries:
   - {message: Added shot glasses to the bar vendor., type: Tweak}
   id: 1597
   time: '2022-05-25T02:34:08.0000000+00:00'
+- author: Peptide90
+  changes:
+  - {message: Added a crate of mice to cargo., type: Add}
+  id: 1598
+  time: '2022-05-25T03:06:34.0000000+00:00'
