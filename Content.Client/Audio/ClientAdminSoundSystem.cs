@@ -22,6 +22,10 @@ public sealed class ClientAdminSoundSystem : SharedAdminSoundSystem
     public override void Shutdown()
     {
         base.Shutdown();
+        foreach (var stream in _adminAudio)
+        {
+            stream?.Stop();
+        }
         _adminAudio.Clear();
     }
 
