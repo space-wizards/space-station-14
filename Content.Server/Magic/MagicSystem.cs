@@ -39,6 +39,7 @@ public sealed class MagicSystem : EntitySystem
         SubscribeLocalEvent<SpellbookComponent, ComponentInit>(OnInit);
         SubscribeLocalEvent<SpellbookComponent, UseInHandEvent>(OnUse);
         SubscribeLocalEvent<SpellbookComponent, LearnDoAfterComplete>(TeachSpell);
+        SubscribeLocalEvent<SpellbookComponent, LearnDoAfterCancel>(OnLearnFail);
 
         SubscribeLocalEvent<RuneMagicEvent>(OnRuneMagic);
         SubscribeLocalEvent<TeleportSpellEvent>(OnTeleportSpell);
@@ -108,6 +109,10 @@ public sealed class MagicSystem : EntitySystem
             return;
 
         _actionsSystem.AddActions(ev.User, component.Spells, uid);
+    }
+
+    private void OnLearnFail(EntityUid uid, SpellbookComponent component, LearnDoAfterCancel args)
+    {
     }
 
     #region Spells

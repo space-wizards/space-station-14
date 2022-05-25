@@ -4,11 +4,14 @@ using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototy
 
 namespace Content.Server.Magic;
 
+/// <summary>
+/// Spellbooks for having an entity learn spells as long as they've read the book and it's in their hand.
+/// </summary>
 [RegisterComponent]
 public sealed class SpellbookComponent : Component
 {
     /// <summary>
-    /// List of spells that this book has.
+    /// List of spells that this book has. This is a combination of the WorldSpells, EntitySpells, and InstantSpells.
     /// </summary>
     [ViewVariables]
     public readonly List<ActionType> Spells = new();
