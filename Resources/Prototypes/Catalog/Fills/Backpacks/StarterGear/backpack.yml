@@ -127,3 +127,16 @@
         - id: BoxSurvival
         - id: AcousticGuitarInstrument
         - id: SaxophoneInstrument
+
+- type: entity
+  noSpawn: true
+  parent: ClothingBackpack
+  id: ClothingBackpackDetectiveFilled
+  components:
+    - type: StorageFill
+      contents:
+      - id: BoxSurvival
+      - id: Lighter
+      - id: CigPackBlack
+      - id: HandLabeler
+      - id: BoxForensicPad

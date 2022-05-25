@@ -323,6 +323,7 @@
     attributes:
       proper: true
   - type: StandingState
+  - type: Fingerprint
 
 - type: entity
   save: false
