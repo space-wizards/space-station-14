@@ -8,7 +8,7 @@ public sealed class MousetrapComponent : Component
 
     /// <summary>
     ///     Set this to change where the
-    ///     reflection point in the scaling
+    ///     inflection point in the scaling
     ///     equation will occur.
     ///     The default is 10.
     /// </summary>
