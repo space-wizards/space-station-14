@@ -28,6 +28,7 @@ namespace Content.Server.MachineLinking.Components
         ///     on the same powernet.
         /// </summary>
         [DataField("transmissionRange")]
+        [ViewVariables(VVAccess.ReadWrite)]
         public float TransmissionRange = 30f;
 
         [DataField("outputs")]
