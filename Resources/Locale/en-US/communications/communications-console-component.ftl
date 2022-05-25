@@ -1,17 +1,17 @@
 ﻿# User interface
-communicationsconsole-menu-title = Communications Console
-communicationsconsole-menu-announcement-placeholder = Announcement
-communicationsconsole-menu-call-shuttle = Call emergency shuttle
-communicationsconsole-menu-recall-shuttle = Recall emergency shuttle
+comms-console-menu-title = Communications Console
+comms-console-menu-announcement-placeholder = Announcement
+comms-console-menu-call-shuttle = Call emergency shuttle
+comms-console-menu-recall-shuttle = Recall emergency shuttle
 
 # Popup
-communicationsconsole-permission-denied = Permission denied
+comms-console-permission-denied = Permission denied
 
 # Placeholder values
-communicationsconsole-announcement-sent-by = Sent by
-communicationsconsole-announcement-unknown-sender = Unknown
+comms-console-announcement-sent-by = Sent by
+comms-console-announcement-unknown-sender = Unknown
 
 # Comms console variant titles
-communicationsconsole-announcement-title-station = Communications Console
-communicationsconsole-announcement-title-centcom = Central Command
-communicationsconsole-announcement-title-nukie = Syndicate Nuclear Operative
+comms-console-announcement-title-station = Communications Console
+comms-console-announcement-title-centcom = Central Command
+comms-console-announcement-title-nukie = Syndicate Nuclear Operative

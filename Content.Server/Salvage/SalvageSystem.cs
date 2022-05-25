@@ -62,8 +62,7 @@ namespace Content.Server.Salvage
             if (_salvageGridStates.Remove(ev.GridId))
             {
                 var gridUid = _mapManager.GetGridEuid(ev.GridId);
-                EntityManager.TryGetComponent<SalvageGridComponent>(gridUid, out var salvComp);
-                if (salvComp.SpawnerMagnet != null)
+                if (EntityManager.TryGetComponent<SalvageGridComponent>(gridUid, out var salvComp) && salvComp.SpawnerMagnet != null)
                     Report(salvComp.SpawnerMagnet.Owner, "salvage-system-announcement-spawn-magnet-lost");
                 // For the very unlikely possibility that the salvage magnet was on a salvage, we will not return here
             }

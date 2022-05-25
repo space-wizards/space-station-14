@@ -32,7 +32,7 @@ namespace Content.Server.StationEvents.Events
         public override void Startup()
         {
             base.Startup();
-            List<EntityUid> alreadyNotifiedStations = new();
+            HashSet<EntityUid> stationsToNotify = new();
             List<MobStateComponent> deadList = new();
             foreach (var mobState in _entityManager.EntityQuery<MobStateComponent>())
             {
@@ -52,16 +52,14 @@ namespace Content.Server.StationEvents.Events
 
                 _entityManager.EnsureComponent<DiseaseZombieComponent>(target.Owner);
 
-                var victimOwningStation = _stationSystem.GetOwningStation(target.Owner);
-                if (victimOwningStation != null)
-                {
-                    if (!alreadyNotifiedStations.Contains((EntityUid) victimOwningStation))
-                    {
-                        _chatManager.DispatchStationAnnouncement((EntityUid) victimOwningStation, Loc.GetString("station-event-zombie-outbreak-announcement"),
-                            playDefaultSound: false, colorOverride: Color.DarkMagenta);
-                        alreadyNotifiedStations.Add((EntityUid) victimOwningStation);
-                    }
-                }
+                var station = _stationSystem.GetOwningStation(target.Owner);
+                if(station == null) continue;
+                stationsToNotify.Add((EntityUid) station);
+            }
+            foreach (var station in stationsToNotify)
+            {
+                _chatManager.DispatchStationAnnouncement((EntityUid) station, Loc.GetString("station-event-zombie-outbreak-announcement"),
+                    playDefaultSound: false, colorOverride: Color.DarkMagenta);
             }
         }
     }

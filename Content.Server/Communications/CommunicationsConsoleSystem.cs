@@ -144,7 +144,7 @@ namespace Content.Server.Communications
             if (message.Session.AttachedEntity is not {Valid: true} mob) return;
             if (!CanUse(mob, uid))
             {
-                _popupSystem.PopupEntity(Loc.GetString("communicationsconsole-permission-denied"), uid, Filter.Entities(mob));
+                _popupSystem.PopupEntity(Loc.GetString("comms-console-permission-denied"), uid, Filter.Entities(mob));
                 return;
             }
 
@@ -159,7 +159,7 @@ namespace Content.Server.Communications
             CommunicationsConsoleAnnounceMessage message)
         {
             var msg = message.Message.Length <= MaxMessageLength ? message.Message.Trim() : $"{message.Message.Trim().Substring(0, MaxMessageLength)}...";
-            var author = Loc.GetString("communicationsconsole-announcement-unknown-sender");
+            var author = Loc.GetString("comms-console-announcement-unknown-sender");
             if (message.Session.AttachedEntity is {Valid: true} mob)
             {
                 if (!CanAnnounce(comp))
@@ -174,7 +174,7 @@ namespace Content.Server.Communications
 
                 if (!CanUse(mob, uid))
                 {
-                    _popupSystem.PopupEntity(Loc.GetString("communicationsconsole-permission-denied"), uid, Filter.Entities(mob));
+                    _popupSystem.PopupEntity(Loc.GetString("comms-console-permission-denied"), uid, Filter.Entities(mob));
                     return;
                 }
             }
@@ -187,7 +187,7 @@ namespace Content.Server.Communications
             Loc.TryGetString("comp.AnnouncementDisplayName", out var title);
             title ??= comp.AnnouncementDisplayName;
 
-            msg += "\n" + Loc.GetString("communicationsconsole-announcement-sent-by") + " " + author;
+            msg += "\n" + Loc.GetString("comms-console-announcement-sent-by") + " " + author;
             _chatManager.DispatchStationAnnouncement(uid, msg, title, colorOverride: comp.AnnouncementColor);
         }
 
@@ -197,7 +197,7 @@ namespace Content.Server.Communications
             if (message.Session.AttachedEntity is not {Valid: true} mob) return;
             if (!CanUse(mob, uid))
             {
-                _popupSystem.PopupEntity(Loc.GetString("communicationsconsole-permission-denied"), uid, Filter.Entities(mob));
+                _popupSystem.PopupEntity(Loc.GetString("comms-console-permission-denied"), uid, Filter.Entities(mob));
                 return;
             }
             _roundEndSystem.RequestRoundEnd(uid);
@@ -209,7 +209,7 @@ namespace Content.Server.Communications
             if (message.Session.AttachedEntity is not {Valid: true} mob) return;
             if (!CanUse(mob, uid))
             {
-                _popupSystem.PopupEntity(Loc.GetString("communicationsconsole-permission-denied"), uid, Filter.Entities(mob));
+                _popupSystem.PopupEntity(Loc.GetString("comms-console-permission-denied"), uid, Filter.Entities(mob));
                 return;
             }
             _roundEndSystem.CancelRoundEndCountdown(uid);

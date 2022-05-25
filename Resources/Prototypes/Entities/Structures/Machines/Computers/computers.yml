@@ -281,7 +281,7 @@
   - type: AccessReader
     access: [[ "Command" ]]
   - type: CommunicationsConsole
-    title: communicationsconsole-announcement-title-station
+    title: comms-console-announcement-title-station
   - type: ActivatableUI
     key: enum.CommunicationsConsoleUiKey.Key
   - type: ActivatableUIRequiresPower
@@ -310,7 +310,7 @@
   - type: AccessReader
     access: [[ "NuclearOperative" ]]
   - type: CommunicationsConsole
-    title: communicationsconsole-announcement-title-nukie
+    title: comms-console-announcement-title-nukie
     color: "#ff0000"
     canShuttle: false
   - type: Computer

@@ -23,7 +23,7 @@ public sealed class RandomSentience : StationEvent
     public override void Startup()
     {
         base.Startup();
-        List<EntityUid> alreadyNotifiedStations = new();
+        HashSet<EntityUid> stationsToNotify = new();
 
         var targetList = _entityManager.EntityQuery<SentienceTargetComponent>().ToList();
         _random.Shuffle(targetList);
@@ -55,23 +55,21 @@ public sealed class RandomSentience : StationEvent
         var _stationSystem = EntitySystem.Get<StationSystem>();
         foreach (var target in targetList)
         {
-            var victimOwningStation = _stationSystem.GetOwningStation(target.Owner);
-            if (victimOwningStation != null)
-            {
-                if (!alreadyNotifiedStations.Contains((EntityUid) victimOwningStation))
-                {
-                    _chatManager.DispatchStationAnnouncement(
-                        (EntityUid) victimOwningStation,
-                        Loc.GetString("station-event-random-sentience-announcement",
-                            ("kind1", kind1), ("kind2", kind2), ("kind3", kind3), ("amount", groupList.Count),
-                            ("data", Loc.GetString($"random-sentience-event-data-{_random.Next(1, 6)}")),
-                            ("strength", Loc.GetString($"random-sentience-event-strength-{_random.Next(1, 8)}"))),
-                        playDefaultSound: false,
-                        colorOverride: Color.Gold
-                    );
-                    alreadyNotifiedStations.Add((EntityUid) victimOwningStation);
-                }
-            }
+            var station = _stationSystem.GetOwningStation(target.Owner);
+            if(station == null) continue;
+            stationsToNotify.Add((EntityUid) station);
+        }
+        foreach (var station in stationsToNotify)
+        {
+            _chatManager.DispatchStationAnnouncement(
+                (EntityUid) station,
+                Loc.GetString("station-event-random-sentience-announcement",
+                    ("kind1", kind1), ("kind2", kind2), ("kind3", kind3), ("amount", groupList.Count),
+                    ("data", Loc.GetString($"random-sentience-event-data-{_random.Next(1, 6)}")),
+                    ("strength", Loc.GetString($"random-sentience-event-strength-{_random.Next(1, 8)}"))),
+                playDefaultSound: false,
+                colorOverride: Color.Gold
+            );
         }
     }
 }

@@ -44,7 +44,7 @@ public sealed class DiseaseOutbreak : StationEvent
     public override void Startup()
     {
         base.Startup();
-        List<EntityUid> alreadyNotifiedStations = new();
+        HashSet<EntityUid> stationsToNotify = new();
         List<DiseaseCarrierComponent> aliveList = new();
         foreach (var (carrier, mobState) in _entityManager.EntityQuery<DiseaseCarrierComponent, MobStateComponent>())
         {
@@ -71,16 +71,15 @@ public sealed class DiseaseOutbreak : StationEvent
 
             diseaseSystem.TryAddDisease(target.Owner, disease, target);
 
-            var victimOwningStation = _stationSystem.GetOwningStation(target.Owner);
-            if (victimOwningStation != null)
-            {
-                if (!alreadyNotifiedStations.Contains((EntityUid) victimOwningStation))
-                {
-                    _chatManager.DispatchStationAnnouncement((EntityUid) victimOwningStation, Loc.GetString("station-event-disease-outbreak-announcement"),
-                        playDefaultSound: false, colorOverride: Color.YellowGreen);
-                    alreadyNotifiedStations.Add((EntityUid) victimOwningStation);
-                }
-            }
+            var station = _stationSystem.GetOwningStation(target.Owner);
+            if(station == null) continue;
+            stationsToNotify.Add((EntityUid) station);
+        }
+
+        foreach (var station in stationsToNotify)
+        {
+            _chatManager.DispatchStationAnnouncement(station, Loc.GetString("station-event-disease-outbreak-announcement"),
+                playDefaultSound: false, colorOverride: Color.YellowGreen);
         }
     }
 }
