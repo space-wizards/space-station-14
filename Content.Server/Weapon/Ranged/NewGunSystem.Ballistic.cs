@@ -40,9 +40,7 @@ public sealed partial class NewGunSystem
         if (sound != null)
             SoundSystem.Play(Filter.Pvs(component.Owner, entityManager: EntityManager), sound);
 
-        if (TryComp<AppearanceComponent>(component.Owner, out var appearance))
-        {
-            appearance.SetData(AmmoVisuals.AmmoCount, GetShots(component));
-        }
+        UpdateBallisticAppearance(component);
+        Dirty(component);
     }
 }

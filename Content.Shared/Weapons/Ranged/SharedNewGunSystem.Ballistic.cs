@@ -141,7 +141,7 @@ public abstract partial class SharedNewGunSystem
 
     protected void UpdateBallisticAppearance(BallisticAmmoProviderComponent component)
     {
-        if (TryComp<AppearanceComponent>(component.Owner, out var appearance))
+        if (Timing.IsFirstTimePredicted && TryComp<AppearanceComponent>(component.Owner, out var appearance))
         {
             appearance.SetData(AmmoVisuals.AmmoCount, GetShots(component));
             appearance.SetData(AmmoVisuals.AmmoMax, component.Capacity);
