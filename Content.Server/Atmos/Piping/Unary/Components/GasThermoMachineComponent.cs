@@ -7,11 +7,11 @@ namespace Content.Server.Atmos.Piping.Unary.Components
     public sealed class GasThermoMachineComponent : Component
     {
         [DataField("inlet")]
-        public string InletName { get; set; } = "pipe";
+        public string InletName = "pipe";
 
         [ViewVariables(VVAccess.ReadWrite)]
         [DataField("enabled")]
-        public bool Enabled { get; set; } = true;
+        public bool Enabled = true;
 
         /// <summary>
         ///     Current maximum temperature, calculated from <see cref="BaseHeatCapacity"/> and the quality of matter
@@ -25,15 +25,15 @@ namespace Content.Server.Atmos.Piping.Unary.Components
         ///     Base heat capacity of the device. Actual heat capacity is calculated by taking this number and doubling
         ///     it for every matter bin quality tier above one.
         /// </summary>
-        [DataField("baseHeatCapacity ")]
+        [DataField("baseHeatCapacity")]
         public float BaseHeatCapacity = 5000;
 
         [DataField("targetTemperature")]
         [ViewVariables(VVAccess.ReadWrite)]
-        public float TargetTemperature { get; set; } = Atmospherics.T20C;
+        public float TargetTemperature = Atmospherics.T20C;
 
         [DataField("mode")]
-        public ThermoMachineMode Mode { get; set; } = ThermoMachineMode.Freezer;
+        public ThermoMachineMode Mode = ThermoMachineMode.Freezer;
 
         /// <summary>
         ///     Current minimum temperature, calculated from <see cref="InitialMinTemperature"/> and <see
