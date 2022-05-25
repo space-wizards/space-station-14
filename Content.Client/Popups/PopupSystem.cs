@@ -10,6 +10,7 @@ using Robust.Client.UserInterface.Controls;
 using Robust.Shared.Map;
 using Robust.Shared.Player;
 using Robust.Shared.Timing;
+using Robust.Shared.Utility;
 
 namespace Content.Client.Popups
 {
@@ -161,7 +162,7 @@ namespace Content.Client.Popups
                     label.Entity != null && Deleted(label.Entity))
                 {
                     label.Dispose();
-                    _aliveWorldLabels.RemoveAt(i);
+                    _aliveWorldLabels.RemoveSwap(i);
                     continue;
                 }
 
@@ -191,7 +192,7 @@ namespace Content.Client.Popups
                 if (label.TotalTime > PopupLifetime)
                 {
                     label.Dispose();
-                    _aliveCursorLabels.RemoveAt(i);
+                    _aliveCursorLabels.RemoveSwap(i);
                 }
             }
         }
