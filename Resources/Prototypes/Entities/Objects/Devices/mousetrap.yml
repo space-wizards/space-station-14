@@ -52,6 +52,7 @@
           mass: 5
           mask:
             - ItemMask
+    - type: Rotatable
     - type: Tag
       tags:
         - DroneUsable
