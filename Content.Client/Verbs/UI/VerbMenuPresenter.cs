@@ -129,8 +129,9 @@ namespace Content.Client.Verbs.UI
                 AddElement(element.SubMenu, subElement);
             }
 
-            if (category.IconsOnly)
-                element.SubMenu.MenuBody.Orientation = LayoutOrientation.Horizontal;
+            element.SubMenu.MenuBody.Columns = category.Columns;
+            element.SubMenu.MenuBody.VSeparationOverride = 0;
+            element.SubMenu.MenuBody.HSeparationOverride = 0;
         }
 
         /// <summary>
