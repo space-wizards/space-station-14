@@ -1,9 +1,4 @@
 Entries:
-- author: Ygg01
-  changes:
-  - {message: Small amounts of liquids don't turn to cum stains, type: Fix}
-  id: 1106
-  time: '2022-02-20T19:54:06.0000000+00:00'
 - author: mirrorcult
   changes:
   - {message: 'Thermomachines can now actually be constructed, and their machine board
@@ -2998,3 +2993,9 @@ Entries:
   - {message: Enhances the HQ parallax., type: Tweak}
   id: 1605
   time: '2022-05-26T08:38:11.0000000+00:00'
+- author: ElectroJr
+  changes:
+  - {message: Fix action icons sometimes being blank when first joining the game.,
+    type: Fix}
+  id: 1606
+  time: '2022-05-26T08:47:03.0000000+00:00'
