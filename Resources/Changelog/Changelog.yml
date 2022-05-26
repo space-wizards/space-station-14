@@ -1,9 +1,4 @@
 Entries:
-- author: Rane
-  changes:
-  - {message: Drones can no longer throw., type: Remove}
-  id: 1104
-  time: '2022-02-20T06:02:06.0000000+00:00'
 - author: mirrorcult
   changes:
   - {message: Using ctrl+rightclick to move pulled objects should no longer feel slightly
@@ -2998,3 +2993,9 @@ Entries:
       before.', type: Add}
   id: 1603
   time: '2022-05-25T21:49:21.0000000+00:00'
+- author: PJB3005
+  changes:
+  - {message: Emergency lights don't have their light clip through walls anymore.,
+    type: Fix}
+  id: 1604
+  time: '2022-05-26T04:56:16.0000000+00:00'
