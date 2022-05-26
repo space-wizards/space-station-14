@@ -28,7 +28,7 @@ using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
 using static Content.Shared.Configurable.SharedConfigurationComponent;
 
-namespace Content.Server.Administration
+namespace Content.Server.Administration.Systems
 {
     /// <summary>
     ///     System to provide various global admin/debug verbs

@@ -1,4 +1,6 @@
-﻿namespace Content.Server.Administration.Components;
+﻿using Content.Server.Administration.Systems;
+
+namespace Content.Server.Administration.Components;
 
 [RegisterComponent, Friend(typeof(BufferingSystem))]
 public sealed class BufferingComponent : Component

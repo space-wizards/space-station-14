@@ -3,7 +3,7 @@ using Content.Shared.Administration;
 using Robust.Shared.Map;
 using Robust.Shared.Random;
 
-namespace Content.Server.Administration;
+namespace Content.Server.Administration.Systems;
 
 public sealed class BufferingSystem : EntitySystem
 {

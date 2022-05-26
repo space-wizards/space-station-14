@@ -37,6 +37,7 @@ public sealed class KillSignSystem : EntitySystem
         sprite.LayerMapSet(KillSignKey.Key, layer);
 
         sprite.LayerSetOffset(layer, new Vector2(0.0f, adj));
+        sprite.LayerSetShader(layer, "unlit");
     }
 
     private enum KillSignKey

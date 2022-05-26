@@ -42,7 +42,7 @@ using Robust.Shared.Random;
 using Robust.Shared.Utility;
 using Timer = Robust.Shared.Timing.Timer;
 
-namespace Content.Server.Administration;
+namespace Content.Server.Administration.Systems;
 
 public sealed partial class AdminVerbSystem
 {
