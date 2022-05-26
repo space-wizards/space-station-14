@@ -6,6 +6,7 @@ using Content.Shared.Containers.ItemSlots;
 using Content.Shared.Damage;
 using Content.Shared.Examine;
 using Content.Shared.Hands.Components;
+using Content.Shared.Interaction.Events;
 using Content.Shared.Popups;
 using Content.Shared.Verbs;
 using Robust.Shared.Audio;
@@ -54,6 +55,7 @@ public abstract partial class SharedNewGunSystem : EntitySystem
         SubscribeAllEvent<RequestShootEvent>(OnShootRequest);
         SubscribeAllEvent<RequestStopShootEvent>(OnStopShootRequest);
         SubscribeLocalEvent<NewGunComponent, ComponentHandleState>(OnHandleState);
+        SubscribeLocalEvent<NewGunComponent, MeleeAttackAttemptEvent>(OnGunMeleeAttempt);
 
         // Ammo providers
         InitializeBallistic();
@@ -68,6 +70,12 @@ public abstract partial class SharedNewGunSystem : EntitySystem
         SubscribeLocalEvent<NewGunComponent, ExaminedEvent>(OnExamine);
         SubscribeLocalEvent<NewGunComponent, CycleModeEvent>(OnCycleMode);
     }
+
+    private void OnGunMeleeAttempt(EntityUid uid, NewGunComponent component, ref MeleeAttackAttemptEvent args)
+    {
+        args.Cancelled = true;
+    }
+
     private void OnShootRequest(RequestShootEvent msg, EntitySessionEventArgs args)
     {
         var user = args.SenderSession.AttachedEntity;

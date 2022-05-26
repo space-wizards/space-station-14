@@ -1,6 +1,7 @@
 using Content.Server.Power.Components;
 using Content.Server.PowerCell;
 using Content.Shared.Containers.ItemSlots;
+using Content.Shared.Examine;
 using Content.Shared.PowerCell.Components;
 using JetBrains.Annotations;
 using Robust.Shared.Containers;
@@ -25,6 +26,13 @@ internal sealed class ChargerSystem : EntitySystem
         SubscribeLocalEvent<ChargerComponent, EntInsertedIntoContainerMessage>(OnInserted);
         SubscribeLocalEvent<ChargerComponent, EntRemovedFromContainerMessage>(OnRemoved);
         SubscribeLocalEvent<ChargerComponent, ContainerIsInsertingAttemptEvent>(OnInsertAttempt);
+
+        SubscribeLocalEvent<ChargerComponent, ExaminedEvent>(OnChargerExamine);
+    }
+
+    private void OnChargerExamine(EntityUid uid, ChargerComponent component, ExaminedEvent args)
+    {
+        args.PushMarkup($"Charges [color=yellow]{component.ChargeRate}W[/color] per second.");
     }
 
     public override void Update(float frameTime)
@@ -63,7 +71,7 @@ internal sealed class ChargerSystem : EntitySystem
             // or by checking for a power cell slot on the inserted entity
             _cellSystem.TryGetBatteryFromSlot(args.Entity, out component.HeldBattery);
         }
-        
+
         component.UpdateStatus();
     }
 

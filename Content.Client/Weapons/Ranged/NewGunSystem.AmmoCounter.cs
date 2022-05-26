@@ -35,10 +35,8 @@ public sealed partial class NewGunSystem
         var ev = new AmmoCounterControlEvent();
         RaiseLocalEvent(uid, ev);
 
-        if (!ev.Handled)
-        {
-            ev.Control = new DefaultStatusControl();
-        }
+        // Fallback to default if none specified
+        ev.Control ??= new DefaultStatusControl();
 
         component.Control = ev.Control;
         UpdateAmmoCount(uid, component);
@@ -67,13 +65,16 @@ public sealed partial class NewGunSystem
     }
 
     /// <summary>
-    /// Raised when an ammocounter is requesting a control
+    /// Raised when an ammocounter is requesting a control.
     /// </summary>
-    public sealed class AmmoCounterControlEvent : HandledEntityEventArgs
+    public sealed class AmmoCounterControlEvent : EntityEventArgs
     {
         public Control? Control;
     }
 
+    /// <summary>
+    /// Raised whenever the ammo count / magazine for a control needs updating.
+    /// </summary>
     public sealed class UpdateAmmoCounterEvent : HandledEntityEventArgs
     {
         public Control Control = default!;

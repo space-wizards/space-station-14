@@ -53,11 +53,17 @@ public abstract partial class SharedNewGunSystem
             component.Shots--;
         }
 
+        TakeCharge(uid, component);
         UpdateBatteryAppearance(uid, component);
         Dirty(component);
     }
 
-    protected virtual void UpdateBatteryAppearance(EntityUid uid, BatteryAmmoProviderComponent component)
+    /// <summary>
+    /// Update the battery (server-only) whenever fired.
+    /// </summary>
+    protected virtual void TakeCharge(EntityUid uid, BatteryAmmoProviderComponent component) {}
+
+    protected void UpdateBatteryAppearance(EntityUid uid, BatteryAmmoProviderComponent component)
     {
         if (!TryComp<AppearanceComponent>(uid, out var appearance)) return;
         appearance.SetData(AmmoVisuals.AmmoCount, component.Shots);

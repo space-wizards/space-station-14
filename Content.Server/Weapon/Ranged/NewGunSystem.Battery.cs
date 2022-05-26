@@ -14,20 +14,21 @@ public sealed partial class NewGunSystem
 
     private void OnBatteryStartup(EntityUid uid, BatteryAmmoProviderComponent component, ComponentStartup args)
     {
-        if (TryComp<BatteryComponent>(uid, out var battery))
-        {
-            SetShots(component, battery);
-        }
+        UpdateShots(uid, component);
     }
 
     private void OnBatteryChargeChange(EntityUid uid, BatteryAmmoProviderComponent component, ChargeChangedEvent args)
     {
-        if (!TryComp<BatteryComponent>(uid, out var battery)) return;
-
-        SetShots(component, battery);
+        UpdateShots(uid, component);
     }
 
-    private void SetShots(BatteryAmmoProviderComponent component, BatteryComponent battery)
+    private void UpdateShots(EntityUid uid, BatteryAmmoProviderComponent component)
+    {
+        if (!TryComp<BatteryComponent>(uid, out var battery)) return;
+        UpdateShots(component, battery);
+    }
+
+    private void UpdateShots(BatteryAmmoProviderComponent component, BatteryComponent battery)
     {
         var shots = (int) (battery.CurrentCharge / component.FireCost);
         var maxShots = (int) (battery.MaxCharge / component.FireCost);
@@ -40,5 +41,13 @@ public sealed partial class NewGunSystem
         component.Shots = shots;
         component.MaxShots = maxShots;
         UpdateBatteryAppearance(component.Owner, component);
+    }
+
+    protected override void TakeCharge(EntityUid uid, BatteryAmmoProviderComponent component)
+    {
+        if (!TryComp<BatteryComponent>(uid, out var battery)) return;
+
+        battery.CurrentCharge -= component.FireCost;
+        UpdateShots(component, battery);
     }
 }
