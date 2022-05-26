@@ -12,6 +12,7 @@
     - state: large
       shader: unshaded
   - type: ExplodeOnTrigger
+    fixtureID: projectile
   - type: DeleteOnTrigger
   - type: TriggerOnCollide
   - type: Projectile
@@ -32,6 +33,7 @@
         radius: 0.8
       mass: 200
       hard: true
+      id: projectile
       # Didn't use MapGrid for now as the bounds are stuffed.
       layer:
       - LargeMobLayer
