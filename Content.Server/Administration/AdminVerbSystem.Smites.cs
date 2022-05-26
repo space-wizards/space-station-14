@@ -12,6 +12,7 @@ using Content.Server.Disease;
 using Content.Server.Disease.Components;
 using Content.Server.Electrocution;
 using Content.Server.Explosion.EntitySystems;
+using Content.Server.GhostKick;
 using Content.Server.Interaction.Components;
 using Content.Server.Medical;
 using Content.Server.Nutrition.EntitySystems;
@@ -46,6 +47,7 @@ namespace Content.Server.Administration;
 public sealed partial class AdminVerbSystem
 {
     [Dependency] private readonly IRobustRandom _random = default!;
+    [Dependency] private readonly GhostKickManager _ghostKickManager = default!;
     [Dependency] private readonly PolymorphableSystem _polymorphableSystem = default!;
     [Dependency] private readonly InventorySystem _inventorySystem = default!;
     [Dependency] private readonly ElectrocutionSystem _electrocutionSystem = default!;
@@ -385,19 +387,22 @@ public sealed partial class AdminVerbSystem
         };
         args.Verbs.Add(bread);
 
-        Verb ghostKick = new()
+        if (TryComp<ActorComponent>(args.Target, out var actorComponent))
         {
-            Text = "Ghostkick",
-            Category = VerbCategory.Smite,
-            IconTexture = "/Textures/Interface/gavel.svg.192dpi.png",
-            Act = () =>
+            Verb ghostKick = new()
             {
-                _polymorphableSystem.PolymorphEntity(args.Target, "AdminBreadSmite");
-            },
-            Impact = LogImpact.Extreme,
-            Message = "Silently kicks the user, dropping their connection.",
-        };
-        args.Verbs.Add(ghostKick);
+                Text = "Ghostkick",
+                Category = VerbCategory.Smite,
+                IconTexture = "/Textures/Interface/gavel.svg.192dpi.png",
+                Act = () =>
+                {
+                    _ghostKickManager.DoDisconnect(actorComponent.PlayerSession.ConnectedClient, "Smitten.");
+                },
+                Impact = LogImpact.Extreme,
+                Message = "Silently kicks the user, dropping their connection.",
+            };
+            args.Verbs.Add(ghostKick);
+        }
 
         if (TryComp<InventoryComponent>(args.Target, out var inventory)) {
             Verb nyanify = new()
@@ -416,6 +421,20 @@ public sealed partial class AdminVerbSystem
                 Message = "Forcibly adds cat ears. There is no escape.",
             };
             args.Verbs.Add(nyanify);
+
+            Verb killSign = new()
+            {
+                Text = "Kill sign",
+                Category = VerbCategory.Smite,
+                IconTexture = "/Textures/Objects/Misc/killsign.rsi/icon.png",
+                Act = () =>
+                {
+                    EnsureComp<KillSignComponent>(args.Target);
+                },
+                Impact = LogImpact.Extreme,
+                Message = "Marks a player for death by their fellows.",
+            };
+            args.Verbs.Add(killSign);
 
             // TODO: Port cluwne outfit.
             Verb clown = new()
