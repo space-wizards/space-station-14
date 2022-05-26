@@ -1,13 +1,14 @@
 using Content.Shared.Audio;
 using JetBrains.Annotations;
 using Robust.Shared.Audio;
+using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.TypeSerializers.Implementations;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 using Robust.Shared.Utility;
 
 namespace Content.Shared.Sound
 {
-    [ImplicitDataDefinitionForInheritors]
+    [ImplicitDataDefinitionForInheritors, Serializable, NetSerializable]
     public abstract class SoundSpecifier
     {
         [ViewVariables(VVAccess.ReadWrite), DataField("params")]
@@ -16,6 +17,7 @@ namespace Content.Shared.Sound
         public abstract string GetSound();
     }
 
+    [Serializable, NetSerializable]
     public sealed class SoundPathSpecifier : SoundSpecifier
     {
         public const string Node = "path";
@@ -44,6 +46,7 @@ namespace Content.Shared.Sound
         }
     }
 
+    [Serializable, NetSerializable]
     public sealed class SoundCollectionSpecifier : SoundSpecifier
     {
         public const string Node = "collection";
