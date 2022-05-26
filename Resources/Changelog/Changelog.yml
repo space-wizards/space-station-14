@@ -1,10 +1,4 @@
 Entries:
-- author: mirrorcult
-  changes:
-  - {message: Using ctrl+rightclick to move pulled objects should no longer feel slightly
-      weird., type: Tweak}
-  id: 1105
-  time: '2022-02-20T06:17:49.0000000+00:00'
 - author: Ygg01
   changes:
   - {message: Small amounts of liquids don't turn to cum stains, type: Fix}
@@ -2999,3 +2993,8 @@ Entries:
     type: Fix}
   id: 1604
   time: '2022-05-26T04:56:16.0000000+00:00'
+- author: moony
+  changes:
+  - {message: Enhances the HQ parallax., type: Tweak}
+  id: 1605
+  time: '2022-05-26T08:38:11.0000000+00:00'
