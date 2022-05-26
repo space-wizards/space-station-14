@@ -14,6 +14,7 @@ using Content.Server.Explosion.EntitySystems;
 using Content.Server.Interaction.Components;
 using Content.Server.Medical;
 using Content.Server.Nutrition.EntitySystems;
+using Content.Server.Pointing.Components;
 using Content.Server.Polymorph.Systems;
 using Content.Server.Popups;
 using Content.Server.Tabletop;
@@ -435,5 +436,19 @@ public sealed partial class AdminVerbSystem
             };
             args.Verbs.Add(clown);
         }
+
+        Verb angerPointingArrows = new()
+        {
+            Text = "Anger Pointing Arrows",
+            Category = VerbCategory.Smite,
+            IconTexture = "/Textures/Interface/Misc/pointing.rsi/pointing.png",
+            Act = () =>
+            {
+                EnsureComp<PointingArrowAngeringComponent>(args.Target);
+            },
+            Impact = LogImpact.Extreme,
+            Message = "Angers the pointing arrows, causing them to assault this entity.",
+        };
+        args.Verbs.Add(angerPointingArrows);
     }
 }
