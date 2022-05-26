@@ -70,10 +70,8 @@ namespace Content.Shared.CombatMode
         {
             var entity = eventArgs.SenderSession.AttachedEntity;
 
-            if (entity == default || !EntityManager.TryGetComponent(entity, out SharedCombatModeComponent? combatModeComponent))
-            {
+            if (entity == null || !EntityManager.TryGetComponent(entity, out SharedCombatModeComponent? combatModeComponent))
                 return;
-            }
 
             combatModeComponent.IsInCombatMode = ev.Active;
         }

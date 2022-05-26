@@ -29,7 +29,7 @@ namespace Content.Client.ContextMenu.UI
         /// <summary>
         ///     This is the main body of the menu. The menu entries should be added to this object.
         /// </summary>
-        public BoxContainer MenuBody = new() { Orientation = LayoutOrientation.Vertical };
+        public GridContainer MenuBody = new();
 
         private ContextMenuPresenter _presenter;
 
@@ -41,6 +41,7 @@ namespace Content.Client.ContextMenu.UI
             _presenter = presenter;
             ParentElement = parentElement;
 
+            // TODO xaml controls now have the access options -> re-xamlify all this.
             //XAML controls are private. So defining and adding MenuBody here instead.
             Scroll.AddChild(MenuBody);
 
@@ -52,6 +53,8 @@ namespace Content.Client.ContextMenu.UI
 
             UserInterfaceManager.ModalRoot.AddChild(this);
             MenuBody.OnChildRemoved += ctrl => _presenter.OnRemoveElement(this, ctrl);
+            MenuBody.VSeparationOverride = 0;
+            MenuBody.HSeparationOverride = 0;
 
             if (ParentElement != null)
             {

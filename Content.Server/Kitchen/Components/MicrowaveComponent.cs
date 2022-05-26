@@ -212,6 +212,7 @@ namespace Content.Server.Kitchen.Components
 
                 if (ev.Handled)
                 {
+                    _busy = false;
                     UIDirty = true;
                     return;
                 }

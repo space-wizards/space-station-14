@@ -44,6 +44,9 @@ public sealed class PowerCellSystem : SharedPowerCellSystem
 
     private void OnMicrowaved(EntityUid uid, BatteryComponent component, BeingMicrowavedEvent args)
     {
+        if (component.CurrentCharge == 0)
+            return;
+
         args.Handled = true;
 
         // What the fuck are you doing???
@@ -85,7 +88,6 @@ public sealed class PowerCellSystem : SharedPowerCellSystem
             return;
 
         var radius = MathF.Min(5, MathF.Ceiling(MathF.Sqrt(battery.CurrentCharge) / 30));
-        battery.CurrentCharge = 0;
 
         _explosionSystem.TriggerExplosive(uid, radius: radius);
         QueueDel(uid);

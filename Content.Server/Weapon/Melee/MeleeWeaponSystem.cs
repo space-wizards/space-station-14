@@ -33,7 +33,7 @@ namespace Content.Server.Weapon.Melee
         [Dependency] private readonly AdminLogSystem _logSystem = default!;
         [Dependency] private readonly BloodstreamSystem _bloodstreamSystem = default!;
 
-        private const float DamagePitchVariation = 0.15f;
+        public const float DamagePitchVariation = 0.15f;
 
         public override void Initialize()
         {
@@ -107,7 +107,7 @@ namespace Content.Server.Weapon.Melee
                                 $"{ToPrettyString(args.User):user} melee attacked {ToPrettyString(args.Target.Value):target} using {ToPrettyString(args.Used):used} and dealt {damageResult.Total:damage} damage");
                     }
 
-                    PlayHitSound(target, GetHighestDamageSound(modifiedDamage), hitEvent.HitSoundOverride, comp.HitSound);
+                    PlayHitSound(target, GetHighestDamageSound(modifiedDamage, _protoManager), hitEvent.HitSoundOverride, comp.HitSound);
                 }
             }
             else
@@ -165,7 +165,7 @@ namespace Content.Server.Weapon.Melee
                     var target = entities.First();
                     TryComp<MeleeWeaponComponent>(target, out var meleeWeapon);
 
-                    PlayHitSound(target, GetHighestDamageSound(modifiedDamage), hitEvent.HitSoundOverride, meleeWeapon?.HitSound);
+                    PlayHitSound(target, GetHighestDamageSound(modifiedDamage, _protoManager), hitEvent.HitSoundOverride, meleeWeapon?.HitSound);
                 }
                 else
                 {
@@ -196,9 +196,9 @@ namespace Content.Server.Weapon.Melee
             RaiseLocalEvent(owner, new RefreshItemCooldownEvent(comp.LastAttackTime, comp.CooldownEnd), false);
         }
 
-        private string? GetHighestDamageSound(DamageSpecifier modifiedDamage)
+        public static string? GetHighestDamageSound(DamageSpecifier modifiedDamage, IPrototypeManager protoManager)
         {
-            var groups = modifiedDamage.GetDamagePerGroup(_protoManager);
+            var groups = modifiedDamage.GetDamagePerGroup(protoManager);
 
             // Use group if it's exclusive, otherwise fall back to type.
             if (groups.Count == 1)
