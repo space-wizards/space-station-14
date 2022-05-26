@@ -14,7 +14,11 @@
   - type: Physics
     bodyType: KinematicController
   - type: HeatResistance
+  # TODO: Remove CombatMode when Prototype Composition is added
   - type: CombatMode
+    disarmAction:
+      enabled: false
+      autoPopulate: false
   - type: Internals
   - type: Examiner
   - type: Speech
