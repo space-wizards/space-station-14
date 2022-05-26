@@ -109,6 +109,9 @@
   id: Debug
 
 - type: Tag
+  id: DevourTarget
+
+- type: Tag
   id: Dice
 
 - type: Tag

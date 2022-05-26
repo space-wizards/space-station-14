@@ -141,9 +141,10 @@ namespace Content.Server.Dragon
             }
 
             // If it can be built- it can be destroyed
-            if (_tagSystem.HasTag(target, "RCDDeconstructWhitelist"))
+            if (_tagSystem.HasTag(target, "DevourTarget"))
             {
                 _popupSystem.PopupEntity(Loc.GetString("devour-action-popup-message-structure"), dragonuid, Filter.Entities(dragonuid));
+                SoundSystem.Play(Filter.Pvs(dragonuid, entityManager: EntityManager), "/Audio/Machines/airlock_creaking.ogg");
                 component.CancelToken = new CancellationTokenSource();
 
                 _doAfterSystem.DoAfter(new DoAfterEventArgs(dragonuid, component.DevourTime, component.CancelToken.Token, target)

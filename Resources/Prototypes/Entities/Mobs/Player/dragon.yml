@@ -86,13 +86,20 @@
     spawned:
     - id: FoodMeatDragon
       amount: 2
-  - type: UnarmedCombat
-    range: 0.8
-    arcwidth: 2
+  - type: MeleeWeapon
+    range: 1.5
+    arcwidth: 0
     arc: bite
+    hitSound:
+      path: /Audio/Effects/bite.ogg
     damage:
-      groups:
-        Brute: 45
+      types:
+        Piercing: 15
+        Slash: 30
+    disarmAction:
+      enabled: false
+      autoPopulate: false
+      name: action-name-disarm
   - type: Dragon
     spawnsLeft: 2
     spawnsProto: MobCarpSentient

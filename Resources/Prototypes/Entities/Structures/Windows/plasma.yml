@@ -3,6 +3,9 @@
   name: plasma window
   parent: Window
   components:
+  - type: Tag
+    tags:
+      - DevourTarget
   - type: Sprite
     drawdepth: WallTops
     sprite: Structures/Windows/plasma_window.rsi
@@ -51,6 +54,9 @@
     snap:
     - Window
   components:
+  - type: Tag
+    tags:
+      - DevourTarget
   - type: Sprite
     netsync: false
     sprite: Structures/Windows/directional.rsi

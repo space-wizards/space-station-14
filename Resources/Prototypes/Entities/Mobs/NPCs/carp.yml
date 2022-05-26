@@ -54,7 +54,6 @@
       types:
         Piercing: 5
         Slash: 10
-  - type: CombatMode
     disarmAction:
       enabled: false
       autoPopulate: false

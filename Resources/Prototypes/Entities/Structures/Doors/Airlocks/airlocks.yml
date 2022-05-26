@@ -85,6 +85,9 @@
   parent: Airlock
   name: glass airlock
   components:
+  - type: Tag
+    tags:
+      - DevourTarget
   - type: MeleeSound
     soundGroups:
       Brute:
