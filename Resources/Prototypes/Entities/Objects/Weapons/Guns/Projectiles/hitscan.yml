@@ -1,3 +1,14 @@
+# Used to animate the hitscan effects because effectsystem doesn't support it
+- type: entity
+  id: HitscanEffect
+  noSpawn: true
+  components:
+  - type: Sprite
+    netsync: false
+    drawdepth: Effects
+  - type: EffectVisuals
+  - type: AnimationPlayer
+
 - type: hitscan
   id: RedLaser
   damage:
@@ -18,9 +29,15 @@
   damage:
     types:
       Heat: 20
-  muzzleFlash: Objects/Weapons/Guns/Projectiles/laser_muzzle.png
-  travelFlash: Objects/Weapons/Guns/Projectiles/laser.png
-  impactFlash: Objects/Weapons/Guns/Projectiles/laser_impact.png
+  muzzleFlash:
+    sprite: Objects/Weapons/Guns/projectiles2.rsi
+    state: muzzle_laser
+  travelFlash:
+    sprite: Objects/Weapons/Guns/projectiles2.rsi
+    state: beam
+  impactFlash:
+    sprite: Objects/Weapons/Guns/projectiles2.rsi
+    state: impact_laser
 
 - type: hitscan
   id: Pulse
@@ -48,12 +65,18 @@
 
 - type: hitscan
   id: XrayLaser
-  muzzleFlash: Objects/Weapons/Guns/Projectiles/xray_muzzle.png
-  travelFlash: Objects/Weapons/Guns/Projectiles/xray.png
-  impactFlash: Objects/Weapons/Guns/Projectiles/xray_impact.png
   damage:
     types:
       Heat: 60
+  muzzleFlash:
+    sprite: Objects/Weapons/Guns/projectiles2.rsi
+    state: muzzle_xray
+  travelFlash:
+    sprite: Objects/Weapons/Guns/projectiles2.rsi
+    state: xray
+  impactFlash:
+    sprite: Objects/Weapons/Guns/projectiles2.rsi
+    state: impact_xray
 
 # DEPRECATED
 

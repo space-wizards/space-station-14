@@ -20,6 +20,7 @@ public sealed partial class NewGunSystem : SharedNewGunSystem
     [Dependency] private readonly IEyeManager _eyeManager = default!;
     [Dependency] private readonly IInputManager _inputManager = default!;
     [Dependency] private readonly IPlayerManager _player = default!;
+    [Dependency] private readonly AnimationPlayerSystem _animPlayer = default!;
     [Dependency] private readonly EffectSystem _effects = default!;
     [Dependency] private readonly InputSystem _inputSystem = default!;
 
@@ -38,10 +39,8 @@ public sealed partial class NewGunSystem : SharedNewGunSystem
         {
             if (a.Sprite is not SpriteSpecifier.Rsi rsi) continue;
 
-            var ent = Spawn(null, a.coordinates);
-            var sprite = AddComp<SpriteComponent>(ent);
-            sprite.DrawDepth = (int) Shared.DrawDepth.DrawDepth.Effects;
-            EnsureComp<EffectVisualsComponent>(ent);
+            var ent = Spawn("HitscanEffect", a.coordinates);
+            var sprite = Comp<SpriteComponent>(ent);
             var xform = Transform(ent);
             xform.LocalRotation = a.angle;
             var layer = sprite.AddLayer(a.Sprite);
@@ -65,7 +64,7 @@ public sealed partial class NewGunSystem : SharedNewGunSystem
                 }
             };
 
-            Get<AnimationPlayerSystem>().Play(ent, null, anim, "hitscan-effect");
+            _animPlayer.Play(ent, null, anim, "hitscan-effect");
         }
     }
 
