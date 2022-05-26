@@ -40,6 +40,9 @@ namespace Content.Server.Polymorph.Systems
         /// <param name="uid">The entityuid of the entity being reverted</param>
         public void Revert(EntityUid uid)
         {
+            if (Deleted(uid))
+                return;
+        
             if (!TryComp<PolymorphedEntityComponent>(uid, out var component))
                 return;
 
