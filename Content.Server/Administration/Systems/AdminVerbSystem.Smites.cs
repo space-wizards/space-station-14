@@ -31,6 +31,7 @@ using Content.Shared.Electrocution;
 using Content.Shared.Interaction.Components;
 using Content.Shared.Inventory;
 using Content.Shared.MobState.Components;
+using Content.Shared.Movement.Components;
 using Content.Shared.Nutrition.Components;
 using Content.Shared.Tabletop.Components;
 using Content.Shared.Verbs;
@@ -500,5 +501,34 @@ public sealed partial class AdminVerbSystem
             Message = "Causes the target to randomly start buffering, freezing them in place for a short timespan while they load.",
         };
         args.Verbs.Add(youtubeVideoSimulation);
+
+        Verb instrumentation = new()
+        {
+            Text = "Become Instrument",
+            Category = VerbCategory.Smite,
+            IconTexture = "/Textures/Objects/Fun/Instruments/h_synthesizer.rsi/icon.png",
+            Act = () =>
+            {
+                _polymorphableSystem.PolymorphEntity(args.Target, "AdminInstrumentSmite");
+            },
+            Impact = LogImpact.Extreme,
+            Message = "It turns them into a supersynth. Really. That's all it does.",
+        };
+        args.Verbs.Add(instrumentation);
+
+        Verb noGravity = new()
+        {
+            Text = "Remove gravity",
+            Category = VerbCategory.Smite,
+            IconTexture = "/Textures/Structures/Machines/gravity_generator.rsi/off.png",
+            Act = () =>
+            {
+                var grav = EnsureComp<MovementIgnoreGravityComponent>(args.Target);
+                grav.Weightless = true;
+            },
+            Impact = LogImpact.Extreme,
+            Message = "Grants them anti-gravity.",
+        };
+        args.Verbs.Add(noGravity);
     }
 }

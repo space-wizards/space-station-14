@@ -29,3 +29,9 @@
   entity: FoodBreadPlain
   forced: true
   dropInventory: true
+
+- type: polymorph
+  id: AdminInstrumentSmite
+  entity: SuperSynthesizerInstrument
+  forced: true
+  dropInventory: true
