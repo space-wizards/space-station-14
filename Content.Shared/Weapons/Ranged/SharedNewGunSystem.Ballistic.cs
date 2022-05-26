@@ -106,7 +106,13 @@ public abstract partial class SharedNewGunSystem
 
         component.Cycled = state.Cycled;
         component.UnspawnedCount = state.UnspawnedCount;
-        component.Entities = state.Entities;
+
+        component.Entities.Clear();
+
+        foreach (var ent in state.Entities)
+        {
+            component.Entities.Push(ent);
+        }
     }
 
     private void OnBallisticInit(EntityUid uid, BallisticAmmoProviderComponent component, ComponentInit args)
@@ -135,9 +141,10 @@ public abstract partial class SharedNewGunSystem
         {
             if (!component.Cycled) break;
 
-            if (component.Entities.TryPop(out var entity))
+            if (component.Entities.TryPeek(out var entity))
             {
                 // Leave the entity as is if it doesn't auto cycle
+                // TODO: Suss this out with NewAmmoComponent as I don't think it gets removed from container properly
                 if (HasComp<CartridgeAmmoComponent>(entity) && component.AutoCycle)
                 {
                     component.Entities.Pop();
