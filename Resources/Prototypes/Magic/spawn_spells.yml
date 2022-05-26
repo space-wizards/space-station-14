@@ -9,7 +9,7 @@
   icon:
     sprite: Objects/Magic/magicactions.rsi
     state: spell_default
-  serverEvent: !type:SpawnSpellEvent
+  serverEvent: !type:WorldSpawnSpellEvent
     prototypes:
       - id: MobCarpMagic
         amount: 3

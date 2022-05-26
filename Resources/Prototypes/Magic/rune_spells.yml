@@ -7,5 +7,5 @@
   icon:
     sprite: Objects/Magic/magicactions.rsi
     state: spell_default
-  serverEvent: !type:RuneMagicEvent
-    rune: FlashRune
+  serverEvent: !type:InstantSpawnSpellEvent
+    prototype: FlashRune

@@ -3,7 +3,7 @@ using Content.Shared.Storage;
 
 namespace Content.Server.Magic.Events;
 
-public class SpawnSpellEvent : WorldTargetActionEvent
+public class WorldSpawnSpellEvent : WorldTargetActionEvent
 {
 
     /// <summary>
