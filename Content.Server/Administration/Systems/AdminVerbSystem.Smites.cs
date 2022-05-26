@@ -278,7 +278,7 @@ public sealed partial class AdminVerbSystem
                             continue;
 
                         mechanism.Part?.RemoveMechanism(mechanism);
-                        xform.Coordinates = baseXform.Coordinates;
+                        xform.Coordinates = baseXform.Coordinates.Offset(_random.NextVector2(0.5f,0.75f));
                     }
 
                     _popupSystem.PopupEntity(Loc.GetString("admin-smite-vomit-organs-self"), args.Target, Filter.Entities(args.Target));
@@ -334,7 +334,7 @@ public sealed partial class AdminVerbSystem
                     }
 
                     physics.LinearVelocity = _random.NextVector2(1.5f, 1.5f);
-                    physics.AngularVelocity = MathF.PI * 6;
+                    physics.AngularVelocity = MathF.PI * 12;
                     physics.LinearDamping = 0.0f;
                     physics.AngularDamping = 0.0f;
                 },
