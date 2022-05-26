@@ -717,7 +717,6 @@
 
 - type: entity
   id: WallForce
-  parent: WallBase
   name: Force Wall
   components:
     - type: TimedDespawn
