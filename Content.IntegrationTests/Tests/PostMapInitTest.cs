@@ -1,5 +1,4 @@
-﻿using System;
-using System.IO;
+﻿using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using NUnit.Framework;
@@ -88,22 +87,8 @@ namespace Content.IntegrationTests.Tests
                 server.Post(() =>
                 {
                     var mapId = mapManager.CreateMap();
-                    try
-                    {
-                        mapLoader.LoadMap(mapId, rootedPath.ToString());
-                    }
-                    catch (Exception ex)
-                    {
-                        throw new Exception($"Failed to load map {rootedPath}", ex);
-                    }
-                    try
-                    {
-                        mapManager.DeleteMap(mapId);
-                    }
-                    catch (Exception ex)
-                    {
-                        throw new Exception($"Failed to delete map {rootedPath}", ex);
-                    }
+                    mapLoader.LoadMap(mapId, rootedPath.ToString());
+                    mapManager.DeleteMap(mapId);
                 });
                 await server.WaitIdleAsync();
             }

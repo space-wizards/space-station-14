@@ -52,7 +52,7 @@
       types:
         Bloodloss:
           -0.25
-  - type: MeleeWeapon
+  - type: UnarmedCombat
     range: 1.5
     arcwidth: 0
     arc: claw
@@ -121,7 +121,7 @@
   - type: AiFactionTag
     factions:
     - Xeno
-  - type: MeleeWeapon
+  - type: UnarmedCombat
     range: 1.5
     arcwidth: 0
     arc: bite

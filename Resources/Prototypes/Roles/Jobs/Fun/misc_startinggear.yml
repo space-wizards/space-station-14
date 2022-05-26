@@ -95,7 +95,7 @@
     id: AgentIDCard
     pocket1: ExtendedEmergencyOxygenTankFilled
     belt: ClothingBeltMilitaryWebbing
-  innerclothingskirt: ClothingUniformJumpskirtOperative
+  innerclothingskirt: ClothingUniformJumpsuitOperative
   satchel: ClothingBackpackDuffelSyndicateOperative
   duffelbag: ClothingBackpackDuffelSyndicateOperative
 
@@ -114,25 +114,7 @@
     id: SyndiPDA
     pocket1: ExtendedEmergencyOxygenTankFilled
     belt: ClothingBeltMilitaryWebbing
-  innerclothingskirt: ClothingUniformJumpskirtOperative
+  innerclothingskirt: ClothingUniformJumpsuitOperative
   satchel: ClothingBackpackDuffelSyndicateOperative
   duffelbag: ClothingBackpackDuffelSyndicateOperative
   
-- type: startingGear
-  id: SyndicateOperativeMedicFull
-  equipment:
-    jumpsuit: ClothingUniformJumpsuitOperative
-    back: ClothingBackpackDuffelSyndicateOperativeMedic
-    mask: ClothingMaskBreathMedical
-    eyes: ClothingEyesHudMedical
-    ears: ClothingHeadsetAltSyndicate
-    gloves: ClothingHandsGlovesCombat
-    outerClothing: ClothingOuterHardsuitSyndieElite
-    shoes: ClothingShoesBootsMagSyndie
-    id: SyndiPDA
-    pocket1: DoubleEmergencyOxygenTankFilled
-    pocket2: HandheldHealthAnalyzer
-    belt: ClothingBeltMilitaryWebbingMedFilled
-  innerclothingskirt: ClothingUniformJumpskirtOperative
-  satchel: ClothingBackpackDuffelSyndicateOperativeMedic
-  duffelbag: ClothingBackpackDuffelSyndicateOperativeMedic

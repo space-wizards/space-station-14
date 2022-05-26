@@ -73,7 +73,7 @@
   - type: RangedWeapon
   - type: BatteryBarrel
     minAngle: 10
-    fireCost: 80
+    fireCost: 40
   - type: Appearance
     visuals:
     - type: MagVisualizer
@@ -97,7 +97,7 @@
         map: ["enum.RangedBarrelVisualLayers.MagUnshaded"]
         shader: unshaded
   - type: Item
-    size: 48
+    size: 24
     sprite: Objects/Weapons/Guns/Battery/makeshift.rsi
   - type: BatteryBarrel
     fireCost: 240
@@ -122,7 +122,7 @@
     size: 12
     sprite: Objects/Weapons/Guns/Battery/svalinn.rsi
   - type: BatteryBarrel
-    fireCost: 50
+    fireCost: 25
 
 - type: entity
   name: PDW-10 pulse pistol
@@ -143,7 +143,7 @@
     size: 12
     sprite: Objects/Weapons/Guns/Battery/pulse_pistol.rsi
   - type: BatteryBarrel
-    fireCost: 50
+    fireCost: 25
     ammoPrototype: Pulse
     soundGunshot:
       path: /Audio/Weapons/Guns/Gunshots/laser_cannon.ogg
@@ -173,7 +173,7 @@
     size: 24
     sprite: Objects/Weapons/Guns/Battery/cog.rsi
   - type: BatteryBarrel
-    fireCost: 280
+    fireCost: 140
     ammoPrototype: RedMediumLaser
 
 - type: entity
@@ -195,7 +195,7 @@
     size: 24
     sprite: Objects/Weapons/Guns/Battery/nightfall.rsi
   - type: BatteryBarrel
-    fireCost: 200
+    fireCost: 100
     ammoPrototype: RedMediumLaser
   - type: Appearance
     visuals:
@@ -223,7 +223,7 @@
     size: 24
     sprite: Objects/Weapons/Guns/Battery/pulse_carbine.rsi
   - type: BatteryBarrel
-    fireCost: 240
+    fireCost: 120
     ammoPrototype: Pulse
     soundGunshot:
       path: /Audio/Weapons/Guns/Gunshots/laser_cannon.ogg
@@ -253,7 +253,7 @@
     size: 24
     sprite: Objects/Weapons/Guns/Battery/pulse_rifle.rsi
   - type: BatteryBarrel
-    fireCost: 200
+    fireCost: 100
     ammoPrototype: Pulse
     soundGunshot:
       path: /Audio/Weapons/Guns/Gunshots/laser_cannon.ogg
@@ -283,8 +283,7 @@
     size: 24
     sprite: Objects/Weapons/Guns/Battery/laser_cannon.rsi
   - type: BatteryBarrel
-    fireCost: 18000
-    fireRate: 1
+    fireCost: 4000
     ammoPrototype: RedHeavyLaser
     soundGunshot:
       path: /Audio/Weapons/Guns/Gunshots/laser_cannon.ogg
@@ -314,8 +313,7 @@
     size: 24
     sprite: Objects/Weapons/Guns/Battery/xray.rsi
   - type: BatteryBarrel
-    fireRate: 0.5
-    fireCost: 54000
+    fireCost: 6000
     ammoPrototype: XrayLaser
     soundGunshot:
       path: /Audio/Weapons/Guns/Gunshots/laser3.ogg
@@ -360,7 +358,7 @@
   - type: BatteryBarrel
     minAngle: 5
     angleIncrease: 20
-    fireCost: 620
+    fireCost: 360
     ammoPrototype: BulletTaser
     soundGunshot:
       path: /Audio/Weapons/Guns/Gunshots/taser.ogg
@@ -396,7 +394,7 @@
     size: 12
     sprite: Objects/Weapons/Guns/Battery/antiquelasergun.rsi
   - type: BatteryBarrel
-    fireCost: 240
+    fireCost: 120
     soundGunshot:
       path: /Audio/Weapons/Guns/Gunshots/laser_cannon.ogg
   - type: RangedWeapon    

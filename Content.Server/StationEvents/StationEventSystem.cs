@@ -352,12 +352,6 @@ namespace Content.Server.StationEvents
                 return false;
             }
 
-            if (stationEvent.LastRun != TimeSpan.Zero && currentTime.TotalMinutes <
-                stationEvent.ReoccurrenceDelay + stationEvent.LastRun.TotalMinutes)
-            {
-                return false;
-            }
-
             return true;
         }
 
@@ -378,7 +372,6 @@ namespace Content.Server.StationEvents
             foreach (var stationEvent in _stationEvents)
             {
                 stationEvent.Occurrences = 0;
-                stationEvent.LastRun = TimeSpan.Zero;
             }
 
             _timeUntilNextEvent = MinimumTimeUntilFirstEvent;

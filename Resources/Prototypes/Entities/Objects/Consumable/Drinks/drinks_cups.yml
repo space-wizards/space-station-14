@@ -170,7 +170,9 @@
       drink:
         reagents:
         - ReagentId: Coffee
-          Quantity: 20
+          Quantity: 19
+        - ReagentId: Theobromine
+          Quantity: 1
         maxVol: 20
   - type: Sprite
     sprite: Objects/Consumable/Drinks/hot_coffee.rsi
@@ -186,7 +188,9 @@
       drink:
         reagents:
         - ReagentId: Tea
-          Quantity: 20
+          Quantity: 19
+        - ReagentId: Theobromine
+          Quantity: 1
         maxVol: 20
   - type: Sprite
     sprite: Objects/Consumable/Drinks/teacup.rsi

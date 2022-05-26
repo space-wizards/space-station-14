@@ -28,7 +28,6 @@ public sealed class TraitorRuleSystem : GameRuleSystem
     [Dependency] private readonly IConfigurationManager _cfg = default!;
     [Dependency] private readonly IObjectivesManager _objectivesManager = default!;
     [Dependency] private readonly IChatManager _chatManager = default!;
-    [Dependency] private readonly GameTicker _gameTicker = default!;
 
     public override string Prototype => "Traitor";
 
@@ -48,7 +47,11 @@ public sealed class TraitorRuleSystem : GameRuleSystem
         SubscribeLocalEvent<RoundEndTextAppendEvent>(OnRoundEndText);
     }
 
-    public override void Started() {}
+    public override void Started()
+    {
+        // This seems silly, but I'll leave it.
+        _chatManager.DispatchServerAnnouncement(Loc.GetString("rule-traitor-added-announcement"));
+    }
 
     public override void Ended()
     {
@@ -59,13 +62,6 @@ public sealed class TraitorRuleSystem : GameRuleSystem
     {
         if (!Enabled)
             return;
-
-        // If the current preset doesn't explicitly contain the traitor game rule, just carry on and remove self.
-        if (_gameTicker.Preset?.Rules.Contains(Prototype) ?? false)
-        {
-            _gameTicker.EndGameRule(_prototypeManager.Index<GameRulePrototype>(Prototype));
-            return;
-        }
 
         var minPlayers = _cfg.GetCVar(CCVars.TraitorMinPlayers);
         if (!ev.Forced && ev.Players.Length < minPlayers)

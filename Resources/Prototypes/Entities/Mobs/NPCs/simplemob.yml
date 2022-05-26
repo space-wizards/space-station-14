@@ -109,7 +109,7 @@
     template: AnimalTemplate
     preset: AnimalPreset
   - type: Examiner
-  - type: MeleeWeapon
+  - type: UnarmedCombat
     range: 1.5
     arcwidth: 0
     arc: bite
@@ -129,7 +129,6 @@
   - type: Polymorphable
   - type: Pullable
   - type: Buckle
-  - type: DiseaseCarrier
   - type: Recyclable
     safe: false
   - type: StandingState

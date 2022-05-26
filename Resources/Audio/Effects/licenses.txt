@@ -13,8 +13,6 @@ holy.ogg taken from https://freesound.org/people/random_intruder/sounds/392172/ 
 
 hug.ogg taken from /tg/station at https://github.com/tgstation/tgstation/blob/e6624ac8aed150668bb4e61c3a48372cc757bfd4/sound/weapons/thudswoosh.ogg - Under license: CC BY-SA 3.0
 
-internals.ogg taken from CEV-Eris at https://github.com/discordia-space/CEV-Eris/blob/f02a6e2c29b41c28b1cf4d8f897cb8f090f43552/sound/effects/internals.ogg - Under license: CC BY-SA 3.0. Edited by metalgearsloth to amplify the volume
-
 poster_broken.ogg taken from https://github.com/tgstation/tgstation/blob/2834383245d2129a106acef3afd17b81e1e64777/sound/items/poster_ripped.ogg
 
 poster_being_set.ogg taken from https://github.com/tgstation/tgstation/blob/2834383245d2129a106acef3afd17b81e1e64777/sound/items/poster_ripped.ogg

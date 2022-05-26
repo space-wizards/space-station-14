@@ -650,19 +650,5 @@
   - type: AccessReader
     access: [["External"]]
 
-#HighSecDoors
-- type: entity
-  parent: HighSecDoor
-  id: HighSecCommandLocked
-  suffix: Command, Locked
-  components:
-  - type: AccessReader
-    access: [["Command"]]
 
-- type: entity
-  parent: HighSecDoor
-  id: HighSecCaptainLocked
-  suffix: Captain, Locked
-  components:
-  - type: AccessReader
-    access: [["Captain"]]
+

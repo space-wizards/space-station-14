@@ -45,9 +45,6 @@
       effects:
       - !type:SatiateThirst
         factor: 2
-      - !type:AdjustReagent
-        reagent: Ethanol
-        amount: 0.05
   reactiveEffects:
     Flammable:
       methods: [ Touch ]

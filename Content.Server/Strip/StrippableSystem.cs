@@ -261,13 +261,13 @@ namespace Content.Server.Strip
 
                 if (_inventorySystem.TryGetSlotEntity(component.Owner, slot, out _))
                 {
-                    user.PopupMessageCursor(Loc.GetString("strippable-component-item-slot-occupied",("owner", component.Owner)));
+                    user.PopupMessageCursor(Loc.GetString("strippable-component-item-slot-occupied",("uid", component.Owner)));
                     return false;
                 }
 
                 if (!_inventorySystem.CanEquip(user, component.Owner, held, slot, out _))
                 {
-                    user.PopupMessageCursor(Loc.GetString("strippable-component-cannot-equip-message",("owner", component.Owner)));
+                    user.PopupMessageCursor(Loc.GetString("strippable-component-cannot-equip-message",("uid", component.Owner)));
                     return false;
                 }
 
@@ -321,7 +321,7 @@ namespace Content.Server.Strip
                 if (!hands.Hands.TryGetValue(handName, out var hand)
                     || !_handsSystem.CanPickupToHand(component.Owner, userHands.ActiveHandEntity.Value, hand, checkActionBlocker: false, hands))
                 {
-                    user.PopupMessageCursor(Loc.GetString("strippable-component-cannot-put-message",("owner", component.Owner)));
+                    user.PopupMessageCursor(Loc.GetString("strippable-component-cannot-put-message",("uid", component.Owner)));
                     return false;
                 }
 
@@ -361,13 +361,13 @@ namespace Content.Server.Strip
 
                 if (!_inventorySystem.TryGetSlotEntity(component.Owner, slot, out _))
                 {
-                    user.PopupMessageCursor(Loc.GetString("strippable-component-item-slot-free-message", ("owner", component.Owner)));
+                    user.PopupMessageCursor(Loc.GetString("strippable-component-item-slot-free-message", ("uid", component.Owner)));
                     return false;
                 }
 
                 if (!_inventorySystem.CanUnequip(user, component.Owner, slot, out _))
                 {
-                    user.PopupMessageCursor(Loc.GetString("strippable-component-cannot-unequip-message", ("owner", component.Owner)));
+                    user.PopupMessageCursor(Loc.GetString("strippable-component-cannot-unequip-message", ("uid", component.Owner)));
                     return false;
                 }
 
@@ -409,7 +409,7 @@ namespace Content.Server.Strip
             {
                 if (!hands.Hands.TryGetValue(handName, out var hand) || hand.HeldEntity == null)
                 {
-                    user.PopupMessageCursor(Loc.GetString("strippable-component-item-slot-free-message",("owner", component.Owner)));
+                    user.PopupMessageCursor(Loc.GetString("strippable-component-item-slot-free-message",("uid", component.Owner)));
                     return false;
                 }
 
@@ -418,7 +418,7 @@ namespace Content.Server.Strip
 
                 if (!_handsSystem.CanDropHeld(component.Owner, hand, false))
                 {
-                    user.PopupMessageCursor(Loc.GetString("strippable-component-cannot-drop-message",("owner", component.Owner)));
+                    user.PopupMessageCursor(Loc.GetString("strippable-component-cannot-drop-message",("uid", component.Owner)));
                     return false;
                 }
 

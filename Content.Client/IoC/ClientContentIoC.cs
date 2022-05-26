@@ -8,7 +8,6 @@ using Content.Client.GhostKick;
 using Content.Client.HUD;
 using Content.Client.Info;
 using Content.Client.Items.Managers;
-using Content.Client.Launcher;
 using Content.Client.Module;
 using Content.Client.Parallax.Managers;
 using Content.Client.Preferences;
@@ -46,7 +45,6 @@ namespace Content.Client.IoC
             IoCManager.Register<IGamePrototypeLoadManager, GamePrototypeLoadManager>();
             IoCManager.Register<NetworkResourceManager>();
             IoCManager.Register<GhostKickManager>();
-            IoCManager.Register<ExtendedDisconnectInformationManager>();
         }
     }
 }

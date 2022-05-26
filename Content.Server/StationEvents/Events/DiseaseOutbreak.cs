@@ -27,9 +27,7 @@ public sealed class DiseaseOutbreak : StationEvent
         "SpaceCold",
         "VanAusdallsRobovirus",
         "VentCough",
-        "AMIV",
-        "SpaceFlu",
-        "BirdFlew"
+        "AMIV"
     };
     public override string Name => "DiseaseOutbreak";
     public override float Weight => WeightNormal;

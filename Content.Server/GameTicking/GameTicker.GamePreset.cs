@@ -1,5 +1,4 @@
 using System.Diagnostics.CodeAnalysis;
-using System.Linq;
 using Content.Server.GameTicking.Presets;
 using Content.Server.GameTicking.Rules;
 using Content.Server.Ghost.Components;
@@ -15,7 +14,7 @@ namespace Content.Server.GameTicking
     {
         public const float PresetFailedCooldownIncrease = 30f;
 
-        public GamePresetPrototype? Preset { get; private set; }
+        private GamePresetPrototype? _preset;
 
         private bool StartPreset(IPlayerSession[] origReadyPlayers, bool force)
         {
@@ -25,7 +24,7 @@ namespace Content.Server.GameTicking
             if (!startAttempt.Cancelled)
                 return true;
 
-            var presetTitle = Preset != null ? Loc.GetString(Preset.ModeTitle) : string.Empty;
+            var presetTitle = _preset != null ? Loc.GetString(_preset.ModeTitle) : string.Empty;
 
             void FailedPresetRestart()
             {
@@ -37,7 +36,7 @@ namespace Content.Server.GameTicking
 
             if (_configurationManager.GetCVar(CCVars.GameLobbyFallbackEnabled))
             {
-                var oldPreset = Preset;
+                var oldPreset = _preset;
                 ClearGameRules();
                 SetGamePreset(_configurationManager.GetCVar(CCVars.GameLobbyFallbackPreset));
                 AddGamePresetRules();
@@ -49,7 +48,7 @@ namespace Content.Server.GameTicking
                 _chatManager.DispatchServerAnnouncement(
                     Loc.GetString("game-ticker-start-round-cannot-start-game-mode-fallback",
                         ("failedGameMode", presetTitle),
-                        ("fallbackMode", Loc.GetString(Preset!.ModeTitle))));
+                        ("fallbackMode", Loc.GetString(_preset!.ModeTitle))));
 
                 if (startAttempt.Cancelled)
                 {
@@ -70,7 +69,7 @@ namespace Content.Server.GameTicking
 
         private void InitializeGamePreset()
         {
-            SetGamePreset(LobbyEnabled ? _configurationManager.GetCVar(CCVars.GameLobbyDefaultPreset) : "sandbox");
+            SetGamePreset(_configurationManager.GetCVar(CCVars.GameLobbyDefaultPreset));
         }
 
         public void SetGamePreset(GamePresetPrototype preset, bool force = false)
@@ -79,7 +78,7 @@ namespace Content.Server.GameTicking
             if (DummyTicker)
                 return;
 
-            Preset = preset;
+            _preset = preset;
             UpdateInfoText();
 
             if (force)
@@ -121,10 +120,10 @@ namespace Content.Server.GameTicking
 
         private bool AddGamePresetRules()
         {
-            if (DummyTicker || Preset == null)
+            if (DummyTicker || _preset == null)
                 return false;
 
-            foreach (var rule in Preset.Rules)
+            foreach (var rule in _preset.Rules)
             {
                 if (!_prototypeManager.TryIndex(rule, out GameRulePrototype? ruleProto))
                     continue;
@@ -137,8 +136,7 @@ namespace Content.Server.GameTicking
 
         private void StartGamePresetRules()
         {
-            // May be touched by the preset during init.
-            foreach (var rule in _addedGameRules.ToArray())
+            foreach (var rule in _addedGameRules)
             {
                 StartGameRule(rule);
             }

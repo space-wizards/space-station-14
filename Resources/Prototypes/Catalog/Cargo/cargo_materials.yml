@@ -1,28 +1,4 @@
 - type: cargoProduct
-  name: "water tank crate"
-  id: MaterialCrateWaterTank
-  description: "A tank of fresh water for when the station has ran out."
-  icon:
-    sprite: Structures/Storage/tanks.rsi
-    state: watertank
-  product: CrateMaterialWaterTank
-  cost: 2000
-  category: Materials
-  group: market
-  
-- type: cargoProduct
-  name: "fuel tank crate"
-  id: MaterialCrateFuelTank
-  description: "A tank of welder fuel for when the station has ran out."
-  icon:
-    sprite: Structures/Storage/tanks.rsi
-    state: fueltank
-  product: CrateMaterialFuelTank
-  cost: 2000
-  category: Materials
-  group: market
-
-- type: cargoProduct
   name: "crate of glass sheets"
   id: MaterialGlass
   description: "90 sheets of glass, packed with care."

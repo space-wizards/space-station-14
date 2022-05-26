@@ -80,7 +80,7 @@ namespace Content.Server.Atmos.Piping.Binary.EntitySystems
 
                 // We calculate the necessary moles to transfer using our good ol' friend PV=nRT.
                 var pressureDelta = pump.TargetPressure - outputStartingPressure;
-                var transferMoles = (pressureDelta * outlet.Air.Volume) / (inlet.Air.Temperature * Atmospherics.R);
+                var transferMoles = pressureDelta * outlet.Air.Volume / inlet.Air.Temperature * Atmospherics.R;
 
                 var removed = inlet.Air.Remove(transferMoles);
                 _atmosphereSystem.Merge(outlet.Air, removed);

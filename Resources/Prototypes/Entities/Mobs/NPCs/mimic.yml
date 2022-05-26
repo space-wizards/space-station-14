@@ -36,7 +36,7 @@
   - type: CharacterInfo
   - type: HumanoidAppearance
   - type: AnimationPlayer
-  - type: MeleeWeapon
+  - type: UnarmedCombat
     range: 1.5
     arcwidth: 0
     arc: fist

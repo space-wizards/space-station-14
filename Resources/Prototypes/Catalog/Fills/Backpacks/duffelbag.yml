@@ -22,11 +22,11 @@
   - type: StorageFill
     contents:
       - id: Hemostat
-      - id: SawAdvanced
+      - id: Saw
       - id: Drill
       - id: Cautery
       - id: Retractor
-      - id: ScalpelAdvanced
+      - id: Scalpel
 
 - type: entity
   parent: ClothingBackpackDuffelSyndicateAmmo
@@ -215,23 +215,3 @@
       - id: SurvivalKnife
       - id: PistolClarissa
       - id: BaseUplinkRadio40TC
-
-
-- type: entity
-  parent: ClothingBackpackDuffelSyndicateMedical
-  id: ClothingBackpackDuffelSyndicateOperativeMedic
-  name: operative medic duffelbag
-  description: A large duffel bag for holding extra medical supplies.
-  components:
-  - type: StorageFill
-    contents:
-      - id: Hemostat
-      - id: SawAdvanced
-      - id: Drill
-      - id: Cautery
-      - id: Retractor
-      - id: ScalpelAdvanced
-      - id: BaseUplinkRadio40TC
-      - id: BoxSurvivalSyndicate
-      - id: SurvivalKnife
-      - id: PistolClarissa

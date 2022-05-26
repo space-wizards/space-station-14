@@ -3,16 +3,11 @@ using Content.Server.CombatMode;
 using Content.Server.Hands.Components;
 using Content.Server.Interaction.Components;
 using Content.Server.Projectiles.Components;
-using Content.Server.Weapon.Melee;
 using Content.Server.Weapon.Ranged.Ammunition.Components;
 using Content.Server.Weapon.Ranged.Barrels.Components;
-using Content.Shared.Audio;
 using Content.Shared.Camera;
-using Content.Shared.Damage;
 using Content.Shared.Database;
-using Content.Shared.Interaction.Events;
 using Content.Shared.Popups;
-using Content.Shared.Sound;
 using Robust.Shared.Audio;
 using Robust.Shared.Map;
 using Robust.Shared.Physics;
@@ -23,11 +18,6 @@ namespace Content.Server.Weapon.Ranged;
 
 public sealed partial class GunSystem
 {
-    private void OnMeleeAttempt(EntityUid uid, ServerRangedWeaponComponent component, ref MeleeAttackAttemptEvent args)
-    {
-        args.Cancelled = true;
-    }
-
     /// <summary>
     /// Tries to fire a round of ammo out of the weapon.
     /// </summary>
@@ -148,7 +138,6 @@ public sealed partial class GunSystem
     }
 
     #region Firing
-
     /// <summary>
     /// Handles firing one or many projectiles
     /// </summary>
@@ -243,60 +232,15 @@ public sealed partial class GunSystem
             var result = rayCastResults[0];
             var distance = result.Distance;
             hitscan.FireEffects(shooter, distance, angle, result.HitEntity);
-            var modifiedDamage = _damageable.TryChangeDamage(result.HitEntity, hitscan.Damage);
-            if (modifiedDamage != null)
+            var dmg = _damageable.TryChangeDamage(result.HitEntity, hitscan.Damage);
+            if (dmg != null)
                 _logs.Add(LogType.HitScanHit,
-                    $"{EntityManager.ToPrettyString(shooter):user} hit {EntityManager.ToPrettyString(result.HitEntity):target} using {EntityManager.ToPrettyString(hitscan.Owner):used} and dealt {modifiedDamage.Total:damage} damage");
-
-            PlaySound(rayCastResults[0].HitEntity, modifiedDamage, hitscan.SoundHit, hitscan.ForceSound);
+                    $"{EntityManager.ToPrettyString(shooter):user} hit {EntityManager.ToPrettyString(result.HitEntity):target} using {EntityManager.ToPrettyString(hitscan.Owner):used} and dealt {dmg.Total:damage} damage");
         }
         else
         {
             hitscan.FireEffects(shooter, hitscan.MaxLength, angle);
         }
     }
-
-    #endregion
-
-    #region Impact sounds
-
-    public void PlaySound(EntityUid otherEntity, DamageSpecifier? modifiedDamage, SoundSpecifier? weaponSound, bool forceWeaponSound)
-    {
-        // Like projectiles and melee,
-        // 1. Entity specific sound
-        // 2. Ammo's sound
-        // 3. Nothing
-        var playedSound = false;
-
-        if (!forceWeaponSound && modifiedDamage != null && modifiedDamage.Total > 0 && TryComp<RangedDamageSoundComponent>(otherEntity, out var rangedSound))
-        {
-            var type = MeleeWeaponSystem.GetHighestDamageSound(modifiedDamage, _protoManager);
-
-            if (type != null && rangedSound.SoundTypes?.TryGetValue(type, out var damageSoundType) == true)
-            {
-                SoundSystem.Play(
-                    Filter.Pvs(otherEntity, entityManager: EntityManager),
-                    damageSoundType!.GetSound(),
-                    otherEntity,
-                    AudioHelpers.WithVariation(DamagePitchVariation));
-
-                playedSound = true;
-            }
-            else if (type != null && rangedSound.SoundGroups?.TryGetValue(type, out var damageSoundGroup) == true)
-            {
-                SoundSystem.Play(
-                    Filter.Pvs(otherEntity, entityManager: EntityManager),
-                    damageSoundGroup!.GetSound(),
-                    otherEntity,
-                    AudioHelpers.WithVariation(DamagePitchVariation));
-
-                playedSound = true;
-            }
-        }
-
-        if (!playedSound && weaponSound != null)
-            SoundSystem.Play(Filter.Pvs(otherEntity, entityManager: EntityManager), weaponSound.GetSound(), otherEntity);
-    }
-
     #endregion
 }

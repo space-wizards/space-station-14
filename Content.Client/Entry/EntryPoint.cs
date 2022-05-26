@@ -129,7 +129,6 @@ namespace Content.Client.Entry
             IoCManager.Resolve<RulesManager>().Initialize();
             IoCManager.Resolve<ViewportManager>().Initialize();
             IoCManager.Resolve<GhostKickManager>().Initialize();
-            IoCManager.Resolve<ExtendedDisconnectInformationManager>().Initialize();
 
             IoCManager.InjectDependencies(this);
 
@@ -139,7 +138,6 @@ namespace Content.Client.Entry
             {
                 IoCManager.Resolve<IMapManager>().CreateNewMapEntity(MapId.Nullspace);
             };
-
         }
 
         /// <summary>

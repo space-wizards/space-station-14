@@ -1,9 +1,7 @@
 using Content.Client.EscapeMenu.UI;
-using Content.Shared.CCVar;
 using Robust.Client.ResourceManagement;
 using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.CustomControls;
-using Robust.Shared.Configuration;
 
 namespace Content.Client.Info
 {
@@ -11,7 +9,6 @@ namespace Content.Client.Info
     {
         [Dependency] private readonly RulesManager _rulesManager = default!;
         [Dependency] private readonly IResourceCache _resourceManager = default!;
-        [Dependency] private readonly IConfigurationManager _cfgManager = default!;
 
         private OptionsMenu optionsMenu;
 
@@ -44,7 +41,7 @@ namespace Content.Client.Info
 
         private void PopulateRules(Info rulesList)
         {
-            AddSection(rulesList, Loc.GetString("ui-rules-header"), _cfgManager.GetCVar(CCVars.RulesFile), true);
+            AddSection(rulesList, Loc.GetString("ui-rules-header"), "Rules.txt", true);
         }
 
         private void PopulateTutorial(Info tutorialList)

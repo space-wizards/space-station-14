@@ -1,9 +1,6 @@
-﻿using System.Linq;
-using Content.Server.Administration;
-using Content.Server.GameTicking.Presets;
+﻿using Content.Server.Administration;
 using Content.Shared.Administration;
 using Robust.Shared.Console;
-using Robust.Shared.Prototypes;
 
 namespace Content.Server.GameTicking.Commands
 {
@@ -39,21 +36,6 @@ namespace Content.Server.GameTicking.Commands
             ticker.SetGamePreset(type, true);
             shell.WriteLine($"Forced the game to start with preset {name}.");
             ticker.UpdateInfoText();
-        }
-
-        public CompletionResult GetCompletion(IConsoleShell shell, string[] args)
-        {
-            if (args.Length == 1)
-            {
-                var options = IoCManager.Resolve<IPrototypeManager>()
-                    .EnumeratePrototypes<GamePresetPrototype>()
-                    .OrderBy(p => p.ID)
-                    .Select(p => p.ID);
-
-                return CompletionResult.FromHintOptions(options, "<preset>");
-            }
-
-            return CompletionResult.Empty;
         }
     }
 }

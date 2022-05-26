@@ -11,10 +11,6 @@ namespace Content.Server.Engineering.Components
         public string? Prototype { get; }
 
         [ViewVariables]
-        [DataField("ignoreDistance")]
-        public bool IgnoreDistance { get; }
-
-        [ViewVariables]
         [DataField("doAfter")]
         public float DoAfterTime = 0;
 

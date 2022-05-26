@@ -8,17 +8,6 @@
   description: extended-description
 
 - type: gamePreset
-  id: Secret
-  alias:
-    - secret
-    - sekrit
-  name: secret-title
-  showInVote: true
-  description: secret-description
-  rules:
-    - Secret
-
-- type: gamePreset
   id: Sandbox
   alias:
     - sandbox
@@ -34,7 +23,7 @@
     - traitor
   name: traitor-title
   description: traitor-description
-  showInVote: false
+  showInVote: true
   rules:
     - Traitor
 
@@ -75,6 +64,6 @@
     - nukeops
   name: nukeops-title
   description: nukeops-description
-  showInVote: false
+  showInVote: true
   rules:
     - Nukeops

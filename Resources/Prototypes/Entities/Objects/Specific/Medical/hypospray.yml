@@ -20,27 +20,6 @@
   - type: Hypospray
 
 - type: entity
-  name: gorlax hypospray
-  parent: BaseItem
-  description: Using reverse engineered designs from NT, Cybersun produced these in limited quantities for gorlax marauder operatives.
-  id: SyndiHypo
-  components:
-  - type: Sprite
-    sprite: Objects/Specific/Medical/syndihypo.rsi
-    state: hypo
-  - type: Item
-    sprite: Objects/Specific/Medical/syndihypo.rsi
-  - type: SolutionContainerManager
-    solutions:
-      hypospray:
-        maxVol: 20
-  - type: RefillableSolution
-    solution: hypospray
-  - type: ExaminableSolution
-    solution: hypospray
-  - type: Hypospray
-  
-- type: entity
   name: chemical medipen
   parent: BaseItem
   description: A sterile injector for rapid administration of drugs to patients. This one can't be refilled.

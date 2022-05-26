@@ -34,6 +34,7 @@ namespace Content.Server.Hands.Systems
                 if (TryComp(hand.HeldEntity, out HandVirtualItemComponent? virt) && virt.BlockingEntity == matching)
                 {
                     Delete(virt, user);
+                    return;
                 }
             }
         }

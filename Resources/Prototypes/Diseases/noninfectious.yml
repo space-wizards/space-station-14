@@ -5,12 +5,10 @@
   cureResist: 0.15
   effects:
     - !type:DiseaseHealthChange
-      probability: 0.3
+      probability: 0.35
       damage:
         types:
           Cellular: 1
-    - !type:DiseaseVomit
-      probability: 0.01
     - !type:DiseasePopUp
       probability: 0.03
   cures:

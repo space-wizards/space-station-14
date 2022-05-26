@@ -4,7 +4,8 @@ using Content.Shared.Sound;
 namespace Content.Server.Weapon.Melee.Components
 {
     [RegisterComponent]
-    public sealed class MeleeWeaponComponent : Component
+    [Virtual]
+    public class MeleeWeaponComponent : Component
     {
         [ViewVariables(VVAccess.ReadWrite)]
         [DataField("hitSound")]

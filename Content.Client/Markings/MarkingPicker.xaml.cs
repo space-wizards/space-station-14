@@ -47,13 +47,11 @@ namespace Content.Client.Markings
         private List<MarkingCategories> _markingCategories = Enum.GetValues<MarkingCategories>().ToList();
 
         private string _currentSpecies = SpeciesManager.DefaultSpecies;
-        public Color CurrentSkinColor = Color.White;
 
-        public void SetData(MarkingsSet newMarkings, string species, Color skinColor)
+        public void SetData(MarkingsSet newMarkings, string species)
         {
             _currentMarkings = newMarkings;
             _currentSpecies = species;
-            CurrentSkinColor = skinColor;
 
             // Should marking limits be dependent on species prototypes,
             // or should it be dependent on the entity the
@@ -73,8 +71,6 @@ namespace Content.Client.Markings
             Populate();
             PopulateUsed();
         }
-
-        public void SetSkinColor(Color color) => CurrentSkinColor = color;
 
         public MarkingPicker()
         {
@@ -353,9 +349,9 @@ namespace Content.Client.Markings
                 );
                 colorSelector.Color = currentColor;
                 _currentMarkingColors.Add(currentColor);
-                var colorIndex = _currentMarkingColors.Count - 1;
+                int colorIndex = _currentMarkingColors.IndexOf(currentColor);
 
-                Action<Color> colorChanged = _ =>
+                Action<Color> colorChanged = delegate(Color color)
                 {
                     _currentMarkingColors[colorIndex] = colorSelector.Color;
 
@@ -398,13 +394,7 @@ namespace Content.Client.Markings
 
             UpdatePoints();
 
-            var markingObject = marking.AsMarking();
-            for (var i = 0; i < markingObject.MarkingColors.Count; i++)
-            {
-                markingObject.SetColor(i, CurrentSkinColor);
-            }
-
-            _currentMarkings.AddBack(markingObject);
+            _currentMarkings.AddBack(marking.AsMarking());
 
             CMarkingsUnused.Remove(_selectedUnusedMarking);
             var item = new ItemList.Item(CMarkingsUsed)

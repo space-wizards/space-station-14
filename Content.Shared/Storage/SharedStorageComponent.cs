@@ -28,10 +28,10 @@ namespace Content.Shared.Storage
         }
 
         [Serializable, NetSerializable]
-        public sealed class StorageInteractWithItemEvent : BoundUserInterfaceMessage
+        public sealed class StorageRemoveItemMessage : BoundUserInterfaceMessage
         {
             public readonly EntityUid InteractedItemUID;
-            public StorageInteractWithItemEvent(EntityUid interactedItemUID)
+            public StorageRemoveItemMessage(EntityUid interactedItemUID)
             {
                 InteractedItemUID = interactedItemUID;
             }

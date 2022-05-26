@@ -8,21 +8,25 @@ namespace Content.Server.DeviceNetwork.Components
     [Friend(typeof(DeviceNetworkSystem), typeof(DeviceNet))]
     public sealed class DeviceNetworkComponent : Component
     {
-        public enum DeviceNetIdDefaults
+        /// <summary>
+        ///     Valid device network NetIDs. The netID is used to separate device networks that shouldn't interact with
+        ///     each other e.g. wireless and wired.
+        /// </summary>
+        [Serializable]
+        public enum ConnectionType
         {
             Private,
             Wired,
             Wireless,
-            Apc,
-            Reserved = 100,
-            // Ids outside this enum may exist
-            // This exists to let yml use nice names instead of numbers
+            Apc
         }
+        // TODO allow devices to join more than one network?
+
+        // TODO if wireless/wired is determined by ConnectionType, what is the point of WirelessNetworkComponent & the
+        // other network-type-specific components? Shouldn't DeviceNetId determine conectivity checks?
 
         [DataField("deviceNetId")]
-        public DeviceNetIdDefaults NetIdEnum { get; set; }
-
-        public int DeviceNetId => (int) NetIdEnum;
+        public ConnectionType DeviceNetId { get; set; } = ConnectionType.Private;
 
         /// <summary>
         ///     The frequency that this device is listening on.

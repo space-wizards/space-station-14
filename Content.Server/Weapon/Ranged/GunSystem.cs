@@ -3,7 +3,6 @@ using Content.Server.Atmos.EntitySystems;
 using Content.Server.Hands.Components;
 using Content.Server.PowerCell;
 using Content.Server.Stunnable;
-using Content.Server.Weapon.Melee;
 using Content.Server.Weapon.Ranged.Ammunition.Components;
 using Content.Server.Weapon.Ranged.Barrels.Components;
 using Content.Shared.ActionBlocker;
@@ -23,7 +22,6 @@ using Robust.Shared.Containers;
 using Robust.Shared.GameStates;
 using Robust.Shared.Map;
 using Robust.Shared.Player;
-using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;
 
@@ -32,7 +30,6 @@ namespace Content.Server.Weapon.Ranged;
 public sealed partial class GunSystem : EntitySystem
 {
     [Dependency] private readonly IGameTiming _gameTiming = default!;
-    [Dependency] private readonly IPrototypeManager _protoManager = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly ActionBlockerSystem  _blocker = default!;
     [Dependency] private readonly AdminLogSystem _logs = default!;
@@ -46,8 +43,6 @@ public sealed partial class GunSystem : EntitySystem
     [Dependency] private readonly SharedPopupSystem _popup = default!;
     [Dependency] private readonly StunSystem _stun = default!;
     [Dependency] private readonly SharedHandsSystem _handsSystem = default!;
-
-    public const float DamagePitchVariation = MeleeWeaponSystem.DamagePitchVariation;
 
     /// <summary>
     /// How many sounds are allowed to be played on ejecting multiple casings.
@@ -128,7 +123,6 @@ public sealed partial class GunSystem : EntitySystem
 
         // SubscribeLocalEvent<ServerRangedWeaponComponent, ExaminedEvent>(OnGunExamine);
         SubscribeNetworkEvent<FirePosEvent>(OnFirePos);
-        SubscribeLocalEvent<ServerRangedWeaponComponent, MeleeAttackAttemptEvent>(OnMeleeAttempt);
     }
 
     private void OnFirePos(FirePosEvent msg, EntitySessionEventArgs args)

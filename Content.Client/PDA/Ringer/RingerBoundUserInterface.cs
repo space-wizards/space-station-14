@@ -1,7 +1,11 @@
+using System;
+using Content.Client.Message;
 using Content.Shared.PDA;
 using Content.Shared.PDA.Ringer;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
+using Robust.Shared.GameObjects;
+using Robust.Shared.Localization;
 namespace Content.Client.PDA.Ringer
 {
     [UsedImplicitly]
@@ -43,12 +47,17 @@ namespace Content.Client.PDA.Ringer
 
             ringtone = new Note[4];
 
-            for (int i = 0; i < _menu.RingerNoteInputs.Length; i++)
-            {
-                if (!Enum.TryParse<Note>(_menu.RingerNoteInputs[i].Text.Replace("#", "sharp"), false, out var note))
-                    return false;
-                ringtone[i] = note;
-            }
+            if (!Enum.TryParse<Note>(_menu.RingerNoteOneInput.Text.Replace("#", "sharp"), false, out var one)) return false;
+            ringtone[0] = one;
+
+            if (!Enum.TryParse<Note>(_menu.RingerNoteTwoInput.Text.Replace("#", "sharp"), false, out var two)) return false;
+            ringtone[1] = two;
+
+            if (!Enum.TryParse<Note>(_menu.RingerNoteThreeInput.Text.Replace("#", "sharp"), false, out var three)) return false;
+            ringtone[2] = three;
+
+            if (!Enum.TryParse<Note>(_menu.RingerNoteFourInput.Text.Replace("#", "sharp"), false, out var four)) return false;
+            ringtone[3] = four;
 
             return true;
         }
@@ -57,22 +66,36 @@ namespace Content.Client.PDA.Ringer
         {
             base.UpdateState(state);
 
-            if (_menu == null || state is not RingerUpdateState msg)
-                return;
-
-            for (int i = 0; i < _menu.RingerNoteInputs.Length; i++)
+            if (_menu == null)
             {
-
-                var note = msg.Ringtone[i].ToString();
-                if (RingtoneMenu.IsNote(note))
-                {
-                    _menu.PreviousNoteInputs[i] = note.Replace("sharp", "#");
-                    _menu.RingerNoteInputs[i].Text = _menu.PreviousNoteInputs[i];
-                }
-
+                return;
             }
 
-            _menu.TestRingerButton.Visible = !msg.IsPlaying;
+            switch (state)
+            {
+                case RingerUpdateState msg:
+                {
+                    var noteOne = msg.Ringtone[0].ToString();
+                    var noteTwo = msg.Ringtone[1].ToString();
+                    var noteThree = msg.Ringtone[2].ToString();
+                    var noteFour = msg.Ringtone[3].ToString();
+
+                    if (RingtoneMenu.IsNote(noteOne))
+                        _menu.RingerNoteOneInput.Text = noteOne.Replace("sharp", "#");
+
+                    if (RingtoneMenu.IsNote(noteTwo))
+                        _menu.RingerNoteTwoInput.Text = noteTwo.Replace("sharp", "#");
+
+                    if (RingtoneMenu.IsNote(noteThree))
+                        _menu.RingerNoteThreeInput.Text = noteThree.Replace("sharp", "#");
+
+                    if (RingtoneMenu.IsNote(noteFour))
+                        _menu.RingerNoteFourInput.Text = noteFour.Replace("sharp", "#");
+
+                    _menu.TestRingerButton.Visible = !msg.IsPlaying;
+                    break;
+                }
+            }
         }
 
 

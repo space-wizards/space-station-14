@@ -21,13 +21,20 @@ namespace Content.Server.DeviceNetwork.Systems
         [Dependency] private readonly IPrototypeManager _protoMan = default!;
         [Dependency] private readonly SharedTransformSystem _transformSystem = default!;
 
-        private readonly Dictionary<int, DeviceNet> _networks = new(4);
+        private readonly DeviceNet[] _networks = new DeviceNet[4]; // Number of ConnectionType enum values
         private readonly Queue<DeviceNetworkPacketEvent> _packets = new();
 
         public override void Initialize()
         {
+            base.Initialize();
+
             SubscribeLocalEvent<DeviceNetworkComponent, MapInitEvent>(OnMapInit);
             SubscribeLocalEvent<DeviceNetworkComponent, ComponentShutdown>(OnNetworkShutdown);
+
+            InitNetwork(ConnectionType.Private);
+            InitNetwork(ConnectionType.Wired);
+            InitNetwork(ConnectionType.Wireless);
+            InitNetwork(ConnectionType.Apc);
         }
 
         public override void Update(float frameTime)
@@ -59,6 +66,10 @@ namespace Content.Server.DeviceNetwork.Systems
             if (frequency != null)
                 _packets.Enqueue(new DeviceNetworkPacketEvent(device.DeviceNetId, address, frequency.Value, device.Address, uid, data));
         }
+
+        private void InitNetwork(ConnectionType connectionType) =>
+            _networks[(int) connectionType] = new(connectionType, _random);
+
         /// <summary>
         /// Automatically attempt to connect some devices when a map starts.
         /// </summary>
@@ -82,14 +93,8 @@ namespace Content.Server.DeviceNetwork.Systems
                 ConnectDevice(uid, device);
         }
 
-        private DeviceNet GetNetwork(int netId)
-        {
-            if (_networks.TryGetValue(netId, out var deviceNet))
-                return deviceNet;
-            var newDeviceNet = new DeviceNet(netId, _random);
-            _networks[netId] = newDeviceNet;
-            return newDeviceNet;
-        }
+        private DeviceNet GetNetwork(ConnectionType connectionType) =>
+            _networks[(int) connectionType];
 
         /// <summary>
         /// Automatically disconnect when an entity with a DeviceNetworkComponent shuts down.
@@ -186,7 +191,7 @@ namespace Content.Server.DeviceNetwork.Systems
         /// <summary>
         ///     Try to find a device on a network using its address.
         /// </summary>
-        private bool TryGetDevice(int netId, string address, [NotNullWhen(true)] out DeviceNetworkComponent? device) =>
+        private bool TryGetDevice(ConnectionType netId, string address, [NotNullWhen(true)] out DeviceNetworkComponent? device) =>
             GetNetwork(netId).Devices.TryGetValue(address, out device);
 
         private void SendPacket(DeviceNetworkPacketEvent packet)
@@ -284,9 +289,9 @@ namespace Content.Server.DeviceNetwork.Systems
     public sealed class DeviceNetworkPacketEvent : EntityEventArgs
     {
         /// <summary>
-        /// The id of the network that this packet is being sent on.
+        /// The type of network that this packet is being sent on.
         /// </summary>
-        public int NetId;
+        public ConnectionType NetId;
 
         /// <summary>
         /// The frequency the packet is sent on.
@@ -313,7 +318,7 @@ namespace Content.Server.DeviceNetwork.Systems
         /// </summary>
         public readonly NetworkPayload Data;
 
-        public DeviceNetworkPacketEvent(int netId, string? address, uint frequency, string senderAddress, EntityUid sender, NetworkPayload data)
+        public DeviceNetworkPacketEvent(ConnectionType netId, string? address, uint frequency, string senderAddress, EntityUid sender, NetworkPayload data)
         {
             NetId = netId;
             Address = address;

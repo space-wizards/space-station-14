@@ -19,7 +19,7 @@
   - type: SolutionContainerManager
     solutions:
       bucket:
-        maxVol: 250
+        maxVol: 100
   - type: SolutionTransfer
     transferAmount: 50
     maxTransferAmount: 100

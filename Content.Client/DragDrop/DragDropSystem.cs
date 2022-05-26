@@ -1,9 +1,7 @@
-using Content.Client.CombatMode;
 using Content.Client.Outline;
 using Content.Client.Viewport;
 using Content.Shared.ActionBlocker;
 using Content.Shared.CCVar;
-using Content.Shared.CombatMode;
 using Content.Shared.DragDrop;
 using Content.Shared.Interaction;
 using Content.Shared.Interaction.Events;
@@ -37,7 +35,6 @@ namespace Content.Client.DragDrop
         [Dependency] private readonly IConfigurationManager _cfgMan = default!;
         [Dependency] private readonly InteractionOutlineSystem _outline = default!;
         [Dependency] private readonly SharedInteractionSystem _interactionSystem = default!;
-        [Dependency] private readonly CombatModeSystem _combatMode = default!;
         [Dependency] private readonly InputSystem _inputSystem = default!;
         [Dependency] private readonly ActionBlockerSystem _actionBlockerSystem = default!;
 
@@ -127,8 +124,7 @@ namespace Content.Client.DragDrop
 
         private bool OnUseMouseDown(in PointerInputCmdHandler.PointerInputCmdArgs args)
         {
-            if (args.Session?.AttachedEntity is not {Valid: true} dragger ||
-                _combatMode.IsInCombatMode())
+            if (args.Session?.AttachedEntity is not {Valid: true} dragger)
             {
                 return false;
             }
@@ -222,8 +218,7 @@ namespace Content.Client.DragDrop
 
         private bool OnContinueDrag(float frameTime)
         {
-            if (_dragDropHelper.Dragged == default || Deleted(_dragDropHelper.Dragged) ||
-                _combatMode.IsInCombatMode())
+            if (_dragDropHelper.Dragged == default || Deleted(_dragDropHelper.Dragged))
             {
                 return false;
             }
@@ -236,6 +231,8 @@ namespace Content.Client.DragDrop
                 return false;
             }
 
+            // keep dragged entity under mouse
+            var mousePos = _eyeManager.ScreenToMap(_dragDropHelper.MouseScreenPosition);
             // TODO: would use MapPosition instead if it had a setter, but it has no setter.
             // is that intentional, or should we add a setter for Transform.MapPosition?
             if (_dragShadow == default)

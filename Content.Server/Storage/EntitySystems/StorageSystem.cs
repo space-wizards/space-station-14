@@ -27,7 +27,6 @@ using Robust.Server.Containers;
 using Content.Server.Popups;
 using Content.Shared.Destructible;
 using static Content.Shared.Storage.SharedStorageComponent;
-using Content.Shared.ActionBlocker;
 
 namespace Content.Server.Storage.EntitySystems
 {
@@ -44,7 +43,6 @@ namespace Content.Server.Storage.EntitySystems
         [Dependency] private readonly SharedHandsSystem _sharedHandsSystem = default!;
         [Dependency] private readonly SharedInteractionSystem _sharedInteractionSystem = default!;
         [Dependency] private readonly UserInterfaceSystem _uiSystem = default!;
-        [Dependency] private readonly ActionBlockerSystem _actionBlockerSystem = default!;
 
         /// <inheritdoc />
         public override void Initialize()
@@ -58,7 +56,7 @@ namespace Content.Server.Storage.EntitySystems
             SubscribeLocalEvent<ServerStorageComponent, ActivateInWorldEvent>(OnActivate);
             SubscribeLocalEvent<ServerStorageComponent, AfterInteractEvent>(AfterInteract);
             SubscribeLocalEvent<ServerStorageComponent, DestructionEventArgs>(OnDestroy);
-            SubscribeLocalEvent<ServerStorageComponent, StorageInteractWithItemEvent>(OnInteractWithItem);
+            SubscribeLocalEvent<ServerStorageComponent, StorageRemoveItemMessage>(OnRemoveItemMessage);
             SubscribeLocalEvent<ServerStorageComponent, StorageInsertItemMessage>(OnInsertItemMessage);
             SubscribeLocalEvent<ServerStorageComponent, BoundUIOpenedEvent>(OnBoundUIOpen);
             SubscribeLocalEvent<ServerStorageComponent, BoundUIClosedEvent>(OnBoundUIClosed);
@@ -337,43 +335,16 @@ namespace Content.Server.Storage.EntitySystems
             }
         }
 
-        /// <summary>
-        ///     This function gets called when the user clicked on an item in the storage UI. This will either place the
-        ///     item in the user's hand if it is currently empty, or interact with the item using the user's currently
-        ///     held item.
-        /// </summary>
-        private void OnInteractWithItem(EntityUid uid, ServerStorageComponent storageComp, StorageInteractWithItemEvent args)
+        private void OnRemoveItemMessage(EntityUid uid, ServerStorageComponent storageComp, StorageRemoveItemMessage args)
         {
-            // TODO move this to shared for prediction.
-            if (args.Session.AttachedEntity is not EntityUid player)
+            if (args.Session.AttachedEntity == null)
                 return;
 
-            if (!_actionBlockerSystem.CanInteract(player, args.InteractedItemUID))
-                return;
-
-            if (storageComp.Storage == null || !storageComp.Storage.Contains(args.InteractedItemUID))
-                return;
-
-            // Does the player have hands?
-            if (!TryComp(player, out HandsComponent? hands) || hands.Count == 0)
-                return;
-
-            // If the user's active hand is empty, try pick up the item.
-            if (hands.ActiveHandEntity == null)
-            {   
-                if (_sharedHandsSystem.TryPickupAnyHand(player, args.InteractedItemUID, handsComp: hands)
-                    && storageComp.StorageRemoveSound != null)
-                        SoundSystem.Play(Filter.Pvs(uid, entityManager: EntityManager), storageComp.StorageRemoveSound.GetSound(), uid, AudioParams.Default);
-                return;
-            }
-
-            // Else, interact using the held item
-            _interactionSystem.InteractUsing(player, hands.ActiveHandEntity.Value, args.InteractedItemUID, Transform(args.InteractedItemUID).Coordinates, checkCanInteract: false);
+            HandleRemoveEntity(uid, args.Session.AttachedEntity.Value, args.InteractedItemUID, storageComp);
         }
 
         private void OnInsertItemMessage(EntityUid uid, ServerStorageComponent storageComp, StorageInsertItemMessage args)
         {
-            // TODO move this to shared for prediction.
             if (args.Session.AttachedEntity == null)
                 return;
 
@@ -467,6 +438,23 @@ namespace Content.Server.Storage.EntitySystems
             }
             RecalculateStorageUsed(sourceComp);
             UpdateStorageUI(source, sourceComp);
+        }
+
+        public void HandleRemoveEntity(EntityUid uid, EntityUid player, EntityUid itemToRemove, ServerStorageComponent? storageComp = null)
+        {
+            if (!Resolve(uid, ref storageComp))
+                return;
+
+            if (!_containerSystem.ContainsEntity(uid, itemToRemove))
+                return;
+
+            // succeeded, remove entity and update UI
+            _containerSystem.RemoveEntity(uid, itemToRemove, false);
+
+            if (storageComp.StorageRemoveSound is not null)
+                SoundSystem.Play(Filter.Pvs(uid, entityManager: EntityManager), storageComp.StorageRemoveSound.GetSound(), uid, AudioParams.Default);
+
+            _sharedHandsSystem.TryPickupAnyHand(player, itemToRemove);
         }
 
         /// <summary>

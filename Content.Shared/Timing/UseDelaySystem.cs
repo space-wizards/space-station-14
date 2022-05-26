@@ -75,10 +75,10 @@ public sealed class UseDelaySystem : EntitySystem
 
         foreach (var delay in _activeDelays)
         {
-            if (delay.DelayEndTime == null ||
-                curTime > delay.DelayEndTime ||
-                Deleted(delay.Owner, mQuery) ||
-                delay.CancellationTokenSource?.Token.IsCancellationRequested == true)
+            if (curTime > delay.DelayEndTime
+                || !mQuery.TryGetComponent(delay.Owner, out var meta)
+                || meta.Deleted
+                || delay.CancellationTokenSource?.Token.IsCancellationRequested == true)
             {
                 toRemove.Add(delay);
             }
@@ -89,7 +89,6 @@ public sealed class UseDelaySystem : EntitySystem
             delay.CancellationTokenSource = null;
             delay.DelayEndTime = null;
             _activeDelays.Remove(delay);
-            Dirty(delay);
         }
     }
 

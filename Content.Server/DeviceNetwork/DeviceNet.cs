@@ -31,12 +31,12 @@ public sealed class DeviceNet
     public readonly Dictionary<uint, HashSet<DeviceNetworkComponent>> ReceiveAllDevices = new();
 
     private readonly IRobustRandom _random;
-    public readonly int NetId;
+    public readonly ConnectionType Type;
 
-    public DeviceNet(int netId, IRobustRandom random)
+    public DeviceNet(ConnectionType netType, IRobustRandom random)
     {
         _random = random;
-        NetId = netId;
+        Type = netType;
     }
 
     /// <summary>

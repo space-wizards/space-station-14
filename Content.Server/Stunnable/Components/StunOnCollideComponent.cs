@@ -23,10 +23,5 @@ namespace Content.Server.Stunnable.Components
 
         [DataField("runSpeedMultiplier")]
         public float RunSpeedMultiplier = 1f;
-
-        /// <summary>
-        /// Fixture we track for the collision.
-        /// </summary>
-        [ViewVariables, DataField("fixture")] public string FixtureID = "projectile";
     }
 }

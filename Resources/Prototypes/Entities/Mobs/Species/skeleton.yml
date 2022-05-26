@@ -233,7 +233,7 @@
   - type: CharacterInfo
   - type: AnimationPlayer
   - type: Buckle
-  - type: MeleeWeapon
+  - type: UnarmedCombat
     hitSound:
       collection: Punch
     range: 0.8

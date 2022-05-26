@@ -221,7 +221,7 @@
           Quantity: 10
         - ReagentId: Omnizine
           Quantity: 2
-        - ReagentId: Sugar
+        - ReagentId: Glucose
           Quantity: 2
 
 - type: entity

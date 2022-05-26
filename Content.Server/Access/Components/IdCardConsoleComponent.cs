@@ -1,9 +1,11 @@
 using System.Linq;
 using Content.Server.Access.Systems;
 using Content.Server.UserInterface;
+using Content.Shared.Access;
 using Content.Shared.Access.Components;
 using Content.Shared.Access.Systems;
 using Robust.Server.GameObjects;
+using Robust.Shared.Prototypes;
 
 namespace Content.Server.Access.Components
 {
@@ -11,6 +13,7 @@ namespace Content.Server.Access.Components
     [ComponentReference(typeof(SharedIdCardConsoleComponent))]
     public sealed class IdCardConsoleComponent : SharedIdCardConsoleComponent
     {
+        [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
         [Dependency] private readonly IEntityManager _entities = default!;
 
         [ViewVariables] private BoundUserInterface? UserInterface => Owner.GetUIOrNull(IdCardConsoleUiKey.Key);
@@ -72,7 +75,7 @@ namespace Content.Server.Access.Components
             cardSystem.TryChangeFullName(targetIdEntity, newFullName);
             cardSystem.TryChangeJobTitle(targetIdEntity, newJobTitle);
 
-            if (!newAccessList.TrueForAll(x => AccessLevels.Contains(x)))
+            if (!newAccessList.TrueForAll(x => _prototypeManager.HasIndex<AccessLevelPrototype>(x)))
             {
                 Logger.Warning("Tried to write unknown access tag.");
                 return;

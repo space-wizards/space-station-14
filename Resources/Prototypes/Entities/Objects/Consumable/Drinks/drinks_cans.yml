@@ -76,7 +76,9 @@
         maxVol: 30
         reagents:
         - ReagentId: IcedTea
-          Quantity: 30
+          Quantity: 28
+        - ReagentId: Theobromine
+          Quantity: 2
   - type: Sprite
     sprite: Objects/Consumable/Drinks/ice_tea_can.rsi
   - type: Item
@@ -236,7 +238,9 @@
         maxVol: 30
         reagents:
         - ReagentId: FourteenLoko
-          Quantity: 30
+          Quantity: 28
+        - ReagentId: Theobromine
+          Quantity: 2
   - type: Sprite
     sprite: Objects/Consumable/Drinks/fourteen_loko.rsi
   - type: Item
@@ -292,7 +296,9 @@
         maxVol: 30
         reagents:
         - ReagentId: EnergyDrink
-          Quantity: 30
+          Quantity: 28
+        - ReagentId: Theobromine
+          Quantity: 2
   - type: Drink
   - type: Sprite
     sprite: Objects/Consumable/Drinks/energy_drink.rsi

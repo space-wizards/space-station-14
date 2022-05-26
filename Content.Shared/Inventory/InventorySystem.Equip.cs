@@ -1,7 +1,6 @@
 using System.Diagnostics.CodeAnalysis;
 using Content.Shared.ActionBlocker;
 using Content.Shared.Clothing.Components;
-using Content.Shared.Hands;
 using Content.Shared.Hands.Components;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Interaction;
@@ -145,16 +144,8 @@ public abstract partial class InventorySystem
             return;
         }
 
-        if (!_handsSystem.CanDropHeld(actor, hands.ActiveHand!, checkActionBlocker: false))
-            return;
-
-        var gotUnequipped = new GotUnequippedHandEvent(actor, held.Value, hands.ActiveHand!);
-        var didUnequip = new DidUnequipHandEvent(actor, held.Value, hands.ActiveHand!);
-        RaiseLocalEvent(held.Value, gotUnequipped, false);
-        RaiseLocalEvent(actor, didUnequip);
-        RaiseLocalEvent(held.Value, new HandDeselectedEvent(actor), false);
-
-        TryEquip(actor, actor, held.Value, ev.Slot, predicted: true, inventory: inventory, force: true);
+        if (_handsSystem.TryDrop(actor, hands.ActiveHand!, doDropInteraction: false, handsComp: hands))
+            TryEquip(actor, actor, held.Value, ev.Slot, predicted: true, inventory: inventory);
     }
 
     public bool TryEquip(EntityUid uid, EntityUid itemUid, string slot, bool silent = false, bool force = false, bool predicted = false,

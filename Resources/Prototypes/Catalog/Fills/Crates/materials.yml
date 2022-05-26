@@ -45,7 +45,7 @@
   components:
   - type: StorageFill
     contents:
-      - id: WeldingFuelTankFull
+      - id: WeldingFuelTank
         amount: 1
 
 #- type: entity
