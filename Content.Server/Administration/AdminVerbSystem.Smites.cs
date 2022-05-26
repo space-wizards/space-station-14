@@ -379,7 +379,7 @@ public sealed partial class AdminVerbSystem
             Act = () =>
             {
                 EntityManager.QueueDeleteEntity(args.Target);
-                EntityManager.SpawnEntity("Ash", Transform(args.Target).MapPosition);
+                Spawn("Ash", Transform(args.Target).Coordinates);
                 _popupSystem.PopupEntity(Loc.GetString("admin-smite-turned-ash-other", ("name", args.Target)), args.Target, Filter.Pvs(args.Target));
             },
             Impact = LogImpact.Extreme,
