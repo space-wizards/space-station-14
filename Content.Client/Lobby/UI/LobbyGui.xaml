@@ -10,12 +10,12 @@
          xmlns:chatUi="clr-namespace:Content.Client.Chat.UI"
          xmlns:lobbyUi="clr-namespace:Content.Client.Lobby.UI"
          xmlns:info="clr-namespace:Content.Client.Info">
-    <Control>
-        <!-- Background -->
-        <TextureRect Access="Public" Name = "Background" Stretch="KeepAspectCovered"/>
-        <BoxContainer Orientation="Horizontal" Margin="10 10 10 10" SeparationOverride="2">
+    <!-- Background -->
+    <TextureRect Access="Public" Name = "Background" Stretch="KeepAspectCovered"/>
+    <BoxContainer Orientation="Horizontal" Margin="10 10 10 10" SeparationOverride="2">
+        <SplitContainer State="Auto" HorizontalExpand="True">
             <!-- LHS Controls -->
-            <BoxContainer Orientation="Vertical" SeparationOverride="4">
+            <BoxContainer Orientation="Vertical" SeparationOverride="4" HorizontalExpand="True">
                 <!-- Left Top Panel -->
                 <PanelContainer StyleClasses="AngleRect" HorizontalAlignment="Left" Name = "LeftSideTop" VerticalAlignment="Top" >
                     <BoxContainer Orientation="Vertical" HorizontalAlignment="Center" MaxWidth="620">
@@ -43,11 +43,9 @@
                     <info:DevInfoBanner Name="DevInfoBanner" VerticalExpand="false" Margin="3 3 3 3"/>
                 </BoxContainer>
             </BoxContainer>
-            <!-- Horizontal Padding -->
-            <Control HorizontalExpand="True"/>
-            <!-- RightPanel Panel -->
-            <PanelContainer Name="RightSide" StyleClasses="AngleRect" HorizontalAlignment= "Right" VerticalExpand="True" VerticalAlignment="Stretch">
-                <BoxContainer Orientation="Vertical">
+            <!-- Right Panel -->
+            <PanelContainer Name="RightSide" StyleClasses="AngleRect" VerticalExpand="True" VerticalAlignment="Stretch">
+                <BoxContainer Orientation="Vertical" HorizontalExpand="True">
                     <!-- Top row -->
                     <BoxContainer Orientation="Horizontal" MinSize="0 40" Name="HeaderContainer" Access="Public" SeparationOverride="4">
                         <Label Margin="8 0 0 0" StyleClasses="LabelHeadingBigger" VAlign="Center" Text="{Loc 'ui-lobby-title'} " />
@@ -77,6 +75,6 @@
                     <chatUi:ChatBox Name="Chat" Access="Public" VerticalExpand="True" Margin="3 3 3 3" MinHeight="50"/>
                 </BoxContainer>
             </PanelContainer>
-        </BoxContainer>
-    </Control>
+        </SplitContainer>
+    </BoxContainer>
 </Control>
