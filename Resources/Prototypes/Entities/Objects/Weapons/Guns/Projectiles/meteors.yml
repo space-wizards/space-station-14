@@ -12,9 +12,9 @@
     - state: large
       shader: unshaded
   - type: ExplodeOnTrigger
-    fixtureID: projectile
   - type: DeleteOnTrigger
   - type: TriggerOnCollide
+    fixtureID: projectile
   - type: Projectile
     damage: {}
     deleteOnCollide: false
