@@ -1,4 +1,4 @@
-﻿<Control xmlns="https://spacestation14.io"
+<Control xmlns="https://spacestation14.io"
          xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
          xmlns:maths="clr-namespace:Robust.Shared.Maths;assembly=Robust.Shared.Maths"
          xmlns:cc="clr-namespace:Content.Client.Administration.UI.CustomControls"
@@ -13,8 +13,9 @@
     <Control>
         <!-- Background -->
         <TextureRect Access="Public" Name = "Background" Stretch="KeepAspectCovered"/>
-        <Control Margin="10 10 10 10" >
-            <!-- Left Top Panel -->
+        <BoxContainer Orientation="Horizontal" Margin="10 10 10 10" SeparationOverride="2">
+            <Control>
+                <!-- Left Top Panel -->
                 <PanelContainer StyleClasses="AngleRect" HorizontalAlignment="Left" Name = "LeftSideTop" VerticalExpand="True"  VerticalAlignment="Top" >
                     <BoxContainer Orientation="Vertical" HorizontalAlignment="Center" MaxWidth="620">
                         <info:LinkBanner Name="LinkBanner" VerticalExpand="false" HorizontalAlignment="Center" Margin="3 3 3 3"/>
@@ -28,13 +29,17 @@
                                        StyleClasses="LabelBig" HorizontalExpand="True" />
                                 <Button Name="ReadyButton" Access="Public" ToggleMode="True" Text="{Loc 'ui-lobby-ready-up-button'}"
                                         StyleClasses="ButtonBig" />
-                            </BoxContainer></hudUi:StripeBack>
+                            </BoxContainer>
+                        </hudUi:StripeBack>
                     </BoxContainer>
                 </PanelContainer>
-            <!-- Left Bot Panel -->
-            <BoxContainer Orientation="Vertical" HorizontalAlignment="Left" VerticalAlignment="Bottom" MaxWidth="620">
-                <info:DevInfoBanner Name="DevInfoBanner" VerticalExpand="false" Margin="3 3 3 3"/>
-            </BoxContainer>
+                <!-- Left Bot Panel -->
+                <BoxContainer Orientation="Vertical" HorizontalAlignment="Left" VerticalAlignment="Bottom" MaxWidth="620">
+                    <info:DevInfoBanner Name="DevInfoBanner" VerticalExpand="false" Margin="3 3 3 3"/>
+                </BoxContainer>
+            </Control>
+            <!-- Padding -->
+            <Control HorizontalExpand="True"/>
             <!-- RightPanel Panel -->
             <PanelContainer Name="RightSide" StyleClasses="AngleRect" HorizontalAlignment= "Right" VerticalExpand="True" VerticalAlignment="Stretch">
                 <BoxContainer Orientation="Vertical">
@@ -67,6 +72,6 @@
                 <chatUi:ChatBox Name="Chat" Access="Public" VerticalExpand="True" Margin="3 3 3 3" MinHeight="50"/>
                 </BoxContainer>
             </PanelContainer>
-        </Control>
+        </BoxContainer>
     </Control>
 </Control>
