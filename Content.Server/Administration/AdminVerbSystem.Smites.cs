@@ -15,8 +15,10 @@ using Content.Server.Interaction.Components;
 using Content.Server.Medical;
 using Content.Server.Nutrition.EntitySystems;
 using Content.Server.Polymorph.Systems;
+using Content.Server.Popups;
 using Content.Server.Tabletop;
 using Content.Server.Tabletop.Components;
+using Content.Server.Visible;
 using Content.Shared.Administration;
 using Content.Shared.Body.Components;
 using Content.Shared.Body.Part;
@@ -33,6 +35,7 @@ using Content.Shared.Verbs;
 using Robust.Server.GameObjects;
 using Robust.Shared.Map;
 using Robust.Shared.Physics;
+using Robust.Shared.Player;
 using Robust.Shared.Random;
 using Robust.Shared.Utility;
 using Timer = Robust.Shared.Timing.Timer;
@@ -54,8 +57,9 @@ public sealed partial class AdminVerbSystem
     [Dependency] private readonly BloodstreamSystem _bloodstreamSystem = default!;
     [Dependency] private readonly BodySystem _bodySystem = default!;
     [Dependency] private readonly VomitSystem _vomitSystem = default!;
+    [Dependency] private readonly PopupSystem _popupSystem = default!;
 
-    // All smite verbs have names so invokeverb wrks.
+    // All smite verbs have names so invokeverb works.
     private void AddSmiteVerbs(GetVerbsEvent<Verb> args)
     {
         if (!EntityManager.TryGetComponent<ActorComponent?>(args.User, out var actor))
@@ -89,26 +93,6 @@ public sealed partial class AdminVerbSystem
         };
         args.Verbs.Add(explode);
 
-        // TODO: Port cluwne outfit.
-        Verb clown = new()
-        {
-            Text = "Clown",
-            Category = VerbCategory.Smite,
-            IconTexture = "/Textures/Objects/Fun/bikehorn.rsi/icon.png",
-            Act = () =>
-            {
-                SetOutfitCommand.SetOutfit(args.Target, "ClownGear", EntityManager, (target, clothing) =>
-                {
-                    if (HasComp<ClothingComponent>(clothing))
-                        EnsureComp<UnremoveableComponent>(clothing);
-                    EnsureComp<ClumsyComponent>(args.Target);
-                });
-            },
-            Impact = LogImpact.Extreme,
-            Message = "Clowns them. The suit cannot be removed.",
-        };
-        args.Verbs.Add(clown);
-
         Verb chess = new()
         {
             Text = "Chess Dimension",
@@ -120,9 +104,12 @@ public sealed partial class AdminVerbSystem
                 EnsureComp<TabletopDraggableComponent>(args.Target);
                 RemComp<PhysicsComponent>(args.Target); // So they can be dragged around.
                 var xform = Transform(args.Target);
+                _popupSystem.PopupEntity(Loc.GetString("admin-smite-chess-self"), args.Target, Filter.Entities(args.Target));
+                _popupSystem.PopupCoordinates(Loc.GetString("admin-smite-chess-others", ("name", args.Target)), xform.Coordinates, Filter.Pvs(args.Target).RemoveWhereAttachedEntity(x => x == args.Target));
                 var board = Spawn("ChessBoard", xform.Coordinates);
                 var session = _tabletopSystem.EnsureSession(Comp<TabletopGameComponent>(board));
                 xform.Coordinates = EntityCoordinates.FromMap(_mapManager, session.Position);
+                xform.WorldRotation = Angle.Zero;
             },
             Impact = LogImpact.Extreme,
             Message = "Chess dimension.",
@@ -141,6 +128,9 @@ public sealed partial class AdminVerbSystem
                     // Fuck you. Burn Forever.
                     flammable.FireStacks = 99999.9f;
                     _flammableSystem.Ignite(args.Target);
+                    var xform = Transform(args.Target);
+                    _popupSystem.PopupEntity(Loc.GetString("admin-smite-set-alight-self"), args.Target, Filter.Entities(args.Target));
+                    _popupSystem.PopupCoordinates(Loc.GetString("admin-smite-set-alight-others", ("name", args.Target)), xform.Coordinates, Filter.Pvs(args.Target).RemoveWhereAttachedEntity(x => x == args.Target));
                 },
                 Impact = LogImpact.Extreme,
                 Message = "Makes them burn.",
@@ -190,14 +180,14 @@ public sealed partial class AdminVerbSystem
                 IconTexture = "/Textures/Clothing/Hands/Gloves/Color/yellow.rsi/icon.png",
                 Act = () =>
                 {
-                    int damageToDeal = 0;
+                    int damageToDeal;
                     var critState = mobState._highestToLowestStates.Where(x => x.Value.IsCritical()).FirstOrNull();
                     if (critState is null)
                     {
                         // We can't crit them so try killing them.
                         var deadState = mobState._highestToLowestStates.Where(x => x.Value.IsDead()).FirstOrNull();
                         if (deadState is null)
-                            return; // welp.
+                            return; // whelp.
 
                         damageToDeal = deadState.Value.Key - (int) damageable.TotalDamage;
                     }
@@ -256,6 +246,9 @@ public sealed partial class AdminVerbSystem
                 Act = () =>
                 {
                     _bloodstreamSystem.SpillAllSolutions(args.Target, bloodstream);
+                    var xform = Transform(args.Target);
+                    _popupSystem.PopupEntity(Loc.GetString("admin-smite-remove-blood-self"), args.Target, Filter.Entities(args.Target));
+                    _popupSystem.PopupCoordinates(Loc.GetString("admin-smite-remove-blood-others", ("name", args.Target)), xform.Coordinates, Filter.Pvs(args.Target).RemoveWhereAttachedEntity(x => x == args.Target));
                 },
                 Impact = LogImpact.Extreme,
                 Message = "Removes their blood. All of it.",
@@ -276,14 +269,17 @@ public sealed partial class AdminVerbSystem
                     _vomitSystem.Vomit(args.Target, -1000, -1000); // You feel hollow!
                     var organs = _bodySystem.GetComponentsOnMechanisms<TransformComponent>(args.Target, body);
                     var baseXform = Transform(args.Target);
-                    foreach (var (xform, mech) in organs)
+                    foreach (var (xform, mechanism) in organs)
                     {
                         if (HasComp<BrainComponent>(xform.Owner) || HasComp<EyeComponent>(xform.Owner))
                             continue;
 
-                        mech.Part?.RemoveMechanism(mech);
+                        mechanism.Part?.RemoveMechanism(mechanism);
                         xform.Coordinates = baseXform.Coordinates;
                     }
+
+                    _popupSystem.PopupEntity(Loc.GetString("admin-smite-vomit-organs-self"), args.Target, Filter.Entities(args.Target));
+                    _popupSystem.PopupCoordinates(Loc.GetString("admin-smite-vomit-organs-others", ("name", args.Target)), baseXform.Coordinates, Filter.Pvs(args.Target).RemoveWhereAttachedEntity(x => x == args.Target));
                 },
                 Impact = LogImpact.Extreme,
                 Message = "Causes them to vomit, including their internal organs.",
@@ -303,6 +299,8 @@ public sealed partial class AdminVerbSystem
                         body.RemovePart(part);
                         Transform(part.Owner).Coordinates = baseXform.Coordinates;
                     }
+                    _popupSystem.PopupEntity(Loc.GetString("admin-smite-remove-hands-self"), args.Target, Filter.Entities(args.Target));
+                    _popupSystem.PopupCoordinates(Loc.GetString("admin-smite-remove-hands-others", ("name", args.Target)), baseXform.Coordinates, Filter.Pvs(args.Target).RemoveWhereAttachedEntity(x => x == args.Target));
                 },
                 Impact = LogImpact.Extreme,
                 Message = "Removes the target's hands.",
@@ -336,7 +334,7 @@ public sealed partial class AdminVerbSystem
                 physics.AngularDamping = 0.0f;
             },
             Impact = LogImpact.Extreme,
-            Message = "Turns them into a super bouncyball, flinging them around until they clip through the station into the abyss.",
+            Message = "Turns them into a super bouncy ball, flinging them around until they clip through the station into the abyss.",
         };
         args.Verbs.Add(pinball);
 
@@ -364,8 +362,75 @@ public sealed partial class AdminVerbSystem
                 physics.AngularDamping = 0.0f;
             },
             Impact = LogImpact.Extreme,
-            Message = "Banishes them into the depths of space by turning on noclip and tossing them.",
+            Message = "Banishes them into the depths of space by turning on no-clip and tossing them.",
         };
         args.Verbs.Add(yeet);
+
+        Verb bread = new()
+        {
+            Text = "Become Bread",
+            Category = VerbCategory.Smite,
+            IconTexture = "/Textures/Objects/Consumable/Food/Baked/bread.rsi/plain.png",
+            Act = () =>
+            {
+                _polymorphableSystem.PolymorphEntity(args.Target, "AdminBreadSmite");
+            },
+            Impact = LogImpact.Extreme,
+            Message = "It turns them into bread. Really. That's all it does.",
+        };
+        args.Verbs.Add(bread);
+
+        Verb ghostKick = new()
+        {
+            Text = "Ghostkick",
+            Category = VerbCategory.Smite,
+            IconTexture = "/Textures/Interface/gavel.svg.192dpi.png",
+            Act = () =>
+            {
+                _polymorphableSystem.PolymorphEntity(args.Target, "AdminBreadSmite");
+            },
+            Impact = LogImpact.Extreme,
+            Message = "Silently kicks the user, dropping their connection.",
+        };
+        args.Verbs.Add(ghostKick);
+
+        if (TryComp<InventoryComponent>(args.Target, out var inventory)) {
+            Verb nyanify = new()
+            {
+                Text = "Nyanify",
+                Category = VerbCategory.Smite,
+                IconTexture = "/Textures/Clothing/Head/Hats/catears.rsi/icon.png",
+                Act = () =>
+                {
+                    var ears = Spawn("ClothingHeadHatCatEars", Transform(args.Target).Coordinates);
+                    EnsureComp<UnremoveableComponent>(ears);
+                    _inventorySystem.TryUnequip(args.Target, "head", true, true, false, inventory);
+                    _inventorySystem.TryEquip(args.Target, ears, "head", true, true, false, inventory);
+                },
+                Impact = LogImpact.Extreme,
+                Message = "Forcibly adds cat ears. There is no escape.",
+            };
+            args.Verbs.Add(nyanify);
+
+            // TODO: Port cluwne outfit.
+            Verb clown = new()
+            {
+                Text = "Clown",
+                Category = VerbCategory.Smite,
+                IconTexture = "/Textures/Objects/Fun/bikehorn.rsi/icon.png",
+                Act = () =>
+                {
+                    SetOutfitCommand.SetOutfit(args.Target, "ClownGear", EntityManager, (_, clothing) =>
+                    {
+                        if (HasComp<ClothingComponent>(clothing))
+                            EnsureComp<UnremoveableComponent>(clothing);
+                        EnsureComp<ClumsyComponent>(args.Target);
+                    });
+                },
+                Impact = LogImpact.Extreme,
+                Message = "Clowns them. The suit cannot be removed.",
+            };
+            args.Verbs.Add(clown);
+        }
     }
 }
