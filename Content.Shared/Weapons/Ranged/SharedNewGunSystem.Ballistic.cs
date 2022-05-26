@@ -59,7 +59,7 @@ public abstract partial class SharedNewGunSystem
 
     private void OnBallisticExamine(EntityUid uid, BallisticAmmoProviderComponent component, ExaminedEvent args)
     {
-        args.PushMarkup($"It has [color={AmmoExamineColor}]{GetBallisticShots(component)}[/yellow] ammo.");
+        args.PushMarkup($"It has [color={AmmoExamineColor}]{GetBallisticShots(component)}[/color] ammo.");
     }
 
     public void ManualCycle(BallisticAmmoProviderComponent component, MapCoordinates coordinates, EntityUid? user = null)

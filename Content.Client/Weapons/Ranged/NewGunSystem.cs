@@ -138,6 +138,10 @@ public sealed partial class NewGunSystem : SharedNewGunSystem
                         cartridge.Spent = true;
                         MuzzleFlash(gun, cartridge, user);
                     }
+                    else
+                    {
+                        PlaySound(gun, Comp<NewGunComponent>(gun).SoundEmpty?.GetSound(), user);
+                    }
 
                     if (cartridge.Owner.IsClientSide())
                         Del(cartridge.Owner);

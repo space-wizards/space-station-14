@@ -44,6 +44,10 @@ public sealed partial class NewGunSystem : SharedNewGunSystem
                         cartridge.Spent = true;
                         MuzzleFlash(gun, cartridge, user);
                     }
+                    else
+                    {
+                        PlaySound(gun, Comp<NewGunComponent>(gun).SoundEmpty?.GetSound(), user);
+                    }
 
                     // Something like ballistic might want to leave it in the container still
                     if (!Containers.IsEntityInContainer(cartridge.Owner))

@@ -237,7 +237,7 @@
     size: 24
     sprite: Objects/Weapons/Guns/SMGs/wt550.rsi
   - type: NewGun
-    fireRate: 3
+    fireRate: 5
     availableModes:
     - Safety
     - FullAuto
