@@ -53,6 +53,9 @@ namespace Content.Shared.Verbs
         public static readonly VerbCategory Rotate =
             new("verb-categories-rotate", "/Textures/Interface/VerbIcons/refresh.svg.192dpi.png", iconsOnly: true);
 
+        public static readonly VerbCategory Smite =
+            new("verb-categories-smite", "/Textures/Interface/VerbIcons/smite.svg.192dpi.png", iconsOnly: true);
+
         public static readonly VerbCategory SetTransferAmount =
             new("verb-categories-transfer", "/Textures/Interface/VerbIcons/spill.svg.192dpi.png");
 
