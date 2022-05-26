@@ -23,3 +23,9 @@
   entity: MobMonkey
   forced: true
   dropInventory: true
+
+- type: polymorph
+  id: AdminBreadSmite
+  entity: FoodBreadPlain
+  forced: true
+  dropInventory: true

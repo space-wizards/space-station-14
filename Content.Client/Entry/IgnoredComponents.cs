@@ -131,7 +131,6 @@ namespace Content.Client.Entry
             "IntrinsicUI",
             "PowerProvider",
             "ApcPowerReceiver",
-            "Smiteable",
             "Cable",
             "StressTestMovement",
             "EmitSoundOnThrow",

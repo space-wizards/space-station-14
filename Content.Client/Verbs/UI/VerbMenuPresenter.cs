@@ -130,8 +130,6 @@ namespace Content.Client.Verbs.UI
             }
 
             element.SubMenu.MenuBody.Columns = category.Columns;
-            element.SubMenu.MenuBody.VSeparationOverride = 0;
-            element.SubMenu.MenuBody.HSeparationOverride = 0;
         }
 
         /// <summary>
