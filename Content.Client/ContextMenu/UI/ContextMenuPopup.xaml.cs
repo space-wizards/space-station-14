@@ -53,6 +53,8 @@ namespace Content.Client.ContextMenu.UI
 
             UserInterfaceManager.ModalRoot.AddChild(this);
             MenuBody.OnChildRemoved += ctrl => _presenter.OnRemoveElement(this, ctrl);
+            MenuBody.VSeparationOverride = 0;
+            MenuBody.HSeparationOverride = 0;
 
             if (ParentElement != null)
             {
