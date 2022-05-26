@@ -12,7 +12,7 @@ public sealed class MovementIgnoreGravitySystem : EntitySystem
         SubscribeLocalEvent<MovementIgnoreGravityComponent, ComponentHandleState>(HandleState);
     }
 
-    private void HandleState(EntityUid uid, MovementIgnoreGravityComponent component, ComponentHandleState args)
+    private void HandleState(EntityUid uid, MovementIgnoreGravityComponent component, ref ComponentHandleState args)
     {
         if (args.Next is null)
             return;
@@ -20,7 +20,7 @@ public sealed class MovementIgnoreGravitySystem : EntitySystem
         component.Weightless = ((MovementIgnoreGravityComponentState) args.Next).Weightless;
     }
 
-    private void GetState(EntityUid uid, MovementIgnoreGravityComponent component, ComponentGetState args)
+    private void GetState(EntityUid uid, MovementIgnoreGravityComponent component, ref ComponentGetState args)
     {
         args.State = new MovementIgnoreGravityComponentState(component);
     }
