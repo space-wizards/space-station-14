@@ -14,10 +14,10 @@
         <!-- Background -->
         <TextureRect Access="Public" Name = "Background" Stretch="KeepAspectCovered"/>
         <BoxContainer Orientation="Horizontal" Margin="10 10 10 10" SeparationOverride="2">
-            <!-- LHS controls -->
-            <BoxContainer>
+            <!-- LHS Controls -->
+            <BoxContainer Orientation="Vertical" SeparationOverride="4">
                 <!-- Left Top Panel -->
-                <PanelContainer StyleClasses="AngleRect" HorizontalAlignment="Left" Name = "LeftSideTop" VerticalExpand="True"  VerticalAlignment="Top" >
+                <PanelContainer StyleClasses="AngleRect" HorizontalAlignment="Left" Name = "LeftSideTop" VerticalAlignment="Top" >
                     <BoxContainer Orientation="Vertical" HorizontalAlignment="Center" MaxWidth="620">
                         <info:LinkBanner Name="LinkBanner" VerticalExpand="false" HorizontalAlignment="Center" Margin="3 3 3 3"/>
                         <hudUi:StripeBack>
@@ -34,8 +34,10 @@
                         </hudUi:StripeBack>
                     </BoxContainer>
                 </PanelContainer>
-                <!-- This is were the actual voting UI appears when a vote gets called-->
-                <BoxContainer Orientation="Horizontal" Name="VoteContainer" Access="Public" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                <!-- Voting Popups -->
+                <BoxContainer Orientation="Vertical" SeparationOverride="4" Name="VoteContainer" Access="Public" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                <!-- Vertical Padding-->
+                <Control VerticalExpand="True"/>
                 <!-- Left Bot Panel -->
                 <BoxContainer Orientation="Vertical" HorizontalAlignment="Left" VerticalAlignment="Bottom" MaxWidth="620">
                     <info:DevInfoBanner Name="DevInfoBanner" VerticalExpand="false" Margin="3 3 3 3"/>
@@ -43,7 +45,7 @@
             </BoxContainer>
             <!-- Horizontal Padding -->
             <Control HorizontalExpand="True"/>
-            <!-- Right Panel -->
+            <!-- RightPanel Panel -->
             <PanelContainer Name="RightSide" StyleClasses="AngleRect" HorizontalAlignment= "Right" VerticalExpand="True" VerticalAlignment="Stretch">
                 <BoxContainer Orientation="Vertical">
                     <!-- Top row -->
