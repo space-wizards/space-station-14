@@ -126,7 +126,6 @@ namespace Content.Server.Pointing.EntitySystems
                 if (TryComp<PointingArrowComponent>(arrow, out var pointingArrowComponent))
                 {
                     pointingArrowComponent.Rogue = true;
-                    Logger.Debug("oh no");
                 }
             }
 
