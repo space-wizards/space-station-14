@@ -15,6 +15,7 @@ using Content.Server.Interaction.Components;
 using Content.Server.Medical;
 using Content.Server.Nutrition.EntitySystems;
 using Content.Server.Polymorph.Systems;
+using Content.Server.Popups;
 using Content.Server.Tabletop;
 using Content.Server.Tabletop.Components;
 using Content.Shared.Administration;
@@ -27,12 +28,14 @@ using Content.Shared.Electrocution;
 using Content.Shared.Interaction.Components;
 using Content.Shared.Inventory;
 using Content.Shared.MobState.Components;
+using Content.Shared.Movement.Components;
 using Content.Shared.Nutrition.Components;
 using Content.Shared.Tabletop.Components;
 using Content.Shared.Verbs;
 using Robust.Server.GameObjects;
 using Robust.Shared.Map;
 using Robust.Shared.Physics;
+using Robust.Shared.Player;
 using Robust.Shared.Random;
 using Robust.Shared.Utility;
 using Timer = Robust.Shared.Timing.Timer;
@@ -54,8 +57,9 @@ public sealed partial class AdminVerbSystem
     [Dependency] private readonly BloodstreamSystem _bloodstreamSystem = default!;
     [Dependency] private readonly BodySystem _bodySystem = default!;
     [Dependency] private readonly VomitSystem _vomitSystem = default!;
+    [Dependency] private readonly PopupSystem _popupSystem = default!;
 
-    // All smite verbs have names so invokeverb wrks.
+    // All smite verbs have names so invokeverb works.
     private void AddSmiteVerbs(GetVerbsEvent<Verb> args)
     {
         if (!EntityManager.TryGetComponent<ActorComponent?>(args.User, out var actor))
@@ -367,5 +371,21 @@ public sealed partial class AdminVerbSystem
             Message = "Banishes them into the depths of space by turning on noclip and tossing them.",
         };
         args.Verbs.Add(yeet);
+
+        Verb dust = new()
+        {
+            Text = "Dust",
+            Category = VerbCategory.Smite,
+            IconTexture = "/Textures/Objects/Materials/materials.rsi/ash.png",
+            Act = () =>
+            {
+                EntityManager.QueueDeleteEntity(args.Target);
+                EntityManager.SpawnEntity("Ash", Transform(args.Target).MapPosition);
+                _popupSystem.PopupEntity(Loc.GetString("admin-smite-turned-ash-other", ("name", args.Target)), args.Target, Filter.Pvs(args.Target));
+            },
+            Impact = LogImpact.Extreme,
+            Message = "Reduces the target to a small pile of ash.",
+        };
+        args.Verbs.Add(dust);
     }
 }
