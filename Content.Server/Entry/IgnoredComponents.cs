@@ -9,6 +9,7 @@ namespace Content.Server.Entry
             "StasisBedVisuals",
             "InteractionOutline",
             "MeleeWeaponArcAnimation",
+            "EffectVisuals",
             "AnimationsTest",
             "ItemStatus",
             "VehicleVisuals",
