@@ -18,7 +18,6 @@ using Content.Server.Polymorph.Systems;
 using Content.Server.Popups;
 using Content.Server.Tabletop;
 using Content.Server.Tabletop.Components;
-using Content.Server.Visible;
 using Content.Shared.Administration;
 using Content.Shared.Body.Components;
 using Content.Shared.Body.Part;
@@ -112,7 +111,7 @@ public sealed partial class AdminVerbSystem
                 xform.WorldRotation = Angle.Zero;
             },
             Impact = LogImpact.Extreme,
-            Message = "Chess dimension.",
+            Message = "Banishment to the Chess Dimension.",
         };
         args.Verbs.Add(chess);
 
@@ -308,63 +307,67 @@ public sealed partial class AdminVerbSystem
             args.Verbs.Add(handRemoval);
         }
 
-        Verb pinball = new()
+        if (TryComp<PhysicsComponent>(args.Target, out var physics))
         {
-            Text = "Pinball",
-            Category = VerbCategory.Smite,
-            IconTexture = "/Textures/Objects/Fun/toys.rsi/basketball.png",
-            Act = () =>
+            Verb pinball = new()
             {
-                var xform = Transform(args.Target);
-                var physics = Comp<PhysicsComponent>(args.Target);
-                var fixtures = Comp<FixturesComponent>(args.Target);
-                xform.Anchored = false; // Just in case.
-                physics.BodyType = BodyType.Dynamic;
-                physics.BodyStatus = BodyStatus.InAir;
-                physics.WakeBody();
-                foreach (var (_, fixture) in fixtures.Fixtures)
+                Text = "Pinball",
+                Category = VerbCategory.Smite,
+                IconTexture = "/Textures/Objects/Fun/toys.rsi/basketball.png",
+                Act = () =>
                 {
-                    if (!fixture.Hard)
-                        continue;
-                    fixture.Restitution = 1.1f;
-                }
-                physics.LinearVelocity = _random.NextVector2(1.5f, 1.5f);
-                physics.AngularVelocity = MathF.PI * 6;
-                physics.LinearDamping = 0.0f;
-                physics.AngularDamping = 0.0f;
-            },
-            Impact = LogImpact.Extreme,
-            Message = "Turns them into a super bouncy ball, flinging them around until they clip through the station into the abyss.",
-        };
-        args.Verbs.Add(pinball);
+                    var xform = Transform(args.Target);
+                    var fixtures = Comp<FixturesComponent>(args.Target);
+                    xform.Anchored = false; // Just in case.
+                    physics.BodyType = BodyType.Dynamic;
+                    physics.BodyStatus = BodyStatus.InAir;
+                    physics.WakeBody();
+                    foreach (var (_, fixture) in fixtures.Fixtures)
+                    {
+                        if (!fixture.Hard)
+                            continue;
+                        fixture.Restitution = 1.1f;
+                    }
 
-        Verb yeet = new()
-        {
-            Text = "Yeet",
-            Category = VerbCategory.Smite,
-            IconTexture = "/Textures/Interface/VerbIcons/eject.svg.192dpi.png",
-            Act = () =>
+                    physics.LinearVelocity = _random.NextVector2(1.5f, 1.5f);
+                    physics.AngularVelocity = MathF.PI * 6;
+                    physics.LinearDamping = 0.0f;
+                    physics.AngularDamping = 0.0f;
+                },
+                Impact = LogImpact.Extreme,
+                Message =
+                    "Turns them into a super bouncy ball, flinging them around until they clip through the station into the abyss.",
+            };
+            args.Verbs.Add(pinball);
+
+            Verb yeet = new()
             {
-                var xform = Transform(args.Target);
-                var physics = Comp<PhysicsComponent>(args.Target);
-                var fixtures = Comp<FixturesComponent>(args.Target);
-                xform.Anchored = false; // Just in case.
-                physics.BodyType = BodyType.Dynamic;
-                physics.BodyStatus = BodyStatus.InAir;
-                physics.WakeBody();
-                foreach (var (_, fixture) in fixtures.Fixtures)
+                Text = "Yeet",
+                Category = VerbCategory.Smite,
+                IconTexture = "/Textures/Interface/VerbIcons/eject.svg.192dpi.png",
+                Act = () =>
                 {
-                    fixture.Hard = false;
-                }
-                physics.LinearVelocity = _random.NextVector2(8.0f, 8.0f);
-                physics.AngularVelocity = MathF.PI * 12;
-                physics.LinearDamping = 0.0f;
-                physics.AngularDamping = 0.0f;
-            },
-            Impact = LogImpact.Extreme,
-            Message = "Banishes them into the depths of space by turning on no-clip and tossing them.",
-        };
-        args.Verbs.Add(yeet);
+                    var xform = Transform(args.Target);
+                    var fixtures = Comp<FixturesComponent>(args.Target);
+                    xform.Anchored = false; // Just in case.
+                    physics.BodyType = BodyType.Dynamic;
+                    physics.BodyStatus = BodyStatus.InAir;
+                    physics.WakeBody();
+                    foreach (var (_, fixture) in fixtures.Fixtures)
+                    {
+                        fixture.Hard = false;
+                    }
+
+                    physics.LinearVelocity = _random.NextVector2(8.0f, 8.0f);
+                    physics.AngularVelocity = MathF.PI * 12;
+                    physics.LinearDamping = 0.0f;
+                    physics.AngularDamping = 0.0f;
+                },
+                Impact = LogImpact.Extreme,
+                Message = "Banishes them into the depths of space by turning on no-clip and tossing them.",
+            };
+            args.Verbs.Add(yeet);
+        }
 
         Verb bread = new()
         {
