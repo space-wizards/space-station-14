@@ -541,3 +541,15 @@
     sprite: Clothing/Uniforms/Jumpskirt/atmosf.rsi
   - type: Clothing
     sprite: Clothing/Uniforms/Jumpskirt/atmosf.rsi
+
+- type: entity
+  parent: ClothingUniformSkirtBase
+  id: ClothingUniformJumpskirtJanimaid
+  name: janitorial maid uniform
+  description: For professionals, not the posers.
+  components:
+  - type: Sprite
+    sprite: Clothing/Uniforms/Jumpskirt/janimaid.rsi
+  - type: Clothing
+    sprite: Clothing/Uniforms/Jumpskirt/janimaid.rsi
+    

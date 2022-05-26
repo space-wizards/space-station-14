@@ -25,6 +25,8 @@ namespace Content.Server.Engineering.EntitySystems
 
         private async void HandleAfterInteract(EntityUid uid, SpawnAfterInteractComponent component, AfterInteractEvent args)
         {
+            if (!args.CanReach && !component.IgnoreDistance)
+                return;
             if (string.IsNullOrEmpty(component.Prototype))
                 return;
             if (!_mapManager.TryGetGrid(args.ClickLocation.GetGridId(EntityManager), out var grid))

@@ -25,6 +25,12 @@ namespace Content.Server.GameTicking.Presets
         [DataField("showInVote")]
         public bool ShowInVote { get; } = false;
 
+        [DataField("minPlayers")]
+        public int? MinPlayers { get; } = null;
+
+        [DataField("maxPlayers")]
+        public int? MaxPlayers { get; } = null;
+
         [DataField("rules", customTypeSerializer:typeof(PrototypeIdListSerializer<GameRulePrototype>))]
         public IReadOnlyList<string> Rules { get; } = Array.Empty<string>();
     }

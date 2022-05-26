@@ -7,6 +7,7 @@ using Robust.Shared.Player;
 using Content.Shared.Storage;
 using Content.Shared.Inventory;
 using Content.Shared.Hands.Components;
+using Content.Shared.ActionBlocker;
 
 namespace Content.Server.Resist;
 
@@ -15,6 +16,7 @@ public sealed class EscapeInventorySystem : EntitySystem
     [Dependency] private readonly DoAfterSystem _doAfterSystem = default!;
     [Dependency] private readonly PopupSystem _popupSystem = default!;
     [Dependency] private readonly SharedContainerSystem _containerSystem = default!;
+    [Dependency] private readonly ActionBlockerSystem _actionBlockerSystem = default!;
 
     public override void Initialize()
     {
@@ -35,7 +37,8 @@ public sealed class EscapeInventorySystem : EntitySystem
         if (_containerSystem.TryGetContainingContainer(uid, out var container)
             && (HasComp<SharedStorageComponent>(container.Owner) || HasComp<InventoryComponent>(container.Owner) || HasComp<SharedHandsComponent>(container.Owner)))
         {
-            AttemptEscape(uid, container.Owner, component);
+            if (_actionBlockerSystem.CanInteract(uid, container.Owner))
+                AttemptEscape(uid, container.Owner, component);
         }
     }
 

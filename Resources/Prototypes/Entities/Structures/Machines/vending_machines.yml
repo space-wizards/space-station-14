@@ -1334,3 +1334,33 @@
     - type: WiresVisualizer
   - type: AccessReader
     access: [["Medical"]]
+    
+# Gas Tank Dispenser
+
+- type: entity
+  parent: VendingMachine
+  id: VendingMachineTankDispenserEVA
+  suffix: EVA [O2, N2]
+  name: gas tank dispenser
+  description: A vendor for dispensing gas tanks.
+  components:
+  - type: VendingMachine
+    pack: TankDispenserEVAInventory
+  - type: Sprite
+    sprite: Structures/Machines/VendingMachines/tankdispenser.rsi #TODO add visualiser for remaining tanks as layers
+    state: dispenser
+    
+- type: entity
+  parent: VendingMachine
+  id: VendingMachineTankDispenserEngineering
+  suffix: ENG [O2, Plasma]
+  name: gas tank dispenser
+  description: A vendor for dispensing gas tanks. This one has an engineering livery.
+  components:
+  - type: VendingMachine
+    pack: TankDispenserEngineeringInventory
+  - type: Sprite
+    sprite: Structures/Machines/VendingMachines/tankdispenser.rsi #TODO add visualiser for remaining tanks as layers
+    layers:
+    - state: dispenser
+    - state: dispensereng
