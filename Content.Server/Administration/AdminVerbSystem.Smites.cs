@@ -452,6 +452,22 @@ public sealed partial class AdminVerbSystem
         };
         args.Verbs.Add(angerPointingArrows);
 
+        Verb dust = new()
+        {
+            Text = "Dust",
+            Category = VerbCategory.Smite,
+            IconTexture = "/Textures/Objects/Materials/materials.rsi/ash.png",
+            Act = () =>
+            {
+                EntityManager.QueueDeleteEntity(args.Target);
+                Spawn("Ash", Transform(args.Target).Coordinates);
+                _popupSystem.PopupEntity(Loc.GetString("admin-smite-turned-ash-other", ("name", args.Target)), args.Target, Filter.Pvs(args.Target));
+            },
+            Impact = LogImpact.Extreme,
+            Message = "Reduces the target to a small pile of ash.",
+        };
+        args.Verbs.Add(dust);
+
         Verb youtubeVideoSimulation = new()
         {
             Text = "Buffering",
