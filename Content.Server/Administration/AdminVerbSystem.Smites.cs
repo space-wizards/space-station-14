@@ -1,6 +1,7 @@
 ﻿using System.Linq;
 using System.Threading;
 using Content.Server.Administration.Commands;
+using Content.Server.Administration.Components;
 using Content.Server.Atmos.Components;
 using Content.Server.Atmos.EntitySystems;
 using Content.Server.Body.Components;
@@ -466,5 +467,19 @@ public sealed partial class AdminVerbSystem
             Message = "Reduces the target to a small pile of ash.",
         };
         args.Verbs.Add(dust);
+
+        Verb youtubeVideoSimulation = new()
+        {
+            Text = "Buffering",
+            Category = VerbCategory.Smite,
+            IconTexture = "/Textures/Interface/Misc/buffering_smite_icon.png",
+            Act = () =>
+            {
+                EnsureComp<BufferingComponent>(args.Target);
+            },
+            Impact = LogImpact.Extreme,
+            Message = "Causes the target to randomly start buffering, freezing them in place for a short timespan while they load.",
+        };
+        args.Verbs.Add(youtubeVideoSimulation);
     }
 }
