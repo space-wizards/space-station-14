@@ -49,7 +49,8 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
 
     private void OnNukeExploded(NukeExplodedEvent ev)
     {
-    	if (!Enabled) return;
+    	if (!Enabled)
+            return;
 
         _opsWon = true;
         _roundEndSystem.EndRound();
@@ -57,6 +58,9 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
 
     private void OnRoundEndText(RoundEndTextAppendEvent ev)
     {
+        if (!Enabled)
+            return;
+
         ev.AddLine(_opsWon ? Loc.GetString("nukeops-ops-won") : Loc.GetString("nukeops-crew-won"));
         ev.AddLine(Loc.GetString("nukeops-list-start"));
         foreach (var nukeop in _aliveNukeops)
@@ -67,6 +71,9 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
 
     private void OnMobStateChanged(MobStateChangedEvent ev)
     {
+        if (!Enabled)
+            return;
+
         if (!_aliveNukeops.TryFirstOrNull(x => x.Key.OwnedEntity == ev.Entity, out var op)) return;
 
         _aliveNukeops[op.Value.Key] = op.Value.Key.CharacterDeadIC;
@@ -79,12 +86,15 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
 
     private void OnPlayersSpawning(RulePlayerSpawningEvent ev)
     {
-        if (!Enabled) return;
+        if (!Enabled)
+            return;
 
         _aliveNukeops.Clear();
 
-        var numOps = (int)Math.Min(Math.Floor((double)ev.PlayerPool.Count / _cfg.GetCVar(CCVars.NukeopsPlayersPerOp)),
-            _cfg.GetCVar(CCVars.NukeopsMaxOps));
+        // Between 1 and <max op count>: needs at least n players per op.
+        var numOps = Math.Max(1,
+            (int)Math.Min(
+                Math.Floor((double)ev.PlayerPool.Count / _cfg.GetCVar(CCVars.NukeopsPlayersPerOp)), _cfg.GetCVar(CCVars.NukeopsMaxOps)));
         var ops = new IPlayerSession[numOps];
         for (var i = 0; i < numOps; i++)
         {
@@ -120,6 +130,7 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
         // TODO: Loot table or something
         var commanderGear = _prototypeManager.Index<StartingGearPrototype>("SyndicateCommanderGearFull");
         var starterGear = _prototypeManager.Index<StartingGearPrototype>("SyndicateOperativeGearFull");
+        var medicGear = _prototypeManager.Index<StartingGearPrototype>("SyndicateOperativeMedicFull");
 
         var spawns = new List<EntityCoordinates>();
 
@@ -143,15 +154,20 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
             string name;
             StartingGearPrototype gear;
 
-            if (i == 0)
+            switch (i)
             {
-                name = $"Commander";
-                gear = commanderGear;
-            }
-            else
-            {
-                name = $"Operator #{i}";
-                gear = starterGear;
+                case 0:
+                    name = $"Commander";
+                    gear = commanderGear;
+                    break;
+                case 1:
+                    name = $"Operator #{i}";
+                    gear = medicGear;
+                    break;
+                default:
+                    name = $"Operator #{i}";
+                    gear = starterGear;
+                    break;
             }
 
             var session = ops[i];
@@ -195,7 +211,10 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
     }
 
 
-    public override void Started(){ _opsWon = false; }
+    public override void Started()
+    {
+        _opsWon = false;
+    }
 
-    public override void Ended(){ }
+    public override void Ended() { }
 }

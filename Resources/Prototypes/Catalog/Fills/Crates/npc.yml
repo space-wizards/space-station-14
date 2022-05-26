@@ -121,6 +121,15 @@
       - id: MonkeyCubeBox
         amount: 1
 
+- type: entity
+  id: CrateNPCMouse
+  name: mice crate
+  parent: CrateLivestock
+  components:
+  - type: StorageFill
+    contents:
+      - id: MobMouse
+        amount: 5
 
 - type: entity
   id: CrateNPCParrot
