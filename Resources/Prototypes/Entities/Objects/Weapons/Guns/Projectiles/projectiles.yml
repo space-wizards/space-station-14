@@ -39,6 +39,7 @@
   noSpawn: true
   components:
   - type: TriggerOnCollide
+    fixtureID: projectile
   - type: Projectile
     damage:
       types:
