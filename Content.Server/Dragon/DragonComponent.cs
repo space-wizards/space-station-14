@@ -51,7 +51,7 @@ namespace Content.Server.Dragon
         [DataField("maxSpawnCount")] public int MaxSpawns = 2;
 
         [DataField("spawnProto", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
-        public string? SpawnPrototype = "MobCarpSentient";
+        public string? SpawnPrototype = "MobCarpDragon";
 
         [DataField("deathSound")]
         public SoundSpecifier? DeathSound = new SoundPathSpecifier("/Audio/Animals/sound_creatures_space_dragon_roar.ogg");
@@ -62,7 +62,7 @@ namespace Content.Server.Dragon
         public CancellationTokenSource? CancelToken;
 
         /// <summary>
-        /// Where the entities go when dragon devours them, empties when the dragon is dead.
+        /// Where the entities go when dragon devours them, empties when the dragon is butchered.
         /// </summary>
         public Container DragonStomach = default!;
     }

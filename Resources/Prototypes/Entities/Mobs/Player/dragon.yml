@@ -19,7 +19,6 @@
     disarmAction:
       enabled: false
       autoPopulate: false
-  - type: Internals
   - type: Examiner
   - type: Speech
   - type: DoAfter
@@ -80,6 +79,7 @@
         Bloodloss:
           -1
   - type: MovementIgnoreGravity
+  - type: NoSlip
   - type: Appearance
     visuals:
     - type: DamageStateVisualizer
@@ -106,7 +106,7 @@
       name: action-name-disarm
   - type: Dragon
     spawnsLeft: 2
-    spawnsProto: MobCarpSentient
+    spawnsProto: MobCarpDragon
     devourAction:
       event: !type:DragonDevourActionEvent
       icon: Interface/Actions/devour.png
@@ -124,3 +124,4 @@
       name: action-name-carp-birth
       description: action-description-carp-birth
       useDelay: 5
+
