@@ -1,9 +1,4 @@
 Entries:
-- author: mirrorcult
-  changes:
-  - {message: Thermomachines now have a proper UI., type: Add}
-  id: 1117
-  time: '2022-02-23T04:09:02.0000000+00:00'
 - author: Peptide90
   changes:
   - {message: 'Chargers, beds and bookshelves can be dragged and anchored now.', type: Tweak}
@@ -2995,3 +2990,9 @@ Entries:
   - {message: NSS_Pillar minor fixes. Now with filing cabinets., type: Tweak}
   id: 1616
   time: '2022-05-27T16:00:05.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: The Spationaut suit sprite has been modified to keep it more in line
+      with the game's artstyle., type: Tweak}
+  id: 1617
+  time: '2022-05-27T16:02:49.0000000+00:00'
