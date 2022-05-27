@@ -47,7 +47,7 @@
       noRot: true
       sprite: Structures/monitors.rsi
       layers:
-        - map: [ "enum.SurveillanceCameraVisuals.Key" ]
+        - map: [ "enum.SurveillanceCameraVisualsKey.Key" ]
           state: television
 
 - type: entity
@@ -63,7 +63,7 @@
       noRot: true
       sprite: Structures/monitors.rsi
       layers:
-        - map: [ "enum.SurveillanceCameraVisuals.Key" ]
+        - map: [ "enum.SurveillanceCameraVisualsKey.Key" ]
           state: mobilevision
 
 - type: entity
