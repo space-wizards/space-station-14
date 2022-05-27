@@ -1,13 +1,6 @@
 Entries:
 - author: mirrorcult
   changes:
-  - {message: 'Thermomachines can now actually be constructed, and their machine board
-      can be unlocked through research.', type: Add}
-  - {message: Thermomachines now function properly., type: Fix}
-  id: 1107
-  time: '2022-02-21T00:17:45.0000000+00:00'
-- author: mirrorcult
-  changes:
   - {message: Blood puddles are now a darker red and much more opaque., type: Tweak}
   - {message: Your bleeding can now alternatively be stopped by cauterizing the wounds
       using heat damage., type: Add}
@@ -2999,3 +2992,8 @@ Entries:
     type: Fix}
   id: 1606
   time: '2022-05-26T08:47:03.0000000+00:00'
+- author: wrexbe
+  changes:
+  - {message: Singulo will eat containment generators if they can't handle it., type: Fix}
+  id: 1607
+  time: '2022-05-27T00:35:19.0000000+00:00'
