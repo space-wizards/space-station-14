@@ -906,6 +906,13 @@ namespace Content.Shared.CCVar
         public static readonly CVarDef<float> RulesWaitTime =
             CVarDef.Create("rules.time", 45f, CVar.SERVER | CVar.REPLICATED);
 
+        /// <summary>
+        /// Don't show rules to localhost/loopback interface.
+        /// </summary>
+        public static readonly CVarDef<bool> RulesExemptLocal =
+            CVarDef.Create("rules.exempt_local", true, CVar.SERVERONLY);
+
+
         /*
          * Autogeneration
          */
