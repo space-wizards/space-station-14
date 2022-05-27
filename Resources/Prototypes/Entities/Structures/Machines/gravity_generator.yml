@@ -75,7 +75,7 @@
   id: GravityGeneratorMini
   parent: GravityGenerator
   name: mini gravity generator
-  description: It's what keeps you to the floor, now in party size.
+  description: It's what keeps you to the floor, now in fun size.
   components:
   - type: Sprite
     netsync: false
