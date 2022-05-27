@@ -1,9 +1,4 @@
 Entries:
-- author: HoofedEar
-  changes:
-  - {message: Added the Musician job. Get out there and entertain us!, type: Add}
-  id: 1110
-  time: '2022-02-21T04:38:48.0000000+00:00'
 - author: ShadowCommander
   changes:
   - {message: Role bans have been implemented, type: Add}
@@ -2993,3 +2988,9 @@ Entries:
   - {message: The China Lake and RPG no longer blow up in your face., type: Fix}
   id: 1609
   time: '2022-05-27T01:18:57.0000000+00:00'
+- author: moony
+  changes:
+  - {message: 'The singulo is now much, much more dangerous (it no longer bounces
+      off the station for no reason).', type: Fix}
+  id: 1610
+  time: '2022-05-27T02:29:34.0000000+00:00'
