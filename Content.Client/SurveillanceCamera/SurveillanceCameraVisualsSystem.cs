@@ -15,10 +15,10 @@ public sealed class SurveillanceCameraVisualsSystem : EntitySystem
     private void OnAppearanceChange(EntityUid uid, SurveillanceCameraVisualsComponent component,
         ref AppearanceChangeEvent args)
     {
-        if (!args.AppearanceData.TryGetValue(SurveillanceCameraVisuals.Key, out var data)
+        if (!args.AppearanceData.TryGetValue(SurveillanceCameraVisualsKey.Key, out var data)
             || data is not SurveillanceCameraVisuals key
             || args.Sprite == null
-            || !args.Sprite.LayerMapTryGet(SurveillanceCameraVisuals.Key, out int layer)
+            || !args.Sprite.LayerMapTryGet(SurveillanceCameraVisualsKey.Layer, out int layer)
             || !component.CameraSprites.TryGetValue(key, out var state))
         {
             return;

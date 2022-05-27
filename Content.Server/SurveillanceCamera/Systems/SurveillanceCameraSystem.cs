@@ -391,7 +391,7 @@ public sealed class SurveillanceCameraSystem : EntitySystem
             key = SurveillanceCameraVisuals.InUse;
         }
 
-        appearance.SetData(SurveillanceCameraVisuals.Key, key);
+        appearance.SetData(SurveillanceCameraVisualsKey.Key, key);
     }
 }
 
