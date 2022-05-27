@@ -1,10 +1,4 @@
 Entries:
-- author: Fishfish458
-  changes:
-  - {message: Added buildable plastic flaps for pushing items through and keeping
-      people out., type: Add}
-  id: 1114
-  time: '2022-02-22T05:01:58.0000000+00:00'
 - author: Rane
   changes:
   - {message: The emag now shows how long it has until the next charge when you examine
@@ -2995,3 +2989,9 @@ Entries:
       room., type: Tweak}
   id: 1613
   time: '2022-05-27T03:22:38.0000000+00:00'
+- author: PJB3005
+  changes:
+  - {message: Certain jobs now get "extended" access levels if the station is running
+      on a low crew count., type: Add}
+  id: 1614
+  time: '2022-05-27T04:01:07.0000000+00:00'
