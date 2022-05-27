@@ -1,6 +1,7 @@
 using Content.Server.AlertLevel;
 using Content.Server.Atmos.Monitor.Components;
 using Content.Server.Power.Components;
+using Content.Server.Power.EntitySystems;
 using Content.Shared.AlertLevel;
 using Content.Shared.Atmos.Monitor;
 using Content.Shared.Interaction;
@@ -27,8 +28,7 @@ namespace Content.Server.Atmos.Monitor.Systems
 
             if (EntityManager.TryGetComponent(args.User, out ActorComponent? actor)
                 && EntityManager.TryGetComponent(uid, out AtmosMonitorComponent? monitor)
-                && EntityManager.TryGetComponent(uid, out ApcPowerReceiverComponent? power)
-                && power.Powered)
+                && this.IsPowered(uid, EntityManager))
             {
                 if (monitor.HighestAlarmInNetwork == AtmosMonitorAlarmType.Normal)
                 {
