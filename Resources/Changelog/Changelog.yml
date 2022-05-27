@@ -1,9 +1,4 @@
 Entries:
-- author: ShadowCommander
-  changes:
-  - {message: Role bans have been implemented, type: Add}
-  id: 1111
-  time: '2022-02-21T22:11:39.0000000+00:00'
 - author: Xenomorph queen
   changes:
   - {message: 'Xenos are ghost roles by default now, and even have their own accent!',
@@ -2994,3 +2989,9 @@ Entries:
       off the station for no reason).', type: Fix}
   id: 1610
   time: '2022-05-27T02:29:34.0000000+00:00'
+- author: ElectroJr
+  changes:
+  - {message: Fixed some buttons in the lobby not being accessible on some resolutions.,
+    type: Fix}
+  id: 1611
+  time: '2022-05-27T02:33:12.0000000+00:00'
