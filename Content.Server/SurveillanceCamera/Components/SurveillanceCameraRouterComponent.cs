@@ -5,9 +5,9 @@ using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototy
 namespace Content.Server.SurveillanceCamera;
 
 [RegisterComponent]
-public class SurveillanceCameraRouterComponent : Component
+public sealed class SurveillanceCameraRouterComponent : Component
 {
-    [ViewVariables] public bool Active { get; set; } = true;
+    [ViewVariables] public bool Active { get; set; }
 
     // The name of the subnet connected to this router.
     [DataField("subnetName")]

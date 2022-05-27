@@ -37,6 +37,7 @@ public sealed class SurveillanceCameraRouterSystem : EntitySystem
         }
 
         router.SubnetFrequency = subnetFrequency.Frequency;
+        router.Active = true;
     }
 
     private void OnPacketReceive(EntityUid uid, SurveillanceCameraRouterComponent router, DeviceNetworkPacketEvent args)
@@ -87,6 +88,7 @@ public sealed class SurveillanceCameraRouterSystem : EntitySystem
 
     private void OnPowerChanged(EntityUid uid, SurveillanceCameraRouterComponent component, PowerChangedEvent args)
     {
+        component.MonitorRoutes.Clear();
         component.Active = args.Powered;
     }
 
@@ -129,6 +131,7 @@ public sealed class SurveillanceCameraRouterSystem : EntitySystem
 
         component.SubnetFrequencyId = component.AvailableNetworks[args.Network];
         component.SubnetFrequency = frequency.Frequency;
+        component.Active = true;
         UpdateSetupInterface(uid, component);
     }
 
