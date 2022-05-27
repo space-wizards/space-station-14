@@ -158,6 +158,7 @@ namespace $NAMESPACE$;
 /// &lt;/summary&gt;
 [Prototype($END$)]
 public sealed class $CLASS$ : IPrototype {
+    /// &lt;inheritdoc/&gt;
     [IdDataField]
     public string ID { get; } = default!;
 }</s:String>
@@ -241,6 +242,7 @@ public sealed class $CLASS$ : IPrototype {
 /// $CLASS$ handles...
 /// &lt;/summary&gt;
 public sealed class $CLASS$ : EntitySystem {
+    /// &lt;inheritdoc/&gt;
     public override void Initialize()
     {
         $END$
@@ -326,12 +328,15 @@ namespace $NAMESPACE$;
 /// &lt;/summary&gt;
 [Prototype($END$)]
 public sealed class $CLASS$ : IPrototype, IInheritingPrototype {
+    /// &lt;inheritdoc/&gt;
     [IdDataField]
     public string ID { get; } = default!;
     
+    /// &lt;inheritdoc/&gt;
     [ParentDataField(typeof(AbstractPrototypeIdSerializer&lt;$CLASS$&gt;))]
     public string? Parent { get; }
     
+    /// &lt;inheritdoc/&gt;
     [NeverPushInheritance]
     [AbstractDataField]
     public bool Abstract { get; }
