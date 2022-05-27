@@ -57,7 +57,7 @@ public sealed class SurveillanceCameraSystem : EntitySystem
         SubscribeLocalEvent<SurveillanceCameraComponent, DeviceNetworkPacketEvent>(OnPacketReceived);
         SubscribeLocalEvent<SurveillanceCameraComponent, SurveillanceCameraSetupSetName>(OnSetName);
         SubscribeLocalEvent<SurveillanceCameraComponent, SurveillanceCameraSetupSetNetwork>(OnSetNetwork);
-        SubscribeLocalEvent<SurveillanceCameraComponent, GetVerbsEvent<Verb>>(AddVerbs);
+        SubscribeLocalEvent<SurveillanceCameraComponent, GetVerbsEvent<AlternativeVerb>>(AddVerbs);
     }
 
     private void OnPacketReceived(EntityUid uid, SurveillanceCameraComponent component, DeviceNetworkPacketEvent args)
@@ -123,7 +123,7 @@ public sealed class SurveillanceCameraSystem : EntitySystem
         }
     }
 
-    private void AddVerbs(EntityUid uid, SurveillanceCameraComponent component, GetVerbsEvent<Verb> verbs)
+    private void AddVerbs(EntityUid uid, SurveillanceCameraComponent component, GetVerbsEvent<AlternativeVerb> verbs)
     {
         if (!_actionBlocker.CanInteract(verbs.User, uid))
         {
@@ -135,7 +135,7 @@ public sealed class SurveillanceCameraSystem : EntitySystem
             return;
         }
 
-        Verb verb = new();
+        AlternativeVerb verb = new();
         verb.Text = Loc.GetString("surveillance-camera-setup");
         verb.Act = () => OpenSetupInterface(uid, verbs.User, component);
         verbs.Verbs.Add(verb);

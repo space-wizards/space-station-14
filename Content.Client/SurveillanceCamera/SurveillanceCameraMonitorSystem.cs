@@ -1,58 +1,49 @@
+using Robust.Shared.Utility;
+
 namespace Content.Client.SurveillanceCamera;
 
 public sealed class SurveillanceCameraMonitorSystem : EntitySystem
 {
-    private readonly Dictionary<EntityUid, CameraSwitchTiming> _activeTimers = new();
-    private readonly List<EntityUid> _toRemove = new();
-
-    private const float InitialTime = 30;
+    private readonly RemQueue<EntityUid> _toRemove = new();
 
     public override void Update(float frameTime)
     {
-        foreach (var (uid, timing) in _activeTimers)
+        foreach (var comp in EntityQuery<ActiveSurveillanceCameraMonitorVisualsComponent>())
         {
-            if (Paused(uid))
+            if (Paused(comp.Owner))
             {
                 continue;
             }
 
-            timing.TimeLeft -= frameTime;
+            comp.TimeLeft -= frameTime;
 
-            if (timing.TimeLeft <= 0 || Deleted(uid))
+            if (comp.TimeLeft <= 0 || Deleted(comp.Owner))
             {
-                _toRemove.Add(uid);
+                if (comp.OnFinish != null)
+                {
+                    comp.OnFinish();
+                }
+
+                _toRemove.Add(comp.Owner);
+            }
+
+            foreach (var uid in _toRemove)
+            {
+                EntityManager.RemoveComponent<ActiveSurveillanceCameraMonitorVisualsComponent>(uid);
             }
         }
 
-        foreach (var uid in _toRemove)
-        {
-            _activeTimers[uid].OnFinish();
-            _activeTimers.Remove(uid);
-        }
-
-        _toRemove.Clear();
+        _toRemove.List?.Clear();
     }
 
     public void AddTimer(EntityUid uid, Action onFinish)
     {
-        var timing = new CameraSwitchTiming(InitialTime, onFinish);
-        _activeTimers[uid] = timing;
+        var comp = AddComp<ActiveSurveillanceCameraMonitorVisualsComponent>(uid);
+        comp.OnFinish = onFinish;
     }
 
     public void RemoveTimer(EntityUid uid)
     {
-        _activeTimers.Remove(uid);
-    }
-
-    private sealed class CameraSwitchTiming
-    {
-        public float TimeLeft;
-        public Action OnFinish;
-
-        public CameraSwitchTiming(float timeLeft, Action onFinish)
-        {
-            TimeLeft = timeLeft;
-            OnFinish = onFinish;
-        }
+        EntityManager.RemoveComponent<ActiveSurveillanceCameraMonitorVisualsComponent>(uid);
     }
 }
