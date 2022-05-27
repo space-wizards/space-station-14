@@ -17,6 +17,11 @@
     - map: ["enum.DamageStateVisualLayers.Base"]
       state: alive
       sprite: Mobs/Aliens/Carps/space.rsi
+  - type: CombatMode
+    disarmAction:
+      enabled: false
+      autoPopulate: false
+      name: action-name-disarm
   - type: Physics
   - type: Fixtures
     fixtures:
@@ -54,10 +59,6 @@
       types:
         Piercing: 5
         Slash: 10
-    disarmAction:
-      enabled: false
-      autoPopulate: false
-      name: action-name-disarm
   - type: ReplacementAccent
     accent: genericAggressive
   - type: TypingIndicator
@@ -76,8 +77,6 @@
     - map: ["enum.DamageStateVisualLayers.Base"]
       state: alive
       sprite: Mobs/Aliens/Carps/magic.rsi
-  - type: GhostTakeoverAvailable
-    name: magicarp
   - type: TypingIndicator
     proto: guardian
 
@@ -104,8 +103,6 @@
       - MobMask
       layer:
       - Opaque
-  - type: GhostTakeoverAvailable
-    name: holocarp
   - type: TypingIndicator
     proto: robot
 

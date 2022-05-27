@@ -16,6 +16,11 @@
   - type: HeatResistance
   - type: Examiner
   - type: Speech
+  - type: CombatMode
+    disarmAction:
+      enabled: false
+      autoPopulate: false
+      name: action-name-disarm
   - type: DoAfter
   # You can't pull a huge fuckoff dragon right? Butcher him on the spot!
   #- type: Pullable
