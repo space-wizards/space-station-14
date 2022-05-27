@@ -11,6 +11,7 @@
     - type: Tag
       tags:
         - RCDDeconstructWhitelist
+        - DevourTarget
     - type: ApcPowerReceiver
     - type: ExtensionCableReceiver
     - type: DeviceNetwork
