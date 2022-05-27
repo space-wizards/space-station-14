@@ -1,11 +1,6 @@
 Entries:
 - author: mirrorcult
   changes:
-  - {message: A new holiday has been added on March 9th., type: Add}
-  id: 1116
-  time: '2022-02-22T20:15:11.0000000+00:00'
-- author: mirrorcult
-  changes:
   - {message: Thermomachines now have a proper UI., type: Add}
   id: 1117
   time: '2022-02-23T04:09:02.0000000+00:00'
@@ -2995,3 +2990,8 @@ Entries:
     type: Add}
   id: 1615
   time: '2022-05-27T07:41:18.0000000+00:00'
+- author: Peptide90
+  changes:
+  - {message: NSS_Pillar minor fixes. Now with filing cabinets., type: Tweak}
+  id: 1616
+  time: '2022-05-27T16:00:05.0000000+00:00'
