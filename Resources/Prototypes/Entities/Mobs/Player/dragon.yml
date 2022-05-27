@@ -117,7 +117,9 @@
       whitelist:
         components:
         - MobState
-        - Tag
+        - Door
+        tags:
+        - Wall
     spawnAction:
       event: !type:DragonSpawnActionEvent
       icon: Interface/Actions/carpbirth.png

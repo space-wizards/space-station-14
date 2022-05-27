@@ -3,9 +3,6 @@
   name: reinforced window
   parent: Window
   components:
-  - type: Tag
-    tags:
-      - DevourTarget
   - type: Sprite
     drawdepth: WallTops
     sprite: Structures/Windows/reinforced_window.rsi
@@ -58,9 +55,6 @@
   id: TintedWindow
   name: tinted window
   components:
-  - type: Tag
-    tags:
-      - DevourTarget
   - type: Sprite
     drawdepth: WallTops
     sprite: Structures/Windows/tinted_window.rsi
@@ -85,9 +79,6 @@
     snap:
     - Window
   components:
-  - type: Tag
-    tags:
-      - DevourTarget
   - type: Sprite
     netsync: false
     sprite: Structures/Windows/directional.rsi

@@ -4,9 +4,6 @@
   suffix: External
   description: It opens, it closes, it might crush you, and there might be only space behind it. Has to be manually activated.
   components:
-  - type: Tag
-    tags:
-      - DevourTarget
   - type: Door
     bumpOpen: false
     crushDamage:
@@ -32,9 +29,6 @@
   id: AirlockExternalGlass
   suffix: Glass, External
   components:
-  - type: Tag
-    tags:
-      - DevourTarget
   - type: Door
     occludes: false
   - type: Occluder

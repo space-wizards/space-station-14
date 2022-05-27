@@ -7,7 +7,6 @@
     tags:
       - Wall
       - RCDDeconstructWhitelist
-      - DevourTarget
   - type: Sprite
     sprite: Structures/Walls/brick.rsi
   - type: Icon
@@ -38,7 +37,6 @@
     tags:
       - Wall
       - RCDDeconstructWhitelist
-      - DevourTarget
   - type: Sprite
     sprite: Structures/Walls/clock.rsi
   - type: Icon
@@ -69,7 +67,6 @@
     tags:
       - Wall
       - RCDDeconstructWhitelist
-      - DevourTarget
   - type: Sprite
     sprite: Structures/Walls/clown.rsi
   - type: Icon
@@ -100,8 +97,6 @@
   - type: Tag
     tags:
       - Wall
-      - RCDDeconstructWhitelist
-      - DevourTarget
   - type: Sprite
     sprite: Structures/Walls/cult.rsi
   - type: Icon
@@ -134,7 +129,6 @@
       - Wall
       - Debug
       - RCDDeconstructWhitelist
-      - DevourTarget
   - type: Sprite
     sprite: Structures/Walls/debug.rsi
   - type: Icon
@@ -165,7 +159,6 @@
     tags:
       - Wall
       - RCDDeconstructWhitelist
-      - DevourTarget
   - type: Sprite
     sprite: Structures/Walls/diamond.rsi
   - type: Icon
@@ -196,7 +189,6 @@
     tags:
       - Wall
       - RCDDeconstructWhitelist
-      - DevourTarget
   - type: Sprite
     sprite: Structures/Walls/gold.rsi
   - type: Icon
@@ -227,7 +219,6 @@
     tags:
       - Wall
       - RCDDeconstructWhitelist
-      - DevourTarget
   - type: Sprite
     sprite: Structures/Walls/ice.rsi
   - type: Icon
@@ -258,7 +249,6 @@
     tags:
       - Wall
       - RCDDeconstructWhitelist
-      - DevourTarget
   - type: Sprite
     sprite: Structures/Walls/metal.rsi
   - type: Icon
@@ -289,7 +279,6 @@
     tags:
       - Wall
       - RCDDeconstructWhitelist
-      - DevourTarget
   - type: Sprite
     sprite: Structures/Walls/plasma.rsi
   - type: Icon
@@ -320,7 +309,6 @@
     tags:
       - Wall
       - RCDDeconstructWhitelist
-      - DevourTarget
   - type: Sprite
     sprite: Structures/Walls/plastic.rsi
   - type: Icon
@@ -349,7 +337,7 @@
   components:
   - type: Tag
     tags:
-      - DevourTarget
+      - Wall
   - type: Sprite
     sprite: Structures/Walls/solid.rsi
   - type: Icon
@@ -391,7 +379,6 @@
     tags:
       - Wall
       - RCDDeconstructWhitelist
-      - DevourTarget
   - type: Sprite
     sprite: Structures/Walls/riveted.rsi
   - type: Icon
@@ -422,7 +409,6 @@
     tags:
       - Wall
       - RCDDeconstructWhitelist
-      - DevourTarget
   - type: Sprite
     sprite: Structures/Walls/sandstone.rsi
   - type: Icon
@@ -453,7 +439,6 @@
     tags:
       - Wall
       - RCDDeconstructWhitelist
-      - DevourTarget
   - type: Sprite
     sprite: Structures/Walls/silver.rsi
   - type: Icon
@@ -484,7 +469,6 @@
     mode: SnapgridCenter
     snap:
     - Wall
-    - DevourTarget
   components:
   - type: Transform
     anchored: true
@@ -542,7 +526,6 @@
     tags:
       - Wall
       - RCDDeconstructWhitelist
-      - DevourTarget
   - type: Sprite
     sprite: Structures/Walls/shuttle.rsi
   - type: Icon
@@ -573,7 +556,6 @@
     tags:
       - Wall
       - RCDDeconstructWhitelist
-      - DevourTarget
   - type: Sprite
     sprite: Structures/Walls/solid.rsi
   - type: Construction
@@ -641,7 +623,6 @@
     tags:
       - Wall
       - RCDDeconstructWhitelist
-      - DevourTarget
   - type: Sprite
     sprite: Structures/Walls/wood.rsi
   - type: Icon
@@ -723,8 +704,6 @@
   - type: Tag
     tags:
       - Wall
-      # EAT THE INVISIBLE WALL
-      - DevourTarget
   - type: Physics
     bodyType: Static
   - type: Fixtures

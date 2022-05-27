@@ -13,6 +13,7 @@ using Robust.Shared.Containers;
 using Robust.Shared.Player;
 using System.Threading;
 using Content.Shared.MobState.State;
+using Content.Shared.Doors.Components;
 
 namespace Content.Server.Dragon
 {
@@ -140,8 +141,9 @@ namespace Content.Server.Dragon
                 return;
             }
 
-            // If it can be built- it can be destroyed
-            if (_tagSystem.HasTag(target, "DevourTarget"))
+            // Absolutely ass solution but requires less yaml fuckery
+            // If it's a door (firelock, airlock, windoor), Wall or Window, dragon can eat it.
+            if (_tagSystem.HasTag(target, "Wall") || (_tagSystem.HasTag(target, "Window") || EntityManager.HasComponent<DoorComponent>(target) || EntityManager.HasComponent<DoorComponent>(target)))
             {
                 _popupSystem.PopupEntity(Loc.GetString("devour-action-popup-message-structure"), dragonuid, Filter.Entities(dragonuid));
                 SoundSystem.Play(Filter.Pvs(dragonuid, entityManager: EntityManager), "/Audio/Machines/airlock_creaking.ogg");
