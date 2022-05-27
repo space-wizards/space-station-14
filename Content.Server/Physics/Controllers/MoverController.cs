@@ -265,10 +265,17 @@ namespace Content.Server.Physics.Controllers
         /// </summary>
         private void HandleVehicleMovement(float frameTime)
         {
-            foreach (var (rider, mover, xform) in EntityManager.EntityQuery<RiderComponent, SharedPlayerInputMoverComponent, TransformComponent>())
+            foreach (var (rider, mover) in EntityManager.EntityQuery<RiderComponent, SharedPlayerInputMoverComponent>())
             {
                 if (rider.Vehicle == null) continue;
                 _excludedMobs.Add(mover.Owner);
+
+                if (!_excludedMobs.Add(rider.Vehicle.Owner)) continue;
+
+                if (!TryComp<PhysicsComponent>(rider.Vehicle.Owner, out var vehicleBody) ||
+                    rider.Vehicle.Owner.IsWeightless(vehicleBody, mapManager: _mapManager, entityManager: EntityManager)) continue;
+
+                HandleKinematicMovement(mover, vehicleBody);
             }
         }
     }
