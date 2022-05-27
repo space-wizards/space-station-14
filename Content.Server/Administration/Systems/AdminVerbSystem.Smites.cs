@@ -98,7 +98,7 @@ public sealed partial class AdminVerbSystem
                 }
             },
             Impact = LogImpact.Extreme,
-            Message = "Explode them.",
+            Message = Loc.GetString("admin-smite-explode-description")
         };
         args.Verbs.Add(explode);
 
@@ -121,7 +121,7 @@ public sealed partial class AdminVerbSystem
                 xform.WorldRotation = Angle.Zero;
             },
             Impact = LogImpact.Extreme,
-            Message = "Banishment to the Chess Dimension.",
+            Message = Loc.GetString("admin-smite-chess-dimension-description")
         };
         args.Verbs.Add(chess);
 
@@ -142,7 +142,7 @@ public sealed partial class AdminVerbSystem
                     _popupSystem.PopupCoordinates(Loc.GetString("admin-smite-set-alight-others", ("name", args.Target)), xform.Coordinates, Filter.Pvs(args.Target).RemoveWhereAttachedEntity(x => x == args.Target));
                 },
                 Impact = LogImpact.Extreme,
-                Message = "Makes them burn.",
+                Message = Loc.GetString("admin-smite-set-alight-description")
             };
             args.Verbs.Add(flames);
         }
@@ -157,7 +157,7 @@ public sealed partial class AdminVerbSystem
                 _polymorphableSystem.PolymorphEntity(args.Target, "AdminMonkeySmite");
             },
             Impact = LogImpact.Extreme,
-            Message = "Monkey mode.",
+            Message = Loc.GetString("admin-smite-monkeyify-description")
         };
         args.Verbs.Add(monkey);
 
@@ -174,7 +174,7 @@ public sealed partial class AdminVerbSystem
                         1.0f, true);
                 },
                 Impact = LogImpact.Extreme,
-                Message = "Stage IIIA Lung Cancer, for when they really like the hit show Breaking Bad.",
+                Message = Loc.GetString("admin-smite-lung-cancer-description")
             };
             args.Verbs.Add(lungCancer);
         }
@@ -223,7 +223,7 @@ public sealed partial class AdminVerbSystem
                         TimeSpan.FromSeconds(30), true);
                 },
                 Impact = LogImpact.Extreme,
-                Message = "Electrocutes them, rendering anything they were wearing useless.",
+                Message = Loc.GetString("admin-smite-electrocute-description")
             };
             args.Verbs.Add(hardElectrocute);
         }
@@ -240,7 +240,7 @@ public sealed partial class AdminVerbSystem
                     _creamPieSystem.SetCreamPied(args.Target, creamPied, true);
                 },
                 Impact = LogImpact.Extreme,
-                Message = "A cream pie, condensed into a button.",
+                Message = Loc.GetString("admin-smite-creampie-description")
             };
             args.Verbs.Add(creamPie);
         }
@@ -260,7 +260,7 @@ public sealed partial class AdminVerbSystem
                     _popupSystem.PopupCoordinates(Loc.GetString("admin-smite-remove-blood-others", ("name", args.Target)), xform.Coordinates, Filter.Pvs(args.Target).RemoveWhereAttachedEntity(x => x == args.Target));
                 },
                 Impact = LogImpact.Extreme,
-                Message = "Removes their blood. All of it.",
+                Message = Loc.GetString("admin-smite-remove-blood-description")
             };
             args.Verbs.Add(bloodRemoval);
         }
@@ -291,7 +291,7 @@ public sealed partial class AdminVerbSystem
                     _popupSystem.PopupCoordinates(Loc.GetString("admin-smite-vomit-organs-others", ("name", args.Target)), baseXform.Coordinates, Filter.Pvs(args.Target).RemoveWhereAttachedEntity(x => x == args.Target));
                 },
                 Impact = LogImpact.Extreme,
-                Message = "Causes them to vomit, including their internal organs.",
+                Message = Loc.GetString("admin-smite-vomit-organs-description")
             };
             args.Verbs.Add(vomitOrgans);
 
@@ -312,7 +312,7 @@ public sealed partial class AdminVerbSystem
                     _popupSystem.PopupCoordinates(Loc.GetString("admin-smite-remove-hands-others", ("name", args.Target)), baseXform.Coordinates, Filter.Pvs(args.Target).RemoveWhereAttachedEntity(x => x == args.Target));
                 },
                 Impact = LogImpact.Extreme,
-                Message = "Removes the target's hands.",
+                Message = Loc.GetString("admin-smite-remove-hands-description")
             };
             args.Verbs.Add(handRemoval);
         }
@@ -345,8 +345,7 @@ public sealed partial class AdminVerbSystem
                     physics.AngularDamping = 0.0f;
                 },
                 Impact = LogImpact.Extreme,
-                Message =
-                    "Turns them into a super bouncy ball, flinging them around until they clip through the station into the abyss.",
+                Message = Loc.GetString("admin-smite-pinball-description")
             };
             args.Verbs.Add(pinball);
 
@@ -374,7 +373,7 @@ public sealed partial class AdminVerbSystem
                     physics.AngularDamping = 0.0f;
                 },
                 Impact = LogImpact.Extreme,
-                Message = "Banishes them into the depths of space by turning on no-clip and tossing them.",
+                Message = Loc.GetString("admin-smite-yeet-description")
             };
             args.Verbs.Add(yeet);
         }
@@ -389,7 +388,7 @@ public sealed partial class AdminVerbSystem
                 _polymorphableSystem.PolymorphEntity(args.Target, "AdminBreadSmite");
             },
             Impact = LogImpact.Extreme,
-            Message = "It turns them into bread. Really. That's all it does.",
+            Message = Loc.GetString("admin-smite-become-bread-description")
         };
         args.Verbs.Add(bread);
 
@@ -405,7 +404,7 @@ public sealed partial class AdminVerbSystem
                     _ghostKickManager.DoDisconnect(actorComponent.PlayerSession.ConnectedClient, "Smitten.");
                 },
                 Impact = LogImpact.Extreme,
-                Message = "Silently kicks the user, dropping their connection.",
+                Message = Loc.GetString("admin-smite-ghostkick-description")
             };
             args.Verbs.Add(ghostKick);
         }
@@ -424,7 +423,7 @@ public sealed partial class AdminVerbSystem
                     _inventorySystem.TryEquip(args.Target, ears, "head", true, true, false, inventory);
                 },
                 Impact = LogImpact.Extreme,
-                Message = "Forcibly adds cat ears. There is no escape.",
+                Message = Loc.GetString("admin-smite-nyanify-description")
             };
             args.Verbs.Add(nyanify);
 
@@ -438,7 +437,7 @@ public sealed partial class AdminVerbSystem
                     EnsureComp<KillSignComponent>(args.Target);
                 },
                 Impact = LogImpact.Extreme,
-                Message = "Marks a player for death by their fellows.",
+                Message = Loc.GetString("admin-smite-kill-sign-description")
             };
             args.Verbs.Add(killSign);
 
@@ -458,7 +457,7 @@ public sealed partial class AdminVerbSystem
                     });
                 },
                 Impact = LogImpact.Extreme,
-                Message = "Clowns them. The suit cannot be removed.",
+                Message = Loc.GetString("admin-smite-clown-description")
             };
             args.Verbs.Add(clown);
         }
@@ -473,7 +472,7 @@ public sealed partial class AdminVerbSystem
                 EnsureComp<PointingArrowAngeringComponent>(args.Target);
             },
             Impact = LogImpact.Extreme,
-            Message = "Angers the pointing arrows, causing them to assault this entity.",
+            Message = Loc.GetString("admin-smite-anger-pointing-arrows-description")
         };
         args.Verbs.Add(angerPointingArrows);
 
@@ -489,7 +488,7 @@ public sealed partial class AdminVerbSystem
                 _popupSystem.PopupEntity(Loc.GetString("admin-smite-turned-ash-other", ("name", args.Target)), args.Target, Filter.Pvs(args.Target));
             },
             Impact = LogImpact.Extreme,
-            Message = "Reduces the target to a small pile of ash.",
+            Message = Loc.GetString("admin-smite-dust-description"),
         };
         args.Verbs.Add(dust);
 
@@ -503,7 +502,7 @@ public sealed partial class AdminVerbSystem
                 EnsureComp<BufferingComponent>(args.Target);
             },
             Impact = LogImpact.Extreme,
-            Message = "Causes the target to randomly start buffering, freezing them in place for a short timespan while they load.",
+            Message = Loc.GetString("admin-smite-buffering-description"),
         };
         args.Verbs.Add(youtubeVideoSimulation);
 
@@ -517,7 +516,7 @@ public sealed partial class AdminVerbSystem
                 _polymorphableSystem.PolymorphEntity(args.Target, "AdminInstrumentSmite");
             },
             Impact = LogImpact.Extreme,
-            Message = "It turns them into a supersynth. Really. That's all it does.",
+            Message = Loc.GetString("admin-smite-become-instrument-description"),
         };
         args.Verbs.Add(instrumentation);
 
@@ -532,7 +531,7 @@ public sealed partial class AdminVerbSystem
                 grav.Weightless = true;
             },
             Impact = LogImpact.Extreme,
-            Message = "Grants them anti-gravity.",
+            Message = Loc.GetString("admin-smite-remove-gravity-description"),
         };
         args.Verbs.Add(noGravity);
 
@@ -543,11 +542,10 @@ public sealed partial class AdminVerbSystem
             IconTexture = "/Textures/Objects/Fun/toys.rsi/plushie_lizard.png",
             Act = () =>
             {
-                var lizard = _polymorphableSystem.PolymorphEntity(args.Target, "AdminLizardSmite");
-
+                _polymorphableSystem.PolymorphEntity(args.Target, "AdminLizardSmite");
             },
             Impact = LogImpact.Extreme,
-            Message = "It changes their species to Reptilian. Useful for people who were being space racist.",
+            Message = Loc.GetString("admin-smite-reptilian-species-swap-description"),
         };
         args.Verbs.Add(reptilian);
 
@@ -567,7 +565,7 @@ public sealed partial class AdminVerbSystem
                 }
             },
             Impact = LogImpact.Extreme,
-            Message = "Stuffs them in a (welded) locker.",
+            Message = Loc.GetString("admin-smite-locker-stuff-description"),
         };
         args.Verbs.Add(locker);
 
@@ -581,7 +579,7 @@ public sealed partial class AdminVerbSystem
                 EnsureComp<HeadstandComponent>(args.Target);
             },
             Impact = LogImpact.Extreme,
-            Message = "Rotates their sprite 180 degrees.",
+            Message = Loc.GetString("admin-smite-headstand-description"),
         };
         args.Verbs.Add(headstand);
     }
