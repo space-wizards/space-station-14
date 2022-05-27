@@ -1,10 +1,4 @@
 Entries:
-- author: Xenomorph queen
-  changes:
-  - {message: 'Xenos are ghost roles by default now, and even have their own accent!',
-    type: Tweak}
-  id: 1112
-  time: '2022-02-22T00:13:18.0000000+00:00'
 - author: Peptide90
   changes:
   - {message: Reduced the size and capacity of all cardboard boxes. No more hardsuits
@@ -2995,3 +2989,9 @@ Entries:
     type: Fix}
   id: 1611
   time: '2022-05-27T02:33:12.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: 'The miniature gravity generator, bringing Newton''s finest to a station
+      near you.', type: Add}
+  id: 1612
+  time: '2022-05-27T03:08:05.0000000+00:00'
