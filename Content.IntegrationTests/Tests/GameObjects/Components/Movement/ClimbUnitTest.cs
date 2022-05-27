@@ -58,14 +58,15 @@ namespace Content.IntegrationTests.Tests.GameObjects.Components.Movement
                 Assert.That(entityManager.TryGetComponent(human, out climbing), "Human has no climbing");
                 Assert.That(entityManager.TryGetComponent(table, out ClimbableComponent? _), "Table has no climbable");
 
-                // Now let's make the player enter a climbing transitioning state.
-                climbing.IsClimbing = true;
-                EntitySystem.Get<ClimbSystem>().MoveEntityToward(human, table, climbing:climbing);
-                var body = entityManager.GetComponent<IPhysBody>(human);
-                // TODO: Check it's climbing
-
-                // Force the player out of climb state. It should immediately remove the ClimbController.
-                climbing.IsClimbing = false;
+                // TODO ShadowCommander: Implement climbing test
+                // // Now let's make the player enter a climbing transitioning state.
+                // climbing.IsClimbing = true;
+                // EntitySystem.Get<ClimbSystem>().MoveEntityToward(human, table, climbing:climbing);
+                // var body = entityManager.GetComponent<IPhysBody>(human);
+                // // TODO: Check it's climbing
+                //
+                // // Force the player out of climb state. It should immediately remove the ClimbController.
+                // climbing.IsClimbing = false;
             });
 
             await server.WaitIdleAsync();

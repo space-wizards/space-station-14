@@ -98,6 +98,12 @@
   size: 8.5
 
 - type: salvageMap
+  id: spaceWaffleHome
+  name: "Waffle Home"
+  mapPath: /Maps/Salvage/wh-salvage.yml
+  size: 12
+
+- type: salvageMap
   id: mediumShuttleWreck
   name: "Medium / Ruined Emergency Shuttle"
   mapPath: /Maps/Salvage/medium-ruined-emergency-shuttle.yml

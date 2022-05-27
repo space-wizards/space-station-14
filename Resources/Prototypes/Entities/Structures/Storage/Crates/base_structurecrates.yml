@@ -5,6 +5,7 @@
   name: crate
   description: A large container for items.
   components:
+  - type: ResistLocker
   - type: Transform
     noRot: true
   - type: Sprite

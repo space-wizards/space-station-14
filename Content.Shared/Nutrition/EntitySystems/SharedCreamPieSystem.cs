@@ -28,8 +28,6 @@ namespace Content.Shared.Nutrition.EntitySystems
             creamPie.Splatted = true;
 
             SplattedCreamPie(uid, creamPie);
-
-            EntityManager.QueueDeleteEntity(uid);
         }
 
         protected virtual void SplattedCreamPie(EntityUid uid, CreamPieComponent creamPie) {}

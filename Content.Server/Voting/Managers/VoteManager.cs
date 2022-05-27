@@ -31,7 +31,6 @@ namespace Content.Server.Voting.Managers
         [Dependency] private readonly IChatManager _chatManager = default!;
         [Dependency] private readonly IAdminManager _adminMgr = default!;
         [Dependency] private readonly IRobustRandom _random = default!;
-        [Dependency] private readonly IAfkManager _afkManager = default!;
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
         [Dependency] private readonly IGameMapManager _gameMapManager = default!;
 

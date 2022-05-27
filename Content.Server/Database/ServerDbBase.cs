@@ -192,6 +192,7 @@ namespace Content.Server.Database
 
             return new HumanoidCharacterProfile(
                 profile.CharacterName,
+                profile.FlavorText,
                 profile.Species,
                 profile.Age,
                 sex,
@@ -227,6 +228,7 @@ namespace Content.Server.Database
             var entity = new Profile
             {
                 CharacterName = humanoid.Name,
+                FlavorText = humanoid.FlavorText,
                 Species = humanoid.Species,
                 Age = humanoid.Age,
                 Sex = humanoid.Sex.ToString(),

@@ -2,7 +2,8 @@
          xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
          xmlns:magicmirror="clr-namespace:Content.Client.CharacterAppearance"
          xmlns:prefUi="clr-namespace:Content.Client.Preferences.UI"
-         xmlns:markings="clr-namespace:Content.Client.Markings">
+         xmlns:markings="clr-namespace:Content.Client.Markings"
+         xmlns:flavorText="clr-namespace:Content.Client.FlavorText">
     <BoxContainer Orientation="Horizontal">
         <!-- Left side -->
         <BoxContainer Orientation="Vertical" Margin="10 10 10 10">
