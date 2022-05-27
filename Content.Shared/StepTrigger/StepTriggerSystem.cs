@@ -29,12 +29,16 @@ public sealed class StepTriggerSystem : EntitySystem
 
     private bool Update(StepTriggerComponent component)
     {
-        if (component.Deleted || !component.Active || component.Colliding.Count == 0)
+        if (component.Deleted ||
+            !component.Active ||
+            component.Colliding.Count == 0 ||
+            !TryComp<TransformComponent>(component.Owner, out var ownerTransform))
             return true;
+
 
         foreach (var otherUid in component.Colliding.ToArray())
         {
-            if (!otherUid.IsValid())
+            if (!otherUid.IsValid() || !TryComp<TransformComponent>(otherUid, out var otherTransform))
             {
                 component.Colliding.Remove(otherUid);
                 component.CurrentlySteppedOn.Remove(otherUid);
@@ -43,8 +47,8 @@ public sealed class StepTriggerSystem : EntitySystem
             }
 
             // TODO: This shouldn't be calculating based on world AABBs.
-            var ourAabb = _entityLookup.GetWorldAABB(component.Owner);
-            var otherAabb = _entityLookup.GetWorldAABB(otherUid);
+            var ourAabb = _entityLookup.GetWorldAABB(component.Owner, ownerTransform);
+            var otherAabb = _entityLookup.GetWorldAABB(otherUid, otherTransform);
 
             if (!TryComp(otherUid, out PhysicsComponent? otherPhysics) || !ourAabb.Intersects(otherAabb))
             {
