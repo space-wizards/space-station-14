@@ -116,7 +116,7 @@ namespace Content.Shared.Singularity
                 appearance.SetData(SingularityVisuals.Level, value);
             }
 
-            if (physics != null && _fixtures.GetFixtureOrNull(physics, DeleteFixture) is {Shape: PhysShapeCircle deleteCircle} && _fixtures.GetFixtureOrNull(physics, DeleteFixture) is {Shape: PhysShapeCircle collideCircle})
+            if (physics != null && _fixtures.GetFixtureOrNull(physics, DeleteFixture) is {Shape: PhysShapeCircle deleteCircle} && _fixtures.GetFixtureOrNull(physics, CollideFixture) is {Shape: PhysShapeCircle collideCircle})
             {
                 deleteCircle.Radius = value - 0.5f;
                 collideCircle.Radius = value;
