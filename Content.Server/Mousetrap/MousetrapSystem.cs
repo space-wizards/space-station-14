@@ -58,7 +58,7 @@ public sealed class MousetrapSystem : EntitySystem
             }
         }
 
-        if (TryComp(args.Tripper, out PhysicsComponent? physics) && float.IsFinite(physics.Mass))
+        if (TryComp(args.Tripper, out PhysicsComponent? physics) && physics.Mass != 0)
         {
             // The idea here is inverse,
             // Small - big damage,
