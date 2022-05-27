@@ -34,8 +34,7 @@ public sealed class StepTriggerSystem : EntitySystem
 
         foreach (var otherUid in component.Colliding.ToArray())
         {
-            if (!otherUid.IsValid()
-                || !HasComp<TransformComponent>(otherUid)) // a little bit of a hack
+            if (!otherUid.IsValid())
             {
                 component.Colliding.Remove(otherUid);
                 component.CurrentlySteppedOn.Remove(otherUid);
