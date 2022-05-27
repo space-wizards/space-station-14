@@ -199,6 +199,14 @@
 
 - type: entity
   parent: BaseSign
+  id: SignAtmosMinsky
+  name: atmospherics sign
+  components:
+  - type: Sprite
+    state: atmominsky
+    
+- type: entity
+  parent: BaseSign
   id: SignBar
   name: bar sign
   components:
