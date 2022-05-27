@@ -1,14 +1,6 @@
 Entries:
 - author: mirrorcult
   changes:
-  - {message: Blood puddles are now a darker red and much more opaque., type: Tweak}
-  - {message: Your bleeding can now alternatively be stopped by cauterizing the wounds
-      using heat damage., type: Add}
-  - {message: Bloodloss from bleeding has been lowered slightly., type: Tweak}
-  id: 1108
-  time: '2022-02-21T00:18:24.0000000+00:00'
-- author: mirrorcult
-  changes:
   - {message: Fixed a bug where examine tooltips would pop up incorrectly on different
       UI scales., type: Fix}
   id: 1109
@@ -2997,3 +2989,8 @@ Entries:
   - {message: Singulo will eat containment generators if they can't handle it., type: Fix}
   id: 1607
   time: '2022-05-27T00:35:19.0000000+00:00'
+- author: keronshb
+  changes:
+  - {message: You can now resist out of locked/welded crates!, type: Fix}
+  id: 1608
+  time: '2022-05-27T01:05:36.0000000+00:00'
