@@ -1,0 +1,23 @@
+﻿- type: polymorph
+  id: AdminMonkeySmite
+  entity: MobMonkey
+  forced: true
+  dropInventory: true
+
+- type: polymorph
+  id: AdminBreadSmite
+  entity: FoodBreadPlain
+  forced: true
+  dropInventory: true
+
+- type: polymorph
+  id: AdminInstrumentSmite
+  entity: SuperSynthesizerInstrument
+  forced: true
+  dropInventory: true
+
+- type: polymorph
+  id: AdminLizardSmite
+  entity: MobReptilian
+  forced: true
+  dropInventory: true

@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using Content.Client.Administration.Managers;
 using Content.Client.Administration.UI;
 using Content.Client.Administration.UI.Tabs.PlayerTab;
@@ -11,13 +10,11 @@ using Robust.Client.Input;
 using Robust.Client.ResourceManagement;
 using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.CustomControls;
-using Robust.Shared.GameObjects;
 using Robust.Shared.Input;
 using Robust.Shared.Input.Binding;
-using Robust.Shared.IoC;
 using Robust.Shared.Network;
 
-namespace Content.Client.Administration
+namespace Content.Client.Administration.Systems
 {
     public sealed partial class AdminSystem
     {

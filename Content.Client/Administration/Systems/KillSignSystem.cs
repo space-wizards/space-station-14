@@ -2,7 +2,7 @@
 using Robust.Client.GameObjects;
 using Robust.Shared.Utility;
 
-namespace Content.Client.Administration;
+namespace Content.Client.Administration.Systems;
 
 public sealed class KillSignSystem : EntitySystem
 {

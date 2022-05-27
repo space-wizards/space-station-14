@@ -1,7 +1,5 @@
 ﻿#nullable enable
-using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
-using System.Linq;
 using Content.Client.Administration.Managers;
 using Content.Client.Administration.UI;
 using Content.Client.Administration.UI.CustomControls;
@@ -9,16 +7,13 @@ using Content.Client.HUD;
 using Content.Shared.Administration;
 using JetBrains.Annotations;
 using Robust.Client.Graphics;
-using Robust.Client.UserInterface.CustomControls;
 using Robust.Client.Player;
-using Robust.Shared.GameObjects;
-using Robust.Shared.Player;
-using Robust.Shared.Localization;
+using Robust.Client.UserInterface.CustomControls;
 using Robust.Shared.Audio;
-using Robust.Shared.IoC;
 using Robust.Shared.Network;
+using Robust.Shared.Player;
 
-namespace Content.Client.Administration
+namespace Content.Client.Administration.Systems
 {
     [UsedImplicitly]
     public sealed class BwoinkSystem : SharedBwoinkSystem

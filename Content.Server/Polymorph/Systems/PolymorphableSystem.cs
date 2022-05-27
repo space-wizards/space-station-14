@@ -61,15 +61,15 @@ namespace Content.Server.Polymorph.Systems
         /// </summary>
         /// <param name="target">The entity that will be transformed</param>
         /// <param name="id">The id of the polymorph prototype</param>
-        public void PolymorphEntity(EntityUid target, String id)
+        public EntityUid? PolymorphEntity(EntityUid target, String id)
         {
             if (!_proto.TryIndex<PolymorphPrototype>(id, out var proto))
             {
                 _saw.Error("Invalid polymorph prototype");
-                return;
+                return null;
             }
 
-            PolymorphEntity(target, proto);
+            return PolymorphEntity(target, proto);
         }
 
         /// <summary>
@@ -77,7 +77,7 @@ namespace Content.Server.Polymorph.Systems
         /// </summary>
         /// <param name="target">The entity that will be transformed</param>
         /// <param name="proto">The polymorph prototype</param>
-        public void PolymorphEntity(EntityUid target, PolymorphPrototype proto)
+        public EntityUid PolymorphEntity(EntityUid target, PolymorphPrototype proto)
         {
             // mostly just for vehicles
             if (TryComp<BuckleComponent>(target, out var buckle))
@@ -125,8 +125,9 @@ namespace Content.Server.Polymorph.Systems
             EnsurePausesdMap();
             if(PausedMap != null)
                 targetTransformComp.AttachParent(Transform(PausedMap.Value));
-            
+
             _popup.PopupEntity(Loc.GetString("polymorph-popup-generic", ("parent", target), ("child", child)), child, Filter.Pvs(child));
+            return child;
         }
 
         public void CreatePolymorphAction(string id, EntityUid target)
@@ -136,7 +137,7 @@ namespace Content.Server.Polymorph.Systems
                 _saw.Error("Invalid polymorph prototype");
                 return;
             }
-                
+
             if (!TryComp<PolymorphableComponent>(target, out var polycomp))
                 return;
 

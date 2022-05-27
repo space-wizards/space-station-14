@@ -19,11 +19,15 @@ using Content.Server.Nutrition.EntitySystems;
 using Content.Server.Pointing.Components;
 using Content.Server.Polymorph.Systems;
 using Content.Server.Popups;
+using Content.Server.Storage.Components;
 using Content.Server.Tabletop;
 using Content.Server.Tabletop.Components;
+using Content.Server.Tools.Systems;
 using Content.Shared.Administration;
+using Content.Shared.Administration.Components;
 using Content.Shared.Body.Components;
 using Content.Shared.Body.Part;
+using Content.Shared.CharacterAppearance.Components;
 using Content.Shared.Damage;
 using Content.Shared.Database;
 using Content.Shared.Disease;
@@ -61,6 +65,7 @@ public sealed partial class AdminVerbSystem
     [Dependency] private readonly BloodstreamSystem _bloodstreamSystem = default!;
     [Dependency] private readonly BodySystem _bodySystem = default!;
     [Dependency] private readonly VomitSystem _vomitSystem = default!;
+    [Dependency] private readonly WeldableSystem _weldableSystem = default!;
     [Dependency] private readonly PopupSystem _popupSystem = default!;
 
     // All smite verbs have names so invokeverb works.
@@ -530,5 +535,54 @@ public sealed partial class AdminVerbSystem
             Message = "Grants them anti-gravity.",
         };
         args.Verbs.Add(noGravity);
+
+        Verb reptilian = new()
+        {
+            Text = "Reptilian Species Swap",
+            Category = VerbCategory.Smite,
+            IconTexture = "/Textures/Objects/Fun/toys.rsi/plushie_lizard.png",
+            Act = () =>
+            {
+                var lizard = _polymorphableSystem.PolymorphEntity(args.Target, "AdminLizardSmite");
+
+            },
+            Impact = LogImpact.Extreme,
+            Message = "It changes their species to Reptilian. Useful for people who were being space racist.",
+        };
+        args.Verbs.Add(reptilian);
+
+        Verb locker = new()
+        {
+            Text = "Locker stuff",
+            Category = VerbCategory.Smite,
+            IconTexture = "/Textures/Structures/Storage/closet.rsi/generic.png",
+            Act = () =>
+            {
+                var xform = Transform(args.Target);
+                var locker = Spawn("ClosetMaintenance", xform.Coordinates);
+                _weldableSystem.ForceWeldedState(locker, true);
+                if (TryComp<EntityStorageComponent>(locker, out var storage))
+                {
+                    storage.Insert(args.Target);
+                }
+            },
+            Impact = LogImpact.Extreme,
+            Message = "Stuffs them in a (welded) locker.",
+        };
+        args.Verbs.Add(locker);
+
+        Verb headstand = new()
+        {
+            Text = "Headstand",
+            Category = VerbCategory.Smite,
+            IconTexture = "/Textures/Interface/VerbIcons/refresh.svg.192dpi.png",
+            Act = () =>
+            {
+                EnsureComp<HeadstandComponent>(args.Target);
+            },
+            Impact = LogImpact.Extreme,
+            Message = "Rotates their sprite 180 degrees.",
+        };
+        args.Verbs.Add(headstand);
     }
 }
