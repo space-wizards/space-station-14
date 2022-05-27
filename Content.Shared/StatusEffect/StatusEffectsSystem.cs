@@ -61,7 +61,7 @@ namespace Content.Shared.StatusEffect
             {
                 if (!state.ActiveEffects.ContainsKey(effect))
                 {
-                    TryRemoveStatusEffect(uid, effect, component);
+                    TryRemoveStatusEffect(uid, effect, component, remComp: false);
                 }
             }
 
@@ -77,13 +77,8 @@ namespace Content.Shared.StatusEffect
                 var time = effect.Cooldown.Item2 - effect.Cooldown.Item1;
 
                 TryAddStatusEffect(uid, key, time, true, component, effect.Cooldown.Item1);
-
-                if (effect.RelevantComponent != null && _componentFactory.TryGetRegistration(effect.RelevantComponent, out var registration))
-                {
-                    if (!HasComp(uid, registration.Type))
-                        EntityManager.AddComponent(uid, registration.Type);
-                    component.ActiveEffects[key].RelevantComponent = effect.RelevantComponent;
-                }
+                component.ActiveEffects[key].RelevantComponent = effect.RelevantComponent;
+                // state handling should not add networked components, that is handled separately by the client game state manager.
             }
         }
 
@@ -242,13 +237,15 @@ namespace Content.Shared.StatusEffect
         /// <param name="uid">The entity to remove an effect from.</param>
         /// <param name="key">The effect ID to remove.</param>
         /// <param name="status">The status effects component to change, if you already have it.</param>
+        /// <param name="remComp">If true, status effect removal will also remove the relevant component. This option
+        /// exists mostly for prediction resetting.</param>
         /// <returns>False if the effect could not be removed, true otherwise.</returns>
         /// <remarks>
         ///     Obviously this doesn't automatically clear any effects a status effect might have.
         ///     That's up to the removed component to handle itself when it's removed.
         /// </remarks>
         public bool TryRemoveStatusEffect(EntityUid uid, string key,
-            StatusEffectsComponent? status=null)
+            StatusEffectsComponent? status=null, bool remComp = true)
         {
             if (!Resolve(uid, ref status, false))
                 return false;
@@ -260,7 +257,9 @@ namespace Content.Shared.StatusEffect
             var state = status.ActiveEffects[key];
 
             // There are cases where a status effect component might be server-only, so TryGetRegistration...
-            if (state.RelevantComponent != null && _componentFactory.TryGetRegistration(state.RelevantComponent, out var registration))
+            if (remComp
+                && state.RelevantComponent != null
+                && _componentFactory.TryGetRegistration(state.RelevantComponent, out var registration))
             {
                 var type = registration.Type;
                 EntityManager.RemoveComponent(uid, type);
