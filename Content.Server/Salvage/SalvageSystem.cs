@@ -189,8 +189,13 @@ namespace Content.Server.Salvage
             {
                 if (player.AttachedEntity.HasValue)
                 {
-                    var playerTransform = EntityManager.GetComponent<TransformComponent>(player.AttachedEntity.Value);
-                    playerTransform.AttachParent(parentTransform);
+                    var playerEntityUid = player.AttachedEntity.Value;
+                    if (HasComp<SalvageMobRestrictionsComponent>(playerEntityUid))
+                    {
+                        // Salvage mobs are NEVER immune (even if they're from a different salvage, they shouldn't be here)
+                        continue;
+                    }
+                    Transform(playerEntityUid).AttachParent(parentTransform);
                 }
             }
             EntityManager.QueueDeleteEntity(salvage);

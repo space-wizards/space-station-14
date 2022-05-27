@@ -26,12 +26,12 @@ namespace Content.Shared.Pulling
                 return false;
             }
 
-            if (!EntityManager.TryGetComponent<IPhysBody?>(pulled, out var _physics))
+            if (!EntityManager.TryGetComponent<IPhysBody>(pulled, out var physics))
             {
                 return false;
             }
 
-            if (_physics.BodyType == BodyType.Static)
+            if (physics.BodyType == BodyType.Static)
             {
                 return false;
             }
@@ -113,12 +113,12 @@ namespace Content.Shared.Pulling
                 return false;
             }
 
-            if (!EntityManager.TryGetComponent<PhysicsComponent?>(puller.Owner, out var pullerPhysics))
+            if (!EntityManager.TryGetComponent<PhysicsComponent>(puller.Owner, out var pullerPhysics))
             {
                 return false;
             }
 
-            if (!EntityManager.TryGetComponent<PhysicsComponent?>(pullable.Owner, out var pullablePhysics))
+            if (!EntityManager.TryGetComponent<PhysicsComponent>(pullable.Owner, out var pullablePhysics))
             {
                 return false;
             }
@@ -158,7 +158,7 @@ namespace Content.Shared.Pulling
 
             // Continue with pulling process.
 
-            var pullAttempt = new PullAttemptMessage(pullerPhysics, pullablePhysics);
+            var pullAttempt = new PullAttemptEvent(pullerPhysics, pullablePhysics);
 
             RaiseLocalEvent(puller.Owner, pullAttempt, broadcast: false);
 

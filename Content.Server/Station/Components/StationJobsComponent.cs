@@ -28,6 +28,11 @@ public sealed class StationJobsComponent : Component
     [DataField("totalJobs")] public int TotalJobs;
 
     /// <summary>
+    /// Station is running on extended access.
+    /// </summary>
+    [DataField("extendedAccess")] public bool ExtendedAccess;
+
+    /// <summary>
     /// The percentage of jobs remaining.
     /// </summary>
     /// <remarks>
