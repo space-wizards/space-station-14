@@ -1,10 +1,4 @@
 Entries:
-- author: Rane
-  changes:
-  - {message: The emag now shows how long it has until the next charge when you examine
-      it., type: Add}
-  id: 1115
-  time: '2022-02-22T05:18:08.0000000+00:00'
 - author: mirrorcult
   changes:
   - {message: A new holiday has been added on March 9th., type: Add}
@@ -2995,3 +2989,9 @@ Entries:
       on a low crew count., type: Add}
   id: 1614
   time: '2022-05-27T04:01:07.0000000+00:00'
+- author: moony
+  changes:
+  - {message: 'Admins have a whole bunch more smites. Like, a lot. You may die.',
+    type: Add}
+  id: 1615
+  time: '2022-05-27T07:41:18.0000000+00:00'
