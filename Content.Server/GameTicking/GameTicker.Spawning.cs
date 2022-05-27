@@ -6,6 +6,7 @@ using Content.Server.Players;
 using Content.Server.Roles;
 using Content.Server.Spawners.Components;
 using Content.Server.Speech.Components;
+using Content.Server.Station.Components;
 using Content.Shared.Database;
 using Content.Shared.GameTicking;
 using Content.Shared.Ghost;
@@ -58,6 +59,15 @@ namespace Content.Server.GameTicking
             var assignedJobs = _stationJobs.AssignJobs(profiles, _stationSystem.Stations.ToList());
 
             _stationJobs.AssignOverflowJobs(ref assignedJobs, playerNetIds, profiles, _stationSystem.Stations.ToList());
+
+            // Calculate extended access for stations.
+            var stationJobCounts = _stationSystem.Stations.ToDictionary(e => e, _ => 0);
+            foreach (var (_, (_, station)) in assignedJobs)
+            {
+                stationJobCounts[station] += 1;
+            }
+
+            _stationJobs.CalcExtendedAccess(stationJobCounts);
 
             // Spawn everybody in!
             foreach (var (player, (job, station)) in assignedJobs)
@@ -172,6 +182,14 @@ namespace Content.Server.GameTicking
                 _adminLogSystem.Add(LogType.LateJoin, LogImpact.Medium, $"Player {player.Name} late joined as {character.Name:characterName} on station {Name(station):stationName} with {ToPrettyString(mob):entity} as a {job.Name:jobName}.");
             else
                 _adminLogSystem.Add(LogType.RoundStartJoin, LogImpact.Medium, $"Player {player.Name} joined as {character.Name:characterName} on station {Name(station):stationName} with {ToPrettyString(mob):entity} as a {job.Name:jobName}.");
+
+            // Make sure they're aware of extended access.
+            if (Comp<StationJobsComponent>(station).ExtendedAccess
+                && (jobPrototype.ExtendedAccess.Count > 0
+                    || jobPrototype.ExtendedAccessGroups.Count > 0))
+            {
+                _chatManager.DispatchServerMessage(player, Loc.GetString("job-greet-crew-shortages"));
+            }
 
             // We raise this event directed to the mob, but also broadcast it so game rules can do something now.
             var aev = new PlayerSpawnCompleteEvent(mob, player, jobId, lateJoin, station, character);

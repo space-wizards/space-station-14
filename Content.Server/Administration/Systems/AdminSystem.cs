@@ -1,4 +1,4 @@
-using System.Globalization;
+﻿using System.Globalization;
 using System.Linq;
 using Content.Server.Administration.Managers;
 using Content.Server.Players;
@@ -10,7 +10,7 @@ using Robust.Server.Player;
 using Robust.Shared.Enums;
 using Robust.Shared.Network;
 
-namespace Content.Server.Administration
+namespace Content.Server.Administration.Systems
 {
     public sealed class AdminSystem : EntitySystem
     {
