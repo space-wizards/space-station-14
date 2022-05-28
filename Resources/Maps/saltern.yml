@@ -752,13 +752,6 @@ entities:
   - pos: 39.5,23.5
     parent: 852
     type: Transform
-- uid: 75
-  type: SuspicionPistolMagazineSpawner
-  components:
-  - rot: 4.371139006309477E-08 rad
-    pos: -29.5,9.5
-    parent: 852
-    type: Transform
 - uid: 76
   type: ShellShotgunSlug
   components:
@@ -6000,13 +5993,6 @@ entities:
   type: ShellShotgunBeanbag
   components:
   - pos: -11.403017,18.407421
-    parent: 852
-    type: Transform
-- uid: 540
-  type: SuspicionRifleSpawner
-  components:
-  - rot: 4.371139006309477E-08 rad
-    pos: -14.5,-0.5
     parent: 852
     type: Transform
 - uid: 541
@@ -57605,7 +57591,7 @@ entities:
     parent: 852
     type: Transform
 - uid: 4891
-  type: SniperBoltGunWood
+  type: WeaponSniperMosin
   components:
   - pos: -8.305917,20.641687
     parent: 852
