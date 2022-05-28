@@ -183,9 +183,7 @@ namespace Content.Server.Electrocution
                 // Does it use APC power for its electrification check? Check if it's powered, and then
                 // attempt an electrocution if all the checks succeed.
 
-                if (electrified.UsesApcPower &&
-                    (!TryComp(uid, out ApcPowerReceiverComponent? power)
-                     || !power.Powered))
+                if (electrified.UsesApcPower && !this.IsPowered(uid, EntityManager))
                 {
                     return false;
                 }

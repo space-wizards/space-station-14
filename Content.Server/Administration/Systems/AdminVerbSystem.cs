@@ -1,4 +1,3 @@
-using System.Threading;
 using Content.Server.Administration.Commands;
 using Content.Server.Administration.Managers;
 using Content.Server.Administration.UI;
@@ -7,7 +6,6 @@ using Content.Server.Chemistry.EntitySystems;
 using Content.Server.Configurable;
 using Content.Server.Disposal.Tube.Components;
 using Content.Server.EUI;
-using Content.Server.Explosion.EntitySystems;
 using Content.Server.Ghost.Roles;
 using Content.Server.Mind.Commands;
 using Content.Server.Mind.Components;
@@ -15,7 +13,6 @@ using Content.Server.Players;
 using Content.Server.Xenoarchaeology.XenoArtifacts;
 using Content.Server.Xenoarchaeology.XenoArtifacts.Triggers.Components;
 using Content.Shared.Administration;
-using Content.Shared.Body.Components;
 using Content.Shared.Database;
 using Content.Shared.GameTicking;
 using Content.Shared.Interaction.Helpers;
@@ -26,23 +23,25 @@ using Robust.Server.Console;
 using Robust.Server.GameObjects;
 using Robust.Server.Player;
 using Robust.Shared.Console;
+using Robust.Shared.Map;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
 using static Content.Shared.Configurable.SharedConfigurationComponent;
-using Timer = Robust.Shared.Timing.Timer;
 
-namespace Content.Server.Administration
+namespace Content.Server.Administration.Systems
 {
     /// <summary>
     ///     System to provide various global admin/debug verbs
     /// </summary>
-    public sealed class AdminVerbSystem : EntitySystem
+    public sealed partial class AdminVerbSystem : EntitySystem
     {
         [Dependency] private readonly IConGroupController _groupController = default!;
         [Dependency] private readonly IConsoleHost _console = default!;
         [Dependency] private readonly IAdminManager _adminManager = default!;
         [Dependency] private readonly IGameTiming _gameTiming = default!;
+        [Dependency] private readonly IMapManager _mapManager = default!;
+        [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
         [Dependency] private readonly EuiManager _euiManager = default!;
-        [Dependency] private readonly ExplosionSystem _explosionSystem = default!;
         [Dependency] private readonly GhostRoleSystem _ghostRoleSystem = default!;
         [Dependency] private readonly ArtifactSystem _artifactSystem = default!;
         [Dependency] private readonly UserInterfaceSystem _uiSystem = default!;
@@ -53,6 +52,7 @@ namespace Content.Server.Administration
         {
             SubscribeLocalEvent<GetVerbsEvent<Verb>>(AddAdminVerbs);
             SubscribeLocalEvent<GetVerbsEvent<Verb>>(AddDebugVerbs);
+            SubscribeLocalEvent<GetVerbsEvent<Verb>>(AddSmiteVerbs);
             SubscribeLocalEvent<RoundRestartCleanupEvent>(Reset);
             SubscribeLocalEvent<SolutionContainerManagerComponent, SolutionChangedEvent>(OnSolutionChanged);
         }
@@ -141,29 +141,6 @@ namespace Content.Server.Administration
                     Act = () => _console.ExecuteCommand(player, $"tpto {args.Target} {args.User}"),
                     Impact = LogImpact.Low
                 });
-            }
-
-            // Artillery
-            if (_adminManager.HasAdminFlag(player, AdminFlags.Fun))
-            {
-                Verb verb = new();
-                verb.Text = Loc.GetString("explode-verb-get-data-text");
-                verb.Category = VerbCategory.Admin;
-                verb.Act = () =>
-                {
-                    var coords = Transform(args.Target).MapPosition;
-                    Timer.Spawn(_gameTiming.TickPeriod,
-                        () => _explosionSystem.QueueExplosion(coords, ExplosionSystem.DefaultExplosionPrototypeId, 4, 1, 2, maxTileBreak: 0), // it gibs, damage doesn't need to be high.
-                        CancellationToken.None);
-
-                    if (TryComp(args.Target, out SharedBodyComponent? body))
-                    {
-                        body.Gib();
-                    }
-                };
-                verb.Impact = LogImpact.Extreme; // if you're just outright killing a person, I guess that deserves to be extreme?
-                verb.ConfirmationPopup = true;
-                args.Verbs.Add(verb);
             }
         }
 

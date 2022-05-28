@@ -4,6 +4,7 @@ using Content.Shared.ActionBlocker;
 using Content.Shared.Administration.Logs;
 using Content.Shared.CombatMode;
 using Content.Shared.Database;
+using Content.Shared.Ghost;
 using Content.Shared.Hands.Components;
 using Content.Shared.Input;
 using Content.Shared.Interaction.Components;
@@ -149,7 +150,7 @@ namespace Content.Shared.Interaction
                 return true;
             }
 
-            UserInteraction(user.Value, coords, uid, altInteract: true);
+            UserInteraction(user.Value, coords, uid, altInteract: true, checkAccess: ShouldCheckAccess(user.Value));
 
             return false;
         }
@@ -163,9 +164,16 @@ namespace Content.Shared.Interaction
                 return true;
             }
 
-            UserInteraction(userEntity.Value, coords, !Deleted(uid) ? uid : null);
+            UserInteraction(userEntity.Value, coords, !Deleted(uid) ? uid : null, checkAccess: ShouldCheckAccess(userEntity.Value));
 
             return false;
+        }
+
+        private bool ShouldCheckAccess(EntityUid user)
+        {
+            // This is for Admin/mapping convenience. If ever there are other ghosts that can still interact, this check
+            // might need to be more selective.
+            return !HasComp<SharedGhostComponent>(user);
         }
 
         /// <summary>
@@ -669,7 +677,7 @@ namespace Content.Shared.Interaction
             if (Deleted(uid))
                 return false;
 
-            InteractionActivate(user.Value, uid);
+            InteractionActivate(user.Value, uid, checkAccess: ShouldCheckAccess(user.Value));
             return false;
         }
 

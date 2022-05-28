@@ -1,9 +1,11 @@
 using Content.Server.Damage.Systems;
 using Content.Server.Explosion.EntitySystems;
+using Content.Server.Popups;
 using Content.Shared.Interaction.Events;
 using Content.Shared.Inventory;
 using Content.Shared.Mousetrap;
 using Content.Shared.StepTrigger;
+using Robust.Shared.Player;
 
 namespace Content.Server.Mousetrap;
 
@@ -11,6 +13,7 @@ public sealed class MousetrapSystem : EntitySystem
 {
     [Dependency] private readonly InventorySystem _inventorySystem = default!;
     [Dependency] private readonly TriggerSystem _triggerSystem = default!;
+    [Dependency] private readonly PopupSystem _popupSystem = default!;
 
     public override void Initialize()
     {
@@ -23,6 +26,11 @@ public sealed class MousetrapSystem : EntitySystem
     private void OnUseInHand(EntityUid uid, MousetrapComponent component, UseInHandEvent args)
     {
         component.IsActive = !component.IsActive;
+        _popupSystem.PopupEntity(component.IsActive
+            ? Loc.GetString("mousetrap-on-activate")
+            : Loc.GetString("mousetrap-on-deactivate"),
+            uid,
+            Filter.Entities(args.User));
 
         UpdateVisuals(uid);
     }
@@ -50,7 +58,7 @@ public sealed class MousetrapSystem : EntitySystem
             }
         }
 
-        if (TryComp(args.Tripper, out PhysicsComponent? physics))
+        if (TryComp(args.Tripper, out PhysicsComponent? physics) && physics.Mass != 0)
         {
             // The idea here is inverse,
             // Small - big damage,

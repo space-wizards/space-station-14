@@ -25,4 +25,14 @@ public sealed partial class StationConfig
     ///   job name: [round-start, mid-round]
     /// </summary>
     public IReadOnlyDictionary<string, List<int?>> AvailableJobs => _availableJobs;
+
+    /// <summary>
+    /// If there are less than or equal this amount of players in the game at round start,
+    /// people get extended access levels from job prototypes.
+    /// </summary>
+    /// <remarks>
+    /// Set to -1 to disable extended access.
+    /// </remarks>
+    [DataField("extendedAccessThreshold")]
+    public int ExtendedAccessThreshold { get; set; } = 15;
 }
