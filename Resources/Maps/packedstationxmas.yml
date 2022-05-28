@@ -33703,7 +33703,7 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 2412
-  type: ShotgunPump
+  type: WeaponShotgunKammerer
   components:
   - pos: 41.518063,26.561434
     parent: 0

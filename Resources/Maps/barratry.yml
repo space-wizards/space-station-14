@@ -52092,7 +52092,7 @@ entities:
         ents: []
     type: ContainerContainer
 - uid: 4123
-  type: ShotgunPump
+  type: WeaponShotgunKammerer
   components:
   - pos: -43.446514,31.698717
     parent: 106

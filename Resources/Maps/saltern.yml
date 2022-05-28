@@ -19922,7 +19922,7 @@ entities:
         ents: []
     type: ContainerContainer
 - uid: 1152
-  type: SmgWt550
+  type: WeaponSubMachineGunWt550
   components:
   - pos: -14.46418,19.398104
     parent: 852
