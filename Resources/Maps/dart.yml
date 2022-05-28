@@ -892,21 +892,6 @@ entities:
       - 0
       - 0
     type: GridAtmosphere
-- uid: 18
-  type: PistolLamia
-  components:
-  - parent: 265
-    type: Transform
-  - canCollide: False
-    type: Physics
-  - containers:
-      MagazineBarrel-chamber: !type:ContainerSlot {}
-      MagazineBarrel-magazine: !type:ContainerSlot
-        ent: 433
-      Content.Server.Weapon.Ranged.Barrels.Components.MagazineBarrelComponent-chamber: !type:ContainerSlot {}
-      Content.Server.Weapon.Ranged.Barrels.Components.MagazineBarrelComponent-magazine: !type:ContainerSlot
-        ent: 573
-    type: ContainerContainer
 - uid: 19
   type: ClothingHeadHelmetHardsuitDeathsquad
   components:
@@ -1244,21 +1229,6 @@ entities:
   - containers:
       board: !type:Container
         ents: []
-    type: ContainerContainer
-- uid: 54
-  type: PistolLamia
-  components:
-  - parent: 292
-    type: Transform
-  - canCollide: False
-    type: Physics
-  - containers:
-      MagazineBarrel-chamber: !type:ContainerSlot {}
-      MagazineBarrel-magazine: !type:ContainerSlot
-        ent: 162
-      Content.Server.Weapon.Ranged.Barrels.Components.MagazineBarrelComponent-chamber: !type:ContainerSlot {}
-      Content.Server.Weapon.Ranged.Barrels.Components.MagazineBarrelComponent-magazine: !type:ContainerSlot
-        ent: 572
     type: ContainerContainer
 - uid: 55
   type: WindowReinforcedDirectional
@@ -2105,21 +2075,6 @@ entities:
         ents: []
       Content.Server.Weapon.Ranged.Ammunition.Components.RangedMagazineComponent-magazine: !type:Container
         ents: []
-    type: ContainerContainer
-- uid: 152
-  type: PistolLamia
-  components:
-  - parent: 197
-    type: Transform
-  - canCollide: False
-    type: Physics
-  - containers:
-      MagazineBarrel-chamber: !type:ContainerSlot {}
-      MagazineBarrel-magazine: !type:ContainerSlot
-        ent: 7
-      Content.Server.Weapon.Ranged.Barrels.Components.MagazineBarrelComponent-chamber: !type:ContainerSlot {}
-      Content.Server.Weapon.Ranged.Barrels.Components.MagazineBarrelComponent-magazine: !type:ContainerSlot
-        ent: 578
     type: ContainerContainer
 - uid: 153
   type: ClothingHandsGlovesCombat
@@ -3863,21 +3818,6 @@ entities:
     type: Transform
   - canCollide: False
     type: Physics
-- uid: 323
-  type: PistolLamia
-  components:
-  - parent: 198
-    type: Transform
-  - canCollide: False
-    type: Physics
-  - containers:
-      MagazineBarrel-chamber: !type:ContainerSlot {}
-      MagazineBarrel-magazine: !type:ContainerSlot
-        ent: 78
-      Content.Server.Weapon.Ranged.Barrels.Components.MagazineBarrelComponent-chamber: !type:ContainerSlot {}
-      Content.Server.Weapon.Ranged.Barrels.Components.MagazineBarrelComponent-magazine: !type:ContainerSlot
-        ent: 580
-    type: ContainerContainer
 - uid: 324
   type: CableApcExtension
   components:
@@ -4244,21 +4184,6 @@ entities:
       Content.Server.Weapon.Ranged.Ammunition.Components.RangedMagazineComponent-magazine: !type:Container
         ents: []
     type: ContainerContainer
-- uid: 370
-  type: PistolLamia
-  components:
-  - parent: 266
-    type: Transform
-  - canCollide: False
-    type: Physics
-  - containers:
-      MagazineBarrel-chamber: !type:ContainerSlot {}
-      MagazineBarrel-magazine: !type:ContainerSlot
-        ent: 8
-      Content.Server.Weapon.Ranged.Barrels.Components.MagazineBarrelComponent-chamber: !type:ContainerSlot {}
-      Content.Server.Weapon.Ranged.Barrels.Components.MagazineBarrelComponent-magazine: !type:ContainerSlot
-        ent: 581
-    type: ContainerContainer
 - uid: 371
   type: Stunbaton
   components:
@@ -4344,21 +4269,6 @@ entities:
   - pos: 0.5,16.5
     parent: 17
     type: Transform
-- uid: 382
-  type: PistolLamia
-  components:
-  - parent: 232
-    type: Transform
-  - canCollide: False
-    type: Physics
-  - containers:
-      MagazineBarrel-chamber: !type:ContainerSlot {}
-      MagazineBarrel-magazine: !type:ContainerSlot
-        ent: 368
-      Content.Server.Weapon.Ranged.Barrels.Components.MagazineBarrelComponent-chamber: !type:ContainerSlot {}
-      Content.Server.Weapon.Ranged.Barrels.Components.MagazineBarrelComponent-magazine: !type:ContainerSlot
-        ent: 582
-    type: ContainerContainer
 - uid: 383
   type: MagazineMagnumHV
   components:
