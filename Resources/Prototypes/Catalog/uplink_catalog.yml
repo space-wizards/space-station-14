@@ -4,7 +4,7 @@
   id: UplinkPistolClarissa
   category: Weapons
   itemId: PistolClarissa
-  listingName: Clarissa
+  listingName: Viper
   description: A small, easily concealable, but somewhat underpowered gun. Use pistol magazines (.35 auto).
   price: 6
 
@@ -12,7 +12,7 @@
   id: UplinkRevolverPredator
   category: Weapons
   itemId: RevolverPredator
-  listingName: Predator
+  listingName: Python
   description: A loud and deadly revolver. Uses .40 Magnum.
   price: 8
 
@@ -21,7 +21,7 @@
   id: UplinkPistolMandella
   category: Weapons
   itemId: PistolMandella
-  listingName: Mandella
+  listingName: Cobra
   description: A rugged, robust operator handgun with inbuilt silencer. Use pistol magazines (.25 caseless).
   price: 8
 
@@ -189,7 +189,7 @@
   category: Bundles
   itemId: ClothingBackpackDuffelSyndicateFilledShotgun
   price: 25
-  icon: /Textures/Objects/Weapons/Guns/Shotguns/bojevic.rsi/icon.png
+  icon: /Textures/Objects/Weapons/Guns/Shotguns/bulldog.rsi/icon.png
 
 - type: uplinkListing
   id: UplinkGrenadeLauncherBundle
