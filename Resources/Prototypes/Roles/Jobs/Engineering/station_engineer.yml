@@ -10,6 +10,8 @@
   - Maintenance
   - Engineering
   - External
+  extendedAccess:
+  - Atmospherics
 
 - type: startingGear
   id: StationEngineerGear
