@@ -69,6 +69,7 @@ namespace Content.Client.Entry
 
             factory.DoAutoRegistrations();
 
+            factory.IgnoreMissingComponents();
 
             factory.RegisterClass<SharedResearchConsoleComponent>();
             factory.RegisterClass<SharedLatheComponent>();
