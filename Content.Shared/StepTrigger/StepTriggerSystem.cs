@@ -48,8 +48,7 @@ public sealed class StepTriggerSystem : EntitySystem
 
     private bool UpdateColliding(StepTriggerComponent component, TransformComponent ownerTransform, EntityUid otherUid)
     {
-        if (!otherUid.IsValid() ||
-            !TryComp(otherUid, out PhysicsComponent? otherPhysics))
+        if (!TryComp(otherUid, out PhysicsComponent? otherPhysics))
             return true;
 
         if (component.CurrentlySteppedOn.Contains(otherUid) ||
