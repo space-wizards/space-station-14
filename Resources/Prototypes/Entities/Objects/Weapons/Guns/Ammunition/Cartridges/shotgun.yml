@@ -9,6 +9,7 @@
     - ShellShotgun
     - Cartridge
   - type: CartridgeAmmo
+    count: 6
     soundEject:
       collection: ShellEject
   - type: Sprite
@@ -31,6 +32,7 @@
     sprite: Objects/Weapons/Guns/Ammunition/Casings/shotgun_shell_beanbag.rsi
   - type: CartridgeAmmo
     proto: PelletShotgunBeanbag
+    count: 1
 
 - type: entity
   id: ShellShotgunSlug
@@ -41,6 +43,7 @@
     sprite: Objects/Weapons/Guns/Ammunition/Casings/shotgun_shell_slug.rsi
   - type: CartridgeAmmo
     proto: PelletShotgunSlug
+    count: 4
 
 - type: entity
   id: ShellShotgunFlare
@@ -51,6 +54,7 @@
     sprite: Objects/Weapons/Guns/Ammunition/Casings/shotgun_shell_flare.rsi
   - type: CartridgeAmmo
     proto: PelletShotgunFlare
+    count: 1
 
 - type: entity
   id: ShellShotgun
@@ -101,6 +105,7 @@
     sprite: Objects/Weapons/Guns/Ammunition/Casings/shotgun_shell_practice.rsi
   - type: CartridgeAmmo
     proto: PelletShotgunTranquilizer
+    count: 1
   - type: ChemicalAmmo
   - type: SolutionContainerManager
     solutions:

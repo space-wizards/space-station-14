@@ -136,6 +136,9 @@ public sealed partial class NewGunSystem : SharedNewGunSystem
 
                         cartridge.Spent = true;
                         MuzzleFlash(gun, cartridge, user);
+
+                        if (cartridge.DeleteOnSpawn)
+                            Del(cartridge.Owner);
                     }
                     else
                     {

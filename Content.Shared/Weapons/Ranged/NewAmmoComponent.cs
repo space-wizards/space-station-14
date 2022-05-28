@@ -30,6 +30,18 @@ public sealed class CartridgeAmmoComponent : NewAmmoComponent
     public bool Spent = false;
 
     /// <summary>
+    /// How much the ammo spreads when shot, in degrees. Does nothing if count is 0.
+    /// </summary>
+    [ViewVariables(VVAccess.ReadWrite), DataField("spreadRatio")]
+    public float Spread = 10f;
+
+    /// <summary>
+    /// How many prototypes are spawned when shot.
+    /// </summary>
+    [ViewVariables(VVAccess.ReadWrite), DataField("count")]
+    public int Count = 1;
+
+    /// <summary>
     /// Caseless ammunition.
     /// </summary>
     [ViewVariables, DataField("deleteOnSpawn")]

@@ -35,14 +35,34 @@ public sealed partial class NewGunSystem : SharedNewGunSystem
                 case CartridgeAmmoComponent cartridge:
                     if (!cartridge.Spent)
                     {
-                        var uid = Spawn(cartridge.Prototype, fromCoordinates);
-                        ShootProjectile(uid, mapDirection, user);
+                        // TODO: Copy it across.
+                        if (cartridge.Count > 1)
+                        {
+                            var mapAngle = mapDirection.ToAngle();
+
+                            var angles = LinearSpread(mapAngle - Angle.FromDegrees(cartridge.Spread / 2f),
+                                mapAngle + Angle.FromDegrees(cartridge.Spread / 2f), cartridge.Count);
+
+                            for (var i = 0; i < cartridge.Count; i++)
+                            {
+                                var uid = Spawn(cartridge.Prototype, fromCoordinates);
+                                ShootProjectile(uid, angles[i].ToVec(), user);
+                            }
+                        }
+                        else
+                        {
+                            var uid = Spawn(cartridge.Prototype, fromCoordinates);
+                            ShootProjectile(uid, mapDirection, user);
+                        }
 
                         if (TryComp<AppearanceComponent>(cartridge.Owner, out var appearance))
                             appearance.SetData(AmmoVisuals.Spent, true);
 
                         cartridge.Spent = true;
                         MuzzleFlash(gun, cartridge, user);
+
+                        if (cartridge.DeleteOnSpawn)
+                            Del(cartridge.Owner);
                     }
                     else
                     {
@@ -113,6 +133,25 @@ public sealed partial class NewGunSystem : SharedNewGunSystem
         }
 
         Transform(uid).WorldRotation = direction.ToWorldAngle();
+    }
+
+    /// <summary>
+    /// Gets a linear spread of angles between start and end.
+    /// </summary>
+    /// <param name="start">Start angle in degrees</param>
+    /// <param name="end">End angle in degrees</param>
+    /// <param name="intervals">How many shots there are</param>
+    private Angle[] LinearSpread(Angle start, Angle end, int intervals)
+    {
+        var angles = new Angle[intervals];
+        DebugTools.Assert(intervals > 1);
+
+        for (var i = 0; i <= intervals - 1; i++)
+        {
+            angles[i] = new Angle(start + (end - start) * i / (intervals - 1));
+        }
+
+        return angles;
     }
 
     protected override void PlaySound(EntityUid gun, string? sound, EntityUid? user = null)
