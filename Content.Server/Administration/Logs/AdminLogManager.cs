@@ -74,7 +74,7 @@ public sealed partial class AdminLogManager : SharedAdminLogManager, IAdminLogMa
     private int _currentRoundId;
     private int _currentLogId;
     private int NextLogId => Interlocked.Increment(ref _currentLogId);
-    private GameRunLevel? _runLevel;
+    private GameRunLevel _runLevel = GameRunLevel.PreRoundLobby;
 
     public void Initialize()
     {

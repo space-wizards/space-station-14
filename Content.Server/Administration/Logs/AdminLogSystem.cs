@@ -18,4 +18,14 @@ public sealed class AdminLogSystem : EntitySystem
         SubscribeLocalEvent<RoundStartingEvent>(ev => _adminLogs.RoundStarting(ev.Id));
         SubscribeLocalEvent<GameRunLevelChangedEvent>(ev => _adminLogs.RunLevelChanged(ev.New));
     }
+
+    public override void Update(float frameTime)
+    {
+        _adminLogs.Update();
+    }
+
+    public override void Shutdown()
+    {
+        _adminLogs.Shutdown();
+    }
 }
