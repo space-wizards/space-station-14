@@ -7,7 +7,11 @@ public sealed partial class NewGunSystem
     protected override void SpinRevolver(SharedRevolverAmmoProviderComponent component, EntityUid? user = null)
     {
         PlaySound(component.Owner, component.SoundSpin?.GetSound(), user);
-        component.CurrentIndex = Random.Next(component.Capacity);
+        var index = Random.Next(component.Capacity);
+
+        if (component.CurrentIndex == index) return;
+
+        component.CurrentIndex = index;
         Dirty(component);
     }
 }
