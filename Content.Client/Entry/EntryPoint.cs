@@ -69,10 +69,6 @@ namespace Content.Client.Entry
 
             factory.DoAutoRegistrations();
 
-            foreach (var ignoreName in IgnoredComponents.List)
-            {
-                factory.RegisterIgnore(ignoreName);
-            }
 
             factory.RegisterClass<SharedResearchConsoleComponent>();
             factory.RegisterClass<SharedLatheComponent>();
