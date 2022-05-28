@@ -1,7 +1,7 @@
 - type: entity
-  name: SniperBase
+  name: BaseWeaponSniper
   parent: BaseItem
-  id: SniperBase
+  id: BaseWeaponSniper
   description: A rooty tooty point and shooty.
   abstract: true
   components:
@@ -14,32 +14,29 @@
       map: ["enum.RangedBarrelVisualLayers.Bolt"]
   - type: Item
     size: 24
-  - type: BoltActionBarrel
-    currentSelector: Single
-    allSelectors:
-    - Single
-    fillPrototype: CartridgeLRifle
-    caliber: LRifle
-    capacity: 10
-    fireRate: 1.0
-    minAngle: 0
-    maxAngle: 60
-    angleIncrease: 20
-    angleDecay: 15
+  - type: NewGun
+    fireRate: 1
+    autoCycle: false
+    selectedMode: SemiAuto
+    availableModes:
+    - Safety
+    - SemiAuto
     soundGunshot:
       path: /Audio/Weapons/Guns/Gunshots/sniper.ogg
-    soundEmpty:
-      path: /Audio/Weapons/Guns/Empty/empty.ogg
-    soundInsert:
-      path: /Audio/Weapons/Guns/MagIn/bullet_insert.ogg
+  - type: BallisticAmmoProvider
+    fireRate: 1
+    capacity: 10
+    proto: CartridgeLRifle
+    whitelist:
+      tags:
+      - CartridgeLightRifle
   - type: Appearance
     visuals:
     - type: BarrelBoltVisualizer
-  - type: RangedWeapon
 
 - type: entity
   name: Kardashev-Mosin
-  parent: SniperBase
+  parent: BaseWeaponSniper
   id: WeaponSniperMosin
   description: A weapon for hunting, or endless trench warfare.
   components:
@@ -47,39 +44,11 @@
     sprite: Objects/Weapons/Guns/Snipers/bolt_gun_wood.rsi
   - type: Item
     sprite: Objects/Weapons/Guns/Snipers/bolt_gun_wood.rsi
+    
 
 - type: entity
   name: Hristov
-  parent: BaseItem
-  id: SniperHeavyNew
-  suffix: new
-  description: A portable anti-armour rifle. Fires armor piercing 14.5mm shells.
-  components:
-    - type: Sprite
-      sprite: Objects/Weapons/Guns/Snipers/heavy_sniper.rsi
-      netsync: false
-      layers:
-      - state: base
-        map: [ "enum.RangedBarrelVisualLayers.Base" ]
-      - state: bolt-closed
-        map: [ "enum.RangedBarrelVisualLayers.Bolt" ]
-    - type: Item
-      sprite: Objects/Weapons/Guns/Snipers/heavy_sniper.rsi
-    - type: NewGun
-      fireRate: 1
-      selectedMode: SemiAuto
-      availableModes:
-      - Safety
-      - SemiAuto
-    - type: AmmoCounter
-    - type: BallisticAmmoProvider
-      proto: CartridgeAntiMaterial
-      capacity: 1
-      autoCycle: false
-
-- type: entity
-  name: Hristov
-  parent: SniperBase
+  parent: BaseWeaponSniper
   id: WeaponSniperHristov
   description: A portable anti-armour rifle. Fires armor piercing 14.5mm shells.
   components:
@@ -87,30 +56,29 @@
     sprite: Objects/Weapons/Guns/Snipers/heavy_sniper.rsi
   - type: Item
     sprite: Objects/Weapons/Guns/Snipers/heavy_sniper.rsi
-  - type: BoltActionBarrel
-    caliber: AntiMaterial
+  - type: BallisticAmmoProvider
+    whitelist:
+      tags:
+      - CartridgeAntiMaterial
     capacity: 1
-    fillPrototype: CartridgeAntiMaterial
-  
+    proto: CartridgeAntiMaterial
 
 - type: entity
   name: musket
-  parent: SniperBase
+  parent: BaseWeaponSniper
   id: Musket
   description: This should've been in a museum long before you were born.
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/Snipers/musket.rsi
-  - type: BoltActionBarrel
-    caliber: AntiMaterial
-    capacity: 1
-    fireRate: 1.0
-    minAngle: 10
-    maxAngle: 60
-    angleIncrease: 20
-    angleDecay: 15
-    fillPrototype: CartridgeAntiMaterial
-    soundInsert:
-      path: /Audio/Weapons/Guns/MagIn/bullet_insert.ogg
   - type: Item
     icon: Objects/Weapons/Guns/Snipers/musket.rsi
+  - type: BallisticAmmoProvider
+    selectedMode: SemiAuto
+    availableModes:
+    - SemiAuto
+    whitelist:
+      tags:
+      - CartridgeAntiMaterial
+    capacity: 1
+    proto: CartridgeAntiMaterial

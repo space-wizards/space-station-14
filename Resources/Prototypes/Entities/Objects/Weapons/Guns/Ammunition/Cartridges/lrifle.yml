@@ -4,6 +4,10 @@
   parent: BaseCartridge
   abstract: true
   components:
+  - type: Tag
+    tags:
+    - Cartridge
+    - CartridgeLightRifle
   - type: Ammo
     caliber: LRifle
   - type: Sprite
@@ -24,6 +28,8 @@
   components:
   - type: Ammo
     projectile: BulletLRifle
+  - type: CartridgeAmmo
+    proto: BulletLRifle
 
 - type: entity
   id: CartridgeLRifleFlash

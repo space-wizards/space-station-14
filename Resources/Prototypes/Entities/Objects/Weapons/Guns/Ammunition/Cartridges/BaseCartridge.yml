@@ -3,6 +3,8 @@
   parent: BaseItem
   abstract: true
   components:
+  - type: Sprite
+    netsync: false
   - type: Tag
     tags:
     - Cartridge

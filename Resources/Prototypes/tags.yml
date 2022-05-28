@@ -55,6 +55,12 @@
   id: Cartridge
 
 - type: Tag
+  id: CartridgeAntiMaterial
+
+- type: Tag
+  id: CartridgeLightRifle
+
+- type: Tag
   id: CigFilter
 
 - type: Tag
@@ -266,7 +272,7 @@
 
 - type: Tag
   id: PlantSampleTaker
-  
+
 - type: Tag
   id: Plastic
 
@@ -275,7 +281,7 @@
 
 - type: Tag
   id: PussyWagonKeys
-  
+
 - type: Tag
   id: RawMaterial
 

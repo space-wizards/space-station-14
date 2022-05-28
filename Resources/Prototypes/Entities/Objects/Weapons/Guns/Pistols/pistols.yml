@@ -195,24 +195,24 @@
     visuals:
     - type: BarrelBoltVisualizer
 
-- type: entity
-  name: flintlock pistol
-  parent: SniperBase
-  id: WeaponPistolFlintlock
-  description: A pirate's companion. Yarrr!
-  components:
-  - type: Sprite
-    sprite: Objects/Weapons/Guns/Snipers/flintlock.rsi
-  - type: BoltActionBarrel
-    caliber: AntiMaterial
-    capacity: 1
-    fireRate: 1.0
-    minAngle: 20
-    maxAngle: 80
-    angleIncrease: 20
-    angleDecay: 15
-    fillPrototype: CartridgeAntiMaterial
-    soundInsert:
-      path: /Audio/Weapons/Guns/MagIn/bullet_insert.ogg
-  - type: Item
-    icon: Objects/Weapons/Guns/Snipers/flintlock.rsi
+#- type: entity
+#  name: flintlock pistol
+#  parent: SniperBase
+#  id: WeaponPistolFlintlock
+#  description: A pirate's companion. Yarrr!
+#  components:
+#  - type: Sprite
+#    sprite: Objects/Weapons/Guns/Snipers/flintlock.rsi
+#  - type: BoltActionBarrel
+#    caliber: AntiMaterial
+#    capacity: 1
+#    fireRate: 1.0
+#    minAngle: 20
+#    maxAngle: 80
+#    angleIncrease: 20
+#    angleDecay: 15
+#    fillPrototype: CartridgeAntiMaterial
+#    soundInsert:
+#      path: /Audio/Weapons/Guns/MagIn/bullet_insert.ogg
+#  - type: Item
+#    icon: Objects/Weapons/Guns/Snipers/flintlock.rsi
