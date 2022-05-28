@@ -9,6 +9,7 @@ public sealed class ChameleonClothingVisualizerSystem : VisualizerSystem<Chamele
 {
     [Dependency] private readonly IPrototypeManager _proto = default!;
     [Dependency] private readonly ItemSystem _itemSystem = default!;
+    [Dependency] private readonly IComponentFactory _factory = default!;
 
     protected override void OnAppearanceChange(EntityUid uid, ChameleonClothingComponent component, ref AppearanceChangeEvent args)
     {
@@ -21,14 +22,14 @@ public sealed class ChameleonClothingVisualizerSystem : VisualizerSystem<Chamele
 
         // world sprite icon
         if (TryComp(uid, out SpriteComponent? sprite)
-            && proto.TryGetComponent(out SpriteComponent? otherSprite))
+            && proto.TryGetComponent(out SpriteComponent? otherSprite, _factory))
         {
             sprite.CopyFrom(otherSprite);
         }
 
         // clothing and in-hand sprite icon
         if (TryComp(uid, out ClothingComponent? clothing) &&
-            proto.TryGetComponent(out ClothingComponent? otherClothing))
+            proto.TryGetComponent(out ClothingComponent? otherClothing, _factory))
         {
             _itemSystem.CopyVisuals(uid, otherClothing, clothing);
         }

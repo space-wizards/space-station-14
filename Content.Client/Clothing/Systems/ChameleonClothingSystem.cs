@@ -9,6 +9,7 @@ namespace Content.Client.Clothing.Systems;
 public sealed class ChameleonClothingSystem : SharedChameleonClothingSystem
 {
     [Dependency] private readonly IPrototypeManager _proto = default!;
+    [Dependency] private readonly IComponentFactory _factory = default!;
 
     private static readonly SlotFlags[] IgnoredSlots =
     {
@@ -53,7 +54,7 @@ public sealed class ChameleonClothingSystem : SharedChameleonClothingSystem
             // check if this is valid clothing
             if (!IsValidTarget(proto))
                 continue;
-            if (!proto.TryGetComponent(out ClothingComponent? item))
+            if (!proto.TryGetComponent(out ClothingComponent? item, _factory))
                 continue;
 
             // sort item by their slot flags
