@@ -54,18 +54,18 @@
       zeroVisible: true
 
 - type: entity
-  name: clarissa
+  name: viper
   parent: PistolBase
   id: PistolClarissa
   description: A small, easily concealable, but somewhat underpowered gun.
   components:
   - type: Sprite
-    sprite: Objects/Weapons/Guns/Pistols/clarissa.rsi
+    sprite: Objects/Weapons/Guns/Pistols/viper.rsi
   - type: Icon
-    sprite: Objects/Weapons/Guns/Pistols/clarissa.rsi
+    sprite: Objects/Weapons/Guns/Pistols/viper.rsi
   - type: Item
     size: 10
-    sprite: Objects/Weapons/Guns/Pistols/clarissa.rsi
+    sprite: Objects/Weapons/Guns/Pistols/viper.rsi
   - type: RangedWeapon
   - type: MagazineBarrel
     caliber: Pistol
@@ -236,13 +236,13 @@
       zeroVisible: true
 
 - type: entity
-  name: mandella
+  name: cobra
   parent: PistolBase
-  id: PistolMandella
+  id: PistolCobra
   description: A rugged, robust operator handgun with inbuilt silencer.
   components:
   - type: Sprite
-    sprite: Objects/Weapons/Guns/Pistols/mandella.rsi
+    sprite: Objects/Weapons/Guns/Pistols/cobra.rsi
     layers:
     - state: base
       map: ["enum.RangedBarrelVisualLayers.Base"]
@@ -251,10 +251,10 @@
     - state: mag-0
       map: ["enum.RangedBarrelVisualLayers.Mag"]
   - type: Icon
-    sprite: Objects/Weapons/Guns/Pistols/mandella.rsi
+    sprite: Objects/Weapons/Guns/Pistols/cobra.rsi
   - type: Item
     size: 10
-    sprite: Objects/Weapons/Guns/Pistols/mandella.rsi
+    sprite: Objects/Weapons/Guns/Pistols/cobra.rsi
   - type: RangedWeapon
   - type: MagazineBarrel
     caliber: ClRifle

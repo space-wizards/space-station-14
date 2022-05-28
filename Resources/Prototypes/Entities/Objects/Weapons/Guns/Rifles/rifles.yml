@@ -130,7 +130,7 @@
       zeroVisible: true
 
 - type: entity
-  name: Z8 Bulldog
+  name: M-90gl
   parent: RifleBase
   id: RifleCarbine
   description: An older bullpup carbine model, with an attached underbarrel grenade launcher.
