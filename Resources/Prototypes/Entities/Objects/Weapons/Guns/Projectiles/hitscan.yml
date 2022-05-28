@@ -73,7 +73,7 @@
   id: OmniLaser
   damage:
     types:
-      heat: 60
+      Heat: 60
   muzzleFlash:
     sprite: Objects/Weapons/Guns/projectiles2.rsi
     state: muzzle_omni
