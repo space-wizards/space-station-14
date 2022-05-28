@@ -42,8 +42,6 @@
     layers:
     - state: base
       map: ["enum.RangedBarrelVisualLayers.Base"]
-    - state: bolt-closed
-      map: ["enum.RangedBarrelVisualLayers.Bolt"]
     - state: mag-0
       map: ["enum.RangedBarrelVisualLayers.Mag"]
   - type: Item
@@ -71,7 +69,6 @@
   - type: MagazineAmmoProvider
   - type: Appearance
     visuals:
-    - type: BarrelBoltVisualizer
     - type: MagVisualizer
       magState: mag
       steps: 1
@@ -90,9 +87,6 @@
     sprite: Objects/Weapons/Guns/Shotguns/db_shotgun.rsi
   - type: NewGun
     fireRate: 8
-  - type: Appearance
-    visuals:
-    - type: BarrelBoltVisualizer
 
 - type: entity
   name: Gladstone
@@ -134,6 +128,3 @@
     proto: ShellShotgun
     fireRate: 8.0
     capacity: 2
-  - type: Appearance
-    visuals:
-    - type: BarrelBoltVisualizer
