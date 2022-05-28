@@ -1,45 +1,43 @@
 - type: entity
-  name: ShotgunBase
+  name: BaseWeaponShotgun
   parent: BaseItem
-  id: ShotgunBase
+  id: BaseWeaponShotgun
   description: A rooty tooty point and shooty.
   abstract: true
   components:
   - type: Sprite
     netsync: false
-    state: icon
-  - type: Icon
-    state: icon
   - type: Item
     size: 24
-  - type: PumpBarrel
-    currentSelector: Single
-    allSelectors:
+  - type: NewGun
+    fireRate: 2
+    selectedMode: Single
+    availableModes:
     - Single
-    fillPrototype: ShellShotgun
-    caliber: Shotgun
-    capacity: 7
-    fireRate: 2.0
-    minAngle: 5
-    maxAngle: 60
-    angleIncrease: 30
-    angleDecay: 15
     soundGunshot:
       path: /Audio/Weapons/Guns/Gunshots/shotgun.ogg
     soundEmpty:
       path: /Audio/Weapons/Guns/Empty/empty.ogg
+  - type: BallisticAmmoProvider
+    whitelist:
+      tags:
+      - ShellShotgun
+    autoCycle: false
+    capacity: 7
+    proto: ShellShotgun
     soundInsert:
       path: /Audio/Weapons/Guns/MagIn/shotgun_insert.ogg
 
 - type: entity
   name: Bojevic
-  parent: ShotgunBase
+  # Don't parent to BaseWeaponShotgun because it differs significantly
+  parent: BaseItem
   id: WeaponShotgunBojevic
   description: It's a magazine-fed shotgun designed for close quarters combat.
   components:
   - type: Sprite
-    netsync: false
     sprite: Objects/Weapons/Guns/Shotguns/bojevic.rsi
+    netsync: false
     layers:
     - state: base
       map: ["enum.RangedBarrelVisualLayers.Base"]
@@ -47,34 +45,29 @@
       map: ["enum.RangedBarrelVisualLayers.Bolt"]
     - state: mag-0
       map: ["enum.RangedBarrelVisualLayers.Mag"]
-  - type: Icon
-    sprite: Objects/Weapons/Guns/Shotguns/bojevic.rsi
   - type: Item
     sprite: Objects/Weapons/Guns/Shotguns/bojevic.rsi
-  - type: RangedWeapon
-  - type: MagazineBarrel
-    currentSelector: Automatic
-    allSelectors:
-    - Automatic
+    size: 24
+  - type: NewGun
     fireRate: 3
-    caliber: Shotgun
-    magazineTypes:
-    - Rifle
-    magFillPrototype: MagazineShotgun
+    selectedMode: FullAuto
+    availableModes:
+    - FullAuto
     soundGunshot:
       path: /Audio/Weapons/Guns/Gunshots/shotgun.ogg
     soundEmpty:
       path: /Audio/Weapons/Guns/Empty/empty.ogg
-    soundRack:
-      path: /Audio/Weapons/Guns/Cock/smg_cock.ogg
-    soundBoltOpen:
-      path: /Audio/Weapons/Guns/Bolt/rifle_bolt_open.ogg
-    soundBoltClosed:
-      path: /Audio/Weapons/Guns/Bolt/rifle_bolt_closed.ogg
-    soundMagInsert:
-      path: /Audio/Weapons/Guns/MagIn/smg_magin.ogg
-    soundMagEject:
-      path: /Audio/Weapons/Guns/MagOut/smg_magout.ogg
+  - type: ItemSlots
+    slots:
+      gun-magazine:
+        name: GunMagazine
+        startingItem: MagazineShotgun
+        whitelist:
+          tags:
+          - MagazineShotgun
+        insertSound: /Audio/Weapons/Guns/MagIn/smg_magin.ogg
+        ejectSound: /Audio/Weapons/Guns/MagOut/smg_magout.ogg
+  - type: MagazineAmmoProvider
   - type: Appearance
     visuals:
     - type: BarrelBoltVisualizer
@@ -92,81 +85,43 @@
   - type: Sprite
     sprite: Objects/Weapons/Guns/Shotguns/db_shotgun.rsi
     layers:
-      - state: base
-        map: ["enum.RangedBarrelVisualLayers.Base"]
-      - state: bolt-closed
-        map: ["enum.RangedBarrelVisualLayers.Bolt"]
-  - type: Icon
-    sprite: Objects/Weapons/Guns/Shotguns/db_shotgun.rsi
-    state: icon
+    - state: base
+      map: ["enum.RangedBarrelVisualLayers.Base"]
+    - state: bolt-closed
+      map: ["enum.RangedBarrelVisualLayers.Bolt"]
   - type: Item
     size: 24
     sprite: Objects/Weapons/Guns/Shotguns/db_shotgun.rsi
-  - type: RangedWeapon
-  - type: BoltActionBarrel
-    caliber: Shotgun
-    currentSelector: Single
-    allSelectors:
-    - Single
-    fillPrototype: ShellShotgun
-    fireRate: 8.0
-    capacity: 2
-    minAngle: 5
-    maxAngle: 60
-    angleIncrease: 30
-    angleDecay: 15
-    ammoSpreadRatio: 0.7
-    soundGunshot:
-      path: /Audio/Weapons/Guns/Gunshots/shotgun.ogg
-    soundEmpty:
-      path: /Audio/Weapons/Guns/Empty/empty.ogg
-    soundInsert:
-      path: /Audio/Weapons/Guns/MagIn/shotgun_insert.ogg
-    soundBoltOpen:
-      path: /Audio/Weapons/Guns/Cock/shotgun_open.ogg
-    soundBoltClosed:
-      path: /Audio/Weapons/Guns/Cock/shotgun_close.ogg
+  - type: NewGun
+    fireRate: 8
   - type: Appearance
     visuals:
     - type: BarrelBoltVisualizer
 
 - type: entity
   name: Gladstone
-  parent: ShotgunBase
+  parent: BaseWeaponShotgun
   id: WeaponShotgunGladstone
   description: A next-generation Frozen Star shotgun.
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/Shotguns/gladstone.rsi
-  - type: Icon
-    sprite: Objects/Weapons/Guns/Shotguns/gladstone.rsi
   - type: Item
     sprite: Objects/Weapons/Guns/Shotguns/gladstone.rsi
-  - type: RangedWeapon
-  - type: PumpBarrel
-    capacity: 9
-    ammoSpreadRatio: 0.5
-    angleIncrease: 30
-    angleDecay: 15
+  - type: BallisticAmmoProvider
 
 - type: entity
   name: Kammerer
-  parent: ShotgunBase
+  parent: BaseWeaponShotgun
   id: WeaponShotgunKammerer
   description: When an old Remington design meets modern materials, this is the result. A favourite weapon of militia forces throughout many worlds.
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/Shotguns/pump.rsi
-  - type: Icon
-    sprite: Objects/Weapons/Guns/Shotguns/pump.rsi
   - type: Item
     sprite: Objects/Weapons/Guns/Shotguns/pump.rsi
-  - type: RangedWeapon
-  - type: PumpBarrel
+  - type: BallisticAmmoProvider
     capacity: 4
-    ammoSpreadRatio: 0.7
-    angleIncrease: 30
-    angleDecay: 15
 
 - type: entity
   name: sawn-off shotgun
@@ -177,39 +132,17 @@
   - type: Sprite
     sprite: Objects/Weapons/Guns/Shotguns/sawn.rsi
     layers:
-      - state: base
-        map: ["enum.RangedBarrelVisualLayers.Base"]
-      - state: bolt-closed
-        map: ["enum.RangedBarrelVisualLayers.Bolt"]
-  - type: Icon
-    sprite: Objects/Weapons/Guns/Shotguns/sawn.rsi
-    state: icon
+    - state: base
+      map: ["enum.RangedBarrelVisualLayers.Base"]
+    - state: bolt-closed
+      map: ["enum.RangedBarrelVisualLayers.Bolt"]
   - type: Item
     size: 15
     sprite: Objects/Weapons/Guns/Shotguns/sawn.rsi
-  - type: RangedWeapon
-  - type: BoltActionBarrel
-    caliber: Shotgun
-    currentSelector: Single
-    allSelectors:
-    - Single
-    fillPrototype: ShellShotgun
+  - type: BallisticAmmoProvider
+    proto: ShellShotgun
     fireRate: 8.0
     capacity: 2
-    minAngle: 7
-    maxAngle: 90
-    angleIncrease: 45
-    angleDecay: 15
-    soundGunshot:
-      path: /Audio/Weapons/Guns/Gunshots/shotgun.ogg
-    soundEmpty:
-      path: /Audio/Weapons/Guns/Empty/empty.ogg
-    soundInsert:
-      path: /Audio/Weapons/Guns/MagIn/shotgun_insert.ogg
-    soundBoltOpen:
-      path: /Audio/Weapons/Guns/Cock/shotgun_open.ogg
-    soundBoltClosed:
-      path: /Audio/Weapons/Guns/Cock/shotgun_close.ogg
   - type: Appearance
     visuals:
     - type: BarrelBoltVisualizer

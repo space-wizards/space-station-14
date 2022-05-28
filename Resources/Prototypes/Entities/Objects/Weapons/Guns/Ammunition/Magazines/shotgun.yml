@@ -1,13 +1,16 @@
 - type: entity
-  id: MagazineShotgunBase
+  id: BaseMagazineShotgun
   name: ammo drum (.50 shells)
   parent: BaseItem
   abstract: true
   components:
-  - type: RangedMagazine
-    caliber: Shotgun
-    magazineType: Rifle
+  - type: Tags
+    tags:
+    - MagazineShotgun
+  - type: BallisticAmmoProvider
     capacity: 8
+    soundRack:
+      path: /Audio/Weapons/Guns/Cock/smg_cock.ogg
   - type: Sprite
     netsync: false
     layers:
@@ -25,39 +28,39 @@
 - type: entity
   id: MagazineShotgun
   name: ammo drum (.50 pellet)
-  parent: MagazineShotgunBase
+  parent: BaseMagazineShotgun
   components:
-  - type: RangedMagazine
-    fillPrototype: ShellShotgun
+  - type: BallisticAmmoProvider
+    proto: ShellShotgun
   - type: Sprite
     sprite: Objects/Weapons/Guns/Ammunition/Magazine/Shotgun/m12_pellets.rsi
 
 - type: entity
   id: MagazineShotgunBeanbag
   name: ammo drum (.50 beanbags)
-  parent: MagazineShotgunBase
+  parent: BaseMagazineShotgun
   components:
-  - type: RangedMagazine
-    fillPrototype: ShellShotgunBeanbag
+  - type: BallisticAmmoProvider
+    proto: ShellShotgunBeanbag
   - type: Sprite
     sprite: Objects/Weapons/Guns/Ammunition/Magazine/Shotgun/m12_beanbag.rsi
 
 - type: entity
   id: MagazineShotgunSlug
   name: ammo drum (.50 slug)
-  parent: MagazineShotgunBase
+  parent: BaseMagazineShotgun
   components:
-  - type: RangedMagazine
-    fillPrototype: ShellShotgunSlug
+  - type: BallisticAmmoProvider
+    proto: ShellShotgunSlug
   - type: Sprite
     sprite: Objects/Weapons/Guns/Ammunition/Magazine/Shotgun/m12_slug.rsi
 
 - type: entity
   id: MagazineShotgunIncendiary
   name: ammo drum (.50 incendiary)
-  parent: MagazineShotgunBase
+  parent: BaseMagazineShotgun
   components:
-  - type: RangedMagazine
-    fillPrototype: ShellShotgunIncendiary
+  - type: BallisticAmmoProvider
+    proto: ShellShotgunIncendiary
   - type: Sprite
     sprite: Objects/Weapons/Guns/Ammunition/Magazine/Shotgun/m12_slug.rsi

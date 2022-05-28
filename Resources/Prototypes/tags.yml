@@ -308,7 +308,7 @@
   id: Sheet
 
 - type: Tag
-  id: ShotgunShell
+  id: ShellShotgun
 
 - type: Tag
   id: Shovel
