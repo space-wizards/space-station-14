@@ -247,7 +247,7 @@
 
 - type: entity
   name: Vector
-  parent: SmgVector
+  parent: SmgDrozd
   id: SmgDrozdRiot
   description: An excellent fully automatic Heavy SMG.
   suffix: Non-Lethal
