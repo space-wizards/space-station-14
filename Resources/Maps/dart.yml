@@ -134,19 +134,6 @@ entities:
       Content.Server.Weapon.Ranged.Ammunition.Components.RangedMagazineComponent-magazine: !type:Container
         ents: []
     type: ContainerContainer
-- uid: 7
-  type: MagazineMagnumHV
-  components:
-  - parent: 152
-    type: Transform
-  - canCollide: False
-    type: Physics
-  - containers:
-      RangedMagazine-magazine: !type:Container
-        ents: []
-      Content.Server.Weapon.Ranged.Ammunition.Components.RangedMagazineComponent-magazine: !type:Container
-        ents: []
-    type: ContainerContainer
 - uid: 8
   type: MagazineMagnumHV
   components:
@@ -2515,7 +2502,6 @@ entities:
         - 154
         - 114
         - 175
-        - 152
         - 227
     type: ContainerContainer
 - uid: 198
@@ -5911,17 +5897,6 @@ entities:
   type: MagazineSRifle
   components:
   - parent: 95
-    type: Transform
-  - canCollide: False
-    type: Physics
-  - containers:
-      Content.Server.Weapon.Ranged.Ammunition.Components.RangedMagazineComponent-magazine: !type:Container
-        ents: []
-    type: ContainerContainer
-- uid: 578
-  type: MagazineMagnum
-  components:
-  - parent: 152
     type: Transform
   - canCollide: False
     type: Physics
