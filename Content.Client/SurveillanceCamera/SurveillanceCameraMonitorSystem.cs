@@ -26,11 +26,11 @@ public sealed class SurveillanceCameraMonitorSystem : EntitySystem
 
                 _toRemove.Add(comp.Owner);
             }
+        }
 
-            foreach (var uid in _toRemove)
-            {
-                EntityManager.RemoveComponent<ActiveSurveillanceCameraMonitorVisualsComponent>(uid);
-            }
+        foreach (var uid in _toRemove)
+        {
+            EntityManager.RemoveComponent<ActiveSurveillanceCameraMonitorVisualsComponent>(uid);
         }
 
         _toRemove.List?.Clear();
