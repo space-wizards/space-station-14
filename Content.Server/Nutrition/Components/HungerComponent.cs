@@ -11,6 +11,7 @@ using Robust.Shared.Random;
 namespace Content.Server.Nutrition.Components
 {
     [RegisterComponent]
+    [ComponentReference(typeof(SharedHungerComponent))]
     public sealed class HungerComponent : SharedHungerComponent
     {
         [Dependency] private readonly IEntityManager _entMan = default!;
