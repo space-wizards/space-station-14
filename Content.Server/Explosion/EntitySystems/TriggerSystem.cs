@@ -77,7 +77,8 @@ namespace Content.Server.Explosion.EntitySystems
 
         private void OnTriggerCollide(EntityUid uid, TriggerOnCollideComponent component, StartCollideEvent args)
         {
-            Trigger(component.Owner);
+			if(args.OurFixture.ID == component.FixtureID)
+				Trigger(component.Owner);
         }
 
         private void OnActivate(EntityUid uid, TriggerOnActivateComponent component, ActivateInWorldEvent args)

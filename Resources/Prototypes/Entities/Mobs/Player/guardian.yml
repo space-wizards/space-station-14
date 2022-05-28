@@ -59,7 +59,7 @@
   - type: TypingIndicator
     proto: guardian
   - type: Pullable
-  - type: UnarmedCombat
+  - type: MeleeWeapon
     range: 2
     arcwidth: 30
     arc: fist

@@ -95,7 +95,7 @@
 - type: entity
   id: Poweredlight
   description: "A light fixture. Draws power and produces light when equipped with a light tube."
-  suffix: 
+  suffix:
   parent: PoweredlightEmpty
   components:
   - type: Sprite
@@ -255,7 +255,7 @@
 
 - type: entity
   id: PoweredSmallLight
-  suffix: 
+  suffix:
   parent: PoweredSmallLightEmpty
   components:
   - type: Sprite
@@ -272,12 +272,12 @@
   name: emergency light
   description: A small red light with an internal battery that turns on as soon as it stops receiving any power.
   parent: AlwaysPoweredWallLight
+  suffix:
   components:
   - type: PointLight
     enabled: false
     radius: 10
     energy: 2.5
-    offset: "0, 0.5"
     color: "#FF4020"
     mask: /Textures/Effects/LightMasks/cone.png
   - type: ApcPowerReceiver
