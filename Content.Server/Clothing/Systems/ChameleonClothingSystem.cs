@@ -66,7 +66,7 @@ public sealed class ChameleonClothingSystem : SharedChameleonClothingSystem
     public void SetSelectedPrototype(EntityUid uid, string protoId, bool forceUpdate = false,
         ChameleonClothingComponent? component = null, AppearanceComponent? appearance = null)
     {
-        if (!Resolve(uid, ref appearance, ref component))
+        if (!Resolve(uid, ref appearance, ref component, false))
             return;
 
         // check that wasn't already selected
