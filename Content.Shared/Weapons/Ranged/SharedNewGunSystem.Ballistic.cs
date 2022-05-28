@@ -64,11 +64,9 @@ public abstract partial class SharedNewGunSystem
 
     public void ManualCycle(BallisticAmmoProviderComponent component, MapCoordinates coordinates, EntityUid? user = null)
     {
-        if (TryComp<NewGunComponent>(component.Owner, out var gunComp) &&
-            gunComp.NextFire > Timing.CurTime) return;
-
         // Reset shotting for cycling
-        if (gunComp is { FireRate: > 0f })
+        if (TryComp<NewGunComponent>(component.Owner, out var gunComp) &&
+            gunComp is { FireRate: > 0f })
         {
             gunComp.NextFire = Timing.CurTime + TimeSpan.FromSeconds(1 / gunComp.FireRate);
         }
@@ -84,6 +82,7 @@ public abstract partial class SharedNewGunSystem
         if (component.Cycled)
             Cycle(component, coordinates);
 
+        Popup("Cycled", gunComp, user);
         UpdateBallisticAppearance(component);
         UpdateAmmoCount(component.Owner);
     }

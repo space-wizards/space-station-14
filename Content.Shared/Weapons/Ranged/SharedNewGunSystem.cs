@@ -262,7 +262,7 @@ public abstract partial class SharedNewGunSystem : EntitySystem
 
     protected abstract void PlaySound(EntityUid gun, string? sound, EntityUid? user = null);
 
-    protected abstract void Popup(string message, NewGunComponent gun, EntityUid? user);
+    protected abstract void Popup(string message, NewGunComponent? gun, EntityUid? user);
 
     /// <summary>
     /// Call this whenever the ammo count for a gun changes.
