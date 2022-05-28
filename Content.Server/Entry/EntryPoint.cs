@@ -17,6 +17,7 @@ using Content.Server.LandMines;
 using Content.Server.Maps;
 using Content.Server.NodeContainer.NodeGroups;
 using Content.Server.Preferences.Managers;
+using Content.Server.ServerUpdates;
 using Content.Server.Voting.Managers;
 using Content.Shared.Administration;
 using Content.Shared.CCVar;
@@ -37,6 +38,7 @@ namespace Content.Server.Entry
     {
         private EuiManager _euiManager = default!;
         private IVoteManager _voteManager = default!;
+        private ServerUpdateManager _updateManager = default!;
 
         /// <inheritdoc />
         public override void Init()
@@ -74,6 +76,7 @@ namespace Content.Server.Entry
             {
                 _euiManager = IoCManager.Resolve<EuiManager>();
                 _voteManager = IoCManager.Resolve<IVoteManager>();
+                _updateManager = IoCManager.Resolve<ServerUpdateManager>();
 
                 var playerManager = IoCManager.Resolve<IPlayerManager>();
 
@@ -90,6 +93,7 @@ namespace Content.Server.Entry
                 IoCManager.Resolve<GhostKickManager>().Initialize();
 
                 _voteManager.Initialize();
+                _updateManager.Initialize();
             }
         }
 
@@ -143,6 +147,10 @@ namespace Content.Server.Entry
                     _voteManager.Update();
                     break;
                 }
+
+                case ModUpdateLevel.FramePostEngine:
+                    _updateManager.Update();
+                    break;
             }
         }
     }

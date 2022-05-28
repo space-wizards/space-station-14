@@ -335,11 +335,9 @@ namespace Content.Server.GameTicking
             if (DummyTicker)
                 return;
 
-            if (_updateOnRoundEnd)
-            {
-                _baseServer.Shutdown(Loc.GetString("game-ticker-shutdown-server-update"));
+            // Handle restart for server update
+            if (_serverUpdates.RoundEnded())
                 return;
-            }
 
             _sawmill.Info("Restarting round!");
 
