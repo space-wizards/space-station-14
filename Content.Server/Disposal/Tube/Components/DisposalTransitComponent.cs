@@ -6,6 +6,7 @@ namespace Content.Server.Disposal.Tube.Components
     [RegisterComponent]
     [ComponentReference(typeof(IDisposalTubeComponent))]
     [Virtual]
+    [ComponentReference(typeof(DisposalTubeComponent))]
     public class DisposalTransitComponent : DisposalTubeComponent
     {
         protected override Direction[] ConnectableDirections()

@@ -1,23 +1,4 @@
 Entries:
-- author: Peptide90
-  changes:
-  - {message: 'Chargers, beds and bookshelves can be dragged and anchored now.', type: Tweak}
-  - {message: Racks can be vaulted over., type: Tweak}
-  id: 1118
-  time: '2022-02-23T04:58:36.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - {message: Drones can now go under doors. They also are no longer considered flying
-      and don't have all-access., type: Tweak}
-  id: 1119
-  time: '2022-02-23T09:22:19.0000000+00:00'
-- author: Willhelm53
-  changes:
-  - {message: 'Added Possums, Raccoons and Ferrets, with a couple of new sound effects.',
-    type: Add}
-  - {message: Added a named Possum (Morty) and Raccoon (Morticia), type: Add}
-  id: 1120
-  time: '2022-02-23T18:40:31.0000000+00:00'
 - author: Macoron
   changes:
   - {message: Nuclear bomb now has cooldown time after deactivation. Wait for 30 seconds
@@ -2996,3 +2977,21 @@ Entries:
       with the game's artstyle., type: Tweak}
   id: 1617
   time: '2022-05-27T16:02:49.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Every member of their crew now receives their Centcomm-mandated one
+      minute in space before dying., type: Tweak}
+  id: 1618
+  time: '2022-05-28T01:19:32.0000000+00:00'
+- author: ElectroJr
+  changes:
+  - {message: Ghosts now ignore obstructions for some interactions. Useful for admins
+      and mappers., type: Tweak}
+  id: 1619
+  time: '2022-05-28T01:46:17.0000000+00:00'
+- author: ElectroJr
+  changes:
+  - {message: Tweaked gas heater & freezer stats. Better lasers now actually improve
+      minimum temperatures., type: Tweak}
+  id: 1620
+  time: '2022-05-28T19:10:37.0000000+00:00'
