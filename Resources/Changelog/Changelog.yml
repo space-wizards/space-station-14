@@ -1,10 +1,4 @@
 Entries:
-- author: metalgearsloth
-  changes:
-  - {message: Drones can now go under doors. They also are no longer considered flying
-      and don't have all-access., type: Tweak}
-  id: 1119
-  time: '2022-02-23T09:22:19.0000000+00:00'
 - author: Willhelm53
   changes:
   - {message: 'Added Possums, Raccoons and Ferrets, with a couple of new sound effects.',
@@ -2996,3 +2990,9 @@ Entries:
       minute in space before dying., type: Tweak}
   id: 1618
   time: '2022-05-28T01:19:32.0000000+00:00'
+- author: ElectroJr
+  changes:
+  - {message: Ghosts now ignore obstructions for some interactions. Useful for admins
+      and mappers., type: Tweak}
+  id: 1619
+  time: '2022-05-28T01:46:17.0000000+00:00'
