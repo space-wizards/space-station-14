@@ -6,6 +6,9 @@
   - type: Sprite
     netsync: false
     drawdepth: Effects
+    layers:
+    - shader: unshaded
+      map: ["enum.EffectLayers.Unshaded"]
   - type: EffectVisuals
   - type: AnimationPlayer
 

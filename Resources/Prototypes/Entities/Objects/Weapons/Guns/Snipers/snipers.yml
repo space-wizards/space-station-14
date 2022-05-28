@@ -14,6 +14,7 @@
       map: ["enum.RangedBarrelVisualLayers.Bolt"]
   - type: Item
     size: 24
+  - type: AmmoCounter
   - type: NewGun
     fireRate: 1
     autoCycle: false
@@ -44,7 +45,7 @@
     sprite: Objects/Weapons/Guns/Snipers/bolt_gun_wood.rsi
   - type: Item
     sprite: Objects/Weapons/Guns/Snipers/bolt_gun_wood.rsi
-    
+
 
 - type: entity
   name: Hristov

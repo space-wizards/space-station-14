@@ -5,6 +5,7 @@
   components:
   - type: Sprite
     netsync: false
+  - type: AmmoCounter
   - type: NewGun
     fireRate: 1.5
     selectedMode: SemiAuto

@@ -10,6 +10,7 @@
     state: icon
   - type: Item
     size: 24
+  - type: AmmoCounter
   - type: NewGun
     fireRate: 2
     selectedMode: SemiAuto

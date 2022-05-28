@@ -394,4 +394,9 @@ public abstract partial class SharedNewGunSystem : EntitySystem
     /// Interface that says this can be shot from a gun. Exists to facilitate hitscan OR prototype shooting.
     /// </summary>
     public interface IShootable {}
+
+    public enum EffectLayers : byte
+    {
+        Unshaded,
+    }
 }

@@ -1,4 +1,3 @@
-using Content.Client.Effects;
 using Content.Client.Items;
 using Content.Shared.Weapons.Ranged;
 using Content.Shared.Weapons.Ranged.Barrels.Components;
@@ -43,10 +42,11 @@ public sealed partial class NewGunSystem : SharedNewGunSystem
             var sprite = Comp<SpriteComponent>(ent);
             var xform = Transform(ent);
             xform.LocalRotation = a.angle;
-            var layer = sprite.AddLayer(a.Sprite);
-            sprite.LayerMapSet(layer, layer);
-            sprite[layer].AutoAnimated = false;
+            sprite[EffectLayers.Unshaded].AutoAnimated = false;
+            sprite.LayerSetSprite(EffectLayers.Unshaded, rsi);
+            sprite.LayerSetState(EffectLayers.Unshaded, rsi.RsiState);
             sprite.Scale = new Vector2(a.Distance, 1f);
+            sprite[EffectLayers.Unshaded].Visible = true;
 
             var anim = new Animation()
             {
@@ -55,7 +55,7 @@ public sealed partial class NewGunSystem : SharedNewGunSystem
                 {
                     new AnimationTrackSpriteFlick()
                     {
-                        LayerKey = layer,
+                        LayerKey = EffectLayers.Unshaded,
                         KeyFrames =
                         {
                             new AnimationTrackSpriteFlick.KeyFrame(rsi.RsiState, 0f),
