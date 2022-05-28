@@ -42781,7 +42781,7 @@ entities:
     parent: 106
     type: Transform
 - uid: 3061
-  type: TaserGun
+  type: WeaponTaser
   components:
   - pos: -41.416508,33.748924
     parent: 106
@@ -42814,7 +42814,7 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 3064
-  type: TaserGun
+  type: WeaponTaser
   components:
   - pos: -41.447758,33.95205
     parent: 106
@@ -52208,7 +52208,7 @@ entities:
   - fixtures: []
     type: Fixtures
 - uid: 4139
-  type: SmgWt550
+  type: WeaponSubMachineGunWt550
   components:
   - pos: -42.40859,29.545546
     parent: 106
@@ -52302,7 +52302,7 @@ entities:
   - bodyType: Dynamic
     type: Physics
 - uid: 4150
-  type: TaserGun
+  type: WeaponTaser
   components:
   - pos: -27.903166,24.498707
     parent: 106
@@ -87842,7 +87842,7 @@ entities:
   - fixtures: []
     type: Fixtures
 - uid: 7406
-  type: LaserRifleCog
+  type: WeaponLaserRifleCog
   components:
   - pos: -42.40859,28.46742
     parent: 106
@@ -87950,7 +87950,7 @@ entities:
     parent: 106
     type: Transform
 - uid: 7419
-  type: SmgDrozdRiot
+  type: WeaponSubMachineGunDrozdRubber
   components:
   - pos: -45.5,31.5
     parent: 106
@@ -88155,7 +88155,7 @@ entities:
         ents: []
     type: ContainerContainer
 - uid: 7442
-  type: SmgWt550
+  type: WeaponSubMachineGunWt550
   components:
   - pos: -29.479053,32.641815
     parent: 106
@@ -88172,7 +88172,7 @@ entities:
     parent: 106
     type: Transform
 - uid: 7444
-  type: TaserGun
+  type: WeaponTaser
   components:
   - pos: -41.416508,33.498924
     parent: 106
@@ -105665,7 +105665,7 @@ entities:
     parent: 106
     type: Transform
 - uid: 9071
-  type: RevolverDeckard
+  type: WeaponRevolverDeckard
   components:
   - pos: 8.511664,29.586452
     parent: 106
@@ -132155,7 +132155,7 @@ entities:
     parent: 106
     type: Transform
 - uid: 11573
-  type: FlareGun
+  type: WeaponFlareGun
   components:
   - pos: 31.529438,-41.474922
     parent: 106

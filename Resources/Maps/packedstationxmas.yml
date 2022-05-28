@@ -77444,7 +77444,7 @@ entities:
       light_bulb: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 7557
-  type: SmgDrozdRiot
+  type: WeaponSubMachineGunDrozdRubber
   components:
   - pos: 38.61274,27.452318
     parent: 0
@@ -77468,7 +77468,7 @@ entities:
         ents: []
     type: ContainerContainer
 - uid: 7559
-  type: SmgDrozdRiot
+  type: WeaponSubMachineGunDrozdRubber
   components:
   - pos: 38.597115,27.702318
     parent: 0
@@ -114489,7 +114489,7 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 11179
-  type: SmgWt550
+  type: WeaponSubMachineGunWt550
   components:
   - pos: 45.51632,24.577965
     parent: 0

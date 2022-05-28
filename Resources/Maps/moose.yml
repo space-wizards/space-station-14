@@ -19792,7 +19792,7 @@ entities:
     parent: 61
     type: Transform
 - uid: 979
-  type: TaserGun
+  type: WeaponTaser
   components:
   - pos: 20.485361,-4.263515
     parent: 61
@@ -19816,7 +19816,7 @@ entities:
   - enabled: False
     type: AmbientSound
 - uid: 982
-  type: TaserGun
+  type: WeaponTaser
   components:
   - pos: 20.485361,-4.388515
     parent: 61
@@ -19826,7 +19826,7 @@ entities:
       cellslot_cell_container: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 983
-  type: TaserGun
+  type: WeaponTaser
   components:
   - pos: 20.500986,-4.56039
     parent: 61
@@ -20149,7 +20149,7 @@ entities:
         ents: []
     type: ContainerContainer
 - uid: 1020
-  type: SmgDrozdRiot
+  type: WeaponSubMachineGunDrozdRubber
   components:
   - pos: 19.553373,0.6517799
     parent: 61
@@ -20191,7 +20191,7 @@ entities:
         ents: []
     type: ContainerContainer
 - uid: 1024
-  type: LaserRifleCog
+  type: WeaponLaserRifleCog
   components:
   - pos: 19.522123,-0.2544701
     parent: 61
@@ -20201,7 +20201,7 @@ entities:
       cellslot_cell_container: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 1025
-  type: LaserRifleCog
+  type: WeaponLaserRifleCog
   components:
   - pos: 19.537748,-0.4732201
     parent: 61
@@ -20229,7 +20229,7 @@ entities:
     parent: 61
     type: Transform
 - uid: 1029
-  type: ShotgunGladstone
+  type: WeaponShotgunGladstone
   components:
   - pos: 17.518997,-1.2810268
     parent: 61
@@ -20336,7 +20336,7 @@ entities:
     parent: 61
     type: Transform
 - uid: 1046
-  type: ShotgunGladstone
+  type: WeaponShotgunGladstone
   components:
   - pos: 17.532757,-1.5361621
     parent: 61
@@ -56681,7 +56681,7 @@ entities:
     parent: 61
     type: Transform
 - uid: 4808
-  type: FlareGun
+  type: WeaponFlareGun
   components:
   - pos: 20.46457,-35.48058
     parent: 61
@@ -94956,7 +94956,7 @@ entities:
         ents: []
     type: ContainerContainer
 - uid: 9110
-  type: RifleWintermute
+  type: WeaponRifleWintermute
   components:
   - pos: 23.52954,3.78771
     parent: 61
@@ -95384,7 +95384,7 @@ entities:
         ents: []
     type: ContainerContainer
 - uid: 9164
-  type: TaserGun
+  type: WeaponTaser
   components:
   - pos: 10.525494,-1.3448606
     parent: 61

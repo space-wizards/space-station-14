@@ -37179,7 +37179,7 @@ entities:
     parent: 60
     type: Transform
 - uid: 1533
-  type: SmgWt550
+  type: WeaponSubMachineGunWt550
   components:
   - pos: -28.464243,1.9162104
     parent: 60
@@ -37245,7 +37245,7 @@ entities:
       Toggle: []
     type: SignalReceiver
 - uid: 1538
-  type: LaserRifleCog
+  type: WeaponLaserRifleCog
   components:
   - pos: -28.464243,1.2755854
     parent: 60
@@ -37255,7 +37255,7 @@ entities:
       cellslot_cell_container: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 1539
-  type: LaserRifleCog
+  type: WeaponLaserRifleCog
   components:
   - pos: -28.479868,1.4474604
     parent: 60
@@ -38390,7 +38390,7 @@ entities:
     parent: 60
     type: Transform
 - uid: 1649
-  type: SmgDrozdRiot
+  type: WeaponSubMachineGunDrozdRubber
   components:
   - pos: -28.404697,2.4943354
     parent: 60
@@ -38497,7 +38497,7 @@ entities:
     parent: 60
     type: Transform
 - uid: 1661
-  type: RevolverInspector
+  type: WeaponRevolverInspector
   components:
   - pos: -28.464243,0.4045535
     parent: 60
@@ -39857,7 +39857,7 @@ entities:
         ents: []
     type: ContainerContainer
 - uid: 1802
-  type: ShotgunGladstone
+  type: WeaponShotgunGladstone
   components:
   - pos: -28.417368,0.95142853
     parent: 60
@@ -40318,7 +40318,7 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 1849
-  type: RifleWintermute
+  type: WeaponRifleWintermute
   components:
   - pos: -18.455557,1.0670196
     parent: 60
@@ -40508,7 +40508,7 @@ entities:
       charger-slot: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 1873
-  type: TaserGun
+  type: WeaponTaser
   components:
   - pos: -30.457558,0.95884895
     parent: 60
@@ -93103,7 +93103,7 @@ entities:
     parent: 60
     type: Transform
 - uid: 7675
-  type: TaserGun
+  type: WeaponTaser
   components:
   - pos: -27.491865,-7.3054943
     parent: 60
@@ -103820,7 +103820,7 @@ entities:
         ents: []
     type: ContainerContainer
 - uid: 8897
-  type: SmgDrozdRiot
+  type: WeaponSubMachineGunDrozdRubber
   components:
   - pos: -28.420322,2.2599604
     parent: 60
@@ -108555,7 +108555,7 @@ entities:
       charger-slot: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 9535
-  type: TaserGun
+  type: WeaponTaser
   components:
   - pos: -30.470657,1.1337857
     parent: 60

@@ -161,7 +161,7 @@ entities:
         ents: []
     type: ContainerContainer
 - uid: 9
-  type: RifleWintermute
+  type: WeaponRifleWintermute
   components:
   - parent: 197
     type: Transform
@@ -996,7 +996,7 @@ entities:
         ents: []
     type: ContainerContainer
 - uid: 29
-  type: RifleWintermute
+  type: WeaponRifleWintermute
   components:
   - parent: 292
     type: Transform
@@ -1076,7 +1076,7 @@ entities:
         ents: []
     type: ContainerContainer
 - uid: 37
-  type: RifleWintermute
+  type: WeaponRifleWintermute
   components:
   - parent: 266
     type: Transform
@@ -1451,7 +1451,7 @@ entities:
     parent: 17
     type: Transform
 - uid: 75
-  type: RifleWintermute
+  type: WeaponRifleWintermute
   components:
   - parent: 198
     type: Transform
@@ -1630,7 +1630,7 @@ entities:
     parent: 17
     type: Transform
 - uid: 95
-  type: RifleWintermute
+  type: WeaponRifleWintermute
   components:
   - parent: 232
     type: Transform
@@ -2281,7 +2281,7 @@ entities:
       light_bulb: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 170
-  type: RifleWintermute
+  type: WeaponRifleWintermute
   components:
   - parent: 265
     type: Transform
@@ -5068,7 +5068,7 @@ entities:
     parent: 17
     type: Transform
 - uid: 474
-  type: RevolverDeckard
+  type: WeaponRevolverDeckard
   components:
   - pos: -0.5378609,12.716614
     parent: 17

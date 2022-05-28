@@ -499,13 +499,6 @@ entities:
       Off: []
       Toggle: []
     type: SignalReceiver
-- uid: 42
-  type: SuspicionPistolSpawner
-  components:
-  - rot: 4.371139006309477E-08 rad
-    pos: -10.5,-0.5
-    parent: 852
-    type: Transform
 - uid: 43
   type: ShellShotgunSlug
   components:
@@ -717,13 +710,6 @@ entities:
   type: ToyRubberDuck
   components:
   - pos: 12.492016,27.532398
-    parent: 852
-    type: Transform
-- uid: 68
-  type: SuspicionPistolMagazineSpawner
-  components:
-  - rot: 4.371139006309477E-08 rad
-    pos: -10.5,1.5
     parent: 852
     type: Transform
 - uid: 69
@@ -1186,7 +1172,7 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 128
-  type: SmgDrozdRiot
+  type: WeaponSubMachineGunDrozdRubber
   components:
   - pos: -14.340517,21.391796
     parent: 852
@@ -5972,13 +5958,6 @@ entities:
   - pos: -0.5,32.5
     parent: 852
     type: Transform
-- uid: 534
-  type: SuspicionPistolSpawner
-  components:
-  - rot: 4.371139006309477E-08 rad
-    pos: 6.5,20.5
-    parent: 852
-    type: Transform
 - uid: 535
   type: DrinkGoldenCup
   components:
@@ -6043,7 +6022,7 @@ entities:
     parent: 852
     type: Transform
 - uid: 543
-  type: ShotgunGladstone
+  type: WeaponShotgunGladstone
   components:
   - pos: -11.496767,19.548046
     parent: 852
@@ -18315,7 +18294,7 @@ entities:
     parent: 852
     type: Transform
 - uid: 975
-  type: LaserRifleCog
+  type: WeaponLaserRifleCog
   components:
   - pos: -14.448555,19.788729
     parent: 852
@@ -23554,7 +23533,7 @@ entities:
     parent: 852
     type: Transform
 - uid: 1549
-  type: TaserGun
+  type: WeaponTaser
   components:
   - pos: -13.508065,16.49532
     parent: 852
@@ -51984,7 +51963,7 @@ entities:
       Toggle: []
     type: SignalReceiver
 - uid: 4233
-  type: SmgDrozdRiot
+  type: WeaponSubMachineGunDrozdRubber
   components:
   - pos: -14.356142,21.563671
     parent: 852
@@ -52172,7 +52151,7 @@ entities:
     parent: 852
     type: Transform
 - uid: 4256
-  type: ShotgunGladstone
+  type: WeaponShotgunGladstone
   components:
   - pos: -11.512392,19.719921
     parent: 852
@@ -55844,7 +55823,7 @@ entities:
       cellslot_cell_container: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 4706
-  type: TaserGun
+  type: WeaponTaser
   components:
   - pos: -13.55494,16.74532
     parent: 852
@@ -55864,7 +55843,7 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 4708
-  type: TaserGun
+  type: WeaponTaser
   components:
   - pos: -13.508065,16.58907
     parent: 852
@@ -59856,7 +59835,7 @@ entities:
         ents: []
     type: ContainerContainer
 - uid: 5148
-  type: RifleWintermute
+  type: WeaponRifleWintermute
   components:
   - pos: -14.387392,20.923046
     parent: 852
@@ -88634,7 +88613,7 @@ entities:
     parent: 852
     type: Transform
 - uid: 8020
-  type: FlareGun
+  type: WeaponFlareGun
   components:
   - pos: -5.3374166,26.472134
     parent: 852
