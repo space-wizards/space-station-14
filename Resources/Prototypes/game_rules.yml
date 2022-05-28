@@ -24,3 +24,6 @@
 
 - type: gameRule
   id: Secret
+
+- type: gameRule
+  id: Zombie

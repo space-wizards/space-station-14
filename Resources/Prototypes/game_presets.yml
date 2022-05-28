@@ -78,3 +78,14 @@
   showInVote: false
   rules:
     - Nukeops
+
+- type: gamePreset
+  id: Zombie
+  alias:
+    - zombie
+    - zombies
+  name: zombie-title
+  description: zombie-description
+  showInVote: true
+  rules:
+    - Zombie

@@ -287,6 +287,19 @@ namespace Content.Shared.CCVar
             CVarDef.Create("nukeops.players_per_op", 5);
 
         /*
+         * Zombie
+         */
+
+        public static readonly CVarDef<int> ZombieMinPlayers =
+            CVarDef.Create("zombie.min_players", 25);
+
+        public static readonly CVarDef<int> ZombieMaxInfected =
+            CVarDef.Create("zombie.max_infected", 4);
+
+        public static readonly CVarDef<int> ZombiePlayersPerInfected =
+            CVarDef.Create("zombie.players_per_infected", 7);
+
+        /*
          * Console
          */
 

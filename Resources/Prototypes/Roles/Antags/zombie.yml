@@ -1,0 +1,6 @@
+- type: antag
+  id: PatientZero
+  name: "Patient 0"
+  antagonist: true
+  setPreference: false
+  objective: "Once you turn, infect as many other crew members as possible"
