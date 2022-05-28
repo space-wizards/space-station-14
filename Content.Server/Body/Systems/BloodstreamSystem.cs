@@ -289,8 +289,11 @@ public sealed class BloodstreamSystem : EntitySystem
         var tempSol = new Solution() { MaxVolume = max };
 
         tempSol.AddSolution(component.BloodSolution);
+        component.BloodSolution.RemoveAllSolution();
         tempSol.AddSolution(component.BloodTemporarySolution);
+        component.BloodTemporarySolution.RemoveAllSolution();
         tempSol.AddSolution(component.ChemicalSolution);
+        component.ChemicalSolution.RemoveAllSolution();
         _spillableSystem.SpillAt(uid, tempSol, "PuddleBlood", true);
     }
 }

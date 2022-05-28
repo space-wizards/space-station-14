@@ -20602,6 +20602,8 @@ entities:
       - 0
       - 0
     type: GridAtmosphere
+  - id: Barratry
+    type: BecomesStation
 - uid: 107
   type: WallReinforced
   components:

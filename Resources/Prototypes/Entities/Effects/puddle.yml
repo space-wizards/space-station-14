@@ -118,10 +118,24 @@
 
 - type: entity
   name: vomit
-  id: PuddleVomit
-  parent: PuddleBase
+  id: PuddleVomit # No parent because we don't want the visualizer
   description: Gross.
   components:
+  - type: Transform
+    anchored: true
+  - type: Clickable
+  - type: Evaporation
+  - type: Physics
+  - type: Fixtures
+    fixtures:
+    - shape:
+        !type:PhysShapeAabb
+        bounds: "-0.4,-0.4,0.4,0.4"
+      mask:
+      - ItemMask
+      layer:
+      - SlipLayer
+      hard: false
   - type: Sprite
     sprite: Fluids/vomit.rsi
     state: vomit-0
@@ -135,9 +149,6 @@
           Quantity: 5
         - ReagentId: Water
           Quantity: 5
-  - type: Appearance
-    visuals:
-    - type: PuddleVisualizer
   - type: Slippery
     launchForwardsMultiplier: 2.0
   - type: StepTrigger
