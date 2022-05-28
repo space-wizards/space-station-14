@@ -14,7 +14,7 @@ namespace Content.Server.Construction
 {
     public sealed class AnchorableSystem : SharedAnchorableSystem
     {
-        [Dependency] private readonly AdminLogSystem _adminLogs = default!;
+        [Dependency] private readonly IAdminLogManager _adminLogger = default!;
         [Dependency] private readonly ToolSystem _toolSystem = default!;
         [Dependency] private readonly PullingSystem _pullingSystem = default!;
 
@@ -43,7 +43,7 @@ namespace Content.Server.Construction
 
             RaiseLocalEvent(uid, new UserUnanchoredEvent(args.User, args.Using), false);
 
-            _adminLogs.Add(
+            _adminLogger.Add(
                 LogType.Action,
                 LogImpact.Low,
                 $"{EntityManager.ToPrettyString(args.User):user} unanchored {EntityManager.ToPrettyString(uid):anchored} using {EntityManager.ToPrettyString(args.Using):using}"
@@ -78,7 +78,7 @@ namespace Content.Server.Construction
 
             RaiseLocalEvent(uid, new UserAnchoredEvent(args.User, args.Using), false);
 
-            _adminLogs.Add(
+            _adminLogger.Add(
                 LogType.Action,
                 LogImpact.Low,
                 $"{EntityManager.ToPrettyString(args.User):user} anchored {EntityManager.ToPrettyString(uid):anchored} using {EntityManager.ToPrettyString(args.Using):using}"

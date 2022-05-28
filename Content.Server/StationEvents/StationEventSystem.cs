@@ -28,7 +28,7 @@ namespace Content.Server.StationEvents
         [Dependency] private readonly GameTicker _gameTicker = default!;
         [Dependency] private readonly IRobustRandom _random = default!;
 
-        [Dependency] private readonly AdminLogSystem _adminLog = default!;
+        [Dependency] private readonly IAdminLogManager _adminLogger = default!;
 
         public StationEvent? CurrentEvent { get; private set; }
         public IReadOnlyCollection<StationEvent> StationEvents => _stationEvents;
@@ -72,7 +72,7 @@ namespace Content.Server.StationEvents
         /// <returns></returns>
         public string RunEvent(string name)
         {
-            _adminLog.Add(LogType.EventRan, LogImpact.High, $"Event run: {name}");
+            _adminLogger.Add(LogType.EventRan, LogImpact.High, $"Event run: {name}");
 
             // Could use a dictionary but it's such a minor thing, eh.
             // Wasn't sure on whether to localize this given it's a command

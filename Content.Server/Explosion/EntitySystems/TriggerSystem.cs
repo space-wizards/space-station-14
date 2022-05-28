@@ -35,7 +35,7 @@ namespace Content.Server.Explosion.EntitySystems
         [Dependency] private readonly FixtureSystem _fixtures = default!;
         [Dependency] private readonly FlashSystem _flashSystem = default!;
         [Dependency] private readonly SharedBroadphaseSystem _broadphase = default!;
-        [Dependency] private readonly AdminLogSystem _logSystem = default!;
+        [Dependency] private readonly IAdminLogManager _adminLogger= default!;
 
         public override void Initialize()
         {
@@ -97,12 +97,12 @@ namespace Content.Server.Explosion.EntitySystems
 
             if (user != null)
             {
-                _logSystem.Add(LogType.Trigger,
+                _adminLogger.Add(LogType.Trigger,
                     $"{ToPrettyString(user.Value):user} started a {delay} second timer trigger on entity {ToPrettyString(uid):timer}");
             }
             else
             {
-                _logSystem.Add(LogType.Trigger,
+                _adminLogger.Add(LogType.Trigger,
                     $"{delay} second timer trigger started on entity {ToPrettyString(uid):timer}");
             }
 
