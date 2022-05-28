@@ -82,11 +82,11 @@
   - type: Sprite
     sprite: Objects/Weapons/Guns/Battery/cog.rsi
     layers:
-      - state: base
-        map: ["enum.RangedBarrelVisualLayers.Base"]
-      - state: mag-unshaded-4
-        map: ["enum.RangedBarrelVisualLayers.MagUnshaded"]
-        shader: unshaded
+    - state: base
+      map: ["enum.RangedBarrelVisualLayers.Base"]
+    - state: mag-unshaded-4
+      map: ["enum.RangedBarrelVisualLayers.MagUnshaded"]
+      shader: unshaded
   - type: Item
     size: 24
     sprite: Objects/Weapons/Guns/Battery/cog.rsi
@@ -108,31 +108,31 @@
   id: WeaponPulsePistolPdw
   description: A state of the art energy pistol favoured as a sidearm by the NT-ERT operatives.
   components:
-    - type: Sprite
-      sprite: Objects/Weapons/Guns/Battery/pulse_pistol.rsi
-      layers:
-        - state: base
-          map: ["enum.RangedBarrelVisualLayers.Base"]
-        - state: mag-unshaded-4
-          map: ["enum.RangedBarrelVisualLayers.MagUnshaded"]
-          shader: unshaded
-    - type: Item
-      size: 12
-      sprite: Objects/Weapons/Guns/Battery/pulse_pistol.rsi
-    - type: NewGun
-      fireRate: 1
-      selectedMode: Safety
-      availableModes:
-        - Safety
-        - SemiAuto
-      soundGunshot:
-        path: /Audio/Weapons/Guns/Gunshots/laser_cannon.ogg
-    - type: HitscanBatteryAmmoProvider
-      proto: pulse
-      fireCost: 150
-    - type: Battery
-      maxCharge: 900
-      startingCharge: 900
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Battery/pulse_pistol.rsi
+    layers:
+    - state: base
+      map: ["enum.RangedBarrelVisualLayers.Base"]
+    - state: mag-unshaded-4
+      map: ["enum.RangedBarrelVisualLayers.MagUnshaded"]
+      shader: unshaded
+  - type: Item
+    size: 12
+    sprite: Objects/Weapons/Guns/Battery/pulse_pistol.rsi
+  - type: NewGun
+    fireRate: 1
+    selectedMode: Safety
+    availableModes:
+    - Safety
+    - SemiAuto
+    soundGunshot:
+      path: /Audio/Weapons/Guns/Gunshots/laser_cannon.ogg
+  - type: HitscanBatteryAmmoProvider
+    proto: pulse
+    fireCost: 150
+  - type: Battery
+    maxCharge: 900
+    startingCharge: 900
 
 - type: entity
   name: DEAC-12 pulse carbine
@@ -143,11 +143,11 @@
   - type: Sprite
     sprite: Objects/Weapons/Guns/Battery/pulse_carbine.rsi
     layers:
-      - state: base
-        map: ["enum.RangedBarrelVisualLayers.Base"]
-      - state: mag-unshaded-4
-        map: ["enum.RangedBarrelVisualLayers.MagUnshaded"]
-        shader: unshaded
+    - state: base
+      map: ["enum.RangedBarrelVisualLayers.Base"]
+    - state: mag-unshaded-4
+      map: ["enum.RangedBarrelVisualLayers.MagUnshaded"]
+      shader: unshaded
   - type: Item
     size: 24
     sprite: Objects/Weapons/Guns/Battery/pulse_carbine.rsi
@@ -204,11 +204,11 @@
   - type: Sprite
     sprite: Objects/Weapons/Guns/Battery/laser_cannon.rsi
     layers:
-      - state: base
-        map: ["enum.RangedBarrelVisualLayers.Base"]
-      - state: mag-unshaded-4
-        map: ["enum.RangedBarrelVisualLayers.MagUnshaded"]
-        shader: unshaded
+    - state: base
+      map: ["enum.RangedBarrelVisualLayers.Base"]
+    - state: mag-unshaded-4
+      map: ["enum.RangedBarrelVisualLayers.MagUnshaded"]
+      shader: unshaded
   - type: Item
     size: 24
     sprite: Objects/Weapons/Guns/Battery/laser_cannon.rsi
@@ -232,11 +232,11 @@
   - type: Sprite
     sprite: Objects/Weapons/Guns/Battery/xray.rsi
     layers:
-      - state: base
-        map: ["enum.RangedBarrelVisualLayers.Base"]
-      - state: mag-unshaded-0
-        map: ["enum.RangedBarrelVisualLayers.MagUnshaded"]
-        shader: unshaded
+    - state: base
+      map: ["enum.RangedBarrelVisualLayers.Base"]
+    - state: mag-unshaded-0
+      map: ["enum.RangedBarrelVisualLayers.MagUnshaded"]
+      shader: unshaded
   - type: Item
     size: 24
     sprite: Objects/Weapons/Guns/Battery/xray.rsi
@@ -269,11 +269,11 @@
   - type: Sprite
     sprite: Objects/Weapons/Guns/Battery/taser.rsi
     layers:
-      - state: base
-        map: ["enum.RangedBarrelVisualLayers.Base"]
-      - state: mag-unshaded-0
-        map: ["enum.RangedBarrelVisualLayers.MagUnshaded"]
-        shader: unshaded
+    - state: base
+      map: ["enum.RangedBarrelVisualLayers.Base"]
+    - state: mag-unshaded-0
+      map: ["enum.RangedBarrelVisualLayers.MagUnshaded"]
+      shader: unshaded
   - type: Clothing
     sprite: Objects/Weapons/Guns/Battery/taser.rsi
     size: 24
@@ -306,11 +306,11 @@
   - type: Sprite
     sprite: Objects/Weapons/Guns/Battery/antiquelasergun.rsi
     layers:
-      - state: base
-        map: ["enum.RangedBarrelVisualLayers.Base"]
-      - state: mag-unshaded-4
-        map: ["enum.RangedBarrelVisualLayers.MagUnshaded"]
-        shader: unshaded
+    - state: base
+      map: ["enum.RangedBarrelVisualLayers.Base"]
+    - state: mag-unshaded-4
+      map: ["enum.RangedBarrelVisualLayers.MagUnshaded"]
+      shader: unshaded
   - type: Item
     size: 12
     sprite: Objects/Weapons/Guns/Battery/antiquelasergun.rsi
