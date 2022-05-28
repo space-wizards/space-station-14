@@ -340,7 +340,7 @@ public sealed partial class NewGunSystem
 
             for (var i = 0; i < capacity; i++)
             {
-                var bulletSpent = bullets[i];
+                var bulletFree = bullets[i];
                 // Add a outline
                 var box = new Control()
                 {
@@ -358,16 +358,16 @@ public sealed partial class NewGunSystem
                 Color color;
                 Texture bulletTexture = texture;
 
-                if (bulletSpent.HasValue)
+                if (bulletFree.HasValue)
                 {
-                    if (bulletSpent.Value)
+                    if (bulletFree.Value)
                     {
-                        color = altColor ? colorSpentA : colorSpentB;
-                        bulletTexture = emptyTexture;
+                        color = altColor ? colorA : colorB;
                     }
                     else
                     {
-                        color = altColor ? colorA : colorB;
+                        color = altColor ? colorSpentA : colorSpentB;
+                        bulletTexture = emptyTexture;
                     }
                 }
                 else
