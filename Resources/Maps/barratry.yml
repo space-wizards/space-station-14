@@ -87975,7 +87975,7 @@ entities:
     parent: 106
     type: Transform
 - uid: 7422
-  type: PulseCarbineDeac
+  type: WeaponPulseCarbineDeac
   components:
   - pos: -42.429092,30.451796
     parent: 106
@@ -105915,7 +105915,7 @@ entities:
     parent: 106
     type: Transform
 - uid: 9104
-  type: PistolClarissa
+  type: WeaponPistolClarissa
   components:
   - pos: -7.507539,28.459343
     parent: 106
