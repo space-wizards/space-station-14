@@ -7,22 +7,23 @@
   components:
   - type: Sprite
     netsync: false
+    state: icon
   - type: Item
     size: 24
   - type: NewGun
     fireRate: 2
-    selectedMode: Single
+    selectedMode: SemiAuto
     availableModes:
-    - Single
+    - SemiAuto
     soundGunshot:
       path: /Audio/Weapons/Guns/Gunshots/shotgun.ogg
     soundEmpty:
       path: /Audio/Weapons/Guns/Empty/empty.ogg
   - type: BallisticAmmoProvider
+    autoCycle: false
     whitelist:
       tags:
       - ShellShotgun
-    autoCycle: false
     capacity: 7
     proto: ShellShotgun
     soundInsert:
@@ -84,11 +85,6 @@
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/Shotguns/db_shotgun.rsi
-    layers:
-    - state: base
-      map: ["enum.RangedBarrelVisualLayers.Base"]
-    - state: bolt-closed
-      map: ["enum.RangedBarrelVisualLayers.Bolt"]
   - type: Item
     size: 24
     sprite: Objects/Weapons/Guns/Shotguns/db_shotgun.rsi
@@ -131,11 +127,6 @@
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/Shotguns/sawn.rsi
-    layers:
-    - state: base
-      map: ["enum.RangedBarrelVisualLayers.Base"]
-    - state: bolt-closed
-      map: ["enum.RangedBarrelVisualLayers.Bolt"]
   - type: Item
     size: 15
     sprite: Objects/Weapons/Guns/Shotguns/sawn.rsi

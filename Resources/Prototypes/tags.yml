@@ -214,6 +214,9 @@
   id: Machete
 
 - type: Tag
+  id: MagazineShotgun
+
+- type: Tag
   id: Matchstick
 
 - type: Tag
