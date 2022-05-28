@@ -3,6 +3,7 @@ using Robust.Shared.Containers;
 using Robust.Shared.GameStates;
 using Robust.Shared.Map;
 using Robust.Shared.Serialization;
+using Robust.Shared.Utility;
 
 namespace Content.Shared.Weapons.Ranged;
 
@@ -21,9 +22,27 @@ public partial class SharedNewGunSystem
     {
         if (args.Current is not RevolverAmmoProviderComponentState state) return;
 
+        var oldIndex = component.CurrentIndex;
         component.CurrentIndex = state.CurrentIndex;
-        component.AmmoSlots = state.AmmoSlots;
-        component.Chambers = state.Chambers;
+
+        component.AmmoSlots = new EntityUid?[state.AmmoSlots.Length];
+        component.Chambers = new bool?[state.Chambers.Length];
+
+        DebugTools.Assert(component.AmmoSlots.Length == component.Chambers.Length);
+
+        // Need to copy across the state rather than the ref.
+        for (var i = 0; i < component.AmmoSlots.Length; i++)
+        {
+            component.AmmoSlots[i] = state.AmmoSlots[i];
+            component.Chambers[i] = state.Chambers[i];
+        }
+
+        // Handle spins
+        if (Timing.IsFirstTimePredicted)
+        {
+            if (oldIndex != state.CurrentIndex)
+                UpdateAmmoCount(uid);
+        }
     }
 
     private void OnRevolverGetState(EntityUid uid, SharedRevolverAmmoProviderComponent component, ref ComponentGetState args)
@@ -38,13 +57,13 @@ public partial class SharedNewGunSystem
 
     private void OnRevolverVerbs(EntityUid uid, SharedRevolverAmmoProviderComponent component, GetVerbsEvent<Verb> args)
     {
-        if (!args.CanAccess || args.CanInteract) return;
+        if (!args.CanAccess || !args.CanInteract) return;
 
         args.Verbs.Add(new Verb()
         {
             Text = "Spin revolver",
             // Category = VerbCategory.G,
-            Act = () => SpinRevolver(component)
+            Act = () => SpinRevolver(component, args.User)
         });
     }
 
