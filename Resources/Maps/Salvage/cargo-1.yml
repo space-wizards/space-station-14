@@ -94,7 +94,7 @@ entities:
     parent: 20
     type: Transform
 - uid: 4
-  type: FlareGun
+  type: WeaponFlareGun
   components:
   - pos: -3.609375,2.629901
     parent: 20

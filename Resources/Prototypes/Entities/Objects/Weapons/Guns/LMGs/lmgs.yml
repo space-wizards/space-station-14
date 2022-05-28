@@ -43,7 +43,7 @@
 
 - type: entity
   name: L6 SAW
-  id: LMGL6
+  id: WeaponLightMachineGunL6
   parent: LMGBase
   description: A rather traditionally made LMG with a pleasantly lacquered wooden pistol grip.
   components:
@@ -75,40 +75,4 @@
     - type: MagVisualizer
       magState: mag
       steps: 4
-      zeroVisible: true
-
-- type: entity
-  name: pulemyot kalashnikova
-  id: LMGPK
-  parent: LMGBase
-  description: A well preserved and maintained antique weapon of war.
-  components:
-  - type: Sprite
-    sprite: Objects/Weapons/Guns/LMGs/pk.rsi
-    layers:
-    - state: base
-      map: ["enum.RangedBarrelVisualLayers.Base"]
-    - state: bolt-closed
-      map: ["enum.RangedBarrelVisualLayers.Bolt"]
-    - state: mag-5
-      map: ["enum.RangedBarrelVisualLayers.Mag"]
-  - type: Icon
-    sprite: Objects/Weapons/Guns/LMGs/pk.rsi
-  - type: Item
-    size: 24
-    sprite: Objects/Weapons/Guns/LMGs/pk.rsi
-  - type: RangedWeapon
-  - type: MagazineBarrel
-    magFillPrototype: MagazineLRiflePkBox
-    fireRate: 5
-    minAngle: 0
-    maxAngle: 45
-    angleIncrease: 15
-    angleDecay: 20
-  - type: Appearance
-    visuals:
-    - type: BarrelBoltVisualizer
-    - type: MagVisualizer
-      magState: mag
-      steps: 6
       zeroVisible: true

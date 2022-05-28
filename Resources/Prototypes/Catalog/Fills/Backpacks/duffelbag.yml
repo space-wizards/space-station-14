@@ -36,7 +36,7 @@
   components:
   - type: StorageFill
     contents:
-      - id: ShotgunBojevic
+      - id: WeaponShotgunBojevic
       - id: MagazineShotgun
       - id: MagazineShotgunBeanbag
 #     - id: ThermalImagingGoggles
@@ -49,7 +49,7 @@
   components:
   - type: StorageFill
     contents:
-      - id: SmgC20r
+      - id: WeaponSubMachineGunC20r
       - id: MagazinePistolSmg
         amount: 2
 #     - id: SMGSuppressor
@@ -62,7 +62,7 @@
   components:
   - type: StorageFill
     contents:
-      - id: RevolverPredator
+      - id: WeaponRevolverPredator
       - id: SLMagnum
         amount: 2
 
@@ -74,7 +74,7 @@
   components:
   - type: StorageFill
     contents:
-      - id: LMGL6
+      - id: WeaponLightMachineGunL6
       - id: MagazineLRifleBox
 
 - type: entity
@@ -85,7 +85,7 @@
   components:
   - type: StorageFill
     contents:
-      - id: LauncherChinaLake
+      - id: WeaponLauncherChinaLake
       - id: GrenadeBlast
         amount: 3
       - id: GrenadeFlash
@@ -103,7 +103,7 @@
   components:
   - type: StorageFill
     contents:
-      - id: RifleCarbine
+      - id: WeaponRifleBulldog
       - id: MagazineSRifle
         amount: 2
       - id: GrenadeBlast
@@ -199,7 +199,7 @@
   - type: StorageFill
     contents:
       - id: SyringeCorpium
-      - id: FlareGun
+      - id: WeaponFlareGun
       - id: BoxShotgunFlare
       - id: PillRomerol
         amount: 3
@@ -213,7 +213,7 @@
     contents:
       - id: BoxSurvivalSyndicate
       - id: SurvivalKnife
-      - id: PistolClarissa
+      - id: WeaponPistolClarissa
       - id: BaseUplinkRadio40TC
 
 
@@ -234,4 +234,4 @@
       - id: BaseUplinkRadio40TC
       - id: BoxSurvivalSyndicate
       - id: SurvivalKnife
-      - id: PistolClarissa
+      - id: WeaponPistolClarissa

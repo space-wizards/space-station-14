@@ -6736,7 +6736,7 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 312
-  type: SmgDrozd
+  type: WeaponSubMachineGunDrozd
   components:
   - pos: -7.467229,-16.30976
     parent: 47
@@ -6760,7 +6760,7 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 314
-  type: SmgDrozd
+  type: WeaponSubMachineGunDrozd
   components:
   - pos: -8.435979,-16.30976
     parent: 47
@@ -6789,7 +6789,7 @@ entities:
         ents: []
     type: ContainerContainer
 - uid: 316
-  type: SmgDrozd
+  type: WeaponSubMachineGunDrozd
   components:
   - pos: -6.404729,-16.30976
     parent: 47
@@ -6819,7 +6819,7 @@ entities:
         ents: []
     type: ContainerContainer
 - uid: 318
-  type: SmgDrozd
+  type: WeaponSubMachineGunDrozd
   components:
   - pos: -5.685979,-14.341009
     parent: 47
@@ -7751,7 +7751,7 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 424
-  type: RevolverDeckard
+  type: WeaponRevolverDeckard
   components:
   - pos: 6.4619765,3.1532822
     parent: 47
@@ -8232,7 +8232,7 @@ entities:
       cellslot_cell_container: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 475
-  type: RifleWintermute
+  type: WeaponRifleWintermute
   components:
   - pos: 10.2805605,-18.337593
     parent: 47

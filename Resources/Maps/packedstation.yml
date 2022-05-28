@@ -31509,7 +31509,7 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 2390
-  type: ShotgunPump
+  type: WeaponShotgunKammerer
   components:
   - pos: 41.518063,26.561434
     parent: 2
@@ -78797,7 +78797,7 @@ entities:
       Toggle: []
     type: SignalReceiver
 - uid: 7531
-  type: SmgDrozdRiot
+  type: WeaponSubMachineGunDrozdRubber
   components:
   - pos: 38.61274,27.452318
     parent: 2
@@ -78826,7 +78826,7 @@ entities:
         ents: []
     type: ContainerContainer
 - uid: 7533
-  type: SmgDrozdRiot
+  type: WeaponSubMachineGunDrozdRubber
   components:
   - pos: 38.597115,27.702318
     parent: 2
@@ -79008,7 +79008,7 @@ entities:
     parent: 2
     type: Transform
 - uid: 7550
-  type: TaserGun
+  type: WeaponTaser
   components:
   - rot: 6.230108556337655E-05 rad
     pos: 41.515198,24.735239
@@ -79023,7 +79023,7 @@ entities:
       Content.Server.Weapon.Ranged.Barrels.Components.BatteryBarrelComponent-ammo-container: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 7551
-  type: TaserGun
+  type: WeaponTaser
   components:
   - pos: 41.515827,24.580679
     parent: 2
@@ -79037,7 +79037,7 @@ entities:
       Content.Server.Weapon.Ranged.Barrels.Components.BatteryBarrelComponent-ammo-container: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 7552
-  type: TaserGun
+  type: WeaponTaser
   components:
   - pos: 41.515827,24.393179
     parent: 2
@@ -95403,7 +95403,7 @@ entities:
   - color: '#0000FFFF'
     type: AtmosPipeColor
 - uid: 9191
-  type: LaserRifleCog
+  type: WeaponLaserRifleCog
   components:
   - pos: 41.526512,27.667274
     parent: 2
@@ -119726,7 +119726,7 @@ entities:
         ents: []
     type: ContainerContainer
 - uid: 11141
-  type: SmgWt550
+  type: WeaponSubMachineGunWt550
   components:
   - pos: 45.51632,24.577965
     parent: 2
@@ -119867,7 +119867,7 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 11154
-  type: LaserRifleCog
+  type: WeaponLaserRifleCog
   components:
   - pos: 41.526512,27.4329
     parent: 2

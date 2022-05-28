@@ -40,20 +40,7 @@
 - type: entity
   name: Kardashev-Mosin
   parent: SniperBase
-  id: SniperBoltGun
-  description: A weapon for hunting, or endless trench warfare.
-  components:
-  - type: Sprite
-    sprite: Objects/Weapons/Guns/Snipers/bolt_gun.rsi
-  - type: Item
-    sprite: Objects/Weapons/Guns/Snipers/bolt_gun.rsi
-  - type: BoltActionBarrel
-    capacity: 5
-
-- type: entity
-  name: Kardashev-Mosin
-  parent: SniperBoltGun
-  id: SniperBoltGunWood
+  id: WeaponSniperMosin
   description: A weapon for hunting, or endless trench warfare.
   components:
   - type: Sprite
@@ -93,7 +80,7 @@
 - type: entity
   name: Hristov
   parent: SniperBase
-  id: SniperHeavy
+  id: WeaponSniperHristov
   description: A portable anti-armour rifle. Fires armor piercing 14.5mm shells.
   components:
   - type: Sprite
@@ -104,29 +91,7 @@
     caliber: AntiMaterial
     capacity: 1
     fillPrototype: CartridgeAntiMaterial
-
-- type: entity
-  name: flintlock pistol
-  parent: SniperBase
-  id: FlintlockPistol
-  description: A pirate's companion. Yarrr!
-  components:
-  - type: Sprite
-    sprite: Objects/Weapons/Guns/Snipers/flintlock.rsi
-  - type: BoltActionBarrel
-    caliber: AntiMaterial
-    capacity: 1
-    fireRate: 1.0
-    minAngle: 20
-    maxAngle: 80
-    angleIncrease: 20
-    angleDecay: 15
-    fillPrototype: CartridgeAntiMaterial
-    soundInsert:
-      path: /Audio/Weapons/Guns/MagIn/bullet_insert.ogg
-  - type: Item
-    icon: Objects/Weapons/Guns/Snipers/flintlock.rsi
-
+  
 
 - type: entity
   name: musket

@@ -4178,7 +4178,7 @@ entities:
     parent: 4
     type: Transform
 - uid: 143
-  type: ShotgunGladstone
+  type: WeaponShotgunGladstone
   components:
   - pos: 22.640556,-5.273798
     parent: 4
@@ -4255,7 +4255,7 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 152
-  type: TaserGun
+  type: WeaponTaser
   components:
   - pos: 25.599106,-3.305048
     parent: 4
@@ -4276,7 +4276,7 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 154
-  type: TaserGun
+  type: WeaponTaser
   components:
   - pos: 26.317856,-3.508173
     parent: 4
@@ -6496,7 +6496,7 @@ entities:
     parent: 4
     type: Transform
 - uid: 473
-  type: RevolverDeckard
+  type: WeaponRevolverDeckard
   components:
   - pos: 30.4565,-4.31473
     parent: 4

@@ -12,7 +12,7 @@
 - type: entity
   name: Deckard
   parent: RevolverBase
-  id: RevolverDeckard
+  id: WeaponRevolverDeckard
   description: A rare, custom-built revolver. Use when there is no time for Voight-Kampff test.
   components:
   - type: Sprite
@@ -58,7 +58,7 @@
 - type: entity
   name: Inspector
   parent: RevolverBase
-  id: RevolverInspector
+  id: WeaponRevolverInspector
   description: A detective's best friend.
   components:
   - type: Sprite
@@ -90,7 +90,7 @@
 - type: entity
   name: Mateba
   parent: RevolverBase
-  id: RevolverMateba
+  id: WeaponRevolverMateba
   description: The iconic sidearm of the dreaded death squads.
   components:
   - type: Sprite
@@ -122,7 +122,7 @@
 - type: entity
   name: Predator
   parent: RevolverBase
-  id: RevolverPredator
+  id: WeaponRevolverPredator
   description: A robust revolver favoured by Syndicate agents.
   components:
   - type: Sprite
@@ -154,7 +154,7 @@
 - type: entity
   name: pirate revolver
   parent: RevolverBase
-  id: RevolverPirate
+  id: WeaponRevolverPirate
   description: An odd, muzzle-loading revolver, favoured by pirate crews.
   components:
   - type: Sprite
