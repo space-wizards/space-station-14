@@ -44,9 +44,15 @@
   damage:
     types:
       Heat: 25
-  travelFlash: Objects/Weapons/Guns/Projectiles/pulse.png
-  muzzleFlash: Objects/Weapons/Guns/Projectiles/pulse_muzzle.png
-  impactFlash: Objects/Weapons/Guns/Projectiles/pulse_impact.png
+  muzzleFlash:
+    sprite: Objects/Weapons/Guns/projectiles2.rsi
+    state: muzzle_blue
+  travelFlash:
+    sprite: Objects/Weapons/Guns/projectiles2.rsi
+    state: beam_blue
+  impactFlash:
+    sprite: Objects/Weapons/Guns/projectiles2.rsi
+    state: impact_blue
 
 - type: hitscan
   id: RedHeavyLaser
@@ -64,6 +70,22 @@
     state: impact_beam_heavy
 
 - type: hitscan
+  id: OmniLaser
+  damage:
+    types:
+      heat: 60
+  muzzleFlash:
+    sprite: Objects/Weapons/Guns/projectiles2.rsi
+    state: muzzle_omni
+  travelFlash:
+    sprite: Objects/Weapons/Guns/projectiles2.rsi
+    state: beam_omni
+  impactFlash:
+    sprite: Objects/Weapons/Guns/projectiles2.rsi
+    state: impact_omni
+
+# When Xrays can actually go through walls should nerf the damage and bump the battery
+- type: hitscan
   id: XrayLaser
   damage:
     types:
@@ -77,70 +99,3 @@
   impactFlash:
     sprite: Objects/Weapons/Guns/projectiles2.rsi
     state: impact_xray
-
-# DEPRECATED
-
-- type: entity
-  name: red laser
-  id: RedLaser
-  noSpawn: true
-  components:
-  - type: Hitscan
-    damage:
-      types:
-        Heat: 15
-    spriteName: Objects/Weapons/Guns/Projectiles/laser.png
-    muzzleFlash: Objects/Weapons/Guns/Projectiles/laser_muzzle.png
-    impactFlash: Objects/Weapons/Guns/Projectiles/laser_impact.png
-
-- type: entity
-  name: red medium laser
-  id: RedMediumLaser
-  noSpawn: true
-  components:
-  - type: Hitscan
-    damage:
-      types:
-        Heat: 20
-    spriteName: Objects/Weapons/Guns/Projectiles/laser.png
-    muzzleFlash: Objects/Weapons/Guns/Projectiles/laser_muzzle.png
-    impactFlash: Objects/Weapons/Guns/Projectiles/laser_impact.png
-
-- type: entity
-  name: pulse
-  id: Pulse
-  noSpawn: true
-  components:
-  - type: Hitscan
-    damage:
-      types:
-        Heat: 25
-    spriteName: Objects/Weapons/Guns/Projectiles/pulse.png
-    muzzleFlash: Objects/Weapons/Guns/Projectiles/pulse_muzzle.png
-    impactFlash: Objects/Weapons/Guns/Projectiles/pulse_impact.png
-
-- type: entity
-  name: red heavy laser
-  id: RedHeavyLaser
-  noSpawn: true
-  components:
-  - type: Hitscan
-    spriteName: Objects/Weapons/Guns/Projectiles/heavy_laser.png
-    muzzleFlash: Objects/Weapons/Guns/Projectiles/heavy_laser_muzzle.png
-    impactFlash: Objects/Weapons/Guns/Projectiles/heavy_laser_impact.png
-    damage:
-      types:
-        Heat: 45
-
-- type: entity
-  name: x-ray laser
-  id: XrayLaser
-  noSpawn: true
-  components:
-  - type: Hitscan
-    spriteName: Objects/Weapons/Guns/Projectiles/xray.png
-    muzzleFlash: Objects/Weapons/Guns/Projectiles/xray_muzzle.png
-    impactFlash: Objects/Weapons/Guns/Projectiles/xray_impact.png
-    damage:
-      types:
-        Heat: 60
