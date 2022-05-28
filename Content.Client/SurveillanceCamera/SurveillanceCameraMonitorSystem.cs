@@ -38,7 +38,7 @@ public sealed class SurveillanceCameraMonitorSystem : EntitySystem
 
     public void AddTimer(EntityUid uid, Action onFinish)
     {
-        var comp = AddComp<ActiveSurveillanceCameraMonitorVisualsComponent>(uid);
+        var comp = EnsureComp<ActiveSurveillanceCameraMonitorVisualsComponent>(uid);
         comp.OnFinish = onFinish;
     }
 
