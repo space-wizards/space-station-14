@@ -1713,7 +1713,7 @@ entities:
   - chunkCollection: {}
     type: DecalGrid
 - uid: 180
-  type: LaserGun
+  type: WeaponLaserGun
   components:
   - pos: -1.47174,4.550247
     parent: 179
@@ -1723,7 +1723,7 @@ entities:
       cellslot_cell_container: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 181
-  type: LaserGun
+  type: WeaponLaserGun
   components:
   - pos: -0.6748645,4.487747
     parent: 179
@@ -3392,7 +3392,7 @@ entities:
     parent: 179
     type: Transform
 - uid: 435
-  type: SmgC20r
+  type: WeaponSubMachineGunC20r
   components:
   - pos: -2.524035,7.579326
     parent: 179
@@ -3402,7 +3402,7 @@ entities:
       Content.Server.Weapon.Ranged.Barrels.Components.MagazineBarrelComponent-magazine: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 436
-  type: SmgC20r
+  type: WeaponSubMachineGunC20r
   components:
   - pos: -1.94591,7.485576
     parent: 179

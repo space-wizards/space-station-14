@@ -134,32 +134,6 @@ entities:
       Content.Server.Weapon.Ranged.Ammunition.Components.RangedMagazineComponent-magazine: !type:Container
         ents: []
     type: ContainerContainer
-- uid: 7
-  type: MagazineMagnumHV
-  components:
-  - parent: 152
-    type: Transform
-  - canCollide: False
-    type: Physics
-  - containers:
-      RangedMagazine-magazine: !type:Container
-        ents: []
-      Content.Server.Weapon.Ranged.Ammunition.Components.RangedMagazineComponent-magazine: !type:Container
-        ents: []
-    type: ContainerContainer
-- uid: 8
-  type: MagazineMagnumHV
-  components:
-  - parent: 370
-    type: Transform
-  - canCollide: False
-    type: Physics
-  - containers:
-      RangedMagazine-magazine: !type:Container
-        ents: []
-      Content.Server.Weapon.Ranged.Ammunition.Components.RangedMagazineComponent-magazine: !type:Container
-        ents: []
-    type: ContainerContainer
 - uid: 9
   type: WeaponRifleWintermute
   components:
@@ -892,21 +866,6 @@ entities:
       - 0
       - 0
     type: GridAtmosphere
-- uid: 18
-  type: PistolLamia
-  components:
-  - parent: 265
-    type: Transform
-  - canCollide: False
-    type: Physics
-  - containers:
-      MagazineBarrel-chamber: !type:ContainerSlot {}
-      MagazineBarrel-magazine: !type:ContainerSlot
-        ent: 433
-      Content.Server.Weapon.Ranged.Barrels.Components.MagazineBarrelComponent-chamber: !type:ContainerSlot {}
-      Content.Server.Weapon.Ranged.Barrels.Components.MagazineBarrelComponent-magazine: !type:ContainerSlot
-        ent: 573
-    type: ContainerContainer
 - uid: 19
   type: ClothingHeadHelmetHardsuitDeathsquad
   components:
@@ -1245,21 +1204,6 @@ entities:
       board: !type:Container
         ents: []
     type: ContainerContainer
-- uid: 54
-  type: PistolLamia
-  components:
-  - parent: 292
-    type: Transform
-  - canCollide: False
-    type: Physics
-  - containers:
-      MagazineBarrel-chamber: !type:ContainerSlot {}
-      MagazineBarrel-magazine: !type:ContainerSlot
-        ent: 162
-      Content.Server.Weapon.Ranged.Barrels.Components.MagazineBarrelComponent-chamber: !type:ContainerSlot {}
-      Content.Server.Weapon.Ranged.Barrels.Components.MagazineBarrelComponent-magazine: !type:ContainerSlot
-        ent: 572
-    type: ContainerContainer
 - uid: 55
   type: WindowReinforcedDirectional
   components:
@@ -1481,19 +1425,6 @@ entities:
   - pos: 2.5,-9.5
     parent: 17
     type: Transform
-- uid: 78
-  type: MagazineMagnumHV
-  components:
-  - parent: 323
-    type: Transform
-  - canCollide: False
-    type: Physics
-  - containers:
-      RangedMagazine-magazine: !type:Container
-        ents: []
-      Content.Server.Weapon.Ranged.Ammunition.Components.RangedMagazineComponent-magazine: !type:Container
-        ents: []
-    type: ContainerContainer
 - uid: 79
   type: WallReinforced
   components:
@@ -2106,21 +2037,6 @@ entities:
       Content.Server.Weapon.Ranged.Ammunition.Components.RangedMagazineComponent-magazine: !type:Container
         ents: []
     type: ContainerContainer
-- uid: 152
-  type: PistolLamia
-  components:
-  - parent: 197
-    type: Transform
-  - canCollide: False
-    type: Physics
-  - containers:
-      MagazineBarrel-chamber: !type:ContainerSlot {}
-      MagazineBarrel-magazine: !type:ContainerSlot
-        ent: 7
-      Content.Server.Weapon.Ranged.Barrels.Components.MagazineBarrelComponent-chamber: !type:ContainerSlot {}
-      Content.Server.Weapon.Ranged.Barrels.Components.MagazineBarrelComponent-magazine: !type:ContainerSlot
-        ent: 578
-    type: ContainerContainer
 - uid: 153
   type: ClothingHandsGlovesCombat
   components:
@@ -2203,19 +2119,6 @@ entities:
     pos: -3.5,-5.5
     parent: 17
     type: Transform
-- uid: 162
-  type: MagazineMagnumHV
-  components:
-  - parent: 54
-    type: Transform
-  - canCollide: False
-    type: Physics
-  - containers:
-      RangedMagazine-magazine: !type:Container
-        ents: []
-      Content.Server.Weapon.Ranged.Ammunition.Components.RangedMagazineComponent-magazine: !type:Container
-        ents: []
-    type: ContainerContainer
 - uid: 163
   type: Grille
   components:
@@ -2560,7 +2463,6 @@ entities:
         - 154
         - 114
         - 175
-        - 152
         - 227
     type: ContainerContainer
 - uid: 198
@@ -2574,7 +2476,6 @@ entities:
   - containers:
       EntityStorageComponent: !type:Container
         ents:
-        - 323
         - 418
         - 172
         - 367
@@ -2926,7 +2827,6 @@ entities:
         - 95
         - 157
         - 353
-        - 382
         - 491
         - 363
         - 554
@@ -3246,7 +3146,6 @@ entities:
         - 481
         - 3
         - 120
-        - 18
         - 85
         - 415
         - 170
@@ -3268,7 +3167,6 @@ entities:
         - 19
         - 354
         - 431
-        - 370
         - 482
         - 86
         - 115
@@ -3545,7 +3443,6 @@ entities:
         - 256
         - 469
         - 551
-        - 54
         - 192
     type: ContainerContainer
 - uid: 293
@@ -3863,21 +3760,6 @@ entities:
     type: Transform
   - canCollide: False
     type: Physics
-- uid: 323
-  type: PistolLamia
-  components:
-  - parent: 198
-    type: Transform
-  - canCollide: False
-    type: Physics
-  - containers:
-      MagazineBarrel-chamber: !type:ContainerSlot {}
-      MagazineBarrel-magazine: !type:ContainerSlot
-        ent: 78
-      Content.Server.Weapon.Ranged.Barrels.Components.MagazineBarrelComponent-chamber: !type:ContainerSlot {}
-      Content.Server.Weapon.Ranged.Barrels.Components.MagazineBarrelComponent-magazine: !type:ContainerSlot
-        ent: 580
-    type: ContainerContainer
 - uid: 324
   type: CableApcExtension
   components:
@@ -4218,19 +4100,6 @@ entities:
     type: Transform
   - canCollide: False
     type: Physics
-- uid: 368
-  type: MagazineMagnumHV
-  components:
-  - parent: 382
-    type: Transform
-  - canCollide: False
-    type: Physics
-  - containers:
-      RangedMagazine-magazine: !type:Container
-        ents: []
-      Content.Server.Weapon.Ranged.Ammunition.Components.RangedMagazineComponent-magazine: !type:Container
-        ents: []
-    type: ContainerContainer
 - uid: 369
   type: MagazineMagnumHV
   components:
@@ -4243,21 +4112,6 @@ entities:
         ents: []
       Content.Server.Weapon.Ranged.Ammunition.Components.RangedMagazineComponent-magazine: !type:Container
         ents: []
-    type: ContainerContainer
-- uid: 370
-  type: PistolLamia
-  components:
-  - parent: 266
-    type: Transform
-  - canCollide: False
-    type: Physics
-  - containers:
-      MagazineBarrel-chamber: !type:ContainerSlot {}
-      MagazineBarrel-magazine: !type:ContainerSlot
-        ent: 8
-      Content.Server.Weapon.Ranged.Barrels.Components.MagazineBarrelComponent-chamber: !type:ContainerSlot {}
-      Content.Server.Weapon.Ranged.Barrels.Components.MagazineBarrelComponent-magazine: !type:ContainerSlot
-        ent: 581
     type: ContainerContainer
 - uid: 371
   type: Stunbaton
@@ -4344,21 +4198,6 @@ entities:
   - pos: 0.5,16.5
     parent: 17
     type: Transform
-- uid: 382
-  type: PistolLamia
-  components:
-  - parent: 232
-    type: Transform
-  - canCollide: False
-    type: Physics
-  - containers:
-      MagazineBarrel-chamber: !type:ContainerSlot {}
-      MagazineBarrel-magazine: !type:ContainerSlot
-        ent: 368
-      Content.Server.Weapon.Ranged.Barrels.Components.MagazineBarrelComponent-chamber: !type:ContainerSlot {}
-      Content.Server.Weapon.Ranged.Barrels.Components.MagazineBarrelComponent-magazine: !type:ContainerSlot
-        ent: 582
-    type: ContainerContainer
 - uid: 383
   type: MagazineMagnumHV
   components:
@@ -4761,19 +4600,6 @@ entities:
     type: Transform
   - canCollide: False
     type: Physics
-- uid: 433
-  type: MagazineMagnumHV
-  components:
-  - parent: 18
-    type: Transform
-  - canCollide: False
-    type: Physics
-  - containers:
-      RangedMagazine-magazine: !type:Container
-        ents: []
-      Content.Server.Weapon.Ranged.Ammunition.Components.RangedMagazineComponent-magazine: !type:Container
-        ents: []
-    type: ContainerContainer
 - uid: 434
   type: MagazineMagnumHV
   components:
@@ -5942,28 +5768,6 @@ entities:
     type: Transform
   - canCollide: False
     type: Physics
-- uid: 572
-  type: MagazineMagnum
-  components:
-  - parent: 54
-    type: Transform
-  - canCollide: False
-    type: Physics
-  - containers:
-      Content.Server.Weapon.Ranged.Ammunition.Components.RangedMagazineComponent-magazine: !type:Container
-        ents: []
-    type: ContainerContainer
-- uid: 573
-  type: MagazineMagnum
-  components:
-  - parent: 18
-    type: Transform
-  - canCollide: False
-    type: Physics
-  - containers:
-      Content.Server.Weapon.Ranged.Ammunition.Components.RangedMagazineComponent-magazine: !type:Container
-        ents: []
-    type: ContainerContainer
 - uid: 574
   type: MagazineSRifle
   components:
@@ -6008,54 +5812,10 @@ entities:
       Content.Server.Weapon.Ranged.Ammunition.Components.RangedMagazineComponent-magazine: !type:Container
         ents: []
     type: ContainerContainer
-- uid: 578
-  type: MagazineMagnum
-  components:
-  - parent: 152
-    type: Transform
-  - canCollide: False
-    type: Physics
-  - containers:
-      Content.Server.Weapon.Ranged.Ammunition.Components.RangedMagazineComponent-magazine: !type:Container
-        ents: []
-    type: ContainerContainer
 - uid: 579
   type: MagazineSRifle
   components:
   - parent: 170
-    type: Transform
-  - canCollide: False
-    type: Physics
-  - containers:
-      Content.Server.Weapon.Ranged.Ammunition.Components.RangedMagazineComponent-magazine: !type:Container
-        ents: []
-    type: ContainerContainer
-- uid: 580
-  type: MagazineMagnum
-  components:
-  - parent: 323
-    type: Transform
-  - canCollide: False
-    type: Physics
-  - containers:
-      Content.Server.Weapon.Ranged.Ammunition.Components.RangedMagazineComponent-magazine: !type:Container
-        ents: []
-    type: ContainerContainer
-- uid: 581
-  type: MagazineMagnum
-  components:
-  - parent: 370
-    type: Transform
-  - canCollide: False
-    type: Physics
-  - containers:
-      Content.Server.Weapon.Ranged.Ammunition.Components.RangedMagazineComponent-magazine: !type:Container
-        ents: []
-    type: ContainerContainer
-- uid: 582
-  type: MagazineMagnum
-  components:
-  - parent: 382
     type: Transform
   - canCollide: False
     type: Physics
