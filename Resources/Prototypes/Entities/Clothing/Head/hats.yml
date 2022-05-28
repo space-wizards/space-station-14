@@ -415,17 +415,6 @@
 
 - type: entity
   parent: ClothingHeadBase
-  id: ClothingHeadCapCentcomBlack
-  name: special operations officer cap
-  description: The NanoTrasen gold-engraved special cap of the higher ranks, which has long gone through more than one blitzkrieg...
-  components:
-    - type: Sprite
-      sprite: Clothing/Head/Hats/centcom_officer_black.rsi
-    - type: Clothing
-      sprite: Clothing/Head/Hats/centcom_officer_black.rsi
-
-- type: entity
-  parent: ClothingHeadBase
   id: ClothingHeadPaperSack
   name: papersack hat
   description: A paper sack with crude holes cut out for eyes. Useful for hiding one's identity or ugliness.
