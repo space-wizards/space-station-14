@@ -42,7 +42,7 @@ public sealed class StepTriggerSystem : EntitySystem
 
             component.Colliding.Remove(otherUid);
             component.CurrentlySteppedOn.Remove(otherUid);
-            component.Dirty();
+            Dirty(component);
         }
         return false;
     }
