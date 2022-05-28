@@ -36,6 +36,7 @@ using Robust.Client.Input;
 using Robust.Client.Player;
 using Robust.Client.State;
 using Robust.Client.UserInterface;
+using Robust.Shared.Configuration;
 using Robust.Shared.ContentPack;
 using Robust.Shared.Map;
 using Robust.Shared.Prototypes;
@@ -54,6 +55,7 @@ namespace Content.Client.Entry
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
         [Dependency] private readonly IClientAdminManager _adminManager = default!;
         [Dependency] private readonly IParallaxManager _parallaxManager = default!;
+        [Dependency] private readonly IConfigurationManager _configManager = default!;
         [Dependency] private readonly IStylesheetManager _stylesheetManager = default!;
         [Dependency] private readonly IScreenshotHook _screenshotHook = default!;
         [Dependency] private readonly ChangelogManager _changelogManager = default!;
@@ -133,6 +135,13 @@ namespace Content.Client.Entry
             _rulesManager.Initialize();
             _viewportManager.Initialize();
             _baseClient.PlayerJoinedServer += (_, _) => { _mapManager.CreateNewMapEntity(MapId.Nullspace);};
+
+            //AUTOSCALING default Setup!
+            _configManager.SetCVar("interface.resolutionAutoScaleUpperCutoffX", 1080);
+            _configManager.SetCVar("interface.resolutionAutoScaleUpperCutoffY", 720);
+            _configManager.SetCVar("interface.resolutionAutoScaleLowerCutoffX", 520);
+            _configManager.SetCVar("interface.resolutionAutoScaleLowerCutoffY", 240);
+            _configManager.SetCVar("interface.resolutionAutoScaleMinimum", 0.5f);
         }
 
         public override void PostInit()
