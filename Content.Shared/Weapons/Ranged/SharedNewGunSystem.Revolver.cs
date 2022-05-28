@@ -1,3 +1,4 @@
+using Content.Shared.Verbs;
 using Robust.Shared.Containers;
 using Robust.Shared.GameStates;
 using Robust.Shared.Map;
@@ -7,12 +8,13 @@ namespace Content.Shared.Weapons.Ranged;
 
 public partial class SharedNewGunSystem
 {
-    private void InitializeRevolver()
+    protected virtual void InitializeRevolver()
     {
         SubscribeLocalEvent<SharedRevolverAmmoProviderComponent, ComponentInit>(OnRevolverInit);
         SubscribeLocalEvent<SharedRevolverAmmoProviderComponent, ComponentGetState>(OnRevolverGetState);
         SubscribeLocalEvent<SharedRevolverAmmoProviderComponent, ComponentHandleState>(OnRevolverHandleState);
         SubscribeLocalEvent<SharedRevolverAmmoProviderComponent, TakeAmmoEvent>(OnRevolverTakeAmmo);
+        SubscribeLocalEvent<SharedRevolverAmmoProviderComponent, GetVerbsEvent<Verb>>(OnRevolverVerbs);
     }
 
     private void OnRevolverHandleState(EntityUid uid, SharedRevolverAmmoProviderComponent component, ref ComponentHandleState args)
@@ -34,6 +36,20 @@ public partial class SharedNewGunSystem
         };
     }
 
+    private void OnRevolverVerbs(EntityUid uid, SharedRevolverAmmoProviderComponent component, GetVerbsEvent<Verb> args)
+    {
+        if (!args.CanAccess || args.CanInteract) return;
+
+        args.Verbs.Add(new Verb()
+        {
+            Text = "Spin revolver",
+            // Category = VerbCategory.G,
+            Act = () => SpinRevolver(component)
+        });
+    }
+
+    protected abstract void SpinRevolver(SharedRevolverAmmoProviderComponent component, EntityUid? user = null);
+
     private void OnRevolverTakeAmmo(EntityUid uid, SharedRevolverAmmoProviderComponent component, TakeAmmoEvent args)
     {
         var currentIndex = component.CurrentIndex;
@@ -42,11 +58,12 @@ public partial class SharedNewGunSystem
         for (var i = 0; i < args.Shots; i++)
         {
             var index = (currentIndex + i) % component.Capacity;
+            var chamber = component.Chambers[index];
 
             // Get unspawned ent first if possible.
-            if (component.Chambers[index] != null)
+            if (chamber != null)
             {
-                if (component.Chambers[index] == true)
+                if (chamber == true)
                 {
                     var ent = Spawn(component.FillPrototype, args.Coordinates);
                     component.Chambers[index] = false;
@@ -98,5 +115,10 @@ public partial class SharedNewGunSystem
         public int CurrentIndex;
         public EntityUid?[] AmmoSlots = default!;
         public bool?[] Chambers = default!;
+    }
+
+    public sealed class RevolverSpinEvent : EntityEventArgs
+    {
+
     }
 }
