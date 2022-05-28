@@ -75,7 +75,7 @@ public sealed class ChameleonClothingSystem : SharedChameleonClothingSystem
             return;
 
         // make sure that it is valid change
-        if (!_proto.TryIndex(protoId, out EntityPrototype? proto))
+        if (!string.IsNullOrEmpty(protoId) || !_proto.TryIndex(protoId, out EntityPrototype? proto))
             return;
         if (!IsValidTarget(proto, component.Slot))
             return;
