@@ -128,7 +128,7 @@
     soundGunshot:
       path: /Audio/Weapons/Guns/Gunshots/laser_cannon.ogg
   - type: HitscanBatteryAmmoProvider
-    proto: pulse
+    proto: Pulse
     fireCost: 150
   - type: Battery
     maxCharge: 900
