@@ -46,7 +46,7 @@ public sealed class AlertLevelDetail
     /// This should only apply to entities or gamemodes that auto-select an alert level,
     /// such as a nuclear bomb being set to active.
     /// </summary>
-    [DataField("disableSelection")] public bool DisableSelection { get; }
+    [DataField("disableSelection")] public bool DisableSelection { get; set; }
 
     /// <summary>
     /// The sound that this alert level will play in-game once selected.
