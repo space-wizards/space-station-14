@@ -68,7 +68,6 @@ namespace Content.Client.Entry
             var prototypes = IoCManager.Resolve<IPrototypeManager>();
 
             factory.DoAutoRegistrations();
-
             factory.IgnoreMissingComponents();
 
             factory.RegisterClass<SharedResearchConsoleComponent>();
