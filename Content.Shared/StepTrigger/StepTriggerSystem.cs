@@ -73,7 +73,7 @@ public sealed class StepTriggerSystem : EntitySystem
         RaiseLocalEvent(component.Owner, ref ev);
 
         component.CurrentlySteppedOn.Add(otherUid);
-        component.Dirty();
+        Dirty(component);
         return false;
     }
 
