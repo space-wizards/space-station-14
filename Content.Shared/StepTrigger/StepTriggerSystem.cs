@@ -18,62 +18,60 @@ public sealed class StepTriggerSystem : EntitySystem
 
     public override void Update(float frameTime)
     {
-        foreach (var (_, trigger) in EntityQuery<StepTriggerActiveComponent, StepTriggerComponent>())
+        foreach (var (_, trigger, transform) in EntityQuery<StepTriggerActiveComponent, StepTriggerComponent, TransformComponent>())
         {
-            if (!Update(trigger))
+            if (!Update(trigger, transform))
                 continue;
 
             RemComp<StepTriggerActiveComponent>(trigger.Owner);
         }
     }
 
-    private bool Update(StepTriggerComponent component)
+    private bool Update(StepTriggerComponent component, TransformComponent transform)
     {
-        if (component.Deleted || !component.Active || component.Colliding.Count == 0)
+        if (!component.Active ||
+            component.Colliding.Count == 0)
             return true;
+
 
         foreach (var otherUid in component.Colliding.ToArray())
         {
-            if (!otherUid.IsValid())
-            {
-                component.Colliding.Remove(otherUid);
-                component.CurrentlySteppedOn.Remove(otherUid);
-                component.Dirty();
-                continue;
-            }
+            var shouldRemoveFromColliding = UpdateColliding(component, transform, otherUid);
+            if (!shouldRemoveFromColliding) continue;
 
-            // TODO: This shouldn't be calculating based on world AABBs.
-            var ourAabb = _entityLookup.GetWorldAABB(component.Owner);
-            var otherAabb = _entityLookup.GetWorldAABB(otherUid);
-
-            if (!TryComp(otherUid, out PhysicsComponent? otherPhysics) || !ourAabb.Intersects(otherAabb))
-            {
-                component.Colliding.Remove(otherUid);
-                component.CurrentlySteppedOn.Remove(otherUid);
-                component.Dirty();
-                continue;
-            }
-
-            if (component.CurrentlySteppedOn.Contains(otherUid))
-                continue;
-
-            if (!CanTrigger(component.Owner, otherUid, component))
-                continue;
-
-            if (otherPhysics.LinearVelocity.Length < component.RequiredTriggerSpeed)
-                continue;
-
-            var percentage = otherAabb.IntersectPercentage(ourAabb);
-            if (percentage < component.IntersectRatio)
-                continue;
-
-            var ev = new StepTriggeredEvent { Source = component.Owner, Tripper = otherUid };
-            RaiseLocalEvent(component.Owner, ref ev);
-
-            component.CurrentlySteppedOn.Add(otherUid);
-            component.Dirty();
+            component.Colliding.Remove(otherUid);
+            component.CurrentlySteppedOn.Remove(otherUid);
+            Dirty(component);
         }
+        return false;
+    }
 
+    private bool UpdateColliding(StepTriggerComponent component, TransformComponent ownerTransform, EntityUid otherUid)
+    {
+        if (!TryComp(otherUid, out PhysicsComponent? otherPhysics))
+            return true;
+
+        if (component.CurrentlySteppedOn.Contains(otherUid) ||
+            !CanTrigger(component.Owner, otherUid, component) ||
+            otherPhysics.LinearVelocity.Length < component.RequiredTriggerSpeed)
+            return false;
+
+        // TODO: This shouldn't be calculating based on world AABBs.
+        var ourAabb = _entityLookup.GetWorldAABB(component.Owner, ownerTransform);
+        var otherAabb = _entityLookup.GetWorldAABB(otherUid);
+
+        if (!ourAabb.Intersects(otherAabb))
+            return true;
+
+        var percentage = otherAabb.IntersectPercentage(ourAabb);
+        if (percentage < component.IntersectRatio)
+            return false;
+
+        var ev = new StepTriggeredEvent { Source = component.Owner, Tripper = otherUid };
+        RaiseLocalEvent(component.Owner, ref ev);
+
+        component.CurrentlySteppedOn.Add(otherUid);
+        Dirty(component);
         return false;
     }
 

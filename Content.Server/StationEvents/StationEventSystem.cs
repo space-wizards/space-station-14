@@ -66,22 +66,6 @@ namespace Content.Server.StationEvents
         private bool _enabled = true;
 
         /// <summary>
-        /// Admins can get a list of all events available to run, regardless of whether their requirements have been met
-        /// </summary>
-        /// <returns></returns>
-        public string GetEventNames()
-        {
-            StringBuilder result = new StringBuilder();
-
-            foreach (var stationEvent in _stationEvents)
-            {
-                result.Append(stationEvent.Name + "\n");
-            }
-
-            return result.ToString();
-        }
-
-        /// <summary>
         /// Admins can forcibly run events by passing in the Name
         /// </summary>
         /// <param name="name">The exact string for Name, without localization</param>

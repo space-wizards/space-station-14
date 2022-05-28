@@ -1,9 +1,12 @@
-using System.Linq;
+﻿using System.Linq;
 using System.Net.Http;
 using System.Text;
 using System.Text.Json;
 using System.Text.Json.Nodes;
+using System.Text.Json.Serialization;
 using Content.Server.Administration.Managers;
+using Content.Server.GameTicking;
+using Content.Server.GameTicking.Events;
 using Content.Shared.Administration;
 using Content.Shared.CCVar;
 using JetBrains.Annotations;
@@ -12,11 +15,8 @@ using Robust.Shared;
 using Robust.Shared.Configuration;
 using Robust.Shared.Network;
 using Robust.Shared.Utility;
-using System.Text.Json.Serialization;
-using Content.Server.GameTicking.Events;
-using Content.Server.GameTicking;
 
-namespace Content.Server.Administration
+namespace Content.Server.Administration.Systems
 {
     [UsedImplicitly]
     public sealed class BwoinkSystem : SharedBwoinkSystem

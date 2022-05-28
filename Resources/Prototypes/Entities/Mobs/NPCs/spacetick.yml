@@ -53,7 +53,7 @@
       enabled: false
       autoPopulate: false
       name: action-name-disarm
-  - type: UnarmedCombat
+  - type: MeleeWeapon
     range: 0.5
     arcwidth: 0
     arc: bite

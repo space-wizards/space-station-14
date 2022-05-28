@@ -2,6 +2,7 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using Content.Server.Audio;
 using Content.Server.Power.Components;
+using Content.Server.Power.EntitySystems;
 using Content.Server.Shuttles.Components;
 using Content.Shared.Damage;
 using Content.Shared.Examine;
@@ -367,8 +368,7 @@ namespace Content.Server.Shuttles.EntitySystems
 
             var xform = Transform(uid);
 
-            if (!xform.Anchored ||
-                EntityManager.TryGetComponent(uid, out ApcPowerReceiverComponent? receiver) && !receiver.Powered)
+            if (!xform.Anchored ||!this.IsPowered(uid, EntityManager))
             {
                 return false;
             }
