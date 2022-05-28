@@ -6676,7 +6676,7 @@ entities:
         - 354
     type: ContainerContainer
 - uid: 308
-  type: ShotgunBojevic
+  type: WeaponShotgunBojevic
   components:
   - pos: -8.382869,-14.328653
     parent: 47
@@ -6709,7 +6709,7 @@ entities:
         ents: []
     type: ContainerContainer
 - uid: 310
-  type: ShotgunBojevic
+  type: WeaponShotgunBojevic
   components:
   - pos: -7.1016192,-14.328653
     parent: 47

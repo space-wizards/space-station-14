@@ -796,7 +796,7 @@ entities:
     parent: 0
     type: Transform
 - uid: 50
-  type: ShotgunSawn
+  type: WeaponShotgunSawn
   components:
   - rot: -1.5707963267948966 rad
     pos: -1.1875,-1.421875
