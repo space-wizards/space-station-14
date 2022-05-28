@@ -29,8 +29,7 @@ public sealed class StepTriggerSystem : EntitySystem
 
     private bool Update(StepTriggerComponent component, TransformComponent transform)
     {
-        if (component.Deleted ||
-            !component.Active ||
+        if (!component.Active ||
             component.Colliding.Count == 0)
             return true;
 
