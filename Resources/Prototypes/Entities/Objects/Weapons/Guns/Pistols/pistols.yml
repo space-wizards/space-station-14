@@ -238,7 +238,7 @@
 - type: entity
   name: cobra
   parent: PistolBase
-  id: PistolCobra
+  id: PistolMandella
   description: A rugged, robust operator handgun with inbuilt silencer.
   components:
   - type: Sprite
