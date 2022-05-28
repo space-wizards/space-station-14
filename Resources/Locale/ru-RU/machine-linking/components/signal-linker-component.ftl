@@ -1,6 +1,6 @@
 signal-linker-component-saved = Успешно связано с устройством { $machine }!
-signal-linker-component-linked-port = Успешно связан {$machine1}:{$port1} c {$machine2}:{$port2}!
-signal-linker-component-unlinked-port = Успешно отвязан {$machine1}:{$port1} от {$machine2}:{$port2}!
+signal-linker-component-linked-port = Успешно связан { $machine1 }:{ $port1 } c { $machine2 }:{ $port2 }!
+signal-linker-component-unlinked-port = Успешно отвязан { $machine1 }:{ $port1 } от { $machine2 }:{ $port2 }!
 signal-linker-component-connection-refused = { $machine } отказывается связываться!
 signal-linker-component-max-connections-receiver = Достигнут максимум соединений для приёмника!
 signal-linker-component-max-connections-transmitter = Достигнут максимум соединений для передатчика!
