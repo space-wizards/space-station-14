@@ -600,4 +600,4 @@
   - type: ExplosionResistance
     resistance: 0.7
   - type: ToggleableClothing
-    clothingPrototype: ClothingHeadHelmetHardsuitSyndieElite
+    clothingPrototype: ClothingHeadHelmetCBURN
