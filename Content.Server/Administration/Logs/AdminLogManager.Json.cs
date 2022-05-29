@@ -7,7 +7,7 @@ using Robust.Server.Player;
 
 namespace Content.Server.Administration.Logs;
 
-public sealed partial class AdminLogSystem
+public sealed partial class AdminLogManager
 {
     private static readonly JsonNamingPolicy NamingPolicy = JsonNamingPolicy.CamelCase;
 

@@ -7,7 +7,7 @@ using Prometheus;
 
 namespace Content.Server.Administration.Logs;
 
-public sealed partial class AdminLogSystem
+public sealed partial class AdminLogManager
 {
     private const int MaxRoundsCached = 3;
     private const int LogListInitialSize = 30_000;
@@ -26,10 +26,10 @@ public sealed partial class AdminLogSystem
         "How many logs are in cache.");
 
     // TODO ADMIN LOGS cache previous {MaxRoundsCached} rounds on startup
-    private void CacheNewRound()
+    public void CacheNewRound()
     {
         List<SharedAdminLog> list;
-        var oldestRound = CurrentRoundId - MaxRoundsCached;
+        var oldestRound = _currentRoundId - MaxRoundsCached;
 
         if (_roundsLogCache.Remove(oldestRound, out var oldestList))
         {
@@ -41,7 +41,7 @@ public sealed partial class AdminLogSystem
             list = new List<SharedAdminLog>(LogListInitialSize);
         }
 
-        _roundsLogCache.Add(CurrentRoundId, list);
+        _roundsLogCache.Add(_currentRoundId, list);
         CacheRoundCount.Set(_roundsLogCache.Count);
     }
 
@@ -61,14 +61,14 @@ public sealed partial class AdminLogSystem
     private void CacheLog(SharedAdminLog log)
     {
         // TODO ADMIN LOGS remove redundant data and don't do a dictionary lookup per log
-        var cache = _roundsLogCache[CurrentRoundId];
+        var cache = _roundsLogCache[_currentRoundId];
         cache.Add(log);
         CacheLogCount.Set(cache.Count);
     }
 
     private void CacheLogs(IEnumerable<SharedAdminLog> logs)
     {
-        var cache = _roundsLogCache[CurrentRoundId];
+        var cache = _roundsLogCache[_currentRoundId];
         cache.AddRange(logs);
         CacheLogCount.Set(cache.Count);
     }
