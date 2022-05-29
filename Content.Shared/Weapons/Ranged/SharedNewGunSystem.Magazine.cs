@@ -10,7 +10,7 @@ namespace Content.Shared.Weapons.Ranged;
 
 public abstract partial class SharedNewGunSystem
 {
-    private const string GunSlot = "gun-magazine";
+    private const string MagazineSlot = "gun-magazine";
 
     protected virtual void InitializeMagazine()
     {
@@ -39,7 +39,7 @@ public abstract partial class SharedNewGunSystem
 
     protected EntityUid? GetMagazineEntity(EntityUid uid)
     {
-        if (!Containers.TryGetContainer(uid, GunSlot, out var container) ||
+        if (!Containers.TryGetContainer(uid, MagazineSlot, out var container) ||
             container is not ContainerSlot slot) return null;
         return slot.ContainedEntity;
     }
@@ -95,6 +95,6 @@ public abstract partial class SharedNewGunSystem
 
         if (ent == null) return;
 
-        Slots.TryEject(component.Owner, GunSlot, null, out var a, excludeUserAudio: true);
+        Slots.TryEject(component.Owner, MagazineSlot, null, out var a, excludeUserAudio: true);
     }
 }
