@@ -67,6 +67,9 @@
   id: CartridgePistol
 
 - type: Tag
+  id: CartridgeRifle
+
+- type: Tag
   id: CigFilter
 
 - type: Tag
@@ -221,6 +224,12 @@
 
 - type: Tag
   id: MagazineCalico
+
+- type: Tag
+  id: MagazineLightRifle
+
+- type: Tag
+  id: MagazineLightRifleBox
 
 - type: Tag
   id: MagazinePistol

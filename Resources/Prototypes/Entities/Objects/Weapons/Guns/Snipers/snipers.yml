@@ -83,3 +83,21 @@
       - CartridgeAntiMaterial
     capacity: 1
     proto: CartridgeAntiMaterial
+
+- type: entity
+  name: flintlock pistol
+  parent: BaseWeaponSniper
+  id: WeaponPistolFlintlock
+  description: A pirate's companion. Yarrr!
+  components:
+    - type: Sprite
+      sprite: Objects/Weapons/Guns/Snipers/flintlock.rsi
+    - type: Item
+      icon: Objects/Weapons/Guns/Snipers/flintlock.rsi
+    - type: BallisticAmmoProvider
+      caliber: AntiMaterial
+      whitelist:
+        tags:
+          - CartridgeAntiMaterial
+        capacity: 1
+        proto: CartridgeAntiMaterial

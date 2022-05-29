@@ -1,45 +1,42 @@
 - type: entity
-  name: BaseRifle
+  name: BaseWeaponRifle
   parent: BaseItem
-  id: RifleBase
+  id: BaseWeaponRifle
   description: A rooty tooty point and shooty.
   abstract: true
   components:
   - type: Sprite
     netsync: false
-  - type: Icon
-    state: icon
   - type: Item
     size: 24
-    state: icon
-  - type: MagazineBarrel
-    currentSelector: Automatic
-    allSelectors:
-    - Automatic
-    magFillPrototype: MagazineLRifle
+  - type: NewGun
     fireRate: 5
-    minAngle: 0
-    maxAngle: 45
-    angleIncrease: 20
-    angleDecay: 20
+    selectedMode: FullAuto
+    availableModes:
+      - FullAuto
     soundGunshot:
       path: /Audio/Weapons/Guns/Gunshots/batrifle.ogg
-    soundEmpty:
-      path: /Audio/Weapons/Guns/Empty/empty.ogg
-    soundRack:
-      path: /Audio/Weapons/Guns/Cock/sf_rifle_cock.ogg
-    soundBoltOpen:
-      path: /Audio/Weapons/Guns/Bolt/rifle_bolt_open.ogg
-    soundBoltClosed:
-      path: /Audio/Weapons/Guns/Bolt/rifle_bolt_closed.ogg
-    soundMagInsert:
-      path: /Audio/Weapons/Guns/MagIn/batrifle_magin.ogg
-    soundMagEject:
-      path: /Audio/Weapons/Guns/MagOut/batrifle_magout.ogg
+  - type: ChamberMagazineAmmoProvider
+  - type: ItemSlots
+    slots:
+      gun-magazine:
+        name: GunMagazine
+        startingItem: MagazineLightRifle
+        insertSound: /Audio/Weapons/Guns/MagIn/batrifle_magin.ogg
+        ejectSound: /Audio/Weapons/Guns/MagOut/batrifle_magout.ogg
+        whitelist:
+          tags:
+            - MagazineLightRifle
+      gun-chamber:
+        name: GunChamber
+        startingItem: CartridgeLightRifle
+        whitelist:
+          tags:
+            - CartridgeLightRifle
 
 - type: entity
   name: AKMS
-  parent: RifleBase
+  parent: BaseWeaponRifle
   id: WeaponRifleAk
   description: An iconic weapon of war.
   components:
@@ -48,36 +45,33 @@
     layers:
       - state: base
         map: ["enum.RangedBarrelVisualLayers.Base"]
-      - state: bolt-closed
-        map: ["enum.RangedBarrelVisualLayers.Bolt"]
       - state: mag-0
         map: ["enum.RangedBarrelVisualLayers.Mag"]
-  - type: Icon
-    sprite: Objects/Weapons/Guns/Rifles/ak.rsi
   - type: Item
     size: 24
     sprite: Objects/Weapons/Guns/Rifles/ak.rsi
-  - type: RangedWeapon
-  - type: MagazineBarrel
-    caliber: LRifle
-    magazineTypes:
-    - Rifle
+  - type: NewGun
     fireRate: 5
-    minAngle: 0
-    maxAngle: 45
-    angleIncrease: 20
-    angleDecay: 20
     soundGunshot:
       path: /Audio/Weapons/Guns/Gunshots/rifle2.ogg
-    soundRack:
-      path: /Audio/Weapons/Guns/Cock/ltrifle_cock.ogg
-    soundMagInsert:
-      path: /Audio/Weapons/Guns/MagIn/ltrifle_magin.ogg
-    soundMagEject:
-      path: /Audio/Weapons/Guns/MagOut/ltrifle_magout.ogg
+  - type: ChamberMagazineAmmoProvider
+    slots:
+      gun-magazine:
+        name: GunMagazine
+        startingItem: MagazineLightRifle
+        insertSound: /Audio/Weapons/Guns/MagIn/ltrifle_magin.ogg
+        ejectSound: /Audio/Weapons/Guns/MagOut/ltrifle_magout.ogg
+        whitelist:
+          tags:
+            - MagazineLightRifle
+      gun-chamber:
+        name: GunChamber
+        startingItem: CartridgeLightRifle
+        whitelist:
+          tags:
+            - CartridgeLightRifle
   - type: Appearance
     visuals:
-    - type: BarrelBoltVisualizer
     - type: MagVisualizer
       magState: mag
       steps: 1
@@ -85,7 +79,7 @@
 
 - type: entity
   name: Z8 Bulldog
-  parent: RifleBase
+  parent: BaseWeaponRifle
   id: WeaponRifleBulldog
   description: An older bullpup carbine model, with an attached underbarrel grenade launcher.
   components:
@@ -94,46 +88,37 @@
     layers:
       - state: base
         map: ["enum.RangedBarrelVisualLayers.Base"]
-      - state: bolt-closed
-        map: ["enum.RangedBarrelVisualLayers.Bolt"]
       - state: mag-0
         map: ["enum.RangedBarrelVisualLayers.Mag"]
-  - type: Icon
-    sprite: Objects/Weapons/Guns/Rifles/carbine.rsi
   - type: Item
     size: 24
     sprite: Objects/Weapons/Guns/Rifles/carbine.rsi
-  - type: RangedWeapon
-  - type: MagazineBarrel
-    caliber: SRifle
-    magazineTypes:
-    - Rifle
-    magFillPrototype: MagazineSRifle
-    fireRate: 5
-    minAngle: 0
-    maxAngle: 45
-    angleIncrease: 15
-    angleDecay: 20
-    soundGunshot:
-      path: /Audio/Weapons/Guns/Gunshots/batrifle.ogg
-    soundRack:
-      path: /Audio/Weapons/Guns/Cock/batrifle_cock.ogg
-    soundMagInsert:
-      path: /Audio/Weapons/Guns/MagIn/batrifle_magin.ogg
-    soundMagEject:
-      path: /Audio/Weapons/Guns/MagOut/batrifle_magout.ogg
+  - type: ItemSlots
+    slots:
+      gun-magazine:
+        name: GunMagazine
+        startingItem: MagazineSRifle
+        insertSound: /Audio/Weapons/Guns/MagIn/batrifle_magin.ogg
+        ejectSound: /Audio/Weapons/Guns/MagOut/batrifle_magout.ogg
+        whitelist:
+          tags:
+            - MagazineRifle
+      gun-chamber:
+        name: GunChamber
+        startingItem: CartridgeRifle
+        whitelist:
+          tags:
+            - CartridgeRifle
   - type: Appearance
     visuals:
-    - type: BarrelBoltVisualizer
     - type: MagVisualizer
       magState: mag
       steps: 1
       zeroVisible: true
 
-
 - type: entity
   name: Wintermute
-  parent: RifleBase
+  parent: BaseWeaponRifle
   id: WeaponRifleWintermute
   description: A high end military grade assault rifle.
   components:
@@ -142,38 +127,32 @@
     layers:
       - state: base
         map: ["enum.RangedBarrelVisualLayers.Base"]
-      - state: bolt-closed
-        map: ["enum.RangedBarrelVisualLayers.Bolt"]
       - state: mag-0
         map: ["enum.RangedBarrelVisualLayers.Mag"]
-  - type: Icon
-    sprite: Objects/Weapons/Guns/Rifles/wintermute.rsi
   - type: Item
     size: 24
     sprite: Objects/Weapons/Guns/Rifles/wintermute.rsi
-  - type: RangedWeapon
-  - type: MagazineBarrel
-    caliber: SRifle
-    magazineTypes:
-    - Rifle
-    magFillPrototype: MagazineSRifle
-    autoEjectMag: true
-    fireRate: 5
-    minAngle: 0
-    maxAngle: 45
-    angleIncrease: 15
-    angleDecay: 20
+  - type: NewGun
     soundGunshot:
       path: /Audio/Weapons/Guns/Gunshots/ltrifle.ogg
-    soundRack:
-      path: /Audio/Weapons/Guns/Cock/ltrifle_cock.ogg
-    soundMagInsert:
-      path: /Audio/Weapons/Guns/MagIn/ltrifle_magin.ogg
-    soundMagEject:
-      path: /Audio/Weapons/Guns/MagOut/ltrifle_magout.ogg
+  - type: ItemSlots
+    slots:
+      gun-magazine:
+        name: GunMagazine
+        startingItem: MagazineRifle
+        insertSound: /Audio/Weapons/Guns/MagIn/ltrifle_magin.ogg
+        ejectSound: /Audio/Weapons/Guns/MagOut/ltrifle_magout.ogg
+        whitelist:
+          tags:
+            - MagazineRifle
+      gun-chamber:
+        name: GunChamber
+        startingItem: CartridgeRifle
+        whitelist:
+          tags:
+            - CartridgeRifle
   - type: Appearance
     visuals:
-    - type: BarrelBoltVisualizer
     - type: MagVisualizer
       magState: mag
       steps: 1
