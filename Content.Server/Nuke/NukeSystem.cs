@@ -363,7 +363,7 @@ namespace Content.Server.Nuke
             var stationUid = _stationSystem.GetOwningStation(uid);
             if (stationUid != null)
             {
-                _alertLevel.SetLevel(stationUid.Value, component.AlertLevelOnDeactivate, true, true, true, true);
+                _alertLevel.SetLevel(stationUid.Value, component.AlertLevelOnDeactivate, true, true, true);
             }
 
             // warn a crew
