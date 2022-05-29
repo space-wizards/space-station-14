@@ -1,13 +1,6 @@
 Entries:
 - author: ElectroJr
   changes:
-  - {message: 'While holding a storage entity (backpacks, boxes, etc) you can now
-      right click on other storage entities or disposal units and transfer contents.',
-    type: Add}
-  id: 1122
-  time: '2022-02-24T10:48:53.0000000+00:00'
-- author: ElectroJr
-  changes:
   - {message: Fixed a bug that allowed you to play multiple instruments simultaneously.,
     type: Fix}
   id: 1123
@@ -2994,3 +2987,13 @@ Entries:
     type: Add}
   id: 1621
   time: '2022-05-29T00:09:29.0000000+00:00'
+- author: keronshb
+  changes:
+  - {message: 'Adds Magic! Learn spells with spellbooks. Spells including: Blink -
+      a teleport spell. Knock - a spell that unlocks and opens doors. Force Wall -
+      a spell that creates a force field in front of you. Runes - magic drawings on
+      the ground. And a Summon Magi-Carp spell!', type: Add}
+  - {message: Adds a way to prevent a specified entity from colliding with another.,
+    type: Add}
+  id: 1622
+  time: '2022-05-29T06:29:10.0000000+00:00'
