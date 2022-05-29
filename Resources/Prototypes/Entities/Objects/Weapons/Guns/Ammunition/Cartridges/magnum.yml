@@ -1,14 +1,17 @@
 - type: entity
-  id: CartridgeMagnumBase
+  id: BaseCartridgeMagnum
   name: cartridge (.40 magnum)
   parent: BaseCartridge
   abstract: true
   components:
-  - type: Ammo
-    caliber: Magnum
+  - type: Tag
+    tags:
+      - Cartridge
+      - CartridgeMagnum
+  - type: CartridgeAmmo
+    proto: BulletMagnum
   - type: Sprite
     netsync: false
-    noRot: false
     sprite: Objects/Weapons/Guns/Ammunition/Casings/ammo_casing.rsi
     layers:
     - state: base
@@ -20,42 +23,39 @@
 - type: entity
   id: CartridgeMagnum
   name: cartridge (.40 magnum)
-  parent: CartridgeMagnumBase
+  parent: BaseCartridgeMagnum
   components:
   - type: CartridgeAmmo
     proto: BulletMagnum
-  - type: Ammo
-    projectile: BulletMagnum
 
 - type: entity
   id: CartridgeMagnumFlash
   name: cartridge (.40 magnum flash)
-  parent: CartridgeMagnumBase
+  parent: BaseCartridgeMagnum
   components:
-  - type: Ammo
-    projectile: BulletMagnumFlash
+  - type: CartridgeAmmo
+    proto: BulletMagnumFlash
 
 - type: entity
-  id: CartridgeMagnumHV
+  id: CartridgeMagnumHighVelocity
   name: cartridge (.40 magnum high-velocity)
-  parent: CartridgeMagnumBase
+  parent: BaseCartridgeMagnum
   components:
-  - type: Ammo
-    projectile: BulletMagnumHV
-    ammoVelocity: 30
+  - type: CartridgeAmmo
+    proto: BulletMagnumHighVelocity
 
 - type: entity
   id: CartridgeMagnumPractice
   name: cartridge (.40 magnum practice)
-  parent: CartridgeMagnumBase
+  parent: BaseCartridgeMagnum
   components:
-  - type: Ammo
-    projectile: BulletMagnumPractice
+  - type: Cartridge
+    proto: BulletMagnumPractice
 
 - type: entity
   id: CartridgeMagnumRubber
   name: cartridge (.40 magnum rubber)
-  parent: CartridgeMagnumBase
+  parent: BaseCartridgeMagnum
   components:
-  - type: Ammo
-    projectile: BulletMagnumRubber
+  - type: Cartridge
+    proto: BulletMagnumRubber

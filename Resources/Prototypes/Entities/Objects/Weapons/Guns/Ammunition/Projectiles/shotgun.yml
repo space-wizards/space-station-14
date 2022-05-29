@@ -2,7 +2,7 @@
   id: PelletShotgunSlug
   name: pellet (.50 slug)
   noSpawn: true
-  parent: BulletBase
+  parent: BaseBullet
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/Projectiles/slug.rsi
@@ -16,7 +16,7 @@
   id: PelletShotgunBeanbag
   name: beanbag (.50)
   noSpawn: true
-  parent: BulletBase
+  parent: BaseBullet
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/Projectiles/buckshot.rsi
@@ -33,7 +33,7 @@
   id: PelletShotgun
   name: pellet (.50)
   noSpawn: true
-  parent: BulletBase
+  parent: BaseBullet
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/Projectiles/buckshot.rsi
@@ -47,7 +47,7 @@
   id: PelletShotgunFlash
   name: pellet (.50 flash)
   noSpawn: true
-  parent: BulletBaseFlash
+  parent: BaseBulletFlash
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/Projectiles/buckshot.rsi
@@ -61,7 +61,7 @@
   id: PelletShotgunIncendiary
   name: pellet (.50 incendiary)
   noSpawn: true
-  parent: BulletBase
+  parent: BaseBullet
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/Projectiles/flare_buckshot.rsi
@@ -82,7 +82,7 @@
   id: PelletShotgunPractice
   name: pellet (.50 practice)
   noSpawn: true
-  parent: BulletBasePractice
+  parent: BaseBulletPractice
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/Projectiles/buckshot.rsi
@@ -96,7 +96,7 @@
   id: PelletShotgunTranquilizer
   name: pellet (.50 tranquilizer)
   noSpawn: true
-  parent: BulletBasePractice
+  parent: BaseBulletPractice
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/Projectiles/buckshot.rsi
@@ -122,7 +122,7 @@
   id: PelletShotgunFlare
   name: pellet (.50 flare)
   noSpawn: true
-  parent: BulletBase
+  parent: BaseBullet
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/Projectiles/flare_buckshot.rsi

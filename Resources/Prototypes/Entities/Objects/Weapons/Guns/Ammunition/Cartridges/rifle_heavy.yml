@@ -1,14 +1,17 @@
 - type: entity
-  id: CartridgeHRifleBase
+  id: BaseCartridgeHeavyRifle
   name: cartridge (.20 rifle)
   parent: BaseCartridge
   abstract: true
   components:
-  - type: Ammo
-    caliber: HRifle
+  - type: Tag
+    tags:
+      - Cartridge
+      - CartridgeHeavyRifle
+  - type: CartridgeAmmo
+    proto: BulletHeavyRifle
   - type: Sprite
     netsync: false
-    noRot: false
     sprite: Objects/Weapons/Guns/Ammunition/Casings/ammo_casing.rsi
     layers:
     - state: base
@@ -20,8 +23,8 @@
 - type: entity
   id: CartridgeMinigun
   name: cartridge (.10 rifle)
-  parent: CartridgeHRifleBase
+  parent: BaseCartridgeHeavyRifle
   components:
-  - type: Ammo
-    projectile: BulletMinigun
-    caseless: true
+  - type: CartridgeAmmo
+    proto: BulletMinigun
+    deleteOnSpawn: true

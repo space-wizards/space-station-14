@@ -1,0 +1,222 @@
+- type: entity
+  id: BaseMagazineCaselessRifle
+  name: "magazine (.25 caseless)"
+  parent: BaseItem
+  abstract: true
+  components:
+  - type: Tag
+    tags:
+      - MagazineCaselessRifle
+  - type: BallisticAmmoProvider
+    proto: CartridgeCaselessRifle
+    capacity: 30
+  - type: Sprite
+    netsync: false
+    layers:
+    - state: base
+      map: ["enum.RangedBarrelVisualLayers.Base"]
+    - state: mag-1
+      map: ["enum.RangedBarrelVisualLayers.Mag"]
+  - type: Appearance
+    visuals:
+    - type: MagVisualizer
+      magState: mag
+      steps: 2
+      zeroVisible: false
+
+- type: entity
+  id: BaseMagazineCaselessRiflePistol
+  name: "pistol magazine (.25 caseless)"
+  parent: BaseMagazineCaselessRifle
+  abstract: true
+  components:
+  - type: Tag
+    tags:
+      - MagazinePistol
+  - type: BallisticAmmoProvider
+    proto: CartridgeCaselessRifle
+    capacity: 10
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Ammunition/Magazine/CaselessRifle/caseless_pistol_mag.rsi
+  - type: Appearance
+    visuals:
+      - type: MagVisualizer
+        magState: mag
+        steps: 6
+        zeroVisible: false
+
+- type: entity
+  id: MagazineCaselessRifle10x24
+  name: "box magazine (.25 caseless)"
+  parent: BaseMagazineCaselessRifle
+  components:
+  - type: BallisticAmmoProvider
+    proto: CartridgeCaselessRifle
+    capacity: 99
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Ammunition/Magazine/CaselessRifle/10x24.rsi
+
+- type: entity
+  id: MagazineCaselessRiflePistol
+  name: "pistol magazine (.25 caseless)"
+  parent: BaseMagazineCaselessRiflePistol
+  components:
+  - type: BallisticAmmoProvider
+    proto: CartridgeCaselessRifle
+    capacity: 10
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Ammunition/Magazine/CaselessRifle/caseless_pistol_mag.rsi
+  - type: Appearance
+    visuals:
+    - type: MagVisualizer
+      magState: mag
+      steps: 6
+      zeroVisible: false
+
+# No flash
+
+- type: entity
+  id: MagazineCaselessRiflePistolHV
+  name: "pistol magazine (.25 caseless high-velocity)"
+  parent: BaseMagazineCaselessRiflePistol
+  components:
+  - type: BallisticAmmoProvider
+    proto: CartridgeCaselessRifleHighVelocity
+    capacity: 10
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Ammunition/Magazine/CaselessRifle/caseless_pistol_mag_high_velocity.rsi
+  - type: Appearance
+    visuals:
+    - type: MagVisualizer
+      magState: mag
+      steps: 6
+      zeroVisible: false
+
+- type: entity
+  id: MagazineCaselessRiflePistolPractice
+  name: "pistol magazine (.25 caseless practice)"
+  parent: BaseMagazineCaselessRiflePistol
+  components:
+  - type: BallisticAmmoProvider
+    proto: CartridgeCaselessRiflePractice
+    capacity: 10
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Ammunition/Magazine/CaselessRifle/caseless_pistol_mag_practice.rsi
+  - type: Appearance
+    visuals:
+    - type: MagVisualizer
+      magState: mag
+      steps: 6
+      zeroVisible: false
+
+- type: entity
+  id: MagazineCaselessRiflePistolRubber
+  name: "pistol magazine (.25 caseless rubber)"
+  parent: BaseMagazineCaselessRiflePistol
+  components:
+  - type: BallisticAmmoProvider
+    proto: CartridgeCaselessRifleRubber
+    capacity: 10
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Ammunition/Magazine/CaselessRifle/caseless_pistol_mag_rubber.rsi
+  - type: Appearance
+    visuals:
+    - type: MagVisualizer
+      magState: mag
+      steps: 6
+      zeroVisible: false
+
+- type: entity
+  id: MagazineCaselessRifle
+  name: "magazine (.25 caseless)"
+  parent: BaseMagazineCaselessRifle
+  components:
+  - type: BallisticAmmoProvider
+    proto: CartridgeCaselessRifle
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Ammunition/Magazine/CaselessRifle/caseless_rifle_mag.rsi
+
+- type: entity
+  id: MagazineCaselessRifleHV
+  name: "magazine (.25 caseless high-velocity)"
+  parent: BaseMagazineCaselessRifle
+  components:
+  - type: BallisticAmmoProvider
+    proto: CartridgeCaselessRifleHV
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Ammunition/Magazine/CaselessRifle/caseless_rifle_mag_high_velocity.rsi
+
+- type: entity
+  id: MagazineCaselessRiflePractice
+  name: "magazine (.25 caseless practice)"
+  parent: BaseMagazineCaselessRifle
+  components:
+  - type: BallisticAmmoProvider
+    proto: CartridgeCaselessRiflePractice
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Ammunition/Magazine/CaselessRifle/caseless_rifle_mag_practice.rsi
+
+- type: entity
+  id: MagazineCaselessRifleRubber
+  name: "magazine (.25 caseless rubber)"
+  parent: BaseMagazineCaselessRifle
+  components:
+  - type: BallisticAmmoProvider
+    proto: CartridgeCaselessRifleRubber
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Ammunition/Magazine/CaselessRifle/caseless_rifle_mag_rubber.rsi
+
+- type: entity
+  id: MagazineCaselessRifleShort
+  name: "short magazine (.25 caseless)"
+  parent: BaseMagazineCaselessRifle
+  components:
+  - type: BallisticAmmoProvider
+    proto: CartridgeCaselessRifle
+    capacity: 20
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Ammunition/Magazine/CaselessRifle/caseless_rifle_mag_short.rsi
+
+- type: entity
+  id: MagazineCaselessRifleShortFlash
+  name: "short magazine (.25 caseless flash)"
+  parent: BaseMagazineCaselessRifle
+  components:
+  - type: BallisticAmmoProvider
+    proto: CartridgeCaselessRifleFlash
+    capacity: 20
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Ammunition/Magazine/CaselessRifle/caseless_rifle_mag_short_flash.rsi
+
+- type: entity
+  id: MagazineCaselessRifleShortHV
+  name: "short magazine (.25 caseless high-velocity)"
+  parent: BaseMagazineCaselessRifle
+  components:
+  - type: BallisticAmmoProvider
+    proto: CartridgeCaselessRifleHV
+    capacity: 20
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Ammunition/Magazine/CaselessRifle/caseless_rifle_mag_short_high_velocity.rsi
+
+- type: entity
+  id: MagazineCaselessRifleShortPractice
+  name: "short magazine (.25 caseless practice)"
+  parent: BaseMagazineCaselessRifle
+  components:
+  - type: BallisticAmmoProvider
+    proto: CartridgeCaselessRiflePractice
+    capacity: 20
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Ammunition/Magazine/CaselessRifle/caseless_rifle_mag_short_practice.rsi
+
+- type: entity
+  id: MagazineCaselessRifleShortRubber
+  name: "short magazine (.25 caseless rubber)"
+  parent: BaseMagazineCaselessRifle
+  components:
+  - type: BallisticAmmoProvider
+    proto: CartridgeCaselessRifleRubber
+    capacity: 20
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Ammunition/Magazine/CaselessRifle/caseless_rifle_mag_short_rubber.rsi

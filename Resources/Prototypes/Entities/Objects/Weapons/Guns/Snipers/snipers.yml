@@ -31,9 +31,6 @@
     whitelist:
       tags:
       - CartridgeLightRifle
-  - type: Appearance
-    visuals:
-    - type: BarrelBoltVisualizer
 
 - type: entity
   name: Kardashev-Mosin

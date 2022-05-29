@@ -1,4 +1,3 @@
-# Empty mags
 - type: entity
   id: BaseMagazineMagnum
   name: "Lamia magazine (.40 magnum)"
@@ -55,7 +54,6 @@
       steps: 2
       zeroVisible: false
 
-# Magazines
 - type: entity
   id: MagazineMagnum
   name: "Lamia magazine (.40 magnum)"

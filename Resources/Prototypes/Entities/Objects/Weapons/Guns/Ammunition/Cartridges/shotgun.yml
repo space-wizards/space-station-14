@@ -6,15 +6,14 @@
   components:
   - type: Tag
     tags:
-    - ShellShotgun
     - Cartridge
+    - ShellShotgun
   - type: CartridgeAmmo
     count: 6
     soundEject:
       collection: ShellEject
   - type: Sprite
     netsync: false
-    noRot: false
     sprite: Objects/Weapons/Guns/Ammunition/Casings/shotgun_shell.rsi
     layers:
     - state: base
@@ -44,6 +43,7 @@
   - type: CartridgeAmmo
     proto: PelletShotgunSlug
     count: 4
+    spread: 2.5
 
 - type: entity
   id: ShellShotgunFlare

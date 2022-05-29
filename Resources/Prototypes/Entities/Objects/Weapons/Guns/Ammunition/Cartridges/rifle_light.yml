@@ -1,5 +1,5 @@
 - type: entity
-  id: CartridgeLRifleBase
+  id: BaseCartridgeLightRifle
   name: cartridge (.30 rifle)
   parent: BaseCartridge
   abstract: true
@@ -8,11 +8,10 @@
     tags:
     - Cartridge
     - CartridgeLightRifle
-  - type: Ammo
-    caliber: LRifle
+  - type: CartridgeAmmo
+    proto: BulletLightRifle
   - type: Sprite
     netsync: false
-    noRot: false
     sprite: Objects/Weapons/Guns/Ammunition/Casings/ammo_casing.rsi
     layers:
     - state: base
@@ -22,44 +21,43 @@
     - type: SpentAmmoVisualizer
 
 - type: entity
-  id: CartridgeLRifle
+  id: CartridgeLightRifle
   name: cartridge (.30 rifle)
-  parent: CartridgeLRifleBase
+  parent: BaseCartridgeLightRifle
   components:
-  - type: Ammo
-    projectile: BulletLRifle
   - type: CartridgeAmmo
-    proto: BulletLRifle
+    proto: BulletLightRifle
+  - type: CartridgeAmmo
+    proto: BulletLightRifle
 
 - type: entity
-  id: CartridgeLRifleFlash
+  id: CartridgeLightRifleFlash
   name: cartridge (.30 rifle flash)
-  parent: CartridgeLRifleBase
+  parent: BaseCartridgeLightRifle
   components:
-  - type: Ammo
-    projectile: BulletLRifleFlash
+  - type: CartridgeAmmo
+    proto: BulletLightRifleFlash
 
 - type: entity
-  id: CartridgeLRifleHV
+  id: CartridgeLightRifleHighVelocity
   name: cartridge (.30 rifle high-velocity)
-  parent: CartridgeLRifleBase
+  parent: BaseCartridgeLightRifle
   components:
-  - type: Ammo
-    projectile: BulletLRifleHV
-    ammoVelocity: 30
+  - type: CartridgeAmmo
+    proto: BulletLightRifleHighVelocity
 
 - type: entity
-  id: CartridgeLRiflePractice
+  id: CartridgeLightRiflePractice
   name: cartridge (.30 rifle practice)
-  parent: CartridgeLRifleBase
+  parent: BaseCartridgeLightRifle
   components:
-  - type: Ammo
-    projectile: BulletLRiflePractice
+  - type: CartridgeAmmo
+    proto: BulletLightRiflePractice
 
 - type: entity
-  id: CartridgeLRifleRubber
+  id: CartridgeLightRifleRubber
   name: cartridge (.30 rifle rubber)
-  parent: CartridgeLRifleBase
+  parent: BaseCartridgeLightRifle
   components:
-  - type: Ammo
-    projectile: BulletLRifleRubber
+  - type: CartridgeAmmo
+    proto: BulletLightRifleRubber

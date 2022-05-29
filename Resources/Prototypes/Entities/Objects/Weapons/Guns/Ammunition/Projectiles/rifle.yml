@@ -1,7 +1,7 @@
 - type: entity
-  id: BulletSRifle
+  id: BulletRifle
   name: bullet (0.20 rifle)
-  parent: BulletBase
+  parent: BaseBullet
   noSpawn: true
   components:
   - type: Projectile
@@ -10,9 +10,9 @@
         Piercing: 25
 
 - type: entity
-  id: BulletSRifleFlash
+  id: BulletRifleFlash
   name: bullet (0.20 rifle flash)
-  parent: BulletBaseFlash
+  parent: BaseBulletFlash
   noSpawn: true
   components:
   - type: Projectile
@@ -21,9 +21,9 @@
         Blunt: 3
 
 - type: entity
-  id: BulletSRifleHV
+  id: BulletRifleHighVelocity
   name: bullet (0.20 rifle high-velocity)
-  parent: BulletBaseHV
+  parent: BaseBulletHighVelocity
   noSpawn: true
   components:
   - type: Projectile
@@ -32,9 +32,9 @@
         Piercing: 30
 
 - type: entity
-  id: BulletSRiflePractice
+  id: BulletRiflePractice
   name: bullet (0.20 rifle practice)
-  parent: BulletBasePractice
+  parent: BaseBulletPractice
   noSpawn: true
   components:
   - type: Projectile
@@ -43,9 +43,9 @@
         Blunt: 2
 
 - type: entity
-  id: BulletSRifleRubber
+  id: BulletRifleRubber
   name: bullet (0.20 rifle rubber)
-  parent: BulletBaseRubber
+  parent: BaseBulletRubber
   noSpawn: true
   components:
   - type: Projectile

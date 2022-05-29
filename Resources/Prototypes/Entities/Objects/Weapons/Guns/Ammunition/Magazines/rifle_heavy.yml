@@ -1,14 +1,14 @@
 - type: entity
-  id: MagazineHRifleBase
+  id: BaseMagazineHeavyRifle
   name: "magazine (.20 rifle)"
   parent: BaseItem
   abstract: true
   components:
-  - type: RangedMagazine
-    caliber: HRifle
-    magazineType: Rifle
+  - type: Tag
+    tags:
+      - MagazineHeavyRifle
+  - type: BallisticAmmoProvider
     capacity: 100
-
   - type: Sprite
     netsync: false
     layers:
@@ -23,17 +23,17 @@
       steps: 2
       zeroVisible: false
 
-
 - type: entity
   id: MagazineMinigun
   name: "Minigun magazine box (.10 rifle)"
-  parent: MagazineHRifleBase
+  parent: BaseMagazineHeavyRifle
   components:
-  - type: RangedMagazine
-    fillPrototype: CartridgeMinigun
-    magazineType: Box
+  - type: Tag
+    tags:
+      - AmmoBoxHeavyRifle
+  - type: BallisticAmmoProvider
+    proto: CartridgeMinigun
     capacity: 1000
-
   - type: Sprite
     sprite: Objects/Weapons/Guns/Ammunition/Magazine/LRifle/l_rifle_box.rsi
   - type: Appearance

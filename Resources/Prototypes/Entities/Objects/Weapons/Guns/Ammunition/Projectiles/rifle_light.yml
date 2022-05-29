@@ -1,17 +1,17 @@
 - type: entity
-  id: BulletClRifle
-  name: bullet (.25 caseless)
+  id: BulletLightRifle
+  name: bullet (.20 rifle)
   parent: BulletBase
   noSpawn: true
   components:
   - type: Projectile
     damage:
       types:
-        Piercing: 27
+        Piercing: 28
 
 - type: entity
-  id: BulletClRifleFlash
-  name: bullet (.25 caseless flash)
+  id: BulletLightRifleFlash
+  name: bullet (.20 rifle flash)
   parent: BulletBaseFlash
   noSpawn: true
   components:
@@ -21,19 +21,19 @@
         Blunt: 3
 
 - type: entity
-  id: BulletClRifleHV
-  name: bullet (.25 caseless high-velocity)
+  id: BulletLightRifleHV
+  name: bullet (.20 rifle high-velocity)
   parent: BulletBaseHV
   noSpawn: true
   components:
   - type: Projectile
     damage:
       types:
-        Piercing: 32
+        Piercing: 30
 
 - type: entity
-  id: BulletClRiflePractice
-  name: bullet (.25 caseless practice)
+  id: BulletLightRiflePractice
+  name: bullet (.20 rifle practice)
   parent: BulletBasePractice
   noSpawn: true
   components:
@@ -43,8 +43,8 @@
         Blunt: 2
 
 - type: entity
-  id: BulletClRifleRubber
-  name: bullet (.25 caseless rubber)
+  id: BulletLightRifleRubber
+  name: bullet (.20 rifle rubber)
   parent: BulletBaseRubber
   noSpawn: true
   components:

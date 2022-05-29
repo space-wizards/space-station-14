@@ -1,14 +1,17 @@
 - type: entity
-  id: CartridgeSRifleBase
+  id: BaseCartridgeRifle
   name: cartridge (.20 rifle)
   parent: BaseCartridge
   abstract: true
   components:
-  - type: Ammo
-    caliber: SRifle
+  - type: Tag
+    tags:
+      - Cartridge
+      - CartridgeRifle
+  - type: CartridgeAmmo
+    proto: BulletRifle
   - type: Sprite
     netsync: false
-    noRot: false
     sprite: Objects/Weapons/Guns/Ammunition/Casings/ammo_casing.rsi
     layers:
     - state: base
@@ -18,42 +21,42 @@
     - type: SpentAmmoVisualizer
 
 - type: entity
-  id: CartridgeSRifle
+  id: CartridgeRifle
   name: cartridge (.20 rifle)
-  parent: CartridgeSRifleBase
+  parent: CartridgeRifleBase
   components:
-  - type: Ammo
-    projectile: BulletSRifle
+  - type: CartridgeAmmo
+    proto: BulletRifle
 
 - type: entity
-  id: CartridgeSRifleFlash
+  id: CartridgeRifleFlash
   name: cartridge (.20 rifle flash)
-  parent: CartridgeSRifleBase
+  parent: CartridgeRifleBase
   components:
-  - type: Ammo
-    projectile: BulletSRifleFlash
+  - type: CartridgeAmmo
+    proto: BulletRifleFlash
 
 - type: entity
-  id: CartridgeSRifleHV
+  id: CartridgeRifleHighVelocity
   name: cartridge (.20 rifle high-velocity)
-  parent: CartridgeSRifleBase
+  parent: CartridgeRifleBase
   components:
-  - type: Ammo
-    projectile: BulletSRifleHV
+  - type: CartridgeAmmo
+    proto: BulletRifleHighVelocity
     ammoVelocity: 30
 
 - type: entity
-  id: CartridgeSRiflePractice
+  id: CartridgeRiflePractice
   name: cartridge (.20 rifle practice)
-  parent: CartridgeSRifleBase
+  parent: CartridgeRifleBase
   components:
-  - type: Ammo
-    projectile: BulletSRiflePractice
+  - type: CartridgeAmmo
+    proto: BulletRiflePractice
 
 - type: entity
-  id: CartridgeSRifleRubber
+  id: CartridgeRifleRubber
   name: cartridge (.20 rifle rubber)
-  parent: CartridgeSRifleBase
+  parent: CartridgeRifleBase
   components:
-  - type: Ammo
-    projectile: BulletSRifleRubber
+  - type: CartridgeAmmo
+    proto: BulletRifleRubber

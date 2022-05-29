@@ -1,0 +1,79 @@
+# Empty mags
+- type: entity
+  id: BaseMagazineRifle
+  name: "magazine (.20 rifle)"
+  parent: BaseItem
+  abstract: true
+  components:
+  - type: Tag
+      tags:
+        - MagazineRifle
+  - type: BallisticAmmoProvider
+    whitelist:
+      tags:
+        - CartridgeRifle
+    capacity: 25
+  - type: Sprite
+    netsync: false
+    layers:
+    - state: base
+      map: ["enum.RangedBarrelVisualLayers.Base"]
+    - state: mag-1
+      map: ["enum.RangedBarrelVisualLayers.Mag"]
+  - type: Appearance
+    visuals:
+    - type: MagVisualizer
+      magState: mag
+      steps: 2
+      zeroVisible: false
+
+# Magazines
+- type: entity
+  id: MagazineRifle
+  name: "magazine (.20 rifle)"
+  parent: BaseMagazineRifle
+  components:
+  - type: BallisticAmmoProvider
+    proto: CartridgeRifle
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Ammunition/Magazine/Rifle/rifle_mag.rsi
+
+- type: entity
+  id: MagazineRifleFlash
+  name: "magazine (.20 rifle flash)"
+  parent: BaseMagazineRifle
+  components:
+  - type: BallisticAmmoProvider
+    proto: CartridgeRifleFlash
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Ammunition/Magazine/Rifle/rifle_mag_flash.rsi
+
+- type: entity
+  id: MagazineRifleHV
+  name: "magazine (.20 rifle high-velocity)"
+  parent: BaseMagazineRifle
+  components:
+  - type: BallisticAmmoProvider
+    proto: CartridgeRifleHV
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Ammunition/Magazine/Rifle/rifle_mag_hv.rsi
+
+- type: entity
+  id: MagazineRiflePractice
+  name: "magazine (.20 rifle practice)"
+  parent: BaseMagazineRifle
+  components:
+  - type: BallisticAmmoProvider
+    proto: CartridgeRiflePractice
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Ammunition/Magazine/Rifle/rifle_mag_practice.rsi
+
+- type: entity
+  id: MagazineRifleRubber
+  name: "magazine (.20 rifle rubber)"
+  parent: BaseMagazineRifle
+  components:
+  - type: BallisticAmmoProvider
+    proto: CartridgeRifleRubber
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Ammunition/Magazine/Rifle/rifle_mag_rubber.rsi

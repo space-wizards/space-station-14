@@ -1,5 +1,5 @@
 - type: entity
-  id: BulletHRifle
+  id: BulletHeavyRifle
   name: bullet (.20 rifle)
   parent: BulletBase
   noSpawn: true
@@ -12,7 +12,7 @@
 - type: entity
   id: BulletMinigun
   name: minigun bullet (.10 rifle)
-  parent: BulletHRifle
+  parent: BulletHeavyRifle
   noSpawn: true
   components:
   - type: Projectile
