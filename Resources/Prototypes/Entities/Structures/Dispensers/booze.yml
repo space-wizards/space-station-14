@@ -3,6 +3,8 @@
   name: booze dispenser
   description: A booze dispenser with a single slot for a container to be filled.
   parent: ReagentDispenserBase
+  placement:
+    mode: PlaceFree
   components:
   - type: Rotatable
   - type: Sprite
