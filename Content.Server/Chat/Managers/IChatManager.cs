@@ -33,7 +33,7 @@ namespace Content.Server.Chat.Managers
         void SendAdminAnnouncement(string message);
 
         void ChatMessageToOne(ChatChannel channel, string message, string messageWrap, EntityUid source, bool hideChat,
-            INetChannel client);
+            INetChannel client, Color? colorOverride = null);
         void ChatMessageToMany(ChatChannel channel, string message, string messageWrap, EntityUid source, bool hideChat,
             List<INetChannel> clients);
         void ChatMessageToAll(ChatChannel channel, string message, string messageWrap, Color? colorOverride = null);
