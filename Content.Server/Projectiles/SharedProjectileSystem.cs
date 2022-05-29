@@ -23,7 +23,7 @@ namespace Content.Server.Projectiles
         [Dependency] private readonly DamageableSystem _damageableSystem = default!;
         [Dependency] private readonly IAdminLogManager _adminLogger = default!;
         [Dependency] private readonly CameraRecoilSystem _cameraRecoil = default!;
-        [Dependency] private readonly GunSystem _guns = default!;
+        [Dependency] private readonly NewGunSystem _guns = default!;
 
         public override void Initialize()
         {
@@ -51,7 +51,7 @@ namespace Content.Server.Projectiles
                     $"Projectile {ToPrettyString(component.Owner):projectile} shot by {ToPrettyString(component.Shooter):user} hit {ToPrettyString(otherEntity):target} and dealt {modifiedDamage.Total:damage} damage");
             }
 
-            _guns.PlaySound(otherEntity, modifiedDamage, component.SoundHit, component.ForceSound);
+            _guns.PlayImpactSound(otherEntity, modifiedDamage, component.SoundHit, component.ForceSound);
 
             // Damaging it can delete it
             if (HasComp<CameraRecoilComponent>(otherEntity))
