@@ -13,6 +13,7 @@
     capacity: 30
   - type: Sprite
     netsync: false
+    sprite: Objects/Weapons/Guns/Ammunition/Magazine/LightRifle/light_rifle_mag.rsi
     layers:
     - state: base
       map: ["enum.RangedBarrelVisualLayers.Base"]
@@ -54,7 +55,11 @@
   - type: BallisticAmmoProvider
     proto: CartridgeLightRifle
   - type: Sprite
-    sprite: Objects/Weapons/Guns/Ammunition/Magazine/LightRifle/light_rifle_mag.rsi
+    layers:
+    - state: red
+      map: ["enum.RangedBarrelVisualLayers.Base"]
+    - state: mag-1
+      map: ["enum.RangedBarrelVisualLayers.Mag"]
 
 - type: entity
   id: MagazineLightRifleFlash
@@ -64,17 +69,25 @@
   - type: BallisticAmmoProvider
     proto: CartridgeLightRifleFlash
   - type: Sprite
-    sprite: Objects/Weapons/Guns/Ammunition/Magazine/LightRifle/light_rifle_mag_flash.rsi
+    layers:
+    - state: flash
+      map: ["enum.RangedBarrelVisualLayers.Base"]
+    - state: mag-1
+      map: ["enum.RangedBarrelVisualLayers.Mag"]
 
 - type: entity
-  id: MagazineLightRifleHV
+  id: MagazineLightRifleHighVelocity
   name: "magazine (.30 rifle high-velocity)"
   parent: BaseMagazineLightRifle
   components:
   - type: BallisticAmmoProvider
-    proto: CartridgeLightRifleHV
+    proto: CartridgeLightRifleHighVelocity
   - type: Sprite
-    sprite: Objects/Weapons/Guns/Ammunition/Magazine/LightRifle/light_rifle_mag_hv.rsi
+    layers:
+    - state: high_velocity
+      map: ["enum.RangedBarrelVisualLayers.Base"]
+    - state: mag-1
+      map: ["enum.RangedBarrelVisualLayers.Mag"]
 
 - type: entity
   id: MagazineLightRiflePractice
@@ -84,7 +97,11 @@
   - type: BallisticAmmoProvider
     proto: CartridgeLightRiflePractice
   - type: Sprite
-    sprite: Objects/Weapons/Guns/Ammunition/Magazine/LightRifle/light_rifle_mag_practice.rsi
+    layers:
+    - state: practice
+      map: ["enum.RangedBarrelVisualLayers.Base"]
+    - state: mag-1
+      map: ["enum.RangedBarrelVisualLayers.Mag"]
 
 - type: entity
   id: MagazineLightRifleRubber
@@ -94,7 +111,11 @@
   - type: BallisticAmmoProvider
     proto: CartridgeLightRifleRubber
   - type: Sprite
-    sprite: Objects/Weapons/Guns/Ammunition/Magazine/LightRifle/light_rifle_mag_rubber.rsi
+    layers:
+    - state: rubber
+      map: ["enum.RangedBarrelVisualLayers.Base"]
+    - state: mag-1
+      map: ["enum.RangedBarrelVisualLayers.Mag"]
 
 - type: entity
   id: MagazineLightRifleMaxim

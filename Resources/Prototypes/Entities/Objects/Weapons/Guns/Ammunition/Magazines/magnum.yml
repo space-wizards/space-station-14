@@ -14,6 +14,7 @@
     capacity: 10
   - type: Sprite
     netsync: false
+    sprite: Objects/Weapons/Guns/Ammunition/Magazine/Magnum/magnum_mag.rsi
     layers:
     - state: base
       map: ["enum.RangedBarrelVisualLayers.Base"]
@@ -42,6 +43,7 @@
     capacity: 25
   - type: Sprite
     netsync: false
+    sprite: Objects/Weapons/Guns/Ammunition/Magazine/Magnum/magnum_smg_mag.rsi
     layers:
     - state: base
       map: ["enum.RangedBarrelVisualLayers.Base"]
@@ -62,7 +64,11 @@
   - type: BallisticAmmoProvider
     proto: CartridgeMagnum
   - type: Sprite
-    sprite: Objects/Weapons/Guns/Ammunition/Magazine/Magnum/magnum_mag.rsi
+    layers:
+    - state: red
+      map: ["enum.RangedBarrelVisualLayers.Base"]
+    - state: mag-1
+      map: ["enum.RangedBarrelVisualLayers.Mag"]
 
 - type: entity
   id: MagazineMagnumFlash
@@ -72,7 +78,11 @@
   - type: BallisticAmmoProvider
     proto: CartridgeMagnumFlash
   - type: Sprite
-    sprite: Objects/Weapons/Guns/Ammunition/Magazine/Magnum/magnum_mag_flash.rsi
+    layers:
+    - state: flash
+      map: ["enum.RangedBarrelVisualLayers.Base"]
+    - state: mag-1
+      map: ["enum.RangedBarrelVisualLayers.Mag"]
 
 - type: entity
   id: MagazineMagnumHighVelocity
@@ -80,9 +90,13 @@
   parent: MagazineMagnumBase
   components:
   - type: BallisticAmmoProvider
-    proto: CartridgeMagnumHV
+    proto: CartridgeMagnumHighVelocity
   - type: Sprite
-    sprite: Objects/Weapons/Guns/Ammunition/Magazine/Magnum/magnum_mag_hv.rsi
+    layers:
+    - state: high_velocity
+      map: ["enum.RangedBarrelVisualLayers.Base"]
+    - state: mag-1
+      map: ["enum.RangedBarrelVisualLayers.Mag"]
 
 - type: entity
   id: MagazineMagnumPractice
@@ -92,7 +106,11 @@
   - type: BallisticAmmoProvider
     proto: CartridgeMagnumPractice
   - type: Sprite
-    sprite: Objects/Weapons/Guns/Ammunition/Magazine/Magnum/magnum_mag_practice.rsi
+    layers:
+    - state: practice
+      map: ["enum.RangedBarrelVisualLayers.Base"]
+    - state: mag-1
+      map: ["enum.RangedBarrelVisualLayers.Mag"]
 
 - type: entity
   id: MagazineMagnumRubber
@@ -102,7 +120,11 @@
   - type: BallisticAmmoProvider
     proto: CartridgeMagnumRubber
   - type: Sprite
-    sprite: Objects/Weapons/Guns/Ammunition/Magazine/Magnum/magnum_mag_rubber.rsi
+    layers:
+    - state: rubber
+      map: ["enum.RangedBarrelVisualLayers.Base"]
+    - state: mag-1
+      map: ["enum.RangedBarrelVisualLayers.Mag"]
 
 - type: entity
   id: MagazineSubMachineGunMagnum
@@ -112,7 +134,11 @@
   - type: BallisticAmmoProvider
     proto: CartridgeMagnum
   - type: Sprite
-    sprite: Objects/Weapons/Guns/Ammunition/Magazine/Magnum/magnum_smg_mag.rsi
+    layers:
+    - state: red
+      map: ["enum.RangedBarrelVisualLayers.Base"]
+    - state: mag-1
+      map: ["enum.RangedBarrelVisualLayers.Mag"]
 
 - type: entity
   id: MagazineSubMachineGunMagnumHighVelocity
@@ -120,9 +146,13 @@
   parent: BaseMagazineSubMachineGunMagnum
   components:
   - type: BallisticAmmoProvider
-    proto: CartridgeMagnumHV
+    proto: CartridgeMagnumHighVelocity
   - type: Sprite
-    sprite: Objects/Weapons/Guns/Ammunition/Magazine/Magnum/magnum_smg_mag_hv.rsi
+    layers:
+    - state: high_velocity
+      map: ["enum.RangedBarrelVisualLayers.Base"]
+    - state: mag-1
+      map: ["enum.RangedBarrelVisualLayers.Mag"]
 
 - type: entity
   id: MagazineSubMachineGunMagnumPractice
@@ -132,7 +162,11 @@
   - type: BallisticAmmoProvider
     proto: CartridgeMagnumPractice
   - type: Sprite
-    sprite: Objects/Weapons/Guns/Ammunition/Magazine/Magnum/magnum_smg_mag_practice.rsi
+    layers:
+    - state: practice
+      map: ["enum.RangedBarrelVisualLayers.Base"]
+    - state: mag-1
+      map: ["enum.RangedBarrelVisualLayers.Mag"]
 
 - type: entity
   id: MagazineSubMachineGunMagnumRubber
@@ -142,4 +176,8 @@
   - type: BallisticAmmoProvider
     proto: CartridgeMagnumRubber
   - type: Sprite
-    sprite: Objects/Weapons/Guns/Ammunition/Magazine/Magnum/magnum_smg_mag_rubber.rsi
+    layers:
+    - state: rubber
+      map: ["enum.RangedBarrelVisualLayers.Base"]
+    - state: mag-1
+      map: ["enum.RangedBarrelVisualLayers.Mag"]

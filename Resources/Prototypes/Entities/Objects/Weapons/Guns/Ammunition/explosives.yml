@@ -10,8 +10,8 @@
     caseless: true
   - type: Sprite
     netsync: false
-    sprite: Objects/Weapons/Guns/Ammunition/Explosives/rpg.rsi
-    state: frag
+    sprite: Objects/Weapons/Guns/Ammunition/Explosives/explosives.rsi
+    state: rpg
 
 - type: entity
   id: GrenadeBaton
@@ -23,9 +23,9 @@
     projectile: BulletGrenadeBaton
   - type: Sprite
     netsync: false
-    sprite: Objects/Weapons/Guns/Ammunition/Explosives/grenade_baton.rsi
+    sprite: Objects/Weapons/Guns/Ammunition/Explosives/explosives.rsi
     layers:
-    - state: base
+    - state: baton
       map: ["enum.AmmoVisualLayers.Base"]
   - type: Appearance
     visuals:
@@ -41,9 +41,9 @@
     projectile: BulletGrenadeBlast
   - type: Sprite
     netsync: false
-    sprite: Objects/Weapons/Guns/Ammunition/Explosives/grenade_blast.rsi
+    sprite: Objects/Weapons/Guns/Ammunition/Explosives/explosives.rsi
     layers:
-    - state: base
+    - state: blast
       map: ["enum.AmmoVisualLayers.Base"]
   - type: Appearance
     visuals:
@@ -59,9 +59,9 @@
     projectile: BulletGrenadeFlash
   - type: Sprite
     netsync: false
-    sprite: Objects/Weapons/Guns/Ammunition/Explosives/grenade_flash.rsi
+    sprite: Objects/Weapons/Guns/Ammunition/Explosives/explosives.rsi
     layers:
-    - state: base
+    - state: flash
       map: ["enum.AmmoVisualLayers.Base"]
   - type: Appearance
     visuals:
@@ -77,9 +77,9 @@
     projectile: BulletGrenadeFrag
   - type: Sprite
     netsync: false
-    sprite: Objects/Weapons/Guns/Ammunition/Explosives/grenade_frag.rsi
+    sprite: Objects/Weapons/Guns/Ammunition/Explosives/explosives.rsi
     layers:
-    - state: base
+    - state: frag
       map: ["enum.AmmoVisualLayers.Base"]
   - type: Appearance
     visuals:
@@ -93,10 +93,10 @@
   components:
   - type: Ammo
     caliber: Rocket
-    projectile: WeakBulletRocket
+    projectile: BulletWeakRocket
     caseless: true
     ammoVelocity: 4.5
   - type: Sprite
     netsync: false
-    sprite: Objects/Weapons/Guns/Ammunition/Explosives/rpg.rsi
+    sprite: Objects/Weapons/Guns/Ammunition/Explosives/explosives.rsi
     state: frag

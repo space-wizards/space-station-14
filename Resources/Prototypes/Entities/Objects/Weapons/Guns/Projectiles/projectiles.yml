@@ -207,7 +207,7 @@
     energy: 0.5
 
 - type: entity
-  id: WeakBulletRocket
+  id: BulletWeakRocket
   name: weak rocket
   parent: BaseBulletTrigger
   noSpawn: true

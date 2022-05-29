@@ -1,11 +1,11 @@
 - type: entity
   abstract: true
   parent: BaseItem
-  id: BoxLRifleBase
+  id: BaseMagazineBoxLightRifle
   name: ammunition box (.30 rifle)
   components:
   - type: BallisticAmmoProvider
-    caliber: LRifle
+    proto: CartridgeLightRifle
     capacity: 50
   - type: Sprite
     sprite: Objects/Weapons/Guns/Ammunition/Boxes/light_rifle.rsi
@@ -19,8 +19,8 @@
 
 # Boxes
 - type: entity
-  parent: BoxLRifleBase
-  id: BoxLRifleBigBox
+  parent: BaseMagazineBoxLightRifle
+  id: BoxLightRifleBigBox
   name: ammunition box (.30 rifle)
   components:
   - type: BallisticAmmoProvider
@@ -40,8 +40,8 @@
       zeroVisible: false
 
 - type: entity
-  parent: BoxLRifleBase
-  id: BoxLRifleBox
+  parent: BaseMagazineBoxLightRifle
+  id: BoxLightRifleBox
   name: ammunition box (.30 rifle)
   components:
   - type: BallisticAmmoProvider
@@ -54,8 +54,8 @@
       map: ["enum.RangedBarrelVisualLayers.Mag"]
 
 - type: entity
-  parent: BoxLRifleBase
-  id: BoxLRifleBoxHV
+  parent: BaseMagazineBoxLightRifle
+  id: BoxLightRifleBoxHV
   name: ammunition box (.30 rifle high-velocity)
   components:
   - type: BallisticAmmoProvider
@@ -69,8 +69,8 @@
     - state: hv
 
 - type: entity
-  parent: BoxLRifleBase
-  id: BoxLRifleBoxPractice
+  parent: BaseMagazineBoxLightRifle
+  id: BoxLightRifleBoxPractice
   name: ammunition box (.30 rifle practice)
   components:
   - type: BallisticAmmoProvider
@@ -84,8 +84,8 @@
     - state: practice
 
 - type: entity
-  parent: BoxLRifleBase
-  id: BoxLRifleBoxRubber
+  parent: BaseMagazineBoxLightRifle
+  id: BoxLightRifleBoxRubber
   name: ammunition box (.30 rifle rubber)
   components:
   - type: BallisticAmmoProvider

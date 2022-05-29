@@ -35,7 +35,7 @@
     proto: CartridgeMinigun
     capacity: 1000
   - type: Sprite
-    sprite: Objects/Weapons/Guns/Ammunition/Magazine/LRifle/l_rifle_box.rsi
+    sprite: Objects/Weapons/Guns/Ammunition/Magazine/LightRifle/light_rifle_box.rsi
   - type: Appearance
     visuals:
     - type: MagVisualizer

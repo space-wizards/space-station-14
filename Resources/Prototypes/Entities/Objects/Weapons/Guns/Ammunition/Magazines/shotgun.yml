@@ -13,6 +13,7 @@
       path: /Audio/Weapons/Guns/Cock/smg_cock.ogg
   - type: Sprite
     netsync: false
+    sprite: Objects/Weapons/Guns/Ammunition/Magazine/Shotgun/m12.rsi
     layers:
     - state: base
       map: ["enum.RangedBarrelVisualLayers.Base"]
@@ -33,7 +34,11 @@
   - type: BallisticAmmoProvider
     proto: ShellShotgun
   - type: Sprite
-    sprite: Objects/Weapons/Guns/Ammunition/Magazine/Shotgun/m12_pellets.rsi
+    layers:
+    - state: pellets
+      map: ["enum.RangedBarrelVisualLayers.Base"]
+    - state: mag-1
+      map: ["enum.RangedBarrelVisualLayers.Mag"]
 
 - type: entity
   id: MagazineShotgunBeanbag
@@ -43,7 +48,11 @@
   - type: BallisticAmmoProvider
     proto: ShellShotgunBeanbag
   - type: Sprite
-    sprite: Objects/Weapons/Guns/Ammunition/Magazine/Shotgun/m12_beanbag.rsi
+    layers:
+    - state: beanbag
+      map: ["enum.RangedBarrelVisualLayers.Base"]
+    - state: mag-1
+      map: ["enum.RangedBarrelVisualLayers.Mag"]
 
 - type: entity
   id: MagazineShotgunSlug
@@ -53,7 +62,11 @@
   - type: BallisticAmmoProvider
     proto: ShellShotgunSlug
   - type: Sprite
-    sprite: Objects/Weapons/Guns/Ammunition/Magazine/Shotgun/m12_slug.rsi
+    layers:
+    - state: slug
+      map: ["enum.RangedBarrelVisualLayers.Base"]
+    - state: mag-1
+      map: ["enum.RangedBarrelVisualLayers.Mag"]
 
 - type: entity
   id: MagazineShotgunIncendiary
@@ -63,4 +76,8 @@
   - type: BallisticAmmoProvider
     proto: ShellShotgunIncendiary
   - type: Sprite
-    sprite: Objects/Weapons/Guns/Ammunition/Magazine/Shotgun/m12_slug.rsi
+    layers:
+    - state: slug
+      map: ["enum.RangedBarrelVisualLayers.Base"]
+    - state: mag-1
+      map: ["enum.RangedBarrelVisualLayers.Mag"]

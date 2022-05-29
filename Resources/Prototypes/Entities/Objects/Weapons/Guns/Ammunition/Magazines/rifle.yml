@@ -15,6 +15,7 @@
     capacity: 25
   - type: Sprite
     netsync: false
+    sprite: Objects/Weapons/Guns/Ammunition/Magazine/Rifle/rifle_mag.rsi
     layers:
     - state: base
       map: ["enum.RangedBarrelVisualLayers.Base"]
@@ -36,7 +37,11 @@
   - type: BallisticAmmoProvider
     proto: CartridgeRifle
   - type: Sprite
-    sprite: Objects/Weapons/Guns/Ammunition/Magazine/Rifle/rifle_mag.rsi
+    layers:
+    - state: red
+      map: ["enum.RangedBarrelVisualLayers.Base"]
+    - state: mag-1
+      map: ["enum.RangedBarrelVisualLayers.Mag"]
 
 - type: entity
   id: MagazineRifleFlash
@@ -46,17 +51,25 @@
   - type: BallisticAmmoProvider
     proto: CartridgeRifleFlash
   - type: Sprite
-    sprite: Objects/Weapons/Guns/Ammunition/Magazine/Rifle/rifle_mag_flash.rsi
+    layers:
+    - state: flash
+      map: ["enum.RangedBarrelVisualLayers.Base"]
+    - state: mag-1
+      map: ["enum.RangedBarrelVisualLayers.Mag"]
 
 - type: entity
-  id: MagazineRifleHV
+  id: MagazineRifleHighVelocity
   name: "magazine (.20 rifle high-velocity)"
   parent: BaseMagazineRifle
   components:
   - type: BallisticAmmoProvider
-    proto: CartridgeRifleHV
+    proto: CartridgeRifleHighVelocity
   - type: Sprite
-    sprite: Objects/Weapons/Guns/Ammunition/Magazine/Rifle/rifle_mag_hv.rsi
+    layers:
+    - state: high_velocity
+      map: ["enum.RangedBarrelVisualLayers.Base"]
+    - state: mag-1
+      map: ["enum.RangedBarrelVisualLayers.Mag"]
 
 - type: entity
   id: MagazineRiflePractice
@@ -66,7 +79,11 @@
   - type: BallisticAmmoProvider
     proto: CartridgeRiflePractice
   - type: Sprite
-    sprite: Objects/Weapons/Guns/Ammunition/Magazine/Rifle/rifle_mag_practice.rsi
+    layers:
+    - state: practice
+      map: ["enum.RangedBarrelVisualLayers.Base"]
+    - state: mag-1
+      map: ["enum.RangedBarrelVisualLayers.Mag"]
 
 - type: entity
   id: MagazineRifleRubber
@@ -76,4 +93,8 @@
   - type: BallisticAmmoProvider
     proto: CartridgeRifleRubber
   - type: Sprite
-    sprite: Objects/Weapons/Guns/Ammunition/Magazine/Rifle/rifle_mag_rubber.rsi
+    layers:
+    - state: rubber
+      map: ["enum.RangedBarrelVisualLayers.Base"]
+    - state: mag-1
+      map: ["enum.RangedBarrelVisualLayers.Mag"]

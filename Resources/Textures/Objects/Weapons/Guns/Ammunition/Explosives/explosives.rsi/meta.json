@@ -8,7 +8,19 @@
     "copyright": "https://github.com/discordia-space/CEV-Eris/raw/e1d495c3faf4642b6ec1c4be8acc7cd5bc51d785/icons/obj/ammo.dmi",
     "states": [
         {
-            "name": "base"
+            "name": "baton"
+        },
+        {
+            "name": "blast"
+        },
+        {
+            "name": "flash"
+        },
+        {
+            "name": "frag"
+        },
+        {
+            "name": "rpg"
         },
         {
             "name": "spent"
