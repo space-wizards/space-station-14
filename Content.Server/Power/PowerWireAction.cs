@@ -146,7 +146,7 @@ public sealed class PowerWireAction : BaseWireAction
         }
         else
         {
-            if (allCut)
+            if (allCut || AllWiresMended(wire.Owner))
             {
                 SetElectrified(wire.Owner, false, electrified);
             }
