@@ -38,7 +38,7 @@
   - type: Barotrauma
     damage:
       types:
-        Blunt: 0.7 #per second, scales with pressure and other constants.
+        Blunt: 0.15 #per second, scales with pressure and other constants.
   - type: DamageOnHighSpeedImpact
     damage:
       types:
@@ -190,7 +190,6 @@
       Arms:
         points: 2
         required: false
-
   - type: Physics
     bodyType: KinematicController
   - type: Fixtures
@@ -218,10 +217,10 @@
     specificHeat: 42
     coldDamage:
       types:
-        Cold : 1 #per second, scales with temperature & other constants
+        Cold: 0.1 #per second, scales with temperature & other constants
     heatDamage:
       types:
-        Heat : 1 #per second, scales with temperature & other constants
+        Heat: 0.1 #per second, scales with temperature & other constants
   - type: HumanoidAppearance
   - type: Body
     template: HumanoidTemplate
