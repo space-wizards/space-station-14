@@ -25,4 +25,5 @@
       announcement: alert-level-delta-announcement
       selectable: false
       sound: /Audio/Misc/delta.ogg
+      disableSelection: true
       color: DarkRed
