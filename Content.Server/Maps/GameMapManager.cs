@@ -1,14 +1,9 @@
-using System;
-using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Content.Server.Chat.Managers;
 using Content.Shared.CCVar;
-using Robust.Server.Maps;
 using Robust.Server.Player;
 using Robust.Shared.Configuration;
-using Robust.Shared.IoC;
-using Robust.Shared.Localization;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 
@@ -23,7 +18,7 @@ public sealed class GameMapManager : IGameMapManager
     [Dependency] private readonly IChatManager _chatManager = default!;
 
     [ViewVariables]
-    private readonly Queue<string> _previousMaps = new Queue<string>();
+    private readonly Queue<string> _previousMaps = new();
     [ViewVariables]
     private GameMapPrototype _currentMap = default!;
     [ViewVariables]
@@ -87,6 +82,8 @@ public sealed class GameMapManager : IGameMapManager
 
         _currentMap = map;
         _currentMapForced = false;
+        var ticker = EntitySystem.Get<GameTicking.GameTicker>();
+        ticker.UpdateInfoText();
         return true;
 
     }
@@ -97,6 +94,8 @@ public sealed class GameMapManager : IGameMapManager
             throw new ArgumentException($"The map \"{gameMap}\" is invalid!");
         _currentMap = map;
         _currentMapForced = true;
+        var ticker = EntitySystem.Get<GameTicking.GameTicker>();
+        ticker.UpdateInfoText();
     }
 
     public void SelectRandomMap()
@@ -104,6 +103,8 @@ public sealed class GameMapManager : IGameMapManager
         var maps = CurrentlyEligibleMaps().ToList();
         _currentMap = _random.Pick(maps);
         _currentMapForced = false;
+        var ticker = EntitySystem.Get<GameTicking.GameTicker>();
+        ticker.UpdateInfoText();
     }
 
     public GameMapPrototype GetSelectedMap()
@@ -131,7 +132,7 @@ public sealed class GameMapManager : IGameMapManager
         var map = GetSelectedMap();
 
         if (markAsPlayed)
-            _previousMaps.Enqueue(map.ID);
+            EnqueueMap(map.ID);
         return map;
     }
 
@@ -150,14 +151,6 @@ public sealed class GameMapManager : IGameMapManager
     private bool TryLookupMap(string gameMap, [NotNullWhen(true)] out GameMapPrototype? map)
     {
         return _prototypeManager.TryIndex(gameMap, out map);
-    }
-
-    public string GenerateMapName(GameMapPrototype gameMap)
-    {
-        if (gameMap.NameGenerator is not null && gameMap.MapNameTemplate is not null)
-            return gameMap.NameGenerator.FormatName(gameMap.MapNameTemplate);
-        else
-            return gameMap.MapName;
     }
 
     public int GetMapQueuePriority(string gameMapProtoName)

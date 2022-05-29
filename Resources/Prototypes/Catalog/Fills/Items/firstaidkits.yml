@@ -52,6 +52,8 @@
     contents:
       - id: SyringeSpaceacillin
         amount: 1
+      - id: SyringeIpecac
+        amount: 1
       - id: PillDylovene
         amount: 3
 

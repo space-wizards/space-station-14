@@ -15,7 +15,9 @@ ui-options-master-volume = Master Volume:
 ui-options-midi-volume = MIDI (Instrument) Volume:
 ui-options-ambience-volume = Ambience volume:
 ui-options-ambience-max-sounds = Ambience simultaneous sounds:
-ui-options-lobby-music = Lobby Music
+ui-options-lobby-music = Lobby & Round-end Music
+ui-options-station-ambience = Station Ambience
+ui-options-space-ambience = Space Ambience
 ui-options-volume-label = Volume
 ui-options-volume-percent = { TOSTRING($volume, "P0") }
 
@@ -49,6 +51,7 @@ ui-options-vp-integer-scaling-tooltip = If this option is enabled, the viewport 
                                         means that black bars appear at the top/bottom of the screen or that part
                                         of the viewport is not visible.
 ui-options-vp-low-res = Low-resolution viewport
+ui-options-parallax-low-quality = Low-quality Parallax (background)
 ui-options-fps-counter = Show FPS counter
 
 ## Controls menu
@@ -109,7 +112,7 @@ ui-options-function-open-character-menu = Open character menu
 ui-options-function-open-context-menu = Open context menu
 ui-options-function-open-crafting-menu = Open crafting menu
 ui-options-function-open-inventory-menu = Open inventory
-ui-options-function-open-info = Open server info
+ui-options-function-open-info = Open admin help
 ui-options-function-open-abilities-menu = Open action menu
 ui-options-function-open-entity-spawn-window = Open entity spawn menu
 ui-options-function-open-sandbox-window = Open sandbox menu

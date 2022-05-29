@@ -29,6 +29,12 @@
     solution: food
   - type: Damageable
     damageContainer: Inorganic
+  - type: SolutionTransfer
+    canChangeTransferAmount: true
+  - type: UserInterface
+    interfaces:
+      - key: enum.TransferAmountUiKey.Key
+        type: TransferAmountBoundUserInterface
   - type: Destructible
     thresholds:
     - trigger:
@@ -59,9 +65,9 @@
     netsync: false
   - type: Tag
     tags:
-    - Recyclable
     - Trash
   - type: Recyclable
+  - type: SpaceGarbage
 
 - type: entity
   name: bowl

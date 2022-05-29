@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using Content.Shared.FixedPoint;
 using Content.Shared.Medical.SuitSensor;
-using Robust.Shared.GameObjects;
-using Robust.Shared.Map;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.Medical.CrewMonitoring
@@ -18,10 +13,18 @@ namespace Content.Shared.Medical.CrewMonitoring
     public sealed class CrewMonitoringState : BoundUserInterfaceState
     {
         public List<SuitSensorStatus> Sensors;
+        public readonly Vector2 WorldPosition;
+        public readonly Angle WorldRotation;
+        public readonly bool Snap;
+        public readonly float Precision;
 
-        public CrewMonitoringState(List<SuitSensorStatus> sensors)
+        public CrewMonitoringState(List<SuitSensorStatus> sensors, Vector2 worldPosition, Angle worldRot, bool snap, float precision)
         {
             Sensors = sensors;
+            WorldPosition = worldPosition;
+            WorldRotation = worldRot;
+            Snap = snap;
+            Precision = precision;
         }
     }
 

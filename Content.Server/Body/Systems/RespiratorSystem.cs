@@ -1,5 +1,3 @@
-using System;
-using System.Linq;
 using Content.Server.Administration.Logs;
 using Content.Server.Atmos;
 using Content.Server.Atmos.EntitySystems;
@@ -12,9 +10,6 @@ using Content.Shared.Damage;
 using Content.Shared.Database;
 using Content.Shared.MobState.Components;
 using JetBrains.Annotations;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Localization;
 using Robust.Shared.Player;
 using Robust.Shared.Timing;
 
@@ -38,6 +33,7 @@ namespace Content.Server.Body.Systems
 
             // We want to process lung reagents before we inhale new reagents.
             UpdatesAfter.Add(typeof(MetabolizerSystem));
+            SubscribeLocalEvent<RespiratorComponent, ApplyMetabolicMultiplierEvent>(OnApplyMetabolicMultiplier);
         }
 
         public override void Update(float frameTime)
@@ -93,7 +89,6 @@ namespace Content.Server.Body.Systems
                 respirator.SuffocationCycles = 0;
             }
         }
-
         public void Inhale(EntityUid uid, SharedBodyComponent? body=null)
         {
             if (!Resolve(uid, ref body, false))
@@ -188,6 +183,26 @@ namespace Content.Server.Body.Systems
             respirator.Saturation += amount;
             respirator.Saturation =
                 Math.Clamp(respirator.Saturation, respirator.MinSaturation, respirator.MaxSaturation);
+        }
+
+        private void OnApplyMetabolicMultiplier(EntityUid uid, RespiratorComponent component, ApplyMetabolicMultiplierEvent args)
+        {
+            if (args.Apply)
+            {
+                component.CycleDelay *= args.Multiplier;
+                component.Saturation *= args.Multiplier;
+                component.MaxSaturation *= args.Multiplier;
+                component.MinSaturation *= args.Multiplier;
+                return;
+            }
+            // This way we don't have to worry about it breaking if the stasis bed component is destroyed
+            component.CycleDelay /= args.Multiplier;
+            component.Saturation /= args.Multiplier;
+            component.MaxSaturation /= args.Multiplier;
+            component.MinSaturation /= args.Multiplier;
+            // Reset the accumulator properly
+            if (component.AccumulatedFrametime >= component.CycleDelay)
+                component.AccumulatedFrametime = component.CycleDelay;
         }
     }
 }

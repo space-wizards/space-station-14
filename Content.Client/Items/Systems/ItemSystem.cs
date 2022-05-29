@@ -1,15 +1,9 @@
 using Content.Shared.Hands;
-using Content.Shared.Hands.Components;
 using Content.Shared.Item;
 using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
 using Robust.Client.ResourceManagement;
 using Robust.Shared.Containers;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Log;
-using System;
-using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using static Robust.Shared.GameObjects.SharedSpriteComponent;
@@ -34,7 +28,7 @@ public sealed class ItemSystem : SharedItemSystem
     /// </summary>
     public override void VisualsChanged(EntityUid uid, SharedItemComponent? item = null)
     {
-        if (!Resolve(uid, ref item))
+        if (!Resolve(uid, ref item, false))
             return;
 
         // if the item is in a container, it might be equipped to hands or inventory slots --> update visuals.

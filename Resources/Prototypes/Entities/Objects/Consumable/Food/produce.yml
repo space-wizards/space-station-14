@@ -49,7 +49,7 @@
         - ReagentId: Flour
           Quantity: 10
   - type: Produce
-    seed: wheat
+    seedId: wheat
 
 - type: entity
   name: oat bushel
@@ -66,7 +66,7 @@
         - ReagentId: Oats
           Quantity: 10
   - type: Produce
-    seed: oat
+    seedId: oat
   - type: Extractable
     juiceSolution:
       reagents:
@@ -85,10 +85,10 @@
     solutions:
       food:
         reagents:
-        - ReagentId: Glucose
+        - ReagentId: Sugar
           Quantity: 10
   - type: Produce
-    seed: sugarcane
+    seedId: sugarcane
 
 - type: entity
   name: tower-cap log
@@ -104,7 +104,7 @@
       types:
         Blunt: 10
   - type: Produce
-    seed: towercap
+    seedId: towercap
   - type: Log
 
 - type: entity
@@ -130,7 +130,7 @@
         - ReagentId: Histamine
           Quantity: 25
   - type: Produce
-    seed: nettle
+    seedId: nettle
   - type: MeleeChemicalInjector
     transferAmount: 6 #To OD someone you would need 2 nettles and about 6-7 hits, the DOT is likely to crit them if they are running away with almost no health
   - type: Extractable
@@ -158,7 +158,7 @@
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/banana.rsi
   - type: Produce
-    seed: banana
+    seedId: banana
   - type: Extractable
     juiceSolution:
       reagents:
@@ -177,7 +177,9 @@
     sprite: Objects/Specific/Hydroponics/banana.rsi
     HeldPrefix: peel
   - type: Slippery
-    intersectPercentage: 0.2
+    launchForwardsMultiplier: 1.5
+  - type: StepTrigger
+    intersectRatio: 0.2
   - type: CollisionWake
     enabled: false
   - type: Physics
@@ -190,13 +192,13 @@
       id: "slips"
       hard: false
       layer:
-        - SmallImpassable
+      - SlipLayer
     - shape:
         !type:PhysShapeAabb
         bounds: "-0.2,-0.2,0.2,0.2"
       mass: 5
       mask:
-        - SmallImpassable
+      - ItemMask
   - type: Tag
     tags:
     - Recyclable
@@ -211,6 +213,7 @@
   - type: Extractable
     grindableSolutionName: food
   - type: Recyclable
+  - type: SpaceGarbage
 
 - type: entity
   name: carrot
@@ -233,7 +236,7 @@
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/carrot.rsi
   - type: Produce
-    seed: carrots
+    seedId: carrots
   - type: Extractable
     juiceSolution:
       reagents:
@@ -258,7 +261,7 @@
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/lemon.rsi
   - type: Produce
-    seed: lemon
+    seedId: lemon
   - type: Extractable
     juiceSolution:
       reagents:
@@ -285,7 +288,7 @@
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/pineapple.rsi
   - type: Produce
-    seed: pineapple
+    seedId: pineapple
   - type: Extractable
     juiceSolution:
       reagents:
@@ -313,7 +316,7 @@
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/potato.rsi
   - type: Produce
-    seed: potato
+    seedId: potato
   - type: Extractable
     juiceSolution:
       reagents:
@@ -338,7 +341,7 @@
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/tomato.rsi
   - type: Produce
-    seed: tomato
+    seedId: tomato
   - type: Extractable
     grindableSolutionName: food
     juiceSolution:
@@ -419,7 +422,7 @@
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/eggplant.rsi
   - type: Produce
-    seed: eggplant
+    seedId: eggplant
 
 - type: entity
   name: apple
@@ -439,7 +442,7 @@
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/apple.rsi
   - type: Produce
-    seed: apple
+    seedId: apple
   - type: Extractable
     juiceSolution:
       reagents:
@@ -466,7 +469,7 @@
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/corn.rsi
   - type: Produce
-    seed: corn
+    seedId: corn
   - type: Extractable
     juiceSolution:
       reagents:
@@ -506,7 +509,7 @@
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/onion.rsi
   - type: Produce
-    seed: onion
+    seedId: onion
   - type: SliceableFood
     count: 5
     slice: FoodOnionSlice
@@ -529,7 +532,7 @@
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/onion_red.rsi
   - type: Produce
-    seed: onionred
+    seedId: onionred
   - type: SliceableFood
     count: 4
     slice: FoodOnionRedSlice
@@ -549,7 +552,7 @@
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/chanterelle.rsi
   - type: Produce
-    seed: chanterelle
+    seedId: chanterelle
 
 # Slices
 
@@ -623,7 +626,7 @@
     - type: Sprite
       sprite: Objects/Specific/Hydroponics/chili.rsi
     - type: Produce
-      seed: chili
+      seedId: chili
 
 - type: entity
   name: aloe
@@ -643,7 +646,7 @@
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/aloe.rsi
   - type: Produce
-    seed: aloe
+    seedId: aloe
   - type: Extractable
     grindableSolutionName: food
 
@@ -665,7 +668,7 @@
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/poppy.rsi
   - type: Produce
-    seed: poppy
+    seedId: poppy
   - type: Extractable
     grindableSolutionName: food
 
@@ -687,7 +690,7 @@
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/lingzhi.rsi
   - type: Produce
-    seed: lingzhi
+    seedId: lingzhi
   - type: Extractable
     grindableSolutionName: food
 
@@ -715,7 +718,7 @@
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/ambrosia_vulgaris.rsi
   - type: Produce
-    seed: ambrosiaVulgaris
+    seedId: ambrosiaVulgaris
   - type: Extractable
     grindableSolutionName: food
   - type: Clothing
@@ -739,7 +742,7 @@
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/galaxythistle.rsi
   - type: Produce
-    seed: galaxythistle
+    seedId: galaxythistle
   - type: Extractable
     grindableSolutionName: food
 
@@ -761,7 +764,7 @@
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/fly_amanita.rsi
   - type: Produce
-    seed: flyAmanita
+    seedId: flyAmanita
   - type: Extractable
     grindableSolutionName: food
 
@@ -783,6 +786,6 @@
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/gatfruit.rsi
   - type: Produce
-    seed: gatfruit
+    seedId: gatfruit
   - type: Food
     trash: RevolverPredator

@@ -73,6 +73,26 @@
     presetInfo:
       balance: 20
 
+
+#Default Nuclear Operative amount, not considering crew count
+- type: entity
+  parent: BaseUplinkRadio
+  id: BaseUplinkRadio25TC
+  suffix: 25 TC
+  components:
+  - type: Uplink
+    presetInfo:
+      balance: 25
+
+- type: entity
+  parent: BaseUplinkRadio
+  id: BaseUplinkRadio40TC
+  suffix: 40 TC
+  components:
+  - type: Uplink
+    presetInfo:
+      balance: 40
+
 - type: entity
   parent: BaseUplinkRadio
   id: BaseUplinkRadioDebug

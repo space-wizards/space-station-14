@@ -16,6 +16,14 @@
 
 - type: entity
   parent: Airlock
+  id: AirlockAtmospherics
+  suffix: Atmospherics
+  components:
+  - type: Sprite
+    sprite: Structures/Doors/Airlocks/Standard/atmospherics.rsi
+
+- type: entity
+  parent: Airlock
   id: AirlockCargo
   suffix: Cargo
   components:
@@ -77,11 +85,13 @@
   parent: Airlock
   name: glass airlock
   components:
+  - type: MeleeSound
+    soundGroups:
+      Brute:
+        path:
+          "/Audio/Effects/glass_hit.ogg"
   - type: Door
     occludes: false
-    crushDamage:
-      types:
-        Blunt: 15
   - type: Occluder
     enabled: false
   - type: Sprite
@@ -90,14 +100,17 @@
     fixtures:
     - shape:
         !type:PhysShapeAabb
-          bounds: "-0.49,-0.49,0.49,0.49" # don't want this colliding with walls or they won't close
+        bounds: "-0.49,-0.49,0.49,0.49" # don't want this colliding with walls or they won't close
       mass: 100
       mask:
-      - Impassable
+      - FullTileMask
       layer:     #removed opaque from the layer, allowing lasers to pass through glass airlocks
-      - Impassable
-      - VaultImpassable
-
+      - GlassAirlockLayer
+  - type: Construction
+    graph: Airlock
+    node: glassAirlock
+  - type: PaintableAirlock
+    group: Windoor
 
 - type: entity
   parent: AirlockGlass
@@ -106,6 +119,18 @@
   components:
   - type: Sprite
     sprite: Structures/Doors/Airlocks/Glass/engineering.rsi
+  - type: PaintableAirlock
+    group: Glass
+
+- type: entity
+  parent: AirlockGlass
+  id: AirlockAtmosphericsGlass
+  suffix: Atmospherics
+  components:
+  - type: Sprite
+    sprite: Structures/Doors/Airlocks/Glass/atmospherics.rsi
+  - type: PaintableAirlock
+    group: Glass
 
 - type: entity
   parent: AirlockGlass
@@ -114,6 +139,8 @@
   components:
   - type: Sprite
     sprite: Structures/Doors/Airlocks/Glass/cargo.rsi
+  - type: PaintableAirlock
+    group: Glass
 
 - type: entity
   parent: AirlockGlass
@@ -122,6 +149,8 @@
   components:
   - type: Sprite
     sprite: Structures/Doors/Airlocks/Glass/medical.rsi
+  - type: PaintableAirlock
+    group: Glass
 
 - type: entity
   parent: AirlockGlass
@@ -130,6 +159,8 @@
   components:
   - type: Sprite
     sprite: Structures/Doors/Airlocks/Glass/science.rsi
+  - type: PaintableAirlock
+    group: Glass
 
 - type: entity
   parent: AirlockGlass
@@ -138,6 +169,8 @@
   components:
   - type: Sprite
     sprite: Structures/Doors/Airlocks/Glass/command.rsi
+  - type: PaintableAirlock
+    group: Glass
 
 - type: entity
   parent: AirlockGlass
@@ -146,3 +179,5 @@
   components:
   - type: Sprite
     sprite: Structures/Doors/Airlocks/Glass/security.rsi
+  - type: PaintableAirlock
+    group: Glass

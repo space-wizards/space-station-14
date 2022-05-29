@@ -90,7 +90,7 @@ public abstract partial class SharedHandsSystem : EntitySystem
         if (handContainer == null || handContainer.ContainedEntity != null)
             return false;
 
-        if (!Resolve(entity, ref item, false))
+        if (!Resolve(entity, ref item, false) || !item.CanPickup)
             return false;
 
         if (TryComp(entity, out PhysicsComponent? physics) && physics.BodyType == BodyType.Static)

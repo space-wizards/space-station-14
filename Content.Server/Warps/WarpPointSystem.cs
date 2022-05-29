@@ -1,6 +1,4 @@
 using Content.Shared.Examine;
-using Robust.Shared.GameObjects;
-using Robust.Shared.Localization;
 
 namespace Content.Server.Warps;
 

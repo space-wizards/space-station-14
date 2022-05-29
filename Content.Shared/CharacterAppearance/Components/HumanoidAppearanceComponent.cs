@@ -1,13 +1,8 @@
-using System;
-using Content.Shared.CharacterAppearance;
 using Content.Shared.CharacterAppearance.Systems;
-using Robust.Shared.Analyzers;
+using Content.Shared.Species;
 using Robust.Shared.Enums;
-using Robust.Shared.GameObjects;
 using Robust.Shared.GameStates;
 using Robust.Shared.Serialization;
-using Robust.Shared.Serialization.Manager.Attributes;
-using Robust.Shared.ViewVariables;
 
 namespace Content.Shared.CharacterAppearance.Components
 {
@@ -24,6 +19,9 @@ namespace Content.Shared.CharacterAppearance.Components
 
         [ViewVariables(VVAccess.ReadWrite)]
         public Gender Gender { get; set; } = default!;
+
+        [ViewVariables]
+        public string Species { get; set; } = SpeciesManager.DefaultSpecies;
 
         [DataField("categoriesHair")]
         [ViewVariables]
@@ -56,14 +54,17 @@ namespace Content.Shared.CharacterAppearance.Components
         public HumanoidCharacterAppearance Appearance { get; }
         public Sex Sex { get; }
         public Gender Gender { get; }
+        public string Species { get; }
 
         public HumanoidAppearanceComponentState(HumanoidCharacterAppearance appearance,
             Sex sex,
-            Gender gender)
+            Gender gender,
+            string species)
         {
             Appearance = appearance;
             Sex = sex;
             Gender = gender;
+            Species = species;
         }
     }
 }

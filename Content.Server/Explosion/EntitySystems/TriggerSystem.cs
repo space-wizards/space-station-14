@@ -1,6 +1,4 @@
 using Content.Server.Administration.Logs;
-using Content.Server.Doors.Components;
-using Content.Server.Doors.Systems;
 using Content.Server.Explosion.Components;
 using Content.Server.Flash;
 using Content.Server.Flash.Components;
@@ -45,6 +43,7 @@ namespace Content.Server.Explosion.EntitySystems
 
             InitializeProximity();
             InitializeOnUse();
+            InitializeSignal();
 
             SubscribeLocalEvent<TriggerOnCollideComponent, StartCollideEvent>(OnTriggerCollide);
 
@@ -73,7 +72,8 @@ namespace Content.Server.Explosion.EntitySystems
 
         private void OnTriggerCollide(EntityUid uid, TriggerOnCollideComponent component, StartCollideEvent args)
         {
-            Trigger(component.Owner);
+			if(args.OurFixture.ID == component.FixtureID)
+				Trigger(component.Owner);
         }
 
 

@@ -2,11 +2,7 @@ using Content.Server.Power.Components;
 using Content.Server.UserInterface;
 using Content.Shared.Research.Components;
 using Content.Shared.Research.Prototypes;
-using Content.Shared.Sound;
 using Robust.Server.GameObjects;
-using Robust.Server.Player;
-using Robust.Shared.Audio;
-using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 
 namespace Content.Server.Research.Components
@@ -16,9 +12,6 @@ namespace Content.Server.Research.Components
     {
         [Dependency] private readonly IEntityManager _entMan = default!;
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
-
-        [DataField("sound")]
-        private SoundSpecifier _soundCollectionName = new SoundCollectionSpecifier("keyboard");
 
         [ViewVariables] private bool Powered => !_entMan.TryGetComponent(Owner, out ApcPowerReceiverComponent? receiver) || receiver.Powered;
 
@@ -91,20 +84,6 @@ namespace Content.Server.Research.Components
             var pointsPerSecond = client.ConnectedToServer ? client.Server.PointsPerSecond : 0;
 
             return new ResearchConsoleBoundInterfaceState(points, pointsPerSecond);
-        }
-
-        /// <summary>
-        ///     Open the user interface on a certain player session.
-        /// </summary>
-        /// <param name="session">Session where the UI will be shown</param>
-        public void OpenUserInterface(IPlayerSession session)
-        {
-            UserInterface?.Open(session);
-        }
-
-        public void PlayKeyboardSound()
-        {
-            SoundSystem.Play(Filter.Pvs(Owner), _soundCollectionName.GetSound(), Owner, AudioParams.Default);
         }
     }
 }

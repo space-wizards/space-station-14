@@ -1,3 +1,4 @@
+admin-player-actions-notes = Notes
 admin-player-actions-kick = Kick
 admin-player-actions-ban = Ban
 admin-player-actions-ahelp = AHelp

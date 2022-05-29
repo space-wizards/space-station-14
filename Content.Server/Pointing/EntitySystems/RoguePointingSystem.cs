@@ -5,9 +5,6 @@ using Content.Shared.MobState.Components;
 using Content.Shared.Pointing.Components;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Maths;
 using Robust.Shared.Player;
 using Robust.Shared.Random;
 using DrawDepth = Content.Shared.DrawDepth.DrawDepth;
@@ -40,15 +37,17 @@ namespace Content.Server.Pointing.EntitySystems
             if (!Resolve(uid, ref component, ref transform))
                 return null;
 
-            var players = Filter.Empty()
-                .AddPlayersByPvs(transform.MapPosition)
-                .RemoveWhereAttachedEntity(euid => !EntityManager.TryGetComponent(euid, out MobStateComponent? mobStateComponent) || mobStateComponent.IsDead())
-                .Recipients
-                .ToArray();
+            var targets = EntityQuery<PointingArrowAngeringComponent>().ToList();
 
-            return players.Length != 0
-                ? _random.Pick(players).AttachedEntity
-                : null;
+            if (targets.Count == 0)
+                return null;
+
+            var angering = _random.Pick(targets);
+            angering.RemainingAnger -= 1;
+            if (angering.RemainingAnger <= 0)
+                RemComp<PointingArrowAngeringComponent>(uid);
+
+            return angering.Owner;
         }
 
         private void UpdateAppearance(EntityUid uid, RoguePointingArrowComponent? component = null, TransformComponent? transform = null, AppearanceComponent? appearance = null)
@@ -59,6 +58,14 @@ namespace Content.Server.Pointing.EntitySystems
             appearance.SetData(RoguePointingArrowVisuals.Rotation, transform.LocalRotation.Degrees);
         }
 
+        public void SetTarget(EntityUid arrow, EntityUid target, RoguePointingArrowComponent? component = null)
+        {
+            if (!Resolve(arrow, ref component))
+                throw new ArgumentException("Input was not a rogue pointing arrow!", nameof(arrow));
+
+            component.Chasing = target;
+        }
+
         public override void Update(float frameTime)
         {
             foreach (var (component, transform) in EntityManager.EntityQuery<RoguePointingArrowComponent, TransformComponent>())
@@ -66,7 +73,7 @@ namespace Content.Server.Pointing.EntitySystems
                 var uid = component.Owner;
                 component.Chasing ??= RandomNearbyPlayer(uid, component, transform);
 
-                if (component.Chasing is not {Valid: true} chasing)
+                if (component.Chasing is not {Valid: true} chasing || Deleted(chasing))
                 {
                     EntityManager.QueueDeleteEntity(uid);
                     return;

@@ -9,3 +9,7 @@
 
 - type: metabolizerType
   id: Slime
+
+- type: metabolizerType
+  id: Vox
+

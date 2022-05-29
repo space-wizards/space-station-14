@@ -5,8 +5,6 @@ using Content.Server.Singularity.EntitySystems;
 using Content.Shared.Administration;
 using Content.Shared.Singularity.Components;
 using Robust.Shared.Console;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
 
 namespace Content.Server.Singularity
 {
@@ -32,7 +30,7 @@ namespace Content.Server.Singularity
             }
             foreach (var comp in entityManager.EntityQuery<RadiationCollectorComponent>())
             {
-                comp.Collecting = true;
+                EntitySystem.Get<RadiationCollectorSystem>().SetCollectorEnabled(comp.Owner, true, null, comp);
             }
             foreach (var comp in entityManager.EntityQuery<ParticleAcceleratorControlBoxComponent>())
             {

@@ -1,9 +1,5 @@
-using System;
 using Content.Shared.Nutrition.EntitySystems;
-using Robust.Shared.Analyzers;
-using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization;
-using Robust.Shared.ViewVariables;
 
 namespace Content.Shared.Nutrition.Components
 {

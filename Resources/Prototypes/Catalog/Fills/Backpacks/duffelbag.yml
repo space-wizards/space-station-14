@@ -22,11 +22,11 @@
   - type: StorageFill
     contents:
       - id: Hemostat
-      - id: Saw
+      - id: SawAdvanced
       - id: Drill
       - id: Cautery
       - id: Retractor
-      - id: Scalpel
+      - id: ScalpelAdvanced
 
 - type: entity
   parent: ClothingBackpackDuffelSyndicateAmmo
@@ -58,7 +58,7 @@
   parent: ClothingBackpackDuffelSyndicateAmmo
   id: ClothingBackpackDuffelSyndicateFilledRevolver
   name: Predator bundle
-  description: "Go loud and proud with a fully loaded Magnum Predator, bundled with two speed loaders." 
+  description: "Go loud and proud with a fully loaded Magnum Predator, bundled with two speed loaders."
   components:
   - type: StorageFill
     contents:
@@ -162,9 +162,76 @@
       - id: ClothingHeadPyjamaSyndicateBlack
       - id: ClothingHeadPyjamaSyndicatePink
       - id: ClothingShoesSlippers
-        amount: 3   
+        amount: 3
       - id: BedsheetSyndie
-        amount: 3   
+        amount: 3
       - id: PlushieCarp
       - id: PlushieNuke
       - id: PlushieLizard
+
+- type: entity
+  parent: ClothingBackpackDuffelSyndicate
+  id: ClothingBackpackDuffelSyndicateC4tBundle
+  name: syndicate C-4 bundle
+  description: "Contains a lot of C-4 charges."
+  components:
+    - type: StorageFill
+      contents:
+        - id: C4
+          amount: 8
+
+- type: entity
+  parent: ClothingBackpackDuffelSyndicate
+  id: ClothingBackpackDuffelSyndicateHardsuitBundle
+  name: syndicate hardsuit bundle
+  description: "Contains the Syndicate's signature blood red hardsuit."
+  components:
+  - type: StorageFill
+    contents:
+      - id: ClothingOuterHardsuitSyndie
+
+- type: entity
+  parent: ClothingBackpackDuffelSyndicate
+  id: ClothingBackpackDuffelZombieBundle
+  name: syndicate zombie bundle
+  description: "An all-in-one kit for unleashing the undead upon a station."
+  components:
+  - type: StorageFill
+    contents:
+      - id: SyringeCorpium
+      - id: FlareGun
+      - id: BoxShotgunFlare
+      - id: PillRomerol
+        amount: 3
+
+- type: entity
+  parent: ClothingBackpackDuffelSyndicate
+  id: ClothingBackpackDuffelSyndicateOperative
+  name: operative duffelbag
+  components:
+  - type: StorageFill
+    contents:
+      - id: BoxSurvivalSyndicate
+      - id: SurvivalKnife
+      - id: PistolClarissa
+      - id: BaseUplinkRadio40TC
+
+
+- type: entity
+  parent: ClothingBackpackDuffelSyndicateMedical
+  id: ClothingBackpackDuffelSyndicateOperativeMedic
+  name: operative medic duffelbag
+  description: A large duffel bag for holding extra medical supplies.
+  components:
+  - type: StorageFill
+    contents:
+      - id: Hemostat
+      - id: SawAdvanced
+      - id: Drill
+      - id: Cautery
+      - id: Retractor
+      - id: ScalpelAdvanced
+      - id: BaseUplinkRadio40TC
+      - id: BoxSurvivalSyndicate
+      - id: SurvivalKnife
+      - id: PistolClarissa

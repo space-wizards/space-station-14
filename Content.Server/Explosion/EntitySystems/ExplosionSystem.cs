@@ -7,8 +7,8 @@ using Content.Shared.Camera;
 using Content.Shared.Damage;
 using Content.Shared.Database;
 using Content.Shared.Explosion;
+using Content.Shared.GameTicking;
 using Content.Shared.Throwing;
-using Robust.Server.Containers;
 using Robust.Server.Player;
 using Robust.Shared.Audio;
 using Robust.Shared.Configuration;
@@ -30,7 +30,6 @@ public sealed partial class ExplosionSystem : EntitySystem
     [Dependency] private readonly IPlayerManager _playerManager = default!;
 
     [Dependency] private readonly DamageableSystem _damageableSystem = default!;
-    [Dependency] private readonly ContainerSystem _containerSystem = default!;
     [Dependency] private readonly NodeGroupSystem _nodeGroupSystem = default!;
     [Dependency] private readonly CameraRecoilSystem _recoilSystem = default!;
     [Dependency] private readonly EntityLookupSystem _entityLookup = default!;
@@ -67,6 +66,8 @@ public sealed partial class ExplosionSystem : EntitySystem
         SubscribeLocalEvent<ExplosionResistanceComponent, GetExplosionResistanceEvent>(OnGetResistance);
         SubscribeLocalEvent<TileChangedEvent>(OnTileChanged);
 
+        SubscribeLocalEvent<RoundRestartCleanupEvent>(OnReset);
+
         // Handled by ExplosionSystem.Processing.cs
         SubscribeLocalEvent<MapChangedEvent>(OnMapChanged);
 
@@ -76,10 +77,18 @@ public sealed partial class ExplosionSystem : EntitySystem
         InitAirtightMap();
     }
 
+    private void OnReset(RoundRestartCleanupEvent ev)
+    {
+        _explosionQueue.Clear();
+        _activeExplosion = null;
+        _nodeGroupSystem.Snoozing = false;
+    }
+
     public override void Shutdown()
     {
         base.Shutdown();
         UnsubscribeCvars();
+        _nodeGroupSystem.Snoozing = false;
     }
 
     private void OnGetResistance(EntityUid uid, ExplosionResistanceComponent component, GetExplosionResistanceEvent args)
@@ -122,6 +131,7 @@ public sealed partial class ExplosionSystem : EntitySystem
             explosive.MaxIntensity,
             explosive.TileBreakScale,
             explosive.MaxTileBreak,
+            explosive.CanCreateVacuum,
             user);
 
         if (delete)
@@ -190,13 +200,14 @@ public sealed partial class ExplosionSystem : EntitySystem
         float maxTileIntensity,
         float tileBreakScale = 1f,
         int maxTileBreak = int.MaxValue,
+        bool canCreateVacuum = true,
         EntityUid? user = null,
         bool addLog = false)
     {
         var pos = Transform(uid).MapPosition;
 
 
-        QueueExplosion(pos, typeId, totalIntensity, slope, maxTileIntensity, tileBreakScale, maxTileBreak, addLog: false);
+        QueueExplosion(pos, typeId, totalIntensity, slope, maxTileIntensity, tileBreakScale, maxTileBreak, canCreateVacuum, addLog: false);
 
         if (!addLog)
             return;
@@ -219,6 +230,7 @@ public sealed partial class ExplosionSystem : EntitySystem
         float maxTileIntensity,
         float tileBreakScale = 1f,
         int maxTileBreak = int.MaxValue,
+        bool canCreateVacuum = true,
         bool addLog = false)
     {
         if (totalIntensity <= 0 || slope <= 0)
@@ -234,7 +246,7 @@ public sealed partial class ExplosionSystem : EntitySystem
             _logsSystem.Add(LogType.Explosion, LogImpact.High, $"Explosion spawned at {epicenter:coordinates} with intensity {totalIntensity} slope {slope}");
         
         _explosionQueue.Enqueue(() => SpawnExplosion(epicenter, type, totalIntensity,
-            slope, maxTileIntensity, tileBreakScale, maxTileBreak));
+            slope, maxTileIntensity, tileBreakScale, maxTileBreak, canCreateVacuum));
     }
 
     /// <summary>
@@ -248,7 +260,8 @@ public sealed partial class ExplosionSystem : EntitySystem
         float slope,
         float maxTileIntensity,
         float tileBreakScale,
-        int maxTileBreak)
+        int maxTileBreak,
+        bool canCreateVacuum)
     {
         if (!_mapManager.MapExists(epicenter.MapId))
             return null;
@@ -283,6 +296,7 @@ public sealed partial class ExplosionSystem : EntitySystem
             area,
             tileBreakScale,
             maxTileBreak,
+            canCreateVacuum,
             EntityManager,
             _mapManager);
     }

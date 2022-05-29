@@ -13,17 +13,12 @@
     fixtures:
     - shape:
         !type:PhysShapeAabb
-          bounds: "-0.4,-0.4,0.4,0.4"
+        bounds: "-0.4,-0.4,0.4,0.4"
       mass: 100
       mask:
-      - Impassable
-      - SmallImpassable
+      - MachineMask
       layer:
-      - Opaque
-      - Impassable
-      - MobImpassable
-      - VaultImpassable
-      - SmallImpassable
+      - WallLayer
   - type: Damageable
     damageContainer: Inorganic
     damageModifierSet: Metallic
@@ -54,3 +49,5 @@
   - type: DrainableSolution
     solution: tank
   - type: ReagentTank
+  - type: Transform
+    noRot: true

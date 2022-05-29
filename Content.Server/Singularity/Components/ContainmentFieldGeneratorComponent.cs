@@ -1,15 +1,9 @@
-using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Content.Shared.Physics;
 using Content.Shared.Singularity.Components;
 using Robust.Server.GameObjects;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Log;
-using Robust.Shared.Maths;
 using Robust.Shared.Physics;
-using Robust.Shared.ViewVariables;
 
 namespace Content.Server.Singularity.Components
 {
@@ -61,8 +55,8 @@ namespace Content.Server.Singularity.Components
         private Tuple<Direction, ContainmentFieldConnection>? _connection1;
         private Tuple<Direction, ContainmentFieldConnection>? _connection2;
 
-        public bool CanRepell(EntityUid toRepell) => _connection1?.Item2?.CanRepell(toRepell) == true ||
-                                                   _connection2?.Item2?.CanRepell(toRepell) == true;
+        public bool CanRepel(SharedSingularityComponent toRepel) => _connection1?.Item2?.CanRepel(toRepel) == true ||
+                                                                     _connection2?.Item2?.CanRepel(toRepel) == true;
 
         public void OnAnchoredChanged()
         {

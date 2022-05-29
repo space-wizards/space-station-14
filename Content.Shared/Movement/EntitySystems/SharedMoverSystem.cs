@@ -1,12 +1,10 @@
 using System.Diagnostics.CodeAnalysis;
 using Content.Shared.MobState.Components;
 using Content.Shared.Movement.Components;
+using Content.Shared.Vehicle.Components;
 using Robust.Shared.Containers;
-using Robust.Shared.GameObjects;
 using Robust.Shared.Input;
 using Robust.Shared.Input.Binding;
-using Robust.Shared.IoC;
-using Robust.Shared.Maths;
 using Robust.Shared.Players;
 
 namespace Content.Shared.Movement.EntitySystems
@@ -59,6 +57,14 @@ namespace Content.Shared.Movement.EntitySystems
                 {
                     var relayMoveEvent = new RelayMovementEntityEvent(owner.Value);
                     EntityManager.EventBus.RaiseLocalEvent(EntityManager.GetComponent<TransformComponent>(owner.Value).ParentUid, relayMoveEvent);
+                }
+                // Pass the rider's inputs to the vehicle (the rider itself is on the ignored list in C.S/MoverController.cs)
+                if (TryComp<RiderComponent>(owner.Value, out var rider) && rider.Vehicle != null && rider.Vehicle.HasKey)
+                {
+                    if (TryComp<IMoverComponent>(rider.Vehicle.Owner, out var vehicleMover))
+                    {
+                        vehicleMover.SetVelocityDirection(dir, subTick, state);
+                    }
                 }
             }
 

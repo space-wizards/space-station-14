@@ -6,139 +6,151 @@
     "x": 32,
     "y": 32
   },
-  "states": [
-    {
-      "name": "beaker"
-    },
-    {
-      "name": "bodybags"
-    },
-    {
-      "name": "clown"
-    },
-    {
-      "name": "heart"
-    },
-    {
-      "name": "meson"
-    },
-    {
-      "name": "sechud"
-    },
-    {
-      "name": "box"
-    },
-    {
-      "name": "boxwide"
-    },
-    {
-      "name": "box_hug"
-    },
-    {
-      "name": "box_id"
-    },
-    {
-      "name": "box_of_doom"
-    },
-    {
-      "name": "box_of_doom_big"
-    },
-    {
-      "name": "box_security"
-    },
-    {
-      "name": "circuit"
-    },
-    {
-      "name": "disk"
-    },
-    {
-      "name": "flashbang"
-    },
-    {
-      "name": "glasses"
-    },
-    {
-      "name": "handcuff"
-    },
-    {
-      "name": "implant"
-    },
-    {
-      "name": "latex"
-    },
-    {
-      "name": "light"
-    },
-    {
-      "name": "lightmixed"
-    },
-    {
-      "name": "lighttube"
-    },
-    {
-      "name": "mousetraps"
-    },
-    {
-      "name": "pda"
-    },
-    {
-      "name": "pillbox"
-    },
-    {
-      "name": "solution_trays"
-    },
-    {
-      "name": "sterile"
-    },
-    {
-      "name": "syringe"
-    },
-    {
-      "name": "writing"
-    },
-    {
-      "name": "writing_of_doom"
-    },
-    {
-      "name": "inhand-left",
-      "directions": 4
-    },
-    {
-      "name": "inhand-right",
-      "directions": 4
-    },
-    {
-      "name": "hug-inhand-left",
-      "directions": 4
-    },
-    {
-      "name": "hug-inhand-right",
-      "directions": 4
-    },
-    {
-      "name": "shellbeanbag"
-    },
-    {
-      "name": "shellflare"
-    },
-    {
-      "name": "shellflash"
-    },
-    {
-      "name": "shellincendiary"
-    },
-    {
-      "name": "shelllethal"
-    },
-    {
-      "name": "shellpractice"
-    },
-    {
-      "name": "shellslug"
-    },
-    {
-      "name": "ziptie"
-    }
-  ]
+    "states": [
+        {
+            "name": "beaker"
+        },
+        {
+            "name": "bodybags"
+        },
+        {
+            "name": "clown"
+        },
+        {
+            "name": "internals"
+        },
+        {
+            "name": "extendedtank"
+        },
+        {
+            "name": "emergencytank"
+        },
+        {
+            "name": "heart"
+        },
+        {
+            "name": "meson"
+        },
+        {
+            "name": "sechud"
+        },
+        {
+            "name": "box"
+        },
+        {
+            "name": "boxwide"
+        },
+        {
+            "name": "box_hug"
+        },
+        {
+            "name": "box_id"
+        },
+        {
+            "name": "box_of_doom"
+        },
+        {
+            "name": "box_of_doom_big"
+        },
+        {
+            "name": "box_security"
+        },
+        {
+            "name": "box_olive"
+        },
+        {
+            "name": "circuit"
+        },
+        {
+            "name": "disk"
+        },
+        {
+            "name": "flashbang"
+        },
+        {
+            "name": "glasses"
+        },
+        {
+            "name": "handcuff"
+        },
+        {
+            "name": "implant"
+        },
+        {
+            "name": "latex"
+        },
+        {
+            "name": "light"
+        },
+        {
+            "name": "lightmixed"
+        },
+        {
+            "name": "lighttube"
+        },
+        {
+            "name": "mousetraps"
+        },
+        {
+            "name": "pda"
+        },
+        {
+            "name": "pillbox"
+        },
+        {
+            "name": "solution_trays"
+        },
+        {
+            "name": "sterile"
+        },
+        {
+            "name": "syringe"
+        },
+        {
+            "name": "writing"
+        },
+        {
+            "name": "writing_of_doom"
+        },
+        {
+            "name": "inhand-left",
+            "directions": 4
+        },
+        {
+            "name": "inhand-right",
+            "directions": 4
+        },
+        {
+            "name": "hug-inhand-left",
+            "directions": 4
+        },
+        {
+            "name": "hug-inhand-right",
+            "directions": 4
+        },
+        {
+            "name": "shellbeanbag"
+        },
+        {
+            "name": "shellflare"
+        },
+        {
+            "name": "shellflash"
+        },
+        {
+            "name": "shellincendiary"
+        },
+        {
+            "name": "shelllethal"
+        },
+        {
+            "name": "shellpractice"
+        },
+        {
+            "name": "shellslug"
+        },
+        {
+            "name": "ziptie"
+        }
+    ]
 }

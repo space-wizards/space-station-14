@@ -1,7 +1,4 @@
-﻿using System.Collections.Generic;
-using Robust.Shared.Prototypes;
-using Robust.Shared.Serialization.Manager.Attributes;
-using Robust.Shared.ViewVariables;
+﻿using Robust.Shared.Prototypes;
 
 namespace Content.Shared.Dataset
 {

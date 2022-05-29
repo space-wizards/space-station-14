@@ -5,6 +5,13 @@
   id: MobHuman
   description: A miserable pile of secrets.
   components:
+  - type: CombatMode
+    canDisarm: true
+  - type: InteractionPopup
+    successChance: 1
+    interactSuccessString: hugging-success-generic
+    interactSuccessSound: /Audio/Effects/hug.ogg
+    messagePerceivedByOthers: hugging-success-generic-others
   - type: Mind
     showExamineInfo: true
   - type: Input
@@ -14,10 +21,10 @@
   - type: Respirator
     damage:
       types:
-        Asphyxiation: 1.5
+        Asphyxiation: 1.0
     damageRecovery:
       types:
-        Asphyxiation: -1.5
+        Asphyxiation: -1.0
   - type: Alerts
   - type: Actions
   - type: Eye
@@ -44,3 +51,4 @@
     description: Inspect the station, jot down performance reviews for heads of staff, bug the Captain.
   - type: UtilityAI
     startingGear: CentcomGear
+  - type: RandomHumanoidAppearance

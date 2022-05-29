@@ -1,9 +1,9 @@
-using System.Linq;
 using Content.Server.Chat.Managers;
 using Content.Server.Disease.Components;
 using Content.Server.Disease;
 using Content.Shared.Disease;
 using Content.Shared.MobState.Components;
+using Content.Shared.Sound;
 using Robust.Shared.Random;
 using Robust.Shared.Prototypes;
 
@@ -27,12 +27,14 @@ public sealed class DiseaseOutbreak : StationEvent
         "SpaceCold",
         "VanAusdallsRobovirus",
         "VentCough",
-        "AMIV"
+        "AMIV",
+        "SpaceFlu",
+        "BirdFlew"
     };
     public override string Name => "DiseaseOutbreak";
     public override float Weight => WeightNormal;
 
-    public override string? StartAudio => "/Audio/Announcements/outbreak7.ogg";
+    public override SoundSpecifier? StartAudio => new SoundPathSpecifier("/Audio/Announcements/outbreak7.ogg");
     protected override float EndAfter => 1.0f;
     /// <summary>
     /// Finds 2-5 random, alive entities that can host diseases

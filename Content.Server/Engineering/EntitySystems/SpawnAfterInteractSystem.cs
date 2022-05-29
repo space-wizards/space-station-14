@@ -3,11 +3,8 @@ using Content.Server.DoAfter;
 using Content.Server.Engineering.Components;
 using Content.Server.Stack;
 using Content.Shared.Interaction;
-using Content.Shared.Interaction.Helpers;
 using Content.Shared.Stacks;
 using JetBrains.Annotations;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
 using Robust.Shared.Map;
 
 namespace Content.Server.Engineering.EntitySystems
@@ -28,6 +25,8 @@ namespace Content.Server.Engineering.EntitySystems
 
         private async void HandleAfterInteract(EntityUid uid, SpawnAfterInteractComponent component, AfterInteractEvent args)
         {
+            if (!args.CanReach && !component.IgnoreDistance)
+                return;
             if (string.IsNullOrEmpty(component.Prototype))
                 return;
             if (!_mapManager.TryGetGrid(args.ClickLocation.GetGridId(EntityManager), out var grid))

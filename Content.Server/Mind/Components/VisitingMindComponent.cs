@@ -1,6 +1,3 @@
-using Robust.Shared.GameObjects;
-using Robust.Shared.ViewVariables;
-
 namespace Content.Server.Mind.Components
 {
     [RegisterComponent]

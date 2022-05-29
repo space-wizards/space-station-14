@@ -56,8 +56,6 @@ namespace Content.Server.Atmos.Piping.Unary.Components
 
         public GasVentScrubberData ToAirAlarmData()
         {
-            if (!IsDirty) return new GasVentScrubberData { Dirty = IsDirty };
-
             return new GasVentScrubberData
             {
                 Enabled = Enabled,
@@ -73,11 +71,11 @@ namespace Content.Server.Atmos.Piping.Unary.Components
         {
             Enabled = data.Enabled;
             IsDirty = data.Dirty;
-            PumpDirection = (ScrubberPumpDirection) data.PumpDirection!;
-            TransferRate = (float) data.VolumeRate!;
+            PumpDirection = data.PumpDirection;
+            TransferRate = data.VolumeRate;
             WideNet = data.WideNet;
 
-            if (!data.FilterGases!.SequenceEqual(FilterGases))
+            if (!data.FilterGases.SequenceEqual(FilterGases))
             {
                 FilterGases.Clear();
                 foreach (var gas in data.FilterGases!)

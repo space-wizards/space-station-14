@@ -1,10 +1,10 @@
 ﻿- type: reagent
   id: Blood
-  name: blood
+  name: reagent-name-blood
   group: Biological
-  desc: I hope this is ketchup.
+  desc: reagent-desc-blood
   color: "#800000"
-  physicalDesc: ferrous
+  physicalDesc: reagent-physical-desc-ferrous
   metabolisms:
     Drink:
       # Quenching!
@@ -17,11 +17,11 @@
 
 - type: reagent
   id: Slime
-  name: slime
+  name: reagent-name-slime
   group: Biological
-  desc: You thought this was gradient blood at first, but you were mistaken.
+  desc: reagent-desc-slime
   color: "#2cf274"
-  physicalDesc: viscous
+  physicalDesc: reagent-physical-desc-viscous
   metabolisms:
     Food:
       # Delicious!

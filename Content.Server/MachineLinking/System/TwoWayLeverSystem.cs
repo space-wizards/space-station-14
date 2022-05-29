@@ -1,31 +1,30 @@
-﻿using System;
 using Content.Server.MachineLinking.Components;
-using Content.Server.MachineLinking.Events;
 using Content.Shared.Interaction;
 using Content.Shared.MachineLinking;
-using Robust.Shared.GameObjects;
 
 namespace Content.Server.MachineLinking.System
 {
     public sealed class TwoWayLeverSystem : EntitySystem
     {
+        [Dependency] private readonly SignalLinkerSystem _signalSystem = default!;
+
         public override void Initialize()
         {
             base.Initialize();
             SubscribeLocalEvent<TwoWayLeverComponent, ComponentInit>(OnInit);
-            SubscribeLocalEvent<TwoWayLeverComponent, InteractHandEvent>(OnInteractHand);
+            SubscribeLocalEvent<TwoWayLeverComponent, ActivateInWorldEvent>(OnActivated);
         }
 
         private void OnInit(EntityUid uid, TwoWayLeverComponent component, ComponentInit args)
         {
-            var transmitter = EnsureComp<SignalTransmitterComponent>(uid);
-            foreach (string state in Enum.GetNames<TwoWayLeverState>())
-                if (!transmitter.Outputs.ContainsKey(state))
-                    transmitter.AddPort(state);
+            _signalSystem.EnsureTransmitterPorts(uid, component.LeftPort, component.RightPort, component.MiddlePort);
         }
 
-        private void OnInteractHand(EntityUid uid, TwoWayLeverComponent component, InteractHandEvent args)
+        private void OnActivated(EntityUid uid, TwoWayLeverComponent component, ActivateInWorldEvent args)
         {
+            if (args.Handled)
+                return;
+
             component.State = component.State switch
             {
                 TwoWayLeverState.Middle => component.NextSignalLeft ? TwoWayLeverState.Left : TwoWayLeverState.Right,
@@ -35,16 +34,20 @@ namespace Content.Server.MachineLinking.System
             };
 
             if (component.State == TwoWayLeverState.Middle)
-            {
                 component.NextSignalLeft = !component.NextSignalLeft;
-            }
 
-            if (EntityManager.TryGetComponent<AppearanceComponent>(uid, out var appearanceComponent))
-            {
+            if (TryComp(uid, out AppearanceComponent? appearanceComponent))
                 appearanceComponent.SetData(TwoWayLeverVisuals.State, component.State);
-            }
 
-            RaiseLocalEvent(uid, new InvokePortEvent(component.State.ToString()));
+            var port = component.State switch
+            {
+                TwoWayLeverState.Left => component.LeftPort,
+                TwoWayLeverState.Right => component.RightPort,
+                TwoWayLeverState.Middle => component.MiddlePort,
+                _ => throw new ArgumentOutOfRangeException()
+            };
+
+            _signalSystem.InvokePort(uid, port);
             args.Handled = true;
         }
     }

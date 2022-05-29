@@ -182,7 +182,7 @@
   id: OrganHumanKidneys
   parent: BaseHumanOrgan
   name: kidneys
-  description: "Filters toxins out of a bloodstream."
+  description: "Filters toxins from the bloodstream."
   components:
   - type: Sprite
     layers:

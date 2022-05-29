@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-
-namespace Content.Server.Objectives.Interfaces
+﻿namespace Content.Server.Objectives.Interfaces
 {
     public interface IObjectivesManager
     {

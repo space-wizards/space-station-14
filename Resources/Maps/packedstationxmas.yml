@@ -41,7 +41,7 @@ tilemap:
   34: floor_wood
   35: lattice
   36: plating
-  37: underplating
+  37: plating
 grids:
 - settings:
     chunksize: 16
@@ -36484,7 +36484,7 @@ entities:
 - uid: 2793
   type: VendingMachineCigs
   components:
-  - name: Cigarette machine
+  - name: cigarette machine
     type: MetaData
   - pos: 24.5,42.5
     parent: 0
@@ -56572,7 +56572,7 @@ entities:
 - uid: 5372
   type: VendingMachineCigs
   components:
-  - name: Cigarette machine
+  - name: cigarette machine
     type: MetaData
   - pos: 63.5,16.5
     parent: 0
@@ -57234,7 +57234,7 @@ entities:
 - uid: 5449
   type: VendingMachineCigs
   components:
-  - name: Cigarette machine
+  - name: cigarette machine
     type: MetaData
   - pos: 34.5,43.5
     parent: 0
@@ -60165,7 +60165,7 @@ entities:
 - uid: 5809
   type: VendingMachineCigs
   components:
-  - name: Cigarette machine
+  - name: cigarette machine
     type: MetaData
   - pos: 29.5,-2.5
     parent: 0
@@ -115093,7 +115093,7 @@ entities:
 - uid: 11258
   type: VendingMachineCigs
   components:
-  - name: Cigarette machine
+  - name: cigarette machine
     type: MetaData
   - pos: 19.5,35.5
     parent: 0

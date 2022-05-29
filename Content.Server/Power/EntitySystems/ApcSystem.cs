@@ -1,7 +1,5 @@
-using System;
 using Content.Server.Popups;
 using Content.Server.Power.Components;
-using Content.Server.Power.Pow3r;
 using Content.Shared.Access.Components;
 using Content.Shared.Access.Systems;
 using Content.Shared.APC;
@@ -9,10 +7,6 @@ using Content.Shared.Emag.Systems;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Localization;
-using Robust.Shared.Maths;
 using Robust.Shared.Player;
 using Robust.Shared.Timing;
 
@@ -48,7 +42,6 @@ namespace Content.Server.Power.EntitySystems
         {
             UpdateApcState(uid, component);
         }
-
         private void OnToggleMainBreaker(EntityUid uid, ApcComponent component, ApcToggleMainBreakerMessage args)
         {
             TryComp<AccessReaderComponent>(uid, out var access);

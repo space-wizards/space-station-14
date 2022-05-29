@@ -1,4 +1,4 @@
-﻿namespace Content.Server.Kitchen.Components;
+namespace Content.Server.Kitchen.Components;
 
 /// <summary>
 ///     Applies to items that are capable of butchering entities, or
@@ -7,6 +7,7 @@
 [RegisterComponent]
 public sealed class SharpComponent : Component
 {
+    // TODO just make this a tool type.
     public HashSet<EntityUid> Butchering = new();
 
     [DataField("butcherDelayModifier")]

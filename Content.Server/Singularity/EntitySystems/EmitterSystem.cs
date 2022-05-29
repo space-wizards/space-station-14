@@ -1,4 +1,3 @@
-using System;
 using System.Threading;
 using Content.Server.Administration.Logs;
 using Content.Server.Power.Components;
@@ -12,12 +11,7 @@ using Content.Shared.Interaction;
 using Content.Shared.Popups;
 using Content.Shared.Singularity.Components;
 using JetBrains.Annotations;
-using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Localization;
-using Robust.Shared.Log;
 using Robust.Shared.Physics;
 using Robust.Shared.Player;
 using Robust.Shared.Random;
@@ -151,7 +145,8 @@ namespace Content.Server.Singularity.EntitySystems
             DebugTools.Assert(component.IsPowered);
             DebugTools.Assert(component.IsOn);
             DebugTools.Assert(TryComp<PowerConsumerComponent>(component.Owner, out var powerConsumer) &&
-                              powerConsumer.DrawRate <= powerConsumer.ReceivedPower);
+                              (powerConsumer.DrawRate <= powerConsumer.ReceivedPower ||
+                               MathHelper.CloseTo(powerConsumer.DrawRate, powerConsumer.ReceivedPower, 0.0001f)));
 
             Fire(component);
 

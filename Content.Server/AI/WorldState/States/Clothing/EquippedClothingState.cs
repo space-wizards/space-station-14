@@ -1,10 +1,5 @@
-using System.Collections.Generic;
 using Content.Shared.Inventory;
 using JetBrains.Annotations;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Prototypes;
-using InventoryComponent = Content.Shared.Inventory.InventoryComponent;
 
 namespace Content.Server.AI.WorldState.States.Clothing
 {

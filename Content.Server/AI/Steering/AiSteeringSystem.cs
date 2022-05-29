@@ -1,5 +1,3 @@
-using System;
-using System.Collections.Generic;
 using System.Runtime.ExceptionServices;
 using System.Threading;
 using System.Threading.Tasks;
@@ -8,17 +6,11 @@ using Content.Server.AI.Pathfinding;
 using Content.Server.AI.Pathfinding.Pathfinders;
 using Content.Server.CPUJob.JobQueues;
 using Content.Shared.Access.Systems;
-using Content.Shared.ActionBlocker;
+using Content.Shared.Doors.Components;
 using Content.Shared.Interaction;
-using Content.Shared.Interaction.Helpers;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
 using Robust.Shared.Map;
-using Robust.Shared.Maths;
 using Robust.Shared.Physics;
-using Robust.Shared.Timing;
 using Robust.Shared.Utility;
-using Robust.Shared.ViewVariables;
 
 namespace Content.Server.AI.Steering
 {
@@ -249,7 +241,7 @@ namespace Content.Server.AI.Steering
             // Main optimisation to be done below is the redundant calls and adding more variables
             if (Deleted(entity) ||
                 !EntityManager.TryGetComponent(entity, out AiControllerComponent? controller) ||
-                !EntitySystem.Get<ActionBlockerSystem>().CanMove(entity) ||
+                !controller.CanMove ||
                 !EntityManager.GetComponent<TransformComponent>(entity).GridID.IsValid())
             {
                 return SteeringStatus.NoPath;
@@ -394,6 +386,7 @@ namespace Content.Server.AI.Steering
             {
                 movementVector += CollisionAvoidance(entity, movementVector, ignoredCollision);
             }
+
             // Group behaviors would also go here e.g. separation, cohesion, alignment
 
             // Move towards it
@@ -481,10 +474,12 @@ namespace Content.Server.AI.Steering
                 _nextGrid.Remove(entity);
             }
 
+            var xform = EntityManager.GetComponent<TransformComponent>(entity);
+
             // If no tiles left just move towards the target (if we're close)
             if (!_paths.ContainsKey(entity) || _paths[entity].Count == 0)
             {
-                if ((steeringRequest.TargetGrid.Position - EntityManager.GetComponent<TransformComponent>(entity).Coordinates.Position).Length <= 2.0f)
+                if ((steeringRequest.TargetGrid.Position - xform.Coordinates.Position).Length <= 2.0f)
                 {
                     return steeringRequest.TargetGrid;
                 }
@@ -494,7 +489,7 @@ namespace Content.Server.AI.Steering
             }
 
             if (!_nextGrid.TryGetValue(entity, out var nextGrid) ||
-                (nextGrid.Position - EntityManager.GetComponent<TransformComponent>(entity).Coordinates.Position).Length <= TileTolerance)
+                (nextGrid.Position - xform.Coordinates.Position).Length <= TileTolerance)
             {
                 UpdateGridCache(entity);
                 nextGrid = _nextGrid[entity];

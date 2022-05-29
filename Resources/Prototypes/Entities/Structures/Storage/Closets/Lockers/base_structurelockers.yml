@@ -18,7 +18,7 @@
       shader: unshaded
     - state: welded
       visible: false
-      map: ["enum.StorageVisualLayers.Welded"]
+      map: ["enum.WeldableLayers.BaseWelded"]
   - type: Destructible
     thresholds:
     - trigger:

@@ -4,8 +4,9 @@
   id: ClothingWithSuitSensor
   components:
   - type: SuitSensor
-  - type: DeviceNetworkComponent
+  - type: DeviceNetwork
     deviceNetId: Wireless
+    transmitFrequencyId: SuitSensor
   - type: WirelessNetworkConnection
     range: 500
 
@@ -18,7 +19,7 @@
     state: icon
   - type: Clothing
     Slots: [innerclothing]
-    EquipSound:
+    equipSound:
       path: /Audio/Items/jumpsuit_equip.ogg
   - type: Butcherable
     butcheringType: Knife
@@ -36,7 +37,7 @@
   - type: Clothing
     Slots: [innerclothing]
     femaleMask: UniformTop
-    EquipSound:
+    equipSound:
       path: /Audio/Items/jumpsuit_equip.ogg
   - type: Butcherable
     butcheringType: Knife

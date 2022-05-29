@@ -192,6 +192,20 @@
   description: You're severely thirsty. The thirst makes moving around a chore.
 
 - type: alert
+  id: VowOfSilence
+  icon: /Textures/Interface/Alerts/Abilities/silenced.png
+  name: Vow of Silence
+  onClick: !type:BreakVow  { }
+  description: You have taken a vow of silence as part of initiation into the Mystiko Tagma Mimon. Click to break your vow.
+
+- type: alert
+  id: VowBroken
+  icon: /Textures/Interface/Actions/scream.png
+  name: Vow Broken
+  onClick: !type:RetakeVow  { }
+  description: You've broken your vows to Mimes everywhere. You can speak, but you've lost your powers for at least 5 entire minutes!!! Click to try and retake your vow.
+
+- type: alert
   id: Pulled
   icon: /Textures/Interface/Alerts/Pull/pulled.png
   onClick: !type:StopBeingPulled  { }

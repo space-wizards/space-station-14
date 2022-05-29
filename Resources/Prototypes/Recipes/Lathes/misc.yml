@@ -2,7 +2,7 @@
   id: LightTube
   icon: Objects/Power/light_tube.rsi/normal.png
   result: LightTube
-  completetime: 500
+  completetime: 2
   materials:
     Steel: 50
     Glass: 50
@@ -11,25 +11,16 @@
   id: LightBulb
   icon: Objects/Power/light_bulb.rsi/normal.png
   result: LightBulb
-  completetime: 500
+  completetime: 2
   materials:
     Steel: 50
     Glass: 50
 
 - type: latheRecipe
-  id: PowerCellSmallHigh
-  icon: Objects/Power/PowerCells/power_cell_small_hi.rsi
-  result: PowerCellSmallHigh
-  completetime: 500
-  materials:
-    Steel: 100
-    Glass: 100
-
-- type: latheRecipe
   id: GlowstickRed
   icon: Objects/Misc/glowstick.rsi
   result: GlowstickRed
-  completetime: 500
+  completetime: 2
   materials:
     Plastic: 50
 
@@ -37,7 +28,7 @@
   id: Flare
   icon: Objects/Misc/flare.rsi
   result: Flare
-  completetime: 500
+  completetime: 2
   materials:
     Plastic: 50
 
@@ -47,7 +38,7 @@
     sprite: Objects/Tools/flashlight.rsi
     state: flashlight
   result: FlashlightLantern
-  completetime: 500
+  completetime: 2
   materials:
     Steel: 100
     Glass: 100
@@ -59,7 +50,7 @@
     sprite: Objects/Misc/fire_extinguisher.rsi
     state: fire_extinguisher_closed
   result: FireExtinguisher
-  completetime: 500
+  completetime: 2
   materials:
     Steel: 200
 
@@ -67,7 +58,7 @@
   id: Matchbox
   icon: Objects/Tools/matches.rsi
   result: Matchbox
-  completetime: 10
+  completetime: 1
   materials:
     Wood: 100
 
@@ -77,7 +68,7 @@
     sprite: Mobs/Silicon/drone.rsi
     state: shell
   result: Drone
-  completetime: 1500
+  completetime: 6
   materials:
     Steel: 500
     Glass: 500
@@ -89,7 +80,7 @@
     sprite: Objects/Fun/Instruments/h_synthesizer.rsi
     state: icon
   result: SynthesizerInstrument
-  completetime: 1000
+  completetime: 4
   materials:
     Steel: 300
     Plastic: 300

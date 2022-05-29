@@ -2,7 +2,7 @@
   parent: BaseItem
   id: DoorRemoteDefault
   name: door remote
-  description: A gadget which can open and bolt doors remotely
+  description: A gadget which can open and bolt doors remotely.
   abstract: true
   components:
   - type: Sprite

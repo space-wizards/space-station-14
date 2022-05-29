@@ -18,23 +18,23 @@ namespace Content.Shared.Decals
         public const int ChunkSize = 32;
         public static Vector2i GetChunkIndices(Vector2 coordinates) => new ((int) Math.Floor(coordinates.X / ChunkSize), (int) Math.Floor(coordinates.Y / ChunkSize));
 
-        private Vector2 _viewSize;
+        private float _viewSize;
 
         public override void Initialize()
         {
             base.Initialize();
 
             SubscribeLocalEvent<GridInitializeEvent>(OnGridInitialize);
-            _configurationManager.OnValueChanged(CVars.NetDefaultUpdateRange, OnPvsRangeChanged, true);
+            _configurationManager.OnValueChanged(CVars.NetMaxUpdateRange, OnPvsRangeChanged, true);
         }
 
         public override void Shutdown()
         {
             base.Shutdown();
-            _configurationManager.UnsubValueChanged(CVars.NetDefaultUpdateRange, OnPvsRangeChanged);
+            _configurationManager.UnsubValueChanged(CVars.NetMaxUpdateRange, OnPvsRangeChanged);
         }
 
-        private void OnPvsRangeChanged(Vector2 obj)
+        private void OnPvsRangeChanged(float obj)
         {
             _viewSize = obj * 2f;
         }
@@ -52,8 +52,11 @@ namespace Content.Shared.Decals
             }
         }
 
-        protected DecalGridComponent.DecalGridChunkCollection DecalGridChunkCollection(GridId gridId) => EntityManager
-            .GetComponent<DecalGridComponent>(MapManager.GetGrid(gridId).GridEntityId).ChunkCollection;
+        protected DecalGridComponent.DecalGridChunkCollection DecalGridChunkCollection(EntityUid gridEuid) =>
+            Comp<DecalGridComponent>(gridEuid).ChunkCollection;
+        protected DecalGridComponent.DecalGridChunkCollection DecalGridChunkCollection(GridId gridId) =>
+            Comp<DecalGridComponent>(MapManager.GetGridEuid(gridId)).ChunkCollection;
+        protected Dictionary<Vector2i, Dictionary<uint, Decal>> ChunkCollection(EntityUid gridEuid) => DecalGridChunkCollection(gridEuid).ChunkCollection;
         protected Dictionary<Vector2i, Dictionary<uint, Decal>> ChunkCollection(GridId gridId) => DecalGridChunkCollection(gridId).ChunkCollection;
 
         protected virtual void DirtyChunk(GridId id, Vector2i chunkIndices) {}
@@ -76,7 +79,7 @@ namespace Content.Shared.Decals
             if (chunkCollection[indices].Count == 0)
                 chunkCollection.Remove(indices);
 
-            ChunkIndex[gridId]?.Remove(uid);
+            ChunkIndex[gridId].Remove(uid);
             DirtyChunk(gridId, indices);
             return true;
         }

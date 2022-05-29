@@ -26,7 +26,7 @@ namespace Content.Server.Clothing
 
             if (TryComp(parent, out MovedByPressureComponent? movedByPressure))
             {
-                movedByPressure.Enabled = state;
+                movedByPressure.Enabled = !state;
             }
 
             if (state)

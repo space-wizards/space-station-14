@@ -10,8 +10,6 @@ using Content.Shared.Database;
 using Content.Shared.FixedPoint;
 using Content.Shared.MobState.Components;
 using JetBrains.Annotations;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 
@@ -30,6 +28,7 @@ namespace Content.Server.Body.Systems
             base.Initialize();
 
             SubscribeLocalEvent<MetabolizerComponent, ComponentInit>(OnMetabolizerInit);
+            SubscribeLocalEvent<MetabolizerComponent, ApplyMetabolicMultiplierEvent>(OnApplyMetabolicMultiplier);
         }
 
         private void OnMetabolizerInit(EntityUid uid, MetabolizerComponent component, ComponentInit args)
@@ -50,6 +49,18 @@ namespace Content.Server.Body.Systems
             }
         }
 
+        private void OnApplyMetabolicMultiplier(EntityUid uid, MetabolizerComponent component, ApplyMetabolicMultiplierEvent args)
+        {
+            if (args.Apply)
+            {
+                component.UpdateFrequency *= args.Multiplier;
+                return;
+            }
+            component.UpdateFrequency /= args.Multiplier;
+            // Reset the accumulator properly
+            if (component.AccumulatedFrametime >= component.UpdateFrequency)
+                component.AccumulatedFrametime = component.UpdateFrequency;
+        }
         public override void Update(float frameTime)
         {
             base.Update(frameTime);
@@ -172,7 +183,7 @@ namespace Content.Server.Body.Systems
                         if (effect.ShouldLog)
                         {
                             _logSystem.Add(LogType.ReagentEffect, effect.LogImpact,
-                                $"Metabolism effect {effect.GetType().Name:effect} of reagent {args.Reagent.Name:reagent} applied on entity {actualEntity:entity} at {Transform(actualEntity).Coordinates:coordinates}");
+                                $"Metabolism effect {effect.GetType().Name:effect} of reagent {args.Reagent.LocalizedName:reagent} applied on entity {actualEntity:entity} at {Transform(actualEntity).Coordinates:coordinates}");
                         }
 
                         effect.Effect(args);
@@ -184,5 +195,14 @@ namespace Content.Server.Body.Systems
                     _solutionContainerSystem.TryRemoveReagent(solutionEntityUid.Value, solution, reagent.ReagentId, mostToRemove);
             }
         }
+    }
+    public sealed class ApplyMetabolicMultiplierEvent : EntityEventArgs
+    {
+        // The entity whose metabolism is being modified
+        public  EntityUid Uid;
+        // What the metabolism's update rate will be multiplied by
+        public  float Multiplier;
+        // Apply this multiplier or ignore / reset it?
+        public bool Apply;
     }
 }

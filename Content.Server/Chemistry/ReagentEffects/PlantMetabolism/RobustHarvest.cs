@@ -20,13 +20,13 @@ namespace Content.Server.Chemistry.ReagentEffects.PlantMetabolism
 
             if (plantHolderComp.Seed.Potency < 100 && random.Prob(0.1f))
             {
-                plantHolderComp.CheckForDivergence(true);
+                plantHolderComp.EnsureUniqueSeed();
                 plantHolderComp.Seed.Potency++;
             }
 
             if (plantHolderComp.Seed.Yield > 1 && random.Prob(0.1f))
             {
-                plantHolderComp.CheckForDivergence(true);
+                plantHolderComp.EnsureUniqueSeed();
                 plantHolderComp.Seed.Yield--;
             }
         }

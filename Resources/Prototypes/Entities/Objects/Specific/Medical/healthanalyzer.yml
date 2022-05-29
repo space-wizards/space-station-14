@@ -35,3 +35,13 @@
   - type: HealthAnalyzer
     fake: true
     disease: OwOnavirus
+
+- type: entity
+  parent: HandheldHealthAnalyzer
+  id: HandheldHealthAnalyzerZombie
+  name: Zombie Infector
+  suffix: DEBUG
+  components:
+  - type: HealthAnalyzer
+    fake: true
+    disease: ZombieInfection

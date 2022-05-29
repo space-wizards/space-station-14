@@ -20,15 +20,18 @@ namespace Content.IntegrationTests.Tests.DeviceNetwork
   name: DummyNetworkDevice
   id: DummyNetworkDevice
   components:
-    - type: DeviceNetworkComponent
-      frequency: 100
+    - type: DeviceNetwork
+      transmitFrequency: 100
+      receiveFrequency: 100
 
 - type: entity
   name: DummyWiredNetworkDevice
   id: DummyWiredNetworkDevice
   components:
-    - type: DeviceNetworkComponent
+    - type: DeviceNetwork
       deviceNetId: Wired
+      transmitFrequency: 0
+      receiveFrequency: 0
     - type: WiredNetworkConnection
     - type: ApcPowerReceiver
 
@@ -36,8 +39,9 @@ namespace Content.IntegrationTests.Tests.DeviceNetwork
   name: DummyWirelessNetworkDevice
   id: DummyWirelessNetworkDevice
   components:
-    - type: DeviceNetworkComponent
-      frequency: 100
+    - type: DeviceNetwork
+      transmitFrequency: 100
+      receiveFrequency: 100
       deviceNetId: Wireless
     - type: WirelessNetworkConnection
       range: 100
@@ -83,18 +87,18 @@ namespace Content.IntegrationTests.Tests.DeviceNetwork
                 device1 = entityManager.SpawnEntity("DummyNetworkDevice", MapCoordinates.Nullspace);
 
                 Assert.That(entityManager.TryGetComponent(device1, out networkComponent1), Is.True);
-                Assert.That(networkComponent1.Open, Is.True);
+                Assert.That(networkComponent1.ReceiveFrequency != null, Is.True);
                 Assert.That(networkComponent1.Address, Is.Not.EqualTo(string.Empty));
 
                 device2 = entityManager.SpawnEntity("DummyNetworkDevice", MapCoordinates.Nullspace);
 
                 Assert.That(entityManager.TryGetComponent(device2, out networkComponent2), Is.True);
-                Assert.That(networkComponent2.Open, Is.True);
+                Assert.That(networkComponent1.ReceiveFrequency != null, Is.True);
                 Assert.That(networkComponent2.Address, Is.Not.EqualTo(string.Empty));
 
                 Assert.That(networkComponent1.Address, Is.Not.EqualTo(networkComponent2.Address));
 
-                deviceNetSystem.QueuePacket(device1, networkComponent2.Address, networkComponent2.Frequency, payload);
+                deviceNetSystem.QueuePacket(device1, networkComponent2.Address, payload, networkComponent2.ReceiveFrequency.Value);
             });
 
             await server.WaitRunTicks(1);
@@ -147,18 +151,18 @@ namespace Content.IntegrationTests.Tests.DeviceNetwork
 
                 Assert.That(entityManager.TryGetComponent(device1, out networkComponent1), Is.True);
                 Assert.That(entityManager.TryGetComponent(device1, out wirelessNetworkComponent), Is.True);
-                Assert.That(networkComponent1.Open, Is.True);
+                Assert.That(networkComponent1.ReceiveFrequency != null, Is.True);
                 Assert.That(networkComponent1.Address, Is.Not.EqualTo(string.Empty));
 
                 device2 = entityManager.SpawnEntity("DummyWirelessNetworkDevice", new MapCoordinates(new Robust.Shared.Maths.Vector2(0,50), MapId.Nullspace));
 
                 Assert.That(entityManager.TryGetComponent(device2, out networkComponent2), Is.True);
-                Assert.That(networkComponent2.Open, Is.True);
+                Assert.That(networkComponent2.ReceiveFrequency != null, Is.True);
                 Assert.That(networkComponent2.Address, Is.Not.EqualTo(string.Empty));
 
                 Assert.That(networkComponent1.Address, Is.Not.EqualTo(networkComponent2.Address));
 
-                deviceNetSystem.QueuePacket(device1, networkComponent2.Address, networkComponent2.Frequency, payload);
+                deviceNetSystem.QueuePacket(device1, networkComponent2.Address, payload, networkComponent2.ReceiveFrequency.Value);
             });
 
             await server.WaitRunTicks(1);
@@ -174,7 +178,7 @@ namespace Content.IntegrationTests.Tests.DeviceNetwork
 
                 wirelessNetworkComponent.Range = 0;
 
-                deviceNetSystem.QueuePacket(device1, networkComponent2.Address, networkComponent2.Frequency, payload);
+                deviceNetSystem.QueuePacket(device1, networkComponent2.Address, payload, networkComponent2.ReceiveFrequency.Value);
             });
 
             await server.WaitRunTicks(1);
@@ -234,18 +238,18 @@ namespace Content.IntegrationTests.Tests.DeviceNetwork
 
                 Assert.That(entityManager.TryGetComponent(device1, out networkComponent1), Is.True);
                 Assert.That(entityManager.TryGetComponent(device1, out wiredNetworkComponent), Is.True);
-                Assert.That(networkComponent1.Open, Is.True);
+                Assert.That(networkComponent1.ReceiveFrequency != null, Is.True);
                 Assert.That(networkComponent1.Address, Is.Not.EqualTo(string.Empty));
 
                 device2 = entityManager.SpawnEntity("DummyWiredNetworkDevice", new MapCoordinates(new Robust.Shared.Maths.Vector2(0, 2), MapId.Nullspace));
 
                 Assert.That(entityManager.TryGetComponent(device2, out networkComponent2), Is.True);
-                Assert.That(networkComponent2.Open, Is.True);
+                Assert.That(networkComponent2.ReceiveFrequency != null, Is.True);
                 Assert.That(networkComponent2.Address, Is.Not.EqualTo(string.Empty));
 
                 Assert.That(networkComponent1.Address, Is.Not.EqualTo(networkComponent2.Address));
 
-                deviceNetSystem.QueuePacket(device1, networkComponent2.Address, networkComponent2.Frequency, payload);
+                deviceNetSystem.QueuePacket(device1, networkComponent2.Address, payload, networkComponent2.ReceiveFrequency.Value);
             });
 
             await server.WaitRunTicks(1);
@@ -256,7 +260,7 @@ namespace Content.IntegrationTests.Tests.DeviceNetwork
 
                 entityManager.SpawnEntity("CableApcExtension", grid.MapToGrid(new MapCoordinates(new Robust.Shared.Maths.Vector2(0, 1), MapId.Nullspace)));
 
-                deviceNetSystem.QueuePacket(device1, networkComponent2.Address, networkComponent2.Frequency, payload);
+                deviceNetSystem.QueuePacket(device1, networkComponent2.Address, payload, networkComponent2.ReceiveFrequency.Value);
             });
 
             await server.WaitRunTicks(1);

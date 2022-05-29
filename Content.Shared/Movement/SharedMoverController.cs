@@ -1,5 +1,4 @@
 using System.Diagnostics.CodeAnalysis;
-using Content.Shared.ActionBlocker;
 using Content.Shared.Audio;
 using Content.Shared.CCVar;
 using Content.Shared.Friction;
@@ -27,7 +26,6 @@ namespace Content.Shared.Movement
     {
         [Dependency] private readonly IMapManager _mapManager = default!;
         [Dependency] private readonly ITileDefinitionManager _tileDefinitionManager = default!;
-        [Dependency] private readonly ActionBlockerSystem _blocker = default!;
         [Dependency] private readonly InventorySystem _inventory = default!;
         [Dependency] private readonly SharedPhysicsSystem _physics = default!;
         [Dependency] private readonly TagSystem _tags = default!;
@@ -114,7 +112,7 @@ namespace Content.Shared.Movement
         {
             DebugTools.Assert(!UsedMobMovement.ContainsKey(mover.Owner));
 
-            if (!UseMobMovement(physicsComponent))
+            if (!UseMobMovement(mover, physicsComponent))
             {
                 UsedMobMovement[mover.Owner] = false;
                 return;
@@ -184,13 +182,13 @@ namespace Content.Shared.Movement
             return UsedMobMovement.TryGetValue(uid, out var used) && used;
         }
 
-        protected bool UseMobMovement(PhysicsComponent body)
+        protected bool UseMobMovement(IMoverComponent mover, PhysicsComponent body)
         {
-            return body.BodyStatus == BodyStatus.OnGround &&
-                   EntityManager.HasComponent<MobStateComponent>(body.Owner) &&
+            return mover.CanMove &&
+                   body.BodyStatus == BodyStatus.OnGround &&
+                   HasComp<MobStateComponent>(body.Owner) &&
                    // If we're being pulled then don't mess with our velocity.
-                   (!EntityManager.TryGetComponent(body.Owner, out SharedPullableComponent? pullable) || !pullable.BeingPulled) &&
-                   _blocker.CanMove((body).Owner);
+                   (!TryComp(body.Owner, out SharedPullableComponent? pullable) || !pullable.BeingPulled);
         }
 
         /// <summary>

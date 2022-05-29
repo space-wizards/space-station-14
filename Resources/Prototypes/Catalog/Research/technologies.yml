@@ -45,6 +45,11 @@
     - HydroponicsToolScythe
     - HydroponicsToolHatchet
     - KitchenKnife
+    - HandheldHealthAnalyzer
+    - ClothingHandsGlovesLatex
+    - ClothingHandsGlovesNitrile
+    - ClothingMaskSterile
+    - DiseaseSwab
 
 - type: technology
   name: "advanced botany"
@@ -59,6 +64,7 @@
   unlockedRecipes:
     - Shovel
     - ButchCleaver
+    - MicrowaveMachineCircuitboard
 
 - type: technology
   name: "advanced surgery"
@@ -104,23 +110,37 @@
 - type: technology
   name: "medical machinery"
   id: MedicalMachinery
-  description: More machine power for more healing efficiency.
+  description: Machines any self-respecting medbay would need.
   icon:
-    sprite: Structures/Machines/cloning.rsi
-    state: pod_0
-  requiredPoints: 15000
+    sprite: Structures/dispensers.rsi
+    state: industrial-working
+  requiredPoints: 10000
   requiredTechnologies:
     - BiologicalTechnology
     - ChemistryTechnology
   unlockedRecipes:
-    - CloningPodMachineCircuitboard
-    - MedicalScannerMachineCircuitboard
     - ChemMasterMachineCircuitboard
     - ChemDispenserMachineCircuitboard
     - CrewMonitoringComputerCircuitboard
     - VaccinatorMachineCircuitboard
     - DiagnoserMachineCircuitboard
     - HandheldCrewMonitor
+
+- type: technology
+  name: "advanced life support systems"
+  id: AdvancedLifeSupport
+  description: The cutting edge of life and death.
+  icon:
+    sprite: Structures/Machines/cloning.rsi
+    state: pod_0
+  requiredPoints: 20000
+  requiredTechnologies:
+    - MedicalMachinery
+    - AdvancedSugery
+  unlockedRecipes:
+    - CloningPodMachineCircuitboard
+    - MedicalScannerMachineCircuitboard
+    - StasisBedMachineCircuitboard
 
 # Security Technology Tree
 
@@ -138,6 +158,7 @@
     - Flash
     - Handcuffs
     - Stunbaton
+    - FlashPayload
 
 - type: technology
   name: "non-lethal technology"
@@ -151,6 +172,8 @@
      - SecurityTechnology
   unlockedRecipes:
     - ShellShotgunBeanbag
+    - ShellTranquilizer
+    - ShellShotgunFlash
     - CartridgePistolRubber
     - CartridgeMagnumRubber
     - CartridgeClRifleRubber
@@ -170,6 +193,7 @@
   unlockedRecipes:
     - CartridgePistol
     - ShellShotgun
+    - ShellShotgunFlare
     - CartridgeLRifle
     - CartridgeMagnum
 
@@ -250,6 +274,7 @@
     - FireExtinguisher
     - AutolatheMachineCircuitboard
     - ProtolatheMachineCircuitboard
+    - OreProcessorMachineCircuitboard
     - CircuitImprinterMachineCircuitboard
     - UniformPrinterMachineCircuitboard
     - AirAlarmElectronics
@@ -328,7 +353,9 @@
     - SolarControlComputerCircuitboard
     - GeneratorPlasmaMachineCircuitboard
     - GeneratorUraniumMachineCircuitboard
-    
+    - Signaller
+    - SignalTrigger
+
 - type: technology
   name: "compact power technology"
   id: CompactPowerTechnology
@@ -360,6 +387,50 @@
     - SynthesizerInstrument
     - DawInstrumentMachineCircuitboard
 
+- type: technology
+  name: "basic powercell printing"
+  id: PowerCellBasic
+  description: Print standard powercells.
+  icon:
+    sprite: Objects/Power/PowerCells/power_cell_small_st.rsi
+    state: s_st
+  requiredPoints: 2500
+  requiredTechnologies:
+    - ElectromagneticTheory
+  unlockedRecipes:
+    - PowerCellSmallStandard
+    - PowerCellMediumStandard
+    - PowerCellLargeStandard
+
+- type: technology
+  name: "advanced powercell printing"
+  id: PowerCellAdvanced
+  description: Print advanced powercells.
+  icon:
+    sprite: Objects/Power/PowerCells/power_cell_small_hi.rsi
+    state: s_hi
+  requiredPoints: 5000
+  requiredTechnologies:
+    - PowerCellBasic
+  unlockedRecipes:
+    - PowerCellSmallHigh
+    - PowerCellMediumHigh
+    - PowerCellLargeHigh
+
+- type: technology
+  name: "super powercell printing"
+  id: PowerCellSuper
+  description: Print super powercells.
+  icon:
+    sprite: Objects/Power/PowerCells/power_cell_small_sup.rsi
+    state: s_sup
+  requiredPoints: 10000
+  requiredTechnologies:
+    - PowerCellAdvanced
+  unlockedRecipes:
+    - PowerCellSmallSuper
+    - PowerCellMediumSuper
+    - PowerCellLargeSuper
 # Basic Parts Technology Tree
 
 - type: technology

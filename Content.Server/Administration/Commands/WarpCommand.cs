@@ -1,14 +1,10 @@
-using System.Collections.Generic;
 using System.Linq;
 using Content.Server.Warps;
 using Content.Shared.Administration;
 using Robust.Server.Player;
 using Robust.Shared.Console;
 using Robust.Shared.Enums;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
 using Robust.Shared.Map;
-using Robust.Shared.Maths;
 using Robust.Shared.Physics;
 
 namespace Content.Server.Administration.Commands
@@ -42,12 +38,7 @@ namespace Content.Server.Administration.Commands
             var location = args[0];
             if (location == "?")
             {
-                var locations = string.Join(", ",
-                    entMan.EntityQuery<WarpPointComponent>(true)
-                        .Select(p => p.Location)
-                        .Where(p => p != null)
-                        .OrderBy(p => p)
-                        .Distinct());
+                var locations = string.Join(", ", GetWarpPointNames(entMan));
 
                 shell.WriteLine(locations);
             }
@@ -124,6 +115,28 @@ namespace Content.Server.Administration.Commands
                     shell.WriteLine("That location does not exist!");
                 }
             }
+        }
+
+        private static IEnumerable<string> GetWarpPointNames(IEntityManager entMan)
+        {
+            return entMan.EntityQuery<WarpPointComponent>(true)
+                .Select(p => p.Location)
+                .Where(p => p != null)
+                .OrderBy(p => p)
+                .Distinct()!;
+        }
+
+        public CompletionResult GetCompletion(IConsoleShell shell, string[] args)
+        {
+            if (args.Length == 1)
+            {
+                var ent = IoCManager.Resolve<IEntityManager>();
+                var options = new[] { "?" }.Concat(GetWarpPointNames(ent));
+
+                return CompletionResult.FromHintOptions(options, "<warp point | ?>");
+            }
+
+            return CompletionResult.Empty;
         }
     }
 }

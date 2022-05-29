@@ -11,6 +11,18 @@
   group: market
 
 - type: cargoProduct
+  name: "brass instrument ensemble crate"
+  id: FunBrass
+  description: "Bring some jazz to the station with the brass ensemble. Contains a variety of brass instruments for the whole station to play."
+  icon:
+    sprite: Structures/Furniture/instruments.rsi
+    state: tuba
+  product: CrateFunBrass
+  cost: 3500
+  category: Fun
+  group: market
+
+- type: cargoProduct
   name: "art supplies"
   id: FunArtSupplies
   description: "Make some happy little accidents with lots of crayons!"
@@ -43,5 +55,17 @@
     state: d66
   product: CrateFunBoardGames
   cost: 1500
+  category: Fun
+  group: market
+
+- type: cargoProduct
+  name: "ATV crate"
+  id: FunATV
+  description: "An Absolutely Taxable Vehicle to help cargo with hauling."
+  icon:
+    sprite: Objects/Vehicles/atv.rsi
+    state: vehicle
+  product: CrateFunATV
+  cost: 6000
   category: Fun
   group: market

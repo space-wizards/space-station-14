@@ -1,5 +1,4 @@
 ﻿using Content.Shared.Body.Components;
-using Robust.Shared.GameObjects;
 
 namespace Content.Shared.Body.Events
 {

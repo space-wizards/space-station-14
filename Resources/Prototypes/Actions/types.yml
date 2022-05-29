@@ -1,0 +1,50 @@
+- type: instantAction
+  id: Scream
+  useDelay: 10
+  icon: Interface/Actions/scream.png
+  name: action-name-scream
+  description: AAAAAAAAAAAAAAAAAAAAAAAAA
+  serverEvent: !type:ScreamActionEvent
+  checkCanInteract: false
+
+- type: instantAction
+  id: ToggleLight
+  name: action-name-toggle-light
+  description: action-description-toggle-light
+  icon: Objects/Tools/flashlight.rsi/flashlight.png
+  iconOn: Objects/Tools/flashlight.rsi/flashlight-on.png
+  event: !type:ToggleActionEvent
+
+- type: instantAction
+  id: ToggleSuitHelmet
+  name: action-name-hardsuit
+  description: action-description-hardsuit
+  itemIconStyle: BigItem
+  useDelay: 1 # equip noise spam.
+  event: !type:ToggleClothingEvent
+
+- type: entityTargetAction
+  id: Disarm
+  name: action-name-disarm
+  description: action-description-disarm
+  icon: Interface/Actions/disarmOff.png
+  iconOn: Interface/Actions/disarm.png
+  repeat: true
+  useDelay: 1.5
+  interactOnMiss: true
+  event: !type:DisarmActionEvent
+  canTargetSelf: false
+  whitelist:
+    components:
+    - Hands
+    - StatusEffects
+
+- type: instantAction
+  id: CombatModeToggle
+  name: action-name-combat
+  description: action-description-combat
+  icon: Interface/Actions/harmOff.png
+  iconOn: Interface/Actions/harm.png
+  userPopup: action-popup-combat
+  popupToggleSuffix: -disabling
+  event: !type:ToggleCombatActionEvent

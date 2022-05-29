@@ -1,11 +1,6 @@
 using Content.Server.Fluids.EntitySystems;
-using Content.Shared.Chemistry.Reagent;
 using Content.Shared.FixedPoint;
 using Content.Shared.Sound;
-using Robust.Shared.Analyzers;
-using Robust.Shared.GameObjects;
-using Robust.Shared.Serialization.Manager.Attributes;
-using Robust.Shared.ViewVariables;
 
 namespace Content.Server.Fluids.Components
 {
@@ -17,7 +12,7 @@ namespace Content.Server.Fluids.Components
     public sealed class PuddleComponent : Component
     {
         public const string DefaultSolutionName = "puddle";
-        private static readonly FixedPoint2 DefaultSlipThreshold = FixedPoint2.New(3);
+        private static readonly FixedPoint2 DefaultSlipThreshold = FixedPoint2.New(-1);
         public static readonly FixedPoint2 DefaultOverflowVolume = FixedPoint2.New(20);
 
         // Current design: Something calls the SpillHelper.Spill, that will either

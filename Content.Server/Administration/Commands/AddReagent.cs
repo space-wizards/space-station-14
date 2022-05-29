@@ -4,10 +4,7 @@ using Content.Shared.Administration;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.FixedPoint;
 using Robust.Shared.Console;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
 using Robust.Shared.Prototypes;
-using System;
 
 namespace Content.Server.Administration.Commands
 {

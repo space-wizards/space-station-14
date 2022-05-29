@@ -1,20 +1,40 @@
-using System;
 using Content.Shared.Audio;
 using Content.Shared.Hands.Components;
 using Content.Shared.Rotation;
 using Robust.Shared.Audio;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
 using Robust.Shared.Player;
 using Robust.Shared.Timing;
 using Robust.Shared.Physics;
 using Content.Shared.Physics;
+using Robust.Shared.GameStates;
+using Robust.Shared.Serialization;
 
 namespace Content.Shared.Standing
 {
     public sealed class StandingStateSystem : EntitySystem
     {
         [Dependency] private readonly IGameTiming _gameTiming = default!;
+
+        // If StandingCollisionLayer value is ever changed to more than one layer, the logic needs to be edited.
+        private const int StandingCollisionLayer = (int) CollisionGroup.MidImpassable;
+
+        public override void Initialize()
+        {
+            SubscribeLocalEvent<StandingStateComponent, ComponentGetState>(OnGetState);
+            SubscribeLocalEvent<StandingStateComponent, ComponentHandleState>(OnHandleState);
+        }
+
+        private void OnHandleState(EntityUid uid, StandingStateComponent component, ref ComponentHandleState args)
+        {
+            if (args.Current is not StandingComponentState state) return;
+
+            component.Standing = state.Standing;
+        }
+
+        private void OnGetState(EntityUid uid, StandingStateComponent component, ref ComponentGetState args)
+        {
+            args.State = new StandingComponentState(component.Standing);
+        }
 
         public bool IsDown(EntityUid uid, StandingStateComponent? standingState = null)
         {
@@ -55,7 +75,7 @@ namespace Content.Shared.Standing
                 return false;
 
             standingState.Standing = false;
-            standingState.Dirty();
+            Dirty(standingState);
             RaiseLocalEvent(uid, new DownedEvent(), false);
 
             if (!_gameTiming.IsFirstTimePredicted)
@@ -64,11 +84,16 @@ namespace Content.Shared.Standing
             // Seemed like the best place to put it
             appearance?.SetData(RotationVisuals.RotationState, RotationState.Horizontal);
 
+            // Change collision masks to allow going under certain entities like flaps and tables
             if (TryComp(uid, out FixturesComponent? fixtureComponent))
             {
-                foreach (var fixture in fixtureComponent.Fixtures.Values)
+                foreach (var (key, fixture) in fixtureComponent.Fixtures)
                 {
-                    fixture.CollisionMask &= ~(int) CollisionGroup.VaultImpassable;
+                    if ((fixture.CollisionMask & StandingCollisionLayer) == 0)
+                        continue;
+
+                    standingState.ChangedFixtures.Add(key);
+                    fixture.CollisionMask &= ~StandingCollisionLayer;
                 }
             }
 
@@ -76,7 +101,7 @@ namespace Content.Shared.Standing
             // > no longer true with door crushing. There just needs to be a better way to handle audio prediction.
             if (playSound)
             {
-                SoundSystem.Play(Filter.Pvs(uid), standingState.DownSoundCollection.GetSound(), uid, AudioHelpers.WithVariation(0.25f));
+                SoundSystem.Play(Filter.Pvs(uid), standingState.DownSound.GetSound(), uid, AudioHelpers.WithVariation(0.25f));
             }
 
             return true;
@@ -103,20 +128,34 @@ namespace Content.Shared.Standing
                 return false;
 
             standingState.Standing = true;
-            standingState.Dirty();
+            Dirty(standingState);
             RaiseLocalEvent(uid, new StoodEvent(), false);
 
             appearance?.SetData(RotationVisuals.RotationState, RotationState.Vertical);
 
             if (TryComp(uid, out FixturesComponent? fixtureComponent))
             {
-                foreach (var fixture in fixtureComponent.Fixtures.Values)
+                foreach (var key in standingState.ChangedFixtures)
                 {
-                    fixture.CollisionMask |= (int) CollisionGroup.VaultImpassable;
+                    if (fixtureComponent.Fixtures.TryGetValue(key, out var fixture))
+                        fixture.CollisionMask |= StandingCollisionLayer;
                 }
             }
+            standingState.ChangedFixtures.Clear();
 
             return true;
+        }
+
+        // I'm not calling it StandingStateComponentState
+        [Serializable, NetSerializable]
+        private sealed class StandingComponentState : ComponentState
+        {
+            public bool Standing { get; }
+
+            public StandingComponentState(bool standing)
+            {
+                Standing = standing;
+            }
         }
     }
 

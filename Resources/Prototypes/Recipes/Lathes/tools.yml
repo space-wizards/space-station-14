@@ -2,7 +2,7 @@
   id: Wirecutter
   icon: Objects/Tools/wirecutters.rsi/cutters-map.png
   result: Wirecutter
-  completetime: 500
+  completetime: 2
   materials:
     Steel: 200
     Plastic: 50
@@ -13,7 +13,7 @@
     sprite: Objects/Tools/screwdriver.rsi
     state: screwdriver-map
   result: Screwdriver
-  completetime: 500
+  completetime: 2
   materials:
     Steel: 200
     Plastic: 50
@@ -24,7 +24,7 @@
     sprite: /Textures/Objects/Tools/welder.rsi
     state: icon
   result: Welder
-  completetime: 500
+  completetime: 2
   materials:
     Steel: 400
 
@@ -32,7 +32,7 @@
   id: Wrench
   icon: Objects/Tools/wrench.rsi/icon.png
   result: Wrench
-  completetime: 500
+  completetime: 2
   materials:
     Steel: 200
 
@@ -41,7 +41,7 @@
   name: LV cable
   icon: /Textures/Objects/Tools/cable-coils.rsi/coillv-30.png
   result: CableApcStack1
-  completetime: 500
+  completetime: 2
   materials:
     Steel: 100
 
@@ -50,7 +50,7 @@
   name: MV cable coil
   icon: /Textures/Objects/Tools/cable-coils.rsi/coilmv-30.png
   result: CableMVStack1
-  completetime: 500
+  completetime: 2
   materials:
     Steel: 150
 
@@ -59,7 +59,7 @@
   name: HV cable coil
   icon: /Textures/Objects/Tools/cable-coils.rsi/coilhv-30.png
   result: CableHVStack1
-  completetime: 500
+  completetime: 2
   materials:
     Steel: 200
 
@@ -67,7 +67,7 @@
   id: Crowbar
   icon: Objects/Tools/crowbar.rsi/icon.png
   result: Crowbar
-  completetime: 500
+  completetime: 2
   materials:
     Steel: 200
 
@@ -75,7 +75,7 @@
   id: Pickaxe
   icon: Objects/Weapons/Melee/pickaxe.rsi
   result: Pickaxe
-  completetime: 500
+  completetime: 2
   materials:
     Steel: 200
     Wood: 100
@@ -86,7 +86,7 @@
     sprite: Objects/Tools/shovel.rsi
     state: icon
   result: Shovel
-  completetime: 500
+  completetime: 2
   materials:
     Steel: 200
     Wood: 100
@@ -97,7 +97,7 @@
     sprite: Objects/Tools/multitool.rsi
     state: icon
   result: Multitool
-  completetime: 500
+  completetime: 2
   materials:
     Steel: 200
     Plastic: 200
@@ -108,7 +108,7 @@
     sprite: Objects/Tools/drill.rsi
     state: drill_screw
   result: PowerDrill
-  completetime: 500
+  completetime: 2
   materials:
     Steel: 600
     Plastic: 200
@@ -119,7 +119,7 @@
     sprite: Objects/Tools/rcd.rsi
     state: icon
   result: RCD
-  completetime: 1000
+  completetime: 4
   materials:
     Steel: 1000
     Plastic: 300
@@ -130,7 +130,7 @@
     sprite: Objects/Tools/rcd.rsi
     state: ammo
   result: RCDAmmo
-  completetime: 600
+  completetime: 2.4
   materials:
     Steel: 500
     Plastic: 250
@@ -139,7 +139,16 @@
   id: HandheldGPSBasic
   icon: Objects/Devices/gps.rsi/icon.png
   result: HandheldGPSBasic
-  completetime: 2000
+  completetime: 2
   materials:
     Steel: 800
     Glass: 300
+
+- type: latheRecipe
+  id: AirlockPainter
+  icon: /Textures/Objects/Tools/airlock_painter.rsi/airlock_painter.png
+  result: AirlockPainter
+  completetime: 2
+  materials:
+    Steel: 300
+    Plastic: 100

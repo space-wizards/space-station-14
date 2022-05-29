@@ -27,6 +27,8 @@
   - type: StorageFill
     contents:
       - id: BoxHug
+      - id: RubberStampClown
+      - id: CrayonRainbow
 
 - type: entity
   noSpawn: true
@@ -35,7 +37,7 @@
   components:
   - type: StorageFill
     contents:
-      - id: BoxSurvival
+      - id: BoxSurvivalSecurity
       - id: Flash
 
 - type: entity
@@ -45,7 +47,7 @@
   components:
   - type: StorageFill
     contents:
-      - id: BoxSurvival
+      - id: BoxSurvivalMedical
 
 - type: entity
   noSpawn: true
@@ -65,7 +67,7 @@
   components:
   - type: StorageFill
     contents:
-      - id: BoxSurvival
+      - id: BoxSurvivalEngineering
 
 - type: entity
   noSpawn: true
@@ -93,6 +95,7 @@
   - type: StorageFill
     contents:
       - id: BoxSurvival
+      - id: RubberStampMime
 
 - type: entity
   noSpawn: true
@@ -112,6 +115,7 @@
     contents:
       - id: BoxSurvival
       - id: Bible
+      - id: RubberStampChaplain
 
 - type: entity
   noSpawn: true

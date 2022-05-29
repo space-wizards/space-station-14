@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Content.Server.Administration.Managers;
@@ -11,11 +9,8 @@ using Content.Shared.Administration.Logs;
 using Content.Shared.CCVar;
 using Content.Shared.Eui;
 using Robust.Shared.Configuration;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Log;
 using Robust.Shared.Timing;
-using static Content.Shared.Administration.AdminLogsEuiMsg;
+using static Content.Shared.Administration.Logs.AdminLogsEuiMsg;
 
 namespace Content.Server.Administration.Logs;
 

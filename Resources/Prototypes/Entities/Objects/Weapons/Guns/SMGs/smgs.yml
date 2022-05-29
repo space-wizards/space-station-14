@@ -20,10 +20,10 @@
     caliber: Pistol
     magazineTypes:
     - Smg
-    minAngle: 5
+    minAngle: 0
     maxAngle: 60
     angleIncrease: 10
-    angleDecay: 60
+    angleDecay: 20
     magFillPrototype: MagazinePistolSmg
     soundGunshot:
       path: /Audio/Weapons/Guns/Gunshots/smg.ogg
@@ -69,10 +69,10 @@
     caliber: Pistol
     magazineTypes:
     - Smg
-    minAngle: 10
+    minAngle: 5
     maxAngle: 60
-    angleIncrease: 12
-    angleDecay: 60
+    angleIncrease: 10
+    angleDecay: 20
   - type: Appearance
     visuals:
     - type: BarrelBoltVisualizer
@@ -111,10 +111,10 @@
     caliber: Pistol
     magazineTypes:
     - Smg
-    minAngle: 5
+    minAngle: 0
     maxAngle: 60
     angleIncrease: 10
-    angleDecay: 60
+    angleDecay: 20
     autoEjectMag: true
   - type: Appearance
     visuals:
@@ -154,10 +154,10 @@
     magazineTypes:
     - Smg
     magFillPrototype: MagazineMagnumSmg
-    minAngle: 5
+    minAngle: 0
     maxAngle: 60
     angleIncrease: 12
-    angleDecay: 60
+    angleDecay: 20
   - type: Appearance
     visuals:
     - type: BarrelBoltVisualizer

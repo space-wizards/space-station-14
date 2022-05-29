@@ -1,17 +1,17 @@
 ﻿- type: reagent
   id: Acetone
-  name: acetone
-  desc: A slick, slightly carcinogenic liquid. Has a multitude of mundane uses in everyday life.
-  physicalDesc: acidic
+  name: reagent-name-acetone
+  desc: reagent-desc-acetone
+  physicalDesc: reagent-physical-desc-acidic
   color: "#AF14B7"
   boilingPoint: 55.5
   meltingPoint: -50.0
 
 - type: reagent
   id: Phenol
-  name: phenol
-  desc: An aromatic ring of carbon with a hydroxyl group. A useful precursor to some medicines, but has no healing properties on its own.
-  physicalDesc: acidic
+  name: reagent-name-phenol
+  desc: reagent-desc-phenol
+  physicalDesc: reagent-physical-desc-acidic
   color: "#E7EA91"
   boilingPoint: 55.5
   meltingPoint: -50.0

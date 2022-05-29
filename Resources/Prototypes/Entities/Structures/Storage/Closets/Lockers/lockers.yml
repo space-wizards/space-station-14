@@ -136,7 +136,7 @@
       state_open: atmos_open
       state_closed: atmos_door
   - type: AccessReader
-    access: [ [ "Engineering" ] ]
+    access: [ [ "Atmospherics" ] ]
 
 # Engineer
 - type: entity

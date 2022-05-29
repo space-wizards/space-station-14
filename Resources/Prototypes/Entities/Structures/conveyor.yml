@@ -28,6 +28,9 @@
   - type: Construction
     graph: ConveyorGraph
     node: entity
+  - type: Damageable
+    damageContainer: Inorganic
+    damageModifierSet: Metallic
   - type: Destructible
     thresholds:
     - trigger:
