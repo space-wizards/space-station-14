@@ -150,8 +150,9 @@
     outerClothing: ClothingOuterHardsuitCBURN
     shoes: ClothingShoesBootsJack
     id: CentcomPDA
-    pocket1: DoubleEmergencyOxygenTankFilled
+    pocket1: CombatKnife
     pocket2: LaserGun
+    suitstorage: YellowOxygenTankFilled
     belt: ClothingBeltBandolier
   innerclothingskirt: ClothingUniformJumpsuitColorBrown
   satchel: ClothingBackpackSatchel
