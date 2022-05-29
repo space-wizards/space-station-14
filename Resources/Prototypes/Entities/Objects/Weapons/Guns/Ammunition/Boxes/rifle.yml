@@ -1,13 +1,13 @@
 - type: entity
   abstract: true
   parent: BaseItem
-  id: BoxSRifleBase
+  id: BaseMagazineBoxRifle
   components:
-  - type: AmmoBox
-    caliber: SRifle
+  - type: BallisticAmmoProvider
+    proto: CartridgeRifle
     capacity: 60
   - type: Sprite
-    sprite: Objects/Weapons/Guns/Ammunition/Boxes/s_rifle.rsi
+    sprite: Objects/Weapons/Guns/Ammunition/Boxes/rifle.rsi
     netsync: false
   - type: Appearance
     visuals:
@@ -18,13 +18,13 @@
 
 # Boxes
 - type: entity
-  parent: BoxSRifleBase
-  id: BoxSRifleBigBox
+  parent: BaseMagazineBoxRifle
+  id: MagazineBoxRifleBig
   name: ammunition box (.20 rifle)
   components:
-  - type: AmmoBox
+  - type: BallisticAmmoProvider
     capacity: 200
-    fillPrototype: CartridgeSRifle
+    proto: CartridgeRifle
   - type: Sprite
     layers:
     - state: base-b
@@ -39,13 +39,13 @@
       zeroVisible: false
 
 - type: entity
-  parent: BoxSRifleBase
-  id: BoxSRifleBigBoxRubber
+  parent: BaseMagazineBoxRifle
+  id: MagazineBoxRifleBigRubber
   name: ammunition box (.20 rifle rubber)
   components:
-  - type: AmmoBox
+  - type: BallisticAmmoProvider
     capacity: 200
-    fillPrototype: CartridgeSRiflePractice
+    proto: CartridgeRiflePractice
   - type: Sprite
     layers:
     - state: base-b
@@ -61,12 +61,12 @@
       zeroVisible: false
 
 - type: entity
-  parent: BoxSRifleBase
-  id: BoxSRifleBox
+  parent: BaseMagazineBoxRifle
+  id: MagazineBoxRifle
   name: ammunition box (.20 rifle)
   components:
-  - type: AmmoBox
-    fillPrototype: CartridgeSRifle
+  - type: BallisticAmmoProvider
+    proto: CartridgeRifle
   - type: Sprite
     layers:
     - state: base
@@ -75,12 +75,12 @@
       map: ["enum.RangedBarrelVisualLayers.Mag"]
 
 - type: entity
-  parent: BoxSRifleBase
-  id: BoxSRifleBoxFlash
+  parent: BaseMagazineBoxRifle
+  id: MagazineBoxRifleFlash
   name: ammunition box (.20 rifle flash)
   components:
-  - type: AmmoBox
-    fillPrototype: CartridgeSRifleFlash
+  - type: BallisticAmmoProvider
+    proto: CartridgeRifleFlash
   - type: Sprite
     layers:
     - state: base
@@ -90,12 +90,12 @@
     - state: flash
 
 - type: entity
-  parent: BoxSRifleBase
-  id: BoxSRifleBoxHV
+  parent: BaseMagazineBoxRifle
+  id: MagazineBoxRifleHighVelocity
   name: ammunition box (.20 rifle high-velocity)
   components:
-  - type: AmmoBox
-    fillPrototype: CartridgeSRifleHV
+  - type: BallisticAmmoProvider
+    proto: CartridgeRifleHV
   - type: Sprite
     layers:
     - state: base
@@ -105,12 +105,12 @@
     - state: hv
 
 - type: entity
-  parent: BoxSRifleBase
-  id: BoxSRifleBoxPractice
+  parent: BaseMagazineBoxRifle
+  id: MagazineBoxRiflePractice
   name: ammunition box (.20 rifle practice)
   components:
-  - type: AmmoBox
-    fillPrototype: CartridgeSRiflePractice
+  - type: BallisticAmmoProvider
+    proto: CartridgeRiflePractice
   - type: Sprite
     layers:
     - state: base
@@ -120,12 +120,12 @@
     - state: practice
 
 - type: entity
-  parent: BoxSRifleBase
-  id: BoxSRifleBoxRubber
+  parent: BaseMagazineBoxRifle
+  id: MagazineBoxRifleRubber
   name: ammunition box (.20 rifle rubber)
   components:
-  - type: AmmoBox
-    fillPrototype: CartridgeSRifleRubber
+  - type: BallisticAmmoProvider
+    proto: CartridgeRifleRubber
   - type: Sprite
     layers:
     - state: base

@@ -1,12 +1,11 @@
 - type: entity
   parent: BaseItem
-  id: BoxAntiMaterial
+  id: MagazineBoxAntiMaterial
   name: ammunition box (.60 anti-material)
   components:
-  - type: AmmoBox
-    caliber: AntiMaterial
+  - type: BallisticAmmoProvider
     capacity: 30
-    fillPrototype: CartridgeAntiMaterial
+    proto: CartridgeAntiMaterial
   - type: Sprite
     netsync: false
     sprite: Objects/Weapons/Guns/Ammunition/Boxes/anti_material.rsi

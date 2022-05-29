@@ -23,7 +23,7 @@ namespace Content.Server.Projectiles
         [Dependency] private readonly DamageableSystem _damageableSystem = default!;
         [Dependency] private readonly IAdminLogManager _adminLogger = default!;
         [Dependency] private readonly CameraRecoilSystem _cameraRecoil = default!;
-        [Dependency] private readonly NewGunSystem _guns = default!;
+        [Dependency] private readonly GunSystem _guns = default!;
 
         public override void Initialize()
         {

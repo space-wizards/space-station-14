@@ -65,33 +65,33 @@
     Steel: 5
 
 - type: latheRecipe
-  id: CartridgeClRifleRubber
+  id: CartridgeCaselessRifleRubber
   icon:
     sprite: Objects/Weapons/Guns/Ammunition/Casings/ammo_casing.rsi
     state: base
-  result: CartridgeClRifleRubber
+  result: CartridgeCaselessRifleRubber
   completetime: 2
   materials:
     Plastic: 10
     Steel: 5
 
 - type: latheRecipe
-  id: CartridgeLRifleRubber
+  id: CartridgeLightRifleRubber
   icon:
     sprite: Objects/Weapons/Guns/Ammunition/Casings/ammo_casing.rsi
     state: base
-  result: CartridgeLRifleRubber
+  result: CartridgeLightRifleRubber
   completetime: 2
   materials:
     Plastic: 10
     Steel: 5
 
 - type: latheRecipe
-  id: CartridgeSRifleRubber
+  id: CartridgeRifleRubber
   icon:
     sprite: Objects/Weapons/Guns/Ammunition/Casings/ammo_casing.rsi
     state: base
-  result: CartridgeSRifleRubber
+  result: CartridgeRifleRubber
   completetime: 2
   materials:
     Plastic: 10
@@ -128,11 +128,11 @@
     Steel: 20
 
 - type: latheRecipe
-  id: CartridgeLRifle
+  id: CartridgeLightRifle
   icon:
     sprite: Objects/Weapons/Guns/Ammunition/Casings/ammo_casing.rsi
     state: base
-  result: CartridgeLRifle
+  result: CartridgeLightRifle
   completetime: 2
   materials:
     Steel: 30

@@ -176,9 +176,9 @@
     - ShellShotgunFlash
     - CartridgePistolRubber
     - CartridgeMagnumRubber
-    - CartridgeClRifleRubber
-    - CartridgeLRifleRubber
-    - CartridgeSRifleRubber
+    - CartridgeCaselessRifleRubber
+    - CartridgeLightRifleRubber
+    - CartridgeRifleRubber
 
 - type: technology
   name: "ballistic technology"
@@ -194,7 +194,7 @@
     - CartridgePistol
     - ShellShotgun
     - ShellShotgunFlare
-    - CartridgeLRifle
+    - CartridgeLightRifle
     - CartridgeMagnum
 
 #- type: technology

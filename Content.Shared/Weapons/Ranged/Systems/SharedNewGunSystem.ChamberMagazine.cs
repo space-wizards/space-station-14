@@ -6,7 +6,7 @@ using Robust.Shared.Containers;
 
 namespace Content.Shared.Weapons.Ranged;
 
-public abstract partial class SharedNewGunSystem
+public abstract partial class SharedGunSystem
 {
     protected const string ChamberSlot = "gun-chamber";
 
@@ -61,7 +61,7 @@ public abstract partial class SharedNewGunSystem
 
         if (TryTakeChamberEntity(uid, out var chamberEnt))
         {
-            args.Ammo.Add(EnsureComp<NewAmmoComponent>(chamberEnt.Value));
+            args.Ammo.Add(EnsureComp<AmmoComponent>(chamberEnt.Value));
         }
 
         var magEnt = GetMagazineEntity(uid);
@@ -77,7 +77,7 @@ public abstract partial class SharedNewGunSystem
             // Rest of the ammo gets shot
             if (relayedArgs.Ammo.Count > 0)
             {
-                var newChamberEnt = ((NewAmmoComponent) relayedArgs.Ammo[^1]).Owner;
+                var newChamberEnt = ((AmmoComponent) relayedArgs.Ammo[^1]).Owner;
                 TryInsertChamber(uid, newChamberEnt);
             }
 

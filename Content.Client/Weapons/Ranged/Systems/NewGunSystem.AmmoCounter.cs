@@ -10,7 +10,7 @@ using Robust.Shared.Utility;
 
 namespace Content.Client.Weapons.Ranged;
 
-public sealed partial class NewGunSystem
+public sealed partial class GunSystem
 {
     private void OnAmmoCounterCollect(EntityUid uid, AmmoCounterComponent component, ItemStatusCollectMessage args)
     {

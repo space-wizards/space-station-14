@@ -3,7 +3,7 @@ using Robust.Shared.Containers;
 
 namespace Content.Client.Weapons.Ranged;
 
-public sealed partial class NewGunSystem
+public sealed partial class GunSystem
 {
     protected override void InitializeChamberMagazine()
     {

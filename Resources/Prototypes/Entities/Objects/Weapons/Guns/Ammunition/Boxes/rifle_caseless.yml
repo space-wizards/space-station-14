@@ -1,14 +1,14 @@
 - type: entity
   abstract: true
   parent: BaseItem
-  id: BoxClRifleBase
+  id: BaseMagazineBoxCaselessRifle
   name: ammunition box (.25 caseless)
   components:
-  - type: AmmoBox
-    caliber: ClRifle
+  - type: BallisticAmmoProvider
+    proto: CartridgeCaselessRifle
     capacity: 60
   - type: Sprite
-    sprite: Objects/Weapons/Guns/Ammunition/Boxes/cl_rifle.rsi
+    sprite: Objects/Weapons/Guns/Ammunition/Boxes/caseless_rifle.rsi
     netsync: false
   - type: Appearance
     visuals:
@@ -19,13 +19,13 @@
 
 # Boxes
 - type: entity
-  parent: BoxClRifleBase
-  id: BoxClRifle10x24
+  parent: BaseMagazineBoxCaselessRifle
+  id: MagazineBoxCaselessRifle10x24
   name: ammunition box (.25 caseless)
   components:
-  - type: AmmoBox
+  - type: BallisticAmmoProvider
     capacity: 200
-    fillPrototype: CartridgeClRifle
+    proto: CartridgeCaselessRifle
   - type: Sprite
     layers:
     - state: base-10x24
@@ -40,13 +40,13 @@
       zeroVisible: false
 
 - type: entity
-  parent: BoxClRifleBase
-  id: BoxClRifleBigBox
+  parent: BaseMagazineBoxCaselessRifle
+  id: MagazineBoxCaselessRifleBig
   name: ammunition box (.25 caseless)
   components:
-  - type: AmmoBox
+  - type: BallisticAmmoProvider
     capacity: 200
-    fillPrototype: CartridgeClRifle
+    proto: CartridgeCaselessRifle
   - type: Sprite
     layers:
     - state: base-b
@@ -61,13 +61,13 @@
       zeroVisible: false
 
 - type: entity
-  parent: BoxClRifleBase
-  id: BoxClRifleBigBoxRubber
+  parent: BaseMagazineBoxCaselessRifle
+  id: MagazineBoxCaselessRifleBigRubber
   name: ammunition box (.25 caseless rubber)
   components:
-  - type: AmmoBox
+  - type: BallisticAmmoProvider
     capacity: 200
-    fillPrototype: CartridgeClRifleRubber
+    proto: CartridgeCaselessRifleRubber
   - type: Sprite
     layers:
     - state: base-b
@@ -83,12 +83,12 @@
       zeroVisible: false
 
 - type: entity
-  parent: BoxClRifleBase
-  id: BoxClRifleBox
+  parent: BaseMagazineBoxCaselessRifle
+  id: MagazineBoxCaselessRifle
   name: ammunition box (.25 caseless)
   components:
-  - type: AmmoBox
-    fillPrototype: CartridgeClRifle
+  - type: BallisticAmmoProvider
+    proto: CartridgeCaselessRifle
   - type: Sprite
     layers:
     - state: base
@@ -97,12 +97,12 @@
       map: ["enum.RangedBarrelVisualLayers.Mag"]
 
 - type: entity
-  parent: BoxClRifleBase
-  id: BoxClRifleBoxFlash
+  parent: BaseMagazineBoxCaselessRifle
+  id: MagazineBoxCaselessRifleFlash
   name: ammunition box (.25 caseless flash)
   components:
-  - type: AmmoBox
-    fillPrototype: CartridgeClRifleFlash
+  - type: BallisticAmmoProvider
+    proto: CartridgeCaselessRifleFlash
   - type: Sprite
     layers:
     - state: base
@@ -112,12 +112,12 @@
     - state: flash
 
 - type: entity
-  parent: BoxClRifleBase
-  id: BoxClRifleBoxHV
+  parent: BaseMagazineBoxCaselessRifle
+  id: MagazineBoxCaselessRifleHighVelocity
   name: ammunition box (.25 caseless high-velocity)
   components:
-  - type: AmmoBox
-    fillPrototype: CartridgeClRifleHV
+  - type: BallisticAmmoProvider
+    proto: CartridgeCaselessRifleHV
   - type: Sprite
     layers:
     - state: base
@@ -127,12 +127,12 @@
     - state: hv
 
 - type: entity
-  parent: BoxClRifleBase
-  id: BoxClRifleBoxPractice
+  parent: BaseMagazineBoxCaselessRifle
+  id: MagazineBoxCaselessRiflePractice
   name: ammunition box (.25 caseless practice)
   components:
-  - type: AmmoBox
-    fillPrototype: CartridgeClRiflePractice
+  - type: BallisticAmmoProvider
+    proto: CartridgeCaselessRiflePractice
   - type: Sprite
     layers:
     - state: base
@@ -142,12 +142,12 @@
     - state: practice
 
 - type: entity
-  parent: BoxClRifleBase
-  id: BoxClRifleBoxRubber
+  parent: BaseMagazineBoxCaselessRifle
+  id: MagazineBoxCaselessRifleRubber
   name: ammunition box (.25 caseless rubber)
   components:
-  - type: AmmoBox
-    fillPrototype: CartridgeClRifleRubber
+  - type: BallisticAmmoProvider
+    proto: CartridgeCaselessRifleRubber
   - type: Sprite
     layers:
     - state: base

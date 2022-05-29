@@ -8,7 +8,7 @@ using Robust.Shared.Serialization;
 
 namespace Content.Shared.Weapons.Ranged;
 
-public abstract partial class SharedNewGunSystem
+public abstract partial class SharedGunSystem
 {
     protected virtual void InitializeBallistic()
     {
@@ -150,13 +150,13 @@ public abstract partial class SharedNewGunSystem
                     component.Container.Remove(entity);
                 }
 
-                args.Ammo.Add(EnsureComp<NewAmmoComponent>(entity));
+                args.Ammo.Add(EnsureComp<AmmoComponent>(entity));
             }
             else if (component.UnspawnedCount > 0)
             {
                 component.UnspawnedCount--;
                 entity = Spawn(component.FillProto, args.Coordinates);
-                args.Ammo.Add(EnsureComp<NewAmmoComponent>(entity));
+                args.Ammo.Add(EnsureComp<AmmoComponent>(entity));
 
                 // Put it back in if it doesn't auto-cycle
                 if (HasComp<CartridgeAmmoComponent>(entity) && !component.AutoCycle)

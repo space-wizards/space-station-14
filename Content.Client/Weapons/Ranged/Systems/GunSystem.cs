@@ -14,7 +14,7 @@ using Robust.Shared.Utility;
 
 namespace Content.Client.Weapons.Ranged;
 
-public sealed partial class NewGunSystem : SharedNewGunSystem
+public sealed partial class GunSystem : SharedGunSystem
 {
     [Dependency] private readonly IEyeManager _eyeManager = default!;
     [Dependency] private readonly IInputManager _inputManager = default!;
@@ -149,12 +149,12 @@ public sealed partial class NewGunSystem : SharedNewGunSystem
                         Del(cartridge.Owner);
 
                     break;
-                case NewAmmoComponent newAmmo:
+                case AmmoComponent newAmmo:
                     MuzzleFlash(gun, newAmmo, user);
                     if (newAmmo.Owner.IsClientSide())
                         Del(newAmmo.Owner);
                     else
-                        RemComp<NewAmmoComponent>(newAmmo.Owner);
+                        RemComp<AmmoComponent>(newAmmo.Owner);
                     break;
             }
         }

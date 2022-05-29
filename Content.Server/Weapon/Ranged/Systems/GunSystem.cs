@@ -15,7 +15,7 @@ using Robust.Shared.Utility;
 
 namespace Content.Server.Weapon.Ranged;
 
-public sealed partial class NewGunSystem : SharedNewGunSystem
+public sealed partial class GunSystem : SharedGunSystem
 {
     [Dependency] private readonly EffectSystem _effects = default!;
 
@@ -37,7 +37,7 @@ public sealed partial class NewGunSystem : SharedNewGunSystem
         {
             switch (shootable)
             {
-                // Cartridge shoots something itself
+                // Cartridge shoots something else
                 case CartridgeAmmoComponent cartridge:
                     if (!cartridge.Spent)
                     {
@@ -84,10 +84,10 @@ public sealed partial class NewGunSystem : SharedNewGunSystem
                     Dirty(cartridge);
                     break;
                 // Ammo shoots itself
-                case NewAmmoComponent newAmmo:
+                case AmmoComponent newAmmo:
                     ShootProjectile(newAmmo.Owner, mapDirection, user);
                     MuzzleFlash(gun, newAmmo, user);
-                    RemComp<NewAmmoComponent>(newAmmo.Owner);
+                    RemComp<AmmoComponent>(newAmmo.Owner);
                     shotProjectiles.Add(newAmmo.Owner);
                     break;
                 case HitscanPrototype hitscan:

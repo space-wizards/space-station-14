@@ -2,7 +2,7 @@ using Content.Shared.Weapons.Ranged;
 
 namespace Content.Client.Weapons.Ranged;
 
-public sealed partial class NewGunSystem
+public sealed partial class GunSystem
 {
     protected override void InitializeMagazine()
     {

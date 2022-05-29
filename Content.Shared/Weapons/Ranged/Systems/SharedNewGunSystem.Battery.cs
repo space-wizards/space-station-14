@@ -5,7 +5,7 @@ using Robust.Shared.Serialization;
 
 namespace Content.Shared.Weapons.Ranged;
 
-public abstract partial class SharedNewGunSystem
+public abstract partial class SharedGunSystem
 {
     protected virtual void InitializeBattery()
     {
@@ -82,7 +82,7 @@ public abstract partial class SharedNewGunSystem
         {
             case ProjectileBatteryAmmoProviderComponent proj:
                 var ent = Spawn(proj.Prototype, coordinates);
-                return EnsureComp<NewAmmoComponent>(ent);
+                return EnsureComp<AmmoComponent>(ent);
             case HitscanBatteryAmmoProviderComponent hitscan:
                 return ProtoManager.Index<HitscanPrototype>(hitscan.Prototype);
             default:

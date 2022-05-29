@@ -7,7 +7,7 @@ using Robust.Shared.Player;
 
 namespace Content.Shared.Weapons.Ranged;
 
-public abstract partial class SharedNewGunSystem
+public abstract partial class SharedGunSystem
 {
     protected const string MagazineSlot = "gun-magazine";
 

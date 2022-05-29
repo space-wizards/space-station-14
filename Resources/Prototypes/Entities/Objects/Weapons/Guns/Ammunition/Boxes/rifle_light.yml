@@ -4,11 +4,11 @@
   id: BoxLRifleBase
   name: ammunition box (.30 rifle)
   components:
-  - type: AmmoBox
+  - type: BallisticAmmoProvider
     caliber: LRifle
     capacity: 50
   - type: Sprite
-    sprite: Objects/Weapons/Guns/Ammunition/Boxes/l_rifle.rsi
+    sprite: Objects/Weapons/Guns/Ammunition/Boxes/light_rifle.rsi
     netsync: false
   - type: Appearance
     visuals:
@@ -23,9 +23,9 @@
   id: BoxLRifleBigBox
   name: ammunition box (.30 rifle)
   components:
-  - type: AmmoBox
+  - type: BallisticAmmoProvider
     capacity: 200
-    fillPrototype: CartridgeLRifle
+    fillPrototype: CartridgeLightRifle
   - type: Sprite
     layers:
     - state: base-b
@@ -44,8 +44,8 @@
   id: BoxLRifleBox
   name: ammunition box (.30 rifle)
   components:
-  - type: AmmoBox
-    fillPrototype: CartridgeLRifle
+  - type: BallisticAmmoProvider
+    fillPrototype: CartridgeLightRifle
   - type: Sprite
     layers:
     - state: base
@@ -58,8 +58,8 @@
   id: BoxLRifleBoxHV
   name: ammunition box (.30 rifle high-velocity)
   components:
-  - type: AmmoBox
-    fillPrototype: CartridgeLRifleHV
+  - type: BallisticAmmoProvider
+    fillPrototype: CartridgeLightRifleHV
   - type: Sprite
     layers:
     - state: base
@@ -73,8 +73,8 @@
   id: BoxLRifleBoxPractice
   name: ammunition box (.30 rifle practice)
   components:
-  - type: AmmoBox
-    fillPrototype: CartridgeLRiflePractice
+  - type: BallisticAmmoProvider
+    fillPrototype: CartridgeLightRiflePractice
   - type: Sprite
     layers:
     - state: base
@@ -88,8 +88,8 @@
   id: BoxLRifleBoxRubber
   name: ammunition box (.30 rifle rubber)
   components:
-  - type: AmmoBox
-    fillPrototype: CartridgeLRifleRubber
+  - type: BallisticAmmoProvider
+    fillPrototype: CartridgeLightRifleRubber
   - type: Sprite
     layers:
     - state: base

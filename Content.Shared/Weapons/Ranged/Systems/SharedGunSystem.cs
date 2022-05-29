@@ -22,7 +22,7 @@ using Robust.Shared.Utility;
 
 namespace Content.Shared.Weapons.Ranged;
 
-public abstract partial class SharedNewGunSystem : EntitySystem
+public abstract partial class SharedGunSystem : EntitySystem
 {
     [Dependency] protected readonly IGameTiming Timing = default!;
     [Dependency] protected readonly IMapManager MapManager = default!;
@@ -237,7 +237,7 @@ public abstract partial class SharedNewGunSystem : EntitySystem
         EntityCoordinates toCoordinates,
         EntityUid? user = null)
     {
-        var shootable = EnsureComp<NewAmmoComponent>(ammo);
+        var shootable = EnsureComp<AmmoComponent>(ammo);
         Shoot(gun, new List<IShootable>(1) { shootable }, fromCoordinates, toCoordinates, user);
     }
 
@@ -302,7 +302,7 @@ public abstract partial class SharedNewGunSystem : EntitySystem
         */
     }
 
-    public void MuzzleFlash(EntityUid gun, NewAmmoComponent component, EntityUid? user = null)
+    public void MuzzleFlash(EntityUid gun, AmmoComponent component, EntityUid? user = null)
     {
         var sprite = component.MuzzleFlash?.ToString();
 

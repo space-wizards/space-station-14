@@ -9,7 +9,7 @@ namespace Content.Shared.Weapons.Ranged;
 /// Allows the entity to be fired from a gun.
 /// </summary>
 [RegisterComponent, Virtual]
-public class NewAmmoComponent : Component, SharedNewGunSystem.IShootable
+public class AmmoComponent : Component, SharedGunSystem.IShootable
 {
     // Muzzle flash stored on ammo because if we swap a gun to whatever we may want to override it.
 
@@ -20,13 +20,13 @@ public class NewAmmoComponent : Component, SharedNewGunSystem.IShootable
 /// <summary>
 /// Spawns another prototype to be shot instead of itself.
 /// </summary>
-[RegisterComponent, ComponentReference(typeof(NewAmmoComponent))]
-public sealed class CartridgeAmmoComponent : NewAmmoComponent
+[RegisterComponent, ComponentReference(typeof(AmmoComponent))]
+public sealed class CartridgeAmmoComponent : AmmoComponent
 {
-    [ViewVariables, DataField("proto", required: true, customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
+    [ViewVariables(VVAccess.ReadWrite), DataField("proto", required: true, customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
     public string Prototype = default!;
 
-    [ViewVariables, DataField("spent")]
+    [ViewVariables(VVAccess.ReadWrite), DataField("spent")]
     public bool Spent = false;
 
     /// <summary>
@@ -45,7 +45,7 @@ public sealed class CartridgeAmmoComponent : NewAmmoComponent
     /// Caseless ammunition.
     /// </summary>
     [ViewVariables, DataField("deleteOnSpawn")]
-    public bool DeleteOnSpawn = false;
+    public bool DeleteOnSpawn;
 
     [ViewVariables, DataField("soundEject")]
     public SoundSpecifier? EjectSound = new SoundCollectionSpecifier("CasingEject");

@@ -3,7 +3,7 @@ using Content.Shared.Weapons.Ranged;
 
 namespace Content.Server.Weapon.Ranged;
 
-public sealed partial class NewGunSystem
+public sealed partial class GunSystem
 {
     protected override void InitializeBattery()
     {

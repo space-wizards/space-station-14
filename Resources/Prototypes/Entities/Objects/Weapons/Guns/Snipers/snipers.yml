@@ -27,7 +27,7 @@
   - type: BallisticAmmoProvider
     fireRate: 1
     capacity: 10
-    proto: CartridgeLRifle
+    proto: CartridgeLightRifle
     whitelist:
       tags:
       - CartridgeLightRifle

@@ -6,7 +6,7 @@ using Robust.Shared.Utility;
 
 namespace Content.Shared.Weapons.Ranged;
 
-public abstract partial class SharedNewGunSystem
+public abstract partial class SharedGunSystem
 {
     private void OnExamine(EntityUid uid, NewGunComponent component, ExaminedEvent args)
     {

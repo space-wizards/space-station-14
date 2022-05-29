@@ -7,7 +7,7 @@ using Robust.Shared.Utility;
 
 namespace Content.Shared.Weapons.Ranged;
 
-public partial class SharedNewGunSystem
+public partial class SharedGunSystem
 {
     protected virtual void InitializeRevolver()
     {
@@ -86,7 +86,7 @@ public partial class SharedNewGunSystem
                 {
                     var ent = Spawn(component.FillPrototype, args.Coordinates);
                     component.Chambers[index] = false;
-                    args.Ammo.Add(EnsureComp<NewAmmoComponent>(ent));
+                    args.Ammo.Add(EnsureComp<AmmoComponent>(ent));
                 }
             }
             else if (component.AmmoSlots[index] != null)
@@ -94,7 +94,7 @@ public partial class SharedNewGunSystem
                 var ent = component.AmmoSlots[index]!;
                 component.AmmoContainer.Remove(ent.Value);
                 component.AmmoSlots[index] = null;
-                args.Ammo.Add(EnsureComp<NewAmmoComponent>(ent.Value));
+                args.Ammo.Add(EnsureComp<AmmoComponent>(ent.Value));
                 Transform(ent.Value).Coordinates = args.Coordinates;
             }
         }

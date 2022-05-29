@@ -706,5 +706,5 @@
   components:
   - type: StorageFill
     contents:
-      - id: CartridgeLRifle
+      - id: CartridgeLightRifle
         amount: 20
