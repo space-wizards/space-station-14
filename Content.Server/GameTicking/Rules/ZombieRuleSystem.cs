@@ -34,6 +34,7 @@ public sealed class ZombieRuleSystem : GameRuleSystem
     [Dependency] private readonly DiseaseSystem _diseaseSystem = default!;
 
     private const string PatientZeroPrototypeID = "PatientZero";
+    private const string InitialZombieVirusPrototype = "ZombieInfection";
 
     private Dictionary<Mind.Mind, bool> _aliveNukeops = new();
     private bool _opsWon;
@@ -105,7 +106,7 @@ public sealed class ZombieRuleSystem : GameRuleSystem
 
         for (var i = 0; i < numInfected; i++)
         {
-            IPlayerSession zombie; //this isn't actually a zombie, but rather a patient 0. sue me for naming it shittily -emo
+            IPlayerSession zombie; //this isn't actually a zombie, but rather a patient 0. sue me for naming it shitty -emo
             if (prefList.Count == 0)
             {
                 if (list.Count == 0)
@@ -133,16 +134,11 @@ public sealed class ZombieRuleSystem : GameRuleSystem
 
             DebugTools.AssertNotNull(mind.OwnedEntity);
 
-            if(mind.OwnedEntity != null)
-                _diseaseSystem.TryAddDisease(mind.OwnedEntity.Value, "ZombieInfection");
+            if (mind.OwnedEntity != null)
+                _diseaseSystem.TryAddDisease(mind.OwnedEntity.Value, InitialZombieVirusPrototype); //change this once zombie refactor is in.
 
-            mind.Briefing = Loc.GetString("zombie-patientzero-role-greeting");
-        }
-
-        foreach (var player in ev.Players)
-        {
-            if (player.AttachedEntity != null)
-                _diseaseSystem.TryAddDisease(player.AttachedEntity.Value, "ZombieInfection");//change this once zombie refactor is in.
+            if (mind.Session != null)
+                _chatManager.DispatchServerMessage(mind.Session, Loc.GetString("zombie-patientzero-role-greeting"));
         }
     }
 
@@ -150,6 +146,7 @@ public sealed class ZombieRuleSystem : GameRuleSystem
     {
         if (!Enabled)
             return;
+        //these are staying here because i want the code for reference
 
         // Between 1 and <max op count>: needs at least n players per op.
         /*var numInfected = Math.Max(1,
