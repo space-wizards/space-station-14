@@ -100,7 +100,8 @@ public sealed class AlertLevelSystem : EntitySystem
         if (!force)
         {
             if (!detail.Selectable
-                || component.CurrentDelay > 0)
+                || component.CurrentDelay > 0
+                || component.IsLevelLocked)
             {
                 return;
             }
@@ -109,8 +110,8 @@ public sealed class AlertLevelSystem : EntitySystem
             component.ActiveDelay = true;
         }
 
-        detail.DisableSelection = locked;
         component.CurrentLevel = level;
+        component.IsLevelLocked = locked;
 
         var stationName = dataComponent.EntityName;
 

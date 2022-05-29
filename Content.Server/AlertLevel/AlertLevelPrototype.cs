@@ -20,7 +20,7 @@ public sealed class AlertLevelPrototype : IPrototype
     /// Default level that the station is on upon initialization.
     /// If this isn't in the dictionary, this will default to whatever .First() gives.
     /// </summary>
-    [DataField("defaultLevel")] public string DefaultLevel { get; }= default!;
+    [DataField("defaultLevel")] public string DefaultLevel { get; } = default!;
 }
 
 /// <summary>
@@ -46,7 +46,7 @@ public sealed class AlertLevelDetail
     /// This should only apply to entities or gamemodes that auto-select an alert level,
     /// such as a nuclear bomb being set to active.
     /// </summary>
-    [DataField("disableSelection")] public bool DisableSelection { get; set; }
+    [DataField("disableSelection")] public bool DisableSelection { get; }
 
     /// <summary>
     /// The sound that this alert level will play in-game once selected.
