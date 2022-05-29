@@ -1,11 +1,4 @@
 Entries:
-- author: Macoron
-  changes:
-  - {message: Nuclear bomb now has cooldown time after deactivation. Wait for 30 seconds
-      before you can arm bomb again., type: Tweak}
-  - {message: Iconic nuclear alarm sound is back., type: Fix}
-  id: 1121
-  time: '2022-02-24T00:00:51.0000000+00:00'
 - author: ElectroJr
   changes:
   - {message: 'While holding a storage entity (backpacks, boxes, etc) you can now
@@ -2995,3 +2988,9 @@ Entries:
       minimum temperatures., type: Tweak}
   id: 1620
   time: '2022-05-28T19:10:37.0000000+00:00'
+- author: efzapa
+  changes:
+  - {message: Added a BRB sign so to let people know you are out doing something.,
+    type: Add}
+  id: 1621
+  time: '2022-05-29T00:09:29.0000000+00:00'
