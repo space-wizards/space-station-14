@@ -68,11 +68,19 @@ public abstract partial class SharedNewGunSystem
         // Pass the event onwards.
         RaiseLocalEvent(magEntity.Value, args);
         // Should be Dirtied by what other ammoprovider is handling it.
+        var count = 0;
+        var capacity = 0;
 
-        FinaliseMagazineTakeAmmo(uid, component, args, magEntity.Value, appearance);
+        if (TryComp<AppearanceComponent>(magEntity, out var magAppearance))
+        {
+            count = magAppearance.GetData<int>(AmmoVisuals.AmmoCount);
+            capacity = magAppearance.GetData<int>(AmmoVisuals.AmmoMax);
+        }
+
+        FinaliseMagazineTakeAmmo(uid, component, args, count, capacity, appearance);
     }
 
-    private void FinaliseMagazineTakeAmmo(EntityUid uid, MagazineAmmoProviderComponent component, TakeAmmoEvent args, EntityUid magEntity, AppearanceComponent? appearance)
+    private void FinaliseMagazineTakeAmmo(EntityUid uid, MagazineAmmoProviderComponent component, TakeAmmoEvent args, int count, int capacity, AppearanceComponent? appearance)
     {
         // If no ammo then check for autoeject
         if (component.AutoEject && args.Ammo.Count == 0)
@@ -87,11 +95,8 @@ public abstract partial class SharedNewGunSystem
         // Copy the magazine's appearance data
         appearance?.SetData(MagazineBarrelVisuals.MagLoaded, true);
 
-        if (appearance != null && TryComp<AppearanceComponent>(magEntity, out var magAppearance))
-        {
-            appearance.SetData(AmmoVisuals.AmmoCount, magAppearance.GetData<int>(AmmoVisuals.AmmoCount));
-            appearance.SetData(AmmoVisuals.AmmoMax, magAppearance.GetData<int>(AmmoVisuals.AmmoMax));
-        }
+        appearance?.SetData(AmmoVisuals.AmmoCount, count);
+        appearance?.SetData(AmmoVisuals.AmmoMax, capacity);
     }
 
     private void EjectMagazine(MagazineAmmoProviderComponent component)

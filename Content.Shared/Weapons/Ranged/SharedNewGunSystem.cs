@@ -366,6 +366,9 @@ public abstract partial class SharedNewGunSystem : EntitySystem
         public EntityCoordinates Coordinates;
     }
 
+    /// <summary>
+    /// Raised on the client to request it would like to stop hooting.
+    /// </summary>
     [Serializable, NetSerializable]
     public sealed class RequestStopShootEvent : EntityEventArgs
     {
@@ -382,10 +385,23 @@ public abstract partial class SharedNewGunSystem : EntitySystem
         public SelectiveFire AvailableSelectiveFire;
     }
 
+    /// <summary>
+    /// Used for animated effects on the client.
+    /// </summary>
     [Serializable, NetSerializable]
     protected sealed class HitscanEvent : EntityEventArgs
     {
         public List<(EntityCoordinates coordinates, Angle angle, SpriteSpecifier Sprite, float Distance)> Sprites = new();
+    }
+
+    /// <summary>
+    /// Raised on an AmmoProvider to request deets.
+    /// </summary>
+    [ByRefEvent]
+    public struct GetAmmoCountEvent
+    {
+        public int Count;
+        public int Capacity;
     }
 
     /// <summary>

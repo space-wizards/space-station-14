@@ -15,6 +15,7 @@ public abstract partial class SharedNewGunSystem
     {
         SubscribeLocalEvent<BallisticAmmoProviderComponent, ComponentInit>(OnBallisticInit);
         SubscribeLocalEvent<BallisticAmmoProviderComponent, TakeAmmoEvent>(OnBallisticTakeAmmo);
+        SubscribeLocalEvent<BallisticAmmoProviderComponent, GetAmmoCountEvent>(OnBallisticAmmoCount);
         SubscribeLocalEvent<BallisticAmmoProviderComponent, ComponentGetState>(OnBallisticGetState);
         SubscribeLocalEvent<BallisticAmmoProviderComponent, ComponentHandleState>(OnBallisticHandleState);
 
@@ -181,6 +182,12 @@ public abstract partial class SharedNewGunSystem
 
         UpdateBallisticAppearance(component);
         Dirty(component);
+    }
+
+    private void OnBallisticAmmoCount(EntityUid uid, BallisticAmmoProviderComponent component, ref GetAmmoCountEvent args)
+    {
+        args.Count = GetBallisticShots(component);
+        args.Capacity = component.Capacity;
     }
 
     protected void UpdateBallisticAppearance(BallisticAmmoProviderComponent component)

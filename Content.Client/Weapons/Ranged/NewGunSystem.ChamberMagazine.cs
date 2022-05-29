@@ -1,3 +1,4 @@
+using Content.Shared.Containers.ItemSlots;
 using Content.Shared.Weapons.Ranged;
 
 namespace Content.Client.Weapons.Ranged;
@@ -7,29 +8,32 @@ public sealed partial class NewGunSystem
     protected override void InitializeChamberMagazine()
     {
         base.InitializeChamberMagazine();
+        SubscribeLocalEvent<ChamberMagazineAmmoProviderComponent, AmmoCounterControlEvent>(OnChamberMagazineCounter);
         SubscribeLocalEvent<ChamberMagazineAmmoProviderComponent, UpdateAmmoCounterEvent>(OnChamberMagazineAmmoUpdate);
+        SubscribeLocalEvent<ChamberMagazineAmmoProviderComponent, ItemSlotChangedEvent>(OnChamberMagazineSlotChange);
     }
 
-    private void OnChamberMagazineControl(EntityUid uid, ChamberMagazineAmmoProviderComponent component, AmmoCounterControlEvent args)
+    private void OnChamberMagazineSlotChange(EntityUid uid, ChamberMagazineAmmoProviderComponent component, ItemSlotChangedEvent args)
+    {
+        UpdateAmmoCount(uid);
+    }
+
+    private void OnChamberMagazineCounter(EntityUid uid, ChamberMagazineAmmoProviderComponent component, AmmoCounterControlEvent args)
     {
         args.Control = new ChamberMagazineStatusControl();
     }
 
-    private void OnChamberMagazineAmmoUpdate(EntityUid uid, MagazineAmmoProviderComponent component, UpdateAmmoCounterEvent args)
+    private void OnChamberMagazineAmmoUpdate(EntityUid uid, ChamberMagazineAmmoProviderComponent component, UpdateAmmoCounterEvent args)
     {
-        // TODO: Chamber and all this
-        var ent = GetMagazineEntity(uid);
+        if (args.Control is not ChamberMagazineStatusControl control) return;
 
-        if (ent == null)
-        {
-            if (args.Control is DefaultStatusControl control)
-            {
-                control.Update(0, 0);
-            }
+        var chambered = GetChamberEntity(uid);
+        var magEntity = GetMagazineEntity(uid);
+        var ammoCountEv = new GetAmmoCountEvent();
 
-            return;
-        }
+        if (magEntity != null)
+            RaiseLocalEvent(magEntity.Value, ref ammoCountEv);
 
-        RaiseLocalEvent(ent.Value, args);
+        control.Update(chambered != null, magEntity != null, ammoCountEv.Count, ammoCountEv.Capacity);
     }
 }

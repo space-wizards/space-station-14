@@ -34,6 +34,17 @@ public abstract partial class SharedNewGunSystem
         return true;
     }
 
+    protected EntityUid? GetChamberEntity(EntityUid uid)
+    {
+        if (!Containers.TryGetContainer(uid, ChamberSlot, out var container) ||
+            container is not ContainerSlot slot)
+        {
+            return null;
+        }
+
+        return slot.ContainedEntity;
+    }
+
     private bool TryInsertChamber(EntityUid uid, EntityUid ammo)
     {
         return Containers.TryGetContainer(uid, ChamberSlot, out var container) &&
@@ -82,6 +93,15 @@ public abstract partial class SharedNewGunSystem
             return;
         }
 
-        FinaliseMagazineTakeAmmo(uid, component, args, magEnt.Value, appearance);
+        var count = chamberEnt != null ? 1 : 0;
+        var capacity = 1;
+
+        if (TryComp<AppearanceComponent>(magEnt, out var magAppearance))
+        {
+            count += magAppearance.GetData<int>(AmmoVisuals.AmmoCount);
+            capacity += magAppearance.GetData<int>(AmmoVisuals.AmmoMax);
+        }
+
+        FinaliseMagazineTakeAmmo(uid, component, args, count, capacity, appearance);
     }
 }

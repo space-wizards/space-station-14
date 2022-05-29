@@ -13,6 +13,7 @@ public abstract partial class SharedNewGunSystem
         SubscribeLocalEvent<BatteryAmmoProviderComponent, ComponentGetState>(OnBatteryGetState);
         SubscribeLocalEvent<BatteryAmmoProviderComponent, ComponentHandleState>(OnBatteryHandleState);
         SubscribeLocalEvent<BatteryAmmoProviderComponent, TakeAmmoEvent>(OnBatteryTakeAmmo);
+        SubscribeLocalEvent<BatteryAmmoProviderComponent, GetAmmoCountEvent>(OnBatteryAmmoCount);
         SubscribeLocalEvent<BatteryAmmoProviderComponent, ExaminedEvent>(OnBatteryExamine);
     }
 
@@ -56,6 +57,12 @@ public abstract partial class SharedNewGunSystem
         TakeCharge(uid, component);
         UpdateBatteryAppearance(uid, component);
         Dirty(component);
+    }
+
+    private void OnBatteryAmmoCount(EntityUid uid, BatteryAmmoProviderComponent component, ref GetAmmoCountEvent args)
+    {
+        args.Count = component.Shots;
+        args.Capacity = component.MaxShots;
     }
 
     /// <summary>
