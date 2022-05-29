@@ -122,7 +122,7 @@ public sealed class PowerWireAction : BaseWireAction
     }
 
     /// <returns>false if failed, true otherwise, or if the entity cannot be electrified</returns>
-    private bool TrySetElectrocution(EntityUid user, Wire wire)
+    private bool TrySetElectrocution(EntityUid user, Wire wire, bool timed = false)
     {
         if (!EntityManager.TryGetComponent<ElectrifiedComponent>(wire.Owner, out var electrified))
         {
@@ -135,7 +135,7 @@ public sealed class PowerWireAction : BaseWireAction
         // if we were electrified, then return false
         var electrifiedAttempt = _electrocutionSystem.TryDoElectrifiedAct(wire.Owner, user);
 
-        if (electrifiedAttempt)
+        if (electrifiedAttempt && !timed)
         {
             SetElectrified(wire.Owner, false, electrified);
         }
@@ -227,7 +227,7 @@ public sealed class PowerWireAction : BaseWireAction
     {
         WiresSystem.TryCancelWireAction(wire.Owner, PowerWireActionKey.ElectrifiedCancel);
 
-        if (!TrySetElectrocution(user, wire))
+        if (!TrySetElectrocution(user, wire, true))
             return false;
 
         // disrupted power shouldn't re-disrupt
