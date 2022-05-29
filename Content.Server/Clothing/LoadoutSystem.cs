@@ -22,8 +22,10 @@ namespace Content.Server.Clothing
 
         private void OnStartup(EntityUid uid, LoadoutComponent component, ComponentStartup args)
         {
-            var proto = _protoMan.Index<StartingGearPrototype>(component.Prototype);
+            if (component.Prototype == string.Empty)
+                return;
 
+            var proto = _protoMan.Index<StartingGearPrototype>(component.Prototype);
             _station.EquipStartingGear(uid, proto, null);
         }
     }
