@@ -68,11 +68,7 @@ namespace Content.Client.Entry
             var prototypes = IoCManager.Resolve<IPrototypeManager>();
 
             factory.DoAutoRegistrations();
-
-            foreach (var ignoreName in IgnoredComponents.List)
-            {
-                factory.RegisterIgnore(ignoreName);
-            }
+            factory.IgnoreMissingComponents();
 
             factory.RegisterClass<SharedResearchConsoleComponent>();
             factory.RegisterClass<SharedLatheComponent>();

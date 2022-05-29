@@ -12,7 +12,6 @@ using YamlDotNet.RepresentationModel;
 namespace Content.IntegrationTests.Tests.GameObjects.Components
 {
     [TestFixture]
-    [TestOf(typeof(Client.Entry.IgnoredComponents))]
     [TestOf(typeof(Server.Entry.IgnoredComponents))]
     public sealed class EntityPrototypeComponentsTest : ContentIntegrationTest
     {
@@ -124,20 +123,8 @@ namespace Content.IntegrationTests.Tests.GameObjects.Components
             var serverComponents = server.ResolveDependency<IComponentFactory>();
             var ignoredServerNames = Server.Entry.IgnoredComponents.List;
             var clientComponents = client.ResolveDependency<IComponentFactory>();
-            var ignoredClientNames = Client.Entry.IgnoredComponents.List;
 
             var failureMessages = "";
-            foreach (var clientIgnored in ignoredClientNames)
-            {
-                if (clientComponents.TryGetRegistration(clientIgnored, out _))
-                {
-                    failureMessages = $"{failureMessages}\nComponent {clientIgnored} was ignored on client, but exists on client";
-                }
-                if (!serverComponents.TryGetRegistration(clientIgnored, out _))
-                {
-                    failureMessages = $"{failureMessages}\nComponent {clientIgnored} was ignored on client, but does not exist on server";
-                }
-            }
             foreach (var serverIgnored in ignoredServerNames)
             {
                 if (serverComponents.TryGetRegistration(serverIgnored, out _))
