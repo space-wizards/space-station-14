@@ -1,13 +1,17 @@
 # Empty mags
 - type: entity
-  id: MagazinePistolBase
+  id: BaseMagazinePistol
   name: pistol magazine (.35 auto)
   parent: BaseItem
   abstract: true
   components:
-  - type: RangedMagazine
-    caliber: Pistol
-    magazineType: Pistol
+  - type: Tag
+    tags:
+      - MagazinePistol
+  - type: BallisticAmmoProvider
+    whitelist:
+      tags:
+        - CartridgePistol
     capacity: 10
   - type: Sprite
     netsync: false
@@ -24,16 +28,19 @@
       zeroVisible: false
 
 - type: entity
-  id: MagazinePistolHCBase
+  id: BaseMagazinePistolHighCapacity
   name: machine pistol magazine (.35 auto)
   parent: BaseItem
   abstract: true
   components:
-  - type: RangedMagazine
-    caliber: Pistol
-    magazineType: HCPistol
+  - type: Tag
+    tags:
+      - MagazinePistolHighCapacity
+  - type: BallisticAmmoProvider
+    whitelist:
+      tags:
+        - CartridgePistol
     capacity: 16
-
   - type: Sprite
     netsync: false
     layers:
@@ -54,11 +61,14 @@
   parent: BaseItem
   abstract: true
   components:
-  - type: RangedMagazine
-    caliber: Pistol
-    magazineType: Smg
+  - type: Tag
+    tags:
+      - MagazineSubMachineGunPistol
+  - type: BallisticAmmoProvider
+    whitelist:
+      tags:
+        - CartridgePistol
     capacity: 35
-
   - type: Sprite
     netsync: false
     layers:
@@ -77,72 +87,42 @@
 - type: entity
   id: MagazinePistolSmgTopMounted
   name: WT550 magazine (.35 auto top-mounted)
-  parent: MagazinePistolSmgBase
-  components:
-  - type: RangedMagazine
-    caliber: Pistol
-    magazineType: SmgTopMounted
-    fillPrototype: CartridgePistol
-
-  - type: Sprite
-    sprite: Objects/Weapons/Guns/Ammunition/Magazine/Pistol/smg_mag_top_mounted.rsi
-    layers:
-    - state: base
-      map: ["enum.RangedBarrelVisualLayers.Base"]
-    - state: mag-unshaded-1
-      map: ["enum.RangedBarrelVisualLayers.MagUnshaded"]
-      shader: unshaded
-  - type: Appearance
-    visuals:
-    - type: MagVisualizer
-      magState: mag
-      steps: 6
-      zeroVisible: false
-
-- type: Tag
-  id: CartridgePistol
-
-- type: entity
-  id: MagazinePistolSmgTopMountedNew
-  name: WT550 magazine (.35 auto top-mounted)
   parent: BaseItem
   components:
-    - type: Tag
+  - type: Tag
+    tags:
+      - MagazinePistolTopMounted
+  - type: BallisticAmmoProvider
+    proto: CartridgePistol
+    whitelist:
       tags:
-        - MagazinePistolTopMounted
-    - type: BallisticAmmoProvider
-      proto: CartridgePistol
-      whitelist:
-        tags:
-        - CartridgePistol
-    - type: AmmoCounter
-    - type: Sprite
-      sprite: Objects/Weapons/Guns/Ammunition/Magazine/Pistol/smg_mag_top_mounted.rsi
-      netsync: false
-      layers:
-        - state: base
-          map: ["enum.RangedBarrelVisualLayers.Base"]
-        - state: mag-unshaded-1
-          map: ["enum.RangedBarrelVisualLayers.MagUnshaded"]
-          shader: unshaded
-    - type: Appearance
-      visuals:
-        - type: MagVisualizer
-          magState: mag
-          steps: 6
-          zeroVisible: false
+      - CartridgePistol
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Ammunition/Magazine/Pistol/smg_mag_top_mounted.rsi
+    netsync: false
+    layers:
+      - state: base
+        map: ["enum.RangedBarrelVisualLayers.Base"]
+      - state: mag-unshaded-1
+        map: ["enum.RangedBarrelVisualLayers.MagUnshaded"]
+        shader: unshaded
+  - type: Appearance
+    visuals:
+      - type: MagVisualizer
+        magState: mag
+        steps: 6
+        zeroVisible: false
 
 - type: entity
   id: MagazinePistolCalicoTopMounted
   name: Calico magazine (.35 auto top-mounted)
-  parent: MagazinePistolSmgBase
+  parent: BaseMagazineSubMachineGunPistol
   components:
-  - type: RangedMagazine
-    caliber: Pistol
-    magazineType: CalicoTopMounted
-    fillPrototype: CartridgePistol
+  - type: Tag
+    tags:
+      - MagazineCalico
+  - type: BallisticAmmoProvider
     capacity: 100
-
   - type: Sprite
     sprite: Objects/Weapons/Guns/Ammunition/Magazine/Pistol/calico_mag.rsi
     layers:
@@ -160,55 +140,50 @@
 - type: entity
   id: MagazinePistol
   name: pistol magazine (.35 auto)
-  parent: MagazinePistolBase
+  parent: BaseMagazinePistol
   components:
-  - type: RangedMagazine
-    fillPrototype: CartridgePistol
-
+  - type: BallisticAmmoProvider
+    proto: CartridgePistol
   - type: Sprite
     sprite: Objects/Weapons/Guns/Ammunition/Magazine/Pistol/pistol_mag.rsi
 
 - type: entity
   id: MagazinePistolFlash
   name: pistol magazine (.35 auto flash)
-  parent: MagazinePistolBase
+  parent: BaseMagazinePistol
   components:
-  - type: RangedMagazine
-    fillPrototype: CartridgePistolFlash
-
+  - type: BallisticAmmoProvider
+    proto: CartridgePistolFlash
   - type: Sprite
     sprite: Objects/Weapons/Guns/Ammunition/Magazine/Pistol/pistol_mag_flash.rsi
 
 - type: entity
-  id: MagazinePistolHV
+  id: MagazinePistolHighVelocity
   name: pistol magazine (.35 auto high-velocity)
-  parent: MagazinePistolBase
+  parent: BaseMagazinePistol
   components:
-  - type: RangedMagazine
-    fillPrototype: CartridgePistolHV
-
+  - type: BallisticAmmoProvider
+    proto: CartridgePistolHighVelocity
   - type: Sprite
-    sprite: Objects/Weapons/Guns/Ammunition/Magazine/Pistol/pistol_mag_hv.rsi
+    sprite: Objects/Weapons/Guns/Ammunition/Magazine/Pistol/pistol_mag_HighVelocity.rsi
 
 - type: entity
   id: MagazinePistolPractice
   name: pistol magazine (.35 auto practice)
-  parent: MagazinePistolBase
+  parent: BaseMagazinePistol
   components:
-  - type: RangedMagazine
-    fillPrototype: CartridgePistolPractice
-
+  - type: BallisticAmmoProvider
+    proto: CartridgePistolPractice
   - type: Sprite
     sprite: Objects/Weapons/Guns/Ammunition/Magazine/Pistol/pistol_mag_practice.rsi
 
 - type: entity
   id: MagazinePistolRubber
   name: pistol magazine (.35 auto rubber)
-  parent: MagazinePistolBase
+  parent: BaseMagazinePistol
   components:
-  - type: RangedMagazine
-    fillPrototype: CartridgePistolRubber
-
+  - type: BallisticAmmoProvider
+    proto: CartridgePistolRubber
   - type: Sprite
     sprite: Objects/Weapons/Guns/Ammunition/Magazine/Pistol/pistol_mag_rubber.rsi
 
@@ -217,31 +192,28 @@
   name: machine pistol magazine (.35 auto)
   parent: MagazinePistolHCBase
   components:
-  - type: RangedMagazine
-    fillPrototype: CartridgePistol
-
+  - type: BallisticAmmoProvider
+    proto: CartridgePistol
   - type: Sprite
     sprite: Objects/Weapons/Guns/Ammunition/Magazine/Pistol/pistol_hc_mag.rsi
 
 - type: entity
-  id: MagazineHCPistolHV
+  id: MagazineHCPistolHighVelocity
   name: machine pistol magazine (.35 auto high-velocity)
   parent: MagazinePistolHCBase
   components:
-  - type: RangedMagazine
-    fillPrototype: CartridgePistol
-
+  - type: BallisticAmmoProvider
+    proto: CartridgePistol
   - type: Sprite
-    sprite: Objects/Weapons/Guns/Ammunition/Magazine/Pistol/pistol_hc_mag_hv.rsi
+    sprite: Objects/Weapons/Guns/Ammunition/Magazine/Pistol/pistol_hc_mag_HighVelocity.rsi
 
 - type: entity
   id: MagazineHCPistolPractice
   name: machine pistol magazine (.35 auto practice)
   parent: MagazinePistolHCBase
   components:
-  - type: RangedMagazine
-    fillPrototype: CartridgePistol
-
+  - type: BallisticAmmoProvider
+    proto: CartridgePistol
   - type: Sprite
     sprite: Objects/Weapons/Guns/Ammunition/Magazine/Pistol/pistol_hc_mag_practice.rsi
 
@@ -250,20 +222,25 @@
   name: machine pistol magazine (.35 auto rubber)
   parent: MagazinePistolHCBase
   components:
-  - type: RangedMagazine
-    fillPrototype: CartridgePistol
-
+  - type: BallisticAmmoProvider
+    proto: CartridgePistol
   - type: Sprite
     sprite: Objects/Weapons/Guns/Ammunition/Magazine/Pistol/pistol_hc_mag_rubber.rsi
 
 - type: entity
-  id: MagazinePistolSmg
+  id: MagazinePistolSubMachineGun
   name: SMG magazine (.35 auto)
   parent: MagazinePistolSmgBase
   components:
-  - type: RangedMagazine
-    fillPrototype: CartridgePistol
-
+  - type: BallisticAmmoProvider
+    fireRate: 1
+    capacity: 30
+    proto: CartridgePistol
+    whitelist:
+      tags:
+        - CartridgePistol
+    soundInsert:
+      path: /Audio/Weapons/Guns/MagIn/bullet_insert.ogg
   - type: Sprite
     sprite: Objects/Weapons/Guns/Ammunition/Magazine/Pistol/smg_mag.rsi
 
@@ -272,31 +249,28 @@
   name: SMG magazine (.35 auto flash)
   parent: MagazinePistolSmgBase
   components:
-  - type: RangedMagazine
-    fillPrototype: CartridgePistolFlash
-
+  - type: BallisticAmmoProvider
+    proto: CartridgePistolFlash
   - type: Sprite
     sprite: Objects/Weapons/Guns/Ammunition/Magazine/Pistol/smg_mag_flash.rsi
 
 - type: entity
-  id: MagazinePistolSmgHV
+  id: MagazinePistolSmgHighVelocity
   name: SMG magazine (.35 auto high-velocity)
   parent: MagazinePistolSmgBase
   components:
-  - type: RangedMagazine
-    fillPrototype: CartridgePistolHV
-
+  - type: BallisticAmmoProvider
+    proto: CartridgePistolHighVelocity
   - type: Sprite
-    sprite: Objects/Weapons/Guns/Ammunition/Magazine/Pistol/smg_mag_hv.rsi
+    sprite: Objects/Weapons/Guns/Ammunition/Magazine/Pistol/smg_mag_HighVelocity.rsi
 
 - type: entity
   id: MagazinePistolSmgPractice
   name: SMG magazine (.35 auto practice)
   parent: MagazinePistolSmgBase
   components:
-  - type: RangedMagazine
-    fillPrototype: CartridgePistolPractice
-
+  - type: BallisticAmmoProvider
+    proto: CartridgePistolPractice
   - type: Sprite
     sprite: Objects/Weapons/Guns/Ammunition/Magazine/Pistol/smg_mag_practice.rsi
 
@@ -305,8 +279,7 @@
   name: SMG magazine (.35 auto rubber)
   parent: MagazinePistolSmgBase
   components:
-  - type: RangedMagazine
-    fillPrototype: CartridgePistolRubber
-
+  - type: BallisticAmmoProvider
+    proto: CartridgePistolRubber
   - type: Sprite
     sprite: Objects/Weapons/Guns/Ammunition/Magazine/Pistol/smg_mag_rubber.rsi

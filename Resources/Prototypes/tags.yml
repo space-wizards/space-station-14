@@ -61,6 +61,12 @@
   id: CartridgeLightRifle
 
 - type: Tag
+  id: CartridgeMagnum
+
+- type: Tag
+  id: CartridgePistol
+
+- type: Tag
   id: CigFilter
 
 - type: Tag
@@ -214,10 +220,22 @@
   id: Machete
 
 - type: Tag
+  id: MagazineCalico
+
+- type: Tag
+  id: MagazinePistol
+
+- type: Tag
+  id: MagazinePistolHighCapacity
+
+- type: Tag
   id: MagazinePistolTopMounted
 
 - type: Tag
   id: MagazineShotgun
+
+- type: Tag
+  id: MagazineSubMachineGunPistol
 
 - type: Tag
   id: Matchstick

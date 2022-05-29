@@ -1,15 +1,18 @@
 # Empty mags
 - type: entity
-  id: MagazineMagnumBase
+  id: BaseMagazineMagnum
   name: "Lamia magazine (.40 magnum)"
   parent: BaseItem
   abstract: true
   components:
-  - type: RangedMagazine
-    caliber: Magnum
-    magazineType: Pistol
+  - type: Tag
+    tags:
+      - MagazineMagnum
+  - type: BallisticAmmoProvider
+    whitelist:
+      tags:
+        - CartridgeMagnum
     capacity: 10
-
   - type: Sprite
     netsync: false
     layers:
@@ -25,16 +28,19 @@
       zeroVisible: false
 
 - type: entity
-  id: MagazineMagnumSmgBase
+  id: BaseMagazineSubMachineGunMagnum
   name: "Drozd magazine (.40 magnum)"
   parent: BaseItem
   abstract: true
   components:
-  - type: RangedMagazine
-    caliber: Magnum
-    magazineType: Smg
+  - type: Tag
+    tags:
+      - MagazineSubMachineGunMagnum
+  - type: BallisticAmmoProvider
+    whitelist:
+      tags:
+        - CartridgeMagnum
     capacity: 25
-
   - type: Sprite
     netsync: false
     layers:
@@ -53,11 +59,10 @@
 - type: entity
   id: MagazineMagnum
   name: "Lamia magazine (.40 magnum)"
-  parent: MagazineMagnumBase
+  parent: BaseMagazineMagnum
   components:
-  - type: RangedMagazine
-    fillPrototype: CartridgeMagnum
-
+  - type: BallisticAmmoProvider
+    proto: CartridgeMagnum
   - type: Sprite
     sprite: Objects/Weapons/Guns/Ammunition/Magazine/Magnum/magnum_mag.rsi
 
@@ -66,20 +71,18 @@
   name: "Lamia magazine (.40 magnum flash)"
   parent: MagazineMagnumBase
   components:
-  - type: RangedMagazine
-    fillPrototype: CartridgeMagnumFlash
-
+  - type: BallisticAmmoProvider
+    proto: CartridgeMagnumFlash
   - type: Sprite
     sprite: Objects/Weapons/Guns/Ammunition/Magazine/Magnum/magnum_mag_flash.rsi
 
 - type: entity
-  id: MagazineMagnumHV
+  id: MagazineMagnumHighVelocity
   name: "Lamia magazine (.40 magnum high-velocity)"
   parent: MagazineMagnumBase
   components:
-  - type: RangedMagazine
-    fillPrototype: CartridgeMagnumHV
-
+  - type: BallisticAmmoProvider
+    proto: CartridgeMagnumHV
   - type: Sprite
     sprite: Objects/Weapons/Guns/Ammunition/Magazine/Magnum/magnum_mag_hv.rsi
 
@@ -88,9 +91,8 @@
   name: "Lamia magazine (.40 magnum practice)"
   parent: MagazineMagnumBase
   components:
-  - type: RangedMagazine
-    fillPrototype: CartridgeMagnumPractice
-
+  - type: BallisticAmmoProvider
+    proto: CartridgeMagnumPractice
   - type: Sprite
     sprite: Objects/Weapons/Guns/Ammunition/Magazine/Magnum/magnum_mag_practice.rsi
 
@@ -99,52 +101,47 @@
   name: "Lamia magazine (.40 magnum rubber)"
   parent: MagazineMagnumBase
   components:
-  - type: RangedMagazine
-    fillPrototype: CartridgeMagnumRubber
-
+  - type: BallisticAmmoProvider
+    proto: CartridgeMagnumRubber
   - type: Sprite
     sprite: Objects/Weapons/Guns/Ammunition/Magazine/Magnum/magnum_mag_rubber.rsi
 
 - type: entity
-  id: MagazineMagnumSmg
+  id: MagazineSubMachineGunMagnum
   name: "Drozd magazine (.40 magnum)"
-  parent: MagazineMagnumSmgBase
+  parent: BaseMagazineSubMachineGunMagnum
   components:
-  - type: RangedMagazine
-    fillPrototype: CartridgeMagnum
-
+  - type: BallisticAmmoProvider
+    proto: CartridgeMagnum
   - type: Sprite
     sprite: Objects/Weapons/Guns/Ammunition/Magazine/Magnum/magnum_smg_mag.rsi
 
 - type: entity
-  id: MagazineMagnumSmgHV
+  id: MagazineSubMachineGunMagnumHighVelocity
   name: "Drozd magazine (.40 magnum High-Velocity)"
-  parent: MagazineMagnumSmgBase
+  parent: BaseMagazineSubMachineGunMagnum
   components:
-  - type: RangedMagazine
-    fillPrototype: CartridgeMagnumHV
-
+  - type: BallisticAmmoProvider
+    proto: CartridgeMagnumHV
   - type: Sprite
     sprite: Objects/Weapons/Guns/Ammunition/Magazine/Magnum/magnum_smg_mag_hv.rsi
 
 - type: entity
-  id: MagazineMagnumSmgPractice
+  id: MagazineSubMachineGunMagnumPractice
   name: "Drozd magazine (.40 magnum practice)"
-  parent: MagazineMagnumSmgBase
+  parent: BaseMagazineSubMachineGunMagnum
   components:
-  - type: RangedMagazine
-    fillPrototype: CartridgeMagnumPractice
-
+  - type: BallisticAmmoProvider
+    proto: CartridgeMagnumPractice
   - type: Sprite
     sprite: Objects/Weapons/Guns/Ammunition/Magazine/Magnum/magnum_smg_mag_practice.rsi
 
 - type: entity
-  id: MagazineMagnumSmgRubber
+  id: MagazineSubMachineGunMagnumRubber
   name: "Drozd magazine (.40 magnum rubber)"
-  parent: MagazineMagnumSmgBase
+  parent: BaseMagazineSubMachineGunMagnum
   components:
-  - type: RangedMagazine
-    fillPrototype: CartridgeMagnumRubber
-
+  - type: BallisticAmmoProvider
+    proto: CartridgeMagnumRubber
   - type: Sprite
     sprite: Objects/Weapons/Guns/Ammunition/Magazine/Magnum/magnum_smg_mag_rubber.rsi

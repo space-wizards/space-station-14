@@ -1,48 +1,45 @@
 - type: entity
   name: BaseSMG
   parent: BaseItem
-  id: SmgBase
+  id: BaseWeaponSubMachineGun
   description: A rooty tooty point and shooty.
   abstract: true
   components:
   - type: Sprite
     netsync: false
-  - type: Icon
-    state: icon
   - type: Item
     size: 24
-  - type: MagazineBarrel
-    currentSelector: Automatic
-    allSelectors:
-    - Single
-    - Automatic
+  - type: NewGun
     fireRate: 8
-    caliber: Pistol
-    magazineTypes:
-    - Smg
-    minAngle: 0
-    maxAngle: 60
-    angleIncrease: 10
-    angleDecay: 20
-    magFillPrototype: MagazinePistolSmg
+    selectedMode: FullAuto
+    availableModes:
+    - SemiAuto
+    - Automatic
     soundGunshot:
       path: /Audio/Weapons/Guns/Gunshots/smg.ogg
-    soundEmpty:
-      path: /Audio/Weapons/Guns/Empty/empty.ogg
     soundRack:
       path: /Audio/Weapons/Guns/Cock/smg_cock.ogg
-    soundBoltOpen:
-      path: /Audio/Weapons/Guns/Bolt/rifle_bolt_open.ogg
-    soundBoltClosed:
-      path: /Audio/Weapons/Guns/Bolt/rifle_bolt_closed.ogg
-    soundMagInsert:
-      path: /Audio/Weapons/Guns/MagIn/smg_magin.ogg
-    soundMagEject:
-      path: /Audio/Weapons/Guns/MagOut/smg_magout.ogg
+  - type: ChamberMagazineAmmoProvider
+  - type: ItemSlots
+    slots:
+      gun-magazine:
+        name: GunMagazine
+        startingItem: MagazinePistolSubMachineGun
+        insertSound: /Audio/Weapons/Guns/MagIn/smg_magin.ogg
+        ejectSound: /Audio/Weapons/Guns/MagOut/smg_magout.ogg
+        whitelist:
+          tags:
+            - MagazinePistolSubMachineGun
+      gun-chamber:
+        name: GunChamber
+        startingItem: CartridgePistol
+        whitelist:
+          tags:
+            - CartridgePistol
 
 - type: entity
   name: Atreides
-  parent: SmgBase
+  parent: BaseWeaponSubMachineGun
   id: WeaponSubMachineGunAtreides
   description: Pla-ket-ket-ket-ket!
   components:
@@ -51,31 +48,15 @@
     layers:
     - state: base
       map: ["enum.RangedBarrelVisualLayers.Base"]
-    - state: bolt-closed
-      map: ["enum.RangedBarrelVisualLayers.Bolt"]
     - state: mag-0
       map: ["enum.RangedBarrelVisualLayers.Mag"]
-  - type: Icon
-    sprite: Objects/Weapons/Guns/SMGs/atreides.rsi
   - type: Item
     size: 24
     sprite: Objects/Weapons/Guns/SMGs/atreides.rsi
-  - type: RangedWeapon
-  - type: MagazineBarrel
-    currentSelector: Automatic
-    allSelectors:
-    - Automatic
+  - type: NewGun
     fireRate: 10
-    caliber: Pistol
-    magazineTypes:
-    - Smg
-    minAngle: 5
-    maxAngle: 60
-    angleIncrease: 10
-    angleDecay: 20
   - type: Appearance
     visuals:
-    - type: BarrelBoltVisualizer
     - type: MagVisualizer
       magState: mag
       steps: 1
@@ -83,7 +64,7 @@
 
 - type: entity
   name: C-20r sub machine gun
-  parent: SmgBase
+  parent: BaseWeaponSubMachineGun
   id: WeaponSubMachineGunC20r
   description: A firearm that is often used by the infamous nuclear operatives.
   components:
@@ -92,33 +73,16 @@
     layers:
     - state: base
       map: ["enum.RangedBarrelVisualLayers.Base"]
-    - state: bolt-closed
-      map: ["enum.RangedBarrelVisualLayers.Bolt"]
     - state: mag-0
       map: ["enum.RangedBarrelVisualLayers.Mag"]
-  - type: Icon
-    sprite: Objects/Weapons/Guns/SMGs/c20r.rsi
   - type: Item
     size: 24
     sprite: Objects/Weapons/Guns/SMGs/c20r.rsi
-  - type: RangedWeapon
-  - type: MagazineBarrel
-    currentSelector: Automatic
-    allSelectors:
-    - Single
-    - Automatic
-    fireRate: 8
-    caliber: Pistol
-    magazineTypes:
-    - Smg
-    minAngle: 0
-    maxAngle: 60
-    angleIncrease: 10
-    angleDecay: 20
-    autoEjectMag: true
+  - type: NewGun
+  - type: ChamberMagazineAmmoProvider
+    autoEject: true
   - type: Appearance
     visuals:
-    - type: BarrelBoltVisualizer
     - type: MagVisualizer
       magState: mag
       steps: 1
@@ -126,7 +90,7 @@
 
 - type: entity
   name: Drozd
-  parent: SmgBase
+  parent: BaseWeaponSubMachineGun
   id: WeaponSubMachineGunDrozd
   description: An excellent fully automatic Heavy SMG.
   components:
@@ -135,32 +99,34 @@
     layers:
       - state: base
         map: ["enum.RangedBarrelVisualLayers.Base"]
-      - state: bolt-closed
-        map: ["enum.RangedBarrelVisualLayers.Bolt"]
       - state: mag-0
         map: ["enum.RangedBarrelVisualLayers.Mag"]
-  - type: Icon
-    sprite: Objects/Weapons/Guns/SMGs/drozd.rsi
   - type: Item
     size: 24
     sprite: Objects/Weapons/Guns/SMGs/drozd.rsi
-  - type: RangedWeapon
-  - type: MagazineBarrel
+  - type: NewGun
     fireRate: 6
-    currentSelector: Automatic
-    allSelectors:
-    - Automatic
-    caliber: Magnum
-    magazineTypes:
-    - Smg
-    magFillPrototype: MagazineMagnumSmg
-    minAngle: 0
-    maxAngle: 60
-    angleIncrease: 12
-    angleDecay: 20
+    selectedMode: FullAuto
+    availableModes:
+    - FullAuto
+  - type: ItemSlots
+    slots:
+      gun-magazine:
+        name: GunMagazine
+        startingItem: MagazineSubMachineGunMagnum
+        insertSound: /Audio/Weapons/Guns/MagIn/smg_magin.ogg
+        ejectSound: /Audio/Weapons/Guns/MagOut/smg_magout.ogg
+        whitelist:
+          tags:
+            - MagazineSubMachineGunMagnum
+      gun-chamber:
+        name: GunChamber
+        startingItem: CartridgeMagnum
+        whitelist:
+          tags:
+            - CartridgeMagnum
   - type: Appearance
     visuals:
-    - type: BarrelBoltVisualizer
     - type: MagVisualizer
       magState: mag
       steps: 1
@@ -168,14 +134,12 @@
 
 - type: entity
   name: WT550
-  parent: BaseItem
-  id: SmgWt550New
+  parent: BaseWeaponSubMachineGun
+  id: WeaponSubMachineGunWt550
   description: An excellent SMG, produced by NanoTrasen's Small Arms Division.
-  suffix: new
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/SMGs/wt550.rsi
-    netsync: false
     layers:
       - state: base
         map: ["enum.RangedBarrelVisualLayers.Base"]
@@ -192,74 +156,16 @@
     sprite: Objects/Weapons/Guns/SMGs/wt550.rsi
   - type: NewGun
     fireRate: 5
+    selectedMode: Safety
     availableModes:
     - Safety
     - FullAuto
-    selectedMode:
-    - FullAuto
-  - type: ItemSlots
-    slots:
-      gun-magazine:
-        name: GunMagazine
-        startingItem: MagazinePistolSmgTopMountedNew
-        whitelist:
-          tags:
-            - MagazinePistolTopMounted
-      gun-chamber:
-        name: GunChamber
-        startingItem: CartridgePistol
-        whitelist:
-          tags:
-            - CartridgePistol
-  - type: ChamberMagazineAmmoProvider
-  - type: AmmoCounter
   - type: Appearance
     visuals:
       - type: MagVisualizer
         magState: mag
         steps: 6
         zeroVisible: true
-
-- type: entity
-  name: WT550
-  parent: SmgBase
-  id: WeaponSubMachineGunWt550
-  description: An excellent SMG, produced by NanoTrasen's Small Arms Division.
-  components:
-  - type: Sprite
-    sprite: Objects/Weapons/Guns/SMGs/wt550.rsi
-    layers:
-    - state: base
-      map: ["enum.RangedBarrelVisualLayers.Base"]
-    - state: base-unshaded
-      map: ["enum.RangedBarrelVisualLayers.BaseUnshaded"]
-      shader: unshaded
-    - state: mag-0
-      map: ["enum.RangedBarrelVisualLayers.Mag"]
-    - state: mag-unshaded-0
-      map: ["enum.RangedBarrelVisualLayers.MagUnshaded"]
-      shader: unshaded
-  - type: Icon
-    sprite: Objects/Weapons/Guns/SMGs/wt550.rsi
-  - type: Item
-    size: 24
-    sprite: Objects/Weapons/Guns/SMGs/wt550.rsi
-  - type: RangedWeapon
-  - type: MagazineBarrel
-    currentSelector: Automatic
-    allSelectors:
-    - Automatic
-    fireRate: 8
-    caliber: Pistol
-    magazineTypes:
-    - SmgTopMounted
-    magFillPrototype: MagazinePistolSmgTopMounted
-  - type: Appearance
-    visuals:
-    - type: MagVisualizer
-      magState: mag
-      steps: 6
-      zeroVisible: true
 
 - type: entity
   name: Drozd
