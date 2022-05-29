@@ -214,6 +214,9 @@
   id: Machete
 
 - type: Tag
+  id: MagazinePistolTopMounted
+
+- type: Tag
   id: MagazineShotgun
 
 - type: Tag

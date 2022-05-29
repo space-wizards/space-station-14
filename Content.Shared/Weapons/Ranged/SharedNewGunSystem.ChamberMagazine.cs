@@ -9,7 +9,7 @@ namespace Content.Shared.Weapons.Ranged;
 
 public abstract partial class SharedNewGunSystem
 {
-    private const string ChamberSlot = "gun-chamber";
+    protected const string ChamberSlot = "gun-chamber";
 
     protected virtual void InitializeChamberMagazine()
     {
@@ -78,7 +78,8 @@ public abstract partial class SharedNewGunSystem
             // Rest of the ammo gets shot
             if (relayedArgs.Ammo.Count > 0)
             {
-                TryInsertChamber(uid, ((NewAmmoComponent) relayedArgs.Ammo[^1]).Owner);
+                var newChamberEnt = ((NewAmmoComponent) relayedArgs.Ammo[^1]).Owner;
+                TryInsertChamber(uid, newChamberEnt);
             }
 
             // Anything above the chamber-refill amount gets fired.

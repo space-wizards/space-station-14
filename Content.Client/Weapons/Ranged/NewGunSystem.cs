@@ -7,6 +7,7 @@ using Robust.Client.Graphics;
 using Robust.Client.Input;
 using Robust.Client.Player;
 using Robust.Shared.Audio;
+using Robust.Shared.Containers;
 using Robust.Shared.Input;
 using Robust.Shared.Map;
 using Robust.Shared.Player;

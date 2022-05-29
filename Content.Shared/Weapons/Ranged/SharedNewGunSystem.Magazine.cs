@@ -10,7 +10,7 @@ namespace Content.Shared.Weapons.Ranged;
 
 public abstract partial class SharedNewGunSystem
 {
-    private const string MagazineSlot = "gun-magazine";
+    protected const string MagazineSlot = "gun-magazine";
 
     protected virtual void InitializeMagazine()
     {
@@ -32,9 +32,9 @@ public abstract partial class SharedNewGunSystem
 
     private void OnMagazineSlotChange(EntityUid uid, MagazineAmmoProviderComponent component, ref ItemSlotChangedEvent args)
     {
+        UpdateAmmoCount(uid);
         if (!TryComp<AppearanceComponent>(uid, out var appearance)) return;
         appearance.SetData(MagazineBarrelVisuals.MagLoaded, GetMagazineEntity(uid) != null);
-        UpdateAmmoCount(uid);
     }
 
     protected EntityUid? GetMagazineEntity(EntityUid uid)

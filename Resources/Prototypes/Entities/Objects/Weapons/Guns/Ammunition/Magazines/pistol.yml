@@ -107,6 +107,9 @@
   name: WT550 magazine (.35 auto top-mounted)
   parent: BaseItem
   components:
+    - type: Tag
+      tags:
+        - MagazinePistolTopMounted
     - type: BallisticAmmoProvider
       proto: CartridgePistol
       whitelist:

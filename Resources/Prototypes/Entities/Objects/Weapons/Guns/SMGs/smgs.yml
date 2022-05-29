@@ -199,13 +199,18 @@
     - FullAuto
   - type: ItemSlots
     slots:
-      gun-chamber:
-        name: GunChamber
-        startingItem: CartridgePistol
       gun-magazine:
         name: GunMagazine
         startingItem: MagazinePistolSmgTopMountedNew
-        # TODO: Whitelist
+        whitelist:
+          tags:
+            - MagazinePistolTopMounted
+      gun-chamber:
+        name: GunChamber
+        startingItem: CartridgePistol
+        whitelist:
+          tags:
+            - CartridgePistol
   - type: ChamberMagazineAmmoProvider
   - type: AmmoCounter
   - type: Appearance
