@@ -1,9 +1,4 @@
 Entries:
-- author: DubiousDoggo
-  changes:
-  - {message: Added crafting for pipes, type: Add}
-  id: 1124
-  time: '2022-02-24T15:05:10.0000000+00:00'
 - author: Peptide90
   changes:
   - {message: 'Pillar V5 is here! All new engineering and bar. Lots of QoL improvements.
@@ -2996,3 +2991,9 @@ Entries:
   - {message: New NanoTrasen alert levels - Gamma & Epsilon, type: Add}
   id: 1623
   time: '2022-05-29T08:35:08.0000000+00:00'
+- author: TimrodDX
+  changes:
+  - {message: 'Waystation has been faithfully ported to SS14, and will succeed Packed
+      Station''s role as a low to midpop map.', type: Add}
+  id: 1624
+  time: '2022-05-29T16:18:16.0000000+00:00'
