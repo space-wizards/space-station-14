@@ -70,9 +70,10 @@
     description: Lead a team of specialists to resolve the stations issues.
   - type: Loadout
     prototype: ERTLeaderGear
-  - type: RandomHumanoidAppearance
   - type: RandomMetadata
     nameSet: NamesFirstMilitaryLeader
+  - type: RandomHumanoidAppearance
+    randomizeName: false
     
 - type: entity
   name: ERT leader
