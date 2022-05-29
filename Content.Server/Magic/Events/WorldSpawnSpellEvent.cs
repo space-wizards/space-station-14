@@ -3,8 +3,9 @@ using Content.Shared.Storage;
 
 namespace Content.Server.Magic.Events;
 
-public class WorldSpawnSpellEvent : WorldTargetActionEvent
+public sealed class WorldSpawnSpellEvent : WorldTargetActionEvent
 {
+    // TODO:This class needs combining with InstantSpawnSpellEvent
 
     /// <summary>
     /// The list of prototypes this spell will spawn
@@ -12,23 +13,17 @@ public class WorldSpawnSpellEvent : WorldTargetActionEvent
     [DataField("prototypes")]
     public List<EntitySpawnEntry> Contents = new();
 
+    // TODO: This offset is liable for deprecation.
     /// <summary>
-    /// The offset the prototypes will spawn in on after the first
+    /// The offset the prototypes will spawn in on relative to the one prior.
     /// Set to 0,0 to have them spawn on the same tile.
     /// </summary>
-    [DataField("offsetVector2")]
-    public Vector2 OffsetVector2;
-
-    /// <summary>
-    /// Check to see if these entities should self delete.
-    /// </summary>
-    [DataField("temporarySummon")]
-    public bool TemporarySummon = false;
+    [DataField("offset")]
+    public Vector2 Offset;
 
     /// <summary>
     /// Lifetime to set for the entities to self delete
     /// </summary>
-    [DataField("lifetime")]
-    public float Lifetime = 10f;
+    [DataField("lifetime")] public float? Lifetime;
 }
 

@@ -1,4 +1,5 @@
-﻿using Content.Server.Coordinates.Helpers;
+﻿using System.Threading;
+using Content.Server.Coordinates.Helpers;
 using Content.Server.Decals;
 using Content.Server.DoAfter;
 using Content.Server.Doors.Components;
@@ -20,16 +21,18 @@ using Robust.Shared.Random;
 
 namespace Content.Server.Magic;
 
+/// <summary>
+/// Handles learning and using spells (actions)
+/// </summary>
 public sealed class MagicSystem : EntitySystem
 {
-    [Dependency] private readonly SharedActionsSystem _actionsSystem = default!;
-    [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
     [Dependency] private readonly IMapManager _mapManager = default!;
-    [Dependency] private readonly DecalSystem _decals = default!;
+    [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
+    [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly EntityLookupSystem _lookup = default!;
     [Dependency] private readonly SharedDoorSystem _doorSystem = default!;
+    [Dependency] private readonly SharedActionsSystem _actionsSystem = default!;
     [Dependency] private readonly DoAfterSystem _doAfter = default!;
-    [Dependency] private readonly IRobustRandom _random = default!;
 
     public override void Initialize()
     {
@@ -37,13 +40,13 @@ public sealed class MagicSystem : EntitySystem
 
         SubscribeLocalEvent<SpellbookComponent, ComponentInit>(OnInit);
         SubscribeLocalEvent<SpellbookComponent, UseInHandEvent>(OnUse);
-        SubscribeLocalEvent<SpellbookComponent, LearnDoAfterComplete>(TeachSpell);
-        SubscribeLocalEvent<SpellbookComponent, LearnDoAfterCancel>(OnLearnFail);
+        SubscribeLocalEvent<SpellbookComponent, LearnDoAfterComplete>(OnLearnComplete);
+        SubscribeLocalEvent<SpellbookComponent, LearnDoAfterCancel>(OnLearnCancel);
 
-        SubscribeLocalEvent<InstantSpawnSpellEvent>(OnSpawnMagic);
+        SubscribeLocalEvent<InstantSpawnSpellEvent>(OnInstantSpawn);
         SubscribeLocalEvent<TeleportSpellEvent>(OnTeleportSpell);
         SubscribeLocalEvent<KnockSpellEvent>(OnKnockSpell);
-        SubscribeLocalEvent<WorldSpawnSpellEvent>(OnSpawnSpell);
+        SubscribeLocalEvent<WorldSpawnSpellEvent>(OnWorldSpawn);
 
     }
 
@@ -84,7 +87,10 @@ public sealed class MagicSystem : EntitySystem
 
     private void AttemptLearn(EntityUid uid, SpellbookComponent component, UseInHandEvent args)
     {
-        component.CancelToken = new();
+        if (component.CancelToken != null) return;
+
+        component.CancelToken = new CancellationTokenSource();
+
         var doAfterEventArgs = new DoAfterEventArgs(args.User, component.LearnTime, component.CancelToken.Token, uid)
         {
             BreakOnTargetMove = true,
@@ -99,23 +105,23 @@ public sealed class MagicSystem : EntitySystem
         _doAfter.DoAfter(doAfterEventArgs);
     }
 
-    private void TeachSpell(EntityUid uid, SpellbookComponent component, LearnDoAfterComplete ev)
+    private void OnLearnComplete(EntityUid uid, SpellbookComponent component, LearnDoAfterComplete ev)
     {
         component.CancelToken = null;
-
-        if (ev.User == null)
-            return;
-
         _actionsSystem.AddActions(ev.User, component.Spells, uid);
     }
 
-    private void OnLearnFail(EntityUid uid, SpellbookComponent component, LearnDoAfterCancel args)
+    private void OnLearnCancel(EntityUid uid, SpellbookComponent component, LearnDoAfterCancel args)
     {
+        component.CancelToken = null;
     }
 
     #region Spells
 
-    private void OnSpawnMagic(InstantSpawnSpellEvent args)
+    /// <summary>
+    /// Handles the instant action (i.e. on the caster) attempting to spawn an entity.
+    /// </summary>
+    private void OnInstantSpawn(InstantSpawnSpellEvent args)
     {
         if (args.Handled)
             return;
@@ -140,9 +146,9 @@ public sealed class MagicSystem : EntitySystem
     {
         switch (data)
         {
-            case TargetCasterPos caster:
+            case TargetCasterPos:
                 return new List<EntityCoordinates>(1) {casterXform.Coordinates};
-            case TargetInFront front:
+            case TargetInFront:
             {
                 // This is shit but you get the idea.
                 var directionPos = casterXform.Coordinates.Offset(casterXform.LocalRotation.ToWorldVec().Normalized);
@@ -166,7 +172,7 @@ public sealed class MagicSystem : EntitySystem
                     {
                         coordsPlus = mapGrid.GridTileToLocal(tileIndex + (1, 0));
                         coordsMinus = mapGrid.GridTileToLocal(tileIndex + (-1, 0));
-                        return new List<EntityCoordinates>()
+                        return new List<EntityCoordinates>(3)
                         {
                             coords,
                             coordsPlus,
@@ -178,7 +184,7 @@ public sealed class MagicSystem : EntitySystem
                     {
                         coordsPlus = mapGrid.GridTileToLocal(tileIndex + (0, 1));
                         coordsMinus = mapGrid.GridTileToLocal(tileIndex + (0, -1));
-                        return new List<EntityCoordinates>()
+                        return new List<EntityCoordinates>(3)
                         {
                             coords,
                             coordsPlus,
@@ -205,21 +211,11 @@ public sealed class MagicSystem : EntitySystem
 
         var transform = Transform(args.Performer);
 
-        if (_mapManager.TryFindGridAt(args.Target, out var grid))
-        {
-            var gridPosition = grid.WorldToLocal(args.Target.Position);
+        if (transform.MapID != args.Target.MapId) return;
 
-            transform.Coordinates = new EntityCoordinates(grid.GridEntityId, gridPosition);
-            SoundSystem.Play(Filter.Pvs(args.Target), args.BlinkSound.GetSound());
-        }
-        else
-        {
-            var mapEntity = _mapManager.GetMapEntityIdOrThrow(args.Target.MapId);
-            transform.AttachParent(mapEntity);
-            transform.WorldPosition = args.Target.Position;
-            SoundSystem.Play(Filter.Pvs(args.Target), args.BlinkSound.GetSound());
-        }
-
+        transform.WorldPosition = args.Target.Position;
+        transform.AttachToGridOrMap();
+        SoundSystem.Play(Filter.Pvs(args.Target), args.BlinkSound.GetSound());
         args.Handled = true;
     }
 
@@ -258,14 +254,14 @@ public sealed class MagicSystem : EntitySystem
     /// It will offset mobs after the first mob based on the OffsetVector2 property supplied.
     /// </remarks>
     /// <param name="args"> The Spawn Spell Event args.</param>
-    private void OnSpawnSpell(WorldSpawnSpellEvent args)
+    private void OnWorldSpawn(WorldSpawnSpellEvent args)
     {
         if (args.Handled)
             return;
 
         var targetMapCoords = args.Target;
 
-        SpawnSpellHelper(args.Contents, targetMapCoords, args.TemporarySummon, args.OffsetVector2, args.Lifetime, _random);
+        SpawnSpellHelper(args.Contents, targetMapCoords, args.Lifetime, args.Offset);
 
         args.Handled = true;
     }
@@ -280,25 +276,23 @@ public sealed class MagicSystem : EntitySystem
     /// </remarks>
     /// <param name="entityEntries"> The list of Entities to spawn in</param>
     /// <param name="mapCoords"> Map Coordinates where the entities will spawn</param>
-    /// <param name="temporarySummon"> Check to see if the entities should self delete</param>
+    /// <param name="lifetime"> Check to see if the entities should self delete</param>
     /// <param name="offsetVector2"> A Vector2 offset that the entities will spawn in</param>
-    /// <param name="lifetime"> Sets the <see cref="SpawnSpellComponent"/> lifetime from the <see cref="WorldSpawnSpellEvent"/> args</param>
-    /// <param name="random"> Resolves param, check out <see cref="EntitySpawnEntry"/> for what to put on the prototype</param>
-    private void SpawnSpellHelper(List<EntitySpawnEntry> entityEntries, MapCoordinates mapCoords, bool temporarySummon, Vector2 offsetVector2, float lifetime, IRobustRandom? random)
+    private void SpawnSpellHelper(List<EntitySpawnEntry> entityEntries, MapCoordinates mapCoords, float? lifetime, Vector2 offsetVector2)
     {
-        var getProtos = EntitySpawnCollection.GetSpawns(entityEntries, random);
+        var getProtos = EntitySpawnCollection.GetSpawns(entityEntries, _random);
 
         var offsetCoords = mapCoords;
         foreach (var proto in getProtos)
         {
+            // TODO: Share this code with instant because they're both doing similar things for positioning.
             var entity = Spawn(proto, offsetCoords);
-            entity.SnapToGrid();
             offsetCoords = offsetCoords.Offset(offsetVector2);
 
-            if (temporarySummon)
+            if (lifetime != null)
             {
                 var comp = EnsureComp<TimedDespawnComponent>(entity);
-                comp.Lifetime = lifetime;
+                comp.Lifetime = lifetime.Value;
             }
         }
     }
