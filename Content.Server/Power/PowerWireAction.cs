@@ -122,24 +122,36 @@ public sealed class PowerWireAction : BaseWireAction
     }
 
     /// <returns>false if failed, true otherwise, or if the entity cannot be electrified</returns>
-    private bool TrySetElectrocution(EntityUid user, Wire wire, bool timed = false)
+    private bool TrySetElectrocution(EntityUid user, Wire wire)
     {
         if (!EntityManager.TryGetComponent<ElectrifiedComponent>(wire.Owner, out var electrified))
         {
             return true;
         }
 
-        var allCut = AllWiresCut(wire.Owner);
         // always set this to true
         SetElectrified(wire.Owner, true, electrified);
 
         // if we were electrified, then return false
         var electrifiedAttempt = _electrocutionSystem.TryDoElectrifiedAct(wire.Owner, user);
 
+        if (!electrifiedAttempt)
+        {
+            SetElectrified(wire.Owner, false, electrified);
+        }
+
+        return !electrifiedAttempt;
+    }
+
+    private void UpdateElectrocution(Wire wire, bool timed = false)
+    {
+        var allCut = AllWiresCut(wire.Owner);
+
         // if this is timed, we set up a doAfter so that the
         // electrocution continues - unless cancelled
         //
         // if the power is disabled however, just don't bother
+
         if (timed && IsPowered(wire.Owner) && !allCut)
         {
             WiresSystem.StartWireAction(wire.Owner, _pulseTimeout, PowerWireActionKey.ElectrifiedCancel, new TimedWireEvent(AwaitElectrifiedCancel, wire));
@@ -148,11 +160,9 @@ public sealed class PowerWireAction : BaseWireAction
         {
             if (allCut || AllWiresMended(wire.Owner))
             {
-                SetElectrified(wire.Owner, false, electrified);
+                SetElectrified(wire.Owner, false);
             }
         }
-
-        return !electrifiedAttempt;
     }
 
     public override void Initialize()
@@ -190,6 +200,8 @@ public sealed class PowerWireAction : BaseWireAction
 
         SetPower(wire.Owner, false);
 
+        UpdateElectrocution(wire);
+
         return true;
     }
 
@@ -206,6 +218,8 @@ public sealed class PowerWireAction : BaseWireAction
 
         SetPower(wire.Owner, false);
 
+        UpdateElectrocution(wire);
+
         return true;
     }
 
@@ -213,7 +227,7 @@ public sealed class PowerWireAction : BaseWireAction
     {
         WiresSystem.TryCancelWireAction(wire.Owner, PowerWireActionKey.ElectrifiedCancel);
 
-        if (!TrySetElectrocution(user, wire, true))
+        if (!TrySetElectrocution(user, wire))
             return false;
 
         // disrupted power shouldn't re-disrupt
@@ -228,6 +242,8 @@ public sealed class PowerWireAction : BaseWireAction
         WiresSystem.StartWireAction(wire.Owner, _pulseTimeout, PowerWireActionKey.PulseCancel, new TimedWireEvent(AwaitPulseCancel, wire));
 
         SetPower(wire.Owner, true);
+
+        UpdateElectrocution(wire, true);
 
         return true;
     }
