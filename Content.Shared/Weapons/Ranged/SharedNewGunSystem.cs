@@ -28,10 +28,10 @@ public abstract partial class SharedNewGunSystem : EntitySystem
     [Dependency] protected readonly IMapManager MapManager = default!;
     [Dependency] protected readonly IPrototypeManager ProtoManager = default!;
     [Dependency] protected readonly IRobustRandom Random = default!;
+    [Dependency] protected readonly ISharedAdminLogManager Logs = default!;
     [Dependency] protected readonly DamageableSystem Damageable = default!;
     [Dependency] protected readonly ItemSlotsSystem Slots = default!;
     [Dependency] protected readonly SharedActionsSystem Actions = default!;
-    [Dependency] protected readonly SharedAdminLogSystem Logs = default!;
     [Dependency] private readonly SharedCombatModeSystem _combatMode = default!;
     [Dependency] protected readonly SharedContainerSystem Containers = default!;
     [Dependency] protected readonly SharedPhysicsSystem Physics = default!;
@@ -195,15 +195,13 @@ public abstract partial class SharedNewGunSystem : EntitySystem
         }
 
         var fromCoordinates = Transform(user).Coordinates;
-
-        // TODO: Just change this to use Ammo
-        // Make cartridge inherit ammo
-        // Have a thing that returns the bullets from ammo (AKA handles cloning for cartridges) + deletion.
-
         // Remove ammo
         var ev = new TakeAmmoEvent(shots, new List<IShootable>(), fromCoordinates);
 
-        RaiseLocalEvent(gun.Owner, ev);
+        // Listen it just makes the other code around it easier if shots == 0 to do this.
+        if (shots > 0)
+            RaiseLocalEvent(gun.Owner, ev);
+
         DebugTools.Assert(ev.Ammo.Count <= shots);
         DebugTools.Assert(shots >= 0);
         UpdateAmmoCount(gun.Owner);

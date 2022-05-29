@@ -3,6 +3,7 @@ using Content.Client.Items;
 using Content.Client.Resources;
 using Content.Client.Stylesheets;
 using Content.Shared.Weapons.Ranged.Barrels.Components;
+using Robust.Client.Animations;
 using Robust.Client.Graphics;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
@@ -279,6 +280,128 @@ public sealed partial class NewGunSystem
                     MinSize = (10, 15),
                 });
             }
+        }
+    }
+
+    private sealed class ChamberMagazineStatusControl : Control
+    {
+        private readonly BoxContainer _bulletsList;
+        private readonly TextureRect _chamberedBullet;
+        private readonly Label _noMagazineLabel;
+        private readonly Label _ammoCount;
+
+        public ChamberMagazineStatusControl()
+        {
+            MinHeight = 15;
+            HorizontalExpand = true;
+            VerticalAlignment = VAlignment.Center;
+
+            AddChild(new BoxContainer
+            {
+                Orientation = BoxContainer.LayoutOrientation.Horizontal,
+                HorizontalExpand = true,
+                Children =
+                {
+                    (_chamberedBullet = new TextureRect
+                    {
+                        Texture = StaticIoC.ResC.GetTexture("/Textures/Interface/ItemStatus/Bullets/chambered_rotated.png"),
+                        VerticalAlignment = VAlignment.Center,
+                        HorizontalAlignment = HAlignment.Right,
+                    }),
+                    new Control() { MinSize = (5,0) },
+                    new Control
+                    {
+                        HorizontalExpand = true,
+                        Children =
+                        {
+                            (_bulletsList = new BoxContainer
+                            {
+                                Orientation = BoxContainer.LayoutOrientation.Horizontal,
+                                VerticalAlignment = VAlignment.Center,
+                                SeparationOverride = 0
+                            }),
+                            (_noMagazineLabel = new Label
+                            {
+                                Text = "No Magazine!",
+                                StyleClasses = {StyleNano.StyleClassItemStatus}
+                            })
+                        }
+                    },
+                    new Control() { MinSize = (5,0) },
+                    (_ammoCount = new Label
+                    {
+                        StyleClasses = {StyleNano.StyleClassItemStatus},
+                        HorizontalAlignment = HAlignment.Right,
+                    }),
+                }
+            });
+        }
+
+        public void Update(bool chambered, bool magazine, int count, int capacity)
+        {
+            _chamberedBullet.ModulateSelfOverride =
+                chambered ? Color.FromHex("#d7df60") : Color.Black;
+
+            _bulletsList.RemoveAllChildren();
+
+            if (!magazine)
+            {
+                _noMagazineLabel.Visible = true;
+                _ammoCount.Visible = false;
+                return;
+            }
+
+            _noMagazineLabel.Visible = false;
+            _ammoCount.Visible = true;
+
+            var texturePath = "/Textures/Interface/ItemStatus/Bullets/normal.png";
+            var texture = StaticIoC.ResC.GetTexture(texturePath);
+
+            _ammoCount.Text = $"x{count:00}";
+            capacity = Math.Min(capacity, 20);
+            FillBulletRow(_bulletsList, count, capacity, texture);
+        }
+
+        private static void FillBulletRow(Control container, int count, int capacity, Texture texture)
+        {
+            var colorA = Color.FromHex("#b68f0e");
+            var colorB = Color.FromHex("#d7df60");
+            var colorGoneA = Color.FromHex("#000000");
+            var colorGoneB = Color.FromHex("#222222");
+
+            var altColor = false;
+
+            // Draw the empty ones
+            for (var i = count; i < capacity; i++)
+            {
+                container.AddChild(new TextureRect
+                {
+                    Texture = texture,
+                    ModulateSelfOverride = altColor ? colorGoneA : colorGoneB,
+                    Stretch = TextureRect.StretchMode.KeepCentered
+                });
+
+                altColor ^= true;
+            }
+
+            // Draw the full ones, but limit the count to the capacity
+            count = Math.Min(count, capacity);
+            for (var i = 0; i < count; i++)
+            {
+                container.AddChild(new TextureRect
+                {
+                    Texture = texture,
+                    ModulateSelfOverride = altColor ? colorA : colorB,
+                    Stretch = TextureRect.StretchMode.KeepCentered
+                });
+
+                altColor ^= true;
+            }
+        }
+
+        public void PlayAlarmAnimation(Animation animation)
+        {
+            _noMagazineLabel.PlayAnimation(animation, "alarm");
         }
     }
 
