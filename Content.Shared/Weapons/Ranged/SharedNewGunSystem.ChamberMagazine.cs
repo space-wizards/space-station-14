@@ -21,9 +21,9 @@ public abstract partial class SharedNewGunSystem
         SubscribeLocalEvent<ChamberMagazineAmmoProviderComponent, ActivateInWorldEvent>(OnMagazineActivate);
     }
 
-    protected bool TryGetChamberEntity(EntityUid uid, [NotNullWhen(true)] out EntityUid? entity, [NotNullWhen(true)] out IContainer? container)
+    protected bool TryTakeChamberEntity(EntityUid uid, [NotNullWhen(true)] out EntityUid? entity)
     {
-        if (!Containers.TryGetContainer(uid, ChamberSlot, out container) ||
+        if (!Containers.TryGetContainer(uid, ChamberSlot, out var container) ||
             container is not ContainerSlot slot)
         {
             entity = null;
@@ -31,7 +31,16 @@ public abstract partial class SharedNewGunSystem
         }
 
         entity = slot.ContainedEntity;
-        return entity != null;
+        if (entity == null) return false;
+        container.Remove(entity.Value);
+        return true;
+    }
+
+    private bool TryInsertChamber(EntityUid uid, EntityUid ammo)
+    {
+        return Containers.TryGetContainer(uid, ChamberSlot, out var container) &&
+               container is ContainerSlot slot &&
+               slot.Insert(ammo);
     }
 
     private void OnChamberMagazineTakeAmmo(EntityUid uid, ChamberMagazineAmmoProviderComponent component, TakeAmmoEvent args)
@@ -40,67 +49,41 @@ public abstract partial class SharedNewGunSystem
         // Essentially we want to treat the chamber as a potentially free slot and then the mag as the remaining slots
         // i.e. if we shoot 3 times, then we use the chamber once (regardless if it's empty or not) and 2 from the mag
         // We move the n + 1 shot into the chamber as we essentially treat it like a stack.
-
-        for (var i = 0; i < args.Shots; i++)
-        {
-            if (i == 0)
-            {
-
-            }
-        }
-
-        // Move the nth shot into the chamber.
-
-        if (TryGetChamberEntity(uid, out var chamberEnt, out var container))
-        {
-            args.Ammo.Add(EnsureComp<NewAmmoComponent>(chamberEnt.Value));
-            container.Remove(chamberEnt.Value);
-            return;
-        }
-
-        var ent = GetMagazineEntity(uid);
         TryComp<AppearanceComponent>(uid, out var appearance);
 
-        if (ent == null)
+        if (TryTakeChamberEntity(uid, out var chamberEnt))
+        {
+            args.Ammo.Add(EnsureComp<NewAmmoComponent>(chamberEnt.Value));
+        }
+
+        var magEnt = GetMagazineEntity(uid);
+
+        // Pass an event to the magazine to get more (to refill chamber or for shooting).
+        if (magEnt != null)
+        {
+            // We pass in Shots not Shots - 1 as we'll take the last entity and move it into the chamber.
+            var relayedArgs = new TakeAmmoEvent(args.Shots, new List<IShootable>(), args.Coordinates);
+            RaiseLocalEvent(magEnt.Value, relayedArgs);
+
+            // Put in the nth slot back into the chamber
+            // Rest of the ammo gets shot
+            if (relayedArgs.Ammo.Count > 0)
+            {
+                TryInsertChamber(uid, ((NewAmmoComponent) relayedArgs.Ammo[^1]).Owner);
+            }
+
+            // Anything above the chamber-refill amount gets fired.
+            for (var i = 0; i < relayedArgs.Ammo.Count - 1; i++)
+            {
+                args.Ammo.Add(relayedArgs.Ammo[i]);
+            }
+        }
+        else
         {
             appearance?.SetData(MagazineBarrelVisuals.MagLoaded, false);
             return;
         }
 
-        // TODO: This is fucking copy-pasted tell sloth to to do something about
-        // Pass the event onwards.
-        RaiseLocalEvent(ent.Value, args);
-        // Should be Dirtied by what other ammoprovider is handling it.
-
-        // So if we shoot 1 bullet we need to pull one into the chamber
-        // If we shoot 2 then we shoot chamber + 1 from mag and pull another into chamber
-        // i.e. shoot count + 1 goes into the chamber.
-        if (args.Ammo.Count > 0)
-        {
-            // Shoot all but the last one?
-            if (Containers.TryGetContainer(uid, ChamberSlot, out var chamberContainer))
-            {
-                chamberContainer.
-            }
-        }
-
-        // If no ammo then check for autoeject
-        if (component.AutoEject && args.Ammo.Count == 0)
-        {
-            EjectMagazine(component);
-            var sound = component.SoundAutoEject?.GetSound();
-
-            if (sound != null)
-                SoundSystem.Play(Filter.Pvs(uid, entityManager: EntityManager), sound);
-        }
-
-        // Copy the magazine's appearance data
-        appearance?.SetData(MagazineBarrelVisuals.MagLoaded, true);
-
-        if (appearance != null && TryComp<AppearanceComponent>(ent, out var magAppearance))
-        {
-            appearance.SetData(AmmoVisuals.AmmoCount, magAppearance.GetData<int>(AmmoVisuals.AmmoCount));
-            appearance.SetData(AmmoVisuals.AmmoMax, magAppearance.GetData<int>(AmmoVisuals.AmmoMax));
-        }
+        FinaliseMagazineTakeAmmo(uid, component, args, magEnt.Value, appearance);
     }
 }
