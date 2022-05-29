@@ -18,6 +18,12 @@
   - Armory
   - Maintenance
   - Service
+  - Cargo
+  - Salvage
+  - Engineering
+  - Atmospherics
+  - Research
+  - Medical
 
 - type: startingGear
   id: HoSGear

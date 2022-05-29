@@ -12,6 +12,12 @@
   - Brig
   - Maintenance
   - Service
+  - Cargo
+  - Salvage
+  - Engineering
+  - Atmospherics
+  - Research
+  - Medical
 
 - type: startingGear
   id: SecurityOfficerGear
