@@ -2,22 +2,13 @@
   id: BaseRune
   name: "rune"
   abstract: true
+  placement:
+    mode: SnapgridCenter
   components:
-    - type: Fixtures
-      fixtures:
-        - shape:
-            !type:PhysShapeAabb
-            bounds: "-0.4,-0.4,0.4,0.4"
-          hard: false
-          mask:
-            - FullTileMask
-          layer:
-            - SlipLayer
-    - type: CollisionWake
-    - type: Physics
     - type: Clickable
     - type: Sprite
       sprite: Structures/Magic/Cult/rune.rsi
+      netsync: false
       layers:
         - state: cult2
           color: '#FF00FF'
@@ -28,10 +19,21 @@
   name: "collision rune"
   abstract: true
   components:
-    - type: TriggerOnCollide
+    - type: Fixtures
+      fixtures:
+        - shape:
+            !type:PhysShapeAabb
+            bounds: "-0.4,-0.4,0.4,0.4"
+          hard: false
+          id: rune
+          mask:
+            - ItemMask
+          layer:
+            - SlipLayer
+    - type: Physics
 
 - type: entity
-  parent: BaseRune
+  parent: CollideRune
   id: ActivateRune
   name: "activation rune"
   abstract: true
@@ -39,7 +41,7 @@
     - type: TriggerOnActivate
 
 - type: entity
-  parent: BaseRune
+  parent: CollideRune
   id: CollideTimerRune
   name: "collision timed rune"
   abstract: true
@@ -52,6 +54,8 @@
   id: ExplosionRune
   name: "explosion rune"
   components:
+    - type: TriggerOnCollide
+      fixtureID: rune
     - type: ExplodeOnTrigger
     - type: Explosive
       explosionType: Cryo
@@ -69,6 +73,8 @@
   id: StunRune
   name: "stun rune"
   components:
+    - type: TriggerOnCollide
+      fixtureID: rune
     - type: DeleteOnTrigger
     - type: StunOnCollide
       stunAmount: 5
@@ -84,6 +90,8 @@
   id: IgniteRune
   name: "ignite rune"
   components:
+    - type: TriggerOnCollide
+      fixtureID: rune
     - type: DeleteOnTrigger
     - type: IgniteOnCollide
       fireStacks: 10
