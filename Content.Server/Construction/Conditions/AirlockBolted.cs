@@ -1,20 +1,13 @@
-using System.Collections.Generic;
 using Content.Shared.Construction;
 using JetBrains.Annotations;
-using Robust.Shared.GameObjects;
-using Robust.Shared.Localization;
-using Robust.Shared.Serialization.Manager.Attributes;
-using Robust.Shared.Utility;
-using System.Threading.Tasks;
 using Content.Server.Doors.Components;
 using Content.Shared.Examine;
-using Robust.Shared.IoC;
 
 namespace Content.Server.Construction.Conditions
 {
     [UsedImplicitly]
     [DataDefinition]
-    public class AirlockBolted : IGraphCondition
+    public sealed class AirlockBolted : IGraphCondition
     {
         [DataField("value")]
         public bool Value { get; private set; } = true;

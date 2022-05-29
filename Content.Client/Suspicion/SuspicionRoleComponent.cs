@@ -12,7 +12,7 @@ using Robust.Shared.ViewVariables;
 namespace Content.Client.Suspicion
 {
     [RegisterComponent]
-    public class SuspicionRoleComponent : SharedSuspicionRoleComponent
+    public sealed class SuspicionRoleComponent : SharedSuspicionRoleComponent
     {
         [Dependency] private readonly IGameHud _gameHud = default!;
         [Dependency] private readonly IOverlayManager _overlayManager = default!;

@@ -1,0 +1,77 @@
+- type: entity
+  name: heavy machinegun
+  parent: BaseItem
+  id: HMGBase
+  description: Spray and pray
+  abstract: true
+  components:
+  - type: Sprite
+    netsync: false
+  - type: Icon
+    state: icon
+  - type: Item
+    size: 24
+  - type: MagazineBarrel
+    currentSelector: Automatic
+    allSelectors:
+    - Automatic
+    caliber: HRifle
+    magazineTypes:
+    - Box
+    fireRate: 20
+    minAngle: 5
+    maxAngle: 45
+    angleIncrease: 10
+    angleDecay: 20
+    magNeedsOpenBolt: false
+    soundGunshot:
+      path: /Audio/Weapons/Guns/Gunshots/lmg.ogg
+    soundEmpty:
+      path: /Audio/Weapons/Guns/Empty/lmg_empty.ogg
+    soundRack:
+      path: /Audio/Weapons/Guns/Cock/lmg_cock.ogg
+    soundBoltOpen:
+      path: /Audio/Weapons/Guns/Bolt/rifle_bolt_open.ogg
+    soundBoltClosed:
+      path: /Audio/Weapons/Guns/Bolt/rifle_bolt_closed.ogg
+    soundAutoEject:
+      path: /Audio/Weapons/Guns/EmptyAlarm/lmg_empty_alarm.ogg
+    soundMagInsert:
+      path: /Audio/Weapons/Guns/MagIn/lmg_magin.ogg
+    soundMagEject:
+      path: /Audio/Weapons/Guns/MagOut/lmg_magout.ogg
+
+- type: entity
+  name: minigun
+  id: Minigun
+  parent: HMGBase
+  description: Vzzzzzt! Rahrahrahrah! Vrrrrr!
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/HMGs/minigun.rsi
+    layers:
+    - state: base
+      map: ["enum.RangedBarrelVisualLayers.Base"]
+    - state: bolt-closed
+      map: ["enum.RangedBarrelVisualLayers.Bolt"]
+  - type: Icon
+    sprite: Objects/Weapons/Guns/HMGs/minigun.rsi
+  - type: Item
+    size: 24
+    sprite: Objects/Weapons/Guns/HMGs/minigun.rsi
+  - type: RangedWeapon
+  - type: MagazineBarrel
+    magFillPrototype: MagazineMinigun
+    fireRate: 15
+    minAngle: 0
+    maxAngle: 15
+    angleIncrease: 15
+    angleDecay: 20
+  - type: Appearance
+    visuals:
+    - type: BarrelBoltVisualizer
+    - type: MagVisualizer
+      magState: mag
+      steps: 4
+      zeroVisible: true
+

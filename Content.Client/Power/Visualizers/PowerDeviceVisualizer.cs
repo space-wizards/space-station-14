@@ -7,7 +7,7 @@ using Robust.Shared.IoC;
 namespace Content.Client.Power
 {
     [UsedImplicitly]
-    public class PowerDeviceVisualizer : AppearanceVisualizer
+    public sealed class PowerDeviceVisualizer : AppearanceVisualizer
     {
         public override void OnChangeData(AppearanceComponent component)
         {

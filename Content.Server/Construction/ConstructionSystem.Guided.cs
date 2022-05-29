@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using Content.Server.Construction.Components;
 using Content.Shared.Construction;
 using Content.Shared.Construction.Prototypes;
@@ -6,12 +5,10 @@ using Content.Shared.Construction.Steps;
 using Content.Shared.Examine;
 using Content.Shared.Popups;
 using Content.Shared.Verbs;
-using Robust.Shared.GameObjects;
-using Robust.Shared.Localization;
 
 namespace Content.Server.Construction
 {
-    public partial class ConstructionSystem
+    public sealed partial class ConstructionSystem
     {
         private readonly Dictionary<ConstructionPrototype, ConstructionGuide> _guideCache = new();
 
@@ -102,6 +99,14 @@ namespace Content.Server.Construction
         }
 
 
+        /// <summary>
+        ///     Returns a <see cref="ConstructionGuide"/> for a given <see cref="ConstructionPrototype"/>,
+        ///     generating and caching it as needed.
+        /// </summary>
+        /// <param name="construction">The construction prototype to generate the guide for. We must be able to pathfind
+        ///                            from its starting node to its ending node to be able to generate a guide for it.</param>
+        /// <returns>The guide for the given construction, or null if we can't pathfind from the start node to the
+        ///          end node on that construction.</returns>
         private ConstructionGuide? GetGuide(ConstructionPrototype construction)
         {
             // NOTE: This method might be allocate a fair bit, but do not worry!

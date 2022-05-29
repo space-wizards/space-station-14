@@ -5,7 +5,7 @@ using Robust.Shared.GameStates;
 
 namespace Content.Client.Tools
 {
-    public class ToolSystem : EntitySystem
+    public sealed class ToolSystem : EntitySystem
     {
         public override void Initialize()
         {

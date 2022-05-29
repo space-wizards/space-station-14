@@ -252,7 +252,7 @@
   canBuildInImpassable: false
   conditions:
     - !type:TileNotBlocked
-    
+
 - type: construction
   name: shutter
   id: Shutters
@@ -450,7 +450,7 @@
   conditions:
   # Same here. - 20kdc
     - !type:TileNotBlocked
-    
+
 - type: construction
   name: ground light post
   id: LightGroundFixture
@@ -468,25 +468,6 @@
   canBuildInImpassable: false
   conditions:
     - !type:TileNotBlocked
-
-- type: construction
-  name: light switch
-  id: LightSwitchRecipe
-  graph: LightSwitch
-  startNode: start
-  targetNode: lightSwitch
-  category: Structures
-  description: A switch for toggling lights that are connected to the same apc.
-  icon:
-    sprite: Structures/Wallmounts/switch.rsi
-    state: on
-  objectType: Structure
-  placementMode: SnapgridCenter
-  canRotate: true
-  canBuildInImpassable: true
-  conditions:
-    - !type:WallmountCondition
-
 
 #conveyor
 - type: construction
@@ -507,17 +488,118 @@
     - !type:TileNotBlocked
 
 - type: construction
-  name: two-way lever
-  id: TwoWayLever
-  graph: LeverGraph
+  name: metal door
+  id: MetalDoor
+  graph: DoorGraph
   startNode: start
-  targetNode: lever
+  targetNode: metalDoor
   category: Structures
-  description: A lever to control machines. It has 3 modes.
+  description: A primitive door with manual operation like the cavemen used.
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  icon:
+    sprite: Structures/Doors/MineralDoors/metal_door.rsi
+    state: closed
+  conditions:
+    - !type:TileNotBlocked
+
+- type: construction
+  name: wooden door
+  id: WoodDoor
+  graph: DoorGraph
+  startNode: start
+  targetNode: woodDoor
+  category: Structures
+  description: A primitive door with manual operation like the cavemen used.
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  icon:
+    sprite: Structures/Doors/MineralDoors/wood_door.rsi
+    state: closed
+  conditions:
+    - !type:TileNotBlocked
+
+- type: construction
+  name: plasma door
+  id: PlasmaDoor
+  graph: DoorGraph
+  startNode: start
+  targetNode: plasmaDoor
+  category: Structures
+  description: A primitive door with manual operation like the cavemen used.
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  icon:
+    sprite: Structures/Doors/MineralDoors/plasma_door.rsi
+    state: closed
+  conditions:
+    - !type:TileNotBlocked
+
+- type: construction
+  name: gold door
+  id: GoldDoor
+  graph: DoorGraph
+  startNode: start
+  targetNode: goldDoor
+  category: Structures
+  description: A primitive door with manual operation like the cavemen used.
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  icon:
+    sprite: Structures/Doors/MineralDoors/gold_door.rsi
+    state: closed
+  conditions:
+    - !type:TileNotBlocked
+
+- type: construction
+  name: silver door
+  id: SilverDoor
+  graph: DoorGraph
+  startNode: start
+  targetNode: silverDoor
+  category: Structures
+  description: A primitive door with manual operation like the cavemen used.
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  icon:
+    sprite: Structures/Doors/MineralDoors/silver_door.rsi
+    state: closed
+  conditions:
+    - !type:TileNotBlocked
+
+- type: construction
+  name: paper door
+  id: PaperDoor
+  graph: DoorGraph
+  startNode: start
+  targetNode: paperDoor
+  category: Structures
+  description: A primitive door with manual operation like the cavemen used.
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  icon:
+    sprite: Structures/Doors/MineralDoors/paper_door.rsi
+    state: closed
+
+- type: construction
+  name: plastic flaps
+  id: PlasticFlapsClear
+  graph: PlasticFlapsGraph
+  startNode: start
+  targetNode: plasticFlaps
+  category: Structures
+  placementMode: SnapgridCenter
+  description: A plastic flap to let items through and keep people out.
   objectType: Structure
   canBuildInImpassable: false
   icon:
-    sprite: Structures/conveyor.rsi
-    state: switch-off
+    sprite: Structures/plastic_flaps.rsi
+    state: plasticflaps
   conditions:
     - !type:TileNotBlocked

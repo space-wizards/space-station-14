@@ -1,7 +1,7 @@
 - type: entity
   name: clientsideclone
   id: clientsideclone
-  abstract: true
+  noSpawn: true
   components:
   - type: Sprite
   - type: AnimationPlayer

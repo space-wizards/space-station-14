@@ -3,11 +3,16 @@
   name: fire alarm
   description: A fire alarm. Spicy!
   components:
+  - type: WallMount
   - type: ApcPowerReceiver
+  - type: Electrified
+    enabled: false
+    usesApcPower: true
   - type: ExtensionCableReceiver
-  - type: DeviceNetworkComponent
+  - type: DeviceNetwork
     deviceNetId: Apc
-    frequency: 1621
+    receiveFrequencyId: AtmosMonitor
+    transmitFrequencyId: AtmosMonitor
   - type: ApcNetworkConnection
   - type: AtmosMonitor
     monitorFire: true
@@ -26,8 +31,17 @@
         Normal: fire_off
         Warning: fire_off # shouldn't be alarming at a warning
         Danger: fire_on
+        Emagged: fire_emagged
       hideOnDepowered: ["fireAlarmState"]
     - type: WiresVisualizer
+  - type: AlertLevelDisplay
+    alertVisuals:
+      green: fire_0
+      blue: fire_1
+      red: fire_2
+      violet: fire_1
+      yellow: fire_1
+      delta: fire_3
   - type: UserInterface
     interfaces:
     - key: enum.WiresUiKey.Key
@@ -59,6 +73,7 @@
   name: fire alarm assembly
   description: A fire alarm assembly. Very mild.
   components:
+  - type: WallMount
   - type: Clickable
   - type: InteractionOutline
   - type: Sprite

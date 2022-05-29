@@ -1,0 +1,18 @@
+{
+  "version": 1,
+  "license": "CC-BY-NC-3.0",
+  "copyright": "Taken from tgstation at https://github.com/tgstation/tgstation/commit/40d89d11ea4a5cb81d61dc1018b46f4e7d32c62a. This sprite features an adaptation of Hatsune Miku, © Crypton Future Media, Inc. 2007, licensed under a CC BY-NC: https://creativecommons.org/licenses/by-nc/3.0/",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "icon"
+    },
+    {
+      "name": "equipped-INNERCLOTHING",
+      "directions": 4
+    }
+  ]
+}

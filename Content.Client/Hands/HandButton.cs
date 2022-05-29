@@ -6,7 +6,7 @@ using Robust.Client.UserInterface.Controls;
 
 namespace Content.Client.Hands
 {
-    public class HandButton : ItemSlotButton
+    public sealed class HandButton : ItemSlotButton
     {
         private bool _activeHand;
         private bool _highlighted;

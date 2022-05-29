@@ -4,7 +4,7 @@ using Robust.Client.UserInterface.Controls;
 
 namespace Content.Client.Administration.UI.CustomControls;
 
-public class AdminLogTypeButton : Button
+public sealed class AdminLogTypeButton : Button
 {
     public AdminLogTypeButton(LogType type)
     {

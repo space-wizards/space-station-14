@@ -3,15 +3,13 @@ using Content.Shared.Body.Prototypes;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.FixedPoint;
 using JetBrains.Annotations;
-using Robust.Shared.IoC;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
 namespace Content.Server.Chemistry.ReagentEffects
 {
     [UsedImplicitly]
-    public class AdjustReagent : ReagentEffect
+    public sealed class AdjustReagent : ReagentEffect
     {
         /// <summary>
         ///     The reagent ID to remove. Only one of this and <see cref="Group"/> should be active.

@@ -2,13 +2,13 @@
 - type: entity
   id: VirtualElectrocutionLoadHVPower
   name: ELECTROCUTION ENTITY YOU SHOULD NOT SEE THIS
-  abstract: true
+  noSpawn: true
   components:
   - type: NodeContainer
     nodes:
       electrocution: !type:ElectrocutionNode
         nodeGroupID: HVPower
-
+        needAnchored: false
   - type: PowerConsumer
     voltage: High
     drawRate: 50000
@@ -17,13 +17,13 @@
 - type: entity
   id: VirtualElectrocutionLoadMVPower
   name: ELECTROCUTION ENTITY YOU SHOULD NOT SEE THIS
-  abstract: true
+  noSpawn: true
   components:
   - type: NodeContainer
     nodes:
       electrocution: !type:ElectrocutionNode
         nodeGroupID: MVPower
-
+        needAnchored: false
   - type: PowerConsumer
     voltage: Medium
     drawRate: 50000
@@ -32,12 +32,13 @@
 - type: entity
   id: VirtualElectrocutionLoadApc
   name: ELECTROCUTION ENTITY YOU SHOULD NOT SEE THIS
-  abstract: true
+  noSpawn: true
   components:
   - type: NodeContainer
     nodes:
       electrocution: !type:ElectrocutionNode
         nodeGroupID: Apc
+        needAnchored: false
   - type: PowerConsumer
     voltage: Apc
     drawRate: 50000

@@ -14,7 +14,7 @@ namespace Content.IntegrationTests.Tests.Chemistry
 {
     [TestFixture]
     [TestOf(typeof(ReactionPrototype))]
-    public class TryAllReactionsTest : ContentIntegrationTest
+    public sealed class TryAllReactionsTest : ContentIntegrationTest
     {
         private const string Prototypes = @"
 - type: entity

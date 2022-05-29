@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using System.Threading;
 using Content.Server.Body.Components;
 using Content.Server.Body.Systems;
@@ -7,24 +6,20 @@ using Content.Server.DoAfter;
 using Content.Server.Hands.Components;
 using Content.Server.Nutrition.Components;
 using Content.Server.Popups;
-using Content.Shared.ActionBlocker;
 using Content.Shared.Administration.Logs;
 using Content.Shared.Body.Components;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Database;
 using Content.Shared.FixedPoint;
 using Content.Shared.Interaction;
-using Content.Shared.Interaction.Helpers;
 using Content.Shared.MobState.Components;
 using Content.Shared.Verbs;
 using Robust.Shared.Audio;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Localization;
 using Robust.Shared.Player;
 using Robust.Shared.Utility;
 using Content.Shared.Inventory;
-using Content.Shared.Item;
+using Content.Shared.Hands.EntitySystems;
+using Content.Shared.Interaction.Events;
 
 namespace Content.Server.Nutrition.EntitySystems
 {
@@ -39,8 +34,10 @@ namespace Content.Server.Nutrition.EntitySystems
         [Dependency] private readonly PopupSystem _popupSystem = default!;
         [Dependency] private readonly UtensilSystem _utensilSystem = default!;
         [Dependency] private readonly DoAfterSystem _doAfterSystem = default!;
-        [Dependency] private readonly SharedAdminLogSystem _logSystem = default!;
+        [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
         [Dependency] private readonly InventorySystem _inventorySystem = default!;
+        [Dependency] private readonly SharedInteractionSystem _interactionSystem = default!;
+        [Dependency] private readonly SharedHandsSystem _handsSystem = default!;
 
         public override void Initialize()
         {
@@ -48,7 +45,7 @@ namespace Content.Server.Nutrition.EntitySystems
 
             SubscribeLocalEvent<FoodComponent, UseInHandEvent>(OnUseFoodInHand);
             SubscribeLocalEvent<FoodComponent, AfterInteractEvent>(OnFeedFood);
-            SubscribeLocalEvent<FoodComponent, GetVerbsEvent<InteractionVerb>>(AddEatVerb);
+            SubscribeLocalEvent<FoodComponent, GetVerbsEvent<AlternativeVerb>>(AddEatVerb);
             SubscribeLocalEvent<SharedBodyComponent, FeedEvent>(OnFeed);
             SubscribeLocalEvent<ForceFeedCancelledEvent>(OnFeedCancelled);
             SubscribeLocalEvent<InventoryComponent, IngestionAttemptEvent>(OnInventoryIngestAttempt);
@@ -81,8 +78,6 @@ namespace Content.Server.Nutrition.EntitySystems
             // if currently being used to feed, cancel that action.
             if (food.CancelToken != null)
             {
-                food.CancelToken.Cancel();
-                food.CancelToken = null;
                 return true;
             }
 
@@ -111,7 +106,7 @@ namespace Content.Server.Nutrition.EntitySystems
             if (!TryGetRequiredUtensils(user, food, out var utensils))
                 return false;
 
-            if (!user.InRangeUnobstructed(food.Owner, popup: true))
+            if (!_interactionSystem.InRangeUnobstructed(user, food.Owner, popup: true))
                 return true;
 
             var forceFeed = user != target;
@@ -126,15 +121,17 @@ namespace Content.Server.Nutrition.EntitySystems
                     user, Filter.Entities(target));
 
                 // logging
-                _logSystem.Add(LogType.ForceFeed, LogImpact.Medium, $"{ToPrettyString(user):user} is forcing {ToPrettyString(target):target} to eat {ToPrettyString(food.Owner):food} {SolutionContainerSystem.ToPrettyString(foodSolution)}");
+                _adminLogger.Add(LogType.ForceFeed, LogImpact.Medium, $"{ToPrettyString(user):user} is forcing {ToPrettyString(target):target} to eat {ToPrettyString(food.Owner):food} {SolutionContainerSystem.ToPrettyString(foodSolution)}");
             }
+
+            var moveBreak = user != target;
 
             _doAfterSystem.DoAfter(new DoAfterEventArgs(user, forceFeed ? food.ForceFeedDelay : food.Delay, food.CancelToken.Token, target)
             {
-                BreakOnUserMove = true,
+                BreakOnUserMove = moveBreak,
                 BreakOnDamage = true,
                 BreakOnStun = true,
-                BreakOnTargetMove = true,
+                BreakOnTargetMove = moveBreak,
                 MovementThreshold = 0.01f,
                 TargetFinishedEvent = new FeedEvent(user, food, foodSolution, utensils),
                 BroadcastCancelledEvent = new ForceFeedCancelledEvent(food),
@@ -223,25 +220,19 @@ namespace Content.Server.Nutrition.EntitySystems
             var finisher = EntityManager.SpawnEntity(component.TrashPrototype, position);
 
             // If the user is holding the item
-            if (user != null &&
-                EntityManager.TryGetComponent(user.Value, out HandsComponent? handsComponent) &&
-                handsComponent.IsHolding(component.Owner))
+            if (user != null && _handsSystem.IsHolding(user.Value, component.Owner, out var hand))
             {
                 EntityManager.DeleteEntity((component).Owner);
 
                 // Put the trash in the user's hand
-                if (EntityManager.TryGetComponent(finisher, out SharedItemComponent? item) &&
-                    handsComponent.CanPutInHand(item))
-                {
-                    handsComponent.PutInHand(item);
-                }
+                _handsSystem.TryPickup(user.Value, finisher, hand);
                 return;
             }
 
             EntityManager.QueueDeleteEntity(component.Owner);
         }
 
-        private void AddEatVerb(EntityUid uid, FoodComponent component, GetVerbsEvent<InteractionVerb> ev)
+        private void AddEatVerb(EntityUid uid, FoodComponent component, GetVerbsEvent<AlternativeVerb> ev)
         {
             if (component.CancelToken != null)
                 return;
@@ -256,12 +247,13 @@ namespace Content.Server.Nutrition.EntitySystems
             if (EntityManager.TryGetComponent<MobStateComponent>(uid, out var mobState) && mobState.IsAlive())
                 return;
 
-            InteractionVerb verb = new()
+            AlternativeVerb verb = new()
             {
                 Act = () =>
                 {
-                    TryFeed(uid, ev.User, component);
+                    TryFeed(ev.User, ev.User, component);
                 },
+                IconTexture = "/Textures/Interface/VerbIcons/cutlery.svg.192dpi.png",
                 Text = Loc.GetString("food-system-verb-eat"),
                 Priority = -1
             };
@@ -298,12 +290,12 @@ namespace Content.Server.Nutrition.EntitySystems
 
             // logging
             if (user == null)
-                _logSystem.Add(LogType.ForceFeed, $"{ToPrettyString(uid):food} {SolutionContainerSystem.ToPrettyString(foodSolution):solution} was thrown into the mouth of {ToPrettyString(target):target}");
+                _adminLogger.Add(LogType.ForceFeed, $"{ToPrettyString(uid):food} {SolutionContainerSystem.ToPrettyString(foodSolution):solution} was thrown into the mouth of {ToPrettyString(target):target}");
             else
-                _logSystem.Add(LogType.ForceFeed, $"{ToPrettyString(user.Value):user} threw {ToPrettyString(uid):food} {SolutionContainerSystem.ToPrettyString(foodSolution):solution} into the mouth of {ToPrettyString(target):target}");
+                _adminLogger.Add(LogType.ForceFeed, $"{ToPrettyString(user.Value):user} threw {ToPrettyString(uid):food} {SolutionContainerSystem.ToPrettyString(foodSolution):solution} into the mouth of {ToPrettyString(target):target}");
 
             var filter = user == null ? Filter.Entities(target) : Filter.Entities(target, user.Value);
-            _popupSystem.PopupEntity(Loc.GetString(food.EatMessage), target, filter);
+            _popupSystem.PopupEntity(Loc.GetString(food.EatMessage, ("food", food.Owner)), target, filter);
 
             foodSolution.DoEntityReaction(uid, ReactionMethod.Ingestion);
             _stomachSystem.TryTransferSolution(((IComponent) firstStomach.Value.Comp).Owner, foodSolution, firstStomach.Value.Comp);
@@ -328,10 +320,10 @@ namespace Content.Server.Nutrition.EntitySystems
 
             var usedTypes = UtensilType.None;
 
-            foreach (var item in hands.GetAllHeldItems())
+            foreach (var item in _handsSystem.EnumerateHeld(user, hands))
             {
                 // Is utensil?
-                if (!EntityManager.TryGetComponent(item.Owner, out UtensilComponent? utensil))
+                if (!EntityManager.TryGetComponent(item, out UtensilComponent? utensil))
                     continue;
 
                 if ((utensil.Types & component.Utensil) != 0 && // Acceptable type?

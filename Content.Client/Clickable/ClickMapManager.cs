@@ -12,7 +12,7 @@ using SixLabors.ImageSharp.PixelFormats;
 
 namespace Content.Client.Clickable
 {
-    internal class ClickMapManager : IClickMapManager, IPostInjectInit
+    internal sealed class ClickMapManager : IClickMapManager, IPostInjectInit
     {
         private const float Threshold = 0.25f;
         private const int ClickRadius = 2;

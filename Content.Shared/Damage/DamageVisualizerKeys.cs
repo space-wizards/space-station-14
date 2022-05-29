@@ -1,5 +1,3 @@
-using System;
-using System.Collections.Generic;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.Damage
@@ -14,7 +12,7 @@ namespace Content.Shared.Damage
     }
 
     [Serializable, NetSerializable]
-    public class DamageVisualizerGroupData : ICloneable
+    public sealed class DamageVisualizerGroupData : ICloneable
     {
         public List<string> GroupList;
 

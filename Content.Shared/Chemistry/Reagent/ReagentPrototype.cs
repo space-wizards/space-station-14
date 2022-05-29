@@ -1,51 +1,53 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text.Json.Serialization;
+﻿using System.Text.Json.Serialization;
 using Content.Shared.Administration.Logs;
 using Content.Shared.Body.Prototypes;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.Reaction;
 using Content.Shared.Database;
 using Content.Shared.FixedPoint;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
 using Robust.Shared.Map;
-using Robust.Shared.Maths;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
-using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.Dictionary;
-using Robust.Shared.ViewVariables;
 
 namespace Content.Shared.Chemistry.Reagent
 {
     [Prototype("reagent")]
     [DataDefinition]
-    public class ReagentPrototype : IPrototype, IInheritingPrototype
+    public sealed class ReagentPrototype : IPrototype, IInheritingPrototype
     {
         [ViewVariables]
-        [DataField("id", required: true)]
+        [IdDataFieldAttribute]
         public string ID { get; } = default!;
 
-        [DataField("name")]
-        public string Name { get; } = string.Empty;
+        [DataField("name", required: true)]
+        private string Name { get; } = default!;
+
+        [ViewVariables(VVAccess.ReadOnly)]
+        public string LocalizedName => Loc.GetString(Name);
 
         [DataField("group")]
         public string Group { get; } = "Unknown";
 
-        [DataField("parent", customTypeSerializer: typeof(PrototypeIdSerializer<ReagentPrototype>))]
+        [ParentDataFieldAttribute(typeof(AbstractPrototypeIdSerializer<ReagentPrototype>))]
         public string? Parent { get; private set; }
 
         [NeverPushInheritance]
-        [DataField("abstract")]
+        [AbstractDataFieldAttribute]
         public bool Abstract { get; private set; }
 
-        [DataField("desc")]
-        public string Description { get; } = string.Empty;
+        [DataField("desc", required: true)]
+        private string Description { get; } = default!;
 
-        [DataField("physicalDesc")]
-        public string PhysicalDescription { get; } = string.Empty;
+        [ViewVariables(VVAccess.ReadOnly)]
+        public string LocalizedDescription => Loc.GetString(Description);
+
+        [DataField("physicalDesc", required: true)]
+        private string PhysicalDescription { get; } = default!;
+
+        [ViewVariables(VVAccess.ReadOnly)]
+        public string LocalizedPhysicalDescription => Loc.GetString(PhysicalDescription);
 
         [DataField("color")]
         public Color SubstanceColor { get; } = Color.White;
@@ -143,7 +145,7 @@ namespace Content.Shared.Chemistry.Reagent
     }
 
     [DataDefinition]
-    public class ReagentEffectsEntry
+    public sealed class ReagentEffectsEntry
     {
         /// <summary>
         ///     Amount of reagent to metabolize, per metabolism cycle.
@@ -161,7 +163,7 @@ namespace Content.Shared.Chemistry.Reagent
     }
 
     [DataDefinition]
-    public class ReactiveReagentEffectEntry
+    public sealed class ReactiveReagentEffectEntry
     {
         [DataField("methods", required: true)]
         public HashSet<ReactionMethod> Methods = default!;

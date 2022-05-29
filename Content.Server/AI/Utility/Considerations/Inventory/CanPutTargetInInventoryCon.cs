@@ -3,12 +3,10 @@ using Content.Server.AI.WorldState.States;
 using Content.Server.AI.WorldState.States.Hands;
 using Content.Server.AI.WorldState.States.Inventory;
 using Content.Shared.Item;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
 
 namespace Content.Server.AI.Utility.Considerations.Inventory
 {
-    public class CanPutTargetInInventoryCon : Consideration
+    public sealed class CanPutTargetInInventoryCon : Consideration
     {
         protected override float GetScore(Blackboard context)
         {

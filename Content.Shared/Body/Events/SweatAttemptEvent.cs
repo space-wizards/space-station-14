@@ -1,8 +1,6 @@
-﻿using Robust.Shared.GameObjects;
-
-namespace Content.Shared.Body.Events
+﻿namespace Content.Shared.Body.Events
 {
-    public class SweatAttemptEvent : CancellableEntityEventArgs
+    public sealed class SweatAttemptEvent : CancellableEntityEventArgs
     {
         public SweatAttemptEvent(EntityUid uid)
         {

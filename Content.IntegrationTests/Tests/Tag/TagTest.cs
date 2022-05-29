@@ -4,7 +4,6 @@ using System.Threading.Tasks;
 using Content.Shared.Tag;
 using NUnit.Framework;
 using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
 using Robust.Shared.Map;
 using Robust.Shared.Prototypes;
 
@@ -12,7 +11,7 @@ namespace Content.IntegrationTests.Tests.Tag
 {
     [TestFixture]
     [TestOf(typeof(TagComponent))]
-    public class TagTest : ContentIntegrationTest
+    public sealed class TagTest : ContentIntegrationTest
     {
         private const string TagEntityId = "TagTestDummy";
 

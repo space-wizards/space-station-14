@@ -136,3 +136,19 @@
     contents:
       - id: SolarAssemblyPart
         amount: 6
+
+- type: entity
+  id: CrateEngineeringShuttle
+  name: shuttle power crate
+  parent: CrateEngineeringSecure
+  components:
+  - type: StorageFill
+    contents:
+      - id: WallmountSubstationElectronics
+        amount: 1
+      - id: WallmountGeneratorAPUElectronics
+        amount: 1
+      - id: HandheldGPSBasic
+        amount: 1
+      - id: InflatableDoorStack1
+        amount: 1

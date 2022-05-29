@@ -1,9 +1,6 @@
-using System.Collections.Generic;
 using Content.Server.NodeContainer;
 using Content.Server.NodeContainer.Nodes;
-using Robust.Shared.GameObjects;
 using Robust.Shared.Map;
-using Robust.Shared.Serialization.Manager.Attributes;
 
 namespace Content.Server.Power.Nodes
 {
@@ -11,6 +8,7 @@ namespace Content.Server.Power.Nodes
     ///     Type of node that connects to a <see cref="CableNode"/> below it.
     /// </summary>
     [DataDefinition]
+    [Virtual]
     public class CableDeviceNode : Node
     {
         public override IEnumerable<Node> GetReachableNodes(TransformComponent xform,

@@ -13,7 +13,7 @@ namespace Content.Client.Verbs.UI
     ///     Slight extension of <see cref="ContextMenuElement"/> that uses a SpriteSpecifier for it's icon and provides
     ///     constructors that take verbs or verb categories.
     /// </summary>
-    public partial class VerbMenuElement : ContextMenuElement
+    public sealed partial class VerbMenuElement : ContextMenuElement
     {
         public const string StyleClassVerbMenuConfirmationTexture = "verbMenuConfirmationTexture";
 
@@ -39,6 +39,18 @@ namespace Content.Client.Verbs.UI
             {
                 ExpansionIndicator.SetOnlyStyleClass(StyleClassVerbMenuConfirmationTexture);
                 ExpansionIndicator.Visible = true;
+            }
+
+            if (verb.Icon == null && verb.IconEntity != null)
+            {
+                var spriteView = new SpriteView()
+                {
+                    OverrideDirection = Direction.South,
+                    Sprite = IoCManager.Resolve<IEntityManager>().GetComponentOrNull<ISpriteComponent>(verb.IconEntity.Value)
+                };
+
+                Icon.AddChild(spriteView);
+                return;
             }
 
             Icon.AddChild(new TextureRect()

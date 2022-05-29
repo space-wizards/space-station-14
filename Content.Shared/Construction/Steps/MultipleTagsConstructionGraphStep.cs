@@ -1,11 +1,8 @@
-using System.Collections.Generic;
 using Content.Shared.Tag;
-using Robust.Shared.GameObjects;
-using Robust.Shared.Serialization.Manager.Attributes;
 
 namespace Content.Shared.Construction.Steps
 {
-    public class MultipleTagsConstructionGraphStep : ArbitraryInsertConstructionGraphStep
+    public sealed class MultipleTagsConstructionGraphStep : ArbitraryInsertConstructionGraphStep
     {
         [DataField("allTags")]
         private List<string>? _allTags;

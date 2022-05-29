@@ -1,15 +1,10 @@
-using System;
-using System.Collections.Generic;
 using System.Threading;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Log;
-using Robust.Shared.Maths;
+using Content.Shared.Singularity.Components;
 using Timer = Robust.Shared.Timing.Timer;
 
 namespace Content.Server.Singularity.Components
 {
-    public class ContainmentFieldConnection : IDisposable
+    public sealed class ContainmentFieldConnection : IDisposable
     {
         public readonly ContainmentFieldGeneratorComponent Generator1;
         public readonly ContainmentFieldGeneratorComponent Generator2;
@@ -71,13 +66,9 @@ namespace Content.Server.Singularity.Components
             Timer.SpawnRepeating(1000, () => { SharedEnergyPool--;}, _powerDecreaseCancellationTokenSource.Token);
         }
 
-        public bool CanRepell(EntityUid toRepell)
+        public bool CanRepel(SharedSingularityComponent toRepel)
         {
-            var powerNeeded = 1;
-            if (IoCManager.Resolve<IEntityManager>().TryGetComponent<ServerSingularityComponent?>(toRepell, out var singularityComponent))
-            {
-                powerNeeded += 2*singularityComponent.Level;
-            }
+            var powerNeeded = 2 * toRepel.Level + 1;
 
             return _sharedEnergyPool > powerNeeded;
         }

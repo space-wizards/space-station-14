@@ -8,7 +8,7 @@ using Robust.Shared.Serialization.Manager.Attributes;
 namespace Content.Client.Atmos.Visualizers
 {
     [UsedImplicitly]
-    public class AtmosPlaqueVisualizer : AppearanceVisualizer
+    public sealed class AtmosPlaqueVisualizer : AppearanceVisualizer
     {
         [DataField("layer")]
         private int Layer { get; }

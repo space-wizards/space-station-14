@@ -1,7 +1,5 @@
 using Content.Shared.Hands.Components;
 using Content.Shared.Inventory;
-using Robust.Shared.GameObjects;
-using Robust.Shared.Localization;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Content.Server.Kitchen.Components;
@@ -10,14 +8,13 @@ using Content.Shared.Access;
 using Content.Shared.Access.Components;
 using Content.Shared.Access.Systems;
 using Content.Shared.PDA;
-using Robust.Shared.IoC;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 
 namespace Content.Server.Access.Systems
 {
-    public class IdCardSystem : SharedIdCardSystem
+    public sealed class IdCardSystem : SharedIdCardSystem
     {
         [Dependency] private readonly InventorySystem _inventorySystem = default!;
         [Dependency] private readonly PopupSystem _popupSystem = default!;
@@ -41,8 +38,23 @@ namespace Content.Server.Access.Systems
         {
             if (TryComp<AccessComponent>(uid, out var access))
             {
+                float randomPick = _random.NextFloat();
+                // if really unlucky, burn card
+                if (randomPick <= 0.15f)
+                {
+                    TryComp<TransformComponent>(uid, out TransformComponent? transformComponent);
+                    if (transformComponent != null)
+                    {
+                        _popupSystem.PopupCoordinates(Loc.GetString("id-card-component-microwave-burnt", ("id", uid)),
+                         transformComponent.Coordinates, Filter.Pvs(uid));
+                        EntityManager.SpawnEntity("FoodBadRecipe",
+                            transformComponent.Coordinates);
+                    }
+                    EntityManager.QueueDeleteEntity(uid);
+                    return;
+                }
                 // If they're unlucky, brick their ID
-                if (_random.Prob(0.25f))
+                if (randomPick <= 0.25f)
                 {
                     _popupSystem.PopupEntity(Loc.GetString("id-card-component-microwave-bricked", ("id", uid)),
                         uid, Filter.Pvs(uid));
@@ -125,8 +137,8 @@ namespace Content.Server.Access.Systems
         {
             // check held item?
             if (EntityManager.TryGetComponent(uid, out SharedHandsComponent? hands) &&
-                hands.TryGetActiveHeldEntity(out var heldItem) &&
-                TryGetIdCard(heldItem.Value, out idCard))
+                hands.ActiveHandEntity is EntityUid heldItem &&
+                TryGetIdCard(heldItem, out idCard))
             {
                 return true;
             }

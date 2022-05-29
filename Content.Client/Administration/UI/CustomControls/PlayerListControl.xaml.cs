@@ -11,7 +11,7 @@ using Robust.Shared.IoC;
 namespace Content.Client.Administration.UI.CustomControls
 {
     [GenerateTypedNameReferences]
-    public partial class PlayerListControl : BoxContainer
+    public sealed partial class PlayerListControl : BoxContainer
     {
         private readonly AdminSystem _adminSystem;
 

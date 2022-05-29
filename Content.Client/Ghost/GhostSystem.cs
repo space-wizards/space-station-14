@@ -10,7 +10,7 @@ using Robust.Shared.IoC;
 namespace Content.Client.Ghost
 {
     [UsedImplicitly]
-    public class GhostSystem : SharedGhostSystem
+    public sealed class GhostSystem : SharedGhostSystem
     {
         [Dependency] private readonly IPlayerManager _playerManager = default!;
         [Dependency] private readonly IGameHud _gameHud = default!;

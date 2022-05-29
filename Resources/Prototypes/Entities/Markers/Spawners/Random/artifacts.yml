@@ -18,6 +18,7 @@
         - ColdArtifact
         - RadiateArtifact
         - GasArtifact
+        - DiseaseArtifact
       chance: 1
 
 - type: entity

@@ -1,6 +1,4 @@
 using Content.Server.AI.EntitySystems;
-using Robust.Shared.GameObjects;
-using Robust.Shared.Serialization.Manager.Attributes;
 
 namespace Content.Server.AI.Components
 {

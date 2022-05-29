@@ -1,8 +1,6 @@
 using Content.Server.Mind.Commands;
 using Content.Server.Mind.Components;
 using Robust.Server.Player;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
 
 namespace Content.Server.Ghost.Roles.Components
 {
@@ -10,7 +8,7 @@ namespace Content.Server.Ghost.Roles.Components
     ///     Allows a ghost to take over the Owner entity.
     /// </summary>
     [RegisterComponent, ComponentReference(typeof(GhostRoleComponent))]
-    public class GhostTakeoverAvailableComponent : GhostRoleComponent
+    public sealed class GhostTakeoverAvailableComponent : GhostRoleComponent
     {
         public override bool Take(IPlayerSession session)
         {

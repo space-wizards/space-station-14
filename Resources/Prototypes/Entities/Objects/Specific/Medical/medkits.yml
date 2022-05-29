@@ -1,7 +1,7 @@
 - type: entity
   name: first aid kit
   description: It's an emergency medical kit for those serious boo-boos.
-  parent: BaseItem
+  parent: BaseStorageItem
   id: Medkit
   components:
   - type: Sprite
@@ -9,15 +9,15 @@
     netsync: false
     state: firstaid
   - type: Storage
-    capacity: 50
+    capacity: 26
   - type: Item
-    size: 5
+    size: 26
     sprite: Objects/Specific/Medical/firstaidkits.rsi
     HeldPrefix: firstaid
 
 - type: entity
   name: burn treatment kit
-  description: "A specialized medical kit for when the toxins lab *spontaneously* burns down."
+  description: "A specialized medical kit for when the toxins lab spontaneously burns down."
   parent: Medkit
   id: MedkitBurn
   components:

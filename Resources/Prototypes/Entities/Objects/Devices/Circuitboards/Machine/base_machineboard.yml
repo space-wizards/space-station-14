@@ -9,3 +9,6 @@
     - type: Sprite
       sprite: Objects/Misc/module.rsi
       state: id_mod
+    - type: Tag
+      tags:
+        - DroneUsable

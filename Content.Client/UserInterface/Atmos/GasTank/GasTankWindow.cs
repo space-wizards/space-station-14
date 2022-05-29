@@ -14,7 +14,7 @@ using static Robust.Client.UserInterface.Controls.BoxContainer;
 
 namespace Content.Client.UserInterface.Atmos.GasTank
 {
-    public class GasTankWindow
+    public sealed class GasTankWindow
         : BaseWindow
     {
         private GasTankBoundUserInterface _owner;

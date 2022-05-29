@@ -8,7 +8,7 @@ using Robust.Shared.Log;
 
 namespace Content.Client.Atmos.Monitor.UI
 {
-    public class AirAlarmBoundUserInterface : BoundUserInterface
+    public sealed class AirAlarmBoundUserInterface : BoundUserInterface
     {
         private AirAlarmWindow? _window;
 

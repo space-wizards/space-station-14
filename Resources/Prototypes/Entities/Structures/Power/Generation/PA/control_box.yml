@@ -23,6 +23,9 @@
     - type: Construction
       graph: ParticleAcceleratorControlBox
       node: completed
+    - type: ActivatableUI
+      key: enum.ParticleAcceleratorControlBoxUiKey.Key
+    - type: ActivatableUIRequiresPower
     - type: UserInterface
       interfaces:
         - key: enum.ParticleAcceleratorControlBoxUiKey.Key

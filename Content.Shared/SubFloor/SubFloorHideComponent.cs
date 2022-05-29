@@ -1,5 +1,4 @@
 using Robust.Shared.GameStates;
-using Robust.Shared.Serialization;
 
 namespace Content.Shared.SubFloor
 {
@@ -19,6 +18,24 @@ namespace Content.Shared.SubFloor
         /// </summary>
         [ViewVariables]
         public bool IsUnderCover { get; set; } = false;
+
+        /// <summary>
+        ///     Whether interactions with this entity should be blocked while it is under floor tiles.
+        /// </summary>
+        /// <remarks>
+        ///     Useful for entities like vents, which are only partially hidden. Anchor attempts will still be blocked.
+        /// </remarks>
+        [DataField("blockInteractions")]
+        public bool BlockInteractions { get; set; } = true;
+
+        /// <summary>
+        /// Whether this entity's ambience should be disabled when underneath the floor.
+        /// </summary>
+        /// <remarks>
+        /// Useful for cables and piping, gives maint it's distinct noise.
+        /// </remarks>
+        [DataField("blockAmbience")]
+        public bool BlockAmbience { get; set; } = true;
 
         /// <summary>
         ///     When revealed using some scanning tool, what transparency should be used to draw this item?

@@ -1,5 +1,4 @@
-using System;
-using System.Collections.Generic;
+using System.Linq;
 using Content.Server.Ghost.Components;
 using Content.Server.Players;
 using Content.Server.Pointing.Components;
@@ -10,15 +9,11 @@ using Content.Shared.Interaction.Helpers;
 using Content.Shared.MobState.Components;
 using Content.Shared.Pointing;
 using Content.Shared.Popups;
-using Content.Shared.Verbs;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
 using Robust.Server.Player;
 using Robust.Shared.Enums;
-using Robust.Shared.GameObjects;
 using Robust.Shared.Input.Binding;
-using Robust.Shared.IoC;
-using Robust.Shared.Localization;
 using Robust.Shared.Map;
 using Robust.Shared.Player;
 using Robust.Shared.Players;
@@ -126,6 +121,14 @@ namespace Content.Server.Pointing.EntitySystems
 
             var arrow = EntityManager.SpawnEntity("pointingarrow", mapCoords);
 
+            if (EntityQuery<PointingArrowAngeringComponent>().FirstOrDefault() != null)
+            {
+                if (TryComp<PointingArrowComponent>(arrow, out var pointingArrowComponent))
+                {
+                    pointingArrowComponent.Rogue = true;
+                }
+            }
+
             var layer = (int) VisibilityFlags.Normal;
             if (TryComp(player, out VisibilityComponent? playerVisibility))
             {
@@ -219,7 +222,7 @@ namespace Content.Server.Pointing.EntitySystems
 
         public override void Update(float frameTime)
         {
-            foreach (var component in EntityManager.EntityQuery<PointingArrowComponent>())
+            foreach (var component in EntityManager.EntityQuery<PointingArrowComponent>(true))
             {
                 component.Update(frameTime);
             }

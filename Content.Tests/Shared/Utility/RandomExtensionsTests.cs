@@ -11,7 +11,7 @@ namespace Content.Tests.Shared.Utility
 {
     [TestFixture]
     [TestOf(typeof(SharedRandomExtensions))]
-    public class RandomExtensionsTests : ContentUnitTest
+    public sealed class RandomExtensionsTests : ContentUnitTest
     {
         private const string TestDatasetId = "TestDataset";
 
@@ -29,6 +29,7 @@ namespace Content.Tests.Shared.Utility
             prototypeManager.Initialize();
 
             prototypeManager.LoadFromStream(new StringReader(Prototypes));
+            prototypeManager.ResolveResults();
 
             var dataSet = prototypeManager.Index<DatasetPrototype>(TestDatasetId);
             var random = IoCManager.Resolve<IRobustRandom>();

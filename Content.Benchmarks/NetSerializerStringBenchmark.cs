@@ -13,7 +13,7 @@ namespace Content.Benchmarks
     // Code for the *Slow and *Unsafe implementations taken from NetSerializer, licensed under the MIT license.
 
     [MemoryDiagnoser]
-    public class NetSerializerStringBenchmark
+    public sealed class NetSerializerStringBenchmark
     {
         private const int StringByteBufferLength = 256;
         private const int StringCharBufferLength = 128;

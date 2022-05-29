@@ -7,7 +7,7 @@ using Robust.Shared.Prototypes;
 
 namespace Content.Client.MobState.Overlays
 {
-    public class CircleMaskOverlay : Overlay
+    public sealed class CircleMaskOverlay : Overlay
     {
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
         [Dependency] private readonly IPlayerManager _playerManager = default!;

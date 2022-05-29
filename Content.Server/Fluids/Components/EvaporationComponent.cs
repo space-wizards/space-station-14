@@ -1,9 +1,5 @@
 ﻿using Content.Server.Fluids.EntitySystems;
-using Content.Shared.Chemistry.Reagent;
 using Content.Shared.FixedPoint;
-using Robust.Shared.Analyzers;
-using Robust.Shared.GameObjects;
-using Robust.Shared.Serialization.Manager.Attributes;
 
 namespace Content.Server.Fluids.Components
 {
@@ -37,7 +33,7 @@ namespace Content.Server.Fluids.Components
         public FixedPoint2 LowerLimit = FixedPoint2.Zero;
 
         /// <summary>
-        ///     Upper limit below which puddle won't evaporate. Useful when wanting to make sure large puddle will
+        ///     Upper limit above which puddle won't evaporate. Useful when wanting to make sure large puddle will
         ///     remain forever. Defaults to 100.
         /// </summary>
         [DataField("upperLimit")]
@@ -46,6 +42,7 @@ namespace Content.Server.Fluids.Components
         /// <summary>
         ///     The time accumulated since the start.
         /// </summary>
+        [DataField("accumulator")]
         public float Accumulator = 0f;
     }
 }

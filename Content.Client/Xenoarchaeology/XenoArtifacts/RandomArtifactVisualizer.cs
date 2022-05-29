@@ -5,7 +5,7 @@ using Robust.Shared.IoC;
 
 namespace Content.Client.Xenoarchaeology.XenoArtifacts;
 
-public class RandomArtifactVisualizer : AppearanceVisualizer
+public sealed class RandomArtifactVisualizer : AppearanceVisualizer
 {
     public override void OnChangeData(AppearanceComponent component)
     {

@@ -202,7 +202,7 @@ namespace Content.Client.Hands
     /// <summary>
     ///     Info on a set of hands to be displayed.
     /// </summary>
-    public class HandsGuiState
+    public sealed class HandsGuiState
     {
         /// <summary>
         ///     The set of hands to be displayed.
@@ -226,7 +226,7 @@ namespace Content.Client.Hands
     /// <summary>
     ///     Info on an individual hand to be displayed.
     /// </summary>
-    public class GuiHand
+    public sealed class GuiHand
     {
         /// <summary>
         ///     The name of this hand.

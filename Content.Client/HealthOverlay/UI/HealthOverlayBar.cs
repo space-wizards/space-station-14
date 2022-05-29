@@ -6,7 +6,7 @@ using Robust.Shared.Prototypes;
 
 namespace Content.Client.HealthOverlay.UI
 {
-    public class HealthOverlayBar : Control
+    public sealed class HealthOverlayBar : Control
     {
         public const byte HealthBarScale = 2;
 

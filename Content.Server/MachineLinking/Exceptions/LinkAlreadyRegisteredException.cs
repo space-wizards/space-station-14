@@ -1,8 +1,6 @@
-﻿using System;
-
-namespace Content.Server.MachineLinking.Exceptions
+﻿namespace Content.Server.MachineLinking.Exceptions
 {
-    public class LinkAlreadyRegisteredException : Exception
+    public sealed class LinkAlreadyRegisteredException : Exception
     {
 
     }

@@ -9,7 +9,7 @@ using Robust.Shared.Serialization.Manager.Attributes;
 namespace Content.Client.Recycling
 {
     [UsedImplicitly]
-    public class RecyclerVisualizer : AppearanceVisualizer
+    public sealed class RecyclerVisualizer : AppearanceVisualizer
     {
         [DataField("state_on")]
         private string _stateOn = "grinder-o1";

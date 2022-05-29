@@ -13,7 +13,7 @@ using static Robust.Client.UserInterface.Controls.BoxContainer;
 namespace Content.Client.AI
 {
 #if DEBUG
-    public class ClientAiDebugSystem : EntitySystem
+    public sealed class ClientAiDebugSystem : EntitySystem
     {
         [Dependency] private readonly IEyeManager _eyeManager = default!;
 

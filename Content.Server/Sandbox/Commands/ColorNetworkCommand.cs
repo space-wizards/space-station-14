@@ -1,5 +1,3 @@
-using System;
-using Content.Server.Administration;
 using Content.Server.Administration.Managers;
 using Content.Server.Atmos.Piping.Components;
 using Content.Server.Atmos.Piping.EntitySystems;
@@ -8,15 +6,11 @@ using Content.Server.NodeContainer.NodeGroups;
 using Content.Shared.Administration;
 using Robust.Server.Player;
 using Robust.Shared.Console;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Localization;
-using Robust.Shared.Maths;
 
 namespace Content.Server.Sandbox.Commands
 {
     [AnyCommand]
-    public class ColorNetworkCommand : IConsoleCommand
+    public sealed class ColorNetworkCommand : IConsoleCommand
     {
         public string Command => "colornetwork";
         public string Description => Loc.GetString("color-network-command-description");
@@ -24,7 +18,7 @@ namespace Content.Server.Sandbox.Commands
 
         public void Execute(IConsoleShell shell, string argStr, string[] args)
         {
-            var sandboxManager = IoCManager.Resolve<ISandboxManager>();
+            var sandboxManager = EntitySystem.Get<SandboxSystem>();
             var adminManager = IoCManager.Resolve<IAdminManager>();
             if (shell.IsClient && (!sandboxManager.IsSandboxEnabled && !adminManager.HasAdminFlag((IPlayerSession)shell.Player!, AdminFlags.Mapping)))
             {

@@ -1,8 +1,6 @@
-﻿using Robust.Shared.GameObjects;
-
-namespace Content.Shared.Emoting
+﻿namespace Content.Shared.Emoting
 {
-    public class EmoteSystem : EntitySystem
+    public sealed class EmoteSystem : EntitySystem
     {
         public override void Initialize()
         {

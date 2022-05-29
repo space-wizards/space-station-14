@@ -1,10 +1,5 @@
-using System;
-using Content.Shared.Damage;
 using Content.Shared.Sound;
 using Content.Shared.Weapons.Ranged.Components;
-using Robust.Shared.GameObjects;
-using Robust.Shared.Serialization.Manager.Attributes;
-using Robust.Shared.ViewVariables;
 
 namespace Content.Server.Weapon.Ranged
 {
@@ -31,8 +26,5 @@ namespace Content.Server.Weapon.Ranged
         [DataField("clumsyWeaponShotSound")]
         public SoundSpecifier ClumsyWeaponShotSound = new SoundPathSpecifier("/Audio/Weapons/Guns/Gunshots/bang.ogg");
 
-        [ViewVariables(VVAccess.ReadWrite)]
-        [DataField("clumsyDamage")]
-        public DamageSpecifier? ClumsyDamage;
     }
 }

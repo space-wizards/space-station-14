@@ -8,7 +8,7 @@ using Robust.Shared.Network;
 namespace Content.Client.Commands
 {
     [AnyCommand]
-    public class OpenAHelpCommand : IConsoleCommand
+    public sealed class OpenAHelpCommand : IConsoleCommand
     {
         public string Command => "openahelp";
         public string Description => $"Opens AHelp channel for a given NetUserID, or your personal channel if none given.";

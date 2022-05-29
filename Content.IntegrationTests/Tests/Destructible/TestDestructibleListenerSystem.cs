@@ -1,7 +1,9 @@
 using System.Collections.Generic;
 using Content.Server.Destructible;
 using Content.Shared.GameTicking;
+using Content.Shared.Module;
 using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 
 namespace Content.IntegrationTests.Tests.Destructible
 {
@@ -9,13 +11,19 @@ namespace Content.IntegrationTests.Tests.Destructible
     ///     This is just a system for testing destructible thresholds. Whenever any threshold is reached, this will add that
     ///     threshold to a list for checking during testing.
     /// </summary>
-    public class TestDestructibleListenerSystem : EntitySystem
+    public sealed class TestDestructibleListenerSystem : EntitySystem
     {
+        [Dependency] private readonly IModuleManager _modManager;
+
         public readonly List<DamageThresholdReached> ThresholdsReached = new();
 
         public override void Initialize()
         {
             base.Initialize();
+
+            if (_modManager.IsClientModule)
+                return;
+
             SubscribeLocalEvent<DestructibleComponent, DamageThresholdReached>(AddThresholdsToList);
             SubscribeLocalEvent<RoundRestartCleanupEvent>(OnRoundRestart);
         }

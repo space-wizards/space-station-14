@@ -1,5 +1,6 @@
-﻿using Content.Server.Power.Components;
-using Robust.Shared.GameObjects;
+using Content.Server.Power.Components;
+using Content.Shared.Examine;
+using Content.Shared.Power;
 
 namespace Content.Server.Power.EntitySystems
 {
@@ -8,6 +9,7 @@ namespace Content.Server.Power.EntitySystems
         public override void Initialize()
         {
             base.Initialize();
+            SubscribeLocalEvent<ApcPowerReceiverComponent, ExaminedEvent>(OnExamined);
 
             SubscribeLocalEvent<ApcPowerReceiverComponent, ExtensionCableSystem.ProviderConnectedEvent>(OnProviderConnected);
             SubscribeLocalEvent<ApcPowerReceiverComponent, ExtensionCableSystem.ProviderDisconnectedEvent>(OnProviderDisconnected);
@@ -15,6 +17,16 @@ namespace Content.Server.Power.EntitySystems
             SubscribeLocalEvent<ApcPowerProviderComponent, ComponentShutdown>(OnProviderShutdown);
             SubscribeLocalEvent<ApcPowerProviderComponent, ExtensionCableSystem.ReceiverConnectedEvent>(OnReceiverConnected);
             SubscribeLocalEvent<ApcPowerProviderComponent, ExtensionCableSystem.ReceiverDisconnectedEvent>(OnReceiverDisconnected);
+        }
+
+        ///<summary>
+        ///Adds some markup to the examine text of whatever object is using this component to tell you if it's powered or not, even if it doesn't have an icon state to do this for you.
+        ///</summary>
+        private void OnExamined(EntityUid uid, ApcPowerReceiverComponent component, ExaminedEvent args)
+        {
+            args.PushMarkup(Loc.GetString("power-receiver-component-on-examine-main",
+                                            ("stateText", Loc.GetString( component.Powered ? "power-receiver-component-on-examine-powered" :
+                                                                                   "power-receiver-component-on-examine-unpowered"))));
         }
 
         private void OnProviderShutdown(EntityUid uid, ApcPowerProviderComponent component, ComponentShutdown args)
@@ -62,10 +74,14 @@ namespace Content.Server.Power.EntitySystems
             }
         }
 
-        private static void ProviderChanged(ApcPowerReceiverComponent receiver)
+        private void ProviderChanged(ApcPowerReceiverComponent receiver)
         {
             receiver.NetworkLoad.LinkedNetwork = default;
-            receiver.ApcPowerChanged();
+
+            RaiseLocalEvent(receiver.Owner, new PowerChangedEvent(receiver.Powered, receiver.NetworkLoad.ReceivingPower));
+
+            if (TryComp(receiver.Owner, out AppearanceComponent? appearance))
+                appearance.SetData(PowerDeviceVisuals.Powered, receiver.Powered);
         }
     }
 }

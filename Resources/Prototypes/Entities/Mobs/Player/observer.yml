@@ -1,7 +1,7 @@
 - type: entity
   id: MobObserver
   name: observer
-  abstract: true
+  noSpawn: true
   save: false
   description: Boo!
   components:
@@ -16,18 +16,18 @@
     fixtures:
     - shape:
         !type:PhysShapeCircle
-          radius: 0.35
+        radius: 0.35
       mass: 5
       mask:
       - GhostImpassable
   - type: PlayerInputMover
+  - type: Appearance
   - type: Eye
     drawFov: false
   - type: Input
     context: "ghost"
   - type: Examiner
     DoRangeCheck: false
-  - type: IgnorePause
   - type: Ghost
   - type: GhostRadio
   - type: Sprite
@@ -41,9 +41,6 @@
       - state: animated
         shader: unshaded
   - type: MovementSpeedModifier
-    baseSprintSpeed: 14
-    baseWalkSpeed: 7
+    baseSprintSpeed: 8
+    baseWalkSpeed: 5
   - type: MovementIgnoreGravity
-  - type: Actions
-    innateActions:
-      - GhostBoo

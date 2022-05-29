@@ -6,7 +6,7 @@ using Robust.Shared.IoC;
 
 namespace Content.Client.Commands
 {
-    public class GroupingEntityMenuCommand : IConsoleCommand
+    public sealed class GroupingEntityMenuCommand : IConsoleCommand
     {
         public string Command => "entitymenug";
 

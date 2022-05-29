@@ -1,7 +1,5 @@
 using Content.Shared.Sound;
-using Robust.Shared.GameObjects;
-using Robust.Shared.Serialization.Manager.Attributes;
-using Robust.Shared.ViewVariables;
+using Robust.Shared.Audio;
 
 namespace Content.Server.Sound.Components
 {
@@ -14,6 +12,9 @@ namespace Content.Server.Sound.Components
         [ViewVariables(VVAccess.ReadWrite)]
         [DataField("sound", required: true)]
         public SoundSpecifier Sound { get; set; } = default!;
+
+        [DataField("audioParams")]
+        public AudioParams AudioParams = AudioParams.Default.WithVolume(-2f);
 
         [ViewVariables(VVAccess.ReadWrite)]
         [DataField("variation")]

@@ -1,6 +1,6 @@
-using System;
 using Content.Server.Popups;
 using Content.Server.Power.Components;
+using Content.Server.Power.EntitySystems;
 using Content.Server.Shuttles.Components;
 using Content.Shared.ActionBlocker;
 using Content.Shared.Alert;
@@ -10,9 +10,6 @@ using Content.Shared.Shuttles;
 using Content.Shared.Shuttles.Components;
 using Content.Shared.Tag;
 using Content.Shared.Verbs;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Localization;
 using Robust.Shared.Map;
 using Robust.Shared.Player;
 using Robust.Shared.Utility;
@@ -36,7 +33,6 @@ namespace Content.Server.Shuttles.EntitySystems
             SubscribeLocalEvent<ShuttleConsoleComponent, PowerChangedEvent>(HandlePowerChange);
             SubscribeLocalEvent<ShuttleConsoleComponent, GetVerbsEvent<InteractionVerb>>(OnConsoleInteract);
 
-            SubscribeLocalEvent<PilotComponent, ComponentShutdown>(HandlePilotShutdown);
             SubscribeLocalEvent<PilotComponent, MoveEvent>(HandlePilotMove);
         }
 
@@ -56,7 +52,7 @@ namespace Content.Server.Shuttles.EntitySystems
             {
                 Text = Loc.GetString("shuttle-mode-toggle"),
                 Act = () => ToggleShuttleMode(args.User, component, shuttle),
-                Disabled = !xform.Anchored || EntityManager.TryGetComponent(uid, out ApcPowerReceiverComponent? receiver) && !receiver.Powered,
+                Disabled = !xform.Anchored || !this.IsPowered(uid, EntityManager),
             };
 
             args.Verbs.Add(verb);
@@ -65,7 +61,7 @@ namespace Content.Server.Shuttles.EntitySystems
         private void ToggleShuttleMode(EntityUid user, ShuttleConsoleComponent consoleComponent, ShuttleComponent shuttleComponent, TransformComponent? consoleXform = null)
         {
             // Re-validate
-            if (EntityManager.TryGetComponent(consoleComponent.Owner, out ApcPowerReceiverComponent? receiver) && !receiver.Powered) return;
+            if (!this.IsPowered(consoleComponent.Owner, EntityManager)) return;
 
             if (!Resolve(consoleComponent.Owner, ref consoleXform)) return;
 
@@ -177,8 +173,9 @@ namespace Content.Server.Shuttles.EntitySystems
             AddPilot(args.User, component);
         }
 
-        private void HandlePilotShutdown(EntityUid uid, PilotComponent component, ComponentShutdown args)
+        protected override void HandlePilotShutdown(EntityUid uid, PilotComponent component, ComponentShutdown args)
         {
+            base.HandlePilotShutdown(uid, component, args);
             RemovePilot(component);
         }
 
@@ -206,6 +203,7 @@ namespace Content.Server.Shuttles.EntitySystems
 
             entity.PopupMessage(Loc.GetString("shuttle-pilot-start"));
             pilotComponent.Console = component;
+            ActionBlockerSystem.UpdateCanMove(entity);
             pilotComponent.Position = EntityManager.GetComponent<TransformComponent>(entity).Coordinates;
             pilotComponent.Dirty();
         }

@@ -11,7 +11,7 @@ namespace Content.Shared.Access;
 [Prototype("accessGroup")]
 public sealed class AccessGroupPrototype : IPrototype
 {
-    [DataField("id", required: true)]
+    [IdDataFieldAttribute]
     public string ID { get; } = default!;
 
     [DataField("tags", required: true, customTypeSerializer:typeof(PrototypeIdHashSetSerializer<AccessLevelPrototype>))]

@@ -2,6 +2,7 @@ using Content.Client.SubFloor;
 using Content.Shared.Atmos;
 using Content.Shared.Atmos.Components;
 using Content.Shared.Atmos.Piping;
+using Content.Shared.SubFloor;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
 using Robust.Client.ResourceManagement;
@@ -12,7 +13,8 @@ namespace Content.Client.Atmos.EntitySystems;
 public sealed class AtmosPipeAppearanceSystem : EntitySystem
 {
     [Dependency] private readonly IResourceCache _resCache = default!;
-
+    [Dependency] private readonly SubFloorHideSystem _subfloorSys = default!;
+    
     public override void Initialize()
     {
         base.Initialize();
@@ -37,30 +39,39 @@ public sealed class AtmosPipeAppearanceSystem : EntitySystem
             sprite.LayerMapReserveBlank(layerKey);
             var layer = sprite.LayerMapGet(layerKey);
             sprite.LayerSetRSI(layer, rsi.RSI);
-            var layerState = component.BaseState + (PipeDirection) layerKey;
+            var layerState = component.State;
             sprite.LayerSetState(layer, layerState);
+            sprite.LayerSetDirOffset(layer, ToOffset(layerKey));
         }
     }
 
     private void OnAppearanceChanged(EntityUid uid, PipeAppearanceComponent component, ref AppearanceChangeEvent args)
     {
-        if (!TryComp(uid, out SpriteComponent? sprite))
+        if (args.Sprite == null)
             return;
+
+        if (!args.Sprite.Visible)
+        {
+            // This entity is probably below a floor and is not even visible to the user -> don't bother updating sprite data.
+            // Note that if the subfloor visuals change, then another AppearanceChangeEvent will get triggered.
+            return;
+        }
 
         if (!args.Component.TryGetData(PipeColorVisuals.Color, out Color color))
             color = Color.White;
 
-        if (!args.Component.TryGetData(PipeVisuals.VisualState, out PipeDirection connectedDirections))
+        if (!args.Component.TryGetData(PipeVisuals.VisualState, out PipeDirection worldConnectedDirections))
             return;
 
-        var rotation = Transform(uid).LocalRotation;
-
+        // transform connected directions to local-coordinates
+        var connectedDirections = worldConnectedDirections.RotatePipeDirection(-Transform(uid).LocalRotation);
+        
         foreach (PipeConnectionLayer layerKey in Enum.GetValues(typeof(PipeConnectionLayer)))
         {
-            if (!sprite.LayerMapTryGet(layerKey, out var key))
+            if (!args.Sprite.LayerMapTryGet(layerKey, out var key))
                 continue;
 
-            var layer = sprite[key];
+            var layer = args.Sprite[key];
             var dir = (PipeDirection) layerKey;
             var visible = connectedDirections.HasDirection(dir);
 
@@ -68,9 +79,19 @@ public sealed class AtmosPipeAppearanceSystem : EntitySystem
 
             if (!visible) continue;
 
-            layer.Rotation = -rotation;
             layer.Color = color;
         }
+    }
+
+    private SpriteComponent.DirectionOffset ToOffset(PipeConnectionLayer layer)
+    {
+        return layer switch
+        {
+            PipeConnectionLayer.NorthConnection => SpriteComponent.DirectionOffset.Flip,
+            PipeConnectionLayer.EastConnection => SpriteComponent.DirectionOffset.CounterClockwise,
+            PipeConnectionLayer.WestConnection => SpriteComponent.DirectionOffset.Clockwise,
+            _ => SpriteComponent.DirectionOffset.None,
+        };
     }
 
     private enum PipeConnectionLayer : byte

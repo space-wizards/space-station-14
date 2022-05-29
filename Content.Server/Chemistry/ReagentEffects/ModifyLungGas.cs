@@ -1,12 +1,10 @@
-﻿using System.Collections.Generic;
-using Content.Server.Body.Components;
+﻿using Content.Server.Body.Components;
 using Content.Shared.Atmos;
 using Content.Shared.Chemistry.Reagent;
-using Robust.Shared.Serialization.Manager.Attributes;
 
 namespace Content.Server.Chemistry.ReagentEffects;
 
-public class ModifyLungGas : ReagentEffect
+public sealed class ModifyLungGas : ReagentEffect
 {
     [DataField("ratios", required: true)]
     private Dictionary<Gas, float> _ratios = default!;

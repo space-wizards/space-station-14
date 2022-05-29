@@ -17,7 +17,7 @@ namespace Content.IntegrationTests.Tests.Administration.Logs;
 
 [TestFixture]
 [TestOf(typeof(AdminLogSystem))]
-public class AddTests : ContentIntegrationTest
+public sealed class AddTests : ContentIntegrationTest
 {
     [Test]
     public async Task AddAndGetSingleLog()
@@ -36,7 +36,7 @@ public class AddTests : ContentIntegrationTest
         var sMaps = server.ResolveDependency<IMapManager>();
         var sSystems = server.ResolveDependency<IEntitySystemManager>();
 
-        var sAdminLogSystem = sSystems.GetEntitySystem<AdminLogSystem>();
+        var sAdminLogSystem = server.ResolveDependency<IAdminLogManager>();
 
         var guid = Guid.NewGuid();
 
@@ -89,7 +89,7 @@ public class AddTests : ContentIntegrationTest
         var sMaps = server.ResolveDependency<IMapManager>();
         var sSystems = server.ResolveDependency<IEntitySystemManager>();
 
-        var sAdminLogSystem = sSystems.GetEntitySystem<AdminLogSystem>();
+        var sAdminLogSystem = server.ResolveDependency<IAdminLogManager>();
         var sGamerTicker = sSystems.GetEntitySystem<GameTicker>();
 
         var guid = Guid.NewGuid();
@@ -156,7 +156,7 @@ public class AddTests : ContentIntegrationTest
         var sMaps = server.ResolveDependency<IMapManager>();
         var sSystems = server.ResolveDependency<IEntitySystemManager>();
 
-        var sAdminLogSystem = sSystems.GetEntitySystem<AdminLogSystem>();
+        var sAdminLogSystem = server.ResolveDependency<IAdminLogManager>();
 
         await server.WaitPost(() =>
         {
@@ -193,7 +193,7 @@ public class AddTests : ContentIntegrationTest
         var sPlayers = server.ResolveDependency<IPlayerManager>();
         var sSystems = server.ResolveDependency<IEntitySystemManager>();
 
-        var sAdminLogSystem = sSystems.GetEntitySystem<AdminLogSystem>();
+        var sAdminLogSystem = server.ResolveDependency<IAdminLogManager>();
         Guid playerGuid = default;
 
         await server.WaitPost(() =>
@@ -234,21 +234,16 @@ public class AddTests : ContentIntegrationTest
         await server.WaitIdleAsync();
 
         var sDatabase = server.ResolveDependency<IServerDbManager>();
-        var sEntities = server.ResolveDependency<IEntityManager>();
-        var sMaps = server.ResolveDependency<IMapManager>();
         var sSystems = server.ResolveDependency<IEntitySystemManager>();
 
-        var sAdminLogSystem = sSystems.GetEntitySystem<AdminLogSystem>();
+        var sAdminLogSystem = server.ResolveDependency<IAdminLogManager>();
         var sGamerTicker = sSystems.GetEntitySystem<GameTicker>();
 
         var guid = Guid.NewGuid();
 
         await server.WaitPost(() =>
         {
-            var coordinates = GetMainEntityCoordinates(sMaps);
-            var entity = sEntities.SpawnEntity(null, coordinates);
-
-            sAdminLogSystem.Add(LogType.Unknown, $"{entity} test log: {guid}");
+            sAdminLogSystem.Add(LogType.Unknown, $"test log: {guid}");
         });
 
         await server.WaitPost(() =>
@@ -285,7 +280,6 @@ public class AddTests : ContentIntegrationTest
         {
             var root = json.RootElement;
 
-            Assert.That(root.TryGetProperty("entity", out _), Is.True);
             Assert.That(root.TryGetProperty("guid", out _), Is.True);
 
             json.Dispose();
@@ -308,7 +302,7 @@ public class AddTests : ContentIntegrationTest
         var sPlayers = server.ResolveDependency<IPlayerManager>();
         var sSystems = server.ResolveDependency<IEntitySystemManager>();
 
-        var sAdminLogSystem = sSystems.GetEntitySystem<AdminLogSystem>();
+        var sAdminLogSystem = server.ResolveDependency<IAdminLogManager>();
 
         var guid = Guid.NewGuid();
 
@@ -353,7 +347,7 @@ public class AddTests : ContentIntegrationTest
         var sPlayers = server.ResolveDependency<IPlayerManager>();
         var sSystems = server.ResolveDependency<IEntitySystemManager>();
 
-        var sAdminLogSystem = sSystems.GetEntitySystem<AdminLogSystem>();
+        var sAdminLogSystem = server.ResolveDependency<IAdminLogManager>();
 
         var guid = Guid.NewGuid();
 

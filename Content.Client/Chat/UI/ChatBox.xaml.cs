@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Content.Client.Alerts.UI;
 using Content.Client.Chat.Managers;
+using Content.Client.Chat.TypingIndicator;
 using Content.Client.Resources;
 using Content.Client.Stylesheets;
 using Content.Shared.Chat;
@@ -22,6 +23,7 @@ using Robust.Shared.Utility;
 namespace Content.Client.Chat.UI
 {
     [GenerateTypedNameReferences]
+    [Virtual]
     public partial class ChatBox : Control
     {
         [Dependency] protected readonly IChatManager ChatMgr = default!;
@@ -474,6 +476,9 @@ namespace Content.Client.Chat.UI
         {
             // Update channel select button to correct channel if we have a prefix.
             UpdateChannelSelectButton();
+
+            // Warn typing indicator about change
+            EntitySystem.Get<TypingIndicatorSystem>().ClientChangedChatText();
         }
 
         private static ChatSelectChannel GetChannelFromPrefix(char prefix)
@@ -517,6 +522,9 @@ namespace Content.Client.Chat.UI
 
         private void Input_OnTextEntered(LineEdit.LineEditEventArgs args)
         {
+            // Warn typing indicator about entered text
+            EntitySystem.Get<TypingIndicatorSystem>().ClientSubmittedChatText();
+
             if (!string.IsNullOrWhiteSpace(args.Text))
             {
                 var (prefixChannel, text) = SplitInputContents();

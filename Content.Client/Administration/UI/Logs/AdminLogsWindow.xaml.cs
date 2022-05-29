@@ -5,7 +5,7 @@ using Robust.Client.UserInterface.XAML;
 namespace Content.Client.Administration.UI.Logs;
 
 [GenerateTypedNameReferences]
-public partial class AdminLogsWindow : DefaultWindow
+public sealed partial class AdminLogsWindow : DefaultWindow
 {
     public AdminLogsWindow()
     {

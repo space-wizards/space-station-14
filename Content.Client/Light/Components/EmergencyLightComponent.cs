@@ -6,7 +6,7 @@ namespace Content.Client.Light.Components
 {
     [RegisterComponent]
     [NetworkedComponent]
-    public class EmergencyLightComponent : SharedEmergencyLightComponent
+    public sealed class EmergencyLightComponent : SharedEmergencyLightComponent
     {
     }
 }

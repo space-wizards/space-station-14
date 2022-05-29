@@ -3,7 +3,7 @@ using Robust.Shared.Maths;
 
 namespace Content.Client.Chat
 {
-    public class ChatHelper
+    public sealed class ChatHelper
     {
         public static Color ChatColor(ChatChannel channel) =>
             channel switch

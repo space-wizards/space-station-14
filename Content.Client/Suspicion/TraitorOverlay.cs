@@ -12,7 +12,7 @@ using Robust.Shared.Physics;
 
 namespace Content.Client.Suspicion
 {
-    public class TraitorOverlay : Overlay
+    public sealed class TraitorOverlay : Overlay
     {
         private readonly IEntityManager _entityManager;
         private readonly IPlayerManager _playerManager;

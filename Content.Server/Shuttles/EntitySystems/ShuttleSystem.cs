@@ -1,22 +1,26 @@
-using System.Collections.Generic;
 using Content.Server.Shuttles.Components;
+using Content.Shared.CCVar;
 using JetBrains.Annotations;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
+using Robust.Shared.Configuration;
 using Robust.Shared.Physics;
 
 namespace Content.Server.Shuttles.EntitySystems
 {
     [UsedImplicitly]
-    internal sealed class ShuttleSystem : EntitySystem
+    public sealed class ShuttleSystem : EntitySystem
     {
-        private const float TileMassMultiplier = 4f;
+        [Dependency] private readonly FixtureSystem _fixtures = default!;
 
-        public float ShuttleIdleLinearDamping = 0.1f;
-        public float ShuttleIdleAngularDamping = 0.2f;
+        public const float TileMassMultiplier = 0.5f;
 
-        public float ShuttleMovingLinearDamping = 0.05f;
-        public float ShuttleMovingAngularDamping = 0.05f;
+        public float ShuttleMaxLinearSpeed;
+
+        public float ShuttleMaxAngularMomentum;
+        public float ShuttleMaxAngularAcc;
+        public float ShuttleMaxAngularSpeed;
+
+        public float ShuttleIdleLinearDamping;
+        public float ShuttleIdleAngularDamping;
 
         public override void Initialize()
         {
@@ -27,6 +31,32 @@ namespace Content.Server.Shuttles.EntitySystems
 
             SubscribeLocalEvent<GridInitializeEvent>(OnGridInit);
             SubscribeLocalEvent<GridFixtureChangeEvent>(OnGridFixtureChange);
+
+            var configManager = IoCManager.Resolve<IConfigurationManager>();
+            configManager.OnValueChanged(CCVars.ShuttleMaxLinearSpeed, SetShuttleMaxLinearSpeed, true);
+            configManager.OnValueChanged(CCVars.ShuttleMaxAngularSpeed, SetShuttleMaxAngularSpeed, true);
+            configManager.OnValueChanged(CCVars.ShuttleIdleLinearDamping, SetShuttleIdleLinearDamping, true);
+            configManager.OnValueChanged(CCVars.ShuttleIdleAngularDamping, SetShuttleIdleAngularDamping, true);
+            configManager.OnValueChanged(CCVars.ShuttleMaxAngularAcc, SetShuttleMaxAngularAcc, true);
+            configManager.OnValueChanged(CCVars.ShuttleMaxAngularMomentum, SetShuttleMaxAngularMomentum, true);
+        }
+
+        private void SetShuttleMaxLinearSpeed(float value) => ShuttleMaxLinearSpeed = value;
+        private void SetShuttleMaxAngularSpeed(float value) => ShuttleMaxAngularSpeed = value;
+        private void SetShuttleMaxAngularAcc(float value) => ShuttleMaxAngularAcc = value;
+        private void SetShuttleMaxAngularMomentum(float value) => ShuttleMaxAngularMomentum = value;
+        private void SetShuttleIdleLinearDamping(float value) => ShuttleIdleLinearDamping = value;
+        private void SetShuttleIdleAngularDamping(float value) => ShuttleIdleAngularDamping = value;
+
+        public override void Shutdown()
+        {
+            base.Shutdown();
+            var configManager = IoCManager.Resolve<IConfigurationManager>();
+            configManager.UnsubValueChanged(CCVars.ShuttleMaxLinearSpeed, SetShuttleMaxLinearSpeed);
+            configManager.UnsubValueChanged(CCVars.ShuttleMaxAngularSpeed, SetShuttleMaxAngularSpeed);
+            configManager.UnsubValueChanged(CCVars.ShuttleIdleLinearDamping, SetShuttleIdleLinearDamping);
+            configManager.UnsubValueChanged(CCVars.ShuttleIdleAngularDamping, SetShuttleIdleAngularDamping);
+            configManager.UnsubValueChanged(CCVars.ShuttleMaxAngularMomentum, SetShuttleMaxAngularMomentum);
         }
 
         private void OnShuttleAdd(EntityUid uid, ShuttleComponent component, ComponentAdd args)
@@ -43,11 +73,15 @@ namespace Content.Server.Shuttles.EntitySystems
             // Look this is jank but it's a placeholder until we design it.
             if (args.NewFixtures.Count == 0) return;
 
+            var manager = Comp<FixturesComponent>(args.NewFixtures[0].Body.Owner);
+
             foreach (var fixture in args.NewFixtures)
             {
-                fixture.Mass = fixture.Area * TileMassMultiplier;
-                fixture.Restitution = 0.1f;
+                _fixtures.SetMass(fixture, fixture.Area * TileMassMultiplier, manager, false);
+                _fixtures.SetRestitution(fixture, 0.1f, manager, false);
             }
+
+            _fixtures.FixtureUpdate(manager, args.NewFixtures[0].Body);
         }
 
         private void OnGridInit(GridInitializeEvent ev)

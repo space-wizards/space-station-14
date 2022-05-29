@@ -8,7 +8,7 @@ using Robust.Shared.Serialization.Manager.Attributes;
 namespace Content.Client.Atmos.Visualizers
 {
     [UsedImplicitly]
-    public class GasAnalyzerVisualizer : AppearanceVisualizer
+    public sealed class GasAnalyzerVisualizer : AppearanceVisualizer
     {
         [DataField("state_off")]
         private string? _stateOff;

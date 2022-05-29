@@ -13,6 +13,7 @@ namespace Content.Client.ContextMenu.UI
     /// <remarks>
     ///     This largely involves setting up timers to open and close sub-menus when hovering over other menu elements.
     /// </remarks>
+    [Virtual]
     public class ContextMenuPresenter : IDisposable
     {
         public static readonly TimeSpan HoverDelay = TimeSpan.FromSeconds(0.2);
@@ -179,7 +180,7 @@ namespace Content.Client.ContextMenu.UI
         }
 
         /// <summary>
-        ///     Removes event subscriptions when an element is removed from a menu, 
+        ///     Removes event subscriptions when an element is removed from a menu,
         /// </summary>
         public void OnRemoveElement(ContextMenuPopup menu, Control control)
         {

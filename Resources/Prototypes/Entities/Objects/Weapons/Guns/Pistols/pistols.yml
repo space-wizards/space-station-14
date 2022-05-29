@@ -17,7 +17,7 @@
   - type: Icon
     state: icon
   - type: Item
-    size: 12
+    size: 10
   - type: MagazineBarrel
     caliber: Pistol
     magazineTypes:
@@ -26,10 +26,10 @@
     allSelectors:
     - Single
     fireRate: 8
-    minAngle: 10
+    minAngle: 5
     maxAngle: 60
     angleIncrease: 10
-    angleDecay: 60
+    angleDecay: 15
     magFillPrototype: MagazinePistol
     soundGunshot:
       path: /Audio/Weapons/Guns/Gunshots/pistol.ogg
@@ -64,7 +64,7 @@
   - type: Icon
     sprite: Objects/Weapons/Guns/Pistols/clarissa.rsi
   - type: Item
-    size: 12
+    size: 10
     sprite: Objects/Weapons/Guns/Pistols/clarissa.rsi
   - type: RangedWeapon
   - type: MagazineBarrel
@@ -76,7 +76,7 @@
     minAngle: 0
     maxAngle: 45
     angleIncrease: 20
-    angleDecay: 60
+    angleDecay: 15
 
 - type: entity
   name: colt M1911
@@ -94,7 +94,7 @@
   - type: Icon
     sprite: Objects/Weapons/Guns/Pistols/colt.rsi
   - type: Item
-    size: 12
+    size: 10
     sprite: Objects/Weapons/Guns/Pistols/colt.rsi
   - type: RangedWeapon
   - type: MagazineBarrel
@@ -105,7 +105,7 @@
     minAngle: 0
     maxAngle: 45
     angleIncrease: 20
-    angleDecay: 60
+    angleDecay: 15
   - type: Appearance
     visuals:
     - type: BarrelBoltVisualizer
@@ -121,7 +121,7 @@
   - type: Icon
     sprite: Objects/Weapons/Guns/Pistols/giskard.rsi
   - type: Item
-    size: 12
+    size: 10
     sprite: Objects/Weapons/Guns/Pistols/giskard.rsi
   - type: RangedWeapon
   - type: MagazineBarrel
@@ -132,7 +132,7 @@
     minAngle: 0
     maxAngle: 45
     angleIncrease: 20
-    angleDecay: 60
+    angleDecay: 15
 
 - type: entity
   name: handmade pistol
@@ -151,7 +151,7 @@
   - type: Icon
     sprite: Objects/Weapons/Guns/Pistols/hm_pistol.rsi
   - type: Item
-    size: 12
+    size: 10
     sprite: Objects/Weapons/Guns/Pistols/hm_pistol.rsi
   - type: RangedWeapon
   - type: MagazineBarrel
@@ -162,10 +162,10 @@
     magazineTypes:
     - Pistol
     fireRate: 8
-    minAngle: 10
+    minAngle: 5
     maxAngle: 60
     angleIncrease: 10
-    angleDecay: 60
+    angleDecay: 15
     magFillPrototype: MagazinePistol
     soundGunshot:
       path: /Audio/Weapons/Guns/Gunshots/pistol.ogg
@@ -189,20 +189,22 @@
   name: lamia
   parent: PistolBase
   id: PistolLamia
-  description: A heavy pistol of Ironhammer enforcers.
+  description: A heavy pistol chambered in .40 Magnum.
   components:
   - type: Sprite
-    sprite: Objects/Weapons/Guns/Pistols/gyro_pistol.rsi
+    sprite: Objects/Weapons/Guns/Pistols/lamia.rsi
     layers:
     - state: base
       map: ["enum.RangedBarrelVisualLayers.Base"]
+    - state: bolt-closed
+      map: ["enum.RangedBarrelVisualLayers.Bolt"]
     - state: mag-0
       map: ["enum.RangedBarrelVisualLayers.Mag"]
   - type: Icon
-    sprite: Objects/Weapons/Guns/Pistols/gyro_pistol.rsi
+    sprite: Objects/Weapons/Guns/Pistols/lamia.rsi
   - type: Item
-    size: 12
-    sprite: Objects/Weapons/Guns/Pistols/gyro_pistol.rsi
+    size: 10
+    sprite: Objects/Weapons/Guns/Pistols/lamia.rsi
   - type: RangedWeapon
   - type: MagazineBarrel
     caliber: Magnum
@@ -210,11 +212,11 @@
     - Pistol
     magFillPrototype: MagazineMagnum
     autoEjectMag: true
-    fireRate: 5
+    fireRate: 3
     minAngle: 0
     maxAngle: 45
     angleIncrease: 20
-    angleDecay: 60
+    angleDecay: 15
     soundGunshot:
       path: /Audio/Weapons/Guns/Gunshots/hpistol.ogg
     soundEmpty:
@@ -227,6 +229,7 @@
       path: /Audio/Weapons/Guns/MagOut/hpistol_magout.ogg
   - type: Appearance
     visuals:
+    - type: BarrelBoltVisualizer
     - type: MagVisualizer
       magState: mag
       steps: 1
@@ -250,7 +253,7 @@
   - type: Icon
     sprite: Objects/Weapons/Guns/Pistols/mandella.rsi
   - type: Item
-    size: 12
+    size: 10
     sprite: Objects/Weapons/Guns/Pistols/mandella.rsi
   - type: RangedWeapon
   - type: MagazineBarrel
@@ -258,12 +261,11 @@
     magazineTypes:
     - Pistol
     magFillPrototype: MagazineClRiflePistol
-    autoEjectMag: true
     canMuzzleFlash: false # Dat in-built suppressor
     minAngle: 0
     maxAngle: 45
     angleIncrease: 20
-    angleDecay: 60
+    angleDecay: 15
     soundGunshot:
       path: /Audio/Weapons/Guns/Gunshots/silenced.ogg
 
@@ -283,7 +285,7 @@
   - type: Icon
     sprite: Objects/Weapons/Guns/Pistols/mk58.rsi
   - type: Item
-    size: 12
+    size: 10
     sprite: Objects/Weapons/Guns/Pistols/mk58.rsi
   - type: RangedWeapon
   - type: MagazineBarrel
@@ -294,7 +296,7 @@
     minAngle: 0
     maxAngle: 45
     angleIncrease: 20
-    angleDecay: 60
+    angleDecay: 15
   - type: Appearance
     visuals:
     - type: BarrelBoltVisualizer
@@ -315,7 +317,7 @@
   - type: Icon
     sprite: Objects/Weapons/Guns/Pistols/mk58_wood.rsi
   - type: Item
-    size: 12
+    size: 10
     sprite: Objects/Weapons/Guns/Pistols/mk58_wood.rsi
   - type: RangedWeapon
   - type: MagazineBarrel
@@ -326,7 +328,7 @@
     minAngle: 0
     maxAngle: 45
     angleIncrease: 20
-    angleDecay: 60
+    angleDecay: 15
   - type: Appearance
     visuals:
     - type: BarrelBoltVisualizer
@@ -342,7 +344,7 @@
   - type: Icon
     sprite: Objects/Weapons/Guns/Pistols/molly.rsi
   - type: Item
-    size: 12
+    size: 10
     sprite: Objects/Weapons/Guns/Pistols/molly.rsi
   - type: RangedWeapon
   - type: MagazineBarrel
@@ -359,7 +361,37 @@
     minAngle: 0
     maxAngle: 45
     angleIncrease: 20
-    angleDecay: 60
+    angleDecay: 15
+
+- type: entity
+  name: basilisk
+  parent: PistolBase
+  id: PistolBasilisk
+  description: A fully automatic handgun chambered in .40 magnum. Can use both pistol and SMG type magazines.
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Pistols/gyro_pistol.rsi
+  - type: Icon
+    sprite: Objects/Weapons/Guns/Pistols/gyro_pistol.rsi
+  - type: Item
+    size: 10
+    sprite: Objects/Weapons/Guns/Pistols/gyro_pistol.rsi
+  - type: RangedWeapon
+  - type: MagazineBarrel
+    caliber: Magnum
+    currentSelector: Automatic
+    allSelectors:
+    - Automatic
+    magazineTypes:
+    - Pistol
+    - Smg
+    magFillPrototype: MagazineMagnum
+    autoEjectMag: true
+    fireRate: 6
+    minAngle: 0
+    maxAngle: 45
+    angleIncrease: 20
+    angleDecay: 15
 
 - type: entity
   name: olivaw
@@ -377,7 +409,7 @@
   - type: Icon
     sprite: Objects/Weapons/Guns/Pistols/olivaw_civil.rsi
   - type: Item
-    size: 12
+    size: 10
     sprite: Objects/Weapons/Guns/Pistols/olivaw_civil.rsi
   - type: RangedWeapon
   - type: MagazineBarrel
@@ -389,7 +421,7 @@
     minAngle: 0
     maxAngle: 45
     angleIncrease: 20
-    angleDecay: 60
+    angleDecay: 15
   - type: Appearance
     visuals:
     - type: BarrelBoltVisualizer
@@ -405,7 +437,7 @@
   - type: Icon
     sprite: Objects/Weapons/Guns/Pistols/paco.rsi
   - type: Item
-    size: 12
+    size: 10
     sprite: Objects/Weapons/Guns/Pistols/paco.rsi
   - type: RangedWeapon
   - type: MagazineBarrel
@@ -417,4 +449,4 @@
     minAngle: 0
     maxAngle: 45
     angleIncrease: 20
-    angleDecay: 60
+    angleDecay: 15

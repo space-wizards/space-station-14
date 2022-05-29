@@ -1,6 +1,3 @@
-using System;
-using Robust.Shared.Analyzers;
-using Robust.Shared.GameObjects;
 using Robust.Shared.GameStates;
 using Robust.Shared.Serialization;
 
@@ -14,7 +11,7 @@ namespace Content.Shared.Flash
     }
 
     [Serializable, NetSerializable]
-    public class FlashableComponentState : ComponentState
+    public sealed class FlashableComponentState : ComponentState
     {
         public float Duration { get; }
         public TimeSpan Time { get; }

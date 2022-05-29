@@ -2,16 +2,12 @@ using Content.Server.Projectiles.Components;
 using Content.Server.Singularity.Components;
 using Content.Shared.Singularity.Components;
 using Robust.Server.GameObjects;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Log;
-using Robust.Shared.Maths;
 using Robust.Shared.Timing;
 
 namespace Content.Server.ParticleAccelerator.Components
 {
     [RegisterComponent]
-    public class ParticleProjectileComponent : Component
+    public sealed class ParticleProjectileComponent : Component
     {
         [Dependency] private readonly IEntityManager _entMan = default!;
 

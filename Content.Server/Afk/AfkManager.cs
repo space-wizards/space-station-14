@@ -1,14 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using Content.Shared.CCVar;
+﻿using Content.Shared.CCVar;
 using JetBrains.Annotations;
 using Robust.Server.Player;
 using Robust.Shared.Configuration;
 using Robust.Shared.Console;
 using Robust.Shared.Enums;
-using Robust.Shared.GameObjects;
 using Robust.Shared.Input;
-using Robust.Shared.IoC;
 using Robust.Shared.Timing;
 
 namespace Content.Server.Afk
@@ -36,7 +32,7 @@ namespace Content.Server.Afk
     }
 
     [UsedImplicitly]
-    public class AfkManager : IAfkManager, IEntityEventSubscriber
+    public sealed class AfkManager : IAfkManager, IEntityEventSubscriber
     {
         [Dependency] private readonly IEntityManager _entityManager = default!;
         [Dependency] private readonly IPlayerManager _playerManager = default!;

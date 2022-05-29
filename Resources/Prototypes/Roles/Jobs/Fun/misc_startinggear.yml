@@ -10,7 +10,7 @@
     gloves: ClothingHandsGlovesIhscombat
     outerClothing: IHSVoidsuit
     shoes: ClothingShoesBootsJack
-    id: AssistantPDA
+    id: PassengerPDA
     ears: ClothingHeadsetService
   innerclothingskirt: ClothingUniformJumpskirtColorBlack
   satchel: ClothingBackpackSatchelFilled
@@ -25,7 +25,7 @@
     head: ClothingHeadHatPirate
     outerClothing: ClothingOuterCoatPirate
     shoes: ClothingShoesBootsWork
-    id: AssistantPDA
+    id: PassengerPDA
     belt: ClothingBeltUtility
   innerclothingskirt: ClothingUniformJumpskirtColorLightBrown
   satchel: ClothingBackpackSatchelEngineering
@@ -41,7 +41,7 @@
     gloves: ClothingHandsGlovesSpaceNinja
     outerClothing: ClothingOuterSuitSpaceninja
     shoes: ClothingShoesSpaceNinja
-    id: AssistantPDA
+    id: PassengerPDA
   innerclothingskirt: ClothingUniformJumpskirtColorBlack
   satchel: ClothingBackpackSatchelFilled
   duffelbag: ClothingBackpackDuffelFilled
@@ -52,7 +52,6 @@
   equipment:
     jumpsuit: ClothingUniformJumpsuitColorBlack
     back: ClothingBackpackDuffelSyndicateAmmo
-    head: ClothingHeadHelmetHardsuitDeathsquad
     mask: ClothingMaskBreath
     eyes: ClothingEyesGlassesSecurity
     ears: ClothingHeadsetCentCom
@@ -65,3 +64,75 @@
   innerclothingskirt: ClothingUniformJumpskirtColorBlack
   satchel: ClothingBackpackDuffelSyndicateAmmo
   duffelbag: ClothingBackpackDuffelSyndicateAmmo
+
+#Syndicate Operative Outfit - Basic
+- type: startingGear
+  id: SyndicateOperativeGearBasic
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitOperative
+    back: ClothingBackpackDuffelSyndicateOperative
+    ears: ClothingHeadsetAltSyndicate
+    gloves: ClothingHandsGlovesCombat
+    shoes: ClothingShoesBootsCombat
+    id: AgentIDCard
+  innerclothingskirt: ClothingUniformJumpsuitOperative
+  satchel: ClothingBackpackDuffelSyndicateOperative
+  duffelbag: ClothingBackpackDuffelSyndicateOperative
+
+#Syndicate Operative Outfit - Full Kit
+- type: startingGear
+  id: SyndicateOperativeGearFull
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitOperative
+    back: ClothingBackpackDuffelSyndicateOperative
+    mask: ClothingMaskGasSyndicate
+  # eyes: Night Vision Goggles whenever they're made
+    eyes: ClothingEyesGlassesMeson
+    ears: ClothingHeadsetAltSyndicate
+    gloves: ClothingHandsGlovesCombat
+    outerClothing: ClothingOuterHardsuitSyndie
+    shoes: ClothingShoesBootsCombat
+    id: AgentIDCard
+    pocket1: ExtendedEmergencyOxygenTankFilled
+    belt: ClothingBeltMilitaryWebbing
+  innerclothingskirt: ClothingUniformJumpskirtOperative
+  satchel: ClothingBackpackDuffelSyndicateOperative
+  duffelbag: ClothingBackpackDuffelSyndicateOperative
+
+- type: startingGear
+  id: SyndicateCommanderGearFull
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitOperative
+    back: ClothingBackpackDuffelSyndicateOperative
+    mask: ClothingMaskGasSyndicate
+  # eyes: Night Vision Goggles whenever they're made
+    eyes: ClothingEyesGlassesMeson 
+    ears: ClothingHeadsetAltSyndicate
+    gloves: ClothingHandsGlovesCombat
+    outerClothing: ClothingOuterHardsuitSyndieCommander
+    shoes: ClothingShoesBootsCombat
+    id: SyndiPDA
+    pocket1: ExtendedEmergencyOxygenTankFilled
+    belt: ClothingBeltMilitaryWebbing
+  innerclothingskirt: ClothingUniformJumpskirtOperative
+  satchel: ClothingBackpackDuffelSyndicateOperative
+  duffelbag: ClothingBackpackDuffelSyndicateOperative
+  
+- type: startingGear
+  id: SyndicateOperativeMedicFull
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitOperative
+    back: ClothingBackpackDuffelSyndicateOperativeMedic
+    mask: ClothingMaskBreathMedical
+    eyes: ClothingEyesHudMedical
+    ears: ClothingHeadsetAltSyndicate
+    gloves: ClothingHandsGlovesCombat
+    outerClothing: ClothingOuterHardsuitSyndieElite
+    shoes: ClothingShoesBootsMagSyndie
+    id: SyndiPDA
+    pocket1: DoubleEmergencyOxygenTankFilled
+    pocket2: HandheldHealthAnalyzer
+    belt: ClothingBeltMilitaryWebbingMedFilled
+  innerclothingskirt: ClothingUniformJumpskirtOperative
+  satchel: ClothingBackpackDuffelSyndicateOperativeMedic
+  duffelbag: ClothingBackpackDuffelSyndicateOperativeMedic

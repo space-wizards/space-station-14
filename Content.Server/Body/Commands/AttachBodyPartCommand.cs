@@ -3,13 +3,11 @@ using Content.Shared.Administration;
 using Content.Shared.Body.Components;
 using Robust.Server.Player;
 using Robust.Shared.Console;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
 
 namespace Content.Server.Body.Commands
 {
     [AdminCommand(AdminFlags.Fun)]
-    public class AttachBodyPartCommand : IConsoleCommand
+    public sealed class AttachBodyPartCommand : IConsoleCommand
     {
         public string Command => "attachbodypart";
         public string Description => "Attaches a body part to you or someone else.";

@@ -13,7 +13,6 @@ namespace Content.Client.Atmos.EntitySystems
     [UsedImplicitly]
     internal sealed class GasTileOverlaySystem : SharedGasTileOverlaySystem
     {
-        [Dependency] private readonly IMapManager _mapManager = default!;
         [Dependency] private readonly IResourceCache _resourceCache = default!;
         [Dependency] private readonly AtmosphereSystem _atmosphereSystem = default!;
 
@@ -41,7 +40,7 @@ namespace Content.Client.Atmos.EntitySystems
         {
             base.Initialize();
             SubscribeNetworkEvent<GasOverlayMessage>(HandleGasOverlayMessage);
-            _mapManager.OnGridRemoved += OnGridRemoved;
+            SubscribeLocalEvent<GridRemovalEvent>(OnGridRemoved);
 
             for (var i = 0; i < Atmospherics.TotalNumberOfGases; i++)
             {
@@ -118,17 +117,16 @@ namespace Content.Client.Atmos.EntitySystems
         public override void Shutdown()
         {
             base.Shutdown();
-            _mapManager.OnGridRemoved -= OnGridRemoved;
             var overlayManager = IoCManager.Resolve<IOverlayManager>();
             overlayManager.RemoveOverlay<GasTileOverlay>();
             overlayManager.RemoveOverlay<FireTileOverlay>();
         }
 
-        private void OnGridRemoved(MapId mapId, GridId gridId)
+        private void OnGridRemoved(GridRemovalEvent ev)
         {
-            if (_tileData.ContainsKey(gridId))
+            if (_tileData.ContainsKey(ev.GridId))
             {
-                _tileData.Remove(gridId);
+                _tileData.Remove(ev.GridId);
             }
         }
 
@@ -176,8 +174,12 @@ namespace Content.Client.Atmos.EntitySystems
 
                 var frameCount = FrameCounter[i];
                 Timer[i] += frameTime;
-                if (!(Timer[i] >= delays[frameCount])) continue;
-                Timer[i] = 0f;
+                var time = delays[frameCount];
+
+                if (Timer[i] < time)
+                    continue;
+
+                Timer[i] -= time;
                 FrameCounter[i] = (frameCount + 1) % Frames[i].Length;
             }
 
@@ -188,8 +190,10 @@ namespace Content.Client.Atmos.EntitySystems
 
                 var frameCount = FireFrameCounter[i];
                 FireTimer[i] += frameTime;
-                if (!(FireTimer[i] >= delays[frameCount])) continue;
-                FireTimer[i] = 0f;
+                var time = delays[frameCount];
+
+                if (FireTimer[i] < time) continue;
+                FireTimer[i] -= time;
                 FireFrameCounter[i] = (frameCount + 1) % FireFrames[i].Length;
             }
         }

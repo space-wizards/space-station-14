@@ -2,8 +2,6 @@ using Content.Shared.Body.Components;
 using Content.Shared.CharacterAppearance.Components;
 using Content.Shared.CharacterAppearance.Systems;
 using Robust.Server.GameObjects;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
 
 namespace Content.Server.CharacterAppearance.Systems
 {

@@ -9,7 +9,7 @@ using Robust.Shared.IoC;
 namespace Content.Client.Singularity.Visualizers
 {
     [UsedImplicitly]
-    public class EmitterVisualizer : AppearanceVisualizer
+    public sealed class EmitterVisualizer : AppearanceVisualizer
     {
         private const string OverlayBeam = "beam";
         private const string OverlayUnderPowered = "underpowered";

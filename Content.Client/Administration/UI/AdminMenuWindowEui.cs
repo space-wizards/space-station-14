@@ -4,7 +4,7 @@ using Robust.Client.UserInterface.Controls;
 
 namespace Content.Client.Administration.UI
 {
-    public class AdminAnnounceEui : BaseEui
+    public sealed class AdminAnnounceEui : BaseEui
     {
         private readonly AdminAnnounceWindow _window;
 

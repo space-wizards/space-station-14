@@ -1,18 +1,11 @@
-using System;
-using Robust.Shared.Analyzers;
-using Robust.Shared.GameObjects;
 using Robust.Shared.GameStates;
-using Robust.Shared.Maths;
-using Robust.Shared.Players;
 using Robust.Shared.Serialization;
-using Robust.Shared.Serialization.Manager.Attributes;
-using Robust.Shared.ViewVariables;
 
 namespace Content.Shared.Placeable
 {
     [RegisterComponent, NetworkedComponent]
     [Friend(typeof(PlaceableSurfaceSystem))]
-    public class PlaceableSurfaceComponent : Component
+    public sealed class PlaceableSurfaceComponent : Component
     {
         [ViewVariables]
         [DataField("isPlaceable")]
@@ -25,15 +18,10 @@ namespace Content.Shared.Placeable
         [ViewVariables]
         [DataField("positionOffset")]
         public Vector2 PositionOffset { get; set; }
-
-        public override ComponentState GetComponentState()
-        {
-            return new PlaceableSurfaceComponentState(IsPlaceable,PlaceCentered, PositionOffset);
-        }
     }
 
     [Serializable, NetSerializable]
-    public class PlaceableSurfaceComponentState : ComponentState
+    public sealed class PlaceableSurfaceComponentState : ComponentState
     {
         public readonly bool IsPlaceable;
         public readonly bool PlaceCentered;

@@ -1,13 +1,8 @@
-using System;
-using System.Collections.Generic;
 using Content.Shared.Light;
 using Content.Shared.Sound;
 using Robust.Shared.Containers;
-using Robust.Shared.GameObjects;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
-using Robust.Shared.ViewVariables;
 
 namespace Content.Server.Light.Components
 {
@@ -16,7 +11,7 @@ namespace Content.Server.Light.Components
     ///     Can be reloaded by new light tubes or light bulbs
     /// </summary>
     [RegisterComponent]
-    public class LightReplacerComponent : Component
+    public sealed class LightReplacerComponent : Component
     {
         [DataField("sound")]
         public SoundSpecifier Sound = new SoundPathSpecifier("/Audio/Weapons/click.ogg");
@@ -35,7 +30,7 @@ namespace Content.Server.Light.Components
 
         [Serializable]
         [DataDefinition]
-        public class LightReplacerEntity
+        public sealed class LightReplacerEntity
         {
             [DataField("name", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
             public string PrototypeName = default!;

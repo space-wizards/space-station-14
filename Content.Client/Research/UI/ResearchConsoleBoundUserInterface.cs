@@ -8,7 +8,7 @@ using static Content.Shared.Research.Components.SharedResearchConsoleComponent;
 namespace Content.Client.Research.UI
 {
     [UsedImplicitly]
-    public class ResearchConsoleBoundUserInterface : BoundUserInterface
+    public sealed class ResearchConsoleBoundUserInterface : BoundUserInterface
     {
         public int Points { get; private set; }
         public int PointsPerSecond { get; private set; }

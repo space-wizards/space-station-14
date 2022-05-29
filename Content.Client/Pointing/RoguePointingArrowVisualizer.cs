@@ -11,7 +11,7 @@ using Robust.Shared.Maths;
 namespace Content.Client.Pointing
 {
     [UsedImplicitly]
-    public class RoguePointingArrowVisualizer : AppearanceVisualizer
+    public sealed class RoguePointingArrowVisualizer : AppearanceVisualizer
     {
         public override void OnChangeData(AppearanceComponent component)
         {

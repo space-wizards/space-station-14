@@ -4,7 +4,7 @@ using Robust.Shared.Maths;
 
 namespace Content.Client.Chat
 {
-    public class StoredChatMessage
+    public sealed class StoredChatMessage
     {
         // TODO Make me reflected with respect to MsgChatMessage
 

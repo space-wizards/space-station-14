@@ -13,7 +13,7 @@ using Robust.Shared.ViewVariables;
 namespace Content.Client.Tools.Components
 {
     [RegisterComponent]
-    public class MultipleToolComponent : SharedMultipleToolComponent, IItemStatus
+    public sealed class MultipleToolComponent : SharedMultipleToolComponent, IItemStatus
     {
         private string? _behavior;
         [DataField("statusShowBehavior")]

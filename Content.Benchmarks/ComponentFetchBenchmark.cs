@@ -6,7 +6,7 @@ using Robust.Shared.Utility;
 namespace Content.Benchmarks
 {
     [SimpleJob]
-    public class ComponentFetchBenchmark
+    public sealed class ComponentFetchBenchmark
     {
         [Params(5000)] public int NEnt { get; set; }
 
@@ -218,39 +218,39 @@ namespace Content.Benchmarks
             public EntityUid Uid;
         }
 
-        private class BComponent1 : BComponent
+        private sealed class BComponent1 : BComponent
         {
         }
 
-        private class BComponent2 : BComponent
+        private sealed class BComponent2 : BComponent
         {
         }
 
-        private class BComponent3 : BComponent
+        private sealed class BComponent3 : BComponent
         {
         }
 
-        private class BComponent4 : BComponent
+        private sealed class BComponent4 : BComponent
         {
         }
 
-        private class BComponentLookup : BComponent
+        private sealed class BComponentLookup : BComponent
         {
         }
 
-        private class BComponent6 : BComponent
+        private sealed class BComponent6 : BComponent
         {
         }
 
-        private class BComponent7 : BComponent
+        private sealed class BComponent7 : BComponent
         {
         }
 
-        private class BComponent8 : BComponent
+        private sealed class BComponent8 : BComponent
         {
         }
 
-        private class BComponent9 : BComponent
+        private sealed class BComponent9 : BComponent
         {
         }
     }

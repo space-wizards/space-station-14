@@ -9,6 +9,8 @@
     sprite: Clothing/OuterClothing/Bio/general.rsi
   - type: Clothing
     sprite: Clothing/OuterClothing/Bio/general.rsi
+  - type: DiseaseProtection
+    protection: 0.2
 
 - type: entity
   parent: ClothingOuterBase
@@ -21,6 +23,8 @@
     sprite: Clothing/OuterClothing/Bio/cmo.rsi
   - type: Clothing
     sprite: Clothing/OuterClothing/Bio/cmo.rsi
+  - type: DiseaseProtection
+    protection: 0.3
 
 - type: entity
   parent: ClothingOuterBase
@@ -33,6 +37,8 @@
     sprite: Clothing/OuterClothing/Bio/janitor.rsi
   - type: Clothing
     sprite: Clothing/OuterClothing/Bio/janitor.rsi
+  - type: DiseaseProtection
+    protection: 0.2
 
 - type: entity
   parent: ClothingOuterBase
@@ -45,6 +51,8 @@
     sprite: Clothing/OuterClothing/Bio/scientist.rsi
   - type: Clothing
     sprite: Clothing/OuterClothing/Bio/scientist.rsi
+  - type: DiseaseProtection
+    protection: 0.2
 
 - type: entity
   parent: ClothingOuterBase
@@ -57,6 +65,8 @@
     sprite: Clothing/OuterClothing/Bio/security.rsi
   - type: Clothing
     sprite: Clothing/OuterClothing/Bio/security.rsi
+  - type: DiseaseProtection
+    protection: 0.2
 
 - type: entity
   parent: ClothingOuterBase
@@ -69,3 +79,5 @@
     sprite: Clothing/OuterClothing/Bio/virology.rsi
   - type: Clothing
     sprite: Clothing/OuterClothing/Bio/virology.rsi
+  - type: DiseaseProtection
+    protection: 0.3

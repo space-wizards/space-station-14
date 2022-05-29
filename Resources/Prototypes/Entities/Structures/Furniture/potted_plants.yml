@@ -15,16 +15,13 @@
         radius: 0.2
       mass: 25
       mask:
-        - MobImpassable
+      - Impassable
       layer:
-        - Opaque
-        - MobImpassable
-        - SmallImpassable
-        - VaultImpassable
+      - Opaque
+      - BulletImpassable
   - type: Sprite
     drawdepth: Overdoors
     offset: "0.0,0.3"
-    noRot: true
     sprite: Structures/Furniture/potted_plants.rsi
   - type: PottedPlantHide
   - type: SecretStash
@@ -73,19 +70,6 @@
   components:
   - type: Sprite
     state: plant-25
-  - type: Physics
-    bodyType: Dynamic
-  - type: Fixtures
-    fixtures:
-    - shape:
-        !type:PhysShapeCircle
-        radius: 0.2
-        position: "0.0,-0.3"
-      mass: 25
-      layer:
-      - SmallImpassable
-      mask:
-      - Impassable
 
 - type: entity
   id: PottedPlantBioluminscent

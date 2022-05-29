@@ -1,11 +1,10 @@
 ﻿using Content.Server.Atmos.Components;
 using Content.Server.Body.Components;
 using Content.Shared.Atmos;
-using Robust.Shared.GameObjects;
 
 namespace Content.Server.Body.Systems;
 
-public class InternalsSystem : EntitySystem
+public sealed class InternalsSystem : EntitySystem
 {
     public override void Initialize()
     {

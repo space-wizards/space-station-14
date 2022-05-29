@@ -1,11 +1,9 @@
-﻿using System.Collections.Generic;
-using Content.Server.Objectives.Interfaces;
-using Robust.Shared.Serialization.Manager.Attributes;
+﻿using Content.Server.Objectives.Interfaces;
 
 namespace Content.Server.Objectives.Requirements
 {
     [DataDefinition]
-    public class IncompatibleConditionsRequirement : IObjectiveRequirement
+    public sealed class IncompatibleConditionsRequirement : IObjectiveRequirement
     {
         [DataField("conditions")]
         private readonly List<string> _incompatibleConditions = new();

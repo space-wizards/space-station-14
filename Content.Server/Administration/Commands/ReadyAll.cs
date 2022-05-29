@@ -1,15 +1,12 @@
 ﻿using Content.Server.GameTicking;
 using Content.Shared.Administration;
 using Content.Shared.GameTicking;
-using Robust.Server.Player;
 using Robust.Shared.Console;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
 
 namespace Content.Server.Administration.Commands
 {
     [AdminCommand(AdminFlags.Round)]
-    public class ReadyAll : IConsoleCommand
+    public sealed class ReadyAll : IConsoleCommand
     {
         public string Command => "readyall";
         public string Description => "Readies up all players in the lobby, except for observers.";

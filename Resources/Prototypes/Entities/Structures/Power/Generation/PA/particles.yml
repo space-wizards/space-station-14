@@ -21,13 +21,13 @@
       fixtures:
       - shape:
           !type:PhysShapeAabb
-            bounds: "-0.48,-0.48,0.48,0.48"
+          bounds: "-0.48,-0.48,0.48,0.48"
         hard: false
         layer: [None]
         mask:
-          # Has to hit mobs, singularity, and singularity generator
-          - MobMask
-          - Opaque
+        # Has to hit mobs, singularity, and singularity generator
+        - Opaque
+        - FullTileMask
     - type: ParticleProjectile
     - type: SinguloFood
       # Energy is setup by the PA particle fire function.

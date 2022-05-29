@@ -107,7 +107,7 @@ namespace Content.Client.Verbs.UI
                 if (verb.Category?.Text == category.Text)
                 {
                     verbsInCategory.Add(verb);
-                    drawIcons = drawIcons || verb.Icon != null;
+                    drawIcons = drawIcons || verb.Icon != null || verb.IconEntity != null;
                 }
             }
 
@@ -129,8 +129,7 @@ namespace Content.Client.Verbs.UI
                 AddElement(element.SubMenu, subElement);
             }
 
-            if (category.IconsOnly)
-                element.SubMenu.MenuBody.Orientation = LayoutOrientation.Horizontal;
+            element.SubMenu.MenuBody.Columns = category.Columns;
         }
 
         /// <summary>

@@ -5,7 +5,7 @@ using Robust.Shared.Exceptions;
 namespace Content.IntegrationTests.Tests
 {
     [TestFixture]
-    public class StartTest : ContentIntegrationTest
+    public sealed class StartTest : ContentIntegrationTest
     {
         /// <summary>
         ///     Test that the server starts.

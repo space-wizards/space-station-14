@@ -4,7 +4,7 @@
     sprite: Objects/Misc/handcuffs.rsi
     state: handcuff
   result: Handcuffs
-  completetime: 500
+  completetime: 2
   materials:
     Steel: 300
 
@@ -14,7 +14,7 @@
     sprite: Objects/Weapons/Melee/stunbaton.rsi
     state: stunbaton_off
   result: Stunbaton
-  completetime: 500
+  completetime: 2
   materials:
     Steel: 300
     Plastic: 300
@@ -25,7 +25,7 @@
     sprite: Objects/Weapons/Melee/flash.rsi
     state: flash
   result: Flash
-  completetime: 500
+  completetime: 2
   materials:
     Glass: 100
     Plastic: 200
@@ -37,62 +37,62 @@
     sprite: Objects/Weapons/Guns/Ammunition/Casings/shotgun_shell_beanbag.rsi
     state: base
   result: ShellShotgunBeanbag
-  completetime: 500
+  completetime: 2
   materials:
     Plastic: 15
     Steel: 10
-    
+
 - type: latheRecipe
   id: CartridgePistolRubber
   icon:
     sprite: Objects/Weapons/Guns/Ammunition/Casings/ammo_casing.rsi
     state: base
   result: CartridgePistolRubber
-  completetime: 500
+  completetime: 2
   materials:
     Plastic: 5
     Steel: 5
-    
+
 - type: latheRecipe
   id: CartridgeMagnumRubber
   icon:
     sprite: Objects/Weapons/Guns/Ammunition/Casings/ammo_casing.rsi
     state: base
   result: CartridgeMagnumRubber
-  completetime: 500
+  completetime: 2
   materials:
     Plastic: 5
     Steel: 5
-    
+
 - type: latheRecipe
   id: CartridgeClRifleRubber
   icon:
     sprite: Objects/Weapons/Guns/Ammunition/Casings/ammo_casing.rsi
     state: base
   result: CartridgeClRifleRubber
-  completetime: 500
+  completetime: 2
   materials:
     Plastic: 10
     Steel: 5
-    
+
 - type: latheRecipe
   id: CartridgeLRifleRubber
   icon:
     sprite: Objects/Weapons/Guns/Ammunition/Casings/ammo_casing.rsi
     state: base
   result: CartridgeLRifleRubber
-  completetime: 500
+  completetime: 2
   materials:
     Plastic: 10
     Steel: 5
-    
+
 - type: latheRecipe
   id: CartridgeSRifleRubber
   icon:
     sprite: Objects/Weapons/Guns/Ammunition/Casings/ammo_casing.rsi
     state: base
   result: CartridgeSRifleRubber
-  completetime: 500
+  completetime: 2
   materials:
     Plastic: 10
     Steel: 5
@@ -103,7 +103,7 @@
     sprite: Objects/Weapons/Guns/Ammunition/Casings/ammo_casing.rsi
     state: base
   result: CartridgePistol
-  completetime: 500
+  completetime: 2
   materials:
     Steel: 10
 
@@ -113,7 +113,7 @@
     sprite: Objects/Weapons/Guns/Ammunition/Casings/shotgun_shell.rsi
     state: base
   result: ShellShotgun
-  completetime: 500
+  completetime: 2
   materials:
     Steel: 20
 
@@ -123,7 +123,7 @@
     sprite: Objects/Weapons/Guns/Ammunition/Casings/ammo_casing.rsi
     state: base
   result: CartridgeMagnum
-  completetime: 500
+  completetime: 2
   materials:
     Steel: 20
 
@@ -133,6 +133,40 @@
     sprite: Objects/Weapons/Guns/Ammunition/Casings/ammo_casing.rsi
     state: base
   result: CartridgeLRifle
-  completetime: 500
+  completetime: 2
   materials:
     Steel: 30
+
+- type: latheRecipe
+  id: ShellShotgunFlare
+  icon:
+    sprite: Objects/Weapons/Guns/Ammunition/Casings/shotgun_shell_flare.rsi
+    state: base
+  result: ShellShotgunFlare
+  completetime: 2
+  materials:
+    Plastic: 20
+    Steel: 5
+
+- type: latheRecipe
+  id: ShellTranquilizer
+  icon:
+    sprite: Objects/Weapons/Guns/Ammunition/Casings/shotgun_shell_practice.rsi
+    state: base
+  result: ShellTranquilizer
+  completetime: 4
+  materials:
+    Plastic: 15
+    Steel: 10
+    Glass: 5
+
+- type: latheRecipe
+  id: ShellShotgunFlash
+  icon:
+    sprite: Objects/Weapons/Guns/Ammunition/Casings/shotgun_shell_flash.rsi
+    state: base
+  result: ShellShotgunFlash
+  completetime: 2
+  materials:
+    Plastic: 20
+    Steel: 5

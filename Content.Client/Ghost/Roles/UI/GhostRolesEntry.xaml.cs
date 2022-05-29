@@ -7,15 +7,26 @@ using Robust.Client.UserInterface.XAML;
 namespace Content.Client.Ghost.Roles.UI
 {
     [GenerateTypedNameReferences]
-    public partial class GhostRolesEntry : BoxContainer
+    public sealed partial class GhostRolesEntry : BoxContainer
     {
-        public GhostRolesEntry(GhostRoleInfo info, Action<BaseButton.ButtonEventArgs> requestAction)
+        public event Action<GhostRoleInfo>? OnRoleSelected;
+        public event Action<GhostRoleInfo>? OnRoleFollow;
+
+        public GhostRolesEntry(string name, string description, IEnumerable<GhostRoleInfo> roles)
         {
             RobustXamlLoader.Load(this);
 
-            Title.SetMessage(info.Name);
-            Description.SetMessage(info.Description);
-            RequestButton.OnPressed += requestAction;
+            Title.Text = name;
+            Description.SetMessage(description);
+
+            foreach (var role in roles)
+            {
+                var button = new GhostRoleEntryButtons();
+                button.RequestButton.OnPressed += _ => OnRoleSelected?.Invoke(role);
+                button.FollowButton.OnPressed += _ => OnRoleFollow?.Invoke(role);
+
+                Buttons.AddChild(button);
+            }
         }
     }
 }

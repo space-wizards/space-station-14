@@ -12,7 +12,7 @@ using static Content.Shared.Disposal.Components.SharedDisposalUnitComponent;
 namespace Content.Client.Disposal.Visualizers
 {
     [UsedImplicitly]
-    public class DisposalUnitVisualizer : AppearanceVisualizer, ISerializationHooks
+    public sealed class DisposalUnitVisualizer : AppearanceVisualizer, ISerializationHooks
     {
         private const string AnimationKey = "disposal_unit_animation";
 

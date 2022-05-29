@@ -1,9 +1,6 @@
 using Content.Shared.CCVar;
 using Content.Shared.Movement.Components;
 using Robust.Shared.Configuration;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Maths;
 using Robust.Shared.Physics;
 using Robust.Shared.Physics.Dynamics;
 
@@ -16,7 +13,7 @@ namespace Content.Shared.Movement.EntitySystems
         public override void Initialize()
         {
             base.Initialize();
-            Get<SharedPhysicsSystem>().KinematicControllerCollision += HandleCollisionMessage;
+            Get<SharedPhysicsSystem>().KinematicControllerCollision += OnMobCollision;
             IoCManager.Resolve<IConfigurationManager>().OnValueChanged(CCVars.MobPushing, SetPushing, true);
         }
 
@@ -29,13 +26,13 @@ namespace Content.Shared.Movement.EntitySystems
         {
             base.Shutdown();
             IoCManager.Resolve<IConfigurationManager>().UnsubValueChanged(CCVars.MobPushing, SetPushing);
-            Get<SharedPhysicsSystem>().KinematicControllerCollision -= HandleCollisionMessage;
+            Get<SharedPhysicsSystem>().KinematicControllerCollision -= OnMobCollision;
         }
 
         /// <summary>
         ///     Fake pushing for player collisions.
         /// </summary>
-        private void HandleCollisionMessage(Fixture ourFixture, Fixture otherFixture, float frameTime, Vector2 worldNormal)
+        private void OnMobCollision(Fixture ourFixture, Fixture otherFixture, float frameTime, Vector2 worldNormal)
         {
             if (!_pushingEnabled) return;
 

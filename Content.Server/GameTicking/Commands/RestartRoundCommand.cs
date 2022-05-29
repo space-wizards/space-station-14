@@ -1,14 +1,12 @@
-using System;
 using Content.Server.Administration;
 using Content.Server.RoundEnd;
 using Content.Shared.Administration;
 using Robust.Shared.Console;
-using Robust.Shared.GameObjects;
 
 namespace Content.Server.GameTicking.Commands
 {
     [AdminCommand(AdminFlags.Round)]
-    public class RestartRoundCommand : IConsoleCommand
+    public sealed class RestartRoundCommand : IConsoleCommand
     {
         public string Command => "restartround";
         public string Description => "Ends the current round and starts the countdown for the next lobby.";
@@ -29,7 +27,7 @@ namespace Content.Server.GameTicking.Commands
     }
 
     [AdminCommand(AdminFlags.Round)]
-    public class RestartRoundNowCommand : IConsoleCommand
+    public sealed class RestartRoundNowCommand : IConsoleCommand
     {
         public string Command => "restartroundnow";
         public string Description => "Moves the server from PostRound to a new PreRoundLobby.";

@@ -9,6 +9,8 @@
     tags:
     - Bottle
     - Trash
+  - type: Recyclable
+  - type: SpaceGarbage
   - type: Sprite
     sprite: Objects/Specific/Chemistry/bottle.rsi
     netsync: false
@@ -123,7 +125,7 @@
         reagents:
         - ReagentId: Epinephrine
           Quantity: 30
-          
+
 - type: entity
   id: RobustHarvestChemistryBottle
   name: robust harvest bottle
@@ -138,3 +140,42 @@
         - ReagentId: RobustHarvest
           Quantity: 30
 
+- type: entity
+  id: NocturineChemistryBottle
+  name: nocturine bottle
+  description: This will make someone fall down almost immediately. Hard to overdose on.
+  parent: BaseChemistryEmptyBottle
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 30
+        reagents:
+        - ReagentId: Nocturine
+          Quantity: 30
+
+- type: entity
+  id: EphedrineChemistryBottle
+  name: ephedrine bottle
+  parent: BaseChemistryEmptyBottle
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      drink: 
+        maxVol: 30
+        reagents:
+        - ReagentId: Ephedrine
+          Quantity: 30
+
+- type: entity
+  id: OmnizineChemistryBottle
+  name: omnizine bottle
+  parent: BaseChemistryEmptyBottle
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      drink: 
+        maxVol: 30
+        reagents:
+        - ReagentId: Omnizine
+          Quantity: 30

@@ -24,8 +24,8 @@ public sealed class SpillableSystem : EntitySystem
     [Dependency] private readonly PuddleSystem _puddleSystem = default!;
     [Dependency] private readonly IMapManager _mapManager = default!;
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
-    [Dependency] private readonly IEntityLookup _entityLookup = default!;
-    [Dependency] private readonly AdminLogSystem _logSystem = default!;
+    [Dependency] private readonly EntityLookupSystem _entityLookup = default!;
+    [Dependency] private readonly IAdminLogManager _adminLogger= default!;
 
     public override void Initialize()
     {
@@ -84,7 +84,7 @@ public sealed class SpillableSystem : EntitySystem
 
         if (args.User != null)
         {
-            _logSystem.Add(LogType.Landed,
+            _adminLogger.Add(LogType.Landed,
                 $"{ToPrettyString(uid):entity} spilled a solution {SolutionContainerSystem.ToPrettyString(solution):solution} on landing");
         }
 
@@ -184,7 +184,7 @@ public sealed class SpillableSystem : EntitySystem
 
         // Get normalized co-ordinate for spill location and spill it in the centre
         // TODO: Does SnapGrid or something else already do this?
-        var spillGridCoords = mapGrid.GridTileToWorld(tileRef.GridIndices);
+        var spillGridCoords = mapGrid.GridTileToLocal(tileRef.GridIndices);
         var startEntity = EntityUid.Invalid;
         PuddleComponent? puddleComponent = null;
 

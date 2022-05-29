@@ -3,7 +3,7 @@ using Robust.Shared.GameObjects;
 
 namespace Content.Client.Decals;
 
-public class ToggleDecalCommand : IConsoleCommand
+public sealed class ToggleDecalCommand : IConsoleCommand
 {
     public string Command => "toggledecals";
     public string Description => "Toggles decaloverlay";

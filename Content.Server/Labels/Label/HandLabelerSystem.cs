@@ -1,16 +1,10 @@
-using System;
 using Content.Server.Labels.Components;
 using Content.Server.UserInterface;
-using Content.Shared.ActionBlocker;
 using Content.Shared.Interaction;
 using Content.Shared.Labels;
 using Content.Shared.Popups;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Localization;
-using Robust.Shared.Players;
 
 namespace Content.Server.Labels
 {
@@ -18,7 +12,7 @@ namespace Content.Server.Labels
     /// A hand labeler system that lets an object apply labels to objects with the <see cref="LabelComponent"/> .
     /// </summary>
     [UsedImplicitly]
-    public class HandLabelerSystem : EntitySystem
+    public sealed class HandLabelerSystem : EntitySystem
     {
         [Dependency] private readonly UserInterfaceSystem _userInterfaceSystem = default!;
 

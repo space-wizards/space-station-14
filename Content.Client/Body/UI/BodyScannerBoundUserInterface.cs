@@ -9,7 +9,7 @@ using Robust.Shared.ViewVariables;
 namespace Content.Client.Body.UI
 {
     [UsedImplicitly]
-    public class BodyScannerBoundUserInterface : BoundUserInterface
+    public sealed class BodyScannerBoundUserInterface : BoundUserInterface
     {
         [ViewVariables]
         private BodyScannerDisplay? _display;

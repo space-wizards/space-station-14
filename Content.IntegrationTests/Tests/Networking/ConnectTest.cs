@@ -11,7 +11,7 @@ using Robust.Shared.Network;
 namespace Content.IntegrationTests.Tests.Networking
 {
     [TestFixture]
-    public class ConnectTest : ContentIntegrationTest
+    public sealed class ConnectTest : ContentIntegrationTest
     {
         [Test]
         public async Task TestConnect()

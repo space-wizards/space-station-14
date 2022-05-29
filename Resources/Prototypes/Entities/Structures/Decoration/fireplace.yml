@@ -1,0 +1,19 @@
+- type: entity
+  id: Fireplace
+  parent: BaseStructure
+  name: fireplace
+  description: A place that has fire. Cozy!
+  components:
+  - type: Sprite
+    netsync: false
+    sprite: Structures/Decoration/fireplace.rsi
+    layers:
+      - state: fireplace
+      - state: fireplace_fire4
+        shader: unshaded
+      - state: fireplace_glow
+        shader: unshaded
+  - type: PointLight
+    radius: 1.5
+    energy: 1.6
+    color: "#FF6F00"

@@ -15,15 +15,12 @@
     fixtures:
     - shape:
         !type:PhysShapeAabb {}
+      mask:
+      - FullTileMask
       layer:
-      - Opaque
-      - Impassable
-      - MobImpassable
-      - VaultImpassable
-      - SmallImpassable
+      - WallLayer
   - type: Tag
     tags:
-    - ExplosivePassable
     - Wooden
   - type: Damageable
     damageModifierSet: Wood
@@ -44,6 +41,9 @@
   - type: AtmosExposed
   - type: Flammable
     fireSpread: true
+    damage:
+      types:
+        Heat: 1 #per second, scales with number of fire 'stacks'
   - type: Appearance
     visuals:
     - type: FireVisualizer

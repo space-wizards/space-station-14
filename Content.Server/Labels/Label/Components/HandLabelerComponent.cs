@@ -1,12 +1,9 @@
 using Content.Shared.Whitelist;
-using Robust.Shared.GameObjects;
-using Robust.Shared.Serialization.Manager.Attributes;
-using Robust.Shared.ViewVariables;
 
 namespace Content.Server.Labels.Components
 {
     [RegisterComponent]
-    public class HandLabelerComponent : Component
+    public sealed class HandLabelerComponent : Component
     {
         [ViewVariables(VVAccess.ReadWrite)]
         [DataField("assignedLabel")]

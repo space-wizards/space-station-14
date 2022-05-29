@@ -1,10 +1,10 @@
-using System;
+using Content.Shared.Actions;
+using Content.Shared.Actions.ActionTypes;
+using Content.Shared.Sound;
 using Content.Shared.Targeting;
-using Robust.Shared.GameObjects;
 using Robust.Shared.GameStates;
-using Robust.Shared.Players;
 using Robust.Shared.Serialization;
-using Robust.Shared.ViewVariables;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
 namespace Content.Shared.CombatMode
 {
@@ -14,6 +14,33 @@ namespace Content.Shared.CombatMode
         private bool _isInCombatMode;
         private TargetingZone _activeZone;
 
+        [DataField("disarmFailChance")]
+        public readonly float DisarmFailChance = 0.4f;
+
+        [DataField("pushChance")]
+        public readonly float DisarmPushChance = 0.4f;
+
+        [DataField("disarmFailSound")]
+        public readonly SoundSpecifier DisarmFailSound = new SoundPathSpecifier("/Audio/Weapons/punchmiss.ogg");
+
+        [DataField("disarmSuccessSound")]
+        public readonly SoundSpecifier DisarmSuccessSound = new SoundPathSpecifier("/Audio/Effects/thudswoosh.ogg");
+
+        [DataField("disarmActionId", customTypeSerializer:typeof(PrototypeIdSerializer<EntityTargetActionPrototype>))]
+        public readonly string DisarmActionId = "Disarm";
+
+        [DataField("canDisarm")]
+        public bool CanDisarm;
+
+        [DataField("disarmAction")] // must be a data-field to properly save cooldown when saving game state.
+        public EntityTargetAction? DisarmAction;
+
+        [DataField("combatToggleActionId", customTypeSerializer: typeof(PrototypeIdSerializer<InstantActionPrototype>))]
+        public readonly string CombatToggleActionId = "CombatModeToggle";
+
+        [DataField("combatToggleAction")]
+        public InstantAction? CombatToggleAction;
+
         [ViewVariables(VVAccess.ReadWrite)]
         public virtual bool IsInCombatMode
         {
@@ -22,6 +49,8 @@ namespace Content.Shared.CombatMode
             {
                 if (_isInCombatMode == value) return;
                 _isInCombatMode = value;
+                if (CombatToggleAction != null)
+                    EntitySystem.Get<SharedActionsSystem>().SetToggled(CombatToggleAction, _isInCombatMode);
                 Dirty();
 
                 // Regenerate physics contacts -> Can probably just selectively check

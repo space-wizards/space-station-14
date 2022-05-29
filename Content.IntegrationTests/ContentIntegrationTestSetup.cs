@@ -2,7 +2,7 @@
 
 [SetUpFixture]
 // ReSharper disable once CheckNamespace
-public class ContentIntegrationTestSetup
+public sealed class ContentIntegrationTestSetup
 {
     [OneTimeTearDown]
     public void TearDown()

@@ -1,10 +1,8 @@
-﻿using System;
-using Robust.Shared.GameObjects;
-using Robust.Shared.Serialization;
+﻿using Robust.Shared.Serialization;
 
 namespace Content.Shared.Pointing.Components
 {
-    public class SharedRoguePointingArrowComponent : Component
+    public abstract class SharedRoguePointingArrowComponent : Component
     {
     }
 

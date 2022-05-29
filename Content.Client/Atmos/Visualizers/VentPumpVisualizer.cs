@@ -7,7 +7,7 @@ using Robust.Shared.IoC;
 namespace Content.Client.Atmos.Visualizers
 {
     [UsedImplicitly]
-    public class VentPumpVisualizer : AppearanceVisualizer
+    public sealed class VentPumpVisualizer : AppearanceVisualizer
     {
         private string _offState = "vent_off";
         private string _inState = "vent_in";

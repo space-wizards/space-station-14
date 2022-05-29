@@ -1,15 +1,11 @@
 using Content.Shared.Nutrition.EntitySystems;
 using Content.Shared.Sound;
-using Robust.Shared.Analyzers;
-using Robust.Shared.GameObjects;
-using Robust.Shared.Serialization.Manager.Attributes;
-using Robust.Shared.ViewVariables;
 
 namespace Content.Shared.Nutrition.Components
 {
     [Friend(typeof(SharedCreamPieSystem))]
     [RegisterComponent]
-    public class CreamPieComponent : Component
+    public sealed class CreamPieComponent : Component
     {
         [ViewVariables]
         [DataField("paralyzeTime")]

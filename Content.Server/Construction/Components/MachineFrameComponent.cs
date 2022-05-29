@@ -8,7 +8,7 @@ using Robust.Shared.Containers;
 namespace Content.Server.Construction.Components
 {
     [RegisterComponent]
-    public class MachineFrameComponent : Component, IInteractUsing
+    public sealed class MachineFrameComponent : Component, IInteractUsing
     {
         [Dependency] private readonly IEntityManager _entMan = default!;
         [Dependency] private readonly IComponentFactory _componentFactory = default!;
@@ -357,7 +357,7 @@ namespace Content.Server.Construction.Components
     }
 
     [DataDefinition]
-    public class MachineDeconstructedEvent : EntityEventArgs
+    public sealed class MachineDeconstructedEvent : EntityEventArgs
     {
     }
 }

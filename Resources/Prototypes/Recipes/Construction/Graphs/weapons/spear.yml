@@ -6,12 +6,17 @@
       edges:
         - to: spear
           steps:
-            - material: Steel
+            - material: MetalRod
               amount: 2
               doAfter: 2
-            - material: Glass
+            - material: Cable
               amount: 2
-              doAfter: 2
-
+              doAfter: 1
+            - prototype: ShardGlass
+              name: Glass Shard
+              icon: 
+                sprite: Objects/Materials/Shards/shard.rsi
+                state: shard1
+              doAfter: 1
     - node: spear
       entity: Spear

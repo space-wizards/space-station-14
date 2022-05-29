@@ -220,7 +220,7 @@ namespace Content.Client.Voting
             }
         }
 
-        public class VoteEntry
+        public sealed class VoteEntry
         {
             public string Text { get; }
             public int Votes { get; set; }

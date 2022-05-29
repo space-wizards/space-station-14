@@ -1,6 +1,4 @@
-﻿using Robust.Shared.GameObjects;
-using Robust.Shared.Serialization.Manager.Attributes;
-using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
+﻿using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
 namespace Content.Server.Speech.Components;
 
@@ -8,7 +6,7 @@ namespace Content.Server.Speech.Components;
 ///     Applies accent to user while they wear entity as a clothing.
 /// </summary>
 [RegisterComponent]
-public class AddAccentClothingComponent : Component
+public sealed class AddAccentClothingComponent : Component
 {
     /// <summary>
     ///     Component name for accent that will be applied.

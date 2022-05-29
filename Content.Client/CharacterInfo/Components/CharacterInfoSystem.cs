@@ -10,7 +10,7 @@ using Robust.Shared.Maths;
 
 namespace Content.Client.CharacterInfo.Components;
 
-public class CharacterInfoSystem : EntitySystem
+public sealed class CharacterInfoSystem : EntitySystem
 {
     public override void Initialize()
     {
@@ -97,13 +97,13 @@ public class CharacterInfoSystem : EntitySystem
             {
                 Orientation = BoxContainer.LayoutOrientation.Horizontal
             };
-            
+
             briefinghBox.AddChild(new Label
             {
                 Text = briefing,
                 Modulate = Color.Yellow
             });
-            
+
             vbox.AddChild(briefinghBox);
             comp.Control.ObjectivesContainer.AddChild(vbox);
         }

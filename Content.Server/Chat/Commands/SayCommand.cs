@@ -1,14 +1,12 @@
-using Content.Server.Chat.Managers;
 using Content.Shared.Administration;
 using Robust.Server.Player;
 using Robust.Shared.Console;
 using Robust.Shared.Enums;
-using Robust.Shared.IoC;
 
 namespace Content.Server.Chat.Commands
 {
     [AnyCommand]
-    internal class SayCommand : IConsoleCommand
+    internal sealed class SayCommand : IConsoleCommand
     {
         public string Command => "say";
         public string Description => "Send chat messages to the local channel or a specified radio channel.";
@@ -38,7 +36,7 @@ namespace Content.Server.Chat.Commands
             if (string.IsNullOrEmpty(message))
                 return;
 
-            IoCManager.Resolve<IChatManager>().TrySpeak(playerEntity, message, false, shell, player);
+            EntitySystem.Get<ChatSystem>().TrySendInGameICMessage(playerEntity, message, InGameICChatType.Speak, false, shell, player);
         }
     }
 }

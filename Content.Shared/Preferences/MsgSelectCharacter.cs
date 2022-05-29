@@ -6,7 +6,7 @@ namespace Content.Shared.Preferences
     /// <summary>
     /// The client sends this to select a character slot.
     /// </summary>
-    public class MsgSelectCharacter : NetMessage
+    public sealed class MsgSelectCharacter : NetMessage
     {
         public override MsgGroups MsgGroup => MsgGroups.Command;
 

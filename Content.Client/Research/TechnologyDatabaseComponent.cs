@@ -8,7 +8,7 @@ using Robust.Shared.Prototypes;
 namespace Content.Client.Research
 {
     [RegisterComponent]
-    public class TechnologyDatabaseComponent : SharedTechnologyDatabaseComponent
+    public sealed class TechnologyDatabaseComponent : SharedTechnologyDatabaseComponent
     {
         /// <summary>
         ///     Event called when the database is updated.

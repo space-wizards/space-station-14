@@ -1,9 +1,5 @@
-﻿using System;
-using Content.Shared.Chemistry.Components;
-using Content.Shared.Chemistry.Reagent;
+﻿using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Jittering;
-using Robust.Shared.GameObjects;
-using Robust.Shared.Serialization.Manager.Attributes;
 
 namespace Content.Server.Chemistry.ReagentEffects.StatusEffects
 {
@@ -12,7 +8,7 @@ namespace Content.Server.Chemistry.ReagentEffects.StatusEffects
     ///     This doesn't use generic status effects because it needs to
     ///     take in some parameters that JitterSystem needs.
     /// </summary>
-    public class Jitter : ReagentEffect
+    public sealed class Jitter : ReagentEffect
     {
         [DataField("amplitude")]
         public float Amplitude = 10.0f;

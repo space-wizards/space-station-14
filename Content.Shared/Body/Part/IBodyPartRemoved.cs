@@ -1,5 +1,4 @@
-﻿using System;
-using Content.Shared.Body.Components;
+﻿using Content.Shared.Body.Components;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.Body.Part
@@ -19,7 +18,7 @@ namespace Content.Shared.Body.Part
     }
 
     [Serializable, NetSerializable]
-    public class BodyPartRemovedEventArgs : EventArgs
+    public sealed class BodyPartRemovedEventArgs : EventArgs
     {
         public BodyPartRemovedEventArgs(string slot, SharedBodyPartComponent part)
         {

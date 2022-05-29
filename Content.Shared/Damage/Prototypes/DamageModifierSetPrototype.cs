@@ -1,10 +1,4 @@
-using System;
-using System.Collections.Generic;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Serialization;
-using Robust.Shared.Serialization.Manager.Attributes;
-using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.Dictionary;
-using Robust.Shared.ViewVariables;
 
 namespace Content.Shared.Damage.Prototypes
 {
@@ -16,10 +10,10 @@ namespace Content.Shared.Damage.Prototypes
     ///     just want normal data to be deserialized.
     /// </remarks>
     [Prototype("damageModifierSet")]
-    public class DamageModifierSetPrototype : DamageModifierSet, IPrototype
+    public sealed class DamageModifierSetPrototype : DamageModifierSet, IPrototype
     {
         [ViewVariables]
-        [DataField("id", required: true)]
+        [IdDataFieldAttribute]
         public string ID { get; } = default!;
     }
 }

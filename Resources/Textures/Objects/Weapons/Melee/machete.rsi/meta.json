@@ -1,22 +1,22 @@
 {
-  "version": 1,
-  "license": "CC-BY-NC-SA-3.0",
-  "copyright": "Taken from TerraGov-Marine-Corps and modified by Taral at https://github.com/tgstation/TerraGov-Marine-Corps/commit/4c8cb6eb48dece03478b0f83542855f7c63b793e#diff-a67180777ae47f2c84f3ebf93c61442bbe34aebcad5b7cbd76feb78f177bcee1",
-  "size": {
-    "x": 32,
-    "y": 32
-  },
-  "states": [
-    {
-      "name": "icon"
+    "version": 1,
+    "license": "CC-BY-NC-SA-3.0",
+    "copyright": "Taken from goonstation and modified by Taral at https://github.com/goonstation/goonstation/pull/6094/commits/c8b97b970d189e566f63b74c6b453b016a5391c5",
+    "size": {
+        "x": 32,
+        "y": 32
     },
-    {
-      "name": "inhand-left",
-      "directions": 4
-    },
-    {
-      "name": "inhand-right",
-      "directions": 4
-    }
-  ]
+    "states": [
+        {
+            "name": "icon"
+        },
+        {
+            "name": "inhand-left",
+            "directions": 4
+        },
+        {
+            "name": "inhand-right",
+            "directions": 4
+        }
+    ]
 }

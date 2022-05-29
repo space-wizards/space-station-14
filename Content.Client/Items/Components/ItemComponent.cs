@@ -6,5 +6,6 @@ namespace Content.Client.Items.Components
 {
     [RegisterComponent]
     [ComponentReference(typeof(SharedItemComponent))]
+    [Virtual]
     public class ItemComponent : SharedItemComponent { }
 }

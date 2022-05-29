@@ -9,6 +9,8 @@
     state: icon
     netsync: false
   - type: GasAnalyzer
+  - type: ActivatableUI
+    key: enum.GasAnalyzerUiKey.Key
   - type: UserInterface
     interfaces:
     - key: enum.GasAnalyzerUiKey.Key
@@ -18,3 +20,6 @@
     - type: GasAnalyzerVisualizer
       state_off: icon
       state_working: working
+  - type: Tag
+    tags:
+      - DroneUsable

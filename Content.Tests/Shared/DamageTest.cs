@@ -14,7 +14,7 @@ namespace Content.Tests.Shared
     [TestOf(typeof(DamageSpecifier))]
     [TestOf(typeof(DamageModifierSetPrototype))]
     [TestOf(typeof(DamageGroupPrototype))]
-    public class DamageTest : ContentUnitTest
+    public sealed class DamageTest : ContentUnitTest
     {
 
         static private Dictionary<string, float> _resistanceCoefficientDict = new()
@@ -44,7 +44,7 @@ namespace Content.Tests.Shared
             _prototypeManager = IoCManager.Resolve<IPrototypeManager>();
             _prototypeManager.Initialize();
             _prototypeManager.LoadString(_damagePrototypes);
-            _prototypeManager.Resync();
+            _prototypeManager.ResolveResults();
 
             // Create a damage data set
             _damageSpec = new(_prototypeManager.Index<DamageGroupPrototype>("Brute"), 6);

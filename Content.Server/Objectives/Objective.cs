@@ -1,11 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using Content.Server.Objectives.Interfaces;
-using Robust.Shared.ViewVariables;
+﻿using Content.Server.Objectives.Interfaces;
 
 namespace Content.Server.Objectives
 {
-    public class Objective : IEquatable<Objective>
+    public sealed class Objective : IEquatable<Objective>
     {
         [ViewVariables]
         public readonly Mind.Mind Mind;

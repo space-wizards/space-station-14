@@ -4,7 +4,7 @@ using Robust.Shared.Maths;
 
 namespace Content.Client.HUD.UI
 {
-    public class StripeBack : Container
+    public sealed class StripeBack : Container
     {
         private const float PadSize = 4;
         private const float EdgeSize = 2;

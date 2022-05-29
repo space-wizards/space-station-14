@@ -1,0 +1,13 @@
+﻿- type: constructionGraph
+  id: Gauze
+  start: start
+  graph:
+  - node: start
+    edges:
+    - to: gauze
+      steps:
+      - material: Cloth
+        amount: 2
+        doAfter: 10
+  - node: gauze
+    entity: Gauze1

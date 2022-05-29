@@ -5,7 +5,7 @@ namespace Content.Client.Body.Components
 {
     [RegisterComponent]
     [ComponentReference(typeof(SharedBodyPartComponent))]
-    public class BodyPartComponent : SharedBodyPartComponent
+    public sealed class BodyPartComponent : SharedBodyPartComponent
     {
     }
 }

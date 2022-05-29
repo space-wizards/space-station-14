@@ -1,15 +1,10 @@
-using System.Collections.Generic;
 using Content.Shared.Lathe;
-using Robust.Shared.GameObjects;
-using Robust.Shared.Players;
-using Robust.Shared.Serialization.Manager.Attributes;
-using Robust.Shared.ViewVariables;
 
 namespace Content.Server.Lathe.Components
 {
     [RegisterComponent]
     [ComponentReference(typeof(SharedMaterialStorageComponent))]
-    public class MaterialStorageComponent : SharedMaterialStorageComponent
+    public sealed class MaterialStorageComponent : SharedMaterialStorageComponent
     {
         [ViewVariables]
         protected override Dictionary<string, int> Storage { get; set; } = new();

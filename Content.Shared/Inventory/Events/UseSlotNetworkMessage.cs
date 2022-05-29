@@ -1,11 +1,9 @@
-﻿using System;
-using Robust.Shared.GameObjects;
-using Robust.Shared.Serialization;
+﻿using Robust.Shared.Serialization;
 
 namespace Content.Shared.Inventory.Events;
 
 [NetSerializable, Serializable]
-public class UseSlotNetworkMessage : EntityEventArgs
+public sealed class UseSlotNetworkMessage : EntityEventArgs
 {
     // The slot-owner is implicitly the client that is sending this message.
     // Otherwise clients could start forcefully undressing other clients.

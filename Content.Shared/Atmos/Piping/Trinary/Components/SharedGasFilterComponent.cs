@@ -1,6 +1,4 @@
-﻿using System;
-using Robust.Shared.GameObjects;
-using Robust.Shared.Serialization;
+﻿using Robust.Shared.Serialization;
 
 namespace Content.Shared.Atmos.Piping.Trinary.Components
 {
@@ -11,7 +9,7 @@ namespace Content.Shared.Atmos.Piping.Trinary.Components
     }
 
     [Serializable, NetSerializable]
-    public class GasFilterBoundUserInterfaceState : BoundUserInterfaceState
+    public sealed class GasFilterBoundUserInterfaceState : BoundUserInterfaceState
     {
         public string FilterLabel { get; }
         public float TransferRate { get; }
@@ -28,7 +26,7 @@ namespace Content.Shared.Atmos.Piping.Trinary.Components
     }
 
     [Serializable, NetSerializable]
-    public class GasFilterToggleStatusMessage : BoundUserInterfaceMessage
+    public sealed class GasFilterToggleStatusMessage : BoundUserInterfaceMessage
     {
         public bool Enabled { get; }
 
@@ -39,7 +37,7 @@ namespace Content.Shared.Atmos.Piping.Trinary.Components
     }
 
     [Serializable, NetSerializable]
-    public class GasFilterChangeRateMessage : BoundUserInterfaceMessage
+    public sealed class GasFilterChangeRateMessage : BoundUserInterfaceMessage
     {
         public float Rate { get; }
 
@@ -50,7 +48,7 @@ namespace Content.Shared.Atmos.Piping.Trinary.Components
     }
 
     [Serializable, NetSerializable]
-    public class GasFilterSelectGasMessage : BoundUserInterfaceMessage
+    public sealed class GasFilterSelectGasMessage : BoundUserInterfaceMessage
     {
         public int ID { get; }
 

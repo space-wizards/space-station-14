@@ -1,17 +1,12 @@
-using System.Collections.Generic;
 using Content.Server.Weapon.Ranged.Barrels.Components;
-using Content.Shared.Popups;
 using Robust.Shared.Containers;
-using Robust.Shared.GameObjects;
-using Robust.Shared.Localization;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
 namespace Content.Server.Weapon.Ranged.Ammunition.Components
 {
     [RegisterComponent]
-    public class RangedMagazineComponent : Component
+    public sealed class RangedMagazineComponent : Component
     {
         public readonly Stack<EntityUid> SpawnedAmmo = new();
         public Container AmmoContainer = default!;

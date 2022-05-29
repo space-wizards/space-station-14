@@ -1,10 +1,8 @@
 using System.Threading;
 using Content.Shared.Damage;
 using Content.Shared.Damage.Prototypes;
-using Robust.Shared.GameObjects;
-using Robust.Shared.Serialization.Manager.Attributes;
+using Content.Shared.Sound;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
-using Robust.Shared.ViewVariables;
 
 namespace Content.Server.Medical.Components
 {
@@ -17,6 +15,14 @@ namespace Content.Server.Medical.Components
         [DataField("damage", required: true)]
         [ViewVariables(VVAccess.ReadWrite)]
         public DamageSpecifier Damage = default!;
+
+        /// <remarks>
+        ///     This should generally be negative,
+        ///     since you're, like, trying to heal damage.
+        /// </remarks>
+        [DataField("bloodlossModifier")]
+        [ViewVariables(VVAccess.ReadWrite)]
+        public float BloodlossModifier = 0.0f;
 
         /// <remarks>
         ///     The supported damage types are specified using a <see cref="DamageContainerPrototype"/>s. For a
@@ -34,5 +40,17 @@ namespace Content.Server.Medical.Components
         public float Delay = 3f;
 
         public CancellationTokenSource? CancelToken = null;
+
+        /// <summary>
+        ///     Sound played on healing begin
+        /// </summary>
+        [DataField("healingBeginSound")]
+        public SoundSpecifier? HealingBeginSound = null;
+
+        /// <summary>
+        ///     Sound played on healing end
+        /// </summary>
+        [DataField("healingEndSound")]
+        public SoundSpecifier? HealingEndSound = null;
     }
 }

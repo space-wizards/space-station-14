@@ -6,13 +6,10 @@ using Content.Shared.Doors;
 using Content.Shared.Doors.Components;
 using Content.Shared.Doors.Systems;
 using Content.Shared.Popups;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Localization;
 
 namespace Content.Server.Doors.Systems
 {
-    public class FirelockSystem : EntitySystem
+    public sealed class FirelockSystem : EntitySystem
     {
         [Dependency] private readonly SharedDoorSystem _doorSystem = default!;
 

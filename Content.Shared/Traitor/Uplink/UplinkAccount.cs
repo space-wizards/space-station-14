@@ -1,8 +1,6 @@
-using Robust.Shared.GameObjects;
-
 namespace Content.Shared.Traitor.Uplink
 {
-    public class UplinkAccount
+    public sealed class UplinkAccount
     {
         public readonly EntityUid? AccountHolder;
         public int Balance;

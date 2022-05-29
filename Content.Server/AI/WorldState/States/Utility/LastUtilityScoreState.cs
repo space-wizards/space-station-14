@@ -6,7 +6,7 @@ namespace Content.Server.AI.WorldState.States.Utility
     /// Used for the utility AI; sets the threshold score we need to beat
     /// </summary>
     [UsedImplicitly]
-    public class LastUtilityScoreState : StateData<float>
+    public sealed class LastUtilityScoreState : StateData<float>
     {
         public override string Name => "LastBonus";
         private float _value = 0.0f;

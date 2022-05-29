@@ -4,15 +4,13 @@ using Content.Shared.Chemistry.Reaction;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.FixedPoint;
 using JetBrains.Annotations;
-using Robust.Shared.GameObjects;
 using Robust.Shared.Map;
-using Robust.Shared.Serialization.Manager.Attributes;
 
 namespace Content.Server.Chemistry.TileReactions
 {
     [UsedImplicitly]
     [DataDefinition]
-    public class SpillIfPuddlePresentTileReaction : ITileReaction
+    public sealed class SpillIfPuddlePresentTileReaction : ITileReaction
     {
         public FixedPoint2 TileReact(TileRef tile, ReagentPrototype reagent, FixedPoint2 reactVolume)
         {

@@ -4,7 +4,7 @@ using Robust.Shared.GameObjects;
 
 namespace Content.Client.Commands
 {
-    public class ToggleHealthOverlayCommand : IConsoleCommand
+    public sealed class ToggleHealthOverlayCommand : IConsoleCommand
     {
         public string Command => "togglehealthoverlay";
         public string Description => "Toggles a health bar above mobs.";

@@ -3,15 +3,12 @@ using Content.Server.Administration;
 using Content.Shared.Administration;
 using JetBrains.Annotations;
 using Robust.Shared.Console;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Localization;
 
 namespace Content.Server.Nuke.Commands
 {
     [UsedImplicitly]
     [AdminCommand(AdminFlags.Fun)]
-    public class ToggleNukeCommand : IConsoleCommand
+    public sealed class ToggleNukeCommand : IConsoleCommand
     {
         public string Command => "nukearm";
         public string Description => "Toggle nuclear bomb timer. You can set timer directly. Uid is optional.";

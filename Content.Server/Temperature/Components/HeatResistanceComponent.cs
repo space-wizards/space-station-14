@@ -1,12 +1,10 @@
 using Content.Server.Clothing.Components;
 using Content.Shared.Inventory;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
 
 namespace Content.Server.Temperature.Components
 {
     [RegisterComponent]
-    public class HeatResistanceComponent : Component
+    public sealed class HeatResistanceComponent : Component
     {
         public int GetHeatResistance()
         {

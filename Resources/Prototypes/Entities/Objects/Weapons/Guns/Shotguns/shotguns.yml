@@ -20,10 +20,10 @@
     caliber: Shotgun
     capacity: 7
     fireRate: 2.0
-    minAngle: 10
+    minAngle: 5
     maxAngle: 60
     angleIncrease: 30
-    angleDecay: 30
+    angleDecay: 15
     soundGunshot:
       path: /Audio/Weapons/Guns/Gunshots/shotgun.ogg
     soundEmpty:
@@ -111,10 +111,10 @@
     fillPrototype: ShellShotgun
     fireRate: 8.0
     capacity: 2
-    minAngle: 10
+    minAngle: 5
     maxAngle: 60
     angleIncrease: 30
-    angleDecay: 30
+    angleDecay: 15
     ammoSpreadRatio: 0.7
     soundGunshot:
       path: /Audio/Weapons/Guns/Gunshots/shotgun.ogg
@@ -151,8 +151,10 @@
   - type: RangedWeapon
   - type: PumpBarrel
     fireRate: 4.0
-    minAngle: 10
+    minAngle: 5
     maxAngle: 120
+    angleIncrease: 30
+    angleDecay: 15
   - type: Appearance
     visuals:
     - type: MagVisualizer
@@ -176,6 +178,8 @@
   - type: PumpBarrel
     capacity: 9
     ammoSpreadRatio: 0.5
+    angleIncrease: 30
+    angleDecay: 15
 
 - type: entity
   name: Regulator 1000
@@ -193,6 +197,8 @@
   - type: PumpBarrel
     capacity: 7
     ammoSpreadRatio: 0.7
+    angleIncrease: 30
+    angleDecay: 15
 
 - type: entity
   name: Kammerer
@@ -210,6 +216,8 @@
   - type: PumpBarrel
     capacity: 4
     ammoSpreadRatio: 0.7
+    angleIncrease: 30
+    angleDecay: 15
 
 - type: entity
   name: sawn-off shotgun
@@ -228,7 +236,7 @@
     sprite: Objects/Weapons/Guns/Shotguns/sawn.rsi
     state: icon
   - type: Item
-    size: 24
+    size: 15
     sprite: Objects/Weapons/Guns/Shotguns/sawn.rsi
   - type: RangedWeapon
   - type: BoltActionBarrel
@@ -239,10 +247,10 @@
     fillPrototype: ShellShotgun
     fireRate: 8.0
     capacity: 2
-    minAngle: 10
+    minAngle: 7
     maxAngle: 90
     angleIncrease: 45
-    angleDecay: 30
+    angleDecay: 15
     soundGunshot:
       path: /Audio/Weapons/Guns/Gunshots/shotgun.ogg
     soundEmpty:

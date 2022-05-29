@@ -1,12 +1,7 @@
-using System.Collections.Generic;
-using Robust.Shared.GameObjects;
-using Robust.Shared.Maths;
-using Robust.Shared.Serialization.Manager.Attributes;
-
 namespace Content.Server.Sprite.Components
 {
     [RegisterComponent]
-    public class RandomSpriteColorComponent : Component
+    public sealed class RandomSpriteColorComponent : Component
     {
         // This should handle random states + colors for layers.
         // Saame with RandomSpriteState

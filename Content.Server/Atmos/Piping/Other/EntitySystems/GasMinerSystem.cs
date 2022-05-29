@@ -1,17 +1,14 @@
 using System.Diagnostics.CodeAnalysis;
-using Content.Server.Atmos.Components;
 using Content.Server.Atmos.EntitySystems;
 using Content.Server.Atmos.Piping.Components;
 using Content.Server.Atmos.Piping.Other.Components;
 using Content.Shared.Atmos;
 using JetBrains.Annotations;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
 
 namespace Content.Server.Atmos.Piping.Other.EntitySystems
 {
     [UsedImplicitly]
-    public class GasMinerSystem : EntitySystem
+    public sealed class GasMinerSystem : EntitySystem
     {
         [Dependency] private readonly AtmosphereSystem _atmosphereSystem = default!;
 

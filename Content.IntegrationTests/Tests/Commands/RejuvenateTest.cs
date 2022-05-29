@@ -14,7 +14,7 @@ namespace Content.IntegrationTests.Tests.Commands
 {
     [TestFixture]
     [TestOf(typeof(RejuvenateCommand))]
-    public class RejuvenateTest : ContentIntegrationTest
+    public sealed class RejuvenateTest : ContentIntegrationTest
     {
         private const string Prototypes = @"
 - type: entity

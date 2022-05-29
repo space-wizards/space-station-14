@@ -1,6 +1,4 @@
-﻿using System;
-using Robust.Shared.GameObjects;
-using Robust.Shared.Serialization;
+﻿using Robust.Shared.Serialization;
 
 namespace Content.Shared.APC
 {
@@ -27,6 +25,11 @@ namespace Content.Shared.APC
         ///     APC battery is full and has enough power.
         /// </summary>
         Full,
+
+        /// <summary>
+        /// APC is emagged (and not displaying other useful power colors at a glance)
+        /// </summary>
+        Emag,
     }
 
     [Serializable, NetSerializable]

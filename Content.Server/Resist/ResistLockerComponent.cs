@@ -1,14 +1,10 @@
-using Robust.Shared.GameObjects;
-using Robust.Shared.Serialization.Manager.Attributes;
-using Robust.Shared.ViewVariables;
-using Robust.Shared.Analyzers;
 using System.Threading;
 
 namespace Content.Server.Resist;
 
 [RegisterComponent]
 [Friend(typeof(ResistLockerSystem))]
-public class ResistLockerComponent : Component
+public sealed class ResistLockerComponent : Component
 {
     /// <summary>
     /// How long will this locker take to kick open, defaults to 2 minutes

@@ -1,16 +1,13 @@
-using System;
 using System.Text;
 using System.Text.RegularExpressions;
 using Content.Server.Speech.Components;
 using Content.Shared.Speech.EntitySystems;
 using Content.Shared.StatusEffect;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
 using Robust.Shared.Random;
 
 namespace Content.Server.Speech.EntitySystems
 {
-    public class StutteringSystem : SharedStutteringSystem
+    public sealed class StutteringSystem : SharedStutteringSystem
     {
         [Dependency] private readonly StatusEffectsSystem _statusEffectsSystem = default!;
         [Dependency] private readonly IRobustRandom _random = default!;

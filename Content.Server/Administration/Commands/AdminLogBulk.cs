@@ -1,17 +1,15 @@
 ﻿using System.Threading.Tasks;
 using Content.Server.Administration.Logs;
 using Content.Shared.Administration;
-using Content.Shared.Administration.Logs;
 using Content.Shared.Database;
 using Robust.Shared.Console;
-using Robust.Shared.GameObjects;
 using Robust.Shared.Timing;
 
 namespace Content.Server.Administration.Commands;
 
 #if DEBUG
 [AdminCommand(AdminFlags.Host)]
-public class AdminLogBulk : IConsoleCommand
+public sealed class AdminLogBulk : IConsoleCommand
 {
     public string Command => "adminlogbulk";
     public string Description => "Adds debug logs to the database.";
@@ -39,7 +37,7 @@ public class AdminLogBulk : IConsoleCommand
                 return;
         }
 
-        var logs = EntitySystem.Get<AdminLogSystem>();
+        var logManager = IoCManager.Resolve<IAdminLogManager>();
 
         var stopwatch = new Stopwatch();
         stopwatch.Start();
@@ -48,14 +46,14 @@ public class AdminLogBulk : IConsoleCommand
         {
             Parallel.For(0, amount, _ =>
             {
-                logs.Add(LogType.Unknown, $"Debug log added by {entity:Player}");
+                logManager.Add(LogType.Unknown, $"Debug log added by {entity:Player}");
             });
         }
         else
         {
             for (var i = 0; i < amount; i++)
             {
-                logs.Add(LogType.Unknown, $"Debug log added by {entity:Player}");
+                logManager.Add(LogType.Unknown, $"Debug log added by {entity:Player}");
             }
         }
 

@@ -10,9 +10,15 @@
     sprite: Structures/Windows/reinforced_plasma_window.rsi
   - type: Damageable
     damageContainer: Inorganic
-    damageModifierSet: Glass
+    damageModifierSet: RGlass
   - type: Destructible
     thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 1000
+      behaviors: #excess damage, don't spawn entities.
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
     - trigger:
         !type:DamageTrigger
         damage: 600
@@ -66,6 +72,12 @@
     node: plasmaReinforcedWindowDirectional
   - type: Destructible
     thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 1000
+      behaviors: #excess damage, don't spawn entities.
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
     - trigger:
         !type:DamageTrigger
         damage: 600

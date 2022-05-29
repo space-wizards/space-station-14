@@ -1,8 +1,6 @@
-﻿using Robust.Shared.GameObjects;
-
-namespace Content.Shared.Pulling
+﻿namespace Content.Shared.Pulling
 {
-    public class PullableStopMovingMessage : EntityEventArgs
+    public sealed class PullableStopMovingMessage : EntityEventArgs
     {
     }
 }

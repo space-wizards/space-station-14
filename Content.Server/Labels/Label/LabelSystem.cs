@@ -5,9 +5,6 @@ using Content.Shared.Examine;
 using Content.Shared.Labels;
 using JetBrains.Annotations;
 using Robust.Shared.Containers;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Localization;
 using Robust.Shared.Utility;
 
 namespace Content.Server.Labels
@@ -16,7 +13,7 @@ namespace Content.Server.Labels
     /// A system that lets players see the contents of a label on an object.
     /// </summary>
     [UsedImplicitly]
-    public class LabelSystem : EntitySystem
+    public sealed class LabelSystem : EntitySystem
     {
         [Dependency] private readonly ItemSlotsSystem _itemSlotsSystem = default!;
 

@@ -1,17 +1,10 @@
-using System;
-using System.Collections.Generic;
-using Content.Server.Solar.Components;
 using Content.Server.UserInterface;
 using Content.Shared.Radar;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Log;
 using Robust.Shared.Map;
-using Robust.Shared.Maths;
 
 namespace Content.Server.Radar;
 
-public class RadarConsoleSystem : EntitySystem
+public sealed class RadarConsoleSystem : EntitySystem
 {
     [Dependency] private readonly IMapManager _mapManager = default!;
 
@@ -32,7 +25,7 @@ public class RadarConsoleSystem : EntitySystem
         {
             var s = component.Owner.GetUIOrNull(RadarConsoleUiKey.Key);
 
-            if (s is null)
+            if (s is null || s.SubscribedSessions.Count == 0)
                 continue;
 
             var (radarPos, _, radarInvMatrix) = xform.GetWorldPositionRotationInvMatrix();

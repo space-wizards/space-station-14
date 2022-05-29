@@ -6,7 +6,7 @@ using Robust.Shared.Player;
 
 namespace Content.Client.Kitchen.EntitySystems
 {
-    public class MicrowaveSystem : EntitySystem
+    public sealed class MicrowaveSystem : EntitySystem
     {
         public void StartSoundLoop(MicrowaveComponent microwave)
         {

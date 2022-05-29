@@ -1,4 +1,3 @@
-using System;
 using Content.Shared.Eui;
 using Robust.Shared.Serialization;
 
@@ -14,7 +13,7 @@ namespace Content.Shared.Ghost.Roles
     }
 
     [NetSerializable, Serializable]
-    public class GhostRolesEuiState : EuiStateBase
+    public sealed class GhostRolesEuiState : EuiStateBase
     {
         public GhostRoleInfo[] GhostRoles { get; }
 
@@ -25,7 +24,7 @@ namespace Content.Shared.Ghost.Roles
     }
 
     [NetSerializable, Serializable]
-    public class GhostRoleTakeoverRequestMessage : EuiMessageBase
+    public sealed class GhostRoleTakeoverRequestMessage : EuiMessageBase
     {
         public uint Identifier { get; }
 
@@ -36,7 +35,18 @@ namespace Content.Shared.Ghost.Roles
     }
 
     [NetSerializable, Serializable]
-    public class GhostRoleWindowCloseMessage : EuiMessageBase
+    public sealed class GhostRoleFollowRequestMessage : EuiMessageBase
+    {
+        public uint Identifier { get; }
+
+        public GhostRoleFollowRequestMessage(uint identifier)
+        {
+            Identifier = identifier;
+        }
+    }
+
+    [NetSerializable, Serializable]
+    public sealed class GhostRoleWindowCloseMessage : EuiMessageBase
     {
     }
 }

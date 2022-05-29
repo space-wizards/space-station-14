@@ -10,7 +10,7 @@ using Robust.Shared.Player;
 namespace Content.Client.Light.Visualizers
 {
     [UsedImplicitly]
-    public class ExpendableLightVisualizer : AppearanceVisualizer
+    public sealed class ExpendableLightVisualizer : AppearanceVisualizer
     {
         public override void OnChangeData(AppearanceComponent component)
         {

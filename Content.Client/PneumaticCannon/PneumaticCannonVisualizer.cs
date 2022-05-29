@@ -5,7 +5,7 @@ using Robust.Shared.IoC;
 
 namespace Content.Client.PneumaticCannon
 {
-    public class PneumaticCannonVisualizer : AppearanceVisualizer
+    public sealed class PneumaticCannonVisualizer : AppearanceVisualizer
     {
         public override void OnChangeData(AppearanceComponent component)
         {

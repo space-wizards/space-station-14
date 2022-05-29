@@ -5,11 +5,6 @@ namespace Content.Server.DeviceNetwork
     /// </summary>
     public static class DeviceNetworkConstants
     {
-        /// <summary>
-        /// Invalid address used for broadcasting
-        /// </summary>
-        public const string NullAddress = "######";
-
         #region Commands
 
         /// <summary>

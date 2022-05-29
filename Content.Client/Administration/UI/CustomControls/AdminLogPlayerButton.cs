@@ -3,7 +3,7 @@ using Robust.Client.UserInterface.Controls;
 
 namespace Content.Client.Administration.UI.CustomControls;
 
-public class AdminLogPlayerButton : Button
+public sealed class AdminLogPlayerButton : Button
 {
     public AdminLogPlayerButton(Guid id)
     {

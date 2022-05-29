@@ -4,7 +4,7 @@ using Robust.Shared.GameObjects;
 
 namespace Content.Client.MobState.States
 {
-    public class DeadMobState : SharedDeadMobState
+    public sealed class DeadMobState : SharedDeadMobState
     {
         public override void EnterState(EntityUid uid, IEntityManager entityManager)
         {

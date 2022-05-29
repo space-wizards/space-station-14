@@ -51,3 +51,13 @@
     fillPrototype: ShellShotgunSlug
   - type: Sprite
     sprite: Objects/Weapons/Guns/Ammunition/Magazine/Shotgun/m12_slug.rsi
+
+- type: entity
+  id: MagazineShotgunIncendiary
+  name: ammo drum (.50 incendiary)
+  parent: MagazineShotgunBase
+  components:
+  - type: RangedMagazine
+    fillPrototype: ShellShotgunIncendiary
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Ammunition/Magazine/Shotgun/m12_slug.rsi

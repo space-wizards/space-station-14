@@ -1,12 +1,9 @@
 using Content.Server.Chat.Managers;
 using Content.Shared.Roles;
-using Robust.Shared.IoC;
-using Robust.Shared.Localization;
-using Robust.Shared.ViewVariables;
 
 namespace Content.Server.Roles
 {
-    public class Job : Role
+    public sealed class Job : Role
     {
         [ViewVariables]
         public JobPrototype Prototype { get; }

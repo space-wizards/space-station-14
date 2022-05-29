@@ -1,12 +1,11 @@
 using Content.Shared.Traitor.Uplink;
-using Robust.Shared.GameObjects;
 
 namespace Content.Server.Traitor.Uplink.Account
 {
     /// <summary>
     /// Invokes when one of the UplinkAccounts changed its TC balance
     /// </summary>
-    public class UplinkAccountBalanceChanged : EntityEventArgs
+    public sealed class UplinkAccountBalanceChanged : EntityEventArgs
     {
         public readonly UplinkAccount Account;
 

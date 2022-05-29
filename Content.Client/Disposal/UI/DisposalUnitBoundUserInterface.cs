@@ -12,7 +12,7 @@ namespace Content.Client.Disposal.UI
     /// Initializes a <see cref="DisposalUnitWindow"/> and updates it when new server messages are received.
     /// </summary>
     [UsedImplicitly]
-    public class DisposalUnitBoundUserInterface : BoundUserInterface
+    public sealed class DisposalUnitBoundUserInterface : BoundUserInterface
     {
         public DisposalUnitWindow? Window;
 

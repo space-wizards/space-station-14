@@ -1,16 +1,10 @@
-using System;
-using Robust.Shared.GameObjects;
-using Robust.Shared.Maths;
-using Robust.Shared.Serialization.Manager.Attributes;
-using Robust.Shared.ViewVariables;
-
 namespace Content.Server.Power.Components
 {
     /// <summary>
     ///     Self-recharging battery.
     /// </summary>
     [RegisterComponent]
-    public class BatterySelfRechargerComponent : Component
+    public sealed class BatterySelfRechargerComponent : Component
     {
         [ViewVariables(VVAccess.ReadWrite)] [DataField("autoRecharge")] public bool AutoRecharge { get; set; }
 

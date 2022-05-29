@@ -5,7 +5,7 @@ using Robust.Shared.ViewVariables;
 namespace Content.Client.Construction
 {
     [RegisterComponent]
-    public class ConstructionGhostComponent : Component
+    public sealed class ConstructionGhostComponent : Component
     {
         [ViewVariables] public ConstructionPrototype? Prototype { get; set; }
         [ViewVariables] public int GhostId { get; set; }

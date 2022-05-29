@@ -9,7 +9,7 @@ namespace Content.Client.Verbs
     /// <summary>
     ///     Client-side admin verb system. These usually open some sort of UIs.
     /// </summary>
-    class AdminVerbSystem : EntitySystem
+    sealed class AdminVerbSystem : EntitySystem
     {
         [Dependency] private readonly IClientConGroupController _clientConGroupController = default!;
         [Dependency] private readonly IClientConsoleHost _clientConsoleHost = default!;

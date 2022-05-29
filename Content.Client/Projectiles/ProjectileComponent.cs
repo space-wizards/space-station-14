@@ -5,7 +5,7 @@ namespace Content.Client.Projectiles
 {
     [RegisterComponent]
     [ComponentReference(typeof(SharedProjectileComponent))]
-    public class ProjectileComponent : SharedProjectileComponent
+    public sealed class ProjectileComponent : SharedProjectileComponent
     {
         public override void HandleComponentState(ComponentState? curState, ComponentState? nextState)
         {

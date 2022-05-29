@@ -1,12 +1,10 @@
 ﻿using Content.Server.Clothing.Components;
 using Content.Server.Speech.Components;
 using Content.Shared.Inventory.Events;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
 
 namespace Content.Server.Speech.EntitySystems;
 
-public class AddAccentClothingSystem : EntitySystem
+public sealed class AddAccentClothingSystem : EntitySystem
 {
     [Dependency] private readonly IComponentFactory _componentFactory = default!;
 

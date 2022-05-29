@@ -1,21 +1,14 @@
-using System;
-using System.Collections.Generic;
 using System.Threading;
 using Content.Server.Atmos;
-using Content.Server.UserInterface;
 using Content.Shared.Atmos;
 using Content.Shared.Disposal.Components;
-using Robust.Server.GameObjects;
 using Robust.Shared.Containers;
-using Robust.Shared.GameObjects;
-using Robust.Shared.Serialization.Manager.Attributes;
-using Robust.Shared.ViewVariables;
 
 namespace Content.Server.Disposal.Unit.Components
 {
     [RegisterComponent]
     [ComponentReference(typeof(SharedDisposalUnitComponent))]
-    public class DisposalUnitComponent : SharedDisposalUnitComponent, IGasMixtureHolder
+    public sealed class DisposalUnitComponent : SharedDisposalUnitComponent, IGasMixtureHolder
     {
         /// <summary>
         ///     Last time that an entity tried to exit this disposal unit.

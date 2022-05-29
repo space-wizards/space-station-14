@@ -1,5 +1,3 @@
-using Robust.Shared.GameObjects;
-
 namespace Content.Shared.Inventory.Events;
 
 public abstract class EquipAttemptBase : CancellableEntityEventArgs
@@ -45,7 +43,7 @@ public abstract class EquipAttemptBase : CancellableEntityEventArgs
     }
 }
 
-public class BeingEquippedAttemptEvent : EquipAttemptBase
+public sealed class BeingEquippedAttemptEvent : EquipAttemptBase
 {
     public BeingEquippedAttemptEvent(EntityUid equipee, EntityUid equipTarget, EntityUid equipment,
         SlotDefinition slotDefinition) : base(equipee, equipTarget, equipment, slotDefinition)
@@ -53,7 +51,7 @@ public class BeingEquippedAttemptEvent : EquipAttemptBase
     }
 }
 
-public class IsEquippingAttemptEvent : EquipAttemptBase
+public sealed class IsEquippingAttemptEvent : EquipAttemptBase
 {
     public IsEquippingAttemptEvent(EntityUid equipee, EntityUid equipTarget, EntityUid equipment,
         SlotDefinition slotDefinition) : base(equipee, equipTarget, equipment, slotDefinition)

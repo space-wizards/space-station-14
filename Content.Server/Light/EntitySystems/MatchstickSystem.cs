@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using Content.Server.Atmos.EntitySystems;
 using Content.Server.Light.Components;
 using Content.Shared.Audio;
@@ -8,13 +7,11 @@ using Content.Shared.Smoking;
 using Content.Shared.Temperature;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
 using Robust.Shared.Player;
 
 namespace Content.Server.Light.EntitySystems
 {
-    public class MatchstickSystem : EntitySystem
+    public sealed class MatchstickSystem : EntitySystem
     {
         private HashSet<MatchstickComponent> _litMatches = new();
         [Dependency]

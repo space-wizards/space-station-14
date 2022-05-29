@@ -11,7 +11,7 @@ using Robust.Shared.Random;
 
 namespace Content.Client.Jittering
 {
-    public class JitteringSystem : SharedJitteringSystem
+    public sealed class JitteringSystem : SharedJitteringSystem
     {
         [Dependency] private readonly IRobustRandom _random = default!;
 

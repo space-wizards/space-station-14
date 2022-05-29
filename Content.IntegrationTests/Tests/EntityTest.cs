@@ -6,17 +6,16 @@ using Content.Shared.CCVar;
 using Content.Shared.Coordinates;
 using NUnit.Framework;
 using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
 using Robust.Shared.Log;
 using Robust.Shared.Map;
+using Robust.Shared.Maths;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Timing;
 
 namespace Content.IntegrationTests.Tests
 {
     [TestFixture]
     [TestOf(typeof(EntityUid))]
-    public class EntityTest : ContentIntegrationTest
+    public sealed class EntityTest : ContentIntegrationTest
     {
         [Test]
         public async Task SpawnTest()
@@ -32,7 +31,6 @@ namespace Content.IntegrationTests.Tests
             var mapManager = server.ResolveDependency<IMapManager>();
             var entityMan = server.ResolveDependency<IEntityManager>();
             var prototypeMan = server.ResolveDependency<IPrototypeManager>();
-            var pauseManager = server.ResolveDependency<IPauseManager>();
             var tileDefinitionManager = server.ResolveDependency<ITileDefinitionManager>();
 
             var prototypes = new List<EntityPrototype>();
@@ -45,7 +43,7 @@ namespace Content.IntegrationTests.Tests
                 // Create a one tile grid to stave off the grid 0 monsters
                 var mapId = mapManager.CreateMap();
 
-                pauseManager.AddUninitializedMap(mapId);
+                mapManager.AddUninitializedMap(mapId);
 
                 var gridId = new GridId(1);
 
@@ -60,7 +58,7 @@ namespace Content.IntegrationTests.Tests
 
                 grid.SetTile(coordinates, tile);
 
-                pauseManager.DoMapInitialize(mapId);
+                mapManager.DoMapInitialize(mapId);
             });
 
             server.Assert(() =>
@@ -126,7 +124,6 @@ namespace Content.IntegrationTests.Tests
 
             var mapManager = server.ResolveDependency<IMapManager>();
             var entityManager = server.ResolveDependency<IEntityManager>();
-            var pauseManager = server.ResolveDependency<IPauseManager>();
             var componentFactory = server.ResolveDependency<IComponentFactory>();
             var tileDefinitionManager = server.ResolveDependency<ITileDefinitionManager>();
 
@@ -137,7 +134,7 @@ namespace Content.IntegrationTests.Tests
                 // Create a one tile grid to stave off the grid 0 monsters
                 var mapId = mapManager.CreateMap();
 
-                pauseManager.AddUninitializedMap(mapId);
+                mapManager.AddUninitializedMap(mapId);
 
                 var gridId = new GridId(1);
 
@@ -152,7 +149,7 @@ namespace Content.IntegrationTests.Tests
 
                 grid.SetTile(coordinates, tile);
 
-                pauseManager.DoMapInitialize(mapId);
+                mapManager.DoMapInitialize(mapId);
             });
 
             server.Assert(() =>
@@ -230,7 +227,6 @@ namespace Content.IntegrationTests.Tests
 
             var mapManager = server.ResolveDependency<IMapManager>();
             var entityManager = server.ResolveDependency<IEntityManager>();
-            var pauseManager = server.ResolveDependency<IPauseManager>();
             var componentFactory = server.ResolveDependency<IComponentFactory>();
             var tileDefinitionManager = server.ResolveDependency<ITileDefinitionManager>();
 
@@ -241,7 +237,7 @@ namespace Content.IntegrationTests.Tests
                 // Create a one tile grid to stave off the grid 0 monsters
                 var mapId = mapManager.CreateMap();
 
-                pauseManager.AddUninitializedMap(mapId);
+                mapManager.AddUninitializedMap(mapId);
 
                 var gridId = new GridId(1);
 
@@ -252,16 +248,14 @@ namespace Content.IntegrationTests.Tests
 
                 var tileDefinition = tileDefinitionManager["underplating"];
                 var tile = new Tile(tileDefinition.TileId);
-                var coordinates = grid.ToCoordinates();
 
-                grid.SetTile(coordinates, tile);
-
-                pauseManager.DoMapInitialize(mapId);
+                grid.SetTile(Vector2i.Zero, tile);
+                mapManager.DoMapInitialize(mapId);
             });
 
-            var distinctComponents = new List<(List<Type> components, List<Type> references)>
+            var distinctComponents = new List<(List<CompIdx> components, List<CompIdx> references)>
             {
-                (new List<Type>(), new List<Type>())
+                (new List<CompIdx>(), new List<CompIdx>())
             };
 
             // Split components into groups, ensuring that their references don't conflict
@@ -278,14 +272,14 @@ namespace Content.IntegrationTests.Tests
                         // Ensure the next list if this one has conflicting references
                         if (i + 1 >= distinctComponents.Count)
                         {
-                            distinctComponents.Add((new List<Type>(), new List<Type>()));
+                            distinctComponents.Add((new List<CompIdx>(), new List<CompIdx>()));
                         }
 
                         continue;
                     }
 
                     // Add the component and its references if no conflicting references were found
-                    distinct.components.Add(type);
+                    distinct.components.Add(registration.Idx);
                     distinct.references.AddRange(registration.References);
                 }
             }

@@ -5,7 +5,7 @@ using JetBrains.Annotations;
 namespace Content.Client.Atmos.Visualizers
 {
     [UsedImplicitly]
-    public class GasValveVisualizer : EnabledAtmosDeviceVisualizer
+    public sealed class GasValveVisualizer : EnabledAtmosDeviceVisualizer
     {
         protected override object LayerMap => Layers.Enabled;
         protected override Enum DataKey => FilterVisuals.Enabled;

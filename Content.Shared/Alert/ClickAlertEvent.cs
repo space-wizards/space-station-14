@@ -1,6 +1,4 @@
-﻿using System;
-using Robust.Shared.GameObjects;
-using Robust.Shared.Serialization;
+﻿using Robust.Shared.Serialization;
 
 namespace Content.Shared.Alert;
 
@@ -8,7 +6,7 @@ namespace Content.Shared.Alert;
 /// A message that calls the click interaction on a alert
 /// </summary>
 [Serializable, NetSerializable]
-public class ClickAlertEvent : EntityEventArgs
+public sealed class ClickAlertEvent : EntityEventArgs
 {
     public readonly AlertType Type;
 

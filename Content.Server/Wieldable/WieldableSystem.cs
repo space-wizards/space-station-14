@@ -4,22 +4,24 @@ using Content.Server.Hands.Systems;
 using Content.Server.Weapon.Melee;
 using Content.Server.Wieldable.Components;
 using Content.Shared.Hands;
-using Content.Shared.Interaction;
+using Content.Shared.Hands.Components;
+using Content.Shared.Hands.EntitySystems;
+using Content.Shared.Interaction.Events;
 using Content.Shared.Item;
 using Content.Shared.Popups;
 using Content.Shared.Verbs;
 using Robust.Shared.Audio;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Localization;
 using Robust.Shared.Player;
+using Content.Server.Actions.Events;
+
 
 namespace Content.Server.Wieldable
 {
-    public class WieldableSystem : EntitySystem
+    public sealed class WieldableSystem : EntitySystem
     {
         [Dependency] private readonly DoAfterSystem _doAfter = default!;
         [Dependency] private readonly HandVirtualItemSystem _virtualItemSystem = default!;
+        [Dependency] private readonly SharedHandsSystem _handsSystem = default!;
 
         public override void Initialize()
         {
@@ -28,11 +30,18 @@ namespace Content.Server.Wieldable
             SubscribeLocalEvent<WieldableComponent, UseInHandEvent>(OnUseInHand);
             SubscribeLocalEvent<WieldableComponent, ItemWieldedEvent>(OnItemWielded);
             SubscribeLocalEvent<WieldableComponent, ItemUnwieldedEvent>(OnItemUnwielded);
-            SubscribeLocalEvent<WieldableComponent, UnequippedHandEvent>(OnItemLeaveHand);
+            SubscribeLocalEvent<WieldableComponent, GotUnequippedHandEvent>(OnItemLeaveHand);
             SubscribeLocalEvent<WieldableComponent, VirtualItemDeletedEvent>(OnVirtualItemDeleted);
             SubscribeLocalEvent<WieldableComponent, GetVerbsEvent<InteractionVerb>>(AddToggleWieldVerb);
+            SubscribeLocalEvent<WieldableComponent, DisarmAttemptEvent>(OnDisarmAttemptEvent);
 
             SubscribeLocalEvent<IncreaseDamageOnWieldComponent, MeleeHitEvent>(OnMeleeHit);
+        }
+
+        private void OnDisarmAttemptEvent(EntityUid uid, WieldableComponent component, DisarmAttemptEvent args)
+        {
+            if (component.Wielded)
+                args.Cancel();
         }
 
         private void AddToggleWieldVerb(EntityUid uid, WieldableComponent component, GetVerbsEvent<InteractionVerb> args)
@@ -75,7 +84,8 @@ namespace Content.Server.Wieldable
                 return false;
             }
 
-            if (hands.GetFreeHands() < component.FreeHandsRequired)
+            if (hands.CountFreeHands()
+                < component.FreeHandsRequired)
             {
                 // TODO FLUENT need function to change 'hands' to 'hand' when there's only 1 required
                 if (!quiet)
@@ -89,7 +99,7 @@ namespace Content.Server.Wieldable
             }
 
             // Is it.. actually in one of their hands?
-            if (!hands.TryGetHandHoldingEntity(uid, out _))
+            if (!_handsSystem.IsHolding(user, uid, out _, hands))
             {
                 if (!quiet)
                 {
@@ -208,7 +218,7 @@ namespace Content.Server.Wieldable
             _virtualItemSystem.DeleteInHandsMatching(args.User.Value, uid);
         }
 
-        private void OnItemLeaveHand(EntityUid uid, WieldableComponent component, UnequippedHandEvent args)
+        private void OnItemLeaveHand(EntityUid uid, WieldableComponent component, GotUnequippedHandEvent args)
         {
             if (!component.Wielded || component.Owner != args.Unequipped)
                 return;
@@ -237,14 +247,14 @@ namespace Content.Server.Wieldable
 
     #region Events
 
-    public class BeforeWieldEvent : CancellableEntityEventArgs
+    public sealed class BeforeWieldEvent : CancellableEntityEventArgs
     {
     }
 
     /// <summary>
     ///     Raised on the item that has been wielded.
     /// </summary>
-    public class ItemWieldedEvent : EntityEventArgs
+    public sealed class ItemWieldedEvent : EntityEventArgs
     {
         public EntityUid? User;
 
@@ -257,7 +267,7 @@ namespace Content.Server.Wieldable
     /// <summary>
     ///     Raised on the user who wielded the item.
     /// </summary>
-    public class WieldedItemEvent : EntityEventArgs
+    public sealed class WieldedItemEvent : EntityEventArgs
     {
         public EntityUid Item;
 
@@ -267,14 +277,14 @@ namespace Content.Server.Wieldable
         }
     }
 
-    public class BeforeUnwieldEvent : CancellableEntityEventArgs
+    public sealed class BeforeUnwieldEvent : CancellableEntityEventArgs
     {
     }
 
     /// <summary>
     ///     Raised on the item that has been unwielded.
     /// </summary>
-    public class ItemUnwieldedEvent : EntityEventArgs
+    public sealed class ItemUnwieldedEvent : EntityEventArgs
     {
         public EntityUid? User;
         /// <summary>
@@ -292,7 +302,7 @@ namespace Content.Server.Wieldable
     /// <summary>
     ///     Raised on the user who unwielded the item.
     /// </summary>
-    public class UnwieldedItemEvent : EntityEventArgs
+    public sealed class UnwieldedItemEvent : EntityEventArgs
     {
         public EntityUid Item;
 

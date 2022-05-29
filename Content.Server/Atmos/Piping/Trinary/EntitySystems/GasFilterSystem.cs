@@ -1,33 +1,30 @@
-using System;
 using Content.Server.Administration.Logs;
 using Content.Server.Atmos.EntitySystems;
 using Content.Server.Atmos.Piping.Components;
 using Content.Server.Atmos.Piping.Trinary.Components;
 using Content.Server.NodeContainer;
 using Content.Server.NodeContainer.Nodes;
-using Content.Server.UserInterface;
 using Content.Shared.Atmos;
 using Content.Shared.Atmos.Piping;
 using Content.Shared.Atmos.Piping.Trinary.Components;
+using Content.Shared.Audio;
 using Content.Shared.Database;
 using Content.Shared.Interaction;
 using Content.Shared.Popups;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Localization;
 using Robust.Shared.Timing;
 
 namespace Content.Server.Atmos.Piping.Trinary.EntitySystems
 {
     [UsedImplicitly]
-    public class GasFilterSystem : EntitySystem
+    public sealed class GasFilterSystem : EntitySystem
     {
         [Dependency] private IGameTiming _gameTiming = default!;
         [Dependency] private UserInterfaceSystem _userInterfaceSystem = default!;
-        [Dependency] private AdminLogSystem _adminLogSystem = default!;
+        [Dependency] private IAdminLogManager _adminLogger = default!;
         [Dependency] private readonly AtmosphereSystem _atmosphereSystem = default!;
+        [Dependency] private readonly SharedAmbientSoundSystem _ambientSoundSystem = default!;
 
         public override void Initialize()
         {
@@ -50,7 +47,10 @@ namespace Content.Server.Atmos.Piping.Trinary.EntitySystems
 
             component.Enabled = false;
             if (TryComp(uid, out AppearanceComponent? appearance))
+            {
                 appearance.SetData(FilterVisuals.Enabled, false);
+                _ambientSoundSystem.SetAmbience(component.Owner, false);
+            }
 
             DirtyUI(uid, component);
             _userInterfaceSystem.TryCloseAll(uid, GasFilterUiKey.Key);
@@ -69,6 +69,7 @@ namespace Content.Server.Atmos.Piping.Trinary.EntitySystems
             || outletNode.Air.Pressure >= Atmospherics.MaxOutputPressure) // No need to transfer if target is full.
             {
                 appearance?.SetData(FilterVisuals.Enabled, false);
+                _ambientSoundSystem.SetAmbience(filter.Owner, false);
                 return;
             }
 
@@ -78,6 +79,7 @@ namespace Content.Server.Atmos.Piping.Trinary.EntitySystems
             if (transferRatio <= 0)
             {
                 appearance?.SetData(FilterVisuals.Enabled, false);
+                _ambientSoundSystem.SetAmbience(filter.Owner, false);
                 return;
             }
 
@@ -94,6 +96,14 @@ namespace Content.Server.Atmos.Piping.Trinary.EntitySystems
 
                 var target = filterNode.Air.Pressure < Atmospherics.MaxOutputPressure ? filterNode : inletNode;
                 _atmosphereSystem.Merge(target.Air, filteredOut);
+                if (filteredOut.Pressure != 0f)
+                {
+                    _ambientSoundSystem.SetAmbience(filter.Owner, true);
+                }
+                else
+                {
+                    _ambientSoundSystem.SetAmbience(filter.Owner, false);
+                }
             }
 
             _atmosphereSystem.Merge(outletNode.Air, removed);
@@ -130,7 +140,7 @@ namespace Content.Server.Atmos.Piping.Trinary.EntitySystems
         private void OnToggleStatusMessage(EntityUid uid, GasFilterComponent filter, GasFilterToggleStatusMessage args)
         {
             filter.Enabled = args.Enabled;
-            _adminLogSystem.Add(LogType.AtmosPowerChanged, LogImpact.Medium,
+            _adminLogger.Add(LogType.AtmosPowerChanged, LogImpact.Medium,
                 $"{ToPrettyString(args.Session.AttachedEntity!.Value):player} set the power on {ToPrettyString(uid):device} to {args.Enabled}");
 
             DirtyUI(uid, filter);
@@ -138,8 +148,8 @@ namespace Content.Server.Atmos.Piping.Trinary.EntitySystems
 
         private void OnTransferRateChangeMessage(EntityUid uid, GasFilterComponent filter, GasFilterChangeRateMessage args)
         {
-            filter.TransferRate = Math.Clamp(args.Rate, 0f, Atmospherics.MaxTransferRate);
-            _adminLogSystem.Add(LogType.AtmosVolumeChanged, LogImpact.Medium,
+            filter.TransferRate = Math.Clamp(args.Rate, 0f, filter.MaxTransferRate);
+            _adminLogger.Add(LogType.AtmosVolumeChanged, LogImpact.Medium,
                 $"{ToPrettyString(args.Session.AttachedEntity!.Value):player} set the transfer rate on {ToPrettyString(uid):device} to {args.Rate}");
             DirtyUI(uid, filter);
 

@@ -18,7 +18,7 @@ using Robust.Shared.Timing;
 
 namespace Content.Client.Items.Managers
 {
-    public class ItemSlotManager : IItemSlotManager
+    public sealed class ItemSlotManager : IItemSlotManager
     {
         [Dependency] private readonly IGameTiming _gameTiming = default!;
         [Dependency] private readonly IEntitySystemManager _entitySystemManager = default!;

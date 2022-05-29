@@ -1,14 +1,12 @@
-using Content.Server.Chat.Managers;
+using Content.Server.Chat;
 using Content.Shared.Administration;
 using Robust.Server.Player;
 using Robust.Shared.Console;
-using Robust.Shared.IoC;
-using Robust.Shared.Localization;
 
 namespace Content.Server.Administration.Commands
 {
     [AdminCommand(AdminFlags.Admin)]
-    class DSay : IConsoleCommand
+    sealed class DSay : IConsoleCommand
     {
         public string Command => "dsay";
 
@@ -25,6 +23,9 @@ namespace Content.Server.Administration.Commands
                 return;
             }
 
+            if (player.AttachedEntity is not { Valid: true } entity)
+                return;
+
             if (args.Length < 1)
                 return;
 
@@ -32,10 +33,8 @@ namespace Content.Server.Administration.Commands
             if (string.IsNullOrEmpty(message))
                 return;
 
-            var chat = IoCManager.Resolve<IChatManager>();
-
-            chat.SendAdminDeadChat(player, message);
-
+            var chat = EntitySystem.Get<ChatSystem>();
+            chat.TrySendInGameOOCMessage(entity, message, InGameOOCChatType.Dead, false, shell, player);
         }
     }
 }

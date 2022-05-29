@@ -32,8 +32,8 @@ namespace Content.Client.Input
             var human = contexts.GetContext("human");
             human.AddFunction(ContentKeyFunctions.SwapHands);
             human.AddFunction(ContentKeyFunctions.Drop);
-            human.AddFunction(ContentKeyFunctions.ActivateItemInHand);
-            human.AddFunction(ContentKeyFunctions.AltActivateItemInHand);
+            human.AddFunction(ContentKeyFunctions.UseItemInHand);
+            human.AddFunction(ContentKeyFunctions.AltUseItemInHand);
             human.AddFunction(ContentKeyFunctions.OpenCharacterMenu);
             human.AddFunction(ContentKeyFunctions.ActivateItemInWorld);
             human.AddFunction(ContentKeyFunctions.ThrowItemInHand);
@@ -46,7 +46,6 @@ namespace Content.Client.Input
             human.AddFunction(ContentKeyFunctions.SmartEquipBackpack);
             human.AddFunction(ContentKeyFunctions.SmartEquipBelt);
             human.AddFunction(ContentKeyFunctions.MouseMiddle);
-            human.AddFunction(ContentKeyFunctions.WideAttack);
             human.AddFunction(ContentKeyFunctions.ArcadeUp);
             human.AddFunction(ContentKeyFunctions.ArcadeDown);
             human.AddFunction(ContentKeyFunctions.ArcadeLeft);

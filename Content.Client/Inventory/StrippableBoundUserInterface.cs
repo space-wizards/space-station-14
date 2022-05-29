@@ -11,7 +11,7 @@ using Robust.Shared.ViewVariables;
 namespace Content.Client.Inventory
 {
     [UsedImplicitly]
-    public class StrippableBoundUserInterface : BoundUserInterface
+    public sealed class StrippableBoundUserInterface : BoundUserInterface
     {
         public Dictionary<(string ID, string Name), string>? Inventory { get; private set; }
         public Dictionary<string, string>? Hands { get; private set; }

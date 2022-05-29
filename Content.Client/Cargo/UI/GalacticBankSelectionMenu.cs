@@ -5,7 +5,7 @@ using Robust.Shared.Localization;
 
 namespace Content.Client.Cargo.UI
 {
-    public class GalacticBankSelectionMenu : DefaultWindow
+    public sealed class GalacticBankSelectionMenu : DefaultWindow
     {
         private readonly ItemList _accounts;
         private int _accountCount;

@@ -14,7 +14,3 @@
     layers:
       - state: box
       - state: beaker
-  - type: Item
-    size: 30
-  - type: Storage
-    capacity: 30

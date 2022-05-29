@@ -1,15 +1,11 @@
-using System.Collections.Generic;
 using Content.Server.NodeContainer;
 using Content.Server.NodeContainer.Nodes;
-using Robust.Shared.GameObjects;
 using Robust.Shared.Map;
-using Robust.Shared.Maths;
-using Robust.Shared.Serialization.Manager.Attributes;
 
 namespace Content.Server.Power.Nodes
 {
     [DataDefinition]
-    public class CableTerminalNode : CableDeviceNode
+    public sealed class CableTerminalNode : CableDeviceNode
     {
         public override IEnumerable<Node> GetReachableNodes(TransformComponent xform,
             EntityQuery<NodeContainerComponent> nodeQuery,

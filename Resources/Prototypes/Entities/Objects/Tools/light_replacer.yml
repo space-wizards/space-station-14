@@ -17,3 +17,6 @@
     - name: LightBulb
       amount: 5
       type: Bulb
+  - type: Tag
+    tags:
+      - DroneUsable

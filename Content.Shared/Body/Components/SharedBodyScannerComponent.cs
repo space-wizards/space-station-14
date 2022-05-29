@@ -1,6 +1,4 @@
-﻿using System;
-using Robust.Shared.GameObjects;
-using Robust.Shared.Serialization;
+﻿using Robust.Shared.Serialization;
 
 namespace Content.Shared.Body.Components
 {
@@ -15,7 +13,7 @@ namespace Content.Shared.Body.Components
     }
 
     [Serializable, NetSerializable]
-    public class BodyScannerUIState : BoundUserInterfaceState
+    public sealed class BodyScannerUIState : BoundUserInterfaceState
     {
         public readonly EntityUid Uid;
 

@@ -11,7 +11,7 @@ using Robust.Shared.Timing;
 
 namespace Content.Client.Crayon;
 
-public sealed class CrayonSystem : EntitySystem
+public sealed class CrayonSystem : SharedCrayonSystem
 {
     // Didn't do in shared because I don't think most of the server stuff can be predicted.
     public override void Initialize()
@@ -25,7 +25,7 @@ public sealed class CrayonSystem : EntitySystem
     {
         if (args.Current is not CrayonComponentState state) return;
 
-        component._color = state.Color;
+        component.Color = state.Color;
         component.SelectedState = state.State;
         component.Charges = state.Charges;
         component.Capacity = state.Capacity;

@@ -3,14 +3,13 @@ using Content.Shared.Administration;
 using JetBrains.Annotations;
 using Robust.Server.Player;
 using Robust.Shared.Console;
-using Robust.Shared.IoC;
 
 
 namespace Content.Server.Administration.Commands
 {
     [UsedImplicitly]
     [AdminCommand(AdminFlags.None)]
-    public class DeAdminCommand : IConsoleCommand
+    public sealed class DeAdminCommand : IConsoleCommand
     {
         public string Command => "deadmin";
         public string Description => "Temporarily de-admins you so you can experience the round as a normal player.";

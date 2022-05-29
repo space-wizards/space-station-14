@@ -16,7 +16,7 @@ using Robust.Shared.Prototypes;
 namespace Content.Client.Traitor.Uplink
 {
     [GenerateTypedNameReferences]
-    public partial class UplinkMenu : DefaultWindow
+    public sealed partial class UplinkMenu : DefaultWindow
     {
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
         [Dependency] private readonly IResourceCache _resourceCache = default!;

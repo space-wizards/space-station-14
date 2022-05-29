@@ -1,11 +1,9 @@
-using System.Collections.Generic;
 using Content.Server.AI.Operators.Inventory;
 using Content.Server.AI.Operators.Movement;
-using Robust.Shared.GameObjects;
 
 namespace Content.Server.AI.Operators.Sequences
 {
-    public class GoPickupEntitySequence : SequenceOperator
+    public sealed class GoPickupEntitySequence : SequenceOperator
     {
         public GoPickupEntitySequence(EntityUid owner, EntityUid target)
         {

@@ -10,7 +10,7 @@ namespace Content.Client.Traitor.Uplink
     ///     Used as sub-window in Uplink UI
     /// </summary>
     [GenerateTypedNameReferences]
-    public partial class UplinkWithdrawWindow : DefaultWindow
+    public sealed partial class UplinkWithdrawWindow : DefaultWindow
     {
         public event System.Action<int>? OnWithdrawAttempt;
 

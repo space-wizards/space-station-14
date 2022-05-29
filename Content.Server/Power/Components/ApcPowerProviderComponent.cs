@@ -1,13 +1,10 @@
-using System.Collections.Generic;
 using Content.Server.Power.NodeGroups;
-using Robust.Shared.GameObjects;
-using Robust.Shared.ViewVariables;
 
 namespace Content.Server.Power.Components
 {
     [RegisterComponent]
     [ComponentProtoName("PowerProvider")]
-    public class ApcPowerProviderComponent : BaseApcNetComponent
+    public sealed class ApcPowerProviderComponent : BaseApcNetComponent
     {
         [ViewVariables] public List<ApcPowerReceiverComponent> LinkedReceivers { get; } = new();
 

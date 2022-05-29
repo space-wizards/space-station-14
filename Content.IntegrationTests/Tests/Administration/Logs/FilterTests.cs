@@ -12,7 +12,7 @@ namespace Content.IntegrationTests.Tests.Administration.Logs;
 
 [TestFixture]
 [TestOf(typeof(AdminLogSystem))]
-public class FilterTests : ContentIntegrationTest
+public sealed class FilterTests : ContentIntegrationTest
 {
     [Test]
     [TestCase(DateOrder.Ascending)]
@@ -33,7 +33,7 @@ public class FilterTests : ContentIntegrationTest
         var sMaps = server.ResolveDependency<IMapManager>();
         var sSystems = server.ResolveDependency<IEntitySystemManager>();
 
-        var sAdminLogSystem = sSystems.GetEntitySystem<AdminLogSystem>();
+        var sAdminLogSystem = server.ResolveDependency<IAdminLogManager>();
 
         var commonGuid = Guid.NewGuid();
         var firstGuid = Guid.NewGuid();

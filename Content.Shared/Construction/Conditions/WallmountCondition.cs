@@ -2,20 +2,15 @@ using System.Linq;
 using Content.Shared.Physics;
 using Content.Shared.Tag;
 using JetBrains.Annotations;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
 using Robust.Shared.Map;
-using Robust.Shared.Maths;
 using Robust.Shared.Physics;
-using Robust.Shared.Physics.Broadphase;
-using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Utility;
 
 namespace Content.Shared.Construction.Conditions
 {
     [UsedImplicitly]
     [DataDefinition]
-    public class WallmountCondition : IConstructionCondition
+    public sealed class WallmountCondition : IConstructionCondition
     {
         public bool Condition(EntityUid user, EntityCoordinates location, Direction direction)
         {

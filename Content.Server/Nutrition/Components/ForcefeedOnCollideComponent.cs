@@ -1,7 +1,4 @@
 ﻿using Content.Server.Nutrition.EntitySystems;
-using Robust.Shared.Analyzers;
-using Robust.Shared.GameObjects;
-using Robust.Shared.Serialization.Manager.Attributes;
 
 namespace Content.Server.Nutrition.Components
 {
@@ -9,7 +6,7 @@ namespace Content.Server.Nutrition.Components
     ///     A food item with this component will be forcefully fed to anyone
     /// </summary>
     [RegisterComponent, Friend(typeof(ForcefeedOnCollideSystem))]
-    public class ForcefeedOnCollideComponent : Component
+    public sealed class ForcefeedOnCollideComponent : Component
     {
         /// <summary>
         ///     Since this component is primarily used by the pneumatic cannon, which adds this comp on throw start

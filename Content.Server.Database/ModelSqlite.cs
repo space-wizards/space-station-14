@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Globalization;
 using System.IO;
+using System.Linq;
 using System.Net;
 using System.Text;
 using System.Text.Json;
@@ -58,13 +59,32 @@ namespace Content.Server.Database
                 .HasColumnType("TEXT")
                 .HasConversion(ipMaskConverter);
 
-            var jsonConverter = new ValueConverter<JsonDocument, string>(
+            modelBuilder
+                .Entity<ServerRoleBan>()
+                .Property(e => e.Address)
+                .HasColumnType("TEXT")
+                .HasConversion(ipMaskConverter);
+
+            var jsonStringConverter = new ValueConverter<JsonDocument, string>(
                 v => JsonDocumentToString(v),
                 v => StringToJsonDocument(v));
 
+            var jsonByteArrayConverter = new ValueConverter<JsonDocument?, byte[]>(
+                v => JsonDocumentToByteArray(v),
+                v => ByteArrayToJsonDocument(v));
+
             modelBuilder.Entity<AdminLog>()
                 .Property(log => log.Json)
-                .HasConversion(jsonConverter);
+                .HasConversion(jsonStringConverter);
+
+            modelBuilder.Entity<Profile>()
+                .Property(log => log.Markings)
+                .HasConversion(jsonByteArrayConverter);
+        }
+
+        public override int CountAdminLogs()
+        {
+            return AdminLog.Count();
         }
 
         private static string InetToString(IPAddress address, int mask) {
@@ -98,6 +118,27 @@ namespace Content.Server.Database
         }
 
         private static JsonDocument StringToJsonDocument(string str)
+        {
+            return JsonDocument.Parse(str);
+        }
+
+        private static byte[] JsonDocumentToByteArray(JsonDocument? document)
+        {
+            if (document == null)
+            {
+                return Array.Empty<byte>();
+            }
+
+            using var stream = new MemoryStream();
+            using var writer = new Utf8JsonWriter(stream, new JsonWriterOptions {Indented = false});
+
+            document.WriteTo(writer);
+            writer.Flush();
+
+            return stream.ToArray();
+        }
+
+        private static JsonDocument ByteArrayToJsonDocument(byte[] str)
         {
             return JsonDocument.Parse(str);
         }

@@ -17,7 +17,7 @@ namespace Content.IntegrationTests.Tests.Lobby
     [TestFixture]
     [TestOf(typeof(ClientPreferencesManager))]
     [TestOf(typeof(ServerPreferencesManager))]
-    public class CharacterCreationTest : ContentIntegrationTest
+    public sealed class CharacterCreationTest : ContentIntegrationTest
     {
         [Test]
         public async Task CreateDeleteCreateTest()

@@ -13,6 +13,8 @@
   - type: Tag
     tags:
     - Trash
+  - type: Recyclable
+  - type: SpaceGarbage
 
 # Base for all cigars and cigarettes.
 - type: entity

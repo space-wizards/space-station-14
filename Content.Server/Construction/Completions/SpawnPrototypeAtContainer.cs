@@ -1,16 +1,13 @@
-using System.Threading.Tasks;
 using Content.Shared.Construction;
 using JetBrains.Annotations;
 using Robust.Server.Containers;
 using Robust.Shared.Containers;
-using Robust.Shared.GameObjects;
-using Robust.Shared.Serialization.Manager.Attributes;
 
 namespace Content.Server.Construction.Completions
 {
     [UsedImplicitly]
     [DataDefinition]
-    public class SpawnPrototypeAtContainer : IGraphAction
+    public sealed class SpawnPrototypeAtContainer : IGraphAction
     {
         [DataField("prototype")] public string Prototype { get; } = string.Empty;
         [DataField("container")] public string Container { get; } = string.Empty;

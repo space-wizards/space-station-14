@@ -1,32 +1,26 @@
-using System;
-using System.Linq;
-using System.Threading.Tasks;
 using Content.Server.Administration.Logs;
 using Content.Server.CombatMode;
 using Content.Server.Hands.Components;
 using Content.Server.Pulling;
 using Content.Server.Storage.Components;
-using Content.Server.Timing;
+using Content.Server.Weapon.Ranged.Barrels.Components;
 using Content.Shared.ActionBlocker;
 using Content.Shared.Database;
 using Content.Shared.DragDrop;
 using Content.Shared.Input;
 using Content.Shared.Interaction;
-using Content.Shared.Interaction.Helpers;
+using Content.Shared.Interaction.Events;
 using Content.Shared.Item;
 using Content.Shared.Pulling.Components;
-using Content.Shared.Timing;
 using Content.Shared.Weapons.Melee;
+using Content.Shared.Weapons.Ranged.Components;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
 using Robust.Shared.Containers;
-using Robust.Shared.GameObjects;
-using Robust.Shared.Input;
 using Robust.Shared.Input.Binding;
-using Robust.Shared.IoC;
-using Robust.Shared.Log;
 using Robust.Shared.Map;
 using Robust.Shared.Players;
+using static Content.Shared.Storage.SharedStorageComponent;
 
 namespace Content.Server.Interaction
 {
@@ -38,8 +32,8 @@ namespace Content.Server.Interaction
     {
         [Dependency] private readonly ActionBlockerSystem _actionBlockerSystem = default!;
         [Dependency] private readonly PullingSystem _pullSystem = default!;
-        [Dependency] private readonly AdminLogSystem _adminLogSystem = default!;
-        [Dependency] private readonly UseDelaySystem _useDelay = default!;
+        [Dependency] private readonly IAdminLogManager _adminLogger = default!;
+        [Dependency] private readonly UserInterfaceSystem _uiSystem = default!;
 
         public override void Initialize()
         {
@@ -48,12 +42,6 @@ namespace Content.Server.Interaction
             SubscribeNetworkEvent<DragDropRequestEvent>(HandleDragDropRequestEvent);
 
             CommandBinds.Builder
-                .Bind(EngineKeyFunctions.Use,
-                    new PointerInputCmdHandler(HandleUseInteraction))
-                .Bind(ContentKeyFunctions.WideAttack,
-                    new PointerInputCmdHandler(HandleWideAttack))
-                .Bind(ContentKeyFunctions.ActivateItemInWorld,
-                    new PointerInputCmdHandler(HandleActivateItemInWorld))
                 .Bind(ContentKeyFunctions.TryPullObject,
                     new PointerInputCmdHandler(HandleTryPullObject))
                 .Register<InteractionSystem>();
@@ -83,12 +71,7 @@ namespace Content.Server.Interaction
                 return false;
 
             // we don't check if the user can access the storage entity itself. This should be handed by the UI system.
-            return storage.SubscribedSessions.Contains(actor.PlayerSession);
-        }
-
-        protected override void BeginDelay(UseDelayComponent? component = null)
-        {
-            _useDelay.BeginDelay(component);
+            return _uiSystem.SessionHasOpenUi(container.Owner, StorageUiKey.Key, actor.PlayerSession);
         }
 
         #region Drag drop
@@ -110,7 +93,8 @@ namespace Content.Server.Interaction
 
             // must be in range of both the target and the object they are drag / dropping
             // Client also does this check but ya know we gotta validate it.
-            if (!interactionArgs.InRangeUnobstructed(ignoreInsideBlocker: true, popup: true))
+            if (!InRangeUnobstructed(interactionArgs.User, interactionArgs.Dragged, popup: true)
+                || !InRangeUnobstructed(interactionArgs.User, interactionArgs.Target, popup: true))
                 return;
 
             // trigger dragdrops on the dropped entity
@@ -145,38 +129,6 @@ namespace Content.Server.Interaction
         }
         #endregion
 
-        #region ActivateItemInWorld
-        private bool HandleActivateItemInWorld(ICommonSession? session, EntityCoordinates coords, EntityUid uid)
-        {
-            if (!ValidateClientInput(session, coords, uid, out var user))
-            {
-                Logger.InfoS("system.interaction", $"ActivateItemInWorld input validation failed");
-                return false;
-            }
-
-            if (Deleted(uid))
-                return false;
-
-            InteractionActivate(user.Value, uid);
-            return true;
-        }
-        #endregion
-
-        private bool HandleWideAttack(ICommonSession? session, EntityCoordinates coords, EntityUid uid)
-        {
-            // client sanitization
-            if (!ValidateClientInput(session, coords, uid, out var userEntity))
-            {
-                Logger.InfoS("system.interaction", $"WideAttack input validation failed");
-                return true;
-            }
-
-            if (TryComp(userEntity, out CombatModeComponent? combatMode) && combatMode.IsInCombatMode)
-                DoAttack(userEntity.Value, coords, true);
-
-            return true;
-        }
-
         /// <summary>
         /// Entity will try and use their active hand at the target location.
         /// Don't use for players
@@ -190,20 +142,6 @@ namespace Content.Server.Interaction
                 throw new InvalidOperationException();
 
             UserInteraction(entity, coords, uid);
-        }
-
-        public bool HandleUseInteraction(ICommonSession? session, EntityCoordinates coords, EntityUid uid)
-        {
-            // client sanitization
-            if (!ValidateClientInput(session, coords, uid, out var userEntity))
-            {
-                Logger.InfoS("system.interaction", $"Use input validation failed");
-                return true;
-            }
-
-            UserInteraction(userEntity.Value, coords, !Deleted(uid) ? uid : null);
-
-            return true;
         }
 
         private bool HandleTryPullObject(ICommonSession? session, EntityCoordinates coords, EntityUid uid)
@@ -229,74 +167,17 @@ namespace Content.Server.Interaction
             return _pullSystem.TogglePull(userEntity.Value, pull);
         }
 
-        /// <summary>
-        /// Uses an empty hand on an entity
-        /// Finds components with the InteractHand interface and calls their function
-        /// NOTE: Does not have any range or can-interact checks. These should all have been done before this function is called.
-        /// </summary>
-        public override void InteractHand(EntityUid user, EntityUid target)
-        {
-            // TODO PREDICTION move server-side interaction logic into the shared system for interaction prediction.
-
-            // all interactions should only happen when in range / unobstructed, so no range check is needed
-            var message = new InteractHandEvent(user, target);
-            RaiseLocalEvent(target, message);
-            _adminLogSystem.Add(LogType.InteractHand, LogImpact.Low, $"{ToPrettyString(user):user} interacted with {ToPrettyString(target):target}");
-            if (message.Handled)
-                return;
-
-            var interactHandEventArgs = new InteractHandEventArgs(user, target);
-
-            var interactHandComps = AllComps<IInteractHand>(target).ToList();
-            foreach (var interactHandComp in interactHandComps)
-            {
-                // If an InteractHand returns a status completion we finish our interaction
-#pragma warning disable 618
-                if (interactHandComp.InteractHand(interactHandEventArgs))
-#pragma warning restore 618
-                    return;
-            }
-
-            // Else we run Activate.
-            InteractionActivate(user, target,
-                checkCanInteract: false,
-                checkUseDelay: true,
-                checkAccess: false);
-        }
-
-        /// <summary>
-        /// Will have two behaviors, either "uses" the used entity at range on the target entity if it is capable of accepting that action
-        /// Or it will use the used entity itself on the position clicked, regardless of what was there
-        /// </summary>
-        public override void InteractUsingRanged(
-            EntityUid user,
-            EntityUid used,
-            EntityUid? target,
-            EntityCoordinates clickLocation,
-            bool inRangeUnobstructed)
-        {
-            // TODO PREDICTION move server-side interaction logic into the shared system for interaction prediction.
-            if (RangedInteractDoBefore(user, used, target, clickLocation, inRangeUnobstructed))
-                return;
-
-            if (target != null)
-            {
-                var rangedMsg = new RangedInteractEvent(user, used, target.Value, clickLocation);
-                RaiseLocalEvent(target.Value, rangedMsg);
-
-                if (rangedMsg.Handled)
-                    return;
-            }
-
-            InteractDoAfter(user, used, target, clickLocation, inRangeUnobstructed);
-        }
-
         public override void DoAttack(EntityUid user, EntityCoordinates coordinates, bool wideAttack, EntityUid? target = null)
         {
             // TODO PREDICTION move server-side interaction logic into the shared system for interaction prediction.
             if (!ValidateInteractAndFace(user, coordinates))
                 return;
 
+            // Check general interaction blocking.
+            if (!_actionBlockerSystem.CanInteract(user, target))
+                return;
+
+            // Check combat-specific action blocking.
             if (!_actionBlockerSystem.CanAttack(user, target))
                 return;
 
@@ -311,17 +192,26 @@ namespace Content.Server.Interaction
                 }
 
                 // TODO: Replace with body attack range when we get something like arm length or telekinesis or something.
-                if (!user.InRangeUnobstructed(coordinates, ignoreInsideBlocker: true))
+                var unobstructed = (target == null)
+                    ? InRangeUnobstructed(user, coordinates)
+                    : InRangeUnobstructed(user, target.Value);
+
+                if (!unobstructed)
                     return;
             }
 
             // Verify user has a hand, and find what object they are currently holding in their active hand
             if (TryComp(user, out HandsComponent? hands))
             {
-                var item = hands.GetActiveHandItem?.Owner;
+                var item = hands.ActiveHandEntity;
 
-                if (item != null && !Deleted(item.Value))
+                if (!Deleted(item))
                 {
+                    var meleeVee = new MeleeAttackAttemptEvent();
+                    RaiseLocalEvent(item.Value, ref meleeVee);
+
+                    if (meleeVee.Cancelled) return;
+
                     if (wideAttack)
                     {
                         var ev = new WideAttackEvent(item.Value, user, coordinates);
@@ -329,7 +219,7 @@ namespace Content.Server.Interaction
 
                         if (ev.Handled)
                         {
-                            _adminLogSystem.Add(LogType.AttackArmedWide, LogImpact.Medium, $"{ToPrettyString(user):user} wide attacked with {ToPrettyString(item.Value):used} at {coordinates}");
+                            _adminLogger.Add(LogType.AttackArmedWide, LogImpact.Low, $"{ToPrettyString(user):user} wide attacked with {ToPrettyString(item.Value):used} at {coordinates}");
                             return;
                         }
                     }
@@ -342,12 +232,12 @@ namespace Content.Server.Interaction
                         {
                             if (target != null)
                             {
-                                _adminLogSystem.Add(LogType.AttackArmedClick, LogImpact.Medium,
+                                _adminLogger.Add(LogType.AttackArmedClick, LogImpact.Low,
                                     $"{ToPrettyString(user):user} attacked {ToPrettyString(target.Value):target} with {ToPrettyString(item.Value):used} at {coordinates}");
                             }
                             else
                             {
-                                _adminLogSystem.Add(LogType.AttackArmedClick, LogImpact.Medium,
+                                _adminLogger.Add(LogType.AttackArmedClick, LogImpact.Low,
                                     $"{ToPrettyString(user):user} attacked with {ToPrettyString(item.Value):used} at {coordinates}");
                             }
 
@@ -370,7 +260,7 @@ namespace Content.Server.Interaction
                 var ev = new WideAttackEvent(user, user, coordinates);
                 RaiseLocalEvent(user, ev, false);
                 if (ev.Handled)
-                    _adminLogSystem.Add(LogType.AttackUnarmedWide, $"{ToPrettyString(user):user} wide attacked at {coordinates}");
+                    _adminLogger.Add(LogType.AttackUnarmedWide, LogImpact.Low, $"{ToPrettyString(user):user} wide attacked at {coordinates}");
             }
             else
             {
@@ -380,12 +270,12 @@ namespace Content.Server.Interaction
                 {
                     if (target != null)
                     {
-                        _adminLogSystem.Add(LogType.AttackUnarmedClick, LogImpact.Medium,
+                        _adminLogger.Add(LogType.AttackUnarmedClick, LogImpact.Low,
                             $"{ToPrettyString(user):user} attacked {ToPrettyString(target.Value):target} at {coordinates}");
                     }
                     else
                     {
-                        _adminLogSystem.Add(LogType.AttackUnarmedClick, LogImpact.Medium,
+                        _adminLogger.Add(LogType.AttackUnarmedClick, LogImpact.Low,
                             $"{ToPrettyString(user):user} attacked at {coordinates}");
                     }
                 }

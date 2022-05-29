@@ -5,7 +5,7 @@ using Robust.Shared.GameObjects;
 
 namespace Content.Client.MobState.States
 {
-    public class NormalMobState : SharedNormalMobState
+    public sealed class NormalMobState : SharedNormalMobState
     {
     }
 }

@@ -17,7 +17,7 @@ using static Robust.Client.UserInterface.Controls.BaseButton;
 namespace Content.Client.Suspicion
 {
     [GenerateTypedNameReferences]
-    public partial class SuspicionGui : Control
+    public sealed partial class SuspicionGui : Control
     {
         [Dependency] private readonly IPlayerManager _playerManager = default!;
         [Dependency] private readonly IGameTiming _timing = default!;

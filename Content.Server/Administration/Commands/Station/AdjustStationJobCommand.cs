@@ -1,17 +1,13 @@
-using Content.Server.Station;
+using Content.Server.Station.Systems;
 using Content.Shared.Administration;
 using Content.Shared.Roles;
-using Content.Shared.Station;
 using Robust.Shared.Console;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Localization;
 using Robust.Shared.Prototypes;
 
 namespace Content.Server.Administration.Commands.Station;
 
 [AdminCommand(AdminFlags.Round)]
-public class AdjustStationJobCommand : IConsoleCommand
+public sealed class AdjustStationJobCommand : IConsoleCommand
 {
     public string Command => "adjstationjob";
 
@@ -27,16 +23,17 @@ public class AdjustStationJobCommand : IConsoleCommand
             return;
         }
 
-
+        var prototypeManager = IoCManager.Resolve<IPrototypeManager>();
         var stationSystem = EntitySystem.Get<StationSystem>();
+        var stationJobs = EntitySystem.Get<StationJobsSystem>();
 
-        if (!uint.TryParse(args[0], out var station) || !stationSystem.StationInfo.ContainsKey(new StationId(station)))
+        if (!int.TryParse(args[0], out var stationInt) || !stationSystem.Stations.Contains(new EntityUid(stationInt)))
         {
             shell.WriteError(Loc.GetString("shell-argument-station-id-invalid", ("index", 1)));
             return;
         }
 
-        var prototypeManager = IoCManager.Resolve<IPrototypeManager>();
+        var station = new EntityUid(stationInt);
 
         if (!prototypeManager.TryIndex<JobPrototype>(args[1], out var job))
         {
@@ -52,6 +49,12 @@ public class AdjustStationJobCommand : IConsoleCommand
             return;
         }
 
-        stationSystem.AdjustJobsAvailableOnStation(new StationId(station), job, amount);
+        if (amount == -1)
+        {
+            stationJobs.MakeJobUnlimited(station, job);
+            return;
+        }
+
+        stationJobs.TrySetJobSlot(station, job, amount, true);
     }
 }

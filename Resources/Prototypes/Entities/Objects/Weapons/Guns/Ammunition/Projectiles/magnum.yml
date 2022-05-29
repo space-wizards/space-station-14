@@ -2,7 +2,7 @@
   id: BulletMagnum
   name: bullet (.40 magnum)
   parent: BulletBase
-  abstract: true
+  noSpawn: true
   components:
   - type: Projectile
     damage:
@@ -13,7 +13,7 @@
   id: BulletMagnumFlash
   name: bullet (.40 magnum flash)
   parent: BulletBaseFlash
-  abstract: true
+  noSpawn: true
   components:
   - type: Projectile
     damage:
@@ -24,7 +24,7 @@
   id: BulletMagnumHV
   name: bullet (.40 magnum high-velocity)
   parent: BulletBaseHV
-  abstract: true
+  noSpawn: true
   components:
   - type: Projectile
     damage:
@@ -35,7 +35,7 @@
   id: BulletMagnumPractice
   name: bullet (.40 magnum practice)
   parent: BulletBasePractice
-  abstract: true
+  noSpawn: true
   components:
   - type: Projectile
     damage:
@@ -46,7 +46,7 @@
   id: BulletMagnumRubber
   name: bullet (.40 magnum rubber)
   parent: BulletBaseRubber
-  abstract: true
+  noSpawn: true
   components:
   - type: Projectile
     damage:

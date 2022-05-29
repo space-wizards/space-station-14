@@ -1,19 +1,16 @@
-using System;
-using System.Collections.Generic;
 using System.Linq;
 using Content.Server.Chemistry.Components.SolutionManager;
 using Content.Server.Mind.Components;
 using Content.Server.Power.Components;
 using Content.Shared.Tag;
 using Robust.Server.Bql;
-using Robust.Shared.GameObjects;
 
 namespace Content.Server.Bql
 {
-    public class QuerySelectors
+    public sealed class QuerySelectors
     {
         [RegisterBqlQuerySelector]
-        public class MindfulQuerySelector : BqlQuerySelector
+        public sealed class MindfulQuerySelector : BqlQuerySelector
         {
             public override string Token => "mindful";
 
@@ -41,7 +38,7 @@ namespace Content.Server.Bql
         }
 
         [RegisterBqlQuerySelector]
-        public class TaggedQuerySelector : BqlQuerySelector
+        public sealed class TaggedQuerySelector : BqlQuerySelector
         {
             public override string Token => "tagged";
 
@@ -63,7 +60,7 @@ namespace Content.Server.Bql
         }
 
         [RegisterBqlQuerySelector]
-        public class AliveQuerySelector : BqlQuerySelector
+        public sealed class AliveQuerySelector : BqlQuerySelector
         {
             public override string Token => "alive";
 
@@ -84,7 +81,7 @@ namespace Content.Server.Bql
         }
 
         [RegisterBqlQuerySelector]
-        public class HasReagentQuerySelector : BqlQuerySelector
+        public sealed class HasReagentQuerySelector : BqlQuerySelector
         {
             public override string Token => "hasreagent";
 
@@ -113,7 +110,7 @@ namespace Content.Server.Bql
         }
 
         [RegisterBqlQuerySelector]
-        public class ApcPoweredQuerySelector : BqlQuerySelector
+        public sealed class ApcPoweredQuerySelector : BqlQuerySelector
         {
             public override string Token => "apcpowered";
 

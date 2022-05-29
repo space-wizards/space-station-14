@@ -1,6 +1,4 @@
-﻿using System;
-using Robust.Shared.GameObjects;
-using Robust.Shared.Serialization;
+﻿using Robust.Shared.Serialization;
 
 namespace Content.Shared.Inventory.Events;
 
@@ -8,7 +6,7 @@ namespace Content.Shared.Inventory.Events;
 /// This event is used to tell the server-inventorysystem someone wants to equip something
 /// </summary>
 [NetSerializable, Serializable]
-public class InventoryEquipActEvent : EntityEventArgs
+public sealed class InventoryEquipActEvent : EntityEventArgs
 {
     public readonly EntityUid Uid;
     public readonly EntityUid ItemUid;

@@ -1,14 +1,9 @@
-using System;
-using System.Collections.Generic;
 using Content.Server.Atmos.Monitor.Components;
 using Content.Server.Atmos.Monitor.Systems;
-using Content.Server.Atmos.Piping.Unary.Components;
 using Content.Server.DeviceNetwork.Systems;
 using Content.Shared.Atmos;
 using Content.Shared.Atmos.Monitor.Components;
 using Content.Shared.Atmos.Piping.Unary.Components;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
 
 namespace Content.Server.Atmos.Monitor
 {
@@ -58,7 +53,7 @@ namespace Content.Server.Atmos.Monitor
         public void Update(EntityUid uid);
     }
 
-    public class AirAlarmModeFactory
+    public sealed class AirAlarmModeFactory
     {
         private static IAirAlarmMode _filterMode = new AirAlarmFilterMode();
         private static IAirAlarmMode _fillMode = new AirAlarmFillMode();
@@ -67,7 +62,7 @@ namespace Content.Server.Atmos.Monitor
 
         // still not a fan since ReplaceMode must have an allocation
         // but it's whatever
-        public static IAirAlarmMode? ModeToExecutor(AirAlarmMode mode) => mode switch 
+        public static IAirAlarmMode? ModeToExecutor(AirAlarmMode mode) => mode switch
         {
             AirAlarmMode.Filtering => _filterMode,
             AirAlarmMode.Fill => _fillMode,
@@ -96,7 +91,7 @@ namespace Content.Server.Atmos.Monitor
         }
     }
 
-    public class AirAlarmNoneMode : AirAlarmModeExecutor
+    public sealed class AirAlarmNoneMode : AirAlarmModeExecutor
     {
         public override void Execute(EntityUid uid)
         {
@@ -111,7 +106,7 @@ namespace Content.Server.Atmos.Monitor
         }
     }
 
-    public class AirAlarmFilterMode : AirAlarmModeExecutor
+    public sealed class AirAlarmFilterMode : AirAlarmModeExecutor
     {
         public override void Execute(EntityUid uid)
         {
@@ -133,7 +128,7 @@ namespace Content.Server.Atmos.Monitor
         }
     }
 
-    public class AirAlarmPanicMode : AirAlarmModeExecutor
+    public sealed class AirAlarmPanicMode : AirAlarmModeExecutor
     {
         public override void Execute(EntityUid uid)
         {
@@ -155,7 +150,7 @@ namespace Content.Server.Atmos.Monitor
         }
     }
 
-    public class AirAlarmFillMode : AirAlarmModeExecutor
+    public sealed class AirAlarmFillMode : AirAlarmModeExecutor
     {
         public override void Execute(EntityUid uid)
         {
@@ -177,7 +172,7 @@ namespace Content.Server.Atmos.Monitor
         }
     }
 
-    public class AirAlarmReplaceMode : AirAlarmModeExecutor, IAirAlarmModeUpdate
+    public sealed class AirAlarmReplaceMode : AirAlarmModeExecutor, IAirAlarmModeUpdate
     {
         private Dictionary<string, IAtmosDeviceData> _devices = new();
         private float _lastPressure = Atmospherics.OneAtmosphere;

@@ -6,7 +6,7 @@ using Robust.Client.UserInterface.XAML;
 namespace Content.Client.Info;
 
 [GenerateTypedNameReferences]
-public partial class InfoControlsSection : BoxContainer
+public sealed partial class InfoControlsSection : BoxContainer
 {
     public InfoControlsSection()
     {

@@ -9,7 +9,7 @@ namespace Content.Client.Disposal.UI
     /// Initializes a <see cref="DisposalTaggerWindow"/> and updates it when new server messages are received.
     /// </summary>
     [UsedImplicitly]
-    public class DisposalTaggerBoundUserInterface : BoundUserInterface
+    public sealed class DisposalTaggerBoundUserInterface : BoundUserInterface
     {
         private DisposalTaggerWindow? _window;
 

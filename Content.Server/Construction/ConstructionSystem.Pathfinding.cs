@@ -1,13 +1,18 @@
-using System.Collections.Generic;
 using Content.Server.Construction.Components;
 using Content.Shared.Construction;
 using Content.Shared.Construction.Prototypes;
-using Robust.Shared.GameObjects;
 
 namespace Content.Server.Construction
 {
-    public partial class ConstructionSystem
+    public sealed partial class ConstructionSystem
     {
+        /// <summary>
+        ///     Sets or clears a pathfinding target node for a given construction entity.
+        /// </summary>
+        /// <param name="uid">The target entity.</param>
+        /// <param name="targetNodeId">The target node to pathfind, or null to clear the current pathfinding node.</param>
+        /// <param name="construction">The construction component of the target entity. Will be resolved if null.</param>
+        /// <returns>Whether we could set/clear the pathfinding target node.</returns>
         public bool SetPathfindingTarget(EntityUid uid, string? targetNodeId, ConstructionComponent? construction = null)
         {
             if (!Resolve(uid, ref construction))
@@ -34,6 +39,12 @@ namespace Content.Server.Construction
             return UpdatePathfinding(uid, graph, node, targetNode, GetCurrentEdge(uid, construction), construction);
         }
 
+        /// <summary>
+        ///     Updates the pathfinding state for the current construction state of an entity.
+        /// </summary>
+        /// <param name="uid">The target entity.</param>
+        /// <param name="construction">The construction component of the target entity. Will be resolved if null.</param>
+        /// <returns>Whether we could update the pathfinding state correctly.</returns>
         public bool UpdatePathfinding(EntityUid uid, ConstructionComponent? construction = null)
         {
             if (!Resolve(uid, ref construction))
@@ -50,6 +61,17 @@ namespace Content.Server.Construction
             return UpdatePathfinding(uid, graph, node, targetNode, GetCurrentEdge(uid, construction), construction);
         }
 
+        /// <summary>
+        ///     Internal version of <see cref="UpdatePathfinding"/>, which expects a valid construction state and
+        ///     actually performs the pathfinding update logic.
+        /// </summary>
+        /// <param name="uid">The target entity.</param>
+        /// <param name="graph">The construction graph the entity is at.</param>
+        /// <param name="currentNode">The current construction node the entity is at.</param>
+        /// <param name="targetNode">The target node we are trying to reach on the graph.</param>
+        /// <param name="currentEdge">The current edge the entity is at, or null if none.</param>
+        /// <param name="construction">The construction component of the target entity. Will be resolved if null.</param>
+        /// <returns>Whether we could update the pathfinding state correctly.</returns>
         private bool UpdatePathfinding(EntityUid uid, ConstructionGraphPrototype graph,
             ConstructionGraphNode currentNode, ConstructionGraphNode targetNode,
             ConstructionGraphEdge? currentEdge,
@@ -111,6 +133,11 @@ namespace Content.Server.Construction
             return true;
         }
 
+        /// <summary>
+        ///     Clears the pathfinding targets on a construction entity.
+        /// </summary>
+        /// <param name="uid">The target entity.</param>
+        /// <param name="construction">The construction component of the target entity. Will be resolved if null.</param>
         public void ClearPathfinding(EntityUid uid, ConstructionComponent? construction = null)
         {
             if (!Resolve(uid, ref construction))

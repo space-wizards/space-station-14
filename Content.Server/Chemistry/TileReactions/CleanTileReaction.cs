@@ -1,20 +1,15 @@
 ﻿using System.Linq;
 using Content.Server.Cleanable;
-using Content.Server.Coordinates.Helpers;
 using Content.Server.Decals;
 using Content.Shared.Chemistry.Reaction;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.FixedPoint;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
 using Robust.Shared.Map;
-using Robust.Shared.Maths;
-using Robust.Shared.Serialization.Manager.Attributes;
 
 namespace Content.Server.Chemistry.TileReactions
 {
     [DataDefinition]
-    public class CleanTileReaction : ITileReaction
+    public sealed class CleanTileReaction : ITileReaction
     {
         /// <summary>
         ///     Multiplier used in CleanTileReaction.
@@ -26,7 +21,7 @@ namespace Content.Server.Chemistry.TileReactions
 
         FixedPoint2 ITileReaction.TileReact(TileRef tile, ReagentPrototype reagent, FixedPoint2 reactVolume)
         {
-            var entities = IoCManager.Resolve<IEntityLookup>().GetEntitiesIntersecting(tile).ToArray();
+            var entities = EntitySystem.Get<EntityLookupSystem>().GetEntitiesIntersecting(tile).ToArray();
             var amount = FixedPoint2.Zero;
             var entMan = IoCManager.Resolve<IEntityManager>();
             foreach (var entity in entities)
@@ -44,7 +39,7 @@ namespace Content.Server.Chemistry.TileReactions
             }
 
             var decalSystem = EntitySystem.Get<DecalSystem>();
-            foreach (var uid in decalSystem.GetDecalsInRange(tile.GridIndex, tile.GridIndices+new Vector2(0.5f, 0.5f), validDelegate: x => x.Cleanable))
+            foreach (var (uid, _) in decalSystem.GetDecalsInRange(tile.GridIndex, tile.GridIndices+new Vector2(0.5f, 0.5f), validDelegate: x => x.Cleanable))
             {
                 decalSystem.RemoveDecal(tile.GridIndex, uid);
             }

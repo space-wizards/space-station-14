@@ -1,9 +1,8 @@
-using Robust.Shared.GameObjects;
 using Robust.Shared.Map;
 
 namespace Content.Shared.Gravity
 {
-    public class GravityChangedMessage : EntityEventArgs
+    public sealed class GravityChangedMessage : EntityEventArgs
     {
         public GravityChangedMessage(GridId changedGridIndex, bool newGravityState)
         {

@@ -13,8 +13,8 @@ namespace Content.Server.Interaction;
 public sealed class InteractionPopupSystem : EntitySystem
 {
     [Dependency] private readonly IGameTiming _gameTiming = default!;
-    [Dependency] private readonly PopupSystem _popupSystem = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
+    [Dependency] private readonly PopupSystem _popupSystem = default!;
 
     public override void Initialize()
     {
@@ -24,7 +24,7 @@ public sealed class InteractionPopupSystem : EntitySystem
 
     private void OnInteractHand(EntityUid uid, InteractionPopupComponent component, InteractHandEvent args)
     {
-        if (args.Handled)
+        if (args.Handled || args.User == args.Target)
             return;
 
         var curTime = _gameTiming.CurTime;
@@ -37,7 +37,7 @@ public sealed class InteractionPopupSystem : EntitySystem
             return;
 
         string msg = ""; // Stores the text to be shown in the popup message
-        string sfx = ""; // Stores the filepath of the sound to be played
+        string? sfx = null; // Stores the filepath of the sound to be played
 
         if (_random.Prob(component.SuccessChance))
         {
@@ -56,15 +56,22 @@ public sealed class InteractionPopupSystem : EntitySystem
                 sfx = component.InteractFailureSound.GetSound();
         }
 
-        if (component.PopupPerceivedByOthers)
-            _popupSystem.PopupEntity(msg, uid, Filter.Pvs(uid)); //play for everyone in range
+        if (component.MessagePerceivedByOthers != null)
+        {
+            string msgOthers = Loc.GetString(component.MessagePerceivedByOthers,("user", args.User), ("target", uid));
+            _popupSystem.PopupEntity(msg, uid, Filter.Entities(args.User));
+            _popupSystem.PopupEntity(msgOthers, uid, Filter.Pvs(uid, 2F, EntityManager).RemoveWhereAttachedEntity(puid => puid == args.User));
+        }
         else
             _popupSystem.PopupEntity(msg, uid, Filter.Entities(args.User)); //play only for the initiating entity.
 
-        if (component.SoundPerceivedByOthers)
-            SoundSystem.Play(Filter.Pvs(args.Target), sfx, args.Target); //play for everyone in range
-        else
-            SoundSystem.Play(Filter.Entities(args.User, args.Target), sfx, args.Target); //play only for the initiating entity and its target.
+        if (sfx is not null) //not all cases will have sound.
+        {
+            if (component.SoundPerceivedByOthers)
+                SoundSystem.Play(Filter.Pvs(args.Target), sfx, args.Target); //play for everyone in range
+            else
+                SoundSystem.Play(Filter.Entities(args.User, args.Target), sfx, args.Target); //play only for the initiating entity and its target.
+        }
 
         component.LastInteractTime = curTime;
         args.Handled = true;

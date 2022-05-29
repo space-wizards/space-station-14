@@ -1,11 +1,7 @@
-using System.Collections.Generic;
-using Robust.Shared.GameObjects;
-using Robust.Shared.Serialization.Manager.Attributes;
-
 namespace Content.Server.Sprite.Components
 {
     [RegisterComponent]
-    public class RandomSpriteStateComponent : Component
+    public sealed class RandomSpriteStateComponent : Component
     {
         [DataField("spriteStates")] public List<string>? SpriteStates;
 

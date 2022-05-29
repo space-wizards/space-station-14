@@ -1,8 +1,5 @@
-using System.Collections.Generic;
 using Robust.Shared.Containers;
-using Robust.Shared.GameObjects;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
 namespace Content.Server.Weapon.Ranged.Ammunition.Components
@@ -11,7 +8,7 @@ namespace Content.Server.Weapon.Ranged.Ammunition.Components
     /// Used to load certain ranged weapons quickly
     /// </summary>
     [RegisterComponent]
-    public class SpeedLoaderComponent : Component
+    public sealed class SpeedLoaderComponent : Component
     {
         [DataField("caliber")] public BallisticCaliber Caliber = BallisticCaliber.Unspecified;
         public int Capacity => _capacity;

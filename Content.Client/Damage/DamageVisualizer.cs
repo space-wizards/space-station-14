@@ -35,7 +35,7 @@ namespace Content.Client.Damage
     ///     of the sprite layer, and then passing in a bool value
     ///     (true to enable, false to disable).
     /// </summary>
-    public class DamageVisualizer : AppearanceVisualizer
+    public sealed class DamageVisualizer : AppearanceVisualizer
     {
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
         [Dependency] private readonly IEntityManager _entityManager = default!;
@@ -161,7 +161,7 @@ namespace Content.Client.Damage
         // deals with the edge case of human damage visuals not
         // being in color without making a Dict<Dict<Dict<Dict<Dict<Dict...
         [DataDefinition]
-        internal class DamageVisualizerSprite
+        internal sealed class DamageVisualizerSprite
         {
             /// <summary>
             ///     The RSI path for the damage visualizer

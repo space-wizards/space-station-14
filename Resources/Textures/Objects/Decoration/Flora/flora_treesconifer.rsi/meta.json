@@ -1,0 +1,29 @@
+{
+    "version": 1,
+    "license": "CC-BY-SA-3.0",
+    "copyright": "Taken from tgstation at commit https://github.com/tgstation/tgstation/commit/b14f3827e5a7db2587b82b1a0314cd6daa2cac0d",
+    "size": {
+        "x": 64,
+        "y": 96
+    },
+    "states": [
+        {
+            "name": "treeconifer01"
+        },
+        {
+            "name": "treeconifer02"
+        },
+        {
+            "name": "treeconifer03"
+        },
+        {
+            "name": "treechristmas01"
+        },
+        {
+            "name": "treestumpconifer"
+        },
+        {
+            "name": "treechristmas02"
+        }
+    ]
+}

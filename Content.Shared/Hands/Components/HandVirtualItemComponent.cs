@@ -1,8 +1,6 @@
-﻿using System;
+﻿using Content.Shared.Item;
 using Robust.Shared.Containers;
-using Robust.Shared.GameObjects;
 using Robust.Shared.GameStates;
-using Robust.Shared.Players;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.Hands.Components
@@ -40,7 +38,7 @@ namespace Content.Shared.Hands.Components
 
             // update hands GUI with new entity.
             if (Owner.TryGetContainer(out var containter))
-                EntitySystem.Get<SharedHandsSystem>().UpdateHandVisuals(containter.Owner);
+                EntitySystem.Get<SharedItemSystem>().VisualsChanged(Owner);
         }
 
         [Serializable, NetSerializable]

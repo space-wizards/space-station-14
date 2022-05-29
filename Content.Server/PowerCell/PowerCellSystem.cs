@@ -8,20 +8,16 @@ using Content.Shared.PowerCell;
 using Content.Shared.PowerCell.Components;
 using Content.Shared.Rounding;
 using Robust.Shared.Containers;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Localization;
-using System;
 using System.Diagnostics.CodeAnalysis;
 using Content.Server.Kitchen.Components;
 
 namespace Content.Server.PowerCell;
 
-public class PowerCellSystem : SharedPowerCellSystem
+public sealed class PowerCellSystem : SharedPowerCellSystem
 {
     [Dependency] private readonly SolutionContainerSystem _solutionsSystem = default!;
     [Dependency] private readonly ExplosionSystem _explosionSystem = default!;
-    [Dependency] private readonly AdminLogSystem _logSystem = default!;
+    [Dependency] private readonly IAdminLogManager _adminLogger= default!;
     [Dependency] private readonly SharedContainerSystem _containerSystem = default!;
 
     public override void Initialize()
@@ -48,6 +44,9 @@ public class PowerCellSystem : SharedPowerCellSystem
 
     private void OnMicrowaved(EntityUid uid, BatteryComponent component, BeingMicrowavedEvent args)
     {
+        if (component.CurrentCharge == 0)
+            return;
+
         args.Handled = true;
 
         // What the fuck are you doing???
@@ -83,15 +82,14 @@ public class PowerCellSystem : SharedPowerCellSystem
 
     private void Explode(EntityUid uid, BatteryComponent? battery = null)
     {
-        _logSystem.Add(LogType.Explosion, LogImpact.High, $"Sabotaged power cell {ToPrettyString(uid)} is exploding");
+        _adminLogger.Add(LogType.Explosion, LogImpact.High, $"Sabotaged power cell {ToPrettyString(uid)} is exploding");
 
         if (!Resolve(uid, ref battery))
             return;
 
-        var heavy = (int) Math.Ceiling(Math.Sqrt(battery.CurrentCharge) / 60);
-        var light = (int) Math.Ceiling(Math.Sqrt(battery.CurrentCharge) / 30);
+        var radius = MathF.Min(5, MathF.Ceiling(MathF.Sqrt(battery.CurrentCharge) / 30));
 
-        _explosionSystem.SpawnExplosion(uid, 0, heavy, light, light * 2);
+        _explosionSystem.TriggerExplosive(uid, radius: radius);
         QueueDel(uid);
     }
 
@@ -114,7 +112,7 @@ public class PowerCellSystem : SharedPowerCellSystem
 
         if (component.IsRigged)
         {
-            _logSystem.Add(LogType.Explosion, LogImpact.Medium, $"Power cell {ToPrettyString(uid)} has been rigged up to explode when used.");
+            _adminLogger.Add(LogType.Explosion, LogImpact.Medium, $"Power cell {ToPrettyString(uid)} has been rigged up to explode when used.");
         }
     }
 

@@ -2,7 +2,7 @@ using Content.Shared.Speech.EntitySystems;
 
 namespace Content.Client.Speech.EntitySystems
 {
-    public class StutteringSystem : SharedStutteringSystem
+    public sealed class StutteringSystem : SharedStutteringSystem
     {
 
     }

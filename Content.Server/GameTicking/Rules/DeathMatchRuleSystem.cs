@@ -5,8 +5,6 @@ using Content.Shared.MobState.Components;
 using Robust.Server.Player;
 using Robust.Shared.Configuration;
 using Robust.Shared.Enums;
-using Robust.Shared.IoC;
-using Robust.Shared.Localization;
 
 namespace Content.Server.GameTicking.Rules;
 
@@ -35,14 +33,14 @@ public sealed class DeathMatchRuleSystem : GameRuleSystem
         SubscribeLocalEvent<DamageChangedEvent>(OnHealthChanged);
     }
 
-    public override void Added()
+    public override void Started()
     {
         _chatManager.DispatchServerAnnouncement(Loc.GetString("rule-death-match-added-announcement"));
 
         _playerManager.PlayerStatusChanged += OnPlayerStatusChanged;
     }
 
-    public override void Removed()
+    public override void Ended()
     {
         _deadCheckTimer = null;
         _restartTimer = null;

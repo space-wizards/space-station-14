@@ -1,15 +1,11 @@
-using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using Content.Shared.CCVar;
 using Robust.Shared.Configuration;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Localization;
 
 namespace Content.Server.Chat.Managers;
 
-public class ChatSanitizationManager : IChatSanitizationManager
+public sealed class ChatSanitizationManager : IChatSanitizationManager
 {
     [Dependency] private readonly IConfigurationManager _configurationManager = default!;
 
@@ -65,6 +61,7 @@ public class ChatSanitizationManager : IChatSanitizationManager
         { "lel", "chatsan-laughs" },
         { "kek", "chatsan-laughs" },
         { "o7", "chatsan-salutes" },
+        { ";_;7", "chatsan-tearfully-salutes"},
         { "idk", "chatsan-shrugs" }
     };
 

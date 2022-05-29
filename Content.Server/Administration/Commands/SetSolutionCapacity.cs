@@ -3,13 +3,11 @@ using Content.Server.Chemistry.EntitySystems;
 using Content.Shared.Administration;
 using Content.Shared.FixedPoint;
 using Robust.Shared.Console;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
 
 namespace Content.Server.Administration.Commands
 {
     [AdminCommand(AdminFlags.Fun)]
-    public class SetSolutionCapacity : IConsoleCommand
+    public sealed class SetSolutionCapacity : IConsoleCommand
     {
         public string Command => "setsolutioncapacity";
         public string Description => "Set the capacity (maximum volume) of some solution.";

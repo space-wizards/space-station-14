@@ -8,7 +8,7 @@ using Robust.Shared.Serialization.Manager.Attributes;
 namespace Content.Client.Atmos.Visualizers
 {
     [UsedImplicitly]
-    public class FireVisualizer : AppearanceVisualizer
+    public sealed class FireVisualizer : AppearanceVisualizer
     {
         [DataField("fireStackAlternateState")]
         private int _fireStackAlternateState = 3;

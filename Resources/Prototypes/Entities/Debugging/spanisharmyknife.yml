@@ -13,7 +13,7 @@
     state: icon
   - type: Clothing
     sprite: Objects/Tools/debug.rsi
-    QuickEquip: false
+    quickEquip: false
     Slots:
       - Belt
   - type: MeleeWeapon

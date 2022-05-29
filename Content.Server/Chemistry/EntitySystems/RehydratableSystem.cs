@@ -2,14 +2,11 @@
 using Content.Server.Popups;
 using Content.Shared.FixedPoint;
 using JetBrains.Annotations;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Localization;
 
 namespace Content.Server.Chemistry.EntitySystems
 {
     [UsedImplicitly]
-    public class RehydratableSystem : EntitySystem
+    public sealed class RehydratableSystem : EntitySystem
     {
         [Dependency] private readonly SolutionContainerSystem _solutionsSystem = default!;
         public override void Initialize()

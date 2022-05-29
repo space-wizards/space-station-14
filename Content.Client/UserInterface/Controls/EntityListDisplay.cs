@@ -10,7 +10,7 @@ using Robust.Shared.Maths;
 
 namespace Content.Client.UserInterface.Controls
 {
-    public class EntityListDisplay : Control
+    public sealed class EntityListDisplay : Control
     {
         public const string StylePropertySeparation = "separation";
 
@@ -279,7 +279,7 @@ namespace Content.Client.UserInterface.Controls
         }
     }
 
-    public class EntityContainerButton : ContainerButton
+    public sealed class EntityContainerButton : ContainerButton
     {
         public EntityUid EntityUid;
 

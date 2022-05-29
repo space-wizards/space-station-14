@@ -1,4 +1,3 @@
-using System;
 using System.Threading;
 using Content.Server.Body.Components;
 using Content.Server.Chemistry.Components;
@@ -11,6 +10,7 @@ using Content.Shared.Database;
 using Content.Shared.FixedPoint;
 using Content.Shared.Hands;
 using Content.Shared.Interaction;
+using Content.Shared.Interaction.Events;
 using Content.Shared.MobState.Components;
 using Robust.Shared.GameStates;
 using Robust.Shared.Player;
@@ -44,7 +44,7 @@ public sealed partial class ChemistrySystem
     }
 
     private void UseInjector(EntityUid target, EntityUid user, InjectorComponent component)
-    { 
+    {
         // Handle injecting/drawing for solutions
         if (component.ToggleState == SharedInjectorComponent.InjectorToggleMode.Inject)
         {
@@ -107,8 +107,6 @@ public sealed partial class ChemistrySystem
 
         if (component.CancelToken != null)
         {
-            component.CancelToken.Cancel();
-            component.CancelToken = null;
             args.Handled = true;
             return;
         }
@@ -208,7 +206,7 @@ public sealed partial class ChemistrySystem
             // Add an admin log, using the "force feed" log type. It's not quite feeding, but the effect is the same.
             if (component.ToggleState == SharedInjectorComponent.InjectorToggleMode.Inject)
             {
-                _logs.Add(LogType.ForceFeed,
+                _adminLogger.Add(LogType.ForceFeed,
                     $"{EntityManager.ToPrettyString(user):user} is attempting to inject {EntityManager.ToPrettyString(target):target} with a solution {SolutionContainerSystem.ToPrettyString(solution):solution}");
             }
         }
@@ -218,7 +216,7 @@ public sealed partial class ChemistrySystem
             actualDelay /= 2;
 
             if (component.ToggleState == SharedInjectorComponent.InjectorToggleMode.Inject)
-                _logs.Add(LogType.Ingestion,
+                _adminLogger.Add(LogType.Ingestion,
                     $"{EntityManager.ToPrettyString(user):user} is attempting to inject themselves with a solution {SolutionContainerSystem.ToPrettyString(solution):solution}.");
         }
 
@@ -247,7 +245,7 @@ public sealed partial class ChemistrySystem
     private void TryInjectIntoBloodstream(InjectorComponent component, BloodstreamComponent targetBloodstream, EntityUid user)
     {
         // Get transfer amount. May be smaller than _transferAmount if not enough room
-        var realTransferAmount = FixedPoint2.Min(component.TransferAmount, targetBloodstream.Solution.AvailableVolume);
+        var realTransferAmount = FixedPoint2.Min(component.TransferAmount, targetBloodstream.ChemicalSolution.AvailableVolume);
 
         if (realTransferAmount <= 0)
         {
@@ -257,9 +255,9 @@ public sealed partial class ChemistrySystem
         }
 
         // Move units from attackSolution to targetSolution
-        var removedSolution = _solutions.SplitSolution(user, targetBloodstream.Solution, realTransferAmount);
+        var removedSolution = _solutions.SplitSolution(user, targetBloodstream.ChemicalSolution, realTransferAmount);
 
-        _blood.TryAddToBloodstream((targetBloodstream).Owner, removedSolution, targetBloodstream);
+        _blood.TryAddToChemicals((targetBloodstream).Owner, removedSolution, targetBloodstream);
 
         removedSolution.DoEntityReaction(targetBloodstream.Owner, ReactionMethod.Injection);
 

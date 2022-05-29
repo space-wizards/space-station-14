@@ -34,10 +34,12 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 20
+        maxVol: 15
         reagents:
         - ReagentId: Nutriment
-          Quantity: 15
+          Quantity: 7
+        - ReagentId: Vitamin
+          Quantity: 3
   - type: Item
     sprite: Objects/Consumable/Food/burger.rsi
 
@@ -116,6 +118,17 @@
   components:
   - type: Sprite
     state: bearger
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 15
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 3
+        - ReagentId: Vitamin
+          Quantity: 5
+        - ReagentId: Protein
+          Quantity: 6
 
 - type: entity
   name: clown burger
@@ -154,6 +167,15 @@
   components:
   - type: Sprite
     state: ghost
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 25
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 7
+        - ReagentId: Vitamin
+          Quantity: 12
 # Tastes like bun, ectoplasm.
 
 # Note: I would put a bunch of colored burgers here as listed in the tg .dm but
@@ -181,7 +203,9 @@
         maxVol: 33
         reagents:
         - ReagentId: Nutriment
-          Quantity: 25
+          Quantity: 17
+        - ReagentId: Vitamin
+          Quantity: 9
   - type: Sprite
     state: bigbite
 # Tastes like bun, silver, magic.
@@ -198,7 +222,13 @@
         maxVol: 53
         reagents:
         - ReagentId: Nutriment
-          Quantity: 40
+          Quantity: 44
+        - ReagentId: Vitamin
+          Quantity: 24
+        - ReagentId: TableSalt
+          Quantity: 5
+        - ReagentId: Blackpepper
+          Quantity: 5
   - type: Sprite
     state: superbite
 # Tastes like bun, diabetes.
@@ -211,6 +241,20 @@
   components:
   - type: Sprite
     state: fivealarm
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 15
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 6
+        - ReagentId: CapsaicinOil
+          Quantity: 5
+        - ReagentId: Blackpepper
+          Quantity: 5
+        - ReagentId: Vitamin
+          Quantity: 1
+
 # Tastes like bun, HEAT.
 
 - type: entity
@@ -221,6 +265,15 @@
   components:
   - type: Sprite
     state: rat
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 10
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 3
+        - ReagentId: Vitamin
+          Quantity: 1
 # Tastes like bun, HEAT.
 
 - type: entity
@@ -241,6 +294,14 @@
   components:
   - type: Sprite
     state: bacon
+    solutions:
+      food:
+        maxVol: 30
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 19
+        - ReagentId: Vitamin
+          Quantity: 5
 # Tastes like bun, bacon.
 
 - type: entity
@@ -251,6 +312,15 @@
   components:
   - type: Sprite
     state: empowered
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 15
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 8
+        - ReagentId: Licoxide
+          Quantity: 5
 # Tastes like bun, pure electricity.
 
 - type: entity
@@ -261,6 +331,17 @@
   components:
   - type: Sprite
     state: crab
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 15
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 3
+        - ReagentId: Protein
+          Quantity: 5
+        - ReagentId: Vitamin
+          Quantity: 4
 # Tastes like bun, crab meat.
 
 - type: entity
@@ -271,6 +352,17 @@
   components:
   - type: Sprite
     state: soylent
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 15
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 4
+        - ReagentId: Protein
+          Quantity: 6
+        - ReagentId: Vitamin
+          Quantity: 4
 # Tastes like bun, redditors.
 
 - type: entity
@@ -281,6 +373,17 @@
   components:
   - type: Sprite
     state: mcrib
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 15
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 2
+        - ReagentId: Protein
+          Quantity: 7
+        - ReagentId: Vitamin
+          Quantity: 4
 # Tastes like bun, pork patty.
 
 - type: entity
@@ -291,6 +394,17 @@
   components:
   - type: Sprite
     state: mcguffin
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 15
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 2
+        - ReagentId: Protein
+          Quantity: 7
+        - ReagentId: Vitamin
+          Quantity: 1
 # Tastes like muffin, bacon.
 
 - type: entity
@@ -301,6 +415,17 @@
   components:
   - type: Sprite
     state: chicken
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 15
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 3
+        - ReagentId: Protein
+          Quantity: 7
+        - ReagentId: Vitamin
+          Quantity: 1
 # Tastes like bun, chicken.
 
 - type: entity
@@ -311,6 +436,17 @@
   components:
   - type: Sprite
     state: chicken
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 15
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 3
+        - ReagentId: Protein
+          Quantity: 7
+        - ReagentId: Vitamin
+          Quantity: 1
 # Tastes like bun, duck.
 
 - type: entity
@@ -321,6 +457,17 @@
   components:
   - type: Sprite
     state: cheese
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 15
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 3
+        - ReagentId: Vitamin
+          Quantity: 7
+        - ReagentId: Protein
+          Quantity: 1
 # TODO: Make this work.
   # - type: Sprite
   #   state: plate

@@ -22,52 +22,41 @@
 
 import PIL
 import PIL.Image
+import sys
+import iconsmooth_lib
+
+if len(sys.argv) != 5:
+    raise Exception("iconsmooth.py <TEST.png> <TILESIZE> <" + iconsmooth_lib.all_conv + "> <OUTPREFIX>")
 
 # Input detail configuration
-input_name = "rplasma_window.dmi"
-input_row = 7
-tile_w = 32
-tile_h = 32
-shodan = False # Citadel Station
+input_name = sys.argv[1]
+metric_mode = sys.argv[2]
+conversion_mode = sys.argv[3]
+out_prefix = sys.argv[4]
 
-# Output state configuration
-if not shodan:
-    # TG
-    out_states = [
-        # Each output state gives a source quadrant for BR, TL, TR, BL.
-        # The idea is that each of the 4 directions is a different rotation of the same state.
-        # These states are associated by a bitfield indicating occupance relative to the indicated corner:
-        # 1: Tile anti-clockwise of indicated diagonal occupied.
-        # 2: Tile in indicated diagonal occupied.
-        # 4: Tile clockwise of indicated diagonal occupied.
-        [  0,  0,  0,  0], # 0 : Standing / Outer corners
-        [ 12, 12,  3,  3], # 1 : Straight line ; top half horizontal bottom half vertical
-        [  0,  0,  0,  0], # 2 : Standing / Outer corners diagonal
-        [ 12, 12,  3,  3], # 3 : Seems to match 1
-        [  3,  3, 12, 12], # 4 : Straight line ; top half vertical bottom half horizontal
-        [ 15, 15, 15, 15], # 5 : Inner corners
-        [  3,  3, 12, 12], # 6 : Seems to match 4
-        [ 46, 46, 46, 46], # 7 : Full
-    ]
-else:
-    # Citadel Station
-    out_states = [
-        [  3,  0,  1,  2],
-        [ 11,  8,  5,  6],
-        [  3,  0,  1,  2],
-        [ 11,  8,  5,  6],
-        [  7,  4,  9, 10],
-        [ 15, 12, 13, 14],
-        [  7,  4,  9, 10],
-        [ 19, 16, 17, 18],
-    ]
-
-# Infer
+# Metric configuration
+tile_w = int(metric_mode)
+tile_h = int(metric_mode)
 subtile_w = tile_w // 2
 subtile_h = tile_h // 2
 
+# Infer remainder from subtile
+# This is for uneven geometries
+#
+# SUB |
+# ----+----
+#     | REM
+#
+remtile_w = tile_w - subtile_w
+remtile_h = tile_h - subtile_h
+
+# Output state configuration
+out_states = iconsmooth_lib.conversion_modes[conversion_mode].states
+
 # Source loading
 src_img = PIL.Image.open(input_name)
+
+input_row = src_img.size[0] // tile_w
 
 tiles = []
 # 48 is the amount of tiles that usually exist
@@ -78,21 +67,17 @@ for i in range(48):
     tile.paste(src_img, (tx * -tile_w, ty * -tile_h))
     # now split that up
     # note that THIS is where the weird ordering gets put into place
-    tile_a = PIL.Image.new("RGBA", (subtile_w, subtile_h))
+    tile_a = PIL.Image.new("RGBA", (remtile_w, remtile_w))
     tile_a.paste(tile, (-subtile_w, -subtile_h))
     tile_b = PIL.Image.new("RGBA", (subtile_w, subtile_h))
     tile_b.paste(tile, (0, 0))
-    tile_c = PIL.Image.new("RGBA", (subtile_w, subtile_h))
+    tile_c = PIL.Image.new("RGBA", (remtile_w, subtile_h))
     tile_c.paste(tile, (-subtile_w, 0))
-    tile_d = PIL.Image.new("RGBA", (subtile_w, subtile_h))
+    tile_d = PIL.Image.new("RGBA", (subtile_w, remtile_w))
     tile_d.paste(tile, (0, -subtile_h))
     tiles.append([tile_a, tile_b, tile_c, tile_d])
 
 state_size = (tile_w * 2, tile_h * 2)
-
-def subtile_copy(dst, dst_x, dst_y, src, src_x, src_y):
-    dst_x += src_x
-    dst_y += src_y
 
 for state in range(len(out_states)):
     full = PIL.Image.new("RGBA", state_size)
@@ -100,12 +85,12 @@ for state in range(len(out_states)):
     full.paste(tiles[out_states[state][1]][1], (tile_w, 0))
     full.paste(tiles[out_states[state][2]][2], (subtile_w, tile_h))
     full.paste(tiles[out_states[state][3]][3], (tile_w, tile_h + subtile_h))
-    full.save("state_" + str(state) + ".png")
+    full.save(out_prefix + str(state) + ".png")
 
 full_finale = PIL.Image.new("RGBA", (tile_w, tile_h))
 full_finale.paste(tiles[out_states[0][0]][0], (subtile_w, subtile_h))
 full_finale.paste(tiles[out_states[0][1]][1], (0, 0))
 full_finale.paste(tiles[out_states[0][2]][2], (subtile_w, 0))
 full_finale.paste(tiles[out_states[0][3]][3], (0, subtile_h))
-full_finale.save("full.png")
+full_finale.save(out_prefix + "full.png")
 

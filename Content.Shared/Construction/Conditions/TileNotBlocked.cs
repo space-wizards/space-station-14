@@ -1,15 +1,12 @@
 using Content.Shared.Maps;
 using JetBrains.Annotations;
-using Robust.Shared.GameObjects;
 using Robust.Shared.Map;
-using Robust.Shared.Maths;
-using Robust.Shared.Serialization.Manager.Attributes;
 
 namespace Content.Shared.Construction.Conditions
 {
     [UsedImplicitly]
     [DataDefinition]
-    public class TileNotBlocked : IConstructionCondition
+    public sealed class TileNotBlocked : IConstructionCondition
     {
         [DataField("filterMobs")] private bool _filterMobs = false;
         [DataField("failIfSpace")] private bool _failIfSpace = true;

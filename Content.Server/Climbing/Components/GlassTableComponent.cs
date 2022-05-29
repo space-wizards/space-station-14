@@ -1,7 +1,4 @@
 using Content.Shared.Damage;
-using Robust.Shared.Analyzers;
-using Robust.Shared.GameObjects;
-using Robust.Shared.Serialization.Manager.Attributes;
 
 namespace Content.Server.Climbing.Components;
 
@@ -11,7 +8,7 @@ namespace Content.Server.Climbing.Components;
 ///     not very generalized with regards to naming.
 /// </summary>
 [RegisterComponent, Friend(typeof(ClimbSystem))]
-public class GlassTableComponent : Component
+public sealed class GlassTableComponent : Component
 {
     /// <summary>
     ///     How much damage should be given to the climber?
@@ -26,7 +23,13 @@ public class GlassTableComponent : Component
     public DamageSpecifier TableDamage = default!;
 
     /// <summary>
+    ///     How much mass should be needed to break the table?
+    /// </summary>
+    [DataField("tableMassLimit")]
+    public float MassLimit;
+
+    /// <summary>
     ///     How long should someone who climbs on this table be stunned for?
     /// </summary>
-    public float StunTime = 5.0f;
+    public float StunTime = 2.0f;
 }

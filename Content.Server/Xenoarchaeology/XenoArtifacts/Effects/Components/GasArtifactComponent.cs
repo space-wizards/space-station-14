@@ -1,7 +1,4 @@
-﻿using Content.Shared.Atmos;
-using Robust.Shared.GameObjects;
-using Robust.Shared.Serialization.Manager.Attributes;
-using Robust.Shared.ViewVariables;
+using Content.Shared.Atmos;
 
 namespace Content.Server.Xenoarchaeology.XenoArtifacts.Effects.Components;
 
@@ -9,10 +6,8 @@ namespace Content.Server.Xenoarchaeology.XenoArtifacts.Effects.Components;
 ///     Spawn a random gas with random temperature when artifact activated.
 /// </summary>
 [RegisterComponent]
-public class GasArtifactComponent : Component
+public sealed class GasArtifactComponent : Component
 {
-    public override string Name => "GasArtifact";
-
     /// <summary>
     ///     Gas that will be spawned when artifact activated.
     ///     If null it will be picked on startup from <see cref="PossibleGases"/>.

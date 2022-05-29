@@ -2,21 +2,16 @@
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.FixedPoint;
 using Content.Shared.Maps;
-using Content.Shared.Random.Helpers;
 using Content.Shared.Whitelist;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
 using Robust.Shared.Map;
-using Robust.Shared.Maths;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
-using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
 namespace Content.Server.Chemistry.TileReactions;
 
 [DataDefinition]
-public class CreateEntityTileReaction : ITileReaction
+public sealed class CreateEntityTileReaction : ITileReaction
 {
     [DataField("entity", required: true, customTypeSerializer:typeof(PrototypeIdSerializer<EntityPrototype>))]
     public string Entity = default!;

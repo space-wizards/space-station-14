@@ -9,7 +9,7 @@ using Robust.Shared.Timing;
 namespace Content.Client.Info;
 
 [GenerateTypedNameReferences]
-public partial class RulesPopup : Control
+public sealed partial class RulesPopup : Control
 {
     private float _timer;
 

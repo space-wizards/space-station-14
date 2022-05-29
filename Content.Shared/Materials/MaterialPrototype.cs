@@ -1,10 +1,7 @@
 using Content.Shared.Stacks;
-using Robust.Shared.Maths;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 using Robust.Shared.Utility;
-using Robust.Shared.ViewVariables;
 
 namespace Content.Shared.Materials
 {
@@ -13,18 +10,18 @@ namespace Content.Shared.Materials
     ///     Properties should be intrinsic (or at least as much is necessary for game purposes).
     /// </summary>
     [Prototype("material")]
-    public class MaterialPrototype : IPrototype, IInheritingPrototype
+    public sealed class MaterialPrototype : IPrototype, IInheritingPrototype
     {
         [ViewVariables]
-        [DataField("parent")]
+        [ParentDataField(typeof(AbstractPrototypeIdSerializer<MaterialPrototype>))]
         public string? Parent { get; } = null;
 
         [ViewVariables]
-        [DataField("abstract")]
+        [AbstractDataFieldAttribute]
         public bool Abstract { get; } = false;
 
         [ViewVariables]
-        [DataField("id", required: true)]
+        [IdDataFieldAttribute]
         public string ID { get; } = default!;
 
         [ViewVariables]

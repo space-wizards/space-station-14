@@ -1,6 +1,4 @@
-﻿using Content.Shared.Hands;
-using Content.Shared.Standing;
-using Robust.Shared.GameObjects;
+﻿using Content.Shared.Standing;
 
 namespace Content.Shared.MobState.State
 {
@@ -11,8 +9,7 @@ namespace Content.Shared.MobState.State
         public override void EnterState(EntityUid uid, IEntityManager entityManager)
         {
             base.EnterState(uid, entityManager);
-            var wake = entityManager.EnsureComponent<CollisionWakeComponent>(uid);
-            wake.Enabled = true;
+            entityManager.EnsureComponent<CollisionWakeComponent>(uid);
             var standingState = EntitySystem.Get<StandingStateSystem>();
             standingState.Down(uid);
 

@@ -6,7 +6,7 @@ using Robust.Shared.Serialization.Manager.Attributes;
 
 namespace Content.Client.Kudzu;
 
-public class KudzuVisualizer : AppearanceVisualizer
+public sealed class KudzuVisualizer : AppearanceVisualizer
 {
     [DataField("layer")]
     private int Layer { get; } = 0;

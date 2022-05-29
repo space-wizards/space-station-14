@@ -7,7 +7,7 @@ using Robust.Shared.IoC;
 namespace Content.IntegrationTests.Tests
 {
     [TestFixture]
-    public class RestartRoundTest : ContentIntegrationTest
+    public sealed class RestartRoundTest : ContentIntegrationTest
     {
         [Test]
         public async Task Test()

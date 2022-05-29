@@ -22,6 +22,14 @@
     
 - type: entity
   parent: Windoor
+  id: WindoorBarKitchenLocked
+  suffix: Bar&Kitchen, Locked
+  components:
+  - type: AccessReader
+    access: [["Bar"], ["Kitchen"]]
+    
+- type: entity
+  parent: Windoor
   id: WindoorCargoLocked
   suffix: Cargo, Locked
   components:
@@ -62,6 +70,14 @@
     
 - type: entity
   parent: Windoor
+  id: WindoorKitchenHydroponicsLocked
+  suffix: Kitchen&Hydroponics, Locked
+  components:
+  - type: AccessReader
+    access: [["Kitchen"], ["Hydroponics"]]
+    
+- type: entity
+  parent: Windoor
   id: WindoorTheatreLocked
   suffix: Theatre, Locked
   components:
@@ -85,6 +101,14 @@
   components:
   - type: AccessReader
     access: [["Brig"]]
+
+- type: entity
+  parent: WindoorSecure
+  id: WindoorSecureCargoLocked
+  suffix: Cargo, Locked
+  components:
+  - type: AccessReader
+    access: [["Cargo"]]
 
 - type: entity
   parent: WindoorSecure
@@ -119,6 +143,14 @@
   components:
   - type: AccessReader
     access: [["Engineering"]]
+    
+- type: entity
+  parent: WindoorSecure
+  id: WindoorExternalLocked
+  suffix: External, Locked
+  components:
+  - type: AccessReader
+    access: [["External"]]
 
 - type: entity
   parent: WindoorSecure

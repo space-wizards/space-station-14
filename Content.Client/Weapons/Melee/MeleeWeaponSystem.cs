@@ -67,12 +67,12 @@ namespace Content.Client.Weapons.Melee
                 if (EntityManager.EntityExists(msg.Source) &&
                     msg.TextureEffect &&
                     EntityManager.TryGetComponent(msg.Source, out ISpriteComponent? sourceSprite) &&
-                    sourceSprite.BaseRSI?.Path != null)
+                    sourceSprite.BaseRSI?.Path is { } path)
                 {
                     var curTime = _gameTiming.CurTime;
                     var effect = new EffectSystemMessage
                     {
-                        EffectSprite = sourceSprite.BaseRSI.Path.ToString(),
+                        EffectSprite = path.ToString(),
                         RsiState = sourceSprite.LayerGetState(0).Name,
                         Coordinates = EntityManager.GetComponent<TransformComponent>(attacker).Coordinates,
                         Color = Vector4.Multiply(new Vector4(255, 255, 255, 125), 1.0f),

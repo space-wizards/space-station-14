@@ -12,7 +12,7 @@ namespace Content.IntegrationTests.Tests.Doors
 {
     [TestFixture]
     [TestOf(typeof(AirlockComponent))]
-    public class AirlockTest : ContentIntegrationTest
+    public sealed class AirlockTest : ContentIntegrationTest
     {
         private const string Prototypes = @"
 - type: entity

@@ -1,11 +1,9 @@
-using Robust.Shared.Log;
-using System.Collections.Generic;
 using Robust.Shared.Utility;
 using System.Diagnostics.CodeAnalysis;
 
 namespace Content.Server.DeviceNetwork
 {
-    public class NetworkPayload : Dictionary<string, object>
+    public sealed class NetworkPayload : Dictionary<string, object>
     {
         /// <summary>
         /// Tries to get a value from the payload and checks if that value is of type  T.

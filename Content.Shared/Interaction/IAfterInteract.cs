@@ -1,8 +1,5 @@
-using System;
 using System.Threading.Tasks;
 using JetBrains.Annotations;
-using Robust.Shared.Analyzers;
-using Robust.Shared.GameObjects;
 using Robust.Shared.Map;
 
 
@@ -29,7 +26,7 @@ namespace Content.Shared.Interaction
         Task<bool> AfterInteract(AfterInteractEventArgs eventArgs);
     }
 
-    public class AfterInteractEventArgs : EventArgs
+    public sealed class AfterInteractEventArgs : EventArgs
     {
         public EntityUid User { get; }
         public EntityCoordinates ClickLocation { get; }

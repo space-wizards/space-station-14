@@ -1,14 +1,11 @@
 ﻿using Content.Shared.Body.Events;
 using Content.Shared.Body.Part;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
 using Robust.Shared.Serialization;
-using Robust.Shared.Serialization.Manager.Attributes;
 
 namespace Content.Shared.Body.Components
 {
     [RegisterComponent]
-    public class MechanismComponent : Component, ISerializationHooks
+    public sealed class MechanismComponent : Component, ISerializationHooks
     {
         [Dependency] private readonly IEntityManager _entMan = default!;
         private SharedBodyPartComponent? _part;

@@ -2,16 +2,11 @@ using Content.Server.Tabletop.Components;
 using Content.Shared.Tabletop.Events;
 using Robust.Server.GameObjects;
 using Robust.Server.Player;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Localization;
-using Robust.Shared.Log;
-using Robust.Shared.Maths;
 using Robust.Shared.Utility;
 
 namespace Content.Server.Tabletop
 {
-    public partial class TabletopSystem
+    public sealed partial class TabletopSystem
     {
         /// <summary>
         ///     Ensures that a <see cref="TabletopSession"/> exists on a <see cref="TabletopGameComponent"/>.
@@ -19,7 +14,7 @@ namespace Content.Server.Tabletop
         /// </summary>
         /// <param name="tabletop">The tabletop game in question.</param>
         /// <returns>The session for the given tabletop game.</returns>
-        private TabletopSession EnsureSession(TabletopGameComponent tabletop)
+        public TabletopSession EnsureSession(TabletopGameComponent tabletop)
         {
             // We already have a session, return it
             // TODO: if tables are connected, treat them as a single entity. This can be done by sharing the session.

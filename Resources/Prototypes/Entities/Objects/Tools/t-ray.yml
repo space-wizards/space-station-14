@@ -19,3 +19,6 @@
       states:
         enum.TrayScannerVisual.On: tray-on
         enum.TrayScannerVisual.Off: tray-off
+  - type: Tag
+    tags:
+      - DroneUsable

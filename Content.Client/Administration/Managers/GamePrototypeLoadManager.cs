@@ -8,7 +8,7 @@ using Robust.Shared.Prototypes;
 
 namespace Content.Client.Administration.Managers;
 
-public class GamePrototypeLoadManager : IGamePrototypeLoadManager
+public sealed class GamePrototypeLoadManager : IGamePrototypeLoadManager
 {
     [Dependency] private readonly IClientNetManager _netManager = default!;
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
@@ -21,8 +21,8 @@ public class GamePrototypeLoadManager : IGamePrototypeLoadManager
 
     private void LoadGamePrototype(GamePrototypeLoadMessage message)
     {
-        _prototypeManager.LoadString(message.PrototypeData);
-        _prototypeManager.Resync();
+        _prototypeManager.LoadString(message.PrototypeData, true);
+        _prototypeManager.ResolveResults();
         _localizationManager.ReloadLocalizations();
         GamePrototypeLoaded?.Invoke();
         Logger.InfoS("adminbus", "Loaded adminbus prototype data.");

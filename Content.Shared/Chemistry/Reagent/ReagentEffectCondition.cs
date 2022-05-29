@@ -1,7 +1,5 @@
 ﻿using System.Text.Json.Serialization;
 using JetBrains.Annotations;
-using Robust.Shared.GameObjects;
-using Robust.Shared.Serialization.Manager.Attributes;
 
 namespace Content.Shared.Chemistry.Reagent
 {

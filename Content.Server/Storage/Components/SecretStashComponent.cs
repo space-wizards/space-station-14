@@ -2,11 +2,7 @@ using Content.Server.Storage.EntitySystems;
 using Content.Server.Toilet;
 using Content.Shared.Containers.ItemSlots;
 using Content.Shared.Item;
-using Robust.Shared.Analyzers;
 using Robust.Shared.Containers;
-using Robust.Shared.GameObjects;
-using Robust.Shared.Serialization.Manager.Attributes;
-using Robust.Shared.ViewVariables;
 
 namespace Content.Server.Storage.Components
 {
@@ -17,7 +13,7 @@ namespace Content.Server.Storage.Components
     /// </summary>
     [RegisterComponent]
     [Friend(typeof(SecretStashSystem))]
-    public class SecretStashComponent : Component
+    public sealed class SecretStashComponent : Component
     {
         /// <summary>
         ///     Max item size that can be fitted into secret stash.

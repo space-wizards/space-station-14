@@ -6,14 +6,11 @@ using Content.Shared.Damage;
 using Content.Shared.Damage.Prototypes;
 using Content.Shared.Examine;
 using Content.Shared.Rounding;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Localization;
 using Robust.Shared.Prototypes;
 
 namespace Content.Server.Damage.Systems;
 
-public class ExaminableDamageSystem : EntitySystem
+public sealed class ExaminableDamageSystem : EntitySystem
 {
     [Dependency] private readonly IPrototypeManager _prototype = default!;
 

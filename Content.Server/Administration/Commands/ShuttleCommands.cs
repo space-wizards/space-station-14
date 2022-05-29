@@ -1,16 +1,12 @@
-using System;
 using Content.Server.RoundEnd;
 using Content.Shared.Administration;
 using Content.Shared.Localizations;
 using Robust.Shared.Console;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Localization;
 
 namespace Content.Server.Administration.Commands
 {
     [AdminCommand(AdminFlags.Round)]
-    public class CallShuttleCommand : IConsoleCommand
+    public sealed class CallShuttleCommand : IConsoleCommand
     {
         public string Command => "callshuttle";
         public string Description => Loc.GetString("call-shuttle-command-description");
@@ -37,7 +33,7 @@ namespace Content.Server.Administration.Commands
     }
 
     [AdminCommand(AdminFlags.Round)]
-    public class RecallShuttleCommand : IConsoleCommand
+    public sealed class RecallShuttleCommand : IConsoleCommand
     {
         public string Command => "recallshuttle";
         public string Description => Loc.GetString("recall-shuttle-command-description");

@@ -7,6 +7,7 @@ using Content.Server.NodeContainer.Nodes;
 using Content.Shared.Atmos;
 using Content.Shared.Atmos.Piping;
 using Content.Shared.Atmos.Piping.Trinary.Components;
+using Content.Shared.Audio;
 using Content.Shared.Database;
 using Content.Shared.Interaction;
 using Content.Shared.Popups;
@@ -19,8 +20,9 @@ namespace Content.Server.Atmos.Piping.Trinary.EntitySystems
     public sealed class GasMixerSystem : EntitySystem
     {
         [Dependency] private UserInterfaceSystem _userInterfaceSystem = default!;
-        [Dependency] private AdminLogSystem _adminLogSystem = default!;
+        [Dependency] private IAdminLogManager _adminLogger = default!;
         [Dependency] private readonly AtmosphereSystem _atmosphereSystem = default!;
+        [Dependency] private readonly SharedAmbientSoundSystem _ambientSoundSystem = default!;
 
         public override void Initialize()
         {
@@ -34,6 +36,7 @@ namespace Content.Server.Atmos.Piping.Trinary.EntitySystems
             SubscribeLocalEvent<GasMixerComponent, GasMixerChangeNodePercentageMessage>(OnChangeNodePercentageMessage);
             SubscribeLocalEvent<GasMixerComponent, GasMixerToggleStatusMessage>(OnToggleStatusMessage);
 
+            // Shouldn't need re-anchor event
             SubscribeLocalEvent<GasMixerComponent, AnchorStateChangedEvent>(OnAnchorChanged);
         }
 
@@ -59,7 +62,10 @@ namespace Content.Server.Atmos.Piping.Trinary.EntitySystems
             // TODO ATMOS: Cache total moles since it's expensive.
 
             if (!mixer.Enabled)
+            {
+                _ambientSoundSystem.SetAmbience(mixer.Owner, false);
                 return;
+            }
 
             if (!EntityManager.TryGetComponent(uid, out NodeContainerComponent? nodeContainer))
                 return;
@@ -67,12 +73,17 @@ namespace Content.Server.Atmos.Piping.Trinary.EntitySystems
             if (!nodeContainer.TryGetNode(mixer.InletOneName, out PipeNode? inletOne)
                 || !nodeContainer.TryGetNode(mixer.InletTwoName, out PipeNode? inletTwo)
                 || !nodeContainer.TryGetNode(mixer.OutletName, out PipeNode? outlet))
+            {
+                _ambientSoundSystem.SetAmbience(mixer.Owner, false);
                 return;
+            }
 
             var outputStartingPressure = outlet.Air.Pressure;
 
             if (outputStartingPressure >= mixer.TargetPressure)
                 return; // Target reached, no need to mix.
+
+
 
             var generalTransfer = (mixer.TargetPressure - outputStartingPressure) * outlet.Air.Volume / Atmospherics.R;
 
@@ -102,7 +113,10 @@ namespace Content.Server.Atmos.Piping.Trinary.EntitySystems
                     return;
 
                 if (transferMolesOne <= 0 || transferMolesTwo <= 0)
+                {
+                    _ambientSoundSystem.SetAmbience(mixer.Owner, false);
                     return;
+                }
 
                 if (inletOne.Air.TotalMoles < transferMolesOne || inletTwo.Air.TotalMoles < transferMolesTwo)
                 {
@@ -125,6 +139,7 @@ namespace Content.Server.Atmos.Piping.Trinary.EntitySystems
                 var removed = inletTwo.Air.Remove(transferMolesTwo);
                 _atmosphereSystem.Merge(outlet.Air, removed);
             }
+            _ambientSoundSystem.SetAmbience(mixer.Owner, true);
         }
 
         private void OnMixerInteractHand(EntityUid uid, GasMixerComponent component, InteractHandEvent args)
@@ -165,7 +180,7 @@ namespace Content.Server.Atmos.Piping.Trinary.EntitySystems
         private void OnToggleStatusMessage(EntityUid uid, GasMixerComponent mixer, GasMixerToggleStatusMessage args)
         {
             mixer.Enabled = args.Enabled;
-            _adminLogSystem.Add(LogType.AtmosPowerChanged, LogImpact.Medium,
+            _adminLogger.Add(LogType.AtmosPowerChanged, LogImpact.Medium,
                 $"{ToPrettyString(args.Session.AttachedEntity!.Value):player} set the power on {ToPrettyString(uid):device} to {args.Enabled}");
             DirtyUI(uid, mixer);
             UpdateAppearance(uid, mixer);
@@ -173,8 +188,8 @@ namespace Content.Server.Atmos.Piping.Trinary.EntitySystems
 
         private void OnOutputPressureChangeMessage(EntityUid uid, GasMixerComponent mixer, GasMixerChangeOutputPressureMessage args)
         {
-            mixer.TargetPressure = Math.Clamp(args.Pressure, 0f, Atmospherics.MaxOutputPressure);
-            _adminLogSystem.Add(LogType.AtmosPressureChanged, LogImpact.Medium,
+            mixer.TargetPressure = Math.Clamp(args.Pressure, 0f, mixer.MaxTargetPressure);
+            _adminLogger.Add(LogType.AtmosPressureChanged, LogImpact.Medium,
                 $"{ToPrettyString(args.Session.AttachedEntity!.Value):player} set the pressure on {ToPrettyString(uid):device} to {args.Pressure}kPa");
             DirtyUI(uid, mixer);
         }
@@ -185,7 +200,7 @@ namespace Content.Server.Atmos.Piping.Trinary.EntitySystems
             float nodeOne = Math.Clamp(args.NodeOne, 0f, 100.0f) / 100.0f;
             mixer.InletOneConcentration = nodeOne;
             mixer.InletTwoConcentration = 1.0f - mixer.InletOneConcentration;
-            _adminLogSystem.Add(LogType.AtmosRatioChanged, LogImpact.Medium,
+            _adminLogger.Add(LogType.AtmosRatioChanged, LogImpact.Medium,
                 $"{EntityManager.ToPrettyString(args.Session.AttachedEntity!.Value):player} set the ratio on {EntityManager.ToPrettyString(uid):device} to {mixer.InletOneConcentration}:{mixer.InletTwoConcentration}");
             DirtyUI(uid, mixer);
         }

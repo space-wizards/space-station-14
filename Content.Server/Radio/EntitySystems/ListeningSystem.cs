@@ -1,11 +1,10 @@
 ﻿using Content.Server.Radio.Components;
 using JetBrains.Annotations;
-using Robust.Shared.GameObjects;
 
 namespace Content.Server.Radio.EntitySystems
 {
     [UsedImplicitly]
-    public class ListeningSystem : EntitySystem
+    public sealed class ListeningSystem : EntitySystem
     {
         public void PingListeners(EntityUid source, string message)
         {

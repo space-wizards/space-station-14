@@ -1,0 +1,16 @@
+- type: deviceFrequency
+  id: AtmosMonitor
+  name: device-frequency-prototype-name-atmos
+  frequency: 1621
+
+# Only listen to this frequency if you are a health or GPS monitor. Otherwise you will just slow down the server by constantly receiving periodic broadcasts from every player-entity.
+- type: deviceFrequency
+  id: SuitSensor
+  name: device-frequency-prototype-name-suit-sensors
+  frequency: 1262
+
+# This frequency will likely have a LARGE number of listening entities. Please don't broadcast on this frequency.
+- type: deviceFrequency
+  id: SmartLight #used by powered lights.
+  name: device-frequency-prototype-name-lights
+  frequency: 1173

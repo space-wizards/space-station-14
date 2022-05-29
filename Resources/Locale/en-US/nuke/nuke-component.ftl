@@ -16,12 +16,13 @@ nuke-user-interface-first-status-input-code = INPUT CODE
 nuke-user-interface-first-status-input-time = INPUT TIME
 nuke-user-interface-first-status-device-ready = DEVICE READY
 nuke-user-interface-first-status-device-armed = DEVICE ARMED
+nuke-user-interface-first-status-device-cooldown = DEACTIVATED
 nuke-user-interface-status-error = ERROR
 
 ## Lower status
 nuke-user-interface-second-status-await-disk = AWAIT DISK
 nuke-user-interface-second-status-time = TIME: {$time}
 nuke-user-interface-second-status-current-code = CODE: {$code}
-
+nuke-user-interface-second-status-cooldown-time = WAIT: {$time}
 
 

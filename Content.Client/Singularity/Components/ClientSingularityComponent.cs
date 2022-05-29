@@ -5,7 +5,7 @@ namespace Content.Client.Singularity.Components
 {
     [RegisterComponent]
     [ComponentReference(typeof(SharedSingularityComponent))]
-    public class ClientSingularityComponent : SharedSingularityComponent
+    public sealed class ClientSingularityComponent : SharedSingularityComponent
     {
     }
 }

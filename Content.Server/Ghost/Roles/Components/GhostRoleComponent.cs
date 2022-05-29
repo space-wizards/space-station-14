@@ -1,15 +1,12 @@
 ﻿using Content.Server.Mind.Commands;
 using Robust.Server.Player;
-using Robust.Shared.GameObjects;
-using Robust.Shared.Serialization.Manager.Attributes;
-using Robust.Shared.ViewVariables;
-using Robust.Shared.Localization;
 
 namespace Content.Server.Ghost.Roles.Components
 {
+    [Friend(typeof(GhostRoleSystem))]
     public abstract class GhostRoleComponent : Component
     {
-        [DataField("name")] private string _roleName = "Unknown";
+        [DataField("name")] public string _roleName = "Unknown";
 
         [DataField("description")] private string _roleDescription = "Unknown";
 
@@ -68,21 +65,6 @@ namespace Content.Server.Ghost.Roles.Components
         [ViewVariables(VVAccess.ReadWrite)]
         [DataField("reregister")]
         public bool ReregisterOnGhost { get; set; } = true;
-
-        protected override void Initialize()
-        {
-            base.Initialize();
-            if (_roleRules == "")
-                _roleRules = Loc.GetString("ghost-role-component-default-rules");
-            EntitySystem.Get<GhostRoleSystem>().RegisterGhostRole(this);
-        }
-
-        protected override void Shutdown()
-        {
-            base.Shutdown();
-
-            EntitySystem.Get<GhostRoleSystem>().UnregisterGhostRole(this);
-        }
 
         public abstract bool Take(IPlayerSession session);
     }

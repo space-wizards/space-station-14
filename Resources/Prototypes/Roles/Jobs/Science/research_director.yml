@@ -1,7 +1,7 @@
 - type: job
   id: ResearchDirector
   name: "research director"
-  head: true
+  weight: 10
   startingGear: ResearchDirectorGear
   departments:
   - Command

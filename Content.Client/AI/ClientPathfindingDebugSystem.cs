@@ -16,7 +16,7 @@ using Robust.Shared.Timing;
 namespace Content.Client.AI
 {
 #if DEBUG
-    public class ClientPathfindingDebugSystem : EntitySystem
+    public sealed class ClientPathfindingDebugSystem : EntitySystem
     {
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
         [Dependency] private readonly IEyeManager _eyeManager = default!;
@@ -335,7 +335,7 @@ namespace Content.Client.AI
                 {
                     Regions[gridId][chunk].Add(region, nodes);
                     _regionColors[gridId][chunk][region] = new Color(robustRandom.NextFloat(), robustRandom.NextFloat(),
-                        robustRandom.NextFloat(), 0.3f);
+                        robustRandom.NextFloat(), 0.5f);
                 }
             }
         }

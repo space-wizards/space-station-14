@@ -1,6 +1,4 @@
 using Content.Server.Speech.Components;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 
@@ -10,7 +8,7 @@ namespace Content.Server.Speech.EntitySystems
     /// <summary>
     /// Replaces any spoken sentences with a random word.
     /// </summary>
-    public class ReplacementAccentSystem : EntitySystem
+    public sealed class ReplacementAccentSystem : EntitySystem
     {
         [Dependency] private readonly IPrototypeManager _proto = default!;
         [Dependency] private readonly IRobustRandom _random = default!;
@@ -24,7 +22,7 @@ namespace Content.Server.Speech.EntitySystems
         {
             var words = _proto.Index<ReplacementAccentPrototype>(component.Accent).Words;
 
-            args.Message = words.Length != 0 ? _random.Pick(words) : "";
+            args.Message = words.Length != 0 ? Loc.GetString(_random.Pick(words)) : "";
         }
     }
 }

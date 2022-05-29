@@ -1,5 +1,4 @@
 ﻿using Content.Server.Power.NodeGroups;
-using Robust.Shared.GameObjects;
 
 namespace Content.Server.Power.Components
 {
@@ -7,7 +6,7 @@ namespace Content.Server.Power.Components
     ///     Connects the loading side of a <see cref="BatteryComponent"/> to a non-APC power network.
     /// </summary>
     [RegisterComponent]
-    public class BatteryChargerComponent : BasePowerNetComponent
+    public sealed class BatteryChargerComponent : BasePowerNetComponent
     {
         protected override void AddSelfToNet(IPowerNet net)
         {

@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Threading.Tasks;
-using Content.Server.Inventory;
 using Content.Server.Stunnable;
 using Content.Shared.Inventory;
 using NUnit.Framework;
@@ -11,7 +10,7 @@ using Robust.Shared.Map;
 namespace Content.IntegrationTests.Tests
 {
     [TestFixture]
-    public class InventoryHelpersTest : ContentIntegrationTest
+    public sealed class InventoryHelpersTest : ContentIntegrationTest
     {
         private const string Prototypes = @"
 - type: entity

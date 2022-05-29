@@ -1,6 +1,5 @@
 using System.IO;
 using System.Collections.Generic;
-using System.Globalization;
 using System.Linq;
 using YamlDotNet.Core;
 using Robust.Shared.Utility;
@@ -8,7 +7,7 @@ using YamlDotNet.RepresentationModel;
 
 namespace Content.Tools
 {
-    public class Map
+    public sealed class Map
     {
         public Map(string path)
         {

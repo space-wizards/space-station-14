@@ -21,6 +21,9 @@
       doAfter: 1
       removeOnInteract: true
     - type: Clickable
+    - type: Tag
+      tags:
+        - DroneUsable
 #    - type: Appearance # TODO: Add stack sprites
 #      visuals:
 #        - type: StackVisualizer
@@ -52,6 +55,9 @@
       doAfter: 1
       removeOnInteract: true
     - type: Clickable
+    - type: Tag
+      tags:
+        - DroneUsable
 
 - type: entity
   parent: InflatableWallStack

@@ -8,7 +8,7 @@ namespace Content.Tests.Shared.Preferences.Job
     [TestFixture]
     [TestOf(typeof(JobPriority))]
     [TestOf(typeof(DbJobPriority))]
-    public class JobPriorityTest
+    public sealed class JobPriorityTest
     {
         [Test]
         public void JobPriorityEnumParityTest()

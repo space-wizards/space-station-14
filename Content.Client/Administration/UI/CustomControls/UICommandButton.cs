@@ -4,7 +4,7 @@ using Robust.Shared.IoC;
 
 namespace Content.Client.Administration.UI.CustomControls
 {
-    public class UICommandButton : CommandButton
+    public sealed class UICommandButton : CommandButton
     {
         public Type? WindowType { get; set; }
         private DefaultWindow? _window;

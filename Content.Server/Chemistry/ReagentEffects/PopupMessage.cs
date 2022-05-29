@@ -1,14 +1,11 @@
 ﻿using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Popups;
-using Robust.Shared.IoC;
-using Robust.Shared.Localization;
 using Robust.Shared.Player;
 using Robust.Shared.Random;
-using Robust.Shared.Serialization.Manager.Attributes;
 
 namespace Content.Server.Chemistry.ReagentEffects
 {
-    public class PopupMessage : ReagentEffect
+    public sealed class PopupMessage : ReagentEffect
     {
         [DataField("messages", required: true)]
         public string[] Messages = default!;

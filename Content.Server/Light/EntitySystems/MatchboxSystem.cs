@@ -1,12 +1,10 @@
 using Content.Server.Light.Components;
 using Content.Shared.Interaction;
 using Content.Shared.Smoking;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
 
 namespace Content.Server.Light.EntitySystems
 {
-    public class MatchboxSystem : EntitySystem
+    public sealed class MatchboxSystem : EntitySystem
     {
         public override void Initialize()
         {

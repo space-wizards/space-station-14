@@ -4,12 +4,13 @@ using Content.Server.Atmos.EntitySystems;
 using Content.Server.Construction;
 using Content.Server.Construction.Components;
 using Content.Server.Tools;
-using Content.Server.Tools.Components;
+using Content.Server.Doors.Components;
 using Content.Shared.Access.Components;
 using Content.Shared.Access.Systems;
 using Content.Shared.Doors;
 using Content.Shared.Doors.Components;
 using Content.Shared.Doors.Systems;
+using Content.Shared.Emag.Systems;
 using Content.Shared.Interaction;
 using Content.Shared.Tag;
 using Robust.Shared.Audio;
@@ -17,6 +18,8 @@ using Robust.Shared.Containers;
 using Robust.Shared.Physics.Dynamics;
 using Robust.Shared.Player;
 using System.Linq;
+using Content.Server.Tools.Systems;
+using Content.Shared.Tools.Components;
 
 namespace Content.Server.Doors.Systems;
 
@@ -37,20 +40,36 @@ public sealed class DoorSystem : SharedDoorSystem
 
         SubscribeLocalEvent<DoorComponent, PryFinishedEvent>(OnPryFinished);
         SubscribeLocalEvent<DoorComponent, PryCancelledEvent>(OnPryCancelled);
-        SubscribeLocalEvent<DoorComponent, WeldFinishedEvent>(OnWeldFinished);
-        SubscribeLocalEvent<DoorComponent, WeldCancelledEvent>(OnWeldCancelled);
+        SubscribeLocalEvent<DoorComponent, WeldableAttemptEvent>(OnWeldAttempt);
+        SubscribeLocalEvent<DoorComponent, WeldableChangedEvent>(OnWeldChanged);
+        SubscribeLocalEvent<DoorComponent, GotEmaggedEvent>(OnEmagged);
     }
 
-    protected override void OnInit(EntityUid uid, DoorComponent door, ComponentInit args)
+    protected override void OnActivate(EntityUid uid, DoorComponent door, ActivateInWorldEvent args)
     {
-        base.OnInit(uid, door, args);
+        // TODO once access permissions are shared, move this back to shared.
+        if (args.Handled || !door.ClickOpen)
+            return;
 
-        if (door.State == DoorState.Open
-                && door.ChangeAirtight
-                && TryComp(uid, out AirtightComponent? airtight))
-        {
-            _airtightSystem.SetAirblocked(airtight, false);
-        }
+        TryToggleDoor(uid, door, args.User);
+        args.Handled = true;
+    }
+
+    protected override void SetCollidable(EntityUid uid, bool collidable,
+        DoorComponent? door = null,
+        PhysicsComponent? physics = null,
+        OccluderComponent? occluder = null)
+    {
+        if (!Resolve(uid, ref door))
+            return;
+
+        if (door.ChangeAirtight && TryComp(uid, out AirtightComponent? airtight))
+            _airtightSystem.SetAirblocked(airtight, collidable);
+
+        // Pathfinding / AI stuff.
+        RaiseLocalEvent(new AccessReaderChangeEvent(uid, collidable));
+
+        base.SetCollidable(uid, collidable, door, physics, occluder);
     }
 
     // TODO AUDIO PREDICT Figure out a better way to handle sound and prediction. For now, this works well enough?
@@ -111,32 +130,27 @@ public sealed class DoorSystem : SharedDoorSystem
             args.Handled = TryPryDoor(uid, args.Used, args.User, door);
             return;
         }
+    }
 
-        if (door.Weldable && tool.Qualities.Contains(door.WeldingQuality))
+    private void OnWeldAttempt(EntityUid uid, DoorComponent component, WeldableAttemptEvent args)
+    {
+        if (component.CurrentlyCrushing.Count > 0)
         {
-            args.Handled = TryWeldDoor(uid, args.Used, args.User, door);
+            args.Cancel();
+            return;
+        }
+        if (component.State != DoorState.Closed && component.State != DoorState.Welded)
+        {
+            args.Cancel();
         }
     }
 
-    /// <summary>
-    ///     Attempt to weld a door shut, or unweld it if it is already welded. This does not actually check if the user
-    ///     is holding the correct tool.
-    /// </summary>
-    private bool TryWeldDoor(EntityUid target, EntityUid used, EntityUid user, DoorComponent door)
+    private void OnWeldChanged(EntityUid uid, DoorComponent component, WeldableChangedEvent args)
     {
-        if (!door.Weldable || door.BeingWelded || door.CurrentlyCrushing.Count > 0)
-            return false;
-
-        // is the door in a weld-able state?
-        if (door.State != DoorState.Closed && door.State != DoorState.Welded)
-            return false;
-
-        // perform a do-after delay
-        door.BeingWelded = true;
-        _toolSystem.UseTool(used, user, target, 3f, 3f, door.WeldingQuality,
-                new WeldFinishedEvent(), new WeldCancelledEvent(), target);
-
-        return true; // we might not actually succeeded, but a do-after has started
+        if (component.State == DoorState.Closed)
+            SetState(uid, DoorState.Welded, component);
+        else if (component.State == DoorState.Welded)
+            SetState(uid, DoorState.Closed, component);
     }
 
     /// <summary>
@@ -153,7 +167,7 @@ public sealed class DoorSystem : SharedDoorSystem
         if (canEv.Cancelled)
             // mark handled, as airlock component will cancel after generating a pop-up & you don't want to pry a tile
             // under a windoor.
-            return true; 
+            return true;
 
         var modEv = new DoorGetPryTimeModifierEvent();
         RaiseLocalEvent(target, modEv, false);
@@ -162,24 +176,6 @@ public sealed class DoorSystem : SharedDoorSystem
                 new PryFinishedEvent(), new PryCancelledEvent(), target);
 
         return true; // we might not actually succeeded, but a do-after has started
-    }
-
-    private void OnWeldCancelled(EntityUid uid, DoorComponent door, WeldCancelledEvent args)
-    {
-        door.BeingWelded = false;
-    }
-
-    private void OnWeldFinished(EntityUid uid, DoorComponent door, WeldFinishedEvent args)
-    {
-        door.BeingWelded = false;
-
-        if (!door.Weldable)
-            return;
-
-        if (door.State == DoorState.Closed)
-            SetState(uid, DoorState.Welded, door);
-        else if (door.State == DoorState.Welded)
-            SetState(uid, DoorState.Closed, door);
     }
 
     private void OnPryCancelled(EntityUid uid, DoorComponent door, PryCancelledEvent args)
@@ -247,39 +243,6 @@ public sealed class DoorSystem : SharedDoorSystem
             TryOpen(uid, door, otherUid);
     }
 
-    public override void OnPartialOpen(EntityUid uid, DoorComponent? door = null, PhysicsComponent? physics = null)
-    {
-        if (!Resolve(uid, ref door, ref physics))
-            return;
-
-        base.OnPartialOpen(uid, door, physics);
-
-        if (door.ChangeAirtight && TryComp(uid, out AirtightComponent? airtight))
-        {
-            _airtightSystem.SetAirblocked(airtight, false);
-        }
-
-        // Path-finding. Has nothing directly to do with access readers.
-        RaiseLocalEvent(new AccessReaderChangeMessage(uid, false));
-    }
-
-    public override bool OnPartialClose(EntityUid uid, DoorComponent? door = null, PhysicsComponent? physics = null)
-    {
-        if (!Resolve(uid, ref door, ref physics))
-            return false;
-
-        if (!base.OnPartialClose(uid, door, physics))
-            return false;
-
-        // update airtight, if we did not crush something.
-        if (door.ChangeAirtight && door.CurrentlyCrushing.Count == 0 && TryComp(uid, out AirtightComponent? airtight))
-            _airtightSystem.SetAirblocked(airtight, true);
-
-        // Path-finding. Has nothing directly to do with access readers.
-        RaiseLocalEvent(new AccessReaderChangeMessage(uid, true));
-        return true;
-    }
-
     private void OnMapInit(EntityUid uid, DoorComponent door, MapInitEvent args)
     {
         // Ensure that the construction component is aware of the board container.
@@ -303,9 +266,40 @@ public sealed class DoorSystem : SharedDoorSystem
         if(!container.Insert(board))
             Logger.Warning($"Couldn't insert board {ToPrettyString(board)} into door {ToPrettyString(uid)}!");
     }
+
+    private void OnEmagged(EntityUid uid, DoorComponent door, GotEmaggedEvent args)
+    {
+        if(TryComp<AirlockComponent>(uid, out var airlockComponent))
+        {
+            if (airlockComponent.BoltsDown || !airlockComponent.IsPowered())
+                return;
+
+            if (door.State == DoorState.Closed)
+            {
+                SetState(uid, DoorState.Emagging, door);
+                PlaySound(uid, door.SparkSound.GetSound(), AudioParams.Default.WithVolume(8), args.UserUid, false);
+                args.Handled = true;
+            }
+        }
+    }
+
+    public override void StartOpening(EntityUid uid, DoorComponent? door = null, EntityUid? user = null, bool predicted = false)
+    {
+        if (!Resolve(uid, ref door))
+            return;
+
+        DoorState lastState = door.State;
+
+        SetState(uid, DoorState.Opening, door);
+
+        if (door.OpenSound != null)
+            PlaySound(uid, door.OpenSound.GetSound(), AudioParams.Default.WithVolume(-5), user, predicted);
+
+        if(lastState == DoorState.Emagging && TryComp<AirlockComponent>(door.Owner, out var airlockComponent))
+            airlockComponent?.SetBoltsWithAudio(!airlockComponent.IsBolted());
+    }
 }
 
-public class PryFinishedEvent : EntityEventArgs { }
-public class PryCancelledEvent : EntityEventArgs { }
-public class WeldFinishedEvent : EntityEventArgs { }
-public class WeldCancelledEvent : EntityEventArgs { }
+public sealed class PryFinishedEvent : EntityEventArgs { }
+public sealed class PryCancelledEvent : EntityEventArgs { }
+

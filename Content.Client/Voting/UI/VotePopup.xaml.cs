@@ -12,7 +12,7 @@ using Robust.Shared.Timing;
 namespace Content.Client.Voting.UI
 {
     [GenerateTypedNameReferences]
-    public partial class VotePopup : Control
+    public sealed partial class VotePopup : Control
     {
         [Dependency] private readonly IGameTiming _gameTiming = default!;
         [Dependency] private readonly IVoteManager _voteManager = default!;

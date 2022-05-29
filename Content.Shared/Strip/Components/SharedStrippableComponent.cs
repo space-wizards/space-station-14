@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using Content.Shared.ActionBlocker;
+﻿using Content.Shared.ActionBlocker;
 using Content.Shared.DragDrop;
 using Content.Shared.Hands.Components;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.Strip.Components
@@ -26,16 +22,16 @@ namespace Content.Shared.Strip.Components
         }
 
         public abstract bool Drop(DragDropEvent args);
-
-        [NetSerializable, Serializable]
-        public enum StrippingUiKey
-        {
-            Key,
-        }
     }
 
     [NetSerializable, Serializable]
-    public class StrippingInventoryButtonPressed : BoundUserInterfaceMessage
+    public enum StrippingUiKey : byte
+    {
+        Key,
+    }
+
+    [NetSerializable, Serializable]
+    public sealed class StrippingInventoryButtonPressed : BoundUserInterfaceMessage
     {
         public string Slot { get; }
 
@@ -46,7 +42,7 @@ namespace Content.Shared.Strip.Components
     }
 
     [NetSerializable, Serializable]
-    public class StrippingHandButtonPressed : BoundUserInterfaceMessage
+    public sealed class StrippingHandButtonPressed : BoundUserInterfaceMessage
     {
         public string Hand { get; }
 
@@ -57,7 +53,7 @@ namespace Content.Shared.Strip.Components
     }
 
     [NetSerializable, Serializable]
-    public class StrippingHandcuffButtonPressed : BoundUserInterfaceMessage
+    public sealed class StrippingHandcuffButtonPressed : BoundUserInterfaceMessage
     {
         public EntityUid Handcuff { get; }
 
@@ -68,7 +64,7 @@ namespace Content.Shared.Strip.Components
     }
 
     [NetSerializable, Serializable]
-    public class StrippingBoundUserInterfaceState : BoundUserInterfaceState
+    public sealed class StrippingBoundUserInterfaceState : BoundUserInterfaceState
     {
         public Dictionary<(string ID, string Name), string> Inventory { get; }
         public Dictionary<string, string> Hands { get; }

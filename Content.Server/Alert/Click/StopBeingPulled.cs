@@ -3,9 +3,6 @@ using Content.Shared.Alert;
 using Content.Shared.Pulling.Components;
 using Content.Shared.Pulling;
 using JetBrains.Annotations;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Serialization.Manager.Attributes;
 
 namespace Content.Server.Alert.Click
 {
@@ -14,7 +11,7 @@ namespace Content.Server.Alert.Click
     /// </summary>
     [UsedImplicitly]
     [DataDefinition]
-    public class StopBeingPulled : IAlertClick
+    public sealed class StopBeingPulled : IAlertClick
     {
         public void AlertClicked(EntityUid player)
         {

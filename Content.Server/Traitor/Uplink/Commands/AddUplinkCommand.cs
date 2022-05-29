@@ -6,14 +6,11 @@ using Content.Shared.Traitor.Uplink;
 using Robust.Server.Player;
 using Robust.Shared.Configuration;
 using Robust.Shared.Console;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Localization;
 
 namespace Content.Server.Traitor.Uplink.Commands
 {
     [AdminCommand(AdminFlags.Fun)]
-    public class AddUplinkCommand : IConsoleCommand
+    public sealed class AddUplinkCommand : IConsoleCommand
     {
         public string Command => "adduplink";
 

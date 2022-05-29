@@ -6,7 +6,7 @@ namespace Content.Shared.Preferences
     /// <summary>
     /// The client sends this to delete a character profile.
     /// </summary>
-    public class MsgDeleteCharacter : NetMessage
+    public sealed class MsgDeleteCharacter : NetMessage
     {
         public override MsgGroups MsgGroup => MsgGroups.Command;
 

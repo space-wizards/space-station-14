@@ -62,6 +62,34 @@
     state: quartertile_overlay_270
 
 - type: decal
+  id: ThreeQuarterTileOverlayGreyscale
+  tags: ["station", "overlay"]
+  sprite:
+    sprite: Decals/Overlays/greyscale.rsi
+    state: threequartertile_overlay
+
+- type: decal
+  id: ThreeQuarterTileOverlayGreyscale90
+  tags: ["station", "overlay"]
+  sprite:
+    sprite: Decals/Overlays/greyscale.rsi
+    state: threequartertile_overlay_90
+
+- type: decal
+  id: ThreeQuarterTileOverlayGreyscale180
+  tags: ["station", "overlay"]
+  sprite:
+    sprite: Decals/Overlays/greyscale.rsi
+    state: threequartertile_overlay_180
+
+- type: decal
+  id: ThreeQuarterTileOverlayGreyscale270
+  tags: ["station", "overlay"]
+  sprite:
+    sprite: Decals/Overlays/greyscale.rsi
+    state: threequartertile_overlay_270
+
+- type: decal
   id: CheckerNESW
   tags: ["station", "overlay"]
   sprite:

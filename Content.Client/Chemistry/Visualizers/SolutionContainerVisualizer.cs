@@ -10,7 +10,7 @@ using Robust.Shared.Serialization.Manager.Attributes;
 namespace Content.Client.Chemistry.Visualizers
 {
     [UsedImplicitly]
-    public class SolutionContainerVisualizer : AppearanceVisualizer
+    public sealed class SolutionContainerVisualizer : AppearanceVisualizer
     {
         [DataField("maxFillLevels")] private int _maxFillLevels = 0;
         [DataField("fillBaseName")] private string? _fillBaseName = null;

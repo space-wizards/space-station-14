@@ -1,12 +1,9 @@
 ﻿using Content.Shared.Examine;
-using Robust.Shared.GameObjects;
-using Robust.Shared.Localization;
-using Robust.Shared.Serialization.Manager.Attributes;
 
 namespace Content.Shared.Construction.Steps
 {
     [DataDefinition]
-    public class ComponentConstructionGraphStep : ArbitraryInsertConstructionGraphStep
+    public sealed class ComponentConstructionGraphStep : ArbitraryInsertConstructionGraphStep
     {
         [DataField("component")] public string Component { get; } = string.Empty;
 

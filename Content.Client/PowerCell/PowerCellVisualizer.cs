@@ -8,7 +8,7 @@ using Robust.Shared.Serialization.Manager.Attributes;
 namespace Content.Client.PowerCell
 {
     [UsedImplicitly]
-    public class PowerCellVisualizer : AppearanceVisualizer
+    public sealed class PowerCellVisualizer : AppearanceVisualizer
     {
         [DataField("prefix")]
         private string? _prefix;

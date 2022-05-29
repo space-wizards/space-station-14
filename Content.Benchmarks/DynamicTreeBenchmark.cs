@@ -5,7 +5,7 @@ using Robust.Shared.Physics;
 namespace Content.Benchmarks
 {
     [SimpleJob, MemoryDiagnoser]
-    public class DynamicTreeBenchmark
+    public sealed class DynamicTreeBenchmark
     {
         private static readonly Box2[] _aabbs1 =
         {

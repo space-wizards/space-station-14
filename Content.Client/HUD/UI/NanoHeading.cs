@@ -3,7 +3,7 @@ using Robust.Client.UserInterface.Controls;
 
 namespace Content.Client.HUD.UI
 {
-    public class NanoHeading : Container
+    public sealed class NanoHeading : Container
     {
         private readonly Label _label;
         private readonly PanelContainer _panel;

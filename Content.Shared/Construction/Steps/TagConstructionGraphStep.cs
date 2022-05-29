@@ -1,11 +1,9 @@
 using Content.Shared.Tag;
-using Robust.Shared.GameObjects;
-using Robust.Shared.Serialization.Manager.Attributes;
 
 namespace Content.Shared.Construction.Steps
 {
     [DataDefinition]
-    public class TagConstructionGraphStep : ArbitraryInsertConstructionGraphStep
+    public sealed class TagConstructionGraphStep : ArbitraryInsertConstructionGraphStep
     {
         [DataField("tag")]
         private string? _tag = null;

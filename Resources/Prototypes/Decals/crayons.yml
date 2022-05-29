@@ -209,13 +209,6 @@
     state: amyjon
 
 - type: decal
-  id: antilizard
-  tags: ["crayon"]
-  sprite:
-    sprite: Effects/crayondecals.rsi
-    state: antilizard
-
-- type: decal
   id: arrow
   tags: ["crayon"]
   sprite:

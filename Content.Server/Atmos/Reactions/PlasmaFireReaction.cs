@@ -1,16 +1,12 @@
-using System;
 using Content.Server.Atmos.EntitySystems;
-using Content.Server.Coordinates.Helpers;
 using Content.Shared.Atmos;
 using JetBrains.Annotations;
-using Robust.Server.GameObjects;
-using Robust.Shared.Serialization.Manager.Attributes;
 
 namespace Content.Server.Atmos.Reactions
 {
     [UsedImplicitly]
     [DataDefinition]
-    public class PlasmaFireReaction : IGasReactionEffect
+    public sealed class PlasmaFireReaction : IGasReactionEffect
     {
         public ReactionResult React(GasMixture mixture, IGasMixtureHolder? holder, AtmosphereSystem atmosphereSystem)
         {

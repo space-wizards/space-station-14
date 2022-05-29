@@ -1,13 +1,12 @@
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Tag;
 using JetBrains.Annotations;
-using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
 namespace Content.Server.Chemistry.ReagentEffectConditions;
 
 [UsedImplicitly]
-public class HasTag : ReagentEffectCondition
+public sealed class HasTag : ReagentEffectCondition
 {
     [DataField("tag", customTypeSerializer: typeof(PrototypeIdSerializer<TagPrototype>))]
     public string Tag = default!;

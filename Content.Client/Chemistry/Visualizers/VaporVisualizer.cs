@@ -12,7 +12,7 @@ using Robust.Shared.Serialization.Manager.Attributes;
 namespace Content.Client.Chemistry.Visualizers
 {
     [UsedImplicitly]
-    public class VaporVisualizer : AppearanceVisualizer, ISerializationHooks
+    public sealed class VaporVisualizer : AppearanceVisualizer, ISerializationHooks
     {
         private const string AnimationKey = "flick_animation";
 

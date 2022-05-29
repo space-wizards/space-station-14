@@ -17,6 +17,8 @@
 
 - Flags: MAPPING
   Commands:
+    - tethergun
+    - griddrag
     - showmarkers
     - showsubfloor
     - showsubfloorforever
@@ -28,3 +30,7 @@
 - Flags: ADMIN
   Commands:
     - togglehealthoverlay
+
+- Flags: QUERY
+  Commands:
+    - uploadfile

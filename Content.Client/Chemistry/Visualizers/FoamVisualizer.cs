@@ -12,7 +12,7 @@ using Robust.Shared.Serialization.Manager.Attributes;
 namespace Content.Client.Chemistry.Visualizers
 {
     [UsedImplicitly]
-    public class FoamVisualizer : AppearanceVisualizer, ISerializationHooks
+    public sealed class FoamVisualizer : AppearanceVisualizer, ISerializationHooks
     {
         private const string AnimationKey = "foamdissolve_animation";
 

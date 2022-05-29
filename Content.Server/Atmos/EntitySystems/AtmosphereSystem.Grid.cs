@@ -1,5 +1,3 @@
-using System;
-using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Runtime.CompilerServices;
@@ -9,18 +7,14 @@ using Content.Server.Atmos.Reactions;
 using Content.Server.NodeContainer.NodeGroups;
 using Content.Shared.Atmos;
 using Content.Shared.Maps;
-using Robust.Shared.GameObjects;
 // ReSharper disable once RedundantUsingDirective
-using Robust.Shared.IoC;
-using Robust.Shared.Log;
 using Robust.Shared.Map;
-using Robust.Shared.Maths;
 using Robust.Shared.Utility;
 using Dependency = Robust.Shared.IoC.DependencyAttribute;
 
 namespace Content.Server.Atmos.EntitySystems
 {
-    public partial class AtmosphereSystem
+    public sealed partial class AtmosphereSystem
     {
         [Dependency] private readonly ITileDefinitionManager _tileDefinitionManager = default!;
         [Dependency] private readonly GasTileOverlaySystem _gasTileOverlaySystem = default!;
@@ -28,6 +22,7 @@ namespace Content.Server.Atmos.EntitySystems
         private void InitializeGrid()
         {
             SubscribeLocalEvent<GridAtmosphereComponent, ComponentInit>(OnGridAtmosphereInit);
+            SubscribeLocalEvent<GridAtmosphereComponent, GridSplitEvent>(OnGridSplit);
         }
 
         private void OnGridAtmosphereInit(EntityUid uid, GridAtmosphereComponent gridAtmosphere, ComponentInit args)
@@ -58,6 +53,56 @@ namespace Content.Server.Atmos.EntitySystems
             }
 
             GridRepopulateTiles(mapGrid.Grid, gridAtmosphere);
+        }
+
+        private void OnGridSplit(EntityUid uid, GridAtmosphereComponent originalGridAtmos, ref GridSplitEvent args)
+        {
+            foreach (var newGrid in args.NewGrids)
+            {
+                // Make extra sure this is a valid grid.
+                if (!_mapManager.TryGetGrid(newGrid, out var mapGrid))
+                    continue;
+
+                var entity = mapGrid.GridEntityId;
+
+                // If the new split grid has an atmosphere already somehow, use that. Otherwise, add a new one.
+                if (!TryComp(entity, out GridAtmosphereComponent? newGridAtmos))
+                    newGridAtmos = AddComp<GridAtmosphereComponent>(entity);
+
+                // We assume the tiles on the new grid have the same coordinates as they did on the old grid...
+                var enumerator = mapGrid.GetAllTilesEnumerator();
+
+                while (enumerator.MoveNext(out var tile))
+                {
+                    var indices = tile.Value.GridIndices;
+
+                    // This split event happens *before* the spaced tiles have been invalidated, therefore we can still
+                    // access their gas data. On the next atmos update tick, these tiles will be spaced. Poof!
+                    if (!originalGridAtmos.Tiles.TryGetValue(indices, out var tileAtmosphere))
+                        continue;
+
+                    // The new grid atmosphere has been initialized, meaning it has all the needed TileAtmospheres...
+                    if (!newGridAtmos.Tiles.TryGetValue(indices, out var newTileAtmosphere))
+                        // Let's be honest, this is really not gonna happen, but just in case...!
+                        continue;
+
+                    // Copy a bunch of data over... Not great, maybe put this in TileAtmosphere?
+                    newTileAtmosphere.Air = tileAtmosphere.Air?.Clone() ?? null;
+                    newTileAtmosphere.Hotspot = tileAtmosphere.Hotspot;
+                    newTileAtmosphere.HeatCapacity = tileAtmosphere.HeatCapacity;
+                    newTileAtmosphere.Temperature = tileAtmosphere.Temperature;
+                    newTileAtmosphere.PressureDifference = tileAtmosphere.PressureDifference;
+                    newTileAtmosphere.PressureDirection = tileAtmosphere.PressureDirection;
+
+                    // TODO ATMOS: Somehow force GasTileOverlaySystem to perform an update *right now, right here.*
+                    // The reason why is that right now, gas will flicker until the next GasTileOverlay update.
+                    // That looks bad, of course. We want to avoid that! Anyway that's a bit more complicated so out of scope.
+
+                    // Invalidate the tile, it's redundant but redundancy is good! Also HashSet so really, no duplicates.
+                    InvalidateTile(originalGridAtmos, indices);
+                    InvalidateTile(newGridAtmos, indices);
+                }
+            }
         }
 
         #region Grid Is Simulated
@@ -193,22 +238,35 @@ namespace Content.Server.Atmos.EntitySystems
         /// <param name="mapGrid">The grid where to get the tile.</param>
         /// <param name="tile">The indices of the tile.</param>
         /// <returns></returns>
-        public virtual IEnumerable<AirtightComponent> GetObstructingComponents(IMapGrid mapGrid, Vector2i tile)
+        public IEnumerable<AirtightComponent> GetObstructingComponents(IMapGrid mapGrid, Vector2i tile)
         {
-            foreach (var uid in mapGrid.GetAnchoredEntities(tile))
+            var airQuery = GetEntityQuery<AirtightComponent>();
+            var enumerator = mapGrid.GetAnchoredEntitiesEnumerator(tile);
+
+            while (enumerator.MoveNext(out var uid))
             {
-                if (TryComp<AirtightComponent>(uid, out var ac))
-                    yield return ac;
+                if (!airQuery.TryGetComponent(uid.Value, out var airtight)) continue;
+                yield return airtight;
             }
+        }
+
+        public AtmosObstructionEnumerator GetObstructingComponentsEnumerator(IMapGrid mapGrid, Vector2i tile)
+        {
+            var ancEnumerator = mapGrid.GetAnchoredEntitiesEnumerator(tile);
+            var airQuery = GetEntityQuery<AirtightComponent>();
+
+            var enumerator = new AtmosObstructionEnumerator(ancEnumerator, airQuery);
+            return enumerator;
         }
 
         private AtmosDirection GetBlockedDirections(IMapGrid mapGrid, Vector2i indices)
         {
             var value = AtmosDirection.Invalid;
+            var enumerator = GetObstructingComponentsEnumerator(mapGrid, indices);
 
-            foreach (var airtightComponent in GetObstructingComponents(mapGrid, indices))
+            while (enumerator.MoveNext(out var airtightComponent))
             {
-                if(airtightComponent.AirBlocked)
+                if (airtightComponent.AirBlocked)
                     value |= airtightComponent.AirBlockedDirection;
             }
 
@@ -717,7 +775,9 @@ namespace Content.Server.Atmos.EntitySystems
         {
             var directions = AtmosDirection.Invalid;
 
-            foreach (var obstructingComponent in GetObstructingComponents(mapGrid, tile))
+            var enumerator = GetObstructingComponentsEnumerator(mapGrid, tile);
+
+            while (enumerator.MoveNext(out var obstructingComponent))
             {
                 if (!obstructingComponent.AirBlocked)
                     continue;
@@ -912,7 +972,7 @@ namespace Content.Server.Atmos.EntitySystems
         public IEnumerable<GasMixture> GetAdjacentTileMixtures(EntityCoordinates coordinates, bool includeBlocked = false, bool invalidate = false)
         {
             if (TryGetGridAndTile(coordinates, out var tuple))
-                return GetAdjacentTileMixtures(tuple.Value.Grid, tuple.Value.Tile);
+                return GetAdjacentTileMixtures(tuple.Value.Grid, tuple.Value.Tile, includeBlocked, invalidate);
 
             return Enumerable.Empty<GasMixture>();
         }
@@ -1492,6 +1552,11 @@ namespace Content.Server.Atmos.EntitySystems
         #endregion
 
         #region Position Helpers
+
+        private TileRef? GetTile(TileAtmosphere tile)
+        {
+            return tile.GridIndices.GetTileRef(tile.GridIndex, _mapManager);
+        }
 
         public bool TryGetGridAndTile(MapCoordinates coordinates, [NotNullWhen(true)] out (GridId Grid, Vector2i Tile)? tuple)
         {

@@ -8,7 +8,7 @@ using Robust.Shared.ViewVariables;
 namespace Content.Client.Power.APC
 {
     [UsedImplicitly]
-    public class ApcBoundUserInterface : BoundUserInterface
+    public sealed class ApcBoundUserInterface : BoundUserInterface
     {
         [ViewVariables] private ApcMenu? _menu;
 

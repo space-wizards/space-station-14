@@ -13,7 +13,7 @@ comp-gas-canister-ui-holding-tank-pressure = Tank Pressure:
 comp-gas-canister-ui-holding-tank-eject = Eject
 
 comp-gas-canister-ui-release-valve-status = Release Valve Status
-comp-gas-canister-ui-release-pressure = Release Pressure:
+comp-gas-canister-ui-release-pressure = Release Pressure (kPa):
 comp-gas-canister-ui-release-valve = Release Valve:
 comp-gas-canister-ui-release-valve-open = Open
 comp-gas-canister-ui-release-valve-close = Close

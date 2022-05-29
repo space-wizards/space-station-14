@@ -14,17 +14,16 @@
     recolor: true
   - type: Clickable
   - type: Evaporation
-  - type: Slippery
   - type: Physics
   - type: Fixtures
     fixtures:
     - shape:
         !type:PhysShapeAabb
-          bounds: "-0.4,-0.4,0.4,0.4"
-      layer:
-      - SmallImpassable
+        bounds: "-0.4,-0.4,0.4,0.4"
       mask:
-      - SmallImpassable
+      - ItemMask
+      layer:
+      - SlipLayer
       hard: false
   - type: Appearance
     visuals:
@@ -56,6 +55,9 @@
   - type: Appearance
     visuals:
     - type: PuddleVisualizer
+  - type: Slippery
+    launchForwardsMultiplier: 2.0
+  - type: StepTrigger
 
 - type: entity
   name: puddle
@@ -72,6 +74,9 @@
     visuals:
     - type: PuddleVisualizer
       recolor: true
+  - type: Slippery
+    launchForwardsMultiplier: 2.0
+  - type: StepTrigger
 
 - type: entity
   name: puddle
@@ -87,13 +92,50 @@
   - type: Appearance
     visuals:
     - type: PuddleVisualizer
+  - type: Slippery
+    launchForwardsMultiplier: 2.0
+  - type: StepTrigger
+
+- type: entity
+  id: PuddleBlood
+  name: blood
+  description: This can't be a good sign.
+  parent: PuddleBase
+  components:
+  - type: Sprite
+    sprite: Fluids/splatter.rsi # Placeholder
+    state: splatter-0
+    netsync: false
+  - type: Puddle
+    overflowVolume: 50
+    opacityModifier: 8
+  - type: Evaporation
+    evaporateTime: 400 # very slow
+  - type: Appearance
+    visuals:
+    - type: PuddleVisualizer
+      recolor: true
 
 - type: entity
   name: vomit
-  id: PuddleVomit
-  parent: PuddleBase
+  id: PuddleVomit # No parent because we don't want the visualizer
   description: Gross.
   components:
+  - type: Transform
+    anchored: true
+  - type: Clickable
+  - type: Evaporation
+  - type: Physics
+  - type: Fixtures
+    fixtures:
+    - shape:
+        !type:PhysShapeAabb
+        bounds: "-0.4,-0.4,0.4,0.4"
+      mask:
+      - ItemMask
+      layer:
+      - SlipLayer
+      hard: false
   - type: Sprite
     sprite: Fluids/vomit.rsi
     state: vomit-0
@@ -107,9 +149,9 @@
           Quantity: 5
         - ReagentId: Water
           Quantity: 5
-  - type: Appearance
-    visuals:
-    - type: PuddleVisualizer
+  - type: Slippery
+    launchForwardsMultiplier: 2.0
+  - type: StepTrigger
 
 - type: entity
   name: toxins vomit
@@ -133,6 +175,9 @@
   - type: Appearance
     visuals:
     - type: PuddleVisualizer
+  - type: Slippery
+    launchForwardsMultiplier: 2.0
+  - type: StepTrigger
 
 - type: entity
   name: writing
@@ -149,4 +194,6 @@
   - type: Appearance
     visuals:
     - type: PuddleVisualizer
-
+  - type: Slippery
+    launchForwardsMultiplier: 2.0
+  - type: StepTrigger

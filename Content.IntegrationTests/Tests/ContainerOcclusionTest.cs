@@ -12,7 +12,7 @@ using Robust.Shared.Maths;
 
 namespace Content.IntegrationTests.Tests
 {
-    public class ContainerOcclusionTest : ContentIntegrationTest
+    public sealed class ContainerOcclusionTest : ContentIntegrationTest
     {
         private const string ExtraPrototypes = @"
 - type: entity

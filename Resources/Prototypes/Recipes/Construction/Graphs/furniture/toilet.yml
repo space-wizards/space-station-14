@@ -12,6 +12,7 @@
               amount: 5
               doAfter: 1
     - node: toilet
+      entity: ToiletEmpty
       edges:
         - to: start
           completed:

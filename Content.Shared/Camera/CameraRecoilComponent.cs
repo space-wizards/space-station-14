@@ -1,12 +1,10 @@
-using Robust.Shared.GameObjects;
 using Robust.Shared.GameStates;
-using Robust.Shared.Maths;
 
 namespace Content.Shared.Camera;
 
 [RegisterComponent]
 [NetworkedComponent]
-public class CameraRecoilComponent : Component
+public sealed class CameraRecoilComponent : Component
 {
     public Vector2 CurrentKick { get; set; }
     public float LastKickTime { get; set; }

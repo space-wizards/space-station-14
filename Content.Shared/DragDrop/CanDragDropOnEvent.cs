@@ -1,13 +1,11 @@
-﻿using Robust.Shared.GameObjects;
-
-namespace Content.Shared.DragDrop;
+﻿namespace Content.Shared.DragDrop;
 
 /// <summary>
 /// Event that gets send to the target of a drag drop action
 /// Mark this event as handled to specify that the entity can be dropped on
 /// and set CanDrop to true or false, depending on whether dropping the entity onto the target is actually possible.
 /// </summary>
-public class CanDragDropOnEvent : HandledEntityEventArgs
+public sealed class CanDragDropOnEvent : HandledEntityEventArgs
 {
     /// <summary>
     ///     Entity doing the drag and drop.

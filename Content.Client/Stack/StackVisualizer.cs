@@ -48,7 +48,7 @@ namespace Content.Client.Stack
     ///  <seealso cref="_spriteLayers"/>
     /// </summary>
     [UsedImplicitly]
-    public class StackVisualizer : AppearanceVisualizer
+    public sealed class StackVisualizer : AppearanceVisualizer
     {
         /// <summary>
         /// Default IconLayer stack.

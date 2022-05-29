@@ -1,18 +1,13 @@
-﻿using System.Linq;
-using Content.Server.Atmos.Components;
+﻿using Content.Server.Atmos.Components;
 using Content.Server.Atmos.EntitySystems;
 using Content.Server.Body.Components;
 using Content.Server.Chemistry.EntitySystems;
 using Content.Shared.Atmos;
-using Content.Shared.Chemistry.Components;
 using Content.Shared.Inventory.Events;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Utility;
 
 namespace Content.Server.Body.Systems;
 
-public class LungSystem : EntitySystem
+public sealed class LungSystem : EntitySystem
 {
     [Dependency] private readonly SolutionContainerSystem _solutionContainerSystem = default!;
     [Dependency] private readonly AtmosphereSystem _atmosphereSystem = default!;

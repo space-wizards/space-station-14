@@ -1,8 +1,5 @@
-using System.Collections.Generic;
 using Content.Server.Storage.Components;
-using Robust.Shared.GameObjects;
-using Robust.Shared.Log;
-using Robust.Shared.Random;
+using Content.Shared.Storage;
 
 namespace Content.Server.Storage.EntitySystems;
 
@@ -11,36 +8,31 @@ public sealed partial class StorageSystem
     private void OnStorageFillMapInit(EntityUid uid, StorageFillComponent component, MapInitEvent args)
     {
         if (component.Contents.Count == 0) return;
-
-        if (!TryComp<IStorageComponent>(uid, out var storage))
+        // ServerStorageComponent needs to rejoin IStorageComponent when other storage components are ECS'd
+        TryComp<IStorageComponent>(uid, out var storage);
+        TryComp<ServerStorageComponent>(uid, out var serverStorageComp);
+        if (storage == null && serverStorageComp == null)
         {
             Logger.Error($"StorageFillComponent couldn't find any StorageComponent ({uid})");
             return;
         }
 
         var coordinates = Transform(uid).Coordinates;
-        var alreadySpawnedGroups = new HashSet<string>();
 
-        foreach (var entry in component.Contents)
+        var spawnItems = EntitySpawnCollection.GetSpawns(component.Contents, _random);
+        foreach (var item in spawnItems)
         {
-            // Handle "Or" groups
-            if (!string.IsNullOrEmpty(entry.GroupId) && alreadySpawnedGroups.Contains(entry.GroupId)) continue;
+            var ent = EntityManager.SpawnEntity(item, coordinates);
 
-            // Check random spawn
-            // ReSharper disable once CompareOfFloatsByEqualityOperator
-            if (entry.SpawnProbability != 1f && !_random.Prob(entry.SpawnProbability)) continue;
+            // handle depending on storage component, again this should be unified after ECS
+            if (storage != null && storage.Insert(ent))
+               continue;
 
-            for (var i = 0; i < entry.Amount; i++)
-            {
-                var ent = EntityManager.SpawnEntity(entry.PrototypeId, coordinates);
+            if (serverStorageComp != null && Insert(uid, ent, serverStorageComp))
+                continue;
 
-                if (storage.Insert(ent)) continue;
-
-                Logger.ErrorS("storage", $"Tried to StorageFill {entry.PrototypeId} inside {uid} but can't.");
-                EntityManager.DeleteEntity(ent);
-            }
-
-            if (!string.IsNullOrEmpty(entry.GroupId)) alreadySpawnedGroups.Add(entry.GroupId);
+            Logger.ErrorS("storage", $"Tried to StorageFill {item} inside {uid} but can't.");
+            EntityManager.DeleteEntity(ent);
         }
     }
 }

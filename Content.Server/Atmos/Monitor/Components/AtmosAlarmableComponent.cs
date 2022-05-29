@@ -1,9 +1,4 @@
-using System.Collections.Generic;
-using Content.Server.Power.Components;
 using Content.Shared.Atmos.Monitor;
-using Robust.Shared.GameObjects;
-using Robust.Shared.Serialization.Manager.Attributes;
-using Robust.Shared.ViewVariables;
 
 namespace Content.Server.Atmos.Monitor.Components
 {
@@ -26,7 +21,7 @@ namespace Content.Server.Atmos.Monitor.Components
     ///     by an atmospheric monitor.
     /// </summary>
     [RegisterComponent]
-    public class AtmosAlarmableComponent : Component
+    public sealed class AtmosAlarmableComponent : Component
     {
         [ViewVariables]
         public List<EntityUid> LinkedMonitors { get; set; } = new();

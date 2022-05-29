@@ -9,7 +9,7 @@ using Robust.Shared.GameObjects;
 namespace Content.Client.Light.Visualizers
 {
     [UsedImplicitly]
-    public class FlashLightVisualizer : AppearanceVisualizer
+    public sealed class FlashLightVisualizer : AppearanceVisualizer
     {
         private readonly Animation _radiatingLightAnimation = new()
         {

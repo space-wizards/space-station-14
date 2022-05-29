@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using System.Linq;
 using Content.Server.Atmos.EntitySystems;
 using Content.Server.Body.Components;
@@ -12,12 +11,10 @@ using Content.Shared.FixedPoint;
 using Content.Shared.Smoking;
 using Content.Shared.Temperature;
 using Robust.Shared.Containers;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
 
 namespace Content.Server.Nutrition.EntitySystems
 {
-    public partial class SmokingSystem : EntitySystem
+    public sealed partial class SmokingSystem : EntitySystem
     {
         [Dependency] private readonly ReactiveSystem _reactiveSystem = default!;
         [Dependency] private readonly SolutionContainerSystem _solutionContainerSystem = default!;
@@ -117,7 +114,7 @@ namespace Content.Server.Nutrition.EntitySystems
                     continue;
 
                 _reactiveSystem.ReactionEntity(containerManager.Owner, ReactionMethod.Ingestion, inhaledSolution);
-                _bloodstreamSystem.TryAddToBloodstream(containerManager.Owner, inhaledSolution, bloodstream);
+                _bloodstreamSystem.TryAddToChemicals(containerManager.Owner, inhaledSolution, bloodstream);
             }
 
             _timer -= UpdateTimer;
@@ -127,7 +124,7 @@ namespace Content.Server.Nutrition.EntitySystems
     /// <summary>
     ///     Directed event raised when the smokable solution is empty.
     /// </summary>
-    public class SmokableSolutionEmptyEvent : EntityEventArgs
+    public sealed class SmokableSolutionEmptyEvent : EntityEventArgs
     {
     }
 }

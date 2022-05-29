@@ -2,12 +2,11 @@
 using Robust.Client.Graphics;
 using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.XAML;
-using Robust.Shared.GameObjects;
 
 namespace Content.Client.Administration.UI.Tabs.PlayerTab;
 
 [GenerateTypedNameReferences]
-public partial class PlayerTabEntry : ContainerButton
+public sealed partial class PlayerTabEntry : ContainerButton
 {
     public EntityUid? PlayerUid;
 

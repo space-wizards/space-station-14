@@ -2,9 +2,6 @@ using Content.Server.Atmos.Components;
 using Content.Server.Atmos.EntitySystems;
 using Content.Server.Doors.Systems;
 using Content.Shared.Doors.Components;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Serialization.Manager.Attributes;
 
 namespace Content.Server.Doors.Components
 {
@@ -13,7 +10,7 @@ namespace Content.Server.Doors.Components
     /// and not being openable on open-hand click.
     /// </summary>
     [RegisterComponent]
-    public class FirelockComponent : Component
+    public sealed class FirelockComponent : Component
     {
         [Dependency] private readonly IEntityManager _entMan = default!;
 

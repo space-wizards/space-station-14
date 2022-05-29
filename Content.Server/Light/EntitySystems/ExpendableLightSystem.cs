@@ -1,14 +1,12 @@
 using Content.Server.Clothing.Components;
 using Content.Server.Light.Components;
-using Content.Shared.Interaction;
+using Content.Shared.Interaction.Events;
 using Content.Shared.Item;
 using Content.Shared.Light.Component;
 using Content.Shared.Verbs;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
-using Robust.Shared.GameObjects;
-using Robust.Shared.Localization;
 using Robust.Shared.Player;
 
 namespace Content.Server.Light.EntitySystems

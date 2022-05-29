@@ -1,16 +1,15 @@
 using Robust.Shared.Prototypes;
-using Robust.Shared.Serialization.Manager.Attributes;
-using Robust.Shared.ViewVariables;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
 namespace Content.Shared.Species;
 
 [Prototype("species")]
-public class SpeciesPrototype : IPrototype
+public sealed class SpeciesPrototype : IPrototype
 {
     /// <summary>
     /// Prototype ID of the species.
     /// </summary>
-    [DataField("id", required: true)]
+    [IdDataFieldAttribute]
     public string ID { get; } = default!;
 
     /// <summary>
@@ -28,13 +27,13 @@ public class SpeciesPrototype : IPrototype
     /// <summary>
     /// Prototype used by the species as a body.
     /// </summary>
-    [DataField("prototype", required: true)]
+    [DataField("prototype", required: true, customTypeSerializer:typeof(PrototypeIdSerializer<EntityPrototype>))]
     public string Prototype { get; } = default!;
 
     /// <summary>
     /// Prototype used by the species for the dress-up doll in various menus.
     /// </summary>
-    [DataField("dollPrototype", required: true)]
+    [DataField("dollPrototype", required: true, customTypeSerializer:typeof(PrototypeIdSerializer<EntityPrototype>))]
     public string DollPrototype { get; } = default!;
 
     /// <summary>
@@ -43,11 +42,28 @@ public class SpeciesPrototype : IPrototype
     [DataField("skinColoration", required: true)]
     public SpeciesSkinColor SkinColoration { get; }
 
+    [DataField("maleFirstNames")]
+    public string MaleFirstNames { get; } = "names_first_male";
 
+    [DataField("femaleFirstNames")]
+    public string FemaleFirstNames { get; } = "names_first_female";
+
+    [DataField("lastNames")]
+    public string LastNames { get; } = "names_last";
+
+    [DataField("naming")]
+    public SpeciesNaming Naming { get; } = SpeciesNaming.FirstLast;
 }
 
-public enum SpeciesSkinColor
+public enum SpeciesSkinColor : byte
 {
     HumanToned,
     Hues,
+    TintedHues, //This gives a color tint to a humanoid's skin (10% saturation with full hue range). 
+}
+
+public enum SpeciesNaming : byte
+{
+    FirstLast,
+    FirstDashFirst,
 }

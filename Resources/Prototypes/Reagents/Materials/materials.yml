@@ -1,23 +1,42 @@
+
+- type: material
+  id: Cloth
+  stack: Cloth
+  name: cloth
+  icon: /Textures/Objects/Materials/materials.rsi/cloth.png
+  color: "#e7e7de"
+
+- type: material
+  id: Durathread
+  stack: Durathread
+  name: durathread
+  icon: /Textures/Objects/Materials/materials.rsi/durathread.png
+  color: "#8291a1"
+
 - type: material
   id: Plasma
   stack: Plasma
   name: plasma
   icon: Objects/Materials/Sheets/other.rsi/plasma.png
-
-- type: material
-  id: Phoron
-  stack: Phoron
-  name: phoron
-  icon: Objects/Materials/Sheets/other.rsi/phoron.png
+  color: "#7e009e"
 
 - type: material
   id: Plastic
   stack: Plastic
   name: plastic
   icon: Objects/Materials/Sheets/other.rsi/plastic.png
+  color: "#d9d9d9"
 
 - type: material
   id: Wood
   stack: WoodPlank
   name: wood
   icon: Objects/Materials/materials.rsi/wood.png
+  color: "#966F33"
+  
+- type: material
+  id: Uranium
+  stack: Uranium
+  name: uranium
+  icon: Objects/Materials/Sheets/other.rsi/uranium.png
+  color: "#32a852"

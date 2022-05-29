@@ -4,7 +4,7 @@ using Robust.Shared.Utility;
 
 namespace Content.Server.Atmos.EntitySystems
 {
-    public partial class AtmosphereSystem
+    public sealed partial class AtmosphereSystem
     {
         private void ExcitedGroupAddTile(ExcitedGroup excitedGroup, TileAtmosphere tile)
         {

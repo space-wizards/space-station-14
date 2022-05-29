@@ -1,12 +1,9 @@
-using System;
 using System.Text.Json.Nodes;
 using Robust.Server.ServerStatus;
-using Robust.Shared.IoC;
-using Robust.Shared.ViewVariables;
 
 namespace Content.Server.GameTicking
 {
-    public partial class GameTicker
+    public sealed partial class GameTicker
     {
         /// <summary>
         ///     Used for thread safety, given <see cref="IStatusHost.OnStatusRequest"/> is called from another thread.

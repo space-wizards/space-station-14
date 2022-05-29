@@ -9,7 +9,7 @@ using static Robust.Client.UserInterface.StylesheetHelpers;
 
 namespace Content.Client.Stylesheets
 {
-    public class StyleSpace : StyleBase
+    public sealed class StyleSpace : StyleBase
     {
         public static readonly Color SpaceRed = Color.FromHex("#9b2236");
 

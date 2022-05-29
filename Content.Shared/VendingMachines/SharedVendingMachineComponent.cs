@@ -1,17 +1,31 @@
-using System;
-using System.Collections.Generic;
-using Robust.Shared.GameObjects;
 using Robust.Shared.GameStates;
 using Robust.Shared.Serialization;
-using Robust.Shared.ViewVariables;
 
 namespace Content.Shared.VendingMachines
 {
+    [Virtual]
     [NetworkedComponent()]
     public class SharedVendingMachineComponent : Component
     {
-        [ViewVariables]
-        public List<VendingMachineInventoryEntry> Inventory = new();
+        [ViewVariables] public List<VendingMachineInventoryEntry> Inventory = new();
+        [ViewVariables] public List<VendingMachineInventoryEntry> EmaggedInventory = new();
+        [ViewVariables] public List<VendingMachineInventoryEntry> ContrabandInventory = new();
+
+        public List<VendingMachineInventoryEntry> AllInventory
+        {
+            get
+            {
+                var inventory = new List<VendingMachineInventoryEntry>(Inventory);
+
+                if (Emagged) inventory.AddRange(EmaggedInventory);
+                if (Contraband) inventory.AddRange(ContrabandInventory);
+
+                return inventory;
+            }
+        }
+
+        public bool Emagged;
+        public bool Contraband;
 
         [Serializable, NetSerializable]
         public enum VendingMachineVisuals
@@ -30,11 +44,13 @@ namespace Content.Shared.VendingMachines
         }
 
         [Serializable, NetSerializable]
-        public class VendingMachineEjectMessage : BoundUserInterfaceMessage
+        public sealed class VendingMachineEjectMessage : BoundUserInterfaceMessage
         {
+            public readonly InventoryType Type;
             public readonly string ID;
-            public VendingMachineEjectMessage(string id)
+            public VendingMachineEjectMessage(InventoryType type, string id)
             {
+                Type = type;
                 ID = id;
             }
         }
@@ -46,12 +62,12 @@ namespace Content.Shared.VendingMachines
         }
 
         [Serializable, NetSerializable]
-        public class InventorySyncRequestMessage : BoundUserInterfaceMessage
+        public sealed class InventorySyncRequestMessage : BoundUserInterfaceMessage
         {
         }
 
         [Serializable, NetSerializable]
-        public class VendingMachineInventoryMessage : BoundUserInterfaceMessage
+        public sealed class VendingMachineInventoryMessage : BoundUserInterfaceMessage
         {
             public readonly List<VendingMachineInventoryEntry> Inventory;
             public VendingMachineInventoryMessage(List<VendingMachineInventoryEntry> inventory)
@@ -61,14 +77,16 @@ namespace Content.Shared.VendingMachines
         }
 
         [Serializable, NetSerializable]
-        public class VendingMachineInventoryEntry
+        public sealed class VendingMachineInventoryEntry
         {
+            [ViewVariables(VVAccess.ReadWrite)] public InventoryType Type;
             [ViewVariables(VVAccess.ReadWrite)]
             public string ID;
             [ViewVariables(VVAccess.ReadWrite)]
             public uint Amount;
-            public VendingMachineInventoryEntry(string id, uint amount)
+            public VendingMachineInventoryEntry(InventoryType type, string id, uint amount)
             {
+                Type = type;
                 ID = id;
                 Amount = amount;
             }
@@ -81,5 +99,26 @@ namespace Content.Shared.VendingMachines
             Advertisement,
             Limiter
         }
+
+        [Serializable, NetSerializable]
+        public enum InventoryType : byte
+        {
+            Regular,
+            Emagged,
+            Contraband
+        }
+    }
+
+    [Serializable, NetSerializable]
+    public enum ContrabandWireKey : byte
+    {
+        StatusKey,
+        TimeoutKey
+    }
+
+    [Serializable, NetSerializable]
+    public enum EjectWireKey : byte
+    {
+        StatusKey,
     }
 }

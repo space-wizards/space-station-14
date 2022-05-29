@@ -14,7 +14,7 @@
       "name": "ai"
     },
     {
-      "name": "assistant"
+      "name": "passenger"
     },
     {
       "name": "atmospherics"
@@ -150,6 +150,9 @@
     },
     {
       "name": "warden"
+    },
+    {
+      "name": "musician"
     }
   ]
 }

@@ -1,5 +1,3 @@
-using System;
-using System.Collections.Generic;
 using System.Linq;
 using Content.Server.Chat.Managers;
 using Content.Server.Objectives.Interfaces;
@@ -16,10 +14,6 @@ using Content.Shared.Traitor.Uplink;
 using Robust.Server.Player;
 using Robust.Shared.Audio;
 using Robust.Shared.Configuration;
-using Robust.Shared.IoC;
-using Robust.Shared.Localization;
-using Robust.Shared.Log;
-using Robust.Shared.Maths;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
@@ -27,13 +21,14 @@ using Robust.Shared.Utility;
 
 namespace Content.Server.GameTicking.Rules;
 
-public class TraitorRuleSystem : GameRuleSystem
+public sealed class TraitorRuleSystem : GameRuleSystem
 {
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly IConfigurationManager _cfg = default!;
     [Dependency] private readonly IObjectivesManager _objectivesManager = default!;
     [Dependency] private readonly IChatManager _chatManager = default!;
+    [Dependency] private readonly GameTicker _gameTicker = default!;
 
     public override string Prototype => "Traitor";
 
@@ -41,7 +36,7 @@ public class TraitorRuleSystem : GameRuleSystem
     private readonly List<TraitorRole> _traitors = new ();
 
     private const string TraitorPrototypeID = "Traitor";
-    
+
     public int TotalTraitors => _traitors.Count;
 
     public override void Initialize()
@@ -53,13 +48,9 @@ public class TraitorRuleSystem : GameRuleSystem
         SubscribeLocalEvent<RoundEndTextAppendEvent>(OnRoundEndText);
     }
 
-    public override void Added()
-    {
-        // This seems silly, but I'll leave it.
-        _chatManager.DispatchServerAnnouncement(Loc.GetString("rule-traitor-added-announcement"));
-    }
+    public override void Started() {}
 
-    public override void Removed()
+    public override void Ended()
     {
         _traitors.Clear();
     }
@@ -68,6 +59,13 @@ public class TraitorRuleSystem : GameRuleSystem
     {
         if (!Enabled)
             return;
+
+        // If the current preset doesn't explicitly contain the traitor game rule, just carry on and remove self.
+        if (_gameTicker.Preset?.Rules.Contains(Prototype) ?? false)
+        {
+            _gameTicker.EndGameRule(_prototypeManager.Index<GameRulePrototype>(Prototype));
+            return;
+        }
 
         var minPlayers = _cfg.GetCVar(CCVars.TraitorMinPlayers);
         if (!ev.Forced && ev.Players.Length < minPlayers)
@@ -188,7 +186,7 @@ public class TraitorRuleSystem : GameRuleSystem
                 if (traitor.Mind.TryAddObjective(objective))
                     difficulty += objective.Difficulty;
             }
-            
+
             //give traitors their codewords to keep in their character info menu
             traitor.Mind.Briefing = Loc.GetString("traitor-role-codewords", ("codewords", string.Join(", ",codewords)));
         }

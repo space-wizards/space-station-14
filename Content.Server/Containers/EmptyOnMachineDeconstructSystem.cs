@@ -2,8 +2,6 @@ using Content.Server.Construction.Components;
 using Content.Shared.Containers.ItemSlots;
 using JetBrains.Annotations;
 using Robust.Shared.Containers;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
 
 namespace Content.Server.Containers
 {
@@ -11,7 +9,7 @@ namespace Content.Server.Containers
     /// Implements functionality of EmptyOnMachineDeconstructComponent.
     /// </summary>
     [UsedImplicitly]
-    public class EmptyOnMachineDeconstructSystem : EntitySystem
+    public sealed class EmptyOnMachineDeconstructSystem : EntitySystem
     {
         public override void Initialize()
         {

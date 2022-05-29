@@ -13,7 +13,7 @@ namespace Content.Client.Administration.UI.Tabs.AdminTab
 {
     [GenerateTypedNameReferences]
     [UsedImplicitly]
-    public partial class BanWindow : DefaultWindow
+    public sealed partial class BanWindow : DefaultWindow
     {
         public BanWindow()
         {

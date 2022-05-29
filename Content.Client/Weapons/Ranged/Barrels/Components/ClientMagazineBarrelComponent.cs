@@ -20,7 +20,7 @@ namespace Content.Client.Weapons.Ranged.Barrels.Components
 {
     [RegisterComponent]
     [NetworkedComponent()]
-    public class ClientMagazineBarrelComponent : Component, IItemStatus
+    public sealed class ClientMagazineBarrelComponent : Component, IItemStatus
     {
         private static readonly Animation AlarmAnimationSmg = new()
         {

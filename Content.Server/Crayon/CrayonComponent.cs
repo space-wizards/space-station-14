@@ -2,21 +2,17 @@ using Content.Server.UserInterface;
 using Content.Shared.Crayon;
 using Content.Shared.Sound;
 using Robust.Server.GameObjects;
-using Robust.Shared.GameObjects;
-using Robust.Shared.Maths;
-using Robust.Shared.Serialization;
-using Robust.Shared.Serialization.Manager.Attributes;
-using Robust.Shared.ViewVariables;
 
 namespace Content.Server.Crayon
 {
     [RegisterComponent]
-    public sealed class CrayonComponent : SharedCrayonComponent, ISerializationHooks
+    public sealed class CrayonComponent : SharedCrayonComponent
     {
         [DataField("useSound")] public SoundSpecifier? UseSound;
 
-        [ViewVariables]
-        public Color Color { get; private set; }
+        [ViewVariables(VVAccess.ReadWrite)]
+        [DataField("selectableColor")]
+        public bool SelectableColor { get; set; }
 
         [ViewVariables(VVAccess.ReadWrite)]
         public int Charges { get; set; }
@@ -25,11 +21,10 @@ namespace Content.Server.Crayon
         [DataField("capacity")]
         public int Capacity { get; set; } = 30;
 
-        [ViewVariables] public BoundUserInterface? UserInterface => Owner.GetUIOrNull(CrayonUiKey.Key);
+        [ViewVariables(VVAccess.ReadWrite)]
+        [DataField("deleteEmpty")]
+        public bool DeleteEmpty = true;
 
-        void ISerializationHooks.AfterDeserialization()
-        {
-            Color = Color.FromName(_color);
-        }
+        [ViewVariables] public BoundUserInterface? UserInterface => Owner.GetUIOrNull(CrayonUiKey.Key);
     }
 }

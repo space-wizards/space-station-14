@@ -6,7 +6,7 @@ using Robust.Shared.Prototypes;
 
 namespace Content.Client.CombatMode
 {
-    public class ColoredScreenBorderOverlay : Overlay
+    public sealed class ColoredScreenBorderOverlay : Overlay
     {
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
 

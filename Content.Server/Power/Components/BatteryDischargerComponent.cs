@@ -1,10 +1,9 @@
 ﻿using Content.Server.Power.NodeGroups;
-using Robust.Shared.GameObjects;
 
 namespace Content.Server.Power.Components
 {
     [RegisterComponent]
-    public class BatteryDischargerComponent : BasePowerNetComponent
+    public sealed class BatteryDischargerComponent : BasePowerNetComponent
     {
         protected override void AddSelfToNet(IPowerNet net)
         {

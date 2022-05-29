@@ -1,4 +1,5 @@
-using System.IO;
+using Content.Server.Administration;
+using Content.Server.Administration.Logs;
 using Content.Server.Administration.Managers;
 using Content.Server.Afk;
 using Content.Server.AI.Utility;
@@ -9,17 +10,16 @@ using Content.Server.Connection;
 using Content.Server.Database;
 using Content.Server.EUI;
 using Content.Server.GameTicking;
+using Content.Server.GhostKick;
 using Content.Server.GuideGenerator;
 using Content.Server.Info;
 using Content.Server.IoC;
+using Content.Server.LandMines;
 using Content.Server.Maps;
 using Content.Server.NodeContainer.NodeGroups;
 using Content.Server.Preferences.Managers;
-using Content.Server.Sandbox;
 using Content.Server.Voting.Managers;
-using Content.Shared.Actions;
 using Content.Shared.Administration;
-using Content.Shared.Alert;
 using Content.Shared.CCVar;
 using Content.Shared.Kitchen;
 using Robust.Server;
@@ -28,15 +28,13 @@ using Robust.Server.Player;
 using Robust.Shared.Configuration;
 using Robust.Server.ServerStatus;
 using Robust.Shared.ContentPack;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Log;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
 
 namespace Content.Server.Entry
 {
-    public class EntryPoint : GameServer
+    public sealed class EntryPoint : GameServer
     {
         private EuiManager _euiManager = default!;
         private IVoteManager _voteManager = default!;
@@ -50,6 +48,7 @@ namespace Content.Server.Entry
                 new[] { "Content.Client", "Content.Shared", "Content.Shared.Database" });
 
             var factory = IoCManager.Resolve<IComponentFactory>();
+            var prototypes = IoCManager.Resolve<IPrototypeManager>();
 
             factory.DoAutoRegistrations();
 
@@ -57,6 +56,8 @@ namespace Content.Server.Entry
             {
                 factory.RegisterIgnore(ignoreName);
             }
+
+            prototypes.RegisterIgnore("parallax");
 
             ServerContentIoC.Register();
 
@@ -81,11 +82,15 @@ namespace Content.Server.Entry
                 logManager.GetSawmill("Storage").Level = LogLevel.Info;
                 logManager.GetSawmill("db.ef").Level = LogLevel.Info;
 
+                IoCManager.Resolve<IAdminLogManager>().Initialize();
                 IoCManager.Resolve<IConnectionManager>().Initialize();
                 IoCManager.Resolve<IServerDbManager>().Init();
                 IoCManager.Resolve<IServerPreferencesManager>().Init();
                 IoCManager.Resolve<INodeGroupFactory>().Initialize();
                 IoCManager.Resolve<IGamePrototypeLoadManager>().Initialize();
+                IoCManager.Resolve<NetworkResourceManager>().Initialize();
+                IoCManager.Resolve<GhostKickManager>().Initialize();
+
                 _voteManager.Initialize();
             }
         }
@@ -112,9 +117,7 @@ namespace Content.Server.Entry
             }
             else
             {
-                IoCManager.Resolve<ISandboxManager>().Initialize();
                 IoCManager.Resolve<RecipeManager>().Initialize();
-                IoCManager.Resolve<ActionManager>().Initialize();
                 IoCManager.Resolve<BlackboardManager>().Initialize();
                 IoCManager.Resolve<ConsiderationsManager>().Initialize();
                 IoCManager.Resolve<IAdminManager>().Initialize();
@@ -126,6 +129,7 @@ namespace Content.Server.Entry
                 IoCManager.Resolve<IGameMapManager>().Initialize();
                 IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<GameTicker>().PostInitialize();
                 IoCManager.Resolve<IBqlQueryManager>().DoAutoRegistrations();
+                IoCManager.Resolve<RoleBanManager>().Initialize();
             }
         }
 

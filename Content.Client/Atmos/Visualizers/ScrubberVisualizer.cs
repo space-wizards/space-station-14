@@ -7,7 +7,7 @@ using Robust.Shared.IoC;
 namespace Content.Client.Atmos.Visualizers
 {
     [UsedImplicitly]
-    public class ScrubberVisualizer : AppearanceVisualizer
+    public sealed class ScrubberVisualizer : AppearanceVisualizer
     {
         private string _offState = "scrub_off";
         private string _scrubState = "scrub_on";

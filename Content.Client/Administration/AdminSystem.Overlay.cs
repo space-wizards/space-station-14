@@ -1,15 +1,17 @@
 using Content.Client.Administration.Managers;
 using Robust.Client.Graphics;
-using Robust.Client.UserInterface.Controls;
-using Robust.Shared.IoC;
 
 namespace Content.Client.Administration
 {
-    public partial class AdminSystem
+    public sealed partial class AdminSystem
     {
         [Dependency] private readonly IClientAdminManager _adminManager = default!;
         [Dependency] private readonly IEyeManager _eyeManager = default!;
+
         private AdminNameOverlay _adminNameOverlay = default!;
+
+        public event Action? OverlayEnabled;
+        public event Action? OverlayDisabled;
 
         private void InitializeOverlay()
         {
@@ -27,15 +29,17 @@ namespace Content.Client.Administration
             AdminOverlayOff();
         }
 
-        public void AdminOverlayOn(BaseButton.ButtonEventArgs? _ = null)
+        public void AdminOverlayOn()
         {
-            if (!_overlayManager.HasOverlay<AdminNameOverlay>())
-                _overlayManager.AddOverlay(_adminNameOverlay);
+            if (_overlayManager.HasOverlay<AdminNameOverlay>()) return;
+            _overlayManager.AddOverlay(_adminNameOverlay);
+            OverlayEnabled?.Invoke();
         }
 
-        public void AdminOverlayOff(BaseButton.ButtonEventArgs? _ = null)
+        public void AdminOverlayOff()
         {
             _overlayManager.RemoveOverlay<AdminNameOverlay>();
+            OverlayDisabled?.Invoke();
         }
     }
 }

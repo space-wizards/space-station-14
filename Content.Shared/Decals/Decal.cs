@@ -1,13 +1,10 @@
-using System;
-using Robust.Shared.Maths;
 using Robust.Shared.Serialization;
-using Robust.Shared.Serialization.Manager.Attributes;
 
 namespace Content.Shared.Decals
 {
     [Serializable, NetSerializable]
     [DataDefinition]
-    public class Decal
+    public sealed class Decal
     {
         [DataField("coordinates")] public readonly Vector2 Coordinates = Vector2.Zero;
         [DataField("id")] public readonly string Id = string.Empty;

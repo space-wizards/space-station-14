@@ -3,11 +3,7 @@ using Content.Shared.Light.Component;
 using Robust.Client.Graphics;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
-using Robust.Shared.Analyzers;
-using Robust.Shared.GameObjects;
-using Robust.Shared.Maths;
 using Robust.Shared.Timing;
-using Robust.Shared.ViewVariables;
 using static Robust.Client.UserInterface.Controls.BoxContainer;
 
 namespace Content.Client.Light.Components
@@ -17,6 +13,17 @@ namespace Content.Client.Light.Components
     public sealed class HandheldLightComponent : SharedHandheldLightComponent, IItemStatus
     {
         public byte? Level;
+        public bool Activated;
+
+        /// <summary>
+        ///     Whether to automatically set item-prefixes when toggling the flashlight.
+        /// </summary>
+        /// <remarks>
+        ///     Flashlights should probably be using explicit unshaded sprite, in-hand and clothing layers, this is
+        ///     mostly here for backwards compatibility.
+        /// </remarks>
+        [DataField("addPrefix")]
+        public bool AddPrefix = false;
 
         public Control MakeControl()
         {

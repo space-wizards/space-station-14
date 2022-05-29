@@ -1,7 +1,5 @@
 using Content.Shared.Light.Component;
-using Robust.Shared.GameObjects;
 using Robust.Shared.GameStates;
-using System.Collections.Generic;
 
 namespace Content.Shared.Light;
 
@@ -33,7 +31,7 @@ public abstract class SharedRgbLightControllerSystem : EntitySystem
         if (!Resolve(uid, ref rgb))
             return;
 
-        rgb.CycleRate = rate;
+        rgb.CycleRate = Math.Clamp(0.01f, rate, 1); // lets not give people seizures
         rgb.Dirty();
     }
 }

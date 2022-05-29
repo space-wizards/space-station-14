@@ -14,7 +14,7 @@ namespace Content.IntegrationTests.Tests.Administration.Logs;
 
 [TestFixture]
 [TestOf(typeof(AdminLogSystem))]
-public class QueryTests : ContentIntegrationTest
+public sealed class QueryTests : ContentIntegrationTest
 {
     [Test]
     public async Task QuerySingleLog()
@@ -33,7 +33,7 @@ public class QueryTests : ContentIntegrationTest
         var sSystems = server.ResolveDependency<IEntitySystemManager>();
         var sPlayers = server.ResolveDependency<IPlayerManager>();
 
-        var sAdminLogSystem = sSystems.GetEntitySystem<AdminLogSystem>();
+        var sAdminLogSystem = server.ResolveDependency<IAdminLogManager>();
         var sGamerTicker = sSystems.GetEntitySystem<GameTicker>();
 
         var date = DateTime.UtcNow;

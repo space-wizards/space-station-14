@@ -1,18 +1,12 @@
 using Content.Server.Atmos.Piping.Binary.Components;
 using Content.Server.NodeContainer;
 using Content.Server.NodeContainer.Nodes;
-using Content.Shared.ActionBlocker;
 using Content.Shared.Atmos.Piping;
 using Content.Shared.Audio;
 using Content.Shared.Examine;
 using Content.Shared.Interaction;
-using Content.Shared.Interaction.Helpers;
 using JetBrains.Annotations;
-using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Localization;
 using Robust.Shared.Player;
 
 namespace Content.Server.Atmos.Piping.Binary.EntitySystems
@@ -20,6 +14,8 @@ namespace Content.Server.Atmos.Piping.Binary.EntitySystems
     [UsedImplicitly]
     public sealed class GasValveSystem : EntitySystem
     {
+        [Dependency] private readonly SharedAmbientSoundSystem _ambientSoundSystem = default!;
+
         public override void Initialize()
         {
             base.Initialize();
@@ -68,11 +64,13 @@ namespace Content.Server.Atmos.Piping.Binary.EntitySystems
                 {
                     inlet.AddAlwaysReachable(outlet);
                     outlet.AddAlwaysReachable(inlet);
+                    _ambientSoundSystem.SetAmbience(component.Owner, true);
                 }
                 else
                 {
                     inlet.RemoveAlwaysReachable(outlet);
                     outlet.RemoveAlwaysReachable(inlet);
+                    _ambientSoundSystem.SetAmbience(component.Owner, false);
                 }
             }
         }

@@ -3,7 +3,7 @@ using Robust.Shared.Network;
 
 namespace Content.Shared.StationEvents
 {
-    public class MsgRequestStationEvents : NetMessage
+    public sealed class MsgRequestStationEvents : NetMessage
     {
         public override MsgGroups MsgGroup => MsgGroups.Command;
 

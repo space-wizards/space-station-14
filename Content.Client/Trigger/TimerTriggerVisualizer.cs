@@ -12,7 +12,7 @@ using Robust.Shared.Serialization.Manager.Attributes;
 namespace Content.Client.Trigger
 {
     [UsedImplicitly]
-    public class TimerTriggerVisualizer : AppearanceVisualizer, ISerializationHooks
+    public sealed class TimerTriggerVisualizer : AppearanceVisualizer, ISerializationHooks
     {
         private const string AnimationKey = "priming_animation";
 

@@ -4,13 +4,11 @@ using Content.Shared.Administration;
 using Content.Shared.Nutrition.Components;
 using Robust.Server.Player;
 using Robust.Shared.Console;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
 
 namespace Content.Server.Nutrition
 {
     [AdminCommand(AdminFlags.Debug)]
-    public class Hungry : IConsoleCommand
+    public sealed class Hungry : IConsoleCommand
     {
         [Dependency] private readonly IEntityManager _entities = default!;
 

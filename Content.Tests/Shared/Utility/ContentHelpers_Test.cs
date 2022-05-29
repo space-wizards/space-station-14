@@ -7,7 +7,7 @@ namespace Content.Tests.Shared.Utility
     [Parallelizable]
     [TestFixture]
     [TestOf(typeof(ContentHelpers))]
-    public class ContentHelpers_Test
+    public sealed class ContentHelpers_Test
     {
         public static readonly IEnumerable<(double val, double max, int levels, int expected)> TestData =
             new (double, double, int, int)[]

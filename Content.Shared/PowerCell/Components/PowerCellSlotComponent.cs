@@ -1,7 +1,4 @@
 using Content.Shared.Containers.ItemSlots;
-using Robust.Shared.GameObjects;
-using Robust.Shared.Serialization.Manager.Attributes;
-using Robust.Shared.ViewVariables;
 
 namespace Content.Shared.PowerCell.Components;
 
@@ -65,7 +62,7 @@ public sealed class PowerCellSlotComponent : Component
 /// <summary>
 ///     Raised directed at an entity with a power cell slot when the power cell inside has its charge updated or is ejected/inserted.
 /// </summary>
-public class PowerCellChangedEvent : EntityEventArgs
+public sealed class PowerCellChangedEvent : EntityEventArgs
 {
     public readonly bool Ejected;
 

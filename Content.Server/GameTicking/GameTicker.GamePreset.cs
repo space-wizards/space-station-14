@@ -1,5 +1,5 @@
-using System;
 using System.Diagnostics.CodeAnalysis;
+using System.Linq;
 using Content.Server.GameTicking.Presets;
 using Content.Server.GameTicking.Rules;
 using Content.Server.Ghost.Components;
@@ -7,20 +7,70 @@ using Content.Shared.CCVar;
 using Content.Shared.Damage;
 using Content.Shared.Damage.Prototypes;
 using Content.Shared.MobState.Components;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
+using Robust.Server.Player;
 
 namespace Content.Server.GameTicking
 {
-    public partial class GameTicker
+    public sealed partial class GameTicker
     {
         public const float PresetFailedCooldownIncrease = 30f;
 
-        private GamePresetPrototype? _preset;
+        public GamePresetPrototype? Preset { get; private set; }
+
+        private bool StartPreset(IPlayerSession[] origReadyPlayers, bool force)
+        {
+            var startAttempt = new RoundStartAttemptEvent(origReadyPlayers, force);
+            RaiseLocalEvent(startAttempt);
+
+            if (!startAttempt.Cancelled)
+                return true;
+
+            var presetTitle = Preset != null ? Loc.GetString(Preset.ModeTitle) : string.Empty;
+
+            void FailedPresetRestart()
+            {
+                SendServerMessage(Loc.GetString("game-ticker-start-round-cannot-start-game-mode-restart",
+                    ("failedGameMode", presetTitle)));
+                RestartRound();
+                DelayStart(TimeSpan.FromSeconds(PresetFailedCooldownIncrease));
+            }
+
+            if (_configurationManager.GetCVar(CCVars.GameLobbyFallbackEnabled))
+            {
+                var oldPreset = Preset;
+                ClearGameRules();
+                SetGamePreset(_configurationManager.GetCVar(CCVars.GameLobbyFallbackPreset));
+                AddGamePresetRules();
+                StartGamePresetRules();
+
+                startAttempt.Uncancel();
+                RaiseLocalEvent(startAttempt);
+
+                _chatManager.DispatchServerAnnouncement(
+                    Loc.GetString("game-ticker-start-round-cannot-start-game-mode-fallback",
+                        ("failedGameMode", presetTitle),
+                        ("fallbackMode", Loc.GetString(Preset!.ModeTitle))));
+
+                if (startAttempt.Cancelled)
+                {
+                    FailedPresetRestart();
+                    return false;
+                }
+
+                RefreshLateJoinAllowed();
+            }
+            else
+            {
+                FailedPresetRestart();
+                return false;
+            }
+
+            return true;
+        }
 
         private void InitializeGamePreset()
         {
-            SetGamePreset(_configurationManager.GetCVar(CCVars.GameLobbyDefaultPreset));
+            SetGamePreset(LobbyEnabled ? _configurationManager.GetCVar(CCVars.GameLobbyDefaultPreset) : "sandbox");
         }
 
         public void SetGamePreset(GamePresetPrototype preset, bool force = false)
@@ -29,7 +79,7 @@ namespace Content.Server.GameTicking
             if (DummyTicker)
                 return;
 
-            _preset = preset;
+            Preset = preset;
             UpdateInfoText();
 
             if (force)
@@ -71,10 +121,10 @@ namespace Content.Server.GameTicking
 
         private bool AddGamePresetRules()
         {
-            if (DummyTicker || _preset == null)
+            if (DummyTicker || Preset == null)
                 return false;
 
-            foreach (var rule in _preset.Rules)
+            foreach (var rule in Preset.Rules)
             {
                 if (!_prototypeManager.TryIndex(rule, out GameRulePrototype? ruleProto))
                     continue;
@@ -83,6 +133,15 @@ namespace Content.Server.GameTicking
             }
 
             return true;
+        }
+
+        private void StartGamePresetRules()
+        {
+            // May be touched by the preset during init.
+            foreach (var rule in _addedGameRules.ToArray())
+            {
+                StartGameRule(rule);
+            }
         }
 
         public bool OnGhostAttempt(Mind.Mind mind, bool canReturnGlobal)
@@ -94,7 +153,7 @@ namespace Content.Server.GameTicking
             if (handleEv.Handled)
                 return handleEv.Result;
 
-            var playerEntity = mind.OwnedEntity;
+            var playerEntity = mind.CurrentEntity;
 
             var entities = IoCManager.Resolve<IEntityManager>();
             if (entities.HasComponent<GhostComponent>(playerEntity))
@@ -160,7 +219,7 @@ namespace Content.Server.GameTicking
         }
     }
 
-    public class GhostAttemptHandleEvent : HandledEntityEventArgs
+    public sealed class GhostAttemptHandleEvent : HandledEntityEventArgs
     {
         public Mind.Mind Mind { get; }
         public bool CanReturnGlobal { get; }

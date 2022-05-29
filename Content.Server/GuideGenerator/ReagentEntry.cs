@@ -1,15 +1,11 @@
-using System.Collections.Generic;
 using System.Linq;
 using System.Text.Json.Serialization;
-using Content.Server.Body.Components;
 using Content.Shared.Chemistry.Reaction;
 using Content.Shared.Chemistry.Reagent;
-using Robust.Shared.Maths;
-using Robust.Shared.Serialization.Manager.Attributes;
 
 namespace Content.Server.GuideGenerator;
 
-public class ReagentEntry
+public sealed class ReagentEntry
 {
     [JsonPropertyName("id")]
     public string Id { get; }
@@ -38,16 +34,16 @@ public class ReagentEntry
     public ReagentEntry(ReagentPrototype proto)
     {
         Id = proto.ID;
-        Name = proto.Name;
+        Name = proto.LocalizedName;
         Group = proto.Group;
-        Description = proto.Description;
-        PhysicalDescription = proto.PhysicalDescription;
+        Description = proto.LocalizedDescription;
+        PhysicalDescription = proto.LocalizedPhysicalDescription;
         SubstanceColor = proto.SubstanceColor.ToHex();
         Metabolisms = proto.Metabolisms;
     }
 }
 
-public class ReactionEntry
+public sealed class ReactionEntry
 {
     [JsonPropertyName("id")]
     public string Id { get; }
@@ -80,7 +76,7 @@ public class ReactionEntry
     }
 }
 
-public class ReactantEntry
+public sealed class ReactantEntry
 {
     [JsonPropertyName("amount")]
     public float Amount { get; }

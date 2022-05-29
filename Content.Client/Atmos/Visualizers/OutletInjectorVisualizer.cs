@@ -5,7 +5,7 @@ using JetBrains.Annotations;
 namespace Content.Client.Atmos.Visualizers
 {
     [UsedImplicitly]
-    public class OutletInjectorVisualizer : EnabledAtmosDeviceVisualizer
+    public sealed class OutletInjectorVisualizer : EnabledAtmosDeviceVisualizer
     {
         protected override object LayerMap => Layers.Enabled;
         protected override Enum DataKey => OutletInjectorVisuals.Enabled;

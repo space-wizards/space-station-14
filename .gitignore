@@ -252,6 +252,7 @@ paket-files/
 # JetBrains Rider
 .idea/
 *.sln.iml
+.editorconfig
 
 # CodeRush
 .cr/
@@ -295,3 +296,8 @@ desktop.ini
 
 # Images generated using the MapRenderer
 Resources/MapImages
+
+## Docfx stuff
+/Content.Docfx/api/
+/Content.Docfx/*site
+

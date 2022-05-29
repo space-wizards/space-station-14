@@ -5,7 +5,7 @@ using JetBrains.Annotations;
 namespace Content.Client.Atmos.Visualizers
 {
     [UsedImplicitly]
-    public class PassiveVentVisualizer : EnabledAtmosDeviceVisualizer
+    public sealed class PassiveVentVisualizer : EnabledAtmosDeviceVisualizer
     {
         protected override object LayerMap => Layers.Enabled;
         protected override Enum DataKey => PassiveVentVisuals.Enabled;

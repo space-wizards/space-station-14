@@ -1,11 +1,8 @@
-﻿using Content.Server.AI.Utility;
+using Content.Server.AI.Utility;
 using Content.Server.AI.WorldState.States.Inventory;
 using Content.Server.Storage.Components;
 using Content.Shared.Interaction;
-using Content.Shared.Interaction.Helpers;
 using Robust.Shared.Containers;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
 
 namespace Content.Server.AI.Operators.Inventory
 {
@@ -30,7 +27,7 @@ namespace Content.Server.AI.Operators.Inventory
                 return Outcome.Success;
             }
 
-            if (!_owner.InRangeUnobstructed(container, popup: true))
+            if (!EntitySystem.Get<SharedInteractionSystem>().InRangeUnobstructed(_owner, container.Owner, popup: true))
             {
                 return Outcome.Failed;
             }

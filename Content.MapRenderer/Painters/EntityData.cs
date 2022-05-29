@@ -2,7 +2,7 @@
 
 namespace Content.MapRenderer.Painters
 {
-    public class EntityData
+    public sealed class EntityData
     {
         public EntityData(SpriteComponent sprite, float x, float y)
         {

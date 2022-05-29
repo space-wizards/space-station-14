@@ -14,10 +14,10 @@
 - type: startingGear
   id: LawyerGear
   equipment:
-    jumpsuit: ClothingUniformJumpsuitLawyerBlack  #TODO change jumpsuit to randomiser of the 4 variants
+    jumpsuit: ClothingUniformJumpsuitLawyerBlack  # TODO change jumpsuit to randomiser of the 4 variants
     back: ClothingBackpackBriefcaseFilled
     shoes: ClothingShoesColorBlack
     id: LawyerPDA
     ears: ClothingHeadsetService
-    #TODO add copy of space law
+    # TODO add copy of space law
 

@@ -1,10 +1,5 @@
-using Robust.Shared.Analyzers;
-using Robust.Shared.GameObjects;
 using Robust.Shared.GameStates;
 using Robust.Shared.Serialization;
-using Robust.Shared.Serialization.Manager.Attributes;
-using Robust.Shared.ViewVariables;
-using System;
 
 namespace Content.Shared.Foldable;
 
@@ -17,7 +12,7 @@ namespace Content.Shared.Foldable;
 [RegisterComponent]
 [NetworkedComponent]
 [Friend(typeof(SharedFoldableSystem))]
-public class FoldableComponent : Component
+public sealed class FoldableComponent : Component
 {
     [DataField("folded")]
     public bool IsFolded = false;
@@ -25,7 +20,7 @@ public class FoldableComponent : Component
 
 // ahhh, the ol' "state thats just a copy of the component".
 [Serializable, NetSerializable]
-public class FoldableComponentState : ComponentState
+public sealed class FoldableComponentState : ComponentState
 {
     public readonly bool IsFolded;
 

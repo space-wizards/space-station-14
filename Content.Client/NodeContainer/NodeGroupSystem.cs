@@ -15,7 +15,7 @@ namespace Content.Client.NodeContainer
     public sealed class NodeGroupSystem : EntitySystem
     {
         [Dependency] private readonly IOverlayManager _overlayManager = default!;
-        [Dependency] private readonly IEntityLookup _entityLookup = default!;
+        [Dependency] private readonly EntityLookupSystem _entityLookup = default!;
         [Dependency] private readonly IMapManager _mapManager = default!;
         [Dependency] private readonly IInputManager _inputManager = default!;
         [Dependency] private readonly IResourceCache _resourceCache = default!;

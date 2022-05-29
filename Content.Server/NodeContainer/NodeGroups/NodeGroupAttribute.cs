@@ -1,4 +1,3 @@
-using System;
 using JetBrains.Annotations;
 
 namespace Content.Server.NodeContainer.NodeGroups
@@ -10,7 +9,7 @@ namespace Content.Server.NodeContainer.NodeGroups
     /// </summary>
     [AttributeUsage(AttributeTargets.Class, AllowMultiple = false, Inherited = false)]
     [MeansImplicitUse]
-    public class NodeGroupAttribute : Attribute
+    public sealed class NodeGroupAttribute : Attribute
     {
         public NodeGroupID[] NodeGroupIDs { get; }
 

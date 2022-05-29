@@ -1,14 +1,11 @@
 using System.Linq;
 using Content.Shared.Construction;
 using Robust.Shared.Containers;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Serialization.Manager.Attributes;
 
 namespace Content.Server.Construction.Completions
 {
     [DataDefinition]
-    public class DeleteEntitiesInContainer : IGraphAction
+    public sealed class DeleteEntitiesInContainer : IGraphAction
     {
         [DataField("container")] public string Container { get; } = string.Empty;
 

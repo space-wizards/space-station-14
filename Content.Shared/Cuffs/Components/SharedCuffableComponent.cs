@@ -1,14 +1,10 @@
-using System;
-using Robust.Shared.GameObjects;
 using Robust.Shared.GameStates;
-using Robust.Shared.Maths;
 using Robust.Shared.Serialization;
-using Robust.Shared.ViewVariables;
 
 namespace Content.Shared.Cuffs.Components
 {
     [NetworkedComponent()]
-    public class SharedCuffableComponent : Component
+    public abstract class SharedCuffableComponent : Component
     {
         [ViewVariables]
         public bool CanStillInteract { get; set; } = true;

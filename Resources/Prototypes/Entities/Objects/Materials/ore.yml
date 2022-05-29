@@ -13,82 +13,17 @@
   - type: Tag
     tags:
     - Ore
-
-- type: entity
-  parent: OreBase
-  id: AdamantineOre
-  name: adamantine ore
-  suffix: Full
-  components:
-  - type: Stack
-    stackType: AdamantineOre
-  - type: Sprite
-    state: adamantine
-
-- type: entity
-  parent: AdamantineOre
-  id: AdamantineOre1
-  suffix: Single
-  components:
-  - type: Stack
-    count: 1
-
-- type: entity
-  parent: OreBase
-  id: Ammonia
-  name: ammonia
-  suffix: Full
-  components:
-  - type: Stack
-    stackType: Ammonia
-  - type: Sprite
-    state: ammonia
-
-- type: entity
-  parent: Ammonia
-  id: Ammonia1
-  suffix: Single
-  components:
-  - type: Stack
-    count: 1
-
-- type: entity
-  parent: OreBase
-  id: BananiumOre
-  name: bananium ore
-  suffix: Full
-  components:
-  - type: Stack
-    stackType: BananiumOre
-  - type: Sprite
-    state: bananium
-
-- type: entity
-  parent: BananiumOre
-  id: BananiumOre1
-  suffix: Single
-  components:
-  - type: Stack
-    count: 1
-
-- type: entity
-  parent: OreBase
-  id: DiamondRaw
-  name: raw diamond
-  suffix: Full
-  components:
-  - type: Stack
-    stackType: DiamondRaw
-  - type: Sprite
-    state: diamond
-
-- type: entity
-  parent: DiamondRaw
-  id: DiamondRaw1
-  suffix: Single
-  components:
-  - type: Stack
-    count: 1
+  - type: Damageable
+    damageContainer: Inorganic
+    damageModifierSet: Metallic
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 200
+      behaviors:
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
 
 - type: entity
   parent: OreBase
@@ -100,6 +35,9 @@
     stackType: GoldOre
   - type: Sprite
     state: gold
+  - type: Material
+    materials:
+      Gold: 500
 
 - type: entity
   parent: GoldOre
@@ -111,41 +49,25 @@
 
 - type: entity
   parent: OreBase
-  id: IronOre
-  name: iron ore
+  id: SteelOre
+  name: steel ore
   suffix: Full
   components:
   - type: Stack
-    stackType: IronOre
+    stackType: SteelOre
   - type: Sprite
     state: iron
+  - type: Material
+    materials:
+      Steel: 500
 
 - type: entity
-  id: IronOre1
-  parent: IronOre
+  id: SteelOre1
+  parent: SteelOre
   suffix: Single
   components:
     - type: Stack
       count: 1
-
-- type: entity
-  parent: OreBase
-  id: PhoronOre
-  name: phoron ore
-  suffix: Full
-  components:
-  - type: Stack
-    stackType: PhoronOre
-  - type: Sprite
-    state: phoron
-
-- type: entity
-  parent: PhoronOre
-  id: PhoronOre1
-  suffix: Single
-  components:
-  - type: Stack
-    count: 1
 
 - type: entity
   parent: OreBase
@@ -157,52 +79,17 @@
     stackType: PlasmaOre
   - type: Sprite
     state: plasma
+  - type: Material
+    materials:
+      Plasma: 500
 
 - type: entity
   parent: PlasmaOre
   id: PlasmaOre1
   suffix: Single
   components:
-  - type: Stack
-    count: 1
-
-- type: entity
-  parent: OreBase
-  id: Sand
-  name: sand
-  suffix: Full
-  components:
-  - type: Stack
-    stackType: Sand
-  - type: Sprite
-    state: sand
-
-- type: entity
-  parent: Sand
-  id: Sand1
-  suffix: Single
-  components:
-  - type: Stack
-    count: 1
-
-- type: entity
-  parent: OreBase
-  id: SandBlack
-  name: black sand
-  suffix: Full
-  components:
-  - type: Stack
-    stackType: BlackSand
-  - type: Sprite
-    state: sand_black
-
-- type: entity
-  parent: SandBlack
-  id: SandBlack1
-  suffix: Single
-  components:
-  - type: Stack
-    count: 1
+    - type: Stack
+      count: 1
 
 - type: entity
   parent: OreBase
@@ -214,6 +101,9 @@
     stackType: SilverOre
   - type: Sprite
     state: silver
+  - type: Material
+    materials:
+      Silver: 500
 
 - type: entity
   parent: SilverOre
@@ -225,37 +115,21 @@
 
 - type: entity
   parent: OreBase
-  id: Slag
-  name: slag
+  id: SpaceQuartz
+  name: space quartz
   suffix: Full
   components:
   - type: Stack
-    stackType: Slag
+    stackType: SpaceQuartz
   - type: Sprite
-    state: slag
+    state: spacequartz
+  - type: Material
+    materials:
+      Glass: 500
 
 - type: entity
-  parent: Slag
-  id: Slag1
-  suffix: Single
-  components:
-  - type: Stack
-    count: 1
-
-- type: entity
-  parent: OreBase
-  id: TitaniumOre
-  name: titanium ore
-  suffix: Full
-  components:
-  - type: Stack
-    stackType: TitaniumOre
-  - type: Sprite
-    state: titanium
-
-- type: entity
-  parent: TitaniumOre
-  id: TitaniumOre1
+  parent: SpaceQuartz
+  id: SpaceQuartz1
   suffix: Single
   components:
   - type: Stack
@@ -271,6 +145,9 @@
     stackType: UraniumOre
   - type: Sprite
     state: uranium
+  - type: Material
+    materials:
+      Uranium: 500
 
 - type: entity
   parent: UraniumOre

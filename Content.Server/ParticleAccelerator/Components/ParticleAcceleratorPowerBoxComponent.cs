@@ -1,12 +1,10 @@
 ﻿using Content.Server.Power.Components;
-using Robust.Shared.GameObjects;
-using Robust.Shared.ViewVariables;
 
 namespace Content.Server.ParticleAccelerator.Components
 {
     [RegisterComponent]
     [ComponentReference(typeof(ParticleAcceleratorPartComponent))]
-    public class ParticleAcceleratorPowerBoxComponent : ParticleAcceleratorPartComponent
+    public sealed class ParticleAcceleratorPowerBoxComponent : ParticleAcceleratorPartComponent
     {
         [ViewVariables] public PowerConsumerComponent? PowerConsumerComponent;
 

@@ -9,14 +9,16 @@
     state: icon
   - type: Clothing
     size: 9999
-    QuickEquip: false
+    quickEquip: false
     Slots:
     - back
     sprite: Clothing/Back/Backpacks/backpack.rsi
   - type: Storage
     capacity: 100
-    storageSoundCollection:
-      collection: storageRustle
+  - type: UserInterface
+    interfaces:
+    - key: enum.StorageUiKey.Key
+      type: StorageBoundUserInterface
 
 - type: entity
   parent: ClothingBackpack
@@ -28,6 +30,9 @@
     sprite: Clothing/Back/Backpacks/clown.rsi
   - type: Clothing
     sprite: Clothing/Back/Backpacks/clown.rsi
+  - type: Storage
+    storageOpenSound:
+      collection: BikeHorn  
 
 - type: entity
   parent: ClothingBackpack
@@ -83,7 +88,11 @@
     sprite: Clothing/Back/Backpacks/mime.rsi
   - type: Clothing
     sprite: Clothing/Back/Backpacks/mime.rsi
-
+    storageOpenSound:
+      collection: null
+    storageInsertSound:
+      collection: null      
+      
 - type: entity
   parent: ClothingBackpack
   id: ClothingBackpackChemistry
@@ -116,7 +125,7 @@
     sprite: Clothing/Back/Backpacks/science.rsi
   - type: Clothing
     sprite: Clothing/Back/Backpacks/science.rsi
-    
+
 - type: entity
   parent: ClothingBackpack
   id: ClothingBackpackVirology

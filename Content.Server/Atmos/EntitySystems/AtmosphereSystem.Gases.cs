@@ -1,16 +1,13 @@
-using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using Content.Server.Atmos.Reactions;
 using Content.Shared.Atmos;
-using Robust.Shared.Maths;
 using Robust.Shared.Prototypes;
 using DependencyAttribute = Robust.Shared.IoC.DependencyAttribute;
 
 namespace Content.Server.Atmos.EntitySystems
 {
-    public partial class AtmosphereSystem
+    public sealed partial class AtmosphereSystem
     {
         [Dependency] private readonly IPrototypeManager _protoMan = default!;
 

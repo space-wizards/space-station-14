@@ -1,5 +1,5 @@
 - type: soundCollection
-  id: keyboard
+  id: Keyboard
   files:
   - /Audio/Machines/Keyboard/keyboard1.ogg
   - /Audio/Machines/Keyboard/keyboard2.ogg

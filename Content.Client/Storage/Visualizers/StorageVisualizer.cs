@@ -76,21 +76,12 @@ namespace Content.Client.Storage.Visualizers
                     sprite.LayerSetState(StorageVisualLayers.Lock, locked ? "locked" : "unlocked");
                 }
             }
-
-            if (component.TryGetData(StorageVisuals.CanWeld, out bool canWeld) && canWeld)
-            {
-                if (component.TryGetData(StorageVisuals.Welded, out bool weldedVal))
-                {
-                    sprite.LayerSetVisible(StorageVisualLayers.Welded, weldedVal);
-                }
-            }
         }
     }
 
     public enum StorageVisualLayers : byte
     {
         Door,
-        Welded,
         Lock
     }
 }

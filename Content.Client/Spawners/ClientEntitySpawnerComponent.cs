@@ -10,7 +10,7 @@ namespace Content.Client.Spawners
     /// </summary>
     [RegisterComponent]
     [ComponentProtoName("ClientEntitySpawner")]
-    public class ClientEntitySpawnerComponent : Component
+    public sealed class ClientEntitySpawnerComponent : Component
     {
         [Dependency] private readonly IEntityManager _entMan = default!;
 

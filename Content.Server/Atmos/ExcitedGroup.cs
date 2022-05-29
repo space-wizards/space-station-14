@@ -1,9 +1,6 @@
-﻿using System.Collections.Generic;
-using Robust.Shared.ViewVariables;
-
-namespace Content.Server.Atmos
+﻿namespace Content.Server.Atmos
 {
-    public class ExcitedGroup
+    public sealed class ExcitedGroup
     {
         [ViewVariables] public bool Disposed = false;
 

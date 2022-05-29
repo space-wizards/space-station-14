@@ -2,14 +2,12 @@
 using Content.Server.Atmos.EntitySystems;
 using Content.Shared.Administration;
 using Robust.Shared.Console;
-using Robust.Shared.GameObjects;
 using Robust.Shared.Map;
-using Robust.Shared.Maths;
 
 namespace Content.Server.Atmos.Commands
 {
     [AdminCommand(AdminFlags.Debug)]
-    public class RemoveGasCommand : IConsoleCommand
+    public sealed class RemoveGasCommand : IConsoleCommand
     {
         public string Command => "removegas";
         public string Description => "Removes an amount of gases.";

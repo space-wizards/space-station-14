@@ -1,13 +1,11 @@
 using Content.Server.Atmos.EntitySystems;
 using Content.Server.Xenoarchaeology.XenoArtifacts.Events;
 using Content.Server.Xenoarchaeology.XenoArtifacts.Triggers.Components;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
 using Robust.Shared.Random;
 
 namespace Content.Server.Xenoarchaeology.XenoArtifacts.Triggers.Systems;
 
-public class ArtifactGasTriggerSystem : EntitySystem
+public sealed class ArtifactGasTriggerSystem : EntitySystem
 {
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly AtmosphereSystem _atmosphereSystem = default!;
@@ -37,7 +35,7 @@ public class ArtifactGasTriggerSystem : EntitySystem
             if (trigger.ActivationGas == null)
                 continue;
 
-            var environment = _atmosphereSystem.GetTileMixture(transform.Coordinates, true);
+            var environment = _atmosphereSystem.GetTileMixture(transform.Coordinates);
             if (environment == null)
                 continue;
 

@@ -8,7 +8,7 @@ using Robust.Shared.Utility;
 namespace Content.Client.Botany
 {
     [UsedImplicitly]
-    public class PlantHolderVisualizer : AppearanceVisualizer
+    public sealed class PlantHolderVisualizer : AppearanceVisualizer
     {
         public override void InitializeEntity(EntityUid entity)
         {

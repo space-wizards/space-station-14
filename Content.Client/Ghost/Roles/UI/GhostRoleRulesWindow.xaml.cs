@@ -11,7 +11,7 @@ using Robust.Shared.Utility;
 namespace Content.Client.Ghost.Roles.UI
 {
     [GenerateTypedNameReferences]
-    public partial class GhostRoleRulesWindow : DefaultWindow
+    public sealed partial class GhostRoleRulesWindow : DefaultWindow
     {
         private float _timer = 5.0f;
         public GhostRoleRulesWindow(string rules, Action<BaseButton.ButtonEventArgs> requestAction)

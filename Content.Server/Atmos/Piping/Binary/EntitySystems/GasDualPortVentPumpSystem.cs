@@ -1,4 +1,3 @@
-using System;
 using Content.Server.Atmos.EntitySystems;
 using Content.Server.Atmos.Piping.Binary.Components;
 using Content.Server.Atmos.Piping.Components;
@@ -8,13 +7,11 @@ using Content.Shared.Atmos;
 using Content.Shared.Atmos.Piping.Unary.Components;
 using Content.Shared.Atmos.Visuals;
 using JetBrains.Annotations;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
 
 namespace Content.Server.Atmos.Piping.Binary.EntitySystems
 {
     [UsedImplicitly]
-    public class GasDualPortVentPumpSystem : EntitySystem
+    public sealed class GasDualPortVentPumpSystem : EntitySystem
     {
         [Dependency] private readonly AtmosphereSystem _atmosphereSystem = default!;
 
