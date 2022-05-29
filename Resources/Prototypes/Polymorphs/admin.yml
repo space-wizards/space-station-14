@@ -11,6 +11,12 @@
   dropInventory: true
 
 - type: polymorph
+  id: AdminMouseSmite
+  entity: MobMouse
+  forced: true
+  dropInventory: true
+
+- type: polymorph
   id: AdminInstrumentSmite
   entity: SuperSynthesizerInstrument
   forced: true

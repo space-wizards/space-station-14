@@ -2,6 +2,7 @@
 using System.Threading;
 using Content.Server.Administration.Commands;
 using Content.Server.Administration.Components;
+using Content.Server.Atmos;
 using Content.Server.Atmos.Components;
 using Content.Server.Atmos.EntitySystems;
 using Content.Server.Body.Components;
@@ -25,6 +26,7 @@ using Content.Server.Tabletop.Components;
 using Content.Server.Tools.Systems;
 using Content.Shared.Administration;
 using Content.Shared.Administration.Components;
+using Content.Shared.Atmos;
 using Content.Shared.Body.Components;
 using Content.Shared.Body.Part;
 using Content.Shared.CharacterAppearance.Components;
@@ -52,21 +54,22 @@ namespace Content.Server.Administration.Systems;
 public sealed partial class AdminVerbSystem
 {
     [Dependency] private readonly IRobustRandom _random = default!;
-    [Dependency] private readonly GhostKickManager _ghostKickManager = default!;
-    [Dependency] private readonly PolymorphableSystem _polymorphableSystem = default!;
-    [Dependency] private readonly InventorySystem _inventorySystem = default!;
-    [Dependency] private readonly ElectrocutionSystem _electrocutionSystem = default!;
-    [Dependency] private readonly CreamPieSystem _creamPieSystem = default!;
-    [Dependency] private readonly DiseaseSystem _diseaseSystem = default!;
-    [Dependency] private readonly TabletopSystem _tabletopSystem = default!;
-    [Dependency] private readonly ExplosionSystem _explosionSystem = default!;
-    [Dependency] private readonly FlammableSystem _flammableSystem = default!;
-    [Dependency] private readonly GodmodeSystem _godmodeSystem = default!;
+    [Dependency] private readonly AtmosphereSystem _atmosphereSystem = default!;
     [Dependency] private readonly BloodstreamSystem _bloodstreamSystem = default!;
     [Dependency] private readonly BodySystem _bodySystem = default!;
+    [Dependency] private readonly CreamPieSystem _creamPieSystem = default!;
+    [Dependency] private readonly DiseaseSystem _diseaseSystem = default!;
+    [Dependency] private readonly ElectrocutionSystem _electrocutionSystem = default!;
+    [Dependency] private readonly ExplosionSystem _explosionSystem = default!;
+    [Dependency] private readonly FlammableSystem _flammableSystem = default!;
+    [Dependency] private readonly GhostKickManager _ghostKickManager = default!;
+    [Dependency] private readonly GodmodeSystem _godmodeSystem = default!;
+    [Dependency] private readonly InventorySystem _inventorySystem = default!;
+    [Dependency] private readonly PolymorphableSystem _polymorphableSystem = default!;
+    [Dependency] private readonly PopupSystem _popupSystem = default!;
+    [Dependency] private readonly TabletopSystem _tabletopSystem = default!;
     [Dependency] private readonly VomitSystem _vomitSystem = default!;
     [Dependency] private readonly WeldableSystem _weldableSystem = default!;
-    [Dependency] private readonly PopupSystem _popupSystem = default!;
 
     // All smite verbs have names so invokeverb works.
     private void AddSmiteVerbs(GetVerbsEvent<Verb> args)
@@ -392,6 +395,20 @@ public sealed partial class AdminVerbSystem
         };
         args.Verbs.Add(bread);
 
+        Verb mouse = new()
+        {
+            Text = "Become Mouse",
+            Category = VerbCategory.Smite,
+            IconTexture = "/Textures/Mobs/Animals/mouse.rsi/icon-0.png",
+            Act = () =>
+            {
+                _polymorphableSystem.PolymorphEntity(args.Target, "AdminMouseSmite");
+            },
+            Impact = LogImpact.Extreme,
+            Message = Loc.GetString("admin-smite-become-mouse-description")
+        };
+        args.Verbs.Add(mouse);
+
         if (TryComp<ActorComponent>(args.Target, out var actorComponent))
         {
             Verb ghostKick = new()
@@ -460,6 +477,32 @@ public sealed partial class AdminVerbSystem
                 Message = Loc.GetString("admin-smite-clown-description")
             };
             args.Verbs.Add(clown);
+
+            Verb plasmaInternals = new()
+            {
+                Text = "Plasma Internals",
+                Category = VerbCategory.Smite,
+                IconTexture = "/Textures/Objects/Tanks/plasma.rsi/icon.png",
+                Act = () =>
+                {
+                    foreach (var slot in _inventorySystem.GetSlots(args.Target))
+                    {
+                        if (!_inventorySystem.TryGetSlotEntity(args.Target, slot.Name, out var entity))
+                            continue;
+
+                        if (!TryComp<GasTankComponent>(entity, out var tank))
+                            continue;
+
+                        var mixSize = tank.Air.Volume;
+                        var newMix = new GasMixture(mixSize);
+                        newMix.SetMoles(Gas.Plasma, 30f);
+                        tank.Air = newMix;
+                    }
+                },
+                Impact = LogImpact.Extreme,
+                Message = Loc.GetString("admin-smite-plasma-internals-description"),
+            };
+            args.Verbs.Add(plasmaInternals);
         }
 
         Verb angerPointingArrows = new()
@@ -558,11 +601,13 @@ public sealed partial class AdminVerbSystem
             {
                 var xform = Transform(args.Target);
                 var locker = Spawn("ClosetMaintenance", xform.Coordinates);
-                _weldableSystem.ForceWeldedState(locker, true);
                 if (TryComp<EntityStorageComponent>(locker, out var storage))
                 {
+                    storage.ToggleOpen(args.Target); // Not necessary, but plays the noise.
                     storage.Insert(args.Target);
+                    storage.ToggleOpen(args.Target);
                 }
+                _weldableSystem.ForceWeldedState(locker, true);
             },
             Impact = LogImpact.Extreme,
             Message = Loc.GetString("admin-smite-locker-stuff-description"),

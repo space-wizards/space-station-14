@@ -37,3 +37,5 @@ admin-smite-remove-gravity-description = Grants them anti-gravity.
 admin-smite-reptilian-species-swap-description = It changes their species to Reptilian. Useful for people who were being space racist.
 admin-smite-locker-stuff-description = Stuffs them in a (welded) locker.
 admin-smite-headstand-description = Rotates their sprite 180 degrees.
+admin-smite-plasma-internals-description = Replaces the contents of their internals with plasma.
+admin-smite-become-mouse-description = They become a rat. Ratatouille.
