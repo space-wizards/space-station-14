@@ -3,3 +3,4 @@ job-greet-important-disconnect-admin-notify = Вы играете важную �
 job-greet-supervisors-warning = Как { $jobName } вы непосредственно подчиняетесь { $supervisors }. Особые обстоятельства могут изменить это.
 job-greet-join-notify-crew = { CAPITALIZE($jobName) } { $characterName } на борту!
 job-greet-join-notify-crew-announcer = Станции
+job-greet-crew-shortages = As this station was initially staffed with a skeleton crew, additional access has been added to your ID card.

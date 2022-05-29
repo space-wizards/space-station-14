@@ -1,6 +1,9 @@
 ent-BoxCardboard = cardboard box
     .desc = A cardboard box for storing things.
     .suffix = { "" }
+ent-BoxMousetrap = mousetrap box
+    .desc = This box is filled with mousetraps. Try not to get your hand stuck in one.
+    .suffix = { "" }
 ent-BoxLightbulb = lightbulb box
     .desc = This box is shaped on the inside so that only light tubes and bulbs fit.
     .suffix = { "" }

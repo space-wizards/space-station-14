@@ -145,7 +145,8 @@ namespace Content.Server.Singularity.EntitySystems
             DebugTools.Assert(component.IsPowered);
             DebugTools.Assert(component.IsOn);
             DebugTools.Assert(TryComp<PowerConsumerComponent>(component.Owner, out var powerConsumer) &&
-                              powerConsumer.DrawRate <= powerConsumer.ReceivedPower);
+                              (powerConsumer.DrawRate <= powerConsumer.ReceivedPower ||
+                               MathHelper.CloseTo(powerConsumer.DrawRate, powerConsumer.ReceivedPower, 0.0001f)));
 
             Fire(component);
 
