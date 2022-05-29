@@ -11,11 +11,11 @@ namespace Content.Shared.Wall;
 public sealed class WallMountComponent : Component
 {
     /// <summary>
-    ///     Range of angles in which the exemption applies. Bigger is more permissive.
+    ///     Range of angles for which the exemption applies. Bigger is more permissive.
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite)]
     [DataField("arc")]
-    public float Arc = MathF.PI;
+    public Angle Arc = new(MathF.PI);
 
     /// <summary>
     ///     The direction in which the exemption arc is facing, relative to the entity's rotation. Defaults to south.

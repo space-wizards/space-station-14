@@ -9,7 +9,7 @@ using Robust.Server.GameObjects;
 namespace Content.Server.Arcade
 {
     // ReSharper disable once ClassNeverInstantiated.Global
-    public sealed class ArcadeSystem : EntitySystem
+    public sealed partial class ArcadeSystem : EntitySystem
     {
         private readonly List<BlockGameMessages.HighScoreEntry> _roundHighscores = new();
         private readonly List<BlockGameMessages.HighScoreEntry> _globalHighscores = new();
@@ -19,6 +19,8 @@ namespace Content.Server.Arcade
             base.Initialize();
             SubscribeLocalEvent<BlockGameArcadeComponent, AfterActivatableUIOpenEvent>(OnAfterUIOpen);
             SubscribeLocalEvent<SpaceVillainArcadeComponent, AfterActivatableUIOpenEvent>(OnAfterUIOpenSV);
+            InitializeBlockGame();
+            InitializeSpaceVillain();
         }
 
         private void OnAfterUIOpen(EntityUid uid, BlockGameArcadeComponent component, AfterActivatableUIOpenEvent args)

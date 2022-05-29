@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using System.Linq;
 using Content.Server.AI.Components;
 using Content.Server.MobState.States;
@@ -6,8 +5,6 @@ using Content.Shared.CCVar;
 using Content.Shared.MobState;
 using JetBrains.Annotations;
 using Robust.Shared.Configuration;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
 using Robust.Shared.Random;
 
 namespace Content.Server.AI.EntitySystems

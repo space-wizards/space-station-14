@@ -40,6 +40,10 @@
       "directions": 4
     },
     {
+      "name": "tuba",
+      "directions": 1
+    },
+    {
       "name": "daw-base",
       "directions": 1
     },

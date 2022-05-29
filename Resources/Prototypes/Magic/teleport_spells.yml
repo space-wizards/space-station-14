@@ -1,0 +1,14 @@
+﻿- type: worldTargetAction
+  id: Blink
+  name: action-name-spell-blink
+  description: action-description-spell-blink
+  useDelay: 10
+  range: 16 # default examine-range.
+  # ^ should probably add better validation that the clicked location is on the users screen somewhere,
+  itemIconStyle: BigAction
+  checkCanAccess: false
+  repeat: true
+  icon:
+    sprite: Objects/Magic/magicactions.rsi
+    state: blink
+  serverEvent: !type:TeleportSpellEvent

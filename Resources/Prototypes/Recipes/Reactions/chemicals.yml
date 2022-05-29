@@ -81,6 +81,7 @@
 - type: reaction
   id: PotassiumExplosion
   impact: High
+  priority: 20
   reactants:
     Water:
       amount: 1
@@ -88,16 +89,15 @@
       amount: 1
   effects:
     - !type:ExplosionReactionEffect
-      #Ranges used when 1 potassium + 1 water react (A unit reaction)
-      devastationRange: 0.025
-      heavyImpactRange: 0.05
-      lightImpactRange: 0.075
-      flashRange: 0.1
-      scaled: true #Scaled proportionally to amount of potassium and water
-      maxScale: 20 #Explosion strength stops scaling at 20 potassium + 20 water
+      explosionType: Default
+      maxIntensity: 1 # at most 15 damage per tile
+      intensityPerUnit: 0.5 # 50+50 reagent for maximum explosion 
+      intensitySlope: 2
+      maxTotalIntensity: 25
 
 - type: reaction
   id: Smoke
+  priority: 10
   impact: High
   reactants:
     Phosphorus:
@@ -121,6 +121,7 @@
 
 - type: reaction
   id: Foam
+  priority: 10
   impact: High
   reactants:
     Fluorosurfactant:
@@ -146,6 +147,7 @@
 - type: reaction
   id: IronMetalFoam
   impact: High
+  priority: 10
   reactants:
     Iron:
       amount: 3
@@ -172,6 +174,7 @@
 - type: reaction
   id: AluminiumMetalFoam
   impact: High
+  priority: 10
   reactants:
     Aluminium:
       amount: 3

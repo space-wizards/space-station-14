@@ -2,7 +2,7 @@
   id: BulletHRifle
   name: bullet (.20 rifle)
   parent: BulletBase
-  abstract: true
+  noSpawn: true
   components:
   - type: Projectile
     damage:
@@ -13,7 +13,7 @@
   id: BulletMinigun
   name: minigun bullet (.10 rifle)
   parent: BulletHRifle
-  abstract: true
+  noSpawn: true
   components:
   - type: Projectile
     damage:

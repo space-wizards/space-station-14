@@ -1,16 +1,8 @@
-using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Diagnostics.CodeAnalysis;
 using Content.Shared.Physics;
-using Content.Shared.Random.Helpers;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
 using Robust.Shared.Map;
-using Robust.Shared.Maths;
-using Robust.Shared.Physics;
-using Robust.Shared.Physics.Broadphase;
 using Robust.Shared.Random;
 
 namespace Content.Shared.Maps
@@ -157,20 +149,20 @@ namespace Content.Shared.Maps
         ///     Helper that returns all entities in a turf.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static IEnumerable<EntityUid> GetEntitiesInTile(this TileRef turf, LookupFlags flags = LookupFlags.IncludeAnchored, EntityLookupSystem? lookupSystem = null)
+        public static IEnumerable<EntityUid> GetEntitiesInTile(this TileRef turf, LookupFlags flags = LookupFlags.Anchored, EntityLookupSystem? lookupSystem = null)
         {
             lookupSystem ??= EntitySystem.Get<EntityLookupSystem>();
 
             if (!GetWorldTileBox(turf, out var worldBox))
                 return Enumerable.Empty<EntityUid>();
 
-            return lookupSystem.GetEntitiesIntersecting(turf.MapIndex, worldBox, flags);
+            return lookupSystem.GetEntitiesIntersecting(turf.GridIndex, worldBox, flags);
         }
 
         /// <summary>
         ///     Helper that returns all entities in a turf.
         /// </summary>
-        public static IEnumerable<EntityUid> GetEntitiesInTile(this EntityCoordinates coordinates, LookupFlags flags = LookupFlags.IncludeAnchored, EntityLookupSystem? lookupSystem = null)
+        public static IEnumerable<EntityUid> GetEntitiesInTile(this EntityCoordinates coordinates, LookupFlags flags = LookupFlags.Anchored, EntityLookupSystem? lookupSystem = null)
         {
             var turf = coordinates.GetTileRef();
 
@@ -183,7 +175,7 @@ namespace Content.Shared.Maps
         /// <summary>
         ///     Helper that returns all entities in a turf.
         /// </summary>
-        public static IEnumerable<EntityUid> GetEntitiesInTile(this Vector2i indices, GridId gridId, LookupFlags flags = LookupFlags.IncludeAnchored, EntityLookupSystem? lookupSystem = null)
+        public static IEnumerable<EntityUid> GetEntitiesInTile(this Vector2i indices, GridId gridId, LookupFlags flags = LookupFlags.Anchored, EntityLookupSystem? lookupSystem = null)
         {
             return GetEntitiesInTile(indices.GetTileRef(gridId), flags, lookupSystem);
         }
@@ -191,17 +183,27 @@ namespace Content.Shared.Maps
         /// <summary>
         /// Checks if a turf has something dense on it.
         /// </summary>
-        public static bool IsBlockedTurf(this TileRef turf, bool filterMobs)
+        public static bool IsBlockedTurf(this TileRef turf, bool filterMobs, EntityLookupSystem? physics = null, IEntitySystemManager? entSysMan = null)
         {
-            var physics = EntitySystem.Get<SharedPhysicsSystem>();
+            // TODO: Deprecate this with entitylookup.
+            if (physics == null)
+            {
+                IoCManager.Resolve(ref entSysMan);
+                physics = entSysMan.GetEntitySystem<EntityLookupSystem>();
+            }
 
             if (!GetWorldTileBox(turf, out var worldBox))
                 return false;
 
-            var query = physics.GetCollidingEntities(turf.MapIndex, in worldBox);
+            var entManager = IoCManager.Resolve<IEntityManager>();
+            var query = physics.GetEntitiesIntersecting(turf.GridIndex, worldBox);
 
-            foreach (var body in query)
+            foreach (var ent in query)
             {
+                // Yes, this can fail. Welp!
+                if (!entManager.TryGetComponent(ent, out PhysicsComponent? body))
+                    continue;
+
                 if (body.CanCollide && body.Hard && (body.CollisionLayer & (int) CollisionGroup.Impassable) != 0)
                     return true;
 

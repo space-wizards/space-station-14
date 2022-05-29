@@ -1,10 +1,8 @@
-using System;
 using System.Threading;
 using Content.Server.Tools.Components;
 using Content.Shared.Interaction;
-using Content.Shared.Interaction.Helpers;
 using Content.Shared.Maps;
-using Robust.Shared.GameObjects;
+using Content.Shared.Tools.Components;
 using Robust.Shared.Map;
 
 namespace Content.Server.Tools;
@@ -17,6 +15,12 @@ public sealed partial class ToolSystem
     {
         SubscribeLocalEvent<TilePryingComponent, AfterInteractEvent>(OnTilePryingAfterInteract);
         SubscribeLocalEvent<TilePryingComponent, TilePryingCompleteEvent>(OnTilePryComplete);
+        SubscribeLocalEvent<TilePryingComponent, TilePryingCancelledEvent>(OnTilePryCancelled);
+    }
+
+    private void OnTilePryCancelled(EntityUid uid, TilePryingComponent component, TilePryingCancelledEvent args)
+    {
+        component.CancelToken = null;
     }
 
     private void OnTilePryComplete(EntityUid uid, TilePryingComponent component, TilePryingCompleteEvent args)
@@ -27,7 +31,7 @@ public sealed partial class ToolSystem
 
     private void OnTilePryingAfterInteract(EntityUid uid, TilePryingComponent component, AfterInteractEvent args)
     {
-        if (args.Handled || !args.CanReach) return;
+        if (args.Handled || !args.CanReach || args.Target != null) return;
 
         if (TryPryTile(args.User, component, args.ClickLocation))
             args.Handled = true;
@@ -37,9 +41,7 @@ public sealed partial class ToolSystem
     {
         if (component.CancelToken != null)
         {
-            component.CancelToken.Cancel();
-            component.CancelToken = null;
-            return false;
+            return true;
         }
 
         if (!TryComp<ToolComponent?>(component.Owner, out var tool) && component.ToolComponentNeeded)
@@ -74,6 +76,7 @@ public sealed partial class ToolSystem
             {
                 Coordinates = clickLocation,
             },
+            new TilePryingCancelledEvent(),
             toolComponent: tool,
             doAfterEventTarget: component.Owner,
             cancelToken: token.Token);
@@ -84,5 +87,10 @@ public sealed partial class ToolSystem
     private sealed class TilePryingCompleteEvent : EntityEventArgs
     {
         public EntityCoordinates Coordinates { get; init; }
+    }
+
+    private sealed class TilePryingCancelledEvent : EntityEventArgs
+    {
+
     }
 }

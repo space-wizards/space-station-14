@@ -1,17 +1,17 @@
 - type: reagent
   id: Cryptobiolin
-  name: cryptobiolin
+  name: reagent-name-cryptobiolin
   group: Medicine
-  desc: Causes confusion and dizziness. This is essential to make Spaceacillin.
-  physicalDesc: fizzy
+  desc: reagent-desc-cryptobiolin
+  physicalDesc: reagent-physical-desc-fizzy
   color: "#081a80"
 
 - type: reagent
   id: Dylovene
-  name: dylovene
+  name: reagent-name-dylovene
   group: Medicine
-  desc: A broad-spectrum anti-toxin, which treats toxin damage in the blood stream. Overdosing will cause vomiting, dizzyness and pain.
-  physicalDesc: translucent
+  desc: reagent-desc-dylovene
+  physicalDesc: reagent-physical-desc-translucent
   color: "#3a1d8a"
   metabolisms:
     Medicine:
@@ -29,10 +29,10 @@
 
 - type: reagent
   id: Diphenhydramine
-  name: diphenhydramine
+  name: reagent-name-diphenhydramine
   group: Medicine
-  desc: Rapidly purges the body of histamine and reduces jitteriness.
-  physicalDesc: chalky
+  desc: reagent-desc-diphenhydramine
+  physicalDesc: reagent-physical-desc-chalky
   color: "#64ffe6"
   metabolisms:
     Medicine:
@@ -47,10 +47,10 @@
 
 - type: reagent
   id: Arithrazine
-  name: arithrazine
+  name: reagent-name-arithrazine
   group: Medicine
-  desc: A slightly unstable medication used for the most extreme case of radiation poisoning. Lowers radiation level at over twice the rate Hyronalin does and will heal toxin damage at the same time. Deals very minor brute damage to the patient over time, but the patient's body will typically out-regenerate it easily.
-  physicalDesc: cloudy
+  desc: reagent-desc-arithrazine
+  physicalDesc: reagent-physical-desc-cloudy
   color: "#bd5902"
   metabolisms:
     Medicine:
@@ -64,10 +64,10 @@
 
 - type: reagent
   id: Bicaridine
-  name: bicaridine
+  name: reagent-name-bicaridine
   group: Medicine
-  desc: An analgesic which is highly effective at treating brute damage. It is useful for stabilizing people who have been severely beaten, as well as treating less life-threatening injuries. In the case of bleeding (internal or external), bicaridine will slow down the bleeding heavily. If the dosage exceeds the overdose limit, it'll stop it outright.
-  physicalDesc: opaque
+  desc: reagent-desc-bicaridine
+  physicalDesc: reagent-physical-desc-opaque
   color: "#ffaa00"
   metabolisms:
     Medicine:
@@ -79,10 +79,10 @@
 
 - type: reagent
   id: Cryoxadone
-  name: cryoxadone
+  name: reagent-name-cryoxadone
   group: Medicine
-  desc: Required for the proper function of cryogenics. Heals all standard types of damage very swiftly, but only works in temperatures under 170K (usually this means cryo cells). Can also slowly heal clone damage, such as caused by cloning or Slimes.
-  physicalDesc: fizzy
+  desc: reagent-desc-cryoxadone
+  physicalDesc: reagent-physical-desc-fizzy
   color: "#0091ff"
   plantMetabolism:
     - !type:PlantAdjustToxins
@@ -107,11 +107,11 @@
 
 - type: reagent
   id: Clonexadone
-  name: clonexadone
+  name: reagent-name-clonexadone
   group: Medicine
   parent: Cryoxadone
-  desc: Heals standard damage in the same as Cryoxadone, with the same temperature requirement. Significantly more effective than the former at treating cellular damage, although both can be used simultaneously. Best used in cryo cells.
-  physicalDesc: bubbly
+  desc: reagent-desc-clonexadone
+  physicalDesc: reagent-physical-desc-bubbly
   color: "#0666ff"
   plantMetabolism:
     - !type:PlantAdjustToxins
@@ -121,10 +121,10 @@
 
 - type: reagent
   id: Dermaline
-  name: dermaline
+  name: reagent-name-dermaline
   group: Medicine
-  desc: An advanced chemical that is more effective at treating burn damage than Kelotane.
-  physicalDesc: translucent
+  desc: reagent-desc-dermaline
+  physicalDesc: reagent-physical-desc-translucent
   color: "#215263"
   metabolisms:
     Medicine:
@@ -136,10 +136,10 @@
 
 - type: reagent
   id: Dexalin
-  name: dexalin
+  name: reagent-name-dexalin
   group: Medicine
-  desc: Used for treating oxygen deprivation. In most cases where it is likely to be needed, the strength of Dexalin Plus will probably be more useful.
-  physicalDesc: opaque
+  desc: reagent-desc-dexalin
+  physicalDesc: reagent-physical-desc-opaque
   color: "#0041a8"
   metabolisms:
     Medicine:
@@ -152,10 +152,10 @@
 
 - type: reagent
   id: DexalinPlus
-  name: dexalin plus
+  name: reagent-name-dexalin-plus
   group: Medicine
-  desc: Used in treatment of extreme cases of oxygen deprivation. Effective at healing blood loss damage.
-  physicalDesc: cloudy
+  desc: reagent-desc-dexalin-plus
+  physicalDesc: reagent-physical-desc-cloudy
   color: "#4da0bd"
   metabolisms:
     Medicine:
@@ -163,16 +163,23 @@
       - !type:HealthChange
         damage:
           types:
-            Asphyxiation: -3
-            Bloodloss: -2
+            Asphyxiation: -3.5
+            Bloodloss: -3
+      - !type:AdjustReagent
+        conditions:
+        - !type:ReagentThreshold
+          reagent: Lexorin
+          min: 1
+        reagent: Lexorin
+        amount: -3
 
 # this ones a doozy
 - type: reagent
   id: Epinephrine
-  name: epinephrine
+  name: reagent-name-epinephrine
   group: Medicine
-  desc: Effective at bringing people back from a critical state. Reduces some stun times. Easy to overdose on.
-  physicalDesc: odorless
+  desc: reagent-desc-epinephrine
+  physicalDesc: reagent-physical-desc-odorless
   color: "#d2fffa"
   metabolisms:
     Medicine:
@@ -229,10 +236,10 @@
 
 - type: reagent
   id: Hyronalin
-  name: hyronalin
+  name: reagent-name-hyronalin
   group: Medicine
-  desc: A weak treatment for radiation damage. Considered to be useful mainly for genetic modification, where it reduces radiation levels, and thus the chance of genetic mutations. Largely outclassed by Arithrazine.
-  physicalDesc: cloudy
+  desc: reagent-desc-hyronalin
+  physicalDesc: reagent-physical-desc-cloudy
   color: "#4cb580"
   metabolisms:
     Medicine:
@@ -243,11 +250,24 @@
             Radiation: -1
 
 - type: reagent
-  id: Inaprovaline
-  name: inaprovaline
+  id: Ipecac
+  name: ipecac
   group: Medicine
-  desc: Inaprovaline is a synaptic stimulant and cardiostimulant. Commonly used to stabilize patients- it stops oxygen loss when the patient is in critical health. It'll also slow down bleeding by a good amount. Acts as a decent painkiller.
-  physicalDesc: opaque
+  desc: Induces vomiting. Useful for stopping a poisoning that isn't done metabolizing.
+  physicalDesc: inky
+  color: "#422912"
+  metabolisms:
+    Medicine:
+      effects:
+      - !type:ChemVomit
+        probability: 0.3
+
+- type: reagent
+  id: Inaprovaline
+  name: reagent-name-inaprovaline
+  group: Medicine
+  desc: reagent-desc-inaprovaline
+  physicalDesc: reagent-physical-desc-opaque
   color: "#731024"
   metabolisms:
     Medicine:
@@ -265,10 +285,10 @@
 
 - type: reagent
   id: Kelotane
-  name: kelotane
+  name: reagent-name-kelotane
   group: Medicine
-  desc: Treats burn damage and prevents infection.
-  physicalDesc: strong-smelling
+  desc: reagent-desc-kelotane
+  physicalDesc: reagent-physical-desc-strong-smelling
   color: "#bf3d19"
   metabolisms:
     Medicine:
@@ -280,35 +300,76 @@
 
 - type: reagent
   id: Leporazine
-  name: leporazine
+  name: reagent-name-leporazine
   group: Medicine
-  desc: This keeps a patient's body temperature stable. High doses can allow short periods of unprotected EVA, but prevents use of the cryogenics tubes.
-  physicalDesc: pungent
+  desc: reagent-desc-leporazine
+  physicalDesc: reagent-physical-desc-pungent
   color: "#ff7db5"
   metabolisms:
     Medicine:
       effects:
+      - !type:HealthChange
+        damage:
+          types:
+            Cold: -4
       - !type:AdjustTemperature
         conditions:
         - !type:Temperature
           max: 293.15
-        amount: 1000 # thermal energy, not temperature!
+        amount: 100000 # thermal energy, not temperature!
       - !type:AdjustTemperature
         conditions:
         - !type:Temperature
           min: 293.15
-        amount: -1000
+        amount: -10000
       - !type:PopupMessage
         type: Local
         messages: [ "leporazine-effect-temperature-adjusting" ]
         probability: 0.2
 
 - type: reagent
-  id: Phalanximine
-  name: phalanximine
+  id: Barozine
+  name: barozine
   group: Medicine
-  desc: Used in the treatment of cancer, is as effective as Anti-Toxin. Causes moderate radiation and hair loss.
-  physicalDesc: acrid
+  desc: A somewhat toxic medicine that prevents pressure damage. Causes extreme pain and jittering. Very poisonous when overdosed.
+  physicalDesc: viscous
+  color: "#ff867d"
+  metabolisms:
+    Medicine:
+      effects:
+      - !type:HealthChange
+        damage:
+          types:
+            Poison: 1
+          groups:
+            Brute: -1.5
+      - !type:HealthChange
+        conditions:
+          - !type:ReagentThreshold
+            min: 15
+        damage:
+          types:
+            Poison: 3
+      - !type:GenericStatusEffect
+        key: PressureImmunity
+        component: PressureImmunity
+      - !type:GenericStatusEffect
+        key: Stutter
+        component: StutteringAccent
+      - !type:Jitter
+      - !type:Scream
+        probability: 0.2
+      - !type:PopupMessage
+        type: Local
+        messages: [ "barozine-effect-skin-burning", "barozine-effect-muscle-contract" ]
+        probability: 0.1
+
+- type: reagent
+  id: Phalanximine
+  name: reagent-name-phalanximine
+  group: Medicine
+  desc: reagent-desc-phalanximine
+  physicalDesc: reagent-physical-desc-acrid
   color: "#c8ff75"
   metabolisms:
     Medicine:
@@ -318,13 +379,30 @@
           types:
             Cellular: -1
             Radiation: 1
+      - !type:ChemVomit
+        probability: 0.05
+
+- type: reagent
+  id: Romerol
+  name: reagent-name-romerol
+  group: Medicine
+  desc: reagent-desc-romerol
+  physicalDesc: reagent-physical-desc-acrid
+  color: "#7e916e"
+  metabolisms:
+    Medicine:
+      effects:
+      - !type:HealthChange
+        damage:
+          types:
+            Poison: 0.5
 
 - type: reagent
   id: PulpedBananaPeel
-  name: pulped banana peel
+  name: reagent-name-pulped-banana-peel
   group: Medicine
-  desc: Pulped banana peels have some effectiveness against bleeding.
-  physicalDesc: pulpy
+  desc: reagent-desc-pulped-banana-peel
+  physicalDesc: reagent-physical-desc-pulpy
   color: "#FFE774"
   metabolisms:
     Medicine:
@@ -334,10 +412,10 @@
 
 - type: reagent
   id: Siderlac
-  name: siderlac
+  name: reagent-name-siderlac
   group: Medicine
-  desc: A powerful anti-caustic medicine derived from plants.
-  physicalDesc: milky
+  desc: reagent-desc-siderlac
+  physicalDesc: reagent-physical-desc-milky
   color: "#f4dab8"
   metabolisms:
     Medicine:
@@ -349,10 +427,10 @@
 
 - type: reagent
   id: Spaceacillin
-  name: spaceacillin
+  name: reagent-name-spaceacillin
   group: Medicine
-  desc: A theta-lactam antibiotic. A common and very useful medicine, effective against many diseases likely to be encountered in space. Slows progression of diseases.
-  physicalDesc: opaque
+  desc: reagent-desc-spaceacillin
+  physicalDesc: reagent-physical-desc-opaque
   color: "#9942f5"
   metabolisms:
     Medicine:
@@ -361,10 +439,10 @@
 
 - type: reagent
   id: Stellibinin
-  name: stellibinin
+  name: reagent-name-stellibinin
   group: Medicine
-  desc: A natual antitoxin with particular effectiveness against amatoxin.
-  physicalDesc: starry
+  desc: reagent-desc-stellibinin
+  physicalDesc: reagent-physical-desc-starry
   color: "#2b2f77"
   metabolisms:
     Medicine:
@@ -372,7 +450,7 @@
       - !type:HealthChange
         damage:
           types:
-            Poison: -1
+            Poison: -4
       - !type:AdjustReagent
         conditions:
         - !type:ReagentThreshold
@@ -383,10 +461,10 @@
 
 - type: reagent
   id: Synaptizine
-  name: synaptizine
+  name: reagent-name-synaptizine
   group: Medicine
-  desc: Toxic, but treats hallucinations, drowsiness & halves the duration of paralysis, stuns and knockdowns. One unit is enough to treat hallucinations; two units is deadly.
-  physicalDesc: pungent
+  desc: reagent-desc-synaptizine
+  physicalDesc: reagent-physical-desc-pungent
   color: "#d49a2f"
   metabolisms:
     Poison:
@@ -406,10 +484,10 @@
 
 - type: reagent
   id: TranexamicAcid
-  name: tranexamic acid
+  name: reagent-name-tranexamic-acid
   group: Medicine
-  desc: A blood clotting medicine for preventing heavy bleeding. Very dangerous in large quantities.
-  physicalDesc: viscous
+  desc: reagent-desc-tranexamic-acid
+  physicalDesc: reagent-physical-desc-viscous
   color: "#ba7d7d"
   metabolisms:
     Medicine:
@@ -428,10 +506,10 @@
 
 - type: reagent
   id: Tricordrazine
-  name: tricordrazine
+  name: reagent-name-tricordrazine
   group: Medicine
-  desc: A wide-spectrum stimulant, originally derived from Cordrazine. It is capable of healing most common damage types simultaneously, however only at about half the rate of other medications. Because of its low potency, it's best used as a supplement to other medicines.
-  physicalDesc: opaque
+  desc: reagent-desc-tricordrazine
+  physicalDesc: reagent-physical-desc-opaque
   color: "#00e5ff"
   metabolisms:
     Medicine:
@@ -449,10 +527,10 @@
 
 - type: reagent
   id: Lipozine
-  name: lipozine
+  name: reagent-name-lipozine
   group: Medicine
-  desc: Causes weight loss upon consumption.
-  physicalDesc: oily
+  desc: reagent-desc-lipozine
+  physicalDesc: reagent-physical-desc-oily
   color: "#2690b5"
   metabolisms:
     Medicine:
@@ -463,10 +541,10 @@
 
 - type: reagent
   id: Omnizine
-  name: Omnizine
+  name: reagent-name-omnizine
   group: Medicine
-  desc: A soothing milky liquid with an iridescent gleam. A well known conspiracy theory says that it's origins remain a mystery because knowing the secrets of its production would render most commercial pharmaceuticals obsolete.
-  physicalDesc: soothing
+  desc: reagent-desc-omnizine
+  physicalDesc: reagent-physical-desc-soothing
   color: "#fcf7f9"
   metabolisms:
     Medicine:
@@ -481,10 +559,10 @@
 
 - type: reagent
   id: Ultravasculine
-  name: ultravasculine
+  name: reagent-name-ultravasculine
   group: Medicine
-  desc: Rapidly flushes toxins from the body, but places some stress on the veins. Do not overdose.
-  physicalDesc: thick and grainy
+  desc: reagent-desc-ultravasculine
+  physicalDesc: reagent-physical-desc-thick-and-grainy
   color: "#520e30"
   metabolisms:
     Medicine:

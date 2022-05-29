@@ -1,4 +1,3 @@
-using System;
 using System.Threading;
 using Content.Server.Administration.Logs;
 using Content.Server.Chat.Managers;
@@ -6,9 +5,6 @@ using Content.Server.GameTicking;
 using Content.Shared.Database;
 using Content.Shared.GameTicking;
 using Robust.Shared.Audio;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Localization;
 using Robust.Shared.Player;
 using Robust.Shared.Timing;
 using Timer = Robust.Shared.Timing.Timer;
@@ -21,7 +17,7 @@ namespace Content.Server.RoundEnd
         [Dependency] private readonly IChatManager _chatManager = default!;
         [Dependency] private readonly GameTicker _gameTicker = default!;
 
-        [Dependency] private readonly AdminLogSystem _adminLog = default!;
+        [Dependency] private readonly IAdminLogManager _adminLogger = default!;
 
 
         public TimeSpan DefaultCooldownDuration { get; set; } = TimeSpan.FromSeconds(30);
@@ -77,11 +73,11 @@ namespace Content.Server.RoundEnd
 
             if (requester != null)
             {
-                _adminLog.Add(LogType.ShuttleCalled, LogImpact.High, $"Shuttle called by {ToPrettyString(requester.Value):user}");
+                _adminLogger.Add(LogType.ShuttleCalled, LogImpact.High, $"Shuttle called by {ToPrettyString(requester.Value):user}");
             }
             else
             {
-                _adminLog.Add(LogType.ShuttleCalled, LogImpact.High, $"Shuttle called");
+                _adminLogger.Add(LogType.ShuttleCalled, LogImpact.High, $"Shuttle called");
             }
 
             _chatManager.DispatchStationAnnouncement(Loc.GetString("round-end-system-shuttle-called-announcement",("minutes", countdownTime.Minutes)), Loc.GetString("Station"), false, Color.Gold);
@@ -106,14 +102,15 @@ namespace Content.Server.RoundEnd
 
             if (requester != null)
             {
-                _adminLog.Add(LogType.ShuttleRecalled, LogImpact.High, $"Shuttle recalled by {ToPrettyString(requester.Value):user}");
+                _adminLogger.Add(LogType.ShuttleRecalled, LogImpact.High, $"Shuttle recalled by {ToPrettyString(requester.Value):user}");
             }
             else
             {
-                _adminLog.Add(LogType.ShuttleRecalled, LogImpact.High, $"Shuttle recalled");
+                _adminLogger.Add(LogType.ShuttleRecalled, LogImpact.High, $"Shuttle recalled");
             }
 
-            _chatManager.DispatchStationAnnouncement(Loc.GetString("round-end-system-shuttle-recalled-announcement"), Loc.GetString("Station"), false);
+            _chatManager.DispatchStationAnnouncement(Loc.GetString("round-end-system-shuttle-recalled-announcement"),
+                Loc.GetString("Station"), false, colorOverride: Color.Gold);
 
             SoundSystem.Play(Filter.Broadcast(), "/Audio/Announcements/shuttlerecalled.ogg");
 

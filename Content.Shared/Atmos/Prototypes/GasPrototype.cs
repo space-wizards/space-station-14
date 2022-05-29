@@ -1,8 +1,6 @@
 ﻿using Content.Shared.Chemistry.Reagent;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
-using Robust.Shared.ViewVariables;
 
 namespace Content.Shared.Atmos.Prototypes
 {
@@ -15,7 +13,7 @@ namespace Content.Shared.Atmos.Prototypes
         // TODO: Add interfaces for gas behaviours e.g. breathing, burning
 
         [ViewVariables]
-        [DataField("id", required: true)]
+        [IdDataFieldAttribute]
         public string ID { get; } = default!;
 
         /// <summary>

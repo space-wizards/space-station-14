@@ -44,9 +44,9 @@
         acts: [ "Destruction" ]
   - type: Tag
     tags:
-    - Recyclable
     - Trash
   - type: Recyclable
+  - type: SpaceGarbage
 
 - type: entity
   name: broken plate
@@ -60,9 +60,9 @@
     netsync: false
   - type: Tag
     tags:
-    - Recyclable
     - Trash
   - type: Recyclable
+  - type: SpaceGarbage
 
 # Small Plate
 
@@ -132,7 +132,7 @@
   name: pie tin
   parent: BaseItem
   id: FoodPlateTin
-  description: A cheap, foil tin for pies.
+  description: A cheap foil tin for pies.
   components:
   - type: Sprite
     sprite: Objects/Consumable/Food/plates.rsi
@@ -142,3 +142,4 @@
     tags:
     - Trash
   - type: Recyclable
+  - type: SpaceGarbage

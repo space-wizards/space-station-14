@@ -72,38 +72,148 @@
   id: FloorTileStackShuttleWhite
   name: white shuttle tile
   spawn: FloorTileItemShuttleWhite
-  
+
 - type: stack
   id: FloorTileStackShuttleBlue
   name: blue shuttle tile
   spawn: FloorTileItemShuttleBlue
-  
+
 - type: stack
   id: FloorTileStackShuttleOrange
   name: orange shuttle tile
   spawn: FloorTileItemShuttleOrange
-  
+
 - type: stack
   id: FloorTileStackShuttlePurple
   name: purple shuttle tile
   spawn: FloorTileItemShuttlePurple
-  
+
 - type: stack
   id: FloorTileStackShuttleRed
   name: red shuttle tile
   spawn: FloorTileItemShuttleRed
-  
+
 - type: stack
   id: FloorTileStackEighties
   name: eighties floor tile
   spawn: FloorTileItemEighties
-  
+
 - type: stack
   id: FloorTileStackArcadeBlue
   name: blue arcade tile
   spawn: FloorTileItemArcadeBlue
-  
+
 - type: stack
   id: FloorTileStackArcadeRed
   name: red arcade tile
   spawn: FloorTileItemArcadeRed
+
+- type: stack
+  id: FloorCarpetRed
+  name: red carpet tile
+  spawn: FloorCarpetItemRed
+
+- type: stack
+  id: FloorCarpetBlack
+  name: block carpet tile
+  spawn: FloorCarpetItemBlack
+
+- type: stack
+  id: FloorCarpetBlue
+  name: blue carpet tile
+  spawn: FloorCarpetItemBlue
+
+- type: stack
+  id: FloorCarpetGreen
+  name: green carpet tile
+  spawn: FloorCarpetItemGreen
+
+- type: stack
+  id: FloorCarpetOrange
+  name: orange carpet tile
+  spawn: FloorCarpetItemOrange
+
+- type: stack
+  id: FloorCarpetSkyBlue
+  name: skyblue carpet tile
+  spawn: FloorCarpetItemSkyBlue
+
+- type: stack
+  id: FloorCarpetPurple
+  name: purple carpet tile
+  spawn: FloorCarpetItemPurple
+
+- type: stack
+  id: FloorCarpetPink
+  name: pink carpet tile
+  spawn: FloorCarpetItemPink
+
+- type: stack
+  id: FloorTileElevatorShaft
+  name: elevator shaft tile
+  spawn: FloorTileItemElevatorShaft
+
+- type: stack
+  id: FloorTileRockVault
+  name: rock vault tile
+  spawn: FloorTileItemRockVault
+
+- type: stack
+  id: FloorTileBlue
+  name: blue floor tile
+  spawn: FloorTileItemBlue
+
+- type: stack
+  id: FloorTileBar
+  name: item bar floor tile
+  spawn: FloorTileItemBar
+
+- type: stack
+  id: FloorTileClown
+  name: clown floor tile
+  spawn: FloorTileItemClown
+
+- type: stack
+  id: FloorTileMime
+  name: mime floor tile
+  spawn: FloorTileItemMime
+
+- type: stack
+  id: FloorTileKitchen
+  name: kitchen floor tile
+  spawn: FloorTileItemKitchen
+
+- type: stack
+  id: FloorTileLaundry
+  name: laundry floor tile
+  spawn: FloorTileItemLaundry
+
+- type: stack
+  id: FloorTileSilver
+  name: silver floor tile
+  spawn: FloorTileItemSilver
+
+- type: stack
+  id: FloorTileGCircuit
+  name: gcircuit floor tile
+  spawn: FloorTileItemGCircuit
+
+- type: stack
+  id: FloorTileBCircuit
+  name: bcircuit floor tile
+  spawn: FloorTileItemBCircuit
+
+- type: stack
+  id: FloorTileGrass
+  name: grass floor tile
+  spawn: FloorTileItemGrass
+
+- type: stack
+  id: FloorTileGrassJungle
+  name: grass jungle floor tile
+  spawn: FloorTileItemGrassJungle
+
+- type: stack
+  id: FloorTileSnow
+  name: snow floor tile
+  spawn: FloorTileItemSnow

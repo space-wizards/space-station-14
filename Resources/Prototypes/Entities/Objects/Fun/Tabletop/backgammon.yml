@@ -16,7 +16,7 @@
 - type: entity
   id: BackgammonBoardTabletop
   name: backgammon
-  abstract: true
+  noSpawn: true
   components:
   - type: Sprite
     sprite: Objects/Fun/Tabletop/backgammon_tabletop.rsi

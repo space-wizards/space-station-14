@@ -5,14 +5,18 @@
   description: An interstellar-grade space farmplot allowing for rapid growth and selective breeding of crops. Just... keep in mind the space weeds.
   components:
   - type: Physics
+    fixedRotation: false
+  - type: Transform
+    noRot: true
   - type: Fixtures
     fixtures:
     - shape:
-        !type:PhysShapeAabb {}
+        !type:PhysShapeAabb
+        bounds: "-0.45,-0.45,0.45,0.1"
       mass: 25
       hard: true
       mask:
-      - Impassable
+      - MachineMask
   - type: Anchorable
   - type: Pullable
   - type: Sprite

@@ -1,7 +1,4 @@
-using Robust.Shared.Localization;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Serialization.Manager.Attributes;
-using Robust.Shared.ViewVariables;
 
 namespace Content.Shared.Access
 {
@@ -12,7 +9,7 @@ namespace Content.Shared.Access
     public sealed class AccessLevelPrototype : IPrototype
     {
         [ViewVariables]
-        [DataField("id", required: true)]
+        [IdDataFieldAttribute]
         public string ID { get; } = default!;
 
         /// <summary>

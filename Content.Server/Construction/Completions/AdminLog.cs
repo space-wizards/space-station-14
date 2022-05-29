@@ -11,7 +11,7 @@ namespace Content.Server.Construction.Completions;
 [UsedImplicitly]
 public sealed class AdminLog : IGraphAction
 {
-    [DataField("logType", required: true)]
+    [DataField("logType")]
     public LogType LogType = LogType.Construction;
 
     [DataField("impact")]
@@ -22,11 +22,11 @@ public sealed class AdminLog : IGraphAction
 
     public void PerformAction(EntityUid uid, EntityUid? userUid, IEntityManager entityManager)
     {
-        var logSys = entityManager.EntitySysManager.GetEntitySystem<AdminLogSystem>();
+        var logManager = IoCManager.Resolve<IAdminLogManager>();
 
         if (userUid.HasValue)
-            logSys.Add(LogType, Impact, $"{Message} - Entity: {entityManager.ToPrettyString(uid):entity}, User: {entityManager.ToPrettyString(userUid.Value):user}");
+            logManager.Add(LogType, Impact, $"{Message} - Entity: {entityManager.ToPrettyString(uid):entity}, User: {entityManager.ToPrettyString(userUid.Value):user}");
         else
-            logSys.Add(LogType, Impact, $"{Message} - Entity: {entityManager.ToPrettyString(uid):entity}");
+            logManager.Add(LogType, Impact, $"{Message} - Entity: {entityManager.ToPrettyString(uid):entity}");
     }
 }

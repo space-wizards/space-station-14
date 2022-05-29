@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using System.Threading.Tasks;
 using Content.Server.Administration.Managers;
 using Content.Server.Database;
@@ -8,8 +6,6 @@ using Content.Server.EUI;
 using Content.Shared.Administration;
 using Content.Shared.Eui;
 using Robust.Server.Player;
-using Robust.Shared.IoC;
-using Robust.Shared.Log;
 using Robust.Shared.Network;
 using DbAdminRank = Content.Server.Database.AdminRank;
 using static Content.Shared.Administration.PermissionsEuiMsg;

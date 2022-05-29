@@ -35,6 +35,18 @@
       "name": "quartertile_overlay_270"
     },
     {
+      "name": "threequartertile_overlay"
+    },
+    {
+      "name": "threequartertile_overlay_90"
+    },
+    {
+      "name": "threequartertile_overlay_180"
+    },
+    {
+      "name": "threequartertile_overlay_270"
+    },
+    {
       "name": "checkerNESW"
     },
     {

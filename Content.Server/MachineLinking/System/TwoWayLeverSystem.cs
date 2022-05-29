@@ -1,50 +1,53 @@
-﻿using System;
 using Content.Server.MachineLinking.Components;
-using Content.Server.MachineLinking.Events;
 using Content.Shared.Interaction;
 using Content.Shared.MachineLinking;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
 
 namespace Content.Server.MachineLinking.System
 {
     public sealed class TwoWayLeverSystem : EntitySystem
     {
+        [Dependency] private readonly SignalLinkerSystem _signalSystem = default!;
+
         public override void Initialize()
         {
             base.Initialize();
-
-            SubscribeLocalEvent<TwoWayLeverComponent, InteractHandEvent>(OnInteractHand);
-            SubscribeLocalEvent<TwoWayLeverComponent, SignalValueRequestedEvent>(OnSignalValueRequested);
+            SubscribeLocalEvent<TwoWayLeverComponent, ComponentInit>(OnInit);
+            SubscribeLocalEvent<TwoWayLeverComponent, ActivateInWorldEvent>(OnActivated);
         }
 
-        private void OnSignalValueRequested(EntityUid uid, TwoWayLeverComponent component, SignalValueRequestedEvent args)
+        private void OnInit(EntityUid uid, TwoWayLeverComponent component, ComponentInit args)
         {
-            args.Signal = component.State;
-            args.Handled = true;
+            _signalSystem.EnsureTransmitterPorts(uid, component.LeftPort, component.RightPort, component.MiddlePort);
         }
 
-        private void OnInteractHand(EntityUid uid, TwoWayLeverComponent component, InteractHandEvent args)
+        private void OnActivated(EntityUid uid, TwoWayLeverComponent component, ActivateInWorldEvent args)
         {
+            if (args.Handled)
+                return;
+
             component.State = component.State switch
             {
-                TwoWayLeverSignal.Middle => component.NextSignalLeft ? TwoWayLeverSignal.Left : TwoWayLeverSignal.Right,
-                TwoWayLeverSignal.Right => TwoWayLeverSignal.Middle,
-                TwoWayLeverSignal.Left => TwoWayLeverSignal.Middle,
+                TwoWayLeverState.Middle => component.NextSignalLeft ? TwoWayLeverState.Left : TwoWayLeverState.Right,
+                TwoWayLeverState.Right => TwoWayLeverState.Middle,
+                TwoWayLeverState.Left => TwoWayLeverState.Middle,
                 _ => throw new ArgumentOutOfRangeException()
             };
 
-            if (component.State == TwoWayLeverSignal.Middle)
-            {
+            if (component.State == TwoWayLeverState.Middle)
                 component.NextSignalLeft = !component.NextSignalLeft;
-            }
 
-            if (EntityManager.TryGetComponent<AppearanceComponent>(uid, out var appearanceComponent))
-            {
+            if (TryComp(uid, out AppearanceComponent? appearanceComponent))
                 appearanceComponent.SetData(TwoWayLeverVisuals.State, component.State);
-            }
 
-            RaiseLocalEvent(uid, new InvokePortEvent("state", component.State));
+            var port = component.State switch
+            {
+                TwoWayLeverState.Left => component.LeftPort,
+                TwoWayLeverState.Right => component.RightPort,
+                TwoWayLeverState.Middle => component.MiddlePort,
+                _ => throw new ArgumentOutOfRangeException()
+            };
+
+            _signalSystem.InvokePort(uid, port);
             args.Handled = true;
         }
     }

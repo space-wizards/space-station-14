@@ -5,7 +5,7 @@
 # These dots' texture detection should not interfere with the actual bounding box being tested.
 
 - type: entity
-  abstract: true
+  noSpawn: true
   id: ClickTestBase
   suffix: DEBUG
   components:

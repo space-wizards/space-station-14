@@ -22,6 +22,7 @@
 - type: accessGroup
   id: Service
   tags:
+  - HeadOfPersonnel
   - Bar
   - Kitchen
   - Hydroponics

@@ -3,17 +3,14 @@
   parent: BaseStructure
   name: bar sign
   components:
+  - type: MeleeSound
+    soundGroups:
+      Brute:
+        path:
+          "/Audio/Effects/glass_hit.ogg"
   - type: WallMount
-  - type: Physics
-  - type: Fixtures
-    fixtures:
-    - shape:
-        !type:PhysShapeAabb
-          bounds: "-0.95,-0.45,1,0.45"
-      layer:
-      - Passable
   - type: Sprite
-    drawdepth: WallTops
+    drawdepth: Objects
     sprite: Structures/Wallmounts/barsign.rsi
     state: empty
   - type: ApcPowerReceiver
@@ -31,11 +28,10 @@
 - type: entity
   id: LargeBarSign
   name: large bar sign
-  abstract: true
+  noSpawn: true
   components:
   - type: Clickable
   - type: InteractionOutline
-  - type: Physics
   - type: Sprite
     drawdepth: WallTops
     sprite: Structures/Wallmounts/sylphs.rsi

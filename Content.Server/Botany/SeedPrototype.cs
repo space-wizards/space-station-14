@@ -1,24 +1,20 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using Content.Server.Botany.Components;
 using Content.Server.Botany.Systems;
 using Content.Shared.Atmos;
-using Content.Shared.Popups;
-using Content.Shared.Random.Helpers;
-using Content.Shared.Tag;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Localization;
-using Robust.Shared.Map;
-using Robust.Shared.Maths;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Random;
-using Robust.Shared.Serialization.Manager.Attributes;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.List;
 using Robust.Shared.Utility;
 
 namespace Content.Server.Botany;
+
+
+
+[Prototype("seed")]
+public sealed class SeedPrototype : SeedData, IPrototype
+{
+    [IdDataField] public string ID { get; private init; } = default!;
+}
 
 public enum HarvestType : byte
 {
@@ -65,33 +61,53 @@ public struct SeedChemQuantity
     [DataField("PotencyDivisor")] public int PotencyDivisor;
 }
 
-[Prototype("seed")]
-public sealed class SeedPrototype : IPrototype
+// TODO reduce the number of friends to a reasonable level. Requires ECS-ing things like plant holder component.
+[Virtual, DataDefinition]
+[Friend(typeof(BotanySystem), typeof(PlantHolderSystem), typeof(SeedExtractorSystem), typeof(PlantHolderComponent))]
+public class SeedData
 {
-    public const string Prototype = "SeedBase";
-
-    [DataField("id", required: true)] public string ID { get; private init; } = default!;
+    #region Tracking
+    /// <summary>
+    ///     The name of this seed. Determines the name of seed packets.
+    /// </summary>
+    [DataField("name")] public string Name = string.Empty;
 
     /// <summary>
-    ///     Unique identifier of this seed. Do NOT set this.
+    ///     The noun for this type of seeds. E.g. for fungi this should probably be "spores" instead of "seeds". Also
+    ///     used to determine the name of seed packets.
     /// </summary>
-    public int Uid { get; internal set; } = -1;
+    [DataField("noun")] public string Noun = "seeds";
 
-    #region Tracking
-
-    [DataField("name")] public string Name = string.Empty;
-    [DataField("seedName")] public string SeedName = string.Empty;
-    [DataField("seedNoun")] public string SeedNoun = "seeds";
+    /// <summary>
+    ///     Name displayed when examining the hydroponics tray. Describes the actual plant, not the seed itself.
+    /// </summary>
     [DataField("displayName")] public string DisplayName = string.Empty;
 
-    [DataField("roundStart")] public bool RoundStart = true;
     [DataField("mysterious")] public bool Mysterious;
+
+    /// <summary>
+    ///     If true, the properties of this seed cannot be modified.
+    /// </summary>
     [DataField("immutable")] public bool Immutable;
 
+    /// <summary>
+    ///     If true, there is only a single reference to this seed and it's properties can be directly modified without
+    ///     needing to clone the seed.
+    /// </summary>
+    [ViewVariables]
+    public bool Unique = false; // seed-prototypes or yaml-defined seeds for entity prototypes will not generally be unique.
     #endregion
 
     #region Output
+    /// <summary>
+    ///     The entity prototype that is spawned when this type of seed is extracted from produce using a seed extractor.
+    /// </summary>
+    [DataField("packetPrototype", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
+    public string PacketPrototype = "SeedBase";
 
+    /// <summary>
+    ///     The entity prototype this seed spawns when it gets harvested.
+    /// </summary>
     [DataField("productPrototypes", customTypeSerializer: typeof(PrototypeIdListSerializer<EntityPrototype>))]
     public List<string> ProductPrototypes = new();
 
@@ -137,7 +153,13 @@ public sealed class SeedPrototype : IPrototype
 
     [DataField("potency")] public float Potency = 1f;
 
+    /// <summary>
+    ///     If true, a sharp tool is required to harvest this plant.
+    /// </summary>
+    [DataField("ligneous")] public bool Ligneous;
+
     // No, I'm not removing these.
+    // if you re-add these, make sure that they get cloned.
     //public PlantSpread Spread { get; set; }
     //public PlantMutation Mutation { get; set; }
     //public float AlterTemperature { get; set; }
@@ -146,8 +168,6 @@ public sealed class SeedPrototype : IPrototype
     //public bool Hematophage { get; set; }
     //public bool Thorny { get; set; }
     //public bool Stinging { get; set; }
-
-    [DataField("ligneous")] public bool Ligneous;
     // public bool Teleporting { get; set; }
     // public PlantJuicy Juicy { get; set; }
 
@@ -168,17 +188,18 @@ public sealed class SeedPrototype : IPrototype
 
     #endregion
 
-    public SeedPrototype Clone()
+    public SeedData Clone()
     {
-        var newSeed = new SeedPrototype
+        DebugTools.Assert(!Immutable, "There should be no need to clone an immutable seed.");
+
+        var newSeed = new SeedData
         {
-            ID = ID,
             Name = Name,
-            SeedName = SeedName,
-            SeedNoun = SeedNoun,
-            RoundStart = RoundStart,
+            Noun = Noun,
+            DisplayName = DisplayName,
             Mysterious = Mysterious,
 
+            PacketPrototype = PacketPrototype,
             ProductPrototypes = new List<string>(ProductPrototypes),
             Chemicals = new Dictionary<string, SeedChemQuantity>(Chemicals),
             ConsumeGasses = new Dictionary<Gas, float>(ConsumeGasses),
@@ -209,14 +230,14 @@ public sealed class SeedPrototype : IPrototype
             PlantIconState = PlantIconState,
             Bioluminescent = Bioluminescent,
             BioluminescentColor = BioluminescentColor,
-            SplatPrototype = SplatPrototype
+            SplatPrototype = SplatPrototype,
+
+            Ligneous = Ligneous,
+
+            // Newly cloned seed is unique. No need to unnecessarily clone if repeatedly modified.
+            Unique = true,
         };
 
         return newSeed;
-    }
-
-    public SeedPrototype Diverge(bool modified)
-    {
-        return Clone();
     }
 }

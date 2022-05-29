@@ -8,7 +8,6 @@ using Content.Shared.Examine;
 using Content.Shared.FixedPoint;
 using JetBrains.Annotations;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Utility;
 
 namespace Content.Server.Chemistry.EntitySystems;
 
@@ -41,9 +40,9 @@ public sealed partial class SolutionContainerSystem : EntitySystem
 
     private void InitSolution(EntityUid uid, SolutionContainerManagerComponent component, ComponentInit args)
     {
-        foreach (var keyValue in component.Solutions)
+        foreach (var (name, solutionHolder) in component.Solutions)
         {
-            var solutionHolder = keyValue.Value;
+            solutionHolder.Name = name;
             if (solutionHolder.MaxVolume == FixedPoint2.Zero)
             {
                 solutionHolder.MaxVolume = solutionHolder.TotalVolume > solutionHolder.InitialMaxVolume
@@ -87,7 +86,7 @@ public sealed partial class SolutionContainerSystem : EntitySystem
             ("wordedAmount", Loc.GetString(solutionHolder.Contents.Count == 1
                 ? "shared-solution-container-component-on-examine-worded-amount-one-reagent"
                 : "shared-solution-container-component-on-examine-worded-amount-multiple-reagents")),
-            ("desc", Loc.GetString(proto.PhysicalDescription))));
+            ("desc", proto.LocalizedPhysicalDescription)));
     }
 
     public void UpdateAppearance(EntityUid uid, Solution solution,
@@ -283,7 +282,7 @@ public sealed partial class SolutionContainerSystem : EntitySystem
 
         if (!solutionsMgr.Solutions.ContainsKey(name))
         {
-            var newSolution = new Solution();
+            var newSolution = new Solution() { Name = name };
             solutionsMgr.Solutions.Add(name, newSolution);
         }
 

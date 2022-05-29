@@ -4,7 +4,6 @@ using System.Threading.Tasks;
 using NUnit.Framework;
 using Robust.Client.GameObjects;
 using Robust.Client.ResourceManagement;
-using Robust.Shared.GameObjects;
 using Robust.Shared.Prototypes;
 
 namespace Content.IntegrationTests.Tests
@@ -24,7 +23,7 @@ namespace Content.IntegrationTests.Tests
             {
                 foreach (var proto in prototypeManager.EnumeratePrototypes<EntityPrototype>())
                 {
-                    if (proto.Abstract || !proto.Components.ContainsKey("Sprite")) continue;
+                    if (proto.NoSpawn || proto.Abstract || !proto.Components.ContainsKey("Sprite")) continue;
 
                     Assert.DoesNotThrow(() =>
                     {

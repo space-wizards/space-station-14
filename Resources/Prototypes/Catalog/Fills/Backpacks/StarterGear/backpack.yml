@@ -1,7 +1,7 @@
 - type: entity
-  abstract: true
   parent: ClothingBackpack
   id: ClothingBackpackFilled
+  noSpawn: true
   components:
   - type: StorageFill
     contents:
@@ -10,7 +10,7 @@
 #This should be temporary, at least until briefcases can spawn in hands.
 
 - type: entity
-  abstract: true
+  noSpawn: true
   parent: ClothingBackpack
   id: ClothingBackpackBriefcaseFilled
   components:
@@ -20,35 +20,37 @@
       - id: BriefcaseBrownFilled
 
 - type: entity
-  abstract: true
+  noSpawn: true
   parent: ClothingBackpackClown
   id: ClothingBackpackClownFilled
   components:
   - type: StorageFill
     contents:
       - id: BoxHug
+      - id: RubberStampClown
+      - id: CrayonRainbow
 
 - type: entity
-  abstract: true
+  noSpawn: true
   parent: ClothingBackpackSecurity
   id: ClothingBackpackSecurityFilled
   components:
   - type: StorageFill
     contents:
-      - id: BoxSurvival
+      - id: BoxSurvivalSecurity
       - id: Flash
 
 - type: entity
-  abstract: true
+  noSpawn: true
   parent: ClothingBackpackMedical
   id: ClothingBackpackMedicalFilled
   components:
   - type: StorageFill
     contents:
-      - id: BoxSurvival
+      - id: BoxSurvivalMedical
 
 - type: entity
-  abstract: true
+  noSpawn: true
   parent: ClothingBackpackCaptain
   id: ClothingBackpackCaptainFilled
   components:
@@ -59,16 +61,16 @@
       #- name: TelescopicBaton
 
 - type: entity
-  abstract: true
+  noSpawn: true
   parent: ClothingBackpackEngineering
   id: ClothingBackpackEngineeringFilled
   components:
   - type: StorageFill
     contents:
-      - id: BoxSurvival
+      - id: BoxSurvivalEngineering
 
 - type: entity
-  abstract: true
+  noSpawn: true
   parent: ClothingBackpackScience
   id: ClothingBackpackScienceFilled
   components:
@@ -77,7 +79,7 @@
       - id: BoxSurvival
 
 - type: entity
-  abstract: true
+  noSpawn: true
   parent: ClothingBackpackHydroponics
   id: ClothingBackpackHydroponicsFilled
   components:
@@ -86,16 +88,17 @@
       - id: BoxSurvival
 
 - type: entity
-  abstract: true
+  noSpawn: true
   parent: ClothingBackpackMime
   id: ClothingBackpackMimeFilled
   components:
   - type: StorageFill
     contents:
       - id: BoxSurvival
+      - id: RubberStampMime
 
 - type: entity
-  abstract: true
+  noSpawn: true
   parent: ClothingBackpackChemistry
   id: ClothingBackpackChemistryFilled
   components:
@@ -104,7 +107,7 @@
       - id: BoxSurvival
 
 - type: entity
-  abstract: true
+  noSpawn: true
   parent: ClothingBackpack
   id: ClothingBackpackChaplainFilled
   components:
@@ -112,9 +115,10 @@
     contents:
       - id: BoxSurvival
       - id: Bible
+      - id: RubberStampChaplain
 
 - type: entity
-  abstract: true
+  noSpawn: true
   parent: ClothingBackpack
   id: ClothingBackpackMusicianFilled
   components:

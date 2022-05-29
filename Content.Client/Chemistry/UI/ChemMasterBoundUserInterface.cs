@@ -1,8 +1,7 @@
 using Content.Shared.Chemistry.Dispenser;
+using Content.Shared.Containers.ItemSlots;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
-using Robust.Shared.GameObjects;
-using Robust.Shared.Localization;
 using static Content.Shared.Chemistry.Components.SharedChemMasterComponent;
 
 namespace Content.Client.Chemistry.UI
@@ -38,7 +37,7 @@ namespace Content.Client.Chemistry.UI
             _window.OnClose += Close;
 
             //Setup static button actions.
-            _window.EjectButton.OnPressed += _ => PrepareData(UiAction.Eject, null, null, null, null, null);
+            _window.EjectButton.OnPressed += _ => SendMessage(new ItemSlotButtonPressedEvent(BeakerSlotId));
             _window.BufferTransferButton.OnPressed += _ => PrepareData(UiAction.Transfer, null, null, null, null, null);
             _window.BufferDiscardButton.OnPressed += _ => PrepareData(UiAction.Discard, null, null, null, null, null);
             _window.CreatePillButton.OnPressed += _ => PrepareData(UiAction.CreatePills, null, _window.LabelLine, null, _window.PillAmount.Value, null);

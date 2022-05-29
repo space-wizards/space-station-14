@@ -104,7 +104,7 @@
   parent: DrinkBottleBaseFull
   id: DrinkColaBottleFull
   name: space cola bottle
-  description: Cola. in space
+  description: Cola. In space.
   components:
   - type: SolutionContainerManager
     solutions:

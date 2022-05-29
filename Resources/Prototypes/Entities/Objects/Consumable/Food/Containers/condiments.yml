@@ -599,7 +599,7 @@
 # Maybe in some dumb universe you could put liquid back in this and seal it
 # with a lighter or something.
 - type: entity
-  abstract: true
+  noSpawn: true
   parent: BaseItem
   id: FoodCondimentPacketTrash
   name: empty condiment packet

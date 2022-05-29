@@ -1,23 +1,28 @@
 using Content.Shared.Stacks;
 using JetBrains.Annotations;
-using Robust.Shared.GameObjects;
 
 namespace Content.Client.Stack
 {
     [UsedImplicitly]
     public sealed class StackSystem : SharedStackSystem
     {
-        public override void Initialize()
+        public override void SetCount(EntityUid uid, int amount, SharedStackComponent? component = null)
         {
-            base.Initialize();
+            if (!Resolve(uid, ref component))
+                return;
 
-            SubscribeLocalEvent<StackComponent, StackCountChangedEvent>(OnStackCountChanged);
-        }
+            base.SetCount(uid, amount, component);
 
-        private void OnStackCountChanged(EntityUid uid, StackComponent component, StackCountChangedEvent args)
-        {
+            // TODO PREDICT ENTITY DELETION: This should really just be a normal entity deletion call.
+            if (component.Count <= 0)
+            {
+                Transform(uid).DetachParentToNull();
+                return;
+            }
+
             // Dirty the UI now that the stack count has changed.
-            component.UiUpdateNeeded = true;
+            if (component is StackComponent clientComp)
+                clientComp.UiUpdateNeeded = true;
         }
     }
 }

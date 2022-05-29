@@ -1,0 +1,46 @@
+<DefaultWindow
+    xmlns="https://spacestation14.io"
+    Title="{Loc 'admin-explosion-eui-title'}"
+    SetHeight="380">
+    <BoxContainer Name="MainContainer" Orientation="Vertical">
+
+        <BoxContainer Orientation="Horizontal">
+            <Label Text="{Loc 'admin-explosion-eui-label-type'}" MinSize="120 0" />
+            <OptionButton Name="ExplosionOption" MinSize="70 0" HorizontalExpand="True" />
+        </BoxContainer>
+        
+        <BoxContainer Orientation="Horizontal">
+            <Label Text="{Loc 'admin-explosion-eui-label-mapid'}" MinSize="120 0" />
+            <OptionButton Name="MapOptions" MinSize="70 0" HorizontalExpand="True" />
+        </BoxContainer>
+        <BoxContainer Orientation="Horizontal">
+            <Label Text="{Loc 'admin-explosion-eui-label-xmap'}" MinSize="120 0" />
+            <FloatSpinBox Name="MapX" MinSize="70 0" HorizontalExpand="True" />
+        </BoxContainer>
+        <BoxContainer Orientation="Horizontal">
+            <Label Text="{Loc 'admin-explosion-eui-label-ymap'}" MinSize="120 0" />
+            <FloatSpinBox Name="MapY" MinSize="70 0" HorizontalExpand="True" />
+        </BoxContainer>
+        <Button Name="Recentre" Text="{Loc 'admin-explosion-eui-label-current'}" />
+
+        <Control MinSize="0 20"/>
+
+        <CheckBox Name="Preview" Text="{Loc 'admin-explosion-eui-label-preview'}"/>
+        <BoxContainer Orientation="Horizontal">
+            <Label Text="{Loc 'admin-explosion-eui-label-total'}" MinSize="120 0"/>
+            <FloatSpinBox Name="Intensity" MinSize="130 0" HorizontalExpand="True" Value="200"/>
+        </BoxContainer>
+        <BoxContainer Orientation="Horizontal">
+            <Label Text="{Loc 'admin-explosion-eui-label-slope'}" MinSize="120 0" />
+            <FloatSpinBox Name="Slope" MinSize="130 0" HorizontalExpand="True" Value="5"/>
+        </BoxContainer>
+        <BoxContainer Orientation="Horizontal">
+            <Label Text="{Loc 'admin-explosion-eui-label-max'}" MinSize="120 0" />
+            <FloatSpinBox Name="MaxIntensity" MinSize="130 0" HorizontalExpand="True" Value="100"/>
+        </BoxContainer>
+
+        <Control MinSize="0 20"/>
+
+        <Button Name="Spawn" Text="{Loc 'admin-explosion-eui-label-spawn'}" />
+    </BoxContainer>
+</DefaultWindow>

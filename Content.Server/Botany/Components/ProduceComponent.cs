@@ -1,7 +1,5 @@
 using Content.Server.Botany.Systems;
-using Robust.Shared.Analyzers;
-using Robust.Shared.GameObjects;
-using Robust.Shared.Serialization.Manager.Attributes;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
 namespace Content.Server.Botany.Components;
 
@@ -11,5 +9,15 @@ public sealed class ProduceComponent : Component
 {
     [DataField("targetSolution")] public string SolutionName { get; set; } = "food";
 
-    [DataField("seed", required: true)] public string SeedName = default!;
+    /// <summary>
+    ///     Seed data used to create a <see cref="SeedComponent"/> when this produce has its seeds extracted.
+    /// </summary>
+    [DataField("seed")]
+    public SeedData? Seed;
+
+    /// <summary>
+    ///     Seed data used to create a <see cref="SeedComponent"/> when this produce has its seeds extracted.
+    /// </summary>
+    [DataField("seedId", customTypeSerializer: typeof(PrototypeIdSerializer<SeedPrototype>))]
+    public readonly string? SeedId;
 }

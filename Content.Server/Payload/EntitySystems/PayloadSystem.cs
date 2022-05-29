@@ -2,7 +2,6 @@ using Content.Server.Administration.Logs;
 using Content.Server.Chemistry.EntitySystems;
 using Content.Server.Explosion.EntitySystems;
 using Content.Shared.Chemistry.Components;
-using Content.Shared.Chemistry.Reaction;
 using Content.Shared.Database;
 using Content.Shared.Payload.Components;
 using Content.Shared.Tag;
@@ -16,8 +15,7 @@ public sealed class PayloadSystem : EntitySystem
 {
     [Dependency] private readonly TagSystem _tagSystem = default!;
     [Dependency] private readonly SolutionContainerSystem _solutionSystem = default!;
-    [Dependency] private readonly SharedChemicalReactionSystem _chemistrySystem = default!;
-    [Dependency] private readonly AdminLogSystem _logSystem = default!;
+    [Dependency] private readonly IAdminLogManager _adminLogger= default!;
     [Dependency] private readonly IComponentFactory _componentFactory = default!;
     [Dependency] private readonly ISerializationManager _serializationManager = default!;
 
@@ -125,7 +123,7 @@ public sealed class PayloadSystem : EntitySystem
         var solStringA = SolutionContainerSystem.ToPrettyString(solutionA);
         var solStringB = SolutionContainerSystem.ToPrettyString(solutionB);
 
-        _logSystem.Add(LogType.ChemicalReaction,
+        _adminLogger.Add(LogType.ChemicalReaction,
             $"Chemical bomb payload {ToPrettyString(uid):payload} at {Transform(uid).MapPosition:location} is combining two solutions: {solStringA:solutionA} and {solStringB:solutionB}");
 
         solutionA.MaxVolume += solutionB.MaxVolume;

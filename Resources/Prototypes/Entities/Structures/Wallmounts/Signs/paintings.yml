@@ -1,0 +1,91 @@
+- type: entity
+  parent: BaseSign
+  id: PaintingBase
+  abstract: true
+  components:
+  - type: WallMount
+    arc: 360
+  - type: Sprite
+    drawdepth: WallTops
+    sprite: Structures/Wallmounts/paintings.rsi
+
+- type: entity
+  parent: PaintingBase
+  id: PaintingEmpty
+  name: Empty Frame
+  description: An empty frame, waiting to be filled with art.
+  components:
+  - type: Sprite
+    state: painting0
+
+- type: entity
+  parent: PaintingBase
+  id: PaintingMoony
+  name: Abstract No.1
+  description: An imposing abstract painting. It feels like it's pressuring you to do good.
+  components:
+  - type: Sprite
+    state: painting1
+
+- type: entity
+  parent: PaintingBase
+  id: PaintingPersistenceOfMemory
+  name: The Persistence of Memory
+  description: This painting depicts a barren landscape. It's filled with various surreal objects.
+  components:
+  - type: Sprite
+    state: painting2
+
+- type: entity
+  parent: PaintingBase
+  id: PaintingTheSonOfMan
+  name: The Son of Man
+  description: This painting depicts a formal-looking man. His face is obscured by an apple.
+  components:
+  - type: Sprite
+    state: painting3
+
+- type: entity
+  parent: PaintingBase
+  id: PaintingTheKiss
+  name: The Kiss
+  description: This painting depicts a couple in tender embrace. It's covered in glittery gold ornamentation.
+  components:
+  - type: Sprite
+    state: painting4
+
+- type: entity
+  parent: PaintingBase
+  id: PaintingTheScream
+  name: The Scream
+  description: This painting depicts a distressed man standing on a bridge.
+  components:
+  - type: Sprite
+    state: painting5
+
+- type: entity
+  parent: PaintingBase
+  id: PaintingTheGreatWave
+  name: The Great Wave off Kanagawa
+  description: This painting depicts a majestic wave. It's throwing around several small fishing boats.
+  components:
+  - type: Sprite
+    state: painting6
+
+- type: entity
+  parent: PaintingBase
+  id: PaintingCafeTerraceAtNight
+  name: Cafe Terrace at Night
+  description: This painting depicts lively night scene at a cafe.
+  components:
+  - type: Sprite
+    state: painting7
+
+- type: entity
+  parent: PaintingBase
+  id: PaintingNightHawks
+  name: Nighthawks
+  description: This painting depicts a lonely-looking diner. The patrons are sitting glumly at the counter.
+  components:
+  - type: Sprite
+    state: painting8

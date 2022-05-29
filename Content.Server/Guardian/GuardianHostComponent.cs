@@ -31,9 +31,10 @@ namespace Content.Server.Guardian
             Description = "action-description-guardian",
             Icon = new SpriteSpecifier.Texture(new ResourcePath("Interface/Actions/manifest.png")),
             UseDelay = TimeSpan.FromSeconds(2),
+            CheckCanInteract = false, // allow use while stunned, etc. Gets removed on death anyways.
             Event =  new GuardianToggleActionEvent(),
         };
     }
 
-    public sealed class GuardianToggleActionEvent : PerformActionEvent { };
+    public sealed class GuardianToggleActionEvent : InstantActionEvent { };
 }

@@ -1,6 +1,5 @@
 ﻿using Content.Server.Temperature.Components;
 using Content.Shared.Chemistry.Reagent;
-using Robust.Shared.Serialization.Manager.Attributes;
 
 namespace Content.Server.Chemistry.ReagentEffectConditions
 {

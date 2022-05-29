@@ -1,13 +1,8 @@
-using System;
-using System.Collections.Generic;
 using Content.Server.Atmos.Components;
 using Content.Server.Atmos.Piping.Components;
 using Content.Server.NodeContainer.NodeGroups;
 using Content.Shared.Atmos;
 using Content.Shared.Maps;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Maths;
 using Robust.Shared.Timing;
 
 namespace Content.Server.Atmos.EntitySystems
@@ -219,15 +214,20 @@ namespace Content.Server.Atmos.EntitySystems
             if(!atmosphere.ProcessingPaused)
                 atmosphere.CurrentRunTiles = new Queue<TileAtmosphere>(atmosphere.HighPressureDelta);
 
+            // Note: This is still processed even if space wind is turned off since this handles playing the sounds.
+
             var number = 0;
             var bodies = EntityManager.GetEntityQuery<PhysicsComponent>();
             var xforms = EntityManager.GetEntityQuery<TransformComponent>();
+            var metas = EntityManager.GetEntityQuery<MetaDataComponent>();
             var pressureQuery = EntityManager.GetEntityQuery<MovedByPressureComponent>();
 
             while (atmosphere.CurrentRunTiles.TryDequeue(out var tile))
             {
-                HighPressureMovements(atmosphere, tile, bodies, xforms, pressureQuery);
+                HighPressureMovements(atmosphere, tile, bodies, xforms, pressureQuery, metas);
                 tile.PressureDifference = 0f;
+                tile.LastPressureDirection = tile.PressureDirection;
+                tile.PressureDirection = AtmosDirection.Invalid;
                 tile.PressureSpecificTarget = null;
                 atmosphere.HighPressureDelta.Remove(tile);
 

@@ -11,7 +11,7 @@ namespace Content.Shared.Hands.EntitySystems;
 
 public abstract partial class SharedHandsSystem : EntitySystem
 {
-    [Dependency] private readonly SharedAdminLogSystem _adminLogSystem = default!;
+    [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
     [Dependency] private readonly SharedInteractionSystem _interactionSystem = default!;
     [Dependency] private readonly ActionBlockerSystem _actionBlocker = default!;
     [Dependency] private readonly SharedContainerSystem _containerSystem = default!;
@@ -118,7 +118,7 @@ public abstract partial class SharedHandsSystem : EntitySystem
     }
 
     /// <summary>
-    ///     Enumerate over hands, with the active hand being first.
+    ///     Enumerate over held items, starting with the item in the currently active hand (if there is one).
     /// </summary>
     public IEnumerable<EntityUid> EnumerateHeld(EntityUid uid, SharedHandsComponent? handsComp = null)
     {

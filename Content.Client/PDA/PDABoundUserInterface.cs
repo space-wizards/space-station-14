@@ -1,14 +1,8 @@
 using Content.Client.Message;
+using Content.Shared.Containers.ItemSlots;
 using Content.Shared.PDA;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
-using Robust.Client.UserInterface.Controls;
-using Robust.Client.UserInterface.CustomControls;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Localization;
-using Robust.Shared.Prototypes;
-using static Robust.Client.UserInterface.Controls.BoxContainer;
 
 namespace Content.Client.PDA
 {
@@ -35,12 +29,12 @@ namespace Content.Client.PDA
 
             _menu.EjectIdButton.OnPressed += _ =>
             {
-                SendMessage(new PDAEjectIDMessage());
+                SendMessage(new ItemSlotButtonPressedEvent(PDAComponent.PDAIdSlotId));
             };
 
             _menu.EjectPenButton.OnPressed += _ =>
             {
-                SendMessage(new PDAEjectPenMessage());
+                SendMessage(new ItemSlotButtonPressedEvent(PDAComponent.PDAPenSlotId));
             };
 
             _menu.ActivateUplinkButton.OnPressed += _ =>

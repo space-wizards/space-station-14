@@ -17,7 +17,7 @@
       amount: 1
     Oxygen:
       amount: 1
-    Glucose:
+    Sugar:
       amount: 1
   products:
     Cryptobiolin: 3
@@ -137,10 +137,20 @@
       amount: 1
     Carbon:
       amount: 1
-    Glucose:
+    Sugar:
       amount: 1
   products:
     Inaprovaline: 3
+
+- type: reaction
+  id: Ipecac
+  reactants:
+    Dylovene:
+      amount: 1
+    Ammonia:
+      amount: 1
+  products:
+    Ipecac: 2
 
 - type: reaction
   id: TranexamicAcid
@@ -149,7 +159,7 @@
       amount: 1
     SulfuricAcid:
       amount: 1
-    Glucose:
+    Sugar:
       amount: 1
   products:
     TranexamicAcid: 3
@@ -190,11 +200,21 @@
     Phalanximine: 3
 
 - type: reaction
+  id: Romerol
+  reactants:
+    Phalanximine:
+      amount: 1
+    Tricordrazine:
+      amount: 1
+  products:
+    Romerol: 2
+
+- type: reaction
   id: Synaptizine
   reactants:
     Lithium:
       amount: 1
-    Glucose:
+    Sugar:
       amount: 1
     Water:
       amount: 1
@@ -228,7 +248,7 @@
       amount: 1
     Oxygen:
       amount: 1
-    Glucose:
+    Sugar:
       amount: 1
   products:
     Impedrezene: 3
@@ -273,7 +293,7 @@
   reactants:
     Mercury:
       amount: 1
-    Glucose:
+    Sugar:
       amount: 1
     Lithium:
       amount: 1

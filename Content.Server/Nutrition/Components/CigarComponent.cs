@@ -1,6 +1,4 @@
 using Content.Server.Nutrition.EntitySystems;
-using Robust.Shared.Analyzers;
-using Robust.Shared.GameObjects;
 
 namespace Content.Server.Nutrition.Components
 {

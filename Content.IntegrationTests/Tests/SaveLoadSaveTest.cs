@@ -4,8 +4,8 @@ using System.Threading.Tasks;
 using NUnit.Framework;
 using Robust.Server.Maps;
 using Robust.Shared.ContentPack;
+using Robust.Shared.Log;
 using Robust.Shared.Map;
-using Robust.Shared.Timing;
 using Robust.Shared.Utility;
 
 namespace Content.IntegrationTests.Tests
@@ -28,8 +28,8 @@ namespace Content.IntegrationTests.Tests
                 // TODO: Un-hardcode the grid Id for this test.
                 mapLoader.SaveBlueprint(new GridId(1), "save load save 1.yml");
                 var mapId = mapManager.CreateMap();
-                var grid = mapLoader.LoadBlueprint(mapId, "save load save 1.yml");
-                mapLoader.SaveBlueprint(grid!.Index, "save load save 2.yml");
+                var grid = mapLoader.LoadBlueprint(mapId, "save load save 1.yml").gridId;
+                mapLoader.SaveBlueprint(grid!.Value, "save load save 2.yml");
             });
 
             await server.WaitIdleAsync();
@@ -78,21 +78,25 @@ namespace Content.IntegrationTests.Tests
         [Test]
         public async Task LoadSaveTicksSaveSaltern()
         {
-            var server = StartServerDummyTicker();
+            var server = StartServerDummyTicker(new ServerIntegrationOptions()
+            {
+                // Don't blame me look at SaveLoadMultiGridMap
+                FailureLogLevel = LogLevel.Error,
+            });
             await server.WaitIdleAsync();
             var mapLoader = server.ResolveDependency<IMapLoader>();
             var mapManager = server.ResolveDependency<IMapManager>();
 
-            IMapGrid grid = default;
+            MapId mapId = default;
 
             // Load saltern.yml as uninitialized map, and save it to ensure it's up to date.
             server.Post(() =>
             {
-                var mapId = mapManager.CreateMap();
+                mapId = mapManager.CreateMap();
                 mapManager.AddUninitializedMap(mapId);
                 mapManager.SetMapPaused(mapId, true);
-                grid = mapLoader.LoadBlueprint(mapId, "Maps/saltern.yml");
-                mapLoader.SaveBlueprint(grid.Index, "load save ticks save 1.yml");
+                mapLoader.LoadMap(mapId, "Maps/saltern.yml");
+                mapLoader.SaveMap(mapId, "load save ticks save 1.yml");
             });
 
             // Run 5 ticks.
@@ -100,7 +104,7 @@ namespace Content.IntegrationTests.Tests
 
             server.Post(() =>
             {
-                mapLoader.SaveBlueprint(grid.Index, "/load save ticks save 2.yml");
+                mapLoader.SaveMap(mapId, "/load save ticks save 2.yml");
             });
 
             await server.WaitIdleAsync();

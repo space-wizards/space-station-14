@@ -2,7 +2,6 @@ using System.Linq;
 using Content.Server.Power.Components;
 using Content.Server.UserInterface;
 using Content.Shared.Arcade;
-using Content.Shared.Interaction;
 using Robust.Server.GameObjects;
 using Robust.Server.Player;
 using Robust.Shared.Random;
@@ -22,20 +21,6 @@ namespace Content.Server.Arcade.Components
 
         private IPlayerSession? _player;
         private readonly List<IPlayerSession> _spectators = new();
-
-        [Obsolete("Component Messages are deprecated, use Entity Events instead.")]
-        public override void HandleMessage(ComponentMessage message, IComponent? component)
-        {
-#pragma warning disable 618
-            base.HandleMessage(message, component);
-#pragma warning restore 618
-            switch (message)
-            {
-                case PowerChangedMessage powerChanged:
-                    OnPowerStateChanged(powerChanged);
-                    break;
-            }
-        }
 
         public void RegisterPlayerSession(IPlayerSession session)
         {
@@ -92,7 +77,7 @@ namespace Content.Server.Arcade.Components
             _game = new BlockGame(this);
         }
 
-        private void OnPowerStateChanged(PowerChangedMessage e)
+        public void OnPowerStateChanged(PowerChangedEvent e)
         {
             if (e.Powered) return;
 
@@ -370,7 +355,8 @@ namespace Content.Server.Arcade.Components
             {
                 _accumulatedFieldFrameTime += frameTime;
 
-                var checkTime = Speed;
+                // Speed goes negative sometimes. uhhhh max() it I guess!!!
+                var checkTime = Math.Max(0.03f, Speed);
 
                 while (_accumulatedFieldFrameTime >= checkTime)
                 {

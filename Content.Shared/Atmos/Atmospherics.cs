@@ -1,6 +1,4 @@
-using Robust.Shared.Maths;
 using Robust.Shared.Serialization;
-using System;
 // ReSharper disable InconsistentNaming
 
 namespace Content.Shared.Atmos

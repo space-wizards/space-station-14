@@ -35,3 +35,9 @@ petting-failure-holo = You reach out to pet {THE($target)}, but {POSS-ADJ($targe
 
 # Shown when knocking on a window
 comp-window-knock = *knock knock*
+
+## Hugging players
+
+hugging-success-generic = You hug {THE($target)}.
+hugging-success-generic-others = { CAPITALIZE(THE($user)) } hugs {THE($target)}.
+hugging-success-generic-target = { CAPITALIZE(THE($user)) } hugs you.

@@ -4,17 +4,19 @@ using Content.Server.Paper;
 using Content.Server.Power.Components;
 using Content.Shared.Cargo;
 using Robust.Shared.Audio;
-using Robust.Shared.GameObjects;
-using Robust.Shared.Localization;
 using Robust.Shared.Player;
 
 namespace Content.Server.Cargo;
 
 public sealed partial class CargoSystem
 {
+    [Dependency] private readonly PaperSystem _paperSystem = default!;
+
     private void InitializeTelepad()
     {
+        SubscribeLocalEvent<CargoTelepadComponent, ComponentInit>(OnInit);
         SubscribeLocalEvent<CargoTelepadComponent, PowerChangedEvent>(OnTelepadPowerChange);
+        // Shouldn't need re-anchored event
         SubscribeLocalEvent<CargoTelepadComponent, AnchorStateChangedEvent>(OnTelepadAnchorChange);
     }
 
@@ -52,6 +54,11 @@ public sealed partial class CargoSystem
             appearance?.SetData(CargoTelepadVisuals.State, CargoTelepadState.Teleporting);
             comp.Accumulator = comp.Delay;
         }
+    }
+
+    private void OnInit(EntityUid uid, CargoTelepadComponent telepad, ComponentInit args)
+    {
+        _linker.EnsureReceiverPorts(uid, telepad.ReceiverPort);
     }
 
     private void SetEnabled(CargoTelepadComponent component, ApcPowerReceiverComponent? receiver = null,
@@ -114,12 +121,13 @@ public sealed partial class CargoSystem
 
         MetaData(printed).EntityName = val;
 
-        paper.SetContent(Loc.GetString(
+        _paperSystem.SetContent(printed, Loc.GetString(
             "cargo-console-paper-print-text",
             ("orderNumber", data.OrderNumber),
             ("requester", data.Requester),
             ("reason", data.Reason),
-            ("approver", data.Approver)));
+            ("approver", data.Approver)),
+            paper);
 
         // attempt to attach the label
         if (TryComp<PaperLabelComponent>(product, out var label))

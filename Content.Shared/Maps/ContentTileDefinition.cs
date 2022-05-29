@@ -2,9 +2,7 @@ using Content.Shared.Sound;
 using JetBrains.Annotations;
 using Robust.Shared.Map;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
-using System.Collections.Generic;
 using Content.Shared.Atmos;
 
 namespace Content.Shared.Maps
@@ -13,16 +11,16 @@ namespace Content.Shared.Maps
     [Prototype("tile")]
     public sealed class ContentTileDefinition : IPrototype, IInheritingPrototype, ITileDefinition
     {
-        [DataField("parent", customTypeSerializer:typeof(PrototypeIdSerializer<ContentTileDefinition>))]
+        [ParentDataFieldAttribute(typeof(AbstractPrototypeIdSerializer<ContentTileDefinition>))]
         public string? Parent { get; private set; }
 
         [NeverPushInheritance]
-        [DataField("abstract")]
+        [AbstractDataFieldAttribute]
         public bool Abstract { get; private set; }
 
         public string Path => "/Textures/Tiles/";
 
-        [DataField("id", required: true)] public string ID { get; } = string.Empty;
+        [IdDataFieldAttribute] public string ID { get; } = string.Empty;
 
         public ushort TileId { get; private set; }
 

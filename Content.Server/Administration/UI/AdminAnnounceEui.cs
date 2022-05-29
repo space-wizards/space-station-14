@@ -3,7 +3,6 @@ using Content.Server.Chat.Managers;
 using Content.Server.EUI;
 using Content.Shared.Administration;
 using Content.Shared.Eui;
-using Robust.Shared.IoC;
 
 namespace Content.Server.Administration.UI
 {
@@ -47,7 +46,7 @@ namespace Content.Server.Administration.UI
                             _chatManager.DispatchServerAnnouncement(doAnnounce.Announcement);
                             break;
                         case AdminAnnounceType.Station:
-                            _chatManager.DispatchStationAnnouncement(doAnnounce.Announcement, doAnnounce.Announcer);
+                            _chatManager.DispatchStationAnnouncement(doAnnounce.Announcement, doAnnounce.Announcer, colorOverride: Color.Gold);
                             break;
                     }
 

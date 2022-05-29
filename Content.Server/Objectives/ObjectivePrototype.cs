@@ -1,9 +1,6 @@
-﻿using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using Content.Server.Objectives.Interfaces;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Serialization.Manager.Attributes;
-using Robust.Shared.ViewVariables;
 
 namespace Content.Server.Objectives
 {
@@ -11,7 +8,7 @@ namespace Content.Server.Objectives
     public sealed class ObjectivePrototype : IPrototype
     {
         [ViewVariables]
-        [DataField("id", required: true)]
+        [IdDataFieldAttribute]
         public string ID { get; } = default!;
 
         [ViewVariables] [DataField("issuer")] public string Issuer { get; private set; } = "Unknown";

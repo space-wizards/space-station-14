@@ -1,17 +1,15 @@
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Threading;
-using Content.Server.Popups;
 using Content.Server.Power.Components;
 using Content.Server.Power.EntitySystems;
 using Content.Server.UserInterface;
-using Content.Server.VendingMachines;
-using Content.Server.WireHacking;
+// using Content.Server.WireHacking;
 using Content.Shared.Singularity.Components;
 using Robust.Server.GameObjects;
 using Robust.Shared.Map;
 using Robust.Shared.Utility;
-using static Content.Shared.Wires.SharedWiresComponent;
+// using static Content.Shared.Wires.SharedWiresComponent;
 using Timer = Robust.Shared.Timing.Timer;
 
 namespace Content.Server.ParticleAccelerator.Components
@@ -23,7 +21,7 @@ namespace Content.Server.ParticleAccelerator.Components
     ///     Also contains primary logic for actual PA behavior, part scanning, etc...
     /// </summary>
     [RegisterComponent]
-    public sealed class ParticleAcceleratorControlBoxComponent : ParticleAcceleratorPartComponent, IWires
+    public sealed class ParticleAcceleratorControlBoxComponent : ParticleAcceleratorPartComponent
     {
         [Dependency] private readonly IEntityManager _entMan = default!;
         [Dependency] private readonly IMapManager _mapManager = default!;
@@ -99,30 +97,16 @@ namespace Content.Server.ParticleAccelerator.Components
             _apcPowerReceiverComponent!.Load = 250;
         }
 
-        [Obsolete("Component Messages are deprecated, use Entity Events instead.")]
-        public override void HandleMessage(ComponentMessage message, IComponent? component)
-        {
-#pragma warning disable 618
-            base.HandleMessage(message, component);
-#pragma warning restore 618
-            switch (message)
-            {
-                case PowerChangedMessage powerChanged:
-                    OnPowerStateChanged(powerChanged);
-                    break;
-            }
-        }
-
         protected override void Startup()
         {
             base.Startup();
 
-            UpdateWireStatus();
+            // UpdateWireStatus();
         }
 
         // This is the power state for the PA control box itself.
         // Keep in mind that the PA itself can keep firing as long as the HV cable under the power box has... power.
-        private void OnPowerStateChanged(PowerChangedMessage e)
+        public void OnPowerStateChanged(PowerChangedEvent e)
         {
             UpdateAppearance();
 
@@ -199,12 +183,14 @@ namespace Content.Server.ParticleAccelerator.Components
 
             UserInterface?.SetState(state);
         }
+
         protected override void OnRemove()
         {
             UserInterface?.CloseAll();
             base.OnRemove();
         }
 
+        /*
         void IWires.RegisterWires(WiresComponent.WiresBuilder builder)
         {
             builder.CreateWire(ParticleAcceleratorControlBoxWires.Toggle);
@@ -322,6 +308,7 @@ namespace Content.Server.ParticleAccelerator.Components
             wires.SetStatus(ParticleAcceleratorWireStatus.Limiter, limiterLight);
             wires.SetStatus(ParticleAcceleratorWireStatus.Strength, strengthLight);
         }
+        */
 
         public void RescanParts()
         {

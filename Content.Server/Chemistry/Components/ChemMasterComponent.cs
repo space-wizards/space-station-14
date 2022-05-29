@@ -3,7 +3,6 @@ using Content.Server.Labels.Components;
 using Content.Server.Power.Components;
 using Content.Server.UserInterface;
 using Content.Shared.Chemistry.Components;
-using Content.Shared.Containers.ItemSlots;
 using Content.Shared.FixedPoint;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Popups;
@@ -68,25 +67,6 @@ namespace Content.Server.Chemistry.Components
             _bufferSolution = EntitySystem.Get<SolutionContainerSystem>().EnsureSolution(Owner, SolutionName);
         }
 
-        [Obsolete("Component Messages are deprecated, use Entity Events instead.")]
-        public override void HandleMessage(ComponentMessage message, IComponent? component)
-        {
-#pragma warning disable 618
-            base.HandleMessage(message, component);
-#pragma warning restore 618
-            switch (message)
-            {
-                case PowerChangedMessage:
-                    OnPowerChanged();
-                    break;
-            }
-        }
-
-        private void OnPowerChanged()
-        {
-            UpdateUserInterface();
-        }
-
         /// <summary>
         /// Handles ui messages from the client. For things such as button presses
         /// which interact with the world and require server action.
@@ -97,21 +77,14 @@ namespace Content.Server.Chemistry.Components
             if (obj.Session.AttachedEntity is not {Valid: true} player)
                 return;
 
-            var msg = (UiActionMessage) obj.Message;
-            var needsPower = msg.Action switch
-            {
-                UiAction.Eject => false,
-                _ => true,
-            };
+            if (obj.Message is not UiActionMessage msg)
+                return;
 
-            if (!PlayerCanUseChemMaster(player, needsPower))
+            if (!PlayerCanUseChemMaster(player, true))
                 return;
 
             switch (msg.Action)
             {
-                case UiAction.Eject:
-                    EntitySystem.Get<ItemSlotsSystem>().TryEjectToHands(Owner, BeakerSlot, player);
-                    break;
                 case UiAction.ChemButton:
                     TransferReagent(msg.Id, msg.Amount, msg.IsBuffer);
                     break;

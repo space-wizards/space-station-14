@@ -51,7 +51,7 @@ namespace Content.Server.Physics.Controllers
 
             conveyorRot += comp.Angle;
 
-            if (comp.State == ConveyorState.Reversed)
+            if (comp.State == ConveyorState.Reverse)
             {
                 conveyorRot += MathF.PI;
             }

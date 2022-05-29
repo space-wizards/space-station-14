@@ -1,12 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
+﻿using System.Diagnostics.CodeAnalysis;
 using System.IO;
-using System.Reflection.Metadata;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
-using Robust.Shared.Serialization.Manager.Attributes;
-using Robust.Shared.ViewVariables;
 
 namespace Content.Shared.Construction.Prototypes
 {
@@ -18,7 +13,7 @@ namespace Content.Shared.Construction.Prototypes
         private readonly Dictionary<string, Dictionary<ConstructionGraphNode, ConstructionGraphNode?>> _pathfinding = new();
 
         [ViewVariables]
-        [DataField("id", required: true)]
+        [IdDataFieldAttribute]
         public string ID { get; } = default!;
 
         [ViewVariables]

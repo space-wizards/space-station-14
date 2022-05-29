@@ -1,5 +1,3 @@
-using System;
-using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Linq;
 using System.Net;
@@ -11,7 +9,6 @@ using Content.Server.Preferences.Managers;
 using Content.Shared.CCVar;
 using Microsoft.EntityFrameworkCore;
 using Robust.Shared.Configuration;
-using Robust.Shared.IoC;
 using Robust.Shared.Network;
 using Robust.Shared.Utility;
 
@@ -489,6 +486,22 @@ namespace Content.Server.Database
             }
 
             await db.DbContext.SaveChangesAsync();
+        }
+
+        public override async Task<int> AddAdminNote(AdminNote note)
+        {
+            await using (var db = await GetDb())
+            {
+                var nextId = 1;
+                if (await db.DbContext.AdminNotes.AnyAsync())
+                {
+                    nextId = await db.DbContext.AdminNotes.MaxAsync(dbVersion => dbVersion.Id) + 1;
+                }
+
+                note.Id = nextId;
+            }
+
+            return await base.AddAdminNote(note);
         }
 
         private async Task<DbGuardImpl> GetDbImpl()

@@ -1,9 +1,5 @@
 using Content.Shared.DragDrop;
-using Robust.Shared.GameObjects;
-using Robust.Shared.Prototypes;
-using Robust.Shared.Serialization.Manager.Attributes;
-using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
-using Robust.Shared.ViewVariables;
+using Content.Shared.Storage;
 
 namespace Content.Shared.Nutrition.Components
 {
@@ -13,14 +9,9 @@ namespace Content.Shared.Nutrition.Components
     [RegisterComponent]
     public sealed class SharedButcherableComponent : Component, IDraggable
     {
-        //TODO: List for sub-products like animal-hides, organs and etc?
         [ViewVariables]
-        [DataField("spawned", customTypeSerializer:typeof(PrototypeIdSerializer<EntityPrototype>))]
-        public string SpawnedPrototype = "FoodMeat";
-
-        [ViewVariables]
-        [DataField("pieces")]
-        public int Pieces = 5;
+        [DataField("spawned", required: true)]
+        public List<EntitySpawnEntry> SpawnedEntities = new();
 
         [DataField("butcherDelay")]
         public float ButcherDelay = 8.0f;

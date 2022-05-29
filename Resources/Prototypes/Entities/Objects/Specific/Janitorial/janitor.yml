@@ -9,7 +9,7 @@
     sprite: Objects/Specific/Janitorial/mop.rsi
     state: mop
   - type: Item
-    size: 10
+    size: 15
     sprite: Objects/Specific/Janitorial/mop.rsi
   - type: Absorbent
   - type: SolutionContainerManager
@@ -18,7 +18,7 @@
         maxVol: 50
   - type: Tag
     tags:
-      - DroneUsable #No bucket because it holds chems, they can drag the thing around instead
+      - DroneUsable #No bucket because it holds chems, they can drag the cart or use a drain
       - Mop
 
 - type: entity
@@ -42,6 +42,7 @@
         reagents:
         - ReagentId: Water
           Quantity: 250 # half-full at roundstart to leave room for puddles
+  - type: Spillable
   - type: DrainableSolution
     solution: bucket
   - type: RefillableSolution
@@ -51,16 +52,19 @@
       - Wringer
   - type: Physics
     bodyType: Dynamic
+    fixedRotation: false
+  - type: Transform
+    noRot: true
   - type: Fixtures
     fixtures:
     - shape:
         !type:PhysShapeAabb
-          bounds: "-0.25,-0.40,0.25,0.25"
+        bounds: "-0.25,-0.40,0.25,0.25"
       mass: 20
       mask:
-      - Impassable
+      - MobMask
       layer:
-      - Opaque
+      - MobLayer
   - type: Pullable
 
 - type: entity
@@ -74,3 +78,168 @@
     state: caution
   - type: Item
     sprite: Objects/Specific/Janitorial/wet_floor_sign.rsi
+    size: 15
+  - type: Tag
+    tags:
+      - WetFloorSign
+
+- type: entity
+  name: janitorial trolley
+  id: JanitorialTrolley
+  parent: BaseStructureDynamic
+  description: This is the alpha and omega of sanitation.
+  components:
+    - type: Sprite
+      netSync: false
+      noRot: true
+      sprite: Objects/Specific/Janitorial/janitorial_cart.rsi
+      layers:
+        - state: cart
+        - state: cart_water_1
+          map: ["enum.SolutionContainerLayers.Fill"]
+    - type: Rotatable
+    - type: InteractionOutline
+    - type: Storage
+      popup: false
+      capacity: 80
+      blacklist: # there is exclusive item slots for that
+        tags:
+          - Mop
+          - TrashBag
+    - type: ItemSlots
+      slots:
+        mop_slot:
+          name: Mop
+          whitelist:
+            tags:
+              - Mop
+          insertOnInteract: false # or it conflicts with bucket logic
+        trashbag_slot:
+          name: Bag
+          whitelist:
+            tags:
+              - TrashBag
+    - type: Fixtures
+      fixtures:
+      - shape:
+          !type:PhysShapeCircle
+          radius: 0.3
+        mass: 100
+        layer:
+        - MobLayer
+        mask:
+        - MobMask
+    - type: Spillable
+    - type: SolutionContainerManager
+      solutions:
+        bucket:
+          maxVol: 500
+          reagents:
+            - ReagentId: Water
+              Quantity: 250 # half-full at roundstart to leave room for puddles
+    - type: DrainableSolution
+      solution: bucket
+    - type: RefillableSolution
+      solution: bucket
+    - type: Tag
+      tags:
+        - Wringer
+    - type: Damageable
+      damageContainer: Inorganic
+      damageModifierSet: Metallic
+    - type: Destructible
+      thresholds:
+        - trigger:
+            !type:DamageTrigger
+            damage: 200
+          behaviors:
+            - !type:EmptyAllContainersBehaviour
+            - !type:DoActsBehavior
+              acts: ["Destruction"]
+            - !type:PlaySoundBehavior
+              sound:
+                path: /Audio/Effects/metalbreak.ogg
+    - type: ItemMapper
+      mapLayers:
+        cart_mop:
+          whitelist:
+            tags:
+              - Mop
+        cart_garbage:
+          whitelist:
+            tags:
+              - TrashBag
+        cart_replacer:
+          whitelist:
+            components:
+              - LightReplacer
+        cart_spray:
+          whitelist:
+            tags:
+              - Spray
+        cart_sign1: # this is like stack of floor signs
+          minCount: 1
+          whitelist:
+            tags:
+              - WetFloorSign
+        cart_sign2:
+          minCount: 2
+          whitelist:
+            tags:
+              - WetFloorSign
+        cart_sign3:
+          minCount: 3
+          whitelist:
+            tags:
+              - WetFloorSign
+        cart_sign4:
+          minCount: 4
+          whitelist:
+            tags:
+              - WetFloorSign
+    - type: Appearance
+      visuals:
+        - type: MappedItemVisualizer
+          sprite: Objects/Specific/Janitorial/janitorial_cart.rsi
+        - type: SolutionContainerVisualizer
+          maxFillLevels: 3
+          fillBaseName: cart_water_
+          changeColor: false
+    - type: UserInterface
+      interfaces:
+      - key: enum.StorageUiKey.Key
+        type: StorageBoundUserInterface
+
+
+- type: entity
+  id: FloorDrain
+  name: drain
+  description: Drains puddles around it. Useful for dumping mop buckets or keeping certain rooms clean.
+  placement:
+    mode: SnapgridCenter
+  components:
+    - type: Sprite
+      netsync: false
+      drawdepth: FloorObjects
+      sprite: Objects/Specific/Janitorial/drain.rsi
+      state: icon
+    - type: InteractionOutline
+    - type: Clickable
+    - type: Transform
+      anchored: true
+    - type: Physics
+      bodyType: Static
+    - type: Drain
+    - type: AmbientSound
+      enabled: false
+      volume: -8
+      range: 8
+      sound:
+        path: /Audio/Ambience/Objects/drain.ogg
+    - type: SolutionContainerManager
+      solutions:
+        drainBuffer:
+          maxVol: 500
+    - type: DrainableSolution
+      solution: drainBuffer
+

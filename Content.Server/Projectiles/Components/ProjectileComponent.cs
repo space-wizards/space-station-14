@@ -1,9 +1,6 @@
 using Content.Shared.Damage;
 using Content.Shared.Projectiles;
 using Content.Shared.Sound;
-using Robust.Shared.GameObjects;
-using Robust.Shared.Serialization.Manager.Attributes;
-using Robust.Shared.ViewVariables;
 
 namespace Content.Server.Projectiles.Components
 {
@@ -19,8 +16,10 @@ namespace Content.Server.Projectiles.Components
         public bool DeleteOnCollide { get; } = true;
 
         // Get that juicy FPS hit sound
-        [DataField("soundHit", required: true)] public SoundSpecifier? SoundHit = default!;
-        [DataField("soundHitSpecies")] public SoundSpecifier? SoundHitSpecies = null;
+        [DataField("soundHit")] public SoundSpecifier? SoundHit;
+
+        [DataField("soundForce")]
+        public bool ForceSound = false;
 
         public bool DamagedEntity;
 

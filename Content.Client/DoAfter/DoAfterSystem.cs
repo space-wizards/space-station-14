@@ -5,6 +5,7 @@ using Content.Shared.Examine;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
+using Robust.Client.Player;
 using Robust.Shared.GameStates;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
@@ -27,19 +28,18 @@ namespace Content.Client.DoAfter
     */
         [Dependency] private readonly IEyeManager _eyeManager = default!;
         [Dependency] private readonly IGameTiming _gameTiming = default!;
+        [Dependency] private readonly IPlayerManager _player = default!;
+        [Dependency] private readonly ExamineSystemShared _examineSystem = default!;
 
         /// <summary>
         ///     We'll use an excess time so stuff like finishing effects can show.
         /// </summary>
         public const float ExcessTime = 0.5f;
 
-        private EntityUid? _attachedEntity;
-
         public override void Initialize()
         {
             base.Initialize();
             UpdatesOutsidePrediction = true;
-            SubscribeLocalEvent<PlayerAttachSysMessage>(HandlePlayerAttached);
             SubscribeNetworkEvent<CancelledDoAfterMessage>(OnCancelledDoAfter);
             SubscribeLocalEvent<DoAfterComponent, ComponentStartup>(OnDoAfterStartup);
             SubscribeLocalEvent<DoAfterComponent, ComponentShutdown>(OnDoAfterShutdown);
@@ -111,11 +111,6 @@ namespace Content.Client.DoAfter
             Cancel(doAfter, ev.ID);
         }
 
-        private void HandlePlayerAttached(PlayerAttachSysMessage message)
-        {
-            _attachedEntity = message.AttachedEntity;
-        }
-
         /// <summary>
         ///     For handling PVS so we dispose of controls if they go out of range
         /// </summary>
@@ -175,9 +170,7 @@ namespace Content.Client.DoAfter
         ///     Mark a DoAfter as cancelled and show a cancellation graphic.
         /// </summary>
         ///     Actual removal is handled by DoAfterEntitySystem.
-        /// <param name="id"></param>
-        /// <param name="currentTime"></param>
-        public void Cancel(DoAfterComponent component, byte id, TimeSpan? currentTime = null)
+        public void Cancel(DoAfterComponent component, byte id)
         {
             foreach (var (_, cancelled) in component.CancelledDoAfters)
             {
@@ -198,18 +191,24 @@ namespace Content.Client.DoAfter
             base.Update(frameTime);
 
             var currentTime = _gameTiming.CurTime;
+            var attached = _player.LocalPlayer?.ControlledEntity;
 
             // Can't see any I guess?
-            if (_attachedEntity is not {Valid: true} entity || Deleted(entity))
+            if (attached == null || Deleted(attached))
                 return;
 
+            // ReSharper disable once ConvertToLocalFunction
+            var predicate = static (EntityUid uid, (EntityUid compOwner, EntityUid? attachedEntity) data)
+                => uid == data.compOwner || uid == data.attachedEntity;
+
+            var occluded = _examineSystem.IsOccluded(attached.Value);
             var viewbox = _eyeManager.GetWorldViewport().Enlarged(2.0f);
-            var entXform = Transform(entity);
+            var entXform = Transform(attached.Value);
             var playerPos = entXform.MapPosition;
 
             foreach (var (comp, xform) in EntityManager.EntityQuery<DoAfterComponent, TransformComponent>(true))
             {
-                var doAfters = comp.DoAfters.ToList();
+                var doAfters = comp.DoAfters;
                 var compPos = xform.MapPosition;
 
                 if (doAfters.Count == 0 ||
@@ -222,11 +221,12 @@ namespace Content.Client.DoAfter
 
                 var range = (compPos.Position - playerPos.Position).Length + 0.01f;
 
-                if (comp.Owner != _attachedEntity &&
+                if (occluded &&
+                    comp.Owner != attached &&
                     !ExamineSystemShared.InRangeUnOccluded(
                         playerPos,
                         compPos, range,
-                        ent => ent == comp.Owner || ent == _attachedEntity))
+                        (comp.Owner, attached), predicate))
                 {
                     Disable(comp);
                     continue;
@@ -235,6 +235,7 @@ namespace Content.Client.DoAfter
                 Enable(comp);
 
                 var userGrid = xform.Coordinates;
+                var toRemove = new RemQueue<ClientDoAfter>();
 
                 // Check cancellations / finishes
                 foreach (var (id, doAfter) in doAfters)
@@ -244,7 +245,7 @@ namespace Content.Client.DoAfter
                     // If we've passed the final time (after the excess to show completion graphic) then remove.
                     if (elapsedTime > doAfter.Delay + ExcessTime)
                     {
-                        Remove(comp, doAfter);
+                        toRemove.Add(doAfter);
                         continue;
                     }
 
@@ -257,7 +258,7 @@ namespace Content.Client.DoAfter
                     {
                         if (!userGrid.InRange(EntityManager, doAfter.UserGrid, doAfter.MovementThreshold))
                         {
-                            Cancel(comp, id, currentTime);
+                            Cancel(comp, id);
                             continue;
                         }
                     }
@@ -268,10 +269,15 @@ namespace Content.Client.DoAfter
                             !Transform(doAfter.Target.Value).Coordinates.InRange(EntityManager, doAfter.TargetGrid,
                                 doAfter.MovementThreshold))
                         {
-                            Cancel(comp, id, currentTime);
+                            Cancel(comp, id);
                             continue;
                         }
                     }
+                }
+
+                foreach (var doAfter in toRemove)
+                {
+                    Remove(comp, doAfter);
                 }
 
                 var count = comp.CancelledDoAfters.Count;

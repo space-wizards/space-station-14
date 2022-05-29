@@ -60,10 +60,10 @@ jobs:
       run: dotnet build --configuration Release --no-restore /p:WarningsAsErrors=nullable /m
 
     - name: Run Content.Tests
-      run: dotnet test --no-build Content.Tests/Content.Tests.csproj -v n
+      run: dotnet test --no-build Content.Tests/Content.Tests.csproj -- NUnit.ConsoleOut=0
 
     - name: Run Content.IntegrationTests
       shell: pwsh
       run: |
         $env:DOTNET_gcServer=1
-        dotnet test --no-build Content.IntegrationTests/Content.IntegrationTests.csproj -v n
+        dotnet test --no-build Content.IntegrationTests/Content.IntegrationTests.csproj -- NUnit.ConsoleOut=0

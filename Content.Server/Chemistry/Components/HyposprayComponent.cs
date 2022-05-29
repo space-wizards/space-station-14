@@ -10,13 +10,7 @@ using Content.Shared.MobState.Components;
 using Content.Shared.Popups;
 using Content.Shared.Sound;
 using Robust.Shared.Audio;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Localization;
-using Robust.Shared.Maths;
 using Robust.Shared.Player;
-using Robust.Shared.Serialization.Manager.Attributes;
-using Robust.Shared.ViewVariables;
 
 namespace Content.Server.Chemistry.Components
 {

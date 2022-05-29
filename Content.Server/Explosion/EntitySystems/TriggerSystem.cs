@@ -1,9 +1,9 @@
 using Content.Server.Administration.Logs;
-using Content.Server.Doors.Components;
-using Content.Server.Doors.Systems;
 using Content.Server.Explosion.Components;
 using Content.Server.Flash;
 using Content.Server.Flash.Components;
+using Content.Server.Sticky.Events;
+using Content.Shared.Actions;
 using JetBrains.Annotations;
 using Robust.Shared.Audio;
 using Robust.Shared.Physics;
@@ -12,6 +12,7 @@ using Robust.Shared.Player;
 using Content.Shared.Sound;
 using Content.Shared.Trigger;
 using Content.Shared.Database;
+using Content.Shared.Interaction;
 
 namespace Content.Server.Explosion.EntitySystems
 {
@@ -36,9 +37,8 @@ namespace Content.Server.Explosion.EntitySystems
         [Dependency] private readonly ExplosionSystem _explosions = default!;
         [Dependency] private readonly FixtureSystem _fixtures = default!;
         [Dependency] private readonly FlashSystem _flashSystem = default!;
-        [Dependency] private readonly DoorSystem _sharedDoorSystem = default!;
         [Dependency] private readonly SharedBroadphaseSystem _broadphase = default!;
-        [Dependency] private readonly AdminLogSystem _logSystem = default!;
+        [Dependency] private readonly IAdminLogManager _adminLogger= default!;
 
         public override void Initialize()
         {
@@ -46,41 +46,21 @@ namespace Content.Server.Explosion.EntitySystems
 
             InitializeProximity();
             InitializeOnUse();
+            InitializeSignal();
+            InitializeTimedCollide();
 
             SubscribeLocalEvent<TriggerOnCollideComponent, StartCollideEvent>(OnTriggerCollide);
+            SubscribeLocalEvent<TriggerOnActivateComponent, ActivateInWorldEvent>(OnActivate);
 
             SubscribeLocalEvent<DeleteOnTriggerComponent, TriggerEvent>(HandleDeleteTrigger);
             SubscribeLocalEvent<ExplodeOnTriggerComponent, TriggerEvent>(HandleExplodeTrigger);
             SubscribeLocalEvent<FlashOnTriggerComponent, TriggerEvent>(HandleFlashTrigger);
-            SubscribeLocalEvent<ToggleDoorOnTriggerComponent, TriggerEvent>(HandleDoorTrigger);
         }
 
-        #region Explosions
         private void HandleExplodeTrigger(EntityUid uid, ExplodeOnTriggerComponent component, TriggerEvent args)
         {
-            if (!EntityManager.TryGetComponent(uid, out ExplosiveComponent? explosiveComponent)) return;
-
-            Explode(uid, explosiveComponent, args.User);
+            _explosions.TriggerExplosive(uid, user: args.User);
         }
-
-        // You really shouldn't call this directly (TODO Change that when ExplosionHelper gets changed).
-        public void Explode(EntityUid uid, ExplosiveComponent component, EntityUid? user = null)
-        {
-            if (component.Exploding)
-            {
-                return;
-            }
-
-            component.Exploding = true;
-            _explosions.SpawnExplosion(uid,
-                component.DevastationRange,
-                component.HeavyImpactRange,
-                component.LightImpactRange,
-                component.FlashRange,
-                user);
-            EntityManager.QueueDeleteEntity(uid);
-        }
-        #endregion
 
         #region Flash
         private void HandleFlashTrigger(EntityUid uid, FlashOnTriggerComponent component, TriggerEvent args)
@@ -95,16 +75,16 @@ namespace Content.Server.Explosion.EntitySystems
             EntityManager.QueueDeleteEntity(uid);
         }
 
-        private void HandleDoorTrigger(EntityUid uid, ToggleDoorOnTriggerComponent component, TriggerEvent args)
-        {
-            _sharedDoorSystem.TryToggleDoor(uid);
-        }
-
         private void OnTriggerCollide(EntityUid uid, TriggerOnCollideComponent component, StartCollideEvent args)
         {
-            Trigger(component.Owner);
+			if(args.OurFixture.ID == component.FixtureID)
+				Trigger(component.Owner);
         }
 
+        private void OnActivate(EntityUid uid, TriggerOnActivateComponent component, ActivateInWorldEvent args)
+        {
+            Trigger(component.Owner, args.User);
+        }
 
         public void Trigger(EntityUid trigger, EntityUid? user = null)
         {
@@ -126,12 +106,12 @@ namespace Content.Server.Explosion.EntitySystems
 
             if (user != null)
             {
-                _logSystem.Add(LogType.Trigger,
+                _adminLogger.Add(LogType.Trigger,
                     $"{ToPrettyString(user.Value):user} started a {delay} second timer trigger on entity {ToPrettyString(uid):timer}");
             }
             else
             {
-                _logSystem.Add(LogType.Trigger,
+                _adminLogger.Add(LogType.Trigger,
                     $"{delay} second timer trigger started on entity {ToPrettyString(uid):timer}");
             }
 
@@ -153,6 +133,7 @@ namespace Content.Server.Explosion.EntitySystems
 
             UpdateProximity(frameTime);
             UpdateTimer(frameTime);
+            UpdateTimedCollide(frameTime);
         }
 
         private void UpdateTimer(float frameTime)

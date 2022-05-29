@@ -1,5 +1,5 @@
 - type: entity
-  abstract: true
+  noSpawn: true
   parent: ClothingBackpackDuffel
   id: ClothingBackpackDuffelFilled
   components:
@@ -8,35 +8,36 @@
       - id: BoxSurvival
 
 - type: entity
-  abstract: true
+  noSpawn: true
   parent: ClothingBackpackDuffelClown
   id: ClothingBackpackDuffelClownFilled
   components:
   - type: StorageFill
     contents:
       - id: BoxHug
+      - id: RubberStampClown
 
 - type: entity
-  abstract: true
+  noSpawn: true
   parent: ClothingBackpackDuffelSecurity
   id: ClothingBackpackDuffelSecurityFilled
   components:
   - type: StorageFill
     contents:
-      - id: BoxSurvival
+      - id: BoxSurvivalSecurity
       - id: Flash
 
 - type: entity
-  abstract: true
+  noSpawn: true
   parent: ClothingBackpackDuffelMedical
   id: ClothingBackpackDuffelMedicalFilled
   components:
   - type: StorageFill
     contents:
-      - id: BoxSurvival
+      - id: BoxSurvivalMedical
 
 - type: entity
-  abstract: true
+  noSpawn: true
   parent: ClothingBackpackDuffelCaptain
   id: ClothingBackpackDuffelCaptainFilled
   components:
@@ -47,16 +48,16 @@
       #- name: TelescopicBaton
 
 - type: entity
-  abstract: true
+  noSpawn: true
   parent: ClothingBackpackDuffelEngineering
   id: ClothingBackpackDuffelEngineeringFilled
   components:
   - type: StorageFill
     contents:
-      - id: BoxSurvival
+      - id: BoxSurvivalEngineering
 
 - type: entity
-  abstract: true
+  noSpawn: true
   parent: ClothingBackpackDuffelScience
   id: ClothingBackpackDuffelScienceFilled
   components:
@@ -65,16 +66,17 @@
       - id: BoxSurvival
 
 - type: entity
-  abstract: true
+  noSpawn: true
   parent: ClothingBackpackDuffelMime
   id: ClothingBackpackDuffelMimeFilled
   components:
   - type: StorageFill
     contents:
       - id: BoxSurvival
+      - id: RubberStampMime
 
 - type: entity
-  abstract: true
+  noSpawn: true
   parent: ClothingBackpackDuffelChemistry
   id: ClothingBackpackDuffelChemistryFilled
   components:
@@ -83,7 +85,7 @@
       - id: BoxSurvival
 
 - type: entity
-  abstract: true
+  noSpawn: true
   parent: ClothingBackpackDuffel
   id: ClothingBackpackDuffelChaplainFilled
   components:
@@ -91,9 +93,10 @@
     contents:
       - id: BoxSurvival
       - id: Bible
+      - id: RubberStampChaplain
 
 - type: entity
-  abstract: true
+  noSpawn: true
   parent: ClothingBackpackDuffel
   id: ClothingBackpackDuffelMusicianFilled
   components:

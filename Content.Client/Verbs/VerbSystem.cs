@@ -114,7 +114,7 @@ namespace Content.Client.Verbs
             }
 
             // Get entities
-            var entities = _entityLookup.GetEntitiesInRange(targetPos.MapId, targetPos.Position, EntityMenuLookupSize)
+            var entities = _entityLookup.GetEntitiesInRange(targetPos, EntityMenuLookupSize)
                 .ToList();
 
             if (entities.Count == 0)

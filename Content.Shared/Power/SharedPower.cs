@@ -1,5 +1,4 @@
-﻿using System;
-using Robust.Shared.Serialization;
+﻿using Robust.Shared.Serialization;
 
 namespace Content.Shared.Power
 {
@@ -9,5 +8,19 @@ namespace Content.Shared.Power
         Still,
         Charging,
         Discharging,
+    }
+
+    [Serializable, NetSerializable]
+    public enum PowerWireActionKey : byte
+    {
+        Key,
+        Status,
+        Pulsed,
+        Electrified,
+        PulseCancel,
+        ElectrifiedCancel,
+        MainWire,
+        WireCount,
+        CutWires
     }
 }

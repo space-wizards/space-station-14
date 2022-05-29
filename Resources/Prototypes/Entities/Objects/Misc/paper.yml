@@ -9,6 +9,12 @@
     netsync: false
     layers:
     - state: paper
+    - state: paper_words
+      map: ["enum.PaperVisualLayers.Writing"]
+      visible: false
+    - state: paper_stamp-generic
+      map: ["enum.PaperVisualLayers.Stamp"]
+      visible: false
   - type: Paper
   - type: ActivatableUI
     key: enum.PaperUiKey.Key
@@ -16,25 +22,18 @@
     interfaces:
     - key: enum.PaperUiKey.Key
       type: PaperBoundUserInterface
-  - type: Appearance
-    visuals:
-      - type: GenericEnumVisualizer
-        key: enum.PaperVisuals.Status
-        layer: 0
-        states:
-          # This default isn't actually explicitly used right now.
-          enum.PaperStatus.Blank: paper
-          enum.PaperStatus.Written: paper_words
   - type: Item
     size: 1
   - type: Tag
     tags:
     - Document
+  - type: Appearance
+  - type: PaperVisuals
 
 - type: entity
   parent: Paper
   id: PaperWritten
-  abstract: true
+  noSpawn: true
   components:
   - type: Paper
   - type: Sprite
@@ -50,7 +49,7 @@
       type: PaperBoundUserInterface
 
 - type: entity
-  parent: PaperWritten
+  parent: Paper
   id: NukeCodePaper
   name: nuclear authentication codes
   components:
@@ -81,24 +80,51 @@
   name: Cybersun pen
   parent: BaseItem
   id: CyberPen
-  description: A high-tech pen straight from Cybersun's legal department, capable of refracting hard-light at impossible angles through its diamond tip in order to write. It's not literally pointless, only figuratively.
+  description: A high-tech pen straight from Cybersun's legal department, capable of refracting hard-light at impossible angles through its diamond tip in order to write.
   components:
   - type: Tag
     tags:
     - Write
+    - Pickaxe
   - type: Sprite
     sprite: Objects/Misc/bureaucracy.rsi
     state: overpriced_pen
     netsync: false
-  - type: Pickaxe
+  - type: ItemCooldown
+  - type: MeleeWeapon
     damage:
       types:
-        Piercing: 5
+        Piercing: 15
+  - type: Tool
+    qualities:
+      - Screwing
+    useSound:
+      collection: Screwdriver
   - type: Item
     sprite: Objects/Misc/bureaucracy.rsi
     HeldPrefix: overpriced_pen
     size: 2
 
+- type: entity
+  name: captain's fountain pen
+  parent: Pen
+  id: PenCap
+  description: 'A luxurious fountain pen for the captain of the station.'
+  components:
+  - type: Sprite
+    sprite: Objects/Misc/bureaucracy.rsi
+    state: pen_cap
+   
+- type: entity
+  name: hop's fountain pen
+  parent: Pen
+  id: PenHop
+  description: 'A luxurious fountain pen for the hop of the station.'
+  components:
+  - type: Sprite
+    sprite: Objects/Misc/bureaucracy.rsi
+    state: pen_hop
+    
 - type: entity
   id: BoxFolderBase
   parent: BoxBase
@@ -124,7 +150,7 @@
 #      black: "#3f3f3f"
   - type: Item
     sprite: Objects/Misc/bureaucracy.rsi
-    size: 20
+    size: 5
   - type: Storage
     capacity: 10
     size: 10
@@ -140,9 +166,22 @@
   - type: Appearance
     visuals:
     - type: MappedItemVisualizer
+  - type: Tag
+    tags:
+    - Folder
+  - type: StorageFill
+    contents:
+      - id: Paper
+        prob: 0.5
+      - id: Paper
+        prob: 0.4
+      - id: Paper
+        prob: 0.3
+      - id: Paper
+        prob: 0.2
+      - id: Paper
+        prob: 0.2
 
-    
-    
 - type: entity
   id: BoxFolderRed
   parent: BoxFolderBase
@@ -213,3 +252,199 @@
     - state: folder-colormap
       color: "#3f3f3f"
     - state: folder-base
+
+- type: entity
+  name: mime's rubber stamp
+  parent: BaseItem
+  id: RubberStampMime
+  description: A rubber stamp for stamping important documents.
+  components:
+  - type: Stamp
+    stampedName: stamp-component-stamped-name-mime
+    stampState: "paper_stamp-mime"
+  - type: Sprite
+    sprite: Objects/Misc/bureaucracy.rsi
+    state: stamp-mime
+    netsync: false
+  - type: Item
+    size: 3
+
+- type: entity
+  name: captain's rubber stamp
+  parent: RubberStampMime
+  id: RubberStampCaptain
+  components:
+  - type: Stamp
+    stampedName: stamp-component-stamped-name-captain
+    stampState: "paper_stamp-cap"
+  - type: Sprite
+    sprite: Objects/Misc/bureaucracy.rsi
+    state: stamp-cap
+
+- type: entity
+  name: CentCom rubber stamp
+  parent: RubberStampMime
+  id: RubberStampCentcom
+  components:
+  - type: Stamp
+    stampedName: stamp-component-stamped-name-centcom
+    stampState: "paper_stamp-cent"
+  - type: Sprite
+    sprite: Objects/Misc/bureaucracy.rsi
+    state: stamp-cent
+
+- type: entity
+  name: chaplain's rubber stamp
+  parent: RubberStampMime
+  id: RubberStampChaplain
+  components:
+  - type: Stamp
+    stampedName: stamp-component-stamped-name-chaplain
+    stampState: "paper_stamp-chaplain"
+  - type: Sprite
+    sprite: Objects/Misc/bureaucracy.rsi
+    state: stamp-chaplain
+
+- type: entity
+  name: clown's rubber stamp
+  parent: RubberStampMime
+  id: RubberStampClown
+  components:
+  - type: Stamp
+    stampedName: stamp-component-stamped-name-clown
+    stampState: "paper_stamp-clown"
+  - type: Sprite
+    sprite: Objects/Misc/bureaucracy.rsi
+    state: stamp-clown
+
+- type: entity
+  name: chief medical officer's rubber stamp
+  parent: RubberStampMime
+  id: RubberStampCMO
+  components:
+  - type: Stamp
+    stampedName: stamp-component-stamped-name-cmo
+    stampState: "paper_stamp-cmo"
+  - type: Sprite
+    sprite: Objects/Misc/bureaucracy.rsi
+    state: stamp-cmo
+
+- type: entity
+  name: DENIED rubber stamp
+  parent: RubberStampMime
+  id: RubberStampDenied
+  components:
+  - type: Stamp
+    stampedName: stamp-component-stamped-name-denied
+    stampState: "paper_stamp-deny"
+  - type: Sprite
+    sprite: Objects/Misc/bureaucracy.rsi
+    state: stamp-deny
+
+- type: entity
+  name: APPROVED rubber stamp
+  parent: RubberStampMime
+  id: RubberStampApproved
+  components:
+  - type: Stamp
+    stampedName: stamp-component-stamped-name-approved
+    stampState: "paper_stamp-iaa"
+  - type: Sprite
+    sprite: Objects/Misc/bureaucracy.rsi
+    state: stamp-iaa
+
+- type: entity
+  name: head of personnel's rubber stamp
+  parent: RubberStampMime
+  id: RubberStampHop
+  components:
+  - type: Stamp
+    stampedName: stamp-component-stamped-name-hop
+    stampState: "paper_stamp-hop"
+  - type: Sprite
+    sprite: Objects/Misc/bureaucracy.rsi
+    state: stamp-hop
+
+- type: entity
+  name: head of security's rubber stamp
+  parent: RubberStampMime
+  id: RubberStampHos
+  components:
+  - type: Stamp
+    stampedName: stamp-component-stamped-name-hos
+    stampState: "paper_stamp-hos"
+  - type: Sprite
+    sprite: Objects/Misc/bureaucracy.rsi
+    state: stamp-hos
+
+- type: entity
+  name: quartermaster's rubber stamp
+  parent: RubberStampMime
+  id: RubberStampQm
+  components:
+  - type: Stamp
+    stampedName: stamp-component-stamped-name-qm
+    stampState: "paper_stamp-qm"
+  - type: Sprite
+    sprite: Objects/Misc/bureaucracy.rsi
+    state: stamp-qm
+
+- type: entity
+  name: research director's rubber stamp
+  parent: RubberStampMime
+  id: RubberStampRd
+  components:
+  - type: Stamp
+    stampedName: stamp-component-stamped-name-rd
+    stampState: "paper_stamp-rd"
+  - type: Sprite
+    sprite: Objects/Misc/bureaucracy.rsi
+    state: stamp-rd
+
+- type: entity
+  name: warden's rubber stamp
+  parent: RubberStampMime
+  id: RubberStampWarden
+  components:
+  - type: Stamp
+    stampedName: stamp-component-stamped-name-warden
+    stampState: "paper_stamp-warden"
+  - type: Sprite
+    sprite: Objects/Misc/bureaucracy.rsi
+    state: stamp-warden
+
+- type: entity
+  name: trader's rubber stamp
+  parent: RubberStampMime
+  id: RubberStampTrader
+  components:
+  - type: Stamp
+    stampedName: stamp-component-stamped-name-trader
+    stampState: "paper_stamp-trader"
+  - type: Sprite
+    sprite: Objects/Misc/bureaucracy.rsi
+    state: stamp-trader
+
+- type: entity
+  name: syndicate rubber stamp
+  parent: RubberStampMime
+  id: RubberStampSyndicate
+  components:
+  - type: Stamp
+    stampedName: stamp-component-stamped-name-syndicate
+    stampState: "paper_stamp-syndicate"
+  - type: Sprite
+    sprite: Objects/Misc/bureaucracy.rsi
+    state: stamp-syndicate
+
+- type: entity
+  name: chief engineers's rubber stamp
+  parent: RubberStampMime
+  id: RubberStampCE
+  components:
+  - type: Stamp
+    stampedName: stamp-component-stamped-name-ce
+    stampState: "paper_stamp-ce"
+  - type: Sprite
+    sprite: Objects/Misc/bureaucracy.rsi
+    state: stamp-ce

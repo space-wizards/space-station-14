@@ -1,8 +1,5 @@
 using Content.Server.Chat.Managers;
 using Content.Shared.Roles;
-using Robust.Shared.IoC;
-using Robust.Shared.Localization;
-using Robust.Shared.ViewVariables;
 
 namespace Content.Server.Roles
 {

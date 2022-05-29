@@ -1,11 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using Robust.Shared.Analyzers;
-using Robust.Shared.GameObjects;
-using Robust.Shared.GameStates;
+﻿using Robust.Shared.GameStates;
 using Robust.Shared.Serialization;
-using Robust.Shared.Serialization.Manager.Attributes;
-using Robust.Shared.ViewVariables;
 
 namespace Content.Shared.StatusEffect
 {
@@ -23,6 +17,9 @@ namespace Content.Shared.StatusEffect
         [DataField("allowed", required: true)]
         public List<string> AllowedEffects = default!;
     }
+
+    [RegisterComponent]
+    public sealed class ActiveStatusEffectsComponent : Component {}
 
     /// <summary>
     ///     Holds information about an active status effect.

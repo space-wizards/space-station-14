@@ -1,11 +1,4 @@
-﻿using System;
-using Content.Server.Atmos.Piping.Components;
-using Content.Server.NodeContainer.NodeGroups;
-using Content.Shared.Atmos;
-using Robust.Shared.GameObjects;
-using Robust.Shared.Maths;
-
-namespace Content.Server.Atmos.Components
+﻿namespace Content.Server.Atmos.Components
 {
     [RegisterComponent]
     [ComponentReference(typeof(IAtmosphereComponent))]

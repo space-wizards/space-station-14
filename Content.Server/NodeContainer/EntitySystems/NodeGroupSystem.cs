@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using Content.Server.Administration.Managers;
@@ -9,11 +8,7 @@ using Content.Shared.NodeContainer;
 using JetBrains.Annotations;
 using Robust.Server.Player;
 using Robust.Shared.Enums;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Log;
 using Robust.Shared.Map;
-using Robust.Shared.Maths;
 using Robust.Shared.Utility;
 
 namespace Content.Server.NodeContainer.EntitySystems
@@ -49,6 +44,8 @@ namespace Content.Server.NodeContainer.EntitySystems
 
         private int _gen = 1;
         private int _groupNetIdCounter = 1;
+
+        public bool Snoozing = false;
 
         public override void Initialize()
         {
@@ -138,8 +135,11 @@ namespace Content.Server.NodeContainer.EntitySystems
         {
             base.Update(frameTime);
 
-            DoGroupUpdates();
-            VisDoUpdate(frameTime);
+            if (!Snoozing)
+            {
+                DoGroupUpdates();
+                VisDoUpdate(frameTime);
+            }
         }
 
         private void DoGroupUpdates()
@@ -152,8 +152,8 @@ namespace Content.Server.NodeContainer.EntitySystems
 
             var sw = Stopwatch.StartNew();
 
-            var xformQuery = EntityManager.GetEntityQuery<TransformComponent>();
-            var nodeQuery = EntityManager.GetEntityQuery<NodeContainerComponent>();
+            var xformQuery = GetEntityQuery<TransformComponent>();
+            var nodeQuery = GetEntityQuery<NodeContainerComponent>();
 
             foreach (var toRemove in _toRemove)
             {

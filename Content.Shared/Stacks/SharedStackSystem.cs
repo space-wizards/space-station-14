@@ -1,15 +1,22 @@
 using Content.Shared.Examine;
+using Content.Shared.Hands.Components;
+using Content.Shared.Hands.EntitySystems;
+using Content.Shared.Interaction;
+using Content.Shared.Popups;
 using JetBrains.Annotations;
-using Robust.Shared.GameObjects;
 using Robust.Shared.GameStates;
-using Robust.Shared.Localization;
-using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
+using Robust.Shared.Player;
+using Robust.Shared.Timing;
 
 namespace Content.Shared.Stacks
 {
     [UsedImplicitly]
     public abstract class SharedStackSystem : EntitySystem
     {
+        [Dependency] protected readonly SharedPopupSystem PopupSystem = default!;
+        [Dependency] protected readonly SharedHandsSystem HandsSystem = default!;
+        [Dependency] private readonly IGameTiming _gameTiming = default!;
+
         public override void Initialize()
         {
             base.Initialize();
@@ -18,9 +25,109 @@ namespace Content.Shared.Stacks
             SubscribeLocalEvent<SharedStackComponent, ComponentHandleState>(OnStackHandleState);
             SubscribeLocalEvent<SharedStackComponent, ComponentStartup>(OnStackStarted);
             SubscribeLocalEvent<SharedStackComponent, ExaminedEvent>(OnStackExamined);
+            SubscribeLocalEvent<SharedStackComponent, InteractUsingEvent>(OnStackInteractUsing);
         }
 
-        public void SetCount(EntityUid uid, int amount, SharedStackComponent? component = null)
+        private void OnStackInteractUsing(EntityUid uid, SharedStackComponent stack, InteractUsingEvent args)
+        {
+            if (args.Handled)
+                return;
+
+            if (!TryComp(args.Used, out SharedStackComponent? recipientStack))
+                return;
+
+            if (!TryMergeStacks(uid, args.Used, out var transfered, stack, recipientStack))
+                return;
+
+            args.Handled = true;
+
+            // interaction is done, the rest is just generating a pop-up
+
+            if (!_gameTiming.IsFirstTimePredicted)
+                return;
+
+            var popupPos = args.ClickLocation;
+
+            if (!popupPos.IsValid(EntityManager))
+            {
+                popupPos = Transform(args.User).Coordinates;
+            }
+
+            switch (transfered)
+            {
+                case > 0:
+                    PopupSystem.PopupCoordinates($"+{transfered}", popupPos, Filter.Local());
+
+                    if (recipientStack.AvailableSpace == 0)
+                    {
+                        PopupSystem.PopupCoordinates(Loc.GetString("comp-stack-becomes-full"),
+                            popupPos.Offset(new Vector2(0, -0.5f)), Filter.Local());
+                    }
+
+                    break;
+
+                case 0 when recipientStack.AvailableSpace == 0:
+                    PopupSystem.PopupCoordinates(Loc.GetString("comp-stack-already-full"), popupPos, Filter.Local());
+                    break;
+            }
+        }
+
+        private bool TryMergeStacks(
+            EntityUid donor,
+            EntityUid recipient,
+            out int transfered,
+            SharedStackComponent? donorStack = null,
+            SharedStackComponent? recipientStack = null)
+        {
+            transfered = 0;
+            if (!Resolve(recipient, ref recipientStack, false) || !Resolve(donor, ref donorStack, false))
+                return false;
+
+            if (!recipientStack.StackTypeId.Equals(donorStack.StackTypeId))
+                return false;
+
+            transfered = Math.Min(donorStack.Count, recipientStack.AvailableSpace);
+            SetCount(donor, donorStack.Count - transfered, donorStack);
+            SetCount(recipient, recipientStack.Count + transfered, recipientStack);
+            return true;
+        }
+
+        /// <summary>
+        ///     If the given item is a stack, this attempts to find a matching stack in the users hand, and merge with that.
+        /// </summary>
+        /// <remarks>
+        ///     If the interaction fails to fully merge the stack, or if this is just not a stack, it will instead try
+        ///     to place it in the user's hand normally.
+        /// </remarks>
+        public void TryMergeToHands(
+            EntityUid item,
+            EntityUid user,
+            SharedStackComponent? itemStack = null,
+            SharedHandsComponent? hands = null)
+        {
+            if (!Resolve(user, ref hands, false))
+                return;
+
+            if (!Resolve(item, ref itemStack, false))
+            {
+                // This isn't even a stack. Just try to pickup as normal.
+                HandsSystem.PickupOrDrop(user, item, handsComp: hands);
+                return;
+            }
+
+            // This is shit code until hands get fixed and give an easy way to enumerate over items, starting with the currently active item.
+            foreach (var held in HandsSystem.EnumerateHeld(user, hands))
+            {
+                TryMergeStacks(item, held, out _, donorStack: itemStack);
+
+                if (itemStack.Count == 0)
+                    return;
+            }
+
+            HandsSystem.PickupOrDrop(user, item, handsComp: hands);
+        }
+
+        public virtual void SetCount(EntityUid uid, int amount, SharedStackComponent? component = null)
         {
             if (!Resolve(uid, ref component))
                 return;
@@ -44,11 +151,7 @@ namespace Content.Shared.Stacks
             }
 
             component.Count = amount;
-            component.Dirty();
-
-            // Queue delete stack if count reaches zero.
-            if(component.Count <= 0)
-                QueueDel(uid);
+            Dirty(component);
 
             // Change appearance data.
             if (TryComp(uid, out AppearanceComponent? appearance))

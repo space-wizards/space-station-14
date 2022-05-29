@@ -1,7 +1,7 @@
-using System.Collections.Generic;
+using Content.Client.Access.Components;
+using Content.Shared.Access.Systems;
+using Content.Shared.Containers.ItemSlots;
 using Robust.Client.GameObjects;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
 using Robust.Shared.Prototypes;
 using static Content.Shared.Access.Components.SharedIdCardConsoleComponent;
 
@@ -21,8 +21,24 @@ namespace Content.Client.Access.UI
         protected override void Open()
         {
             base.Open();
+            List<string> accessLevels;
 
-            _window = new IdCardConsoleWindow(this, _prototypeManager) {Title = _entityManager.GetComponent<MetaDataComponent>(Owner.Owner).EntityName};
+            if (_entityManager.TryGetComponent<IdCardConsoleComponent>(Owner.Owner, out var idCard))
+            {
+                accessLevels = idCard.AccessLevels;
+                accessLevels.Sort();
+            }
+            else
+            {
+                accessLevels = new List<string>();
+                Logger.ErrorS(SharedIdCardConsoleSystem.Sawmill, $"No IdCardConsole component found for {_entityManager.ToPrettyString(Owner.Owner)}!");
+            }
+
+            _window = new IdCardConsoleWindow(this, _prototypeManager, accessLevels) {Title = _entityManager.GetComponent<MetaDataComponent>(Owner.Owner).EntityName};
+
+            _window.PrivilegedIdButton.OnPressed += _ => SendMessage(new ItemSlotButtonPressedEvent(PrivilegedIdCardSlotId));
+            _window.TargetIdButton.OnPressed += _ => SendMessage(new ItemSlotButtonPressedEvent(TargetIdCardSlotId));
+
             _window.OnClose += Close;
             _window.OpenCentered();
         }
@@ -39,11 +55,6 @@ namespace Content.Client.Access.UI
             base.UpdateState(state);
             var castState = (IdCardConsoleBoundUserInterfaceState) state;
             _window?.UpdateState(castState);
-        }
-
-        public void ButtonPressed(UiButton button)
-        {
-            SendMessage(new IdButtonPressedMessage(button));
         }
 
         public void SubmitData(string newFullName, string newJobTitle, List<string> newAccessList)

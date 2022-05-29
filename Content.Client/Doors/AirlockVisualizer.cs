@@ -4,6 +4,7 @@ using Content.Shared.Doors.Components;
 using JetBrains.Annotations;
 using Robust.Client.Animations;
 using Robust.Client.GameObjects;
+using Robust.Client.ResourceManagement;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Serialization;
@@ -17,6 +18,7 @@ namespace Content.Client.Doors
     {
         [Dependency] private readonly IEntityManager _entMan = default!;
         [Dependency] private readonly IGameTiming _gameTiming = default!;
+        [Dependency] private readonly IResourceCache _resourceCache = default!;
 
         private const string AnimationKey = "airlock_animation";
 
@@ -65,7 +67,7 @@ namespace Content.Client.Doors
         {
             IoCManager.InjectDependencies(this);
 
-            CloseAnimation = new Animation {Length = TimeSpan.FromSeconds(_delay)};
+            CloseAnimation = new Animation { Length = TimeSpan.FromSeconds(_delay) };
             {
                 var flick = new AnimationTrackSpriteFlick();
                 CloseAnimation.AnimationTracks.Add(flick);
@@ -89,7 +91,7 @@ namespace Content.Client.Doors
                 }
             }
 
-            OpenAnimation = new Animation {Length = TimeSpan.FromSeconds(_delay)};
+            OpenAnimation = new Animation { Length = TimeSpan.FromSeconds(_delay) };
             {
                 var flick = new AnimationTrackSpriteFlick();
                 OpenAnimation.AnimationTracks.Add(flick);
@@ -112,7 +114,7 @@ namespace Content.Client.Doors
                     }
                 }
             }
-            EmaggingAnimation = new Animation {Length = TimeSpan.FromSeconds(_delay)};
+            EmaggingAnimation = new Animation { Length = TimeSpan.FromSeconds(_delay) };
             {
                 var flickUnlit = new AnimationTrackSpriteFlick();
                 EmaggingAnimation.AnimationTracks.Add(flickUnlit);
@@ -122,7 +124,7 @@ namespace Content.Client.Doors
 
             if (!_simpleVisuals)
             {
-                DenyAnimation = new Animation {Length = TimeSpan.FromSeconds(_denyDelay)};
+                DenyAnimation = new Animation { Length = TimeSpan.FromSeconds(_denyDelay) };
                 {
                     var flick = new AnimationTrackSpriteFlick();
                     DenyAnimation.AnimationTracks.Add(flick);
@@ -158,8 +160,19 @@ namespace Content.Client.Doors
             var door = _entMan.GetComponent<DoorComponent>(component.Owner);
             var unlitVisible = true;
             var boltedVisible = false;
-            var weldedVisible = false;
             var emergencyLightsVisible = false;
+
+            if (component.TryGetData(DoorVisuals.BaseRSI, out string baseRsi))
+            {
+                if (!_resourceCache.TryGetResource<RSIResource>(SharedSpriteComponent.TextureRoot / baseRsi, out var res))
+                {
+                    Logger.Error("Unable to load RSI '{0}'. Trace:\n{1}", baseRsi, Environment.StackTrace);
+                }
+                foreach (ISpriteLayer layer in sprite.AllLayers)
+                {
+                    layer.Rsi = res?.RSI;
+                }
+            }
 
             if (animPlayer.HasRunningAnimation(AnimationKey))
             {
@@ -196,7 +209,6 @@ namespace Content.Client.Doors
                     animPlayer.Play(DenyAnimation, AnimationKey);
                     break;
                 case DoorState.Welded:
-                    weldedVisible = true;
                     break;
                 case DoorState.Emagging:
                     animPlayer.Play(EmaggingAnimation, AnimationKey);
@@ -222,7 +234,6 @@ namespace Content.Client.Doors
             if (!_simpleVisuals)
             {
                 sprite.LayerSetVisible(DoorVisualLayers.BaseUnlit, unlitVisible && state != DoorState.Closed && state != DoorState.Welded);
-                sprite.LayerSetVisible(DoorVisualLayers.BaseWelded, weldedVisible);
                 sprite.LayerSetVisible(DoorVisualLayers.BaseBolted, unlitVisible && boltedVisible);
                 if (_emergencyAccessLayer)
                 {
@@ -241,7 +252,6 @@ namespace Content.Client.Doors
     {
         Base,
         BaseUnlit,
-        BaseWelded,
         BaseBolted,
         BaseEmergencyAccess,
     }

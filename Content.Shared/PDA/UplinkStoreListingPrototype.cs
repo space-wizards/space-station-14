@@ -1,8 +1,6 @@
 using Robust.Shared.Prototypes;
-using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 using Robust.Shared.Utility;
-using Robust.Shared.ViewVariables;
 
 namespace Content.Shared.PDA
 {
@@ -10,7 +8,7 @@ namespace Content.Shared.PDA
     public sealed class UplinkStoreListingPrototype : IPrototype
     {
         [ViewVariables]
-        [DataField("id", required: true)]
+        [IdDataFieldAttribute]
         public string ID { get; } = default!;
 
         [DataField("itemId", customTypeSerializer:typeof(PrototypeIdSerializer<EntityPrototype>))]
@@ -30,5 +28,8 @@ namespace Content.Shared.PDA
 
         [DataField("icon")]
         public SpriteSpecifier? Icon { get; } = null;
+
+        [DataField("surplus")]
+        public bool CanSurplus = true;
     }
 }

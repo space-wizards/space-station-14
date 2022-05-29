@@ -6,6 +6,7 @@
   abstract: true
   components:
   - type: Sprite
+    sprite: Objects/Fun/toys.rsi
     netsync: false
   - type: EmitSoundOnUse
     sound:
@@ -19,6 +20,12 @@
   - type: ItemCooldown
   - type: UseDelay
     delay: 1.0
+  - type: MeleeWeapon
+    hitSound:
+      collection: ToySqueak
+    damage:
+      types:
+        Blunt: 0
 
 - type: entity
   parent: BasePlushie
@@ -27,7 +34,6 @@
   description: A cute toy that resembles an even cuter programmer. You'd have to be a monster to grind this up.
   components:
   - type: Sprite
-    sprite: Objects/Fun/toys.rsi
     state: plushie_h
   - type: Extractable
     grindableSolutionName: bee
@@ -48,6 +54,7 @@
     radius: 1.5
     energy: 2
   - type: RgbLightController
+    layers: [ 0 ]
 
 - type: entity
   parent: BasePlushie
@@ -56,7 +63,6 @@
   description: A stuffed toy that resembles a syndicate nuclear operative. The tag claims operatives to be purely fictitious.
   components:
   - type: Sprite
-    sprite: Objects/Fun/toys.rsi
     state: plushie_nuke
 
 - type: entity
@@ -66,19 +72,16 @@
   description: Rouny
   components:
   - type: Sprite
-    sprite: Objects/Fun/toys.rsi
     state: plushie_rouny
 
 - type: entity
   parent: BasePlushie
   id: PlushieLizard #Weh!
   name: lizard plushie
-  description: An adorable stuffed toy that resembles a lizardperson. Made by CentCom as a token initiative to combat speciesism in work environments. "Welcome your new colleges as you do this plush, with open arms!"
+  description: An adorable stuffed toy that resembles a lizardperson. Made by CentCom as a token initiative to combat speciesism in work environments. "Welcome your new colleagues as you do this plush, with open arms!"
   components:
   - type: Sprite
-    sprite: Objects/Fun/toys.rsi
     state: plushie_lizard
-  - type: ItemCooldown
   - type: EmitSoundOnUse
     sound:
       path: /Audio/Items/Toys/weh.ogg
@@ -88,8 +91,9 @@
   - type: EmitSoundOnActivate
     sound:
       path: /Audio/Items/Toys/weh.ogg
-  - type: UseDelay
-    delay: 1.0
+  - type: MeleeWeapon
+    hitSound:
+      path: /Audio/Items/Toys/weh.ogg
 
 - type: entity
   parent: BasePlushie
@@ -98,9 +102,7 @@
   description: An adorable stuffed toy that resembles a lizardperson in an EVA suit. Made by CentCom as a token initiative to combat speciesism in space environments. "Welcome your new colleges as you do this plush, with open arms!"
   components:
   - type: Sprite
-    sprite: Objects/Fun/toys.rsi
     state: plushie_spacelizard
-  - type: ItemCooldown
   - type: EmitSoundOnUse
     sound:
       path: /Audio/Items/Toys/muffled_weh.ogg
@@ -110,8 +112,9 @@
   - type: EmitSoundOnActivate
     sound:
       path: /Audio/Items/Toys/muffled_weh.ogg
-  - type: UseDelay
-    delay: 1.0
+  - type: MeleeWeapon
+    hitSound:
+      path: /Audio/Items/Toys/muffled_weh.ogg
 
 - type: entity
   parent: BasePlushie
@@ -120,7 +123,6 @@
   description: A small stuffed doll of the elder god Ratvar.
   components:
   - type: Sprite
-    sprite: Objects/Fun/toys.rsi
     state: plushie_ratvar
 
 - type: entity
@@ -130,7 +132,6 @@
   description: A small stuffed doll of the elder goddess Nar'Sie.
   components:
   - type: Sprite
-    sprite: Objects/Fun/toys.rsi
     state: narplush
 
 
@@ -141,11 +142,21 @@
   description: An adorable stuffed toy that resembles the monstrous space carp.
   components:
   - type: Sprite
-    sprite: Objects/Fun/toys.rsi
     state: carpplush
   - type: Item
-    sprite: Objects/Fun/toys.rsi
     HeldPrefix: carpplush
+  - type: EmitSoundOnUse
+    sound:
+      path: /Audio/Effects/bite.ogg
+  - type: EmitSoundOnLand
+    sound:
+      path: /Audio/Effects/bite.ogg
+  - type: EmitSoundOnActivate
+    sound:
+      path: /Audio/Effects/bite.ogg
+  - type: MeleeWeapon
+    hitSound:
+      path: /Audio/Effects/bite.ogg
 
 - type: entity
   parent: BasePlushie
@@ -154,43 +165,40 @@
   description: An adorable stuffed toy that resembles a slime. It's basically a hacky sack.
   components:
   - type: Sprite
-    sprite: Objects/Fun/toys.rsi
     state: plushie_slime
 
 - type: entity
-  parent: BaseItem
+  parent: BasePlushie
   id: PlushieSnake
   name: snake plushie
   description: An adorable stuffed toy that resembles a snake.
   components:
   - type: Sprite
-    sprite: Objects/Fun/toys.rsi
     state: plushie_snake
-  - type: ItemCooldown
   - type: EmitSoundOnUse
     sound:
       path: /Audio/Items/Toys/rattle.ogg
-  - type: UseDelay
-    delay: 1.0
+  - type: MeleeWeapon
+    hitSound:
+      path: /Audio/Items/Toys/rattle.ogg
 
 - type: entity
-  parent: BaseItem
+  parent: BasePlushie
   id: ToyMouse
   name: mouse toy
   description: A colorful toy mouse!
   components:
   - type: Sprite
-    sprite: Objects/Fun/toys.rsi
     state: toy_mouse
-  - type: ItemCooldown
   - type: EmitSoundOnUse
     sound:
       path: /Audio/Items/Toys/mousesqueek.ogg
-  - type: UseDelay
-    delay: 1.0
+  - type: MeleeWeapon
+    hitSound:
+      path: /Audio/Items/Toys/mousesqueek.ogg
 
 - type: entity
-  parent: BaseItem
+  parent: BasePlushie
   id: ToyRubberDuck
   name: rubber ducky
   description: Not carried here by ocean currents.
@@ -203,33 +211,28 @@
     sprite: Objects/Fun/ducky.rsi
     Slots:
     - HEAD
-  - type: ItemCooldown
   - type: EmitSoundOnUse
     sound:
       path: /Audio/Items/Toys/quack.ogg
-  - type: UseDelay
-    delay: 1.0
 
 - type: entity
-  parent: BaseItem
+  parent: BasePlushie
   id: PlushieVox
   name: vox plushie
   description: SKREEEEEEEEEEEE!
   components:
   - type: Sprite
-    sprite: Objects/Fun/toys.rsi
     state: plushie_vox
     netsync: false
-  - type: ItemCooldown
   - type: EmitSoundOnUse
     sound:
       path: /Audio/Voice/Vox/shriek1.ogg
   - type: EmitSoundOnLand
     sound:
-       path: /Audio/Voice/Vox/shriek1.ogg
-  - type: UseDelay
-    delay: 1.0
-
+      path: /Audio/Voice/Vox/shriek1.ogg
+  - type: MeleeWeapon
+    hitSound:
+      path: /Audio/Voice/Vox/shriek1.ogg
 ## Figurines
 
 - type: entity
@@ -254,8 +257,8 @@
 
 - type: entity
   parent: BaseItem
-  id: ToyAssistant
-  name: assistant toy
+  id: ToyAssistant # TODO rename but needs map changes
+  name: passenger toy
   description: Grey tide world wide!
   components:
   - type: Sprite
@@ -278,7 +281,7 @@
 - type: entity
   parent: BaseItem
   id: ToyHonk
-  name: h.o.n.k. toy
+  name: H.O.N.K. toy
   description: Mini-Mecha action figure! 'Mecha No. 6/12' is written on the back.
   components:
   - type: Sprite
@@ -286,20 +289,19 @@
     state: honkprize
 
 - type: entity
-  parent: BaseItem
+  parent: BasePlushie
   id: ToyIan
   name: ian toy
   description: Unable to eat, but just as fluffy as the real guy!
   components:
   - type: Sprite
-    sprite: Objects/Fun/toys.rsi
     state: ian
-  - type: ItemCooldown
   - type: EmitSoundOnUse
     sound:
       path: /Audio/Items/Toys/ian.ogg
-  - type: UseDelay
-    delay: 1.0
+  - type: MeleeWeapon
+    hitSound:
+      path: /Audio/Items/Toys/ian.ogg
 
 - type: entity
   parent: BaseItem
@@ -538,7 +540,7 @@
     arc: spear
     damage:
       types:
-        Blunt: 1
+        Blunt: 0
   - type: Item
     size: 24
     sprite: Objects/Fun/toys.rsi
@@ -616,8 +618,8 @@
     sprite: Objects/Fun/toys.rsi
     state: singularitytoy
   - type: SingularityDistortion
-    intensity: 2
-    falloff: 7
+    intensity: 2000
+    falloffPower: 2.6
   - type: Item
     size: 12
     sprite: Objects/Fun/toys.rsi

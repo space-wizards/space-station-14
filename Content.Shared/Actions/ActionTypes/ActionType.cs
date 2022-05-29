@@ -5,7 +5,6 @@ using Robust.Shared.Utility;
 
 namespace Content.Shared.Actions.ActionTypes;
 
-[DataDefinition]
 [ImplicitDataDefinitionForInheritors]
 [Serializable, NetSerializable]
 public abstract class ActionType : IEquatable<ActionType>, IComparable, ICloneable
@@ -89,6 +88,17 @@ public abstract class ActionType : IEquatable<ActionType>, IComparable, ICloneab
     ///     this action has no provider (e.g., mapping tools), the this will result in broadcast events.
     /// </summary>
     public EntityUid? Provider;
+
+    /// <summary>
+    ///     Entity to use for the action icon. Defaults to using <see cref="Provider"/>. 
+    /// </summary>
+    public EntityUid? EntityIcon
+    {
+        get => _entityIcon ?? Provider;
+        set => _entityIcon = value;
+    }
+
+    private EntityUid? _entityIcon;
 
     /// <summary>
     ///     Whether the action system should block this action if the user cannot currently interact. Some spells or
@@ -256,6 +266,7 @@ public abstract class ActionType : IEquatable<ActionType>, IComparable, ICloneab
         Popup = toClone.Popup;
         PopupToggleSuffix = toClone.PopupToggleSuffix;
         ItemIconStyle = toClone.ItemIconStyle;
+        _entityIcon = toClone._entityIcon;
     }
 
     public bool Equals(ActionType? other)

@@ -4,12 +4,9 @@ using Content.Shared.Examine;
 using Content.Shared.Interaction;
 using Content.Shared.Interaction.Events;
 using Content.Shared.Weapons.Ranged.Barrels.Components;
-using Content.Shared.Weapons.Ranged.Components;
 using Robust.Shared.Audio;
 using Robust.Shared.Containers;
-using Robust.Shared.GameObjects;
 using Robust.Shared.GameStates;
-using Robust.Shared.Localization;
 using Robust.Shared.Map;
 using Robust.Shared.Player;
 

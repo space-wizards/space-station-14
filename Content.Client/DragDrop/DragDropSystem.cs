@@ -1,6 +1,9 @@
+using Content.Client.CombatMode;
 using Content.Client.Outline;
 using Content.Client.Viewport;
 using Content.Shared.ActionBlocker;
+using Content.Shared.CCVar;
+using Content.Shared.CombatMode;
 using Content.Shared.DragDrop;
 using Content.Shared.Interaction;
 using Content.Shared.Interaction.Events;
@@ -11,6 +14,7 @@ using Robust.Client.Graphics;
 using Robust.Client.Input;
 using Robust.Client.Player;
 using Robust.Client.State;
+using Robust.Shared.Configuration;
 using Robust.Shared.Input;
 using Robust.Shared.Input.Binding;
 using Robust.Shared.Prototypes;
@@ -30,8 +34,10 @@ namespace Content.Client.DragDrop
         [Dependency] private readonly IEyeManager _eyeManager = default!;
         [Dependency] private readonly IPlayerManager _playerManager = default!;
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
+        [Dependency] private readonly IConfigurationManager _cfgMan = default!;
         [Dependency] private readonly InteractionOutlineSystem _outline = default!;
         [Dependency] private readonly SharedInteractionSystem _interactionSystem = default!;
+        [Dependency] private readonly CombatModeSystem _combatMode = default!;
         [Dependency] private readonly InputSystem _inputSystem = default!;
         [Dependency] private readonly ActionBlockerSystem _actionBlockerSystem = default!;
 
@@ -75,6 +81,7 @@ namespace Content.Client.DragDrop
             UpdatesOutsidePrediction = true;
 
             _dragDropHelper = new DragDropHelper<EntityUid>(OnBeginDrag, OnContinueDrag, OnEndDrag);
+            _cfgMan.OnValueChanged(CCVars.DragDropDeadZone, SetDeadZone, true);
 
             _dropTargetInRangeShader = _prototypeManager.Index<ShaderPrototype>(ShaderDropTargetInRange).Instance();
             _dropTargetOutOfRangeShader = _prototypeManager.Index<ShaderPrototype>(ShaderDropTargetOutOfRange).Instance();
@@ -84,8 +91,14 @@ namespace Content.Client.DragDrop
                 .Register<DragDropSystem>();
         }
 
+        private void SetDeadZone(float deadZone)
+        {
+            _dragDropHelper.Deadzone = deadZone;
+        }
+
         public override void Shutdown()
         {
+            _cfgMan.UnsubValueChanged(CCVars.DragDropDeadZone, SetDeadZone);
             _dragDropHelper.EndDrag();
             CommandBinds.Unregister<DragDropSystem>();
             base.Shutdown();
@@ -114,7 +127,8 @@ namespace Content.Client.DragDrop
 
         private bool OnUseMouseDown(in PointerInputCmdHandler.PointerInputCmdArgs args)
         {
-            if (args.Session?.AttachedEntity is not {Valid: true} dragger)
+            if (args.Session?.AttachedEntity is not {Valid: true} dragger ||
+                _combatMode.IsInCombatMode())
             {
                 return false;
             }
@@ -208,7 +222,8 @@ namespace Content.Client.DragDrop
 
         private bool OnContinueDrag(float frameTime)
         {
-            if (_dragDropHelper.Dragged == default || Deleted(_dragDropHelper.Dragged))
+            if (_dragDropHelper.Dragged == default || Deleted(_dragDropHelper.Dragged) ||
+                _combatMode.IsInCombatMode())
             {
                 return false;
             }
@@ -221,8 +236,6 @@ namespace Content.Client.DragDrop
                 return false;
             }
 
-            // keep dragged entity under mouse
-            var mousePos = _eyeManager.ScreenToMap(_dragDropHelper.MouseScreenPosition);
             // TODO: would use MapPosition instead if it had a setter, but it has no setter.
             // is that intentional, or should we add a setter for Transform.MapPosition?
             if (_dragShadow == default)
@@ -363,7 +376,7 @@ namespace Content.Client.DragDrop
             // TODO: Duplicated in SpriteSystem and TargetOutlineSystem. Should probably be cached somewhere for a frame?
             var mousePos = _eyeManager.ScreenToMap(_inputManager.MouseScreenPosition).Position;
             var bounds = new Box2(mousePos - 1.5f, mousePos + 1.5f);
-            var pvsEntities = EntitySystem.Get<EntityLookupSystem>().GetEntitiesIntersecting(_eyeManager.CurrentMap, bounds, LookupFlags.Approximate | LookupFlags.IncludeAnchored);
+            var pvsEntities = EntitySystem.Get<EntityLookupSystem>().GetEntitiesIntersecting(_eyeManager.CurrentMap, bounds, LookupFlags.Approximate | LookupFlags.Anchored);
             foreach (var pvsEntity in pvsEntities)
             {
                 if (!EntityManager.TryGetComponent(pvsEntity, out ISpriteComponent? inRangeSprite) ||

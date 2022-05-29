@@ -5,10 +5,14 @@
   components:
   - type: WallMount
   - type: ApcPowerReceiver
+  - type: Electrified
+    enabled: false
+    usesApcPower: true
   - type: ExtensionCableReceiver
-  - type: DeviceNetworkComponent
+  - type: DeviceNetwork
     deviceNetId: Apc
-    frequency: 1621
+    receiveFrequencyId: AtmosMonitor
+    transmitFrequencyId: AtmosMonitor
   - type: ApcNetworkConnection
   - type: AtmosMonitor
     monitorFire: true
@@ -30,6 +34,14 @@
         Emagged: fire_emagged
       hideOnDepowered: ["fireAlarmState"]
     - type: WiresVisualizer
+  - type: AlertLevelDisplay
+    alertVisuals:
+      green: fire_0
+      blue: fire_1
+      red: fire_2
+      violet: fire_1
+      yellow: fire_1
+      delta: fire_3
   - type: UserInterface
     interfaces:
     - key: enum.WiresUiKey.Key

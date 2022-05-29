@@ -1,11 +1,6 @@
-using System;
-using System.Collections.Generic;
-using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Containers.ItemSlots;
 using Content.Shared.FixedPoint;
-using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization;
-using Robust.Shared.Serialization.Manager.Attributes;
 
 namespace Content.Shared.Chemistry.Dispenser
 {
@@ -18,6 +13,8 @@ namespace Content.Shared.Chemistry.Dispenser
     [Virtual]
     public class SharedReagentDispenserComponent : Component
     {
+        public const string BeakerSlotId = "ReagentDispenser-beaker";
+
         [DataField("beakerSlot")]
         public ItemSlot BeakerSlot = new();
 
@@ -87,7 +84,6 @@ namespace Content.Shared.Chemistry.Dispenser
         /// </summary>
         public enum UiButton
         {
-            Eject,
             Clear,
             SetDispenseAmount1,
             SetDispenseAmount5,

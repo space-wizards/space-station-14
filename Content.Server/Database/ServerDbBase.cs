@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using Content.Server.Administration.Logs;
 using Content.Shared.Administration.Logs;
 using Content.Shared.CharacterAppearance;
+using Content.Shared.Markings;
 using Content.Shared.Preferences;
 using Microsoft.EntityFrameworkCore;
 using Robust.Shared.Enums;
@@ -172,8 +173,26 @@ namespace Content.Server.Database
             if (Enum.TryParse<Gender>(profile.Gender, true, out var genderVal))
                 gender = genderVal;
 
+            // ReSharper disable once ConditionalAccessQualifierIsNonNullableAccordingToAPIContract
+            var markingsRaw = profile.Markings?.Deserialize<List<string>>();
+
+            List<Marking> markings = new();
+            if (markingsRaw != null)
+            {
+                foreach (var marking in markingsRaw)
+                {
+                    var parsed = Marking.ParseFromDbString(marking);
+
+                    if (parsed is null) continue;
+
+                    markings.Add(parsed);
+                }
+            }
+            var markingsSet = new MarkingsSet(markings);
+
             return new HumanoidCharacterProfile(
                 profile.CharacterName,
+                profile.FlavorText,
                 profile.Species,
                 profile.Age,
                 sex,
@@ -185,7 +204,8 @@ namespace Content.Server.Database
                     profile.FacialHairName,
                     Color.FromHex(profile.FacialHairColor),
                     Color.FromHex(profile.EyeColor),
-                    Color.FromHex(profile.SkinColor)
+                    Color.FromHex(profile.SkinColor),
+                    markingsSet
                 ),
                 clothing,
                 backpack,
@@ -198,10 +218,17 @@ namespace Content.Server.Database
         private static Profile ConvertProfiles(HumanoidCharacterProfile humanoid, int slot)
         {
             var appearance = (HumanoidCharacterAppearance) humanoid.CharacterAppearance;
+            List<string> markingStrings = new();
+            foreach (var marking in appearance.Markings)
+            {
+                markingStrings.Add(marking.ToString());
+            }
+            var markings = JsonSerializer.SerializeToDocument(markingStrings);
 
             var entity = new Profile
             {
                 CharacterName = humanoid.Name,
+                FlavorText = humanoid.FlavorText,
                 Species = humanoid.Species,
                 Age = humanoid.Age,
                 Sex = humanoid.Sex.ToString(),
@@ -214,6 +241,7 @@ namespace Content.Server.Database
                 SkinColor = appearance.SkinColor.ToHex(),
                 Clothing = humanoid.Clothing.ToString(),
                 Backpack = humanoid.Backpack.ToString(),
+                Markings = markings,
                 Slot = slot,
                 PreferenceUnavailable = (DbPreferenceUnavailableMode) humanoid.PreferenceUnavailable
             };
@@ -816,6 +844,69 @@ namespace Content.Server.Database
             {
                 db.DbContext.UploadedResourceLog.Remove(log);
             }
+
+            await db.DbContext.SaveChangesAsync();
+        }
+
+        #endregion
+
+        #region Admin Notes
+
+        public virtual async Task<int> AddAdminNote(AdminNote note)
+        {
+            await using var db = await GetDb();
+            db.DbContext.AdminNotes.Add(note);
+            await db.DbContext.SaveChangesAsync();
+            return note.Id;
+        }
+
+        public async Task<AdminNote?> GetAdminNote(int id)
+        {
+            await using var db = await GetDb();
+            return await db.DbContext.AdminNotes
+                .Where(note => note.Id == id)
+                .Include(note => note.Round)
+                .Include(note => note.CreatedBy)
+                .Include(note => note.LastEditedBy)
+                .Include(note => note.DeletedBy)
+                .Include(note => note.Player)
+                .SingleOrDefaultAsync();
+        }
+
+        public async Task<List<AdminNote>> GetAdminNotes(Guid player)
+        {
+            await using var db = await GetDb();
+            return await db.DbContext.AdminNotes
+                .Where(note => note.PlayerUserId == player)
+                .Where(note => !note.Deleted)
+                .Include(note => note.Round)
+                .Include(note => note.CreatedBy)
+                .Include(note => note.LastEditedBy)
+                .Include(note => note.Player)
+                .ToListAsync();
+        }
+
+        public async Task DeleteAdminNote(int id, Guid deletedBy, DateTime deletedAt)
+        {
+            await using var db = await GetDb();
+
+            var note = await db.DbContext.AdminNotes.Where(note => note.Id == id).SingleAsync();
+
+            note.Deleted = true;
+            note.DeletedById = deletedBy;
+            note.DeletedAt = deletedAt;
+
+            await db.DbContext.SaveChangesAsync();
+        }
+
+        public async Task EditAdminNote(int id, string message, Guid editedBy, DateTime editedAt)
+        {
+            await using var db = await GetDb();
+
+            var note = await db.DbContext.AdminNotes.Where(note => note.Id == id).SingleAsync();
+            note.Message = message;
+            note.LastEditedById = editedBy;
+            note.LastEditedAt = editedAt;
 
             await db.DbContext.SaveChangesAsync();
         }

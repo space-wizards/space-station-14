@@ -1,13 +1,7 @@
 using Content.Shared.Damage.Prototypes;
-using Robust.Shared.IoC;
-using Robust.Shared.Log;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.Dictionary;
 using Robust.Shared.Utility;
-using Robust.Shared.ViewVariables;
-using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Text.Json.Serialization;
 using Content.Shared.FixedPoint;
@@ -312,10 +306,11 @@ namespace Content.Shared.Damage
         ///     total of each group. If no members of a group are present in this <see cref="DamageSpecifier"/>, the
         ///     group is not included in the resulting dictionary.
         /// </remarks>
-        public Dictionary<string, FixedPoint2> GetDamagePerGroup()
+        public Dictionary<string, FixedPoint2> GetDamagePerGroup(IPrototypeManager? protoManager = null)
         {
+            IoCManager.Resolve(ref protoManager);
             var damageGroupDict = new Dictionary<string, FixedPoint2>();
-            foreach (var group in IoCManager.Resolve<IPrototypeManager>().EnumeratePrototypes<DamageGroupPrototype>())
+            foreach (var group in protoManager.EnumeratePrototypes<DamageGroupPrototype>())
             {
                 if (TryGetDamageInGroup(group, out var value))
                 {

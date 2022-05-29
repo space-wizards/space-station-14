@@ -1,0 +1,17 @@
+- type: constructionGraph
+  id: Durathread
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: MaterialDurathread
+          completed:
+            - !type:SetStackCount
+              amount: 1
+          steps:
+            - material: Cloth
+              amount: 5
+            - material: Plastic
+              amount: 5
+    - node: MaterialDurathread
+      entity: MaterialDurathread

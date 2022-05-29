@@ -1,21 +1,13 @@
-using System;
-using Content.Server.Doors.Components;
 using Content.Server.Doors.Systems;
 using Content.Server.Power.Components;
 using Content.Server.Shuttles.Components;
 using Content.Shared.Doors;
 using Content.Shared.Doors.Components;
 using Content.Shared.Verbs;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Localization;
-using Robust.Shared.Log;
 using Robust.Shared.Map;
-using Robust.Shared.Maths;
 using Robust.Shared.Physics;
 using Robust.Shared.Physics.Collision.Shapes;
 using Robust.Shared.Physics.Dynamics;
-using Robust.Shared.Physics.Dynamics.Joints;
 using Robust.Shared.Utility;
 
 namespace Content.Server.Shuttles.EntitySystems
@@ -38,6 +30,7 @@ namespace Content.Server.Shuttles.EntitySystems
             SubscribeLocalEvent<DockingComponent, ComponentShutdown>(OnShutdown);
             SubscribeLocalEvent<DockingComponent, PowerChangedEvent>(OnPowerChange);
             SubscribeLocalEvent<DockingComponent, AnchorStateChangedEvent>(OnAnchorChange);
+            SubscribeLocalEvent<DockingComponent, ReAnchorEvent>(OnDockingReAnchor);
 
             SubscribeLocalEvent<DockingComponent, GetVerbsEvent<InteractionVerb>>(OnVerb);
             SubscribeLocalEvent<DockingComponent, BeforeDoorAutoCloseEvent>(OnAutoClose);
@@ -254,6 +247,16 @@ namespace Content.Server.Shuttles.EntitySystems
             {
                 DisableDocking(uid, component);
             }
+        }
+
+        private void OnDockingReAnchor(EntityUid uid, DockingComponent component, ref ReAnchorEvent args)
+        {
+            if (!component.Docked) return;
+
+            var other = Comp<DockingComponent>(component.DockedWith!.Value);
+
+            Undock(component);
+            Dock(component, other);
         }
 
         private void OnPowerChange(EntityUid uid, DockingComponent component, PowerChangedEvent args)

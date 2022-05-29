@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using System.Threading;
 using Content.Server.Body.Components;
 using Content.Server.Body.Systems;
@@ -35,7 +34,7 @@ namespace Content.Server.Nutrition.EntitySystems
         [Dependency] private readonly PopupSystem _popupSystem = default!;
         [Dependency] private readonly UtensilSystem _utensilSystem = default!;
         [Dependency] private readonly DoAfterSystem _doAfterSystem = default!;
-        [Dependency] private readonly SharedAdminLogSystem _logSystem = default!;
+        [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
         [Dependency] private readonly InventorySystem _inventorySystem = default!;
         [Dependency] private readonly SharedInteractionSystem _interactionSystem = default!;
         [Dependency] private readonly SharedHandsSystem _handsSystem = default!;
@@ -46,7 +45,7 @@ namespace Content.Server.Nutrition.EntitySystems
 
             SubscribeLocalEvent<FoodComponent, UseInHandEvent>(OnUseFoodInHand);
             SubscribeLocalEvent<FoodComponent, AfterInteractEvent>(OnFeedFood);
-            SubscribeLocalEvent<FoodComponent, GetVerbsEvent<InteractionVerb>>(AddEatVerb);
+            SubscribeLocalEvent<FoodComponent, GetVerbsEvent<AlternativeVerb>>(AddEatVerb);
             SubscribeLocalEvent<SharedBodyComponent, FeedEvent>(OnFeed);
             SubscribeLocalEvent<ForceFeedCancelledEvent>(OnFeedCancelled);
             SubscribeLocalEvent<InventoryComponent, IngestionAttemptEvent>(OnInventoryIngestAttempt);
@@ -79,8 +78,6 @@ namespace Content.Server.Nutrition.EntitySystems
             // if currently being used to feed, cancel that action.
             if (food.CancelToken != null)
             {
-                food.CancelToken.Cancel();
-                food.CancelToken = null;
                 return true;
             }
 
@@ -124,7 +121,7 @@ namespace Content.Server.Nutrition.EntitySystems
                     user, Filter.Entities(target));
 
                 // logging
-                _logSystem.Add(LogType.ForceFeed, LogImpact.Medium, $"{ToPrettyString(user):user} is forcing {ToPrettyString(target):target} to eat {ToPrettyString(food.Owner):food} {SolutionContainerSystem.ToPrettyString(foodSolution)}");
+                _adminLogger.Add(LogType.ForceFeed, LogImpact.Medium, $"{ToPrettyString(user):user} is forcing {ToPrettyString(target):target} to eat {ToPrettyString(food.Owner):food} {SolutionContainerSystem.ToPrettyString(foodSolution)}");
             }
 
             var moveBreak = user != target;
@@ -235,7 +232,7 @@ namespace Content.Server.Nutrition.EntitySystems
             EntityManager.QueueDeleteEntity(component.Owner);
         }
 
-        private void AddEatVerb(EntityUid uid, FoodComponent component, GetVerbsEvent<InteractionVerb> ev)
+        private void AddEatVerb(EntityUid uid, FoodComponent component, GetVerbsEvent<AlternativeVerb> ev)
         {
             if (component.CancelToken != null)
                 return;
@@ -250,11 +247,11 @@ namespace Content.Server.Nutrition.EntitySystems
             if (EntityManager.TryGetComponent<MobStateComponent>(uid, out var mobState) && mobState.IsAlive())
                 return;
 
-            InteractionVerb verb = new()
+            AlternativeVerb verb = new()
             {
                 Act = () =>
                 {
-                    TryFeed(uid, ev.User, component);
+                    TryFeed(ev.User, ev.User, component);
                 },
                 IconTexture = "/Textures/Interface/VerbIcons/cutlery.svg.192dpi.png",
                 Text = Loc.GetString("food-system-verb-eat"),
@@ -293,9 +290,9 @@ namespace Content.Server.Nutrition.EntitySystems
 
             // logging
             if (user == null)
-                _logSystem.Add(LogType.ForceFeed, $"{ToPrettyString(uid):food} {SolutionContainerSystem.ToPrettyString(foodSolution):solution} was thrown into the mouth of {ToPrettyString(target):target}");
+                _adminLogger.Add(LogType.ForceFeed, $"{ToPrettyString(uid):food} {SolutionContainerSystem.ToPrettyString(foodSolution):solution} was thrown into the mouth of {ToPrettyString(target):target}");
             else
-                _logSystem.Add(LogType.ForceFeed, $"{ToPrettyString(user.Value):user} threw {ToPrettyString(uid):food} {SolutionContainerSystem.ToPrettyString(foodSolution):solution} into the mouth of {ToPrettyString(target):target}");
+                _adminLogger.Add(LogType.ForceFeed, $"{ToPrettyString(user.Value):user} threw {ToPrettyString(uid):food} {SolutionContainerSystem.ToPrettyString(foodSolution):solution} into the mouth of {ToPrettyString(target):target}");
 
             var filter = user == null ? Filter.Entities(target) : Filter.Entities(target, user.Value);
             _popupSystem.PopupEntity(Loc.GetString(food.EatMessage, ("food", food.Owner)), target, filter);

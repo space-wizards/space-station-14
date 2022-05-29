@@ -3,6 +3,7 @@ using Content.Shared.Construction.Prototypes;
 using Content.Shared.Examine;
 using Content.Shared.Input;
 using Content.Shared.Interaction;
+using Content.Shared.Wall;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
 using Robust.Client.Player;
@@ -182,6 +183,9 @@ namespace Content.Client.Construction
             sprite.LayerSetSprite(0, prototype.Icon);
             sprite.LayerSetShader(0, "unshaded");
             sprite.LayerSetVisible(0, true);
+
+            if (prototype.CanBuildInImpassable)
+                EnsureComp<WallMountComponent>(ghost).Arc = new(Math.Tau);
         }
 
         /// <summary>

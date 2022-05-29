@@ -1,0 +1,32 @@
+- type: soundCollection
+  id: Sneezes
+  files:
+  - /Audio/Effects/Diseases/sneeze1.ogg
+  - /Audio/Effects/Diseases/sneeze2.ogg
+
+- type: soundCollection
+  id: Coughs
+  files:
+  - /Audio/Effects/Diseases/cough1.ogg
+  - /Audio/Effects/Diseases/cough2.ogg
+
+- type: soundCollection
+  id: CatMeows
+  files:
+  - /Audio/Animals/cat_meow.ogg
+
+- type: soundCollection
+  id: CatHisses
+  files:
+  - /Audio/Animals/cat_hiss.ogg
+
+- type: soundCollection
+  id: MonkeyScreeches
+  files:
+  - /Audio/Effects/Diseases/monkey1.ogg
+  - /Audio/Effects/Diseases/monkey2.ogg
+
+- type: soundCollection
+  id: RobotBeeps
+  files:
+  - /Audio/Effects/Diseases/beepboop.ogg

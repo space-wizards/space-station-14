@@ -11,4 +11,10 @@ namespace Content.Server.DoAfter
         // we'll just send them the index. Doesn't matter if it wraps around.
         public byte RunningIndex;
     }
+
+    /// <summary>
+    ///     Added to entities that are currently performing any doafters.
+    /// </summary>
+    [RegisterComponent]
+    public sealed class ActiveDoAfterComponent : Component {}
 }

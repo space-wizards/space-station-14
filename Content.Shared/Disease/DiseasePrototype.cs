@@ -12,22 +12,23 @@ namespace Content.Shared.Disease
     public sealed class DiseasePrototype : IPrototype, IInheritingPrototype
     {
         [ViewVariables]
-        [DataField("id", required: true)]
+        [IdDataFieldAttribute]
         public string ID { get; } = default!;
 
         [DataField("name")]
         public string Name { get; } = string.Empty;
 
-        [DataField("parent", customTypeSerializer: typeof(PrototypeIdSerializer<DiseasePrototype>))]
+        [ParentDataFieldAttribute(typeof(AbstractPrototypeIdSerializer<DiseasePrototype>))]
         public string? Parent { get; private set; }
 
         [NeverPushInheritance]
-        [DataField("abstract")]
+        [AbstractDataFieldAttribute]
         public bool Abstract { get; private set; }
 
         /// <summary>
         /// Controls how often a disease ticks.
         /// </summary>
+        [ViewVariables]
         public float TickTime = 1f;
 
         /// <summary>

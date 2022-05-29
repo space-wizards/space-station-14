@@ -1,7 +1,5 @@
-using System.Collections.Generic;
 using Content.Shared.Sound;
-using Robust.Shared.GameObjects;
-using Robust.Shared.Serialization.Manager.Attributes;
+using Content.Shared.Storage;
 
 namespace Content.Server.Storage.Components
 {
@@ -16,7 +14,7 @@ namespace Content.Server.Storage.Components
         /// </summary>
         /// <returns></returns>
         [DataField("items", required: true)]
-        public List<EntitySpawnEntry> Items = new List<EntitySpawnEntry>();
+        public List<EntitySpawnEntry> Items = new();
 
         /// <summary>
         ///     A sound to play when the items are spawned. For example, gift boxes being unwrapped.

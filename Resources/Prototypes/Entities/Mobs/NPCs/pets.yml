@@ -19,13 +19,11 @@
     - shape:
         !type:PhysShapeCircle
         radius: 0.35
-      mass: 10
+      mass: 20
       mask:
-      - Impassable
-      - MobImpassable #Bullets?!
-      - SmallImpassable
+      - MobMask
       layer:
-      - Opaque
+      - MobLayer
   - type: Appearance
     visuals:
     - type: DamageStateVisualizer
@@ -33,8 +31,9 @@
       crit: corgi_dead
       dead: corgi_dead
   - type: Butcherable
-    spawned: FoodMeat
-    pieces: 3
+    spawned:
+    - id: FoodMeat
+      amount: 2
   - type: ReplacementAccent
     accent: dog
   - type: InteractionPopup
@@ -47,6 +46,7 @@
       gender: epicene
   - type: SentienceTarget
     flavorKind: corgi
+  - type: Puller
 
 - type: entity
   name: corrupted corgi
@@ -66,7 +66,7 @@
       normal: narsian
       crit: narsian_dead
       dead: narsian_dead
-  - type: UnarmedCombat
+  - type: MeleeWeapon
     range: 1.5
     arcwidth: 0
     arc: bite
@@ -87,11 +87,35 @@
   - type: Grammar
     attributes:
       gender: epicene
+  - type: Bloodstream
+    bloodReagent: DemonsBlood
+    bloodlossDamage:
+      types:
+        Bloodloss:
+          1
+    bloodlossHealDamage:
+      types:
+        Bloodloss:
+          -0.25
+  - type: Damageable
+    damageContainer: Biological
+    damageModifierSet: Infernal
+  - type: Temperature
+    heatDamageThreshold: 4000 #They come from hell, so...
+    coldDamageThreshold: 260
+    currentTemperature: 310.15
+    coldDamage:
+      types:
+        Cold : 1 #per second, scales with temperature & other constants
+    specificHeat: 42
+    heatDamage:
+      types:
+        Heat : 1 #per second, scales with temperature & other constants
 
 - type: entity
   name: Ian
   parent: MobCorgi
-  id: MobCorgiOld
+  id: MobCorgiIan
   description: Favorite pet corgi.
   components:
   - type: Sprite
@@ -110,6 +134,10 @@
     attributes:
       proper: true
       gender: male
+  - type: Butcherable
+    spawned:
+    - id: FoodMeatCorgi
+      amount: 2
 
 - type: entity
   name: Old Ian
@@ -197,13 +225,11 @@
     - shape:
         !type:PhysShapeCircle
         radius: 0.35
-      mass: 10
+      mass: 20
       mask:
-      - Impassable
-      - MobImpassable #Bullets?!
-      - SmallImpassable
+      - MobMask
       layer:
-      - Opaque
+      - MobLayer
   - type: Appearance
     visuals:
     - type: DamageStateVisualizer
@@ -211,8 +237,9 @@
       crit: cat_dead
       dead: cat_dead
   - type: Butcherable
-    spawned: FoodMeat
-    pieces: 2
+    spawned:
+    - id: FoodMeat
+      amount: 3
   - type: ReplacementAccent
     accent: cat
   - type: InteractionPopup
@@ -348,13 +375,11 @@
     - shape:
         !type:PhysShapeCircle
         radius: 0.35
-      mass: 10
+      mass: 20
       mask:
-      - Impassable
-      - MobImpassable #Bullets?!
-      - SmallImpassable
+      - MobMask
       layer:
-      - Opaque
+      - MobLayer
   - type: Appearance
     visuals:
     - type: DamageStateVisualizer
@@ -362,12 +387,15 @@
       crit: sloth_dead
       dead: sloth_dead
   - type: Butcherable
-    spawned: FoodMeat
-    pieces: 3
+    spawned:
+    - id: FoodMeat
+      amount: 3
   - type: InteractionPopup
     successChance: 0.9
     interactSuccessString: petting-success-sloth
     interactFailureString: petting-failure-sloth
+    interactSuccessSound:
+      path: /Audio/Animals/sloth_squeak.ogg
   - type: Grammar
     attributes:
       gender: epicene
@@ -390,14 +418,11 @@
     - shape:
         !type:PhysShapeCircle
         radius: 0.35
-      mass: 10
+      mass: 20
       mask:
-      - Impassable
-      - MobImpassable
-      - VaultImpassable
-      - SmallImpassable
+      - MobMask
       layer:
-      - Opaque
+      - MobLayer
   - type: Appearance
     visuals:
     - type: DamageStateVisualizer
@@ -405,8 +430,9 @@
       crit: ferret_dead
       dead: ferret_dead
   - type: Butcherable
-    spawned: FoodMeat
-    pieces: 3
+    spawned:
+    - id: FoodMeat
+      amount: 3
   - type: InteractionPopup
     successChance: 0.8
     interactDelay: 1.5 # Avoids overlapping SFX due to spam - these SFX are a little longer than the typical 1 second.
@@ -446,14 +472,11 @@
     - shape:
         !type:PhysShapeCircle
         radius: 0.35
-      mass: 10
+      mass: 20
       mask:
-      - Impassable
-      - MobImpassable 
-      - VaultImpassable
-      - SmallImpassable
+      - MobMask
       layer:
-      - Opaque
+      - MobLayer
   - type: Appearance
     visuals:
     - type: DamageStateVisualizer
@@ -461,10 +484,11 @@
       crit: bingus_dead
       dead: bingus_dead
   - type: Butcherable
-    spawned: FoodMeat
-    pieces: 2
+    spawned:
+    - id: FoodMeat
+      amount: 2
   - type: InteractionPopup
-    successChance: 0.9 
+    successChance: 0.9
     interactSuccessString: petting-success-cat
     interactFailureString: petting-failure-generic
     interactSuccessSound:
@@ -472,7 +496,7 @@
   - type: Grammar
     attributes:
       gender: epicene
-      
+
 - type: entity
   name: mcgriff
   parent: SimpleMobBase
@@ -491,14 +515,11 @@
     - shape:
         !type:PhysShapeCircle
         radius: 0.35
-      mass: 10
+      mass: 20
       mask:
-      - Impassable
-      - MobImpassable 
-      - SmallImpassable
-      - VaultImpassable
+      - MobMask
       layer:
-      - Opaque
+      - MobLayer
   - type: Appearance
     visuals:
     - type: DamageStateVisualizer
@@ -506,12 +527,13 @@
       crit: mcgriff_dead
       dead: mcgriff_dead
   - type: Butcherable
-    spawned: FoodMeat
-    pieces: 2
+    spawned:
+    - id: FoodMeat
+      amount: 2
   - type: ReplacementAccent
     accent: dog
   - type: InteractionPopup
-    successChance: 0.5 
+    successChance: 0.5
     interactSuccessString: petting-success-dog
     interactFailureString: petting-failure-generic
     interactSuccessSound:
@@ -522,10 +544,10 @@
       gender: male
 
 - type: entity
-  name: paperwork
+  name: Paperwork
   parent: MobSloth
   id: MobPaperwork
-  description: Took up a new job sorting books in the library after he got transferred from space station 13. He seems to be just as slow at this.
+  description: Took up a new job sorting books in the library after he got transferred from Space Station 13. He seems to be just as slow at this.
   components:
   - type: Sprite
     drawdepth: Mobs
@@ -540,8 +562,9 @@
       crit: paperwork_dead
       dead: paperwork_dead
   - type: Butcherable
-    spawned: FoodMeat
-    pieces: 3
+    spawned:
+    - id: FoodMeat
+      amount: 3
   - type: InteractionPopup
     successChance: 1
     interactSuccessString: petting-success-sloth
@@ -550,9 +573,9 @@
     attributes:
       proper: true
       gender: male
-      
+
 - type: entity
-  name: walter
+  name: Walter
   parent: SimpleMobBase
   id: MobWalter
   description: He likes chems and treats. Walter.
@@ -569,14 +592,11 @@
     - shape:
         !type:PhysShapeCircle
         radius: 0.35
-      mass: 10
+      mass: 20
       mask:
-      - Impassable
-      - MobImpassable 
-      - SmallImpassable
-      - VaultImpassable
+      - MobMask
       layer:
-      - Opaque
+      - MobLayer
   - type: Appearance
     visuals:
     - type: DamageStateVisualizer
@@ -584,8 +604,9 @@
       crit: walter_dead
       dead: walter_dead
   - type: Butcherable
-    spawned: FoodMeat
-    pieces: 3
+    spawned:
+    - id: FoodMeat
+      amount: 3
   - type: ReplacementAccent
     accent: dog
   - type: InteractionPopup

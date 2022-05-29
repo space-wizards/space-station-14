@@ -1,9 +1,5 @@
-using System.Collections.Generic;
 using Content.Shared.Damage;
 using Content.Shared.Sound;
-using Robust.Shared.GameObjects;
-using Robust.Shared.Maths;
-using Robust.Shared.Serialization.Manager.Attributes;
 
 namespace Content.Server.Weapon.Melee.EnergySword
 {
@@ -15,8 +11,12 @@ namespace Content.Server.Weapon.Melee.EnergySword
         public bool Hacked = false;
 
         public bool Activated = false;
-        [DataField("hitSound")]
-        public SoundSpecifier HitSound { get; set; } = new SoundPathSpecifier("/Audio/Weapons/eblade1.ogg");
+
+        /// <summary>
+        ///     RGB cycle rate for hacked e-swords.
+        /// </summary>
+        [DataField("cycleRate")]
+        public float CycleRate = 1f;
 
         [DataField("activateSound")]
         public SoundSpecifier ActivateSound { get; set; } = new SoundPathSpecifier("/Audio/Weapons/ebladeon.ogg");

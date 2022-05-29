@@ -116,7 +116,7 @@
   parent: PosterBase
   id: PosterContrabandGreyTide
   name: "Grey Tide"
-  description: "A rebellious poster symbolizing assistant solidarity."
+  description: "A rebellious poster symbolizing passenger solidarity."
   components:
   - type: Sprite
     state: poster8_contraband
@@ -296,7 +296,7 @@
   parent: PosterBase
   id: PosterContrabandSyndicatePistol
   name: "Syndicate Pistol"
-  description: "A poster advertising syndicate pistols as being 'classy as fuck'. It is covered in faded gang tags."
+  description: "A poster advertising syndicate pistols as being 'classy as fuck'. It's covered in faded gang tags."
   components:
   - type: Sprite
     state: poster28_contraband
@@ -440,7 +440,7 @@
   parent: PosterBase
   id: PosterContrabandUnreadableAnnouncement
   name: "Unreadable Announcement"
-  description: "A poster announcing something by someone, oddly enough  they seem to have forgotten making it readable"
+  description: "A poster announcing something by someone, oddly enough they seem to have forgotten making it readable"
   components:
   - type: Sprite
     state: poster45_contraband
@@ -498,6 +498,35 @@
   components:
   - type: Sprite
     state: poster51_contraband
+
+# These 3 originally from VEEGEE
+- type: entity
+  parent: PosterBase
+  id: PosterContrabandBeachStarYamamoto
+  name: "Beach Star Yamamoto!"
+  description: "A wall scroll depicting an old swimming anime with girls in small swim suits. You feel more weebish the longer you look at it."
+  components:
+  - type: Sprite
+    state: poster52_contraband
+
+- type: entity
+  parent: PosterBase
+  id: PosterContrabandHighEffectEngineering
+  name: "High Effect Engineering"
+  description: "There are 3 shards and a singularity.  The shards are singing.  The engineers are crying."
+  components:
+  - type: Sprite
+    state: poster53_contraband
+
+- type: entity
+  parent: PosterBase
+  id: PosterContrabandNuclearDeviceInformational
+  name: "Nuclear Device Informational"
+  description: "This poster depicts an image of an old style nuclear explosive device, as well as some helpful information on what to do if one has been set. It suggests lying on the floor and crying."
+  components:
+  - type: Sprite
+    state: poster54_contraband
+
 
 # Legit
 - type: entity
@@ -832,3 +861,78 @@
   components:
   - type: Sprite
     state: poster37_legit
+
+#maps
+
+- type: entity
+  parent: PosterBase
+  id: PosterMapBagel
+  name: "Bagel Map"
+  description: "A map of Bagel Station."
+  components:
+  - type: Sprite
+    state: bagelmap
+
+- type: entity
+  parent: PosterBase
+  id: PosterMapDelta
+  name: "Delta Map"
+  description: "A map of Delta Station."
+  components:
+  - type: Sprite
+    state: deltamap
+
+- type: entity
+  parent: PosterBase
+  id: PosterMapMarathon
+  name: "Marathon Map"
+  description: "A map of Marathon Station."
+  components:
+  - type: Sprite
+    state: marathonmap
+
+- type: entity
+  parent: PosterBase
+  id: PosterMapMoose
+  name: "Moose Map"
+  description: "A map of Moose Station."
+  components:
+  - type: Sprite
+    state: moosemap
+
+- type: entity
+  parent: PosterBase
+  id: PosterMapPacked
+  name: "Packed Map"
+  description: "A map of Packed Station."
+  components:
+  - type: Sprite
+    state: packedmap
+
+- type: entity
+  parent: PosterBase
+  id: PosterMapPillar
+  name: "Pillar Map"
+  description: "A map of NSS Pillar."
+  components:
+  - type: Sprite
+    state: pillarmap
+
+- type: entity
+  parent: PosterBase
+  id: PosterMapSaltern
+  name: "Saltern Map"
+  description: "A map of Saltern Station."
+  components:
+  - type: Sprite
+    state: salternmap
+
+- type: entity
+  parent: PosterBase
+  id: PosterMapSplit
+  name: "Split Station Map"
+  description: "A map of Split Station."
+  components:
+  - type: Sprite
+    state: splitmap
+

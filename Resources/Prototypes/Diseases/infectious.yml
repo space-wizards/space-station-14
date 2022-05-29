@@ -11,6 +11,8 @@
       probability: 0.025
     - !type:DiseaseSnough
       probability: 0.025
+      snoughSound:
+        collection: Sneezes
   cures:
     - !type:DiseaseBedrestCure
       maxLength: 20
@@ -31,6 +33,8 @@
     - !type:DiseaseSnough
       probability: 0.025
       snoughMessage: disease-cough
+      snoughSound:
+        collection: Coughs
     - !type:DiseaseHealthChange
       probability: 0.015
       damage:
@@ -45,6 +49,51 @@
       reagent: SpaceCleaner
 
 - type: disease
+  id: SpaceFlu
+  name: space flu
+  cureResist: 0.08
+  effects:
+    - !type:DiseaseVomit
+      probability: 0.01
+    - !type:DiseasePopUp
+      probability: 0.025
+    - !type:DiseaseSnough
+      probability: 0.025
+      snoughSound:
+        collection: Sneezes
+    - !type:DiseaseHealthChange
+      probability: 0.015
+      damage:
+        types:
+          Heat: 1
+  cures:
+    - !type:DiseaseBedrestCure
+      maxLength: 100
+
+- type: disease
+  id: Bird Flew
+  name: bird flew
+  cureResist: 0.08
+  effects:
+    - !type:DiseaseVomit
+      probability: 0.015
+    - !type:DiseasePopUp
+      probability: 0.025
+    - !type:DiseaseSnough
+      probability: 0.025
+      snoughMessage: disease-cough
+      snoughSound:
+        collection: Coughs
+    - !type:DiseaseHealthChange
+      probability: 0.05
+      damage:
+        groups:
+          Caustic: 1
+  cures:
+    - !type:DiseaseBedrestCure
+      maxLength: 120
+
+- type: disease
   id: VanAusdallsRobovirus
   name: Van Ausdall's Robovirus
   cureResist: 0.1
@@ -56,6 +105,8 @@
     - !type:DiseaseSnough
       probability: 0.02
       snoughMessage: disease-beep
+      snoughSound:
+        collection: RobotBeeps
   cures:
     - !type:DiseaseJustWaitCure
       maxLength: 900
@@ -73,10 +124,12 @@
       message: disease-beat-chest-compulsion
     - !type:DiseasePopUp
       probability: 0.03
-      message: disease-steal-compulsion
+      message: disease-banana-compulsion
     - !type:DiseaseSnough
       probability: 0.02
       snoughMessage: disease-screech
+      snoughSound:
+        collection: MonkeyScreeches
     - !type:DiseaseGenericStatusEffect
       probability: 0.3
       key: Stutter
@@ -128,8 +181,15 @@
       reagent: Ephedrine
       amount: 1
     - !type:DiseaseSnough
-      probability: 0.02
+      probability: 0.01
       snoughMessage: disease-meow
+      snoughSound:
+        collection: CatMeows
+    - !type:DiseaseSnough
+      probability: 0.01
+      snoughMessage: disease-hiss
+      snoughSound:
+        collection: CatHisses
   cures:
     - !type:DiseaseBodyTemperatureCure
       min: 420 ## Reachable with a flamer

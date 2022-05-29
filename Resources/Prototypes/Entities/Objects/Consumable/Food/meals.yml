@@ -201,7 +201,7 @@
 # Tastes like meat, cabbage.
 
 - type: entity
-  name: Filet migrawr
+  name: filet migrawr
   parent: FoodMealBase
   id: FoodMealBearsteak
   description: Because eating bear wasn't manly enough.

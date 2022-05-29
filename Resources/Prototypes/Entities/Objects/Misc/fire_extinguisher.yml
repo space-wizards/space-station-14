@@ -53,7 +53,7 @@
   name: extinguisher spray
   id: ExtinguisherSpray
   parent: Vapor
-  abstract: true
+  noSpawn: true
   components:
   - type: Sprite
     sprite: Effects/extinguisherSpray.rsi

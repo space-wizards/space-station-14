@@ -3,7 +3,7 @@
   id: IDCardStandard
   name: identification card
   description: A card necessary to access various areas aboard the station.
-  abstract: true
+  noSpawn: true
   components:
   - type: Sprite
     sprite: Objects/Misc/id_cards.rsi
@@ -22,15 +22,63 @@
 
 - type: entity
   parent: IDCardStandard
-  id: AssistantIDCard
-  name: assistant ID card
+  id: PassengerIDCard
+  name: passenger ID card
   components:
   - type: Sprite
     layers:
     - state: default
-    - state: idassistant
+    - state: idpassenger
   - type: PresetIdCard
-    job: Assistant
+    job: Passenger
+
+- type: entity
+  parent: PassengerIDCard
+  id: TechnicalAssistantIDCard
+  name: technical assistant ID card
+  components:
+  - type: PresetIdCard
+    job: TechnicalAssistant
+  - type: Sprite
+    layers:
+    - state: default
+    - state: idintern-tech
+
+- type: entity
+  parent: PassengerIDCard
+  id: MedicalInternIDCard
+  name: medical intern ID card
+  components:
+  - type: PresetIdCard
+    job: MedicalIntern
+  - type: Sprite
+    layers:
+    - state: default
+    - state: idintern-med
+
+- type: entity
+  parent: PassengerIDCard
+  id: SecurityCadetIDCard
+  name: security cadet ID card
+  components:
+  - type: PresetIdCard
+    job: SecurityCadet
+  - type: Sprite
+    layers:
+    - state: default
+    - state: idintern-cadet
+
+- type: entity
+  parent: PassengerIDCard
+  id: ServiceWorkerIDCard
+  name: service worker ID card
+  components:
+  - type: PresetIdCard
+    job: ServiceWorker
+  - type: Sprite
+    layers:
+    - state: default
+    - state: idintern-service
 
 - type: entity
   parent: IDCardStandard
@@ -377,3 +425,37 @@
         - state: idmusician
     - type: PresetIdCard
       job: Musician
+
+- type: entity
+  parent: PassengerIDCard
+  id: AgentIDCard
+  suffix: Agent
+  components:
+  - type: AgentIDCard
+  - type: ActivatableUI
+    key: enum.AgentIDCardUiKey.Key
+  - type: UserInterface
+    interfaces:
+      - key: enum.AgentIDCardUiKey.Key
+        type: AgentIDCardBoundUserInterface
+
+- type: entity
+  parent: IDCardStandard
+  id: AtmosIDCard
+  name: atmospheric technician ID card
+  components:
+  - type: Sprite
+    layers:
+    - state: orange
+    - state: idatmospherictechnician
+  - type: PresetIdCard
+    job: AtmosphericTechnician
+
+- type: entity
+  parent: IDCardStandard
+  id: SyndicateIDCard
+  name: Syndicate ID card
+  components:
+  - type: Sprite
+    layers:
+    - state: syndie

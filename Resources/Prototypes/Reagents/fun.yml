@@ -1,9 +1,9 @@
 ﻿- type: reagent
   id: Carpetium
-  name: carpetium
+  name: reagent-name-carpetium
   group: Special
-  desc: A mystical chemical, usually outsourced from the Clown Planet, that covers everything it touches in carpet.
-  physicalDesc: fibrous
+  desc: reagent-desc-carpetium
+  physicalDesc: reagent-physical-desc-fibrous
   color: "#800000"
   tileReactions:
   - !type:CreateEntityTileReaction
@@ -20,17 +20,17 @@
 
 - type: reagent
   id: Fiber
-  name: fiber
-  desc: A raw material, usually extracted from wool or other fabric products.
-  physicalDesc: fibrous
+  name: reagent-name-fiber
+  desc: reagent-desc-fiber
+  physicalDesc: reagent-physical-desc-fibrous
   color: "#808080"
 
 - type: reagent
   id: BuzzochloricBees
-  name: Buzzochloric Bees
+  name: reagent-name-buzzochloric-bees
   group: Toxins
-  desc: "Liquid bees. Oh god it's LIQUID BEES NO-"
-  physicalDesc: buzzy
+  desc: reagent-desc-buzzochloric-bees
+  physicalDesc: reagent-physical-desc-buzzy
   color: "#FFD35D"
   tileReactions:
   - !type:CreateEntityTileReaction
@@ -117,24 +117,24 @@
 
 - type: reagent
   id: GroundBee
-  name: Ground Bee
-  desc: Bee grounds. Gross.
-  physicalDesc: bee guts
+  name: reagent-name-ground-bee
+  desc: reagent-desc-ground-bee
+  physicalDesc: reagent-physical-desc-bee-guts
   color: "#86530E"
 
 - type: reagent
   id: Saxoite
-  name: Saxoite
-  desc: Smells like jazz.
-  physicalDesc: ground brass
+  name: reagent-name-saxoite
+  desc: reagent-desc-saxoite
+  physicalDesc: reagent-physical-desc-ground-brass
   color: "#B8A603"
 
 - type: reagent
   id: Licoxide
-  name: Licoxide
+  name: reagent-name-licoxide
   group: Toxins
-  desc: It looks... electrifying.
-  physicalDesc: electric
+  desc: reagent-desc-licoxide
+  physicalDesc: reagent-physical-desc-electric
   color: "#FDD023"
   metabolisms:
     Poison:

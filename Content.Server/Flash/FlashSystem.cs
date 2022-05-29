@@ -30,7 +30,6 @@ namespace Content.Server.Flash
         {
             base.Initialize();
             SubscribeLocalEvent<FlashComponent, MeleeHitEvent>(OnFlashMeleeHit);
-            SubscribeLocalEvent<FlashComponent, MeleeInteractEvent>(OnFlashMeleeInteract);
             SubscribeLocalEvent<FlashComponent, UseInHandEvent>(OnFlashUseInHand);
             SubscribeLocalEvent<FlashComponent, ExaminedEvent>(OnFlashExamined);
 
@@ -41,12 +40,18 @@ namespace Content.Server.Flash
             SubscribeLocalEvent<FlashableComponent, ComponentStartup>(OnFlashableStartup);
             SubscribeLocalEvent<FlashableComponent, ComponentShutdown>(OnFlashableShutdown);
             SubscribeLocalEvent<FlashableComponent, MetaFlagRemoveAttemptEvent>(OnMetaFlagRemoval);
+            SubscribeLocalEvent<FlashableComponent, PlayerAttachedEvent>(OnPlayerAttached);
+        }
+
+        private void OnPlayerAttached(EntityUid uid, FlashableComponent component, PlayerAttachedEvent args)
+        {
+            Dirty(component);
         }
 
         private void OnMetaFlagRemoval(EntityUid uid, FlashableComponent component, ref MetaFlagRemoveAttemptEvent args)
         {
             if (component.LifeStage == ComponentLifeStage.Running)
-                args.Cancelled = true;
+                args.ToRemove &= ~MetaDataFlags.EntitySpecific;
         }
 
         private void OnFlashableStartup(EntityUid uid, FlashableComponent component, ComponentStartup args)
@@ -70,20 +75,6 @@ namespace Content.Server.Flash
             foreach (var e in args.HitEntities)
             {
                 Flash(e, args.User, uid, comp.FlashDuration, comp.SlowTo);
-            }
-        }
-
-        private void OnFlashMeleeInteract(EntityUid uid, FlashComponent comp, MeleeInteractEvent args)
-        {
-            if (!UseFlash(comp, args.User))
-            {
-                return;
-            }
-
-            if (EntityManager.HasComponent<FlashableComponent>(args.Entity))
-            {
-                args.CanInteract = true;
-                Flash(args.Entity, args.User, uid, comp.FlashDuration, comp.SlowTo);
             }
         }
 
@@ -204,9 +195,12 @@ namespace Content.Server.Flash
 
         private void OnInventoryFlashAttempt(EntityUid uid, InventoryComponent component, FlashAttemptEvent args)
         {
+            // Forward the event to a worn helmet, if one is equipped.
+            if (_inventorySystem.TryGetSlotEntity(uid, "head", out var maskSlotEntity, component))
+                RaiseLocalEvent(maskSlotEntity.Value, args);
             // Forward the event to the glasses, if any.
-            if(_inventorySystem.TryGetSlotEntity(uid, "eyes", out var slotEntity, component))
-                RaiseLocalEvent(slotEntity.Value, args);
+            if(!args.Cancelled && _inventorySystem.TryGetSlotEntity(uid, "eyes", out var eyeSlotEntity, component))
+                RaiseLocalEvent(eyeSlotEntity.Value, args);
         }
 
         private void OnFlashImmunityFlashAttempt(EntityUid uid, FlashImmunityComponent component, FlashAttemptEvent args)

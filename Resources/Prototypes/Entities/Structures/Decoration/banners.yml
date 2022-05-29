@@ -2,13 +2,15 @@
   id: BannerBase
   parent: BaseStructureDynamic
   name: base banner
-  description: It is the concept of a banner, you shouldn't be seeing this.
+  description: It's the concept of a banner, you shouldn't be seeing this.
   abstract: true
   components:
   - type: Sprite
     sprite: Structures/Decoration/banner.rsi
     state: banner
     netsync: false
+  - type: Transform
+    noRot: true
   - type: Fixtures
     fixtures:
     - shape:
@@ -16,19 +18,19 @@
         radius: 0.2
       mass: 25
       mask:
-        - SmallImpassable
-        - VaultImpassable
+      - MachineMask
       layer:
-        - Opaque
-        - MobImpassable
-        - SmallImpassable
-        - VaultImpassable
+      - Opaque
+      - MidImpassable
+      - HighImpassable
+      - BulletImpassable
+  - type: InteractionOutline
 
 - type: entity
   id: BannerNanotrasen
   parent: BannerBase
   name: nanotrasen banner
-  description: It is a banner displaying the Nanotrasen logo. It looks rather cheap.
+  description: A banner displaying the Nanotrasen logo. It looks rather cheap.
   components:
   - type: Sprite
     sprite: Structures/Decoration/banner.rsi
@@ -38,7 +40,7 @@
   id: BannerCargo
   parent: BannerBase
   name: cargo banner
-  description: It is a banner displaying the colors of the cargo department. Not. Cargonia.
+  description: A banner displaying the colors of the cargo department. Not. Cargonia.
   components:
   - type: Sprite
     sprite: Structures/Decoration/banner.rsi
@@ -48,7 +50,7 @@
   id: BannerEngineering
   parent: BannerBase
   name: engineering banner
-  description: It is a banner displaying the colors of the engineering deparment. Scrungularty.
+  description: A banner displaying the colors of the engineering deparment. Scrungularty.
   components:
   - type: Sprite
     sprite: Structures/Decoration/banner.rsi
@@ -58,7 +60,7 @@
   id: BannerMedical
   parent: BannerBase
   name: medical banner
-  description: It is a banner displaying the colors of the medical deparment. How sterile.
+  description: A banner displaying the colors of the medical deparment. How sterile.
   components:
   - type: Sprite
     sprite: Structures/Decoration/banner.rsi
@@ -68,7 +70,7 @@
   id: BannerRevolution
   parent: BannerBase
   name: revolution banner
-  description: It is a banner displaying revolution. Viva!
+  description: A banner displaying revolution. Viva!
   components:
   - type: Sprite
     sprite: Structures/Decoration/banner.rsi
@@ -78,7 +80,7 @@
   id: BannerScience
   parent: BannerBase
   name: science banner
-  description: It is a banner displaying the colors of the science department. Where stupidity is proven greater than the universe.
+  description: A banner displaying the colors of the science department. Where stupidity is proven greater than the universe.
   components:
   - type: Sprite
     sprite: Structures/Decoration/banner.rsi
@@ -88,7 +90,7 @@
   id: BannerSecurity
   parent: BannerBase
   name: security banner
-  description: It is a banner displaying the colors of the shitcurity department. Security, my bad.
+  description: A banner displaying the colors of the shitcurity department. Security, my bad.
   components:
   - type: Sprite
     sprite: Structures/Decoration/banner.rsi
@@ -98,7 +100,7 @@
   id: BannerBlue
   parent: BannerBase
   name: blue banner
-  description: It is a banner displaying the color blue. Dabudidabudai.
+  description: A banner displaying the color blue. Dabudidabudai.
   components:
   - type: Sprite
     sprite: Structures/Decoration/banner.rsi
@@ -108,7 +110,7 @@
   id: BannerRed
   parent: BannerBase
   name: red banner
-  description: It is a banner displaying the color red. The edgy one.
+  description: A banner displaying the color red. The edgy one.
   components:
   - type: Sprite
     sprite: Structures/Decoration/banner.rsi
@@ -118,7 +120,7 @@
   id: BannerYellow
   parent: BannerBase
   name: yellow banner
-  description: It is a banner displaying the color yellow. Reminds you of ducks and lemon stands.
+  description: A banner displaying the color yellow. Reminds you of ducks and lemon stands.
   components:
   - type: Sprite
     sprite: Structures/Decoration/banner.rsi
@@ -128,7 +130,7 @@
   id: BannerGreen
   parent: BannerBase
   name: green banner
-  description: It is a banner displaying the color green. Grass, leaves, guacamole.
+  description: A banner displaying the color green. Grass, leaves, guacamole.
   components:
   - type: Sprite
     sprite: Structures/Decoration/banner.rsi

@@ -1,8 +1,6 @@
 using Content.Shared.Access.Components;
 using Content.Shared.Containers.ItemSlots;
 using Robust.Shared.Containers;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
 
 namespace Content.Shared.PDA
 {
@@ -26,8 +24,8 @@ namespace Content.Shared.PDA
             if (pda.IdCard != null)
                 pda.IdSlot.StartingItem = pda.IdCard;
 
-            ItemSlotsSystem.AddItemSlot(uid, $"{pda.Name}-id", pda.IdSlot);
-            ItemSlotsSystem.AddItemSlot(uid, $"{pda.Name}-pen", pda.PenSlot);
+            ItemSlotsSystem.AddItemSlot(uid, PDAComponent.PDAIdSlotId, pda.IdSlot);
+            ItemSlotsSystem.AddItemSlot(uid, PDAComponent.PDAPenSlotId, pda.PenSlot);
 
             UpdatePDAAppearance(pda);
         }

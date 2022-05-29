@@ -1,17 +1,7 @@
-using System;
-using Content.Server.Hands.Components;
-using Content.Server.Popups;
-using Content.Shared.Hands.EntitySystems;
-using Content.Shared.Interaction;
-using Content.Shared.Item;
 using Content.Shared.Stacks;
 using Content.Shared.Verbs;
 using JetBrains.Annotations;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Localization;
 using Robust.Shared.Map;
-using Robust.Shared.Maths;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 
@@ -25,8 +15,6 @@ namespace Content.Server.Stack
     public sealed class StackSystem : SharedStackSystem
     {
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
-        [Dependency] private readonly PopupSystem _popupSystem = default!;
-        [Dependency] private readonly SharedHandsSystem _handsSystem = default!;
 
         public static readonly int[] DefaultSplitAmounts = { 1, 5, 10, 20, 30, 50 };
 
@@ -34,8 +22,19 @@ namespace Content.Server.Stack
         {
             base.Initialize();
 
-            SubscribeLocalEvent<StackComponent, InteractUsingEvent>(OnStackInteractUsing);
             SubscribeLocalEvent<StackComponent, GetVerbsEvent<AlternativeVerb>>(OnStackAlternativeInteract);
+        }
+
+        public override void SetCount(EntityUid uid, int amount, SharedStackComponent? component = null)
+        {
+            if (!Resolve(uid, ref component))
+                return;
+
+            base.SetCount(uid, amount, component);
+
+            // Queue delete stack if count reaches zero.
+            if (component.Count <= 0)
+                QueueDel(uid);
         }
 
         /// <summary>
@@ -81,51 +80,6 @@ namespace Content.Server.Stack
             // And finally, set the correct amount!
             SetCount(entity, amount, stack);
             return entity;
-        }
-
-        private void OnStackInteractUsing(EntityUid uid, StackComponent stack, InteractUsingEvent args)
-        {
-            if (args.Handled)
-                return;
-
-            if (!TryComp<StackComponent>(args.Used, out var otherStack))
-                return;
-
-            if (!otherStack.StackTypeId.Equals(stack.StackTypeId))
-                return;
-
-            var toTransfer = Math.Min(stack.Count, otherStack.AvailableSpace);
-            SetCount(uid, stack.Count - toTransfer, stack);
-            SetCount(args.Used, otherStack.Count + toTransfer, otherStack);
-
-            var popupPos = args.ClickLocation;
-
-            if (!popupPos.IsValid(EntityManager))
-            {
-                popupPos = Transform(args.User).Coordinates;
-            }
-
-            var filter = Filter.Entities(args.User);
-
-            switch (toTransfer)
-            {
-                case > 0:
-                    _popupSystem.PopupCoordinates($"+{toTransfer}", popupPos, filter);
-
-                    if (otherStack.AvailableSpace == 0)
-                    {
-                        _popupSystem.PopupCoordinates(Loc.GetString("comp-stack-becomes-full"),
-                            popupPos.Offset(new Vector2(0, -0.5f)) , filter);
-                    }
-
-                    break;
-
-                case 0 when otherStack.AvailableSpace == 0:
-                    _popupSystem.PopupCoordinates(Loc.GetString("comp-stack-already-full"), popupPos, filter);
-                    break;
-            }
-
-            args.Handled = true;
         }
 
         private void OnStackAlternativeInteract(EntityUid uid, StackComponent stack, GetVerbsEvent<AlternativeVerb> args)
@@ -175,16 +129,16 @@ namespace Content.Server.Stack
 
             if (amount <= 0)
             {
-                _popupSystem.PopupCursor(Loc.GetString("comp-stack-split-too-small"), Filter.Entities(userUid));
+                PopupSystem.PopupCursor(Loc.GetString("comp-stack-split-too-small"), Filter.Entities(userUid));
                 return;
             }
 
             if (Split(uid, amount, userTransform.Coordinates, stack) is not {} split)
                 return;
 
-            _handsSystem.PickupOrDrop(userUid, split);
+            HandsSystem.PickupOrDrop(userUid, split);
 
-            _popupSystem.PopupCursor(Loc.GetString("comp-stack-split"), Filter.Entities(userUid));
+            PopupSystem.PopupCursor(Loc.GetString("comp-stack-split"), Filter.Entities(userUid));
         }
     }
 }

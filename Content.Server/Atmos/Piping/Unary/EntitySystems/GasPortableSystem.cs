@@ -1,13 +1,11 @@
 using System.Diagnostics.CodeAnalysis;
 using Content.Server.Atmos.Piping.Binary.Components;
 using Content.Server.Atmos.Piping.Unary.Components;
-using Content.Server.Construction.Components;
 using Content.Server.NodeContainer;
 using Content.Server.NodeContainer.Nodes;
 using Content.Shared.Atmos.Piping.Unary.Components;
+using Content.Shared.Construction.Components;
 using JetBrains.Annotations;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
 using Robust.Shared.Map;
 
 namespace Content.Server.Atmos.Piping.Unary.EntitySystems
@@ -22,6 +20,7 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
             base.Initialize();
 
             SubscribeLocalEvent<GasPortableComponent, AnchorAttemptEvent>(OnPortableAnchorAttempt);
+            // Shouldn't need re-anchored event.
             SubscribeLocalEvent<GasPortableComponent, AnchorStateChangedEvent>(OnAnchorChanged);
         }
 

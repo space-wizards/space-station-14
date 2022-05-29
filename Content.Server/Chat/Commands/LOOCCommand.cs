@@ -1,11 +1,7 @@
-using Content.Server.Administration;
-using Content.Server.Chat.Managers;
-using Content.Server.Players;
 using Content.Shared.Administration;
 using Robust.Server.Player;
 using Robust.Shared.Console;
 using Robust.Shared.Enums;
-using Robust.Shared.IoC;
 
 namespace Content.Server.Chat.Commands
 {
@@ -24,6 +20,9 @@ namespace Content.Server.Chat.Commands
                 return;
             }
 
+            if (player.AttachedEntity is not { Valid: true } entity)
+                return;
+
             if (player.Status != SessionStatus.InGame)
                 return;
 
@@ -34,7 +33,7 @@ namespace Content.Server.Chat.Commands
             if (string.IsNullOrEmpty(message))
                 return;
 
-            IoCManager.Resolve<IChatManager>().SendLOOC(player, message);
+            EntitySystem.Get<ChatSystem>().TrySendInGameOOCMessage(entity, message, InGameOOCChatType.Looc, false, shell, player);
         }
     }
 }

@@ -1,11 +1,8 @@
-using System;
 using Content.Server.Power.Components;
 using Content.Shared.Power;
 using Content.Shared.Rounding;
 using Content.Shared.SMES;
 using Robust.Server.GameObjects;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
 using Robust.Shared.Timing;
 
 namespace Content.Server.Power.SMES

@@ -5,12 +5,7 @@
   description: The holy light guides the way.
   components:
     - type: HandheldLight
-      toggleAction:
-        name: action-name-toggle-light
-        description: action-description-toggle-light
-        icon: Objects/Tools/flashlight.rsi/flashlight.png
-        iconOn: Objects/Tools/flashlight.rsi/flashlight-on.png
-        event: !type:ToggleActionEvent
+      addPrefix: true
     - type: Sprite
       sprite: Objects/Tools/lantern.rsi
       layers:
@@ -18,10 +13,12 @@
         - state: lantern-on
           shader: unshaded
           visible: false
+          map: [ "light" ]
     - type: Item
       sprite: Objects/Tools/lantern.rsi
       HeldPrefix: off
     - type: PointLight
+      netsync: false
       enabled: false
       radius: 3
       energy: 2.5
@@ -29,6 +26,7 @@
     - type: Appearance
       visuals:
         - type: LanternVisualizer
+    - type: ToggleableLightVisuals
     - type: PowerCellSlot
       cellSlot:
         startingItem: PowerCellSmallHigh

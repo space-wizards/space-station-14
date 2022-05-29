@@ -1,6 +1,4 @@
 ﻿using Content.Shared.Actions.ActionTypes;
-using JetBrains.Annotations;
-using Robust.Server.GameObjects;
 using Robust.Shared.Reflection;
 using Robust.Shared.Serialization;
 

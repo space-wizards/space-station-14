@@ -1,0 +1,13 @@
+﻿<BoxContainer xmlns="https://spacestation14.io"
+              Orientation="Horizontal">
+    <Button Name="RequestButton"
+            Access="Public"
+            Text="{Loc 'ghost-roles-window-request-role-button'}"
+            StyleClasses="OpenRight"
+            HorizontalAlignment="Left"/>
+    <Button Name="FollowButton"
+            Access="Public"
+            Text="{Loc 'ghost-roles-window-follow-role-button'}"
+            StyleClasses="OpenLeft"
+            HorizontalAlignment="Right"/>
+</BoxContainer>

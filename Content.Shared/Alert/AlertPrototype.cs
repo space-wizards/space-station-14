@@ -1,11 +1,7 @@
-﻿using System;
-using System.Globalization;
-using Robust.Shared.Log;
+﻿using System.Globalization;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
-using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Utility;
-using Robust.Shared.ViewVariables;
 
 namespace Content.Shared.Alert
 {
@@ -21,7 +17,7 @@ namespace Content.Shared.Alert
         /// <summary>
         /// Type of alert, no 2 alert prototypes should have the same one.
         /// </summary>
-        [DataField("alertType")]
+        [IdDataFieldAttribute]
         public AlertType AlertType { get; private set; }
 
         /// <summary>

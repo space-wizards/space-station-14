@@ -1,11 +1,5 @@
-using System.Collections.Generic;
-using System.Linq;
-using Content.Server.Objectives.Interfaces;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Serialization.Manager.Attributes;
-using Robust.Shared.Serialization.TypeSerializers.Implementations;
 using Robust.Shared.Utility;
-using Robust.Shared.ViewVariables;
 
 namespace Content.Server.Salvage
 {
@@ -13,7 +7,7 @@ namespace Content.Server.Salvage
     public sealed class SalvageMapPrototype : IPrototype
     {
         [ViewVariables]
-        [DataField("id", required: true)]
+        [IdDataFieldAttribute]
         public string ID { get; } = default!;
 
         /// <summary>

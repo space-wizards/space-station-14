@@ -1,8 +1,8 @@
 - type: entity
   parent: ClothingMaskBase
   id: ClothingMaskGas
-  name: old gas mask
-  description: An old, dusty mask. Yet still dutifully functional.
+  name: gas mask
+  description: A face-covering mask that can be connected to an air supply.
   components:
   - type: Sprite
     sprite: Clothing/Mask/gas.rsi
@@ -12,6 +12,122 @@
   - type: IngestionBlocker
   - type: DiseaseProtection
     protection: 0.05
+
+- type: entity
+  parent: ClothingMaskBase
+  id: ClothingMaskGasSecurity
+  name: security gas mask
+  description: A standard issue Security gas mask.
+  components:
+  - type: Sprite
+    sprite: Clothing/Mask/gassecurity.rsi
+  - type: Clothing
+    sprite: Clothing/Mask/gassecurity.rsi
+  - type: BreathMask
+  - type: IngestionBlocker
+  - type: DiseaseProtection
+    protection: 0.05
+
+- type: entity
+  parent: ClothingMaskBase
+  id: ClothingMaskGasSyndicate
+  name: syndicate gas mask
+  description: A close-fitting tactical mask that can be connected to an air supply.
+  components:
+  - type: Sprite
+    sprite: Clothing/Mask/gassyndicate.rsi
+  - type: Clothing
+    sprite: Clothing/Mask/gassyndicate.rsi
+  - type: BreathMask
+  - type: IngestionBlocker
+  - type: DiseaseProtection
+    protection: 0.05
+
+- type: entity
+  parent: ClothingMaskBase
+  id: ClothingMaskGasAtmos
+  name: atmospheric gas mask
+  description: Improved gas mask utilized by atmospheric technicians. It's flameproof!
+  components:
+  - type: Sprite
+    sprite: Clothing/Mask/gasatmos.rsi
+  - type: Clothing
+    sprite: Clothing/Mask/gasatmos.rsi
+  - type: BreathMask
+  - type: IngestionBlocker
+  - type: DiseaseProtection
+    protection: 0.05
+  - type: Armor
+    modifiers:
+      coefficients:
+        Heat: 0.80
+
+- type: entity
+  parent: ClothingMaskGasAtmos
+  id: ClothingMaskGasCaptain
+  name: captain's gas mask
+  description: Nanotrasen cut corners and repainted a spare atmospheric gas mask, but don't tell anyone.
+  components:
+  - type: Sprite
+    sprite: Clothing/Mask/gascaptain.rsi
+  - type: Clothing
+    sprite: Clothing/Mask/gascaptain.rsi
+  - type: BreathMask
+  - type: IngestionBlocker
+  - type: DiseaseProtection
+    protection: 0.05
+
+- type: entity
+  parent: ClothingMaskGasAtmos
+  id: ClothingMaskGasCentcom
+  name: centcom gas mask
+  description: Oooh, gold and green. Fancy! This should help as you sit in your office.
+  components:
+  - type: Sprite
+    sprite: Clothing/Mask/gascentcom.rsi
+  - type: Clothing
+    sprite: Clothing/Mask/gascentcom.rsi
+  - type: BreathMask
+  - type: IngestionBlocker
+  - type: DiseaseProtection
+    protection: 0.05
+
+- type: entity
+  parent: ClothingMaskBase
+  id: ClothingMaskGasExplorer
+  name: explorer gas mask
+  description: A military-grade gas mask that can be connected to an air supply.
+  components:
+  - type: Sprite
+    sprite: Clothing/Mask/gasexplorer.rsi
+  - type: Clothing
+    sprite: Clothing/Mask/gasexplorer.rsi
+  - type: BreathMask
+  - type: IngestionBlocker
+  - type: DiseaseProtection
+    protection: 0.05
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.90
+        Slash: 0.90
+        Piercing: 0.95
+        Heat: 0.95
+
+- type: entity
+  parent: ClothingMaskBase
+  id: ClothingMaskBreathMedical
+  name: medical mask
+  description: A close-fitting sterile mask that can be connected to an air supply.
+  components:
+  - type: Sprite
+    sprite: Clothing/Mask/medical.rsi
+  - type: Clothing
+    sprite: Clothing/Mask/medical.rsi
+  - type: BreathMask
+  - type: IngestionBlocker
+  - type: DiseaseProtection
+    protection: 0.10
 
 - type: entity
   parent: ClothingMaskBase
@@ -93,3 +209,18 @@
     - type: AddAccentClothing
       accent: ReplacementAccent
       replacement: mumble
+
+- type: entity
+  parent: ClothingMaskBase
+  id: ClothingMaskPlague
+  name: plague doctor mask
+  description: A bad omen.
+  components:
+  - type: Sprite
+    sprite: Clothing/Mask/plaguedoctormask.rsi
+  - type: Clothing
+    sprite: Clothing/Mask/plaguedoctormask.rsi
+  - type: BreathMask
+  - type: IngestionBlocker
+  - type: DiseaseProtection
+    protection: 0.1

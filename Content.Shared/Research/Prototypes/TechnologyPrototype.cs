@@ -1,11 +1,7 @@
-using System;
-using System.Collections.Generic;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
-using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.List;
 using Robust.Shared.Utility;
-using Robust.Shared.ViewVariables;
 
 namespace Content.Shared.Research.Prototypes
 {
@@ -16,7 +12,7 @@ namespace Content.Shared.Research.Prototypes
         ///     The ID of this technology prototype.
         /// </summary>
         [ViewVariables]
-        [DataField("id", required: true)]
+        [IdDataFieldAttribute]
         public string ID { get; } = default!;
 
         /// <summary>

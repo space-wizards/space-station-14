@@ -15,7 +15,7 @@ namespace Content.Tests.Shared.Alert
     {
         private const string Prototypes = @"
 - type: alert
-  alertType: HumanHealth
+  id: HumanHealth
   category: Health
   icon: /Textures/Interface/Alerts/Human/human.rsi/human.png
   name: Health
@@ -78,7 +78,7 @@ namespace Content.Tests.Shared.Alert
             var proto = (YamlMappingNode) rootNode[0];
             var serMan = IoCManager.Resolve<ISerializationManager>();
 
-            return serMan.ReadValue<AlertPrototype>(new MappingDataNode(proto));
+            return serMan.Read<AlertPrototype>(new MappingDataNode(proto));
         }
     }
 }

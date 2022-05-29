@@ -19,7 +19,10 @@
         color: "#FFFFFF"
         visible: false
         shader: unshaded
+        map: [ "blade" ]
   - type: MeleeWeapon
+    hitSound:
+      path: /Audio/Weapons/eblade1.ogg
     damage:
       types:
         Blunt: 7
@@ -35,8 +38,15 @@
     energy: 2
     color: white
   - type: Appearance
-    visuals:
-    - type: EnergySwordVisualizer
+  - type: ToggleableLightVisuals
+    spriteLayer: blade
+    inhandVisuals:
+      left:
+      - state: inhand-left-blade
+        shader: unshaded
+      right:
+      - state: inhand-right-blade
+        shader: unshaded
 
 - type: entity
   name: pen
@@ -59,6 +69,7 @@
         color: "#FFFFFF"
         visible: false
         shader: unshaded
+        map: [ "blade" ]
   - type: MeleeWeapon
     damage:
       types:
@@ -75,8 +86,15 @@
     energy: 1.5
     color: white
   - type: Appearance
-    visuals:
-    - type: EnergySwordVisualizer
+  - type: ToggleableLightVisuals
+    spriteLayer: blade
+    inhandVisuals:
+      left:
+      - state: inhand-left-blade
+        shader: unshaded
+      right:
+      - state: inhand-right-blade
+        shader: unshaded
   - type: Tag
     tags:
     - Write

@@ -114,9 +114,8 @@ namespace Content.IntegrationTests.Tests.Damageable
 
             await server.WaitPost(() =>
             {
-                var mapId = sMapManager.NextMapId();
-                var coordinates = new MapCoordinates(0, 0, mapId);
-                sMapManager.CreateMap(mapId);
+                var map = sMapManager.CreateMap();
+                var coordinates = new MapCoordinates(0, 0, map);
 
                 sDamageableEntity = sEntityManager.SpawnEntity("TestDamageableEntityId", coordinates);
                 sDamageableComponent = IoCManager.Resolve<IEntityManager>().GetComponent<DamageableComponent>(sDamageableEntity);

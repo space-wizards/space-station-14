@@ -16,25 +16,24 @@
     fixtures:
     - shape:
         !type:PhysShapeAabb
-          bounds: "-0.2,-0.2,0.2,0.2"
+        bounds: "-0.2,-0.2,0.2,0.2"
       id: brrt
       hard: false
       layer:
-      - Opaque
-      - Impassable
-      - MobImpassable
-      - VaultImpassable
+      - FullTileLayer
     - shape:
         !type:PhysShapeAabb
-          bounds: "-0.49,-0.49,0.49,0.49"
+        bounds: "-0.49,-0.49,0.49,0.49"
       id: collision
       hard: true
       mask:
       - Impassable
       layer:
-        - Opaque
+      - Opaque
+      - BulletImpassable
   - type: Transform
     anchored: true
+    noRot: false    
   - type: Sprite
     netsync: false
     drawdepth: Doors
@@ -49,8 +48,3 @@
       state_off: grinder-o0
   - type: Recycler
   - type: Conveyor
-  - type: SignalReceiver
-    inputs:
-      - name: state
-        type: Content.Shared.MachineLinking.TwoWayLeverSignal
-        maxConnections: 1

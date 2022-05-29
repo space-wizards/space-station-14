@@ -2,8 +2,7 @@ using Content.Shared.Actions;
 using Content.Shared.Actions.ActionTypes;
 using Content.Shared.Sound;
 using Robust.Shared.Audio;
-using Robust.Shared.Utility;
-
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
 namespace Content.Server.Speech.Components;
 
@@ -25,18 +24,16 @@ public sealed class VocalComponent : Component
     [DataField("audioParams")]
     public AudioParams AudioParams = AudioParams.Default.WithVolume(4f);
 
+    [DataField("wilhelmProbability")]
+    public float WilhelmProbability = 0.01f;
+
     public const float Variation = 0.125f;
 
-    // Not using the in-build sound support for actions, given that the sound is modified non-prototype specific factors like gender.
-    [DataField("action", required: true)]
-    public InstantAction Action = new()
-    {
-        UseDelay = TimeSpan.FromSeconds(10),
-        Icon = new SpriteSpecifier.Texture(new ResourcePath("Interface/Actions/scream.png")),
-        Name = "action-name-scream",
-        Description = "AAAAAAAAAAAAAAAAAAAAAAAAA",
-        Event = new ScreamActionEvent(),
-    };
+    [DataField("actionId", customTypeSerializer:typeof(PrototypeIdSerializer<InstantActionPrototype>))]
+    public string ActionId = "Scream";
+
+    [DataField("action")] // must be a data-field to properly save cooldown when saving game state.
+    public InstantAction? ScreamAction = null;
 }
 
-public sealed class ScreamActionEvent : PerformActionEvent { };
+public sealed class ScreamActionEvent : InstantActionEvent { };

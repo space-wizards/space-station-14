@@ -1,13 +1,13 @@
-﻿<DefaultWindow xmlns="https://spacestation14.io"
+<DefaultWindow xmlns="https://spacestation14.io"
             MinSize="650 290">
     <BoxContainer Orientation="Vertical">
         <GridContainer Columns="3">
             <Label Text="{Loc 'id-card-console-window-privileged-id'}" />
-            <Button Name="PrivilegedIdButton" />
+            <Button Name="PrivilegedIdButton" Access="Public"/>
             <Label Name="PrivilegedIdLabel" />
 
             <Label Text="{Loc 'id-card-console-window-target-id'}" />
-            <Button Name="TargetIdButton" />
+            <Button Name="TargetIdButton" Access="Public"/>
             <Label Name="TargetIdLabel" />
         </GridContainer>
         <Control MinSize="0 8" />

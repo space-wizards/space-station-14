@@ -2,6 +2,7 @@ using System.Diagnostics.CodeAnalysis;
 using Content.Server.Hands.Components;
 using Content.Server.Pulling;
 using Content.Shared.ActionBlocker;
+using Content.Shared.Vehicle.Components;
 using Content.Shared.Alert;
 using Content.Shared.Buckle.Components;
 using Content.Shared.Interaction;
@@ -26,6 +27,7 @@ namespace Content.Server.Buckle.Components
     public sealed class BuckleComponent : SharedBuckleComponent
     {
         [Dependency] private readonly IEntityManager _entMan = default!;
+        [Dependency] private readonly IEntitySystemManager _sysMan = default!;
         [Dependency] private readonly IGameTiming _gameTiming = default!;
 
         [DataField("size")]
@@ -63,7 +65,8 @@ namespace Content.Server.Buckle.Components
             {
                 _buckledTo = value;
                 _buckleTime = _gameTiming.CurTime;
-                Dirty();
+                _sysMan.GetEntitySystem<ActionBlockerSystem>().UpdateCanMove(Owner);
+                Dirty(_entMan);
             }
         }
 
@@ -230,8 +233,9 @@ namespace Content.Server.Buckle.Components
 
             UpdateBuckleStatus();
 
-            var ev = new BuckleChangeEvent() { Buckling = true, Strap = BuckledTo.Owner };
-            _entMan.EventBus.RaiseLocalEvent(Owner, ev, false);
+            var ev = new BuckleChangeEvent() { Buckling = true, Strap = BuckledTo.Owner, BuckledEntity = Owner };
+            _entMan.EventBus.RaiseLocalEvent(ev.BuckledEntity, ev, false);
+            _entMan.EventBus.RaiseLocalEvent(ev.Strap, ev, false);
 
             if (_entMan.TryGetComponent(Owner, out SharedPullableComponent? ownerPullable))
             {
@@ -285,6 +289,10 @@ namespace Content.Server.Buckle.Components
                 {
                     return false;
                 }
+                // If the strap is a vehicle and the rider is not the person unbuckling, return.
+                if (_entMan.TryGetComponent<VehicleComponent>(oldBuckledTo.Owner, out var vehicle) &&
+                        vehicle.Rider != user)
+                    return false;
             }
 
             BuckledTo = null;
@@ -322,8 +330,9 @@ namespace Content.Server.Buckle.Components
             oldBuckledTo.Remove(this);
             SoundSystem.Play(Filter.Pvs(Owner), oldBuckledTo.UnbuckleSound.GetSound(), Owner);
 
-            var ev = new BuckleChangeEvent() { Buckling = false, Strap = oldBuckledTo.Owner };
+            var ev = new BuckleChangeEvent() { Buckling = false, Strap = oldBuckledTo.Owner, BuckledEntity = Owner };
             _entMan.EventBus.RaiseLocalEvent(Owner, ev, false);
+            _entMan.EventBus.RaiseLocalEvent(oldBuckledTo.Owner, ev, false);
 
             return true;
         }

@@ -2,9 +2,6 @@ using Content.Server.UserInterface;
 using Content.Shared.Instruments;
 using Robust.Server.GameObjects;
 using Robust.Server.Player;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.ViewVariables;
 
 namespace Content.Server.Instruments;
 
@@ -25,6 +22,9 @@ public sealed class InstrumentComponent : SharedInstrumentComponent
     [ViewVariables]
     public int MidiEventCount = 0;
 
+    [ViewVariables]
+    public uint LastSequencerTick = 0;
+
     // TODO Instruments: Make this ECS
     public IPlayerSession? InstrumentPlayer =>
         _entMan.GetComponentOrNull<ActivatableUIComponent>(Owner)?.CurrentSingleUser
@@ -32,3 +32,6 @@ public sealed class InstrumentComponent : SharedInstrumentComponent
 
     [ViewVariables] public BoundUserInterface? UserInterface => Owner.GetUIOrNull(InstrumentUiKey.Key);
 }
+
+[RegisterComponent]
+public sealed class ActiveInstrumentComponent : Component {}

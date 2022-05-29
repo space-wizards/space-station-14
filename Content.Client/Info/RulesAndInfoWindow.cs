@@ -1,7 +1,11 @@
 using Content.Client.EscapeMenu.UI;
+using Content.Shared.CCVar;
 using Robust.Client.ResourceManagement;
+using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.CustomControls;
+using Robust.Shared.Configuration;
+using Robust.Shared.ContentPack;
 
 namespace Content.Client.Info
 {
@@ -9,6 +13,7 @@ namespace Content.Client.Info
     {
         [Dependency] private readonly RulesManager _rulesManager = default!;
         [Dependency] private readonly IResourceCache _resourceManager = default!;
+        [Dependency] private readonly IConfigurationManager _cfgManager = default!;
 
         private OptionsMenu optionsMenu;
 
@@ -41,7 +46,7 @@ namespace Content.Client.Info
 
         private void PopulateRules(Info rulesList)
         {
-            AddSection(rulesList, Loc.GetString("ui-rules-header"), "Rules.txt", true);
+            AddSection(rulesList, MakeRules(_cfgManager, _resourceManager));
         }
 
         private void PopulateTutorial(Info tutorialList)
@@ -55,10 +60,24 @@ namespace Content.Client.Info
             infoControlSection.ControlsButton.OnPressed += _ => optionsMenu.OpenCentered();
         }
 
+        private static void AddSection(Info info, Control control)
+        {
+            info.InfoContainer.AddChild(control);
+        }
+
         private void AddSection(Info info, string title, string path, bool markup = false)
         {
-            info.InfoContainer.AddChild(new InfoSection(title,
-                _resourceManager.ContentFileReadAllText($"/Server Info/{path}"), markup));
+            AddSection(info, MakeSection(title, path, markup, _resourceManager));
+        }
+
+        private static Control MakeSection(string title, string path, bool markup, IResourceManager res)
+        {
+            return new InfoSection(title, res.ContentFileReadAllText($"/Server Info/{path}"), markup);
+        }
+
+        public static Control MakeRules(IConfigurationManager cfg, IResourceManager res)
+        {
+            return MakeSection(Loc.GetString("ui-rules-header"), cfg.GetCVar(CCVars.RulesFile), true, res);
         }
     }
 }
