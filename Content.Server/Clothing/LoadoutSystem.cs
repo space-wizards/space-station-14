@@ -5,6 +5,9 @@ using Robust.Shared.Prototypes;
 
 namespace Content.Server.Clothing
 {
+    /// <summary>
+    /// Assigns a loadout to an entity based on the startingGear prototype
+    /// </summary>
     public sealed class LoadoutSystem : EntitySystem
     {
         [Dependency] private readonly StationSpawningSystem _station = default!;
@@ -19,8 +22,7 @@ namespace Content.Server.Clothing
 
         private void OnStartup(EntityUid uid, LoadoutComponent component, ComponentStartup args)
         {
-            if (!_protoMan.TryIndex<StartingGearPrototype>(component.Prototype, out var proto))
-                return;
+            var proto = _protoMan.Index<StartingGearPrototype>(component.Prototype);
 
             _station.EquipStartingGear(uid, proto, null);
         }
