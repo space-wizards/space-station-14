@@ -1,4 +1,3 @@
-using Content.Shared.Containers.ItemSlots;
 using Content.Shared.Weapons.Ranged;
 using Robust.Shared.Containers;
 

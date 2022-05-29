@@ -154,6 +154,8 @@ public sealed partial class NewGunSystem : SharedNewGunSystem
                     MuzzleFlash(gun, newAmmo, user);
                     if (newAmmo.Owner.IsClientSide())
                         Del(newAmmo.Owner);
+                    else
+                        RemComp<NewAmmoComponent>(newAmmo.Owner);
                     break;
             }
         }

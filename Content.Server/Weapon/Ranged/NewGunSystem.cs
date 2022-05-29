@@ -79,6 +79,7 @@ public sealed partial class NewGunSystem : SharedNewGunSystem
                 case NewAmmoComponent newAmmo:
                     ShootProjectile(newAmmo.Owner, mapDirection, user);
                     MuzzleFlash(gun, newAmmo, user);
+                    RemComp<NewAmmoComponent>(newAmmo.Owner);
                     break;
                 case HitscanPrototype hitscan:
                     var ray = new CollisionRay(fromMap.Position, mapDirection.Normalized, hitscan.CollisionMask);
