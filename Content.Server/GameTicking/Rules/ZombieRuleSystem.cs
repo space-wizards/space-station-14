@@ -1,6 +1,7 @@
 using System.Linq;
 using Content.Server.Chat.Managers;
 using Content.Server.Disease;
+using Content.Server.Nuke;
 using Content.Server.Players;
 using Content.Server.RoundEnd;
 using Content.Server.Spawners.Components;
@@ -32,6 +33,8 @@ public sealed class ZombieRuleSystem : GameRuleSystem
     [Dependency] private readonly StationSystem _stationSystem = default!;
     [Dependency] private readonly RoundEndSystem _roundEndSystem = default!;
     [Dependency] private readonly DiseaseSystem _diseaseSystem = default!;
+    [Dependency] private readonly NukeSystem _nukeSystem = default!;
+    [Dependency] private readonly NukeCodeSystem _nukeCodeSystem = default!;
 
     private const string PatientZeroPrototypeID = "PatientZero";
     private const string InitialZombieVirusPrototype = "ZombieInfection";
@@ -67,17 +70,7 @@ public sealed class ZombieRuleSystem : GameRuleSystem
 
     private void OnMobStateChanged(MobStateChangedEvent ev)
     {
-        if (!Enabled)
-            return;
-
-        if (!_aliveNukeops.TryFirstOrNull(x => x.Key.OwnedEntity == ev.Entity, out var op)) return;
-
-        _aliveNukeops[op.Value.Key] = op.Value.Key.CharacterDeadIC;
-
-        if (_aliveNukeops.Values.All(x => !x))
-        {
-            _roundEndSystem.EndRound();
-        }
+        
     }
 
     private void OnJobAssigned(RulePlayerJobsAssignedEvent ev)
@@ -282,4 +275,18 @@ public sealed class ZombieRuleSystem : GameRuleSystem
     }
 
     public override void Ended() { }
+
+    /// EVENTS
+    /// These are all the functions that handle midround events
+    /// that can occur during zombie mode
+
+    private void UnlockNuke()
+    {
+        _chatManager.DispatchStationAnnouncement(Loc.GetString("zombie-nuke-armed-event", ("code",_nukeCodeSystem.Code)), "Centcomm", default, Color.Crimson);
+        foreach (var nuke in EntityManager.EntityQuery<NukeComponent>().ToList())
+        {
+            if (nuke.DiskSlot.ContainerSlot != null)
+                nuke.DiskSlot.ContainerSlot.Insert(Spawn("NukeDisk", Transform(nuke.Owner).Coordinates));
+        }
+    }
 }
