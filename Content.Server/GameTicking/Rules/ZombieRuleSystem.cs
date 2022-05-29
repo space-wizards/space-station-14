@@ -138,7 +138,13 @@ public sealed class ZombieRuleSystem : GameRuleSystem
                 _diseaseSystem.TryAddDisease(mind.OwnedEntity.Value, InitialZombieVirusPrototype); //change this once zombie refactor is in.
 
             if (mind.Session != null)
-                _chatManager.DispatchServerMessage(mind.Session, Loc.GetString("zombie-patientzero-role-greeting"));
+            {
+                var messageWrapper = Loc.GetString("chat-manager-server-wrap-message");
+
+                // I went all the way to ChatManager.cs and all i got was this lousy T-shirt
+                _chatManager.ChatMessageToOne(Shared.Chat.ChatChannel.Server, Loc.GetString("zombie-patientzero-role-greeting"),
+                   messageWrapper, default, false, mind.Session.ConnectedClient, Color.Plum);
+            }
         }
     }
 
