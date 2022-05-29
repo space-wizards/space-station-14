@@ -19,7 +19,7 @@
     - shape:
         !type:PhysShapeCircle
         radius: 0.35
-      mass: 10
+      mass: 20
       mask:
       - MobMask
       layer:
@@ -66,7 +66,7 @@
       normal: narsian
       crit: narsian_dead
       dead: narsian_dead
-  - type: UnarmedCombat
+  - type: MeleeWeapon
     range: 1.5
     arcwidth: 0
     arc: bite
@@ -138,7 +138,7 @@
     spawned:
     - id: FoodMeatCorgi
       amount: 2
-      
+
 - type: entity
   name: Old Ian
   parent: MobCorgi
@@ -225,7 +225,7 @@
     - shape:
         !type:PhysShapeCircle
         radius: 0.35
-      mass: 10
+      mass: 20
       mask:
       - MobMask
       layer:
@@ -375,7 +375,7 @@
     - shape:
         !type:PhysShapeCircle
         radius: 0.35
-      mass: 10
+      mass: 20
       mask:
       - MobMask
       layer:
@@ -418,7 +418,7 @@
     - shape:
         !type:PhysShapeCircle
         radius: 0.35
-      mass: 10
+      mass: 20
       mask:
       - MobMask
       layer:
@@ -472,7 +472,7 @@
     - shape:
         !type:PhysShapeCircle
         radius: 0.35
-      mass: 10
+      mass: 20
       mask:
       - MobMask
       layer:
@@ -515,7 +515,7 @@
     - shape:
         !type:PhysShapeCircle
         radius: 0.35
-      mass: 10
+      mass: 20
       mask:
       - MobMask
       layer:
@@ -592,7 +592,7 @@
     - shape:
         !type:PhysShapeCircle
         radius: 0.35
-      mass: 10
+      mass: 20
       mask:
       - MobMask
       layer:

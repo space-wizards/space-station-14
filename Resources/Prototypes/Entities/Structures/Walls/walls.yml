@@ -649,7 +649,7 @@
   parent: WallBase
   id: WallVaultAlien
   name: alien vault wall
-  description: A mysterious ornate looking wall. There may be ancient dangers inside. 
+  description: A mysterious ornate looking wall. There may be ancient dangers inside.
   components:
   - type: Sprite
     sprite: Structures/Walls/vault.rsi
@@ -665,7 +665,7 @@
       behaviors:
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
-    
+
 - type: entity
   parent: WallVaultAlien
   id: WallVaultRock
@@ -677,7 +677,7 @@
   - type: Icon
     sprite: Structures/Walls/vault.rsi
     state: rockvault
-    
+
 - type: entity
   parent: WallVaultAlien
   id: WallVaultSandstone
@@ -697,6 +697,8 @@
   id: WallInvisible
   name: Invisible Wall
   components:
+  - type: DeleteAfterTime
+    despawnTime: 30
   - type: Tag
     tags:
       - Wall

@@ -25,14 +25,8 @@
   thermalConductivity: 0.04
   heatCapacity: 10000
 
-# TODO kill underplating and all its usages since it is deprecated
-- type: tile
+# The final step in underplating's deprecation before it gets completely wiped from the codebase.
+- type: tileAlias
   id: underplating
-  name: haqrecyngvat [DO NOT USE]
-  texture: deprecated
-  base_turfs:
-  - lattice
-  is_subfloor: true
-  footstep_sounds:
-    collection: footstep_plating
-  friction: 0.5
+  target: plating
+

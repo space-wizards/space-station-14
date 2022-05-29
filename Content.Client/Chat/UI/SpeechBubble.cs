@@ -46,7 +46,7 @@ namespace Content.Client.Chat.UI
         public float VerticalOffset { get; set; }
         private float _verticalOffsetAchieved;
 
-        public float ContentHeight { get; private set; }
+        public Vector2 ContentSize { get; private set; }
 
         public static SpeechBubble CreateSpeechBubble(SpeechType type, string text, EntityUid senderEntity, IEyeManager eyeManager, IChatManager chatManager, IEntityManager entityManager)
         {
@@ -83,8 +83,8 @@ namespace Content.Client.Chat.UI
             ForceRunStyleUpdate();
 
             bubble.Measure(Vector2.Infinity);
-            ContentHeight = bubble.DesiredSize.Y;
-            _verticalOffsetAchieved = -ContentHeight;
+            ContentSize = bubble.DesiredSize;
+            _verticalOffsetAchieved = -ContentSize.Y;
         }
 
         protected abstract Control BuildBubble(string text, string speechStyleClass);
@@ -133,12 +133,12 @@ namespace Content.Client.Chat.UI
             var offset = new Vector2(0, EntityVerticalOffset * EyeManager.PixelsPerMeter * scale);
             var lowerCenter = (_eyeManager.WorldToScreen(worldPos) - offset) / UIScale;
 
-            var screenPos = lowerCenter - (Width / 2, ContentHeight + _verticalOffsetAchieved);
+            var screenPos = lowerCenter - (ContentSize.X / 2, ContentSize.Y + _verticalOffsetAchieved);
             // Round to nearest 0.5
             screenPos = (screenPos * 2).Rounded() / 2;
             LayoutContainer.SetPosition(this, screenPos);
 
-            var height = MathF.Ceiling(MathHelper.Clamp(lowerCenter.Y - screenPos.Y, 0, ContentHeight));
+            var height = MathF.Ceiling(MathHelper.Clamp(lowerCenter.Y - screenPos.Y, 0, ContentSize.Y));
             SetHeight = height;
         }
 

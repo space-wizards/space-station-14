@@ -19,9 +19,6 @@ public sealed partial class RulesControl : BoxContainer
         RobustXamlLoader.Load(this);
         IoCManager.InjectDependencies(this);
 
-        var path = "Server Info/" + _cfgManager.GetCVar(CCVars.RulesFile);
-
-        AddChild(new InfoSection(Loc.GetString("ui-rules-header"),
-            _resourceManager.ContentFileReadAllText(path), true));
+        AddChild(RulesAndInfoWindow.MakeRules(_cfgManager, _resourceManager));
     }
 }

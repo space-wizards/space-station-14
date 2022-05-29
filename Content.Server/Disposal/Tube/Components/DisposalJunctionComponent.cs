@@ -7,6 +7,7 @@ namespace Content.Server.Disposal.Tube.Components
     [Virtual]
     [RegisterComponent]
     [ComponentReference(typeof(IDisposalTubeComponent))]
+    [ComponentReference(typeof(DisposalTubeComponent))]
     public class DisposalJunctionComponent : DisposalTubeComponent
     {
         [Dependency] private readonly IEntityManager _entMan = default!;

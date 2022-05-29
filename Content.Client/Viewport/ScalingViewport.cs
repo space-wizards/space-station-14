@@ -129,14 +129,10 @@ namespace Content.Client.Viewport
             _inputManager.ViewportKeyEvent(this, args);
         }
 
-
-        protected override void FrameUpdate(FrameEventArgs args)
-        {
-            EnsureViewportCreated();
-        }
-
         protected override void Draw(DrawingHandleScreen handle)
         {
+            EnsureViewportCreated();
+
             DebugTools.AssertNotNull(_viewport);
 
             _viewport!.Render();

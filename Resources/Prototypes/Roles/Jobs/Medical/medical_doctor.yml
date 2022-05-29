@@ -9,6 +9,8 @@
   access:
   - Medical
   - Maintenance
+  extendedAccess:
+  - Chemistry
 
 - type: startingGear
   id: DoctorGear

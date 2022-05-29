@@ -35,6 +35,17 @@
         amount: 1
 
 - type: entity
+  id: CrateMousetrapBoxes
+  name: mousetraps crate
+  description: Mousetraps, for when all of service is being haunted by an entire horde of rats. Use sparingly... or not.
+  parent: CrateGenericSteel
+  components:
+    - type: StorageFill
+      contents:
+        - id: BoxMousetrap
+          amount: 1
+
+- type: entity
   id: CrateServiceSmokeables
   name: smokeables crate
   description: "Tired of a quick death on the station? Order this crate and chain-smoke your way to a coughy demise!"
