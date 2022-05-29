@@ -710,6 +710,8 @@ entities:
     type: Transform
 - uid: 82
   components:
+  - id: Waystation
+    type: BecomesStation
   - pos: 0.421875,0.5
     parent: null
     type: Transform
