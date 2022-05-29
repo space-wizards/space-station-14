@@ -1,5 +1,5 @@
 - type: gameMap
-  id: Waystation
+  id: waystation
   mapName: 'Waystation'
   mapPath: /Maps/waystation.yml
   minPlayers: 15

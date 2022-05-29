@@ -1,7 +1,7 @@
 meta:
   format: 2
-  name: DemoStation
-  author: Space-Wizards
+  name: Waystation
+  author: TimrodDX
   postmapinit: false
 tilemap:
   0: space
@@ -710,7 +710,7 @@ entities:
     type: Transform
 - uid: 82
   components:
-  - id: Waystation
+  - id: waystation
     type: BecomesStation
   - pos: 0.421875,0.5
     parent: null
