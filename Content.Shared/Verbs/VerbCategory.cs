@@ -14,6 +14,12 @@ namespace Content.Shared.Verbs
         public readonly SpriteSpecifier? Icon;
 
         /// <summary>
+        ///     Columns for the grid layout that shows the verbs in this category. If <see cref="IconsOnly"/> is false,
+        ///     this should very likely be set to 1.
+        /// </summary>
+        public int Columns = 1;
+
+        /// <summary>
         ///     If true, the members of this verb category will be shown in the context menu as a row of icons without
         ///     any text.
         /// </summary>
@@ -51,7 +57,10 @@ namespace Content.Shared.Verbs
             new("verb-categories-unbuckle", "/Textures/Interface/VerbIcons/unbuckle.svg.192dpi.png");
 
         public static readonly VerbCategory Rotate =
-            new("verb-categories-rotate", "/Textures/Interface/VerbIcons/refresh.svg.192dpi.png", iconsOnly: true);
+            new("verb-categories-rotate", "/Textures/Interface/VerbIcons/refresh.svg.192dpi.png", iconsOnly: true) { Columns = 5 };
+
+        public static readonly VerbCategory Smite =
+            new("verb-categories-smite", "/Textures/Interface/VerbIcons/smite.svg.192dpi.png", iconsOnly: true) { Columns = 5 };
 
         public static readonly VerbCategory SetTransferAmount =
             new("verb-categories-transfer", "/Textures/Interface/VerbIcons/spill.svg.192dpi.png");

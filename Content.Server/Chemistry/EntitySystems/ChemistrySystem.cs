@@ -7,7 +7,7 @@ namespace Content.Server.Chemistry.EntitySystems;
 
 public sealed partial class ChemistrySystem : EntitySystem
 {
-    [Dependency] private readonly AdminLogSystem _logs = default!;
+    [Dependency] private readonly IAdminLogManager _adminLogger = default!;
     [Dependency] private readonly BloodstreamSystem _blood = default!;
     [Dependency] private readonly DoAfterSystem _doAfter = default!;
     [Dependency] private readonly PopupSystem _popup = default!;

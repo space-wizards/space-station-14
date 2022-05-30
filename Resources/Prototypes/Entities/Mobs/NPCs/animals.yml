@@ -51,7 +51,7 @@
     bloodMaxVolume: 50
   - type: ReplacementAccent
     accent: mouse
-  - type: UnarmedCombat
+  - type: MeleeWeapon
     range: 1.5
     arcwidth: 0
     arc: bite
@@ -121,7 +121,7 @@
       enabled: false
       autoPopulate: false
       name: action-name-disarm
-  - type: UnarmedCombat
+  - type: MeleeWeapon
     range: 0.3
     arcwidth: 0
     arc: bite
@@ -507,7 +507,7 @@
     - shape:
         !type:PhysShapeCircle
         radius: 0.48
-      mass: 20
+      mass: 60
       mask:
       - MobMask
       layer:
@@ -560,7 +560,7 @@
         crit: kangaroo-dead
         dead: kangaroo-dead
   - type: Puller
-  
+
 - type: entity
   name: boxing kangaroo
   parent: MobKangaroo
@@ -581,7 +581,7 @@
         normal: kangaroo-boxing
         crit: kangaroo-boxing-dead
         dead: kangaroo-boxing-dead
-  - type: UnarmedCombat
+  - type: MeleeWeapon
     range: 1.5
     arcwidth: 0
     arc: claw
@@ -997,7 +997,7 @@
     - shape:
         !type:PhysShapeCircle
         radius: 0.25
-      mass: 10
+      mass: 20
       mask:
       - MobMask
       layer:
@@ -1061,7 +1061,7 @@
     spawned:
     - id: FoodMeatPenguin
       amount: 3
-  - type: UnarmedCombat
+  - type: MeleeWeapon
     range: 0.5
     arcwidth: 0
     arc: bite
@@ -1213,7 +1213,7 @@
     - shape:
         !type:PhysShapeCircle
         radius: 0.35
-      mass: 10
+      mass: 20
       mask:
       - MobMask
       layer:
@@ -1269,7 +1269,7 @@
     - shape:
         !type:PhysShapeCircle
         radius: 0.35
-      mass: 10
+      mass: 20
       mask:
       - MobMask
       layer:
@@ -1325,7 +1325,7 @@
     - shape:
         !type:PhysShapeCircle
         radius: 0.35
-      mass: 10
+      mass: 20
       mask:
       - MobMask
       layer:

@@ -21,10 +21,10 @@
   - type: Respirator
     damage:
       types:
-        Asphyxiation: 1.5
+        Asphyxiation: 1.0
     damageRecovery:
       types:
-        Asphyxiation: -1.5
+        Asphyxiation: -1.0
   - type: Alerts
   - type: Actions
   - type: Eye
@@ -49,6 +49,6 @@
     makeSentient: false
     name: centcom official
     description: Inspect the station, jot down performance reviews for heads of staff, bug the Captain.
-  - type: UtilityAI
-    startingGear: CentcomGear
+  - type: Loadout
+    prototype: CentcomGear
   - type: RandomHumanoidAppearance

@@ -1,21 +1,26 @@
 using Content.Shared.Audio;
 using JetBrains.Annotations;
 using Robust.Shared.Audio;
+using Robust.Shared.Prototypes;
+using Robust.Shared.Random;
+using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.TypeSerializers.Implementations;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 using Robust.Shared.Utility;
 
 namespace Content.Shared.Sound
 {
-    [ImplicitDataDefinitionForInheritors]
+    [ImplicitDataDefinitionForInheritors, Serializable, NetSerializable]
     public abstract class SoundSpecifier
     {
-        [DataField("params")]
+        [ViewVariables(VVAccess.ReadWrite), DataField("params")]
         public AudioParams Params = AudioParams.Default;
 
-        public abstract string GetSound();
+        // TODO: remove most uses of this function, and just make the audio-system take in a SoundSpecifier
+        public abstract string GetSound(IRobustRandom? rand = null, IPrototypeManager? proto = null);
     }
 
+    [Serializable, NetSerializable]
     public sealed class SoundPathSpecifier : SoundSpecifier
     {
         public const string Node = "path";
@@ -38,12 +43,13 @@ namespace Content.Shared.Sound
             Path = path;
         }
 
-        public override string GetSound()
+        public override string GetSound(IRobustRandom? rand = null, IPrototypeManager? proto = null)
         {
             return Path == null ? string.Empty : Path.ToString();
         }
     }
 
+    [Serializable, NetSerializable]
     public sealed class SoundCollectionSpecifier : SoundSpecifier
     {
         public const string Node = "collection";
@@ -61,9 +67,9 @@ namespace Content.Shared.Sound
             Collection = collection;
         }
 
-        public override string GetSound()
+        public override string GetSound(IRobustRandom? rand = null, IPrototypeManager? proto = null)
         {
-            return Collection == null ? string.Empty : AudioHelpers.GetRandomFileFromSoundCollection(Collection);
+            return Collection == null ? string.Empty : AudioHelpers.GetRandomFileFromSoundCollection(Collection, rand, proto);
         }
     }
 }

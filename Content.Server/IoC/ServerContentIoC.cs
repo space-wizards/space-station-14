@@ -1,4 +1,5 @@
 using Content.Server.Administration;
+using Content.Server.Administration.Logs;
 using Content.Server.Administration.Managers;
 using Content.Server.Administration.Notes;
 using Content.Server.Afk;
@@ -20,6 +21,7 @@ using Content.Server.Objectives.Interfaces;
 using Content.Server.Preferences.Managers;
 using Content.Server.Voting.Managers;
 using Content.Shared.Administration;
+using Content.Shared.Administration.Logs;
 using Content.Shared.Kitchen;
 using Content.Shared.Module;
 
@@ -54,6 +56,8 @@ namespace Content.Server.IoC
             IoCManager.Register<NetworkResourceManager>();
             IoCManager.Register<IAdminNotesManager, AdminNotesManager>();
             IoCManager.Register<GhostKickManager>();
+            IoCManager.Register<ISharedAdminLogManager, AdminLogManager>();
+            IoCManager.Register<IAdminLogManager, AdminLogManager>();
         }
     }
 }

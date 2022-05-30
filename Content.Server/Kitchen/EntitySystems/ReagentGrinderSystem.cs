@@ -3,6 +3,7 @@ using Content.Server.Chemistry.EntitySystems;
 using Content.Server.Kitchen.Components;
 using Content.Server.Kitchen.Events;
 using Content.Server.Power.Components;
+using Content.Server.Power.EntitySystems;
 using Content.Server.Stack;
 using Content.Server.UserInterface;
 using Content.Shared.Containers.ItemSlots;
@@ -122,7 +123,7 @@ namespace Content.Server.Kitchen.EntitySystems
         {
             _itemSlotsSystem.RemoveItemSlot(uid, component.BeakerSlot);
         }
-        
+
         private void OnUIMessageReceived(EntityUid uid, ReagentGrinderComponent component,
             ServerBoundUserInterfaceMessage message)
         {
@@ -134,16 +135,14 @@ namespace Content.Server.Kitchen.EntitySystems
             switch (message.Message)
             {
                 case SharedReagentGrinderComponent.ReagentGrinderGrindStartMessage msg:
-                    if (!EntityManager.TryGetComponent(component.Owner, out ApcPowerReceiverComponent? receiver) ||
-                        !receiver.Powered) break;
+                    if (!this.IsPowered(component.Owner, EntityManager)) break;
                     ClickSound(component);
                     DoWork(component, attached,
                         SharedReagentGrinderComponent.GrinderProgram.Grind);
                     break;
 
                 case SharedReagentGrinderComponent.ReagentGrinderJuiceStartMessage msg:
-                    if (!EntityManager.TryGetComponent(component.Owner, out ApcPowerReceiverComponent? receiver2) ||
-                        !receiver2.Powered) break;
+                    if (!this.IsPowered(component.Owner, EntityManager)) break;
                     ClickSound(component);
                     DoWork(component, attached,
                         SharedReagentGrinderComponent.GrinderProgram.Juice);
@@ -206,7 +205,7 @@ namespace Content.Server.Kitchen.EntitySystems
                     (
                         comp.Busy,
                         comp.BeakerSlot.HasItem,
-                        EntityManager.TryGetComponent(comp.Owner, out ApcPowerReceiverComponent? receiver) && receiver.Powered,
+                        this.IsPowered(comp.Owner, EntityManager),
                         canJuice,
                         canGrind,
                         comp.Chamber.ContainedEntities.Select(item => item).ToArray(),
@@ -224,7 +223,7 @@ namespace Content.Server.Kitchen.EntitySystems
             SharedReagentGrinderComponent.GrinderProgram program)
         {
             //Have power, are  we busy, chamber has anything to grind, a beaker for the grounds to go?
-            if (!EntityManager.TryGetComponent(component.Owner, out ApcPowerReceiverComponent? receiver) || !receiver.Powered ||
+            if (!this.IsPowered(component.Owner, EntityManager) ||
                 component.Busy || component.Chamber.ContainedEntities.Count <= 0 ||
                 component.BeakerSlot.Item is not EntityUid beakerEntity ||
                 component.BeakerSolution == null)
