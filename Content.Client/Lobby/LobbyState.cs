@@ -49,18 +49,18 @@ namespace Content.Client.Lobby
                 _prototypeManager, _configurationManager);
             LayoutContainer.SetAnchorPreset(_characterSetup, LayoutContainer.LayoutPreset.Wide);
 
+            Lobby.CharacterSetupState.AddChild(_characterSetup);
             chatController.SetMainChat(true);
 
             _characterSetup.CloseButton.OnPressed += _ =>
             {
-                _userInterfaceManager.StateRoot.AddChild(Lobby);
-                _userInterfaceManager.StateRoot.RemoveChild(_characterSetup);
+                Lobby.SwitchState(LobbyGui.LobbyGuiState.Default);
             };
 
             _characterSetup.SaveButton.OnPressed += _ =>
             {
                 _characterSetup.Save();
-                Lobby?.CharacterPreview.UpdateUI();
+                Lobby.CharacterPreview.UpdateUI();
             };
 
             LayoutContainer.SetAnchorPreset(Lobby, LayoutContainer.LayoutPreset.Wide);
@@ -71,8 +71,7 @@ namespace Content.Client.Lobby
             Lobby.CharacterPreview.CharacterSetupButton.OnPressed += _ =>
             {
                 SetReady(false);
-                _userInterfaceManager.StateRoot.RemoveChild(Lobby);
-                _userInterfaceManager.StateRoot.AddChild(_characterSetup);
+                Lobby.SwitchState(LobbyGui.LobbyGuiState.CharacterSetup);
             };
 
             Lobby.ReadyButton.OnPressed += _ =>
