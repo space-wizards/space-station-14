@@ -177,6 +177,7 @@ public sealed class ZombieRuleSystem : GameRuleSystem
 
     public override void Started()
     {
+        //this technically will run twice with zombies on roundstart, but it doesn't matter because it fails instantly
         InfectInitialPlayers();
     }
 
