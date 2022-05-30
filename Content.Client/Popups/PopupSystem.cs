@@ -10,6 +10,7 @@ using Robust.Client.UserInterface.Controls;
 using Robust.Shared.Map;
 using Robust.Shared.Player;
 using Robust.Shared.Timing;
+using Robust.Shared.Utility;
 
 namespace Content.Client.Popups
 {
@@ -22,7 +23,8 @@ namespace Content.Client.Popups
         [Dependency] private readonly IPlayerManager _playerManager = default!;
         [Dependency] private readonly ExamineSystemShared _examineSystem = default!;
 
-        private readonly List<PopupLabel> _aliveLabels = new();
+        private readonly List<WorldPopupLabel> _aliveWorldLabels = new();
+        private readonly List<CursorPopupLabel> _aliveCursorLabels = new();
 
         public const float PopupLifetime = 3f;
 
@@ -38,15 +40,20 @@ namespace Content.Client.Popups
 
         public void PopupCursor(string message)
         {
-            PopupMessage(message, _inputManager.MouseScreenPosition);
+            var label = new CursorPopupLabel(_inputManager.MouseScreenPosition)
+            {
+                Text = message,
+                StyleClasses = { StyleNano.StyleClassPopupMessage },
+            };
+            _userInterfaceManager.PopupRoot.AddChild(label);
+            _aliveCursorLabels.Add(label);
         }
 
         public void PopupCoordinates(string message, EntityCoordinates coordinates)
         {
-            var mapCoords = coordinates.ToMap(EntityManager);
-            if (_eyeManager.CurrentMap != mapCoords.MapId)
+            if (_eyeManager.CurrentMap != Transform(coordinates.EntityId).MapID)
                 return;
-            PopupMessage(message, _eyeManager.MapToScreen(mapCoords));
+            PopupMessage(message, coordinates, null);
         }
 
         public void PopupEntity(string message, EntityUid uid)
@@ -58,18 +65,12 @@ namespace Content.Client.Popups
             if (_eyeManager.CurrentMap != transform.MapID)
                 return; // TODO: entity may be outside of PVS, but enter PVS at a later time. So the pop-up should still get tracked?
 
-            PopupMessage(message, _eyeManager.CoordinatesToScreen(transform.Coordinates), uid);
-        }
-
-        private void PopupMessage(string message, ScreenCoordinates coordinates, EntityUid? entity = null)
-        {
-            var mapCoords = _eyeManager.ScreenToMap(coordinates);
-            PopupMessage(message, EntityCoordinates.FromMap(_map, mapCoords), entity);
+            PopupMessage(message, transform.Coordinates, uid);
         }
 
         private void PopupMessage(string message, EntityCoordinates coordinates, EntityUid? entity = null)
         {
-            var label = new PopupLabel(_eyeManager, EntityManager)
+            var label = new WorldPopupLabel(_eyeManager, EntityManager)
             {
                 Entity = entity,
                 Text = message,
@@ -80,8 +81,7 @@ namespace Content.Client.Popups
             label.Measure(Vector2.Infinity);
 
             label.InitialPos = coordinates;
-            LayoutContainer.SetPosition(label, label.InitialPos.Position);
-            _aliveLabels.Add(label);
+            _aliveWorldLabels.Add(label);
         }
 
         #endregion
@@ -133,19 +133,19 @@ namespace Content.Client.Popups
 
         private void OnRoundRestart(RoundRestartCleanupEvent ev)
         {
-            foreach (var label in _aliveLabels)
+            foreach (var label in _aliveWorldLabels)
             {
                 label.Dispose();
             }
 
-            _aliveLabels.Clear();
+            _aliveWorldLabels.Clear();
         }
 
         #endregion
 
         public override void FrameUpdate(float frameTime)
         {
-            if (_aliveLabels.Count == 0) return;
+            if (_aliveWorldLabels.Count == 0) return;
 
             var player = _playerManager.LocalPlayer?.ControlledEntity;
             var playerPos = player != null ? Transform(player.Value).MapPosition : MapCoordinates.Nullspace;
@@ -155,14 +155,14 @@ namespace Content.Client.Popups
                 => uid == data.compOwner || uid == data.attachedEntity;
             var occluded = player != null && _examineSystem.IsOccluded(player.Value);
 
-            for (var i = _aliveLabels.Count - 1; i >= 0; i--)
+            for (var i = _aliveWorldLabels.Count - 1; i >= 0; i--)
             {
-                var label = _aliveLabels[i];
+                var label = _aliveWorldLabels[i];
                 if (label.TotalTime > PopupLifetime ||
                     label.Entity != null && Deleted(label.Entity))
                 {
                     label.Dispose();
-                    _aliveLabels.RemoveAt(i);
+                    _aliveWorldLabels.RemoveSwap(i);
                     continue;
                 }
 
@@ -185,14 +185,58 @@ namespace Content.Client.Popups
 
                 label.Visible = true;
             }
+
+            for (var i = _aliveCursorLabels.Count - 1; i >= 0; i--)
+            {
+                var label = _aliveCursorLabels[i];
+                if (label.TotalTime > PopupLifetime)
+                {
+                    label.Dispose();
+                    _aliveCursorLabels.RemoveSwap(i);
+                }
+            }
         }
 
-        private sealed class PopupLabel : Label
+        private abstract class PopupLabel : Label
+        {
+            public float TotalTime { get; protected set; }
+
+            public PopupLabel()
+            {
+                ShadowOffsetXOverride = ShadowOffsetYOverride = 1;
+                FontColorShadowOverride = Color.Black;
+                Measure(Vector2.Infinity);
+            }
+
+            protected override void FrameUpdate(FrameEventArgs eventArgs)
+            {
+                TotalTime += eventArgs.DeltaSeconds;
+                if (TotalTime > 0.5f)
+                    Modulate = Color.White.WithAlpha(1f - 0.2f * MathF.Pow(TotalTime - 0.5f, 3f));
+            }
+        }
+
+        private sealed class CursorPopupLabel : PopupLabel
+        {
+            public Vector2 InitialPos { get; set; }
+
+            public CursorPopupLabel(ScreenCoordinates screenCoords) : base()
+            {
+                InitialPos = screenCoords.Position / UIScale - DesiredSize / 2;
+            }
+
+            protected override void FrameUpdate(FrameEventArgs eventArgs)
+            {
+                base.FrameUpdate(eventArgs);
+                LayoutContainer.SetPosition(this, InitialPos - (0, 20 * (TotalTime * TotalTime + TotalTime)));
+            }
+        }
+
+        private sealed class WorldPopupLabel : PopupLabel
         {
             private readonly IEyeManager _eyeManager;
             private readonly IEntityManager _entityManager;
 
-            public float TotalTime { get; private set; }
             /// <summary>
             /// The original Mapid and ScreenPosition of the label.
             /// </summary>
@@ -202,19 +246,15 @@ namespace Content.Client.Popups
             public EntityCoordinates InitialPos { get; set; }
             public EntityUid? Entity { get; set; }
 
-            public PopupLabel(IEyeManager eyeManager, IEntityManager entityManager)
+            public WorldPopupLabel(IEyeManager eyeManager, IEntityManager entityManager) : base()
             {
                 _eyeManager = eyeManager;
                 _entityManager = entityManager;
-                ShadowOffsetXOverride = 1;
-                ShadowOffsetYOverride = 1;
-                FontColorShadowOverride = Color.Black;
             }
 
             protected override void FrameUpdate(FrameEventArgs eventArgs)
             {
-                TotalTime += eventArgs.DeltaSeconds;
-
+                base.FrameUpdate(eventArgs);
                 ScreenCoordinates screenCoords;
 
                 if (Entity == null)
@@ -232,11 +272,6 @@ namespace Content.Client.Popups
                 Visible = true;
                 var position = screenCoords.Position / UIScale - DesiredSize / 2;
                 LayoutContainer.SetPosition(this, position - (0, 20 * (TotalTime * TotalTime + TotalTime)));
-
-                if (TotalTime > 0.5f)
-                {
-                    Modulate = Color.White.WithAlpha(1f - 0.2f * (float)Math.Pow(TotalTime - 0.5f, 3f));
-                }
             }
         }
     }

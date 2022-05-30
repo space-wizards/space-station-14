@@ -245,7 +245,7 @@ public sealed partial class GunSystem
             hitscan.FireEffects(shooter, distance, angle, result.HitEntity);
             var modifiedDamage = _damageable.TryChangeDamage(result.HitEntity, hitscan.Damage);
             if (modifiedDamage != null)
-                _logs.Add(LogType.HitScanHit,
+                _adminLogger.Add(LogType.HitScanHit,
                     $"{EntityManager.ToPrettyString(shooter):user} hit {EntityManager.ToPrettyString(result.HitEntity):target} using {EntityManager.ToPrettyString(hitscan.Owner):used} and dealt {modifiedDamage.Total:damage} damage");
 
             PlaySound(rayCastResults[0].HitEntity, modifiedDamage, hitscan.SoundHit, hitscan.ForceSound);

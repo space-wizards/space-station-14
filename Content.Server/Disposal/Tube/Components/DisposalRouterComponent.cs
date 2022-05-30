@@ -12,6 +12,7 @@ namespace Content.Server.Disposal.Tube.Components
 {
     [RegisterComponent]
     [ComponentReference(typeof(IDisposalTubeComponent))]
+    [ComponentReference(typeof(DisposalTubeComponent))]
     public sealed class DisposalRouterComponent : DisposalJunctionComponent
     {
         [Dependency] private readonly IEntityManager _entMan = default!;
