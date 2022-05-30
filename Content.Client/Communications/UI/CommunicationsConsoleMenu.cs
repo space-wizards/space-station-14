@@ -102,13 +102,17 @@ namespace Content.Client.Communications.UI
             {
                 foreach (var alert in alerts)
                 {
-                     AlertLevelButton.AddItem(Loc.GetString($"alert-level-{alert}"));
-                     AlertLevelButton.SetItemMetadata(AlertLevelButton.ItemCount - 1, alert);
-
-                     if (alert == currentAlert)
-                     {
-                         AlertLevelButton.Select(AlertLevelButton.ItemCount - 1);
-                     }
+                    var name = alert;
+                    if (Loc.TryGetString($"alert-level-{level}", out var locName))
+                    {
+                        name = locName;
+                    }
+                    AlertLevelButton.AddItem(name);
+                    AlertLevelButton.SetItemMetadata(AlertLevelButton.ItemCount - 1, alert);
+                    if (alert == currentAlert)
+                    {
+                        AlertLevelButton.Select(AlertLevelButton.ItemCount - 1);
+                    }
                 }
             }
         }
