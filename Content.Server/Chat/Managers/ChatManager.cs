@@ -43,7 +43,7 @@ namespace Content.Server.Chat.Managers
         [Dependency] private readonly IEntityManager _entityManager = default!;
 
         private StationSystem _stationSystem = default!;
-        
+
         /// <summary>
         /// The maximum length a player-sent message can be sent
         /// </summary>
@@ -104,7 +104,7 @@ namespace Content.Server.Chat.Managers
             {
                 SoundSystem.Play(Filter.Broadcast(), "/Audio/Announcements/announce.ogg", AudioParams.Default.WithVolume(-2f));
             }
-            _logs.Add(LogType.Chat, LogImpact.Low, $"Global station announcement from {sender}: {message}");
+            _adminLogger.Add(LogType.Chat, LogImpact.Low, $"Global station announcement from {sender}: {message}");
         }
 
         /// <summary>
