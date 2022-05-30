@@ -26,6 +26,8 @@ public class GunComponent : Component
 
     #region Recoil
 
+    // These values are very small for now until we get a debug overlay and fine tune it
+
     /// <summary>
     /// Last time the gun fired.
     /// Used for recoil purposes.
@@ -43,19 +45,19 @@ public class GunComponent : Component
     /// How much the spread increases every time the gun fires.
     /// </summary>
     [ViewVariables, DataField("angleIncrease")]
-    public Angle AngleIncrease = Angle.FromDegrees(1);
+    public Angle AngleIncrease = Angle.FromDegrees(0.5);
 
     /// <summary>
     /// How much the <see cref="CurrentAngle"/> decreases per second.
     /// </summary>
     [ViewVariables, DataField("angleDecay")]
-    public Angle AngleDecay = Angle.FromDegrees(5);
+    public Angle AngleDecay = Angle.FromDegrees(4);
 
     /// <summary>
     /// The maximum angle allowed for <see cref="CurrentAngle"/>
     /// </summary>
     [ViewVariables, DataField("maxAngle")]
-    public Angle MaxAngle = Angle.FromDegrees(5);
+    public Angle MaxAngle = Angle.FromDegrees(2);
 
     /// <summary>
     /// The minimum angle allowed for <see cref="CurrentAngle"/>
