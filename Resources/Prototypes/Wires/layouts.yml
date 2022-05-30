@@ -22,8 +22,12 @@
   id: AirlockArmory
 
 - type: wireLayout
+  parent: Airlock
+  id: Windoors
+
+- type: wireLayout
   id: HighSec
-  wires:  
+  wires:
   - !type:PowerWireAction
     pulseTimeout: 10
   - !type:DoorBoltWireAction
@@ -31,7 +35,7 @@
   - !type:DoorTimingWireAction
   - !type:DoorSafetyWireAction
   dummyWires: 5
-  
+
 - type: wireLayout
   id: Vending
   wires:

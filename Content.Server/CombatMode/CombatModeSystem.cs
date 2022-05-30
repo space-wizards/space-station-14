@@ -20,7 +20,7 @@ namespace Content.Server.CombatMode
         [Dependency] private readonly ActionBlockerSystem _actionBlockerSystem = default!;
         [Dependency] private readonly MeleeWeaponSystem _meleeWeaponSystem = default!;
         [Dependency] private readonly PopupSystem _popupSystem = default!;
-        [Dependency] private readonly AdminLogSystem _logSystem = default!;
+        [Dependency] private readonly IAdminLogManager _adminLogger= default!;
         [Dependency] private readonly IRobustRandom _random = default!;
 
         public override void Initialize()
@@ -87,7 +87,7 @@ namespace Content.Server.CombatMode
 
             _meleeWeaponSystem.SendAnimation("disarm", angle, args.Performer, args.Performer, new[] { args.Target });
             SoundSystem.Play(filterAll, component.DisarmSuccessSound.GetSound(), args.Performer, AudioHelpers.WithVariation(0.025f));
-            _logSystem.Add(LogType.DisarmedAction, $"{ToPrettyString(args.Performer):user} used disarm on {ToPrettyString(args.Target):target}");
+            _adminLogger.Add(LogType.DisarmedAction, $"{ToPrettyString(args.Performer):user} used disarm on {ToPrettyString(args.Target):target}");
 
             var eventArgs = new DisarmedEvent() { Target = args.Target, Source = args.Performer, PushProbability = component.DisarmPushChance };
             RaiseLocalEvent(args.Target, eventArgs);

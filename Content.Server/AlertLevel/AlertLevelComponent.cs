@@ -22,7 +22,11 @@ public sealed class AlertLevelComponent : Component
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite)] public string CurrentLevel = string.Empty;
 
+    [ViewVariables(VVAccess.ReadWrite)] public bool IsLevelLocked = false;
     [ViewVariables] public const float Delay = 30;
+    /// <summary>
+    /// Is current station level can be changed by crew.
+    /// </summary>
     [ViewVariables] public float CurrentDelay = 0;
     [ViewVariables] public bool ActiveDelay;
 
@@ -40,7 +44,7 @@ public sealed class AlertLevelComponent : Component
                 return false;
             }
 
-            return level.Selectable && !level.DisableSelection;
+            return level.Selectable && !level.DisableSelection && !IsLevelLocked;
         }
     }
 }

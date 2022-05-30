@@ -15,7 +15,7 @@ namespace Content.Shared.Chemistry
     {
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
         [Dependency] private readonly IRobustRandom _robustRandom = default!;
-        [Dependency] private readonly SharedAdminLogSystem _logSystem = default!;
+        [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
 
         public void ReactionEntity(EntityUid uid, ReactionMethod method, Solution solution)
         {
@@ -63,7 +63,7 @@ namespace Content.Shared.Chemistry
                         if (effect.ShouldLog)
                         {
                             var entity = args.SolutionEntity;
-                            _logSystem.Add(LogType.ReagentEffect, effect.LogImpact,
+                            _adminLogger.Add(LogType.ReagentEffect, effect.LogImpact,
                                 $"Reactive effect {effect.GetType().Name:effect} of reagent {reagent.ID:reagent} with method {method} applied on entity {ToPrettyString(entity):entity} at {Transform(entity).Coordinates:coordinates}");
                         }
 
@@ -91,7 +91,7 @@ namespace Content.Shared.Chemistry
                         if (effect.ShouldLog)
                         {
                             var entity = args.SolutionEntity;
-                            _logSystem.Add(LogType.ReagentEffect, effect.LogImpact,
+                            _adminLogger.Add(LogType.ReagentEffect, effect.LogImpact,
                                 $"Reactive effect {effect.GetType().Name:effect} of {ToPrettyString(entity):entity} using reagent {reagent.ID:reagent} with method {method} at {Transform(entity).Coordinates:coordinates}");
                         }
 

@@ -15,7 +15,7 @@ namespace Content.Server.Stunnable
     public sealed class StunSystem : SharedStunSystem
     {
         [Dependency] private readonly IRobustRandom _random = default!;
-        [Dependency] private readonly AdminLogSystem _adminLogSystem = default!;
+        [Dependency] private readonly IAdminLogManager _adminLogger = default!;
 
         public override void Initialize()
         {
@@ -42,7 +42,7 @@ namespace Content.Server.Stunnable
             source.PopupMessageOtherClients(Loc.GetString("stunned-component-disarm-success-others", ("source", Name(source)), ("target", Name(target))));
             source.PopupMessageCursor(Loc.GetString("stunned-component-disarm-success", ("target", Name(target))));
 
-            _adminLogSystem.Add(LogType.DisarmedKnockdown, LogImpact.Medium, $"{ToPrettyString(args.Source):user} knocked down {ToPrettyString(args.Target):target}");
+            _adminLogger.Add(LogType.DisarmedKnockdown, LogImpact.Medium, $"{ToPrettyString(args.Source):user} knocked down {ToPrettyString(args.Target):target}");
 
             args.Handled = true;
         }

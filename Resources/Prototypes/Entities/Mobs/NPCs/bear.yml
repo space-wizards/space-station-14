@@ -55,7 +55,7 @@
   - type: Temperature
     heatDamageThreshold: 500
     coldDamageThreshold: 0
-  - type: UnarmedCombat
+  - type: MeleeWeapon
     range: 0.5
     arcwidth: 0
     arc: claw

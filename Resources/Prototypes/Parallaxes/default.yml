@@ -2,10 +2,20 @@
   id: default
   layers:
     - texture:
-        !type:GeneratedParallaxTextureSource
-        id: "hq_wizard_clouds"
-        configPath: "/Prototypes/Parallaxes/parallax_config_clouds.toml"
+        !type:ImageParallaxTextureSource
+        path: "/Textures/Parallaxes/layer1.png"
       slowness: 0.5
+      scale: "1, 1"
+    - texture:
+        !type:GeneratedParallaxTextureSource
+        id: "hq_wizard_stars"
+        configPath: "/Prototypes/Parallaxes/parallax_config_stars.toml"
+      slowness: 0.25
+    - texture:
+        !type:GeneratedParallaxTextureSource
+        id: "hq_wizard_stars_slower"
+        configPath: "/Prototypes/Parallaxes/parallax_config_stars-2.toml"
+      slowness: 0.15
     - texture:
         !type:GeneratedParallaxTextureSource
         id: "hq_wizard_stars_dim"
@@ -13,13 +23,13 @@
       slowness: 0.375
     - texture:
         !type:GeneratedParallaxTextureSource
-        id: "hq_wizard_stars"
-        configPath: "/Prototypes/Parallaxes/parallax_config_stars.toml"
-      slowness: 0.25
+        id: "hq_wizard_stars_dim_faster"
+        configPath: "/Prototypes/Parallaxes/parallax_config_stars_dim-2.toml"
+      slowness: 0.125
   layersLQ:
     - texture:
         !type:GeneratedParallaxTextureSource
-        id: ""
-        configPath: "/Prototypes/Parallaxes/parallax_config.toml"
-      slowness: 0.5
+       id: ""
+       configPath: "/Prototypes/Parallaxes/parallax_config.toml"
+       slowness: 0.5
   layersLQUseHQ: false

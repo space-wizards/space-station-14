@@ -104,6 +104,7 @@ namespace Content.Server.GameTicking
         [Dependency] private readonly IWatchdogApi _watchdogApi = default!;
         [Dependency] private readonly IGameMapManager _gameMapManager = default!;
         [Dependency] private readonly IServerDbManager _db = default!;
+        [Dependency] private readonly IAdminLogManager _adminLogger = default!;
         [Dependency] private readonly ILogManager _logManager = default!;
         [Dependency] private readonly IConsoleHost _consoleHost = default!;
 #if EXCEPTION_TOLERANCE
@@ -112,7 +113,6 @@ namespace Content.Server.GameTicking
         [Dependency] private readonly StationSystem _stationSystem = default!;
         [Dependency] private readonly StationSpawningSystem _stationSpawning = default!;
         [Dependency] private readonly StationJobsSystem _stationJobs = default!;
-        [Dependency] private readonly AdminLogSystem _adminLogSystem = default!;
         [Dependency] private readonly DamageableSystem _damageable = default!;
         [Dependency] private readonly GhostSystem _ghosts = default!;
         [Dependency] private readonly RoleBanManager _roleBanManager = default!;

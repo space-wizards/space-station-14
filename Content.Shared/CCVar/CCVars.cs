@@ -17,6 +17,12 @@ namespace Content.Shared.CCVar
         public static readonly CVarDef<string> ServerId =
             CVarDef.Create("server.id", "unknown_server_id", CVar.REPLICATED | CVar.SERVER);
 
+        /// <summary>
+        ///     Name of the rules txt file in the "Resources/Server Info" dir. Include the extension.
+        /// </summary>
+        public static readonly CVarDef<string> RulesFile =
+            CVarDef.Create("server.rules_file", "Rules.txt", CVar.REPLICATED | CVar.SERVER);
+
         /*
          * Ambience
          */
@@ -899,6 +905,13 @@ namespace Content.Shared.CCVar
         /// </summary>
         public static readonly CVarDef<float> RulesWaitTime =
             CVarDef.Create("rules.time", 45f, CVar.SERVER | CVar.REPLICATED);
+
+        /// <summary>
+        /// Don't show rules to localhost/loopback interface.
+        /// </summary>
+        public static readonly CVarDef<bool> RulesExemptLocal =
+            CVarDef.Create("rules.exempt_local", true, CVar.SERVERONLY);
+
 
         /*
          * Autogeneration

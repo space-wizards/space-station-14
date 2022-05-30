@@ -36,14 +36,14 @@ namespace Content.Server.Chat.Managers
         [Dependency] private readonly IServerNetManager _netManager = default!;
         [Dependency] private readonly IMoMMILink _mommiLink = default!;
         [Dependency] private readonly IAdminManager _adminManager = default!;
+        [Dependency] private readonly IAdminLogManager _adminLogger = default!;
         [Dependency] private readonly IServerPreferencesManager _preferencesManager = default!;
         [Dependency] private readonly IConfigurationManager _configurationManager = default!;
         [Dependency] private readonly IMapManager _mapManager = default!;
         [Dependency] private readonly IEntityManager _entityManager = default!;
 
         private StationSystem _stationSystem = default!;
-        private AdminLogSystem _logs = default!;
-
+        
         /// <summary>
         /// The maximum length a player-sent message can be sent
         /// </summary>
@@ -55,8 +55,6 @@ namespace Content.Server.Chat.Managers
         public void Initialize()
         {
             _stationSystem = _entityManager.EntitySysManager.GetEntitySystem<StationSystem>();
-            _logs = _entityManager.EntitySysManager.GetEntitySystem<AdminLogSystem>();
-
             _netManager.RegisterNetMessage<MsgChatMessage>();
 
             _configurationManager.OnValueChanged(CCVars.OocEnabled, OnOocEnabledChanged, true);
@@ -87,7 +85,7 @@ namespace Content.Server.Chat.Managers
             ChatMessageToAll(ChatChannel.Server, message, messageWrap, colorOverride);
             Logger.InfoS("SERVER", message);
 
-            _logs.Add(LogType.Chat, LogImpact.Low, $"Server announcement: {message}");
+            _adminLogger.Add(LogType.Chat, LogImpact.Low, $"Server announcement: {message}");
         }
 
         /// <summary>
@@ -146,7 +144,7 @@ namespace Content.Server.Chat.Managers
                 }
             }
 
-            _logs.Add(LogType.Chat, LogImpact.Low, $"Station Announcement on {station} from {sender}: {message}");
+            _adminLogger.Add(LogType.Chat, LogImpact.Low, $"Station Announcement on {station} from {sender}: {message}");
         }
 
         public void DispatchServerMessage(IPlayerSession player, string message)
@@ -154,7 +152,7 @@ namespace Content.Server.Chat.Managers
             var messageWrap = Loc.GetString("chat-manager-server-wrap-message");
             ChatMessageToOne(ChatChannel.Server, message, messageWrap, default, false, player.ConnectedClient);
 
-            _logs.Add(LogType.Chat, LogImpact.Low, $"Server message to {player:Player}: {message}");
+            _adminLogger.Add(LogType.Chat, LogImpact.Low, $"Server message to {player:Player}: {message}");
         }
 
         public void SendAdminAnnouncement(string message)
@@ -166,7 +164,7 @@ namespace Content.Server.Chat.Managers
                 ("adminChannelName", Loc.GetString("chat-manager-admin-channel-name")));
 
             ChatMessageToMany(ChatChannel.Admin, message, messageWrap, default, false, clients.ToList());
-            _logs.Add(LogType.Chat, LogImpact.Low, $"Admin announcement from {message}: {message}");
+            _adminLogger.Add(LogType.Chat, LogImpact.Low, $"Admin announcement from {message}: {message}");
         }
 
         public void SendHookOOC(string sender, string message)
@@ -178,7 +176,7 @@ namespace Content.Server.Chat.Managers
             message = FormattedMessage.EscapeText(message);
             var messageWrap = Loc.GetString("chat-manager-send-hook-ooc-wrap-message", ("senderName", sender));
             ChatMessageToAll(ChatChannel.OOC, message, messageWrap);
-            _logs.Add(LogType.Chat, LogImpact.Low, $"Hook OOC from {sender}: {message}");
+            _adminLogger.Add(LogType.Chat, LogImpact.Low, $"Hook OOC from {sender}: {message}");
         }
 
         #endregion
@@ -247,14 +245,14 @@ namespace Content.Server.Chat.Managers
             //TODO: player.Name color, this will need to change the structure of the MsgChatMessage
             ChatMessageToAll(ChatChannel.OOC, message, messageWrap, colorOverride);
             _mommiLink.SendOOCMessage(player.Name, message);
-            _logs.Add(LogType.Chat, LogImpact.Low, $"OOC from {player:Player}: {message}");
+            _adminLogger.Add(LogType.Chat, LogImpact.Low, $"OOC from {player:Player}: {message}");
         }
 
         private void SendAdminChat(IPlayerSession player, string message)
         {
             if (!_adminManager.IsAdmin(player))
             {
-                _logs.Add(LogType.Chat, LogImpact.Extreme, $"{player:Player} attempted to send admin message but was not admin");
+                _adminLogger.Add(LogType.Chat, LogImpact.Extreme, $"{player:Player} attempted to send admin message but was not admin");
                 return;
             }
 
@@ -264,7 +262,7 @@ namespace Content.Server.Chat.Managers
                                             ("playerName", player.Name));
             ChatMessageToMany(ChatChannel.Admin, message, messageWrap, default, false, clients.ToList());
 
-            _logs.Add(LogType.Chat, $"Admin chat from {player:Player}: {message}");
+            _adminLogger.Add(LogType.Chat, $"Admin chat from {player:Player}: {message}");
         }
 
         #endregion

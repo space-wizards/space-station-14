@@ -15,7 +15,6 @@ namespace Content.Server.Remotes
     public sealed class DoorRemoteSystem : EntitySystem
     {
         [Dependency] private readonly SharedPopupSystem _popupSystem = default!;
-        [Dependency] private readonly SharedDoorSystem _sharedDoorSystem = default!;
         [Dependency] private readonly DoorSystem _doorSystem = default!;
         [Dependency] private readonly SharedInteractionSystem _interactionSystem = default!;
         [Dependency] private readonly SharedAirlockSystem _sharedAirlockSystem = default!;
@@ -49,21 +48,23 @@ namespace Content.Server.Remotes
 
         private void OnAfterInteract(EntityUid uid, DoorRemoteComponent component, AfterInteractEvent args)
         {
-            if (args.Handled
+            if (!args.CanReach ||
+                args.Handled
                 || args.Target == null
                 || !TryComp<DoorComponent>(args.Target, out var doorComponent) // If it isn't a door we don't use it
                 || !HasComp<AccessReaderComponent>(args.Target) // Remotes do not work on doors without access requirements
                 || !TryComp<AirlockComponent>(args.Target, out var airlockComponent) // Remotes only work on airlocks
+                // TODO: Why the fuck is this -1f
                 || !_interactionSystem.InRangeUnobstructed(args.User, doorComponent.Owner, -1f, CollisionGroup.Opaque))
             {
                 return;
             }
 
             args.Handled = true;
-            
+
             if (component.Mode == DoorRemoteComponent.OperatingMode.OpenClose)
             {
-                _sharedDoorSystem.TryToggleDoor(doorComponent.Owner, user: args.Used);
+                _doorSystem.TryToggleDoor(doorComponent.Owner, user: args.Used);
             }
 
             if (component.Mode == DoorRemoteComponent.OperatingMode.ToggleBolts
@@ -77,11 +78,11 @@ namespace Content.Server.Remotes
                 {
                     if (doorComponent.State != DoorState.Open)
                     {
-                        _sharedDoorSystem.Deny(airlockComponent.Owner, user: args.User);
+                        _doorSystem.Deny(airlockComponent.Owner, user: args.User);
                     }
                     else if (doorComponent.DenySound != null)
                     {
-                        SoundSystem.Play(Filter.Pvs(args.Target.Value), doorComponent.DenySound.GetSound(), args.Target.Value);
+                        SoundSystem.Play(Filter.Pvs(args.Target.Value, entityManager: EntityManager), doorComponent.DenySound.GetSound(), args.Target.Value);
                     }
                 }
             }
