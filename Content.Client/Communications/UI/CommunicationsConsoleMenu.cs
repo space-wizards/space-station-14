@@ -103,7 +103,7 @@ namespace Content.Client.Communications.UI
                 foreach (var alert in alerts)
                 {
                     var name = alert;
-                    if (Loc.TryGetString($"alert-level-{level}", out var locName))
+                    if (Loc.TryGetString($"alert-level-{alert}", out var locName))
                     {
                         name = locName;
                     }
