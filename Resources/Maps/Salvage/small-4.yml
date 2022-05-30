@@ -804,11 +804,6 @@ entities:
     type: Transform
   - canCollide: False
     type: Physics
-  - containers:
-      BoltActionBarrel-ammo-container: !type:Container
-        ents: []
-      BoltActionBarrel-chamber-container: !type:ContainerSlot {}
-    type: ContainerContainer
 - uid: 51
   type: CableApcExtension
   components:

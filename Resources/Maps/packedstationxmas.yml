@@ -33710,11 +33710,6 @@ entities:
     type: Transform
   - canCollide: False
     type: Physics
-  - containers:
-      PumpBarrel-ammo-container: !type:Container
-        ents: []
-      PumpBarrel-chamber-container: !type:ContainerSlot {}
-    type: ContainerContainer
 - uid: 2413
   type: ClothingOuterArmorBulletproof
   components:
@@ -92567,11 +92562,6 @@ entities:
     type: Transform
   - canCollide: False
     type: Physics
-  - containers:
-      BatteryBarrel-powercell-container: !type:ContainerSlot
-        ent: 11108
-      BatteryBarrel-ammo-container: !type:ContainerSlot {}
-    type: ContainerContainer
 - uid: 9230
   type: GasPipeStraight
   components:
@@ -114620,11 +114610,6 @@ entities:
     type: Transform
   - canCollide: False
     type: Physics
-  - containers:
-      BatteryBarrel-powercell-container: !type:ContainerSlot
-        ent: 11204
-      BatteryBarrel-ammo-container: !type:ContainerSlot {}
-    type: ContainerContainer
 - uid: 11193
   type: CableApcExtension
   components:

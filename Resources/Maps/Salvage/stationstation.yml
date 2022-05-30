@@ -1718,20 +1718,12 @@ entities:
   - pos: -1.47174,4.550247
     parent: 179
     type: Transform
-  - containers:
-      Content.Server.Weapon.Ranged.Barrels.Components.BatteryBarrelComponent-ammo-container: !type:ContainerSlot {}
-      cellslot_cell_container: !type:ContainerSlot {}
-    type: ContainerContainer
 - uid: 181
   type: WeaponLaserGun
   components:
   - pos: -0.6748645,4.487747
     parent: 179
     type: Transform
-  - containers:
-      Content.Server.Weapon.Ranged.Barrels.Components.BatteryBarrelComponent-ammo-container: !type:ContainerSlot {}
-      cellslot_cell_container: !type:ContainerSlot {}
-    type: ContainerContainer
 - uid: 182
   type: Brutepack
   components:
@@ -3398,8 +3390,8 @@ entities:
     parent: 179
     type: Transform
   - containers:
-      Content.Server.Weapon.Ranged.Barrels.Components.MagazineBarrelComponent-chamber: !type:ContainerSlot {}
-      Content.Server.Weapon.Ranged.Barrels.Components.MagazineBarrelComponent-magazine: !type:ContainerSlot {}
+      gun-chamber: !type:ContainerSlot {}
+      gun-magazine: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 436
   type: WeaponSubMachineGunC20r
@@ -3408,8 +3400,8 @@ entities:
     parent: 179
     type: Transform
   - containers:
-      Content.Server.Weapon.Ranged.Barrels.Components.MagazineBarrelComponent-chamber: !type:ContainerSlot {}
-      Content.Server.Weapon.Ranged.Barrels.Components.MagazineBarrelComponent-magazine: !type:ContainerSlot {}
+      gun-chamber: !type:ContainerSlot {}
+      gun-magazine: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 437
   type: WallSolid

@@ -7560,8 +7560,8 @@ entities:
     parent: 73
     type: Transform
   - containers:
-      Content.Server.Weapon.Ranged.Barrels.Components.MagazineBarrelComponent-chamber: !type:ContainerSlot {}
-      Content.Server.Weapon.Ranged.Barrels.Components.MagazineBarrelComponent-magazine: !type:ContainerSlot
+      gun-chamber: !type:ContainerSlot {}
+      gun-magazine: !type:ContainerSlot
         ent: 756
     type: ContainerContainer
 - uid: 756

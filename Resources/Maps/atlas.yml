@@ -15359,8 +15359,8 @@ entities:
     parent: 30
     type: Transform
   - containers:
-      Content.Server.Weapon.Ranged.Barrels.Components.MagazineBarrelComponent-chamber: !type:ContainerSlot {}
-      Content.Server.Weapon.Ranged.Barrels.Components.MagazineBarrelComponent-magazine: !type:ContainerSlot
+      gun-chamber: !type:ContainerSlot {}
+      gun-magazine: !type:ContainerSlot
         ent: 871
     type: ContainerContainer
 - uid: 871
@@ -15430,31 +15430,18 @@ entities:
   - pos: 11.534376,17.451567
     parent: 30
     type: Transform
-  - containers:
-      Content.Server.Weapon.Ranged.Barrels.Components.PumpBarrelComponent-ammo-container: !type:Container
-        ents: []
-      Content.Server.Weapon.Ranged.Barrels.Components.PumpBarrelComponent-chamber-container: !type:ContainerSlot {}
-    type: ContainerContainer
 - uid: 878
   type: WeaponLaserRifleCog
   components:
   - pos: 12.534376,18.732817
     parent: 30
     type: Transform
-  - containers:
-      Content.Server.Weapon.Ranged.Barrels.Components.BatteryBarrelComponent-ammo-container: !type:ContainerSlot {}
-      cellslot_cell_container: !type:ContainerSlot {}
-    type: ContainerContainer
 - uid: 879
   type: WeaponLaserRifleCog
   components:
   - pos: 12.550001,18.498442
     parent: 30
     type: Transform
-  - containers:
-      Content.Server.Weapon.Ranged.Barrels.Components.BatteryBarrelComponent-ammo-container: !type:ContainerSlot {}
-      cellslot_cell_container: !type:ContainerSlot {}
-    type: ContainerContainer
 - uid: 880
   type: WindoorArmoryLocked
   components:
@@ -15962,8 +15949,8 @@ entities:
     parent: 30
     type: Transform
   - containers:
-      Content.Server.Weapon.Ranged.Barrels.Components.MagazineBarrelComponent-chamber: !type:ContainerSlot {}
-      Content.Server.Weapon.Ranged.Barrels.Components.MagazineBarrelComponent-magazine: !type:ContainerSlot
+      gun-chamber: !type:ContainerSlot {}
+      gun-magazine: !type:ContainerSlot
         ent: 933
     type: ContainerContainer
 - uid: 933

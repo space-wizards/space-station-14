@@ -1171,8 +1171,8 @@ entities:
     parent: 852
     type: Transform
   - containers:
-      Content.Server.Weapon.Ranged.Barrels.Components.MagazineBarrelComponent-chamber: !type:ContainerSlot {}
-      Content.Server.Weapon.Ranged.Barrels.Components.MagazineBarrelComponent-magazine: !type:ContainerSlot
+      gun-chamber: !type:ContainerSlot {}
+      gun-magazine: !type:ContainerSlot
         ent: 14
     type: ContainerContainer
 - uid: 129
@@ -6013,11 +6013,6 @@ entities:
   - pos: -11.496767,19.548046
     parent: 852
     type: Transform
-  - containers:
-      Content.Server.Weapon.Ranged.Barrels.Components.PumpBarrelComponent-ammo-container: !type:Container
-        ents: []
-      Content.Server.Weapon.Ranged.Barrels.Components.PumpBarrelComponent-chamber-container: !type:ContainerSlot {}
-    type: ContainerContainer
 - uid: 544
   type: ShellShotgunIncendiary
   components:
@@ -18311,10 +18306,6 @@ entities:
   - pos: -14.448555,19.788729
     parent: 852
     type: Transform
-  - containers:
-      Content.Server.Weapon.Ranged.Barrels.Components.BatteryBarrelComponent-ammo-container: !type:ContainerSlot {}
-      cellslot_cell_container: !type:ContainerSlot {}
-    type: ContainerContainer
 - uid: 976
   type: MaintenanceToolSpawner
   components:
@@ -19914,8 +19905,8 @@ entities:
     parent: 852
     type: Transform
   - containers:
-      Content.Server.Weapon.Ranged.Barrels.Components.MagazineBarrelComponent-chamber: !type:ContainerSlot {}
-      Content.Server.Weapon.Ranged.Barrels.Components.MagazineBarrelComponent-magazine: !type:ContainerSlot
+      gun-chamber: !type:ContainerSlot {}
+      gun-magazine: !type:ContainerSlot
         ent: 5157
     type: ContainerContainer
 - uid: 1153
@@ -23550,13 +23541,6 @@ entities:
   - pos: -13.508065,16.49532
     parent: 852
     type: Transform
-  - containers:
-      BatteryBarrel-powercell-container: !type:ContainerSlot
-        ent: 1130
-      BatteryBarrel-ammo-container: !type:ContainerSlot {}
-      cellslot_cell_container: !type:ContainerSlot {}
-      Content.Server.Weapon.Ranged.Barrels.Components.BatteryBarrelComponent-ammo-container: !type:ContainerSlot {}
-    type: ContainerContainer
 - uid: 1550
   type: ReinforcedPlasmaWindow
   components:
@@ -51981,8 +51965,8 @@ entities:
     parent: 852
     type: Transform
   - containers:
-      Content.Server.Weapon.Ranged.Barrels.Components.MagazineBarrelComponent-chamber: !type:ContainerSlot {}
-      Content.Server.Weapon.Ranged.Barrels.Components.MagazineBarrelComponent-magazine: !type:ContainerSlot
+      gun-chamber: !type:ContainerSlot {}
+      gun-magazine: !type:ContainerSlot
         ent: 1603
     type: ContainerContainer
 - uid: 4234
@@ -52168,11 +52152,6 @@ entities:
   - pos: -11.512392,19.719921
     parent: 852
     type: Transform
-  - containers:
-      Content.Server.Weapon.Ranged.Barrels.Components.PumpBarrelComponent-ammo-container: !type:Container
-        ents: []
-      Content.Server.Weapon.Ranged.Barrels.Components.PumpBarrelComponent-chamber-container: !type:ContainerSlot {}
-    type: ContainerContainer
 - uid: 4257
   type: WallReinforced
   components:
@@ -55840,13 +55819,6 @@ entities:
   - pos: -13.55494,16.74532
     parent: 852
     type: Transform
-  - containers:
-      BatteryBarrel-powercell-container: !type:ContainerSlot
-        ent: 4707
-      BatteryBarrel-ammo-container: !type:ContainerSlot {}
-      cellslot_cell_container: !type:ContainerSlot {}
-      Content.Server.Weapon.Ranged.Barrels.Components.BatteryBarrelComponent-ammo-container: !type:ContainerSlot {}
-    type: ContainerContainer
 - uid: 4707
   type: PowerCellSmallStandard
   components:
@@ -55860,13 +55832,6 @@ entities:
   - pos: -13.508065,16.58907
     parent: 852
     type: Transform
-  - containers:
-      BatteryBarrel-powercell-container: !type:ContainerSlot
-        ent: 1205
-      BatteryBarrel-ammo-container: !type:ContainerSlot {}
-      cellslot_cell_container: !type:ContainerSlot {}
-      Content.Server.Weapon.Ranged.Barrels.Components.BatteryBarrelComponent-ammo-container: !type:ContainerSlot {}
-    type: ContainerContainer
 - uid: 4709
   type: PoweredSmallLight
   components:
@@ -57596,11 +57561,6 @@ entities:
   - pos: -8.305917,20.641687
     parent: 852
     type: Transform
-  - containers:
-      Content.Server.Weapon.Ranged.Barrels.Components.BoltActionBarrelComponent-ammo-container: !type:Container
-        ents: []
-      Content.Server.Weapon.Ranged.Barrels.Components.BoltActionBarrelComponent-chamber-container: !type:ContainerSlot {}
-    type: ContainerContainer
 - uid: 4892
   type: Windoor
   components:
@@ -59853,8 +59813,8 @@ entities:
     parent: 852
     type: Transform
   - containers:
-      Content.Server.Weapon.Ranged.Barrels.Components.MagazineBarrelComponent-chamber: !type:ContainerSlot {}
-      Content.Server.Weapon.Ranged.Barrels.Components.MagazineBarrelComponent-magazine: !type:ContainerSlot
+      gun-chamber: !type:ContainerSlot {}
+      gun-magazine: !type:ContainerSlot
         ent: 5146
     type: ContainerContainer
 - uid: 5149
@@ -88630,11 +88590,6 @@ entities:
   - pos: -5.3374166,26.472134
     parent: 852
     type: Transform
-  - containers:
-      Content.Server.Weapon.Ranged.Barrels.Components.BoltActionBarrelComponent-ammo-container: !type:Container
-        ents: []
-      Content.Server.Weapon.Ranged.Barrels.Components.BoltActionBarrelComponent-chamber-container: !type:ContainerSlot {}
-    type: ContainerContainer
 - uid: 8021
   type: Grille
   components:
