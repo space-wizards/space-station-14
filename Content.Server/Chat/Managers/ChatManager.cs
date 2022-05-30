@@ -100,10 +100,13 @@ namespace Content.Server.Chat.Managers
         public void DispatchGlobalStationAnnouncement(string message, string sender = "Central Command",
             bool playDefaultSound = true, Color? colorOverride = null)
         {
-            foreach (var station in _stationSystem.Stations)
+            var messageWrap = Loc.GetString("chat-manager-sender-announcement-wrap-message", ("sender", sender));
+            ChatMessageToAll(ChatChannel.Radio, message, messageWrap);
+            if (playDefaultSound)
             {
-                DispatchStationAnnouncement(station, message, sender, playDefaultSound, colorOverride);
+                SoundSystem.Play(Filter.Broadcast(), "/Audio/Announcements/announce.ogg", AudioParams.Default.WithVolume(-2f));
             }
+            _logs.Add(LogType.Chat, LogImpact.Low, $"Global station announcement from {sender}: {message}");
         }
 
         /// <summary>
@@ -143,7 +146,7 @@ namespace Content.Server.Chat.Managers
                 }
             }
 
-            _logs.Add(LogType.Chat, LogImpact.Low, $"Station Announcement from {sender}: {message}");
+            _logs.Add(LogType.Chat, LogImpact.Low, $"Station Announcement on {station} from {sender}: {message}");
         }
 
         public void DispatchServerMessage(IPlayerSession player, string message)

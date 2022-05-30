@@ -48,6 +48,12 @@ namespace Content.Server.Communications
         [DataField("canShuttle")]
         public bool CanCallShuttle = true;
 
+        /// <summary>
+        /// Announce on all grids (for nukies)
+        /// </summary>
+        [DataField("global")]
+        public bool AnnounceGlobal = false;
+
         public BoundUserInterface? UserInterface => Owner.GetUIOrNull(CommunicationsConsoleUiKey.Key);
     }
 }

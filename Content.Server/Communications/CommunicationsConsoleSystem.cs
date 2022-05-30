@@ -188,7 +188,14 @@ namespace Content.Server.Communications
             title ??= comp.AnnouncementDisplayName;
 
             msg += "\n" + Loc.GetString("comms-console-announcement-sent-by") + " " + author;
-            _chatManager.DispatchStationAnnouncement(uid, msg, title, colorOverride: comp.AnnouncementColor);
+            if (comp.AnnounceGlobal)
+            {
+                _chatManager.DispatchGlobalStationAnnouncement(msg, title, colorOverride: comp.AnnouncementColor);
+            }
+            else
+            {
+                _chatManager.DispatchStationAnnouncement(uid, msg, title, colorOverride: comp.AnnouncementColor);
+            }
         }
 
         private void OnCallShuttleMessage(EntityUid uid, CommunicationsConsoleComponent comp, CommunicationsConsoleCallEmergencyShuttleMessage message)
