@@ -51,11 +51,11 @@ public abstract partial class SharedGunSystem : EntitySystem
     {
         Sawmill = Logger.GetSawmill("gun");
         Sawmill.Level = LogLevel.Info;
-        SubscribeLocalEvent<NewGunComponent, ComponentGetState>(OnGetState);
+        SubscribeLocalEvent<GunComponent, ComponentGetState>(OnGetState);
         SubscribeAllEvent<RequestShootEvent>(OnShootRequest);
         SubscribeAllEvent<RequestStopShootEvent>(OnStopShootRequest);
-        SubscribeLocalEvent<NewGunComponent, ComponentHandleState>(OnHandleState);
-        SubscribeLocalEvent<NewGunComponent, MeleeAttackAttemptEvent>(OnGunMeleeAttempt);
+        SubscribeLocalEvent<GunComponent, ComponentHandleState>(OnHandleState);
+        SubscribeLocalEvent<GunComponent, MeleeAttackAttemptEvent>(OnGunMeleeAttempt);
 
         // Ammo providers
         InitializeBallistic();
@@ -65,13 +65,13 @@ public abstract partial class SharedGunSystem : EntitySystem
         InitializeRevolver();
 
         // Interactions
-        SubscribeLocalEvent<NewGunComponent, GetVerbsEvent<AlternativeVerb>>(OnAltVerb);
-        SubscribeLocalEvent<NewGunComponent, GetItemActionsEvent>(OnGetActions);
-        SubscribeLocalEvent<NewGunComponent, ExaminedEvent>(OnExamine);
-        SubscribeLocalEvent<NewGunComponent, CycleModeEvent>(OnCycleMode);
+        SubscribeLocalEvent<GunComponent, GetVerbsEvent<AlternativeVerb>>(OnAltVerb);
+        SubscribeLocalEvent<GunComponent, GetItemActionsEvent>(OnGetActions);
+        SubscribeLocalEvent<GunComponent, ExaminedEvent>(OnExamine);
+        SubscribeLocalEvent<GunComponent, CycleModeEvent>(OnCycleMode);
     }
 
-    private void OnGunMeleeAttempt(EntityUid uid, NewGunComponent component, ref MeleeAttackAttemptEvent args)
+    private void OnGunMeleeAttempt(EntityUid uid, GunComponent component, ref MeleeAttackAttemptEvent args)
     {
         args.Cancelled = true;
     }
@@ -94,10 +94,10 @@ public abstract partial class SharedGunSystem : EntitySystem
     private void OnStopShootRequest(RequestStopShootEvent ev)
     {
         // TODO validate input
-        StopShooting(Comp<NewGunComponent>(ev.Gun));
+        StopShooting(Comp<GunComponent>(ev.Gun));
     }
 
-    private void OnGetState(EntityUid uid, NewGunComponent component, ref ComponentGetState args)
+    private void OnGetState(EntityUid uid, GunComponent component, ref ComponentGetState args)
     {
         args.State = new NewGunComponentState
         {
@@ -109,7 +109,7 @@ public abstract partial class SharedGunSystem : EntitySystem
         };
     }
 
-    private void OnHandleState(EntityUid uid, NewGunComponent component, ref ComponentHandleState args)
+    private void OnHandleState(EntityUid uid, GunComponent component, ref ComponentHandleState args)
     {
         if (args.Current is not NewGunComponentState state) return;
 
@@ -121,7 +121,7 @@ public abstract partial class SharedGunSystem : EntitySystem
         component.AvailableModes = state.AvailableSelectiveFire;
     }
 
-    protected NewGunComponent? GetGun(EntityUid entity)
+    protected GunComponent? GetGun(EntityUid entity)
     {
         if (!EntityManager.TryGetComponent(entity, out SharedHandsComponent? hands) ||
             hands.ActiveHandEntity is not { } held)
@@ -129,7 +129,7 @@ public abstract partial class SharedGunSystem : EntitySystem
             return null;
         }
 
-        if (!EntityManager.TryGetComponent(held, out NewGunComponent? gun))
+        if (!EntityManager.TryGetComponent(held, out GunComponent? gun))
             return null;
 
         if (!_combatMode.IsInCombatMode(entity))
@@ -138,7 +138,7 @@ public abstract partial class SharedGunSystem : EntitySystem
         return gun;
     }
 
-    protected void StopShooting(NewGunComponent gun)
+    protected void StopShooting(GunComponent gun)
     {
         if (gun.ShotCounter == 0) return;
 
@@ -148,7 +148,7 @@ public abstract partial class SharedGunSystem : EntitySystem
         Dirty(gun);
     }
 
-    private void AttemptShoot(EntityUid user, NewGunComponent gun)
+    private void AttemptShoot(EntityUid user, GunComponent gun)
     {
         if (gun.FireRate <= 0f) return;
 
@@ -260,7 +260,7 @@ public abstract partial class SharedGunSystem : EntitySystem
 
     protected abstract void PlaySound(EntityUid gun, string? sound, EntityUid? user = null);
 
-    protected abstract void Popup(string message, NewGunComponent? gun, EntityUid? user);
+    protected abstract void Popup(string message, GunComponent? gun, EntityUid? user);
 
     /// <summary>
     /// Call this whenever the ammo count for a gun changes.

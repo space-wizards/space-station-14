@@ -142,7 +142,7 @@ public sealed partial class GunSystem : SharedGunSystem
                     }
                     else
                     {
-                        PlaySound(gun, Comp<NewGunComponent>(gun).SoundEmpty?.GetSound(), user);
+                        PlaySound(gun, Comp<GunComponent>(gun).SoundEmpty?.GetSound(), user);
                     }
 
                     if (cartridge.Owner.IsClientSide())
@@ -166,7 +166,7 @@ public sealed partial class GunSystem : SharedGunSystem
         SoundSystem.Play(Filter.Local(), sound, gun);
     }
 
-    protected override void Popup(string message, NewGunComponent? gun, EntityUid? user)
+    protected override void Popup(string message, GunComponent? gun, EntityUid? user)
     {
         if (gun == null || user == null || !Timing.IsFirstTimePredicted) return;
         PopupSystem.PopupEntity(message, gun.Owner, Filter.Entities(user.Value));

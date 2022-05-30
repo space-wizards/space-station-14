@@ -139,9 +139,6 @@
       - Impassable
       - BulletImpassable
   - type: Ammo
-    isProjectile: true
-    ammoVelocity: 20
-    caliber: Energy
   - type: Projectile
     damage:
       types:

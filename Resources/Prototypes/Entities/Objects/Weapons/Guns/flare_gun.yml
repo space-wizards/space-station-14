@@ -9,38 +9,20 @@
     layers:
       - state: base
         map: ["enum.RangedBarrelVisualLayers.Base"]
-      - state: bolt-closed
-        map: ["enum.RangedBarrelVisualLayers.Bolt"]
-  - type: Icon
-    sprite: Objects/Weapons/Guns/Shotguns/flaregun.rsi
-    state: icon
   - type: Item
     size: 12
     sprite: Objects/Weapons/Guns/Shotguns/flaregun.rsi
-  - type: RangedWeapon
-  - type: BoltActionBarrel
-    caliber: Shotgun
-    currentSelector: Single
-    allSelectors:
-    - Single
-    fillPrototype: ShellShotgunFlare
-    fireRate: 8.0
-    capacity: 1
-    minAngle: 25
-    maxAngle: 70
-    angleIncrease: 30
-    angleDecay: 30
-    ammoSpreadRatio: 0.85
+  - type: Gun
+    fireRate: 8
+    selectedMode: SemiAuto
+    availableModes:
+      - FullAuto
     soundGunshot:
       path: /Audio/Weapons/Guns/Gunshots/shotgun.ogg
-    soundEmpty:
-      path: /Audio/Weapons/Guns/Empty/empty.ogg
+  - type: BallisticAmmoProvider
+    whitelist:
+      tags:
+        - ShellShotgun
+    proto: ShellShotgunFlare
     soundInsert:
       path: /Audio/Weapons/Guns/MagIn/shotgun_insert.ogg
-    soundBoltOpen:
-      path: /Audio/Weapons/Guns/Cock/shotgun_open.ogg
-    soundBoltClosed:
-      path: /Audio/Weapons/Guns/Cock/shotgun_close.ogg
-  - type: Appearance
-    visuals:
-    - type: BarrelBoltVisualizer

@@ -15,7 +15,7 @@
   - type: Item
     size: 24
   - type: AmmoCounter
-  - type: NewGun
+  - type: Gun
     fireRate: 1
     autoCycle: false
     selectedMode: SemiAuto

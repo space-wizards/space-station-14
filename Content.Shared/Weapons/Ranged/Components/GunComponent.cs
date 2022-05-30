@@ -6,7 +6,7 @@ using Robust.Shared.Map;
 namespace Content.Shared.Weapons.Ranged;
 
 [RegisterComponent, NetworkedComponent, Virtual]
-public class NewGunComponent : Component
+public class GunComponent : Component
 {
     [ViewVariables(VVAccess.ReadWrite), DataField("soundGunshot")]
     public SoundSpecifier? SoundGunshot = new SoundPathSpecifier("/Audio/Weapons/Guns/Gunshots/smg.ogg");
@@ -17,8 +17,8 @@ public class NewGunComponent : Component
     /// <summary>
     /// Sound played when toggling the <see cref="SelectedMode"/> for this gun.
     /// </summary>
-    [ViewVariables(VVAccess.ReadWrite), DataField("soundSelective")]
-    public SoundSpecifier? SoundSelectiveToggle = new SoundPathSpecifier("/Audio/Weapons/Guns/Misc/selector.ogg");
+    [ViewVariables(VVAccess.ReadWrite), DataField("soundMode")]
+    public SoundSpecifier? SoundModeToggle = new SoundPathSpecifier("/Audio/Weapons/Guns/Misc/selector.ogg");
 
     /// <summary>
     /// Where the gun is being requested to shoot.

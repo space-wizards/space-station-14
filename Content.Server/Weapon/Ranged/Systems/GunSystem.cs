@@ -74,7 +74,7 @@ public sealed partial class GunSystem : SharedGunSystem
                     }
                     else
                     {
-                        PlaySound(gun, Comp<NewGunComponent>(gun).SoundEmpty?.GetSound(), user);
+                        PlaySound(gun, Comp<GunComponent>(gun).SoundEmpty?.GetSound(), user);
                     }
 
                     // Something like ballistic might want to leave it in the container still
@@ -176,7 +176,7 @@ public sealed partial class GunSystem : SharedGunSystem
         SoundSystem.Play(Filter.Pvs(gun).RemoveWhereAttachedEntity(e => e == user), sound, gun);
     }
 
-    protected override void Popup(string message, NewGunComponent? gun, EntityUid? user) {}
+    protected override void Popup(string message, GunComponent? gun, EntityUid? user) {}
 
     protected override void CreateEffect(EffectSystemMessage message, EntityUid? user = null)
     {

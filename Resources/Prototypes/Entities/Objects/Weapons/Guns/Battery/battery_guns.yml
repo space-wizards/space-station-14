@@ -6,7 +6,7 @@
   - type: Sprite
     netsync: false
   - type: AmmoCounter
-  - type: NewGun
+  - type: Gun
     fireRate: 1.5
     selectedMode: SemiAuto
     availableModes:
@@ -91,7 +91,7 @@
   - type: Item
     size: 24
     sprite: Objects/Weapons/Guns/Battery/cog.rsi
-  - type: NewGun
+  - type: Gun
     selectedMode: Safety
     availableModes:
     - Safety
@@ -120,7 +120,7 @@
   - type: Item
     size: 12
     sprite: Objects/Weapons/Guns/Battery/pulse_pistol.rsi
-  - type: NewGun
+  - type: Gun
     fireRate: 1
     selectedMode: Safety
     availableModes:
@@ -152,7 +152,7 @@
   - type: Item
     size: 24
     sprite: Objects/Weapons/Guns/Battery/pulse_carbine.rsi
-  - type: NewGun
+  - type: Gun
     selectedMode: Safety
     fireRate: 1.5
     availableModes:
@@ -185,7 +185,7 @@
   - type: Item
     size: 24
     sprite: Objects/Weapons/Guns/Battery/pulse_rifle.rsi
-  - type: NewGun
+  - type: Gun
     fireRate: 0.5
     soundGunshot:
       path: /Audio/Weapons/Guns/Gunshots/laser3.ogg
@@ -213,7 +213,7 @@
   - type: Item
     size: 24
     sprite: Objects/Weapons/Guns/Battery/laser_cannon.rsi
-  - type: NewGun
+  - type: Gun
     fireRate: 1
     soundGunshot:
       path: /Audio/Weapons/Guns/Gunshots/laser_cannon.ogg
@@ -241,7 +241,7 @@
   - type: Item
     size: 24
     sprite: Objects/Weapons/Guns/Battery/xray.rsi
-  - type: NewGun
+  - type: Gun
     fireRate: 0.5
     soundGunshot:
       path: /Audio/Weapons/Guns/Gunshots/laser3.ogg
@@ -282,7 +282,7 @@
     Slots:
     - Belt
     HeldPrefix: taser4
-  - type: NewGun
+  - type: Gun
     soundGunshot:
       path: /Audio/Weapons/Guns/Gunshots/taser.ogg
   - type: ProjectileBatteryAmmoProvider
@@ -315,7 +315,7 @@
   - type: Item
     size: 12
     sprite: Objects/Weapons/Guns/Battery/antiquelasergun.rsi
-  - type: NewGun
+  - type: Gun
     soundGunshot:
       path: /Audio/Weapons/Guns/Gunshots/laser_cannon.ogg
   - type: HitscanBatteryAmmoProvider

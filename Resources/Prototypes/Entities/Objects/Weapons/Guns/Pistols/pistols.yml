@@ -14,7 +14,7 @@
         map: ["enum.RangedBarrelVisualLayers.Mag"]
   - type: Item
     size: 10
-  - type: NewGun
+  - type: Gun
     fireRate: 8
     selectedMode: Safety
     availableModes:
@@ -89,7 +89,7 @@
   - type: Item
     size: 10
     sprite: Objects/Weapons/Guns/Pistols/hm_pistol.rsi
-  - type: NewGun
+  - type: Gun
     selectedMode: SemiAuto
     availableModes:
       - SemiAuto
@@ -110,7 +110,7 @@
   - type: Item
     size: 10
     sprite: Objects/Weapons/Guns/Pistols/mandella.rsi
-  - type: NewGun
+  - type: Gun
     soundGunshot:
       path: /Audio/Weapons/Guns/Gunshots/silenced.ogg
   - type: ItemSlots
@@ -144,5 +144,5 @@
   - type: Item
     size: 10
     sprite: Objects/Weapons/Guns/Pistols/mk58.rsi
-  - type: NewGun
+  - type: Gun
     fireRate: 5

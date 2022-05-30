@@ -9,7 +9,7 @@
     netsync: false
   - type: Item
     size: 24
-  - type: NewGun
+  - type: Gun
     fireRate: 8
     selectedMode: FullAuto
     availableModes:
@@ -53,7 +53,7 @@
   - type: Item
     size: 24
     sprite: Objects/Weapons/Guns/SMGs/atreides.rsi
-  - type: NewGun
+  - type: Gun
     fireRate: 10
   - type: Appearance
     visuals:
@@ -78,7 +78,7 @@
   - type: Item
     size: 24
     sprite: Objects/Weapons/Guns/SMGs/c20r.rsi
-  - type: NewGun
+  - type: Gun
   - type: ChamberMagazineAmmoProvider
     autoEject: true
   - type: Appearance
@@ -104,7 +104,7 @@
   - type: Item
     size: 24
     sprite: Objects/Weapons/Guns/SMGs/drozd.rsi
-  - type: NewGun
+  - type: Gun
     fireRate: 6
     selectedMode: FullAuto
     availableModes:
@@ -154,7 +154,7 @@
   - type: Item
     size: 24
     sprite: Objects/Weapons/Guns/SMGs/wt550.rsi
-  - type: NewGun
+  - type: Gun
     fireRate: 5
     selectedMode: Safety
     availableModes:
@@ -174,5 +174,19 @@
   description: An excellent fully automatic Heavy SMG.
   suffix: Non-Lethal
   components:
-  - type: MagazineBarrel
-    magFillPrototype: MagazineMagnumSmgRubber
+  - type: ItemSlots
+    slots:
+      gun-magazine:
+        name: GunMagazine
+        startingItem: MagazineSubMachineGunMagnumRubber
+        insertSound: /Audio/Weapons/Guns/MagIn/smg_magin.ogg
+        ejectSound: /Audio/Weapons/Guns/MagOut/smg_magout.ogg
+        whitelist:
+          tags:
+            - MagazineSubMachineGunMagnum
+      gun-chamber:
+        name: GunChamber
+        startingItem: CartridgeMagnumRubber
+        whitelist:
+          tags:
+            - CartridgeMagnum

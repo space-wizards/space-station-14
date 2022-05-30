@@ -6,8 +6,8 @@
   abstract: true
   components:
   - type: Tag
-      tags:
-        - MagazineRifle
+    tags:
+      - MagazineRifle
   - type: BallisticAmmoProvider
     whitelist:
       tags:

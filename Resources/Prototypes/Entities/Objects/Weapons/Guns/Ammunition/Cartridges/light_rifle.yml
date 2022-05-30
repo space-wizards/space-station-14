@@ -27,8 +27,6 @@
   components:
   - type: CartridgeAmmo
     proto: BulletLightRifle
-  - type: CartridgeAmmo
-    proto: BulletLightRifle
 
 - type: entity
   id: CartridgeLightRifleFlash

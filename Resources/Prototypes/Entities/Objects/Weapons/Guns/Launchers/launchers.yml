@@ -26,7 +26,7 @@
   - type: Item
     size: 24
     sprite: Objects/Weapons/Guns/Launchers/china_lake.rsi
-  - type: NewGun
+  - type: Gun
     selectedMode: Safety
     availableModes:
       - Safety
@@ -59,7 +59,7 @@
   - type: Item
     size: 24
     sprite: Objects/Weapons/Guns/Launchers/rocket.rsi
-  - type: NewGun
+  - type: Gun
     fireRate: 0.5
     soundGunshot:
       path: /Audio/Weapons/Guns/Gunshots/rpgfire.ogg
@@ -94,7 +94,7 @@
   - type: Item
     size: 24
     sprite: Objects/Weapons/Guns/Launchers/rocket.rsi
-  - type: NewGun
+  - type: Gun
     fireRate: 6
     soundGunshot:
       path: /Audio/Weapons/Guns/Gunshots/rpgfire.ogg

@@ -32,7 +32,7 @@ public abstract class SharedRevolverAmmoProviderComponent : AmmoProviderComponen
 
     public bool?[] Chambers = Array.Empty<bool?>();
 
-    [DataField("fillProto", customTypeSerializer:typeof(PrototypeIdSerializer<EntityPrototype>))]
+    [DataField("proto", customTypeSerializer:typeof(PrototypeIdSerializer<EntityPrototype>))]
     public string? FillPrototype = "CartridgeMagnum";
 
     [ViewVariables, DataField("soundEject")]

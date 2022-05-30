@@ -11,7 +11,7 @@
   - type: Item
     size: 24
   - type: AmmoCounter
-  - type: NewGun
+  - type: Gun
     fireRate: 2
     selectedMode: SemiAuto
     availableModes:
@@ -48,7 +48,7 @@
   - type: Item
     sprite: Objects/Weapons/Guns/Shotguns/bojevic.rsi
     size: 24
-  - type: NewGun
+  - type: Gun
     fireRate: 3
     selectedMode: FullAuto
     availableModes:
@@ -86,7 +86,7 @@
   - type: Item
     size: 24
     sprite: Objects/Weapons/Guns/Shotguns/db_shotgun.rsi
-  - type: NewGun
+  - type: Gun
     fireRate: 8
 
 - type: entity
