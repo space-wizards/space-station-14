@@ -27,8 +27,11 @@ public sealed partial class GunSystem
         EntityUid? ent = null;
 
         // TODO: Combine with TakeAmmo
-        if (component.Entities.TryPop(out var existing))
+        if (component.Entities.Count > 0)
         {
+            var existing = component.Entities[^1];
+            component.Entities.RemoveAt(component.Entities.Count - 1);
+
             component.Container.Remove(existing);
             EnsureComp<AmmoComponent>(existing);
         }

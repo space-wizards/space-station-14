@@ -36,7 +36,7 @@ public abstract partial class SharedGunSystem
 
         if (GetBallisticShots(component) >= component.Capacity) return;
 
-        component.Entities.Push(args.Used);
+        component.Entities.Add(args.Used);
         component.Container.Insert(args.Used);
         // Not predicted so
         PlaySound(uid, component.SoundInsert?.GetSound(), args.User);
@@ -110,7 +110,7 @@ public abstract partial class SharedGunSystem
 
         foreach (var ent in state.Entities)
         {
-            component.Entities.Push(ent);
+            component.Entities.Add(ent);
         }
     }
 
@@ -140,13 +140,17 @@ public abstract partial class SharedGunSystem
         {
             if (!component.Cycled) break;
 
-            if (component.Entities.TryPeek(out var entity))
+            EntityUid entity;
+
+            if (component.Entities.Count > 0)
             {
+                entity = component.Entities[^1];
+
                 // Leave the entity as is if it doesn't auto cycle
                 // TODO: Suss this out with NewAmmoComponent as I don't think it gets removed from container properly
                 if (HasComp<CartridgeAmmoComponent>(entity) && component.AutoCycle)
                 {
-                    component.Entities.Pop();
+                    component.Entities.RemoveAt(component.Entities.Count - 1);
                     component.Container.Remove(entity);
                 }
 
@@ -163,7 +167,7 @@ public abstract partial class SharedGunSystem
                 {
                     if (!entity.IsClientSide())
                     {
-                        component.Entities.Push(entity);
+                        component.Entities.Add(entity);
                         component.Container.Insert(entity);
                     }
                     else
@@ -200,7 +204,7 @@ public abstract partial class SharedGunSystem
     private sealed class BallisticAmmoProviderComponentState : ComponentState
     {
         public int UnspawnedCount;
-        public Stack<EntityUid> Entities = default!;
+        public List<EntityUid> Entities = default!;
         public bool Cycled;
     }
 }

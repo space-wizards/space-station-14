@@ -27,9 +27,10 @@ public abstract class SharedRevolverAmmoProviderComponent : AmmoProviderComponen
     [ViewVariables, DataField("capacity")]
     public int Capacity = 6;
 
-    [DataField("ammoSlots", readOnly: true)]
+    [DataField("ammoSlots")]
     public EntityUid?[] AmmoSlots = Array.Empty<EntityUid?>();
 
+    [DataField("chambers")]
     public bool?[] Chambers = Array.Empty<bool?>();
 
     [DataField("proto", customTypeSerializer:typeof(PrototypeIdSerializer<EntityPrototype>))]

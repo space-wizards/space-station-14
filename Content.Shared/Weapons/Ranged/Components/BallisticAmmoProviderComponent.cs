@@ -30,8 +30,9 @@ public sealed class BallisticAmmoProviderComponent : Component
 
     public Container Container = default!;
 
+    // TODO: Make this use stacks when the typeserializer is done.
     [ViewVariables, DataField("entities")]
-    public Stack<EntityUid> Entities = new();
+    public List<EntityUid> Entities = new();
 
     /// <summary>
     /// Will the ammoprovider automatically cycle through rounds or does it need doing manually.
