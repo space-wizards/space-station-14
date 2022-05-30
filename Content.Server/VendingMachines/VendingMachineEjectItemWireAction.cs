@@ -1,4 +1,3 @@
-using Content.Server.VendingMachines.Systems;
 using Content.Server.Wires;
 using Content.Shared.VendingMachines;
 using Content.Shared.Wires;

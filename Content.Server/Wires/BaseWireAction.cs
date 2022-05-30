@@ -1,4 +1,5 @@
 using Content.Server.Power.Components;
+using Content.Server.Power.EntitySystems;
 using Content.Shared.Wires;
 
 namespace Content.Server.Wires;
@@ -17,7 +18,7 @@ public abstract class BaseWireAction : IWireAction
     {
         EntityManager = IoCManager.Resolve<IEntityManager>();
 
-        WiresSystem = EntitySystem.Get<WiresSystem>();
+        WiresSystem = EntityManager.EntitySysManager.GetEntitySystem<WiresSystem>();
     }
 
     public virtual bool AddWire(Wire wire, int count) => count == 1;
@@ -38,14 +39,8 @@ public abstract class BaseWireAction : IWireAction
     ///     Utility function to check if this given entity is powered.
     /// </summary>
     /// <returns>true if powered, false otherwise</returns>
-    public bool IsPowered(EntityUid uid)
+    protected bool IsPowered(EntityUid uid)
     {
-        if (!EntityManager.TryGetComponent<ApcPowerReceiverComponent>(uid, out var power)
-            || power.PowerDisabled) // there's some kind of race condition here?
-        {
-            return false;
-        }
-
-        return power.Powered;
+        return WiresSystem.IsPowered(uid, EntityManager);
     }
 }

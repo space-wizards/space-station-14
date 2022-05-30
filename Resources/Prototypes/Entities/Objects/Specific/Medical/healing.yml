@@ -268,6 +268,19 @@
         - ReagentId: Spaceacillin
           Quantity: 15
 
+- type: entity
+  name: ipecac syringe
+  parent: Syringe
+  id: SyringeIpecac
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      injector:
+        maxVol: 15
+        reagents:
+        - ReagentId: Ipecac
+          Quantity: 15
+
 #this is where all the syringes are so i didn't know where to put it
 - type: entity
   name: corpium syringe

@@ -4,6 +4,7 @@ namespace Content.Server.Disposal.Tube.Components
 {
     [RegisterComponent]
     [ComponentReference(typeof(IDisposalTubeComponent))]
+    [ComponentReference(typeof(DisposalTubeComponent))]
     public sealed class DisposalBendComponent : DisposalTubeComponent
     {
         [DataField("sideDegrees")]

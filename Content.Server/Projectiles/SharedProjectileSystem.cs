@@ -21,7 +21,7 @@ namespace Content.Server.Projectiles
     public sealed class ProjectileSystem : SharedProjectileSystem
     {
         [Dependency] private readonly DamageableSystem _damageableSystem = default!;
-        [Dependency] private readonly AdminLogSystem _adminLogSystem = default!;
+        [Dependency] private readonly IAdminLogManager _adminLogger = default!;
         [Dependency] private readonly CameraRecoilSystem _cameraRecoil = default!;
         [Dependency] private readonly GunSystem _guns = default!;
 
@@ -46,7 +46,7 @@ namespace Content.Server.Projectiles
 
             if (modifiedDamage is not null && EntityManager.EntityExists(component.Shooter))
             {
-                _adminLogSystem.Add(LogType.BulletHit,
+                _adminLogger.Add(LogType.BulletHit,
                     HasComp<ActorComponent>(otherEntity) ? LogImpact.Extreme : LogImpact.High,
                     $"Projectile {ToPrettyString(component.Owner):projectile} shot by {ToPrettyString(component.Shooter):user} hit {ToPrettyString(otherEntity):target} and dealt {modifiedDamage.Total:damage} damage");
             }

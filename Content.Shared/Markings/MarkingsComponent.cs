@@ -1,4 +1,6 @@
 using Content.Shared.CharacterAppearance;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.List;
 
 namespace Content.Shared.Markings
 {
@@ -32,7 +34,7 @@ namespace Content.Shared.Markings
         [DataField("required", required: true)]
         public bool Required = false;
         // Default markings for this layer.
-        [DataField("defaultMarkings")]
+        [DataField("defaultMarkings", customTypeSerializer:typeof(PrototypeIdListSerializer<MarkingPrototype>))]
         public List<string> DefaultMarkings = new();
 
         public static Dictionary<MarkingCategories, MarkingPoints> CloneMarkingPointDictionary(Dictionary<MarkingCategories, MarkingPoints> self)
