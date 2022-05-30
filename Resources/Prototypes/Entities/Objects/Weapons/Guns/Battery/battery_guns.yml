@@ -125,7 +125,7 @@
     fireCost: 50
 
 - type: entity
-  name: PDW-10 pulse pistol
+  name: Pulse pistol
   parent: BatteryGunSmall
   id: PulsePistolPdw
   description: A state of the art energy pistol favoured as a sidearm by the NT-ERT operatives.
@@ -205,7 +205,7 @@
       zeroVisible: true
 
 - type: entity
-  name: DEAC-12 pulse carbine
+  name: Pulse carbine
   parent: BatteryGunMedium
   id: PulseCarbineDeac
   description: A high tech energy carbine favoured by the NT-ERT operatives.
@@ -235,10 +235,10 @@
       startingItem: PowerCellMediumHigh
 
 - type: entity
-  name: destroyer pulse rifle
+  name: Pulse rifle
   parent: BatteryGunMedium
   id: PulseRifleDeathSquad
-  description: A weapon that fully lives up to its name. 
+  description: A weapon almost as infamous as its wielders.. 
   components:
   - type: Sprite
     netsync: false
