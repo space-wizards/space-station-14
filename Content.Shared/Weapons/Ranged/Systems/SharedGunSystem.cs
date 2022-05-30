@@ -32,23 +32,23 @@ public abstract partial class SharedGunSystem : EntitySystem
     [Dependency] protected readonly IRobustRandom Random = default!;
     [Dependency] protected readonly ISharedAdminLogManager Logs = default!;
     [Dependency] protected readonly DamageableSystem Damageable = default!;
-    [Dependency] private readonly ItemSlotsSystem _slots = default!;
+    [Dependency] private   readonly ItemSlotsSystem _slots = default!;
     [Dependency] protected readonly SharedActionsSystem Actions = default!;
-    [Dependency] private readonly SharedCombatModeSystem _combatMode = default!;
+    [Dependency] private   readonly SharedCombatModeSystem _combatMode = default!;
     [Dependency] protected readonly SharedContainerSystem Containers = default!;
     [Dependency] protected readonly SharedPhysicsSystem Physics = default!;
     [Dependency] protected readonly SharedPopupSystem PopupSystem = default!;
 
     protected ISawmill Sawmill = default!;
 
-    protected const float MuzzleFlashLifetime = 1f;
-    protected const float InteractNextFire = 0.3f;
-    protected const double SafetyNextFire = 0.5;
-    public const float EjectOffset = 0.4f;
-    public string AmmoExamineColor = "yellow";
-    public string FireRateExamineColor = "yellow";
-    public string SafetyExamineColor = "lightgreen";
-    public string ModeExamineColor = "cyan";
+    private const float MuzzleFlashLifetime = 1f;
+    private const float InteractNextFire = 0.3f;
+    private const double SafetyNextFire = 0.5;
+    private const float EjectOffset = 0.4f;
+    protected const string AmmoExamineColor = "yellow";
+    protected const string FireRateExamineColor = "yellow";
+    protected const string SafetyExamineColor = "lightgreen";
+    protected const string ModeExamineColor = "cyan";
 
     public override void Initialize()
     {

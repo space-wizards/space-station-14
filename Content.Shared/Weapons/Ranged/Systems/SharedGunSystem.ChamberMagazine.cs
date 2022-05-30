@@ -1,5 +1,6 @@
 using System.Diagnostics.CodeAnalysis;
 using Content.Shared.Containers.ItemSlots;
+using Content.Shared.Examine;
 using Content.Shared.Interaction;
 using Content.Shared.Verbs;
 using Content.Shared.Weapons.Ranged.Components;
@@ -18,6 +19,13 @@ public abstract partial class SharedGunSystem
         SubscribeLocalEvent<ChamberMagazineAmmoProviderComponent, GetVerbsEvent<Verb>>(OnMagazineVerb);
         SubscribeLocalEvent<ChamberMagazineAmmoProviderComponent, ItemSlotChangedEvent>(OnMagazineSlotChange);
         SubscribeLocalEvent<ChamberMagazineAmmoProviderComponent, ActivateInWorldEvent>(OnMagazineActivate);
+        SubscribeLocalEvent<ChamberMagazineAmmoProviderComponent, ExaminedEvent>(OnChamberMagazineExamine);
+    }
+
+    private void OnChamberMagazineExamine(EntityUid uid, ChamberMagazineAmmoProviderComponent component, ExaminedEvent args)
+    {
+        var (count, _) = GetChamberMagazineCountCapacity(component);
+        args.PushMarkup($"It has [color={AmmoExamineColor}]{count}[/color] shots remaining.");
     }
 
     private bool TryTakeChamberEntity(EntityUid uid, [NotNullWhen(true)] out EntityUid? entity)
@@ -44,6 +52,13 @@ public abstract partial class SharedGunSystem
         }
 
         return slot.ContainedEntity;
+    }
+
+    protected (int, int) GetChamberMagazineCountCapacity(ChamberMagazineAmmoProviderComponent component)
+    {
+        var count = GetChamberEntity(component.Owner) != null ? 1 : 0;
+        var (magCount, magCapacity) = GetMagazineCountCapacity(component);
+        return (count + magCount, magCapacity);
     }
 
     private bool TryInsertChamber(EntityUid uid, EntityUid ammo)
@@ -100,8 +115,10 @@ public abstract partial class SharedGunSystem
 
         if (TryComp<AppearanceComponent>(magEnt, out var magAppearance))
         {
-            count += magAppearance.GetData<int>(AmmoVisuals.AmmoCount);
-            capacity += magAppearance.GetData<int>(AmmoVisuals.AmmoMax);
+            magAppearance.TryGetData<int>(AmmoVisuals.AmmoCount, out var addCount);
+            magAppearance.TryGetData<int>(AmmoVisuals.AmmoMax, out var addCapacity);
+            count += addCount;
+            capacity += addCapacity;
         }
 
         FinaliseMagazineTakeAmmo(uid, component, args, count, capacity, appearance);

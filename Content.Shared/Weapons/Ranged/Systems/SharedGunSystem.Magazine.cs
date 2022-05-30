@@ -1,11 +1,10 @@
 using Content.Shared.Containers.ItemSlots;
+using Content.Shared.Examine;
 using Content.Shared.Interaction;
 using Content.Shared.Verbs;
 using Content.Shared.Weapons.Ranged.Components;
 using Content.Shared.Weapons.Ranged.Events;
-using Robust.Shared.Audio;
 using Robust.Shared.Containers;
-using Robust.Shared.Player;
 
 namespace Content.Shared.Weapons.Ranged.Systems;
 
@@ -19,6 +18,13 @@ public abstract partial class SharedGunSystem
         SubscribeLocalEvent<MagazineAmmoProviderComponent, GetVerbsEvent<Verb>>(OnMagazineVerb);
         SubscribeLocalEvent<MagazineAmmoProviderComponent, ItemSlotChangedEvent>(OnMagazineSlotChange);
         SubscribeLocalEvent<MagazineAmmoProviderComponent, ActivateInWorldEvent>(OnMagazineActivate);
+        SubscribeLocalEvent<MagazineAmmoProviderComponent, ExaminedEvent>(OnMagazineExamine);
+    }
+
+    private void OnMagazineExamine(EntityUid uid, MagazineAmmoProviderComponent component, ExaminedEvent args)
+    {
+        var (count, _) = GetMagazineCountCapacity(component);
+        args.PushMarkup($"It has [color={AmmoExamineColor}]{count}[/color] shots remaining.");
     }
 
     private void OnMagazineActivate(EntityUid uid, MagazineAmmoProviderComponent component, ActivateInWorldEvent args)
@@ -37,6 +43,23 @@ public abstract partial class SharedGunSystem
         UpdateAmmoCount(uid);
         if (!TryComp<AppearanceComponent>(uid, out var appearance)) return;
         appearance.SetData(AmmoVisuals.MagLoaded, GetMagazineEntity(uid) != null);
+    }
+
+    protected (int, int) GetMagazineCountCapacity(MagazineAmmoProviderComponent component)
+    {
+        var count = 0;
+        var capacity = 1;
+        var magEnt = GetMagazineEntity(component.Owner);
+
+        if (magEnt != null)
+        {
+            var ev = new GetAmmoCountEvent();
+            RaiseLocalEvent(magEnt.Value, ref ev);
+            count += ev.Count;
+            capacity += ev.Capacity;
+        }
+
+        return (count, capacity);
     }
 
     protected EntityUid? GetMagazineEntity(EntityUid uid)
@@ -78,8 +101,10 @@ public abstract partial class SharedGunSystem
 
         if (TryComp<AppearanceComponent>(magEntity, out var magAppearance))
         {
-            count = magAppearance.GetData<int>(AmmoVisuals.AmmoCount);
-            capacity = magAppearance.GetData<int>(AmmoVisuals.AmmoMax);
+            magAppearance.TryGetData<int>(AmmoVisuals.AmmoCount, out var addCount);
+            magAppearance.TryGetData<int>(AmmoVisuals.AmmoMax, out var addCapacity);
+            count += addCount;
+            capacity += addCapacity;
         }
 
         FinaliseMagazineTakeAmmo(uid, component, args, count, capacity, appearance);
@@ -112,8 +137,10 @@ public abstract partial class SharedGunSystem
 
         if (TryComp<AppearanceComponent>(magEnt, out var magAppearance))
         {
-            count += magAppearance.GetData<int>(AmmoVisuals.AmmoCount);
-            capacity += magAppearance.GetData<int>(AmmoVisuals.AmmoMax);
+            magAppearance.TryGetData<int>(AmmoVisuals.AmmoCount, out var addCount);
+            magAppearance.TryGetData<int>(AmmoVisuals.AmmoMax, out var addCapacity);
+            count += addCount;
+            capacity += addCapacity;
         }
 
         UpdateMagazineAppearance(appearance, true, count, capacity);

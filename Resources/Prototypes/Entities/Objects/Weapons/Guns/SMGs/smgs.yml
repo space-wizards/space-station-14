@@ -9,6 +9,7 @@
     netsync: false
   - type: Item
     size: 24
+  - type: AmmoCounter
   - type: Gun
     fireRate: 8
     selectedMode: FullAuto

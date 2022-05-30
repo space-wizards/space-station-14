@@ -95,7 +95,7 @@ public sealed partial class GunSystem : SharedGunSystem
         if (_inputSystem.CmdStates.GetState(EngineKeyFunctions.Use) != BoundKeyState.Down)
         {
             if (gun.ShotCounter != 0)
-                EntityManager.RaisePredictiveEvent(new RequestStopShootEvent() { Gun = gun.Owner });
+                EntityManager.RaisePredictiveEvent(new RequestStopShootEvent { Gun = gun.Owner });
             return;
         }
 
@@ -105,6 +105,8 @@ public sealed partial class GunSystem : SharedGunSystem
         var mousePos = _eyeManager.ScreenToMap(_inputManager.MouseScreenPosition);
         EntityCoordinates coordinates;
 
+        // Bro why would I want a ternary here
+        // ReSharper disable once ConvertIfStatementToConditionalTernaryExpression
         if (MapManager.TryFindGridAt(mousePos, out var grid))
         {
             coordinates = EntityCoordinates.FromMap(grid.GridEntityId, mousePos, EntityManager);
@@ -116,7 +118,7 @@ public sealed partial class GunSystem : SharedGunSystem
 
         Sawmill.Debug($"Sending shoot request tick {Timing.CurTick} / {Timing.CurTime}");
 
-        EntityManager.RaisePredictiveEvent(new RequestShootEvent()
+        EntityManager.RaisePredictiveEvent(new RequestShootEvent
         {
             Coordinates = coordinates,
             Gun = gun.Owner,
