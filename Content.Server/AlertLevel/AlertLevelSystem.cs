@@ -22,7 +22,8 @@ public sealed class AlertLevelSystem : EntitySystem
     public override void Initialize()
     {
         SubscribeLocalEvent<StationInitializedEvent>(OnStationInitialize);
-        SubscribeLocalEvent<PrototypesReloadedEventArgs>(OnPrototypeReload);
+
+        _prototypeManager.PrototypesReloaded += OnPrototypeReload;
     }
 
     public override void Update(float time)
