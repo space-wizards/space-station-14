@@ -93,6 +93,8 @@ public sealed class AlertLevelSystem : EntitySystem
                 SetLevel(comp.Owner, defaultLevel, true, true, true);
             }
         }
+
+        RaiseLocalEvent(new AlertLevelPrototypeReloadedEvent());
     }
 
     public float GetAlertLevelDelay(EntityUid station, AlertLevelComponent? alert = null)
@@ -186,6 +188,9 @@ public sealed class AlertLevelSystem : EntitySystem
 }
 
 public sealed class AlertLevelDelayFinishedEvent : EntityEventArgs
+{}
+
+public sealed class AlertLevelPrototypeReloadedEvent : EntityEventArgs
 {}
 
 public sealed class AlertLevelChangedEvent : EntityEventArgs

@@ -95,7 +95,12 @@ namespace Content.Client.Communications.UI
 
             if (alerts == null)
             {
-                AlertLevelButton.AddItem(Loc.GetString($"alert-level-{currentAlert}"));
+                var name = currentAlert;
+                if (Loc.TryGetString($"alert-level-{currentAlert}", out var locName))
+                {
+                    name = locName;
+                }
+                AlertLevelButton.AddItem(name);
                 AlertLevelButton.SetItemMetadata(AlertLevelButton.ItemCount - 1, currentAlert);
             }
             else
