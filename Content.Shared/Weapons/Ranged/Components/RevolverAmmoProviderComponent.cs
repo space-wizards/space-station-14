@@ -27,6 +27,9 @@ public sealed class RevolverAmmoProviderComponent : AmmoProviderComponent
     [ViewVariables, DataField("capacity")]
     public int Capacity = 6;
 
+    // Like BallisticAmmoProvider we defer spawning until necessary
+    // AmmoSlots is the instantiated ammo and Chambers is the unspawned ammo (that may or may not have been shot).
+
     [DataField("ammoSlots")]
     public EntityUid?[] AmmoSlots = Array.Empty<EntityUid?>();
 
