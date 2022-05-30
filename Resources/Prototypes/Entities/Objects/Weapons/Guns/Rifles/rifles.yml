@@ -44,9 +44,9 @@
     sprite: Objects/Weapons/Guns/Rifles/ak.rsi
     layers:
       - state: base
-        map: ["enum.RangedBarrelVisualLayers.Base"]
+        map: ["enum.GunVisualLayers.Base"]
       - state: mag-0
-        map: ["enum.RangedBarrelVisualLayers.Mag"]
+        map: ["enum.GunVisualLayers.Mag"]
   - type: Item
     size: 24
     sprite: Objects/Weapons/Guns/Rifles/ak.rsi
@@ -87,9 +87,9 @@
     sprite: Objects/Weapons/Guns/Rifles/carbine.rsi
     layers:
       - state: base
-        map: ["enum.RangedBarrelVisualLayers.Base"]
+        map: ["enum.GunVisualLayers.Base"]
       - state: mag-0
-        map: ["enum.RangedBarrelVisualLayers.Mag"]
+        map: ["enum.GunVisualLayers.Mag"]
   - type: Item
     size: 24
     sprite: Objects/Weapons/Guns/Rifles/carbine.rsi
@@ -126,9 +126,9 @@
     sprite: Objects/Weapons/Guns/Rifles/wintermute.rsi
     layers:
       - state: base
-        map: ["enum.RangedBarrelVisualLayers.Base"]
+        map: ["enum.GunVisualLayers.Base"]
       - state: mag-0
-        map: ["enum.RangedBarrelVisualLayers.Mag"]
+        map: ["enum.GunVisualLayers.Mag"]
   - type: Item
     size: 24
     sprite: Objects/Weapons/Guns/Rifles/wintermute.rsi

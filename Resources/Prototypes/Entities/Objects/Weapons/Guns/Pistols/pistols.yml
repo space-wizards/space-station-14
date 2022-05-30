@@ -9,9 +9,9 @@
     netsync: false
     layers:
       - state: base
-        map: ["enum.RangedBarrelVisualLayers.Base"]
+        map: ["enum.GunVisualLayers.Base"]
       - state: mag-0
-        map: ["enum.RangedBarrelVisualLayers.Mag"]
+        map: ["enum.GunVisualLayers.Mag"]
   - type: Item
     size: 10
   - type: Gun
@@ -85,7 +85,7 @@
     sprite: Objects/Weapons/Guns/Pistols/hm_pistol.rsi
     layers:
       - state: base
-        map: ["enum.RangedBarrelVisualLayers.Base"]
+        map: ["enum.GunVisualLayers.Base"]
   - type: Item
     size: 10
     sprite: Objects/Weapons/Guns/Pistols/hm_pistol.rsi
@@ -104,9 +104,9 @@
     sprite: Objects/Weapons/Guns/Pistols/mandella.rsi
     layers:
     - state: base
-      map: ["enum.RangedBarrelVisualLayers.Base"]
+      map: ["enum.GunVisualLayers.Base"]
     - state: mag-0
-      map: ["enum.RangedBarrelVisualLayers.Mag"]
+      map: ["enum.GunVisualLayers.Mag"]
   - type: Item
     size: 10
     sprite: Objects/Weapons/Guns/Pistols/mandella.rsi
@@ -140,7 +140,7 @@
     sprite: Objects/Weapons/Guns/Pistols/mk58.rsi
     layers:
     - state: base
-      map: ["enum.RangedBarrelVisualLayers.Base"]
+      map: ["enum.GunVisualLayers.Base"]
   - type: Item
     size: 10
     sprite: Objects/Weapons/Guns/Pistols/mk58.rsi

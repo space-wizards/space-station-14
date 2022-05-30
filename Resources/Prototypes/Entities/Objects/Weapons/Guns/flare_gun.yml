@@ -8,7 +8,7 @@
     sprite: Objects/Weapons/Guns/Shotguns/flaregun.rsi
     layers:
       - state: base
-        map: ["enum.RangedBarrelVisualLayers.Base"]
+        map: ["enum.GunVisualLayers.Base"]
   - type: Item
     size: 12
     sprite: Objects/Weapons/Guns/Shotguns/flaregun.rsi

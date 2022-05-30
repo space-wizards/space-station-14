@@ -16,9 +16,9 @@
     sprite: Objects/Weapons/Guns/Ammunition/Magazine/Shotgun/m12.rsi
     layers:
     - state: base
-      map: ["enum.RangedBarrelVisualLayers.Base"]
+      map: ["enum.GunVisualLayers.Base"]
     - state: mag-1
-      map: ["enum.RangedBarrelVisualLayers.Mag"]
+      map: ["enum.GunVisualLayers.Mag"]
   - type: Appearance
     visuals:
     - type: MagVisualizer
@@ -36,9 +36,9 @@
   - type: Sprite
     layers:
     - state: pellets
-      map: ["enum.RangedBarrelVisualLayers.Base"]
+      map: ["enum.GunVisualLayers.Base"]
     - state: mag-1
-      map: ["enum.RangedBarrelVisualLayers.Mag"]
+      map: ["enum.GunVisualLayers.Mag"]
 
 - type: entity
   id: MagazineShotgunBeanbag
@@ -50,9 +50,9 @@
   - type: Sprite
     layers:
     - state: beanbag
-      map: ["enum.RangedBarrelVisualLayers.Base"]
+      map: ["enum.GunVisualLayers.Base"]
     - state: mag-1
-      map: ["enum.RangedBarrelVisualLayers.Mag"]
+      map: ["enum.GunVisualLayers.Mag"]
 
 - type: entity
   id: MagazineShotgunSlug
@@ -64,9 +64,9 @@
   - type: Sprite
     layers:
     - state: slug
-      map: ["enum.RangedBarrelVisualLayers.Base"]
+      map: ["enum.GunVisualLayers.Base"]
     - state: mag-1
-      map: ["enum.RangedBarrelVisualLayers.Mag"]
+      map: ["enum.GunVisualLayers.Mag"]
 
 - type: entity
   id: MagazineShotgunIncendiary
@@ -78,6 +78,6 @@
   - type: Sprite
     layers:
     - state: slug
-      map: ["enum.RangedBarrelVisualLayers.Base"]
+      map: ["enum.GunVisualLayers.Base"]
     - state: mag-1
-      map: ["enum.RangedBarrelVisualLayers.Mag"]
+      map: ["enum.GunVisualLayers.Mag"]

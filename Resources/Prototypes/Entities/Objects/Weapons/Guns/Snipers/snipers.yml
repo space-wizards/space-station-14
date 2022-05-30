@@ -9,9 +9,7 @@
     netsync: false
     layers:
     - state: base
-      map: ["enum.RangedBarrelVisualLayers.Base"]
-    - state: bolt-closed
-      map: ["enum.RangedBarrelVisualLayers.Bolt"]
+      map: ["enum.GunVisualLayers.Base"]
   - type: Item
     size: 24
   - type: AmmoCounter

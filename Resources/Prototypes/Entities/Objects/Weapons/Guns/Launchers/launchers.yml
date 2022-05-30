@@ -20,9 +20,7 @@
     sprite: Objects/Weapons/Guns/Launchers/china_lake.rsi
     layers:
       - state: base
-        map: ["enum.RangedBarrelVisualLayers.Base"]
-      - state: bolt-closed
-        map: ["enum.RangedBarrelVisualLayers.Bolt"]
+        map: ["enum.GunVisualLayers.Base"]
   - type: Item
     size: 24
     sprite: Objects/Weapons/Guns/Launchers/china_lake.rsi
@@ -53,9 +51,9 @@
     sprite: Objects/Weapons/Guns/Launchers/rocket.rsi
     layers:
       - state: base
-        map: ["enum.RangedBarrelVisualLayers.Base"]
+        map: ["enum.GunVisualLayers.Base"]
       - state: mag-0
-        map: ["enum.RangedBarrelVisualLayers.Mag"]
+        map: ["enum.GunVisualLayers.Mag"]
   - type: Item
     size: 24
     sprite: Objects/Weapons/Guns/Launchers/rocket.rsi
@@ -88,9 +86,9 @@
     sprite: Objects/Weapons/Guns/Launchers/rocket.rsi
     layers:
       - state: base
-        map: ["enum.RangedBarrelVisualLayers.Base"]
+        map: ["enum.GunVisualLayers.Base"]
       - state: mag-0
-        map: ["enum.RangedBarrelVisualLayers.Mag"]
+        map: ["enum.GunVisualLayers.Mag"]
   - type: Item
     size: 24
     sprite: Objects/Weapons/Guns/Launchers/rocket.rsi

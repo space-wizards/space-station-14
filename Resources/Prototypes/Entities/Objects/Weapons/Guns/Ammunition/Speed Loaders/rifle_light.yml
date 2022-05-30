@@ -13,9 +13,9 @@
 #    sprite: Objects/Weapons/Guns/Ammunition/SpeedLoaders/LRifle/l_rifle_sl.rsi
 #    layers:
 #    - state: base
-#      map: ["enum.RangedBarrelVisualLayers.Base"]
+#      map: ["enum.GunVisualLayers.Base"]
 #    - state: mag-5
-#      map: ["enum.RangedBarrelVisualLayers.Mag"]
+#      map: ["enum.GunVisualLayers.Mag"]
 #  - type: Appearance
 #    visuals:
 #    - type: MagVisualizer

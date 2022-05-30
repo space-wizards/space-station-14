@@ -16,9 +16,9 @@
     sprite: Objects/Weapons/Guns/Ammunition/Magazine/LightRifle/light_rifle_mag.rsi
     layers:
     - state: base
-      map: ["enum.RangedBarrelVisualLayers.Base"]
+      map: ["enum.GunVisualLayers.Base"]
     - state: mag-1
-      map: ["enum.RangedBarrelVisualLayers.Mag"]
+      map: ["enum.GunVisualLayers.Mag"]
   - type: Appearance
     visuals:
     - type: MagVisualizer
@@ -57,9 +57,9 @@
   - type: Sprite
     layers:
     - state: red
-      map: ["enum.RangedBarrelVisualLayers.Base"]
+      map: ["enum.GunVisualLayers.Base"]
     - state: mag-1
-      map: ["enum.RangedBarrelVisualLayers.Mag"]
+      map: ["enum.GunVisualLayers.Mag"]
 
 - type: entity
   id: MagazineLightRifleFlash
@@ -71,9 +71,9 @@
   - type: Sprite
     layers:
     - state: flash
-      map: ["enum.RangedBarrelVisualLayers.Base"]
+      map: ["enum.GunVisualLayers.Base"]
     - state: mag-1
-      map: ["enum.RangedBarrelVisualLayers.Mag"]
+      map: ["enum.GunVisualLayers.Mag"]
 
 - type: entity
   id: MagazineLightRifleHighVelocity
@@ -85,9 +85,9 @@
   - type: Sprite
     layers:
     - state: high_velocity
-      map: ["enum.RangedBarrelVisualLayers.Base"]
+      map: ["enum.GunVisualLayers.Base"]
     - state: mag-1
-      map: ["enum.RangedBarrelVisualLayers.Mag"]
+      map: ["enum.GunVisualLayers.Mag"]
 
 - type: entity
   id: MagazineLightRiflePractice
@@ -99,9 +99,9 @@
   - type: Sprite
     layers:
     - state: practice
-      map: ["enum.RangedBarrelVisualLayers.Base"]
+      map: ["enum.GunVisualLayers.Base"]
     - state: mag-1
-      map: ["enum.RangedBarrelVisualLayers.Mag"]
+      map: ["enum.GunVisualLayers.Mag"]
 
 - type: entity
   id: MagazineLightRifleRubber
@@ -113,9 +113,9 @@
   - type: Sprite
     layers:
     - state: rubber
-      map: ["enum.RangedBarrelVisualLayers.Base"]
+      map: ["enum.GunVisualLayers.Base"]
     - state: mag-1
-      map: ["enum.RangedBarrelVisualLayers.Mag"]
+      map: ["enum.GunVisualLayers.Mag"]
 
 - type: entity
   id: MagazineLightRifleMaxim

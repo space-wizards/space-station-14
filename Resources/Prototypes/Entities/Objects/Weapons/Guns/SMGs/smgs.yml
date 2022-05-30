@@ -47,9 +47,9 @@
     sprite: Objects/Weapons/Guns/SMGs/atreides.rsi
     layers:
     - state: base
-      map: ["enum.RangedBarrelVisualLayers.Base"]
+      map: ["enum.GunVisualLayers.Base"]
     - state: mag-0
-      map: ["enum.RangedBarrelVisualLayers.Mag"]
+      map: ["enum.GunVisualLayers.Mag"]
   - type: Item
     size: 24
     sprite: Objects/Weapons/Guns/SMGs/atreides.rsi
@@ -72,9 +72,9 @@
     sprite: Objects/Weapons/Guns/SMGs/c20r.rsi
     layers:
     - state: base
-      map: ["enum.RangedBarrelVisualLayers.Base"]
+      map: ["enum.GunVisualLayers.Base"]
     - state: mag-0
-      map: ["enum.RangedBarrelVisualLayers.Mag"]
+      map: ["enum.GunVisualLayers.Mag"]
   - type: Item
     size: 24
     sprite: Objects/Weapons/Guns/SMGs/c20r.rsi
@@ -98,9 +98,9 @@
     sprite: Objects/Weapons/Guns/SMGs/drozd.rsi
     layers:
       - state: base
-        map: ["enum.RangedBarrelVisualLayers.Base"]
+        map: ["enum.GunVisualLayers.Base"]
       - state: mag-0
-        map: ["enum.RangedBarrelVisualLayers.Mag"]
+        map: ["enum.GunVisualLayers.Mag"]
   - type: Item
     size: 24
     sprite: Objects/Weapons/Guns/SMGs/drozd.rsi
@@ -142,14 +142,14 @@
     sprite: Objects/Weapons/Guns/SMGs/wt550.rsi
     layers:
       - state: base
-        map: ["enum.RangedBarrelVisualLayers.Base"]
+        map: ["enum.GunVisualLayers.Base"]
       - state: base-unshaded
-        map: ["enum.RangedBarrelVisualLayers.BaseUnshaded"]
+        map: ["enum.GunVisualLayers.BaseUnshaded"]
         shader: unshaded
       - state: mag-0
-        map: ["enum.RangedBarrelVisualLayers.Mag"]
+        map: ["enum.GunVisualLayers.Mag"]
       - state: mag-unshaded-0
-        map: ["enum.RangedBarrelVisualLayers.MagUnshaded"]
+        map: ["enum.GunVisualLayers.MagUnshaded"]
         shader: unshaded
   - type: Item
     size: 24

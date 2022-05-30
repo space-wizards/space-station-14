@@ -17,9 +17,9 @@
     sprite: Objects/Weapons/Guns/Ammunition/Magazine/Pistol/pistol_mag.rsi
     layers:
     - state: base
-      map: ["enum.RangedBarrelVisualLayers.Base"]
+      map: ["enum.GunVisualLayers.Base"]
     - state: mag-1
-      map: ["enum.RangedBarrelVisualLayers.Mag"]
+      map: ["enum.GunVisualLayers.Mag"]
   - type: Appearance
     visuals:
     - type: MagVisualizer
@@ -46,9 +46,9 @@
     sprite: Objects/Weapons/Guns/Ammunition/Magazine/Pistol/pistol_high_capacity_mag.rsi
     layers:
     - state: base
-      map: ["enum.RangedBarrelVisualLayers.Base"]
+      map: ["enum.GunVisualLayers.Base"]
     - state: mag-1
-      map: ["enum.RangedBarrelVisualLayers.Mag"]
+      map: ["enum.GunVisualLayers.Mag"]
   - type: Appearance
     visuals:
     - type: MagVisualizer
@@ -75,9 +75,9 @@
     sprite: Objects/Weapons/Guns/Ammunition/Magazine/Pistol/smg_mag.rsi
     layers:
     - state: base
-      map: ["enum.RangedBarrelVisualLayers.Base"]
+      map: ["enum.GunVisualLayers.Base"]
     - state: mag-1
-      map: ["enum.RangedBarrelVisualLayers.Mag"]
+      map: ["enum.GunVisualLayers.Mag"]
   - type: Appearance
     visuals:
     - type: MagVisualizer
@@ -103,9 +103,9 @@
     netsync: false
     layers:
       - state: base
-        map: ["enum.RangedBarrelVisualLayers.Base"]
+        map: ["enum.GunVisualLayers.Base"]
       - state: mag-unshaded-1
-        map: ["enum.RangedBarrelVisualLayers.MagUnshaded"]
+        map: ["enum.GunVisualLayers.MagUnshaded"]
         shader: unshaded
   - type: Appearance
     visuals:
@@ -128,9 +128,9 @@
     sprite: Objects/Weapons/Guns/Ammunition/Magazine/Pistol/calico_mag.rsi
     layers:
     - state: base
-      map: ["enum.RangedBarrelVisualLayers.Base"]
+      map: ["enum.GunVisualLayers.Base"]
     - state: mag-1
-      map: ["enum.RangedBarrelVisualLayers.Mag"]
+      map: ["enum.GunVisualLayers.Mag"]
   - type: Appearance
     visuals:
     - type: MagVisualizer
@@ -148,9 +148,9 @@
   - type: Sprite
     layers:
     - state: red
-      map: ["enum.RangedBarrelVisualLayers.Base"]
+      map: ["enum.GunVisualLayers.Base"]
     - state: mag-1
-      map: ["enum.RangedBarrelVisualLayers.Mag"]
+      map: ["enum.GunVisualLayers.Mag"]
 
 - type: entity
   id: MagazinePistolFlash
@@ -162,9 +162,9 @@
   - type: Sprite
     layers:
     - state: flash
-      map: ["enum.RangedBarrelVisualLayers.Base"]
+      map: ["enum.GunVisualLayers.Base"]
     - state: mag-1
-      map: ["enum.RangedBarrelVisualLayers.Mag"]
+      map: ["enum.GunVisualLayers.Mag"]
 
 - type: entity
   id: MagazinePistolHighVelocity
@@ -176,9 +176,9 @@
   - type: Sprite
     layers:
     - state: high_velocity
-      map: ["enum.RangedBarrelVisualLayers.Base"]
+      map: ["enum.GunVisualLayers.Base"]
     - state: mag-1
-      map: ["enum.RangedBarrelVisualLayers.Mag"]
+      map: ["enum.GunVisualLayers.Mag"]
 
 - type: entity
   id: MagazinePistolPractice
@@ -190,9 +190,9 @@
   - type: Sprite
     layers:
     - state: practice
-      map: ["enum.RangedBarrelVisualLayers.Base"]
+      map: ["enum.GunVisualLayers.Base"]
     - state: mag-1
-      map: ["enum.RangedBarrelVisualLayers.Mag"]
+      map: ["enum.GunVisualLayers.Mag"]
 
 - type: entity
   id: MagazinePistolRubber
@@ -204,9 +204,9 @@
   - type: Sprite
     layers:
     - state: rubber
-      map: ["enum.RangedBarrelVisualLayers.Base"]
+      map: ["enum.GunVisualLayers.Base"]
     - state: mag-1
-      map: ["enum.RangedBarrelVisualLayers.Mag"]
+      map: ["enum.GunVisualLayers.Mag"]
 
 - type: entity
   id: MagazineHighCapacityPistol
@@ -218,9 +218,9 @@
   - type: Sprite
     layers:
     - state: red
-      map: ["enum.RangedBarrelVisualLayers.Base"]
+      map: ["enum.GunVisualLayers.Base"]
     - state: mag-1
-      map: ["enum.RangedBarrelVisualLayers.Mag"]
+      map: ["enum.GunVisualLayers.Mag"]
 
 - type: entity
   id: MagazineHighCapacityPistolHighVelocity
@@ -232,9 +232,9 @@
   - type: Sprite
     layers:
     - state: high_velocity
-      map: ["enum.RangedBarrelVisualLayers.Base"]
+      map: ["enum.GunVisualLayers.Base"]
     - state: mag-1
-      map: ["enum.RangedBarrelVisualLayers.Mag"]
+      map: ["enum.GunVisualLayers.Mag"]
 
 - type: entity
   id: MagazineHighCapacityPistolPractice
@@ -246,9 +246,9 @@
   - type: Sprite
     layers:
     - state: practice
-      map: ["enum.RangedBarrelVisualLayers.Base"]
+      map: ["enum.GunVisualLayers.Base"]
     - state: mag-1
-      map: ["enum.RangedBarrelVisualLayers.Mag"]
+      map: ["enum.GunVisualLayers.Mag"]
 
 - type: entity
   id: MagazineHighCapacityPistolRubber
@@ -260,9 +260,9 @@
   - type: Sprite
     layers:
     - state: rubber
-      map: ["enum.RangedBarrelVisualLayers.Base"]
+      map: ["enum.GunVisualLayers.Base"]
     - state: mag-1
-      map: ["enum.RangedBarrelVisualLayers.Mag"]
+      map: ["enum.GunVisualLayers.Mag"]
 
 - type: entity
   id: MagazinePistolSubMachineGun
@@ -281,9 +281,9 @@
   - type: Sprite
     layers:
     - state: red
-      map: ["enum.RangedBarrelVisualLayers.Base"]
+      map: ["enum.GunVisualLayers.Base"]
     - state: mag-1
-      map: ["enum.RangedBarrelVisualLayers.Mag"]
+      map: ["enum.GunVisualLayers.Mag"]
 
 - type: entity
   id: MagazineSubMachineGunPistolFlash
@@ -295,9 +295,9 @@
   - type: Sprite
     layers:
     - state: flash
-      map: ["enum.RangedBarrelVisualLayers.Base"]
+      map: ["enum.GunVisualLayers.Base"]
     - state: mag-1
-      map: ["enum.RangedBarrelVisualLayers.Mag"]
+      map: ["enum.GunVisualLayers.Mag"]
 
 - type: entity
   id: MagazineSubMachineGunPistolHighVelocity
@@ -309,9 +309,9 @@
   - type: Sprite
     layers:
     - state: high_velocity
-      map: ["enum.RangedBarrelVisualLayers.Base"]
+      map: ["enum.GunVisualLayers.Base"]
     - state: mag-1
-      map: ["enum.RangedBarrelVisualLayers.Mag"]
+      map: ["enum.GunVisualLayers.Mag"]
 
 - type: entity
   id: MagazineSubMachineGunPistolPractice
@@ -323,9 +323,9 @@
   - type: Sprite
     layers:
     - state: practice
-      map: ["enum.RangedBarrelVisualLayers.Base"]
+      map: ["enum.GunVisualLayers.Base"]
     - state: mag-1
-      map: ["enum.RangedBarrelVisualLayers.Mag"]
+      map: ["enum.GunVisualLayers.Mag"]
 
 - type: entity
   id: MagazineSubMachineGunPistolRubber
@@ -337,6 +337,6 @@
   - type: Sprite
     layers:
     - state: rubber
-      map: ["enum.RangedBarrelVisualLayers.Base"]
+      map: ["enum.GunVisualLayers.Base"]
     - state: mag-1
-      map: ["enum.RangedBarrelVisualLayers.Mag"]
+      map: ["enum.GunVisualLayers.Mag"]

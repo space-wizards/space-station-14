@@ -30,7 +30,7 @@
     sprite: Objects/Weapons/Guns/HMGs/minigun.rsi
     layers:
     - state: base
-      map: ["enum.RangedBarrelVisualLayers.Base"]
+      map: ["enum.GunVisualLayers.Base"]
   - type: Item
     size: 24
     sprite: Objects/Weapons/Guns/HMGs/minigun.rsi

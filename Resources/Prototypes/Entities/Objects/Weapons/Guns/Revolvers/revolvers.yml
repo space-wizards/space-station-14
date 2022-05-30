@@ -37,9 +37,9 @@
     sprite: Objects/Weapons/Guns/Revolvers/deckard.rsi
     layers:
     - state: base
-      map: ["enum.RangedBarrelVisualLayers.Base"]
+      map: ["enum.GunVisualLayers.Base"]
     - state: mag-unshaded-3
-      map: ["enum.RangedBarrelVisualLayers.MagUnshaded"]
+      map: ["enum.GunVisualLayers.MagUnshaded"]
       shader: unshaded
   - type: Item
     size: 12

@@ -500,7 +500,7 @@
     sprite: Objects/Fun/toys.rsi
     layers:
     - state: base
-      map: ["enum.RangedBarrelVisualLayers.Base"]
+      map: ["enum.GunVisualLayers.Base"]
   - type: Item
     size: 24
     sprite: Objects/Fun/toys.rsi

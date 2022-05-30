@@ -11,9 +11,9 @@
 #    netsync: false
 #    layers:
 #    - state: base
-#      map: ["enum.RangedBarrelVisualLayers.Base"]
+#      map: ["enum.GunVisualLayers.Base"]
 #    - state: mag-6
-#      map: ["enum.RangedBarrelVisualLayers.Mag"]
+#      map: ["enum.GunVisualLayers.Mag"]
 #  - type: Appearance
 #    visuals:
 #    - type: MagVisualizer
