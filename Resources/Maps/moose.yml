@@ -94945,7 +94945,7 @@ entities:
     parent: 61
     type: Transform
 - uid: 9109
-  type: MagazineSRifle
+  type: MagazineRifle
   components:
   - parent: 9110
     type: Transform
@@ -94976,7 +94976,7 @@ entities:
       cellslot_cell_container: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 9112
-  type: MagazineSRifleRubber
+  type: MagazineRifleRubber
   components:
   - pos: 23.71704,3.28771
     parent: 61

@@ -51860,7 +51860,7 @@ entities:
     parent: 106
     type: Transform
 - uid: 4099
-  type: BoxMagazinePistolSmgTopMounted
+  type: BoxMagazinePistolSubMachineGunTopMounted
   components:
   - pos: -28.557178,32.641815
     parent: 106
@@ -88146,7 +88146,7 @@ entities:
     parent: 106
     type: Transform
 - uid: 7441
-  type: MagazinePistolSmgTopMounted
+  type: MagazinePistolSubMachineGunTopMounted
   components:
   - parent: 7442
     type: Transform
@@ -137533,7 +137533,7 @@ entities:
     parent: 106
     type: Transform
 - uid: 12219
-  type: MagazinePistolSmgTopMounted
+  type: MagazinePistolSubMachineGunTopMounted
   components:
   - parent: 4139
     type: Transform
@@ -145597,7 +145597,7 @@ entities:
     parent: 106
     type: Transform
 - uid: 13132
-  type: BoxMagazinePistolSmgTopMounted
+  type: BoxMagazinePistolSubMachineGunTopMounted
   components:
   - pos: -42.486713,29.514296
     parent: 106

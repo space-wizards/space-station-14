@@ -8248,7 +8248,7 @@ entities:
         ent: 2496
     type: ContainerContainer
 - uid: 476
-  type: MagazineSRifle
+  type: MagazineRifle
   components:
   - parent: 475
     type: Transform
@@ -8261,7 +8261,7 @@ entities:
         ents: []
     type: ContainerContainer
 - uid: 477
-  type: MagazineSRifle
+  type: MagazineRifle
   components:
   - pos: 9.5618105,-18.345078
     parent: 47
@@ -8275,7 +8275,7 @@ entities:
         ents: []
     type: ContainerContainer
 - uid: 478
-  type: MagazineSRifle
+  type: MagazineRifle
   components:
   - pos: 9.7805605,-18.470078
     parent: 47
@@ -25721,7 +25721,7 @@ entities:
         ents: []
     type: ContainerContainer
 - uid: 2496
-  type: MagazineSRifle
+  type: MagazineRifle
   components:
   - parent: 475
     type: Transform

@@ -119742,7 +119742,7 @@ entities:
         ent: 11938
     type: ContainerContainer
 - uid: 11142
-  type: MagazinePistolSmgTopMounted
+  type: MagazinePistolSubMachineGunTopMounted
   components:
   - parent: 11141
     type: Transform
@@ -119755,7 +119755,7 @@ entities:
         ents: []
     type: ContainerContainer
 - uid: 11143
-  type: MagazinePistolSmgTopMounted
+  type: MagazinePistolSubMachineGunTopMounted
   components:
   - pos: 45.39132,24.15609
     parent: 2
@@ -119769,7 +119769,7 @@ entities:
         ents: []
     type: ContainerContainer
 - uid: 11144
-  type: MagazinePistolSmgTopMounted
+  type: MagazinePistolSubMachineGunTopMounted
   components:
   - pos: 45.688194,24.171715
     parent: 2
@@ -126758,7 +126758,7 @@ entities:
         ents: []
     type: ContainerContainer
 - uid: 11938
-  type: MagazinePistolSmgTopMounted
+  type: MagazinePistolSubMachineGunTopMounted
   components:
   - parent: 11141
     type: Transform

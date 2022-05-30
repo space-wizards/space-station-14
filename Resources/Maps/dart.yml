@@ -122,7 +122,7 @@ entities:
         ents: []
     type: ContainerContainer
 - uid: 6
-  type: MagazineSRifleHV
+  type: MagazineRifleHighVelocity
   components:
   - parent: 75
     type: Transform
@@ -942,7 +942,7 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 28
-  type: MagazineSRifleHV
+  type: MagazineRifleHighVelocity
   components:
   - parent: 170
     type: Transform
@@ -984,7 +984,7 @@ entities:
     parent: 17
     type: Transform
 - uid: 32
-  type: MagazineSRifleHV
+  type: MagazineRifleHighVelocity
   components:
   - parent: 491
     type: Transform
@@ -1011,7 +1011,7 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 35
-  type: MagazineSRifleHV
+  type: MagazineRifleHighVelocity
   components:
   - parent: 289
     type: Transform
@@ -1024,7 +1024,7 @@ entities:
         ents: []
     type: ContainerContainer
 - uid: 36
-  type: MagazineSRifle
+  type: MagazineRifle
   components:
   - parent: 29
     type: Transform
@@ -1050,7 +1050,7 @@ entities:
         ent: 574
     type: ContainerContainer
 - uid: 38
-  type: MagazineSRifleHV
+  type: MagazineRifleHighVelocity
   components:
   - parent: 9
     type: Transform
@@ -1093,7 +1093,7 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 42
-  type: MagazineSRifleHV
+  type: MagazineRifleHighVelocity
   components:
   - parent: 37
     type: Transform
@@ -1256,7 +1256,7 @@ entities:
     parent: 17
     type: Transform
 - uid: 60
-  type: MagazineSRifleHV
+  type: MagazineRifleHighVelocity
   components:
   - parent: 29
     type: Transform
@@ -1663,7 +1663,7 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 105
-  type: MagazineSRifleHV
+  type: MagazineRifleHighVelocity
   components:
   - parent: 289
     type: Transform
@@ -1780,7 +1780,7 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 119
-  type: MagazineSRifleHV
+  type: MagazineRifleHighVelocity
   components:
   - parent: 192
     type: Transform
@@ -1989,7 +1989,7 @@ entities:
     parent: 17
     type: Transform
 - uid: 148
-  type: MagazineSRifleHV
+  type: MagazineRifleHighVelocity
   components:
   - parent: 3
     type: Transform
@@ -2093,7 +2093,7 @@ entities:
     parent: 17
     type: Transform
 - uid: 159
-  type: MagazineSRifleHV
+  type: MagazineRifleHighVelocity
   components:
   - parent: 192
     type: Transform
@@ -2697,7 +2697,7 @@ entities:
         ents: []
     type: ContainerContainer
 - uid: 220
-  type: MagazineSRifleHV
+  type: MagazineRifleHighVelocity
   components:
   - parent: 227
     type: Transform
@@ -3273,7 +3273,7 @@ entities:
     parent: 17
     type: Transform
 - uid: 277
-  type: MagazineSRifleHV
+  type: MagazineRifleHighVelocity
   components:
   - parent: 261
     type: Transform
@@ -3286,7 +3286,7 @@ entities:
         ents: []
     type: ContainerContainer
 - uid: 278
-  type: MagazineSRifleHV
+  type: MagazineRifleHighVelocity
   components:
   - parent: 261
     type: Transform
@@ -3299,7 +3299,7 @@ entities:
         ents: []
     type: ContainerContainer
 - uid: 279
-  type: MagazineSRifleHV
+  type: MagazineRifleHighVelocity
   components:
   - parent: 289
     type: Transform
@@ -3312,7 +3312,7 @@ entities:
         ents: []
     type: ContainerContainer
 - uid: 280
-  type: MagazineSRifleHV
+  type: MagazineRifleHighVelocity
   components:
   - parent: 261
     type: Transform
@@ -4124,7 +4124,7 @@ entities:
       cellslot_cell_container: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 372
-  type: MagazineSRifleHV
+  type: MagazineRifleHighVelocity
   components:
   - parent: 3
     type: Transform
@@ -4232,7 +4232,7 @@ entities:
       cellslot_cell_container: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 386
-  type: MagazineSRifleHV
+  type: MagazineRifleHighVelocity
   components:
   - parent: 3
     type: Transform
@@ -4634,7 +4634,7 @@ entities:
       cellslot_cell_container: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 437
-  type: MagazineSRifleHV
+  type: MagazineRifleHighVelocity
   components:
   - parent: 192
     type: Transform
@@ -4863,7 +4863,7 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 470
-  type: MagazineSRifleHV
+  type: MagazineRifleHighVelocity
   components:
   - parent: 95
     type: Transform
@@ -5089,7 +5089,7 @@ entities:
   - supplyRampPosition: 2643.3308
     type: PowerSupplier
 - uid: 494
-  type: MagazineSRifleHV
+  type: MagazineRifleHighVelocity
   components:
   - parent: 491
     type: Transform
@@ -5621,7 +5621,7 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 556
-  type: MagazineSRifleHV
+  type: MagazineRifleHighVelocity
   components:
   - parent: 227
     type: Transform
@@ -5698,7 +5698,7 @@ entities:
     parent: 17
     type: Transform
 - uid: 565
-  type: MagazineSRifleHV
+  type: MagazineRifleHighVelocity
   components:
   - parent: 227
     type: Transform
@@ -5719,7 +5719,7 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 567
-  type: MagazineSRifleHV
+  type: MagazineRifleHighVelocity
   components:
   - parent: 491
     type: Transform
@@ -5769,7 +5769,7 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 574
-  type: MagazineSRifle
+  type: MagazineRifle
   components:
   - parent: 37
     type: Transform
@@ -5780,7 +5780,7 @@ entities:
         ents: []
     type: ContainerContainer
 - uid: 575
-  type: MagazineSRifle
+  type: MagazineRifle
   components:
   - parent: 9
     type: Transform
@@ -5791,7 +5791,7 @@ entities:
         ents: []
     type: ContainerContainer
 - uid: 576
-  type: MagazineSRifle
+  type: MagazineRifle
   components:
   - parent: 75
     type: Transform
@@ -5802,7 +5802,7 @@ entities:
         ents: []
     type: ContainerContainer
 - uid: 577
-  type: MagazineSRifle
+  type: MagazineRifle
   components:
   - parent: 95
     type: Transform
@@ -5813,7 +5813,7 @@ entities:
         ents: []
     type: ContainerContainer
 - uid: 579
-  type: MagazineSRifle
+  type: MagazineRifle
   components:
   - parent: 170
     type: Transform

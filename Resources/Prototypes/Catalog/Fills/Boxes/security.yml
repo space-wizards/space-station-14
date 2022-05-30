@@ -216,7 +216,7 @@
 - type: entity
   name: box of .20 rifle (practice) magazines
   parent: BoxCardboard
-  id: BoxMagazineSRiflePractice
+  id: BoxMagazineRiflePractice
   description: A box full of .20 rifle (practice) magazines.
   components:
     - type: StorageFill

@@ -15967,7 +15967,7 @@ entities:
         ent: 933
     type: ContainerContainer
 - uid: 933
-  type: MagazineSRifle
+  type: MagazineRifle
   components:
   - parent: 932
     type: Transform
@@ -15978,7 +15978,7 @@ entities:
         ents: []
     type: ContainerContainer
 - uid: 934
-  type: MagazineSRifleRubber
+  type: MagazineRifleRubber
   components:
   - pos: 11.5,18.5
     parent: 30
@@ -15988,7 +15988,7 @@ entities:
         ents: []
     type: ContainerContainer
 - uid: 935
-  type: MagazineSRifleFlash
+  type: MagazineRifleFlash
   components:
   - pos: 11.5,18.5
     parent: 30

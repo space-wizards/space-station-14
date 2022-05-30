@@ -369,7 +369,7 @@ entities:
   - fixtures: []
     type: Fixtures
 - uid: 24
-  type: MagazinePistolSmgTopMounted
+  type: MagazinePistolSubMachineGunTopMounted
   components:
   - pos: -14.24543,19.569979
     parent: 852
@@ -21078,7 +21078,7 @@ entities:
       Toggle: []
     type: SignalReceiver
 - uid: 1273
-  type: MagazineSRifleRubber
+  type: MagazineRifleRubber
   components:
   - pos: -14.356142,20.594921
     parent: 852
@@ -59826,7 +59826,7 @@ entities:
     parent: 852
     type: Transform
 - uid: 5146
-  type: MagazineSRifle
+  type: MagazineRifle
   components:
   - parent: 5148
     type: Transform
@@ -59837,7 +59837,7 @@ entities:
         ents: []
     type: ContainerContainer
 - uid: 5147
-  type: MagazineSRifleRubber
+  type: MagazineRifleRubber
   components:
   - pos: -14.590517,20.594921
     parent: 852
@@ -59898,7 +59898,7 @@ entities:
     parent: 852
     type: Transform
 - uid: 5155
-  type: MagazinePistolSmgTopMounted
+  type: MagazinePistolSubMachineGunTopMounted
   components:
   - pos: -14.24543,19.569979
     parent: 852
@@ -59918,7 +59918,7 @@ entities:
         ents: []
     type: ContainerContainer
 - uid: 5157
-  type: MagazinePistolSmgTopMounted
+  type: MagazinePistolSubMachineGunTopMounted
   components:
   - parent: 1152
     type: Transform
@@ -98346,4 +98346,4 @@ entities:
     parent: 852
     type: Transform
   - sprite: Structures/Machines/VendingMachines/cigs.rsi
-    typ
+    type: Sprite
