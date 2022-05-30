@@ -2992,7 +2992,6 @@ Entries:
   time: '2022-05-29T16:18:16.0000000+00:00'
 - author: youarereadingthis
   changes:
-  - {message: Examine text for Substations+SMES for when they are unanchored and thus
-      cannot be connected to the power net., type: Add}
+  - {message: Examine text for anchors., type: Add}
   id: 1625
   time: '2022-05-30T08:55:54.0000000+00:00'
