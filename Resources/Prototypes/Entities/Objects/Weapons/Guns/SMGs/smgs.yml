@@ -14,7 +14,7 @@
     selectedMode: FullAuto
     availableModes:
     - SemiAuto
-    - Automatic
+    - FullAuto
     soundGunshot:
       path: /Audio/Weapons/Guns/Gunshots/smg.ogg
     soundRack:

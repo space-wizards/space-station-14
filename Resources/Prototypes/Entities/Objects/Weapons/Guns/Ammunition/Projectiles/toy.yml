@@ -26,7 +26,8 @@
     deleteOnSpawn: true
   - type: Sprite
     sprite: Objects/Fun/toys.rsi
-    state: foamdart
+    layers:
+      - state: foamdart
   - type: Projectile
     damage:
       types:

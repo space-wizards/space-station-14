@@ -34,8 +34,8 @@
 - type: latheRecipe
   id: ShellShotgunBeanbag
   icon:
-    sprite: Objects/Weapons/Guns/Ammunition/Casings/shotgun_shell_beanbag.rsi
-    state: base
+    sprite: Objects/Weapons/Guns/Ammunition/Casings/shotgun_shell.rsi
+    state: beanbag
   result: ShellShotgunBeanbag
   completetime: 2
   materials:
@@ -140,8 +140,8 @@
 - type: latheRecipe
   id: ShellShotgunFlare
   icon:
-    sprite: Objects/Weapons/Guns/Ammunition/Casings/shotgun_shell_flare.rsi
-    state: base
+    sprite: Objects/Weapons/Guns/Ammunition/Casings/shotgun_shell.rsi
+    state: flare
   result: ShellShotgunFlare
   completetime: 2
   materials:
@@ -151,8 +151,8 @@
 - type: latheRecipe
   id: ShellTranquilizer
   icon:
-    sprite: Objects/Weapons/Guns/Ammunition/Casings/shotgun_shell_practice.rsi
-    state: base
+    sprite: Objects/Weapons/Guns/Ammunition/Casings/shotgun_shell.rsi
+    state: practice
   result: ShellTranquilizer
   completetime: 4
   materials:
@@ -163,8 +163,8 @@
 - type: latheRecipe
   id: ShellShotgunFlash
   icon:
-    sprite: Objects/Weapons/Guns/Ammunition/Casings/shotgun_shell_flash.rsi
-    state: base
+    sprite: Objects/Weapons/Guns/Ammunition/Casings/shotgun_shell.rsi
+    state: flash
   result: ShellShotgunFlash
   completetime: 2
   materials:

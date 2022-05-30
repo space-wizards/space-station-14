@@ -28,7 +28,8 @@
   parent: BaseShellShotgun
   components:
   - type: Sprite
-    sprite: Objects/Weapons/Guns/Ammunition/Casings/shotgun_shell_beanbag.rsi
+    sprite: Objects/Weapons/Guns/Ammunition/Casings/shotgun_shell.rsi
+    state: beanbag
   - type: CartridgeAmmo
     proto: PelletShotgunBeanbag
     count: 1
@@ -39,7 +40,8 @@
   parent: BaseShellShotgun
   components:
   - type: Sprite
-    sprite: Objects/Weapons/Guns/Ammunition/Casings/shotgun_shell_slug.rsi
+    sprite: Objects/Weapons/Guns/Ammunition/Casings/shotgun_shell.rsi
+    state: slug
   - type: CartridgeAmmo
     proto: PelletShotgunSlug
     count: 4
@@ -51,7 +53,8 @@
   parent: BaseShellShotgun
   components:
   - type: Sprite
-    sprite: Objects/Weapons/Guns/Ammunition/Casings/shotgun_shell_flare.rsi
+    sprite: Objects/Weapons/Guns/Ammunition/Casings/shotgun_shell.rsi
+    state: flare
   - type: CartridgeAmmo
     proto: PelletShotgunFlare
     count: 1
@@ -72,7 +75,8 @@
   parent: BaseShellShotgun
   components:
   - type: Sprite
-    sprite: Objects/Weapons/Guns/Ammunition/Casings/shotgun_shell_flash.rsi
+    sprite: Objects/Weapons/Guns/Ammunition/Casings/shotgun_shell.rsi
+    state: flash
   - type: CartridgeAmmo
     proto: PelletShotgunFlash
 
@@ -82,7 +86,8 @@
   parent: BaseShellShotgun
   components:
   - type: Sprite
-    sprite: Objects/Weapons/Guns/Ammunition/Casings/shotgun_shell_incendiary.rsi
+    sprite: Objects/Weapons/Guns/Ammunition/Casings/shotgun_shell.rsi
+    state: incendiary
   - type: CartridgeAmmo
     proto: PelletShotgunIncendiary
 
@@ -92,7 +97,8 @@
   parent: BaseShellShotgun
   components:
   - type: Sprite
-    sprite: Objects/Weapons/Guns/Ammunition/Casings/shotgun_shell_practice.rsi
+    sprite: Objects/Weapons/Guns/Ammunition/Casings/shotgun_shell.rsi
+    state: practice
   - type: CartridgeAmmo
     proto: PelletShotgun
 
@@ -102,7 +108,8 @@
   parent: BaseShellShotgun
   components:
   - type: Sprite
-    sprite: Objects/Weapons/Guns/Ammunition/Casings/shotgun_shell_practice.rsi
+    sprite: Objects/Weapons/Guns/Ammunition/Casings/shotgun_shell.rsi
+    state: practice
   - type: CartridgeAmmo
     proto: PelletShotgunTranquilizer
     count: 1

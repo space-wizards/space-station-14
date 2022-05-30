@@ -73,7 +73,7 @@
 - type: entity
   id: MagazineMagnumFlash
   name: "Lamia magazine (.40 magnum flash)"
-  parent: MagazineMagnumBase
+  parent: BaseMagazineMagnum
   components:
   - type: BallisticAmmoProvider
     proto: CartridgeMagnumFlash
@@ -87,7 +87,7 @@
 - type: entity
   id: MagazineMagnumHighVelocity
   name: "Lamia magazine (.40 magnum high-velocity)"
-  parent: MagazineMagnumBase
+  parent: BaseMagazineMagnum
   components:
   - type: BallisticAmmoProvider
     proto: CartridgeMagnumHighVelocity
@@ -101,7 +101,7 @@
 - type: entity
   id: MagazineMagnumPractice
   name: "Lamia magazine (.40 magnum practice)"
-  parent: MagazineMagnumBase
+  parent: BaseMagazineMagnum
   components:
   - type: BallisticAmmoProvider
     proto: CartridgeMagnumPractice
@@ -115,7 +115,7 @@
 - type: entity
   id: MagazineMagnumRubber
   name: "Lamia magazine (.40 magnum rubber)"
-  parent: MagazineMagnumBase
+  parent: BaseMagazineMagnum
   components:
   - type: BallisticAmmoProvider
     proto: CartridgeMagnumRubber

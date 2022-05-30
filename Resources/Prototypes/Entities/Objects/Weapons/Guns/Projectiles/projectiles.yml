@@ -10,8 +10,10 @@
   - type: Sprite
     netsync: false
     noRot: false
-    sprite: Objects/Weapons/Guns/Projectiles/bullet.rsi
-    state: bullet
+    sprite: Objects/Weapons/Guns/Projectiles/projectiles2.rsi
+    layers:
+    - state: bullet
+      shader: unshaded
   - type: Physics
     bodyType: Dynamic
     linearDamping: 0
@@ -122,7 +124,7 @@
         volume: 5
   - type: Sprite
     noRot: true
-    sprite: Objects/Weapons/Guns/Projectiles/spark.rsi
+    sprite: Objects/Weapons/Guns/Projectiles/projectiles2.rsi
     color: "#ffff33"
     layers:
     - state: spark
@@ -159,7 +161,10 @@
   - type: Sprite
     color: "#ffff33"
     sprite: Structures/Power/Generation/Singularity/emitter.rsi
-    state: 'projectile'
+    layers:
+      - state: projectile
+        shader: unshaded
+  - type: Ammo
   - type: Physics
   - type: Fixtures
     fixtures:
@@ -189,8 +194,9 @@
   noSpawn: true
   components:
   - type: Sprite
-    sprite: Objects/Weapons/Guns/Projectiles/rocket.rsi
-    state: frag
+    sprite: Objects/Weapons/Guns/Projectiles/projectiles2.rsi
+    layers:
+      - state: frag
   - type: ExplodeOnTrigger
   - type: Explosive
     explosionType: Default
@@ -210,8 +216,9 @@
   noSpawn: true
   components:
   - type: Sprite
-    sprite: Objects/Weapons/Guns/Projectiles/rocket.rsi
-    state: frag
+    sprite: Objects/Weapons/Guns/Projectiles/projectiles2.rsi
+    layers:
+      - state: frag
   - type: ExplodeOnTrigger
   - type: Explosive
     explosionType: Default
@@ -231,8 +238,9 @@
   noSpawn: true
   components:
   - type: Sprite
-    sprite: Objects/Weapons/Guns/Projectiles/grenade.rsi
-    state: grenade
+    sprite: Objects/Weapons/Guns/Projectiles/projectiles2.rsi
+    layers:
+      - state: grenade
   - type: Projectile
     deleteOnCollide: false
     damage:
@@ -251,8 +259,9 @@
   noSpawn: true
   components:
   - type: Sprite
-    sprite: Objects/Weapons/Guns/Projectiles/grenade.rsi
-    state: grenade
+    sprite: Objects/Weapons/Guns/Projectiles/projectiles2.rsi
+    layers:
+      - state: grenade
   - type: ExplodeOnTrigger
   - type: Explosive
     explosionType: Default
@@ -266,8 +275,9 @@
   noSpawn: true
   components:
   - type: Sprite
-    sprite: Objects/Weapons/Guns/Projectiles/grenade.rsi
-    state: grenade
+    sprite: Objects/Weapons/Guns/Projectiles/projectiles2.rsi
+    layers:
+      - state: grenade
   - type: FlashOnTrigger
     range: 7
 
@@ -279,8 +289,9 @@
   noSpawn: true
   components:
   - type: Sprite
-    sprite: Objects/Weapons/Guns/Projectiles/grenade.rsi
-    state: grenade
+    sprite: Objects/Weapons/Guns/Projectiles/projectiles2.rsi
+    layers:
+      - state: grenade
   - type: ExplodeOnTrigger
   - type: Explosive
     explosionType: Default
@@ -294,7 +305,8 @@
   components:
   - type: Sprite
     sprite: Objects/Fun/toys.rsi
-    state: foamdart
+    layers:
+      - state: foamdart
   - type: Projectile
     deleteOnCollide: true
     damage:
@@ -311,7 +323,8 @@
   components:
   - type: Sprite
     sprite: Objects/Fun/toys.rsi
-    state: capbullet
+    layers:
+      - state: capbullet
   - type: Projectile
     deleteOnCollide: true
     damage:

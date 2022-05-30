@@ -19,7 +19,7 @@
   - type: Sprite
     sprite: Objects/Weapons/Guns/Launchers/china_lake.rsi
     layers:
-      - state: base
+      - state: icon
         map: ["enum.GunVisualLayers.Base"]
   - type: Item
     size: 24

@@ -102,6 +102,7 @@ public sealed class MagVisualizer : AppearanceVisualizer
 public enum GunVisualLayers
 {
     Base,
+    BaseUnshaded,
     Mag,
     MagUnshaded,
 }

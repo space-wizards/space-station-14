@@ -29,7 +29,7 @@
   - type: Sprite
     sprite: Objects/Weapons/Guns/HMGs/minigun.rsi
     layers:
-    - state: base
+    - state: icon
       map: ["enum.GunVisualLayers.Base"]
   - type: Item
     size: 24
