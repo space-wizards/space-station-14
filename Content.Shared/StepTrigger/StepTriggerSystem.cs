@@ -1,4 +1,4 @@
-﻿using System.Linq;
+using System.Linq;
 using Robust.Shared.GameStates;
 using Robust.Shared.Physics.Dynamics;
 
@@ -18,25 +18,25 @@ public sealed class StepTriggerSystem : EntitySystem
 
     public override void Update(float frameTime)
     {
-        foreach (var (_, trigger, transform) in EntityQuery<StepTriggerActiveComponent, StepTriggerComponent, TransformComponent>())
+        var query = GetEntityQuery<PhysicsComponent>();
+        foreach (var (active, trigger, transform) in EntityQuery<StepTriggerActiveComponent, StepTriggerComponent, TransformComponent>())
         {
-            if (!Update(trigger, transform))
+            if (!Update(trigger, transform, query))
                 continue;
 
-            RemComp<StepTriggerActiveComponent>(trigger.Owner);
+            RemComp(trigger.Owner, active);
         }
     }
 
-    private bool Update(StepTriggerComponent component, TransformComponent transform)
+    private bool Update(StepTriggerComponent component, TransformComponent transform, EntityQuery<PhysicsComponent> query)
     {
         if (!component.Active ||
             component.Colliding.Count == 0)
             return true;
 
-
         foreach (var otherUid in component.Colliding.ToArray())
         {
-            var shouldRemoveFromColliding = UpdateColliding(component, transform, otherUid);
+            var shouldRemoveFromColliding = UpdateColliding(component, transform, otherUid, query);
             if (!shouldRemoveFromColliding) continue;
 
             component.Colliding.Remove(otherUid);
@@ -46,15 +46,10 @@ public sealed class StepTriggerSystem : EntitySystem
         return false;
     }
 
-    private bool UpdateColliding(StepTriggerComponent component, TransformComponent ownerTransform, EntityUid otherUid)
+    private bool UpdateColliding(StepTriggerComponent component, TransformComponent ownerTransform, EntityUid otherUid, EntityQuery<PhysicsComponent> query)
     {
-        if (!TryComp(otherUid, out PhysicsComponent? otherPhysics))
+        if (!query.TryGetComponent(otherUid, out var otherPhysics))
             return true;
-
-        if (component.CurrentlySteppedOn.Contains(otherUid) ||
-            !CanTrigger(component.Owner, otherUid, component) ||
-            otherPhysics.LinearVelocity.Length < component.RequiredTriggerSpeed)
-            return false;
 
         // TODO: This shouldn't be calculating based on world AABBs.
         var ourAabb = _entityLookup.GetWorldAABB(component.Owner, ownerTransform);
@@ -63,8 +58,10 @@ public sealed class StepTriggerSystem : EntitySystem
         if (!ourAabb.Intersects(otherAabb))
             return true;
 
-        var percentage = otherAabb.IntersectPercentage(ourAabb);
-        if (percentage < component.IntersectRatio)
+        if (otherPhysics.LinearVelocity.Length < component.RequiredTriggerSpeed
+            || component.CurrentlySteppedOn.Contains(otherUid)
+            || otherAabb.IntersectPercentage(ourAabb) < component.IntersectRatio
+            || !CanTrigger(component.Owner, otherUid, component))
             return false;
 
         var ev = new StepTriggeredEvent { Source = component.Owner, Tripper = otherUid };
@@ -106,20 +103,23 @@ public sealed class StepTriggerSystem : EntitySystem
 
         component.RequiredTriggerSpeed = state.RequiredTriggerSpeed;
         component.IntersectRatio = state.IntersectRatio;
-        component.CurrentlySteppedOn.Clear();
+        component.Active = state.Active;
 
-        foreach (var slipped in state.CurrentlySteppedOn)
-        {
-            component.CurrentlySteppedOn.Add(slipped);
-        }
+        component.CurrentlySteppedOn.Clear();
+        component.Colliding.Clear();
+
+        component.CurrentlySteppedOn.UnionWith(state.CurrentlySteppedOn);
+        component.Colliding.UnionWith(state.Colliding);
     }
 
     private static void TriggerGetState(EntityUid uid, StepTriggerComponent component, ref ComponentGetState args)
     {
         args.State = new StepTriggerComponentState(
             component.IntersectRatio,
-            component.CurrentlySteppedOn.ToArray(),
-            component.RequiredTriggerSpeed);
+            component.CurrentlySteppedOn,
+            component.Colliding,
+            component.RequiredTriggerSpeed,
+            component.Active);
     }
 
     public void SetIntersectRatio(EntityUid uid, float ratio, StepTriggerComponent? component = null)

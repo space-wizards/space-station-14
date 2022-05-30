@@ -36,7 +36,7 @@ public sealed class AddTests : ContentIntegrationTest
         var sMaps = server.ResolveDependency<IMapManager>();
         var sSystems = server.ResolveDependency<IEntitySystemManager>();
 
-        var sAdminLogSystem = sSystems.GetEntitySystem<AdminLogSystem>();
+        var sAdminLogSystem = server.ResolveDependency<IAdminLogManager>();
 
         var guid = Guid.NewGuid();
 
@@ -89,7 +89,7 @@ public sealed class AddTests : ContentIntegrationTest
         var sMaps = server.ResolveDependency<IMapManager>();
         var sSystems = server.ResolveDependency<IEntitySystemManager>();
 
-        var sAdminLogSystem = sSystems.GetEntitySystem<AdminLogSystem>();
+        var sAdminLogSystem = server.ResolveDependency<IAdminLogManager>();
         var sGamerTicker = sSystems.GetEntitySystem<GameTicker>();
 
         var guid = Guid.NewGuid();
@@ -156,7 +156,7 @@ public sealed class AddTests : ContentIntegrationTest
         var sMaps = server.ResolveDependency<IMapManager>();
         var sSystems = server.ResolveDependency<IEntitySystemManager>();
 
-        var sAdminLogSystem = sSystems.GetEntitySystem<AdminLogSystem>();
+        var sAdminLogSystem = server.ResolveDependency<IAdminLogManager>();
 
         await server.WaitPost(() =>
         {
@@ -193,7 +193,7 @@ public sealed class AddTests : ContentIntegrationTest
         var sPlayers = server.ResolveDependency<IPlayerManager>();
         var sSystems = server.ResolveDependency<IEntitySystemManager>();
 
-        var sAdminLogSystem = sSystems.GetEntitySystem<AdminLogSystem>();
+        var sAdminLogSystem = server.ResolveDependency<IAdminLogManager>();
         Guid playerGuid = default;
 
         await server.WaitPost(() =>
@@ -236,7 +236,7 @@ public sealed class AddTests : ContentIntegrationTest
         var sDatabase = server.ResolveDependency<IServerDbManager>();
         var sSystems = server.ResolveDependency<IEntitySystemManager>();
 
-        var sAdminLogSystem = sSystems.GetEntitySystem<AdminLogSystem>();
+        var sAdminLogSystem = server.ResolveDependency<IAdminLogManager>();
         var sGamerTicker = sSystems.GetEntitySystem<GameTicker>();
 
         var guid = Guid.NewGuid();
@@ -279,7 +279,7 @@ public sealed class AddTests : ContentIntegrationTest
         await foreach (var json in sDatabase.GetAdminLogsJson(filter))
         {
             var root = json.RootElement;
-            
+
             Assert.That(root.TryGetProperty("guid", out _), Is.True);
 
             json.Dispose();
@@ -302,7 +302,7 @@ public sealed class AddTests : ContentIntegrationTest
         var sPlayers = server.ResolveDependency<IPlayerManager>();
         var sSystems = server.ResolveDependency<IEntitySystemManager>();
 
-        var sAdminLogSystem = sSystems.GetEntitySystem<AdminLogSystem>();
+        var sAdminLogSystem = server.ResolveDependency<IAdminLogManager>();
 
         var guid = Guid.NewGuid();
 
@@ -347,7 +347,7 @@ public sealed class AddTests : ContentIntegrationTest
         var sPlayers = server.ResolveDependency<IPlayerManager>();
         var sSystems = server.ResolveDependency<IEntitySystemManager>();
 
-        var sAdminLogSystem = sSystems.GetEntitySystem<AdminLogSystem>();
+        var sAdminLogSystem = server.ResolveDependency<IAdminLogManager>();
 
         var guid = Guid.NewGuid();
 

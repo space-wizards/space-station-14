@@ -138,8 +138,8 @@ namespace Content.MapRenderer.Painters
 
         private (float x, float y) TransformLocalPosition(Vector2 position, IMapGrid grid)
         {
-            var xOffset = (int) Math.Abs(grid.LocalAABB.Left);
-            var yOffset = (int) Math.Abs(grid.LocalAABB.Bottom);
+            var xOffset = (int) -grid.LocalAABB.Left;
+            var yOffset = (int) -grid.LocalAABB.Bottom;
             var tileSize = grid.TileSize;
 
             var x = ((float) Math.Floor(position.X) + xOffset) * tileSize * TilePainter.TileImageSize;
