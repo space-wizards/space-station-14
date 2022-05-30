@@ -152,7 +152,11 @@ public sealed class PowerWireAction : BaseWireAction
         //
         // if the power is disabled however, just don't bother
 
-        if (timed && IsPowered(wire.Owner) && !allCut)
+        if (!WiresSystem.HasData(wire.Owner, PowerWireActionKey.ElectrifiedCancel)
+            && WiresSystem.TryGetData(wire.Owner, PowerWireActionKey.Pulsed, out bool pulsed)
+            && pulsed
+            && IsPowered(wire.Owner)
+            && !allCut)
         {
             WiresSystem.StartWireAction(wire.Owner, _pulseTimeout, PowerWireActionKey.ElectrifiedCancel, new TimedWireEvent(AwaitElectrifiedCancel, wire));
         }
@@ -200,8 +204,6 @@ public sealed class PowerWireAction : BaseWireAction
 
         SetPower(wire.Owner, false);
 
-        UpdateElectrocution(wire);
-
         return true;
     }
 
@@ -217,8 +219,6 @@ public sealed class PowerWireAction : BaseWireAction
         SetWireCuts(wire.Owner, false);
 
         SetPower(wire.Owner, false);
-
-        UpdateElectrocution(wire);
 
         return true;
     }
@@ -243,13 +243,13 @@ public sealed class PowerWireAction : BaseWireAction
 
         SetPower(wire.Owner, true);
 
-        UpdateElectrocution(wire, true);
-
         return true;
     }
 
     public override void Update(Wire wire)
     {
+        UpdateElectrocution(wire);
+
         if (!IsPowered(wire.Owner))
         {
             if (!WiresSystem.TryGetData(wire.Owner, PowerWireActionKey.Pulsed, out bool pulsed)

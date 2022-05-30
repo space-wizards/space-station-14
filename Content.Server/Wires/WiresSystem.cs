@@ -746,6 +746,7 @@ public sealed class WiresSystem : EntitySystem
                 break;
         }
 
+        wire.Action.Update(wire);
         wires.WiresQueue.Remove(id);
     }
 
