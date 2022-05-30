@@ -72,7 +72,7 @@ public abstract partial class SharedGunSystem
         if (magEnt != null)
         {
             // We pass in Shots not Shots - 1 as we'll take the last entity and move it into the chamber.
-            var relayedArgs = new TakeAmmoEvent(args.Shots, new List<IShootable>(), args.Coordinates);
+            var relayedArgs = new TakeAmmoEvent(args.Shots, new List<IShootable>(), args.Coordinates, args.User);
             RaiseLocalEvent(magEnt.Value, relayedArgs);
 
             // Put in the nth slot back into the chamber

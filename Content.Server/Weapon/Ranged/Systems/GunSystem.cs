@@ -180,7 +180,7 @@ public sealed partial class GunSystem : SharedGunSystem
         SoundSystem.Play(Filter.Pvs(gun).RemoveWhereAttachedEntity(e => e == user), sound, gun);
     }
 
-    protected override void Popup(string message, GunComponent? gun, EntityUid? user) {}
+    protected override void Popup(string message, EntityUid? uid, EntityUid? user) {}
 
     protected override void CreateEffect(EffectSystemMessage message, EntityUid? user = null)
     {

@@ -41,8 +41,8 @@
     proto: RedLaser
     fireCost: 100
   - type: Battery
-    maxCharge: 700
-    startingCharge: 700
+    maxCharge: 600
+    startingCharge: 600
   - type: Appearance
     visuals:
     - type: MagVisualizer
@@ -100,8 +100,8 @@
     proto: RedMediumLaser
     fireCost: 100
   - type: Battery
-    maxCharge: 500
-    startingCharge: 500
+    maxCharge: 800
+    startingCharge: 800
 
 - type: entity
   name: PDW-10 pulse pistol

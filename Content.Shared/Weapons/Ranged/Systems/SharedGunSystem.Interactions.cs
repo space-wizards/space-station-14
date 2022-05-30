@@ -62,7 +62,7 @@ public abstract partial class SharedGunSystem
             component.NextFire += cooldown;
 
         PlaySound(component.Owner, component.SoundModeToggle?.GetSound(), user);
-        Popup($"Selected {fire}", component, user);
+        Popup($"Selected {fire}", component.Owner, user);
 
         if (component.SelectModeAction != null)
         {

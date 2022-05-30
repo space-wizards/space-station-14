@@ -32,7 +32,7 @@ public abstract partial class SharedGunSystem : EntitySystem
     [Dependency] protected readonly IRobustRandom Random = default!;
     [Dependency] protected readonly ISharedAdminLogManager Logs = default!;
     [Dependency] protected readonly DamageableSystem Damageable = default!;
-    [Dependency] protected readonly ItemSlotsSystem Slots = default!;
+    [Dependency] private readonly ItemSlotsSystem _slots = default!;
     [Dependency] protected readonly SharedActionsSystem Actions = default!;
     [Dependency] private readonly SharedCombatModeSystem _combatMode = default!;
     [Dependency] protected readonly SharedContainerSystem Containers = default!;
@@ -43,6 +43,7 @@ public abstract partial class SharedGunSystem : EntitySystem
 
     protected const float MuzzleFlashLifetime = 1f;
     protected const float InteractNextFire = 0.3f;
+    protected const float SafetyNextFire = 0.5;
     public const float EjectOffset = 0.4f;
     public string AmmoExamineColor = "yellow";
     public string FireRateExamineColor = "yellow";
@@ -175,6 +176,7 @@ public abstract partial class SharedGunSystem : EntitySystem
             gun.NextFire = curTime;
 
         var shots = 0;
+        var lastFire = gun.NextFire;
         var fireRate = TimeSpan.FromSeconds(1f / gun.FireRate);
 
         while (gun.NextFire <= curTime)
@@ -204,7 +206,7 @@ public abstract partial class SharedGunSystem : EntitySystem
 
         var fromCoordinates = Transform(user).Coordinates;
         // Remove ammo
-        var ev = new TakeAmmoEvent(shots, new List<IShootable>(), fromCoordinates);
+        var ev = new TakeAmmoEvent(shots, new List<IShootable>(), fromCoordinates, user);
 
         // Listen it just makes the other code around it easier if shots == 0 to do this.
         if (shots > 0)
@@ -214,12 +216,19 @@ public abstract partial class SharedGunSystem : EntitySystem
         DebugTools.Assert(shots >= 0);
         UpdateAmmoCount(gun.Owner);
 
+        // Even if we don't actually shoot update the ShotCounter. This is to avoid spamming empty sounds
+        // where the gun may be SemiAuto or Burst.
+        gun.ShotCounter += shots;
+
         if (ev.Ammo.Count <= 0)
         {
             // Play empty gun sounds if relevant
             // If they're firing an existing clip then don't play anything.
-            if (gun.ShotCounter == 0 && (gun.SelectedMode == SelectiveFire.Safety || shots > 0))
+            if (gun.SelectedMode == SelectiveFire.Safety || shots > 0)
             {
+                // Don't spam safety sounds at gun fire rate, play it at a reduced rate.
+                // May cause prediction issues? Needs more tweaking
+                gun.NextFire = TimeSpan.FromSeconds(Math.Max(lastFire.TotalSeconds + SafetyNextFire, gun.NextFire.TotalSeconds));
                 PlaySound(gun.Owner, gun.SoundEmpty?.GetSound(), user);
                 Dirty(gun);
                 return;
@@ -229,8 +238,6 @@ public abstract partial class SharedGunSystem : EntitySystem
         }
 
         // Shoot confirmed
-        gun.ShotCounter += ev.Ammo.Count;
-
         Shoot(gun.Owner, ev.Ammo, fromCoordinates, toCoordinates.Value, user);
 
         // Predicted sound moment
@@ -268,7 +275,7 @@ public abstract partial class SharedGunSystem : EntitySystem
 
     protected abstract void PlaySound(EntityUid gun, string? sound, EntityUid? user = null);
 
-    protected abstract void Popup(string message, GunComponent? gun, EntityUid? user);
+    protected abstract void Popup(string message, EntityUid? uid, EntityUid? user);
 
     /// <summary>
     /// Call this whenever the ammo count for a gun changes.

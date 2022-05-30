@@ -84,7 +84,7 @@ public abstract partial class SharedGunSystem
         if (component.Cycled)
             Cycle(component, coordinates);
 
-        Popup("Cycled", gunComp, user);
+        Popup("Cycled", component.Owner, user);
         UpdateBallisticAppearance(component);
         UpdateAmmoCount(component.Owner);
     }

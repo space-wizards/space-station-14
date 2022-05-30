@@ -1,6 +1,7 @@
 using Content.Shared.Containers.ItemSlots;
 using Content.Shared.Interaction;
 using Content.Shared.Verbs;
+using Content.Shared.Weapons.Ranged.Components;
 using Content.Shared.Weapons.Ranged.Events;
 using Robust.Shared.Audio;
 using Robust.Shared.Containers;
@@ -22,12 +23,13 @@ public abstract partial class SharedGunSystem
 
     private void OnMagazineActivate(EntityUid uid, MagazineAmmoProviderComponent component, ActivateInWorldEvent args)
     {
-        var ent = GetMagazineEntity(uid);
+        var magEnt = GetMagazineEntity(uid);
 
-        if (ent == null) return;
+        if (magEnt == null) return;
 
-        RaiseLocalEvent(ent.Value, args);
+        RaiseLocalEvent(magEnt.Value, args);
         UpdateAmmoCount(uid);
+        UpdateMagazineAppearance(component, magEnt.Value);
     }
 
     private void OnMagazineSlotChange(EntityUid uid, MagazineAmmoProviderComponent component, ref ItemSlotChangedEvent args)
@@ -51,7 +53,10 @@ public abstract partial class SharedGunSystem
         var magEnt = GetMagazineEntity(uid);
 
         if (magEnt != null)
+        {
             RaiseLocalEvent(magEnt.Value, args);
+            UpdateMagazineAppearance(component, magEnt.Value);
+        }
     }
 
     private void OnMagazineTakeAmmo(EntityUid uid, MagazineAmmoProviderComponent component, TakeAmmoEvent args)
@@ -86,15 +91,38 @@ public abstract partial class SharedGunSystem
         if (component.AutoEject && args.Ammo.Count == 0)
         {
             EjectMagazine(component);
-            var sound = component.SoundAutoEject?.GetSound();
-
-            if (sound != null)
-                SoundSystem.Play(Filter.Pvs(uid, entityManager: EntityManager), sound);
+            PlaySound(uid, component.SoundAutoEject?.GetSound(), args.User);
         }
 
-        // Copy the magazine's appearance data
-        appearance?.SetData(AmmoVisuals.MagLoaded, true);
+        UpdateMagazineAppearance(appearance, true, count, capacity);
+    }
 
+    private void UpdateMagazineAppearance(MagazineAmmoProviderComponent component, EntityUid magEnt)
+    {
+        TryComp<AppearanceComponent>(component.Owner, out var appearance);
+
+        var count = 0;
+        var capacity = 0;
+
+        if (component is ChamberMagazineAmmoProviderComponent chamber)
+        {
+            count = GetChamberEntity(chamber.Owner) != null ? 1 : 0;
+            capacity = 1;
+        }
+
+        if (TryComp<AppearanceComponent>(magEnt, out var magAppearance))
+        {
+            count += magAppearance.GetData<int>(AmmoVisuals.AmmoCount);
+            capacity += magAppearance.GetData<int>(AmmoVisuals.AmmoMax);
+        }
+
+        UpdateMagazineAppearance(appearance, true, count, capacity);
+    }
+
+    private void UpdateMagazineAppearance(AppearanceComponent? appearance, bool magLoaded, int count, int capacity)
+    {
+        // Copy the magazine's appearance data
+        appearance?.SetData(AmmoVisuals.MagLoaded, magLoaded);
         appearance?.SetData(AmmoVisuals.AmmoCount, count);
         appearance?.SetData(AmmoVisuals.AmmoMax, capacity);
     }
@@ -105,6 +133,6 @@ public abstract partial class SharedGunSystem
 
         if (ent == null) return;
 
-        Slots.TryEject(component.Owner, MagazineSlot, null, out var a, excludeUserAudio: true);
+        _slots.TryEject(component.Owner, MagazineSlot, null, out var a, excludeUserAudio: true);
     }
 }

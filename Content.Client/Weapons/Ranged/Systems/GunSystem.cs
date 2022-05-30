@@ -170,10 +170,10 @@ public sealed partial class GunSystem : SharedGunSystem
         SoundSystem.Play(Filter.Local(), sound, gun);
     }
 
-    protected override void Popup(string message, GunComponent? gun, EntityUid? user)
+    protected override void Popup(string message, EntityUid? uid, EntityUid? user)
     {
-        if (gun == null || user == null || !Timing.IsFirstTimePredicted) return;
-        PopupSystem.PopupEntity(message, gun.Owner, Filter.Entities(user.Value));
+        if (uid == null || user == null || !Timing.IsFirstTimePredicted) return;
+        PopupSystem.PopupEntity(message, uid.Value, Filter.Entities(user.Value));
     }
 
     protected override void CreateEffect(EffectSystemMessage message, EntityUid? user = null)

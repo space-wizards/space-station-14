@@ -1,4 +1,3 @@
-using Content.Shared.Weapons.Ranged.Systems;
 using Robust.Shared.Map;
 
 namespace Content.Shared.Weapons.Ranged.Events;
@@ -8,6 +7,7 @@ namespace Content.Shared.Weapons.Ranged.Events;
 /// </summary>
 public sealed class TakeAmmoEvent : EntityEventArgs
 {
+    public EntityUid? User;
     public readonly int Shots;
     public List<IShootable> Ammo;
 
@@ -16,10 +16,11 @@ public sealed class TakeAmmoEvent : EntityEventArgs
     /// </summary>
     public EntityCoordinates Coordinates;
 
-    public TakeAmmoEvent(int shots, List<IShootable> ammo, EntityCoordinates coordinates)
+    public TakeAmmoEvent(int shots, List<IShootable> ammo, EntityCoordinates coordinates, EntityUid? user)
     {
         Shots = shots;
         Ammo = ammo;
         Coordinates = coordinates;
+        User = user;
     }
 }
