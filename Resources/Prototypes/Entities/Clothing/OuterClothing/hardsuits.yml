@@ -572,7 +572,7 @@
 
 #ERT
 - type: entity
-  parent: ClothingOuterHardsuitSecurity
+  parent: ClothingOuterHardsuitSyndie
   id: ClothingOuterHardsuitERTLeader
   name: ERT leader's hardsuit
   description: A protective hardsuit worn by members of an emergency response team.
@@ -581,6 +581,8 @@
     sprite: Clothing/OuterClothing/Hardsuits/ERTSuits/ertleader.rsi
   - type: Clothing
     sprite: Clothing/OuterClothing/Hardsuits/ERTSuits/ertleader.rsi
+  - type: ToggleableClothing
+    clothingPrototype: ClothingHeadHelmetHardsuitERTLeader
 
 - type: entity
   parent: ClothingOuterHardsuitERTLeader
@@ -591,7 +593,9 @@
     sprite: Clothing/OuterClothing/Hardsuits/ERTSuits/ertengineer.rsi
   - type: Clothing
     sprite: Clothing/OuterClothing/Hardsuits/ERTSuits/ertengineer.rsi
-
+  - type: ToggleableClothing
+    clothingPrototype: ClothingHeadHelmetHardsuitERTEngineer
+    
 - type: entity
   parent: ClothingOuterHardsuitERTLeader
   id: ClothingOuterHardsuitERTMedical
@@ -601,6 +605,8 @@
     sprite: Clothing/OuterClothing/Hardsuits/ERTSuits/ertmedical.rsi
   - type: Clothing
     sprite: Clothing/OuterClothing/Hardsuits/ERTSuits/ertmedical.rsi
+  - type: ToggleableClothing
+    clothingPrototype: ClothingHeadHelmetHardsuitERTMedical
 
 - type: entity
   parent: ClothingOuterHardsuitERTLeader
@@ -611,6 +617,8 @@
     sprite: Clothing/OuterClothing/Hardsuits/ERTSuits/ertsecurity.rsi
   - type: Clothing
     sprite: Clothing/OuterClothing/Hardsuits/ERTSuits/ertsecurity.rsi
+  - type: ToggleableClothing
+    clothingPrototype: ClothingHeadHelmetHardsuitERTSecurity
     
 - type: entity
   parent: ClothingOuterHardsuitERTLeader
@@ -621,3 +629,5 @@
     sprite: Clothing/OuterClothing/Hardsuits/ERTSuits/ertjanitor.rsi
   - type: Clothing
     sprite: Clothing/OuterClothing/Hardsuits/ERTSuits/ertjanitor.rsi
+  - type: ToggleableClothing
+    clothingPrototype: ClothingHeadHelmetHardsuitERTJanitor
