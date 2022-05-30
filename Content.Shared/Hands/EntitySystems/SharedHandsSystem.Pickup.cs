@@ -137,7 +137,7 @@ public abstract partial class SharedHandsSystem : EntitySystem
             return;
         }
 
-        _adminLogSystem.Add(LogType.Pickup, LogImpact.Low, $"{ToPrettyString(uid):user} picked up {ToPrettyString(entity):entity}");
+        _adminLogger.Add(LogType.Pickup, LogImpact.Low, $"{ToPrettyString(uid):user} picked up {ToPrettyString(entity):entity}");
 
         Dirty(hands);
 
