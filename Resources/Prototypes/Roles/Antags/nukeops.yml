@@ -1,0 +1,6 @@
+- type: antag
+  id: Nukeops
+  name: "Nuclear Operative"
+  antagonist: true
+  setPreference: true
+  objective: "Find the nuke disk and blow up the station."
