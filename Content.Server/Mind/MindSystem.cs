@@ -80,6 +80,7 @@ public sealed class MindSystem : EntitySystem
             }
             else if (mind.GhostOnShutdown)
             {
+                Transform(uid).AttachToGridOrMap();
                 var spawnPosition = Transform(uid).Coordinates;
                 // Use a regular timer here because the entity has probably been deleted.
                 Timer.Spawn(0, () =>
@@ -93,11 +94,6 @@ public sealed class MindSystem : EntitySystem
                     if (!spawnPosition.IsValid(EntityManager) || gridId == GridId.Invalid || !_mapManager.GridExists(gridId))
                     {
                         spawnPosition = _gameTicker.GetObserverSpawnPoint();
-                    }
-                    else if (spawnPosition.Position == Vector2.Zero)
-                    {
-                        Transform(spawnPosition.EntityId).AttachToGridOrMap();
-                        spawnPosition = Transform(spawnPosition.EntityId).Coordinates;
                     }
 
                     var ghost = Spawn("MobObserver", spawnPosition);
