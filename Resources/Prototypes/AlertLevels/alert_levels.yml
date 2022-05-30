@@ -5,10 +5,6 @@
     green:
       announcement: alert-level-green-announcement
       color: Green
-    amogus:
-      annoucement: Among Us
-      color: Red
-      sound: /Audio/amogus.ogg
     blue:
       announcement: alert-level-blue-announcement
       sound: /Audio/Misc/notice1.ogg
