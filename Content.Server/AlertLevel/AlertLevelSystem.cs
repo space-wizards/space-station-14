@@ -71,7 +71,9 @@ public sealed class AlertLevelSystem : EntitySystem
 
     private void OnPrototypeReload(PrototypesReloadedEventArgs args)
     {
-        if (!_prototypeManager.TryIndex(DefaultAlertLevelSet, out AlertLevelPrototype? alerts))
+        if (!args.ByType.TryGetValue(typeof(AlertLevelPrototype), out var alertPrototypes)
+            || !alertPrototypes.Modified.TryGetValue(DefaultAlertLevelSet, out var alertObject)
+            || alertObject is not AlertLevelPrototype alerts)
         {
             return;
         }
