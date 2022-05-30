@@ -39,7 +39,7 @@ public sealed class DirtyCommand : IConsoleCommand
     {
         foreach (var component in manager.GetComponents(entityUid))
         {
-            component.Dirty();
+            manager.Dirty(component);
         }
     }
 }
