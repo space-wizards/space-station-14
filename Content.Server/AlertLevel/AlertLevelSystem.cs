@@ -22,6 +22,7 @@ public sealed class AlertLevelSystem : EntitySystem
     public override void Initialize()
     {
         SubscribeLocalEvent<StationInitializedEvent>(OnStationInitialize);
+        SubscribeLocalEvent<PrototypesReloadedEventArgs>(OnPrototypeReload);
     }
 
     public override void Update(float time)
@@ -65,6 +66,30 @@ public sealed class AlertLevelSystem : EntitySystem
         }
 
         SetLevel(args.Station, defaultLevel, false, false, true);
+    }
+
+    private void OnPrototypeReload(PrototypesReloadedEventArgs args)
+    {
+        if (!_prototypeManager.TryIndex(DefaultAlertLevelSet, out AlertLevelPrototype? alerts))
+        {
+            return;
+        }
+
+        foreach (var comp in EntityQuery<AlertLevelComponent>())
+        {
+            comp.AlertLevels = alerts;
+
+            if (!comp.AlertLevels.Levels.ContainsKey(comp.CurrentLevel))
+            {
+                var defaultLevel = comp.AlertLevels.DefaultLevel;
+                if (string.IsNullOrEmpty(defaultLevel))
+                {
+                    defaultLevel = comp.AlertLevels.Levels.Keys.First();
+                }
+
+                SetLevel(comp.Owner, defaultLevel, true, true, true);
+            }
+        }
     }
 
     public float GetAlertLevelDelay(EntityUid station, AlertLevelComponent? alert = null)
