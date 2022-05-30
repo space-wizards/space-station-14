@@ -24,7 +24,7 @@ public abstract partial class SharedGunSystem
     private void OnMagazineExamine(EntityUid uid, MagazineAmmoProviderComponent component, ExaminedEvent args)
     {
         var (count, _) = GetMagazineCountCapacity(component);
-        args.PushMarkup($"It has [color={AmmoExamineColor}]{count}[/color] shots remaining.");
+        args.PushMarkup(Loc.GetString("gun-magazine-examine", ("color", AmmoExamineColor), ("count", count)));
     }
 
     private void OnMagazineActivate(EntityUid uid, MagazineAmmoProviderComponent component, ActivateInWorldEvent args)
@@ -36,6 +36,19 @@ public abstract partial class SharedGunSystem
         RaiseLocalEvent(magEnt.Value, args);
         UpdateAmmoCount(uid);
         UpdateMagazineAppearance(component, magEnt.Value);
+    }
+
+    private void OnMagazineVerb(EntityUid uid, MagazineAmmoProviderComponent component, GetVerbsEvent<Verb> args)
+    {
+        if (!args.CanInteract || !args.CanAccess) return;
+
+        var magEnt = GetMagazineEntity(uid);
+
+        if (magEnt != null)
+        {
+            RaiseLocalEvent(magEnt.Value, args);
+            UpdateMagazineAppearance(component, magEnt.Value);
+        }
     }
 
     private void OnMagazineSlotChange(EntityUid uid, MagazineAmmoProviderComponent component, ref ItemSlotChangedEvent args)
@@ -67,19 +80,6 @@ public abstract partial class SharedGunSystem
         if (!Containers.TryGetContainer(uid, MagazineSlot, out var container) ||
             container is not ContainerSlot slot) return null;
         return slot.ContainedEntity;
-    }
-
-    private void OnMagazineVerb(EntityUid uid, MagazineAmmoProviderComponent component, GetVerbsEvent<Verb> args)
-    {
-        if (!args.CanInteract || !args.CanAccess) return;
-
-        var magEnt = GetMagazineEntity(uid);
-
-        if (magEnt != null)
-        {
-            RaiseLocalEvent(magEnt.Value, args);
-            UpdateMagazineAppearance(component, magEnt.Value);
-        }
     }
 
     private void OnMagazineTakeAmmo(EntityUid uid, MagazineAmmoProviderComponent component, TakeAmmoEvent args)

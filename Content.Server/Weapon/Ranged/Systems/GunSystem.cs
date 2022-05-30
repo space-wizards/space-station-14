@@ -15,6 +15,7 @@ using Robust.Shared.Audio;
 using Robust.Shared.Map;
 using Robust.Shared.Physics;
 using Robust.Shared.Player;
+using Robust.Shared.Random;
 using Robust.Shared.Utility;
 using SharedGunSystem = Content.Shared.Weapons.Ranged.Systems.SharedGunSystem;
 
@@ -26,12 +27,17 @@ public sealed partial class GunSystem : SharedGunSystem
 
     public const float DamagePitchVariation = MeleeWeaponSystem.DamagePitchVariation;
 
-    public override void Shoot(EntityUid gun, List<IShootable> ammo, EntityCoordinates fromCoordinates, EntityCoordinates toCoordinates, EntityUid? user = null)
+    public override void Shoot(GunComponent gun, List<IShootable> ammo, EntityCoordinates fromCoordinates, EntityCoordinates toCoordinates, EntityUid? user = null)
     {
-        // TODO recoil / spread
         var fromMap = fromCoordinates.ToMap(EntityManager);
         var toMap = toCoordinates.ToMapPos(EntityManager);
         var mapDirection = toMap - fromMap.Position;
+        var mapAngle = mapDirection.ToAngle();
+        var angle = GetRecoilAngle(Timing.CurTime, gun, mapDirection.ToAngle());
+
+        // Update shot based on the recoil
+        toMap = fromMap.Position + angle.ToVec() * mapDirection.Length;
+        mapDirection = toMap - fromMap.Position;
         var entityDirection = Transform(fromCoordinates.EntityId).InvWorldMatrix.Transform(toMap) - fromCoordinates.Position;
 
         // I must be high because this was getting tripped even when true.
@@ -48,8 +54,6 @@ public sealed partial class GunSystem : SharedGunSystem
                     {
                         if (cartridge.Count > 1)
                         {
-                            var mapAngle = mapDirection.ToAngle();
-
                             var angles = LinearSpread(mapAngle - Angle.FromDegrees(cartridge.Spread / 2f),
                                 mapAngle + Angle.FromDegrees(cartridge.Spread / 2f), cartridge.Count);
 
@@ -71,14 +75,14 @@ public sealed partial class GunSystem : SharedGunSystem
                             appearance.SetData(AmmoVisuals.Spent, true);
 
                         cartridge.Spent = true;
-                        MuzzleFlash(gun, cartridge, user);
+                        MuzzleFlash(gun.Owner, cartridge, user);
 
                         if (cartridge.DeleteOnSpawn)
                             Del(cartridge.Owner);
                     }
                     else
                     {
-                        PlaySound(gun, Comp<GunComponent>(gun).SoundEmpty?.GetSound(), user);
+                        PlaySound(gun.Owner, gun.SoundEmpty?.GetSound(), user);
                     }
 
                     // Something like ballistic might want to leave it in the container still
@@ -90,7 +94,7 @@ public sealed partial class GunSystem : SharedGunSystem
                 // Ammo shoots itself
                 case AmmoComponent newAmmo:
                     ShootProjectile(newAmmo.Owner, mapDirection, user);
-                    MuzzleFlash(gun, newAmmo, user);
+                    MuzzleFlash(gun.Owner, newAmmo, user);
                     RemComp<AmmoComponent>(newAmmo.Owner);
                     shotProjectiles.Add(newAmmo.Owner);
                     break;
@@ -133,7 +137,7 @@ public sealed partial class GunSystem : SharedGunSystem
             }
         }
 
-        RaiseLocalEvent(gun, new AmmoShotEvent()
+        RaiseLocalEvent(gun.Owner, new AmmoShotEvent()
         {
             FiredProjectiles = shotProjectiles,
         });
@@ -171,6 +175,19 @@ public sealed partial class GunSystem : SharedGunSystem
         }
 
         return angles;
+    }
+
+    private Angle GetRecoilAngle(TimeSpan curTime, GunComponent component, Angle direction)
+    {
+        var timeSinceLastFire = (curTime - component.LastFire).TotalSeconds;
+        var newTheta = MathHelper.Clamp(component.CurrentAngle.Theta + component.AngleIncrease.Theta - component.AngleDecay.Theta * timeSinceLastFire, component.MinAngle.Theta, component.MaxAngle.Theta);
+        component.CurrentAngle = new Angle(newTheta);
+        component.LastFire = component.NextFire;
+
+        // Convert it so angle can go either side.
+        var random = Random.NextGaussian(0, 0.5);
+        var angle = new Angle(direction.Theta + component.CurrentAngle.Theta * random);
+        return angle;
     }
 
     protected override void PlaySound(EntityUid gun, string? sound, EntityUid? user = null)

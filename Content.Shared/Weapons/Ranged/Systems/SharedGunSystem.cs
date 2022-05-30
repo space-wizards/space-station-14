@@ -238,7 +238,7 @@ public abstract partial class SharedGunSystem : EntitySystem
         }
 
         // Shoot confirmed
-        Shoot(gun.Owner, ev.Ammo, fromCoordinates, toCoordinates.Value, user);
+        Shoot(gun, ev.Ammo, fromCoordinates, toCoordinates.Value, user);
 
         // Predicted sound moment
         PlaySound(gun.Owner, gun.SoundGunshot?.GetSound(), user);
@@ -246,7 +246,7 @@ public abstract partial class SharedGunSystem : EntitySystem
     }
 
     public void Shoot(
-        EntityUid gun,
+        GunComponent gun,
         EntityUid ammo,
         EntityCoordinates fromCoordinates,
         EntityCoordinates toCoordinates,
@@ -257,14 +257,14 @@ public abstract partial class SharedGunSystem : EntitySystem
     }
 
     public abstract void Shoot(
-        EntityUid gun,
+        GunComponent gun,
         List<IShootable> ammo,
         EntityCoordinates fromCoordinates,
         EntityCoordinates toCoordinates,
         EntityUid? user = null);
 
     public void Shoot(
-    EntityUid gun,
+        GunComponent gun,
         IShootable ammo,
         EntityCoordinates fromCoordinates,
         EntityCoordinates toCoordinates,

@@ -12,8 +12,8 @@ public abstract partial class SharedGunSystem
     private void OnExamine(EntityUid uid, GunComponent component, ExaminedEvent args)
     {
         var selectColor = component.SelectedMode == SelectiveFire.Safety ? SafetyExamineColor : ModeExamineColor;
-        args.PushMarkup($"Current selected fire mode is [color={selectColor}]{component.SelectedMode}[/color].");
-        args.PushMarkup($"Fire rate is [color={FireRateExamineColor}]{component.FireRate}[/color] per second.");
+        args.PushMarkup(Loc.GetString("gun-selected-mode-examine", ("color", selectColor), ("mode", component.SelectedMode)));
+        args.PushMarkup(Loc.GetString("gun-fire-rate-examine", ("color", FireRateExamineColor), ("fireRate", component.FireRate)));
     }
 
     private void OnAltVerb(EntityUid uid, GunComponent component, GetVerbsEvent<AlternativeVerb> args)

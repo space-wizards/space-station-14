@@ -61,7 +61,7 @@ public abstract partial class SharedGunSystem
 
     private void OnBallisticExamine(EntityUid uid, BallisticAmmoProviderComponent component, ExaminedEvent args)
     {
-        args.PushMarkup($"It has [color={AmmoExamineColor}]{GetBallisticShots(component)}[/color] ammo.");
+        args.PushMarkup(Loc.GetString("gun-magazine-examine", ("color", AmmoExamineColor), ("count", GetBallisticShots(component))));
     }
 
     private void ManualCycle(BallisticAmmoProviderComponent component, MapCoordinates coordinates, EntityUid? user = null)

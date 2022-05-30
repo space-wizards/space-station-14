@@ -125,7 +125,7 @@ public sealed partial class GunSystem : SharedGunSystem
         });
     }
 
-    public override void Shoot(EntityUid gun, List<IShootable> ammo, EntityCoordinates fromCoordinates, EntityCoordinates toCoordinates, EntityUid? user = null)
+    public override void Shoot(GunComponent gun, List<IShootable> ammo, EntityCoordinates fromCoordinates, EntityCoordinates toCoordinates, EntityUid? user = null)
     {
         // Rather than splitting client / server for every ammo provider it's easier
         // to just delete the spawned entities. This is for programmer sanity despite the wasted perf.
@@ -141,14 +141,14 @@ public sealed partial class GunSystem : SharedGunSystem
                             appearance.SetData(AmmoVisuals.Spent, true);
 
                         cartridge.Spent = true;
-                        MuzzleFlash(gun, cartridge, user);
+                        MuzzleFlash(gun.Owner, cartridge, user);
 
                         if (cartridge.DeleteOnSpawn)
                             Del(cartridge.Owner);
                     }
                     else
                     {
-                        PlaySound(gun, Comp<GunComponent>(gun).SoundEmpty?.GetSound(), user);
+                        PlaySound(gun.Owner, gun.SoundEmpty?.GetSound(), user);
                     }
 
                     if (cartridge.Owner.IsClientSide())
@@ -156,7 +156,7 @@ public sealed partial class GunSystem : SharedGunSystem
 
                     break;
                 case AmmoComponent newAmmo:
-                    MuzzleFlash(gun, newAmmo, user);
+                    MuzzleFlash(gun.Owner, newAmmo, user);
                     if (newAmmo.Owner.IsClientSide())
                         Del(newAmmo.Owner);
                     else

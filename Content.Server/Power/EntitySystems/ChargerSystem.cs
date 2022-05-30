@@ -16,23 +16,18 @@ internal sealed class ChargerSystem : EntitySystem
 
     public override void Initialize()
     {
-        base.Initialize();
-
         SubscribeLocalEvent<ChargerComponent, ComponentInit>(OnChargerInit);
         SubscribeLocalEvent<ChargerComponent, ComponentRemove>(OnChargerRemove);
-
         SubscribeLocalEvent<ChargerComponent, PowerChangedEvent>(OnPowerChanged);
-
         SubscribeLocalEvent<ChargerComponent, EntInsertedIntoContainerMessage>(OnInserted);
         SubscribeLocalEvent<ChargerComponent, EntRemovedFromContainerMessage>(OnRemoved);
         SubscribeLocalEvent<ChargerComponent, ContainerIsInsertingAttemptEvent>(OnInsertAttempt);
-
         SubscribeLocalEvent<ChargerComponent, ExaminedEvent>(OnChargerExamine);
     }
 
     private void OnChargerExamine(EntityUid uid, ChargerComponent component, ExaminedEvent args)
     {
-        args.PushMarkup($"Charges [color=yellow]{component.ChargeRate}W[/color] per second.");
+        args.PushMarkup(Loc.GetString("charger-examine", ("color", "yellow"), ("chargeRate", component.ChargeRate)));
     }
 
     public override void Update(float frameTime)

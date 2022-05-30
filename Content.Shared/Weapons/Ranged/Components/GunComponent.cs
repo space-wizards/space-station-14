@@ -8,6 +8,8 @@ namespace Content.Shared.Weapons.Ranged.Components;
 [RegisterComponent, NetworkedComponent, Virtual]
 public class GunComponent : Component
 {
+    #region Sound
+
     [ViewVariables(VVAccess.ReadWrite), DataField("soundGunshot")]
     public SoundSpecifier? SoundGunshot = new SoundPathSpecifier("/Audio/Weapons/Guns/Gunshots/smg.ogg");
 
@@ -19,6 +21,49 @@ public class GunComponent : Component
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite), DataField("soundMode")]
     public SoundSpecifier? SoundModeToggle = new SoundPathSpecifier("/Audio/Weapons/Guns/Misc/selector.ogg");
+
+    #endregion
+
+    #region Recoil
+
+    /// <summary>
+    /// Last time the gun fired.
+    /// Used for recoil purposes.
+    /// </summary>
+    [ViewVariables, DataField("lastFire")]
+    public TimeSpan LastFire = TimeSpan.Zero;
+
+    /// <summary>
+    /// What the current spread is for shooting. This gets changed every time the gun fires.
+    /// </summary>
+    [ViewVariables, DataField("currentAngle")]
+    public Angle CurrentAngle;
+
+    /// <summary>
+    /// How much the spread increases every time the gun fires.
+    /// </summary>
+    [ViewVariables, DataField("angleIncrease")]
+    public Angle AngleIncrease = Angle.FromDegrees(1);
+
+    /// <summary>
+    /// How much the <see cref="CurrentAngle"/> decreases per second.
+    /// </summary>
+    [ViewVariables, DataField("angleDecay")]
+    public Angle AngleDecay = Angle.FromDegrees(5);
+
+    /// <summary>
+    /// The maximum angle allowed for <see cref="CurrentAngle"/>
+    /// </summary>
+    [ViewVariables, DataField("maxAngle")]
+    public Angle MaxAngle = Angle.FromDegrees(5);
+
+    /// <summary>
+    /// The minimum angle allowed for <see cref="CurrentAngle"/>
+    /// </summary>
+    [ViewVariables, DataField("minAngle")]
+    public Angle MinAngle = Angle.FromDegrees(1);
+
+    #endregion
 
     /// <summary>
     /// Where the gun is being requested to shoot.

@@ -25,7 +25,7 @@ public abstract partial class SharedGunSystem
     private void OnChamberMagazineExamine(EntityUid uid, ChamberMagazineAmmoProviderComponent component, ExaminedEvent args)
     {
         var (count, _) = GetChamberMagazineCountCapacity(component);
-        args.PushMarkup($"It has [color={AmmoExamineColor}]{count}[/color] shots remaining.");
+        args.PushMarkup(Loc.GetString("gun-magazine-examine", ("color", AmmoExamineColor), ("count", count)));
     }
 
     private bool TryTakeChamberEntity(EntityUid uid, [NotNullWhen(true)] out EntityUid? entity)

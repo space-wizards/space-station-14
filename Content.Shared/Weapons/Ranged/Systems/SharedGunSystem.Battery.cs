@@ -48,7 +48,7 @@ public abstract partial class SharedGunSystem
 
     private void OnBatteryExamine(EntityUid uid, BatteryAmmoProviderComponent component, ExaminedEvent args)
     {
-        args.PushMarkup($"It has enough charge for [color={AmmoExamineColor}]{component.Shots} shots.");
+        args.PushMarkup(Loc.GetString("gun-battery-examine", ("color", AmmoExamineColor), ("count", component.Shots)));
     }
 
     private void OnBatteryTakeAmmo(EntityUid uid, BatteryAmmoProviderComponent component, TakeAmmoEvent args)
