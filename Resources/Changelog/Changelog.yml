@@ -1,11 +1,4 @@
 Entries:
-- author: Peptide90
-  changes:
-  - {message: 'Pillar V5 is here! All new engineering and bar. Lots of QoL improvements.
-      Less space, more interesting corridors etc. See changelog on github PR 6883.',
-    type: Add}
-  id: 1125
-  time: '2022-02-25T23:18:08.0000000+00:00'
 - author: moony
   changes:
   - {message: 'Three new events have been introduced that will hopefully increase
@@ -2997,3 +2990,9 @@ Entries:
       Station''s role as a low to midpop map.', type: Add}
   id: 1624
   time: '2022-05-29T16:18:16.0000000+00:00'
+- author: youarereadingthis
+  changes:
+  - {message: Examine text for Substations+SMES for when they are unanchored and thus
+      cannot be connected to the power net., type: Add}
+  id: 1625
+  time: '2022-05-30T08:55:54.0000000+00:00'
