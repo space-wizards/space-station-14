@@ -25,6 +25,7 @@
     size: 24
     sprite: Objects/Weapons/Guns/Launchers/china_lake.rsi
   - type: Gun
+    fireRate: 1
     selectedMode: Safety
     availableModes:
       - Safety
@@ -35,7 +36,6 @@
     whitelist:
       tags:
         - Grenade
-    fireRate: 1
     capacity: 3
     proto: GrenadeFrag
     soundInsert:
@@ -64,8 +64,8 @@
   - type: BallisticAmmoProvider
     whitelist:
       tags:
-        - AmmoRocket
-    proto: AmmoRocket
+        - Cartridge
+    proto: CartridgeRocket
     capacity: 1
     soundInsert:
       path: /Audio/Weapons/Guns/MagIn/batrifle_magin.ogg
@@ -94,16 +94,16 @@
     sprite: Objects/Weapons/Guns/Launchers/rocket.rsi
   - type: Gun
     fireRate: 6
+    selectedMode: FullAuto
+    availableModes:
+      - FullAuto
     soundGunshot:
       path: /Audio/Weapons/Guns/Gunshots/rpgfire.ogg
   - type: BallisticAmmoProvider
     whitelist:
       tags:
-        - AmmoRocket
-    proto: AmmoRocketSlow
-    selectedMode: FullAuto
-    availableModes:
-      - FullAuto
+        - CartridgeRocket
+    proto: CartridgeRocketSlow
     soundInsert:
       path: /Audio/Weapons/Guns/MagIn/batrifle_magin.ogg
   - type: Appearance

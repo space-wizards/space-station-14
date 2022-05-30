@@ -4502,7 +4502,7 @@ entities:
     parent: 17
     type: Transform
 - uid: 424
-  type: SLMagnum
+  type: SpeedLoaderMagnum
   components:
   - pos: -0.3838296,12.437054
     parent: 17

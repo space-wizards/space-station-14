@@ -17,8 +17,6 @@
     - FullAuto
     soundGunshot:
       path: /Audio/Weapons/Guns/Gunshots/smg.ogg
-    soundRack:
-      path: /Audio/Weapons/Guns/Cock/smg_cock.ogg
   - type: ChamberMagazineAmmoProvider
   - type: ItemSlots
     slots:
@@ -113,12 +111,12 @@
     slots:
       gun-magazine:
         name: GunMagazine
-        startingItem: MagazineSubMachineGunMagnum
+        startingItem: MagazineMagnumSubMachineGun
         insertSound: /Audio/Weapons/Guns/MagIn/smg_magin.ogg
         ejectSound: /Audio/Weapons/Guns/MagOut/smg_magout.ogg
         whitelist:
           tags:
-            - MagazineSubMachineGunMagnum
+            - MagazineMagnumSubMachineGun
       gun-chamber:
         name: GunChamber
         startingItem: CartridgeMagnum
@@ -178,12 +176,12 @@
     slots:
       gun-magazine:
         name: GunMagazine
-        startingItem: MagazineSubMachineGunMagnumRubber
+        startingItem: MagazineMagnumSubMachineGunRubber
         insertSound: /Audio/Weapons/Guns/MagIn/smg_magin.ogg
         ejectSound: /Audio/Weapons/Guns/MagOut/smg_magout.ogg
         whitelist:
           tags:
-            - MagazineSubMachineGunMagnum
+            - MagazineMagnumSubMachineGun
       gun-chamber:
         name: GunChamber
         startingItem: CartridgeMagnumRubber

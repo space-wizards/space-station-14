@@ -6805,7 +6805,7 @@ entities:
         ent: 2494
     type: ContainerContainer
 - uid: 317
-  type: MagazineMagnumSmgHV
+  type: MagazineMagnumSubMachineGunHV
   components:
   - pos: -5.2132025,-16.34101
     parent: 47
@@ -6857,7 +6857,7 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 321
-  type: MagazineMagnumSmgHV
+  type: MagazineMagnumSubMachineGunHV
   components:
   - parent: 318
     type: Transform
@@ -6974,7 +6974,7 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 335
-  type: MagazineMagnumSmgHV
+  type: MagazineMagnumSubMachineGunHV
   components:
   - parent: 312
     type: Transform
@@ -6987,7 +6987,7 @@ entities:
         ents: []
     type: ContainerContainer
 - uid: 336
-  type: MagazineMagnumSmgHV
+  type: MagazineMagnumSubMachineGunHV
   components:
   - parent: 314
     type: Transform
@@ -7000,7 +7000,7 @@ entities:
         ents: []
     type: ContainerContainer
 - uid: 337
-  type: MagazineMagnumSmgHV
+  type: MagazineMagnumSubMachineGunHV
   components:
   - pos: -7.9944525,-16.34101
     parent: 47
@@ -7014,7 +7014,7 @@ entities:
         ents: []
     type: ContainerContainer
 - uid: 338
-  type: MagazineMagnumSmgHV
+  type: MagazineMagnumSubMachineGunHV
   components:
   - pos: -6.9632025,-16.40351
     parent: 47
@@ -7028,7 +7028,7 @@ entities:
         ents: []
     type: ContainerContainer
 - uid: 339
-  type: MagazineMagnumSmgHV
+  type: MagazineMagnumSubMachineGunHV
   components:
   - pos: -5.8694525,-16.37226
     parent: 47
@@ -7042,7 +7042,7 @@ entities:
         ents: []
     type: ContainerContainer
 - uid: 340
-  type: MagazineMagnumSmgHV
+  type: MagazineMagnumSubMachineGunHV
   components:
   - pos: -5.2132025,-14.434759
     parent: 47
@@ -7203,7 +7203,7 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 358
-  type: MagazineMagnumSmgHV
+  type: MagazineMagnumSubMachineGunHV
   components:
   - parent: 316
     type: Transform
@@ -7229,7 +7229,7 @@ entities:
         ents: []
     type: ContainerContainer
 - uid: 360
-  type: MagazineMagnumSmgHV
+  type: MagazineMagnumSubMachineGunHV
   components:
   - pos: -5.6507025,-16.37226
     parent: 47
@@ -7264,7 +7264,7 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 364
-  type: MagazineMagnumSmgHV
+  type: MagazineMagnumSubMachineGunHV
   components:
   - pos: -5.4007025,-16.34101
     parent: 47
@@ -7306,7 +7306,7 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 369
-  type: MagazineMagnumSmgHV
+  type: MagazineMagnumSubMachineGunHV
   components:
   - pos: -5.4944525,-16.40351
     parent: 47
@@ -7787,7 +7787,7 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 427
-  type: SLMagnum
+  type: SpeedLoaderMagnum
   components:
   - pos: 6.272612,2.5336695
     parent: 47
@@ -7801,7 +7801,7 @@ entities:
         ents: []
     type: ContainerContainer
 - uid: 428
-  type: SLMagnum
+  type: SpeedLoaderMagnum
   components:
   - pos: 6.7432265,2.5595322
     parent: 47
@@ -25677,7 +25677,7 @@ entities:
         ents: []
     type: ContainerContainer
 - uid: 2492
-  type: MagazineMagnumSmg
+  type: MagazineMagnumSubMachineGun
   components:
   - parent: 312
     type: Transform
@@ -25688,7 +25688,7 @@ entities:
         ents: []
     type: ContainerContainer
 - uid: 2493
-  type: MagazineMagnumSmg
+  type: MagazineMagnumSubMachineGun
   components:
   - parent: 314
     type: Transform
@@ -25699,7 +25699,7 @@ entities:
         ents: []
     type: ContainerContainer
 - uid: 2494
-  type: MagazineMagnumSmg
+  type: MagazineMagnumSubMachineGun
   components:
   - parent: 316
     type: Transform
@@ -25710,7 +25710,7 @@ entities:
         ents: []
     type: ContainerContainer
 - uid: 2495
-  type: MagazineMagnumSmg
+  type: MagazineMagnumSubMachineGun
   components:
   - parent: 318
     type: Transform

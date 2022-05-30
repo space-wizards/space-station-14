@@ -95,7 +95,7 @@
   name: ammunition box (.20 rifle high-velocity)
   components:
   - type: BallisticAmmoProvider
-    proto: CartridgeRifleHV
+    proto: CartridgeRifleHighVelocity
   - type: Sprite
     layers:
     - state: base

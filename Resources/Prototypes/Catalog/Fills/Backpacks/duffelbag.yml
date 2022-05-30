@@ -50,7 +50,7 @@
   - type: StorageFill
     contents:
       - id: WeaponSubMachineGunC20r
-      - id: MagazinePistolSmg
+      - id: MagazinePistolSubMachineGun
         amount: 2
 #     - id: SMGSuppressor
 
@@ -63,7 +63,7 @@
   - type: StorageFill
     contents:
       - id: WeaponRevolverPredator
-      - id: SLMagnum
+      - id: SpeedLoaderMagnum
         amount: 2
 
 - type: entity
@@ -75,7 +75,7 @@
   - type: StorageFill
     contents:
       - id: WeaponLightMachineGunL6
-      - id: MagazineLRifleBox
+      - id: MagazineLightRifleBox
 
 - type: entity
   parent: ClothingBackpackDuffelSyndicateAmmo
@@ -104,7 +104,7 @@
   - type: StorageFill
     contents:
       - id: WeaponRifleBulldog
-      - id: MagazineSRifle
+      - id: MagazineRifle
         amount: 2
       - id: GrenadeBlast
         amount: 2

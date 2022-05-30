@@ -475,7 +475,7 @@
   - type: BallisticAmmoProvider
     whitelist:
       tags:
-        - Rocket
+        - CartridgeRocket
     capacity: 1
     soundInsert:
       path: /Audio/Weapons/drawbow2.ogg

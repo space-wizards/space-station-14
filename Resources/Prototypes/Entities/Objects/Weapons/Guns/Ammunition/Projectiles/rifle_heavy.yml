@@ -1,7 +1,7 @@
 - type: entity
   id: BulletHeavyRifle
   name: bullet (.20 rifle)
-  parent: BulletBase
+  parent: BaseBullet
   noSpawn: true
   components:
   - type: Projectile

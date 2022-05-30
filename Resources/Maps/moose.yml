@@ -20160,7 +20160,7 @@ entities:
         ent: 1021
     type: ContainerContainer
 - uid: 1021
-  type: MagazineMagnumSmgRubber
+  type: MagazineMagnumSubMachineGunRubber
   components:
   - parent: 1020
     type: Transform
@@ -20171,7 +20171,7 @@ entities:
         ents: []
     type: ContainerContainer
 - uid: 1022
-  type: MagazineMagnumSmg
+  type: MagazineMagnumSubMachineGun
   components:
   - pos: 19.756498,0.3705299
     parent: 61
@@ -20181,7 +20181,7 @@ entities:
         ents: []
     type: ContainerContainer
 - uid: 1023
-  type: MagazineMagnumSmgRubber
+  type: MagazineMagnumSubMachineGunRubber
   components:
   - pos: 19.568998,0.3705299
     parent: 61

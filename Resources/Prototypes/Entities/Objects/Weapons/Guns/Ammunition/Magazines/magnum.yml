@@ -28,14 +28,14 @@
       zeroVisible: false
 
 - type: entity
-  id: BaseMagazineSubMachineGunMagnum
+  id: BaseMagazineMagnumSubMachineGun
   name: "Drozd magazine (.40 magnum)"
   parent: BaseItem
   abstract: true
   components:
   - type: Tag
     tags:
-      - MagazineSubMachineGunMagnum
+      - MagazineMagnumSubMachineGun
   - type: BallisticAmmoProvider
     whitelist:
       tags:
@@ -127,9 +127,9 @@
       map: ["enum.GunVisualLayers.Mag"]
 
 - type: entity
-  id: MagazineSubMachineGunMagnum
+  id: MagazineMagnumSubMachineGun
   name: "Drozd magazine (.40 magnum)"
-  parent: BaseMagazineSubMachineGunMagnum
+  parent: BaseMagazineMagnumSubMachineGun
   components:
   - type: BallisticAmmoProvider
     proto: CartridgeMagnum
@@ -141,9 +141,9 @@
       map: ["enum.GunVisualLayers.Mag"]
 
 - type: entity
-  id: MagazineSubMachineGunMagnumHighVelocity
+  id: MagazineMagnumSubMachineGunHighVelocity
   name: "Drozd magazine (.40 magnum High-Velocity)"
-  parent: BaseMagazineSubMachineGunMagnum
+  parent: BaseMagazineMagnumSubMachineGun
   components:
   - type: BallisticAmmoProvider
     proto: CartridgeMagnumHighVelocity
@@ -155,9 +155,9 @@
       map: ["enum.GunVisualLayers.Mag"]
 
 - type: entity
-  id: MagazineSubMachineGunMagnumPractice
+  id: MagazineMagnumSubMachineGunPractice
   name: "Drozd magazine (.40 magnum practice)"
-  parent: BaseMagazineSubMachineGunMagnum
+  parent: BaseMagazineMagnumSubMachineGun
   components:
   - type: BallisticAmmoProvider
     proto: CartridgeMagnumPractice
@@ -169,9 +169,9 @@
       map: ["enum.GunVisualLayers.Mag"]
 
 - type: entity
-  id: MagazineSubMachineGunMagnumRubber
+  id: MagazineMagnumSubMachineGunRubber
   name: "Drozd magazine (.40 magnum rubber)"
-  parent: BaseMagazineSubMachineGunMagnum
+  parent: BaseMagazineMagnumSubMachineGun
   components:
   - type: BallisticAmmoProvider
     proto: CartridgeMagnumRubber

@@ -1,6 +1,6 @@
 - type: entity
   name: flare gun
-  parent: LauncherBase
+  parent: BaseWeaponLauncher
   id: WeaponFlareGun
   description: A compact, single-shot pistol that fires shotgun shells.
   components:

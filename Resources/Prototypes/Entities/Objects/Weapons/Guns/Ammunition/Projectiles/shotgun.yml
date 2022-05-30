@@ -19,8 +19,8 @@
   parent: BaseBullet
   components:
   - type: Sprite
-    sprite: Objects/Weapons/Guns/Projectiles/buckshot.rsi
-    state: base
+    sprite: Objects/Weapons/Guns/Projectiles/projectiles2.rsi
+    state: buckshot
   - type: Projectile
     damage:
       types:
@@ -36,8 +36,8 @@
   parent: BaseBullet
   components:
   - type: Sprite
-    sprite: Objects/Weapons/Guns/Projectiles/buckshot.rsi
-    state: base
+    sprite: Objects/Weapons/Guns/Projectiles/projectiles2.rsi
+    state: buckshot
   - type: Projectile
     damage:
       types:
@@ -50,8 +50,8 @@
   parent: BaseBulletFlash
   components:
   - type: Sprite
-    sprite: Objects/Weapons/Guns/Projectiles/buckshot.rsi
-    state: base
+    sprite: Objects/Weapons/Guns/Projectiles/projectiles2.rsi
+    state: buckshot
   - type: Projectile
     damage:
       types:
@@ -64,8 +64,8 @@
   parent: BaseBullet
   components:
   - type: Sprite
-    sprite: Objects/Weapons/Guns/Projectiles/flare_buckshot.rsi
-    state: base
+    sprite: Objects/Weapons/Guns/Projectiles/projectiles2.rsi
+    state: buckshot-flare
   - type: Projectile
     damage:
       groups:
@@ -85,8 +85,8 @@
   parent: BaseBulletPractice
   components:
   - type: Sprite
-    sprite: Objects/Weapons/Guns/Projectiles/buckshot.rsi
-    state: base
+    sprite: Objects/Weapons/Guns/Projectiles/projectiles2.rsi
+    state: buckshot
   - type: Projectile
     damage:
       types:
@@ -99,8 +99,8 @@
   parent: BaseBulletPractice
   components:
   - type: Sprite
-    sprite: Objects/Weapons/Guns/Projectiles/buckshot.rsi
-    state: base
+    sprite: Objects/Weapons/Guns/Projectiles/projectiles2.rsi
+    state: buckshot
   - type: Projectile
     damage:
       types:
@@ -125,8 +125,8 @@
   parent: BaseBullet
   components:
   - type: Sprite
-    sprite: Objects/Weapons/Guns/Projectiles/flare_buckshot.rsi
-    state: base
+    sprite: Objects/Weapons/Guns/Projectiles/projectiles2.rsi
+    state: buckshot-flare
   - type: Projectile
     damage:
       groups:

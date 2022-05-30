@@ -30,7 +30,7 @@
   components:
   - type: Tag
     tags:
-      - AmmoBoxHeavyRifle
+      - MagazineHeavyRifleBox
   - type: BallisticAmmoProvider
     proto: CartridgeMinigun
     capacity: 1000

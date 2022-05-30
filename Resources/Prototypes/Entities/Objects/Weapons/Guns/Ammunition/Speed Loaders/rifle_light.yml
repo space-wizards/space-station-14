@@ -1,16 +1,15 @@
 #- type: entity
-#  id: SLLRifle
+#  id: SpeedLoaderLightRifle
 #  name: "speed loader (.30 rifle)"
 #  parent: BaseItem
 #  components:
 #  - type: SpeedLoader
 #    caliber: LRifle
 #    capacity: 5
-#    fillPrototype: CartridgeLightRifle
-#
+#    proto: CartridgeLightRifle
 #  - type: Sprite
 #    netsync: false
-#    sprite: Objects/Weapons/Guns/Ammunition/SpeedLoaders/LRifle/l_rifle_sl.rsi
+#    sprite: Objects/Weapons/Guns/Ammunition/SpeedLoaders/LightRifle/l_rifle_sl.rsi
 #    layers:
 #    - state: base
 #      map: ["enum.GunVisualLayers.Base"]

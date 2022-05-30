@@ -57,14 +57,14 @@
       zeroVisible: false
 
 - type: entity
-  id: MagazineSubMachineGunPistolBase  # Yeah it's weird but it's pistol caliber
+  id: BaseMagazinePistolSubMachineGun  # Yeah it's weird but it's pistol caliber
   name: SMG magazine (.35 auto)
   parent: BaseItem
   abstract: true
   components:
   - type: Tag
     tags:
-      - MagazineSubMachineGunPistol
+      - MagazinePistolSubMachineGun
   - type: BallisticAmmoProvider
     whitelist:
       tags:
@@ -86,7 +86,7 @@
       zeroVisible: false
 
 - type: entity
-  id: MagazineSubMachineGunPistolTopMounted
+  id: MagazinePistolSubMachineGunTopMounted
   name: WT550 magazine (.35 auto top-mounted)
   parent: BaseItem
   components:
@@ -117,7 +117,7 @@
 - type: entity
   id: MagazinePistolCalicoTopMounted
   name: Calico magazine (.35 auto top-mounted)
-  parent: BaseMagazineSubMachineGunPistol
+  parent: BaseMagazinePistolSubMachineGun
   components:
   - type: Tag
     tags:
@@ -207,7 +207,7 @@
       map: ["enum.GunVisualLayers.Mag"]
 
 - type: entity
-  id: MagazineHighCapacityPistol
+  id: MagazinePistolHighCapacity
   name: machine pistol magazine (.35 auto)
   parent: BaseMagazinePistolHighCapacity
   components:
@@ -221,7 +221,7 @@
       map: ["enum.GunVisualLayers.Mag"]
 
 - type: entity
-  id: MagazineHighCapacityPistolHighVelocity
+  id: MagazinePistolHighCapacityHighVelocity
   name: machine pistol magazine (.35 auto high-velocity)
   parent: BaseMagazinePistolHighCapacity
   components:
@@ -235,7 +235,7 @@
       map: ["enum.GunVisualLayers.Mag"]
 
 - type: entity
-  id: MagazineHighCapacityPistolPractice
+  id: MagazinePistolHighCapacityPractice
   name: machine pistol magazine (.35 auto practice)
   parent: BaseMagazinePistolHighCapacity
   components:
@@ -249,7 +249,7 @@
       map: ["enum.GunVisualLayers.Mag"]
 
 - type: entity
-  id: MagazineHighCapacityPistolRubber
+  id: MagazinePistolHighCapacityRubber
   name: machine pistol magazine (.35 auto rubber)
   parent: BaseMagazinePistolHighCapacity
   components:
@@ -265,10 +265,9 @@
 - type: entity
   id: MagazinePistolSubMachineGun
   name: SMG magazine (.35 auto)
-  parent: MagazineSubMachineGunPistolBase
+  parent: BaseMagazinePistolSubMachineGun
   components:
   - type: BallisticAmmoProvider
-    fireRate: 1
     capacity: 30
     proto: CartridgePistol
     whitelist:
@@ -284,9 +283,9 @@
       map: ["enum.GunVisualLayers.Mag"]
 
 - type: entity
-  id: MagazineSubMachineGunPistolFlash
+  id: MagazinePistolSubMachineGunFlash
   name: SMG magazine (.35 auto flash)
-  parent: MagazineSubMachineGunPistolBase
+  parent: BaseMagazinePistolSubMachineGun
   components:
   - type: BallisticAmmoProvider
     proto: CartridgePistolFlash
@@ -298,9 +297,9 @@
       map: ["enum.GunVisualLayers.Mag"]
 
 - type: entity
-  id: MagazineSubMachineGunPistolHighVelocity
+  id: MagazinePistolSubMachineGunHighVelocity
   name: SMG magazine (.35 auto high-velocity)
-  parent: MagazineSubMachineGunPistolBase
+  parent: BaseMagazinePistolSubMachineGun
   components:
   - type: BallisticAmmoProvider
     proto: CartridgePistolHighVelocity
@@ -312,9 +311,9 @@
       map: ["enum.GunVisualLayers.Mag"]
 
 - type: entity
-  id: MagazineSubMachineGunPistolPractice
+  id: MagazinePistolSubMachineGunPractice
   name: SMG magazine (.35 auto practice)
-  parent: MagazineSubMachineGunPistolBase
+  parent: BaseMagazinePistolSubMachineGun
   components:
   - type: BallisticAmmoProvider
     proto: CartridgePistolPractice
@@ -326,9 +325,9 @@
       map: ["enum.GunVisualLayers.Mag"]
 
 - type: entity
-  id: MagazineSubMachineGunPistolRubber
+  id: MagazinePistolSubMachineGunRubber
   name: SMG magazine (.35 auto rubber)
-  parent: MagazineSubMachineGunPistolBase
+  parent: BaseMagazinePistolSubMachineGun
   components:
   - type: BallisticAmmoProvider
     proto: CartridgePistolRubber

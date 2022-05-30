@@ -7,6 +7,6 @@ namespace Content.Shared.Weapons.Ranged;
 [RegisterComponent, NetworkedComponent, ComponentReference(typeof(BatteryAmmoProviderComponent))]
 public sealed class HitscanBatteryAmmoProviderComponent : BatteryAmmoProviderComponent
 {
-    [ViewVariables(VVAccess.ReadWrite), DataField("proto", required: true, customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
+    [ViewVariables(VVAccess.ReadWrite), DataField("proto", required: true, customTypeSerializer: typeof(PrototypeIdSerializer<HitscanPrototype>))]
     public string Prototype = default!;
 }

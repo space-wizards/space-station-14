@@ -49,7 +49,7 @@
   name: cartridge (.40 magnum practice)
   parent: BaseCartridgeMagnum
   components:
-  - type: Cartridge
+  - type: CartridgeAmmo
     proto: BulletMagnumPractice
 
 - type: entity
@@ -57,5 +57,5 @@
   name: cartridge (.40 magnum rubber)
   parent: BaseCartridgeMagnum
   components:
-  - type: Cartridge
+  - type: CartridgeAmmo
     proto: BulletMagnumRubber

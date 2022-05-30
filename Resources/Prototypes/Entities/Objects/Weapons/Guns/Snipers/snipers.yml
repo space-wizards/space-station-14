@@ -15,7 +15,6 @@
   - type: AmmoCounter
   - type: Gun
     fireRate: 1
-    autoCycle: false
     selectedMode: SemiAuto
     availableModes:
     - Safety
@@ -23,7 +22,7 @@
     soundGunshot:
       path: /Audio/Weapons/Guns/Gunshots/sniper.ogg
   - type: BallisticAmmoProvider
-    fireRate: 1
+    autoCycle: false
     capacity: 10
     proto: CartridgeLightRifle
     whitelist:
@@ -40,7 +39,6 @@
     sprite: Objects/Weapons/Guns/Snipers/bolt_gun_wood.rsi
   - type: Item
     sprite: Objects/Weapons/Guns/Snipers/bolt_gun_wood.rsi
-
 
 - type: entity
   name: Hristov
@@ -69,10 +67,11 @@
     sprite: Objects/Weapons/Guns/Snipers/musket.rsi
   - type: Item
     icon: Objects/Weapons/Guns/Snipers/musket.rsi
-  - type: BallisticAmmoProvider
+  - type: Gun
     selectedMode: SemiAuto
     availableModes:
     - SemiAuto
+  - type: BallisticAmmoProvider
     whitelist:
       tags:
       - CartridgeAntiMaterial
@@ -90,9 +89,8 @@
     - type: Item
       icon: Objects/Weapons/Guns/Snipers/flintlock.rsi
     - type: BallisticAmmoProvider
-      caliber: AntiMaterial
       whitelist:
         tags:
           - CartridgeAntiMaterial
-        capacity: 1
-        proto: CartridgeAntiMaterial
+      capacity: 1
+      proto: CartridgeAntiMaterial

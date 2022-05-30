@@ -27,7 +27,7 @@
 #  parent: CapAmmoBase
 #  components:
 #  - type: SpeedLoader
-#    fillPrototype: CartridgeCap
+#    proto: CartridgeCap
 #  - type: Sprite
 #    sprite: Objects/Fun/caps.rsi
 #

@@ -55,6 +55,7 @@
     soundGunshot:
       path: /Audio/Weapons/Guns/Gunshots/rifle2.ogg
   - type: ChamberMagazineAmmoProvider
+  - type: ItemSlots
     slots:
       gun-magazine:
         name: GunMagazine
@@ -97,7 +98,7 @@
     slots:
       gun-magazine:
         name: GunMagazine
-        startingItem: MagazineSRifle
+        startingItem: MagazineRifle
         insertSound: /Audio/Weapons/Guns/MagIn/batrifle_magin.ogg
         ejectSound: /Audio/Weapons/Guns/MagOut/batrifle_magout.ogg
         whitelist:

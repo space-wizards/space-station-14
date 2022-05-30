@@ -73,7 +73,7 @@
       path: "/Audio/Effects/flash_bang.ogg"
 
 - type: entity
-  id: BaseBulletHV
+  id: BaseBulletHighVelocity
   name: base bullet high-velocity
   parent: BaseBullet
   noSpawn: true

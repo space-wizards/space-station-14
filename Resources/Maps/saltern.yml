@@ -286,7 +286,7 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 14
-  type: MagazineMagnumSmgRubber
+  type: MagazineMagnumSubMachineGunRubber
   components:
   - parent: 128
     type: Transform
@@ -614,7 +614,7 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 56
-  type: MagazineMagnumSmg
+  type: MagazineMagnumSubMachineGun
   components:
   - pos: -13.293642,21.563671
     parent: 852
@@ -697,7 +697,7 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 66
-  type: MagazineMagnumSmgRubber
+  type: MagazineMagnumSubMachineGunRubber
   components:
   - pos: -13.668642,21.563671
     parent: 852
@@ -5181,7 +5181,7 @@ entities:
   - fixtures: []
     type: Fixtures
 - uid: 446
-  type: MagazineMagnumSmgRubber
+  type: MagazineMagnumSubMachineGunRubber
   components:
   - pos: -13.840517,21.563671
     parent: 852
@@ -24024,7 +24024,7 @@ entities:
     parent: 852
     type: Transform
 - uid: 1603
-  type: MagazineMagnumSmgRubber
+  type: MagazineMagnumSubMachineGunRubber
   components:
   - parent: 4233
     type: Transform
@@ -59908,7 +59908,7 @@ entities:
         ents: []
     type: ContainerContainer
 - uid: 5156
-  type: MagazineMagnumSmg
+  type: MagazineMagnumSubMachineGun
   components:
   - pos: -13.481142,21.563671
     parent: 852
@@ -98346,7 +98346,4 @@ entities:
     parent: 852
     type: Transform
   - sprite: Structures/Machines/VendingMachines/cigs.rsi
-    type: Sprite
-  - enabled: False
-    type: AmbientSound
-...
+    typ

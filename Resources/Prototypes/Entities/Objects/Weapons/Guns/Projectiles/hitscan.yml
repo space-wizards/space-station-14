@@ -18,13 +18,13 @@
     types:
       Heat: 15
   muzzleFlash:
-    sprite: Objects/Weapons/Guns/projectiles2.rsi
+    sprite: Objects/Weapons/Guns/Projectiles/projectiles.rsi
     state: muzzle_laser
   travelFlash:
-    sprite: Objects/Weapons/Guns/projectiles2.rsi
+    sprite: Objects/Weapons/Guns/Projectiles/projectiles.rsi
     state: beam
   impactFlash:
-    sprite: Objects/Weapons/Guns/projectiles2.rsi
+    sprite: Objects/Weapons/Guns/Projectiles/projectiles.rsi
     state: impact_laser
 
 - type: hitscan
@@ -33,13 +33,13 @@
     types:
       Heat: 20
   muzzleFlash:
-    sprite: Objects/Weapons/Guns/projectiles2.rsi
+    sprite: Objects/Weapons/Guns/Projectiles/projectiles.rsi
     state: muzzle_laser
   travelFlash:
-    sprite: Objects/Weapons/Guns/projectiles2.rsi
+    sprite: Objects/Weapons/Guns/Projectiles/projectiles.rsi
     state: beam
   impactFlash:
-    sprite: Objects/Weapons/Guns/projectiles2.rsi
+    sprite: Objects/Weapons/Guns/Projectiles/projectiles.rsi
     state: impact_laser
 
 - type: hitscan
@@ -48,13 +48,13 @@
     types:
       Heat: 25
   muzzleFlash:
-    sprite: Objects/Weapons/Guns/projectiles2.rsi
+    sprite: Objects/Weapons/Guns/Projectiles/projectiles.rsi
     state: muzzle_blue
   travelFlash:
-    sprite: Objects/Weapons/Guns/projectiles2.rsi
+    sprite: Objects/Weapons/Guns/Projectiles/projectiles.rsi
     state: beam_blue
   impactFlash:
-    sprite: Objects/Weapons/Guns/projectiles2.rsi
+    sprite: Objects/Weapons/Guns/Projectiles/projectiles.rsi
     state: impact_blue
 
 - type: hitscan
@@ -63,13 +63,13 @@
     types:
       Heat: 45
   muzzleFlash:
-    sprite: Objects/Weapons/Guns/projectiles2.rsi
+    sprite: Objects/Weapons/Guns/Projectiles/projectiles.rsi
     state: muzzle_beam_heavy
   travelFlash:
-    sprite: Objects/Weapons/Guns/projectiles2.rsi
+    sprite: Objects/Weapons/Guns/Projectiles/projectiles.rsi
     state: beam_heavy
   impactFlash:
-    sprite: Objects/Weapons/Guns/projectiles2.rsi
+    sprite: Objects/Weapons/Guns/Projectiles/projectiles.rsi
     state: impact_beam_heavy
 
 - type: hitscan
@@ -78,13 +78,13 @@
     types:
       Heat: 60
   muzzleFlash:
-    sprite: Objects/Weapons/Guns/projectiles2.rsi
+    sprite: Objects/Weapons/Guns/Projectiles/projectiles.rsi
     state: muzzle_omni
   travelFlash:
-    sprite: Objects/Weapons/Guns/projectiles2.rsi
+    sprite: Objects/Weapons/Guns/Projectiles/projectiles.rsi
     state: beam_omni
   impactFlash:
-    sprite: Objects/Weapons/Guns/projectiles2.rsi
+    sprite: Objects/Weapons/Guns/Projectiles/projectiles.rsi
     state: impact_omni
 
 # When Xrays can actually go through walls should nerf the damage and bump the battery
@@ -94,11 +94,11 @@
     types:
       Heat: 60
   muzzleFlash:
-    sprite: Objects/Weapons/Guns/projectiles2.rsi
+    sprite: Objects/Weapons/Guns/Projectiles/projectiles.rsi
     state: muzzle_xray
   travelFlash:
-    sprite: Objects/Weapons/Guns/projectiles2.rsi
+    sprite: Objects/Weapons/Guns/Projectiles/projectiles.rsi
     state: xray
   impactFlash:
-    sprite: Objects/Weapons/Guns/projectiles2.rsi
+    sprite: Objects/Weapons/Guns/Projectiles/projectiles.rsi
     state: impact_xray

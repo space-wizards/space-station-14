@@ -43,7 +43,7 @@
       map: ["enum.GunVisualLayers.Mag"]
 
 - type: entity
-  id: BaseMagazineCaselessRiflePistol
+  id: BaseMagazinePistolCaselessRifle
   name: "pistol magazine (.25 caseless)"
   parent: BaseMagazineCaselessRifle
   abstract: true
@@ -80,9 +80,9 @@
     sprite: Objects/Weapons/Guns/Ammunition/Magazine/CaselessRifle/10x24.rsi
 
 - type: entity
-  id: MagazineCaselessRiflePistol
+  id: MagazinePistolCaselessRifle
   name: "pistol magazine (.25 caseless)"
-  parent: BaseMagazineCaselessRiflePistol
+  parent: BaseMagazinePistolCaselessRifle
   components:
   - type: BallisticAmmoProvider
     proto: CartridgeCaselessRifle
@@ -103,9 +103,9 @@
 # No flash
 
 - type: entity
-  id: MagazineCaselessRiflePistolHighVelocity
+  id: MagazinePistolCaselessRifleHighVelocity
   name: "pistol magazine (.25 caseless high-velocity)"
-  parent: BaseMagazineCaselessRiflePistol
+  parent: BaseMagazinePistolCaselessRifle
   components:
   - type: BallisticAmmoProvider
     proto: CartridgeCaselessRifleHighVelocity
@@ -124,9 +124,9 @@
       zeroVisible: false
 
 - type: entity
-  id: MagazineCaselessRiflePistolPractice
+  id: MagazinePistolCaselessRiflePractice
   name: "pistol magazine (.25 caseless practice)"
-  parent: BaseMagazineCaselessRiflePistol
+  parent: BaseMagazinePistolCaselessRifle
   components:
   - type: BallisticAmmoProvider
     proto: CartridgeCaselessRiflePractice
@@ -145,9 +145,9 @@
       zeroVisible: false
 
 - type: entity
-  id: MagazineCaselessRiflePistolRubber
+  id: MagazinePistolCaselessRifleRubber
   name: "pistol magazine (.25 caseless rubber)"
-  parent: BaseMagazineCaselessRiflePistol
+  parent: BaseMagazinePistolCaselessRifle
   components:
   - type: BallisticAmmoProvider
     proto: CartridgeCaselessRifleRubber
@@ -185,7 +185,7 @@
   parent: BaseMagazineCaselessRifle
   components:
   - type: BallisticAmmoProvider
-    proto: CartridgeCaselessRifleHV
+    proto: CartridgeCaselessRifleHighVelocity
   - type: Sprite
     layers:
     - state: high_velocity
@@ -257,7 +257,7 @@
   parent: BaseMagazineCaselessRifleShort
   components:
   - type: BallisticAmmoProvider
-    proto: CartridgeCaselessRifleHV
+    proto: CartridgeCaselessRifleHighVelocity
     capacity: 20
   - type: Sprite
     layers:

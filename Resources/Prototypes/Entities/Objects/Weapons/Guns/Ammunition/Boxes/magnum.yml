@@ -52,7 +52,7 @@
   name: ammunition box (.40 magnum high-velocity)
   components:
   - type: BallisticAmmoProvider
-    proto: CartridgeMagnumHV
+    proto: CartridgeMagnumHighVelocity
   - type: Sprite
     layers:
     - state: base

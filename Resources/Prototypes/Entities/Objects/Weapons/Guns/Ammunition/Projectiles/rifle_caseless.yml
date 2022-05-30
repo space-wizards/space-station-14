@@ -21,7 +21,7 @@
         Blunt: 3
 
 - type: entity
-  id: BulletCaseRifleHV
+  id: BulletCaselessRifleHighVelocity
   name: bullet (.25 caseless high-velocity)
   parent: BaseBulletHighVelocity
   noSpawn: true
@@ -32,7 +32,7 @@
         Piercing: 32
 
 - type: entity
-  id: BulletCaseRiflePractice
+  id: BulletCaselessRiflePractice
   name: bullet (.25 caseless practice)
   parent: BaseBulletPractice
   noSpawn: true
@@ -43,7 +43,7 @@
         Blunt: 2
 
 - type: entity
-  id: BulletCaseRifleRubber
+  id: BulletCaselessRifleRubber
   name: bullet (.25 caseless rubber)
   parent: BaseBulletRubber
   noSpawn: true

@@ -6509,7 +6509,7 @@ entities:
       BoltActionBarrel-chamber-container: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 474
-  type: SLMagnumHV
+  type: SpeedLoaderMagnumHV
   components:
   - pos: 30.60944,-4.6134
     parent: 4

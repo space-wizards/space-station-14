@@ -32,7 +32,7 @@ public sealed class CartridgeAmmoComponent : AmmoComponent
     /// <summary>
     /// How much the ammo spreads when shot, in degrees. Does nothing if count is 0.
     /// </summary>
-    [ViewVariables(VVAccess.ReadWrite), DataField("spreadRatio")]
+    [ViewVariables(VVAccess.ReadWrite), DataField("spread")]
     public float Spread = 10f;
 
     /// <summary>

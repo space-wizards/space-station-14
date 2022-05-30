@@ -117,7 +117,7 @@
   name: ammunition box (.25 caseless high-velocity)
   components:
   - type: BallisticAmmoProvider
-    proto: CartridgeCaselessRifleHV
+    proto: CartridgeCaselessRifleHighVelocity
   - type: Sprite
     layers:
     - state: base

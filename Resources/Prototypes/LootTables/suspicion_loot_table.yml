@@ -81,16 +81,6 @@
   - id: WeaponSniperHristov
     amount: 0
     maxAmount: 5
-
-  - id: RedLaser
-    amount: 0
-    maxAmount: 5
-  - id: RedHeavyLaser
-    amount: 0
-    maxAmount: 1
-  - id: XrayLaser
-    amount: 0
-    maxAmount: 1
   - id: WeaponLaserGun
     amount: 0
     maxAmount: 1
@@ -137,15 +127,15 @@
 
 
     # Spawn a bunch of ammo around!
-  - id: MagazineSRifle
+  - id: MagazineRifle
     maxAmount: 15
-  - id: MagazineClRifle
+  - id: MagazineCaselessRifle
     maxAmount: 15
-  - id: MagazineClRifle10x24
+  - id: MagazineCaselessRifle10x24
     maxAmount: 15
-  - id: MagazineClRiflePistol
+  - id: MagazinePistolCaselessRifle
     maxAmount: 15
-  - id: MagazineLRifle
+  - id: MagazineLightRifle
     maxAmount: 15
   - id: MagazinePistolCalicoTopMounted
     maxAmount: 15
@@ -153,13 +143,13 @@
     maxAmount: 15
   - id: MagazinePistol
     maxAmount: 15
-  - id: MagazineHCPistol
+  - id: MagazinePistolHighCapacity
     maxAmount: 15
   - id: MagazineMagnum
     maxAmount: 15
-  - id: MagazineMagnumSmg
+  - id: MagazineMagnumSubMachineGun
     maxAmount: 15
-  - id: RocketAmmo
+  - id: CartridgeRocket
     maxAmount: 15
   - id: GrenadeFrag
     maxAmount: 15

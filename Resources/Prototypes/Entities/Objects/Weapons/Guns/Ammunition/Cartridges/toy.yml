@@ -19,7 +19,7 @@
 - type: entity
   id: CartridgeCap
   name: cap gun cartridge
-  parent: CartridgeCapBase
+  parent: BaseCartridgeCap
   components:
   - type: CartridgeAmmo
     proto: BulletCap

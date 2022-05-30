@@ -42,7 +42,7 @@
   parent: BaseCartridgePistol
   components:
   - type: CartridgeAmmo
-    proto: BulletPistolHV
+    proto: BulletPistolHighVelocity
 
 - type: entity
   id: CartridgePistolPractice

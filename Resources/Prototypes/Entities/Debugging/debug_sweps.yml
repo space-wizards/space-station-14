@@ -39,7 +39,7 @@
 - type: entity
   id: BulletDebug
   name: bang, ded bullet
-  parent: BulletBase
+  parent: BaseBullet
   noSpawn: true
   suffix: DEBUG
   components:
@@ -54,7 +54,7 @@
 - type: entity
   id: CartridgeDebug
   name: bang, ded cartridge
-  parent: CartridgePistolBase
+  parent: BaseCartridgePistol
   suffix: DEBUG
   components:
   - type: Tag

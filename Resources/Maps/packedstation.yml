@@ -78813,7 +78813,7 @@ entities:
         ent: 11936
     type: ContainerContainer
 - uid: 7532
-  type: MagazineMagnumSmgRubber
+  type: MagazineMagnumSubMachineGunRubber
   components:
   - parent: 7531
     type: Transform
@@ -78842,7 +78842,7 @@ entities:
         ent: 11937
     type: ContainerContainer
 - uid: 7534
-  type: MagazineMagnumSmgRubber
+  type: MagazineMagnumSubMachineGunRubber
   components:
   - parent: 7533
     type: Transform
@@ -78855,7 +78855,7 @@ entities:
         ents: []
     type: ContainerContainer
 - uid: 7535
-  type: MagazineMagnumSmgRubber
+  type: MagazineMagnumSubMachineGunRubber
   components:
   - pos: 38.784615,26.467943
     parent: 2
@@ -78869,7 +78869,7 @@ entities:
         ents: []
     type: ContainerContainer
 - uid: 7536
-  type: MagazineMagnumSmgRubber
+  type: MagazineMagnumSubMachineGunRubber
   components:
   - pos: 38.440865,26.499193
     parent: 2
@@ -78883,7 +78883,7 @@ entities:
         ents: []
     type: ContainerContainer
 - uid: 7537
-  type: MagazineMagnumSmgRubber
+  type: MagazineMagnumSubMachineGunRubber
   components:
   - rot: 2.006034628720954E-05 rad
     pos: 38.26498,26.51372
@@ -78898,7 +78898,7 @@ entities:
         ents: []
     type: ContainerContainer
 - uid: 7538
-  type: MagazineMagnumSmgRubber
+  type: MagazineMagnumSubMachineGunRubber
   components:
   - pos: 38.534615,26.483568
     parent: 2
@@ -78912,7 +78912,7 @@ entities:
         ents: []
     type: ContainerContainer
 - uid: 7539
-  type: MagazineMagnumSmgRubber
+  type: MagazineMagnumSubMachineGunRubber
   components:
   - pos: 38.597115,26.483568
     parent: 2
@@ -78926,7 +78926,7 @@ entities:
         ents: []
     type: ContainerContainer
 - uid: 7540
-  type: MagazineMagnumSmgRubber
+  type: MagazineMagnumSubMachineGunRubber
   components:
   - pos: 38.73774,26.483568
     parent: 2
@@ -126736,7 +126736,7 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 11936
-  type: MagazineMagnumSmgRubber
+  type: MagazineMagnumSubMachineGunRubber
   components:
   - parent: 7531
     type: Transform
@@ -126747,7 +126747,7 @@ entities:
         ents: []
     type: ContainerContainer
 - uid: 11937
-  type: MagazineMagnumSmgRubber
+  type: MagazineMagnumSubMachineGunRubber
   components:
   - parent: 7533
     type: Transform

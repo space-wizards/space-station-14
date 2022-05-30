@@ -28,7 +28,7 @@
 #  parent: SLPistolBase
 #  components:
 #  - type: SpeedLoader
-#    fillPrototype: CartridgePistol
+#    proto: CartridgePistol
 #
 #  - type: Sprite
 #    sprite: Objects/Weapons/Guns/Ammunition/SpeedLoaders/Pistol/pistol_sl.rsi
@@ -39,18 +39,18 @@
 #  parent: SLPistolBase
 #  components:
 #  - type: SpeedLoader
-#    fillPrototype: CartridgePistolFlash
+#    proto: CartridgePistolFlash
 #
 #  - type: Sprite
 #    sprite: Objects/Weapons/Guns/Ammunition/SpeedLoaders/Pistol/pistol_sl_flash.rsi
 #
 #- type: entity
-#  id: SLPistolHV
+#  id: SLPistolHighVelocity
 #  name: "speed loader (.35 auto high-velocity)"
 #  parent: SLPistolBase
 #  components:
 #  - type: SpeedLoader
-#    fillPrototype: CartridgePistolHV
+#    proto: CartridgePistolHighVelocity
 #
 #  - type: Sprite
 #    sprite: Objects/Weapons/Guns/Ammunition/SpeedLoaders/Pistol/pistol_sl_hv.rsi
@@ -61,7 +61,7 @@
 #  parent: SLPistolBase
 #  components:
 #  - type: SpeedLoader
-#    fillPrototype: CartridgePistolPractice
+#    proto: CartridgePistolPractice
 #
 #  - type: Sprite
 #    sprite: Objects/Weapons/Guns/Ammunition/SpeedLoaders/Pistol/pistol_sl_practice.rsi
@@ -72,7 +72,7 @@
 #  parent: SLPistolBase
 #  components:
 #  - type: SpeedLoader
-#    fillPrototype: CartridgePistolRubber
+#    proto: CartridgePistolRubber
 #
 #  - type: Sprite
 #    sprite: Objects/Weapons/Guns/Ammunition/SpeedLoaders/Pistol/pistol_sl_rubber.rsi

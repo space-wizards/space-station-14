@@ -25,7 +25,7 @@
   components:
   - type: BallisticAmmoProvider
     capacity: 200
-    fillPrototype: CartridgeLightRifle
+    proto: CartridgeLightRifle
   - type: Sprite
     layers:
     - state: base-b
@@ -45,7 +45,7 @@
   name: ammunition box (.30 rifle)
   components:
   - type: BallisticAmmoProvider
-    fillPrototype: CartridgeLightRifle
+    proto: CartridgeLightRifle
   - type: Sprite
     layers:
     - state: base
@@ -55,11 +55,11 @@
 
 - type: entity
   parent: BaseMagazineBoxLightRifle
-  id: BoxLightRifleBoxHV
+  id: BoxLightRifleBoxHighVelocity
   name: ammunition box (.30 rifle high-velocity)
   components:
   - type: BallisticAmmoProvider
-    fillPrototype: CartridgeLightRifleHV
+    proto: CartridgeLightRifleHighVelocity
   - type: Sprite
     layers:
     - state: base
@@ -74,7 +74,7 @@
   name: ammunition box (.30 rifle practice)
   components:
   - type: BallisticAmmoProvider
-    fillPrototype: CartridgeLightRiflePractice
+    proto: CartridgeLightRiflePractice
   - type: Sprite
     layers:
     - state: base
@@ -89,7 +89,7 @@
   name: ammunition box (.30 rifle rubber)
   components:
   - type: BallisticAmmoProvider
-    fillPrototype: CartridgeLightRifleRubber
+    proto: CartridgeLightRifleRubber
   - type: Sprite
     layers:
     - state: base

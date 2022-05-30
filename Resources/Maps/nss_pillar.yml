@@ -26823,7 +26823,7 @@ entities:
     parent: 130
     type: Transform
 - uid: 878
-  type: MagazineMagnumSmgRubber
+  type: MagazineMagnumSubMachineGunRubber
   components:
   - parent: 4756
     type: Transform
@@ -120519,7 +120519,7 @@ entities:
         ent: 9839
     type: ContainerContainer
 - uid: 9839
-  type: MagazineMagnumSmgRubber
+  type: MagazineMagnumSubMachineGunRubber
   components:
   - parent: 9838
     type: Transform
@@ -120543,7 +120543,7 @@ entities:
         ent: 9841
     type: ContainerContainer
 - uid: 9841
-  type: MagazineMagnumSmgRubber
+  type: MagazineMagnumSubMachineGunRubber
   components:
   - parent: 9840
     type: Transform
@@ -120584,7 +120584,7 @@ entities:
     parent: 130
     type: Transform
 - uid: 9847
-  type: BoxMagazineMagnumSmgRubber
+  type: BoxMagazineMagnumSubMachineGunRubber
   components:
   - pos: -50.537224,27.537354
     parent: 130
@@ -120606,7 +120606,7 @@ entities:
     parent: 130
     type: Transform
 - uid: 9850
-  type: BoxMagazineMagnumSmg
+  type: BoxMagazineMagnumSubMachineGun
   components:
   - pos: -50.50613,33.499382
     parent: 130

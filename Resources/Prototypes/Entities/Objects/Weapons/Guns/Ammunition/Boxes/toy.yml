@@ -5,7 +5,9 @@
   name: foamdart box
   components:
   - type: BallisticAmmoProvider
-    caliber: Rocket
+    whitelist:
+      tags:
+        - CartridgeRocket
     capacity: 30
   - type: Sprite
     netsync: false
@@ -18,7 +20,7 @@
   components:
   - type: BallisticAmmoProvider
     capacity: 40
-    fillPrototype: BulletDonkSoft
+    proto: BulletDonkSoft
   - type: Sprite
     sprite: Objects/Fun/toys.rsi
     state: foambox
@@ -30,7 +32,7 @@
   components:
   - type: BallisticAmmoProvider
     capacity: 20
-    fillPrototype: CartridgeCap
+    proto: CartridgeCap
   - type: Sprite
     sprite: Objects/Storage/boxes.rsi
     state: box

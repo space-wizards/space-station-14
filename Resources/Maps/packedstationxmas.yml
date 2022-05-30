@@ -77457,7 +77457,7 @@ entities:
         ent: 7558
     type: ContainerContainer
 - uid: 7558
-  type: MagazineMagnumSmgRubber
+  type: MagazineMagnumSubMachineGunRubber
   components:
   - parent: 7557
     type: Transform
@@ -77481,7 +77481,7 @@ entities:
         ent: 7560
     type: ContainerContainer
 - uid: 7560
-  type: MagazineMagnumSmgRubber
+  type: MagazineMagnumSubMachineGunRubber
   components:
   - parent: 7559
     type: Transform
@@ -77492,7 +77492,7 @@ entities:
         ents: []
     type: ContainerContainer
 - uid: 7561
-  type: MagazineMagnumSmgRubber
+  type: MagazineMagnumSubMachineGunRubber
   components:
   - pos: 38.784615,26.467943
     parent: 0
@@ -77504,7 +77504,7 @@ entities:
         ents: []
     type: ContainerContainer
 - uid: 7562
-  type: MagazineMagnumSmgRubber
+  type: MagazineMagnumSubMachineGunRubber
   components:
   - pos: 38.440865,26.499193
     parent: 0
@@ -77516,7 +77516,7 @@ entities:
         ents: []
     type: ContainerContainer
 - uid: 7563
-  type: MagazineMagnumSmgRubber
+  type: MagazineMagnumSubMachineGunRubber
   components:
   - rot: 2.006034628720954E-05 rad
     pos: 38.26498,26.51372
@@ -77529,7 +77529,7 @@ entities:
         ents: []
     type: ContainerContainer
 - uid: 7564
-  type: MagazineMagnumSmgRubber
+  type: MagazineMagnumSubMachineGunRubber
   components:
   - pos: 38.534615,26.483568
     parent: 0
@@ -77541,7 +77541,7 @@ entities:
         ents: []
     type: ContainerContainer
 - uid: 7565
-  type: MagazineMagnumSmgRubber
+  type: MagazineMagnumSubMachineGunRubber
   components:
   - pos: 38.597115,26.483568
     parent: 0
@@ -77553,7 +77553,7 @@ entities:
         ents: []
     type: ContainerContainer
 - uid: 7566
-  type: MagazineMagnumSmgRubber
+  type: MagazineMagnumSubMachineGunRubber
   components:
   - pos: 38.73774,26.483568
     parent: 0

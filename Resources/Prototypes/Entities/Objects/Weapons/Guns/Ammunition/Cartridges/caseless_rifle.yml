@@ -9,7 +9,7 @@
       - Cartridge
       - CartridgeCaselessRifle
   - type: CartridgeAmmo
-    proto: CaselessRifle
+    deleteOnSpawn: true
   - type: Sprite
     netsync: false
     noRot: false
@@ -28,7 +28,6 @@
   components:
   - type: CartridgeAmmo
     proto: BulletCaselessRifle
-    deleteOnSpawn: true
 
 - type: entity
   id: CartridgeCaselessRifleFlash
@@ -37,7 +36,6 @@
   components:
   - type: CartridgeAmmo
     proto: BulletCaselessRifleFlash
-    deleteOnSpawn: true
 
 - type: entity
   id: CartridgeCaselessRifleHighVelocity
@@ -46,7 +44,6 @@
   components:
   - type: CartridgeAmmo
     proto: BulletCaselessRifleHighVelocity
-    deleteOnSpawn: true
 
 - type: entity
   id: CartridgeCaselessRiflePractice
@@ -55,7 +52,6 @@
   components:
   - type: CartridgeAmmo
     proto: BulletCaselessRiflePractice
-    deleteOnSpawn: true
 
 - type: entity
   id: CartridgeCaselessRifleRubber
@@ -64,4 +60,3 @@
   components:
   - type: CartridgeAmmo
     proto: BulletCaselessRifleRubber
-    deleteOnSpawn: true

@@ -77,7 +77,7 @@
 
 - type: entity
   name: double-barreled shotgun
-  parent: LauncherBase
+  parent: BaseWeaponLauncher
   id: WeaponShotgunDoubleBarreled
   description: An immortal classic.
   components:
@@ -116,7 +116,7 @@
 
 - type: entity
   name: sawn-off shotgun
-  parent: LauncherBase
+  parent: BaseWeaponLauncher
   id: WeaponShotgunSawn
   description: Omar's coming!
   components:
@@ -125,7 +125,8 @@
   - type: Item
     size: 15
     sprite: Objects/Weapons/Guns/Shotguns/sawn.rsi
+  - type: Gun
+    fireRate: 8
   - type: BallisticAmmoProvider
     proto: ShellShotgun
-    fireRate: 8.0
     capacity: 2

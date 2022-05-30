@@ -61,7 +61,7 @@
         prob: 0.1
         # Interesting (1%)
         #  - Ammo
-      - id: BoxMagnum
+      - id: MagazineBoxMagnum
         prob: 0.01
         #  - #shinies
       - id: PowerCellLargeHyper
