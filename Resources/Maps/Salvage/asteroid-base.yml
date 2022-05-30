@@ -1688,7 +1688,7 @@ entities:
         ent: 218
     type: ContainerContainer
 - uid: 218
-  type: MagazineClRiflePistol
+  type: MagazinePistolCaselessRifle
   components:
   - parent: 217
     type: Transform

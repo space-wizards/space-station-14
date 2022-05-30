@@ -52254,7 +52254,7 @@ entities:
     parent: 106
     type: Transform
 - uid: 4145
-  type: MagazineMagnumSubMachineGunHV
+  type: MagazineMagnumSubMachineGunHighVelocity
   components:
   - pos: -44.708973,31.611404
     parent: 106
@@ -52264,7 +52264,7 @@ entities:
         ents: []
     type: ContainerContainer
 - uid: 4146
-  type: MagazineMagnumSubMachineGunHV
+  type: MagazineMagnumSubMachineGunHighVelocity
   components:
   - pos: -44.845993,31.611404
     parent: 106
@@ -88031,7 +88031,7 @@ entities:
     parent: 106
     type: Transform
 - uid: 7430
-  type: MagazineMagnumSubMachineGunHV
+  type: MagazineMagnumSubMachineGunHighVelocity
   components:
   - pos: -44.599598,31.611404
     parent: 106

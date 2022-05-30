@@ -3336,7 +3336,7 @@ entities:
         ents: []
     type: ContainerContainer
 - uid: 429
-  type: MagazinePistolSmg
+  type: MagazinePistolSubMachineGun
   components:
   - pos: -6.605512,7.638151
     parent: 179
@@ -3346,7 +3346,7 @@ entities:
         ents: []
     type: ContainerContainer
 - uid: 430
-  type: MagazinePistolSmg
+  type: MagazinePistolSubMachineGun
   components:
   - pos: -6.339887,7.669401
     parent: 179
@@ -3356,7 +3356,7 @@ entities:
         ents: []
     type: ContainerContainer
 - uid: 431
-  type: MagazinePistolSmg
+  type: MagazinePistolSubMachineGun
   components:
   - pos: -6.027387,7.622526
     parent: 179
