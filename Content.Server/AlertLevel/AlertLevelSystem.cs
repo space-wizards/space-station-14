@@ -148,7 +148,12 @@ public sealed class AlertLevelSystem : EntitySystem
         }
 
         // Announcement text. Is passed into announcementFull.
-        var announcement = Loc.GetString(detail.Announcement);
+        var announcement = detail.Announcement;
+
+        if (Loc.TryGetString(detail.Announcement, out var locAnnouncement))
+        {
+            announcement = locAnnouncement;
+        }
 
         // The full announcement to be spat out into chat.
         var announcementFull = Loc.GetString("alert-level-announcement", ("name", name), ("announcement", announcement));
