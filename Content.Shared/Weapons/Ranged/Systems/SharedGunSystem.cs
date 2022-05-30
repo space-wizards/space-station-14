@@ -43,7 +43,7 @@ public abstract partial class SharedGunSystem : EntitySystem
 
     protected const float MuzzleFlashLifetime = 1f;
     protected const float InteractNextFire = 0.3f;
-    protected const float SafetyNextFire = 0.5;
+    protected const double SafetyNextFire = 0.5;
     public const float EjectOffset = 0.4f;
     public string AmmoExamineColor = "yellow";
     public string FireRateExamineColor = "yellow";
