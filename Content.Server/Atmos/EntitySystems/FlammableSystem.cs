@@ -24,7 +24,7 @@ namespace Content.Server.Atmos.EntitySystems
         [Dependency] private readonly TemperatureSystem _temperatureSystem = default!;
         [Dependency] private readonly DamageableSystem _damageableSystem = default!;
         [Dependency] private readonly AlertsSystem _alertsSystem = default!;
-        [Dependency] private readonly AdminLogSystem _logSystem = default!;
+        [Dependency] private readonly IAdminLogManager _adminLogger = default!;
 
         private const float MinimumFireStacks = -10f;
         private const float MaximumFireStacks = 20f;
@@ -151,7 +151,7 @@ namespace Content.Server.Atmos.EntitySystems
             if (!flammable.OnFire)
                 return;
 
-            _logSystem.Add(LogType.Flammable, $"{ToPrettyString(flammable.Owner):entity} stopped being on fire damage");
+            _adminLogger.Add(LogType.Flammable, $"{ToPrettyString(flammable.Owner):entity} stopped being on fire damage");
             flammable.OnFire = false;
             flammable.FireStacks = 0;
 
@@ -167,7 +167,7 @@ namespace Content.Server.Atmos.EntitySystems
 
             if (flammable.FireStacks > 0 && !flammable.OnFire)
             {
-                _logSystem.Add(LogType.Flammable, $"{ToPrettyString(flammable.Owner):entity} is on fire");
+                _adminLogger.Add(LogType.Flammable, $"{ToPrettyString(flammable.Owner):entity} is on fire");
                 flammable.OnFire = true;
             }
 
@@ -243,7 +243,7 @@ namespace Content.Server.Atmos.EntitySystems
                 {
                     // TODO FLAMMABLE: further balancing
                     var damageScale = Math.Min((int)flammable.FireStacks, 5);
-                    
+
                     if(TryComp(uid, out TemperatureComponent? temp))
                         _temperatureSystem.ChangeHeat(uid, 12500 * damageScale, false, temp);
 

@@ -15,7 +15,7 @@ namespace Content.Server.Temperature.Systems
         [Dependency] private readonly DamageableSystem _damageableSystem = default!;
         [Dependency] private readonly AtmosphereSystem _atmosphereSystem = default!;
         [Dependency] private readonly AlertsSystem _alertsSystem = default!;
-        [Dependency] private readonly AdminLogSystem _logSystem = default!;
+        [Dependency] private readonly IAdminLogManager _adminLogger= default!;
 
         /// <summary>
         ///     All the components that will have their damage updated at the end of the tick.
@@ -163,7 +163,7 @@ namespace Content.Server.Temperature.Systems
             {
                 if (!temperature.TakingDamage)
                 {
-                    _logSystem.Add(LogType.Temperature, $"{ToPrettyString(temperature.Owner):entity} started taking high temperature damage");
+                    _adminLogger.Add(LogType.Temperature, $"{ToPrettyString(temperature.Owner):entity} started taking high temperature damage");
                     temperature.TakingDamage = true;
                 }
 
@@ -175,7 +175,7 @@ namespace Content.Server.Temperature.Systems
             {
                 if (!temperature.TakingDamage)
                 {
-                    _logSystem.Add(LogType.Temperature, $"{ToPrettyString(temperature.Owner):entity} started taking low temperature damage");
+                    _adminLogger.Add(LogType.Temperature, $"{ToPrettyString(temperature.Owner):entity} started taking low temperature damage");
                     temperature.TakingDamage = true;
                 }
 
@@ -186,7 +186,7 @@ namespace Content.Server.Temperature.Systems
             }
             else if (temperature.TakingDamage)
             {
-                _logSystem.Add(LogType.Temperature, $"{ToPrettyString(temperature.Owner):entity} stopped taking temperature damage");
+                _adminLogger.Add(LogType.Temperature, $"{ToPrettyString(temperature.Owner):entity} stopped taking temperature damage");
                 temperature.TakingDamage = false;
             }
         }

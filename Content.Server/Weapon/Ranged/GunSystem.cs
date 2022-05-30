@@ -35,7 +35,7 @@ public sealed partial class GunSystem : EntitySystem
     [Dependency] private readonly IPrototypeManager _protoManager = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly ActionBlockerSystem  _blocker = default!;
-    [Dependency] private readonly AdminLogSystem _logs = default!;
+    [Dependency] private readonly IAdminLogManager _adminLogger = default!;
     [Dependency] private readonly AtmosphereSystem _atmos = default!;
     [Dependency] private readonly CameraRecoilSystem _recoil = default!;
     [Dependency] private readonly DamageableSystem _damageable = default!;
