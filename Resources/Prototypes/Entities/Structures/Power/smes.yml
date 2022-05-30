@@ -26,7 +26,6 @@
       maxCharge: 1000
       startingCharge: 0
     - type: ExaminableBattery
-    - type: ExaminableAnchoredPower
     - type: NodeContainer
       examinable: true
       nodes:

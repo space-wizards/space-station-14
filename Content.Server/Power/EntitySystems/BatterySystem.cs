@@ -12,7 +12,6 @@ namespace Content.Server.Power.EntitySystems
             base.Initialize();
 
             SubscribeLocalEvent<ExaminableBatteryComponent, ExaminedEvent>(OnExamine);
-            SubscribeLocalEvent<ExaminableAnchoredPowerComponent, ExaminedEvent>(OnAnchoredExamine);
 
             SubscribeLocalEvent<NetworkBatteryPreSync>(PreSync);
             SubscribeLocalEvent<NetworkBatteryPostSync>(PostSync);
@@ -37,17 +36,6 @@ namespace Content.Server.Power.EntitySystems
                     )
                 );
             }
-        }
-
-        private void OnAnchoredExamine(EntityUid uid, ExaminableAnchoredPowerComponent component, ExaminedEvent args)
-        {
-            if (!Comp<TransformComponent>(uid).Anchored)
-                args.PushMarkup(
-                    Loc.GetString(
-                        "examinable-anchored-power-unconnected",
-                        ("target", uid)
-                    )
-                );
         }
 
         private void PreSync(NetworkBatteryPreSync ev)
