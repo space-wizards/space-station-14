@@ -21,9 +21,21 @@
       announcement: alert-level-yellow-announcement
       sound: /Audio/Misc/notice1.ogg
       color: Yellow
+    gamma:
+      announcement: alert-level-gamma-announcement
+      selectable: false
+      sound: /Audio/Misc/siren.ogg
+      disableSelection: true
+      color: PaleVioletRed
     delta:
       announcement: alert-level-delta-announcement
       selectable: false
       sound: /Audio/Misc/delta.ogg
       disableSelection: true
       color: DarkRed
+    epsilon:
+      announcement: alert-level-epsilon-announcement
+      selectable: false
+      sound: /Audio/Misc/epsilon.ogg
+      disableSelection: true
+      color: DarkViolet
