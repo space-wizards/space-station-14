@@ -5,7 +5,6 @@
   description: A rooty tooty point and shooty.
   abstract: true
   components:
-  - type: AmmoCounter
   - type: Sprite
     netsync: false
     state: icon

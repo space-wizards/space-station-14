@@ -71,10 +71,7 @@ public sealed partial class GunSystem : SharedGunSystem
                             shotProjectiles.Add(uid);
                         }
 
-                        if (TryComp<AppearanceComponent>(cartridge.Owner, out var appearance))
-                            appearance.SetData(AmmoVisuals.Spent, true);
-
-                        cartridge.Spent = true;
+                        SetCartridgeSpent(cartridge, true);
                         MuzzleFlash(gun.Owner, cartridge, user);
 
                         if (cartridge.DeleteOnSpawn)
@@ -82,7 +79,7 @@ public sealed partial class GunSystem : SharedGunSystem
                     }
                     else
                     {
-                        PlaySound(gun.Owner, gun.SoundEmpty?.GetSound(), user);
+                        PlaySound(gun.Owner, gun.SoundEmpty?.GetSound(Random, ProtoManager), user);
                     }
 
                     // Something like ballistic might want to leave it in the container still
@@ -194,7 +191,7 @@ public sealed partial class GunSystem : SharedGunSystem
     {
         if (sound == null) return;
 
-        SoundSystem.Play(Filter.Pvs(gun).RemoveWhereAttachedEntity(e => e == user), sound, gun);
+        SoundSystem.Play(Filter.Pvs(gun, entityManager: EntityManager).RemoveWhereAttachedEntity(e => e == user), sound, gun);
     }
 
     protected override void Popup(string message, EntityUid? uid, EntityUid? user) {}

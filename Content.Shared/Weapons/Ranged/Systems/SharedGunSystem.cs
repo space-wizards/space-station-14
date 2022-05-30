@@ -15,6 +15,7 @@ using Robust.Shared.Audio;
 using Robust.Shared.Containers;
 using Robust.Shared.GameStates;
 using Robust.Shared.Map;
+using Robust.Shared.Network;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
@@ -28,6 +29,7 @@ public abstract partial class SharedGunSystem : EntitySystem
 {
     [Dependency] protected readonly IGameTiming Timing = default!;
     [Dependency] protected readonly IMapManager MapManager = default!;
+    [Dependency] private readonly INetManager _netManager = default!;
     [Dependency] protected readonly IPrototypeManager ProtoManager = default!;
     [Dependency] protected readonly IRobustRandom Random = default!;
     [Dependency] protected readonly ISharedAdminLogManager Logs = default!;
@@ -63,6 +65,7 @@ public abstract partial class SharedGunSystem : EntitySystem
         // Ammo providers
         InitializeBallistic();
         InitializeBattery();
+        InitializeCartridge();
         InitializeChamberMagazine();
         InitializeMagazine();
         InitializeRevolver();
@@ -229,7 +232,7 @@ public abstract partial class SharedGunSystem : EntitySystem
                 // Don't spam safety sounds at gun fire rate, play it at a reduced rate.
                 // May cause prediction issues? Needs more tweaking
                 gun.NextFire = TimeSpan.FromSeconds(Math.Max(lastFire.TotalSeconds + SafetyNextFire, gun.NextFire.TotalSeconds));
-                PlaySound(gun.Owner, gun.SoundEmpty?.GetSound(), user);
+                PlaySound(gun.Owner, gun.SoundEmpty?.GetSound(Random, ProtoManager), user);
                 Dirty(gun);
                 return;
             }
@@ -241,7 +244,7 @@ public abstract partial class SharedGunSystem : EntitySystem
         Shoot(gun, ev.Ammo, fromCoordinates, toCoordinates.Value, user);
 
         // Predicted sound moment
-        PlaySound(gun.Owner, gun.SoundGunshot?.GetSound(), user);
+        PlaySound(gun.Owner, gun.SoundGunshot?.GetSound(Random, ProtoManager), user);
         Dirty(gun);
     }
 
@@ -282,6 +285,16 @@ public abstract partial class SharedGunSystem : EntitySystem
     /// </summary>
     protected virtual void UpdateAmmoCount(EntityUid uid) {}
 
+    protected void SetCartridgeSpent(CartridgeAmmoComponent cartridge, bool spent)
+    {
+        if (cartridge.Spent != spent)
+            Dirty(cartridge);
+
+        cartridge.Spent = spent;
+        if (!TryComp<AppearanceComponent>(cartridge.Owner, out var appearance)) return;
+        appearance.SetData(AmmoVisuals.Spent, spent);
+    }
+
     /// <summary>
     /// Drops a single cartridge / shell
     /// </summary>
@@ -289,8 +302,8 @@ public abstract partial class SharedGunSystem : EntitySystem
         EntityUid entity,
         bool playSound = true)
     {
+        // TODO: Sound limit version.
         var offsetPos = (Random.NextVector2(EjectOffset));
-
         var xform = Transform(entity);
 
         var coordinates = xform.Coordinates;
@@ -303,7 +316,7 @@ public abstract partial class SharedGunSystem : EntitySystem
 
         if (TryComp<CartridgeAmmoComponent>(entity, out var cartridge))
         {
-            sound = cartridge.EjectSound?.GetSound();
+            sound = cartridge.EjectSound?.GetSound(Random, ProtoManager);
         }
 
         if (sound != null && playSound)

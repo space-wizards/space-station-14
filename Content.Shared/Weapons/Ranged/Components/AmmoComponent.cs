@@ -1,5 +1,6 @@
 using Content.Shared.Sound;
 using Content.Shared.Weapons.Ranged.Systems;
+using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 using Robust.Shared.Utility;
@@ -21,7 +22,7 @@ public class AmmoComponent : Component, IShootable
 /// <summary>
 /// Spawns another prototype to be shot instead of itself.
 /// </summary>
-[RegisterComponent, ComponentReference(typeof(AmmoComponent))]
+[RegisterComponent, NetworkedComponent, ComponentReference(typeof(AmmoComponent))]
 public sealed class CartridgeAmmoComponent : AmmoComponent
 {
     [ViewVariables(VVAccess.ReadWrite), DataField("proto", required: true, customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]

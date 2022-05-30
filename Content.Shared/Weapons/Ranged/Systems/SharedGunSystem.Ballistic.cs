@@ -41,7 +41,7 @@ public abstract partial class SharedGunSystem
         component.Entities.Add(args.Used);
         component.Container.Insert(args.Used);
         // Not predicted so
-        PlaySound(uid, component.SoundInsert?.GetSound(), args.User);
+        PlaySound(uid, component.SoundInsert?.GetSound(Random, ProtoManager), args.User);
         args.Handled = true;
         UpdateBallisticAppearance(component);
         Dirty(component);
@@ -53,7 +53,7 @@ public abstract partial class SharedGunSystem
 
         args.Verbs.Add(new Verb()
         {
-            Text = "Cycle",
+            Text = Loc.GetString("gun-ballistic-cycle"),
             Disabled = GetBallisticShots(component) == 0,
             Act = () => ManualCycle(component, Transform(uid).MapPosition, args.User),
         });
@@ -74,7 +74,7 @@ public abstract partial class SharedGunSystem
         }
 
         Dirty(component);
-        var sound = component.SoundRack?.GetSound();
+        var sound = component.SoundRack?.GetSound(Random, ProtoManager);
 
         if (sound != null)
             PlaySound(component.Owner, sound, user);

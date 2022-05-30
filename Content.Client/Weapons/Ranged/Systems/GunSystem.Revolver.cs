@@ -1,4 +1,6 @@
 using Content.Shared.Weapons.Ranged.Components;
+using Robust.Shared.Containers;
+using Robust.Shared.Utility;
 
 namespace Content.Client.Weapons.Ranged.Systems;
 
@@ -9,6 +11,17 @@ public sealed partial class GunSystem
         base.InitializeRevolver();
         SubscribeLocalEvent<RevolverAmmoProviderComponent, AmmoCounterControlEvent>(OnRevolverCounter);
         SubscribeLocalEvent<RevolverAmmoProviderComponent, UpdateAmmoCounterEvent>(OnRevolverAmmoUpdate);
+        SubscribeLocalEvent<RevolverAmmoProviderComponent, EntRemovedFromContainerMessage>(OnRevolverEntRemove);
+    }
+
+    private void OnRevolverEntRemove(EntityUid uid, RevolverAmmoProviderComponent component, EntRemovedFromContainerMessage args)
+    {
+        if (args.Container.ID != RevolverContainer) return;
+
+        // See ChamberMagazineAmmoProvider
+        if (!args.Entity.IsClientSide()) return;
+
+        QueueDel(args.Entity);
     }
 
     private void OnRevolverAmmoUpdate(EntityUid uid, RevolverAmmoProviderComponent component, UpdateAmmoCounterEvent args)
@@ -24,6 +37,6 @@ public sealed partial class GunSystem
 
     protected override void SpinRevolver(RevolverAmmoProviderComponent component, EntityUid? user = null)
     {
-        PlaySound(component.Owner, component.SoundSpin?.GetSound(), user);
+        PlaySound(component.Owner, component.SoundSpin?.GetSound(Random, ProtoManager), user);
     }
 }

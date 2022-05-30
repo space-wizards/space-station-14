@@ -12,10 +12,10 @@ public sealed partial class GunSystem
         base.InitializeChamberMagazine();
         SubscribeLocalEvent<ChamberMagazineAmmoProviderComponent, AmmoCounterControlEvent>(OnChamberMagazineCounter);
         SubscribeLocalEvent<ChamberMagazineAmmoProviderComponent, UpdateAmmoCounterEvent>(OnChamberMagazineAmmoUpdate);
-        SubscribeLocalEvent<ChamberMagazineAmmoProviderComponent, EntRemovedFromContainerMessage>(OnAmmoRemove);
+        SubscribeLocalEvent<ChamberMagazineAmmoProviderComponent, EntRemovedFromContainerMessage>(OnChamberEntRemove);
     }
 
-    private void OnAmmoRemove(EntityUid uid, ChamberMagazineAmmoProviderComponent component, EntRemovedFromContainerMessage args)
+    private void OnChamberEntRemove(EntityUid uid, ChamberMagazineAmmoProviderComponent component, EntRemovedFromContainerMessage args)
     {
         if (args.Container.ID != ChamberSlot) return;
 

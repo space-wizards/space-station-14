@@ -116,7 +116,7 @@ public abstract partial class SharedGunSystem
         if (component.AutoEject && args.Ammo.Count == 0)
         {
             EjectMagazine(component);
-            PlaySound(uid, component.SoundAutoEject?.GetSound(), args.User);
+            PlaySound(uid, component.SoundAutoEject?.GetSound(Random, ProtoManager), args.User);
         }
 
         UpdateMagazineAppearance(appearance, true, count, capacity);

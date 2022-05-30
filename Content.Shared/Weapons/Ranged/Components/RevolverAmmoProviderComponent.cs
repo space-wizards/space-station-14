@@ -1,4 +1,5 @@
 using Content.Shared.Sound;
+using Content.Shared.Whitelist;
 using Robust.Shared.Containers;
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
@@ -15,8 +16,8 @@ public sealed class RevolverAmmoProviderComponent : AmmoProviderComponent
      * for example 7 entities when revolver spawns (1 for the revolver and 6 cylinders) we can instead defer it.
      */
 
-    //[ViewVariables, DataField("whitelist", required: true)]
-    //public EntityWhitelist Whitelist = default!;
+    [ViewVariables, DataField("whitelist")]
+    public EntityWhitelist? Whitelist;
 
     public Container AmmoContainer = default!;
 
@@ -36,10 +37,10 @@ public sealed class RevolverAmmoProviderComponent : AmmoProviderComponent
     public string? FillPrototype = "CartridgeMagnum";
 
     [ViewVariables, DataField("soundEject")]
-    public SoundSpecifier SoundEject = new SoundPathSpecifier("/Audio/Weapons/Guns/MagOut/revolver_magout.ogg");
+    public SoundSpecifier? SoundEject = new SoundPathSpecifier("/Audio/Weapons/Guns/MagOut/revolver_magout.ogg");
 
     [ViewVariables, DataField("soundInsert")]
-    public SoundSpecifier SoundInsert = new SoundPathSpecifier("/Audio/Weapons/Guns/MagIn/revolver_magin.ogg");
+    public SoundSpecifier? SoundInsert = new SoundPathSpecifier("/Audio/Weapons/Guns/MagIn/revolver_magin.ogg");
 
     [ViewVariables, DataField("soundSpin")]
     public SoundSpecifier SoundSpin = new SoundPathSpecifier("/Audio/Weapons/Guns/Misc/revolver_spin.ogg");

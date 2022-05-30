@@ -137,10 +137,7 @@ public sealed partial class GunSystem : SharedGunSystem
                 case CartridgeAmmoComponent cartridge:
                     if (!cartridge.Spent)
                     {
-                        if (TryComp<AppearanceComponent>(cartridge.Owner, out var appearance))
-                            appearance.SetData(AmmoVisuals.Spent, true);
-
-                        cartridge.Spent = true;
+                        SetCartridgeSpent(cartridge, true);
                         MuzzleFlash(gun.Owner, cartridge, user);
 
                         if (cartridge.DeleteOnSpawn)
@@ -148,7 +145,7 @@ public sealed partial class GunSystem : SharedGunSystem
                     }
                     else
                     {
-                        PlaySound(gun.Owner, gun.SoundEmpty?.GetSound(), user);
+                        PlaySound(gun.Owner, gun.SoundEmpty?.GetSound(Random, ProtoManager), user);
                     }
 
                     if (cartridge.Owner.IsClientSide())
