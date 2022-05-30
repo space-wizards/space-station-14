@@ -11,6 +11,8 @@ using Content.Server.Station.Systems;
 using Content.Server.Traitor;
 using Content.Shared.CCVar;
 using Content.Shared.MobState;
+using Content.Shared.Random;
+using Content.Shared.Random.Helpers;
 using Content.Shared.Roles;
 using Robust.Server.Maps;
 using Robust.Server.Player;
@@ -39,9 +41,14 @@ public sealed class ZombieRuleSystem : GameRuleSystem
     [Dependency] private readonly NukeSystem _nukeSystem = default!;
     [Dependency] private readonly NukeCodeSystem _nukeCodeSystem = default!;
 
+    private const string ZombieEventsWeightedRandomID = "ZombieEvents";
+
     private const string PatientZeroPrototypeID = "PatientZero";
+    
+
     private const string InitialZombieVirusPrototype = "ZombieInfection";
 
+    private string? _midRoundEvent;
     private Dictionary<Mind.Mind, bool> _aliveNukeops = new();
     private bool _opsWon;
 
@@ -79,6 +86,7 @@ public sealed class ZombieRuleSystem : GameRuleSystem
     private void OnJobAssigned(RulePlayerJobsAssignedEvent ev)
     {
         InfectInitialPlayers();
+        ChooseMidRoundEvent();
     }
 
     private void OnPlayersSpawning(RulePlayerSpawningEvent ev)
@@ -238,7 +246,23 @@ public sealed class ZombieRuleSystem : GameRuleSystem
     /// EVENTS
     /// These are all the functions that handle midround events
     /// that can occur during zombie mode
-    
+    private void ChooseMidRoundEvent()
+    {
+        switch (_prototypeManager.Index<WeightedRandomPrototype>(ZombieEventsWeightedRandomID).Pick(_random))
+        {
+            case ("Nuke"):
+                UnlockNuke();
+                break;
+            case ("ERT"):
+                SpawnShuttle("/maps/dart.yml");
+                break;
+            case ("CBURN"):
+                SpawnShuttle("/maps/infiltrator.yml");
+                break;
+        }
+    }
+
+
     /// <summary>
     /// This event announces the nuke code and spawns
     /// the disk inside of it. This is for round end

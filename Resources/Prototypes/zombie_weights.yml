@@ -1,0 +1,8 @@
+#Each of these values are hardcoded into 
+#ZombieRuleSystem.cs because I'm a bastard. -emo
+- type: weightedRandom
+  id: ZombieEvents
+  weights:
+    Nuke: 0.50
+    ERT: 0.50
+    CBURN: 0.25
