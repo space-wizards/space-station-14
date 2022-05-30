@@ -16,6 +16,7 @@
   - Service
   - Medical
   - Research
+  - Cargo
 
 - type: startingGear
   id: ERTLeaderGear
@@ -44,10 +45,11 @@
     eyes: ClothingEyesGlassesSecurity
     gloves: ClothingHandsGlovesColorBlack
     outerClothing: ClothingOuterHardsuitERTLeader
+    suitStorage: OxygenTankFilled
     id: ERTLeaderPDA
     ears: ClothingHeadsetAltCommand
     belt: ClothingBeltSecurityFilled
-    pocket1: DoubleEmergencyOxygenTank # TODO change to exosuit slot when available
+    pocket1:
     pocket2:
 
 # Engineer
@@ -67,6 +69,7 @@
   - Service
   - Medical
   - Research
+  - Cargo
   
 - type: startingGear
   id: ERTEngineerGear
@@ -94,9 +97,10 @@
     eyes: ClothingEyesGlassesMeson
     gloves: ClothingHandsGlovesColorYellow
     outerClothing: ClothingOuterHardsuitERTEngineer
+    suitStorage: OxygenTankFilled
     id: ERTLeaderPDA
     belt: ClothingBeltChiefEngineerFilled
-    pocket1: DoubleEmergencyOxygenTank # TODO change to exosuit slot when available
+    pocket1:
     
 # Security
 - type: job
@@ -115,6 +119,7 @@
   - Service
   - Medical
   - Research
+  - Cargo
   
 - type: startingGear
   id: ERTSecurityGear
@@ -142,9 +147,10 @@
     eyes: ClothingEyesGlassesSecurity
     gloves: ClothingHandsGlovesColorBlack
     outerClothing: ClothingOuterHardsuitERTSecurity
+    suitStorage: OxygenTankFilled
     id: ERTLeaderPDA
     belt: ClothingBeltSecurityWebbing
-    pocket1: DoubleEmergencyOxygenTank # TODO change to exosuit slot when available
+    pocket1:
     
 # Medical
 - type: job
@@ -163,6 +169,7 @@
   - Service
   - Medical
   - Research
+  - Cargo
   
 - type: startingGear
   id: ERTMedicalGear
@@ -190,9 +197,10 @@
     eyes: ClothingEyesHudMedical
     gloves: ClothingHandsGlovesColorBlack
     outerClothing: ClothingOuterHardsuitERTMedical
+    suitStorage: OxygenTankFilled
     id: ERTLeaderPDA
     belt: ClothingBeltMedicalFilled
-    pocket1: DoubleEmergencyOxygenTank # TODO change to exosuit slot when available
+    pocket1:
     
 # Janitor
 - type: job
@@ -211,6 +219,7 @@
   - Service
   - Medical
   - Research
+  - Cargo
   
 - type: startingGear
   id: ERTJanitorGear
@@ -236,6 +245,7 @@
     mask: ClothingMaskBreath
     gloves: ClothingHandsGlovesColorBlack
     outerClothing: ClothingOuterHardsuitERTJanitor
+    suitStorage: OxygenTankFilled
     id: ERTLeaderPDA
     belt: ClothingBeltSecurityWebbing
-    pocket1: DoubleEmergencyOxygenTank # TODO change to exosuit slot when available
+    pocket1:
