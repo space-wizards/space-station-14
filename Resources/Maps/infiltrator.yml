@@ -7438,7 +7438,7 @@ entities:
     parent: 73
     type: Transform
 - uid: 739
-  type: MagazineHCPistolHV
+  type: MagazinePistolHighCapacityHighVelocity
   components:
   - pos: 1.6797396,-6.442282
     parent: 73
@@ -7585,7 +7585,7 @@ entities:
       Pressed: []
     type: SignalTransmitter
 - uid: 758
-  type: MagazineHCPistolHV
+  type: MagazinePistolHighCapacityHighVelocity
   components:
   - pos: 1.5391146,-6.442282
     parent: 73

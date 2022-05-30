@@ -6509,7 +6509,7 @@ entities:
       BoltActionBarrel-chamber-container: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 474
-  type: SpeedLoaderMagnumHV
+  type: SpeedLoaderMagnumHighVelocity
   components:
   - pos: 30.60944,-4.6134
     parent: 4
@@ -6527,42 +6527,42 @@ entities:
         - 476
     type: ContainerContainer
 - uid: 475
-  type: CartridgeMagnumHV
+  type: CartridgeMagnumHighVelocity
   components:
   - parent: 474
     type: Transform
   - canCollide: False
     type: Physics
 - uid: 476
-  type: CartridgeMagnumHV
+  type: CartridgeMagnumHighVelocity
   components:
   - parent: 474
     type: Transform
   - canCollide: False
     type: Physics
 - uid: 477
-  type: CartridgeMagnumHV
+  type: CartridgeMagnumHighVelocity
   components:
   - parent: 474
     type: Transform
   - canCollide: False
     type: Physics
 - uid: 478
-  type: CartridgeMagnumHV
+  type: CartridgeMagnumHighVelocity
   components:
   - parent: 474
     type: Transform
   - canCollide: False
     type: Physics
 - uid: 479
-  type: CartridgeMagnumHV
+  type: CartridgeMagnumHighVelocity
   components:
   - parent: 474
     type: Transform
   - canCollide: False
     type: Physics
 - uid: 480
-  type: CartridgeMagnumHV
+  type: CartridgeMagnumHighVelocity
   components:
   - parent: 474
     type: Transform

@@ -20,7 +20,7 @@
 # Boxes
 - type: entity
   parent: BaseMagazineBoxLightRifle
-  id: BoxLightRifleBigBox
+  id: MagazineBoxLightRifleBig
   name: ammunition box (.30 rifle)
   components:
   - type: BallisticAmmoProvider
@@ -41,7 +41,7 @@
 
 - type: entity
   parent: BaseMagazineBoxLightRifle
-  id: BoxLightRifleBox
+  id: MagazineBoxLightRifle
   name: ammunition box (.30 rifle)
   components:
   - type: BallisticAmmoProvider
@@ -55,7 +55,7 @@
 
 - type: entity
   parent: BaseMagazineBoxLightRifle
-  id: BoxLightRifleBoxHighVelocity
+  id: MagazineBoxLightRifleHighVelocity
   name: ammunition box (.30 rifle high-velocity)
   components:
   - type: BallisticAmmoProvider
@@ -70,7 +70,7 @@
 
 - type: entity
   parent: BaseMagazineBoxLightRifle
-  id: BoxLightRifleBoxPractice
+  id: MagazineBoxLightRiflePractice
   name: ammunition box (.30 rifle practice)
   components:
   - type: BallisticAmmoProvider
@@ -85,7 +85,7 @@
 
 - type: entity
   parent: BaseMagazineBoxLightRifle
-  id: BoxLightRifleBoxRubber
+  id: MagazineBoxLightRifleRubber
   name: ammunition box (.30 rifle rubber)
   components:
   - type: BallisticAmmoProvider

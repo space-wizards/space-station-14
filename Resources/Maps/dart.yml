@@ -2012,7 +2012,7 @@ entities:
       cellslot_cell_container: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 150
-  type: MagazineMagnumHV
+  type: MagazineMagnumHighVelocity
   components:
   - parent: 289
     type: Transform
@@ -2025,7 +2025,7 @@ entities:
         ents: []
     type: ContainerContainer
 - uid: 151
-  type: MagazineMagnumHV
+  type: MagazineMagnumHighVelocity
   components:
   - parent: 3
     type: Transform
@@ -4101,7 +4101,7 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 369
-  type: MagazineMagnumHV
+  type: MagazineMagnumHighVelocity
   components:
   - parent: 192
     type: Transform
@@ -4199,7 +4199,7 @@ entities:
     parent: 17
     type: Transform
 - uid: 383
-  type: MagazineMagnumHV
+  type: MagazineMagnumHighVelocity
   components:
   - parent: 227
     type: Transform
@@ -4601,7 +4601,7 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 434
-  type: MagazineMagnumHV
+  type: MagazineMagnumHighVelocity
   components:
   - parent: 261
     type: Transform
@@ -5732,7 +5732,7 @@ entities:
         ents: []
     type: ContainerContainer
 - uid: 568
-  type: MagazineMagnumHV
+  type: MagazineMagnumHighVelocity
   components:
   - parent: 491
     type: Transform
