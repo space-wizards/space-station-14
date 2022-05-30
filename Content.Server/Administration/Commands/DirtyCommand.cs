@@ -7,7 +7,7 @@ namespace Content.Server.Administration.Commands;
 public sealed class DirtyCommand : IConsoleCommand
 {
     public string Command => "dirty";
-    public string Description => "Marks all components on an entity as dirty";
+    public string Description => "Marks all components on an entity as dirty, if not specified, dirties everything";
     public string Help => $"Usage: {Command} [entityUid]";
 
     public async void Execute(IConsoleShell shell, string argStr, string[] args)
