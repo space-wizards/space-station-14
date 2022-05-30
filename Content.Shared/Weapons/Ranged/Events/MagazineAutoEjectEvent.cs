@@ -1,6 +1,6 @@
 using Robust.Shared.Serialization;
 
-namespace Content.Shared.Weapons.Ranged
+namespace Content.Shared.Weapons.Ranged.Events
 {
     /// <summary>
     /// This is sent if the MagazineBarrel AutoEjects the magazine

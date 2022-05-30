@@ -1,18 +1,22 @@
 using Content.Client.Items;
+using Content.Client.Weapons.Ranged.Components;
 using Content.Shared.Weapons.Ranged;
+using Content.Shared.Weapons.Ranged.Components;
+using Content.Shared.Weapons.Ranged.Events;
+using Content.Shared.Weapons.Ranged.Systems;
 using Robust.Client.Animations;
 using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
 using Robust.Client.Input;
 using Robust.Client.Player;
 using Robust.Shared.Audio;
-using Robust.Shared.Containers;
 using Robust.Shared.Input;
 using Robust.Shared.Map;
 using Robust.Shared.Player;
 using Robust.Shared.Utility;
+using SharedGunSystem = Content.Shared.Weapons.Ranged.Systems.SharedGunSystem;
 
-namespace Content.Client.Weapons.Ranged;
+namespace Content.Client.Weapons.Ranged.Systems;
 
 public sealed partial class GunSystem : SharedGunSystem
 {

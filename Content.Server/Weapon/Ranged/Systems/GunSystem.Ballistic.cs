@@ -1,7 +1,7 @@
-using Content.Shared.Weapons.Ranged;
+using Content.Shared.Weapons.Ranged.Components;
 using Robust.Shared.Map;
 
-namespace Content.Server.Weapon.Ranged;
+namespace Content.Server.Weapon.Ranged.Systems;
 
 public sealed partial class GunSystem
 {

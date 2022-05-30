@@ -1,4 +1,4 @@
-namespace Content.Server.Weapon.Ranged.Ammunition.Components
+namespace Content.Server.Weapon.Ranged.Components
 {
     [RegisterComponent]
     public sealed class ChemicalAmmoComponent : Component

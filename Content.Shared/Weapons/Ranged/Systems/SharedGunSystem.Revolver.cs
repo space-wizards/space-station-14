@@ -1,24 +1,35 @@
 using Content.Shared.Verbs;
+using Content.Shared.Weapons.Ranged.Components;
+using Content.Shared.Weapons.Ranged.Events;
 using Robust.Shared.Containers;
 using Robust.Shared.GameStates;
-using Robust.Shared.Map;
 using Robust.Shared.Serialization;
 using Robust.Shared.Utility;
 
-namespace Content.Shared.Weapons.Ranged;
+namespace Content.Shared.Weapons.Ranged.Systems;
 
 public partial class SharedGunSystem
 {
     protected virtual void InitializeRevolver()
     {
-        SubscribeLocalEvent<SharedRevolverAmmoProviderComponent, ComponentInit>(OnRevolverInit);
-        SubscribeLocalEvent<SharedRevolverAmmoProviderComponent, ComponentGetState>(OnRevolverGetState);
-        SubscribeLocalEvent<SharedRevolverAmmoProviderComponent, ComponentHandleState>(OnRevolverHandleState);
-        SubscribeLocalEvent<SharedRevolverAmmoProviderComponent, TakeAmmoEvent>(OnRevolverTakeAmmo);
-        SubscribeLocalEvent<SharedRevolverAmmoProviderComponent, GetVerbsEvent<Verb>>(OnRevolverVerbs);
+        SubscribeLocalEvent<RevolverAmmoProviderComponent, ComponentGetState>(OnRevolverGetState);
+        SubscribeLocalEvent<RevolverAmmoProviderComponent, ComponentHandleState>(OnRevolverHandleState);
+        SubscribeLocalEvent<RevolverAmmoProviderComponent, ComponentInit>(OnRevolverInit);
+        SubscribeLocalEvent<RevolverAmmoProviderComponent, TakeAmmoEvent>(OnRevolverTakeAmmo);
+        SubscribeLocalEvent<RevolverAmmoProviderComponent, GetVerbsEvent<Verb>>(OnRevolverVerbs);
     }
 
-    private void OnRevolverHandleState(EntityUid uid, SharedRevolverAmmoProviderComponent component, ref ComponentHandleState args)
+    private void OnRevolverGetState(EntityUid uid, RevolverAmmoProviderComponent component, ref ComponentGetState args)
+    {
+        args.State = new RevolverAmmoProviderComponentState
+        {
+            CurrentIndex = component.CurrentIndex,
+            AmmoSlots = component.AmmoSlots,
+            Chambers = component.Chambers,
+        };
+    }
+
+    private void OnRevolverHandleState(EntityUid uid, RevolverAmmoProviderComponent component, ref ComponentHandleState args)
     {
         if (args.Current is not RevolverAmmoProviderComponentState state) return;
 
@@ -45,17 +56,7 @@ public partial class SharedGunSystem
         }
     }
 
-    private void OnRevolverGetState(EntityUid uid, SharedRevolverAmmoProviderComponent component, ref ComponentGetState args)
-    {
-        args.State = new RevolverAmmoProviderComponentState
-        {
-            CurrentIndex = component.CurrentIndex,
-            AmmoSlots = component.AmmoSlots,
-            Chambers = component.Chambers,
-        };
-    }
-
-    private void OnRevolverVerbs(EntityUid uid, SharedRevolverAmmoProviderComponent component, GetVerbsEvent<Verb> args)
+    private void OnRevolverVerbs(EntityUid uid, RevolverAmmoProviderComponent component, GetVerbsEvent<Verb> args)
     {
         if (!args.CanAccess || !args.CanInteract) return;
 
@@ -67,9 +68,9 @@ public partial class SharedGunSystem
         });
     }
 
-    protected abstract void SpinRevolver(SharedRevolverAmmoProviderComponent component, EntityUid? user = null);
+    protected abstract void SpinRevolver(RevolverAmmoProviderComponent component, EntityUid? user = null);
 
-    private void OnRevolverTakeAmmo(EntityUid uid, SharedRevolverAmmoProviderComponent component, TakeAmmoEvent args)
+    private void OnRevolverTakeAmmo(EntityUid uid, RevolverAmmoProviderComponent component, TakeAmmoEvent args)
     {
         var currentIndex = component.CurrentIndex;
         Cycle(component, args.Shots);
@@ -102,12 +103,12 @@ public partial class SharedGunSystem
         Dirty(component);
     }
 
-    private void Cycle(SharedRevolverAmmoProviderComponent component, int count = 1)
+    private void Cycle(RevolverAmmoProviderComponent component, int count = 1)
     {
         component.CurrentIndex = (component.CurrentIndex + count) % component.Capacity;
     }
 
-    private void OnRevolverInit(EntityUid uid, SharedRevolverAmmoProviderComponent component, ComponentInit args)
+    private void OnRevolverInit(EntityUid uid, RevolverAmmoProviderComponent component, ComponentInit args)
     {
         component.AmmoContainer = Containers.EnsureContainer<Container>(uid, "revolver-ammo");
         component.AmmoSlots = new EntityUid?[component.Capacity];
@@ -129,7 +130,7 @@ public partial class SharedGunSystem
     }
 
     [Serializable, NetSerializable]
-    private sealed class RevolverAmmoProviderComponentState : ComponentState
+    protected sealed class RevolverAmmoProviderComponentState : ComponentState
     {
         public int CurrentIndex;
         public EntityUid?[] AmmoSlots = default!;

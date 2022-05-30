@@ -1,15 +1,16 @@
 using Content.Shared.Sound;
+using Content.Shared.Weapons.Ranged.Systems;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 using Robust.Shared.Utility;
 
-namespace Content.Shared.Weapons.Ranged;
+namespace Content.Shared.Weapons.Ranged.Components;
 
 /// <summary>
 /// Allows the entity to be fired from a gun.
 /// </summary>
 [RegisterComponent, Virtual]
-public class AmmoComponent : Component, SharedGunSystem.IShootable
+public class AmmoComponent : Component, IShootable
 {
     // Muzzle flash stored on ammo because if we swap a gun to whatever we may want to override it.
 

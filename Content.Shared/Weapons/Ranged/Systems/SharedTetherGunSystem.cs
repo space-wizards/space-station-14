@@ -1,11 +1,11 @@
 using Robust.Shared.Map;
 using Robust.Shared.Serialization;
 
-namespace Content.Shared.Weapons.Ranged;
+namespace Content.Shared.Weapons.Ranged.Systems;
 
 public abstract class SharedTetherGunSystem : EntitySystem
 {
-    public const string CommandName = "tethergun";
+    protected const string CommandName = "tethergun";
 }
 
 [Serializable, NetSerializable]

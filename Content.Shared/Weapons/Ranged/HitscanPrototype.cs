@@ -1,12 +1,13 @@
 using Content.Shared.Damage;
 using Content.Shared.Physics;
+using Content.Shared.Weapons.Ranged.Systems;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
 
 namespace Content.Shared.Weapons.Ranged;
 
 [Prototype("hitscan")]
-public sealed class HitscanPrototype : IPrototype, SharedGunSystem.IShootable
+public sealed class HitscanPrototype : IPrototype, IShootable
 {
     [ViewVariables]
     [IdDataFieldAttribute]

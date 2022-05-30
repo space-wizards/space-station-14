@@ -14,6 +14,7 @@ using Robust.Shared.Audio;
 using Robust.Shared.Physics.Dynamics;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
+using GunSystem = Content.Server.Weapon.Ranged.Systems.GunSystem;
 
 namespace Content.Server.Projectiles
 {

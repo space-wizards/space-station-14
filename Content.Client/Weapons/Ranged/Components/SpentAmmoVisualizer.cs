@@ -1,6 +1,8 @@
 using Content.Shared.Weapons.Ranged;
+using Content.Shared.Weapons.Ranged.Systems;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
+using SharedGunSystem = Content.Shared.Weapons.Ranged.Systems.SharedGunSystem;
 
 namespace Content.Client.Weapons.Ranged.Components;
 
@@ -12,7 +14,7 @@ public sealed class SpentAmmoVisualizer : AppearanceVisualizer
         base.OnChangeData(component);
         var sprite = IoCManager.Resolve<IEntityManager>().GetComponent<ISpriteComponent>(component.Owner);
 
-        if (!component.TryGetData(SharedGunSystem.AmmoVisuals.Spent, out bool spent))
+        if (!component.TryGetData(AmmoVisuals.Spent, out bool spent))
         {
             return;
         }

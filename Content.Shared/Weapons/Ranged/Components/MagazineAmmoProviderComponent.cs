@@ -1,4 +1,5 @@
 using Content.Shared.Sound;
+using Content.Shared.Weapons.Ranged.Components;
 
 namespace Content.Shared.Weapons.Ranged;
 

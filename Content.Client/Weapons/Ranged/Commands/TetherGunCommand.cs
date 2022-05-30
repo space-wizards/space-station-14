@@ -1,3 +1,4 @@
+using Content.Client.Weapons.Ranged.Systems;
 using Robust.Shared.Console;
 
 namespace Content.Client.Weapons.Ranged;

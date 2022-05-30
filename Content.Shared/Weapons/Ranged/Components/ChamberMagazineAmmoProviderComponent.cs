@@ -1,4 +1,4 @@
-namespace Content.Shared.Weapons.Ranged;
+namespace Content.Shared.Weapons.Ranged.Components;
 
 /// <summary>
 /// Chamber + mags in one package. If you need just magazine then use <see cref="MagazineAmmoProviderComponent"/>

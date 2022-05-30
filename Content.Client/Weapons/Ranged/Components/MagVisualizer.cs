@@ -1,14 +1,14 @@
 using Content.Shared.Rounding;
-using Content.Shared.Weapons.Ranged;
+using Content.Shared.Weapons.Ranged.Systems;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
+using SharedGunSystem = Content.Shared.Weapons.Ranged.Systems.SharedGunSystem;
 
 namespace Content.Client.Weapons.Ranged.Components;
 
 [UsedImplicitly]
 public sealed class MagVisualizer : AppearanceVisualizer
 {
-    private bool _magLoaded;
     [DataField("magState")] private string? _magState;
     [DataField("steps")] private int _magSteps;
     [DataField("zeroVisible")] private bool _zeroVisible;
@@ -41,18 +41,17 @@ public sealed class MagVisualizer : AppearanceVisualizer
         // 3. Otherwise just do mag / unshaded as is
         var sprite = IoCManager.Resolve<IEntityManager>().GetComponent<ISpriteComponent>(component.Owner);
 
-        component.TryGetData(SharedGunSystem.AmmoVisuals.MagLoaded, out _magLoaded);
-
-        if (_magLoaded)
+        if (!component.TryGetData(AmmoVisuals.MagLoaded, out bool magloaded) ||
+            magloaded)
         {
-            if (!component.TryGetData(SharedGunSystem.AmmoVisuals.AmmoMax, out int capacity))
+            if (!component.TryGetData(AmmoVisuals.AmmoMax, out int capacity))
             {
-                return;
+                capacity = _magSteps;
             }
 
-            if (!component.TryGetData(SharedGunSystem.AmmoVisuals.AmmoCount, out int current))
+            if (!component.TryGetData(AmmoVisuals.AmmoCount, out int current))
             {
-                return;
+                current = _magSteps;
             }
 
             var step = ContentHelpers.RoundToLevels(current, capacity, _magSteps);

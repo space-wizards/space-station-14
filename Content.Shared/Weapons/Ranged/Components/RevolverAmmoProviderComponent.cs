@@ -1,14 +1,13 @@
 using Content.Shared.Sound;
-using Content.Shared.Whitelist;
 using Robust.Shared.Containers;
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
-namespace Content.Shared.Weapons.Ranged;
+namespace Content.Shared.Weapons.Ranged.Components;
 
-[NetworkedComponent]
-public abstract class SharedRevolverAmmoProviderComponent : AmmoProviderComponent
+[RegisterComponent, NetworkedComponent]
+public sealed class RevolverAmmoProviderComponent : AmmoProviderComponent
 {
     /*
      * Revolver has an array of its slots of which we can fire from any index.

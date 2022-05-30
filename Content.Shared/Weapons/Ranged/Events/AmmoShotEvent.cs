@@ -1,4 +1,4 @@
-namespace Content.Shared.Weapons.Ranged;
+namespace Content.Shared.Weapons.Ranged.Events;
 
 /// <summary>
 /// Raised when projectiles have been fired from a gun.

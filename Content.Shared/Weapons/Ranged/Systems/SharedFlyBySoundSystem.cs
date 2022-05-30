@@ -1,12 +1,13 @@
 using Content.Shared.Physics;
 using Content.Shared.Sound;
+using Content.Shared.Weapons.Ranged.Components;
 using Robust.Shared.GameStates;
 using Robust.Shared.Physics;
 using Robust.Shared.Physics.Collision.Shapes;
 using Robust.Shared.Physics.Dynamics;
 using Robust.Shared.Serialization;
 
-namespace Content.Shared.Weapons.Ranged;
+namespace Content.Shared.Weapons.Ranged.Systems;
 
 public abstract class SharedFlyBySoundSystem : EntitySystem
 {

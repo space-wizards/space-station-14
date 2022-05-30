@@ -2,7 +2,7 @@ using Content.Shared.Sound;
 using Robust.Shared.Audio;
 using Robust.Shared.GameStates;
 
-namespace Content.Shared.Weapons.Ranged;
+namespace Content.Shared.Weapons.Ranged.Components;
 
 /// <summary>
 /// Plays a sound when its non-hard fixture collides with a player.

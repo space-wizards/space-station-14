@@ -1,6 +1,6 @@
 using Content.Shared.Weapons.Ranged;
 
-namespace Content.Client.Weapons.Ranged;
+namespace Content.Client.Weapons.Ranged.Systems;
 
 public sealed partial class GunSystem
 {

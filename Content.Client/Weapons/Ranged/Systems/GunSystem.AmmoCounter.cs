@@ -2,13 +2,13 @@ using Content.Client.IoC;
 using Content.Client.Items;
 using Content.Client.Resources;
 using Content.Client.Stylesheets;
+using Content.Client.Weapons.Ranged.Components;
 using Robust.Client.Animations;
 using Robust.Client.Graphics;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
-using Robust.Shared.Utility;
 
-namespace Content.Client.Weapons.Ranged;
+namespace Content.Client.Weapons.Ranged.Systems;
 
 public sealed partial class GunSystem
 {
@@ -25,7 +25,7 @@ public sealed partial class GunSystem
     /// </summary>
     /// <param name="uid"></param>
     /// <param name="component"></param>
-    public void RefreshControl(EntityUid uid, AmmoCounterComponent? component = null)
+    private void RefreshControl(EntityUid uid, AmmoCounterComponent? component = null)
     {
         if (!Resolve(uid, ref component, false)) return;
 
@@ -54,7 +54,7 @@ public sealed partial class GunSystem
         RaiseLocalEvent(uid, ev);
     }
 
-    public override void UpdateAmmoCount(EntityUid uid)
+    protected override void UpdateAmmoCount(EntityUid uid)
     {
         // Don't use resolves because the method is shared and there's no compref and I'm trying to
         // share as much code as possible

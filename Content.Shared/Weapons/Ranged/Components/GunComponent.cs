@@ -2,9 +2,8 @@ using Content.Shared.Actions.ActionTypes;
 using Content.Shared.Sound;
 using Robust.Shared.GameStates;
 using Robust.Shared.Map;
-using Robust.Shared.Serialization;
 
-namespace Content.Shared.Weapons.Ranged;
+namespace Content.Shared.Weapons.Ranged.Components;
 
 [RegisterComponent, NetworkedComponent, Virtual]
 public class GunComponent : Component

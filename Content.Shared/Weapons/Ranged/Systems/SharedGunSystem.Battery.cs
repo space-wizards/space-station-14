@@ -1,19 +1,30 @@
 using Content.Shared.Examine;
+using Content.Shared.Weapons.Ranged.Components;
+using Content.Shared.Weapons.Ranged.Events;
 using Robust.Shared.GameStates;
 using Robust.Shared.Map;
 using Robust.Shared.Serialization;
 
-namespace Content.Shared.Weapons.Ranged;
+namespace Content.Shared.Weapons.Ranged.Systems;
 
 public abstract partial class SharedGunSystem
 {
     protected virtual void InitializeBattery()
     {
-        SubscribeLocalEvent<BatteryAmmoProviderComponent, ComponentGetState>(OnBatteryGetState);
-        SubscribeLocalEvent<BatteryAmmoProviderComponent, ComponentHandleState>(OnBatteryHandleState);
-        SubscribeLocalEvent<BatteryAmmoProviderComponent, TakeAmmoEvent>(OnBatteryTakeAmmo);
-        SubscribeLocalEvent<BatteryAmmoProviderComponent, GetAmmoCountEvent>(OnBatteryAmmoCount);
-        SubscribeLocalEvent<BatteryAmmoProviderComponent, ExaminedEvent>(OnBatteryExamine);
+        // Trying to dump comp references hence the below
+        // Hitscan
+        SubscribeLocalEvent<HitscanBatteryAmmoProviderComponent, ComponentGetState>(OnBatteryGetState);
+        SubscribeLocalEvent<HitscanBatteryAmmoProviderComponent, ComponentHandleState>(OnBatteryHandleState);
+        SubscribeLocalEvent<HitscanBatteryAmmoProviderComponent, TakeAmmoEvent>(OnBatteryTakeAmmo);
+        SubscribeLocalEvent<HitscanBatteryAmmoProviderComponent, GetAmmoCountEvent>(OnBatteryAmmoCount);
+        SubscribeLocalEvent<HitscanBatteryAmmoProviderComponent, ExaminedEvent>(OnBatteryExamine);
+
+        // Projectile
+        SubscribeLocalEvent<ProjectileBatteryAmmoProviderComponent, ComponentGetState>(OnBatteryGetState);
+        SubscribeLocalEvent<ProjectileBatteryAmmoProviderComponent, ComponentHandleState>(OnBatteryHandleState);
+        SubscribeLocalEvent<ProjectileBatteryAmmoProviderComponent, TakeAmmoEvent>(OnBatteryTakeAmmo);
+        SubscribeLocalEvent<ProjectileBatteryAmmoProviderComponent, GetAmmoCountEvent>(OnBatteryAmmoCount);
+        SubscribeLocalEvent<ProjectileBatteryAmmoProviderComponent, ExaminedEvent>(OnBatteryExamine);
     }
 
     private void OnBatteryHandleState(EntityUid uid, BatteryAmmoProviderComponent component, ref ComponentHandleState args)
@@ -21,7 +32,7 @@ public abstract partial class SharedGunSystem
         if (args.Current is not BatteryAmmoProviderComponentState state) return;
 
         component.Shots = state.Shots;
-        component.MaxShots = state.MaxShots;
+        component.Capacity = state.MaxShots;
         component.FireCost = state.FireCost;
     }
 
@@ -30,7 +41,7 @@ public abstract partial class SharedGunSystem
         args.State = new BatteryAmmoProviderComponentState()
         {
             Shots = component.Shots,
-            MaxShots = component.MaxShots,
+            MaxShots = component.Capacity,
             FireCost = component.FireCost,
         };
     }
@@ -61,7 +72,7 @@ public abstract partial class SharedGunSystem
     private void OnBatteryAmmoCount(EntityUid uid, BatteryAmmoProviderComponent component, ref GetAmmoCountEvent args)
     {
         args.Count = component.Shots;
-        args.Capacity = component.MaxShots;
+        args.Capacity = component.Capacity;
     }
 
     /// <summary>
@@ -73,7 +84,7 @@ public abstract partial class SharedGunSystem
     {
         if (!TryComp<AppearanceComponent>(uid, out var appearance)) return;
         appearance.SetData(AmmoVisuals.AmmoCount, component.Shots);
-        appearance.SetData(AmmoVisuals.AmmoMax, component.MaxShots);
+        appearance.SetData(AmmoVisuals.AmmoMax, component.Capacity);
     }
 
     private IShootable GetShootable(BatteryAmmoProviderComponent component, EntityCoordinates coordinates)

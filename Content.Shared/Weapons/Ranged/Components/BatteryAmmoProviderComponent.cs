@@ -1,4 +1,4 @@
-namespace Content.Shared.Weapons.Ranged;
+namespace Content.Shared.Weapons.Ranged.Components;
 
 public abstract class BatteryAmmoProviderComponent : AmmoProviderComponent
 {
@@ -14,5 +14,5 @@ public abstract class BatteryAmmoProviderComponent : AmmoProviderComponent
     public int Shots;
 
     [ViewVariables]
-    public int MaxShots;
+    public int Capacity;
 }

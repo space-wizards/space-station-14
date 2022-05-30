@@ -9,6 +9,8 @@ using Content.Shared.Hands.Components;
 using Content.Shared.Interaction.Events;
 using Content.Shared.Popups;
 using Content.Shared.Verbs;
+using Content.Shared.Weapons.Ranged.Components;
+using Content.Shared.Weapons.Ranged.Events;
 using Robust.Shared.Audio;
 using Robust.Shared.Containers;
 using Robust.Shared.GameStates;
@@ -20,7 +22,7 @@ using Robust.Shared.Serialization;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
 
-namespace Content.Shared.Weapons.Ranged;
+namespace Content.Shared.Weapons.Ranged.Systems;
 
 public abstract partial class SharedGunSystem : EntitySystem
 {
@@ -91,10 +93,16 @@ public abstract partial class SharedGunSystem : EntitySystem
         AttemptShoot(user.Value, gun);
     }
 
-    private void OnStopShootRequest(RequestStopShootEvent ev)
+    private void OnStopShootRequest(RequestStopShootEvent ev, EntitySessionEventArgs args)
     {
-        // TODO validate input
-        StopShooting(Comp<GunComponent>(ev.Gun));
+        if (args.SenderSession.AttachedEntity == null ||
+            !TryComp<GunComponent>(ev.Gun, out var gun)) return;
+
+        var userGun = GetGun(args.SenderSession.AttachedEntity.Value);
+
+        if (userGun != gun) return;
+
+        StopShooting(gun);
     }
 
     private void OnGetState(EntityUid uid, GunComponent component, ref ComponentGetState args)
@@ -138,7 +146,7 @@ public abstract partial class SharedGunSystem : EntitySystem
         return gun;
     }
 
-    protected void StopShooting(GunComponent gun)
+    private void StopShooting(GunComponent gun)
     {
         if (gun.ShotCounter == 0) return;
 
@@ -265,12 +273,12 @@ public abstract partial class SharedGunSystem : EntitySystem
     /// <summary>
     /// Call this whenever the ammo count for a gun changes.
     /// </summary>
-    public virtual void UpdateAmmoCount(EntityUid uid) {}
+    protected virtual void UpdateAmmoCount(EntityUid uid) {}
 
     /// <summary>
     /// Drops a single cartridge / shell
     /// </summary>
-    public void EjectCartridge(
+    protected void EjectCartridge(
         EntityUid entity,
         bool playSound = true)
     {
@@ -295,7 +303,7 @@ public abstract partial class SharedGunSystem : EntitySystem
             SoundSystem.Play(Filter.Pvs(entity, entityManager: EntityManager), sound, coordinates, AudioHelpers.WithVariation(0.05f).WithVolume(-1f));
     }
 
-    public void MuzzleFlash(EntityUid gun, AmmoComponent component, EntityUid? user = null)
+    protected void MuzzleFlash(EntityUid gun, AmmoComponent component, EntityUid? user = null)
     {
         var sprite = component.MuzzleFlash?.ToString();
 
@@ -328,46 +336,6 @@ public abstract partial class SharedGunSystem : EntitySystem
 
     protected abstract void CreateEffect(EffectSystemMessage message, EntityUid? user = null);
 
-    /// <summary>
-    /// Raised on a gun when it would like to take the specified amount of ammo.
-    /// </summary>
-    public sealed class TakeAmmoEvent : EntityEventArgs
-    {
-        public readonly int Shots;
-        public List<IShootable> Ammo;
-
-        /// <summary>
-        /// Coordinates to spawn the ammo at.
-        /// </summary>
-        public EntityCoordinates Coordinates;
-
-        public TakeAmmoEvent(int shots, List<IShootable> ammo, EntityCoordinates coordinates)
-        {
-            Shots = shots;
-            Ammo = ammo;
-            Coordinates = coordinates;
-        }
-    }
-
-    /// <summary>
-    /// Raised on the client to indicate it'd like to shoot.
-    /// </summary>
-    [Serializable, NetSerializable]
-    public sealed class RequestShootEvent : EntityEventArgs
-    {
-        public EntityUid Gun;
-        public EntityCoordinates Coordinates;
-    }
-
-    /// <summary>
-    /// Raised on the client to request it would like to stop hooting.
-    /// </summary>
-    [Serializable, NetSerializable]
-    public sealed class RequestStopShootEvent : EntityEventArgs
-    {
-        public EntityUid Gun;
-    }
-
     [Serializable, NetSerializable]
     protected sealed class NewGunComponentState : ComponentState
     {
@@ -387,32 +355,17 @@ public abstract partial class SharedGunSystem : EntitySystem
         public List<(EntityCoordinates coordinates, Angle angle, SpriteSpecifier Sprite, float Distance)> Sprites = new();
     }
 
-    /// <summary>
-    /// Raised on an AmmoProvider to request deets.
-    /// </summary>
-    [ByRefEvent]
-    public struct GetAmmoCountEvent
-    {
-        public int Count;
-        public int Capacity;
-    }
-
-    /// <summary>
-    /// Interface that says this can be shot from a gun. Exists to facilitate hitscan OR prototype shooting.
-    /// </summary>
-    public interface IShootable {}
-
     public enum EffectLayers : byte
     {
         Unshaded,
     }
+}
 
-    [Serializable, NetSerializable]
-    public enum AmmoVisuals : byte
-    {
-        Spent,
-        AmmoCount,
-        AmmoMax,
-        MagLoaded,
-    }
+[Serializable, NetSerializable]
+public enum AmmoVisuals : byte
+{
+    Spent,
+    AmmoCount,
+    AmmoMax,
+    MagLoaded,
 }

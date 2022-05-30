@@ -1,7 +1,7 @@
-using Content.Shared.Weapons.Ranged;
+using Content.Shared.Weapons.Ranged.Components;
 using Robust.Client.UserInterface;
 
-namespace Content.Client.Weapons;
+namespace Content.Client.Weapons.Ranged.Components;
 
 [RegisterComponent]
 public sealed class AmmoCounterComponent : SharedAmmoCounterComponent

@@ -1,15 +1,21 @@
 using Content.Server.Power.Components;
-using Content.Shared.Weapons.Ranged;
+using Content.Shared.Weapons.Ranged.Components;
 
-namespace Content.Server.Weapon.Ranged;
+namespace Content.Server.Weapon.Ranged.Systems;
 
 public sealed partial class GunSystem
 {
     protected override void InitializeBattery()
     {
         base.InitializeBattery();
-        SubscribeLocalEvent<BatteryAmmoProviderComponent, ComponentStartup>(OnBatteryStartup);
-        SubscribeLocalEvent<BatteryAmmoProviderComponent, ChargeChangedEvent>(OnBatteryChargeChange);
+
+        // Hitscan
+        SubscribeLocalEvent<HitscanBatteryAmmoProviderComponent, ComponentStartup>(OnBatteryStartup);
+        SubscribeLocalEvent<HitscanBatteryAmmoProviderComponent, ChargeChangedEvent>(OnBatteryChargeChange);
+
+        // Projectile
+        SubscribeLocalEvent<ProjectileBatteryAmmoProviderComponent, ComponentStartup>(OnBatteryStartup);
+        SubscribeLocalEvent<ProjectileBatteryAmmoProviderComponent, ChargeChangedEvent>(OnBatteryChargeChange);
     }
 
     private void OnBatteryStartup(EntityUid uid, BatteryAmmoProviderComponent component, ComponentStartup args)
@@ -33,13 +39,13 @@ public sealed partial class GunSystem
         var shots = (int) (battery.CurrentCharge / component.FireCost);
         var maxShots = (int) (battery.MaxCharge / component.FireCost);
 
-        if (component.Shots != shots || component.MaxShots != maxShots)
+        if (component.Shots != shots || component.Capacity != maxShots)
         {
             Dirty(component);
         }
 
         component.Shots = shots;
-        component.MaxShots = maxShots;
+        component.Capacity = maxShots;
         UpdateBatteryAppearance(component.Owner, component);
     }
 

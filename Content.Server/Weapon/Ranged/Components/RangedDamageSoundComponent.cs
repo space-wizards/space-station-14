@@ -2,7 +2,7 @@ using Content.Shared.Damage.Prototypes;
 using Content.Shared.Sound;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.Dictionary;
 
-namespace Content.Server.Weapon.Ranged;
+namespace Content.Server.Weapon.Ranged.Components;
 
 /// <summary>
 /// Plays the specified sound upon receiving damage of that type.

@@ -1,10 +1,10 @@
-using Content.Shared.Weapons.Ranged;
+using Content.Shared.Weapons.Ranged.Components;
 
-namespace Content.Server.Weapon.Ranged;
+namespace Content.Server.Weapon.Ranged.Systems;
 
 public sealed partial class GunSystem
 {
-    protected override void SpinRevolver(SharedRevolverAmmoProviderComponent component, EntityUid? user = null)
+    protected override void SpinRevolver(RevolverAmmoProviderComponent component, EntityUid? user = null)
     {
         PlaySound(component.Owner, component.SoundSpin?.GetSound(), user);
         var index = Random.Next(component.Capacity);

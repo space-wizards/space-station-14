@@ -1,12 +1,14 @@
 using Content.Shared.Examine;
 using Content.Shared.Interaction;
 using Content.Shared.Verbs;
+using Content.Shared.Weapons.Ranged.Components;
+using Content.Shared.Weapons.Ranged.Events;
 using Robust.Shared.Containers;
 using Robust.Shared.GameStates;
 using Robust.Shared.Map;
 using Robust.Shared.Serialization;
 
-namespace Content.Shared.Weapons.Ranged;
+namespace Content.Shared.Weapons.Ranged.Systems;
 
 public abstract partial class SharedGunSystem
 {
@@ -62,7 +64,7 @@ public abstract partial class SharedGunSystem
         args.PushMarkup($"It has [color={AmmoExamineColor}]{GetBallisticShots(component)}[/color] ammo.");
     }
 
-    public void ManualCycle(BallisticAmmoProviderComponent component, MapCoordinates coordinates, EntityUid? user = null)
+    private void ManualCycle(BallisticAmmoProviderComponent component, MapCoordinates coordinates, EntityUid? user = null)
     {
         // Reset shotting for cycling
         if (TryComp<GunComponent>(component.Owner, out var gunComp) &&
@@ -193,7 +195,7 @@ public abstract partial class SharedGunSystem
         args.Capacity = component.Capacity;
     }
 
-    protected void UpdateBallisticAppearance(BallisticAmmoProviderComponent component)
+    private void UpdateBallisticAppearance(BallisticAmmoProviderComponent component)
     {
         if (!Timing.IsFirstTimePredicted || !TryComp<AppearanceComponent>(component.Owner, out var appearance)) return;
         appearance.SetData(AmmoVisuals.AmmoCount, GetBallisticShots(component));
