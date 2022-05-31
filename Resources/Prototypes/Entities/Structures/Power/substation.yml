@@ -145,9 +145,15 @@
       behaviors:
       - !type:DoActsBehavior
         acts: ["Destruction"]
+      - !type:ExplodeBehavior
       - !type:PlaySoundBehavior
         sound:
           path: /Audio/Effects/metalbreak.ogg
+  - type: Explosive
+    explosionType: Default
+    maxIntensity: 50
+    intensitySlope: 2
+    totalIntensity: 100
 
 # Substations in use
 
