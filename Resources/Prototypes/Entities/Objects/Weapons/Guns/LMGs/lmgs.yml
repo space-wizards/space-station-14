@@ -23,12 +23,12 @@
     slots:
       gun-magazine:
         name: GunMagazine
-        startingItem: MagazineLightRifle
+        startingItem: MagazineBoxLightRifle
         insertSound: /Audio/Weapons/Guns/MagIn/batrifle_magin.ogg
         ejectSound: /Audio/Weapons/Guns/MagOut/batrifle_magout.ogg
         whitelist:
           tags:
-            - MagazineLightRifleBox
+            - MagazineBoxLightRifle
       gun-chamber:
         name: GunChamber
         startingItem: CartridgeLightRifle

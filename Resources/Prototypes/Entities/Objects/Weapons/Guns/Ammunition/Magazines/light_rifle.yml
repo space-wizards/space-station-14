@@ -28,13 +28,13 @@
 
 # Magazines
 - type: entity
-  id: MagazineLightRifleBox
+  id: MagazineBoxLightRifle
   name: "L6 SAW magazine box (.30 rifle)"
   parent: BaseMagazineLightRifle
   components:
   - type: Tag
     tags:
-      - MagazineLightRifleBox
+      - MagazineBoxLightRifle
   - type: BallisticAmmoProvider
     proto: CartridgeLightRifle
     capacity: 50
@@ -138,7 +138,7 @@
   components:
   - type: Tag
     tags:
-      - MagazineLightRifleBox
+      - MagazineBoxLightRifle
   - type: BallisticAmmoProvider
     proto: CartridgeLightRifle
     capacity: 80
