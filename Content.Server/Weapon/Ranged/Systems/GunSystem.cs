@@ -83,7 +83,7 @@ public sealed partial class GunSystem : SharedGunSystem
                     }
 
                     // Something like ballistic might want to leave it in the container still
-                    if (!Containers.IsEntityInContainer(cartridge.Owner))
+                    if (!cartridge.DeleteOnSpawn && !Containers.IsEntityInContainer(cartridge.Owner))
                         EjectCartridge(cartridge.Owner);
 
                     Dirty(cartridge);

@@ -22,23 +22,3 @@
       magState: mag
       steps: 2
       zeroVisible: false
-
-- type: entity
-  id: MagazineMinigun
-  name: "Minigun magazine box (.10 rifle)"
-  parent: BaseMagazineHeavyRifle
-  components:
-  - type: Tag
-    tags:
-      - MagazineHeavyRifleBox
-  - type: BallisticAmmoProvider
-    proto: CartridgeMinigun
-    capacity: 1000
-  - type: Sprite
-    sprite: Objects/Weapons/Guns/Ammunition/Magazine/LightRifle/light_rifle_box.rsi
-  - type: Appearance
-    visuals:
-    - type: MagVisualizer
-      magState: mag
-      steps: 8
-      zeroVisible: false
