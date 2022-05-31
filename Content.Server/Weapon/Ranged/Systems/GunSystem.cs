@@ -6,10 +6,10 @@ using Content.Shared.Audio;
 using Content.Shared.Damage;
 using Content.Shared.Database;
 using Content.Shared.Sound;
+using Content.Shared.Throwing;
 using Content.Shared.Weapons.Ranged;
 using Content.Shared.Weapons.Ranged.Components;
 using Content.Shared.Weapons.Ranged.Events;
-using Content.Shared.Weapons.Ranged.Systems;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.Map;
@@ -42,7 +42,7 @@ public sealed partial class GunSystem : SharedGunSystem
 
         // I must be high because this was getting tripped even when true.
         // DebugTools.Assert(direction != Vector2.Zero);
-        var shotProjectiles = new List<EntityUid>();
+        var shotProjectiles = new List<EntityUid>(ammo.Count);
 
         foreach (var shootable in ammo)
         {
@@ -90,10 +90,19 @@ public sealed partial class GunSystem : SharedGunSystem
                     break;
                 // Ammo shoots itself
                 case AmmoComponent newAmmo:
-                    ShootProjectile(newAmmo.Owner, mapDirection, user);
-                    MuzzleFlash(gun.Owner, newAmmo, user);
-                    RemComp<AmmoComponent>(newAmmo.Owner);
                     shotProjectiles.Add(newAmmo.Owner);
+                    MuzzleFlash(gun.Owner, newAmmo, user);
+
+                    // Do a throw
+                    if (!HasComp<ProjectileComponent>(newAmmo.Owner))
+                    {
+                        RemComp<AmmoComponent>(newAmmo.Owner);
+                        // TODO: Someone can probably yeet this a billion miles so need to pre-validate input somewhere up the call stack.
+                        ThrowingSystem.TryThrow(newAmmo.Owner, mapDirection, 20f, user);
+                        break;
+                    }
+
+                    ShootProjectile(newAmmo.Owner, mapDirection, user);
                     break;
                 case HitscanPrototype hitscan:
                     var ray = new CollisionRay(fromMap.Position, mapDirection.Normalized, hitscan.CollisionMask);
