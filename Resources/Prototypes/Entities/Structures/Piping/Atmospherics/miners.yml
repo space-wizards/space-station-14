@@ -28,6 +28,7 @@
       state: miner
     - type: AtmosDevice
     - type: GasMiner
+      maxExternalPressure: 300
 
 - type: entity
   name: O2 gas miner
