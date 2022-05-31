@@ -1,12 +1,4 @@
 Entries:
-- author: moony
-  changes:
-  - {message: 'Three new events have been introduced that will hopefully increase
-      round variation (and, very rarely, result in a station composed entirely of
-      clowns)', type: Add}
-  - {message: Makes HoP and Quartermaster considered heads by the game., type: Tweak}
-  id: 1126
-  time: '2022-02-26T05:10:09.0000000+00:00'
 - author: HoofedEar
   changes:
   - {message: Musicians now have their own PDA and Theatre access!, type: Add}
@@ -2995,3 +2987,10 @@ Entries:
   - {message: Examine text for anchors., type: Add}
   id: 1625
   time: '2022-05-30T08:55:54.0000000+00:00'
+- author: vulppine
+  changes:
+  - {message: NanoTrasen has finally installed surveillance camera systems into our
+      stations. Be aware that you are now being watched onboard our fine stations!,
+    type: Add}
+  id: 1626
+  time: '2022-05-31T08:44:57.0000000+00:00'
