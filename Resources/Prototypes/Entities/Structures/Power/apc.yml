@@ -96,7 +96,7 @@
   components:
   - type: Battery
     maxCharge: 150000
-    startingCharge: 
+    startingCharge: 150000
     
 - type: entity
   parent: BaseAPC
