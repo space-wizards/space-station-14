@@ -16,3 +16,4 @@ gun-revolver-empty = Empty revolver
 gun-revolver-full = Revolver full
 gun-revolver-insert = Inserted
 gun-revolver-spin = Spin revolver
+gun-revolver-spun = Spun

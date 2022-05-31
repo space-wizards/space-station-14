@@ -7,7 +7,9 @@
   components:
   - type: Sprite
     netsync: false
-    state: icon
+    layers:
+      - state: icon
+        map: [ "enum.GunVisualLayers.Base" ]
   - type: Item
     size: 24
   - type: AmmoCounter
@@ -77,7 +79,7 @@
 
 - type: entity
   name: double-barreled shotgun
-  parent: BaseWeaponLauncher
+  parent: BaseWeaponShotgun
   id: WeaponShotgunDoubleBarreled
   description: An immortal classic.
   components:
@@ -88,6 +90,8 @@
     sprite: Objects/Weapons/Guns/Shotguns/db_shotgun.rsi
   - type: Gun
     fireRate: 8
+  - type: BallisticAmmoProvider
+    capacity: 2
 
 - type: entity
   name: Gladstone
@@ -116,7 +120,7 @@
 
 - type: entity
   name: sawn-off shotgun
-  parent: BaseWeaponLauncher
+  parent: BaseWeaponShotgun
   id: WeaponShotgunSawn
   description: Omar's coming!
   components:
@@ -128,5 +132,4 @@
   - type: Gun
     fireRate: 8
   - type: BallisticAmmoProvider
-    proto: ShellShotgun
     capacity: 2

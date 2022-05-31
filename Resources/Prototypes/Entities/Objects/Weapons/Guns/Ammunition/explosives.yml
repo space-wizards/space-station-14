@@ -34,6 +34,7 @@
   - type: Appearance
     visuals:
     - type: SpentAmmoVisualizer
+      state: baton
 
 - type: entity
   id: GrenadeBlast
@@ -54,6 +55,7 @@
   - type: Appearance
     visuals:
     - type: SpentAmmoVisualizer
+      state: blast
 
 - type: entity
   id: GrenadeFlash
@@ -74,6 +76,7 @@
   - type: Appearance
     visuals:
     - type: SpentAmmoVisualizer
+      state: flash
 
 - type: entity
   id: GrenadeFrag
@@ -94,6 +97,7 @@
   - type: Appearance
     visuals:
     - type: SpentAmmoVisualizer
+      state: frag
 
 - type: entity
   id: CartridgeRocketSlow

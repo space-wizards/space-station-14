@@ -1,14 +1,15 @@
-using Content.Shared.Weapons.Ranged;
 using Content.Shared.Weapons.Ranged.Systems;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
-using SharedGunSystem = Content.Shared.Weapons.Ranged.Systems.SharedGunSystem;
 
 namespace Content.Client.Weapons.Ranged.Components;
 
 [UsedImplicitly]
 public sealed class SpentAmmoVisualizer : AppearanceVisualizer
 {
+    [DataField("state")]
+    private string _state = "base";
+
     public override void OnChangeData(AppearanceComponent component)
     {
         base.OnChangeData(component);
@@ -19,7 +20,7 @@ public sealed class SpentAmmoVisualizer : AppearanceVisualizer
             return;
         }
 
-        sprite.LayerSetState(AmmoVisualLayers.Base, spent ? "spent" : "base");
+        sprite.LayerSetState(AmmoVisualLayers.Base, spent ? $"{_state}-spent" : _state);
     }
 }
 

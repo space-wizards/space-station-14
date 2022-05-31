@@ -218,7 +218,11 @@ public partial class SharedGunSystem
         appearance.SetData(AmmoVisuals.AmmoMax, component.Capacity);
     }
 
-    protected abstract void SpinRevolver(RevolverAmmoProviderComponent component, EntityUid? user = null);
+    protected virtual void SpinRevolver(RevolverAmmoProviderComponent component, EntityUid? user = null)
+    {
+        PlaySound(component.Owner, component.SoundSpin?.GetSound(Random, ProtoManager), user);
+        Popup(Loc.GetString("gun-revolver-spun"), component.Owner, user);
+    }
 
     private void OnRevolverTakeAmmo(EntityUid uid, RevolverAmmoProviderComponent component, TakeAmmoEvent args)
     {

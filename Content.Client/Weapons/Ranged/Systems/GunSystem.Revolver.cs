@@ -34,9 +34,4 @@ public sealed partial class GunSystem
     {
         args.Control = new RevolverStatusControl();
     }
-
-    protected override void SpinRevolver(RevolverAmmoProviderComponent component, EntityUid? user = null)
-    {
-        PlaySound(component.Owner, component.SoundSpin?.GetSound(Random, ProtoManager), user);
-    }
 }

@@ -16,8 +16,8 @@
     netsync: false
     sprite: Objects/Weapons/Guns/Ammunition/Casings/shotgun_shell.rsi
     layers:
-    - state: base
-      map: ["enum.AmmoVisualLayers.Base"]
+      - state: base
+        map: [ "enum.AmmoVisualLayers.Base" ]
   - type: Appearance
     visuals:
     - type: SpentAmmoVisualizer
@@ -28,8 +28,9 @@
   parent: BaseShellShotgun
   components:
   - type: Sprite
-    sprite: Objects/Weapons/Guns/Ammunition/Casings/shotgun_shell.rsi
-    state: beanbag
+    layers:
+      - state: beanbag
+        map: [ "enum.AmmoVisualLayers.Base" ]
   - type: CartridgeAmmo
     proto: PelletShotgunBeanbag
     count: 1
@@ -40,8 +41,9 @@
   parent: BaseShellShotgun
   components:
   - type: Sprite
-    sprite: Objects/Weapons/Guns/Ammunition/Casings/shotgun_shell.rsi
-    state: slug
+    layers:
+      - state: slug
+        map: [ "enum.AmmoVisualLayers.Base" ]
   - type: CartridgeAmmo
     proto: PelletShotgunSlug
     count: 4
@@ -53,8 +55,9 @@
   parent: BaseShellShotgun
   components:
   - type: Sprite
-    sprite: Objects/Weapons/Guns/Ammunition/Casings/shotgun_shell.rsi
-    state: flare
+    layers:
+      - state: flare
+        map: [ "enum.AmmoVisualLayers.Base" ]
   - type: CartridgeAmmo
     proto: PelletShotgunFlare
     count: 1
@@ -65,7 +68,9 @@
   parent: BaseShellShotgun
   components:
   - type: Sprite
-    sprite: Objects/Weapons/Guns/Ammunition/Casings/shotgun_shell.rsi
+    layers:
+      - state: base
+        map: [ "enum.AmmoVisualLayers.Base" ]
   - type: CartridgeAmmo
     proto: PelletShotgun
 
@@ -75,8 +80,9 @@
   parent: BaseShellShotgun
   components:
   - type: Sprite
-    sprite: Objects/Weapons/Guns/Ammunition/Casings/shotgun_shell.rsi
-    state: flash
+    layers:
+      - state: flash
+        map: [ "enum.AmmoVisualLayers.Base" ]
   - type: CartridgeAmmo
     proto: PelletShotgunFlash
 
@@ -86,8 +92,9 @@
   parent: BaseShellShotgun
   components:
   - type: Sprite
-    sprite: Objects/Weapons/Guns/Ammunition/Casings/shotgun_shell.rsi
-    state: incendiary
+    layers:
+      - state: incendiary
+        map: [ "enum.AmmoVisualLayers.Base" ]
   - type: CartridgeAmmo
     proto: PelletShotgunIncendiary
 
@@ -97,8 +104,9 @@
   parent: BaseShellShotgun
   components:
   - type: Sprite
-    sprite: Objects/Weapons/Guns/Ammunition/Casings/shotgun_shell.rsi
-    state: practice
+    layers:
+      - state: practice
+        map: [ "enum.AmmoVisualLayers.Base" ]
   - type: CartridgeAmmo
     proto: PelletShotgun
 
@@ -108,8 +116,9 @@
   parent: BaseShellShotgun
   components:
   - type: Sprite
-    sprite: Objects/Weapons/Guns/Ammunition/Casings/shotgun_shell.rsi
-    state: practice
+    layers:
+      - state: practice
+        map: [ "enum.AmmoVisualLayers.Base" ]
   - type: CartridgeAmmo
     proto: PelletShotgunTranquilizer
     count: 1

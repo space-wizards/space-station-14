@@ -125,10 +125,10 @@
             - MagazinePistolCaselessRifle
       gun-chamber:
         name: GunChamber
-        startingItem: CartridgePistol
+        startingItem: CartridgeCaselessRifle
         whitelist:
           tags:
-            - CartridgePistol
+            - CartridgeCaselessRifle
 
 - type: entity
   name: mk 58

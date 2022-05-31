@@ -46,5 +46,5 @@ public sealed class RevolverAmmoProviderComponent : AmmoProviderComponent
     public SoundSpecifier? SoundInsert = new SoundPathSpecifier("/Audio/Weapons/Guns/MagIn/revolver_magin.ogg");
 
     [ViewVariables, DataField("soundSpin")]
-    public SoundSpecifier SoundSpin = new SoundPathSpecifier("/Audio/Weapons/Guns/Misc/revolver_spin.ogg");
+    public SoundSpecifier? SoundSpin = new SoundPathSpecifier("/Audio/Weapons/Guns/Misc/revolver_spin.ogg");
 }
