@@ -4,6 +4,7 @@
   mapPath: /Maps/atlas.yml
   minPlayers: 0
   maxPlayers: 25
+  votable: false
   stations:
     Atlas: 
       mapNameTemplate: '{0} Atlas {1}'
