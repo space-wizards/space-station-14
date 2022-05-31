@@ -24,7 +24,8 @@ namespace Content.Server.Entry
             "ToggleableLightVisuals",
             "CableVisualizer",
             "PotencyVisuals",
-            "PaperVisuals"
+            "PaperVisuals",
+            "SurveillanceCameraVisuals"
         };
     }
 }
