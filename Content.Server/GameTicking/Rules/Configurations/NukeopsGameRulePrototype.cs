@@ -22,7 +22,7 @@ public sealed class NukeopsGameRuleConfiguration : GameRuleConfiguration
     /// Yes, you can put anything in here. Including bread.
     /// </remarks>
     [DataField("pickableSpecies")]
-    public List<EntityPrototype>? Species;
+    public List<string>? Species;
 
     /// <summary>
     /// Shuttles the nukies can spawn on
@@ -31,8 +31,8 @@ public sealed class NukeopsGameRuleConfiguration : GameRuleConfiguration
     public List<GameMapPrototype>? Shuttles;
 
     /// <summary>
-    /// Different "ranks" the nukies can get (commander, medic)
+    /// Loadouts for different "professions" of nukie (commander, medic)
     /// </summary>
-    [DataField("ranks")]
-    public Dictionary<string, List<StartingGearPrototype>>? Ranks;
+    [DataField("loadouts")]
+    public Dictionary<string, List<StartingGearPrototype>>? Loadouts;
 }

@@ -12,6 +12,7 @@ using Content.Server.Station.Components;
 using Content.Server.Station.Systems;
 using Content.Shared.CCVar;
 using Content.Shared.MobState;
+using Content.Shared.Preferences;
 using Content.Shared.Roles;
 using Robust.Server.Maps;
 using Robust.Server.Player;
@@ -41,6 +42,11 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
     public override string Prototype => "Nukeops";
 
     private const string NukeopsPrototypeId = "Nukeops";
+
+    /// <summary>
+    /// Config information for the current round
+    /// </summary>
+    private NukeopsGameRuleConfiguration _config = new();
 
     public override void Initialize()
     {
@@ -143,8 +149,16 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
             operatives.Add(nukeOp);
         }
 
-        // TODO: Make this a prototype
-        var map = "/Maps/infiltrator.yml";
+        string map;
+        if (_config.Shuttles != null)
+        {
+            map = _random.Pick(_config.Shuttles).MapPath.ToString();
+        }
+        else
+        {
+            // Default to the Infiltrator
+            map = "Maps/infiltrator.yml";
+        }
 
         var aabbs = _stationSystem.Stations.SelectMany(x =>
             Comp<StationDataComponent>(x).Grids.Select(x => _mapManager.GetGridComp(x).Grid.WorldAABB)).ToArray();
@@ -170,14 +184,26 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
         }
 
         var gridUid = _mapManager.GetGridEuid(gridId.Value);
-        // TODO: Loot table or something
-        var commanderGear = _prototypeManager.Index<StartingGearPrototype>("SyndicateCommanderGearFull");
-        var starterGear = _prototypeManager.Index<StartingGearPrototype>("SyndicateOperativeGearFull");
-        var medicGear = _prototypeManager.Index<StartingGearPrototype>("SyndicateOperativeMedicFull");
+        StartingGearPrototype commanderGear;
+        StartingGearPrototype medicGear;
+        StartingGearPrototype starterGear;
+
+        if (_config.Loadouts != null)
+        {
+            commanderGear = _random.Pick(_config.Loadouts["Commander"]);
+            medicGear = _random.Pick(_config.Loadouts["Commander"]);
+            starterGear = _random.Pick(_config.Loadouts["Commander"]);
+        }
+        else
+        {
+            commanderGear = _prototypeManager.Index<StartingGearPrototype>("SyndicateCommanderGearFull");
+            medicGear = _prototypeManager.Index<StartingGearPrototype>("SyndicateOperativeMedicFull");
+            starterGear = _prototypeManager.Index<StartingGearPrototype>("SyndicateCommanderGearFull");
+        }
 
         var spawns = new List<EntityCoordinates>();
 
-        // Forgive me for hardcoding prototypes
+        // TODO: Don't hardcode prototypes
         foreach (var (_, meta, xform) in EntityManager.EntityQuery<SpawnPointComponent, MetaDataComponent, TransformComponent>(true))
         {
             if (meta.EntityPrototype?.ID != "SpawnPointNukies" || xform.ParentUid != gridUid) continue;
@@ -189,6 +215,18 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
         {
             spawns.Add(EntityManager.GetComponent<TransformComponent>(gridUid).Coordinates);
             Logger.WarningS("nukies", $"Fell back to default spawn for nukies!");
+        }
+
+        List<string> availableSpecies;
+        if(_config.Species != null)
+        {
+            availableSpecies = _config.Species;
+        }
+        else
+        {
+            // Fall back to humans
+            availableSpecies = new();
+            availableSpecies.Add("MobHuman");
         }
 
         // TODO: This should spawn the nukies in regardless and transfer if possible; rest should go to shot roles.
@@ -219,8 +257,7 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
                 CharacterName = name
             };
             newMind.ChangeOwningPlayer(session.UserId);
-
-            var mob = EntityManager.SpawnEntity("MobHuman", _random.Pick(spawns));
+            var mob = EntityManager.SpawnEntity(_random.Pick(availableSpecies), _random.Pick(spawns));
             EntityManager.GetComponent<MetaDataComponent>(mob).EntityName = name;
 
             newMind.TransferTo(mob);
@@ -254,9 +291,10 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
     }
 
 
-    public override void Started(GameRuleConfiguration _)
+    public override void Started(GameRuleConfiguration cfg)
     {
         _opsWon = false;
+        _config = (NukeopsGameRuleConfiguration) cfg;
     }
 
     public override void Ended(GameRuleConfiguration _) { }

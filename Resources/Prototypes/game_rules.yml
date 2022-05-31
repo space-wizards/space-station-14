@@ -30,7 +30,7 @@
       - MobReptilian
     shuttles:
       - infiltrator
-    ranks:
+    loadouts:
       Commander:
         - SyndicateCommanderGearFull
       Medic:
