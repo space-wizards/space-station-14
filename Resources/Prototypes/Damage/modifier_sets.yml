@@ -132,6 +132,13 @@
     Asphyxiation: 0.0
     Bloodloss: 0.0
     Cellular: 0.0
+    
+
+# So animals can eat some raw meat and not take toxin damage
+- type: damageModifierSet
+    id: Animal
+  flatReductions:
+    Poison: 1.0
 
 # Represents which damage types should be modified
 # in relation to how they cause bloodloss damage.
