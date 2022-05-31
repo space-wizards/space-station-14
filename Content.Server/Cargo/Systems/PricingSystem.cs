@@ -11,6 +11,7 @@ using Content.Shared.Inventory;
 using Content.Shared.MobState.Components;
 using Robust.Shared.Console;
 using Robust.Shared.Map;
+using Robust.Shared.Utility;
 
 namespace Content.Server.Cargo.Systems;
 
@@ -63,7 +64,22 @@ public sealed class PricingSystem : EntitySystem
                 continue;
             }
 
-            shell.WriteLine($"Grid {gid} appraised to {AppraiseGrid(mapGrid.GridEntityId)} credits.");
+            List<(double, EntityUid)> mostValuable = new();
+
+            var value = AppraiseGrid(mapGrid.GridEntityId, null, (uid, price) =>
+            {
+                mostValuable.Add((price, uid));
+                mostValuable.Sort((i1, i2) => i2.Item1.CompareTo(i1.Item1));
+                if (mostValuable.Count > 5)
+                    mostValuable.Pop();
+            });
+
+            shell.WriteLine($"Grid {gid} appraised to {value} credits.");
+            shell.WriteLine($"The top most valuable items were:");
+            foreach (var (price, ent) in mostValuable)
+            {
+                shell.WriteLine($"- {ToPrettyString(ent)} @ {price} credits");
+            }
         }
     }
 
@@ -157,8 +173,9 @@ public sealed class PricingSystem : EntitySystem
     /// </summary>
     /// <param name="grid">The grid to appraise.</param>
     /// <param name="predicate">An optional predicate that controls whether or not the entity is counted toward the total.</param>
+    /// <param name="afterPredicate">An optional predicate to run after the price has been calculated. Useful for high scores or similar.</param>
     /// <returns>The total value of the grid.</returns>
-    public double AppraiseGrid(EntityUid grid, Func<EntityUid, bool>? predicate = null)
+    public double AppraiseGrid(EntityUid grid, Func<EntityUid, bool>? predicate = null, Action<EntityUid, double>? afterPredicate = null)
     {
         var xform = Transform(grid);
         var price = 0.0;
@@ -166,7 +183,11 @@ public sealed class PricingSystem : EntitySystem
         foreach (var childXform in xform.Children)
         {
             if (predicate is null || predicate(childXform.Owner))
-                price += GetPrice(childXform.Owner);
+            {
+                var subPrice = GetPrice(childXform.Owner);
+                price += subPrice;
+                afterPredicate?.Invoke(childXform.Owner, subPrice);
+            }
         }
 
         return price;
