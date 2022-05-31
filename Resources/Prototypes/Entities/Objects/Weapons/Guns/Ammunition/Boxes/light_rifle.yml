@@ -5,6 +5,9 @@
   name: ammunition box (.30 rifle)
   components:
   - type: BallisticAmmoProvider
+    whitelist:
+      tags:
+        - CartridgeLightRifle
     proto: CartridgeLightRifle
     capacity: 50
   - type: Sprite

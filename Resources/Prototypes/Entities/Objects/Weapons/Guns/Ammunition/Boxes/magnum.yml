@@ -4,6 +4,9 @@
   id: BaseMagazineBoxMagnum
   components:
   - type: BallisticAmmoProvider
+    whitelist:
+      tags:
+        - CartridgeMagnum
     proto: CartridgeMagnum
     capacity: 60
   - type: Sprite

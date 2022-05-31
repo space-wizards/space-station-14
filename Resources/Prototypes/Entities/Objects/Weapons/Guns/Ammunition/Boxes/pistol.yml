@@ -5,6 +5,9 @@
   name: ammunition box (.35 auto)
   components:
   - type: BallisticAmmoProvider
+    whitelist:
+      tags:
+        - CartridgePistol
     proto: CartridgePistol
     capacity: 60
   - type: Sprite

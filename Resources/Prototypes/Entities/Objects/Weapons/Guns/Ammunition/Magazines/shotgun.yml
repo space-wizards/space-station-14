@@ -8,6 +8,9 @@
     tags:
     - MagazineShotgun
   - type: BallisticAmmoProvider
+    whitelist:
+      tags:
+        - ShellShotgun
     capacity: 8
     soundRack:
       path: /Audio/Weapons/Guns/Cock/smg_cock.ogg

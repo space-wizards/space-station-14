@@ -4,6 +4,9 @@
   id: BaseMagazineBoxRifle
   components:
   - type: BallisticAmmoProvider
+    whitelist:
+      tags:
+        - CartridgeRifle
     proto: CartridgeRifle
     capacity: 60
   - type: Sprite

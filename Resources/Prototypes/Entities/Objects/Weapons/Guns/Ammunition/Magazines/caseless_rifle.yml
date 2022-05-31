@@ -8,6 +8,9 @@
     tags:
       - MagazineCaselessRifle
   - type: BallisticAmmoProvider
+    whitelist:
+      tags:
+        - CartridgeCaselessRifle
     proto: CartridgeCaselessRifle
     capacity: 30
   - type: Sprite
@@ -52,6 +55,9 @@
     tags:
       - MagazinePistol
   - type: BallisticAmmoProvider
+    whitelist:
+      tags:
+        - CartridgeCaselessRifle
     proto: CartridgeCaselessRifle
     capacity: 10
   - type: Sprite

@@ -9,6 +9,9 @@
     tags:
       - MagazineLightRifle
   - type: BallisticAmmoProvider
+    whitelist:
+      tags:
+        - CartridgeLightRifle
     proto: CartridgeLightRifle
     capacity: 30
   - type: Sprite
