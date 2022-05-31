@@ -39,7 +39,7 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
 
     public override string Prototype => "Nukeops";
 
-    private const string NukeopsPrototypeID = "Nukeops";
+    private const string NukeopsPrototypeId = "Nukeops";
 
     public override void Initialize()
     {
@@ -113,7 +113,7 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
                 continue;
             }
             var profile = ev.Profiles[player.UserId];
-            if (profile.AntagPreferences.Contains(NukeopsPrototypeID))
+            if (profile.AntagPreferences.Contains(NukeopsPrototypeId))
             {
                 prefList.Add(player);
             }
