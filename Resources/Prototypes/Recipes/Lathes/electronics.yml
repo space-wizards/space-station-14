@@ -330,3 +330,30 @@
   materials:
     Steel: 100
     Glass: 900
+
+- type: latheRecipe
+  id: SurveillanceCameraMonitorCircuitboard
+  icon: Objects/Misc/module.rsi/id_mod.png
+  result: SurveillanceCameraMonitorCircuitboard
+  completetime: 4
+  materials:
+    Steel: 100
+    Glass: 900
+
+- type: latheRecipe
+  id: SurveillanceWirelessCameraMonitorCircuitboard
+  icon: Objects/Misc/module.rsi/id_mod.png
+  result: SurveillanceWirelessCameraMonitorCircuitboard
+  completetime: 4
+  materials:
+    Steel: 100
+    Glass: 900
+
+- type: latheRecipe
+  id: ComputerTelevisionCircuitboard
+  icon: Objects/Misc/module.rsi/id_mod.png
+  result: ComputerTelevisionCircuitboard
+  completetime: 4
+  materials:
+    Steel: 100
+    Glass: 900

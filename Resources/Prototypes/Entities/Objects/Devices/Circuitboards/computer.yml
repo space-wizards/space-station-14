@@ -86,6 +86,15 @@
 
 - type: entity
   parent: BaseComputerCircuitboard
+  id: ComputerTelevisionCircuitboard
+  name: television board
+  description: A computer printed circuit board for a television
+  components:
+    - type: ComputerBoard
+      prototype: ComputerTelevision
+
+- type: entity
+  parent: BaseComputerCircuitboard
   id: PowerMonitoringComputerCircuitboard
   name: power monitoring computer board
   components:
