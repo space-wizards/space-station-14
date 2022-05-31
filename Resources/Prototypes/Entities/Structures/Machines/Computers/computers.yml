@@ -469,6 +469,8 @@
           body: television
           bodyBroken: television_broken
           screen: detective_television
+    - type: Computer
+      board: ComputerTelevisionCircuitboard
     - type: Sprite
       sprite: Structures/Machines/computers.rsi
       layers:

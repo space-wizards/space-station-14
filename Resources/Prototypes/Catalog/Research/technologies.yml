@@ -281,6 +281,9 @@
     - SurveillanceCameraWirelessRouterCircuitboard
     - SurveillanceWirelessCameraMovableCircuitboard
     - SurveillanceWirelessCameraAnchoredCircuitboard
+    - SurveillanceCameraMonitorCircuitboard
+    - SurveillanceWirelessCameraMonitorCircuitboard
+    - ComputerTelevisionCircuitboard
     - AirAlarmElectronics
     - FireAlarmElectronics
 

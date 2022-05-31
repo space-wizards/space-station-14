@@ -251,6 +251,7 @@
       - ChemMasterMachineCircuitboard
       - ChemDispenserMachineCircuitboard
       - SurveillanceCameraRouterCircuitboard
+      - SurveillanceCameraMonitorCircuitboard
       - HydroponicsTrayMachineCircuitboard
       - SolarControlComputerCircuitboard
       - AutolatheMachineCircuitboard
