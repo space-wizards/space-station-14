@@ -72,6 +72,7 @@
     solution: bloodstream
   - type: Damageable
     damageContainer: Biological
+    damageModifierSet: Animal
   - type: AtmosExposed
   - type: Flammable
     fireSpread: true
