@@ -30,14 +30,12 @@
       - MobReptilian
     shuttles:
       - "Maps/infiltrator.yml"
-    loadouts:
-      Commander:
-        - SyndicateCommanderGearFull
-      Medic:
-        - SyndicateOperativeMedicFull
-      Operative:
-        - SyndicateOperativeGearFull
-
+    commanderLoadouts:
+      - SyndicateCommanderGearFull
+    medicLoadouts:
+      - SyndicateOperativeMedicFull
+    operativeLoadouts:
+      - SyndicateOperativeGearFull
 
 - type: gameRule
   id: Suspicion

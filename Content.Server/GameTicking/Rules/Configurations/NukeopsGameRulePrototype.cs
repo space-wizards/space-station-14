@@ -1,9 +1,4 @@
-using Content.Server.Maps;
-using Content.Shared.Roles;
 using JetBrains.Annotations;
-using Robust.Shared.Prototypes;
-using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
-using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.List;
 
 namespace Content.Server.GameTicking.Rules.Configurations;
 
@@ -30,13 +25,29 @@ public sealed class NukeopsGameRuleConfiguration : GameRuleConfiguration
     public List<string> Shuttles = new() { "Maps/infiltrator.yml" };
 
     /// <summary>
-    /// Loadouts for different "professions" of nukie (commander, medic)
+    /// Loadouts for the commander
     /// </summary>
-    [DataField("loadouts")]
-    public Dictionary<string, List<string>> Loadouts = new()
+    [DataField("commanderLoadouts")]
+    public List<string> CommanderLoadouts = new()
     {
-        { "Commander", new List<string> { "SyndicateCommanderGearFull" } },
-        { "Medic", new List<string> { "SyndicateOperativeMedicFull" } },
-        { "Operative", new List<string> { "SyndicateOperativeGearFull" } }
+        "SyndicateCommanderGearFull"
+    };
+
+    /// <summary>
+    /// Loadouts for medical operatives
+    /// </summary>
+    [DataField("medicLoadouts")]
+    public List<string> MedicLoadouts = new()
+    {
+        "SyndicateOperativeMedicFull"
+    };
+
+    /// <summary>
+    /// Loadouts for regular operatives
+    /// </summary>
+    [DataField("operativeLoadouts")]
+    public List<string> OperativeLoadouts = new()
+    {
+        "SyndicateOperativeGearFull"
     };
 }

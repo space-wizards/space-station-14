@@ -178,22 +178,6 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
         }
 
         var gridUid = _mapManager.GetGridEuid(gridId.Value);
-        StartingGearPrototype commanderGear;
-        StartingGearPrototype medicGear;
-        StartingGearPrototype starterGear;
-
-        if (_config.Loadouts != null)
-        {
-            commanderGear = _prototypeManager.Index<StartingGearPrototype>(_random.Pick(_config.Loadouts["Commander"]));
-            medicGear = _prototypeManager.Index<StartingGearPrototype>(_random.Pick(_config.Loadouts["Commander"]));
-            starterGear = _prototypeManager.Index<StartingGearPrototype>(_random.Pick(_config.Loadouts["Commander"]));
-        }
-        else
-        {
-            commanderGear = _prototypeManager.Index<StartingGearPrototype>("SyndicateCommanderGearFull");
-            medicGear = _prototypeManager.Index<StartingGearPrototype>("SyndicateOperativeMedicFull");
-            starterGear = _prototypeManager.Index<StartingGearPrototype>("SyndicateCommanderGearFull");
-        }
 
         var spawns = new List<EntityCoordinates>();
 
@@ -221,15 +205,15 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
             {
                 case 0:
                     name = $"Commander";
-                    gear = commanderGear;
+                    gear = _prototypeManager.Index<StartingGearPrototype>(_random.Pick(_config.CommanderLoadouts));
                     break;
                 case 1:
                     name = $"Operator #{i}";
-                    gear = medicGear;
+                    gear = _prototypeManager.Index<StartingGearPrototype>(_random.Pick(_config.MedicLoadouts));
                     break;
                 default:
                     name = $"Operator #{i}";
-                    gear = starterGear;
+                    gear = _prototypeManager.Index<StartingGearPrototype>(_random.Pick(_config.OperativeLoadouts));
                     break;
             }
 
