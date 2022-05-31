@@ -400,7 +400,7 @@
 - type: entity
   id: SurveillanceCameraRouterCircuitboard
   parent: BaseMachineCircuitboard
-  name: Surveillance camera router board
+  name: surveillance camera router board
   description: A machine printed circuit board for a surveillance camera router
   components:
     - type: MachineBoard
@@ -411,7 +411,7 @@
 - type: entity
   id: SurveillanceCameraWirelessRouterCircuitboard
   parent: BaseMachineCircuitboard
-  name: Surveillance camera wireless router board
+  name: surveillance camera wireless router board
   description: A machine printed circuit board for a surveillance camera wireless router
   components:
     - type: MachineBoard

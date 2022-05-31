@@ -334,7 +334,7 @@
 - type: latheRecipe
   id: SurveillanceCameraMonitorCircuitboard
   icon: Objects/Misc/module.rsi/id_mod.png
-  result: SurveillanceWirelessCameraMovableCircuitboard
+  result: SurveillanceCameraMonitorCircuitboard
   completetime: 4
   materials:
     Steel: 100
@@ -343,7 +343,7 @@
 - type: latheRecipe
   id: SurveillanceWirelessCameraMonitorCircuitboard
   icon: Objects/Misc/module.rsi/id_mod.png
-  result: SurveillanceWirelessCameraMovableCircuitboard
+  result: SurveillanceWirelessCameraMonitorCircuitboard
   completetime: 4
   materials:
     Steel: 100
