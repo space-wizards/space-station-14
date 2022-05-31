@@ -21,8 +21,23 @@
 - type: gameRule
   id: Nukeops
   config:
-    !type:GenericGameRuleConfiguration
+    !type:NukeopsGameRuleConfiguration
     id: Nukeops
+    pickableSpecies:
+      - MobHuman
+      - MobDwarf
+      - MobSlime
+      - MobReptilian
+    shuttles:
+      - infiltrator
+    ranks:
+      Commander:
+        - SyndicateCommanderGearFull
+      Medic:
+        - SyndicateOperativeMedicFull
+      Operative:
+        - SyndicateOperativeGearFull
+
 
 - type: gameRule
   id: Suspicion
