@@ -79,7 +79,7 @@
     sprite: Objects/Weapons/Guns/SMGs/c20r.rsi
   - type: Gun
   - type: ChamberMagazineAmmoProvider
-    autoEject: true
+    # autoEject: true # Do not set this until the PVS prediction issue is resolved
   - type: Appearance
     visuals:
     - type: MagVisualizer
