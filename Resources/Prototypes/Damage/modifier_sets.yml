@@ -132,7 +132,6 @@
     Asphyxiation: 0.0
     Bloodloss: 0.0
     Cellular: 0.0
-    
 
 # So animals can eat some raw meat and not take toxin damage
 - type: damageModifierSet
