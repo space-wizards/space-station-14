@@ -140,8 +140,9 @@ public sealed partial class GunSystem : SharedGunSystem
                         SetCartridgeSpent(cartridge, true);
                         MuzzleFlash(gun.Owner, cartridge, user);
 
-                        if (cartridge.DeleteOnSpawn)
-                            Del(cartridge.Owner);
+                        // TODO: Can't predict entity deletions.
+                        //if (cartridge.DeleteOnSpawn)
+                        //    Del(cartridge.Owner);
                     }
                     else
                     {
