@@ -11,9 +11,8 @@
     size: 24
   - type: Gun
     fireRate: 8
-    selectedMode: Safety
+    selectedMode: FullAuto
     availableModes:
-      - Safety
       - FullAuto
     soundGunshot:
       path: /Audio/Weapons/Guns/Gunshots/lmg.ogg

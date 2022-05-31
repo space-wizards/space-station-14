@@ -155,9 +155,8 @@
     sprite: Objects/Weapons/Guns/SMGs/wt550.rsi
   - type: Gun
     fireRate: 5
-    selectedMode: Safety
+    selectedMode: FullAuto
     availableModes:
-    - Safety
     - FullAuto
   - type: Appearance
     visuals:

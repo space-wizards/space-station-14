@@ -92,9 +92,8 @@
     size: 24
     sprite: Objects/Weapons/Guns/Battery/cog.rsi
   - type: Gun
-    selectedMode: Safety
+    selectedMode: SemiAuto
     availableModes:
-    - Safety
     - SemiAuto
   - type: HitscanBatteryAmmoProvider
     proto: RedMediumLaser
@@ -122,9 +121,8 @@
     sprite: Objects/Weapons/Guns/Battery/pulse_pistol.rsi
   - type: Gun
     fireRate: 1
-    selectedMode: Safety
+    selectedMode: SemiAuto
     availableModes:
-    - Safety
     - SemiAuto
     soundGunshot:
       path: /Audio/Weapons/Guns/Gunshots/laser_cannon.ogg
@@ -153,10 +151,9 @@
     size: 24
     sprite: Objects/Weapons/Guns/Battery/pulse_carbine.rsi
   - type: Gun
-    selectedMode: Safety
+    selectedMode: SemiAuto
     fireRate: 1.5
     availableModes:
-      - Safety
       - SemiAuto
       - FullAuto
     soundGunshot:

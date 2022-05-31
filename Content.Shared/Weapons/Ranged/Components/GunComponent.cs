@@ -96,7 +96,7 @@ public class GunComponent : Component
     /// What firemodes can be selected.
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite), DataField("availableModes")]
-    public SelectiveFire AvailableModes = SelectiveFire.Safety | SelectiveFire.SemiAuto;
+    public SelectiveFire AvailableModes = SelectiveFire.SemiAuto;
 
     /// <summary>
     /// What firemode is currently selected.
@@ -118,8 +118,8 @@ public class GunComponent : Component
 public enum SelectiveFire : byte
 {
     Invalid = 0,
-    Safety = 1 << 0,
-    SemiAuto = 1 << 1,
-    Burst = 1 << 2,
-    FullAuto = 1 << 3, // Not in the building!
+    // Combat mode already functions as the equivalent of Safety
+    SemiAuto = 1 << 0,
+    Burst = 1 << 1,
+    FullAuto = 1 << 2, // Not in the building!
 }

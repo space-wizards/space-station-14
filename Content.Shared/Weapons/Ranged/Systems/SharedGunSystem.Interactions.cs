@@ -1,5 +1,6 @@
 using Content.Shared.Actions;
 using Content.Shared.Actions.ActionTypes;
+using Content.Shared.CombatMode;
 using Content.Shared.Examine;
 using Content.Shared.Verbs;
 using Content.Shared.Weapons.Ranged.Components;
@@ -11,8 +12,8 @@ public abstract partial class SharedGunSystem
 {
     private void OnExamine(EntityUid uid, GunComponent component, ExaminedEvent args)
     {
-        var selectColor = component.SelectedMode == SelectiveFire.Safety ? SafetyExamineColor : ModeExamineColor;
-        args.PushMarkup(Loc.GetString("gun-selected-mode-examine", ("color", selectColor), ("mode", component.SelectedMode)));
+        var selectColor = !_combatMode.IsInCombatMode(args.Examiner) ? SafetyExamineColor : ModeExamineColor;
+        args.PushMarkup(Loc.GetString("gun-selected-mode-examine", ("color", ModeExamineColor), ("mode", component.SelectedMode)));
         args.PushMarkup(Loc.GetString("gun-fire-rate-examine", ("color", FireRateExamineColor), ("fireRate", component.FireRate)));
     }
 
@@ -63,12 +64,7 @@ public abstract partial class SharedGunSystem
 
         PlaySound(component.Owner, component.SoundModeToggle?.GetSound(Random, ProtoManager), user);
         Popup($"Selected {fire}", component.Owner, user);
-
-        if (component.SelectModeAction != null)
-        {
-            var nextMode = GetNextMode(component);
-            UpdateSelectModeAction(component.SelectModeAction, nextMode);
-        }
+        // When actions done add here.
 
         Dirty(component);
     }
@@ -84,65 +80,6 @@ public abstract partial class SharedGunSystem
         DebugTools.Assert((component.AvailableModes & component.SelectedMode) == component.SelectedMode);
         var nextMode = GetNextMode(component);
         SelectFire(component, nextMode, user);
-    }
-
-    private void OnGetActions(EntityUid uid, GunComponent component, GetItemActionsEvent args)
-    {
-        var action = GetSelectModeAction(component);
-
-        if (action == null) return;
-
-        args.Actions.Add(action);
-        component.SelectModeAction = action;
-    }
-
-    private void UpdateSelectModeAction(InstantAction? action, SelectiveFire mode)
-    {
-        if (action == null) return;
-
-        // For the action we'll show our current mode as the icon I guess
-        switch (mode)
-        {
-            case SelectiveFire.Safety:
-                action.Icon = new SpriteSpecifier.Texture(new ResourcePath("Interface/Actions/scream.png"));
-                break;
-            case SelectiveFire.SemiAuto:
-                action.Icon = new SpriteSpecifier.Texture(new ResourcePath("Interface/Actions/scream.png"));
-                break;
-            case SelectiveFire.Burst:
-                action.Icon = new SpriteSpecifier.Texture(new ResourcePath("Interface/Actions/scream.png"));
-                break;
-            case SelectiveFire.FullAuto:
-                action.Icon = new SpriteSpecifier.Texture(new ResourcePath("Interface/Actions/scream.png"));
-                break;
-            default:
-                throw new ArgumentOutOfRangeException(
-                    $"No implemented select mode action for {mode}!");
-        }
-
-        action.Description = $"Cycle the mode for this gun to {mode}";
-        action.Event = new CycleModeEvent(mode);
-    }
-
-    private InstantAction? GetSelectModeAction(GunComponent component)
-    {
-        if (component.SelectedMode == component.AvailableModes) return null;
-
-        var nextMode = GetNextMode(component);
-
-        var action = new InstantAction()
-        {
-            Icon = new SpriteSpecifier.Texture(new ResourcePath("Interface/Actions/scream.png")),
-            Name = "Cycle mode",
-            Keywords = new HashSet<string>()
-            {
-                "gun",
-            },
-        };
-
-        UpdateSelectModeAction(action, nextMode);
-
-        return action;
     }
 
     private sealed class CycleModeEvent : InstantActionEvent

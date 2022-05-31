@@ -72,7 +72,6 @@ public abstract partial class SharedGunSystem : EntitySystem
 
         // Interactions
         SubscribeLocalEvent<GunComponent, GetVerbsEvent<AlternativeVerb>>(OnAltVerb);
-        SubscribeLocalEvent<GunComponent, GetItemActionsEvent>(OnGetActions);
         SubscribeLocalEvent<GunComponent, ExaminedEvent>(OnExamine);
         SubscribeLocalEvent<GunComponent, CycleModeEvent>(OnCycleMode);
     }
@@ -192,9 +191,6 @@ public abstract partial class SharedGunSystem : EntitySystem
         // Don't do this in the loop so we still reset NextFire.
         switch (gun.SelectedMode)
         {
-            case SelectiveFire.Safety:
-                shots = 0;
-                break;
             case SelectiveFire.SemiAuto:
                 shots = Math.Min(shots, 1 - gun.ShotCounter);
                 break;
@@ -227,7 +223,7 @@ public abstract partial class SharedGunSystem : EntitySystem
         {
             // Play empty gun sounds if relevant
             // If they're firing an existing clip then don't play anything.
-            if (gun.SelectedMode == SelectiveFire.Safety || shots > 0)
+            if (shots > 0)
             {
                 // Don't spam safety sounds at gun fire rate, play it at a reduced rate.
                 // May cause prediction issues? Needs more tweaking

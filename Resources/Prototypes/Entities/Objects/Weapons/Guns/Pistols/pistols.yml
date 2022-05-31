@@ -16,9 +16,8 @@
     size: 10
   - type: Gun
     fireRate: 8
-    selectedMode: Safety
+    selectedMode: SemiAuto
     availableModes:
-      - Safety
       - SemiAuto
     soundGunshot:
       path: /Audio/Weapons/Guns/Gunshots/pistol.ogg

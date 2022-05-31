@@ -26,9 +26,8 @@
     sprite: Objects/Weapons/Guns/Launchers/china_lake.rsi
   - type: Gun
     fireRate: 1
-    selectedMode: Safety
+    selectedMode: SemiAuto
     availableModes:
-      - Safety
       - SemiAuto
     soundGunshot:
       path: /Audio/Weapons/Guns/Gunshots/grenade_launcher.ogg
