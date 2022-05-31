@@ -254,10 +254,10 @@ public sealed class ZombieRuleSystem : GameRuleSystem
                 UnlockNuke();
                 break;
             case ("ERT"):
-                SpawnShuttle("/maps/dart.yml");
+                SpawnShuttle("/Maps/dart.yml");
                 break;
             case ("CBURN"):
-                SpawnShuttle("/maps/infiltrator.yml");
+                SpawnShuttle("/Maps/infiltrator.yml");
                 break;
         }
     }
