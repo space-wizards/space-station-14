@@ -3500,7 +3500,7 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 513
-  type: SalternAPC
+  type: APCBasic
   components:
   - rot: -1.5707963267948966 rad
     pos: 7.5,-0.5

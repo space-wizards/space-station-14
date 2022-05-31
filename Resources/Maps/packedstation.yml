@@ -16670,7 +16670,7 @@ entities:
       stash: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 340
-  type: SalternAPC
+  type: APCBasic
   components:
   - rot: -1.5707963267948966 rad
     pos: 0.5,-3.5
@@ -16686,7 +16686,7 @@ entities:
       stash: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 342
-  type: SalternAPC
+  type: APCBasic
   components:
   - rot: -1.5707963267948966 rad
     pos: -0.5,-11.5
@@ -16911,7 +16911,7 @@ entities:
         ents: []
     type: ContainerContainer
 - uid: 376
-  type: SalternAPC
+  type: APCBasic
   components:
   - rot: 3.141592653589793 rad
     pos: 16.5,-6.5
@@ -17357,7 +17357,7 @@ entities:
         ents: []
     type: ContainerContainer
 - uid: 439
-  type: SalternAPC
+  type: APCBasic
   components:
   - pos: -0.5,15.5
     parent: 2
@@ -17576,7 +17576,7 @@ entities:
     parent: 2
     type: Transform
 - uid: 466
-  type: SalternAPC
+  type: APCBasic
   components:
   - rot: 3.141592653589793 rad
     pos: 10.5,11.5
@@ -18555,7 +18555,7 @@ entities:
         ents: []
     type: ContainerContainer
 - uid: 604
-  type: SalternAPC
+  type: APCBasic
   components:
   - pos: 19.5,-13.5
     parent: 2
@@ -19064,7 +19064,7 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 681
-  type: SalternAPC
+  type: APCBasic
   components:
   - rot: -1.5707963267948966 rad
     pos: 11.5,-15.5
@@ -19513,7 +19513,7 @@ entities:
     parent: 2
     type: Transform
 - uid: 751
-  type: SalternAPC
+  type: APCBasic
   components:
   - rot: 1.5707963267948966 rad
     pos: 8.5,-26.5
@@ -21039,7 +21039,7 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 947
-  type: SalternAPC
+  type: APCBasic
   components:
   - rot: 1.5707963267948966 rad
     pos: 9.5,-35.5
@@ -21665,7 +21665,7 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 1043
-  type: SalternAPC
+  type: APCBasic
   components:
   - pos: 29.5,-37.5
     parent: 2
@@ -22144,7 +22144,7 @@ entities:
         ents: []
     type: ContainerContainer
 - uid: 1111
-  type: SalternAPC
+  type: APCBasic
   components:
   - rot: -1.5707963267948966 rad
     pos: 21.5,5.5
@@ -23870,7 +23870,7 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 1372
-  type: SalternAPC
+  type: APCBasic
   components:
   - rot: -1.5707963267948966 rad
     pos: 5.5,-35.5
@@ -25161,7 +25161,7 @@ entities:
         ents: []
     type: ContainerContainer
 - uid: 1539
-  type: SalternAPC
+  type: APCBasic
   components:
   - pos: 37.485016,-2.5795918
     parent: 2
@@ -25394,7 +25394,7 @@ entities:
         ents: []
     type: ContainerContainer
 - uid: 1569
-  type: SalternAPC
+  type: APCBasic
   components:
   - rot: 3.141592653589793 rad
     pos: 26.5,-37.5
@@ -25752,7 +25752,7 @@ entities:
         ents: []
     type: ContainerContainer
 - uid: 1614
-  type: SalternAPC
+  type: APCBasic
   components:
   - rot: -1.5707963267948966 rad
     pos: 40.5,-11.5
@@ -26113,7 +26113,7 @@ entities:
     parent: 2
     type: Transform
 - uid: 1659
-  type: SalternAPC
+  type: APCBasic
   components:
   - rot: 3.141592653589793 rad
     pos: 42.5,-11.5
@@ -26422,7 +26422,7 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 1688
-  type: SalternAPC
+  type: APCBasic
   components:
   - rot: -1.5707963267948966 rad
     pos: 34.5,-15.5
@@ -26865,14 +26865,14 @@ entities:
         ents: []
     type: ContainerContainer
 - uid: 1748
-  type: SalternAPC
+  type: APCBasic
   components:
   - rot: 1.5707963267948966 rad
     pos: 39.5,-15.5
     parent: 2
     type: Transform
 - uid: 1749
-  type: SalternAPC
+  type: APCBasic
   components:
   - pos: 41.5,-21.5
     parent: 2
@@ -27432,7 +27432,7 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 1815
-  type: SalternAPC
+  type: APCBasic
   components:
   - pos: 41.5,21.5
     parent: 2
@@ -28281,7 +28281,7 @@ entities:
       ItemCabinet: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 1948
-  type: SalternAPC
+  type: APCBasic
   components:
   - rot: 3.141592653589793 rad
     pos: 36.5,29.5
@@ -31426,7 +31426,7 @@ entities:
     parent: 2
     type: Transform
 - uid: 2378
-  type: SalternAPC
+  type: APCBasic
   components:
   - rot: -1.5707963267948966 rad
     pos: 37.5,25.5
@@ -31635,7 +31635,7 @@ entities:
         ents: []
     type: ContainerContainer
 - uid: 2404
-  type: SalternAPC
+  type: APCBasic
   components:
   - pos: 43.5,26.5
     parent: 2
@@ -32278,7 +32278,7 @@ entities:
     parent: 2
     type: Transform
 - uid: 2481
-  type: SalternAPC
+  type: APCBasic
   components:
   - pos: 20.5,34.5
     parent: 2
@@ -33960,7 +33960,7 @@ entities:
     parent: 2
     type: Transform
 - uid: 2721
-  type: SalternAPC
+  type: APCBasic
   components:
   - rot: -1.5707963267948966 rad
     pos: 68.5,-15.5
@@ -35409,7 +35409,7 @@ entities:
         ents: []
     type: ContainerContainer
 - uid: 2902
-  type: SalternAPC
+  type: APCBasic
   components:
   - pos: 69.5,47.5
     parent: 2
@@ -38541,7 +38541,7 @@ entities:
     parent: 2
     type: Transform
 - uid: 3407
-  type: SalternAPC
+  type: APCBasic
   components:
   - rot: 1.5707963267948966 rad
     pos: 0.5,-8.5
@@ -42484,7 +42484,7 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 4019
-  type: SalternAPC
+  type: APCBasic
   components:
   - rot: -1.5707963267948966 rad
     pos: 10.5,-4.5
@@ -42777,7 +42777,7 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 4053
-  type: SalternAPC
+  type: APCBasic
   components:
   - rot: 3.141592653589793 rad
     pos: 22.5,-13.5
@@ -43336,7 +43336,7 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 4107
-  type: SalternAPC
+  type: APCBasic
   components:
   - rot: 1.5707963267948966 rad
     pos: 12.5,-17.5
@@ -43387,7 +43387,7 @@ entities:
     parent: 2
     type: Transform
 - uid: 4113
-  type: SalternAPC
+  type: APCBasic
   components:
   - rot: -1.5707963267948966 rad
     pos: -4.5,-2.5
@@ -43412,7 +43412,7 @@ entities:
     parent: 2
     type: Transform
 - uid: 4116
-  type: SalternAPC
+  type: APCBasic
   components:
   - rot: -1.5707963267948966 rad
     pos: 13.5,16.5
@@ -44057,7 +44057,7 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 4186
-  type: SalternAPC
+  type: APCBasic
   components:
   - rot: -1.5707963267948966 rad
     pos: 28.5,7.5
@@ -45716,7 +45716,7 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 4325
-  type: SalternAPC
+  type: APCBasic
   components:
   - rot: -1.5707963267948966 rad
     pos: 10.5,18.5
@@ -47048,7 +47048,7 @@ entities:
     parent: 2
     type: Transform
 - uid: 4455
-  type: SalternAPC
+  type: APCBasic
   components:
   - pos: 3.5,-27.5
     parent: 2
@@ -48308,7 +48308,7 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 4587
-  type: SalternAPC
+  type: APCBasic
   components:
   - rot: -1.5707963267948966 rad
     pos: 33.5,7.5
@@ -49524,7 +49524,7 @@ entities:
       Toggle: []
     type: SignalReceiver
 - uid: 4703
-  type: SalternAPC
+  type: APCBasic
   components:
   - rot: 3.141592653589793 rad
     pos: 40.5,-1.5
@@ -50732,7 +50732,7 @@ entities:
       Toggle: []
     type: SignalReceiver
 - uid: 4815
-  type: SalternAPC
+  type: APCBasic
   components:
   - rot: 1.5707963267948966 rad
     pos: 16.5,23.5
@@ -50827,7 +50827,7 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 4827
-  type: SalternAPC
+  type: APCBasic
   components:
   - rot: -1.5707963267948966 rad
     pos: 16.5,25.5
@@ -50842,7 +50842,7 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 4829
-  type: SalternAPC
+  type: APCBasic
   components:
   - rot: 3.141592653589793 rad
     pos: 13.5,35.5
@@ -51441,7 +51441,7 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 4883
-  type: SalternAPC
+  type: APCBasic
   components:
   - pos: 15.5,34.5
     parent: 2
@@ -51461,7 +51461,7 @@ entities:
     parent: 2
     type: Transform
 - uid: 4886
-  type: SalternAPC
+  type: APCBasic
   components:
   - rot: 3.141592653589793 rad
     pos: 25.5,43.5
@@ -51793,14 +51793,14 @@ entities:
       PaperLabel: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 4918
-  type: SalternAPC
+  type: APCBasic
   components:
   - rot: -1.5707963267948966 rad
     pos: 20.5,40.5
     parent: 2
     type: Transform
 - uid: 4919
-  type: SalternAPC
+  type: APCBasic
   components:
   - rot: 1.5707963267948966 rad
     pos: 43.5,2.5
@@ -52615,7 +52615,7 @@ entities:
         ents: []
     type: ContainerContainer
 - uid: 5013
-  type: SalternAPC
+  type: APCBasic
   components:
   - rot: 3.141592653589793 rad
     pos: 52.5,-8.5
@@ -52634,7 +52634,7 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 5015
-  type: SalternAPC
+  type: APCBasic
   components:
   - pos: 66.5,-0.5
     parent: 2
@@ -53301,7 +53301,7 @@ entities:
         ents: []
     type: ContainerContainer
 - uid: 5088
-  type: SalternAPC
+  type: APCBasic
   components:
   - rot: -1.5707963267948966 rad
     pos: 75.5,-2.5
@@ -53683,21 +53683,21 @@ entities:
       morgue_tray: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 5129
-  type: SalternAPC
+  type: APCBasic
   components:
   - rot: 1.5707963267948966 rad
     pos: 75.5,-4.5
     parent: 2
     type: Transform
 - uid: 5130
-  type: SalternAPC
+  type: APCBasic
   components:
   - rot: -1.5707963267948966 rad
     pos: 73.5,-7.5
     parent: 2
     type: Transform
 - uid: 5131
-  type: SalternAPC
+  type: APCBasic
   components:
   - pos: 58.5,-8.5
     parent: 2
@@ -53918,7 +53918,7 @@ entities:
         ents: []
     type: ContainerContainer
 - uid: 5155
-  type: SalternAPC
+  type: APCBasic
   components:
   - pos: 74.5,9.5
     parent: 2
@@ -54389,7 +54389,7 @@ entities:
   - enabled: False
     type: AmbientSound
 - uid: 5201
-  type: SalternAPC
+  type: APCBasic
   components:
   - rot: -1.5707963267948966 rad
     pos: 64.5,11.5
@@ -54759,7 +54759,7 @@ entities:
   - color: '#0000FFFF'
     type: AtmosPipeColor
 - uid: 5236
-  type: SalternAPC
+  type: APCBasic
   components:
   - rot: -1.5707963267948966 rad
     pos: 56.5,11.5
@@ -55121,20 +55121,20 @@ entities:
       Toggle: []
     type: SignalReceiver
 - uid: 5269
-  type: SalternAPC
+  type: APCBasic
   components:
   - pos: 53.5,21.5
     parent: 2
     type: Transform
 - uid: 5270
-  type: SalternAPC
+  type: APCBasic
   components:
   - rot: 3.141592653589793 rad
     pos: 51.5,22.5
     parent: 2
     type: Transform
 - uid: 5271
-  type: SalternAPC
+  type: APCBasic
   components:
   - pos: 33.5,44.5
     parent: 2
@@ -55439,7 +55439,7 @@ entities:
         ents: []
     type: ContainerContainer
 - uid: 5299
-  type: SalternAPC
+  type: APCBasic
   components:
   - pos: 66.488266,17.465452
     parent: 2
@@ -56575,7 +56575,7 @@ entities:
   - enabled: False
     type: AmbientSound
 - uid: 5427
-  type: SalternAPC
+  type: APCBasic
   components:
   - rot: 1.5707963267948966 rad
     pos: 2.5,-4.5
@@ -58411,7 +58411,7 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 5648
-  type: SalternAPC
+  type: APCBasic
   components:
   - rot: 3.141592653589793 rad
     pos: 68.5,41.5
@@ -58795,7 +58795,7 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 5689
-  type: SalternAPC
+  type: APCBasic
   components:
   - rot: 3.141592653589793 rad
     pos: 69.5,9.5
@@ -61970,7 +61970,7 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 6005
-  type: SalternAPC
+  type: APCBasic
   components:
   - pos: 78.5,-14.5
     parent: 2
@@ -62126,7 +62126,7 @@ entities:
       Toggle: []
     type: SignalReceiver
 - uid: 6015
-  type: SalternAPC
+  type: APCBasic
   components:
   - pos: 6.5,-10.5
     parent: 2
@@ -62230,7 +62230,7 @@ entities:
     parent: 2
     type: Transform
 - uid: 6025
-  type: SalternAPC
+  type: APCBasic
   components:
   - rot: -1.5707963267948966 rad
     pos: 28.5,-19.5
@@ -62485,7 +62485,7 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 6047
-  type: SalternAPC
+  type: APCBasic
   components:
   - pos: 28.5,33.5
     parent: 2
@@ -63035,7 +63035,7 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 6095
-  type: SalternAPC
+  type: APCBasic
   components:
   - rot: 3.141592653589793 rad
     pos: 28.5,9.5
@@ -63074,7 +63074,7 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 6099
-  type: SalternAPC
+  type: APCBasic
   components:
   - rot: 3.141592653589793 rad
     pos: 43.5,12.5
@@ -63581,7 +63581,7 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 6158
-  type: SalternAPC
+  type: APCBasic
   components:
   - pos: 22.5,11.5
     parent: 2
@@ -63731,7 +63731,7 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 6172
-  type: SalternAPC
+  type: APCBasic
   components:
   - pos: 66.5,45.5
     parent: 2
@@ -65355,7 +65355,7 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 6342
-  type: SalternAPC
+  type: APCBasic
   components:
   - pos: 54.5,4.5
     parent: 2
@@ -65537,7 +65537,7 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 6358
-  type: SalternAPC
+  type: APCBasic
   components:
   - rot: 1.5707963267948966 rad
     pos: 50.5,-14.5
@@ -67417,7 +67417,7 @@ entities:
       Toggle: []
     type: SignalReceiver
 - uid: 6522
-  type: SalternAPC
+  type: APCBasic
   components:
   - pos: 39.5,-18.5
     parent: 2
@@ -69282,7 +69282,7 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 6697
-  type: SalternAPC
+  type: APCBasic
   components:
   - rot: 3.141592653589793 rad
     pos: 11.5,2.5
@@ -69465,7 +69465,7 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 6717
-  type: SalternAPC
+  type: APCBasic
   components:
   - rot: -1.5707963267948966 rad
     pos: 7.5,3.5
@@ -70949,7 +70949,7 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 6873
-  type: SalternAPC
+  type: APCBasic
   components:
   - pos: 47.5,28.5
     parent: 2
@@ -71971,7 +71971,7 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 6960
-  type: SalternAPC
+  type: APCBasic
   components:
   - pos: 22.5,-22.5
     parent: 2
@@ -87770,7 +87770,7 @@ entities:
   - color: '#0000FFFF'
     type: AtmosPipeColor
 - uid: 8388
-  type: SalternAPC
+  type: APCBasic
   components:
   - pos: 38.500893,-33.65727
     parent: 2
@@ -90232,7 +90232,7 @@ entities:
       Toggle: []
     type: SignalReceiver
 - uid: 8585
-  type: SalternAPC
+  type: APCBasic
   components:
   - pos: 30.480644,38.38934
     parent: 2
@@ -93635,7 +93635,7 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 9020
-  type: SalternAPC
+  type: APCBasic
   components:
   - pos: 110.5,-14.5
     parent: 2
@@ -122323,7 +122323,7 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 11408
-  type: SalternAPC
+  type: APCBasic
   components:
   - rot: -1.5707963267948966 rad
     pos: 55.5,37.5
@@ -127958,7 +127958,7 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 12098
-  type: SalternAPC
+  type: APCBasic
   components:
   - pos: -12.5,1.5
     parent: 2
@@ -128431,7 +128431,7 @@ entities:
     parent: 2
     type: Transform
 - uid: 12151
-  type: SalternAPC
+  type: APCBasic
   components:
   - rot: -1.5707963267948966 rad
     pos: 65.5,23.5

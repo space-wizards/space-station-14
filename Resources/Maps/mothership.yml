@@ -7736,7 +7736,7 @@ entities:
     parent: 45
     type: Transform
 - uid: 774
-  type: SalternAPC
+  type: APCBasic
   components:
   - pos: -0.5,-39.5
     parent: 45
@@ -7749,7 +7749,7 @@ entities:
     supplyRampPosition: 0.026367188
     type: PowerNetworkBattery
 - uid: 775
-  type: SalternAPC
+  type: APCBasic
   components:
   - pos: -0.5,-25.5
     parent: 45
@@ -7762,7 +7762,7 @@ entities:
     supplyRampPosition: -0.0009460449
     type: PowerNetworkBattery
 - uid: 776
-  type: SalternAPC
+  type: APCBasic
   components:
   - pos: 0.5,-11.5
     parent: 45
@@ -7774,7 +7774,7 @@ entities:
     currentSupply: 205
     type: PowerNetworkBattery
 - uid: 777
-  type: SalternAPC
+  type: APCBasic
   components:
   - pos: -1.5,8.5
     parent: 45
@@ -7786,7 +7786,7 @@ entities:
     currentSupply: 6155
     type: PowerNetworkBattery
 - uid: 778
-  type: SalternAPC
+  type: APCBasic
   components:
   - pos: 2.5,21.5
     parent: 45
@@ -7799,7 +7799,7 @@ entities:
     supplyRampPosition: 0.009765625
     type: PowerNetworkBattery
 - uid: 779
-  type: SalternAPC
+  type: APCBasic
   components:
   - pos: 1.5,41.5
     parent: 45

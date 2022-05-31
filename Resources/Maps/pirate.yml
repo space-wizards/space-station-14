@@ -3026,19 +3026,19 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 261
-  type: SalternAPC
+  type: APCBasic
   components:
   - pos: -0.5,5.5
     parent: 25
     type: Transform
 - uid: 262
-  type: SalternAPC
+  type: APCBasic
   components:
   - pos: -9.5,0.5
     parent: 25
     type: Transform
 - uid: 263
-  type: SalternAPC
+  type: APCBasic
   components:
   - pos: 4.5,8.5
     parent: 25
@@ -3799,7 +3799,7 @@ entities:
   - fixtures: []
     type: Fixtures
 - uid: 331
-  type: SalternAPC
+  type: APCBasic
   components:
   - pos: 0.5,-0.5
     parent: 25

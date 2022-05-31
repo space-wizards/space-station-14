@@ -899,7 +899,7 @@ entities:
     parent: 52
     type: Transform
 - uid: 99
-  type: SalternAPC
+  type: APCBasic
   components:
   - pos: -0.5,1.5
     parent: 52
