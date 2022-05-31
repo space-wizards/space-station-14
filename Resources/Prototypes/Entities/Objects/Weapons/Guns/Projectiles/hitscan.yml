@@ -16,7 +16,7 @@
   id: RedLaser
   damage:
     types:
-      Heat: 15
+      Heat: 20
   muzzleFlash:
     sprite: Objects/Weapons/Guns/Projectiles/projectiles.rsi
     state: muzzle_laser
@@ -31,7 +31,7 @@
   id: RedMediumLaser
   damage:
     types:
-      Heat: 20
+      Heat: 25
   muzzleFlash:
     sprite: Objects/Weapons/Guns/Projectiles/projectiles.rsi
     state: muzzle_laser
@@ -43,25 +43,41 @@
     state: impact_laser
 
 - type: hitscan
-  id: Pulse
+  id: OmniLaser
   damage:
     types:
-      Heat: 25
+      Heat: 30
   muzzleFlash:
     sprite: Objects/Weapons/Guns/Projectiles/projectiles.rsi
-    state: muzzle_blue
+    state: muzzle_omni
   travelFlash:
     sprite: Objects/Weapons/Guns/Projectiles/projectiles.rsi
-    state: beam_blue
+    state: beam_omni
   impactFlash:
     sprite: Objects/Weapons/Guns/Projectiles/projectiles.rsi
-    state: impact_blue
+    state: impact_omni
+
+- type: hitscan
+  id: XrayLaser
+  damage:
+    types:
+      Heat: 15
+      Radiation: 15
+  muzzleFlash:
+    sprite: Objects/Weapons/Guns/Projectiles/projectiles.rsi
+    state: muzzle_xray
+  travelFlash:
+    sprite: Objects/Weapons/Guns/Projectiles/projectiles.rsi
+    state: xray
+  impactFlash:
+    sprite: Objects/Weapons/Guns/Projectiles/projectiles.rsi
+    state: impact_xray
 
 - type: hitscan
   id: RedHeavyLaser
   damage:
     types:
-      Heat: 45
+      Heat: 40
   muzzleFlash:
     sprite: Objects/Weapons/Guns/Projectiles/projectiles.rsi
     state: muzzle_beam_heavy
@@ -73,32 +89,16 @@
     state: impact_beam_heavy
 
 - type: hitscan
-  id: OmniLaser
+  id: Pulse
   damage:
     types:
-      Heat: 60
+      Heat: 50
   muzzleFlash:
     sprite: Objects/Weapons/Guns/Projectiles/projectiles.rsi
-    state: muzzle_omni
+    state: muzzle_blue
   travelFlash:
     sprite: Objects/Weapons/Guns/Projectiles/projectiles.rsi
-    state: beam_omni
+    state: beam_blue
   impactFlash:
     sprite: Objects/Weapons/Guns/Projectiles/projectiles.rsi
-    state: impact_omni
-
-# When Xrays can actually go through walls should nerf the damage and bump the battery
-- type: hitscan
-  id: XrayLaser
-  damage:
-    types:
-      Heat: 60
-  muzzleFlash:
-    sprite: Objects/Weapons/Guns/Projectiles/projectiles.rsi
-    state: muzzle_xray
-  travelFlash:
-    sprite: Objects/Weapons/Guns/Projectiles/projectiles.rsi
-    state: xray
-  impactFlash:
-    sprite: Objects/Weapons/Guns/Projectiles/projectiles.rsi
-    state: impact_xray
+    state: impact_blue
