@@ -9,6 +9,9 @@
     sprite: Objects/Materials/ingots.rsi
   - type: Item
     sprite: Objects/Materials/ingots.rsi
+  - type: StaticPrice
+    price: 0
+  - type: MaterialPrice
   - type: ItemStatus
   - type: Tag
     tags:

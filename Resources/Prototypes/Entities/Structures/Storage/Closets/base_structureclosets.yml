@@ -66,3 +66,4 @@
       state: generic
       state_open: generic_open
       state_closed: generic_door
+  - type: ContentsPrice # A locker full of people should be worth as much as a locker full of people.

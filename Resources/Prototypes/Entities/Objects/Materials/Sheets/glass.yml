@@ -11,7 +11,7 @@
     sprite: Objects/Materials/Sheets/glass.rsi
   - type: StaticPrice
     price: 0
-  - type:
+  - type: MaterialPrice
   - type: ItemStatus
   - type: Tag
     tags:

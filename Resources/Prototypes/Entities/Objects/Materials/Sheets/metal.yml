@@ -11,6 +11,7 @@
     sprite: Objects/Materials/Sheets/metal.rsi
   - type: StaticPrice
     price: 0
+  - type: MaterialPrice
   - type: ItemStatus
   - type: Tag
     tags:
