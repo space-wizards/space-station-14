@@ -57,7 +57,7 @@
       whitelist:
         components:
         - Paper
-
+  - type: ContentsPrice
 
 - type: entity
   id: CrateBaseSecure
@@ -120,3 +120,4 @@
   - type: Construction
     graph: CrateSecure
     node: cratesecure
+  - type: ContentsPrice
