@@ -2,6 +2,8 @@ using Content.Server.Maps;
 using Content.Shared.Roles;
 using JetBrains.Annotations;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.List;
 
 namespace Content.Server.GameTicking.Rules.Configurations;
 
@@ -18,9 +20,6 @@ public sealed class NukeopsGameRuleConfiguration : GameRuleConfiguration
     /// <summary>
     /// List of species that nukies can be
     /// </summary>
-    /// <remarks>
-    /// Yes, you can put anything in here. Including bread.
-    /// </remarks>
     [DataField("pickableSpecies")]
     public List<string>? Species;
 
@@ -28,11 +27,11 @@ public sealed class NukeopsGameRuleConfiguration : GameRuleConfiguration
     /// Shuttles the nukies can spawn on
     /// </summary>
     [DataField("shuttles")]
-    public List<GameMapPrototype>? Shuttles;
+    public List<string>? Shuttles;
 
     /// <summary>
     /// Loadouts for different "professions" of nukie (commander, medic)
     /// </summary>
     [DataField("loadouts")]
-    public Dictionary<string, List<StartingGearPrototype>>? Loadouts;
+    public Dictionary<string, List<string>>? Loadouts;
 }

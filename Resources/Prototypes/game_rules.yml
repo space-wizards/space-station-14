@@ -29,7 +29,7 @@
       - MobSlime
       - MobReptilian
     shuttles:
-      - infiltrator
+      - "Maps/infiltrator.yml"
     loadouts:
       Commander:
         - SyndicateCommanderGearFull

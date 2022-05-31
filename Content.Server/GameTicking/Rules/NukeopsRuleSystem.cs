@@ -149,16 +149,7 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
             operatives.Add(nukeOp);
         }
 
-        string map;
-        if (_config.Shuttles != null)
-        {
-            map = _random.Pick(_config.Shuttles).MapPath.ToString();
-        }
-        else
-        {
-            // Default to the Infiltrator
-            map = "Maps/infiltrator.yml";
-        }
+        var map = _config.Shuttles != null ? _random.Pick(_config.Shuttles) : "Maps/infiltrator.yml";
 
         var aabbs = _stationSystem.Stations.SelectMany(x =>
             Comp<StationDataComponent>(x).Grids.Select(x => _mapManager.GetGridComp(x).Grid.WorldAABB)).ToArray();
@@ -190,9 +181,9 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
 
         if (_config.Loadouts != null)
         {
-            commanderGear = _random.Pick(_config.Loadouts["Commander"]);
-            medicGear = _random.Pick(_config.Loadouts["Commander"]);
-            starterGear = _random.Pick(_config.Loadouts["Commander"]);
+            commanderGear = _prototypeManager.Index<StartingGearPrototype>(_random.Pick(_config.Loadouts["Commander"]));
+            medicGear = _prototypeManager.Index<StartingGearPrototype>(_random.Pick(_config.Loadouts["Commander"]));
+            starterGear = _prototypeManager.Index<StartingGearPrototype>(_random.Pick(_config.Loadouts["Commander"]));
         }
         else
         {
