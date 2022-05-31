@@ -45,6 +45,9 @@
     supplyRampTolerance: 500
   - type: Anchorable
   - type: Pullable
+  - type: Damageable
+    damageContainer: Inorganic
+    damageModifierSet: Metallic
   - type: Destructible
     thresholds:
     - trigger:
