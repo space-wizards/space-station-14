@@ -74,6 +74,12 @@ public abstract partial class SharedGunSystem : EntitySystem
         SubscribeLocalEvent<GunComponent, GetVerbsEvent<AlternativeVerb>>(OnAltVerb);
         SubscribeLocalEvent<GunComponent, ExaminedEvent>(OnExamine);
         SubscribeLocalEvent<GunComponent, CycleModeEvent>(OnCycleMode);
+        SubscribeLocalEvent<GunComponent, ComponentInit>(OnGunInit);
+    }
+
+    private void OnGunInit(EntityUid uid, GunComponent component, ComponentInit args)
+    {
+        DebugTools.Assert((component.AvailableModes & component.SelectedMode) != 0x0);
     }
 
     private void OnGunMeleeAttempt(EntityUid uid, GunComponent component, ref MeleeAttackAttemptEvent args)

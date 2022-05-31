@@ -16,7 +16,7 @@
     fireRate: 8
     selectedMode: SemiAuto
     availableModes:
-      - FullAuto
+      - SemiAuto
     soundGunshot:
       path: /Audio/Weapons/Guns/Gunshots/shotgun.ogg
   - type: BallisticAmmoProvider
@@ -24,5 +24,6 @@
       tags:
         - ShellShotgun
     proto: ShellShotgunFlare
+    capacity: 1
     soundInsert:
       path: /Audio/Weapons/Guns/MagIn/shotgun_insert.ogg
