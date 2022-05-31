@@ -119,7 +119,8 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
             {
                 continue;
             }
-            var profile = ev.Profiles[player.UserId];
+            ev.Profiles.TryGetValue(player.UserId, out var profile);
+            if(profile == null) continue;
             if (profile.AntagPreferences.Contains(NukeopsPrototypeId))
             {
                 prefList.Add(player);
@@ -136,6 +137,7 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
                 if (list.Count == 0)
                 {
                     Logger.InfoS("preset", "Insufficient ready players to fill up with nukeops, stopping the selection");
+                    break;
                 }
                 nukeOp = _random.PickAndTake(list);
                 Logger.InfoS("preset", "Insufficient preferred nukeops, picking at random.");
@@ -149,7 +151,7 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
             operatives.Add(nukeOp);
         }
 
-        var map = _config.Shuttles != null ? _random.Pick(_config.Shuttles) : "Maps/infiltrator.yml";
+        var map = _random.Pick(_config.Shuttles);
 
         var aabbs = _stationSystem.Stations.SelectMany(x =>
             Comp<StationDataComponent>(x).Grids.Select(x => _mapManager.GetGridComp(x).Grid.WorldAABB)).ToArray();
@@ -208,18 +210,6 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
             Logger.WarningS("nukies", $"Fell back to default spawn for nukies!");
         }
 
-        List<string> availableSpecies;
-        if(_config.Species != null)
-        {
-            availableSpecies = _config.Species;
-        }
-        else
-        {
-            // Fall back to humans
-            availableSpecies = new();
-            availableSpecies.Add("MobHuman");
-        }
-
         // TODO: This should spawn the nukies in regardless and transfer if possible; rest should go to shot roles.
         for (var i = 0; i < operatives.Count; i++)
         {
@@ -248,7 +238,7 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
                 CharacterName = name
             };
             newMind.ChangeOwningPlayer(session.UserId);
-            var mob = EntityManager.SpawnEntity(_random.Pick(availableSpecies), _random.Pick(spawns));
+            var mob = EntityManager.SpawnEntity(_random.Pick(_config.Species), _random.Pick(spawns));
             EntityManager.GetComponent<MetaDataComponent>(mob).EntityName = name;
 
             newMind.TransferTo(mob);

@@ -21,17 +21,22 @@ public sealed class NukeopsGameRuleConfiguration : GameRuleConfiguration
     /// List of species that nukies can be
     /// </summary>
     [DataField("pickableSpecies")]
-    public List<string>? Species;
+    public List<string> Species = new() { "MobHuman" };
 
     /// <summary>
     /// Shuttles the nukies can spawn on
     /// </summary>
     [DataField("shuttles")]
-    public List<string>? Shuttles;
+    public List<string> Shuttles = new() { "Maps/infiltrator.yml" };
 
     /// <summary>
     /// Loadouts for different "professions" of nukie (commander, medic)
     /// </summary>
     [DataField("loadouts")]
-    public Dictionary<string, List<string>>? Loadouts;
+    public Dictionary<string, List<string>> Loadouts = new()
+    {
+        { "Commander", new List<string> { "SyndicateCommanderGearFull" } },
+        { "Medic", new List<string> { "SyndicateOperativeMedicFull" } },
+        { "Operative", new List<string> { "SyndicateOperativeGearFull" } }
+    };
 }
