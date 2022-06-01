@@ -51,7 +51,7 @@ public sealed partial class GunSystem
             Control = component.Control
         };
 
-        RaiseLocalEvent(uid, ev);
+        RaiseLocalEvent(uid, ev, false);
     }
 
     protected override void UpdateAmmoCount(EntityUid uid)
