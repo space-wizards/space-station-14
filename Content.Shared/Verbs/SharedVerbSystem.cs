@@ -102,13 +102,6 @@ namespace Content.Shared.Verbs
                 verbs.UnionWith(verbEvent.Verbs);
             }
 
-            if (types.Contains(typeof(InnateVerb)))
-            {
-                var verbEvent = new GetVerbsEvent<InnateVerb>(user, target, @using, hands, canInteract, canAccess);
-                RaiseLocalEvent(user, verbEvent);
-                verbs.UnionWith(verbEvent.Verbs);
-            }
-
             if (types.Contains(typeof(AlternativeVerb)))
             {
                 var verbEvent = new GetVerbsEvent<AlternativeVerb>(user, target, @using, hands, canInteract, canAccess);

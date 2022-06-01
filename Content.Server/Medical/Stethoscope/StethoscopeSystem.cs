@@ -5,6 +5,7 @@ using Content.Shared.MobState.Components;
 using Content.Shared.FixedPoint;
 using Content.Shared.Damage;
 using Content.Shared.Damage.Prototypes;
+using Content.Shared.Actions;
 using Content.Server.Medical.Components;
 using Content.Server.Clothing.Components;
 using Content.Server.Popups;
@@ -20,67 +21,26 @@ namespace Content.Server.Medical
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
         [Dependency] private readonly PopupSystem _popupSystem = default!;
         [Dependency] private readonly DoAfterSystem _doAfterSystem = default!;
+        [Dependency] private readonly SharedActionsSystem _actionsSystem = default!;
         public override void Initialize()
         {
             base.Initialize();
-            SubscribeLocalEvent<StethoscopeComponent, GotEquippedEvent>(OnEquipped);
-            SubscribeLocalEvent<StethoscopeComponent, GotUnequippedEvent>(OnUnequipped);
-            SubscribeLocalEvent<WearingStethoscopeComponent, GetVerbsEvent<InnateVerb>>(AddStethoscopeVerb);
+            SubscribeLocalEvent<StethoscopeComponent, StethoscopeActionEvent>(OnStethoscopeAction);
+            SubscribeLocalEvent<StethoscopeComponent, GetItemActionsEvent>(OnGetActions);
             SubscribeLocalEvent<ListenSuccessfulEvent>(OnListenSuccess);
             SubscribeLocalEvent<ListenCancelledEvent>(OnListenCancelled);
         }
-        /// <summary>
-        /// Add the component the verb event subs to if the equippee is wearing the stethoscope.
-        /// </summary>
-        private void OnEquipped(EntityUid uid, StethoscopeComponent component, GotEquippedEvent args)
+
+        private void OnStethoscopeAction(EntityUid uid, StethoscopeComponent component, StethoscopeActionEvent args)
         {
-            if (!TryComp<ClothingComponent>(uid, out var clothing))
-                return;
-            // Is the clothing in its actual slot?
-            if (!clothing.SlotFlags.HasFlag(args.SlotFlags))
-                return;
-
-            component.IsActive = true;
-
-            EnsureComp<WearingStethoscopeComponent>(args.Equipee);
+            StartListening(args.Performer, args.Target, component);
         }
 
-        private void OnUnequipped(EntityUid uid, StethoscopeComponent component, GotUnequippedEvent args)
+        private void OnGetActions(EntityUid uid, StethoscopeComponent component, GetItemActionsEvent args)
         {
-            if (!component.IsActive)
-                return;
-
-            RemComp<WearingStethoscopeComponent>(args.Equipee);
-            component.IsActive = false;
+            args.Actions.Add(component.Action);
         }
 
-        /// <summary>
-        /// This is raised when someone with WearingStethoscopeComponent requests verbs on an item.
-        /// It returns if the target is not a mob.
-        /// </summary>
-        private void AddStethoscopeVerb(EntityUid uid, WearingStethoscopeComponent component, GetVerbsEvent<InnateVerb> args)
-        {
-            if (!args.CanInteract || !args.CanAccess)
-                return;
-
-            if (!HasComp<MobStateComponent>(args.Target))
-                return;
-
-            if (component.CancelToken != null)
-                return;
-
-            InnateVerb verb = new()
-            {
-                Act = () =>
-                {
-                    StartListening(uid, args.Target, component); // start doafter
-                },
-                Text = Loc.GetString("stethoscope-verb"),
-                IconTexture = "Clothing/Neck/Misc/stethoscope.rsi/icon.png",
-                Priority = 2
-            };
-            args.Verbs.Add(verb);
-        }
         // doafter succeeded / failed
         private void OnListenSuccess(ListenSuccessfulEvent ev)
         {
@@ -95,7 +55,7 @@ namespace Content.Server.Medical
             ev.Component.CancelToken = null;
         }
         // construct the doafter and start it
-        private void StartListening(EntityUid user, EntityUid target, WearingStethoscopeComponent comp)
+        private void StartListening(EntityUid user, EntityUid target, StethoscopeComponent comp)
         {
             comp.CancelToken = new CancellationTokenSource();
             _doAfterSystem.DoAfter(new DoAfterEventArgs(user, comp.Delay, comp.CancelToken.Token, target: target)
@@ -151,9 +111,9 @@ namespace Content.Server.Medical
         {
             public EntityUid User;
             public EntityUid Target;
-            public WearingStethoscopeComponent Component;
+            public StethoscopeComponent Component;
 
-            public ListenSuccessfulEvent(EntityUid user, EntityUid target, WearingStethoscopeComponent component)
+            public ListenSuccessfulEvent(EntityUid user, EntityUid target, StethoscopeComponent component)
             {
                 User = user;
                 Target = target;
@@ -164,9 +124,9 @@ namespace Content.Server.Medical
         private sealed class ListenCancelledEvent : EntityEventArgs
         {
             public EntityUid Uid;
-            public WearingStethoscopeComponent Component;
+            public StethoscopeComponent Component;
 
-            public ListenCancelledEvent(EntityUid uid, WearingStethoscopeComponent component)
+            public ListenCancelledEvent(EntityUid uid, StethoscopeComponent component)
             {
                 Uid = uid;
                 Component = component;
@@ -174,4 +134,6 @@ namespace Content.Server.Medical
         }
 
     }
+
+    public sealed class StethoscopeActionEvent : EntityTargetActionEvent {}
 }
