@@ -160,7 +160,7 @@ namespace Content.Shared.CCVar
         ///     Controls if the game should obey map criteria or not. Overriden if a map vote or similar occurs.
         /// </summary>
         public static readonly CVarDef<bool>
-            GameMapForced = CVarDef.Create("game.mapforced", false, CVar.SERVERONLY);
+            GameMapForced = CVarDef.Create("game.mapforced", true, CVar.SERVERONLY);
 
         /// <summary>
         /// The depth of the queue used to calculate which map is next in rotation.
