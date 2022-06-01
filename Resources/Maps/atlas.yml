@@ -15370,50 +15370,30 @@ entities:
     type: Transform
   - canCollide: False
     type: Physics
-  - containers:
-      Content.Server.Weapon.Ranged.Ammunition.Components.RangedMagazineComponent-magazine: !type:Container
-        ents: []
-    type: ContainerContainer
 - uid: 872
   type: MagazineMagnumSubMachineGunRubber
   components:
   - pos: 11.878126,18.560942
     parent: 30
     type: Transform
-  - containers:
-      Content.Server.Weapon.Ranged.Ammunition.Components.RangedMagazineComponent-magazine: !type:Container
-        ents: []
-    type: ContainerContainer
 - uid: 873
   type: MagazineMagnumSubMachineGunRubber
   components:
   - pos: 11.721876,18.560942
     parent: 30
     type: Transform
-  - containers:
-      Content.Server.Weapon.Ranged.Ammunition.Components.RangedMagazineComponent-magazine: !type:Container
-        ents: []
-    type: ContainerContainer
 - uid: 874
   type: MagazineMagnumSubMachineGunHighVelocity
   components:
   - pos: 11.565626,18.560942
     parent: 30
     type: Transform
-  - containers:
-      Content.Server.Weapon.Ranged.Ammunition.Components.RangedMagazineComponent-magazine: !type:Container
-        ents: []
-    type: ContainerContainer
 - uid: 875
   type: MagazineMagnumSubMachineGunHighVelocity
   components:
   - pos: 11.440626,18.560942
     parent: 30
     type: Transform
-  - containers:
-      Content.Server.Weapon.Ranged.Ammunition.Components.RangedMagazineComponent-magazine: !type:Container
-        ents: []
-    type: ContainerContainer
 - uid: 876
   type: BoxShotgunIncendiary
   components:
@@ -15960,30 +15940,18 @@ entities:
     type: Transform
   - canCollide: False
     type: Physics
-  - containers:
-      Content.Server.Weapon.Ranged.Ammunition.Components.RangedMagazineComponent-magazine: !type:Container
-        ents: []
-    type: ContainerContainer
 - uid: 934
   type: MagazineRifleRubber
   components:
   - pos: 11.5,18.5
     parent: 30
     type: Transform
-  - containers:
-      Content.Server.Weapon.Ranged.Ammunition.Components.RangedMagazineComponent-magazine: !type:Container
-        ents: []
-    type: ContainerContainer
 - uid: 935
   type: MagazineRifleFlash
   components:
   - pos: 11.5,18.5
     parent: 30
     type: Transform
-  - containers:
-      Content.Server.Weapon.Ranged.Ammunition.Components.RangedMagazineComponent-magazine: !type:Container
-        ents: []
-    type: ContainerContainer
 - uid: 936
   type: ChairOfficeDark
   components:

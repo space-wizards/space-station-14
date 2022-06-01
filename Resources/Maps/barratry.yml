@@ -52079,10 +52079,6 @@ entities:
   - pos: -44.458973,31.611404
     parent: 106
     type: Transform
-  - containers:
-      Content.Server.Weapon.Ranged.Ammunition.Components.RangedMagazineComponent-magazine: !type:Container
-        ents: []
-    type: ContainerContainer
 - uid: 4123
   type: WeaponShotgunKammerer
   components:
@@ -52246,20 +52242,12 @@ entities:
   - pos: -44.708973,31.611404
     parent: 106
     type: Transform
-  - containers:
-      Content.Server.Weapon.Ranged.Ammunition.Components.RangedMagazineComponent-magazine: !type:Container
-        ents: []
-    type: ContainerContainer
 - uid: 4146
   type: MagazineMagnumSubMachineGunHighVelocity
   components:
   - pos: -44.845993,31.611404
     parent: 106
     type: Transform
-  - containers:
-      Content.Server.Weapon.Ranged.Ammunition.Components.RangedMagazineComponent-magazine: !type:Container
-        ents: []
-    type: ContainerContainer
 - uid: 4147
   type: CableApcExtension
   components:
@@ -87851,10 +87839,6 @@ entities:
     type: Transform
   - canCollide: False
     type: Physics
-  - containers:
-      Content.Server.Weapon.Ranged.Ammunition.Components.RangedMagazineComponent-magazine: !type:Container
-        ents: []
-    type: ContainerContainer
 - uid: 7410
   type: WindoorSecurityLocked
   components:
@@ -88011,20 +87995,12 @@ entities:
   - pos: -44.599598,31.611404
     parent: 106
     type: Transform
-  - containers:
-      Content.Server.Weapon.Ranged.Ammunition.Components.RangedMagazineComponent-magazine: !type:Container
-        ents: []
-    type: ContainerContainer
 - uid: 7431
   type: MagazineMagnumSubMachineGun
   components:
   - pos: -44.333973,31.611404
     parent: 106
     type: Transform
-  - containers:
-      Content.Server.Weapon.Ranged.Ammunition.Components.RangedMagazineComponent-magazine: !type:Container
-        ents: []
-    type: ContainerContainer
 - uid: 7432
   type: GasPipeStraight
   components:
@@ -88127,10 +88103,6 @@ entities:
     type: Transform
   - canCollide: False
     type: Physics
-  - containers:
-      Content.Server.Weapon.Ranged.Ammunition.Components.RangedMagazineComponent-magazine: !type:Container
-        ents: []
-    type: ContainerContainer
 - uid: 7442
   type: WeaponSubMachineGunWt550
   components:
@@ -105593,10 +105565,6 @@ entities:
     type: Transform
   - canCollide: False
     type: Physics
-  - containers:
-      Content.Server.Weapon.Ranged.Ammunition.Components.RangedMagazineComponent-magazine: !type:Container
-        ents: []
-    type: ContainerContainer
 - uid: 9065
   type: ShardGlassReinforced
   components:
@@ -110566,10 +110534,6 @@ entities:
   - pos: -44.177723,31.611404
     parent: 106
     type: Transform
-  - containers:
-      Content.Server.Weapon.Ranged.Ammunition.Components.RangedMagazineComponent-magazine: !type:Container
-        ents: []
-    type: ContainerContainer
 - uid: 9535
   type: Table
   components:
@@ -137505,10 +137469,6 @@ entities:
     type: Transform
   - canCollide: False
     type: Physics
-  - containers:
-      Content.Server.Weapon.Ranged.Ammunition.Components.RangedMagazineComponent-magazine: !type:Container
-        ents: []
-    type: ContainerContainer
 - uid: 12220
   type: WallReinforced
   components:

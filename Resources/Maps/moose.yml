@@ -20154,30 +20154,18 @@ entities:
     type: Transform
   - canCollide: False
     type: Physics
-  - containers:
-      Content.Server.Weapon.Ranged.Ammunition.Components.RangedMagazineComponent-magazine: !type:Container
-        ents: []
-    type: ContainerContainer
 - uid: 1022
   type: MagazineMagnumSubMachineGun
   components:
   - pos: 19.756498,0.3705299
     parent: 61
     type: Transform
-  - containers:
-      Content.Server.Weapon.Ranged.Ammunition.Components.RangedMagazineComponent-magazine: !type:Container
-        ents: []
-    type: ContainerContainer
 - uid: 1023
   type: MagazineMagnumSubMachineGunRubber
   components:
   - pos: 19.568998,0.3705299
     parent: 61
     type: Transform
-  - containers:
-      Content.Server.Weapon.Ranged.Ammunition.Components.RangedMagazineComponent-magazine: !type:Container
-        ents: []
-    type: ContainerContainer
 - uid: 1024
   type: WeaponLaserRifleCog
   components:
@@ -94916,10 +94904,6 @@ entities:
     type: Transform
   - canCollide: False
     type: Physics
-  - containers:
-      Content.Server.Weapon.Ranged.Ammunition.Components.RangedMagazineComponent-magazine: !type:Container
-        ents: []
-    type: ContainerContainer
 - uid: 9110
   type: WeaponRifleWintermute
   components:
@@ -94946,10 +94930,6 @@ entities:
   - pos: 23.71704,3.28771
     parent: 61
     type: Transform
-  - containers:
-      Content.Server.Weapon.Ranged.Ammunition.Components.RangedMagazineComponent-magazine: !type:Container
-        ents: []
-    type: ContainerContainer
 - uid: 9113
   type: BedsheetHOS
   components:

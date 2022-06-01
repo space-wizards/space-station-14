@@ -78811,12 +78811,6 @@ entities:
     type: Transform
   - canCollide: False
     type: Physics
-  - containers:
-      RangedMagazine-magazine: !type:Container
-        ents: []
-      Content.Server.Weapon.Ranged.Ammunition.Components.RangedMagazineComponent-magazine: !type:Container
-        ents: []
-    type: ContainerContainer
 - uid: 7533
   type: WeaponSubMachineGunDrozdRubber
   components:
@@ -78840,12 +78834,6 @@ entities:
     type: Transform
   - canCollide: False
     type: Physics
-  - containers:
-      RangedMagazine-magazine: !type:Container
-        ents: []
-      Content.Server.Weapon.Ranged.Ammunition.Components.RangedMagazineComponent-magazine: !type:Container
-        ents: []
-    type: ContainerContainer
 - uid: 7535
   type: MagazineMagnumSubMachineGunRubber
   components:
@@ -78854,12 +78842,6 @@ entities:
     type: Transform
   - canCollide: False
     type: Physics
-  - containers:
-      RangedMagazine-magazine: !type:Container
-        ents: []
-      Content.Server.Weapon.Ranged.Ammunition.Components.RangedMagazineComponent-magazine: !type:Container
-        ents: []
-    type: ContainerContainer
 - uid: 7536
   type: MagazineMagnumSubMachineGunRubber
   components:
@@ -78868,12 +78850,6 @@ entities:
     type: Transform
   - canCollide: False
     type: Physics
-  - containers:
-      RangedMagazine-magazine: !type:Container
-        ents: []
-      Content.Server.Weapon.Ranged.Ammunition.Components.RangedMagazineComponent-magazine: !type:Container
-        ents: []
-    type: ContainerContainer
 - uid: 7537
   type: MagazineMagnumSubMachineGunRubber
   components:
@@ -78883,12 +78859,6 @@ entities:
     type: Transform
   - canCollide: False
     type: Physics
-  - containers:
-      RangedMagazine-magazine: !type:Container
-        ents: []
-      Content.Server.Weapon.Ranged.Ammunition.Components.RangedMagazineComponent-magazine: !type:Container
-        ents: []
-    type: ContainerContainer
 - uid: 7538
   type: MagazineMagnumSubMachineGunRubber
   components:
@@ -78897,12 +78867,6 @@ entities:
     type: Transform
   - canCollide: False
     type: Physics
-  - containers:
-      RangedMagazine-magazine: !type:Container
-        ents: []
-      Content.Server.Weapon.Ranged.Ammunition.Components.RangedMagazineComponent-magazine: !type:Container
-        ents: []
-    type: ContainerContainer
 - uid: 7539
   type: MagazineMagnumSubMachineGunRubber
   components:
@@ -78911,12 +78875,6 @@ entities:
     type: Transform
   - canCollide: False
     type: Physics
-  - containers:
-      RangedMagazine-magazine: !type:Container
-        ents: []
-      Content.Server.Weapon.Ranged.Ammunition.Components.RangedMagazineComponent-magazine: !type:Container
-        ents: []
-    type: ContainerContainer
 - uid: 7540
   type: MagazineMagnumSubMachineGunRubber
   components:
@@ -78925,12 +78883,6 @@ entities:
     type: Transform
   - canCollide: False
     type: Physics
-  - containers:
-      RangedMagazine-magazine: !type:Container
-        ents: []
-      Content.Server.Weapon.Ranged.Ammunition.Components.RangedMagazineComponent-magazine: !type:Container
-        ents: []
-    type: ContainerContainer
 - uid: 7541
   type: ClothingOuterHardsuitEVA
   components:
@@ -119715,12 +119667,6 @@ entities:
     type: Transform
   - canCollide: False
     type: Physics
-  - containers:
-      RangedMagazine-magazine: !type:Container
-        ents: []
-      Content.Server.Weapon.Ranged.Ammunition.Components.RangedMagazineComponent-magazine: !type:Container
-        ents: []
-    type: ContainerContainer
 - uid: 11143
   type: MagazinePistolSubMachineGunTopMounted
   components:
@@ -119729,12 +119675,6 @@ entities:
     type: Transform
   - canCollide: False
     type: Physics
-  - containers:
-      RangedMagazine-magazine: !type:Container
-        ents: []
-      Content.Server.Weapon.Ranged.Ammunition.Components.RangedMagazineComponent-magazine: !type:Container
-        ents: []
-    type: ContainerContainer
 - uid: 11144
   type: MagazinePistolSubMachineGunTopMounted
   components:
@@ -119743,12 +119683,6 @@ entities:
     type: Transform
   - canCollide: False
     type: Physics
-  - containers:
-      RangedMagazine-magazine: !type:Container
-        ents: []
-      Content.Server.Weapon.Ranged.Ammunition.Components.RangedMagazineComponent-magazine: !type:Container
-        ents: []
-    type: ContainerContainer
 - uid: 11145
   type: WallWeaponCapacitorRecharger
   components:
@@ -126702,10 +126636,6 @@ entities:
     type: Transform
   - canCollide: False
     type: Physics
-  - containers:
-      Content.Server.Weapon.Ranged.Ammunition.Components.RangedMagazineComponent-magazine: !type:Container
-        ents: []
-    type: ContainerContainer
 - uid: 11937
   type: MagazineMagnumSubMachineGunRubber
   components:
@@ -126713,10 +126643,6 @@ entities:
     type: Transform
   - canCollide: False
     type: Physics
-  - containers:
-      Content.Server.Weapon.Ranged.Ammunition.Components.RangedMagazineComponent-magazine: !type:Container
-        ents: []
-    type: ContainerContainer
 - uid: 11938
   type: MagazinePistolSubMachineGunTopMounted
   components:
@@ -126724,10 +126650,6 @@ entities:
     type: Transform
   - canCollide: False
     type: Physics
-  - containers:
-      Content.Server.Weapon.Ranged.Ammunition.Components.RangedMagazineComponent-magazine: !type:Container
-        ents: []
-    type: ContainerContainer
 - uid: 11939
   type: SignSecurearea
   components:

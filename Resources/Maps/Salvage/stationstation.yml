@@ -3333,30 +3333,18 @@ entities:
   - pos: -6.605512,7.638151
     parent: 179
     type: Transform
-  - containers:
-      Content.Server.Weapon.Ranged.Ammunition.Components.RangedMagazineComponent-magazine: !type:Container
-        ents: []
-    type: ContainerContainer
 - uid: 430
   type: MagazinePistolSubMachineGun
   components:
   - pos: -6.339887,7.669401
     parent: 179
     type: Transform
-  - containers:
-      Content.Server.Weapon.Ranged.Ammunition.Components.RangedMagazineComponent-magazine: !type:Container
-        ents: []
-    type: ContainerContainer
 - uid: 431
   type: MagazinePistolSubMachineGun
   components:
   - pos: -6.027387,7.622526
     parent: 179
     type: Transform
-  - containers:
-      Content.Server.Weapon.Ranged.Ammunition.Components.RangedMagazineComponent-magazine: !type:Container
-        ents: []
-    type: ContainerContainer
 - uid: 432
   type: ClothingBackpack
   components:
