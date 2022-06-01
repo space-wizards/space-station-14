@@ -111,16 +111,11 @@ public abstract partial class SharedGunSystem
         }
 
         var count = chamberEnt != null ? 1 : 0;
-        var capacity = 1;
+        const int capacity = 1;
 
-        if (TryComp<AppearanceComponent>(magEnt, out var magAppearance))
-        {
-            magAppearance.TryGetData<int>(AmmoVisuals.AmmoCount, out var addCount);
-            magAppearance.TryGetData<int>(AmmoVisuals.AmmoMax, out var addCapacity);
-            count += addCount;
-            capacity += addCapacity;
-        }
+        var ammoEv = new GetAmmoCountEvent();
+        RaiseLocalEvent(magEnt.Value, ref ammoEv, false);
 
-        FinaliseMagazineTakeAmmo(uid, component, args, count, capacity, appearance);
+        FinaliseMagazineTakeAmmo(uid, component, args, count + ammoEv.Count, capacity + ammoEv.Capacity, appearance);
     }
 }

@@ -68,8 +68,6 @@ public abstract partial class SharedGunSystem
 
         PlaySound(component.Owner, component.SoundModeToggle?.GetSound(Random, ProtoManager), user);
         Popup(Loc.GetString("gun-selected-mode", ("mode", GetLocSelector(fire))), component.Owner, user);
-        // When actions done add here.
-
         Dirty(component);
     }
 

@@ -96,18 +96,10 @@ public abstract partial class SharedGunSystem
         // Pass the event onwards.
         RaiseLocalEvent(magEntity.Value, args, false);
         // Should be Dirtied by what other ammoprovider is handling it.
-        var count = 0;
-        var capacity = 0;
 
-        if (TryComp<AppearanceComponent>(magEntity, out var magAppearance))
-        {
-            magAppearance.TryGetData<int>(AmmoVisuals.AmmoCount, out var addCount);
-            magAppearance.TryGetData<int>(AmmoVisuals.AmmoMax, out var addCapacity);
-            count += addCount;
-            capacity += addCapacity;
-        }
-
-        FinaliseMagazineTakeAmmo(uid, component, args, count, capacity, appearance);
+        var ammoEv = new GetAmmoCountEvent();
+        RaiseLocalEvent(magEntity.Value, ref ammoEv, false);
+        FinaliseMagazineTakeAmmo(uid, component, args, ammoEv.Count, ammoEv.Capacity, appearance);
     }
 
     private void FinaliseMagazineTakeAmmo(EntityUid uid, MagazineAmmoProviderComponent component, TakeAmmoEvent args, int count, int capacity, AppearanceComponent? appearance)
