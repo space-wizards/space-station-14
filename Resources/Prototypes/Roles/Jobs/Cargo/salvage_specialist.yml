@@ -1,5 +1,8 @@
 - type: job
   id: SalvageSpecialist
+  requirements:
+    - job: CargoTechnician
+      time: 1800 # 30 minutes
   name: "salvage specialist"
   icon: "ShaftMiner"
   startingGear: SalvageSpecialistGear

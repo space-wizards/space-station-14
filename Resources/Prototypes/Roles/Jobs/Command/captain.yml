@@ -1,6 +1,19 @@
 - type: job
   id: Captain
   name: "captain"
+  requirements:
+    # Cap should know all the departments they lord over
+    # and the jobs each dept. head has
+    - job: ChiefMedicalOfficer
+      time: 14400 # 4 hours
+    - job: HeadOfSecurity
+      time: 14400
+    - job: ResearchDirector
+      time: 14400
+    - job: ChiefEngineer
+      time: 14400
+    - job: HeadOfPersonnel
+      time: 14400
   weight: 20
   startingGear: CaptainGear
   departments:

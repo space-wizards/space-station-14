@@ -1,6 +1,10 @@
 - type: job
   id: HeadOfPersonnel
   name: "head of personnel"
+  requirements:
+    # HoP covers a lot of fields so I'm not sure what roles they should have to play first
+    - job: Quartermaster
+      time: 7200 # 2 hours
   weight: 20
   startingGear: HoPGear
   departments:

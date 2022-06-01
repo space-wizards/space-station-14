@@ -1,6 +1,9 @@
 - type: job
   id: Warden
   name: "warden"
+  requirements:
+    - job: SecurityOfficer
+      time: 7200 # 2 hours
   startingGear: WardenGear
   departments:
   - Security

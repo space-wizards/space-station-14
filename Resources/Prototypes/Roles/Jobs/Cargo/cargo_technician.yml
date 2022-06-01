@@ -1,6 +1,9 @@
 - type: job
   id: CargoTechnician
   name: "cargo technician"
+  requirements:
+    - job: ServiceWorker
+      time: 1800 # 30 minutes
   startingGear: CargoTechGear
   departments:
   - Cargo

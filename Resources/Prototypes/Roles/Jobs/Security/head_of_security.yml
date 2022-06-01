@@ -1,6 +1,9 @@
 - type: job
   id: HeadOfSecurity
   name: "head of security"
+  requirements:
+    - job: Warden
+      time: 14400 # 4 hours
   weight: 10
   startingGear: HoSGear
   departments:

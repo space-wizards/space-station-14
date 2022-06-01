@@ -26,6 +26,9 @@ namespace Content.Shared.Roles
         [DataField("name")]
         public string Name { get; } = string.Empty;
 
+        [DataField("requirements")]
+        public List<JobRequirement>? Requirements;
+
         [DataField("joinNotifyCrew")]
         public bool JoinNotifyCrew { get; } = false;
 
