@@ -52,6 +52,9 @@
       - ForceNoFixRotations
   - type: PaintableAirlock
     group: Shuttle
+  - type: Construction
+    graph: Airlock
+    node: AirlockDocking
 
 - type: entity
   id: AirlockGlassShuttle
@@ -86,3 +89,6 @@
     group: ShuttleGlass
   - type: Door
     occludes: false
+  - type: Construction
+    graph: Airlock
+    node: AirlockDockingGlass
