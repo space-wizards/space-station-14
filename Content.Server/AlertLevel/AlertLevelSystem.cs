@@ -26,6 +26,13 @@ public sealed class AlertLevelSystem : EntitySystem
         _prototypeManager.PrototypesReloaded += OnPrototypeReload;
     }
 
+    public override void Shutdown()
+    {
+        base.Shutdown();
+
+        _prototypeManager.PrototypesReloaded -= OnPrototypeReload;
+    }
+
     public override void Update(float time)
     {
         foreach (var station in _stationSystem.Stations)
