@@ -31,15 +31,15 @@ namespace Content.Server.Tiles
             if (!TryComp<StackComponent>(uid, out var stack))
                 return;
 
+            if (component.OutputTiles == null)
+                return;
+
             // this looks a bit sussy but it might be because it needs to be able to place off of grids and expand them
             var location = args.ClickLocation.AlignWithClosestGridTile();
             var locationMap = location.ToMap(EntityManager);
             if (locationMap.MapId == MapId.Nullspace)
                 return;
             _mapManager.TryGetGrid(location.GetGridId(EntityManager), out var mapGrid);
-
-            if (component.OutputTiles == null)
-                return;
 
             foreach (var currentTile in component.OutputTiles)
             {
@@ -75,9 +75,7 @@ namespace Content.Server.Tiles
             foreach (var tileBaseTurf in tileDef.BaseTurfs)
             {
                 if (baseTurf == tileBaseTurf)
-                {
                     return true;
-                }
             }
 
             return false;
