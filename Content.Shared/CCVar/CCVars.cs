@@ -961,5 +961,15 @@ namespace Content.Shared.CCVar
         /// </summary>
         public static readonly CVarDef<float> DragDropDeadZone =
             CVarDef.Create("control.drag_dead_zone", 12f, CVar.CLIENTONLY | CVar.ARCHIVE);
+
+        /*
+         * UPDATE
+         */
+
+        /// <summary>
+        /// If a server update restart is pending, the delay after the last player leaves before we actually restart. In seconds.
+        /// </summary>
+        public static readonly CVarDef<float> UpdateRestartDelay =
+            CVarDef.Create("update.restart_delay", 20f, CVar.SERVERONLY);
     }
 }
