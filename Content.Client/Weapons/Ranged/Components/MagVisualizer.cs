@@ -98,7 +98,7 @@ public sealed class MagVisualizer : AppearanceVisualizer
     }
 }
 
-public enum GunVisualLayers
+public enum GunVisualLayers : byte
 {
     Base,
     BaseUnshaded,
