@@ -375,6 +375,38 @@
   canBuildInImpassable: false
   conditions:
     - !type:TileNotBlocked
+    
+- type: construction
+  name: external airlock
+  id: Airlock
+  graph: Airlock
+  startNode: start
+  targetNode: AirlockExternal
+  category: Structures
+  description: It opens, it closes, and maybe crushes you.
+  icon:
+    sprite: Structures/Doors/Airlocks/Standard/external.rsi
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  conditions:
+    - !type:TileNotBlocked
+    
+- type: construction
+  name: docking airlock
+  id: Airlock
+  graph: Airlock
+  startNode: start
+  targetNode: AirlockDocking
+  category: Structures
+  description: Used for docking shuttles.
+  icon:
+    sprite: Structures/Doors/Airlocks/Standard/shuttle.rsi
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  conditions:
+    - !type:TileNotBlocked
 
 - type: construction
   name: windoor
