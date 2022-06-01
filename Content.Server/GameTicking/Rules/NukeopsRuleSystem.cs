@@ -40,6 +40,7 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
     public override string Prototype => "Nukeops";
 
     private const string NukeopsPrototypeId = "Nukeops";
+    private const string NukeopsCommanderPrototypeId = "NukeopsCommander";
 
     public override void Initialize()
     {
@@ -100,13 +101,14 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
         var playersPerOperative = _cfg.GetCVar(CCVars.NukeopsPlayersPerOp);
         var maxOperatives = _cfg.GetCVar(CCVars.NukeopsMaxOps);
 
-        var list = new List<IPlayerSession>(ev.PlayerPool);
+        var everyone = new List<IPlayerSession>(ev.PlayerPool);
         var prefList = new List<IPlayerSession>();
+        var cmdrPrefList = new List<IPlayerSession>();
         var operatives = new List<IPlayerSession>();
 
         // The LINQ expression ReSharper keeps suggesting is completely unintelligible so I'm disabling it
         // ReSharper disable once ForeachCanBeConvertedToQueryUsingAnotherGetEnumerator
-        foreach (var player in list)
+        foreach (var player in everyone)
         {
             if(player.ContentData()?.Mind?.AllRoles.All(role => role is not Job {CanBeAntag: false}) ?? false) continue;
             if (!ev.Profiles.ContainsKey(player.UserId))
@@ -118,6 +120,10 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
             {
                 prefList.Add(player);
             }
+            if (profile.AntagPreferences.Contains(NukeopsCommanderPrototypeId))
+            {
+                cmdrPrefList.Add(player);
+            }
         }
 
         var numNukies = MathHelper.Clamp(ev.PlayerPool.Count / playersPerOperative, 1, maxOperatives);
@@ -125,20 +131,51 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
         for (var i = 0; i < numNukies; i++)
         {
             IPlayerSession nukeOp;
-            if (prefList.Count == 0)
+            // Only one commander, so we do it at the start
+            if (i == 0)
             {
-                if (list.Count == 0)
+                if (cmdrPrefList.Count == 0)
                 {
-                    Logger.InfoS("preset", "Insufficient ready players to fill up with nukeops, stopping the selection");
+                    if (prefList.Count == 0)
+                    {
+                        if (everyone.Count == 0)
+                        {
+                            Logger.InfoS("preset", "Insufficient ready players to fill up with nukeops, stopping the selection");
+                            break;
+                        }
+                        nukeOp = _random.PickAndTake(everyone);
+                        Logger.InfoS("preset", "Insufficient preferred nukeop commanders or nukies, picking at random.");
+                    }
+                    else
+                    {
+                        nukeOp = _random.PickAndTake(prefList);
+                        Logger.InfoS("preset", "Insufficient preferred nukeop commanders, picking at random from regular op list.");
+                    }
                 }
-                nukeOp = _random.PickAndTake(list);
-                Logger.InfoS("preset", "Insufficient preferred nukeops, picking at random.");
+                else
+                {
+                    nukeOp = _random.PickAndTake(cmdrPrefList);
+                    Logger.InfoS("preset", "Selected a preferred nukeop commander.");
+                }
             }
             else
             {
-                nukeOp = _random.PickAndTake(prefList);
-                list.Remove(nukeOp);
-                Logger.InfoS("preset", "Selected a preferred nukeop.");
+                if (prefList.Count == 0)
+                {
+                    if (everyone.Count == 0)
+                    {
+                        Logger.InfoS("preset", "Insufficient ready players to fill up with nukeops, stopping the selection");
+                        break;
+                    }
+                    nukeOp = _random.PickAndTake(everyone);
+                    Logger.InfoS("preset", "Insufficient preferred nukeops, picking at random.");
+                }
+                else
+                {
+                    nukeOp = _random.PickAndTake(prefList);
+                    everyone.Remove(nukeOp);
+                    Logger.InfoS("preset", "Selected a preferred nukeop.");
+                }
             }
             operatives.Add(nukeOp);
         }
