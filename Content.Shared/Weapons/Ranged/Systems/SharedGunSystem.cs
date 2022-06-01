@@ -118,11 +118,10 @@ public abstract partial class SharedGunSystem : EntitySystem
 
     private void OnGetState(EntityUid uid, GunComponent component, ref ComponentGetState args)
     {
-        args.State = new NewGunComponentState
+        args.State = new GunComponentState
         {
             NextFire = component.NextFire,
             ShotCounter = component.ShotCounter,
-            FakeAmmo = component.FakeAmmo,
             SelectiveFire = component.SelectedMode,
             AvailableSelectiveFire = component.AvailableModes,
         };
@@ -130,12 +129,11 @@ public abstract partial class SharedGunSystem : EntitySystem
 
     private void OnHandleState(EntityUid uid, GunComponent component, ref ComponentHandleState args)
     {
-        if (args.Current is not NewGunComponentState state) return;
+        if (args.Current is not GunComponentState state) return;
 
         Sawmill.Debug($"Handle state: setting shot count from {component.ShotCounter} to {state.ShotCounter}");
         component.NextFire = state.NextFire;
         component.ShotCounter = state.ShotCounter;
-        component.FakeAmmo = state.FakeAmmo;
         component.SelectedMode = state.SelectiveFire;
         component.AvailableModes = state.AvailableSelectiveFire;
     }
@@ -361,11 +359,10 @@ public abstract partial class SharedGunSystem : EntitySystem
     protected abstract void CreateEffect(EffectSystemMessage message, EntityUid? user = null);
 
     [Serializable, NetSerializable]
-    protected sealed class NewGunComponentState : ComponentState
+    protected sealed class GunComponentState : ComponentState
     {
         public TimeSpan NextFire;
         public int ShotCounter;
-        public int FakeAmmo;
         public SelectiveFire SelectiveFire;
         public SelectiveFire AvailableSelectiveFire;
     }

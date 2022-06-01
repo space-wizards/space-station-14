@@ -106,12 +106,6 @@ public class GunComponent : Component
 
     [DataField("selectModeAction")]
     public InstantAction? SelectModeAction;
-
-    /// <summary>
-    /// Used for sloth's debugging. Will be removed on undraft.
-    /// </summary>
-    [ViewVariables(VVAccess.ReadWrite)]
-    public int FakeAmmo = 30;
 }
 
 [Flags]
