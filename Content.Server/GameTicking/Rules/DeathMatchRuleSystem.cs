@@ -1,5 +1,4 @@
 using Content.Server.Chat.Managers;
-using Content.Server.GameTicking.Rules.Configurations;
 using Content.Shared.CCVar;
 using Content.Shared.Damage;
 using Content.Shared.MobState.Components;
@@ -34,14 +33,14 @@ public sealed class DeathMatchRuleSystem : GameRuleSystem
         SubscribeLocalEvent<DamageChangedEvent>(OnHealthChanged);
     }
 
-    public override void Started(GameRuleConfiguration _)
+    public override void Started()
     {
         _chatManager.DispatchServerAnnouncement(Loc.GetString("rule-death-match-added-announcement"));
 
         _playerManager.PlayerStatusChanged += OnPlayerStatusChanged;
     }
 
-    public override void Ended(GameRuleConfiguration _)
+    public override void Ended()
     {
         _deadCheckTimer = null;
         _restartTimer = null;

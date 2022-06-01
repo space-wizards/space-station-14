@@ -1,6 +1,5 @@
 using System.Linq;
 using Content.Server.GameTicking.Presets;
-using Content.Server.GameTicking.Rules.Configurations;
 using Content.Shared.Random;
 using Content.Shared.Random.Helpers;
 using Robust.Shared.Prototypes;
@@ -16,12 +15,12 @@ public sealed class SecretRuleSystem : GameRuleSystem
 
     public override string Prototype => "Secret";
 
-    public override void Started(GameRuleConfiguration _)
+    public override void Started()
     {
         PickRule();
     }
 
-    public override void Ended(GameRuleConfiguration _)
+    public override void Ended()
     {
         // noop
         // Preset should already handle it.

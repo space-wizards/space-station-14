@@ -1,7 +1,6 @@
 ﻿using System.Linq;
 using Content.Server.Atmos.EntitySystems;
 using Content.Server.Chat.Managers;
-using Content.Server.GameTicking.Rules.Configurations;
 using Content.Server.Hands.Components;
 using Content.Server.PDA;
 using Content.Server.Players;
@@ -197,14 +196,14 @@ public sealed class TraitorDeathMatchRuleSystem : GameRuleSystem
         ev.AddLine(string.Join('\n', lines));
     }
 
-    public override void Started(GameRuleConfiguration _)
+    public override void Started()
     {
         _restarter.RoundMaxTime = TimeSpan.FromMinutes(30);
         _restarter.RestartTimer();
         _safeToEndRound = true;
     }
 
-    public override void Ended(GameRuleConfiguration _)
+    public override void Ended()
     {
     }
 

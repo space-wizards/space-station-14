@@ -1,4 +1,3 @@
-using Content.Server.GameTicking.Rules.Configurations;
 using Content.Server.Sandbox;
 
 namespace Content.Server.GameTicking.Rules;
@@ -9,12 +8,12 @@ public sealed class SandboxRuleSystem : GameRuleSystem
 
     public override string Prototype => "Sandbox";
 
-    public override void Started(GameRuleConfiguration _)
+    public override void Started()
     {
         _sandbox.IsSandboxEnabled = true;
     }
 
-    public override void Ended(GameRuleConfiguration _)
+    public override void Ended()
     {
         _sandbox.IsSandboxEnabled = false;
     }
