@@ -100,14 +100,15 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
         var playersPerOperative = _cfg.GetCVar(CCVars.NukeopsPlayersPerOp);
         var maxOperatives = _cfg.GetCVar(CCVars.NukeopsMaxOps);
 
-        var list = new List<IPlayerSession>(ev.PlayerPool).Where(x =>
-            x.Data.ContentData()?.Mind?.AllRoles.All(role => role is not Job {CanBeAntag: false}) ?? false
-        ).ToList();
+        var list = new List<IPlayerSession>(ev.PlayerPool);
         var prefList = new List<IPlayerSession>();
         var operatives = new List<IPlayerSession>();
 
+        // The LINQ expression ReSharper keeps suggesting is completely unintelligible so I'm disabling it
+        // ReSharper disable once ForeachCanBeConvertedToQueryUsingAnotherGetEnumerator
         foreach (var player in list)
         {
+            if(player.ContentData()?.Mind?.AllRoles.All(role => role is not Job {CanBeAntag: false}) ?? false) continue;
             if (!ev.Profiles.ContainsKey(player.UserId))
             {
                 continue;
