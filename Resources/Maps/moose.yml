@@ -87437,8 +87437,8 @@ entities:
     parent: 61
     type: Transform
   - containers:
-      gun-chamber: !type:ContainerSlot {}
-      gun-magazine: !type:ContainerSlot
+      gun_chamber: !type:ContainerSlot {}
+      gun_magazine: !type:ContainerSlot
         ent: 9109
     type: ContainerContainer
   - canCollide: False
