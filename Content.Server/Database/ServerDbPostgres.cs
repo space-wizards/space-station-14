@@ -410,6 +410,20 @@ namespace Content.Server.Database
         }
         #endregion
 
+        #region Role Timers
+
+        public override Task<List<ServerRoleTimerDef>> GetRoleTimersAsync(Guid player)
+        {
+
+        }
+
+        public override Task<ServerRoleTimerDef> GetRoleTimerAsync(Guid player, string role)
+        {
+
+        }
+
+        #endregion
+
         protected override PlayerRecord MakePlayerRecord(Player record)
         {
             return new PlayerRecord(

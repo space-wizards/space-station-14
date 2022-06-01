@@ -33,6 +33,7 @@ namespace Content.Server.Database
         public DbSet<ServerBanHit> ServerBanHit { get; set; } = default!;
         public DbSet<ServerRoleBan> RoleBan { get; set; } = default!;
         public DbSet<ServerRoleUnban> RoleUnban { get; set; } = default!;
+        public DbSet<RoleTimer> RoleTimer { get; set; } = default!;
         public DbSet<UploadedResourceLog> UploadedResourceLog { get; set; } = default!;
         public DbSet<AdminNote> AdminNotes { get; set; } = null!;
 
@@ -498,6 +499,18 @@ namespace Content.Server.Database
         public Guid? UnbanningAdmin { get; set; }
 
         public DateTime UnbanTime { get; set; }
+    }
+
+    [Table("role_timer")]
+    public sealed class RoleTimer
+    {
+        [Column("player")]
+        [Required, ForeignKey("Player")]
+        public Guid Player { get; set; }
+        [Required, ForeignKey("Role")]
+        public string Role { get; set; } = string.Empty;
+        [Required, ForeignKey("TimeSpent")]
+        public TimeSpan TimeSpent { get; set; }
     }
 
     [Table("uploaded_resource_log")]

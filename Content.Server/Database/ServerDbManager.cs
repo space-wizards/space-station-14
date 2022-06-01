@@ -121,7 +121,7 @@ namespace Content.Server.Database
         /// </summary>
         /// <param name="player">The player to get the role timer information from.</param>
         /// <returns>All role timers belonging to the player.</returns>
-        //Task<List<ServerRoleTimerDef>> GetRoleTimers(Guid player);
+        Task<List<ServerRoleTimerDef>> GetRoleTimers(Guid player);
 
         /// <summary>
         /// Get a role timer by player ID and role.
@@ -129,7 +129,7 @@ namespace Content.Server.Database
         /// <param name="player">The player to get the role timer from.</param>
         /// <param name="role">The role timer for this specific role.</param>
         /// <returns>A role timer for the passed role.</returns>
-        //Task<ServerRoleTimerDef> GetRoleTimer(Guid player, string role);
+        Task<ServerRoleTimerDef> GetRoleTimer(Guid player, string role);
 
         #endregion
 
@@ -361,7 +361,15 @@ namespace Content.Server.Database
 
         #region Role Timers
 
+        public Task<ServerRoleTimerDef> GetRoleTimer(Guid player, string role)
+        {
+            return _db.GetRoleTimerAsync(player, role);
+        }
 
+        public Task<List<ServerRoleTimerDef>> GetRoleTimers(Guid player)
+        {
+            return _db.GetRoleTimersAsync(player);
+        }
 
         #endregion
 

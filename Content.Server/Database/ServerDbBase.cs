@@ -361,7 +361,9 @@ namespace Content.Server.Database
 
         #region Role Timers
 
-        public abstract Task<List<ServerRoleTimerDef>> GetServerRoleTimersAsync(Guid player);
+        public abstract Task<List<ServerRoleTimerDef>> GetRoleTimersAsync(Guid player);
+
+        public abstract Task<ServerRoleTimerDef> GetRoleTimerAsync(Guid player, string role);
 
         #endregion
 
