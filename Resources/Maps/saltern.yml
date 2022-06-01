@@ -19634,8 +19634,8 @@ entities:
     parent: 852
     type: Transform
   - containers:
-      gun-chamber: !type:ContainerSlot {}
-      gun-magazine: !type:ContainerSlot
+      gun_chamber: !type:ContainerSlot {}
+      gun_magazine: !type:ContainerSlot
         ent: 5157
     type: ContainerContainer
   - canCollide: False
