@@ -196,8 +196,7 @@
       contents:
         - id: BoxSurvival
         - id: WeaponPulsePistolPdw
-        - id: TrashBagBlue
-        - id: TrashBagBlue
+        - id: MedkitFilled
         - id: BoxLightMixed
         - id: BoxLightMixed
         - id: Soap
