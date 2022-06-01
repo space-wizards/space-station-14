@@ -11,6 +11,8 @@ gun-FullAuto = full-auto
 
 # BallisticAmmoProvider
 gun-ballistic-cycle = Cycle
+gun-ballistic-cycled = Cycled
+gun-ballistic-cycled-empty = Cycled (empty)
 
 # BatteryAmmoProvider
 gun-battery-examine = It has enough charge for [color={$color}]{$count} shots.

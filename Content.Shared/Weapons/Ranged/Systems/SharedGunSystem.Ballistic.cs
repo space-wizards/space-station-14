@@ -80,12 +80,14 @@ public abstract partial class SharedGunSystem
         if (sound != null)
             PlaySound(component.Owner, sound, user);
 
+        var shots = GetBallisticShots(component);
         component.Cycled = true;
 
-        if (component.Cycled)
-            Cycle(component, coordinates);
+        Cycle(component, coordinates);
 
-        Popup(Loc.GetString("gun-ballistic-cycle"), component.Owner, user);
+        var text = Loc.GetString(shots == 0 ? "gun-ballistic-cycled-empty" : "gun-ballistic-cycled");
+
+        Popup(text, component.Owner, user);
         UpdateBallisticAppearance(component);
         UpdateAmmoCount(component.Owner);
     }

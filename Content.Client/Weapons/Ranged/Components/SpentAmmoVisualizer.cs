@@ -7,6 +7,11 @@ namespace Content.Client.Weapons.Ranged.Components;
 [UsedImplicitly]
 public sealed class SpentAmmoVisualizer : AppearanceVisualizer
 {
+    /// <summary>
+    /// Should we do "{_state}-spent" or just "spent"
+    /// </summary>
+    [DataField("suffix")] private bool _suffix = true;
+
     [DataField("state")]
     private string _state = "base";
 
@@ -20,7 +25,14 @@ public sealed class SpentAmmoVisualizer : AppearanceVisualizer
             return;
         }
 
-        sprite.LayerSetState(AmmoVisualLayers.Base, spent ? $"{_state}-spent" : _state);
+        string state;
+
+        if (spent)
+            state = _suffix ? $"{_state}-spent" : "spent";
+        else
+            state = _state;
+
+        sprite.LayerSetState(AmmoVisualLayers.Base, state);
     }
 }
 

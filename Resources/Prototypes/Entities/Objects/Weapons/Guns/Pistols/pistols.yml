@@ -38,6 +38,10 @@
         whitelist:
           tags:
             - CartridgePistol
+  - type: ContainerContainer
+    containers:
+      gun-magazine: !type:ContainerSlot
+      gun-chamber: !type:ContainerSlot
   - type: Appearance
     visuals:
     - type: MagVisualizer
@@ -73,6 +77,10 @@
         whitelist:
           tags:
             - CartridgePistol
+  - type: ContainerContainer
+    containers:
+      gun-magazine: !type:ContainerSlot
+      gun-chamber: !type:ContainerSlot
 
 - type: entity
   name: handmade pistol
@@ -128,6 +136,10 @@
         whitelist:
           tags:
             - CartridgeCaselessRifle
+  - type: ContainerContainer
+    containers:
+      gun-magazine: !type:ContainerSlot
+      gun-chamber: !type:ContainerSlot
 
 - type: entity
   name: mk 58

@@ -13,6 +13,9 @@
       tags:
         - CartridgeRifle
     capacity: 25
+  - type: ContainerContainer
+    containers:
+      ballistic-ammo: !type:Container
   - type: Sprite
     netsync: false
     sprite: Objects/Weapons/Guns/Ammunition/Magazine/Rifle/rifle_mag.rsi

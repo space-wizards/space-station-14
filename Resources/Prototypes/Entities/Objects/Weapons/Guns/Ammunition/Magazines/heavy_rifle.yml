@@ -9,6 +9,9 @@
       - MagazineHeavyRifle
   - type: BallisticAmmoProvider
     capacity: 100
+  - type: ContainerContainer
+    containers:
+      ballistic-ammo: !type:Container
   - type: Sprite
     netsync: false
     layers:

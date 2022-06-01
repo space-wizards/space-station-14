@@ -9,6 +9,9 @@
         - CartridgeMagnum
     proto: CartridgeMagnum
     capacity: 60
+  - type: ContainerContainer
+    containers:
+      ballistic-ammo: !type:Container
   - type: Sprite
     sprite: Objects/Weapons/Guns/Ammunition/Boxes/magnum.rsi
     netsync: false

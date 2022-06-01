@@ -35,6 +35,10 @@
         whitelist:
           tags:
             - CartridgeLightRifle
+  - type: ContainerContainer
+    containers:
+      gun-magazine: !type:ContainerSlot
+      gun-chamber: !type:ContainerSlot
 
 - type: entity
   name: L6 SAW

@@ -35,6 +35,10 @@
         whitelist:
           tags:
             - CartridgePistol
+  - type: ContainerContainer
+    containers:
+      gun-magazine: !type:ContainerSlot
+      gun-chamber: !type:ContainerSlot
 
 - type: entity
   name: Atreides
@@ -124,6 +128,10 @@
         whitelist:
           tags:
             - CartridgeMagnum
+  - type: ContainerContainer
+    containers:
+      gun-magazine: !type:ContainerSlot
+      gun-chamber: !type:ContainerSlot
   - type: Appearance
     visuals:
     - type: MagVisualizer
@@ -188,3 +196,7 @@
         whitelist:
           tags:
             - CartridgeMagnum
+  - type: ContainerContainer
+    containers:
+      gun-magazine: !type:ContainerSlot
+      gun-chamber: !type:ContainerSlot

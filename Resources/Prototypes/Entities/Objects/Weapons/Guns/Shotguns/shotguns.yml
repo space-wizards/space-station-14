@@ -69,6 +69,10 @@
           - MagazineShotgun
         insertSound: /Audio/Weapons/Guns/MagIn/smg_magin.ogg
         ejectSound: /Audio/Weapons/Guns/MagOut/smg_magout.ogg
+  - type: ContainerContainer
+    containers:
+      gun-magazine: !type:ContainerSlot
+      gun-chamber: !type:ContainerSlot
   - type: MagazineAmmoProvider
   - type: Appearance
     visuals:

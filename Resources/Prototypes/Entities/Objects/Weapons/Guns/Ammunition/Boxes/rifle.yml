@@ -9,6 +9,9 @@
         - CartridgeRifle
     proto: CartridgeRifle
     capacity: 60
+  - type: ContainerContainer
+    containers:
+      ballistic-ammo: !type:Container
   - type: Sprite
     sprite: Objects/Weapons/Guns/Ammunition/Boxes/rifle.rsi
     netsync: false

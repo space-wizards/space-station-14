@@ -35,6 +35,7 @@
     whitelist:
       tags:
         - Grenade
+    autoCycle: false
     capacity: 3
     proto: GrenadeFrag
     soundInsert:

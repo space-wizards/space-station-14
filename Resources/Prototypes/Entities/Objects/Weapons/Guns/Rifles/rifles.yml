@@ -34,6 +34,10 @@
         whitelist:
           tags:
             - CartridgeLightRifle
+  - type: ContainerContainer
+    containers:
+      gun-magazine: !type:ContainerSlot
+      gun-chamber: !type:ContainerSlot
 
 - type: entity
   name: AKMS
@@ -72,6 +76,10 @@
         whitelist:
           tags:
             - CartridgeLightRifle
+  - type: ContainerContainer
+    containers:
+      gun-magazine: !type:ContainerSlot
+      gun-chamber: !type:ContainerSlot
   - type: Appearance
     visuals:
     - type: MagVisualizer
@@ -111,6 +119,10 @@
         whitelist:
           tags:
             - CartridgeRifle
+  - type: ContainerContainer
+    containers:
+      gun-magazine: !type:ContainerSlot
+      gun-chamber: !type:ContainerSlot
   - type: Appearance
     visuals:
     - type: MagVisualizer
@@ -153,6 +165,10 @@
         whitelist:
           tags:
             - CartridgeRifle
+  - type: ContainerContainer
+    containers:
+      gun-magazine: !type:ContainerSlot
+      gun-chamber: !type:ContainerSlot
   - type: Appearance
     visuals:
     - type: MagVisualizer
