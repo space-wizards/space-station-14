@@ -12,6 +12,7 @@ using Robust.Shared.Player;
 using Content.Shared.Sound;
 using Content.Shared.Trigger;
 using Content.Shared.Database;
+using Content.Shared.Explosion;
 using Content.Shared.Interaction;
 
 namespace Content.Server.Explosion.EntitySystems
@@ -60,6 +61,7 @@ namespace Content.Server.Explosion.EntitySystems
         private void HandleExplodeTrigger(EntityUid uid, ExplodeOnTriggerComponent component, TriggerEvent args)
         {
             _explosions.TriggerExplosive(uid, user: args.User);
+            args.Handled = true;
         }
 
         #region Flash
@@ -67,12 +69,14 @@ namespace Content.Server.Explosion.EntitySystems
         {
             // TODO Make flash durations sane ffs.
             _flashSystem.FlashArea(uid, args.User, component.Range, component.Duration * 1000f);
+            args.Handled = true;
         }
         #endregion
 
         private void HandleDeleteTrigger(EntityUid uid, DeleteOnTriggerComponent component, TriggerEvent args)
         {
             EntityManager.QueueDeleteEntity(uid);
+            args.Handled = true;
         }
 
         private void OnTriggerCollide(EntityUid uid, TriggerOnCollideComponent component, StartCollideEvent args)
@@ -84,12 +88,14 @@ namespace Content.Server.Explosion.EntitySystems
         private void OnActivate(EntityUid uid, TriggerOnActivateComponent component, ActivateInWorldEvent args)
         {
             Trigger(component.Owner, args.User);
+            args.Handled = true;
         }
 
-        public void Trigger(EntityUid trigger, EntityUid? user = null)
+        public bool Trigger(EntityUid trigger, EntityUid? user = null)
         {
             var triggerEvent = new TriggerEvent(trigger, user);
             EntityManager.EventBus.RaiseLocalEvent(trigger, triggerEvent);
+            return triggerEvent.Handled;
         }
 
         public void HandleTimerTrigger(EntityUid uid, EntityUid? user, float delay , float beepInterval, float? initialBeepDelay, SoundSpecifier? beepSound, AudioParams beepParams)
