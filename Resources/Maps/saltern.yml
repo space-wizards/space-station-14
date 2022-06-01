@@ -22159,7 +22159,6 @@ entities:
   - pos: -0.442379,13.650292
     parent: 852
     type: Transform
-
   - canCollide: False
     type: Physics
 - uid: 1419
@@ -25408,7 +25407,6 @@ entities:
   - pos: -2.5532327,30.014599
     parent: 852
     type: Transform
-
   - canCollide: False
     type: Physics
 - uid: 1878
@@ -27425,7 +27423,6 @@ entities:
   - pos: 7.643837,18.677101
     parent: 852
     type: Transform
-
   - canCollide: False
     type: Physics
 - uid: 2156
@@ -45210,7 +45207,6 @@ entities:
   - pos: -30.54503,-5.3981686
     parent: 852
     type: Transform
-
   - canCollide: False
     type: Physics
 - uid: 4093
@@ -45231,7 +45227,6 @@ entities:
   - pos: -30.466906,-1.5231686
     parent: 852
     type: Transform
-
   - canCollide: False
     type: Physics
 - uid: 4096
@@ -45936,7 +45931,6 @@ entities:
   - pos: 0.41178536,-5.2814264
     parent: 852
     type: Transform
-
   - canCollide: False
     type: Physics
 - uid: 4179
@@ -46321,7 +46315,9 @@ entities:
     type: Transform
   - canCollide: False
     type: Physics
-
+  - containers:
+      cell_slot: !type:ContainerSlot {}
+    type: ContainerContainer
 - uid: 4229
   type: SpawnPointAssistant
   components:
@@ -49839,7 +49835,9 @@ entities:
     type: Transform
   - canCollide: False
     type: Physics
-
+  - containers:
+      cell_slot: !type:ContainerSlot {}
+    type: ContainerContainer
 - uid: 4705
   type: Stunbaton
   components:
@@ -49848,7 +49846,9 @@ entities:
     type: Transform
   - canCollide: False
     type: Physics
-
+  - containers:
+      cell_slot: !type:ContainerSlot {}
+    type: ContainerContainer
 - uid: 4706
   type: WeaponTaser
   components:
@@ -51720,7 +51720,6 @@ entities:
   - pos: 37.66952,-0.30827445
     parent: 852
     type: Transform
-
   - canCollide: False
     type: Physics
 - uid: 4926
@@ -64449,7 +64448,6 @@ entities:
   - pos: -7.462167,20.657312
     parent: 852
     type: Transform
-
   - canCollide: False
     type: Physics
 - uid: 6023
@@ -71032,7 +71030,6 @@ entities:
   - pos: -0.4371283,-29.28531
     parent: 852
     type: Transform
-
   - canCollide: False
     type: Physics
 - uid: 6696
@@ -74359,7 +74356,6 @@ entities:
   - pos: 6.5934343,24.65432
     parent: 852
     type: Transform
-
   - canCollide: False
     type: Physics
 - uid: 7150
@@ -75656,7 +75652,6 @@ entities:
   - pos: 11.433,-31.299496
     parent: 852
     type: Transform
-
   - canCollide: False
     type: Physics
 - uid: 7320
@@ -76090,7 +76085,6 @@ entities:
   - pos: -4.4252543,-22.444613
     parent: 852
     type: Transform
-
   - canCollide: False
     type: Physics
 - uid: 7373
@@ -79730,7 +79724,6 @@ entities:
   - pos: 8.54651,-28.293444
     parent: 852
     type: Transform
-
   - canCollide: False
     type: Physics
 - uid: 7827
@@ -79915,7 +79908,6 @@ entities:
   - pos: 26.628683,-25.257757
     parent: 852
     type: Transform
-
   - canCollide: False
     type: Physics
 - uid: 7853
@@ -84360,7 +84352,6 @@ entities:
   - pos: -1.4903483,1.69441
     parent: 852
     type: Transform
-
   - canCollide: False
     type: Physics
 - uid: 8448
@@ -86182,7 +86173,6 @@ entities:
   - pos: -36.511345,-29.258835
     parent: 852
     type: Transform
-
   - canCollide: False
     type: Physics
 - uid: 8726
@@ -87396,7 +87386,6 @@ entities:
   - pos: 30.50418,14.529506
     parent: 852
     type: Transform
-
   - canCollide: False
     type: Physics
 - uid: 8848
@@ -88155,7 +88144,6 @@ entities:
   - pos: -18.636322,-4.1902304
     parent: 852
     type: Transform
-
   - canCollide: False
     type: Physics
 - uid: 8942
@@ -89754,7 +89742,6 @@ entities:
       keywords: []
       event: !type:ToggleActionEvent {}
     type: HandheldLight
-
   - canCollide: False
     type: Physics
 - uid: 9144
