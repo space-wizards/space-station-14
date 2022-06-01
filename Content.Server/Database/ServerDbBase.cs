@@ -359,6 +359,12 @@ namespace Content.Server.Database
         public abstract Task AddServerRoleUnbanAsync(ServerRoleUnbanDef serverRoleUnban);
         #endregion
 
+        #region Role Timers
+
+        public abstract Task<List<ServerRoleTimerDef>> GetServerRoleTimersAsync(Guid player);
+
+        #endregion
+
         #region Player Records
         /*
          * PLAYER RECORDS

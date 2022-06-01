@@ -114,6 +114,25 @@ namespace Content.Server.Database
         Task AddServerRoleUnbanAsync(ServerRoleUnbanDef serverBan);
         #endregion
 
+        #region Role Timers
+
+        /// <summary>
+        /// Look up a player's role timers.
+        /// </summary>
+        /// <param name="player">The player to get the role timer information from.</param>
+        /// <returns>All role timers belonging to the player.</returns>
+        //Task<List<ServerRoleTimerDef>> GetRoleTimers(Guid player);
+
+        /// <summary>
+        /// Get a role timer by player ID and role.
+        /// </summary>
+        /// <param name="player">The player to get the role timer from.</param>
+        /// <param name="role">The role timer for this specific role.</param>
+        /// <returns>A role timer for the passed role.</returns>
+        //Task<ServerRoleTimerDef> GetRoleTimer(Guid player, string role);
+
+        #endregion
+
         #region Player Records
         Task UpdatePlayerRecordAsync(
             NetUserId userId,
@@ -338,6 +357,12 @@ namespace Content.Server.Database
         {
             return _db.AddServerRoleUnbanAsync(serverRoleUnban);
         }
+        #endregion
+
+        #region Role Timers
+
+
+
         #endregion
 
         public Task UpdatePlayerRecordAsync(
