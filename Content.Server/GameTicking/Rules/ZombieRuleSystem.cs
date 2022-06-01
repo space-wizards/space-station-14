@@ -42,6 +42,7 @@ public sealed class ZombieRuleSystem : GameRuleSystem
     [Dependency] private readonly NukeCodeSystem _nukeCodeSystem = default!;
 
     private const string ZombieEventsWeightedRandomID = "ZombieEvents";
+    private const string ZombieVariantsWeightedRandomID = "ZombieVariants";
 
     private const string PatientZeroPrototypeID = "PatientZero";
     
@@ -86,7 +87,6 @@ public sealed class ZombieRuleSystem : GameRuleSystem
     private void OnJobAssigned(RulePlayerJobsAssignedEvent ev)
     {
         InfectInitialPlayers();
-        ChooseMidRoundEvent();
     }
 
     private void OnPlayersSpawning(RulePlayerSpawningEvent ev)
@@ -243,30 +243,11 @@ public sealed class ZombieRuleSystem : GameRuleSystem
         }
     }
 
-    /// EVENTS
-    /// These are all the functions that handle midround events
-    /// that can occur during zombie mode
-    private void ChooseMidRoundEvent()
-    {
-        switch (_prototypeManager.Index<WeightedRandomPrototype>(ZombieEventsWeightedRandomID).Pick(_random))
-        {
-            case ("Nuke"):
-                UnlockNuke();
-                break;
-            case ("ERT"):
-                SpawnShuttle("/Maps/dart.yml");
-                break;
-            case ("CBURN"):
-                SpawnShuttle("/Maps/infiltrator.yml");
-                break;
-        }
-    }
-
 
     /// <summary>
     /// This event announces the nuke code and spawns
     /// the disk inside of it. This is for round end
-    /// so the duplicated disks shouldn't really matter.
+    /// so the duplicated disk shouldn't really matter.
     /// </summary>
     private void UnlockNuke()
     {
@@ -279,29 +260,5 @@ public sealed class ZombieRuleSystem : GameRuleSystem
             }
                 
         }
-    }
-
-    /// <summary>
-    /// Spawns a shuttle a distance away from the main station
-    /// This code is 100% canibalized from nukies
-    /// idk how it works. -emo
-    /// </summary>
-    /// <param name="map">The file path to the map file</param>
-    private void SpawnShuttle(string map)
-    {
-        _chatManager.DispatchStationAnnouncement(Loc.GetString("zombie-shuttle-call-event", ("code", _nukeCodeSystem.Code)), "Centcomm", default, Color.Crimson);
-
-        var aabbs = _stationSystem.Stations.SelectMany(x =>
-            Comp<StationDataComponent>(x).Grids.Select(x => _mapManager.GetGridComp(x).Grid.WorldAABB)).ToArray();
-        var aabb = aabbs[0];
-        for (int i = 1; i < aabbs.Length; i++)
-        {
-            aabb.Union(aabbs[i]);
-        }
-
-        var (_, gridId) = _mapLoader.LoadBlueprint(GameTicker.DefaultMap, map, new MapLoadOptions
-        {
-            Offset = aabb.Center + MathF.Max(aabb.Height / 2f, aabb.Width / 2f) * 2.5f
-        });
     }
 }
