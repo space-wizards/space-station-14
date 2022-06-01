@@ -1,102 +1,117 @@
 - type: entity
-  id: RocketAmmo
+  id: CartridgeRocket
   name: PG-7VL grenade
   parent: BaseItem
   description: A 1.5 warhead designed for the RPG-7 launcher. Has tubular shape.
   components:
-  - type: Ammo
-    caliber: Rocket
-    projectile: BulletRocket
-    caseless: true
+  - type: Tag
+    tags:
+      - CartridgeRocket
+  - type: CartridgeAmmo
+    proto: BulletRocket
+    deleteOnSpawn: true
   - type: Sprite
     netsync: false
-    sprite: Objects/Weapons/Guns/Ammunition/Explosives/rpg.rsi
-    state: frag
+    sprite: Objects/Weapons/Guns/Ammunition/Explosives/explosives.rsi
+    state: rpg
 
 - type: entity
   id: GrenadeBaton
   name: baton grenade
   parent: BaseItem
   components:
-  - type: Ammo
-    caliber: Grenade
-    projectile: BulletGrenadeBaton
+  - type: Tag
+    tags:
+      - Grenade
+  - type: CartridgeAmmo
+    proto: BulletGrenadeBaton
   - type: Sprite
     netsync: false
-    sprite: Objects/Weapons/Guns/Ammunition/Explosives/grenade_baton.rsi
+    sprite: Objects/Weapons/Guns/Ammunition/Explosives/explosives.rsi
     layers:
-    - state: base
+    - state: baton
       map: ["enum.AmmoVisualLayers.Base"]
   - type: Appearance
-    visuals:
-    - type: SpentAmmoVisualizer
+  - type: SpentAmmoVisuals
+    state: baton
+    suffix: false
 
 - type: entity
   id: GrenadeBlast
   name: blast grenade
   parent: BaseItem
   components:
-  - type: Ammo
-    caliber: Grenade
-    projectile: BulletGrenadeBlast
+  - type: Tag
+    tags:
+      - Grenade
+  - type: CartridgeAmmo
+    proto: BulletGrenadeBlast
   - type: Sprite
     netsync: false
-    sprite: Objects/Weapons/Guns/Ammunition/Explosives/grenade_blast.rsi
+    sprite: Objects/Weapons/Guns/Ammunition/Explosives/explosives.rsi
     layers:
-    - state: base
+    - state: blast
       map: ["enum.AmmoVisualLayers.Base"]
   - type: Appearance
-    visuals:
-    - type: SpentAmmoVisualizer
+  - type: SpentAmmoVisuals
+    state: blast
+    suffix: false
 
 - type: entity
   id: GrenadeFlash
   name: flash grenade
   parent: BaseItem
   components:
-  - type: Ammo
-    caliber: Grenade
-    projectile: BulletGrenadeFlash
+  - type: Tag
+    tags:
+      - Grenade
+  - type: CartridgeAmmo
+    proto: BulletGrenadeFlash
   - type: Sprite
     netsync: false
-    sprite: Objects/Weapons/Guns/Ammunition/Explosives/grenade_flash.rsi
+    sprite: Objects/Weapons/Guns/Ammunition/Explosives/explosives.rsi
     layers:
-    - state: base
+    - state: flash
       map: ["enum.AmmoVisualLayers.Base"]
   - type: Appearance
-    visuals:
-    - type: SpentAmmoVisualizer
+  - type: SpentAmmoVisuals
+    state: flash
+    suffix: false
 
 - type: entity
   id: GrenadeFrag
   name: frag grenade
   parent: BaseItem
   components:
-  - type: Ammo
-    caliber: Grenade
-    projectile: BulletGrenadeFrag
+  - type: Tag
+    tags:
+      - Grenade
+  - type: CartridgeAmmo
+    proto: BulletGrenadeFrag
   - type: Sprite
     netsync: false
-    sprite: Objects/Weapons/Guns/Ammunition/Explosives/grenade_frag.rsi
+    sprite: Objects/Weapons/Guns/Ammunition/Explosives/explosives.rsi
     layers:
-    - state: base
+    - state: frag
       map: ["enum.AmmoVisualLayers.Base"]
   - type: Appearance
-    visuals:
-    - type: SpentAmmoVisualizer
+  - type: SpentAmmoVisuals
+    state: frag
+    suffix: false
 
 - type: entity
-  id: SlowRocketAmmo
+  id: CartridgeRocketSlow
   name: PG-7VL grenade "Snail-Rocket"
   parent: BaseItem
   description: A 1.5 warhead designed for the RPG-7 launcher. It's unusually slow.
   components:
-  - type: Ammo
-    caliber: Rocket
-    projectile: WeakBulletRocket
-    caseless: true
-    ammoVelocity: 4.5
+  - type: Tag
+    tags:
+      - CartridgeRocket
+  - type: CartridgeAmmo
+    proto: BulletWeakRocket
+    deleteOnSpawn: true
   - type: Sprite
     netsync: false
-    sprite: Objects/Weapons/Guns/Ammunition/Explosives/rpg.rsi
+    sprite: Objects/Weapons/Guns/Ammunition/Explosives/explosives.rsi
     state: frag

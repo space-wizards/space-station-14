@@ -6,13 +6,14 @@
   components:
   - type: StorageFill
     contents:
+      - id: HandheldHealthAnalyzer
+        amount: 1
       - id: Brutepack
         amount: 2
       - id: Gauze
         amount: 1
       - id: Ointment
         amount: 2
-      # todo 1 Health Analyzer once it exists. Remove brutepack and ointment for suture, gauze, mesh and medipen?
       # see https://github.com/tgstation/blob/master/code/game/objects/items/storage/firstaid.dm for example contents
 
 - type: entity
@@ -52,6 +53,8 @@
     contents:
       - id: SyringeSpaceacillin
         amount: 1
+      - id: SyringeIpecac
+        amount: 1
       - id: PillDylovene
         amount: 3
 
@@ -90,6 +93,8 @@
   components:
   - type: StorageFill
     contents:
+      - id: HandheldHealthAnalyzer
+        amount: 1
       - id: Brutepack
         amount: 3 # TO DO: Advanced fills
       - id: SyringeTranexamicAcid
@@ -106,6 +111,8 @@
   components:
   - type: StorageFill
     contents:
+      - id: HandheldHealthAnalyzer
+        amount: 1
       - id: SyringeEphedrine
         amount: 1 # TO DO: More combat meds
       - id: SyringeTranexamicAcid

@@ -3,7 +3,7 @@
 - type: uplinkListing
   id: UplinkPistolClarissa
   category: Weapons
-  itemId: PistolClarissa
+  itemId: WeaponPistolClarissa
   listingName: Clarissa
   description: A small, easily concealable, but somewhat underpowered gun. Use pistol magazines (.35 auto).
   price: 6
@@ -11,7 +11,7 @@
 - type: uplinkListing
   id: UplinkRevolverPredator
   category: Weapons
-  itemId: RevolverPredator
+  itemId: WeaponRevolverPredator
   listingName: Predator
   description: A loud and deadly revolver. Uses .40 Magnum.
   price: 8
@@ -20,7 +20,7 @@
 - type: uplinkListing
   id: UplinkPistolMandella
   category: Weapons
-  itemId: PistolMandella
+  itemId: WeaponPistolMandella
   listingName: Mandella
   description: A rugged, robust operator handgun with inbuilt silencer. Use pistol magazines (.25 caseless).
   price: 8
@@ -29,7 +29,7 @@
 - type: uplinkListing
   id: UplinkRifleMosin
   category: Weapons
-  itemId: SniperBoltGunWood
+  itemId: WeaponSniperMosin
   listingName: Surplus Rifle
   description: A bolt action service rifle that has seen many wars. Not modern by any standard, hand loaded, and terrible recoil, but it is cheap.
   price: 4
@@ -117,25 +117,25 @@
 
 # For the Mandella
 - type: uplinkListing
-  id: UplinkMagazineClRiflePistol
+  id: UplinkMagazinePistolCaselessRifle
   category: Ammo
-  itemId: MagazineClRiflePistol
+  itemId: MagazinePistolCaselessRifle
   price: 2
 
 # For the Inspector
 - type: uplinkListing
-  id: UplinkSLMagnum
+  id: UplinkSpeedLoaderMagnum
   category: Ammo
-  itemId: SLMagnum
+  itemId: SpeedLoaderMagnum
   price: 2
-  icon: /Textures/Objects/Weapons/Guns/Ammunition/SpeedLoaders/Magnum/magnum_sl.rsi/icon.png
+  icon: /Textures/Objects/Weapons/Guns/Ammunition/SpeedLoaders/Magnum/magnum_speed_loader.rsi/base.png
 
 # For the mosin
 - type: uplinkListing
   id: UplinkMosinAmmo
   category: Ammo
-  itemId: BoxBulletLRifleSmall
-  description: A box of bullets for the surplus rifle.
+  itemId: BoxMagazineLightRifle
+  description: A box of cartridges for the surplus rifle.
   price: 2
 
 
@@ -290,7 +290,7 @@
   itemId: ClothingBackpackDuffelSyndicateHardsuitBundle
   description: The Syndicate's well known armored blood red hardsuit, capable of space walks and bullet resistant.
   price: 8
-  
+
 - type: uplinkListing
   id: UplinkClothingShoesBootsMagSyndie
   category: Armor
@@ -377,7 +377,7 @@
   category: Misc
   itemId: ClothingBackpackDuffelSyndicatePyjamaBundle
   price: 4
-  
+
 - type: uplinkListing
   id: UplinkCatEars
   category: Misc

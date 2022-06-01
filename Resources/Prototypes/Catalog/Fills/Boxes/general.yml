@@ -8,6 +8,21 @@
     state: box
 
 - type: entity
+  name: mousetrap box
+  parent: BoxCardboard
+  id: BoxMousetrap
+  description: This box is filled with mousetraps. Try not to get your hand stuck in one.
+  components:
+    - type: StorageFill
+      contents:
+        - id: Mousetrap
+          amount: 6
+    - type: Sprite
+      layers:
+        - state: box
+        - state: mousetraps
+
+- type: entity
   name: lightbulb box
   parent: BoxCardboard
   id: BoxLightbulb

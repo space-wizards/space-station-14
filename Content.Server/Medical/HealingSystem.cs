@@ -18,7 +18,7 @@ namespace Content.Server.Medical;
 
 public sealed class HealingSystem : EntitySystem
 {
-    [Dependency] private readonly AdminLogSystem _logs = default!;
+    [Dependency] private readonly IAdminLogManager _adminLogger = default!;
     [Dependency] private readonly DamageableSystem _damageable = default!;
     [Dependency] private readonly BloodstreamSystem _bloodstreamSystem = default!;
     [Dependency] private readonly DoAfterSystem _doAfter = default!;
@@ -59,9 +59,9 @@ public sealed class HealingSystem : EntitySystem
         _stacks.Use(args.Component.Owner, 1, stack);
 
         if (uid != args.User)
-            _logs.Add(LogType.Healed, $"{EntityManager.ToPrettyString(args.User):user} healed {EntityManager.ToPrettyString(uid):target} for {healed.Total:damage} damage");
+            _adminLogger.Add(LogType.Healed, $"{EntityManager.ToPrettyString(args.User):user} healed {EntityManager.ToPrettyString(uid):target} for {healed.Total:damage} damage");
         else
-            _logs.Add(LogType.Healed, $"{EntityManager.ToPrettyString(args.User):user} healed themselves for {healed.Total:damage} damage");
+            _adminLogger.Add(LogType.Healed, $"{EntityManager.ToPrettyString(args.User):user} healed themselves for {healed.Total:damage} damage");
 
         if (args.Component.HealingEndSound != null)
         {
