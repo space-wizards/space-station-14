@@ -121,6 +121,8 @@ public sealed partial class GunSystem : SharedGunSystem
 
                         if (dmg != null)
                         {
+                            PlayImpactSound(result.HitEntity, dmg, hitscan.Sound, hitscan.ForceSound);
+
                             if (user != null)
                             {
                                 Logs.Add(LogType.HitScanHit,
