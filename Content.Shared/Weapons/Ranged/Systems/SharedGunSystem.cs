@@ -215,7 +215,7 @@ public abstract partial class SharedGunSystem : EntitySystem
 
         // Listen it just makes the other code around it easier if shots == 0 to do this.
         if (shots > 0)
-            RaiseLocalEvent(gun.Owner, ev);
+            RaiseLocalEvent(gun.Owner, ev, false);
 
         DebugTools.Assert(ev.Ammo.Count <= shots);
         DebugTools.Assert(shots >= 0);

@@ -1,7 +1,7 @@
 namespace Content.Shared.Weapons.Ranged.Events;
 
 /// <summary>
-/// Raised when projectiles have been fired from a gun.
+/// Raised on a gun when projectiles have been fired from it.
 /// </summary>
 public sealed class AmmoShotEvent : EntityEventArgs
 {

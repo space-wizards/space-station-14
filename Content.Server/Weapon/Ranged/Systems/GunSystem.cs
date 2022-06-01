@@ -146,7 +146,7 @@ public sealed partial class GunSystem : SharedGunSystem
         RaiseLocalEvent(gun.Owner, new AmmoShotEvent()
         {
             FiredProjectiles = shotProjectiles,
-        });
+        }, false);
     }
 
     private void ShootProjectile(EntityUid uid, Vector2 direction, EntityUid? user = null)

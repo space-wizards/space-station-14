@@ -33,7 +33,7 @@ public abstract partial class SharedGunSystem
 
         if (magEnt == null) return;
 
-        RaiseLocalEvent(magEnt.Value, args);
+        RaiseLocalEvent(magEnt.Value, args, false);
         UpdateAmmoCount(uid);
         UpdateMagazineAppearance(component, magEnt.Value);
     }
@@ -46,7 +46,7 @@ public abstract partial class SharedGunSystem
 
         if (magEnt != null)
         {
-            RaiseLocalEvent(magEnt.Value, args);
+            RaiseLocalEvent(magEnt.Value, args, false);
             UpdateMagazineAppearance(component, magEnt.Value);
         }
     }
@@ -67,7 +67,7 @@ public abstract partial class SharedGunSystem
         if (magEnt != null)
         {
             var ev = new GetAmmoCountEvent();
-            RaiseLocalEvent(magEnt.Value, ref ev);
+            RaiseLocalEvent(magEnt.Value, ref ev, false);
             count += ev.Count;
             capacity += ev.Capacity;
         }
@@ -94,7 +94,7 @@ public abstract partial class SharedGunSystem
         }
 
         // Pass the event onwards.
-        RaiseLocalEvent(magEntity.Value, args);
+        RaiseLocalEvent(magEntity.Value, args, false);
         // Should be Dirtied by what other ammoprovider is handling it.
         var count = 0;
         var capacity = 0;
