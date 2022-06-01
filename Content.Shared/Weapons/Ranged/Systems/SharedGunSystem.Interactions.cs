@@ -12,9 +12,13 @@ public abstract partial class SharedGunSystem
 {
     private void OnExamine(EntityUid uid, GunComponent component, ExaminedEvent args)
     {
-        var selectColor = !_combatMode.IsInCombatMode(args.Examiner) ? SafetyExamineColor : ModeExamineColor;
         args.PushMarkup(Loc.GetString("gun-selected-mode-examine", ("color", ModeExamineColor), ("mode", component.SelectedMode)));
         args.PushMarkup(Loc.GetString("gun-fire-rate-examine", ("color", FireRateExamineColor), ("fireRate", component.FireRate)));
+    }
+
+    private string GetLocSelector(SelectiveFire mode)
+    {
+        return Loc.GetString($"gun-{mode.ToString()}");
     }
 
     private void OnAltVerb(EntityUid uid, GunComponent component, GetVerbsEvent<AlternativeVerb> args)
@@ -27,7 +31,7 @@ public abstract partial class SharedGunSystem
         AlternativeVerb verb = new()
         {
             Act = () => SelectFire(component, nextMode, args.User),
-            Text = $"Change to {nextMode}",
+            Text = Loc.GetString("gun-selector-verb", ("mode", GetLocSelector(nextMode))),
             IconTexture = "/Textures/Interface/VerbIcons/fold.svg.192dpi.png",
         };
 
@@ -63,7 +67,7 @@ public abstract partial class SharedGunSystem
             component.NextFire += cooldown;
 
         PlaySound(component.Owner, component.SoundModeToggle?.GetSound(Random, ProtoManager), user);
-        Popup($"Selected {fire}", component.Owner, user);
+        Popup(Loc.GetString("gun-selected-mode", ("mode", GetLocSelector(fire))), component.Owner, user);
         // When actions done add here.
 
         Dirty(component);

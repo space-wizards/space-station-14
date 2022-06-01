@@ -25,7 +25,7 @@
   - type: ItemSlots
     slots:
       gun-magazine:
-        name: GunMagazine
+        name: Magazine
         startingItem: MagazinePistol
         insertSound: /Audio/Weapons/Guns/MagIn/pistol_magin.ogg
         ejectSound: /Audio/Weapons/Guns/MagOut/pistol_magout.ogg
@@ -33,7 +33,7 @@
           tags:
             - MagazinePistol
       gun-chamber:
-        name: GunChamber
+        name: Chamber
         startingItem: CartridgePistol
         whitelist:
           tags:
@@ -59,7 +59,7 @@
   - type: ItemSlots
     slots:
       gun-magazine:
-        name: GunMagazine
+        name: Magazine
         startingItem: MagazinePistol
         insertSound: /Audio/Weapons/Guns/MagIn/pistol_magin.ogg
         ejectSound: /Audio/Weapons/Guns/MagOut/pistol_magout.ogg
@@ -68,7 +68,7 @@
             - MagazinePistol
             - MagazinePistolHighCapacity
       gun-chamber:
-        name: GunChamber
+        name: Chamber
         startingItem: CartridgePistol
         whitelist:
           tags:
@@ -115,7 +115,7 @@
   - type: ItemSlots
     slots:
       gun-magazine:
-        name: GunMagazine
+        name: Magazine
         startingItem: MagazinePistolCaselessRifle
         insertSound: /Audio/Weapons/Guns/MagIn/pistol_magin.ogg
         ejectSound: /Audio/Weapons/Guns/MagOut/pistol_magout.ogg
@@ -123,7 +123,7 @@
           tags:
             - MagazinePistolCaselessRifle
       gun-chamber:
-        name: GunChamber
+        name: Chamber
         startingItem: CartridgeCaselessRifle
         whitelist:
           tags:

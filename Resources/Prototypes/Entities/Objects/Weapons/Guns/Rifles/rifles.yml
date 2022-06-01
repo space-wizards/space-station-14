@@ -21,7 +21,7 @@
   - type: ItemSlots
     slots:
       gun-magazine:
-        name: GunMagazine
+        name: Magazine
         startingItem: MagazineLightRifle
         insertSound: /Audio/Weapons/Guns/MagIn/batrifle_magin.ogg
         ejectSound: /Audio/Weapons/Guns/MagOut/batrifle_magout.ogg
@@ -29,7 +29,7 @@
           tags:
             - MagazineLightRifle
       gun-chamber:
-        name: GunChamber
+        name: Chamber
         startingItem: CartridgeLightRifle
         whitelist:
           tags:
@@ -59,7 +59,7 @@
   - type: ItemSlots
     slots:
       gun-magazine:
-        name: GunMagazine
+        name: Magazine
         startingItem: MagazineLightRifle
         insertSound: /Audio/Weapons/Guns/MagIn/ltrifle_magin.ogg
         ejectSound: /Audio/Weapons/Guns/MagOut/ltrifle_magout.ogg
@@ -67,7 +67,7 @@
           tags:
             - MagazineLightRifle
       gun-chamber:
-        name: GunChamber
+        name: Chamber
         startingItem: CartridgeLightRifle
         whitelist:
           tags:
@@ -98,7 +98,7 @@
   - type: ItemSlots
     slots:
       gun-magazine:
-        name: GunMagazine
+        name: Magazine
         startingItem: MagazineRifle
         insertSound: /Audio/Weapons/Guns/MagIn/batrifle_magin.ogg
         ejectSound: /Audio/Weapons/Guns/MagOut/batrifle_magout.ogg
@@ -106,7 +106,7 @@
           tags:
             - MagazineRifle
       gun-chamber:
-        name: GunChamber
+        name: Chamber
         startingItem: CartridgeRifle
         whitelist:
           tags:
@@ -140,7 +140,7 @@
   - type: ItemSlots
     slots:
       gun-magazine:
-        name: GunMagazine
+        name: Magazine
         startingItem: MagazineRifle
         insertSound: /Audio/Weapons/Guns/MagIn/ltrifle_magin.ogg
         ejectSound: /Audio/Weapons/Guns/MagOut/ltrifle_magout.ogg
@@ -148,7 +148,7 @@
           tags:
             - MagazineRifle
       gun-chamber:
-        name: GunChamber
+        name: Chamber
         startingItem: CartridgeRifle
         whitelist:
           tags:

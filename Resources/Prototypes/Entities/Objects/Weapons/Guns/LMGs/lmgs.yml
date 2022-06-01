@@ -22,7 +22,7 @@
   - type: ItemSlots
     slots:
       gun-magazine:
-        name: GunMagazine
+        name: Magazine
         startingItem: MagazineBoxLightRifle
         insertSound: /Audio/Weapons/Guns/MagIn/batrifle_magin.ogg
         ejectSound: /Audio/Weapons/Guns/MagOut/batrifle_magout.ogg
@@ -30,7 +30,7 @@
           tags:
             - MagazineBoxLightRifle
       gun-chamber:
-        name: GunChamber
+        name: Chamber
         startingItem: CartridgeLightRifle
         whitelist:
           tags:

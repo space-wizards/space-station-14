@@ -62,7 +62,7 @@
   - type: ItemSlots
     slots:
       gun-magazine:
-        name: GunMagazine
+        name: Magazine
         startingItem: MagazineShotgun
         whitelist:
           tags:

@@ -1,6 +1,13 @@
 
 gun-selected-mode-examine = Current selected fire mode is [color={$color}]{$mode}[/color].
 gun-fire-rate-examine = Fire rate is [color={$color}]{$fireRate}[/color] per second.
+gun-selector-verb = Change to {$mode}
+gun-selected-mode = Selected {$mode}
+
+# SelectiveFire
+gun-SemiAuto = semi-auto
+gun-Burst = burst
+gun-FullAuto = full-auto
 
 # BallisticAmmoProvider
 gun-ballistic-cycle = Cycle

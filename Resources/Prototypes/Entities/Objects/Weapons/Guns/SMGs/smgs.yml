@@ -22,7 +22,7 @@
   - type: ItemSlots
     slots:
       gun-magazine:
-        name: GunMagazine
+        name: Magazine
         startingItem: MagazinePistolSubMachineGun
         insertSound: /Audio/Weapons/Guns/MagIn/smg_magin.ogg
         ejectSound: /Audio/Weapons/Guns/MagOut/smg_magout.ogg
@@ -30,7 +30,7 @@
           tags:
             - MagazinePistolSubMachineGun
       gun-chamber:
-        name: GunChamber
+        name: Chamber
         startingItem: CartridgePistol
         whitelist:
           tags:
@@ -111,7 +111,7 @@
   - type: ItemSlots
     slots:
       gun-magazine:
-        name: GunMagazine
+        name: Magazine
         startingItem: MagazineMagnumSubMachineGun
         insertSound: /Audio/Weapons/Guns/MagIn/smg_magin.ogg
         ejectSound: /Audio/Weapons/Guns/MagOut/smg_magout.ogg
@@ -119,7 +119,7 @@
           tags:
             - MagazineMagnumSubMachineGun
       gun-chamber:
-        name: GunChamber
+        name: Chamber
         startingItem: CartridgeMagnum
         whitelist:
           tags:
@@ -175,7 +175,7 @@
   - type: ItemSlots
     slots:
       gun-magazine:
-        name: GunMagazine
+        name: Magazine
         startingItem: MagazineMagnumSubMachineGunRubber
         insertSound: /Audio/Weapons/Guns/MagIn/smg_magin.ogg
         ejectSound: /Audio/Weapons/Guns/MagOut/smg_magout.ogg
@@ -183,7 +183,7 @@
           tags:
             - MagazineMagnumSubMachineGun
       gun-chamber:
-        name: GunChamber
+        name: Chamber
         startingItem: CartridgeMagnumRubber
         whitelist:
           tags:
