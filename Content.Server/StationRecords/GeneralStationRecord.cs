@@ -20,6 +20,12 @@ public sealed class GeneralStationRecord
     public string JobTitle = string.Empty;
 
     /// <summary>
+    ///     The original job prototype tied to this record.
+    /// </summary>
+    [ViewVariables]
+    public string JobId = String.Empty;
+
+    /// <summary>
     ///     Species tied to this station record.
     /// </summary>
     [ViewVariables]
