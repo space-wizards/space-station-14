@@ -1,9 +1,11 @@
 ﻿using System.Diagnostics;
 using System.Linq;
+using Content.Server.CharacterAppearance.Components;
 using Content.Server.Chat.Managers;
 using Content.Server.Maps;
 using Content.Server.Nuke;
 using Content.Server.Players;
+using Content.Server.RandomAppearance;
 using Content.Server.Roles;
 using Content.Server.RoundEnd;
 using Content.Server.Spawners.Components;
@@ -259,6 +261,7 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
 
             var mob = EntityManager.SpawnEntity("MobHuman", _random.Pick(spawns));
             EntityManager.GetComponent<MetaDataComponent>(mob).EntityName = name;
+            EntityManager.AddComponent<RandomHumanoidAppearanceComponent>(mob);
 
             newMind.TransferTo(mob);
             _stationSpawningSystem.EquipStartingGear(mob, gear, null);
