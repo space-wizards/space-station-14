@@ -81,6 +81,15 @@
       - material: Steel
         amount: 1
         doAfter: 2
+    - to: AirlockDocking
+      conditions:
+      - !type:EntityAnchored {}
+      steps:
+      - tool: Screwing
+        doAfter: 2.5
+      - material: Plasteel
+        amount: 1
+        doAfter: 2
     - to: glassElectronics
       conditions:
       - !type:EntityAnchored {}
@@ -121,6 +130,22 @@
       - tool: Prying
         doAfter: 5
         
+  - node: AirlockDocking
+    entity: AirlockShuttle
+    edges:
+    - to: wired #TODO DOOR ELECTRONICS. If door electronics ever govern access permissions, this step should probably be further down? It makes it too easy to swap permissions around. See also windoor.
+      conditions:
+      - !type:EntityAnchored {}
+      - !type:DoorWelded {}
+      - !type:AirlockBolted
+        value: false
+      - !type:WirePanel {}
+      completed:
+      - !type:EmptyAllContainers {}
+      steps:
+      - tool: Prying
+        doAfter: 5
+        
   - node: glassElectronics
     entity: AirlockAssembly
     edges:
@@ -141,6 +166,18 @@
         amount: 1
         doAfter: 2
       - material: Steel
+        amount: 1
+        doAfter: 2
+      - tool: Screwing
+        doAfter: 2.5
+    - to: AirlockDockingGlass
+      conditions:
+      - !type:EntityAnchored {}
+      steps:
+      - material: ReinforcedGlass
+        amount: 1
+        doAfter: 2
+      - material: Plasteel
         amount: 1
         doAfter: 2
       - tool: Screwing
@@ -174,6 +211,24 @@
 
   - node: AirlockExternalGlass
     entity: AirlockExternalGlass
+    edges:
+    - to: glassElectronics
+      conditions:
+      - !type:EntityAnchored {}
+      - !type:DoorWelded {}
+      - !type:AirlockBolted
+        value: false
+      - !type:WirePanel {}
+      completed:
+      - !type:SpawnPrototype
+        prototype: SheetRGlass1
+        amount: 1
+      steps:
+      - tool: Prying
+        doAfter: 2
+
+  - node: AirlockDockingGlass
+    entity: AirlockGlassShuttle
     edges:
     - to: glassElectronics
       conditions:
