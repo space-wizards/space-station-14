@@ -15359,8 +15359,8 @@ entities:
     parent: 30
     type: Transform
   - containers:
-      gun-chamber: !type:ContainerSlot {}
-      gun-magazine: !type:ContainerSlot
+      gun_chamber: !type:ContainerSlot {}
+      gun_magazine: !type:ContainerSlot
         ent: 871
     type: ContainerContainer
 - uid: 871
@@ -15929,8 +15929,8 @@ entities:
     parent: 30
     type: Transform
   - containers:
-      gun-chamber: !type:ContainerSlot {}
-      gun-magazine: !type:ContainerSlot
+      gun_chamber: !type:ContainerSlot {}
+      gun_magazine: !type:ContainerSlot
         ent: 933
     type: ContainerContainer
 - uid: 933

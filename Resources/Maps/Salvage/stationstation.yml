@@ -3378,8 +3378,8 @@ entities:
     parent: 179
     type: Transform
   - containers:
-      gun-chamber: !type:ContainerSlot {}
-      gun-magazine: !type:ContainerSlot {}
+      gun_chamber: !type:ContainerSlot {}
+      gun_magazine: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 436
   type: WeaponSubMachineGunC20r
@@ -3388,8 +3388,8 @@ entities:
     parent: 179
     type: Transform
   - containers:
-      gun-chamber: !type:ContainerSlot {}
-      gun-magazine: !type:ContainerSlot {}
+      gun_chamber: !type:ContainerSlot {}
+      gun_magazine: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 437
   type: WallSolid
