@@ -94,16 +94,11 @@ entities:
     parent: 20
     type: Transform
 - uid: 4
-  type: FlareGun
+  type: WeaponFlareGun
   components:
   - pos: -3.609375,2.629901
     parent: 20
     type: Transform
-  - containers:
-      Content.Server.Weapon.Ranged.Barrels.Components.BoltActionBarrelComponent-ammo-container: !type:Container
-        ents: []
-      Content.Server.Weapon.Ranged.Barrels.Components.BoltActionBarrelComponent-chamber-container: !type:ContainerSlot {}
-    type: ContainerContainer
 - uid: 5
   type: BoxBeanbag
   components:

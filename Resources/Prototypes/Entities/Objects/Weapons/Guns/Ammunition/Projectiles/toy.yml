@@ -1,9 +1,13 @@
 - type: entity
-  id: BulletDonkSoftBase
+  id: BaseBulletDonkSoft
   name: foam dart
   parent: BaseItem
   abstract: true
   components:
+  - type: Tag
+    tags:
+      - Cartridge
+      - CartridgeRocket
   - type: Projectile
     damage:
       types:
@@ -14,17 +18,16 @@
 - type: entity
   id: BulletDonkSoft
   name: foam dart
-  parent: BulletDonkSoftBase
+  parent: BaseBulletDonkSoft
   description: I hope you're wearing eye protection.
   components:
-  - type: Ammo
-    caliber: Rocket
-    projectile: BulletFoam
-    caseless: true
+  - type: CartridgeAmmo
+    proto: BulletFoam
+    deleteOnSpawn: true
   - type: Sprite
-    netsync: false
     sprite: Objects/Fun/toys.rsi
-    state: foamdart
+    layers:
+      - state: foamdart
   - type: Projectile
     damage:
       types:

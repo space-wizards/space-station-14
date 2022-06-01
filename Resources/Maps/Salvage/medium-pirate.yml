@@ -108,16 +108,11 @@ entities:
     parent: 52
     type: Transform
 - uid: 6
-  type: FlintlockPistol
+  type: WeaponPistolFlintlock
   components:
   - pos: 0.5412905,2.4954393
     parent: 52
     type: Transform
-  - containers:
-      Content.Server.Weapon.Ranged.Barrels.Components.BoltActionBarrelComponent-ammo-container: !type:Container
-        ents: []
-      Content.Server.Weapon.Ranged.Barrels.Components.BoltActionBarrelComponent-chamber-container: !type:ContainerSlot {}
-    type: ContainerContainer
 - uid: 7
   type: WallReinforced
   components:

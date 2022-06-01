@@ -40,6 +40,7 @@ namespace Content.Server.Sound
         private void HandleEmitSoundOnTrigger(EntityUid uid, EmitSoundOnTriggerComponent component, TriggerEvent args)
         {
             TryEmitSound(component);
+            args.Handled = true;
         }
 
         private void HandleEmitSoundOnLand(EntityUid eUI, BaseEmitSoundComponent component, LandEvent arg)
