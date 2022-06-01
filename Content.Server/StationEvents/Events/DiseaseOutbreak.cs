@@ -64,8 +64,8 @@ public sealed class DiseaseOutbreak : StationEvent
             return;
 
         var diseaseSystem = EntitySystem.Get<DiseaseSystem>();
+        var stationSystem = EntitySystem.Get<StationSystem>();
         // Now we give it to people in the list of living disease carriers earlier
-        var _stationSystem = EntitySystem.Get<StationSystem>();
         foreach (var target in aliveList)
         {
             if (toInfect-- == 0)
@@ -73,7 +73,7 @@ public sealed class DiseaseOutbreak : StationEvent
 
             diseaseSystem.TryAddDisease(target.Owner, disease, target);
 
-            var station = _stationSystem.GetOwningStation(target.Owner);
+            var station = stationSystem.GetOwningStation(target.Owner);
             if(station == null) continue;
             stationsToNotify.Add((EntityUid) station);
         }

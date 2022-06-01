@@ -301,7 +301,6 @@ namespace Content.Server.Chat.Managers
             {
                 clients.Add(recipient.ConnectedClient);
             }
-            var commonSessionEnum = filter.Recipients.GetEnumerator();
 
             ChatMessageToMany(channel, message, messageWrap, source, hideChat, clients);
         }

@@ -43,6 +43,7 @@ namespace Content.Server.Communications
         {
             foreach (var comp in EntityManager.EntityQuery<CommunicationsConsoleComponent>())
             {
+                if (comp.AlreadyRefreshed) continue;
                 if (comp.AnnouncementCooldownRemaining <= 0f)
                 {
                     // TODO: Find a less ass way of refreshing the UI
@@ -57,6 +58,9 @@ namespace Content.Server.Communications
             base.Update(frameTime);
         }
 
+        /// <summary>
+        /// Update the UI of every comms console.
+        /// </summary>
         private void OnGenericBroadcastEvent()
         {
             foreach (var comp in EntityManager.EntityQuery<CommunicationsConsoleComponent>())
@@ -65,6 +69,10 @@ namespace Content.Server.Communications
             }
         }
 
+        /// <summary>
+        /// Updates all comms consoles belonging to the station that the alert level was set on
+        /// </summary>
+        /// <param name="args">Alert level changed event arguments</param>
         private void OnAlertLevelChanged(AlertLevelChangedEvent args)
         {
             foreach (var comp in EntityManager.EntityQuery<CommunicationsConsoleComponent>())
@@ -144,7 +152,7 @@ namespace Content.Server.Communications
             if (message.Session.AttachedEntity is not {Valid: true} mob) return;
             if (!CanUse(mob, uid))
             {
-                _popupSystem.PopupEntity(Loc.GetString("comms-console-permission-denied"), uid, Filter.Entities(mob));
+                _popupSystem.PopupCursor(Loc.GetString("comms-console-permission-denied"), Filter.Entities(mob));
                 return;
             }
 
