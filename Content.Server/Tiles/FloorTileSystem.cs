@@ -91,6 +91,5 @@ namespace Content.Server.Tiles
             mapGrid.SetTile(location.Offset(new Vector2(offset, offset)), new Tile(tileId, 0, variant));
             SoundSystem.Play(Filter.Pvs(location), placeSound.GetSound(), location, AudioHelpers.WithVariation(0.125f, _random));
         }
-
     }
 }
