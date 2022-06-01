@@ -13,7 +13,7 @@ namespace Content.Server.AI.Operators.Combat.Melee
 
         private readonly EntityUid _owner;
         private readonly EntityUid _target;
-        private UnarmedCombatComponent? _unarmedCombat;
+        private MeleeWeaponComponent? _unarmedCombat;
 
         public UnarmedCombatOperator(EntityUid owner, EntityUid target, float burstTime = 1.0f)
         {
@@ -41,7 +41,7 @@ namespace Content.Server.AI.Operators.Combat.Melee
                 combatModeComponent.IsInCombatMode = true;
             }
 
-            if (_entMan.TryGetComponent(_owner, out UnarmedCombatComponent? unarmedCombatComponent))
+            if (_entMan.TryGetComponent(_owner, out MeleeWeaponComponent? unarmedCombatComponent))
             {
                 _unarmedCombat = unarmedCombatComponent;
             }

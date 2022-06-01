@@ -22,6 +22,21 @@
   id: AirlockArmory
 
 - type: wireLayout
+  parent: Airlock
+  id: Windoors
+
+- type: wireLayout
+  id: HighSec
+  wires:
+  - !type:PowerWireAction
+    pulseTimeout: 10
+  - !type:DoorBoltWireAction
+  - !type:DoorBoltLightWireAction
+  - !type:DoorTimingWireAction
+  - !type:DoorSafetyWireAction
+  dummyWires: 5
+
+- type: wireLayout
   id: Vending
   wires:
   - !type:PowerWireAction
@@ -51,3 +66,9 @@
   - !type:ArcadeOverflowWireAction
   - !type:ArcadePlayerInvincibleWireAction
   - !type:ArcadeEnemyInvincibleWireAction
+
+- type: wireLayout
+  id: SurveillanceCamera
+  dummyWires: 4
+  wires:
+  - !type:PowerWireAction

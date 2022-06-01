@@ -5,6 +5,7 @@ using Content.Server.DeviceNetwork.Components;
 using Content.Server.DeviceNetwork.Systems;
 using Content.Server.Popups;
 using Content.Server.Power.Components;
+using Content.Server.Power.EntitySystems;
 using Content.Server.Wires;
 using Content.Shared.Access.Components;
 using Content.Shared.Access.Systems;
@@ -201,7 +202,7 @@ namespace Content.Server.Atmos.Monitor.Systems
                 return;
             }
 
-            if (EntityManager.TryGetComponent(uid, out ApcPowerReceiverComponent recv) && !recv.Powered)
+            if (!this.IsPowered(uid, EntityManager))
                 return;
 
             _uiSystem.GetUiOrNull(component.Owner, SharedAirAlarmInterfaceKey.Key)?.Open(actor.PlayerSession);

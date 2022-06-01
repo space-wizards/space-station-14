@@ -1,4 +1,5 @@
 using Content.Server.Administration;
+using Content.Server.Administration.Logs;
 using Content.Server.Administration.Managers;
 using Content.Server.Afk;
 using Content.Server.AI.Utility;
@@ -9,12 +10,15 @@ using Content.Server.Connection;
 using Content.Server.Database;
 using Content.Server.EUI;
 using Content.Server.GameTicking;
+using Content.Server.GhostKick;
 using Content.Server.GuideGenerator;
 using Content.Server.Info;
 using Content.Server.IoC;
+using Content.Server.LandMines;
 using Content.Server.Maps;
 using Content.Server.NodeContainer.NodeGroups;
 using Content.Server.Preferences.Managers;
+using Content.Server.ServerUpdates;
 using Content.Server.Voting.Managers;
 using Content.Shared.Administration;
 using Content.Shared.CCVar;
@@ -35,6 +39,7 @@ namespace Content.Server.Entry
     {
         private EuiManager _euiManager = default!;
         private IVoteManager _voteManager = default!;
+        private ServerUpdateManager _updateManager = default!;
 
         /// <inheritdoc />
         public override void Init()
@@ -72,6 +77,7 @@ namespace Content.Server.Entry
             {
                 _euiManager = IoCManager.Resolve<EuiManager>();
                 _voteManager = IoCManager.Resolve<IVoteManager>();
+                _updateManager = IoCManager.Resolve<ServerUpdateManager>();
 
                 var playerManager = IoCManager.Resolve<IPlayerManager>();
 
@@ -79,13 +85,17 @@ namespace Content.Server.Entry
                 logManager.GetSawmill("Storage").Level = LogLevel.Info;
                 logManager.GetSawmill("db.ef").Level = LogLevel.Info;
 
+                IoCManager.Resolve<IAdminLogManager>().Initialize();
                 IoCManager.Resolve<IConnectionManager>().Initialize();
                 IoCManager.Resolve<IServerDbManager>().Init();
                 IoCManager.Resolve<IServerPreferencesManager>().Init();
                 IoCManager.Resolve<INodeGroupFactory>().Initialize();
                 IoCManager.Resolve<IGamePrototypeLoadManager>().Initialize();
                 IoCManager.Resolve<NetworkResourceManager>().Initialize();
+                IoCManager.Resolve<GhostKickManager>().Initialize();
+
                 _voteManager.Initialize();
+                _updateManager.Initialize();
             }
         }
 
@@ -139,6 +149,10 @@ namespace Content.Server.Entry
                     _voteManager.Update();
                     break;
                 }
+
+                case ModUpdateLevel.FramePostEngine:
+                    _updateManager.Update();
+                    break;
             }
         }
     }

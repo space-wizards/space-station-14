@@ -73,8 +73,7 @@ namespace Content.Server.Cuffs
                 }
                 else
                 {
-                    // Uh... let it go through???
-                    // TODO CUFFABLE/STUN add UncuffAttemptEvent subscription to StunSystem
+                    // TODO Find a way for cuffable to check ActionBlockerSystem.CanInteract() without blocking itself
                 }
             }
             else

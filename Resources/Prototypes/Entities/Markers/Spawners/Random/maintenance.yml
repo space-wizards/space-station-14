@@ -20,6 +20,7 @@
         - PonderingOrb
         - Skub
         - ClothingHeadHatCatEars
+        - DrinkMugDog
       rareChance: 0.01
       prototypes:
         - Lighter
@@ -38,8 +39,8 @@
         - ClothingUnderSocksCoder
       chance: 0.6
       offset: 0.0
-      
-      
+
+
 - type: entity
   name: Maint Loot Spawner
   suffix: Tools+Cells+Mats
@@ -68,12 +69,12 @@
         - ClothingBeltUtilityFilled
         - Shovel
         - Welder
-        - FlareGun
+        - WeaponFlareGun
         - SheetSteel
         - SheetPlastic
       chance: 0.6
       offset: 0.0
-      
+
 - type: entity
   name: Maint Loot Spawner
   suffix: Scrap+Weapons
@@ -99,7 +100,7 @@
         - Crowbar
         - Shovel
         - Welder
-        - FlareGun
+        - WeaponFlareGun
         - Spear
         - LidSalami
       chance: 0.6

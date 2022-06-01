@@ -6,7 +6,7 @@
   - type: StorageFill
     contents:
       - id: ClothingOuterArmorBulletproof
-      - id: ShotgunSawn
+      - id: WeaponShotgunSawn
       - id: DrinkShaker
       - id: ClothingEyesGlassesBeer
       - id: DrinkBottleBeer
@@ -30,6 +30,8 @@
     contents:
       - id: CrowbarRed
       - id: MonkeyCubeBox
+      - id: BoxMousetrap
+        amount: 2
       - id: SprayBottleWater
       - id: ReagentContainerFlour
         amount: 2
@@ -49,6 +51,8 @@
   - type: StorageFill
     contents:
       - id: MopItem
+      - id: BoxMousetrap
+        amount: 2
       - id: WetFloorSign
         amount: 3
       - id: TrashBag

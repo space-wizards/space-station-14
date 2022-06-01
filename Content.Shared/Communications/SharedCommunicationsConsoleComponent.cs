@@ -14,13 +14,30 @@ namespace Content.Shared.Communications
         public readonly bool CanCall;
         public readonly TimeSpan? ExpectedCountdownEnd;
         public readonly bool CountdownStarted;
+        public List<string>? AlertLevels;
+        public string CurrentAlert;
+        public float CurrentAlertDelay;
 
-        public CommunicationsConsoleInterfaceState(bool canAnnounce, bool canCall, TimeSpan? expectedCountdownEnd = null)
+        public CommunicationsConsoleInterfaceState(bool canAnnounce, bool canCall, List<string>? alertLevels, string currentAlert, float currentAlertDelay, TimeSpan? expectedCountdownEnd = null)
         {
             CanAnnounce = canAnnounce;
             CanCall = canCall;
             ExpectedCountdownEnd = expectedCountdownEnd;
             CountdownStarted = expectedCountdownEnd != null;
+            AlertLevels = alertLevels;
+            CurrentAlert = currentAlert;
+            CurrentAlertDelay = currentAlertDelay;
+        }
+    }
+
+    [Serializable, NetSerializable]
+    public sealed class CommunicationsConsoleSelectAlertLevelMessage : BoundUserInterfaceMessage
+    {
+        public readonly string Level;
+
+        public CommunicationsConsoleSelectAlertLevelMessage(string level)
+        {
+            Level = level;
         }
     }
 

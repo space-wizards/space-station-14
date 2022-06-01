@@ -355,7 +355,8 @@ namespace Content.Server.Arcade.Components
             {
                 _accumulatedFieldFrameTime += frameTime;
 
-                var checkTime = Speed;
+                // Speed goes negative sometimes. uhhhh max() it I guess!!!
+                var checkTime = Math.Max(0.03f, Speed);
 
                 while (_accumulatedFieldFrameTime >= checkTime)
                 {

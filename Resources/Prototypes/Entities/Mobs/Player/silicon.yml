@@ -119,7 +119,7 @@
       types:
         Heat : 1 #per second, scales with temperature & other constants
   - type: Sprite
-    drawdepth: Mobs
+    drawdepth: SmallMobs
     netsync: false
     layers:
     - state: shell
@@ -174,10 +174,10 @@
   - type: Drone
     applyLaws: false
     tools:
-      - id: Minigun
+      - id: WeaponMinigun
       - id: EnergySword
-      - id: LauncherMultipleRocket
-      - id: XrayCannon
+      - id: WeaponLauncherMultipleRocket
+      - id: WeaponXrayCannon
   - type: UserInterface
     interfaces:
     - key: enum.StrippingUiKey.Key
