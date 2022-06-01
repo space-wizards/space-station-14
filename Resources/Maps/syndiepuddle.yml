@@ -906,7 +906,7 @@ entities:
         ents: []
     type: ContainerContainer
 - uid: 75
-  type: SalternGenerator
+  type: GeneratorBasic
   components:
   - pos: -0.5,-6.5
     parent: 22

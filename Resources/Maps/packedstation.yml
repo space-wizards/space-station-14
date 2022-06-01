@@ -19873,7 +19873,7 @@ entities:
     parent: 2
     type: Transform
 - uid: 801
-  type: SalternGenerator
+  type: GeneratorBasic
   components:
   - pos: 13.5,-28.5
     parent: 2

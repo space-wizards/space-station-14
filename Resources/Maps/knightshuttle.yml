@@ -1196,7 +1196,7 @@ entities:
     parent: 8
     type: Transform
 - uid: 24
-  type: SalternGenerator
+  type: GeneratorBasic
   components:
   - pos: 0.5,-3.5
     parent: 8
@@ -1430,7 +1430,7 @@ entities:
     parent: 8
     type: Transform
 - uid: 51
-  type: SalternGenerator
+  type: GeneratorBasic
   components:
   - pos: -0.5,-3.5
     parent: 8

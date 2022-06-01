@@ -22691,7 +22691,7 @@ entities:
     parent: 0
     type: Transform
 - uid: 823
-  type: SalternGenerator
+  type: GeneratorBasic
   components:
   - pos: 13.5,-28.5
     parent: 0

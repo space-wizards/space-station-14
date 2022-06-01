@@ -3118,7 +3118,7 @@ entities:
         ents: []
     type: ContainerContainer
 - uid: 8
-  type: SalternGenerator
+  type: GeneratorBasic
   components:
   - pos: -13.5,-3.5
     parent: 4
@@ -3534,7 +3534,7 @@ entities:
         ents: []
     type: ContainerContainer
 - uid: 55
-  type: SalternGenerator
+  type: GeneratorBasic
   components:
   - pos: -12.5,-3.5
     parent: 4
