@@ -7,6 +7,6 @@ ent-Thruster = двигатель
 ent-DebugThruster = thruster
     .desc = It goes nyooooooom. It doesn't need power nor space.
     .suffix = DEBUG
-ent-Gyroscope = Гироскоп
+ent-Gyroscope = гироскоп
     .desc = Увеличивает потенциальное угловое вращение шаттла.
     .suffix = { "" }

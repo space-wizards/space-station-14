@@ -1,3 +1,3 @@
-ent-Mousetrap = mousetrap
+ent-Mousetrap = мышеловка
     .desc = { ent-BaseItem.desc }
     .suffix = { "" }

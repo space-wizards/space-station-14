@@ -1,8 +1,8 @@
 ent-BoxCardboard = картонная коробка
     .desc = Картонная коробка для хранения вещей.
     .suffix = { "" }
-ent-BoxMousetrap = mousetrap box
-    .desc = This box is filled with mousetraps. Try not to get your hand stuck in one.
+ent-BoxMousetrap = коробка мышеловок
+    .desc = Коробка, наполненая мышеловками. Постарайтесь не поймать себя за руку.
     .suffix = { "" }
 ent-BoxLightbulb = коробка лампочек
     .desc = Из-за формы коробки в нее помещаются только лампочки и лампочки-трубки.
