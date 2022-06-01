@@ -43,7 +43,7 @@ public sealed partial class GunSystem
         var ammoCountEv = new GetAmmoCountEvent();
 
         if (magEntity != null)
-            RaiseLocalEvent(magEntity.Value, ref ammoCountEv);
+            RaiseLocalEvent(magEntity.Value, ref ammoCountEv, false);
 
         control.Update(chambered != null, magEntity != null, ammoCountEv.Count, ammoCountEv.Capacity);
     }
