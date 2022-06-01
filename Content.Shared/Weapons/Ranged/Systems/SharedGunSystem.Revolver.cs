@@ -300,6 +300,13 @@ public partial class SharedGunSystem
     {
         component.AmmoContainer = Containers.EnsureContainer<Container>(uid, RevolverContainer);
         component.AmmoSlots.EnsureCapacity(component.Capacity);
+        var remainder = component.Capacity - component.AmmoSlots.Count;
+
+        for (var i = 0; i < remainder; i++)
+        {
+            component.AmmoSlots.Add(null);
+        }
+
         component.Chambers = new bool?[component.Capacity];
 
         if (component.FillPrototype != null)
