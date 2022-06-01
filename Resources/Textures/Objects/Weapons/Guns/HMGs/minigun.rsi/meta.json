@@ -14,7 +14,7 @@
       "name": "notholstered"
     },
     {
-      "name": "icon",
+      "name": "base",
       "delays": [
         [
           0.1,
@@ -23,6 +23,9 @@
           0.1
         ]
       ]
+    },
+    {
+      "name": "icon"
     }
   ]
 }
