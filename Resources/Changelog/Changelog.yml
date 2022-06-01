@@ -1,9 +1,4 @@
 Entries:
-- author: HoofedEar
-  changes:
-  - {message: Flashbangs no longer jumpscare the entire station., type: Fix}
-  id: 1128
-  time: '2022-02-26T05:11:10.0000000+00:00'
 - author: Fishfish458
   changes:
   - {message: Added handheld GPS devices which can be found in the autolathe, type: Add}
@@ -2995,3 +2990,9 @@ Entries:
       first aid kits.', type: Add}
   id: 1627
   time: '2022-06-01T03:17:38.0000000+00:00'
+- author: themias
+  changes:
+  - {message: Fixed an issue where mouse ghosts would be tethered to who ate them,
+    type: Fix}
+  id: 1628
+  time: '2022-06-01T07:39:50.0000000+00:00'
