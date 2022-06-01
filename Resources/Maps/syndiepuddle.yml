@@ -886,7 +886,7 @@ entities:
   - fixtures: []
     type: Fixtures
 - uid: 74
-  type: SalternSubstation
+  type: SubstationBasic
   components:
   - pos: -0.5,-5.5
     parent: 22

@@ -1485,7 +1485,7 @@ entities:
     parent: 8
     type: Transform
 - uid: 57
-  type: SalternSubstation
+  type: SubstationBasic
   components:
   - pos: -1.5,-3.5
     parent: 8

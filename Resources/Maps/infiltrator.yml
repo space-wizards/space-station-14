@@ -2213,7 +2213,7 @@ entities:
   - fixtures: []
     type: Fixtures
 - uid: 219
-  type: SalternSubstation
+  type: SubstationBasic
   components:
   - pos: -3.5,-19.5
     parent: 73

@@ -812,7 +812,7 @@ entities:
     parent: 20
     type: Transform
 - uid: 74
-  type: SalternSubstation
+  type: SubstationBasic
   components:
   - pos: 2.5,-0.5
     parent: 20

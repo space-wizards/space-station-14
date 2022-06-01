@@ -49908,7 +49908,7 @@ entities:
     parent: 852
     type: Transform
 - uid: 4690
-  type: SalternSubstation
+  type: SubstationBasic
   components:
   - rot: 4.371139006309477E-08 rad
     pos: -15.5,16.5
@@ -86128,7 +86128,7 @@ entities:
   - enabled: False
     type: AmbientSound
 - uid: 8667
-  type: SalternSubstation
+  type: SubstationBasic
   components:
   - pos: -31.5,-31.5
     parent: 852

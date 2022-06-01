@@ -20271,7 +20271,7 @@ entities:
       light_bulb: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 465
-  type: SalternSubstation
+  type: SubstationBasic
   components:
   - pos: 14.5,35.5
     parent: 0
@@ -32116,7 +32116,7 @@ entities:
     parent: 0
     type: Transform
 - uid: 2182
-  type: SalternSubstation
+  type: SubstationBasic
   components:
   - pos: 14.5,7.5
     parent: 0
@@ -33339,7 +33339,7 @@ entities:
     parent: 0
     type: Transform
 - uid: 2354
-  type: SalternSubstation
+  type: SubstationBasic
   components:
   - pos: 43.5,28.5
     parent: 0
@@ -36186,7 +36186,7 @@ entities:
   - color: '#FF0000FF'
     type: AtmosPipeColor
 - uid: 2754
-  type: SalternSubstation
+  type: SubstationBasic
   components:
   - pos: 11.5,19.5
     parent: 0
@@ -44485,7 +44485,7 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 4059
-  type: SalternSubstation
+  type: SubstationBasic
   components:
   - pos: 3.5,-8.5
     parent: 0
@@ -44860,7 +44860,7 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 4101
-  type: SalternSubstation
+  type: SubstationBasic
   components:
   - pos: 16.5,-13.5
     parent: 0
@@ -45018,7 +45018,7 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 4119
-  type: SalternSubstation
+  type: SubstationBasic
   components:
   - pos: 10.5,-25.5
     parent: 0
@@ -45184,7 +45184,7 @@ entities:
     parent: 0
     type: Transform
 - uid: 4140
-  type: SalternSubstation
+  type: SubstationBasic
   components:
   - pos: 13.5,-41.5
     parent: 0
@@ -48291,7 +48291,7 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 4454
-  type: SalternSubstation
+  type: SubstationBasic
   components:
   - pos: 4.5,-36.5
     parent: 0
@@ -49893,7 +49893,7 @@ entities:
   - color: '#FF0000FF'
     type: AtmosPipeColor
 - uid: 4636
-  type: SalternSubstation
+  type: SubstationBasic
   components:
   - pos: 90.5,-2.5
     parent: 0
@@ -58866,7 +58866,7 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 5660
-  type: SalternSubstation
+  type: SubstationBasic
   components:
   - pos: 70.5,44.5
     parent: 0
@@ -59650,7 +59650,7 @@ entities:
         ents: []
     type: ContainerContainer
 - uid: 5750
-  type: SalternSubstation
+  type: SubstationBasic
   components:
   - pos: 52.5,-10.5
     parent: 0
@@ -63900,7 +63900,7 @@ entities:
         ents: []
     type: ContainerContainer
 - uid: 6224
-  type: SalternSubstation
+  type: SubstationBasic
   components:
   - pos: 69.5,-13.5
     parent: 0
@@ -65526,7 +65526,7 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 6404
-  type: SalternSubstation
+  type: SubstationBasic
   components:
   - pos: 50.5,27.5
     parent: 0
@@ -90810,7 +90810,7 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 9054
-  type: SalternSubstation
+  type: SubstationBasic
   components:
   - rot: -1.5707963267948966 rad
     pos: 112.5,-15.5
@@ -116493,7 +116493,7 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 11450
-  type: SalternSubstation
+  type: SubstationBasic
   components:
   - pos: 55.5,38.5
     parent: 0
