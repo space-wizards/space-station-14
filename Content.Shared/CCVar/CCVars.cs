@@ -176,6 +176,12 @@ namespace Content.Shared.CCVar
             GameMapRotation = CVarDef.Create<bool>("game.map_rotation", true, CVar.SERVERONLY);
 
         /// <summary>
+        /// If roles should be restricted based on time.
+        /// </summary>
+        public static readonly CVarDef<bool>
+            RoleTimers = CVarDef.Create("game.role_timers", true, CVar.ARCHIVE | CVar.REPLICATED);
+
+        /// <summary>
         ///     Whether a random position offset will be applied to the station on roundstart.
         /// </summary>
         public static readonly CVarDef<bool> StationOffset =
