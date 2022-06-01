@@ -267,16 +267,17 @@ public sealed partial class GunSystem : SharedGunSystem
         var sprites = new List<(EntityCoordinates coordinates, Angle angle, SpriteSpecifier sprite, float scale)>();
 
         // We'll get the effects relative to the grid / map of the firer
-        // TODO: Don't do muzzle or impact for short stuff
-
-        if (hitscan.MuzzleFlash != null)
+        if (distance >= 1f)
         {
-            sprites.Add((fromCoordinates.Offset(angle.ToVec().Normalized / 2), angle, hitscan.MuzzleFlash, 1f));
-        }
+            if (hitscan.MuzzleFlash != null)
+            {
+                sprites.Add((fromCoordinates.Offset(angle.ToVec().Normalized / 2), angle, hitscan.MuzzleFlash, 1f));
+            }
 
-        if (hitscan.TravelFlash != null)
-        {
-            sprites.Add((fromCoordinates.Offset(angle.ToVec() * (distance + 0.5f) / 2), angle, hitscan.TravelFlash, distance - 1.5f));
+            if (hitscan.TravelFlash != null)
+            {
+                sprites.Add((fromCoordinates.Offset(angle.ToVec() * (distance + 0.5f) / 2), angle, hitscan.TravelFlash, distance - 1.5f));
+            }
         }
 
         if (hitscan.ImpactFlash != null)
