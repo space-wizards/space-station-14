@@ -27,6 +27,7 @@ namespace Content.Server.Entry
             "CableVisualizer",
             "PotencyVisuals",
             "PaperVisuals",
+            "SurveillanceCameraVisuals",
         };
     }
 }
