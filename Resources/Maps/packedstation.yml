@@ -19097,7 +19097,7 @@ entities:
     parent: 2
     type: Transform
 - uid: 685
-  type: SalternSMES
+  type: SMESBasic
   components:
   - pos: 20.5,-14.5
     parent: 2
@@ -19670,7 +19670,7 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 776
-  type: SalternSMES
+  type: SMESBasic
   components:
   - pos: 17.5,-23.5
     parent: 2
@@ -19891,7 +19891,7 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 803
-  type: SalternSMES
+  type: SMESBasic
   components:
   - pos: 18.5,-23.5
     parent: 2
@@ -38511,7 +38511,7 @@ entities:
         ents: []
     type: ContainerContainer
 - uid: 3405
-  type: SalternSMES
+  type: SMESBasic
   components:
   - pos: 71.5,44.5
     parent: 2
@@ -93349,7 +93349,7 @@ entities:
     parent: 2
     type: Transform
 - uid: 9002
-  type: SalternSMES
+  type: SMESBasic
   components:
   - rot: -1.5707963267948966 rad
     pos: 112.5,-17.5
@@ -109273,7 +109273,7 @@ entities:
   - enabled: False
     type: AmbientSound
 - uid: 10225
-  type: SalternSMES
+  type: SMESBasic
   components:
   - pos: 16.5,-23.5
     parent: 2
@@ -117259,7 +117259,7 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 10856
-  type: SalternSMES
+  type: SMESBasic
   components:
   - pos: 3.5,-34.5
     parent: 2
@@ -122215,7 +122215,7 @@ entities:
     parent: 2
     type: Transform
 - uid: 11409
-  type: SalternSMES
+  type: SMESBasic
   components:
   - pos: 56.5,38.5
     parent: 2

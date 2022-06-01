@@ -132492,7 +132492,7 @@ entities:
     parent: 130
     type: Transform
 - uid: 10908
-  type: SalternSMES
+  type: SMESBasic
   components:
   - pos: 32.5,41.5
     parent: 130
@@ -132801,7 +132801,7 @@ entities:
     parent: 130
     type: Transform
 - uid: 10941
-  type: SalternSMES
+  type: SMESBasic
   components:
   - pos: 44.5,28.5
     parent: 130
@@ -158319,7 +158319,7 @@ entities:
     parent: 130
     type: Transform
 - uid: 13493
-  type: SalternSMES
+  type: SMESBasic
   components:
   - pos: -81.5,-13.5
     parent: 130
@@ -158355,7 +158355,7 @@ entities:
     parent: 130
     type: Transform
 - uid: 13497
-  type: SalternSMES
+  type: SMESBasic
   components:
   - pos: -87.5,-13.5
     parent: 130
@@ -158371,7 +158371,7 @@ entities:
         ents: []
     type: ContainerContainer
 - uid: 13498
-  type: SalternSMES
+  type: SMESBasic
   components:
   - pos: -86.5,-13.5
     parent: 130
@@ -158387,7 +158387,7 @@ entities:
         ents: []
     type: ContainerContainer
 - uid: 13499
-  type: SalternSMES
+  type: SMESBasic
   components:
   - pos: -85.5,-13.5
     parent: 130
@@ -158403,7 +158403,7 @@ entities:
         ents: []
     type: ContainerContainer
 - uid: 13500
-  type: SalternSMES
+  type: SMESBasic
   components:
   - pos: -83.5,-13.5
     parent: 130
@@ -158419,7 +158419,7 @@ entities:
         ents: []
     type: ContainerContainer
 - uid: 13501
-  type: SalternSMES
+  type: SMESBasic
   components:
   - pos: -82.5,-13.5
     parent: 130
@@ -160978,7 +160978,7 @@ entities:
     parent: 130
     type: Transform
 - uid: 13871
-  type: SalternSMES
+  type: SMESBasic
   components:
   - pos: -111.5,-19.5
     parent: 130
@@ -176512,7 +176512,7 @@ entities:
         ents: []
     type: ContainerContainer
 - uid: 15373
-  type: SalternSMES
+  type: SMESBasic
   components:
   - pos: -88.5,-21.5
     parent: 130

@@ -47663,7 +47663,7 @@ entities:
     parent: 61
     type: Transform
 - uid: 3921
-  type: SalternSMES
+  type: SMESBasic
   components:
   - pos: -20.5,10.5
     parent: 61

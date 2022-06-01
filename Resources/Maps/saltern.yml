@@ -85553,7 +85553,7 @@ entities:
   - fixtures: []
     type: Fixtures
 - uid: 8574
-  type: SalternSMES
+  type: SMESBasic
   components:
   - pos: -30.5,-31.5
     parent: 852

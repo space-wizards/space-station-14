@@ -2099,7 +2099,7 @@ entities:
   - fixtures: []
     type: Fixtures
 - uid: 210
-  type: SalternSMES
+  type: SMESBasic
   components:
   - pos: -5.5,-19.5
     parent: 73
@@ -2115,7 +2115,7 @@ entities:
         ents: []
     type: ContainerContainer
 - uid: 211
-  type: SalternSMES
+  type: SMESBasic
   components:
   - pos: -4.5,-19.5
     parent: 73

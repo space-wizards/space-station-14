@@ -3182,7 +3182,7 @@ entities:
   - radius: 2.2553093
     type: PointLight
 - uid: 16
-  type: SalternSMES
+  type: SMESBasic
   components:
   - pos: -14.5,-3.5
     parent: 4
