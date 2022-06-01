@@ -37,6 +37,7 @@
   - type: Ringer
   - type: ActivatableUI
     key: enum.PDAUiKey.Key
+    singleUser: true
   - type: UserInterface
     interfaces:
     - key: enum.PDAUiKey.Key
