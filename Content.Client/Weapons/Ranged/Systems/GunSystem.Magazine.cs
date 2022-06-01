@@ -24,6 +24,6 @@ public sealed partial class GunSystem
             return;
         }
 
-        RaiseLocalEvent(ent.Value, args);
+        RaiseLocalEvent(ent.Value, args, false);
     }
 }
