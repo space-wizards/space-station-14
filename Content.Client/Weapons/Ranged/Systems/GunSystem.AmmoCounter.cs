@@ -33,7 +33,7 @@ public sealed partial class GunSystem
         component.Control = null;
 
         var ev = new AmmoCounterControlEvent();
-        RaiseLocalEvent(uid, ev);
+        RaiseLocalEvent(uid, ev, false);
 
         // Fallback to default if none specified
         ev.Control ??= new DefaultStatusControl();
