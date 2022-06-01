@@ -7,6 +7,7 @@ using Content.Server.Tools;
 using Content.Shared.Construction.Components;
 using Content.Shared.Construction.EntitySystems;
 using Content.Shared.Database;
+using Content.Shared.Examine;
 using Content.Shared.Pulling.Components;
 using Content.Shared.Tools.Components;
 
@@ -25,6 +26,14 @@ namespace Content.Server.Construction
             SubscribeLocalEvent<AnchorableComponent, TryAnchorCancelledEvent>(OnAnchorCancelled2);
             SubscribeLocalEvent<AnchorableComponent, TryUnanchorCompletedEvent>(OnUnanchorComplete2);
             SubscribeLocalEvent<AnchorableComponent, TryUnanchorCancelledEvent>(OnUnanchorCancelled2);
+            SubscribeLocalEvent<AnchorableComponent, ExaminedEvent>(OnAnchoredExamine);
+        }
+
+        private void OnAnchoredExamine(EntityUid uid, AnchorableComponent component, ExaminedEvent args)
+        {
+            var isAnchored = Comp<TransformComponent>(uid).Anchored;
+            var messageId = isAnchored ? "examinable-anchored" : "examinable-unanchored";
+            args.PushMarkup(Loc.GetString(messageId, ("target", uid)));
         }
 
         private void OnUnanchorCancelled2(EntityUid uid, AnchorableComponent component, TryUnanchorCancelledEvent args)

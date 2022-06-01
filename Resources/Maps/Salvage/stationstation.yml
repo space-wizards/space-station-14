@@ -1713,25 +1713,17 @@ entities:
   - chunkCollection: {}
     type: DecalGrid
 - uid: 180
-  type: LaserGun
+  type: WeaponLaserGun
   components:
   - pos: -1.47174,4.550247
     parent: 179
     type: Transform
-  - containers:
-      Content.Server.Weapon.Ranged.Barrels.Components.BatteryBarrelComponent-ammo-container: !type:ContainerSlot {}
-      cellslot_cell_container: !type:ContainerSlot {}
-    type: ContainerContainer
 - uid: 181
-  type: LaserGun
+  type: WeaponLaserGun
   components:
   - pos: -0.6748645,4.487747
     parent: 179
     type: Transform
-  - containers:
-      Content.Server.Weapon.Ranged.Barrels.Components.BatteryBarrelComponent-ammo-container: !type:ContainerSlot {}
-      cellslot_cell_container: !type:ContainerSlot {}
-    type: ContainerContainer
 - uid: 182
   type: Brutepack
   components:
@@ -3336,35 +3328,23 @@ entities:
         ents: []
     type: ContainerContainer
 - uid: 429
-  type: MagazinePistolSmg
+  type: MagazinePistolSubMachineGun
   components:
   - pos: -6.605512,7.638151
     parent: 179
     type: Transform
-  - containers:
-      Content.Server.Weapon.Ranged.Ammunition.Components.RangedMagazineComponent-magazine: !type:Container
-        ents: []
-    type: ContainerContainer
 - uid: 430
-  type: MagazinePistolSmg
+  type: MagazinePistolSubMachineGun
   components:
   - pos: -6.339887,7.669401
     parent: 179
     type: Transform
-  - containers:
-      Content.Server.Weapon.Ranged.Ammunition.Components.RangedMagazineComponent-magazine: !type:Container
-        ents: []
-    type: ContainerContainer
 - uid: 431
-  type: MagazinePistolSmg
+  type: MagazinePistolSubMachineGun
   components:
   - pos: -6.027387,7.622526
     parent: 179
     type: Transform
-  - containers:
-      Content.Server.Weapon.Ranged.Ammunition.Components.RangedMagazineComponent-magazine: !type:Container
-        ents: []
-    type: ContainerContainer
 - uid: 432
   type: ClothingBackpack
   components:
@@ -3392,24 +3372,24 @@ entities:
     parent: 179
     type: Transform
 - uid: 435
-  type: SmgC20r
+  type: WeaponSubMachineGunC20r
   components:
   - pos: -2.524035,7.579326
     parent: 179
     type: Transform
   - containers:
-      Content.Server.Weapon.Ranged.Barrels.Components.MagazineBarrelComponent-chamber: !type:ContainerSlot {}
-      Content.Server.Weapon.Ranged.Barrels.Components.MagazineBarrelComponent-magazine: !type:ContainerSlot {}
+      gun_chamber: !type:ContainerSlot {}
+      gun_magazine: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 436
-  type: SmgC20r
+  type: WeaponSubMachineGunC20r
   components:
   - pos: -1.94591,7.485576
     parent: 179
     type: Transform
   - containers:
-      Content.Server.Weapon.Ranged.Barrels.Components.MagazineBarrelComponent-chamber: !type:ContainerSlot {}
-      Content.Server.Weapon.Ranged.Barrels.Components.MagazineBarrelComponent-magazine: !type:ContainerSlot {}
+      gun_chamber: !type:ContainerSlot {}
+      gun_magazine: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 437
   type: WallSolid
