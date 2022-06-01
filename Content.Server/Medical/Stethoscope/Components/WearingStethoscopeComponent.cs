@@ -12,5 +12,7 @@ namespace Content.Server.Medical.Components
 
         [DataField("delay")]
         public float Delay = 2.5f;
+
+        public EntityUid Stethoscope = default!;
     }
 }

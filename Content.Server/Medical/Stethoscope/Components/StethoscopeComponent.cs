@@ -10,6 +10,7 @@ namespace Content.Server.Medical.Components
     [RegisterComponent]
     public sealed class StethoscopeComponent : Component
     {
+        public bool IsActive = false;
 
         public CancellationTokenSource? CancelToken;
 

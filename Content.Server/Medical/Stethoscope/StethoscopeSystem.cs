@@ -4,10 +4,9 @@ using Content.Shared.Inventory.Events;
 using Content.Shared.MobState.Components;
 using Content.Shared.FixedPoint;
 using Content.Shared.Damage;
-using Content.Shared.Damage.Prototypes;
 using Content.Shared.Actions;
-using Content.Server.Medical.Components;
 using Content.Server.Clothing.Components;
+using Content.Server.Medical.Components;
 using Content.Server.Popups;
 using Content.Server.Body.Components;
 using Content.Server.DoAfter;
@@ -25,11 +24,71 @@ namespace Content.Server.Medical
         public override void Initialize()
         {
             base.Initialize();
-            SubscribeLocalEvent<StethoscopeComponent, StethoscopeActionEvent>(OnStethoscopeAction);
+            SubscribeLocalEvent<StethoscopeComponent, GotEquippedEvent>(OnEquipped);
+            SubscribeLocalEvent<StethoscopeComponent, GotUnequippedEvent>(OnUnequipped);
+            SubscribeLocalEvent<WearingStethoscopeComponent, GetVerbsEvent<InnateVerb>>(AddStethoscopeVerb);
             SubscribeLocalEvent<StethoscopeComponent, GetItemActionsEvent>(OnGetActions);
             SubscribeLocalEvent<ListenSuccessfulEvent>(OnListenSuccess);
             SubscribeLocalEvent<ListenCancelledEvent>(OnListenCancelled);
         }
+
+        /// <summary>
+        /// Add the component the verb event subs to if the equippee is wearing the stethoscope.
+        /// </summary>
+        private void OnEquipped(EntityUid uid, StethoscopeComponent component, GotEquippedEvent args)
+        {
+            if (!TryComp<ClothingComponent>(uid, out var clothing))
+                return;
+            // Is the clothing in its actual slot?
+            if (!clothing.SlotFlags.HasFlag(args.SlotFlags))
+                return;
+
+            component.IsActive = true;
+
+            var wearingComp = EnsureComp<WearingStethoscopeComponent>(args.Equipee);
+            wearingComp.Stethoscope = uid;
+        }
+
+        private void OnUnequipped(EntityUid uid, StethoscopeComponent component, GotUnequippedEvent args)
+        {
+            if (!component.IsActive)
+                return;
+
+            RemComp<WearingStethoscopeComponent>(args.Equipee);
+            component.IsActive = false;
+        }
+
+        /// <summary>
+        /// This is raised when someone with WearingStethoscopeComponent requests verbs on an item.
+        /// It returns if the target is not a mob.
+        /// </summary>
+        private void AddStethoscopeVerb(EntityUid uid, WearingStethoscopeComponent component, GetVerbsEvent<InnateVerb> args)
+        {
+            if (!args.CanInteract || !args.CanAccess)
+                return;
+
+            if (!HasComp<MobStateComponent>(args.Target))
+                return;
+
+            if (component.CancelToken != null)
+                return;
+
+            if (!TryComp<StethoscopeComponent>(component.Stethoscope, out var stetho))
+                return;
+
+            InnateVerb verb = new()
+            {
+                Act = () =>
+                {
+                    StartListening(uid, args.Target, stetho); // start doafter
+                },
+                Text = Loc.GetString("stethoscope-verb"),
+                IconTexture = "Clothing/Neck/Misc/stethoscope.rsi/icon.png",
+                Priority = 2
+            };
+            args.Verbs.Add(verb);
+        }
+
 
         private void OnStethoscopeAction(EntityUid uid, StethoscopeComponent component, StethoscopeActionEvent args)
         {
