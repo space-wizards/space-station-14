@@ -15,5 +15,4 @@
     - state: base
       map: ["enum.AmmoVisualLayers.Base"]
   - type: Appearance
-    visuals:
-    - type: SpentAmmoVisualizer
+  - type: SpentAmmoVisuals

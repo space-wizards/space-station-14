@@ -22,10 +22,11 @@ namespace Content.Server.Entry
             "LatheVisuals",
             "DiseaseMachineVisuals",
             "HandheldGPS",
+            "SpentAmmoVisuals",
             "ToggleableLightVisuals",
             "CableVisualizer",
             "PotencyVisuals",
-            "PaperVisuals"
+            "PaperVisuals",
         };
     }
 }

@@ -32,10 +32,9 @@
     - state: baton
       map: ["enum.AmmoVisualLayers.Base"]
   - type: Appearance
-    visuals:
-    - type: SpentAmmoVisualizer
-      state: baton
-      suffix: false
+  - type: SpentAmmoVisuals
+    state: baton
+    suffix: false
 
 - type: entity
   id: GrenadeBlast
@@ -54,10 +53,9 @@
     - state: blast
       map: ["enum.AmmoVisualLayers.Base"]
   - type: Appearance
-    visuals:
-    - type: SpentAmmoVisualizer
-      state: blast
-      suffix: false
+  - type: SpentAmmoVisuals
+    state: blast
+    suffix: false
 
 - type: entity
   id: GrenadeFlash
@@ -76,10 +74,9 @@
     - state: flash
       map: ["enum.AmmoVisualLayers.Base"]
   - type: Appearance
-    visuals:
-    - type: SpentAmmoVisualizer
-      state: flash
-      suffix: false
+  - type: SpentAmmoVisuals
+    state: flash
+    suffix: false
 
 - type: entity
   id: GrenadeFrag
@@ -98,10 +95,9 @@
     - state: frag
       map: ["enum.AmmoVisualLayers.Base"]
   - type: Appearance
-    visuals:
-    - type: SpentAmmoVisualizer
-      state: frag
-      suffix: false
+  - type: SpentAmmoVisuals
+    state: frag
+    suffix: false
 
 - type: entity
   id: CartridgeRocketSlow
