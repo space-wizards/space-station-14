@@ -8,6 +8,7 @@ namespace Content.Shared.Tag
     {
         [ViewVariables]
         [DataField("tags", customTypeSerializer: typeof(PrototypeIdHashSetSerializer<TagPrototype>))]
+        [Friend(typeof(TagSystem), Other = AccessPermissions.ReadExecute)] // FIXME Friends
         public readonly HashSet<string> Tags = new();
     }
 }

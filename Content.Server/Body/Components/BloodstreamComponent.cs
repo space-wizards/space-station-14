@@ -129,6 +129,7 @@ namespace Content.Server.Body.Components
         ///     Internal solution for reagent storage
         /// </summary>
         [ViewVariables(VVAccess.ReadWrite)]
+        [Friend(typeof(BloodstreamSystem), Other = AccessPermissions.ReadExecute)] // FIXME Friends
         public Solution ChemicalSolution = default!;
 
         /// <summary>

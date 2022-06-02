@@ -10,6 +10,7 @@ namespace Content.Server.Mind.Components
         ///     The mind controlling this mob. Can be null.
         /// </summary>
         [ViewVariables]
+        [Friend(typeof(MindSystem), Other = AccessPermissions.ReadWriteExecute)] // FIXME Friends
         public Mind? Mind { get; set; }
 
         /// <summary>

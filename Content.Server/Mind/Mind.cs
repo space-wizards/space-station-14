@@ -72,7 +72,8 @@ namespace Content.Server.Mind
         ///     The time of death for this Mind.
         ///     Can be null - will be null if the Mind is not considered "dead".
         /// </summary>
-        [ViewVariables] public TimeSpan? TimeOfDeath { get; set; } = null;
+        [ViewVariables]
+        public TimeSpan? TimeOfDeath { get; set; } = null;
 
         /// <summary>
         ///     The component currently owned by this mind.

@@ -47,6 +47,7 @@ namespace Content.Shared.SubFloor
         ///     The entities this subfloor is revealed by.
         /// </summary>
         [ViewVariables]
+        [Friend(typeof(SharedSubFloorHideSystem), Other = AccessPermissions.ReadWriteExecute)] // FIXME Friends
         public HashSet<EntityUid> RevealedBy { get; set; } = new();
     }
 }

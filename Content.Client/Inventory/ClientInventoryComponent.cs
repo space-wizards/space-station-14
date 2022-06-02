@@ -34,6 +34,7 @@ namespace Content.Client.Inventory
         ///     Data about the current layers that have been added to the players sprite due to the items in each equipment slot.
         /// </summary>
         [ViewVariables]
+        [Friend(typeof(ClientInventorySystem), Other = AccessPermissions.ReadWriteExecute)] // FIXME Friends
         public readonly Dictionary<string, HashSet<string>> VisualLayerKeys = new();
 
         public bool AttachedToGameHud;

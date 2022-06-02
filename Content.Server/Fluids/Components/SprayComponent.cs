@@ -32,5 +32,6 @@ public sealed class SprayComponent : Component
     [DataField("impulse")] public float Impulse;
 
     [DataField("spraySound", required: true)]
+    [Friend(typeof(SpraySystem), Other = AccessPermissions.ReadExecute)] // FIXME Friends
     public SoundSpecifier SpraySound { get; } = default!;
 }

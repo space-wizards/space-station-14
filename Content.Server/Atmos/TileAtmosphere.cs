@@ -48,7 +48,7 @@ namespace Content.Server.Atmos
         [ViewVariables]
         public AtmosDirection AdjacentBits = AtmosDirection.Invalid;
 
-        [ViewVariables]
+        [ViewVariables, Friend(typeof(AtmosphereSystem), Other = AccessPermissions.ReadExecute)]
         public MonstermosInfo MonstermosInfo;
 
         [ViewVariables]
@@ -78,6 +78,7 @@ namespace Content.Server.Atmos
         /// This can be immutable if the tile is spaced.
         /// </summary>
         [ViewVariables]
+        [Friend(typeof(AtmosphereSystem), Other = AccessPermissions.ReadExecute)] // FIXME Friends
         public GasMixture? Air { get; set; }
 
         GasMixture IGasMixtureHolder.Air

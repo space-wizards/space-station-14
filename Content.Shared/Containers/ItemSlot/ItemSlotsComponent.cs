@@ -86,6 +86,7 @@ namespace Content.Shared.Containers.ItemSlots
         ///     of the currently held or currently inserted entity instead.
         /// </remarks>
         [DataField("name", readOnly: true)]
+        [Friend(typeof(ItemSlotsSystem), Other = AccessPermissions.ReadWriteExecute)] // FIXME Friends
         public string Name = string.Empty;
 
         /// <summary>
@@ -97,6 +98,7 @@ namespace Content.Shared.Containers.ItemSlots
         ///     when mapping.
         /// </remarks>
         [DataField("startingItem", readOnly: true, customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
+        [Friend(typeof(ItemSlotsSystem), Other = AccessPermissions.ReadWriteExecute)] // FIXME Friends
         public string? StartingItem;
 
         /// <summary>

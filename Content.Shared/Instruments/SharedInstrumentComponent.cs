@@ -26,6 +26,7 @@ public abstract class SharedInstrumentComponent : Component
     public bool RespectMidiLimits { get; set; } = true;
 
     [ViewVariables(VVAccess.ReadWrite)]
+    [Friend(typeof(SharedInstrumentSystem), Other = AccessPermissions.ReadWrite)] // FIXME Friends
     public bool DirtyRenderer { get; set; }
 }
 

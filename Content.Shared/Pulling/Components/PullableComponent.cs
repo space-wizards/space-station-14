@@ -26,6 +26,7 @@ namespace Content.Shared.Pulling.Components
 
         public bool BeingPulled => Puller != null;
 
+        [Friend(typeof(SharedPullingStateManagementSystem), Other = AccessPermissions.ReadExecute)] // FIXME Friends
         public EntityCoordinates? MovingTo { get; set; }
 
         public override ComponentState GetComponentState()

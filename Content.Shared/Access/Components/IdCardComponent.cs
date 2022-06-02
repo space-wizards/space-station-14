@@ -13,6 +13,8 @@ namespace Content.Shared.Access.Components
         public string OriginalOwnerName = default!;
 
         [DataField("fullName")]
+        [Friend(typeof(SharedIdCardSystem), typeof(SharedPDASystem), typeof(SharedAgentIdCardSystem),
+            Other = AccessPermissions.ReadWrite)] // FIXME Friends
         public string? FullName;
 
         [DataField("jobTitle")]

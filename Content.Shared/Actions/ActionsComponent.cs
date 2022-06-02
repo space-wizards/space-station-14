@@ -10,6 +10,7 @@ namespace Content.Shared.Actions;
 public sealed class ActionsComponent : Component
 {
     [ViewVariables]
+    [Friend(typeof(SharedActionsSystem), Other = AccessPermissions.ReadExecute)] // FIXME Friends
     public SortedSet<ActionType> Actions = new();
 }
 

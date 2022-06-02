@@ -9,6 +9,7 @@ namespace Content.Server.Body.Components;
 public sealed class LungComponent : Component
 {
     [DataField("air")]
+    [Friend(typeof(LungSystem), Other = AccessPermissions.ReadExecute)] // FIXME Friends
     public GasMixture Air { get; set; } = new()
     {
         Volume = 6,
@@ -16,5 +17,6 @@ public sealed class LungComponent : Component
     };
 
     [ViewVariables]
+    [Friend(typeof(LungSystem), Other = AccessPermissions.ReadExecute)] // FIXME Friends
     public Solution LungSolution = default!;
 }
