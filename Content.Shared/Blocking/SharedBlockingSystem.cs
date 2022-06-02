@@ -128,15 +128,20 @@ public sealed class SharedBlockingSystem : EntitySystem
 
         var xform = Transform(user);
 
+        //Used to store the physics component so it can be set back to Kinematic Controller
+        PhysicsComponent bodyType = new PhysicsComponent();
+
         if (TryComp(user, out PhysicsComponent? physicsComponent))
         {
             _fixtureSystem.DestroyFixture(physicsComponent, "test");
+            bodyType = physicsComponent;
         }
 
         if (component.BlockingToggleAction != null)
         {
             _actionsSystem.SetToggled(component.BlockingToggleAction, false);
             _transformSystem.Unanchor(xform);
+            bodyType.BodyType = BodyType.KinematicController;
         }
 
         return true;
