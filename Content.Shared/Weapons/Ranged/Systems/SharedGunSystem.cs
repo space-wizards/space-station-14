@@ -242,11 +242,8 @@ public abstract partial class SharedGunSystem : EntitySystem
             return;
         }
 
-        // Shoot confirmed
+        // Shoot confirmed - sounds also played here in case it's invalid (e.g. cartridge already spent).
         Shoot(gun, ev.Ammo, fromCoordinates, toCoordinates.Value, user);
-
-        // Predicted sound moment
-        PlaySound(gun.Owner, gun.SoundGunshot?.GetSound(Random, ProtoManager), user);
         Dirty(gun);
     }
 
