@@ -69,7 +69,7 @@
         - ClothingBeltUtilityFilled
         - Shovel
         - Welder
-        - FlareGun
+        - WeaponFlareGun
         - SheetSteel
         - SheetPlastic
       chance: 0.6
@@ -100,7 +100,7 @@
         - Crowbar
         - Shovel
         - Welder
-        - FlareGun
+        - WeaponFlareGun
         - Spear
         - LidSalami
       chance: 0.6

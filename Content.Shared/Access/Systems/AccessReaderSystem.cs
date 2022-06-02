@@ -26,7 +26,7 @@ namespace Content.Shared.Access.Systems
 
         private void OnLinkAttempt(EntityUid uid, AccessReaderComponent component, LinkAttemptEvent args)
         {
-            if (component.Enabled && !IsAllowed(component, args.User))
+            if (component.Enabled && !IsAllowed(args.User, component))
                 args.Cancel();
         }
 
@@ -59,13 +59,17 @@ namespace Content.Shared.Access.Systems
         ///     If no access is found, an empty set is used instead.
         /// </remarks>
         /// <param name="entity">The entity to bor access.</param>
-        public bool IsAllowed(AccessReaderComponent reader, EntityUid entity)
+        /// <param name="reader"></param>
+        public bool IsAllowed(EntityUid entity, AccessReaderComponent? reader = null)
         {
+            if (!Resolve(entity, ref reader, false))
+                return true;
+
             var tags = FindAccessTags(entity);
-            return IsAllowed(reader, tags);
+            return IsAllowed(tags, reader);
         }
 
-        public bool IsAllowed(AccessReaderComponent reader, ICollection<string> accessTags)
+        public bool IsAllowed(ICollection<string> accessTags, AccessReaderComponent reader)
         {
             if (!reader.Enabled)
             {

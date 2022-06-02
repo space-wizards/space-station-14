@@ -5,6 +5,7 @@ using Content.Server.Database;
 using Content.Server.Ghost;
 using Content.Server.Maps;
 using Content.Server.Preferences.Managers;
+using Content.Server.ServerUpdates;
 using Content.Server.Station.Systems;
 using Content.Shared.Chat;
 using Content.Shared.Damage;
@@ -12,7 +13,6 @@ using Content.Shared.GameTicking;
 using Content.Shared.Roles;
 using Robust.Server;
 using Robust.Server.Maps;
-using Robust.Server.ServerStatus;
 using Robust.Shared.Configuration;
 using Robust.Shared.Console;
 #if EXCEPTION_TOLERANCE
@@ -55,7 +55,6 @@ namespace Content.Server.GameTicking
             DebugTools.Assert(_prototypeManager.Index<JobPrototype>(FallbackOverflowJob).Name == Loc.GetString(FallbackOverflowJobName),
                 "Overflow role does not have the correct name!");
             InitializeGameRules();
-            InitializeUpdates();
 
             _initialized = true;
         }
@@ -101,7 +100,6 @@ namespace Content.Server.GameTicking
         [Dependency] private readonly IRobustRandom _robustRandom = default!;
         [Dependency] private readonly IServerPreferencesManager _prefsManager = default!;
         [Dependency] private readonly IBaseServer _baseServer = default!;
-        [Dependency] private readonly IWatchdogApi _watchdogApi = default!;
         [Dependency] private readonly IGameMapManager _gameMapManager = default!;
         [Dependency] private readonly IServerDbManager _db = default!;
         [Dependency] private readonly IAdminLogManager _adminLogger = default!;
@@ -116,5 +114,6 @@ namespace Content.Server.GameTicking
         [Dependency] private readonly DamageableSystem _damageable = default!;
         [Dependency] private readonly GhostSystem _ghosts = default!;
         [Dependency] private readonly RoleBanManager _roleBanManager = default!;
+        [Dependency] private readonly ServerUpdateManager _serverUpdates = default!;
     }
 }
