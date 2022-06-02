@@ -11,6 +11,8 @@
     size: 24
   - type: AmmoCounter
   - type: Gun
+    minAngle: 2
+    maxAngle: 8
     fireRate: 8
     selectedMode: FullAuto
     availableModes:
