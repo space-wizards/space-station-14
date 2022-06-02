@@ -19,6 +19,7 @@ namespace Content.Server.Nuke
         /// <summary>
         ///     Default bomb timer value in seconds.
         /// </summary>
+        // Must be shorter then the nuke alarm song
         [DataField("timer")]
         [ViewVariables(VVAccess.ReadWrite)]
         public int Timer = 120;
