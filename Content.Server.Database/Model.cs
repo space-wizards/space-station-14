@@ -501,15 +501,17 @@ namespace Content.Server.Database
         public DateTime UnbanTime { get; set; }
     }
 
-    [Table("role_timer")]
+    [Table(nameof(PlayerId))]
     public sealed class RoleTimer
     {
-        [Column("player")]
-        [Required, ForeignKey("Player")]
-        public Guid Player { get; set; }
-        [Required, ForeignKey("Role")]
+        [Required, Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public int Id { get; set; }
+
+        [Required, ForeignKey("player")]
+        public Guid PlayerId { get; set; }
+
         public string Role { get; set; } = string.Empty;
-        [Required, ForeignKey("TimeSpent")]
+
         public TimeSpan TimeSpent { get; set; }
     }
 

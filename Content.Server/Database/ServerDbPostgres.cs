@@ -410,46 +410,6 @@ namespace Content.Server.Database
         }
         #endregion
 
-        #region Role Timers
-        public override async Task<List<ServerRoleTimerDef>> GetRoleTimersAsync(Guid player)
-        {
-            await using var db = await GetDbImpl();
-
-            var query = await db.PgDbContext.RoleTimer
-                .Include(p => p.Player == player)
-                .ToListAsync();
-
-            return ConvertRoleTimers(query);
-        }
-
-        public override async Task<ServerRoleTimerDef> GetRoleTimerAsync(Guid player, string role)
-        {
-            await using var db = await GetDbImpl();
-
-            var query = await db.PgDbContext.RoleTimer
-                .Include(p => p.Player == player)
-                .Where(p => p.Role == role)
-                .FirstAsync();
-
-            return ConvertRoleTimer(query);
-        }
-
-        private static List<ServerRoleTimerDef> ConvertRoleTimers(List<RoleTimer> timers)
-        {
-            var returnList = new List<ServerRoleTimerDef>();
-            foreach (var timer in timers)
-            {
-                returnList.Add(ConvertRoleTimer(timer));
-            }
-            return returnList;
-        }
-
-        private static ServerRoleTimerDef ConvertRoleTimer(RoleTimer timer)
-        {
-            return new ServerRoleTimerDef(timer.Player, timer.Role, timer.TimeSpent);
-        }
-        #endregion
-
         protected override PlayerRecord MakePlayerRecord(Player record)
         {
             return new PlayerRecord(

@@ -2,21 +2,14 @@
 {
     public sealed class ServerRoleTimerDef
     {
-        /// <summary>
-        /// The player that this role timer belongs to.
-        /// </summary>
+        public int Id { get; }
         public Guid UserId { get; }
-        /// <summary>
-        /// The job (or role) that this timer is tracking.
-        /// </summary>
         public string Role { get; }
-        /// <summary>
-        /// Time spent playing this role.
-        /// </summary>
         public TimeSpan TimeSpent { get; }
 
-        public ServerRoleTimerDef(Guid userId, string role, TimeSpan timeSpent)
+        public ServerRoleTimerDef(int id, Guid userId, string role, TimeSpan timeSpent)
         {
+            Id = id;
             UserId = userId;
             Role = role;
             TimeSpent = timeSpent;

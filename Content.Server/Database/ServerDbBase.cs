@@ -360,11 +360,34 @@ namespace Content.Server.Database
         #endregion
 
         #region Role Timers
+        public async Task<RoleTimer> GetRoleTimer(Guid player, string role)
+        {
+            await using var db = await GetDb();
 
-        public abstract Task<List<ServerRoleTimerDef>> GetRoleTimersAsync(Guid player);
+            return await db.DbContext.RoleTimer
+                .Include(v => v.PlayerId == player)
+                .Include(v => v.Role == role)
+                .SingleAsync();
+        }
 
-        public abstract Task<ServerRoleTimerDef> GetRoleTimerAsync(Guid player, string role);
+        public async Task<List<RoleTimer>> GetRoleTimers(Guid player)
+        {
+            await using var db = await GetDb();
 
+            return await db.DbContext.RoleTimer
+                .Include(p => p.PlayerId == player)
+                .ToListAsync();
+        }
+
+        public async Task EditRoleTimer(int id, TimeSpan time)
+        {
+            await using var db = await GetDb();
+
+            var newTimer = await db.DbContext.RoleTimer.Where(note => note.Id == id).SingleAsync();
+            newTimer.TimeSpent = time;
+
+            await db.DbContext.SaveChangesAsync();
+        }
         #endregion
 
         #region Player Records
