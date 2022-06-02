@@ -35,7 +35,7 @@ namespace Content.Server.GameTicking
 
         private string GetInfoText()
         {
-            if (_preset == null)
+            if (Preset == null)
             {
                 return string.Empty;
             }
@@ -43,8 +43,8 @@ namespace Content.Server.GameTicking
             var playerCount = $"{_playerManager.PlayerCount}";
             var map = _gameMapManager.GetSelectedMap();
             var mapName = map?.MapName ?? Loc.GetString("game-ticker-no-map-selected");
-            var gmTitle = Loc.GetString(_preset.ModeTitle);
-            var desc = Loc.GetString(_preset.Description);
+            var gmTitle = Loc.GetString(Preset.ModeTitle);
+            var desc = Loc.GetString(Preset.Description);
             return Loc.GetString("game-ticker-get-info-text",("roundId", RoundId), ("playerCount", playerCount),("mapName", mapName),("gmTitle", gmTitle),("desc", desc));
         }
 

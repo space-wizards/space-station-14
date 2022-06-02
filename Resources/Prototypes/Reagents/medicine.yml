@@ -250,6 +250,19 @@
             Radiation: -1
 
 - type: reagent
+  id: Ipecac
+  name: ipecac
+  group: Medicine
+  desc: Induces vomiting. Useful for stopping a poisoning that isn't done metabolizing.
+  physicalDesc: inky
+  color: "#422912"
+  metabolisms:
+    Medicine:
+      effects:
+      - !type:ChemVomit
+        probability: 0.3
+
+- type: reagent
   id: Inaprovaline
   name: reagent-name-inaprovaline
   group: Medicine
@@ -295,6 +308,10 @@
   metabolisms:
     Medicine:
       effects:
+      - !type:HealthChange
+        damage:
+          types:
+            Cold: -4
       - !type:AdjustTemperature
         conditions:
         - !type:Temperature
@@ -324,13 +341,15 @@
         damage:
           types:
             Poison: 1
+          groups:
+            Brute: -1.5
       - !type:HealthChange
         conditions:
           - !type:ReagentThreshold
             min: 15
         damage:
           types:
-            Poison: 4
+            Poison: 3
       - !type:GenericStatusEffect
         key: PressureImmunity
         component: PressureImmunity
@@ -360,6 +379,8 @@
           types:
             Cellular: -1
             Radiation: 1
+      - !type:ChemVomit
+        probability: 0.05
 
 - type: reagent
   id: Romerol

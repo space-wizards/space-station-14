@@ -60,6 +60,7 @@
         maxVol: 600
         canReact: false
   - type: Slippery
+  - type: StepTrigger
 
 - type: entity
   id: IronMetalFoam
