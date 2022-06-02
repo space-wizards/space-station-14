@@ -5,18 +5,12 @@
   setPreference: false
   startingGear: ERTLeaderGearEVA
   departments:
-    - Command
+  - Command
   icon: "Nanotrasen"
   supervisors: "centcom official"
-  access:
-  - Command
-  - Maintenance
-  - Security
-  - Engineering
-  - Service
-  - Medical
-  - Research
-  - Cargo
+  canBeAntag: false
+  accessGroups:
+  - AllAccess
 
 - type: startingGear
   id: ERTLeaderGear
@@ -58,18 +52,12 @@
   name: "ERT engineer"
   startingGear: ERTEngineerGearEVA
   departments:
-    - Command
+  - Command
   icon: "Nanotrasen"
   supervisors: "centcom official"
-  access:
-  - Command
-  - Maintenance
-  - Security
-  - Engineering
-  - Service
-  - Medical
-  - Research
-  - Cargo
+  canBeAntag: false
+  accessGroups:
+  - AllAccess
   
 - type: startingGear
   id: ERTEngineerGear
@@ -108,18 +96,12 @@
   name: "ERT security"
   startingGear: ERTEngineerGearEVA
   departments:
-    - Command
+  - Command
   icon: "Nanotrasen"
   supervisors: "centcom official"
-  access:
-  - Command
-  - Maintenance
-  - Security
-  - Engineering
-  - Service
-  - Medical
-  - Research
-  - Cargo
+  canBeAntag: false
+  accessGroups:
+  - AllAccess
   
 - type: startingGear
   id: ERTSecurityGear
@@ -158,18 +140,12 @@
   name: "ERT medic"
   startingGear: ERTMedicalGearEVA
   departments:
-    - Command
+  - Command
   icon: "Nanotrasen"
   supervisors: "centcom official"
-  access:
-  - Command
-  - Maintenance
-  - Security
-  - Engineering
-  - Service
-  - Medical
-  - Research
-  - Cargo
+  canBeAntag: false
+  accessGroups:
+  - AllAccess
   
 - type: startingGear
   id: ERTMedicalGear
@@ -209,18 +185,12 @@
   name: "ERT janitor"
   startingGear: ERTJanitorGearEVA
   departments:
-    - Command
+  - Command
   icon: "Nanotrasen"
   supervisors: "centcom official"
-  access:
-  - Command
-  - Maintenance
-  - Security
-  - Engineering
-  - Service
-  - Medical
-  - Research
-  - Cargo
+  canBeAntag: false
+  accessGroups:
+  - AllAccess
   
 - type: startingGear
   id: ERTJanitorGear
