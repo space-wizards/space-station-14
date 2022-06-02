@@ -33,6 +33,7 @@ namespace Content.Server.Database
         public DbSet<ServerBanHit> ServerBanHit { get; set; } = default!;
         public DbSet<ServerRoleBan> RoleBan { get; set; } = default!;
         public DbSet<ServerRoleUnban> RoleUnban { get; set; } = default!;
+        public DbSet<RoleTimer> RoleTimer { get; set; } = default!;
         public DbSet<UploadedResourceLog> UploadedResourceLog { get; set; } = default!;
         public DbSet<AdminNote> AdminNotes { get; set; } = null!;
 
@@ -288,8 +289,6 @@ namespace Content.Server.Database
         public List<AdminNote> AdminNotesCreated { get; set; } = null!;
         public List<AdminNote> AdminNotesLastEdited { get; set; } = null!;
         public List<AdminNote> AdminNotesDeleted { get; set; } = null!;
-
-        public Dictionary<string, TimeSpan> TimeSpentOnRolesDict { get; set; } = null!;
     }
 
     [Table("whitelist")]
