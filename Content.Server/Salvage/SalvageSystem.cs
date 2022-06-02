@@ -12,13 +12,13 @@ using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Utility;
 using System.Linq;
+using Content.Server.Chat;
 using Content.Server.Station.Systems;
 
 namespace Content.Server.Salvage
 {
     public sealed class SalvageSystem : EntitySystem
     {
-        [Dependency] private readonly IChatManager _chatManager = default!;
         [Dependency] private readonly IMapLoader _mapLoader = default!;
         [Dependency] private readonly IMapManager _mapManager = default!;
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
@@ -26,6 +26,7 @@ namespace Content.Server.Salvage
         [Dependency] private readonly IRobustRandom _random = default!;
         [Dependency] private readonly SharedPopupSystem _popupSystem = default!;
         [Dependency] private readonly StationSystem _stationSystem = default!;
+        [Dependency] private readonly ChatSystem _chatSystem = default!;
 
         private static readonly TimeSpan AttachingTime = TimeSpan.FromSeconds(30);
         private static readonly TimeSpan HoldTime = TimeSpan.FromMinutes(4);
@@ -292,9 +293,9 @@ namespace Content.Server.Salvage
             return true;
         }
         private void Report(EntityUid source, string messageKey) =>
-            _chatManager.DispatchStationAnnouncement(source, Loc.GetString(messageKey), Loc.GetString("salvage-system-announcement-source"), colorOverride: Color.Orange, playDefaultSound: false);
+            _chatSystem.DispatchStationAnnouncement(source, Loc.GetString(messageKey), Loc.GetString("salvage-system-announcement-source"), colorOverride: Color.Orange, playDefaultSound: false);
         private void Report(EntityUid source, string messageKey, params (string, object)[] args) =>
-            _chatManager.DispatchStationAnnouncement(source, Loc.GetString(messageKey, args), Loc.GetString("salvage-system-announcement-source"), colorOverride: Color.Orange, playDefaultSound: false);
+            _chatSystem.DispatchStationAnnouncement(source, Loc.GetString(messageKey, args), Loc.GetString("salvage-system-announcement-source"), colorOverride: Color.Orange, playDefaultSound: false);
 
         private void Transition(SalvageMagnetComponent magnet, TimeSpan currentTime)
         {

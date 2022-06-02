@@ -1,4 +1,4 @@
-using Content.Server.Chat.Managers;
+using Content.Server.Chat;
 using Content.Server.Communications;
 using Content.Server.Station.Systems;
 using Content.Shared.GameTicking;
@@ -13,7 +13,7 @@ namespace Content.Server.Nuke
     public sealed class NukeCodeSystem : EntitySystem
     {
         [Dependency] private readonly IRobustRandom _random = default!;
-        [Dependency] private readonly IChatManager _chat = default!;
+        [Dependency] private readonly ChatSystem _chatSystem = default!;
         [Dependency] private readonly StationSystem _stationSystem = default!;
 
         private const int CodeLength = 6;
@@ -79,7 +79,7 @@ namespace Content.Server.Nuke
             if (wasSent)
             {
                 var msg = Loc.GetString("nuke-component-announcement-send-codes");
-                _chat.DispatchGlobalStationAnnouncement(msg, colorOverride: Color.Red);
+                _chatSystem.DispatchGlobalStationAnnouncement(msg, colorOverride: Color.Red);
             }
 
             return wasSent;

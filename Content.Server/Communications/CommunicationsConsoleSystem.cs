@@ -1,6 +1,7 @@
 using System.Globalization;
 using Content.Server.Access.Systems;
 using Content.Server.AlertLevel;
+using Content.Server.Chat;
 using Content.Server.Chat.Managers;
 using Content.Server.Popups;
 using Content.Server.RoundEnd;
@@ -21,6 +22,7 @@ namespace Content.Server.Communications
         [Dependency] private readonly IdCardSystem _idCardSystem = default!;
         [Dependency] private readonly AccessReaderSystem _accessReaderSystem = default!;
         [Dependency] private readonly PopupSystem _popupSystem = default!;
+        [Dependency] private readonly ChatSystem _chatSystem = default!;
 
         private const int MaxMessageLength = 256;
 
@@ -43,11 +45,10 @@ namespace Content.Server.Communications
         {
             foreach (var comp in EntityManager.EntityQuery<CommunicationsConsoleComponent>())
             {
+                // TODO: Find a less ass way of refreshing the UI
                 if (comp.AlreadyRefreshed) continue;
                 if (comp.AnnouncementCooldownRemaining <= 0f)
                 {
-                    // TODO: Find a less ass way of refreshing the UI
-                    if (comp.AlreadyRefreshed) continue;
                     UpdateBoundUserInterface(comp);
                     comp.AlreadyRefreshed = true;
                     continue;
@@ -198,11 +199,11 @@ namespace Content.Server.Communications
             msg += "\n" + Loc.GetString("comms-console-announcement-sent-by") + " " + author;
             if (comp.AnnounceGlobal)
             {
-                _chatManager.DispatchGlobalStationAnnouncement(msg, title, colorOverride: comp.AnnouncementColor);
+                _chatSystem.DispatchGlobalStationAnnouncement(msg, title, colorOverride: comp.AnnouncementColor);
             }
             else
             {
-                _chatManager.DispatchStationAnnouncement(uid, msg, title, colorOverride: comp.AnnouncementColor);
+                _chatSystem.DispatchStationAnnouncement(uid, msg, title, colorOverride: comp.AnnouncementColor);
             }
         }
 

@@ -1,5 +1,5 @@
 using Content.Server.Administration;
-using Content.Server.Chat.Managers;
+using Content.Server.Chat;
 using Content.Shared.Administration;
 using Robust.Shared.Console;
 
@@ -13,7 +13,7 @@ namespace Content.Server.Announcements
         public string Help => $"{Command} <sender> <message> or {Command} <message> to send announcement as centcomm.";
         public void Execute(IConsoleShell shell, string argStr, string[] args)
         {
-            var chat = IoCManager.Resolve<IChatManager>();
+            var chat = IoCManager.Resolve<ChatSystem>();
 
             if (args.Length == 0)
             {

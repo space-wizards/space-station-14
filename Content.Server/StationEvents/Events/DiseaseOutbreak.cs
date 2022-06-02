@@ -1,4 +1,4 @@
-using Content.Server.Chat.Managers;
+using Content.Server.Chat;
 using Content.Server.Disease.Components;
 using Content.Server.Disease;
 using Content.Server.Station.Systems;
@@ -18,7 +18,6 @@ public sealed class DiseaseOutbreak : StationEvent
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly IEntityManager _entityManager = default!;
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
-    [Dependency] private readonly IChatManager _chatManager = default!;
 
     /// <summary>
     /// Disease prototypes I decided were not too deadly for a random event
@@ -65,6 +64,7 @@ public sealed class DiseaseOutbreak : StationEvent
 
         var diseaseSystem = EntitySystem.Get<DiseaseSystem>();
         var stationSystem = EntitySystem.Get<StationSystem>();
+        var chatSystem = EntitySystem.Get<ChatSystem>();
         // Now we give it to people in the list of living disease carriers earlier
         foreach (var target in aliveList)
         {
@@ -80,7 +80,7 @@ public sealed class DiseaseOutbreak : StationEvent
 
         foreach (var station in stationsToNotify)
         {
-            _chatManager.DispatchStationAnnouncement(station, Loc.GetString("station-event-disease-outbreak-announcement"),
+            chatSystem.DispatchStationAnnouncement(station, Loc.GetString("station-event-disease-outbreak-announcement"),
                 playDefaultSound: false, colorOverride: Color.YellowGreen);
         }
     }

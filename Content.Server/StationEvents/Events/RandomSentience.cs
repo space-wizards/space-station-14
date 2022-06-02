@@ -1,5 +1,5 @@
 ﻿using System.Linq;
-using Content.Server.Chat.Managers;
+using Content.Server.Chat;
 using Content.Server.Ghost.Roles.Components;
 using Content.Server.Mind.Commands;
 using Content.Server.Station.Systems;
@@ -12,7 +12,6 @@ public sealed class RandomSentience : StationEvent
 {
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly IEntityManager _entityManager = default!;
-    [Dependency] private readonly IChatManager _chatManager = default!;
 
     public override string Name => "RandomSentience";
 
@@ -52,16 +51,17 @@ public sealed class RandomSentience : StationEvent
         var kind2 = groupList.Count > 1 ? groupList[1] : "???";
         var kind3 = groupList.Count > 2 ? groupList[2] : "???";
 
-        var _stationSystem = EntitySystem.Get<StationSystem>();
+        var stationSystem = EntitySystem.Get<StationSystem>();
+        var chatSystem = EntitySystem.Get<ChatSystem>();
         foreach (var target in targetList)
         {
-            var station = _stationSystem.GetOwningStation(target.Owner);
+            var station = stationSystem.GetOwningStation(target.Owner);
             if(station == null) continue;
             stationsToNotify.Add((EntityUid) station);
         }
         foreach (var station in stationsToNotify)
         {
-            _chatManager.DispatchStationAnnouncement(
+            chatSystem.DispatchStationAnnouncement(
                 (EntityUid) station,
                 Loc.GetString("station-event-random-sentience-announcement",
                     ("kind1", kind1), ("kind2", kind2), ("kind3", kind3), ("amount", groupList.Count),

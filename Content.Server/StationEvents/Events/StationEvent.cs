@@ -1,5 +1,6 @@
 using Content.Server.Administration.Logs;
 using Content.Server.Atmos.EntitySystems;
+using Content.Server.Chat;
 using Content.Server.Chat.Managers;
 using Content.Server.GameTicking;
 using Content.Server.Station.Components;
@@ -140,8 +141,8 @@ namespace Content.Server.StationEvents.Events
 
             if (StartAnnouncement != null)
             {
-                var chatManager = IoCManager.Resolve<IChatManager>();
-                chatManager.DispatchGlobalStationAnnouncement(StartAnnouncement, playDefaultSound: false, colorOverride: Color.Gold);
+                var chatSystem = IoCManager.Resolve<ChatSystem>();
+                chatSystem.DispatchGlobalStationAnnouncement(StartAnnouncement, playDefaultSound: false, colorOverride: Color.Gold);
             }
 
             if (StartAudio != null)
@@ -163,8 +164,8 @@ namespace Content.Server.StationEvents.Events
 
             if (EndAnnouncement != null)
             {
-                var chatManager = IoCManager.Resolve<IChatManager>();
-                chatManager.DispatchGlobalStationAnnouncement(EndAnnouncement, playDefaultSound: false, colorOverride: Color.Gold);
+                var chatSystem = IoCManager.Resolve<ChatSystem>();
+                chatSystem.DispatchGlobalStationAnnouncement(EndAnnouncement, playDefaultSound: false, colorOverride: Color.Gold);
             }
 
             if (EndAudio != null)

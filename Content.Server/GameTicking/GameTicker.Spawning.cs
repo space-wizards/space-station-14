@@ -157,7 +157,7 @@ namespace Content.Server.GameTicking
 
             if (lateJoin)
             {
-                _chatManager.DispatchStationAnnouncement(station,
+                _chatSystem.DispatchStationAnnouncement(station,
                     Loc.GetString(
                         "latejoin-arrival-announcement",
                     ("character", character.Name),

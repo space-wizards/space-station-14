@@ -1,7 +1,7 @@
 using Content.Server.Administration.Managers;
+using Content.Server.Chat;
 using Content.Server.Chat.Managers;
 using Content.Server.EUI;
-using Content.Server.Station.Systems;
 using Content.Shared.Administration;
 using Content.Shared.Eui;
 
@@ -11,6 +11,7 @@ namespace Content.Server.Administration.UI
     {
         [Dependency] private readonly IAdminManager _adminManager = default!;
         [Dependency] private readonly IChatManager _chatManager = default!;
+        [Dependency] private readonly ChatSystem _chatSystem = default!;
 
         public AdminAnnounceEui()
         {
@@ -48,7 +49,7 @@ namespace Content.Server.Administration.UI
                             break;
                         // TODO: Per-station announcement support
                         case AdminAnnounceType.Station:
-                            _chatManager.DispatchGlobalStationAnnouncement(doAnnounce.Announcement, doAnnounce.Announcer, colorOverride: Color.Gold);
+                            _chatSystem.DispatchGlobalStationAnnouncement(doAnnounce.Announcement, doAnnounce.Announcer, colorOverride: Color.Gold);
                             break;
                     }
 

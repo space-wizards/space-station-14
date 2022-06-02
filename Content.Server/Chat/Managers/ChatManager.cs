@@ -1,17 +1,14 @@
 using System.Linq;
-using Content.Server.Administration.Commands.Station;
 using Content.Server.Administration.Logs;
 using Content.Server.Administration.Managers;
 using Content.Server.MoMMI;
 using Content.Server.Preferences.Managers;
-using Content.Server.Station.Components;
 using Content.Server.Station.Systems;
 using Content.Shared.Administration;
 using Content.Shared.CCVar;
 using Content.Shared.Chat;
 using Content.Shared.Database;
 using Robust.Server.Player;
-using Robust.Shared.Audio;
 using Robust.Shared.Configuration;
 using Robust.Shared.Map;
 using Robust.Shared.Network;
@@ -86,65 +83,6 @@ namespace Content.Server.Chat.Managers
             Logger.InfoS("SERVER", message);
 
             _adminLogger.Add(LogType.Chat, LogImpact.Low, $"Server announcement: {message}");
-        }
-
-        /// <summary>
-        /// Dispatches an announcement to all stations
-        /// </summary>
-        /// <param name="message">The contents of the message</param>
-        /// <param name="sender">The sender (Communications Console in Communications Console Announcement)</param>
-        /// <param name="playDefaultSound">Play the announcement sound</param>
-        /// <param name="colorOverride">Optional color for the announcement message</param>
-        public void DispatchGlobalStationAnnouncement(string message, string sender = "Central Command",
-            bool playDefaultSound = true, Color? colorOverride = null)
-        {
-            var messageWrap = Loc.GetString("chat-manager-sender-announcement-wrap-message", ("sender", sender));
-            ChatMessageToAll(ChatChannel.Radio, message, messageWrap);
-            if (playDefaultSound)
-            {
-                SoundSystem.Play(Filter.Broadcast(), "/Audio/Announcements/announce.ogg", AudioParams.Default.WithVolume(-2f));
-            }
-            _adminLogger.Add(LogType.Chat, LogImpact.Low, $"Global station announcement from {sender}: {message}");
-        }
-
-        /// <summary>
-        /// Dispatches an announcement on a specific station
-        /// </summary>
-        /// <param name="source">The entity making the announcement (used to determine the station)</param>
-        /// <param name="message">The contents of the message</param>
-        /// <param name="sender">The sender (Communications Console in Communications Console Announcement)</param>
-        /// <param name="playDefaultSound">Play the announcement sound</param>
-        /// <param name="colorOverride">Optional color for the announcement message</param>
-        public void DispatchStationAnnouncement(EntityUid source, string message, string sender = "Central Command", bool playDefaultSound = true, Color? colorOverride = null)
-        {
-            var messageWrap = Loc.GetString("chat-manager-sender-announcement-wrap-message", ("sender", sender));
-
-            var station = _stationSystem.GetOwningStation(source);
-            ChatMessageToAll(ChatChannel.Radio, message, messageWrap, colorOverride);
-            if (station != null)
-            {
-                if(!_entityManager.TryGetComponent<StationDataComponent>(station, out var stationDataComp)) return;
-                foreach (var gridEnt in stationDataComp.Grids)
-                {
-                    var filter = Filter.BroadcastGrid(gridEnt);
-                    ChatMessageToManyFiltered(filter, ChatChannel.Radio, message, messageWrap, source, true, colorOverride);
-                    if (playDefaultSound)
-                    {
-                        SoundSystem.Play(filter, "/Audio/Announcements/announce.ogg", AudioParams.Default.WithVolume(-2f));
-                    }
-                }
-            }
-            else
-            {
-                var filter = Filter.Pvs(source);
-                ChatMessageToManyFiltered(filter, ChatChannel.Radio, message, messageWrap, source, true, colorOverride);
-                if (playDefaultSound)
-                {
-                    SoundSystem.Play(filter, "/Audio/Announcements/announce.ogg", AudioParams.Default.WithVolume(-2f));
-                }
-            }
-
-            _adminLogger.Add(LogType.Chat, LogImpact.Low, $"Station Announcement on {station} from {sender}: {message}");
         }
 
         public void DispatchServerMessage(IPlayerSession player, string message)
