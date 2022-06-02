@@ -3,7 +3,7 @@
   id: ERTLeader
   name: "ERT leader"
   setPreference: false
-  startingGear: ERTLeaderGear
+  startingGear: ERTLeaderGearEVA
   departments:
     - Command
   icon: "Nanotrasen"
@@ -56,7 +56,7 @@
 - type: job
   id: ERTEngineer
   name: "ERT engineer"
-  startingGear: ERTEngineerGear
+  startingGear: ERTEngineerGearEVA
   departments:
     - Command
   icon: "Nanotrasen"
@@ -106,7 +106,7 @@
 - type: job
   id: ERTSecurity
   name: "ERT security"
-  startingGear: ERTEngineerGear
+  startingGear: ERTEngineerGearEVA
   departments:
     - Command
   icon: "Nanotrasen"
@@ -156,7 +156,7 @@
 - type: job
   id: ERTMedical
   name: "ERT medic"
-  startingGear: ERTMedicalGear
+  startingGear: ERTMedicalGearEVA
   departments:
     - Command
   icon: "Nanotrasen"
@@ -207,7 +207,7 @@
 - type: job
   id: ERTJanitor
   name: "ERT janitor"
-  startingGear: ERTJanitorGear
+  startingGear: ERTJanitorGearEVA
   departments:
     - Command
   icon: "Nanotrasen"
