@@ -21,7 +21,7 @@ namespace Content.Server.Nuke
         /// </summary>
         [DataField("timer")]
         [ViewVariables(VVAccess.ReadWrite)]
-        public int Timer = 180;
+        public int Timer = 120;
 
         /// <summary>
         ///     How long until the bomb can arm again after deactivation.
