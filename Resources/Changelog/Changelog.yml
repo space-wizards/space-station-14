@@ -1,10 +1,4 @@
 Entries:
-- author: moony
-  changes:
-  - {message: 'Power grid check no longer shuts off all power instantly, and instead
-      does so over about 30 seconds.', type: Tweak}
-  id: 1133
-  time: '2022-02-27T07:01:39.0000000+00:00'
 - author: Peptide90
   changes:
   - {message: 'Adds a bunch of new carpets, grass and shuttle flooring for mappers.
@@ -3002,3 +2996,9 @@ Entries:
   - {message: Added an audio setting to disable playing admin music, type: Add}
   id: 1632
   time: '2022-06-02T13:41:20.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: SMGs have had their maximum spread angle increased (i.e. accuracy reduced).,
+    type: Tweak}
+  id: 1633
+  time: '2022-06-02T19:46:46.0000000+00:00'
