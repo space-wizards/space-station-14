@@ -1,12 +1,6 @@
 Entries:
 - author: Peptide90
   changes:
-  - {message: 'Pillar V5.1 - bug fixes and reinforced more walls, departments, offices
-      and substations.', type: Add}
-  id: 1136
-  time: '2022-02-27T07:02:15.0000000+00:00'
-- author: Peptide90
-  changes:
   - {message: 'All electronics, machine and computer boards now have updated names,
       descriptions and in some cases sprites.', type: Fix}
   - {message: SMES construction is now fixed., type: Fix}
@@ -3001,3 +2995,9 @@ Entries:
   - {message: Nukes will now explode in 120 seconds instead of 180., type: Tweak}
   id: 1635
   time: '2022-06-02T20:53:32.0000000+00:00'
+- author: Peptide90
+  changes:
+  - {message: Gas miners are now capped at 300 kPa instead of 4500 kPa. Less pressure
+      bombing., type: Tweak}
+  id: 1636
+  time: '2022-06-02T21:35:32.0000000+00:00'
