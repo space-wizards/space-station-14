@@ -56,13 +56,13 @@ public class GunComponent : Component
     /// <summary>
     /// The maximum angle allowed for <see cref="CurrentAngle"/>
     /// </summary>
-    [ViewVariables, DataField("maxAngle")]
+    [ViewVariables(VVAccess.ReadWrite), DataField("maxAngle")]
     public Angle MaxAngle = Angle.FromDegrees(2);
 
     /// <summary>
     /// The minimum angle allowed for <see cref="CurrentAngle"/>
     /// </summary>
-    [ViewVariables, DataField("minAngle")]
+    [ViewVariables(VVAccess.ReadWrite), DataField("minAngle")]
     public Angle MinAngle = Angle.FromDegrees(1);
 
     #endregion
