@@ -11,7 +11,7 @@ namespace Content.Shared.Weapons.Ranged.Systems;
 
 public abstract partial class SharedGunSystem
 {
-    protected const string ChamberSlot = "gun-chamber";
+    protected const string ChamberSlot = "gun_chamber";
 
     protected virtual void InitializeChamberMagazine()
     {

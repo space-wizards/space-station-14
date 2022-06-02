@@ -10,19 +10,19 @@ namespace Content.Shared.Weapons.Ranged.Components;
 [RegisterComponent, NetworkedComponent]
 public sealed class BallisticAmmoProviderComponent : Component
 {
-    [ViewVariables(VVAccess.ReadOnly), DataField("soundRack")]
+    [ViewVariables(VVAccess.ReadWrite), DataField("soundRack")]
     public SoundSpecifier? SoundRack = new SoundPathSpecifier("/Audio/Weapons/Guns/Cock/smg_cock.ogg");
 
-    [ViewVariables(VVAccess.ReadOnly), DataField("soundInsert")]
+    [ViewVariables(VVAccess.ReadWrite), DataField("soundInsert")]
     public SoundSpecifier? SoundInsert = new SoundPathSpecifier("/Audio/Weapons/Guns/MagIn/bullet_insert.ogg");
 
-    [ViewVariables, DataField("proto", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
+    [ViewVariables(VVAccess.ReadWrite), DataField("proto", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
     public string? FillProto;
 
     [ViewVariables(VVAccess.ReadWrite), DataField("capacity")]
     public int Capacity = 30;
 
-    [ViewVariables, DataField("unspawnedCount")]
+    [ViewVariables(VVAccess.ReadWrite), DataField("unspawnedCount")]
     public int UnspawnedCount;
 
     [ViewVariables(VVAccess.ReadWrite), DataField("whitelist")]

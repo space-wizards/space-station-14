@@ -11,6 +11,8 @@
     size: 24
   - type: AmmoCounter
   - type: Gun
+    minAngle: 2
+    maxAngle: 8
     fireRate: 8
     selectedMode: FullAuto
     availableModes:
@@ -21,7 +23,7 @@
   - type: ChamberMagazineAmmoProvider
   - type: ItemSlots
     slots:
-      gun-magazine:
+      gun_magazine:
         name: Magazine
         startingItem: MagazinePistolSubMachineGun
         insertSound: /Audio/Weapons/Guns/MagIn/smg_magin.ogg
@@ -29,7 +31,7 @@
         whitelist:
           tags:
             - MagazinePistolSubMachineGun
-      gun-chamber:
+      gun_chamber:
         name: Chamber
         startingItem: CartridgePistol
         whitelist:
@@ -37,8 +39,8 @@
             - CartridgePistol
   - type: ContainerContainer
     containers:
-      gun-magazine: !type:ContainerSlot
-      gun-chamber: !type:ContainerSlot
+      gun_magazine: !type:ContainerSlot
+      gun_chamber: !type:ContainerSlot
 
 - type: entity
   name: Atreides
@@ -114,7 +116,7 @@
     - FullAuto
   - type: ItemSlots
     slots:
-      gun-magazine:
+      gun_magazine:
         name: Magazine
         startingItem: MagazineMagnumSubMachineGun
         insertSound: /Audio/Weapons/Guns/MagIn/smg_magin.ogg
@@ -122,7 +124,7 @@
         whitelist:
           tags:
             - MagazineMagnumSubMachineGun
-      gun-chamber:
+      gun_chamber:
         name: Chamber
         startingItem: CartridgeMagnum
         whitelist:
@@ -130,8 +132,8 @@
             - CartridgeMagnum
   - type: ContainerContainer
     containers:
-      gun-magazine: !type:ContainerSlot
-      gun-chamber: !type:ContainerSlot
+      gun_magazine: !type:ContainerSlot
+      gun_chamber: !type:ContainerSlot
   - type: Appearance
     visuals:
     - type: MagVisualizer
@@ -166,6 +168,22 @@
     selectedMode: FullAuto
     availableModes:
     - FullAuto
+  - type: ItemSlots
+    slots:
+      gun_magazine:
+        name: Magazine
+        startingItem: MagazinePistolSubMachineGunTopMounted
+        insertSound: /Audio/Weapons/Guns/MagIn/smg_magin.ogg
+        ejectSound: /Audio/Weapons/Guns/MagOut/smg_magout.ogg
+        whitelist:
+          tags:
+            - MagazinePistolSubMachineGunTopMounted
+      gun_chamber:
+        name: Chamber
+        startingItem: CartridgePistol
+        whitelist:
+          tags:
+            - CartridgePistol
   - type: Appearance
     visuals:
       - type: MagVisualizer
@@ -182,7 +200,7 @@
   components:
   - type: ItemSlots
     slots:
-      gun-magazine:
+      gun_magazine:
         name: Magazine
         startingItem: MagazineMagnumSubMachineGunRubber
         insertSound: /Audio/Weapons/Guns/MagIn/smg_magin.ogg
@@ -190,7 +208,7 @@
         whitelist:
           tags:
             - MagazineMagnumSubMachineGun
-      gun-chamber:
+      gun_chamber:
         name: Chamber
         startingItem: CartridgeMagnumRubber
         whitelist:
@@ -198,5 +216,5 @@
             - CartridgeMagnum
   - type: ContainerContainer
     containers:
-      gun-magazine: !type:ContainerSlot
-      gun-chamber: !type:ContainerSlot
+      gun_magazine: !type:ContainerSlot
+      gun_chamber: !type:ContainerSlot

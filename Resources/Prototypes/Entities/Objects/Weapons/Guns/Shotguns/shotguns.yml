@@ -61,7 +61,7 @@
       path: /Audio/Weapons/Guns/Empty/empty.ogg
   - type: ItemSlots
     slots:
-      gun-magazine:
+      gun_magazine:
         name: Magazine
         startingItem: MagazineShotgun
         whitelist:
@@ -71,8 +71,8 @@
         ejectSound: /Audio/Weapons/Guns/MagOut/smg_magout.ogg
   - type: ContainerContainer
     containers:
-      gun-magazine: !type:ContainerSlot
-      gun-chamber: !type:ContainerSlot
+      gun_magazine: !type:ContainerSlot
+      gun_chamber: !type:ContainerSlot
   - type: MagazineAmmoProvider
   - type: Appearance
     visuals:
