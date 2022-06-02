@@ -189,16 +189,12 @@ entities:
     parent: 82
     type: Transform
 - uid: 4
-  type: AntiqueLaserGun
+  type: WeaponAntiqueLaser
   components:
   - parent: 6699
     type: Transform
   - canCollide: False
     type: Physics
-  - containers:
-      Content.Server.Weapon.Ranged.Barrels.Components.BatteryBarrelComponent-ammo-container: !type:ContainerSlot {}
-      cellslot_cell_container: !type:ContainerSlot {}
-    type: ContainerContainer
 - uid: 5
   type: ReinforcedWindow
   components:
@@ -23047,16 +23043,11 @@ entities:
     parent: 82
     type: Transform
 - uid: 1063
-  type: ShotgunDB
+  type: WeaponShotgunDoubleBarreled
   components:
   - pos: 30.479113,8.559942
     parent: 82
     type: Transform
-  - containers:
-      Content.Server.Weapon.Ranged.Barrels.Components.BoltActionBarrelComponent-ammo-container: !type:Container
-        ents: []
-      Content.Server.Weapon.Ranged.Barrels.Components.BoltActionBarrelComponent-chamber-container: !type:ContainerSlot {}
-    type: ContainerContainer
 - uid: 1064
   type: BoxBeanbag
   components:
@@ -26467,46 +26458,29 @@ entities:
     parent: 82
     type: Transform
 - uid: 1427
-  type: LaserRifleCog
+  type: WeaponLaserRifleCog
   components:
   - pos: -0.4915824,21.534182
     parent: 82
     type: Transform
-  - containers:
-      Content.Server.Weapon.Ranged.Barrels.Components.BatteryBarrelComponent-ammo-container: !type:ContainerSlot {}
-      cellslot_cell_container: !type:ContainerSlot {}
-    type: ContainerContainer
 - uid: 1428
-  type: LaserRifleCog
+  type: WeaponLaserRifleCog
   components:
   - pos: -0.5228324,21.627932
     parent: 82
     type: Transform
-  - containers:
-      Content.Server.Weapon.Ranged.Barrels.Components.BatteryBarrelComponent-ammo-container: !type:ContainerSlot {}
-      cellslot_cell_container: !type:ContainerSlot {}
-    type: ContainerContainer
 - uid: 1429
-  type: LaserRifleCog
+  type: WeaponLaserRifleCog
   components:
   - pos: -0.4915824,21.409182
     parent: 82
     type: Transform
-  - containers:
-      Content.Server.Weapon.Ranged.Barrels.Components.BatteryBarrelComponent-ammo-container: !type:ContainerSlot {}
-      cellslot_cell_container: !type:ContainerSlot {}
-    type: ContainerContainer
 - uid: 1430
-  type: ShotgunPump
+  type: WeaponShotgunGladstone
   components:
   - pos: -1.4915824,21.596682
     parent: 82
     type: Transform
-  - containers:
-      Content.Server.Weapon.Ranged.Barrels.Components.PumpBarrelComponent-ammo-container: !type:Container
-        ents: []
-      Content.Server.Weapon.Ranged.Barrels.Components.PumpBarrelComponent-chamber-container: !type:ContainerSlot {}
-    type: ContainerContainer
 - uid: 1431
   type: ClothingOuterVestKevlar
   components:
@@ -26617,38 +26591,30 @@ entities:
         ents: []
     type: ContainerContainer
 - uid: 1443
-  type: MagazineMagnumSmg
+  type: MagazineMagnumSubMachineGun
   components:
   - parent: 1444
     type: Transform
   - canCollide: False
     type: Physics
-  - containers:
-      Content.Server.Weapon.Ranged.Ammunition.Components.RangedMagazineComponent-magazine: !type:Container
-        ents: []
-    type: ContainerContainer
 - uid: 1444
-  type: SmgDrozd
+  type: WeaponSubMachineGunDrozd
   components:
   - pos: -0.46777725,20.588768
     parent: 82
     type: Transform
   - containers:
-      Content.Server.Weapon.Ranged.Barrels.Components.MagazineBarrelComponent-chamber: !type:ContainerSlot {}
-      Content.Server.Weapon.Ranged.Barrels.Components.MagazineBarrelComponent-magazine: !type:ContainerSlot
+      gun_chamber: !type:ContainerSlot {}
+      gun_magazine: !type:ContainerSlot
         ent: 1443
     type: ContainerContainer
 - uid: 1445
-  type: BoxMagazineMagnumSmg
+  type: MagazineBoxMagnum
   components:
   - parent: 1438
     type: Transform
   - canCollide: False
     type: Physics
-  - containers:
-      storagebase: !type:Container
-        ents: []
-    type: ContainerContainer
 - uid: 1446
   type: WallReinforced
   components:
@@ -26835,35 +26801,23 @@ entities:
         ents: []
     type: ContainerContainer
 - uid: 1473
-  type: TaserGun
+  type: WeaponTaser
   components:
   - pos: -2.474149,21.454634
     parent: 82
     type: Transform
-  - containers:
-      Content.Server.Weapon.Ranged.Barrels.Components.BatteryBarrelComponent-ammo-container: !type:ContainerSlot {}
-      cellslot_cell_container: !type:ContainerSlot {}
-    type: ContainerContainer
 - uid: 1474
-  type: TaserGun
+  type: WeaponTaser
   components:
   - pos: -2.474149,21.579634
     parent: 82
     type: Transform
-  - containers:
-      Content.Server.Weapon.Ranged.Barrels.Components.BatteryBarrelComponent-ammo-container: !type:ContainerSlot {}
-      cellslot_cell_container: !type:ContainerSlot {}
-    type: ContainerContainer
 - uid: 1475
-  type: TaserGun
+  type: WeaponTaser
   components:
   - pos: -2.474149,21.673384
     parent: 82
     type: Transform
-  - containers:
-      Content.Server.Weapon.Ranged.Barrels.Components.BatteryBarrelComponent-ammo-container: !type:ContainerSlot {}
-      cellslot_cell_container: !type:ContainerSlot {}
-    type: ContainerContainer
 - uid: 1476
   type: Poweredlight
   components:

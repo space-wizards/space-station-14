@@ -6,9 +6,9 @@
   components:
   - type: StorageFill
     contents:
-      - id: SmgDrozd
+      - id: WeaponSubMachineGunWt550
         amount: 2
-      - id: MagazineMagnumSmg
+      - id: MagazineMagnumSubMachineGun
         amount: 4
 
 - type: entity
@@ -19,7 +19,7 @@
   components:
   - type: StorageFill
     contents:
-      - id: ShotgunGladstone
+      - id: WeaponShotgunKammerer
         amount: 2
       - id: BoxLethalshot
         amount: 3
