@@ -389,11 +389,14 @@ namespace Content.Shared.CCVar
             CVarDef.Create("physics.mob_pushing", false, CVar.REPLICATED);
 
         /*
-         * Lobby music
+         * Music
          */
 
         public static readonly CVarDef<bool> LobbyMusicEnabled =
             CVarDef.Create("ambience.lobbymusicenabled", true, CVar.ARCHIVE | CVar.CLIENTONLY);
+
+        public static readonly CVarDef<bool> EventMusicEnabled =
+            CVarDef.Create("ambience.eventmusicenabled", true, CVar.ARCHIVE | CVar.CLIENTONLY);
 
         /*
          * Admin sounds

@@ -1,6 +1,9 @@
 ﻿using Content.Server.Administration;
+using Content.Server.Station.Components;
+using Content.Server.Station.Systems;
 using Content.Shared.Administration;
 using Content.Shared.Audio;
+using Content.Shared.Sound;
 using Robust.Server.Player;
 using Robust.Shared.Audio;
 using Robust.Shared.Console;
@@ -8,10 +11,11 @@ using Robust.Shared.Player;
 
 namespace Content.Server.Audio;
 
-public sealed class ServerAdminSoundSystem : SharedAdminSoundSystem
+public sealed class ServerGlobalSoundSystem : SharedGlobalSoundSystem
 {
     [Dependency] private readonly IConsoleHost _conHost = default!;
     [Dependency] private readonly IPlayerManager _playerManager = default!;
+    [Dependency] private readonly StationSystem _stationSystem = default!;
 
     public override void Initialize()
     {
@@ -29,6 +33,52 @@ public sealed class ServerAdminSoundSystem : SharedAdminSoundSystem
     {
         var msg = new AdminSoundEvent(filename, audioParams);
         RaiseNetworkEvent(msg, playerFilter);
+    }
+
+    private void PlayStationEventMusic(Filter playerFilter, string filename, StationEventMusicType type, AudioParams? audioParams = null)
+    {
+        var msg = new StationEventMusicEvent(filename, type, audioParams);
+        RaiseNetworkEvent(msg, playerFilter);
+    }
+
+    public void StopStationEventMusic(EntityUid source, StationEventMusicType type)
+    {
+        var station = _stationSystem.GetOwningStation(source);
+        var msg = new StopStationEventMusic(type);
+        if (station != null)
+        {
+            if(!EntityManager.TryGetComponent<StationDataComponent>(station, out var stationDataComp)) return;
+            foreach (var gridEnt in stationDataComp.Grids)
+            {
+                var filter = Filter.BroadcastGrid(gridEnt);
+                RaiseNetworkEvent(msg, filter);
+            }
+        }
+        else
+        {
+            var filter = Filter.Pvs(source);
+            RaiseNetworkEvent(msg, filter);
+        }
+    }
+
+    public void DispatchStationEventMusic(EntityUid source, SoundSpecifier sound, StationEventMusicType type)
+    {
+        var audio = AudioParams.Default.WithVolume(-8);
+        var station = _stationSystem.GetOwningStation(source);
+        if (station != null)
+        {
+            if(!EntityManager.TryGetComponent<StationDataComponent>(station, out var stationDataComp)) return;
+            foreach (var gridEnt in stationDataComp.Grids)
+            {
+                var filter = Filter.BroadcastGrid(gridEnt);
+                PlayStationEventMusic(filter, sound.GetSound(), type, audio);
+            }
+        }
+        else
+        {
+            var filter = Filter.Pvs(source);
+            PlayStationEventMusic(filter, sound.GetSound(), type, audio);
+        }
     }
 
     /// <summary>
