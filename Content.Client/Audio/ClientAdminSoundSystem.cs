@@ -9,7 +9,8 @@ namespace Content.Client.Audio;
 public sealed class ClientAdminSoundSystem : SharedAdminSoundSystem
 {
     [Dependency] private readonly IConfigurationManager _cfg = default!;
-
+    
+    private bool _adminAudioEnabled = true;
     private List<IPlayingAudioStream?> _adminAudio = new(1);
 
     public override void Initialize()
@@ -17,6 +18,7 @@ public sealed class ClientAdminSoundSystem : SharedAdminSoundSystem
         base.Initialize();
         SubscribeNetworkEvent<AdminSoundEvent>(PlayAdminSound);
         _cfg.OnValueChanged(CCVars.AdminSoundsEnabled, ToggleAdminSound, true);
+        _adminAudioEnabled = _cfg.GetCVar(CCVars.AdminSoundsEnabled);
     }
 
     public override void Shutdown()
@@ -31,7 +33,7 @@ public sealed class ClientAdminSoundSystem : SharedAdminSoundSystem
 
     private void PlayAdminSound(AdminSoundEvent soundEvent)
     {
-        if(!_cfg.GetCVar(CCVars.AdminSoundsEnabled)) return;
+        if(!_adminAudioEnabled) return;
 
         var stream = SoundSystem.Play(Filter.Local(), soundEvent.Filename, soundEvent.AudioParams);
         _adminAudio.Add(stream);
@@ -39,7 +41,8 @@ public sealed class ClientAdminSoundSystem : SharedAdminSoundSystem
 
     private void ToggleAdminSound(bool enabled)
     {
-        if (enabled) return;
+        _adminAudioEnabled = enabled;
+        if (_adminAudioEnabled) return;
         foreach (var stream in _adminAudio)
         {
             stream?.Stop();
