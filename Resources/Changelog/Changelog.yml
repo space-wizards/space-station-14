@@ -1,12 +1,6 @@
 Entries:
 - author: Peptide90
   changes:
-  - {message: 'Adds a bunch of new carpets, grass and shuttle flooring for mappers.
-      Keep an eye out for updates to your favorite maps!', type: Add}
-  id: 1134
-  time: '2022-02-27T07:01:48.0000000+00:00'
-- author: Peptide90
-  changes:
   - {message: Added the fire helmet! Heat resistant goodness for your head that looks
       cool AND has a light!, type: Add}
   id: 1135
@@ -3002,3 +2996,9 @@ Entries:
     type: Tweak}
   id: 1633
   time: '2022-06-02T19:46:46.0000000+00:00'
+- author: Peptide90
+  changes:
+  - {message: Post Lights are now slightly smaller and sit further up in a tile.,
+    type: Tweak}
+  id: 1634
+  time: '2022-06-02T20:12:23.0000000+00:00'
