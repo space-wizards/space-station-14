@@ -1,5 +1,6 @@
 using Content.Shared.Damage;
 using Content.Shared.Physics;
+using Content.Shared.Sound;
 using Content.Shared.Weapons.Ranged.Systems;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
@@ -28,8 +29,17 @@ public sealed class HitscanPrototype : IPrototype, IShootable
     [ViewVariables, DataField("collisionMask")]
     public int CollisionMask = (int) CollisionGroup.Opaque;
 
-    [ViewVariables(VVAccess.ReadWrite), DataField("color")]
-    public Color Color = Color.White;
+    /// <summary>
+    /// Sound that plays upon the thing being hit.
+    /// </summary>
+    [ViewVariables, DataField("sound")]
+    public SoundSpecifier? Sound;
+
+    /// <summary>
+    /// Force the hitscan sound to play rather than potentially playing the entity's sound.
+    /// </summary>
+    [ViewVariables(VVAccess.ReadWrite), DataField("forceSound")]
+    public bool ForceSound;
 
     /// <summary>
     /// Try not to set this too high.

@@ -20,7 +20,7 @@
   - type: ChamberMagazineAmmoProvider
   - type: ItemSlots
     slots:
-      gun-magazine:
+      gun_magazine:
         name: Magazine
         startingItem: MagazineLightRifle
         insertSound: /Audio/Weapons/Guns/MagIn/batrifle_magin.ogg
@@ -28,7 +28,7 @@
         whitelist:
           tags:
             - MagazineLightRifle
-      gun-chamber:
+      gun_chamber:
         name: Chamber
         startingItem: CartridgeLightRifle
         whitelist:
@@ -36,8 +36,8 @@
             - CartridgeLightRifle
   - type: ContainerContainer
     containers:
-      gun-magazine: !type:ContainerSlot
-      gun-chamber: !type:ContainerSlot
+      gun_magazine: !type:ContainerSlot
+      gun_chamber: !type:ContainerSlot
 
 - type: entity
   name: AKMS
@@ -62,7 +62,7 @@
   - type: ChamberMagazineAmmoProvider
   - type: ItemSlots
     slots:
-      gun-magazine:
+      gun_magazine:
         name: Magazine
         startingItem: MagazineLightRifle
         insertSound: /Audio/Weapons/Guns/MagIn/ltrifle_magin.ogg
@@ -70,7 +70,7 @@
         whitelist:
           tags:
             - MagazineLightRifle
-      gun-chamber:
+      gun_chamber:
         name: Chamber
         startingItem: CartridgeLightRifle
         whitelist:
@@ -78,8 +78,8 @@
             - CartridgeLightRifle
   - type: ContainerContainer
     containers:
-      gun-magazine: !type:ContainerSlot
-      gun-chamber: !type:ContainerSlot
+      gun_magazine: !type:ContainerSlot
+      gun_chamber: !type:ContainerSlot
   - type: Appearance
     visuals:
     - type: MagVisualizer
@@ -105,7 +105,7 @@
     sprite: Objects/Weapons/Guns/Rifles/carbine.rsi
   - type: ItemSlots
     slots:
-      gun-magazine:
+      gun_magazine:
         name: Magazine
         startingItem: MagazineRifle
         insertSound: /Audio/Weapons/Guns/MagIn/batrifle_magin.ogg
@@ -113,7 +113,7 @@
         whitelist:
           tags:
             - MagazineRifle
-      gun-chamber:
+      gun_chamber:
         name: Chamber
         startingItem: CartridgeRifle
         whitelist:
@@ -121,8 +121,8 @@
             - CartridgeRifle
   - type: ContainerContainer
     containers:
-      gun-magazine: !type:ContainerSlot
-      gun-chamber: !type:ContainerSlot
+      gun_magazine: !type:ContainerSlot
+      gun_chamber: !type:ContainerSlot
   - type: Appearance
     visuals:
     - type: MagVisualizer
@@ -151,7 +151,7 @@
       path: /Audio/Weapons/Guns/Gunshots/ltrifle.ogg
   - type: ItemSlots
     slots:
-      gun-magazine:
+      gun_magazine:
         name: Magazine
         startingItem: MagazineRifle
         insertSound: /Audio/Weapons/Guns/MagIn/ltrifle_magin.ogg
@@ -159,7 +159,7 @@
         whitelist:
           tags:
             - MagazineRifle
-      gun-chamber:
+      gun_chamber:
         name: Chamber
         startingItem: CartridgeRifle
         whitelist:
@@ -167,8 +167,8 @@
             - CartridgeRifle
   - type: ContainerContainer
     containers:
-      gun-magazine: !type:ContainerSlot
-      gun-chamber: !type:ContainerSlot
+      gun_magazine: !type:ContainerSlot
+      gun_chamber: !type:ContainerSlot
   - type: Appearance
     visuals:
     - type: MagVisualizer

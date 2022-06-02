@@ -52199,8 +52199,8 @@ entities:
     parent: 106
     type: Transform
   - containers:
-      gun-chamber: !type:ContainerSlot {}
-      gun-magazine: !type:ContainerSlot
+      gun_chamber: !type:ContainerSlot {}
+      gun_magazine: !type:ContainerSlot
         ent: 12219
     type: ContainerContainer
 - uid: 4140
@@ -87921,8 +87921,8 @@ entities:
     parent: 106
     type: Transform
   - containers:
-      gun-chamber: !type:ContainerSlot {}
-      gun-magazine: !type:ContainerSlot
+      gun_chamber: !type:ContainerSlot {}
+      gun_magazine: !type:ContainerSlot
         ent: 7409
     type: ContainerContainer
 - uid: 7420
@@ -88110,8 +88110,8 @@ entities:
     parent: 106
     type: Transform
   - containers:
-      gun-chamber: !type:ContainerSlot {}
-      gun-magazine: !type:ContainerSlot
+      gun_chamber: !type:ContainerSlot {}
+      gun_magazine: !type:ContainerSlot
         ent: 7441
     type: ContainerContainer
 - uid: 7443
@@ -105860,8 +105860,8 @@ entities:
     parent: 106
     type: Transform
   - containers:
-      gun-chamber: !type:ContainerSlot {}
-      gun-magazine: !type:ContainerSlot
+      gun_chamber: !type:ContainerSlot {}
+      gun_magazine: !type:ContainerSlot
         ent: 9064
     type: ContainerContainer
 - uid: 9105

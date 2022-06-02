@@ -63863,8 +63863,8 @@ entities:
   - canCollide: False
     type: Physics
   - containers:
-      gun-chamber: !type:ContainerSlot {}
-      gun-magazine: !type:ContainerSlot
+      gun_chamber: !type:ContainerSlot {}
+      gun_magazine: !type:ContainerSlot
         ent: 878
     type: ContainerContainer
 - uid: 4757
@@ -120485,8 +120485,8 @@ entities:
   - canCollide: False
     type: Physics
   - containers:
-      gun-chamber: !type:ContainerSlot {}
-      gun-magazine: !type:ContainerSlot
+      gun_chamber: !type:ContainerSlot {}
+      gun_magazine: !type:ContainerSlot
         ent: 9839
     type: ContainerContainer
 - uid: 9839
@@ -120505,8 +120505,8 @@ entities:
   - canCollide: False
     type: Physics
   - containers:
-      gun-chamber: !type:ContainerSlot {}
-      gun-magazine: !type:ContainerSlot
+      gun_chamber: !type:ContainerSlot {}
+      gun_magazine: !type:ContainerSlot
         ent: 9841
     type: ContainerContainer
 - uid: 9841
@@ -120677,8 +120677,8 @@ entities:
     parent: 130
     type: Transform
   - containers:
-      gun-chamber: !type:ContainerSlot {}
-      gun-magazine: !type:ContainerSlot
+      gun_chamber: !type:ContainerSlot {}
+      gun_magazine: !type:ContainerSlot
         ent: 9862
     type: ContainerContainer
 - uid: 9862

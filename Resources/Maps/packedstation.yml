@@ -78797,11 +78797,8 @@ entities:
   - canCollide: False
     type: Physics
   - containers:
-      MagazineBarrel-chamber: !type:ContainerSlot {}
-      MagazineBarrel-magazine: !type:ContainerSlot
-        ent: 7532
-      gun-chamber: !type:ContainerSlot {}
-      gun-magazine: !type:ContainerSlot
+      gun_chamber: !type:ContainerSlot {}
+      gun_magazine: !type:ContainerSlot
         ent: 11936
     type: ContainerContainer
 - uid: 7532
@@ -78820,11 +78817,8 @@ entities:
   - canCollide: False
     type: Physics
   - containers:
-      MagazineBarrel-chamber: !type:ContainerSlot {}
-      MagazineBarrel-magazine: !type:ContainerSlot
-        ent: 7534
-      gun-chamber: !type:ContainerSlot {}
-      gun-magazine: !type:ContainerSlot
+      gun_chamber: !type:ContainerSlot {}
+      gun_magazine: !type:ContainerSlot
         ent: 11937
     type: ContainerContainer
 - uid: 7534
@@ -119653,11 +119647,8 @@ entities:
   - canCollide: False
     type: Physics
   - containers:
-      MagazineBarrel-chamber: !type:ContainerSlot {}
-      MagazineBarrel-magazine: !type:ContainerSlot
-        ent: 11142
-      gun-chamber: !type:ContainerSlot {}
-      gun-magazine: !type:ContainerSlot
+      gun_chamber: !type:ContainerSlot {}
+      gun_magazine: !type:ContainerSlot
         ent: 11938
     type: ContainerContainer
 - uid: 11142
