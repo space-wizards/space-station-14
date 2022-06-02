@@ -6,6 +6,7 @@ using Content.Shared.Pulling.Events;
 using Robust.Shared.Containers;
 using Robust.Shared.Map;
 using Robust.Shared.Physics;
+using Content.Shared.MobState.Components;
 
 namespace Content.Shared.Pulling
 {
@@ -73,7 +74,8 @@ namespace Content.Shared.Pulling
 
         public bool TryStopPull(SharedPullableComponent pullable, EntityUid? user = null)
         {
-            if (!pullable.BeingPulled)
+            if (!pullable.BeingPulled ||
+                (TryComp<MobStateComponent>(pullable.Owner, out var mobState) && mobState.IsDead()))
             {
                 return false;
             }
