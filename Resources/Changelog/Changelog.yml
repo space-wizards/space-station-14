@@ -1,12 +1,6 @@
 Entries:
 - author: Peptide90
   changes:
-  - {message: Added the fire helmet! Heat resistant goodness for your head that looks
-      cool AND has a light!, type: Add}
-  id: 1135
-  time: '2022-02-27T07:02:07.0000000+00:00'
-- author: Peptide90
-  changes:
   - {message: 'Pillar V5.1 - bug fixes and reinforced more walls, departments, offices
       and substations.', type: Add}
   id: 1136
@@ -3002,3 +2996,8 @@ Entries:
     type: Tweak}
   id: 1634
   time: '2022-06-02T20:12:23.0000000+00:00'
+- author: DogZeroX
+  changes:
+  - {message: Nukes will now explode in 120 seconds instead of 180., type: Tweak}
+  id: 1635
+  time: '2022-06-02T20:53:32.0000000+00:00'
