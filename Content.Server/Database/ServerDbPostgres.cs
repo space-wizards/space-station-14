@@ -422,6 +422,27 @@ namespace Content.Server.Database
 
         }
 
+        public static List<RoleTimer> ConvertRoleTimers(List<ServerRoleTimerDef> timers)
+        {
+            var returnList = new List<RoleTimer>();
+            foreach (var timer in timers)
+            {
+                returnList.Add(ConvertRoleTimer(timer));
+            }
+            return returnList;
+        }
+
+        public static RoleTimer ConvertRoleTimer(ServerRoleTimerDef timer)
+        {
+            var rt = new RoleTimer
+            {
+                Player = timer.UserId,
+                Role = timer.Role,
+                TimeSpent = timer.TimeSpent
+            };
+            return rt;
+        }
+
         #endregion
 
         protected override PlayerRecord MakePlayerRecord(Player record)
