@@ -179,7 +179,7 @@ namespace Content.Shared.CCVar
         /// If roles should be restricted based on time.
         /// </summary>
         public static readonly CVarDef<bool>
-            RoleTimers = CVarDef.Create("game.role_timers", false, CVar.ARCHIVE | CVar.REPLICATED);
+            GameRoleTimers = CVarDef.Create("game.role_timers", false, CVar.SERVER | CVar.REPLICATED);
 
         /// <summary>
         ///     Whether a random position offset will be applied to the station on roundstart.

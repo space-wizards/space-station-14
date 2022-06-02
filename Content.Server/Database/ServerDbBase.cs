@@ -365,8 +365,8 @@ namespace Content.Server.Database
             await using var db = await GetDb();
 
             return await db.DbContext.RoleTimer
-                .Include(v => v.PlayerId == player)
-                .Include(v => v.Role == role)
+                .Where(v => v.PlayerId == player)
+                .Where(v => v.Role == role)
                 .SingleAsync();
         }
 
@@ -375,7 +375,7 @@ namespace Content.Server.Database
             await using var db = await GetDb();
 
             return await db.DbContext.RoleTimer
-                .Include(p => p.PlayerId == player)
+                .Where(p => p.PlayerId == player)
                 .ToListAsync();
         }
 
@@ -383,7 +383,8 @@ namespace Content.Server.Database
         {
             await using var db = await GetDb();
 
-            var newTimer = await db.DbContext.RoleTimer.Where(note => note.Id == id).SingleAsync();
+            var newTimer = await db.DbContext.RoleTimer
+                .SingleAsync(note => note.Id == id);
             newTimer.TimeSpent = time;
 
             await db.DbContext.SaveChangesAsync();

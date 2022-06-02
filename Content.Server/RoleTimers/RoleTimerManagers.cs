@@ -1,4 +1,5 @@
-﻿using Content.Server.Database;
+﻿using System.Threading.Tasks;
+using Content.Server.Database;
 using Robust.Shared.Network;
 
 namespace Content.Server.RoleTimers
@@ -7,19 +8,19 @@ namespace Content.Server.RoleTimers
     {
         [Dependency] private readonly IServerDbManager _db = default!;
 
-        private RoleTimer GetRoleTimer(NetUserId userId, string role)
+        private async Task<RoleTimer> GetRoleTimer(NetUserId userId, string role)
         {
-            return _db.GetRoleTimer(userId.UserId, role).Result;
+            return await _db.GetRoleTimer(userId.UserId, role);
         }
 
-        private List<RoleTimer> GetRoleTimers(NetUserId userId)
+        private async Task<List<RoleTimer>> GetRoleTimers(NetUserId userId)
         {
-            return _db.GetRoleTimers(userId.UserId).Result;
+            return await _db.GetRoleTimers(userId.UserId);
         }
 
-        private void EditRoleTimer(int id, TimeSpan time)
+        private async Task EditRoleTimer(int id, TimeSpan time)
         {
-            _db.EditRoleTimer(id, time);
+            await _db.EditRoleTimer(id, time);
         }
     }
 }

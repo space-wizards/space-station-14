@@ -95,6 +95,10 @@ namespace Content.Server.Database
             modelBuilder.Entity<AdminLog>()
                 .HasIndex(log => log.Date);
 
+            modelBuilder.Entity<RoleTimer>()
+                .HasIndex(v => new { v.PlayerId, v.Role })
+                .IsUnique();
+
             modelBuilder.Entity<AdminLogPlayer>()
                 .HasOne(player => player.Player)
                 .WithMany(player => player.AdminLogs)
@@ -501,7 +505,7 @@ namespace Content.Server.Database
         public DateTime UnbanTime { get; set; }
     }
 
-    [Table(nameof(PlayerId))]
+    [Table("role_timers")]
     public sealed class RoleTimer
     {
         [Required, Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
@@ -510,7 +514,7 @@ namespace Content.Server.Database
         [Required, ForeignKey("player")]
         public Guid PlayerId { get; set; }
 
-        public string Role { get; set; } = string.Empty;
+        public string Role { get; set; } = null!;
 
         public TimeSpan TimeSpent { get; set; }
     }
