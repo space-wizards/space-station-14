@@ -141,7 +141,7 @@ namespace Content.Server.StationEvents.Events
 
             if (StartAnnouncement != null)
             {
-                var chatSystem = IoCManager.Resolve<ChatSystem>();
+                var chatSystem = EntitySystem.Get<ChatSystem>();
                 chatSystem.DispatchGlobalStationAnnouncement(StartAnnouncement, playDefaultSound: false, colorOverride: Color.Gold);
             }
 
@@ -164,7 +164,7 @@ namespace Content.Server.StationEvents.Events
 
             if (EndAnnouncement != null)
             {
-                var chatSystem = IoCManager.Resolve<ChatSystem>();
+                var chatSystem = EntitySystem.Get<ChatSystem>();
                 chatSystem.DispatchGlobalStationAnnouncement(EndAnnouncement, playDefaultSound: false, colorOverride: Color.Gold);
             }
 
