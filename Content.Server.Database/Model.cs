@@ -289,7 +289,7 @@ namespace Content.Server.Database
         public List<AdminNote> AdminNotesLastEdited { get; set; } = null!;
         public List<AdminNote> AdminNotesDeleted { get; set; } = null!;
 
-        public Dictionary<string, TimeSpan> TimeSpentOnRoles { get; set; } = null!;
+        public Dictionary<string, TimeSpan> TimeSpentOnRoles { get; set; } = new();
     }
 
     [Table("whitelist")]

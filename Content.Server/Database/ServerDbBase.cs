@@ -822,6 +822,42 @@ namespace Content.Server.Database
 
         #endregion
 
+        #region Role Timers
+        public async Task SetPlaytimeForRole(NetUserId player, string role, TimeSpan time)
+        {
+            await using var db = await GetDb();
+
+            var dbPlayer = await db.DbContext.Player.Where(dbPlayer => dbPlayer.UserId == player).SingleOrDefaultAsync();
+            if (dbPlayer == null)
+            {
+                return;
+            }
+
+            dbPlayer.TimeSpentOnRoles[role] = time;
+            await db.DbContext.SaveChangesAsync();
+        }
+
+        public async Task<TimeSpan?> GetPlaytimeForRole(NetUserId player, string role)
+        {
+            await using var db = await GetDb();
+
+            return await db.DbContext.Player
+                .Where(dbPlayer => dbPlayer.UserId == player)
+                .Select(dbPlayer => dbPlayer.TimeSpentOnRoles[role])
+                .SingleOrDefaultAsync();
+        }
+
+        public async Task<Dictionary<string, TimeSpan>?> GetPlaytimeAllRoles(NetUserId player)
+        {
+            await using var db = await GetDb();
+
+            return await db.DbContext.Player
+                .Where(dbPlayer => dbPlayer.UserId == player)
+                .Select(dbPlayer => dbPlayer.TimeSpentOnRoles)
+                .SingleOrDefaultAsync();
+        }
+        #endregion
+
         #region Uploaded Resources Logs
 
         public async Task AddUploadedResourceLogAsync(NetUserId user, DateTime date, string path, byte[] data)

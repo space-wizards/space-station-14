@@ -205,6 +205,16 @@ namespace Content.Server.Database
         Task EditAdminNote(int id, string message, Guid editedBy, DateTime editedAt);
 
         #endregion
+
+        #region Role Timers
+
+        Task SetPlaytimeForRole(NetUserId player, string role, TimeSpan time);
+
+        Task<TimeSpan?> GetPlaytimeForRole(NetUserId player, string role);
+
+        Task<Dictionary<string, TimeSpan>?> GetPlaytimeAllRoles(NetUserId player);
+
+        #endregion
     }
 
     public sealed class ServerDbManager : IServerDbManager
@@ -529,6 +539,21 @@ namespace Content.Server.Database
         public Task EditAdminNote(int id, string message, Guid editedBy, DateTime editedAt)
         {
             return _db.EditAdminNote(id, message, editedBy, editedAt);
+        }
+
+        public Task SetPlaytimeForRole(NetUserId player, string role, TimeSpan time)
+        {
+            return _db.SetPlaytimeForRole(player, role, time);
+        }
+
+        public Task<TimeSpan?> GetPlaytimeForRole(NetUserId player, string role)
+        {
+            return _db.GetPlaytimeForRole(player, role);
+        }
+
+        public Task<Dictionary<string, TimeSpan>?> GetPlaytimeAllRoles(NetUserId player)
+        {
+            return _db.GetPlaytimeAllRoles(player);
         }
 
         private DbContextOptions<PostgresServerDbContext> CreatePostgresOptions()
