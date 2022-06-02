@@ -101,7 +101,7 @@
   components:
   - type: Tag
     tags:
-      - MagazinePistolTopMounted
+      - MagazinePistolSubMachineGunTopMounted
   - type: BallisticAmmoProvider
     proto: CartridgePistol
     whitelist:

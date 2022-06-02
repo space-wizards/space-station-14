@@ -11,6 +11,8 @@
     size: 24
   - type: AmmoCounter
   - type: Gun
+    minAngle: 2
+    maxAngle: 8
     fireRate: 8
     selectedMode: FullAuto
     availableModes:
@@ -166,6 +168,22 @@
     selectedMode: FullAuto
     availableModes:
     - FullAuto
+  - type: ItemSlots
+    slots:
+      gun_magazine:
+        name: Magazine
+        startingItem: MagazinePistolSubMachineGunTopMounted
+        insertSound: /Audio/Weapons/Guns/MagIn/smg_magin.ogg
+        ejectSound: /Audio/Weapons/Guns/MagOut/smg_magout.ogg
+        whitelist:
+          tags:
+            - MagazinePistolSubMachineGunTopMounted
+      gun_chamber:
+        name: Chamber
+        startingItem: CartridgePistol
+        whitelist:
+          tags:
+            - CartridgePistol
   - type: Appearance
     visuals:
       - type: MagVisualizer
