@@ -2,14 +2,12 @@
 using Content.Server.Administration;
 using Content.Server.Body.Components;
 using Content.Server.Cargo.Components;
-using Content.Server.Inventory;
 using Content.Server.Materials;
 using Content.Server.Stack;
-using Content.Server.Storage.Components;
 using Content.Shared.Administration;
-using Content.Shared.Inventory;
 using Content.Shared.MobState.Components;
 using Robust.Shared.Console;
+using Robust.Shared.Containers;
 using Robust.Shared.Map;
 using Robust.Shared.Utility;
 
@@ -22,8 +20,6 @@ public sealed class PricingSystem : EntitySystem
 {
     [Dependency] private readonly IConsoleHost _consoleHost = default!;
     [Dependency] private readonly IMapManager _mapManager = default!;
-    [Dependency] private readonly InventorySystem _inventorySystem = default!;
-
 
     /// <inheritdoc/>
     public override void Initialize()
@@ -111,30 +107,13 @@ public sealed class PricingSystem : EntitySystem
 
     private void CalculateContainerPrice(EntityUid uid, ContentsPriceComponent component, ref PriceCalculationEvent args)
     {
-        if (TryComp<EntityStorageComponent>(uid, out var entStorage))
-        {
-            foreach (var contained in entStorage.Contents.ContainedEntities)
-            {
-                args.Price += GetPrice(contained);
-            }
-        }
+        if (!TryComp<ContainerManagerComponent>(uid, out var containers)) return;
 
-        if (TryComp<ServerStorageComponent>(uid, out var storage) && storage.Storage is not null)
+        foreach (var container in containers.Containers)
         {
-            foreach (var contained in storage.Storage.ContainedEntities)
+            foreach (var ent in container.Value.ContainedEntities)
             {
-                args.Price += GetPrice(contained);
-            }
-        }
-
-        if (TryComp<ServerInventoryComponent>(uid, out var inventory))
-        {
-            foreach (var slot in _inventorySystem.GetSlots(uid, inventory))
-            {
-                if (!_inventorySystem.TryGetSlotEntity(uid, slot.Name, out var obj, inventory))
-                    continue;
-
-                args.Price += GetPrice(obj.Value);
+                args.Price += GetPrice(ent);
             }
         }
     }
@@ -144,7 +123,7 @@ public sealed class PricingSystem : EntitySystem
         if (!TryComp<StackComponent>(uid, out var stack))
             throw new Exception("Tried to get the stack price of an object that isn't a stack!");
 
-        args.Price += stack.Count;
+        args.Price += stack.Count * component.Price;
     }
 
     private void CalculateStaticPrice(EntityUid uid, StaticPriceComponent component, ref PriceCalculationEvent args)
@@ -180,13 +159,13 @@ public sealed class PricingSystem : EntitySystem
         var xform = Transform(grid);
         var price = 0.0;
 
-        foreach (var childXform in xform.Children)
+        foreach (var child in xform.ChildEntities)
         {
-            if (predicate is null || predicate(childXform.Owner))
+            if (predicate is null || predicate(child))
             {
-                var subPrice = GetPrice(childXform.Owner);
+                var subPrice = GetPrice(child);
                 price += subPrice;
-                afterPredicate?.Invoke(childXform.Owner, subPrice);
+                afterPredicate?.Invoke(child, subPrice);
             }
         }
 

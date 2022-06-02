@@ -11,3 +11,5 @@
     - type: Item
       sprite: Objects/Tools/appraisal-tool.rsi
     - type: PriceGun
+    - type: UseDelay
+      delay: 3
