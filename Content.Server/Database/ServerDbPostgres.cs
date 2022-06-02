@@ -411,20 +411,32 @@ namespace Content.Server.Database
         #endregion
 
         #region Role Timers
-
-        public override Task<List<ServerRoleTimerDef>> GetRoleTimersAsync(Guid player)
+        public override async Task<List<ServerRoleTimerDef>> GetRoleTimersAsync(Guid player)
         {
+            await using var db = await GetDbImpl();
 
+            var query = await db.PgDbContext.RoleTimer
+                .Include(p => p.Player == player)
+                .ToListAsync();
+
+            return ConvertRoleTimers(query);
         }
 
-        public override Task<ServerRoleTimerDef> GetRoleTimerAsync(Guid player, string role)
+        public override async Task<ServerRoleTimerDef> GetRoleTimerAsync(Guid player, string role)
         {
+            await using var db = await GetDbImpl();
 
+            var query = await db.PgDbContext.RoleTimer
+                .Include(p => p.Player == player)
+                .Where(p => p.Role == role)
+                .FirstAsync();
+
+            return ConvertRoleTimer(query);
         }
 
-        public static List<RoleTimer> ConvertRoleTimers(List<ServerRoleTimerDef> timers)
+        private static List<ServerRoleTimerDef> ConvertRoleTimers(List<RoleTimer> timers)
         {
-            var returnList = new List<RoleTimer>();
+            var returnList = new List<ServerRoleTimerDef>();
             foreach (var timer in timers)
             {
                 returnList.Add(ConvertRoleTimer(timer));
@@ -432,17 +444,10 @@ namespace Content.Server.Database
             return returnList;
         }
 
-        public static RoleTimer ConvertRoleTimer(ServerRoleTimerDef timer)
+        private static ServerRoleTimerDef ConvertRoleTimer(RoleTimer timer)
         {
-            var rt = new RoleTimer
-            {
-                Player = timer.UserId,
-                Role = timer.Role,
-                TimeSpent = timer.TimeSpent
-            };
-            return rt;
+            return new ServerRoleTimerDef(timer.Player, timer.Role, timer.TimeSpent);
         }
-
         #endregion
 
         protected override PlayerRecord MakePlayerRecord(Player record)
