@@ -8,7 +8,7 @@
   icon: "Nanotrasen"
   supervisors: "the head of security"
   access:
-   - AllAccess
+    - AllAccess
 
 
 - type: startingGear
