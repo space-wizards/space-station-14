@@ -52,23 +52,22 @@ namespace Content.Shared.Access.Systems
         }
 
         /// <summary>
-        /// Searches an <see cref="AccessComponent"/> in the entity itself, in its active hand or in its ID slot.
-        /// Then compares the found access with the configured access lists to see if it is allowed.
+        /// Searches the given entity for access tags
+        /// then compares it with the readers access list to see if it is allowed.
         /// </summary>
-        /// <remarks>
-        ///     If no access is found, an empty set is used instead.
-        /// </remarks>
-        /// <param name="entity">The entity to bor access.</param>
-        /// <param name="reader"></param>
-        public bool IsAllowed(EntityUid entity, AccessReaderComponent? reader = null)
+        /// <param name="entity">The entity that wants access.</param>
+        /// <param name="reader">A reader from a different entity</param>
+        public bool IsAllowed(EntityUid entity, AccessReaderComponent reader)
         {
-            if (!Resolve(entity, ref reader, false))
-                return true;
-
             var tags = FindAccessTags(entity);
             return IsAllowed(tags, reader);
         }
 
+        /// <summary>
+        /// Compares the given tags with the readers access list to see if it is allowed.
+        /// </summary>
+        /// <param name="accessTags">A list of access tags</param>
+        /// <param name="reader">An access reader to check against</param>
         public bool IsAllowed(ICollection<string> accessTags, AccessReaderComponent reader)
         {
             if (!reader.Enabled)
@@ -90,6 +89,10 @@ namespace Content.Shared.Access.Systems
             return reader.AccessLists.Count == 0 || reader.AccessLists.Any(a => a.IsSubsetOf(accessTags));
         }
 
+        /// <summary>
+        /// Finds the access tags on the given entity
+        /// </summary>
+        /// <param name="entity">The entity that to search.</param>
         public ICollection<string> FindAccessTags(EntityUid uid)
         {
             HashSet<string>? tags = null;
