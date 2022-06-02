@@ -643,6 +643,34 @@ namespace Content.Server.Database.Migrations.Postgres
                     b.ToTable("profile", (string)null);
                 });
 
+            modelBuilder.Entity("Content.Server.Database.RoleTimer", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasColumnName("player_id_id");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<Guid>("PlayerId")
+                        .HasColumnType("uuid")
+                        .HasColumnName("player_id");
+
+                    b.Property<string>("Role")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("role");
+
+                    b.Property<TimeSpan>("TimeSpent")
+                        .HasColumnType("interval")
+                        .HasColumnName("time_spent");
+
+                    b.HasKey("Id")
+                        .HasName("PK__player_id");
+
+                    b.ToTable("PlayerId");
+                });
+
             modelBuilder.Entity("Content.Server.Database.Round", b =>
                 {
                     b.Property<int>("Id")
