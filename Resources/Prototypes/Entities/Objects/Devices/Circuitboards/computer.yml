@@ -68,6 +68,33 @@
 
 - type: entity
   parent: BaseComputerCircuitboard
+  id: SurveillanceCameraMonitorCircuitboard
+  name: surveillance camera monitor board
+  description: A computer printed circuit board for a surveillance camera monitor
+  components:
+    - type: ComputerBoard
+      prototype: ComputerSurveillanceCameraMonitor
+
+- type: entity
+  parent: BaseComputerCircuitboard
+  id: SurveillanceWirelessCameraMonitorCircuitboard
+  name: surveillance wireless camera monitor board
+  description: A computer printed circuit board for a surveillance wireless camera monitor
+  components:
+    - type: ComputerBoard
+      prototype: ComputerSurveillanceWirelessCameraMonitor
+
+- type: entity
+  parent: BaseComputerCircuitboard
+  id: ComputerTelevisionCircuitboard
+  name: television board
+  description: A computer printed circuit board for a television
+  components:
+    - type: ComputerBoard
+      prototype: ComputerTelevision
+
+- type: entity
+  parent: BaseComputerCircuitboard
   id: PowerMonitoringComputerCircuitboard
   name: power monitoring computer board
   components:

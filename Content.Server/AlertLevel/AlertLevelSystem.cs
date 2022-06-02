@@ -19,6 +19,15 @@ public sealed class AlertLevelSystem : EntitySystem
     public override void Initialize()
     {
         SubscribeLocalEvent<StationInitializedEvent>(OnStationInitialize);
+
+        _prototypeManager.PrototypesReloaded += OnPrototypeReload;
+    }
+
+    public override void Shutdown()
+    {
+        base.Shutdown();
+
+        _prototypeManager.PrototypesReloaded -= OnPrototypeReload;
     }
 
     public override void Update(float time)
@@ -62,6 +71,34 @@ public sealed class AlertLevelSystem : EntitySystem
         }
 
         SetLevel(args.Station, defaultLevel, false, false, true);
+    }
+
+    private void OnPrototypeReload(PrototypesReloadedEventArgs args)
+    {
+        if (!args.ByType.TryGetValue(typeof(AlertLevelPrototype), out var alertPrototypes)
+            || !alertPrototypes.Modified.TryGetValue(DefaultAlertLevelSet, out var alertObject)
+            || alertObject is not AlertLevelPrototype alerts)
+        {
+            return;
+        }
+
+        foreach (var comp in EntityQuery<AlertLevelComponent>())
+        {
+            comp.AlertLevels = alerts;
+
+            if (!comp.AlertLevels.Levels.ContainsKey(comp.CurrentLevel))
+            {
+                var defaultLevel = comp.AlertLevels.DefaultLevel;
+                if (string.IsNullOrEmpty(defaultLevel))
+                {
+                    defaultLevel = comp.AlertLevels.Levels.Keys.First();
+                }
+
+                SetLevel(comp.Owner, defaultLevel, true, true, true);
+            }
+        }
+
+        RaiseLocalEvent(new AlertLevelPrototypeReloadedEvent());
     }
 
     public float GetAlertLevelDelay(EntityUid station, AlertLevelComponent? alert = null)
@@ -112,10 +149,20 @@ public sealed class AlertLevelSystem : EntitySystem
 
         var stationName = dataComponent.EntityName;
 
-        var name = Loc.GetString($"alert-level-{level}").ToLower();
+        var name = level.ToLower();
+
+        if (Loc.TryGetString($"alert-level-{level}", out var locName))
+        {
+            name = locName.ToLower();
+        }
 
         // Announcement text. Is passed into announcementFull.
-        var announcement = Loc.GetString(detail.Announcement);
+        var announcement = detail.Announcement;
+
+        if (Loc.TryGetString(detail.Announcement, out var locAnnouncement))
+        {
+            announcement = locAnnouncement;
+        }
 
         // The full announcement to be spat out into chat.
         var announcementFull = Loc.GetString("alert-level-announcement", ("name", name), ("announcement", announcement));
@@ -145,6 +192,9 @@ public sealed class AlertLevelSystem : EntitySystem
 }
 
 public sealed class AlertLevelDelayFinishedEvent : EntityEventArgs
+{}
+
+public sealed class AlertLevelPrototypeReloadedEvent : EntityEventArgs
 {}
 
 public sealed class AlertLevelChangedEvent : EntityEventArgs

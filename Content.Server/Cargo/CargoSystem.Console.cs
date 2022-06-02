@@ -190,7 +190,7 @@ namespace Content.Server.Cargo
         public bool ApproveOrder(EntityUid uid, EntityUid approver, int id, int orderNumber, AccessReaderComponent? reader = null)
         {
             // does the approver have permission to approve orders?
-            if (Resolve(uid, ref reader) && !_accessReaderSystem.IsAllowed(reader, approver))
+            if (Resolve(uid, ref reader) && !_accessReaderSystem.IsAllowed(approver, reader))
                 return false;
 
             // get the approver's name

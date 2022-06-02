@@ -697,8 +697,8 @@
   id: WallInvisible
   name: Invisible Wall
   components:
-  - type: DeleteAfterTime
-    despawnTime: 30
+  - type: TimedDespawn
+    lifetime: 30
   - type: Tag
     tags:
       - Wall
