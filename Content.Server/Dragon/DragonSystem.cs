@@ -15,6 +15,10 @@ using System.Threading;
 using Content.Shared.MobState.State;
 using Content.Shared.Doors.Components;
 
+/*
+ * Please don't re-use this code for anything else. If you do sloth will shed you.
+ */
+
 namespace Content.Server.Dragon
 {
     public sealed class DragonSystem : EntitySystem
@@ -143,7 +147,7 @@ namespace Content.Server.Dragon
 
             // Absolutely ass solution but requires less yaml fuckery
             // If it's a door (firelock, airlock, windoor), Wall or Window, dragon can eat it.
-            if (_tagSystem.HasTag(target, "Wall") || (_tagSystem.HasTag(target, "Window") || EntityManager.HasComponent<DoorComponent>(target) || EntityManager.HasComponent<DoorComponent>(target)))
+            if (_tagSystem.HasTag(target, "Wall") || (_tagSystem.HasTag(target, "Window") || EntityManager.HasComponent<DoorComponent>(target)))
             {
                 _popupSystem.PopupEntity(Loc.GetString("devour-action-popup-message-structure"), dragonuid, Filter.Entities(dragonuid));
                 SoundSystem.Play(Filter.Pvs(dragonuid, entityManager: EntityManager), "/Audio/Machines/airlock_creaking.ogg");

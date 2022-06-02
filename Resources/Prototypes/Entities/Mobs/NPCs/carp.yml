@@ -2,7 +2,7 @@
   name: space carp
   id: MobCarp
   parent: SimpleSpaceMobBase
-  description: It's a space fish! A very, very angry space fish!
+  description: It's a space carp.
   components:
   - type: UtilityAI
     behaviorSets:
