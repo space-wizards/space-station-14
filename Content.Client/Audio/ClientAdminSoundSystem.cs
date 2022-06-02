@@ -18,7 +18,6 @@ public sealed class ClientAdminSoundSystem : SharedAdminSoundSystem
         base.Initialize();
         SubscribeNetworkEvent<AdminSoundEvent>(PlayAdminSound);
         _cfg.OnValueChanged(CCVars.AdminSoundsEnabled, ToggleAdminSound, true);
-        _adminAudioEnabled = _cfg.GetCVar(CCVars.AdminSoundsEnabled);
     }
 
     public override void Shutdown()
