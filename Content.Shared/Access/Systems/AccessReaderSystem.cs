@@ -59,7 +59,7 @@ namespace Content.Shared.Access.Systems
         /// <param name="reader">Optional reader from the target entity</param>
         public bool IsAllowed(EntityUid source, EntityUid target, AccessReaderComponent? reader = null)
         {
-            if (!Resolve(target, ref reader))
+            if (!Resolve(target, ref reader, false))
                 return true;
             var tags = FindAccessTags(source);
             return IsAllowed(tags, reader);
