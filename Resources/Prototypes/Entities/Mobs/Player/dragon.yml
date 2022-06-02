@@ -14,10 +14,13 @@
   - type: Physics
     bodyType: KinematicController
   - type: HeatResistance
-  - type: CombatMode
-  - type: Internals
   - type: Examiner
   - type: Speech
+  - type: CombatMode
+    disarmAction:
+      enabled: false
+      autoPopulate: false
+      name: action-name-disarm
   - type: DoAfter
   # You can't pull a huge fuckoff dragon right? Butcher him on the spot!
   #- type: Pullable
@@ -76,6 +79,7 @@
         Bloodloss:
           -1
   - type: MovementIgnoreGravity
+  - type: NoSlip
   - type: Appearance
     visuals:
     - type: DamageStateVisualizer
@@ -86,16 +90,23 @@
     spawned:
     - id: FoodMeatDragon
       amount: 2
-  - type: UnarmedCombat
-    range: 0.8
-    arcwidth: 2
+  - type: MeleeWeapon
+    range: 1.5
+    arcwidth: 0
     arc: bite
+    hitSound:
+      path: /Audio/Effects/bite.ogg
     damage:
-      groups:
-        Brute: 45
+      types:
+        Piercing: 15
+        Slash: 30
+    disarmAction:
+      enabled: false
+      autoPopulate: false
+      name: action-name-disarm
   - type: Dragon
     spawnsLeft: 2
-    spawnsProto: MobCarpSentient
+    spawnsProto: MobCarpDragon
     devourAction:
       event: !type:DragonDevourActionEvent
       icon: Interface/Actions/devour.png
@@ -106,10 +117,13 @@
       whitelist:
         components:
         - MobState
-        - Tag
+        - Door
+        tags:
+        - Wall
     spawnAction:
       event: !type:DragonSpawnActionEvent
       icon: Interface/Actions/carpbirth.png
       name: action-name-carp-birth
       description: action-description-carp-birth
       useDelay: 5
+

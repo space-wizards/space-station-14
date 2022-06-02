@@ -13,6 +13,7 @@ using Robust.Shared.Containers;
 using Robust.Shared.Player;
 using System.Threading;
 using Content.Shared.MobState.State;
+using Content.Shared.Doors.Components;
 
 namespace Content.Server.Dragon
 {
@@ -109,9 +110,6 @@ namespace Content.Server.Dragon
                     case SharedDeadMobState:
                         if (!EntityManager.HasComponent<DamageableComponent>(dragonuid)) return;
 
-                        // Recover spawns.
-                        component.SpawnsLeft = Math.Min(component.SpawnsLeft + 1, component.MaxSpawns);
-
                         //Humanoid devours allow dragon to get eggs, corpses included
                         if (EntityManager.HasComponent<HumanoidAppearanceComponent>(target))
                         {
@@ -120,9 +118,10 @@ namespace Content.Server.Dragon
                             // Sends the human entity into the stomach so it can be revived later.
                             component.DragonStomach.Insert(target);
                             SoundSystem.Play(Filter.Pvs(dragonuid, entityManager: EntityManager), "/Audio/Effects/sound_magic_demon_consume.ogg");
-
+                            // Add a spawn for a consumed humanoid
+                            component.SpawnsLeft = Math.Min(component.SpawnsLeft + 1, component.MaxSpawns);
                         }
-                        //Non-humanoid mobs can only heal dragon for half the normal amount
+                        //Non-humanoid mobs can only heal dragon for half the normal amount, with no additional spawn tickets
                         else
                         {
                             // heal HALF the damage
@@ -142,10 +141,12 @@ namespace Content.Server.Dragon
                 return;
             }
 
-            // If it can be built- it can be destroyed
-            if (_tagSystem.HasTag(target, "RCDDeconstructWhitelist"))
+            // Absolutely ass solution but requires less yaml fuckery
+            // If it's a door (firelock, airlock, windoor), Wall or Window, dragon can eat it.
+            if (_tagSystem.HasTag(target, "Wall") || (_tagSystem.HasTag(target, "Window") || EntityManager.HasComponent<DoorComponent>(target) || EntityManager.HasComponent<DoorComponent>(target)))
             {
                 _popupSystem.PopupEntity(Loc.GetString("devour-action-popup-message-structure"), dragonuid, Filter.Entities(dragonuid));
+                SoundSystem.Play(Filter.Pvs(dragonuid, entityManager: EntityManager), "/Audio/Machines/airlock_creaking.ogg");
                 component.CancelToken = new CancellationTokenSource();
 
                 _doAfterSystem.DoAfter(new DoAfterEventArgs(dragonuid, component.DevourTime, component.CancelToken.Token, target)
