@@ -1,0 +1,58 @@
+- type: radioChannel
+  id: broadcast
+  name: "General"
+  channel: 0
+
+- type: radioChannel
+  id: command
+  name: "Command"
+  keycode: 'c'
+  channel: 1
+
+- type: radioChannel
+  id: centcom
+  name: "CentCom"
+  keycode: 'y'
+  channel: 2
+
+- type: radioChannel
+  id: engineering
+  name: "Engineering"
+  keycode: 'e'
+  channel: 3
+
+- type: radioChannel
+  id: medical
+  name: "Medical"
+  keycode: 'm'
+  channel: 4
+
+- type: radioChannel
+  id: science
+  name: "Science"
+  keycode: 'n'
+  channel: 5
+
+- type: radioChannel
+  id: security
+  name: "Security"
+  keycode: 's'
+  channel: 6
+
+- type: radioChannel
+  id: service
+  name: "Service"
+  keycode: 'v'
+  channel: 7
+
+- type: radioChannel
+  id: supply
+  name: "Supply"
+  keycode: 'u'
+  channel: 8
+
+- type: radioChannel
+  id: syndicate
+  name: "Syndicate"
+  keycode: 't'
+  channel: 9

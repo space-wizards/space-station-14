@@ -11,6 +11,7 @@ using Content.Server.Radio.EntitySystems;
 using Content.Shared.ActionBlocker;
 using Content.Shared.CCVar;
 using Content.Shared.Chat;
+using Content.Shared.Radio;
 using Content.Shared.Database;
 using Content.Shared.Inventory;
 using Robust.Server.Player;
@@ -19,6 +20,7 @@ using Robust.Shared.Console;
 using Robust.Shared.Network;
 using Robust.Shared.Player;
 using Robust.Shared.Players;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Utility;
 
@@ -35,6 +37,7 @@ public sealed class ChatSystem : SharedChatSystem
     [Dependency] private readonly IChatSanitizationManager _sanitizer = default!;
     [Dependency] private readonly IAdminManager _adminManager = default!;
     [Dependency] private readonly IPlayerManager _playerManager = default!;
+    [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly AdminLogSystem _logs = default!;
     [Dependency] private readonly ActionBlockerSystem _actionBlocker = default!;
@@ -345,48 +348,18 @@ public sealed class ChatSystem : SharedChatSystem
             int chan = -1;
             if (channelMessage && message.Length >= 2)
             {
-                switch (message[1])
+                foreach (var channel in _prototypeManager.EnumeratePrototypes<RadioChannelPrototype>())
                 {
-                case 'c':
-                    // Command
-                    chan = 1;
-                    break;
-                case 'y':
-                    // CentCom
-                    chan = 2;
-                    break;
-                case 'e':
-                    // Engineering
-                    chan = 3;
-                    break;
-                case 'm':
-                    // Medical
-                    chan = 4;
-                    break;
-                case 'n':
-                    // Science
-                    chan = 5;
-                    break;
-                case 's':
-                    // Security
-                    chan = 6;
-                    break;
-                case 'v':
-                    // Service
-                    chan = 7;
-                    break;
-                case 'u':
-                    // Supply
-                    chan = 8;
-                    break;
-                case 't':
-                    // Syndicate
-                    chan = 9;
-                    break;
-                default:
+                    if (channel.KeyCode == message[1])
+                    {
+                        chan = channel.Channel;
+                        break;
+                    }
+                }
+
+                if (chan == -1) {
                     _popup.PopupEntity(Loc.GetString("chat-manager-no-such-channel"), source, Filter.Entities(source));
                     chan = -1;
-                    break;
                 }
 
                 // Strip message prefix.
