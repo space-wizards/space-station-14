@@ -1,24 +1,41 @@
+﻿using Content.Server.Administration;
 using Content.Shared.Administration;
+using Content.Shared.Audio;
 using Robust.Server.Player;
 using Robust.Shared.Audio;
 using Robust.Shared.Console;
 using Robust.Shared.Player;
 
-namespace Content.Server.Administration.Commands;
+namespace Content.Server.Audio;
 
-/// <summary>
-///     Command that allows admins to play global sounds.
-/// </summary>
-[AdminCommand(AdminFlags.Fun)]
-public sealed class PlayGlobalSound : IConsoleCommand
+public sealed class ServerAdminSoundSystem : SharedAdminSoundSystem
 {
-    [Dependency] private IPlayerManager _playerManager = default!;
+    [Dependency] private readonly IConsoleHost _conHost = default!;
+    [Dependency] private readonly IPlayerManager _playerManager = default!;
 
+    public override void Initialize()
+    {
+        base.Initialize();
+        _conHost.RegisterCommand("playglobalsound", Loc.GetString("play-global-sound-command-description"), Loc.GetString("play-global-sound-command-help"), PlayGlobalSoundCommand);
+    }
 
-    public string Command => "playglobalsound";
-    public string Description => Loc.GetString("play-global-sound-command-description");
-    public string Help => Loc.GetString("play-global-sound-command-help");
-    public void Execute(IConsoleShell shell, string argStr, string[] args)
+    public override void Shutdown()
+    {
+        base.Shutdown();
+        _conHost.UnregisterCommand("playglobalsound");
+    }
+
+    private void PlayGlobal(Filter playerFilter, string filename, AudioParams? audioParams = null)
+    {
+        var msg = new AdminSoundEvent(filename, audioParams);
+        RaiseNetworkEvent(msg, playerFilter);
+    }
+
+    /// <summary>
+    ///     Command that allows admins to play global sounds.
+    /// </summary>
+    [AdminCommand(AdminFlags.Fun)]
+    public void PlayGlobalSoundCommand(IConsoleShell shell, string argStr, string[] args)
     {
         Filter filter;
         var audio = AudioParams.Default.WithVolume(-8);
@@ -27,7 +44,7 @@ public sealed class PlayGlobalSound : IConsoleCommand
         {
             // No arguments, show command help.
             case 0:
-                shell.WriteLine(Help);
+                shell.WriteLine(Loc.GetString("play-global-sound-command-help"));
                 return;
 
             // No users, play sound for everyone.
@@ -79,6 +96,6 @@ public sealed class PlayGlobalSound : IConsoleCommand
                 break;
         }
 
-        SoundSystem.Play(filter, args[0], audio);
+        PlayGlobal(filter, args[0], audio);
     }
 }

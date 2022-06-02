@@ -273,7 +273,7 @@
   id: MagazinePistolHighCapacity
 
 - type: Tag
-  id: MagazinePistolTopMounted
+  id: MagazinePistolSubMachineGunTopMounted
 
 - type: Tag
   id: MagazineRifle

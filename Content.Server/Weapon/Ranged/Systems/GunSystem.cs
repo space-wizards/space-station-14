@@ -73,6 +73,7 @@ public sealed partial class GunSystem : SharedGunSystem
 
                         SetCartridgeSpent(cartridge, true);
                         MuzzleFlash(gun.Owner, cartridge, user);
+                        PlaySound(gun.Owner, gun.SoundGunshot?.GetSound(Random, ProtoManager), user);
 
                         if (cartridge.DeleteOnSpawn)
                             Del(cartridge.Owner);
@@ -92,6 +93,7 @@ public sealed partial class GunSystem : SharedGunSystem
                 case AmmoComponent newAmmo:
                     shotProjectiles.Add(newAmmo.Owner);
                     MuzzleFlash(gun.Owner, newAmmo, user);
+                    PlaySound(gun.Owner, gun.SoundGunshot?.GetSound(Random, ProtoManager), user);
 
                     // Do a throw
                     if (!HasComp<ProjectileComponent>(newAmmo.Owner))
@@ -121,6 +123,8 @@ public sealed partial class GunSystem : SharedGunSystem
 
                         if (dmg != null)
                         {
+                            PlayImpactSound(result.HitEntity, dmg, hitscan.Sound, hitscan.ForceSound);
+
                             if (user != null)
                             {
                                 Logs.Add(LogType.HitScanHit,
@@ -137,6 +141,7 @@ public sealed partial class GunSystem : SharedGunSystem
                     {
                         FireEffects(fromCoordinates, hitscan.MaxLength, entityDirection.ToAngle(), hitscan);
                     }
+                    PlaySound(gun.Owner, gun.SoundGunshot?.GetSound(Random, ProtoManager), user);
                     break;
                 default:
                     throw new ArgumentOutOfRangeException();
@@ -198,7 +203,7 @@ public sealed partial class GunSystem : SharedGunSystem
 
     protected override void PlaySound(EntityUid gun, string? sound, EntityUid? user = null)
     {
-        if (sound == null) return;
+        if (string.IsNullOrEmpty(sound)) return;
 
         SoundSystem.Play(Filter.Pvs(gun, entityManager: EntityManager).RemoveWhereAttachedEntity(e => e == user), sound, gun);
     }
