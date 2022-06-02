@@ -48,3 +48,11 @@
   userPopup: action-popup-combat
   popupToggleSuffix: -disabling
   event: !type:ToggleCombatActionEvent
+
+- type: instantAction
+  id: ToggleBlock
+  name: "block"
+  description: "block"
+  icon: Objects/Tools/flashlight.rsi/flashlight.png
+  iconOn: Objects/Tools/flashlight.rsi/flashlight-on.png
+  event: !type:ToggleActionEvent
