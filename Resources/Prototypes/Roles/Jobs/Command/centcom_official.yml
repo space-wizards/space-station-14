@@ -8,8 +8,8 @@
   icon: "Nanotrasen"
   supervisors: "the head of security"
   access:
-  - Command
-  - Maintenance
+   - AllAccess
+
 
 - type: startingGear
   id: CentcomGear
