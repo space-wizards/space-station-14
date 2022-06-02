@@ -365,6 +365,7 @@ namespace Content.Server.Shuttles.EntitySystems
         public bool CanEnable(EntityUid uid, ThrusterComponent component)
         {
             if (!component.Enabled) return false;
+            if (component.LifeStage > ComponentLifeStage.Running) return false;
 
             var xform = Transform(uid);
 
