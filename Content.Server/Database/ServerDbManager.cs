@@ -131,6 +131,13 @@ namespace Content.Server.Database
         /// <returns>A role timer for the passed role.</returns>
         Task<RoleTimer> GetRoleTimer(Guid player, string role);
 
+        /// <summary>
+        /// Set the time value of a RoleTimer database object.
+        /// </summary>
+        /// <param name="id">Numerical ID for the roletimer object</param>
+        /// <param name="time">New value for time spent on the role</param>
+        Task EditRoleTimer(int id, TimeSpan time);
+
         #endregion
 
         #region Player Records
@@ -369,6 +376,11 @@ namespace Content.Server.Database
         public Task<List<RoleTimer>> GetRoleTimers(Guid player)
         {
             return _db.GetRoleTimers(player);
+        }
+
+        public Task EditRoleTimer(int id, TimeSpan time)
+        {
+            return _db.EditRoleTimer(id, time);
         }
 
         #endregion
