@@ -138,7 +138,7 @@ namespace Content.Server.Communications
         {
             if (EntityManager.TryGetComponent<AccessReaderComponent>(console, out var accessReaderComponent) && accessReaderComponent.Enabled)
             {
-                return _accessReaderSystem.IsAllowed(accessReaderComponent, user);
+                return _accessReaderSystem.IsAllowed(user, accessReaderComponent);
             }
             return true;
         }
