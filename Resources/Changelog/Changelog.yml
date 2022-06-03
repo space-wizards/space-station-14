@@ -1,14 +1,4 @@
 Entries:
-- author: DogZeroX
-  changes:
-  - {message: Animal's blood now variate depending on their size, type: Tweak}
-  id: 1142
-  time: '2022-02-28T01:23:45.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - {message: Lowered ghost movement speed., type: Tweak}
-  id: 1143
-  time: '2022-02-28T15:14:17.0000000+00:00'
 - author: Emisse
   changes:
   - {message: 'A brand new station, moose station.', type: Add}
@@ -3004,3 +2994,15 @@ Entries:
       in the server., type: Tweak}
   id: 1641
   time: '2022-06-03T10:04:53.0000000+00:00'
+- author: ElectroJr
+  changes:
+  - {message: Fixed a bug that caused gas quantity to not be conserved when anchoring
+      and unanchoring atmos devices., type: Fix}
+  id: 1642
+  time: '2022-06-03T10:09:52.0000000+00:00'
+- author: Peptide90
+  changes:
+  - {message: 'APCs, generators and wallmount substations are no longer nuke proof.',
+    type: Tweak}
+  id: 1643
+  time: '2022-06-03T10:10:18.0000000+00:00'
