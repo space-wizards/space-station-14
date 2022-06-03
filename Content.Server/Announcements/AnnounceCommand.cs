@@ -13,7 +13,7 @@ namespace Content.Server.Announcements
         public string Help => $"{Command} <sender> <message> or {Command} <message> to send announcement as centcomm.";
         public void Execute(IConsoleShell shell, string argStr, string[] args)
         {
-            var chat = IoCManager.Resolve<ChatSystem>();
+            var chat = IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<ChatSystem>();
 
             if (args.Length == 0)
             {
