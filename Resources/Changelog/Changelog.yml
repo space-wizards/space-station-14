@@ -1,9 +1,4 @@
 Entries:
-- author: Zyme
-  changes:
-  - {message: Monkeys now understand the concept of hats, type: Add}
-  id: 1140
-  time: '2022-02-27T19:56:36.0000000+00:00'
 - author: ElectroJr
   changes:
   - {message: 'The /mapping command syntax has changed. The filename now comes before
@@ -3003,3 +2998,9 @@ Entries:
   - {message: Spread changed from 10 degrees to 15., type: Tweak}
   id: 1639
   time: '2022-06-03T07:57:39.0000000+00:00'
+- author: Peptide90
+  changes:
+  - {message: Emitters have been removed from cargo ordering. You now have to research
+      a machine board for them and build them from machine frames., type: Tweak}
+  id: 1640
+  time: '2022-06-03T09:22:58.0000000+00:00'
