@@ -50,24 +50,25 @@ public sealed class SharedBlockingSystem : EntitySystem
     private void OnPickupAttempt(EntityUid uid, SharedBlockingComponent component, GettingPickedUpAttemptEvent args)
     {
         component.User = args.User;
-        var userComp = EnsureComp<SharedBlockingUserComponent>(args.User);
-        userComp.BlockingItem = uid;
 
         //To make sure that this bodytype doesn't get set as anything but the original
-        if (TryComp(args.User, out PhysicsComponent? physicsComponent) && physicsComponent.BodyType != BodyType.Static)
+        if (TryComp(args.User, out PhysicsComponent? physicsComponent) && physicsComponent.BodyType != BodyType.Static
+                                                                       && !TryComp(args.User, out SharedBlockingUserComponent? blockingUserComponent))
         {
+            var userComp = EnsureComp<SharedBlockingUserComponent>(args.User);
+            userComp.BlockingItem = uid;
             userComp.OriginalBodyType = physicsComponent.BodyType;
         }
     }
 
     private void OnDrop(EntityUid uid, SharedBlockingComponent component, DroppedEvent args)
     {
-        RemComp<SharedBlockingComponent>(args.User);
-        component.User = null;
         if (component.IsBlocking)
         {
             StopBlocking(uid, component, args.User);
         }
+        RemComp<SharedBlockingUserComponent>(args.User);
+        component.User = null;
     }
 
 
@@ -99,7 +100,16 @@ public sealed class SharedBlockingSystem : EntitySystem
         args.Handled = true;
     }
 
-    private bool StartBlocking(EntityUid uid, SharedBlockingComponent component, EntityUid user)
+    /// <summary>
+    /// Called where you want the user to start blocking
+    /// Creates a new hard fixture to bodyblock
+    /// Also makes the user static to prevent prediction issues
+    /// </summary>
+    /// <param name="uid"> The entity with the blocking component</param>
+    /// <param name="component"> The blocking component</param>
+    /// <param name="user"> The entity who's using the item to block</param>
+    /// <returns></returns>
+    private bool StartBlocking(EntityUid item, SharedBlockingComponent component, EntityUid user)
     {
         if (component.IsBlocking) return false;
 
@@ -131,7 +141,14 @@ public sealed class SharedBlockingSystem : EntitySystem
         return true;
     }
 
-    private bool StopBlocking(EntityUid uid, SharedBlockingComponent component, EntityUid user)
+    /// <summary>
+    /// Called where you want the user to stop blocking.
+    /// </summary>
+    /// <param name="item"> The entity with the blocking component</param>
+    /// <param name="component"> The blocking component</param>
+    /// <param name="user"> The entity who's using the item to block</param>
+    /// <returns></returns>
+    private bool StopBlocking(EntityUid item, SharedBlockingComponent component, EntityUid user)
     {
         if (!component.IsBlocking) return false;
 
@@ -139,6 +156,9 @@ public sealed class SharedBlockingSystem : EntitySystem
 
         var xform = Transform(user);
 
+        //If the component blocking toggle isn't null, grab the users SharedBlockingUserComponent and PhysicsComponent
+        //then toggle the action to false, unanchor the user, remove the hard fixture
+        //and set the users bodytype back to their original type
         if (component.BlockingToggleAction != null && TryComp(user, out SharedBlockingUserComponent? blockingUserComponent)
                                                      && TryComp(user, out PhysicsComponent? physicsComponent))
         {
