@@ -1,13 +1,4 @@
 Entries:
-- author: Peptide90
-  changes:
-  - {message: 'All electronics, machine and computer boards now have updated names,
-      descriptions and in some cases sprites.', type: Fix}
-  - {message: SMES construction is now fixed., type: Fix}
-  - {message: There's now computer boards for all computers on the station...some
-      still don't do anything., type: Add}
-  id: 1137
-  time: '2022-02-27T13:46:27.0000000+00:00'
 - author: Zumorica
   changes:
   - {message: Suspicion no longer shows up in gamemode votes., type: Remove}
@@ -3001,3 +2992,9 @@ Entries:
       bombing., type: Tweak}
   id: 1636
   time: '2022-06-02T21:35:32.0000000+00:00'
+- author: TimrodDX
+  changes:
+  - {message: Delta Station now has security cameras. Lots of them., type: Add}
+  - {message: Delta Station now has more decals., type: Tweak}
+  id: 1637
+  time: '2022-06-03T05:32:57.0000000+00:00'
