@@ -10,6 +10,7 @@
     - ShellShotgun
   - type: CartridgeAmmo
     count: 6
+    spread: 15
     soundEject:
       collection: ShellEject
   - type: Sprite
@@ -46,7 +47,7 @@
   - type: CartridgeAmmo
     proto: PelletShotgunSlug
     count: 4
-    spread: 2.5
+    spread: 5
 
 - type: entity
   id: ShellShotgunFlare

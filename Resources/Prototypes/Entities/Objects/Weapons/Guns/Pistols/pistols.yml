@@ -24,7 +24,7 @@
   - type: ChamberMagazineAmmoProvider
   - type: ItemSlots
     slots:
-      gun-magazine:
+      gun_magazine:
         name: Magazine
         startingItem: MagazinePistol
         insertSound: /Audio/Weapons/Guns/MagIn/pistol_magin.ogg
@@ -32,7 +32,7 @@
         whitelist:
           tags:
             - MagazinePistol
-      gun-chamber:
+      gun_chamber:
         name: Chamber
         startingItem: CartridgePistol
         whitelist:
@@ -40,8 +40,8 @@
             - CartridgePistol
   - type: ContainerContainer
     containers:
-      gun-magazine: !type:ContainerSlot
-      gun-chamber: !type:ContainerSlot
+      gun_magazine: !type:ContainerSlot
+      gun_chamber: !type:ContainerSlot
   - type: MagazineVisuals
     magState: mag
     steps: 1
@@ -61,7 +61,7 @@
     sprite: Objects/Weapons/Guns/Pistols/clarissa.rsi
   - type: ItemSlots
     slots:
-      gun-magazine:
+      gun_magazine:
         name: Magazine
         startingItem: MagazinePistol
         insertSound: /Audio/Weapons/Guns/MagIn/pistol_magin.ogg
@@ -70,7 +70,7 @@
           tags:
             - MagazinePistol
             - MagazinePistolHighCapacity
-      gun-chamber:
+      gun_chamber:
         name: Chamber
         startingItem: CartridgePistol
         whitelist:
@@ -78,8 +78,8 @@
             - CartridgePistol
   - type: ContainerContainer
     containers:
-      gun-magazine: !type:ContainerSlot
-      gun-chamber: !type:ContainerSlot
+      gun_magazine: !type:ContainerSlot
+      gun_chamber: !type:ContainerSlot
 
 - type: entity
   name: handmade pistol
@@ -121,7 +121,7 @@
       path: /Audio/Weapons/Guns/Gunshots/silenced.ogg
   - type: ItemSlots
     slots:
-      gun-magazine:
+      gun_magazine:
         name: Magazine
         startingItem: MagazinePistolCaselessRifle
         insertSound: /Audio/Weapons/Guns/MagIn/pistol_magin.ogg
@@ -129,7 +129,7 @@
         whitelist:
           tags:
             - MagazinePistolCaselessRifle
-      gun-chamber:
+      gun_chamber:
         name: Chamber
         startingItem: CartridgeCaselessRifle
         whitelist:
@@ -137,8 +137,8 @@
             - CartridgeCaselessRifle
   - type: ContainerContainer
     containers:
-      gun-magazine: !type:ContainerSlot
-      gun-chamber: !type:ContainerSlot
+      gun_magazine: !type:ContainerSlot
+      gun_chamber: !type:ContainerSlot
 
 - type: entity
   name: mk 58

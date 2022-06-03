@@ -21,7 +21,7 @@
   - type: ChamberMagazineAmmoProvider
   - type: ItemSlots
     slots:
-      gun-magazine:
+      gun_magazine:
         name: Magazine
         startingItem: MagazineBoxLightRifle
         insertSound: /Audio/Weapons/Guns/MagIn/batrifle_magin.ogg
@@ -29,7 +29,7 @@
         whitelist:
           tags:
             - MagazineBoxLightRifle
-      gun-chamber:
+      gun_chamber:
         name: Chamber
         startingItem: CartridgeLightRifle
         whitelist:
@@ -37,8 +37,8 @@
             - CartridgeLightRifle
   - type: ContainerContainer
     containers:
-      gun-magazine: !type:ContainerSlot
-      gun-chamber: !type:ContainerSlot
+      gun_magazine: !type:ContainerSlot
+      gun_chamber: !type:ContainerSlot
 
 - type: entity
   name: L6 SAW

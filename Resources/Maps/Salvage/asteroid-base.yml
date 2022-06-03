@@ -1683,8 +1683,8 @@ entities:
   - canCollide: False
     type: Physics
   - containers:
-      gun-chamber: !type:ContainerSlot {}
-      gun-magazine: !type:ContainerSlot
+      gun_chamber: !type:ContainerSlot {}
+      gun_magazine: !type:ContainerSlot
         ent: 218
     type: ContainerContainer
 - uid: 218

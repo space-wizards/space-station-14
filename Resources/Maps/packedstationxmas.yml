@@ -77446,11 +77446,6 @@ entities:
     type: Transform
   - canCollide: False
     type: Physics
-  - containers:
-      MagazineBarrel-chamber: !type:ContainerSlot {}
-      MagazineBarrel-magazine: !type:ContainerSlot
-        ent: 7558
-    type: ContainerContainer
 - uid: 7558
   type: MagazineMagnumSubMachineGunRubber
   components:
@@ -77470,11 +77465,6 @@ entities:
     type: Transform
   - canCollide: False
     type: Physics
-  - containers:
-      MagazineBarrel-chamber: !type:ContainerSlot {}
-      MagazineBarrel-magazine: !type:ContainerSlot
-        ent: 7560
-    type: ContainerContainer
 - uid: 7560
   type: MagazineMagnumSubMachineGunRubber
   components:
@@ -114486,11 +114476,6 @@ entities:
     type: Transform
   - canCollide: False
     type: Physics
-  - containers:
-      MagazineBarrel-chamber: !type:ContainerSlot {}
-      MagazineBarrel-magazine: !type:ContainerSlot
-        ent: 11180
-    type: ContainerContainer
 - uid: 11180
   type: MagazinePistolSubMachineGunTopMounted
   components:
