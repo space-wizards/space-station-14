@@ -148,6 +148,15 @@
 
 - type: entity
   parent: BaseComputerCircuitboard
+  id: SyndicateCommsComputerCircuitboard
+  name: syndicate communications computer board
+  description: A computer printed circuit board for a syndicate communications console
+  components:
+    - type: ComputerBoard
+      prototype: SyndicateComputerComms
+
+- type: entity
+  parent: BaseComputerCircuitboard
   id: RadarConsoleCircuitboard
   name: radar console computer board
   components:

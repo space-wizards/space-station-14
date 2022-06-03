@@ -3,13 +3,14 @@ using Content.Server.Administration.Logs;
 using Content.Server.Administration.Managers;
 using Content.Server.MoMMI;
 using Content.Server.Preferences.Managers;
+using Content.Server.Station.Systems;
 using Content.Shared.Administration;
 using Content.Shared.CCVar;
 using Content.Shared.Chat;
 using Content.Shared.Database;
 using Robust.Server.Player;
-using Robust.Shared.Audio;
 using Robust.Shared.Configuration;
+using Robust.Shared.Map;
 using Robust.Shared.Network;
 using Robust.Shared.Player;
 using Robust.Shared.Utility;
@@ -35,6 +36,10 @@ namespace Content.Server.Chat.Managers
         [Dependency] private readonly IAdminLogManager _adminLogger = default!;
         [Dependency] private readonly IServerPreferencesManager _preferencesManager = default!;
         [Dependency] private readonly IConfigurationManager _configurationManager = default!;
+        [Dependency] private readonly IMapManager _mapManager = default!;
+        [Dependency] private readonly IEntityManager _entityManager = default!;
+
+        private StationSystem _stationSystem = default!;
 
         /// <summary>
         /// The maximum length a player-sent message can be sent
@@ -46,6 +51,7 @@ namespace Content.Server.Chat.Managers
 
         public void Initialize()
         {
+            _stationSystem = _entityManager.EntitySysManager.GetEntitySystem<StationSystem>();
             _netManager.RegisterNetMessage<MsgChatMessage>();
 
             _configurationManager.OnValueChanged(CCVars.OocEnabled, OnOocEnabledChanged, true);
@@ -77,18 +83,6 @@ namespace Content.Server.Chat.Managers
             Logger.InfoS("SERVER", message);
 
             _adminLogger.Add(LogType.Chat, LogImpact.Low, $"Server announcement: {message}");
-        }
-
-        public void DispatchStationAnnouncement(string message, string sender = "Central Command", bool playDefaultSound = true, Color? colorOverride = null)
-        {
-            var messageWrap = Loc.GetString("chat-manager-sender-announcement-wrap-message", ("sender", sender));
-            ChatMessageToAll(ChatChannel.Radio, message, messageWrap, colorOverride);
-            if (playDefaultSound)
-            {
-                SoundSystem.Play(Filter.Broadcast(), "/Audio/Announcements/announce.ogg", AudioParams.Default.WithVolume(-2f));
-            }
-
-            _adminLogger.Add(LogType.Chat, LogImpact.Low, $"Station Announcement from {sender}: {message}");
         }
 
         public void DispatchServerMessage(IPlayerSession player, string message)
@@ -233,6 +227,20 @@ namespace Content.Server.Chat.Managers
             msg.SenderEntity = source;
             msg.HideChat = hideChat;
             _netManager.ServerSendToMany(msg, clients);
+        }
+
+        public void ChatMessageToManyFiltered(Filter filter, ChatChannel channel, string message, string messageWrap, EntityUid source,
+            bool hideChat, Color? colorOverride = null)
+        {
+            if (!filter.Recipients.Any()) return;
+
+            var clients = new List<INetChannel>();
+            foreach (var recipient in filter.Recipients)
+            {
+                clients.Add(recipient.ConnectedClient);
+            }
+
+            ChatMessageToMany(channel, message, messageWrap, source, hideChat, clients);
         }
 
         public void ChatMessageToAll(ChatChannel channel, string message, string messageWrap, Color? colorOverride = null)
