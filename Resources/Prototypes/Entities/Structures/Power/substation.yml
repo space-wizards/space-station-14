@@ -73,6 +73,10 @@
     LayoutId: Substation
   - type: Machine
     board: SubstationMachineCircuitboard
+  - type: ContainerContainer
+    containers:
+      machine_parts: !type:Container
+      machine_board: !type:Container
 
 # Compact Wall Substation Base
 - type: entity
