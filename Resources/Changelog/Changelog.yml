@@ -1,9 +1,4 @@
 Entries:
-- author: Peptide90
-  changes:
-  - {message: 'Added boxes of trashbags, flares and all magazine types.', type: Add}
-  id: 1139
-  time: '2022-02-27T19:56:27.0000000+00:00'
 - author: Zyme
   changes:
   - {message: Monkeys now understand the concept of hats, type: Add}
@@ -3000,3 +2995,11 @@ Entries:
     type: Remove}
   id: 1638
   time: '2022-06-03T07:31:35.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Bojevic firerate dropped from 3 to 2, type: Tweak}
+  - {message: Shotgun pellet damage from 13 to 8 (3 shotting players instead of 2
+      shot assuming all pellets hit)., type: Tweak}
+  - {message: Spread changed from 10 degrees to 15., type: Tweak}
+  id: 1639
+  time: '2022-06-03T07:57:39.0000000+00:00'
