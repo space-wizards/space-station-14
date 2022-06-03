@@ -1,4 +1,4 @@
-name: Add Extra PR labels
+name: Check Merge Conflicts
 
 on:
   push:
