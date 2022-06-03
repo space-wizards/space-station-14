@@ -410,7 +410,6 @@
       materialRequirements:
         CableHV: 5
         Glass: 2
-        Cable: 2
 
 - type: entity
   id: SurveillanceCameraRouterCircuitboard
