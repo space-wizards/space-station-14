@@ -1,10 +1,4 @@
 Entries:
-- author: Zumorica
-  changes:
-  - {message: Map votes during the pre-round period actually affect the chosen map
-      on round start., type: Tweak}
-  id: 1147
-  time: '2022-03-01T02:20:21.0000000+00:00'
 - author: mirrorcult
   changes:
   - {message: Gauze can now be crafted using cloth., type: Add}
@@ -3011,3 +3005,11 @@ Entries:
   - {message: Fix delay between alert status changes scaling with tick rate., type: Fix}
   id: 1646
   time: '2022-06-03T11:37:35.0000000+00:00'
+- author: moonheart08
+  changes:
+  - {message: 'Items can now have prices, and their price can be evaluated with the
+      Appraisal Tool. This is currently only used for privateers.', type: Add}
+  - {message: 'There''s been reports of privateering in your sector, be on the lookout.',
+    type: Add}
+  id: 1647
+  time: '2022-06-03T15:56:11.0000000+00:00'
