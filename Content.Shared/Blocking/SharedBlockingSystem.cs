@@ -52,6 +52,12 @@ public sealed class SharedBlockingSystem : EntitySystem
         component.User = args.User;
         var userComp = EnsureComp<SharedBlockingUserComponent>(args.User);
         userComp.BlockingItem = uid;
+
+        //To make sure that this bodytype doesn't get set as anything but the original
+        if (TryComp(args.User, out PhysicsComponent? physicsComponent) && physicsComponent.BodyType != BodyType.Static)
+        {
+            userComp.OriginalBodyType = physicsComponent.BodyType;
+        }
     }
 
     private void OnDrop(EntityUid uid, SharedBlockingComponent component, DroppedEvent args)
@@ -133,8 +139,20 @@ public sealed class SharedBlockingSystem : EntitySystem
 
         var xform = Transform(user);
 
-        //Used to store the physics component so it can be set back to Kinematic Controller
-        PhysicsComponent bodyType = new PhysicsComponent();
+        //Storing component to be used to get the original bodytype
+        //It won't let me just make a blank component here so I need to initialize
+        //to use it outside of the if statement.
+        var blockingUserComponent = new SharedBlockingUserComponent();
+
+        if (TryComp(user, out SharedBlockingUserComponent? sharedBlockingUserComponent))
+        {
+            blockingUserComponent = sharedBlockingUserComponent;
+        }
+
+        //Used to store the physics component so the users bodytype can be set back to Kinematic Controller
+        //It won't let me just make a blank component here so I need to initialize
+        //to use it outside of the if statement.
+        var bodyType = new PhysicsComponent();
 
         if (TryComp(user, out PhysicsComponent? physicsComponent))
         {
@@ -146,7 +164,7 @@ public sealed class SharedBlockingSystem : EntitySystem
         {
             _actionsSystem.SetToggled(component.BlockingToggleAction, false);
             _transformSystem.Unanchor(xform);
-            bodyType.BodyType = BodyType.KinematicController;
+            bodyType.BodyType = blockingUserComponent.OriginalBodyType;
         }
 
         return true;
