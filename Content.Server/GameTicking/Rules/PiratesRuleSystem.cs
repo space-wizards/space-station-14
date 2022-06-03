@@ -125,11 +125,9 @@ public sealed class PiratesRuleSystem : GameRuleSystem
 
     private void OnPlayerSpawningEvent(RulePlayerSpawningEvent ev)
     {
-        Logger.Debug("OK!");
         // Forgive me for copy-pasting nukies.
         if (!Enabled)
         {
-            Logger.Debug("whoops, not enabled.");
             return;
         }
 
