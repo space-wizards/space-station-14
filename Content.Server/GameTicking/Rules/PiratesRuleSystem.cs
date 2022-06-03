@@ -34,8 +34,13 @@ public sealed class PiratesRuleSystem : GameRuleSystem
     [Dependency] private readonly RoundEndSystem _roundEndSystem = default!;
     [Dependency] private readonly PricingSystem _pricingSystem = default!;
 
+    [ViewVariables]
     private List<Mind.Mind> _pirates = new();
+    [ViewVariables]
     private EntityUid _pirateShip = EntityUid.Invalid;
+    [ViewVariables]
+    private HashSet<EntityUid> _initialItems = new();
+    [ViewVariables]
     private double _initialShipValue;
 
     public override string Prototype => "Pirates";
@@ -43,6 +48,8 @@ public sealed class PiratesRuleSystem : GameRuleSystem
     /// <inheritdoc/>
     public override void Initialize()
     {
+        base.Initialize();
+
         SubscribeLocalEvent<RulePlayerSpawningEvent>(OnPlayerSpawningEvent);
         SubscribeLocalEvent<RoundEndTextAppendEvent>(OnRoundEndTextEvent);
     }
@@ -72,6 +79,9 @@ public sealed class PiratesRuleSystem : GameRuleSystem
                 return true;
             }, (uid, price) =>
             {
+                if (_initialItems.Contains(uid))
+                    return;
+
                 mostValuableThefts.Add((price, uid));
                 mostValuableThefts.Sort((i1, i2) => i2.Item1.CompareTo(i1.Item1));
                 if (mostValuableThefts.Count > 5)
@@ -86,14 +96,26 @@ public sealed class PiratesRuleSystem : GameRuleSystem
 
             var score = finalValue - _initialShipValue;
 
-            ev.AddLine(Loc.GetString("pirates-final-score", ("finalPrice", $"{finalValue:F2}"),
-                ("score", $"{score:F2}")));
+            ev.AddLine(Loc.GetString("pirates-final-score", ("score", $"{score:F2}")));
+            ev.AddLine(Loc.GetString("pirates-final-score-2", ("finalPrice", $"{finalValue:F2}")));
+
+            ev.AddLine("");
+            ev.AddLine(Loc.GetString("pirates-most-valuable"));
+
+            foreach (var (price, obj) in mostValuableThefts)
+            {
+                ev.AddLine(Loc.GetString("pirates-stolen-item-entry", ("entity", obj), ("credits", $"{price:F2}")));
+            }
+
+            if (mostValuableThefts.Count == 0)
+                ev.AddLine(Loc.GetString("pirates-stole-nothing"));
         }
 
+        ev.AddLine("");
         ev.AddLine(Loc.GetString("pirates-list-start"));
         foreach (var pirates in _pirates)
         {
-            ev.AddLine($"- {pirates.CharacterName} ({pirates.Session?.Name}");
+            ev.AddLine($"- {pirates.CharacterName} ({pirates.Session?.Name})");
         }
     }
 
@@ -105,9 +127,12 @@ public sealed class PiratesRuleSystem : GameRuleSystem
     {
         // Forgive me for copy-pasting nukies.
         if (!Enabled)
+        {
             return;
+        }
 
         _pirates.Clear();
+        _initialItems.Clear();
 
         // Between 1 and <max pirate count>: needs at least n players per op.
         var numOps = Math.Max(1,
@@ -190,7 +215,11 @@ public sealed class PiratesRuleSystem : GameRuleSystem
             GameTicker.PlayerJoinGame(session);
         }
 
-        _initialShipValue = _pricingSystem.AppraiseGrid(_pirateShip); // Include the players in the appraisal.
+        _initialShipValue = _pricingSystem.AppraiseGrid(_pirateShip, uid =>
+        {
+            _initialItems.Add(uid);
+            return true;
+        }); // Include the players in the appraisal.
     }
 
     private void OnStartAttempt(RoundStartAttemptEvent ev)
