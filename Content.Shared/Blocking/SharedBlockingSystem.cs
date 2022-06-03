@@ -1,7 +1,9 @@
 ﻿using Content.Shared.Actions;
 using Content.Shared.Actions.ActionTypes;
 using Content.Shared.Damage;
+using Content.Shared.Damage.Prototypes;
 using Content.Shared.DragDrop;
+using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Interaction.Events;
 using Content.Shared.Item;
 using Content.Shared.Physics;
@@ -18,9 +20,8 @@ public sealed class SharedBlockingSystem : EntitySystem
     [Dependency] private readonly SharedActionsSystem _actionsSystem = default!;
     [Dependency] private readonly IPrototypeManager _proto = default!;
     [Dependency] private readonly SharedTransformSystem _transformSystem = default!;
-    [Dependency] private readonly DamageableSystem _damageable = default!;
     [Dependency] private readonly FixtureSystem _fixtureSystem = default!;
-    [Dependency] private readonly DamageableSystem _damageableSystem = default!;
+    [Dependency] private readonly SharedHandsSystem _handsSystem = default!;
 
     public override void Initialize()
     {
@@ -29,19 +30,33 @@ public sealed class SharedBlockingSystem : EntitySystem
         SubscribeLocalEvent<SharedBlockingComponent, GettingPickedUpAttemptEvent>(OnPickupAttempt);
         SubscribeLocalEvent<SharedBlockingComponent, DroppedEvent>(OnDrop);
 
-        SubscribeLocalEvent<SharedBlockingComponent, DamageChangedEvent>(OnDamagedChanged);
+        SubscribeLocalEvent<SharedBlockingUserComponent, DamageModifyEvent>(OnUserDamageModified);
 
         SubscribeLocalEvent<SharedBlockingComponent, GetItemActionsEvent>(OnGetActions);
         SubscribeLocalEvent<SharedBlockingComponent, ToggleActionEvent>(OnToggleAction);
     }
 
+    private void OnUserDamageModified(EntityUid uid, SharedBlockingUserComponent component, DamageModifyEvent args)
+    {
+        if (TryComp(component.BlockingItem, out SharedBlockingComponent? blockingComponent) && blockingComponent.IsBlocking)
+        {
+            if (_proto.TryIndex("Metallic", out DamageModifierSetPrototype? blockModifier))
+            {
+                args.Damage = DamageSpecifier.ApplyModifierSet(args.Damage, blockModifier);
+            }
+        }
+    }
+
     private void OnPickupAttempt(EntityUid uid, SharedBlockingComponent component, GettingPickedUpAttemptEvent args)
     {
         component.User = args.User;
+        var userComp = EnsureComp<SharedBlockingUserComponent>(args.User);
+        userComp.BlockingItem = uid;
     }
 
     private void OnDrop(EntityUid uid, SharedBlockingComponent component, DroppedEvent args)
     {
+        RemComp<SharedBlockingComponent>(args.User);
         component.User = null;
         if (component.IsBlocking)
         {
@@ -49,16 +64,6 @@ public sealed class SharedBlockingSystem : EntitySystem
         }
     }
 
-    private void OnDamagedChanged(EntityUid uid, SharedBlockingComponent component, DamageChangedEvent args)
-    {
-        if (args.DamageDelta is null)
-            return;
-
-        if (component.IsBlocking)
-        {
-            _damageableSystem.TryChangeDamage(component.User, args.DamageDelta * 0);
-        }
-    }
 
     private void OnGetActions(EntityUid uid, SharedBlockingComponent component, GetItemActionsEvent args)
     {
