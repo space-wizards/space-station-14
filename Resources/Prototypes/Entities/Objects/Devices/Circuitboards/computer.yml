@@ -11,6 +11,8 @@
     - type: Tag
       tags:
         - DroneUsable
+    - type: StaticPrice
+      price: 75
 
 - type: entity
   parent: BaseComputerCircuitboard
@@ -56,6 +58,8 @@
   components:
     - type: ComputerBoard
       prototype: ComputerSupplyOrdering
+    - type: StaticPrice
+      price: 750
 
 - type: entity
   parent: BaseComputerCircuitboard
@@ -127,6 +131,8 @@
   components:
     - type: ComputerBoard
       prototype: ComputerId
+    - type: StaticPrice
+      price: 750
 
 - type: entity
   parent: BaseComputerCircuitboard
