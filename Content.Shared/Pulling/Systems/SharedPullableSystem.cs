@@ -1,6 +1,7 @@
 using Content.Shared.ActionBlocker;
 using Content.Shared.Movement.EntitySystems;
 using Content.Shared.Pulling.Components;
+using Content.Shared.MobState.Components;
 
 namespace Content.Shared.Pulling.Systems
 {
@@ -19,6 +20,7 @@ namespace Content.Shared.Pulling.Systems
         {
             var entity = args.Session.AttachedEntity;
             if (entity == null || !_blocker.CanMove(entity.Value)) return;
+            if (!component.BeingPulled || (TryComp<MobStateComponent>(component.Owner, out var mobState) && mobState.IsDead())) return;
             _pullSystem.TryStopPull(component);
         }
     }
