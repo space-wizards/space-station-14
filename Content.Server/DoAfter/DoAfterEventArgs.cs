@@ -109,7 +109,7 @@ namespace Content.Server.DoAfter
             CancelToken = cancelToken;
             Target = target;
             MovementThreshold = 0.1f;
-            DamageThreshold = 0;
+            DamageThreshold = 1.0;
 
             if (Target == null)
             {

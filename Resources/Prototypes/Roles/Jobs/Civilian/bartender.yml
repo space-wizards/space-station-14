@@ -6,11 +6,14 @@
   - Civilian
   icon: "Bartender"
   supervisors: "the head of personnel"
+  difficulty: "Easy"
   access:
   - Service
   - Maintenance
   - Bar
-  difficulty: "Easy"
+  extendedAccess:
+  - Kitchen
+  - Hydroponics
 
 - type: startingGear
   id: BartenderGear

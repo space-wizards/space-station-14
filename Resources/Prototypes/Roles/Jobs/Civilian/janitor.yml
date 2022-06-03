@@ -6,6 +6,7 @@
   - Civilian
   icon: "Janitor"
   supervisors: "the head of personnel"
+  difficulty: "Easy"
   access:
   - Janitor
   - Maintenance
@@ -13,8 +14,8 @@
   - !type:GiveItemOnHolidaySpecial
     holiday: GarbageDay
     prototype: RevolverInspector
-  difficulty: "Easy"
-
+    prototype: WeaponRevolverInspector
+    
 - type: startingGear
   id: JanitorGear
   equipment:

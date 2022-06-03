@@ -6,12 +6,14 @@
   - Engineering
   icon: "StationEngineer"
   supervisors: "the chief engineer"
+  difficulty: "Medium"
   access:
   - Maintenance
   - Engineering
   - External
-  difficulty: "Medium"
-  
+  extendedAccess:
+  - Atmospherics
+
 - type: startingGear
   id: StationEngineerGear
   equipment:

@@ -27,6 +27,7 @@
     shoes: ClothingShoesBootsWork
     id: PassengerPDA
     belt: ClothingBeltUtility
+    pocket1: AppraisalTool
   innerclothingskirt: ClothingUniformJumpskirtColorLightBrown
   satchel: ClothingBackpackSatchelEngineering
   duffelbag: ClothingBackpackSatchelEngineering
@@ -95,7 +96,7 @@
     id: AgentIDCard
     pocket1: ExtendedEmergencyOxygenTankFilled
     belt: ClothingBeltMilitaryWebbing
-  innerclothingskirt: ClothingUniformJumpsuitOperative
+  innerclothingskirt: ClothingUniformJumpskirtOperative
   satchel: ClothingBackpackDuffelSyndicateOperative
   duffelbag: ClothingBackpackDuffelSyndicateOperative
 
@@ -106,7 +107,7 @@
     back: ClothingBackpackDuffelSyndicateOperative
     mask: ClothingMaskGasSyndicate
   # eyes: Night Vision Goggles whenever they're made
-    eyes: ClothingEyesGlassesMeson 
+    eyes: ClothingEyesGlassesMeson
     ears: ClothingHeadsetAltSyndicate
     gloves: ClothingHandsGlovesCombat
     outerClothing: ClothingOuterHardsuitSyndieCommander
@@ -114,7 +115,25 @@
     id: SyndiPDA
     pocket1: ExtendedEmergencyOxygenTankFilled
     belt: ClothingBeltMilitaryWebbing
-  innerclothingskirt: ClothingUniformJumpsuitOperative
+  innerclothingskirt: ClothingUniformJumpskirtOperative
   satchel: ClothingBackpackDuffelSyndicateOperative
   duffelbag: ClothingBackpackDuffelSyndicateOperative
-  
+
+- type: startingGear
+  id: SyndicateOperativeMedicFull
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitOperative
+    back: ClothingBackpackDuffelSyndicateOperativeMedic
+    mask: ClothingMaskBreathMedical
+    eyes: ClothingEyesHudMedical
+    ears: ClothingHeadsetAltSyndicate
+    gloves: ClothingHandsGlovesCombat
+    outerClothing: ClothingOuterHardsuitSyndieElite
+    shoes: ClothingShoesBootsMagSyndie
+    id: SyndiPDA
+    pocket1: DoubleEmergencyOxygenTankFilled
+    pocket2: HandheldHealthAnalyzer
+    belt: ClothingBeltMilitaryWebbingMedFilled
+  innerclothingskirt: ClothingUniformJumpskirtOperative
+  satchel: ClothingBackpackDuffelSyndicateOperativeMedic
+  duffelbag: ClothingBackpackDuffelSyndicateOperativeMedic

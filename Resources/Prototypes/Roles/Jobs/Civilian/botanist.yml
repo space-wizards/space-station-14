@@ -6,12 +6,15 @@
   - Civilian
   icon: "Botanist"
   supervisors: "the head of personnel"
+  difficulty: "Easy"
   access:
   - Service
   - Maintenance
   - Hydroponics
-  difficulty: "Easy"
-  
+  extendedAccess:
+  - Kitchen
+  - Bar
+
 - type: startingGear
   id: BotanistGear
   equipment:

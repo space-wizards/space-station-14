@@ -1,4 +1,5 @@
 using Content.Shared.Access.Components;
+using Content.Shared.Roles;
 using Robust.Shared.Prototypes;
 
 namespace Content.Shared.Access.Systems
@@ -55,6 +56,34 @@ namespace Content.Shared.Access.Systems
             }
 
             return true;
+        }
+
+        /// <summary>
+        /// Set the access on an <see cref="AccessComponent"/> to the access for a specific job.
+        /// </summary>
+        /// <param name="uid">The ID of the entity with the access component.</param>
+        /// <param name="prototype">The job prototype to use access from.</param>
+        /// <param name="extended">Whether to apply extended job access.</param>
+        /// <param name="access">The access component.</param>
+        public void SetAccessToJob(
+            EntityUid uid,
+            JobPrototype prototype,
+            bool extended,
+            AccessComponent? access = null)
+        {
+            if (!Resolve(uid, ref access))
+                return;
+
+            access.Tags.Clear();
+            access.Tags.UnionWith(prototype.Access);
+
+            TryAddGroups(uid, prototype.AccessGroups, access);
+
+            if (extended)
+            {
+                access.Tags.UnionWith(prototype.ExtendedAccess);
+                TryAddGroups(uid, prototype.ExtendedAccessGroups, access);
+            }
         }
     }
 }

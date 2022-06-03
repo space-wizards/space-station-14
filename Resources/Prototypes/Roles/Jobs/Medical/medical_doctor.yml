@@ -6,11 +6,13 @@
   - Medical
   icon: "MedicalDoctor"
   supervisors: "the chief medical officer"
+  difficulty: "Medium"
   access:
   - Medical
   - Maintenance
-  difficulty: "Medium"
-  
+  extendedAccess:
+  - Chemistry
+
 - type: startingGear
   id: DoctorGear
   equipment:

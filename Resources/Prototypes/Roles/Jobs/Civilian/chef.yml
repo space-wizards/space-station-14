@@ -6,12 +6,15 @@
   - Civilian
   icon: "Chef"
   supervisors: "the head of personnel"
+  difficulty: "Medium"
   access:
   - Service
   - Maintenance
   - Kitchen
-  difficulty: "Medium"
-  
+  extendedAccess:
+  - Hydroponics
+  - Bar
+
 - type: startingGear
   id: ChefGear
   equipment:

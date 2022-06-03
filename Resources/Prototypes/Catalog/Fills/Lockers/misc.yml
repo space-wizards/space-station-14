@@ -22,7 +22,7 @@
         prob: 0.2
       - id: MedkitOxygenFilled
         prob: 0.2
-      - id: FlareGun
+      - id: WeaponFlareGun
         prob: 0.05
       - id: ClothingOuterSuitEmergency
         prob: 0.5
@@ -80,7 +80,7 @@
           prob: 0.33
         - id: ClothingHeadHatCone
           prob: 0.2
-        - id: FlareGun
+        - id: WeaponFlareGun
           prob: 0.1
         - id: ClothingHandsGlovesColorYellowBudget
           prob: 0.33
