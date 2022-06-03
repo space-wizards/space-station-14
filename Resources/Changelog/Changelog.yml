@@ -1,10 +1,4 @@
 Entries:
-- author: ElectroJr
-  changes:
-  - {message: 'Fixed being able to push some entities (computers, canisters, plants)
-      through walls and doors.', type: Fix}
-  id: 1145
-  time: '2022-03-01T02:18:20.0000000+00:00'
 - author: mirrorcult
   changes:
   - {message: Added a new medium-sized salvage., type: Add}
@@ -3006,3 +3000,10 @@ Entries:
   - {message: Sprays will now properly apply effects to entities again., type: Tweak}
   id: 1644
   time: '2022-06-03T10:25:44.0000000+00:00'
+- author: Peptide90
+  changes:
+  - {message: 'The Emergency Response Team have arrived! Look out for ghost roles
+      becoming available when centcom advises they''re coming. (Not currently call-able,
+      ask an admin via communications console to centcom).', type: Add}
+  id: 1645
+  time: '2022-06-03T10:48:29.0000000+00:00'
