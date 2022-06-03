@@ -2,6 +2,8 @@ circuitprinter.ogg taken from https://freesound.org/people/OroborosNZ/sounds/273
 
 diagnoser_printing.ogg taken from https://freesound.org/people/RobSp1derp1g/sounds/615419/ and edited
 
+genetics.ogg taken from https://github.com/Citadel-Station-13/Citadel-Station-13-RP/blob/5307e56a25a53fe1b4d34e7f1401ae8dfaa44922/sound/effects/genetics.ogg under CC BY-SA 3.0
+
 uniformprinter.ogg taken from https://freesound.org/people/sukaton/sounds/60640/ and edited
 
 vaccinator_running.ogg taken from https://freesound.org/people/RutgerMuller/sounds/365413/ and edited

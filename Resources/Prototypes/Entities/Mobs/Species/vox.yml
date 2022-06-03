@@ -87,10 +87,10 @@
   - type: Respirator
     damage:
       types:
-        Asphyxiation: 3
+        Asphyxiation: 2
     damageRecovery:
       types:
-        Asphyxiation: -1.5
+        Asphyxiation: -1.0
   - type: HumanoidAppearance
     canColorHair: false
     canColorFacialHair: false

@@ -3,31 +3,31 @@
   name: Ammovend
   spriteName: ammo
   startingInventory:
-    BoxClRifleBox: 3
-    BoxClRifleBoxFlash: 3
-    BoxClRifleBoxHV: 3
-    BoxClRifleBoxPractice: 3
-    BoxClRifleBoxRubber: 3
+    MagazineBoxCaselessRifle: 3
+    MagazineBoxCaselessRifleFlash: 3
+    MagazineBoxCaselessRifleHighVelocity: 3
+    MagazineBoxCaselessRiflePractice: 3
+    MagazineBoxCaselessRifleRubber: 3
 
-    BoxLRifleBigBox: 3
-    BoxLRifleBoxHV: 3
-    BoxLRifleBoxPractice: 3
-    BoxLRifleBoxRubber: 3
+    MagazineBoxLightRifleBig: 3
+    MagazineBoxLightRifleHighVelocity: 3
+    MagazineBoxLightRiflePractice: 3
+    MagazineBoxLightRifleRubber: 3
 
-    BoxMagnum: 3
-    BoxMagnumFlash: 3
-    BoxMagnumHV: 3
-    BoxMagnumPractice: 3
-    BoxMagnumRubber: 3
+    MagazineBoxMagnum: 3
+    MagazineBoxMagnumFlash: 3
+    MagazineBoxMagnumHighVelocity: 3
+    MagazineBoxMagnumPractice: 3
+    MagazineBoxMagnumRubber: 3
 
-    BoxPistolBox: 3
-    BoxPistolBoxFlash: 3
-    BoxPistolBoxHV: 3
-    BoxPistolBoxPractice: 3
-    BoxPistolBoxRubber: 3
+    MagazineBoxPistol: 3
+    MagazineBoxPistolFlash: 3
+    MagazineBoxPistolHighVelocity: 3
+    MagazineBoxPistolPractice: 3
+    MagazineBoxPistolRubber: 3
 
-    BoxSRifleBox: 3
-    BoxSRifleBoxFlash: 3
-    BoxSRifleBoxHV: 3
-    BoxSRifleBoxPractice: 3
-    BoxSRifleBoxRubber: 3
+    MagazineBoxRifle: 3
+    MagazineBoxRifleFlash: 3
+    MagazineBoxRifleHighVelocity: 3
+    MagazineBoxRiflePractice: 3
+    MagazineBoxRifleRubber: 3

@@ -192,7 +192,7 @@
     state: pda-clown
   - type: Slippery
     paralyzeTime: 4
-    launchForwardsMultiplier: 9.0
+    launchForwardsMultiplier: 1.5
   - type: StepTrigger
   - type: CollisionWake
     enabled: false
@@ -615,3 +615,11 @@
   - type: Icon
     state: pda-syndi
 
+- type: entity
+  parent: HoSPDA
+  id: ERTLeaderPDA
+  name: ERT PDA
+  description: Red for firepower.
+  components:
+  - type: PDA
+    id: ERTLeaderIDCard

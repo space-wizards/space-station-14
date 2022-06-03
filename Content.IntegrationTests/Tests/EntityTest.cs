@@ -253,9 +253,9 @@ namespace Content.IntegrationTests.Tests
                 mapManager.DoMapInitialize(mapId);
             });
 
-            var distinctComponents = new List<(List<Type> components, List<Type> references)>
+            var distinctComponents = new List<(List<CompIdx> components, List<CompIdx> references)>
             {
-                (new List<Type>(), new List<Type>())
+                (new List<CompIdx>(), new List<CompIdx>())
             };
 
             // Split components into groups, ensuring that their references don't conflict
@@ -272,14 +272,14 @@ namespace Content.IntegrationTests.Tests
                         // Ensure the next list if this one has conflicting references
                         if (i + 1 >= distinctComponents.Count)
                         {
-                            distinctComponents.Add((new List<Type>(), new List<Type>()));
+                            distinctComponents.Add((new List<CompIdx>(), new List<CompIdx>()));
                         }
 
                         continue;
                     }
 
                     // Add the component and its references if no conflicting references were found
-                    distinct.components.Add(type);
+                    distinct.components.Add(registration.Idx);
                     distinct.references.AddRange(registration.References);
                 }
             }

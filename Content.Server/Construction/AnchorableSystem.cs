@@ -7,6 +7,7 @@ using Content.Server.Tools;
 using Content.Shared.Construction.Components;
 using Content.Shared.Construction.EntitySystems;
 using Content.Shared.Database;
+using Content.Shared.Examine;
 using Content.Shared.Pulling.Components;
 using Content.Shared.Tools.Components;
 
@@ -14,7 +15,7 @@ namespace Content.Server.Construction
 {
     public sealed class AnchorableSystem : SharedAnchorableSystem
     {
-        [Dependency] private readonly AdminLogSystem _adminLogs = default!;
+        [Dependency] private readonly IAdminLogManager _adminLogger = default!;
         [Dependency] private readonly ToolSystem _toolSystem = default!;
         [Dependency] private readonly PullingSystem _pullingSystem = default!;
 
@@ -25,6 +26,14 @@ namespace Content.Server.Construction
             SubscribeLocalEvent<AnchorableComponent, TryAnchorCancelledEvent>(OnAnchorCancelled2);
             SubscribeLocalEvent<AnchorableComponent, TryUnanchorCompletedEvent>(OnUnanchorComplete2);
             SubscribeLocalEvent<AnchorableComponent, TryUnanchorCancelledEvent>(OnUnanchorCancelled2);
+            SubscribeLocalEvent<AnchorableComponent, ExaminedEvent>(OnAnchoredExamine);
+        }
+
+        private void OnAnchoredExamine(EntityUid uid, AnchorableComponent component, ExaminedEvent args)
+        {
+            var isAnchored = Comp<TransformComponent>(uid).Anchored;
+            var messageId = isAnchored ? "examinable-anchored" : "examinable-unanchored";
+            args.PushMarkup(Loc.GetString(messageId, ("target", uid)));
         }
 
         private void OnUnanchorCancelled2(EntityUid uid, AnchorableComponent component, TryUnanchorCancelledEvent args)
@@ -43,7 +52,7 @@ namespace Content.Server.Construction
 
             RaiseLocalEvent(uid, new UserUnanchoredEvent(args.User, args.Using), false);
 
-            _adminLogs.Add(
+            _adminLogger.Add(
                 LogType.Action,
                 LogImpact.Low,
                 $"{EntityManager.ToPrettyString(args.User):user} unanchored {EntityManager.ToPrettyString(uid):anchored} using {EntityManager.ToPrettyString(args.Using):using}"
@@ -78,7 +87,7 @@ namespace Content.Server.Construction
 
             RaiseLocalEvent(uid, new UserAnchoredEvent(args.User, args.Using), false);
 
-            _adminLogs.Add(
+            _adminLogger.Add(
                 LogType.Action,
                 LogImpact.Low,
                 $"{EntityManager.ToPrettyString(args.User):user} anchored {EntityManager.ToPrettyString(uid):anchored} using {EntityManager.ToPrettyString(args.Using):using}"

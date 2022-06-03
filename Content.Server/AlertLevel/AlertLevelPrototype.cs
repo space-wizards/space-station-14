@@ -20,7 +20,7 @@ public sealed class AlertLevelPrototype : IPrototype
     /// Default level that the station is on upon initialization.
     /// If this isn't in the dictionary, this will default to whatever .First() gives.
     /// </summary>
-    [DataField("defaultLevel")] public string DefaultLevel { get; }= default!;
+    [DataField("defaultLevel")] public string DefaultLevel { get; } = default!;
 }
 
 /// <summary>
