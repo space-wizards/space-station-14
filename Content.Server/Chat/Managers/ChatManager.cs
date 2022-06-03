@@ -232,7 +232,7 @@ namespace Content.Server.Chat.Managers
         public void ChatMessageToManyFiltered(Filter filter, ChatChannel channel, string message, string messageWrap, EntityUid source,
             bool hideChat, Color? colorOverride = null)
         {
-            if(!filter.Recipients.Any()) return;
+            if (!filter.Recipients.Any()) return;
 
             var clients = new List<INetChannel>();
             foreach (var recipient in filter.Recipients)

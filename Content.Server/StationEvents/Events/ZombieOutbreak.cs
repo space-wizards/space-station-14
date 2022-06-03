@@ -43,8 +43,8 @@ namespace Content.Server.StationEvents.Events
             var toInfect = _random.Next(1, 3);
 
             // Now we give it to people in the list of dead entities earlier.
-            var stationSystem = EntitySystem.Get<StationSystem>();
-            var chatSystem = EntitySystem.Get<ChatSystem>();
+            var stationSystem = IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<StationSystem>();
+            var chatSystem = IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<ChatSystem>();
             foreach (var target in deadList)
             {
                 if (toInfect-- == 0)

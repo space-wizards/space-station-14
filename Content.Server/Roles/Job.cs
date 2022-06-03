@@ -33,7 +33,7 @@ namespace Content.Server.Roles
             if (Mind.TryGetSession(out var session))
             {
                 var chatMgr = IoCManager.Resolve<IChatManager>();
-                var chatSys = EntitySystem.Get<ChatSystem>();
+                var chatSys = IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<ChatSystem>();
                 chatMgr.DispatchServerMessage(session, Loc.GetString("job-greet-introduce-job-name", ("jobName", Name)));
 
                 if(Prototype.RequireAdminNotify)

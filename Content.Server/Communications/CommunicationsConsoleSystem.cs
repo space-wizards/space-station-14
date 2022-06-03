@@ -15,7 +15,6 @@ namespace Content.Server.Communications
 {
     public sealed class CommunicationsConsoleSystem : EntitySystem
     {
-        [Dependency] private readonly IChatManager _chatManager = default!;
         [Dependency] private readonly RoundEndSystem _roundEndSystem = default!;
         [Dependency] private readonly AlertLevelSystem _alertLevelSystem = default!;
         [Dependency] private readonly StationSystem _stationSystem = default!;
@@ -43,7 +42,7 @@ namespace Content.Server.Communications
 
         public override void Update(float frameTime)
         {
-            foreach (var comp in EntityManager.EntityQuery<CommunicationsConsoleComponent>())
+            foreach (var comp in EntityQuery<CommunicationsConsoleComponent>())
             {
                 // TODO: Find a less ass way of refreshing the UI
                 if (comp.AlreadyRefreshed) continue;
@@ -64,7 +63,7 @@ namespace Content.Server.Communications
         /// </summary>
         private void OnGenericBroadcastEvent()
         {
-            foreach (var comp in EntityManager.EntityQuery<CommunicationsConsoleComponent>())
+            foreach (var comp in EntityQuery<CommunicationsConsoleComponent>())
             {
                 UpdateBoundUserInterface(comp);
             }
@@ -76,7 +75,7 @@ namespace Content.Server.Communications
         /// <param name="args">Alert level changed event arguments</param>
         private void OnAlertLevelChanged(AlertLevelChangedEvent args)
         {
-            foreach (var comp in EntityManager.EntityQuery<CommunicationsConsoleComponent>())
+            foreach (var comp in EntityQuery<CommunicationsConsoleComponent>())
             {
                 var entStation = _stationSystem.GetOwningStation(comp.Owner);
                 if (args.Station == entStation)
@@ -97,7 +96,7 @@ namespace Content.Server.Communications
 
             if (stationUid != null)
             {
-                if (EntityManager.TryGetComponent(stationUid.Value, out AlertLevelComponent alertComp) &&
+                if (TryComp(stationUid.Value, out AlertLevelComponent? alertComp) &&
                     alertComp.AlertLevels != null)
                 {
                     if (alertComp.IsSelectable)
@@ -136,7 +135,7 @@ namespace Content.Server.Communications
 
         private bool CanUse(EntityUid user, EntityUid console)
         {
-            if (EntityManager.TryGetComponent<AccessReaderComponent>(console, out var accessReaderComponent) && accessReaderComponent.Enabled)
+            if (TryComp<AccessReaderComponent>(console, out var accessReaderComponent) && accessReaderComponent.Enabled)
             {
                 return _accessReaderSystem.IsAllowed(user, accessReaderComponent);
             }

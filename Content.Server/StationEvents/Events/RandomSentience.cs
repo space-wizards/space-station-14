@@ -51,8 +51,8 @@ public sealed class RandomSentience : StationEvent
         var kind2 = groupList.Count > 1 ? groupList[1] : "???";
         var kind3 = groupList.Count > 2 ? groupList[2] : "???";
 
-        var stationSystem = EntitySystem.Get<StationSystem>();
-        var chatSystem = EntitySystem.Get<ChatSystem>();
+        var stationSystem = IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<StationSystem>();
+        var chatSystem = IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<ChatSystem>();
         foreach (var target in targetList)
         {
             var station = stationSystem.GetOwningStation(target.Owner);
