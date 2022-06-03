@@ -66,7 +66,6 @@ namespace Content.Client.LateJoin
             var gameTicker = EntitySystem.Get<ClientGameTicker>();
             foreach (var (id, name) in gameTicker.StationNames)
             {
-
                 var jobList = new BoxContainer
                 {
                     Orientation = LayoutOrientation.Vertical
@@ -364,8 +363,7 @@ namespace Content.Client.LateJoin
             }
         }
     }
-	
-        
+	     
     sealed class JobButton : ContainerButton
     {
         public string JobId { get; }

@@ -103,8 +103,6 @@ namespace Content.Client.Preferences.UI
         private bool _isDirty;
         private bool _needUpdatePreview;
         private bool _needsDummyRebuild;
-        private bool _newbToggle;
-
         public int CharacterSlot;
         public HumanoidCharacterProfile? Profile;
 
