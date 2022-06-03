@@ -28,6 +28,18 @@
               amount: 2
               doAfter: 3
 
+        - to: shuttleWindow
+          steps:
+            - material: TitaniumGlass
+              amount: 2
+              doAfter: 4
+
+        - to: plastitaniumWindow
+          steps:
+            - material: PlastitaniumGlass
+              amount: 2
+              doAfter: 6
+
         - to: window
           steps:
             - material: Glass
@@ -132,3 +144,51 @@
               doAfter: 2
             - tool: Anchoring
               doAfter: 3
+
+    - node: shuttleWindow
+      entity: ShuttleWindow
+      edges:
+        - to: start
+          completed:
+            - !type:SpawnPrototype
+              prototype: SheetTGlass1
+              amount: 2
+            - !type:DeleteEntity {}
+          steps:
+            - tool: Welding
+              doAfter: 5
+            - tool: Screwing
+              doAfter: 1
+            - tool: Prying
+              doAfter: 2
+            - tool: Welding
+              doAfter: 5
+            - tool: Screwing
+              doAfter: 1
+            - tool: Anchoring
+              doAfter: 2
+
+    - node: plastitaniumWindow
+      entity: PlastitaniumWindow
+      edges:
+        - to: start
+          completed:
+            - !type:SpawnPrototype
+              prototype: SheetPTGlass1
+              amount: 2
+            - !type:DeleteEntity {}
+          steps:
+            - tool: Welding
+              doAfter: 5
+            - tool: Screwing
+              doAfter: 1
+            - tool: Prying
+              doAfter: 2
+            - tool: Cutting
+              doAfter: 2
+            - tool: Welding
+              doAfter: 5
+            - tool: Screwing
+              doAfter: 1
+            - tool: Anchoring
+              doAfter: 2

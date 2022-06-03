@@ -522,6 +522,10 @@
         - SheetPlasma30
         - SheetPGlass30
         - SheetRPGlass30
+        - SheetTitanium30
+        - SheetPlastitanium30
+        - SheetTGlass30
+        - SheetPTGlass30
         - SheetUranium1
         - IngotGold1
         - IngotSilver1

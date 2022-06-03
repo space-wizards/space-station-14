@@ -83,3 +83,34 @@
     refineResult:
     - SheetGlass1
     - SheetPlasma1
+
+- type: entity
+  parent: ShardBase
+  id: ShardGlassTitanium
+  name: titanium glass shard
+  description: A small piece of titanium glass. It looks sharp, you wouldn't want to step on it barefoot.
+  components:
+  - type: Sprite
+    color: "#6f7370"
+  - type: Item
+    color: "#6f7370"
+  - type: WelderRefinable
+    refineResult:
+    - SheetGlass1
+    - SheetTitanium1
+
+- type: entity
+  parent: ShardBase
+  id: ShardGlassPlastitanium
+  name: plastitanium glass shard
+  description: A small piece of plastitanium glass. It looks sharp, you wouldn't want to step on it barefoot.
+  components:
+  - type: Sprite
+    color: "#403440"
+  - type: Item
+    color: "#403440"
+  - type: WelderRefinable
+    refineResult:
+    - SheetGlass1
+    - SheetPlasma1
+    - SheetTitanium1

@@ -20,3 +20,24 @@
   icon: Objects/Weapons/Throwable/bola.rsi/icon.png
   objectType: Item
 
+- type: construction
+  name: titanium glass shiv
+  id: TGlassShiv
+  graph: TShiv
+  startNode: start
+  targetNode: tglassshiv
+  category: Weapons
+  description: A crude stabbing device often seen in prisons.
+  icon: Objects/Weapons/Melee/titanium_shiv.rsi
+  objectType: Item
+
+- type: construction
+  name: plastitanium glass shiv
+  id: PTGlassShiv
+  graph: PTShiv
+  startNode: start
+  targetNode: ptglassshiv
+  category: Weapons
+  description: A crude stabbing device often seen in prisons.
+  icon: Objects/Weapons/Melee/plastitanium_shiv.rsi
+  objectType: Item

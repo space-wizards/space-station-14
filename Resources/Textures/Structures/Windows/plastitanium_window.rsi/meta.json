@@ -1,0 +1,46 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Taken from tgstation at commit https://github.com/tgstation/tgstation/commit/49438a65f8530a8473901ecec98efa0b66ae0959 and modified by blankmann",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "ptwindowfull"
+    },
+    {
+      "name": "ptwindow0",
+      "directions": 4
+    },
+    {
+      "name": "ptwindow1",
+      "directions": 4
+    },
+    {
+      "name": "ptwindow2",
+      "directions": 4
+    },
+    {
+      "name": "ptwindow3",
+      "directions": 4
+    },
+    {
+      "name": "ptwindow4",
+      "directions": 4
+    },
+    {
+      "name": "ptwindow5",
+      "directions": 4
+    },
+    {
+      "name": "ptwindow6",
+      "directions": 4
+    },
+    {
+      "name": "ptwindow7",
+      "directions": 4
+    }
+  ]
+}
