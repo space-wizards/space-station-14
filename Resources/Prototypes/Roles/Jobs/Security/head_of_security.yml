@@ -18,7 +18,8 @@
   - Armory
   - Maintenance
   - Service
-
+  difficulty: "Hard"
+  
 - type: startingGear
   id: HoSGear
   equipment:

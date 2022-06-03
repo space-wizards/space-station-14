@@ -66,6 +66,7 @@ namespace Content.Client.LateJoin
             var gameTicker = EntitySystem.Get<ClientGameTicker>();
             foreach (var (id, name) in gameTicker.StationNames)
             {
+
                 var jobList = new BoxContainer
                 {
                     Orientation = LayoutOrientation.Vertical
@@ -105,6 +106,63 @@ namespace Content.Client.LateJoin
                         }
                     }
                 });
+
+                // Difficulty Filter Buttons - wr41thX
+
+                var difficultyContainer = new BoxContainer
+                {
+                    Orientation = LayoutOrientation.Horizontal,
+                    HorizontalAlignment = HAlignment.Center
+                };
+
+                var easyButton = new Button()
+                {
+                    HorizontalAlignment = HAlignment.Left,
+                    ToggleMode = true,
+                    StyleClasses = { OptionButton.StyleClassOptionButton },
+                    Text = "Easy"
+                };
+
+                var mediumButton = new Button()
+                {
+                    HorizontalAlignment = HAlignment.Center,
+                    ToggleMode = true,
+                    StyleClasses = { OptionButton.StyleClassOptionButton },
+                    Text = "Medium"
+                };
+
+                var hardButton = new Button()
+                {
+                    HorizontalAlignment = HAlignment.Right,
+                    ToggleMode = true,
+                    StyleClasses = { OptionButton.StyleClassOptionButton },
+                    Text = "Hard"
+                };
+
+                var allButton = new Button()
+                {
+                    HorizontalAlignment = HAlignment.Right,
+                    ToggleMode = true,
+                    StyleClasses = { OptionButton.StyleClassOptionButton },
+                    Text = "All"
+                };
+
+                difficultyContainer.AddChild(
+                    easyButton
+                    );
+                difficultyContainer.AddChild(
+                    mediumButton
+                    );
+                difficultyContainer.AddChild(
+                    hardButton
+                    );
+                difficultyContainer.AddChild(
+                    allButton
+                    );
+                _base.AddChild(
+                    difficultyContainer
+                    );
+
                 var jobListScroll = new ScrollContainer()
                 {
                     VerticalExpand = true,
@@ -210,6 +268,69 @@ namespace Content.Client.LateJoin
                         jobButton.AddChild(jobSelector);
                         category.AddChild(jobButton);
 
+                        // Filter for Roles by difficulty, probably refactorable - wr41thX
+
+                        easyButton.OnToggled += _ =>
+                        {         
+                            if (easyButton.Pressed)
+                            {
+                                allButton.Pressed = false;
+                                mediumButton.Pressed = false;
+                                hardButton.Pressed = false;
+                                jobButton.Disabled = true;
+
+                                if ((prototype.Difficulty == "Easy" ||
+                                prototype.Difficulty == "Clown" ||
+                                prototype.Difficulty == "Clown+") && job.Value != 0)
+                                { jobButton.Disabled = false; }
+                            }
+                            
+                        };
+
+                        mediumButton.OnToggled += _ =>
+                        {
+                            if (mediumButton.Pressed)
+                            {
+                                allButton.Pressed = false;
+                                easyButton.Pressed = false;
+                                hardButton.Pressed = false;
+                                jobButton.Disabled = true;
+
+                                if ((prototype.Difficulty == "Medium" ||
+                                prototype.Difficulty == "Easy to Medium") && job.Value != 0)
+                                {jobButton.Disabled = false;}
+                            }
+                        };
+
+                        hardButton.OnToggled += _ =>
+                        {
+                            if (hardButton.Pressed)
+                            {
+                                allButton.Pressed = false;
+                                mediumButton.Pressed = false;
+                                easyButton.Pressed = false;
+                                jobButton.Disabled = true;
+
+                                if ((prototype.Difficulty == "Hard" ||
+                                prototype.Difficulty == "Medium to Hard") && job.Value != 0)
+                                { jobButton.Disabled = false; }
+                            }
+                        };
+
+                        allButton.OnToggled += _ =>
+                        {
+                            if (allButton.Pressed)
+                            {
+                                hardButton.Pressed = false;
+                                mediumButton.Pressed = false;
+                                easyButton.Pressed = false;
+                                if (job.Value != 0)
+                                {
+                                    jobButton.Disabled = false;
+                                } 
+                            }      
+                        };
+
                         jobButton.OnPressed += _ =>
                         {
                             SelectedId?.Invoke((id, jobButton.JobId));
@@ -243,7 +364,8 @@ namespace Content.Client.LateJoin
             }
         }
     }
-
+	
+        
     sealed class JobButton : ContainerButton
     {
         public string JobId { get; }

@@ -10,7 +10,8 @@
   - Service
   - Brig
   - Maintenance
-
+  difficulty: "Easy"
+  
 - type: startingGear
   id: LawyerGear
   equipment:

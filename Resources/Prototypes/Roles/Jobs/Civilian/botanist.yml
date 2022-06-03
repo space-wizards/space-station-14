@@ -10,7 +10,8 @@
   - Service
   - Maintenance
   - Hydroponics
-
+  difficulty: "Easy"
+  
 - type: startingGear
   id: BotanistGear
   equipment:

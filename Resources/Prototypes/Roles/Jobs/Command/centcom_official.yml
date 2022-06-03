@@ -10,7 +10,8 @@
   access:
   - Command
   - Maintenance
-
+  difficulty: "Hard"
+  
 - type: startingGear
   id: CentcomGear
   equipment:

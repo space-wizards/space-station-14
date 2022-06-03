@@ -12,7 +12,8 @@
   - Maintenance
   - Bar
   - Kitchen
-
+  difficulty: "Easy"
+  
 - type: startingGear
   id: ServiceWorkerGear
   equipment:

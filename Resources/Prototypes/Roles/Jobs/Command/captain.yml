@@ -12,7 +12,8 @@
   canBeAntag: false
   accessGroups:
   - AllAccess
-
+  difficulty: "Hard"
+  
 - type: startingGear
   id: CaptainGear
   equipment:

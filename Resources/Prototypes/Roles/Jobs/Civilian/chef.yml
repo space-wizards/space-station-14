@@ -10,7 +10,8 @@
   - Service
   - Maintenance
   - Kitchen
-
+  difficulty: "Medium"
+  
 - type: startingGear
   id: ChefGear
   equipment:

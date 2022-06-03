@@ -9,7 +9,8 @@
   access:
   - Medical
   - Maintenance
-
+  difficulty: "Medium"
+  
 - type: startingGear
   id: DoctorGear
   equipment:

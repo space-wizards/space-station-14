@@ -12,6 +12,7 @@
   - Maintenance
   - Engineering
   - External
+  difficulty: "Easy"
 
 - type: startingGear
   id: TechnicalAssistantGear

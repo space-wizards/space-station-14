@@ -25,6 +25,7 @@
   - Chapel
   - Hydroponics
   # I mean they'll give themselves the rest of the access levels *anyways*.
+  difficulty: "Hard"
 
 - type: startingGear
   id: HoPGear

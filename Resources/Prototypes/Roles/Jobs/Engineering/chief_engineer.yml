@@ -17,7 +17,8 @@
   - External
   - ChiefEngineer
   - Atmospherics
-
+  difficulty: "Hard"
+  
 - type: startingGear
   id: ChiefEngineerGear
   equipment:

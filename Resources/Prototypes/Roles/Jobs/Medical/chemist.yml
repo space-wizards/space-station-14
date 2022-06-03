@@ -10,7 +10,8 @@
   - Medical
   - Chemistry
   - Maintenance
-
+  difficulty: "Medium"
+  
 - type: startingGear
   id: ChemistGear
   equipment:

@@ -10,7 +10,8 @@
   - Maintenance
   - Engineering
   - External
-
+  difficulty: "Medium"
+  
 - type: startingGear
   id: StationEngineerGear
   equipment:

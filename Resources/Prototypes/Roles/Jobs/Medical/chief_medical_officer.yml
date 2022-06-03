@@ -18,7 +18,8 @@
   - Maintenance
   - Chemistry
   - ChiefMedicalOfficer
-
+  difficulty: "Medium"
+  
 - type: startingGear
   id: CMOGear
   equipment:

@@ -10,7 +10,8 @@
   - Cargo
   - Maintenance
   - External
-
+  difficulty: "Medium"
+  
 - type: startingGear
   id: CargoTechGear
   equipment:

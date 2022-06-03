@@ -11,7 +11,8 @@
   - Salvage
   - Maintenance
   - External
-
+  difficulty: "Medium"
+  
 - type: startingGear
   id: SalvageSpecialistGear
   equipment:

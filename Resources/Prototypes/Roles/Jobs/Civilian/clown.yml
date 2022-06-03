@@ -9,6 +9,7 @@
   access:
   - Theatre
   - Maintenance
+  difficulty: "Clown"
   special:
   - !type:AddComponentSpecial
     components:

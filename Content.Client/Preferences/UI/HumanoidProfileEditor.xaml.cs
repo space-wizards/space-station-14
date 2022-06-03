@@ -103,6 +103,8 @@ namespace Content.Client.Preferences.UI
         private bool _isDirty;
         private bool _needUpdatePreview;
         private bool _needsDummyRebuild;
+        private bool _newbToggle;
+
         public int CharacterSlot;
         public HumanoidCharacterProfile? Profile;
 
@@ -341,7 +343,7 @@ namespace Content.Client.Preferences.UI
 
             _jobPriorities = new List<JobPrioritySelector>();
             _jobCategories = new Dictionary<string, BoxContainer>();
-
+            
             var firstCategory = true;
 
             foreach (var job in prototypeManager.EnumeratePrototypes<JobPrototype>().OrderBy(j => j.Name))
@@ -390,7 +392,7 @@ namespace Content.Client.Preferences.UI
                     }
 
                     var selector = new JobPrioritySelector(job);
-                    category.AddChild(selector);
+                    category.AddChild(selector);                         
                     _jobPriorities.Add(selector);
 
                     selector.PriorityChanged += priority =>
@@ -978,6 +980,7 @@ namespace Content.Client.Preferences.UI
         {
             public JobPrototype Job { get; }
             private readonly RadioOptions<int> _optionButton;
+            private readonly Label _difficultyLable;
 
             public JobPriority Priority
             {
@@ -991,6 +994,10 @@ namespace Content.Client.Preferences.UI
             {
                 Job = job;
 
+                // Difficulty Rating Text
+                string spacer = "     ";
+                string difficultyText = job.Difficulty;
+
                 _optionButton = new RadioOptions<int>(RadioOptionsLayout.Horizontal)
                 {
                     FirstButtonStyle = StyleBase.ButtonOpenRight,
@@ -998,11 +1005,19 @@ namespace Content.Client.Preferences.UI
                     LastButtonStyle = StyleBase.ButtonOpenLeft
                 };
 
+
+                _difficultyLable = new Label
+                {
+                    Text = spacer + difficultyText
+                };
+
                 // Text, Value
                 _optionButton.AddItem(Loc.GetString("humanoid-profile-editor-job-priority-high-button"), (int) JobPriority.High);
                 _optionButton.AddItem(Loc.GetString("humanoid-profile-editor-job-priority-medium-button"), (int) JobPriority.Medium);
                 _optionButton.AddItem(Loc.GetString("humanoid-profile-editor-job-priority-low-button"), (int) JobPriority.Low);
                 _optionButton.AddItem(Loc.GetString("humanoid-profile-editor-job-priority-never-button"), (int) JobPriority.Never);
+
+              
 
                 _optionButton.OnItemSelected += args =>
                 {
@@ -1022,7 +1037,6 @@ namespace Content.Client.Preferences.UI
                         job.Icon);
                     icon.Texture = specifier.Frame0();
                 }
-
                 AddChild(new BoxContainer
                 {
                     Orientation = LayoutOrientation.Horizontal,
@@ -1030,7 +1044,8 @@ namespace Content.Client.Preferences.UI
                     {
                         icon,
                         new Label {Text = job.Name, MinSize = (175, 0)},
-                        _optionButton
+                        _optionButton,
+                        _difficultyLable
                     }
                 });
             }

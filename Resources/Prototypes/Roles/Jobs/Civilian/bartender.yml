@@ -10,6 +10,7 @@
   - Service
   - Maintenance
   - Bar
+  difficulty: "Easy"
 
 - type: startingGear
   id: BartenderGear

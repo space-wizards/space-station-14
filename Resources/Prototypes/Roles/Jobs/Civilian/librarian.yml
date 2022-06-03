@@ -9,7 +9,8 @@
   access:
   - Service
   - Maintenance
-
+  difficulty: "Easy"
+  
 - type: startingGear
   id: LibrarianGear
   equipment:

@@ -12,7 +12,8 @@
   - Brig
   - Maintenance
   - Service
-
+  difficulty: "Medium to Hard"
+  
 - type: startingGear
   id: SecurityOfficerGear
   equipment:

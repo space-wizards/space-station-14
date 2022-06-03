@@ -8,7 +8,8 @@
   supervisors: "absolutely everyone"
   access:
   - Maintenance
-
+  difficulty: "Easy"
+  
 - type: startingGear
   id: PassengerGear
   equipment:

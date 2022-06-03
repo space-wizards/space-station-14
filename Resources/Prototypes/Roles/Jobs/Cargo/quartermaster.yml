@@ -14,7 +14,8 @@
   - Quartermaster
   - Maintenance
   - External
-
+  difficulty: "Medium"
+  
 - type: startingGear
   id: QuartermasterGear
   equipment:

@@ -13,7 +13,8 @@
   - !type:GiveItemOnHolidaySpecial
     holiday: MikuDay
     prototype: BoxPerformer
-
+  difficulty: "Easy"
+  
 - type: startingGear
   id: MusicianGear
   equipment:

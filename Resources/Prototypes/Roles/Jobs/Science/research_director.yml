@@ -15,7 +15,8 @@
   - Command
   - Maintenance
   - ResearchDirector
-
+  difficulty: "Medium"
+  
 - type: startingGear
   id: ResearchDirectorGear
   equipment:

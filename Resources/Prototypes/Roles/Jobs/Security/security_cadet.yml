@@ -12,7 +12,8 @@
   - Security
   - Brig
   - Maintenance
-
+  difficulty: "Easy"
+  
 - type: startingGear
   id: SecurityCadetGear
   equipment:
