@@ -46,7 +46,6 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
 
             var airHeatCapacity = _atmosphereSystem.GetHeatCapacity(inlet.Air);
             var combinedHeatCapacity = airHeatCapacity + thermoMachine.HeatCapacity;
-            var oldTemperature = inlet.Air.Temperature;
 
             if (!MathHelper.CloseTo(combinedHeatCapacity, 0, 0.001f))
             {
@@ -70,6 +69,9 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
 
         private void OnGasThermoRefreshParts(EntityUid uid, GasThermoMachineComponent component, RefreshPartsEvent args)
         {
+            // Here we evaluate the average quality of relevant machine parts. 
+            var nLasers = 0;
+            var nBins= 0;
             var matterBinRating = 0;
             var laserRating = 0;
 
@@ -78,25 +80,32 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
                 switch (part.PartType)
                 {
                     case MachinePart.MatterBin:
+                        nBins += 1;
                         matterBinRating += part.Rating;
                         break;
                     case MachinePart.Laser:
+                        nLasers += 1;
                         laserRating += part.Rating;
                         break;
                 }
             }
+            laserRating /= nLasers;
+            matterBinRating /= nBins;
 
-            component.HeatCapacity = 5000 * MathF.Pow((matterBinRating - 1), 2);
+            component.HeatCapacity = 5000 * MathF.Pow(matterBinRating, 2);
 
             switch (component.Mode)
             {
-                // 573.15K with stock parts.
+                // 593.15K with stock parts.
                 case ThermoMachineMode.Heater:
-                    component.MaxTemperature = Atmospherics.T20C + (component.InitialMaxTemperature * laserRating);
+                    component.MaxTemperature = component.BaseMaxTemperature + component.MaxTemperatureDelta * laserRating;
+                    component.MinTemperature = Atmospherics.T20C;
                     break;
                 // 73.15K with stock parts.
                 case ThermoMachineMode.Freezer:
-                    component.MinTemperature = MathF.Max(Atmospherics.T0C - component.InitialMinTemperature + laserRating * 15f, Atmospherics.TCMB);
+                    component.MinTemperature = MathF.Max(
+                        component.BaseMinTemperature - component.MinTemperatureDelta * laserRating, Atmospherics.TCMB);
+                    component.MaxTemperature = Atmospherics.T20C;
                     break;
             }
 

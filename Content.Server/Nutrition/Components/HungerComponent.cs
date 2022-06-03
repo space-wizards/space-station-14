@@ -11,6 +11,7 @@ using Robust.Shared.Random;
 namespace Content.Server.Nutrition.Components
 {
     [RegisterComponent]
+    [ComponentReference(typeof(SharedHungerComponent))]
     public sealed class HungerComponent : SharedHungerComponent
     {
         [Dependency] private readonly IEntityManager _entMan = default!;
@@ -195,10 +196,11 @@ namespace Content.Server.Nutrition.Components
             // _trySound(calculatedThreshold);
             if (calculatedHungerThreshold != _currentHungerThreshold)
             {
+                var logManager = IoCManager.Resolve<IAdminLogManager>();
                 if (_currentHungerThreshold == HungerThreshold.Dead)
-                    EntitySystem.Get<AdminLogSystem>().Add(LogType.Hunger, $"{_entMan.ToPrettyString(Owner):entity} has stopped starving");
+                    logManager.Add(LogType.Hunger, $"{_entMan.ToPrettyString(Owner):entity} has stopped starving");
                 else if (calculatedHungerThreshold == HungerThreshold.Dead)
-                    EntitySystem.Get<AdminLogSystem>().Add(LogType.Hunger, $"{_entMan.ToPrettyString(Owner):entity} has started starving");
+                    logManager.Add(LogType.Hunger, $"{_entMan.ToPrettyString(Owner):entity} has started starving");
 
                 _currentHungerThreshold = calculatedHungerThreshold;
                 HungerThresholdEffect();
