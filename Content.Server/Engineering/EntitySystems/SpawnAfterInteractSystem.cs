@@ -3,6 +3,7 @@ using Content.Server.DoAfter;
 using Content.Server.Engineering.Components;
 using Content.Server.Stack;
 using Content.Shared.Interaction;
+using Content.Shared.Maps;
 using Content.Shared.Stacks;
 using JetBrains.Annotations;
 using Robust.Shared.Map;
@@ -40,6 +41,9 @@ namespace Content.Server.Engineering.EntitySystems
             }
 
             if (!IsTileClear())
+                return;
+
+            if (tileRef.IsBlockedTurf(true))
                 return;
 
             if (component.DoAfterTime > 0)
