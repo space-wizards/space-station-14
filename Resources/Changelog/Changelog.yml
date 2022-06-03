@@ -1,68 +1,4 @@
 Entries:
-- author: moony
-  changes:
-  - {message: 'Power grid check no longer shuts off all power instantly, and instead
-      does so over about 30 seconds.', type: Tweak}
-  id: 1133
-  time: '2022-02-27T07:01:39.0000000+00:00'
-- author: Peptide90
-  changes:
-  - {message: 'Adds a bunch of new carpets, grass and shuttle flooring for mappers.
-      Keep an eye out for updates to your favorite maps!', type: Add}
-  id: 1134
-  time: '2022-02-27T07:01:48.0000000+00:00'
-- author: Peptide90
-  changes:
-  - {message: Added the fire helmet! Heat resistant goodness for your head that looks
-      cool AND has a light!, type: Add}
-  id: 1135
-  time: '2022-02-27T07:02:07.0000000+00:00'
-- author: Peptide90
-  changes:
-  - {message: 'Pillar V5.1 - bug fixes and reinforced more walls, departments, offices
-      and substations.', type: Add}
-  id: 1136
-  time: '2022-02-27T07:02:15.0000000+00:00'
-- author: Peptide90
-  changes:
-  - {message: 'All electronics, machine and computer boards now have updated names,
-      descriptions and in some cases sprites.', type: Fix}
-  - {message: SMES construction is now fixed., type: Fix}
-  - {message: There's now computer boards for all computers on the station...some
-      still don't do anything., type: Add}
-  id: 1137
-  time: '2022-02-27T13:46:27.0000000+00:00'
-- author: Zumorica
-  changes:
-  - {message: Suspicion no longer shows up in gamemode votes., type: Remove}
-  id: 1138
-  time: '2022-02-27T18:03:08.0000000+00:00'
-- author: Peptide90
-  changes:
-  - {message: 'Added boxes of trashbags, flares and all magazine types.', type: Add}
-  id: 1139
-  time: '2022-02-27T19:56:27.0000000+00:00'
-- author: Zyme
-  changes:
-  - {message: Monkeys now understand the concept of hats, type: Add}
-  id: 1140
-  time: '2022-02-27T19:56:36.0000000+00:00'
-- author: ElectroJr
-  changes:
-  - {message: 'The /mapping command syntax has changed. The filename now comes before
-      the Id, and a new blank map is created by providing no arguments.', type: Tweak}
-  id: 1141
-  time: '2022-02-28T01:21:15.0000000+00:00'
-- author: DogZeroX
-  changes:
-  - {message: Animal's blood now variate depending on their size, type: Tweak}
-  id: 1142
-  time: '2022-02-28T01:23:45.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - {message: Lowered ghost movement speed., type: Tweak}
-  id: 1143
-  time: '2022-02-28T15:14:17.0000000+00:00'
 - author: Emisse
   changes:
   - {message: 'A brand new station, moose station.', type: Add}
@@ -3002,3 +2938,71 @@ Entries:
   - {message: Added an audio setting to disable playing admin music, type: Add}
   id: 1632
   time: '2022-06-02T13:41:20.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: SMGs have had their maximum spread angle increased (i.e. accuracy reduced).,
+    type: Tweak}
+  id: 1633
+  time: '2022-06-02T19:46:46.0000000+00:00'
+- author: Peptide90
+  changes:
+  - {message: Post Lights are now slightly smaller and sit further up in a tile.,
+    type: Tweak}
+  id: 1634
+  time: '2022-06-02T20:12:23.0000000+00:00'
+- author: DogZeroX
+  changes:
+  - {message: Nukes will now explode in 120 seconds instead of 180., type: Tweak}
+  id: 1635
+  time: '2022-06-02T20:53:32.0000000+00:00'
+- author: Peptide90
+  changes:
+  - {message: Gas miners are now capped at 300 kPa instead of 4500 kPa. Less pressure
+      bombing., type: Tweak}
+  id: 1636
+  time: '2022-06-02T21:35:32.0000000+00:00'
+- author: TimrodDX
+  changes:
+  - {message: Delta Station now has security cameras. Lots of them., type: Add}
+  - {message: Delta Station now has more decals., type: Tweak}
+  id: 1637
+  time: '2022-06-03T05:32:57.0000000+00:00'
+- author: moony
+  changes:
+  - {message: 'Removed dwarves, due to their lack of content. If someone steps up
+      in the next few weeks to make them better we''ll see about their reintroduction.',
+    type: Remove}
+  id: 1638
+  time: '2022-06-03T07:31:35.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Bojevic firerate dropped from 3 to 2, type: Tweak}
+  - {message: Shotgun pellet damage from 13 to 8 (3 shotting players instead of 2
+      shot assuming all pellets hit)., type: Tweak}
+  - {message: Spread changed from 10 degrees to 15., type: Tweak}
+  id: 1639
+  time: '2022-06-03T07:57:39.0000000+00:00'
+- author: Peptide90
+  changes:
+  - {message: Emitters have been removed from cargo ordering. You now have to research
+      a machine board for them and build them from machine frames., type: Tweak}
+  id: 1640
+  time: '2022-06-03T09:22:58.0000000+00:00'
+- author: mirrorcult
+  changes:
+  - {message: Sandbox is now votable again as long as there are less than 5 players
+      in the server., type: Tweak}
+  id: 1641
+  time: '2022-06-03T10:04:53.0000000+00:00'
+- author: ElectroJr
+  changes:
+  - {message: Fixed a bug that caused gas quantity to not be conserved when anchoring
+      and unanchoring atmos devices., type: Fix}
+  id: 1642
+  time: '2022-06-03T10:09:52.0000000+00:00'
+- author: Peptide90
+  changes:
+  - {message: 'APCs, generators and wallmount substations are no longer nuke proof.',
+    type: Tweak}
+  id: 1643
+  time: '2022-06-03T10:10:18.0000000+00:00'
