@@ -1,9 +1,4 @@
 Entries:
-- author: Emisse
-  changes:
-  - {message: 'A brand new station, moose station.', type: Add}
-  id: 1144
-  time: '2022-03-01T02:16:46.0000000+00:00'
 - author: ElectroJr
   changes:
   - {message: 'Fixed being able to push some entities (computers, canisters, plants)
@@ -3006,3 +3001,8 @@ Entries:
     type: Tweak}
   id: 1643
   time: '2022-06-03T10:10:18.0000000+00:00'
+- author: mirrorcult
+  changes:
+  - {message: Sprays will now properly apply effects to entities again., type: Tweak}
+  id: 1644
+  time: '2022-06-03T10:25:44.0000000+00:00'
