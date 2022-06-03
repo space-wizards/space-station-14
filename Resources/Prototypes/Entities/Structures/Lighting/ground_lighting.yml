@@ -76,6 +76,9 @@
     damage:
       types:
         Heat: 20
+  - type: ContainerContainer
+    containers:
+      light_bulb: !type:ContainerSlot
   - type: ApcPowerReceiver
   - type: ExtensionCableReceiver
   - type: DeviceNetwork
