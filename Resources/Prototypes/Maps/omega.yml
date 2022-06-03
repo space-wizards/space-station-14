@@ -5,7 +5,7 @@
   minPlayers: 0
   maxPlayers: 35
   stations:
-    Moose:
+    Omega:
       mapNameTemplate: '{0} Omega Station {1}'
       nameGenerator:
         !type:NanotrasenNameGenerator
