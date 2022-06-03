@@ -36,7 +36,7 @@ public sealed class ChatSystem : SharedChatSystem
     [Dependency] private readonly IAdminManager _adminManager = default!;
     [Dependency] private readonly IPlayerManager _playerManager = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
-    [Dependency] private readonly AdminLogSystem _logs = default!;
+    [Dependency] private readonly IAdminLogManager _adminLogger = default!;
     [Dependency] private readonly ActionBlockerSystem _actionBlocker = default!;
     [Dependency] private readonly ListeningSystem _listener = default!;
     [Dependency] private readonly InventorySystem _inventory = default!;
@@ -155,7 +155,7 @@ public sealed class ChatSystem : SharedChatSystem
 
         var ev = new EntitySpokeEvent(message);
         RaiseLocalEvent(source, ev, false);
-        _logs.Add(LogType.Chat, LogImpact.Low, $"Say from {ToPrettyString(source):user}: {message}");
+        _adminLogger.Add(LogType.Chat, LogImpact.Low, $"Say from {ToPrettyString(source):user}: {message}");
     }
 
     private void SendEntityWhisper(EntityUid source, string message, bool hideChat = false)
@@ -199,7 +199,7 @@ public sealed class ChatSystem : SharedChatSystem
 
         var ev = new EntitySpokeEvent(message);
         RaiseLocalEvent(source, ev, false);
-        _logs.Add(LogType.Chat, LogImpact.Low, $"Whisper from {ToPrettyString(source):user}: {message}");
+        _adminLogger.Add(LogType.Chat, LogImpact.Low, $"Whisper from {ToPrettyString(source):user}: {message}");
     }
 
     private void SendEntityEmote(EntityUid source, string action, bool hideChat)
@@ -210,7 +210,7 @@ public sealed class ChatSystem : SharedChatSystem
             ("entityName", Name(source)));
 
         SendInVoiceRange(ChatChannel.Emotes, action, messageWrap, source, hideChat);
-        _logs.Add(LogType.Chat, LogImpact.Low, $"Emote from {ToPrettyString(source):user}: {action}");
+        _adminLogger.Add(LogType.Chat, LogImpact.Low, $"Emote from {ToPrettyString(source):user}: {action}");
     }
 
     // ReSharper disable once InconsistentNaming
@@ -225,7 +225,7 @@ public sealed class ChatSystem : SharedChatSystem
             ("entityName", Name(source)));
 
         SendInVoiceRange(ChatChannel.LOOC, message, messageWrap, source, hideChat);
-        _logs.Add(LogType.Chat, LogImpact.Low, $"LOOC from {player:Player}: {message}");
+        _adminLogger.Add(LogType.Chat, LogImpact.Low, $"LOOC from {player:Player}: {message}");
     }
 
     private void SendDeadChat(EntityUid source, IPlayerSession player, string message, bool hideChat)
@@ -238,18 +238,18 @@ public sealed class ChatSystem : SharedChatSystem
             messageWrap = Loc.GetString("chat-manager-send-admin-dead-chat-wrap-message",
                 ("adminChannelName", Loc.GetString("chat-manager-admin-channel-name")),
                 ("userName", player.ConnectedClient.UserName));
-            _logs.Add(LogType.Chat, LogImpact.Low, $"Dead chat from {player:Player}: {message}");
+            _adminLogger.Add(LogType.Chat, LogImpact.Low, $"Dead chat from {player:Player}: {message}");
         }
         else
         {
             messageWrap = Loc.GetString("chat-manager-send-dead-chat-wrap-message",
                 ("deadChannelName", Loc.GetString("chat-manager-dead-channel-name")),
                 ("playerName", (playerName)));
-            _logs.Add(LogType.Chat, LogImpact.Low, $"Admin dead chat from {player:Player}: {message}");
+            _adminLogger.Add(LogType.Chat, LogImpact.Low, $"Admin dead chat from {player:Player}: {message}");
         }
 
         _chatManager.ChatMessageToMany(ChatChannel.Dead, message, messageWrap, source, hideChat, clients.ToList());
-        _logs.Add(LogType.Chat, LogImpact.Low, $"Dead chat from {player:Player}: {message}");
+        _adminLogger.Add(LogType.Chat, LogImpact.Low, $"Dead chat from {player:Player}: {message}");
     }
     #endregion
 

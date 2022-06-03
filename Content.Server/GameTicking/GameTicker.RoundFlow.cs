@@ -161,7 +161,7 @@ namespace Content.Server.GameTicking
                 return await _db.AddNewRound(server, playerIds);
             }).Result;
 
-            var startingEvent = new RoundStartingEvent();
+            var startingEvent = new RoundStartingEvent(RoundId);
             RaiseLocalEvent(startingEvent);
 
             List<IPlayerSession> readyPlayers;
@@ -335,11 +335,9 @@ namespace Content.Server.GameTicking
             if (DummyTicker)
                 return;
 
-            if (_updateOnRoundEnd)
-            {
-                _baseServer.Shutdown(Loc.GetString("game-ticker-shutdown-server-update"));
+            // Handle restart for server update
+            if (_serverUpdates.RoundEnded())
                 return;
-            }
 
             _sawmill.Info("Restarting round!");
 

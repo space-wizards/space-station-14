@@ -175,7 +175,7 @@ namespace Content.Server.VendingMachines
 
             if (TryComp<AccessReaderComponent?>(vendComponent.Owner, out var accessReader))
             {
-                if (!_accessReader.IsAllowed(accessReader, sender.Value) && !vendComponent.Emagged)
+                if (!_accessReader.IsAllowed(sender.Value, accessReader) && !vendComponent.Emagged)
                 {
                     _popupSystem.PopupEntity(Loc.GetString("vending-machine-component-try-eject-access-denied"), uid, Filter.Pvs(uid));
                     Deny(uid, vendComponent);
