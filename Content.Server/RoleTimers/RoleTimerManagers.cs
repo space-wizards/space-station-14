@@ -5,16 +5,7 @@ using Robust.Shared.Network;
 
 namespace Content.Server.RoleTimers
 {
-    public interface IRoleTimerManager
-    {
-        Task<RoleTimer> GetRoleTimer(NetUserId userId, string role);
-
-        Task<List<RoleTimer>> GetRoleTimers(NetUserId userId);
-
-        Task EditRoleTimer(int id, TimeSpan time);
-    }
-
-    public sealed class RoleTimerManager : IRoleTimerManager, IEntityEventSubscriber
+    public sealed class RoleTimerManager : IEntityEventSubscriber
     {
         [Dependency] private readonly IServerDbManager _db = default!;
         [Dependency] private readonly IPlayerManager _playerManager = default!;
