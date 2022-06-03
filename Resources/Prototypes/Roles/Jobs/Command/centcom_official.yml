@@ -4,12 +4,12 @@
   setPreference: false
   startingGear: CentcomGear
   departments:
-    - Command
+  - Command
   icon: "Nanotrasen"
   supervisors: "the head of security"
-  access:
-  - Command
-  - Maintenance
+  canBeAntag: false
+  accessGroups:
+  - AllAccess
 
 - type: startingGear
   id: CentcomGear

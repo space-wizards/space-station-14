@@ -568,3 +568,66 @@
     resistance: 0.3
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHelmetHardsuitSyndieElite
+
+
+#ERT
+- type: entity
+  parent: ClothingOuterHardsuitSyndie
+  id: ClothingOuterHardsuitERTLeader
+  name: ERT leader's hardsuit
+  description: A protective hardsuit worn by members of an emergency response team.
+  components:
+  - type: Sprite
+    sprite: Clothing/OuterClothing/Hardsuits/ERTSuits/ertleader.rsi
+  - type: Clothing
+    sprite: Clothing/OuterClothing/Hardsuits/ERTSuits/ertleader.rsi
+  - type: ToggleableClothing
+    clothingPrototype: ClothingHeadHelmetHardsuitERTLeader
+
+- type: entity
+  parent: ClothingOuterHardsuitERTLeader
+  id: ClothingOuterHardsuitERTEngineer
+  name: ERT engineer's hardsuit
+  components:
+  - type: Sprite
+    sprite: Clothing/OuterClothing/Hardsuits/ERTSuits/ertengineer.rsi
+  - type: Clothing
+    sprite: Clothing/OuterClothing/Hardsuits/ERTSuits/ertengineer.rsi
+  - type: ToggleableClothing
+    clothingPrototype: ClothingHeadHelmetHardsuitERTEngineer
+    
+- type: entity
+  parent: ClothingOuterHardsuitERTLeader
+  id: ClothingOuterHardsuitERTMedical
+  name: ERT medic's hardsuit
+  components:
+  - type: Sprite
+    sprite: Clothing/OuterClothing/Hardsuits/ERTSuits/ertmedical.rsi
+  - type: Clothing
+    sprite: Clothing/OuterClothing/Hardsuits/ERTSuits/ertmedical.rsi
+  - type: ToggleableClothing
+    clothingPrototype: ClothingHeadHelmetHardsuitERTMedical
+
+- type: entity
+  parent: ClothingOuterHardsuitERTLeader
+  id: ClothingOuterHardsuitERTSecurity
+  name: ERT security's hardsuit
+  components:
+  - type: Sprite
+    sprite: Clothing/OuterClothing/Hardsuits/ERTSuits/ertsecurity.rsi
+  - type: Clothing
+    sprite: Clothing/OuterClothing/Hardsuits/ERTSuits/ertsecurity.rsi
+  - type: ToggleableClothing
+    clothingPrototype: ClothingHeadHelmetHardsuitERTSecurity
+    
+- type: entity
+  parent: ClothingOuterHardsuitERTLeader
+  id: ClothingOuterHardsuitERTJanitor
+  name: ERT janitor's hardsuit
+  components:
+  - type: Sprite
+    sprite: Clothing/OuterClothing/Hardsuits/ERTSuits/ertjanitor.rsi
+  - type: Clothing
+    sprite: Clothing/OuterClothing/Hardsuits/ERTSuits/ertjanitor.rsi
+  - type: ToggleableClothing
+    clothingPrototype: ClothingHeadHelmetHardsuitERTJanitor
