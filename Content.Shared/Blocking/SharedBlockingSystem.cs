@@ -139,32 +139,13 @@ public sealed class SharedBlockingSystem : EntitySystem
 
         var xform = Transform(user);
 
-        //Storing component to be used to get the original bodytype
-        //It won't let me just make a blank component here so I need to initialize
-        //to use it outside of the if statement.
-        var blockingUserComponent = new SharedBlockingUserComponent();
-
-        if (TryComp(user, out SharedBlockingUserComponent? sharedBlockingUserComponent))
-        {
-            blockingUserComponent = sharedBlockingUserComponent;
-        }
-
-        //Used to store the physics component so the users bodytype can be set back to Kinematic Controller
-        //It won't let me just make a blank component here so I need to initialize
-        //to use it outside of the if statement.
-        var bodyType = new PhysicsComponent();
-
-        if (TryComp(user, out PhysicsComponent? physicsComponent))
-        {
-            _fixtureSystem.DestroyFixture(physicsComponent, "test");
-            bodyType = physicsComponent;
-        }
-
-        if (component.BlockingToggleAction != null)
+        if (component.BlockingToggleAction != null && TryComp(user, out SharedBlockingUserComponent? blockingUserComponent)
+                                                     && TryComp(user, out PhysicsComponent? physicsComponent))
         {
             _actionsSystem.SetToggled(component.BlockingToggleAction, false);
             _transformSystem.Unanchor(xform);
-            bodyType.BodyType = blockingUserComponent.OriginalBodyType;
+            _fixtureSystem.DestroyFixture(physicsComponent, "test");
+            physicsComponent.BodyType = blockingUserComponent.OriginalBodyType;
         }
 
         return true;
