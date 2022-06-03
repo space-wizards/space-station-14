@@ -9,7 +9,6 @@
       Credit: 1
   - type: StaticPrice
     price: 0
-  - type: MaterialPrice
   - type: Stack
     stackType: Credit
     max: 1000000 # if you somehow get this rich consider buying a second station

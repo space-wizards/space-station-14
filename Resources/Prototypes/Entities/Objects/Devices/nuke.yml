@@ -89,5 +89,5 @@
           Quantity: 3000
   - type: ReagentTank
     transferAmount: 100
-  - type: MobPrice
+  - type: StaticPrice
     price: 5000 # That's a pretty fancy keg you got there.

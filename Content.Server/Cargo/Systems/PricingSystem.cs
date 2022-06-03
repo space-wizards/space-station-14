@@ -26,8 +26,6 @@ public sealed class PricingSystem : EntitySystem
     {
         SubscribeLocalEvent<StaticPriceComponent, PriceCalculationEvent>(CalculateStaticPrice);
         SubscribeLocalEvent<StackPriceComponent, PriceCalculationEvent>(CalculateStackPrice);
-        SubscribeLocalEvent<MaterialPriceComponent, PriceCalculationEvent>(CalculateMaterialPrice);
-        SubscribeLocalEvent<ContentsPriceComponent, PriceCalculationEvent>(CalculateContainerPrice);
         SubscribeLocalEvent<MobPriceComponent, PriceCalculationEvent>(CalculateMobPrice);
 
         _consoleHost.RegisterCommand("appraisegrid",
@@ -82,7 +80,10 @@ public sealed class PricingSystem : EntitySystem
     private void CalculateMobPrice(EntityUid uid, MobPriceComponent component, ref PriceCalculationEvent args)
     {
         if (!TryComp<BodyComponent>(uid, out var body) || !TryComp<MobStateComponent>(uid, out var state))
-            throw new Exception("Tried to get the mob price of an object that isn't a mob with a body and state!");
+        {
+            Logger.ErrorS("pricing", $"Tried to get the mob price of {ToPrettyString(uid)}, which has no {nameof(BodyComponent)} and no {nameof(MobStateComponent)}.");
+            return;
+        }
 
         var partList = body.Slots.ToList();
         var totalPartsPresent = partList.Sum(x => x.Part != null ? 1 : 0);
@@ -94,34 +95,13 @@ public sealed class PricingSystem : EntitySystem
         args.Price += (component.Price - partPenalty) * (state.IsAlive() ? 1.0 : component.DeathPenalty);
     }
 
-    private void CalculateMaterialPrice(EntityUid uid, MaterialPriceComponent component, ref PriceCalculationEvent args)
-    {
-        if (!TryComp<MaterialComponent>(uid, out var material))
-            throw new Exception("Tried to get the stack price of an object that isn't a stack w/ material!");
-
-        if (TryComp<StackComponent>(uid, out var stack))
-            args.Price += stack.Count * material.Materials.Sum(x => x.Price * material._materials[x.ID]);
-        else
-            args.Price += material.Materials.Sum(x => x.Price);
-    }
-
-    private void CalculateContainerPrice(EntityUid uid, ContentsPriceComponent component, ref PriceCalculationEvent args)
-    {
-        if (!TryComp<ContainerManagerComponent>(uid, out var containers)) return;
-
-        foreach (var container in containers.Containers)
-        {
-            foreach (var ent in container.Value.ContainedEntities)
-            {
-                args.Price += GetPrice(ent);
-            }
-        }
-    }
-
     private void CalculateStackPrice(EntityUid uid, StackPriceComponent component, ref PriceCalculationEvent args)
     {
         if (!TryComp<StackComponent>(uid, out var stack))
-            throw new Exception("Tried to get the stack price of an object that isn't a stack!");
+        {
+            Logger.ErrorS("pricing", $"Tried to get the stack price of {ToPrettyString(uid)}, which has no {nameof(StackComponent)}.");
+            return;
+        }
 
         args.Price += stack.Count * component.Price;
     }
@@ -144,6 +124,28 @@ public sealed class PricingSystem : EntitySystem
     {
         var ev = new PriceCalculationEvent();
         RaiseLocalEvent(uid, ref ev);
+
+        //TODO: Add an OpaqueToAppraisal component or similar for blocking the recursive descent into containers, or preventing material pricing.
+
+        if (TryComp<MaterialComponent>(uid, out var material) && !HasComp<StackPriceComponent>(uid))
+        {
+            if (TryComp<StackComponent>(uid, out var stack))
+                ev.Price += stack.Count * material.Materials.Sum(x => x.Price * material._materials[x.ID]);
+            else
+                ev.Price += material.Materials.Sum(x => x.Price);
+        }
+
+        if (TryComp<ContainerManagerComponent>(uid, out var containers))
+        {
+            foreach (var container in containers.Containers)
+            {
+                foreach (var ent in container.Value.ContainedEntities)
+                {
+                    ev.Price += GetPrice(ent);
+                }
+            }
+        }
+
         return ev.Price;
     }
 

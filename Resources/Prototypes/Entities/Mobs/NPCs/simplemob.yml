@@ -144,7 +144,6 @@
       90: 0.2
   - type: MobPrice
     price: 1000 # Living critters are valuable in space.
-  - type: ContentsPrice
 
 - type: entity
   save: false

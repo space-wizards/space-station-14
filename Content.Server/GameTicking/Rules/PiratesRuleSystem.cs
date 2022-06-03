@@ -153,7 +153,7 @@ public sealed class PiratesRuleSystem : GameRuleSystem
         var spawns = new List<EntityCoordinates>();
 
         // Forgive me for hardcoding prototypes
-        foreach (var (_, meta, xform) in EntityManager.EntityQuery<SpawnPointComponent, MetaDataComponent, TransformComponent>(true))
+        foreach (var (_, meta, xform) in EntityQuery<SpawnPointComponent, MetaDataComponent, TransformComponent>(true))
         {
             if (meta.EntityPrototype?.ID != "SpawnPointPirates" || xform.ParentUid != _pirateShip) continue;
 
@@ -162,7 +162,7 @@ public sealed class PiratesRuleSystem : GameRuleSystem
 
         if (spawns.Count == 0)
         {
-            spawns.Add(EntityManager.GetComponent<TransformComponent>(_pirateShip).Coordinates);
+            spawns.Add(Transform(_pirateShip).Coordinates);
             Logger.WarningS("pirates", $"Fell back to default spawn for nukies!");
         }
 
@@ -179,8 +179,8 @@ public sealed class PiratesRuleSystem : GameRuleSystem
             };
             newMind.ChangeOwningPlayer(session.UserId);
 
-            var mob = EntityManager.SpawnEntity("MobHuman", _random.Pick(spawns));
-            EntityManager.GetComponent<MetaDataComponent>(mob).EntityName = name;
+            var mob = Spawn("MobHuman", _random.Pick(spawns));
+            MetaData(mob).EntityName = name;
 
             newMind.TransferTo(mob);
             _stationSpawningSystem.EquipStartingGear(mob, pirateGear, null);
