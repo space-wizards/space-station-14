@@ -27,6 +27,8 @@ public sealed class ClientGlobalSoundSystem : SharedGlobalSoundSystem
         SubscribeNetworkEvent<StationEventMusicEvent>(PlayStationEventMusic);
         SubscribeNetworkEvent<StopStationEventMusic>(StopStationEventMusic);
         _cfg.OnValueChanged(CCVars.EventMusicEnabled, ToggleStationEventMusic, true);
+
+        SubscribeNetworkEvent<GameGlobalSoundEvent>(PlayGameSound);
     }
 
     public override void Shutdown()
@@ -54,6 +56,11 @@ public sealed class ClientGlobalSoundSystem : SharedGlobalSoundSystem
 
         var stream = SoundSystem.Play(Filter.Local(), soundEvent.Filename, soundEvent.AudioParams);
         _eventAudio.Add(soundEvent.Type, stream);
+    }
+
+    private void PlayGameSound(GameGlobalSoundEvent soundEvent)
+    {
+        var stream = SoundSystem.Play(Filter.Local(), soundEvent.Filename, soundEvent.AudioParams);
     }
 
     private void StopStationEventMusic(StopStationEventMusic soundEvent)

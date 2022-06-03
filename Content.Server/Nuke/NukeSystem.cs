@@ -27,6 +27,7 @@ namespace Content.Server.Nuke
         [Dependency] private readonly AlertLevelSystem _alertLevel = default!;
         [Dependency] private readonly StationSystem _stationSystem = default!;
         [Dependency] private readonly IChatManager _chat = default!;
+        [Dependency] private readonly ServerGlobalSoundSystem _soundSystem = default!;
 
         public override void Initialize()
         {
@@ -344,10 +345,7 @@ namespace Content.Server.Nuke
             var sender = Loc.GetString("nuke-component-announcement-sender");
             _chat.DispatchStationAnnouncement(announcement, sender, false, Color.Red);
 
-            // todo: move it to announcements system
-            SoundSystem.Play(Filter.Broadcast(), component.ArmSound.GetSound());
-
-            PlayNukeMusic(component);
+            NukeArmedAudio(component);
 
             component.Status = NukeStatus.ARMED;
             UpdateUserInterface(uid, component);
@@ -375,9 +373,7 @@ namespace Content.Server.Nuke
             var sender = Loc.GetString("nuke-component-announcement-sender");
             _chat.DispatchStationAnnouncement(announcement, sender, false);
 
-            // todo: move it to announcements system
-            SoundSystem.Play(Filter.Broadcast(), component.DisarmSound.GetSound());
-            StopNukeMusic(component);
+            NukeDisarmedAudio(component);
 
             // disable sound and reset it
             component.PlayedAlertSound = false;
@@ -442,16 +438,16 @@ namespace Content.Server.Nuke
         }
         #endregion
 
-        private void PlayNukeMusic(NukeComponent component)
+        private void NukeArmedAudio(NukeComponent component)
         {
-            var audioSystem = EntitySystem.Get<ServerGlobalSoundSystem>();
-            audioSystem.DispatchStationEventMusic(component.Owner, component.ArmMusic, StationEventMusicType.Nuke);
+            _soundSystem.PlayGlobalOnStation(component.Owner, component.ArmSound.GetSound());
+            _soundSystem.DispatchStationEventMusic(component.Owner, component.ArmMusic, StationEventMusicType.Nuke);
         }
 
-        private void StopNukeMusic(NukeComponent component)
+        private void NukeDisarmedAudio(NukeComponent component)
         {
-            var audioSystem = EntitySystem.Get<ServerGlobalSoundSystem>();
-            audioSystem.StopStationEventMusic(component.Owner, StationEventMusicType.Nuke);
+            _soundSystem.PlayGlobalOnStation(component.Owner, component.DisarmSound.GetSound());
+            _soundSystem.StopStationEventMusic(component.Owner, StationEventMusicType.Nuke);
         }
     }
 

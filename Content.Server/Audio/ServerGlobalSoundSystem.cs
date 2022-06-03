@@ -29,10 +29,19 @@ public sealed class ServerGlobalSoundSystem : SharedGlobalSoundSystem
         _conHost.UnregisterCommand("playglobalsound");
     }
 
-    private void PlayGlobal(Filter playerFilter, string filename, AudioParams? audioParams = null)
+    private void PlayAdminGlobal(Filter playerFilter, string filename, AudioParams? audioParams = null)
     {
         var msg = new AdminSoundEvent(filename, audioParams);
         RaiseNetworkEvent(msg, playerFilter);
+    }
+
+    public void PlayGlobalOnStation(EntityUid source, string filename, AudioParams? audioParams = null)
+    {
+        var msg = new GameGlobalSoundEvent(filename, audioParams);
+        foreach(var filter in GetStationFilters(source))
+        {
+            RaiseNetworkEvent(msg, filter);
+        }
     }
 
     private void PlayStationEventMusic(Filter playerFilter, string filename, StationEventMusicType type, AudioParams? audioParams = null)
@@ -43,20 +52,9 @@ public sealed class ServerGlobalSoundSystem : SharedGlobalSoundSystem
 
     public void StopStationEventMusic(EntityUid source, StationEventMusicType type)
     {
-        var station = _stationSystem.GetOwningStation(source);
         var msg = new StopStationEventMusic(type);
-        if (station != null)
+        foreach (var filter in GetStationFilters(source))
         {
-            if(!EntityManager.TryGetComponent<StationDataComponent>(station, out var stationDataComp)) return;
-            foreach (var gridEnt in stationDataComp.Grids)
-            {
-                var filter = Filter.BroadcastGrid(gridEnt);
-                RaiseNetworkEvent(msg, filter);
-            }
-        }
-        else
-        {
-            var filter = Filter.Pvs(source);
             RaiseNetworkEvent(msg, filter);
         }
     }
@@ -64,21 +62,27 @@ public sealed class ServerGlobalSoundSystem : SharedGlobalSoundSystem
     public void DispatchStationEventMusic(EntityUid source, SoundSpecifier sound, StationEventMusicType type)
     {
         var audio = AudioParams.Default.WithVolume(-8);
+        var soundFile = sound.GetSound();
+
+        foreach (var filter in GetStationFilters(source))
+        {
+            PlayStationEventMusic(filter, soundFile, type, audio);
+        }
+    }
+
+    private List<Filter> GetStationFilters(EntityUid source)
+    {
         var station = _stationSystem.GetOwningStation(source);
         if (station != null)
         {
-            if(!EntityManager.TryGetComponent<StationDataComponent>(station, out var stationDataComp)) return;
+            if(!EntityManager.TryGetComponent<StationDataComponent>(station, out var stationDataComp)) return new List<Filter>(1) {  Filter.Pvs(source) };
+            var filters = new List<Filter>(stationDataComp.Grids.Count);
             foreach (var gridEnt in stationDataComp.Grids)
             {
-                var filter = Filter.BroadcastGrid(gridEnt);
-                PlayStationEventMusic(filter, sound.GetSound(), type, audio);
+                filters.Add(Filter.BroadcastGrid(gridEnt));
             }
         }
-        else
-        {
-            var filter = Filter.Pvs(source);
-            PlayStationEventMusic(filter, sound.GetSound(), type, audio);
-        }
+        return new List<Filter>(1) {  Filter.Pvs(source) };
     }
 
     /// <summary>
@@ -146,6 +150,6 @@ public sealed class ServerGlobalSoundSystem : SharedGlobalSoundSystem
                 break;
         }
 
-        PlayGlobal(filter, args[0], audio);
+        PlayAdminGlobal(filter, args[0], audio);
     }
 }

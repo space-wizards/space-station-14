@@ -1,6 +1,6 @@
-﻿using Robust.Shared.Audio;
+﻿using Content.Shared.CCVar;
+using Robust.Shared.Audio;
 using Robust.Shared.Serialization;
-
 namespace Content.Shared.Audio;
 
 /// <summary>
@@ -23,10 +23,22 @@ public class GlobalSoundEvent : EntityEventArgs
     }
 }
 
+/// <summary>
+/// Intended for admin music. Can be disabled by the <seealso cref="CCVars.AdminSoundsEnabled"/> cvar.
+/// </summary>
 [Serializable, NetSerializable]
 public sealed class AdminSoundEvent : GlobalSoundEvent
 {
     public AdminSoundEvent(string filename, AudioParams? audioParams = null) : base(filename, audioParams){}
+}
+
+/// <summary>
+/// Intended for misc sound effects. Can't be disabled by cvar.
+/// </summary>
+[Serializable, NetSerializable]
+public sealed class GameGlobalSoundEvent : GlobalSoundEvent
+{
+    public GameGlobalSoundEvent(string filename, AudioParams? audioParams = null) : base(filename, audioParams){}
 }
 
 public enum StationEventMusicType : byte
@@ -34,6 +46,9 @@ public enum StationEventMusicType : byte
     Nuke
 }
 
+/// <summary>
+/// Intended for music triggered by events on a specific station. Can be disabled by the <seealso cref="CCVars.EventMusicEnabled"/> cvar.
+/// </summary>
 [Serializable, NetSerializable]
 public sealed class StationEventMusicEvent : GlobalSoundEvent
 {
@@ -46,6 +61,9 @@ public sealed class StationEventMusicEvent : GlobalSoundEvent
     }
 }
 
+/// <summary>
+/// Attempts to stop a playing <seealso cref="StationEventMusicEvent"/> stream.
+/// </summary>
 [Serializable, NetSerializable]
 public sealed class StopStationEventMusic : EntityEventArgs
 {
