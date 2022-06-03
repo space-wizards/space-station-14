@@ -1,6 +1,7 @@
 - type: job
   id: SecurityOfficer
   name: "security officer"
+  difficulty: "Medium to Hard"
   startingGear: SecurityOfficerGear
   departments:
   - Security
@@ -12,7 +13,6 @@
   - Brig
   - Maintenance
   - Service
-  difficulty: "Medium to Hard"
   
 - type: startingGear
   id: SecurityOfficerGear

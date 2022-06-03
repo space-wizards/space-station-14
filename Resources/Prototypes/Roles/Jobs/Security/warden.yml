@@ -1,6 +1,7 @@
 - type: job
   id: Warden
   name: "warden"
+  difficulty: "Hard"
   startingGear: WardenGear
   departments:
   - Security
@@ -13,8 +14,7 @@
   - Maintenance
   - Service
   - Brig
-  difficulty: "Hard"
-
+  
 - type: startingGear
   id: WardenGear
   equipment:

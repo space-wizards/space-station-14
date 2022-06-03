@@ -1,6 +1,7 @@
 - type: job
   id: Clown
   name: "clown"
+  difficulty: "Clown"
   startingGear: ClownGear
   departments:
   - Civilian
@@ -9,7 +10,6 @@
   access:
   - Theatre
   - Maintenance
-  difficulty: "Clown"
   special:
   - !type:AddComponentSpecial
     components:

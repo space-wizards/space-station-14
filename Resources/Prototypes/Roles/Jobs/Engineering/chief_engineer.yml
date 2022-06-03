@@ -1,6 +1,7 @@
 - type: job
   id: ChiefEngineer
   name: "chief engineer"
+  difficulty: "Hard"
   weight: 10
   startingGear: ChiefEngineerGear
   departments:
@@ -17,7 +18,6 @@
   - External
   - ChiefEngineer
   - Atmospherics
-  difficulty: "Hard"
   
 - type: startingGear
   id: ChiefEngineerGear

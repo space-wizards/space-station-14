@@ -1,6 +1,7 @@
 ﻿- type: job
   id: SecurityCadet
   name: "security cadet"
+  difficulty: "Easy"
   startingGear: SecurityCadetGear
   departments:
   - Civilian
@@ -12,7 +13,6 @@
   - Security
   - Brig
   - Maintenance
-  difficulty: "Easy"
   
 - type: startingGear
   id: SecurityCadetGear

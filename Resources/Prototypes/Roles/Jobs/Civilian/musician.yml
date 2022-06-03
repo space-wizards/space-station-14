@@ -1,6 +1,7 @@
 - type: job
   id: Musician
   name: "musician"
+  difficulty: "Easy"
   startingGear: MusicianGear
   departments:
   - Civilian
@@ -13,7 +14,6 @@
   - !type:GiveItemOnHolidaySpecial
     holiday: MikuDay
     prototype: BoxPerformer
-  difficulty: "Easy"
   
 - type: startingGear
   id: MusicianGear

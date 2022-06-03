@@ -1,6 +1,7 @@
 - type: job
   id: Chaplain
   name: "chaplain"
+  difficulty: "Easy"
   startingGear: ChaplainGear
   departments:
   - Civilian
@@ -9,13 +10,11 @@
   access:
   - Chapel
   - Maintenance
-  difficulty: "Easy"
   special:
   - !type:AddComponentSpecial
     components:
     - type: BibleUser #Lets them heal with bibles
   
-
 - type: startingGear
   id: ChaplainGear
   equipment:

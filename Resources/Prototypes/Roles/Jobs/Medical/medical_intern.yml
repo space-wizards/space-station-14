@@ -1,6 +1,7 @@
 ﻿- type: job
   id: MedicalIntern
   name: "medical intern"
+  difficulty: "Easy"
   startingGear: MedicalInternGear
   departments:
   - Civilian
@@ -11,8 +12,7 @@
   access:
   - Medical
   - Maintenance
-  difficulty: "Easy"
-
+  
 - type: startingGear
   id: MedicalInternGear
   equipment:

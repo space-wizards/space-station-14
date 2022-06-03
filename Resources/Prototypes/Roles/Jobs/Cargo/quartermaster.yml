@@ -1,6 +1,7 @@
 - type: job
   id: Quartermaster
   name: "quartermaster"
+  difficulty: "Medium"
   weight: 10
   startingGear: QuartermasterGear
   departments:
@@ -14,7 +15,6 @@
   - Quartermaster
   - Maintenance
   - External
-  difficulty: "Medium"
   
 - type: startingGear
   id: QuartermasterGear

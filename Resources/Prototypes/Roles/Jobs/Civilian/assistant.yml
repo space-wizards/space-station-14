@@ -1,6 +1,7 @@
 - type: job
   id: Passenger
   name: "passenger"
+  difficulty: "Easy"
   startingGear: PassengerGear
   departments:
   - Civilian
@@ -8,8 +9,7 @@
   supervisors: "absolutely everyone"
   access:
   - Maintenance
-  difficulty: "Easy"
-  
+
 - type: startingGear
   id: PassengerGear
   equipment:

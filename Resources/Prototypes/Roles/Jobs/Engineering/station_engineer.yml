@@ -1,19 +1,17 @@
 - type: job
   id: StationEngineer
   name: "station engineer"
+  difficulty: "Medium"
   startingGear: StationEngineerGear
   departments:
   - Engineering
   icon: "StationEngineer"
   supervisors: "the chief engineer"
-  difficulty: "Medium"
   access:
   - Maintenance
   - Engineering
   - External
-  extendedAccess:
-  - Atmospherics
-
+  
 - type: startingGear
   id: StationEngineerGear
   equipment:

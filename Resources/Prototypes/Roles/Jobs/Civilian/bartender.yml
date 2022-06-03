@@ -1,20 +1,17 @@
 - type: job
   id: Bartender
   name: "bartender"
+  difficulty: "Easy"
   startingGear: BartenderGear
   departments:
   - Civilian
   icon: "Bartender"
   supervisors: "the head of personnel"
-  difficulty: "Easy"
   access:
   - Service
   - Maintenance
   - Bar
-  extendedAccess:
-  - Kitchen
-  - Hydroponics
-
+  
 - type: startingGear
   id: BartenderGear
   equipment:

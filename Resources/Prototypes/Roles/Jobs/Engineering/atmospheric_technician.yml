@@ -1,6 +1,7 @@
 - type: job
   id: AtmosphericTechnician
   name: "atmospheric technician"
+  difficulty: "Medium"
   startingGear: AtmosphericTechnicianGear
   departments:
   - Engineering
@@ -12,7 +13,6 @@
   - Engineering
   - External
   - Atmospherics
-  difficulty: "Medium"
   
 - type: startingGear
   id: AtmosphericTechnicianGear

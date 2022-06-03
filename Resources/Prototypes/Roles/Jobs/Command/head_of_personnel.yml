@@ -1,6 +1,7 @@
 - type: job
   id: HeadOfPersonnel
   name: "head of personnel"
+  difficulty: "Hard"
   weight: 20
   startingGear: HoPGear
   departments:
@@ -13,7 +14,7 @@
   access:
   - Command
   - HeadOfPersonnel
-  - Brig
+  - Security # HoPcurity strikes again
   - Service
   - Quartermaster
   - Salvage
@@ -25,7 +26,6 @@
   - Chapel
   - Hydroponics
   # I mean they'll give themselves the rest of the access levels *anyways*.
-  difficulty: "Hard"
 
 - type: startingGear
   id: HoPGear

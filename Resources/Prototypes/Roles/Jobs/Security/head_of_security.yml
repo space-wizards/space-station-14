@@ -1,6 +1,7 @@
 - type: job
   id: HeadOfSecurity
   name: "head of security"
+  difficulty: "Hard"
   weight: 10
   startingGear: HoSGear
   departments:
@@ -18,7 +19,6 @@
   - Armory
   - Maintenance
   - Service
-  difficulty: "Hard"
   
 - type: startingGear
   id: HoSGear

@@ -3,6 +3,7 @@
 - type: job
   id: ChiefMedicalOfficer
   name: "chief medical officer"
+  difficulty: "Medium"
   weight: 10
   startingGear: CMOGear
   departments:
@@ -18,7 +19,6 @@
   - Maintenance
   - Chemistry
   - ChiefMedicalOfficer
-  difficulty: "Medium"
   
 - type: startingGear
   id: CMOGear

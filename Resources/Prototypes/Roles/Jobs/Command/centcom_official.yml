@@ -1,20 +1,17 @@
 - type: job
   id: CentralCommandOfficial
   name: "centcom official"
+  difficulty: "Hard"
   setPreference: false
   startingGear: CentcomGear
   departments:
-  - Command
+    - Command
   icon: "Nanotrasen"
   supervisors: "the head of security"
   access:
   - Command
   - Maintenance
-  difficulty: "Hard"
-  canBeAntag: false
-  accessGroups:
-  - AllAccess
-
+  
 - type: startingGear
   id: CentcomGear
   equipment:

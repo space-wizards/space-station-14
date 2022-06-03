@@ -1,12 +1,12 @@
 - type: job
   id: Janitor
   name: "janitor"
+  difficulty: "Easy"
   startingGear: JanitorGear
   departments:
   - Civilian
   icon: "Janitor"
   supervisors: "the head of personnel"
-  difficulty: "Easy"
   access:
   - Janitor
   - Maintenance
@@ -14,8 +14,7 @@
   - !type:GiveItemOnHolidaySpecial
     holiday: GarbageDay
     prototype: RevolverInspector
-    prototype: WeaponRevolverInspector
-    
+  
 - type: startingGear
   id: JanitorGear
   equipment:
