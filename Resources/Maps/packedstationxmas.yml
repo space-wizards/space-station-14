@@ -33703,18 +33703,13 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 2412
-  type: ShotgunPump
+  type: WeaponShotgunKammerer
   components:
   - pos: 41.518063,26.561434
     parent: 0
     type: Transform
   - canCollide: False
     type: Physics
-  - containers:
-      PumpBarrel-ammo-container: !type:Container
-        ents: []
-      PumpBarrel-chamber-container: !type:ContainerSlot {}
-    type: ContainerContainer
 - uid: 2413
   type: ClothingOuterArmorBulletproof
   components:
@@ -77444,20 +77439,15 @@ entities:
       light_bulb: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 7557
-  type: SmgDrozdRiot
+  type: WeaponSubMachineGunDrozdRubber
   components:
   - pos: 38.61274,27.452318
     parent: 0
     type: Transform
   - canCollide: False
     type: Physics
-  - containers:
-      MagazineBarrel-chamber: !type:ContainerSlot {}
-      MagazineBarrel-magazine: !type:ContainerSlot
-        ent: 7558
-    type: ContainerContainer
 - uid: 7558
-  type: MagazineMagnumSmgRubber
+  type: MagazineMagnumSubMachineGunRubber
   components:
   - parent: 7557
     type: Transform
@@ -77468,20 +77458,15 @@ entities:
         ents: []
     type: ContainerContainer
 - uid: 7559
-  type: SmgDrozdRiot
+  type: WeaponSubMachineGunDrozdRubber
   components:
   - pos: 38.597115,27.702318
     parent: 0
     type: Transform
   - canCollide: False
     type: Physics
-  - containers:
-      MagazineBarrel-chamber: !type:ContainerSlot {}
-      MagazineBarrel-magazine: !type:ContainerSlot
-        ent: 7560
-    type: ContainerContainer
 - uid: 7560
-  type: MagazineMagnumSmgRubber
+  type: MagazineMagnumSubMachineGunRubber
   components:
   - parent: 7559
     type: Transform
@@ -77492,7 +77477,7 @@ entities:
         ents: []
     type: ContainerContainer
 - uid: 7561
-  type: MagazineMagnumSmgRubber
+  type: MagazineMagnumSubMachineGunRubber
   components:
   - pos: 38.784615,26.467943
     parent: 0
@@ -77504,7 +77489,7 @@ entities:
         ents: []
     type: ContainerContainer
 - uid: 7562
-  type: MagazineMagnumSmgRubber
+  type: MagazineMagnumSubMachineGunRubber
   components:
   - pos: 38.440865,26.499193
     parent: 0
@@ -77516,7 +77501,7 @@ entities:
         ents: []
     type: ContainerContainer
 - uid: 7563
-  type: MagazineMagnumSmgRubber
+  type: MagazineMagnumSubMachineGunRubber
   components:
   - rot: 2.006034628720954E-05 rad
     pos: 38.26498,26.51372
@@ -77529,7 +77514,7 @@ entities:
         ents: []
     type: ContainerContainer
 - uid: 7564
-  type: MagazineMagnumSmgRubber
+  type: MagazineMagnumSubMachineGunRubber
   components:
   - pos: 38.534615,26.483568
     parent: 0
@@ -77541,7 +77526,7 @@ entities:
         ents: []
     type: ContainerContainer
 - uid: 7565
-  type: MagazineMagnumSmgRubber
+  type: MagazineMagnumSubMachineGunRubber
   components:
   - pos: 38.597115,26.483568
     parent: 0
@@ -77553,7 +77538,7 @@ entities:
         ents: []
     type: ContainerContainer
 - uid: 7566
-  type: MagazineMagnumSmgRubber
+  type: MagazineMagnumSubMachineGunRubber
   components:
   - pos: 38.73774,26.483568
     parent: 0
@@ -92560,18 +92545,13 @@ entities:
   - color: '#0000FFFF'
     type: AtmosPipeColor
 - uid: 9229
-  type: LaserGun
+  type: WeaponLaserGun
   components:
   - pos: 41.526512,27.667274
     parent: 0
     type: Transform
   - canCollide: False
     type: Physics
-  - containers:
-      BatteryBarrel-powercell-container: !type:ContainerSlot
-        ent: 11108
-      BatteryBarrel-ammo-container: !type:ContainerSlot {}
-    type: ContainerContainer
 - uid: 9230
   type: GasPipeStraight
   components:
@@ -114489,20 +114469,15 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 11179
-  type: SmgWt550
+  type: WeaponSubMachineGunWt550
   components:
   - pos: 45.51632,24.577965
     parent: 0
     type: Transform
   - canCollide: False
     type: Physics
-  - containers:
-      MagazineBarrel-chamber: !type:ContainerSlot {}
-      MagazineBarrel-magazine: !type:ContainerSlot
-        ent: 11180
-    type: ContainerContainer
 - uid: 11180
-  type: MagazinePistolSmgTopMounted
+  type: MagazinePistolSubMachineGunTopMounted
   components:
   - parent: 11179
     type: Transform
@@ -114513,7 +114488,7 @@ entities:
         ents: []
     type: ContainerContainer
 - uid: 11181
-  type: MagazinePistolSmgTopMounted
+  type: MagazinePistolSubMachineGunTopMounted
   components:
   - pos: 45.39132,24.15609
     parent: 0
@@ -114525,7 +114500,7 @@ entities:
         ents: []
     type: ContainerContainer
 - uid: 11182
-  type: MagazinePistolSmgTopMounted
+  type: MagazinePistolSubMachineGunTopMounted
   components:
   - pos: 45.688194,24.171715
     parent: 0
@@ -114613,18 +114588,13 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 11192
-  type: LaserGun
+  type: WeaponLaserGun
   components:
   - pos: 41.526512,27.4329
     parent: 0
     type: Transform
   - canCollide: False
     type: Physics
-  - containers:
-      BatteryBarrel-powercell-container: !type:ContainerSlot
-        ent: 11204
-      BatteryBarrel-ammo-container: !type:ContainerSlot {}
-    type: ContainerContainer
 - uid: 11193
   type: CableApcExtension
   components:

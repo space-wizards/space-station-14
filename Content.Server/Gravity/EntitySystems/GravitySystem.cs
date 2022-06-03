@@ -10,6 +10,7 @@ namespace Content.Server.Gravity.EntitySystems
         {
             base.Initialize();
             SubscribeLocalEvent<GravityComponent, ComponentInit>(HandleGravityInitialize);
+            SubscribeLocalEvent<GravityComponent, ComponentShutdown>(HandleGravityShutdown);
         }
 
         private void HandleGravityInitialize(EntityUid uid, GravityComponent component, ComponentInit args)
@@ -32,6 +33,11 @@ namespace Content.Server.Gravity.EntitySystems
             component.Enabled = false;
             message = new GravityChangedMessage(gridId, false);
             RaiseLocalEvent(message);
+        }
+
+        private void HandleGravityShutdown(EntityUid uid, GravityComponent component, ComponentShutdown args)
+        {
+            DisableGravity(component);
         }
 
         public void EnableGravity(GravityComponent comp)

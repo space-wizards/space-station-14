@@ -16,7 +16,7 @@ namespace Content.Server.Atmos.EntitySystems
     public sealed partial class AtmosphereSystem : SharedAtmosphereSystem
     {
         [Dependency] private readonly IMapManager _mapManager = default!;
-        [Dependency] private readonly AdminLogSystem _adminLog = default!;
+        [Dependency] private readonly IAdminLogManager _adminLogger = default!;
         [Dependency] private readonly SharedContainerSystem _containers = default!;
         [Dependency] private readonly SharedPhysicsSystem _physics = default!;
 

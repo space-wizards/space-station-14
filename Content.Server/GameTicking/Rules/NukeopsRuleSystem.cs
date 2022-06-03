@@ -130,6 +130,7 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
         // TODO: Loot table or something
         var commanderGear = _prototypeManager.Index<StartingGearPrototype>("SyndicateCommanderGearFull");
         var starterGear = _prototypeManager.Index<StartingGearPrototype>("SyndicateOperativeGearFull");
+        var medicGear = _prototypeManager.Index<StartingGearPrototype>("SyndicateOperativeMedicFull");
 
         var spawns = new List<EntityCoordinates>();
 
@@ -153,15 +154,20 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
             string name;
             StartingGearPrototype gear;
 
-            if (i == 0)
+            switch (i)
             {
-                name = $"Commander";
-                gear = commanderGear;
-            }
-            else
-            {
-                name = $"Operator #{i}";
-                gear = starterGear;
+                case 0:
+                    name = $"Commander";
+                    gear = commanderGear;
+                    break;
+                case 1:
+                    name = $"Operator #{i}";
+                    gear = medicGear;
+                    break;
+                default:
+                    name = $"Operator #{i}";
+                    gear = starterGear;
+                    break;
             }
 
             var session = ops[i];

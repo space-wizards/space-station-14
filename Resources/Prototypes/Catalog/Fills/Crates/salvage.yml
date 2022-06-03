@@ -61,16 +61,16 @@
         prob: 0.1
         # Interesting (1%)
         #  - Ammo
-      - id: BoxMagnum
+      - id: MagazineBoxMagnum
         prob: 0.01
         #  - #shinies
       - id: PowerCellLargeHyper
         prob: 0.01
         # Just no (0.1%)
         #  - Working guns
-      - id: RevolverDeckard
+      - id: WeaponRevolverDeckard
         prob: 0.001
-      - id: RevolverInspector
+      - id: WeaponRevolverInspector
         prob: 0.001
         #  - Skub
       - id: Skub
@@ -80,8 +80,8 @@
         # TRAITOR EQUIPMENT (0.01%)
       - id: Telecrystal10
         prob: 0.0001
-      - id: RevolverPredator
+      - id: WeaponRevolverPredator
         prob: 0.0001
-      - id: RevolverMateba
+      - id: WeaponRevolverMateba
         prob: 0.0001
 

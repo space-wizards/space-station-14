@@ -10,6 +10,9 @@
   - Service
   - Maintenance
   - Kitchen
+  extendedAccess:
+  - Hydroponics
+  - Bar
 
 - type: startingGear
   id: ChefGear
