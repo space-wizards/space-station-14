@@ -1,13 +1,4 @@
 Entries:
-- author: mirrorcult
-  changes:
-  - {message: Gauze can now be crafted using cloth., type: Add}
-  - {message: 'You can now gain cloth by butchering clothing items like jumpsuits,
-      shoes, or cloaks.', type: Tweak}
-  - {message: 'Fiber reagent is now gained by grinding cloth, not the individual clothing
-      items.', type: Tweak}
-  id: 1148
-  time: '2022-03-01T03:38:39.0000000+00:00'
 - author: HoofedEar
   changes:
   - {message: Certain station announcements have been given a splash of color in chat.,
@@ -3013,3 +3004,9 @@ Entries:
     type: Add}
   id: 1647
   time: '2022-06-03T15:56:11.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Reduced the number of each drink for Robust Softdrink machines from
+      10 to 2., type: Tweak}
+  id: 1648
+  time: '2022-06-03T23:46:51.0000000+00:00'
