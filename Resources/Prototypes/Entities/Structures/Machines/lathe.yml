@@ -269,6 +269,11 @@
       - DawInstrumentMachineCircuitboard
       - StasisBedMachineCircuitboard
       - OreProcessorMachineCircuitboard
+      - GeneratorPlasmaMachineCircuitboard
+      - GeneratorUraniumMachineCircuitboard
+      - WallmountGeneratorElectronics
+      - WallmountGeneratorAPUElectronics
+      - EmitterCircuitboard
   - type: Machine
     board: CircuitImprinterMachineCircuitboard
   - type: Lathe
