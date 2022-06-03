@@ -31,6 +31,7 @@ public abstract class GameRuleSystem : EntitySystem
 
     private void OnGameRuleAdded(GameRuleAddedEvent ev)
     {
+        Logger.Debug($"{ev.Rule.ID} vs {Prototype}");
         if (ev.Rule.ID != Prototype)
             return;
 
@@ -39,6 +40,7 @@ public abstract class GameRuleSystem : EntitySystem
 
     private void OnGameRuleStarted(GameRuleStartedEvent ev)
     {
+        Logger.Debug($"{ev.Rule.ID} vs {Prototype}");
         if (ev.Rule.ID != Prototype)
             return;
 
