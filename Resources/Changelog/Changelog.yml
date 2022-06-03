@@ -1,9 +1,4 @@
 Entries:
-- author: Zumorica
-  changes:
-  - {message: Suspicion no longer shows up in gamemode votes., type: Remove}
-  id: 1138
-  time: '2022-02-27T18:03:08.0000000+00:00'
 - author: Peptide90
   changes:
   - {message: 'Added boxes of trashbags, flares and all magazine types.', type: Add}
@@ -2998,3 +2993,10 @@ Entries:
   - {message: Delta Station now has more decals., type: Tweak}
   id: 1637
   time: '2022-06-03T05:32:57.0000000+00:00'
+- author: moony
+  changes:
+  - {message: 'Removed dwarves, due to their lack of content. If someone steps up
+      in the next few weeks to make them better we''ll see about their reintroduction.',
+    type: Remove}
+  id: 1638
+  time: '2022-06-03T07:31:35.0000000+00:00'
