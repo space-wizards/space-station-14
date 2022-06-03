@@ -1,10 +1,4 @@
 Entries:
-- author: ElectroJr
-  changes:
-  - {message: 'The /mapping command syntax has changed. The filename now comes before
-      the Id, and a new blank map is created by providing no arguments.', type: Tweak}
-  id: 1141
-  time: '2022-02-28T01:21:15.0000000+00:00'
 - author: DogZeroX
   changes:
   - {message: Animal's blood now variate depending on their size, type: Tweak}
@@ -3004,3 +2998,9 @@ Entries:
       a machine board for them and build them from machine frames., type: Tweak}
   id: 1640
   time: '2022-06-03T09:22:58.0000000+00:00'
+- author: mirrorcult
+  changes:
+  - {message: Sandbox is now votable again as long as there are less than 5 players
+      in the server., type: Tweak}
+  id: 1641
+  time: '2022-06-03T10:04:53.0000000+00:00'
