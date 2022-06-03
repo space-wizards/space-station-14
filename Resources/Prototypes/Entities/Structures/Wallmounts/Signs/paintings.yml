@@ -89,3 +89,12 @@
   components:
   - type: Sprite
     state: painting8
+
+- type: entity
+  parent: PaintingBase
+  id: PaintingRedYellowBlue
+  name: Who's Afraid of Red, Yellow and Blue 1
+  description: This painting depicts a bold red surface flanked by blue and yellow lines.
+  components:
+  - type: Sprite
+    state: painting9
