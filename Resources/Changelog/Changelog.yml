@@ -1,9 +1,4 @@
 Entries:
-- author: mirrorcult
-  changes:
-  - {message: Added a new medium-sized salvage., type: Add}
-  id: 1146
-  time: '2022-03-01T02:18:31.0000000+00:00'
 - author: Zumorica
   changes:
   - {message: Map votes during the pre-round period actually affect the chosen map
@@ -3007,3 +3002,12 @@ Entries:
       ask an admin via communications console to centcom).', type: Add}
   id: 1645
   time: '2022-06-03T10:48:29.0000000+00:00'
+- author: Veritius
+  changes:
+  - {message: Added the Syndicate Communication Console., type: Add}
+  - {message: Using communication consoles now requires Command access., type: Tweak}
+  - {message: 'Announcements are now per-station, so nukies will no longer know the
+      state of the station they''re entering.', type: Tweak}
+  - {message: Fix delay between alert status changes scaling with tick rate., type: Fix}
+  id: 1646
+  time: '2022-06-03T11:37:35.0000000+00:00'
