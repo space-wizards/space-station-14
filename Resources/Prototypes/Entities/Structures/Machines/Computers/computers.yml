@@ -278,7 +278,10 @@
     - type: ComputerVisualizer
       key: generic_key
       screen: comm
+  - type: AccessReader
+    access: [[ "Command" ]]
   - type: CommunicationsConsole
+    title: comms-console-announcement-title-station
   - type: ActivatableUI
     key: enum.CommunicationsConsoleUiKey.Key
   - type: ActivatableUIRequiresPower
@@ -292,6 +295,31 @@
     radius: 1.5
     energy: 1.6
     color: "#3c5eb5"
+
+- type: entity
+  parent: ComputerComms
+  id: SyndicateComputerComms
+  name: syndicate communications computer
+  description: This can be used for various important functions. Still under development.
+  components:
+  - type: Appearance
+    visuals:
+    - type: ComputerVisualizer
+      key: syndie_key
+      screen: comm_syndie
+  - type: AccessReader
+    access: [[ "NuclearOperative" ]]
+  - type: CommunicationsConsole
+    title: comms-console-announcement-title-nukie
+    color: "#ff0000"
+    canShuttle: false
+    global: true #announce to everyone they're about to fuck shit up
+  - type: Computer
+    board: SyndicateCommsComputerCircuitboard
+  - type: PointLight
+    radius: 1.5
+    energy: 1.6
+    color: "#f71713"
 
 - type: entity
   parent: ComputerBase

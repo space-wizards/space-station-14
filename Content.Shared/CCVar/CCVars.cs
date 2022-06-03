@@ -287,6 +287,19 @@ namespace Content.Shared.CCVar
             CVarDef.Create("nukeops.players_per_op", 5);
 
         /*
+         * Pirates
+         */
+
+        public static readonly CVarDef<int> PiratesMinPlayers =
+            CVarDef.Create("pirates.min_players", 25);
+
+        public static readonly CVarDef<int> PiratesMaxOps =
+            CVarDef.Create("pirates.max_pirates", 6);
+
+        public static readonly CVarDef<int> PiratesPlayersPerOp =
+            CVarDef.Create("pirates.players_per_pirate", 5);
+
+        /*
          * Console
          */
 

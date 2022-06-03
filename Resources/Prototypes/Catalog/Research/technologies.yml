@@ -273,6 +273,7 @@
     - FlashlightLantern
     - FireExtinguisher
     - AutolatheMachineCircuitboard
+    - EmitterCircuitboard
     - ProtolatheMachineCircuitboard
     - OreProcessorMachineCircuitboard
     - CircuitImprinterMachineCircuitboard

@@ -21,8 +21,6 @@ namespace Content.Server.NodeContainer.NodeGroups
     {
         [ViewVariables] public GasMixture Air { get; set; } = new() {Temperature = Atmospherics.T20C};
 
-        [ViewVariables] private readonly List<PipeNode> _pipes = new();
-
         [ViewVariables] private AtmosphereSystem? _atmosphereSystem;
 
         public GridId Grid => GridId;
@@ -47,7 +45,6 @@ namespace Content.Server.NodeContainer.NodeGroups
             foreach (var node in groupNodes)
             {
                 var pipeNode = (PipeNode) node;
-                _pipes.Add(pipeNode);
                 Air.Volume += pipeNode.Volume;
             }
         }
@@ -56,32 +53,27 @@ namespace Content.Server.NodeContainer.NodeGroups
         {
             base.RemoveNode(node);
 
-            var pipeNode = (PipeNode) node;
-            Air.Volume -= pipeNode.Volume;
-            // TODO: Bad O(n^2)
-            _pipes.Remove(pipeNode);
+            // if the node is simply being removed into a separate group, we do nothing, as gas redistribution will be
+            // handled by AfterRemake(). But if it is being deleted, we actually want to remove the gas stored in this node.
+            if (!node.Deleting || node is not PipeNode pipe)
+                return;
+
+            Air.Multiply(1f - pipe.Volume / Air.Volume);
+            Air.Volume -= pipe.Volume;
         }
 
         public override void AfterRemake(IEnumerable<IGrouping<INodeGroup?, Node>> newGroups)
         {
             RemoveFromGridAtmos();
 
-            var buffer = new GasMixture(Air.Volume) {Temperature = Air.Temperature};
-            var atmosphereSystem = EntitySystem.Get<AtmosphereSystem>();
-
+            var newAir = new List<GasMixture>(newGroups.Count());
             foreach (var newGroup in newGroups)
             {
-                if (newGroup.Key is not IPipeNet newPipeNet)
-                    continue;
-
-                var newAir = newPipeNet.Air;
-                var newVolume = newGroup.Cast<PipeNode>().Sum(n => n.Volume);
-
-                buffer.Clear();
-                atmosphereSystem.Merge(buffer, Air);
-                buffer.Multiply(MathF.Min(newVolume / Air.Volume, 1f));
-                atmosphereSystem.Merge(newAir, buffer);
+                if (newGroup.Key is IPipeNet newPipeNet)
+                    newAir.Add(newPipeNet.Air);
             }
+
+            _atmosphereSystem!.DivideInto(Air, newAir);
         }
 
         private void RemoveFromGridAtmos()
