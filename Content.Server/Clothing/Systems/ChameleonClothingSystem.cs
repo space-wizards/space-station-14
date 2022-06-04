@@ -49,6 +49,7 @@ public sealed class ChameleonClothingSystem : SharedChameleonClothingSystem
         if (!TryComp(user, out ActorComponent? actor))
             return;
         _uiSystem.TryToggleUi(uid, ChameleonUiKey.Key, actor.PlayerSession);
+        UpdateUi(uid, component);
     }
 
     private void UpdateUi(EntityUid uid, ChameleonClothingComponent? component = null)
@@ -75,7 +76,7 @@ public sealed class ChameleonClothingSystem : SharedChameleonClothingSystem
             return;
 
         // make sure that it is valid change
-        if (!string.IsNullOrEmpty(protoId) || !_proto.TryIndex(protoId, out EntityPrototype? proto))
+        if (string.IsNullOrEmpty(protoId) || !_proto.TryIndex(protoId, out EntityPrototype? proto))
             return;
         if (!IsValidTarget(proto, component.Slot))
             return;
