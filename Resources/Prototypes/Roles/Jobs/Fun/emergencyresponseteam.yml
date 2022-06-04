@@ -50,7 +50,6 @@
 - type: job
   id: ERTEngineer
   name: "ERT engineer"
-  setPreference: false
   startingGear: ERTEngineerGearEVA
   departments:
   - Command
@@ -95,7 +94,6 @@
 - type: job
   id: ERTSecurity
   name: "ERT security"
-  setPreference: false
   startingGear: ERTEngineerGearEVA
   departments:
   - Command
@@ -140,7 +138,6 @@
 - type: job
   id: ERTMedical
   name: "ERT medic"
-  setPreference: false
   startingGear: ERTMedicalGearEVA
   departments:
   - Command
@@ -186,7 +183,6 @@
 - type: job
   id: ERTJanitor
   name: "ERT janitor"
-  setPreference: false
   startingGear: ERTJanitorGearEVA
   departments:
   - Command
