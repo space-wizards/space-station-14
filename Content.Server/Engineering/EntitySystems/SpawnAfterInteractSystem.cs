@@ -37,13 +37,10 @@ namespace Content.Server.Engineering.EntitySystems
 
             bool IsTileClear()
             {
-                return tileRef.Tile.IsEmpty == false;
+                return tileRef.Tile.IsEmpty == false && !tileRef.IsBlockedTurf(true);
             }
 
             if (!IsTileClear())
-                return;
-
-            if (tileRef.IsBlockedTurf(true))
                 return;
 
             if (component.DoAfterTime > 0)
