@@ -1,6 +1,7 @@
 - type: job
   id: Musician
   name: "musician"
+  difficulty: "Easy"
   startingGear: MusicianGear
   departments:
   - Civilian

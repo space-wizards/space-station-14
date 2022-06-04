@@ -1,6 +1,7 @@
 - type: job
   id: CentralCommandOfficial
   name: "centcom official"
+  difficulty: "Hard"
   setPreference: false
   startingGear: CentcomGear
   departments:

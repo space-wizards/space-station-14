@@ -1,6 +1,7 @@
 - type: job
   id: Chef
   name: "chef"
+  difficulty: "Medium"
   startingGear: ChefGear
   departments:
   - Civilian

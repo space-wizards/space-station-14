@@ -1,6 +1,7 @@
 - type: job
   id: Captain
   name: "captain"
+  difficulty: "Hard"
   weight: 20
   startingGear: CaptainGear
   departments:

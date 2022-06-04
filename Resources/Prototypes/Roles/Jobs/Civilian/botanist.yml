@@ -1,6 +1,7 @@
 - type: job
   id: Botanist
   name: "botanist"
+  difficulty: "Easy"
   startingGear: BotanistGear
   departments:
   - Civilian

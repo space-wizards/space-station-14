@@ -1,6 +1,7 @@
 - type: job
   id: Chaplain
   name: "chaplain"
+  difficulty: "Easy"
   startingGear: ChaplainGear
   departments:
   - Civilian

@@ -1,6 +1,7 @@
 - type: job
   id: Scientist
   name: "scientist"
+  difficulty: "Medium"
   startingGear: ScientistGear
   departments:
   - Science

@@ -982,6 +982,7 @@ namespace Content.Client.Preferences.UI
         {
             public JobPrototype Job { get; }
             private readonly RadioOptions<int> _optionButton;
+			private readonly Label _difficultyLable;
 
             public JobPriority Priority
             {
@@ -995,12 +996,21 @@ namespace Content.Client.Preferences.UI
             {
                 Job = job;
 
+				// Difficulty Rating Text
+				string spacer = "     ";
+				string difficultyText = job.Difficulty;
+
                 _optionButton = new RadioOptions<int>(RadioOptionsLayout.Horizontal)
                 {
                     FirstButtonStyle = StyleBase.ButtonOpenRight,
                     ButtonStyle = StyleBase.ButtonOpenBoth,
                     LastButtonStyle = StyleBase.ButtonOpenLeft
                 };
+
+                _difficultyLable = new Label
+				{
+					Text = spacer + difficultyText
+				};
 
                 // Text, Value
                 _optionButton.AddItem(Loc.GetString("humanoid-profile-editor-job-priority-high-button"), (int) JobPriority.High);
@@ -1034,7 +1044,8 @@ namespace Content.Client.Preferences.UI
                     {
                         icon,
                         new Label {Text = job.Name, MinSize = (175, 0)},
-                        _optionButton
+                        _optionButton,
+                        _difficultyLable
                     }
                 });
             }

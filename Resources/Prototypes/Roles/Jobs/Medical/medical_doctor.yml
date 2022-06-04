@@ -1,6 +1,7 @@
 - type: job
   id: MedicalDoctor
   name: "medical doctor"
+  difficulty: "Medium"
   startingGear: DoctorGear
   departments:
   - Medical

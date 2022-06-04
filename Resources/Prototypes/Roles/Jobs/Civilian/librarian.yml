@@ -1,6 +1,7 @@
 - type: job
   id: Librarian
   name: "librarian"
+  difficulty: "Easy"
   startingGear: LibrarianGear
   departments:
   - Civilian

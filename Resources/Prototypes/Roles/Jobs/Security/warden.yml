@@ -1,6 +1,7 @@
 - type: job
   id: Warden
   name: "warden"
+  difficulty: "Hard"
   startingGear: WardenGear
   departments:
   - Security

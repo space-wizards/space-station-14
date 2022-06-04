@@ -1,6 +1,7 @@
 - type: job
   id: Passenger
   name: "passenger"
+  difficulty: "Easy"
   startingGear: PassengerGear
   departments:
   - Civilian

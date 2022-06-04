@@ -1,6 +1,7 @@
 - type: job
   id: ResearchDirector
   name: "research director"
+  difficulty: "Medium"
   weight: 10
   startingGear: ResearchDirectorGear
   departments:

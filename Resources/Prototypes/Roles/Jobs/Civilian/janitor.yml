@@ -1,6 +1,7 @@
 - type: job
   id: Janitor
   name: "janitor"
+  difficulty: "Easy"
   startingGear: JanitorGear
   departments:
   - Civilian

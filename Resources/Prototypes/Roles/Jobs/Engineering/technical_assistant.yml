@@ -1,6 +1,7 @@
 ﻿- type: job
   id: TechnicalAssistant
   name: "technical assistant"
+  difficulty: "Easy"
   startingGear: TechnicalAssistantGear
   departments:
   - Civilian

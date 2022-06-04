@@ -1,6 +1,7 @@
 ﻿- type: job
   id: ServiceWorker
   name: "service worker"
+  difficulty: "Easy"
   startingGear: ServiceWorkerGear
   departments:
   - Civilian

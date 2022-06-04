@@ -1,6 +1,7 @@
 - type: job
   id: Chemist
   name: "chemist"
+  difficulty: "Medium"
   startingGear: ChemistGear
   departments:
   - Medical

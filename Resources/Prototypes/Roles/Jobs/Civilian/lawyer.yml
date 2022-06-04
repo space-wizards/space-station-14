@@ -1,6 +1,7 @@
 - type: job
   id: Lawyer
   name: "lawyer"
+  difficulty: "Easy"
   startingGear: LawyerGear
   departments:
   - Civilian

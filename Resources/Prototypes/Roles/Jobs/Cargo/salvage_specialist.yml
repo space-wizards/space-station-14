@@ -1,6 +1,7 @@
 - type: job
   id: SalvageSpecialist
   name: "salvage specialist"
+  difficulty: "Medium"
   icon: "ShaftMiner"
   startingGear: SalvageSpecialistGear
   departments:

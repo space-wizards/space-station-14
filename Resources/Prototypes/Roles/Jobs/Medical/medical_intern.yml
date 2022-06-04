@@ -1,6 +1,7 @@
 ﻿- type: job
   id: MedicalIntern
   name: "medical intern"
+  difficulty: "Easy"
   startingGear: MedicalInternGear
   departments:
   - Civilian

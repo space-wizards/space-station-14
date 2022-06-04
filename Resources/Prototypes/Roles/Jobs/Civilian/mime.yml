@@ -1,6 +1,7 @@
 - type: job
   id: Mime
   name: "mime"
+  difficulty: "Clown+"
   startingGear: MimeGear
   departments:
   - Civilian

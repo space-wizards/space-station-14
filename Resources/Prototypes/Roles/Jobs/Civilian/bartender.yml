@@ -1,6 +1,7 @@
 - type: job
   id: Bartender
   name: "bartender"
+  difficulty: "Easy"
   startingGear: BartenderGear
   departments:
   - Civilian

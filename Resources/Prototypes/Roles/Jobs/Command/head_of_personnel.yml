@@ -1,6 +1,7 @@
 - type: job
   id: HeadOfPersonnel
   name: "head of personnel"
+  difficulty: "Hard"
   weight: 20
   startingGear: HoPGear
   departments:
