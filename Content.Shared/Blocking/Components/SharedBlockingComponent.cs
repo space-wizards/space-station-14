@@ -29,20 +29,21 @@ public sealed class SharedBlockingComponent : Component
     /// <summary>
     /// The shape of the blocking fixture that will be dynamically spawned
     /// </summary>
+    [ViewVariables(VVAccess.ReadWrite)]
     [DataField("blockRadius")]
     public float BlockRadius = 0.5f;
 
     /// <summary>
     /// The damage modifer to use while passively blocking
     /// </summary>
-    [ViewVariables]
+    [ViewVariables(VVAccess.ReadWrite)]
     [DataField("passiveBlockModifier")]
     public string PassiveBlockDamageModifer = default!;
 
     /// <summary>
     /// The damage modifier to use while actively blocking.
     /// </summary>
-    [ViewVariables]
+    [ViewVariables(VVAccess.ReadWrite)]
     [DataField("activeBlockModifier")]
     public string ActiveBlockDamageModifier = default!;
 
@@ -51,20 +52,4 @@ public sealed class SharedBlockingComponent : Component
 
     [DataField("blockingToggleAction")]
     public InstantAction? BlockingToggleAction;
-}
-
-[Serializable, NetSerializable]
-public sealed class BlockingComponentState : ComponentState
-{
-    public bool Blocking { get; }
-
-    public BlockingComponentState(bool blocking)
-    {
-        Blocking = blocking;
-    }
-}
-
-public sealed class BlockingEvent : EntityEventArgs
-{
-
 }

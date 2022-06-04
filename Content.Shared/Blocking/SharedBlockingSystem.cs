@@ -7,10 +7,12 @@ using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Interaction.Events;
 using Content.Shared.Item;
 using Content.Shared.Physics;
+using Content.Shared.Popups;
 using Content.Shared.Toggleable;
 using Robust.Shared.Physics;
 using Robust.Shared.Physics.Collision.Shapes;
 using Robust.Shared.Physics.Dynamics;
+using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 
 namespace Content.Shared.Blocking;
@@ -22,6 +24,7 @@ public sealed class SharedBlockingSystem : EntitySystem
     [Dependency] private readonly SharedTransformSystem _transformSystem = default!;
     [Dependency] private readonly FixtureSystem _fixtureSystem = default!;
     [Dependency] private readonly SharedHandsSystem _handsSystem = default!;
+    [Dependency] private readonly SharedPopupSystem _popupSystem = default!;
 
     public override void Initialize()
     {
@@ -114,6 +117,8 @@ public sealed class SharedBlockingSystem : EntitySystem
 
         component.IsBlocking = true;
 
+        var msgUser = Loc.GetString("action-popup-blocking");
+
         var shape = new PhysShapeCircle();
         shape.Radius = component.BlockRadius;
 
@@ -133,6 +138,7 @@ public sealed class SharedBlockingSystem : EntitySystem
         {
             _actionsSystem.SetToggled(component.BlockingToggleAction, true);
             _transformSystem.AnchorEntity(xform);
+            _popupSystem.PopupEntity(msgUser, user, Filter.Entities(user));
         }
 
         return true;
@@ -153,6 +159,8 @@ public sealed class SharedBlockingSystem : EntitySystem
 
         var xform = Transform(user);
 
+        var msgUser = Loc.GetString("action-popup-blocking-disabling");
+
         //If the component blocking toggle isn't null, grab the users SharedBlockingUserComponent and PhysicsComponent
         //then toggle the action to false, unanchor the user, remove the hard fixture
         //and set the users bodytype back to their original type
@@ -163,6 +171,7 @@ public sealed class SharedBlockingSystem : EntitySystem
             _transformSystem.Unanchor(xform);
             _fixtureSystem.DestroyFixture(physicsComponent, component.BlockFixtureID);
             physicsComponent.BodyType = blockingUserComponent.OriginalBodyType;
+            _popupSystem.PopupEntity(msgUser, user, Filter.Entities(user));
         }
 
         return true;
