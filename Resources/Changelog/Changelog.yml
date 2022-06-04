@@ -1,9 +1,4 @@
 Entries:
-- author: notafet
-  changes:
-  - {message: Items on conveyor belts now round corners correctly., type: Add}
-  id: 1156
-  time: '2022-03-02T22:32:33.0000000+00:00'
 - author: DogZeroX
   changes:
   - {message: 'Ratvar, Rouny, and Space Lizard have joined the plushie gang, find
@@ -3005,3 +3000,8 @@ Entries:
   - {message: L6 sustained spread increased and item size increased., type: Tweak}
   id: 1655
   time: '2022-06-04T06:52:40.0000000+00:00'
+- author: Veritius
+  changes:
+  - {message: Fix communications consoles not sending announcements., type: Fix}
+  id: 1656
+  time: '2022-06-04T09:09:04.0000000+00:00'
