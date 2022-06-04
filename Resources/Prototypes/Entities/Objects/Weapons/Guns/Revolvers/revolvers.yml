@@ -45,12 +45,11 @@
     sprite: Objects/Weapons/Guns/Revolvers/deckard.rsi
   - type: RevolverAmmoProvider
     capacity: 5
+  - type: MagazineVisuals
+    magState: mag
+    steps: 4
+    zeroVisible: true
   - type: Appearance
-    visuals:
-    - type: MagVisualizer
-      magState: mag
-      steps: 4
-      zeroVisible: true
 
 - type: entity
   name: Inspector

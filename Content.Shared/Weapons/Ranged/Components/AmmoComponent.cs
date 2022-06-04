@@ -35,7 +35,7 @@ public sealed class CartridgeAmmoComponent : AmmoComponent
     /// How much the ammo spreads when shot, in degrees. Does nothing if count is 0.
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite), DataField("spread")]
-    public float Spread = 10f;
+    public Angle Spread = Angle.FromDegrees(5);
 
     /// <summary>
     /// How many prototypes are spawned when shot.

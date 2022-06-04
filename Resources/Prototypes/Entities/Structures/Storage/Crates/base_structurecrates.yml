@@ -58,7 +58,6 @@
         components:
         - Paper
 
-
 - type: entity
   id: CrateBaseSecure
   parent: BaseStructureDynamic

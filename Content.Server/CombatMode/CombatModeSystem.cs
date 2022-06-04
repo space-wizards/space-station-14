@@ -40,7 +40,7 @@ namespace Content.Server.CombatMode
 
             EntityUid? inTargetHand = null;
 
-            if (EntityManager.TryGetComponent<HandsComponent>(args.Target, out HandsComponent targetHandsComponent)
+            if (EntityManager.TryGetComponent<HandsComponent>(args.Target, out HandsComponent? targetHandsComponent)
                 && targetHandsComponent.ActiveHand != null
                 && !targetHandsComponent.ActiveHand.IsEmpty)
             {

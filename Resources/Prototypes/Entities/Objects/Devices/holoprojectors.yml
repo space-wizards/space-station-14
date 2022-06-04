@@ -1,0 +1,23 @@
+- type: entity
+  parent: BaseItem
+  id: Holoprojector
+  name: holographic sign projector
+  description: A handy-dandy holographic projector that displays a janitorial sign.
+  components:
+  - type: HolosignProjector
+  - type: Sprite
+    sprite: Objects/Devices/Holoprojectors/custodial.rsi
+    state: icon
+
+- type: entity
+  parent: Holoprojector
+  id: HolofanProjector
+  name: holofan projector
+  description: Stop suicidal passengers from killing everyone during atmos emergencies.
+  components:
+  - type: HolosignProjector
+    signProto: HoloFan
+    rechargeTime: 120
+  - type: Sprite
+    sprite: Objects/Devices/Holoprojectors/atmos.rsi
+    state: icon
