@@ -8,11 +8,11 @@
   - type: Sprite
     netsync: false
   - type: Item
-    size: 50
+    size: 60
   - type: Gun
-    minAngle: 4
-    maxAngle: 16
-    angleIncrease: 1
+    minAngle: 2
+    maxAngle: 12
+    angleIncrease: 0.5
     angleDecay: 8
     fireRate: 8
     selectedMode: FullAuto
@@ -28,12 +28,12 @@
     slots:
       gun_magazine:
         name: Magazine
-        startingItem: MagazineBoxLightRifle
+        startingItem: MagazineLightRifleBox
         insertSound: /Audio/Weapons/Guns/MagIn/batrifle_magin.ogg
         ejectSound: /Audio/Weapons/Guns/MagOut/batrifle_magout.ogg
         whitelist:
           tags:
-            - MagazineBoxLightRifle
+            - MagazineLightRifleBox
       gun_chamber:
         name: Chamber
         startingItem: CartridgeLightRifle
@@ -59,7 +59,6 @@
     - state: mag-3
       map: ["enum.GunVisualLayers.Mag"]
   - type: Item
-    size: 60
     sprite: Objects/Weapons/Guns/LMGs/l6.rsi
   - type: Appearance
     visuals:
