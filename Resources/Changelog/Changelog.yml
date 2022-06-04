@@ -1,9 +1,4 @@
 Entries:
-- author: wrexbe
-  changes:
-  - {message: Glass tables now have different mass limits., type: Add}
-  id: 1154
-  time: '2022-03-02T14:07:49.0000000+00:00'
 - author: DogZeroX
   changes:
   - {message: Xenos no longer need oxygen and are space-proof., type: Tweak}
@@ -3007,3 +3002,8 @@ Entries:
   - {message: Fixed name of sterile mask and latex glove boxes., type: Tweak}
   id: 1653
   time: '2022-06-04T05:05:18.0000000+00:00'
+- author: UKNOWH
+  changes:
+  - {message: Added makeshift laser gun!, type: Add}
+  id: 1654
+  time: '2022-06-04T06:30:37.0000000+00:00'
