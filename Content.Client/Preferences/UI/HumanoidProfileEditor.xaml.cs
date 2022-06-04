@@ -1009,7 +1009,7 @@ namespace Content.Client.Preferences.UI
 
                 _difficultyLabel = new Label
                 {
-                Text = spacer + difficultyText
+                    Text = spacer + difficultyText
                 };
 
                 // Text, Value
