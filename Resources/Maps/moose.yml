@@ -40962,7 +40962,7 @@ entities:
         ents: []
     type: ContainerContainer
 - uid: 3338
-  type: BoxSterile
+  type: BoxSterileMask
   components:
   - pos: -32.896896,-20.345268
     parent: 61
@@ -84986,7 +84986,7 @@ entities:
     parent: 61
     type: Transform
 - uid: 8775
-  type: BoxSterile
+  type: BoxSterileMask
   components:
   - pos: -16.37624,-24.480099
     parent: 61
@@ -84998,7 +84998,7 @@ entities:
         ents: []
     type: ContainerContainer
 - uid: 8776
-  type: BoxLatex
+  type: BoxLatexGloves
   components:
   - pos: -16.579365,-24.401974
     parent: 61

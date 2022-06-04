@@ -7,7 +7,7 @@ using Content.Shared.Access.Systems;
 using Content.Shared.Cargo;
 using Content.Shared.GameTicking;
 
-namespace Content.Server.Cargo
+namespace Content.Server.Cargo.Systems
 {
     public sealed partial class CargoSystem
     {

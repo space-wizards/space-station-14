@@ -1,61 +1,4 @@
 Entries:
-- author: Zumorica
-  changes:
-  - {message: Map votes during the pre-round period actually affect the chosen map
-      on round start., type: Tweak}
-  id: 1147
-  time: '2022-03-01T02:20:21.0000000+00:00'
-- author: mirrorcult
-  changes:
-  - {message: Gauze can now be crafted using cloth., type: Add}
-  - {message: 'You can now gain cloth by butchering clothing items like jumpsuits,
-      shoes, or cloaks.', type: Tweak}
-  - {message: 'Fiber reagent is now gained by grinding cloth, not the individual clothing
-      items.', type: Tweak}
-  id: 1148
-  time: '2022-03-01T03:38:39.0000000+00:00'
-- author: HoofedEar
-  changes:
-  - {message: Certain station announcements have been given a splash of color in chat.,
-    type: Add}
-  id: 1149
-  time: '2022-03-01T13:21:29.0000000+00:00'
-- author: ElectroJr
-  changes:
-  - {message: 'Added some more basic mapping tools. Entity, tile, and decal placement
-      can now be saved to the action-toolbar by clicking on empty slots while placing
-      entities. `/loadmapacts` loads some presets mapping actions.', type: Add}
-  id: 1150
-  time: '2022-03-01T23:12:34.0000000+00:00'
-- author: Mith-randalf
-  changes:
-  - {message: Removed fun (by which I mean the centcomm outfit bundle from the traitor
-      uplink)!, type: Remove}
-  id: 1151
-  time: '2022-03-02T01:46:55.0000000+00:00'
-- author: Emisse
-  changes:
-  - {message: updated Saltern to Saltern Special Edition HD Enhanced Edition, type: Add}
-  id: 1152
-  time: '2022-03-02T13:16:42.0000000+00:00'
-- author: ElectroJr
-  changes:
-  - {message: Fixed a bug preventing the RCD from constructing entities on some empty
-      tiles., type: Fix}
-  id: 1153
-  time: '2022-03-02T13:38:19.0000000+00:00'
-- author: wrexbe
-  changes:
-  - {message: Glass tables now have different mass limits., type: Add}
-  id: 1154
-  time: '2022-03-02T14:07:49.0000000+00:00'
-- author: DogZeroX
-  changes:
-  - {message: Xenos no longer need oxygen and are space-proof., type: Tweak}
-  - {message: The odds of winning against a Xeno in a fist-fight have decreased considerably.,
-    type: Tweak}
-  id: 1155
-  time: '2022-03-02T14:08:19.0000000+00:00'
 - author: notafet
   changes:
   - {message: Items on conveyor belts now round corners correctly., type: Add}
@@ -3011,3 +2954,54 @@ Entries:
   - {message: Fix delay between alert status changes scaling with tick rate., type: Fix}
   id: 1646
   time: '2022-06-03T11:37:35.0000000+00:00'
+- author: moonheart08
+  changes:
+  - {message: 'Items can now have prices, and their price can be evaluated with the
+      Appraisal Tool. This is currently only used for privateers.', type: Add}
+  - {message: 'There''s been reports of privateering in your sector, be on the lookout.',
+    type: Add}
+  id: 1647
+  time: '2022-06-03T15:56:11.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Reduced the number of each drink for Robust Softdrink machines from
+      10 to 2., type: Tweak}
+  id: 1648
+  time: '2022-06-03T23:46:51.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: ERT roles no longer show up on the role select screen., type: Fix}
+  id: 1649
+  time: '2022-06-04T00:04:34.0000000+00:00'
+- author: Peptide90
+  changes:
+  - {message: Generator circuit boards and emitters can now be printed with the correct
+      technology unlock., type: Fix}
+  id: 1650
+  time: '2022-06-04T00:04:49.0000000+00:00'
+- author: themias
+  changes:
+  - {message: Inflatables can no longer be placed on walls or doors, type: Fix}
+  id: 1651
+  time: '2022-06-04T02:15:46.0000000+00:00'
+- author: themias
+  changes:
+  - {message: Ghosting no longer causes dragged corpses to be dropped, type: Fix}
+  id: 1652
+  time: '2022-06-04T02:59:07.0000000+00:00'
+- author: Peptide90
+  changes:
+  - {message: Added boxes of nitrile gloves., type: Add}
+  - {message: Fixed name of sterile mask and latex glove boxes., type: Tweak}
+  id: 1653
+  time: '2022-06-04T05:05:18.0000000+00:00'
+- author: UKNOWH
+  changes:
+  - {message: Added makeshift laser gun!, type: Add}
+  id: 1654
+  time: '2022-06-04T06:30:37.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: L6 sustained spread increased and item size increased., type: Tweak}
+  id: 1655
+  time: '2022-06-04T06:52:40.0000000+00:00'

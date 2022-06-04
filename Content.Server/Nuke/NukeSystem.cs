@@ -284,7 +284,7 @@ namespace Content.Server.Nuke
                 return;
 
             var anchored = false;
-            if (EntityManager.TryGetComponent(uid, out TransformComponent transform))
+            if (EntityManager.TryGetComponent(uid, out TransformComponent? transform))
                 anchored = transform.Anchored;
 
             var allowArm = component.DiskSlot.HasItem &&

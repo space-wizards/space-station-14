@@ -58,7 +58,7 @@ namespace Content.Server.Morgue.Components
             if (Open)
                 CloseStorage();
 
-            if(_entities.TryGetComponent(Owner, out AppearanceComponent appearanceComponent))
+            if(_entities.TryGetComponent(Owner, out AppearanceComponent? appearanceComponent))
                 appearanceComponent.SetData(CrematoriumVisuals.Burning, true);
             Cooking = true;
 
