@@ -170,7 +170,6 @@
   description: A weapon that fully lives up to its name.
   components:
   - type: Sprite
-    netsync: false
     sprite: Objects/Weapons/Guns/Battery/pulse_rifle.rsi
     layers:
     - state: base
