@@ -1,11 +1,4 @@
 Entries:
-- author: DogZeroX
-  changes:
-  - {message: Xenos no longer need oxygen and are space-proof., type: Tweak}
-  - {message: The odds of winning against a Xeno in a fist-fight have decreased considerably.,
-    type: Tweak}
-  id: 1155
-  time: '2022-03-02T14:08:19.0000000+00:00'
 - author: notafet
   changes:
   - {message: Items on conveyor belts now round corners correctly., type: Add}
@@ -3007,3 +3000,8 @@ Entries:
   - {message: Added makeshift laser gun!, type: Add}
   id: 1654
   time: '2022-06-04T06:30:37.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: L6 sustained spread increased and item size increased., type: Tweak}
+  id: 1655
+  time: '2022-06-04T06:52:40.0000000+00:00'
