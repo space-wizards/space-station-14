@@ -1,5 +1,4 @@
-﻿using Content.Shared.DragDrop;
-using Content.Shared.Interaction;
+﻿using Content.Shared.Interaction;
 
 namespace Content.Shared.Climbing
 {

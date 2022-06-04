@@ -1,7 +1,5 @@
 using Content.Shared.Cargo;
 using Content.Shared.Containers.ItemSlots;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
 using Robust.Shared.Prototypes;
 
 namespace Content.Server.Cargo;

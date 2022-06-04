@@ -1,14 +1,9 @@
-using System;
 using Content.Server.GameTicking;
 using Content.Server.Ghost;
 using Content.Server.Ghost.Components;
 using Content.Server.Mind.Components;
 using Content.Shared.Examine;
-using Content.Shared.Ghost;
 using Content.Shared.MobState.Components;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Localization;
 using Robust.Shared.Map;
 using Robust.Shared.Timing;
 
@@ -85,6 +80,7 @@ public sealed class MindSystem : EntitySystem
             }
             else if (mind.GhostOnShutdown)
             {
+                Transform(uid).AttachToGridOrMap();
                 var spawnPosition = Transform(uid).Coordinates;
                 // Use a regular timer here because the entity has probably been deleted.
                 Timer.Spawn(0, () =>

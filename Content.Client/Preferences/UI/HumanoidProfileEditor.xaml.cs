@@ -5,6 +5,7 @@ using Content.Client.CharacterAppearance;
 using Content.Client.Lobby.UI;
 using Content.Client.Message;
 using Content.Client.Stylesheets;
+using Content.Shared.CCVar;
 using Content.Shared.CharacterAppearance;
 using Content.Shared.CharacterAppearance.Systems;
 using Content.Shared.GameTicking;
@@ -19,6 +20,7 @@ using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.XAML;
 using Robust.Client.Utility;
+using Robust.Shared.Configuration;
 using Robust.Shared.Enums;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
@@ -52,13 +54,16 @@ namespace Content.Client.Preferences.UI
     [GenerateTypedNameReferences]
     public sealed partial class HumanoidProfileEditor : Control
     {
+        private readonly IClientPreferencesManager _preferencesManager;
+        private readonly IEntityManager _entMan;
+        private readonly IConfigurationManager _configurationManager;
+
         private LineEdit _ageEdit => CAgeEdit;
         private LineEdit _nameEdit => CNameEdit;
+        private LineEdit _flavorTextEdit = null!;
         private Button _nameRandomButton => CNameRandomize;
         private Button _randomizeEverythingButton => CRandomizeEverything;
         private RichTextLabel _warningLabel => CWarningLabel;
-        private readonly IClientPreferencesManager _preferencesManager;
-        private readonly IEntityManager _entMan;
         private Button _saveButton => CSaveButton;
         private Button _sexFemaleButton => CSexFemale;
         private Button _sexMaleButton => CSexMale;
@@ -104,13 +109,14 @@ namespace Content.Client.Preferences.UI
         public event Action<HumanoidCharacterProfile, int>? OnProfileChanged;
 
         public HumanoidProfileEditor(IClientPreferencesManager preferencesManager, IPrototypeManager prototypeManager,
-            IEntityManager entityManager)
+            IEntityManager entityManager, IConfigurationManager configurationManager)
         {
             RobustXamlLoader.Load(this);
             _random = IoCManager.Resolve<IRobustRandom>();
             _prototypeManager = prototypeManager;
             _entMan = entityManager;
             _preferencesManager = preferencesManager;
+            _configurationManager = configurationManager;
 
             #region Left
 
@@ -458,6 +464,20 @@ namespace Content.Client.Preferences.UI
 
             #endregion Markings
 
+            #region FlavorText
+
+            if (_configurationManager.GetCVar(CCVars.FlavorText))
+            {
+                var flavorText = new FlavorText.FlavorText();
+                _tabContainer.AddChild(flavorText);
+                _tabContainer.SetTabTitle(_tabContainer.ChildCount-1, Loc.GetString("humanoid-profile-editor-flavortext-tab"));
+                _flavorTextEdit = flavorText.CFlavorTextInput;
+
+                flavorText.OnFlavorTextChanged += OnFlavorTextChange;
+            }
+
+            #endregion FlavorText
+
             #endregion Left
 
             if (preferencesManager.ServerDataLoaded)
@@ -469,6 +489,15 @@ namespace Content.Client.Preferences.UI
 
 
             IsDirty = false;
+        }
+
+        private void OnFlavorTextChange(string content)
+        {
+            if (Profile is null)
+                return;
+
+            Profile = Profile.WithFlavorText(content);
+            IsDirty = true;
         }
 
         private void OnMarkingChange(MarkingsSet markings)
@@ -526,6 +555,7 @@ namespace Content.Client.Preferences.UI
 
                     var color = Color.FromHsv(new Vector4(hue / 360, sat / 100, val / 100, 1.0f));
 
+                    CMarkings.CurrentSkinColor = color;
                     Profile = Profile.WithCharacterAppearance(Profile.Appearance.WithSkinColor(color));
                     break;
                 }
@@ -538,6 +568,8 @@ namespace Content.Client.Preferences.UI
                     }
 
                     var color = new Color(_rgbSkinColorSelector.Color.R, _rgbSkinColorSelector.Color.G, _rgbSkinColorSelector.Color.B);
+
+                    CMarkings.CurrentSkinColor = color;
                     Profile = Profile.WithCharacterAppearance(Profile.Appearance.WithSkinColor(color));
                     break;
                 }
@@ -555,13 +587,14 @@ namespace Content.Client.Preferences.UI
                     newColor.Y = .1f;
                     color = Color.FromHsv(newColor);
 
+                    CMarkings.CurrentSkinColor = color;
                     Profile = Profile.WithCharacterAppearance(Profile.Appearance.WithSkinColor(color));
                     break;
                 }
             }
 
             IsDirty = true;
-            NeedsDummyRebuild = true; // ugh - fix this asap
+            NeedsDummyRebuild = true; // TODO: ugh - fix this asap
         }
 
         protected override void Dispose(bool disposing)
@@ -716,6 +749,14 @@ namespace Content.Client.Preferences.UI
             _nameEdit.Text = Profile?.Name ?? "";
         }
 
+        private void UpdateFlavorTextEdit()
+        {
+            if(_flavorTextEdit != null)
+            {
+                _flavorTextEdit.Text = Profile?.FlavorText ?? "";
+            }
+        }
+
         private void UpdateAgeEdit()
         {
             _ageEdit.Text = Profile?.Age.ToString() ?? "";
@@ -797,7 +838,7 @@ namespace Content.Client.Preferences.UI
                 return;
             }
 
-            CMarkings.SetData(Profile.Appearance.Markings, Profile.Species);
+            CMarkings.SetData(Profile.Appearance.Markings, Profile.Species, Profile.Appearance.SkinColor);
         }
 
         private void UpdateSpecies()
@@ -893,6 +934,7 @@ namespace Content.Client.Preferences.UI
         {
             if (Profile is null) return;
             UpdateNameEdit();
+            UpdateFlavorTextEdit();
             UpdateSexControls();
             UpdateGenderControls();
             UpdateSkinColor();
@@ -907,7 +949,7 @@ namespace Content.Client.Preferences.UI
             UpdateAntagPreferences();
             UpdateMarkings();
 
-            _needUpdatePreview = true;
+            NeedsDummyRebuild = true;
 
             _preferenceUnavailableButton.SelectId((int) Profile.PreferenceUnavailable);
         }

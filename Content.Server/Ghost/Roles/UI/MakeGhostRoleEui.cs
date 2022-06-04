@@ -1,7 +1,6 @@
 ﻿using Content.Server.EUI;
 using Content.Shared.Eui;
 using Content.Shared.Ghost.Roles;
-using Robust.Shared.GameObjects;
 
 namespace Content.Server.Ghost.Roles.UI
 {

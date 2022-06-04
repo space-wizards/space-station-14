@@ -165,8 +165,8 @@
   id: NonLethalTechnology
   description: For the softer approach to detaining.
   icon:
-    sprite: Objects/Weapons/Guns/Ammunition/Casings/shotgun_shell_beanbag.rsi
-    state: base
+    sprite: Objects/Weapons/Guns/Ammunition/Casings/shotgun_shell.rsi
+    state: beanbag
   requiredPoints: 8000
   requiredTechnologies:
      - SecurityTechnology
@@ -176,9 +176,9 @@
     - ShellShotgunFlash
     - CartridgePistolRubber
     - CartridgeMagnumRubber
-    - CartridgeClRifleRubber
-    - CartridgeLRifleRubber
-    - CartridgeSRifleRubber
+    - CartridgeCaselessRifleRubber
+    - CartridgeLightRifleRubber
+    - CartridgeRifleRubber
 
 - type: technology
   name: "ballistic technology"
@@ -194,7 +194,7 @@
     - CartridgePistol
     - ShellShotgun
     - ShellShotgunFlare
-    - CartridgeLRifle
+    - CartridgeLightRifle
     - CartridgeMagnum
 
 #- type: technology
@@ -273,10 +273,18 @@
     - FlashlightLantern
     - FireExtinguisher
     - AutolatheMachineCircuitboard
+    - EmitterCircuitboard
     - ProtolatheMachineCircuitboard
     - OreProcessorMachineCircuitboard
     - CircuitImprinterMachineCircuitboard
     - UniformPrinterMachineCircuitboard
+    - SurveillanceCameraRouterCircuitboard
+    - SurveillanceCameraWirelessRouterCircuitboard
+    - SurveillanceWirelessCameraMovableCircuitboard
+    - SurveillanceWirelessCameraAnchoredCircuitboard
+    - SurveillanceCameraMonitorCircuitboard
+    - SurveillanceWirelessCameraMonitorCircuitboard
+    - ComputerTelevisionCircuitboard
     - AirAlarmElectronics
     - FireAlarmElectronics
 

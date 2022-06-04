@@ -1,4 +1,3 @@
-using System;
 using Content.Shared.Actions;
 using Content.Shared.Actions.ActionTypes;
 using Content.Shared.Sound;

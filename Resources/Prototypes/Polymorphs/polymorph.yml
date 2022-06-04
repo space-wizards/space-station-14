@@ -1,0 +1,37 @@
+- type: polymorph
+  id: Mouse
+  entity: MobMouse
+  forced: true
+  duration: 30
+
+- type: polymorph
+  id: Chicken
+  entity: MobChicken
+  forced: true
+  dropInventory: true
+
+- type: polymorph
+  id: Monkey
+  entity: MobMonkey
+  forced: true
+  dropInventory: true
+  revertOnCrit: true
+  revertOnDeath: true
+
+- type: polymorph
+  id: AdminMonkeySmite
+  entity: MobMonkey
+  forced: true
+  dropInventory: true
+
+- type: polymorph
+  id: AdminBreadSmite
+  entity: FoodBreadPlain
+  forced: true
+  dropInventory: true
+
+- type: polymorph
+  id: AdminInstrumentSmite
+  entity: SuperSynthesizerInstrument
+  forced: true
+  dropInventory: true

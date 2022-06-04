@@ -5,8 +5,6 @@ using Content.Server.Singularity.EntitySystems;
 using Content.Shared.Administration;
 using Content.Shared.Singularity.Components;
 using Robust.Shared.Console;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
 
 namespace Content.Server.Singularity
 {

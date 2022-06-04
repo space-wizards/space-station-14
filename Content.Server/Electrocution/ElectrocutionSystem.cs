@@ -1,5 +1,3 @@
-using System;
-using System.Collections.Generic;
 using Content.Server.Administration.Logs;
 using Content.Server.NodeContainer;
 using Content.Server.NodeContainer.EntitySystems;
@@ -23,10 +21,6 @@ using Content.Shared.Stunnable;
 using Content.Shared.Tag;
 using Content.Shared.Weapons.Melee;
 using Robust.Shared.Audio;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Localization;
-using Robust.Shared.Maths;
 using Robust.Shared.Physics.Dynamics;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
@@ -47,7 +41,7 @@ namespace Content.Server.Electrocution
         [Dependency] private readonly SharedPopupSystem _popupSystem = default!;
         [Dependency] private readonly DamageableSystem _damageableSystem = default!;
         [Dependency] private readonly NodeGroupSystem _nodeGroupSystem = default!;
-        [Dependency] private readonly AdminLogSystem _logSystem = default!;
+        [Dependency] private readonly IAdminLogManager _adminLogger= default!;
         [Dependency] private readonly TagSystem _tagSystem = default!;
 
         private const string StatusEffectKey = "Electrocution";
@@ -111,7 +105,7 @@ namespace Content.Server.Electrocution
                     var actual = _damageableSystem.TryChangeDamage(finished.Electrocuting, damage);
                     if (actual != null)
                     {
-                        _logSystem.Add(LogType.Electrocution,
+                        _adminLogger.Add(LogType.Electrocution,
                             $"{ToPrettyString(finished.Owner):entity} received {actual.Total:damage} powered electrocution damage");
                     }
                 }
@@ -189,9 +183,7 @@ namespace Content.Server.Electrocution
                 // Does it use APC power for its electrification check? Check if it's powered, and then
                 // attempt an electrocution if all the checks succeed.
 
-                if (electrified.UsesApcPower &&
-                    (!TryComp(uid, out ApcPowerReceiverComponent? power)
-                     || !power.Powered))
+                if (electrified.UsesApcPower && !this.IsPowered(uid, EntityManager))
                 {
                     return false;
                 }
@@ -369,7 +361,7 @@ namespace Content.Server.Electrocution
 
                 if (actual != null)
                 {
-                    _logSystem.Add(LogType.Electrocution,
+                    _adminLogger.Add(LogType.Electrocution,
                         $"{ToPrettyString(statusEffects.Owner):entity} received {actual.Total:damage} powered electrocution damage");
                 }
             }

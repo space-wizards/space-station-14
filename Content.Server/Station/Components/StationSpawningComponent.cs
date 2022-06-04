@@ -1,5 +1,4 @@
 ﻿using Content.Server.Station.Systems;
-using Robust.Shared.Map;
 
 namespace Content.Server.Station.Components;
 

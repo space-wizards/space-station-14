@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using Content.Server.Atmos.Monitor.Components;
 using Content.Server.Atmos.EntitySystems;
 using Content.Server.Atmos.Piping.EntitySystems;
@@ -7,13 +6,10 @@ using Content.Server.DeviceNetwork;
 using Content.Server.DeviceNetwork.Components;
 using Content.Server.DeviceNetwork.Systems;
 using Content.Server.Power.Components;
+using Content.Server.Power.EntitySystems;
 using Content.Shared.Atmos;
 using Content.Shared.Atmos.Monitor;
-using Robust.Server.GameObjects;
-using Robust.Shared.GameObjects;
 using Robust.Shared.Audio;
-using Robust.Shared.IoC;
-using Robust.Shared.Maths;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 
@@ -234,8 +230,7 @@ namespace Content.Server.Atmos.Monitor.Systems
 
         private void OnFireEvent(EntityUid uid, AtmosMonitorComponent component, ref TileFireEvent args)
         {
-            if (!TryComp<ApcPowerReceiverComponent>(uid, out var powerReceiverComponent)
-                || !powerReceiverComponent.Powered)
+            if (!this.IsPowered(uid, EntityManager))
                 return;
 
             // if we're monitoring for atmos fire, then we make it similar to a smoke detector
@@ -257,8 +252,7 @@ namespace Content.Server.Atmos.Monitor.Systems
 
         private void OnAtmosUpdate(EntityUid uid, AtmosMonitorComponent component, AtmosDeviceUpdateEvent args)
         {
-            if (!TryComp<ApcPowerReceiverComponent>(uid, out var powerReceiverComponent)
-                || !powerReceiverComponent.Powered)
+            if (!this.IsPowered(uid, EntityManager))
                 return;
 
             // can't hurt

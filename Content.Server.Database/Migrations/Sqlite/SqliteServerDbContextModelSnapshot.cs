@@ -539,6 +539,11 @@ namespace Content.Server.Database.Migrations.Sqlite
                         .HasColumnType("TEXT")
                         .HasColumnName("facial_hair_name");
 
+                    b.Property<string>("FlavorText")
+                        .IsRequired()
+                        .HasColumnType("TEXT")
+                        .HasColumnName("flavor_text");
+
                     b.Property<string>("Gender")
                         .IsRequired()
                         .HasColumnType("TEXT")

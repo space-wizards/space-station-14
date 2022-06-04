@@ -2,7 +2,6 @@ using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Threading;
 using Content.Server.DoAfter;
-using Content.Server.Hands.Systems;
 using Content.Server.Hands.Components;
 using Content.Server.Power.Components;
 using Content.Server.Tools;
@@ -24,12 +23,10 @@ namespace Content.Server.Wires;
 public sealed class WiresSystem : EntitySystem
 {
     [Dependency] private readonly IPrototypeManager _protoMan = default!;
-    [Dependency] private readonly AudioSystem _audioSystem = default!;
     [Dependency] private readonly UserInterfaceSystem _uiSystem = default!;
     [Dependency] private readonly ToolSystem _toolSystem = default!;
     [Dependency] private readonly SharedPopupSystem _popupSystem = default!;
     [Dependency] private readonly SharedInteractionSystem _interactionSystem = default!;
-    [Dependency] private readonly HandsSystem _handsSystem = default!;
     [Dependency] private readonly DoAfterSystem _doAfter = default!;
 
     private IRobustRandom _random = new RobustRandom();
@@ -243,6 +240,7 @@ public sealed class WiresSystem : EntitySystem
             SetOrCreateWireLayout(uid, component);
 
         UpdateUserInterface(uid);
+        UpdateAppearance(uid);
     }
     #endregion
 
@@ -445,8 +443,8 @@ public sealed class WiresSystem : EntitySystem
             return;
 
         if (component.IsPanelOpen &&
-            _toolSystem.HasQuality(args.Used, "Cutting", tool) ||
-            _toolSystem.HasQuality(args.Used, "Pulsing", tool))
+            (_toolSystem.HasQuality(args.Used, "Cutting", tool) ||
+            _toolSystem.HasQuality(args.Used, "Pulsing", tool)))
         {
             if (EntityManager.TryGetComponent(args.User, out ActorComponent? actor))
             {
@@ -539,7 +537,7 @@ public sealed class WiresSystem : EntitySystem
 
     private void UpdateAppearance(EntityUid uid, AppearanceComponent? appearance = null, WiresComponent? wires = null)
     {
-        if (!Resolve(uid, ref appearance, ref wires))
+        if (!Resolve(uid, ref appearance, ref wires, false))
             return;
 
         appearance.SetData(WiresVisuals.MaintenancePanelState, wires.IsPanelOpen && wires.IsPanelVisible);
@@ -679,14 +677,22 @@ public sealed class WiresSystem : EntitySystem
 
     private void UpdateWires(EntityUid used, EntityUid user, EntityUid toolEntity, int id, WiresAction action, WiresComponent? wires = null, ToolComponent? tool = null)
     {
-        if (!Resolve(used, ref wires)
-            || !Resolve(toolEntity, ref tool))
+        if (!Resolve(used, ref wires))
             return;
+
+        if (!Resolve(toolEntity, ref tool))
+        {
+            wires.WiresQueue.Remove(id);
+            return;
+        }
 
         var wire = TryGetWire(used, id, wires);
 
         if (wire == null)
+        {
+            wires.WiresQueue.Remove(id);
             return;
+        }
 
         switch (action)
         {
@@ -694,7 +700,7 @@ public sealed class WiresSystem : EntitySystem
                 if (!_toolSystem.HasQuality(toolEntity, "Cutting", tool))
                 {
                     _popupSystem.PopupCursor(Loc.GetString("wires-component-ui-on-receive-message-need-wirecutters"), Filter.Entities(user));
-                    return;
+                    break;
                 }
 
                 _toolSystem.PlayToolSound(toolEntity, tool);
@@ -709,7 +715,7 @@ public sealed class WiresSystem : EntitySystem
                 if (!_toolSystem.HasQuality(toolEntity, "Cutting", tool))
                 {
                     _popupSystem.PopupCursor(Loc.GetString("wires-component-ui-on-receive-message-need-wirecutters"), Filter.Entities(user));
-                    return;
+                    break;
                 }
 
                 _toolSystem.PlayToolSound(toolEntity, tool);
@@ -724,13 +730,13 @@ public sealed class WiresSystem : EntitySystem
                 if (!_toolSystem.HasQuality(toolEntity, "Pulsing", tool))
                 {
                     _popupSystem.PopupCursor(Loc.GetString("wires-component-ui-on-receive-message-need-multitool"), Filter.Entities(user));
-                    return;
+                    break;
                 }
 
                 if (wire.IsCut)
                 {
                     _popupSystem.PopupCursor(Loc.GetString("wires-component-ui-on-receive-message-cannot-pulse-cut-wire"), Filter.Entities(user));
-                    return;
+                    break;
                 }
 
                 wire.Action.Pulse(user, wire);

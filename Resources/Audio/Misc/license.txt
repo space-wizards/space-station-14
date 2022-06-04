@@ -1,0 +1,3 @@
+﻿epsilon.ogg made by dj-34 (https://github.com/dj-34) taken from https://github.com/ss220-space/Paradise/blob/05043bcfb35c2e7bcf1efbdbfbf976e1a2504bc2/sound/effects/epsilon.ogg
+
+siren.ogg taken from https://github.com/ParadiseSS13/Paradise/blob/master/sound/effects/new_siren.ogg

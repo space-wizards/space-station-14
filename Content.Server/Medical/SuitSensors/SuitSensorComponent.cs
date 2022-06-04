@@ -1,9 +1,4 @@
-using System;
-using Content.Shared.Inventory;
 using Content.Shared.Medical.SuitSensor;
-using Robust.Shared.Analyzers;
-using Robust.Shared.GameObjects;
-using Robust.Shared.Serialization.Manager.Attributes;
 
 namespace Content.Server.Medical.SuitSensors
 {

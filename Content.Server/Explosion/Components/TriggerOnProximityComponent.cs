@@ -1,9 +1,5 @@
 using Content.Server.Explosion.EntitySystems;
-using Robust.Shared.GameObjects;
 using Robust.Shared.Physics.Collision.Shapes;
-using Robust.Shared.Serialization.Manager.Attributes;
-using Robust.Shared.ViewVariables;
-using System.Collections.Generic;
 using Content.Shared.Explosion;
 
 namespace Content.Server.Explosion.Components

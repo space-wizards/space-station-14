@@ -111,10 +111,17 @@ namespace Content.MapRenderer.Painters
 
             foreach (var grid in grids)
             {
+                // Skip empty grids
+                if (grid.LocalAABB.IsEmpty())
+                {
+                    Console.WriteLine($"Warning: Grid {grid.Index} was empty. Skipping image rendering.");
+                    continue;
+                }
+
                 var tileXSize = grid.TileSize * TilePainter.TileImageSize;
                 var tileYSize = grid.TileSize * TilePainter.TileImageSize;
 
-                var bounds = grid.LocalBounds;
+                var bounds = grid.LocalAABB;
 
                 var left = bounds.Left;
                 var right = bounds.Right;

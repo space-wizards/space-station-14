@@ -1,7 +1,7 @@
-using System.Linq;
 using Content.Server.Administration.Logs;
 using Content.Server.Atmos.EntitySystems;
 using Content.Server.Chat.Managers;
+using Content.Server.GameTicking;
 using Content.Server.Station.Components;
 using Content.Server.Station.Systems;
 using Content.Shared.Database;
@@ -25,6 +25,11 @@ namespace Content.Server.StationEvents.Events
         ///     If the event has started and is currently running.
         /// </summary>
         public bool Running { get; set; }
+
+        /// <summary>
+        ///     The time when this event last ran.
+        /// </summary>
+        public TimeSpan LastRun { get; set; } = TimeSpan.Zero;
 
         /// <summary>
         ///     Human-readable name for the event.
@@ -62,6 +67,11 @@ namespace Content.Server.StationEvents.Events
         ///     In minutes, when is the first round time this event can start
         /// </summary>
         public virtual int EarliestStart { get; } = 5;
+
+        /// <summary>
+        ///     In minutes, the amount of time before the same event can occur again
+        /// </summary>
+        public virtual int ReoccurrenceDelay { get; } = 30;
 
         /// <summary>
         ///     When in the lifetime to call Start().
@@ -113,8 +123,9 @@ namespace Content.Server.StationEvents.Events
         {
             Started = true;
             Occurrences += 1;
+            LastRun = EntitySystem.Get<GameTicker>().RoundDuration();
 
-            EntitySystem.Get<AdminLogSystem>()
+            IoCManager.Resolve<IAdminLogManager>()
                 .Add(LogType.EventStarted, LogImpact.High, $"Event startup: {Name}");
         }
 
@@ -124,7 +135,7 @@ namespace Content.Server.StationEvents.Events
         /// </summary>
         public virtual void Announce()
         {
-            EntitySystem.Get<AdminLogSystem>()
+            IoCManager.Resolve<IAdminLogManager>()
                 .Add(LogType.EventAnnounced, $"Event announce: {Name}");
 
             if (StartAnnouncement != null)
@@ -147,7 +158,7 @@ namespace Content.Server.StationEvents.Events
         /// </summary>
         public virtual void Shutdown()
         {
-            EntitySystem.Get<AdminLogSystem>()
+            IoCManager.Resolve<IAdminLogManager>()
                 .Add(LogType.EventStopped, $"Event shutdown: {Name}");
 
             if (EndAnnouncement != null)
@@ -209,7 +220,7 @@ namespace Content.Server.StationEvents.Events
 
             var atmosphereSystem = EntitySystem.Get<AtmosphereSystem>();
             var found = false;
-            var gridBounds = grid.WorldBounds;
+            var gridBounds = grid.WorldAABB;
             var gridPos = grid.WorldPosition;
 
             for (var i = 0; i < 10; i++)

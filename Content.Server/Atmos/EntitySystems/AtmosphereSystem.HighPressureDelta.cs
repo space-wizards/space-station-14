@@ -4,14 +4,11 @@ using Content.Shared.Audio;
 using Content.Shared.MobState.Components;
 using Content.Shared.Physics;
 using Robust.Shared.Audio;
-using Robust.Shared.GameObjects;
 using Robust.Shared.Map;
-using Robust.Shared.Maths;
 using Robust.Shared.Physics;
 using Robust.Shared.Player;
 using Robust.Shared.Random;
 using Robust.Shared.Utility;
-using Robust.Shared.ViewVariables;
 
 namespace Content.Server.Atmos.EntitySystems
 {

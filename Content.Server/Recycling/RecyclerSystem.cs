@@ -3,12 +3,12 @@ using Content.Server.GameTicking;
 using Content.Server.Players;
 using Content.Server.Popups;
 using Content.Server.Power.Components;
+using Content.Server.Power.EntitySystems;
 using Content.Server.Recycling.Components;
 using Content.Shared.Audio;
 using Content.Shared.Body.Components;
 using Content.Shared.Emag.Systems;
 using Content.Shared.Interaction.Events;
-using Content.Shared.Popups;
 using Content.Shared.Recycling;
 using Content.Shared.Tag;
 using Robust.Server.GameObjects;
@@ -121,9 +121,8 @@ namespace Content.Server.Recycling
 
         private bool CanGib(RecyclerComponent component, EntityUid entity)
         {
-            // TODO: Power needs a helper for this jeez
             return HasComp<SharedBodyComponent>(entity) && !component.Safe &&
-                   TryComp<ApcPowerReceiverComponent>(component.Owner, out var receiver) && receiver.Powered;
+                   this.IsPowered(component.Owner, EntityManager);
         }
 
         public void Bloodstain(RecyclerComponent component)

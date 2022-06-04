@@ -1,3 +1,4 @@
+using System.Threading;
 using Content.Shared.Construction.EntitySystems;
 using Content.Shared.Tools;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
@@ -19,7 +20,9 @@ namespace Content.Shared.Construction.Components
         /// </summary>
         [ViewVariables(VVAccess.ReadWrite)]
         [DataField("delay")]
-        public float Delay = 0.5f;
+        public float Delay = 1f;
+
+        public CancellationTokenSource? CancelToken = null;
     }
 
     public abstract class BaseAnchoredAttemptEvent : CancellableEntityEventArgs

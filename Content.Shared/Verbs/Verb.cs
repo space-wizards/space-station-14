@@ -1,9 +1,6 @@
-using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization;
 using Robust.Shared.Utility;
-using System;
 using Content.Shared.Database;
-using System.Collections.Generic;
 
 namespace Content.Shared.Verbs
 {

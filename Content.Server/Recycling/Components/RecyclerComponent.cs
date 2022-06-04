@@ -1,13 +1,5 @@
-using Content.Server.Act;
-using Content.Server.Chat.Managers;
-using Content.Server.GameTicking;
-using Content.Server.Players;
-using Content.Server.Popups;
-using Content.Shared.Body.Components;
-using Content.Shared.Popups;
 using Content.Shared.Recycling;
 using Content.Shared.Sound;
-using Robust.Server.GameObjects;
 
 namespace Content.Server.Recycling.Components
 {

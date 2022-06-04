@@ -1,8 +1,5 @@
-using System.Collections.Generic;
 using Content.Shared.Sound;
 using Content.Shared.Storage;
-using Robust.Shared.GameObjects;
-using Robust.Shared.Serialization.Manager.Attributes;
 
 namespace Content.Server.Storage.Components
 {

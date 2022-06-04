@@ -1,8 +1,5 @@
 using Content.Shared.Doors.Components;
-using Robust.Shared.GameObjects;
 using Robust.Shared.GameStates;
-using Robust.Shared.IoC;
-using System.Linq;
 
 namespace Content.Shared.Doors.Systems;
 

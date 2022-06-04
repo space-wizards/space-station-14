@@ -67,7 +67,7 @@ public sealed class DoorSystem : SharedDoorSystem
             _airtightSystem.SetAirblocked(airtight, collidable);
 
         // Pathfinding / AI stuff.
-        RaiseLocalEvent(new AccessReaderChangeMessage(uid, collidable));
+        RaiseLocalEvent(new AccessReaderChangeEvent(uid, collidable));
 
         base.SetCollidable(uid, collidable, door, physics, occluder);
     }
@@ -217,9 +217,9 @@ public sealed class DoorSystem : SharedDoorSystem
         return AccessType switch
         {
             // Some game modes modify access rules.
-            AccessTypes.AllowAllIdExternal => !isExternal || _accessReaderSystem.IsAllowed(access, user.Value),
+            AccessTypes.AllowAllIdExternal => !isExternal || _accessReaderSystem.IsAllowed(user.Value, access),
             AccessTypes.AllowAllNoExternal => !isExternal,
-            _ => _accessReaderSystem.IsAllowed(access, user.Value)
+            _ => _accessReaderSystem.IsAllowed(user.Value, access)
         };
     }
 

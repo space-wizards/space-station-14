@@ -1,12 +1,7 @@
-using System.Collections.Generic;
 using Content.Server.Radio.Components;
 using Content.Shared.Chat;
 using Robust.Server.GameObjects;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Localization;
 using Robust.Shared.Network;
-using Robust.Shared.Serialization.Manager.Attributes;
 
 namespace Content.Server.Ghost.Components
 {

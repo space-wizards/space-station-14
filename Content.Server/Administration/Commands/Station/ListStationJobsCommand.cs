@@ -1,4 +1,3 @@
-using Content.Server.Station.Components;
 using Content.Server.Station.Systems;
 using Content.Shared.Administration;
 using Robust.Shared.Console;
@@ -8,8 +7,6 @@ namespace Content.Server.Administration.Commands.Station;
 [AdminCommand(AdminFlags.Admin)]
 public sealed class ListStationJobsCommand : IConsoleCommand
 {
-    [Dependency] private readonly IEntityManager _entityManager = default!;
-
     public string Command => "lsstationjobs";
 
     public string Description => "Lists all jobs on the given station.";

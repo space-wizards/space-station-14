@@ -1,7 +1,6 @@
 using Content.Server.Fluids.Components;
 using Content.Server.Chemistry.EntitySystems;
 using Content.Shared.FixedPoint;
-using Content.Shared.Interaction;
 using Content.Shared.Audio;
 
 namespace Content.Server.Fluids.EntitySystems

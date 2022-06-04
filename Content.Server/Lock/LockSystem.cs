@@ -1,8 +1,5 @@
-using Content.Server.Access.Components;
-using Content.Server.Access.Systems;
 using Content.Server.Storage.Components;
 using Content.Shared.Emag.Systems;
-using Content.Shared.Emag.Components;
 using Content.Shared.Access.Components;
 using Content.Shared.Access.Systems;
 using Content.Shared.Examine;
@@ -12,9 +9,6 @@ using Content.Shared.Storage;
 using Content.Shared.Verbs;
 using JetBrains.Annotations;
 using Robust.Shared.Audio;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Localization;
 using Robust.Shared.Player;
 
 namespace Content.Server.Lock
@@ -162,7 +156,7 @@ namespace Content.Server.Lock
             if (!Resolve(uid, ref reader))
                 return true;
 
-            if (!_accessReader.IsAllowed(reader, user))
+            if (!_accessReader.IsAllowed(user, reader))
             {
                 if (!quiet)
                     reader.Owner.PopupMessage(user, Loc.GetString("lock-comp-has-user-access-fail"));

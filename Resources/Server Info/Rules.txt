@@ -9,9 +9,9 @@
 
 [color=#a4885c]3.[/color] These servers are "Low Roleplay", meaning that while you don't need to be perfectly in character, basic roleplaying standards like not using emoji/emoticons or textspeak (:), :D, xD, lol, etc.) in speech, and using real names for characters, are expected to be followed.
 
-[color=#a4885c]4.[/color] Follow basic common sense, you cannot murder someone because they slipped you on a banana, or gun down the captain because the shuttle was recalled.
+[color=#a4885c]4.[/color] Follow basic common sense--you cannot murder someone because they slipped you on a banana
     - This isn't a deathmatch, be humane.
-    - What is considered a reasonable reason to kill someone is at the discretion of staff.
+    - What is considered a reasonable reason to escalate conflict is listed below under ESCALATION RULES and is at the discretion of admins.
     - Declaring a revolution or going on strike is an antagonist only activity. "Cargonia" and other departmental revolutions are prohibited unless admin permission is obtained.
 
 [color=#a4885c]5.[/color] Erotic Roleplay (ERP) is [color=#ff0000]not allowed under any circumstance[/color].
@@ -23,7 +23,7 @@
 	- Intentionally seeking to demean others due to their actual or perceived race, sex, gender, orientation or the like is not tolerated.
 	- Words that are closely tied to real life slurs are [color=#ff0000]not allowed[/color].
 
-[color=#a4885c]8.[/color] Offensive/bad/out-of-character character names put you at the mercy of administrators, from receiving brain damage to becoming valid to straight up getting banned on the spot depending on how bad they are. Character names should be something a real person might have for a name.
+[color=#a4885c]8.[/color] Offensive/bad/out-of-character character names and descriptions put you at the mercy of administrators, from receiving brain damage to becoming valid to straight up getting banned on the spot depending on how bad they are. Character names should be something a real person might have for a name.
 
 [color=#a4885c]9.[/color] Knowingly using exploits, external programs, or other unintended game mechanics to powergame, slow down, or crash the server is [color=#ff0000]not allowed[/color].
 
@@ -42,3 +42,16 @@ RULES FOR SECURITY
 
 [color=#a4885c]13.[/color] Prisoners should not be given sentences longer than 10 minutes. Certain extreme exceptions like bombers and assassins may warrant permabrigging, or [color=#ff0000]in the very worst cases[/color], execution.
     - Note that employment at a hostile corporation (i.e. traitor status) alone [color=#ff0000]does not[/color] qualify someone for perma or execution.
+
+ESCALATION RULES
+
+Self-defense is always allowed, to the extent of saving your own life. Preemptively attacking/maiming someone or hitting someone while they are already incapacitated is not considered self-defense.
+
+Minor conflicts and scuffles are allowed, given that the wronged party has reasonable justification. If you are wronged, you are expected to handle the conflict non-lethally whenever possible, escalating in severity as the conflict continues.
+As the defending party the rate of escalation increases with you, up to and including violence, while the instigator is always able to respond in kind.
+
+If a conflict leads to violence and either participant is incapacitated, the standing participant is expected to make an effort to treat the other, unless they have reason to believe the other was an antagonist.
+Once treated the conflict is over; any new conflict with either individual must escalate once again. If you get into a conflict again with that individual, they may be removed permanently from the round.
+
+Not all conflicts should be solved in character. If a non-antagonist conflict has escalated to the point of interfering with the round in a detrimental way, Admin Help is preferred as a solution.
+If you're unsure whether escalation is justified in a given conflict, don't be afraid to use Admin Help and ask for clarification.

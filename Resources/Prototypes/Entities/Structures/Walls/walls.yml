@@ -360,10 +360,9 @@
         node: girder
       - !type:DoActsBehavior
         acts: ["Destruction"]
-  - type: ReinforcedWall
+  - type: IconSmooth
     key: walls
-    base: solid
-    reinforcedBase: reinf_over
+    base: reinf_over
   - type: Appearance
     visuals:
       - type: ReinforcedWallVisualizer
@@ -650,7 +649,7 @@
   parent: WallBase
   id: WallVaultAlien
   name: alien vault wall
-  description: A mysterious ornate looking wall. There may be ancient dangers inside. 
+  description: A mysterious ornate looking wall. There may be ancient dangers inside.
   components:
   - type: Sprite
     sprite: Structures/Walls/vault.rsi
@@ -666,7 +665,7 @@
       behaviors:
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
-    
+
 - type: entity
   parent: WallVaultAlien
   id: WallVaultRock
@@ -678,7 +677,7 @@
   - type: Icon
     sprite: Structures/Walls/vault.rsi
     state: rockvault
-    
+
 - type: entity
   parent: WallVaultAlien
   id: WallVaultSandstone
@@ -698,6 +697,8 @@
   id: WallInvisible
   name: Invisible Wall
   components:
+  - type: TimedDespawn
+    lifetime: 30
   - type: Tag
     tags:
       - Wall
@@ -713,3 +714,31 @@
       layer:
       - GlassLayer
   - type: Airtight
+
+- type: entity
+  id: WallForce
+  name: Force Wall
+  components:
+    - type: TimedDespawn
+      lifetime: 20
+    - type: Tag
+      tags:
+        - Wall
+    - type: Physics
+      bodyType: Static
+    - type: Fixtures
+      fixtures:
+        - shape:
+            !type:PhysShapeAabb
+            bounds: "-0.5,-0.5,0.5,0.5"
+          mask:
+            - FullTileMask
+          layer:
+            - WallLayer
+    - type: Airtight
+    - type: Sprite
+      sprite: Structures/Magic/forcewall.rsi
+      state: forcewall
+    - type: Icon
+      sprite: Structures/Magic/forcewall.rsi
+      state: forcewall

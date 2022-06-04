@@ -48,7 +48,7 @@ namespace Content.Server.Power.EntitySystems
             if (args.Session.AttachedEntity == null)
                 return;
 
-            if (access == null || _accessReader.IsAllowed(access, args.Session.AttachedEntity.Value))
+            if (access == null || _accessReader.IsAllowed(args.Session.AttachedEntity.Value, access))
             {
                 ApcToggleBreaker(uid, component);
             }

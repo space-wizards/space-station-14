@@ -4,8 +4,6 @@ using Content.Shared.Movement.EntitySystems;
 using Content.Shared.Physics.Pull;
 using Content.Shared.Pulling.Components;
 using JetBrains.Annotations;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
 
 namespace Content.Shared.Pulling.Systems
 {
