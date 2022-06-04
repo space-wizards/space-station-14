@@ -37,7 +37,7 @@ namespace Content.Shared.Roles
 
         [DataField("canBeAntag")]
         public bool CanBeAntag { get; } = true;
-		
+
 		[DataField("difficulty")]
 		public string Difficulty { get; } = string.Empty; 
 
@@ -64,11 +64,5 @@ namespace Content.Shared.Roles
 
         [DataField("accessGroups", customTypeSerializer: typeof(PrototypeIdListSerializer<AccessGroupPrototype>))]
         public IReadOnlyCollection<string> AccessGroups { get; } = Array.Empty<string>();
-
-        [DataField("extendedAccess", customTypeSerializer: typeof(PrototypeIdListSerializer<AccessLevelPrototype>))]
-        public IReadOnlyCollection<string> ExtendedAccess { get; } = Array.Empty<string>();
-
-        [DataField("extendedAccessGroups", customTypeSerializer: typeof(PrototypeIdListSerializer<AccessGroupPrototype>))]
-        public IReadOnlyCollection<string> ExtendedAccessGroups { get; } = Array.Empty<string>();
     }
 }
