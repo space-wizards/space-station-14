@@ -38,8 +38,11 @@ namespace Content.Shared.Movement.Components
             if (body == null)
                 entityManager.TryGetComponent(entity, out body);
 
-            if (entityManager.TryGetComponent<MovementIgnoreGravityComponent>(entity, out var ignoreGravityComponent) ||
-                (body?.BodyType & (BodyType.Static | BodyType.Kinematic)) != 0) return ignoreGravityComponent.Weightless;
+            if ((body?.BodyType & (BodyType.Static | BodyType.Kinematic)) != 0)
+                return false;
+
+            if (entityManager.TryGetComponent<MovementIgnoreGravityComponent>(entity, out var ignoreGravityComponent))
+                return ignoreGravityComponent.Weightless;
 
             var transform = entityManager.GetComponent<TransformComponent>(entity);
             var gridId = transform.GridID;
