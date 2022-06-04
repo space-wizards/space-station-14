@@ -15,12 +15,11 @@
   - type: Sprite
     sprite: Objects/Weapons/Guns/Ammunition/Boxes/magnum.rsi
     netsync: false
+  - type: MagazineVisuals
+    magState: mag
+    steps: 2
+    zeroVisible: false
   - type: Appearance
-    visuals:
-    - type: MagVisualizer
-      magState: mag
-      steps: 2
-      zeroVisible: false
 
 # Boxes
 - type: entity
