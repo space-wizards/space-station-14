@@ -49,7 +49,6 @@ public sealed class ChameleonClothingSystem : SharedChameleonClothingSystem
         if (!TryComp(user, out ActorComponent? actor))
             return;
         _uiSystem.TryToggleUi(uid, ChameleonUiKey.Key, actor.PlayerSession);
-        UpdateUi(uid, component);
     }
 
     private void UpdateUi(EntityUid uid, ChameleonClothingComponent? component = null)
