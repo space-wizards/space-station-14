@@ -982,8 +982,8 @@ namespace Content.Client.Preferences.UI
         {
             public JobPrototype Job { get; }
             private readonly RadioOptions<int> _optionButton;
-            private readonly Label _difficultyLabel;
-            
+			private readonly Label _difficultyLabel;
+
             public JobPriority Priority
             {
                 get => (JobPriority) _optionButton.SelectedValue;
