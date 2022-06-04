@@ -15,6 +15,7 @@
     - nodevis
     - nodevisfilter
     - showspread
+    - showambient
 
 - Flags: MAPPING
   Commands:

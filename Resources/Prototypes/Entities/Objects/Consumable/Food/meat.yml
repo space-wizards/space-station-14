@@ -177,6 +177,8 @@
         reagents:
         - ReagentId: Bicaridine
           Quantity: 20
+  - type: StaticPrice
+    price: 750
 
 - type: entity
   name: raw crab meat

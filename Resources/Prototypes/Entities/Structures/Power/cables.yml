@@ -23,6 +23,8 @@
       - !type:DoActsBehavior
         acts: ["Destruction"]
   - type: SubFloorHide
+  - type: AmbientSound
+    enabled: false  # Leaving as false because 90% of them are set to this.
   - type: Appearance
   - type: Electrified
     onHandInteract: false
@@ -78,7 +80,6 @@
   - type: CableVisualizer
     statePrefix: hvcable_
   - type: AmbientSound
-    enabled: true
     volume: -15
     range: 2
     sound:
@@ -128,7 +129,6 @@
   - type: CableVisualizer
     statePrefix: mvcable_
   - type: AmbientSound
-    enabled: true
     volume: -16
     range: 2
     sound:
@@ -181,7 +181,6 @@
   - type: CableVisualizer
     statePrefix: lvcable_
   - type: AmbientSound
-    enabled: true
     volume: -17
     range: 2
     sound:

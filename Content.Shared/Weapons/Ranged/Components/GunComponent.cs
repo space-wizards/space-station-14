@@ -44,7 +44,7 @@ public class GunComponent : Component
     /// <summary>
     /// How much the spread increases every time the gun fires.
     /// </summary>
-    [ViewVariables, DataField("angleIncrease")]
+    [ViewVariables(VVAccess.ReadWrite), DataField("angleIncrease")]
     public Angle AngleIncrease = Angle.FromDegrees(0.5);
 
     /// <summary>

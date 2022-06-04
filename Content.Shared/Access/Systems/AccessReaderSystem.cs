@@ -50,6 +50,20 @@ namespace Content.Shared.Access.Systems
                 args.Handled = true;
             }
         }
+        /// <summary>
+        /// Searches the source for access tags
+        /// then compares it with the targets readers access list to see if it is allowed.
+        /// </summary>
+        /// <param name="source">The entity that wants access.</param>
+        /// <param name="target">The entity to search for an access reader</param>
+        /// <param name="reader">Optional reader from the target entity</param>
+        public bool IsAllowed(EntityUid source, EntityUid target, AccessReaderComponent? reader = null)
+        {
+            if (!Resolve(target, ref reader, false))
+                return true;
+            var tags = FindAccessTags(source);
+            return IsAllowed(tags, reader);
+        }
 
         /// <summary>
         /// Searches the given entity for access tags

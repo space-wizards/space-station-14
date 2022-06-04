@@ -51,7 +51,7 @@
     sprite: Objects/Weapons/Guns/Shotguns/bojevic.rsi
     size: 24
   - type: Gun
-    fireRate: 3
+    fireRate: 2
     selectedMode: FullAuto
     availableModes:
     - FullAuto
