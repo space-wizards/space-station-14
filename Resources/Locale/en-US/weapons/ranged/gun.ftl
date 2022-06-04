@@ -23,6 +23,6 @@ gun-magazine-examine = It has [color={$color}]{$count}[/color] shots remaining.
 # RevolverAmmoProvider
 gun-revolver-empty = Empty revolver
 gun-revolver-full = Revolver full
-gun-revolver-insert = Insert
+gun-revolver-insert = Inserted
 gun-revolver-spin = Spin revolver
 gun-revolver-spun = Spun

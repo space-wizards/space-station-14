@@ -615,3 +615,11 @@
   - type: Icon
     state: pda-syndi
 
+- type: entity
+  parent: HoSPDA
+  id: ERTLeaderPDA
+  name: ERT PDA
+  description: Red for firepower.
+  components:
+  - type: PDA
+    id: ERTLeaderIDCard

@@ -30,8 +30,9 @@ public sealed class RevolverAmmoProviderComponent : AmmoProviderComponent
     // Like BallisticAmmoProvider we defer spawning until necessary
     // AmmoSlots is the instantiated ammo and Chambers is the unspawned ammo (that may or may not have been shot).
 
+    // TODO: Using an array would be better but this throws!
     [DataField("ammoSlots")]
-    public EntityUid?[] AmmoSlots = Array.Empty<EntityUid?>();
+    public List<EntityUid?> AmmoSlots = new();
 
     [DataField("chambers")]
     public bool?[] Chambers = Array.Empty<bool?>();

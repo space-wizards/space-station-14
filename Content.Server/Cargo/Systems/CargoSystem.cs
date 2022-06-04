@@ -2,7 +2,7 @@ using Content.Shared.Cargo;
 using Content.Shared.Containers.ItemSlots;
 using Robust.Shared.Prototypes;
 
-namespace Content.Server.Cargo;
+namespace Content.Server.Cargo.Systems;
 
 public sealed partial class CargoSystem : SharedCargoSystem
 {
