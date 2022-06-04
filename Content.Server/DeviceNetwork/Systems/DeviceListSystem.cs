@@ -12,7 +12,6 @@ public sealed class DeviceListSystem : EntitySystem
         base.Initialize();
         SubscribeLocalEvent<DeviceListComponent, BeforeBroadcastAttemptEvent>(OnBeforeBroadcast);
         SubscribeLocalEvent<DeviceListComponent, BeforePacketSentEvent>(OnBeforePacketSent);
-
     }
 
     /// <summary>

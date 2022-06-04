@@ -14,7 +14,7 @@ namespace Content.Server.DeviceNetwork.Components
             Wired,
             Wireless,
             Apc,
-            AtmosDevices
+            AtmosDevices,
             Reserved = 100,
             // Ids outside this enum may exist
             // This exists to let yml use nice names instead of numbers

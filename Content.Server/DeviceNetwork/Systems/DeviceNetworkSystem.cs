@@ -51,7 +51,7 @@ namespace Content.Server.DeviceNetwork.Systems
             if (!Resolve(uid, ref device, false))
                 return;
 
-            if (device.Address == null)
+            if (device.Address == string.Empty)
                 return;
 
             frequency ??= device.TransmitFrequency;

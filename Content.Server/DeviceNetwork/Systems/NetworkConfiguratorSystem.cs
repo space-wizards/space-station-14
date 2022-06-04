@@ -28,7 +28,6 @@ public sealed class NetworkConfiguratorSystem : EntitySystem
         base.Initialize();
 
         //Interaction
-        SubscribeLocalEvent<NetworkConfiguratorComponent, UseInHandEvent>(OnUsedInHand);
         SubscribeLocalEvent<NetworkConfiguratorComponent, AfterInteractEvent>((uid, component, args) => OnUsed(uid, component, args.Target, args.User, args.CanReach)); //TODO: Replace with utility verb?
 
         //Verbs
@@ -42,7 +41,7 @@ public sealed class NetworkConfiguratorSystem : EntitySystem
         SubscribeLocalEvent<NetworkConfiguratorComponent, NetworkConfiguratorButtonPressedMessage>(OnConfigButtonPressed);
     }
 
-    public void TryAddNetworkDevice(EntityUid? targetUid, EntityUid configuratorUid, EntityUid userUid,
+    private void TryAddNetworkDevice(EntityUid? targetUid, EntityUid configuratorUid, EntityUid userUid,
         NetworkConfiguratorComponent? configurator = null)
     {
         if (!Resolve(configuratorUid, ref configurator))
@@ -89,20 +88,7 @@ public sealed class NetworkConfiguratorSystem : EntitySystem
         return false;
     }
 
-
     #region Interactions
-
-    /// <summary>
-    /// Shows the saved devices ui. It can be used to view and remove saved devices
-    /// </summary>
-    private void OnUsedInHand(EntityUid uid, NetworkConfiguratorComponent component, UseInHandEvent args)
-    {
-        if (!TryComp(args.User, out ActorComponent? actor))
-            return;
-
-        _uiSystem.GetUiOrNull(uid, NetworkConfiguratorUiKey.List)?.Open(actor.PlayerSession);
-        UpdateUiState(uid, component);
-    }
 
     /// <summary>
     /// Either adds a device to the device list or shows the config ui if the target is ant entity with a device list

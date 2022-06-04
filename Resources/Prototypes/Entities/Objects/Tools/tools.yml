@@ -182,6 +182,9 @@
       - Pulsing
   - type: SignalLinker
   - type: NetworkConfigurator
+  - type: ActivatableUI
+    key: enum.NetworkConfiguratorUiKey.List
+    inHandsOnly: true
   - type: UserInterface
     interfaces:
     - key: enum.SignalLinkerUiKey.Key
