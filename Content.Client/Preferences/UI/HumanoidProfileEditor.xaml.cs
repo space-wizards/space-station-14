@@ -519,7 +519,6 @@ namespace Content.Client.Preferences.UI
             IsDirty = true;
         }
 
-
         private void OnSkinColorOnValueChanged()
         {
             if (Profile is null) return;
@@ -555,7 +554,6 @@ namespace Content.Client.Preferences.UI
 
                     var color = Color.FromHsv(new Vector4(hue / 360, sat / 100, val / 100, 1.0f));
 
-                    CMarkings.CurrentSkinColor = color;
                     Profile = Profile.WithCharacterAppearance(Profile.Appearance.WithSkinColor(color));
                     break;
                 }
@@ -568,8 +566,6 @@ namespace Content.Client.Preferences.UI
                     }
 
                     var color = new Color(_rgbSkinColorSelector.Color.R, _rgbSkinColorSelector.Color.G, _rgbSkinColorSelector.Color.B);
-
-                    CMarkings.CurrentSkinColor = color;
                     Profile = Profile.WithCharacterAppearance(Profile.Appearance.WithSkinColor(color));
                     break;
                 }
@@ -587,7 +583,6 @@ namespace Content.Client.Preferences.UI
                     newColor.Y = .1f;
                     color = Color.FromHsv(newColor);
 
-                    CMarkings.CurrentSkinColor = color;
                     Profile = Profile.WithCharacterAppearance(Profile.Appearance.WithSkinColor(color));
                     break;
                 }
@@ -838,7 +833,7 @@ namespace Content.Client.Preferences.UI
                 return;
             }
 
-            CMarkings.SetData(Profile.Appearance.Markings, Profile.Species, Profile.Appearance.SkinColor);
+            CMarkings.SetData(Profile.Appearance.Markings, Profile.Species);
         }
 
         private void UpdateSpecies()
@@ -949,7 +944,7 @@ namespace Content.Client.Preferences.UI
             UpdateAntagPreferences();
             UpdateMarkings();
 
-            NeedsDummyRebuild = true;
+            _needUpdatePreview = true;
 
             _preferenceUnavailableButton.SelectId((int) Profile.PreferenceUnavailable);
         }
@@ -1007,7 +1002,6 @@ namespace Content.Client.Preferences.UI
                     LastButtonStyle = StyleBase.ButtonOpenLeft
                 };
 
-
                 _difficultyLable = new Label
                 {
                     Text = spacer + difficultyText
@@ -1018,8 +1012,6 @@ namespace Content.Client.Preferences.UI
                 _optionButton.AddItem(Loc.GetString("humanoid-profile-editor-job-priority-medium-button"), (int) JobPriority.Medium);
                 _optionButton.AddItem(Loc.GetString("humanoid-profile-editor-job-priority-low-button"), (int) JobPriority.Low);
                 _optionButton.AddItem(Loc.GetString("humanoid-profile-editor-job-priority-never-button"), (int) JobPriority.Never);
-
-              
 
                 _optionButton.OnItemSelected += args =>
                 {
