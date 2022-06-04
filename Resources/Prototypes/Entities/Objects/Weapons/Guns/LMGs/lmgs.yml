@@ -10,10 +10,10 @@
   - type: Item
     size: 60
   - type: Gun
-    minAngle: 2
-    maxAngle: 12
+    minAngle: 4
+    maxAngle: 16
     angleIncrease: 0.5
-    angleDecay: 8
+    angleDecay: 12
     fireRate: 8
     selectedMode: FullAuto
     availableModes:
