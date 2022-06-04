@@ -8109,11 +8109,11 @@ entities:
       -16,-4: 0
       -16,-3: 0
       -16,-2: 0
-      -16,-1: 0
+      -16,-1: 1
       -15,-4: 0
       -15,-3: 0
       -15,-2: 0
-      -15,-1: 0
+      -15,-1: 1
       -14,-4: 0
       -14,-3: 0
       -14,-2: 0
@@ -13989,7 +13989,7 @@ entities:
       -3,59: 0
       -3,60: 0
       -3,61: 0
-      -32,55: 1
+      -32,55: 2
       -32,56: 0
       -32,57: 0
       -32,58: 0
@@ -14233,16 +14233,16 @@ entities:
       -35,61: 0
       -35,62: 0
       -35,63: 0
-      -34,55: 2
-      -34,56: 3
-      -34,57: 4
-      -34,58: 5
-      -34,59: 6
+      -34,55: 3
+      -34,56: 4
+      -34,57: 5
+      -34,58: 6
+      -34,59: 7
       -34,60: 0
       -34,61: 0
       -34,62: 0
       -34,63: 0
-      -33,55: 7
+      -33,55: 8
       -33,56: 0
       -33,57: 0
       -33,58: 0
@@ -15013,10 +15013,10 @@ entities:
       -2,73: 0
       -2,74: 0
       -2,75: 0
-      -2,76: 8
-      -2,77: 9
-      -2,78: 10
-      -2,79: 11
+      -2,76: 9
+      -2,77: 10
+      -2,78: 11
+      -2,79: 12
       -1,76: 0
       -1,77: 0
       -1,78: 0
@@ -15025,10 +15025,10 @@ entities:
       -21,77: 0
       -21,78: 0
       -21,79: 0
-      -20,76: 8
-      -20,77: 9
-      -20,78: 10
-      -20,79: 11
+      -20,76: 9
+      -20,77: 10
+      -20,78: 11
+      -20,79: 12
       -19,73: 0
       -19,74: 0
       -19,75: 0
@@ -15057,49 +15057,49 @@ entities:
       -21,80: 0
       -20,80: 0
       -20,81: 0
-      -19,80: 12
+      -19,80: 13
       -19,81: 0
-      -18,80: 13
+      -18,80: 14
       -18,81: 0
       -17,80: 0
-      -16,80: 12
+      -16,80: 13
       -16,81: 0
-      -15,80: 13
+      -15,80: 14
       -15,81: 0
       -14,80: 0
       -14,81: 0
       -14,82: 0
       -13,80: 0
       -13,81: 0
-      -13,82: 14
+      -13,82: 15
       -13,83: 0
       -12,80: 0
       -12,81: 0
-      -12,82: 15
+      -12,82: 16
       -12,83: 0
       -11,80: 0
       -11,81: 0
-      -11,82: 16
+      -11,82: 17
       -11,83: 0
       -10,80: 0
       -10,81: 0
-      -10,82: 17
+      -10,82: 18
       -10,83: 0
       -9,80: 0
       -9,81: 0
-      -9,82: 18
+      -9,82: 19
       -9,83: 0
       -8,80: 0
       -8,81: 0
       -8,82: 0
-      -7,80: 19
+      -7,80: 20
       -7,81: 0
-      -6,80: 12
+      -6,80: 13
       -6,81: 0
       -5,80: 0
-      -4,80: 19
+      -4,80: 20
       -4,81: 0
-      -3,80: 12
+      -3,80: 13
       -3,81: 0
       -2,80: 0
       -2,81: 0
@@ -15969,489 +15969,500 @@ entities:
       33,2: 0
       33,8: 0
       34,2: 0
-      28,31: 20
-      29,25: 20
-      29,26: 20
-      29,27: 20
-      29,28: 20
-      29,31: 20
-      30,25: 20
-      30,27: 20
-      30,28: 20
-      30,31: 20
-      31,27: 20
-      31,28: 20
-      31,30: 20
-      31,31: 20
-      -64,13: 20
-      -64,14: 20
-      -64,15: 20
-      -63,13: 20
-      -63,14: 20
-      -63,15: 20
-      -62,14: 20
-      -62,15: 20
-      -57,14: 20
-      -57,15: 20
-      -64,19: 20
-      -64,20: 20
-      -64,21: 20
-      -63,19: 20
-      -63,20: 20
-      -63,21: 20
-      -62,16: 20
-      -62,17: 20
-      -62,18: 20
-      -62,19: 20
-      -62,20: 20
-      -61,17: 20
-      -60,17: 20
-      -59,17: 20
-      -58,17: 20
-      -57,16: 20
-      -57,17: 20
-      -56,17: 20
-      -56,18: 20
-      -55,16: 20
-      -55,17: 20
-      -55,18: 20
-      -54,19: 20
-      -53,19: 20
-      32,28: 20
-      32,30: 20
-      32,31: 20
-      33,28: 20
-      33,31: 20
-      34,25: 20
-      34,28: 20
-      34,30: 20
-      35,25: 20
-      35,27: 20
-      35,28: 20
-      35,30: 20
-      36,25: 20
-      36,26: 20
-      36,27: 20
-      36,28: 20
-      36,29: 20
-      36,30: 20
-      36,31: 20
-      37,24: 20
-      37,25: 20
-      37,26: 20
-      37,30: 20
-      37,31: 20
-      38,24: 20
-      38,25: 20
-      38,26: 20
-      38,30: 20
-      38,31: 20
-      39,24: 20
-      39,25: 20
-      39,26: 20
-      39,30: 20
-      39,31: 20
-      40,24: 20
-      40,25: 20
-      40,26: 20
-      40,30: 20
-      40,31: 20
-      41,24: 20
-      41,25: 20
-      41,26: 20
-      41,30: 20
-      41,31: 20
-      42,24: 20
-      42,25: 20
-      42,26: 20
-      42,30: 20
-      42,31: 20
-      43,24: 20
-      43,25: 20
-      43,26: 20
-      43,30: 20
-      43,31: 20
-      44,24: 20
-      44,25: 20
-      44,26: 20
-      44,30: 20
-      44,31: 20
-      45,25: 20
-      45,26: 20
-      45,27: 20
-      45,28: 20
-      45,29: 20
-      45,30: 20
-      45,31: 20
-      46,28: 20
-      -73,17: 20
-      -72,16: 20
-      -72,17: 20
-      -72,18: 20
-      -72,19: 20
-      -72,20: 20
-      -71,19: 20
-      -71,20: 20
-      -71,21: 20
-      -70,19: 20
-      -70,20: 20
-      -70,21: 20
-      -69,19: 20
-      -69,20: 20
-      -69,21: 20
-      -68,19: 20
-      -68,20: 20
-      -68,21: 20
-      -67,19: 20
-      -67,20: 20
-      -67,21: 20
-      -66,19: 20
-      -66,20: 20
-      -66,21: 20
-      -65,19: 20
-      -65,20: 20
-      -65,21: 20
-      37,32: 20
-      38,32: 20
-      39,32: 20
-      40,32: 20
-      41,32: 20
-      42,32: 20
-      43,32: 20
-      44,32: 20
-      -72,14: 20
-      -72,15: 20
-      -71,13: 20
-      -71,14: 20
-      -71,15: 20
-      -70,13: 20
-      -70,14: 20
-      -70,15: 20
-      -69,13: 20
-      -69,14: 20
-      -69,15: 20
-      -68,13: 20
-      -68,14: 20
-      -68,15: 20
-      -67,13: 20
-      -67,14: 20
-      -67,15: 20
-      -66,13: 20
-      -66,14: 20
-      -66,15: 20
-      -65,13: 20
-      -65,14: 20
-      -65,15: 20
-      -16,-48: 20
-      -16,-47: 20
-      -16,-46: 20
-      -15,-46: 20
-      -15,-43: 20
-      -14,-46: 20
-      -14,-43: 20
-      -13,-46: 20
-      -13,-45: 20
-      -13,-44: 20
-      -13,-43: 20
-      -12,-48: 20
-      -12,-47: 20
-      -12,-46: 20
-      -12,-43: 20
-      -11,-46: 20
-      -11,-43: 20
-      7,-47: 20
-      8,-47: 20
-      9,-48: 20
-      9,-47: 20
-      10,-47: 20
-      11,-47: 20
-      12,-44: 20
-      16,-42: 20
-      16,-41: 20
-      17,-44: 20
-      17,-43: 20
-      17,-42: 20
-      17,-41: 20
-      18,-42: 20
-      18,-40: 20
-      19,-42: 20
-      19,-40: 20
-      20,-40: 20
-      21,-44: 20
-      22,-44: 20
-      23,-46: 20
-      23,-45: 20
-      23,-44: 20
-      23,-43: 20
-      23,-42: 20
-      23,-41: 20
-      24,-44: 20
-      24,-43: 20
-      25,-44: 20
-      25,-43: 20
-      29,-45: 20
-      29,-44: 20
-      29,-43: 20
-      30,-45: 20
-      30,-44: 20
-      30,-43: 20
-      31,-43: 20
-      31,-42: 20
-      31,-41: 20
-      36,-22: 20
-      37,-26: 20
-      37,-22: 20
-      37,-21: 20
-      38,-26: 20
-      38,-22: 20
-      39,-26: 20
-      39,-22: 20
-      40,-27: 20
-      40,-26: 20
-      40,-25: 20
-      40,-22: 20
-      41,-22: 20
-      41,-21: 20
-      41,-20: 20
-      41,-19: 20
-      42,-23: 20
-      42,-22: 20
-      42,-21: 20
-      42,-20: 20
-      42,-19: 20
-      43,-24: 20
-      43,-23: 20
-      43,-22: 20
-      43,-21: 20
-      43,-20: 20
-      43,-19: 20
-      43,-18: 20
-      43,-17: 20
-      44,-24: 20
-      44,-23: 20
-      44,-22: 20
-      44,-19: 20
-      45,-24: 20
-      45,-23: 20
-      45,-22: 20
-      45,-19: 20
-      46,-22: 20
-      35,-44: 20
-      35,-43: 20
-      35,-42: 20
-      36,-42: 20
-      36,-41: 20
-      36,-40: 20
-      37,-40: 20
-      37,-38: 20
-      37,-37: 20
-      37,-36: 20
-      37,-35: 20
-      38,-40: 20
-      38,-38: 20
-      38,-37: 20
-      38,-36: 20
-      38,-35: 20
-      39,-42: 20
-      39,-41: 20
-      39,-40: 20
-      39,-38: 20
-      39,-37: 20
-      39,-36: 20
-      39,-35: 20
-      40,-40: 20
-      40,-38: 20
-      40,-37: 20
-      40,-36: 20
-      41,-40: 20
-      -23,-44: 20
-      -23,-41: 20
-      -22,-44: 20
-      -22,-41: 20
-      -21,-46: 20
-      -21,-45: 20
-      -21,-44: 20
-      -21,-43: 20
-      -21,-42: 20
-      -21,-41: 20
-      -21,-40: 20
-      -20,-44: 20
-      -20,-43: 20
-      -20,-42: 20
-      -20,-41: 20
-      -18,-48: 20
-      -17,-48: 20
-      -64,17: 20
-      -63,17: 20
-      -61,20: 20
-      -60,18: 20
-      -60,19: 20
-      -60,20: 20
-      -60,21: 20
-      -12,-49: 20
-      -6,-52: 20
-      -6,-51: 20
-      -5,-52: 20
-      -5,-51: 20
-      -4,-58: 20
-      -4,-52: 20
-      -4,-51: 20
-      -3,-58: 20
-      -3,-52: 20
-      -3,-51: 20
-      -2,-58: 20
-      -2,-57: 20
-      -2,-56: 20
-      -2,-55: 20
-      -2,-54: 20
-      -2,-53: 20
-      -2,-52: 20
-      -1,-60: 20
-      -1,-59: 20
-      -1,-58: 20
-      -1,-54: 20
-      -1,-51: 20
-      0,-58: 20
-      0,-54: 20
-      0,-51: 20
-      1,-51: 20
-      3,-51: 20
-      4,-51: 20
-      5,-51: 20
-      8,-50: 20
-      9,-52: 20
-      9,-51: 20
-      9,-50: 20
-      9,-49: 20
-      10,-50: 20
-      37,28: 20
-      38,28: 20
-      39,28: 20
-      40,28: 20
-      41,28: 20
-      42,28: 20
-      43,27: 20
-      43,28: 20
-      43,29: 20
-      45,24: 20
-      46,24: 20
-      46,25: 20
-      46,26: 20
-      46,30: 20
-      46,31: 20
-      47,24: 20
-      47,25: 20
-      47,26: 20
-      47,30: 20
-      47,31: 20
-      -80,16: 20
-      -80,17: 20
-      -80,18: 20
-      -80,19: 20
-      -80,20: 20
-      -79,19: 20
-      -79,20: 20
-      -79,21: 20
-      -78,19: 20
-      -78,20: 20
-      -78,21: 20
-      -77,19: 20
-      -77,20: 20
-      -77,21: 20
-      -76,19: 20
-      -76,20: 20
-      -76,21: 20
-      -75,19: 20
-      -75,20: 20
-      -75,21: 20
-      -74,19: 20
-      -74,20: 20
-      -74,21: 20
-      -73,19: 20
-      -73,20: 20
-      -73,21: 20
-      -72,21: 20
-      -70,16: 20
-      -70,17: 20
-      -70,18: 20
-      -69,17: 20
-      -68,17: 20
-      -67,17: 20
-      -66,17: 20
-      -65,16: 20
-      -65,17: 20
-      45,32: 20
-      46,32: 20
-      47,32: 20
-      -80,14: 20
-      -80,15: 20
-      -79,13: 20
-      -79,14: 20
-      -79,15: 20
-      -78,13: 20
-      -78,14: 20
-      -78,15: 20
-      -77,13: 20
-      -77,14: 20
-      -77,15: 20
-      -76,13: 20
-      -76,14: 20
-      -76,15: 20
-      -75,13: 20
-      -75,14: 20
-      -75,15: 20
-      -74,13: 20
-      -74,14: 20
-      -74,15: 20
-      -73,13: 20
-      -73,14: 20
-      -73,15: 20
-      -72,13: 20
-      48,24: 20
-      48,25: 20
-      48,26: 20
-      48,30: 20
-      48,31: 20
-      49,24: 20
-      49,25: 20
-      49,26: 20
-      49,30: 20
-      49,31: 20
-      50,24: 20
-      50,25: 20
-      50,26: 20
-      50,30: 20
-      50,31: 20
-      51,24: 20
-      51,25: 20
-      51,26: 20
-      51,30: 20
-      51,31: 20
-      52,24: 20
-      52,25: 20
-      52,26: 20
-      52,30: 20
-      52,31: 20
-      53,25: 20
-      53,26: 20
-      53,27: 20
-      53,28: 20
-      53,29: 20
-      53,30: 20
-      53,31: 20
-      54,28: 20
-      48,32: 20
-      49,32: 20
-      50,32: 20
-      51,32: 20
-      52,32: 20
-      -81,17: 20
+      28,31: 1
+      29,25: 1
+      29,26: 1
+      29,27: 1
+      29,28: 1
+      29,31: 1
+      30,25: 1
+      30,27: 1
+      30,28: 1
+      30,31: 1
+      31,27: 1
+      31,28: 1
+      31,30: 1
+      31,31: 1
+      -64,13: 1
+      -64,14: 1
+      -64,15: 1
+      -63,13: 1
+      -63,14: 1
+      -63,15: 1
+      -62,14: 1
+      -62,15: 1
+      -57,14: 1
+      -57,15: 1
+      -64,19: 1
+      -64,20: 1
+      -64,21: 1
+      -63,19: 1
+      -63,20: 1
+      -63,21: 1
+      -62,16: 1
+      -62,17: 1
+      -62,18: 1
+      -62,19: 1
+      -62,20: 1
+      -61,17: 1
+      -60,17: 1
+      -59,17: 1
+      -58,17: 1
+      -57,16: 1
+      -57,17: 1
+      -56,17: 1
+      -56,18: 1
+      -55,16: 1
+      -55,17: 1
+      -55,18: 1
+      -54,19: 1
+      -53,19: 1
+      32,28: 1
+      32,30: 1
+      32,31: 1
+      33,28: 1
+      33,31: 1
+      34,25: 1
+      34,28: 1
+      34,30: 1
+      35,25: 1
+      35,27: 1
+      35,28: 1
+      35,30: 1
+      36,25: 1
+      36,26: 1
+      36,27: 1
+      36,28: 1
+      36,29: 1
+      36,30: 1
+      36,31: 1
+      37,24: 1
+      37,25: 1
+      37,26: 1
+      37,30: 1
+      37,31: 1
+      38,24: 1
+      38,25: 1
+      38,26: 1
+      38,30: 1
+      38,31: 1
+      39,24: 1
+      39,25: 1
+      39,26: 1
+      39,30: 1
+      39,31: 1
+      40,24: 1
+      40,25: 1
+      40,26: 1
+      40,30: 1
+      40,31: 1
+      41,24: 1
+      41,25: 1
+      41,26: 1
+      41,30: 1
+      41,31: 1
+      42,24: 1
+      42,25: 1
+      42,26: 1
+      42,30: 1
+      42,31: 1
+      43,24: 1
+      43,25: 1
+      43,26: 1
+      43,30: 1
+      43,31: 1
+      44,24: 1
+      44,25: 1
+      44,26: 1
+      44,30: 1
+      44,31: 1
+      45,25: 1
+      45,26: 1
+      45,27: 1
+      45,28: 1
+      45,29: 1
+      45,30: 1
+      45,31: 1
+      46,28: 1
+      -73,17: 1
+      -72,16: 1
+      -72,17: 1
+      -72,18: 1
+      -72,19: 1
+      -72,20: 1
+      -71,19: 1
+      -71,20: 1
+      -71,21: 1
+      -70,19: 1
+      -70,20: 1
+      -70,21: 1
+      -69,19: 1
+      -69,20: 1
+      -69,21: 1
+      -68,19: 1
+      -68,20: 1
+      -68,21: 1
+      -67,19: 1
+      -67,20: 1
+      -67,21: 1
+      -66,19: 1
+      -66,20: 1
+      -66,21: 1
+      -65,19: 1
+      -65,20: 1
+      -65,21: 1
+      37,32: 1
+      38,32: 1
+      39,32: 1
+      40,32: 1
+      41,32: 1
+      42,32: 1
+      43,32: 1
+      44,32: 1
+      -72,14: 1
+      -72,15: 1
+      -71,13: 1
+      -71,14: 1
+      -71,15: 1
+      -70,13: 1
+      -70,14: 1
+      -70,15: 1
+      -69,13: 1
+      -69,14: 1
+      -69,15: 1
+      -68,13: 1
+      -68,14: 1
+      -68,15: 1
+      -67,13: 1
+      -67,14: 1
+      -67,15: 1
+      -66,13: 1
+      -66,14: 1
+      -66,15: 1
+      -65,13: 1
+      -65,14: 1
+      -65,15: 1
+      -16,-48: 1
+      -16,-47: 1
+      -16,-46: 1
+      -15,-46: 1
+      -15,-43: 1
+      -14,-46: 1
+      -14,-43: 1
+      -13,-46: 1
+      -13,-45: 1
+      -13,-44: 1
+      -13,-43: 1
+      -12,-48: 1
+      -12,-47: 1
+      -12,-46: 1
+      -12,-43: 1
+      -11,-46: 1
+      -11,-43: 1
+      7,-47: 1
+      8,-47: 1
+      9,-48: 1
+      9,-47: 1
+      10,-47: 1
+      11,-47: 1
+      12,-44: 1
+      16,-42: 1
+      16,-41: 1
+      17,-44: 1
+      17,-43: 1
+      17,-42: 1
+      17,-41: 1
+      18,-42: 1
+      18,-40: 1
+      19,-42: 1
+      19,-40: 1
+      20,-40: 1
+      21,-44: 1
+      22,-44: 1
+      23,-46: 1
+      23,-45: 1
+      23,-44: 1
+      23,-43: 1
+      23,-42: 1
+      23,-41: 1
+      24,-44: 1
+      24,-43: 1
+      25,-44: 1
+      25,-43: 1
+      29,-45: 1
+      29,-44: 1
+      29,-43: 1
+      30,-45: 1
+      30,-44: 1
+      30,-43: 1
+      31,-43: 1
+      31,-42: 1
+      31,-41: 1
+      36,-22: 1
+      37,-26: 1
+      37,-22: 1
+      37,-21: 1
+      38,-26: 1
+      38,-22: 1
+      39,-26: 1
+      39,-22: 1
+      40,-27: 1
+      40,-26: 1
+      40,-25: 1
+      40,-22: 1
+      41,-22: 1
+      41,-21: 1
+      41,-20: 1
+      41,-19: 1
+      42,-23: 1
+      42,-22: 1
+      42,-21: 1
+      42,-20: 1
+      42,-19: 1
+      43,-24: 1
+      43,-23: 1
+      43,-22: 1
+      43,-21: 1
+      43,-20: 1
+      43,-19: 1
+      43,-18: 1
+      43,-17: 1
+      44,-24: 1
+      44,-23: 1
+      44,-22: 1
+      44,-19: 1
+      45,-24: 1
+      45,-23: 1
+      45,-22: 1
+      45,-19: 1
+      46,-22: 1
+      35,-44: 1
+      35,-43: 1
+      35,-42: 1
+      36,-42: 1
+      36,-41: 1
+      36,-40: 1
+      37,-40: 1
+      37,-38: 1
+      37,-37: 1
+      37,-36: 1
+      37,-35: 1
+      38,-40: 1
+      38,-38: 1
+      38,-37: 1
+      38,-36: 1
+      38,-35: 1
+      39,-42: 1
+      39,-41: 1
+      39,-40: 1
+      39,-38: 1
+      39,-37: 1
+      39,-36: 1
+      39,-35: 1
+      40,-40: 1
+      40,-38: 1
+      40,-37: 1
+      40,-36: 1
+      41,-40: 1
+      -23,-44: 1
+      -23,-41: 1
+      -22,-44: 1
+      -22,-41: 1
+      -21,-46: 1
+      -21,-45: 1
+      -21,-44: 1
+      -21,-43: 1
+      -21,-42: 1
+      -21,-41: 1
+      -21,-40: 1
+      -20,-44: 1
+      -20,-43: 1
+      -20,-42: 1
+      -20,-41: 1
+      -18,-48: 1
+      -17,-48: 1
+      -64,17: 1
+      -63,17: 1
+      -61,20: 1
+      -60,18: 1
+      -60,19: 1
+      -60,20: 1
+      -60,21: 1
+      -12,-49: 1
+      -6,-52: 1
+      -6,-51: 1
+      -5,-52: 1
+      -5,-51: 1
+      -4,-58: 1
+      -4,-52: 1
+      -4,-51: 1
+      -3,-58: 1
+      -3,-52: 1
+      -3,-51: 1
+      -2,-58: 1
+      -2,-57: 1
+      -2,-56: 1
+      -2,-55: 1
+      -2,-54: 1
+      -2,-53: 1
+      -2,-52: 1
+      -1,-60: 1
+      -1,-59: 1
+      -1,-58: 1
+      -1,-54: 1
+      -1,-51: 1
+      0,-58: 1
+      0,-54: 1
+      0,-51: 1
+      1,-51: 1
+      3,-51: 1
+      4,-51: 1
+      5,-51: 1
+      8,-50: 1
+      9,-52: 1
+      9,-51: 1
+      9,-50: 1
+      9,-49: 1
+      10,-50: 1
+      37,28: 1
+      38,28: 1
+      39,28: 1
+      40,28: 1
+      41,28: 1
+      42,28: 1
+      43,27: 1
+      43,28: 1
+      43,29: 1
+      45,24: 1
+      46,24: 1
+      46,25: 1
+      46,26: 1
+      46,30: 1
+      46,31: 1
+      47,24: 1
+      47,25: 1
+      47,26: 1
+      47,30: 1
+      47,31: 1
+      -80,16: 1
+      -80,17: 1
+      -80,18: 1
+      -80,19: 1
+      -80,20: 1
+      -79,19: 1
+      -79,20: 1
+      -79,21: 1
+      -78,19: 1
+      -78,20: 1
+      -78,21: 1
+      -77,19: 1
+      -77,20: 1
+      -77,21: 1
+      -76,19: 1
+      -76,20: 1
+      -76,21: 1
+      -75,19: 1
+      -75,20: 1
+      -75,21: 1
+      -74,19: 1
+      -74,20: 1
+      -74,21: 1
+      -73,19: 1
+      -73,20: 1
+      -73,21: 1
+      -72,21: 1
+      -70,16: 1
+      -70,17: 1
+      -70,18: 1
+      -69,17: 1
+      -68,17: 1
+      -67,17: 1
+      -66,17: 1
+      -65,16: 1
+      -65,17: 1
+      45,32: 1
+      46,32: 1
+      47,32: 1
+      -80,14: 1
+      -80,15: 1
+      -79,13: 1
+      -79,14: 1
+      -79,15: 1
+      -78,13: 1
+      -78,14: 1
+      -78,15: 1
+      -77,13: 1
+      -77,14: 1
+      -77,15: 1
+      -76,13: 1
+      -76,14: 1
+      -76,15: 1
+      -75,13: 1
+      -75,14: 1
+      -75,15: 1
+      -74,13: 1
+      -74,14: 1
+      -74,15: 1
+      -73,13: 1
+      -73,14: 1
+      -73,15: 1
+      -72,13: 1
+      48,24: 1
+      48,25: 1
+      48,26: 1
+      48,30: 1
+      48,31: 1
+      49,24: 1
+      49,25: 1
+      49,26: 1
+      49,30: 1
+      49,31: 1
+      50,24: 1
+      50,25: 1
+      50,26: 1
+      50,30: 1
+      50,31: 1
+      51,24: 1
+      51,25: 1
+      51,26: 1
+      51,30: 1
+      51,31: 1
+      52,24: 1
+      52,25: 1
+      52,26: 1
+      52,30: 1
+      52,31: 1
+      53,25: 1
+      53,26: 1
+      53,27: 1
+      53,28: 1
+      53,29: 1
+      53,30: 1
+      53,31: 1
+      54,28: 1
+      48,32: 1
+      49,32: 1
+      50,32: 1
+      51,32: 1
+      52,32: 1
+      -81,17: 1
     uniqueMixes:
     - volume: 2500
       temperature: 293.15
       moles:
       - 21.824879
       - 82.10312
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+    - volume: 2500
+      temperature: 293.15
+      moles:
+      - 0
+      - 0
       - 0
       - 0
       - 0
@@ -16661,17 +16672,6 @@ entities:
       moles:
       - 21.824795
       - 82.102806
-      - 0
-      - 0
-      - 0
-      - 0
-      - 0
-      - 0
-    - volume: 2500
-      temperature: 293.15
-      moles:
-      - 0
-      - 0
       - 0
       - 0
       - 0
@@ -23402,10 +23402,17 @@ entities:
     parent: 100
     type: Transform
 - uid: 1126
-  type: Paper
+  type: BoxFolderGrey
   components:
-  - parent: 1128
+  - pos: -29.31883,12.1364765
+    parent: 100
     type: Transform
+  - canCollide: False
+    type: Physics
+  - containers:
+      storagebase: !type:Container
+        ents: []
+    type: ContainerContainer
 - uid: 1127
   type: WallSolid
   components:
@@ -23413,17 +23420,16 @@ entities:
     parent: 100
     type: Transform
 - uid: 1128
-  type: BoxFolderGrey
+  type: BoxFolderRed
   components:
-  - pos: -29.365686,11.92261
+  - pos: 4.4437814,44.56017
     parent: 100
     type: Transform
   - canCollide: False
     type: Physics
   - containers:
       storagebase: !type:Container
-        ents:
-        - 1126
+        ents: []
     type: ContainerContainer
 - uid: 1129
   type: BananaSeeds
@@ -28764,71 +28770,79 @@ entities:
 - uid: 1866
   type: BoxFolderRed
   components:
-  - pos: 4.3908305,44.52706
+  - pos: 10.475031,44.575794
     parent: 100
     type: Transform
   - canCollide: False
     type: Physics
   - containers:
       storagebase: !type:Container
-        ents:
-        - 1872
+        ents: []
     type: ContainerContainer
 - uid: 1867
   type: BoxFolderRed
   components:
-  - pos: 10.446312,44.68176
+  - pos: 7.4437814,44.575794
     parent: 100
     type: Transform
   - canCollide: False
     type: Physics
   - containers:
       storagebase: !type:Container
-        ents:
-        - 1871
-        - 1870
+        ents: []
     type: ContainerContainer
 - uid: 1868
   type: BoxFolderRed
   components:
-  - pos: 7.6720805,44.71456
+  - pos: 21.390116,7.8399935
     parent: 100
     type: Transform
   - canCollide: False
     type: Physics
   - containers:
       storagebase: !type:Container
-        ents:
-        - 1869
+        ents: []
     type: ContainerContainer
 - uid: 1869
-  type: Paper
+  type: BoxFolderBlue
   components:
-  - parent: 1868
+  - pos: 21.640116,7.6056185
+    parent: 100
     type: Transform
   - canCollide: False
     type: Physics
+  - containers:
+      storagebase: !type:Container
+        ents: []
+    type: ContainerContainer
 - uid: 1870
-  type: Paper
+  type: BoxFolderBlue
   components:
-  - parent: 1867
+  - pos: -38.391476,-1.2875779
+    parent: 100
     type: Transform
   - canCollide: False
     type: Physics
+  - containers:
+      storagebase: !type:Container
+        ents: []
+    type: ContainerContainer
 - uid: 1871
-  type: Paper
+  type: filingCabinetDrawer
   components:
-  - parent: 1867
+  - pos: -38.5,-2.5
+    parent: 100
     type: Transform
-  - canCollide: False
-    type: Physics
+  - containers:
+      storagebase: !type:Container
+        ents: []
+    type: ContainerContainer
 - uid: 1872
-  type: Paper
+  type: WindowReinforcedDirectional
   components:
-  - parent: 1866
+  - pos: -38.5,-2.5
+    parent: 100
     type: Transform
-  - canCollide: False
-    type: Physics
 - uid: 1873
   type: ComputerCriminalRecords
   components:
@@ -31537,11 +31551,9 @@ entities:
 - uid: 2250
   type: BoxFolderGrey
   components:
-  - pos: 8.51115,49.66028
+  - pos: 8.46419,49.678413
     parent: 100
     type: Transform
-  - canCollide: False
-    type: Physics
   - containers:
       storagebase: !type:Container
         ents: []
@@ -31991,9 +32003,9 @@ entities:
     parent: 100
     type: Transform
 - uid: 2316
-  type: BoxFolderBlue
+  type: BoxFolderRed
   components:
-  - pos: 21.390455,8.126454
+  - pos: -38.62585,-1.3657029
     parent: 100
     type: Transform
   - canCollide: False
@@ -32003,17 +32015,16 @@ entities:
         ents: []
     type: ContainerContainer
 - uid: 2317
-  type: BoxFolderRed
+  type: BoxFolderGrey
   components:
-  - pos: 21.37483,7.532705
+  - pos: -45.241325,-6.0388966
     parent: 100
     type: Transform
   - canCollide: False
     type: Physics
   - containers:
       storagebase: !type:Container
-        ents:
-        - 2325
+        ents: []
     type: ContainerContainer
 - uid: 2318
   type: RubberStampApproved
@@ -32077,12 +32088,17 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 2325
-  type: Paper
+  type: BoxFolderRed
   components:
-  - parent: 2317
+  - pos: 8.086063,33.509693
+    parent: 100
     type: Transform
   - canCollide: False
     type: Physics
+  - containers:
+      storagebase: !type:Container
+        ents: []
+    type: ContainerContainer
 - uid: 2326
   type: DogBed
   components:
@@ -37483,11 +37499,13 @@ entities:
     parent: 100
     type: Transform
 - uid: 3148
-  type: filingCabinetDrawer
+  type: BoxFolderWhite
   components:
-  - pos: -38.5,-2.5
+  - pos: -10.557137,58.851032
     parent: 100
     type: Transform
+  - canCollide: False
+    type: Physics
   - containers:
       storagebase: !type:Container
         ents: []
@@ -37693,20 +37711,42 @@ entities:
       OrderSender: []
     type: SignalTransmitter
 - uid: 3178
-  type: Paper
+  type: BoxFolderYellow
   components:
-  - parent: 3190
+  - pos: -9.479012,59.882282
+    parent: 100
     type: Transform
+  - canCollide: False
+    type: Physics
+  - containers:
+      storagebase: !type:Container
+        ents: []
+    type: ContainerContainer
 - uid: 3179
-  type: Paper
+  type: filingCabinet
   components:
-  - parent: 3191
+  - pos: -16.5,-39.5
+    parent: 100
     type: Transform
+  - containers:
+      storagebase: !type:Container
+        ents: []
+    type: ContainerContainer
 - uid: 3180
-  type: Paper
+  type: SignalButton
   components:
-  - parent: 3191
+  - pos: -16.5,-1.5
+    parent: 100
     type: Transform
+  - fixtures: []
+    type: Fixtures
+  - outputs:
+      Pressed:
+      - port: Toggle
+        uid: 3593
+      - port: Toggle
+        uid: 3186
+    type: SignalTransmitter
 - uid: 3181
   type: Lamp
   components:
@@ -37748,11 +37788,24 @@ entities:
     parent: 100
     type: Transform
 - uid: 3186
-  type: WindowReinforcedDirectional
+  type: ShuttersNormalOpen
   components:
-  - pos: -38.5,-2.5
+  - pos: -14.5,-0.5
     parent: 100
     type: Transform
+  - enabled: False
+    type: Occluder
+  - canCollide: False
+    type: Physics
+  - airBlocked: False
+    type: Airtight
+  - inputs:
+      Open: []
+      Close: []
+      Toggle:
+      - port: Pressed
+        uid: 3180
+    type: SignalReceiver
 - uid: 3187
   type: WindowReinforcedDirectional
   components:
@@ -37761,9 +37814,9 @@ entities:
     parent: 100
     type: Transform
 - uid: 3188
-  type: BoxFolderGrey
+  type: BoxFolderYellow
   components:
-  - pos: -45.239292,-6.166125
+  - pos: -14.593858,-38.42529
     parent: 100
     type: Transform
   - canCollide: False
@@ -37779,33 +37832,21 @@ entities:
     parent: 100
     type: Transform
 - uid: 3190
-  type: BoxFolderRed
+  type: ClothingHeadHatPirate
   components:
-  - pos: -38.789665,-1.4512075
+  - pos: 29.421413,5.638719
     parent: 100
     type: Transform
   - canCollide: False
     type: Physics
-  - containers:
-      storagebase: !type:Container
-        ents:
-        - 3178
-        - 12373
-        - 12370
-    type: ContainerContainer
 - uid: 3191
-  type: BoxFolderBlue
+  type: PottedPlantRandom
   components:
-  - pos: -38.42033,-1.3739853
+  - pos: 28.5,-37.5
     parent: 100
     type: Transform
-  - canCollide: False
-    type: Physics
   - containers:
-      storagebase: !type:Container
-        ents:
-        - 3179
-        - 3180
+      stash: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 3192
   type: PlasticFlapsClear
@@ -38229,11 +38270,13 @@ entities:
         ents: []
     type: ContainerContainer
 - uid: 3248
-  type: filingCabinet
+  type: BoxFolderRed
   components:
-  - pos: -16.5,-39.5
+  - pos: 3.3958821,26.723118
     parent: 100
     type: Transform
+  - canCollide: False
+    type: Physics
   - containers:
       storagebase: !type:Container
         ents: []
@@ -40818,34 +40861,54 @@ entities:
         ents: []
     type: ContainerContainer
 - uid: 3592
-  type: Paper
+  type: BoxFolderGrey
   components:
-  - parent: 3595
-    type: Transform
-- uid: 3593
-  type: Paper
-  components:
-  - parent: 3595
-    type: Transform
-- uid: 3594
-  type: Paper
-  components:
-  - parent: 3595
-    type: Transform
-- uid: 3595
-  type: BoxFolderRed
-  components:
-  - pos: 8.199122,33.6206
+  - pos: 3.3177571,22.754368
     parent: 100
     type: Transform
   - canCollide: False
     type: Physics
   - containers:
       storagebase: !type:Container
-        ents:
-        - 3592
-        - 3593
-        - 3594
+        ents: []
+    type: ContainerContainer
+- uid: 3593
+  type: ShuttersNormalOpen
+  components:
+  - pos: -15.5,-0.5
+    parent: 100
+    type: Transform
+  - enabled: False
+    type: Occluder
+  - canCollide: False
+    type: Physics
+  - airBlocked: False
+    type: Airtight
+  - inputs:
+      Open: []
+      Close: []
+      Toggle:
+      - port: Pressed
+        uid: 3180
+    type: SignalReceiver
+- uid: 3594
+  type: Paper
+  components:
+  - pos: -14.245108,-2.700173
+    parent: 100
+    type: Transform
+  - canCollide: False
+    type: Physics
+- uid: 3595
+  type: Lamp
+  components:
+  - pos: -14.557608,-2.168923
+    parent: 100
+    type: Transform
+  - canCollide: False
+    type: Physics
+  - containers:
+      cellslot_cell_container: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 3596
   type: ClothingOuterHardsuitEVAPrisoner
@@ -44061,9 +44124,9 @@ entities:
         ents: []
     type: ContainerContainer
 - uid: 4099
-  type: BoxFolderYellow
+  type: BoxFolderBlack
   components:
-  - pos: -9.3695965,59.83921
+  - pos: -14.510733,-3.1062565
     parent: 100
     type: Transform
   - canCollide: False
@@ -44073,13 +44136,11 @@ entities:
         ents: []
     type: ContainerContainer
 - uid: 4100
-  type: BoxFolderBase
+  type: filingCabinet
   components:
-  - pos: -10.5414715,59.073586
+  - pos: -16.5,-38.5
     parent: 100
     type: Transform
-  - canCollide: False
-    type: Physics
   - containers:
       storagebase: !type:Container
         ents: []
@@ -48724,13 +48785,17 @@ entities:
     parent: 100
     type: Transform
 - uid: 4782
-  type: ClothingHeadHatPirate
+  type: BoxFolderGrey
   components:
-  - pos: 29.421413,5.638719
+  - pos: -11.438205,75.64216
     parent: 100
     type: Transform
   - canCollide: False
     type: Physics
+  - containers:
+      storagebase: !type:Container
+        ents: []
+    type: ContainerContainer
 - uid: 4783
   type: GasPipeStraight
   components:
@@ -48841,15 +48906,6 @@ entities:
     type: AmbientSound
   - canCollide: False
     type: Physics
-- uid: 4794
-  type: PottedPlantRandom
-  components:
-  - pos: 28.5,-37.5
-    parent: 100
-    type: Transform
-  - containers:
-      stash: !type:ContainerSlot {}
-    type: ContainerContainer
 - uid: 4795
   type: GasPipeBend
   components:
@@ -49522,16 +49578,6 @@ entities:
       board: !type:Container
         ents: []
     type: ContainerContainer
-- uid: 4891
-  type: filingCabinet
-  components:
-  - pos: -16.5,-38.5
-    parent: 100
-    type: Transform
-  - containers:
-      storagebase: !type:Container
-        ents: []
-    type: ContainerContainer
 - uid: 4893
   type: FirelockEdge
   components:
@@ -49555,32 +49601,6 @@ entities:
     type: RefillableSolution
   - solution: drink
     type: DrainableSolution
-- uid: 4895
-  type: Paper
-  components:
-  - parent: 4897
-    type: Transform
-- uid: 4896
-  type: Paper
-  components:
-  - parent: 4897
-    type: Transform
-- uid: 4897
-  type: BoxFolderYellow
-  components:
-  - pos: -14.640968,-38.354168
-    parent: 100
-    type: Transform
-  - containers:
-      storagebase: !type:Container
-        ents:
-        - 4895
-        - 12391
-        - 12390
-        - 4896
-        - 12389
-        - 12388
-    type: ContainerContainer
 - uid: 4898
   type: DrinkBottleBeer
   components:
@@ -116755,11 +116775,9 @@ entities:
 - uid: 12177
   type: Multitool
   components:
-  - pos: -14.193888,-3.3894162
+  - pos: -14.256744,-3.3252826
     parent: 100
     type: Transform
-  - canCollide: False
-    type: Physics
 - uid: 12178
   type: ClothingMaskMuzzle
   components:
@@ -117916,83 +117934,11 @@ entities:
     type: Transform
   - canCollide: False
     type: Physics
-- uid: 12309
-  type: BoxFolderRed
-  components:
-  - pos: 3.352866,26.599775
-    parent: 100
-    type: Transform
-  - canCollide: False
-    type: Physics
-  - containers:
-      storagebase: !type:Container
-        ents:
-        - 12315
-        - 12317
-        - 12316
-    type: ContainerContainer
-- uid: 12310
-  type: BoxFolderGrey
-  components:
-  - pos: 3.274741,22.599775
-    parent: 100
-    type: Transform
-  - canCollide: False
-    type: Physics
-  - containers:
-      storagebase: !type:Container
-        ents:
-        - 12314
-        - 12312
-        - 12313
-    type: ContainerContainer
 - uid: 12311
   type: Paper
   components:
   - pos: 5.7747407,25.474775
     parent: 100
-    type: Transform
-  - canCollide: False
-    type: Physics
-- uid: 12312
-  type: Paper
-  components:
-  - parent: 12310
-    type: Transform
-  - canCollide: False
-    type: Physics
-- uid: 12313
-  type: Paper
-  components:
-  - parent: 12310
-    type: Transform
-  - canCollide: False
-    type: Physics
-- uid: 12314
-  type: Paper
-  components:
-  - parent: 12310
-    type: Transform
-  - canCollide: False
-    type: Physics
-- uid: 12315
-  type: Paper
-  components:
-  - parent: 12309
-    type: Transform
-  - canCollide: False
-    type: Physics
-- uid: 12316
-  type: Paper
-  components:
-  - parent: 12309
-    type: Transform
-  - canCollide: False
-    type: Physics
-- uid: 12317
-  type: Paper
-  components:
-  - parent: 12309
     type: Transform
   - canCollide: False
     type: Physics
@@ -118342,20 +118288,6 @@ entities:
     pos: -39.5,-15.5
     parent: 100
     type: Transform
-- uid: 12370
-  type: Paper
-  components:
-  - parent: 3190
-    type: Transform
-  - canCollide: False
-    type: Physics
-- uid: 12373
-  type: Paper
-  components:
-  - parent: 3190
-    type: Transform
-  - canCollide: False
-    type: Physics
 - uid: 12374
   type: Paper
   components:
@@ -118399,34 +118331,6 @@ entities:
   components:
   - pos: -14.537043,-37.89636
     parent: 100
-    type: Transform
-  - canCollide: False
-    type: Physics
-- uid: 12388
-  type: Paper
-  components:
-  - parent: 4897
-    type: Transform
-  - canCollide: False
-    type: Physics
-- uid: 12389
-  type: Paper
-  components:
-  - parent: 4897
-    type: Transform
-  - canCollide: False
-    type: Physics
-- uid: 12390
-  type: Paper
-  components:
-  - parent: 4897
-    type: Transform
-  - canCollide: False
-    type: Physics
-- uid: 12391
-  type: Paper
-  components:
-  - parent: 4897
     type: Transform
   - canCollide: False
     type: Physics
@@ -118914,72 +118818,6 @@ entities:
     type: Transform
   - canCollide: False
     type: Physics
-- uid: 12464
-  type: Paper
-  components:
-  - parent: 12473
-    type: Transform
-- uid: 12465
-  type: Paper
-  components:
-  - parent: 12473
-    type: Transform
-- uid: 12466
-  type: Paper
-  components:
-  - parent: 12473
-    type: Transform
-- uid: 12467
-  type: Paper
-  components:
-  - parent: 12473
-    type: Transform
-- uid: 12468
-  type: Paper
-  components:
-  - parent: 12473
-    type: Transform
-- uid: 12469
-  type: Paper
-  components:
-  - parent: 12473
-    type: Transform
-- uid: 12470
-  type: Paper
-  components:
-  - parent: 12473
-    type: Transform
-- uid: 12471
-  type: Paper
-  components:
-  - parent: 12473
-    type: Transform
-- uid: 12472
-  type: Paper
-  components:
-  - parent: 12473
-    type: Transform
-- uid: 12473
-  type: BoxFolderGrey
-  components:
-  - pos: -11.362728,75.69419
-    parent: 100
-    type: Transform
-  - canCollide: False
-    type: Physics
-  - containers:
-      storagebase: !type:Container
-        ents:
-        - 12472
-        - 12471
-        - 12470
-        - 12469
-        - 12468
-        - 12467
-        - 12466
-        - 12465
-        - 12464
-    type: ContainerContainer
 - uid: 12474
   type: Paper
   components:
@@ -119123,11 +118961,9 @@ entities:
 - uid: 12492
   type: BriefcaseBrown
   components:
-  - pos: -12.483362,81.394745
+  - pos: -12.541493,81.39566
     parent: 100
     type: Transform
-  - canCollide: False
-    type: Physics
   - containers:
       storagebase: !type:Container
         ents: []
@@ -119285,11 +119121,9 @@ entities:
 - uid: 12509
   type: BriefcaseBrownFilled
   components:
-  - pos: -4.5458617,75.238495
+  - pos: -4.560425,75.31403
     parent: 100
     type: Transform
-  - canCollide: False
-    type: Physics
   - containers:
       storagebase: !type:Container
         ents: []
