@@ -1,7 +1,6 @@
 using Content.Server.Chat;
 using Robust.Shared.Random;
 using Content.Server.Chat.Managers;
-using Content.Server.Disease.Zombie.Components;
 using Content.Server.Station.Systems;
 using Content.Shared.MobState.Components;
 using Content.Shared.Sound;
