@@ -37569,7 +37569,6 @@ entities:
         - 12376
         - 12377
         - 12375
-        - 12374
     type: ContainerContainer
 - uid: 3187
   type: WindowReinforcedDirectional
@@ -116735,11 +116734,9 @@ entities:
 - uid: 12191
   type: ClothingOuterCoatPirate
   components:
-  - pos: 29.482927,5.27622
+  - pos: 29.477491,5.075936
     parent: 100
     type: Transform
-  - canCollide: False
-    type: Physics
   - containers:
       storagebase: !type:Container
         ents: []
@@ -116747,7 +116744,7 @@ entities:
 - uid: 12192
   type: ClothingHeadHatPirate
   components:
-  - pos: 29.467302,5.666845
+  - pos: 29.421413,5.638719
     parent: 100
     type: Transform
   - canCollide: False
@@ -117294,6 +117291,15 @@ entities:
   - containers:
       stash: !type:ContainerSlot {}
     type: ContainerContainer
+- uid: 12250
+  type: PottedPlantRandom
+  components:
+  - pos: 28.5,-37.5
+    parent: 100
+    type: Transform
+  - containers:
+      stash: !type:ContainerSlot {}
+    type: ContainerContainer
 - uid: 12251
   type: PottedPlantRandom
   components:
@@ -117360,15 +117366,12 @@ entities:
 - uid: 12258
   type: BriefcaseBrown
   components:
-  - pos: -41.991024,-20.97825
+  - pos: -41.658855,-20.879543
     parent: 100
     type: Transform
-  - canCollide: False
-    type: Physics
   - containers:
       storagebase: !type:Container
-        ents:
-        - 12367
+        ents: []
     type: ContainerContainer
 - uid: 12259
   type: Table
@@ -118188,15 +118191,14 @@ entities:
   components:
   - desc: ''
     type: MetaData
-  - parent: 12258
+  - pos: -41.79948,-20.363918
+    parent: 100
     type: Transform
   - content: >
       I want the money Lebowski! Bunny says you're good for it.
 
       Where's the fucking money shithead?!?
     type: Paper
-  - canCollide: False
-    type: Physics
 - uid: 12368
   type: ConveyorBelt
   components:
@@ -118252,10 +118254,9 @@ entities:
 - uid: 12374
   type: Paper
   components:
-  - parent: 3186
+  - pos: -40.661247,-2.1781607
+    parent: 100
     type: Transform
-  - canCollide: False
-    type: Physics
 - uid: 12375
   type: Paper
   components:
