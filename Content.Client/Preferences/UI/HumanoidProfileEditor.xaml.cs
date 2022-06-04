@@ -1045,7 +1045,7 @@ namespace Content.Client.Preferences.UI
                         icon,
                         new Label {Text = job.Name, MinSize = (175, 0)},
                         _optionButton,
-                        _difficultyLable
+                        _difficultyLabel
                     }
                 });
             }
