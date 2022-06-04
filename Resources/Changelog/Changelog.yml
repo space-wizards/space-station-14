@@ -1,10 +1,4 @@
 Entries:
-- author: DogZeroX
-  changes:
-  - {message: 'Ratvar, Rouny, and Space Lizard have joined the plushie gang, find
-      them on your closest plushie crate or toy spawners!', type: Add}
-  id: 1157
-  time: '2022-03-03T00:26:18.0000000+00:00'
 - author: metalgearsloth
   changes:
   - {message: Pushing objects has been disabled. Pulling is still okay., type: Tweak}
@@ -3005,3 +2999,8 @@ Entries:
   - {message: Fix communications consoles not sending announcements., type: Fix}
   id: 1656
   time: '2022-06-04T09:09:04.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Post lights now have interaction outlines., type: Fix}
+  id: 1657
+  time: '2022-06-04T21:50:30.0000000+00:00'
