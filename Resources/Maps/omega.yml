@@ -88358,7 +88358,7 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 9028
-  type: BoxSterile
+  type: BoxSterileMask
   components:
   - pos: -40.66941,-35.374573
     parent: 0
@@ -88370,7 +88370,7 @@ entities:
         ents: []
     type: ContainerContainer
 - uid: 9029
-  type: BoxLatex
+  type: BoxLatexGloves
   components:
   - pos: -40.466286,-35.483948
     parent: 0
