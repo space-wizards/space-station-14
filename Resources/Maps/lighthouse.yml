@@ -4317,11 +4317,10 @@ entities:
           color: '#D4D4D4FF'
           id: DirtLight
           coordinates: -16,11
-        1121:
-          cleanable: True
-          color: '#D4D4D4FF'
-          id: DirtLight
-          coordinates: -12,12
+        1543:
+          color: '#79150096'
+          id: FullTileOverlayGreyscale
+          coordinates: -5,12
         1122:
           cleanable: True
           color: '#D4D4D4FF'
@@ -4332,11 +4331,10 @@ entities:
           color: '#D4D4D4FF'
           id: DirtLight
           coordinates: -24,1
-        1142:
-          cleanable: True
-          color: '#D4D4D4FF'
-          id: DirtLight
-          coordinates: -30,20
+        1537:
+          color: '#79150096'
+          id: FullTileOverlayGreyscale
+          coordinates: -1,14
         1182:
           cleanable: True
           color: '#D4D4D4FF'
@@ -4459,6 +4457,149 @@ entities:
           color: '#536250CA'
           id: Rock05
           coordinates: -2.097149,0.16356254
+        1550:
+          color: '#79150096'
+          id: FullTileOverlayGreyscale
+          coordinates: -9,14
+        1536:
+          color: '#79150096'
+          id: FullTileOverlayGreyscale
+          coordinates: -1,12
+        1541:
+          color: '#79150096'
+          id: FullTileOverlayGreyscale
+          coordinates: -2,15
+        1542:
+          color: '#79150096'
+          id: FullTileOverlayGreyscale
+          coordinates: -4,13
+        1544:
+          color: '#79150096'
+          id: FullTileOverlayGreyscale
+          coordinates: -5,14
+        1548:
+          color: '#79150096'
+          id: FullTileOverlayGreyscale
+          coordinates: -8,13
+        1539:
+          color: '#79150096'
+          id: FullTileOverlayGreyscale
+          coordinates: -2,13
+        1546:
+          color: '#79150096'
+          id: FullTileOverlayGreyscale
+          coordinates: -4,15
+        1549:
+          color: '#79150096'
+          id: FullTileOverlayGreyscale
+          coordinates: -9,12
+        1547:
+          color: '#79150096'
+          id: FullTileOverlayGreyscale
+          coordinates: -6,15
+        1545:
+          color: '#79150096'
+          id: FullTileOverlayGreyscale
+          coordinates: -6,13
+        1557:
+          color: '#79150096'
+          id: FullTileOverlayGreyscale
+          coordinates: -9,8
+        1552:
+          color: '#79150096'
+          id: FullTileOverlayGreyscale
+          coordinates: -8,15
+        1551:
+          color: '#79150096'
+          id: FullTileOverlayGreyscale
+          coordinates: -10,13
+        1554:
+          color: '#79150096'
+          id: FullTileOverlayGreyscale
+          coordinates: -9,10
+        1553:
+          color: '#79150096'
+          id: FullTileOverlayGreyscale
+          coordinates: -10,15
+        1555:
+          color: '#79150096'
+          id: FullTileOverlayGreyscale
+          coordinates: -8,11
+        1556:
+          color: '#79150096'
+          id: FullTileOverlayGreyscale
+          coordinates: -10,11
+        1558:
+          color: '#79150096'
+          id: FullTileOverlayGreyscale
+          coordinates: -8,9
+        1575:
+          cleanable: True
+          color: '#79150096'
+          id: DirtHeavy
+          coordinates: -12,13
+        1567:
+          color: '#79150096'
+          id: FullTileOverlayGreyscale
+          coordinates: -12,15
+        1566:
+          color: '#79150096'
+          id: FullTileOverlayGreyscale
+          coordinates: -13,14
+        1568:
+          color: '#79150096'
+          id: FullTileOverlayGreyscale
+          coordinates: -14,13
+        1569:
+          color: '#79150096'
+          id: FullTileOverlayGreyscale
+          coordinates: -13,12
+        1570:
+          color: '#79150096'
+          id: FullTileOverlayGreyscale
+          coordinates: -14,11
+        1571:
+          color: '#79150096'
+          id: FullTileOverlayGreyscale
+          coordinates: -13,10
+        1572:
+          color: '#79150096'
+          id: FullTileOverlayGreyscale
+          coordinates: -12,11
+        1574:
+          color: '#79150096'
+          id: FullTileOverlayGreyscale
+          coordinates: -12,13
+        1576:
+          cleanable: True
+          color: '#79150096'
+          id: DirtHeavy
+          coordinates: -2,15
+        1577:
+          cleanable: True
+          color: '#79150096'
+          id: DirtLight
+          coordinates: -8,11
+        1578:
+          cleanable: True
+          color: '#79150096'
+          id: DirtMedium
+          coordinates: -1,12
+        1579:
+          cleanable: True
+          color: '#79150096'
+          id: DirtHeavy
+          coordinates: -9,14
+        1580:
+          cleanable: True
+          color: '#FFFFFFFF'
+          id: DirtMedium
+          coordinates: -10,12
+        1582:
+          cleanable: True
+          color: '#FFFFFFFF'
+          id: DirtLight
+          coordinates: -14,14
       0,-1:
         169:
           color: '#60697988'
@@ -6762,6 +6903,39 @@ entities:
           color: '#536250CA'
           id: Grasse3
           coordinates: 2.043476,0.19481254
+        1559:
+          color: '#79150096'
+          id: FullTileOverlayGreyscale
+          coordinates: 2,13
+        1561:
+          color: '#79150096'
+          id: FullTileOverlayGreyscale
+          coordinates: 4,15
+        1538:
+          color: '#79150096'
+          id: FullTileOverlayGreyscale
+          coordinates: 0,13
+        1560:
+          color: '#79150096'
+          id: FullTileOverlayGreyscale
+          coordinates: 4,13
+        1540:
+          color: '#79150096'
+          id: FullTileOverlayGreyscale
+          coordinates: 0,15
+        1562:
+          color: '#79150096'
+          id: FullTileOverlayGreyscale
+          coordinates: 2,15
+        1563:
+          color: '#79150096'
+          id: FullTileOverlayGreyscale
+          coordinates: 3,14
+        1581:
+          cleanable: True
+          color: '#FFFFFFFF'
+          id: DirtHeavy
+          coordinates: 0,14
       0,-2:
         1044:
           color: '#EFB34196'
@@ -37295,10 +37469,15 @@ entities:
     parent: 100
     type: Transform
 - uid: 3148
-  type: Paper
+  type: filingCabinetDrawer
   components:
-  - parent: 3186
+  - pos: -38.5,-2.5
+    parent: 100
     type: Transform
+  - containers:
+      storagebase: !type:Container
+        ents: []
+    type: ContainerContainer
 - uid: 3149
   type: Table
   components:
@@ -37555,21 +37734,11 @@ entities:
     parent: 100
     type: Transform
 - uid: 3186
-  type: filingCabinetDrawer
+  type: WindowReinforcedDirectional
   components:
   - pos: -38.5,-2.5
     parent: 100
     type: Transform
-  - containers:
-      storagebase: !type:Container
-        ents:
-        - 12372
-        - 12371
-        - 3148
-        - 12376
-        - 12377
-        - 12375
-    type: ContainerContainer
 - uid: 3187
   type: WindowReinforcedDirectional
   components:
@@ -37578,11 +37747,13 @@ entities:
     parent: 100
     type: Transform
 - uid: 3188
-  type: WindowReinforcedDirectional
+  type: ClothingHeadHatPirate
   components:
-  - pos: -38.5,-2.5
+  - pos: 29.421413,5.638719
     parent: 100
     type: Transform
+  - canCollide: False
+    type: Physics
 - uid: 3189
   type: WindowReinforcedDirectional
   components:
@@ -116742,13 +116913,14 @@ entities:
         ents: []
     type: ContainerContainer
 - uid: 12192
-  type: ClothingHeadHatPirate
+  type: PottedPlantRandom
   components:
-  - pos: 29.421413,5.638719
+  - pos: 28.5,-37.5
     parent: 100
     type: Transform
-  - canCollide: False
-    type: Physics
+  - containers:
+      stash: !type:ContainerSlot {}
+    type: ContainerContainer
 - uid: 12193
   type: Shovel
   components:
@@ -117286,15 +117458,6 @@ entities:
   type: PottedPlantRandom
   components:
   - pos: 24.5,-23.5
-    parent: 100
-    type: Transform
-  - containers:
-      stash: !type:ContainerSlot {}
-    type: ContainerContainer
-- uid: 12250
-  type: PottedPlantRandom
-  components:
-  - pos: 28.5,-37.5
     parent: 100
     type: Transform
   - containers:
@@ -118230,20 +118393,6 @@ entities:
     type: Transform
   - canCollide: False
     type: Physics
-- uid: 12371
-  type: Paper
-  components:
-  - parent: 3186
-    type: Transform
-  - canCollide: False
-    type: Physics
-- uid: 12372
-  type: Paper
-  components:
-  - parent: 3186
-    type: Transform
-  - canCollide: False
-    type: Physics
 - uid: 12373
   type: Paper
   components:
@@ -118257,27 +118406,6 @@ entities:
   - pos: -40.661247,-2.1781607
     parent: 100
     type: Transform
-- uid: 12375
-  type: Paper
-  components:
-  - parent: 3186
-    type: Transform
-  - canCollide: False
-    type: Physics
-- uid: 12376
-  type: Paper
-  components:
-  - parent: 3186
-    type: Transform
-  - canCollide: False
-    type: Physics
-- uid: 12377
-  type: Paper
-  components:
-  - parent: 3186
-    type: Transform
-  - canCollide: False
-    type: Physics
 - uid: 12378
   type: Paper
   components:
