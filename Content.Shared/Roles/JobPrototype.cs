@@ -38,8 +38,8 @@ namespace Content.Shared.Roles
         [DataField("canBeAntag")]
         public bool CanBeAntag { get; } = true;
 
-		[DataField("difficulty")]
-		public string Difficulty { get; } = string.Empty;
+        [DataField("difficulty")]
+        public string Difficulty { get; } = string.Empty;
 
         /// <summary>
         ///     Whether this job is a head.

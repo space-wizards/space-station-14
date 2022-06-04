@@ -982,8 +982,8 @@ namespace Content.Client.Preferences.UI
         {
             public JobPrototype Job { get; }
             private readonly RadioOptions<int> _optionButton;
-			private readonly Label _difficultyLable;
-
+            private readonly Label _difficultyLabel;
+            
             public JobPriority Priority
             {
                 get => (JobPriority) _optionButton.SelectedValue;
@@ -996,9 +996,9 @@ namespace Content.Client.Preferences.UI
             {
                 Job = job;
 
-				// Difficulty Rating Text
-				string spacer = "     ";
-				string difficultyText = job.Difficulty;
+                // Difficulty Rating Text
+                string spacer = "     ";
+                string difficultyText = job.Difficulty;
 
                 _optionButton = new RadioOptions<int>(RadioOptionsLayout.Horizontal)
                 {
@@ -1007,10 +1007,10 @@ namespace Content.Client.Preferences.UI
                     LastButtonStyle = StyleBase.ButtonOpenLeft
                 };
 
-                _difficultyLable = new Label
-				{
-					Text = spacer + difficultyText
-				};
+                _difficultyLabel = new Label
+                {
+                Text = spacer + difficultyText
+                };
 
                 // Text, Value
                 _optionButton.AddItem(Loc.GetString("humanoid-profile-editor-job-priority-high-button"), (int) JobPriority.High);
