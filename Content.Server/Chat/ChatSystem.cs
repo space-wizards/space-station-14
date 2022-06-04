@@ -180,6 +180,8 @@ public sealed class ChatSystem : SharedChatSystem
         var station = _stationSystem.GetOwningStation(source);
         var filter = Filter.Empty();
 
+        filter.AddInRange(Transform(source).MapPosition, 500f);
+
         if (station != null)
         {
             if (!EntityManager.TryGetComponent<StationDataComponent>(station, out var stationDataComp)) return;
@@ -189,12 +191,8 @@ public sealed class ChatSystem : SharedChatSystem
                 filter.AddInGrid(gridEnt);
             }
         }
-        else
-        {
-            filter = Filter.Pvs(source, entityManager: EntityManager);
-        }
 
-        _chatManager.ChatMessageToManyFiltered(filter, ChatChannel.Radio, message, messageWrap, source, true, colorOverride);
+        _chatManager.ChatMessageToManyFiltered(filter, ChatChannel.Radio, message, messageWrap, source, false, colorOverride);
 
         if (playDefaultSound)
         {
