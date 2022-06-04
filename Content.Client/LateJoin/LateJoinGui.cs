@@ -363,7 +363,7 @@ namespace Content.Client.LateJoin
             }
         }
     }
-	     
+
     sealed class JobButton : ContainerButton
     {
         public string JobId { get; }
