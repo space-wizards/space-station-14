@@ -1,10 +1,4 @@
 Entries:
-- author: ElectroJr
-  changes:
-  - {message: Fixed a bug preventing the RCD from constructing entities on some empty
-      tiles., type: Fix}
-  id: 1153
-  time: '2022-03-02T13:38:19.0000000+00:00'
 - author: wrexbe
   changes:
   - {message: Glass tables now have different mass limits., type: Add}
@@ -3007,3 +3001,9 @@ Entries:
   - {message: Ghosting no longer causes dragged corpses to be dropped, type: Fix}
   id: 1652
   time: '2022-06-04T02:59:07.0000000+00:00'
+- author: Peptide90
+  changes:
+  - {message: Added boxes of nitrile gloves., type: Add}
+  - {message: Fixed name of sterile mask and latex glove boxes., type: Tweak}
+  id: 1653
+  time: '2022-06-04T05:05:18.0000000+00:00'
