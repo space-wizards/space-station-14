@@ -12,9 +12,9 @@
             - material: Steel
               amount: 10
               doAfter: 4
-            - prototype: MaterialDiamond1
+            - prototype: MaterialDiamond
               name: refined diamond
-              icon: 
+              icon:
                 sprite: Objects/Materials/materials.rsi
                 state: diamond
               doAfter: 1
@@ -22,4 +22,4 @@
               amount: 5
               doAfter: 5
     - node: makeshiftLaser
-      entity: MakeshiftLaser
+      entity: WeaponMakeshiftLaser

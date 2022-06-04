@@ -27,7 +27,7 @@
   startNode: start
   targetNode: makeshiftLaser
   category: Weapons
-  description: A simple weapon for tripping someone at a distance.
+  description: A make shift laser for the lasering enthusiast.
   icon: Objects/Weapons/Guns/Battery/makeshift.rsi/icon.png
   objectType: Item
 
