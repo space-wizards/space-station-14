@@ -4,7 +4,7 @@
   mapPath: /Maps/lighthouse.yml
   minPlayers: 25
   stations:
-    Lighthouse:
+    Station:
       mapNameTemplate: '{0} Lighthouse {1}'
       nameGenerator:
         !type:NanotrasenNameGenerator
