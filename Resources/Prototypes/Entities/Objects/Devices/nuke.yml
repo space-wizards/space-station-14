@@ -47,6 +47,8 @@
     interfaces:
     - key: enum.NukeUiKey.Key
       type: NukeBoundUserInterface
+  - type: StaticPrice # TODO: Make absolutely certain cargo cannot sell this, that'd be horrible. Presumably, add an export ban component so only the yarrs get a deal here.
+    price: 50000 # YOU STOLE A NUCLEAR FISSION EXPLOSIVE?!
 
 - type: entity
   parent: NuclearBomb
@@ -87,3 +89,5 @@
           Quantity: 3000
   - type: ReagentTank
     transferAmount: 100
+  - type: StaticPrice
+    price: 5000 # That's a pretty fancy keg you got there.

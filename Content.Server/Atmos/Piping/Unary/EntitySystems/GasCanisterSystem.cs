@@ -127,7 +127,7 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
         private void OnCanisterChangeReleaseValve(EntityUid uid, GasCanisterComponent canister, GasCanisterChangeReleaseValveMessage args)
         {
             var impact = LogImpact.High;
-            if (EntityManager.TryGetComponent(uid, out ContainerManagerComponent containerManager)
+            if (EntityManager.TryGetComponent(uid, out ContainerManagerComponent? containerManager)
                 && containerManager.TryGetContainer(canister.ContainerName, out var container))
                 impact = container.ContainedEntities.Count != 0 ? LogImpact.Medium : LogImpact.High;
 

@@ -47,7 +47,7 @@
     graph: LightFixture
     node: tubeLight
   - type: Sprite
-    sprite: Structures/Decoration/LightPosts/small_light_post.rsi
+    sprite: Structures/Lighting/LightPosts/small_light_post.rsi
     layers:
     - state: on
       map: ["enum.PoweredLightLayers.Base"]
@@ -67,7 +67,7 @@
   parent: BaseLightStructure
   components:
   - type: Sprite
-    sprite: Structures/Decoration/LightPosts/small_light_post.rsi
+    sprite: Structures/Lighting/LightPosts/small_light_post.rsi
     state: off
   - type: PointLight
     enabled: false
@@ -76,6 +76,9 @@
     damage:
       types:
         Heat: 20
+  - type: ContainerContainer
+    containers:
+      light_bulb: !type:ContainerSlot
   - type: ApcPowerReceiver
   - type: ExtensionCableReceiver
   - type: DeviceNetwork

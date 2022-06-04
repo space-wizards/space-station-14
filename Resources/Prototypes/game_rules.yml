@@ -11,6 +11,9 @@
   id: Nukeops
 
 - type: gameRule
+  id: Pirates
+
+- type: gameRule
   id: Suspicion
 
 - type: gameRule

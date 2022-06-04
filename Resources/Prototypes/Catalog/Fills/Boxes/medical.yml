@@ -29,9 +29,9 @@
       - state: pillbox
 
 - type: entity
-  name: sterile box
+  name: sterile mask box
   parent: BoxCardboard
-  id: BoxSterile
+  id: BoxSterileMask
   description: This box contains sterile medical masks.
   components:
   - type: StorageFill
@@ -44,9 +44,9 @@
       - state: sterile
 
 - type: entity
-  name: latex box
+  name: latex gloves box
   parent: BoxCardboard
-  id: BoxLatex
+  id: BoxLatexGloves
   description: Contains sterile latex gloves.
   components:
   - type: StorageFill
@@ -57,6 +57,21 @@
     layers:
       - state: box
       - state: latex
+      
+- type: entity
+  name: nitrile gloves box
+  parent: BoxCardboard
+  id: BoxNitrileGloves
+  description: Contains sterile nitrile gloves. Better than latex.
+  components:
+  - type: StorageFill
+    contents:
+      - id: ClothingHandsGlovesNitrile
+        amount: 4
+  - type: Sprite
+    layers:
+      - state: box
+      - state: nitrile
 
 - type: entity
   name: mouth swab box
