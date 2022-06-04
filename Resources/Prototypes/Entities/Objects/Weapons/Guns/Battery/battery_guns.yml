@@ -281,3 +281,35 @@
     magState: mag
     steps: 5
     zeroVisible: true
+  - type: Appearance
+
+- type: entity
+  name: antique laser gun
+  parent: BaseWeaponBattery
+  id: WeaponAntiqueLaser
+  description: This is an antique laser gun. All craftsmanship is of the highest quality. It is decorated with assistant leather and chrome. The object menaces with spikes of energy.
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Battery/antiquelasergun.rsi
+    layers:
+    - state: base
+      map: ["enum.GunVisualLayers.Base"]
+    - state: mag-unshaded-4
+      map: ["enum.GunVisualLayers.MagUnshaded"]
+      shader: unshaded
+  - type: Item
+    size: 12
+    sprite: Objects/Weapons/Guns/Battery/antiquelasergun.rsi
+  - type: Gun
+    soundGunshot:
+      path: /Audio/Weapons/Guns/Gunshots/laser_cannon.ogg
+  - type: HitscanBatteryAmmoProvider
+    proto: RedMediumLaser
+    fireCost: 100
+  - type: MagazineVisuals
+    magState: mag
+    steps: 5
+    zeroVisible: true
+  - type: Appearance
+  - type: StaticPrice
+    price: 750
