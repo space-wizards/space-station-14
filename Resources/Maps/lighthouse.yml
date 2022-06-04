@@ -4282,11 +4282,6 @@ entities:
           color: '#D4D4D4FF'
           id: DirtLight
           coordinates: -4,18
-        1114:
-          cleanable: True
-          color: '#D4D4D4FF'
-          id: DirtLight
-          coordinates: -11,17
         1115:
           cleanable: True
           color: '#D4D4D4FF'
@@ -4600,6 +4595,16 @@ entities:
           color: '#FFFFFFFF'
           id: DirtLight
           coordinates: -14,14
+        1629:
+          cleanable: True
+          color: '#FFFFFFFF'
+          id: DirtLight
+          coordinates: -7,17
+        1626:
+          cleanable: True
+          color: '#FFFFFFFF'
+          id: DirtHeavy
+          coordinates: -13,19
       0,-1:
         169:
           color: '#60697988'
@@ -6795,16 +6800,11 @@ entities:
           color: '#D4D4D4FF'
           id: DirtLight
           coordinates: 6,2
-        1184:
+        1625:
           cleanable: True
-          color: '#D4D4D4FF'
-          id: DirtLight
-          coordinates: 1,20
-        1185:
-          cleanable: True
-          color: '#D4D4D4FF'
-          id: DirtLight
-          coordinates: 11,17
+          color: '#FFFFFFFF'
+          id: DirtHeavy
+          coordinates: 8,19
         1186:
           cleanable: True
           color: '#D4D4D4FF'
@@ -6825,16 +6825,6 @@ entities:
           color: '#D4D4D4FF'
           id: DirtLight
           coordinates: 17,25
-        1230:
-          cleanable: True
-          color: '#D4D4D4FF'
-          id: DirtMedium
-          coordinates: 2,17
-        1231:
-          cleanable: True
-          color: '#D4D4D4FF'
-          id: DirtMedium
-          coordinates: 6,19
         1232:
           cleanable: True
           color: '#D4D4D4FF'
@@ -6936,6 +6926,30 @@ entities:
           color: '#FFFFFFFF'
           id: DirtHeavy
           coordinates: 0,14
+        1624:
+          cleanable: True
+          color: '#FFFFFFFF'
+          id: DirtHeavy
+          coordinates: 2,20
+        1623:
+          cleanable: True
+          color: '#FFFFFFFF'
+          id: DirtLight
+          coordinates: 0,17
+        1627:
+          cleanable: True
+          color: '#FFFFFFFF'
+          id: DirtLight
+          coordinates: 7,18
+        1628:
+          cleanable: True
+          color: '#FFFFFFFF'
+          id: DirtLight
+          coordinates: 10,17
+        1617:
+          color: '#D4D4D496'
+          id: HalfTileOverlayGreyscale180
+          coordinates: 3,17
       0,-2:
         1044:
           color: '#EFB34196'
@@ -37747,13 +37761,17 @@ entities:
     parent: 100
     type: Transform
 - uid: 3188
-  type: ClothingHeadHatPirate
+  type: BoxFolderGrey
   components:
-  - pos: 29.421413,5.638719
+  - pos: -45.239292,-6.166125
     parent: 100
     type: Transform
   - canCollide: False
     type: Physics
+  - containers:
+      storagebase: !type:Container
+        ents: []
+    type: ContainerContainer
 - uid: 3189
   type: WindowReinforcedDirectional
   components:
@@ -38211,25 +38229,14 @@ entities:
         ents: []
     type: ContainerContainer
 - uid: 3248
-  type: BoxFolderGrey
+  type: filingCabinet
   components:
-  - pos: -45.296303,-6.2603436
+  - pos: -16.5,-39.5
     parent: 100
     type: Transform
-  - canCollide: False
-    type: Physics
   - containers:
       storagebase: !type:Container
-        ents:
-        - 6848
-        - 4782
-        - 4794
-        - 10721
-        - 12385
-        - 12384
-        - 12383
-        - 12382
-        - 12381
+        ents: []
     type: ContainerContainer
 - uid: 3249
   type: Lamp
@@ -48717,9 +48724,10 @@ entities:
     parent: 100
     type: Transform
 - uid: 4782
-  type: Paper
+  type: ClothingHeadHatPirate
   components:
-  - parent: 3248
+  - pos: 29.421413,5.638719
+    parent: 100
     type: Transform
   - canCollide: False
     type: Physics
@@ -48834,12 +48842,14 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 4794
-  type: Paper
+  type: PottedPlantRandom
   components:
-  - parent: 3248
+  - pos: 28.5,-37.5
+    parent: 100
     type: Transform
-  - canCollide: False
-    type: Physics
+  - containers:
+      stash: !type:ContainerSlot {}
+    type: ContainerContainer
 - uid: 4795
   type: GasPipeBend
   components:
@@ -49515,41 +49525,12 @@ entities:
 - uid: 4891
   type: filingCabinet
   components:
-  - rot: 3.141592653589793 rad
-    pos: -16.5,-39.5
+  - pos: -16.5,-38.5
     parent: 100
     type: Transform
   - containers:
       storagebase: !type:Container
-        ents:
-        - 12408
-        - 12407
-        - 12406
-        - 12405
-        - 12404
-        - 12403
-    type: ContainerContainer
-- uid: 4892
-  type: filingCabinet
-  components:
-  - rot: 3.141592653589793 rad
-    pos: -16.5,-38.5
-    parent: 100
-    type: Transform
-  - containers:
-      storagebase: !type:Container
-        ents:
-        - 12402
-        - 12401
-        - 12400
-        - 12399
-        - 12398
-        - 12397
-        - 12396
-        - 12395
-        - 12394
-        - 12393
-        - 12392
+        ents: []
     type: ContainerContainer
 - uid: 4893
   type: FirelockEdge
@@ -49587,11 +49568,9 @@ entities:
 - uid: 4897
   type: BoxFolderYellow
   components:
-  - pos: -14.620122,-38.512794
+  - pos: -14.640968,-38.354168
     parent: 100
     type: Transform
-  - canCollide: False
-    type: Physics
   - containers:
       storagebase: !type:Container
         ents:
@@ -71815,13 +71794,6 @@ entities:
     type: Transform
   - color: '#42F5F5FF'
     type: AtmosPipeColor
-  - canCollide: False
-    type: Physics
-- uid: 6848
-  type: Paper
-  components:
-  - parent: 3248
-    type: Transform
   - canCollide: False
     type: Physics
 - uid: 6849
@@ -103084,13 +103056,6 @@ entities:
     type: Transform
   - canCollide: False
     type: Physics
-- uid: 10721
-  type: Paper
-  components:
-  - parent: 3248
-    type: Transform
-  - canCollide: False
-    type: Physics
 - uid: 10722
   type: AirlockGlass
   components:
@@ -116912,15 +116877,6 @@ entities:
       storagebase: !type:Container
         ents: []
     type: ContainerContainer
-- uid: 12192
-  type: PottedPlantRandom
-  components:
-  - pos: 28.5,-37.5
-    parent: 100
-    type: Transform
-  - containers:
-      stash: !type:ContainerSlot {}
-    type: ContainerContainer
 - uid: 12193
   type: Shovel
   components:
@@ -118430,41 +118386,6 @@ entities:
     type: Transform
   - canCollide: False
     type: Physics
-- uid: 12381
-  type: Paper
-  components:
-  - parent: 3248
-    type: Transform
-  - canCollide: False
-    type: Physics
-- uid: 12382
-  type: Paper
-  components:
-  - parent: 3248
-    type: Transform
-  - canCollide: False
-    type: Physics
-- uid: 12383
-  type: Paper
-  components:
-  - parent: 3248
-    type: Transform
-  - canCollide: False
-    type: Physics
-- uid: 12384
-  type: Paper
-  components:
-  - parent: 3248
-    type: Transform
-  - canCollide: False
-    type: Physics
-- uid: 12385
-  type: Paper
-  components:
-  - parent: 3248
-    type: Transform
-  - canCollide: False
-    type: Physics
 - uid: 12386
   type: Paper
   components:
@@ -118506,125 +118427,6 @@ entities:
   type: Paper
   components:
   - parent: 4897
-    type: Transform
-  - canCollide: False
-    type: Physics
-- uid: 12392
-  type: Paper
-  components:
-  - parent: 4892
-    type: Transform
-  - canCollide: False
-    type: Physics
-- uid: 12393
-  type: Paper
-  components:
-  - parent: 4892
-    type: Transform
-  - canCollide: False
-    type: Physics
-- uid: 12394
-  type: Paper
-  components:
-  - parent: 4892
-    type: Transform
-  - canCollide: False
-    type: Physics
-- uid: 12395
-  type: Paper
-  components:
-  - parent: 4892
-    type: Transform
-  - canCollide: False
-    type: Physics
-- uid: 12396
-  type: Paper
-  components:
-  - parent: 4892
-    type: Transform
-  - canCollide: False
-    type: Physics
-- uid: 12397
-  type: Paper
-  components:
-  - parent: 4892
-    type: Transform
-  - canCollide: False
-    type: Physics
-- uid: 12398
-  type: Paper
-  components:
-  - parent: 4892
-    type: Transform
-  - canCollide: False
-    type: Physics
-- uid: 12399
-  type: Paper
-  components:
-  - parent: 4892
-    type: Transform
-  - canCollide: False
-    type: Physics
-- uid: 12400
-  type: Paper
-  components:
-  - parent: 4892
-    type: Transform
-  - canCollide: False
-    type: Physics
-- uid: 12401
-  type: Paper
-  components:
-  - parent: 4892
-    type: Transform
-  - canCollide: False
-    type: Physics
-- uid: 12402
-  type: Paper
-  components:
-  - parent: 4892
-    type: Transform
-  - canCollide: False
-    type: Physics
-- uid: 12403
-  type: Paper
-  components:
-  - parent: 4891
-    type: Transform
-  - canCollide: False
-    type: Physics
-- uid: 12404
-  type: Paper
-  components:
-  - parent: 4891
-    type: Transform
-  - canCollide: False
-    type: Physics
-- uid: 12405
-  type: Paper
-  components:
-  - parent: 4891
-    type: Transform
-  - canCollide: False
-    type: Physics
-- uid: 12406
-  type: Paper
-  components:
-  - parent: 4891
-    type: Transform
-  - canCollide: False
-    type: Physics
-- uid: 12407
-  type: Paper
-  components:
-  - parent: 4891
-    type: Transform
-  - canCollide: False
-    type: Physics
-- uid: 12408
-  type: Paper
-  components:
-  - parent: 4891
     type: Transform
   - canCollide: False
     type: Physics
