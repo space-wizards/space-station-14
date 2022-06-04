@@ -104,7 +104,7 @@ public sealed class SurveillanceCameraMonitorBoundUserInterface : BoundUserInter
                 _currentCamera = cast.ActiveCamera;
             }
 
-            if (_entityManager.TryGetComponent(cast.ActiveCamera, out EyeComponent eye))
+            if (_entityManager.TryGetComponent(cast.ActiveCamera, out EyeComponent? eye))
             {
                 _window.UpdateState(eye.Eye, cast.Subnets, cast.ActiveAddress, cast.ActiveSubnet, cast.Cameras);
             }

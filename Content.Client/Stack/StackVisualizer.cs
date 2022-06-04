@@ -102,7 +102,7 @@ namespace Content.Client.Stack
             base.OnChangeData(component);
 
             var entities = IoCManager.Resolve<IEntityManager>();
-            if (entities.TryGetComponent(component.Owner, out ISpriteComponent spriteComponent))
+            if (entities.TryGetComponent(component.Owner, out ISpriteComponent? spriteComponent))
             {
                 if (_isComposite)
                 {
