@@ -64,9 +64,8 @@ public sealed class SharedBlockingSystem : EntitySystem
     private void OnDrop(EntityUid uid, SharedBlockingComponent component, DroppedEvent args)
     {
         if (component.IsBlocking)
-        {
             StopBlocking(uid, component, args.User);
-        }
+
         RemComp<SharedBlockingUserComponent>(args.User);
         component.User = null;
     }
@@ -81,10 +80,7 @@ public sealed class SharedBlockingSystem : EntitySystem
         }
 
         if (component.BlockingToggleAction != null)
-        {
             args.Actions.Add(component.BlockingToggleAction);
-        }
-
     }
 
     private void OnToggleAction(EntityUid uid, SharedBlockingComponent component, ToggleActionEvent args)
@@ -118,13 +114,13 @@ public sealed class SharedBlockingSystem : EntitySystem
         component.IsBlocking = true;
 
         var shape = new PhysShapeCircle();
-        shape.Radius = 1f;
+        shape.Radius = component.BlockRadius;
 
         if (TryComp(user, out PhysicsComponent? physicsComponent))
         {
             var fixture = new Fixture(physicsComponent, shape)
             {
-                ID = "test",
+                ID = component.BlockFixtureID,
                 Hard = true,
                 CollisionLayer = (int) CollisionGroup.WallLayer
             };
@@ -164,7 +160,7 @@ public sealed class SharedBlockingSystem : EntitySystem
         {
             _actionsSystem.SetToggled(component.BlockingToggleAction, false);
             _transformSystem.Unanchor(xform);
-            _fixtureSystem.DestroyFixture(physicsComponent, "test");
+            _fixtureSystem.DestroyFixture(physicsComponent, component.BlockFixtureID);
             physicsComponent.BodyType = blockingUserComponent.OriginalBodyType;
         }
 

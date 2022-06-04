@@ -21,6 +21,17 @@ public sealed class SharedBlockingComponent : Component
     [ViewVariables]
     public bool IsBlocking;
 
+    /// <summary>
+    /// The ID for the fixture that's dynamically created when blocking
+    /// </summary>
+    public string BlockFixtureID = "blocking-active";
+
+    /// <summary>
+    /// The shape of the blocking fixture that will be dynamically spawned
+    /// </summary>
+    [DataField("blockRadius")]
+    public float BlockRadius = 0.5f;
+
     [DataField("blockingToggleActionId", customTypeSerializer:typeof(PrototypeIdSerializer<InstantActionPrototype>))]
     public string BlockingToggleActionId = "ToggleBlock";
 
