@@ -8,12 +8,15 @@ using Content.Server.Headset;
 using Content.Server.Players;
 using Content.Server.Popups;
 using Content.Server.Radio.EntitySystems;
+using Content.Server.Station.Components;
+using Content.Server.Station.Systems;
 using Content.Shared.ActionBlocker;
 using Content.Shared.CCVar;
 using Content.Shared.Chat;
 using Content.Shared.Database;
 using Content.Shared.Inventory;
 using Robust.Server.Player;
+using Robust.Shared.Audio;
 using Robust.Shared.Configuration;
 using Robust.Shared.Console;
 using Robust.Shared.Network;
@@ -36,14 +39,16 @@ public sealed class ChatSystem : SharedChatSystem
     [Dependency] private readonly IAdminManager _adminManager = default!;
     [Dependency] private readonly IPlayerManager _playerManager = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
-    [Dependency] private readonly AdminLogSystem _logs = default!;
+    [Dependency] private readonly IAdminLogManager _adminLogger = default!;
     [Dependency] private readonly ActionBlockerSystem _actionBlocker = default!;
     [Dependency] private readonly ListeningSystem _listener = default!;
     [Dependency] private readonly InventorySystem _inventory = default!;
     [Dependency] private readonly PopupSystem _popup = default!;
+    [Dependency] private readonly StationSystem _stationSystem = default!;
 
     private const int VoiceRange = 7; // how far voice goes in world units
     private const int WhisperRange = 2; // how far whisper goes in world units
+    private const string AnnouncementSound = "/Audio/Announcements/announce.ogg";
 
     private bool _loocEnabled = true;
     private readonly bool _adminLoocEnabled = true;
@@ -140,6 +145,67 @@ public sealed class ChatSystem : SharedChatSystem
         }
     }
 
+    #region Announcements
+
+    /// <summary>
+    /// Dispatches an announcement to all stations
+    /// </summary>
+    /// <param name="message">The contents of the message</param>
+    /// <param name="sender">The sender (Communications Console in Communications Console Announcement)</param>
+    /// <param name="playDefaultSound">Play the announcement sound</param>
+    /// <param name="colorOverride">Optional color for the announcement message</param>
+    public void DispatchGlobalStationAnnouncement(string message, string sender = "Central Command",
+        bool playDefaultSound = true, Color? colorOverride = null)
+    {
+        var messageWrap = Loc.GetString("chat-manager-sender-announcement-wrap-message", ("sender", sender));
+        _chatManager.ChatMessageToAll(ChatChannel.Radio, message, messageWrap);
+        if (playDefaultSound)
+        {
+            SoundSystem.Play(Filter.Broadcast(), AnnouncementSound, AudioParams.Default.WithVolume(-2f));
+        }
+        _adminLogger.Add(LogType.Chat, LogImpact.Low, $"Global station announcement from {sender}: {message}");
+    }
+
+    /// <summary>
+    /// Dispatches an announcement on a specific station
+    /// </summary>
+    /// <param name="source">The entity making the announcement (used to determine the station)</param>
+    /// <param name="message">The contents of the message</param>
+    /// <param name="sender">The sender (Communications Console in Communications Console Announcement)</param>
+    /// <param name="playDefaultSound">Play the announcement sound</param>
+    /// <param name="colorOverride">Optional color for the announcement message</param>
+    public void DispatchStationAnnouncement(EntityUid source, string message, string sender = "Central Command", bool playDefaultSound = true, Color? colorOverride = null)
+    {
+        var messageWrap = Loc.GetString("chat-manager-sender-announcement-wrap-message", ("sender", sender));
+        var station = _stationSystem.GetOwningStation(source);
+        var filter = Filter.Empty();
+
+        if (station != null)
+        {
+            if (!EntityManager.TryGetComponent<StationDataComponent>(station, out var stationDataComp)) return;
+
+            foreach (var gridEnt in stationDataComp.Grids)
+            {
+                filter.AddInGrid(gridEnt);
+            }
+        }
+        else
+        {
+            filter = Filter.Pvs(source, entityManager: EntityManager);
+        }
+
+        _chatManager.ChatMessageToManyFiltered(filter, ChatChannel.Radio, message, messageWrap, source, true, colorOverride);
+
+        if (playDefaultSound)
+        {
+            SoundSystem.Play(filter, AnnouncementSound, AudioParams.Default.WithVolume(-2f));
+        }
+
+        _adminLogger.Add(LogType.Chat, LogImpact.Low, $"Station Announcement on {station} from {sender}: {message}");
+    }
+
+    #endregion
+
     #region Private API
 
     private void SendEntitySpeak(EntityUid source, string message, bool hideChat = false)
@@ -155,7 +221,7 @@ public sealed class ChatSystem : SharedChatSystem
 
         var ev = new EntitySpokeEvent(message);
         RaiseLocalEvent(source, ev, false);
-        _logs.Add(LogType.Chat, LogImpact.Low, $"Say from {ToPrettyString(source):user}: {message}");
+        _adminLogger.Add(LogType.Chat, LogImpact.Low, $"Say from {ToPrettyString(source):user}: {message}");
     }
 
     private void SendEntityWhisper(EntityUid source, string message, bool hideChat = false)
@@ -199,7 +265,7 @@ public sealed class ChatSystem : SharedChatSystem
 
         var ev = new EntitySpokeEvent(message);
         RaiseLocalEvent(source, ev, false);
-        _logs.Add(LogType.Chat, LogImpact.Low, $"Whisper from {ToPrettyString(source):user}: {message}");
+        _adminLogger.Add(LogType.Chat, LogImpact.Low, $"Whisper from {ToPrettyString(source):user}: {message}");
     }
 
     private void SendEntityEmote(EntityUid source, string action, bool hideChat)
@@ -210,7 +276,7 @@ public sealed class ChatSystem : SharedChatSystem
             ("entityName", Name(source)));
 
         SendInVoiceRange(ChatChannel.Emotes, action, messageWrap, source, hideChat);
-        _logs.Add(LogType.Chat, LogImpact.Low, $"Emote from {ToPrettyString(source):user}: {action}");
+        _adminLogger.Add(LogType.Chat, LogImpact.Low, $"Emote from {ToPrettyString(source):user}: {action}");
     }
 
     // ReSharper disable once InconsistentNaming
@@ -225,7 +291,7 @@ public sealed class ChatSystem : SharedChatSystem
             ("entityName", Name(source)));
 
         SendInVoiceRange(ChatChannel.LOOC, message, messageWrap, source, hideChat);
-        _logs.Add(LogType.Chat, LogImpact.Low, $"LOOC from {player:Player}: {message}");
+        _adminLogger.Add(LogType.Chat, LogImpact.Low, $"LOOC from {player:Player}: {message}");
     }
 
     private void SendDeadChat(EntityUid source, IPlayerSession player, string message, bool hideChat)
@@ -238,18 +304,18 @@ public sealed class ChatSystem : SharedChatSystem
             messageWrap = Loc.GetString("chat-manager-send-admin-dead-chat-wrap-message",
                 ("adminChannelName", Loc.GetString("chat-manager-admin-channel-name")),
                 ("userName", player.ConnectedClient.UserName));
-            _logs.Add(LogType.Chat, LogImpact.Low, $"Dead chat from {player:Player}: {message}");
+            _adminLogger.Add(LogType.Chat, LogImpact.Low, $"Dead chat from {player:Player}: {message}");
         }
         else
         {
             messageWrap = Loc.GetString("chat-manager-send-dead-chat-wrap-message",
                 ("deadChannelName", Loc.GetString("chat-manager-dead-channel-name")),
                 ("playerName", (playerName)));
-            _logs.Add(LogType.Chat, LogImpact.Low, $"Admin dead chat from {player:Player}: {message}");
+            _adminLogger.Add(LogType.Chat, LogImpact.Low, $"Admin dead chat from {player:Player}: {message}");
         }
 
         _chatManager.ChatMessageToMany(ChatChannel.Dead, message, messageWrap, source, hideChat, clients.ToList());
-        _logs.Add(LogType.Chat, LogImpact.Low, $"Dead chat from {player:Player}: {message}");
+        _adminLogger.Add(LogType.Chat, LogImpact.Low, $"Dead chat from {player:Player}: {message}");
     }
     #endregion
 

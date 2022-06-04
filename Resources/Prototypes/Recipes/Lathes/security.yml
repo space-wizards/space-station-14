@@ -34,8 +34,8 @@
 - type: latheRecipe
   id: ShellShotgunBeanbag
   icon:
-    sprite: Objects/Weapons/Guns/Ammunition/Casings/shotgun_shell_beanbag.rsi
-    state: base
+    sprite: Objects/Weapons/Guns/Ammunition/Casings/shotgun_shell.rsi
+    state: beanbag
   result: ShellShotgunBeanbag
   completetime: 2
   materials:
@@ -65,33 +65,33 @@
     Steel: 5
 
 - type: latheRecipe
-  id: CartridgeClRifleRubber
+  id: CartridgeCaselessRifleRubber
   icon:
     sprite: Objects/Weapons/Guns/Ammunition/Casings/ammo_casing.rsi
     state: base
-  result: CartridgeClRifleRubber
+  result: CartridgeCaselessRifleRubber
   completetime: 2
   materials:
     Plastic: 10
     Steel: 5
 
 - type: latheRecipe
-  id: CartridgeLRifleRubber
+  id: CartridgeLightRifleRubber
   icon:
     sprite: Objects/Weapons/Guns/Ammunition/Casings/ammo_casing.rsi
     state: base
-  result: CartridgeLRifleRubber
+  result: CartridgeLightRifleRubber
   completetime: 2
   materials:
     Plastic: 10
     Steel: 5
 
 - type: latheRecipe
-  id: CartridgeSRifleRubber
+  id: CartridgeRifleRubber
   icon:
     sprite: Objects/Weapons/Guns/Ammunition/Casings/ammo_casing.rsi
     state: base
-  result: CartridgeSRifleRubber
+  result: CartridgeRifleRubber
   completetime: 2
   materials:
     Plastic: 10
@@ -128,11 +128,11 @@
     Steel: 20
 
 - type: latheRecipe
-  id: CartridgeLRifle
+  id: CartridgeLightRifle
   icon:
     sprite: Objects/Weapons/Guns/Ammunition/Casings/ammo_casing.rsi
     state: base
-  result: CartridgeLRifle
+  result: CartridgeLightRifle
   completetime: 2
   materials:
     Steel: 30
@@ -140,8 +140,8 @@
 - type: latheRecipe
   id: ShellShotgunFlare
   icon:
-    sprite: Objects/Weapons/Guns/Ammunition/Casings/shotgun_shell_flare.rsi
-    state: base
+    sprite: Objects/Weapons/Guns/Ammunition/Casings/shotgun_shell.rsi
+    state: flare
   result: ShellShotgunFlare
   completetime: 2
   materials:
@@ -151,8 +151,8 @@
 - type: latheRecipe
   id: ShellTranquilizer
   icon:
-    sprite: Objects/Weapons/Guns/Ammunition/Casings/shotgun_shell_practice.rsi
-    state: base
+    sprite: Objects/Weapons/Guns/Ammunition/Casings/shotgun_shell.rsi
+    state: practice
   result: ShellTranquilizer
   completetime: 4
   materials:
@@ -163,8 +163,8 @@
 - type: latheRecipe
   id: ShellShotgunFlash
   icon:
-    sprite: Objects/Weapons/Guns/Ammunition/Casings/shotgun_shell_flash.rsi
-    state: base
+    sprite: Objects/Weapons/Guns/Ammunition/Casings/shotgun_shell.rsi
+    state: flash
   result: ShellShotgunFlash
   completetime: 2
   materials:

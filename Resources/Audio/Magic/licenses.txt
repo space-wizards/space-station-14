@@ -1,0 +1,5 @@
+https://github.com/Citadel-Station-13/Citadel-Station-13/blob/master/sound/magic/ForceWall.ogg
+https://github.com/Citadel-Station-13/Citadel-Station-13/blob/master/sound/magic/blink.ogg
+https://github.com/Citadel-Station-13/Citadel-Station-13/blob/master/sound/magic/Knock.ogg
+
+copyright: CC BY-SA 3.0

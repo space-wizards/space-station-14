@@ -18,6 +18,8 @@
   - type: ExaminableSolution
     solution: hypospray
   - type: Hypospray
+  - type: StaticPrice
+    price: 750
 
 - type: entity
   name: gorlax hypospray
@@ -39,7 +41,7 @@
   - type: ExaminableSolution
     solution: hypospray
   - type: Hypospray
-  
+
 - type: entity
   name: chemical medipen
   parent: BaseItem
@@ -75,6 +77,8 @@
     - Trash
   - type: Recyclable
   - type: SpaceGarbage
+  - type: StaticPrice
+    price: 75 # These are limited supply items.
 
 - type: entity
   name: emergency medipen
@@ -166,4 +170,5 @@
   - type: Tag
     tags:
     - Write
-
+  - type: StaticPrice
+    price: 75

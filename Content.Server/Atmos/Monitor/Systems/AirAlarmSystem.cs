@@ -258,7 +258,7 @@ namespace Content.Server.Atmos.Monitor.Systems
             if (!EntityManager.TryGetComponent(uid, out AccessReaderComponent reader) || user == null)
                 return false;
 
-            if (!_accessSystem.IsAllowed(reader, user.Value))
+            if (!_accessSystem.IsAllowed(user.Value, reader))
             {
                 _popup.PopupEntity(Loc.GetString("air-alarm-ui-access-denied"), user.Value, Filter.Entities(user.Value));
                 return false;

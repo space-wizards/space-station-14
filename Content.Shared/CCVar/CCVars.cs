@@ -293,6 +293,19 @@ namespace Content.Shared.CCVar
             CVarDef.Create("nukeops.players_per_op", 5);
 
         /*
+         * Pirates
+         */
+
+        public static readonly CVarDef<int> PiratesMinPlayers =
+            CVarDef.Create("pirates.min_players", 25);
+
+        public static readonly CVarDef<int> PiratesMaxOps =
+            CVarDef.Create("pirates.max_pirates", 6);
+
+        public static readonly CVarDef<int> PiratesPlayersPerOp =
+            CVarDef.Create("pirates.players_per_pirate", 5);
+
+        /*
          * Console
          */
 
@@ -400,6 +413,13 @@ namespace Content.Shared.CCVar
 
         public static readonly CVarDef<bool> LobbyMusicEnabled =
             CVarDef.Create("ambience.lobbymusicenabled", true, CVar.ARCHIVE | CVar.CLIENTONLY);
+
+        /*
+         * Admin sounds
+         */
+
+        public static readonly CVarDef<bool> AdminSoundsEnabled =
+            CVarDef.Create("audio.adminsoundsenabled", true, CVar.ARCHIVE | CVar.CLIENTONLY);
 
         /*
          * HUD
@@ -967,5 +987,15 @@ namespace Content.Shared.CCVar
         /// </summary>
         public static readonly CVarDef<float> DragDropDeadZone =
             CVarDef.Create("control.drag_dead_zone", 12f, CVar.CLIENTONLY | CVar.ARCHIVE);
+
+        /*
+         * UPDATE
+         */
+
+        /// <summary>
+        /// If a server update restart is pending, the delay after the last player leaves before we actually restart. In seconds.
+        /// </summary>
+        public static readonly CVarDef<float> UpdateRestartDelay =
+            CVarDef.Create("update.restart_delay", 20f, CVar.SERVERONLY);
     }
 }
