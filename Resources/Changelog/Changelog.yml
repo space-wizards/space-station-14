@@ -1,9 +1,4 @@
 Entries:
-- author: Emisse
-  changes:
-  - {message: updated Saltern to Saltern Special Edition HD Enhanced Edition, type: Add}
-  id: 1152
-  time: '2022-03-02T13:16:42.0000000+00:00'
 - author: ElectroJr
   changes:
   - {message: Fixed a bug preventing the RCD from constructing entities on some empty
@@ -3007,3 +3002,8 @@ Entries:
   - {message: Inflatables can no longer be placed on walls or doors, type: Fix}
   id: 1651
   time: '2022-06-04T02:15:46.0000000+00:00'
+- author: themias
+  changes:
+  - {message: Ghosting no longer causes dragged corpses to be dropped, type: Fix}
+  id: 1652
+  time: '2022-06-04T02:59:07.0000000+00:00'
