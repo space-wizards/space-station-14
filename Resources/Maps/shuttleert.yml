@@ -7411,7 +7411,7 @@ entities:
     parent: 73
     type: Transform
 - uid: 743
-  type: BoxLatex
+  type: BoxLatexGloves
   components:
   - pos: 5.590371,-14.454765
     parent: 73
@@ -7517,7 +7517,7 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 754
-  type: BoxSterile
+  type: BoxSterileMask
   components:
   - pos: 5.355996,-14.423515
     parent: 73
