@@ -26,12 +26,11 @@
       map: ["enum.GunVisualLayers.Base"]
     - state: base-6
       map: ["enum.GunVisualLayers.Mag"]
+  - type: MagazineVisuals
+    magState: base
+    steps: 7
+    zeroVisible: false
   - type: Appearance
-    visuals:
-    - type: MagVisualizer
-      magState: base
-      steps: 7
-      zeroVisible: false
 
 - type: entity
   id: SpeedLoaderPistolFlash
@@ -46,12 +45,11 @@
       map: ["enum.GunVisualLayers.Base"]
     - state: flash-6
       map: ["enum.GunVisualLayers.Mag"]
+  - type: MagazineVisuals
+    magState: flash
+    steps: 7
+    zeroVisible: false
   - type: Appearance
-    visuals:
-    - type: MagVisualizer
-      magState: flash
-      steps: 7
-      zeroVisible: false
 
 - type: entity
   id: SpeedLoaderPistolHighVelocity
@@ -66,12 +64,11 @@
       map: ["enum.GunVisualLayers.Base"]
     - state: high-velocity-6
       map: ["enum.GunVisualLayers.Mag"]
+  - type: MagazineVisuals
+    magState: high-velocity
+    steps: 7
+    zeroVisible: false
   - type: Appearance
-    visuals:
-    - type: MagVisualizer
-      magState: high-velocity
-      steps: 7
-      zeroVisible: false
 
 - type: entity
   id: SpeedLoaderPistolPractice
@@ -86,12 +83,11 @@
       map: ["enum.GunVisualLayers.Base"]
     - state: practice-6
       map: ["enum.GunVisualLayers.Mag"]
+  - type: MagazineVisuals
+    magState: practice
+    steps: 7
+    zeroVisible: false
   - type: Appearance
-    visuals:
-    - type: MagVisualizer
-      magState: practice
-      steps: 7
-      zeroVisible: false
 
 - type: entity
   id: SpeedLoaderPistolRubber
@@ -106,9 +102,8 @@
       map: ["enum.GunVisualLayers.Base"]
     - state: rubber-6
       map: ["enum.GunVisualLayers.Mag"]
+  - type: MagazineVisuals
+    magState: rubber
+    steps: 7
+    zeroVisible: false
   - type: Appearance
-    visuals:
-    - type: MagVisualizer
-      magState: rubber
-      steps: 7
-      zeroVisible: false
