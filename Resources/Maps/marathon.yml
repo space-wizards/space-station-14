@@ -81643,7 +81643,7 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 7022
-  type: BoxSterile
+  type: BoxSterileMask
   components:
   - pos: -21.456934,-19.32787
     parent: 30
@@ -81655,7 +81655,7 @@ entities:
         ents: []
     type: ContainerContainer
 - uid: 7023
-  type: BoxLatex
+  type: BoxLatexGloves
   components:
   - pos: -21.488184,-19.374744
     parent: 30
@@ -92747,7 +92747,7 @@ entities:
         ents: []
     type: ContainerContainer
 - uid: 8275
-  type: BoxLatex
+  type: BoxLatexGloves
   components:
   - pos: -31.539986,-23.431513
     parent: 30
@@ -92759,7 +92759,7 @@ entities:
         ents: []
     type: ContainerContainer
 - uid: 8276
-  type: BoxSterile
+  type: BoxSterileMask
   components:
   - pos: -31.539986,-23.806513
     parent: 30
