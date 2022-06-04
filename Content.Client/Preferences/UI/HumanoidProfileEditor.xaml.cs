@@ -982,7 +982,7 @@ namespace Content.Client.Preferences.UI
         {
             public JobPrototype Job { get; }
             private readonly RadioOptions<int> _optionButton;
-			private readonly Label _difficultyLable;
+			private readonly Label _difficultyLabel;
 
             public JobPriority Priority
             {
@@ -1007,7 +1007,7 @@ namespace Content.Client.Preferences.UI
                     LastButtonStyle = StyleBase.ButtonOpenLeft
                 };
 
-                _difficultyLable = new Label
+                _difficultyLabel = new Label
 				{
 					Text = spacer + difficultyText
 				};
@@ -1045,7 +1045,7 @@ namespace Content.Client.Preferences.UI
                         icon,
                         new Label {Text = job.Name, MinSize = (175, 0)},
                         _optionButton,
-                        _difficultyLable
+                        _difficultyLabel
                     }
                 });
             }
