@@ -13,6 +13,8 @@
       size: 100
       HeldPrefix: riot
     - type: Blocking
+      passiveBlockModifier: Glass
+      activeBlockModifier: Metallic
       blockingToggleAction:
         name: "block"
         description: "blocks shit"
@@ -21,7 +23,6 @@
         event: !type:ToggleActionEvent
     - type: Damageable
       damageContainer: Inorganic
-      damageModifierSet: Metallic
     - type: Destructible
       thresholds:
         - trigger:

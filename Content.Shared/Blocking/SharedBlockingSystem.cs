@@ -38,12 +38,13 @@ public sealed class SharedBlockingSystem : EntitySystem
 
     private void OnUserDamageModified(EntityUid uid, SharedBlockingUserComponent component, DamageModifyEvent args)
     {
-        if (TryComp(component.BlockingItem, out SharedBlockingComponent? blockingComponent) && blockingComponent.IsBlocking)
+        if (TryComp(component.BlockingItem, out SharedBlockingComponent? blockingComponent))
         {
-            if (_proto.TryIndex("Metallic", out DamageModifierSetPrototype? blockModifier))
-            {
-                args.Damage = DamageSpecifier.ApplyModifierSet(args.Damage, blockModifier);
-            }
+            if (_proto.TryIndex(blockingComponent.PassiveBlockDamageModifer, out DamageModifierSetPrototype? passiveblockModifier) && !blockingComponent.IsBlocking)
+                args.Damage = DamageSpecifier.ApplyModifierSet(args.Damage, passiveblockModifier);
+
+            if (_proto.TryIndex(blockingComponent.ActiveBlockDamageModifier, out DamageModifierSetPrototype? activeBlockModifier) && blockingComponent.IsBlocking)
+                args.Damage = DamageSpecifier.ApplyModifierSet(args.Damage, activeBlockModifier);
         }
     }
 

@@ -32,6 +32,20 @@ public sealed class SharedBlockingComponent : Component
     [DataField("blockRadius")]
     public float BlockRadius = 0.5f;
 
+    /// <summary>
+    /// The damage modifer to use while passively blocking
+    /// </summary>
+    [ViewVariables]
+    [DataField("passiveBlockModifier")]
+    public string PassiveBlockDamageModifer = default!;
+
+    /// <summary>
+    /// The damage modifier to use while actively blocking.
+    /// </summary>
+    [ViewVariables]
+    [DataField("activeBlockModifier")]
+    public string ActiveBlockDamageModifier = default!;
+
     [DataField("blockingToggleActionId", customTypeSerializer:typeof(PrototypeIdSerializer<InstantActionPrototype>))]
     public string BlockingToggleActionId = "ToggleBlock";
 
