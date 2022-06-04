@@ -4,7 +4,6 @@
   abstract: true
   components:
   - type: Sprite
-    netsync: false
   - type: AmmoCounter
   - type: Gun
     fireRate: 2
@@ -109,7 +108,6 @@
   description: A state of the art energy pistol favoured as a sidearm by the NT-ERT operatives.
   components:
   - type: Sprite
-    netsync: false
     sprite: Objects/Weapons/Guns/Battery/pulse_pistol.rsi
     layers:
     - state: base
