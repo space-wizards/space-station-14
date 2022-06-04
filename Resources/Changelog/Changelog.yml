@@ -1,32 +1,4 @@
 Entries:
-- author: mirrorcult
-  changes:
-  - {message: Gauze can now be crafted using cloth., type: Add}
-  - {message: 'You can now gain cloth by butchering clothing items like jumpsuits,
-      shoes, or cloaks.', type: Tweak}
-  - {message: 'Fiber reagent is now gained by grinding cloth, not the individual clothing
-      items.', type: Tweak}
-  id: 1148
-  time: '2022-03-01T03:38:39.0000000+00:00'
-- author: HoofedEar
-  changes:
-  - {message: Certain station announcements have been given a splash of color in chat.,
-    type: Add}
-  id: 1149
-  time: '2022-03-01T13:21:29.0000000+00:00'
-- author: ElectroJr
-  changes:
-  - {message: 'Added some more basic mapping tools. Entity, tile, and decal placement
-      can now be saved to the action-toolbar by clicking on empty slots while placing
-      entities. `/loadmapacts` loads some presets mapping actions.', type: Add}
-  id: 1150
-  time: '2022-03-01T23:12:34.0000000+00:00'
-- author: Mith-randalf
-  changes:
-  - {message: Removed fun (by which I mean the centcomm outfit bundle from the traitor
-      uplink)!, type: Remove}
-  id: 1151
-  time: '2022-03-02T01:46:55.0000000+00:00'
 - author: Emisse
   changes:
   - {message: updated Saltern to Saltern Special Edition HD Enhanced Edition, type: Add}
@@ -3013,3 +2985,25 @@ Entries:
     type: Add}
   id: 1647
   time: '2022-06-03T15:56:11.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Reduced the number of each drink for Robust Softdrink machines from
+      10 to 2., type: Tweak}
+  id: 1648
+  time: '2022-06-03T23:46:51.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: ERT roles no longer show up on the role select screen., type: Fix}
+  id: 1649
+  time: '2022-06-04T00:04:34.0000000+00:00'
+- author: Peptide90
+  changes:
+  - {message: Generator circuit boards and emitters can now be printed with the correct
+      technology unlock., type: Fix}
+  id: 1650
+  time: '2022-06-04T00:04:49.0000000+00:00'
+- author: themias
+  changes:
+  - {message: Inflatables can no longer be placed on walls or doors, type: Fix}
+  id: 1651
+  time: '2022-06-04T02:15:46.0000000+00:00'
