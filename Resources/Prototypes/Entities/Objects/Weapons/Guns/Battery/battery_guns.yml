@@ -313,3 +313,5 @@
       magState: mag
       steps: 5
       zeroVisible: true
+  - type: StaticPrice
+    price: 750

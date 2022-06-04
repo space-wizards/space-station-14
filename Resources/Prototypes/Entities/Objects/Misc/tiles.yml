@@ -53,6 +53,25 @@
   - type: Construction
     graph: TileSteel
     node: steeltile
+    
+- type: entity
+  name: steel tile
+  parent: FloorTileItemBase
+  id: FloorTileItemMetalDiamond
+  components:
+  - type: Sprite
+    state: metaldiamond
+  - type: Item
+    HeldPrefix: steel
+  - type: FloorTile
+    outputs:
+      - plating
+      - FloorMetalDiamond
+  - type: Stack
+    stackType: FloorTileMetalDiamond
+#  - type: Construction
+#    graph: TileSteel
+#    node: steeltile
 
 - type: entity
   name: wood floor
@@ -386,6 +405,22 @@
       - FloorArcadeBlue
   - type: Stack
     stackType: FloorTileStackArcadeBlue
+    
+- type: entity
+  name: blue arcade floor
+  parent: FloorTileItemBase
+  id: FloorTileItemArcadeBlue2
+  components:
+  - type: Sprite
+    state: arcadeblue2
+  - type: Item
+    HeldPrefix: generic
+  - type: FloorTile
+    outputs:
+      - plating
+      - FloorArcadeBlue2
+  - type: Stack
+    stackType: FloorTileStackArcadeBlue2
 
 - type: entity
   name: red arcade floor
@@ -418,6 +453,70 @@
       - FloorEighties
   - type: Stack
     stackType: FloorTileStackEighties
+    
+- type: entity
+  name: clown carpet floor
+  parent: FloorTileItemBase
+  id: FloorTileItemCarpetClown
+  components:
+  - type: Sprite
+    state: carpetclown
+  - type: Item
+    HeldPrefix: generic
+  - type: FloorTile
+    outputs:
+      - plating
+      - FloorCarpetClown
+  - type: Stack
+    stackType: FloorTileStackCarpetClown
+    
+- type: entity
+  name: office carpet floor
+  parent: FloorTileItemBase
+  id: FloorTileItemCarpetOffice
+  components:
+  - type: Sprite
+    state: carpetoffice
+  - type: Item
+    HeldPrefix: generic
+  - type: FloorTile
+    outputs:
+      - plating
+      - FloorCarpetOffice
+  - type: Stack
+    stackType: FloorTileStackCarpetOffice
+    
+- type: entity
+  name: boxing ring floor
+  parent: FloorTileItemBase
+  id: FloorTileItemBoxing
+  components:
+  - type: Sprite
+    state: boxing
+  - type: Item
+    HeldPrefix: generic
+  - type: FloorTile
+    outputs:
+      - plating
+      - FloorBoxing
+  - type: Stack
+    stackType: FloorTileStackBoxing
+    
+- type: entity
+  name: gym floor
+  parent: FloorTileItemBase
+  id: FloorTileItemGym
+  components:
+  - type: Sprite
+    state: gym
+  - type: Item
+    HeldPrefix: generic
+  - type: FloorTile
+    outputs:
+      - plating
+      - FloorGym
+  - type: Stack
+    stackType: FloorTileStackGym
 
 # Shuttles
 - type: entity
