@@ -8,8 +8,12 @@
   - type: Sprite
     netsync: false
   - type: Item
-    size: 24
+    size: 50
   - type: Gun
+    minAngle: 4
+    maxAngle: 16
+    angleIncrease: 1
+    angleDecay: 8
     fireRate: 8
     selectedMode: FullAuto
     availableModes:
@@ -19,6 +23,7 @@
     soundEmpty:
       path: /Audio/Weapons/Guns/Empty/lmg_empty.ogg
   - type: ChamberMagazineAmmoProvider
+  - type: AmmoCounter
   - type: ItemSlots
     slots:
       gun_magazine:
@@ -54,7 +59,7 @@
     - state: mag-3
       map: ["enum.GunVisualLayers.Mag"]
   - type: Item
-    size: 24
+    size: 60
     sprite: Objects/Weapons/Guns/LMGs/l6.rsi
   - type: Appearance
     visuals:
