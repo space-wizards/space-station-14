@@ -79,7 +79,7 @@ public sealed class NetworkConfiguratorSystem : EntitySystem
         if (!TryComp(target, out AccessReaderComponent? reader) || user == null)
             return false;
 
-        if (_accessSystem.IsAllowed(reader, user.Value))
+        if (_accessSystem.IsAllowed(user.Value, reader))
             return true;
 
         SoundSystem.Play(Filter.Pvs(user.Value), component.SoundNoAccess.GetSound(), target, AudioParams.Default.WithVolume(-2f).WithPitchScale(1.2f));
