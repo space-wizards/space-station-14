@@ -20,7 +20,7 @@ namespace Content.Shared.Pulling.Systems
         {
             var entity = args.Session.AttachedEntity;
             if (entity == null || !_blocker.CanMove(entity.Value)) return;
-            if (!component.BeingPulled || (TryComp<MobStateComponent>(component.Owner, out var mobState) && mobState.IsDead())) return;
+            if (TryComp<MobStateComponent>(component.Owner, out var mobState) && mobState.IsIncapacitated()) return;
             _pullSystem.TryStopPull(component);
         }
     }
