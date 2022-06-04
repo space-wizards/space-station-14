@@ -146,7 +146,7 @@
   components:
   - type: Tag
     tags:
-      - MagazineBoxLightRifle
+      - MagazineLightRifleBox
   - type: BallisticAmmoProvider
     proto: CartridgeLightRifle
     capacity: 80
