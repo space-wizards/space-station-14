@@ -30,7 +30,9 @@ namespace Content.Server.Rotatable
 
         private void AddRotateVerbs(EntityUid uid, RotatableComponent component, GetVerbsEvent<Verb> args)
         {
-            if (!args.CanAccess || !args.CanInteract)
+            if (!args.CanAccess
+                || !args.CanInteract
+                || Transform(uid).NoLocalRotation) // Good ol prototype inheritance, eh?
                 return;
 
             // Check if the object is anchored, and whether we are still allowed to rotate it.

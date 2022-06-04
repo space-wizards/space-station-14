@@ -1,0 +1,15 @@
+﻿- type: entity
+  parent: BaseItem
+  id: AppraisalTool
+  name: appraisal tool
+  description: A beancounter's best friend, with a quantum connection to the galactic market and the ability to appraise even the toughest items.
+  components:
+    - type: Sprite
+      sprite: Objects/Tools/appraisal-tool.rsi
+      state: icon
+      netsync: false
+    - type: Item
+      sprite: Objects/Tools/appraisal-tool.rsi
+    - type: PriceGun
+    - type: UseDelay
+      delay: 3

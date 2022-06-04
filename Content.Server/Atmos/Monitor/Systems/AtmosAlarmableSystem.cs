@@ -17,7 +17,7 @@ namespace Content.Server.Atmos.Monitor.Systems
         {
             if (component.IgnoreAlarms) return;
 
-            if (!EntityManager.TryGetComponent(uid, out DeviceNetworkComponent netConn))
+            if (!EntityManager.TryGetComponent(uid, out DeviceNetworkComponent? netConn))
                 return;
 
             if (args.Data.TryGetValue(DeviceNetworkConstants.Command, out string? cmd)

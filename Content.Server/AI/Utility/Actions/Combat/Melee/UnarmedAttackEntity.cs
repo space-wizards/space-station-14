@@ -20,7 +20,7 @@ namespace Content.Server.AI.Utility.Actions.Combat.Melee
         public override void SetupOperators(Blackboard context)
         {
             MoveToEntityOperator moveOperator;
-            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner, out UnarmedCombatComponent? unarmedCombatComponent))
+            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner, out MeleeWeaponComponent? unarmedCombatComponent))
             {
                 moveOperator = new MoveToEntityOperator(Owner, Target, unarmedCombatComponent.Range - 0.01f);
             }

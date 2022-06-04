@@ -69,7 +69,7 @@ grids:
   - ind: 0,-1
     tiles: MQAAAC4AAAEuAAACLgAAAy4AAAMuAAABLgAAAC4AAAIuAAADLgAAAS4AAAIuAAADLgAAAi4AAAMuAAAALgAAAC4AAAMuAAACLgAAAy4AAAIuAAACLgAAAi4AAAIuAAADLgAAAy4AAAMuAAAALgAAAC4AAAMuAAACLgAAAy4AAAMuAAADLgAAAC4AAAIuAAADLgAAAi4AAAAuAAACLgAAAS4AAAIuAAACLgAAAC4AAAMuAAABLgAAAy4AAAMuAAAALgAAAy4AAAEuAAABLgAAAy4AAAEuAAACLgAAAS4AAAEuAAACMQAAADEAAAAuAAAALgAAAi4AAAMxAAAAMQAAAC4AAAEuAAAALgAAAy4AAAIuAAADLgAAAS4AAAAuAAACLgAAAC4AAAMxAAAALgAAAy4AAAMuAAACMQAAABgAAAMuAAADLgAAAy4AAAMuAAADLgAAAS4AAAAuAAAALgAAAi4AAAAuAAADMQAAAC4AAAMuAAABLgAAAzEAAAAYAAACLgAAAi4AAAIuAAACLgAAAy4AAAMuAAABLgAAAS4AAAAuAAABMQAAADEAAAAuAAAALgAAAC4AAAIxAAAAGAAAAy4AAAIuAAAALgAAAy4AAAMuAAAALgAAAy4AAAMuAAADLgAAAy4AAAMuAAAALgAAAy4AAAIuAAACMQAAABgAAAAuAAADLgAAAy4AAAIuAAAALgAAAS4AAAIuAAACLgAAAC4AAAAuAAAALgAAAi4AAAEuAAACLgAAADEAAAAYAAACLgAAAy4AAAAuAAABLgAAAy4AAAAuAAAALgAAAy4AAAIuAAADLgAAAi4AAAAuAAADLgAAAy4AAAEYAAACGAAAAy4AAAAuAAAALgAAAS4AAAIuAAADLgAAAC4AAAMuAAABLgAAADEAAAAuAAACLgAAAi4AAAAuAAACMQAAADEAAAAuAAADLgAAAC4AAAAuAAAALgAAAy4AAAAuAAABLgAAAC4AAAEuAAAALgAAAC4AAAEuAAAALgAAADEAAAAtAAAALgAAAi4AAAMuAAAALgAAAy4AAAIuAAAALgAAAS4AAAEuAAAALgAAAC4AAAEuAAAALgAAAi4AAAAxAAAALQAAADEAAAAxAAAALgAAAC4AAAIuAAACMQAAAC4AAAMuAAADLgAAADEAAAAxAAAAMQAAADEAAAAxAAAAMQAAADEAAAAYAAADGAAAAhgAAAEYAAABGAAAABgAAAAYAAADGAAAARgAAAEYAAABGAAAARgAAAAYAAAAGAAAAxgAAAEYAAACKwAAAysAAAMrAAABKwAAAisAAAMrAAAAKwAAAysAAAIrAAADKwAAAysAAAIrAAADKwAAAysAAAIrAAABKwAAAQ==
   - ind: -2,-1
-    tiles: KwAAAysAAAArAAADKwAAAysAAAIrAAAAKwAAAjEAAAAYAAABKwAAACsAAAAYAAAAMQAAAC0AAAAxAAAAMQAAACsAAAArAAABKwAAASsAAAMrAAADKwAAAysAAAExAAAAGAAAACsAAAErAAACGAAAAzEAAAAtAAAAMQAAADEAAAArAAACKwAAATEAAAArAAADKwAAAisAAAMrAAAAMQAAABgAAAArAAAAKwAAAhgAAAMxAAAAMQAAADEAAAAxAAAAKwAAAzEAAAAxAAAAMQAAADEAAAAxAAAAMQAAADEAAAAYAAACKwAAAysAAAAYAAAAMQAAADEAAAAxAAAAMQAAACsAAAMrAAABKwAAAS0AAAAtAAAALQAAAC0AAAAtAAAAGAAAAysAAAIrAAABGAAAAjEAAAAxAAAAMQAAADEAAAArAAACKwAAAisAAAMtAAAALQAAAC0AAAAtAAAALQAAABgAAAArAAACKwAAAxgAAAIxAAAALwAAAC8AAAMvAAADKwAAASsAAAAxAAAALQAAAC0AAAAtAAAALQAAAC0AAAAYAAACKwAAAysAAAAYAAACMQAAAC8AAAMvAAACLwAAAysAAAArAAAAKwAAAC0AAAAtAAAALQAAAC0AAAAtAAAAGAAAASsAAAIrAAABGAAAADEAAAAvAAADLwAAAzEAAAArAAAAKwAAADEAAAAtAAAALQAAAC0AAAAtAAAALQAAABgAAAIrAAAAKwAAABgAAAMxAAAAMQAAADEAAAAxAAAAGAAAAjEAAAAxAAAAMQAAADEAAAAxAAAAMQAAADEAAAAYAAACKwAAASsAAAAYAAAAMQAAAB0AAAAdAAAAHQAAADEAAAAxAAAALQAAAC0AAAAtAAAALQAAAC0AAAAxAAAAGAAAAisAAAIrAAABGAAAAjEAAAAdAAAAHQAAABMAAAAtAAAALQAAAC0AAAAtAAAALQAAAC0AAAAtAAAALQAAABgAAAArAAABKwAAAhgAAAIxAAAAHQAAABMAAAATAAAALQAAADEAAAAtAAAALQAAAC0AAAAtAAAALQAAADEAAAAYAAABKwAAACsAAAAYAAAAMQAAAB0AAAATAAAAEwAAADEAAAAxAAAAMQAAADEAAAAtAAAAMQAAADEAAAAxAAAAGAAAAysAAAArAAACGAAAAjEAAAAdAAAAEwAAABMAAAAYAAADGAAAAhgAAAEYAAABGAAAAhgAAAEYAAACGAAAARgAAAErAAABKwAAABgAAAMrAAABEwAAABMAAAATAAAAKwAAASsAAAMrAAADKwAAACsAAAIrAAADKwAAAysAAAIrAAACKwAAAisAAAMrAAACKwAAAxMAAAATAAAAEwAAAA==
+    tiles: KwAAAysAAAArAAADKwAAAysAAAIrAAAAKwAAAjEAAAAYAAABKwAAACsAAAAYAAAAMQAAAC0AAAAxAAAAMQAAACsAAAArAAABKwAAASsAAAMrAAADKwAAAysAAAExAAAAGAAAACsAAAErAAACGAAAAzEAAAAtAAAAMQAAADEAAAArAAACKwAAATEAAAArAAADKwAAAisAAAMrAAAAMQAAABgAAAArAAAAKwAAAhgAAAMxAAAAMQAAADEAAAAxAAAAKwAAAzEAAAAxAAAAMQAAADEAAAAxAAAAMQAAADEAAAAYAAACKwAAAysAAAAYAAAAMQAAADEAAAAxAAAAMQAAACsAAAMrAAABKwAAAS0AAAAtAAAALQAAAC0AAAAtAAAAGAAAAysAAAIrAAABGAAAAjEAAAAxAAAAMQAAADEAAAArAAACKwAAAisAAAMtAAAALQAAAC0AAAAtAAAALQAAABgAAAArAAACKwAAAxgAAAIxAAAALwAAAC8AAAMvAAADKwAAASsAAAAxAAAALQAAAC0AAAAtAAAALQAAAC0AAAAYAAACKwAAAysAAAAYAAACLwAAAC8AAAMvAAACLwAAAysAAAArAAAAKwAAAC0AAAAtAAAALQAAAC0AAAAtAAAAGAAAASsAAAIrAAABGAAAADEAAAAvAAADLwAAAzEAAAArAAAAKwAAADEAAAAtAAAALQAAAC0AAAAtAAAALQAAABgAAAIrAAAAKwAAABgAAAMxAAAAMQAAADEAAAAxAAAAGAAAAjEAAAAxAAAAMQAAADEAAAAxAAAAMQAAADEAAAAYAAACKwAAASsAAAAYAAAAMQAAAB0AAAAdAAAAHQAAADEAAAAxAAAALQAAAC0AAAAtAAAALQAAAC0AAAAxAAAAGAAAAisAAAIrAAABGAAAAjEAAAAdAAAAHQAAABMAAAAtAAAALQAAAC0AAAAtAAAALQAAAC0AAAAtAAAALQAAABgAAAArAAABKwAAAhgAAAIxAAAAHQAAABMAAAATAAAALQAAADEAAAAtAAAALQAAAC0AAAAtAAAALQAAADEAAAAYAAABKwAAACsAAAAYAAAAMQAAAB0AAAATAAAAEwAAADEAAAAxAAAAMQAAADEAAAAtAAAAMQAAADEAAAAxAAAAGAAAAysAAAArAAACGAAAAjEAAAAdAAAAEwAAABMAAAAYAAADGAAAAhgAAAEYAAABGAAAAhgAAAEYAAACGAAAARgAAAErAAABKwAAABgAAAMrAAABEwAAABMAAAATAAAAKwAAASsAAAMrAAADKwAAACsAAAIrAAADKwAAAysAAAIrAAACKwAAAisAAAMrAAACKwAAAxMAAAATAAAAEwAAAA==
   - ind: -2,0
     tiles: KwAAAisAAAMrAAABKwAAAysAAAMrAAACKwAAAysAAAArAAAAKwAAAysAAAIrAAAAKwAAABMAAAATAAAAHQAAABgAAAEYAAAAGAAAAxgAAAIYAAADGAAAAxgAAAErAAABKwAAAhgAAAAYAAACGAAAAjEAAAAdAAAAHQAAAB0AAAAxAAAAMQAAADEAAAAxAAAAMQAAADEAAAAYAAADKwAAAysAAAIYAAABMQAAADEAAAAxAAAAMQAAADEAAAAxAAAAKwAAAysAAAArAAAAKwAAAysAAAIxAAAAGAAAASsAAAMrAAADGAAAAzEAAAAwAAAAMAAAADAAAAAwAAAAMAAAACsAAAIrAAAAKwAAASsAAAIrAAACKwAAAhgAAAIrAAADKwAAAhgAAAMxAAAAMAAAAAAAAAAAAAAAAAAAAAAAAAArAAAAKwAAAisAAAArAAAAKwAAASsAAAAYAAABKwAAACsAAAIYAAAAMQAAADAAAAAAAAAAMQAAADEAAAAxAAAAMQAAACsAAAArAAABKwAAASsAAAMxAAAAGAAAAisAAAIrAAACGAAAAjEAAAAwAAAAAAAAADEAAAAYAAACGAAAADEAAAArAAADKwAAASsAAAMrAAACMQAAABgAAAMrAAAAKwAAAhgAAAExAAAAMQAAADEAAAAxAAAAGAAAAhgAAAIxAAAAMQAAADEAAAAxAAAAMQAAADEAAAAYAAAAKwAAACsAAAMYAAADGAAAAhgAAAAYAAADGAAAARgAAAAbAAAAMQAAADEAAAAnAAAAJwAAACcAAAAxAAAAGAAAAisAAAErAAACGAAAABgAAAIYAAADGAAAARgAAAEYAAADGwAAACsAAAMxAAAAJwAAACcAAAAnAAAAMQAAABgAAAArAAABKwAAAxgAAAExAAAAMQAAADEAAAAxAAAAGAAAARgAAAIrAAADJwAAACcAAAAnAAAAJwAAADEAAAAYAAAAKwAAASsAAAAYAAADMQAAADAAAAAAAAAAMQAAADEAAAAvAAADKwAAAzEAAAAxAAAAMQAAADEAAAAxAAAAGAAAASsAAAErAAABGAAAADEAAAAwAAAAAAAAADEAAAAvAAACLwAAACsAAAExAAAAJwAAACcAAAAnAAAAMQAAABgAAAMrAAABKwAAABgAAAExAAAAMAAAAAAAAAAxAAAALwAAAS8AAAErAAACJwAAACcAAAAnAAAAJwAAADEAAAAYAAACKwAAAisAAAIYAAACMQAAADAAAAAAAAAAMQAAAC8AAAIvAAADKwAAAjEAAAAnAAAAJwAAACcAAAAxAAAAGAAAACsAAAMrAAABGAAAAjEAAAAwAAAAAAAAADEAAAAvAAADLwAAAQ==
   - ind: 1,-1
@@ -1179,7 +1179,7 @@ entities:
       Toggle: []
     type: SignalReceiver
 - uid: 110
-  type: BoxSterile
+  type: BoxSterileMask
   components:
   - pos: 2.6051922,-12.398874
     parent: 130
@@ -2164,21 +2164,81 @@ entities:
           color: '#FFFFFFFF'
           id: Dirt
           coordinates: -31,-27
-        1586:
+        1609:
           cleanable: True
           color: '#FFFFFFFF'
-          id: Dirt
-          coordinates: -28,-6
-        1587:
+          id: DirtLight
+          coordinates: -26,-4
+        1608:
           cleanable: True
           color: '#FFFFFFFF'
-          id: Dirt
-          coordinates: -28,-5
+          id: DirtLight
+          coordinates: -29,-5
         1588:
           cleanable: True
           color: '#FFFFFFFF'
           id: Dirt
           coordinates: -26,-4
+        1597:
+          cleanable: True
+          color: '#FFFFFFFF'
+          id: DirtHeavy
+          coordinates: -5,-20
+        1598:
+          cleanable: True
+          color: '#FFFFFFFF'
+          id: DirtHeavy
+          coordinates: -4,-23
+        1599:
+          cleanable: True
+          color: '#FFFFFFFF'
+          id: DirtLight
+          coordinates: -6,-23
+        1600:
+          cleanable: True
+          color: '#FFFFFFFF'
+          id: DirtLight
+          coordinates: -6,-20
+        1601:
+          cleanable: True
+          color: '#FFFFFFFF'
+          id: DirtLight
+          coordinates: -4,-19
+        1602:
+          cleanable: True
+          color: '#FFFFFFFF'
+          id: DirtLight
+          coordinates: -5,-17
+        1603:
+          cleanable: True
+          color: '#FFFFFFFF'
+          id: DirtLight
+          coordinates: -4,-13
+        1604:
+          cleanable: True
+          color: '#FFFFFFFF'
+          id: DirtLight
+          coordinates: -6,-9
+        1605:
+          cleanable: True
+          color: '#FFFFFFFF'
+          id: DirtLight
+          coordinates: -4,-5
+        1606:
+          cleanable: True
+          color: '#FFFFFFFF'
+          id: Rust
+          coordinates: -5,-21
+        1607:
+          cleanable: True
+          color: '#FFFFFFFF'
+          id: Rust
+          coordinates: -6,-25
+        1610:
+          cleanable: True
+          color: '#FFFFFFFF'
+          id: DirtHeavy
+          coordinates: -26,-6
       -2,-1:
         21:
           color: '#FFFFFFFF'
@@ -9371,7 +9431,7 @@ entities:
       -20,-13: 0
       -20,-12: 0
       -20,-11: 0
-      -20,-10: 0
+      -20,-10: 9
       -20,-9: 0
       -20,-8: 0
       -20,-7: 0
@@ -9622,8 +9682,8 @@ entities:
       -19,0: 0
       -19,1: 0
       -19,2: 0
-      -19,5: 9
-      -19,6: 10
+      -19,5: 10
+      -19,6: 11
       -19,7: 0
       -19,8: 0
       -19,9: 0
@@ -9636,7 +9696,7 @@ entities:
       -18,0: 0
       -18,1: 0
       -18,2: 0
-      -18,5: 11
+      -18,5: 12
       -18,6: 0
       -18,7: 0
       -18,8: 0
@@ -9650,7 +9710,7 @@ entities:
       -17,0: 0
       -17,1: 0
       -17,2: 0
-      -17,5: 12
+      -17,5: 13
       -17,6: 0
       -17,7: 0
       -17,8: 0
@@ -14429,9 +14489,9 @@ entities:
       -95,3: 0
       -95,4: 0
       -95,5: 0
-      -95,6: 13
-      -95,7: 13
-      -95,8: 13
+      -95,6: 14
+      -95,7: 14
+      -95,8: 14
       -95,9: 0
       -95,10: 0
       -95,11: 0
@@ -14461,9 +14521,9 @@ entities:
       -93,3: 0
       -93,4: 0
       -93,5: 0
-      -93,6: 14
-      -93,7: 14
-      -93,8: 14
+      -93,6: 15
+      -93,7: 15
+      -93,8: 15
       -93,9: 0
       -93,10: 0
       -93,11: 0
@@ -14778,9 +14838,9 @@ entities:
       -105,3: 0
       -105,4: 0
       -105,5: 0
-      -105,6: 15
-      -105,7: 15
-      -105,8: 15
+      -105,6: 9
+      -105,7: 9
+      -105,8: 9
       -105,9: 0
       -105,10: 0
       -104,0: 0
@@ -14800,9 +14860,9 @@ entities:
       -103,3: 0
       -103,4: 0
       -103,5: 0
-      -103,6: 15
-      -103,7: 15
-      -103,8: 15
+      -103,6: 9
+      -103,7: 9
+      -103,8: 9
       -103,9: 0
       -103,10: 0
       -102,0: 0
@@ -14822,9 +14882,9 @@ entities:
       -101,3: 0
       -101,4: 0
       -101,5: 0
-      -101,6: 15
-      -101,7: 15
-      -101,8: 15
+      -101,6: 9
+      -101,7: 9
+      -101,8: 9
       -101,9: 0
       -101,10: 0
       -100,0: 0
@@ -14844,9 +14904,9 @@ entities:
       -99,3: 0
       -99,4: 0
       -99,5: 0
-      -99,6: 15
-      -99,7: 15
-      -99,8: 15
+      -99,6: 9
+      -99,7: 9
+      -99,8: 9
       -99,9: 0
       -99,10: 0
       -99,11: 0
@@ -14872,9 +14932,9 @@ entities:
       -97,3: 0
       -97,4: 0
       -97,5: 0
-      -97,6: 15
-      -97,7: 15
-      -97,8: 15
+      -97,6: 9
+      -97,7: 9
+      -97,8: 9
       -97,9: 0
       -97,10: 0
       -97,15: 0
@@ -20256,10 +20316,10 @@ entities:
       - 0
       - 0
     - volume: 2500
-      temperature: 156.96262
+      temperature: 156.95639
       moles:
-      - 11.59154
-      - 43.60627
+      - 11.591072
+      - 43.604507
       - 0
       - 0
       - 0
@@ -20267,10 +20327,10 @@ entities:
       - 0
       - 0
     - volume: 2500
-      temperature: 186.49834
+      temperature: 186.49066
       moles:
-      - 13.810902
-      - 51.9553
+      - 13.810325
+      - 51.953125
       - 0
       - 0
       - 0
@@ -20278,10 +20338,10 @@ entities:
       - 0
       - 0
     - volume: 2500
-      temperature: 186.51315
+      temperature: 186.4938
       moles:
-      - 13.812015
-      - 51.959488
+      - 13.810561
+      - 51.954018
       - 0
       - 0
       - 0
@@ -20289,10 +20349,10 @@ entities:
       - 0
       - 0
     - volume: 2500
-      temperature: 157.05261
+      temperature: 156.97522
       moles:
-      - 11.598301
-      - 43.631706
+      - 11.592488
+      - 43.609837
       - 0
       - 0
       - 0
@@ -20300,10 +20360,10 @@ entities:
       - 0
       - 0
     - volume: 2500
-      temperature: 145.53777
+      temperature: 145.49219
       moles:
-      - 10.733058
-      - 40.376743
+      - 10.729633
+      - 40.363857
       - 0
       - 0
       - 0
@@ -20311,10 +20371,10 @@ entities:
       - 0
       - 0
     - volume: 2500
-      temperature: 129.1435
+      temperature: 129.12242
       moles:
-      - 9.501166
-      - 35.74248
+      - 9.499583
+      - 35.73653
       - 0
       - 0
       - 0
@@ -20322,10 +20382,10 @@ entities:
       - 0
       - 0
     - volume: 2500
-      temperature: 75.14751
+      temperature: 75.13982
       moles:
-      - 5.443822
-      - 20.47914
+      - 5.4432445
+      - 20.476969
       - 0
       - 0
       - 0
@@ -20333,10 +20393,10 @@ entities:
       - 0
       - 0
     - volume: 2500
-      temperature: 166.03687
+      temperature: 166.03494
       moles:
-      - 12.273395
-      - 46.171345
+      - 12.273251
+      - 46.1708
       - 0
       - 0
       - 0
@@ -20344,10 +20404,10 @@ entities:
       - 0
       - 0
     - volume: 2500
-      temperature: 75.15527
+      temperature: 293.15
       moles:
-      - 5.4444056
-      - 20.481335
+      - 0
+      - 0
       - 0
       - 0
       - 0
@@ -20355,10 +20415,10 @@ entities:
       - 0
       - 0
     - volume: 2500
-      temperature: 166.03882
+      temperature: 75.14142
       moles:
-      - 12.2735405
-      - 46.171894
+      - 5.443364
+      - 20.477419
       - 0
       - 0
       - 0
@@ -20366,10 +20426,10 @@ entities:
       - 0
       - 0
     - volume: 2500
-      temperature: 129.16519
+      temperature: 166.03535
       moles:
-      - 9.502797
-      - 35.74862
+      - 12.27328
+      - 46.170914
       - 0
       - 0
       - 0
@@ -20377,10 +20437,21 @@ entities:
       - 0
       - 0
     - volume: 2500
-      temperature: 145.50214
+      temperature: 129.12686
       moles:
-      - 10.73038
-      - 40.366673
+      - 9.499916
+      - 35.73778
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+    - volume: 2500
+      temperature: 145.48486
+      moles:
+      - 10.729084
+      - 40.361794
       - 0
       - 0
       - 0
@@ -20402,17 +20473,6 @@ entities:
       temperature: 293.15
       moles:
       - 6666.982
-      - 0
-      - 0
-      - 0
-      - 0
-      - 0
-      - 0
-      - 0
-    - volume: 2500
-      temperature: 293.15
-      moles:
-      - 0
       - 0
       - 0
       - 0
@@ -21346,6 +21406,78 @@ entities:
         bodyB: 130
         bodyA: 12183
         id: docking23627
+        localAnchorB: -32.5,-32
+        localAnchorA: 1.5,1
+        referenceAngle: -3.8784267E-05
+        damping: 1110.888
+        stiffness: 9971.308
+      docking20855: !type:WeldJoint
+        bodyB: 9743
+        bodyA: 130
+        id: docking20855
+        localAnchorB: -2.5,0
+        localAnchorA: 10.5,-43
+        referenceAngle: -0.00039834913
+        damping: 103014.484
+        stiffness: 924655.9
+      docking20856: !type:WeldJoint
+        bodyB: 9742
+        bodyA: 130
+        id: docking20856
+        localAnchorB: 1.5,0
+        localAnchorA: 16.5,-43
+        referenceAngle: -0.00041914586
+        damping: 103014.484
+        stiffness: 924655.9
+      docking21174: !type:WeldJoint
+        bodyB: 130
+        bodyA: 9743
+        id: docking21174
+        localAnchorB: 10.5,-43
+        localAnchorA: -2.5,0
+        referenceAngle: 0.00039834913
+        damping: 251.67662
+        stiffness: 2259.0442
+      docking21175: !type:WeldJoint
+        bodyB: 130
+        bodyA: 9742
+        id: docking21175
+        localAnchorB: 16.5,-43
+        localAnchorA: 1.5,0
+        referenceAngle: 0.00041914586
+        damping: 250.80473
+        stiffness: 2251.2183
+      docking21382: !type:WeldJoint
+        bodyB: 12183
+        bodyA: 130
+        id: docking21382
+        localAnchorB: 0.5,1
+        localAnchorA: -33.5,-32
+        referenceAngle: 3.8784267E-05
+        damping: 103014.484
+        stiffness: 924655.9
+      docking21383: !type:WeldJoint
+        bodyB: 12183
+        bodyA: 130
+        id: docking21383
+        localAnchorB: 1.5,1
+        localAnchorA: -32.5,-32
+        referenceAngle: 3.8784267E-05
+        damping: 103014.484
+        stiffness: 924655.9
+      docking23621: !type:WeldJoint
+        bodyB: 130
+        bodyA: 12183
+        id: docking23621
+        localAnchorB: -33.5,-32
+        localAnchorA: 0.5,1
+        referenceAngle: -3.8784267E-05
+        damping: 1110.888
+        stiffness: 9971.308
+      docking23622: !type:WeldJoint
+        bodyB: 130
+        bodyA: 12183
+        id: docking23622
         localAnchorB: -32.5,-32
         localAnchorA: 1.5,1
         referenceAngle: -3.8784267E-05
@@ -26691,16 +26823,12 @@ entities:
     parent: 130
     type: Transform
 - uid: 878
-  type: MagazineMagnumSmgRubber
+  type: MagazineMagnumSubMachineGunRubber
   components:
   - parent: 4756
     type: Transform
   - canCollide: False
     type: Physics
-  - containers:
-      Content.Server.Weapon.Ranged.Ammunition.Components.RangedMagazineComponent-magazine: !type:Container
-        ents: []
-    type: ContainerContainer
 - uid: 879
   type: Rack
   components:
@@ -28664,16 +28792,11 @@ entities:
       stash: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 1102
-  type: RevolverDeckard
+  type: WeaponRevolverDeckard
   components:
   - pos: -17.504456,12.729088
     parent: 130
     type: Transform
-  - containers:
-      Content.Server.Weapon.Ranged.Barrels.Components.BoltActionBarrelComponent-ammo-container: !type:Container
-        ents: []
-      Content.Server.Weapon.Ranged.Barrels.Components.BoltActionBarrelComponent-chamber-container: !type:ContainerSlot {}
-    type: ContainerContainer
 - uid: 1103
   type: WallSolid
   components:
@@ -30283,17 +30406,13 @@ entities:
       stash: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 1318
-  type: TaserGun
+  type: WeaponTaser
   components:
   - pos: -46.49491,27.801142
     parent: 130
     type: Transform
   - canCollide: False
     type: Physics
-  - containers:
-      Content.Server.Weapon.Ranged.Barrels.Components.BatteryBarrelComponent-ammo-container: !type:ContainerSlot {}
-      cellslot_cell_container: !type:ContainerSlot {}
-    type: ContainerContainer
 - uid: 1319
   type: DisposalPipe
   components:
@@ -46879,11 +46998,17 @@ entities:
     parent: 130
     type: Transform
 - uid: 3333
-  type: WallReinforced
+  type: ClosetFireFilled
   components:
-  - pos: -19.5,-9.5
+  - pos: -18.5,-14.5
     parent: 130
     type: Transform
+  - isPlaceable: False
+    type: PlaceableSurface
+  - containers:
+      EntityStorageComponent: !type:Container
+        ents: []
+    type: ContainerContainer
 - uid: 3334
   type: WallReinforced
   components:
@@ -63730,7 +63855,7 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 4756
-  type: SmgDrozdRiot
+  type: WeaponSubMachineGunDrozdRubber
   components:
   - pos: -50.49019,28.484802
     parent: 130
@@ -63738,8 +63863,8 @@ entities:
   - canCollide: False
     type: Physics
   - containers:
-      Content.Server.Weapon.Ranged.Barrels.Components.MagazineBarrelComponent-chamber: !type:ContainerSlot {}
-      Content.Server.Weapon.Ranged.Barrels.Components.MagazineBarrelComponent-magazine: !type:ContainerSlot
+      gun_chamber: !type:ContainerSlot {}
+      gun_magazine: !type:ContainerSlot
         ent: 878
     type: ContainerContainer
 - uid: 4757
@@ -73576,7 +73701,7 @@ entities:
     parent: 130
     type: Transform
 - uid: 5650
-  type: BoxLatex
+  type: BoxLatexGloves
   components:
   - pos: 21.30173,-25.393604
     parent: 130
@@ -109009,12 +109134,6 @@ entities:
     type: Physics
   - fixtures: []
     type: Fixtures
-- uid: 8648
-  type: SuspicionSniperSpawner
-  components:
-  - pos: -2.5,28.5
-    parent: 130
-    type: Transform
 - uid: 8649
   type: CableMV
   components:
@@ -109039,70 +109158,10 @@ entities:
     type: Physics
   - fixtures: []
     type: Fixtures
-- uid: 8651
-  type: SuspicionRifleSpawner
-  components:
-  - pos: -36.5,4.5
-    parent: 130
-    type: Transform
 - uid: 8652
   type: ClothingHandsGlovesColorYellow
   components:
   - pos: -85.54092,-2.3624935
-    parent: 130
-    type: Transform
-- uid: 8653
-  type: SuspicionPistolSpawner
-  components:
-  - pos: -65.5,13.5
-    parent: 130
-    type: Transform
-- uid: 8654
-  type: SuspicionRevolverSpawner
-  components:
-  - pos: -72.5,23.5
-    parent: 130
-    type: Transform
-- uid: 8655
-  type: SuspicionPistolSpawner
-  components:
-  - pos: -63.5,23.5
-    parent: 130
-    type: Transform
-- uid: 8656
-  type: SuspicionPistolMagazineSpawner
-  components:
-  - pos: -63.5,19.5
-    parent: 130
-    type: Transform
-- uid: 8657
-  type: SuspicionPistolMagazineSpawner
-  components:
-  - pos: -59.5,12.5
-    parent: 130
-    type: Transform
-- uid: 8658
-  type: SuspicionPistolMagazineSpawner
-  components:
-  - pos: -60.5,12.5
-    parent: 130
-    type: Transform
-- uid: 8659
-  type: SuspicionMeleeSpawner
-  components:
-  - pos: -65.5,23.5
-    parent: 130
-    type: Transform
-- uid: 8660
-  type: SuspicionMagnumMagazineSpawner
-  components:
-  - pos: -61.5,12.5
-    parent: 130
-    type: Transform
-- uid: 8661
-  type: SuspicionLaunchersSpawner
-  components:
-  - pos: -36.5,12.5
     parent: 130
     type: Transform
 - uid: 8662
@@ -109145,30 +109204,6 @@ entities:
   - pos: 15.2865305,12.476993
     parent: 130
     type: Transform
-- uid: 8666
-  type: SuspicionMeleeSpawner
-  components:
-  - pos: 16.5,8.5
-    parent: 130
-    type: Transform
-- uid: 8667
-  type: SuspicionMeleeSpawner
-  components:
-  - pos: 15.5,6.5
-    parent: 130
-    type: Transform
-- uid: 8668
-  type: SuspicionMeleeSpawner
-  components:
-  - pos: 16.5,5.5
-    parent: 130
-    type: Transform
-- uid: 8669
-  type: SuspicionPistolMagazineSpawner
-  components:
-  - pos: 16.5,6.5
-    parent: 130
-    type: Transform
 - uid: 8670
   type: hydroponicsTray
   components:
@@ -109185,12 +109220,6 @@ entities:
       machine_parts: !type:Container
         ents: []
     type: ContainerContainer
-- uid: 8671
-  type: SuspicionSniperSpawner
-  components:
-  - pos: 47.5,-0.5
-    parent: 130
-    type: Transform
 - uid: 8672
   type: WallSolid
   components:
@@ -109221,24 +109250,6 @@ entities:
       EntityStorageComponent: !type:Container
         ents: []
     type: ContainerContainer
-- uid: 8676
-  type: SuspicionShotgunSpawner
-  components:
-  - pos: 13.5,-23.5
-    parent: 130
-    type: Transform
-- uid: 8677
-  type: SuspicionShotgunMagazineSpawner
-  components:
-  - pos: 13.5,-23.5
-    parent: 130
-    type: Transform
-- uid: 8678
-  type: SuspicionSMGSpawner
-  components:
-  - pos: 4.5,-23.5
-    parent: 130
-    type: Transform
 - uid: 8679
   type: Protolathe
   components:
@@ -109665,53 +109676,37 @@ entities:
         ents: []
     type: ContainerContainer
 - uid: 8723
-  type: TaserGun
+  type: WeaponTaser
   components:
   - pos: -46.49491,28.317125
     parent: 130
     type: Transform
   - canCollide: False
     type: Physics
-  - containers:
-      Content.Server.Weapon.Ranged.Barrels.Components.BatteryBarrelComponent-ammo-container: !type:ContainerSlot {}
-      cellslot_cell_container: !type:ContainerSlot {}
-    type: ContainerContainer
 - uid: 8724
-  type: TaserGun
+  type: WeaponTaser
   components:
   - pos: -46.49491,28.45785
     parent: 130
     type: Transform
   - canCollide: False
     type: Physics
-  - containers:
-      Content.Server.Weapon.Ranged.Barrels.Components.BatteryBarrelComponent-ammo-container: !type:ContainerSlot {}
-      cellslot_cell_container: !type:ContainerSlot {}
-    type: ContainerContainer
 - uid: 8725
-  type: TaserGun
+  type: WeaponTaser
   components:
   - pos: -46.510536,28.176403
     parent: 130
     type: Transform
   - canCollide: False
     type: Physics
-  - containers:
-      Content.Server.Weapon.Ranged.Barrels.Components.BatteryBarrelComponent-ammo-container: !type:ContainerSlot {}
-      cellslot_cell_container: !type:ContainerSlot {}
-    type: ContainerContainer
 - uid: 8726
-  type: TaserGun
+  type: WeaponTaser
   components:
   - pos: -46.51059,27.988773
     parent: 130
     type: Transform
   - canCollide: False
     type: Physics
-  - containers:
-      Content.Server.Weapon.Ranged.Barrels.Components.BatteryBarrelComponent-ammo-container: !type:ContainerSlot {}
-      cellslot_cell_container: !type:ContainerSlot {}
-    type: ContainerContainer
 - uid: 8727
   type: BoxFlashbang
   components:
@@ -109968,7 +109963,7 @@ entities:
         ents: []
     type: ContainerContainer
 - uid: 8755
-  type: BoxSterile
+  type: BoxSterileMask
   components:
   - pos: 21.86423,-25.393604
     parent: 130
@@ -114016,17 +114011,23 @@ entities:
     parent: 130
     type: Transform
 - uid: 9219
-  type: LockerEvidence
+  type: PoweredSmallLight
   components:
-  - pos: -38.500004,15.499999
+  - pos: -17.5,-12.5
     parent: 130
     type: Transform
-  - isPlaceable: False
-    type: PlaceableSurface
+  - powerLoad: 0
+    type: ApcPowerReceiver
+  - enabled: False
+    type: AmbientSound
   - containers:
-      EntityStorageComponent: !type:Container
-        ents: []
+      light_bulb: !type:ContainerSlot {}
     type: ContainerContainer
+  - inputs:
+      On: []
+      Off: []
+      Toggle: []
+    type: SignalReceiver
 - uid: 9220
   type: ShuttersWindowOpen
   components:
@@ -116795,7 +116796,7 @@ entities:
     type: Transform
   - dockedWith: 9798
     type: Docking
-  - SecondsUntilStateChange: -38.142303
+  - SecondsUntilStateChange: -415.531
     changeAirtight: False
     state: Opening
     type: Door
@@ -116814,7 +116815,7 @@ entities:
     type: Transform
   - dockedWith: 9799
     type: Docking
-  - SecondsUntilStateChange: -38.142303
+  - SecondsUntilStateChange: -415.531
     changeAirtight: False
     state: Opening
     type: Door
@@ -119305,6 +119306,24 @@ entities:
         referenceAngle: 0.00041914586
         damping: 250.80473
         stiffness: 2251.2183
+      docking20856: !type:WeldJoint
+        bodyB: 9742
+        bodyA: 130
+        id: docking20856
+        localAnchorB: 1.5,0
+        localAnchorA: 16.5,-43
+        referenceAngle: -0.00041914586
+        damping: 103014.484
+        stiffness: 924655.9
+      docking21175: !type:WeldJoint
+        bodyB: 130
+        bodyA: 9742
+        id: docking21175
+        localAnchorB: 16.5,-43
+        localAnchorA: 1.5,0
+        referenceAngle: 0.00041914586
+        damping: 250.80473
+        stiffness: 2251.2183
     type: Joint
 - uid: 9743
   components:
@@ -119614,6 +119633,24 @@ entities:
         bodyB: 130
         bodyA: 9743
         id: docking21179
+        localAnchorB: 10.5,-43
+        localAnchorA: -2.5,0
+        referenceAngle: 0.00039834913
+        damping: 251.67662
+        stiffness: 2259.0442
+      docking20855: !type:WeldJoint
+        bodyB: 9743
+        bodyA: 130
+        id: docking20855
+        localAnchorB: -2.5,0
+        localAnchorA: 10.5,-43
+        referenceAngle: -0.00039834913
+        damping: 103014.484
+        stiffness: 924655.9
+      docking21174: !type:WeldJoint
+        bodyB: 130
+        bodyA: 9743
+        id: docking21174
         localAnchorB: 10.5,-43
         localAnchorA: -2.5,0
         referenceAngle: 0.00039834913
@@ -120083,7 +120120,7 @@ entities:
     type: Transform
   - dockedWith: 9479
     type: Docking
-  - SecondsUntilStateChange: -38.142303
+  - SecondsUntilStateChange: -415.531
     changeAirtight: False
     state: Opening
     type: Door
@@ -120103,7 +120140,7 @@ entities:
     type: Transform
   - dockedWith: 9480
     type: Docking
-  - SecondsUntilStateChange: -38.142303
+  - SecondsUntilStateChange: -415.531
     changeAirtight: False
     state: Opening
     type: Door
@@ -120440,7 +120477,7 @@ entities:
     parent: 130
     type: Transform
 - uid: 9838
-  type: SmgDrozdRiot
+  type: WeaponSubMachineGunDrozdRubber
   components:
   - pos: -50.36519,28.39105
     parent: 130
@@ -120448,23 +120485,19 @@ entities:
   - canCollide: False
     type: Physics
   - containers:
-      Content.Server.Weapon.Ranged.Barrels.Components.MagazineBarrelComponent-chamber: !type:ContainerSlot {}
-      Content.Server.Weapon.Ranged.Barrels.Components.MagazineBarrelComponent-magazine: !type:ContainerSlot
+      gun_chamber: !type:ContainerSlot {}
+      gun_magazine: !type:ContainerSlot
         ent: 9839
     type: ContainerContainer
 - uid: 9839
-  type: MagazineMagnumSmgRubber
+  type: MagazineMagnumSubMachineGunRubber
   components:
   - parent: 9838
     type: Transform
   - canCollide: False
     type: Physics
-  - containers:
-      Content.Server.Weapon.Ranged.Ammunition.Components.RangedMagazineComponent-magazine: !type:Container
-        ents: []
-    type: ContainerContainer
 - uid: 9840
-  type: SmgDrozdRiot
+  type: WeaponSubMachineGunDrozdRubber
   components:
   - pos: -50.20894,28.25043
     parent: 130
@@ -120472,21 +120505,17 @@ entities:
   - canCollide: False
     type: Physics
   - containers:
-      Content.Server.Weapon.Ranged.Barrels.Components.MagazineBarrelComponent-chamber: !type:ContainerSlot {}
-      Content.Server.Weapon.Ranged.Barrels.Components.MagazineBarrelComponent-magazine: !type:ContainerSlot
+      gun_chamber: !type:ContainerSlot {}
+      gun_magazine: !type:ContainerSlot
         ent: 9841
     type: ContainerContainer
 - uid: 9841
-  type: MagazineMagnumSmgRubber
+  type: MagazineMagnumSubMachineGunRubber
   components:
   - parent: 9840
     type: Transform
   - canCollide: False
     type: Physics
-  - containers:
-      Content.Server.Weapon.Ranged.Ammunition.Components.RangedMagazineComponent-magazine: !type:Container
-        ents: []
-    type: ContainerContainer
 - uid: 9842
   type: SignElectricalMed
   components:
@@ -120518,7 +120547,7 @@ entities:
     parent: 130
     type: Transform
 - uid: 9847
-  type: BoxMagazineMagnumSmgRubber
+  type: BoxMagazineMagnumSubMachineGunRubber
   components:
   - pos: -50.537224,27.537354
     parent: 130
@@ -120540,7 +120569,7 @@ entities:
     parent: 130
     type: Transform
 - uid: 9850
-  type: BoxMagazineMagnumSmg
+  type: BoxMagazineMagnumSubMachineGun
   components:
   - pos: -50.50613,33.499382
     parent: 130
@@ -120555,11 +120584,6 @@ entities:
   - pos: 4.560455,40.706085
     parent: 130
     type: Transform
-  - containers:
-      Content.Server.Weapon.Ranged.Barrels.Components.BoltActionBarrelComponent-ammo-container: !type:Container
-        ents: []
-      Content.Server.Weapon.Ranged.Barrels.Components.BoltActionBarrelComponent-chamber-container: !type:ContainerSlot {}
-    type: ContainerContainer
 - uid: 9852
   type: BoxShotgunFlash
   components:
@@ -120571,7 +120595,7 @@ entities:
         ents: []
     type: ContainerContainer
 - uid: 9853
-  type: ShotgunPump
+  type: WeaponShotgunKammerer
   components:
   - rot: 0.0005161979424883612 rad
     pos: -50.42611,26.53713
@@ -120579,37 +120603,22 @@ entities:
     type: Transform
   - canCollide: False
     type: Physics
-  - containers:
-      Content.Server.Weapon.Ranged.Barrels.Components.PumpBarrelComponent-ammo-container: !type:Container
-        ents: []
-      Content.Server.Weapon.Ranged.Barrels.Components.PumpBarrelComponent-chamber-container: !type:ContainerSlot {}
-    type: ContainerContainer
 - uid: 9854
-  type: ShotgunPump
+  type: WeaponShotgunKammerer
   components:
   - pos: -50.362858,26.434116
     parent: 130
     type: Transform
   - canCollide: False
     type: Physics
-  - containers:
-      Content.Server.Weapon.Ranged.Barrels.Components.PumpBarrelComponent-ammo-container: !type:Container
-        ents: []
-      Content.Server.Weapon.Ranged.Barrels.Components.PumpBarrelComponent-chamber-container: !type:ContainerSlot {}
-    type: ContainerContainer
 - uid: 9855
-  type: ShotgunPump
+  type: WeaponShotgunKammerer
   components:
   - pos: -50.331615,26.29349
     parent: 130
     type: Transform
   - canCollide: False
     type: Physics
-  - containers:
-      Content.Server.Weapon.Ranged.Barrels.Components.PumpBarrelComponent-ammo-container: !type:Container
-        ents: []
-      Content.Server.Weapon.Ranged.Barrels.Components.PumpBarrelComponent-chamber-container: !type:ContainerSlot {}
-    type: ContainerContainer
 - uid: 9856
   type: BoxBeanbag
   components:
@@ -120635,17 +120644,13 @@ entities:
         ents: []
     type: ContainerContainer
 - uid: 9858
-  type: TaserGun
+  type: WeaponTaser
   components:
   - pos: -46.510536,28.661114
     parent: 130
     type: Transform
   - canCollide: False
     type: Physics
-  - containers:
-      Content.Server.Weapon.Ranged.Barrels.Components.BatteryBarrelComponent-ammo-container: !type:ContainerSlot {}
-      cellslot_cell_container: !type:ContainerSlot {}
-    type: ContainerContainer
 - uid: 9859
   type: WeaponCapacitorRecharger
   components:
@@ -120658,110 +120663,75 @@ entities:
   - fixtures: []
     type: Fixtures
 - uid: 9860
-  type: LaserRifleCog
+  type: WeaponLaserRifleCog
   components:
   - pos: -50.43171,36.557983
     parent: 130
     type: Transform
   - canCollide: False
     type: Physics
-  - containers:
-      Content.Server.Weapon.Ranged.Barrels.Components.BatteryBarrelComponent-ammo-container: !type:ContainerSlot {}
-      cellslot_cell_container: !type:ContainerSlot {}
-    type: ContainerContainer
 - uid: 9861
-  type: SmgWt550
+  type: WeaponSubMachineGunWt550
   components:
   - pos: -42.41477,29.758934
     parent: 130
     type: Transform
   - containers:
-      Content.Server.Weapon.Ranged.Barrels.Components.MagazineBarrelComponent-chamber: !type:ContainerSlot {}
-      Content.Server.Weapon.Ranged.Barrels.Components.MagazineBarrelComponent-magazine: !type:ContainerSlot
+      gun_chamber: !type:ContainerSlot {}
+      gun_magazine: !type:ContainerSlot
         ent: 9862
     type: ContainerContainer
 - uid: 9862
-  type: MagazinePistolSmgTopMounted
+  type: MagazinePistolSubMachineGunTopMounted
   components:
   - parent: 9861
     type: Transform
   - canCollide: False
     type: Physics
-  - containers:
-      Content.Server.Weapon.Ranged.Ammunition.Components.RangedMagazineComponent-magazine: !type:Container
-        ents: []
-    type: ContainerContainer
 - uid: 9863
-  type: MagazinePistolSmgTopMounted
+  type: MagazinePistolSubMachineGunTopMounted
   components:
   - pos: -41.69602,29.64956
     parent: 130
     type: Transform
-  - containers:
-      Content.Server.Weapon.Ranged.Ammunition.Components.RangedMagazineComponent-magazine: !type:Container
-        ents: []
-    type: ContainerContainer
 - uid: 9864
-  type: MagazinePistolSmgTopMounted
+  type: MagazinePistolSubMachineGunTopMounted
   components:
   - pos: -41.57574,29.462057
     parent: 130
     type: Transform
-  - containers:
-      Content.Server.Weapon.Ranged.Ammunition.Components.RangedMagazineComponent-magazine: !type:Container
-        ents: []
-    type: ContainerContainer
 - uid: 9865
-  type: LaserRifleCog
+  type: WeaponLaserRifleCog
   components:
   - pos: -50.448357,36.295975
     parent: 130
     type: Transform
   - canCollide: False
     type: Physics
-  - containers:
-      Content.Server.Weapon.Ranged.Barrels.Components.BatteryBarrelComponent-ammo-container: !type:ContainerSlot {}
-      cellslot_cell_container: !type:ContainerSlot {}
-    type: ContainerContainer
 - uid: 9866
-  type: ShotgunPump
+  type: WeaponShotgunKammerer
   components:
   - pos: -50.5266,35.646835
     parent: 130
     type: Transform
   - canCollide: False
     type: Physics
-  - containers:
-      Content.Server.Weapon.Ranged.Barrels.Components.PumpBarrelComponent-ammo-container: !type:Container
-        ents: []
-      Content.Server.Weapon.Ranged.Barrels.Components.PumpBarrelComponent-chamber-container: !type:ContainerSlot {}
-    type: ContainerContainer
 - uid: 9867
-  type: ShotgunPump
+  type: WeaponShotgunKammerer
   components:
   - pos: -50.52665,35.459335
     parent: 130
     type: Transform
   - canCollide: False
     type: Physics
-  - containers:
-      Content.Server.Weapon.Ranged.Barrels.Components.PumpBarrelComponent-ammo-container: !type:Container
-        ents: []
-      Content.Server.Weapon.Ranged.Barrels.Components.PumpBarrelComponent-chamber-container: !type:ContainerSlot {}
-    type: ContainerContainer
 - uid: 9868
-  type: ShotgunPump
+  type: WeaponShotgunKammerer
   components:
   - pos: -50.511024,35.318657
     parent: 130
     type: Transform
   - canCollide: False
     type: Physics
-  - containers:
-      Content.Server.Weapon.Ranged.Barrels.Components.PumpBarrelComponent-ammo-container: !type:Container
-        ents: []
-      Content.Server.Weapon.Ranged.Barrels.Components.PumpBarrelComponent-chamber-container: !type:ContainerSlot {}
-    type: ContainerContainer
 - uid: 9869
   type: Rack
   components:
@@ -121915,7 +121885,7 @@ entities:
     type: Transform
   - dockedWith: 12245
     type: Docking
-  - SecondsUntilStateChange: -38.142303
+  - SecondsUntilStateChange: -415.531
     changeAirtight: False
     state: Opening
     type: Door
@@ -121934,7 +121904,7 @@ entities:
     type: Transform
   - dockedWith: 12246
     type: Docking
-  - SecondsUntilStateChange: -38.142303
+  - SecondsUntilStateChange: -415.531
     changeAirtight: False
     state: Opening
     type: Door
@@ -145841,6 +145811,42 @@ entities:
         referenceAngle: -3.8784267E-05
         damping: 1110.888
         stiffness: 9971.308
+      docking21382: !type:WeldJoint
+        bodyB: 12183
+        bodyA: 130
+        id: docking21382
+        localAnchorB: 0.5,1
+        localAnchorA: -33.5,-32
+        referenceAngle: 3.8784267E-05
+        damping: 103014.484
+        stiffness: 924655.9
+      docking21383: !type:WeldJoint
+        bodyB: 12183
+        bodyA: 130
+        id: docking21383
+        localAnchorB: 1.5,1
+        localAnchorA: -32.5,-32
+        referenceAngle: 3.8784267E-05
+        damping: 103014.484
+        stiffness: 924655.9
+      docking23621: !type:WeldJoint
+        bodyB: 130
+        bodyA: 12183
+        id: docking23621
+        localAnchorB: -33.5,-32
+        localAnchorA: 0.5,1
+        referenceAngle: -3.8784267E-05
+        damping: 1110.888
+        stiffness: 9971.308
+      docking23622: !type:WeldJoint
+        bodyB: 130
+        bodyA: 12183
+        id: docking23622
+        localAnchorB: -32.5,-32
+        localAnchorA: 1.5,1
+        referenceAngle: -3.8784267E-05
+        damping: 1110.888
+        stiffness: 9971.308
     type: Joint
 - uid: 12184
   type: WallRiveted
@@ -146276,7 +146282,7 @@ entities:
     type: Transform
   - dockedWith: 10006
     type: Docking
-  - SecondsUntilStateChange: -38.142303
+  - SecondsUntilStateChange: -415.531
     changeAirtight: False
     state: Opening
     type: Door
@@ -146296,7 +146302,7 @@ entities:
     type: Transform
   - dockedWith: 10007
     type: Docking
-  - SecondsUntilStateChange: -38.142303
+  - SecondsUntilStateChange: -415.531
     changeAirtight: False
     state: Opening
     type: Door
@@ -147785,16 +147791,6 @@ entities:
   - pos: 41.5,-14.5
     parent: 130
     type: Transform
-- uid: 12381
-  type: LaserPistolSvalinn
-  components:
-  - pos: 41.431465,-14.428922
-    parent: 130
-    type: Transform
-  - containers:
-      Content.Server.Weapon.Ranged.Barrels.Components.BatteryBarrelComponent-ammo-container: !type:ContainerSlot {}
-      cellslot_cell_container: !type:ContainerSlot {}
-    type: ContainerContainer
 - uid: 12382
   type: ClothingBeltUtilityFilled
   components:
@@ -149736,6 +149732,8 @@ entities:
     pos: -19.5,-9.5
     parent: 130
     type: Transform
+  - enabled: False
+    type: AmbientSound
   - canCollide: False
     type: Physics
 - uid: 12571
@@ -151339,7 +151337,7 @@ entities:
       id: docking
     type: Fixtures
 - uid: 12721
-  type: BoxSterile
+  type: BoxSterileMask
   components:
   - pos: 5.5165095,-21.370937
     parent: 130
@@ -151355,7 +151353,7 @@ entities:
     parent: 130
     type: Transform
 - uid: 12723
-  type: BoxLatex
+  type: BoxLatexGloves
   components:
   - pos: 2.335823,-12.452833
     parent: 130
@@ -151365,7 +151363,7 @@ entities:
         ents: []
     type: ContainerContainer
 - uid: 12724
-  type: BoxLatex
+  type: BoxLatexGloves
   components:
   - pos: 5.445194,-23.46559
     parent: 130
@@ -151797,15 +151795,11 @@ entities:
     parent: 130
     type: Transform
 - uid: 12775
-  type: TaserGun
+  type: WeaponTaser
   components:
   - pos: -49.643505,23.50929
     parent: 130
     type: Transform
-  - containers:
-      Content.Server.Weapon.Ranged.Barrels.Components.BatteryBarrelComponent-ammo-container: !type:ContainerSlot {}
-      cellslot_cell_container: !type:ContainerSlot {}
-    type: ContainerContainer
 - uid: 12776
   type: Table
   components:
@@ -151813,15 +151807,11 @@ entities:
     parent: 130
     type: Transform
 - uid: 12777
-  type: TaserGun
+  type: WeaponTaser
   components:
   - pos: -49.65913,23.712416
     parent: 130
     type: Transform
-  - containers:
-      Content.Server.Weapon.Ranged.Barrels.Components.BatteryBarrelComponent-ammo-container: !type:ContainerSlot {}
-      cellslot_cell_container: !type:ContainerSlot {}
-    type: ContainerContainer
 - uid: 12778
   type: WeaponCapacitorRecharger
   components:
@@ -192515,16 +192505,11 @@ entities:
     parent: 130
     type: Transform
 - uid: 17137
-  type: FlareGun
+  type: WeaponFlareGun
   components:
   - pos: -56.528667,17.548311
     parent: 130
     type: Transform
-  - containers:
-      Content.Server.Weapon.Ranged.Barrels.Components.BoltActionBarrelComponent-ammo-container: !type:Container
-        ents: []
-      Content.Server.Weapon.Ranged.Barrels.Components.BoltActionBarrelComponent-chamber-container: !type:ContainerSlot {}
-    type: ContainerContainer
 - uid: 17138
   type: ClothingBeltMilitaryWebbing
   components:
@@ -199838,6 +199823,102 @@ entities:
       machine_board: !type:Container
         ents: []
       machine_parts: !type:Container
+        ents: []
+    type: ContainerContainer
+- uid: 18087
+  type: AirlockMaint
+  components:
+  - pos: -19.5,-12.5
+    parent: 130
+    type: Transform
+- uid: 18088
+  type: filingCabinet
+  components:
+  - pos: -38.5,15.5
+    parent: 130
+    type: Transform
+  - containers:
+      storagebase: !type:Container
+        ents: []
+    type: ContainerContainer
+- uid: 18089
+  type: filingCabinetDrawer
+  components:
+  - pos: -15.5,-9.5
+    parent: 130
+    type: Transform
+  - containers:
+      storagebase: !type:Container
+        ents: []
+    type: ContainerContainer
+- uid: 18090
+  type: filingCabinet
+  components:
+  - pos: -10.5,-10.5
+    parent: 130
+    type: Transform
+  - containers:
+      storagebase: !type:Container
+        ents: []
+    type: ContainerContainer
+- uid: 18091
+  type: filingCabinetTall
+  components:
+  - pos: 12.5,-17.5
+    parent: 130
+    type: Transform
+  - containers:
+      storagebase: !type:Container
+        ents: []
+    type: ContainerContainer
+- uid: 18092
+  type: filingCabinetDrawer
+  components:
+  - pos: 31.5,-3.5
+    parent: 130
+    type: Transform
+  - containers:
+      storagebase: !type:Container
+        ents: []
+    type: ContainerContainer
+- uid: 18093
+  type: filingCabinet
+  components:
+  - pos: -30.5,-9.5
+    parent: 130
+    type: Transform
+  - containers:
+      storagebase: !type:Container
+        ents: []
+    type: ContainerContainer
+- uid: 18094
+  type: filingCabinetDrawer
+  components:
+  - pos: -40.5,-22.5
+    parent: 130
+    type: Transform
+  - containers:
+      storagebase: !type:Container
+        ents: []
+    type: ContainerContainer
+- uid: 18095
+  type: filingCabinetTall
+  components:
+  - pos: -92.5,-12.5
+    parent: 130
+    type: Transform
+  - containers:
+      storagebase: !type:Container
+        ents: []
+    type: ContainerContainer
+- uid: 18096
+  type: filingCabinetDrawer
+  components:
+  - pos: -38.5,8.5
+    parent: 130
+    type: Transform
+  - containers:
+      storagebase: !type:Container
         ents: []
     type: ContainerContainer
 ...

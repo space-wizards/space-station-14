@@ -7,6 +7,7 @@ using Content.Server.PDA;
 using Content.Server.Roles;
 using Content.Server.Station.Components;
 using Content.Shared.Access.Components;
+using Content.Shared.Access.Systems;
 using Content.Shared.CCVar;
 using Content.Shared.Inventory;
 using Content.Shared.PDA;
@@ -35,6 +36,7 @@ public sealed class StationSpawningSystem : EntitySystem
     [Dependency] private readonly IdCardSystem _cardSystem = default!;
     [Dependency] private readonly InventorySystem _inventorySystem = default!;
     [Dependency] private readonly PDASystem _pdaSystem = default!;
+    [Dependency] private readonly AccessSystem _accessSystem = default!;
 
     /// <inheritdoc/>
     public override void Initialize()
@@ -82,8 +84,13 @@ public sealed class StationSpawningSystem : EntitySystem
     /// <param name="coordinates">Coordinates to spawn the character at.</param>
     /// <param name="job">Job to assign to the character, if any.</param>
     /// <param name="profile">Appearance profile to use for the character.</param>
+    /// <param name="station">The station this player is being spawned on.</param>
     /// <returns>The spawned entity</returns>
-    public EntityUid SpawnPlayerMob(EntityCoordinates coordinates, Job? job, HumanoidCharacterProfile? profile)
+    public EntityUid SpawnPlayerMob(
+        EntityCoordinates coordinates,
+        Job? job,
+        HumanoidCharacterProfile? profile,
+        EntityUid? station)
     {
         var entity = EntityManager.SpawnEntity(
             _prototypeManager.Index<SpeciesPrototype>(profile?.Species ?? SpeciesManager.DefaultSpecies).Prototype,
@@ -94,7 +101,7 @@ public sealed class StationSpawningSystem : EntitySystem
             var startingGear = _prototypeManager.Index<StartingGearPrototype>(job.StartingGear);
             EquipStartingGear(entity, startingGear, profile);
             if (profile != null)
-                EquipIdCard(entity, profile.Name, job.Prototype);
+                EquipIdCard(entity, profile.Name, job.Prototype, station);
         }
 
         if (profile != null)
@@ -154,7 +161,8 @@ public sealed class StationSpawningSystem : EntitySystem
     /// <param name="entity">Entity to load out.</param>
     /// <param name="characterName">Character name to use for the ID.</param>
     /// <param name="jobPrototype">Job prototype to use for the PDA and ID.</param>
-    public void EquipIdCard(EntityUid entity, string characterName, JobPrototype jobPrototype)
+    /// <param name="station">The station this player is being spawned on.</param>
+    public void EquipIdCard(EntityUid entity, string characterName, JobPrototype jobPrototype, EntityUid? station)
     {
         if (!_inventorySystem.TryGetSlotEntity(entity, "id", out var idUid))
             return;
@@ -163,12 +171,19 @@ public sealed class StationSpawningSystem : EntitySystem
             return;
 
         var card = pdaComponent.ContainedID;
-        _cardSystem.TryChangeFullName(card.Owner, characterName, card);
-        _cardSystem.TryChangeJobTitle(card.Owner, jobPrototype.Name, card);
+        var cardId = card.Owner;
+        _cardSystem.TryChangeFullName(cardId, characterName, card);
+        _cardSystem.TryChangeJobTitle(cardId, jobPrototype.Name, card);
 
-        var access = EntityManager.GetComponent<AccessComponent>(card.Owner);
-        var accessTags = access.Tags;
-        accessTags.UnionWith(jobPrototype.Access);
+        var extendedAccess = false;
+        if (station != null)
+        {
+            var data = Comp<StationJobsComponent>(station.Value);
+            extendedAccess = data.ExtendedAccess;
+        }
+
+        _accessSystem.SetAccessToJob(cardId, jobPrototype, extendedAccess);
+
         _pdaSystem.SetOwner(pdaComponent, characterName);
     }
 

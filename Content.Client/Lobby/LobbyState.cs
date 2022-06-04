@@ -179,7 +179,6 @@ namespace Content.Client.Lobby
 
         }
 
-
         private void LobbyStatusUpdated()
         {
             UpdateLobbyBackground();
