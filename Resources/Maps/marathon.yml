@@ -88974,6 +88974,7 @@ entities:
     nameSet: True
     id: Medical Lobby
     type: SurveillanceCamera
+
 - uid: 8291
   type: WallSolid
   components:
@@ -191006,6 +191007,11 @@ entities:
     pos: -17.5,-0.5
     parent: 30
     type: Transform
+  - setupAvailableNetworks:
+    - SurveillanceCameraSecurity
+    nameSet: True
+    id: Sec Medical Office
+    type: SurveillanceCamera
 - uid: 21198
   type: SurveillanceCameraMedical
   components:
