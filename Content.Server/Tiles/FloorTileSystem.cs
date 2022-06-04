@@ -56,16 +56,14 @@ namespace Content.Server.Tiles
                             continue;
 
                         PlaceAt(mapGrid, location, currentTileDefinition.TileId, component.PlaceTileSound);
-                        return;
                     }
                 }
-                if (HasBaseTurf(currentTileDefinition, "space"))
+                else if (HasBaseTurf(currentTileDefinition, "space"))
                 {
                     mapGrid = _mapManager.CreateGrid(locationMap.MapId);
                     mapGrid.WorldPosition = locationMap.Position;
                     location = new EntityCoordinates(mapGrid.GridEntityId, Vector2.Zero);
                     PlaceAt(mapGrid, location, _tileDefinitionManager[component.OutputTiles[0]].TileId, component.PlaceTileSound, mapGrid.TileSize / 2f);
-                    return;
                 }
             }
         }
