@@ -79,9 +79,8 @@ namespace Content.Server.Zombies
             /// hacking off all of the component
             if (HasComp<HumanoidAppearanceComponent>(target))
             {
-                var foo = _polymorph.PolymorphEntity(target, "ZombieGeneric");
-                if (foo == null) return;
-                zombie = foo.Value;
+                if (_polymorph.PolymorphEntity(target, "ZombieGeneric") is not { } zombie)
+                    return;
 
                 if (TryComp<HumanoidAppearanceComponent>(zombie, out var zomAppComp))
                     _sharedHuApp.UpdateAppearance(zombie, zomAppComp.Appearance.WithSkinColor(zombiecomp.SkinColor));
