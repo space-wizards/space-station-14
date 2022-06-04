@@ -1,10 +1,4 @@
 Entries:
-- author: Mith-randalf
-  changes:
-  - {message: Removed fun (by which I mean the centcomm outfit bundle from the traitor
-      uplink)!, type: Remove}
-  id: 1151
-  time: '2022-03-02T01:46:55.0000000+00:00'
 - author: Emisse
   changes:
   - {message: updated Saltern to Saltern Special Edition HD Enhanced Edition, type: Add}
@@ -3008,3 +3002,8 @@ Entries:
       technology unlock., type: Fix}
   id: 1650
   time: '2022-06-04T00:04:49.0000000+00:00'
+- author: themias
+  changes:
+  - {message: Inflatables can no longer be placed on walls or doors, type: Fix}
+  id: 1651
+  time: '2022-06-04T02:15:46.0000000+00:00'
