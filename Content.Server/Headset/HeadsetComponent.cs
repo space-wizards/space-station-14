@@ -1,9 +1,12 @@
 using Content.Server.Radio.Components;
 using Content.Server.Radio.EntitySystems;
 using Content.Shared.Chat;
+using Content.Shared.Radio;
 using Robust.Server.GameObjects;
 using Robust.Shared.Containers;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Network;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.List;
 
 namespace Content.Server.Headset
 {
@@ -19,8 +22,8 @@ namespace Content.Server.Headset
 
         private RadioSystem _radioSystem = default!;
 
-        [DataField("channels")]
-        private List<int> _channels = new(){0};
+        [DataField("channels", customTypeSerializer:typeof(PrototypeIdListSerializer<RadioChannelPrototype>))]
+        private List<String> _channels = new(){"broadcast"};
 
         [ViewVariables(VVAccess.ReadWrite)]
         [DataField("broadcastChannel")]
@@ -30,7 +33,7 @@ namespace Content.Server.Headset
         [DataField("listenRange")]
         public int ListenRange { get; private set; }
 
-        public IReadOnlyList<int> Channels => _channels;
+        public IReadOnlyList<int> Channels => getChannels();
 
         public bool RadioRequested { get; set; }
 
@@ -39,6 +42,17 @@ namespace Content.Server.Headset
             base.Initialize();
 
             _radioSystem = EntitySystem.Get<RadioSystem>();
+        }
+
+        private List<int> getChannels()
+        {
+            List<int> ret = new List<int>();
+            foreach (string channelId in _channels)
+            {
+                if (IoCManager.Resolve<IPrototypeManager>().TryIndex(channelId, out RadioChannelPrototype? proto))
+                    ret.Add(proto.Channel);
+            }
+            return ret;
         }
 
         public bool CanListen(string message, EntityUid source)
@@ -73,7 +87,7 @@ namespace Content.Server.Headset
         public void Broadcast(string message, EntityUid speaker, int channel)
         {
             var destChannel = channel == 0 ? BroadcastFrequency : channel;
-            if (_channels.Contains(destChannel))
+            if (getChannels().Contains(destChannel))
                 _radioSystem.SpreadMessage(this, speaker, message, destChannel);
             RadioRequested = false;
         }
