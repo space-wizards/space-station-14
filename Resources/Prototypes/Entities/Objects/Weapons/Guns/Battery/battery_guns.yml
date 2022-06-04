@@ -4,6 +4,7 @@
   abstract: true
   components:
   - type: Sprite
+    netsync: false
   - type: AmmoCounter
   - type: Gun
     fireRate: 2
