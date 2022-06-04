@@ -10,13 +10,12 @@ namespace Content.Server.Communications
         /// <summary>
         /// Remaining cooldown between making announcements.
         /// </summary>
-        [ViewVariables]
+        [ViewVariables(VVAccess.ReadWrite)]
         public float AnnouncementCooldownRemaining;
 
         /// <summary>
         /// Has the UI already been refreshed after the announcement
         /// </summary>
-        [ViewVariables]
         public bool AlreadyRefreshed = false;
 
         /// <summary>

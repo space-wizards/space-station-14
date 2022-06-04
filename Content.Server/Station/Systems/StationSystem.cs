@@ -305,6 +305,12 @@ public sealed class StationSystem : EntitySystem
         if (!Resolve(entity, ref xform))
             throw new ArgumentException("Tried to use an abstract entity!", nameof(entity));
 
+        if (TryComp<StationDataComponent>(entity, out _))
+        {
+            // We are the station, just return ourselves.
+            return entity;
+        }
+
         if (TryComp<IMapGridComponent>(entity, out _))
         {
             // We are the station, just check ourselves.
