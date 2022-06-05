@@ -76,13 +76,13 @@
     node: makeshiftLaser
 
 - type: entity
-  name: cog laser carbine
+  name: laser gun
   parent: BaseWeaponBattery
   id: WeaponLaserRifleCog
   description: Favoured by Nanotrasen Security for being cheap and easy to use.
   components:
   - type: Sprite
-    sprite: Objects/Weapons/Guns/Battery/cog.rsi
+    sprite: Objects/Weapons/Guns/Battery/laser_gun.rsi
     layers:
     - state: base
       map: ["enum.GunVisualLayers.Base"]
@@ -91,7 +91,7 @@
       shader: unshaded
   - type: Item
     size: 24
-    sprite: Objects/Weapons/Guns/Battery/cog.rsi
+    sprite: Objects/Weapons/Guns/Battery/laser_gun.rsi
   - type: Gun
     selectedMode: SemiAuto
     availableModes:
