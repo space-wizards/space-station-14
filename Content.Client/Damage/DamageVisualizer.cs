@@ -505,7 +505,7 @@ namespace Content.Client.Damage
         public override void OnChangeData(AppearanceComponent component)
         {
             var entities = _entityManager;
-            if (!entities.TryGetComponent(component.Owner, out DamageVisualizerDataComponent damageData))
+            if (!entities.TryGetComponent(component.Owner, out DamageVisualizerDataComponent? damageData))
                 return;
 
             if (!damageData.Valid)
@@ -527,8 +527,8 @@ namespace Content.Client.Damage
         private void HandleDamage(AppearanceComponent component, DamageVisualizerDataComponent damageData)
         {
             var entities = _entityManager;
-            if (!entities.TryGetComponent(component.Owner, out SpriteComponent spriteComponent)
-                || !entities.TryGetComponent(component.Owner, out DamageableComponent damageComponent))
+            if (!entities.TryGetComponent(component.Owner, out SpriteComponent? spriteComponent)
+                || !entities.TryGetComponent(component.Owner, out DamageableComponent? damageComponent))
                 return;
 
             if (_targetLayers != null && _damageOverlayGroups != null)

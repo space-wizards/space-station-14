@@ -64,7 +64,7 @@ namespace Content.Server.Tools
                 return;
 
             // Sprite is optional.
-            Resolve(uid, ref sprite);
+            Resolve(uid, ref sprite, false);
 
             if (multiple.Entries.Length == 0)
             {

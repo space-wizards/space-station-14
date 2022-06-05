@@ -336,6 +336,8 @@
   - type: Appearance
     visuals:
       - type: ReinforcedWallVisualizer
+  - type: StaticPrice
+    price: 41.5 # total material cost. If you change the recipe for the wall you should recalculate this.
 
 # Riveting
 - type: entity
@@ -555,6 +557,8 @@
   - type: IconSmooth
     key: walls
     base: solid
+  - type: StaticPrice
+    price: 1 # total material cost. If you change the recipe for the wall you should recalculate this.
     
 - type: entity
   parent: WallBase
@@ -593,7 +597,7 @@
   - type: IconSmooth
     key: walls
     base: solidrust
-    
+
 - type: entity
   parent: WallBase
   id: WallUranium
@@ -705,8 +709,8 @@
   id: WallInvisible
   name: Invisible Wall
   components:
-  - type: DeleteAfterTime
-    despawnTime: 30
+  - type: TimedDespawn
+    lifetime: 30
   - type: Tag
     tags:
       - Wall
@@ -722,3 +726,31 @@
       layer:
       - GlassLayer
   - type: Airtight
+
+- type: entity
+  id: WallForce
+  name: Force Wall
+  components:
+    - type: TimedDespawn
+      lifetime: 20
+    - type: Tag
+      tags:
+        - Wall
+    - type: Physics
+      bodyType: Static
+    - type: Fixtures
+      fixtures:
+        - shape:
+            !type:PhysShapeAabb
+            bounds: "-0.5,-0.5,0.5,0.5"
+          mask:
+            - FullTileMask
+          layer:
+            - WallLayer
+    - type: Airtight
+    - type: Sprite
+      sprite: Structures/Magic/forcewall.rsi
+      state: forcewall
+    - type: Icon
+      sprite: Structures/Magic/forcewall.rsi
+      state: forcewall

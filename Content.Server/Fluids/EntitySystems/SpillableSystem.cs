@@ -25,7 +25,7 @@ public sealed class SpillableSystem : EntitySystem
     [Dependency] private readonly IMapManager _mapManager = default!;
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
     [Dependency] private readonly EntityLookupSystem _entityLookup = default!;
-    [Dependency] private readonly AdminLogSystem _logSystem = default!;
+    [Dependency] private readonly IAdminLogManager _adminLogger= default!;
 
     public override void Initialize()
     {
@@ -84,7 +84,7 @@ public sealed class SpillableSystem : EntitySystem
 
         if (args.User != null)
         {
-            _logSystem.Add(LogType.Landed,
+            _adminLogger.Add(LogType.Landed,
                 $"{ToPrettyString(uid):entity} spilled a solution {SolutionContainerSystem.ToPrettyString(solution):solution} on landing");
         }
 
