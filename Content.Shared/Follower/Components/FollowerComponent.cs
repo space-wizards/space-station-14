@@ -1,4 +1,5 @@
 using Robust.Shared.GameStates;
+using Robust.Shared.Serialization;
 
 namespace Content.Shared.Follower.Components;
 
@@ -8,4 +9,15 @@ namespace Content.Shared.Follower.Components;
 public sealed class FollowerComponent : Component
 {
     public EntityUid Following;
+}
+
+[Serializable, NetSerializable]
+public sealed class FollowerComponentState : ComponentState
+{
+    public EntityUid Following;
+
+    public FollowerComponentState(EntityUid following)
+    {
+        Following = following;
+    }
 }

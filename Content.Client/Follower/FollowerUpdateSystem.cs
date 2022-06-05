@@ -12,6 +12,10 @@ public sealed class FollowerUpdateSystem : EntitySystem
     {
         foreach (var (follow, xform) in EntityQuery<FollowerComponent, TransformComponent>())
         {
+            // pvs shenanigans
+            if (!Exists(follow.Following))
+                continue;
+
             xform.WorldPosition = Transform(follow.Following).WorldPosition;
         }
     }

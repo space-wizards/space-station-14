@@ -1,8 +1,8 @@
 using Robust.Shared.GameStates;
+using Robust.Shared.Serialization;
 
 namespace Content.Shared.Follower.Components;
 
-// TODO properly network this and followercomp.
 /// <summary>
 ///     Attached to entities that are currently being followed by a ghost.
 /// </summary>
@@ -10,5 +10,16 @@ namespace Content.Shared.Follower.Components;
 [NetworkedComponent]
 public sealed class FollowedComponent : Component
 {
-    public HashSet<EntityUid> Following = new();
+    public HashSet<EntityUid> Followers = new();
+}
+
+[Serializable, NetSerializable]
+public sealed class FollowedComponentState : ComponentState
+{
+    public HashSet<EntityUid> Followers;
+
+    public FollowedComponentState(HashSet<EntityUid> followers)
+    {
+        Followers = followers;
+    }
 }

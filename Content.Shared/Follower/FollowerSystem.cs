@@ -3,6 +3,8 @@ using Content.Shared.Follower.Components;
 using Content.Shared.Ghost;
 using Content.Shared.Movement.EntitySystems;
 using Content.Shared.Verbs;
+using JetBrains.Annotations;
+using Robust.Shared.GameStates;
 
 namespace Content.Shared.Follower;
 
@@ -15,6 +17,11 @@ public sealed class FollowerSystem : EntitySystem
         SubscribeLocalEvent<GetVerbsEvent<AlternativeVerb>>(OnGetAlternativeVerbs);
         SubscribeLocalEvent<FollowerComponent, RelayMoveInputEvent>(OnFollowerMove);
         SubscribeLocalEvent<FollowedComponent, ComponentRemove>(OnFollowedRemoved);
+
+        SubscribeLocalEvent<FollowerComponent, ComponentGetState>(OnFollowerGetState);
+        SubscribeLocalEvent<FollowerComponent, ComponentHandleState>(OnFollowerHandleState);
+        SubscribeLocalEvent<FollowedComponent, ComponentGetState>(OnFollowedGetState);
+        SubscribeLocalEvent<FollowedComponent, ComponentHandleState>(OnFollowedHandleState);
     }
 
     private void OnGetAlternativeVerbs(GetVerbsEvent<AlternativeVerb> ev)
@@ -66,9 +73,11 @@ public sealed class FollowerSystem : EntitySystem
 
         var followerComp = EnsureComp<FollowerComponent>(follower);
         followerComp.Following = entity;
+        Dirty(followerComp);
 
         var followedComp = EnsureComp<FollowedComponent>(entity);
-        followedComp.Following.Add(follower);
+        followedComp.Followers.Add(follower);
+        Dirty(followedComp);
 
         var xform = Transform(follower);
         xform.LocalRotation = Angle.Zero;
@@ -94,8 +103,8 @@ public sealed class FollowerSystem : EntitySystem
         if (!HasComp<FollowerComponent>(uid))
             return;
 
-        followed.Following.Remove(uid);
-        if (followed.Following.Count == 0)
+        followed.Followers.Remove(uid);
+        if (followed.Followers.Count == 0)
             RemComp<FollowedComponent>(target);
         RemComp<FollowerComponent>(uid);
 
@@ -119,13 +128,36 @@ public sealed class FollowerSystem : EntitySystem
         if (!Resolve(uid, ref followed))
             return;
 
-        foreach (var player in followed.Following)
+        foreach (var player in followed.Followers)
         {
             StopFollowingEntity(player, uid, followed);
         }
     }
+
+    private void OnFollowerGetState(EntityUid uid, FollowerComponent component, ref ComponentGetState args)
+    {
+        args.State = new FollowerComponentState(component.Following);
+    }
+
+    private void OnFollowerHandleState(EntityUid uid, FollowerComponent component, ref ComponentHandleState args)
+    {
+        if (args.Current is FollowerComponentState state)
+            component.Following = state.Following;
+    }
+
+    private void OnFollowedGetState(EntityUid uid, FollowedComponent component, ref ComponentGetState args)
+    {
+        args.State = new FollowedComponentState(component.Followers);
+    }
+
+    private void OnFollowedHandleState(EntityUid uid, FollowedComponent component, ref ComponentHandleState args)
+    {
+        if (args.Current is FollowedComponentState state)
+            component.Followers = state.Followers;
+    }
 }
 
+[PublicAPI]
 public abstract class FollowEvent : EntityEventArgs
 {
     public EntityUid Following;
