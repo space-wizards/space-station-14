@@ -1,9 +1,4 @@
 Entries:
-- author: router
-  changes:
-  - {message: Added capitalism. The captain spawns with some money now., type: Add}
-  id: 1160
-  time: '2022-03-03T10:11:35.0000000+00:00'
 - author: Peptide90
   changes:
   - {message: Onion and Oat seeds are now in the seed vendor and seed crate., type: Add}
@@ -3003,3 +2998,8 @@ Entries:
   - {message: Emitter hitsound has been removed, type: Tweak}
   id: 1659
   time: '2022-06-05T07:54:48.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Fix NPCs steering around puddles, type: Fix}
+  id: 1660
+  time: '2022-06-05T09:42:03.0000000+00:00'
