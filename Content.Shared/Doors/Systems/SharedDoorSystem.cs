@@ -10,6 +10,7 @@ using Robust.Shared.Physics;
 using Robust.Shared.Physics.Dynamics;
 using Robust.Shared.Timing;
 using System.Linq;
+using Content.Shared.Tag;
 
 namespace Content.Shared.Doors.Systems;
 
@@ -18,6 +19,7 @@ public abstract class SharedDoorSystem : EntitySystem
     [Dependency] private readonly SharedPhysicsSystem _physicsSystem = default!;
     [Dependency] private readonly DamageableSystem _damageableSystem = default!;
     [Dependency] private readonly SharedStunSystem _stunSystem = default!;
+    [Dependency] protected readonly TagSystem Tags = default!;
     [Dependency] protected readonly IGameTiming GameTiming = default!;
 
     /// <summary>
@@ -548,9 +550,13 @@ public abstract class SharedDoorSystem : EntitySystem
                 {
                     _activeDoors.Remove(door);
                 }
-                else
+                else if (door.BumpOpen)
                 {
-                    SetState(door.Owner, DoorState.Opening, door);
+                    foreach (var other in _physicsSystem.GetCollidingEntities(doorBody))
+                    {
+                        if (Tags.HasTag(other.Owner, "DoorBumpOpener") &&
+                            TryOpen(door.Owner, door, other.Owner)) break;
+                    }
                 }
             }
         }

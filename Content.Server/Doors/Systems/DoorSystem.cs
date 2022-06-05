@@ -25,11 +25,10 @@ namespace Content.Server.Doors.Systems;
 
 public sealed class DoorSystem : SharedDoorSystem
 {
+    [Dependency] private readonly AccessReaderSystem _accessReaderSystem = default!;
+    [Dependency] private readonly AirtightSystem _airtightSystem = default!;
     [Dependency] private readonly ConstructionSystem _constructionSystem = default!;
     [Dependency] private readonly ToolSystem _toolSystem = default!;
-    [Dependency] private readonly AirtightSystem _airtightSystem = default!;
-    [Dependency] private readonly AccessReaderSystem _accessReaderSystem = default!;
-    [Dependency] private readonly TagSystem _tagSystem = default!;
 
     public override void Initialize()
     {
@@ -239,7 +238,7 @@ public sealed class DoorSystem : SharedDoorSystem
 
         var otherUid = args.OtherFixture.Body.Owner;
 
-        if (_tagSystem.HasTag(otherUid, "DoorBumpOpener"))
+        if (Tags.HasTag(otherUid, "DoorBumpOpener"))
             TryOpen(uid, door, otherUid);
     }
 
