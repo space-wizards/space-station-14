@@ -1,10 +1,4 @@
 Entries:
-- author: Peptide90
-  changes:
-  - {message: Onion and Oat seeds are now in the seed vendor and seed crate., type: Add}
-  - {message: Seed vendor inventory reduced from 10 seeds to 5., type: Tweak}
-  id: 1161
-  time: '2022-03-03T10:42:49.0000000+00:00'
 - author: router
   changes:
   - {message: Added money to the captain's locker. Capitalism is now REAL., type: Add}
@@ -3003,3 +2997,10 @@ Entries:
   - {message: Fix NPCs steering around puddles, type: Fix}
   id: 1660
   time: '2022-06-05T09:42:03.0000000+00:00'
+- author: ElectroJr
+  changes:
+  - {message: Added a mapping/editor keybinding that starts placing the same type
+      of entity or tile that the mouse is currently hovering over. Defaults to `P`,
+    type: Add}
+  id: 1661
+  time: '2022-06-05T22:58:20.0000000+00:00'
