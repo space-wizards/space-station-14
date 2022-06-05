@@ -2,6 +2,7 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using Content.Server.Audio;
 using Content.Server.Power.Components;
+using Content.Server.Power.EntitySystems;
 using Content.Server.Shuttles.Components;
 using Content.Shared.Damage;
 using Content.Shared.Examine;
@@ -271,7 +272,7 @@ namespace Content.Server.Shuttles.EntitySystems
                         {
                             ID = BurnFixture,
                             Hard = false,
-                            CollisionLayer = (int) CollisionGroup.MobImpassable
+                            CollisionLayer = (int) CollisionGroup.FullTileMask
                         };
 
                         _fixtureSystem.TryCreateFixture(physicsComponent, fixture);
@@ -364,11 +365,11 @@ namespace Content.Server.Shuttles.EntitySystems
         public bool CanEnable(EntityUid uid, ThrusterComponent component)
         {
             if (!component.Enabled) return false;
+            if (component.LifeStage > ComponentLifeStage.Running) return false;
 
             var xform = Transform(uid);
 
-            if (!xform.Anchored ||
-                EntityManager.TryGetComponent(uid, out ApcPowerReceiverComponent? receiver) && !receiver.Powered)
+            if (!xform.Anchored ||!this.IsPowered(uid, EntityManager))
             {
                 return false;
             }

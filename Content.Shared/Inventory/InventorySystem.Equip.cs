@@ -1,5 +1,7 @@
 using System.Diagnostics.CodeAnalysis;
+using Content.Shared.ActionBlocker;
 using Content.Shared.Clothing.Components;
+using Content.Shared.Hands;
 using Content.Shared.Hands.Components;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Interaction;
@@ -11,7 +13,6 @@ using Content.Shared.Popups;
 using Content.Shared.Strip.Components;
 using Robust.Shared.Audio;
 using Robust.Shared.Containers;
-using Robust.Shared.Map;
 using Robust.Shared.Network;
 using Robust.Shared.Player;
 using Robust.Shared.Timing;
@@ -24,6 +25,7 @@ public abstract partial class InventorySystem
     [Dependency] private readonly MovementSpeedModifierSystem _movementSpeed = default!;
     [Dependency] private readonly SharedInteractionSystem _interactionSystem = default!;
     [Dependency] private readonly SharedContainerSystem _containerSystem = default!;
+    [Dependency] private readonly ActionBlockerSystem _actionBlockerSystem = default!;
     [Dependency] private readonly SharedHandsSystem _handsSystem = default!;
     [Dependency] private readonly IGameTiming _gameTiming = default!;
     [Dependency] private readonly INetManager _netMan = default!;
@@ -117,15 +119,17 @@ public abstract partial class InventorySystem
         if (held != null && itemUid != null)
         {
             _interactionSystem.InteractUsing(actor, held.Value, itemUid.Value,
-                new EntityCoordinates());
+                Transform(itemUid.Value).Coordinates);
             return;
         }
 
-        // un-equip to hands
+        // unequip the item.
         if (itemUid != null)
         {
-            if (_handsSystem.CanPickupAnyHand(actor, itemUid.Value, handsComp: hands) && TryUnequip(actor, ev.Slot, inventory: inventory))
-                _handsSystem.TryPickup(actor, itemUid.Value, checkActionBlocker: false, handsComp: hands);
+            if (!TryUnequip(actor, ev.Slot, out var item, predicted: true, inventory: inventory))
+                return;
+
+            _handsSystem.PickupOrDrop(actor, item.Value);
             return;
         }
 
@@ -141,9 +145,17 @@ public abstract partial class InventorySystem
             return;
         }
 
-        if (_handsSystem.TryDrop(actor, hands.ActiveHand!, doDropInteraction: false, handsComp: hands))
-            TryEquip(actor, actor, held.Value, ev.Slot, predicted: true, inventory: inventory);
-        }
+        if (!_handsSystem.CanDropHeld(actor, hands.ActiveHand!, checkActionBlocker: false))
+            return;
+
+        var gotUnequipped = new GotUnequippedHandEvent(actor, held.Value, hands.ActiveHand!);
+        var didUnequip = new DidUnequipHandEvent(actor, held.Value, hands.ActiveHand!);
+        RaiseLocalEvent(held.Value, gotUnequipped, false);
+        RaiseLocalEvent(actor, didUnequip);
+        RaiseLocalEvent(held.Value, new HandDeselectedEvent(actor), false);
+
+        TryEquip(actor, actor, held.Value, ev.Slot, predicted: true, inventory: inventory, force: true);
+    }
 
     public bool TryEquip(EntityUid uid, EntityUid itemUid, string slot, bool silent = false, bool force = false, bool predicted = false,
         InventoryComponent? inventory = null, SharedItemComponent? item = null) =>
@@ -195,7 +207,7 @@ public abstract partial class InventorySystem
                     filter.RemoveWhereAttachedEntity(entity => entity == actor);
             }
 
-            SoundSystem.Play(filter, item.EquipSound.GetSound(), target, AudioParams.Default.WithVolume(-2f));
+            SoundSystem.Play(filter, item.EquipSound.GetSound(), target, item.EquipSound.Params.WithVolume(-2f));
         }
 
         inventory.Dirty();
@@ -374,7 +386,7 @@ public abstract partial class InventorySystem
                     filter.RemoveWhereAttachedEntity(entity => entity == actor);
             }
 
-            SoundSystem.Play(filter, item.UnequipSound.GetSound(), target, AudioParams.Default.WithVolume(-2f));
+            SoundSystem.Play(filter, item.UnequipSound.GetSound(), target, item.UnequipSound.Params.WithVolume(-2f));
         }
 
         inventory.Dirty();

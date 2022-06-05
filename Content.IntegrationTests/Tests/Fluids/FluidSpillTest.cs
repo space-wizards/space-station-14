@@ -6,7 +6,6 @@ using Content.Server.Fluids.EntitySystems;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.FixedPoint;
 using NUnit.Framework;
-using Robust.Server.Maps;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
@@ -22,7 +21,7 @@ public sealed class FluidSpill : ContentIntegrationTest
     {
         foreach (var uid in mapGrid.GetAnchoredEntities(pos))
         {
-            if (entityManager.TryGetComponent(uid, out PuddleComponent puddleComponent))
+            if (entityManager.TryGetComponent(uid, out PuddleComponent? puddleComponent))
                 return puddleComponent;
         }
 

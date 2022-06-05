@@ -1,5 +1,4 @@
 using Content.Server.Tabletop.Components;
-using Content.Shared.ActionBlocker;
 using Content.Shared.Interaction;
 using Content.Shared.Tabletop;
 using Content.Shared.Tabletop.Events;
@@ -8,9 +7,6 @@ using JetBrains.Annotations;
 using Robust.Server.GameObjects;
 using Robust.Server.Player;
 using Robust.Shared.Enums;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Localization;
 using Robust.Shared.Map;
 
 namespace Content.Server.Tabletop

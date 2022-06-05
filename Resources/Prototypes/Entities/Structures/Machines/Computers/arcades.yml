@@ -40,6 +40,7 @@
   components:
   - type: SpaceVillainArcade
   - type: Wires
+    LayoutId: Arcade
     BoardName: "Arcade"
   - type: ActivatableUI
     key: enum.SpaceVillainArcadeUiKey.Key
@@ -63,6 +64,9 @@
   - type: ActivatableUI
     key: enum.BlockGameUiKey.Key
   - type: ActivatableUIRequiresPower
+  - type: Wires
+    LayoutId: Arcade
+    BoardName: "Arcade"
   - type: UserInterface
     interfaces:
       - key: enum.BlockGameUiKey.Key

@@ -9,6 +9,10 @@
   access:
   - Theatre
   - Maintenance
+  special:
+  - !type:AddComponentSpecial
+    components:
+    - type: MimePowers
 
 - type: startingGear
   id: MimeGear

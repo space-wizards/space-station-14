@@ -2,6 +2,8 @@ using Content.Client.Pointing.Components;
 using Content.Shared.MobState.Components;
 using Content.Shared.Pointing;
 using Content.Shared.Verbs;
+using Robust.Client.GameObjects;
+using DrawDepth = Content.Shared.DrawDepth.DrawDepth;
 
 namespace Content.Client.Pointing;
 
@@ -12,6 +14,9 @@ internal sealed class PointingSystem : EntitySystem
         base.Initialize();
 
         SubscribeLocalEvent<GetVerbsEvent<Verb>>(AddPointingVerb);
+        SubscribeLocalEvent<PointingArrowComponent, ComponentStartup>(OnArrowStartup);
+        SubscribeLocalEvent<RoguePointingArrowComponent, ComponentStartup>(OnRogueArrowStartup);
+
     }
 
     private void AddPointingVerb(GetVerbsEvent<Verb> args)
@@ -43,5 +48,21 @@ internal sealed class PointingSystem : EntitySystem
         };
 
         args.Verbs.Add(verb);
+    }
+
+    private void OnArrowStartup(EntityUid uid, PointingArrowComponent arrow, ComponentStartup args)
+    {
+        if (EntityManager.TryGetComponent(uid, out SpriteComponent? sprite))
+        {
+            sprite.DrawDepth = (int) DrawDepth.Overlays;
+        }
+    }
+
+    private void OnRogueArrowStartup(EntityUid uid, RoguePointingArrowComponent arrow, ComponentStartup args)
+    {
+        if (EntityManager.TryGetComponent(uid, out SpriteComponent? sprite))
+        {
+            sprite.DrawDepth = (int) DrawDepth.Overlays;
+        }
     }
 }

@@ -1,6 +1,4 @@
-﻿using Robust.Shared.GameObjects;
-
-namespace Content.Shared.DragDrop
+﻿namespace Content.Shared.DragDrop
 {
     public sealed class DropAttemptEvent : CancellableEntityEventArgs
     {

@@ -10,6 +10,22 @@
 
 - type: entity
   parent: DrinkBase
+  id: DrinkMREFlask
+  name: MRE flask
+  description: An old military flask, filled with the finest contents for soldiers
+  components:
+  - type: Drink
+  - type: Sprite
+    sprite: Objects/Consumable/Drinks/mreflask.rsi
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        reagents:
+        - ReagentId: Water
+          Quantity: 50
+
+- type: entity
+  parent: DrinkBase
   id: DrinkDetFlask
   name: inspector's flask
   description: A metal flask with a leather band and golden badge belonging to the inspector.

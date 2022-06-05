@@ -11,3 +11,15 @@
     quickEquip: false
     equipSound:
       path: /Audio/Items/belt_equip.ogg
+
+- type: entity
+  abstract: true
+  parent: ClothingBeltBase
+  id: ClothingBeltStorageBase
+  components:
+  - type: Storage
+    capacity: 40
+  - type: UserInterface
+    interfaces:
+    - key: enum.StorageUiKey.Key
+      type: StorageBoundUserInterface

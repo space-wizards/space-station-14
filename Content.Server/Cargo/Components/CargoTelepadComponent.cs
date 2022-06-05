@@ -1,5 +1,7 @@
+using Content.Server.Cargo.Systems;
 using Content.Shared.Cargo;
 using Content.Shared.Cargo.Components;
+using Content.Shared.MachineLinking;
 using Content.Shared.Sound;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
@@ -35,5 +37,8 @@ namespace Content.Server.Cargo.Components
         /// </summary>
         [DataField("printerOutput", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
         public string PrinterOutput = "Paper";
+
+        [DataField("receiverPort", customTypeSerializer: typeof(PrototypeIdSerializer<ReceiverPortPrototype>))]
+        public string ReceiverPort = "OrderReceiver";
     }
 }

@@ -6,6 +6,7 @@ using Content.Server.AI.Pathfinding;
 using Content.Server.AI.Pathfinding.Pathfinders;
 using Content.Server.CPUJob.JobQueues;
 using Content.Shared.Access.Systems;
+using Content.Shared.Doors.Components;
 using Content.Shared.Interaction;
 using Robust.Shared.Map;
 using Robust.Shared.Physics;
@@ -385,6 +386,7 @@ namespace Content.Server.AI.Steering
             {
                 movementVector += CollisionAvoidance(entity, movementVector, ignoredCollision);
             }
+
             // Group behaviors would also go here e.g. separation, cohesion, alignment
 
             // Move towards it
@@ -472,10 +474,12 @@ namespace Content.Server.AI.Steering
                 _nextGrid.Remove(entity);
             }
 
+            var xform = EntityManager.GetComponent<TransformComponent>(entity);
+
             // If no tiles left just move towards the target (if we're close)
             if (!_paths.ContainsKey(entity) || _paths[entity].Count == 0)
             {
-                if ((steeringRequest.TargetGrid.Position - EntityManager.GetComponent<TransformComponent>(entity).Coordinates.Position).Length <= 2.0f)
+                if ((steeringRequest.TargetGrid.Position - xform.Coordinates.Position).Length <= 2.0f)
                 {
                     return steeringRequest.TargetGrid;
                 }
@@ -485,7 +489,7 @@ namespace Content.Server.AI.Steering
             }
 
             if (!_nextGrid.TryGetValue(entity, out var nextGrid) ||
-                (nextGrid.Position - EntityManager.GetComponent<TransformComponent>(entity).Coordinates.Position).Length <= TileTolerance)
+                (nextGrid.Position - xform.Coordinates.Position).Length <= TileTolerance)
             {
                 UpdateGridCache(entity);
                 nextGrid = _nextGrid[entity];
@@ -656,7 +660,8 @@ namespace Content.Server.AI.Steering
                     // So if 2 entities are moving towards each other and both detect a collision they'll both move in the same direction
                     // i.e. towards the right
                     if (EntityManager.TryGetComponent(physicsEntity, out IPhysBody? otherPhysics) &&
-                        Vector2.Dot(otherPhysics.LinearVelocity, direction) > 0)
+                        (!otherPhysics.Hard ||
+                        Vector2.Dot(otherPhysics.LinearVelocity, direction) > 0))
                     {
                         continue;
                     }

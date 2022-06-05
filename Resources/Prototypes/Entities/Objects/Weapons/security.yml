@@ -11,7 +11,7 @@
   - type: MeleeWeapon
     damage:
       types:
-        Blunt: 10
+        Blunt: 5
     range: 1.5
     arcwidth: 60
     arc: default
@@ -81,13 +81,11 @@
       fixtures:
       - shape:
           !type:PhysShapeAabb
-            bounds: "-0.15,-0.3,0.15,0.3"
+          bounds: "-0.15,-0.3,0.15,0.3"
         mask:
-        - Impassable
-        - VaultImpassable
-        - SmallImpassable
+        - MachineMask
         layer:
-        - MobImpassable
+        - MachineLayer
         mass: 70
     - type: Appearance
     - type: AnimationPlayer

@@ -2,7 +2,6 @@
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
-using Content.Server.Decals;
 using Content.Shared.Decals;
 using Robust.Client.GameObjects;
 using Robust.Shared.GameObjects;
@@ -84,7 +83,7 @@ namespace Content.MapRenderer.Painters
                     continue;
                 }
 
-                if (!_cEntityManager.TryGetComponent(entity, out SpriteComponent sprite))
+                if (!_cEntityManager.TryGetComponent(entity, out SpriteComponent? sprite))
                 {
                     throw new InvalidOperationException(
                         $"No sprite component found on an entity for which a server sprite component exists. Prototype id: {prototype.ID}");
@@ -139,8 +138,8 @@ namespace Content.MapRenderer.Painters
 
         private (float x, float y) TransformLocalPosition(Vector2 position, IMapGrid grid)
         {
-            var xOffset = (int) Math.Abs(grid.LocalBounds.Left);
-            var yOffset = (int) Math.Abs(grid.LocalBounds.Bottom);
+            var xOffset = (int) -grid.LocalAABB.Left;
+            var yOffset = (int) -grid.LocalAABB.Bottom;
             var tileSize = grid.TileSize;
 
             var x = ((float) Math.Floor(position.X) + xOffset) * tileSize * TilePainter.TileImageSize;

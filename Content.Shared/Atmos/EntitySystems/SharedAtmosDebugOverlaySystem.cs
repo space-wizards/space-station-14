@@ -1,7 +1,4 @@
-﻿using System;
-using Robust.Shared.GameObjects;
-using Robust.Shared.Map;
-using Robust.Shared.Maths;
+﻿using Robust.Shared.Map;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.Atmos.EntitySystems
@@ -18,14 +15,16 @@ namespace Content.Shared.Atmos.EntitySystems
             public readonly float Temperature;
             public readonly float[] Moles;
             public readonly AtmosDirection PressureDirection;
+            public readonly AtmosDirection LastPressureDirection;
             public readonly bool InExcitedGroup;
             public readonly AtmosDirection BlockDirection;
 
-            public AtmosDebugOverlayData(float temperature, float[] moles, AtmosDirection pressureDirection, bool inExcited, AtmosDirection blockDirection)
+            public AtmosDebugOverlayData(float temperature, float[] moles, AtmosDirection pressureDirection, AtmosDirection lastPressureDirection, bool inExcited, AtmosDirection blockDirection)
             {
                 Temperature = temperature;
                 Moles = moles;
                 PressureDirection = pressureDirection;
+                LastPressureDirection = lastPressureDirection;
                 InExcitedGroup = inExcited;
                 BlockDirection = blockDirection;
             }

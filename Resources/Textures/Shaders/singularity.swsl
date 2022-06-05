@@ -3,7 +3,7 @@
 uniform sampler2D SCREEN_TEXTURE;
 uniform highp vec2 renderScale;
 uniform highp float maxDistance;
-uniform int count;
+uniform lowp int count;
 
 uniform highp float[5] falloffPower;
 uniform highp float[5] intensity;
@@ -30,9 +30,9 @@ void fragment() {
         // avoids long-range single-pixel shifts that are noticeable when leaving PVS.
         
         if (distance >= maxDistance) {
-            deformation = 0;
+            deformation = 0.0;
         } else {
-            deformation *= (1 - pow(distance/maxDistance, 4));
+            deformation *= (1.0 - pow(distance/maxDistance, 4.0));
         }
         
         if(deformation > 0.8)

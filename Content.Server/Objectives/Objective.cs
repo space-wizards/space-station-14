@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using Content.Server.Objectives.Interfaces;
-using Robust.Shared.ViewVariables;
+﻿using Content.Server.Objectives.Interfaces;
 
 namespace Content.Server.Objectives
 {

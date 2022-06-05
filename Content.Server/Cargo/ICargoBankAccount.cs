@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace Content.Server.Cargo
+﻿namespace Content.Server.Cargo
 {
     public interface ICargoBankAccount
     {

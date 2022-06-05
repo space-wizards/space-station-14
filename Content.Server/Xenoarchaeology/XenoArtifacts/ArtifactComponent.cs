@@ -28,5 +28,12 @@ public sealed class ArtifactComponent : Component
     [ViewVariables(VVAccess.ReadWrite)]
     public double CooldownTime = 10;
 
+    /// <summary>
+    ///     Is this artifact under some suppression device?
+    ///     If true, will ignore all trigger activations attempts.
+    /// </summary>
+    [ViewVariables(VVAccess.ReadWrite)]
+    public bool IsSuppressed;
+
     public TimeSpan LastActivationTime;
 }

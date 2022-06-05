@@ -5,8 +5,6 @@ using Content.Shared.MobState.Components;
 using Robust.Server.Player;
 using Robust.Shared.Configuration;
 using Robust.Shared.Enums;
-using Robust.Shared.IoC;
-using Robust.Shared.Localization;
 
 namespace Content.Server.GameTicking.Rules;
 

@@ -1,6 +1,5 @@
 using Content.Server.AI.EntitySystems;
-using Content.Server.GameTicking;
-using Content.Shared.ActionBlocker;
+using Content.Server.Station.Systems;
 using Content.Shared.Movement.Components;
 using Content.Shared.Roles;
 using Robust.Shared.Map;
@@ -41,10 +40,6 @@ namespace Content.Server.AI.Components
         private bool _awake = true;
 
         [ViewVariables(VVAccess.ReadWrite)]
-        [DataField("startingGear")]
-        public string? StartingGearPrototype { get; set; }
-
-        [ViewVariables(VVAccess.ReadWrite)]
         public float VisionRadius
         {
             get => _visionRadius;
@@ -58,20 +53,6 @@ namespace Content.Server.AI.Components
 
             // This component requires a physics component.
             Owner.EnsureComponent<PhysicsComponent>();
-        }
-
-        protected override void Startup()
-        {
-            base.Startup();
-
-            if (StartingGearPrototype != null)
-            {
-                var gameTicker = EntitySystem.Get<GameTicker>();
-                var protoManager = IoCManager.Resolve<IPrototypeManager>();
-
-                var startingGear = protoManager.Index<StartingGearPrototype>(StartingGearPrototype);
-                gameTicker.EquipStartingGear(Owner, startingGear, null);
-            }
         }
 
         /// <summary>

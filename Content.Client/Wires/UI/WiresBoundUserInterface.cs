@@ -1,6 +1,6 @@
-﻿using Robust.Client.GameObjects;
+﻿using Content.Shared.Wires;
+using Robust.Client.GameObjects;
 using Robust.Shared.GameObjects;
-using static Content.Shared.Wires.SharedWiresComponent;
 
 namespace Content.Client.Wires.UI
 {

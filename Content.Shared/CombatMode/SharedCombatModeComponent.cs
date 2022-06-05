@@ -1,4 +1,3 @@
-using System;
 using Content.Shared.Actions;
 using Content.Shared.Actions.ActionTypes;
 using Content.Shared.Sound;
@@ -29,6 +28,9 @@ namespace Content.Shared.CombatMode
 
         [DataField("disarmActionId", customTypeSerializer:typeof(PrototypeIdSerializer<EntityTargetActionPrototype>))]
         public readonly string DisarmActionId = "Disarm";
+
+        [DataField("canDisarm")]
+        public bool CanDisarm;
 
         [DataField("disarmAction")] // must be a data-field to properly save cooldown when saving game state.
         public EntityTargetAction? DisarmAction;

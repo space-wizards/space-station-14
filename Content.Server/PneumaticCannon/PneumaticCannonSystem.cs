@@ -225,7 +225,7 @@ namespace Content.Server.PneumaticCannon
             if (storage.StoredEntities.Count == 0) return; // click sound?
 
             var ent = _random.Pick(storage.StoredEntities);
-            storage.Remove(ent);
+            _storageSystem.RemoveAndDrop(comp.Owner, ent, storage);
 
             SoundSystem.Play(Filter.Pvs(data.User), comp.FireSound.GetSound(), ((IComponent) comp).Owner, AudioParams.Default);
             if (EntityManager.HasComponent<CameraRecoilComponent>(data.User))
@@ -333,7 +333,7 @@ namespace Content.Server.PneumaticCannon
                 if (storage.StoredEntities == null) return;
                 foreach (var entity in storage.StoredEntities.ToArray())
                 {
-                    storage.Remove(entity);
+                    _storageSystem.RemoveAndDrop(component.Owner, entity, storage);
                 }
 
                 user.PopupMessage(Loc.GetString("pneumatic-cannon-component-ejected-all",

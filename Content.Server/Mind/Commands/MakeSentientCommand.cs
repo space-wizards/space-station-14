@@ -7,9 +7,6 @@ using Content.Shared.Examine;
 using Content.Shared.Movement.Components;
 using Content.Shared.Speech;
 using Robust.Shared.Console;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Timer = Robust.Shared.Timing.Timer;
 
 namespace Content.Server.Mind.Commands
 {

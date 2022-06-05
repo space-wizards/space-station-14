@@ -1,8 +1,8 @@
 ﻿- type: reagent
   id: Oxygen
-  name: oxygen
-  desc: An oxidizing, colorless gas.
-  physicalDesc: gaseous
+  name: reagent-name-oxygen
+  desc: reagent-desc-oxygen
+  physicalDesc: reagent-physical-desc-gaseous
   color: "#808080"
   boilingPoint: -183.0
   meltingPoint: -218.4
@@ -19,15 +19,19 @@
           type: Animal
       # Convert Oxygen into CO2.
       - !type:ModifyLungGas
+        conditions:
+        - !type:OrganType
+          type: Vox
+          shouldHave: false
         ratios:
           CarbonDioxide: 1.0
           Oxygen: -1.0
 
 - type: reagent
   id: Plasma
-  name: plasma
-  desc: Funky, space-magic pixie dust. You probably shouldn't eat this, but we both know you will anyways.
-  physicalDesc: gaseous
+  name: reagent-name-plasma
+  desc: reagent-desc-plasma
+  physicalDesc: reagent-physical-desc-gaseous
   color: "#7e009e"
   boilingPoint: -127.3 # Random values picked between the actual values for CO2 and O2
   meltingPoint: -186.4
@@ -64,9 +68,9 @@
 
 - type: reagent
   id: Tritium
-  name: tritium
-  desc: Radioactive space-magic pixie dust.
-  physicalDesc: ionizing
+  name: reagent-name-tritium
+  desc: reagent-desc-tritium
+  physicalDesc: reagent-physical-desc-ionizing
   color: "#66ff33"
   tileReactions:
   - !type:FlammableTileReaction
@@ -93,9 +97,9 @@
 
 - type: reagent
   id: CarbonDioxide
-  name: carbon dioxide
-  desc: You have genuinely no idea what this is.
-  physicalDesc: odorless
+  name: reagent-name-carbon-dioxide
+  desc: reagent-desc-carbon-dioxide
+  physicalDesc: reagent-physical-desc-odorless
   color: "#66ff33"
   metabolisms:
     Gas:
@@ -118,9 +122,25 @@
 
 - type: reagent
   id: Nitrogen
-  name: nitrogen
-  desc: A colorless, odorless unreactive gas. Highly stable.
-  physicalDesc: gaseous
+  name: reagent-name-nitrogen
+  desc: reagent-desc-nitrogen
+  physicalDesc: reagent-physical-desc-gaseous
   color: "#808080"
   boilingPoint: -195.8
   meltingPoint: -210.0
+  metabolisms:
+    Gas:
+      effects:
+      - !type:Oxygenate
+        conditions:
+        - !type:OrganType
+          type: Vox
+      # Converts Nitrogen into CO2
+      - !type:ModifyLungGas
+        conditions:
+        - !type:OrganType
+          type: Vox
+        ratios:
+          CarbonDioxide: 1.0
+          Nitrogen: -1.0
+

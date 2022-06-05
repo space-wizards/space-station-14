@@ -1,21 +1,13 @@
-using System;
-using Content.Server.Doors.Components;
 using Content.Server.Doors.Systems;
 using Content.Server.Power.Components;
 using Content.Server.Shuttles.Components;
 using Content.Shared.Doors;
 using Content.Shared.Doors.Components;
 using Content.Shared.Verbs;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Localization;
-using Robust.Shared.Log;
 using Robust.Shared.Map;
-using Robust.Shared.Maths;
 using Robust.Shared.Physics;
 using Robust.Shared.Physics.Collision.Shapes;
 using Robust.Shared.Physics.Dynamics;
-using Robust.Shared.Physics.Dynamics.Joints;
 using Robust.Shared.Utility;
 
 namespace Content.Server.Shuttles.EntitySystems
@@ -269,8 +261,9 @@ namespace Content.Server.Shuttles.EntitySystems
 
         private void OnPowerChange(EntityUid uid, DockingComponent component, PowerChangedEvent args)
         {
+            var lifestage = MetaData(uid).EntityLifeStage;
             // This is because power can change during startup for <Reasons> and undock
-            if (MetaData(uid).EntityLifeStage < EntityLifeStage.MapInitialized) return;
+            if (lifestage is < EntityLifeStage.MapInitialized or >= EntityLifeStage.Terminating) return;
 
             if (args.Powered)
             {

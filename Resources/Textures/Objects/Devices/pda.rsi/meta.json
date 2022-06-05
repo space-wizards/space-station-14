@@ -144,6 +144,18 @@
     },
     {
       "name": "pda-musician"
+    },
+    {
+      "name": "pda-interncadet"
+    },
+    {
+      "name": "pda-internmed"
+    },
+    {
+      "name": "pda-internservice"
+    },
+    {
+      "name": "pda-interntech"
     }
   ]
 }

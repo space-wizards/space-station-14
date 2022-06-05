@@ -1,21 +1,15 @@
-﻿using System;
-using Content.Server.Chemistry.Components;
+﻿using Content.Server.Chemistry.Components;
 using Content.Server.Chemistry.EntitySystems;
 using Content.Server.Cooldown;
 using Content.Server.Extinguisher;
 using Content.Server.Fluids.Components;
 using Content.Server.Popups;
-using Content.Shared.ActionBlocker;
 using Content.Shared.Audio;
 using Content.Shared.Cooldown;
 using Content.Shared.FixedPoint;
 using Content.Shared.Interaction;
 using Content.Shared.Vapor;
 using Robust.Shared.Audio;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Localization;
-using Robust.Shared.Maths;
 using Robust.Shared.Player;
 using Robust.Shared.Timing;
 

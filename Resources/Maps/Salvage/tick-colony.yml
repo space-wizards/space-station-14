@@ -54,7 +54,7 @@ tilemap:
   47: floor_wood
   48: lattice
   49: plating
-  50: underplating
+  50: plating
 grids:
 - settings:
     chunksize: 16
@@ -704,8 +704,8 @@ entities:
         radius: 0.35
       mask:
       - Impassable
-      - MobImpassable
-      - SmallImpassable
+      - MidImpassable
+      - LowImpassable
       layer:
       - Opaque
       mass: 70
@@ -956,8 +956,8 @@ entities:
         radius: 0.35
       mask:
       - Impassable
-      - MobImpassable
-      - SmallImpassable
+      - MidImpassable
+      - LowImpassable
       layer:
       - Opaque
       mass: 70
@@ -1208,8 +1208,8 @@ entities:
         radius: 0.35
       mask:
       - Impassable
-      - MobImpassable
-      - SmallImpassable
+      - MidImpassable
+      - LowImpassable
       layer:
       - Opaque
       mass: 70

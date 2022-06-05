@@ -14,9 +14,13 @@
     - toggledecals
     - nodevis
     - nodevisfilter
+    - showspread
+    - showambient
 
 - Flags: MAPPING
   Commands:
+    - tethergun
+    - griddrag
     - showmarkers
     - showsubfloor
     - showsubfloorforever

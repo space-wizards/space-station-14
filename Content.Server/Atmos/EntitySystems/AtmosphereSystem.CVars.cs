@@ -1,6 +1,5 @@
 using Content.Shared.CCVar;
 using Robust.Shared.Configuration;
-using Robust.Shared.IoC;
 
 namespace Content.Server.Atmos.EntitySystems
 {
