@@ -43,6 +43,18 @@
       "directions": 4
     },
     {
+      "name": "open"
+    },
+    {
+      "name": "opening"
+    },
+    {
+      "name": "closed"
+    },
+    {
+      "name": "closing"
+    },
+    {
       "name": "reinf_construct-0"
     },
     {

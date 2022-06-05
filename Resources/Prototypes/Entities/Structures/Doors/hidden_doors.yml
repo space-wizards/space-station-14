@@ -7,7 +7,7 @@
   components:
   - type: Sprite
     netsync: false
-    sprite: Structures/Doors/HiddenDoors/metalwall.rsi
+    sprite: Structures/Walls/solid.rsi
     layers:
     - state: closed
       map: ["enum.DoorVisualLayers.Base"]
