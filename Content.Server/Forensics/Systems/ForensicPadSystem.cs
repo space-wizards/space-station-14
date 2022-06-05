@@ -142,6 +142,5 @@ namespace Content.Server.Forensics
                 Sample = sample;
             }
         }
-
     }
 }
