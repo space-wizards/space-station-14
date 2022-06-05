@@ -30,3 +30,4 @@
 
 - type: statusEffect
   id: Muted
+  alert: Muted
