@@ -116,7 +116,7 @@ public sealed class NetworkConfiguratorSystem : EntitySystem
     /// </summary>
     private void OnAddInteractVerb(EntityUid uid, NetworkConfiguratorComponent component, GetVerbsEvent<UtilityVerb> args)
     {
-        if (!args.CanAccess || !args.CanInteract || !args.Using.HasValue)
+        if (!args.CanAccess || !args.CanInteract || !args.Using.HasValue || !HasComp<DeviceNetworkComponent>(args.Target))
             return;
 
         var isDeviceList = HasComp<DeviceListComponent>(args.Target);
