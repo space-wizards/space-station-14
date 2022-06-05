@@ -139,15 +139,18 @@ public abstract class SharedDoorSystem : EntitySystem
                 break;
 
             case DoorState.Open:
-            case DoorState.Closed:
                 door.Partial = false;
                 if (door.NextStateChange == null)
                     _activeDoors.Remove(door);
                 break;
+            case DoorState.Closed:
+                // May want to keep the door around to re-check for opening if we got a contact during closing.
+                door.Partial = false;
+                break;
         }
 
         door.State = state;
-        door.Dirty();
+        Dirty(door);
         RaiseLocalEvent(uid, new DoorStateChangedEvent(state), false);
         UpdateAppearance(uid, door);
     }
@@ -536,6 +539,20 @@ public abstract class SharedDoorSystem : EntitySystem
 
             if (door.NextStateChange.Value < time)
                 NextState(door, time);
+
+            if (door.State == DoorState.Closed &&
+                TryComp<PhysicsComponent>(door.Owner, out var doorBody))
+            {
+                // If something bumped into us during closing then start to re-open, otherwise, remove it from active.
+                if (doorBody.ContactCount == 0)
+                {
+                    _activeDoors.Remove(door);
+                }
+                else
+                {
+                    SetState(door.Owner, DoorState.Opening, door);
+                }
+            }
         }
     }
 
