@@ -549,6 +549,7 @@ public abstract class SharedDoorSystem : EntitySystem
                 if (doorBody.ContactCount == 0)
                 {
                     _activeDoors.Remove(door);
+                    continue;
                 }
 
                 // Access isn't predicted so
