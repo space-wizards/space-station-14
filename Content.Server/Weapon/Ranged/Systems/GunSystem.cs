@@ -54,8 +54,8 @@ public sealed partial class GunSystem : SharedGunSystem
                     {
                         if (cartridge.Count > 1)
                         {
-                            var angles = LinearSpread(mapAngle - Angle.FromDegrees(cartridge.Spread / 2f),
-                                mapAngle + Angle.FromDegrees(cartridge.Spread / 2f), cartridge.Count);
+                            var angles = LinearSpread(mapAngle - cartridge.Spread / 2,
+                                mapAngle + cartridge.Spread / 2, cartridge.Count);
 
                             for (var i = 0; i < cartridge.Count; i++)
                             {
@@ -196,8 +196,10 @@ public sealed partial class GunSystem : SharedGunSystem
         component.LastFire = component.NextFire;
 
         // Convert it so angle can go either side.
-        var random = Random.NextGaussian(0, 0.5);
+        var random = Random.NextFloat(-0.5f, 0.5f);
+        var spread = component.CurrentAngle.Theta * random;
         var angle = new Angle(direction.Theta + component.CurrentAngle.Theta * random);
+        DebugTools.Assert(spread <= component.MaxAngle.Theta);
         return angle;
     }
 

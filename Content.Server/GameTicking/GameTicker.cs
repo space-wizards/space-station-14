@@ -1,5 +1,6 @@
 using Content.Server.Administration.Logs;
 using Content.Server.Administration.Managers;
+using Content.Server.Chat;
 using Content.Server.Chat.Managers;
 using Content.Server.Database;
 using Content.Server.Ghost;
@@ -114,6 +115,7 @@ namespace Content.Server.GameTicking
         [Dependency] private readonly DamageableSystem _damageable = default!;
         [Dependency] private readonly GhostSystem _ghosts = default!;
         [Dependency] private readonly RoleBanManager _roleBanManager = default!;
+        [Dependency] private readonly ChatSystem _chatSystem = default!;
         [Dependency] private readonly ServerUpdateManager _serverUpdates = default!;
     }
 }

@@ -19,9 +19,9 @@
         amount: 2
       - id: Gauze
         amount: 2
-      - id: BoxLatex
+      - id: BoxLatexGloves
         amount: 1
-      - id: BoxSterile
+      - id: BoxSterileMask
         amount: 1
       - id: BoxMouthSwab
         amount: 1

@@ -3,6 +3,7 @@
   parent: BaseStructure
   id: BaseLightStructure
   components:
+  - type: InteractionOutline
   - type: Fixtures
     fixtures:
     - shape:
@@ -76,6 +77,9 @@
     damage:
       types:
         Heat: 20
+  - type: ContainerContainer
+    containers:
+      light_bulb: !type:ContainerSlot
   - type: ApcPowerReceiver
   - type: ExtensionCableReceiver
   - type: DeviceNetwork

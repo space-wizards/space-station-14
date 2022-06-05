@@ -51,7 +51,7 @@
     sprite: Objects/Weapons/Guns/Shotguns/bojevic.rsi
     size: 24
   - type: Gun
-    fireRate: 3
+    fireRate: 2
     selectedMode: FullAuto
     availableModes:
     - FullAuto
@@ -74,12 +74,11 @@
       gun_magazine: !type:ContainerSlot
       gun_chamber: !type:ContainerSlot
   - type: MagazineAmmoProvider
+  - type: MagazineVisuals
+    magState: mag
+    steps: 1
+    zeroVisible: true
   - type: Appearance
-    visuals:
-    - type: MagVisualizer
-      magState: mag
-      steps: 1
-      zeroVisible: true
 
 - type: entity
   name: double-barreled shotgun

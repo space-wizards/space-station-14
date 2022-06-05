@@ -396,6 +396,20 @@
       materialRequirements:
         Glass: 2
         Cable: 2
+        
+- type: entity
+  id: EmitterCircuitboard
+  parent: BaseMachineCircuitboard
+  name: emitter machine board
+  components:
+    - type: MachineBoard
+      prototype: Emitter
+      requirements:
+        Capacitor: 1
+        Laser: 1
+      materialRequirements:
+        CableHV: 5
+        Glass: 2
 
 - type: entity
   id: SurveillanceCameraRouterCircuitboard
