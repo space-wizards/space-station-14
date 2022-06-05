@@ -6,11 +6,8 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <PackageReference Include="YamlDotNet" Version="9.1.4" />
-    </ItemGroup>
-
-    <ItemGroup>
       <ProjectReference Include="..\RobustToolbox\Robust.Shared\Robust.Shared.csproj" />
+      <ProjectReference Include="..\RobustToolbox\YamlDotNet\YamlDotNet.csproj" />
     </ItemGroup>
 
 </Project>
