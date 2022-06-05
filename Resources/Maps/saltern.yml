@@ -1199,7 +1199,7 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 128
-  type: WeaponSubMachineGunDrozdRubber
+  type: WeaponSubMachineGunVectorRubber
   components:
   - pos: -14.340517,21.391796
     parent: 852
@@ -46540,7 +46540,7 @@ entities:
       Toggle: []
     type: SignalReceiver
 - uid: 4233
-  type: WeaponSubMachineGunDrozdRubber
+  type: WeaponSubMachineGunVectorRubber
   components:
   - pos: -14.356142,21.563671
     parent: 852

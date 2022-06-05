@@ -78789,7 +78789,7 @@ entities:
       Toggle: []
     type: SignalReceiver
 - uid: 7531
-  type: WeaponSubMachineGunDrozdRubber
+  type: WeaponSubMachineGunVectorRubber
   components:
   - pos: 38.61274,27.452318
     parent: 2

@@ -189,7 +189,7 @@
 
 - type: entity
   name: Vector
-  parent: WeaponSubMachineGunDrozd
+  parent: WeaponSubMachineGunVector
   id: WeaponSubMachineGunVectorRubber
   description: An excellent fully automatic Heavy SMG.
   suffix: Non-Lethal
