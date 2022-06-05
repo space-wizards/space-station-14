@@ -1,9 +1,4 @@
 Entries:
-- author: metalgearsloth
-  changes:
-  - {message: Pushing objects has been disabled. Pulling is still okay., type: Tweak}
-  id: 1158
-  time: '2022-03-03T02:32:03.0000000+00:00'
 - author: HoofedEar
   changes:
   - {message: Cargo door remote now works on Salvage access airlocks., type: Fix}
@@ -3004,3 +2999,8 @@ Entries:
   - {message: Post lights now have interaction outlines., type: Fix}
   id: 1657
   time: '2022-06-04T21:50:30.0000000+00:00'
+- author: themias
+  changes:
+  - {message: Other players can now hear the Musician's PDA music, type: Fix}
+  id: 1658
+  time: '2022-06-05T04:12:55.0000000+00:00'
