@@ -14,7 +14,7 @@ public sealed class FollowerSystem : EntitySystem
 
         SubscribeLocalEvent<GetVerbsEvent<AlternativeVerb>>(OnGetAlternativeVerbs);
         SubscribeLocalEvent<FollowerComponent, RelayMoveInputEvent>(OnFollowerMove);
-        SubscribeLocalEvent<FollowedComponent, EntityTerminatingEvent>(OnFollowedTerminating);
+        SubscribeLocalEvent<FollowedComponent, ComponentRemove>(OnFollowedRemoved);
     }
 
     private void OnGetAlternativeVerbs(GetVerbsEvent<AlternativeVerb> ev)
@@ -45,9 +45,10 @@ public sealed class FollowerSystem : EntitySystem
         StopFollowingEntity(uid, component.Following);
     }
 
-    // Since we parent our observer to the followed entity, we need to detach
-    // before they get deleted so that we don't get recursively deleted too.
-    private void OnFollowedTerminating(EntityUid uid, FollowedComponent component, ref EntityTerminatingEvent args)
+    /// <summary>
+    ///     Detach all followers if the followed entity is deleted.
+    /// </summary>
+    private void OnFollowedRemoved(EntityUid uid, FollowedComponent component, ComponentRemove args)
     {
         StopAllFollowers(uid, component);
     }
@@ -70,8 +71,6 @@ public sealed class FollowerSystem : EntitySystem
         followedComp.Following.Add(follower);
 
         var xform = Transform(follower);
-        xform.AttachParent(entity);
-        xform.LocalPosition = Vector2.Zero;
         xform.LocalRotation = Angle.Zero;
 
         EnsureComp<OrbitVisualsComponent>(follower);
