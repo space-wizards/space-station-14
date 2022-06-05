@@ -297,6 +297,18 @@ public sealed class DoorSystem : SharedDoorSystem
         if(lastState == DoorState.Emagging && TryComp<AirlockComponent>(door.Owner, out var airlockComponent))
             airlockComponent?.SetBoltsWithAudio(!airlockComponent.IsBolted());
     }
+
+    protected override void CheckDoorBump(DoorComponent component, PhysicsComponent body)
+    {
+        if (component.BumpOpen)
+        {
+            foreach (var other in PhysicsSystem.GetCollidingEntities(body))
+            {
+                if (Tags.HasTag(other.Owner, "DoorBumpOpener") &&
+                    TryOpen(component.Owner, component, other.Owner)) break;
+            }
+        }
+    }
 }
 
 public sealed class PryFinishedEvent : EntityEventArgs { }

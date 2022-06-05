@@ -16,7 +16,7 @@ namespace Content.Shared.Doors.Systems;
 
 public abstract class SharedDoorSystem : EntitySystem
 {
-    [Dependency] private readonly SharedPhysicsSystem _physicsSystem = default!;
+    [Dependency] protected readonly SharedPhysicsSystem PhysicsSystem = default!;
     [Dependency] private readonly DamageableSystem _damageableSystem = default!;
     [Dependency] private readonly SharedStunSystem _stunSystem = default!;
     [Dependency] protected readonly TagSystem Tags = default!;
@@ -422,7 +422,7 @@ public abstract class SharedDoorSystem : EntitySystem
         // TODO SLOTH fix electro's code.
         var doorAABB = physics.GetWorldAABB();
 
-        foreach (var otherPhysics in _physicsSystem.GetCollidingEntities(Transform(uid).MapID, doorAABB))
+        foreach (var otherPhysics in PhysicsSystem.GetCollidingEntities(Transform(uid).MapID, doorAABB))
         {
             if (otherPhysics == physics)
                 continue;
@@ -550,17 +550,14 @@ public abstract class SharedDoorSystem : EntitySystem
                 {
                     _activeDoors.Remove(door);
                 }
-                else if (door.BumpOpen)
-                {
-                    foreach (var other in _physicsSystem.GetCollidingEntities(doorBody))
-                    {
-                        if (Tags.HasTag(other.Owner, "DoorBumpOpener") &&
-                            TryOpen(door.Owner, door, other.Owner)) break;
-                    }
-                }
+
+                // Access isn't predicted so
+                CheckDoorBump(door, doorBody);
             }
         }
     }
+
+    protected virtual void CheckDoorBump(DoorComponent component, PhysicsComponent body) {}
 
     /// <summary>
     ///     Makes a door proceed to the next state (if applicable).
