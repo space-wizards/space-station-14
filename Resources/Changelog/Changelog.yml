@@ -1,9 +1,4 @@
 Entries:
-- author: router
-  changes:
-  - {message: Added money to the captain's locker. Capitalism is now REAL., type: Add}
-  id: 1162
-  time: '2022-03-04T05:03:12.0000000+00:00'
 - author: ElectroJr
   changes:
   - {message: 'Fixed a bug that was preventing clothing from being hidden inside of
@@ -3004,3 +2999,8 @@ Entries:
     type: Add}
   id: 1661
   time: '2022-06-05T22:58:20.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Anchoring now shows popups, type: Add}
+  id: 1662
+  time: '2022-06-05T23:04:40.0000000+00:00'
