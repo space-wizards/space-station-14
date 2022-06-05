@@ -15,12 +15,11 @@
   - type: Sprite
     sprite: Objects/Weapons/Guns/Ammunition/Boxes/rifle.rsi
     netsync: false
+  - type: MagazineVisuals
+    magState: mag
+    steps: 2
+    zeroVisible: false
   - type: Appearance
-    visuals:
-    - type: MagVisualizer
-      magState: mag
-      steps: 2
-      zeroVisible: false
 
 # Boxes
 - type: entity
@@ -37,12 +36,11 @@
       map: ["enum.GunVisualLayers.Base"]
     - state: magb-1
       map: ["enum.GunVisualLayers.Mag"]
+  - type: MagazineVisuals
+    magState: magb
+    steps: 2
+    zeroVisible: false
   - type: Appearance
-    visuals:
-    - type: MagVisualizer
-      magState: magb
-      steps: 2
-      zeroVisible: false
 
 - type: entity
   parent: BaseMagazineBoxRifle
@@ -59,12 +57,11 @@
     - state: magb-1
       map: ["enum.GunVisualLayers.Mag"]
     - state: practice-b
+  - type: MagazineVisuals
+    magState: magb
+    steps: 2
+    zeroVisible: false
   - type: Appearance
-    visuals:
-    - type: MagVisualizer
-      magState: magb
-      steps: 2
-      zeroVisible: false
 
 - type: entity
   parent: BaseMagazineBoxRifle

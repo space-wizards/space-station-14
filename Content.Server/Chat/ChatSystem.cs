@@ -158,7 +158,7 @@ public sealed class ChatSystem : SharedChatSystem
         bool playDefaultSound = true, Color? colorOverride = null)
     {
         var messageWrap = Loc.GetString("chat-manager-sender-announcement-wrap-message", ("sender", sender));
-        _chatManager.ChatMessageToAll(ChatChannel.Radio, message, messageWrap);
+        _chatManager.ChatMessageToAll(ChatChannel.Radio, message, messageWrap, colorOverride);
         if (playDefaultSound)
         {
             SoundSystem.Play(Filter.Broadcast(), AnnouncementSound, AudioParams.Default.WithVolume(-2f));
@@ -180,21 +180,20 @@ public sealed class ChatSystem : SharedChatSystem
         var station = _stationSystem.GetOwningStation(source);
         var filter = Filter.Empty();
 
-        if (station != null)
+        if (station == null)
         {
-            if (!EntityManager.TryGetComponent<StationDataComponent>(station, out var stationDataComp)) return;
-
-            foreach (var gridEnt in stationDataComp.Grids)
-            {
-                filter.AddInGrid(gridEnt);
-            }
-        }
-        else
-        {
-            filter = Filter.Pvs(source, entityManager: EntityManager);
+            // you can't make a station announcement without a station
+            return;
         }
 
-        _chatManager.ChatMessageToManyFiltered(filter, ChatChannel.Radio, message, messageWrap, source, true, colorOverride);
+        if (!EntityManager.TryGetComponent<StationDataComponent>(station, out var stationDataComp)) return;
+
+        foreach (var gridEnt in stationDataComp.Grids)
+        {
+            filter.AddInGrid(gridEnt);
+        }
+
+        _chatManager.ChatMessageToManyFiltered(filter, ChatChannel.Radio, message, messageWrap, source, false, colorOverride);
 
         if (playDefaultSound)
         {

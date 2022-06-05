@@ -358,7 +358,7 @@ namespace Content.Server.Nutrition.EntitySystems
             if (args.Cancelled)
                 return;
 
-            IngestionBlockerComponent blocker;
+            IngestionBlockerComponent? blocker;
 
             if (_inventorySystem.TryGetSlotEntity(uid, "mask", out var maskUid) &&
                 EntityManager.TryGetComponent(maskUid, out blocker) &&

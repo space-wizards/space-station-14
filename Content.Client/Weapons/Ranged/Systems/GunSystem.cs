@@ -65,6 +65,7 @@ public sealed partial class GunSystem : SharedGunSystem
         // Plays animated effects on the client.
         SubscribeNetworkEvent<HitscanEvent>(OnHitscan);
 
+        InitializeMagazineVisuals();
         InitializeSpentAmmo();
     }
 
