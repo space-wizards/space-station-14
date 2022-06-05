@@ -151859,7 +151859,7 @@ entities:
         ents: []
     type: ContainerContainer
 - uid: 15187
-  type: PlaqueAtmos
+  type: RandomPlaqueAtmos
   components:
   - pos: -27.5,33.5
     parent: 60

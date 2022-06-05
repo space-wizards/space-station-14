@@ -89900,7 +89900,7 @@ entities:
       ItemCabinet: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 9427
-  type: PlaqueAtmos
+  type: RandomPlaqueAtmos
   components:
   - pos: -37.5,0.5
     parent: 61

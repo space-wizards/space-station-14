@@ -2,6 +2,8 @@
   id: PottedPlantBase
   parent: BaseStructureDynamic
   abstract: true
+  name: potted plant
+  description: A little bit of nature contained in a pot.
   components:
   - type: Transform
     noRot: true
@@ -12,13 +14,13 @@
     fixtures:
     - shape:
         !type:PhysShapeCircle
-        radius: 0.2
-      mass: 25
+        radius: 0.10
+      mass: 50
       mask:
-      - Impassable
+      - MachineMask
       layer:
-      - Opaque
-      - BulletImpassable
+      - MidImpassable
+      - LowImpassable
   - type: Sprite
     drawdepth: Overdoors
     offset: "0.0,0.3"
@@ -42,29 +44,189 @@
           path: /Audio/Effects/plant_rustle.ogg
 
 - type: entity
-  id: PottedPlantRandom
   parent: PottedPlantBase
-  name: potted plant
-  description: A little bit of nature contained in a pot.
+  id: PottedPlantApplebush
+  suffix: Applebush
   components:
   - type: Sprite
-    state: random
-  - type: RandomPottedPlant
+    state: applebush
 
 - type: entity
-  id: PottedPlantRandomPlastic
   parent: PottedPlantBase
-  name: plastic potted plant
-  description: A fake, cheap looking, plastic tree. Perfect for people who kill every plant they touch.
+  id: PottedPlant1
   components:
   - type: Sprite
-    state: plant-26
-  - type: RandomPottedPlant
-    plastic: true
+    state: plant-01
 
 - type: entity
+  parent: PottedPlantBase
+  id: PottedPlant2
+  components:
+  - type: Sprite
+    state: plant-02
+
+- type: entity
+  parent: PottedPlantBase
+  id: PottedPlant3
+  components:
+  - type: Sprite
+    state: plant-03
+
+- type: entity
+  parent: PottedPlantBase
+  id: PottedPlant4
+  components:
+  - type: Sprite
+    state: plant-04
+
+- type: entity
+  parent: PottedPlantBase
+  id: PottedPlant5
+  components:
+  - type: Sprite
+    state: plant-05
+
+- type: entity
+  parent: PottedPlantBase
+  id: PottedPlant6
+  components:
+  - type: Sprite
+    state: plant-06
+
+- type: entity
+  parent: PottedPlantBase
+  id: PottedPlant7
+  components:
+  - type: Sprite
+    state: plant-07
+
+- type: entity
+  parent: PottedPlantBase
+  id: PottedPlant8
+  components:
+  - type: Sprite
+    state: plant-08
+
+- type: entity
+  parent: PottedPlantBase
+  id: PottedPlantBioluminscent
+  name: bioluminescent potted plant
+  description: It produces light!
+  components:
+  - type: Sprite
+    state: plant-09
+  - type: PointLight
+    radius: 2
+    color: "#2cb2e8"
+
+- type: entity
+  parent: PottedPlantBase
+  id: PottedPlant10
+  components:
+  - type: Sprite
+    state: plant-10
+
+- type: entity
+  parent: PottedPlantBase
+  id: PottedPlant11
+  components:
+  - type: Sprite
+    state: plant-11
+
+- type: entity
+  parent: PottedPlantBase
+  id: PottedPlant12
+  components:
+  - type: Sprite
+    state: plant-12
+
+- type: entity
+  parent: PottedPlantBase
+  id: PottedPlant13
+  components:
+  - type: Sprite
+    state: plant-13
+
+- type: entity
+  parent: PottedPlantBase
+  id: PottedPlant14
+  components:
+  - type: Sprite
+    state: plant-14
+
+- type: entity
+  parent: PottedPlantBase
+  id: PottedPlant15
+  components:
+  - type: Sprite
+    state: plant-15
+
+- type: entity
+  parent: PottedPlantBase
+  id: PottedPlant16
+  components:
+  - type: Sprite
+    state: plant-16
+
+- type: entity
+  parent: PottedPlantBase
+  id: PottedPlant17
+  components:
+  - type: Sprite
+    state: plant-17
+
+- type: entity
+  parent: PottedPlantBase
+  id: PottedPlant18
+  components:
+  - type: Sprite
+    state: plant-18
+
+- type: entity
+  parent: PottedPlantBase
+  id: PottedPlant19
+  components:
+  - type: Sprite
+    state: plant-19
+
+- type: entity
+  parent: PottedPlantBase
+  id: PottedPlant20
+  components:
+  - type: Sprite
+    state: plant-20
+
+- type: entity
+  parent: PottedPlantBase
+  id: PottedPlant21
+  components:
+  - type: Sprite
+    state: plant-21
+
+- type: entity
+  parent: PottedPlantBase
+  id: PottedPlant22
+  components:
+  - type: Sprite
+    state: plant-22
+
+- type: entity
+  parent: PottedPlantBase
+  id: PottedPlant23
+  components:
+  - type: Sprite
+    state: plant-23
+
+- type: entity
+  parent: PottedPlantBase
+  id: PottedPlant24
+  components:
+  - type: Sprite
+    state: plant-24
+
+- type: entity
+  parent: PottedPlantBase
   id: PottedPlantRD
-  parent: PottedPlantBase
   name: "RD's potted plant"
   description: "A gift from the botanical staff, presented after the RD's reassignment. There's a tag on it that says \"Y'all come back now, y'hear?\"\nIt doesn't look very healthy..."
   components:
@@ -72,13 +234,39 @@
     state: plant-25
 
 - type: entity
-  id: PottedPlantBioluminscent
   parent: PottedPlantBase
-  name: "bioluminescent potted plant"
-  description: "It produces light!"
+  id: PottedPlant26
+  name: plastic potted plant
+  description: A fake, cheap looking, plastic tree. Perfect for people who kill every plant they touch.
   components:
   - type: Sprite
-    state: plant-09
-  - type: PointLight
-    radius: 2
-    color: "#2cb2e8"
+    state: plant-26
+
+- type: entity
+  parent: PottedPlantBase
+  id: PottedPlant27
+  name: plastic potted plant
+  description: A fake, cheap looking, plastic tree. Perfect for people who kill every plant they touch.
+  components:
+  - type: Sprite
+    state: plant-27
+
+- type: entity
+  parent: PottedPlantBase
+  id: PottedPlant28
+  name: plastic potted plant
+  description: A fake, cheap looking, plastic tree. Perfect for people who kill every plant they touch.
+  components:
+  - type: Sprite
+    state: plant-28
+
+- type: entity
+  parent: PottedPlantBase
+  id: PottedPlant29
+  name: plastic potted plant
+  description: A fake, cheap looking, plastic tree. Perfect for people who kill every plant they touch.
+  components:
+  - type: Sprite
+    state: plant-29
+
+

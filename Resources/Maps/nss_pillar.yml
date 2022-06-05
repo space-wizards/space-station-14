@@ -190905,7 +190905,7 @@ entities:
         ents: []
     type: ContainerContainer
 - uid: 16906
-  type: PlaqueAtmos
+  type: RandomPlaqueAtmos
   components:
   - pos: -84.5,9.5
     parent: 130

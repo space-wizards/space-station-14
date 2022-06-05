@@ -61366,7 +61366,7 @@ entities:
     parent: 30
     type: Transform
 - uid: 5916
-  type: PlaqueAtmos
+  type: RandomPlaqueAtmos
   components:
   - pos: -40.5,7.5
     parent: 30

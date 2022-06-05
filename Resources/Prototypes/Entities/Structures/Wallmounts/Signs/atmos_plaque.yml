@@ -1,7 +1,8 @@
 ﻿- type: entity
   parent: BaseSign
-  id: PlaqueAtmos
-  name: atmos plaque
+  id: PlaqueAtmosZUM
+  name: ZUM Atmospherics Division plaque
+  description: This plaque commemorates the rise of the Atmos ZUM division. May they carry the torch that the Atmos ZAS, LINDA and FEA divisions left behind.
   components:
   - type: WallMount
   - type: Physics
@@ -14,4 +15,21 @@
       - MidImpassable
   - type: Sprite
     state: atmosplaque
-  - type: AtmosPlaque
+
+- type: entity
+  parent: PlaqueAtmosZUM
+  id: PlaqueAtmosFEA
+  name: FEA Atmospherics Division plaque
+  description: This plaque commemorates the fall of the Atmos FEA division. For all the charred, dizzy, and brittle men who have died in its hands.
+
+- type: entity
+  parent: PlaqueAtmosZUM
+  id: PlaqueAtmosZAS
+  name: ZAS Atmospherics Division plaque
+  description: This plaque commemorates the fall of the Atmos ZAS division. For all the charred, dizzy, and brittle men who have died in its hands.
+
+- type: entity
+  parent: PlaqueAtmosZUM
+  id: PlaqueAtmosLINDA
+  name: LINDA Atmospherics Division plaque
+  description: This plaque commemorates the fall of the Atmos LINDA division. For all the charred, dizzy, and brittle men who have died in its hands.

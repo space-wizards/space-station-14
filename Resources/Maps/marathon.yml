@@ -95893,7 +95893,7 @@ entities:
     parent: 30
     type: Transform
 - uid: 9084
-  type: PlaqueAtmos
+  type: RandomPlaqueAtmos
   components:
   - pos: 8.5,-30.5
     parent: 30

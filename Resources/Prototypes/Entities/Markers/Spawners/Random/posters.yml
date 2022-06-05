@@ -134,3 +134,22 @@
       - PosterLegitDickGumshue
       - PosterLegitThereIsNoGasGiant
     chance: 1
+
+#this isn't special enough to get it's own file, sorry
+- type: entity
+  parent: MarkerBase
+  id: RandomPlaqueAtmos
+  name: random atmos plaque spawner
+  components:
+  - type: Sprite
+    laters:
+      - state: red
+      - state: Structures/Wallmounts/posters.rsi/atmosplaque.png
+  - type: RandomSpawner
+    offset: 0
+    prototypes:
+      - PlaqueAtmosFEA
+      - PlaqueAtmosZAS
+      - PlaqueAtmosLINDA
+      - PlaqueAtmosZUM #omg epic
+    chance: 1

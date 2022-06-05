@@ -91662,7 +91662,7 @@ entities:
     parent: 82
     type: Transform
 - uid: 8717
-  type: PlaqueAtmos
+  type: RandomPlaqueAtmos
   components:
   - pos: 63.5,28.5
     parent: 82
