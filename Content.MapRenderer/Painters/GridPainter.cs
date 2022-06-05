@@ -83,7 +83,7 @@ namespace Content.MapRenderer.Painters
                     continue;
                 }
 
-                if (!_cEntityManager.TryGetComponent(entity, out SpriteComponent sprite))
+                if (!_cEntityManager.TryGetComponent(entity, out SpriteComponent? sprite))
                 {
                     throw new InvalidOperationException(
                         $"No sprite component found on an entity for which a server sprite component exists. Prototype id: {prototype.ID}");
