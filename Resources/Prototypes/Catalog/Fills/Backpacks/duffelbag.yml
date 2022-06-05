@@ -75,7 +75,7 @@
   - type: StorageFill
     contents:
       - id: WeaponLightMachineGunL6
-      - id: MagazineBoxLightRifle
+      - id: MagazineLightRifleBox
 
 - type: entity
   parent: ClothingBackpackDuffelSyndicateAmmo

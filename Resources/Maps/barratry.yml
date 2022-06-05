@@ -74497,7 +74497,7 @@ entities:
     parent: 106
     type: Transform
 - uid: 6057
-  type: BoxSterile
+  type: BoxSterileMask
   components:
   - pos: 34.5,-6.5
     parent: 106
@@ -129625,7 +129625,7 @@ entities:
     parent: 106
     type: Transform
 - uid: 11287
-  type: BoxSterile
+  type: BoxSterileMask
   components:
   - pos: 17.5,2.5
     parent: 106

@@ -25,12 +25,12 @@ namespace Content.Client.Communications.UI
             SetSize = MinSize = (600, 400);
             IoCManager.InjectDependencies(this);
 
-            Title = Loc.GetString("communicationsconsole-menu-title");
+            Title = Loc.GetString("comms-console-menu-title");
             Owner = owner;
 
             _messageInput = new LineEdit
             {
-                PlaceHolder = Loc.GetString("communicationsconsole-menu-announcement-placeholder"),
+                PlaceHolder = Loc.GetString("comms-console-menu-announcement-placeholder"),
                 HorizontalExpand = true,
                 SizeFlagsStretchRatio = 1
             };
@@ -127,11 +127,11 @@ namespace Content.Client.Communications.UI
             if (!Owner.CountdownStarted)
             {
                 _countdownLabel.SetMessage("");
-                EmergencyShuttleButton.Text = Loc.GetString("communicationsconsole-menu-call-shuttle");
+                EmergencyShuttleButton.Text = Loc.GetString("comms-console-menu-call-shuttle");
                 return;
             }
 
-            EmergencyShuttleButton.Text = Loc.GetString("communicationsconsole-menu-recall-shuttle");
+            EmergencyShuttleButton.Text = Loc.GetString("comms-console-menu-recall-shuttle");
             _countdownLabel.SetMessage($"Time remaining\n{Owner.Countdown.ToString()}s");
         }
 

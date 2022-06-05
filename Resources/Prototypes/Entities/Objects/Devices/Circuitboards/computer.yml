@@ -11,6 +11,8 @@
     - type: Tag
       tags:
         - DroneUsable
+    - type: StaticPrice
+      price: 75
 
 - type: entity
   parent: BaseComputerCircuitboard
@@ -56,6 +58,8 @@
   components:
     - type: ComputerBoard
       prototype: ComputerSupplyOrdering
+    - type: StaticPrice
+      price: 750
 
 - type: entity
   parent: BaseComputerCircuitboard
@@ -127,6 +131,8 @@
   components:
     - type: ComputerBoard
       prototype: ComputerId
+    - type: StaticPrice
+      price: 750
 
 - type: entity
   parent: BaseComputerCircuitboard
@@ -145,6 +151,15 @@
   components:
     - type: ComputerBoard
       prototype: ComputerComms
+
+- type: entity
+  parent: BaseComputerCircuitboard
+  id: SyndicateCommsComputerCircuitboard
+  name: syndicate communications computer board
+  description: A computer printed circuit board for a syndicate communications console
+  components:
+    - type: ComputerBoard
+      prototype: SyndicateComputerComms
 
 - type: entity
   parent: BaseComputerCircuitboard

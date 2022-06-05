@@ -25,33 +25,33 @@
       map: ["enum.GunVisualLayers.Base"]
     - state: mag-1
       map: ["enum.GunVisualLayers.Mag"]
+  - type: MagazineVisuals
+    magState: mag
+    steps: 2
+    zeroVisible: false
   - type: Appearance
-    visuals:
-    - type: MagVisualizer
-      magState: mag
-      steps: 2
-      zeroVisible: false
 
 # Magazines
 - type: entity
-  id: MagazineBoxLightRifle
+  id: MagazineLightRifleBox
   name: "L6 SAW magazine box (.30 rifle)"
   parent: BaseMagazineLightRifle
   components:
   - type: Tag
     tags:
-      - MagazineBoxLightRifle
+      - MagazineLightRifleBox
   - type: BallisticAmmoProvider
     proto: CartridgeLightRifle
-    capacity: 50
+    capacity: 100
+  - type: Item
+    size: 10
   - type: Sprite
     sprite: Objects/Weapons/Guns/Ammunition/Magazine/LightRifle/light_rifle_box.rsi
+  - type: MagazineVisuals
+    magState: mag
+    steps: 8
+    zeroVisible: false
   - type: Appearance
-    visuals:
-    - type: MagVisualizer
-      magState: mag
-      steps: 8
-      zeroVisible: false
 
 - type: entity
   id: MagazineLightRifle
@@ -144,15 +144,14 @@
   components:
   - type: Tag
     tags:
-      - MagazineBoxLightRifle
+      - MagazineLightRifleBox
   - type: BallisticAmmoProvider
     proto: CartridgeLightRifle
     capacity: 80
   - type: Sprite
     sprite: Objects/Weapons/Guns/Ammunition/Magazine/LightRifle/pk_box.rsi
+  - type: MagazineVisuals
+    magState: mag
+    steps: 7
+    zeroVisible: false
   - type: Appearance
-    visuals:
-    - type: MagVisualizer
-      magState: mag
-      steps: 7
-      zeroVisible: false
