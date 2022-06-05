@@ -405,3 +405,65 @@
     layers:
       - state: green
       - state: security_officer
+
+# SPECIAL
+# ERT
+- type: entity
+  id: SpawnPointERTLeader
+  parent: SpawnPointJobBase
+  name: ERTleader
+  components:
+  - type: SpawnPoint
+    job_id: ERTLeader
+  - type: Sprite
+    layers:
+      - state: green
+      - state: ertleader
+      
+- type: entity
+  id: SpawnPointERTEngineer
+  parent: SpawnPointJobBase
+  name: ERTengineer
+  components:
+  - type: SpawnPoint
+    job_id: ERTEngineer
+  - type: Sprite
+    layers:
+      - state: green
+      - state: ertengineer
+      
+- type: entity
+  id: SpawnPointERTMedical
+  parent: SpawnPointJobBase
+  name: ERTmedical
+  components:
+  - type: SpawnPoint
+    job_id: ERTMedical
+  - type: Sprite
+    layers:
+      - state: green
+      - state: ertmedical
+      
+- type: entity
+  id: SpawnPointERTSecurity
+  parent: SpawnPointJobBase
+  name: ERTsecurity
+  components:
+  - type: SpawnPoint
+    job_id: ERTSecurity
+  - type: Sprite
+    layers:
+      - state: green
+      - state: ertsecurity
+      
+- type: entity
+  id: SpawnPointERTJanitor
+  parent: SpawnPointJobBase
+  name: ERTjanitor
+  components:
+  - type: SpawnPoint
+    job_id: ERTJanitor
+  - type: Sprite
+    layers:
+      - state: green
+      - state: ertjanitor

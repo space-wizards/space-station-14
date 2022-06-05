@@ -235,7 +235,7 @@ entities:
     parent: 852
     type: Transform
 - uid: 9
-  type: BoxLatex
+  type: BoxLatexGloves
   components:
   - pos: 21.584303,-4.310457
     parent: 852
@@ -541,7 +541,7 @@ entities:
         ents: []
     type: ContainerContainer
 - uid: 45
-  type: BoxSterile
+  type: BoxSterileMask
   components:
   - pos: 21.350922,-4.296852
     parent: 852
@@ -74358,7 +74358,7 @@ entities:
         ents: []
     type: ContainerContainer
 - uid: 7116
-  type: BoxLatex
+  type: BoxLatexGloves
   components:
   - pos: 13.500268,-13.486635
     parent: 852

@@ -24,12 +24,11 @@
       map: ["enum.GunVisualLayers.Base"]
     - state: mag-1
       map: ["enum.GunVisualLayers.Mag"]
+  - type: MagazineVisuals
+    magState: mag
+    steps: 2
+    zeroVisible: false
   - type: Appearance
-    visuals:
-    - type: MagVisualizer
-      magState: mag
-      steps: 2
-      zeroVisible: false
 
 # Magazines
 - type: entity

@@ -32446,7 +32446,7 @@ entities:
     parent: 30
     type: Transform
 - uid: 2762
-  type: BoxLatex
+  type: BoxLatexGloves
   components:
   - pos: 10.618573,-10.325268
     parent: 30
@@ -32518,7 +32518,7 @@ entities:
     parent: 30
     type: Transform
 - uid: 2772
-  type: BoxSterile
+  type: BoxSterileMask
   components:
   - pos: 0.5569134,-20.455555
     parent: 30

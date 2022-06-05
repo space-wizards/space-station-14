@@ -512,6 +512,9 @@
     soundGunshot:
       path: /Audio/Weapons/Guns/Gunshots/revolver.ogg
   - type: BallisticAmmoProvider
+    whitelist:
+      tags:
+        - CartridgeCap
     capacity: 6
     autoCycle: true
     soundInsert:

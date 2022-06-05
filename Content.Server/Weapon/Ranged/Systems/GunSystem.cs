@@ -54,8 +54,8 @@ public sealed partial class GunSystem : SharedGunSystem
                     {
                         if (cartridge.Count > 1)
                         {
-                            var angles = LinearSpread(mapAngle - Angle.FromDegrees(cartridge.Spread / 2f),
-                                mapAngle + Angle.FromDegrees(cartridge.Spread / 2f), cartridge.Count);
+                            var angles = LinearSpread(mapAngle - cartridge.Spread / 2,
+                                mapAngle + cartridge.Spread / 2, cartridge.Count);
 
                             for (var i = 0; i < cartridge.Count; i++)
                             {
@@ -73,6 +73,7 @@ public sealed partial class GunSystem : SharedGunSystem
 
                         SetCartridgeSpent(cartridge, true);
                         MuzzleFlash(gun.Owner, cartridge, user);
+                        PlaySound(gun.Owner, gun.SoundGunshot?.GetSound(Random, ProtoManager), user);
 
                         if (cartridge.DeleteOnSpawn)
                             Del(cartridge.Owner);
@@ -92,6 +93,7 @@ public sealed partial class GunSystem : SharedGunSystem
                 case AmmoComponent newAmmo:
                     shotProjectiles.Add(newAmmo.Owner);
                     MuzzleFlash(gun.Owner, newAmmo, user);
+                    PlaySound(gun.Owner, gun.SoundGunshot?.GetSound(Random, ProtoManager), user);
 
                     // Do a throw
                     if (!HasComp<ProjectileComponent>(newAmmo.Owner))
@@ -121,6 +123,8 @@ public sealed partial class GunSystem : SharedGunSystem
 
                         if (dmg != null)
                         {
+                            PlayImpactSound(result.HitEntity, dmg, hitscan.Sound, hitscan.ForceSound);
+
                             if (user != null)
                             {
                                 Logs.Add(LogType.HitScanHit,
@@ -137,6 +141,7 @@ public sealed partial class GunSystem : SharedGunSystem
                     {
                         FireEffects(fromCoordinates, hitscan.MaxLength, entityDirection.ToAngle(), hitscan);
                     }
+                    PlaySound(gun.Owner, gun.SoundGunshot?.GetSound(Random, ProtoManager), user);
                     break;
                 default:
                     throw new ArgumentOutOfRangeException();
@@ -191,14 +196,16 @@ public sealed partial class GunSystem : SharedGunSystem
         component.LastFire = component.NextFire;
 
         // Convert it so angle can go either side.
-        var random = Random.NextGaussian(0, 0.5);
+        var random = Random.NextFloat(-0.5f, 0.5f);
+        var spread = component.CurrentAngle.Theta * random;
         var angle = new Angle(direction.Theta + component.CurrentAngle.Theta * random);
+        DebugTools.Assert(spread <= component.MaxAngle.Theta);
         return angle;
     }
 
     protected override void PlaySound(EntityUid gun, string? sound, EntityUid? user = null)
     {
-        if (sound == null) return;
+        if (string.IsNullOrEmpty(sound)) return;
 
         SoundSystem.Play(Filter.Pvs(gun, entityManager: EntityManager).RemoveWhereAttachedEntity(e => e == user), sound, gun);
     }

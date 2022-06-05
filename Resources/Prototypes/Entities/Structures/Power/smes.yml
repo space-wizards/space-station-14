@@ -59,6 +59,10 @@
       LayoutId: SMES
     - type: Machine
       board: SMESMachineCircuitboard
+    - type: ContainerContainer
+      containers:
+        machine_parts: !type:Container
+        machine_board: !type:Container
 
 # SMES' in use
 

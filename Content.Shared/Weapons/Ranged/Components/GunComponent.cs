@@ -44,7 +44,7 @@ public class GunComponent : Component
     /// <summary>
     /// How much the spread increases every time the gun fires.
     /// </summary>
-    [ViewVariables, DataField("angleIncrease")]
+    [ViewVariables(VVAccess.ReadWrite), DataField("angleIncrease")]
     public Angle AngleIncrease = Angle.FromDegrees(0.5);
 
     /// <summary>
@@ -56,13 +56,13 @@ public class GunComponent : Component
     /// <summary>
     /// The maximum angle allowed for <see cref="CurrentAngle"/>
     /// </summary>
-    [ViewVariables, DataField("maxAngle")]
+    [ViewVariables(VVAccess.ReadWrite), DataField("maxAngle")]
     public Angle MaxAngle = Angle.FromDegrees(2);
 
     /// <summary>
     /// The minimum angle allowed for <see cref="CurrentAngle"/>
     /// </summary>
-    [ViewVariables, DataField("minAngle")]
+    [ViewVariables(VVAccess.ReadWrite), DataField("minAngle")]
     public Angle MinAngle = Angle.FromDegrees(1);
 
     #endregion

@@ -15,6 +15,8 @@
     layers:
     - state: base
       map: ["enum.AmmoVisualLayers.Base"]
+  - type: SpentAmmoVisuals
+  - type: Appearance
 
 - type: entity
   id: CartridgeCap

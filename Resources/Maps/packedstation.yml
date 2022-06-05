@@ -128391,7 +128391,7 @@ entities:
         ents: []
     type: ContainerContainer
 - uid: 12159
-  type: BoxSterile
+  type: BoxSterileMask
   components:
   - pos: 79.63914,-6.4771976
     parent: 2

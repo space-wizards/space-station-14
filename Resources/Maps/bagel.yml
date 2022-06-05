@@ -25341,7 +25341,7 @@ entities:
     parent: 60
     type: Transform
 - uid: 261
-  type: BoxLatex
+  type: BoxLatexGloves
   components:
   - pos: 39.731613,-10.351491
     parent: 60
@@ -55566,7 +55566,7 @@ entities:
     parent: 60
     type: Transform
 - uid: 3336
-  type: BoxLatex
+  type: BoxLatexGloves
   components:
   - pos: 51.726803,-25.342684
     parent: 60
@@ -90244,7 +90244,7 @@ entities:
     parent: 60
     type: Transform
 - uid: 7282
-  type: BoxSterile
+  type: BoxSterileMask
   components:
   - pos: 39.184265,-10.335866
     parent: 60
@@ -103123,7 +103123,7 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 8888
-  type: BoxSterile
+  type: BoxSterileMask
   components:
   - pos: 51.178062,-25.257103
     parent: 60
