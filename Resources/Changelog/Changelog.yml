@@ -1,26 +1,4 @@
 Entries:
-- author: DogZeroX
-  changes:
-  - {message: 'Ratvar, Rouny, and Space Lizard have joined the plushie gang, find
-      them on your closest plushie crate or toy spawners!', type: Add}
-  id: 1157
-  time: '2022-03-03T00:26:18.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - {message: Pushing objects has been disabled. Pulling is still okay., type: Tweak}
-  id: 1158
-  time: '2022-03-03T02:32:03.0000000+00:00'
-- author: HoofedEar
-  changes:
-  - {message: Cargo door remote now works on Salvage access airlocks., type: Fix}
-  - {message: Security door remote now works on Armory access airlocks., type: Fix}
-  id: 1159
-  time: '2022-03-03T09:18:15.0000000+00:00'
-- author: router
-  changes:
-  - {message: Added capitalism. The captain spawns with some money now., type: Add}
-  id: 1160
-  time: '2022-03-03T10:11:35.0000000+00:00'
 - author: Peptide90
   changes:
   - {message: Onion and Oat seeds are now in the seed vendor and seed crate., type: Add}
