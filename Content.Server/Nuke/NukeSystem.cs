@@ -1,10 +1,12 @@
+using Content.Server.AlertLevel;
+using Content.Server.Chat;
 using Content.Server.Chat.Managers;
 using Content.Server.Coordinates.Helpers;
 using Content.Server.Explosion.EntitySystems;
 using Content.Server.Popups;
+using Content.Server.Station.Systems;
 using Content.Server.UserInterface;
 using Content.Shared.Audio;
-using Content.Shared.Body.Components;
 using Content.Shared.Construction.Components;
 using Content.Shared.Containers.ItemSlots;
 using Content.Shared.Nuke;
@@ -21,7 +23,9 @@ namespace Content.Server.Nuke
         [Dependency] private readonly ItemSlotsSystem _itemSlots = default!;
         [Dependency] private readonly PopupSystem _popups = default!;
         [Dependency] private readonly ExplosionSystem _explosions = default!;
-        [Dependency] private readonly IChatManager _chat = default!;
+        [Dependency] private readonly AlertLevelSystem _alertLevel = default!;
+        [Dependency] private readonly StationSystem _stationSystem = default!;
+        [Dependency] private readonly ChatSystem _chatSystem = default!;
 
         public override void Initialize()
         {
@@ -280,7 +284,7 @@ namespace Content.Server.Nuke
                 return;
 
             var anchored = false;
-            if (EntityManager.TryGetComponent(uid, out TransformComponent transform))
+            if (EntityManager.TryGetComponent(uid, out TransformComponent? transform))
                 anchored = transform.Anchored;
 
             var allowArm = component.DiskSlot.HasItem &&
@@ -324,11 +328,20 @@ namespace Content.Server.Nuke
             if (component.Status == NukeStatus.ARMED)
                 return;
 
+            var stationUid = _stationSystem.GetOwningStation(uid);
+            // The nuke may not be on a station, so it's more important to just
+            // let people know that a nuclear bomb was armed in their vicinity instead.
+            // Otherwise, you could set every station to whatever AlertLevelOnActivate is.
+            if (stationUid != null)
+            {
+                _alertLevel.SetLevel(stationUid.Value, component.AlertLevelOnActivate, true, true, true, true);
+            }
+
             // warn a crew
             var announcement = Loc.GetString("nuke-component-announcement-armed",
                 ("time", (int) component.RemainingTime));
             var sender = Loc.GetString("nuke-component-announcement-sender");
-            _chat.DispatchStationAnnouncement(announcement, sender, false, Color.Red);
+            _chatSystem.DispatchStationAnnouncement(uid, announcement, sender, false, Color.Red);
 
             // todo: move it to announcements system
             SoundSystem.Play(Filter.Broadcast(), component.ArmSound.GetSound());
@@ -348,10 +361,16 @@ namespace Content.Server.Nuke
             if (component.Status != NukeStatus.ARMED)
                 return;
 
+            var stationUid = _stationSystem.GetOwningStation(uid);
+            if (stationUid != null)
+            {
+                _alertLevel.SetLevel(stationUid.Value, component.AlertLevelOnDeactivate, true, true, true);
+            }
+
             // warn a crew
             var announcement = Loc.GetString("nuke-component-announcement-unarmed");
             var sender = Loc.GetString("nuke-component-announcement-sender");
-            _chat.DispatchStationAnnouncement(announcement, sender, false);
+            _chatSystem.DispatchStationAnnouncement(uid, announcement, sender, false);
 
             // todo: move it to announcements system
             SoundSystem.Play(Filter.Broadcast(), component.DisarmSound.GetSound());
@@ -401,6 +420,8 @@ namespace Content.Server.Nuke
                 component.IntensitySlope,
                 component.MaxIntensity);
 
+            RaiseLocalEvent(new NukeExplodedEvent());
+
             EntityManager.DeleteEntity(uid);
         }
 
@@ -417,4 +438,6 @@ namespace Content.Server.Nuke
         }
         #endregion
     }
+
+    public sealed class NukeExplodedEvent : EntityEventArgs {}
 }

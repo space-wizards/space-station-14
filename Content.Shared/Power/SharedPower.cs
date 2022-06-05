@@ -1,5 +1,4 @@
-﻿using System;
-using Robust.Shared.Serialization;
+﻿using Robust.Shared.Serialization;
 
 namespace Content.Shared.Power
 {
@@ -19,6 +18,9 @@ namespace Content.Shared.Power
         Pulsed,
         Electrified,
         PulseCancel,
-        ElectrifiedCancel
+        ElectrifiedCancel,
+        MainWire,
+        WireCount,
+        CutWires
     }
 }

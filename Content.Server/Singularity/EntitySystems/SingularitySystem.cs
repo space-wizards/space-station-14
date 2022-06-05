@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using Content.Server.Ghost.Components;
 using Content.Server.Singularity.Components;
 using Content.Shared.Singularity;
@@ -133,7 +132,7 @@ namespace Content.Server.Singularity.EntitySystems
                    !EntityManager.HasComponent<GhostComponent>(entity) &&
                    (component.Level > 4 ||
                    !EntityManager.HasComponent<ContainmentFieldComponent>(entity) &&
-                   !EntityManager.HasComponent<ContainmentFieldGeneratorComponent>(entity));
+                   !(EntityManager.TryGetComponent<ContainmentFieldGeneratorComponent>(entity, out var containFieldGen) && containFieldGen.CanRepel(component)));
         }
 
         private void HandleDestroy(ServerSingularityComponent component, EntityUid entity)

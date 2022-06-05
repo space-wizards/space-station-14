@@ -64,12 +64,13 @@ public sealed partial class TriggerSystem
 
     private void OnProxAppChange(EntityUid uid, TriggerOnProximityComponent component, ref AppearanceChangeEvent args)
     {
-        OnChangeData(uid, component, args.Component);
+        OnChangeData(uid, component, args.Component, args.Sprite);
     }
 
-    private void OnChangeData(EntityUid uid, TriggerOnProximityComponent component, AppearanceComponent appearance)
+    private void OnChangeData(EntityUid uid, TriggerOnProximityComponent component, AppearanceComponent appearance, SpriteComponent? spriteComponent = null)
     {
-        if (!TryComp<SpriteComponent>(component.Owner, out var spriteComponent)) return;
+        if (!Resolve(uid, ref spriteComponent))
+            return;
 
         TryComp<AnimationPlayerComponent>(component.Owner, out var player);
         appearance.TryGetData(ProximityTriggerVisualState.State, out ProximityTriggerVisuals state);

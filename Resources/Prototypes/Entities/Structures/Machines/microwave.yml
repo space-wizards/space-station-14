@@ -25,12 +25,12 @@
     fixtures:
     - shape:
         !type:PhysShapeAabb
-          bounds: "-0.3,-0.16,0.3,0.16"
+        bounds: "-0.3,-0.16,0.3,0.16"
       mass: 25
-      layer:
-      - SmallImpassable
       mask:
-      - VaultImpassable
+      - TabletopMachineMask
+      layer:
+      - TabletopMachineLayer
   - type: Sprite
     netsync: false
     sprite: Structures/Machines/microwave.rsi

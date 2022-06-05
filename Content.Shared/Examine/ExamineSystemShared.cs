@@ -44,7 +44,7 @@ namespace Content.Shared.Examine
         public bool IsInDetailsRange(EntityUid examiner, EntityUid entity)
         {
             // check if the mob is in ciritcal or dead
-            if (EntityManager.TryGetComponent(examiner, out MobStateComponent mobState) && mobState.IsIncapacitated())
+            if (EntityManager.TryGetComponent(examiner, out MobStateComponent? mobState) && mobState.IsIncapacitated())
                 return false;
 
             if (!_interactionSystem.InRangeUnobstructed(examiner, entity, ExamineDetailsRange))
@@ -100,6 +100,14 @@ namespace Content.Shared.Examine
                     return CritExamineRange;
             }
             return ExamineRange;
+        }
+
+        /// <summary>
+        /// True if occluders are drawn for this entity, otherwise false.
+        /// </summary>
+        public bool IsOccluded(EntityUid uid)
+        {
+            return TryComp<SharedEyeComponent>(uid, out var eye) && eye.DrawFov;
         }
 
         public static bool InRangeUnOccluded(MapCoordinates origin, MapCoordinates other, float range, Ignored? predicate, bool ignoreInsideBlocker = true, IEntityManager? entMan = null)

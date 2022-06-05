@@ -1,7 +1,5 @@
 ﻿using Content.Server.ParticleAccelerator.Components;
 using Content.Server.Power.EntitySystems;
-using JetBrains.Annotations;
-using Robust.Shared.GameObjects;
 
 namespace Content.Server.ParticleAccelerator.EntitySystems
 {

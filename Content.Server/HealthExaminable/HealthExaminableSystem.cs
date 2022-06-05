@@ -1,8 +1,6 @@
-﻿using Content.Server.Examine;
-using Content.Shared.Damage;
+﻿using Content.Shared.Damage;
 using Content.Shared.Examine;
 using Content.Shared.FixedPoint;
-using Content.Shared.Ghost.Roles;
 using Content.Shared.Verbs;
 using Robust.Shared.Utility;
 

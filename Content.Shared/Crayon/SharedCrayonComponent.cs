@@ -1,18 +1,14 @@
-using System;
-using Robust.Shared.GameObjects;
 using Robust.Shared.GameStates;
-using Robust.Shared.Maths;
 using Robust.Shared.Serialization;
-using Robust.Shared.Serialization.Manager.Attributes;
 
 namespace Content.Shared.Crayon
 {
-    [NetworkedComponent, ComponentProtoName("Crayon")]
+    [NetworkedComponent, ComponentProtoName("Crayon"), Friend(typeof(SharedCrayonSystem))]
     public abstract class SharedCrayonComponent : Component
     {
         public string SelectedState { get; set; } = string.Empty;
 
-        [DataField("color")] public string _color = "white";
+        [ViewVariables] [DataField("color")] public Color Color;
 
         [Serializable, NetSerializable]
         public enum CrayonUiKey : byte
@@ -34,8 +30,8 @@ namespace Content.Shared.Crayon
     [Serializable, NetSerializable]
     public sealed class CrayonColorMessage : BoundUserInterfaceMessage
     {
-        public readonly string Color;
-        public CrayonColorMessage(string color)
+        public readonly Color Color;
+        public CrayonColorMessage(Color color)
         {
             Color = color;
         }
@@ -51,12 +47,12 @@ namespace Content.Shared.Crayon
     [Serializable, NetSerializable]
     public sealed class CrayonComponentState : ComponentState
     {
-        public readonly string Color;
+        public readonly Color Color;
         public readonly string State;
         public readonly int Charges;
         public readonly int Capacity;
 
-        public CrayonComponentState(string color, string state, int charges, int capacity)
+        public CrayonComponentState(Color color, string state, int charges, int capacity)
         {
             Color = color;
             State = state;

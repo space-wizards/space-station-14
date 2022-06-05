@@ -29,7 +29,7 @@
         bounds: "-0.35,-0.35,0.35,0.35"
       mass: 5
       mask:
-        - GhostImpassable
+      - GhostImpassable
   - type: Body
     template: AGhostTemplate
     preset: HumanPreset
@@ -97,6 +97,8 @@
           event: !type:ToggleIntrinsicUIEvent
   - type: SolarControlConsole # look ma i AM the computer!
   - type: CommunicationsConsole
+    title: communicationsconsole-announcement-title-centcom
+    color: "#228b22"
   - type: RadarConsole
   - type: CargoConsole
   - type: CargoOrderDatabase

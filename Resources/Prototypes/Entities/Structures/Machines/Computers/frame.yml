@@ -11,15 +11,12 @@
     fixtures:
     - shape:
         !type:PhysShapeAabb
-          bounds: "-0.25,-0.5,0.25,0.5"
+        bounds: "-0.25,-0.5,0.25,0.5"
       mass: 25
       mask:
-        - MobMask
+      - MachineMask
       layer:
-        - Opaque
-        - MobImpassable
-        - SmallImpassable
-        - VaultImpassable
+      - MachineLayer
   - type: InteractionOutline
   - type: Rotatable
   - type: Anchorable

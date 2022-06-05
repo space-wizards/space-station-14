@@ -14,11 +14,10 @@
     fixtures:
     - shape:
         !type:PhysShapeCircle
-          radius: 0.2
-      mask:
-      - Impassable
-      - VaultImpassable
+        radius: 0.2
       mass: 10
+      mask:
+      - TableMask
   - type: Sprite
     sprite: Structures/Furniture/chairs.rsi
     noRot: true

@@ -2,43 +2,38 @@ using Content.Server.Chat.Managers;
 using Content.Server.GameTicking;
 using Content.Shared.CCVar;
 using Content.Shared.Examine;
-using Content.Shared.GameTicking;
 using Content.Shared.Interaction;
 using Content.Shared.Popups;
 using Robust.Server.Maps;
 using Robust.Shared.Configuration;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Localization;
-using Robust.Shared.Log;
 using Robust.Shared.Map;
-using Robust.Shared.Maths;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
-using Robust.Shared.Timing;
 using Robust.Shared.Utility;
-using System;
-using System.Collections.Generic;
 using System.Linq;
+using Content.Server.Chat;
+using Content.Server.Station.Systems;
 
 namespace Content.Server.Salvage
 {
     public sealed class SalvageSystem : EntitySystem
     {
-        [Dependency] private readonly IChatManager _chatManager = default!;
         [Dependency] private readonly IMapLoader _mapLoader = default!;
         [Dependency] private readonly IMapManager _mapManager = default!;
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
         [Dependency] private readonly IConfigurationManager _configurationManager = default!;
         [Dependency] private readonly IRobustRandom _random = default!;
         [Dependency] private readonly SharedPopupSystem _popupSystem = default!;
+        [Dependency] private readonly StationSystem _stationSystem = default!;
+        [Dependency] private readonly ChatSystem _chatSystem = default!;
 
         private static readonly TimeSpan AttachingTime = TimeSpan.FromSeconds(30);
         private static readonly TimeSpan HoldTime = TimeSpan.FromMinutes(4);
         private static readonly TimeSpan DetachingTime = TimeSpan.FromSeconds(30);
         private static readonly TimeSpan CooldownTime = TimeSpan.FromMinutes(1);
 
+        // TODO: This is probably not compatible with multi-station
         private readonly Dictionary<GridId, SalvageGridState> _salvageGridStates = new();
 
         public override void Initialize()
@@ -67,7 +62,9 @@ namespace Content.Server.Salvage
             // If we ever want to give magnets names, and announce them individually, we would need to loop this, before removing it.
             if (_salvageGridStates.Remove(ev.GridId))
             {
-                Report("salvage-system-announcement-spawn-magnet-lost");
+                var gridUid = _mapManager.GetGridEuid(ev.GridId);
+                if (EntityManager.TryGetComponent<SalvageGridComponent>(gridUid, out var salvComp) && salvComp.SpawnerMagnet != null)
+                    Report(salvComp.SpawnerMagnet.Owner, "salvage-system-announcement-spawn-magnet-lost");
                 // For the very unlikely possibility that the salvage magnet was on a salvage, we will not return here
             }
             foreach(var gridState in _salvageGridStates)
@@ -94,16 +91,16 @@ namespace Content.Server.Salvage
                 return;
             }
             salvageGridState.ActiveMagnets.Remove(component);
-            Report("salvage-system-announcement-spawn-magnet-lost");
+            Report(uid, "salvage-system-announcement-spawn-magnet-lost");
             if (component.AttachedEntity.HasValue)
             {
                 SafeDeleteSalvage(component.AttachedEntity.Value);
                 component.AttachedEntity = null;
-                Report("salvage-system-announcement-lost");
+                Report(uid, "salvage-system-announcement-lost");
             }
             else if (component.MagnetState is { StateType: MagnetStateType.Attaching })
             {
-                Report("salvage-system-announcement-spawn-no-debris-available");
+                Report(uid, "salvage-system-announcement-spawn-no-debris-available");
             }
             component.MagnetState = MagnetState.Inactive;
         }
@@ -166,7 +163,7 @@ namespace Content.Server.Salvage
                     }
                     gridState.ActiveMagnets.Add(component);
                     component.MagnetState = new MagnetState(MagnetStateType.Attaching, gridState.CurrentTime + AttachingTime);
-                    Report("salvage-system-report-activate-success");
+                    Report(component.Owner, "salvage-system-report-activate-success");
                     break;
                 case MagnetStateType.Attaching:
                 case MagnetStateType.Holding:
@@ -198,8 +195,13 @@ namespace Content.Server.Salvage
             {
                 if (player.AttachedEntity.HasValue)
                 {
-                    var playerTransform = EntityManager.GetComponent<TransformComponent>(player.AttachedEntity.Value);
-                    playerTransform.AttachParent(parentTransform);
+                    var playerEntityUid = player.AttachedEntity.Value;
+                    if (HasComp<SalvageMobRestrictionsComponent>(playerEntityUid))
+                    {
+                        // Salvage mobs are NEVER immune (even if they're from a different salvage, they shouldn't be here)
+                        continue;
+                    }
+                    Transform(playerEntityUid).AttachParent(parentTransform);
                 }
             }
             EntityManager.QueueDeleteEntity(salvage);
@@ -264,7 +266,7 @@ namespace Content.Server.Salvage
 
             if (map == null)
             {
-                Report("salvage-system-announcement-spawn-no-debris-available");
+                Report(component.Owner, "salvage-system-announcement-spawn-no-debris-available");
                 return false;
             }
 
@@ -276,22 +278,24 @@ namespace Content.Server.Salvage
             var (_, gridId) = _mapLoader.LoadBlueprint(spl.MapId, map.MapPath.ToString(), opts);
             if (gridId == null)
             {
-                Report("salvage-system-announcement-spawn-debris-disintegrated");
+                Report(component.Owner, "salvage-system-announcement-spawn-debris-disintegrated");
                 return false;
             }
             var salvageEntityId = _mapManager.GetGridEuid(gridId.Value);
             component.AttachedEntity = salvageEntityId;
+            var gridcomp = EntityManager.EnsureComponent<SalvageGridComponent>(salvageEntityId);
+            gridcomp.SpawnerMagnet = component;
 
             var pulledTransform = EntityManager.GetComponent<TransformComponent>(salvageEntityId);
             pulledTransform.WorldRotation = spAngle;
 
-            Report("salvage-system-announcement-arrived", ("timeLeft", HoldTime.TotalSeconds));
+            Report(component.Owner, "salvage-system-announcement-arrived", ("timeLeft", HoldTime.TotalSeconds));
             return true;
         }
-        private void Report(string messageKey) =>
-            _chatManager.DispatchStationAnnouncement(Loc.GetString(messageKey), Loc.GetString("salvage-system-announcement-source"), colorOverride: Color.Orange, playDefaultSound: false);
-        private void Report(string messageKey, params (string, object)[] args) =>
-            _chatManager.DispatchStationAnnouncement(Loc.GetString(messageKey, args), Loc.GetString("salvage-system-announcement-source"), colorOverride: Color.Orange, playDefaultSound: false);
+        private void Report(EntityUid source, string messageKey) =>
+            _chatSystem.DispatchStationAnnouncement(source, Loc.GetString(messageKey), Loc.GetString("salvage-system-announcement-source"), colorOverride: Color.Orange, playDefaultSound: false);
+        private void Report(EntityUid source, string messageKey, params (string, object)[] args) =>
+            _chatSystem.DispatchStationAnnouncement(source, Loc.GetString(messageKey, args), Loc.GetString("salvage-system-announcement-source"), colorOverride: Color.Orange, playDefaultSound: false);
 
         private void Transition(SalvageMagnetComponent magnet, TimeSpan currentTime)
         {
@@ -308,7 +312,7 @@ namespace Content.Server.Salvage
                     }
                     break;
                 case MagnetStateType.Holding:
-                    Report("salvage-system-announcement-losing", ("timeLeft", DetachingTime.TotalSeconds));
+                    Report(magnet.Owner, "salvage-system-announcement-losing", ("timeLeft", DetachingTime.TotalSeconds));
                     magnet.MagnetState = new MagnetState(MagnetStateType.Detaching, currentTime + DetachingTime);
                     break;
                 case MagnetStateType.Detaching:
@@ -320,7 +324,7 @@ namespace Content.Server.Salvage
                     {
                         Logger.ErrorS("salvage", "Salvage detaching was expecting attached entity but it was null");
                     }
-                    Report("salvage-system-announcement-lost");
+                    Report(magnet.Owner, "salvage-system-announcement-lost");
                     magnet.MagnetState = new MagnetState(MagnetStateType.CoolingDown, currentTime + CooldownTime);
                     break;
                 case MagnetStateType.CoolingDown:

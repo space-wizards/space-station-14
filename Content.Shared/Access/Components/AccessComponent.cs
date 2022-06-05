@@ -1,10 +1,5 @@
-using System.Collections.Generic;
 using Content.Shared.Access.Systems;
-using Robust.Shared.Analyzers;
-using Robust.Shared.GameObjects;
-using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.Set;
-using Robust.Shared.ViewVariables;
 
 namespace Content.Shared.Access.Components
 {

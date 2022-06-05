@@ -17,6 +17,12 @@ namespace Content.Shared.CCVar
         public static readonly CVarDef<string> ServerId =
             CVarDef.Create("server.id", "unknown_server_id", CVar.REPLICATED | CVar.SERVER);
 
+        /// <summary>
+        ///     Name of the rules txt file in the "Resources/Server Info" dir. Include the extension.
+        /// </summary>
+        public static readonly CVarDef<string> RulesFile =
+            CVarDef.Create("server.rules_file", "Rules.txt", CVar.REPLICATED | CVar.SERVER);
+
         /*
          * Ambience
          */
@@ -56,6 +62,19 @@ namespace Content.Shared.CCVar
         /// </summary>
         public static readonly CVarDef<float> AmbienceVolume =
             CVarDef.Create("ambience.volume", 0.0f, CVar.ARCHIVE | CVar.CLIENTONLY);
+
+        /// <summary>
+        /// Whether to play the station ambience (humming) sound
+        /// </summary>
+        public static readonly CVarDef<bool> StationAmbienceEnabled =
+            CVarDef.Create("ambience.station_ambience", true, CVar.ARCHIVE | CVar.CLIENTONLY);
+
+        /// <summary>
+        /// Whether to play the space ambience
+        /// </summary>
+        public static readonly CVarDef<bool> SpaceAmbienceEnabled =
+            CVarDef.Create("ambience.space_ambience", true, CVar.ARCHIVE | CVar.CLIENTONLY);
+
         /*
          * Status
          */
@@ -255,6 +274,32 @@ namespace Content.Shared.CCVar
             CVarDef.Create("traitordm.starting_balance", 20);
 
         /*
+         * Nukeops
+         */
+
+        public static readonly CVarDef<int> NukeopsMinPlayers =
+            CVarDef.Create("nukeops.min_players", 15);
+
+        public static readonly CVarDef<int> NukeopsMaxOps =
+            CVarDef.Create("nukeops.max_ops", 6);
+
+        public static readonly CVarDef<int> NukeopsPlayersPerOp =
+            CVarDef.Create("nukeops.players_per_op", 5);
+
+        /*
+         * Pirates
+         */
+
+        public static readonly CVarDef<int> PiratesMinPlayers =
+            CVarDef.Create("pirates.min_players", 25);
+
+        public static readonly CVarDef<int> PiratesMaxOps =
+            CVarDef.Create("pirates.max_pirates", 6);
+
+        public static readonly CVarDef<int> PiratesPlayersPerOp =
+            CVarDef.Create("pirates.players_per_pirate", 5);
+
+        /*
          * Console
          */
 
@@ -362,6 +407,13 @@ namespace Content.Shared.CCVar
 
         public static readonly CVarDef<bool> LobbyMusicEnabled =
             CVarDef.Create("ambience.lobbymusicenabled", true, CVar.ARCHIVE | CVar.CLIENTONLY);
+
+        /*
+         * Admin sounds
+         */
+
+        public static readonly CVarDef<bool> AdminSoundsEnabled =
+            CVarDef.Create("audio.adminsoundsenabled", true, CVar.ARCHIVE | CVar.CLIENTONLY);
 
         /*
          * HUD
@@ -545,7 +597,7 @@ namespace Content.Shared.CCVar
         ///     Whether gas differences will move entities.
         /// </summary>
         public static readonly CVarDef<bool> SpaceWind =
-            CVarDef.Create("atmos.space_wind", true, CVar.SERVERONLY);
+            CVarDef.Create("atmos.space_wind", false, CVar.SERVERONLY);
 
         /// <summary>
         ///     Divisor from maxForce (pressureDifference * 2.25f) to force applied on objects.
@@ -671,6 +723,11 @@ namespace Content.Shared.CCVar
         public static readonly CVarDef<bool> AdminOocEnabled =
             CVarDef.Create("ooc.enabled_admin", true, CVar.NOTIFY);
 
+        /// <summary>
+        /// If true, whenever OOC is disabled the Discord OOC relay will also be disabled.
+        /// </summary>
+        public static readonly CVarDef<bool> DisablingOOCDisablesRelay = CVarDef.Create("ooc.disabling_ooc_disables_relay", true, CVar.SERVERONLY);
+
         /*
          * LOOC
          */
@@ -727,7 +784,7 @@ namespace Content.Shared.CCVar
         ///     The required ratio of the server that must agree for a restart round vote to go through.
         /// </summary>
         public static readonly CVarDef<float> VoteRestartRequiredRatio =
-            CVarDef.Create("vote.restart_required_ratio", 0.8f, CVar.SERVERONLY);
+            CVarDef.Create("vote.restart_required_ratio", 0.7f, CVar.SERVERONLY);
 
         /// <summary>
         ///     The delay which two votes of the same type are allowed to be made by separate people, in seconds.
@@ -746,7 +803,7 @@ namespace Content.Shared.CCVar
         ///     Sets the duration of the restart vote timer.
         /// </summary>
         public static readonly CVarDef<int>
-            VoteTimerRestart = CVarDef.Create("vote.timerrestart", 30, CVar.SERVERONLY);
+            VoteTimerRestart = CVarDef.Create("vote.timerrestart", 60, CVar.SERVERONLY);
 
         /// <summary>
         ///     Sets the duration of the gamemode/preset vote timer.
@@ -820,6 +877,9 @@ namespace Content.Shared.CCVar
         public static readonly CVarDef<bool> ChatSanitizerEnabled =
             CVarDef.Create("chat.chat_sanitizer_enabled", true, CVar.SERVERONLY);
 
+        public static readonly CVarDef<bool> ChatShowTypingIndicator =
+            CVarDef.Create("chat.show_typing_indicator", true, CVar.CLIENTONLY);
+
         /*
          * AFK
          */
@@ -840,6 +900,12 @@ namespace Content.Shared.CCVar
         public static readonly CVarDef<bool> RestrictedNames =
             CVarDef.Create("ic.restricted_names", true, CVar.SERVER | CVar.REPLICATED);
 
+        /// <summary>
+        /// Allows flavor text (character descriptions)
+        /// </summary>
+        public static readonly CVarDef<bool> FlavorText =
+            CVarDef.Create("ic.flavor_text", false, CVar.SERVER | CVar.REPLICATED);
+
         /*
          * Salvage
          */
@@ -859,6 +925,13 @@ namespace Content.Shared.CCVar
         /// </summary>
         public static readonly CVarDef<float> RulesWaitTime =
             CVarDef.Create("rules.time", 45f, CVar.SERVER | CVar.REPLICATED);
+
+        /// <summary>
+        /// Don't show rules to localhost/loopback interface.
+        /// </summary>
+        public static readonly CVarDef<bool> RulesExemptLocal =
+            CVarDef.Create("rules.exempt_local", true, CVar.SERVERONLY);
+
 
         /*
          * Autogeneration
@@ -908,5 +981,15 @@ namespace Content.Shared.CCVar
         /// </summary>
         public static readonly CVarDef<float> DragDropDeadZone =
             CVarDef.Create("control.drag_dead_zone", 12f, CVar.CLIENTONLY | CVar.ARCHIVE);
+
+        /*
+         * UPDATE
+         */
+
+        /// <summary>
+        /// If a server update restart is pending, the delay after the last player leaves before we actually restart. In seconds.
+        /// </summary>
+        public static readonly CVarDef<float> UpdateRestartDelay =
+            CVarDef.Create("update.restart_delay", 20f, CVar.SERVERONLY);
     }
 }

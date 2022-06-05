@@ -3,7 +3,7 @@
 - type: uplinkListing
   id: UplinkPistolClarissa
   category: Weapons
-  itemId: PistolClarissa
+  itemId: WeaponPistolClarissa
   listingName: Clarissa
   description: A small, easily concealable, but somewhat underpowered gun. Use pistol magazines (.35 auto).
   price: 6
@@ -11,7 +11,7 @@
 - type: uplinkListing
   id: UplinkRevolverPredator
   category: Weapons
-  itemId: RevolverPredator
+  itemId: WeaponRevolverPredator
   listingName: Predator
   description: A loud and deadly revolver. Uses .40 Magnum.
   price: 8
@@ -20,7 +20,7 @@
 - type: uplinkListing
   id: UplinkPistolMandella
   category: Weapons
-  itemId: PistolMandella
+  itemId: WeaponPistolMandella
   listingName: Mandella
   description: A rugged, robust operator handgun with inbuilt silencer. Use pistol magazines (.25 caseless).
   price: 8
@@ -29,7 +29,7 @@
 - type: uplinkListing
   id: UplinkRifleMosin
   category: Weapons
-  itemId: SniperBoltGunWood
+  itemId: WeaponSniperMosin
   listingName: Surplus Rifle
   description: A bolt action service rifle that has seen many wars. Not modern by any standard, hand loaded, and terrible recoil, but it is cheap.
   price: 4
@@ -89,6 +89,7 @@
   category: Explosives
   itemId: MobGrenadePenguin
   price: 6
+  surplus: false # got wrecked by penguins from surplus crate
 
 - type: uplinkListing
   id: UplinkC4
@@ -116,25 +117,25 @@
 
 # For the Mandella
 - type: uplinkListing
-  id: UplinkMagazineClRiflePistol
+  id: UplinkMagazinePistolCaselessRifle
   category: Ammo
-  itemId: MagazineClRiflePistol
+  itemId: MagazinePistolCaselessRifle
   price: 2
 
 # For the Inspector
 - type: uplinkListing
-  id: UplinkSLMagnum
+  id: UplinkSpeedLoaderMagnum
   category: Ammo
-  itemId: SLMagnum
+  itemId: SpeedLoaderMagnum
   price: 2
-  icon: /Textures/Objects/Weapons/Guns/Ammunition/SpeedLoaders/Magnum/magnum_sl.rsi/icon.png
+  icon: /Textures/Objects/Weapons/Guns/Ammunition/SpeedLoaders/Magnum/magnum_speed_loader.rsi/base.png
 
 # For the mosin
 - type: uplinkListing
   id: UplinkMosinAmmo
   category: Ammo
-  itemId: BoxBulletLRifleSmall
-  description: A box of bullets for the surplus rifle.
+  itemId: BoxMagazineLightRifle
+  description: A box of cartridges for the surplus rifle.
   price: 2
 
 
@@ -211,6 +212,21 @@
   price: 50
   icon: /Textures/Structures/Wallmounts/signs.rsi/bio.png
 
+- type: uplinkListing
+  id: UplinkSurplusBundle
+  category: Bundles
+  itemId: CrateSyndicateSurplusBundle
+  description: Contains 50 telecrystals worth of completely random Syndicate items. It can be useless junk or really good.
+  price: 20
+  surplus: false
+
+- type: uplinkListing
+  id: UplinkSuperSurplusBundle
+  category: Bundles
+  itemId: CrateSyndicateSuperSurplusBundle
+  description: Contains 125 telecrystals worth of completely random Syndicate items.
+  price: 40
+  surplus: false
 
 #- type: uplinkListing
 #  id: UplinkCarbineBundle
@@ -237,6 +253,12 @@
   id: UplinkDuffelSurgery
   category: Tools
   itemId: ClothingBackpackDuffelSyndicateFilledMedical
+  price: 5
+
+- type : uplinkListing
+  id: UplinkPowerSink
+  category: Tools
+  itemId: PowerSink
   price: 5
 
 - type: uplinkListing
@@ -283,6 +305,12 @@
   description: A simple EVA suit that offers no protection other than what's needed to survive in space.
   price: 4
 
+- type: uplinkListing
+  id: UplinkClothingOuterHardsuitJuggernaut
+  category: Armor
+  itemId: ClothingOuterHardsuitJuggernaut
+  description: Hyper resilient armor made of materials tested in the Tau chromosphere facility. The only thing that's going to be slowing you down is this suit... and tasers.
+  price: 12
 
 
 # Misc
@@ -351,6 +379,15 @@
   price: 4
 
 - type: uplinkListing
+  id: UplinkCatEars
+  category: Misc
+  itemId: ClothingHeadHatCatEars
+  listingName: Cat Ears
+  description: UwU.
+  price: 21
+
+
+- type: uplinkListing
   id: UplinkGigacancerScanner
   category: Misc
   itemId: HandheldHealthAnalyzerGigacancer
@@ -378,3 +415,4 @@
   listingName: syndicate segway
   description: Be an enemy of the corporation, in style!
   price: 5
+  surplus: false

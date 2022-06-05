@@ -1,19 +1,10 @@
-using System;
 using System.Threading;
-using Content.Server.Doors.Systems;
 using Content.Server.Power.Components;
-using Content.Server.VendingMachines;
 // using Content.Server.WireHacking;
-using Content.Shared.Doors;
 using Content.Shared.Doors.Components;
 using Content.Shared.Sound;
 using Robust.Shared.Audio;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Maths;
 using Robust.Shared.Player;
-using Robust.Shared.Serialization.Manager.Attributes;
-using Robust.Shared.ViewVariables;
 // using static Content.Shared.Wires.SharedWiresComponent;
 // using static Content.Shared.Wires.SharedWiresComponent.WiresAction;
 

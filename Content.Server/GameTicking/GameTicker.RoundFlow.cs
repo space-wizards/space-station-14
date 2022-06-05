@@ -1,20 +1,21 @@
 using System.Linq;
 using System.Threading.Tasks;
+using Content.Server.Announcements;
 using Content.Server.GameTicking.Events;
 using Content.Server.Ghost;
 using Content.Server.Maps;
 using Content.Server.Mind;
 using Content.Server.Players;
-using Content.Server.Station;
 using Content.Shared.CCVar;
 using Content.Shared.Coordinates;
 using Content.Shared.GameTicking;
 using Content.Shared.Preferences;
-using Content.Shared.Station;
+using Content.Shared.Sound;
 using JetBrains.Annotations;
 using Prometheus;
 using Robust.Server.Maps;
 using Robust.Server.Player;
+using Robust.Shared.Audio;
 using Robust.Shared.Map;
 using Robust.Shared.Network;
 using Robust.Shared.Player;
@@ -160,7 +161,7 @@ namespace Content.Server.GameTicking
                 return await _db.AddNewRound(server, playerIds);
             }).Result;
 
-            var startingEvent = new RoundStartingEvent();
+            var startingEvent = new RoundStartingEvent(RoundId);
             RaiseLocalEvent(startingEvent);
 
             List<IPlayerSession> readyPlayers;
@@ -204,7 +205,7 @@ namespace Content.Server.GameTicking
             // MapInitialize *before* spawning players, our codebase is too shit to do it afterwards...
             _mapManager.DoMapInitialize(DefaultMap);
 
-            SpawnPlayers(readyPlayers, origReadyPlayers, profiles, force);
+            SpawnPlayers(readyPlayers, profiles, force);
 
             _roundStartDateTime = DateTime.UtcNow;
             RunLevel = GameRunLevel.InRound;
@@ -213,7 +214,7 @@ namespace Content.Server.GameTicking
             SendStatusToAll();
             ReqWindowAttentionAll();
             UpdateLateJoinStatus();
-            UpdateJobsAvailable();
+            AnnounceRound();
 
 #if EXCEPTION_TOLERANCE
             }
@@ -261,7 +262,7 @@ namespace Content.Server.GameTicking
             RunLevel = GameRunLevel.PostRound;
 
             //Tell every client the round has ended.
-            var gamemodeTitle = _preset != null ? Loc.GetString(_preset.ModeTitle) : string.Empty;
+            var gamemodeTitle = Preset != null ? Loc.GetString(Preset.ModeTitle) : string.Empty;
 
             // Let things add text here.
             var textEv = new RoundEndTextAppendEvent();
@@ -325,7 +326,7 @@ namespace Content.Server.GameTicking
             // This ordering mechanism isn't great (no ordering of minds) but functions
             var listOfPlayerInfoFinal = listOfPlayerInfo.OrderBy(pi => pi.PlayerOOCName).ToArray();
             _playersInGame.Clear();
-            RaiseNetworkEvent(new RoundEndMessageEvent(gamemodeTitle, roundEndText, roundDuration, RoundId, listOfPlayerInfoFinal.Length, listOfPlayerInfoFinal));
+            RaiseNetworkEvent(new RoundEndMessageEvent(gamemodeTitle, roundEndText, roundDuration, RoundId, listOfPlayerInfoFinal.Length, listOfPlayerInfoFinal, LobbySong));
         }
 
         public void RestartRound()
@@ -334,11 +335,9 @@ namespace Content.Server.GameTicking
             if (DummyTicker)
                 return;
 
-            if (_updateOnRoundEnd)
-            {
-                _baseServer.Shutdown(Loc.GetString("game-ticker-shutdown-server-update"));
+            // Handle restart for server update
+            if (_serverUpdates.RoundEnded())
                 return;
-            }
 
             _sawmill.Info("Restarting round!");
 
@@ -350,6 +349,7 @@ namespace Content.Server.GameTicking
             LobbySong = _robustRandom.Pick(_lobbyMusicCollection.PickFiles).ToString();
             RandomizeLobbyBackground();
             ResettingCleanup();
+            SoundSystem.Play(Filter.Broadcast(), new SoundCollectionSpecifier("RoundEnd").GetSound());
 
             if (!LobbyEnabled)
             {
@@ -424,8 +424,6 @@ namespace Content.Server.GameTicking
             // So clients' entity systems can clean up too...
             RaiseNetworkEvent(ev, Filter.Broadcast());
 
-            _spawnedPositions.Clear();
-            _manifest.Clear();
             DisallowLateJoin = false;
         }
 
@@ -465,6 +463,25 @@ namespace Content.Server.GameTicking
         public TimeSpan RoundDuration()
         {
             return _gameTiming.RealTime.Subtract(_roundStartTimeSpan);
+        }
+
+        private void AnnounceRound()
+        {
+            if (Preset == null) return;
+
+            foreach (var proto in _prototypeManager.EnumeratePrototypes<RoundAnnouncementPrototype>())
+            {
+                if (!proto.GamePresets.Contains(Preset.ID)) continue;
+
+                if (proto.Message != null)
+                    _chatSystem.DispatchGlobalStationAnnouncement(Loc.GetString(proto.Message), playDefaultSound: true);
+
+                if (proto.Sound != null)
+                    SoundSystem.Play(Filter.Broadcast(), proto.Sound.GetSound());
+
+                // Only play one because A
+                break;
+            }
         }
     }
 

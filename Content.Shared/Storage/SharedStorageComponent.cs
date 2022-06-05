@@ -1,7 +1,3 @@
-using System.Linq;
-using Content.Shared.ActionBlocker;
-using Content.Shared.DragDrop;
-using Content.Shared.Placeable;
 using Robust.Shared.GameStates;
 using Robust.Shared.Map;
 using Robust.Shared.Serialization;
@@ -32,10 +28,10 @@ namespace Content.Shared.Storage
         }
 
         [Serializable, NetSerializable]
-        public sealed class StorageRemoveItemMessage : BoundUserInterfaceMessage
+        public sealed class StorageInteractWithItemEvent : BoundUserInterfaceMessage
         {
             public readonly EntityUid InteractedItemUID;
-            public StorageRemoveItemMessage(EntityUid interactedItemUID)
+            public StorageInteractWithItemEvent(EntityUid interactedItemUID)
             {
                 InteractedItemUID = interactedItemUID;
             }
@@ -78,11 +74,9 @@ namespace Content.Shared.Storage
 
     [NetSerializable]
     [Serializable]
-    public enum StorageVisuals
+    public enum StorageVisuals : byte
     {
         Open,
-        CanWeld,
-        Welded,
         CanLock,
         Locked
     }

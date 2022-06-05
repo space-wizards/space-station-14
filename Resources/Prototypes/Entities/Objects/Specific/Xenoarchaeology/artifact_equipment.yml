@@ -19,7 +19,7 @@
           map: ["enum.StorageVisualLayers.Door"]
         - state: welded
           visible: false
-          map: ["enum.StorageVisualLayers.Welded"]
+          map: ["enum.WeldableLayers.BaseWelded"]
         - state: locked
           map: ["enum.StorageVisualLayers.Lock"]
           shader: unshaded
@@ -32,17 +32,15 @@
             radius: 0.45
           mass: 150
           mask:
-            - Impassable
+          - MachineMask
           layer:
-            - Opaque
-            - MobImpassable
-            - SmallImpassable
+          - MachineLayer
     - type: Icon
       sprite: Structures/Storage/Crates/artifact.rsi
       state: artifact_container_icon
     - type: ArtifactStorage
       Capacity: 1
-      CanWeldShut: true
+    - type: Weldable
     - type: SuppressArtifactContainer
     - type: PlaceableSurface
     - type: Damageable

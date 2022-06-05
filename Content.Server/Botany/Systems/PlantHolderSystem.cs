@@ -9,7 +9,6 @@ using Content.Shared.Tag;
 using Content.Shared.FixedPoint;
 using Content.Shared.Audio;
 using Content.Shared.Random.Helpers;
-using Robust.Shared.Prototypes;
 using Robust.Shared.Player;
 using Robust.Shared.Timing;
 using Robust.Shared.Audio;
@@ -20,7 +19,6 @@ namespace Content.Server.Botany.Systems
     public sealed class PlantHolderSystem : EntitySystem
     {
         [Dependency] private readonly BotanySystem _botanySystem = default!;
-        [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
         [Dependency] private readonly PopupSystem _popupSystem = default!;
         [Dependency] private readonly IGameTiming _gameTiming = default!;
         [Dependency] private readonly TagSystem _tagSystem = default!;

@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using Content.Server.Database;
+﻿using Content.Server.Database;
 
 namespace Content.Server.Administration.Logs;
 

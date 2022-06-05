@@ -21,13 +21,11 @@ namespace Content.Server.Power.EntitySystems
         private void OnActivate(EntityUid uid, ActivatableUIRequiresPowerComponent component, ActivatableUIOpenAttemptEvent args)
         {
             if (args.Cancelled) return;
-            if (EntityManager.TryGetComponent<ApcPowerReceiverComponent>(uid, out var power) && !power.Powered)
-            {
-                if (TryComp<WiresComponent>(uid, out var wires) && wires.IsPanelOpen)
-                    return;
-                args.User.PopupMessageCursor(Loc.GetString("base-computer-ui-component-not-powered", ("machine", uid)));
-                args.Cancel();
-            }
+            if (this.IsPowered(uid, EntityManager)) return;
+            if (TryComp<WiresComponent>(uid, out var wires) && wires.IsPanelOpen)
+                return;
+            args.User.PopupMessageCursor(Loc.GetString("base-computer-ui-component-not-powered", ("machine", uid)));
+            args.Cancel();
         }
 
         private void OnPowerChanged(EntityUid uid, ActivatableUIRequiresPowerComponent component, PowerChangedEvent args)

@@ -1,6 +1,5 @@
 using Content.Server.DeviceNetwork.Components;
 using JetBrains.Annotations;
-using Robust.Shared.GameObjects;
 
 namespace Content.Server.DeviceNetwork.Systems
 {

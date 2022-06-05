@@ -485,7 +485,7 @@
           Quantity: 20
         - ReagentId: Vitamin
           Quantity: 5
-        - ReagentId: Glucose
+        - ReagentId: Sugar
           Quantity: 15
 
 - type: entity
@@ -510,7 +510,7 @@
           Quantity: 4
         - ReagentId: Vitamin
           Quantity: 1
-        - ReagentId: Glucose
+        - ReagentId: Sugar
           Quantity: 3
 # Tastes like sweetness, cake, vanilla.
 
@@ -537,7 +537,7 @@
           Quantity: 20
         - ReagentId: Vitamin
           Quantity: 5
-        - ReagentId: Glucose
+        - ReagentId: Sugar
           Quantity: 15
 
 - type: entity
@@ -562,7 +562,7 @@
           Quantity: 4
         - ReagentId: Vitamin
           Quantity: 1
-        - ReagentId: Glucose
+        - ReagentId: Sugar
           Quantity: 3
 # Tastes like sweetness, cake, clown.
 
@@ -617,3 +617,60 @@
         - ReagentId: Omnizine
           Quantity: 3
 # Tastes like sweetness, cake, jam.
+
+
+# Suppermatter
+# I can't figure out where to put this. It kind of acts like a cake I guess?
+
+- type: entity
+  name: suppermatter
+  parent: FoodCakeBase
+  id: FoodCakeSuppermatter
+  description: Extremely dense and powerful food.
+  components:
+  - type: Sprite
+    layers:
+    - state: plate
+    - state: suppermatter
+  - type: SliceableFood
+    slice: FoodCakeSuppermatterSlice
+    TotalCount: 8
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 48
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 48
+  - type: Food
+    transferAmount: 12
+    trash: FoodPlate
+  - type: Item
+    size: 40
+  - type: PointLight
+    color: "#FFFF00"
+    radius: 2
+    energy: 1.4
+
+- type: entity
+  name: suppermatter shard
+  parent: FoodCakeSliceBase
+  id: FoodCakeSuppermatterSlice
+  description: A single portion of power.
+  components:
+  - type: Sprite
+    layers:
+    - state: suppermatter-shard
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 12
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 12
+  - type: Food
+    transferAmount: 3
+  - type: PointLight
+    color: "#FFFF00"
+    radius: 1.4
+    energy: 1.4

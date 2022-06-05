@@ -16,11 +16,7 @@
     ClothingOuterPlagueSuit: 1
     ClothingMaskPlague: 1
     ClothingHeadsetService: 2
-
-- type: vendingMachineInventory
-  id: PietyVendEmagInventory
-  spriteName: chapel
-  startingInventory:
+  emaggedInventory:
     ClothingOuterArmorCult: 1
     ClothingHeadHelmetCult: 1
     ClothingOuterRobesCult: 3

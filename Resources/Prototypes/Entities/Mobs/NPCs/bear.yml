@@ -24,11 +24,9 @@
         radius: 0.5
       mass: 100
       mask:
-      - Impassable
-      - MobImpassable
-      - SmallImpassable
+      - MobMask
       layer:
-      - Opaque
+      - MobLayer
   - type: MovementIgnoreGravity
   - type: MobState
     thresholds:
@@ -57,7 +55,7 @@
   - type: Temperature
     heatDamageThreshold: 500
     coldDamageThreshold: 0
-  - type: UnarmedCombat
+  - type: MeleeWeapon
     range: 0.5
     arcwidth: 0
     arc: claw

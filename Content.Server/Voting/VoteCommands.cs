@@ -1,4 +1,3 @@
-using System;
 using System.Linq;
 using Content.Server.Administration;
 using Content.Server.Chat.Managers;
@@ -7,8 +6,6 @@ using Content.Shared.Administration;
 using Content.Shared.Voting;
 using Robust.Server.Player;
 using Robust.Shared.Console;
-using Robust.Shared.IoC;
-using Robust.Shared.Localization;
 
 namespace Content.Server.Voting
 {

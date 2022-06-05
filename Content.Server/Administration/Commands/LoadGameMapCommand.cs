@@ -49,4 +49,31 @@ namespace Content.Server.Administration.Commands
             }
         }
     }
+
+    [AdminCommand(AdminFlags.Round | AdminFlags.Spawn)]
+    public sealed class ListGameMaps : IConsoleCommand
+    {
+        public string Command => "listgamemaps";
+
+        public string Description => "Lists the game maps that can be used by loadgamemap";
+
+        public string Help => "listgamemaps";
+
+        public void Execute(IConsoleShell shell, string argStr, string[] args)
+        {
+            var prototypeManager = IoCManager.Resolve<IPrototypeManager>();
+            var entityManager = IoCManager.Resolve<IEntityManager>();
+            var gameTicker = entityManager.EntitySysManager.GetEntitySystem<GameTicker>();
+
+            if (args.Length != 0)
+            {
+                shell.WriteError(Loc.GetString("shell-wrong-arguments-number"));
+                return;
+            }
+            foreach (var prototype in prototypeManager.EnumeratePrototypes<GameMapPrototype>())
+            {
+                shell.WriteLine($"{prototype.ID} - {prototype.MapName}");
+            }
+        }
+    }
 }

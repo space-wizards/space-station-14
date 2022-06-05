@@ -1,7 +1,5 @@
 using Content.Server.Plants.Components;
 using Robust.Server.GameObjects;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
 using Robust.Shared.Random;
 
 namespace Content.Server.Plants.Systems

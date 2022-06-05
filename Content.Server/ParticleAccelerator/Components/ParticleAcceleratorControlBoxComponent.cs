@@ -1,19 +1,14 @@
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Threading;
-using Content.Server.Popups;
 using Content.Server.Power.Components;
 using Content.Server.Power.EntitySystems;
 using Content.Server.UserInterface;
-using Content.Server.VendingMachines;
 // using Content.Server.WireHacking;
-using Content.Shared.ActionBlocker;
-using Content.Shared.Interaction;
 using Content.Shared.Singularity.Components;
 using Robust.Server.GameObjects;
 using Robust.Shared.Map;
 using Robust.Shared.Utility;
-using Robust.Shared.ViewVariables;
 // using static Content.Shared.Wires.SharedWiresComponent;
 using Timer = Robust.Shared.Timing.Timer;
 

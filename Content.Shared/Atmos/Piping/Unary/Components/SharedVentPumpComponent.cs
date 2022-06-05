@@ -1,4 +1,3 @@
-using System;
 using Content.Shared.Atmos.Monitor.Components;
 using Robust.Shared.Serialization;
 
