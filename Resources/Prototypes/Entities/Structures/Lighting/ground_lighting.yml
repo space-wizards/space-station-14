@@ -3,6 +3,7 @@
   parent: BaseStructure
   id: BaseLightStructure
   components:
+  - type: InteractionOutline
   - type: Fixtures
     fixtures:
     - shape:
