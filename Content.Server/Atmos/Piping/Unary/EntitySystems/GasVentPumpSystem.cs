@@ -159,8 +159,8 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
 
         private void OnPacketRecv(EntityUid uid, GasVentPumpComponent component, DeviceNetworkPacketEvent args)
         {
-            if (!EntityManager.TryGetComponent(uid, out DeviceNetworkComponent netConn)
-                || !EntityManager.TryGetComponent(uid, out AtmosAlarmableComponent alarmable)
+            if (!EntityManager.TryGetComponent(uid, out DeviceNetworkComponent? netConn)
+                || !EntityManager.TryGetComponent(uid, out AtmosAlarmableComponent? alarmable)
                 || !args.Data.TryGetValue(DeviceNetworkConstants.Command, out var cmd))
                 return;
 

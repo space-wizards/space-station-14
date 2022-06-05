@@ -1,4 +1,4 @@
-using System.Linq;
+using Robust.Shared.Collections;
 using Robust.Shared.GameStates;
 using Robust.Shared.Physics.Dynamics;
 
@@ -34,15 +34,27 @@ public sealed class StepTriggerSystem : EntitySystem
             component.Colliding.Count == 0)
             return true;
 
-        foreach (var otherUid in component.Colliding.ToArray())
+        var remQueue = new ValueList<EntityUid>();
+        foreach (var otherUid in component.Colliding)
         {
             var shouldRemoveFromColliding = UpdateColliding(component, transform, otherUid, query);
-            if (!shouldRemoveFromColliding) continue;
+            if (!shouldRemoveFromColliding)
+                continue;
 
-            component.Colliding.Remove(otherUid);
-            component.CurrentlySteppedOn.Remove(otherUid);
+            remQueue.Add(otherUid);
+        }
+
+        if (remQueue.Count > 0)
+        {
+            foreach (var uid in remQueue)
+            {
+                component.Colliding.Remove(uid);
+                component.CurrentlySteppedOn.Remove(uid);
+            }
+
             Dirty(component);
         }
+
         return false;
     }
 
