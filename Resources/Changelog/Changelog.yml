@@ -1,10 +1,4 @@
 Entries:
-- author: HoofedEar
-  changes:
-  - {message: Cargo door remote now works on Salvage access airlocks., type: Fix}
-  - {message: Security door remote now works on Armory access airlocks., type: Fix}
-  id: 1159
-  time: '2022-03-03T09:18:15.0000000+00:00'
 - author: router
   changes:
   - {message: Added capitalism. The captain spawns with some money now., type: Add}
@@ -3004,3 +2998,8 @@ Entries:
   - {message: Other players can now hear the Musician's PDA music, type: Fix}
   id: 1658
   time: '2022-06-05T04:12:55.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Emitter hitsound has been removed, type: Tweak}
+  id: 1659
+  time: '2022-06-05T07:54:48.0000000+00:00'
