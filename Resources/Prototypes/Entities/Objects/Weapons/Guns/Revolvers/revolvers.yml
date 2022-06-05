@@ -82,14 +82,14 @@
 - type: entity
   name: Predator
   parent: BaseWeaponRevolver
-  id: WeaponRevolverPredator
+  id: WeaponRevolverPython
   description: A robust revolver favoured by Syndicate agents.
   components:
   - type: Sprite
-    sprite: Objects/Weapons/Guns/Revolvers/predator.rsi
+    sprite: Objects/Weapons/Guns/Revolvers/python.rsi
   - type: Item
     size: 12
-    sprite: Objects/Weapons/Guns/Revolvers/predator.rsi
+    sprite: Objects/Weapons/Guns/Revolvers/python.rsi
 
 - type: entity
   name: pirate revolver

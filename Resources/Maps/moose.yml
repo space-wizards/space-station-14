@@ -20154,7 +20154,7 @@ entities:
         ents: []
     type: ContainerContainer
 - uid: 1020
-  type: WeaponSubMachineGunDrozdRubber
+  type: WeaponSubMachineGunVectorRubber
   components:
   - pos: 19.553373,0.6517799
     parent: 61

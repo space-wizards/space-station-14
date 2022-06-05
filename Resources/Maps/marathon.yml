@@ -36428,7 +36428,7 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 1989
-  type: WeaponSubMachineGunDrozdRubber
+  type: WeaponSubMachineGunVectorRubber
   components:
   - pos: -37.418808,55.43419
     parent: 30
@@ -36450,7 +36450,7 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 1991
-  type: WeaponSubMachineGunDrozdRubber
+  type: WeaponSubMachineGunVectorRubber
   components:
   - pos: -37.418808,55.55919
     parent: 30

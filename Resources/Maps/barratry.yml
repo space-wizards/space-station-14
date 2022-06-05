@@ -148782,7 +148782,7 @@ entities:
       Toggle: []
     type: SignalReceiver
 - uid: 13417
-  type: WeaponSubMachineGunDrozd
+  type: WeaponSubMachineGunVector
   components:
   - pos: -44.470184,31.758118
     parent: 106
@@ -148790,7 +148790,7 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 13418
-  type: WeaponSubMachineGunDrozd
+  type: WeaponSubMachineGunVector
   components:
   - pos: -44.324352,31.633118
     parent: 106

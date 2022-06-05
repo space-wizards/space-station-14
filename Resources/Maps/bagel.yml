@@ -197964,7 +197964,7 @@ entities:
     parent: 60
     type: Transform
 - uid: 21014
-  type: WeaponSubMachineGunDrozd
+  type: WeaponSubMachineGunVector
   components:
   - pos: -28.465193,2.6841984
     parent: 60
@@ -197972,7 +197972,7 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 21015
-  type: WeaponSubMachineGunDrozdRubber
+  type: WeaponSubMachineGunVectorRubber
   components:
   - pos: -28.449568,2.4185734
     parent: 60

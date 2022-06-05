@@ -87,9 +87,9 @@
   - type: Appearance
 
 - type: entity
-  name: Z8 Bulldog
+  name: M-90gl
   parent: BaseWeaponRifle
-  id: WeaponRifleBulldog
+  id: WeaponRifleM90
   description: An older bullpup carbine model, with an attached underbarrel grenade launcher.
   components:
   - type: Sprite
