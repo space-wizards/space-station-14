@@ -19,13 +19,9 @@
         bounds: "-0.49,-0.49,0.49,0.49"
       mass: 100
       mask:
-      - MobImpassable
+      - FullTileMask
       layer:
-      - Opaque
-      - Impassable
-      - MobImpassable
-      - VaultImpassable
-      - SmallImpassable
+      - WallLayer
   - type: Door
     bumpOpen: false
     clickOpen: true
@@ -57,9 +53,9 @@
       behaviors:
       - !type:DoActsBehavior
         acts: ["Destruction"]
-#  - type: IconSmooth
-#    key: walls
-#    base: solid
+  - type: IconSmooth
+    key: walls
+    base: solid
   - type: Occluder
     sizeX: 32
     sizeY: 32
