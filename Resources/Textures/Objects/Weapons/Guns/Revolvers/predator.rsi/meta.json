@@ -1,7 +1,7 @@
 {
     "version": 1,
     "license": "CC-BY-SA-3.0",
-    "copyright": "Taken/modified from cev-eris at https://github.com/discordia-space/CEV-Eris/blob/master/icons/obj/guns/projectile/sky_driver.dmi",
+    "copyright": "Taken from vgstation at https://github.com/vgstation-coders/vgstation13/pull/26621/commits/fc4cc47e5ae4a5562077239fc2dcfe1603d2645a",
     "size": {
         "x": 32,
         "y": 32
