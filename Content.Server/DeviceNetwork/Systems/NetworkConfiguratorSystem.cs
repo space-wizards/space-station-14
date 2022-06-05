@@ -1,10 +1,12 @@
 ﻿using Content.Server.DeviceNetwork.Components;
+using Content.Server.UserInterface;
 using Content.Shared.Access.Components;
 using Content.Shared.Access.Systems;
 using Content.Shared.Database;
 using Content.Shared.DeviceNetwork;
 using Content.Shared.Interaction;
 using Content.Shared.Interaction.Events;
+using Content.Shared.Movement;
 using Content.Shared.Popups;
 using Content.Shared.Verbs;
 using JetBrains.Annotations;
@@ -21,6 +23,7 @@ public sealed class NetworkConfiguratorSystem : EntitySystem
     [Dependency] private readonly SharedPopupSystem _popupSystem = default!;
     [Dependency] private readonly UserInterfaceSystem _uiSystem = default!;
     [Dependency] private readonly AccessReaderSystem _accessSystem = default!;
+    [Dependency] private readonly SharedInteractionSystem _interactionSystem = default!;
 
 
     public override void Initialize()
@@ -39,6 +42,25 @@ public sealed class NetworkConfiguratorSystem : EntitySystem
         SubscribeLocalEvent<NetworkConfiguratorComponent, NetworkConfiguratorRemoveDeviceMessage>(OnRemoveDevice);
         SubscribeLocalEvent<NetworkConfiguratorComponent, NetworkConfiguratorClearDevicesMessage>(OnClearDevice);
         SubscribeLocalEvent<NetworkConfiguratorComponent, NetworkConfiguratorButtonPressedMessage>(OnConfigButtonPressed);
+
+        SubscribeLocalEvent<DeviceListComponent, ComponentRemove>(OnComponentRemoved);
+    }
+
+    public override void Update(float frameTime)
+    {
+        base.Update(frameTime);
+
+        foreach (var component in EntityManager.EntityQuery<NetworkConfiguratorComponent>())
+        {
+            if (component.ActiveDeviceList != null && EntityManager.EntityExists(component.ActiveDeviceList.Value) &&
+                _interactionSystem.InRangeUnobstructed(component.Owner, component.ActiveDeviceList.Value))
+            {
+                return;
+            }
+
+            //The network configurator is a handheld device. There can only ever be an ui session open for the player holding the device.
+            component.Owner.GetUIOrNull(NetworkConfiguratorUiKey.Configure)?.CloseAll();
+        }
     }
 
     private void TryAddNetworkDevice(EntityUid? targetUid, EntityUid configuratorUid, EntityUid userUid,
@@ -86,6 +108,11 @@ public sealed class NetworkConfiguratorSystem : EntitySystem
         _popupSystem.PopupEntity(Loc.GetString("network-configurator-device-access-denied"), target, Filter.Entities(user.Value));
 
         return false;
+    }
+
+    private void OnComponentRemoved(EntityUid uid, DeviceListComponent component, ComponentRemove args)
+    {
+        component.Owner.GetUIOrNull(NetworkConfiguratorUiKey.Configure)?.CloseAll();
     }
 
     #region Interactions
