@@ -911,7 +911,7 @@
   desc: reagent-desc-silencer
   physicalDesc: reagent-physical-desc-strong-smelling
   color: "#004666"
-  spritePath: silencerglass.
+  spritePath: silencerglass.rsi
   metabolisms:
     Drink:
       effects:
