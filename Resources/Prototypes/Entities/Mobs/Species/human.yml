@@ -84,6 +84,7 @@
     - PressureImmunity
     - Muted
   - type: DiseaseCarrier
+  - type: Blindable
   # Other
   - type: Inventory
   - type: Clickable

@@ -5,6 +5,7 @@ using Content.Client.CharacterInterface;
 using Content.Client.Chat.Managers;
 using Content.Client.EscapeMenu;
 using Content.Client.Eui;
+using Content.Client.Eye.Blinding;
 using Content.Client.Flash;
 using Content.Client.GhostKick;
 using Content.Client.HUD;
@@ -191,6 +192,7 @@ namespace Content.Client.Entry
             overlayMgr.AddOverlay(new CircleMaskOverlay());
             overlayMgr.AddOverlay(new FlashOverlay());
             overlayMgr.AddOverlay(new RadiationPulseOverlay());
+            overlayMgr.AddOverlay(new BlindOverlay());
 
             IoCManager.Resolve<IChatManager>().Initialize();
             IoCManager.Resolve<IClientPreferencesManager>().Initialize();
