@@ -78,7 +78,7 @@
 - type: entity
   name: laser gun
   parent: BaseWeaponBattery
-  id: WeaponLaserRifleCog
+  id: WeaponLaserCarbine
   description: Favoured by Nanotrasen Security for being cheap and easy to use.
   components:
   - type: Sprite

@@ -15411,13 +15411,13 @@ entities:
     parent: 30
     type: Transform
 - uid: 878
-  type: WeaponLaserRifleCog
+  type: WeaponLaserCarbine
   components:
   - pos: 12.534376,18.732817
     parent: 30
     type: Transform
 - uid: 879
-  type: WeaponLaserRifleCog
+  type: WeaponLaserCarbine
   components:
   - pos: 12.550001,18.498442
     parent: 30
