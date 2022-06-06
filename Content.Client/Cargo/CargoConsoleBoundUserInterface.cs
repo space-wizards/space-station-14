@@ -167,7 +167,8 @@ namespace Content.Client.Cargo
                 return;
 
             SendMessage(new CargoConsoleApproveOrderMessage(row.Order.OrderNumber));
-            _menu?.UpdateCargoCapacity(OrderCount + row.Order.Amount, OrderCapacity);
+            // Most of the UI isn't predicted anyway so.
+            // _menu?.UpdateCargoCapacity(OrderCount + row.Order.Amount, OrderCapacity);
         }
     }
 }

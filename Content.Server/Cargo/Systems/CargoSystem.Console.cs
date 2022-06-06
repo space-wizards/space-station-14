@@ -3,6 +3,7 @@ using Content.Server.Access.Systems;
 using Content.Server.Cargo.Components;
 using Content.Server.MachineLinking.Components;
 using Content.Server.MachineLinking.System;
+using Content.Server.Popups;
 using Content.Server.Power.Components;
 using Content.Server.Station.Systems;
 using Content.Shared.Access.Systems;
@@ -12,6 +13,7 @@ using Content.Shared.GameTicking;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.Player;
+using Robust.Shared.Players;
 
 namespace Content.Server.Cargo.Systems
 {
@@ -144,6 +146,7 @@ namespace Content.Server.Cargo.Systems
             // No station to deduct from.
             if (orderDatabase == null || bankAccount == null)
             {
+                ConsolePopup(args.Session, "No available station");
                 PlayDenySound(uid, component);
                 return;
             }
@@ -153,8 +156,9 @@ namespace Content.Server.Cargo.Systems
                 order.Approved) return;
 
             // Invalid order
-            if (!_protoMan.TryIndex(order.ProductId, out CargoProductPrototype? product))
+            if (!_protoMan.TryIndex<CargoProductPrototype>(order.ProductId, out var product))
             {
+                ConsolePopup(args.Session, "Invalid product ID");
                 PlayDenySound(uid, component);
                 return;
             }
@@ -165,6 +169,7 @@ namespace Content.Server.Cargo.Systems
             // Too many orders, avoid them getting spammed in the UI.
             if (amount >= capacity)
             {
+                ConsolePopup(args.Session, "Too many approved orders");
                 PlayDenySound(uid, component);
                 return;
             }
@@ -175,7 +180,7 @@ namespace Content.Server.Cargo.Systems
             if (orderAmount != order.Amount)
             {
                 order.Amount = orderAmount;
-                // TODO: Popup on order trimming.
+                ConsolePopup(args.Session, "Order trimmed to capacity");
                 PlayDenySound(uid, component);
             }
 
@@ -184,12 +189,12 @@ namespace Content.Server.Cargo.Systems
             // Not enough balance
             if (cost > bankAccount.Balance)
             {
+                ConsolePopup(args.Session, $"Insufficient funds (require {cost})");
                 PlayDenySound(uid, component);
                 return;
             }
 
             order.Approved = true;
-
             _idCardSystem.TryFindIdCard(player, out var idCard);
             order.Approver = idCard?.FullName ?? string.Empty;
 
@@ -244,6 +249,11 @@ namespace Content.Server.Cargo.Systems
             _uiSystem.GetUiOrNull(component.Owner, CargoConsoleUiKey.Key)?.SetState(state);
         }
 
+        private void ConsolePopup(ICommonSession session, string text)
+        {
+            Get<PopupSystem>().PopupCursor(text, Filter.SinglePlayer(session));
+        }
+
         private void PlayDenySound(EntityUid uid, CargoConsoleComponent component)
         {
             SoundSystem.Play(Filter.Pvs(uid, entityManager: EntityManager), component.ErrorSound.GetSound());
@@ -260,6 +270,7 @@ namespace Content.Server.Cargo.Systems
 
             foreach (var (_, order) in component.Orders)
             {
+                if (!order.Approved) continue;
                 amount += order.Amount;
             }
 
@@ -268,8 +279,7 @@ namespace Content.Server.Cargo.Systems
 
         public bool TryAddOrder(StationCargoOrderDatabaseComponent component, CargoOrderData data)
         {
-            var index = GetNextIndex(component);
-            component.Orders.Add(index, data);
+            component.Orders.Add(data.OrderNumber, data);
             return true;
         }
 
