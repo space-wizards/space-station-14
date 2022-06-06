@@ -379,7 +379,7 @@
 - type: construction
   name: external airlock
   id: AirlockExternal
-  graph: Airlock
+  graph: AirlockExternal
   startNode: start
   targetNode: AirlockExternal
   category: Structures
@@ -396,7 +396,7 @@
 - type: construction
   name: docking airlock
   id: AirlockExternal
-  graph: Airlock
+  graph: AirlockExternal
   startNode: start
   targetNode: AirlockDocking
   category: Structures
