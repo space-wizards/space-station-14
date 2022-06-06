@@ -2,7 +2,6 @@ using System.Globalization;
 using Content.Server.Access.Systems;
 using Content.Server.AlertLevel;
 using Content.Server.Chat;
-using Content.Server.Chat.Managers;
 using Content.Server.Popups;
 using Content.Server.RoundEnd;
 using Content.Server.Station.Systems;
@@ -199,11 +198,9 @@ namespace Content.Server.Communications
             if (comp.AnnounceGlobal)
             {
                 _chatSystem.DispatchGlobalStationAnnouncement(msg, title, colorOverride: comp.AnnouncementColor);
+                return;
             }
-            else
-            {
-                _chatSystem.DispatchStationAnnouncement(uid, msg, title, colorOverride: comp.AnnouncementColor);
-            }
+            _chatSystem.DispatchStationAnnouncement(uid, msg, title, colorOverride: comp.AnnouncementColor);
         }
 
         private void OnCallShuttleMessage(EntityUid uid, CommunicationsConsoleComponent comp, CommunicationsConsoleCallEmergencyShuttleMessage message)

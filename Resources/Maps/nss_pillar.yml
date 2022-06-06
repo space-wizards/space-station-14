@@ -1179,7 +1179,7 @@ entities:
       Toggle: []
     type: SignalReceiver
 - uid: 110
-  type: BoxSterile
+  type: BoxSterileMask
   components:
   - pos: 2.6051922,-12.398874
     parent: 130
@@ -73701,7 +73701,7 @@ entities:
     parent: 130
     type: Transform
 - uid: 5650
-  type: BoxLatex
+  type: BoxLatexGloves
   components:
   - pos: 21.30173,-25.393604
     parent: 130
@@ -109963,7 +109963,7 @@ entities:
         ents: []
     type: ContainerContainer
 - uid: 8755
-  type: BoxSterile
+  type: BoxSterileMask
   components:
   - pos: 21.86423,-25.393604
     parent: 130
@@ -151337,7 +151337,7 @@ entities:
       id: docking
     type: Fixtures
 - uid: 12721
-  type: BoxSterile
+  type: BoxSterileMask
   components:
   - pos: 5.5165095,-21.370937
     parent: 130
@@ -151353,7 +151353,7 @@ entities:
     parent: 130
     type: Transform
 - uid: 12723
-  type: BoxLatex
+  type: BoxLatexGloves
   components:
   - pos: 2.335823,-12.452833
     parent: 130
@@ -151363,7 +151363,7 @@ entities:
         ents: []
     type: ContainerContainer
 - uid: 12724
-  type: BoxLatex
+  type: BoxLatexGloves
   components:
   - pos: 5.445194,-23.46559
     parent: 130

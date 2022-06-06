@@ -1,77 +1,4 @@
 Entries:
-- author: Mith-randalf
-  changes:
-  - {message: Removed fun (by which I mean the centcomm outfit bundle from the traitor
-      uplink)!, type: Remove}
-  id: 1151
-  time: '2022-03-02T01:46:55.0000000+00:00'
-- author: Emisse
-  changes:
-  - {message: updated Saltern to Saltern Special Edition HD Enhanced Edition, type: Add}
-  id: 1152
-  time: '2022-03-02T13:16:42.0000000+00:00'
-- author: ElectroJr
-  changes:
-  - {message: Fixed a bug preventing the RCD from constructing entities on some empty
-      tiles., type: Fix}
-  id: 1153
-  time: '2022-03-02T13:38:19.0000000+00:00'
-- author: wrexbe
-  changes:
-  - {message: Glass tables now have different mass limits., type: Add}
-  id: 1154
-  time: '2022-03-02T14:07:49.0000000+00:00'
-- author: DogZeroX
-  changes:
-  - {message: Xenos no longer need oxygen and are space-proof., type: Tweak}
-  - {message: The odds of winning against a Xeno in a fist-fight have decreased considerably.,
-    type: Tweak}
-  id: 1155
-  time: '2022-03-02T14:08:19.0000000+00:00'
-- author: notafet
-  changes:
-  - {message: Items on conveyor belts now round corners correctly., type: Add}
-  id: 1156
-  time: '2022-03-02T22:32:33.0000000+00:00'
-- author: DogZeroX
-  changes:
-  - {message: 'Ratvar, Rouny, and Space Lizard have joined the plushie gang, find
-      them on your closest plushie crate or toy spawners!', type: Add}
-  id: 1157
-  time: '2022-03-03T00:26:18.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - {message: Pushing objects has been disabled. Pulling is still okay., type: Tweak}
-  id: 1158
-  time: '2022-03-03T02:32:03.0000000+00:00'
-- author: HoofedEar
-  changes:
-  - {message: Cargo door remote now works on Salvage access airlocks., type: Fix}
-  - {message: Security door remote now works on Armory access airlocks., type: Fix}
-  id: 1159
-  time: '2022-03-03T09:18:15.0000000+00:00'
-- author: router
-  changes:
-  - {message: Added capitalism. The captain spawns with some money now., type: Add}
-  id: 1160
-  time: '2022-03-03T10:11:35.0000000+00:00'
-- author: Peptide90
-  changes:
-  - {message: Onion and Oat seeds are now in the seed vendor and seed crate., type: Add}
-  - {message: Seed vendor inventory reduced from 10 seeds to 5., type: Tweak}
-  id: 1161
-  time: '2022-03-03T10:42:49.0000000+00:00'
-- author: router
-  changes:
-  - {message: Added money to the captain's locker. Capitalism is now REAL., type: Add}
-  id: 1162
-  time: '2022-03-04T05:03:12.0000000+00:00'
-- author: ElectroJr
-  changes:
-  - {message: 'Fixed a bug that was preventing clothing from being hidden inside of
-      secret stashes (e.g., potted plants)', type: Fix}
-  id: 1163
-  time: '2022-03-04T06:54:27.0000000+00:00'
 - author: Peptide90
   changes:
   - {message: Added secure cargo and external windoors. Fixed glass EVA airlock sprite.,
@@ -3008,3 +2935,72 @@ Entries:
       technology unlock., type: Fix}
   id: 1650
   time: '2022-06-04T00:04:49.0000000+00:00'
+- author: themias
+  changes:
+  - {message: Inflatables can no longer be placed on walls or doors, type: Fix}
+  id: 1651
+  time: '2022-06-04T02:15:46.0000000+00:00'
+- author: themias
+  changes:
+  - {message: Ghosting no longer causes dragged corpses to be dropped, type: Fix}
+  id: 1652
+  time: '2022-06-04T02:59:07.0000000+00:00'
+- author: Peptide90
+  changes:
+  - {message: Added boxes of nitrile gloves., type: Add}
+  - {message: Fixed name of sterile mask and latex glove boxes., type: Tweak}
+  id: 1653
+  time: '2022-06-04T05:05:18.0000000+00:00'
+- author: UKNOWH
+  changes:
+  - {message: Added makeshift laser gun!, type: Add}
+  id: 1654
+  time: '2022-06-04T06:30:37.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: L6 sustained spread increased and item size increased., type: Tweak}
+  id: 1655
+  time: '2022-06-04T06:52:40.0000000+00:00'
+- author: Veritius
+  changes:
+  - {message: Fix communications consoles not sending announcements., type: Fix}
+  id: 1656
+  time: '2022-06-04T09:09:04.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Post lights now have interaction outlines., type: Fix}
+  id: 1657
+  time: '2022-06-04T21:50:30.0000000+00:00'
+- author: themias
+  changes:
+  - {message: Other players can now hear the Musician's PDA music, type: Fix}
+  id: 1658
+  time: '2022-06-05T04:12:55.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Emitter hitsound has been removed, type: Tweak}
+  id: 1659
+  time: '2022-06-05T07:54:48.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Fix NPCs steering around puddles, type: Fix}
+  id: 1660
+  time: '2022-06-05T09:42:03.0000000+00:00'
+- author: ElectroJr
+  changes:
+  - {message: Added a mapping/editor keybinding that starts placing the same type
+      of entity or tile that the mouse is currently hovering over. Defaults to `P`,
+    type: Add}
+  id: 1661
+  time: '2022-06-05T22:58:20.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Anchoring now shows popups, type: Add}
+  id: 1662
+  time: '2022-06-05T23:04:40.0000000+00:00'
+- author: WilliamECrew
+  changes:
+  - {message: 'When dumping contents out of a bag, items will now be spread out randomly
+      instead of all being dumped into the same exact spot.', type: Tweak}
+  id: 1663
+  time: '2022-06-06T00:34:44.0000000+00:00'

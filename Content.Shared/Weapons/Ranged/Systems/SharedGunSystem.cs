@@ -120,6 +120,10 @@ public abstract partial class SharedGunSystem : EntitySystem
     {
         args.State = new GunComponentState
         {
+            FireRate = component.FireRate,
+            CurrentAngle = component.CurrentAngle,
+            MinAngle = component.MinAngle,
+            MaxAngle = component.MaxAngle,
             NextFire = component.NextFire,
             ShotCounter = component.ShotCounter,
             SelectiveFire = component.SelectedMode,
@@ -132,13 +136,17 @@ public abstract partial class SharedGunSystem : EntitySystem
         if (args.Current is not GunComponentState state) return;
 
         Sawmill.Debug($"Handle state: setting shot count from {component.ShotCounter} to {state.ShotCounter}");
+        component.FireRate = state.FireRate;
+        component.CurrentAngle = state.CurrentAngle;
+        component.MinAngle = state.MinAngle;
+        component.MaxAngle = state.MaxAngle;
         component.NextFire = state.NextFire;
         component.ShotCounter = state.ShotCounter;
         component.SelectedMode = state.SelectiveFire;
         component.AvailableModes = state.AvailableSelectiveFire;
     }
 
-    protected GunComponent? GetGun(EntityUid entity)
+    public GunComponent? GetGun(EntityUid entity)
     {
         if (!EntityManager.TryGetComponent(entity, out SharedHandsComponent? hands) ||
             hands.ActiveHandEntity is not { } held)
@@ -358,7 +366,11 @@ public abstract partial class SharedGunSystem : EntitySystem
     [Serializable, NetSerializable]
     protected sealed class GunComponentState : ComponentState
     {
+        public Angle CurrentAngle;
+        public Angle MinAngle;
+        public Angle MaxAngle;
         public TimeSpan NextFire;
+        public float FireRate;
         public int ShotCounter;
         public SelectiveFire SelectiveFire;
         public SelectiveFire AvailableSelectiveFire;
