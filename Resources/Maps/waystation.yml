@@ -26458,19 +26458,19 @@ entities:
     parent: 82
     type: Transform
 - uid: 1427
-  type: WeaponLaserRifleCog
+  type: WeaponLaserCarbine
   components:
   - pos: -0.4915824,21.534182
     parent: 82
     type: Transform
 - uid: 1428
-  type: WeaponLaserRifleCog
+  type: WeaponLaserCarbine
   components:
   - pos: -0.5228324,21.627932
     parent: 82
     type: Transform
 - uid: 1429
-  type: WeaponLaserRifleCog
+  type: WeaponLaserCarbine
   components:
   - pos: -0.4915824,21.409182
     parent: 82
