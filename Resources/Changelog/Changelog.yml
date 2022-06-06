@@ -1,12 +1,6 @@
 Entries:
 - author: ElectroJr
   changes:
-  - {message: 'Fixed a bug causing alerts (health, hunger, etc) to sometimes disappear.
-      Please report if it continues happening.', type: Fix}
-  id: 1165
-  time: '2022-03-04T10:52:51.0000000+00:00'
-- author: ElectroJr
-  changes:
   - {message: Reverted explosion refactor test merge. Will probably return eventually.,
     type: Remove}
   id: 1166
@@ -3004,3 +2998,9 @@ Entries:
       neck and right click on someone else to listen to their chest., type: Add}
   id: 1664
   time: '2022-06-06T01:37:29.0000000+00:00'
+- author: youarereadingthis
+  changes:
+  - {message: Removed the shuttle powering crate from the cargo ordering console.,
+    type: Remove}
+  id: 1665
+  time: '2022-06-06T08:34:07.0000000+00:00'
