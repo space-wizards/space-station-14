@@ -2,7 +2,8 @@
   id: lighthouse
   mapName: 'lighthouse'
   mapPath: /Maps/lighthouse.yml
-  minPlayers: 25
+  minPlayers: 35
+  maxPlayers: 60
   stations:
     Station:
       mapNameTemplate: '{0} Lighthouse {1}'
