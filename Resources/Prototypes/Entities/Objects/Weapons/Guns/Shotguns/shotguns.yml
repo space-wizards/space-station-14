@@ -132,6 +132,6 @@
     size: 10
     sprite: Objects/Weapons/Guns/Shotguns/sawn.rsi
   - type: Gun
-    fireRate: 8
+    fireRate: 4
   - type: BallisticAmmoProvider
     capacity: 2
