@@ -48,6 +48,7 @@
     - state: mag-0
       map: ["enum.GunVisualLayers.Mag"]
   - type: Item
+    size: 50  # Magazine-fed so you don't get the small size benefit.
     sprite: Objects/Weapons/Guns/Shotguns/bojevic.rsi
   - type: Gun
     fireRate: 2
