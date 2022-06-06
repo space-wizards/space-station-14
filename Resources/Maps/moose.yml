@@ -20192,7 +20192,7 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 1024
-  type: WeaponLaserRifleCog
+  type: WeaponLaserCarbine
   components:
   - pos: 19.522123,-0.2544701
     parent: 61
@@ -20200,7 +20200,7 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 1025
-  type: WeaponLaserRifleCog
+  type: WeaponLaserCarbine
   components:
   - pos: 19.537748,-0.4732201
     parent: 61
