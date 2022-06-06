@@ -55,7 +55,7 @@ namespace Content.IntegrationTests.Tests.GameObjects.Components.Movement
 
                 // Test for climb components existing
                 // Players and tables should have these in their prototypes.
-                Assert.That(entityManager.TryGetComponent(human, out climbing), "Human has no climbing");
+                Assert.That(entityManager.TryGetComponent(human, out climbing!), "Human has no climbing");
                 Assert.That(entityManager.TryGetComponent(table, out ClimbableComponent? _), "Table has no climbable");
 
                 // TODO ShadowCommander: Implement climbing test

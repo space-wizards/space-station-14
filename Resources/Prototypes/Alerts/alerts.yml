@@ -192,6 +192,12 @@
   description: You're severely thirsty. The thirst makes moving around a chore.
 
 - type: alert
+  id: Muted
+  icon: /Textures/Interface/Alerts/Abilities/silenced.png
+  name: Muted
+  description: You have lost the ability to speak.
+
+- type: alert
   id: VowOfSilence
   icon: /Textures/Interface/Alerts/Abilities/silenced.png
   name: Vow of Silence
