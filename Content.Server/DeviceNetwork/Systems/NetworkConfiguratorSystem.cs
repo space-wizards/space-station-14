@@ -59,7 +59,7 @@ public sealed class NetworkConfiguratorSystem : EntitySystem
             }
 
             //The network configurator is a handheld device. There can only ever be an ui session open for the player holding the device.
-            _uiSystem.GetUiOrNull(configurator.Owner, NetworkConfiguratorUiKey.Configure)?.CloseAll();
+            _uiSystem.GetUiOrNull(component.Owner, NetworkConfiguratorUiKey.Configure)?.CloseAll();
         }
     }
 
