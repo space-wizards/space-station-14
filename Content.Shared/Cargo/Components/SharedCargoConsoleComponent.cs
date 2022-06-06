@@ -9,12 +9,7 @@ namespace Content.Shared.Cargo.Components
     ///    Sends away or requests shuttle
     /// </summary>
     [Serializable, NetSerializable]
-    public sealed class CargoConsoleShuttleMessage : BoundUserInterfaceMessage
-    {
-        public CargoConsoleShuttleMessage()
-        {
-        }
-    }
+    public sealed class CargoConsoleShuttleMessage : BoundUserInterfaceMessage {}
 
     /// <summary>
     ///     Add order to database.

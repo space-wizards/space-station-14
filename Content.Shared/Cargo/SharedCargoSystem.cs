@@ -18,7 +18,10 @@ public abstract class SharedCargoSystem : EntitySystem
 
     private void OnOrderGetState(EntityUid uid, StationCargoOrderDatabaseComponent component, ref ComponentGetState args)
     {
-        args.State = new StationCargoOrderDatabaseComponentState();
+        args.State = new StationCargoOrderDatabaseComponentState()
+        {
+            Orders = component.Orders,
+        };
     }
 
     private void OnBankHandleState(EntityUid uid, StationBankAccountComponent component, ref ComponentHandleState args)
@@ -35,6 +38,8 @@ public abstract class SharedCargoSystem : EntitySystem
     private void OnOrderHandleState(EntityUid uid, StationCargoOrderDatabaseComponent component, ref ComponentHandleState args)
     {
         if (args.Current is not StationCargoOrderDatabaseComponentState state) return;
+        component.Orders = state.Orders;
+        // TODO: Dirty UI.
     }
 
     [Serializable, NetSerializable]
@@ -46,7 +51,7 @@ public abstract class SharedCargoSystem : EntitySystem
     [Serializable, NetSerializable]
     protected sealed class StationCargoOrderDatabaseComponentState : ComponentState
     {
-
+        public Dictionary<int, CargoOrderData> Orders = new();
     }
 }
 
