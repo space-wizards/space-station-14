@@ -13,7 +13,7 @@ namespace Content.Client.Cargo.UI
         private int[] _accountIds = System.Array.Empty<int>();
         private int _selectedAccountId = -1;
 
-        public GalacticBankSelectionMenu(CargoConsoleBoundUserInterface owner)
+        public GalacticBankSelectionMenu(CargoTelepadConsoleBoundUserInterface owner)
         {
             MinSize = SetSize = (300, 300);
             IoCManager.InjectDependencies(this);

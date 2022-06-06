@@ -3,18 +3,15 @@ using Content.Client.Cargo.UI;
 using Content.Shared.Cargo;
 using Content.Shared.Cargo.Components;
 using Robust.Client.GameObjects;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.ViewVariables;
 using static Content.Shared.Cargo.Components.SharedCargoConsoleComponent;
 using static Robust.Client.UserInterface.Controls.BaseButton;
 
 namespace Content.Client.Cargo
 {
-    public sealed class CargoConsoleBoundUserInterface : BoundUserInterface
+    public sealed class CargoTelepadConsoleBoundUserInterface : CargoBoundUserInterface
     {
         [ViewVariables]
-        private CargoConsoleMenu? _menu;
+        private CargoTelepadConsoleMenu? _menu;
 
         [ViewVariables]
         private CargoConsoleOrderMenu? _orderMenu;
@@ -39,7 +36,7 @@ namespace Content.Client.Cargo
 
         private CargoProductPrototype? _product;
 
-        public CargoConsoleBoundUserInterface(ClientUserInterfaceComponent owner, object uiKey) : base(owner, uiKey)
+        public CargoTelepadConsoleBoundUserInterface(ClientUserInterfaceComponent owner, object uiKey) : base(owner, uiKey)
         {
         }
 
@@ -52,7 +49,7 @@ namespace Content.Client.Cargo
 
             Orders = orders;
 
-            _menu = new CargoConsoleMenu(this);
+            _menu = new CargoTelepadConsoleMenu(this);
             _orderMenu = new CargoConsoleOrderMenu();
 
             _menu.OnClose += Close;
