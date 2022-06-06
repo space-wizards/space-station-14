@@ -58,10 +58,7 @@ namespace Content.Server.Doors.Systems
 
             foreach (var (firelock, door, appearance, xform) in EntityQuery<FirelockComponent, DoorComponent, AppearanceComponent, TransformComponent>())
             {
-                if (!airtightQuery.TryGetComponent(door.Owner, out var airtight))
-                    continue;
-
-                UpdateVisuals(door.Owner, firelock, door, airtight, appearance, xform, powerQuery, airtightQuery);
+                UpdateVisuals(door.Owner, firelock, door, null, appearance, xform, powerQuery, airtightQuery);
             }
         }
 
