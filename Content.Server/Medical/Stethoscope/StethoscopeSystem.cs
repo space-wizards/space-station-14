@@ -28,6 +28,7 @@ namespace Content.Server.Medical
             SubscribeLocalEvent<StethoscopeComponent, GotUnequippedEvent>(OnUnequipped);
             SubscribeLocalEvent<WearingStethoscopeComponent, GetVerbsEvent<InnateVerb>>(AddStethoscopeVerb);
             SubscribeLocalEvent<StethoscopeComponent, GetItemActionsEvent>(OnGetActions);
+            SubscribeLocalEvent<StethoscopeComponent, StethoscopeActionEvent>(OnStethoscopeAction);
             SubscribeLocalEvent<ListenSuccessfulEvent>(OnListenSuccess);
             SubscribeLocalEvent<ListenCancelledEvent>(OnListenCancelled);
         }
