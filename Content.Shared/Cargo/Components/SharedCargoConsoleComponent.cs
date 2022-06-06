@@ -1,77 +1,73 @@
-﻿using Robust.Shared.Prototypes;
-using Robust.Shared.Serialization;
+﻿using Robust.Shared.Serialization;
 
 namespace Content.Shared.Cargo.Components
 {
     [Virtual]
-    public class SharedCargoConsoleComponent : Component
+    public abstract class SharedCargoConsoleComponent : Component {}
+
+    /// <summary>
+    ///    Sends away or requests shuttle
+    /// </summary>
+    [Serializable, NetSerializable]
+    public sealed class CargoConsoleShuttleMessage : BoundUserInterfaceMessage
     {
-        [Dependency] protected readonly IPrototypeManager PrototypeManager = default!;
-
-        /// <summary>
-        ///    Sends away or requests shuttle
-        /// </summary>
-        [Serializable, NetSerializable]
-        public sealed class CargoConsoleShuttleMessage : BoundUserInterfaceMessage
+        public CargoConsoleShuttleMessage()
         {
-            public CargoConsoleShuttleMessage()
-            {
-            }
         }
+    }
 
-        /// <summary>
-        ///     Add order to database.
-        /// </summary>
-        [Serializable, NetSerializable]
-        public sealed class CargoConsoleAddOrderMessage : BoundUserInterfaceMessage
+    /// <summary>
+    ///     Add order to database.
+    /// </summary>
+    [Serializable, NetSerializable]
+    public sealed class CargoConsoleAddOrderMessage : BoundUserInterfaceMessage
+    {
+        public string Requester;
+        public string Reason;
+        public string ProductId;
+        public int Amount;
+
+        public CargoConsoleAddOrderMessage(string requester, string reason, string productId, int amount)
         {
-            public string Requester;
-            public string Reason;
-            public string ProductId;
-            public int Amount;
-
-            public CargoConsoleAddOrderMessage(string requester, string reason, string productId, int amount)
-            {
-                Requester = requester;
-                Reason = reason;
-                ProductId = productId;
-                Amount = amount;
-            }
+            Requester = requester;
+            Reason = reason;
+            ProductId = productId;
+            Amount = amount;
         }
+    }
 
-        /// <summary>
-        ///     Remove order from database.
-        /// </summary>
-        [Serializable, NetSerializable]
-        public sealed class CargoConsoleRemoveOrderMessage : BoundUserInterfaceMessage
+    /// <summary>
+    ///     Remove order from database.
+    /// </summary>
+    [Serializable, NetSerializable]
+    public sealed class CargoConsoleRemoveOrderMessage : BoundUserInterfaceMessage
+    {
+        public int OrderNumber;
+
+        public CargoConsoleRemoveOrderMessage(int orderNumber)
         {
-            public int OrderNumber;
-
-            public CargoConsoleRemoveOrderMessage(int orderNumber)
-            {
-                OrderNumber = orderNumber;
-            }
+            OrderNumber = orderNumber;
         }
+    }
 
-        /// <summary>
-        ///     Set order in database as approved.
-        /// </summary>
-        [Serializable, NetSerializable]
-        public sealed class CargoConsoleApproveOrderMessage : BoundUserInterfaceMessage
+    /// <summary>
+    ///     Set order in database as approved.
+    /// </summary>
+    [Serializable, NetSerializable]
+    public sealed class CargoConsoleApproveOrderMessage : BoundUserInterfaceMessage
+    {
+        public int OrderNumber;
+
+        public CargoConsoleApproveOrderMessage(int orderNumber)
         {
-            public int OrderNumber;
-
-            public CargoConsoleApproveOrderMessage(int orderNumber)
-            {
-                OrderNumber = orderNumber;
-            }
+            OrderNumber = orderNumber;
         }
+    }
 
-        [NetSerializable, Serializable]
-        public enum CargoConsoleUiKey
-        {
-            Key
-        }
+    [NetSerializable, Serializable]
+    public enum CargoConsoleUiKey : byte
+    {
+        Key
     }
 
     [NetSerializable, Serializable]

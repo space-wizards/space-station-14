@@ -57,7 +57,7 @@
   name: cargo shuttle console
   description: 'Temporary cargo delivery for developing Nanotrasen stations! Warning: destroying this while goods are in transit will lose them forever!'
   components:
-  - type: CargoShuttle
+  - type: CargoConsoleShuttle
 
 - type: entity
   id: cargoTelepad
@@ -65,4 +65,4 @@
   name: cargo telepad
   description: 'Temporary cargo delivery for developing Nanotrasen stations! Warning: destroying this while goods are in transit will lose them forever!'
   components:
-  - type: CargoTelepad
+  - type: CargoConsoleTelepad

@@ -1,11 +1,15 @@
-using System.Diagnostics.CodeAnalysis;
 using Content.Server.Access.Systems;
 using Content.Server.Cargo.Components;
+using Content.Server.MachineLinking.Components;
 using Content.Server.MachineLinking.System;
-using Content.Shared.Access.Components;
+using Content.Server.Power.Components;
 using Content.Shared.Access.Systems;
 using Content.Shared.Cargo;
+using Content.Shared.Cargo.Components;
 using Content.Shared.GameTicking;
+using Robust.Shared.Audio;
+using Robust.Shared.Player;
+using Robust.Shared.Prototypes;
 
 namespace Content.Server.Cargo.Systems
 {
@@ -24,26 +28,6 @@ namespace Content.Server.Cargo.Systems
         /// Keeps track of how much time has elapsed since last balance increase.
         /// </summary>
         private float _timer;
-        /// <summary>
-        /// Stores all bank accounts.
-        /// </summary>
-        private readonly Dictionary<int, CargoBankAccount> _accountsDict = new();
-
-        private readonly Dictionary<int, CargoOrderDatabase> _databasesDict = new();
-        /// <summary>
-        /// Used to assign IDs to bank accounts. Incremental counter.
-        /// </summary>
-        private int _accountIndex;
-        /// <summary>
-        /// Enumeration of all bank accounts.
-        /// </summary>
-        public IEnumerable<CargoBankAccount> BankAccounts => _accountsDict.Values;
-        /// <summary>
-        /// The station's bank account.
-        /// </summary>
-        public CargoBankAccount StationAccount => GetBankAccount(0);
-
-        public CargoOrderDatabase StationOrderDatabase => GetOrderDatabase(0);
 
         [Dependency] private readonly IdCardSystem _idCardSystem = default!;
         [Dependency] private readonly AccessReaderSystem _accessReaderSystem = default!;
@@ -51,10 +35,101 @@ namespace Content.Server.Cargo.Systems
 
         private void InitializeConsole()
         {
+            SubscribeLocalEvent<CargoConsoleComponent, CargoConsoleAddOrderMessage>(OnAddOrderMessage);
+            SubscribeLocalEvent<CargoConsoleComponent, CargoConsoleRemoveOrderMessage>(OnRemoveOrderMessage);
+            SubscribeLocalEvent<CargoConsoleComponent, CargoConsoleApproveOrderMessage>(OnApproveOrderMessage);
+            SubscribeLocalEvent<CargoConsoleComponent, CargoConsoleShuttleMessage>(OnShuttleMessage);
+
             SubscribeLocalEvent<CargoConsoleComponent, ComponentInit>(OnInit);
             SubscribeLocalEvent<RoundRestartCleanupEvent>(Reset);
             Reset();
         }
+
+        private void OnShuttleMessage(EntityUid uid, CargoConsoleComponent component, CargoConsoleShuttleMessage args)
+        {
+            // Jesus fucking christ Glass
+            //var approvedOrders = _cargoOrderDataManager.RemoveAndGetApprovedFrom(orders.Database);
+            //orders.Database.ClearOrderCapacity();
+
+            // TODO replace with shuttle code
+            EntityUid? cargoTelepad = null;
+
+            if (TryComp<SignalTransmitterComponent>(uid, out var transmitter) &&
+                transmitter.Outputs.TryGetValue(component.SenderPort, out var telepad) &&
+                telepad.Count > 0)
+            {
+                // use most recent link
+                var pad = telepad[^1].Uid;
+                if (HasComp<CargoConsoleTelepadComponent>(pad) &&
+                    TryComp<ApcPowerReceiverComponent?>(pad, out var powerReceiver) &&
+                    powerReceiver.Powered)
+                    cargoTelepad = pad;
+            }
+
+            if (cargoTelepad != null)
+            {
+                if (TryComp<CargoConsoleTelepadComponent?>(cargoTelepad.Value, out var telepadComponent))
+                {
+                    var approvedOrders = _cargoConsoleSystem.RemoveAndGetApprovedOrders(orders.Database.Id);
+                    orders.Database.ClearOrderCapacity();
+                    foreach (var order in approvedOrders)
+                    {
+                        _cargoConsoleSystem.QueueTeleport(telepadComponent, order);
+                    }
+                }
+            }
+        }
+
+        private void OnApproveOrderMessage(EntityUid uid, CargoConsoleComponent component, CargoConsoleApproveOrderMessage args)
+        {
+            if (component._requestOnly ||
+                !orders.Database.TryGetOrder(msg.OrderNumber, out var order) ||
+                _bankAccount == null)
+            {
+                return;
+            }
+
+            if (msg.Session.AttachedEntity is not {Valid: true} player)
+                return;
+
+            _protoMan.TryIndex(order.ProductId, out CargoProductPrototype? product);
+            if (product == null!)
+                return;
+            var capacity = _cargoConsoleSystem.GetCapacity(orders.Database.Id);
+            if (
+                (capacity.CurrentCapacity == capacity.MaxCapacity
+                 || capacity.CurrentCapacity + order.Amount > capacity.MaxCapacity
+                 || !_cargoConsoleSystem.CheckBalance(_bankAccount.Id, (-product.PointCost) * order.Amount)
+                 || !_cargoConsoleSystem.ApproveOrder(uid, player, orders.Database.Id, msg.OrderNumber)
+                 || !_cargoConsoleSystem.ChangeBalance(_bankAccount.Id, (-product.PointCost) * order.Amount))
+            )
+            {
+                SoundSystem.Play(Filter.Pvs(uid), component._errorSound.GetSound(), uid, AudioParams.Default);
+                return;
+            }
+
+            UpdateUIState();
+        }
+
+        private void OnRemoveOrderMessage(EntityUid uid, CargoConsoleComponent component, CargoConsoleRemoveOrderMessage args)
+        {
+            _cargoConsoleSystem.RemoveOrder(orders.Database.Id, msg.OrderNumber);
+        }
+
+        private void OnAddOrderMessage(EntityUid uid, CargoConsoleComponent component, CargoConsoleAddOrderMessage args)
+        {
+            if (msg.Amount <= 0 || _bankAccount == null)
+            {
+                return;
+            }
+
+            if (!_cargoConsoleSystem.AddOrder(orders.Database.Id, msg.Requester, msg.Reason, msg.ProductId,
+                    msg.Amount, _bankAccount.Id))
+            {
+                SoundSystem.Play(Filter.Pvs(uid), _errorSound.GetSound(), uid, AudioParams.Default);
+            }
+        }
+
         private void OnInit(EntityUid uid, CargoConsoleComponent console, ComponentInit args)
         {
             _linker.EnsureTransmitterPorts(uid, console.SenderPort);
@@ -67,13 +142,7 @@ namespace Content.Server.Cargo.Systems
 
         private void Reset()
         {
-            _accountsDict.Clear();
-            _databasesDict.Clear();
             _timer = 0;
-            _accountIndex = 0;
-
-            CreateBankAccount("Space Station 14", 1000);
-            CreateOrderDatabase(0);
         }
 
         private void UpdateConsole(float frameTime)
@@ -84,156 +153,10 @@ namespace Content.Server.Cargo.Systems
             {
                 _timer -= Delay;
 
-                foreach (var account in BankAccounts)
+                foreach (var account in EntityQuery<StationBankAccountComponent>())
                 {
                     account.Balance += PointIncrease;
                 }
-            }
-        }
-
-        /// <summary>
-        /// Creates a new bank account.
-        /// </summary>
-        public void CreateBankAccount(string name, int balance)
-        {
-            var account = new CargoBankAccount(_accountIndex, name, balance);
-            _accountsDict.Add(_accountIndex, account);
-            _accountIndex += 1;
-        }
-
-        public void CreateOrderDatabase(int id)
-        {
-            _databasesDict.Add(id, new CargoOrderDatabase(id));
-        }
-
-        /// <summary>
-        /// Returns the bank account associated with the given ID.
-        /// </summary>
-        public CargoBankAccount GetBankAccount(int id)
-        {
-            return _accountsDict[id];
-        }
-
-        public CargoOrderDatabase GetOrderDatabase(int id)
-        {
-            return _databasesDict[id];
-        }
-
-        /// <summary>
-        /// Returns whether the account exists, eventually passing the account in the out parameter.
-        /// </summary>
-        public bool TryGetBankAccount(int id, [NotNullWhen(true)] out CargoBankAccount? account)
-        {
-            return _accountsDict.TryGetValue(id, out account);
-        }
-
-        public bool TryGetOrderDatabase(int id, [NotNullWhen(true)] out CargoOrderDatabase? database)
-        {
-            return _databasesDict.TryGetValue(id, out database);
-        }
-        /// <summary>
-        /// Verifies if there is enough money in the account's balance to pay the amount.
-        /// Returns false if there's no account associated with the given ID
-        /// or if the balance would end up being negative.
-        /// </summary>
-        public bool CheckBalance(int id, int amount)
-        {
-            if (!TryGetBankAccount(id, out var account))
-            {
-                return false;
-            }
-
-            if (account.Balance + amount < 0)
-            {
-                return false;
-            }
-
-            return true;
-        }
-        /// <summary>
-        /// Attempts to change the given account's balance.
-        /// Returns false if there's no account associated with the given ID
-        /// or if the balance would end up being negative.
-        /// </summary>
-        public bool ChangeBalance(int id, int amount)
-        {
-            if (!TryGetBankAccount(id, out var account))
-            {
-                return false;
-            }
-
-            account.Balance += amount;
-            return true;
-        }
-
-        public bool AddOrder(int id, string requester, string reason, string productId, int amount, int payingAccountId)
-        {
-            if (amount < 1 || !TryGetOrderDatabase(id, out var database) || amount > database.MaxOrderSize)
-            {
-                return false;
-            }
-
-            database.AddOrder(requester, reason, productId, amount, payingAccountId);
-            SyncComponentsWithId(id);
-            return true;
-        }
-
-        public bool RemoveOrder(int id, int orderNumber)
-        {
-            if (!TryGetOrderDatabase(id, out var database))
-                return false;
-            database.RemoveOrder(orderNumber);
-            SyncComponentsWithId(id);
-            return true;
-        }
-
-        public bool ApproveOrder(EntityUid uid, EntityUid approver, int id, int orderNumber, AccessReaderComponent? reader = null)
-        {
-            // does the approver have permission to approve orders?
-            if (Resolve(uid, ref reader) && !_accessReaderSystem.IsAllowed(approver, reader))
-                return false;
-
-            // get the approver's name
-            _idCardSystem.TryFindIdCard(approver, out var idCard);
-            var approverName = idCard?.FullName ?? string.Empty;
-
-            if (!TryGetOrderDatabase(id, out var database))
-                return false;
-
-            if (!database.TryGetOrder(orderNumber, out var order))
-                return false;
-
-            if (!database.ApproveOrder(approverName, orderNumber))
-                return false;
-
-            SyncComponentsWithId(id);
-            return true;
-        }
-
-        public List<CargoOrderData> RemoveAndGetApprovedOrders(int id)
-        {
-            if (!TryGetOrderDatabase(id, out var database))
-                return new List<CargoOrderData>();
-            var approvedOrders = database.SpliceApproved();
-            SyncComponentsWithId(id);
-            return approvedOrders;
-        }
-
-        public (int CurrentCapacity, int MaxCapacity) GetCapacity(int id)
-        {
-            if (!TryGetOrderDatabase(id, out var database))
-                return (0,0);
-            return (database.CurrentOrderSize, database.MaxOrderSize);
-        }
-
-        private void SyncComponentsWithId(int id)
-        {
-            foreach (var comp in EntityManager.EntityQuery<CargoOrderDatabaseComponent>(true))
-            {
-                if (comp.Database == null || comp.Database.Id != id)
-                    continue;
-
-                Dirty(comp);
             }
         }
     }

@@ -88,7 +88,11 @@ public sealed partial class CargoSystem
 
     #endregion
 
-    // TODO: Get price before it leaves and after it leaves
+    public int GetCargoSlots(EntityUid uid)
+    {
+        // TODO: Need to get the uhh cargo pad idea thing.
+        return 0;
+    }
 
     private int GetPrice(EntityUid uid, int price = 0)
     {
