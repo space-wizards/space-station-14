@@ -15923,7 +15923,7 @@ entities:
         ents: []
     type: ContainerContainer
 - uid: 932
-  type: WeaponRifleWintermute
+  type: WeaponRifleLecter
   components:
   - pos: 11.5,18.5
     parent: 30

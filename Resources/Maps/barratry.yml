@@ -147481,7 +147481,7 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 13268
-  type: WeaponRifleWintermute
+  type: WeaponRifleLecter
   components:
   - pos: -42.4225,30.506044
     parent: 106

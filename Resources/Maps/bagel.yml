@@ -197980,7 +197980,7 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 21016
-  type: WeaponRifleWintermute
+  type: WeaponRifleLecter
   components:
   - pos: -28.465193,1.9341984
     parent: 60

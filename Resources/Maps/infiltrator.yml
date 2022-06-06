@@ -7550,7 +7550,7 @@ entities:
     parent: 73
     type: Transform
 - uid: 755
-  type: WeaponPistolClarissa
+  type: WeaponPistolViper
   components:
   - pos: 1.5391146,-6.426657
     parent: 73

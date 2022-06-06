@@ -87431,7 +87431,7 @@ entities:
   - unspawnedCount: 25
     type: BallisticAmmoProvider
 - uid: 9110
-  type: WeaponRifleWintermute
+  type: WeaponRifleLecter
   components:
   - pos: 23.52954,3.78771
     parent: 61

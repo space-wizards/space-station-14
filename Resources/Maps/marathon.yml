@@ -97849,7 +97849,7 @@ entities:
     parent: 30
     type: Transform
 - uid: 9361
-  type: WeaponRifleWintermute
+  type: WeaponRifleLecter
   components:
   - pos: -22.568516,53.59532
     parent: 30
