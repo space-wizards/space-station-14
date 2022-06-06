@@ -97,7 +97,7 @@ namespace Content.Shared.Examine
             {
                 if (mobState.IsDead())
                     return DeadExamineRange;
-                else if (mobState.IsCritical() || HasComp<BlindableComponent>(examiner))
+                else if (mobState.IsCritical() || (TryComp<BlindableComponent>(examiner, out var blind) && blind.Sources > 0))
                     return CritExamineRange;
             }
             return ExamineRange;
