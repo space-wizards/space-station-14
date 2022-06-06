@@ -553,13 +553,3 @@
   - type: Clothing
     sprite: Clothing/Uniforms/Jumpskirt/janimaid.rsi
     
-- type: entity
-  parent: ClothingUniformSkirtBase
-  id: ClothingUniformJumpskirtNurse
-  name: nurse skirt
-  description: Time to carry the medical department.
-  components:
-  - type: Sprite
-    sprite: Clothing/Uniforms/Jumpskirt/nursesuit.rsi
-  - type: Clothing
-    sprite: Clothing/Uniforms/Jumpskirt/nursesuit.rsi
