@@ -99,7 +99,7 @@
 - type: entity
   name: Enforcer
   parent: BaseWeaponShotgun
-  id: WeaponShotgunGladstone
+  id: WeaponShotgunEnforcer
   description: A next-generation Frozen Star shotgun.
   components:
   - type: Sprite
