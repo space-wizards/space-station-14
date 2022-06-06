@@ -71,3 +71,8 @@
     locked: false
   - type: AccessReader
     access: [[ "Engineering" ]]
+  - type: Construction
+    graph: Machine
+    node: machine
+  - type: Machine
+    board: EmitterCircuitboard

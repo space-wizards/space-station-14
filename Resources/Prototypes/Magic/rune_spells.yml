@@ -1,0 +1,11 @@
+﻿- type: instantAction
+  id: FlashRune
+  name: action-name-spell-rune-flash
+  description: action-description-spell-rune-flash
+  useDelay: 10
+  itemIconStyle: BigAction
+  icon:
+    sprite: Objects/Magic/magicactions.rsi
+    state: spell_default
+  serverEvent: !type:InstantSpawnSpellEvent
+    prototype: FlashRune

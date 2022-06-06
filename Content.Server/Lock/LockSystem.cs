@@ -156,7 +156,7 @@ namespace Content.Server.Lock
             if (!Resolve(uid, ref reader))
                 return true;
 
-            if (!_accessReader.IsAllowed(reader, user))
+            if (!_accessReader.IsAllowed(user, reader))
             {
                 if (!quiet)
                     reader.Owner.PopupMessage(user, Loc.GetString("lock-comp-has-user-access-fail"));

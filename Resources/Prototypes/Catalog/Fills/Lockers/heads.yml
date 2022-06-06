@@ -39,7 +39,7 @@
       - id: ClothingHandsGlovesCaptain
       - id: ClothingOuterHardsuitCap
       - id: ClothingMaskGasCaptain
-      - id: TaserGun
+      - id: WeaponTaser
       - id: CommsComputerCircuitboard
       - id: ClothingHeadsetAltCommand
       - id: SpaceCash1000
@@ -55,7 +55,7 @@
       - id: ClothingNeckBronzeheart
       - id: ClothingNeckGoldmedal
       - id: RubberStampCaptain
-      - id: AntiqueLaserGun
+      - id: WeaponAntiqueLaser
 
 - type: entity
   id: LockerHeadOfPersonnelFilled
@@ -72,7 +72,7 @@
       - id: BoxPDA
       - id: BoxID
       - id: IDComputerCircuitboard
-      - id: TaserGun
+      - id: WeaponTaser
       - id: ClothingShoesColorBlack
         prob: 0.7
       - id: PlushieLizard
@@ -155,7 +155,7 @@
   components:
   - type: StorageFill
     contents:
-      - id: TaserGun
+      - id: WeaponTaser
       - id: ClothingHeadHatBeretHoS
       - id: ClothingHeadHatHoshat
       - id: ClothingNeckCloakHos

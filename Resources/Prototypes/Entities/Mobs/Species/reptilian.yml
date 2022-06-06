@@ -135,10 +135,10 @@
     specificHeat: 46
     coldDamage:
       types:
-        Cold : 1.1 #per second, scales with temperature & other constants
+        Cold : 0.2 #per second, scales with temperature & other constants
     heatDamage:
       types:
-        Heat : 0.9 #per second, scales with temperature & other constants
+        Heat : 0.1 #per second, scales with temperature & other constants
   - type: MovementSpeedModifier
     baseWalkSpeed : 2.7
     baseSprintSpeed : 4.5
