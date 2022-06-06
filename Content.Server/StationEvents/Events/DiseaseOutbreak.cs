@@ -63,8 +63,9 @@ public sealed class DiseaseOutbreak : StationEvent
             return;
 
         var diseaseSystem = EntitySystem.Get<DiseaseSystem>();
-        var stationSystem = IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<StationSystem>();
-        var chatSystem = IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<ChatSystem>();
+        var entSysMgr = IoCManager.Resolve<IEntitySystemManager>();
+        var stationSystem = entSysMgr.GetEntitySystem<StationSystem>();
+        var chatSystem = entSysMgr.GetEntitySystem<ChatSystem>();
         // Now we give it to people in the list of living disease carriers earlier
         foreach (var target in aliveList)
         {

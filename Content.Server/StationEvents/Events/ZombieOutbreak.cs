@@ -46,8 +46,9 @@ namespace Content.Server.StationEvents.Events
             var zombifysys = _entityManager.EntitySysManager.GetEntitySystem<ZombifyOnDeathSystem>();
             
             // Now we give it to people in the list of dead entities earlier.
-            var stationSystem = IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<StationSystem>();
-            var chatSystem = IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<ChatSystem>();
+            var entSysMgr = IoCManager.Resolve<IEntitySystemManager>();
+            var stationSystem = entSysMgr.GetEntitySystem<StationSystem>();
+            var chatSystem = entSysMgr.GetEntitySystem<ChatSystem>();
             
             foreach (var target in deadList)
             {
