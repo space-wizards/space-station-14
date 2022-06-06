@@ -546,13 +546,7 @@ public abstract class SharedDoorSystem : EntitySystem
                 TryComp<PhysicsComponent>(door.Owner, out var doorBody))
             {
                 // If something bumped into us during closing then start to re-open, otherwise, remove it from active.
-                if (doorBody.ContactCount == 0)
-                {
-                    _activeDoors.Remove(door);
-                    continue;
-                }
-
-                // Access isn't predicted so
+                _activeDoors.Remove(door);
                 CheckDoorBump(door, doorBody);
             }
         }
