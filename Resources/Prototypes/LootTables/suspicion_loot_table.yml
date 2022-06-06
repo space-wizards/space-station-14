@@ -8,7 +8,7 @@
   - id: WeaponRifleM90
     amount: 0
     maxAmount: 5
-  - id: WeaponRifleWintermute
+  - id: WeaponRifleLecter
     amount: 0
     maxAmount: 5
   - id: WeaponPistolViper
