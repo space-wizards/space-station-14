@@ -4,10 +4,12 @@ using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototy
 
 namespace Content.Shared.Blocking;
 
+/// <summary>
+/// This component goes on an item that you want to use to block
+/// </summary>
 [RegisterComponent]
 public sealed class SharedBlockingComponent : Component
 {
-
     /// <summary>
     /// The entity that's blocking
     /// </summary>
