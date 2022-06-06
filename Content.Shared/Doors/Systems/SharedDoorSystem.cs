@@ -285,7 +285,7 @@ public abstract class SharedDoorSystem : EntitySystem
         door.Partial = true;
         door.NextStateChange = GameTiming.CurTime + door.CloseTimeTwo;
         _activeDoors.Add(door);
-        door.Dirty();
+        Dirty(door);
 
     }
     #endregion
@@ -340,7 +340,7 @@ public abstract class SharedDoorSystem : EntitySystem
             return false;
 
         door.Partial = true;
-        door.Dirty();
+        Dirty(door);
 
         // Make sure no entity waled into the airlock when it started closing.
         if (!CanClose(uid, door))
