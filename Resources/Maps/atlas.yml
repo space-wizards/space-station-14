@@ -60572,7 +60572,7 @@ entities:
     parent: 30
     type: Transform
 - uid: 5826
-  type: cargoTelepad
+  type: CargoConsole
   components:
   - pos: -21.5,18.5
     parent: 30

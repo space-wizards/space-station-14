@@ -73606,7 +73606,7 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 5637
-  type: cargoTelepad
+  type: CargoConsole
   components:
   - pos: -34.5,-17.5
     parent: 130

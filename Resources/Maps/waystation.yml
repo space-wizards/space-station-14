@@ -18834,7 +18834,7 @@ entities:
     parent: 82
     type: Transform
 - uid: 592
-  type: cargoTelepad
+  type: CargoConsole
   components:
   - pos: 14.5,43.5
     parent: 82

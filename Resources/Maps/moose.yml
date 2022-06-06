@@ -53970,7 +53970,7 @@ entities:
       OrderSender: []
     type: SignalTransmitter
 - uid: 4832
-  type: cargoTelepad
+  type: CargoConsole
   components:
   - pos: 25.5,-20.5
     parent: 61
