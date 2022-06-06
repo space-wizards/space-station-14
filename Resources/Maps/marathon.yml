@@ -36352,7 +36352,7 @@ entities:
         ents: []
     type: ContainerContainer
 - uid: 1980
-  type: WeaponLaserRifleCog
+  type: WeaponLaserCarbine
   components:
   - pos: -37.501694,54.356064
     parent: 30
@@ -36360,7 +36360,7 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 1981
-  type: WeaponLaserRifleCog
+  type: WeaponLaserCarbine
   components:
   - pos: -37.501694,54.481064
     parent: 30
@@ -36368,7 +36368,7 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 1982
-  type: WeaponLaserRifleCog
+  type: WeaponLaserCarbine
   components:
   - pos: -37.501694,54.606064
     parent: 30

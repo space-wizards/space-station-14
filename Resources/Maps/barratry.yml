@@ -147473,7 +147473,7 @@ entities:
         uid: 3449
     type: SignalTransmitter
 - uid: 13267
-  type: WeaponLaserRifleCog
+  type: WeaponLaserCarbine
   components:
   - pos: -42.40947,29.422718
     parent: 106
