@@ -5,7 +5,6 @@ using Content.Server.Disease.Components;
 using Content.Server.Drone.Components;
 using Content.Server.Weapon.Melee;
 using Content.Shared.Chemistry.Components;
-using Content.Shared.Damage;
 using Content.Shared.MobState.Components;
 using Content.Server.Disease;
 
@@ -25,7 +24,7 @@ namespace Content.Server.Zombies
 
         private void OnMeleeHit(EntityUid uid, ZombieComponent component, MeleeHitEvent args)
         {
-            if (!EntityManager.TryGetComponent<ZombieComponent>(args.User, out var diseaseZombieComp))
+            if (!EntityManager.TryGetComponent<ZombieComponent>(args.User, out var zombieComp))
                 return;
 
             if (!args.HitEntities.Any())
@@ -40,19 +39,16 @@ namespace Content.Server.Zombies
                     continue;
 
                 if (_robustRandom.Prob(0.5f) && HasComp<DiseaseCarrierComponent>(entity))
-                {
                     _disease.TryAddDisease(entity, "ActiveZombieVirus");
-                }
+
+                if (HasComp<ZombieComponent>(entity))
+                    args.BonusDamage = args.BaseDamage * zombieComp.OtherZombieDamageCoefficient;
 
                 if ((mobState.IsDead() || mobState.IsCritical())
                     && !HasComp<ZombieComponent>(entity))
                 {
                     _zombify.ZombifyEntity(entity);
-                    var dspec = new DamageSpecifier();
-                    //these damages match the zombie claw
-                    dspec.DamageDict.TryAdd("Slash", -12);
-                    dspec.DamageDict.TryAdd("Piercing", -7);
-                    args.BonusDamage += dspec;
+                    args.BonusDamage = args.BaseDamage*-1;
                 }
                 else if (mobState.IsAlive()) //heals when zombies bite live entities
                 {

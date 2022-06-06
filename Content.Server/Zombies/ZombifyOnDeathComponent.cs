@@ -5,7 +5,8 @@ namespace Content.Server.Zombies
     {
         [DataField("skinColor")]
         public Color SkinColor = new Color(0.70f, 0.72f, 0.48f, 1);
-        
-        public bool Zombified = false;
+
+        [DataField("attackArc")]
+        public string AttackArc = "claw";
     }
 }

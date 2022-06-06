@@ -63,45 +63,24 @@ namespace Content.Server.Polymorph.Systems
                 _damageable.SetDamage(damageParent, damage);
             }
 
-            if (proto.DropInventory || proto.TransferInventory)
+            if (proto.TransferInventory)
             {
-                if (_inventory.TryGetContainerSlotEnumerator(uid, out var enumerator))
-                {
-                    Dictionary<String, EntityUid?> inventoryEntities = new();
-                    var slots = _inventory.GetSlots(uid);
-                    while (enumerator.MoveNext(out var containerSlot))
-                    {
-                        //records all the entities stored in each of the target's slots
-                        foreach (var slot in slots)
-                        {
-                            if (_inventory.TryGetSlotContainer(component.Parent, slot.Name, out var conslot, out var _) &&
-                                conslot.ID == containerSlot.ID)
-                            {
-                                inventoryEntities.Add(slot.Name, containerSlot.ContainedEntity);
-                            }
-                        }
-                        //drops everything in the target's inventory on the ground
-                        containerSlot.EmptyContainer();
-                    }
-
-                    /// this is the specific code which takes the data about all the entities 
-                    /// we stored earlier and actually equips all of it to the new entity
-                    if (proto.TransferInventory)
-                    {
-                        foreach (var item in inventoryEntities)
-                        {
-                            if (item.Value != null)
-                                _inventory.TryEquip(component.Parent, item.Value.Value, item.Key, true);
-                        }
-                    }
-                }
-                //drops everything in the user's hands
-                foreach (var hand in _sharedHands.EnumerateHeld(uid))
+                _inventory.SwapEntityInventories(uid, component.Parent);
+                foreach (var hand in _sharedHands.EnumerateHeld(component.Parent))
                 {
                     hand.TryRemoveFromContainer();
                     if (proto.TransferInventory)
                         _sharedHands.TryPickupAnyHand(component.Parent, hand);
                 }
+            }
+            else if (proto.DropInventory)
+            {
+                if (_inventory.TryGetContainerSlotEnumerator(uid, out var enumerator))
+                    while (enumerator.MoveNext(out var slot))
+                        slot.EmptyContainer();
+
+                foreach (var hand in _sharedHands.EnumerateHeld(uid))
+                    hand.TryRemoveFromContainer();
             }
 
             if (TryComp<MindComponent>(uid, out var mind) && mind.Mind != null)

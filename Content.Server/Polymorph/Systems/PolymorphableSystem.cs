@@ -113,45 +113,24 @@ namespace Content.Server.Polymorph.Systems
                 _damageable.SetDamage(damageParent, damage);
             }
 
-            if (proto.DropInventory || proto.TransferInventory)
+            if (proto.TransferInventory)
             {
-                if (_inventory.TryGetContainerSlotEnumerator(target, out var enumerator))
-                {
-                    Dictionary<string, EntityUid?> inventoryEntities = new();
-                    var slots = _inventory.GetSlots(target);
-                    while (enumerator.MoveNext(out var containerSlot))
-                    {
-                        //records all the entities stored in each of the target's slots
-                        foreach (var slot in slots)
-                        {
-                            if (_inventory.TryGetSlotContainer(child, slot.Name, out var conslot, out var _) &&
-                                conslot.ID == containerSlot.ID)
-                            {
-                                inventoryEntities.Add(slot.Name, containerSlot.ContainedEntity);
-                            }
-                        }
-                        //drops everything in the target's inventory on the ground
-                        containerSlot.EmptyContainer();
-                    }
-
-                    /// this is the specific code which takes the data about all the entities we stored earlier
-                    /// and actually equips all of it to the new entity
-                    if (proto.TransferInventory)
-                    {
-                        foreach (var item in inventoryEntities)
-                        {
-                            if (item.Value != null)
-                                _inventory.TryEquip(child, item.Value.Value, item.Key, true);
-                        }
-                    }
-                }
-                //drops everything in the user's hands
+                _inventory.SwapEntityInventories(target, child);
                 foreach (var hand in _sharedHands.EnumerateHeld(target))
                 {
                     hand.TryRemoveFromContainer();
                     if (proto.TransferInventory)
                         _sharedHands.TryPickupAnyHand(child, hand);
                 }
+            }
+            else if (proto.DropInventory)
+            {
+                if(_inventory.TryGetContainerSlotEnumerator(target, out var enumerator))
+                    while (enumerator.MoveNext(out var slot))
+                        slot.EmptyContainer();
+
+                foreach (var hand in _sharedHands.EnumerateHeld(target))
+                    hand.TryRemoveFromContainer();
             }
 
             if (proto.TransferName &&
@@ -240,7 +219,7 @@ namespace Content.Server.Polymorph.Systems
         /// The polymorph prototype containing all the information about
         /// the specific polymorph.
         /// </summary>
-        public readonly PolymorphPrototype Prototype = new();
+        public readonly PolymorphPrototype Prototype;
 
         public PolymorphActionEvent(PolymorphPrototype prototype)
         {

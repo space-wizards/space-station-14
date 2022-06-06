@@ -27,17 +27,6 @@
   transferInventory: true
 
 - type: polymorph
-  id: ZombieGeneric
-  entity: MobZombieBase
-  forced: true
-  transferDamage: false
-  transferName: true
-  transferHumanoidAppearance: true
-  transferInventory: true
-  revertOnCrit: false
-  revertOnDeath: false
-
-- type: polymorph
   id: AdminMonkeySmite
   entity: MobMonkey
   forced: true
