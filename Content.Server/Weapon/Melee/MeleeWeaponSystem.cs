@@ -30,7 +30,7 @@ namespace Content.Server.Weapon.Melee
         [Dependency] private readonly IPrototypeManager _protoManager = default!;
         [Dependency] private readonly DamageableSystem _damageableSystem = default!;
         [Dependency] private readonly SolutionContainerSystem _solutionsSystem = default!;
-        [Dependency] private readonly AdminLogSystem _logSystem = default!;
+        [Dependency] private readonly IAdminLogManager _adminLogger = default!;
         [Dependency] private readonly BloodstreamSystem _bloodstreamSystem = default!;
 
         public const float DamagePitchVariation = 0.15f;
@@ -100,10 +100,10 @@ namespace Content.Server.Weapon.Melee
                     if (damageResult != null)
                     {
                         if (args.Used == args.User)
-                            _logSystem.Add(LogType.MeleeHit,
+                            _adminLogger.Add(LogType.MeleeHit,
                                 $"{ToPrettyString(args.User):user} melee attacked {ToPrettyString(args.Target.Value):target} using their hands and dealt {damageResult.Total:damage} damage");
                         else
-                            _logSystem.Add(LogType.MeleeHit,
+                            _adminLogger.Add(LogType.MeleeHit,
                                 $"{ToPrettyString(args.User):user} melee attacked {ToPrettyString(args.Target.Value):target} using {ToPrettyString(args.Used):used} and dealt {damageResult.Total:damage} damage");
                     }
 
@@ -181,10 +181,10 @@ namespace Content.Server.Weapon.Melee
                     if (damageResult != null)
                     {
                         if (args.Used == args.User)
-                            _logSystem.Add(LogType.MeleeHit,
+                            _adminLogger.Add(LogType.MeleeHit,
                                 $"{ToPrettyString(args.User):user} melee attacked {ToPrettyString(entity):target} using their hands and dealt {damageResult.Total:damage} damage");
                         else
-                            _logSystem.Add(LogType.MeleeHit,
+                            _adminLogger.Add(LogType.MeleeHit,
                                 $"{ToPrettyString(args.User):user} melee attacked {ToPrettyString(entity):target} using {ToPrettyString(args.Used):used} and dealt {damageResult.Total:damage} damage");
                     }
                 }

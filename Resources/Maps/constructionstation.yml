@@ -9046,7 +9046,7 @@ entities:
       - canCollide: False
         type: Physics
   - uid: 893
-    type: BoxSterile
+    type: BoxSterileMask
     components:
       - parent: 834
         type: Transform

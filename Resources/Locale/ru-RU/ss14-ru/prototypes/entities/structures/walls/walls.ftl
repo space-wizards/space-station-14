@@ -70,3 +70,6 @@ ent-WallVaultSandstone = песчаниковая каменная стена
 ent-WallInvisible = невидимая стена
     .desc = { "" }
     .suffix = { "" }
+ent-WallForce = Force Wall
+    .desc = { "" }
+    .suffix = { "" }

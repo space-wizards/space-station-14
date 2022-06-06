@@ -460,7 +460,7 @@
   category: Structures
   description: A ground light fixture. Use light bulbs.
   icon:
-    sprite: Structures/Decoration/LightPosts/small_light_post.rsi
+    sprite: Structures/Lighting/LightPosts/small_light_post.rsi
     state: off
   objectType: Structure
   placementMode: SnapgridCenter

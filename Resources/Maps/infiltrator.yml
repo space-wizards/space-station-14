@@ -7438,15 +7438,11 @@ entities:
     parent: 73
     type: Transform
 - uid: 739
-  type: MagazineHCPistolHV
+  type: MagazinePistolHighCapacityHighVelocity
   components:
   - pos: 1.6797396,-6.442282
     parent: 73
     type: Transform
-  - containers:
-      Content.Server.Weapon.Ranged.Ammunition.Components.RangedMagazineComponent-magazine: !type:Container
-        ents: []
-    type: ContainerContainer
 - uid: 740
   type: SoapSyndie
   components:
@@ -7554,14 +7550,14 @@ entities:
     parent: 73
     type: Transform
 - uid: 755
-  type: PistolClarissa
+  type: WeaponPistolClarissa
   components:
   - pos: 1.5391146,-6.426657
     parent: 73
     type: Transform
   - containers:
-      Content.Server.Weapon.Ranged.Barrels.Components.MagazineBarrelComponent-chamber: !type:ContainerSlot {}
-      Content.Server.Weapon.Ranged.Barrels.Components.MagazineBarrelComponent-magazine: !type:ContainerSlot
+      gun_chamber: !type:ContainerSlot {}
+      gun_magazine: !type:ContainerSlot
         ent: 756
     type: ContainerContainer
 - uid: 756
@@ -7571,10 +7567,6 @@ entities:
     type: Transform
   - canCollide: False
     type: Physics
-  - containers:
-      Content.Server.Weapon.Ranged.Ammunition.Components.RangedMagazineComponent-magazine: !type:Container
-        ents: []
-    type: ContainerContainer
 - uid: 757
   type: RemoteSignaller
   components:
@@ -7585,15 +7577,11 @@ entities:
       Pressed: []
     type: SignalTransmitter
 - uid: 758
-  type: MagazineHCPistolHV
+  type: MagazinePistolHighCapacityHighVelocity
   components:
   - pos: 1.5391146,-6.442282
     parent: 73
     type: Transform
-  - containers:
-      Content.Server.Weapon.Ranged.Ammunition.Components.RangedMagazineComponent-magazine: !type:Container
-        ents: []
-    type: ContainerContainer
 - uid: 759
   type: Catwalk
   components:

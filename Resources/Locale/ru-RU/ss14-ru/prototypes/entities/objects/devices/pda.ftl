@@ -103,3 +103,6 @@ ent-ClearPDA = чистый КПК
 ent-SyndiPDA = КПК синдиката
     .desc = Окей, пора стать продуктивным членом... о, круто, я плохой парень, пора убивать людей!
     .suffix = { "" }
+ent-ERTLeaderPDA = ERT PDA
+    .desc = Red for firepower.
+    .suffix = { "" }

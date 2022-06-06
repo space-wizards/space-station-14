@@ -1,15 +1,3 @@
-ent-RedLaser = red laser
-    .desc = { "" }
-    .suffix = { "" }
-ent-RedMediumLaser = red medium laser
-    .desc = { "" }
-    .suffix = { "" }
-ent-Pulse = pulse
-    .desc = { "" }
-    .suffix = { "" }
-ent-RedHeavyLaser = red heavy laser
-    .desc = { "" }
-    .suffix = { "" }
-ent-XrayLaser = x-ray laser
+ent-HitscanEffect = { "" }
     .desc = { "" }
     .suffix = { "" }

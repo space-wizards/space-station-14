@@ -220,6 +220,10 @@
       mode: Freezer
     - type: Machine
       board: ThermomachineFreezerMachineCircuitBoard
+    - type: ContainerContainer
+      containers:
+        machine_parts: !type:Container
+        machine_board: !type:Container
 
 - type: entity
   parent: BaseGasThermoMachine
@@ -245,3 +249,7 @@
       mode: Heater
     - type: Machine
       board: ThermomachineHeaterMachineCircuitBoard
+    - type: ContainerContainer
+      containers:
+        machine_parts: !type:Container
+        machine_board: !type:Container

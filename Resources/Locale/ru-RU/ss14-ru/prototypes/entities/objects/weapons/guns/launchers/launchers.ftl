@@ -1,12 +1,12 @@
-ent-LauncherBase = Launcher Base
-    .desc = A rooty tooty point and shooty.
+ent-BaseWeaponLauncher = BaseWeaponLauncher
+    .desc = Дерзай — налетай, целься и стреляй.
     .suffix = { "" }
-ent-LauncherChinaLake = China Lake
+ent-WeaponLauncherChinaLake = China Lake
     .desc = БЛУП
     .suffix = { "" }
-ent-LauncherRocket = РПГ-7
+ent-WeaponLauncherRocket = РПГ-7
     .desc = Модифицированный древний ручной реактивный гранатомёт.
     .suffix = { "" }
-ent-LauncherMultipleRocket = multiple rocket launcher
+ent-WeaponLauncherMultipleRocket = multiple rocket launcher
     .desc = A modified ancient rocket-propelled grenade launcher.
     .suffix = { "" }

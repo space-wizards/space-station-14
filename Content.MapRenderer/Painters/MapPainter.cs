@@ -115,7 +115,7 @@ namespace Content.MapRenderer.Painters
                 if (grid.LocalAABB.IsEmpty())
                 {
                     Console.WriteLine($"Warning: Grid {grid.Index} was empty. Skipping image rendering.");
-                    continue;;
+                    continue;
                 }
 
                 var tileXSize = grid.TileSize * TilePainter.TileImageSize;

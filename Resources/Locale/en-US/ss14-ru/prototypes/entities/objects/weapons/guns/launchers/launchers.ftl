@@ -1,12 +1,12 @@
-ent-LauncherBase = Launcher Base
+ent-BaseWeaponLauncher = BaseWeaponLauncher
     .desc = A rooty tooty point and shooty.
     .suffix = { "" }
-ent-LauncherChinaLake = china lake
+ent-WeaponLauncherChinaLake = china lake
     .desc = PLOOP
     .suffix = { "" }
-ent-LauncherRocket = RPG-7
+ent-WeaponLauncherRocket = RPG-7
     .desc = A modified ancient rocket-propelled grenade launcher.
     .suffix = { "" }
-ent-LauncherMultipleRocket = multiple rocket launcher
+ent-WeaponLauncherMultipleRocket = multiple rocket launcher
     .desc = A modified ancient rocket-propelled grenade launcher.
     .suffix = { "" }

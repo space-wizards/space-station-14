@@ -227,6 +227,7 @@ namespace Content.Server.Cuffs.Components
             var doAfterEventArgs = new DoAfterEventArgs(user, uncuffTime)
             {
                 BreakOnUserMove = true,
+                BreakOnTargetMove = true,
                 BreakOnDamage = true,
                 BreakOnStun = true,
                 NeedHand = true
