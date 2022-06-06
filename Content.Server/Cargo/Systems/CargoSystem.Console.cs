@@ -8,6 +8,7 @@ using Content.Shared.Access.Systems;
 using Content.Shared.Cargo;
 using Content.Shared.Cargo.Components;
 using Content.Shared.GameTicking;
+using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
@@ -33,6 +34,7 @@ namespace Content.Server.Cargo.Systems
         [Dependency] private readonly IdCardSystem _idCardSystem = default!;
         [Dependency] private readonly AccessReaderSystem _accessReaderSystem = default!;
         [Dependency] private readonly SignalLinkerSystem _linker = default!;
+        [Dependency] private readonly UserInterfaceSystem _uiSystem = default!;
 
         private void InitializeConsole()
         {
@@ -78,6 +80,8 @@ namespace Content.Server.Cargo.Systems
 
         private void OnShuttleMessage(EntityUid uid, CargoConsoleComponent component, CargoConsoleShuttleMessage args)
         {
+            // TODO: Move this to CargoCOnsoleTelepadSystem or whatever.
+
             // Jesus fucking christ Glass
             //var approvedOrders = _cargoOrderDataManager.RemoveAndGetApprovedFrom(orders.Database);
             //orders.Database.ClearOrderCapacity();
@@ -97,6 +101,7 @@ namespace Content.Server.Cargo.Systems
                     cargoTelepad = pad;
             }
 
+            /*
             if (cargoTelepad != null)
             {
                 if (TryComp<CargoConsoleTelepadComponent?>(cargoTelepad.Value, out var telepadComponent))
@@ -109,6 +114,7 @@ namespace Content.Server.Cargo.Systems
                     }
                 }
             }
+            */
         }
 
         private void OnApproveOrderMessage(EntityUid uid, CargoConsoleComponent component, CargoConsoleApproveOrderMessage args)
@@ -117,37 +123,73 @@ namespace Content.Server.Cargo.Systems
                 return;
 
             var orderDatabase = GetOrderDatabase(component);
+            var bankAccount = GetBankAccount(component);
 
-            if (orderDatabase == null || !orderDatabase.Orders.TryGetValue(args.OrderNumber, out var order))
-                return;
-
-            if (_protoMan.TryIndex(order.ProductId, out CargoProductPrototype? product))
-                return;
-
-            var capacity = orderDatabase.Capacity;
-
-            // Too much approved.
-            if (order.Amount + orderDatabase.Orders.Count > orderDatabase.Capacity) return;
-
-            // TODO: Check balance
-
-            // TODO: Approve order
-
-            // TODO: Change balance?
-
-            if (
-                (capacity.CurrentCapacity == capacity.MaxCapacity
-                 || capacity.CurrentCapacity + order.Amount > capacity.MaxCapacity
-                 || !_cargoConsoleSystem.CheckBalance(_bankAccount.Id, (-product.PointCost) * order.Amount)
-                 || !_cargoConsoleSystem.ApproveOrder(uid, player, orders.Database.Id, msg.OrderNumber)
-                 || !_cargoConsoleSystem.ChangeBalance(_bankAccount.Id, (-product.PointCost) * order.Amount))
-            )
+            // No station to deduct from.
+            if (orderDatabase == null || bankAccount == null)
             {
-                SoundSystem.Play(Filter.Pvs(uid), component.ErrorSound.GetSound(), uid, AudioParams.Default);
+                PlayDenySound(uid, component);
                 return;
             }
 
-            UpdateUIState();
+            // No order to approve?
+            if (!orderDatabase.Orders.TryGetValue(args.OrderNumber, out var order) ||
+                order.Approved) return;
+
+            // Invalid order
+            if (!_protoMan.TryIndex(order.ProductId, out CargoProductPrototype? product))
+            {
+                PlayDenySound(uid, component);
+                return;
+            }
+
+            var amount = GetDatabaseAmount(orderDatabase);
+            var capacity = orderDatabase.Capacity;
+
+            // Too many orders, avoid them getting spammed in the UI.
+            if (amount >= capacity)
+            {
+                PlayDenySound(uid, component);
+                return;
+            }
+
+            var orderAmount = Math.Min(capacity - amount, order.Amount);
+
+            if (orderAmount != order.Amount)
+            {
+                order.Amount = orderAmount;
+                // TODO: Popup on order trimming.
+                PlayDenySound(uid, component);
+            }
+
+            var cost = product.PointCost * order.Amount;
+
+            // Not enough balance
+            if (cost > bankAccount.Balance)
+            {
+                PlayDenySound(uid, component);
+                return;
+            }
+
+            order.Approved = true;
+
+            _idCardSystem.TryFindIdCard(player, out var idCard);
+            order.Approver = idCard?.FullName ?? string.Empty;
+
+            DeductFunds(bankAccount, cost);
+            Dirty(component);
+            UpdateUIState(component);
+        }
+
+        private void UpdateUIState(CargoConsoleComponent component)
+        {
+            var state = new CargoConsoleInterfaceState();
+            _uiSystem.GetUiOrNull(component.Owner, CargoConsoleUiKey.Key)?.SetState(state);
+        }
+
+        private void PlayDenySound(EntityUid uid, CargoConsoleComponent component)
+        {
+            SoundSystem.Play(Filter.Pvs(uid, entityManager: EntityManager), component.ErrorSound.GetSound());
         }
 
         private void OnRemoveOrderMessage(EntityUid uid, CargoConsoleComponent component, CargoConsoleRemoveOrderMessage args)
@@ -167,7 +209,7 @@ namespace Content.Server.Cargo.Systems
             var orderDatabase = GetOrderDatabase(component);
             if (orderDatabase == null) return;
 
-            var data = GetOrderData(args);
+            var data = GetOrderData(args, GetNextIndex(orderDatabase));
 
             if (!TryAddOrder(orderDatabase, data))
             {
@@ -175,9 +217,21 @@ namespace Content.Server.Cargo.Systems
             }
         }
 
-        private CargoOrderData GetOrderData(CargoConsoleAddOrderMessage args)
+        private CargoOrderData GetOrderData(CargoConsoleAddOrderMessage args, int index)
         {
-            return new CargoOrderData();
+            return new CargoOrderData(index, args.Requester, args.Reason, args.ProductId, args.Amount);
+        }
+
+        private int GetDatabaseAmount(StationCargoOrderDatabaseComponent component)
+        {
+            var amount = 0;
+
+            foreach (var (_, order) in component.Orders)
+            {
+                amount += order.Amount;
+            }
+
+            return amount;
         }
 
         public bool TryAddOrder(StationCargoOrderDatabaseComponent component, CargoOrderData data)
@@ -206,6 +260,12 @@ namespace Content.Server.Cargo.Systems
             if (component.Orders.Count == 0) return;
 
             component.Orders.Clear();
+            Dirty(component);
+        }
+
+        private void DeductFunds(StationBankAccountComponent component, int amount)
+        {
+            component.Balance = Math.Max(0, component.Balance - amount);
             Dirty(component);
         }
 
