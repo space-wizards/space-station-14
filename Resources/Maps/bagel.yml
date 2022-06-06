@@ -198040,7 +198040,7 @@ entities:
         ents: []
     type: ContainerContainer
 - uid: 21021
-  type: WeaponLaserRifleCog
+  type: WeaponLaserCarbine
   components:
   - pos: -28.418318,1.4810735
     parent: 60
@@ -198048,7 +198048,7 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 21022
-  type: WeaponLaserRifleCog
+  type: WeaponLaserCarbine
   components:
   - pos: -28.418318,1.2154485
     parent: 60
