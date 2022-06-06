@@ -32,22 +32,12 @@ public sealed class SharedBlockingSystem : EntitySystem
         SubscribeLocalEvent<SharedBlockingComponent, GettingPickedUpAttemptEvent>(OnPickupAttempt);
         SubscribeLocalEvent<SharedBlockingComponent, DroppedEvent>(OnDrop);
 
-        SubscribeLocalEvent<SharedBlockingUserComponent, DamageModifyEvent>(OnUserDamageModified);
-
         SubscribeLocalEvent<SharedBlockingComponent, GetItemActionsEvent>(OnGetActions);
         SubscribeLocalEvent<SharedBlockingComponent, ToggleActionEvent>(OnToggleAction);
-    }
 
-    private void OnUserDamageModified(EntityUid uid, SharedBlockingUserComponent component, DamageModifyEvent args)
-    {
-        if (TryComp(component.BlockingItem, out SharedBlockingComponent? blockingComponent))
-        {
-            if (_proto.TryIndex(blockingComponent.PassiveBlockDamageModifer, out DamageModifierSetPrototype? passiveblockModifier) && !blockingComponent.IsBlocking)
-                args.Damage = DamageSpecifier.ApplyModifierSet(args.Damage, passiveblockModifier);
+        SubscribeLocalEvent<SharedBlockingUserComponent, DamageModifyEvent>(OnUserDamageModified);
 
-            if (_proto.TryIndex(blockingComponent.ActiveBlockDamageModifier, out DamageModifierSetPrototype? activeBlockModifier) && blockingComponent.IsBlocking)
-                args.Damage = DamageSpecifier.ApplyModifierSet(args.Damage, activeBlockModifier);
-        }
+        SubscribeLocalEvent<SharedBlockingComponent, ComponentShutdown>(OnShutdown);
     }
 
     private void OnPickupAttempt(EntityUid uid, SharedBlockingComponent component, GettingPickedUpAttemptEvent args)
@@ -66,13 +56,8 @@ public sealed class SharedBlockingSystem : EntitySystem
 
     private void OnDrop(EntityUid uid, SharedBlockingComponent component, DroppedEvent args)
     {
-        if (component.IsBlocking)
-            StopBlocking(uid, component, args.User);
-
-        RemComp<SharedBlockingUserComponent>(args.User);
-        component.User = null;
+        BlockingShutdownHelper(uid, component, args.User);
     }
-
 
     private void OnGetActions(EntityUid uid, SharedBlockingComponent component, GetItemActionsEvent args)
     {
@@ -99,13 +84,35 @@ public sealed class SharedBlockingSystem : EntitySystem
         args.Handled = true;
     }
 
+    private void OnUserDamageModified(EntityUid uid, SharedBlockingUserComponent component, DamageModifyEvent args)
+    {
+        if (TryComp(component.BlockingItem, out SharedBlockingComponent? blockingComponent))
+        {
+            if (_proto.TryIndex(blockingComponent.PassiveBlockDamageModifer, out DamageModifierSetPrototype? passiveblockModifier) && !blockingComponent.IsBlocking)
+                args.Damage = DamageSpecifier.ApplyModifierSet(args.Damage, passiveblockModifier);
+
+            if (_proto.TryIndex(blockingComponent.ActiveBlockDamageModifier, out DamageModifierSetPrototype? activeBlockModifier) && blockingComponent.IsBlocking)
+                args.Damage = DamageSpecifier.ApplyModifierSet(args.Damage, activeBlockModifier);
+        }
+    }
+
+    private void OnShutdown(EntityUid uid, SharedBlockingComponent component, ComponentShutdown args)
+    {
+        //In theory the user should not be null when this fires off
+        if (component.User != null)
+        {
+            var user = (EntityUid) component.User;
+            BlockingShutdownHelper(uid, component, user);
+        }
+    }
+
     /// <summary>
     /// Called where you want the user to start blocking
     /// Creates a new hard fixture to bodyblock
     /// Also makes the user static to prevent prediction issues
     /// </summary>
     /// <param name="uid"> The entity with the blocking component</param>
-    /// <param name="component"> The blocking component</param>
+    /// <param name="component"> The <see cref="SharedBlockingComponent"/></param>
     /// <param name="user"> The entity who's using the item to block</param>
     /// <returns></returns>
     private bool StartBlocking(EntityUid item, SharedBlockingComponent component, EntityUid user)
@@ -147,7 +154,7 @@ public sealed class SharedBlockingSystem : EntitySystem
     /// Called where you want the user to stop blocking.
     /// </summary>
     /// <param name="item"> The entity with the blocking component</param>
-    /// <param name="component"> The blocking component</param>
+    /// <param name="component"> The <see cref="SharedBlockingComponent"/></param>
     /// <param name="user"> The entity who's using the item to block</param>
     /// <returns></returns>
     private bool StopBlocking(EntityUid item, SharedBlockingComponent component, EntityUid user)
@@ -174,6 +181,21 @@ public sealed class SharedBlockingSystem : EntitySystem
         }
 
         return true;
+    }
+
+    /// <summary>
+    /// Called where you want someone to stop blocking and to remove the <see cref="SharedBlockingUserComponent"/> from them
+    /// </summary>
+    /// <param name="uid"> The item the component is attached to</param>
+    /// <param name="component"> The <see cref="SharedBlockingComponent"/> </param>
+    /// <param name="user"> The person holding the blocking item </param>
+    private void BlockingShutdownHelper(EntityUid uid, SharedBlockingComponent component, EntityUid user)
+    {
+        if (component.IsBlocking)
+            StopBlocking(uid, component, user);
+
+        RemComp<SharedBlockingUserComponent>(user);
+        component.User = null;
     }
 
 }

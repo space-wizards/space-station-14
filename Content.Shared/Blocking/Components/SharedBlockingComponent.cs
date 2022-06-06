@@ -36,14 +36,14 @@ public sealed class SharedBlockingComponent : Component
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite)]
     [DataField("passiveBlockModifier")]
-    public string PassiveBlockDamageModifer = default!;
+    public string PassiveBlockDamageModifer = "Metallic";
 
     /// <summary>
     /// The damage modifier to use while actively blocking.
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite)]
     [DataField("activeBlockModifier")]
-    public string ActiveBlockDamageModifier = default!;
+    public string ActiveBlockDamageModifier = "Metallic";
 
     [DataField("blockingToggleActionId", customTypeSerializer:typeof(PrototypeIdSerializer<InstantActionPrototype>))]
     public string BlockingToggleActionId = "ToggleBlock";

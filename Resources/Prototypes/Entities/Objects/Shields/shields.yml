@@ -13,8 +13,8 @@
       size: 100
       HeldPrefix: riot
     - type: Blocking
-      passiveBlockModifier: Glass
-      activeBlockModifier: Metallic
+      passiveBlockModifier: PassiveRiotShieldBlock
+      activeBlockModifier: ActiveRiotShieldBlock
       blockingToggleAction:
         name: action-name-blocking
         description: action-description-blocking
@@ -22,12 +22,12 @@
         iconOn: Objects/Weapons/Melee/shields.rsi/teleriot-on.png
         event: !type:ToggleActionEvent
     - type: Damageable
-      damageContainer: Inorganic
+      damageContainer: Shield
     - type: Destructible
       thresholds:
         - trigger:
             !type:DamageTrigger
-            damage: 10
+            damage: 50 #This is probably enough damage before it breaks
           behaviors:
             - !type:DoActsBehavior
               acts: [ "Destruction" ]

@@ -150,3 +150,27 @@
     Bloodloss: 0.0 # no double dipping
     Cellular: 0.0
 
+# Represents what a riot shield should block passively
+# Honestly it should not be too high
+- type: damageModifierSet
+  id: PassiveRiotShieldBlock
+  coefficients:
+    Blunt: 0.9
+    Slash: 0.9
+    Piercing: 0.9
+    Heat: 0.9
+
+# Represents what a riot shield should block while active
+# Should be a higher reduction because you're anchored
+- type: damageModifierSet
+  id: ActiveRiotShieldBlock
+  coefficients:
+    Blunt: 0.8
+    Slash: 0.8
+    Piercing: 0.8
+    Heat: 0.8
+  flatReductions:
+    Blunt: 1
+    Slash: 1
+    Piercing: 1
+    Heat: 1
