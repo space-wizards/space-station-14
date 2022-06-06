@@ -148,9 +148,10 @@ namespace Content.Server.Storage.EntitySystems
 
             foreach (var entity in dumpQueue)
             {
-                Transform(entity).AttachParentToContainerOrGrid(EntityManager);
-                Transform(entity).LocalPosition = Transform(entity).LocalPosition + _random.NextVector2Box() / 2;
-                Transform(entity).LocalRotation = _random.NextAngle();
+                var transform = Transform(entity);
+                transform.AttachParentToContainerOrGrid(EntityManager);
+                transform.LocalPosition = transform.LocalPosition + _random.NextVector2Box() / 2;
+                transform.LocalRotation = _random.NextAngle();
             }
 
             if (HasComp<PlaceableSurfaceComponent>(args.Target))
