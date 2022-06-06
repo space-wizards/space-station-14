@@ -59,7 +59,7 @@ public sealed class NetworkConfiguratorSystem : EntitySystem
             }
 
             //The network configurator is a handheld device. There can only ever be an ui session open for the player holding the device.
-            component.Owner.GetUIOrNull(NetworkConfiguratorUiKey.Configure)?.CloseAll();
+            _uiSystem.GetUiOrNull(configurator.Owner, NetworkConfiguratorUiKey.Configure)?.CloseAll();
         }
     }
 
@@ -112,7 +112,7 @@ public sealed class NetworkConfiguratorSystem : EntitySystem
 
     private void OnComponentRemoved(EntityUid uid, DeviceListComponent component, ComponentRemove args)
     {
-        component.Owner.GetUIOrNull(NetworkConfiguratorUiKey.Configure)?.CloseAll();
+        _uiSystem.GetUiOrNull(component.Owner, NetworkConfiguratorUiKey.Configure)?.CloseAll();
     }
 
     #region Interactions
