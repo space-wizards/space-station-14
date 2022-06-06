@@ -1,4 +1,6 @@
+using Content.Server.Station.Systems;
 using Content.Shared.Cargo;
+using Content.Shared.Cargo.Components;
 using Content.Shared.Containers.ItemSlots;
 using Robust.Shared.Prototypes;
 
@@ -18,6 +20,13 @@ public sealed partial class CargoSystem : SharedCargoSystem
         InitializeConsole();
         InitializeShuttle();
         InitializeTelepad();
+        SubscribeLocalEvent<StationInitializedEvent>(OnStationInit);
+    }
+
+    private void OnStationInit(StationInitializedEvent ev)
+    {
+        EnsureComp<StationBankAccountComponent>(ev.Station);
+        EnsureComp<StationCargoOrderDatabaseComponent>(ev.Station);
     }
 
     public override void Update(float frameTime)

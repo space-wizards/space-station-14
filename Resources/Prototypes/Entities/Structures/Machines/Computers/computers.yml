@@ -389,7 +389,6 @@
       key: tech_key
       screen: supply
   - type: CargoConsole
-  - type: CargoOrderDatabase
   - type: ActivatableUI
     key: enum.CargoConsoleUiKey.Key
   - type: ActivatableUIRequiresPower

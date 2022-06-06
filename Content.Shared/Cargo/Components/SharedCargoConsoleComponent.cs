@@ -68,11 +68,19 @@ namespace Content.Shared.Cargo.Components
     [NetSerializable, Serializable]
     public sealed class CargoConsoleInterfaceState : BoundUserInterfaceState
     {
-        public EntityUid? Station;
+        public string Name;
+        public int Count;
+        public int Capacity;
+        public int Balance;
+        public List<CargoOrderData> Orders;
 
-        public CargoConsoleInterfaceState(EntityUid? stationUid)
+        public CargoConsoleInterfaceState(string name, int count, int capacity, int balance, List<CargoOrderData> orders)
         {
-            Station = stationUid;
+            Name = name;
+            Count = count;
+            Capacity = capacity;
+            Balance = balance;
+            Orders = orders;
         }
     }
 }

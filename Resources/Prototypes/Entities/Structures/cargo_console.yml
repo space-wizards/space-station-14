@@ -1,6 +1,5 @@
 ﻿- type: entity
-  id: BaseCargoConsole
-  abstract: true
+  id: CargoConsole
   parent: BaseStructureDynamic
   name: cargo console
   components:
@@ -47,22 +46,6 @@
   - type: ApcPowerReceiver
     powerLoad: 1000 # TODO if we keep this make it spike power draw when teleporting
   - type: ExtensionCableReceiver
-  - type: CargoTelepad
+  - type: CargoConsole
   - type: Appearance
   - type: CollideOnAnchor
-
-- type: entity
-  id: CargoConsoleShuttle
-  parent: BaseCargoConsole
-  name: cargo shuttle console
-  description: 'Temporary cargo delivery for developing Nanotrasen stations! Warning: destroying this while goods are in transit will lose them forever!'
-  components:
-  - type: CargoConsoleShuttle
-
-- type: entity
-  id: cargoTelepad
-  parent: BaseCargoConsole
-  name: cargo telepad
-  description: 'Temporary cargo delivery for developing Nanotrasen stations! Warning: destroying this while goods are in transit will lose them forever!'
-  components:
-  - type: CargoConsoleTelepad

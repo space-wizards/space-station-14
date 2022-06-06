@@ -101,7 +101,6 @@
     color: "#228b22"
   - type: RadarConsole
   - type: CargoConsole
-  - type: CargoOrderDatabase
   - type: CrewMonitoringConsole
     snap: false
     precision: 3

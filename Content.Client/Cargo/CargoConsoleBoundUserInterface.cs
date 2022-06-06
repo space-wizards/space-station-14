@@ -76,13 +76,13 @@ namespace Content.Client.Cargo
             _menu.OpenCentered();
         }
 
-        private void Populate(StationCargoOrderDatabaseComponent? orderDatabase)
+        private void Populate(List<CargoOrderData> orders)
         {
             if (_menu == null) return;
 
             _menu.PopulateProducts();
             _menu.PopulateCategories();
-            _menu.PopulateOrders(GetOrders(orderDatabase));
+            _menu.PopulateOrders(orders);
         }
 
         protected override void UpdateState(BoundUserInterfaceState state)
@@ -92,18 +92,13 @@ namespace Content.Client.Cargo
             if (state is not CargoConsoleInterfaceState cState)
                 return;
 
-            var entManager = IoCManager.Resolve<IEntityManager>();
+            OrderCapacity = cState.Capacity;
+            OrderCount = cState.Count;
+            BankBalance = cState.Balance;
 
-            entManager.TryGetComponent<StationCargoOrderDatabaseComponent>(cState.Station, out var orderDatabase);
-            entManager.TryGetComponent<StationBankAccountComponent>(cState.Station, out var bankAccount);
+            AccountName = cState.Name;
 
-            OrderCapacity = orderDatabase?.Capacity ?? 0;
-            OrderCount = orderDatabase != null ? GetOrderCount(orderDatabase) : 0;
-            BankBalance = bankAccount?.Balance ?? 0;
-
-            AccountName = "Fuck fuck fuck fuck fuck";
-
-            Populate(orderDatabase);
+            Populate(cState.Orders);
             _menu?.UpdateCargoCapacity(OrderCount, OrderCapacity);
             _menu?.UpdateBankData(AccountName, BankBalance);
         }

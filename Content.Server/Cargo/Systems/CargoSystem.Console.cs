@@ -1,3 +1,4 @@
+using System.Linq;
 using Content.Server.Access.Systems;
 using Content.Server.Cargo.Components;
 using Content.Server.MachineLinking.Components;
@@ -11,7 +12,6 @@ using Content.Shared.GameTicking;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.Player;
-using Robust.Shared.Prototypes;
 
 namespace Content.Server.Cargo.Systems
 {
@@ -21,6 +21,7 @@ namespace Content.Server.Cargo.Systems
         /// How much time to wait (in seconds) before increasing bank accounts balance.
         /// </summary>
         private const float Delay = 10f;
+
         /// <summary>
         /// How many points to give to every bank account every <see cref="Delay"/> seconds.
         /// </summary>
@@ -30,6 +31,8 @@ namespace Content.Server.Cargo.Systems
         /// Keeps track of how much time has elapsed since last balance increase.
         /// </summary>
         private float _timer;
+
+        // TODO: Move the station stuff to server
 
         [Dependency] private readonly IdCardSystem _idCardSystem = default!;
         [Dependency] private readonly AccessReaderSystem _accessReaderSystem = default!;
@@ -42,15 +45,19 @@ namespace Content.Server.Cargo.Systems
             SubscribeLocalEvent<CargoConsoleComponent, CargoConsoleRemoveOrderMessage>(OnRemoveOrderMessage);
             SubscribeLocalEvent<CargoConsoleComponent, CargoConsoleApproveOrderMessage>(OnApproveOrderMessage);
             SubscribeLocalEvent<CargoConsoleComponent, CargoConsoleShuttleMessage>(OnShuttleMessage);
-
             SubscribeLocalEvent<CargoConsoleComponent, ComponentInit>(OnInit);
             SubscribeLocalEvent<RoundRestartCleanupEvent>(Reset);
             Reset();
         }
 
+
         private void OnInit(EntityUid uid, CargoConsoleComponent console, ComponentInit args)
         {
             _linker.EnsureTransmitterPorts(uid, console.SenderPort);
+
+            var station = Get<StationSystem>().GetOwningStation(uid);
+
+            UpdateUIState(console, station);
         }
 
         private void Reset(RoundRestartCleanupEvent ev)
@@ -75,8 +82,17 @@ namespace Content.Server.Cargo.Systems
                 {
                     account.Balance += PointIncrease;
                 }
+
+                foreach (var comp in EntityQuery<CargoConsoleComponent>())
+                {
+                    var station = Get<StationSystem>().GetOwningStation(comp.Owner);
+
+                    UpdateUIState(comp, station);
+                }
             }
         }
+
+        #region Interface
 
         private void OnShuttleMessage(EntityUid uid, CargoConsoleComponent component, CargoConsoleShuttleMessage args)
         {
@@ -143,7 +159,7 @@ namespace Content.Server.Cargo.Systems
                 return;
             }
 
-            var amount = GetDatabaseAmount(orderDatabase);
+            var amount = GetOrderCount(orderDatabase);
             var capacity = orderDatabase.Capacity;
 
             // Too many orders, avoid them getting spammed in the UI.
@@ -178,19 +194,7 @@ namespace Content.Server.Cargo.Systems
             order.Approver = idCard?.FullName ?? string.Empty;
 
             DeductFunds(bankAccount, cost);
-            Dirty(component);
             UpdateUIState(component, Get<StationSystem>().GetOwningStation(component.Owner));
-        }
-
-        private void UpdateUIState(CargoConsoleComponent component, EntityUid? station)
-        {
-            var state = new CargoConsoleInterfaceState(station);
-            _uiSystem.GetUiOrNull(component.Owner, CargoConsoleUiKey.Key)?.SetState(state);
-        }
-
-        private void PlayDenySound(EntityUid uid, CargoConsoleComponent component)
-        {
-            SoundSystem.Play(Filter.Pvs(uid, entityManager: EntityManager), component.ErrorSound.GetSound());
         }
 
         private void OnRemoveOrderMessage(EntityUid uid, CargoConsoleComponent component, CargoConsoleRemoveOrderMessage args)
@@ -198,6 +202,7 @@ namespace Content.Server.Cargo.Systems
             var orderDatabase = GetOrderDatabase(component);
             if (orderDatabase == null) return;
             RemoveOrder(orderDatabase, args.OrderNumber);
+            UpdateUIState(component, Get<StationSystem>().GetOwningStation(component.Owner));
         }
 
         private void OnAddOrderMessage(EntityUid uid, CargoConsoleComponent component, CargoConsoleAddOrderMessage args)
@@ -214,8 +219,34 @@ namespace Content.Server.Cargo.Systems
 
             if (!TryAddOrder(orderDatabase, data))
             {
-                SoundSystem.Play(Filter.Pvs(uid, entityManager: EntityManager), component.ErrorSound.GetSound(), uid, AudioParams.Default);
+                PlayDenySound(uid, component);
+                return;
             }
+
+            UpdateUIState(component, Get<StationSystem>().GetOwningStation(component.Owner));
+        }
+
+        #endregion
+
+        private void UpdateUIState(CargoConsoleComponent component, EntityUid? station)
+        {
+            if (station == null ||
+                !TryComp<StationCargoOrderDatabaseComponent>(station, out var orderDatabase) ||
+                !TryComp<StationBankAccountComponent>(station, out var bankAccount)) return;
+
+            var state = new CargoConsoleInterfaceState(
+                MetaData(station.Value).EntityName,
+                GetOrderCount(orderDatabase),
+                orderDatabase.Capacity,
+                bankAccount.Balance,
+                orderDatabase.Orders.Values.ToList());
+
+            _uiSystem.GetUiOrNull(component.Owner, CargoConsoleUiKey.Key)?.SetState(state);
+        }
+
+        private void PlayDenySound(EntityUid uid, CargoConsoleComponent component)
+        {
+            SoundSystem.Play(Filter.Pvs(uid, entityManager: EntityManager), component.ErrorSound.GetSound());
         }
 
         private CargoOrderData GetOrderData(CargoConsoleAddOrderMessage args, int index)
@@ -223,7 +254,7 @@ namespace Content.Server.Cargo.Systems
             return new CargoOrderData(index, args.Requester, args.Reason, args.ProductId, args.Amount);
         }
 
-        private int GetDatabaseAmount(StationCargoOrderDatabaseComponent component)
+        private int GetOrderCount(StationCargoOrderDatabaseComponent component)
         {
             var amount = 0;
 
@@ -239,7 +270,6 @@ namespace Content.Server.Cargo.Systems
         {
             var index = GetNextIndex(component);
             component.Orders.Add(index, data);
-            Dirty(component);
             return true;
         }
 
@@ -253,7 +283,6 @@ namespace Content.Server.Cargo.Systems
         public void RemoveOrder(StationCargoOrderDatabaseComponent component, int index)
         {
             if (!component.Orders.Remove(index)) return;
-            Dirty(component);
         }
 
         public void ClearOrders(StationCargoOrderDatabaseComponent component)

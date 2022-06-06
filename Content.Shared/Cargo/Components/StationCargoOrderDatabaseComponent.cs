@@ -1,11 +1,9 @@
-using Robust.Shared.GameStates;
-
 namespace Content.Shared.Cargo.Components;
 
 /// <summary>
 /// Stores all of cargo orders for a particular station.
 /// </summary>
-[RegisterComponent, NetworkedComponent]
+[RegisterComponent]
 public sealed class StationCargoOrderDatabaseComponent : Component
 {
     /// <summary>
