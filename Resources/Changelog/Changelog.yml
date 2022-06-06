@@ -1,10 +1,4 @@
 Entries:
-- author: Peptide90
-  changes:
-  - {message: Added secure cargo and external windoors. Fixed glass EVA airlock sprite.,
-    type: Add}
-  id: 1164
-  time: '2022-03-04T06:56:40.0000000+00:00'
 - author: ElectroJr
   changes:
   - {message: 'Fixed a bug causing alerts (health, hunger, etc) to sometimes disappear.
@@ -3004,3 +2998,9 @@ Entries:
       instead of all being dumped into the same exact spot.', type: Tweak}
   id: 1663
   time: '2022-06-06T00:34:44.0000000+00:00'
+- author: Rane
+  changes:
+  - {message: Stethoscopes have been ported over from Nyanotrasen. Wear one on your
+      neck and right click on someone else to listen to their chest., type: Add}
+  id: 1664
+  time: '2022-06-06T01:37:29.0000000+00:00'
