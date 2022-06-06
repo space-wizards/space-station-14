@@ -1,6 +1,5 @@
 ## UI
-cargo-console-menu-request-only-title = Cargo Request Console
-cargo-console-menu-title = Cargo Shuttle Console
+cargo-console-menu-title = Cargo Request Console
 cargo-console-menu-account-name-label = Account Name:{" "}
 cargo-console-menu-account-name-none-text = None
 cargo-console-menu-points-label = Points:{" "}
@@ -20,7 +19,7 @@ cargo-console-menu-cargo-order-row-approve-button = Approve
 cargo-console-menu-cargo-order-row-cancel-button = Cancel
 
 cargo-console-paper-print-name = Order #{$orderNumber}
-cargo-console-paper-print-text = 
+cargo-console-paper-print-text =
     Order #{$orderNumber}
     Requested by: {$requester}
     Reason: {$reason}

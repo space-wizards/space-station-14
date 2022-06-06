@@ -179,12 +179,12 @@ namespace Content.Server.Cargo.Systems
 
             DeductFunds(bankAccount, cost);
             Dirty(component);
-            UpdateUIState(component);
+            UpdateUIState(component, Get<StationSystem>().GetOwningStation(component.Owner));
         }
 
-        private void UpdateUIState(CargoConsoleComponent component)
+        private void UpdateUIState(CargoConsoleComponent component, EntityUid? station)
         {
-            var state = new CargoConsoleInterfaceState();
+            var state = new CargoConsoleInterfaceState(station);
             _uiSystem.GetUiOrNull(component.Owner, CargoConsoleUiKey.Key)?.SetState(state);
         }
 

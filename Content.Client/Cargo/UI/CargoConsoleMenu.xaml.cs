@@ -11,12 +11,9 @@ using static Robust.Client.UserInterface.Controls.BaseButton;
 namespace Content.Client.Cargo.UI
 {
     [GenerateTypedNameReferences]
-    public sealed partial class CargoShuttleConsoleMenu : DefaultWindow
+    public sealed partial class CargoConsoleMenu : DefaultWindow
     {
-        [Dependency]
-        private IPrototypeManager _prototypeManager = default!;
-
-        public CargoConsoleBoundUserInterface Owner { get; private set; }
+        private IPrototypeManager _protoManager;
 
         public event Action<ButtonEventArgs>? OnItemSelected;
         public event Action<ButtonEventArgs>? OnOrderApproved;
@@ -25,23 +22,15 @@ namespace Content.Client.Cargo.UI
         private readonly List<string> _categoryStrings = new();
         private string? _category;
 
-        public CargoShuttleConsoleMenu(CargoConsoleBoundUserInterface owner)
+        public CargoConsoleMenu(IPrototypeManager protoManager)
         {
             RobustXamlLoader.Load(this);
-            IoCManager.InjectDependencies(this);
-            Owner = owner;
+            _protoManager = protoManager;
 
-            Title = Loc.GetString(Owner.RequestOnly
-                                      ? "cargo-console-menu-request-only-title"
-                                      : "cargo-console-menu-title");
+            Title = Loc.GetString("cargo-console-menu-title");
 
-            CallShuttleButton.OnPressed += OnCallShuttleButtonPressed;
             SearchBar.OnTextChanged += OnSearchBarTextChanged;
             Categories.OnItemSelected += OnCategoryItemSelected;
-        }
-
-        private void OnCallShuttleButtonPressed(ButtonEventArgs args)
-        {
         }
 
         private void OnCategoryItemSelected(OptionButton.ItemSelectedEventArgs args)
@@ -61,7 +50,7 @@ namespace Content.Client.Cargo.UI
             Categories.SelectId(id);
         }
 
-        public IEnumerable<CargoProductPrototype> ProductPrototypes => _prototypeManager.EnumeratePrototypes<CargoProductPrototype>();
+        public IEnumerable<CargoProductPrototype> ProductPrototypes => _protoManager.EnumeratePrototypes<CargoProductPrototype>();
 
         /// <summary>
         ///     Populates the list of products that will actually be shown, using the current filters.
@@ -123,25 +112,14 @@ namespace Content.Client.Cargo.UI
         /// <summary>
         ///     Populates the list of orders and requests.
         /// </summary>
-        public void PopulateOrders()
+        public void PopulateOrders(IEnumerable<CargoOrderData> orders)
         {
             Orders.RemoveAllChildren();
             Requests.RemoveAllChildren();
 
-            if (Owner.Orders == null)
+            foreach (var order in orders)
             {
-                return;
-            }
-
-            foreach (var order in Owner.Orders.Orders)
-            {
-                if (!_prototypeManager.TryIndex<CargoProductPrototype>(order.ProductId, out CargoProductPrototype? product))
-                {
-                    DebugTools.Assert(false);
-                    Logger.ErrorS("cargo", $"Unable to find product name for {order.ProductId}");
-                    continue;
-                }
-
+                var product = _protoManager.Index<CargoProductPrototype>(order.ProductId);
                 var productName = product.Name;
 
                 var row = new CargoOrderRow
@@ -168,43 +146,23 @@ namespace Content.Client.Cargo.UI
                 }
                 else
                 {
-                    if (Owner.RequestOnly)
-                        row.Approve.Visible = false;
-                    else
-                        row.Approve.OnPressed += (args) => { OnOrderApproved?.Invoke(args); };
+                    // TODO: Disable based on access.
+                    row.Approve.OnPressed += (args) => { OnOrderApproved?.Invoke(args); };
                     Requests.AddChild(row);
                 }
             }
         }
 
-        public void Populate()
+        public void UpdateCargoCapacity(int count, int capacity)
         {
-            PopulateProducts();
-            PopulateCategories();
-            PopulateOrders();
+            // TODO: Rename + Loc.
+            ShuttleCapacityLabel.Text = $"{count}/{capacity}";
         }
 
-        public void UpdateCargoCapacity()
+        public void UpdateBankData(string name, int points)
         {
-            ShuttleCapacityLabel.Text = $"{Owner.ShuttleCapacity.CurrentCapacity}/{Owner.ShuttleCapacity.MaxCapacity}";
-        }
-
-        public void UpdateBankData()
-        {
-            AccountNameLabel.Text = Owner.BankName;
-            PointsLabel.Text = Owner.BankBalance.ToString();
-        }
-
-        /// <summary>
-        ///     Show/Hide Call Shuttle button and Approve buttons
-        /// </summary>
-        public void UpdateRequestOnly()
-        {
-            CallShuttleButton.Visible = !Owner.RequestOnly;
-            foreach (CargoOrderRow row in Requests.Children)
-            {
-                row.Approve.Visible = !Owner.RequestOnly;
-            }
+            AccountNameLabel.Text = name;
+            PointsLabel.Text = points.ToString();
         }
     }
 }

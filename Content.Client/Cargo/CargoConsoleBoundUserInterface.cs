@@ -1,148 +1,178 @@
-using Content.Client.Cargo.Components;
+using System.Linq;
 using Content.Client.Cargo.UI;
 using Content.Shared.Cargo;
 using Content.Shared.Cargo.Components;
 using Robust.Client.GameObjects;
-using Robust.Client.UserInterface.Controls;
+using Robust.Shared.Prototypes;
+using static Robust.Client.UserInterface.Controls.BaseButton;
 
-namespace Content.Client.Cargo;
-
-public sealed class CargoConsoleBoundUserInterface : BoundUserInterface
+namespace Content.Client.Cargo
 {
-    [ViewVariables]
-    private CargoConsoleOrderMenu? _orderMenu;
-
-    [ViewVariables]
-    public bool RequestOnly { get; private set; }
-
-    [ViewVariables]
-    public int BankId { get; private set; }
-
-    [ViewVariables]
-    public string? BankName { get; private set; }
-
-    [ViewVariables]
-    public int BankBalance { get; private set; }
-
-    [ViewVariables]
-    public (int CurrentCapacity, int MaxCapacity) ShuttleCapacity { get; private set; }
-
-    private CargoProductPrototype? _product;
-
-    public CargoConsoleBoundUserInterface(ClientUserInterfaceComponent owner, object uiKey) : base(owner, uiKey)
+    public sealed class CargoConsoleBoundUserInterface : BoundUserInterface
     {
-    }
+        [ViewVariables]
+        private CargoConsoleMenu? _menu;
 
-    protected override void Open()
-    {
-        base.Open();
+        /// <summary>
+        /// This is the separate popup window for individual orders.
+        /// </summary>
+        [ViewVariables]
+        private CargoConsoleOrderMenu? _orderMenu;
 
-        var entMan = IoCManager.Resolve<IEntityManager>();
-        if (!entMan.TryGetComponent(Owner.Owner, out CargoOrderDatabaseComponent? orders)) return;
+        public EntityUid? Station { get; private set; }
 
-        Orders = orders;
+        [ViewVariables]
+        public string? AccountName { get; private set; }
 
-        _menu = new CargoShuttleConsoleMenu(this);
-        _orderMenu = new CargoConsoleOrderMenu();
+        [ViewVariables]
+        public int BankBalance { get; private set; }
 
-        _menu.OnClose += Close;
+        [ViewVariables]
+        public int OrderCapacity { get; private set; }
 
-        _menu.Populate();
+        [ViewVariables]
+        public int OrderCount { get; private set; }
 
-        Orders.OnDatabaseUpdated += _menu.PopulateOrders;
+        public List<CargoOrderData> Orders { get; private set; } = new();
 
-        _menu.CallShuttleButton.OnPressed += (_) =>
+        /// <summary>
+        /// Currently selected product
+        /// </summary>
+        private CargoProductPrototype? _product;
+
+        public CargoConsoleBoundUserInterface(ClientUserInterfaceComponent owner, object uiKey) : base(owner, uiKey)
         {
-            SendMessage(new CargoConsoleShuttleMessage());
-        };
-        _menu.OnItemSelected += (args) =>
+        }
+
+        protected override void Open()
         {
-            if (args.Button.Parent is not CargoProductRow row)
-                return;
-            _product = row.Product;
-            _orderMenu.Requester.Text = "";
-            _orderMenu.Reason.Text = "";
-            _orderMenu.Amount.Value = 1;
-            _orderMenu.OpenCentered();
-        };
-        _menu.OnOrderApproved += ApproveOrder;
-        _menu.OnOrderCanceled += RemoveOrder;
-        _orderMenu.SubmitButton.OnPressed += (_) =>
-        {
-            if (AddOrder())
+            base.Open();
+
+            _menu = new CargoConsoleMenu(IoCManager.Resolve<IPrototypeManager>());
+            _orderMenu = new CargoConsoleOrderMenu();
+
+            _menu.OnClose += Close;
+
+            _menu.OnItemSelected += (args) =>
             {
-                _orderMenu.Close();
+                if (args.Button.Parent is not CargoProductRow row)
+                    return;
+                _product = row.Product;
+                _orderMenu.Requester.Text = "";
+                _orderMenu.Reason.Text = "";
+                _orderMenu.Amount.Value = 1;
+                _orderMenu.OpenCentered();
+            };
+            _menu.OnOrderApproved += ApproveOrder;
+            _menu.OnOrderCanceled += RemoveOrder;
+            _orderMenu.SubmitButton.OnPressed += (_) =>
+            {
+                if (AddOrder())
+                {
+                    _orderMenu.Close();
+                }
+            };
+
+            _menu.OpenCentered();
+        }
+
+        private void Populate(StationCargoOrderDatabaseComponent? orderDatabase)
+        {
+            if (_menu == null) return;
+
+            _menu.PopulateProducts();
+            _menu.PopulateCategories();
+            _menu.PopulateOrders(GetOrders(orderDatabase));
+        }
+
+        protected override void UpdateState(BoundUserInterfaceState state)
+        {
+            base.UpdateState(state);
+
+            if (state is not CargoConsoleInterfaceState cState)
+                return;
+
+            var entManager = IoCManager.Resolve<IEntityManager>();
+
+            entManager.TryGetComponent<StationCargoOrderDatabaseComponent>(cState.Station, out var orderDatabase);
+            entManager.TryGetComponent<StationBankAccountComponent>(cState.Station, out var bankAccount);
+
+            OrderCapacity = orderDatabase?.Capacity ?? 0;
+            OrderCount = orderDatabase != null ? GetOrderCount(orderDatabase) : 0;
+            BankBalance = bankAccount?.Balance ?? 0;
+
+            AccountName = "Fuck fuck fuck fuck fuck";
+
+            Populate(orderDatabase);
+            _menu?.UpdateCargoCapacity(OrderCount, OrderCapacity);
+            _menu?.UpdateBankData(AccountName, BankBalance);
+        }
+
+        private IEnumerable<CargoOrderData> GetOrders(StationCargoOrderDatabaseComponent? component)
+        {
+            if (component == null) return Enumerable.Empty<CargoOrderData>();
+
+            return component.Orders.Values;
+        }
+
+        // TODO: Move to the shared system
+        private int GetOrderCount(StationCargoOrderDatabaseComponent component)
+        {
+            var count = 0;
+
+            foreach (var (_, order) in component.Orders)
+            {
+                count += order.Amount;
             }
-        };
 
-        _menu.OpenCentered();
-
-    }
-
-    protected override void UpdateState(BoundUserInterfaceState state)
-    {
-        base.UpdateState(state);
-
-        if (state is not CargoConsoleInterfaceState cState)
-            return;
-
-        BankId = cState.BankId;
-        BankName = cState.BankName;
-        BankBalance = cState.BankBalance;
-        ShuttleCapacity = cState.ShuttleCapacity;
-        _menu?.UpdateCargoCapacity();
-        _menu?.UpdateBankData();
-    }
-
-    protected override void Dispose(bool disposing)
-    {
-        base.Dispose(disposing);
-
-        if (!disposing) return;
-
-        if (Orders != null && _menu != null)
-        {
-            Orders.OnDatabaseUpdated -= _menu.PopulateOrders;
+            return count;
         }
 
-        _menu?.Dispose();
-        _orderMenu?.Dispose();
-    }
-
-    private bool AddOrder()
-    {
-        int orderAmt = _orderMenu?.Amount.Value ?? 0;
-        if (orderAmt < 1 || orderAmt > ShuttleCapacity.MaxCapacity)
+        protected override void Dispose(bool disposing)
         {
-            return false;
+            base.Dispose(disposing);
+
+            if (!disposing) return;
+
+            _menu?.Dispose();
+            _orderMenu?.Dispose();
         }
 
-        SendMessage(new CargoConsoleAddOrderMessage(
-            _orderMenu?.Requester.Text ?? "",
-            _orderMenu?.Reason.Text ?? "",
-            _product?.ID ?? "",
-            orderAmt));
+        private bool AddOrder()
+        {
+            int orderAmt = _orderMenu?.Amount.Value ?? 0;
+            if (orderAmt < 1 || orderAmt > OrderCapacity)
+            {
+                return false;
+            }
 
-        return true;
-    }
+            SendMessage(new CargoConsoleAddOrderMessage(
+                _orderMenu?.Requester.Text ?? "",
+                _orderMenu?.Reason.Text ?? "",
+                _product?.ID ?? "",
+                orderAmt));
 
-    private void RemoveOrder(BaseButton.ButtonEventArgs args)
-    {
-        if (args.Button.Parent?.Parent is not CargoOrderRow row || row.Order == null)
-            return;
+            return true;
+        }
 
-        SendMessage(new CargoConsoleRemoveOrderMessage(row.Order.OrderNumber));
-    }
+        private void RemoveOrder(ButtonEventArgs args)
+        {
+            if (args.Button.Parent?.Parent is not CargoOrderRow row || row.Order == null)
+                return;
 
-    private void ApproveOrder(BaseButton.ButtonEventArgs args)
-    {
-        if (args.Button.Parent?.Parent is not CargoOrderRow row || row.Order == null)
-            return;
+            SendMessage(new CargoConsoleRemoveOrderMessage(row.Order.OrderNumber));
+        }
 
-        if (ShuttleCapacity.CurrentCapacity == ShuttleCapacity.MaxCapacity)
-            return;
+        private void ApproveOrder(ButtonEventArgs args)
+        {
+            if (args.Button.Parent?.Parent is not CargoOrderRow row || row.Order == null)
+                return;
 
-        SendMessage(new CargoConsoleApproveOrderMessage(row.Order.OrderNumber));
-        _menu?.UpdateCargoCapacity();
+            if (OrderCount >= OrderCapacity)
+                return;
+
+            SendMessage(new CargoConsoleApproveOrderMessage(row.Order.OrderNumber));
+            _menu?.UpdateCargoCapacity(OrderCount + row.Order.Amount, OrderCapacity);
+        }
     }
 }

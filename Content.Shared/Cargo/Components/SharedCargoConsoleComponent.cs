@@ -68,17 +68,11 @@ namespace Content.Shared.Cargo.Components
     [NetSerializable, Serializable]
     public sealed class CargoConsoleInterfaceState : BoundUserInterfaceState
     {
-        public readonly int BankId;
-        public readonly string BankName;
-        public readonly int BankBalance;
-        public readonly (int CurrentCapacity, int MaxCapacity) ShuttleCapacity;
+        public EntityUid? Station;
 
-        public CargoConsoleInterfaceState(int bankId, string bankName, int bankBalance, (int CurrentCapacity, int MaxCapacity) shuttleCapacity)
+        public CargoConsoleInterfaceState(EntityUid? stationUid)
         {
-            BankId = bankId;
-            BankName = bankName;
-            BankBalance = bankBalance;
-            ShuttleCapacity = shuttleCapacity;
+            Station = stationUid;
         }
     }
 }

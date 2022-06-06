@@ -28,16 +28,6 @@
                    Text="0/20" />
         </BoxContainer>
         <BoxContainer Orientation="Horizontal">
-            <Button Name="CallShuttleButton"
-                    Access="Public"
-                    Text="{Loc 'cargo-console-menu-call-shuttle-button'}"
-                    TextAlign="Center"
-                    HorizontalExpand="True"/>
-            <Button Name="PermissionsButton"
-                    Text="{Loc 'cargo-console-menu-permissions-button'}"
-                    TextAlign="Center" />
-        </BoxContainer>
-        <BoxContainer Orientation="Horizontal">
             <OptionButton Name="Categories"
                           Prefix="{Loc 'cargo-console-menu-categories-label'}"
                           HorizontalExpand="True" />
