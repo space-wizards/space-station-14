@@ -63855,7 +63855,7 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 4756
-  type: WeaponSubMachineGunDrozVectorRubber
+  type: WeaponSubMachineGunVectorRubber
   components:
   - pos: -50.49019,28.484802
     parent: 130
@@ -120477,7 +120477,7 @@ entities:
     parent: 130
     type: Transform
 - uid: 9838
-  type: WeaponSubMachineGunDrozdRubber
+  type: WeaponSubMachineGunVectorRubber
   components:
   - pos: -50.36519,28.39105
     parent: 130
@@ -120497,7 +120497,7 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 9840
-  type: WeaponSubMachineGunDrozdRubber
+  type: WeaponSubMachineGunVectordRubber
   components:
   - pos: -50.20894,28.25043
     parent: 130
