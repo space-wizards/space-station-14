@@ -53,7 +53,7 @@
   - type: PaintableAirlock
     group: Shuttle
   - type: Construction
-    graph: Airlock
+    graph: AirlockExternal
     node: AirlockDocking
 
 - type: entity
@@ -90,5 +90,5 @@
   - type: Door
     occludes: false
   - type: Construction
-    graph: Airlock
+    graph: AirlockExternal
     node: AirlockDockingGlass

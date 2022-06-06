@@ -24,7 +24,7 @@
   - type: PaintableAirlock
     group: External
   - type: Construction
-    graph: Airlock
+    graph: AirlockExternal
     node: AirlockExternal
 
 - type: entity
@@ -41,5 +41,5 @@
   - type: PaintableAirlock
     group: ExternalGlass
   - type: Construction
-    graph: Airlock
+    graph: AirlockExternal
     node: AirlockExternalGlass
