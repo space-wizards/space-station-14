@@ -386,6 +386,7 @@
   description: It opens, it closes, and maybe crushes you.
   icon:
     sprite: Structures/Doors/Airlocks/Standard/external.rsi
+    state: closed
   objectType: Structure
   placementMode: SnapgridCenter
   canBuildInImpassable: false
@@ -402,6 +403,7 @@
   description: Used for docking shuttles.
   icon:
     sprite: Structures/Doors/Airlocks/Standard/shuttle.rsi
+    state: closed
   objectType: Structure
   placementMode: SnapgridCenter
   canBuildInImpassable: false
