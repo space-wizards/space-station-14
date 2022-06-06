@@ -10,7 +10,7 @@ public sealed class StationCargoOrderDatabaseComponent : Component
     /// Maximum amount of orders a station is allowed, approved or not.
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite), DataField("capacity")]
-    public int Capacity = 50;
+    public int Capacity = 20;
 
     [ViewVariables(VVAccess.ReadWrite), DataField("orders")]
     public Dictionary<int, CargoOrderData> Orders = new();
