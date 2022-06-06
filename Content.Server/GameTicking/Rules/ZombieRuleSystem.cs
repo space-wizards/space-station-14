@@ -41,15 +41,10 @@ public sealed class ZombieRuleSystem : GameRuleSystem
     [Dependency] private readonly NukeSystem _nukeSystem = default!;
     [Dependency] private readonly NukeCodeSystem _nukeCodeSystem = default!;
 
-    private const string ZombieEventsWeightedRandomID = "ZombieEvents";
     private const string ZombieVariantsWeightedRandomID = "ZombieVariants";
-
     private const string PatientZeroPrototypeID = "PatientZero";
-    
-
     private const string InitialZombieVirusPrototype = "ZombieInfection";
 
-    private string? _midRoundEvent;
     private Dictionary<Mind.Mind, bool> _aliveNukeops = new();
     private bool _opsWon;
 
