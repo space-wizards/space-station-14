@@ -1,4 +1,5 @@
 ﻿using Content.Shared.Actions.ActionTypes;
+using Content.Shared.Sound;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
 namespace Content.Shared.Blocking;
@@ -50,4 +51,9 @@ public sealed class SharedBlockingComponent : Component
 
     [DataField("blockingToggleAction")]
     public InstantAction? BlockingToggleAction;
+
+    /// <summary>
+    /// The sound to be played when you get hit while actively blocking
+    /// </summary>
+    public SoundSpecifier BlockSound = new SoundPathSpecifier("/Audio/Weapons/block_metal1.ogg");
 }

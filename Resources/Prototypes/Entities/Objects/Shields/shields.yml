@@ -27,7 +27,9 @@
       thresholds:
         - trigger:
             !type:DamageTrigger
-            damage: 50 #This is probably enough damage before it breaks
+            damage: 40 #This is probably enough damage before it breaks
           behaviors:
             - !type:DoActsBehavior
               acts: [ "Destruction" ]
+
+#TODO: Add more shields from the texture files

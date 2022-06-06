@@ -151,6 +151,7 @@
     Cellular: 0.0
 
 # Represents what a riot shield should block passively
+# Each shield will probably have their own passive and active modifier sets
 # Honestly it should not be too high
 - type: damageModifierSet
   id: PassiveRiotShieldBlock

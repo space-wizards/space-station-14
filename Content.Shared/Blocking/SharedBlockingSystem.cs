@@ -1,5 +1,6 @@
 ﻿using Content.Shared.Actions;
 using Content.Shared.Actions.ActionTypes;
+using Content.Shared.Audio;
 using Content.Shared.Damage;
 using Content.Shared.Damage.Prototypes;
 using Content.Shared.Hands.EntitySystems;
@@ -8,6 +9,7 @@ using Content.Shared.Item;
 using Content.Shared.Physics;
 using Content.Shared.Popups;
 using Content.Shared.Toggleable;
+using Robust.Shared.Audio;
 using Robust.Shared.Physics;
 using Robust.Shared.Physics.Collision.Shapes;
 using Robust.Shared.Physics.Dynamics;
@@ -92,7 +94,10 @@ public sealed class SharedBlockingSystem : EntitySystem
                 args.Damage = DamageSpecifier.ApplyModifierSet(args.Damage, passiveblockModifier);
 
             if (_proto.TryIndex(blockingComponent.ActiveBlockDamageModifier, out DamageModifierSetPrototype? activeBlockModifier) && blockingComponent.IsBlocking)
+            {
                 args.Damage = DamageSpecifier.ApplyModifierSet(args.Damage, activeBlockModifier);
+                SoundSystem.Play(Filter.Pvs(component.Owner), blockingComponent.BlockSound.GetSound(), component.Owner, AudioHelpers.WithVariation(0.2f));
+            }
         }
     }
 
@@ -123,7 +128,10 @@ public sealed class SharedBlockingSystem : EntitySystem
 
         component.IsBlocking = true;
 
-        var msgUser = Loc.GetString("action-popup-blocking");
+        var shieldName = Name(item);
+
+        var msgUser = Loc.GetString("action-popup-blocking-user", ("shield", shieldName));
+        var msgOther = Loc.GetString("action-popup-blocking-other", ("blockerName", Name(user)), ("shield", shieldName));
 
         var shape = new PhysShapeCircle();
         shape.Radius = component.BlockRadius;
@@ -145,6 +153,7 @@ public sealed class SharedBlockingSystem : EntitySystem
             _actionsSystem.SetToggled(component.BlockingToggleAction, true);
             _transformSystem.AnchorEntity(xform);
             _popupSystem.PopupEntity(msgUser, user, Filter.Entities(user));
+            _popupSystem.PopupEntity(msgOther, user, Filter.Pvs(user).RemoveWhereAttachedEntity(e => e == user));
         }
 
         return true;
@@ -165,7 +174,10 @@ public sealed class SharedBlockingSystem : EntitySystem
 
         var xform = Transform(user);
 
-        var msgUser = Loc.GetString("action-popup-blocking-disabling");
+        var shieldName = Name(item);
+
+        var msgUser = Loc.GetString("action-popup-blocking-disabling-user", ("shield", shieldName));
+        var msgOther = Loc.GetString("action-popup-blocking-disabling-other", ("blockerName", Name(user)), ("shield", shieldName));
 
         //If the component blocking toggle isn't null, grab the users SharedBlockingUserComponent and PhysicsComponent
         //then toggle the action to false, unanchor the user, remove the hard fixture
@@ -178,6 +190,7 @@ public sealed class SharedBlockingSystem : EntitySystem
             _fixtureSystem.DestroyFixture(physicsComponent, component.BlockFixtureID);
             physicsComponent.BodyType = blockingUserComponent.OriginalBodyType;
             _popupSystem.PopupEntity(msgUser, user, Filter.Entities(user));
+            _popupSystem.PopupEntity(msgOther, user, Filter.Pvs(user).RemoveWhereAttachedEntity(e => e == user));
         }
 
         return true;
