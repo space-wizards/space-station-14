@@ -1,3 +1,5 @@
+# Rockets
+
 - type: entity
   id: CartridgeRocket
   name: PG-7VL grenade
@@ -7,6 +9,8 @@
   - type: Tag
     tags:
       - CartridgeRocket
+  - type: Item
+    size: 5
   - type: CartridgeAmmo
     proto: BulletRocket
     deleteOnSpawn: true
@@ -16,17 +20,46 @@
     state: rpg
 
 - type: entity
-  id: GrenadeBaton
-  name: baton grenade
+  id: CartridgeRocketSlow
+  name: PG-7VL grenade "Snail-Rocket"
+  parent: BaseItem
+  description: A 1.5 warhead designed for the RPG-7 launcher. It's unusually slow.
+  components:
+    - type: Tag
+      tags:
+        - CartridgeRocket
+    - type: Item
+      size: 5
+    - type: CartridgeAmmo
+      proto: BulletWeakRocket
+      deleteOnSpawn: true
+    - type: Sprite
+      sprite: Objects/Weapons/Guns/Ammunition/Explosives/explosives.rsi
+      state: frag
+
+# Grenades
+
+- type: entity
+  id: BaseGrenade
+  name: base grenade
   parent: BaseItem
   components:
   - type: Tag
     tags:
-      - Grenade
+    - Grenade
+  - type: Item
+    size: 5
+  - type: Sprite
+    netsync: false
+
+- type: entity
+  id: GrenadeBaton
+  name: baton grenade
+  parent: BaseGrenade
+  components:
   - type: CartridgeAmmo
     proto: BulletGrenadeBaton
   - type: Sprite
-    netsync: false
     sprite: Objects/Weapons/Guns/Ammunition/Explosives/explosives.rsi
     layers:
     - state: baton
@@ -39,15 +72,11 @@
 - type: entity
   id: GrenadeBlast
   name: blast grenade
-  parent: BaseItem
+  parent: BaseGrenade
   components:
-  - type: Tag
-    tags:
-      - Grenade
   - type: CartridgeAmmo
     proto: BulletGrenadeBlast
   - type: Sprite
-    netsync: false
     sprite: Objects/Weapons/Guns/Ammunition/Explosives/explosives.rsi
     layers:
     - state: blast
@@ -62,13 +91,9 @@
   name: flash grenade
   parent: BaseItem
   components:
-  - type: Tag
-    tags:
-      - Grenade
   - type: CartridgeAmmo
     proto: BulletGrenadeFlash
   - type: Sprite
-    netsync: false
     sprite: Objects/Weapons/Guns/Ammunition/Explosives/explosives.rsi
     layers:
     - state: flash
@@ -83,13 +108,9 @@
   name: frag grenade
   parent: BaseItem
   components:
-  - type: Tag
-    tags:
-      - Grenade
   - type: CartridgeAmmo
     proto: BulletGrenadeFrag
   - type: Sprite
-    netsync: false
     sprite: Objects/Weapons/Guns/Ammunition/Explosives/explosives.rsi
     layers:
     - state: frag
@@ -98,20 +119,3 @@
   - type: SpentAmmoVisuals
     state: frag
     suffix: false
-
-- type: entity
-  id: CartridgeRocketSlow
-  name: PG-7VL grenade "Snail-Rocket"
-  parent: BaseItem
-  description: A 1.5 warhead designed for the RPG-7 launcher. It's unusually slow.
-  components:
-  - type: Tag
-    tags:
-      - CartridgeRocket
-  - type: CartridgeAmmo
-    proto: BulletWeakRocket
-    deleteOnSpawn: true
-  - type: Sprite
-    netsync: false
-    sprite: Objects/Weapons/Guns/Ammunition/Explosives/explosives.rsi
-    state: frag
