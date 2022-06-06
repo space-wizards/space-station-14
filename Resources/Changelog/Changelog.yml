@@ -1,10 +1,4 @@
 Entries:
-- author: ElectroJr
-  changes:
-  - {message: Reverted explosion refactor test merge. Will probably return eventually.,
-    type: Remove}
-  id: 1166
-  time: '2022-03-05T17:02:34.0000000+00:00'
 - author: ninruB
   changes:
   - {message: 'a recipe for white and dark tiles in the crafting menu, sorta like
@@ -3004,3 +2998,9 @@ Entries:
     type: Remove}
   id: 1665
   time: '2022-06-06T08:34:07.0000000+00:00'
+- author: Rane
+  changes:
+  - {message: Added mute toxin., type: Add}
+  - {message: Silencer now mutes you., type: Add}
+  id: 1666
+  time: '2022-06-06T08:35:25.0000000+00:00'
