@@ -1,39 +1,4 @@
 Entries:
-- author: Peptide90
-  changes:
-  - {message: Onion and Oat seeds are now in the seed vendor and seed crate., type: Add}
-  - {message: Seed vendor inventory reduced from 10 seeds to 5., type: Tweak}
-  id: 1161
-  time: '2022-03-03T10:42:49.0000000+00:00'
-- author: router
-  changes:
-  - {message: Added money to the captain's locker. Capitalism is now REAL., type: Add}
-  id: 1162
-  time: '2022-03-04T05:03:12.0000000+00:00'
-- author: ElectroJr
-  changes:
-  - {message: 'Fixed a bug that was preventing clothing from being hidden inside of
-      secret stashes (e.g., potted plants)', type: Fix}
-  id: 1163
-  time: '2022-03-04T06:54:27.0000000+00:00'
-- author: Peptide90
-  changes:
-  - {message: Added secure cargo and external windoors. Fixed glass EVA airlock sprite.,
-    type: Add}
-  id: 1164
-  time: '2022-03-04T06:56:40.0000000+00:00'
-- author: ElectroJr
-  changes:
-  - {message: 'Fixed a bug causing alerts (health, hunger, etc) to sometimes disappear.
-      Please report if it continues happening.', type: Fix}
-  id: 1165
-  time: '2022-03-04T10:52:51.0000000+00:00'
-- author: ElectroJr
-  changes:
-  - {message: Reverted explosion refactor test merge. Will probably return eventually.,
-    type: Remove}
-  id: 1166
-  time: '2022-03-05T17:02:34.0000000+00:00'
 - author: ninruB
   changes:
   - {message: 'a recipe for white and dark tiles in the crafting menu, sorta like
@@ -3003,3 +2968,39 @@ Entries:
   - {message: Fix NPCs steering around puddles, type: Fix}
   id: 1660
   time: '2022-06-05T09:42:03.0000000+00:00'
+- author: ElectroJr
+  changes:
+  - {message: Added a mapping/editor keybinding that starts placing the same type
+      of entity or tile that the mouse is currently hovering over. Defaults to `P`,
+    type: Add}
+  id: 1661
+  time: '2022-06-05T22:58:20.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Anchoring now shows popups, type: Add}
+  id: 1662
+  time: '2022-06-05T23:04:40.0000000+00:00'
+- author: WilliamECrew
+  changes:
+  - {message: 'When dumping contents out of a bag, items will now be spread out randomly
+      instead of all being dumped into the same exact spot.', type: Tweak}
+  id: 1663
+  time: '2022-06-06T00:34:44.0000000+00:00'
+- author: Rane
+  changes:
+  - {message: Stethoscopes have been ported over from Nyanotrasen. Wear one on your
+      neck and right click on someone else to listen to their chest., type: Add}
+  id: 1664
+  time: '2022-06-06T01:37:29.0000000+00:00'
+- author: youarereadingthis
+  changes:
+  - {message: Removed the shuttle powering crate from the cargo ordering console.,
+    type: Remove}
+  id: 1665
+  time: '2022-06-06T08:34:07.0000000+00:00'
+- author: Rane
+  changes:
+  - {message: Added mute toxin., type: Add}
+  - {message: Silencer now mutes you., type: Add}
+  id: 1666
+  time: '2022-06-06T08:35:25.0000000+00:00'
