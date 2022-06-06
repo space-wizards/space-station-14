@@ -7,16 +7,10 @@ using Robust.Client.UserInterface.Controls;
 
 namespace Content.Client.Cargo;
 
-public sealed class CargoShuttleConsoleBoundUserInterface : CargoBoundUserInterface
+public sealed class CargoConsoleBoundUserInterface : BoundUserInterface
 {
     [ViewVariables]
-    private CargoShuttleConsoleMenu? _menu;
-
-    [ViewVariables]
     private CargoConsoleOrderMenu? _orderMenu;
-
-    [ViewVariables]
-    public CargoOrderDatabaseComponent? Orders { get; private set; }
 
     [ViewVariables]
     public bool RequestOnly { get; private set; }
@@ -35,7 +29,7 @@ public sealed class CargoShuttleConsoleBoundUserInterface : CargoBoundUserInterf
 
     private CargoProductPrototype? _product;
 
-    public CargoShuttleConsoleBoundUserInterface(ClientUserInterfaceComponent owner, object uiKey) : base(owner, uiKey)
+    public CargoConsoleBoundUserInterface(ClientUserInterfaceComponent owner, object uiKey) : base(owner, uiKey)
     {
     }
 
@@ -59,7 +53,7 @@ public sealed class CargoShuttleConsoleBoundUserInterface : CargoBoundUserInterf
 
         _menu.CallShuttleButton.OnPressed += (_) =>
         {
-            SendMessage(new SharedCargoConsoleComponent.CargoConsoleShuttleMessage());
+            SendMessage(new CargoConsoleShuttleMessage());
         };
         _menu.OnItemSelected += (args) =>
         {
@@ -91,11 +85,7 @@ public sealed class CargoShuttleConsoleBoundUserInterface : CargoBoundUserInterf
 
         if (state is not CargoConsoleInterfaceState cState)
             return;
-        if (RequestOnly != cState.RequestOnly)
-        {
-            RequestOnly = cState.RequestOnly;
-            _menu?.UpdateRequestOnly();
-        }
+
         BankId = cState.BankId;
         BankName = cState.BankName;
         BankBalance = cState.BankBalance;
@@ -127,7 +117,7 @@ public sealed class CargoShuttleConsoleBoundUserInterface : CargoBoundUserInterf
             return false;
         }
 
-        SendMessage(new SharedCargoConsoleComponent.CargoConsoleAddOrderMessage(
+        SendMessage(new CargoConsoleAddOrderMessage(
             _orderMenu?.Requester.Text ?? "",
             _orderMenu?.Reason.Text ?? "",
             _product?.ID ?? "",
@@ -141,7 +131,7 @@ public sealed class CargoShuttleConsoleBoundUserInterface : CargoBoundUserInterf
         if (args.Button.Parent?.Parent is not CargoOrderRow row || row.Order == null)
             return;
 
-        SendMessage(new SharedCargoConsoleComponent.CargoConsoleRemoveOrderMessage(row.Order.OrderNumber));
+        SendMessage(new CargoConsoleRemoveOrderMessage(row.Order.OrderNumber));
     }
 
     private void ApproveOrder(BaseButton.ButtonEventArgs args)
@@ -152,7 +142,7 @@ public sealed class CargoShuttleConsoleBoundUserInterface : CargoBoundUserInterf
         if (ShuttleCapacity.CurrentCapacity == ShuttleCapacity.MaxCapacity)
             return;
 
-        SendMessage(new SharedCargoConsoleComponent.CargoConsoleApproveOrderMessage(row.Order.OrderNumber));
+        SendMessage(new CargoConsoleApproveOrderMessage(row.Order.OrderNumber));
         _menu?.UpdateCargoCapacity();
     }
 }

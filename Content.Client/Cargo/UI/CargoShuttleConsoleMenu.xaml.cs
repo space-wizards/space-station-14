@@ -16,7 +16,7 @@ namespace Content.Client.Cargo.UI
         [Dependency]
         private IPrototypeManager _prototypeManager = default!;
 
-        public CargoShuttleConsoleBoundUserInterface Owner { get; private set; }
+        public CargoConsoleBoundUserInterface Owner { get; private set; }
 
         public event Action<ButtonEventArgs>? OnItemSelected;
         public event Action<ButtonEventArgs>? OnOrderApproved;
@@ -25,7 +25,7 @@ namespace Content.Client.Cargo.UI
         private readonly List<string> _categoryStrings = new();
         private string? _category;
 
-        public CargoShuttleConsoleMenu(CargoShuttleConsoleBoundUserInterface owner)
+        public CargoShuttleConsoleMenu(CargoConsoleBoundUserInterface owner)
         {
             RobustXamlLoader.Load(this);
             IoCManager.InjectDependencies(this);

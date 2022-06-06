@@ -153,6 +153,7 @@ namespace Content.Server.Cargo.Systems
                 return;
             }
 
+            // Cap orders so someone can't spam thousands.
             var orderAmount = Math.Min(capacity - amount, order.Amount);
 
             if (orderAmount != order.Amount)
