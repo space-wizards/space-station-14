@@ -18088,7 +18088,7 @@ entities:
     parent: 852
     type: Transform
 - uid: 975
-  type: WeaponLaserRifleCog
+  type: WeaponLaserCarbine
   components:
   - pos: -14.448555,19.788729
     parent: 852
