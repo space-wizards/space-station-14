@@ -1,7 +1,7 @@
 ent-BaseMagazineLightRifle = magazine (.30 rifle)
     .desc = { ent-BaseItem.desc }
     .suffix = { "" }
-ent-MagazineBoxLightRifle = L6 SAW magazine box (.30 rifle)
+ent-MagazineLightRifleBox = L6 SAW magazine box (.30 rifle)
     .desc = { ent-BaseMagazineLightRifle.desc }
     .suffix = { "" }
 ent-MagazineLightRifle = magazine (.30 rifle)
