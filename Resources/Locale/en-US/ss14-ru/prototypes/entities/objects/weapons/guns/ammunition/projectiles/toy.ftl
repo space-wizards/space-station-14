@@ -1,4 +1,4 @@
-ent-BulletDonkSoftBase = foam dart
+ent-BaseBulletDonkSoft = foam dart
     .desc = { ent-BaseItem.desc }
     .suffix = { "" }
 ent-BulletDonkSoft = foam dart

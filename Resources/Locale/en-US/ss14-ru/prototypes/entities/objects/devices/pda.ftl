@@ -103,3 +103,6 @@ ent-ClearPDA = clear PDA
 ent-SyndiPDA = syndicate PDA
     .desc = Ok, time to be a productive member of- oh cool I'm a bad guy time to kill people!
     .suffix = { "" }
+ent-ERTLeaderPDA = ERT PDA
+    .desc = Red for firepower.
+    .suffix = { "" }

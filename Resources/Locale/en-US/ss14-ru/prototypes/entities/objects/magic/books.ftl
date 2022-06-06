@@ -1,0 +1,15 @@
+ent-BaseSpellbook = spellbook
+    .desc = { ent-BaseItem.desc }
+    .suffix = { "" }
+ent-SpawnSpellbook = spawn spellbook
+    .desc = { ent-BaseSpellbook.desc }
+    .suffix = { "" }
+ent-ForceWallSpellbook = force wall spellbook
+    .desc = { ent-BaseSpellbook.desc }
+    .suffix = { "" }
+ent-BlinkBook = blink spellbook
+    .desc = { ent-BaseSpellbook.desc }
+    .suffix = { "" }
+ent-KnockSpellbook = knock spellbook
+    .desc = { ent-BaseSpellbook.desc }
+    .suffix = { "" }

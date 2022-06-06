@@ -1,15 +1,3 @@
-ent-RedLaser = красный лазер
-    .desc = { "" }
-    .suffix = { "" }
-ent-RedMediumLaser = средний красный лазер
-    .desc = { "" }
-    .suffix = { "" }
-ent-Pulse = импульс
-    .desc = { "" }
-    .suffix = { "" }
-ent-RedHeavyLaser = мощный красный лазер
-    .desc = { "" }
-    .suffix = { "" }
-ent-XrayLaser = рентгеновский лазер
+ent-HitscanEffect = { "" }
     .desc = { "" }
     .suffix = { "" }

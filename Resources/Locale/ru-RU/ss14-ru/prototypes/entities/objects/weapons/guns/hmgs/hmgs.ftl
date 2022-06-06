@@ -1,6 +1,6 @@
-ent-HMGBase = heavy machinegun
+ent-BaseWeaponHeavyMachineGun = BaseWeaponHeavyMachineGun
     .desc = Spray and pray
     .suffix = { "" }
-ent-Minigun = minigun
+ent-WeaponMinigun = minigun
     .desc = Vzzzzzt! Rahrahrahrah! Vrrrrr!
     .suffix = { "" }

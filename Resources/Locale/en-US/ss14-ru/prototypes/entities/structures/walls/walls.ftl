@@ -70,3 +70,6 @@ ent-WallVaultSandstone = sandstone vault wall
 ent-WallInvisible = Invisible Wall
     .desc = { "" }
     .suffix = { "" }
+ent-WallForce = Force Wall
+    .desc = { "" }
+    .suffix = { "" }

@@ -1,4 +1,4 @@
-ent-BulletDonkSoftBase = поролоновый дротик
+ent-BaseBulletDonkSoft = поролоновый дротик
     .desc = { ent-BaseItem.desc }
     .suffix = { "" }
 ent-BulletDonkSoft = поролоновый дротик
