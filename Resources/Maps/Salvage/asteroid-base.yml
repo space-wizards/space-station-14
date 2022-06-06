@@ -1676,7 +1676,7 @@ entities:
     parent: 0
     type: Transform
 - uid: 217
-  type: WeaponPistolMandella
+  type: WeaponPistolCobra
   components:
   - parent: 207
     type: Transform
