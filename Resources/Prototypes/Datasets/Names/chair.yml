@@ -1,4 +1,5 @@
 - type: dataset
-  id: chr
+  id: chair
   values:
   - chr
+  - chair
