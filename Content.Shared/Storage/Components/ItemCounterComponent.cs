@@ -16,7 +16,7 @@ namespace Content.Shared.Storage.Components
     ///      tags: [Cigarette]
     /// </code>
     [RegisterComponent]
-    [Access(typeof(SharedItemCounterSystem))]
+    [Friend(typeof(SharedItemCounterSystem))]
     public sealed class ItemCounterComponent : Component
     {
         [DataField("count", required: true)]

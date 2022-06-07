@@ -5,7 +5,7 @@ using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototy
 
 namespace Content.Shared.Construction.Components
 {
-    [RegisterComponent, Access(typeof(SharedAnchorableSystem))]
+    [RegisterComponent, Friend(typeof(SharedAnchorableSystem))]
     public sealed class AnchorableComponent : Component
     {
         [DataField("tool", customTypeSerializer: typeof(PrototypeIdSerializer<ToolQualityPrototype>))]

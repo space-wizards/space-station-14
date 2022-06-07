@@ -3,7 +3,7 @@ using Content.Shared.Damage;
 
 namespace Content.Server.Body.Components
 {
-    [RegisterComponent, Access(typeof(RespiratorSystem))]
+    [RegisterComponent, Friend(typeof(RespiratorSystem))]
     public sealed class RespiratorComponent : Component
     {
         /// <summary>

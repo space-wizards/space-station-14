@@ -9,7 +9,7 @@ namespace Content.Server.Plants.Components
     ///     Gently rustle after each interaction with plant.
     /// </summary>
     [RegisterComponent]
-    [Access(typeof(PottedPlantHideSystem))]
+    [Friend(typeof(PottedPlantHideSystem))]
     public sealed class PottedPlantHideComponent : Component
     {
         [DataField("rustleSound")]

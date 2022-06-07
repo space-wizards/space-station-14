@@ -3,7 +3,7 @@ using Content.Shared.Damage;
 
 namespace Content.Server.Damage.Components
 {
-    [Access(typeof(DamageOtherOnHitSystem))]
+    [Friend(typeof(DamageOtherOnHitSystem))]
     [RegisterComponent]
     public sealed class DamageOtherOnHitComponent : Component
     {

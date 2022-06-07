@@ -8,7 +8,7 @@ namespace Content.Server.Solar.Components
     ///     It generates power from the sun based on coverage.
     /// </summary>
     [RegisterComponent]
-    [Access(typeof(PowerSolarSystem))]
+    [Friend(typeof(PowerSolarSystem))]
     public sealed class SolarPanelComponent : Component
     {
         /// <summary>

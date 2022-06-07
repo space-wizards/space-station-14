@@ -6,7 +6,7 @@ namespace Content.Server.Strip
 {
     [RegisterComponent]
     [ComponentReference(typeof(SharedStrippableComponent))]
-    [Access(typeof(StrippableSystem))]
+    [Friend(typeof(StrippableSystem))]
     public sealed class StrippableComponent : SharedStrippableComponent
     {
         [ViewVariables]

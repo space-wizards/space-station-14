@@ -4,7 +4,7 @@ using Content.Shared.FixedPoint;
 namespace Content.Server.Fluids.Components
 {
     [RegisterComponent]
-    [Access(typeof(EvaporationSystem))]
+    [Friend(typeof(EvaporationSystem))]
     public sealed class EvaporationComponent : Component
     {
         /// <summary>

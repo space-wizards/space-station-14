@@ -16,7 +16,7 @@ namespace Content.Shared.Damage
     /// </remarks>
     [RegisterComponent]
     [NetworkedComponent()]
-    [Access(typeof(DamageableSystem))]
+    [Friend(typeof(DamageableSystem))]
     public sealed class DamageableComponent : Component
     {
         /// <summary>
@@ -24,7 +24,6 @@ namespace Content.Shared.Damage
         ///     If null, all damage types will be supported.
         /// </summary>
         [DataField("damageContainer", customTypeSerializer: typeof(PrototypeIdSerializer<DamageContainerPrototype>))]
-        [Access(typeof(DamageableSystem), Other = AccessPermissions.ReadExecute)] // FIXME Friends
         public string? DamageContainerID;
 
         /// <summary>
@@ -47,7 +46,6 @@ namespace Content.Shared.Damage
         /// </remarks>
         [DataField("damage")]
         [ViewVariables(VVAccess.ReadWrite)]
-        [Access(typeof(DamageableSystem), Other = AccessPermissions.ReadExecute)] // FIXME Friends
         public DamageSpecifier Damage = new();
 
         /// <summary>
@@ -62,9 +60,7 @@ namespace Content.Shared.Damage
         /// <summary>
         ///     The sum of all damages in the DamageableComponent.
         /// </summary>
-        [ViewVariables]
-        [Access(typeof(DamageableSystem), Other = AccessPermissions.ReadExecute)] // FIXME Friends
-        public FixedPoint2 TotalDamage;
+        [ViewVariables] public FixedPoint2 TotalDamage;
 
         // Really these shouldn't be here. OnExplosion() and RadiationAct() should be handled elsewhere.
         [ViewVariables]

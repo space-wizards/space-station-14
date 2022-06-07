@@ -4,7 +4,7 @@ using Content.Shared.Gravity;
 namespace Content.Server.Gravity
 {
     [RegisterComponent]
-    [Access(typeof(GravityGeneratorSystem))]
+    [Friend(typeof(GravityGeneratorSystem))]
     public sealed class GravityGeneratorComponent : SharedGravityGeneratorComponent
     {
         // 1% charge per second.

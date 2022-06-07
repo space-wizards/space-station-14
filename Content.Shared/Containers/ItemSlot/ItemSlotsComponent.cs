@@ -13,7 +13,7 @@ namespace Content.Shared.Containers.ItemSlots
     ///     insert/eject interactions.
     /// </summary>
     [RegisterComponent]
-    [Access(typeof(ItemSlotsSystem))]
+    [Friend(typeof(ItemSlotsSystem))]
     public sealed class ItemSlotsComponent : Component
     {
         /// <summary>
@@ -60,7 +60,7 @@ namespace Content.Shared.Containers.ItemSlots
     ///     insert/eject sounds.
     /// </summary>
     [DataDefinition]
-    [Access(typeof(ItemSlotsSystem))]
+    [Friend(typeof(ItemSlotsSystem))]
     public sealed class ItemSlot
     {
         [DataField("whitelist")]
@@ -86,7 +86,6 @@ namespace Content.Shared.Containers.ItemSlots
         ///     of the currently held or currently inserted entity instead.
         /// </remarks>
         [DataField("name", readOnly: true)]
-        [Access(typeof(ItemSlotsSystem), Other = AccessPermissions.ReadWriteExecute)] // FIXME Friends
         public string Name = string.Empty;
 
         /// <summary>
@@ -98,7 +97,6 @@ namespace Content.Shared.Containers.ItemSlots
         ///     when mapping.
         /// </remarks>
         [DataField("startingItem", readOnly: true, customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
-        [Access(typeof(ItemSlotsSystem), Other = AccessPermissions.ReadWriteExecute)] // FIXME Friends
         public string? StartingItem;
 
         /// <summary>

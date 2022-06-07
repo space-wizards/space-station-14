@@ -3,7 +3,7 @@ using Robust.Shared.Serialization;
 
 namespace Content.Shared.Nutrition.Components
 {
-    [Access(typeof(SharedCreamPieSystem))]
+    [Friend(typeof(SharedCreamPieSystem))]
     [RegisterComponent]
     public sealed class CreamPiedComponent : Component
     {

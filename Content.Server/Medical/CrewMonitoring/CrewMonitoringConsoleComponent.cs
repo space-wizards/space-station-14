@@ -3,7 +3,7 @@ using Content.Shared.Medical.SuitSensor;
 namespace Content.Server.Medical.CrewMonitoring
 {
     [RegisterComponent]
-    [Access(typeof(CrewMonitoringConsoleSystem))]
+    [Friend(typeof(CrewMonitoringConsoleSystem))]
     public sealed class CrewMonitoringConsoleComponent : Component
     {
         /// <summary>

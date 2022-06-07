@@ -1,7 +1,7 @@
 ﻿namespace Content.Shared.Pulling.Components
 {
     [RegisterComponent]
-    [Access(typeof(SharedPullingStateManagementSystem))]
+    [Friend(typeof(SharedPullingStateManagementSystem))]
     public sealed class SharedPullerComponent : Component
     {
         // Before changing how this is updated, please see SharedPullerSystem.RefreshMovementSpeed

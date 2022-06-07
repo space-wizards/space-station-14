@@ -5,7 +5,7 @@ using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototy
 
 namespace Content.Server.Explosion.Components
 {
-    [RegisterComponent, Access(typeof(ClusterGrenadeSystem))]
+    [RegisterComponent, Friend(typeof(ClusterGrenadeSystem))]
     public sealed class ClusterGrenadeComponent : Component
     {
         public Container GrenadesContainer = default!;

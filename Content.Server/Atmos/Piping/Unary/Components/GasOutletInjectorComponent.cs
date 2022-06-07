@@ -4,7 +4,7 @@ using Content.Shared.Atmos;
 namespace Content.Server.Atmos.Piping.Unary.Components
 {
     [RegisterComponent]
-    [Access(typeof(GasOutletInjectorSystem))]
+    [Friend(typeof(GasOutletInjectorSystem))]
     public sealed class GasOutletInjectorComponent : Component
     {
 

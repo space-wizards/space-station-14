@@ -2,5 +2,5 @@ using Content.Shared.Explosion;
 
 namespace Content.Client.Explosion;
 
-[RegisterComponent, Access(typeof(TriggerSystem))]
+[RegisterComponent, Friend(typeof(TriggerSystem))]
 public sealed class TriggerOnProximityComponent : SharedTriggerOnProximityComponent {}

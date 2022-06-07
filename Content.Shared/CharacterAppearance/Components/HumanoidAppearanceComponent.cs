@@ -7,7 +7,7 @@ using Robust.Shared.Serialization;
 namespace Content.Shared.CharacterAppearance.Components
 {
     [RegisterComponent]
-    [Access(typeof(SharedHumanoidAppearanceSystem), typeof(SharedMagicMirrorComponent))]
+    [Friend(typeof(SharedHumanoidAppearanceSystem), typeof(SharedMagicMirrorComponent))]
     [NetworkedComponent]
     public sealed class HumanoidAppearanceComponent : Component
     {

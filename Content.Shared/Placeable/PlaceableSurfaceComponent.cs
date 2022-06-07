@@ -4,7 +4,7 @@ using Robust.Shared.Serialization;
 namespace Content.Shared.Placeable
 {
     [RegisterComponent, NetworkedComponent]
-    [Access(typeof(PlaceableSurfaceSystem))]
+    [Friend(typeof(PlaceableSurfaceSystem))]
     public sealed class PlaceableSurfaceComponent : Component
     {
         [ViewVariables]

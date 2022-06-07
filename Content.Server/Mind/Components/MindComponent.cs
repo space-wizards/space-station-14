@@ -3,14 +3,13 @@ namespace Content.Server.Mind.Components
     /// <summary>
     ///     Stores a <see cref="Server.Mind.Mind"/> on a mob.
     /// </summary>
-    [RegisterComponent, Access(typeof(MindSystem))]
+    [RegisterComponent, Friend(typeof(MindSystem))]
     public sealed class MindComponent : Component
     {
         /// <summary>
         ///     The mind controlling this mob. Can be null.
         /// </summary>
         [ViewVariables]
-        [Access(typeof(MindSystem), Other = AccessPermissions.ReadWriteExecute)] // FIXME Friends
         public Mind? Mind { get; set; }
 
         /// <summary>

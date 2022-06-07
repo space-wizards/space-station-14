@@ -12,7 +12,7 @@ namespace Content.Server.Explosion.Components;
 ///     significantly reduce the damage, but shouldn't be silly overpowered in regular combat.
 /// </remarks>
 [RegisterComponent]
-[Access(typeof(ExplosionSystem))]
+[Friend(typeof(ExplosionSystem))]
 public sealed class ExplosionResistanceComponent : Component
 {
     /// <summary>

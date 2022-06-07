@@ -7,7 +7,7 @@ namespace Content.Shared.Pulling.Components
 {
     // Before you try to add another type than SharedPullingStateManagementSystem, consider the can of worms you may be opening!
     [NetworkedComponent()]
-    [Access(typeof(SharedPullingStateManagementSystem))]
+    [Friend(typeof(SharedPullingStateManagementSystem))]
     [RegisterComponent]
     public sealed class SharedPullableComponent : Component
     {
@@ -26,7 +26,6 @@ namespace Content.Shared.Pulling.Components
 
         public bool BeingPulled => Puller != null;
 
-        [Access(typeof(SharedPullingStateManagementSystem), Other = AccessPermissions.ReadExecute)] // FIXME Friends
         public EntityCoordinates? MovingTo { get; set; }
 
         public override ComponentState GetComponentState()
