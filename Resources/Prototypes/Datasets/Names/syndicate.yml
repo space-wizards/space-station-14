@@ -1,5 +1,5 @@
 - type: dataset
-  id: syndicate_names_normal
+  id: SyndicateNamesNormal
   values:
   - Alfa
   - Bravo
@@ -28,7 +28,7 @@
   - Zulu
 
 - type: dataset
-  id: syndicate_names_elite
+  id: SyndicateNamesElite
   values:
   - Alpha
   - Beta
