@@ -26,7 +26,7 @@ namespace Content.Server.Jobs
                 var component = (Component) factory.GetComponent(name);
                 component.Owner = mob;
 
-                var copied = (Component?) serializationManager.Copy(data, component, null);
+                var copied = (Component?) serializationManager.Copy(data.Component, component, null);
                 if (copied != null)
                     entityManager.AddComponent(mob, copied);
             }

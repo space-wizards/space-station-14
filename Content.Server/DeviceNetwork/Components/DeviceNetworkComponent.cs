@@ -5,7 +5,7 @@ using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototy
 namespace Content.Server.DeviceNetwork.Components
 {
     [RegisterComponent]
-    [Friend(typeof(DeviceNetworkSystem), typeof(DeviceNet))]
+    [Access(typeof(DeviceNetworkSystem), typeof(DeviceNet))]
     public sealed class DeviceNetworkComponent : Component
     {
         public enum DeviceNetIdDefaults
