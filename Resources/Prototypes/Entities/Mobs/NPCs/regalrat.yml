@@ -1,0 +1,82 @@
+- type: entity
+  name: Rat King
+  id: MobRatKing
+  parent: SimpleMobBase
+  description: The finest ruler of the rodent kingdom.
+  components:
+  - type: CombatMode
+  - type: MovementSpeedModifier
+    baseWalkSpeed : 3.75
+    baseSprintSpeed : 3.75
+  - type: UtilityAI
+    behaviorSets:
+    - Idle
+    - UnarmedAttackHostiles
+  - type: Reactive
+    groups:
+      Flammable: [Touch]
+      Extinguish: [Touch]
+  - type: AiFactionTag
+    factions:
+    - SimpleHostile
+  - type: Hands
+  - type: Sprite
+    drawdepth: Mobs
+    sprite: Mobs/Animals/regalrat.rsi
+    layers:
+    - map: ["enum.DamageStateVisualLayers.Base"]
+      state: regalrat
+  - type: Physics
+    bodyType: Dynamic
+  - type: Fixtures
+    fixtures:
+    - shape:
+        !type:PhysShapeCircle
+        radius: 0.25
+      mass: 120
+      mask:
+      - MobMask
+      layer:
+      - MobLayer
+  - type: MobState
+    thresholds:
+      0: !type:NormalMobState {}
+      150: !type:DeadMobState {}
+  - type: MeleeWeapon
+    range: 1
+    arcwidth: 0
+    arc: claw
+    damage:
+      types:
+        Slash: 12
+        Piercing: 8 
+  - type: Appearance
+    visuals:
+    - type: DamageStateVisualizer
+      rotate: true
+      normal: regalrat
+      dead: dead
+  - type: Puller
+  - type: GhostTakeoverAvailable
+    makeSentient: true
+    name: Rat King
+    description: You are the Rat King, scavenge food in order to produce rat minions to do your bidding.
+    rules: You are an antagonist, scavenge, attack, and grow your hoarde!
+  - type: Tag
+    tags:
+      - CannotSuicide
+      - DoorBumpOpener
+      - FootstepSound
+  - type: NoSlip
+  - type: Access #he's so baller he gets his own access. NT got nothing on him
+    tags:
+    - Maintenance
+    - Service
+  - type: SlowOnDamage
+    speedModifierThresholds:
+      50: 0.9
+      75: 0.8
+      100: 0.7
+  - type: MobPrice
+    price: 2500 # rat wealth
+

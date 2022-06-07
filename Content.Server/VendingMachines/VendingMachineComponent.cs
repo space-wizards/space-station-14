@@ -20,6 +20,17 @@ namespace Content.Server.VendingMachines
 
         public bool Broken;
 
+        [DataField("ejectItemsOnHit")]
+        public bool EjectItemsOnHit = false;
+
+        [DataField("chanceToDispenseOnHit")]
+        public float DispenseChanceOnHit = 0.5f;
+
+        [DataField("ejectAllOnDestroy")]
+        public bool EjectAllOnDestroy = false;
+
+        public float PercentToEjectOnDestroy = 0.10f;
+
         /// <summary>
         /// When true, will forcefully throw any object it dispenses
         /// </summary>

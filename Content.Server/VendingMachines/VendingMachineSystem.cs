@@ -4,6 +4,7 @@ using Content.Server.Power.Components;
 using Content.Server.Power.EntitySystems;
 using Content.Shared.Access.Components;
 using Content.Shared.Access.Systems;
+using Content.Shared.Damage;
 using Content.Shared.Destructible;
 using Content.Shared.Emag.Systems;
 using Content.Shared.Throwing;
@@ -34,6 +35,13 @@ namespace Content.Server.VendingMachines
             SubscribeLocalEvent<VendingMachineComponent, VendingMachineEjectMessage>(OnInventoryEjectMessage);
             SubscribeLocalEvent<VendingMachineComponent, BreakageEventArgs>(OnBreak);
             SubscribeLocalEvent<VendingMachineComponent, GotEmaggedEvent>(OnEmagged);
+            SubscribeLocalEvent<VendingMachineComponent, DamageChangedEvent>(OnDamageChanged);
+        }
+
+        private void OnDamageChanged(EntityUid uid, VendingMachineComponent component, DamageChangedEvent args)
+        {
+            if (component.EjectItemsOnHit && _random.Prob(component.DispenseChanceOnHit))
+                EjectRandom(uid, true, component);
         }
 
         private void OnComponentInit(EntityUid uid, VendingMachineComponent component, ComponentInit args)
@@ -79,6 +87,27 @@ namespace Content.Server.VendingMachines
 
         private void OnBreak(EntityUid uid, VendingMachineComponent vendComponent, BreakageEventArgs eventArgs)
         {
+            if (vendComponent.EjectAllOnDestroy)
+            {
+                int totalItems = 0;
+                foreach (var entry in vendComponent.Inventory)
+                {
+                    totalItems += (int) entry.Amount;
+                }
+
+                var availableItems = vendComponent.AllInventory.Where(x => x.Amount > 0).ToList();
+                if (availableItems.Count <= 0) return;
+
+                //this doesn't clean up the entities in the machine, but the machine is broken anyways
+                for (var i = 0; i < totalItems * vendComponent.PercentToEjectOnDestroy; i++)
+                {
+                    var ent = EntityManager.SpawnEntity(_random.Pick(availableItems).ID, Transform(uid).Coordinates);
+                    float range = vendComponent.NonLimitedEjectRange;
+                    Vector2 direction = new Vector2(_random.NextFloat(-range, range), _random.NextFloat(-range, range));
+                    _throwingSystem.TryThrow(ent, direction, vendComponent.NonLimitedEjectForce);
+                }
+            }
+
             vendComponent.Broken = true;
             TryUpdateVisualState(uid, VendingMachineVisualState.Broken, vendComponent);
         }
