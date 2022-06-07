@@ -36,10 +36,14 @@ namespace Content.Client.Eye.Blinding
                 return;
             if (blindComp.Sources <= 0)
             {
-                _lightManager.Enabled = true; // yeah this could behave weird in sandbox mode, you can just aghost or remove the component though.
+                if (blindComp.LightSetup) // Do we need to reset this?
+                {
+                    _lightManager.Enabled = true;
+                    blindComp.LightSetup = false;
+                }
                 return;
             }
-
+            blindComp.LightSetup = true; // Ok we touched the lights
             _lightManager.Enabled = false;
 
             _greyscaleShader?.SetParameter("SCREEN_TEXTURE", ScreenTexture);
