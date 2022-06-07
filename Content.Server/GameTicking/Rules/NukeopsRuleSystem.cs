@@ -132,6 +132,8 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
         var commanderGear = _prototypeManager.Index<StartingGearPrototype>("SyndicateCommanderGearFull");
         var starterGear = _prototypeManager.Index<StartingGearPrototype>("SyndicateOperativeGearFull");
         var medicGear = _prototypeManager.Index<StartingGearPrototype>("SyndicateOperativeMedicFull");
+        var syndicateNamesElite = new List<string>(_prototypeManager.Index<DatasetPrototype>("SyndicateNamesElite").Values);
+        var syndicateNamesNormal = new List<string>(_prototypeManager.Index<DatasetPrototype>("SyndicateNamesNormal").Values);
 
         var spawns = new List<EntityCoordinates>();
 
@@ -158,15 +160,15 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
             switch (i)
             {
                 case 0:
-                    name = $"Commander " + _random.Pick(_prototypeManager.Index<DatasetPrototype>("syndicate_names_elite").Values);
+                    name = $"Commander " + _random.PickAndTake<string>(syndicateNamesElite);
                     gear = commanderGear;
                     break;
                 case 1:
-                    name = $"Agent " + _random.Pick(_prototypeManager.Index<DatasetPrototype>("syndicate_names_elite").Values);
+                    name = $"Agent " + _random.PickAndTake<string>(syndicateNamesNormal);
                     gear = medicGear;
                     break;
                 default:
-                    name = $"Operator " + _random.Pick(_prototypeManager.Index<DatasetPrototype>("syndicate_names_normal").Values); ;
+                    name = $"Operator " + _random.PickAndTake<string>(syndicateNamesNormal);
                     gear = starterGear;
                     break;
             }
