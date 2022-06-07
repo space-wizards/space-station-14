@@ -8,6 +8,7 @@ using Robust.Client.Graphics;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.XAML;
 using Robust.Shared.Map;
+using Robust.Shared.Physics;
 
 namespace Content.Client.Radar;
 
@@ -83,6 +84,7 @@ public sealed class RadarControl : Control
             return;
         }
 
+
         var gridLines = new Color(0.08f, 0.08f, 0.08f);
         var gridLinesRadial = 8;
         var gridLinesEquatorial = (int) Math.Floor(_radarRange / GridLinesDistance);
@@ -99,16 +101,31 @@ public sealed class RadarControl : Control
             handle.DrawLine((point, point) - aExtent, (point, point) + aExtent, gridLines);
         }
 
-        handle.DrawLine((point, point) + new Vector2(8, 8), (point, point) - new Vector2(0, 8), Color.Yellow);
-        handle.DrawLine((point, point) + new Vector2(-8, 8), (point, point) - new Vector2(0, 8), Color.Yellow);
-
         var xform = _entManager.GetComponent<TransformComponent>(_entity.Value);
         var mapPosition = xform.MapPosition;
         var matrix = xform.InvWorldMatrix;
 
+        // Draw our grid in detail
+        var ourGridId = xform.GridID;
+        var ourGridFixtures = _entManager.GetComponent<FixturesComponent>(ourGridId);
+        var ourGridBody = _entManager.GetComponent<PhysicsComponent>(ourGridId);
+
+        foreach (var (_, fixture) in ourGridFixtures.Fixtures)
+        {
+            var bounds = fixture.Shape.LocalBounds.Translated(-ourGridBody.LocalCenter);
+            var (bottom, top) = (bounds.Bottom, bounds.Top);
+            bounds.Bottom = -bottom;
+            bounds.Top = -top;
+
+            handle.DrawRect(new UIBox2(bounds.TopLeft * MinimapScale + point, bounds.BottomRight * MinimapScale + point), Color.Yellow, false);
+        }
+
+        // Draw other grids... differently
         foreach (var grid in _mapManager.FindGridsIntersecting(mapPosition.MapId,
                      new Box2(mapPosition.Position - _radarRange, mapPosition.Position + _radarRange)))
         {
+            if (grid.Index == ourGridId) continue;
+
             var gridXform = _entManager.GetComponent<TransformComponent>(grid.GridEntityId);
             var gridBody = _entManager.GetComponent<PhysicsComponent>(grid.GridEntityId);
 

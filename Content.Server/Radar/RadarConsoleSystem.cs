@@ -5,7 +5,7 @@ using Robust.Shared.Map;
 
 namespace Content.Server.Radar;
 
-public sealed class RadarConsoleSystem : EntitySystem
+public sealed class RadarConsoleSystem : SharedRadarConsoleSystem
 {
     [Dependency] private readonly IMapManager _mapManager = default!;
 
@@ -26,7 +26,7 @@ public sealed class RadarConsoleSystem : EntitySystem
         UpdateState(component);
     }
 
-    private void UpdateState(RadarConsoleComponent component)
+    protected override void UpdateState(RadarConsoleComponent component)
     {
         // TODO: send null if no power or unanchored.
         var radarState = new RadarConsoleBoundInterfaceState(component.Range, component.Owner);
