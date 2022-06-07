@@ -64,9 +64,6 @@
     name: Rat King
     description: You are the Rat King, scavenge food in order to produce rat minions to do your bidding.
     rules: You are an antagonist, scavenge, attack, and grow your hoarde!
-  - type: Body
-    template: AnimalTemplate
-    preset: AnimalPreset
   - type: Tag
     tags:
       - CannotSuicide
@@ -94,6 +91,10 @@
     tags:
     - Maintenance
     - Service
+  - type: Butcherable
+    spawned:
+    - id: ClothingHeadHatFancyCrown #how did that get there?
+      amount: 1
   - type: DiseaseCarrier
     noSymptoms: true
   - type: SlowOnDamage

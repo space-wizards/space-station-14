@@ -1,6 +1,5 @@
 using System.Linq;
 using Content.Server.StationEvents.Components;
-using Content.Shared.Sound;
 using Robust.Shared.Random;
 
 namespace Content.Server.StationEvents.Events;
@@ -37,13 +36,13 @@ public sealed class MouseMigration : StationEvent
         var spawnLocations = _entityManager.EntityQuery<VentCritterSpawnLocationComponent>().ToList();
         _random.Shuffle(spawnLocations);
 
-        var spawnAmount = _random.Next(15, 20); // A small colony of critters.
-        for (int i = 0; i < spawnAmount; i++)
+        var spawnAmount = _random.Next(7, 15); // A small colony of critters.
+        for (int i = 0; i <= spawnAmount || i <= spawnLocations.Count; i++)
         {
             var location = _random.Pick(spawnLocations);
             var coords = _entityManager.GetComponent<TransformComponent>(location.Owner);
             var spawnChoice = _random.Pick(SpawnedPrototypeChoices);
-            if (_random.Prob(0.05f) || i == 0) //small chance for multiple
+            if (_random.Prob(0.02f) || i == 0) //small chance for multiple
                 spawnChoice = "MobRatKing";
             _entityManager.SpawnEntity(spawnChoice, coords.Coordinates);
         }
