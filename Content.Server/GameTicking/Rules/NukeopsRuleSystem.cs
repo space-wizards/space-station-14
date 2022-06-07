@@ -148,12 +148,15 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
                     else
                     {
                         nukeOp = _random.PickAndTake(prefList);
+                        everyone.Remove(nukeOp);
                         Logger.InfoS("preset", "Insufficient preferred nukeop commanders, picking at random from regular op list.");
                     }
                 }
                 else
                 {
                     nukeOp = _random.PickAndTake(cmdrPrefList);
+                    everyone.Remove(nukeOp);
+                    prefList.Remove(nukeOp);
                     Logger.InfoS("preset", "Selected a preferred nukeop commander.");
                 }
             }
