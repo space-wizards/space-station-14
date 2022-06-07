@@ -1,10 +1,4 @@
 Entries:
-- author: ninruB
-  changes:
-  - {message: 'a recipe for white and dark tiles in the crafting menu, sorta like
-      the steel tile recipe.', type: Add}
-  id: 1167
-  time: '2022-03-05T20:47:19.0000000+00:00'
 - author: Radrark
   changes:
   - {message: Improved the movement of shuttles., type: Tweak}
@@ -3004,3 +2998,8 @@ Entries:
   - {message: Silencer now mutes you., type: Add}
   id: 1666
   time: '2022-06-06T08:35:25.0000000+00:00'
+- author: Veritius
+  changes:
+  - {message: You can now opt in to being a nukie., type: Fix}
+  id: 1667
+  time: '2022-06-07T02:43:54.0000000+00:00'
