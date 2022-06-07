@@ -11,6 +11,8 @@
     size: 24
   - type: AmmoCounter
   - type: Gun
+    minAngle: 2
+    maxAngle: 8
     fireRate: 8
     selectedMode: FullAuto
     availableModes:
@@ -58,12 +60,11 @@
     sprite: Objects/Weapons/Guns/SMGs/atreides.rsi
   - type: Gun
     fireRate: 10
+  - type: MagazineVisuals
+    magState: mag
+    steps: 1
+    zeroVisible: true
   - type: Appearance
-    visuals:
-    - type: MagVisualizer
-      magState: mag
-      steps: 1
-      zeroVisible: true
 
 - type: entity
   name: C-20r sub machine gun
@@ -84,12 +85,11 @@
   - type: Gun
   - type: ChamberMagazineAmmoProvider
     # autoEject: true # Do not set this until the PVS prediction issue is resolved
+  - type: MagazineVisuals
+    magState: mag
+    steps: 1
+    zeroVisible: true
   - type: Appearance
-    visuals:
-    - type: MagVisualizer
-      magState: mag
-      steps: 1
-      zeroVisible: true
 
 - type: entity
   name: Drozd
@@ -132,12 +132,11 @@
     containers:
       gun_magazine: !type:ContainerSlot
       gun_chamber: !type:ContainerSlot
+  - type: MagazineVisuals
+    magState: mag
+    steps: 1
+    zeroVisible: true
   - type: Appearance
-    visuals:
-    - type: MagVisualizer
-      magState: mag
-      steps: 1
-      zeroVisible: true
 
 - type: entity
   name: WT550
@@ -182,12 +181,11 @@
         whitelist:
           tags:
             - CartridgePistol
+  - type: MagazineVisuals
+    magState: mag
+    steps: 6
+    zeroVisible: true
   - type: Appearance
-    visuals:
-      - type: MagVisualizer
-        magState: mag
-        steps: 6
-        zeroVisible: true
 
 - type: entity
   name: Drozd

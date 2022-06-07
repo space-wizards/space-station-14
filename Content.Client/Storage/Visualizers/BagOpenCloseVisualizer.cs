@@ -1,4 +1,4 @@
-﻿using Content.Shared.Storage.Components;
+using Content.Shared.Storage.Components;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
 using Robust.Shared.GameObjects;
@@ -47,7 +47,7 @@ namespace Content.Client.Storage.Visualizers
             var entities = IoCManager.Resolve<IEntityManager>();
 
             if (_openIcon == null ||
-                !entities.TryGetComponent(component.Owner, out SpriteComponent spriteComponent))
+                !entities.TryGetComponent(component.Owner, out SpriteComponent? spriteComponent))
                 return;
 
             if (!component.TryGetData<SharedBagState>(SharedBagOpenVisuals.BagState, out var bagState))
