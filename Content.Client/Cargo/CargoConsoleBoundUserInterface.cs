@@ -19,8 +19,6 @@ namespace Content.Client.Cargo
         [ViewVariables]
         private CargoConsoleOrderMenu? _orderMenu;
 
-        public EntityUid? Station { get; private set; }
-
         [ViewVariables]
         public string? AccountName { get; private set; }
 
@@ -32,8 +30,6 @@ namespace Content.Client.Cargo
 
         [ViewVariables]
         public int OrderCount { get; private set; }
-
-        public List<CargoOrderData> Orders { get; private set; } = new();
 
         /// <summary>
         /// Currently selected product
@@ -101,26 +97,6 @@ namespace Content.Client.Cargo
             Populate(cState.Orders);
             _menu?.UpdateCargoCapacity(OrderCount, OrderCapacity);
             _menu?.UpdateBankData(AccountName, BankBalance);
-        }
-
-        private IEnumerable<CargoOrderData> GetOrders(StationCargoOrderDatabaseComponent? component)
-        {
-            if (component == null) return Enumerable.Empty<CargoOrderData>();
-
-            return component.Orders.Values;
-        }
-
-        // TODO: Move to the shared system
-        private int GetOrderCount(StationCargoOrderDatabaseComponent component)
-        {
-            var count = 0;
-
-            foreach (var (_, order) in component.Orders)
-            {
-                count += order.Amount;
-            }
-
-            return count;
         }
 
         protected override void Dispose(bool disposing)
