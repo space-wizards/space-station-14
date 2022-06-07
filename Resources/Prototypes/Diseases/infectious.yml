@@ -186,7 +186,7 @@
       probability: 0.05
       damage:
         types:
-          Toxin: 2
+          Poison: 2
   cures:
     - !type:DiseaseBedrestCure
       maxLength: 120
