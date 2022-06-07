@@ -1,4 +1,4 @@
-﻿using System.Linq;
+using System.Linq;
 using Content.Server.Chat.Managers;
 using Content.Server.Nuke;
 using Content.Server.RoundEnd;
@@ -7,6 +7,7 @@ using Content.Server.Station.Components;
 using Content.Server.Station.Systems;
 using Content.Shared.CCVar;
 using Content.Shared.MobState;
+using Content.Shared.Dataset;
 using Content.Shared.Roles;
 using Robust.Server.Maps;
 using Robust.Server.Player;
@@ -157,15 +158,15 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
             switch (i)
             {
                 case 0:
-                    name = $"Commander";
+                    name = $"Commander " + _random.Pick(_prototypeManager.Index<DatasetPrototype>("syndicate_names_elite").Values);
                     gear = commanderGear;
                     break;
                 case 1:
-                    name = $"Operator #{i}";
+                    name = $"Agent " + _random.Pick(_prototypeManager.Index<DatasetPrototype>("syndicate_names_elite").Values);
                     gear = medicGear;
                     break;
                 default:
-                    name = $"Operator #{i}";
+                    name = $"Operator " + _random.Pick(_prototypeManager.Index<DatasetPrototype>("syndicate_names_normal").Values); ;
                     gear = starterGear;
                     break;
             }
