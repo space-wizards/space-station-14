@@ -9,6 +9,7 @@ using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.XAML;
 using Robust.Shared.Map;
 using Robust.Shared.Physics;
+using Robust.Shared.Physics.Collision.Shapes;
 
 namespace Content.Client.Radar;
 
@@ -116,6 +117,7 @@ public sealed class RadarControl : Control
         var invertedPosition = xform.Coordinates.Position - offset;
         invertedPosition.Y = -invertedPosition.Y;
 
+        // Draw our grid; use non-filled boxes so it doesn't look awful.
         foreach (var (_, fixture) in ourGridFixtures.Fixtures)
         {
             var bounds = fixture.Shape.LocalBounds.Translated(-offset);
@@ -135,22 +137,29 @@ public sealed class RadarControl : Control
         {
             if (grid.Index == ourGridId) continue;
 
-            var gridXform = _entManager.GetComponent<TransformComponent>(grid.GridEntityId);
             var gridBody = _entManager.GetComponent<PhysicsComponent>(grid.GridEntityId);
-
-            var gridPos = matrix.Transform(gridXform.WorldMatrix.Transform(gridBody.LocalCenter));
-
-            var minimapPos = gridPos * MinimapScale;
-            minimapPos.Y = -minimapPos.Y;
-
             if (gridBody.Mass < 10f) continue;
 
-            var radius = MathF.Log2(gridBody.Mass) * 3 * MinimapScale;
+            var gridXform = _entManager.GetComponent<TransformComponent>(grid.GridEntityId);
+            var gridFixtures = _entManager.GetComponent<FixturesComponent>(grid.GridEntityId);
+            // TODO: Do a matrix multiple here
+            var gridMatrix = gridXform.WorldMatrix;
 
-            if (minimapPos.Length + radius > ScaledMinimapRadius)
-                continue;
+            foreach (var (_, fixture) in gridFixtures.Fixtures)
+            {
+                var poly = (PolygonShape) fixture.Shape;
 
-            handle.DrawCircle(minimapPos + point, radius, Color.Red, false);
+                for (var i = 0; i < poly.VertexCount; i++)
+                {
+                    var j = (i + 1) % poly.VertexCount;
+                    var start = matrix.Transform(gridMatrix.Transform(poly.Vertices[i]));
+                    var end = matrix.Transform(gridMatrix.Transform(poly.Vertices[j]));
+                    start.Y = -start.Y;
+                    end.Y = -end.Y;
+
+                    handle.DrawLine(start * MinimapScale + point, end * MinimapScale + point, Color.Aqua);
+                }
+            }
         }
     }
 }
