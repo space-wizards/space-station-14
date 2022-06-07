@@ -1,9 +1,4 @@
 Entries:
-- author: Radrark
-  changes:
-  - {message: Improved the movement of shuttles., type: Tweak}
-  id: 1168
-  time: '2022-03-07T05:03:53.0000000+00:00'
 - author: ElectroJr
   changes:
   - {message: Fixed electrocution not dealing damage., type: Fix}
@@ -3003,3 +2998,8 @@ Entries:
   - {message: You can now opt in to being a nukie., type: Fix}
   id: 1667
   time: '2022-06-07T02:43:54.0000000+00:00'
+- author: Pancake
+  changes:
+  - {message: The Syndicate have gotten more creative with their names., type: Tweak}
+  id: 1668
+  time: '2022-06-07T03:41:22.0000000+00:00'
