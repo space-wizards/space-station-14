@@ -165,7 +165,7 @@ namespace Content.Shared.Containers.ItemSlots
             if (args.Handled)
                 return;
 
-            if (!EntityManager.TryGetComponent(args.User, out SharedHandsComponent hands))
+            if (!EntityManager.TryGetComponent(args.User, out SharedHandsComponent? hands))
                 return;
 
             foreach (var slot in itemSlots.Slots.Values)

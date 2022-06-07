@@ -13,6 +13,7 @@ using Robust.Shared.Audio;
 using Robust.Shared.Input;
 using Robust.Shared.Map;
 using Robust.Shared.Player;
+using Robust.Shared.Timing;
 using Robust.Shared.Utility;
 using SharedGunSystem = Content.Shared.Weapons.Ranged.Systems.SharedGunSystem;
 
@@ -27,6 +28,34 @@ public sealed partial class GunSystem : SharedGunSystem
     [Dependency] private readonly EffectSystem _effects = default!;
     [Dependency] private readonly InputSystem _inputSystem = default!;
 
+    public bool SpreadOverlay
+    {
+        get => _spreadOverlay;
+        set
+        {
+            if (_spreadOverlay == value) return;
+            _spreadOverlay = value;
+            var overlayManager = IoCManager.Resolve<IOverlayManager>();
+
+            if (_spreadOverlay)
+            {
+                overlayManager.AddOverlay(new GunSpreadOverlay(
+                    EntityManager,
+                    IoCManager.Resolve<IEyeManager>(),
+                    IoCManager.Resolve<IGameTiming>(),
+                    IoCManager.Resolve<IInputManager>(),
+                    IoCManager.Resolve<IPlayerManager>(),
+                    this));
+            }
+            else
+            {
+                overlayManager.RemoveOverlay<GunSpreadOverlay>();
+            }
+        }
+    }
+
+    private bool _spreadOverlay;
+
     public override void Initialize()
     {
         base.Initialize();
@@ -36,6 +65,7 @@ public sealed partial class GunSystem : SharedGunSystem
         // Plays animated effects on the client.
         SubscribeNetworkEvent<HitscanEvent>(OnHitscan);
 
+        InitializeMagazineVisuals();
         InitializeSpentAmmo();
     }
 
@@ -143,7 +173,7 @@ public sealed partial class GunSystem : SharedGunSystem
                     {
                         SetCartridgeSpent(cartridge, true);
                         MuzzleFlash(gun.Owner, cartridge, user);
-
+                        PlaySound(gun.Owner, gun.SoundGunshot?.GetSound(Random, ProtoManager), user);
                         // TODO: Can't predict entity deletions.
                         //if (cartridge.DeleteOnSpawn)
                         //    Del(cartridge.Owner);
@@ -159,10 +189,14 @@ public sealed partial class GunSystem : SharedGunSystem
                     break;
                 case AmmoComponent newAmmo:
                     MuzzleFlash(gun.Owner, newAmmo, user);
+                    PlaySound(gun.Owner, gun.SoundGunshot?.GetSound(Random, ProtoManager), user);
                     if (newAmmo.Owner.IsClientSide())
                         Del(newAmmo.Owner);
                     else
                         RemComp<AmmoComponent>(newAmmo.Owner);
+                    break;
+                case HitscanPrototype:
+                    PlaySound(gun.Owner, gun.SoundGunshot?.GetSound(Random, ProtoManager), user);
                     break;
             }
         }

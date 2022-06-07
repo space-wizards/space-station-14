@@ -33919,7 +33919,7 @@ entities:
         ents: []
     type: ContainerContainer
 - uid: 2240
-  type: BoxLatex
+  type: BoxLatexGloves
   components:
   - pos: -8.579043,21.712063
     parent: 82
@@ -33935,7 +33935,7 @@ entities:
     parent: 82
     type: Transform
 - uid: 2242
-  type: BoxSterile
+  type: BoxSterileMask
   components:
   - pos: -8.422793,21.805813
     parent: 82
@@ -50403,7 +50403,7 @@ entities:
         ents: []
     type: ContainerContainer
 - uid: 4157
-  type: BoxSterile
+  type: BoxSterileMask
   components:
   - pos: 63.398205,4.583559
     parent: 82
@@ -50413,7 +50413,7 @@ entities:
         ents: []
     type: ContainerContainer
 - uid: 4158
-  type: BoxLatex
+  type: BoxLatexGloves
   components:
   - pos: 63.64821,4.646059
     parent: 82
@@ -51487,7 +51487,7 @@ entities:
     parent: 82
     type: Transform
 - uid: 4285
-  type: BoxLatex
+  type: BoxLatexGloves
   components:
   - pos: 69.62836,-3.3707879
     parent: 82
@@ -52379,7 +52379,7 @@ entities:
         ents: []
     type: ContainerContainer
 - uid: 4399
-  type: BoxSterile
+  type: BoxSterileMask
   components:
   - pos: 75.50042,0.6692133
     parent: 82
@@ -52446,7 +52446,7 @@ entities:
     parent: 82
     type: Transform
 - uid: 4408
-  type: BoxLatex
+  type: BoxLatexGloves
   components:
   - pos: 75.40667,0.5754633
     parent: 82
@@ -57678,7 +57678,7 @@ entities:
     parent: 82
     type: Transform
 - uid: 4910
-  type: BoxLatex
+  type: BoxLatexGloves
   components:
   - pos: 87.512794,7.6604137
     parent: 82
@@ -57688,7 +57688,7 @@ entities:
         ents: []
     type: ContainerContainer
 - uid: 4911
-  type: BoxSterile
+  type: BoxSterileMask
   components:
   - pos: 87.325294,7.6291637
     parent: 82
@@ -58592,7 +58592,7 @@ entities:
         ents: []
     type: ContainerContainer
 - uid: 5023
-  type: BoxLatex
+  type: BoxLatexGloves
   components:
   - pos: 44.63998,-0.41317558
     parent: 82
@@ -59377,7 +59377,7 @@ entities:
   - solution: bucket
     type: Drink
 - uid: 5119
-  type: BoxLatex
+  type: BoxLatexGloves
   components:
   - pos: 32.504967,-11.409534
     parent: 82
@@ -59423,7 +59423,7 @@ entities:
     parent: 82
     type: Transform
 - uid: 5126
-  type: BoxSterile
+  type: BoxSterileMask
   components:
   - pos: 35.629967,-10.378284
     parent: 82
