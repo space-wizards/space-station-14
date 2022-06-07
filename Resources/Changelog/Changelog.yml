@@ -1,242 +1,4 @@
 Entries:
-- author: moony
-  changes:
-  - {message: 'Three new events have been introduced that will hopefully increase
-      round variation (and, very rarely, result in a station composed entirely of
-      clowns)', type: Add}
-  - {message: Makes HoP and Quartermaster considered heads by the game., type: Tweak}
-  id: 1126
-  time: '2022-02-26T05:10:09.0000000+00:00'
-- author: HoofedEar
-  changes:
-  - {message: Musicians now have their own PDA and Theatre access!, type: Add}
-  id: 1127
-  time: '2022-02-26T05:11:04.0000000+00:00'
-- author: HoofedEar
-  changes:
-  - {message: Flashbangs no longer jumpscare the entire station., type: Fix}
-  id: 1128
-  time: '2022-02-26T05:11:10.0000000+00:00'
-- author: Fishfish458
-  changes:
-  - {message: Added handheld GPS devices which can be found in the autolathe, type: Add}
-  id: 1129
-  time: '2022-02-26T05:59:20.0000000+00:00'
-- author: Zymem
-  changes:
-  - {message: Drinks should now have sprites, type: Fix}
-  id: 1130
-  time: '2022-02-27T01:26:45.0000000+00:00'
-- author: ElectroJr
-  changes:
-  - {message: 'Fixed two action bugs: ghost boo not working, and powered-flashlight
-      toggling affecting all flashlights.', type: Fix}
-  id: 1131
-  time: '2022-02-27T03:02:39.0000000+00:00'
-- author: moony
-  changes:
-  - {message: Introduced two more events., type: Add}
-  id: 1132
-  time: '2022-02-27T03:04:01.0000000+00:00'
-- author: moony
-  changes:
-  - {message: 'Power grid check no longer shuts off all power instantly, and instead
-      does so over about 30 seconds.', type: Tweak}
-  id: 1133
-  time: '2022-02-27T07:01:39.0000000+00:00'
-- author: Peptide90
-  changes:
-  - {message: 'Adds a bunch of new carpets, grass and shuttle flooring for mappers.
-      Keep an eye out for updates to your favorite maps!', type: Add}
-  id: 1134
-  time: '2022-02-27T07:01:48.0000000+00:00'
-- author: Peptide90
-  changes:
-  - {message: Added the fire helmet! Heat resistant goodness for your head that looks
-      cool AND has a light!, type: Add}
-  id: 1135
-  time: '2022-02-27T07:02:07.0000000+00:00'
-- author: Peptide90
-  changes:
-  - {message: 'Pillar V5.1 - bug fixes and reinforced more walls, departments, offices
-      and substations.', type: Add}
-  id: 1136
-  time: '2022-02-27T07:02:15.0000000+00:00'
-- author: Peptide90
-  changes:
-  - {message: 'All electronics, machine and computer boards now have updated names,
-      descriptions and in some cases sprites.', type: Fix}
-  - {message: SMES construction is now fixed., type: Fix}
-  - {message: There's now computer boards for all computers on the station...some
-      still don't do anything., type: Add}
-  id: 1137
-  time: '2022-02-27T13:46:27.0000000+00:00'
-- author: Zumorica
-  changes:
-  - {message: Suspicion no longer shows up in gamemode votes., type: Remove}
-  id: 1138
-  time: '2022-02-27T18:03:08.0000000+00:00'
-- author: Peptide90
-  changes:
-  - {message: 'Added boxes of trashbags, flares and all magazine types.', type: Add}
-  id: 1139
-  time: '2022-02-27T19:56:27.0000000+00:00'
-- author: Zyme
-  changes:
-  - {message: Monkeys now understand the concept of hats, type: Add}
-  id: 1140
-  time: '2022-02-27T19:56:36.0000000+00:00'
-- author: ElectroJr
-  changes:
-  - {message: 'The /mapping command syntax has changed. The filename now comes before
-      the Id, and a new blank map is created by providing no arguments.', type: Tweak}
-  id: 1141
-  time: '2022-02-28T01:21:15.0000000+00:00'
-- author: DogZeroX
-  changes:
-  - {message: Animal's blood now variate depending on their size, type: Tweak}
-  id: 1142
-  time: '2022-02-28T01:23:45.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - {message: Lowered ghost movement speed., type: Tweak}
-  id: 1143
-  time: '2022-02-28T15:14:17.0000000+00:00'
-- author: Emisse
-  changes:
-  - {message: 'A brand new station, moose station.', type: Add}
-  id: 1144
-  time: '2022-03-01T02:16:46.0000000+00:00'
-- author: ElectroJr
-  changes:
-  - {message: 'Fixed being able to push some entities (computers, canisters, plants)
-      through walls and doors.', type: Fix}
-  id: 1145
-  time: '2022-03-01T02:18:20.0000000+00:00'
-- author: mirrorcult
-  changes:
-  - {message: Added a new medium-sized salvage., type: Add}
-  id: 1146
-  time: '2022-03-01T02:18:31.0000000+00:00'
-- author: Zumorica
-  changes:
-  - {message: Map votes during the pre-round period actually affect the chosen map
-      on round start., type: Tweak}
-  id: 1147
-  time: '2022-03-01T02:20:21.0000000+00:00'
-- author: mirrorcult
-  changes:
-  - {message: Gauze can now be crafted using cloth., type: Add}
-  - {message: 'You can now gain cloth by butchering clothing items like jumpsuits,
-      shoes, or cloaks.', type: Tweak}
-  - {message: 'Fiber reagent is now gained by grinding cloth, not the individual clothing
-      items.', type: Tweak}
-  id: 1148
-  time: '2022-03-01T03:38:39.0000000+00:00'
-- author: HoofedEar
-  changes:
-  - {message: Certain station announcements have been given a splash of color in chat.,
-    type: Add}
-  id: 1149
-  time: '2022-03-01T13:21:29.0000000+00:00'
-- author: ElectroJr
-  changes:
-  - {message: 'Added some more basic mapping tools. Entity, tile, and decal placement
-      can now be saved to the action-toolbar by clicking on empty slots while placing
-      entities. `/loadmapacts` loads some presets mapping actions.', type: Add}
-  id: 1150
-  time: '2022-03-01T23:12:34.0000000+00:00'
-- author: Mith-randalf
-  changes:
-  - {message: Removed fun (by which I mean the centcomm outfit bundle from the traitor
-      uplink)!, type: Remove}
-  id: 1151
-  time: '2022-03-02T01:46:55.0000000+00:00'
-- author: Emisse
-  changes:
-  - {message: updated Saltern to Saltern Special Edition HD Enhanced Edition, type: Add}
-  id: 1152
-  time: '2022-03-02T13:16:42.0000000+00:00'
-- author: ElectroJr
-  changes:
-  - {message: Fixed a bug preventing the RCD from constructing entities on some empty
-      tiles., type: Fix}
-  id: 1153
-  time: '2022-03-02T13:38:19.0000000+00:00'
-- author: wrexbe
-  changes:
-  - {message: Glass tables now have different mass limits., type: Add}
-  id: 1154
-  time: '2022-03-02T14:07:49.0000000+00:00'
-- author: DogZeroX
-  changes:
-  - {message: Xenos no longer need oxygen and are space-proof., type: Tweak}
-  - {message: The odds of winning against a Xeno in a fist-fight have decreased considerably.,
-    type: Tweak}
-  id: 1155
-  time: '2022-03-02T14:08:19.0000000+00:00'
-- author: notafet
-  changes:
-  - {message: Items on conveyor belts now round corners correctly., type: Add}
-  id: 1156
-  time: '2022-03-02T22:32:33.0000000+00:00'
-- author: DogZeroX
-  changes:
-  - {message: 'Ratvar, Rouny, and Space Lizard have joined the plushie gang, find
-      them on your closest plushie crate or toy spawners!', type: Add}
-  id: 1157
-  time: '2022-03-03T00:26:18.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - {message: Pushing objects has been disabled. Pulling is still okay., type: Tweak}
-  id: 1158
-  time: '2022-03-03T02:32:03.0000000+00:00'
-- author: HoofedEar
-  changes:
-  - {message: Cargo door remote now works on Salvage access airlocks., type: Fix}
-  - {message: Security door remote now works on Armory access airlocks., type: Fix}
-  id: 1159
-  time: '2022-03-03T09:18:15.0000000+00:00'
-- author: router
-  changes:
-  - {message: Added capitalism. The captain spawns with some money now., type: Add}
-  id: 1160
-  time: '2022-03-03T10:11:35.0000000+00:00'
-- author: Peptide90
-  changes:
-  - {message: Onion and Oat seeds are now in the seed vendor and seed crate., type: Add}
-  - {message: Seed vendor inventory reduced from 10 seeds to 5., type: Tweak}
-  id: 1161
-  time: '2022-03-03T10:42:49.0000000+00:00'
-- author: router
-  changes:
-  - {message: Added money to the captain's locker. Capitalism is now REAL., type: Add}
-  id: 1162
-  time: '2022-03-04T05:03:12.0000000+00:00'
-- author: ElectroJr
-  changes:
-  - {message: 'Fixed a bug that was preventing clothing from being hidden inside of
-      secret stashes (e.g., potted plants)', type: Fix}
-  id: 1163
-  time: '2022-03-04T06:54:27.0000000+00:00'
-- author: Peptide90
-  changes:
-  - {message: Added secure cargo and external windoors. Fixed glass EVA airlock sprite.,
-    type: Add}
-  id: 1164
-  time: '2022-03-04T06:56:40.0000000+00:00'
-- author: ElectroJr
-  changes:
-  - {message: 'Fixed a bug causing alerts (health, hunger, etc) to sometimes disappear.
-      Please report if it continues happening.', type: Fix}
-  id: 1165
-  time: '2022-03-04T10:52:51.0000000+00:00'
-- author: ElectroJr
-  changes:
-  - {message: Reverted explosion refactor test merge. Will probably return eventually.,
-    type: Remove}
-  id: 1166
-  time: '2022-03-05T17:02:34.0000000+00:00'
 - author: ninruB
   changes:
   - {message: 'a recipe for white and dark tiles in the crafting menu, sorta like
@@ -2995,3 +2757,250 @@ Entries:
   - {message: Examine text for anchors., type: Add}
   id: 1625
   time: '2022-05-30T08:55:54.0000000+00:00'
+- author: vulppine
+  changes:
+  - {message: NanoTrasen has finally installed surveillance camera systems into our
+      stations. Be aware that you are now being watched onboard our fine stations!,
+    type: Add}
+  id: 1626
+  time: '2022-05-31T08:44:57.0000000+00:00'
+- author: Peptide90
+  changes:
+  - {message: 'Added the handheld health analyzer to the regular, advanced and combat
+      first aid kits.', type: Add}
+  id: 1627
+  time: '2022-06-01T03:17:38.0000000+00:00'
+- author: themias
+  changes:
+  - {message: Fixed an issue where mouse ghosts would be tethered to who ate them,
+    type: Fix}
+  id: 1628
+  time: '2022-06-01T07:39:50.0000000+00:00'
+- author: mirrorcult
+  changes:
+  - {message: 'Added modular landmines, which can be constructed using a payload and
+      are triggered by stepping on them.', type: Add}
+  - {message: Mines and grenades will now be triggered if an explosion damages them.,
+    type: Tweak}
+  id: 1629
+  time: '2022-06-01T08:39:06.0000000+00:00'
+- author: Peptide90
+  changes:
+  - {message: 'Added 6 new floor tiles ported from Goon! Look out for clown carpet,
+      boxing ring, gym mat, office carpet, metal diamond and alternate blue arcade.',
+    type: Add}
+  id: 1630
+  time: '2022-06-02T02:10:59.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Fix infinite gunshot sounds from spent cartridges., type: Fix}
+  - {message: Fix cap cartridge visualizer., type: Fix}
+  - {message: Fix empty gunshot sounds (no more wehnigun log spam)., type: Fix}
+  id: 1631
+  time: '2022-06-02T09:13:13.0000000+00:00'
+- author: ike709
+  changes:
+  - {message: Added an audio setting to disable playing admin music, type: Add}
+  id: 1632
+  time: '2022-06-02T13:41:20.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: SMGs have had their maximum spread angle increased (i.e. accuracy reduced).,
+    type: Tweak}
+  id: 1633
+  time: '2022-06-02T19:46:46.0000000+00:00'
+- author: Peptide90
+  changes:
+  - {message: Post Lights are now slightly smaller and sit further up in a tile.,
+    type: Tweak}
+  id: 1634
+  time: '2022-06-02T20:12:23.0000000+00:00'
+- author: DogZeroX
+  changes:
+  - {message: Nukes will now explode in 120 seconds instead of 180., type: Tweak}
+  id: 1635
+  time: '2022-06-02T20:53:32.0000000+00:00'
+- author: Peptide90
+  changes:
+  - {message: Gas miners are now capped at 300 kPa instead of 4500 kPa. Less pressure
+      bombing., type: Tweak}
+  id: 1636
+  time: '2022-06-02T21:35:32.0000000+00:00'
+- author: TimrodDX
+  changes:
+  - {message: Delta Station now has security cameras. Lots of them., type: Add}
+  - {message: Delta Station now has more decals., type: Tweak}
+  id: 1637
+  time: '2022-06-03T05:32:57.0000000+00:00'
+- author: moony
+  changes:
+  - {message: 'Removed dwarves, due to their lack of content. If someone steps up
+      in the next few weeks to make them better we''ll see about their reintroduction.',
+    type: Remove}
+  id: 1638
+  time: '2022-06-03T07:31:35.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Bojevic firerate dropped from 3 to 2, type: Tweak}
+  - {message: Shotgun pellet damage from 13 to 8 (3 shotting players instead of 2
+      shot assuming all pellets hit)., type: Tweak}
+  - {message: Spread changed from 10 degrees to 15., type: Tweak}
+  id: 1639
+  time: '2022-06-03T07:57:39.0000000+00:00'
+- author: Peptide90
+  changes:
+  - {message: Emitters have been removed from cargo ordering. You now have to research
+      a machine board for them and build them from machine frames., type: Tweak}
+  id: 1640
+  time: '2022-06-03T09:22:58.0000000+00:00'
+- author: mirrorcult
+  changes:
+  - {message: Sandbox is now votable again as long as there are less than 5 players
+      in the server., type: Tweak}
+  id: 1641
+  time: '2022-06-03T10:04:53.0000000+00:00'
+- author: ElectroJr
+  changes:
+  - {message: Fixed a bug that caused gas quantity to not be conserved when anchoring
+      and unanchoring atmos devices., type: Fix}
+  id: 1642
+  time: '2022-06-03T10:09:52.0000000+00:00'
+- author: Peptide90
+  changes:
+  - {message: 'APCs, generators and wallmount substations are no longer nuke proof.',
+    type: Tweak}
+  id: 1643
+  time: '2022-06-03T10:10:18.0000000+00:00'
+- author: mirrorcult
+  changes:
+  - {message: Sprays will now properly apply effects to entities again., type: Tweak}
+  id: 1644
+  time: '2022-06-03T10:25:44.0000000+00:00'
+- author: Peptide90
+  changes:
+  - {message: 'The Emergency Response Team have arrived! Look out for ghost roles
+      becoming available when centcom advises they''re coming. (Not currently call-able,
+      ask an admin via communications console to centcom).', type: Add}
+  id: 1645
+  time: '2022-06-03T10:48:29.0000000+00:00'
+- author: Veritius
+  changes:
+  - {message: Added the Syndicate Communication Console., type: Add}
+  - {message: Using communication consoles now requires Command access., type: Tweak}
+  - {message: 'Announcements are now per-station, so nukies will no longer know the
+      state of the station they''re entering.', type: Tweak}
+  - {message: Fix delay between alert status changes scaling with tick rate., type: Fix}
+  id: 1646
+  time: '2022-06-03T11:37:35.0000000+00:00'
+- author: moonheart08
+  changes:
+  - {message: 'Items can now have prices, and their price can be evaluated with the
+      Appraisal Tool. This is currently only used for privateers.', type: Add}
+  - {message: 'There''s been reports of privateering in your sector, be on the lookout.',
+    type: Add}
+  id: 1647
+  time: '2022-06-03T15:56:11.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Reduced the number of each drink for Robust Softdrink machines from
+      10 to 2., type: Tweak}
+  id: 1648
+  time: '2022-06-03T23:46:51.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: ERT roles no longer show up on the role select screen., type: Fix}
+  id: 1649
+  time: '2022-06-04T00:04:34.0000000+00:00'
+- author: Peptide90
+  changes:
+  - {message: Generator circuit boards and emitters can now be printed with the correct
+      technology unlock., type: Fix}
+  id: 1650
+  time: '2022-06-04T00:04:49.0000000+00:00'
+- author: themias
+  changes:
+  - {message: Inflatables can no longer be placed on walls or doors, type: Fix}
+  id: 1651
+  time: '2022-06-04T02:15:46.0000000+00:00'
+- author: themias
+  changes:
+  - {message: Ghosting no longer causes dragged corpses to be dropped, type: Fix}
+  id: 1652
+  time: '2022-06-04T02:59:07.0000000+00:00'
+- author: Peptide90
+  changes:
+  - {message: Added boxes of nitrile gloves., type: Add}
+  - {message: Fixed name of sterile mask and latex glove boxes., type: Tweak}
+  id: 1653
+  time: '2022-06-04T05:05:18.0000000+00:00'
+- author: UKNOWH
+  changes:
+  - {message: Added makeshift laser gun!, type: Add}
+  id: 1654
+  time: '2022-06-04T06:30:37.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: L6 sustained spread increased and item size increased., type: Tweak}
+  id: 1655
+  time: '2022-06-04T06:52:40.0000000+00:00'
+- author: Veritius
+  changes:
+  - {message: Fix communications consoles not sending announcements., type: Fix}
+  id: 1656
+  time: '2022-06-04T09:09:04.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Post lights now have interaction outlines., type: Fix}
+  id: 1657
+  time: '2022-06-04T21:50:30.0000000+00:00'
+- author: themias
+  changes:
+  - {message: Other players can now hear the Musician's PDA music, type: Fix}
+  id: 1658
+  time: '2022-06-05T04:12:55.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Emitter hitsound has been removed, type: Tweak}
+  id: 1659
+  time: '2022-06-05T07:54:48.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Fix NPCs steering around puddles, type: Fix}
+  id: 1660
+  time: '2022-06-05T09:42:03.0000000+00:00'
+- author: ElectroJr
+  changes:
+  - {message: Added a mapping/editor keybinding that starts placing the same type
+      of entity or tile that the mouse is currently hovering over. Defaults to `P`,
+    type: Add}
+  id: 1661
+  time: '2022-06-05T22:58:20.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Anchoring now shows popups, type: Add}
+  id: 1662
+  time: '2022-06-05T23:04:40.0000000+00:00'
+- author: WilliamECrew
+  changes:
+  - {message: 'When dumping contents out of a bag, items will now be spread out randomly
+      instead of all being dumped into the same exact spot.', type: Tweak}
+  id: 1663
+  time: '2022-06-06T00:34:44.0000000+00:00'
+- author: Rane
+  changes:
+  - {message: Stethoscopes have been ported over from Nyanotrasen. Wear one on your
+      neck and right click on someone else to listen to their chest., type: Add}
+  id: 1664
+  time: '2022-06-06T01:37:29.0000000+00:00'
+- author: youarereadingthis
+  changes:
+  - {message: Removed the shuttle powering crate from the cargo ordering console.,
+    type: Remove}
+  id: 1665
+  time: '2022-06-06T08:34:07.0000000+00:00'
+- author: Rane
+  changes:
+  - {message: Added mute toxin., type: Add}
+  - {message: Silencer now mutes you., type: Add}
+  id: 1666
+  time: '2022-06-06T08:35:25.0000000+00:00'

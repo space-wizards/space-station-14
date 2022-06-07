@@ -215,6 +215,7 @@ namespace Content.Shared.Verbs
             { typeof(Verb) },
             { typeof(InteractionVerb) },
             { typeof(UtilityVerb) },
+            { typeof(InnateVerb)},
             { typeof(AlternativeVerb) },
             { typeof(ActivationVerb) },
             { typeof(ExamineVerb) }
@@ -257,6 +258,24 @@ namespace Content.Shared.Verbs
         public override int TypePriority => 3;
 
         public UtilityVerb() : base()
+        {
+            TextStyleClass = InteractionVerb.DefaultTextStyleClass;
+        }
+    }
+
+    /// <summary>
+    ///     This is for verbs facilitated by components on the user.
+    ///     Verbs from clothing, species, etc. rather than a held item.
+    /// </summary>
+    /// <remarks>
+    ///     Add a component to the user's entity and sub to the get verbs event
+    ///     and it'll appear in the verbs menu on any target.
+    /// </summary>
+    [Serializable, NetSerializable]
+    public sealed class InnateVerb : Verb
+    {
+        public override int TypePriority => 3;
+        public InnateVerb() : base()
         {
             TextStyleClass = InteractionVerb.DefaultTextStyleClass;
         }

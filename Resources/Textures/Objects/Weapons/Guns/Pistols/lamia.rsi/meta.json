@@ -17,14 +17,6 @@
             "name": "mag-0"
         },
         {
-            "name": "bolt-open"
-
-        },
-        {
-            "name": "bolt-closed"
-
-        },
-        {
             "name": "inhand-left",
             "directions": 4
         },

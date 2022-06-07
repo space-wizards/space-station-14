@@ -20,5 +20,7 @@ public sealed class GhostKickUserOnTriggerSystem : EntitySystem
         _ghostKickManager.DoDisconnect(
             actor.PlayerSession.ConnectedClient,
             "Tripped over a kick mine, crashed through the fourth wall");
+
+        args.Handled = true;
     }
 }

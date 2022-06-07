@@ -55,6 +55,33 @@
   id: Cartridge
 
 - type: Tag
+  id: CartridgeAntiMaterial
+
+- type: Tag
+  id: CartridgeCap
+
+- type: Tag
+  id: CartridgeCaselessRifle
+
+- type: Tag
+  id: CartridgeHeavyRifle
+
+- type: Tag
+  id: CartridgeLightRifle
+
+- type: Tag
+  id: CartridgeMagnum
+
+- type: Tag
+  id: CartridgePistol
+
+- type: Tag
+  id: CartridgeRifle
+
+- type: Tag
+  id: CartridgeRocket
+
+- type: Tag
   id: CigFilter
 
 - type: Tag
@@ -178,6 +205,9 @@
   id: GlassBeaker
 
 - type: Tag
+  id: Grenade
+
+- type: Tag
   id: Handcuffs
 
 - type: Tag
@@ -206,6 +236,56 @@
 
 - type: Tag
   id: Machete
+
+# Magazines ordered by slot then caliber
+
+- type: Tag
+  id: MagazineCalico
+
+- type: Tag
+  id: MagazineCaselessRifle
+
+- type: Tag
+  id: MagazineHeavyRifle
+
+- type: Tag
+  id: MagazineHeavyRifleBox
+
+- type: Tag
+  id: MagazineLightRifle
+
+- type: Tag
+  id: MagazineLightRifleBox
+
+- type: Tag
+  id: MagazineLightRiflePan
+
+- type: Tag
+  id: MagazineMagnum
+
+- type: Tag
+  id: MagazinePistol
+
+- type: Tag
+  id: MagazinePistolCaselessRifle
+
+- type: Tag
+  id: MagazinePistolHighCapacity
+
+- type: Tag
+  id: MagazinePistolSubMachineGunTopMounted
+
+- type: Tag
+  id: MagazineRifle
+
+- type: Tag
+  id: MagazineShotgun
+
+- type: Tag
+  id: MagazineMagnumSubMachineGun
+
+- type: Tag
+  id: MagazinePistolSubMachineGun
 
 - type: Tag
   id: Matchstick
@@ -266,7 +346,7 @@
 
 - type: Tag
   id: PlantSampleTaker
-  
+
 - type: Tag
   id: Plastic
 
@@ -275,7 +355,7 @@
 
 - type: Tag
   id: PussyWagonKeys
-  
+
 - type: Tag
   id: RawMaterial
 
@@ -302,7 +382,7 @@
   id: Sheet
 
 - type: Tag
-  id: ShotgunShell
+  id: ShellShotgun
 
 - type: Tag
   id: Shovel

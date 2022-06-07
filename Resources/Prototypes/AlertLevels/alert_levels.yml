@@ -9,10 +9,6 @@
       announcement: alert-level-blue-announcement
       sound: /Audio/Misc/notice1.ogg
       color: DodgerBlue
-    red:
-      announcement: alert-level-red-announcement
-      sound: /Audio/Misc/notice1.ogg
-      color: Red
     violet:
       announcement: alert-level-violet-announcement
       sound: /Audio/Misc/notice1.ogg
@@ -21,6 +17,10 @@
       announcement: alert-level-yellow-announcement
       sound: /Audio/Misc/notice1.ogg
       color: Yellow
+    red:
+      announcement: alert-level-red-announcement
+      sound: /Audio/Misc/notice1.ogg
+      color: Red
     gamma:
       announcement: alert-level-gamma-announcement
       selectable: false
