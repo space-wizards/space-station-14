@@ -42,3 +42,13 @@
   id: OrderReceiver
   name: signal-port-name-order-receiver
   description: signal-port-description-order-receiver
+
+- type: receiverPort
+  id: Pressurize
+  name: signal-port-name-pressurize
+  description: signal-port-description-pressurize
+
+- type: receiverPort
+  id: Depressurize
+  name: signal-port-name-depressurize
+  description: signal-port-description-depressurize

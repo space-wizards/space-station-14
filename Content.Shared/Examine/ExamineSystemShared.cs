@@ -44,7 +44,7 @@ namespace Content.Shared.Examine
         public bool IsInDetailsRange(EntityUid examiner, EntityUid entity)
         {
             // check if the mob is in ciritcal or dead
-            if (EntityManager.TryGetComponent(examiner, out MobStateComponent mobState) && mobState.IsIncapacitated())
+            if (EntityManager.TryGetComponent(examiner, out MobStateComponent? mobState) && mobState.IsIncapacitated())
                 return false;
 
             if (!_interactionSystem.InRangeUnobstructed(examiner, entity, ExamineDetailsRange))

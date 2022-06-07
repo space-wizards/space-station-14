@@ -124,7 +124,7 @@ namespace Content.Shared.CCVar
         ///     Controls the default game preset.
         /// </summary>
         public static readonly CVarDef<string>
-            GameLobbyDefaultPreset = CVarDef.Create("game.defaultpreset", "traitor", CVar.ARCHIVE);
+            GameLobbyDefaultPreset = CVarDef.Create("game.defaultpreset", "secret", CVar.ARCHIVE);
 
         /// <summary>
         ///     Controls if the game can force a different preset if the current preset's criteria are not met.
@@ -285,6 +285,19 @@ namespace Content.Shared.CCVar
 
         public static readonly CVarDef<int> NukeopsPlayersPerOp =
             CVarDef.Create("nukeops.players_per_op", 5);
+
+        /*
+         * Pirates
+         */
+
+        public static readonly CVarDef<int> PiratesMinPlayers =
+            CVarDef.Create("pirates.min_players", 25);
+
+        public static readonly CVarDef<int> PiratesMaxOps =
+            CVarDef.Create("pirates.max_pirates", 6);
+
+        public static readonly CVarDef<int> PiratesPlayersPerOp =
+            CVarDef.Create("pirates.players_per_pirate", 5);
 
         /*
          * Console
