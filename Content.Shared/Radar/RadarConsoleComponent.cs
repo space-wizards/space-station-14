@@ -16,7 +16,7 @@ public sealed class RadarConsoleComponent : Component
     }
 
     [ViewVariables, DataField("range")]
-    public float Range = 256f;
+    public float Range = 120f;
 
     [ViewVariables, DataField("minRange")]
     public float MinimumRange = 64f;
