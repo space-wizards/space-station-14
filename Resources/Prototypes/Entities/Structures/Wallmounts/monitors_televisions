@@ -1,0 +1,82 @@
+- type: entity
+  parent: ComputerBase
+  id: WallmountTelevision
+  name: television
+  description: Finally, some decent reception around here...
+  components:
+    - type: Appearance
+      visuals:
+        - type: ComputerVisualizer
+          body: television
+          bodyBroken: television_broken
+          screen: detective_television
+#    - type: Construction
+#      graph: Monitor
+#      node: Television
+    - type: Sprite
+      drawdepth: WallMountedItems
+      netsync: false
+      sprite: Structures/Machines/computers.rsi
+      layers:
+        - map: [ "enum.ComputerVisualizer+Layers.KeyboardOn" ]
+          visible: false
+        - map: [ "enum.ComputerVisualizer+Layers.Keyboard" ]
+          visible: false
+        - map: [ "enum.ComputerVisualizer+Layers.Body"]
+          state: television
+        - map: [ "enum.ComputerVisualizer+Layers.Screen" ]
+          state: detective_television
+          shader: unshaded
+    - type: PointLight
+      radius: 1.5
+      energy: 1.6
+      color: "#b89f25"
+    - type: Fixtures
+      fixtures:
+        - shape:
+            !type:PhysShapeAabb
+            bounds: "-0.25,-0.25,0.25,0.25"
+          mass: 50
+          mask:
+            - FullTileMask
+          layer:
+            - WallLayer
+    - type: WallMount
+    - type: Damageable
+      damageContainer: Inorganic
+      damageModifierSet: Metallic
+    - type: Destructible
+      thresholds:
+      - trigger:
+          !type:DamageTrigger
+          damage: 200
+        behaviors: #excess damage, don't spawn entities.
+        - !type:DoActsBehavior
+          acts: [ "Destruction" ]
+      - trigger:
+          !type:DamageTrigger
+          damage: 50
+        behaviors:
+        - !type:SpawnEntitiesBehavior
+          spawn:
+            SheetSteel1:
+              min: 1
+              max: 1
+        - !type:DoActsBehavior
+          acts: [ "Destruction" ]
+    - type: DeviceNetwork
+      deviceNetId: Wireless
+      receiveFrequencyId: SurveillanceCamera
+      transmitFrequencyId: SurveillanceCamera
+    - type: WirelessNetworkConnection
+      range: 200
+    - type: SurveillanceCameraMonitor
+    - type: ActivatableUI
+      key: enum.SurveillanceCameraMonitorUiKey.Key
+    - type: ActivatableUIRequiresPower
+    - type: Transform
+      anchored: true
+    - type: UserInterface
+      interfaces:
+        - key: enum.SurveillanceCameraMonitorUiKey.Key
+          type: SurveillanceCameraMonitorBoundUserInterface
