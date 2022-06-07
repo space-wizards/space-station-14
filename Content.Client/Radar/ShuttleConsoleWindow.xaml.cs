@@ -65,6 +65,7 @@ public sealed class RadarControl : Control
 
     protected override void Draw(DrawingHandleScreen handle)
     {
+        // TODO: Just draw shuttles in range on fixture normals.
         var point = SizeFull / 2;
         var fakeAA = new Color(0.08f, 0.08f, 0.08f);
         var gridLines = new Color(0.08f, 0.08f, 0.08f);
