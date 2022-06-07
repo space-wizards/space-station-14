@@ -33,6 +33,7 @@ public abstract class SharedRadarConsoleSystem : EntitySystem
         if (component.Range.Equals(value)) return;
         component.Range = value;
         Dirty(component);
+        UpdateState(component);
     }
 
     [Serializable, NetSerializable]

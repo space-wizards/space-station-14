@@ -110,15 +110,24 @@ public sealed class RadarControl : Control
         var ourGridFixtures = _entManager.GetComponent<FixturesComponent>(ourGridId);
         var ourGridBody = _entManager.GetComponent<PhysicsComponent>(ourGridId);
 
+        // Can also use ourGridBody.LocalCenter
+        var offset = xform.Coordinates.Position;
+
+        var invertedPosition = xform.Coordinates.Position - offset;
+        invertedPosition.Y = -invertedPosition.Y;
+
         foreach (var (_, fixture) in ourGridFixtures.Fixtures)
         {
-            var bounds = fixture.Shape.LocalBounds.Translated(-ourGridBody.LocalCenter);
+            var bounds = fixture.Shape.LocalBounds.Translated(-offset);
             var (bottom, top) = (bounds.Bottom, bounds.Top);
             bounds.Bottom = -bottom;
             bounds.Top = -top;
 
             handle.DrawRect(new UIBox2(bounds.TopLeft * MinimapScale + point, bounds.BottomRight * MinimapScale + point), Color.Yellow, false);
         }
+
+        // Draw radar position on the station
+        handle.DrawCircle(invertedPosition * MinimapScale + point, 5f, Color.Lime);
 
         // Draw other grids... differently
         foreach (var grid in _mapManager.FindGridsIntersecting(mapPosition.MapId,
