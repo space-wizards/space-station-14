@@ -52,7 +52,7 @@ namespace Content.Server.Atmos.EntitySystems
         {
             var otherFixture = args.OtherFixture.Body.Owner;
 
-            if (!EntityManager.TryGetComponent(otherFixture, out FlammableComponent flammable))
+            if (!EntityManager.TryGetComponent(otherFixture, out FlammableComponent? flammable))
                 return;
 
             flammable.FireStacks += component.FireStacks;

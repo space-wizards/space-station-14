@@ -10,6 +10,7 @@
   components:
   - type: Sprite
     netsync: false
+    visible: false
   - type: SubFloorHide
   - type: Clickable
   - type: InteractionOutline

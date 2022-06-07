@@ -115,7 +115,7 @@ namespace Content.Server.Chemistry.Components
             //Special case for reagent tanks, because normally clicking another container will give solution, not take it.
             if (CanReceive  && !_entities.HasComponent<RefillableSolutionComponent>(target) // target must not be refillable (e.g. Reagent Tanks)
                             && solutionsSys.TryGetDrainableSolution(target, out var targetDrain) // target must be drainable
-                            && _entities.TryGetComponent(Owner, out RefillableSolutionComponent refillComp)
+                            && _entities.TryGetComponent(Owner, out RefillableSolutionComponent? refillComp)
                             && solutionsSys.TryGetRefillableSolution(Owner, out var ownerRefill, refillable: refillComp))
 
             {

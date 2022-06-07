@@ -97,6 +97,8 @@
           event: !type:ToggleIntrinsicUIEvent
   - type: SolarControlConsole # look ma i AM the computer!
   - type: CommunicationsConsole
+    title: communicationsconsole-announcement-title-centcom
+    color: "#228b22"
   - type: RadarConsole
   - type: CargoConsole
   - type: CargoOrderDatabase

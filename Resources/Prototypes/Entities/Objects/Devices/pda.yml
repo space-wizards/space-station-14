@@ -37,6 +37,7 @@
   - type: Ringer
   - type: ActivatableUI
     key: enum.PDAUiKey.Key
+    singleUser: true
   - type: UserInterface
     interfaces:
     - key: enum.PDAUiKey.Key
@@ -615,3 +616,11 @@
   - type: Icon
     state: pda-syndi
 
+- type: entity
+  parent: HoSPDA
+  id: ERTLeaderPDA
+  name: ERT PDA
+  description: Red for firepower.
+  components:
+  - type: PDA
+    id: ERTLeaderIDCard
