@@ -7,6 +7,7 @@ using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.XAML;
+using Robust.Shared.Map;
 
 namespace Content.Client.Radar;
 
@@ -37,12 +38,19 @@ public sealed partial class ShuttleConsoleWindow : FancyWindow, IComputerWindow<
 
 public sealed class RadarControl : Control
 {
+    [Dependency] private readonly IEntityManager _entManager = default!;
+    [Dependency] private readonly IMapManager _mapManager = default!;
+
     private const int MinimapRadius = 256;
     private const int MinimapMargin = 4;
     private const float GridLinesDistance = 32f;
 
+    /// <summary>
+    /// Entity used to transform all of the radar objects.
+    /// </summary>
+    private EntityUid? _entity;
+
     private float _radarRange = 256f;
-    private RadarConsoleBoundInterfaceState _lastState = new(256f, Array.Empty<RadarObjectData>());
 
     private int SizeFull => (int) ((MinimapRadius + MinimapMargin) * 2 * UIScale);
     private int ScaledMinimapRadius => (int) (MinimapRadius * UIScale);
@@ -50,17 +58,14 @@ public sealed class RadarControl : Control
 
     public RadarControl()
     {
+        IoCManager.InjectDependencies(this);
         MinSize = (SizeFull, SizeFull);
     }
 
     public void UpdateState(RadarConsoleBoundInterfaceState ls)
     {
-        if (!_radarRange.Equals(ls.Range))
-        {
-            _radarRange = ls.Range;
-        }
-
-        _lastState = ls;
+        _radarRange = ls.Range;
+        _entity = ls.Entity;
     }
 
     protected override void Draw(DrawingHandleScreen handle)
@@ -68,12 +73,19 @@ public sealed class RadarControl : Control
         // TODO: Just draw shuttles in range on fixture normals.
         var point = SizeFull / 2;
         var fakeAA = new Color(0.08f, 0.08f, 0.08f);
-        var gridLines = new Color(0.08f, 0.08f, 0.08f);
-        var gridLinesRadial = 8;
-        var gridLinesEquatorial = (int) Math.Floor(_radarRange / GridLinesDistance);
 
         handle.DrawCircle((point, point), ScaledMinimapRadius + 1, fakeAA);
         handle.DrawCircle((point, point), ScaledMinimapRadius, Color.Black);
+
+        // No data
+        if (_entity == null)
+        {
+            return;
+        }
+
+        var gridLines = new Color(0.08f, 0.08f, 0.08f);
+        var gridLinesRadial = 8;
+        var gridLinesEquatorial = (int) Math.Floor(_radarRange / GridLinesDistance);
 
         for (var i = 1; i < gridLinesEquatorial + 1; i++)
         {
@@ -90,25 +102,29 @@ public sealed class RadarControl : Control
         handle.DrawLine((point, point) + new Vector2(8, 8), (point, point) - new Vector2(0, 8), Color.Yellow);
         handle.DrawLine((point, point) + new Vector2(-8, 8), (point, point) - new Vector2(0, 8), Color.Yellow);
 
-        foreach (var obj in _lastState.Objects)
+        var xform = _entManager.GetComponent<TransformComponent>(_entity.Value);
+        var mapPosition = xform.MapPosition;
+        var matrix = xform.InvWorldMatrix;
+
+        foreach (var grid in _mapManager.FindGridsIntersecting(mapPosition.MapId,
+                     new Box2(mapPosition.Position - _radarRange, mapPosition.Position + _radarRange)))
         {
-            var minimapPos = obj.Position * MinimapScale;
-            var radius = obj.Radius * MinimapScale;
+            var gridXform = _entManager.GetComponent<TransformComponent>(grid.GridEntityId);
+            var gridBody = _entManager.GetComponent<PhysicsComponent>(grid.GridEntityId);
+
+            var gridPos = matrix.Transform(gridXform.WorldMatrix.Transform(gridBody.LocalCenter));
+
+            var minimapPos = gridPos * MinimapScale;
+            minimapPos.Y = -minimapPos.Y;
+
+            if (gridBody.Mass < 10f) continue;
+
+            var radius = MathF.Log2(gridBody.Mass) * 3 * MinimapScale;
 
             if (minimapPos.Length + radius > ScaledMinimapRadius)
                 continue;
 
-            switch (obj.Shape)
-            {
-                case RadarObjectShape.CircleFilled:
-                case RadarObjectShape.Circle:
-                {
-                    handle.DrawCircle(minimapPos + point, radius, obj.Color, obj.Shape == RadarObjectShape.CircleFilled);
-                    break;
-                }
-                default:
-                    throw new NotImplementedException();
-            }
+            handle.DrawCircle(minimapPos + point, radius, Color.Red, false);
         }
     }
 }

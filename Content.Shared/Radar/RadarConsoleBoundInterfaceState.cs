@@ -1,3 +1,4 @@
+using Robust.Shared.Map;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.Radar;
@@ -6,28 +7,13 @@ namespace Content.Shared.Radar;
 public sealed class RadarConsoleBoundInterfaceState : BoundUserInterfaceState
 {
     public float Range;
-    public RadarObjectData[] Objects;
+    public EntityUid? Entity;
 
-    public RadarConsoleBoundInterfaceState(float range, RadarObjectData[] objects)
+    public RadarConsoleBoundInterfaceState(float range, EntityUid ?entity)
     {
         Range = range;
-        Objects = objects;
+        Entity = entity;
     }
-}
-
-[Serializable, NetSerializable]
-public struct RadarObjectData
-{
-    public Color Color;
-    public RadarObjectShape Shape;
-    public Vector2 Position;
-    public float Radius;
-}
-
-public enum RadarObjectShape : byte
-{
-    Circle,
-    CircleFilled,
 }
 
 [Serializable, NetSerializable]
