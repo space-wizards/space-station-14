@@ -82,6 +82,7 @@
     - Stutter
     - Electrocution
     - PressureImmunity
+    - Muted
   - type: DiseaseCarrier
   # Other
   - type: Inventory

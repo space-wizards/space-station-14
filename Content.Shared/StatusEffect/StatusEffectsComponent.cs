@@ -5,7 +5,7 @@ namespace Content.Shared.StatusEffect
 {
     [RegisterComponent]
     [NetworkedComponent]
-    [Friend(typeof(StatusEffectsSystem))]
+    [Access(typeof(StatusEffectsSystem))]
     public sealed class StatusEffectsComponent : Component
     {
         [ViewVariables]
