@@ -4,7 +4,7 @@ using Robust.Shared.Serialization;
 namespace Content.Shared.Storage.Components
 {
     [RegisterComponent]
-    [Access(typeof(SharedItemMapperSystem))]
+    [Friend(typeof(SharedItemMapperSystem))]
     public sealed class ItemMapperComponent : Component, ISerializationHooks
     {
         [DataField("mapLayers")] public readonly Dictionary<string, SharedMapLayerData> MapLayers = new();

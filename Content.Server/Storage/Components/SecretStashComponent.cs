@@ -12,7 +12,7 @@ namespace Content.Server.Storage.Components
     ///     Other classes like <see cref="ToiletComponent"/> should implement it.
     /// </summary>
     [RegisterComponent]
-    [Access(typeof(SecretStashSystem))]
+    [Friend(typeof(SecretStashSystem))]
     public sealed class SecretStashComponent : Component
     {
         /// <summary>

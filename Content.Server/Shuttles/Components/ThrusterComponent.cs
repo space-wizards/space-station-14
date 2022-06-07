@@ -4,7 +4,7 @@ using Content.Shared.Damage;
 namespace Content.Server.Shuttles.Components
 {
     [RegisterComponent]
-    [Access(typeof(ThrusterSystem))]
+    [Friend(typeof(ThrusterSystem))]
     public sealed class ThrusterComponent : Component
     {
         /// <summary>

@@ -6,7 +6,7 @@ namespace Content.Shared.Stunnable
 {
     [RegisterComponent]
     [NetworkedComponent]
-    [Access(typeof(SharedStunSystem))]
+    [Friend(typeof(SharedStunSystem))]
     public sealed class KnockedDownComponent : Component
     {
         [DataField("helpInterval")]

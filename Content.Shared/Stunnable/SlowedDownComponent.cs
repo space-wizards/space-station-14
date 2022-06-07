@@ -5,7 +5,7 @@ namespace Content.Shared.Stunnable
 {
     [RegisterComponent]
     [NetworkedComponent]
-    [Access(typeof(SharedStunSystem))]
+    [Friend(typeof(SharedStunSystem))]
     public sealed class SlowedDownComponent : Component
     {
         public float SprintSpeedModifier { get; set; } = 0.5f;

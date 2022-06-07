@@ -9,7 +9,7 @@ namespace Content.Server.Tools.Components;
 ///     Allows users to weld/unweld doors, crates and lockers.
 /// </summary>
 [RegisterComponent]
-[Access(typeof(WeldableSystem))]
+[Friend(typeof(WeldableSystem))]
 public sealed class WeldableComponent : SharedWeldableComponent
 {
     /// <summary>

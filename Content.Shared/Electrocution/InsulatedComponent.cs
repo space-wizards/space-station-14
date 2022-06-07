@@ -3,7 +3,7 @@ using Robust.Shared.Serialization;
 
 namespace Content.Shared.Electrocution
 {
-    [Access(typeof(SharedElectrocutionSystem))]
+    [Friend(typeof(SharedElectrocutionSystem))]
     [RegisterComponent, NetworkedComponent]
     public sealed class InsulatedComponent : Component
     {

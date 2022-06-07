@@ -3,7 +3,7 @@ using Content.Shared.Sound;
 
 namespace Content.Server.Nutrition.Components
 {
-    [RegisterComponent, Access(typeof(UtensilSystem))]
+    [RegisterComponent, Friend(typeof(UtensilSystem))]
     public sealed class UtensilComponent : Component
     {
         [DataField("types")]

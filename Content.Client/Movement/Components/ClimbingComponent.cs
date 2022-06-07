@@ -3,6 +3,6 @@
 namespace Content.Client.Movement.Components;
 
 [RegisterComponent]
-[Access(typeof(ClimbSystem))]
+[Friend(typeof(ClimbSystem))]
 [ComponentReference(typeof(SharedClimbingComponent))]
 public sealed class ClimbingComponent : SharedClimbingComponent { }

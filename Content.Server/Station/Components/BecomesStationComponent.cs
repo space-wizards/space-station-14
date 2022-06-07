@@ -6,7 +6,7 @@ namespace Content.Server.Station.Components;
 ///     Added to grids saved in maps to designate that they are the 'main station' grid.
 /// </summary>
 [RegisterComponent]
-[Access(typeof(GameTicker))]
+[Friend(typeof(GameTicker))]
 public sealed class BecomesStationComponent : Component
 {
     /// <summary>

@@ -13,7 +13,7 @@ namespace Content.Server.Nuke
     ///     To activate it, user needs to insert an authorization disk and enter a secret code.
     /// </summary>
     [RegisterComponent]
-    [Access(typeof(NukeSystem))]
+    [Friend(typeof(NukeSystem))]
     public sealed class NukeComponent : SharedNukeComponent
     {
         /// <summary>

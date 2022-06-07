@@ -3,7 +3,7 @@ using Content.Server.Botany.Systems;
 namespace Content.Server.Botany.Components;
 
 [RegisterComponent]
-[Access(typeof(SeedExtractorSystem))]
+[Friend(typeof(SeedExtractorSystem))]
 public sealed class SeedExtractorComponent : Component
 {
     // TODO: Upgradeable machines.

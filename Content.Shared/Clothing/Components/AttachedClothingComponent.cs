@@ -8,7 +8,7 @@ namespace Content.Shared.Clothing.Components;
 ///     attached to, rather than being dumped on the floor or something like that. Intended for use with hardsuits and
 ///     hardsuit helmets.
 /// </summary>
-[Access(typeof(ToggleableClothingSystem))]
+[Friend(typeof(ToggleableClothingSystem))]
 [RegisterComponent]
 public sealed class AttachedClothingComponent : Component
 {

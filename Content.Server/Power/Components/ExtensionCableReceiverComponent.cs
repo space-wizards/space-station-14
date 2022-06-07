@@ -3,7 +3,7 @@
 namespace Content.Server.Power.Components
 {
     [RegisterComponent]
-    [Access(typeof(ExtensionCableSystem))]
+    [Friend(typeof(ExtensionCableSystem))]
     public sealed class ExtensionCableReceiverComponent : Component
     {
         [ViewVariables]

@@ -11,7 +11,7 @@ namespace Content.Server.Cargo.Components
     /// <summary>
     /// Handles teleporting in requested cargo after the specified delay.
     /// </summary>
-    [RegisterComponent, Access(typeof(CargoSystem))]
+    [RegisterComponent, Friend(typeof(CargoSystem))]
     public sealed class CargoTelepadComponent : SharedCargoTelepadComponent
     {
         [DataField("delay")]

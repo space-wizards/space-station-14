@@ -5,7 +5,7 @@ using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototy
 namespace Content.Server.Conveyor
 {
     [RegisterComponent]
-    [Access(typeof(ConveyorSystem))]
+    [Friend(typeof(ConveyorSystem))]
     public sealed class ConveyorComponent : Component
     {
         /// <summary>

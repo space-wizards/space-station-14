@@ -5,7 +5,7 @@ using Robust.Shared.GameObjects;
 namespace Content.Client.Flash
 {
     [ComponentReference(typeof(SharedFlashableComponent))]
-    [RegisterComponent, Access(typeof(FlashSystem))]
+    [RegisterComponent, Friend(typeof(FlashSystem))]
     public sealed class FlashableComponent : SharedFlashableComponent
     {
     }

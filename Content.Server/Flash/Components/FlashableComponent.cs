@@ -3,7 +3,7 @@ using Content.Shared.Flash;
 namespace Content.Server.Flash.Components
 {
     [ComponentReference(typeof(SharedFlashableComponent))]
-    [RegisterComponent, Access(typeof(FlashSystem))]
+    [RegisterComponent, Friend(typeof(FlashSystem))]
     public sealed class FlashableComponent : SharedFlashableComponent
     {
     }

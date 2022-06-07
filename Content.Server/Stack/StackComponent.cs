@@ -3,7 +3,7 @@ using Content.Shared.Stacks;
 namespace Content.Server.Stack
 {
     // TODO: Naming and presentation and such could use some improvement.
-    [RegisterComponent, Access(typeof(StackSystem))]
+    [RegisterComponent, Friend(typeof(StackSystem))]
     [ComponentReference(typeof(SharedStackComponent))]
     public sealed class StackComponent : SharedStackComponent
     {

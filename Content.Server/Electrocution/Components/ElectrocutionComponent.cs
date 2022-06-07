@@ -4,7 +4,7 @@
     /// Component for virtual electrocution entities (representing an in-progress shock).
     /// </summary>
     [RegisterComponent]
-    [Access(typeof(ElectrocutionSystem))]
+    [Friend(typeof(ElectrocutionSystem))]
     public sealed class ElectrocutionComponent : Component
     {
         [DataField("timeLeft")] public float TimeLeft { get; set; }

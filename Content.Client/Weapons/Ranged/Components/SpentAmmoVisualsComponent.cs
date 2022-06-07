@@ -2,7 +2,7 @@ using Content.Client.Weapons.Ranged.Systems;
 
 namespace Content.Client.Weapons.Ranged.Components;
 
-[RegisterComponent, Access(typeof(GunSystem))]
+[RegisterComponent, Friend(typeof(GunSystem))]
 public sealed class SpentAmmoVisualsComponent : Component
 {
     /// <summary>

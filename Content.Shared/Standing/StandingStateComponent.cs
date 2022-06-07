@@ -3,7 +3,7 @@ using Robust.Shared.GameStates;
 
 namespace Content.Shared.Standing
 {
-    [Access(typeof(StandingStateSystem))]
+    [Friend(typeof(StandingStateSystem))]
     [RegisterComponent, NetworkedComponent]
     public sealed class StandingStateComponent : Component
     {

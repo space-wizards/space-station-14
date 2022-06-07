@@ -5,11 +5,10 @@ using Content.Shared.Chemistry.Components;
 
 namespace Content.Server.Body.Components;
 
-[RegisterComponent, Access(typeof(LungSystem))]
+[RegisterComponent, Friend(typeof(LungSystem))]
 public sealed class LungComponent : Component
 {
     [DataField("air")]
-    [Access(typeof(LungSystem), Other = AccessPermissions.ReadExecute)] // FIXME Friends
     public GasMixture Air { get; set; } = new()
     {
         Volume = 6,
@@ -17,6 +16,5 @@ public sealed class LungComponent : Component
     };
 
     [ViewVariables]
-    [Access(typeof(LungSystem), Other = AccessPermissions.ReadExecute)] // FIXME Friends
     public Solution LungSolution = default!;
 }

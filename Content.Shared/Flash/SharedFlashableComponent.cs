@@ -3,7 +3,7 @@ using Robust.Shared.Serialization;
 
 namespace Content.Shared.Flash
 {
-    [NetworkedComponent, Access(typeof(SharedFlashSystem))]
+    [NetworkedComponent, Friend(typeof(SharedFlashSystem))]
     public abstract class SharedFlashableComponent : Component
     {
         public float Duration { get; set; }

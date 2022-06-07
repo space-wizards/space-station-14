@@ -2,7 +2,7 @@ using Content.Shared.DoAfter;
 
 namespace Content.Server.DoAfter
 {
-    [RegisterComponent, Access(typeof(DoAfterSystem))]
+    [RegisterComponent, Friend(typeof(DoAfterSystem))]
     public sealed class DoAfterComponent : SharedDoAfterComponent
     {
         public readonly Dictionary<DoAfter, byte> DoAfters = new();

@@ -6,7 +6,7 @@ namespace Content.Server.Light.Components
     /// <summary>
     ///     Component that represents an emergency light, it has an internal battery that charges when the power is on.
     /// </summary>
-    [RegisterComponent, Access(typeof(EmergencyLightSystem))]
+    [RegisterComponent, Friend(typeof(EmergencyLightSystem))]
     public sealed class EmergencyLightComponent : SharedEmergencyLightComponent
     {
         [ViewVariables]
