@@ -32,5 +32,12 @@ namespace Content.Server.Disease.Components
         /// <summary>
         [ViewVariables(VVAccess.ReadWrite)]
         public List<DiseasePrototype> AllDiseases => PastDiseases.Concat(Diseases).ToList();
+
+        /// <summary>
+        /// Whether or not the entity experiences any
+        /// symptoms from their diseases.
+        /// </summary>
+        [DataField("noSymptoms")]
+        public bool NoSymptoms = false;
     }
 }

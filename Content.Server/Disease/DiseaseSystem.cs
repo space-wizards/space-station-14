@@ -93,6 +93,9 @@ namespace Content.Server.Disease
                     continue;
                 }
 
+                if (carrierComp.NoSymptoms)
+                    continue;
+
                 for (var i = 0; i < carrierComp.Diseases.Count; i++) //this is a for-loop so that it doesn't break when new diseases are added
                 {
                     var disease = carrierComp.Diseases[i];
@@ -381,6 +384,14 @@ namespace Content.Server.Disease
                 return;
             if (_random.Prob(infectionChance))
                 TryAddDisease(carrier.Owner, disease, carrier);
+        }
+
+        public void TryInfect(DiseaseCarrierComponent carrier, string? disease, float chance = 0.7f, bool forced = false)
+        {
+            if (disease == null || !_prototypeManager.TryIndex<DiseasePrototype>(disease, out var d))
+                return;
+
+            TryInfect(carrier, d, chance, forced);
         }
 
         /// <summary>
