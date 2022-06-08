@@ -184,11 +184,7 @@ public sealed class StationSystem : EntitySystem
         {
             name = GenerateStationName(stationConfig);
         }
-        else if (name is not null)
-        {
-            name = name;
-        }
-        else
+        else if (name is null)
         {
             _sawmill.Error($"When setting up station {station}, was unable to find a valid name in the config and no name was provided.");
             name = "unnamed station";
