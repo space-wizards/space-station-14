@@ -119,15 +119,7 @@ public sealed class RadarControl : Control
         invertedPosition.Y = -invertedPosition.Y;
 
         // Draw our grid; use non-filled boxes so it doesn't look awful.
-        foreach (var (_, fixture) in ourGridFixtures.Fixtures)
-        {
-            var bounds = fixture.Shape.LocalBounds.Translated(-offset);
-            var (bottom, top) = (bounds.Bottom, bounds.Top);
-            bounds.Bottom = -bottom;
-            bounds.Top = -top;
-
-            handle.DrawRect(new UIBox2(bounds.TopLeft * MinimapScale + point, bounds.BottomRight * MinimapScale + point), Color.Yellow, false);
-        }
+        DrawGrid(handle, Matrix3.CreateTranslation(-offset), ourGridFixtures, point, Color.Yellow);
 
         // Draw docks
         // TODO:
@@ -150,6 +142,7 @@ public sealed class RadarControl : Control
             Matrix3.Multiply(ref gridMatrix, ref matrix, out var matty);
 
             // Obscured view.
+            /*
             foreach (var (_, fixture) in gridFixtures.Fixtures)
             {
                 var poly = (PolygonShape) fixture.Shape;
@@ -178,30 +171,41 @@ public sealed class RadarControl : Control
                     DrawObscuredLine(handle, start * MinimapScale + point, end * MinimapScale + point);
                 }
             }
+            */
 
             // Detailed view
+            DrawGrid(handle, matty, gridFixtures, point, Color.Aquamarine);
+        }
+    }
 
-            foreach (var (_, fixture) in gridFixtures.Fixtures)
+    private void DrawGrid(DrawingHandleScreen handle, Matrix3 matrix, FixturesComponent component, int point, Color color)
+    {
+        foreach (var (_, fixture) in component.Fixtures)
+        {
+            // If the fixture has any points out of range we won't draw any of it.
+            var invalid = false;
+            var poly = (PolygonShape) fixture.Shape;
+            var verts = new Vector2[poly.VertexCount + 1];
+
+            for (var i = 0; i < poly.VertexCount; i++)
             {
-                var poly = (PolygonShape) fixture.Shape;
+                var vert = matrix.Transform(poly.Vertices[i]);
 
-                for (var i = 0; i < poly.VertexCount; i++)
+                if (vert.Length > _radarRange)
                 {
-                    // Check if the normal points in our direction.
-                    // If so then we show the obscured line, otherwise, skip.
-                    var j = (i + 1) % poly.VertexCount;
-                    var start = matty.Transform(poly.Vertices[i]);
-                    var end = matty.Transform(poly.Vertices[j]);
-
-                    start.Y = -start.Y;
-                    end.Y = -end.Y;
-
-                    handle.DrawLine(
-                        start * MinimapScale + point,
-                        end * MinimapScale + point, Color.Red);
+                    invalid = true;
+                    break;
                 }
+
+                vert.Y = -vert.Y;
+                verts[i] = vert * MinimapScale + point;
             }
 
+            if (invalid) continue;
+
+            // Closed list
+            verts[poly.VertexCount] = verts[0];
+            handle.DrawPrimitives(DrawPrimitiveTopology.LineStrip, verts, color);
         }
     }
 
