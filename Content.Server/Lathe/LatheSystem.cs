@@ -144,8 +144,8 @@ namespace Content.Server.Lathe
 
             EntityManager.QueueDeleteEntity(args.Used);
             InsertingAddQueue.Enqueue(uid);
-            _popupSystem.PopupEntity(Loc.GetString("machine-insert-item", ("machine", uid),
-                ("item", args.Used)), uid, Filter.Entities(args.User));
+            _popupSystem.PopupEntity(Filter.Entities(args.User), Loc.GetString("machine-insert-item", ("machine", uid),
+                ("item", args.Used)), uid);
             if (matProto != null)
             {
                 UpdateInsertingAppearance(uid, true, matProto.Color);

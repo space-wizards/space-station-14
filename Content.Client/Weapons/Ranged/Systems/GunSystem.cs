@@ -211,7 +211,7 @@ public sealed partial class GunSystem : SharedGunSystem
     protected override void Popup(string message, EntityUid? uid, EntityUid? user)
     {
         if (uid == null || user == null || !Timing.IsFirstTimePredicted) return;
-        PopupSystem.PopupEntity(message, uid.Value, Filter.Entities(user.Value));
+        PopupSystem.PopupEntity(Filter.Entities(user.Value), message, uid.Value);
     }
 
     protected override void CreateEffect(EffectSystemMessage message, EntityUid? user = null)

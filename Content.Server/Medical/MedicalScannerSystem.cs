@@ -275,13 +275,13 @@ namespace Content.Server.Medical
             // Check to see if they are humanoid
             if (!TryComp<HumanoidAppearanceComponent>(body, out var humanoid))
             {
-                _popupSystem.PopupEntity(Loc.GetString("medical-scanner-component-msg-no-humanoid-component"), uid, Filter.Pvs(uid));
+                _popupSystem.PopupEntity(Filter.Pvs(uid), Loc.GetString("medical-scanner-component-msg-no-humanoid-component"), uid);
                 return;
             }
 
             if (!TryComp<MindComponent>(body, out var mindComp) || mindComp.Mind == null)
             {
-                _popupSystem.PopupEntity(Loc.GetString("medical-scanner-component-msg-no-soul"), uid, Filter.Pvs(uid));
+                _popupSystem.PopupEntity(Filter.Pvs(uid), Loc.GetString("medical-scanner-component-msg-no-soul"), uid);
                 return;
             }
 
@@ -295,7 +295,7 @@ namespace Content.Server.Medical
             if (mindUser.HasValue == false || mind.Session == null)
             {
                 // For now assume this means soul departed
-                _popupSystem.PopupEntity(Loc.GetString("medical-scanner-component-msg-soul-broken"), uid, Filter.Pvs(uid));
+                _popupSystem.PopupEntity(Filter.Pvs(uid), Loc.GetString("medical-scanner-component-msg-soul-broken"), uid);
                 return;
             }
 

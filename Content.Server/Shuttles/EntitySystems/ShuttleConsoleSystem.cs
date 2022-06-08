@@ -71,11 +71,11 @@ namespace Content.Server.Shuttles.EntitySystems
             {
                 case ShuttleMode.Cruise:
                     shuttleComponent.Mode = ShuttleMode.Docking;
-                    _popup.PopupEntity(Loc.GetString("shuttle-mode-docking"), consoleComponent.Owner, Filter.Entities(user));
+                    _popup.PopupEntity(Filter.Entities(user), Loc.GetString("shuttle-mode-docking"), consoleComponent.Owner);
                     break;
                 case ShuttleMode.Docking:
                     shuttleComponent.Mode = ShuttleMode.Cruise;
-                    _popup.PopupEntity(Loc.GetString("shuttle-mode-cruise"), consoleComponent.Owner, Filter.Entities(user));
+                    _popup.PopupEntity(Filter.Entities(user), Loc.GetString("shuttle-mode-cruise"), consoleComponent.Owner);
                     break;
                 default:
                     throw new ArgumentOutOfRangeException();

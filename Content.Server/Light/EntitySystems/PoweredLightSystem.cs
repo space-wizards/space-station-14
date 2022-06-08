@@ -106,7 +106,7 @@ namespace Content.Server.Light.EntitySystems
                 {
                     // apply damage to users hands and show message with sound
                     var burnMsg = Loc.GetString("powered-light-component-burn-hand");
-                    _popupSystem.PopupEntity(burnMsg, uid, Filter.Entities(userUid));
+                    _popupSystem.PopupEntity(Filter.Entities(userUid), burnMsg, uid);
 
                     var damage = _damageableSystem.TryChangeDamage(userUid, light.Damage);
 

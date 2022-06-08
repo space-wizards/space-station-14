@@ -190,7 +190,7 @@ namespace Content.Server.Disease
         {
             var CureTuple = (carrier, disease);
             CureQueue.Enqueue(CureTuple);
-            _popupSystem.PopupEntity(Loc.GetString("disease-cured"), carrier.Owner, Filter.Entities(carrier.Owner));
+            _popupSystem.PopupEntity(Filter.Entities(carrier.Owner), Loc.GetString("disease-cured"), carrier.Owner);
         }
 
         public void CureAllDiseases(EntityUid uid, DiseaseCarrierComponent? carrier = null)
@@ -256,7 +256,7 @@ namespace Content.Server.Disease
 
             if (vaxx.Used)
             {
-                _popupSystem.PopupEntity(Loc.GetString("vaxx-already-used"), args.User, Filter.Entities(args.User));
+                _popupSystem.PopupEntity(Filter.Entities(args.User), Loc.GetString("vaxx-already-used"), args.User);
                 return;
             }
 
@@ -393,7 +393,7 @@ namespace Content.Server.Disease
             if (!Resolve(uid, ref xform)) return;
 
             if (!string.IsNullOrEmpty(snoughMessage))
-                _popupSystem.PopupEntity(Loc.GetString(snoughMessage, ("person", uid)), uid, Filter.Pvs(uid));
+                _popupSystem.PopupEntity(Filter.Pvs(uid), Loc.GetString(snoughMessage, ("person", uid)), uid);
 
             if (disease is not { Infectious: true } || !airTransmit)
                 return;

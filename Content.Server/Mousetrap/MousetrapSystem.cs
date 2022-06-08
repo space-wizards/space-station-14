@@ -26,11 +26,9 @@ public sealed class MousetrapSystem : EntitySystem
     private void OnUseInHand(EntityUid uid, MousetrapComponent component, UseInHandEvent args)
     {
         component.IsActive = !component.IsActive;
-        _popupSystem.PopupEntity(component.IsActive
+        _popupSystem.PopupEntity(Filter.Entities(args.User), component.IsActive
             ? Loc.GetString("mousetrap-on-activate")
-            : Loc.GetString("mousetrap-on-deactivate"),
-            uid,
-            Filter.Entities(args.User));
+            : Loc.GetString("mousetrap-on-deactivate"), uid);
 
         UpdateVisuals(uid);
     }

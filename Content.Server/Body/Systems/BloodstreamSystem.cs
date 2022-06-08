@@ -163,8 +163,7 @@ public sealed class BloodstreamSystem : EntitySystem
 
             // We'll play a special sound and popup for feedback.
             SoundSystem.Play(Filter.Pvs(uid), component.BloodHealedSound.GetSound(), uid, AudioParams.Default);
-            _popupSystem.PopupEntity(Loc.GetString("bloodstream-component-wounds-cauterized"), uid,
-                Filter.Entities(uid));
+            _popupSystem.PopupEntity(Filter.Entities(uid), Loc.GetString("bloodstream-component-wounds-cauterized"), uid);
 ;       }
     }
 

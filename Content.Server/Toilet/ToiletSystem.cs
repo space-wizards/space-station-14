@@ -47,11 +47,11 @@ namespace Content.Server.Toilet
             {
                 var othersMessage = Loc.GetString("toilet-component-suicide-head-message-others",
                     ("victim", args.Victim), ("owner", uid));
-                _popupSystem.PopupEntity(othersMessage, uid, Filter.Pvs(args.Victim).RemoveWhereAttachedEntity(puid => puid == args.Victim));
+                _popupSystem.PopupEntity(Filter.Pvs(args.Victim).RemoveWhereAttachedEntity(puid => puid == args.Victim), othersMessage, uid);
 
                 var selfMessage = Loc.GetString("toilet-component-suicide-head-message",
                     ("owner", uid));
-                _popupSystem.PopupEntity(selfMessage, uid, Filter.Entities(args.Victim));
+                _popupSystem.PopupEntity(Filter.Entities(args.Victim), selfMessage, uid);
 
                 args.SetHandled(SuicideKind.Asphyxiation);
             }
@@ -59,11 +59,11 @@ namespace Content.Server.Toilet
             {
                 var othersMessage = Loc.GetString("toilet-component-suicide-message-others",
                     ("victim", args.Victim), ("owner", uid));
-                _popupSystem.PopupEntity(othersMessage, uid, Filter.Pvs(uid).RemoveWhereAttachedEntity(puid => puid == args.Victim));
+                _popupSystem.PopupEntity(Filter.Pvs(uid).RemoveWhereAttachedEntity(puid => puid == args.Victim), othersMessage, uid);
 
                 var selfMessage = Loc.GetString("toilet-component-suicide-message",
                     ("owner", uid));
-                _popupSystem.PopupEntity(selfMessage, uid, Filter.Entities(args.Victim));
+                _popupSystem.PopupEntity(Filter.Entities(args.Victim), selfMessage, uid);
 
                 args.SetHandled(SuicideKind.Blunt);
             }

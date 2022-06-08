@@ -100,7 +100,7 @@ namespace Content.Server.Disease.Zombie
             if (TryComp<ServerInventoryComponent>(uid, out var servInvComp))
                 _serverInventory.TryUnequip(uid, "gloves", true, true, predicted: false, servInvComp);
 
-            _popupSystem.PopupEntity(Loc.GetString("zombie-transform", ("target", uid)), uid, Filter.Pvs(uid));
+            _popupSystem.PopupEntity(Filter.Pvs(uid), Loc.GetString("zombie-transform", ("target", uid)), uid);
 
             if (TryComp<MetaDataComponent>(uid, out var metacomp))
                 metacomp.EntityName = Loc.GetString("zombie-name-prefix", ("target", metacomp.EntityName));

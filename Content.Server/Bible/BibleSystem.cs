@@ -73,7 +73,7 @@ namespace Content.Server.Bible
                     summonableComp.Summon = null;
                 }
                 summonableComp.AlreadySummoned = false;
-                _popupSystem.PopupEntity(Loc.GetString("bible-summon-respawn-ready", ("book", summonableComp.Owner)), summonableComp.Owner, Filter.Pvs(summonableComp.Owner));
+                _popupSystem.PopupEntity(Filter.Pvs(summonableComp.Owner), Loc.GetString("bible-summon-respawn-ready", ("book", summonableComp.Owner)), summonableComp.Owner);
                 SoundSystem.Play(Filter.Pvs(summonableComp.Owner), "/Audio/Effects/radpulse9.ogg", summonableComp.Owner, AudioParams.Default.WithVolume(-4f));
                 /// Clean up the accumulator and respawn tracking component
                 summonableComp.Accumulator = 0;
@@ -103,7 +103,7 @@ namespace Content.Server.Bible
 
             if (!HasComp<BibleUserComponent>(args.User))
             {
-                _popupSystem.PopupEntity(Loc.GetString("bible-sizzle"), args.User, Filter.Entities(args.User));
+                _popupSystem.PopupEntity(Filter.Entities(args.User), Loc.GetString("bible-sizzle"), args.User);
 
                 SoundSystem.Play(Filter.Pvs(args.User), component.SizzleSoundPath.GetSound(), args.User);
                 _damageableSystem.TryChangeDamage(args.User, component.DamageOnUntrainedUse, true);
@@ -117,10 +117,10 @@ namespace Content.Server.Bible
                 if (_random.Prob(component.FailChance))
                 {
                 var othersFailMessage = Loc.GetString(component.LocPrefix + "-heal-fail-others", ("user", args.User),("target", args.Target),("bible", uid));
-                _popupSystem.PopupEntity(othersFailMessage, args.User, Filter.Pvs(args.User).RemoveWhereAttachedEntity(puid => puid == args.User));
+                _popupSystem.PopupEntity(Filter.Pvs(args.User).RemoveWhereAttachedEntity(puid => puid == args.User), othersFailMessage, args.User);
 
                 var selfFailMessage = Loc.GetString(component.LocPrefix + "-heal-fail-self", ("target", args.Target),("bible", uid));
-                _popupSystem.PopupEntity(selfFailMessage, args.User, Filter.Entities(args.User));
+                _popupSystem.PopupEntity(Filter.Entities(args.User), selfFailMessage, args.User);
 
                 SoundSystem.Play(Filter.Pvs(args.Target.Value), "/Audio/Effects/hit_kick.ogg", args.User);
                 _damageableSystem.TryChangeDamage(args.Target.Value, component.DamageOnFail, true);
@@ -129,10 +129,10 @@ namespace Content.Server.Bible
             }
 
             var othersMessage = Loc.GetString(component.LocPrefix + "-heal-success-others", ("user", args.User),("target", args.Target),("bible", uid));
-            _popupSystem.PopupEntity(othersMessage, args.User, Filter.Pvs(args.User).RemoveWhereAttachedEntity(puid => puid == args.User));
+            _popupSystem.PopupEntity(Filter.Pvs(args.User).RemoveWhereAttachedEntity(puid => puid == args.User), othersMessage, args.User);
 
             var selfMessage = Loc.GetString(component.LocPrefix + "-heal-success-self", ("target", args.Target),("bible", uid));
-            _popupSystem.PopupEntity(selfMessage, args.User, Filter.Entities(args.User));
+            _popupSystem.PopupEntity(Filter.Entities(args.User), selfMessage, args.User);
 
             SoundSystem.Play(Filter.Pvs(args.Target.Value), component.HealSoundPath.GetSound(), args.User);
             _damageableSystem.TryChangeDamage(args.Target.Value, component.Damage, true);

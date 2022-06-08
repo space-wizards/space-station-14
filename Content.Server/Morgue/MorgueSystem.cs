@@ -44,14 +44,11 @@ namespace Content.Server.Morgue
 
                 if (mind.OwnedEntity is { Valid: true } entity)
                 {
-                    _popup.PopupEntity(Loc.GetString("crematorium-entity-storage-component-suicide-message"), entity, Filter.Pvs(entity, entityManager: EntityManager));
+                    _popup.PopupEntity(Filter.Pvs(entity, entityManager: EntityManager), Loc.GetString("crematorium-entity-storage-component-suicide-message"), entity);
                 }
             }
 
-            _popup.PopupEntity(
-                Loc.GetString("crematorium-entity-storage-component-suicide-message-others", ("victim", victim)),
-                victim,
-                Filter.Pvs(victim, entityManager: EntityManager).RemoveWhereAttachedEntity(e => e == victim));
+            _popup.PopupEntity(Filter.Pvs(victim, entityManager: EntityManager).RemoveWhereAttachedEntity(e => e == victim), Loc.GetString("crematorium-entity-storage-component-suicide-message-others", ("victim", victim)), victim);
 
             if (component.CanInsert(victim))
             {

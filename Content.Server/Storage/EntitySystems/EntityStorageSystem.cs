@@ -31,7 +31,7 @@ public sealed class EntityStorageSystem : EntitySystem
         if (component.Contents.Contains(args.User))
         {
             var msg = Loc.GetString("entity-storage-component-already-contains-user-message");
-            _popupSystem.PopupEntity(msg, args.User, Filter.Entities(args.User));
+            _popupSystem.PopupEntity(Filter.Entities(args.User), msg, args.User);
             args.Cancel();
         }
     }

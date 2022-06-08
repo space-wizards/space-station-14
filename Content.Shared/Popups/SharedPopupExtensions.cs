@@ -16,7 +16,7 @@ namespace Content.Shared.Popups
         {
             var popupSystem = EntitySystem.Get<SharedPopupSystem>();
 
-            popupSystem.PopupEntity(message, source, Filter.Entities(viewer));
+            popupSystem.PopupEntity(Filter.Entities(viewer), message, source);
         }
 
         /// <summary>
@@ -38,7 +38,7 @@ namespace Content.Shared.Popups
         public static void PopupMessage(this EntityCoordinates coordinates, EntityUid viewer, string message)
         {
             var popupSystem = EntitySystem.Get<SharedPopupSystem>();
-            popupSystem.PopupCoordinates(message, coordinates, Filter.Entities(viewer));
+            popupSystem.PopupCoordinates(Filter.Entities(viewer), message, coordinates);
         }
 
         /// <summary>
@@ -51,7 +51,7 @@ namespace Content.Shared.Popups
         public static void PopupMessageCursor(this EntityUid viewer, string message)
         {
             var popupSystem = EntitySystem.Get<SharedPopupSystem>();
-            popupSystem.PopupCursor(message, Filter.Entities(viewer));
+            popupSystem.PopupCursor(Filter.Entities(viewer), message);
         }
     }
 }

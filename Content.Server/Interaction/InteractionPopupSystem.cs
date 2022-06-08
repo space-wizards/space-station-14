@@ -59,11 +59,11 @@ public sealed class InteractionPopupSystem : EntitySystem
         if (component.MessagePerceivedByOthers != null)
         {
             string msgOthers = Loc.GetString(component.MessagePerceivedByOthers,("user", args.User), ("target", uid));
-            _popupSystem.PopupEntity(msg, uid, Filter.Entities(args.User));
-            _popupSystem.PopupEntity(msgOthers, uid, Filter.Pvs(uid, 2F, EntityManager).RemoveWhereAttachedEntity(puid => puid == args.User));
+            _popupSystem.PopupEntity(Filter.Entities(args.User), msg, uid);
+            _popupSystem.PopupEntity(Filter.Pvs(uid, 2F, EntityManager).RemoveWhereAttachedEntity(puid => puid == args.User), msgOthers, uid);
         }
         else
-            _popupSystem.PopupEntity(msg, uid, Filter.Entities(args.User)); //play only for the initiating entity.
+            _popupSystem.PopupEntity(Filter.Entities(args.User), msg, uid); //play only for the initiating entity.
 
         if (sfx is not null) //not all cases will have sound.
         {

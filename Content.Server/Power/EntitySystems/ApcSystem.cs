@@ -54,8 +54,7 @@ namespace Content.Server.Power.EntitySystems
             }
             else
             {
-                _popupSystem.PopupCursor(Loc.GetString("apc-component-insufficient-access"),
-                    Filter.Entities(args.Session.AttachedEntity.Value));
+                _popupSystem.PopupCursor(Filter.Entities(args.Session.AttachedEntity.Value), Loc.GetString("apc-component-insufficient-access"));
             }
         }
 

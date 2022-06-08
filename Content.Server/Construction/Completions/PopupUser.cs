@@ -20,9 +20,9 @@ namespace Content.Server.Construction.Completions
             var popupSystem = entityManager.EntitySysManager.GetEntitySystem<PopupSystem>();
 
             if(Cursor)
-                popupSystem.PopupCursor(Loc.GetString(Text), Filter.Entities(userUid.Value));
+                popupSystem.PopupCursor(Filter.Entities(userUid.Value), Loc.GetString(Text));
             else
-                popupSystem.PopupEntity(Loc.GetString(Text), uid, Filter.Entities(userUid.Value));
+                popupSystem.PopupEntity(Filter.Entities(userUid.Value), Loc.GetString(Text), uid);
         }
     }
 }

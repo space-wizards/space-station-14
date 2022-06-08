@@ -99,8 +99,8 @@ namespace Content.Server.Hands.Systems
             var msgUser = Loc.GetString("hands-component-disarm-success-message", ("disarmed", targetName));
 
             var filter = Filter.Pvs(args.Source).RemoveWhereAttachedEntity(e => e == args.Source);
-            _popupSystem.PopupEntity(msgOther, args.Source, filter);
-            _popupSystem.PopupEntity(msgUser, args.Source, Filter.Entities(args.Source));
+            _popupSystem.PopupEntity(filter, msgOther, args.Source);
+            _popupSystem.PopupEntity(Filter.Entities(args.Source), msgUser, args.Source);
 
             args.Handled = true; // no shove/stun.
         }

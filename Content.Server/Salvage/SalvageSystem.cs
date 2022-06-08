@@ -179,7 +179,7 @@ namespace Content.Server.Salvage
         }
         private void ShowPopup(string messageKey, SalvageMagnetComponent component, EntityUid user)
         {
-            _popupSystem.PopupEntity(Loc.GetString(messageKey), component.Owner, Filter.Entities(user));
+            _popupSystem.PopupEntity(Filter.Entities(user), Loc.GetString(messageKey), component.Owner);
         }
 
         private void SafeDeleteSalvage(EntityUid salvage)

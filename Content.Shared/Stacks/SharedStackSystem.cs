@@ -56,18 +56,17 @@ namespace Content.Shared.Stacks
             switch (transfered)
             {
                 case > 0:
-                    PopupSystem.PopupCoordinates($"+{transfered}", popupPos, Filter.Local());
+                    PopupSystem.PopupCoordinates(Filter.Local(), $"+{transfered}", popupPos);
 
                     if (recipientStack.AvailableSpace == 0)
                     {
-                        PopupSystem.PopupCoordinates(Loc.GetString("comp-stack-becomes-full"),
-                            popupPos.Offset(new Vector2(0, -0.5f)), Filter.Local());
+                        PopupSystem.PopupCoordinates(Filter.Local(), Loc.GetString("comp-stack-becomes-full"), popupPos.Offset(new Vector2(0, -0.5f)));
                     }
 
                     break;
 
                 case 0 when recipientStack.AvailableSpace == 0:
-                    PopupSystem.PopupCoordinates(Loc.GetString("comp-stack-already-full"), popupPos, Filter.Local());
+                    PopupSystem.PopupCoordinates(Filter.Local(), Loc.GetString("comp-stack-already-full"), popupPos);
                     break;
             }
         }

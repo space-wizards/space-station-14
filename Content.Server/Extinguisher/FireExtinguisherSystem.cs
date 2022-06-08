@@ -61,8 +61,7 @@ public sealed class FireExtinguisherSystem : EntitySystem
 
         if (component.HasSafety && component.Safety)
         {
-            _popupSystem.PopupEntity(Loc.GetString("fire-extinguisher-component-safety-on-message"), uid,
-                Filter.Entities(args.User));
+            _popupSystem.PopupEntity(Filter.Entities(args.User), Loc.GetString("fire-extinguisher-component-safety-on-message"), uid);
             return;
         }
 
@@ -86,8 +85,7 @@ public sealed class FireExtinguisherSystem : EntitySystem
             _solutionContainerSystem.TryAddSolution(uid, container, drained);
 
             SoundSystem.Play(Filter.Pvs(uid), component.RefillSound.GetSound(), uid);
-            _popupSystem.PopupEntity(Loc.GetString("fire-extinguisher-component-after-interact-refilled-message", ("owner", uid)),
-                uid, Filter.Entities(args.Target.Value));
+            _popupSystem.PopupEntity(Filter.Entities(args.Target.Value), Loc.GetString("fire-extinguisher-component-after-interact-refilled-message", ("owner", uid)), uid);
         }
     }
 
@@ -109,8 +107,7 @@ public sealed class FireExtinguisherSystem : EntitySystem
     {
         if (component.HasSafety && component.Safety)
         {
-            _popupSystem.PopupEntity(Loc.GetString("fire-extinguisher-component-safety-on-message"), uid,
-                Filter.Entities(args.User));
+            _popupSystem.PopupEntity(Filter.Entities(args.User), Loc.GetString("fire-extinguisher-component-safety-on-message"), uid);
             args.Cancel();
         }
     }

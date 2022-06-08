@@ -145,7 +145,7 @@ namespace Content.Server.Body.Systems
                 if (!xformQuery.TryGetComponent(part, out var xform) ||
                     !bodyXform.Coordinates.InRange(EntityManager, xform.Coordinates,2f))
                 {
-                    _popupSystem.PopupEntity(Loc.GetString("reassemble-fail"), uid, Filter.Entities(uid));
+                    _popupSystem.PopupEntity(Filter.Entities(uid), Loc.GetString("reassemble-fail"), uid);
                     return false;
                 }
                 partList.Add(part);
@@ -176,7 +176,7 @@ namespace Content.Server.Body.Systems
                 EntityManager.DeleteEntity(entity);
             }
 
-            _popupSystem.PopupEntity(Loc.GetString("reassemble-success", ("user", mob)), mob, Filter.Entities(mob));
+            _popupSystem.PopupEntity(Filter.Entities(mob), Loc.GetString("reassemble-success", ("user", mob)), mob);
         }
 
         /// <summary>

@@ -129,7 +129,7 @@ namespace Content.Server.Stack
 
             if (amount <= 0)
             {
-                PopupSystem.PopupCursor(Loc.GetString("comp-stack-split-too-small"), Filter.Entities(userUid));
+                PopupSystem.PopupCursor(Filter.Entities(userUid), Loc.GetString("comp-stack-split-too-small"));
                 return;
             }
 
@@ -138,7 +138,7 @@ namespace Content.Server.Stack
 
             HandsSystem.PickupOrDrop(userUid, split);
 
-            PopupSystem.PopupCursor(Loc.GetString("comp-stack-split"), Filter.Entities(userUid));
+            PopupSystem.PopupCursor(Filter.Entities(userUid), Loc.GetString("comp-stack-split"));
         }
     }
 }

@@ -197,16 +197,16 @@ namespace Content.Server.Nutrition.EntitySystems
 
             if (!drink.Opened)
             {
-                _popupSystem.PopupEntity(Loc.GetString("drink-component-try-use-drink-not-open",
-                    ("owner", EntityManager.GetComponent<MetaDataComponent>(drink.Owner).EntityName)), drink.Owner, Filter.Entities(user));
+                _popupSystem.PopupEntity(Filter.Entities(user), Loc.GetString("drink-component-try-use-drink-not-open",
+                    ("owner", EntityManager.GetComponent<MetaDataComponent>(drink.Owner).EntityName)), drink.Owner);
                 return true;
             }
 
             if (!_solutionContainerSystem.TryGetDrainableSolution(drink.Owner, out var drinkSolution) ||
                 drinkSolution.DrainAvailable <= 0)
             {
-                _popupSystem.PopupEntity(Loc.GetString("drink-component-try-use-drink-is-empty",
-                    ("entity", EntityManager.GetComponent<MetaDataComponent>(drink.Owner).EntityName)), drink.Owner, Filter.Entities(user));
+                _popupSystem.PopupEntity(Filter.Entities(user), Loc.GetString("drink-component-try-use-drink-is-empty",
+                    ("entity", EntityManager.GetComponent<MetaDataComponent>(drink.Owner).EntityName)), drink.Owner);
                 return true;
             }
 
@@ -223,8 +223,7 @@ namespace Content.Server.Nutrition.EntitySystems
                 EntityManager.TryGetComponent(user, out MetaDataComponent? meta);
                 var userName = meta?.EntityName ?? string.Empty;
 
-                _popupSystem.PopupEntity(Loc.GetString("drink-component-force-feed", ("user", userName)),
-                    user, Filter.Entities(target));
+                _popupSystem.PopupEntity(Filter.Entities(target), Loc.GetString("drink-component-force-feed", ("user", userName)), user);
 
                 // logging
                 _adminLogger.Add(LogType.ForceFeed, LogImpact.Medium, $"{ToPrettyString(user):user} is forcing {ToPrettyString(target):target} to drink {ToPrettyString(drink.Owner):drink} {SolutionContainerSystem.ToPrettyString(drinkSolution)}");
@@ -264,11 +263,9 @@ namespace Content.Server.Nutrition.EntitySystems
 
             if (!_bodySystem.TryGetComponentsOnMechanisms<StomachComponent>(uid, out var stomachs, body))
             {
-                _popupSystem.PopupEntity(
-                    forceDrink ?
-                        Loc.GetString("drink-component-try-use-drink-cannot-drink-other") :
-                        Loc.GetString("drink-component-try-use-drink-had-enough"),
-                    uid, Filter.Entities(args.User));
+                _popupSystem.PopupEntity(Filter.Entities(args.User), forceDrink ?
+                    Loc.GetString("drink-component-try-use-drink-cannot-drink-other") :
+                    Loc.GetString("drink-component-try-use-drink-had-enough"), uid);
 
                 if (EntityManager.HasComponent<RefillableSolutionComponent>(uid))
                 {
@@ -286,8 +283,7 @@ namespace Content.Server.Nutrition.EntitySystems
             // All stomach are full or can't handle whatever solution we have.
             if (firstStomach == null)
             {
-                _popupSystem.PopupEntity(Loc.GetString("drink-component-try-use-drink-had-enough-other"),
-                    uid, Filter.Entities(args.User));
+                _popupSystem.PopupEntity(Filter.Entities(args.User), Loc.GetString("drink-component-try-use-drink-had-enough-other"), uid);
 
                 _spillableSystem.SpillAt(uid, drained, "PuddleSmear");
                 return;
@@ -301,17 +297,13 @@ namespace Content.Server.Nutrition.EntitySystems
                 EntityManager.TryGetComponent(args.User, out MetaDataComponent? userMeta);
                 var userName = userMeta?.EntityName ?? string.Empty;
 
-                _popupSystem.PopupEntity(
-                    Loc.GetString("drink-component-force-feed-success", ("user", userName)), uid, Filter.Entities(uid));
+                _popupSystem.PopupEntity(Filter.Entities(uid), Loc.GetString("drink-component-force-feed-success", ("user", userName)), uid);
 
-                _popupSystem.PopupEntity(
-                    Loc.GetString("drink-component-force-feed-success-user", ("target", targetName)),
-                    args.User, Filter.Entities(args.User));
+                _popupSystem.PopupEntity(Filter.Entities(args.User), Loc.GetString("drink-component-force-feed-success-user", ("target", targetName)), args.User);
             }
             else
             {
-                _popupSystem.PopupEntity(
-                    Loc.GetString("drink-component-try-use-drink-success-slurp"), args.User, Filter.Pvs(args.User));
+                _popupSystem.PopupEntity(Filter.Pvs(args.User), Loc.GetString("drink-component-try-use-drink-success-slurp"), args.User);
             }
 
             SoundSystem.Play(Filter.Pvs(uid), args.Drink.UseSound.GetSound(), uid, AudioParams.Default.WithVolume(-2f));

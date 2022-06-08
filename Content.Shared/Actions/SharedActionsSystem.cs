@@ -342,7 +342,7 @@ public abstract class SharedActionsSystem : EntitySystem
             ? Loc.GetString(action.Popup)
             : Loc.GetString(action.Popup + action.PopupToggleSuffix);
 
-        _popupSystem.PopupEntity(msg, performer, filter);
+        _popupSystem.PopupEntity(filter, msg, performer);
 
         return true;
     }

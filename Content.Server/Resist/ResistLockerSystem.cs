@@ -55,7 +55,7 @@ public sealed class ResistLockerSystem : EntitySystem
         };
 
         resistLockerComponent.IsResisting = true;
-        _popupSystem.PopupEntity(Loc.GetString("resist-locker-component-start-resisting"), user, Filter.Entities(user));
+        _popupSystem.PopupEntity(Filter.Entities(user), Loc.GetString("resist-locker-component-start-resisting"), user);
         _doAfterSystem.DoAfter(doAfterEventArgs);
     }
 
@@ -80,7 +80,7 @@ public sealed class ResistLockerSystem : EntitySystem
     {
         component.IsResisting = false;
         component.CancelToken = null;
-        _popupSystem.PopupEntity(Loc.GetString("resist-locker-component-resist-interrupted"), ev.User, Filter.Entities(ev.User));
+        _popupSystem.PopupEntity(Filter.Entities(ev.User), Loc.GetString("resist-locker-component-resist-interrupted"), ev.User);
     }
 
     private void OnRemovedFromContainer(EntityUid uid, ResistLockerComponent component, EntRemovedFromContainerMessage message)

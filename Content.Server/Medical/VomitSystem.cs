@@ -52,7 +52,7 @@ namespace Content.Server.Medical
 
             SoundSystem.Play(Filter.Pvs(uid), "/Audio/Effects/Diseases/vomiting.ogg", uid, AudioHelpers.WithVariation(0.2f).WithVolume(-4f));
 
-            _popupSystem.PopupEntity(Loc.GetString("disease-vomit", ("person", uid)), uid, Filter.Pvs(uid));
+            _popupSystem.PopupEntity(Filter.Pvs(uid), Loc.GetString("disease-vomit", ("person", uid)), uid);
             // Get the solution of the puddle we spawned
             if (!_solutionSystem.TryGetSolution(puddle, puddleComp.SolutionName, out var puddleSolution))
                 return;

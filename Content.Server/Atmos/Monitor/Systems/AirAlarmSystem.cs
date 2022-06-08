@@ -260,7 +260,7 @@ namespace Content.Server.Atmos.Monitor.Systems
 
             if (!_accessSystem.IsAllowed(user.Value, reader))
             {
-                _popup.PopupEntity(Loc.GetString("air-alarm-ui-access-denied"), user.Value, Filter.Entities(user.Value));
+                _popup.PopupEntity(Filter.Entities(user.Value), Loc.GetString("air-alarm-ui-access-denied"), user.Value);
                 return false;
             }
 

@@ -110,7 +110,7 @@ namespace Content.Server.Nuke
             if (!component.DiskSlot.HasItem)
             {
                 var msg = Loc.GetString("nuke-component-cant-anchor");
-                _popups.PopupEntity(msg, uid, Filter.Entities(args.User));
+                _popups.PopupEntity(Filter.Entities(args.User), msg, uid);
 
                 args.Cancel();
             }

@@ -30,8 +30,7 @@ public sealed class SeedExtractorSystem : EntitySystem
         if (!_botanySystem.TryGetSeed(produce, out var seed))
             return;
 
-        _popupSystem.PopupCursor(Loc.GetString("seed-extractor-component-interact-message",("name", args.Used)),
-            Filter.Entities(args.User));
+        _popupSystem.PopupCursor(Filter.Entities(args.User), Loc.GetString("seed-extractor-component-interact-message",("name", args.Used)));
 
         QueueDel(args.Used);
 

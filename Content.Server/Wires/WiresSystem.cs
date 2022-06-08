@@ -402,13 +402,13 @@ public sealed class WiresSystem : EntitySystem
 
         if (!EntityManager.TryGetComponent(player, out HandsComponent? handsComponent))
         {
-            _popupSystem.PopupEntity(Loc.GetString("wires-component-ui-on-receive-message-no-hands"), uid, Filter.Entities(player));
+            _popupSystem.PopupEntity(Filter.Entities(player), Loc.GetString("wires-component-ui-on-receive-message-no-hands"), uid);
             return;
         }
 
         if (!_interactionSystem.InRangeUnobstructed(player, uid))
         {
-            _popupSystem.PopupEntity(Loc.GetString("wires-component-ui-on-receive-message-cannot-reach"), uid, Filter.Entities(player));
+            _popupSystem.PopupEntity(Filter.Entities(player), Loc.GetString("wires-component-ui-on-receive-message-cannot-reach"), uid);
             return;
         }
 
@@ -626,7 +626,7 @@ public sealed class WiresSystem : EntitySystem
             case WiresAction.Cut:
                 if (!_toolSystem.HasQuality(toolEntity, "Cutting", tool))
                 {
-                    _popupSystem.PopupCursor(Loc.GetString("wires-component-ui-on-receive-message-need-wirecutters"), Filter.Entities(user));
+                    _popupSystem.PopupCursor(Filter.Entities(user), Loc.GetString("wires-component-ui-on-receive-message-need-wirecutters"));
                     return;
                 }
 
@@ -634,7 +634,7 @@ public sealed class WiresSystem : EntitySystem
             case WiresAction.Mend:
                 if (!_toolSystem.HasQuality(toolEntity, "Cutting", tool))
                 {
-                    _popupSystem.PopupCursor(Loc.GetString("wires-component-ui-on-receive-message-need-wirecutters"), Filter.Entities(user));
+                    _popupSystem.PopupCursor(Filter.Entities(user), Loc.GetString("wires-component-ui-on-receive-message-need-wirecutters"));
                     return;
                 }
 
@@ -642,7 +642,7 @@ public sealed class WiresSystem : EntitySystem
             case WiresAction.Pulse:
                 if (!_toolSystem.HasQuality(toolEntity, "Pulsing", tool))
                 {
-                    _popupSystem.PopupCursor(Loc.GetString("wires-component-ui-on-receive-message-need-multitool"), Filter.Entities(user));
+                    _popupSystem.PopupCursor(Filter.Entities(user), Loc.GetString("wires-component-ui-on-receive-message-need-multitool"));
                     return;
                 }
 
@@ -699,7 +699,7 @@ public sealed class WiresSystem : EntitySystem
             case WiresAction.Cut:
                 if (!_toolSystem.HasQuality(toolEntity, "Cutting", tool))
                 {
-                    _popupSystem.PopupCursor(Loc.GetString("wires-component-ui-on-receive-message-need-wirecutters"), Filter.Entities(user));
+                    _popupSystem.PopupCursor(Filter.Entities(user), Loc.GetString("wires-component-ui-on-receive-message-need-wirecutters"));
                     break;
                 }
 
@@ -714,7 +714,7 @@ public sealed class WiresSystem : EntitySystem
             case WiresAction.Mend:
                 if (!_toolSystem.HasQuality(toolEntity, "Cutting", tool))
                 {
-                    _popupSystem.PopupCursor(Loc.GetString("wires-component-ui-on-receive-message-need-wirecutters"), Filter.Entities(user));
+                    _popupSystem.PopupCursor(Filter.Entities(user), Loc.GetString("wires-component-ui-on-receive-message-need-wirecutters"));
                     break;
                 }
 
@@ -729,13 +729,13 @@ public sealed class WiresSystem : EntitySystem
             case WiresAction.Pulse:
                 if (!_toolSystem.HasQuality(toolEntity, "Pulsing", tool))
                 {
-                    _popupSystem.PopupCursor(Loc.GetString("wires-component-ui-on-receive-message-need-multitool"), Filter.Entities(user));
+                    _popupSystem.PopupCursor(Filter.Entities(user), Loc.GetString("wires-component-ui-on-receive-message-need-multitool"));
                     break;
                 }
 
                 if (wire.IsCut)
                 {
-                    _popupSystem.PopupCursor(Loc.GetString("wires-component-ui-on-receive-message-cannot-pulse-cut-wire"), Filter.Entities(user));
+                    _popupSystem.PopupCursor(Filter.Entities(user), Loc.GetString("wires-component-ui-on-receive-message-cannot-pulse-cut-wire"));
                     break;
                 }
 

@@ -56,7 +56,7 @@ namespace Content.Server.Polymorph.Systems
                 mind.Mind.TransferTo(component.Parent);
             }
 
-            _popup.PopupEntity(Loc.GetString("polymorph-revert-popup-generic", ("parent", uid), ("child", component.Parent)), component.Parent, Filter.Pvs(component.Parent));
+            _popup.PopupEntity(Filter.Pvs(component.Parent), Loc.GetString("polymorph-revert-popup-generic", ("parent", uid), ("child", component.Parent)), component.Parent);
             QueueDel(uid);
         }
 

@@ -160,7 +160,7 @@ namespace Content.Server.Buckle.Components
 
             if (!_entMan.HasComponent<HandsComponent>(user))
             {
-                popupSystem.PopupEntity(Loc.GetString("buckle-component-no-hands-message"), user, Filter.Entities(user));
+                popupSystem.PopupEntity(Filter.Entities(user), Loc.GetString("buckle-component-no-hands-message"), user);
                 return false;
             }
 
@@ -169,7 +169,7 @@ namespace Content.Server.Buckle.Components
                 var message = Loc.GetString(Owner == user
                     ? "buckle-component-already-buckled-message"
                     : "buckle-component-other-already-buckled-message", ("owner", Owner));
-                popupSystem.PopupEntity(message, user, Filter.Entities(user));
+                popupSystem.PopupEntity(Filter.Entities(user), message, user);
 
                 return false;
             }
@@ -182,7 +182,7 @@ namespace Content.Server.Buckle.Components
                     var message = Loc.GetString(Owner == user
                         ? "buckle-component-cannot-buckle-message"
                         : "buckle-component-other-cannot-buckle-message", ("owner", Owner));
-                    popupSystem.PopupEntity(message, user, Filter.Entities(user));
+                    popupSystem.PopupEntity(Filter.Entities(user), message, user);
 
                     return false;
                 }
@@ -195,7 +195,7 @@ namespace Content.Server.Buckle.Components
                 var message = Loc.GetString(Owner == user
                     ? "buckle-component-cannot-fit-message"
                     : "buckle-component-other-cannot-fit-message", ("owner", Owner));
-                popupSystem.PopupEntity(message, user, Filter.Entities(user));
+                popupSystem.PopupEntity(Filter.Entities(user), message, user);
 
                 return false;
             }
@@ -218,7 +218,7 @@ namespace Content.Server.Buckle.Components
                 var message = Loc.GetString(Owner == user
                     ? "buckle-component-cannot-buckle-message"
                     : "buckle-component-other-cannot-buckle-message", ("owner", Owner));
-                popupSystem.PopupEntity(message, user, Filter.Entities(user));
+                popupSystem.PopupEntity(Filter.Entities(user), message, user);
                 return false;
             }
 

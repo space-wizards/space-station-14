@@ -78,8 +78,8 @@ namespace Content.Server.CombatMode
 
                 var msgUser = Loc.GetString("disarm-action-popup-message-cursor", ("targetName", targetName ));
 
-                _popupSystem.PopupEntity(msgOther, args.Performer, filterOther);
-                _popupSystem.PopupEntity(msgUser, args.Performer, Filter.Entities(args.Performer));
+                _popupSystem.PopupEntity(filterOther, msgOther, args.Performer);
+                _popupSystem.PopupEntity(Filter.Entities(args.Performer), msgUser, args.Performer);
 
                 _meleeWeaponSystem.SendLunge(angle, args.Performer);
                 return;

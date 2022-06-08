@@ -86,7 +86,7 @@ namespace Content.Server.Cuffs
             }
             if (args.Cancelled)
             {
-                _popupSystem.PopupEntity(Loc.GetString("cuffable-component-cannot-interact-message"), args.Target, Filter.Entities(args.User));
+                _popupSystem.PopupEntity(Filter.Entities(args.User), Loc.GetString("cuffable-component-cannot-interact-message"), args.Target);
             }
         }
 

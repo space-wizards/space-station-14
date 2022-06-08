@@ -95,7 +95,7 @@ namespace Content.Server.Tools
             if (fuel == FixedPoint2.Zero || fuel < welder.FuelLitCost)
             {
                 if(user != null)
-                    _popupSystem.PopupEntity(Loc.GetString("welder-component-no-fuel-message"), uid, Filter.Entities(user.Value));
+                    _popupSystem.PopupEntity(Filter.Entities(user.Value), Loc.GetString("welder-component-no-fuel-message"), uid);
                 return false;
             }
 
@@ -236,7 +236,7 @@ namespace Content.Server.Tools
 
             if (!welder.Lit)
             {
-                _popupSystem.PopupEntity(Loc.GetString("welder-component-welder-not-lit-message"), uid, Filter.Entities(args.User));
+                _popupSystem.PopupEntity(Filter.Entities(args.User), Loc.GetString("welder-component-welder-not-lit-message"), uid);
                 args.Cancel();
                 return;
             }
@@ -245,7 +245,7 @@ namespace Content.Server.Tools
 
             if (FixedPoint2.New(args.Fuel) > fuel)
             {
-                _popupSystem.PopupEntity(Loc.GetString("welder-component-cannot-weld-message"), uid, Filter.Entities(args.User));
+                _popupSystem.PopupEntity(Filter.Entities(args.User), Loc.GetString("welder-component-cannot-weld-message"), uid);
                 args.Cancel();
                 return;
             }
@@ -258,7 +258,7 @@ namespace Content.Server.Tools
 
             if (!welder.Lit)
             {
-                _popupSystem.PopupEntity(Loc.GetString("welder-component-welder-not-lit-message"), uid, Filter.Entities(args.User));
+                _popupSystem.PopupEntity(Filter.Entities(args.User), Loc.GetString("welder-component-welder-not-lit-message"), uid);
                 args.Cancel();
                 return;
             }

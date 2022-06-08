@@ -88,7 +88,7 @@ namespace Content.Client.Popups
 
         #region Abstract Method Implementations
 
-        public override void PopupCursor(string message, Filter filter)
+        public override void PopupCursor(Filter filter, string message)
         {
             if (!filter.CheckPrediction)
                 return;
@@ -96,7 +96,7 @@ namespace Content.Client.Popups
             PopupCursor(message);
         }
 
-        public override void PopupCoordinates(string message, EntityCoordinates coordinates, Filter filter)
+        public override void PopupCoordinates(Filter filter, string message, EntityCoordinates coordinates)
         {
             if (!filter.CheckPrediction)
                 return;
@@ -104,7 +104,7 @@ namespace Content.Client.Popups
             PopupCoordinates(message, coordinates);
         }
 
-        public override void PopupEntity(string message, EntityUid uid, Filter filter)
+        public override void PopupEntity(Filter filter, string message, EntityUid uid)
         {
             if (!filter.CheckPrediction)
                 return;

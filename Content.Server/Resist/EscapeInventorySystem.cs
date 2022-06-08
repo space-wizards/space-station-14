@@ -63,8 +63,8 @@ public sealed class EscapeInventorySystem : EntitySystem
         };
 
         component.IsResisting = true;
-        _popupSystem.PopupEntity(Loc.GetString("escape-inventory-component-start-resisting"), user, Filter.Entities(user));
-        _popupSystem.PopupEntity(Loc.GetString("escape-inventory-component-start-resisting-target"), container, Filter.Entities(container));
+        _popupSystem.PopupEntity(Filter.Entities(user), Loc.GetString("escape-inventory-component-start-resisting"), user);
+        _popupSystem.PopupEntity(Filter.Entities(container), Loc.GetString("escape-inventory-component-start-resisting-target"), container);
         _doAfterSystem.DoAfter(doAfterEventArgs);
     }
 

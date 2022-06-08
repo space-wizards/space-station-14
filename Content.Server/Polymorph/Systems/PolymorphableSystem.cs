@@ -126,7 +126,7 @@ namespace Content.Server.Polymorph.Systems
             if(PausedMap != null)
                 targetTransformComp.AttachParent(Transform(PausedMap.Value));
             
-            _popup.PopupEntity(Loc.GetString("polymorph-popup-generic", ("parent", target), ("child", child)), child, Filter.Pvs(child));
+            _popup.PopupEntity(Filter.Pvs(child), Loc.GetString("polymorph-popup-generic", ("parent", target), ("child", child)), child);
         }
 
         public void CreatePolymorphAction(string id, EntityUid target)

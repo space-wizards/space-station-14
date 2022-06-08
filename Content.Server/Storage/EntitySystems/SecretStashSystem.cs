@@ -69,7 +69,7 @@ namespace Content.Server.Storage.EntitySystems
             if (container.ContainedEntity != null)
             {
                 var msg = Loc.GetString("comp-secret-stash-action-hide-container-not-empty");
-                _popupSystem.PopupEntity(msg, uid, Filter.Entities(userUid));
+                _popupSystem.PopupEntity(Filter.Entities(userUid), msg, uid);
                 return false;
             }
 
@@ -79,7 +79,7 @@ namespace Content.Server.Storage.EntitySystems
             {
                 var msg = Loc.GetString("comp-secret-stash-action-hide-item-too-big",
                     ("item", itemName), ("stash", component.SecretPartName));
-                _popupSystem.PopupEntity(msg, uid, Filter.Entities(userUid));
+                _popupSystem.PopupEntity(Filter.Entities(userUid), msg, uid);
                 return false;
             }
 
@@ -92,7 +92,7 @@ namespace Content.Server.Storage.EntitySystems
             // all done, show success message
             var successMsg = Loc.GetString("comp-secret-stash-action-hide-success",
                 ("item", itemName), ("this", component.SecretPartName));
-            _popupSystem.PopupEntity(successMsg, uid, Filter.Entities(userUid));
+            _popupSystem.PopupEntity(Filter.Entities(userUid), successMsg, uid);
             return true;
         }
 
@@ -121,7 +121,7 @@ namespace Content.Server.Storage.EntitySystems
             // show success message
             var successMsg = Loc.GetString("comp-secret-stash-action-get-item-found-something",
                 ("stash", component.SecretPartName));
-            _popupSystem.PopupEntity(successMsg, uid, Filter.Entities(userUid));
+            _popupSystem.PopupEntity(Filter.Entities(userUid), successMsg, uid);
 
             return true;
         }

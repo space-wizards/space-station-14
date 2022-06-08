@@ -95,19 +95,19 @@ namespace Content.Server.Kitchen.EntitySystems
         {
             if (!component.Powered)
             {
-                _popupSystem.PopupEntity(Loc.GetString("microwave-component-interact-using-no-power"), uid, Filter.Entities(args.User));
+                _popupSystem.PopupEntity(Filter.Entities(args.User), Loc.GetString("microwave-component-interact-using-no-power"), uid);
                 return;
             }
 
             if (component.Broken)
             {
-                _popupSystem.PopupEntity(Loc.GetString("microwave-component-interact-using-broken"), uid, Filter.Entities(args.User));
+                _popupSystem.PopupEntity(Filter.Entities(args.User), Loc.GetString("microwave-component-interact-using-broken"), uid);
                 return;
             }
 
             if (!HasComp<SharedItemComponent>(args.Used))
             {
-                _popupSystem.PopupEntity(Loc.GetString("microwave-component-interact-using-transfer-fail"), uid, Filter.Entities(args.User));
+                _popupSystem.PopupEntity(Filter.Entities(args.User), Loc.GetString("microwave-component-interact-using-transfer-fail"), uid);
                 return;
             }
 

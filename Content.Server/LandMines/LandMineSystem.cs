@@ -29,10 +29,7 @@ public sealed class LandMineSystem : EntitySystem
     {
         if (_trigger.Trigger(uid, args.Tripper))
         {
-            _popupSystem.PopupCoordinates(
-                Loc.GetString("land-mine-triggered", ("mine", uid)),
-                Transform(uid).Coordinates,
-                Filter.Entities(args.Tripper));
+            _popupSystem.PopupCoordinates(Filter.Entities(args.Tripper), Loc.GetString("land-mine-triggered", ("mine", uid)), Transform(uid).Coordinates);
         }
 
         if (component.DeleteOnActivate)

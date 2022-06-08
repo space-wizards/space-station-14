@@ -53,7 +53,7 @@ namespace Content.Server.Construction
             xform.Anchored = false;
             RaiseLocalEvent(uid, new UserUnanchoredEvent(args.User, args.Using), false);
 
-            _popup.PopupEntity(Loc.GetString("anchorable-unanchored"), uid, Filter.Pvs(uid, entityManager: EntityManager));
+            _popup.PopupEntity(Filter.Pvs(uid, entityManager: EntityManager), Loc.GetString("anchorable-unanchored"), uid);
 
             _adminLogger.Add(
                 LogType.Action,
@@ -88,7 +88,7 @@ namespace Content.Server.Construction
             xform.Anchored = true;
             RaiseLocalEvent(uid, new UserAnchoredEvent(args.User, args.Using), false);
 
-            _popup.PopupEntity(Loc.GetString("anchorable-anchored"), uid, Filter.Pvs(uid, entityManager: EntityManager));
+            _popup.PopupEntity(Filter.Pvs(uid, entityManager: EntityManager), Loc.GetString("anchorable-anchored"), uid);
 
             _adminLogger.Add(
                 LogType.Action,

@@ -223,7 +223,7 @@ namespace Content.Server.Light.EntitySystems
             if (!_powerCell.TryGetBatteryFromSlot(component.Owner, out var battery))
             {
                 SoundSystem.Play(Filter.Pvs(component.Owner, entityManager: EntityManager), component.TurnOnFailSound.GetSound(), component.Owner);
-                _popup.PopupEntity(Loc.GetString("handheld-light-component-cell-missing-message"), component.Owner, Filter.Entities(user));
+                _popup.PopupEntity(Filter.Entities(user), Loc.GetString("handheld-light-component-cell-missing-message"), component.Owner);
                 return false;
             }
 
@@ -233,7 +233,7 @@ namespace Content.Server.Light.EntitySystems
             if (component.Wattage > battery.CurrentCharge)
             {
                 SoundSystem.Play(Filter.Pvs(component.Owner, entityManager: EntityManager), component.TurnOnFailSound.GetSound(), component.Owner);
-                _popup.PopupEntity(Loc.GetString("handheld-light-component-cell-dead-message"), component.Owner, Filter.Entities(user));
+                _popup.PopupEntity(Filter.Entities(user), Loc.GetString("handheld-light-component-cell-dead-message"), component.Owner);
                 return false;
             }
 

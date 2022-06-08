@@ -197,7 +197,7 @@ namespace Content.Server.Medical.SuitSensors
             if (userUid != null)
             {
                 var msg = Loc.GetString("suit-sensor-mode-state", ("mode", GetModeName(mode)));
-                _popupSystem.PopupEntity(msg, uid, Filter.Entities(userUid.Value));
+                _popupSystem.PopupEntity(Filter.Entities(userUid.Value), msg, uid);
             }
         }
 

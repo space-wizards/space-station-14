@@ -68,7 +68,7 @@ public sealed class ClimbSystem : SharedClimbSystem
             : CanVault(component, args.User, args.Dragged, args.Target, out reason);
 
         if (!canVault)
-            _popupSystem.PopupEntity(reason, args.User, Filter.Entities(args.User));
+            _popupSystem.PopupEntity(Filter.Entities(args.User), reason, args.User);
 
         args.CanDrop = canVault;
         args.Handled = true;
@@ -326,9 +326,7 @@ public sealed class ClimbSystem : SharedClimbSystem
         _stunSystem.TryParalyze(args.Climber, TimeSpan.FromSeconds(component.StunTime), true);
 
         // Not shown to the user, since they already get a 'you climb on the glass table' popup
-        _popupSystem.PopupEntity(
-            Loc.GetString("glass-table-shattered-others", ("table", uid), ("climber", args.Climber)), args.Climber,
-            Filter.Pvs(uid).RemoveWhereAttachedEntity(puid => puid == args.Climber));
+        _popupSystem.PopupEntity(Filter.Pvs(uid).RemoveWhereAttachedEntity(puid => puid == args.Climber), Loc.GetString("glass-table-shattered-others", ("table", uid), ("climber", args.Climber)), args.Climber);
     }
 
     /// <summary>

@@ -12,25 +12,25 @@ namespace Content.Shared.Popups
         /// <summary>
         ///     Shows a popup on the users' cursors.
         /// </summary>
-        /// <param name="message">The message to display.</param>
         /// <param name="filter">Filter for the players that will see the popup.</param>
-        public abstract void PopupCursor(string message, Filter filter);
+        /// <param name="message">The message to display.</param>
+        public abstract void PopupCursor(Filter filter, string message);
 
         /// <summary>
         ///     Shows a popup at a world location.
         /// </summary>
+        /// <param name="filter">Filter for the players that will see the popup.</param>
         /// <param name="message">The message to display.</param>
         /// <param name="coordinates">The coordinates where to display the message.</param>
-        /// <param name="filter">Filter for the players that will see the popup.</param>
-        public abstract void PopupCoordinates(string message, EntityCoordinates coordinates, Filter filter);
+        public abstract void PopupCoordinates(Filter filter, string message, EntityCoordinates coordinates);
 
         /// <summary>
         ///     Shows a popup above an entity.
         /// </summary>
+        /// <param name="filter">Filter for the players that will see the popup.</param>
         /// <param name="message">The message to display.</param>
         /// <param name="uid">The UID of the entity.</param>
-        /// <param name="filter">Filter for the players that will see the popup.</param>
-        public abstract void PopupEntity(string message, EntityUid uid, Filter filter);
+        public abstract void PopupEntity(Filter filter, string message, EntityUid uid);
     }
 
     /// <summary>

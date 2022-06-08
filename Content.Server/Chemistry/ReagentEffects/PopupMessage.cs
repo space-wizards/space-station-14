@@ -20,9 +20,9 @@ namespace Content.Server.Chemistry.ReagentEffects
 
             var msg = random.Pick(Messages);
             if (Type == PopupType.Local)
-                popupSys.PopupEntity(Loc.GetString(msg), args.SolutionEntity, Filter.Entities(args.SolutionEntity));
+                popupSys.PopupEntity(Filter.Entities(args.SolutionEntity), Loc.GetString(msg), args.SolutionEntity);
             else if (Type == PopupType.Pvs)
-                popupSys.PopupEntity(Loc.GetString(msg), args.SolutionEntity, Filter.Pvs(args.SolutionEntity));
+                popupSys.PopupEntity(Filter.Pvs(args.SolutionEntity), Loc.GetString(msg), args.SolutionEntity);
         }
     }
 

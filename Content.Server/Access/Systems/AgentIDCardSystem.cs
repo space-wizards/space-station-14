@@ -36,15 +36,15 @@ namespace Content.Server.Access.Systems
 
             if (addedLength == 0)
             {
-                _popupSystem.PopupEntity(Loc.GetString("agent-id-no-new", ("card", args.Target)), args.Target.Value, Filter.Entities(args.User));
+                _popupSystem.PopupEntity(Filter.Entities(args.User), Loc.GetString("agent-id-no-new", ("card", args.Target)), args.Target.Value);
                 return;
             }
             else if (addedLength == 1)
             {
-                _popupSystem.PopupEntity(Loc.GetString("agent-id-new-1", ("card", args.Target)), args.Target.Value, Filter.Entities(args.User));
+                _popupSystem.PopupEntity(Filter.Entities(args.User), Loc.GetString("agent-id-new-1", ("card", args.Target)), args.Target.Value);
                 return;
             }
-            _popupSystem.PopupEntity(Loc.GetString("agent-id-new", ("number", addedLength), ("card", args.Target)), args.Target.Value, Filter.Entities(args.User));
+            _popupSystem.PopupEntity(Filter.Entities(args.User), Loc.GetString("agent-id-new", ("number", addedLength), ("card", args.Target)), args.Target.Value);
         }
 
         private void OnJobChanged(EntityUid uid, AgentIDCardComponent comp, AgentIDCardJobChangedMessage args)

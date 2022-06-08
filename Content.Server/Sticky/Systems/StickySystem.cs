@@ -78,7 +78,7 @@ public sealed class StickySystem : EntitySystem
             if (component.StickPopupStart != null)
             {
                 var msg = Loc.GetString(component.StickPopupStart);
-                _popupSystem.PopupEntity(msg, user, Filter.Entities(user));
+                _popupSystem.PopupEntity(Filter.Entities(user), msg, user);
             }
 
             // start sticking object to target
@@ -121,7 +121,7 @@ public sealed class StickySystem : EntitySystem
             if (component.UnstickPopupStart != null)
             {
                 var msg = Loc.GetString(component.UnstickPopupStart);
-                _popupSystem.PopupEntity(msg, user, Filter.Entities(user));
+                _popupSystem.PopupEntity(Filter.Entities(user), msg, user);
             }
 
             // start unsticking object
@@ -165,7 +165,7 @@ public sealed class StickySystem : EntitySystem
         if (component.StickPopupSuccess != null)
         {
             var msg = Loc.GetString(component.StickPopupSuccess);
-            _popupSystem.PopupEntity(msg, user, Filter.Entities(user));
+            _popupSystem.PopupEntity(Filter.Entities(user), msg, user);
         }
 
         // send information to appearance that entity is stuck
@@ -206,7 +206,7 @@ public sealed class StickySystem : EntitySystem
         if (component.UnstickPopupSuccess != null)
         {
             var msg = Loc.GetString(component.UnstickPopupSuccess);
-            _popupSystem.PopupEntity(msg, user, Filter.Entities(user));
+            _popupSystem.PopupEntity(Filter.Entities(user), msg, user);
         }
 
         component.StuckTo = null;

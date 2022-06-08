@@ -76,7 +76,7 @@ namespace Content.Server.Verbs
             {
                 // Send an informative pop-up message
                 if (!string.IsNullOrWhiteSpace(verb.Message))
-                    _popupSystem.PopupEntity(verb.Message, user, Filter.Entities(user));
+                    _popupSystem.PopupEntity(Filter.Entities(user), verb.Message, user);
 
                 return;
             }

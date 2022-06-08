@@ -33,15 +33,15 @@ namespace Content.Server.Remotes
             {
                 case DoorRemoteComponent.OperatingMode.OpenClose:
                     component.Mode = DoorRemoteComponent.OperatingMode.ToggleBolts;
-                    _popupSystem.PopupEntity(Loc.GetString("door-remote-switch-state-toggle-bolts"), args.User, Filter.Entities(args.User));
+                    _popupSystem.PopupEntity(Filter.Entities(args.User), Loc.GetString("door-remote-switch-state-toggle-bolts"), args.User);
                     break;
                 case DoorRemoteComponent.OperatingMode.ToggleBolts:
                     component.Mode = DoorRemoteComponent.OperatingMode.ToggleEmergencyAccess;
-                    _popupSystem.PopupEntity(Loc.GetString("door-remote-switch-state-toggle-emergency-access"), args.User, Filter.Entities(args.User));
+                    _popupSystem.PopupEntity(Filter.Entities(args.User), Loc.GetString("door-remote-switch-state-toggle-emergency-access"), args.User);
                     break;
                 case DoorRemoteComponent.OperatingMode.ToggleEmergencyAccess:
                     component.Mode = DoorRemoteComponent.OperatingMode.OpenClose;
-                    _popupSystem.PopupEntity(Loc.GetString("door-remote-switch-state-open-close"), args.User, Filter.Entities(args.User));
+                    _popupSystem.PopupEntity(Filter.Entities(args.User), Loc.GetString("door-remote-switch-state-open-close"), args.User);
                     break;
             }
         }

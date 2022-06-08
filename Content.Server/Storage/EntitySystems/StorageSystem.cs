@@ -648,7 +648,7 @@ namespace Content.Server.Storage.EntitySystems
         {
             if (!storageComp.ShowPopup) return;
 
-            _popupSystem.PopupEntity(Loc.GetString(message), player, Filter.Entities(player));
+            _popupSystem.PopupEntity(Filter.Entities(player), Loc.GetString(message), player);
         }
     }
 }

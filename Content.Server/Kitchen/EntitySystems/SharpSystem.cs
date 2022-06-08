@@ -87,8 +87,7 @@ public sealed class SharpSystem : EntitySystem
             popupEnt = Spawn(proto, coords);
         }
 
-        _popupSystem.PopupEntity(Loc.GetString("butcherable-knife-butchered-success", ("target", ev.Entity), ("knife", ev.Sharp)),
-            popupEnt, Filter.Entities(ev.User));
+        _popupSystem.PopupEntity(Filter.Entities(ev.User), Loc.GetString("butcherable-knife-butchered-success", ("target", ev.Entity), ("knife", ev.Sharp)), popupEnt);
 
         if (TryComp<SharedBodyComponent>(ev.Entity, out var body))
         {

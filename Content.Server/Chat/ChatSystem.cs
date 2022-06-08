@@ -415,7 +415,7 @@ public sealed class ChatSystem : SharedChatSystem
             }
             else
             {
-                _popup.PopupEntity(Loc.GetString("chat-manager-no-headset-on-message"), source, Filter.Entities(source));
+                _popup.PopupEntity(Filter.Entities(source), Loc.GetString("chat-manager-no-headset-on-message"), source);
             }
         }
         else

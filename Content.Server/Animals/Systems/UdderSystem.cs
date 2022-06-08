@@ -66,7 +66,7 @@ namespace Content.Server.Animals.Systems
 
             if (udder.BeingMilked)
             {
-                _popupSystem.PopupEntity(Loc.GetString("udder-system-already-milking"), uid, Filter.Entities(userUid));
+                _popupSystem.PopupEntity(Filter.Entities(userUid), Loc.GetString("udder-system-already-milking"), uid);
                 return;
             }
 
@@ -99,7 +99,7 @@ namespace Content.Server.Animals.Systems
             var quantity = solution.TotalVolume;
             if(quantity == 0)
             {
-                _popupSystem.PopupEntity(Loc.GetString("udder-system-dry"), uid, Filter.Entities(ev.UserUid));
+                _popupSystem.PopupEntity(Filter.Entities(ev.UserUid), Loc.GetString("udder-system-dry"), uid);
                 return;
             }
 
@@ -109,7 +109,7 @@ namespace Content.Server.Animals.Systems
             var split = _solutionContainerSystem.SplitSolution(uid, solution, quantity);
             _solutionContainerSystem.TryAddSolution(ev.ContainerUid, targetSolution, split);
 
-            _popupSystem.PopupEntity(Loc.GetString("udder-system-success", ("amount", quantity), ("target", ev.ContainerUid)), uid, Filter.Entities(ev.UserUid));
+            _popupSystem.PopupEntity(Filter.Entities(ev.UserUid), Loc.GetString("udder-system-success", ("amount", quantity), ("target", ev.ContainerUid)), uid);
         }
 
         private void OnMilkingFailed(EntityUid uid, UdderComponent component, MilkingFailEvent ev)
