@@ -1,10 +1,29 @@
 <userInterface:FancyWindow xmlns="https://spacestation14.io"
                xmlns:radar="clr-namespace:Content.Client.Radar"
                xmlns:userInterface="clr-namespace:Content.Client.UserInterface"
-               xmlns:graphics="clr-namespace:Robust.Client.Graphics;assembly=Robust.Client"
                Title="{Loc 'radar-window-title'}">
     <GridContainer Columns="2"
                   HorizontalAlignment="Left">
-        <radar:RadarControl Name="ShuttleConsole"/>
+        <radar:RadarControl Name="RadarControl"/>
+        <BoxContainer Name="RightDisplay"
+                      VerticalAlignment="Top"
+                      HorizontalAlignment="Left"
+                      MinWidth="256"
+                      Align="Center"
+                      Orientation="Vertical">
+            <PanelContainer Name="ReadonlyDisplay"
+                            StyleClasses="BorderedWindowPanel">
+                <BoxContainer Orientation="Horizontal">
+                    <Label Text="Range: "
+                           Align="Left"/>
+                    <Label Name="RadarRange"
+                           Text="0.0"
+                           Align="Right"/>
+                </BoxContainer>
+            </PanelContainer>
+            <Button Name="IFFToggle"
+                    Text="Show IFF"
+                    TextAlign="Center"/>
+        </BoxContainer>
     </GridContainer>
 </userInterface:FancyWindow>

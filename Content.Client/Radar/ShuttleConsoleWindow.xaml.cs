@@ -23,6 +23,14 @@ public sealed partial class ShuttleConsoleWindow : FancyWindow, IComputerWindow<
     public ShuttleConsoleWindow()
     {
         RobustXamlLoader.Load(this);
+        IFFToggle.OnPressed += OnIFFTogglePressed;
+        IFFToggle.Pressed = RadarControl.ShowIFF;
+    }
+
+    private void OnIFFTogglePressed(BaseButton.ButtonEventArgs args)
+    {
+        RadarControl.ShowIFF ^= true;
+        args.Button.Pressed = RadarControl.ShowIFF;
     }
 
     public void SetupComputerWindow(ComputerBoundUserInterfaceBase cb)
@@ -32,7 +40,8 @@ public sealed partial class ShuttleConsoleWindow : FancyWindow, IComputerWindow<
 
     public void UpdateState(RadarConsoleBoundInterfaceState scc)
     {
-        ShuttleConsole.UpdateState(scc);
+        RadarControl.UpdateState(scc);
+        RadarRange.Text = $"{scc.Range:0}";
     }
 }
 
@@ -42,7 +51,7 @@ public sealed class RadarControl : Control
     [Dependency] private readonly IEntityManager _entManager = default!;
     [Dependency] private readonly IMapManager _mapManager = default!;
 
-    private const int MinimapRadius = 256;
+    private const int MinimapRadius = 384;
     private const int MinimapMargin = 4;
     private const float GridLinesDistance = 32f;
 
@@ -61,6 +70,8 @@ public sealed class RadarControl : Control
     /// Shows a label on each radar object.
     /// </summary>
     private Dictionary<EntityUid, Control> _iffControls = new();
+
+    public bool ShowIFF { get; set; } = true;
 
     public RadarControl()
     {
@@ -119,7 +130,6 @@ public sealed class RadarControl : Control
         // Draw our grid in detail
         var ourGridId = xform.GridID;
         var ourGridFixtures = _entManager.GetComponent<FixturesComponent>(ourGridId);
-        var ourGridBody = _entManager.GetComponent<PhysicsComponent>(ourGridId);
 
         // Can also use ourGridBody.LocalCenter
         var offset = xform.Coordinates.Position;
@@ -133,11 +143,10 @@ public sealed class RadarControl : Control
 
         // Don't need to transform the InvWorldMatrix again as it's already offset to its position.
 
-        // Draw docks
-        // TODO:
-
         // Draw radar position on the station
         handle.DrawCircle(invertedPosition * MinimapScale + point, 5f, Color.Lime);
+
+        var shown = new HashSet<EntityUid>();
 
         // Draw other grids... differently
         foreach (var grid in _mapManager.FindGridsIntersecting(mapPosition.MapId,
@@ -156,45 +165,59 @@ public sealed class RadarControl : Control
             var gridXform = _entManager.GetComponent<TransformComponent>(grid.GridEntityId);
             var gridFixtures = _entManager.GetComponent<FixturesComponent>(grid.GridEntityId);
             var gridMatrix = gridXform.WorldMatrix;
+            shown.Add(grid.GridEntityId);
             Matrix3.Multiply(ref gridMatrix, ref matrix, out var matty);
 
-            if (!_iffControls.TryGetValue(grid.GridEntityId, out var control))
+            if (ShowIFF)
             {
-                var label = new Label()
+                if (!_iffControls.TryGetValue(grid.GridEntityId, out var control))
                 {
-                    HorizontalAlignment = HAlignment.Left,
-                };
+                    var label = new Label()
+                    {
+                        HorizontalAlignment = HAlignment.Left,
+                    };
 
-                control = new PanelContainer()
+                    control = new PanelContainer()
+                    {
+                        HorizontalAlignment = HAlignment.Left,
+                        VerticalAlignment = VAlignment.Top,
+                        Children = { label },
+                        StyleClasses  = { StyleNano.StyleClassTooltipPanel },
+                    };
+
+                    _iffControls[grid.GridEntityId] = control;
+                    LayoutContainer.SetAnchorAndMarginPreset(control, LayoutContainer.LayoutPreset.BottomLeft);
+                    AddChild(control);
+                }
+
+                var gridCentre = matty.Transform(gridBody.LocalCenter);
+                gridCentre.Y = -gridCentre.Y;
+
+                if (gridCentre.Length < _radarRange)
                 {
-                    HorizontalAlignment = HAlignment.Left,
-                    VerticalAlignment = VAlignment.Top,
-                    Children = { label },
-                    StyleClasses  = { StyleNano.StyleClassTooltipPanel },
-                };
-
-                _iffControls[grid.GridEntityId] = control;
-                LayoutContainer.SetAnchorAndMarginPreset(control, LayoutContainer.LayoutPreset.BottomLeft);
-                AddChild(control);
-            }
-
-            var gridCentre = matty.Transform(gridBody.LocalCenter);
-            gridCentre.Y = -gridCentre.Y;
-
-            if (gridCentre.Length < _radarRange)
-            {
-                control.Visible = true;
-                var label = (Label) control.GetChild(0);
-                label.Text = $"{name} ({gridCentre.Length:0.0}m)";
-                LayoutContainer.SetPosition(control, (gridCentre * MinimapScale + point ) / UIScale);
+                    control.Visible = true;
+                    var label = (Label) control.GetChild(0);
+                    label.Text = $"{name} ({gridCentre.Length:0.0}m)";
+                    LayoutContainer.SetPosition(control, (gridCentre * MinimapScale + point ) / UIScale);
+                }
+                else
+                {
+                    control.Visible = false;
+                }
             }
             else
             {
-                control.Visible = false;
+                ClearLabel(grid.GridEntityId);
             }
 
             // Detailed view
             DrawGrid(handle, matty, gridFixtures, point, Color.Aquamarine);
+        }
+
+        foreach (var (ent, _) in _iffControls)
+        {
+            if (shown.Contains(ent)) continue;
+            ClearLabel(ent);
         }
     }
 
