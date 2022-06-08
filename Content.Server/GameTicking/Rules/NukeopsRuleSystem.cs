@@ -10,6 +10,7 @@ using Content.Server.Station.Components;
 using Content.Server.Station.Systems;
 using Content.Shared.CCVar;
 using Content.Shared.MobState;
+using Content.Shared.Dataset;
 using Content.Shared.Roles;
 using Robust.Server.Maps;
 using Robust.Server.Player;
@@ -213,6 +214,8 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
         var commanderGear = _prototypeManager.Index<StartingGearPrototype>("SyndicateCommanderGearFull");
         var starterGear = _prototypeManager.Index<StartingGearPrototype>("SyndicateOperativeGearFull");
         var medicGear = _prototypeManager.Index<StartingGearPrototype>("SyndicateOperativeMedicFull");
+        var syndicateNamesElite = new List<string>(_prototypeManager.Index<DatasetPrototype>("SyndicateNamesElite").Values);
+        var syndicateNamesNormal = new List<string>(_prototypeManager.Index<DatasetPrototype>("SyndicateNamesNormal").Values);
 
         var spawns = new List<EntityCoordinates>();
 
@@ -239,15 +242,15 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
             switch (i)
             {
                 case 0:
-                    name = $"Commander";
+                    name = $"Commander " + _random.PickAndTake<string>(syndicateNamesElite);
                     gear = commanderGear;
                     break;
                 case 1:
-                    name = $"Operator #{i}";
+                    name = $"Agent " + _random.PickAndTake<string>(syndicateNamesNormal);
                     gear = medicGear;
                     break;
                 default:
-                    name = $"Operator #{i}";
+                    name = $"Operator " + _random.PickAndTake<string>(syndicateNamesNormal);
                     gear = starterGear;
                     break;
             }
