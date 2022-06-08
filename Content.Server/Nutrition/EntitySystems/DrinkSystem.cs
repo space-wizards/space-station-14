@@ -75,7 +75,37 @@ namespace Content.Server.Nutrition.EntitySystems
                 Loc.GetString(IsEmpty(uid, component) ? "drink-component-on-examine-is-empty" : "drink-component-on-examine-is-opened");
             args.Message.AddMarkup($"\n{Loc.GetString("drink-component-on-examine-details-text", ("colorName", color), ("text", openedText))}");
             if (!IsEmpty(uid, component))
-                args.Message.AddMarkup($" - {Loc.GetString("drink-component-on-examine-remaining-volume", ("remaining", _solutionContainerSystem.DrainAvailable(uid)))}");
+            {
+                if (TryComp<ExaminableSolutionComponent>(component.Owner, out var comp))
+                {
+                    //provide exact measurement for beakers
+                    args.Message.AddMarkup($" - {Loc.GetString("drink-component-on-examine-exact-volume", ("amount", _solutionContainerSystem.DrainAvailable(uid)))}");
+                }
+                else
+                {
+                    //general approximation
+                    string remainingString;
+                    switch (_solutionContainerSystem.PercentFull(uid))
+                    {
+                        case int perc when perc == 100:
+                            remainingString = "drink-component-on-examine-is-full";
+                            break;
+                        case int perc when perc > 75:
+                            remainingString = "drink-component-on-examine-is-mostly-full";
+                            break;
+                        case int perc when perc > 25:
+                            remainingString = "drink-component-on-examine-is-half-full";
+                            break;
+                        case int perc when perc > 0:
+                            remainingString = "drink-component-on-examine-is-mostly-empty";
+                            break;
+                        default:
+                            remainingString = "drink-component-on-examine-is-empty";
+                            break;
+                    }
+                    args.Message.AddMarkup($" - {Loc.GetString(remainingString)}");
+                }
+            }
         }
 
         private void SetOpen(EntityUid uid, bool opened = false, DrinkComponent? component = null)
