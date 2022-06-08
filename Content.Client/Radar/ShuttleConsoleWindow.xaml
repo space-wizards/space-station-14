@@ -20,12 +20,20 @@
                     <Label Name="RadarRange"
                            Text="0.0"
                            HorizontalAlignment="Right"/>
-                    <Label Text="Linear velocity: "/>
-                    <Label Name="LinearVelocity"
+                    <Label Text="Position: "/>
+                    <Label Name="GridPosition"
+                           Text="0.0, 0.0"
+                           Align="Right"/>
+                    <Label Text="Orientation: "/>
+                    <Label Name="GridOrientation"
                            Text="0.0"
                            Align="Right"/>
+                    <Label Text="Linear velocity: "/>
+                    <Label Name="GridLinearVelocity"
+                           Text="0.0, 0.0"
+                           Align="Right"/>
                     <Label Text="Angular velocity: "/>
-                    <Label Name="AngularVelocity"
+                    <Label Name="GridAngularVelocity"
                            Text="0.0"
                            Align="Right"/>
                 </GridContainer>

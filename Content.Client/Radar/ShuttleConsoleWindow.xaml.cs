@@ -54,16 +54,26 @@ public sealed partial class ShuttleConsoleWindow : FancyWindow, IComputerWindow<
         base.Draw(handle);
 
         if (!_entManager.TryGetComponent<TransformComponent>(_entity, out var entXform) ||
-            !_entManager.TryGetComponent<PhysicsComponent>(entXform.GridEntityId, out var gridPhysics))
+            !_entManager.TryGetComponent<PhysicsComponent>(entXform.GridEntityId, out var gridBody) ||
+            !_entManager.TryGetComponent<TransformComponent>(entXform.GridEntityId, out var gridXform))
         {
             return;
         }
 
-        var gridVelocity = gridPhysics.LinearVelocity;
-        gridVelocity = entXform.WorldRotation.RotateVec(gridVelocity);
+        var (_, worldRot, worldMatrix) = gridXform.GetWorldPositionRotationMatrix();
+        var worldPos = worldMatrix.Transform(gridBody.LocalCenter);
+
+        // Get the positive reduced angle.
+        var displayRot = -worldRot.Reduced();
+
+        GridPosition.Text = $"{worldPos.X:0.0}, {worldPos.Y:0.0}";
+        GridOrientation.Text = $"{displayRot.Degrees:0.0}";
+
+        var gridVelocity = gridBody.LinearVelocity;
+        gridVelocity = -worldRot.Opposite().RotateVec(gridVelocity);
         // Get linear velocity relative to the console entity
-        LinearVelocity.Text = $"{gridVelocity.X:0.0}, {gridVelocity.Y:0.0}";
-        AngularVelocity.Text = $"{gridPhysics.AngularVelocity:0.00}";
+        GridLinearVelocity.Text = $"{gridVelocity.X:0.0}, {gridVelocity.Y:0.0}";
+        GridAngularVelocity.Text = $"{gridBody.AngularVelocity:0.0}";
     }
 }
 
