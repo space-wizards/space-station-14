@@ -170,6 +170,8 @@ public sealed class RadarControl : Control
                 var gridCentre = matty.Transform(gridBody.LocalCenter);
                 gridCentre.Y = -gridCentre.Y;
 
+                // TODO: When we get IFF or whatever we can show controls at a further distance; for now
+                // we don't do that because it would immediately reveal nukies.
                 if (gridCentre.Length < _radarRange)
                 {
                     control.Visible = true;
