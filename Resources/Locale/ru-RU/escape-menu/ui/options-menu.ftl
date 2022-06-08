@@ -15,7 +15,7 @@ ui-options-midi-volume = MIDI (Инструменты) громкость:
 ui-options-ambience-volume = Громкость окружения:
 ui-options-ambience-max-sounds = Кол-во одновременных звуков окружения:
 ui-options-lobby-music = Музыка в лобби
-ui-options-admin-sounds = Play Admin Sounds
+ui-options-admin-sounds = Музыка админов
 ui-options-station-ambience = Эмбиент станции
 ui-options-space-ambience = Эмбиент космоса
 ui-options-volume-label = Громкость
@@ -43,7 +43,7 @@ ui-options-hud-theme = Тема HUD:
 ui-options-hud-theme-default = По умолчанию
 ui-options-hud-theme-modernized = Модернизированный
 ui-options-hud-theme-classic = Классический
-ui-options-vp-stretch = Stretch viewport to fit game window
+ui-options-vp-stretch = Растянуть изображение для соответствия окну игры
 ui-options-vp-scale = Fixed viewport scale: x{ $scale }
 ui-options-vp-integer-scaling = Prefer integer scaling (might cause black bars/clipping)
 ui-options-vp-integer-scaling-tooltip =
@@ -51,8 +51,8 @@ ui-options-vp-integer-scaling-tooltip =
     at specific resolutions. While this results in crisp textures, it also often
     means that black bars appear at the top/bottom of the screen or that part
     of the viewport is not visible.
-ui-options-vp-low-res = Low-resolution viewport
-ui-options-parallax-low-quality = Low-quality Parallax (background)
+ui-options-vp-low-res = Изображение низкого разрешения
+ui-options-parallax-low-quality = Низкокачественный параллакс (фон)
 ui-options-fps-counter = Показать счетчик FPS
 
 ## Controls menu

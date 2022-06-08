@@ -1,22 +1,22 @@
-gun-selected-mode-examine = Current selected fire mode is [color={ $color }]{ $mode }[/color].
-gun-fire-rate-examine = Fire rate is [color={ $color }]{ $fireRate }[/color] per second.
-gun-selector-verb = Change to { $mode }
-gun-selected-mode = Selected { $mode }
+gun-selected-mode-examine = Выбран режим огня [color={ $color }]{ $mode }[/color].
+gun-fire-rate-examine = Скорострельность [color={ $color }]{ $fireRate }[/color] в секунду.
+gun-selector-verb = Изменить на { $mode }
+gun-selected-mode = Выбран { $mode }
 # SelectiveFire
-gun-SemiAuto = semi-auto
-gun-Burst = burst
-gun-FullAuto = full-auto
+gun-SemiAuto = полуавто
+gun-Burst = очередь
+gun-FullAuto = авто
 # BallisticAmmoProvider
-gun-ballistic-cycle = Cycle
-gun-ballistic-cycled = Cycled
-gun-ballistic-cycled-empty = Cycled (empty)
+gun-ballistic-cycle = Цикл
+gun-ballistic-cycled = Циклирован
+gun-ballistic-cycled-empty = Циклирован (пуст)
 # BatteryAmmoProvider
-gun-battery-examine = It has enough charge for [color={ $color }]{ $count } shots.
+gun-battery-examine = Заряда хватит на [color={ $color }]{ $count } выстрелов.
 # MagazineAmmoProvider
-gun-magazine-examine = It has [color={ $color }]{ $count }[/color] shots remaining.
+gun-magazine-examine = Осталось [color={ $color }]{ $count }[/color] выстрелов.
 # RevolverAmmoProvider
-gun-revolver-empty = Empty revolver
-gun-revolver-full = Revolver full
-gun-revolver-insert = Insert
-gun-revolver-spin = Spin revolver
-gun-revolver-spun = Spun
+gun-revolver-empty = Револьвер полностью разряжен
+gun-revolver-full = Револьвер полностью заряжен
+gun-revolver-insert = Вставить
+gun-revolver-spin = Крутить револьвер
+gun-revolver-spun = Повернуть

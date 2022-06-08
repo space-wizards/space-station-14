@@ -1,6 +1,6 @@
 ent-BaseWeaponHeavyMachineGun = BaseWeaponHeavyMachineGun
-    .desc = Spray and pray
+    .desc = Пали и моли
     .suffix = { "" }
-ent-WeaponMinigun = minigun
-    .desc = Vzzzzzt! Rahrahrahrah! Vrrrrr!
+ent-WeaponMinigun = миниган
+    .desc = Вззззззт! Рахрахрахрах! Врррр!
     .suffix = { "" }

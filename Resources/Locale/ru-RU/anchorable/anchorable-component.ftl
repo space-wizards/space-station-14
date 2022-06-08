@@ -1,2 +1,2 @@
-anchorable-anchored = Anchored
-anchorable-unanchored = Unanchored
+anchorable-anchored = Закреплено
+anchorable-unanchored = Не закреплено
