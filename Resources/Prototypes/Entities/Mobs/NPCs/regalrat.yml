@@ -96,7 +96,8 @@
     - id: ClothingHeadHatFancyCrown #how did that get there?
       amount: 1
   - type: DiseaseCarrier
-    noSymptoms: true
+    silentDiseases:
+    - Plague
   - type: SlowOnDamage
     speedModifierThresholds:
       50: 0.9
@@ -167,7 +168,8 @@
       dead: splat-3
   - type: Puller
   - type: DiseaseCarrier
-    noSymptoms: true
+    silentDiseases:
+    - Plague
   - type: Vocal
     # mice are gender neutral who cares
     maleScream: /Audio/Animals/mouse_squeak.ogg

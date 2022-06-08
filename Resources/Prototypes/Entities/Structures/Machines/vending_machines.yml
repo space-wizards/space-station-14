@@ -165,8 +165,6 @@
   components:
   - type: VendingMachine
     pack: CigaretteMachineInventory
-    ejectItemsOnHit: true
-    ejectAllOnDestroy: true
   - type: Advertise
     pack: CigaretteMachineAds
   - type: Speech
@@ -233,8 +231,6 @@
   components:
   - type: VendingMachine
     pack: HotDrinksMachineInventory
-    ejectItemsOnHit: true
-    ejectAllOnDestroy: true
   - type: Advertise
     pack: HotDrinksMachineAds
   - type: Speech
@@ -273,8 +269,6 @@
   components:
   - type: VendingMachine
     pack: RobustSoftdrinksInventory
-    ejectItemsOnHit: true
-    ejectAllOnDestroy: true
   - type: Advertise
     pack: RobustSoftdrinksAds
   - type: Speech
@@ -343,8 +337,6 @@
   components:
   - type: VendingMachine
     pack: DiscountDansInventory
-    ejectItemsOnHit: true
-    ejectAllOnDestroy: true
   - type: Advertise
     pack: DiscountDansAds
   - type: Speech
@@ -581,8 +573,6 @@
   components:
   - type: VendingMachine
     pack: GetmoreChocolateCorpInventory
-    ejectItemsOnHit: true
-    ejectAllOnDestroy: true
   - type: Advertise
     pack: GetmoreChocolateCorpAds
   - type: Speech
@@ -617,8 +607,6 @@
   components:
   - type: VendingMachine
     pack: BodaInventory
-    ejectItemsOnHit: true
-    ejectAllOnDestroy: true
   - type: Advertise
     pack: BodaAds
   - type: Speech
@@ -826,8 +814,6 @@
   components:
   - type: VendingMachine
     pack: ChangInventory
-    ejectItemsOnHit: true
-    ejectAllOnDestroy: true
   - type: Advertise
     pack: ChangAds
   - type: Speech

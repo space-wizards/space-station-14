@@ -1,5 +1,6 @@
 using System.Linq;
 using Content.Shared.Disease;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.List;
 
 namespace Content.Server.Disease.Components
 {
@@ -32,12 +33,12 @@ namespace Content.Server.Disease.Components
         /// <summary>
         [ViewVariables(VVAccess.ReadWrite)]
         public List<DiseasePrototype> AllDiseases => PastDiseases.Concat(Diseases).ToList();
-
         /// <summary>
-        /// Whether or not the entity experiences any
-        /// symptoms from their diseases.
+        /// A list of diseases which the entity does not
+        /// exhibit direct symptoms from. They still transmit
+        /// these diseases, just without symptoms.
         /// </summary>
-        [DataField("noSymptoms")]
-        public bool NoSymptoms = false;
+        [DataField("silentDiseases", customTypeSerializer: typeof(AbstractPrototypeIdListSerializer<DiseasePrototype>))]
+        public List<string>? SilentDiseases;
     }
 }

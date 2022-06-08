@@ -93,12 +93,16 @@ namespace Content.Server.Disease
                     continue;
                 }
 
-                if (carrierComp.NoSymptoms)
-                    continue;
-
                 for (var i = 0; i < carrierComp.Diseases.Count; i++) //this is a for-loop so that it doesn't break when new diseases are added
                 {
                     var disease = carrierComp.Diseases[i];
+
+                    //if the disease is on the silent disease list, don't do effects
+                    var doEffects = true;
+                    if (carrierComp.SilentDiseases != null)
+                        foreach (var id in carrierComp.SilentDiseases)
+                            if (id == null)
+                                doEffects = false;
 
                     var args = new DiseaseEffectArgs(carrierComp.Owner, disease, EntityManager);
                     disease.Accumulator += frameTime;
@@ -110,10 +114,13 @@ namespace Content.Server.Disease
                             if (cure.Cure(args))
                                 CureDisease(carrierComp, disease);
                         }
-                        foreach (var effect in disease.Effects)
+                        if (doEffects)
                         {
-                            if (_random.Prob(effect.Probability))
-                                effect.Effect(args);
+                            foreach (var effect in disease.Effects)
+                            {
+                                if (_random.Prob(effect.Probability))
+                                    effect.Effect(args);
+                            }
                         }
                     }
                 }

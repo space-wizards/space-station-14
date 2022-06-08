@@ -29,11 +29,15 @@ namespace Content.Server.RatKing
             _action.AddAction(uid, component.ActionDomain, null);
         }
 
+        /// <summary>
+        /// Summons an allied rat servant at the King, costing a small amount of hunger
+        /// </summary>
         private void OnRaiseArmy(EntityUid uid, RatKingComponent component, RatKingRaiseArmyActionEvent args)
         {
             if (!TryComp<HungerComponent>(uid, out var hunger))
                 return;
 
+            //make sure the hunger doesn't go into the negatives
             if (hunger.CurrentHunger < component.HungerPerArmyUse)
             {
                 _popup.PopupEntity(Loc.GetString("rat-king-too-hungry"), uid, Filter.Entities(uid));
@@ -44,11 +48,16 @@ namespace Content.Server.RatKing
             Spawn(component.ArmyMobSpawnId, Transform(uid).Coordinates);
         }
 
+        /// <summary>
+        /// Gets all of the nearby disease-carrying entities in a radius
+        /// and gives them the specified disease. It has a hunger cost as well
+        /// </summary>
         private void OnDomain(EntityUid uid, RatKingComponent component, RatKingDomainActionEvent args)
         {
             if (!TryComp<HungerComponent>(uid, out var hunger))
                 return;
 
+            //make sure the hunger doesn't go into the negatives
             if (hunger.CurrentHunger < component.HungerPerDomainUse)
             {
                 _popup.PopupEntity(Loc.GetString("rat-king-too-hungry"), uid, Filter.Entities(uid));
