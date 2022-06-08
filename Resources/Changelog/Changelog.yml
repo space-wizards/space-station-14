@@ -1,9 +1,4 @@
 Entries:
-- author: Macoron
-  changes:
-  - {message: Musician PDA works like a regular PDA again., type: Fix}
-  id: 1171
-  time: '2022-03-07T11:41:50.0000000+00:00'
 - author: Rane
   changes:
   - {message: Drones can now only pick up or drag a whitelist of items., type: Tweak}
@@ -3004,3 +2999,9 @@ Entries:
   - {message: Counters and tables now take more damage to destroy., type: Tweak}
   id: 1670
   time: '2022-06-08T08:47:30.0000000+00:00'
+- author: themias
+  changes:
+  - {message: Fixed an issue where Omnitools and Jaws of Life sometimes don't pry
+      floor tiles, type: Fix}
+  id: 1671
+  time: '2022-06-08T09:25:48.0000000+00:00'
