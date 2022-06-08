@@ -60,12 +60,7 @@ public sealed class RadarControl : Control
         // No data
         if (_entity == null)
         {
-            foreach (var (_, label) in _iffControls)
-            {
-                label.Dispose();
-            }
-
-            _iffControls.Clear();
+            Clear();
             return;
         }
 
@@ -92,22 +87,34 @@ public sealed class RadarControl : Control
         var bodyQuery = _entManager.GetEntityQuery<PhysicsComponent>();
         var xform = xformQuery.GetComponent(_entity.Value);
         var mapPosition = xform.MapPosition;
-        var matrix = xform.InvWorldMatrix;
 
-        // Draw our grid in detail
-        var ourGridId = xform.GridID;
-        var ourGridFixtures = fixturesQuery.GetComponent(ourGridId);
+        if (mapPosition.MapId == MapId.Nullspace)
+        {
+            Clear();
+            return;
+        }
 
         // Can also use ourGridBody.LocalCenter
         var offset = xform.Coordinates.Position;
+        var offsetMatrix = Matrix3.CreateTranslation(-offset);
+        Matrix3 matrix;
+
+        // Draw our grid in detail
+        var ourGridId = xform.GridID;
+        if (ourGridId != GridId.Invalid)
+        {
+            matrix = xform.InvWorldMatrix;
+            var ourGridFixtures = fixturesQuery.GetComponent(ourGridId);
+            // Draw our grid; use non-filled boxes so it doesn't look awful.
+            DrawGrid(handle, offsetMatrix, ourGridFixtures, point, Color.Yellow);
+        }
+        else
+        {
+            matrix = Matrix3.CreateTranslation(-offset);
+        }
 
         var invertedPosition = xform.Coordinates.Position - offset;
         invertedPosition.Y = -invertedPosition.Y;
-        var offsetMatrix = Matrix3.CreateTranslation(-offset);
-
-        // Draw our grid; use non-filled boxes so it doesn't look awful.
-        DrawGrid(handle, offsetMatrix, ourGridFixtures, point, Color.Yellow);
-
         // Don't need to transform the InvWorldMatrix again as it's already offset to its position.
 
         // Draw radar position on the station
@@ -189,6 +196,16 @@ public sealed class RadarControl : Control
             if (shown.Contains(ent)) continue;
             ClearLabel(ent);
         }
+    }
+
+    private void Clear()
+    {
+        foreach (var (_, label) in _iffControls)
+        {
+            label.Dispose();
+        }
+
+        _iffControls.Clear();
     }
 
     private void ClearLabel(EntityUid uid)

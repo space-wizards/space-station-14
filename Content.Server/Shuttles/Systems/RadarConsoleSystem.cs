@@ -1,5 +1,3 @@
-using Content.Server.Power.Components;
-using Content.Server.Power.EntitySystems;
 using Content.Shared.Shuttles.BUIStates;
 using Content.Shared.Shuttles.Components;
 using Content.Shared.Shuttles.Systems;
@@ -14,24 +12,17 @@ public sealed class RadarConsoleSystem : SharedRadarConsoleSystem
     public override void Initialize()
     {
         base.Initialize();
-        SubscribeLocalEvent<RadarConsoleComponent, PowerChangedEvent>(OnRadarPowerChange);
-        SubscribeLocalEvent<RadarConsoleComponent, AnchorStateChangedEvent>(OnRadarAnchorChange);
+        SubscribeLocalEvent<RadarConsoleComponent, ComponentStartup>(OnRadarStartup);
     }
 
-    private void OnRadarAnchorChange(EntityUid uid, RadarConsoleComponent component, ref AnchorStateChangedEvent args)
-    {
-        UpdateState(component);
-    }
-
-    private void OnRadarPowerChange(EntityUid uid, RadarConsoleComponent component, PowerChangedEvent args)
+    private void OnRadarStartup(EntityUid uid, RadarConsoleComponent component, ComponentStartup args)
     {
         UpdateState(component);
     }
 
     protected override void UpdateState(RadarConsoleComponent component)
     {
-        var empty = !this.IsPowered(component.Owner, EntityManager) || !(Transform(component.Owner).Anchored);
-        var radarState = new RadarConsoleBoundInterfaceState(component.Range, empty ? null : component.Owner);
+        var radarState = new RadarConsoleBoundInterfaceState(component.Range, component.Owner);
         _uiSystem.GetUiOrNull(component.Owner, RadarConsoleUiKey.Key)?.SetState(radarState);
     }
 }
