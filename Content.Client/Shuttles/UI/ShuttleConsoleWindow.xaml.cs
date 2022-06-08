@@ -44,13 +44,6 @@ public sealed partial class ShuttleConsoleWindow : FancyWindow,
         args.Button.Pressed = RadarScreen.ShowIFF;
     }
 
-    public void UpdateState(RadarConsoleBoundInterfaceState scc)
-    {
-        _entity = scc.Entity;
-        RadarScreen.UpdateState(scc);
-        RadarRange.Text = $"{scc.Range:0}";
-    }
-
     public void UpdateState(ShuttleConsoleBoundInterfaceState scc)
     {
         _entity = scc.Entity;
