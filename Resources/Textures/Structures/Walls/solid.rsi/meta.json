@@ -8,7 +8,7 @@
   },
   "states": [
     {
-      "name": "solidfull"
+      "name": "full"
     },
     {
       "name": "solid0",
@@ -96,7 +96,7 @@
       "directions": 4
     },
     {
-      "name": "reinf_overfull"
+      "name": "rgeneric"
     },
     {
       "name": "wall_girder"
