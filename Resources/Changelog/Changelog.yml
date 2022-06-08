@@ -1,9 +1,4 @@
 Entries:
-- author: ElectroJr
-  changes:
-  - {message: Fixed electrocution not dealing damage., type: Fix}
-  id: 1169
-  time: '2022-03-07T05:14:56.0000000+00:00'
 - author: Radrark
   changes:
   - {message: Fixed the mass scanner console., type: Fix}
@@ -3003,3 +2998,9 @@ Entries:
   - {message: The Syndicate have gotten more creative with their names., type: Tweak}
   id: 1668
   time: '2022-06-07T03:41:22.0000000+00:00'
+- author: Zumorica
+  changes:
+  - {message: Fixed shutter construction not working properly when using a wrench
+      on it., type: Fix}
+  id: 1669
+  time: '2022-06-08T07:50:23.0000000+00:00'
