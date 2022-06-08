@@ -364,24 +364,29 @@ namespace Content.Server.Database
         {
             await using var db = await GetDb();
 
-            var timer = await db.DbContext.RoleTimer
+            RoleTimer result;
+            var query = await db.DbContext.RoleTimer
                 .Where(v => v.PlayerId == player)
                 .Where(v => v.Role == role)
                 .SingleOrDefaultAsync();
 
-            if (timer == null)
+            if (query == null)
             {
-                timer = new RoleTimer()
+                result = new RoleTimer()
                 {
                     PlayerId = player,
                     Role = role,
                     TimeSpent = TimeSpan.Zero
                 };
-                db.DbContext.Add(timer);
+                db.DbContext.Add(result);
                 await db.DbContext.SaveChangesAsync();
             }
+            else
+            {
+                result = query;
+            }
 
-            return timer;
+            return result;
         }
 
         public async Task<List<RoleTimer>> GetRoleTimers(Guid player)
