@@ -160,17 +160,28 @@ public sealed class RadarControl : Control
 
             if (!_labels.TryGetValue(grid.GridEntityId, out var label))
             {
-                label = new Label();
+                label = new Label()
+                {
+                    HorizontalAlignment = HAlignment.Left,
+                };
                 _labels[grid.GridEntityId] = label;
+                LayoutContainer.SetAnchorAndMarginPreset(label, LayoutContainer.LayoutPreset.BottomLeft, LayoutContainer.LayoutPresetMode.MinSize);
                 AddChild(label);
             }
 
             var gridCentre = matty.Transform(gridBody.LocalCenter);
             gridCentre.Y = -gridCentre.Y;
-            label.Text = $"Dork ({gridCentre.Length:0.0} m)";
-            label.Visible = true;
-            handle.DrawCircle(gridCentre * MinimapScale + point, 2f, Color.Red);
-            // LayoutContainer.SetPosition(label, gridCentre * MinimapScale + point);
+
+            if (gridCentre.Length < _radarRange)
+            {
+                label.Text = $"Dork ({gridCentre.Length:0.0} m)";
+                handle.DrawCircle(gridCentre * MinimapScale + point, 2f, Color.Red);
+                LayoutContainer.SetPosition(label, gridCentre * MinimapScale / UIScale + point);
+            }
+            else
+            {
+                label.Visible = false;
+            }
 
             // Detailed view
             DrawGrid(handle, matty, gridFixtures, point, Color.Aquamarine);
@@ -213,13 +224,6 @@ public sealed class RadarControl : Control
             verts[poly.VertexCount] = verts[0];
             handle.DrawPrimitives(DrawPrimitiveTopology.LineStrip, verts, color);
         }
-    }
-
-    private void DrawObscuredLine(DrawingHandleScreen handle, Vector2 start, Vector2 end)
-    {
-        handle.DrawCircle(start + (end - start) / 2f, 1f, Color.Aqua, false);
-
-        // handle.DrawLine(start, end, Color.Aqua);
     }
 }
 
