@@ -4,6 +4,7 @@ using Content.Server.Ghost;
 using Content.Server.Ghost.Components;
 using Content.Server.Players;
 using Content.Server.Roles;
+using Content.Server.RoleTimers;
 using Content.Server.Spawners.Components;
 using Content.Server.Speech.Components;
 using Content.Server.Station.Components;
@@ -72,7 +73,11 @@ namespace Content.Server.GameTicking
             // Spawn everybody in!
             foreach (var (player, (job, station)) in assignedJobs)
             {
-                SpawnPlayer(_playerManager.GetSessionByUserId(player), profiles[player], station, job, false);
+                var session = _playerManager.GetSessionByUserId(player);
+                SpawnPlayer(session, profiles[player], station, job, false);
+#pragma warning disable CS4014
+                _roleTimerManager.RoleChange(session, job, DateTime.UtcNow);
+#pragma warning restore CS4014
             }
 
             RefreshLateJoinAllowed();
