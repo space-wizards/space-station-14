@@ -340,7 +340,7 @@
     sprite: Structures/Walls/solid.rsi
   - type: Icon
     sprite: Structures/Walls/solid.rsi
-    state: reinf_overfull
+    state: rgeneric
   - type: Construction
     graph: Girder
     node: reinforcedWall
