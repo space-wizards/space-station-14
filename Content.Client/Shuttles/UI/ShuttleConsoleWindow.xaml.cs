@@ -33,12 +33,6 @@ public sealed partial class ShuttleConsoleWindow : FancyWindow,
         ShuttleMode.OnPressed += OnShuttleModePressed;
     }
 
-    public override void Close()
-    {
-        base.Close();
-        _system.StopPiloting();
-    }
-
     private void OnShuttleModePressed(BaseButton.ButtonEventArgs obj)
     {
         ShuttleMode.Pressed ^= true;

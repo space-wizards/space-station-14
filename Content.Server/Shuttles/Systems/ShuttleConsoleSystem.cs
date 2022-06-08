@@ -35,12 +35,25 @@ namespace Content.Server.Shuttles.Systems
             SubscribeLocalEvent<ShuttleConsoleComponent, ComponentShutdown>(OnConsoleShutdown);
             SubscribeLocalEvent<ShuttleConsoleComponent, PowerChangedEvent>(OnConsolePowerChange);
             SubscribeLocalEvent<ShuttleConsoleComponent, AnchorStateChangedEvent>(OnConsoleAnchorChange);
+            SubscribeLocalEvent<ShuttleConsoleComponent, ActivatableUIOpenAttemptEvent>(OnConsoleUIOpenAttempt);
             SubscribeNetworkEvent<ShuttleModeRequestEvent>(OnModeRequest);
-            SubscribeNetworkEvent<StartPilotRequestEvent>(OnPilotStartRequest);
-            SubscribeNetworkEvent<StopPilotRequestEvent>(OnPilotStopRequest);
+            SubscribeLocalEvent<ShuttleConsoleComponent, BoundUIClosedEvent>(OnConsoleUIClose);
 
             SubscribeLocalEvent<PilotComponent, MoveEvent>(HandlePilotMove);
             SubscribeLocalEvent<PilotComponent, ComponentGetState>(OnGetState);
+        }
+
+        private void OnConsoleUIClose(EntityUid uid, ShuttleConsoleComponent component, BoundUIClosedEvent args)
+        {
+            if ((ShuttleConsoleUiKey) args.UiKey != ShuttleConsoleUiKey.Key ||
+                args.Session.AttachedEntity is not {} user) return;
+            RemovePilot(user);
+        }
+
+        private void OnConsoleUIOpenAttempt(EntityUid uid, ShuttleConsoleComponent component, ActivatableUIOpenAttemptEvent args)
+        {
+            if (!TryPilot(args.User, uid))
+                args.Cancel();
         }
 
         private void OnConsoleAnchorChange(EntityUid uid, ShuttleConsoleComponent component, ref AnchorStateChangedEvent args)
@@ -53,17 +66,15 @@ namespace Content.Server.Shuttles.Systems
             UpdateState(component);
         }
 
-        private void OnPilotStartRequest(StartPilotRequestEvent ev, EntitySessionEventArgs args)
+        private bool TryPilot(EntityUid user, EntityUid uid)
         {
-            if (args.SenderSession.AttachedEntity is not { } user ||
-                !_tags.HasTag(user, "CanPilot") ||
-                !TryComp<ShuttleConsoleComponent>(ev.Uid, out var component) ||
-                !this.IsPowered(ev.Uid, EntityManager) ||
-                !Transform(ev.Uid).Anchored ||
-                !_blocker.CanInteract(user, ev.Uid))
+            if (!_tags.HasTag(user, "CanPilot") ||
+                !TryComp<ShuttleConsoleComponent>(uid, out var component) ||
+                !this.IsPowered(uid, EntityManager) ||
+                !Transform(uid).Anchored ||
+                !_blocker.CanInteract(user, uid))
             {
-                _ui.TryClose(ev.Uid, ShuttleConsoleUiKey.Key, (IPlayerSession) args.SenderSession);
-                return;
+                return false;
             }
 
             var pilotComponent = EntityManager.EnsureComponent<PilotComponent>(user);
@@ -75,17 +86,12 @@ namespace Content.Server.Shuttles.Systems
 
                 if (console == component)
                 {
-                    return;
+                    return false;
                 }
             }
 
             AddPilot(user, component);
-        }
-
-        private void OnPilotStopRequest(StopPilotRequestEvent msg, EntitySessionEventArgs args)
-        {
-            if (!TryComp<PilotComponent>(args.SenderSession.AttachedEntity, out var pilot)) return;
-            RemovePilot(pilot);
+            return true;
         }
 
         private void OnGetState(EntityUid uid, PilotComponent component, ref ComponentGetState args)
@@ -113,21 +119,22 @@ namespace Content.Server.Shuttles.Systems
             ShuttleComponent shuttleComponent, TransformComponent? consoleXform = null)
         {
             // Re-validate
-            if (!this.IsPowered(consoleComponent.Owner, EntityManager)) return;
-
-            if (!Resolve(consoleComponent.Owner, ref consoleXform)) return;
-
-            if (!consoleXform.Anchored || consoleXform.GridID != Transform(shuttleComponent.Owner).GridID) return;
+            if (!this.IsPowered(consoleComponent.Owner, EntityManager) ||
+                !Resolve(consoleComponent.Owner, ref consoleXform) ||
+                !consoleXform.Anchored ||
+                consoleXform.GridID != Transform(shuttleComponent.Owner).GridID)
+            {
+                UpdateState(consoleComponent);
+                return;
+            }
 
             shuttleComponent.Mode = mode;
 
             switch (mode)
             {
                 case ShuttleMode.Strafing:
-                    _popup.PopupEntity(Loc.GetString("shuttle-mode-docking"), consoleComponent.Owner, Filter.Entities(user));
                     break;
                 case ShuttleMode.Cruise:
-                    _popup.PopupEntity(Loc.GetString("shuttle-mode-cruise"), consoleComponent.Owner, Filter.Entities(user));
                     break;
                 default:
                     throw new ArgumentOutOfRangeException();
@@ -219,11 +226,10 @@ namespace Content.Server.Shuttles.Systems
 
             _alertsSystem.ShowAlert(entity, AlertType.PilotingShuttle);
 
-            entity.PopupMessage(Loc.GetString("shuttle-pilot-start"));
             pilotComponent.Console = component;
             ActionBlockerSystem.UpdateCanMove(entity);
             pilotComponent.Position = EntityManager.GetComponent<TransformComponent>(entity).Coordinates;
-            pilotComponent.Dirty();
+            Dirty(pilotComponent);
         }
 
         public void RemovePilot(PilotComponent pilotComponent)

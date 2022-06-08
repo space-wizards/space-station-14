@@ -1,7 +1,7 @@
 <userInterface:FancyWindow xmlns="https://spacestation14.io"
                            xmlns:userInterface="clr-namespace:Content.Client.UserInterface"
                            xmlns:ui="clr-namespace:Content.Client.Shuttles.UI"
-               Title="{Loc 'radar-window-title'}">
+               Title="{Loc 'shuttle-console-window-title'}">
     <GridContainer Columns="2"
                   HorizontalAlignment="Stretch">
         <ui:RadarControl Name="RadarScreen"/>
@@ -16,33 +16,33 @@
                 <GridContainer Columns="2"
                                HorizontalAlignment="Stretch"
                                VerticalAlignment="Top">
-                    <Label Text="Radar range: "/>
+                    <Label Text="{Loc 'shuttle-console-radar'}"/>
                     <Label Name="RadarRange"
                            Text="0.0"
                            HorizontalAlignment="Right"/>
-                    <Label Text="Position: "/>
+                    <Label Text="{Loc 'shuttle-console-position'}"/>
                     <Label Name="GridPosition"
                            Text="0.0, 0.0"
                            Align="Right"/>
-                    <Label Text="Orientation: "/>
+                    <Label Text="{Loc 'shuttle-console-orientation'}"/>
                     <Label Name="GridOrientation"
                            Text="0.0"
                            Align="Right"/>
-                    <Label Text="Linear velocity: "/>
+                    <Label Text="{Loc 'shuttle-console-linear-velocity'}"/>
                     <Label Name="GridLinearVelocity"
                            Text="0.0, 0.0"
                            Align="Right"/>
-                    <Label Text="Angular velocity: "/>
+                    <Label Text="{Loc 'shuttle-console-angular-velocity'}"/>
                     <Label Name="GridAngularVelocity"
                            Text="0.0"
                            Align="Right"/>
                 </GridContainer>
             </PanelContainer>
-            <Button Name="IFFToggle"
-                    Text="Show IFF"
-                    TextAlign="Center"/>
             <Button Name="ShuttleMode"
-                    Text="Strafing mode"
+                    Text="{Loc 'shuttle-console-strafing'}"
+                    TextAlign="Center"/>
+            <Button Name="IFFToggle"
+                    Text="{Loc 'shuttle-console-iff'}"
                     TextAlign="Center"/>
         </BoxContainer>
     </GridContainer>

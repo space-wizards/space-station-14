@@ -1,4 +1,3 @@
-using Content.Shared.Shuttles;
 using Content.Shared.Shuttles.Components;
 using Content.Shared.Shuttles.Events;
 using Content.Shared.Shuttles.Systems;
@@ -41,11 +40,6 @@ namespace Content.Client.Shuttles.Systems
             {
                 Mode = mode,
             });
-        }
-
-        public void StopPiloting()
-        {
-            RaiseNetworkEvent(new StopPilotRequestEvent());
         }
     }
 }
