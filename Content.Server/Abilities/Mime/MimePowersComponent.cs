@@ -28,7 +28,7 @@ namespace Content.Server.Abilities.Mime
         public InstantAction InvisibleWallAction = new()
         {
             UseDelay = TimeSpan.FromSeconds(30),
-            Icon = new SpriteSpecifier.Texture(new ResourcePath("Structures/Walls/solid.rsi/full.png")),
+            Icon = new SpriteSpecifier.Texture(new ResourcePath("Structures/Walls/solid.rsi/solidfull.png")),
             Name = "mime-invisible-wall",
             Description = "mime-invisible-wall-desc",
             Priority = -1,

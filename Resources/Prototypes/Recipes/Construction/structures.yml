@@ -26,7 +26,7 @@
   description: Keeps the air in and the greytide out.
   icon:
     sprite: Structures/Walls/solid.rsi
-    state: full
+    state: solidfull
   objectType: Structure
   placementMode: SnapgridCenter
   canRotate: false
@@ -44,7 +44,7 @@
   description: Keeps the air in and the greytide out.
   icon:
     sprite: Structures/Walls/solid.rsi
-    state: rgeneric
+    state: reinf_overfull
   objectType: Structure
   placementMode: SnapgridCenter
   canRotate: false
