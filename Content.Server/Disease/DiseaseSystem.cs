@@ -97,6 +97,13 @@ namespace Content.Server.Disease
                 {
                     var disease = carrierComp.Diseases[i];
 
+                    //if the disease is on the silent disease list, don't do effects
+                    var doEffects = true;
+                    if (carrierComp.SilentDiseases != null)
+                        foreach (var id in carrierComp.SilentDiseases)
+                            if (id == null)
+                                doEffects = false;
+
                     var args = new DiseaseEffectArgs(carrierComp.Owner, disease, EntityManager);
                     disease.Accumulator += frameTime;
                     if (disease.Accumulator >= disease.TickTime)
@@ -107,10 +114,13 @@ namespace Content.Server.Disease
                             if (cure.Cure(args))
                                 CureDisease(carrierComp, disease);
                         }
-                        foreach (var effect in disease.Effects)
+                        if (doEffects)
                         {
-                            if (_random.Prob(effect.Probability))
-                                effect.Effect(args);
+                            foreach (var effect in disease.Effects)
+                            {
+                                if (_random.Prob(effect.Probability))
+                                    effect.Effect(args);
+                            }
                         }
                     }
                 }
@@ -381,6 +391,14 @@ namespace Content.Server.Disease
                 return;
             if (_random.Prob(infectionChance))
                 TryAddDisease(carrier.Owner, disease, carrier);
+        }
+
+        public void TryInfect(DiseaseCarrierComponent carrier, string? disease, float chance = 0.7f, bool forced = false)
+        {
+            if (disease == null || !_prototypeManager.TryIndex<DiseasePrototype>(disease, out var d))
+                return;
+
+            TryInfect(carrier, d, chance, forced);
         }
 
         /// <summary>
