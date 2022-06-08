@@ -1,3 +1,4 @@
+using System.Diagnostics.CodeAnalysis;
 using Content.Server.Access.Systems;
 using Content.Server.GameTicking;
 using Content.Server.Station.Systems;
@@ -7,8 +8,28 @@ using Content.Shared.Inventory;
 using Content.Shared.PDA;
 using Content.Shared.Preferences;
 using Content.Shared.Roles;
+using Robust.Shared.Enums;
 using Robust.Shared.Prototypes;
 
+/// <summary>
+///     Station records.
+///
+///     A station record is tied to an ID card, or anything that holds
+///     a station record's key. This key will determine access to a
+///     station record set's record entries, and it is imperative not
+///     to lose the item that holds the key under any circumstance.
+///
+///     Records are mostly a roleplaying tool, but can have some
+///     functionality as well (i.e., security records indicating that
+///     a specific person holding an ID card with a linked key is
+///     currently under warrant, showing a crew manifest with user
+///     settable, custom titles).
+///
+///     General records are tied into this system, as most crewmembers
+///     should have a general record - and most systems should probably
+///     depend on this general record being created. This is subject
+///     to change.
+/// </summary>
 public sealed class StationRecordsSystem : EntitySystem
 {
     [Dependency] private readonly InventorySystem _inventorySystem = default!;
@@ -33,16 +54,8 @@ public sealed class StationRecordsSystem : EntitySystem
         CreateGeneralRecord(args.Station, args.Mob, args.Profile, args.JobId);
     }
 
-    /// <summary>
-    ///     Creates a general record for a player. Usually requires that they have an ID.
-    /// </summary>
-    /// <param name="station"></param>
-    /// <param name="player"></param>
-    /// <param name="profile"></param>
-    /// <param name="jobId"></param>
-    /// <param name="records"></param>
-    private void CreateGeneralRecord(EntityUid station, EntityUid player, HumanoidCharacterProfile profile, string? jobId,
-        StationRecordsComponent? records = null)
+    private void CreateGeneralRecord(EntityUid station, EntityUid player, HumanoidCharacterProfile profile,
+        string? jobId, StationRecordsComponent? records = null)
     {
         if (!Resolve(station, ref records)
             || String.IsNullOrEmpty(jobId)
@@ -56,13 +69,51 @@ public sealed class StationRecordsSystem : EntitySystem
             return;
         }
 
+        CreateGeneralRecord(station, idUid.Value, profile.Name, profile.Species, profile.Gender, jobId, profile, records);
+    }
+
+
+    /// <summary>
+    ///     Create a general record to store in a station's record set.
+    /// </summary>
+    /// <remarks>
+    ///     This is tied into the record system, as any crew member's
+    ///     records should generally be dependent on some generic
+    ///     record with the bare minimum of information involved.
+    /// </remarks>
+    /// <param name="station"></param>
+    /// <param name="idUid"></param>
+    /// <param name="name"></param>
+    /// <param name="species"></param>
+    /// <param name="gender"></param>
+    /// <param name="jobId">
+    ///     The job to initially tie this record to. This must be a valid job loaded in, otherwise
+    ///     this call will silently fail. For example, just give somebody the 'passenger' job if
+    ///     they want a new record.
+    /// </param>
+    /// <param name="profile">
+    ///     Profile for the related player. This is so that other systems can get further information
+    ///     about the player character.
+    ///     Optional - other systems should anticipate this.
+    /// </param>
+    /// <param name="records"></param>
+    public void CreateGeneralRecord(EntityUid station, EntityUid? idUid, string name, string species, Gender gender, string? jobId, HumanoidCharacterProfile? profile = null,
+        StationRecordsComponent? records = null)
+    {
+        if (!Resolve(station, ref records)
+            || string.IsNullOrEmpty(jobId)
+            || !_prototypeManager.TryIndex(jobId, out JobPrototype? jobPrototype))
+        {
+            return;
+        }
+
         var record = new GeneralStationRecord()
         {
-            Name = profile.Name,
+            Name = name,
             JobTitle = jobPrototype.Name,
             JobId = jobId,
-            Species = profile.Species,
-            Gender = profile.Gender
+            Species = species,
+            Gender = gender
         };
 
         record.Departments.AddRange(jobPrototype.Departments);
@@ -70,18 +121,40 @@ public sealed class StationRecordsSystem : EntitySystem
         (var key, var entry) = records.Records.AddRecord(station);
         entry.Entries.Add(typeof(GeneralStationRecord), record);
 
-        EntityUid? keyStorageEntity = idUid;
-        if (TryComp(idUid, out PDAComponent? pdaComponent) && pdaComponent.ContainedID != null)
+        if (idUid != null)
         {
-            keyStorageEntity = pdaComponent.IdSlot.Item;
+            var keyStorageEntity = idUid;
+            if (TryComp(idUid, out PDAComponent? pdaComponent) && pdaComponent.ContainedID != null)
+            {
+                keyStorageEntity = pdaComponent.IdSlot.Item;
+            }
+
+            if (keyStorageEntity != null && TryComp(keyStorageEntity, out StationRecordKeyStorageComponent? keyStorage))
+            {
+                keyStorage.Key = key;
+            }
         }
 
-        if (keyStorageEntity != null && TryComp(keyStorageEntity, out StationRecordKeyStorageComponent? keyStorage))
+        RaiseLocalEvent(new AfterGeneralRecordCreatedEvent(key, record, profile));
+    }
+
+    public bool RemoveRecord(EntityUid station, StationRecordKey key, StationRecordsComponent? records = null)
+    {
+        if (!Resolve(station, ref records))
         {
-            keyStorage.Key = key;
+            return false;
         }
 
-        RaiseLocalEvent(new AfterGeneralRecordCreated(key, record, player, profile));
+        RaiseLocalEvent(new RecordRemovedEvent(key));
+
+        return records.Records.Remove(key);
+    }
+
+    public bool TryGetRecord<T>(EntityUid station, StationRecordKey key, [NotNullWhen(true)] out T? entry, StationRecordsComponent? records = null)
+    {
+        entry = default;
+
+        return Resolve(station, ref records) && records.Records.TryGetRecordEntry(key, out entry);
     }
 }
 
@@ -91,18 +164,37 @@ public sealed class StationRecordsSystem : EntitySystem
 ///     listening to this event, as it contains the character's record key.
 ///     Also stores the general record reference, to save some time.
 /// </summary>
-public sealed class AfterGeneralRecordCreated : EntityEventArgs
+public sealed class AfterGeneralRecordCreatedEvent : EntityEventArgs
 {
     public StationRecordKey Key { get; }
     public GeneralStationRecord Record { get; }
-    public EntityUid Mob { get; }
-    public HumanoidCharacterProfile Profile { get; }
+    /// <summary>
+    /// Profile for the related player. This is so that other systems can get further information
+    ///     about the player character.
+    ///     Optional - other systems should anticipate this.
+    /// </summary>
+    public HumanoidCharacterProfile? Profile { get; }
 
-    public AfterGeneralRecordCreated(StationRecordKey key, GeneralStationRecord record, EntityUid mob, HumanoidCharacterProfile profile)
+    public AfterGeneralRecordCreatedEvent(StationRecordKey key, GeneralStationRecord record, HumanoidCharacterProfile? profile)
     {
         Key = key;
         Record = record;
-        Mob = mob;
         Profile = profile;
+    }
+}
+
+/// <summary>
+///     Event raised after a record is removed. Only the key is given
+///     when the record is removed, so that any relevant systems/components
+///     that store record keys can then remove the key from their internal
+///     fields.
+/// </summary>
+public sealed class RecordRemovedEvent : EntityEventArgs
+{
+    public StationRecordKey Key { get; }
+
+    public RecordRemovedEvent(StationRecordKey key)
+    {
+        Key = key;
     }
 }
