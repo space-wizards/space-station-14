@@ -70,7 +70,7 @@ public sealed partial class ShuttleConsoleWindow : FancyWindow, IComputerWindow<
         GridOrientation.Text = $"{displayRot.Degrees:0.0}";
 
         var gridVelocity = gridBody.LinearVelocity;
-        gridVelocity = -worldRot.Opposite().RotateVec(gridVelocity);
+        gridVelocity = -worldRot.RotateVec(gridVelocity);
         // Get linear velocity relative to the console entity
         GridLinearVelocity.Text = $"{gridVelocity.X:0.0}, {gridVelocity.Y:0.0}";
         GridAngularVelocity.Text = $"{gridBody.AngularVelocity:0.0}";
