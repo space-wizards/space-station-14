@@ -73,11 +73,7 @@ namespace Content.Server.GameTicking
             // Spawn everybody in!
             foreach (var (player, (job, station)) in assignedJobs)
             {
-                var session = _playerManager.GetSessionByUserId(player);
-                SpawnPlayer(session, profiles[player], station, job, false);
-#pragma warning disable CS4014
-                _roleTimerManager.RoleChange(session, job, DateTime.UtcNow);
-#pragma warning restore CS4014
+                SpawnPlayer(_playerManager.GetSessionByUserId(player), profiles[player], station, job, false);
             }
 
             RefreshLateJoinAllowed();
@@ -142,6 +138,10 @@ namespace Content.Server.GameTicking
                 _chatManager.DispatchServerMessage(player, Loc.GetString("game-ticker-player-no-jobs-available-when-joining"));
                 return;
             }
+
+#pragma warning disable CS4014
+            _roleTimerManager.RoleChange(player, jobId, DateTime.Now);
+#pragma warning restore CS4014
 
             PlayerJoinGame(player);
 
