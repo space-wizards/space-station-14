@@ -37,7 +37,9 @@ public sealed class MouseMigration : StationEvent
         _random.Shuffle(spawnLocations);
 
         var spawnAmount = _random.Next(7, 15); // A small colony of critters.
-        for (int i = 0; i <= spawnAmount || i <= spawnLocations.Count; i++)
+        Math.Clamp(spawnAmount, 0, spawnLocations.Count);
+
+        for (int i = 0; i <= spawnAmount; i++)
         {
             var location = _random.Pick(spawnLocations);
             var coords = _entityManager.GetComponent<TransformComponent>(location.Owner);
