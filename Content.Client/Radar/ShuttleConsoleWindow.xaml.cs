@@ -1,4 +1,5 @@
 using Content.Client.Computer;
+using Content.Client.Stylesheets;
 using Content.Client.UserInterface;
 using Content.Shared.Radar;
 using Content.Shared.Shuttles.Components;
@@ -33,11 +34,6 @@ public sealed partial class ShuttleConsoleWindow : FancyWindow, IComputerWindow<
     {
         ShuttleConsole.UpdateState(scc);
     }
-
-    public void SetLinearVelocity(Vector2 value)
-    {
-        LinearVelocity.Text = value.ToString();
-    }
 }
 
 
@@ -61,7 +57,10 @@ public sealed class RadarControl : Control
     private int ScaledMinimapRadius => (int) (MinimapRadius * UIScale);
     private float MinimapScale => _radarRange != 0 ? ScaledMinimapRadius / _radarRange : 0f;
 
-    private Dictionary<EntityUid, Label> _labels = new();
+    /// <summary>
+    /// Shows a label on each radar object.
+    /// </summary>
+    private Dictionary<EntityUid, Control> _iffControls = new();
 
     public RadarControl()
     {
@@ -87,12 +86,12 @@ public sealed class RadarControl : Control
         // No data
         if (_entity == null)
         {
-            foreach (var (_, label) in _labels)
+            foreach (var (_, label) in _iffControls)
             {
                 label.Dispose();
             }
 
-            _labels.Clear();
+            _iffControls.Clear();
             return;
         }
 
@@ -153,20 +152,30 @@ public sealed class RadarControl : Control
                 continue;
             }
 
+            var name = "Dork ship";
             var gridXform = _entManager.GetComponent<TransformComponent>(grid.GridEntityId);
             var gridFixtures = _entManager.GetComponent<FixturesComponent>(grid.GridEntityId);
             var gridMatrix = gridXform.WorldMatrix;
             Matrix3.Multiply(ref gridMatrix, ref matrix, out var matty);
 
-            if (!_labels.TryGetValue(grid.GridEntityId, out var label))
+            if (!_iffControls.TryGetValue(grid.GridEntityId, out var control))
             {
-                label = new Label()
+                var label = new Label()
                 {
                     HorizontalAlignment = HAlignment.Left,
                 };
-                _labels[grid.GridEntityId] = label;
-                LayoutContainer.SetAnchorAndMarginPreset(label, LayoutContainer.LayoutPreset.BottomLeft, LayoutContainer.LayoutPresetMode.MinSize);
-                AddChild(label);
+
+                control = new PanelContainer()
+                {
+                    HorizontalAlignment = HAlignment.Left,
+                    VerticalAlignment = VAlignment.Top,
+                    Children = { label },
+                    StyleClasses  = { StyleNano.StyleClassTooltipPanel },
+                };
+
+                _iffControls[grid.GridEntityId] = control;
+                LayoutContainer.SetAnchorAndMarginPreset(control, LayoutContainer.LayoutPreset.BottomLeft);
+                AddChild(control);
             }
 
             var gridCentre = matty.Transform(gridBody.LocalCenter);
@@ -174,13 +183,14 @@ public sealed class RadarControl : Control
 
             if (gridCentre.Length < _radarRange)
             {
-                label.Text = $"Dork ({gridCentre.Length:0.0} m)";
-                handle.DrawCircle(gridCentre * MinimapScale + point, 2f, Color.Red);
-                LayoutContainer.SetPosition(label, gridCentre * MinimapScale / UIScale + point);
+                control.Visible = true;
+                var label = (Label) control.GetChild(0);
+                label.Text = $"{name} ({gridCentre.Length:0.0}m)";
+                LayoutContainer.SetPosition(control, (gridCentre * MinimapScale + point ) / UIScale);
             }
             else
             {
-                label.Visible = false;
+                control.Visible = false;
             }
 
             // Detailed view
@@ -190,9 +200,9 @@ public sealed class RadarControl : Control
 
     private void ClearLabel(EntityUid uid)
     {
-        if (!_labels.TryGetValue(uid, out var label)) return;
+        if (!_iffControls.TryGetValue(uid, out var label)) return;
         label.Dispose();
-        _labels.Remove(uid);
+        _iffControls.Remove(uid);
     }
 
     private void DrawGrid(DrawingHandleScreen handle, Matrix3 matrix, FixturesComponent component, int point, Color color)

@@ -6,35 +6,5 @@
     <GridContainer Columns="2"
                   HorizontalAlignment="Left">
         <radar:RadarControl Name="ShuttleConsole"/>
-        <BoxContainer VerticalAlignment="Center"
-                      HorizontalAlignment="Center"
-                      MinWidth="256"
-                      Align="Center"
-                      Orientation="Vertical">
-            <PanelContainer>
-                <PanelContainer.PanelOverride>
-                    <graphics:StyleBoxFlat BackgroundColor="#25252A"/>
-                </PanelContainer.PanelOverride>
-                <BoxContainer Orientation="Horizontal">
-                    <Label Text="Linear velocity "
-                           Align="Left"/>
-                    <Label Name="LinearVelocity"
-                           Text="0.0"
-                           Align="Right"
-                           StyleClasses="OpenRight"/>
-                </BoxContainer>
-            </PanelContainer>
-            <BoxContainer Orientation="Horizontal">
-                <Label Text="Angular velocity "
-                       Align="Left"/>
-                <Label Name="AngularVelocity"
-                       Text="0.0"
-                       Align="Right"
-                       StyleClasses="OpenRight"/>
-            </BoxContainer>
-            <BoxContainer>
-                <Label Text="UWU"/>
-            </BoxContainer>
-        </BoxContainer>
     </GridContainer>
 </userInterface:FancyWindow>
