@@ -3,7 +3,7 @@ using Robust.Shared.GameStates;
 
 namespace Content.Shared.Shuttles.Components;
 
-[RegisterComponent, NetworkedComponent, Friend(typeof(SharedRadarConsoleSystem))]
+[RegisterComponent, NetworkedComponent, Access(typeof(SharedRadarConsoleSystem))]
 public sealed class RadarConsoleComponent : Component
 {
     [ViewVariables(VVAccess.ReadWrite)]
