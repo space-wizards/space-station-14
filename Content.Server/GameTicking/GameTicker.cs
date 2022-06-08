@@ -105,6 +105,7 @@ namespace Content.Server.GameTicking
         [Dependency] private readonly IServerDbManager _db = default!;
         [Dependency] private readonly IAdminLogManager _adminLogger = default!;
         [Dependency] private readonly ILogManager _logManager = default!;
+        [Dependency] private readonly IRoleTimerManager _roleTimerManager = default!;
         [Dependency] private readonly IConsoleHost _consoleHost = default!;
 #if EXCEPTION_TOLERANCE
         [Dependency] private readonly IRuntimeLog _runtimeLog = default!;
@@ -116,6 +117,5 @@ namespace Content.Server.GameTicking
         [Dependency] private readonly GhostSystem _ghosts = default!;
         [Dependency] private readonly RoleBanManager _roleBanManager = default!;
         [Dependency] private readonly ServerUpdateManager _serverUpdates = default!;
-        [Dependency] private readonly RoleTimerManager _roleTimerManager = default!;
     }
 }

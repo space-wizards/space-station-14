@@ -5,7 +5,19 @@ using Robust.Shared.Enums;
 
 namespace Content.Server.RoleTimers
 {
-    public sealed class RoleTimerManager : IEntityEventSubscriber
+    public interface IRoleTimerManager
+    {
+        /// <summary>
+        /// Call this when the player is changing role to something else.
+        /// Saves the player's current playtime, and changes the cache to remember the new role.
+        /// </summary>
+        /// <param name="player">The player to access DB stuff from.</param>
+        /// <param name="role">The name or id of the role.</param>
+        /// <param name="now">Just pass DateTime.UtcNow here.</param>
+        public Task RoleChange(IPlayerSession player, string role, DateTime now);
+    }
+
+    public sealed class RoleTimerManager : IRoleTimerManager, IEntityEventSubscriber
     {
         [Dependency] private readonly IServerDbManager _db = default!;
         [Dependency] private readonly IPlayerManager _playerManager = default!;
@@ -34,13 +46,6 @@ namespace Content.Server.RoleTimers
             }
         }
 
-        /// <summary>
-        /// Call this when the player is changing role to something else.
-        /// Saves the player's current playtime, and changes the cache to remember the new role.
-        /// </summary>
-        /// <param name="player">The player to access DB stuff from.</param>
-        /// <param name="role">The name or id of the role.</param>
-        /// <param name="now">Just pass DateTime.UtcNow here.</param>
         public async Task RoleChange(IPlayerSession player, string role, DateTime now)
         {
             // If the role doesn't exist in the cache, load it
