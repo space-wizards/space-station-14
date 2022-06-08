@@ -76,6 +76,6 @@ public sealed partial class ShuttleConsoleWindow : FancyWindow,
         gridVelocity = displayRot.RotateVec(gridVelocity);
         // Get linear velocity relative to the console entity
         GridLinearVelocity.Text = $"{gridVelocity.X:0.0}, {gridVelocity.Y:0.0}";
-        GridAngularVelocity.Text = $"{gridBody.AngularVelocity:0.0}";
+        GridAngularVelocity.Text = $"{-gridBody.AngularVelocity:0.0}";
     }
 }
