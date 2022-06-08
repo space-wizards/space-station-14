@@ -37,16 +37,20 @@ public sealed class MouseMigration : StationEvent
         _random.Shuffle(spawnLocations);
 
         var spawnAmount = _random.Next(7, 15); // A small colony of critters.
-        Math.Clamp(spawnAmount, 0, spawnLocations.Count);
 
-        for (int i = 0; i <= spawnAmount; i++)
+        List<TransformComponent> validLocations = new();
+        for (var i = 0; i < spawnAmount || i < spawnLocations.Count; i++)
         {
-            var location = _random.Pick(spawnLocations);
-            var coords = _entityManager.GetComponent<TransformComponent>(location.Owner);
+            validLocations.Add(_entityManager.GetComponent<TransformComponent>(spawnLocations[i].Owner));
+        }
+
+        for (var i = 0; i < validLocations.Count; i++)
+        {
             var spawnChoice = _random.Pick(SpawnedPrototypeChoices);
             if (_random.Prob(0.02f) || i == 0) //small chance for multiple
                 spawnChoice = "MobRatKing";
-            _entityManager.SpawnEntity(spawnChoice, coords.Coordinates);
+
+            _entityManager.SpawnEntity(spawnChoice, validLocations[i].Coordinates);
         }
     }
 }

@@ -122,7 +122,7 @@
     sprite: Clothing/Head/Misc/fancycrown.rsi
   - type: Clothing
     sprite: Clothing/Head/Misc/fancycrown.rsi
-   - type: MobPrice
+  - type: MobPrice
     price: 3000
 
 - type: entity
