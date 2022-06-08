@@ -6,7 +6,7 @@ using Robust.Client.GameObjects;
 namespace Content.Client.Shuttles.UI;
 
 [UsedImplicitly]
-public sealed class RadarConsoleBoundUserInterface : ComputerBoundUserInterface<ShuttleConsoleWindow, RadarConsoleBoundInterfaceState>
+public sealed class RadarConsoleBoundUserInterface : ComputerBoundUserInterface<RadarConsoleWindow, RadarConsoleBoundInterfaceState>
 {
     public RadarConsoleBoundUserInterface(ClientUserInterfaceComponent owner, object uiKey) : base(owner, uiKey) {}
 }

@@ -11,7 +11,6 @@ namespace Content.Client.Shuttles.UI;
 
 [GenerateTypedNameReferences]
 public sealed partial class ShuttleConsoleWindow : FancyWindow,
-    IComputerWindow<RadarConsoleBoundInterfaceState>,
     IComputerWindow<ShuttleConsoleBoundInterfaceState>
 {
     private readonly ShuttleConsoleSystem _system;
