@@ -10,6 +10,6 @@
         /// How long (in seconds) this requirement is.
         /// </summary>
         [DataField("time")]
-        public int Time;
+        public TimeSpan Time;
     }
 }
