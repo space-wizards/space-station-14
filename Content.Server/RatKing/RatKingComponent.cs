@@ -9,7 +9,7 @@ namespace Content.Server.RatKing
         public InstantAction ActionRaiseArmy = new();
 
         [DataField("hungerPerArmyUse", required: true)]
-        public float HungerPerArmyUse;
+        public float HungerPerArmyUse = 25f;
 
         public string ArmyMobSpawnId = "MobRatServant";
 
@@ -17,11 +17,11 @@ namespace Content.Server.RatKing
         public InstantAction ActionDomain = new();
 
         [DataField("hungerPerDomainUse", required: true)]
-        public float HungerPerDomainUse;
+        public float HungerPerDomainUse = 50f;
 
         public string DomainDiseaseId = "Plague";
 
-        public float DomainRange = 4f;
+        public float DomainRange = 3f;
 
     }
 };

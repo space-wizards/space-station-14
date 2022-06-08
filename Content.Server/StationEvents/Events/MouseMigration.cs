@@ -10,7 +10,7 @@ public sealed class MouseMigration : StationEvent
     [Dependency] private readonly IEntityManager _entityManager = default!;
 
     public static List<string> SpawnedPrototypeChoices = new List<string>() //we double up for that ez fake probability
-        {"MobMouse", "MobMouse1", "MobMouse2", "MobMouse", "MobMouse1", "MobMouse2", "MobRatServant"};
+        {"MobMouse", "MobMouse1", "MobMouse2", "MobRatServant"};
 
     public override string Name => "MouseMigration";
 
@@ -33,24 +33,18 @@ public sealed class MouseMigration : StationEvent
     {
         base.Startup();
         
-        var spawnLocations = _entityManager.EntityQuery<VentCritterSpawnLocationComponent>().ToList();
+        var spawnLocations = _entityManager.EntityQuery<VentCritterSpawnLocationComponent, TransformComponent>().ToList();
         _random.Shuffle(spawnLocations);
 
         var spawnAmount = _random.Next(7, 15); // A small colony of critters.
 
-        List<TransformComponent> validLocations = new();
-        for (var i = 0; i < spawnAmount && i < spawnLocations.Count - 1; i++)
-        {
-            validLocations.Add(_entityManager.GetComponent<TransformComponent>(spawnLocations[i].Owner));
-        }
-
-        for (int i = 0; i < validLocations.Count - 1; i++)
+        for (int i = 0; i < spawnAmount && i < spawnLocations.Count - 1; i++)
         {
             var spawnChoice = _random.Pick(SpawnedPrototypeChoices);
             if (_random.Prob(0.01f) || i == 0) //small chance for multiple, but always at least 1
                 spawnChoice = "MobRatKing";
 
-            _entityManager.SpawnEntity(spawnChoice, validLocations[i].Coordinates);
+            _entityManager.SpawnEntity(spawnChoice, spawnLocations[i].Item2.Coordinates);
         }
     }
 }

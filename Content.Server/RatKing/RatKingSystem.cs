@@ -34,6 +34,9 @@ namespace Content.Server.RatKing
         /// </summary>
         private void OnRaiseArmy(EntityUid uid, RatKingComponent component, RatKingRaiseArmyActionEvent args)
         {
+			if (args.Handled)
+				return;
+			
             if (!TryComp<HungerComponent>(uid, out var hunger))
                 return;
 
@@ -45,7 +48,7 @@ namespace Content.Server.RatKing
             }
             args.Handled = true;
             hunger.CurrentHunger -= component.HungerPerArmyUse;
-            Spawn(component.ArmyMobSpawnId, Transform(uid).Coordinates);
+            Spawn(component.ArmyMobSpawnId, Transform(uid).Coordinates); //spawn the little mouse boi
         }
 
         /// <summary>
@@ -54,6 +57,9 @@ namespace Content.Server.RatKing
         /// </summary>
         private void OnDomain(EntityUid uid, RatKingComponent component, RatKingDomainActionEvent args)
         {
+			if (args.Handled)
+				return;
+			
             if (!TryComp<HungerComponent>(uid, out var hunger))
                 return;
 
@@ -66,13 +72,13 @@ namespace Content.Server.RatKing
             args.Handled = true;
             hunger.CurrentHunger -= component.HungerPerDomainUse;
 
-            var xformQuery = EntityQuery<TransformComponent, DiseaseCarrierComponent>(false);
+            var xformQuery = EntityQuery<TransformComponent, DiseaseCarrierComponent>(false); //get every disease-carrying mob
             var bodyXform = Transform(uid);
             _popup.PopupEntity(Loc.GetString("rat-king-domain-popup"), uid, Filter.Pvs(uid));
 
-            foreach (var query in xformQuery)
+            foreach (var query in xformQuery) //go through all of them, filtering only those in range that are not the king itself
                 if (bodyXform.Coordinates.InRange(EntityManager, query.Item1.Coordinates, component.DomainRange) && query.Item1.Owner != uid)
-                    _disease.TryInfect(query.Item2, component.DomainDiseaseId); 
+                    _disease.TryInfect(query.Item2, component.DomainDiseaseId); //infect them with w/e disease
         }
     }
 

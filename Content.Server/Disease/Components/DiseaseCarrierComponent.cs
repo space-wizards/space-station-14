@@ -38,7 +38,7 @@ namespace Content.Server.Disease.Components
         /// exhibit direct symptoms from. They still transmit
         /// these diseases, just without symptoms.
         /// </summary>
-        [DataField("silentDiseases", customTypeSerializer: typeof(AbstractPrototypeIdListSerializer<DiseasePrototype>))]
+        [DataField("silentDiseases", customTypeSerializer: typeof(PrototypeIdListSerializer<DiseasePrototype>))]
         public List<string>? SilentDiseases;
     }
 }

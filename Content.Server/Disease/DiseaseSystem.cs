@@ -101,7 +101,7 @@ namespace Content.Server.Disease
                     var doEffects = true;
                     if (carrierComp.SilentDiseases != null)
                         foreach (var id in carrierComp.SilentDiseases)
-                            if (id == null)
+                            if (id == disease.ID)
                                 doEffects = false;
 
                     var args = new DiseaseEffectArgs(carrierComp.Owner, disease, EntityManager);
