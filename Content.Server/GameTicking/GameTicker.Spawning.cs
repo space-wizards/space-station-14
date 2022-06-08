@@ -140,7 +140,7 @@ namespace Content.Server.GameTicking
             }
 
 #pragma warning disable CS4014
-            _roleTimerManager.RoleChange(player, jobId, DateTime.Now);
+            _roleTimerSystem.RoleChange(player, jobId, DateTime.Now);
 #pragma warning restore CS4014
 
             PlayerJoinGame(player);

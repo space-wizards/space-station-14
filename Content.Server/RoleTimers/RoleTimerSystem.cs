@@ -1,11 +1,12 @@
 ﻿using System.Threading.Tasks;
 using Content.Server.Database;
+using Content.Shared.GameTicking;
 using Robust.Server.Player;
 using Robust.Shared.Enums;
 
 namespace Content.Server.RoleTimers
 {
-    public sealed class RoleTimerManager : IEntityEventSubscriber
+    public sealed class RoleTimerSystem : EntitySystem
     {
         [Dependency] private readonly IServerDbManager _db = default!;
         [Dependency] private readonly IPlayerManager _playerManager = default!;
@@ -16,9 +17,11 @@ namespace Content.Server.RoleTimers
         // and use that to get the TimeSpan to add onto the saved playtime
         private Dictionary<IPlayerSession, Tuple<string, DateTime>> _cachedPlayerData = new();
 
-        public void Initialize()
+        public override void Initialize()
         {
+            base.Initialize();
             _playerManager.PlayerStatusChanged += OnPlayerStatusChanged;
+            SubscribeLocalEvent<RoundRestartCleanupEvent>(_ => SaveAndClear());
         }
 
         private void OnPlayerStatusChanged(object? sender, SessionStatusEventArgs args)
