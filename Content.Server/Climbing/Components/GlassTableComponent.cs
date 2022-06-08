@@ -7,7 +7,7 @@ namespace Content.Server.Climbing.Components;
 ///     This is a really entity-specific behavior, so opted to make it
 ///     not very generalized with regards to naming.
 /// </summary>
-[RegisterComponent, Friend(typeof(ClimbSystem))]
+[RegisterComponent, Access(typeof(ClimbSystem))]
 public sealed class GlassTableComponent : Component
 {
     /// <summary>
