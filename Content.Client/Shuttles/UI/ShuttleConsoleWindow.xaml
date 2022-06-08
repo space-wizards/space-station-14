@@ -1,10 +1,10 @@
 <userInterface:FancyWindow xmlns="https://spacestation14.io"
-               xmlns:radar="clr-namespace:Content.Client.Radar"
-               xmlns:userInterface="clr-namespace:Content.Client.UserInterface"
+                           xmlns:userInterface="clr-namespace:Content.Client.UserInterface"
+                           xmlns:ui="clr-namespace:Content.Client.Shuttles.UI"
                Title="{Loc 'radar-window-title'}">
     <GridContainer Columns="2"
                   HorizontalAlignment="Stretch">
-        <radar:RadarControl Name="RadarScreen"/>
+        <ui:RadarControl Name="RadarScreen"/>
         <BoxContainer Name="RightDisplay"
                       VerticalAlignment="Top"
                       HorizontalAlignment="Left"
@@ -40,6 +40,9 @@
             </PanelContainer>
             <Button Name="IFFToggle"
                     Text="Show IFF"
+                    TextAlign="Center"/>
+            <Button Name="ShuttleMode"
+                    Text="Strafing mode"
                     TextAlign="Center"/>
         </BoxContainer>
     </GridContainer>

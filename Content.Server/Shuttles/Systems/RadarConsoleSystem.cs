@@ -1,13 +1,15 @@
 using Content.Server.Power.Components;
-using Content.Shared.Radar;
+using Content.Server.Power.EntitySystems;
+using Content.Shared.Shuttles.BUIStates;
+using Content.Shared.Shuttles.Components;
+using Content.Shared.Shuttles.Systems;
 using Robust.Server.GameObjects;
-using Robust.Shared.Map;
 
-namespace Content.Server.Radar;
+namespace Content.Server.Shuttles.Systems;
 
 public sealed class RadarConsoleSystem : SharedRadarConsoleSystem
 {
-    [Dependency] private readonly IMapManager _mapManager = default!;
+    [Dependency] private readonly UserInterfaceSystem _uiSystem = default!;
 
     public override void Initialize()
     {
@@ -28,8 +30,8 @@ public sealed class RadarConsoleSystem : SharedRadarConsoleSystem
 
     protected override void UpdateState(RadarConsoleComponent component)
     {
-        // TODO: send null if no power or unanchored.
-        var radarState = new RadarConsoleBoundInterfaceState(component.Range, component.Owner);
-        Get<UserInterfaceSystem>().GetUiOrNull(component.Owner, RadarConsoleUiKey.Key)?.SetState(radarState);
+        var empty = !this.IsPowered(component.Owner, EntityManager) || !(Transform(component.Owner).Anchored);
+        var radarState = new RadarConsoleBoundInterfaceState(component.Range, empty ? null : component.Owner);
+        _uiSystem.GetUiOrNull(component.Owner, RadarConsoleUiKey.Key)?.SetState(radarState);
     }
 }

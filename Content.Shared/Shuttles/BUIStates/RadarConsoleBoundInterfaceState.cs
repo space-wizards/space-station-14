@@ -1,13 +1,13 @@
-using Robust.Shared.Map;
 using Robust.Shared.Serialization;
 
-namespace Content.Shared.Radar;
+namespace Content.Shared.Shuttles.BUIStates;
 
 [Serializable, NetSerializable]
-public sealed class RadarConsoleBoundInterfaceState : BoundUserInterfaceState
+[Virtual]
+public class RadarConsoleBoundInterfaceState : BoundUserInterfaceState
 {
-    public float Range;
-    public EntityUid? Entity;
+    public readonly float Range;
+    public readonly EntityUid? Entity;
 
     public RadarConsoleBoundInterfaceState(float range, EntityUid ?entity)
     {

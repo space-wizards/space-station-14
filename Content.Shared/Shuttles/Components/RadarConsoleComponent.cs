@@ -1,6 +1,7 @@
+using Content.Shared.Shuttles.Systems;
 using Robust.Shared.GameStates;
 
-namespace Content.Shared.Radar;
+namespace Content.Shared.Shuttles.Components;
 
 [RegisterComponent, NetworkedComponent, Friend(typeof(SharedRadarConsoleSystem))]
 public sealed class RadarConsoleComponent : Component

@@ -4,7 +4,7 @@ using JetBrains.Annotations;
 using Robust.Shared.Configuration;
 using Robust.Shared.Physics;
 
-namespace Content.Server.Shuttles.EntitySystems
+namespace Content.Server.Shuttles.Systems
 {
     [UsedImplicitly]
     public sealed class ShuttleSystem : EntitySystem

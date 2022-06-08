@@ -2,84 +2,153 @@ using Content.Server.Popups;
 using Content.Server.Power.Components;
 using Content.Server.Power.EntitySystems;
 using Content.Server.Shuttles.Components;
+using Content.Server.UserInterface;
 using Content.Shared.ActionBlocker;
 using Content.Shared.Alert;
 using Content.Shared.Interaction;
 using Content.Shared.Popups;
-using Content.Shared.Shuttles;
+using Content.Shared.Shuttles.BUIStates;
 using Content.Shared.Shuttles.Components;
+using Content.Shared.Shuttles.Events;
+using Content.Shared.Shuttles.Systems;
 using Content.Shared.Tag;
-using Content.Shared.Verbs;
-using Robust.Shared.Map;
+using Robust.Server.GameObjects;
+using Robust.Server.Player;
+using Robust.Shared.GameStates;
 using Robust.Shared.Player;
 using Robust.Shared.Utility;
 
-namespace Content.Server.Shuttles.EntitySystems
+namespace Content.Server.Shuttles.Systems
 {
-    internal sealed class ShuttleConsoleSystem : SharedShuttleConsoleSystem
+    public sealed class ShuttleConsoleSystem : SharedShuttleConsoleSystem
     {
-        [Dependency] private readonly IMapManager _mapManager = default!;
         [Dependency] private readonly ActionBlockerSystem _blocker = default!;
         [Dependency] private readonly AlertsSystem _alertsSystem = default!;
         [Dependency] private readonly PopupSystem _popup = default!;
         [Dependency] private readonly TagSystem _tags = default!;
+        [Dependency] private readonly UserInterfaceSystem _ui = default!;
 
         public override void Initialize()
         {
             base.Initialize();
 
-            SubscribeLocalEvent<ShuttleConsoleComponent, ComponentShutdown>(HandleConsoleShutdown);
-            SubscribeLocalEvent<ShuttleConsoleComponent, ActivateInWorldEvent>(HandleConsoleInteract);
-            SubscribeLocalEvent<ShuttleConsoleComponent, PowerChangedEvent>(HandlePowerChange);
-            SubscribeLocalEvent<ShuttleConsoleComponent, GetVerbsEvent<InteractionVerb>>(OnConsoleInteract);
+            SubscribeLocalEvent<ShuttleConsoleComponent, ComponentShutdown>(OnConsoleShutdown);
+            SubscribeLocalEvent<ShuttleConsoleComponent, PowerChangedEvent>(OnConsolePowerChange);
+            SubscribeLocalEvent<ShuttleConsoleComponent, AnchorStateChangedEvent>(OnConsoleAnchorChange);
+            SubscribeNetworkEvent<ShuttleModeRequestEvent>(OnModeRequest);
+            SubscribeNetworkEvent<StartPilotRequestEvent>(OnPilotStartRequest);
+            SubscribeNetworkEvent<StopPilotRequestEvent>(OnPilotStopRequest);
 
             SubscribeLocalEvent<PilotComponent, MoveEvent>(HandlePilotMove);
+            SubscribeLocalEvent<PilotComponent, ComponentGetState>(OnGetState);
         }
 
-        private void OnConsoleInteract(EntityUid uid, ShuttleConsoleComponent component, GetVerbsEvent<InteractionVerb> args)
+        private void OnConsoleAnchorChange(EntityUid uid, ShuttleConsoleComponent component, ref AnchorStateChangedEvent args)
         {
-            if (!args.CanAccess ||
-                !args.CanInteract)
-                return;
-
-            var xform = EntityManager.GetComponent<TransformComponent>(uid);
-
-            // Maybe move mode onto the console instead?
-            if (!_mapManager.TryGetGrid(xform.GridID, out var grid) ||
-                !EntityManager.TryGetComponent(grid.GridEntityId, out ShuttleComponent? shuttle)) return;
-
-            InteractionVerb verb = new()
-            {
-                Text = Loc.GetString("shuttle-mode-toggle"),
-                Act = () => ToggleShuttleMode(args.User, component, shuttle),
-                Disabled = !xform.Anchored || !this.IsPowered(uid, EntityManager),
-            };
-
-            args.Verbs.Add(verb);
+            UpdateState(component);
         }
 
-        private void ToggleShuttleMode(EntityUid user, ShuttleConsoleComponent consoleComponent, ShuttleComponent shuttleComponent, TransformComponent? consoleXform = null)
+        private void OnConsolePowerChange(EntityUid uid, ShuttleConsoleComponent component, PowerChangedEvent args)
+        {
+            UpdateState(component);
+        }
+
+        private void OnPilotStartRequest(StartPilotRequestEvent ev, EntitySessionEventArgs args)
+        {
+            if (args.SenderSession.AttachedEntity is not { } user ||
+                !_tags.HasTag(user, "CanPilot") ||
+                !TryComp<ShuttleConsoleComponent>(ev.Uid, out var component) ||
+                !this.IsPowered(ev.Uid, EntityManager) ||
+                !Transform(ev.Uid).Anchored ||
+                !_blocker.CanInteract(user, ev.Uid))
+            {
+                _ui.TryClose(ev.Uid, ShuttleConsoleUiKey.Key, (IPlayerSession) args.SenderSession);
+                return;
+            }
+
+            var pilotComponent = EntityManager.EnsureComponent<PilotComponent>(user);
+            var console = pilotComponent.Console;
+
+            if (console != null)
+            {
+                RemovePilot(pilotComponent);
+
+                if (console == component)
+                {
+                    return;
+                }
+            }
+
+            AddPilot(user, component);
+        }
+
+        private void OnPilotStopRequest(StopPilotRequestEvent msg, EntitySessionEventArgs args)
+        {
+            if (!TryComp<PilotComponent>(args.SenderSession.AttachedEntity, out var pilot)) return;
+            RemovePilot(pilot);
+        }
+
+        private void OnGetState(EntityUid uid, PilotComponent component, ref ComponentGetState args)
+        {
+            args.State = new PilotComponentState(component.Console?.Owner);
+        }
+
+        private void OnModeRequest(ShuttleModeRequestEvent msg, EntitySessionEventArgs args)
+        {
+            if (args.SenderSession.AttachedEntity is not { } player ||
+                !TryComp<PilotComponent>(player, out var pilot) ||
+                !TryComp<TransformComponent>(player, out var xform) ||
+                pilot.Console is not ShuttleConsoleComponent console) return;
+
+            if (!console.SubscribedPilots.Contains(pilot) ||
+                !TryComp<ShuttleComponent>(xform.GridEntityId, out var shuttle)) return;
+
+            SetShuttleMode(msg.Mode, player, console, shuttle);
+        }
+
+        /// <summary>
+        /// Sets the shuttle's movement mode. Does minimal revalidation.
+        /// </summary>
+        private void SetShuttleMode(ShuttleMode mode, EntityUid user, ShuttleConsoleComponent consoleComponent,
+            ShuttleComponent shuttleComponent, TransformComponent? consoleXform = null)
         {
             // Re-validate
             if (!this.IsPowered(consoleComponent.Owner, EntityManager)) return;
 
             if (!Resolve(consoleComponent.Owner, ref consoleXform)) return;
 
-            if (!consoleXform.Anchored || consoleXform.GridID != EntityManager.GetComponent<TransformComponent>(shuttleComponent.Owner).GridID) return;
+            if (!consoleXform.Anchored || consoleXform.GridID != Transform(shuttleComponent.Owner).GridID) return;
 
-            switch (shuttleComponent.Mode)
+            shuttleComponent.Mode = mode;
+
+            switch (mode)
             {
-                case ShuttleMode.Cruise:
-                    shuttleComponent.Mode = ShuttleMode.Docking;
+                case ShuttleMode.Strafing:
                     _popup.PopupEntity(Loc.GetString("shuttle-mode-docking"), consoleComponent.Owner, Filter.Entities(user));
                     break;
-                case ShuttleMode.Docking:
-                    shuttleComponent.Mode = ShuttleMode.Cruise;
+                case ShuttleMode.Cruise:
                     _popup.PopupEntity(Loc.GetString("shuttle-mode-cruise"), consoleComponent.Owner, Filter.Entities(user));
                     break;
                 default:
                     throw new ArgumentOutOfRangeException();
             }
+
+            UpdateState(consoleComponent);
+        }
+
+        private void UpdateState(ShuttleConsoleComponent component)
+        {
+            TryComp<RadarConsoleComponent>(component.Owner, out var radar);
+            var range = radar?.Range ?? 0f;
+
+            TryComp<ShuttleComponent>(Transform(component.Owner).GridUid, out var shuttle);
+            var mode = shuttle?.Mode ?? ShuttleMode.Cruise;
+
+            _ui.GetUiOrNull(component.Owner, ShuttleConsoleUiKey.Key)
+                ?.SetState(new ShuttleConsoleBoundInterfaceState(
+                    mode,
+                    range,
+                    component.Owner));
         }
 
         public override void Update(float frameTime)
@@ -105,23 +174,6 @@ namespace Content.Server.Shuttles.EntitySystems
         }
 
         /// <summary>
-        /// Console requires power to operate.
-        /// </summary>
-        private void HandlePowerChange(EntityUid uid, ShuttleConsoleComponent component, PowerChangedEvent args)
-        {
-            if (!args.Powered)
-            {
-                component.Enabled = false;
-
-                ClearPilots(component);
-            }
-            else
-            {
-                component.Enabled = true;
-            }
-        }
-
-        /// <summary>
         /// If pilot is moved then we'll stop them from piloting.
         /// </summary>
         private void HandlePilotMove(EntityUid uid, PilotComponent component, ref MoveEvent args)
@@ -139,47 +191,13 @@ namespace Content.Server.Shuttles.EntitySystems
             RemovePilot(component);
         }
 
-        /// <summary>
-        /// For now pilots just interact with the console and can start piloting with wasd.
-        /// </summary>
-        private void HandleConsoleInteract(EntityUid uid, ShuttleConsoleComponent component, ActivateInWorldEvent args)
-        {
-            if (!_tags.HasTag(args.User, "CanPilot"))
-            {
-                return;
-            }
-
-            var pilotComponent = EntityManager.EnsureComponent<PilotComponent>(args.User);
-
-            if (!component.Enabled)
-            {
-                args.User.PopupMessage($"Console is not powered.");
-                return;
-            }
-
-            args.Handled = true;
-            var console = pilotComponent.Console;
-
-            if (console != null)
-            {
-                RemovePilot(pilotComponent);
-
-                if (console == component)
-                {
-                    return;
-                }
-            }
-
-            AddPilot(args.User, component);
-        }
-
         protected override void HandlePilotShutdown(EntityUid uid, PilotComponent component, ComponentShutdown args)
         {
             base.HandlePilotShutdown(uid, component, args);
             RemovePilot(component);
         }
 
-        private void HandleConsoleShutdown(EntityUid uid, ShuttleConsoleComponent component, ComponentShutdown args)
+        private void OnConsoleShutdown(EntityUid uid, ShuttleConsoleComponent component, ComponentShutdown args)
         {
             ClearPilots(component);
         }

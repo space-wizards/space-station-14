@@ -10,7 +10,7 @@ using Robust.Shared.Physics.Collision.Shapes;
 using Robust.Shared.Physics.Dynamics;
 using Robust.Shared.Utility;
 
-namespace Content.Server.Shuttles.EntitySystems
+namespace Content.Server.Shuttles.Systems
 {
     public sealed class DockingSystem : EntitySystem
     {

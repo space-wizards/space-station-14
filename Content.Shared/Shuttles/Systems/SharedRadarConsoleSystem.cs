@@ -1,7 +1,8 @@
+using Content.Shared.Shuttles.Components;
 using Robust.Shared.GameStates;
 using Robust.Shared.Serialization;
 
-namespace Content.Shared.Radar;
+namespace Content.Shared.Shuttles.Systems;
 
 public abstract class SharedRadarConsoleSystem : EntitySystem
 {
