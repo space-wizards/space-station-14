@@ -53,6 +53,8 @@
         components:
         - HitscanBatteryAmmoProvider
         - ProjectileBatteryAmmoProvider
+        - PowerCell
+        - PowerCellSlot
 
 - type: entity
   name: wall recharger
