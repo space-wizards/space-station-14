@@ -3,8 +3,8 @@
                xmlns:userInterface="clr-namespace:Content.Client.UserInterface"
                Title="{Loc 'radar-window-title'}">
     <GridContainer Columns="2"
-                  HorizontalAlignment="Left">
-        <radar:RadarControl Name="RadarControl"/>
+                  HorizontalAlignment="Stretch">
+        <radar:RadarControl Name="RadarScreen"/>
         <BoxContainer Name="RightDisplay"
                       VerticalAlignment="Top"
                       HorizontalAlignment="Left"
@@ -13,13 +13,22 @@
                       Orientation="Vertical">
             <PanelContainer Name="ReadonlyDisplay"
                             StyleClasses="BorderedWindowPanel">
-                <BoxContainer Orientation="Horizontal">
-                    <Label Text="Range: "
-                           Align="Left"/>
+                <GridContainer Columns="2"
+                               HorizontalAlignment="Stretch"
+                               VerticalAlignment="Top">
+                    <Label Text="Radar range: "/>
                     <Label Name="RadarRange"
                            Text="0.0"
+                           HorizontalAlignment="Right"/>
+                    <Label Text="Linear velocity: "/>
+                    <Label Name="LinearVelocity"
+                           Text="0.0"
                            Align="Right"/>
-                </BoxContainer>
+                    <Label Text="Angular velocity: "/>
+                    <Label Name="AngularVelocity"
+                           Text="0.0"
+                           Align="Right"/>
+                </GridContainer>
             </PanelContainer>
             <Button Name="IFFToggle"
                     Text="Show IFF"

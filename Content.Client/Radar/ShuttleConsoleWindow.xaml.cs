@@ -20,17 +20,21 @@ namespace Content.Client.Radar;
 [GenerateTypedNameReferences]
 public sealed partial class ShuttleConsoleWindow : FancyWindow, IComputerWindow<RadarConsoleBoundInterfaceState>
 {
+    private IEntityManager _entManager = default!;
+    private EntityUid? _entity;
+
     public ShuttleConsoleWindow()
     {
         RobustXamlLoader.Load(this);
+        _entManager = IoCManager.Resolve<IEntityManager>();
         IFFToggle.OnPressed += OnIFFTogglePressed;
-        IFFToggle.Pressed = RadarControl.ShowIFF;
+        IFFToggle.Pressed = RadarScreen.ShowIFF;
     }
 
     private void OnIFFTogglePressed(BaseButton.ButtonEventArgs args)
     {
-        RadarControl.ShowIFF ^= true;
-        args.Button.Pressed = RadarControl.ShowIFF;
+        RadarScreen.ShowIFF ^= true;
+        args.Button.Pressed = RadarScreen.ShowIFF;
     }
 
     public void SetupComputerWindow(ComputerBoundUserInterfaceBase cb)
@@ -40,8 +44,26 @@ public sealed partial class ShuttleConsoleWindow : FancyWindow, IComputerWindow<
 
     public void UpdateState(RadarConsoleBoundInterfaceState scc)
     {
-        RadarControl.UpdateState(scc);
+        _entity = scc.Entity;
+        RadarScreen.UpdateState(scc);
         RadarRange.Text = $"{scc.Range:0}";
+    }
+
+    protected override void Draw(DrawingHandleScreen handle)
+    {
+        base.Draw(handle);
+
+        if (!_entManager.TryGetComponent<TransformComponent>(_entity, out var entXform) ||
+            !_entManager.TryGetComponent<PhysicsComponent>(entXform.GridEntityId, out var gridPhysics))
+        {
+            return;
+        }
+
+        var gridVelocity = gridPhysics.LinearVelocity;
+        gridVelocity = entXform.WorldRotation.RotateVec(gridVelocity);
+        // Get linear velocity relative to the console entity
+        LinearVelocity.Text = $"{gridVelocity.X:0.0}, {gridVelocity.Y:0.0}";
+        AngularVelocity.Text = $"{gridPhysics.AngularVelocity:0.00}";
     }
 }
 
