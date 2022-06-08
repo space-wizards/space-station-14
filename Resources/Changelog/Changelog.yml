@@ -1,9 +1,4 @@
 Entries:
-- author: Radrark
-  changes:
-  - {message: Fixed the mass scanner console., type: Fix}
-  id: 1170
-  time: '2022-03-07T07:04:27.0000000+00:00'
 - author: Macoron
   changes:
   - {message: Musician PDA works like a regular PDA again., type: Fix}
@@ -3004,3 +2999,8 @@ Entries:
       on it., type: Fix}
   id: 1669
   time: '2022-06-08T07:50:23.0000000+00:00'
+- author: Peptide90
+  changes:
+  - {message: Counters and tables now take more damage to destroy., type: Tweak}
+  id: 1670
+  time: '2022-06-08T08:47:30.0000000+00:00'
