@@ -34,19 +34,42 @@ namespace Content.Server.RoleTimers
             }
         }
 
-        public async Task RoleChange(IPlayerSession player, string role, DateTime now)
+        /// <summary>
+        /// Saves and clears everything from cached player data
+        /// </summary>
+        public void SaveAndClear()
+        {
+            foreach (var (player, data) in _cachedPlayerData)
+            {
+                SaveRoleTime(player, DateTime.Now, data.Item2, data.Item1);
+            }
+            _cachedPlayerData.Clear();
+        }
+
+        /// <summary>
+        ///
+        /// </summary>
+        /// <param name="player"></param>
+        /// <param name="role">The role to change to. Set to null to not count anything.</param>
+        /// <param name="now"></param>
+        public async Task RoleChange(IPlayerSession player, string? role, DateTime now)
         {
             // If the role doesn't exist in the cache, load it
-            if (!_cachedPlayerData.ContainsKey(player))
+            if (!_cachedPlayerData.ContainsKey(player) && role != null)
             {
                 var timer = await _db.AddOrGetRoleTimer(player.UserId, role);
                 _cachedPlayerData[player] = new Tuple<string, DateTime>(timer.Role, now);
             }
             // Save role time
             await SaveRoleTime(player, now, _cachedPlayerData[player].Item2);
-            // New role
-            var rtimer = await _db.AddOrGetRoleTimer(player.UserId, role);
-            _cachedPlayerData[player] = new Tuple<string, DateTime>(role, now);
+            if (role == null)
+            {
+                _cachedPlayerData.Remove(player);
+                return;
+            }
+            // new role
+            //var rtimer = await _db.AddOrGetRoleTimer(player.UserId, role);
+            //_cachedPlayerData[player] = new Tuple<string, DateTime>(role, now);
         }
 
         private async Task SaveRoleTime(IPlayerSession player, DateTime now, DateTime then, string? role = null)

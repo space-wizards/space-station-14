@@ -273,6 +273,9 @@ namespace Content.Server.GameTicking
             //Get the timespan of the round.
             var roundDuration = RoundDuration();
 
+            // Save everyone's playtime
+            _roleTimerManager.SaveAndClear();
+
             //Generate a list of basic player info to display in the end round summary.
             var listOfPlayerInfo = new List<RoundEndMessageEvent.RoundEndPlayerInfo>();
             // Grab the great big book of all the Minds, we'll need them for this.
