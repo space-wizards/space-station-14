@@ -1,9 +1,9 @@
 using System.Globalization;
 using System.Linq;
+using Content.Server.Database;
 using Content.Server.Ghost;
 using Content.Server.Ghost.Components;
 using Content.Server.Players;
-using Content.Server.Roles;
 using Content.Server.RoleTimers;
 using Content.Server.Spawners.Components;
 using Content.Server.Speech.Components;
@@ -19,6 +19,7 @@ using Robust.Shared.Map;
 using Robust.Shared.Network;
 using Robust.Shared.Random;
 using Robust.Shared.Utility;
+using Job = Content.Server.Roles.Job;
 
 namespace Content.Server.GameTicking
 {
@@ -125,9 +126,14 @@ namespace Content.Server.GameTicking
                 return;
             }
 
+            // Figure out job restrictions
+            var restrictedRoles = new HashSet<string>();
+            restrictedRoles.UnionWith(_roleTimerSystem.GetRestrictedRoles(player));
+            var jobBans = _roleBanManager.GetJobBans(player.UserId);
+            if(jobBans != null) restrictedRoles.UnionWith(jobBans);
             // Pick best job best on prefs.
             jobId ??= _stationJobs.PickBestAvailableJobWithPriority(station, character.JobPriorities, true,
-                _roleBanManager.GetJobBans(player.UserId));
+                restrictedRoles);
             // If no job available, stay in lobby, or if no lobby spawn as observer
             if (jobId is null)
             {

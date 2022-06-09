@@ -183,6 +183,14 @@ namespace Content.Server.GameTicking
                 return true;
             });
 
+            readyPlayers.RemoveAll(p =>
+            {
+                if (_roleTimerSystem.IsPlayerTimeCachedYet(p))
+                    return false;
+                Logger.ErrorS("RoleTimers", $"Role timers for player {p} {p.UserId} have not been loaded yet.");
+                return true;
+            });
+
             // Get the profiles for each player for easier lookup.
             var profiles = _prefsManager.GetSelectedProfilesForPlayers(
                     readyPlayers
