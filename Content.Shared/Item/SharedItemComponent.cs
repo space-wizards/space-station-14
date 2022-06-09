@@ -88,6 +88,15 @@ namespace Content.Shared.Item
         [DataField("sprite")]
         public readonly string? RsiPath;
 
+        /// <summary>
+        ///     Defines if this item is used remotely when interacting, like a remote control.
+        /// </summary>
+        /// <remarks>
+        ///     Currently just used to determine electrocution on use.
+        /// </remarks>
+        [DataField("interactsRemotely")]
+        public bool InteractsRemotely = false;
+
         public void RemovedFromSlot()
         {
             if (_entMan.TryGetComponent(Owner, out SharedSpriteComponent? component))

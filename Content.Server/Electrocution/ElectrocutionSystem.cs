@@ -6,12 +6,12 @@ using Content.Server.NodeContainer.Nodes;
 using Content.Server.Power.Components;
 using Content.Server.Power.EntitySystems;
 using Content.Server.Power.NodeGroups;
-using Content.Server.Remotes;
 using Content.Shared.Damage;
 using Content.Shared.Damage.Prototypes;
 using Content.Shared.Database;
 using Content.Shared.Electrocution;
 using Content.Shared.Interaction;
+using Content.Shared.Item;
 using Content.Shared.Jittering;
 using Content.Shared.Maps;
 using Content.Shared.Popups;
@@ -141,7 +141,7 @@ namespace Content.Server.Electrocution
 
         private void OnElectrifiedInteractUsing(EntityUid uid, ElectrifiedComponent electrified, InteractUsingEvent args)
         {
-            if (!electrified.OnInteractUsing || TryComp<DoorRemoteComponent>(args.Used, out var remote))
+            if (!electrified.OnInteractUsing || (TryComp<SharedItemComponent>(args.Used, out var item) && item.InteractsRemotely))
                 return;
 
             var siemens = TryComp(args.Used, out InsulatedComponent? insulation)

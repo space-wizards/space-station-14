@@ -10,6 +10,8 @@
     netsync: false
   - type: Access
   - type: DoorRemote
+  - type: Item
+    interactsRemotely: true
 
 - type: entity
   parent: DoorRemoteDefault
