@@ -103,7 +103,7 @@
   components:
   - type: StorageFill
     contents:
-      - id: WeaponRifleM90
+      - id: WeaponRifleM90GrenadeLauncher
       - id: MagazineRifle
         amount: 2
       - id: GrenadeBlast
