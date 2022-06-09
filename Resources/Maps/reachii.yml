@@ -91859,54 +91859,6 @@ entities:
       storagebase: !type:Container
         ents: []
     type: ContainerContainer
-- uid: 9642
-  type: BoxSterile
-  components:
-  - pos: 51.034428,-18.117922
-    parent: 0
-    type: Transform
-  - canCollide: False
-    type: Physics
-  - containers:
-      storagebase: !type:Container
-        ents: []
-    type: ContainerContainer
-- uid: 9643
-  type: BoxSterile
-  components:
-  - pos: 51.221928,-18.461672
-    parent: 0
-    type: Transform
-  - canCollide: False
-    type: Physics
-  - containers:
-      storagebase: !type:Container
-        ents: []
-    type: ContainerContainer
-- uid: 9644
-  type: BoxLatex
-  components:
-  - pos: 51.753178,-18.211672
-    parent: 0
-    type: Transform
-  - canCollide: False
-    type: Physics
-  - containers:
-      storagebase: !type:Container
-        ents: []
-    type: ContainerContainer
-- uid: 9645
-  type: BoxLatex
-  components:
-  - pos: 51.940678,-18.461672
-    parent: 0
-    type: Transform
-  - canCollide: False
-    type: Physics
-  - containers:
-      storagebase: !type:Container
-        ents: []
-    type: ContainerContainer
 - uid: 9646
   type: ClothingHandsGlovesNitrile
   components:
