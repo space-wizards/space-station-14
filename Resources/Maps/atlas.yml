@@ -17661,11 +17661,7 @@ entities:
     parent: 30
     type: Transform
 - uid: 1181
-<<<<<<< HEAD
   type: WeaponLaserCarbine
-=======
-  type: WeaponLaserRifleCog
->>>>>>> dbb94663095f06b2f172ede95b4d35f818584aeb
   components:
   - pos: 9.568229,15.507681
     parent: 30
@@ -20043,11 +20039,7 @@ entities:
     parent: 30
     type: Transform
 - uid: 1472
-<<<<<<< HEAD
   type: WeaponLaserCarbine
-=======
-  type: WeaponLaserRifleCog
->>>>>>> dbb94663095f06b2f172ede95b4d35f818584aeb
   components:
   - pos: 9.396354,15.663931
     parent: 30
