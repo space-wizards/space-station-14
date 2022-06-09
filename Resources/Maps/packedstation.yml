@@ -78789,7 +78789,7 @@ entities:
       Toggle: []
     type: SignalReceiver
 - uid: 7531
-  type: WeaponSubMachineGunDrozdRubber
+  type: WeaponSubMachineGunVectorRubber
   components:
   - pos: 38.61274,27.452318
     parent: 2
@@ -78809,7 +78809,7 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 7533
-  type: WeaponSubMachineGunDrozdRubber
+  type: WeaponSubMachineGunVectorRubber
   components:
   - pos: 38.597115,27.702318
     parent: 2
@@ -95323,7 +95323,7 @@ entities:
   - color: '#0000FFFF'
     type: AtmosPipeColor
 - uid: 9191
-  type: WeaponLaserRifleCog
+  type: WeaponLaserCarbine
   components:
   - pos: 41.526512,27.667274
     parent: 2
@@ -119759,7 +119759,7 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 11154
-  type: WeaponLaserRifleCog
+  type: WeaponLaserCarbine
   components:
   - pos: 41.526512,27.4329
     parent: 2

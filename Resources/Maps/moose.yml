@@ -20154,7 +20154,7 @@ entities:
         ents: []
     type: ContainerContainer
 - uid: 1020
-  type: WeaponSubMachineGunDrozdRubber
+  type: WeaponSubMachineGunVectorRubber
   components:
   - pos: 19.553373,0.6517799
     parent: 61
@@ -20192,7 +20192,7 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 1024
-  type: WeaponLaserRifleCog
+  type: WeaponLaserCarbine
   components:
   - pos: 19.522123,-0.2544701
     parent: 61
@@ -20200,7 +20200,7 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 1025
-  type: WeaponLaserRifleCog
+  type: WeaponLaserCarbine
   components:
   - pos: 19.537748,-0.4732201
     parent: 61
@@ -87431,7 +87431,7 @@ entities:
   - unspawnedCount: 25
     type: BallisticAmmoProvider
 - uid: 9110
-  type: WeaponRifleWintermute
+  type: WeaponRifleLecter
   components:
   - pos: 23.52954,3.78771
     parent: 61

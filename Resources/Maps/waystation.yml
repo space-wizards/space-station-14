@@ -26458,25 +26458,25 @@ entities:
     parent: 82
     type: Transform
 - uid: 1427
-  type: WeaponLaserRifleCog
+  type: WeaponLaserCarbine
   components:
   - pos: -0.4915824,21.534182
     parent: 82
     type: Transform
 - uid: 1428
-  type: WeaponLaserRifleCog
+  type: WeaponLaserCarbine
   components:
   - pos: -0.5228324,21.627932
     parent: 82
     type: Transform
 - uid: 1429
-  type: WeaponLaserRifleCog
+  type: WeaponLaserCarbine
   components:
   - pos: -0.4915824,21.409182
     parent: 82
     type: Transform
 - uid: 1430
-  type: WeaponShotgunGladstone
+  type: WeaponShotgunEnforcer
   components:
   - pos: -1.4915824,21.596682
     parent: 82
@@ -26598,7 +26598,7 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 1444
-  type: WeaponSubMachineGunDrozd
+  type: WeaponSubMachineGunVector
   components:
   - pos: -0.46777725,20.588768
     parent: 82

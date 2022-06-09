@@ -36352,7 +36352,7 @@ entities:
         ents: []
     type: ContainerContainer
 - uid: 1980
-  type: WeaponLaserRifleCog
+  type: WeaponLaserCarbine
   components:
   - pos: -37.501694,54.356064
     parent: 30
@@ -36360,7 +36360,7 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 1981
-  type: WeaponLaserRifleCog
+  type: WeaponLaserCarbine
   components:
   - pos: -37.501694,54.481064
     parent: 30
@@ -36368,7 +36368,7 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 1982
-  type: WeaponLaserRifleCog
+  type: WeaponLaserCarbine
   components:
   - pos: -37.501694,54.606064
     parent: 30
@@ -36428,7 +36428,7 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 1989
-  type: WeaponSubMachineGunDrozdRubber
+  type: WeaponSubMachineGunVectorRubber
   components:
   - pos: -37.418808,55.43419
     parent: 30
@@ -36450,7 +36450,7 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 1991
-  type: WeaponSubMachineGunDrozdRubber
+  type: WeaponSubMachineGunVectorRubber
   components:
   - pos: -37.418808,55.55919
     parent: 30
@@ -97849,7 +97849,7 @@ entities:
     parent: 30
     type: Transform
 - uid: 9361
-  type: WeaponRifleWintermute
+  type: WeaponRifleLecter
   components:
   - pos: -22.568516,53.59532
     parent: 30
