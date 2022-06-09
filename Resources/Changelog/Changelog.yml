@@ -1,10 +1,4 @@
 Entries:
-- author: moony
-  changes:
-  - {message: 'Player built shuttles should now be able to hold an atmosphere, assuming
-      they''re eight tiles or larger.', type: Add}
-  id: 1173
-  time: '2022-03-07T12:09:55.0000000+00:00'
 - author: Peptide90
   changes:
   - {message: 'Pillar 5.2! New arcade, small dorms, EVA storage and minor fixes. Engineering
@@ -3002,3 +2996,8 @@ Entries:
   - {message: Matches can once again be lit using match boxes., type: Fix}
   id: 1672
   time: '2022-06-09T02:39:29.0000000+00:00'
+- author: lapatison
+  changes:
+  - {message: changed color of opened airlock maint. panel, type: Add}
+  id: 1673
+  time: '2022-06-09T02:41:29.0000000+00:00'
