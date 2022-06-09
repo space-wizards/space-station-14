@@ -13512,7 +13512,7 @@ entities:
     parent: 30
     type: Transform
 - uid: 700
-  type: WeaponRifleWintermute
+  type: WeaponRifleLecter
   components:
   - pos: 8.568229,17.50768
     parent: 30
