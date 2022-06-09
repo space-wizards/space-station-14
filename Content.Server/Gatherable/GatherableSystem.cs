@@ -1,8 +1,10 @@
 ﻿using System.Threading;
+using Content.Server.Destructible;
 using Content.Server.DoAfter;
 using Content.Server.Gatherable.Components;
 using Content.Shared.Damage;
 using Content.Shared.EntityList;
+using Content.Shared.FixedPoint;
 using Content.Shared.Interaction;
 using Content.Shared.Tag;
 using Robust.Shared.Audio;
@@ -14,6 +16,7 @@ namespace Content.Server.Gatherable;
 
 public sealed class GatherableSystem : EntitySystem
 {
+    [Dependency] private readonly DestructibleSystem _destructible = default!;
     [Dependency] private readonly DoAfterSystem _doAfterSystem = default!;
     [Dependency] private readonly DamageableSystem _damageableSystem = default!;
     [Dependency] private readonly IRobustRandom _random = null!;
@@ -42,8 +45,14 @@ public sealed class GatherableSystem : EntitySystem
 
         cancelToken = new CancellationTokenSource();
         tool.GatheringEntities[uid] = cancelToken;
+        var multiplier = FixedPoint2.New(1f);
 
-        var doAfter = new DoAfterEventArgs(args.User, tool.GatheringTime, cancelToken.Token, uid)
+        if (TryComp<DestructibleComponent>(uid, out var destructible))
+        {
+            multiplier = _destructible.DestroyedAt(uid, destructible) / tool.Damage.Total;
+        }
+
+        var doAfter = new DoAfterEventArgs(args.User, multiplier.Float(), cancelToken.Token, uid)
         {
             BreakOnDamage = true,
             BreakOnStun = true,
@@ -51,7 +60,7 @@ public sealed class GatherableSystem : EntitySystem
             BreakOnUserMove = true,
             MovementThreshold = 0.25f,
             BroadcastCancelledEvent = new GatheringDoafterCancel { Tool = args.Used, Resource = uid },
-            TargetFinishedEvent = new GatheringDoafterSuccess { Tool = args.Used, Resource = uid, Player = args.User }
+            TargetFinishedEvent = new GatheringDoafterSuccess { Tool = args.Used, Resource = uid, Player = args.User, Multiplier = multiplier.Float()}
         };
 
         _doAfterSystem.DoAfter(doAfter);
@@ -63,9 +72,10 @@ public sealed class GatherableSystem : EntitySystem
             return;
 
         // Complete the gathering process
-        _damageableSystem.TryChangeDamage(ev.Resource, tool.Damage);
         SoundSystem.Play(Filter.Pvs(ev.Resource, entityManager: EntityManager), tool.GatheringSound.GetSound(), ev.Resource);
         tool.GatheringEntities.Remove(ev.Resource);
+
+        _damageableSystem.TryChangeDamage(ev.Resource, tool.Damage * ev.Multiplier, true);
 
         // Spawn the loot!
         if (component.MappedLoot == null) return;
@@ -104,6 +114,7 @@ public sealed class GatherableSystem : EntitySystem
         public EntityUid Tool;
         public EntityUid Resource;
         public EntityUid Player;
+        public float Multiplier;
     }
 }
 

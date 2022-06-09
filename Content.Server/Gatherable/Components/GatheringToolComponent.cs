@@ -18,15 +18,9 @@ namespace Content.Server.Gatherable.Components
         public SoundSpecifier GatheringSound { get; set; } = new SoundPathSpecifier("/Audio/Items/Mining/pickaxe.ogg");
 
         /// <summary>
-        ///     This directly plugs into the time delay for gathering.
-        /// </summary>
-        [ViewVariables(VVAccess.ReadWrite)]
-        [DataField("gatheringTime")]
-        public float GatheringTime { get; set; } = 1f;
-
-        /// <summary>
         ///     What damage should be given to objects when
         ///     gathered using this tool? (0 for infinite gathering)
+        ///     This is used to determine the gathering rate as this is applied per second.
         /// </summary>
         [DataField("damage", required: true)]
         public DamageSpecifier Damage { get; set; } = default!;
@@ -36,7 +30,7 @@ namespace Content.Server.Gatherable.Components
         /// </summary>
         [ViewVariables(VVAccess.ReadWrite)]
         [DataField("maxEntities")]
-        public int MaxGatheringEntities = 1;
+        public int MaxGatheringEntities = 3;
 
         [ViewVariables]
         public readonly Dictionary<EntityUid, CancellationTokenSource> GatheringEntities = new();
