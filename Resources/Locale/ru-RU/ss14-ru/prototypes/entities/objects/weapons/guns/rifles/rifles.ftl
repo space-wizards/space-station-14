@@ -7,6 +7,6 @@ ent-WeaponRifleAk = АКМС
 ent-WeaponRifleBulldog = Z8 Бульдог
     .desc = Старая модель карабина, выполненного по схеме булл-пап, с подствольным гранатометом.
     .suffix = { "" }
-ent-WeaponRifleWintermute = Wintermute
+ent-WeaponRifleWintermute = Винтермьют
     .desc = Высококлассная военная штурмовая винтовка.
     .suffix = { "" }
