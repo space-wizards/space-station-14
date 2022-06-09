@@ -2,6 +2,7 @@ using Content.Shared.Shuttles.BUIStates;
 using Content.Shared.Shuttles.Components;
 using Content.Shared.Shuttles.Systems;
 using Robust.Server.GameObjects;
+using Robust.Shared.Map;
 
 namespace Content.Server.Shuttles.Systems;
 
@@ -22,7 +23,7 @@ public sealed class RadarConsoleSystem : SharedRadarConsoleSystem
 
     protected override void UpdateState(RadarConsoleComponent component)
     {
-        var radarState = new RadarConsoleBoundInterfaceState(component.Range, component.Owner);
+        var radarState = new RadarConsoleBoundInterfaceState(component.Range, component.Owner, new List<(EntityCoordinates Coordinates, Angle Angle)>());
         _uiSystem.GetUiOrNull(component.Owner, RadarConsoleUiKey.Key)?.SetState(radarState);
     }
 }

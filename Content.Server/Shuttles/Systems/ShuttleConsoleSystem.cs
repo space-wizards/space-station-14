@@ -15,6 +15,7 @@ using Content.Shared.Tag;
 using Robust.Server.GameObjects;
 using Robust.Server.Player;
 using Robust.Shared.GameStates;
+using Robust.Shared.Map;
 using Robust.Shared.Player;
 using Robust.Shared.Utility;
 
@@ -22,9 +23,9 @@ namespace Content.Server.Shuttles.Systems
 {
     public sealed class ShuttleConsoleSystem : SharedShuttleConsoleSystem
     {
+        [Dependency] private readonly IMapManager _mapManager = default!;
         [Dependency] private readonly ActionBlockerSystem _blocker = default!;
         [Dependency] private readonly AlertsSystem _alertsSystem = default!;
-        [Dependency] private readonly PopupSystem _popup = default!;
         [Dependency] private readonly TagSystem _tags = default!;
         [Dependency] private readonly UserInterfaceSystem _ui = default!;
 
@@ -109,13 +110,13 @@ namespace Content.Server.Shuttles.Systems
             if (!console.SubscribedPilots.Contains(pilot) ||
                 !TryComp<ShuttleComponent>(xform.GridEntityId, out var shuttle)) return;
 
-            SetShuttleMode(msg.Mode, player, console, shuttle);
+            SetShuttleMode(msg.Mode, console, shuttle);
         }
 
         /// <summary>
         /// Sets the shuttle's movement mode. Does minimal revalidation.
         /// </summary>
-        private void SetShuttleMode(ShuttleMode mode, EntityUid user, ShuttleConsoleComponent consoleComponent,
+        private void SetShuttleMode(ShuttleMode mode, ShuttleConsoleComponent consoleComponent,
             ShuttleComponent shuttleComponent, TransformComponent? consoleXform = null)
         {
             // Re-validate
@@ -143,6 +144,24 @@ namespace Content.Server.Shuttles.Systems
             UpdateState(consoleComponent);
         }
 
+        /// <summary>
+        /// Returns the position and angle of all dockingcomponents.
+        /// </summary>
+        private List<(EntityCoordinates Coordinates, Angle Angle)> GetAllDocks()
+        {
+            // TODO: NEED TO MAKE SURE THIS UPDATES ON ANCHORING CHANGES!
+            var result = new List<(EntityCoordinates Coordinates, Angle Angle)>();
+
+            foreach (var (comp, xform) in EntityQuery<DockingComponent, TransformComponent>(true))
+            {
+                if (xform.ParentUid != xform.GridUid) continue;
+
+                result.Add((xform.Coordinates, xform.LocalRotation));
+            }
+
+            return result;
+        }
+
         private void UpdateState(ShuttleConsoleComponent component)
         {
             TryComp<RadarConsoleComponent>(component.Owner, out var radar);
@@ -151,11 +170,14 @@ namespace Content.Server.Shuttles.Systems
             TryComp<ShuttleComponent>(Transform(component.Owner).GridUid, out var shuttle);
             var mode = shuttle?.Mode ?? ShuttleMode.Cruise;
 
+            var docks = GetAllDocks();
+
             _ui.GetUiOrNull(component.Owner, ShuttleConsoleUiKey.Key)
                 ?.SetState(new ShuttleConsoleBoundInterfaceState(
                     mode,
                     range,
-                    component.Owner));
+                    component.Owner,
+                    docks));
         }
 
         public override void Update(float frameTime)

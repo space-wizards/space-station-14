@@ -26,8 +26,12 @@ public sealed partial class ShuttleConsoleWindow : FancyWindow,
         RobustXamlLoader.Load(this);
         _entManager = IoCManager.Resolve<IEntityManager>();
         _system = _entManager.EntitySysManager.GetEntitySystem<ShuttleConsoleSystem>();
+
         IFFToggle.OnPressed += OnIFFTogglePressed;
         IFFToggle.Pressed = RadarScreen.ShowIFF;
+
+        DockToggle.OnPressed += OnDockTogglePressed;
+        DockToggle.Pressed = RadarScreen.ShowDocks;
 
         ShuttleMode.OnPressed += OnShuttleModePressed;
     }
@@ -42,6 +46,12 @@ public sealed partial class ShuttleConsoleWindow : FancyWindow,
     {
         RadarScreen.ShowIFF ^= true;
         args.Button.Pressed = RadarScreen.ShowIFF;
+    }
+
+    private void OnDockTogglePressed(BaseButton.ButtonEventArgs args)
+    {
+        RadarScreen.ShowDocks ^= true;
+        args.Button.Pressed = RadarScreen.ShowDocks;
     }
 
     public void UpdateState(ShuttleConsoleBoundInterfaceState scc)

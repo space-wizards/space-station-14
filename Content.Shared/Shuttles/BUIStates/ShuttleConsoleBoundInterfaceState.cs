@@ -1,4 +1,5 @@
 using Content.Shared.Shuttles.Components;
+using Robust.Shared.Map;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.Shuttles.BUIStates;
@@ -8,7 +9,11 @@ public sealed class ShuttleConsoleBoundInterfaceState : RadarConsoleBoundInterfa
 {
     public readonly ShuttleMode Mode;
 
-    public ShuttleConsoleBoundInterfaceState(ShuttleMode mode, float range, EntityUid? entity) : base(range, entity)
+    public ShuttleConsoleBoundInterfaceState(
+        ShuttleMode mode,
+        float range,
+        EntityUid? entity,
+        List<(EntityCoordinates Coordinates, Angle Angle)> docks) : base(range, entity, docks)
     {
         Mode = mode;
     }

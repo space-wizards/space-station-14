@@ -6,6 +6,7 @@ using Robust.Client.UserInterface.Controls;
 using Robust.Shared.Map;
 using Robust.Shared.Physics;
 using Robust.Shared.Physics.Collision.Shapes;
+using Robust.Shared.Utility;
 
 namespace Content.Client.Shuttles.UI;
 
@@ -34,7 +35,10 @@ public sealed class RadarControl : Control
     /// </summary>
     private Dictionary<EntityUid, Control> _iffControls = new();
 
+    private Dictionary<EntityUid, List<(Vector2 Position, Angle Angle)>> _docks = new();
+
     public bool ShowIFF { get; set; } = true;
+    public bool ShowDocks { get; set; } = true;
 
     public RadarControl()
     {
@@ -46,6 +50,12 @@ public sealed class RadarControl : Control
     {
         _radarRange = ls.Range;
         _entity = ls.Entity;
+
+        foreach (var (coordinates, angle) in ls.Docks)
+        {
+            var grid = _docks.GetOrNew(coordinates.EntityId);
+            grid.Add((coordinates.Position, angle));
+        }
     }
 
     protected override void Draw(DrawingHandleScreen handle)
@@ -107,6 +117,8 @@ public sealed class RadarControl : Control
             var ourGridFixtures = fixturesQuery.GetComponent(ourGridId);
             // Draw our grid; use non-filled boxes so it doesn't look awful.
             DrawGrid(handle, offsetMatrix, ourGridFixtures, point, Color.Yellow);
+
+            DrawDocks(handle, xform.GridEntityId, offsetMatrix, point);
         }
         else
         {
@@ -144,7 +156,7 @@ public sealed class RadarControl : Control
             var gridXform = xformQuery.GetComponent(grid.GridEntityId);
             var gridFixtures = fixturesQuery.GetComponent(grid.GridEntityId);
             var gridMatrix = gridXform.WorldMatrix;
-            Matrix3.Multiply(ref gridMatrix, ref matrix, out var matty);
+            Matrix3.Multiply(in gridMatrix, in matrix, out var matty);
 
             if (ShowIFF)
             {
@@ -191,6 +203,8 @@ public sealed class RadarControl : Control
 
             // Detailed view
             DrawGrid(handle, matty, gridFixtures, point, Color.Aquamarine);
+
+            DrawDocks(handle, grid.GridEntityId, matty, point);
         }
 
         foreach (var (ent, _) in _iffControls)
@@ -215,6 +229,24 @@ public sealed class RadarControl : Control
         if (!_iffControls.TryGetValue(uid, out var label)) return;
         label.Dispose();
         _iffControls.Remove(uid);
+    }
+
+    private void DrawDocks(DrawingHandleScreen handle, EntityUid uid, Matrix3 matrix, int point)
+    {
+        if (!ShowDocks) return;
+
+        if (_docks.TryGetValue(uid, out var docks))
+        {
+            foreach (var (position, angle) in docks)
+            {
+                var uiPosition = matrix.Transform(position);
+
+                if (uiPosition.Length > _radarRange) continue;
+
+                uiPosition.Y = -uiPosition.Y;
+                handle.DrawCircle(uiPosition * MinimapScale + point, 6f, Color.Orange);
+            }
+        }
     }
 
     private void DrawGrid(DrawingHandleScreen handle, Matrix3 matrix, FixturesComponent component, int point, Color color)
