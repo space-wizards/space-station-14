@@ -64,6 +64,21 @@ conversion_modes = {
             [ 19, 16, 17, 18],
         ]
     ),
+    # TauCeti Station
+    "tau": ConversionMode(
+        3, 2,
+        [
+            # BR, TL, TR, BL
+            [  0,  0,  0,  0],
+            [  2,  2,  1,  1],
+            [  0,  0,  0,  0],
+            [  2,  2,  1,  1],
+            [  1,  1,  2,  2],
+            [  3,  3,  3,  3],
+            [  1,  1,  2,  2],
+            [  4,  4,  4,  4],
+        ]
+    ),
     # VXA
     "vxa": ConversionMode(
         2, 3,
@@ -113,7 +128,7 @@ conversion_modes = {
     ),
 }
 
-all_conv = "tg/citadel/vxa/vxap/rt_states"
+all_conv = "tg/citadel/tau/vxa/vxap/rt_states"
 
 def parse_size(sz):
     if sz.find("x") == -1:
