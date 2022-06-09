@@ -123,6 +123,7 @@ public sealed partial class ShuttleConsoleWindow : FancyWindow,
 
         if (!obj.Button.Pressed)
         {
+            DockingScreen.Entity = null;
             DockingScreen.Visible = false;
             RadarScreen.Visible = true;
         }
@@ -130,6 +131,7 @@ public sealed partial class ShuttleConsoleWindow : FancyWindow,
         {
             RadarScreen.Visible = false;
             DockingScreen.Visible = true;
+            DockingScreen.Entity = ent;
             _selectedDock = obj.Button;
         }
     }

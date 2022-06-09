@@ -249,7 +249,7 @@ public sealed class RadarControl : Control
 
                 if (uiPosition.Length > _radarRange) continue;
 
-                var color = HighlightedDock == ent ? Color.Magenta : Color.DarkMagenta;
+                var color = HighlightedDock == ent ? Color.Magenta : Color.DarkViolet;
 
                 uiPosition.Y = -uiPosition.Y;
                 handle.DrawCircle(ScalePosition(uiPosition), 5f, color);
