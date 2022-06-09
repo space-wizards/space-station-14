@@ -75,6 +75,7 @@
     state: chocolatebar
   - type: Item
     HeldPrefix: chocolatebar
+    size: 3
   - type: SpawnItemsOnUse
     items:
       - id: FoodPacketChocolateTrash
