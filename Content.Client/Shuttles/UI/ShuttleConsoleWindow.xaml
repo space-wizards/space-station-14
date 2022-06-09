@@ -2,9 +2,25 @@
                            xmlns:userInterface="clr-namespace:Content.Client.UserInterface"
                            xmlns:ui="clr-namespace:Content.Client.Shuttles.UI"
                Title="{Loc 'shuttle-console-window-title'}">
-    <GridContainer Columns="2"
+    <GridContainer Columns="3"
                   HorizontalAlignment="Stretch">
-        <ui:RadarControl Name="RadarScreen"/>
+        <BoxContainer Name="LeftDisplay"
+                      VerticalAlignment="Top"
+                      HorizontalAlignment="Left"
+                      MinWidth="256"
+                      Align="Center"
+                      Orientation="Vertical">
+            <PanelContainer StyleClasses="BorderedWindowPanel">
+                <BoxContainer Name="DockPorts"
+                              Orientation="Vertical">
+                </BoxContainer>
+            </PanelContainer>
+        </BoxContainer>
+        <PanelContainer>
+            <ui:RadarControl Name="RadarScreen"/>
+            <ui:DockingControl Name="DockingScreen"
+                               Visible="False"/>
+        </PanelContainer>
         <BoxContainer Name="RightDisplay"
                       VerticalAlignment="Top"
                       HorizontalAlignment="Left"
@@ -40,13 +56,16 @@
             </PanelContainer>
             <Button Name="ShuttleMode"
                     Text="{Loc 'shuttle-console-strafing'}"
-                    TextAlign="Center"/>
+                    TextAlign="Center"
+                    ToggleMode="True"/>
             <Button Name="IFFToggle"
                     Text="{Loc 'shuttle-console-iff-toggle'}"
-                    TextAlign="Center"/>
+                    TextAlign="Center"
+                    ToggleMode="True"/>
             <Button Name="DockToggle"
                     Text="{Loc 'shuttle-console-dock-toggle'}"
-                    TextAlign="Center"/>
+                    TextAlign="Center"
+                    ToggleMode="True"/>
         </BoxContainer>
     </GridContainer>
 </userInterface:FancyWindow>

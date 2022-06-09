@@ -10,6 +10,9 @@ using Robust.Shared.Utility;
 
 namespace Content.Client.Shuttles.UI;
 
+/// <summary>
+/// Displays nearby grids inside of a control.
+/// </summary>
 public sealed class RadarControl : Control
 {
     [Dependency] private readonly IEntityManager _entManager = default!;
@@ -26,6 +29,7 @@ public sealed class RadarControl : Control
 
     private float _radarRange = 256f;
 
+    private int MidPoint => SizeFull / 2;
     private int SizeFull => (int) ((MinimapRadius + MinimapMargin) * 2 * UIScale);
     private int ScaledMinimapRadius => (int) (MinimapRadius * UIScale);
     private float MinimapScale => _radarRange != 0 ? ScaledMinimapRadius / _radarRange : 0f;
@@ -35,10 +39,15 @@ public sealed class RadarControl : Control
     /// </summary>
     private Dictionary<EntityUid, Control> _iffControls = new();
 
-    private Dictionary<EntityUid, List<(Vector2 Position, Angle Angle)>> _docks = new();
+    private Dictionary<EntityUid, List<(Vector2 Position, Angle Angle, EntityUid Entity)>> _docks = new();
 
     public bool ShowIFF { get; set; } = true;
     public bool ShowDocks { get; set; } = true;
+
+    /// <summary>
+    /// Currently hovered docked to show on the map.
+    /// </summary>
+    public EntityUid? HighlightedDock;
 
     public RadarControl()
     {
@@ -51,21 +60,19 @@ public sealed class RadarControl : Control
         _radarRange = ls.Range;
         _entity = ls.Entity;
 
-        foreach (var (coordinates, angle) in ls.Docks)
+        foreach (var (coordinates, angle, ent) in ls.Docks)
         {
             var grid = _docks.GetOrNew(coordinates.EntityId);
-            grid.Add((coordinates.Position, angle));
+            grid.Add((coordinates.Position, angle, ent));
         }
     }
 
     protected override void Draw(DrawingHandleScreen handle)
     {
-        // TODO: Just draw shuttles in range on fixture normals.
-        var point = SizeFull / 2;
         var fakeAA = new Color(0.08f, 0.08f, 0.08f);
 
-        handle.DrawCircle((point, point), ScaledMinimapRadius + 1, fakeAA);
-        handle.DrawCircle((point, point), ScaledMinimapRadius, Color.Black);
+        handle.DrawCircle((MidPoint, MidPoint), ScaledMinimapRadius + 1, fakeAA);
+        handle.DrawCircle((MidPoint, MidPoint), ScaledMinimapRadius, Color.Black);
 
         // No data
         if (_entity == null)
@@ -74,21 +81,20 @@ public sealed class RadarControl : Control
             return;
         }
 
-
         var gridLines = new Color(0.08f, 0.08f, 0.08f);
         var gridLinesRadial = 8;
         var gridLinesEquatorial = (int) Math.Floor(_radarRange / GridLinesDistance);
 
         for (var i = 1; i < gridLinesEquatorial + 1; i++)
         {
-            handle.DrawCircle((point, point), GridLinesDistance * MinimapScale * i, gridLines, false);
+            handle.DrawCircle((MidPoint, MidPoint), GridLinesDistance * MinimapScale * i, gridLines, false);
         }
 
         for (var i = 0; i < gridLinesRadial; i++)
         {
             Angle angle = (Math.PI / gridLinesRadial) * i;
             var aExtent = angle.ToVec() * ScaledMinimapRadius;
-            handle.DrawLine((point, point) - aExtent, (point, point) + aExtent, gridLines);
+            handle.DrawLine((MidPoint, MidPoint) - aExtent, (MidPoint, MidPoint) + aExtent, gridLines);
         }
 
         var metaQuery = _entManager.GetEntityQuery<MetaDataComponent>();
@@ -116,9 +122,9 @@ public sealed class RadarControl : Control
             matrix = xform.InvWorldMatrix;
             var ourGridFixtures = fixturesQuery.GetComponent(ourGridId);
             // Draw our grid; use non-filled boxes so it doesn't look awful.
-            DrawGrid(handle, offsetMatrix, ourGridFixtures, point, Color.Yellow);
+            DrawGrid(handle, offsetMatrix, ourGridFixtures, Color.Yellow);
 
-            DrawDocks(handle, xform.GridEntityId, offsetMatrix, point);
+            DrawDocks(handle, xform.GridEntityId, offsetMatrix);
         }
         else
         {
@@ -130,7 +136,7 @@ public sealed class RadarControl : Control
         // Don't need to transform the InvWorldMatrix again as it's already offset to its position.
 
         // Draw radar position on the station
-        handle.DrawCircle(invertedPosition * MinimapScale + point, 5f, Color.Lime);
+        handle.DrawCircle(ScalePosition(invertedPosition), 5f, Color.Lime);
 
         var shown = new HashSet<EntityUid>();
 
@@ -189,7 +195,7 @@ public sealed class RadarControl : Control
                     control.Visible = true;
                     var label = (Label) control.GetChild(0);
                     label.Text = $"{name} ({gridCentre.Length:0.0}m)";
-                    LayoutContainer.SetPosition(control, (gridCentre * MinimapScale + point ) / UIScale);
+                    LayoutContainer.SetPosition(control, ScalePosition(gridCentre) / UIScale);
                 }
                 else
                 {
@@ -202,9 +208,9 @@ public sealed class RadarControl : Control
             }
 
             // Detailed view
-            DrawGrid(handle, matty, gridFixtures, point, Color.Aquamarine);
+            DrawGrid(handle, matty, gridFixtures, Color.Aquamarine);
 
-            DrawDocks(handle, grid.GridEntityId, matty, point);
+            DrawDocks(handle, grid.GridEntityId, matty);
         }
 
         foreach (var (ent, _) in _iffControls)
@@ -231,25 +237,27 @@ public sealed class RadarControl : Control
         _iffControls.Remove(uid);
     }
 
-    private void DrawDocks(DrawingHandleScreen handle, EntityUid uid, Matrix3 matrix, int point)
+    private void DrawDocks(DrawingHandleScreen handle, EntityUid uid, Matrix3 matrix)
     {
         if (!ShowDocks) return;
 
         if (_docks.TryGetValue(uid, out var docks))
         {
-            foreach (var (position, angle) in docks)
+            foreach (var (position, angle, ent) in docks)
             {
                 var uiPosition = matrix.Transform(position);
 
                 if (uiPosition.Length > _radarRange) continue;
 
+                var color = HighlightedDock == ent ? Color.Magenta : Color.DarkMagenta;
+
                 uiPosition.Y = -uiPosition.Y;
-                handle.DrawCircle(uiPosition * MinimapScale + point, 6f, Color.Orange);
+                handle.DrawCircle(ScalePosition(uiPosition), 5f, color);
             }
         }
     }
 
-    private void DrawGrid(DrawingHandleScreen handle, Matrix3 matrix, FixturesComponent component, int point, Color color)
+    private void DrawGrid(DrawingHandleScreen handle, Matrix3 matrix, FixturesComponent component, Color color)
     {
         foreach (var (_, fixture) in component.Fixtures)
         {
@@ -269,7 +277,7 @@ public sealed class RadarControl : Control
                 }
 
                 vert.Y = -vert.Y;
-                verts[i] = vert * MinimapScale + point;
+                verts[i] = ScalePosition(vert);
             }
 
             if (invalid) continue;
@@ -278,5 +286,10 @@ public sealed class RadarControl : Control
             verts[poly.VertexCount] = verts[0];
             handle.DrawPrimitives(DrawPrimitiveTopology.LineStrip, verts, color);
         }
+    }
+
+    private Vector2 ScalePosition(Vector2 value)
+    {
+        return value * MinimapScale + MidPoint;
     }
 }

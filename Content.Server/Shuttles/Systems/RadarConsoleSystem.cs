@@ -23,7 +23,7 @@ public sealed class RadarConsoleSystem : SharedRadarConsoleSystem
 
     protected override void UpdateState(RadarConsoleComponent component)
     {
-        var radarState = new RadarConsoleBoundInterfaceState(component.Range, component.Owner, new List<(EntityCoordinates Coordinates, Angle Angle)>());
+        var radarState = new RadarConsoleBoundInterfaceState(component.Range, component.Owner, new List<(EntityCoordinates Coordinates, Angle Angle, EntityUid Entity)>());
         _uiSystem.GetUiOrNull(component.Owner, RadarConsoleUiKey.Key)?.SetState(radarState);
     }
 }

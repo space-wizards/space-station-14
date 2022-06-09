@@ -9,12 +9,12 @@ public class RadarConsoleBoundInterfaceState : BoundUserInterfaceState
 {
     public readonly float Range;
     public readonly EntityUid? Entity;
-    public readonly List<(EntityCoordinates Coordinates, Angle Angle)> Docks;
+    public readonly List<(EntityCoordinates Coordinates, Angle Angle, EntityUid Entity)> Docks;
 
     public RadarConsoleBoundInterfaceState(
         float range,
         EntityUid? entity,
-        List<(EntityCoordinates Coordinates, Angle Angle)> docks)
+        List<(EntityCoordinates Coordinates, Angle Angle, EntityUid Entity)> docks)
     {
         Range = range;
         Entity = entity;
