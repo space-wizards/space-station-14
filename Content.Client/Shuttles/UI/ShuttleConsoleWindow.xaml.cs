@@ -129,9 +129,12 @@ public sealed partial class ShuttleConsoleWindow : FancyWindow,
         }
         else
         {
+            _entManager.TryGetComponent<TransformComponent>(_entity, out var xform);
+
             RadarScreen.Visible = false;
             DockingScreen.Visible = true;
             DockingScreen.Entity = ent;
+            DockingScreen.GridEntity = xform?.GridEntityId;
             _selectedDock = obj.Button;
         }
     }
