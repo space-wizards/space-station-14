@@ -48,10 +48,8 @@ namespace Content.Server.Gravity.EntitySystems
         {
             _gridsToShake[gridId] = ShakeTimes;
 
-            SoundSystem.Play(
-                Filter.BroadcastGrid(gridId),
-                comp.GravityShakeSound.GetSound(),
-                AudioParams.Default.WithVolume(-2f));
+            SoundSystem.Play(comp.GravityShakeSound.GetSound(),
+                Filter.BroadcastGrid(gridId), AudioParams.Default.WithVolume(-2f));
         }
 
         private void ShakeGrids()

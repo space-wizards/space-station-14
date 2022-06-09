@@ -113,7 +113,7 @@ namespace Content.Server.Flash
                     });
                 }
 
-                SoundSystem.Play(Filter.Pvs(comp.Owner), comp.Sound.GetSound(), comp.Owner, AudioParams.Default);
+                SoundSystem.Play(comp.Sound.GetSound(), Filter.Pvs(comp.Owner), comp.Owner, AudioParams.Default);
 
                 return true;
             }
@@ -169,7 +169,7 @@ namespace Content.Server.Flash
             }
             if (sound != null)
             {
-                SoundSystem.Play(Filter.Pvs(transform), sound.GetSound(), transform.Coordinates);
+                SoundSystem.Play(sound.GetSound(), Filter.Pvs(transform), transform.Coordinates);
             }
         }
 

@@ -112,7 +112,7 @@ namespace Content.Server.Weapon.Melee
             }
             else
             {
-                SoundSystem.Play(Filter.Pvs(owner, entityManager: EntityManager), comp.MissSound.GetSound(), args.User);
+                SoundSystem.Play(comp.MissSound.GetSound(), Filter.Pvs(owner, entityManager: EntityManager), args.User);
                 return;
             }
 
@@ -169,7 +169,7 @@ namespace Content.Server.Weapon.Melee
                 }
                 else
                 {
-                    SoundSystem.Play(Filter.Pvs(owner), comp.MissSound.GetSound(), Transform(args.User).Coordinates);
+                    SoundSystem.Play(comp.MissSound.GetSound(), Filter.Pvs(owner), Transform(args.User).Coordinates);
                 }
 
                 foreach (var entity in hitEntities)
@@ -227,17 +227,17 @@ namespace Content.Server.Weapon.Melee
             {
                 if (type == null && damageSoundComp.NoDamageSound != null)
                 {
-                    SoundSystem.Play(Filter.Pvs(target, entityManager: EntityManager), damageSoundComp.NoDamageSound.GetSound(), target, AudioHelpers.WithVariation(DamagePitchVariation));
+                    SoundSystem.Play(damageSoundComp.NoDamageSound.GetSound(), Filter.Pvs(target, entityManager: EntityManager), target, AudioHelpers.WithVariation(DamagePitchVariation));
                     playedSound = true;
                 }
                 else if (type != null && damageSoundComp.SoundTypes?.TryGetValue(type, out var damageSoundType) == true)
                 {
-                    SoundSystem.Play(Filter.Pvs(target, entityManager: EntityManager), damageSoundType!.GetSound(), target, AudioHelpers.WithVariation(DamagePitchVariation));
+                    SoundSystem.Play(damageSoundType!.GetSound(), Filter.Pvs(target, entityManager: EntityManager), target, AudioHelpers.WithVariation(DamagePitchVariation));
                     playedSound = true;
                 }
                 else if (type != null && damageSoundComp.SoundGroups?.TryGetValue(type, out var damageSoundGroup) == true)
                 {
-                    SoundSystem.Play(Filter.Pvs(target, entityManager: EntityManager), damageSoundGroup!.GetSound(), target, AudioHelpers.WithVariation(DamagePitchVariation));
+                    SoundSystem.Play(damageSoundGroup!.GetSound(), Filter.Pvs(target, entityManager: EntityManager), target, AudioHelpers.WithVariation(DamagePitchVariation));
                     playedSound = true;
                 }
             }
@@ -247,12 +247,12 @@ namespace Content.Server.Weapon.Melee
             {
                 if (hitSoundOverride != null)
                 {
-                    SoundSystem.Play(Filter.Pvs(target, entityManager: EntityManager), hitSoundOverride.GetSound(), target, AudioHelpers.WithVariation(DamagePitchVariation));
+                    SoundSystem.Play(hitSoundOverride.GetSound(), Filter.Pvs(target, entityManager: EntityManager), target, AudioHelpers.WithVariation(DamagePitchVariation));
                     playedSound = true;
                 }
                 else if (hitSound != null)
                 {
-                    SoundSystem.Play(Filter.Pvs(target, entityManager: EntityManager), hitSound.GetSound(), target);
+                    SoundSystem.Play(hitSound.GetSound(), Filter.Pvs(target, entityManager: EntityManager), target);
                     playedSound = true;
                 }
             }
@@ -266,14 +266,14 @@ namespace Content.Server.Weapon.Melee
                     case "Burn":
                     case "Heat":
                     case "Cold":
-                        SoundSystem.Play(Filter.Pvs(target, entityManager: EntityManager), "/Audio/Items/welder.ogg", target);
+                        SoundSystem.Play("/Audio/Items/welder.ogg", Filter.Pvs(target, entityManager: EntityManager), target);
                         break;
                     // No damage, fallback to tappies
                     case null:
-                        SoundSystem.Play(Filter.Pvs(target, entityManager: EntityManager), "/Audio/Weapons/tap.ogg", target);
+                        SoundSystem.Play("/Audio/Weapons/tap.ogg", Filter.Pvs(target, entityManager: EntityManager), target);
                         break;
                     case "Brute":
-                        SoundSystem.Play(Filter.Pvs(target, entityManager: EntityManager), "/Audio/Weapons/smash.ogg", target);
+                        SoundSystem.Play("/Audio/Weapons/smash.ogg", Filter.Pvs(target, entityManager: EntityManager), target);
                         break;
                 }
             }

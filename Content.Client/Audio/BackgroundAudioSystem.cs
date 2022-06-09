@@ -169,7 +169,7 @@ namespace Content.Client.Audio
             EndAmbience();
             if (!CanPlayCollection(_currentCollection)) return;
             var file = _robustRandom.Pick(_currentCollection.PickFiles).ToString();
-            _ambientStream = SoundSystem.Play(Filter.Local(), file, _ambientParams.WithVolume(_ambientParams.Volume + _configManager.GetCVar(CCVars.AmbienceVolume)));
+            _ambientStream = SoundSystem.Play(file, Filter.Local(), _ambientParams.WithVolume(_ambientParams.Volume + _configManager.GetCVar(CCVars.AmbienceVolume)));
         }
 
         private void EndAmbience()
@@ -255,7 +255,7 @@ namespace Content.Client.Audio
             {
                 return;
             }
-            _lobbyStream = SoundSystem.Play(Filter.Local(), file, _lobbyParams);
+            _lobbyStream = SoundSystem.Play(file, Filter.Local(), _lobbyParams);
         }
 
         private void EndLobbyMusic()

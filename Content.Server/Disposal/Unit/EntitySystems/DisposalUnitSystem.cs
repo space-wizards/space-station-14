@@ -200,7 +200,7 @@ namespace Content.Server.Disposal.Unit.EntitySystems
                     break;
                 case SharedDisposalUnitComponent.UiButton.Power:
                     TogglePower(component);
-                    SoundSystem.Play(Filter.Pvs(component.Owner), "/Audio/Machines/machine_switch.ogg", component.Owner, AudioParams.Default.WithVolume(-2f));
+                    SoundSystem.Play("/Audio/Machines/machine_switch.ogg", Filter.Pvs(component.Owner), component.Owner, AudioParams.Default.WithVolume(-2f));
                     break;
                 default:
                     throw new ArgumentOutOfRangeException();

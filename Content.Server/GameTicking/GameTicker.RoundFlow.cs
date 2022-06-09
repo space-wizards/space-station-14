@@ -349,7 +349,7 @@ namespace Content.Server.GameTicking
             LobbySong = _robustRandom.Pick(_lobbyMusicCollection.PickFiles).ToString();
             RandomizeLobbyBackground();
             ResettingCleanup();
-            SoundSystem.Play(Filter.Broadcast(), new SoundCollectionSpecifier("RoundEnd").GetSound());
+            SoundSystem.Play(new SoundCollectionSpecifier("RoundEnd").GetSound(), Filter.Broadcast());
 
             if (!LobbyEnabled)
             {
@@ -477,7 +477,7 @@ namespace Content.Server.GameTicking
                     _chatSystem.DispatchGlobalStationAnnouncement(Loc.GetString(proto.Message), playDefaultSound: true);
 
                 if (proto.Sound != null)
-                    SoundSystem.Play(Filter.Broadcast(), proto.Sound.GetSound());
+                    SoundSystem.Play(proto.Sound.GetSound(), Filter.Broadcast());
 
                 // Only play one because A
                 break;
