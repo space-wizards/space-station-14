@@ -1,12 +1,4 @@
 Entries:
-- author: Rane
-  changes:
-  - {message: Drones can now only pick up or drag a whitelist of items., type: Tweak}
-  - {message: Drones are now way easier to kill for a variety of reasons., type: Tweak}
-  - {message: "Drones can no longer interact with anything within 2\xBD tiles of a\
-      \ non-drone mob. The nerfs will continue until morale improves.", type: Tweak}
-  id: 1172
-  time: '2022-03-07T11:46:37.0000000+00:00'
 - author: moony
   changes:
   - {message: 'Player built shuttles should now be able to hold an atmosphere, assuming
@@ -3005,3 +2997,8 @@ Entries:
       floor tiles, type: Fix}
   id: 1671
   time: '2022-06-08T09:25:48.0000000+00:00'
+- author: ElectroJr
+  changes:
+  - {message: Matches can once again be lit using match boxes., type: Fix}
+  id: 1672
+  time: '2022-06-09T02:39:29.0000000+00:00'
