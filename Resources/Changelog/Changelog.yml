@@ -1,9 +1,4 @@
 Entries:
-- author: HoofedEar
-  changes:
-  - {message: Things should no longer float through asteroid rocks., type: Fix}
-  id: 1175
-  time: '2022-03-08T01:01:36.0000000+00:00'
 - author: Macoron
   changes:
   - {message: Welder sprite now updates correctly when lit., type: Fix}
@@ -3002,3 +2997,8 @@ Entries:
     type: Tweak}
   id: 1674
   time: '2022-06-10T01:28:24.0000000+00:00'
+- author: themias
+  changes:
+  - {message: Captain and HoP PDA pen slots now hold just pens, type: Fix}
+  id: 1675
+  time: '2022-06-10T18:53:56.0000000+00:00'
