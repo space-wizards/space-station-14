@@ -8,7 +8,7 @@ using Robust.Shared.Timing;
 
 namespace Content.Client.Stack
 {
-    [RegisterComponent, Friend(typeof(StackSystem), typeof(StatusControl))]
+    [RegisterComponent, Access(typeof(StackSystem), typeof(StatusControl))]
     [ComponentReference(typeof(SharedStackComponent))]
     public sealed class StackComponent : SharedStackComponent, IItemStatus
     {

@@ -1,7 +1,7 @@
 namespace Content.Server.SurveillanceCamera;
 
 [RegisterComponent]
-[Friend(typeof(SurveillanceCameraMonitorSystem))]
+[Access(typeof(SurveillanceCameraMonitorSystem))]
 public sealed class SurveillanceCameraMonitorComponent : Component
 {
     // Currently active camera viewed by this monitor.
