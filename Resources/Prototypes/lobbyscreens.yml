@@ -1,7 +1,7 @@
 ﻿- type: lobbyBackground
-  id: Robotics
-  background: /Textures/LobbyScreens/robotics.png
+  id: ironhammer
+  background: /Textures/LobbyScreens/ironhammer.png
 
 - type: lobbyBackground
-  id: Supermatter
-  background: /Textures/LobbyScreens/supermatter.png
+  id: ship
+  background: /Textures/LobbyScreens/ship.png
