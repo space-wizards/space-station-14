@@ -157,7 +157,7 @@ namespace Content.Server.RoleTimers
         }
 
         /// <summary>
-        /// Gets a list of roles the player doesn't fulfill the requirements for.
+        /// Gets a hashset of roles the player doesn't fulfill the requirements for.
         /// </summary>
         /// <param name="id">The player's network id.</param>
         /// <returns>A HashSet of disallowed roles, or null if the player is uncached.</returns>
