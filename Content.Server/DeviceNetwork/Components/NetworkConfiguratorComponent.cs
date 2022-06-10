@@ -4,7 +4,7 @@ using Content.Shared.Sound;
 namespace Content.Server.DeviceNetwork.Components;
 
 [RegisterComponent]
-[Friend(typeof(NetworkConfiguratorSystem))]
+[Access(typeof(NetworkConfiguratorSystem))]
 public sealed class NetworkConfiguratorComponent : Component
 {
     /// <summary>
