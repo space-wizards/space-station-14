@@ -122,7 +122,7 @@ namespace Content.Server.Database
         /// <param name="player">The player to get the role timer from.</param>
         /// <param name="role">The role that's being timed.</param>
         /// <returns>A role timer for the passed role.</returns>
-        Task<RoleTimer> AddOrGetRoleTimer(Guid player, string role);
+        Task<RoleTimer> CreateOrGetRoleTimer(Guid player, string role);
 
         /// <summary>
         /// Look up a player's role timers.
@@ -136,7 +136,9 @@ namespace Content.Server.Database
         /// </summary>
         /// <param name="id">Numerical ID for the roletimer object</param>
         /// <param name="time">New value for time spent on the role</param>
-        Task<RoleTimer?> EditRoleTimer(int id, TimeSpan time);
+        Task<RoleTimer?> SetRoleTime(int id, TimeSpan time);
+
+        Task<RoleTimer?> AddRoleTime(int id, TimeSpan time);
 
         #endregion
 
@@ -368,9 +370,9 @@ namespace Content.Server.Database
 
         #region Role Timers
 
-        public Task<RoleTimer> AddOrGetRoleTimer(Guid player, string role)
+        public Task<RoleTimer> CreateOrGetRoleTimer(Guid player, string role)
         {
-            return _db.AddOrGetRoleTimer(player, role);
+            return _db.CreateOrGetRoleTimer(player, role);
         }
 
         public Task<List<RoleTimer>> GetRoleTimers(Guid player)
@@ -378,9 +380,14 @@ namespace Content.Server.Database
             return _db.GetRoleTimers(player);
         }
 
-        public Task<RoleTimer?> EditRoleTimer(int id, TimeSpan time)
+        public Task<RoleTimer?> SetRoleTime(int id, TimeSpan time)
         {
-            return _db.EditRoleTimer(id, time);
+            return _db.SetRoleTime(id, time);
+        }
+
+        public Task<RoleTimer?> AddRoleTime(int id, TimeSpan time)
+        {
+            return _db.AddRoleTime(id, time);
         }
         #endregion
 

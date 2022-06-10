@@ -185,7 +185,7 @@ namespace Content.Server.GameTicking
 
             readyPlayers.RemoveAll(p =>
             {
-                if (_roleTimerSystem.IsPlayerTimeCachedYet(p))
+                if (_roleTimerSystem.IsPlayerTimeCached(p.UserId))
                     return false;
                 Logger.ErrorS("RoleTimers", $"Role timers for player {p} {p.UserId} have not been loaded yet.");
                 return true;

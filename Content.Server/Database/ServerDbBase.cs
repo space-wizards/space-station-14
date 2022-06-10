@@ -360,7 +360,7 @@ namespace Content.Server.Database
         #endregion
 
         #region Role Timers
-        public async Task<RoleTimer> AddOrGetRoleTimer(Guid player, string role)
+        public async Task<RoleTimer> CreateOrGetRoleTimer(Guid player, string role)
         {
             await using var db = await GetDb();
 
@@ -398,13 +398,23 @@ namespace Content.Server.Database
                 .ToListAsync();
         }
 
-        public async Task<RoleTimer?> EditRoleTimer(int id, TimeSpan time)
+        public async Task<RoleTimer?> SetRoleTime(int id, TimeSpan time)
         {
             await using var db = await GetDb();
 
             var newTimer = await db.DbContext.RoleTimer
-                .SingleAsync(note => note.Id == id);
+                .SingleAsync(timer => timer.Id == id);
             newTimer.TimeSpent = time;
+
+            await db.DbContext.SaveChangesAsync();
+            return newTimer;
+        }
+
+        public async Task<RoleTimer?> AddRoleTime(int id, TimeSpan time)
+        {
+            await using var db = await GetDb();
+
+            var newTimer = await db.DbContext.RoleTimer.SingleAsync(timer => timer.Id == id);
 
             await db.DbContext.SaveChangesAsync();
             return newTimer;

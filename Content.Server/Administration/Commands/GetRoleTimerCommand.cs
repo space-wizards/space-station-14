@@ -31,8 +31,7 @@ namespace Content.Server.Administration.Commands
 
             if (args.Length >= 2)
             {
-                bool.TryParse(args[1], out var useDb);
-                if (useDb)
+                if (bool.TryParse(args[1], out var useDb))
                 {
                     var db = IoCManager.Resolve<IServerDbManager>();
                     var timers = await db.GetRoleTimers(targetSessionInst.UserId);
@@ -44,16 +43,16 @@ namespace Content.Server.Administration.Commands
                 else
                 {
                     var rt = IoCManager.Resolve<RoleTimerSystem>();
-                    var timers = rt.GetCachedRoleTimers(targetSessionInst);
+                    var timers = rt.GetCachedRoleTimersForPlayer(targetSessionInst.UserId);
                     if (timers == null)
                     {
                         shell.WriteLine("Couldn't get any information from cache (player info may not be cached yet)");
                         return;
                     }
 
-                    foreach (var timer in timers)
+                    foreach (var (role, time) in timers)
                     {
-                        shell.WriteLine($"Role: {timer.Key}, Playtime: {timer.Value.Item2}");
+                        shell.WriteLine($"Role: {role}, Playtime: {time}");
                     }
                 }
             }

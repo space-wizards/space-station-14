@@ -128,7 +128,8 @@ namespace Content.Server.GameTicking
 
             // Figure out job restrictions
             var restrictedRoles = new HashSet<string>();
-            restrictedRoles.UnionWith(_roleTimerSystem.GetRestrictedRoles(player));
+            var timerGates = _roleTimerSystem.GetDisallowedRoles(player.UserId);
+            if(timerGates != null) restrictedRoles.UnionWith(timerGates);
             var jobBans = _roleBanManager.GetJobBans(player.UserId);
             if(jobBans != null) restrictedRoles.UnionWith(jobBans);
             // Pick best job best on prefs.
@@ -144,10 +145,6 @@ namespace Content.Server.GameTicking
                 _chatManager.DispatchServerMessage(player, Loc.GetString("game-ticker-player-no-jobs-available-when-joining"));
                 return;
             }
-
-#pragma warning disable CS4014
-            _roleTimerSystem.RoleChange(player, jobId, DateTime.Now);
-#pragma warning restore CS4014
 
             PlayerJoinGame(player);
 
@@ -165,6 +162,8 @@ namespace Content.Server.GameTicking
             var jobPrototype = _prototypeManager.Index<JobPrototype>(jobId);
             var job = new Job(newMind, jobPrototype);
             newMind.AddRole(job);
+
+            _roleTimerSystem.PlayerRolesChanged(player.UserId, newMind);
 
             if (lateJoin)
             {
