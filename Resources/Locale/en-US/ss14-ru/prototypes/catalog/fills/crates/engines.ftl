@@ -28,6 +28,6 @@ ent-CrateEngineeringGenerator = generator crate
 ent-CrateEngineeringSolar = solar assembly crate
     .desc = { ent-CrateEngineering.desc }
     .suffix = { "" }
-ent-CrateEngineeringShuttle = shuttle power crate
+ent-CrateEngineeringShuttle = shuttle powering crate
     .desc = { ent-CrateEngineeringSecure.desc }
     .suffix = { "" }

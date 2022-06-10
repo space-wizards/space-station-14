@@ -17,5 +17,5 @@ ent-GasPort = connector port
     .desc = For connecting portable devices related to atmospherics control.
     .suffix = { "" }
 ent-GasDualPortVentPump = dual-port air vent
-    .desc = Has a valve and a pump attached to it. There are two ports.
+    .desc = Has a valve and a pump attached to it. There are two ports, one is an input for releasing air, the other is an output when siphoning.
     .suffix = { "" }
