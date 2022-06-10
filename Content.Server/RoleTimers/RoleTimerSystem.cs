@@ -1,5 +1,6 @@
 ﻿using System.Threading.Tasks;
 using Content.Server.Database;
+using Content.Server.Players;
 using Content.Shared.GameTicking;
 using Content.Shared.Roles;
 using Robust.Server.Player;
@@ -99,7 +100,68 @@ namespace Content.Server.RoleTimers
         /// <param name="roles">A full list of the new roles the player has. If this is passed, mind will be ignored.</param>
         public void PlayerRolesChanged(NetUserId player, Mind.Mind? mind = null, HashSet<string>? roles = null)
         {
+            if (!IsPlayerTimeCached(player))
+            {
+                Logger.ErrorS("RoleTimers", "Tried to change the player roles of an uncached player.");
+                return;
+            }
 
+            var currentRoles = _cachedPlayerData[player].CurrentRoles;
+            var inputRoleSet = roles;
+
+            // Fill out roles from mind (if no roles were provided in args)
+            if (inputRoleSet == null)
+            {
+                inputRoleSet = new HashSet<string>();
+                Mind.Mind mindObj;
+                if (mind == null)
+                {
+                    var contentData = _playerManager.GetPlayerData(player).ContentData();
+                    if (contentData == null)
+                    {
+                        Logger.ErrorS("RoleTimers", "Tried to access a player's content data but the content data was null (wtf?)");
+                        return;
+                    }
+                    if (contentData.Mind == null)
+                    {
+                        Logger.ErrorS("RoleTimers", "Tried to access a player's mind but they had none");
+                        return;
+                    }
+                    mindObj = contentData.Mind;
+                }
+                else
+                {
+                    mindObj = mind;
+                }
+
+                foreach (var mindRole in mindObj.AllRoles)
+                {
+                    inputRoleSet.Add(mindRole.Name);
+                }
+            }
+
+            // Check if a role's been removed
+            foreach (var role in currentRoles)
+            {
+                if (!inputRoleSet.Contains(role))
+                {
+                    var time = _cachedPlayerData[player].GetLastSavedTime(role);
+                    if (time == null)
+                    {
+                        return;
+                    }
+
+                    var timeToAdd = time.Value.Subtract(DateTime.UtcNow);
+                    AddTimeToRole(player, role, timeToAdd);
+                }
+            }
+        }
+
+        private async Task AddTimeToRole(NetUserId id, string role, TimeSpan time)
+        {
+            var timer = await _db.CreateOrGetRoleTimer(id, role);
+            await _db.AddRoleTime(timer.Id, time);
+            _cachedPlayerData[id].SetCachedPlaytimeForRole(role, time);
         }
 
         /// <summary>
