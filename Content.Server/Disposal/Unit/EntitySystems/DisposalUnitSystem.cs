@@ -394,11 +394,17 @@ namespace Content.Server.Disposal.Unit.EntitySystems
 
             if (oldPressure < 1 && state == SharedDisposalUnitComponent.PressureState.Ready)
             {
-                UpdateVisualState(component);
-
                 if (component.Engaged)
                 {
+                    //Flush engaged when pressurization reached, so flush now
                     TryFlush(component);
+                    state = component.State;
+                }
+                else
+                {
+                    //Update visuals to appear ready to flush
+                    UpdateVisualState(component);
+                    UpdateInterface(component, component.Powered);
                 }
             }
 
@@ -567,6 +573,7 @@ namespace Content.Server.Disposal.Unit.EntitySystems
             {
                 appearance.SetData(SharedDisposalUnitComponent.Visuals.VisualState, SharedDisposalUnitComponent.VisualState.Flushing);
                 appearance.SetData(SharedDisposalUnitComponent.Visuals.Light, SharedDisposalUnitComponent.LightState.Off);
+                component.Owner.SpawnTimer(component.GetFlushTime(), () => UpdateVisualState(component)); //update visuals once done flushing
                 return;
             }
 

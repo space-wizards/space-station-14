@@ -65,5 +65,13 @@ namespace Content.Server.Disposal.Unit.Components
 
         [DataField("air")]
         public GasMixture Air { get; set; } = new(Atmospherics.CellVolume);
+
+        [DataField("flushTime")]
+        private float FlushTime = 2.0f;
+
+        public TimeSpan GetFlushTime()
+        {
+            return TimeSpan.FromSeconds(FlushTime);
+        }
     }
 }
