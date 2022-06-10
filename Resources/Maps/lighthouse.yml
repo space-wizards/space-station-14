@@ -1358,63 +1358,63 @@ entities:
           color: '#D4D4D4FF'
           id: DirtMedium
           coordinates: -15,67
-        1381:
+        1380:
           color: '#835432FF'
           id: Dirt
           coordinates: -21,71
-        1382:
+        1381:
           color: '#835432FF'
           id: Dirt
           coordinates: -21,70
-        1383:
+        1382:
           color: '#835432FF'
           id: Dirt
           coordinates: -21,69
-        1384:
+        1383:
           color: '#835432FF'
           id: Dirt
           coordinates: -21,68
-        1385:
+        1384:
           color: '#835432FF'
           id: Dirt
           coordinates: -21,67
-        1386:
+        1385:
           color: '#835432FF'
           id: Dirt
           coordinates: -21,66
-        1387:
+        1386:
           color: '#835432FF'
           id: Dirt
           coordinates: -20,66
-        1388:
+        1387:
           color: '#835432FF'
           id: Dirt
           coordinates: -19,66
-        1389:
+        1388:
           color: '#835432FF'
           id: Dirt
           coordinates: -21,73
-        1390:
+        1389:
           color: '#835432FF'
           id: Dirt
           coordinates: -21,72
-        1391:
+        1390:
           color: '#835432FF'
           id: Dirt
           coordinates: -18,66
-        1513:
+        1512:
           color: '#EFF2F595'
           id: FullTileOverlayGreyscale
           coordinates: -24,66
-        1514:
+        1513:
           color: '#EFF2F595'
           id: FullTileOverlayGreyscale
           coordinates: -23,66
-        1515:
+        1514:
           color: '#EFF2F595'
           id: FullTileOverlayGreyscale
           coordinates: -24,67
-        1525:
+        1524:
           color: '#EFF2F595'
           id: FullTileOverlayGreyscale
           coordinates: -22,66
@@ -2732,59 +2732,59 @@ entities:
           color: '#D4D4D4FF'
           id: DirtMedium
           coordinates: -5,34
-        1263:
+        1262:
           cleanable: True
           color: '#D4D4D4FF'
           id: DirtHeavy
           coordinates: -2,35
-        1276:
+        1275:
           cleanable: True
           color: '#D4D4D4FF'
           id: DirtHeavy
           coordinates: -16,55
-        1277:
+        1276:
           cleanable: True
           color: '#D4D4D4FF'
           id: DirtHeavy
           coordinates: -28,61
-        1280:
+        1279:
           cleanable: True
           color: '#D4D4D4FF'
           id: Dirt
           coordinates: -1,39
-        1594:
+        1592:
           color: '#334E6DC8'
           id: Flowersy2
           coordinates: -32,57
-        1596:
+        1594:
           color: '#334E6DC8'
           id: Flowersy2
           coordinates: -31,58
-        1601:
+        1599:
           color: '#319F6DC8'
           id: Flowerspv3
           coordinates: -31.250128,56.24909
-        1604:
+        1602:
           color: '#319F6DC8'
           id: Flowersy2
           coordinates: -31.797003,57.56159
-        1607:
+        1605:
           color: '#319F6D5A'
           id: Grasse2
           coordinates: -31.422003,55.920963
-        1610:
+        1608:
           color: '#319F6D5A'
           id: Grasse2
           coordinates: -31.922003,58.09284
-        1611:
+        1609:
           color: '#319F6D5A'
           id: Grasse2
           coordinates: -31.047003,58.09284
-        1614:
+        1610:
           color: '#319F6D5A'
           id: Grasse2
           coordinates: -30.968878,55.99909
-        1627:
+        1617:
           color: '#319F6DF2'
           id: Flowersy4
           coordinates: -30.984503,57.202213
@@ -3324,52 +3324,52 @@ entities:
           color: '#D4D4D4FF'
           id: DirtLight
           coordinates: 5,50
-        1264:
+        1263:
           cleanable: True
           color: '#D4D4D4FF'
           id: DirtHeavy
           coordinates: 2,36
-        1267:
+        1266:
           cleanable: True
           color: '#D4D4D4FF'
           id: DirtHeavy
           coordinates: 26,41
-        1268:
+        1267:
           cleanable: True
           color: '#D4D4D4FF'
           id: DirtHeavy
           coordinates: 28,42
-        1269:
+        1268:
           cleanable: True
           color: '#D4D4D4FF'
           id: DirtHeavy
           coordinates: 29,45
-        1270:
+        1269:
           cleanable: True
           color: '#D4D4D4FF'
           id: DirtHeavy
           coordinates: 24,46
-        1271:
+        1270:
           cleanable: True
           color: '#D4D4D4FF'
           id: DirtHeavy
           coordinates: 21,48
-        1272:
+        1271:
           cleanable: True
           color: '#D4D4D4FF'
           id: DirtHeavy
           coordinates: 22,48
-        1273:
+        1272:
           cleanable: True
           color: '#D4D4D4FF'
           id: DirtHeavy
           coordinates: 21,47
-        1274:
+        1273:
           cleanable: True
           color: '#D4D4D4FF'
           id: DirtHeavy
           coordinates: 22,47
-        1275:
+        1274:
           cleanable: True
           color: '#D4D4D4FF'
           id: DirtHeavy
@@ -3454,177 +3454,177 @@ entities:
           color: '#D4D4D4FF'
           id: DirtMedium
           coordinates: -37,32
-        1278:
+        1277:
           cleanable: True
           color: '#D4D4D4FF'
           id: DirtHeavy
           coordinates: -43,63
-        1279:
+        1278:
           cleanable: True
           color: '#D4D4D4FF'
           id: DirtHeavy
           coordinates: -44,60
-        1392:
+        1391:
           color: '#3AB3DAFF'
           id: FullTileOverlayGreyscale
           coordinates: -40,37
-        1393:
+        1392:
           color: '#3AB3DAFF'
           id: FullTileOverlayGreyscale
           coordinates: -40,38
-        1394:
+        1393:
           color: '#3AB3DAFF'
           id: FullTileOverlayGreyscale
           coordinates: -39,38
-        1395:
+        1394:
           color: '#3AB3DAFF'
           id: FullTileOverlayGreyscale
           coordinates: -39,37
-        1396:
+        1395:
           color: '#3AB3DAFF'
           id: FullTileOverlayGreyscale
           coordinates: -38,37
-        1397:
+        1396:
           color: '#3AB3DAFF'
           id: FullTileOverlayGreyscale
           coordinates: -38,38
-        1398:
+        1397:
           color: '#474F52FF'
           id: FullTileOverlayGreyscale
           coordinates: -46,37
-        1399:
+        1398:
           color: '#474F52FF'
           id: FullTileOverlayGreyscale
           coordinates: -46,38
-        1400:
+        1399:
           color: '#474F52FF'
           id: FullTileOverlayGreyscale
           coordinates: -46,39
-        1401:
+        1400:
           color: '#C3AF3DD3'
           id: FullTileOverlayGreyscale
           coordinates: -48,40
-        1402:
+        1401:
           color: '#C3AF3DD3'
           id: FullTileOverlayGreyscale
           coordinates: -48,41
-        1403:
+        1402:
           color: '#C3AF3DD3'
           id: FullTileOverlayGreyscale
           coordinates: -47,41
-        1404:
+        1403:
           color: '#C3AF3DD3'
           id: FullTileOverlayGreyscale
           coordinates: -46,41
-        1405:
+        1404:
           color: '#C3AF3DD3'
           id: FullTileOverlayGreyscale
           coordinates: -46,42
-        1406:
+        1405:
           color: '#C3AF3DD3'
           id: FullTileOverlayGreyscale
           coordinates: -47,42
-        1407:
+        1406:
           color: '#C3AF3DD3'
           id: FullTileOverlayGreyscale
           coordinates: -48,42
-        1428:
+        1427:
           color: '#604628CA'
           id: FullTileOverlayGreyscale
           coordinates: -40,40
-        1429:
+        1428:
           color: '#604628CA'
           id: FullTileOverlayGreyscale
           coordinates: -40,41
-        1430:
+        1429:
           color: '#604628CA'
           id: FullTileOverlayGreyscale
           coordinates: -37,40
-        1431:
+        1430:
           color: '#604628CA'
           id: FullTileOverlayGreyscale
           coordinates: -37,41
-        1593:
+        1591:
           color: '#334E6DC8'
           id: Flowersy2
           coordinates: -33,56
-        1595:
+        1593:
           color: '#334E6DC8'
           id: Flowersy2
           coordinates: -34,58
-        1597:
+        1595:
           color: '#334E6DC8'
           id: bushsnowa1
           coordinates: -33,57
-        1598:
+        1596:
           color: '#334E6DC8'
           id: Bushm3
           coordinates: -33,58
-        1599:
+        1597:
           color: '#319F6DC8'
           id: bushsnowa3
           coordinates: -33.4845,56.795963
-        1600:
+        1598:
           color: '#319F6DC8'
           id: Flowerspv3
           coordinates: -32.31263,57.358463
-        1602:
+        1600:
           color: '#319F6DC8'
           id: Flowersy2
           coordinates: -33.812626,57.202213
-        1603:
+        1601:
           color: '#319F6DC8'
           id: Flowersy2
           coordinates: -33.51575,56.452213
-        1605:
+        1603:
           color: '#319F6D5A'
           id: Grasse2
           coordinates: -33.687626,56.139713
-        1606:
+        1604:
           color: '#319F6D5A'
           id: Grasse2
           coordinates: -34.125126,55.99909
-        1608:
+        1606:
           color: '#319F6D5A'
           id: Grasse2
           coordinates: -32.562626,55.920963
-        1609:
+        1607:
           color: '#319F6D5A'
           id: Grasse2
           coordinates: -33.70325,58.108463
-        1619:
+        1611:
           color: '#319F6D5A'
           id: Grassd1
           coordinates: -32.297005,57.84284
-        1620:
+        1612:
           color: '#319F6DC0'
           id: Grassd1
           coordinates: -32.70325,56.420963
-        1621:
+        1613:
           color: '#319F6DC0'
           id: Grassd1
           coordinates: -33.89075,57.358463
-        1623:
+        1614:
           color: '#319F6DF2'
           id: Bushj2
           coordinates: -33.625126,56.295963
-        1624:
+        1615:
           color: '#319F6DF2'
           id: Bushk1
           coordinates: -32.15638,57.56159
-        1625:
+        1616:
           color: '#319F6DF2'
           id: Bushl1
           coordinates: -33.7345,57.608463
-        1628:
+        1618:
           color: '#31B8ABB1'
           id: Flowerspv1
           coordinates: -32.172005,56.31159
-        1629:
+        1619:
           color: '#31B8ABB1'
           id: Flowerspv1
           coordinates: -34.14075,56.139713
-        1630:
+        1620:
           color: '#31B8ABB1'
           id: Flowerspv1
           coordinates: -32.28138,58.077213
@@ -3937,302 +3937,302 @@ entities:
           color: '#D4D4D4FF'
           id: DirtMedium
           coordinates: -34,21
-        1282:
+        1281:
           cleanable: True
           color: '#D4D4D4FF'
           id: trade
           coordinates: -42,15
-        1283:
+        1282:
           cleanable: True
           color: '#D4D4D4FF'
           id: shop
           coordinates: -42,16
-        1284:
+        1283:
           cleanable: True
           color: '#D4D4D4FF'
           id: safe
           coordinates: -40,12
-        1408:
+        1407:
           color: '#604628CA'
           id: FullTileOverlayGreyscale
           coordinates: -40,29
-        1409:
+        1408:
           color: '#604628CA'
           id: FullTileOverlayGreyscale
           coordinates: -40,30
-        1410:
+        1409:
           color: '#604628CA'
           id: FullTileOverlayGreyscale
           coordinates: -39,30
-        1411:
+        1410:
           color: '#604628CA'
           id: FullTileOverlayGreyscale
           coordinates: -38,30
-        1412:
+        1411:
           color: '#604628CA'
           id: FullTileOverlayGreyscale
           coordinates: -39,31
-        1413:
+        1412:
           color: '#604628CA'
           id: FullTileOverlayGreyscale
           coordinates: -40,31
-        1414:
+        1413:
           color: '#604628CA'
           id: FullTileOverlayGreyscale
           coordinates: -47,27
-        1415:
+        1414:
           color: '#604628CA'
           id: FullTileOverlayGreyscale
           coordinates: -47,26
-        1416:
+        1415:
           color: '#604628CA'
           id: FullTileOverlayGreyscale
           coordinates: -47,28
-        1417:
+        1416:
           color: '#604628CA'
           id: FullTileOverlayGreyscale
           coordinates: -46,28
-        1418:
+        1417:
           color: '#604628CA'
           id: FullTileOverlayGreyscale
           coordinates: -46,29
-        1419:
+        1418:
           color: '#604628CA'
           id: FullTileOverlayGreyscale
           coordinates: -47,29
-        1420:
+        1419:
           color: '#604628CA'
           id: FullTileOverlayGreyscale
           coordinates: -46,27
-        1421:
+        1420:
           color: '#604628CA'
           id: FullTileOverlayGreyscale
           coordinates: -46,26
-        1422:
+        1421:
           color: '#604628CA'
           id: FullTileOverlayGreyscale
           coordinates: -46,24
-        1423:
+        1422:
           color: '#604628CA'
           id: FullTileOverlayGreyscale
           coordinates: -47,24
-        1424:
+        1423:
           color: '#604628CA'
           id: FullTileOverlayGreyscale
           coordinates: -47,23
-        1425:
+        1424:
           color: '#604628CA'
           id: FullTileOverlayGreyscale
           coordinates: -46,23
-        1426:
+        1425:
           color: '#604628CA'
           id: FullTileOverlayGreyscale
           coordinates: -46,22
-        1427:
+        1426:
           color: '#604628CA'
           id: FullTileOverlayGreyscale
           coordinates: -47,22
-        1432:
+        1431:
           color: '#604628CA'
           id: FullTileOverlayGreyscale
           coordinates: -40,5
-        1433:
+        1432:
           color: '#604628CA'
           id: FullTileOverlayGreyscale
           coordinates: -40,6
-        1434:
+        1433:
           color: '#604628CA'
           id: FullTileOverlayGreyscale
           coordinates: -39,6
-        1435:
+        1434:
           color: '#604628CA'
           id: FullTileOverlayGreyscale
           coordinates: -37,7
-        1436:
+        1435:
           color: '#604628CA'
           id: FullTileOverlayGreyscale
           coordinates: -37,8
-        1437:
+        1436:
           color: '#604628CA'
           id: FullTileOverlayGreyscale
           coordinates: -48,9
-        1438:
+        1437:
           color: '#604628CA'
           id: FullTileOverlayGreyscale
           coordinates: -47,9
-        1439:
+        1438:
           color: '#604628CA'
           id: FullTileOverlayGreyscale
           coordinates: -46,9
-        1440:
+        1439:
           color: '#604628CA'
           id: FullTileOverlayGreyscale
           coordinates: -46,10
-        1441:
+        1440:
           color: '#604628CA'
           id: FullTileOverlayGreyscale
           coordinates: -46,11
-        1442:
+        1441:
           color: '#604628CA'
           id: FullTileOverlayGreyscale
           coordinates: -46,12
-        1443:
+        1442:
           color: '#604628CA'
           id: FullTileOverlayGreyscale
           coordinates: -40,12
-        1444:
+        1443:
           color: '#604628CA'
           id: FullTileOverlayGreyscale
           coordinates: -40,11
-        1445:
+        1444:
           color: '#604628CA'
           id: FullTileOverlayGreyscale
           coordinates: -40,10
-        1446:
+        1445:
           color: '#604628CA'
           id: FullTileOverlayGreyscale
           coordinates: -39,10
-        1447:
+        1446:
           color: '#604628CA'
           id: FullTileOverlayGreyscale
           coordinates: -39,11
-        1448:
+        1447:
           color: '#604628CA'
           id: FullTileOverlayGreyscale
           coordinates: -38,11
-        1449:
+        1448:
           color: '#604628CA'
           id: FullTileOverlayGreyscale
           coordinates: -37,11
-        1450:
+        1449:
           color: '#604628CA'
           id: FullTileOverlayGreyscale
           coordinates: -37,10
-        1451:
+        1450:
           color: '#604628CA'
           id: FullTileOverlayGreyscale
           coordinates: -38,10
-        1452:
+        1451:
           color: '#9B3FABB1'
           id: FullTileOverlayGreyscale
           coordinates: -48,5
-        1453:
+        1452:
           color: '#9B3FABB1'
           id: FullTileOverlayGreyscale
           coordinates: -47,6
-        1454:
+        1453:
           color: '#9B3FABB1'
           id: FullTileOverlayGreyscale
           coordinates: -47,5
-        1455:
+        1454:
           color: '#9B3FABB1'
           id: FullTileOverlayGreyscale
           coordinates: -47,4
-        1456:
+        1455:
           color: '#9B3FABB1'
           id: FullTileOverlayGreyscale
           coordinates: -47,3
-        1457:
+        1456:
           color: '#9B3FABB1'
           id: FullTileOverlayGreyscale
           coordinates: -48,6
-        1458:
+        1457:
           color: '#9B3FABB1'
           id: FullTileOverlayGreyscale
           coordinates: -48,7
-        1459:
+        1458:
           color: '#9B3FABB1'
           id: FullTileOverlayGreyscale
           coordinates: -47,7
-        1460:
+        1459:
           color: '#9B3FABB1'
           id: FullTileOverlayGreyscale
           coordinates: -46,7
+        1515:
+          color: '#EFF2F595'
+          id: FullTileOverlayGreyscale
+          coordinates: -40,27
         1516:
           color: '#EFF2F595'
           id: FullTileOverlayGreyscale
-          coordinates: -40,27
+          coordinates: -40,26
         1517:
           color: '#EFF2F595'
           id: FullTileOverlayGreyscale
-          coordinates: -40,26
+          coordinates: -40,25
         1518:
           color: '#EFF2F595'
           id: FullTileOverlayGreyscale
-          coordinates: -40,25
+          coordinates: -39,25
         1519:
           color: '#EFF2F595'
           id: FullTileOverlayGreyscale
-          coordinates: -39,25
+          coordinates: -39,26
         1520:
           color: '#EFF2F595'
           id: FullTileOverlayGreyscale
-          coordinates: -39,26
+          coordinates: -38,26
         1521:
           color: '#EFF2F595'
           id: FullTileOverlayGreyscale
-          coordinates: -38,26
+          coordinates: -38,25
         1522:
           color: '#EFF2F595'
           id: FullTileOverlayGreyscale
-          coordinates: -38,25
+          coordinates: -38,27
         1523:
           color: '#EFF2F595'
           id: FullTileOverlayGreyscale
-          coordinates: -38,27
-        1524:
-          color: '#EFF2F595'
-          id: FullTileOverlayGreyscale
           coordinates: -38,28
-        1637:
+        1626:
           cleanable: True
           angle: 3.141592653589793 rad
           color: '#FFFFFFFF'
           id: DirtHeavy
           coordinates: -39,25
-        1638:
+        1627:
           cleanable: True
           angle: 3.141592653589793 rad
           color: '#FFFFFFFF'
           id: DirtHeavy
           coordinates: -40,27
-        1639:
+        1628:
           cleanable: True
           angle: 3.141592653589793 rad
           color: '#FFFFFFFF'
           id: DirtHeavy
           coordinates: -38,26
-        1640:
+        1629:
           cleanable: True
           angle: 3.141592653589793 rad
           color: '#FFFFFFFF'
           id: DirtHeavy
           coordinates: -39,26
-        1641:
+        1630:
           cleanable: True
           angle: 3.141592653589793 rad
           color: '#FFFFFFFF'
           id: DirtHeavy
           coordinates: -40,26
-        1642:
+        1631:
           cleanable: True
           angle: 3.141592653589793 rad
           color: '#FFFFFFFF'
           id: DirtHeavy
           coordinates: -40,25
-        1643:
+        1632:
           cleanable: True
           angle: 3.141592653589793 rad
           color: '#FFFFFFFF'
           id: DirtHeavy
           coordinates: -38,25
-        1644:
+        1633:
           cleanable: True
           angle: 3.141592653589793 rad
           color: '#FFFFFFFF'
           id: DirtHeavy
           coordinates: -38,27
-        1645:
+        1634:
           cleanable: True
           angle: 3.141592653589793 rad
           color: '#FFFFFFFF'
@@ -4597,250 +4597,250 @@ entities:
           color: '#D4D4D4FF'
           id: DirtMedium
           coordinates: -14,22
-        1257:
+        1256:
           cleanable: True
           color: '#D4D4D4FF'
           id: DirtHeavy
           coordinates: -20,14
-        1258:
+        1257:
           cleanable: True
           color: '#D4D4D4FF'
           id: DirtHeavy
           coordinates: -26,19
-        1259:
+        1258:
           cleanable: True
           color: '#D4D4D4FF'
           id: DirtHeavy
           coordinates: -28,15
-        1260:
+        1259:
           cleanable: True
           color: '#D4D4D4FF'
           id: DirtHeavy
           coordinates: -32,15
-        1261:
+        1260:
           cleanable: True
           color: '#D4D4D4FF'
           id: DirtHeavy
           coordinates: -24,23
-        1262:
+        1261:
           cleanable: True
           color: '#D4D4D4FF'
           id: DirtHeavy
           coordinates: -14,31
-        1281:
+        1280:
           cleanable: True
           color: '#D4D4D4FF'
           id: Dirt
           coordinates: -2,16
-        1286:
+        1285:
           color: '#D4D4D496'
           id: Flowerspv3
           coordinates: -6,4
-        1289:
+        1288:
           color: '#DE3A3A96'
           id: Flowersy1
           coordinates: -5,4
-        1292:
+        1291:
           color: '#DE3A3A96'
           id: Flowersy1
           coordinates: -2,4
-        1293:
+        1292:
           color: '#DEF23A96'
           id: Flowersbr2
           coordinates: -4,4
-        1294:
+        1293:
           color: '#DEF23A96'
           id: Flowersbr2
           coordinates: -1,4
-        1296:
+        1295:
           color: '#DE00C096'
           id: Flowersy1
           coordinates: -3,4
-        1298:
+        1297:
           color: '#6FF84A96'
           id: Flowersy1
           coordinates: -3.50741,4.0641594
-        1299:
+        1298:
           color: '#6FF84A96'
           id: Flowersy1
           coordinates: -5.523035,3.9860344
-        1300:
+        1299:
           color: '#6FF84A96'
           id: Flowersy1
           coordinates: -1.47616,3.9547844
-        1303:
+        1302:
           color: '#66B5D3CD'
           id: Flowersbr2
           coordinates: -4.304285,4.0329094
-        1304:
+        1303:
           color: '#66B5D3CD'
           id: Flowersbr2
           coordinates: -2.41366,4.0485344
-        1321:
+        1320:
           color: '#536250CA'
           id: Rock05
           coordinates: -3.081524,0.038562536
-        1323:
+        1322:
           color: '#536250CA'
           id: Rock05
           coordinates: -2.097149,0.16356254
-        1461:
+        1460:
           color: '#79150096'
           id: FullTileOverlayGreyscale
           coordinates: -1,12
-        1462:
+        1461:
           color: '#79150096'
           id: FullTileOverlayGreyscale
           coordinates: -1,14
-        1464:
+        1463:
           color: '#79150096'
           id: FullTileOverlayGreyscale
           coordinates: -2,13
-        1466:
+        1465:
           color: '#79150096'
           id: FullTileOverlayGreyscale
           coordinates: -2,15
-        1467:
+        1466:
           color: '#79150096'
           id: FullTileOverlayGreyscale
           coordinates: -4,13
-        1468:
+        1467:
           color: '#79150096'
           id: FullTileOverlayGreyscale
           coordinates: -5,12
-        1469:
+        1468:
           color: '#79150096'
           id: FullTileOverlayGreyscale
           coordinates: -5,14
-        1470:
+        1469:
           color: '#79150096'
           id: FullTileOverlayGreyscale
           coordinates: -6,13
-        1471:
+        1470:
           color: '#79150096'
           id: FullTileOverlayGreyscale
           coordinates: -4,15
-        1472:
+        1471:
           color: '#79150096'
           id: FullTileOverlayGreyscale
           coordinates: -6,15
-        1473:
+        1472:
           color: '#79150096'
           id: FullTileOverlayGreyscale
           coordinates: -8,13
-        1474:
+        1473:
           color: '#79150096'
           id: FullTileOverlayGreyscale
           coordinates: -9,12
-        1475:
+        1474:
           color: '#79150096'
           id: FullTileOverlayGreyscale
           coordinates: -9,14
-        1476:
+        1475:
           color: '#79150096'
           id: FullTileOverlayGreyscale
           coordinates: -10,13
-        1477:
+        1476:
           color: '#79150096'
           id: FullTileOverlayGreyscale
           coordinates: -8,15
-        1478:
+        1477:
           color: '#79150096'
           id: FullTileOverlayGreyscale
           coordinates: -10,15
-        1479:
+        1478:
           color: '#79150096'
           id: FullTileOverlayGreyscale
           coordinates: -9,10
-        1480:
+        1479:
           color: '#79150096'
           id: FullTileOverlayGreyscale
           coordinates: -8,11
-        1481:
+        1480:
           color: '#79150096'
           id: FullTileOverlayGreyscale
           coordinates: -10,11
-        1482:
+        1481:
           color: '#79150096'
           id: FullTileOverlayGreyscale
           coordinates: -9,8
-        1483:
+        1482:
           color: '#79150096'
           id: FullTileOverlayGreyscale
           coordinates: -8,9
-        1489:
+        1488:
           color: '#79150096'
           id: FullTileOverlayGreyscale
           coordinates: -13,14
-        1490:
+        1489:
           color: '#79150096'
           id: FullTileOverlayGreyscale
           coordinates: -12,15
-        1491:
+        1490:
           color: '#79150096'
           id: FullTileOverlayGreyscale
           coordinates: -14,13
-        1492:
+        1491:
           color: '#79150096'
           id: FullTileOverlayGreyscale
           coordinates: -13,12
-        1493:
+        1492:
           color: '#79150096'
           id: FullTileOverlayGreyscale
           coordinates: -14,11
-        1494:
+        1493:
           color: '#79150096'
           id: FullTileOverlayGreyscale
           coordinates: -13,10
-        1495:
+        1494:
           color: '#79150096'
           id: FullTileOverlayGreyscale
           coordinates: -12,11
-        1496:
+        1495:
           color: '#79150096'
           id: FullTileOverlayGreyscale
+          coordinates: -12,13
+        1496:
+          cleanable: True
+          color: '#79150096'
+          id: DirtHeavy
           coordinates: -12,13
         1497:
           cleanable: True
           color: '#79150096'
           id: DirtHeavy
-          coordinates: -12,13
-        1498:
-          cleanable: True
-          color: '#79150096'
-          id: DirtHeavy
           coordinates: -2,15
-        1499:
+        1498:
           cleanable: True
           color: '#79150096'
           id: DirtLight
           coordinates: -8,11
-        1500:
+        1499:
           cleanable: True
           color: '#79150096'
           id: DirtMedium
           coordinates: -1,12
-        1501:
+        1500:
           cleanable: True
           color: '#79150096'
           id: DirtHeavy
           coordinates: -9,14
-        1502:
+        1501:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtMedium
           coordinates: -10,12
-        1504:
+        1503:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtLight
           coordinates: -14,14
-        1509:
+        1508:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtHeavy
           coordinates: -13,19
-        1512:
+        1511:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtLight
@@ -5144,145 +5144,145 @@ entities:
           color: '#D4D4D4FF'
           id: DirtLight
           coordinates: 18,-5
-        1239:
+        1238:
           cleanable: True
           color: '#D4D4D4FF'
           id: DirtMedium
           coordinates: 21,-24
-        1240:
+        1239:
           cleanable: True
           color: '#D4D4D4FF'
           id: DirtMedium
           coordinates: 14,-23
-        1307:
+        1306:
           color: '#66B5D3CD'
           id: Flowersbr2
           coordinates: 0.7934761,-4.977062
-        1310:
+        1309:
           color: '#53625069'
           id: Bushi3
           coordinates: 3.699726,-1.2270625
-        1311:
+        1310:
           color: '#53625069'
           id: Bushi3
           coordinates: 4.152851,-1.3364375
-        1312:
+        1311:
           color: '#536250CA'
           id: Bushl4
           coordinates: 4.918476,-0.75831246
-        1313:
+        1312:
           color: '#536250CA'
           id: Bushl4
           coordinates: 5.215351,-1.0395625
-        1314:
+        1313:
           color: '#536250CA'
           id: Bushm1
           coordinates: 4.762226,-1.3989375
-        1315:
+        1314:
           color: '#536250CA'
           id: Bushm4
           coordinates: 5.168476,-1.5864375
-        1316:
+        1315:
           color: '#536250CA'
           id: Rock05
           coordinates: 5.027851,-2.8208125
-        1317:
+        1316:
           color: '#536250CA'
           id: Rock05
           coordinates: 5.059101,-2.1801875
-        1319:
+        1318:
           color: '#536250CA'
           id: Rock05
           coordinates: 2.324726,-0.10206249
-        1320:
+        1319:
           color: '#536250CA'
           id: Rock05
           coordinates: 3.246601,-0.07081249
-        1337:
+        1336:
           color: '#536250CA'
           id: grasssnowc2
           coordinates: 2.918476,-0.3208125
-        1339:
+        1338:
           color: '#536250CA'
           id: grasssnowc2
           coordinates: 4.809101,-1.1489375
-        1340:
+        1339:
           color: '#536250CA'
           id: grasssnowc2
           coordinates: 5.340351,-0.69581246
-        1341:
+        1340:
           color: '#536250CA'
           id: grasssnowc2
           coordinates: 5.184101,-1.3989375
-        1342:
+        1341:
           color: '#536250CA'
           id: grasssnowc2
           coordinates: 4.590351,-1.6958125
-        1343:
+        1342:
           color: '#536250CA'
           id: grasssnowc2
           coordinates: 4.621601,-2.3989375
-        1344:
+        1343:
           color: '#536250CA'
           id: grasssnowc2
           coordinates: 5.324726,-3.2426875
-        1345:
+        1344:
           color: '#536250CA'
           id: grasssnowc2
           coordinates: 4.637226,-3.2426875
-        1346:
+        1345:
           color: '#536250CA'
           id: grasssnowc2
           coordinates: 5.199726,-2.1801875
-        1348:
+        1347:
           color: '#536250CA'
           id: grasssnow05
           coordinates: 4.074726,-2.9614375
-        1355:
+        1354:
           color: '#536250CA'
           id: Grasse3
           coordinates: 1.9966011,-0.039562494
-        1357:
+        1356:
           color: '#536250CA'
           id: Flowersy1
           coordinates: 3.027851,-1.0551875
-        1358:
+        1357:
           color: '#536250CA'
           id: Flowersy1
           coordinates: 3.949726,-2.0083125
-        1363:
+        1362:
           color: '#C362CACA'
           id: Flowersy3
           coordinates: 0.9184761,-3.9770625
-        1365:
+        1364:
           color: '#C362CACA'
           id: Flowersy3
           coordinates: 2.996601,-1.0083125
-        1370:
+        1369:
           color: '#4ADFCACA'
           id: Flowersy1
           coordinates: 4.980976,-3.9770625
-        1373:
+        1372:
           color: '#4ADFCACA'
           id: Grasse2
           coordinates: 0.012226045,-4.133312
-        1374:
+        1373:
           color: '#4ADFCACA'
           id: Grasse2
           coordinates: 0.15285105,-3.4614375
-        1377:
+        1376:
           color: '#4ADFCACA'
           id: Grasse2
           coordinates: 3.934101,-3.1801875
-        1378:
+        1377:
           color: '#4ADFCACA'
           id: Grasse2
           coordinates: 3.980976,-3.9458125
-        1379:
+        1378:
           color: '#4ADFCACA'
           id: Flowerspv1
           coordinates: 3.949726,-3.5551875
-        1380:
+        1379:
           color: '#4ADFCACA'
           id: Bushi2
           coordinates: 1.0747261,-5.039562
@@ -5892,217 +5892,217 @@ entities:
           color: '#D4D4D4FF'
           id: DirtMedium
           coordinates: -26,-28
-        1242:
+        1241:
           cleanable: True
           color: '#D4D4D4FF'
           id: DirtHeavy
           coordinates: -24,-5
-        1243:
+        1242:
           cleanable: True
           color: '#D4D4D4FF'
           id: DirtHeavy
           coordinates: -25,-15
-        1244:
+        1243:
           cleanable: True
           color: '#D4D4D4FF'
           id: DirtHeavy
           coordinates: -27,-14
-        1245:
+        1244:
           cleanable: True
           color: '#D4D4D4FF'
           id: DirtHeavy
           coordinates: -23,-14
-        1254:
+        1253:
           cleanable: True
           color: '#D4D4D4FF'
           id: DirtHeavy
           coordinates: -32,-14
-        1255:
+        1254:
           cleanable: True
           color: '#D4D4D4FF'
           id: DirtHeavy
           coordinates: -31,-11
-        1256:
+        1255:
           cleanable: True
           color: '#D4D4D4FF'
           id: DirtHeavy
           coordinates: -28,-7
-        1306:
+        1305:
           color: '#66B5D3CD'
           id: Flowersbr2
           coordinates: -4.472149,-4.8676877
-        1308:
+        1307:
           color: '#53625069'
           id: Bushi3
           coordinates: -3.972149,-1.1958125
-        1309:
+        1308:
           color: '#53625069'
           id: Bushi3
           coordinates: -3.503399,-1.2270625
-        1322:
+        1321:
           color: '#536250CA'
           id: Rock05
           coordinates: -2.112774,-0.08643749
-        1324:
+        1323:
           color: '#536250CA'
           id: Rock05
           coordinates: -5.362774,-2.2583125
-        1325:
+        1324:
           color: '#536250CA'
           id: Rock05
           coordinates: -5.034649,-2.9145625
-        1326:
+        1325:
           color: '#536250CA'
           id: Bushi3
           coordinates: -4.862774,-1.0083125
-        1327:
+        1326:
           color: '#536250CA'
           id: Bushj1
           coordinates: -4.909649,-1.3676875
-        1328:
+        1327:
           color: '#536250CA'
           id: Rock01
           coordinates: -4.940899,-1.1645625
-        1329:
+        1328:
           color: '#536250CA'
           id: Rock01
           coordinates: -4.940899,-1.8676875
-        1330:
+        1329:
           color: '#536250CA'
           id: grasssnowc2
           coordinates: -5.159649,-0.97706246
-        1331:
+        1330:
           color: '#536250CA'
           id: grasssnowc2
           coordinates: -4.706524,-0.93018746
-        1332:
+        1331:
           color: '#536250CA'
           id: grasssnowc2
           coordinates: -5.284649,-1.5864375
-        1333:
+        1332:
           color: '#536250CA'
           id: grasssnowc2
           coordinates: -4.737774,-2.6801875
-        1334:
+        1333:
           color: '#536250CA'
           id: grasssnowc2
           coordinates: -5.222149,-3.3208125
-        1335:
+        1334:
           color: '#536250CA'
           id: grasssnowc2
           coordinates: -4.706524,-3.3833125
-        1336:
+        1335:
           color: '#536250CA'
           id: grasssnowc2
           coordinates: -2.081524,-0.1333125
-        1347:
+        1346:
           color: '#536250CA'
           id: grasssnow03
           coordinates: -3.925274,-2.9770625
-        1349:
+        1348:
           color: '#536250CA'
           id: grasssnow05
           coordinates: -1.0971489,-4.8989377
-        1350:
+        1349:
           color: '#536250CA'
           id: grasssnow10
           coordinates: -4.003399,-4.133312
-        1351:
+        1350:
           color: '#536250CA'
           id: grasssnow11
           coordinates: -0.0033989549,-3.1333125
-        1352:
+        1351:
           color: '#536250CA'
           id: grasssnow11
           coordinates: -1.0971489,-3.7426875
-        1353:
+        1352:
           color: '#536250CA'
           id: Grasse3
           coordinates: -2.675274,-0.07081249
-        1354:
+        1353:
           color: '#536250CA'
           id: Grasse3
           coordinates: -3.159649,-0.2739375
-        1359:
+        1358:
           color: '#536250CA'
           id: Flowersy1
           coordinates: -4.003399,-1.8989375
-        1360:
+        1359:
           color: '#536250CA'
           id: Flowersy1
           coordinates: -3.081524,-0.94581246
-        1361:
+        1360:
           color: '#C362CACA'
           id: Flowersy3
           coordinates: -0.065898955,-3.0551875
-        1362:
+        1361:
           color: '#C362CACA'
           id: Flowersy3
           coordinates: -0.034648955,-1.1489375
-        1364:
+        1363:
           color: '#C362CACA'
           id: Flowersy3
           coordinates: -0.23777395,-5.039562
-        1366:
+        1365:
           color: '#C362CACA'
           id: Flowersy3
           coordinates: -5.034649,-4.070812
-        1367:
+        1366:
           color: '#4ADFCACA'
           id: Flowersy1
           coordinates: -4.050274,-4.148937
-        1368:
+        1367:
           color: '#4ADFCACA'
           id: Flowersy1
           coordinates: -5.159649,-4.992687
-        1369:
+        1368:
           color: '#4ADFCACA'
           id: Flowersy1
           coordinates: -1.0033989,-3.9614375
-        1371:
+        1370:
           color: '#4ADFCACA'
           id: Bushe1
           coordinates: -0.097148955,-3.7895625
-        1372:
+        1371:
           color: '#4ADFCACA'
           id: Bushe1
           coordinates: -0.19089895,-3.9770625
-        1375:
+        1374:
           color: '#4ADFCACA'
           id: Grasse2
           coordinates: -3.925274,-5.023937
-        1376:
+        1375:
           color: '#4ADFCACA'
           id: Grasse2
           coordinates: -0.98777395,-4.6020627
-        1584:
+        1583:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtMedium
           coordinates: -31,-24
-        1585:
+        1584:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtLight
           coordinates: -30,-24
-        1586:
+        1585:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtLight
           coordinates: -30,-25
-        1651:
+        1640:
           cleanable: True
           angle: 3.141592653589793 rad
           color: '#FFFFFFFF'
           id: DirtHeavy
           coordinates: -32,-15
-        1667:
+        1656:
           cleanable: True
           angle: 3.141592653589793 rad
           color: '#FFFFFFFF'
           id: DirtLight
           coordinates: -29,-11
-        1668:
+        1657:
           cleanable: True
           angle: 3.141592653589793 rad
           color: '#FFFFFFFF'
@@ -6286,23 +6286,23 @@ entities:
           color: '#D4D4D4FF'
           id: DirtMedium
           coordinates: -4,-39
-        1587:
+        1586:
           color: '#EFB34196'
           id: WarnBox
           coordinates: -8,-47
-        1588:
+        1587:
           color: '#EFB34196'
           id: WarnBox
           coordinates: -8,-48
-        1589:
+        1588:
           color: '#EFB34196'
           id: WarnBox
           coordinates: -8,-46
-        1590:
+        1589:
           color: '#EFB34196'
           id: WarnBoxGreyscale
           coordinates: -8,-45
-        1591:
+        1590:
           color: '#EFB34196'
           id: WarnBox
           coordinates: -8,-42
@@ -6705,276 +6705,276 @@ entities:
           color: '#D4D4D4FF'
           id: DirtMedium
           coordinates: -45,-26
-        1246:
+        1245:
           cleanable: True
           color: '#D4D4D4FF'
           id: DirtHeavy
           coordinates: -43,-24
-        1247:
+        1246:
           cleanable: True
           color: '#D4D4D4FF'
           id: DirtHeavy
           coordinates: -42,-6
-        1248:
+        1247:
           cleanable: True
           color: '#D4D4D4FF'
           id: DirtHeavy
           coordinates: -52,-3
-        1249:
+        1248:
           cleanable: True
           color: '#D4D4D4FF'
           id: DirtHeavy
           coordinates: -40,-2
-        1250:
+        1249:
           cleanable: True
           color: '#D4D4D4FF'
           id: DirtHeavy
           coordinates: -48,-2
-        1251:
+        1250:
           cleanable: True
           color: '#D4D4D4FF'
           id: DirtHeavy
           coordinates: -47,-10
-        1252:
+        1251:
           cleanable: True
           color: '#D4D4D4FF'
           id: DirtHeavy
           coordinates: -44,-16
-        1253:
+        1252:
           cleanable: True
           color: '#D4D4D4FF'
           id: DirtHeavy
           coordinates: -38,-14
-        1526:
+        1525:
           color: '#A4610696'
           id: Bot
           coordinates: -41,-19
-        1527:
+        1526:
           color: '#A4610696'
           id: StandClearGreyscale
           coordinates: -51.983433,-2.585907
-        1530:
+        1529:
           color: '#FFFFFFFF'
           id: Flowersy3
           coordinates: -32.637337,-30.76102
-        1531:
+        1530:
           color: '#2B000696'
           id: Grassa1
           coordinates: -37.131832,-30.91727
-        1532:
+        1531:
           color: '#2B000696'
           id: Grassa1
           coordinates: -36.897457,-31.057896
-        1533:
+        1532:
           color: '#2B000696'
           id: Grassa1
           coordinates: -37.100582,-31.307896
-        1534:
+        1533:
           color: '#FFFFFFFF'
           id: Bushh3
           coordinates: -37.584957,-31.057896
-        1535:
+        1534:
           color: '#FFFFFFFF'
           id: Bushh3
           coordinates: -36.522457,-31.26102
-        1536:
+        1535:
           color: '#FFFFFFFF'
           id: Rock06
           coordinates: -36.319332,-30.54227
-        1537:
+        1536:
           color: '#FFFFFFFF'
           id: Rock07
           coordinates: -37.334957,-30.839146
-        1538:
+        1537:
           color: '#FFFFFFFF'
           id: Rock07
           coordinates: -37.225582,-31.69852
-        1539:
+        1538:
           color: '#FFFFFFFF'
           id: Flowerspv2
           coordinates: -37.569332,-29.16727
-        1540:
+        1539:
           color: '#FFFFFFFF'
           id: Flowerspv2
           coordinates: -36.272457,-29.464146
-        1541:
+        1540:
           color: '#A7B56396'
           id: Flowersy1
           coordinates: -37.678707,-29.88602
-        1543:
+        1542:
           color: '#A7B563D6'
           id: Flowersbr2
           coordinates: -37.819332,-31.339146
-        1544:
+        1543:
           color: '#A7B563D6'
           id: Bushm2
           coordinates: -37.116207,-29.432896
-        1547:
+        1546:
           color: '#A7B563D6'
           id: Bushi2
           coordinates: -35.866207,-31.120396
-        1548:
+        1547:
           color: '#A7B563D6'
           id: Bushi4
           coordinates: -37.944332,-29.089146
-        1549:
+        1548:
           color: '#A7B563D6'
           id: Bushi4
           coordinates: -35.850582,-28.82352
-        1550:
+        1549:
           color: '#A7B563D6'
           id: Bushg3
           coordinates: -38.038082,-30.276646
-        1552:
+        1551:
           color: '#A7B563D6'
           id: Bushd3
           coordinates: -37.834957,-31.995396
-        1553:
+        1552:
           color: '#A7B563D6'
           id: Bushd3
           coordinates: -36.725582,-28.807896
-        1554:
+        1553:
           color: '#A7B563D6'
           id: grasssnow09
           coordinates: -36.944332,-29.97977
-        1555:
+        1554:
           color: '#A7B563D6'
           id: grasssnow12
           coordinates: -36.084312,-30.01102
-        1556:
+        1555:
           color: '#A7B563D6'
           id: grasssnow12
           coordinates: -32.256187,-29.745396
-        1581:
+        1580:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtLight
           coordinates: -36,-25
-        1582:
+        1581:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtLight
           coordinates: -41,-27
-        1583:
+        1582:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtLight
           coordinates: -44,-26
-        1646:
+        1635:
           cleanable: True
           angle: 3.141592653589793 rad
           color: '#FFFFFFFF'
           id: DirtMedium
           coordinates: -42,-15
-        1647:
+        1636:
           cleanable: True
           angle: 3.141592653589793 rad
           color: '#FFFFFFFF'
           id: DirtMedium
           coordinates: -35,-13
-        1648:
+        1637:
           cleanable: True
           angle: 3.141592653589793 rad
           color: '#FFFFFFFF'
           id: DirtMedium
           coordinates: -41,-12
-        1649:
+        1638:
           cleanable: True
           angle: 3.141592653589793 rad
           color: '#FFFFFFFF'
           id: DirtLight
           coordinates: -44,-18
-        1650:
+        1639:
           cleanable: True
           angle: 3.141592653589793 rad
           color: '#FFFFFFFF'
           id: DirtLight
           coordinates: -42,-17
-        1652:
+        1641:
           cleanable: True
           angle: 3.141592653589793 rad
           color: '#FFFFFFFF'
           id: DirtLight
           coordinates: -34,-14
-        1653:
+        1642:
           cleanable: True
           angle: 3.141592653589793 rad
           color: '#FFFFFFFF'
           id: DirtMedium
           coordinates: -37,-15
-        1654:
+        1643:
           cleanable: True
           angle: 3.141592653589793 rad
           color: '#FFFFFFFF'
           id: DirtMedium
           coordinates: -47,-5
-        1655:
+        1644:
           cleanable: True
           angle: 3.141592653589793 rad
           color: '#FFFFFFFF'
           id: DirtMedium
           coordinates: -53,-5
-        1656:
+        1645:
           cleanable: True
           angle: 3.141592653589793 rad
           color: '#FFFFFFFF'
           id: DirtMedium
           coordinates: -49,-4
-        1657:
+        1646:
           cleanable: True
           angle: 3.141592653589793 rad
           color: '#FFFFFFFF'
           id: DirtMedium
           coordinates: -52,-1
-        1658:
+        1647:
           cleanable: True
           angle: 3.141592653589793 rad
           color: '#FFFFFFFF'
           id: DirtMedium
           coordinates: -39,-4
-        1659:
+        1648:
           cleanable: True
           angle: 3.141592653589793 rad
           color: '#FFFFFFFF'
           id: DirtLight
           coordinates: -42,-4
-        1660:
+        1649:
           cleanable: True
           angle: 3.141592653589793 rad
           color: '#FFFFFFFF'
           id: DirtLight
           coordinates: -41,-7
-        1661:
+        1650:
           cleanable: True
           angle: 3.141592653589793 rad
           color: '#FFFFFFFF'
           id: DirtLight
           coordinates: -45,-10
-        1662:
+        1651:
           cleanable: True
           angle: 3.141592653589793 rad
           color: '#FFFFFFFF'
           id: DirtLight
           coordinates: -45,-12
-        1663:
+        1652:
           cleanable: True
           angle: 3.141592653589793 rad
           color: '#FFFFFFFF'
           id: DirtLight
           coordinates: -40,-13
-        1664:
+        1653:
           cleanable: True
           angle: 3.141592653589793 rad
           color: '#FFFFFFFF'
           id: DirtHeavy
           coordinates: -40,-13
-        1665:
+        1654:
           cleanable: True
           angle: 3.141592653589793 rad
           color: '#FFFFFFFF'
           id: DirtLight
           coordinates: -44,-14
-        1666:
+        1655:
           cleanable: True
           angle: 3.141592653589793 rad
           color: '#FFFFFFFF'
@@ -7010,154 +7010,154 @@ entities:
           color: '#D4D4D4FF'
           id: DirtLight
           coordinates: -42,-37
-        1528:
+        1527:
           color: '#FFFFFFFF'
           id: Flowersy3
           coordinates: -37.65296,-32.76102
-        1529:
+        1528:
           color: '#FFFFFFFF'
           id: Flowersy3
           coordinates: -36.012337,-32.82352
-        1542:
+        1541:
           color: '#A7B56396'
           id: Flowersy1
           coordinates: -36.428707,-32.057896
-        1545:
+        1544:
           color: '#A7B563D6'
           id: Bushi2
           coordinates: -36.788082,-32.72977
-        1546:
+        1545:
           color: '#A7B563D6'
           id: Bushi2
           coordinates: -37.850582,-33.057896
-        1551:
+        1550:
           color: '#A7B563D6'
           id: Bushg3
           coordinates: -36.959957,-33.07352
-        1557:
+        1556:
           color: '#A7B563D6'
           id: grasssnow12
           coordinates: -33.709312,-32.870396
-        1558:
+        1557:
           color: '#FFFFFFFF'
           id: DirtLight
           coordinates: -49,-51
-        1559:
+        1558:
           color: '#FFFFFFFF'
           id: DirtLight
           coordinates: -48,-61
-        1560:
+        1559:
           color: '#FFFFFFFF'
           id: DirtLight
           coordinates: -35,-45
-        1561:
+        1560:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtHeavy
           coordinates: -40,-36
-        1562:
+        1561:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtHeavy
           coordinates: -35,-47
-        1563:
+        1562:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtHeavy
           coordinates: -35,-49
-        1564:
+        1563:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtHeavy
           coordinates: -47,-47
-        1565:
+        1564:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtHeavy
           coordinates: -47,-49
-        1566:
+        1565:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtHeavy
           coordinates: -47,-55
-        1567:
+        1566:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtHeavy
           coordinates: -47,-57
-        1568:
+        1567:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtHeavy
           coordinates: -35,-57
-        1569:
+        1568:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtHeavy
           coordinates: -35,-55
-        1573:
+        1572:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtMedium
           coordinates: -34,-63
-        1574:
+        1573:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtMedium
           coordinates: -49,-54
-        1575:
+        1574:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtMedium
           coordinates: -33,-52
-        1576:
+        1575:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtMedium
           coordinates: -49,-44
-        1577:
+        1576:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtMedium
           coordinates: -49,-36
-        1578:
+        1577:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtLight
           coordinates: -47,-40
-        1579:
+        1578:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtLight
           coordinates: -35,-37
-        1580:
+        1579:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtLight
           coordinates: -35,-60
-        1631:
+        1621:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtMedium
           coordinates: -56,-37
-        1632:
+        1622:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtLight
           coordinates: -54,-38
-        1633:
+        1623:
           cleanable: True
           angle: 1.5707963267948966 rad
           color: '#FFFFFFFF'
           id: DirtLight
           coordinates: -55,-38
-        1634:
+        1624:
           cleanable: True
           angle: 1.5707963267948966 rad
           color: '#FFFFFFFF'
           id: DirtLight
           coordinates: -54,-36
-        1635:
+        1625:
           cleanable: True
           angle: 1.5707963267948966 rad
           color: '#FFFFFFFF'
@@ -7464,127 +7464,127 @@ entities:
           color: '#D4D4D4FF'
           id: DirtMedium
           coordinates: 15,2
-        1241:
+        1240:
           cleanable: True
           color: '#D4D4D4FF'
           id: DirtHeavy
           coordinates: 15,11
-        1265:
+        1264:
           cleanable: True
           color: '#D4D4D4FF'
           id: DirtHeavy
           coordinates: 0,29
-        1266:
+        1265:
           cleanable: True
           color: '#D4D4D4FF'
           id: DirtHeavy
           coordinates: 3,29
-        1287:
+        1286:
           color: '#D4D4D496'
           id: Flowerspv3
           coordinates: 4,4
-        1288:
+        1287:
           color: '#D4D4D496'
           id: Flowerspv3
           coordinates: 1,4
-        1290:
+        1289:
           color: '#DE3A3A96'
           id: Flowersy1
           coordinates: 2,4
-        1291:
+        1290:
           color: '#DE3A3A96'
           id: Flowersy1
           coordinates: 6,4
-        1295:
+        1294:
           color: '#DEF23A96'
           id: Flowersbr2
           coordinates: 3,4
-        1297:
+        1296:
           color: '#DE00C096'
           id: Flowersy1
           coordinates: 5,4
-        1301:
+        1300:
           color: '#6FF84A96'
           id: Flowersy1
           coordinates: 1.55509,4.0016594
-        1302:
+        1301:
           color: '#6FF84A96'
           id: Flowersy1
           coordinates: 5.52384,3.9547844
-        1305:
+        1304:
           color: '#66B5D3CD'
           id: Flowersbr2
           coordinates: 3.58634,4.0797844
-        1318:
+        1317:
           color: '#536250CA'
           id: Rock05
           coordinates: 2.887226,0.17918754
-        1338:
+        1337:
           color: '#536250CA'
           id: grasssnowc2
           coordinates: 2.527851,0.30418754
-        1356:
+        1355:
           color: '#536250CA'
           id: Grasse3
           coordinates: 2.043476,0.19481254
-        1463:
+        1462:
           color: '#79150096'
           id: FullTileOverlayGreyscale
           coordinates: 0,13
-        1465:
+        1464:
           color: '#79150096'
           id: FullTileOverlayGreyscale
           coordinates: 0,15
-        1484:
+        1483:
           color: '#79150096'
           id: FullTileOverlayGreyscale
           coordinates: 2,13
-        1485:
+        1484:
           color: '#79150096'
           id: FullTileOverlayGreyscale
           coordinates: 4,13
-        1486:
+        1485:
           color: '#79150096'
           id: FullTileOverlayGreyscale
           coordinates: 4,15
-        1487:
+        1486:
           color: '#79150096'
           id: FullTileOverlayGreyscale
           coordinates: 2,15
-        1488:
+        1487:
           color: '#79150096'
           id: FullTileOverlayGreyscale
           coordinates: 3,14
-        1503:
+        1502:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtHeavy
           coordinates: 0,14
-        1505:
+        1504:
           color: '#D4D4D496'
           id: HalfTileOverlayGreyscale180
           coordinates: 3,17
-        1506:
+        1505:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtLight
           coordinates: 0,17
-        1507:
+        1506:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtHeavy
           coordinates: 2,20
-        1508:
+        1507:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtHeavy
           coordinates: 8,19
-        1510:
+        1509:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtLight
           coordinates: 7,18
-        1511:
+        1510:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtLight
@@ -7747,17 +7747,17 @@ entities:
           color: '#D4D4D4FF'
           id: DirtLight
           coordinates: 22,-36
-        1235:
+        1234:
           cleanable: True
           color: '#D4D4D4FF'
           id: DirtMedium
           coordinates: 12,-36
-        1236:
+        1235:
           cleanable: True
           color: '#D4D4D4FF'
           id: DirtMedium
           coordinates: 31,-37
-        1238:
+        1237:
           cleanable: True
           color: '#D4D4D4FF'
           id: DirtMedium
@@ -7780,27 +7780,27 @@ entities:
           id: DirtLight
           coordinates: -33,65
       1,-2:
-        1237:
+        1236:
           cleanable: True
           color: '#D4D4D4FF'
           id: DirtMedium
           coordinates: 33,-36
-        1285:
+        1284:
           color: '#D4D4D496'
           id: space
           coordinates: 33,-37
       -2,-3:
-        1570:
+        1569:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtLight
           coordinates: -47,-65
-        1571:
+        1570:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtLight
           coordinates: -35,-65
-        1572:
+        1571:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtMedium
@@ -15512,7 +15512,7 @@ entities:
       -16,69: 0
       -16,70: 0
       -16,71: 0
-      -16,72: 55
+      -16,72: 62
       -16,73: 0
       -16,74: 0
       -16,75: 0
@@ -15523,7 +15523,7 @@ entities:
       -15,69: 0
       -15,70: 0
       -15,71: 0
-      -15,72: 56
+      -15,72: 63
       -15,73: 0
       -15,74: 0
       -15,75: 0
@@ -15560,7 +15560,7 @@ entities:
       -12,69: 0
       -12,70: 0
       -12,71: 0
-      -12,72: 62
+      -12,72: 64
       -12,73: 0
       -12,74: 0
       -12,75: 0
@@ -15574,7 +15574,7 @@ entities:
       -11,69: 0
       -11,70: 0
       -11,71: 0
-      -11,72: 55
+      -11,72: 62
       -11,73: 0
       -11,74: 0
       -11,75: 0
@@ -15588,7 +15588,7 @@ entities:
       -10,69: 0
       -10,70: 0
       -10,71: 0
-      -10,72: 56
+      -10,72: 63
       -10,73: 0
       -10,74: 0
       -10,75: 0
@@ -15624,7 +15624,7 @@ entities:
       -8,77: 0
       -8,78: 0
       -8,79: 0
-      -7,72: 63
+      -7,72: 65
       -7,73: 0
       -7,74: 0
       -7,75: 0
@@ -15632,7 +15632,7 @@ entities:
       -7,77: 0
       -7,78: 0
       -7,79: 0
-      -6,72: 64
+      -6,72: 66
       -6,73: 0
       -6,74: 0
       -6,75: 0
@@ -15640,7 +15640,7 @@ entities:
       -6,77: 0
       -6,78: 0
       -6,79: 0
-      -5,72: 65
+      -5,72: 67
       -5,73: 0
       -5,74: 0
       -5,75: 0
@@ -15669,8 +15669,8 @@ entities:
       -2,74: 0
       -2,75: 0
       -2,76: 0
-      -2,77: 66
-      -2,78: 67
+      -2,77: 0
+      -2,78: 68
       -2,79: 68
       -1,76: 0
       -1,77: 0
@@ -15681,8 +15681,8 @@ entities:
       -21,78: 0
       -21,79: 0
       -20,76: 0
-      -20,77: 66
-      -20,78: 67
+      -20,77: 0
+      -20,78: 68
       -20,79: 68
       -19,73: 0
       -19,74: 0
@@ -15701,7 +15701,7 @@ entities:
       -17,69: 0
       -17,70: 0
       -17,71: 0
-      -17,72: 62
+      -17,72: 64
       -17,73: 0
       -17,74: 0
       -17,75: 0
@@ -15726,23 +15726,23 @@ entities:
       -14,82: 0
       -13,80: 0
       -13,81: 0
-      -13,82: 69
+      -13,82: 0
       -13,83: 0
       -12,80: 0
       -12,81: 0
-      -12,82: 70
+      -12,82: 69
       -12,83: 0
       -11,80: 0
       -11,81: 0
-      -11,82: 71
+      -11,82: 70
       -11,83: 0
       -10,80: 0
       -10,81: 0
-      -10,82: 70
+      -10,82: 71
       -10,83: 0
       -9,80: 0
       -9,81: 0
-      -9,82: 68
+      -9,82: 69
       -9,83: 0
       -8,80: 0
       -8,81: 0
@@ -17734,6 +17734,82 @@ entities:
       -75,48: 73
       -75,49: 73
       -74,48: 73
+      -43,55: 73
+      -43,56: 73
+      -43,57: 73
+      -43,58: 73
+      -42,55: 73
+      -42,56: 73
+      -42,57: 73
+      -42,58: 73
+      -41,56: 73
+      -41,57: 73
+      -41,58: 73
+      -40,56: 73
+      -40,57: 73
+      -39,54: 73
+      -39,55: 73
+      -39,56: 73
+      -39,57: 73
+      -38,54: 73
+      -38,55: 73
+      -38,56: 73
+      -38,57: 73
+      -37,54: 73
+      -37,55: 73
+      -37,56: 73
+      -37,57: 73
+      -36,55: 73
+      -36,56: 73
+      -36,57: 73
+      -36,58: 73
+      -35,56: 73
+      -35,57: 73
+      -35,58: 73
+      -58,14: 73
+      -58,15: 73
+      -56,14: 73
+      -56,15: 73
+      -55,15: 73
+      -52,10: 73
+      -52,11: 73
+      -57,-39: 73
+      -57,-38: 73
+      -57,-37: 73
+      -57,-36: 73
+      -57,-35: 73
+      -56,-39: 73
+      -56,-38: 73
+      -56,-37: 73
+      -56,-36: 73
+      -56,-35: 73
+      -55,-39: 73
+      -55,-38: 73
+      -55,-37: 73
+      -55,-36: 73
+      -55,-35: 73
+      -54,-39: 73
+      -54,-38: 73
+      -54,-37: 73
+      -54,-36: 73
+      -54,-35: 73
+      -53,-39: 73
+      -53,-38: 73
+      -53,-37: 73
+      -53,-36: 73
+      -53,-35: 73
+      -52,-39: 73
+      -52,-38: 73
+      -52,-37: 73
+      -52,-36: 73
+      -52,-35: 73
+      -51,-37: 73
+      -51,-36: 73
+      -51,-35: 73
+      -58,16: 73
+      -58,18: 73
+      -57,18: 73
+      -56,16: 73
     uniqueMixes:
     - volume: 2500
       temperature: 293.15
@@ -17749,8 +17825,8 @@ entities:
     - volume: 2500
       temperature: 293.15
       moles:
-      - 21.824547
-      - 82.10187
+      - 21.82486
+      - 82.10304
       - 0
       - 0
       - 0
@@ -17760,8 +17836,8 @@ entities:
     - volume: 2500
       temperature: 293.15
       moles:
-      - 21.823547
-      - 82.09811
+      - 21.824797
+      - 82.102806
       - 0
       - 0
       - 0
@@ -18220,10 +18296,10 @@ entities:
       - 0
       - 0
     - volume: 2500
-      temperature: 291.4245
+      temperature: 291.42154
       moles:
-      - 21.69522
-      - 81.61536
+      - 21.695
+      - 81.614525
       - 0
       - 0
       - 0
@@ -18231,10 +18307,10 @@ entities:
       - 0
       - 0
     - volume: 2500
-      temperature: 286.248
+      temperature: 286.23618
       moles:
-      - 21.30625
-      - 80.152084
+      - 21.305363
+      - 80.14874
       - 0
       - 0
       - 0
@@ -18242,10 +18318,10 @@ entities:
       - 0
       - 0
     - volume: 2500
-      temperature: 267.24377
+      temperature: 267.22015
       moles:
-      - 19.878244
-      - 74.78006
+      - 19.876469
+      - 74.77338
       - 0
       - 0
       - 0
@@ -18264,10 +18340,10 @@ entities:
       - 0
       - 0
     - volume: 2500
-      temperature: 287.98462
+      temperature: 287.98376
       moles:
-      - 21.436743
-      - 80.64299
+      - 21.43668
+      - 80.64275
       - 0
       - 0
       - 0
@@ -18308,10 +18384,10 @@ entities:
       - 0
       - 0
     - volume: 2500
-      temperature: 291.77277
+      temperature: 291.77234
       moles:
-      - 21.721394
-      - 81.71381
+      - 21.72136
+      - 81.7137
       - 0
       - 0
       - 0
@@ -18319,10 +18395,10 @@ entities:
       - 0
       - 0
     - volume: 2500
-      temperature: 292.80566
+      temperature: 292.80557
       moles:
-      - 21.799007
-      - 82.00579
+      - 21.799
+      - 82.00577
       - 0
       - 0
       - 0
@@ -18420,8 +18496,52 @@ entities:
     - volume: 2500
       temperature: 293.15
       moles:
-      - 20.11981
+      - 20.972345
+      - 78.895966
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+    - volume: 2500
+      temperature: 293.15
+      moles:
+      - 20.119812
       - 75.68881
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+    - volume: 2500
+      temperature: 293.15
+      moles:
+      - 21.611744
+      - 81.30133
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+    - volume: 2500
+      temperature: 190.47139
+      moles:
+      - 13.89631
+      - 52.276596
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+    - volume: 2500
+      temperature: 172.88556
+      moles:
+      - 11.935481
+      - 44.90014
       - 0
       - 0
       - 0
@@ -18433,61 +18553,6 @@ entities:
       moles:
       - 12.958522
       - 48.748726
-      - 0
-      - 0
-      - 0
-      - 0
-      - 0
-      - 0
-    - volume: 2500
-      temperature: 202.38437
-      moles:
-      - 8.18433
-      - 30.78867
-      - 0
-      - 0
-      - 0
-      - 0
-      - 0
-      - 0
-    - volume: 2500
-      temperature: 220.5375
-      moles:
-      - 10.912439
-      - 41.05156
-      - 0
-      - 0
-      - 0
-      - 0
-      - 0
-      - 0
-    - volume: 2500
-      temperature: 293.15
-      moles:
-      - 21.824875
-      - 82.1031
-      - 0
-      - 0
-      - 0
-      - 0
-      - 0
-      - 0
-    - volume: 2500
-      temperature: 293.15
-      moles:
-      - 21.824871
-      - 82.10309
-      - 0
-      - 0
-      - 0
-      - 0
-      - 0
-      - 0
-    - volume: 2500
-      temperature: 293.15
-      moles:
-      - 21.824867
-      - 82.10307
       - 0
       - 0
       - 0
@@ -18508,8 +18573,8 @@ entities:
     - volume: 2500
       temperature: 293.15
       moles:
-      - 21.82487
-      - 82.10309
+      - 21.824877
+      - 82.10311
       - 0
       - 0
       - 0
@@ -18519,8 +18584,19 @@ entities:
     - volume: 2500
       temperature: 293.15
       moles:
-      - 21.824854
-      - 82.10303
+      - 21.824873
+      - 82.1031
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+    - volume: 2500
+      temperature: 293.15
+      moles:
+      - 21.824877
+      - 82.10312
       - 0
       - 0
       - 0
@@ -32823,10 +32899,7 @@ entities:
 - uid: 2169
   type: BotanistIDCard
   components:
-  - desc: A card necessary to access just this single area aboard the station.
-    name: prisoner ID card
-    type: MetaData
-  - pos: 27.126661,45.321053
+  - pos: 27.464497,45.32313
     parent: 100
     type: Transform
   - originalOwnerName: botanist ID card
@@ -49994,10 +50067,10 @@ entities:
     parent: 100
     type: Transform
   - ringtone:
-    - A
-    - C
-    - G
-    - G
+    - D
+    - D
+    - E
+    - D
     type: Ringer
   - canCollide: False
     type: Physics
@@ -128348,6 +128421,8 @@ entities:
   - pos: -44.944458,-5.249181
     parent: 100
     type: Transform
+  - canCollide: False
+    type: Physics
 - uid: 13267
   type: CableApcExtension
   components:
