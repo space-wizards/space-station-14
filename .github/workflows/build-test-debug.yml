@@ -1,5 +1,15 @@
 name: Build & Test Debug
 
+env:
+  DOTNET_CLI_TELEMETRY_OPTOUT: 1
+  DOTNET_SKIP_FIRST_TIME_EXPERIENCE: 1
+  DOTNET_NOLOGO: 1
+  DOTNET_GENERATE_ASPNET_CERTIFICATE: 0
+  DOTNET_ADD_GLOBAL_TOOLS_TO_PATH: 0
+  DOTNET_MULTILEVEL_LOOKUP: 0
+  DOTNET_SYSTEM_CONSOLE_ALLOW_ANSI_COLOR_REDIRECTION: 1
+  TERM: xterm
+
 on:
   push:
     branches: [ master ]
@@ -34,7 +44,7 @@ jobs:
 
     steps:
     - name: Checkout Master
-      uses: actions/checkout@v2
+      uses: actions/checkout@v3
 
     - name: Setup Submodule
       run: |
@@ -49,9 +59,15 @@ jobs:
         git submodule update --init --recursive
 
     - name: Setup .NET Core
-      uses: actions/setup-dotnet@v1
+      uses: actions/setup-dotnet@v2
       with:
         dotnet-version: 6.0.x
+    - uses: actions/cache@v1
+      with:
+        path: ~/.nuget/packages
+        key: ${{ runner.os }}-nuget-${{ hashFiles('**/*.csproj') }}
+        restore-keys: |
+          ${{ runner.os }}-nuget-
 
     - name: Install dependencies
       run: dotnet restore
