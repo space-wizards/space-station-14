@@ -76,7 +76,7 @@ namespace Content.Server.RoleTimers
         private async Task SaveCacheDataToDb(NetUserId player, CachedPlayerRoleTimers? data = null)
         {
             var pdata = data ?? _cachedPlayerData[player];
-            foreach (var (role, (lastSaved, playTime)) in pdata.GetAllRoleTimers())
+            foreach (var role in pdata.CurrentRoles)
             {
                 var timer = await _db.CreateOrGetRoleTimer(player, role);
                 var additionalPlaytime = DateTime.UtcNow.Subtract(pdata.GetLastSavedTime(role)!.Value);
