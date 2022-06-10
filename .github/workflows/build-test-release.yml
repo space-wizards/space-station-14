@@ -1,5 +1,7 @@
 name: Build & Test Release
-
+env:
+  DOTNET_SKIP_FIRST_TIME_EXPERIENCE: true
+  DOTNET_CLI_TELEMETRY_OPTOUT: true
 on:
   push:
     branches: [ master ]
