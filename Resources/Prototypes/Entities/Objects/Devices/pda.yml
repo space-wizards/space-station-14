@@ -365,6 +365,9 @@
     id: CaptainIDCard
     penSlot:
       startingItem: PenCap
+      whitelist:
+        tags:
+        - Write
   - type: Appearance
     visuals:
       - type: PDAVisualizer
@@ -382,6 +385,9 @@
     id: HoPIDCard
     penSlot:
       startingItem: PenHop
+      whitelist:
+        tags:
+        - Write
   - type: Appearance
     visuals:
       - type: PDAVisualizer
