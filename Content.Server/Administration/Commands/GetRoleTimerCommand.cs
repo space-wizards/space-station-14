@@ -15,6 +15,12 @@ namespace Content.Server.Administration.Commands
 
         public async void Execute(IConsoleShell shell, string argStr, string[] args)
         {
+            if (args.Length == 0)
+            {
+                shell.WriteLine("Name a player to get the role timer information from");
+                return;
+            };
+
             var playerManager = IoCManager.Resolve<IPlayerManager>();
 
             var target = args[0];

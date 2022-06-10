@@ -4,7 +4,7 @@
     public sealed class JobRequirement
     {
         [DataField("job")]
-        public string? Job;
+        public string Job = default!;
 
         /// <summary>
         /// How long (in seconds) this requirement is.

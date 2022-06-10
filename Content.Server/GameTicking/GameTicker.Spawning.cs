@@ -88,7 +88,10 @@ namespace Content.Server.GameTicking
             var character = GetPlayerProfile(player);
 
             var jobBans = _roleBanManager.GetJobBans(player.UserId);
-            if (jobBans == null || (jobId != null && jobBans.Contains(jobId)))
+            if (jobBans == null || jobId != null && jobBans.Contains(jobId))
+                return;
+            var roleGates = _roleTimerSystem.GetDisallowedRoles(player.UserId);
+            if (roleGates == null || jobId != null && roleGates.Contains(jobId))
                 return;
             SpawnPlayer(player, character, station, jobId, lateJoin);
         }

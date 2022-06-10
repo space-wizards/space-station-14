@@ -30,24 +30,14 @@ namespace Content.Server.RoleTimers
         {
             switch (args.NewStatus)
             {
-                case SessionStatus.Connecting:
-                {
+                case SessionStatus.Connected:
                     await CachePlayerRoles(args.Session.UserId);
                     break;
-                }
                 case SessionStatus.Disconnected:
                 {
                     ClearPlayerFromCache(args.Session.UserId);
                     break;
                 }
-                case SessionStatus.Zombie:
-                    break;
-                case SessionStatus.Connected:
-                    break;
-                case SessionStatus.InGame:
-                    break;
-                default:
-                    throw new ArgumentOutOfRangeException();
             }
         }
 
@@ -59,6 +49,7 @@ namespace Content.Server.RoleTimers
         {
             var roleTimers = await _db.GetRoleTimers(player);
             var cacheObject = new CachedPlayerRoleTimers();
+            cacheObject.CallOnStart();
             foreach (var timer in roleTimers)
             {
                 cacheObject.SetCachedPlaytimeForRole(timer.Role, timer.TimeSpent);
@@ -85,10 +76,11 @@ namespace Content.Server.RoleTimers
         private async Task SaveCacheDataToDb(NetUserId player, CachedPlayerRoleTimers? data = null)
         {
             var pdata = data ?? _cachedPlayerData[player];
-            foreach (var role in pdata.CurrentRoles)
+            foreach (var (role, (lastSaved, playTime)) in pdata.GetAllRoleTimers())
             {
                 var timer = await _db.CreateOrGetRoleTimer(player, role);
-                await _db.AddRoleTime(timer.Id, DateTime.UtcNow.Subtract(pdata.GetLastSavedTime(role)!.Value));
+                var additionalPlaytime = DateTime.UtcNow.Subtract(pdata.GetLastSavedTime(role)!.Value);
+                await _db.AddRoleTime(timer.Id, additionalPlaytime);
             }
         }
 
@@ -168,12 +160,29 @@ namespace Content.Server.RoleTimers
         /// Gets a list of roles the player doesn't fulfill the requirements for.
         /// </summary>
         /// <param name="id">The player's network id.</param>
-        /// <returns>A HashSet of disallowed roles.</returns>
+        /// <returns>A HashSet of disallowed roles, or null if the player is uncached.</returns>
         public HashSet<string>? GetDisallowedRoles(NetUserId id)
         {
-            if (!IsPlayerTimeCached(id)) return null;
-            // TODO: Disallowed roles logic.
-            return new HashSet<string>();
+            if (!IsPlayerTimeCached(id))
+            {
+                Logger.ErrorS("RoleTimers", "Tried to get disallowed roles from an uncached player");
+                return null;
+            }
+            var disallowedRoles = new HashSet<string>();
+            var jobs = _prototypeManager.EnumeratePrototypes<JobPrototype>();
+            foreach (var job in jobs)
+            {
+                if (job.Requirements == null) continue;
+                foreach (var requirement in job.Requirements)
+                {
+                    var playtime = GetPlayTimeForRole(id, requirement.Job)!.Value;
+                    if (requirement.Time >= playtime)
+                    {
+                        disallowedRoles.Add(job.ID);
+                    }
+                }
+            }
+            return disallowedRoles;
         }
 
         public bool IsPlayerTimeCached(NetUserId id)
@@ -199,6 +208,20 @@ namespace Content.Server.RoleTimers
 
             return dict;
         }
+
+        public TimeSpan? GetPlayTimeForRole(NetUserId id, string role)
+        {
+            if (!IsPlayerTimeCached(id)) return null;
+            var time = _cachedPlayerData[id].GetPlaytimeForRole(role);
+            if (time == null)
+            {
+                // New role timer at zero seconds
+                _cachedPlayerData[id].SetCachedPlaytimeForRole(role, TimeSpan.Zero);
+                return TimeSpan.Zero;
+            }
+
+            return time.Value;
+        }
     }
 
     /// <summary>
@@ -207,6 +230,13 @@ namespace Content.Server.RoleTimers
     /// </summary>
     public struct CachedPlayerRoleTimers
     {
+        // TODO: There's gotta be a better solution than this
+        public void CallOnStart()
+        {
+            CurrentRoles = new HashSet<string>();
+            _roleTimers = new Dictionary<string, Tuple<DateTime, TimeSpan>>();
+        }
+
         public HashSet<string> CurrentRoles;
         // The reasoning for having a DateTime here is that we don't need to update it, and
         // can instead just figure out how much time has passed since they first joined and now,
@@ -215,7 +245,7 @@ namespace Content.Server.RoleTimers
 
         public TimeSpan? GetPlaytimeForRole(string role)
         {
-            if (!_roleTimers.ContainsKey(role)) return null;
+            if (!_roleTimers.ContainsKey(role)) {return null;}
             return _roleTimers[role].Item2;
         }
 
@@ -235,9 +265,7 @@ namespace Content.Server.RoleTimers
         /// <param name="time">The duration of time played.</param>
         public void SetCachedPlaytimeForRole(string role, TimeSpan time)
         {
-            DateTime lastSaved;
-            lastSaved = _roleTimers.ContainsKey(role) ? _roleTimers[role].Item1 : DateTime.UtcNow;
-            _roleTimers[role] = new Tuple<DateTime, TimeSpan>(lastSaved, time);
+            _roleTimers[role] = new Tuple<DateTime, TimeSpan>(DateTime.UtcNow, time);
         }
 
         public DateTime? GetLastSavedTime(string role)
