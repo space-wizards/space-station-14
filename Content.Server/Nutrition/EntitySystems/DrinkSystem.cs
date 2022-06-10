@@ -90,11 +90,11 @@ namespace Content.Server.Nutrition.EntitySystems
                         case int perc when perc == 100:
                             remainingString = "drink-component-on-examine-is-full";
                             break;
-                        case int perc when perc > 75:
+                        case int perc when perc > 66:
                             remainingString = "drink-component-on-examine-is-mostly-full";
                             break;
-                        case int perc when perc > 25:
-                            remainingString = "drink-component-on-examine-is-half-full";
+                        case int perc when perc > 33:
+                            remainingString = HalfEmptyOrHalfFull(args);
                             break;
                         case int perc when perc > 0:
                             remainingString = "drink-component-on-examine-is-mostly-empty";
@@ -384,6 +384,18 @@ namespace Content.Server.Nutrition.EntitySystems
             };
 
             ev.Verbs.Add(verb);
+        }
+
+        // some see half empty, and others see half full
+        private string HalfEmptyOrHalfFull(ExaminedEvent args)
+        {
+            string remainingString = "drink-component-on-examine-is-half-full";
+
+            if (TryComp<MetaDataComponent>(args.Examiner, out var examiner) && examiner.EntityName.Length > 0
+                && string.Compare(examiner.EntityName.Substring(0, 1), "m", StringComparison.InvariantCultureIgnoreCase) > 0)
+                remainingString = "drink-component-on-examine-is-half-empty";
+
+            return remainingString;
         }
     }
 }
