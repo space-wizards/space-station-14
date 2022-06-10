@@ -63,7 +63,7 @@ public sealed class CrayonSystem : SharedCrayonSystem
 
             _parent.UIUpdateNeeded = false;
             _label.SetMarkup(Loc.GetString("crayon-drawing-label",
-                ("color",_parent.Color),
+                ("color",_parent.Color.ToHex()),
                 ("state",_parent.SelectedState),
                 ("charges", _parent.Charges),
                 ("capacity",_parent.Capacity)));
