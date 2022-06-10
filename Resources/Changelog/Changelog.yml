@@ -1,10 +1,4 @@
 Entries:
-- author: Peptide90
-  changes:
-  - {message: 'Pillar 5.2! New arcade, small dorms, EVA storage and minor fixes. Engineering
-      now have EVA suits.', type: Add}
-  id: 1174
-  time: '2022-03-07T12:26:28.0000000+00:00'
 - author: HoofedEar
   changes:
   - {message: Things should no longer float through asteroid rocks., type: Fix}
@@ -3001,3 +2995,10 @@ Entries:
   - {message: changed color of opened airlock maint. panel, type: Add}
   id: 1673
   time: '2022-06-09T02:41:29.0000000+00:00'
+- author: juliangiebel
+  changes:
+  - {message: Added network configuration functionality to multitools, type: Add}
+  - {message: 'Air alarms can be tied to specific vents, scrubbers and firelocks',
+    type: Tweak}
+  id: 1674
+  time: '2022-06-10T01:28:24.0000000+00:00'
