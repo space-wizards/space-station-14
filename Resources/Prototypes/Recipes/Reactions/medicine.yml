@@ -143,6 +143,16 @@
     Inaprovaline: 3
 
 - type: reaction
+  id: Ipecac
+  reactants:
+    Dylovene:
+      amount: 1
+    Ammonia:
+      amount: 1
+  products:
+    Ipecac: 2
+
+- type: reaction
   id: TranexamicAcid
   reactants:
     Inaprovaline:

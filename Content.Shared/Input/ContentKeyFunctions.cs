@@ -79,5 +79,6 @@ namespace Content.Shared.Input
         public static readonly BoundKeyFunction Vote7 = "Vote7";
         public static readonly BoundKeyFunction Vote8 = "Vote8";
         public static readonly BoundKeyFunction Vote9 = "Vote9";
+        public static readonly BoundKeyFunction EditorCopyObject = "EditorCopyObject";
     }
 }

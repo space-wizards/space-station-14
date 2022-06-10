@@ -525,7 +525,7 @@ namespace Content.Client.Chat.Managers
                 // Push up existing bubbles above the mob's head.
                 foreach (var existingBubble in existing)
                 {
-                    existingBubble.VerticalOffset += bubble.ContentHeight;
+                    existingBubble.VerticalOffset += bubble.ContentSize.Y;
                 }
             }
             else

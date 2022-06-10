@@ -37,6 +37,7 @@
   - type: Ringer
   - type: ActivatableUI
     key: enum.PDAUiKey.Key
+    singleUser: true
   - type: UserInterface
     interfaces:
     - key: enum.PDAUiKey.Key
@@ -192,7 +193,7 @@
     state: pda-clown
   - type: Slippery
     paralyzeTime: 4
-    launchForwardsMultiplier: 9.0
+    launchForwardsMultiplier: 1.5
   - type: StepTrigger
   - type: CollisionWake
     enabled: false
@@ -364,6 +365,9 @@
     id: CaptainIDCard
     penSlot:
       startingItem: PenCap
+      whitelist:
+        tags:
+        - Write
   - type: Appearance
     visuals:
       - type: PDAVisualizer
@@ -381,6 +385,9 @@
     id: HoPIDCard
     penSlot:
       startingItem: PenHop
+      whitelist:
+        tags:
+        - Write
   - type: Appearance
     visuals:
       - type: PDAVisualizer
@@ -615,3 +622,11 @@
   - type: Icon
     state: pda-syndi
 
+- type: entity
+  parent: HoSPDA
+  id: ERTLeaderPDA
+  name: ERT PDA
+  description: Red for firepower.
+  components:
+  - type: PDA
+    id: ERTLeaderIDCard

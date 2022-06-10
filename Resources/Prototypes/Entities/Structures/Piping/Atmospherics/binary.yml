@@ -206,10 +206,10 @@
       node: port
 
 - type: entity
-  parent: GasUnaryBase
+  parent: GasVentPump
   id: GasDualPortVentPump
   name: dual-port air vent
-  description: Has a valve and a pump attached to it. There are two ports.
+  description: Has a valve and a pump attached to it. There are two ports, one is an input for releasing air, the other is an output when siphoning.
   placement:
     mode: SnapgridCenter
   components:
@@ -228,6 +228,19 @@
         - type: PipeColorVisualizer
         - type: VentPumpVisualizer
     - type: GasVentPump
+      inlet: inlet
+      outlet: outlet
+      canLink: true
     - type: Construction
       graph: GasBinary
       node: dualportventpump
+    - type: NodeContainer
+      nodes:
+        inlet:
+          !type:PipeNode
+          nodeGroupID: Pipe
+          pipeDirection: North
+        outlet:
+          !type:PipeNode
+          nodeGroupID: Pipe
+          pipeDirection: South

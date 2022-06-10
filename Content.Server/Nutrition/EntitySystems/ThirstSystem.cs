@@ -16,7 +16,7 @@ namespace Content.Server.Nutrition.EntitySystems
     {
         [Dependency] private readonly IRobustRandom _random = default!;
         [Dependency] private readonly AlertsSystem _alerts = default!;
-        [Dependency] private readonly AdminLogSystem _adminlog = default!;
+        [Dependency] private readonly IAdminLogManager _adminLogger = default!;
         [Dependency] private readonly DamageableSystem _damage = default!;
         [Dependency] private readonly MovementSpeedModifierSystem _movement = default!;
 
@@ -136,9 +136,9 @@ namespace Content.Server.Nutrition.EntitySystems
                     if (calculatedThirstThreshold != component.CurrentThirstThreshold)
                     {
                         if (component.CurrentThirstThreshold == ThirstThreshold.Dead)
-                            _adminlog.Add(LogType.Thirst, $"{EntityManager.ToPrettyString(component.Owner):entity} has stopped taking dehydration damage");
+                            _adminLogger.Add(LogType.Thirst, $"{EntityManager.ToPrettyString(component.Owner):entity} has stopped taking dehydration damage");
                         else if (calculatedThirstThreshold == ThirstThreshold.Dead)
-                           _adminlog.Add(LogType.Thirst, $"{EntityManager.ToPrettyString(component.Owner):entity} has started taking dehydration damage");
+                           _adminLogger.Add(LogType.Thirst, $"{EntityManager.ToPrettyString(component.Owner):entity} has started taking dehydration damage");
 
                         component.CurrentThirstThreshold = calculatedThirstThreshold;
                         UpdateEffects(component);

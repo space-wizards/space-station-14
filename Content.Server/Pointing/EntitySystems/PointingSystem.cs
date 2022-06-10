@@ -1,3 +1,4 @@
+using System.Linq;
 using Content.Server.Ghost.Components;
 using Content.Server.Players;
 using Content.Server.Pointing.Components;
@@ -119,6 +120,14 @@ namespace Content.Server.Pointing.EntitySystems
             _rotateToFaceSystem.TryFaceCoordinates(player, mapCoords.Position);
 
             var arrow = EntityManager.SpawnEntity("pointingarrow", mapCoords);
+
+            if (EntityQuery<PointingArrowAngeringComponent>().FirstOrDefault() != null)
+            {
+                if (TryComp<PointingArrowComponent>(arrow, out var pointingArrowComponent))
+                {
+                    pointingArrowComponent.Rogue = true;
+                }
+            }
 
             var layer = (int) VisibilityFlags.Normal;
             if (TryComp(player, out VisibilityComponent? playerVisibility))

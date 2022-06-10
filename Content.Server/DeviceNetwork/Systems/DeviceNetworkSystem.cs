@@ -51,7 +51,7 @@ namespace Content.Server.DeviceNetwork.Systems
             if (!Resolve(uid, ref device, false))
                 return;
 
-            if (device.Address == null)
+            if (device.Address == string.Empty)
                 return;
 
             frequency ??= device.TransmitFrequency;
@@ -194,7 +194,8 @@ namespace Content.Server.DeviceNetwork.Systems
             var network = GetNetwork(packet.NetId);
             if (packet.Address == null)
             {
-                if (network.ListeningDevices.TryGetValue(packet.Frequency, out var devices))
+                // Broadcast to all listening devices
+                if (network.ListeningDevices.TryGetValue(packet.Frequency, out var devices) && CheckRecipientsList(packet, ref devices))
                 {
                     var deviceCopy = ArrayPool<DeviceNetworkComponent>.Shared.Rent(devices.Count);
                     devices.CopyTo(deviceCopy);
@@ -229,6 +230,30 @@ namespace Content.Server.DeviceNetwork.Systems
                 SendToConnections(deviceCopy.AsSpan(0, totalDevices), packet);
                 ArrayPool<DeviceNetworkComponent>.Shared.Return(deviceCopy);
             }
+        }
+
+        /// <summary>
+        /// Sends the <see cref="BeforeBroadcastAttemptEvent"/> to the sending entity if the packets SendBeforeBroadcastAttemptEvent field is set to true.
+        /// The recipients is set to the modified recipient list.
+        /// </summary>
+        /// <returns>false if the broadcast was canceled</returns>
+        private bool CheckRecipientsList(DeviceNetworkPacketEvent packet, ref HashSet<DeviceNetworkComponent> recipients)
+        {
+            if (!_networks.ContainsKey(packet.NetId) || !_networks[packet.NetId].Devices.ContainsKey(packet.SenderAddress))
+                return false;
+
+            var sender = _networks[packet.NetId].Devices[packet.SenderAddress];
+            if (!sender.SendBroadcastAttemptEvent)
+                return true;
+
+            var beforeBroadcastAttemptEvent = new BeforeBroadcastAttemptEvent(recipients);
+            RaiseLocalEvent(packet.Sender, beforeBroadcastAttemptEvent);
+
+            if (beforeBroadcastAttemptEvent.Cancelled || beforeBroadcastAttemptEvent.ModifiedRecipients == null)
+                return false;
+
+            recipients = beforeBroadcastAttemptEvent.ModifiedRecipients;
+            return true;
         }
 
         private void SendToConnections(ReadOnlySpan<DeviceNetworkComponent> connections, DeviceNetworkPacketEvent packet)
@@ -275,6 +300,20 @@ namespace Content.Server.DeviceNetwork.Systems
             Sender = sender;
             SenderTransform = xform;
             SenderPosition = senderPosition;
+        }
+    }
+
+    /// <summary>
+    /// Sent to the sending entity before broadcasting network packets to recipients
+    /// </summary>
+    public sealed class BeforeBroadcastAttemptEvent : CancellableEntityEventArgs
+    {
+        public readonly IReadOnlySet<DeviceNetworkComponent> Recipients;
+        public HashSet<DeviceNetworkComponent>? ModifiedRecipients;
+
+        public BeforeBroadcastAttemptEvent(IReadOnlySet<DeviceNetworkComponent> recipients)
+        {
+            Recipients = recipients;
         }
     }
 
