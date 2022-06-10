@@ -38,7 +38,7 @@ public sealed class CrayonSystem : SharedCrayonSystem
         args.Controls.Add(new StatusControl(component));
     }
 
-    private sealed class StatusControl : Control
+    public sealed class StatusControl : Control
     {
         private readonly CrayonComponent _parent;
         private readonly RichTextLabel _label;

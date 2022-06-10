@@ -4,7 +4,7 @@ using Robust.Shared.ViewVariables;
 
 namespace Content.Client.Crayon
 {
-    [RegisterComponent, Access(typeof(SharedCrayonSystem), Other = AccessPermissions.ReadExecute)]
+    [RegisterComponent, Access(typeof(CrayonSystem), typeof(CrayonSystem.StatusControl))]
     public sealed class CrayonComponent : SharedCrayonComponent
     {
         [ViewVariables(VVAccess.ReadWrite)] public bool UIUpdateNeeded;
