@@ -415,6 +415,7 @@ namespace Content.Server.Database
             await using var db = await GetDb();
 
             var newTimer = await db.DbContext.RoleTimer.SingleAsync(timer => timer.Id == id);
+            newTimer.TimeSpent += time;
 
             await db.DbContext.SaveChangesAsync();
             return newTimer;

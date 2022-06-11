@@ -152,8 +152,20 @@ namespace Content.Server.RoleTimers
         private async Task AddTimeToRole(NetUserId id, string role, TimeSpan time)
         {
             var timer = await _db.CreateOrGetRoleTimer(id, role);
-            await _db.AddRoleTime(timer.Id, time);
-            _cachedPlayerData[id].SetCachedPlaytimeForRole(role, time);
+            timer = await _db.AddRoleTime(timer.Id, time);
+            if (!IsPlayerTimeCached(id)) await CachePlayerRoles(id);
+            var playtime = _cachedPlayerData[id].GetPlaytimeForRole(role);
+            TimeSpan additionalTime;
+            if (playtime == null)
+            {
+                var query = await _db.CreateOrGetRoleTimer(id, role);
+                additionalTime = query.TimeSpent.Add(time);
+            }
+            else
+            {
+                additionalTime = playtime.Value;
+            }
+            _cachedPlayerData[id].SetCachedPlaytimeForRole(role, additionalTime);
         }
 
         /// <summary>
