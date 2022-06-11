@@ -101,7 +101,8 @@ namespace Content.Server.RoleTimers
                 return;
             }
 
-            var currentRoles = _cachedPlayerData[player].CurrentRoles;
+            var cachedPlayerRoleTimers = _cachedPlayerData[player];
+            var currentRoles = cachedPlayerRoleTimers.CurrentRoles;
             var inputRoleSet = roles;
 
             // Fill out roles from mind (if no roles were provided in args)
@@ -140,7 +141,7 @@ namespace Content.Server.RoleTimers
             {
                 if (!inputRoleSet.Contains(role))
                 {
-                    var time = _cachedPlayerData[player].GetLastSavedTime(role);
+                    var time = cachedPlayerRoleTimers.GetLastSavedTime(role);
                     if (time == null)
                     {
                         return;
@@ -150,6 +151,8 @@ namespace Content.Server.RoleTimers
                     AddTimeToRole(player, role, timeToAdd);
                 }
             }
+
+            cachedPlayerRoleTimers.CurrentRoles = inputRoleSet;
         }
 
         private async Task AddTimeToRole(NetUserId id, string role, TimeSpan time)
