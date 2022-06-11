@@ -42,6 +42,8 @@ public sealed partial class ShuttleConsoleWindow : FancyWindow,
         _consoleSystem = _entManager.EntitySysManager.GetEntitySystem<ShuttleConsoleSystem>();
         _dockSystem = _entManager.EntitySysManager.GetEntitySystem<DockingSystem>();
 
+        RadarScreen.OnRadarRangeChanged += OnRadarRangeChange;
+
         IFFToggle.OnToggled += OnIFFTogglePressed;
         IFFToggle.Pressed = RadarScreen.ShowIFF;
 
@@ -51,6 +53,11 @@ public sealed partial class ShuttleConsoleWindow : FancyWindow,
         ShuttleMode.OnToggled += OnShuttleModePressed;
 
         UndockButton.OnPressed += OnUndockPressed;
+    }
+
+    private void OnRadarRangeChange(float value)
+    {
+        RadarRange.Text = $"{value:0}";
     }
 
     private void OnShuttleModePressed(BaseButton.ButtonEventArgs obj)
@@ -81,7 +88,7 @@ public sealed partial class ShuttleConsoleWindow : FancyWindow,
         _entity = scc.Entity;
         UpdateDocks(scc.Docks);
         RadarScreen.UpdateState(scc);
-        RadarRange.Text = $"{scc.Range:0}";
+        MaxRadarRange.Text = $"{scc.MaxRange:0}";
         ShuttleMode.Pressed = scc.Mode == Shared.Shuttles.Components.ShuttleMode.Strafing;
     }
 

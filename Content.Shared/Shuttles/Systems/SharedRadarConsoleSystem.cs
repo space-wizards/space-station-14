@@ -16,14 +16,14 @@ public abstract class SharedRadarConsoleSystem : EntitySystem
     private void OnHandleState(EntityUid uid, RadarConsoleComponent component, ref ComponentHandleState args)
     {
         if (args.Current is not RadarConsoleComponentState state) return;
-        component.Range = state.Range;
+        component.MaxRange = state.Range;
     }
 
     private void OnGetState(EntityUid uid, RadarConsoleComponent component, ref ComponentGetState args)
     {
         args.State = new RadarConsoleComponentState()
         {
-            Range = component.Range
+            Range = component.MaxRange
         };
     }
 
@@ -31,8 +31,8 @@ public abstract class SharedRadarConsoleSystem : EntitySystem
 
     public void SetRange(RadarConsoleComponent component, float value)
     {
-        if (component.Range.Equals(value)) return;
-        component.Range = value;
+        if (component.MaxRange.Equals(value)) return;
+        component.MaxRange = value;
         Dirty(component);
         UpdateState(component);
     }

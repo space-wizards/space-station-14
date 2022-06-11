@@ -21,7 +21,5 @@ public sealed partial class RadarConsoleWindow : FancyWindow,
     public void UpdateState(RadarConsoleBoundInterfaceState scc)
     {
         RadarScreen.UpdateState(scc);
-        // RadarRange.Text = $"{scc.Range:0}";
-        // TODO: Need to show radar stuff separately to shuttle
     }
 }

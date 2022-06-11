@@ -17,9 +17,11 @@
             </PanelContainer>
         </BoxContainer>
         <PanelContainer>
-            <ui:RadarControl Name="RadarScreen"/>
+            <ui:RadarControl Name="RadarScreen"
+                             MouseFilter="Stop"/>
             <ui:DockingControl Name="DockingScreen"
-                               Visible="False"/>
+                               Visible="False"
+                               MouseFilter="Stop"/>
         </PanelContainer>
         <BoxContainer Name="RightDisplay"
                       VerticalAlignment="Top"
@@ -32,6 +34,10 @@
                 <GridContainer Columns="2"
                                HorizontalAlignment="Stretch"
                                VerticalAlignment="Top">
+                    <Label Text="{Loc 'shuttle-console-max-radar'}"/>
+                    <Label Name="MaxRadarRange"
+                           Text="0.0"
+                           HorizontalAlignment="Right"/>
                     <Label Text="{Loc 'shuttle-console-radar'}"/>
                     <Label Name="RadarRange"
                            Text="0.0"

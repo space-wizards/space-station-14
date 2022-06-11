@@ -7,16 +7,16 @@ namespace Content.Shared.Shuttles.BUIStates;
 [Virtual]
 public class RadarConsoleBoundInterfaceState : BoundUserInterfaceState
 {
-    public readonly float Range;
+    public readonly float MaxRange;
     public readonly EntityUid? Entity;
     public readonly List<DockingInterfaceState> Docks;
 
     public RadarConsoleBoundInterfaceState(
-        float range,
+        float maxRange,
         EntityUid? entity,
         List<DockingInterfaceState> docks)
     {
-        Range = range;
+        MaxRange = maxRange;
         Entity = entity;
         Docks = docks;
     }

@@ -9,7 +9,7 @@ public sealed class RadarConsoleComponent : Component
     [ViewVariables(VVAccess.ReadWrite)]
     public float RangeVV
     {
-        get => Range;
+        get => MaxRange;
         set => IoCManager
             .Resolve<IEntitySystemManager>()
             .GetEntitySystem<SharedRadarConsoleSystem>()
@@ -17,8 +17,5 @@ public sealed class RadarConsoleComponent : Component
     }
 
     [ViewVariables, DataField("range")]
-    public float Range = 120f;
-
-    [ViewVariables, DataField("minRange")]
-    public float MinimumRange = 64f;
+    public float MaxRange = 120f;
 }

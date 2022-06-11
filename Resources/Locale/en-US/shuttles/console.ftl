@@ -2,6 +2,7 @@ shuttle-pilot-start = Piloting ship
 shuttle-pilot-end = Stopped piloting
 
 # Display
+shuttle-console-max-radar = Max radar range:
 shuttle-console-radar = Radar range:
 shuttle-console-position = Position:
 shuttle-console-orientation = Orientation:

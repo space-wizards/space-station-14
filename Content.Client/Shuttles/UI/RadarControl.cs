@@ -18,6 +18,8 @@ public sealed class RadarControl : Control
     [Dependency] private readonly IEntityManager _entManager = default!;
     [Dependency] private readonly IMapManager _mapManager = default!;
 
+    private const float ScrollSensitivity = 8f;
+
     private const int MinimapRadius = 384;
     private const int MinimapMargin = 4;
     private const float GridLinesDistance = 32f;
@@ -27,6 +29,8 @@ public sealed class RadarControl : Control
     /// </summary>
     private EntityUid? _entity;
 
+    private float _radarMinRange = 64f;
+    private float _radarMaxRange = 256f;
     private float _radarRange = 256f;
 
     private int MidPoint => SizeFull / 2;
@@ -49,6 +53,8 @@ public sealed class RadarControl : Control
     /// </summary>
     public EntityUid? HighlightedDock;
 
+    public Action<float>? OnRadarRangeChanged;
+
     public RadarControl()
     {
         IoCManager.InjectDependencies(this);
@@ -57,7 +63,17 @@ public sealed class RadarControl : Control
 
     public void UpdateState(RadarConsoleBoundInterfaceState ls)
     {
-        _radarRange = ls.Range;
+        _radarMaxRange = ls.MaxRange;
+
+        if (_radarMaxRange < _radarRange)
+        {
+            _radarRange = _radarMaxRange;
+            OnRadarRangeChanged?.Invoke(_radarRange);
+        }
+
+        if (_radarMaxRange < _radarMinRange)
+            _radarMinRange = _radarMaxRange;
+
         _entity = ls.Entity;
         _docks.Clear();
 
@@ -67,6 +83,22 @@ public sealed class RadarControl : Control
             var grid = _docks.GetOrNew(coordinates.EntityId);
             grid.Add(state.Entity, state);
         }
+    }
+
+    protected override void MouseWheel(GUIMouseWheelEventArgs args)
+    {
+        base.MouseWheel(args);
+        AddRadarRange(-args.Delta.Y * ScrollSensitivity);
+    }
+
+    public void AddRadarRange(float value)
+    {
+        var oldValue = _radarRange;
+        _radarRange = MathF.Max(0f, MathF.Max(_radarMinRange, MathF.Min(_radarRange + value, _radarMaxRange)));
+
+        if (oldValue.Equals(_radarRange)) return;
+
+        OnRadarRangeChanged?.Invoke(_radarRange);
     }
 
     protected override void Draw(DrawingHandleScreen handle)
@@ -243,6 +275,8 @@ public sealed class RadarControl : Control
     {
         if (!ShowDocks) return;
 
+        const float DockScale = 1.2f;
+
         if (_docks.TryGetValue(uid, out var docks))
         {
             foreach (var (ent, state) in docks)
@@ -250,15 +284,13 @@ public sealed class RadarControl : Control
                 var position = state.Coordinates.Position;
                 var uiPosition = matrix.Transform(position);
 
-                if (uiPosition.Length > _radarRange) continue;
+                if (uiPosition.Length > _radarRange - DockScale) continue;
 
                 var color = HighlightedDock == ent ? Color.Magenta : Color.DarkViolet;
 
                 uiPosition.Y = -uiPosition.Y;
 
-                const float DockScale = 1f;
-
-                var verts = new Vector2[]
+                var verts = new[]
                 {
                     matrix.Transform(position + new Vector2(-DockScale, -DockScale)),
                     matrix.Transform(position + new Vector2(DockScale, -DockScale)),

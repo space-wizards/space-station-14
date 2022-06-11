@@ -186,7 +186,7 @@ namespace Content.Server.Shuttles.Systems
         private void UpdateState(ShuttleConsoleComponent component, List<DockingInterfaceState>? docks = null)
         {
             TryComp<RadarConsoleComponent>(component.Owner, out var radar);
-            var range = radar?.Range ?? 0f;
+            var range = radar?.MaxRange ?? 0f;
 
             TryComp<ShuttleComponent>(Transform(component.Owner).GridUid, out var shuttle);
             var mode = shuttle?.Mode ?? ShuttleMode.Cruise;
