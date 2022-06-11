@@ -1,10 +1,4 @@
 Entries:
-- author: Fishfish458
-  changes:
-  - {message: Health Analyzers have now been added to various medical containers and
-      the autolathe, type: Add}
-  id: 1178
-  time: '2022-03-08T03:45:52.0000000+00:00'
 - author: Rane
   changes:
   - {message: Musicians will now receive a special box on a certain holiday., type: Add}
@@ -3002,3 +2996,9 @@ Entries:
       station., type: Tweak}
   id: 1677
   time: '2022-06-11T14:25:38.0000000+00:00'
+- author: moony
+  changes:
+  - {message: 'Slowed down parallax significiantly. Space should feel much, much vaster
+      now.', type: Tweak}
+  id: 1678
+  time: '2022-06-11T20:59:31.0000000+00:00'
