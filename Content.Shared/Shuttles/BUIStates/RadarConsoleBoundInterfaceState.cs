@@ -9,17 +9,29 @@ public class RadarConsoleBoundInterfaceState : BoundUserInterfaceState
 {
     public readonly float Range;
     public readonly EntityUid? Entity;
-    public readonly List<(EntityCoordinates Coordinates, Angle Angle, EntityUid Entity)> Docks;
+    public readonly List<DockingInterfaceState> Docks;
 
     public RadarConsoleBoundInterfaceState(
         float range,
         EntityUid? entity,
-        List<(EntityCoordinates Coordinates, Angle Angle, EntityUid Entity)> docks)
+        List<DockingInterfaceState> docks)
     {
         Range = range;
         Entity = entity;
         Docks = docks;
     }
+}
+
+/// <summary>
+/// State of each individual docking port for interface purposes
+/// </summary>
+[Serializable, NetSerializable]
+public sealed class DockingInterfaceState
+{
+    public EntityCoordinates Coordinates;
+    public Angle Angle;
+    public EntityUid Entity;
+    public bool Connected;
 }
 
 [Serializable, NetSerializable]

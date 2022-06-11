@@ -1,3 +1,4 @@
+using Content.Shared.Shuttles.BUIStates;
 using Robust.Client.Graphics;
 using Robust.Client.UserInterface;
 using Robust.Shared.Map;
@@ -26,8 +27,13 @@ public class DockingControl : Control
     private int ScaledMinimapRadius => (int) (MinimapRadius * UIScale);
     private float MinimapScale => _range != 0 ? ScaledMinimapRadius / _range : 0f;
 
-    public EntityUid? Entity;
+    public EntityUid? ViewedDock;
     public EntityUid? GridEntity;
+
+    /// <summary>
+    /// Stored by GridID then by docks
+    /// </summary>
+    public Dictionary<EntityUid, List<DockingInterfaceState>> Docks = new();
 
     public DockingControl()
     {
@@ -46,7 +52,7 @@ public class DockingControl : Control
         handle.DrawCircle((MidPoint, MidPoint), ScaledMinimapRadius + 1, fakeAA);
         handle.DrawCircle((MidPoint, MidPoint), ScaledMinimapRadius, Color.Black);
 
-        if (!_entManager.TryGetComponent<TransformComponent>(Entity, out var xform) ||
+        if (!_entManager.TryGetComponent<TransformComponent>(ViewedDock, out var xform) ||
             !_entManager.TryGetComponent<TransformComponent>(GridEntity, out var gridXform)) return;
 
         var rotation = Matrix3.CreateRotation(xform.LocalRotation);
@@ -111,7 +117,7 @@ public class DockingControl : Control
 
         // TODO: Getting some overdraw so need to fix that.
 
-        foreach (var grid in _mapManager.FindGridsIntersecting(xform.MapID,
+        foreach (var grid in _mapManager.FindGridsIntersecting(gridXform.MapID,
                      new Box2(worldPos - _range, worldPos + _range)))
         {
             if (grid.GridEntityId == GridEntity) continue;

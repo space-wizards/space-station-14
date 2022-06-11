@@ -66,6 +66,10 @@
                     Text="{Loc 'shuttle-console-dock-toggle'}"
                     TextAlign="Center"
                     ToggleMode="True"/>
+            <Button Name="UndockButton"
+                    Text="{Loc 'shuttle-console-undock'}"
+                    TextAlign="Center"
+                    Disabled="True"/>
         </BoxContainer>
     </GridContainer>
 </userInterface:FancyWindow>

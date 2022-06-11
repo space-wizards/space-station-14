@@ -147,16 +147,23 @@ namespace Content.Server.Shuttles.Systems
         /// <summary>
         /// Returns the position and angle of all dockingcomponents.
         /// </summary>
-        private List<(EntityCoordinates Coordinates, Angle Angle, EntityUid Entity)> GetAllDocks()
+        private List<DockingInterfaceState> GetAllDocks()
         {
             // TODO: NEED TO MAKE SURE THIS UPDATES ON ANCHORING CHANGES!
-            var result = new List<(EntityCoordinates Coordinates, Angle Angle, EntityUid Entity)>();
+            var result = new List<DockingInterfaceState>();
 
             foreach (var (comp, xform) in EntityQuery<DockingComponent, TransformComponent>(true))
             {
                 if (xform.ParentUid != xform.GridUid) continue;
 
-                result.Add((xform.Coordinates, xform.LocalRotation, comp.Owner));
+                var state = new DockingInterfaceState()
+                {
+                    Coordinates = xform.Coordinates,
+                    Angle = xform.LocalRotation,
+                    Entity = comp.Owner,
+                    Connected = comp.Docked,
+                };
+                result.Add(state);
             }
 
             return result;

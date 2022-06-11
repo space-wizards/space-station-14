@@ -9,6 +9,7 @@ shuttle-console-linear-velocity = Linear velocity:
 shuttle-console-angular-velocity = Angular velocity:
 
 # Buttons
+shuttle-console-strafing = Strafing mode
 shuttle-console-iff-toggle = Show IFF
 shuttle-console-dock-toggle = Show docks
-shuttle-console-strafing = Strafing mode
+shuttle-console-undock = Undock

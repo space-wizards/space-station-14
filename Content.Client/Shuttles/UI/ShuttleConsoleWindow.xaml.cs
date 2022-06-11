@@ -8,6 +8,7 @@ using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.XAML;
 using Robust.Shared.Map;
+using Robust.Shared.Utility;
 
 namespace Content.Client.Shuttles.UI;
 
@@ -28,6 +29,11 @@ public sealed partial class ShuttleConsoleWindow : FancyWindow,
     /// </summary>
     private BaseButton? _selectedDock;
 
+    /// <summary>
+    /// Stored by grid entityid then by states
+    /// </summary>
+    private Dictionary<EntityUid, List<DockingInterfaceState>> _docks = new();
+
     public ShuttleConsoleWindow()
     {
         RobustXamlLoader.Load(this);
@@ -41,6 +47,8 @@ public sealed partial class ShuttleConsoleWindow : FancyWindow,
         DockToggle.Pressed = RadarScreen.ShowDocks;
 
         ShuttleMode.OnToggled += OnShuttleModePressed;
+
+        UndockButton.OnPressed += OnUndockPressed;
     }
 
     private void OnShuttleModePressed(BaseButton.ButtonEventArgs obj)
@@ -60,6 +68,12 @@ public sealed partial class ShuttleConsoleWindow : FancyWindow,
         args.Button.Pressed = RadarScreen.ShowDocks;
     }
 
+    private void OnUndockPressed(BaseButton.ButtonEventArgs args)
+    {
+        if (DockingScreen.ViewedDock == null) return;
+        _system.Undock(DockingScreen.ViewedDock.Value);
+    }
+
     public void UpdateState(ShuttleConsoleBoundInterfaceState scc)
     {
         _entity = scc.Entity;
@@ -71,32 +85,47 @@ public sealed partial class ShuttleConsoleWindow : FancyWindow,
 
     #region Docking
 
-    private void UpdateDocks(List<(EntityCoordinates Coordinates, Angle Angle, EntityUid entity)> docks)
+    private void UpdateDocks(List<DockingInterfaceState> docks)
     {
+        // TODO: We should check for changes so any existing highlighted doesn't delete.
+        // We also need to make up some pseudonumber as well for these.
+
+        _docks.Clear();
+
+        foreach (var dock in docks)
+        {
+            var grid = _docks.GetOrNew(dock.Coordinates.EntityId);
+            grid.Add(dock);
+        }
+
         DockPorts.DisposeAllChildren();
 
         if (!_entManager.TryGetComponent<TransformComponent>(_entity, out var xform))
         {
-            // TODO: Placeholder
+            // TODO: Show Placeholder
             return;
         }
 
         var index = 0;
 
-        foreach (var (coordinates, angle, ent) in docks)
+        if (_docks.TryGetValue(xform.GridEntityId, out var gridDocks))
         {
-            if (xform.GridEntityId != coordinates.EntityId) continue;
-            var button = new Button()
+            foreach (var state in gridDocks)
             {
-                Text = $"Dock {index + 1}",
-                ToggleMode = true,
-            };
+                var ent = state.Entity;
 
-            button.OnMouseEntered += args => OnDockMouseEntered(args, ent);
-            button.OnMouseExited += args => OnDockMouseExited(args, ent);
-            button.OnToggled += args => OnDockToggled(args, ent);
-            DockPorts.AddChild(button);
-            index++;
+                var button = new Button()
+                {
+                    Text = $"Dock {index + 1}",
+                    ToggleMode = true,
+                };
+
+                button.OnMouseEntered += args => OnDockMouseEntered(args, ent);
+                button.OnMouseExited += args => OnDockMouseExited(args, ent);
+                button.OnToggled += args => OnDockToggled(args, ent);
+                DockPorts.AddChild(button);
+                index++;
+            }
         }
     }
 
@@ -123,19 +152,37 @@ public sealed partial class ShuttleConsoleWindow : FancyWindow,
 
         if (!obj.Button.Pressed)
         {
-            DockingScreen.Entity = null;
+            if (DockingScreen.ViewedDock != null)
+            {
+                _system.StopAutodock(DockingScreen.ViewedDock.Value);
+                DockingScreen.ViewedDock = null;
+            }
+
+            UndockButton.Disabled = true;
             DockingScreen.Visible = false;
             RadarScreen.Visible = true;
         }
         else
         {
+            // DebugTools.Assert(DockingScreen.ViewedDock == null);
             _entManager.TryGetComponent<TransformComponent>(_entity, out var xform);
 
+            UndockButton.Disabled = false;
             RadarScreen.Visible = false;
             DockingScreen.Visible = true;
-            DockingScreen.Entity = ent;
+            DockingScreen.ViewedDock = ent;
+            _system.StartAutodock(ent);
             DockingScreen.GridEntity = xform?.GridEntityId;
             _selectedDock = obj.Button;
+        }
+    }
+
+    public override void Close()
+    {
+        base.Close();
+        if (DockingScreen.ViewedDock != null)
+        {
+            _system.StopAutodock(DockingScreen.ViewedDock.Value);
         }
     }
 

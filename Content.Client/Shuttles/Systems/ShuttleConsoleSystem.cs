@@ -41,5 +41,20 @@ namespace Content.Client.Shuttles.Systems
                 Mode = mode,
             });
         }
+
+        public void StartAutodock(EntityUid uid)
+        {
+            RaiseNetworkEvent(new AutodockRequestEvent {Entity = uid});
+        }
+
+        public void StopAutodock(EntityUid uid)
+        {
+            RaiseNetworkEvent(new StopAutodockRequestEvent() {Entity = uid});
+        }
+
+        public void Undock(EntityUid uid)
+        {
+            RaiseNetworkEvent(new UndockRequestEvent() {Entity = uid});
+        }
     }
 }
