@@ -3,7 +3,7 @@
 namespace Content.Server.DeviceNetwork.Components;
 
 [RegisterComponent]
-[Access(typeof(DeviceListSystem))]
+
 public sealed class DeviceListComponent : Component
 {
     /// <summary>

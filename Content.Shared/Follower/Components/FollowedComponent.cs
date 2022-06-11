@@ -6,7 +6,7 @@ namespace Content.Shared.Follower.Components;
 /// <summary>
 ///     Attached to entities that are currently being followed by a ghost.
 /// </summary>
-[RegisterComponent, Access(typeof(FollowerSystem))]
+[RegisterComponent]
 [NetworkedComponent]
 public sealed class FollowedComponent : Component
 {

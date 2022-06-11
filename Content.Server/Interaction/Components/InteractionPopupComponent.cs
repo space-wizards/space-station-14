@@ -2,7 +2,7 @@ using Content.Shared.Sound;
 
 namespace Content.Server.Interaction.Components;
 
-[RegisterComponent, Access(typeof(InteractionPopupSystem))]
+[RegisterComponent]
 public sealed class InteractionPopupComponent : Component
 {
     /// <summary>

@@ -3,7 +3,7 @@ using Robust.Server.Player;
 
 namespace Content.Server.Ghost.Roles.Components
 {
-    [Access(typeof(GhostRoleSystem))]
+
     public abstract class GhostRoleComponent : Component
     {
         [DataField("name")] public string _roleName = "Unknown";
@@ -21,7 +21,7 @@ namespace Content.Server.Ghost.Roles.Components
         // We do this so updating RoleName and RoleDescription in VV updates the open EUIs.
 
         [ViewVariables(VVAccess.ReadWrite)]
-        [Access(typeof(GhostRoleSystem), Other = AccessPermissions.ReadWriteExecute)] // FIXME Friends
+         // FIXME Friends
         public string RoleName
         {
             get => _roleName;
@@ -33,7 +33,7 @@ namespace Content.Server.Ghost.Roles.Components
         }
 
         [ViewVariables(VVAccess.ReadWrite)]
-        [Access(typeof(GhostRoleSystem), Other = AccessPermissions.ReadWriteExecute)] // FIXME Friends
+         // FIXME Friends
         public string RoleDescription
         {
             get => _roleDescription;
@@ -45,7 +45,7 @@ namespace Content.Server.Ghost.Roles.Components
         }
 
         [ViewVariables(VVAccess.ReadWrite)]
-        [Access(typeof(GhostRoleSystem), Other = AccessPermissions.ReadWriteExecute)] // FIXME Friends
+         // FIXME Friends
         public string RoleRules
         {
             get => _roleRules;

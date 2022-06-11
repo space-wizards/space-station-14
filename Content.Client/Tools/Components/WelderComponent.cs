@@ -13,7 +13,7 @@ using Robust.Shared.ViewVariables;
 
 namespace Content.Client.Tools.Components
 {
-    [RegisterComponent, Access(typeof(ToolSystem), typeof(StatusControl))]
+    [RegisterComponent]
     public sealed class WelderComponent : SharedWelderComponent, IItemStatus
     {
         [ViewVariables(VVAccess.ReadWrite)]

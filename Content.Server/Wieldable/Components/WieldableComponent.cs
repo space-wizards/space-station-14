@@ -5,7 +5,7 @@ namespace Content.Server.Wieldable.Components
     /// <summary>
     ///     Used for objects that can be wielded in two or more hands,
     /// </summary>
-    [RegisterComponent, Access(typeof(WieldableSystem))]
+    [RegisterComponent]
     public sealed class WieldableComponent : Component
     {
         [DataField("wieldSound")]

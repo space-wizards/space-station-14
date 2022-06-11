@@ -4,7 +4,7 @@ using Robust.Shared.GameStates;
 namespace Content.Shared.Movement.Components
 {
     [RegisterComponent]
-    [NetworkedComponent, Access(typeof(MovementSpeedModifierSystem))]
+    [NetworkedComponent]
     public sealed class MovementSpeedModifierComponent : Component
     {
         public const float DefaultBaseWalkSpeed = 3.0f;

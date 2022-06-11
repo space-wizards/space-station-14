@@ -1,7 +1,7 @@
 namespace Content.Shared.Decals
 {
     [RegisterComponent]
-    [Access(typeof(SharedDecalSystem))]
+
     public sealed class DecalGridComponent : Component
     {
         [DataField("chunkCollection", serverOnly: true)]

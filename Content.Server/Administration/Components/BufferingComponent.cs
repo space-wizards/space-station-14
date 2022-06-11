@@ -2,7 +2,7 @@
 
 namespace Content.Server.Administration.Components;
 
-[RegisterComponent, Access(typeof(BufferingSystem))]
+[RegisterComponent]
 public sealed class BufferingComponent : Component
 {
     [DataField("minBufferTime")]

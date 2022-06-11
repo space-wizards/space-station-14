@@ -2,7 +2,7 @@
 
 namespace Content.Server.Wieldable.Components
 {
-    [RegisterComponent, Access(typeof(WieldableSystem))]
+    [RegisterComponent]
     public sealed class IncreaseDamageOnWieldComponent : Component
     {
         [DataField("modifiers", required: true)]

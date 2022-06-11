@@ -3,7 +3,7 @@ using System.Threading;
 namespace Content.Server.Resist;
 
 [RegisterComponent]
-[Access(typeof(ResistLockerSystem))]
+
 public sealed class ResistLockerComponent : Component
 {
     /// <summary>

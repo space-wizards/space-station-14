@@ -2,7 +2,7 @@
 
 namespace Content.Shared.Administration;
 
-[RegisterComponent, Access(typeof(AdminFrozenSystem))]
+[RegisterComponent]
 [NetworkedComponent]
 public sealed class AdminFrozenComponent : Component
 {

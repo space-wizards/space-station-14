@@ -3,7 +3,7 @@ using Content.Shared.Whitelist;
 namespace Content.Server.Gatherable.Components;
 
 [RegisterComponent]
-[Access(typeof(GatherableSystem))]
+
 public sealed class GatherableComponent : Component
 {
     /// <summary>
