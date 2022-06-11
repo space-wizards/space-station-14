@@ -117,7 +117,7 @@ namespace Content.Server.Singularity.EntitySystems
         private bool TryGenerateFieldConnection([NotNullWhen(true)] ref Tuple<Direction, ContainmentFieldConnection>? propertyFieldTuple, ContainmentFieldGeneratorComponent component)
         {
             if (propertyFieldTuple != null) return false;
-            if (EntityManager.TryGetComponent<PhysicsComponent>(component.Owner, out var physicsComponent) && physicsComponent.BodyType != BodyType.Static) return false;
+            if (EntityManager.TryGetComponent<TransformComponent>(component.Owner, out var xform) && !xform.Anchored) return false;
 
             foreach (var direction in new[] { Direction.North, Direction.East, Direction.South, Direction.West })
             {
