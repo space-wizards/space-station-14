@@ -18,7 +18,8 @@ public class DockingControl : Control
     private const int MinimapRadius = 384;
     private const int MinimapMargin = 4;
 
-    private float _range = 16f;
+    private float _range = 8f;
+    private float _rangeSquared = 0f;
 
     private int MidPoint => SizeFull / 2;
     private int SizeFull => (int) ((MinimapRadius + MinimapMargin) * 2 * UIScale);
@@ -32,6 +33,7 @@ public class DockingControl : Control
     {
         _entManager = IoCManager.Resolve<IEntityManager>();
         _mapManager = IoCManager.Resolve<IMapManager>();
+        _rangeSquared = _range * _range;
         MinSize = (SizeFull, SizeFull);
     }
 
@@ -47,58 +49,124 @@ public class DockingControl : Control
         if (!_entManager.TryGetComponent<TransformComponent>(Entity, out var xform) ||
             !_entManager.TryGetComponent<TransformComponent>(GridEntity, out var gridXform)) return;
 
-        var matrix = Matrix3.CreateTranslation(-xform.LocalPosition);
         var rotation = Matrix3.CreateRotation(xform.LocalRotation);
+        var matrix = Matrix3.CreateTranslation(-xform.LocalPosition);
 
         // Draw the fixtures around the dock before drawing it
         if (_entManager.TryGetComponent<FixturesComponent>(GridEntity, out var fixtures))
         {
-            var gridMatrix = gridXform.WorldMatrix;
-            Matrix3.Multiply(in gridMatrix, in matrix, out var matty);
-
             foreach (var (_, fixture) in fixtures.Fixtures)
             {
-                var invalid = false;
                 var poly = (PolygonShape) fixture.Shape;
-                var verts = new Vector2[poly.VertexCount + 1];
 
                 for (var i = 0; i < poly.VertexCount; i++)
                 {
-                    var vert = matty.Transform(poly.Vertices[i]);
+                    var start = matrix.Transform(poly.Vertices[i]);
+                    var end = matrix.Transform(poly.Vertices[(i + 1) % poly.VertexCount]);
 
-                    if (vert.Length > _range)
+                    var startOut = start.LengthSquared > _rangeSquared;
+                    var endOut = end.LengthSquared > _rangeSquared;
+
+                    // We need to draw to the radar border so we'll cap the range,
+                    // but if none of the verts are in range then just leave it.
+                    if (startOut && endOut)
+                        continue;
+
+                    start.Y = -start.Y;
+                    end.Y = -end.Y;
+
+                    // If start is outside we draw capped from end to start
+                    if (startOut)
                     {
-                        invalid = true;
-                        break;
+                        // It's called Jobseeker now.
+                        if (!MathHelper.TryGetIntersecting(start, end, _range, out var newStart)) continue;
+                        start = newStart.Value;
+                    }
+                    // otherwise vice versa
+                    else if (endOut)
+                    {
+                        if (!MathHelper.TryGetIntersecting(end, start, _range, out var newEnd)) continue;
+                        end = newEnd.Value;
                     }
 
-                    vert.Y = -vert.Y;
-                    verts[i] = ScalePosition(vert);
+                    handle.DrawLine(ScalePosition(start), ScalePosition(end), Color.Goldenrod);
                 }
-
-                if (invalid) continue;
-
-                // Closed list
-                verts[poly.VertexCount] = verts[0];
-                handle.DrawPrimitives(DrawPrimitiveTopology.LineStrip, verts, Color.Yellow);
             }
         }
 
         // Draw the dock's collision
         handle.DrawRect(new UIBox2(
-            ScalePosition(rotation.Transform(new Vector2(-0.2f, 0f) + xform.LocalPosition)),
-            ScalePosition(rotation.Transform(new Vector2(0.2f, -0.2f) + xform.LocalPosition))), Color.Aquamarine, false);
+            ScalePosition(rotation.Transform(new Vector2(-0.2f, -0.7f))),
+            ScalePosition(rotation.Transform(new Vector2(0.2f, -0.5f)))), Color.Aquamarine, false);
 
         // Draw the dock itself
-        handle.DrawLine(ScalePosition(rotation.Transform(new Vector2(-0.5f, 0f))), ScalePosition(rotation.Transform(new Vector2(0.5f, 0f))), Color.Orange);
+        handle.DrawLine(
+            ScalePosition(rotation.Transform(new Vector2(-0.5f, -0.5f))),
+            ScalePosition(rotation.Transform(new Vector2(0.5f, -0.5f))), Color.Green);
 
         // Draw nearby grids
-        var worldPos = xform.WorldPosition;
+        var worldPos = gridXform.WorldMatrix.Transform(xform.LocalPosition);
+        var gridInvMatrix = gridXform.InvWorldMatrix;
+        Matrix3.Multiply(in gridInvMatrix, in matrix, out var invMatrix);
+
+        // TODO: Getting some overdraw so need to fix that.
 
         foreach (var grid in _mapManager.FindGridsIntersecting(xform.MapID,
                      new Box2(worldPos - _range, worldPos + _range)))
         {
+            if (grid.GridEntityId == GridEntity) continue;
 
+            // Draw the fixtures before drawing any docks in range.
+            if (!_entManager.TryGetComponent<FixturesComponent>(grid.GridEntityId, out var gridFixtures)) continue;
+
+            var gridMatrix = grid.WorldMatrix;
+
+            Matrix3.Multiply(in gridMatrix, in invMatrix, out var matty);
+
+            foreach (var (_, fixture) in gridFixtures.Fixtures)
+            {
+                var poly = (PolygonShape) fixture.Shape;
+
+                for (var i = 0; i < poly.VertexCount; i++)
+                {
+                    // This is because the same line might be on different fixtures so we don't want to draw it twice.
+                    var startPos = poly.Vertices[i];
+                    var endPos = poly.Vertices[(i + 1) % poly.VertexCount];
+
+                    var start = matty.Transform(startPos);
+                    var end = matty.Transform(endPos);
+
+                    var startOut = start.LengthSquared > _rangeSquared;
+                    var endOut = end.LengthSquared > _rangeSquared;
+
+                    // We need to draw to the radar border so we'll cap the range,
+                    // but if none of the verts are in range then just leave it.
+                    if (startOut && endOut)
+                        continue;
+
+                    start.Y = -start.Y;
+                    end.Y = -end.Y;
+
+                    // If start is outside we draw capped from end to start
+                    if (startOut)
+                    {
+                        // It's called Jobseeker now.
+                        if (!MathHelper.TryGetIntersecting(start, end, _range, out var newStart)) continue;
+                        start = newStart.Value;
+                    }
+                    // otherwise vice versa
+                    else if (endOut)
+                    {
+                        if (!MathHelper.TryGetIntersecting(end, start, _range, out var newEnd)) continue;
+                        end = newEnd.Value;
+                    }
+
+                    handle.DrawLine(ScalePosition(start), ScalePosition(end), Color.Aquamarine);
+                }
+            }
+
+            // Draw any docks on that grid
+            // foreach (var dock in )
         }
 
     }
