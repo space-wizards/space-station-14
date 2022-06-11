@@ -18,7 +18,7 @@ namespace Content.Server.Singularity.EntitySystems
         [Dependency] private readonly IMapManager _mapManager = default!;
         [Dependency] private readonly SharedContainerSystem _container = default!;
         [Dependency] private readonly PVSOverrideSystem _pvs = default!;
-
+        [Dependency] private readonly ContainmentFieldGeneratorSystem _fieldGeneratorSystem = default!;
         /// <summary>
         /// How much energy the singulo gains from destroying a tile.
         /// </summary>
@@ -132,7 +132,7 @@ namespace Content.Server.Singularity.EntitySystems
                    !EntityManager.HasComponent<GhostComponent>(entity) &&
                    (component.Level > 4 ||
                    !EntityManager.HasComponent<ContainmentFieldComponent>(entity) &&
-                   !(EntityManager.TryGetComponent<ContainmentFieldGeneratorComponent>(entity, out var containFieldGen) && containFieldGen.CanRepel(component)));
+                   !(EntityManager.TryGetComponent<ContainmentFieldGeneratorComponent>(entity, out var containFieldGen) && _fieldGeneratorSystem.CanRepel(component, containFieldGen)));
         }
 
         private void HandleDestroy(ServerSingularityComponent component, EntityUid entity)

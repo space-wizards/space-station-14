@@ -1,4 +1,5 @@
 using System.Threading;
+using Content.Server.Singularity.EntitySystems;
 using Content.Shared.Singularity.Components;
 using Timer = Robust.Shared.Timing.Timer;
 
@@ -82,8 +83,8 @@ namespace Content.Server.Singularity.Components
             }
             _fields.Clear();
 
-            Generator1.RemoveConnection(this);
-            Generator2.RemoveConnection(this);
+            IoCManager.Resolve<ContainmentFieldGeneratorSystem>().RemoveConnection(this, Generator1);
+            IoCManager.Resolve<ContainmentFieldGeneratorSystem>().RemoveConnection(this, Generator2);
         }
     }
 }

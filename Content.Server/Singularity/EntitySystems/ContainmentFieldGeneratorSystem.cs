@@ -32,7 +32,7 @@ namespace Content.Server.Singularity.EntitySystems
             component.Connection2?.Item2.Dispose();
         }
 
-        private void OnAnchorChanged(EntityUid uid, ContainmentFieldGeneratorComponent component, AnchorStateChangedEvent args)
+        private void OnAnchorChanged(EntityUid uid, ContainmentFieldGeneratorComponent component, ref AnchorStateChangedEvent args)
         {
             if (EntityManager.TryGetComponent<PhysicsComponent>(component.Owner, out var physicsComponent) && physicsComponent.BodyType != BodyType.Static)
             {
