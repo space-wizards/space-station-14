@@ -1,59 +1,60 @@
 - type: entity
-  id: CartridgePistolBase
+  id: BaseCartridgePistol
   name: cartridge (.35 auto)
   parent: BaseCartridge
   abstract: true
   components:
-  - type: Ammo
-    caliber: Pistol
+  - type: Tag
+    tags:
+      - Cartridge
+      - CartridgePistol
+  - type: CartridgeAmmo
+    proto: BulletPistol
   - type: Sprite
     netsync: false
-    noRot: false
     sprite: Objects/Weapons/Guns/Ammunition/Casings/ammo_casing.rsi
     layers:
     - state: base
       map: ["enum.AmmoVisualLayers.Base"]
   - type: Appearance
-    visuals:
-    - type: SpentAmmoVisualizer
+  - type: SpentAmmoVisuals
 
 - type: entity
   id: CartridgePistol
   name: cartridge (.35 auto)
-  parent: CartridgePistolBase
+  parent: BaseCartridgePistol
   components:
-  - type: Ammo
-    projectile: BulletPistol
+  - type: CartridgeAmmo
+    proto: BulletPistol
 
 - type: entity
   id: CartridgePistolFlash
   name: cartridge (.35 auto flash)
-  parent: CartridgePistolBase
+  parent: BaseCartridgePistol
   components:
-  - type: Ammo
-    projectile: BulletPistolFlash
+  - type: CartridgeAmmo
+    proto: BulletPistolFlash
 
 - type: entity
-  id: CartridgePistolHV
+  id: CartridgePistolHighVelocity
   name: cartridge (.35 auto high-velocity)
-  parent: CartridgePistolBase
+  parent: BaseCartridgePistol
   components:
-  - type: Ammo
-    projectile: BulletPistolHV
-    ammoVelocity: 30
+  - type: CartridgeAmmo
+    proto: BulletPistolHighVelocity
 
 - type: entity
   id: CartridgePistolPractice
   name: cartridge (.35 auto practice)
-  parent: CartridgePistolBase
+  parent: BaseCartridgePistol
   components:
-  - type: Ammo
-    projectile: BulletPistolPractice
+  - type: CartridgeAmmo
+    proto: BulletPistolPractice
 
 - type: entity
   id: CartridgePistolRubber
   name: cartridge (.35 auto rubber)
-  parent: CartridgePistolBase
+  parent: BaseCartridgePistol
   components:
-  - type: Ammo
-    projectile: BulletPistolRubber
+  - type: CartridgeAmmo
+    proto: BulletPistolRubber

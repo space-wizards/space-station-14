@@ -1,0 +1,14 @@
+- type: entity
+  id: BaseCartridge
+  parent: BaseItem
+  abstract: true
+  components:
+  - type: Sprite
+    netsync: false
+  - type: Tag
+    tags:
+    - Cartridge
+  - type: Item
+    size: 1
+  - type: Recyclable
+  - type: SpaceGarbage

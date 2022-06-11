@@ -31509,21 +31509,13 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 2390
-  type: ShotgunPump
+  type: WeaponShotgunKammerer
   components:
   - pos: 41.518063,26.561434
     parent: 2
     type: Transform
   - canCollide: False
     type: Physics
-  - containers:
-      PumpBarrel-ammo-container: !type:Container
-        ents: []
-      PumpBarrel-chamber-container: !type:ContainerSlot {}
-      Content.Server.Weapon.Ranged.Barrels.Components.PumpBarrelComponent-ammo-container: !type:Container
-        ents: []
-      Content.Server.Weapon.Ranged.Barrels.Components.PumpBarrelComponent-chamber-container: !type:ContainerSlot {}
-    type: ContainerContainer
 - uid: 2391
   type: ClothingOuterArmorBulletproof
   components:
@@ -78797,7 +78789,7 @@ entities:
       Toggle: []
     type: SignalReceiver
 - uid: 7531
-  type: SmgDrozdRiot
+  type: WeaponSubMachineGunDrozdRubber
   components:
   - pos: 38.61274,27.452318
     parent: 2
@@ -78805,28 +78797,19 @@ entities:
   - canCollide: False
     type: Physics
   - containers:
-      MagazineBarrel-chamber: !type:ContainerSlot {}
-      MagazineBarrel-magazine: !type:ContainerSlot
-        ent: 7532
-      Content.Server.Weapon.Ranged.Barrels.Components.MagazineBarrelComponent-chamber: !type:ContainerSlot {}
-      Content.Server.Weapon.Ranged.Barrels.Components.MagazineBarrelComponent-magazine: !type:ContainerSlot
+      gun_chamber: !type:ContainerSlot {}
+      gun_magazine: !type:ContainerSlot
         ent: 11936
     type: ContainerContainer
 - uid: 7532
-  type: MagazineMagnumSmgRubber
+  type: MagazineMagnumSubMachineGunRubber
   components:
   - parent: 7531
     type: Transform
   - canCollide: False
     type: Physics
-  - containers:
-      RangedMagazine-magazine: !type:Container
-        ents: []
-      Content.Server.Weapon.Ranged.Ammunition.Components.RangedMagazineComponent-magazine: !type:Container
-        ents: []
-    type: ContainerContainer
 - uid: 7533
-  type: SmgDrozdRiot
+  type: WeaponSubMachineGunDrozdRubber
   components:
   - pos: 38.597115,27.702318
     parent: 2
@@ -78834,56 +78817,35 @@ entities:
   - canCollide: False
     type: Physics
   - containers:
-      MagazineBarrel-chamber: !type:ContainerSlot {}
-      MagazineBarrel-magazine: !type:ContainerSlot
-        ent: 7534
-      Content.Server.Weapon.Ranged.Barrels.Components.MagazineBarrelComponent-chamber: !type:ContainerSlot {}
-      Content.Server.Weapon.Ranged.Barrels.Components.MagazineBarrelComponent-magazine: !type:ContainerSlot
+      gun_chamber: !type:ContainerSlot {}
+      gun_magazine: !type:ContainerSlot
         ent: 11937
     type: ContainerContainer
 - uid: 7534
-  type: MagazineMagnumSmgRubber
+  type: MagazineMagnumSubMachineGunRubber
   components:
   - parent: 7533
     type: Transform
   - canCollide: False
     type: Physics
-  - containers:
-      RangedMagazine-magazine: !type:Container
-        ents: []
-      Content.Server.Weapon.Ranged.Ammunition.Components.RangedMagazineComponent-magazine: !type:Container
-        ents: []
-    type: ContainerContainer
 - uid: 7535
-  type: MagazineMagnumSmgRubber
+  type: MagazineMagnumSubMachineGunRubber
   components:
   - pos: 38.784615,26.467943
     parent: 2
     type: Transform
   - canCollide: False
     type: Physics
-  - containers:
-      RangedMagazine-magazine: !type:Container
-        ents: []
-      Content.Server.Weapon.Ranged.Ammunition.Components.RangedMagazineComponent-magazine: !type:Container
-        ents: []
-    type: ContainerContainer
 - uid: 7536
-  type: MagazineMagnumSmgRubber
+  type: MagazineMagnumSubMachineGunRubber
   components:
   - pos: 38.440865,26.499193
     parent: 2
     type: Transform
   - canCollide: False
     type: Physics
-  - containers:
-      RangedMagazine-magazine: !type:Container
-        ents: []
-      Content.Server.Weapon.Ranged.Ammunition.Components.RangedMagazineComponent-magazine: !type:Container
-        ents: []
-    type: ContainerContainer
 - uid: 7537
-  type: MagazineMagnumSmgRubber
+  type: MagazineMagnumSubMachineGunRubber
   components:
   - rot: 2.006034628720954E-05 rad
     pos: 38.26498,26.51372
@@ -78891,54 +78853,30 @@ entities:
     type: Transform
   - canCollide: False
     type: Physics
-  - containers:
-      RangedMagazine-magazine: !type:Container
-        ents: []
-      Content.Server.Weapon.Ranged.Ammunition.Components.RangedMagazineComponent-magazine: !type:Container
-        ents: []
-    type: ContainerContainer
 - uid: 7538
-  type: MagazineMagnumSmgRubber
+  type: MagazineMagnumSubMachineGunRubber
   components:
   - pos: 38.534615,26.483568
     parent: 2
     type: Transform
   - canCollide: False
     type: Physics
-  - containers:
-      RangedMagazine-magazine: !type:Container
-        ents: []
-      Content.Server.Weapon.Ranged.Ammunition.Components.RangedMagazineComponent-magazine: !type:Container
-        ents: []
-    type: ContainerContainer
 - uid: 7539
-  type: MagazineMagnumSmgRubber
+  type: MagazineMagnumSubMachineGunRubber
   components:
   - pos: 38.597115,26.483568
     parent: 2
     type: Transform
   - canCollide: False
     type: Physics
-  - containers:
-      RangedMagazine-magazine: !type:Container
-        ents: []
-      Content.Server.Weapon.Ranged.Ammunition.Components.RangedMagazineComponent-magazine: !type:Container
-        ents: []
-    type: ContainerContainer
 - uid: 7540
-  type: MagazineMagnumSmgRubber
+  type: MagazineMagnumSubMachineGunRubber
   components:
   - pos: 38.73774,26.483568
     parent: 2
     type: Transform
   - canCollide: False
     type: Physics
-  - containers:
-      RangedMagazine-magazine: !type:Container
-        ents: []
-      Content.Server.Weapon.Ranged.Ammunition.Components.RangedMagazineComponent-magazine: !type:Container
-        ents: []
-    type: ContainerContainer
 - uid: 7541
   type: ClothingOuterHardsuitEVA
   components:
@@ -79008,7 +78946,7 @@ entities:
     parent: 2
     type: Transform
 - uid: 7550
-  type: TaserGun
+  type: WeaponTaser
   components:
   - rot: 6.230108556337655E-05 rad
     pos: 41.515198,24.735239
@@ -79016,40 +78954,22 @@ entities:
     type: Transform
   - canCollide: False
     type: Physics
-  - containers:
-      BatteryBarrel-powercell-container: !type:ContainerSlot {}
-      BatteryBarrel-ammo-container: !type:ContainerSlot {}
-      cellslot_cell_container: !type:ContainerSlot {}
-      Content.Server.Weapon.Ranged.Barrels.Components.BatteryBarrelComponent-ammo-container: !type:ContainerSlot {}
-    type: ContainerContainer
 - uid: 7551
-  type: TaserGun
+  type: WeaponTaser
   components:
   - pos: 41.515827,24.580679
     parent: 2
     type: Transform
   - canCollide: False
     type: Physics
-  - containers:
-      BatteryBarrel-powercell-container: !type:ContainerSlot {}
-      BatteryBarrel-ammo-container: !type:ContainerSlot {}
-      cellslot_cell_container: !type:ContainerSlot {}
-      Content.Server.Weapon.Ranged.Barrels.Components.BatteryBarrelComponent-ammo-container: !type:ContainerSlot {}
-    type: ContainerContainer
 - uid: 7552
-  type: TaserGun
+  type: WeaponTaser
   components:
   - pos: 41.515827,24.393179
     parent: 2
     type: Transform
   - canCollide: False
     type: Physics
-  - containers:
-      BatteryBarrel-powercell-container: !type:ContainerSlot {}
-      BatteryBarrel-ammo-container: !type:ContainerSlot {}
-      cellslot_cell_container: !type:ContainerSlot {}
-      Content.Server.Weapon.Ranged.Barrels.Components.BatteryBarrelComponent-ammo-container: !type:ContainerSlot {}
-    type: ContainerContainer
 - uid: 7553
   type: ClothingOuterCoatPirate
   components:
@@ -95403,20 +95323,13 @@ entities:
   - color: '#0000FFFF'
     type: AtmosPipeColor
 - uid: 9191
-  type: LaserRifleCog
+  type: WeaponLaserRifleCog
   components:
   - pos: 41.526512,27.667274
     parent: 2
     type: Transform
   - canCollide: False
     type: Physics
-  - containers:
-      BatteryBarrel-powercell-container: !type:ContainerSlot
-        ent: 11070
-      BatteryBarrel-ammo-container: !type:ContainerSlot {}
-      cellslot_cell_container: !type:ContainerSlot {}
-      Content.Server.Weapon.Ranged.Barrels.Components.BatteryBarrelComponent-ammo-container: !type:ContainerSlot {}
-    type: ContainerContainer
 - uid: 9192
   type: GasPipeStraight
   components:
@@ -119726,7 +119639,7 @@ entities:
         ents: []
     type: ContainerContainer
 - uid: 11141
-  type: SmgWt550
+  type: WeaponSubMachineGunWt550
   components:
   - pos: 45.51632,24.577965
     parent: 2
@@ -119734,54 +119647,33 @@ entities:
   - canCollide: False
     type: Physics
   - containers:
-      MagazineBarrel-chamber: !type:ContainerSlot {}
-      MagazineBarrel-magazine: !type:ContainerSlot
-        ent: 11142
-      Content.Server.Weapon.Ranged.Barrels.Components.MagazineBarrelComponent-chamber: !type:ContainerSlot {}
-      Content.Server.Weapon.Ranged.Barrels.Components.MagazineBarrelComponent-magazine: !type:ContainerSlot
+      gun_chamber: !type:ContainerSlot {}
+      gun_magazine: !type:ContainerSlot
         ent: 11938
     type: ContainerContainer
 - uid: 11142
-  type: MagazinePistolSmgTopMounted
+  type: MagazinePistolSubMachineGunTopMounted
   components:
   - parent: 11141
     type: Transform
   - canCollide: False
     type: Physics
-  - containers:
-      RangedMagazine-magazine: !type:Container
-        ents: []
-      Content.Server.Weapon.Ranged.Ammunition.Components.RangedMagazineComponent-magazine: !type:Container
-        ents: []
-    type: ContainerContainer
 - uid: 11143
-  type: MagazinePistolSmgTopMounted
+  type: MagazinePistolSubMachineGunTopMounted
   components:
   - pos: 45.39132,24.15609
     parent: 2
     type: Transform
   - canCollide: False
     type: Physics
-  - containers:
-      RangedMagazine-magazine: !type:Container
-        ents: []
-      Content.Server.Weapon.Ranged.Ammunition.Components.RangedMagazineComponent-magazine: !type:Container
-        ents: []
-    type: ContainerContainer
 - uid: 11144
-  type: MagazinePistolSmgTopMounted
+  type: MagazinePistolSubMachineGunTopMounted
   components:
   - pos: 45.688194,24.171715
     parent: 2
     type: Transform
   - canCollide: False
     type: Physics
-  - containers:
-      RangedMagazine-magazine: !type:Container
-        ents: []
-      Content.Server.Weapon.Ranged.Ammunition.Components.RangedMagazineComponent-magazine: !type:Container
-        ents: []
-    type: ContainerContainer
 - uid: 11145
   type: WallWeaponCapacitorRecharger
   components:
@@ -119867,20 +119759,13 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 11154
-  type: LaserRifleCog
+  type: WeaponLaserRifleCog
   components:
   - pos: 41.526512,27.4329
     parent: 2
     type: Transform
   - canCollide: False
     type: Physics
-  - containers:
-      BatteryBarrel-powercell-container: !type:ContainerSlot
-        ent: 11166
-      BatteryBarrel-ammo-container: !type:ContainerSlot {}
-      cellslot_cell_container: !type:ContainerSlot {}
-      Content.Server.Weapon.Ranged.Barrels.Components.BatteryBarrelComponent-ammo-container: !type:ContainerSlot {}
-    type: ContainerContainer
 - uid: 11155
   type: CableApcExtension
   components:
@@ -126736,38 +126621,26 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 11936
-  type: MagazineMagnumSmgRubber
+  type: MagazineMagnumSubMachineGunRubber
   components:
   - parent: 7531
     type: Transform
   - canCollide: False
     type: Physics
-  - containers:
-      Content.Server.Weapon.Ranged.Ammunition.Components.RangedMagazineComponent-magazine: !type:Container
-        ents: []
-    type: ContainerContainer
 - uid: 11937
-  type: MagazineMagnumSmgRubber
+  type: MagazineMagnumSubMachineGunRubber
   components:
   - parent: 7533
     type: Transform
   - canCollide: False
     type: Physics
-  - containers:
-      Content.Server.Weapon.Ranged.Ammunition.Components.RangedMagazineComponent-magazine: !type:Container
-        ents: []
-    type: ContainerContainer
 - uid: 11938
-  type: MagazinePistolSmgTopMounted
+  type: MagazinePistolSubMachineGunTopMounted
   components:
   - parent: 11141
     type: Transform
   - canCollide: False
     type: Physics
-  - containers:
-      Content.Server.Weapon.Ranged.Ammunition.Components.RangedMagazineComponent-magazine: !type:Container
-        ents: []
-    type: ContainerContainer
 - uid: 11939
   type: SignSecurearea
   components:
@@ -128518,7 +128391,7 @@ entities:
         ents: []
     type: ContainerContainer
 - uid: 12159
-  type: BoxSterile
+  type: BoxSterileMask
   components:
   - pos: 79.63914,-6.4771976
     parent: 2

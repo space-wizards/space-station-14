@@ -27,11 +27,10 @@
     - type: ApcPowerReceiver
     - type: ExtensionCableReceiver
     - type: DeviceNetwork
-      deviceNetId: Apc
+      deviceNetId: AtmosDevices
       receiveFrequencyId: AtmosMonitor
       transmitFrequencyId: AtmosMonitor
       prefix: device-address-prefix-vent
-    - type: ApcNetworkConnection
     - type: AtmosAlarmable
       alarmedBy:
       - AirAlarm
@@ -99,11 +98,10 @@
     - type: ApcPowerReceiver
     - type: ExtensionCableReceiver
     - type: DeviceNetwork
-      deviceNetId: Apc
+      deviceNetId: AtmosDevices
       receiveFrequencyId: AtmosMonitor
       transmitFrequencyId: AtmosMonitor
       prefix: device-address-prefix-scrubber
-    - type: ApcNetworkConnection
     - type: AtmosAlarmable
       alarmedBy:
       - AirAlarm
@@ -220,6 +218,10 @@
       mode: Freezer
     - type: Machine
       board: ThermomachineFreezerMachineCircuitBoard
+    - type: ContainerContainer
+      containers:
+        machine_parts: !type:Container
+        machine_board: !type:Container
 
 - type: entity
   parent: BaseGasThermoMachine
@@ -245,3 +247,7 @@
       mode: Heater
     - type: Machine
       board: ThermomachineHeaterMachineCircuitBoard
+    - type: ContainerContainer
+      containers:
+        machine_parts: !type:Container
+        machine_board: !type:Container

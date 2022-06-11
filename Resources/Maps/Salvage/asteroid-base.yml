@@ -1676,26 +1676,22 @@ entities:
     parent: 0
     type: Transform
 - uid: 217
-  type: PistolMandella
+  type: WeaponPistolMandella
   components:
   - parent: 207
     type: Transform
   - canCollide: False
     type: Physics
   - containers:
-      Content.Server.Weapon.Ranged.Barrels.Components.MagazineBarrelComponent-chamber: !type:ContainerSlot {}
-      Content.Server.Weapon.Ranged.Barrels.Components.MagazineBarrelComponent-magazine: !type:ContainerSlot
+      gun_chamber: !type:ContainerSlot {}
+      gun_magazine: !type:ContainerSlot
         ent: 218
     type: ContainerContainer
 - uid: 218
-  type: MagazineClRiflePistol
+  type: MagazinePistolCaselessRifle
   components:
   - parent: 217
     type: Transform
   - canCollide: False
     type: Physics
-  - containers:
-      Content.Server.Weapon.Ranged.Ammunition.Components.RangedMagazineComponent-magazine: !type:Container
-        ents: []
-    type: ContainerContainer
 ...

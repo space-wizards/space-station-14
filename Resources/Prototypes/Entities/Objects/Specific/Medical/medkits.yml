@@ -9,9 +9,9 @@
     netsync: false
     state: firstaid
   - type: Storage
-    capacity: 26
+    capacity: 30
   - type: Item
-    size: 26
+    size: 30
     sprite: Objects/Specific/Medical/firstaidkits.rsi
     HeldPrefix: firstaid
 

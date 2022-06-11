@@ -9,7 +9,7 @@ namespace Content.Server.Station.Components;
 /// <summary>
 /// Stores information about a station's job selection.
 /// </summary>
-[RegisterComponent, Friend(typeof(StationJobsSystem)), PublicAPI]
+[RegisterComponent, Access(typeof(StationJobsSystem)), PublicAPI]
 public sealed class StationJobsComponent : Component
 {
     /// <summary>
