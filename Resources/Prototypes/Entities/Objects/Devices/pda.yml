@@ -53,6 +53,7 @@
   - type: PDA
     penSlot:
       startingItem: Pen
+      priority: -1
       whitelist:
         tags:
         - Write
@@ -177,11 +178,10 @@
   - type: PDA
     id: ClownIDCard
     penSlot:
-      startingItem: CrayonOrange # no pink crayon?!?
-      # Maybe this is a bad idea.
-      # At least they can't just spam alt-click it.
-      # You need to remove the ID & alternate between inserting and ejecting
+      startingItem: CrayonOrange # no pink crayon?!? 
+      # ^ Still unacceptable.
       ejectSound: /Audio/Items/bikehorn.ogg
+      priority: -1
       whitelist:
         tags:
         - Write
@@ -365,6 +365,7 @@
     id: CaptainIDCard
     penSlot:
       startingItem: PenCap
+      priority: -1
       whitelist:
         tags:
         - Write
@@ -385,6 +386,7 @@
     id: HoPIDCard
     penSlot:
       startingItem: PenHop
+      priority: -1
       whitelist:
         tags:
         - Write
@@ -409,7 +411,6 @@
         state: pda-ce
   - type: Icon
     state: pda-ce
-
 
 - type: entity
   parent: BasePDA
