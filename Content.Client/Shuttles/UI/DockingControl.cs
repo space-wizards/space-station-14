@@ -21,6 +21,7 @@ public class DockingControl : Control
 
     private float _range = 8f;
     private float _rangeSquared = 0f;
+    private const float GridLinesDistance = 32f;
 
     private int MidPoint => SizeFull / 2;
     private int SizeFull => (int) ((MinimapRadius + MinimapMargin) * 2 * UIScale);
@@ -51,6 +52,22 @@ public class DockingControl : Control
 
         handle.DrawCircle((MidPoint, MidPoint), ScaledMinimapRadius + 1, fakeAA);
         handle.DrawCircle((MidPoint, MidPoint), ScaledMinimapRadius, Color.Black);
+
+        var gridLines = new Color(0.08f, 0.08f, 0.08f);
+        var gridLinesRadial = 8;
+        var gridLinesEquatorial = (int) Math.Floor(_range / GridLinesDistance);
+
+        for (var i = 1; i < gridLinesEquatorial + 1; i++)
+        {
+            handle.DrawCircle((MidPoint, MidPoint), GridLinesDistance * MinimapScale * i, gridLines, false);
+        }
+
+        for (var i = 0; i < gridLinesRadial; i++)
+        {
+            Angle angle = (Math.PI / gridLinesRadial) * i;
+            var aExtent = angle.ToVec() * ScaledMinimapRadius;
+            handle.DrawLine((MidPoint, MidPoint) - aExtent, (MidPoint, MidPoint) + aExtent, gridLines);
+        }
 
         if (!_entManager.TryGetComponent<TransformComponent>(ViewedDock, out var xform) ||
             !_entManager.TryGetComponent<TransformComponent>(GridEntity, out var gridXform)) return;
