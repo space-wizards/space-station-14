@@ -20,7 +20,9 @@
   description: A headset used by the quartermaster and his slaves.
   components:
   - type: Headset
-    channels: [broadcast, supply]
+    channels:
+    - broadcast
+    - supply
   - type: Sprite
     sprite: Clothing/Ears/Headsets/cargo.rsi
 
@@ -31,7 +33,16 @@
   description: A headset used by the upper echelons of Nanotrasen.
   components:
   - type: Headset
-    channels: [broadcast, command, centcom, engineering, medical, science, security, service, supply]
+    channels:
+    - broadcast
+    - command
+    - centcom
+    - engineering
+    - medical
+    - science
+    - security
+    - service
+    - supply
   - type: Sprite
     sprite: Clothing/Ears/Headsets/centcom.rsi
 
@@ -42,7 +53,15 @@
   description: A headset with a commanding channel.
   components:
   - type: Headset
-    channels: [broadcast, command, engineering, medical, science, security, service, supply]
+    channels:
+    - broadcast
+    - command
+    - engineering
+    - medical
+    - science
+    - security
+    - service
+    - supply
   - type: Sprite
     sprite: Clothing/Ears/Headsets/command.rsi
 
@@ -53,7 +72,9 @@
   description: A headset for engineers to chat while the station burns around them.
   components:
   - type: Headset
-    channels: [broadcast, engineering]
+    channels:
+    - broadcast
+    - engineering
   - type: Sprite
     sprite: Clothing/Ears/Headsets/engineering.rsi
 
@@ -64,7 +85,9 @@
   description: A headset for the trained staff of the medbay.
   components:
   - type: Headset
-    channels: [broadcast, medical]
+    channels:
+    - broadcast
+    - medical
   - type: Sprite
     sprite: Clothing/Ears/Headsets/medical.rsi
 
@@ -75,7 +98,10 @@
   description: A headset that is a result of the mating between medical and science.
   components:
   - type: Headset
-    channels: [broadcast, medical, science]
+    channels:
+    - broadcast
+    - medical
+    - science
   - type: Sprite
     sprite: Clothing/Ears/Headsets/medicalscience.rsi
 
@@ -104,7 +130,9 @@
   description: A sciency headset. Like usual.
   components:
   - type: Headset
-    channels: [broadcast, science]
+    channels:
+    - broadcast
+    - science
   - type: Sprite
     sprite: Clothing/Ears/Headsets/science.rsi
 
@@ -115,7 +143,9 @@
   description: This is used by your elite security force.
   components:
   - type: Headset
-    channels: [broadcast, security]
+    channels:
+    - broadcast
+    - security
   - type: Sprite
     sprite: Clothing/Ears/Headsets/security.rsi
 
@@ -126,6 +156,8 @@
   description: Headset used by the service staff, tasked with keeping the station full, happy and clean.
   components:
   - type: Headset
-    channels: [broadcast, service]
+    channels:
+    - broadcast
+    - service
   - type: Sprite
     sprite: Clothing/Ears/Headsets/service.rsi
