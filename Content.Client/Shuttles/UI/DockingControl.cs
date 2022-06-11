@@ -103,12 +103,12 @@ public class DockingControl : Control
         // Draw the dock's collision
         handle.DrawRect(new UIBox2(
             ScalePosition(rotation.Transform(new Vector2(-0.2f, -0.7f))),
-            ScalePosition(rotation.Transform(new Vector2(0.2f, -0.5f)))), Color.Aquamarine, false);
+            ScalePosition(rotation.Transform(new Vector2(0.2f, -0.5f)))), Color.Aquamarine);
 
         // Draw the dock itself
-        handle.DrawLine(
-            ScalePosition(rotation.Transform(new Vector2(-0.5f, -0.5f))),
-            ScalePosition(rotation.Transform(new Vector2(0.5f, -0.5f))), Color.Green);
+        handle.DrawRect(new UIBox2(
+            ScalePosition(rotation.Transform(new Vector2(-0.5f, 0.5f))),
+            ScalePosition(rotation.Transform(new Vector2(0.5f, -0.5f)))), Color.Green);
 
         // Draw nearby grids
         var worldPos = gridXform.WorldMatrix.Transform(xform.LocalPosition);
@@ -172,7 +172,57 @@ public class DockingControl : Control
             }
 
             // Draw any docks on that grid
-            // foreach (var dock in )
+            if (Docks.TryGetValue(grid.GridEntityId, out var gridDocks))
+            {
+                foreach (var dock in gridDocks)
+                {
+                    var position = matty.Transform(dock.Coordinates.Position);
+
+                    if (position.Length > _range - 0.8f) continue;
+
+                    var otherDockRotation = Matrix3.CreateRotation(dock.Angle);
+
+                    // Draw the dock's collision
+                    var verts = new[]
+                    {
+                        matty.Transform(dock.Coordinates.Position +
+                                        otherDockRotation.Transform(new Vector2(-0.2f, -0.7f))),
+                        matty.Transform(dock.Coordinates.Position +
+                                        otherDockRotation.Transform(new Vector2(0.2f, -0.7f))),
+                        matty.Transform(dock.Coordinates.Position +
+                                        otherDockRotation.Transform(new Vector2(0.2f, -0.5f))),
+                        matty.Transform(dock.Coordinates.Position +
+                                        otherDockRotation.Transform(new Vector2(-0.2f, -0.5f))),
+                    };
+
+                    for (var i = 0; i < verts.Length; i++)
+                    {
+                        var vert = verts[i];
+                        vert.Y = -vert.Y;
+                        verts[i] = ScalePosition(vert);
+                    }
+
+                    handle.DrawPrimitives(DrawPrimitiveTopology.TriangleFan, verts, Color.Turquoise);
+
+                    // Draw the dock itself
+                    verts = new[]
+                    {
+                        matty.Transform(dock.Coordinates.Position + new Vector2(-0.5f, -0.5f)),
+                        matty.Transform(dock.Coordinates.Position + new Vector2(0.5f, -0.5f)),
+                        matty.Transform(dock.Coordinates.Position + new Vector2(0.5f, 0.5f)),
+                        matty.Transform(dock.Coordinates.Position + new Vector2(-0.5f, 0.5f)),
+                    };
+
+                    for (var i = 0; i < verts.Length; i++)
+                    {
+                        var vert = verts[i];
+                        vert.Y = -vert.Y;
+                        verts[i] = ScalePosition(vert);
+                    }
+
+                    handle.DrawPrimitives(DrawPrimitiveTopology.TriangleFan, verts, Color.Green);
+                }
+            }
         }
 
     }

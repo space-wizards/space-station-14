@@ -54,6 +54,7 @@ public sealed partial class DockingSystem
 
             if ((worldPos - otherWorldPos).Length < comp.Radius) continue;
 
+            _sawmill.Debug($"Removed RecentlyDocked from {ToPrettyString(comp.Owner)} and {ToPrettyString(comp.LastDocked)}");
             RemComp<RecentlyDockedComponent>(comp.Owner);
             RemComp<RecentlyDockedComponent>(comp.LastDocked);
         }
@@ -74,8 +75,7 @@ public sealed partial class DockingSystem
     {
         _sawmill.Debug($"Received autodock request for {ToPrettyString(msg.Entity)}");
 
-        if (!TryComp<DockingComponent>(msg.Entity, out var dock) ||
-            dock.Docked) return;
+        if (!TryComp<DockingComponent>(msg.Entity, out var dock)) return;
 
         // TODO: Validation
         EnsureComp<AutoDockComponent>(msg.Entity);

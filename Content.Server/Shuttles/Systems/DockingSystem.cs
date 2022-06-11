@@ -19,6 +19,7 @@ namespace Content.Server.Shuttles.Systems
         [Dependency] private readonly FixtureSystem _fixtureSystem = default!;
         [Dependency] private readonly SharedJointSystem _jointSystem = default!;
         [Dependency] private readonly SharedTransformSystem _transformSystem = default!;
+        [Dependency] private readonly ShuttleConsoleSystem _console = default!;
         [Dependency] private readonly DoorSystem _doorSystem = default!;
 
         private ISawmill _sawmill = default!;
@@ -207,6 +208,8 @@ namespace Content.Server.Shuttles.Systems
             {
                 DisableDocking(uid, component);
             }
+
+            _console.RefreshShuttleConsoles();
         }
 
         private void OnDockingReAnchor(EntityUid uid, DockingComponent component, ref ReAnchorEvent args)
@@ -217,6 +220,7 @@ namespace Content.Server.Shuttles.Systems
 
             Undock(component);
             Dock(component, other);
+            _console.RefreshShuttleConsoles();
         }
 
         private void OnPowerChange(EntityUid uid, DockingComponent component, PowerChangedEvent args)

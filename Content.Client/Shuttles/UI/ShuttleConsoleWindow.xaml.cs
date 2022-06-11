@@ -16,7 +16,8 @@ namespace Content.Client.Shuttles.UI;
 public sealed partial class ShuttleConsoleWindow : FancyWindow,
     IComputerWindow<ShuttleConsoleBoundInterfaceState>
 {
-    private readonly ShuttleConsoleSystem _system;
+    private readonly DockingSystem _dockSystem;
+    private readonly ShuttleConsoleSystem _consoleSystem;
     private readonly IEntityManager _entManager;
 
     /// <summary>
@@ -38,7 +39,8 @@ public sealed partial class ShuttleConsoleWindow : FancyWindow,
     {
         RobustXamlLoader.Load(this);
         _entManager = IoCManager.Resolve<IEntityManager>();
-        _system = _entManager.EntitySysManager.GetEntitySystem<ShuttleConsoleSystem>();
+        _consoleSystem = _entManager.EntitySysManager.GetEntitySystem<ShuttleConsoleSystem>();
+        _dockSystem = _entManager.EntitySysManager.GetEntitySystem<DockingSystem>();
 
         IFFToggle.OnToggled += OnIFFTogglePressed;
         IFFToggle.Pressed = RadarScreen.ShowIFF;
@@ -53,7 +55,7 @@ public sealed partial class ShuttleConsoleWindow : FancyWindow,
 
     private void OnShuttleModePressed(BaseButton.ButtonEventArgs obj)
     {
-        _system.SendShuttleMode(ShuttleMode.Pressed ? Shared.Shuttles.Components.ShuttleMode.Strafing : Shared.Shuttles.Components.ShuttleMode.Cruise);
+        _consoleSystem.SendShuttleMode(ShuttleMode.Pressed ? Shared.Shuttles.Components.ShuttleMode.Strafing : Shared.Shuttles.Components.ShuttleMode.Cruise);
     }
 
     private void OnIFFTogglePressed(BaseButton.ButtonEventArgs args)
@@ -71,7 +73,7 @@ public sealed partial class ShuttleConsoleWindow : FancyWindow,
     private void OnUndockPressed(BaseButton.ButtonEventArgs args)
     {
         if (DockingScreen.ViewedDock == null) return;
-        _system.Undock(DockingScreen.ViewedDock.Value);
+        _dockSystem.Undock(DockingScreen.ViewedDock.Value);
     }
 
     public void UpdateState(ShuttleConsoleBoundInterfaceState scc)
@@ -89,7 +91,6 @@ public sealed partial class ShuttleConsoleWindow : FancyWindow,
     {
         // TODO: We should check for changes so any existing highlighted doesn't delete.
         // We also need to make up some pseudonumber as well for these.
-
         _docks.Clear();
 
         foreach (var dock in docks)
@@ -99,6 +100,7 @@ public sealed partial class ShuttleConsoleWindow : FancyWindow,
         }
 
         DockPorts.DisposeAllChildren();
+        DockingScreen.Docks = _docks;
 
         if (!_entManager.TryGetComponent<TransformComponent>(_entity, out var xform))
         {
@@ -106,18 +108,20 @@ public sealed partial class ShuttleConsoleWindow : FancyWindow,
             return;
         }
 
-        var index = 0;
-
         if (_docks.TryGetValue(xform.GridEntityId, out var gridDocks))
         {
+            var index = 0;
+
             foreach (var state in gridDocks)
             {
                 var ent = state.Entity;
+                var pressed = ent == DockingScreen.ViewedDock;
 
                 var button = new Button()
                 {
                     Text = $"Dock {index + 1}",
                     ToggleMode = true,
+                    Pressed = pressed,
                 };
 
                 button.OnMouseEntered += args => OnDockMouseEntered(args, ent);
@@ -154,7 +158,7 @@ public sealed partial class ShuttleConsoleWindow : FancyWindow,
         {
             if (DockingScreen.ViewedDock != null)
             {
-                _system.StopAutodock(DockingScreen.ViewedDock.Value);
+                _dockSystem.StopAutodock(DockingScreen.ViewedDock.Value);
                 DockingScreen.ViewedDock = null;
             }
 
@@ -171,7 +175,7 @@ public sealed partial class ShuttleConsoleWindow : FancyWindow,
             RadarScreen.Visible = false;
             DockingScreen.Visible = true;
             DockingScreen.ViewedDock = ent;
-            _system.StartAutodock(ent);
+            _dockSystem.StartAutodock(ent);
             DockingScreen.GridEntity = xform?.GridEntityId;
             _selectedDock = obj.Button;
         }
@@ -182,7 +186,7 @@ public sealed partial class ShuttleConsoleWindow : FancyWindow,
         base.Close();
         if (DockingScreen.ViewedDock != null)
         {
-            _system.StopAutodock(DockingScreen.ViewedDock.Value);
+            _dockSystem.StopAutodock(DockingScreen.ViewedDock.Value);
         }
     }
 

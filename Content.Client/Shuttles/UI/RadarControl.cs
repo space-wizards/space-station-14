@@ -255,7 +255,25 @@ public sealed class RadarControl : Control
                 var color = HighlightedDock == ent ? Color.Magenta : Color.DarkViolet;
 
                 uiPosition.Y = -uiPosition.Y;
-                handle.DrawCircle(ScalePosition(uiPosition), 5f, color);
+
+                const float DockScale = 1f;
+
+                var verts = new Vector2[]
+                {
+                    matrix.Transform(position + new Vector2(-DockScale, -DockScale)),
+                    matrix.Transform(position + new Vector2(DockScale, -DockScale)),
+                    matrix.Transform(position + new Vector2(DockScale, DockScale)),
+                    matrix.Transform(position + new Vector2(-DockScale, DockScale)),
+                };
+
+                for (var i = 0; i < verts.Length; i++)
+                {
+                    var vert = verts[i];
+                    vert.Y = -vert.Y;
+                    verts[i] = ScalePosition(vert);
+                }
+
+                handle.DrawPrimitives(DrawPrimitiveTopology.TriangleFan, verts, color);
             }
         }
     }

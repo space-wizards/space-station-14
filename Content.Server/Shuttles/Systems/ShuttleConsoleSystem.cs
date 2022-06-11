@@ -1,11 +1,9 @@
-using Content.Server.Popups;
 using Content.Server.Power.Components;
 using Content.Server.Power.EntitySystems;
 using Content.Server.Shuttles.Components;
 using Content.Server.UserInterface;
 using Content.Shared.ActionBlocker;
 using Content.Shared.Alert;
-using Content.Shared.Interaction;
 using Content.Shared.Popups;
 using Content.Shared.Shuttles.BUIStates;
 using Content.Shared.Shuttles.Components;
@@ -13,17 +11,13 @@ using Content.Shared.Shuttles.Events;
 using Content.Shared.Shuttles.Systems;
 using Content.Shared.Tag;
 using Robust.Server.GameObjects;
-using Robust.Server.Player;
 using Robust.Shared.GameStates;
-using Robust.Shared.Map;
-using Robust.Shared.Player;
 using Robust.Shared.Utility;
 
 namespace Content.Server.Shuttles.Systems
 {
     public sealed class ShuttleConsoleSystem : SharedShuttleConsoleSystem
     {
-        [Dependency] private readonly IMapManager _mapManager = default!;
         [Dependency] private readonly ActionBlockerSystem _blocker = default!;
         [Dependency] private readonly AlertsSystem _alertsSystem = default!;
         [Dependency] private readonly TagSystem _tags = default!;
@@ -44,10 +38,27 @@ namespace Content.Server.Shuttles.Systems
             SubscribeLocalEvent<PilotComponent, ComponentGetState>(OnGetState);
         }
 
+        /// <summary>
+        /// Refreshes all of the data for shuttle consoles.
+        /// </summary>
+        public void RefreshShuttleConsoles()
+        {
+            var docks = GetAllDocks();
+
+            foreach (var comp in EntityQuery<ShuttleConsoleComponent>(true))
+            {
+                UpdateState(comp, docks);
+            }
+        }
+
+        /// <summary>
+        /// Stop piloting if the window is closed.
+        /// </summary>
         private void OnConsoleUIClose(EntityUid uid, ShuttleConsoleComponent component, BoundUIClosedEvent args)
         {
             if ((ShuttleConsoleUiKey) args.UiKey != ShuttleConsoleUiKey.Key ||
                 args.Session.AttachedEntity is not {} user) return;
+
             RemovePilot(user);
         }
 
@@ -100,6 +111,9 @@ namespace Content.Server.Shuttles.Systems
             args.State = new PilotComponentState(component.Console?.Owner);
         }
 
+        /// <summary>
+        /// Client is requesting a change in the shuttle's driving mode.
+        /// </summary>
         private void OnModeRequest(ShuttleModeRequestEvent msg, EntitySessionEventArgs args)
         {
             if (args.SenderSession.AttachedEntity is not { } player ||
@@ -169,7 +183,7 @@ namespace Content.Server.Shuttles.Systems
             return result;
         }
 
-        private void UpdateState(ShuttleConsoleComponent component)
+        private void UpdateState(ShuttleConsoleComponent component, List<DockingInterfaceState>? docks = null)
         {
             TryComp<RadarConsoleComponent>(component.Owner, out var radar);
             var range = radar?.Range ?? 0f;
@@ -177,7 +191,7 @@ namespace Content.Server.Shuttles.Systems
             TryComp<ShuttleComponent>(Transform(component.Owner).GridUid, out var shuttle);
             var mode = shuttle?.Mode ?? ShuttleMode.Cruise;
 
-            var docks = GetAllDocks();
+            docks ??= GetAllDocks();
 
             _ui.GetUiOrNull(component.Owner, ShuttleConsoleUiKey.Key)
                 ?.SetState(new ShuttleConsoleBoundInterfaceState(
