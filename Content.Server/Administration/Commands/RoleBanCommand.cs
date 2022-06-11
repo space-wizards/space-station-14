@@ -8,7 +8,7 @@ namespace Content.Server.Administration.Commands;
 public sealed class RoleBanCommand : IConsoleCommand
 {
     public string Command => "roleban";
-    public string Description => "Bans a player from a job";
+    public string Description => "Bans a player from a role";
     public string Help => $"Usage: {Command} <name or user ID> <job> <reason> [duration in minutes, leave out or 0 for permanent ban]";
 
     public async void Execute(IConsoleShell shell, string argStr, string[] args)
