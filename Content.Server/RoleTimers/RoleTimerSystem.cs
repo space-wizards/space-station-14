@@ -1,9 +1,11 @@
 ﻿using System.Threading.Tasks;
 using Content.Server.Database;
 using Content.Server.Players;
+using Content.Shared.CCVar;
 using Content.Shared.GameTicking;
 using Content.Shared.Roles;
 using Robust.Server.Player;
+using Robust.Shared.Configuration;
 using Robust.Shared.Enums;
 using Robust.Shared.Network;
 using Robust.Shared.Prototypes;
@@ -15,6 +17,7 @@ namespace Content.Server.RoleTimers
         [Dependency] private readonly IServerDbManager _db = default!;
         [Dependency] private readonly IPlayerManager _playerManager = default!;
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
+        [Dependency] private readonly IConfigurationManager _configManager = default!;
 
         private const int StateCheckTime = 90;
         private Dictionary<NetUserId, CachedPlayerRoleTimers> _cachedPlayerData = new();
@@ -181,6 +184,7 @@ namespace Content.Server.RoleTimers
                 return null;
             }
             var disallowedRoles = new HashSet<string>();
+            if (!_configManager.GetCVar(CCVars.GameRoleTimers)) return disallowedRoles; // Return an empty hashset if role timers are disabled
             var jobs = _prototypeManager.EnumeratePrototypes<JobPrototype>();
             foreach (var job in jobs)
             {
