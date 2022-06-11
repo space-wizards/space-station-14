@@ -22,6 +22,12 @@ namespace Content.Server.Singularity.Components
             set => _powerBuffer = Math.Clamp(value, 0, 6);
         }
 
+        [ViewVariables]
+        public bool Enabled;
+
+        [ViewVariables]
+        public bool IsConnected;
+
         public void ReceivePower(int power)
         {
             var totalPower = power + PowerBuffer;
@@ -82,6 +88,7 @@ namespace Content.Server.Singularity.Components
         private bool TryGenerateFieldConnection([NotNullWhen(true)] ref Tuple<Direction, ContainmentFieldConnection>? propertyFieldTuple)
         {
             if (propertyFieldTuple != null) return false;
+            if (!Enabled) return false; //don't gen a field unless it's on
             if(_entMan.TryGetComponent<PhysicsComponent>(Owner, out var physicsComponent) && physicsComponent.BodyType != BodyType.Static) return false;
 
             foreach (var direction in new[] {Direction.North, Direction.East, Direction.South, Direction.West})
@@ -130,6 +137,7 @@ namespace Content.Server.Singularity.Components
                 {
                     Logger.Error("When trying to connect two Containmentfieldgenerators, the second one already had two connection but the check didn't catch it");
                 }
+                IsConnected = true;
                 UpdateConnectionLights();
                 return true;
             }
@@ -142,11 +150,13 @@ namespace Content.Server.Singularity.Components
             if (_connection1?.Item2 == connection)
             {
                 _connection1 = null;
+                IsConnected = false;
                 UpdateConnectionLights();
             }
             else if (_connection2?.Item2 == connection)
             {
                 _connection2 = null;
+                IsConnected = false;
                 UpdateConnectionLights();
             }
             else if(connection != null)
