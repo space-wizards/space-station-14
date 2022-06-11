@@ -1,9 +1,4 @@
 Entries:
-- author: Macoron
-  changes:
-  - {message: Welder sprite now updates correctly when lit., type: Fix}
-  id: 1176
-  time: '2022-03-08T01:06:10.0000000+00:00'
 - author: moony
   changes:
   - {message: A number of unused/useless chems have been removed until they actually
@@ -3002,3 +2997,8 @@ Entries:
   - {message: Captain and HoP PDA pen slots now hold just pens, type: Fix}
   id: 1675
   time: '2022-06-10T18:53:56.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Nukies are fixed again., type: Fix}
+  id: 1676
+  time: '2022-06-11T14:18:58.0000000+00:00'
