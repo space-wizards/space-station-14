@@ -1,5 +1,8 @@
 using Content.Server.Shuttles.Components;
+using Content.Shared.Shuttles.Components;
 using Content.Shared.Shuttles.Events;
+using Robust.Shared.Players;
+using Robust.Shared.Utility;
 
 namespace Content.Server.Shuttles.Systems;
 
@@ -8,13 +11,15 @@ public sealed partial class DockingSystem
     private void UpdateAutodock()
     {
         // Work out what we can autodock with, what we shouldn't, and when we should stop tracking.
+        // Autodocking only stops when the client closes that dock viewport OR they lose pilotcomponent.
         var dockingQuery = GetEntityQuery<DockingComponent>();
         var xformQuery = GetEntityQuery<TransformComponent>();
         var recentQuery = GetEntityQuery<RecentlyDockedComponent>();
+        var pilotQuery = GetEntityQuery<PilotComponent>();
 
         foreach (var (comp, body) in EntityQuery<AutoDockComponent, PhysicsComponent>())
         {
-            if (!dockingQuery.TryGetComponent(comp.Owner, out var dock))
+            if (comp.Requesters.Count == 0 || !dockingQuery.TryGetComponent(comp.Owner, out var dock))
             {
                 RemComp<AutoDockComponent>(comp.Owner);
                 continue;
@@ -22,6 +27,22 @@ public sealed partial class DockingSystem
 
             // Don't re-dock if we're already docked or recently were.
             if (dock.Docked || recentQuery.HasComponent(comp.Owner)) continue;
+
+            var toRemoveEnts = new RemQueue<EntityUid>();
+
+            // If anyone d/cs handle no message being sent I guess?
+            foreach (var entity in comp.Requesters)
+            {
+                if (pilotQuery.HasComponent(entity)) continue;
+                toRemoveEnts.Add(entity);
+            }
+
+            foreach (var toRemove in toRemoveEnts)
+            {
+                comp.Requesters.Remove(toRemove);
+            }
+
+            if (comp.Requesters.Count == 0) continue;
 
             var dockable = GetDockable(body, xformQuery.GetComponent(comp.Owner));
 
@@ -74,18 +95,27 @@ public sealed partial class DockingSystem
     private void OnRequestAutodock(AutodockRequestEvent msg, EntitySessionEventArgs args)
     {
         _sawmill.Debug($"Received autodock request for {ToPrettyString(msg.Entity)}");
+        var player = args.SenderSession.AttachedEntity;
 
-        if (!TryComp<DockingComponent>(msg.Entity, out var dock)) return;
+        if (player == null || !HasComp<DockingComponent>(msg.Entity)) return;
 
         // TODO: Validation
-        EnsureComp<AutoDockComponent>(msg.Entity);
+        var comp = EnsureComp<AutoDockComponent>(msg.Entity);
+        comp.Requesters.Add(player.Value);
     }
 
     private void OnRequestStopAutodock(StopAutodockRequestEvent msg, EntitySessionEventArgs args)
     {
         _sawmill.Debug($"Received stop autodock request for {ToPrettyString(msg.Entity)}");
 
+        var player = args.SenderSession.AttachedEntity;
+
         // TODO: Validation
-        RemComp<AutoDockComponent>(msg.Entity);
+        if (player == null || !TryComp<AutoDockComponent>(msg.Entity, out var comp)) return;
+
+        comp.Requesters.Remove(player.Value);
+
+        if (comp.Requesters.Count == 0)
+            RemComp<AutoDockComponent>(msg.Entity);
     }
 }
