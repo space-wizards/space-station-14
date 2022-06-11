@@ -1,10 +1,4 @@
 Entries:
-- author: moony
-  changes:
-  - {message: A number of unused/useless chems have been removed until they actually
-      get a usage., type: Remove}
-  id: 1177
-  time: '2022-03-08T02:51:35.0000000+00:00'
 - author: Fishfish458
   changes:
   - {message: Health Analyzers have now been added to various medical containers and
@@ -3002,3 +2996,9 @@ Entries:
   - {message: Nukies are fixed again., type: Fix}
   id: 1676
   time: '2022-06-11T14:18:58.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: A greater variety of miscellaneous trash can now be found around the
+      station., type: Tweak}
+  id: 1677
+  time: '2022-06-11T14:25:38.0000000+00:00'
