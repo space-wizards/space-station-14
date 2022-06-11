@@ -216,7 +216,7 @@ namespace Content.Server.Nutrition.EntitySystems
         private void DeleteAndSpawnTrash(FoodComponent component, EntityUid? user = null)
         {
             //We're empty. Become trash.
-            var position = EntityManager.GetComponent<TransformComponent>(component.Owner).Coordinates;
+            var position = Transform(component.Owner).MapPosition;
             var finisher = EntityManager.SpawnEntity(component.TrashPrototype, position);
 
             // If the user is holding the item
