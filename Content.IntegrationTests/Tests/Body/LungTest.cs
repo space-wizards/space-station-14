@@ -1,4 +1,4 @@
-﻿using System.Threading.Tasks;
+using System.Threading.Tasks;
 using Content.Server.Atmos.Components;
 using Content.Server.Body.Components;
 using Content.Server.Body.Systems;
@@ -61,7 +61,7 @@ namespace Content.IntegrationTests.Tests.Body
             MetabolizerSystem metaSys = default;
 
             MapId mapId;
-            GridId? grid = null;
+            EntityUid? grid = null;
             SharedBodyComponent body = default;
             EntityUid human = default;
             GridAtmosphereComponent relevantAtmos = default;
@@ -91,12 +91,11 @@ namespace Content.IntegrationTests.Tests.Body
             await server.WaitAssertion(() =>
             {
                 var coords = new Vector2(0.5f, -1f);
-                var geid = mapManager.GetGridEuid(grid.Value);
-                var coordinates = new EntityCoordinates(geid, coords);
+                var coordinates = new EntityCoordinates(grid.Value, coords);
                 human = entityManager.SpawnEntity("HumanBodyDummy", coordinates);
                 respSys = EntitySystem.Get<RespiratorSystem>();
                 metaSys = EntitySystem.Get<MetabolizerSystem>();
-                relevantAtmos = entityManager.GetComponent<GridAtmosphereComponent>(geid);
+                relevantAtmos = entityManager.GetComponent<GridAtmosphereComponent>(grid.Value);
                 startingMoles = GetMapMoles();
 
                 Assert.True(entityManager.TryGetComponent(human, out body));
@@ -138,7 +137,7 @@ namespace Content.IntegrationTests.Tests.Body
             var entityManager = server.ResolveDependency<IEntityManager>();
 
             MapId mapId;
-            GridId? grid = null;
+            EntityUid? grid = null;
             RespiratorComponent respirator = null;
             EntityUid human = default;
 
@@ -155,8 +154,7 @@ namespace Content.IntegrationTests.Tests.Body
             await server.WaitAssertion(() =>
             {
                 var center = new Vector2(0.5f, -1.5f);
-                var geid = mapManager.GetGridEuid(grid.Value);
-                var coordinates = new EntityCoordinates(geid, center);
+                var coordinates = new EntityCoordinates(grid.Value, center);
                 human = entityManager.SpawnEntity("HumanBodyDummy", coordinates);
 
                 Assert.True(entityManager.HasComponent<SharedBodyComponent>(human));
