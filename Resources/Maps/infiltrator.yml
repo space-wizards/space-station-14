@@ -2192,13 +2192,13 @@ entities:
     - machine_board
     type: Construction
 - uid: 220
-  type: APCBasic
+  type: BaseAPC
   components:
   - pos: -3.5,-18.5
     parent: 73
     type: Transform
 - uid: 221
-  type: APCBasic
+  type: BaseAPC
   components:
   - pos: 0.5,-6.5
     parent: 73

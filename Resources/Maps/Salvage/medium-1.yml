@@ -1363,7 +1363,7 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 114
-  type: APCBasic
+  type: BaseAPC
   components:
   - pos: 1.5,2.5
     parent: 0
