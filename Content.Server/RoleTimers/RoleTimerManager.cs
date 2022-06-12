@@ -12,7 +12,7 @@ using Robust.Shared.Prototypes;
 
 namespace Content.Server.RoleTimers
 {
-    public sealed class RoleTimerSystem : EntitySystem
+    public sealed class RoleTimerManager : IEntityEventSubscriber
     {
         [Dependency] private readonly IServerDbManager _db = default!;
         [Dependency] private readonly IPlayerManager _playerManager = default!;
@@ -22,11 +22,11 @@ namespace Content.Server.RoleTimers
         private const int StateCheckTime = 90;
         private Dictionary<NetUserId, CachedPlayerRoleTimers> _cachedPlayerData = new();
 
-        public override void Initialize()
+        public void Initialize()
         {
-            base.Initialize();
             _playerManager.PlayerStatusChanged += OnPlayerStatusChanged;
-            SubscribeLocalEvent<RoundRestartCleanupEvent>(_ => SaveFullCacheToDb());
+            IoCManager.Resolve<IEntityManager>().EventBus
+                .SubscribeEvent<RoundRestartCleanupEvent>(EventSource.Local, this, _ => SaveFullCacheToDb());
         }
 
         private async void OnPlayerStatusChanged(object? sender, SessionStatusEventArgs args)

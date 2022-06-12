@@ -48,7 +48,7 @@ namespace Content.Server.Administration.Commands
                 }
                 else
                 {
-                    var rt = IoCManager.Resolve<RoleTimerSystem>();
+                    var rt = IoCManager.Resolve<RoleTimerManager>();
                     var timers = rt.GetCachedRoleTimersForPlayer(targetSessionInst.UserId);
                     if (timers == null)
                     {
