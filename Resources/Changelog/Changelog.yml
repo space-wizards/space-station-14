@@ -1,12 +1,6 @@
 Entries:
 - author: ElectroJr
   changes:
-  - {message: You can no longer accidentally punch sub-floor entities when using a
-      T-Ray scanner, type: Fix}
-  id: 1182
-  time: '2022-03-09T06:40:07.0000000+00:00'
-- author: ElectroJr
-  changes:
   - {message: 'The client now tries to predict more interactions. This may lead to
       some bugs, particularly double audio, pop-ups, and animations. Please report
       any that come up.', type: Tweak}
@@ -3003,3 +2997,8 @@ Entries:
       Music" option disabled in the game's settings., type: Fix}
   id: 1681
   time: '2022-06-12T01:23:29.0000000+00:00'
+- author: TimrodDX
+  changes:
+  - {message: Waystation now has cameras., type: Add}
+  id: 1682
+  time: '2022-06-12T01:28:19.0000000+00:00'
