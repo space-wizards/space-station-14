@@ -1,9 +1,4 @@
 Entries:
-- author: metalgearsloth
-  changes:
-  - {message: Footstep sounds are now predicted and won't sound delayed., type: Tweak}
-  id: 1187
-  time: '2022-03-11T01:48:03.0000000+00:00'
 - author: moonheart08
   changes:
   - {message: 'Admin ghosts now have the cargo shuttle console, communications console,
@@ -3002,3 +2997,10 @@ Entries:
   - {message: Most gun sizes have been increased., type: Tweak}
   id: 1686
   time: '2022-06-12T05:30:03.0000000+00:00'
+- author: Peptide90
+  changes:
+  - {message: Added new APC variants for mappers. Construction graphs to follow in
+      a later PR., type: Add}
+  - {message: Standard APC is now 5x bigger in power capacity., type: Tweak}
+  id: 1687
+  time: '2022-06-12T05:34:16.0000000+00:00'
