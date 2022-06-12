@@ -1,5 +1,6 @@
 using Content.Server.Popups;
 using Content.Server.Power.Components;
+using Content.Server.Power.EntitySystems;
 using Content.Server.Shuttles.Components;
 using Content.Shared.ActionBlocker;
 using Content.Shared.Alert;
@@ -44,14 +45,14 @@ namespace Content.Server.Shuttles.EntitySystems
             var xform = EntityManager.GetComponent<TransformComponent>(uid);
 
             // Maybe move mode onto the console instead?
-            if (!_mapManager.TryGetGrid(xform.GridID, out var grid) ||
+            if (!_mapManager.TryGetGrid(xform.GridEntityId, out var grid) ||
                 !EntityManager.TryGetComponent(grid.GridEntityId, out ShuttleComponent? shuttle)) return;
 
             InteractionVerb verb = new()
             {
                 Text = Loc.GetString("shuttle-mode-toggle"),
                 Act = () => ToggleShuttleMode(args.User, component, shuttle),
-                Disabled = !xform.Anchored || EntityManager.TryGetComponent(uid, out ApcPowerReceiverComponent? receiver) && !receiver.Powered,
+                Disabled = !xform.Anchored || !this.IsPowered(uid, EntityManager),
             };
 
             args.Verbs.Add(verb);
@@ -60,11 +61,11 @@ namespace Content.Server.Shuttles.EntitySystems
         private void ToggleShuttleMode(EntityUid user, ShuttleConsoleComponent consoleComponent, ShuttleComponent shuttleComponent, TransformComponent? consoleXform = null)
         {
             // Re-validate
-            if (EntityManager.TryGetComponent(consoleComponent.Owner, out ApcPowerReceiverComponent? receiver) && !receiver.Powered) return;
+            if (!this.IsPowered(consoleComponent.Owner, EntityManager)) return;
 
             if (!Resolve(consoleComponent.Owner, ref consoleXform)) return;
 
-            if (!consoleXform.Anchored || consoleXform.GridID != EntityManager.GetComponent<TransformComponent>(shuttleComponent.Owner).GridID) return;
+            if (!consoleXform.Anchored || consoleXform.GridEntityId != EntityManager.GetComponent<TransformComponent>(shuttleComponent.Owner).GridEntityId) return;
 
             switch (shuttleComponent.Mode)
             {

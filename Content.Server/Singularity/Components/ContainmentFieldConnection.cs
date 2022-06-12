@@ -1,4 +1,5 @@
 using System.Threading;
+using Content.Shared.Singularity.Components;
 using Timer = Robust.Shared.Timing.Timer;
 
 namespace Content.Server.Singularity.Components
@@ -65,13 +66,9 @@ namespace Content.Server.Singularity.Components
             Timer.SpawnRepeating(1000, () => { SharedEnergyPool--;}, _powerDecreaseCancellationTokenSource.Token);
         }
 
-        public bool CanRepell(EntityUid toRepell)
+        public bool CanRepel(SharedSingularityComponent toRepel)
         {
-            var powerNeeded = 1;
-            if (IoCManager.Resolve<IEntityManager>().TryGetComponent<ServerSingularityComponent?>(toRepell, out var singularityComponent))
-            {
-                powerNeeded += 2*singularityComponent.Level;
-            }
+            var powerNeeded = 2 * toRepel.Level + 1;
 
             return _sharedEnergyPool > powerNeeded;
         }

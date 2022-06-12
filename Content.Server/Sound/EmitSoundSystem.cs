@@ -40,12 +40,13 @@ namespace Content.Server.Sound
         private void HandleEmitSoundOnTrigger(EntityUid uid, EmitSoundOnTriggerComponent component, TriggerEvent args)
         {
             TryEmitSound(component);
+            args.Handled = true;
         }
 
         private void HandleEmitSoundOnLand(EntityUid eUI, BaseEmitSoundComponent component, LandEvent arg)
         {
             if (!TryComp<TransformComponent>(eUI, out var xform) ||
-                !_mapManager.TryGetGrid(xform.GridID, out var grid)) return;
+                !_mapManager.TryGetGrid(xform.GridEntityId, out var grid)) return;
 
             var tile = grid.GetTileRef(xform.Coordinates);
 

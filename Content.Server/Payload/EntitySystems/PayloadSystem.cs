@@ -1,8 +1,10 @@
+using System.Linq;
 using Content.Server.Administration.Logs;
 using Content.Server.Chemistry.EntitySystems;
 using Content.Server.Explosion.EntitySystems;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Database;
+using Content.Shared.Examine;
 using Content.Shared.Payload.Components;
 using Content.Shared.Tag;
 using Robust.Shared.Containers;
@@ -15,7 +17,7 @@ public sealed class PayloadSystem : EntitySystem
 {
     [Dependency] private readonly TagSystem _tagSystem = default!;
     [Dependency] private readonly SolutionContainerSystem _solutionSystem = default!;
-    [Dependency] private readonly AdminLogSystem _logSystem = default!;
+    [Dependency] private readonly IAdminLogManager _adminLogger= default!;
     [Dependency] private readonly IComponentFactory _componentFactory = default!;
     [Dependency] private readonly ISerializationManager _serializationManager = default!;
 
@@ -27,7 +29,23 @@ public sealed class PayloadSystem : EntitySystem
         SubscribeLocalEvent<PayloadTriggerComponent, TriggerEvent>(OnTriggerTriggered);
         SubscribeLocalEvent<PayloadCaseComponent, EntInsertedIntoContainerMessage>(OnEntityInserted);
         SubscribeLocalEvent<PayloadCaseComponent, EntRemovedFromContainerMessage>(OnEntityRemoved);
+        SubscribeLocalEvent<PayloadCaseComponent, ExaminedEvent>(OnExamined);
         SubscribeLocalEvent<ChemicalPayloadComponent, TriggerEvent>(HandleChemicalPayloadTrigger);
+    }
+
+    public IEnumerable<EntityUid> GetAllPayloads(EntityUid uid, ContainerManagerComponent? contMan=null)
+    {
+        if (!Resolve(uid, ref contMan, false))
+            yield break;
+
+        foreach (var container in contMan.Containers.Values)
+        {
+            foreach (var entity in container.ContainedEntities)
+            {
+                if (_tagSystem.HasTag(entity, "Payload"))
+                    yield return entity;
+            }
+        }
     }
 
     private void OnCaseTriggered(EntityUid uid, PayloadCaseComponent component, TriggerEvent args)
@@ -36,13 +54,9 @@ public sealed class PayloadSystem : EntitySystem
             return;
 
         // Pass trigger event onto all contained payloads. Payload capacity configurable by construction graphs.
-        foreach (var container in contMan.Containers.Values)
+        foreach (var ent in GetAllPayloads(uid, contMan))
         {
-            foreach (var entity in container.ContainedEntities)
-            {
-                if (_tagSystem.HasTag(entity, "Payload"))
-                    RaiseLocalEvent(entity, args, false);
-            }
+            RaiseLocalEvent(ent, args, false);
         }
     }
 
@@ -84,7 +98,7 @@ public sealed class PayloadSystem : EntitySystem
 
             component.Owner = uid;
 
-            if (_serializationManager.Copy(data, component, null) is Component copied)
+            if (_serializationManager.Copy(data.Component, component, null) is Component copied)
                 EntityManager.AddComponent(uid, copied);
 
             trigger.GrantedComponents.Add(registration.Type);
@@ -106,6 +120,24 @@ public sealed class PayloadSystem : EntitySystem
         trigger.GrantedComponents.Clear();
     }
 
+    private void OnExamined(EntityUid uid, PayloadCaseComponent component, ExaminedEvent args)
+    {
+        if (!args.IsInDetailsRange)
+        {
+            args.PushMarkup(Loc.GetString("payload-case-not-close-enough", ("ent", uid)));
+            return;
+        }
+
+        if (GetAllPayloads(uid).Any())
+        {
+            args.PushMarkup(Loc.GetString("payload-case-has-payload", ("ent", uid)));
+        }
+        else
+        {
+            args.PushMarkup(Loc.GetString("payload-case-does-not-have-payload", ("ent", uid)));
+        }
+    }
+
     private void HandleChemicalPayloadTrigger(EntityUid uid, ChemicalPayloadComponent component, TriggerEvent args)
     {
         if (component.BeakerSlotA.Item is not EntityUid beakerA
@@ -123,7 +155,7 @@ public sealed class PayloadSystem : EntitySystem
         var solStringA = SolutionContainerSystem.ToPrettyString(solutionA);
         var solStringB = SolutionContainerSystem.ToPrettyString(solutionB);
 
-        _logSystem.Add(LogType.ChemicalReaction,
+        _adminLogger.Add(LogType.ChemicalReaction,
             $"Chemical bomb payload {ToPrettyString(uid):payload} at {Transform(uid).MapPosition:location} is combining two solutions: {solStringA:solutionA} and {solStringB:solutionB}");
 
         solutionA.MaxVolume += solutionB.MaxVolume;
@@ -135,5 +167,7 @@ public sealed class PayloadSystem : EntitySystem
         _solutionSystem.TryAddSolution(beakerB, solutionB, tmpSol);
         solutionA.MaxVolume -= solutionB.MaxVolume;
         _solutionSystem.UpdateChemicals(beakerA, solutionA, false);
+
+        args.Handled = true;
     }
 }

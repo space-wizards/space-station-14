@@ -6,6 +6,7 @@ using Content.Server.DeviceNetwork;
 using Content.Server.DeviceNetwork.Components;
 using Content.Server.DeviceNetwork.Systems;
 using Content.Server.Power.Components;
+using Content.Server.Power.EntitySystems;
 using Content.Shared.Atmos;
 using Content.Shared.Atmos.Monitor;
 using Robust.Shared.Audio;
@@ -155,7 +156,7 @@ namespace Content.Server.Atmos.Monitor.Systems
             // the highest network alarm state at any time
             if (!args.Data.TryGetValue(DeviceNetworkConstants.Command, out string? cmd)
                 || !EntityManager.TryGetComponent(uid, out AtmosAlarmableComponent? alarmable)
-                || !EntityManager.TryGetComponent(uid, out DeviceNetworkComponent netConn))
+                || !EntityManager.TryGetComponent(uid, out DeviceNetworkComponent? netConn))
                 return;
 
             // ignore packets from self, ignore from different frequency
@@ -229,8 +230,7 @@ namespace Content.Server.Atmos.Monitor.Systems
 
         private void OnFireEvent(EntityUid uid, AtmosMonitorComponent component, ref TileFireEvent args)
         {
-            if (!TryComp<ApcPowerReceiverComponent>(uid, out var powerReceiverComponent)
-                || !powerReceiverComponent.Powered)
+            if (!this.IsPowered(uid, EntityManager))
                 return;
 
             // if we're monitoring for atmos fire, then we make it similar to a smoke detector
@@ -252,8 +252,7 @@ namespace Content.Server.Atmos.Monitor.Systems
 
         private void OnAtmosUpdate(EntityUid uid, AtmosMonitorComponent component, AtmosDeviceUpdateEvent args)
         {
-            if (!TryComp<ApcPowerReceiverComponent>(uid, out var powerReceiverComponent)
-                || !powerReceiverComponent.Powered)
+            if (!this.IsPowered(uid, EntityManager))
                 return;
 
             // can't hurt
@@ -343,7 +342,7 @@ namespace Content.Server.Atmos.Monitor.Systems
 
             if (state == AtmosMonitorAlarmType.Danger) PlayAlertSound(uid, monitor);
 
-            if (EntityManager.TryGetComponent(monitor.Owner, out AtmosAlarmableComponent alarmable)
+            if (EntityManager.TryGetComponent(monitor.Owner, out AtmosAlarmableComponent? alarmable)
                 && !alarmable.IgnoreAlarms)
                 RaiseLocalEvent(monitor.Owner, new AtmosMonitorAlarmEvent(monitor.LastAlarmState, monitor.HighestAlarmInNetwork));
             // TODO: Central system that grabs *all* alarms from wired network

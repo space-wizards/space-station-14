@@ -1,4 +1,4 @@
-﻿using Content.Server.Audio;
+using Content.Server.Audio;
 using Content.Server.Power.Components;
 using Content.Shared.Gravity;
 using Content.Shared.Interaction;
@@ -20,9 +20,16 @@ namespace Content.Server.Gravity.EntitySystems
             base.Initialize();
 
             SubscribeLocalEvent<GravityGeneratorComponent, ComponentInit>(OnComponentInitialized);
+            SubscribeLocalEvent<GravityGeneratorComponent, ComponentShutdown>(OnComponentShutdown);
             SubscribeLocalEvent<GravityGeneratorComponent, InteractHandEvent>(OnInteractHand);
             SubscribeLocalEvent<GravityGeneratorComponent, SharedGravityGeneratorComponent.SwitchGeneratorMessage>(
                 OnSwitchGenerator);
+        }
+
+        private void OnComponentShutdown(EntityUid uid, GravityGeneratorComponent component, ComponentShutdown args)
+        {
+            component.GravityActive = false;
+            UpdateGravityActive(component, true);
         }
 
         public override void Update(float frameTime)
@@ -180,8 +187,8 @@ namespace Content.Server.Gravity.EntitySystems
 
         private void UpdateGravityActive(GravityGeneratorComponent grav, bool shake)
         {
-            var gridId = EntityManager.GetComponent<TransformComponent>(grav.Owner).GridID;
-            if (gridId == GridId.Invalid)
+            var gridId = EntityManager.GetComponent<TransformComponent>(grav.Owner).GridEntityId;
+            if (gridId == EntityUid.Invalid)
                 return;
 
             var grid = _mapManager.GetGrid(gridId);

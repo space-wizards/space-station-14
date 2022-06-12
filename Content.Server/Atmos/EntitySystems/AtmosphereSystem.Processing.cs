@@ -54,7 +54,7 @@ namespace Content.Server.Atmos.EntitySystems
 
                 if (tile == null)
                 {
-                    tile = new TileAtmosphere(mapGrid.Index, indices, new GasMixture(volume){Temperature = Atmospherics.T20C});
+                    tile = new TileAtmosphere(mapGrid.GridEntityId, indices, new GasMixture(volume){Temperature = Atmospherics.T20C});
                     atmosphere.Tiles[indices] = tile;
                 }
 
@@ -110,7 +110,7 @@ namespace Content.Server.Atmos.EntitySystems
                 var tileDef = GetTile(tile)?.Tile.GetContentTileDefinition(_tileDefinitionManager);
                 tile.ThermalConductivity = tileDef?.ThermalConductivity ?? 0.5f;
                 tile.HeatCapacity = tileDef?.HeatCapacity ?? float.PositiveInfinity;
-                InvalidateVisuals(mapGrid.Index, indices);
+                InvalidateVisuals(mapGrid.GridEntityId, indices);
 
                 for (var i = 0; i < Atmospherics.Directions; i++)
                 {

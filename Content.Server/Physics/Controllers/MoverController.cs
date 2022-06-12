@@ -46,7 +46,7 @@ namespace Content.Server.Physics.Controllers
             }
 
             HandleShuttleMovement(frameTime);
-            HandleVehicleMovement(frameTime);
+            HandleVehicleMovement();
 
             foreach (var (mover, physics) in EntityManager.EntityQuery<IMoverComponent, PhysicsComponent>(true))
             {
@@ -66,7 +66,7 @@ namespace Content.Server.Physics.Controllers
                 if (pilot.Console == null) continue;
                 _excludedMobs.Add(mover.Owner);
 
-                var gridId = xform.GridID;
+                var gridId = xform.GridEntityId;
                 // This tries to see if the grid is a shuttle
                 if (!_mapManager.TryGetGrid(gridId, out var grid) ||
                     !EntityManager.TryGetComponent(grid.GridEntityId, out ShuttleComponent? shuttleComponent)) continue;
@@ -263,12 +263,21 @@ namespace Content.Server.Physics.Controllers
         /// Add mobs riding vehicles to the list of mobs whose input
         /// should be ignored.
         /// </summary>
-        private void HandleVehicleMovement(float frameTime)
+        private void HandleVehicleMovement()
         {
-            foreach (var (rider, mover, xform) in EntityManager.EntityQuery<RiderComponent, SharedPlayerInputMoverComponent, TransformComponent>())
+            // TODO: Nuke this code. It's on my list.
+            foreach (var (rider, mover) in EntityQuery<RiderComponent, SharedPlayerInputMoverComponent>())
             {
                 if (rider.Vehicle == null) continue;
                 _excludedMobs.Add(mover.Owner);
+
+                if (!_excludedMobs.Add(rider.Vehicle.Owner)) continue;
+
+                if (!TryComp<IMoverComponent>(rider.Vehicle.Owner, out var vehicleMover) ||
+                    !TryComp<PhysicsComponent>(rider.Vehicle.Owner, out var vehicleBody) ||
+                    rider.Vehicle.Owner.IsWeightless(vehicleBody, mapManager: _mapManager, entityManager: EntityManager)) continue;
+
+                HandleKinematicMovement(vehicleMover, vehicleBody);
             }
         }
     }

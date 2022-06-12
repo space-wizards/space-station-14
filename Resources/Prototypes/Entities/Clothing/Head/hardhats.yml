@@ -29,14 +29,11 @@
     inhandVisuals:
       left:
       - state: on-inhand-left
-        shader: unshaded
       right:
       - state: on-inhand-right
-        shader: unshaded
     clothingVisuals:
       head:
       - state: on-equipped-HELMET
-        shader: unshaded
   - type: PowerCellSlot
     cellSlot:
       startingItem: PowerCellSmallHigh

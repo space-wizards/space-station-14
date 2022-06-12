@@ -18,6 +18,29 @@
       reagent: Phalanximine
       min: 15
 
+
+- type: disease
+  id: StageIIIALungCancer
+  name: Stage IIIA Lung Cancer
+  infectious: false
+  cureResist: 1.0
+  effects:
+    - !type:DiseaseHealthChange
+      probability: 0.3
+      damage:
+        types:
+          Cellular: 1
+    - !type:DiseaseVomit
+      probability: 0.01
+    - !type:DiseaseSnough
+      probability: 0.10
+      snoughMessage: disease-cough
+      snoughSound:
+        collection: Coughs
+    - !type:DiseasePopUp
+      probability: 0.03
+
+
 ### Once radiation is refactored I want it to have a small chance of giving you regular cancer
 
 - type: disease

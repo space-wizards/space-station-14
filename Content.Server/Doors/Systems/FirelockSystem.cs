@@ -65,7 +65,7 @@ namespace Content.Server.Doors.Systems
             // Make firelocks autoclose, but only if the last alarm type it
             // remembers was a danger. This is to prevent people from
             // flooding hallways with endless bad air/fire.
-            if (!EntityManager.TryGetComponent(uid, out AtmosAlarmableComponent alarmable))
+            if (!EntityManager.TryGetComponent(uid, out AtmosAlarmableComponent? alarmable))
             {
                 args.Cancel();
                 return;

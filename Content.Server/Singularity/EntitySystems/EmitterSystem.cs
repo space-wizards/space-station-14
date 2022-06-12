@@ -24,7 +24,7 @@ namespace Content.Server.Singularity.EntitySystems
     public sealed class EmitterSystem : EntitySystem
     {
         [Dependency] private readonly IRobustRandom _random = default!;
-        [Dependency] private readonly AdminLogSystem _adminLog = default!;
+        [Dependency] private readonly IAdminLogManager _adminLogger = default!;
 
         public override void Initialize()
         {
@@ -56,7 +56,7 @@ namespace Content.Server.Singularity.EntitySystems
                     component.Owner.PopupMessage(args.User, Loc.GetString("comp-emitter-turned-off", ("target", component.Owner)));
                 }
 
-                _adminLog.Add(LogType.Emitter,
+                _adminLogger.Add(LogType.Emitter,
                     component.IsOn ? LogImpact.Medium : LogImpact.High,
                     $"{ToPrettyString(args.User):player} toggled {ToPrettyString(uid):emitter}");
             }
@@ -145,7 +145,8 @@ namespace Content.Server.Singularity.EntitySystems
             DebugTools.Assert(component.IsPowered);
             DebugTools.Assert(component.IsOn);
             DebugTools.Assert(TryComp<PowerConsumerComponent>(component.Owner, out var powerConsumer) &&
-                              powerConsumer.DrawRate <= powerConsumer.ReceivedPower);
+                              (powerConsumer.DrawRate <= powerConsumer.ReceivedPower ||
+                               MathHelper.CloseTo(powerConsumer.DrawRate, powerConsumer.ReceivedPower, 0.0001f)));
 
             Fire(component);
 

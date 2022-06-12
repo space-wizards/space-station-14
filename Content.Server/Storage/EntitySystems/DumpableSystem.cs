@@ -8,6 +8,7 @@ using Content.Server.Disposal.Unit.EntitySystems;
 using Content.Server.DoAfter;
 using Content.Shared.Placeable;
 using Robust.Shared.Containers;
+using Robust.Shared.Random;
 
 namespace Content.Server.Storage.EntitySystems
 {
@@ -15,6 +16,7 @@ namespace Content.Server.Storage.EntitySystems
     {
         [Dependency] private readonly DoAfterSystem _doAfterSystem = default!;
         [Dependency] private readonly DisposalUnitSystem _disposalUnitSystem = default!;
+        [Dependency] private readonly IRobustRandom _random = default!;
 
         public override void Initialize()
         {
@@ -146,14 +148,17 @@ namespace Content.Server.Storage.EntitySystems
 
             foreach (var entity in dumpQueue)
             {
-                Transform(entity).AttachParentToContainerOrGrid(EntityManager);
+                var transform = Transform(entity);
+                transform.AttachParentToContainerOrGrid(EntityManager);
+                transform.LocalPosition = transform.LocalPosition + _random.NextVector2Box() / 2;
+                transform.LocalRotation = _random.NextAngle();
             }
 
             if (HasComp<PlaceableSurfaceComponent>(args.Target))
             {
                 foreach (var entity in dumpQueue)
                 {
-                    Transform(entity).LocalPosition = Transform(args.Target.Value).LocalPosition;
+                    Transform(entity).LocalPosition = Transform(args.Target.Value).LocalPosition + _random.NextVector2Box() / 4;
                 }
                 return;
             }

@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using System.Linq;
 using Content.Shared.Singularity.Components;
 using JetBrains.Annotations;
@@ -52,7 +52,7 @@ namespace Content.Client.ParticleAccelerator
             base.OnChangeData(component);
 
             var entities = IoCManager.Resolve<IEntityManager>();
-            if (!entities.TryGetComponent(component.Owner, out ISpriteComponent sprite)) return;
+            if (!entities.TryGetComponent(component.Owner, out ISpriteComponent? sprite)) return;
             if (!component.TryGetData(ParticleAcceleratorVisuals.VisualState, out ParticleAcceleratorVisualState state))
             {
                 state = ParticleAcceleratorVisualState.Unpowered;
