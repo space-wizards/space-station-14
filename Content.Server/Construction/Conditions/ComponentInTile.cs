@@ -1,4 +1,4 @@
-﻿using Content.Shared.Construction;
+using Content.Shared.Construction;
 using Content.Shared.Examine;
 using Content.Shared.Maps;
 using JetBrains.Annotations;
@@ -44,7 +44,7 @@ namespace Content.Server.Construction.Conditions
 
             var transform = entityManager.GetComponent<TransformComponent>(uid);
             var indices = transform.Coordinates.ToVector2i(entityManager, IoCManager.Resolve<IMapManager>());
-            var entities = indices.GetEntitiesInTile(transform.GridID, LookupFlags.Approximate | LookupFlags.Anchored, EntitySystem.Get<EntityLookupSystem>());
+            var entities = indices.GetEntitiesInTile(transform.GridEntityId, LookupFlags.Approximate | LookupFlags.Anchored, EntitySystem.Get<EntityLookupSystem>());
 
             foreach (var ent in entities)
             {

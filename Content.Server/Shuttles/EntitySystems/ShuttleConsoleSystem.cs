@@ -45,7 +45,7 @@ namespace Content.Server.Shuttles.EntitySystems
             var xform = EntityManager.GetComponent<TransformComponent>(uid);
 
             // Maybe move mode onto the console instead?
-            if (!_mapManager.TryGetGrid(xform.GridID, out var grid) ||
+            if (!_mapManager.TryGetGrid(xform.GridEntityId, out var grid) ||
                 !EntityManager.TryGetComponent(grid.GridEntityId, out ShuttleComponent? shuttle)) return;
 
             InteractionVerb verb = new()
@@ -65,7 +65,7 @@ namespace Content.Server.Shuttles.EntitySystems
 
             if (!Resolve(consoleComponent.Owner, ref consoleXform)) return;
 
-            if (!consoleXform.Anchored || consoleXform.GridID != EntityManager.GetComponent<TransformComponent>(shuttleComponent.Owner).GridID) return;
+            if (!consoleXform.Anchored || consoleXform.GridEntityId != EntityManager.GetComponent<TransformComponent>(shuttleComponent.Owner).GridEntityId) return;
 
             switch (shuttleComponent.Mode)
             {

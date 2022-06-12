@@ -42,7 +42,7 @@ namespace Content.Server.Voting
         }
     }
 
-    [AdminCommand(AdminFlags.Fun)]
+    [AdminCommand(AdminFlags.Admin)]
     public sealed class CreateCustomCommand : IConsoleCommand
     {
         public string Command => "customvote";
