@@ -198,5 +198,11 @@ namespace Content.Shared.Containers.ItemSlots
         // Convenience properties
         public bool HasItem => ContainerSlot?.ContainedEntity != null;
         public EntityUid? Item => ContainerSlot?.ContainedEntity;
+
+        /// <summary>
+        ///     Priority for use with the eject & insert verbs for this slot.
+        /// </summary>
+        [DataField("priority")]
+        public int Priority = 0;
     }
 }

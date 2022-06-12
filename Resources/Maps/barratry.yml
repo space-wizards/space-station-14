@@ -147074,7 +147074,7 @@ entities:
     parent: 106
     type: Transform
 - uid: 13214
-  type: WeaponLaserRifleCog
+  type: WeaponLaserCarbine
   components:
   - pos: -42.40947,29.69355
     parent: 106
@@ -147473,7 +147473,7 @@ entities:
         uid: 3449
     type: SignalTransmitter
 - uid: 13267
-  type: WeaponLaserRifleCog
+  type: WeaponLaserCarbine
   components:
   - pos: -42.40947,29.422718
     parent: 106
@@ -147481,7 +147481,7 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 13268
-  type: WeaponRifleWintermute
+  type: WeaponRifleLecter
   components:
   - pos: -42.4225,30.506044
     parent: 106
@@ -148782,7 +148782,7 @@ entities:
       Toggle: []
     type: SignalReceiver
 - uid: 13417
-  type: WeaponSubMachineGunDrozd
+  type: WeaponSubMachineGunVector
   components:
   - pos: -44.470184,31.758118
     parent: 106
@@ -148790,7 +148790,7 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 13418
-  type: WeaponSubMachineGunDrozd
+  type: WeaponSubMachineGunVector
   components:
   - pos: -44.324352,31.633118
     parent: 106

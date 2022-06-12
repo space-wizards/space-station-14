@@ -13512,7 +13512,7 @@ entities:
     parent: 30
     type: Transform
 - uid: 700
-  type: WeaponRifleWintermute
+  type: WeaponRifleLecter
   components:
   - pos: 8.568229,17.50768
     parent: 30
@@ -17661,7 +17661,7 @@ entities:
     parent: 30
     type: Transform
 - uid: 1181
-  type: WeaponLaserRifleCog
+  type: WeaponLaserCarbine
   components:
   - pos: 9.568229,15.507681
     parent: 30
@@ -20039,7 +20039,7 @@ entities:
     parent: 30
     type: Transform
 - uid: 1472
-  type: WeaponLaserRifleCog
+  type: WeaponLaserCarbine
   components:
   - pos: 9.396354,15.663931
     parent: 30

@@ -92,13 +92,13 @@
   - type: Appearance
 
 - type: entity
-  name: Drozd
+  name: Vector
   parent: BaseWeaponSubMachineGun
-  id: WeaponSubMachineGunDrozd
+  id: WeaponSubMachineGunVector
   description: An excellent fully automatic Heavy SMG.
   components:
   - type: Sprite
-    sprite: Objects/Weapons/Guns/SMGs/drozd.rsi
+    sprite: Objects/Weapons/Guns/SMGs/vector.rsi
     layers:
       - state: base
         map: ["enum.GunVisualLayers.Base"]
@@ -106,7 +106,7 @@
         map: ["enum.GunVisualLayers.Mag"]
   - type: Item
     size: 24
-    sprite: Objects/Weapons/Guns/SMGs/drozd.rsi
+    sprite: Objects/Weapons/Guns/SMGs/vector.rsi
   - type: Gun
     fireRate: 6
     selectedMode: FullAuto
@@ -188,9 +188,9 @@
   - type: Appearance
 
 - type: entity
-  name: Drozd
-  parent: WeaponSubMachineGunDrozd
-  id: WeaponSubMachineGunDrozdRubber
+  name: Vector
+  parent: WeaponSubMachineGunVector
+  id: WeaponSubMachineGunVectorRubber
   description: An excellent fully automatic Heavy SMG.
   suffix: Non-Lethal
   components:

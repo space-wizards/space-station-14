@@ -7267,7 +7267,7 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 755
-  type: WeaponPistolClarissa
+  type: WeaponPistolViper
   components:
   - pos: 1.5391146,-6.426657
     parent: 73

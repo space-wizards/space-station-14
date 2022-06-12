@@ -4178,7 +4178,7 @@ entities:
     parent: 4
     type: Transform
 - uid: 143
-  type: WeaponShotgunGladstone
+  type: WeaponShotgunEnforcer
   components:
   - pos: 22.640556,-5.273798
     parent: 4

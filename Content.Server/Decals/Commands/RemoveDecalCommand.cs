@@ -25,14 +25,14 @@ namespace Content.Server.Decals.Commands
                 return;
             }
 
-            if (!int.TryParse(args[1], out var rawGridId) ||
-                !IoCManager.Resolve<IMapManager>().GridExists(new GridId(rawGridId)))
+            if (!EntityUid.TryParse(args[1], out var rawGridId) ||
+                !IoCManager.Resolve<IMapManager>().GridExists(rawGridId))
             {
                 shell.WriteError("Failed parsing gridId.");
             }
 
             var decalSystem = EntitySystem.Get<DecalSystem>();
-            if (decalSystem.RemoveDecal(new GridId(rawGridId), uid))
+            if (decalSystem.RemoveDecal(rawGridId, uid))
             {
                 shell.WriteLine($"Successfully removed decal {uid}.");
                 return;
