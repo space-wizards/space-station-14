@@ -1,11 +1,4 @@
 Entries:
-- author: Rane
-  changes:
-  - {message: 'Added Uniform Printers. You can currently get them from the circuit
-      imprinter, later they will be part of the HOP office.', type: Add}
-  - {message: Lathes now actually play their building animations., type: Fix}
-  id: 1181
-  time: '2022-03-08T23:58:50.0000000+00:00'
 - author: ElectroJr
   changes:
   - {message: You can no longer accidentally punch sub-floor entities when using a
@@ -3004,3 +2997,9 @@ Entries:
       inserted into a recharger again, type: Tweak}
   id: 1680
   time: '2022-06-12T01:20:03.0000000+00:00'
+- author: Zumorica
+  changes:
+  - {message: Fixed round end sounds playing even if you have the "Lobby & Round-end
+      Music" option disabled in the game's settings., type: Fix}
+  id: 1681
+  time: '2022-06-12T01:23:29.0000000+00:00'
