@@ -1,9 +1,4 @@
 Entries:
-- author: Veritius
-  changes:
-  - {message: clarify round stalling as against the rules, type: Add}
-  id: 1184
-  time: '2022-03-09T13:45:53.0000000+00:00'
 - author: moony
   changes:
   - {message: Some tiles now have additional visual variants. These will start showing
@@ -3001,3 +2996,9 @@ Entries:
       found in their lockers!', type: Add}
   id: 1683
   time: '2022-06-12T01:57:02.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Items now correctly pass through plastic flaps. Cargo players rejoice!,
+    type: Fix}
+  id: 1684
+  time: '2022-06-12T02:40:15.0000000+00:00'
