@@ -3,7 +3,7 @@ using Content.Shared.FixedPoint;
 
 namespace Content.Server.Body.Components
 {
-    [RegisterComponent, Friend(typeof(StomachSystem))]
+    [RegisterComponent, Access(typeof(StomachSystem))]
     public sealed class StomachComponent : Component
     {
         public float AccumulatedFrameTime;

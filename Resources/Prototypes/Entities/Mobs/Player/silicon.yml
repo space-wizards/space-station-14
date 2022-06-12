@@ -174,10 +174,10 @@
   - type: Drone
     applyLaws: false
     tools:
-      - id: Minigun
+      - id: WeaponMinigun
       - id: EnergySword
-      - id: LauncherMultipleRocket
-      - id: XrayCannon
+      - id: WeaponLauncherMultipleRocket
+      - id: WeaponXrayCannon
   - type: UserInterface
     interfaces:
     - key: enum.StrippingUiKey.Key

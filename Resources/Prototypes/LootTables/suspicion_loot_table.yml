@@ -2,64 +2,27 @@
 - type: entityLootTable
   id: SuspicionRule
   entries:
-  - id: RifleAk
+  - id: WeaponRifleAk
     amount: 0
     maxAmount: 5
-  - id: RifleBlackAk
+  - id: WeaponRifleM90GrenadeLauncher
     amount: 0
     maxAmount: 5
-  - id: RifleCarbine
+  - id: WeaponRifleLecter
     amount: 0
     maxAmount: 5
-  - id: RifleDallas
+  - id: WeaponPistolViper
     amount: 0
     maxAmount: 5
-  - id: RifleSTS
+  - id: WeaponPistolHandmade
     amount: 0
     maxAmount: 5
-  - id: RifleVintorez
+  - id: WeaponPistolCobra
     amount: 0
     maxAmount: 5
-  - id: RifleWintermute
+  - id: WeaponPistolMk58
     amount: 0
     maxAmount: 5
-  - id: RifleCalico
-    amount: 0
-    maxAmount: 5
-  - id: PistolClarissa
-    amount: 0
-    maxAmount: 5
-  - id: PistolColt
-    amount: 0
-    maxAmount: 5
-  - id: PistolGiskard
-    amount: 0
-    maxAmount: 5
-  - id: PistolHMPistol
-    amount: 0
-    maxAmount: 5
-  - id: PistolLamia
-    amount: 0
-    maxAmount: 5
-  - id: PistolMandella
-    amount: 0
-    maxAmount: 5
-  - id: PistolMk58
-    amount: 0
-    maxAmount: 5
-  - id: PistolMk58Wood
-    amount: 0
-    maxAmount: 5
-  - id: PistolMolly
-    amount: 0
-    maxAmount: 5
-  - id: PistolOlivaw
-    amount: 0
-    maxAmount: 5
-  - id: PistolPaco
-    amount: 0
-    maxAmount: 5
-
   - id: ButchCleaver
     maxAmount: 5
   - id: Pickaxe
@@ -73,91 +36,69 @@
   - id: Stunbaton
     maxAmount: 10
 
-  - id: RevolverDeckard
+  - id: WeaponRevolverDeckard
     amount: 0
     maxAmount: 5
-  - id: RevolverInspector
+  - id: WeaponRevolverInspector
     amount: 0
     maxAmount: 5
-  - id: RevolverMateba
-    amount: 0
-    maxAmount: 5
-
-  - id: ShotgunBojevic
-    amount: 0
-    maxAmount: 5
-  - id: ShotgunDB
-    amount: 0
-    maxAmount: 5
-  - id: ShotgunBull
-    amount: 0
-    maxAmount: 5
-  - id: ShotgunGladstone
-    amount: 0
-    maxAmount: 5
-  - id: ShotgunRegulator
-    amount: 0
-    maxAmount: 5
-  - id: ShotgunPump
-    amount: 0
-    maxAmount: 5
-  - id: ShotgunSawn
+  - id: WeaponRevolverMateba
     amount: 0
     maxAmount: 5
 
-  - id: SmgAtreides
+  - id: WeaponShotgunBulldog
     amount: 0
     maxAmount: 5
-  - id: SmgC20r
+  - id: WeaponShotgunDoubleBarreled
     amount: 0
     maxAmount: 5
-  - id: SmgDrozd
+  - id: WeaponShotgunEnforcer
     amount: 0
     maxAmount: 5
-  - id: SmgWt550
+  - id: WeaponShotgunKammerer
     amount: 0
     maxAmount: 5
-  - id: SmgZoric
-    amount: 0
-    maxAmount: 5
-
-  - id: SniperBoltGun
-    amount: 0
-    maxAmount: 5
-  - id: SniperBoltGunWood
-    amount: 0
-    maxAmount: 5
-  - id: SniperHeavy
+  - id: WeaponShotgunSawn
     amount: 0
     maxAmount: 5
 
-  - id: RedLaser
+  - id: WeaponSubMachineGunAtreides
     amount: 0
     maxAmount: 5
-  - id: RedHeavyLaser
+  - id: WeaponSubMachineGunC20r
+    amount: 0
+    maxAmount: 5
+  - id: WeaponSubMachineGunVector
+    amount: 0
+    maxAmount: 5
+  - id: WeaponSubMachineGunWt550
+    amount: 0
+    maxAmount: 5
+
+  - id: WeaponSniperMosin
+    amount: 0
+    maxAmount: 5
+  - id: WeaponSniperHristov
+    amount: 0
+    maxAmount: 5
+  - id: WeaponLaserGun
     amount: 0
     maxAmount: 1
-  - id: XrayLaser
+  - id: WeaponLaserCannon
     amount: 0
     maxAmount: 1
-  - id: LaserGun
-    amount: 0
-    maxAmount: 1
-  - id: LaserCannon
-    amount: 0
-    maxAmount: 1
-  - id: XrayCannon
+  - id: WeaponXrayCannon
     amount: 0
     maxAmount: 2
-  - id: TaserGun
+  - id: WeaponTaser
     amount: 0
     maxAmount: 4
 
-  - id: LauncherChinaLake
+  - id: WeaponLauncherChinaLake
     prob: 0.30
     maxAmount: 3
 
-  - id: LauncherRocket
+  - id: WeaponLauncherRocket
     prob: 0.20
     maxAmount: 3
 
@@ -186,15 +127,15 @@
 
 
     # Spawn a bunch of ammo around!
-  - id: MagazineSRifle
+  - id: MagazineRifle
     maxAmount: 15
-  - id: MagazineClRifle
+  - id: MagazineCaselessRifle
     maxAmount: 15
-  - id: MagazineClRifle10x24
+  - id: MagazineCaselessRifle10x24
     maxAmount: 15
-  - id: MagazineClRiflePistol
+  - id: MagazinePistolCaselessRifle
     maxAmount: 15
-  - id: MagazineLRifle
+  - id: MagazineLightRifle
     maxAmount: 15
   - id: MagazinePistolCalicoTopMounted
     maxAmount: 15
@@ -202,13 +143,13 @@
     maxAmount: 15
   - id: MagazinePistol
     maxAmount: 15
-  - id: MagazineHCPistol
+  - id: MagazinePistolHighCapacity
     maxAmount: 15
   - id: MagazineMagnum
     maxAmount: 15
-  - id: MagazineMagnumSmg
+  - id: MagazineMagnumSubMachineGun
     maxAmount: 15
-  - id: RocketAmmo
+  - id: CartridgeRocket
     maxAmount: 15
   - id: GrenadeFrag
     maxAmount: 15

@@ -35,6 +35,10 @@
     openSound:
       path: /Audio/Items/deconstruct.ogg
     trayPrototype: MorgueTray
+  - type: ContainerContainer
+    containers:
+      entity_storage: !type:Container
+      morgue_tray: !type:ContainerSlot
   - type: Appearance
     visuals:
     - type: MorgueVisualizer

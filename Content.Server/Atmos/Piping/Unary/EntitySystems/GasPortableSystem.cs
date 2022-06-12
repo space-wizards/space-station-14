@@ -30,7 +30,7 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
                 return;
 
             // If we can't find any ports, cancel the anchoring.
-            if(!FindGasPortIn(transform.GridID, transform.Coordinates, out _))
+            if(!FindGasPortIn(transform.GridEntityId, transform.Coordinates, out _))
                 args.Cancel();
         }
 
@@ -50,7 +50,7 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
             }
         }
 
-        private bool FindGasPortIn(GridId gridId, EntityCoordinates coordinates, [NotNullWhen(true)] out GasPortComponent? port)
+        private bool FindGasPortIn(EntityUid gridId, EntityCoordinates coordinates, [NotNullWhen(true)] out GasPortComponent? port)
         {
             port = null;
 

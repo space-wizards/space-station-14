@@ -1,150 +1,191 @@
-# Empty mags
 - type: entity
-  id: MagazineMagnumBase
+  id: BaseMagazineMagnum
   name: "Lamia magazine (.40 magnum)"
   parent: BaseItem
   abstract: true
   components:
-  - type: RangedMagazine
-    caliber: Magnum
-    magazineType: Pistol
+  - type: Tag
+    tags:
+      - MagazineMagnum
+  - type: BallisticAmmoProvider
+    whitelist:
+      tags:
+        - CartridgeMagnum
     capacity: 10
-
+  - type: Item
+    size: 5
+  - type: ContainerContainer
+    containers:
+      ballistic-ammo: !type:Container
   - type: Sprite
     netsync: false
+    sprite: Objects/Weapons/Guns/Ammunition/Magazine/Magnum/magnum_mag.rsi
     layers:
     - state: base
-      map: ["enum.RangedBarrelVisualLayers.Base"]
+      map: ["enum.GunVisualLayers.Base"]
     - state: mag-1
-      map: ["enum.RangedBarrelVisualLayers.Mag"]
+      map: ["enum.GunVisualLayers.Mag"]
+  - type: MagazineVisuals
+    magState: mag
+    steps: 5
+    zeroVisible: false
   - type: Appearance
-    visuals:
-    - type: MagVisualizer
-      magState: mag
-      steps: 5
-      zeroVisible: false
 
 - type: entity
-  id: MagazineMagnumSmgBase
+  id: BaseMagazineMagnumSubMachineGun
   name: "Drozd magazine (.40 magnum)"
   parent: BaseItem
   abstract: true
   components:
-  - type: RangedMagazine
-    caliber: Magnum
-    magazineType: Smg
+  - type: Tag
+    tags:
+      - MagazineMagnumSubMachineGun
+  - type: BallisticAmmoProvider
+    whitelist:
+      tags:
+        - CartridgeMagnum
     capacity: 25
-
+  - type: Item
+    size: 10
+  - type: ContainerContainer
+    containers:
+      ballistic-ammo: !type:Container
   - type: Sprite
     netsync: false
+    sprite: Objects/Weapons/Guns/Ammunition/Magazine/Magnum/magnum_smg_mag.rsi
     layers:
     - state: base
-      map: ["enum.RangedBarrelVisualLayers.Base"]
+      map: ["enum.GunVisualLayers.Base"]
     - state: mag-1
-      map: ["enum.RangedBarrelVisualLayers.Mag"]
+      map: ["enum.GunVisualLayers.Mag"]
+  - type: MagazineVisuals
+    magState: mag
+    steps: 2
+    zeroVisible: false
   - type: Appearance
-    visuals:
-    - type: MagVisualizer
-      magState: mag
-      steps: 2
-      zeroVisible: false
 
-# Magazines
 - type: entity
   id: MagazineMagnum
   name: "Lamia magazine (.40 magnum)"
-  parent: MagazineMagnumBase
+  parent: BaseMagazineMagnum
   components:
-  - type: RangedMagazine
-    fillPrototype: CartridgeMagnum
-
+  - type: BallisticAmmoProvider
+    proto: CartridgeMagnum
   - type: Sprite
-    sprite: Objects/Weapons/Guns/Ammunition/Magazine/Magnum/magnum_mag.rsi
+    layers:
+    - state: red
+      map: ["enum.GunVisualLayers.Base"]
+    - state: mag-1
+      map: ["enum.GunVisualLayers.Mag"]
 
 - type: entity
   id: MagazineMagnumFlash
   name: "Lamia magazine (.40 magnum flash)"
-  parent: MagazineMagnumBase
+  parent: BaseMagazineMagnum
   components:
-  - type: RangedMagazine
-    fillPrototype: CartridgeMagnumFlash
-
+  - type: BallisticAmmoProvider
+    proto: CartridgeMagnumFlash
   - type: Sprite
-    sprite: Objects/Weapons/Guns/Ammunition/Magazine/Magnum/magnum_mag_flash.rsi
+    layers:
+    - state: flash
+      map: ["enum.GunVisualLayers.Base"]
+    - state: mag-1
+      map: ["enum.GunVisualLayers.Mag"]
 
 - type: entity
-  id: MagazineMagnumHV
+  id: MagazineMagnumHighVelocity
   name: "Lamia magazine (.40 magnum high-velocity)"
-  parent: MagazineMagnumBase
+  parent: BaseMagazineMagnum
   components:
-  - type: RangedMagazine
-    fillPrototype: CartridgeMagnumHV
-
+  - type: BallisticAmmoProvider
+    proto: CartridgeMagnumHighVelocity
   - type: Sprite
-    sprite: Objects/Weapons/Guns/Ammunition/Magazine/Magnum/magnum_mag_hv.rsi
+    layers:
+    - state: high_velocity
+      map: ["enum.GunVisualLayers.Base"]
+    - state: mag-1
+      map: ["enum.GunVisualLayers.Mag"]
 
 - type: entity
   id: MagazineMagnumPractice
   name: "Lamia magazine (.40 magnum practice)"
-  parent: MagazineMagnumBase
+  parent: BaseMagazineMagnum
   components:
-  - type: RangedMagazine
-    fillPrototype: CartridgeMagnumPractice
-
+  - type: BallisticAmmoProvider
+    proto: CartridgeMagnumPractice
   - type: Sprite
-    sprite: Objects/Weapons/Guns/Ammunition/Magazine/Magnum/magnum_mag_practice.rsi
+    layers:
+    - state: practice
+      map: ["enum.GunVisualLayers.Base"]
+    - state: mag-1
+      map: ["enum.GunVisualLayers.Mag"]
 
 - type: entity
   id: MagazineMagnumRubber
   name: "Lamia magazine (.40 magnum rubber)"
-  parent: MagazineMagnumBase
+  parent: BaseMagazineMagnum
   components:
-  - type: RangedMagazine
-    fillPrototype: CartridgeMagnumRubber
-
+  - type: BallisticAmmoProvider
+    proto: CartridgeMagnumRubber
   - type: Sprite
-    sprite: Objects/Weapons/Guns/Ammunition/Magazine/Magnum/magnum_mag_rubber.rsi
+    layers:
+    - state: rubber
+      map: ["enum.GunVisualLayers.Base"]
+    - state: mag-1
+      map: ["enum.GunVisualLayers.Mag"]
 
 - type: entity
-  id: MagazineMagnumSmg
+  id: MagazineMagnumSubMachineGun
   name: "Drozd magazine (.40 magnum)"
-  parent: MagazineMagnumSmgBase
+  parent: BaseMagazineMagnumSubMachineGun
   components:
-  - type: RangedMagazine
-    fillPrototype: CartridgeMagnum
-
+  - type: BallisticAmmoProvider
+    proto: CartridgeMagnum
   - type: Sprite
-    sprite: Objects/Weapons/Guns/Ammunition/Magazine/Magnum/magnum_smg_mag.rsi
+    layers:
+    - state: red
+      map: ["enum.GunVisualLayers.Base"]
+    - state: mag-1
+      map: ["enum.GunVisualLayers.Mag"]
 
 - type: entity
-  id: MagazineMagnumSmgHV
+  id: MagazineMagnumSubMachineGunHighVelocity
   name: "Drozd magazine (.40 magnum High-Velocity)"
-  parent: MagazineMagnumSmgBase
+  parent: BaseMagazineMagnumSubMachineGun
   components:
-  - type: RangedMagazine
-    fillPrototype: CartridgeMagnumHV
-
+  - type: BallisticAmmoProvider
+    proto: CartridgeMagnumHighVelocity
   - type: Sprite
-    sprite: Objects/Weapons/Guns/Ammunition/Magazine/Magnum/magnum_smg_mag_hv.rsi
+    layers:
+    - state: high_velocity
+      map: ["enum.GunVisualLayers.Base"]
+    - state: mag-1
+      map: ["enum.GunVisualLayers.Mag"]
 
 - type: entity
-  id: MagazineMagnumSmgPractice
+  id: MagazineMagnumSubMachineGunPractice
   name: "Drozd magazine (.40 magnum practice)"
-  parent: MagazineMagnumSmgBase
+  parent: BaseMagazineMagnumSubMachineGun
   components:
-  - type: RangedMagazine
-    fillPrototype: CartridgeMagnumPractice
-
+  - type: BallisticAmmoProvider
+    proto: CartridgeMagnumPractice
   - type: Sprite
-    sprite: Objects/Weapons/Guns/Ammunition/Magazine/Magnum/magnum_smg_mag_practice.rsi
+    layers:
+    - state: practice
+      map: ["enum.GunVisualLayers.Base"]
+    - state: mag-1
+      map: ["enum.GunVisualLayers.Mag"]
 
 - type: entity
-  id: MagazineMagnumSmgRubber
+  id: MagazineMagnumSubMachineGunRubber
   name: "Drozd magazine (.40 magnum rubber)"
-  parent: MagazineMagnumSmgBase
+  parent: BaseMagazineMagnumSubMachineGun
   components:
-  - type: RangedMagazine
-    fillPrototype: CartridgeMagnumRubber
-
+  - type: BallisticAmmoProvider
+    proto: CartridgeMagnumRubber
   - type: Sprite
-    sprite: Objects/Weapons/Guns/Ammunition/Magazine/Magnum/magnum_smg_mag_rubber.rsi
+    layers:
+    - state: rubber
+      map: ["enum.GunVisualLayers.Base"]
+    - state: mag-1
+      map: ["enum.GunVisualLayers.Mag"]

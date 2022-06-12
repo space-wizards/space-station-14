@@ -2,7 +2,7 @@
 
 namespace Content.Server.Body.Components
 {
-    [RegisterComponent, Friend(typeof(BrainSystem))]
+    [RegisterComponent, Access(typeof(BrainSystem))]
     public sealed class BrainComponent : Component
     {
     }
