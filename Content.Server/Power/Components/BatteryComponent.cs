@@ -34,7 +34,7 @@ namespace Content.Server.Power.Components
         /// </summary>
         public virtual bool TryUseCharge(float chargeToUse)
         {
-            if (chargeToUse >= CurrentCharge)
+            if (chargeToUse > CurrentCharge)
             {
                 return false;
             }
