@@ -1,10 +1,4 @@
 Entries:
-- author: moony
-  changes:
-  - {message: Some tiles now have additional visual variants. These will start showing
-      up when maps are updated., type: Add}
-  id: 1185
-  time: '2022-03-09T19:59:44.0000000+00:00'
 - author: lapatison
   changes:
   - {message: It's now possible to carry an acoustic guitar on your back., type: Add}
@@ -3002,3 +2996,9 @@ Entries:
     type: Fix}
   id: 1684
   time: '2022-06-12T02:40:15.0000000+00:00'
+- author: Peptide90
+  changes:
+  - {message: Asteroid walls now have reduced ore yield. Look out for designated mining
+      areas and salvage asteroids., type: Tweak}
+  id: 1685
+  time: '2022-06-12T02:58:35.0000000+00:00'
