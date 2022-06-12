@@ -854,15 +854,15 @@ entities:
   - pos: -11.5,21.5
     parent: 852
     type: Transform
-  - isPlaceable: False
-    type: PlaceableSurface
   - containers:
-      EntityStorageComponent: !type:Container
+      entity_storage: !type:Container
         ents:
         - 7797
         - 4294
         - 5153
     type: ContainerContainer
+  - isPlaceable: False
+    type: PlaceableSurface
 - uid: 85
   type: ShellShotgunBeanbag
   components:
@@ -5347,10 +5347,6 @@ entities:
     type: Transform
   - isPlaceable: False
     type: PlaceableSurface
-  - containers:
-      EntityStorageComponent: !type:Container
-        ents: []
-    type: ContainerContainer
 - uid: 473
   type: VendingMachineCigs
   components:
@@ -5469,9 +5465,6 @@ entities:
     type: Transform
   - canCollide: False
     type: Physics
-  - containers:
-      cellslot_cell_container: !type:ContainerSlot {}
-    type: ContainerContainer
 - uid: 491
   type: CarpetBlue
   components:
@@ -5896,9 +5889,6 @@ entities:
     type: Transform
   - canCollide: False
     type: Physics
-  - containers:
-      cellslot_cell_container: !type:ContainerSlot {}
-    type: ContainerContainer
 - uid: 547
   type: PlasticFlapsAirtightClear
   components:
@@ -5913,10 +5903,6 @@ entities:
     type: Transform
   - isPlaceable: False
     type: PlaceableSurface
-  - containers:
-      EntityStorageComponent: !type:Container
-        ents: []
-    type: ContainerContainer
 - uid: 549
   type: CableApcExtension
   components:
@@ -6224,10 +6210,6 @@ entities:
     type: Transform
   - isPlaceable: False
     type: PlaceableSurface
-  - containers:
-      EntityStorageComponent: !type:Container
-        ents: []
-    type: ContainerContainer
 - uid: 585
   type: EmergencyLight
   components:
@@ -7446,10 +7428,6 @@ entities:
     type: Transform
   - isPlaceable: False
     type: PlaceableSurface
-  - containers:
-      EntityStorageComponent: !type:Container
-        ents: []
-    type: ContainerContainer
 - uid: 729
   type: Catwalk
   components:
@@ -7476,10 +7454,6 @@ entities:
     type: Transform
   - isPlaceable: False
     type: PlaceableSurface
-  - containers:
-      EntityStorageComponent: !type:Container
-        ents: []
-    type: ContainerContainer
 - uid: 733
   type: SpawnPointMedicalDoctor
   components:
@@ -7681,10 +7655,6 @@ entities:
     type: Transform
   - isPlaceable: False
     type: PlaceableSurface
-  - containers:
-      EntityStorageComponent: !type:Container
-        ents: []
-    type: ContainerContainer
 - uid: 760
   type: VendingMachineDiscount
   components:
@@ -7701,10 +7671,6 @@ entities:
     type: Transform
   - isPlaceable: False
     type: PlaceableSurface
-  - containers:
-      EntityStorageComponent: !type:Container
-        ents: []
-    type: ContainerContainer
 - uid: 762
   type: SprayBottleSpaceCleaner
   components:
@@ -7774,6 +7740,8 @@ entities:
   - pos: -4.430562,13.857189
     parent: 852
     type: Transform
+  - canCollide: False
+    type: Physics
   - containers:
       storagebase: !type:Container
         ents: []
@@ -7804,10 +7772,6 @@ entities:
     type: Transform
   - isPlaceable: False
     type: PlaceableSurface
-  - containers:
-      EntityStorageComponent: !type:Container
-        ents: []
-    type: ContainerContainer
 - uid: 773
   type: GasPipeStraight
   components:
@@ -7898,10 +7862,6 @@ entities:
     type: Transform
   - isPlaceable: False
     type: PlaceableSurface
-  - containers:
-      EntityStorageComponent: !type:Container
-        ents: []
-    type: ContainerContainer
 - uid: 783
   type: Poweredlight
   components:
@@ -7927,10 +7887,6 @@ entities:
     type: Transform
   - isPlaceable: False
     type: PlaceableSurface
-  - containers:
-      EntityStorageComponent: !type:Container
-        ents: []
-    type: ContainerContainer
 - uid: 785
   type: ClosetEmergencyFilledRandom
   components:
@@ -7939,10 +7895,6 @@ entities:
     type: Transform
   - isPlaceable: False
     type: PlaceableSurface
-  - containers:
-      EntityStorageComponent: !type:Container
-        ents: []
-    type: ContainerContainer
 - uid: 786
   type: MopItem
   components:
@@ -7965,10 +7917,6 @@ entities:
     type: Transform
   - isPlaceable: False
     type: PlaceableSurface
-  - containers:
-      EntityStorageComponent: !type:Container
-        ents: []
-    type: ContainerContainer
 - uid: 789
   type: GasPipeStraight
   components:
@@ -7986,10 +7934,6 @@ entities:
     type: Transform
   - isPlaceable: False
     type: PlaceableSurface
-  - containers:
-      EntityStorageComponent: !type:Container
-        ents: []
-    type: ContainerContainer
 - uid: 791
   type: ClosetEmergencyFilledRandom
   components:
@@ -7998,10 +7942,6 @@ entities:
     type: Transform
   - isPlaceable: False
     type: PlaceableSurface
-  - containers:
-      EntityStorageComponent: !type:Container
-        ents: []
-    type: ContainerContainer
 - uid: 792
   type: VendingMachineChang
   components:
@@ -8076,10 +8016,6 @@ entities:
     type: Transform
   - isPlaceable: False
     type: PlaceableSurface
-  - containers:
-      EntityStorageComponent: !type:Container
-        ents: []
-    type: ContainerContainer
 - uid: 800
   type: VendingMachineJaniDrobe
   components:
@@ -8103,10 +8039,6 @@ entities:
     type: Transform
   - isPlaceable: False
     type: PlaceableSurface
-  - containers:
-      EntityStorageComponent: !type:Container
-        ents: []
-    type: ContainerContainer
 - uid: 803
   type: LockerSecurityFilled
   components:
@@ -8116,10 +8048,6 @@ entities:
     type: Transform
   - isPlaceable: False
     type: PlaceableSurface
-  - containers:
-      EntityStorageComponent: !type:Container
-        ents: []
-    type: ContainerContainer
 - uid: 804
   type: LockerSecurityFilled
   components:
@@ -8129,10 +8057,6 @@ entities:
     type: Transform
   - isPlaceable: False
     type: PlaceableSurface
-  - containers:
-      EntityStorageComponent: !type:Container
-        ents: []
-    type: ContainerContainer
 - uid: 805
   type: VendingMachineSec
   components:
@@ -8172,10 +8096,6 @@ entities:
     type: Transform
   - isPlaceable: False
     type: PlaceableSurface
-  - containers:
-      EntityStorageComponent: !type:Container
-        ents: []
-    type: ContainerContainer
 - uid: 809
   type: TableGlass
   components:
@@ -8244,13 +8164,13 @@ entities:
     pos: 37.5,-1.5
     parent: 852
     type: Transform
-  - isPlaceable: False
-    type: PlaceableSurface
   - containers:
-      EntityStorageComponent: !type:Container
+      entity_storage: !type:Container
         ents:
         - 1734
     type: ContainerContainer
+  - isPlaceable: False
+    type: PlaceableSurface
 - uid: 817
   type: Table
   components:
@@ -8266,10 +8186,6 @@ entities:
     type: Transform
   - isPlaceable: False
     type: PlaceableSurface
-  - containers:
-      EntityStorageComponent: !type:Container
-        ents: []
-    type: ContainerContainer
 - uid: 819
   type: CarpetPurple
   components:
@@ -19604,10 +19520,6 @@ entities:
     type: Transform
   - isPlaceable: False
     type: PlaceableSurface
-  - containers:
-      EntityStorageComponent: !type:Container
-        ents: []
-    type: ContainerContainer
 - uid: 1150
   type: WallReinforced
   components:
@@ -19623,10 +19535,6 @@ entities:
     type: Transform
   - isPlaceable: False
     type: PlaceableSurface
-  - containers:
-      EntityStorageComponent: !type:Container
-        ents: []
-    type: ContainerContainer
 - uid: 1152
   type: WeaponSubMachineGunWt550
   components:
@@ -19702,10 +19610,6 @@ entities:
     type: Transform
   - isPlaceable: False
     type: PlaceableSurface
-  - containers:
-      EntityStorageComponent: !type:Container
-        ents: []
-    type: ContainerContainer
 - uid: 1162
   type: WaterTankFull
   components:
@@ -20308,10 +20212,6 @@ entities:
     type: Transform
   - isPlaceable: False
     type: PlaceableSurface
-  - containers:
-      EntityStorageComponent: !type:Container
-        ents: []
-    type: ContainerContainer
 - uid: 1228
   type: Poweredlight
   components:
@@ -22223,10 +22123,6 @@ entities:
     type: Transform
   - isPlaceable: False
     type: PlaceableSurface
-  - containers:
-      EntityStorageComponent: !type:Container
-        ents: []
-    type: ContainerContainer
 - uid: 1413
   type: WallReinforced
   components:
@@ -22265,9 +22161,6 @@ entities:
     type: Transform
   - canCollide: False
     type: Physics
-  - containers:
-      cellslot_cell_container: !type:ContainerSlot {}
-    type: ContainerContainer
 - uid: 1419
   type: TableWood
   components:
@@ -22685,11 +22578,6 @@ entities:
     pos: 11.5,-15.5
     parent: 852
     type: Transform
-  - containers:
-      EntityStorageComponent: !type:Container
-        ents: []
-      morgue_tray: !type:ContainerSlot {}
-    type: ContainerContainer
 - uid: 1481
   type: Morgue
   components:
@@ -22697,11 +22585,6 @@ entities:
     pos: 11.5,-14.5
     parent: 852
     type: Transform
-  - containers:
-      EntityStorageComponent: !type:Container
-        ents: []
-      morgue_tray: !type:ContainerSlot {}
-    type: ContainerContainer
 - uid: 1482
   type: ReinforcedWindow
   components:
@@ -23276,11 +23159,6 @@ entities:
     type: Construction
   - isPlaceable: False
     type: PlaceableSurface
-  - containers:
-      EntityStorageComponent: !type:Container
-        ents: []
-      PaperLabel: !type:ContainerSlot {}
-    type: ContainerContainer
 - uid: 1555
   type: ClosetFireFilled
   components:
@@ -23289,10 +23167,6 @@ entities:
     type: Transform
   - isPlaceable: False
     type: PlaceableSurface
-  - containers:
-      EntityStorageComponent: !type:Container
-        ents: []
-    type: ContainerContainer
 - uid: 1556
   type: WallReinforced
   components:
@@ -24820,10 +24694,6 @@ entities:
     type: Transform
   - isPlaceable: False
     type: PlaceableSurface
-  - containers:
-      EntityStorageComponent: !type:Container
-        ents: []
-    type: ContainerContainer
 - uid: 1773
   type: WallReinforced
   components:
@@ -25539,9 +25409,6 @@ entities:
     type: Transform
   - canCollide: False
     type: Physics
-  - containers:
-      cellslot_cell_container: !type:ContainerSlot {}
-    type: ContainerContainer
 - uid: 1878
   type: Grille
   components:
@@ -26101,10 +25968,6 @@ entities:
     type: Transform
   - isPlaceable: False
     type: PlaceableSurface
-  - containers:
-      EntityStorageComponent: !type:Container
-        ents: []
-    type: ContainerContainer
 - uid: 1958
   type: Stool
   components:
@@ -27475,10 +27338,6 @@ entities:
     type: Transform
   - isPlaceable: False
     type: PlaceableSurface
-  - containers:
-      EntityStorageComponent: !type:Container
-        ents: []
-    type: ContainerContainer
 - uid: 2146
   type: TableReinforced
   components:
@@ -27566,9 +27425,6 @@ entities:
     type: Transform
   - canCollide: False
     type: Physics
-  - containers:
-      cellslot_cell_container: !type:ContainerSlot {}
-    type: ContainerContainer
 - uid: 2156
   type: Paper
   components:
@@ -27939,11 +27795,6 @@ entities:
     pos: 11.5,-13.5
     parent: 852
     type: Transform
-  - containers:
-      EntityStorageComponent: !type:Container
-        ents: []
-      morgue_tray: !type:ContainerSlot {}
-    type: ContainerContainer
 - uid: 2212
   type: Wrench
   components:
@@ -27996,7 +27847,7 @@ entities:
     parent: 852
     type: Transform
   - containers:
-      EntityStorageComponent: !type:Container
+      entity_storage: !type:Container
         ents: []
       morgue_tray: !type:ContainerSlot {}
     type: ContainerContainer
@@ -28019,11 +27870,6 @@ entities:
     pos: 11.5,-16.5
     parent: 852
     type: Transform
-  - containers:
-      EntityStorageComponent: !type:Container
-        ents: []
-      morgue_tray: !type:ContainerSlot {}
-    type: ContainerContainer
 - uid: 2223
   type: ReinforcedWindow
   components:
@@ -29675,10 +29521,6 @@ entities:
     type: Transform
   - isPlaceable: False
     type: PlaceableSurface
-  - containers:
-      EntityStorageComponent: !type:Container
-        ents: []
-    type: ContainerContainer
 - uid: 2454
   type: AirlockMaintLocked
   components:
@@ -30042,6 +29884,8 @@ entities:
   - pos: 8.497082,31.408243
     parent: 852
     type: Transform
+  - canCollide: False
+    type: Physics
 - uid: 2500
   type: WallSolid
   components:
@@ -36765,10 +36609,6 @@ entities:
     type: Transform
   - isPlaceable: False
     type: PlaceableSurface
-  - containers:
-      EntityStorageComponent: !type:Container
-        ents: []
-    type: ContainerContainer
 - uid: 3175
   type: CableApcExtension
   components:
@@ -38489,10 +38329,6 @@ entities:
     type: Transform
   - isPlaceable: False
     type: PlaceableSurface
-  - containers:
-      EntityStorageComponent: !type:Container
-        ents: []
-    type: ContainerContainer
 - uid: 3370
   type: CableApcExtension
   components:
@@ -44677,10 +44513,6 @@ entities:
     type: Transform
   - isPlaceable: False
     type: PlaceableSurface
-  - containers:
-      EntityStorageComponent: !type:Container
-        ents: []
-    type: ContainerContainer
 - uid: 4014
   type: ShuttersNormalOpen
   components:
@@ -44895,14 +44727,14 @@ entities:
   - pos: 0.5,7.5
     parent: 852
     type: Transform
-  - isPlaceable: False
-    type: PlaceableSurface
   - containers:
-      EntityStorageComponent: !type:Container
+      entity_storage: !type:Container
         ents:
         - 4213
         - 4203
     type: ContainerContainer
+  - isPlaceable: False
+    type: PlaceableSurface
 - uid: 4037
   type: CableApcExtension
   components:
@@ -45377,9 +45209,6 @@ entities:
     type: Transform
   - canCollide: False
     type: Physics
-  - containers:
-      cellslot_cell_container: !type:ContainerSlot {}
-    type: ContainerContainer
 - uid: 4093
   type: TableWood
   components:
@@ -45400,9 +45229,6 @@ entities:
     type: Transform
   - canCollide: False
     type: Physics
-  - containers:
-      cellslot_cell_container: !type:ContainerSlot {}
-    type: ContainerContainer
 - uid: 4096
   type: PoweredSmallLight
   components:
@@ -45579,10 +45405,6 @@ entities:
     type: Transform
   - isPlaceable: False
     type: PlaceableSurface
-  - containers:
-      EntityStorageComponent: !type:Container
-        ents: []
-    type: ContainerContainer
 - uid: 4119
   type: Poweredlight
   components:
@@ -46077,10 +45899,6 @@ entities:
     type: Transform
   - isPlaceable: False
     type: PlaceableSurface
-  - containers:
-      EntityStorageComponent: !type:Container
-        ents: []
-    type: ContainerContainer
 - uid: 4176
   type: GasPipeStraight
   components:
@@ -46115,9 +45933,6 @@ entities:
     type: Transform
   - canCollide: False
     type: Physics
-  - containers:
-      cellslot_cell_container: !type:ContainerSlot {}
-    type: ContainerContainer
 - uid: 4179
   type: StoolBar
   components:
@@ -46377,6 +46192,8 @@ entities:
   - pos: -4.508687,13.700939
     parent: 852
     type: Transform
+  - canCollide: False
+    type: Physics
   - containers:
       storagebase: !type:Container
         ents: []
@@ -46499,7 +46316,7 @@ entities:
   - canCollide: False
     type: Physics
   - containers:
-      cellslot_cell_container: !type:ContainerSlot {}
+      cell_slot: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 4229
   type: SpawnPointAssistant
@@ -47659,10 +47476,6 @@ entities:
     type: Transform
   - isPlaceable: False
     type: PlaceableSurface
-  - containers:
-      EntityStorageComponent: !type:Container
-        ents: []
-    type: ContainerContainer
 - uid: 4382
   type: RandomSpawner
   components:
@@ -48758,10 +48571,6 @@ entities:
     type: Transform
   - isPlaceable: False
     type: PlaceableSurface
-  - containers:
-      EntityStorageComponent: !type:Container
-        ents: []
-    type: ContainerContainer
 - uid: 4531
   type: ClosetRadiationSuitFilled
   components:
@@ -48770,10 +48579,6 @@ entities:
     type: Transform
   - isPlaceable: False
     type: PlaceableSurface
-  - containers:
-      EntityStorageComponent: !type:Container
-        ents: []
-    type: ContainerContainer
 - uid: 4532
   type: Grille
   components:
@@ -48843,10 +48648,6 @@ entities:
     type: Transform
   - isPlaceable: False
     type: PlaceableSurface
-  - containers:
-      EntityStorageComponent: !type:Container
-        ents: []
-    type: ContainerContainer
 - uid: 4542
   type: Rack
   components:
@@ -50035,7 +49836,7 @@ entities:
   - canCollide: False
     type: Physics
   - containers:
-      cellslot_cell_container: !type:ContainerSlot {}
+      cell_slot: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 4705
   type: Stunbaton
@@ -50046,7 +49847,7 @@ entities:
   - canCollide: False
     type: Physics
   - containers:
-      cellslot_cell_container: !type:ContainerSlot {}
+      cell_slot: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 4706
   type: WeaponTaser
@@ -51921,9 +51722,6 @@ entities:
     type: Transform
   - canCollide: False
     type: Physics
-  - containers:
-      cellslot_cell_container: !type:ContainerSlot {}
-    type: ContainerContainer
 - uid: 4926
   type: Grille
   components:
@@ -53235,10 +53033,6 @@ entities:
     type: Transform
   - isPlaceable: False
     type: PlaceableSurface
-  - containers:
-      EntityStorageComponent: !type:Container
-        ents: []
-    type: ContainerContainer
 - uid: 5095
   type: ChairOfficeLight
   components:
@@ -53697,6 +53491,8 @@ entities:
     type: Transform
   - unspawnedCount: 25
     type: BallisticAmmoProvider
+  - canCollide: False
+    type: Physics
 - uid: 5147
   type: MagazineRifleRubber
   components:
@@ -54732,11 +54528,6 @@ entities:
     type: Construction
   - isPlaceable: False
     type: PlaceableSurface
-  - containers:
-      EntityStorageComponent: !type:Container
-        ents: []
-      PaperLabel: !type:ContainerSlot {}
-    type: ContainerContainer
 - uid: 5293
   type: AirlockExternalLocked
   components:
@@ -64651,10 +64442,6 @@ entities:
     type: Transform
   - isPlaceable: False
     type: PlaceableSurface
-  - containers:
-      EntityStorageComponent: !type:Container
-        ents: []
-    type: ContainerContainer
 - uid: 6022
   type: Lamp
   components:
@@ -64663,9 +64450,6 @@ entities:
     type: Transform
   - canCollide: False
     type: Physics
-  - containers:
-      cellslot_cell_container: !type:ContainerSlot {}
-    type: ContainerContainer
 - uid: 6023
   type: GasVentScrubber
   components:
@@ -67202,10 +66986,6 @@ entities:
     type: Transform
   - isPlaceable: False
     type: PlaceableSurface
-  - containers:
-      EntityStorageComponent: !type:Container
-        ents: []
-    type: ContainerContainer
 - uid: 6206
   type: GasPipeStraight
   components:
@@ -67275,10 +67055,6 @@ entities:
     type: Transform
   - isPlaceable: False
     type: PlaceableSurface
-  - containers:
-      EntityStorageComponent: !type:Container
-        ents: []
-    type: ContainerContainer
 - uid: 6212
   type: AirlockSalvageGlassLocked
   components:
@@ -70247,10 +70023,6 @@ entities:
     type: Transform
   - isPlaceable: False
     type: PlaceableSurface
-  - containers:
-      EntityStorageComponent: !type:Container
-        ents: []
-    type: ContainerContainer
 - uid: 6563
   type: LockerAtmosphericsFilled
   components:
@@ -70259,10 +70031,6 @@ entities:
     type: Transform
   - isPlaceable: False
     type: PlaceableSurface
-  - containers:
-      EntityStorageComponent: !type:Container
-        ents: []
-    type: ContainerContainer
 - uid: 6564
   type: PlaqueAtmos
   components:
@@ -70388,10 +70156,6 @@ entities:
     type: Transform
   - isPlaceable: False
     type: PlaceableSurface
-  - containers:
-      EntityStorageComponent: !type:Container
-        ents: []
-    type: ContainerContainer
 - uid: 6576
   type: ChairOfficeDark
   components:
@@ -70465,10 +70229,6 @@ entities:
     type: Transform
   - isPlaceable: False
     type: PlaceableSurface
-  - containers:
-      EntityStorageComponent: !type:Container
-        ents: []
-    type: ContainerContainer
 - uid: 6585
   type: OxygenCanister
   components:
@@ -70624,12 +70384,12 @@ entities:
     - EntityStorageComponent
     type: Construction
   - containers:
-      EntityStorageComponent: !type:Container
+      entity_storage: !type:Container
         ents:
         - 7777
         - 3475
         - 3476
-      PaperLabel: !type:ContainerSlot {}
+      paper_label: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 6604
   type: CableHV
@@ -70815,9 +70575,9 @@ entities:
     - EntityStorageComponent
     type: Construction
   - containers:
-      EntityStorageComponent: !type:Container
+      entity_storage: !type:Container
         ents: []
-      PaperLabel: !type:ContainerSlot {}
+      paper_label: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 6627
   type: WallReinforced
@@ -71272,9 +71032,6 @@ entities:
     type: Transform
   - canCollide: False
     type: Physics
-  - containers:
-      cellslot_cell_container: !type:ContainerSlot {}
-    type: ContainerContainer
 - uid: 6696
   type: VendingMachineGames
   components:
@@ -73842,14 +73599,14 @@ entities:
   - pos: -0.5,18.5
     parent: 852
     type: Transform
-  - isPlaceable: False
-    type: PlaceableSurface
   - containers:
-      EntityStorageComponent: !type:Container
+      entity_storage: !type:Container
         ents:
         - 9055
         - 4585
     type: ContainerContainer
+  - isPlaceable: False
+    type: PlaceableSurface
 - uid: 7058
   type: ClosetMaintenanceFilledRandom
   components:
@@ -73858,10 +73615,6 @@ entities:
     type: Transform
   - isPlaceable: False
     type: PlaceableSurface
-  - containers:
-      EntityStorageComponent: !type:Container
-        ents: []
-    type: ContainerContainer
 - uid: 7059
   type: Bed
   components:
@@ -73942,10 +73695,6 @@ entities:
     type: Transform
   - isPlaceable: False
     type: PlaceableSurface
-  - containers:
-      EntityStorageComponent: !type:Container
-        ents: []
-    type: ContainerContainer
 - uid: 7069
   type: ReinforcedWindow
   components:
@@ -74290,10 +74039,8 @@ entities:
   - pos: 15.536513,-13.5
     parent: 852
     type: Transform
-  - isPlaceable: False
-    type: PlaceableSurface
   - containers:
-      EntityStorageComponent: !type:Container
+      entity_storage: !type:Container
         ents:
         - 4231
         - 7101
@@ -74303,6 +74050,8 @@ entities:
         - 7098
         - 7108
     type: ContainerContainer
+  - isPlaceable: False
+    type: PlaceableSurface
 - uid: 7111
   type: Morgue
   components:
@@ -74310,11 +74059,6 @@ entities:
     pos: 13.5,-14.5
     parent: 852
     type: Transform
-  - containers:
-      EntityStorageComponent: !type:Container
-        ents: []
-      morgue_tray: !type:ContainerSlot {}
-    type: ContainerContainer
 - uid: 7112
   type: Morgue
   components:
@@ -74322,11 +74066,6 @@ entities:
     pos: 13.5,-15.5
     parent: 852
     type: Transform
-  - containers:
-      EntityStorageComponent: !type:Container
-        ents: []
-      morgue_tray: !type:ContainerSlot {}
-    type: ContainerContainer
 - uid: 7113
   type: Morgue
   components:
@@ -74334,11 +74073,6 @@ entities:
     pos: 13.5,-16.5
     parent: 852
     type: Transform
-  - containers:
-      EntityStorageComponent: !type:Container
-        ents: []
-      morgue_tray: !type:ContainerSlot {}
-    type: ContainerContainer
 - uid: 7114
   type: Table
   components:
@@ -74624,9 +74358,6 @@ entities:
     type: Transform
   - canCollide: False
     type: Physics
-  - containers:
-      cellslot_cell_container: !type:ContainerSlot {}
-    type: ContainerContainer
 - uid: 7150
   type: HandLabeler
   components:
@@ -74720,10 +74451,6 @@ entities:
     type: Transform
   - isPlaceable: False
     type: PlaceableSurface
-  - containers:
-      EntityStorageComponent: !type:Container
-        ents: []
-    type: ContainerContainer
 - uid: 7162
   type: PartRodMetal
   components:
@@ -75382,11 +75109,6 @@ entities:
     type: Construction
   - isPlaceable: False
     type: PlaceableSurface
-  - containers:
-      EntityStorageComponent: !type:Container
-        ents: []
-      PaperLabel: !type:ContainerSlot {}
-    type: ContainerContainer
 - uid: 7247
   type: CrateMedicalSurgery
   components:
@@ -75398,11 +75120,6 @@ entities:
     type: Construction
   - isPlaceable: False
     type: PlaceableSurface
-  - containers:
-      EntityStorageComponent: !type:Container
-        ents: []
-      PaperLabel: !type:ContainerSlot {}
-    type: ContainerContainer
 - uid: 7248
   type: ClothingHandsGlovesLatex
   components:
@@ -75466,10 +75183,6 @@ entities:
     type: Transform
   - isPlaceable: False
     type: PlaceableSurface
-  - containers:
-      EntityStorageComponent: !type:Container
-        ents: []
-    type: ContainerContainer
 - uid: 7255
   type: ClothingUniformJumpsuitParamedic
   components:
@@ -75941,9 +75654,6 @@ entities:
     type: Transform
   - canCollide: False
     type: Physics
-  - containers:
-      cellslot_cell_container: !type:ContainerSlot {}
-    type: ContainerContainer
 - uid: 7320
   type: BookRandom
   components:
@@ -76377,9 +76087,6 @@ entities:
     type: Transform
   - canCollide: False
     type: Physics
-  - containers:
-      cellslot_cell_container: !type:ContainerSlot {}
-    type: ContainerContainer
 - uid: 7373
   type: ClothingBeltUtilityFilled
   components:
@@ -76802,10 +76509,6 @@ entities:
     type: Transform
   - isPlaceable: False
     type: PlaceableSurface
-  - containers:
-      EntityStorageComponent: !type:Container
-        ents: []
-    type: ContainerContainer
 - uid: 7425
   type: ClosetRadiationSuitFilled
   components:
@@ -76814,10 +76517,6 @@ entities:
     type: Transform
   - isPlaceable: False
     type: PlaceableSurface
-  - containers:
-      EntityStorageComponent: !type:Container
-        ents: []
-    type: ContainerContainer
 - uid: 7426
   type: ClosetFireFilled
   components:
@@ -76826,10 +76525,6 @@ entities:
     type: Transform
   - isPlaceable: False
     type: PlaceableSurface
-  - containers:
-      EntityStorageComponent: !type:Container
-        ents: []
-    type: ContainerContainer
 - uid: 7427
   type: Sink
   components:
@@ -76901,10 +76596,6 @@ entities:
     type: Transform
   - isPlaceable: False
     type: PlaceableSurface
-  - containers:
-      EntityStorageComponent: !type:Container
-        ents: []
-    type: ContainerContainer
 - uid: 7436
   type: VendingMachineNutri
   components:
@@ -77411,10 +77102,6 @@ entities:
     type: Transform
   - isPlaceable: False
     type: PlaceableSurface
-  - containers:
-      EntityStorageComponent: !type:Container
-        ents: []
-    type: ContainerContainer
 - uid: 7498
   type: Catwalk
   components:
@@ -77543,10 +77230,6 @@ entities:
     type: Transform
   - isPlaceable: False
     type: PlaceableSurface
-  - containers:
-      EntityStorageComponent: !type:Container
-        ents: []
-    type: ContainerContainer
 - uid: 7519
   type: Barricade
   components:
@@ -78096,10 +77779,6 @@ entities:
     type: Transform
   - isPlaceable: False
     type: PlaceableSurface
-  - containers:
-      EntityStorageComponent: !type:Container
-        ents: []
-    type: ContainerContainer
 - uid: 7572
   type: ClothingHandsGlovesColorYellow
   components:
@@ -78218,10 +77897,6 @@ entities:
     type: Transform
   - isPlaceable: False
     type: PlaceableSurface
-  - containers:
-      EntityStorageComponent: !type:Container
-        ents: []
-    type: ContainerContainer
 - uid: 7589
   type: ClosetFireFilled
   components:
@@ -78230,10 +77905,6 @@ entities:
     type: Transform
   - isPlaceable: False
     type: PlaceableSurface
-  - containers:
-      EntityStorageComponent: !type:Container
-        ents: []
-    type: ContainerContainer
 - uid: 7590
   type: Welder
   components:
@@ -78342,10 +78013,6 @@ entities:
     type: Transform
   - isPlaceable: False
     type: PlaceableSurface
-  - containers:
-      EntityStorageComponent: !type:Container
-        ents: []
-    type: ContainerContainer
 - uid: 7607
   type: MaintenanceToolSpawner
   components:
@@ -78542,11 +78209,6 @@ entities:
     type: Construction
   - isPlaceable: False
     type: PlaceableSurface
-  - containers:
-      EntityStorageComponent: !type:Container
-        ents: []
-      PaperLabel: !type:ContainerSlot {}
-    type: ContainerContainer
 - uid: 7636
   type: ClosetToolFilled
   components:
@@ -78555,10 +78217,6 @@ entities:
     type: Transform
   - isPlaceable: False
     type: PlaceableSurface
-  - containers:
-      EntityStorageComponent: !type:Container
-        ents: []
-    type: ContainerContainer
 - uid: 7637
   type: Table
   components:
@@ -78999,10 +78657,6 @@ entities:
     type: Transform
   - isPlaceable: False
     type: PlaceableSurface
-  - containers:
-      EntityStorageComponent: !type:Container
-        ents: []
-    type: ContainerContainer
 - uid: 7699
   type: Bed
   components:
@@ -79739,10 +79393,6 @@ entities:
     type: Transform
   - isPlaceable: False
     type: PlaceableSurface
-  - containers:
-      EntityStorageComponent: !type:Container
-        ents: []
-    type: ContainerContainer
 - uid: 7780
   type: NitrogenCanister
   components:
@@ -79823,10 +79473,6 @@ entities:
     type: Transform
   - isPlaceable: False
     type: PlaceableSurface
-  - containers:
-      EntityStorageComponent: !type:Container
-        ents: []
-    type: ContainerContainer
 - uid: 7790
   type: ToySpawner
   components:
@@ -79841,10 +79487,6 @@ entities:
     type: Transform
   - isPlaceable: False
     type: PlaceableSurface
-  - containers:
-      EntityStorageComponent: !type:Container
-        ents: []
-    type: ContainerContainer
 - uid: 7792
   type: ClosetFireFilled
   components:
@@ -79853,10 +79495,6 @@ entities:
     type: Transform
   - isPlaceable: False
     type: PlaceableSurface
-  - containers:
-      EntityStorageComponent: !type:Container
-        ents: []
-    type: ContainerContainer
 - uid: 7793
   type: Rack
   components:
@@ -79890,9 +79528,9 @@ entities:
     - EntityStorageComponent
     type: Construction
   - containers:
-      EntityStorageComponent: !type:Container
+      entity_storage: !type:Container
         ents: []
-      PaperLabel: !type:ContainerSlot {}
+      paper_label: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 7797
   type: ClothingOuterArmorRiot
@@ -80088,9 +79726,6 @@ entities:
     type: Transform
   - canCollide: False
     type: Physics
-  - containers:
-      cellslot_cell_container: !type:ContainerSlot {}
-    type: ContainerContainer
 - uid: 7827
   type: PosterLegitReportCrimes
   components:
@@ -80275,19 +79910,14 @@ entities:
     type: Transform
   - canCollide: False
     type: Physics
-  - containers:
-      cellslot_cell_container: !type:ContainerSlot {}
-    type: ContainerContainer
 - uid: 7853
   type: ClosetBase
   components:
   - pos: 27.5,-22.5
     parent: 852
     type: Transform
-  - isPlaceable: False
-    type: PlaceableSurface
   - containers:
-      EntityStorageComponent: !type:Container
+      entity_storage: !type:Container
         ents:
         - 7855
         - 7857
@@ -80295,6 +79925,8 @@ entities:
         - 7859
         - 7856
     type: ContainerContainer
+  - isPlaceable: False
+    type: PlaceableSurface
 - uid: 7854
   type: ClothingOuterCoatInspector
   components:
@@ -80683,10 +80315,6 @@ entities:
     type: Transform
   - isPlaceable: False
     type: PlaceableSurface
-  - containers:
-      EntityStorageComponent: !type:Container
-        ents: []
-    type: ContainerContainer
 - uid: 7912
   type: ClosetFireFilled
   components:
@@ -80695,10 +80323,6 @@ entities:
     type: Transform
   - isPlaceable: False
     type: PlaceableSurface
-  - containers:
-      EntityStorageComponent: !type:Container
-        ents: []
-    type: ContainerContainer
 - uid: 7913
   type: ClosetL3JanitorFilled
   components:
@@ -80707,10 +80331,6 @@ entities:
     type: Transform
   - isPlaceable: False
     type: PlaceableSurface
-  - containers:
-      EntityStorageComponent: !type:Container
-        ents: []
-    type: ContainerContainer
 - uid: 7914
   type: RandomSpawner
   components:
@@ -80923,10 +80543,6 @@ entities:
     type: Transform
   - isPlaceable: False
     type: PlaceableSurface
-  - containers:
-      EntityStorageComponent: !type:Container
-        ents: []
-    type: ContainerContainer
 - uid: 7949
   type: MaintenanceFluffSpawner
   components:
@@ -82803,10 +82419,6 @@ entities:
     type: Transform
   - isPlaceable: False
     type: PlaceableSurface
-  - containers:
-      EntityStorageComponent: !type:Container
-        ents: []
-    type: ContainerContainer
 - uid: 8206
   type: WallReinforced
   components:
@@ -84742,9 +84354,6 @@ entities:
     type: Transform
   - canCollide: False
     type: Physics
-  - containers:
-      cellslot_cell_container: !type:ContainerSlot {}
-    type: ContainerContainer
 - uid: 8448
   type: WallReinforced
   components:
@@ -84837,10 +84446,6 @@ entities:
     type: Transform
   - isPlaceable: False
     type: PlaceableSurface
-  - containers:
-      EntityStorageComponent: !type:Container
-        ents: []
-    type: ContainerContainer
 - uid: 8463
   type: WallReinforced
   components:
@@ -86570,9 +86175,6 @@ entities:
     type: Transform
   - canCollide: False
     type: Physics
-  - containers:
-      cellslot_cell_container: !type:ContainerSlot {}
-    type: ContainerContainer
 - uid: 8726
   type: CarpetGreen
   components:
@@ -86803,10 +86405,6 @@ entities:
     type: Transform
   - isPlaceable: False
     type: PlaceableSurface
-  - containers:
-      EntityStorageComponent: !type:Container
-        ents: []
-    type: ContainerContainer
 - uid: 8751
   type: Rack
   components:
@@ -87421,10 +87019,6 @@ entities:
     type: Transform
   - isPlaceable: False
     type: PlaceableSurface
-  - containers:
-      EntityStorageComponent: !type:Container
-        ents: []
-    type: ContainerContainer
 - uid: 8805
   type: ClosetEmergencyFilledRandom
   components:
@@ -87433,10 +87027,6 @@ entities:
     type: Transform
   - isPlaceable: False
     type: PlaceableSurface
-  - containers:
-      EntityStorageComponent: !type:Container
-        ents: []
-    type: ContainerContainer
 - uid: 8806
   type: Table
   components:
@@ -87798,9 +87388,6 @@ entities:
     type: Transform
   - canCollide: False
     type: Physics
-  - containers:
-      cellslot_cell_container: !type:ContainerSlot {}
-    type: ContainerContainer
 - uid: 8848
   type: ToolboxMechanical
   components:
@@ -88559,9 +88146,6 @@ entities:
     type: Transform
   - canCollide: False
     type: Physics
-  - containers:
-      cellslot_cell_container: !type:ContainerSlot {}
-    type: ContainerContainer
 - uid: 8942
   type: WindowReinforcedDirectional
   components:
@@ -90160,9 +89744,6 @@ entities:
     type: HandheldLight
   - canCollide: False
     type: Physics
-  - containers:
-      cellslot_cell_container: !type:ContainerSlot {}
-    type: ContainerContainer
 - uid: 9144
   type: SyringeSpaceacillin
   components:
