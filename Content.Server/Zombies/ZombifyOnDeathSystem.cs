@@ -23,6 +23,7 @@ using Content.Server.Weapon.Melee.Components;
 using Content.Server.Disease;
 using Robust.Shared.Containers;
 using Content.Shared.Movement.Components;
+using Content.Shared.MobState;
 
 namespace Content.Server.Zombies
 {
@@ -44,13 +45,13 @@ namespace Content.Server.Zombies
         {
             base.Initialize();
 
-            SubscribeLocalEvent<ZombifyOnDeathComponent, DamageChangedEvent>(OnDamageChanged);
+            SubscribeLocalEvent<ZombifyOnDeathComponent, MobStateChangedEvent>(OnDamageChanged);
         }
 
         /// <summary>
         /// Handles an entity turning into a zombie when they die or go into crit
         /// </summary>
-        private void OnDamageChanged(EntityUid uid, ZombifyOnDeathComponent component, DamageChangedEvent args)
+        private void OnDamageChanged(EntityUid uid, ZombifyOnDeathComponent component, MobStateChangedEvent args)
         {
             if (!TryComp<MobStateComponent>(uid, out var mobstate))
                 return;
