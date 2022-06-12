@@ -44,7 +44,7 @@ namespace Content.Server.Atmos.EntitySystems
             var xform = Transform(uid);
 
             // If the grid is deleting no point updating atmos.
-            if (_mapManager.TryGetGrid(xform.GridID, out var grid))
+            if (_mapManager.TryGetGrid(xform.GridEntityId, out var grid))
             {
                 if (MetaData(grid.GridEntityId).EntityLifeStage > EntityLifeStage.MapInitialized) return;
             }
@@ -56,7 +56,7 @@ namespace Content.Server.Atmos.EntitySystems
         {
             var xform = Transform(uid);
 
-            var gridId = xform.GridID;
+            var gridId = xform.GridEntityId;
             var coords = xform.Coordinates;
 
             var grid = _mapManager.GetGrid(gridId);
@@ -100,15 +100,15 @@ namespace Content.Server.Atmos.EntitySystems
         {
             if (!Resolve(airtight.Owner, ref xform)) return;
 
-            if (!xform.Anchored || !xform.GridID.IsValid())
+            if (!xform.Anchored || !xform.GridEntityId.IsValid())
                 return;
 
-            var grid = _mapManager.GetGrid(xform.GridID);
-            airtight.LastPosition = (xform.GridID, grid.TileIndicesFor(xform.Coordinates));
+            var grid = _mapManager.GetGrid(xform.GridEntityId);
+            airtight.LastPosition = (xform.GridEntityId, grid.TileIndicesFor(xform.Coordinates));
             InvalidatePosition(airtight.LastPosition.Item1, airtight.LastPosition.Item2, airtight.FixVacuum && !airtight.AirBlocked);
         }
 
-        public void InvalidatePosition(GridId gridId, Vector2i pos, bool fixVacuum = false)
+        public void InvalidatePosition(EntityUid gridId, Vector2i pos, bool fixVacuum = false)
         {
             if (!gridId.IsValid())
                 return;

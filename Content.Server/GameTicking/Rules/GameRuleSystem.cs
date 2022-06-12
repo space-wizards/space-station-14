@@ -1,3 +1,4 @@
+using Content.Server.GameTicking.Rules.Configurations;
 using JetBrains.Annotations;
 
 namespace Content.Server.GameTicking.Rules;
@@ -31,7 +32,7 @@ public abstract class GameRuleSystem : EntitySystem
 
     private void OnGameRuleAdded(GameRuleAddedEvent ev)
     {
-        if (ev.Rule.ID != Prototype)
+        if (ev.Rule.Configuration.Id != Prototype)
             return;
 
         Enabled = true;
@@ -39,28 +40,28 @@ public abstract class GameRuleSystem : EntitySystem
 
     private void OnGameRuleStarted(GameRuleStartedEvent ev)
     {
-        if (ev.Rule.ID != Prototype)
+        if (ev.Rule.Configuration.Id != Prototype)
             return;
 
-        Started();
+        Started(ev.Rule.Configuration);
     }
 
     private void OnGameRuleEnded(GameRuleEndedEvent ev)
     {
-        if (ev.Rule.ID != Prototype)
+        if (ev.Rule.Configuration.Id != Prototype)
             return;
 
         Enabled = false;
-        Ended();
+        Ended(ev.Rule.Configuration);
     }
 
     /// <summary>
     ///     Called when the game rule has been started..
     /// </summary>
-    public abstract void Started();
+    public abstract void Started(GameRuleConfiguration configuration);
 
     /// <summary>
     ///     Called when the game rule has ended..
     /// </summary>
-    public abstract void Ended();
+    public abstract void Ended(GameRuleConfiguration configuration);
 }

@@ -1,18 +1,22 @@
 ﻿using System.Linq;
+using Content.Server.CharacterAppearance.Components;
 using Content.Server.Chat.Managers;
+using Content.Server.GameTicking.Rules.Configurations;
 using Content.Server.Nuke;
+using Content.Server.Players;
+using Content.Server.Roles;
 using Content.Server.RoundEnd;
 using Content.Server.Spawners.Components;
 using Content.Server.Station.Components;
 using Content.Server.Station.Systems;
 using Content.Shared.CCVar;
 using Content.Shared.MobState;
+using Content.Shared.Dataset;
 using Content.Shared.Roles;
 using Robust.Server.Maps;
 using Robust.Server.Player;
 using Robust.Shared.Configuration;
 using Robust.Shared.Map;
-using Robust.Shared.Physics.Collision.Shapes;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Utility;
@@ -35,6 +39,9 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
     private bool _opsWon;
 
     public override string Prototype => "Nukeops";
+
+    private const string NukeopsPrototypeId = "Nukeops";
+    private const string NukeopsCommanderPrototypeId = "NukeopsCommander";
 
     public override void Initialize()
     {
@@ -91,16 +98,93 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
 
         _aliveNukeops.Clear();
 
-        // Between 1 and <max op count>: needs at least n players per op.
-        var numOps = Math.Max(1,
-            (int)Math.Min(
-                Math.Floor((double)ev.PlayerPool.Count / _cfg.GetCVar(CCVars.NukeopsPlayersPerOp)), _cfg.GetCVar(CCVars.NukeopsMaxOps)));
-        var ops = new IPlayerSession[numOps];
-        for (var i = 0; i < numOps; i++)
+        // Basically copied verbatim from traitor code
+        var playersPerOperative = _cfg.GetCVar(CCVars.NukeopsPlayersPerOp);
+        var maxOperatives = _cfg.GetCVar(CCVars.NukeopsMaxOps);
+
+        var everyone = new List<IPlayerSession>(ev.PlayerPool);
+        var prefList = new List<IPlayerSession>();
+        var cmdrPrefList = new List<IPlayerSession>();
+        var operatives = new List<IPlayerSession>();
+
+        // The LINQ expression ReSharper keeps suggesting is completely unintelligible so I'm disabling it
+        // ReSharper disable once ForeachCanBeConvertedToQueryUsingAnotherGetEnumerator
+        foreach (var player in everyone)
         {
-            ops[i] = _random.PickAndTake(ev.PlayerPool);
+            if(player.ContentData()?.Mind?.AllRoles.All(role => role is not Job {CanBeAntag: false}) ?? false) continue;
+            if (!ev.Profiles.ContainsKey(player.UserId))
+            {
+                continue;
+            }
+            var profile = ev.Profiles[player.UserId];
+            if (profile.AntagPreferences.Contains(NukeopsPrototypeId))
+            {
+                prefList.Add(player);
+            }
+            if (profile.AntagPreferences.Contains(NukeopsCommanderPrototypeId))
+            {
+                cmdrPrefList.Add(player);
+            }
         }
 
+        var numNukies = MathHelper.Clamp(ev.PlayerPool.Count / playersPerOperative, 1, maxOperatives);
+
+        for (var i = 0; i < numNukies; i++)
+        {
+            IPlayerSession nukeOp;
+            // Only one commander, so we do it at the start
+            if (i == 0)
+            {
+                if (cmdrPrefList.Count == 0)
+                {
+                    if (prefList.Count == 0)
+                    {
+                        if (everyone.Count == 0)
+                        {
+                            Logger.InfoS("preset", "Insufficient ready players to fill up with nukeops, stopping the selection");
+                            break;
+                        }
+                        nukeOp = _random.PickAndTake(everyone);
+                        Logger.InfoS("preset", "Insufficient preferred nukeop commanders or nukies, picking at random.");
+                    }
+                    else
+                    {
+                        nukeOp = _random.PickAndTake(prefList);
+                        everyone.Remove(nukeOp);
+                        Logger.InfoS("preset", "Insufficient preferred nukeop commanders, picking at random from regular op list.");
+                    }
+                }
+                else
+                {
+                    nukeOp = _random.PickAndTake(cmdrPrefList);
+                    everyone.Remove(nukeOp);
+                    prefList.Remove(nukeOp);
+                    Logger.InfoS("preset", "Selected a preferred nukeop commander.");
+                }
+            }
+            else
+            {
+                if (prefList.Count == 0)
+                {
+                    if (everyone.Count == 0)
+                    {
+                        Logger.InfoS("preset", "Insufficient ready players to fill up with nukeops, stopping the selection");
+                        break;
+                    }
+                    nukeOp = _random.PickAndTake(everyone);
+                    Logger.InfoS("preset", "Insufficient preferred nukeops, picking at random.");
+                }
+                else
+                {
+                    nukeOp = _random.PickAndTake(prefList);
+                    everyone.Remove(nukeOp);
+                    Logger.InfoS("preset", "Selected a preferred nukeop.");
+                }
+            }
+            operatives.Add(nukeOp);
+        }
+
+        // TODO: Make this a prototype
         var map = "/Maps/infiltrator.yml";
 
         var aabbs = _stationSystem.Stations.SelectMany(x =>
@@ -119,7 +203,7 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
         if (!gridId.HasValue)
         {
             Logger.ErrorS("NUKEOPS", $"Gridid was null when loading \"{map}\", aborting.");
-            foreach (var session in ops)
+            foreach (var session in operatives)
             {
                 ev.PlayerPool.Add(session);
             }
@@ -131,6 +215,8 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
         var commanderGear = _prototypeManager.Index<StartingGearPrototype>("SyndicateCommanderGearFull");
         var starterGear = _prototypeManager.Index<StartingGearPrototype>("SyndicateOperativeGearFull");
         var medicGear = _prototypeManager.Index<StartingGearPrototype>("SyndicateOperativeMedicFull");
+        var syndicateNamesElite = new List<string>(_prototypeManager.Index<DatasetPrototype>("SyndicateNamesElite").Values);
+        var syndicateNamesNormal = new List<string>(_prototypeManager.Index<DatasetPrototype>("SyndicateNamesNormal").Values);
 
         var spawns = new List<EntityCoordinates>();
 
@@ -149,7 +235,7 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
         }
 
         // TODO: This should spawn the nukies in regardless and transfer if possible; rest should go to shot roles.
-        for (var i = 0; i < ops.Length; i++)
+        for (var i = 0; i < operatives.Count; i++)
         {
             string name;
             StartingGearPrototype gear;
@@ -157,20 +243,20 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
             switch (i)
             {
                 case 0:
-                    name = $"Commander";
+                    name = $"Commander " + _random.PickAndTake<string>(syndicateNamesElite);
                     gear = commanderGear;
                     break;
                 case 1:
-                    name = $"Operator #{i}";
+                    name = $"Agent " + _random.PickAndTake<string>(syndicateNamesNormal);
                     gear = medicGear;
                     break;
                 default:
-                    name = $"Operator #{i}";
+                    name = $"Operator " + _random.PickAndTake<string>(syndicateNamesNormal);
                     gear = starterGear;
                     break;
             }
 
-            var session = ops[i];
+            var session = operatives[i];
             var newMind = new Mind.Mind(session.UserId)
             {
                 CharacterName = name
@@ -179,10 +265,12 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
 
             var mob = EntityManager.SpawnEntity("MobHuman", _random.Pick(spawns));
             EntityManager.GetComponent<MetaDataComponent>(mob).EntityName = name;
+            EntityManager.AddComponent<RandomHumanoidAppearanceComponent>(mob);
 
             newMind.TransferTo(mob);
             _stationSpawningSystem.EquipStartingGear(mob, gear, null);
 
+            ev.PlayerPool.Remove(session);
             _aliveNukeops.Add(newMind, true);
 
             GameTicker.PlayerJoinGame(session);
@@ -211,10 +299,10 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
     }
 
 
-    public override void Started()
+    public override void Started(GameRuleConfiguration _)
     {
         _opsWon = false;
     }
 
-    public override void Ended() { }
+    public override void Ended(GameRuleConfiguration _) { }
 }

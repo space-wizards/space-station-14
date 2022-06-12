@@ -5,7 +5,7 @@ using Content.Server.Light.EntitySystems;
 namespace Content.Server.Light.Components
 {
     [RegisterComponent]
-    [Friend(typeof(MatchstickSystem))]
+    [Access(typeof(MatchstickSystem))]
     public sealed class MatchstickComponent : Component
     {
         /// <summary>
