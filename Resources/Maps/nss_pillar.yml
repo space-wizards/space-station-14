@@ -27943,12 +27943,6 @@ entities:
     - True
     - True
     - True
-    ammoSlots:
-    - {}
-    - {}
-    - {}
-    - {}
-    - {}
     type: RevolverAmmoProvider
   - canCollide: False
     type: Physics
