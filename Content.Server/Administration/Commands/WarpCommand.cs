@@ -52,7 +52,7 @@ namespace Content.Server.Administration.Commands
 
                 var mapManager = IoCManager.Resolve<IMapManager>();
                 var currentMap = entMan.GetComponent<TransformComponent>(playerEntity).MapID;
-                var currentGrid = entMan.GetComponent<TransformComponent>(playerEntity).GridID;
+                var currentGrid = entMan.GetComponent<TransformComponent>(playerEntity).GridEntityId;
 
                 var found = entMan.EntityQuery<WarpPointComponent>(true)
                     .Where(p => p.Location == location)
@@ -62,8 +62,8 @@ namespace Content.Server.Administration.Commands
                         // Sort so that warp points on the same grid/map are first.
                         // So if you have two maps loaded with the same warp points,
                         // it will prefer the warp points on the map you're currently on.
-                        var aGrid = a.GetGridId(entMan);
-                        var bGrid = b.GetGridId(entMan);
+                        var aGrid = a.GetGridEntityId(entMan);
+                        var bGrid = b.GetGridEntityId(entMan);
 
                         if (aGrid == bGrid)
                         {
@@ -80,8 +80,8 @@ namespace Content.Server.Administration.Commands
                             return 1;
                         }
 
-                        var mapA = mapManager.GetGrid(aGrid).ParentMapId;
-                        var mapB = mapManager.GetGrid(bGrid).ParentMapId;
+                        var mapA = a.GetMapId(entMan);
+                        var mapB = a.GetMapId(entMan);
 
                         if (mapA == mapB)
                         {
@@ -102,7 +102,8 @@ namespace Content.Server.Administration.Commands
                     }))
                     .FirstOrDefault();
 
-                if (found.GetGridId(entMan) != GridId.Invalid)
+                var entityUid = found.GetGridEntityId(entMan);
+                if (entityUid != EntityUid.Invalid)
                 {
                     entMan.GetComponent<TransformComponent>(playerEntity).Coordinates = found;
                     if (entMan.TryGetComponent(playerEntity, out IPhysBody? physics))

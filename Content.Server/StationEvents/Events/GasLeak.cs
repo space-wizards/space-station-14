@@ -118,13 +118,13 @@ namespace Content.Server.StationEvents.Events
             if (!_foundTile ||
                 _targetGrid == default ||
                 _entityManager.Deleted(_targetGrid) ||
-                !atmosphereSystem.IsSimulatedGrid(_entityManager.GetComponent<TransformComponent>(_targetGrid).GridID))
+                !atmosphereSystem.IsSimulatedGrid(_entityManager.GetComponent<TransformComponent>(_targetGrid).GridEntityId))
             {
                 Running = false;
                 return;
             }
 
-            var environment = atmosphereSystem.GetTileMixture(_entityManager.GetComponent<TransformComponent>(_targetGrid).GridID, _targetTile, true);
+            var environment = atmosphereSystem.GetTileMixture(_entityManager.GetComponent<TransformComponent>(_targetGrid).GridEntityId, _targetTile, true);
 
             environment?.AdjustMoles(_leakGas, LeakCooldown * _molesPerSecond);
         }
@@ -151,7 +151,7 @@ namespace Content.Server.StationEvents.Events
                 if (!_foundTile ||
                     _targetGrid == default ||
                     (!_entityManager.EntityExists(_targetGrid) ? EntityLifeStage.Deleted : _entityManager.GetComponent<MetaDataComponent>(_targetGrid).EntityLifeStage) >= EntityLifeStage.Deleted ||
-                    !atmosphereSystem.IsSimulatedGrid(_entityManager.GetComponent<TransformComponent>(_targetGrid).GridID))
+                    !atmosphereSystem.IsSimulatedGrid(_entityManager.GetComponent<TransformComponent>(_targetGrid).GridEntityId))
                 {
                     return;
                 }

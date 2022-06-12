@@ -477,7 +477,7 @@ namespace Content.Server.Disposal.Unit.EntitySystems
                 return false;
             }
 
-            var grid = _mapManager.GetGrid(EntityManager.GetComponent<TransformComponent>(component.Owner).GridID);
+            var grid = _mapManager.GetGrid(EntityManager.GetComponent<TransformComponent>(component.Owner).GridEntityId);
             var coords = EntityManager.GetComponent<TransformComponent>(component.Owner).Coordinates;
             var entry = grid.GetLocal(coords)
                 .FirstOrDefault(entity => EntityManager.HasComponent<DisposalEntryComponent>(entity));

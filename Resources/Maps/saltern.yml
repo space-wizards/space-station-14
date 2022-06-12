@@ -1199,7 +1199,7 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 128
-  type: WeaponSubMachineGunDrozdRubber
+  type: WeaponSubMachineGunVectorRubber
   components:
   - pos: -14.340517,21.391796
     parent: 852
@@ -18088,7 +18088,7 @@ entities:
     parent: 852
     type: Transform
 - uid: 975
-  type: WeaponLaserRifleCog
+  type: WeaponLaserCarbine
   components:
   - pos: -14.448555,19.788729
     parent: 852
@@ -46540,7 +46540,7 @@ entities:
       Toggle: []
     type: SignalReceiver
 - uid: 4233
-  type: WeaponSubMachineGunDrozdRubber
+  type: WeaponSubMachineGunVectorRubber
   components:
   - pos: -14.356142,21.563671
     parent: 852
@@ -53708,7 +53708,7 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 5148
-  type: WeaponRifleWintermute
+  type: WeaponRifleLecter
   components:
   - pos: -14.387392,20.923046
     parent: 852

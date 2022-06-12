@@ -5,6 +5,8 @@ using Content.Shared.IoC;
 using Content.Shared.Localizations;
 using Content.Shared.Maps;
 using Content.Shared.Markings;
+using Robust.Shared;
+using Robust.Shared.Configuration;
 using Robust.Shared.ContentPack;
 using Robust.Shared.Map;
 using Robust.Shared.Prototypes;
@@ -33,35 +35,17 @@ namespace Content.Shared.Entry
             base.PostInit();
 
             _initTileDefinitions();
-            CheckReactions();
             IoCManager.Resolve<SpriteAccessoryManager>().Initialize();
             IoCManager.Resolve<MarkingManager>().Initialize();
-        }
 
-        private void CheckReactions()
-        {
-            foreach (var reaction in _prototypeManager.EnumeratePrototypes<ReactionPrototype>())
-            {
-                foreach (var reactant in reaction.Reactants.Keys)
-                {
-                    if (!_prototypeManager.HasIndex<ReagentPrototype>(reactant))
-                    {
-                        Logger.ErrorS(
-                            "chem", "Reaction {reaction} has unknown reactant {reagent}.",
-                            reaction.ID, reactant);
-                    }
-                }
+#if !FULL_RELEASE
+            var configMan = IoCManager.Resolve<IConfigurationManager>();
+            configMan.OverrideDefault(CVars.NetFakeLagMin, 0.075f);
+            configMan.OverrideDefault(CVars.NetFakeLagRand, 0.01f);
+            configMan.OverrideDefault(CVars.NetFakeLoss, 0.005f);
+            configMan.OverrideDefault(CVars.NetFakeDuplicates, 0.005f);
+#endif
 
-                foreach (var product in reaction.Products.Keys)
-                {
-                    if (!_prototypeManager.HasIndex<ReagentPrototype>(product))
-                    {
-                        Logger.ErrorS(
-                            "chem", "Reaction {reaction} has unknown product {product}.",
-                            reaction.ID, product);
-                    }
-                }
-            }
         }
 
         private void _initTileDefinitions()
