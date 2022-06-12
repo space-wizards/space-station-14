@@ -1,9 +1,4 @@
 Entries:
-- author: Rane
-  changes:
-  - {message: Musicians will now receive a special box on a certain holiday., type: Add}
-  id: 1179
-  time: '2022-03-08T06:34:10.0000000+00:00'
 - author: DubiousDoggo
   changes:
   - {message: Fixed popup positioning on large UI scales, type: Fix}
@@ -3002,3 +2997,9 @@ Entries:
       now.', type: Tweak}
   id: 1678
   time: '2022-06-11T20:59:31.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: You can no longer eat chocolate bars through their wrappers or spawn
+      infinite wrappers from certain snacks., type: Fix}
+  id: 1679
+  time: '2022-06-12T01:06:52.0000000+00:00'
