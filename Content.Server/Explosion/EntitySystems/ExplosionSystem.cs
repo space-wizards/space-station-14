@@ -308,10 +308,10 @@ public sealed partial class ExplosionSystem : EntitySystem
     {
         var spaceTiles = spaceData?.TileLists;
 
-        Dictionary<GridId, Dictionary<int, List<Vector2i>>> tileLists = new();
+        Dictionary<EntityUid, Dictionary<int, List<Vector2i>>> tileLists = new();
         foreach (var grid in gridData)
         {
-            tileLists.Add(grid.Grid.Index, grid.TileLists);
+            tileLists.Add(grid.Grid.GridEntityId, grid.TileLists);
         }
 
         return new ExplosionEvent(_explosionCounter, epicenter, id, iterationIntensity, spaceTiles, tileLists, spaceMatrix, spaceData?.TileSize ?? DefaultTileSize);

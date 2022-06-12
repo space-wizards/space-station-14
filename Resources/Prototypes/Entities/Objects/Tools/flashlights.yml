@@ -28,6 +28,9 @@
   - type: PowerCellSlot
     cellSlot:
       startingItem: PowerCellSmallHigh
+  - type: ContainerContainer
+    containers:
+      cell_slot: !type:ContainerSlot
   - type: Sprite
     sprite: Objects/Tools/flashlight.rsi
     netsync: false

@@ -5,7 +5,7 @@ namespace Content.Shared.StepTrigger;
 
 [RegisterComponent]
 [NetworkedComponent]
-[Friend(typeof(StepTriggerSystem))]
+[Access(typeof(StepTriggerSystem))]
 public sealed class StepTriggerComponent : Component
 {
     /// <summary>
@@ -41,7 +41,7 @@ public sealed class StepTriggerComponent : Component
 }
 
 [RegisterComponent]
-[Friend(typeof(StepTriggerSystem))]
+[Access(typeof(StepTriggerSystem))]
 public sealed class StepTriggerActiveComponent : Component
 {
 

@@ -56,7 +56,7 @@ namespace Content.Server.NodeContainer.NodeGroups
         public bool Removed { get; set; } = false;
 
         [ViewVariables]
-        protected GridId GridId { get; private set; }
+        protected EntityUid GridId { get; private set; }
 
         /// <summary>
         ///     Network ID of this group for client-side debug visualization of nodes.
@@ -75,7 +75,7 @@ namespace Content.Server.NodeContainer.NodeGroups
         public virtual void Initialize(Node sourceNode)
         {
             // TODO: Can we get rid of this GridId?
-            GridId = IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(sourceNode.Owner).GridID;
+            GridId = IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(sourceNode.Owner).GridEntityId;
         }
 
         /// <summary>

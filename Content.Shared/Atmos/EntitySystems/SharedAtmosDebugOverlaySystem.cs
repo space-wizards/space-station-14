@@ -1,4 +1,4 @@
-﻿using Robust.Shared.Map;
+using Robust.Shared.Map;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.Atmos.EntitySystems
@@ -37,13 +37,13 @@ namespace Content.Shared.Atmos.EntitySystems
         [Serializable, NetSerializable]
         public sealed class AtmosDebugOverlayMessage : EntityEventArgs
         {
-            public GridId GridId { get; }
+            public EntityUid GridId { get; }
 
             public Vector2i BaseIdx { get; }
             // LocalViewRange*LocalViewRange
             public AtmosDebugOverlayData[] OverlayData { get; }
 
-            public AtmosDebugOverlayMessage(GridId gridIndices, Vector2i baseIdx, AtmosDebugOverlayData[] overlayData)
+            public AtmosDebugOverlayMessage(EntityUid gridIndices, Vector2i baseIdx, AtmosDebugOverlayData[] overlayData)
             {
                 GridId = gridIndices;
                 BaseIdx = baseIdx;
