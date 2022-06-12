@@ -1,3 +1,4 @@
+using System.Diagnostics.CodeAnalysis;
 using Content.Server.Construction;
 using Content.Server.Destructible.Thresholds;
 using Content.Server.Destructible.Thresholds.Behaviors;
@@ -52,6 +53,34 @@ namespace Content.Server.Destructible
                 if (EntityManager.IsQueuedForDeletion(uid) || Deleted(uid))
                     return;
             }
+        }
+
+        /// <summary>
+        /// Attempts to get the threshold at which this entity will be considered destroyed.
+        /// </summary>
+        public bool TryGetDestroyedAt(EntityUid uid, [NotNullWhen(true)] out FixedPoint2? damageNeeded, DestructibleComponent? destructible = null)
+        {
+            damageNeeded = null;
+
+            if (!Resolve(uid, ref destructible, false))
+                return false;
+
+            foreach (var threshold in destructible.Thresholds)
+            {
+                if (threshold.Trigger is not DamageTrigger trigger)
+                    continue;
+
+                foreach (var behavior in threshold.Behaviors)
+                {
+                    if (behavior is DoActsBehavior actBehavior &&
+                        actBehavior.HasAct(ThresholdActs.Destruction | ThresholdActs.Breakage))
+                    {
+                        damageNeeded = Math.Min((damageNeeded ?? FixedPoint2.Zero).Float(), trigger.Damage);
+                    }
+                }
+            }
+
+            return damageNeeded != null;
         }
 
         // FFS this shouldn't be this hard. Maybe this should just be a field of the destructible component. Its not

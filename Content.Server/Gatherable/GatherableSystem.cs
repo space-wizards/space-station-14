@@ -47,9 +47,10 @@ public sealed class GatherableSystem : EntitySystem
         tool.GatheringEntities[uid] = cancelToken;
         var multiplier = FixedPoint2.New(1f);
 
-        if (TryComp<DestructibleComponent>(uid, out var destructible))
+        if (TryComp<DestructibleComponent>(uid, out var destructible) &&
+            _destructible.TryGetDestroyedAt(uid, out var destroyAt, destructible))
         {
-            multiplier = _destructible.DestroyedAt(uid, destructible) / tool.Damage.Total;
+            multiplier = destroyAt.Value / tool.Damage.Total;
         }
 
         var doAfter = new DoAfterEventArgs(args.User, multiplier.Float(), cancelToken.Token, uid)
