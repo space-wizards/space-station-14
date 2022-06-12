@@ -1,12 +1,12 @@
 - type: gameMap
-  id: ShuttleERT
-  mapName: 'ERT Shuttle'
-  mapPath: /Maps/shuttleert.yml
+  id: Dart
+  mapName: 'Dart ERT'
+  mapPath: /Maps/dart.yml
   minPlayers: 0
   votable: false
   stations:
-    Station:
-      mapNameTemplate: '{0} ERT Shuttle {1}'
+    Dart:
+      mapNameTemplate: '{0} Dart ERT {1}'
       nameGenerator:
         !type:NanotrasenNameGenerator
         prefixCreator: '14'

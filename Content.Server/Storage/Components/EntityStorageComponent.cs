@@ -114,7 +114,7 @@ namespace Content.Server.Storage.Components
         protected override void Initialize()
         {
             base.Initialize();
-            Contents = Owner.EnsureContainer<Container>(nameof(EntityStorageComponent));
+            Contents = Owner.EnsureContainer<Container>(EntityStorageSystem.ContainerName);
             Contents.ShowContents = _showContents;
             Contents.OccludesLight = _occludesLight;
 

@@ -57,7 +57,6 @@
   - type: Sprite
     sprite: Objects/Weapons/Guns/Pistols/viper.rsi
   - type: Item
-    size: 10
     sprite: Objects/Weapons/Guns/Pistols/viper.rsi
   - type: ItemSlots
     slots:
@@ -93,7 +92,6 @@
       - state: base
         map: ["enum.GunVisualLayers.Base"]
   - type: Item
-    size: 10
     sprite: Objects/Weapons/Guns/Pistols/hm_pistol.rsi
   - type: Gun
     selectedMode: SemiAuto
@@ -114,7 +112,6 @@
     - state: mag-0
       map: ["enum.GunVisualLayers.Mag"]
   - type: Item
-    size: 10
     sprite: Objects/Weapons/Guns/Pistols/cobra.rsi
   - type: Gun
     soundGunshot:
@@ -154,7 +151,6 @@
     - state: mag-0
       map: ["enum.GunVisualLayers.Mag"]
   - type: Item
-    size: 10
     sprite: Objects/Weapons/Guns/Pistols/mk58.rsi
   - type: Gun
     fireRate: 5
