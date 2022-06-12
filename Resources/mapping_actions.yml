@@ -312,15 +312,15 @@
 - action: !type:InstantAction
     checkCanInteract: False
     icon:
-      entity: SalternSMES
-    name: SalternSMES
+      entity: SMESBasic
+    name: SMESBasic
     keywords: []
     clientExclusive: True
     autoPopulate: False
     temporary: True
     event: !type:StartPlacementActionEvent
       placementOption: SnapgridCenter
-      entityType: SalternSMES
+      entityType: SMESBasic
   assignments:
   - 2: 5
 - action: !type:InstantAction
