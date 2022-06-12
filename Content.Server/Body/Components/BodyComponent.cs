@@ -92,7 +92,7 @@ namespace Content.Server.Body.Components
                 _entMan.EventBus.RaiseLocalEvent(part, new PartGibbedEvent(Owner, gibs));
             }
 
-            SoundSystem.Play(Filter.Pvs(Owner, entityManager: _entMan), _gibSound.GetSound(), coordinates, AudioHelpers.WithVariation(0.025f));
+            SoundSystem.Play(_gibSound.GetSound(), Filter.Pvs(Owner, entityManager: _entMan), coordinates, AudioHelpers.WithVariation(0.025f));
 
             if (_entMan.TryGetComponent(Owner, out ContainerManagerComponent? container))
             {

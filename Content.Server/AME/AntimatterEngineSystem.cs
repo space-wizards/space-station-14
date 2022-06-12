@@ -102,7 +102,7 @@ namespace Content.Server.AME
 
             var ent = EntityManager.SpawnEntity("AMEShielding", mapGrid.GridTileToLocal(snapPos));
 
-            SoundSystem.Play(Filter.Pvs(uid), component.UnwrapSound.GetSound(), uid);
+            SoundSystem.Play(component.UnwrapSound.GetSound(), Filter.Pvs(uid), uid);
 
             EntityManager.QueueDeleteEntity(uid);
         }

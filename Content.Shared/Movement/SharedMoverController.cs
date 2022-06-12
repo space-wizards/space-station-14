@@ -166,11 +166,9 @@ namespace Content.Shared.Movement
 
                 if (TryGetSound(mover, mobMover, xform, out var variation, out var sound))
                 {
-                    SoundSystem.Play(
+                    SoundSystem.Play(sound,
                         GetSoundPlayers(mover.Owner),
-                        sound,
-                        mover.Owner,
-                        AudioHelpers.WithVariation(variation).WithVolume(FootstepVolume));
+                        mover.Owner, AudioHelpers.WithVariation(variation).WithVolume(FootstepVolume));
                 }
             }
 

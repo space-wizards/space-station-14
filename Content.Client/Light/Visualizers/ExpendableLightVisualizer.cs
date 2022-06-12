@@ -49,9 +49,8 @@ namespace Content.Client.Light.Visualizers
                         TryStopStream(expendableLight.PlayingStream);
                         if (expendableLight.LoopedSound != null)
                         {
-                            expendableLight.PlayingStream = SoundSystem.Play(Filter.Local(),
-                                expendableLight.LoopedSound, expendableLight.Owner,
-                                SharedExpendableLightComponent.LoopedSoundParams.WithLoop(true));
+                            expendableLight.PlayingStream = SoundSystem.Play(expendableLight.LoopedSound, Filter.Local(),
+                                expendableLight.Owner, SharedExpendableLightComponent.LoopedSoundParams.WithLoop(true));
                         }
                         break;
                     }

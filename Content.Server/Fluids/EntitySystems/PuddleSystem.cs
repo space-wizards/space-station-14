@@ -164,8 +164,8 @@ namespace Content.Server.Fluids.EntitySystems
                 return true;
             }
 
-            SoundSystem.Play(Filter.Pvs(puddleComponent.Owner), puddleComponent.SpillSound.GetSound(),
-                puddleComponent.Owner);
+            SoundSystem.Play(puddleComponent.SpillSound.GetSound(),
+                Filter.Pvs(puddleComponent.Owner), puddleComponent.Owner);
             return true;
         }
 

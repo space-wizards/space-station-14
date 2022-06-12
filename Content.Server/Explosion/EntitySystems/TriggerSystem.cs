@@ -162,7 +162,7 @@ namespace Content.Server.Explosion.EntitySystems
 
                 timer.TimeUntilBeep += timer.BeepInterval;
                 var filter = Filter.Pvs(timer.Owner, entityManager: EntityManager);
-                SoundSystem.Play(filter, timer.BeepSound.GetSound(), timer.Owner, timer.BeepParams);
+                SoundSystem.Play(timer.BeepSound.GetSound(), filter, timer.Owner, timer.BeepParams);
             }
 
             foreach (var uid in toRemove)

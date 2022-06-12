@@ -123,7 +123,7 @@ namespace Content.Server.Kitchen.EntitySystems
             // TODO: Need to be able to leave them on the spike to do DoT, see ss13.
             EntityManager.QueueDeleteEntity(victimUid);
 
-            SoundSystem.Play(Filter.Pvs(uid), component.SpikeSound.GetSound(), uid);
+            SoundSystem.Play(component.SpikeSound.GetSound(), Filter.Pvs(uid), uid);
         }
 
         private bool TryGetPiece(EntityUid uid, EntityUid user, EntityUid used,
