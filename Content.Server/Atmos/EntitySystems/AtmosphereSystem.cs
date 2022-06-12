@@ -58,7 +58,7 @@ namespace Content.Server.Atmos.EntitySystems
                 return;
             }
 
-            InvalidateTile(ev.NewTile.GridIndex, ev.NewTile.GridIndices);
+            InvalidateTile(ev.NewTile.GridUid, ev.NewTile.GridIndices);
         }
 
         public override void Update(float frameTime)

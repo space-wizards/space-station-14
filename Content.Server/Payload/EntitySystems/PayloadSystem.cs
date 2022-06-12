@@ -98,7 +98,7 @@ public sealed class PayloadSystem : EntitySystem
 
             component.Owner = uid;
 
-            if (_serializationManager.Copy(data, component, null) is Component copied)
+            if (_serializationManager.Copy(data.Component, component, null) is Component copied)
                 EntityManager.AddComponent(uid, copied);
 
             trigger.GrantedComponents.Add(registration.Type);

@@ -4,7 +4,7 @@ using Content.Shared.Kitchen.Components;
 
 namespace Content.Server.Kitchen.Components
 {
-    [RegisterComponent, Friend(typeof(KitchenSpikeSystem))]
+    [RegisterComponent, Access(typeof(KitchenSpikeSystem))]
     public sealed class KitchenSpikeComponent : SharedKitchenSpikeComponent
     {
         public List<string>? PrototypesToSpawn;

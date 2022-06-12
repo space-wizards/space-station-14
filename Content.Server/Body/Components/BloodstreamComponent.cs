@@ -8,7 +8,7 @@ using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototy
 
 namespace Content.Server.Body.Components
 {
-    [RegisterComponent, Friend(typeof(BloodstreamSystem))]
+    [RegisterComponent, Access(typeof(BloodstreamSystem))]
     public sealed class BloodstreamComponent : Component
     {
         public static string DefaultChemicalsSolutionName = "chemicals";
@@ -129,6 +129,7 @@ namespace Content.Server.Body.Components
         ///     Internal solution for reagent storage
         /// </summary>
         [ViewVariables(VVAccess.ReadWrite)]
+        [Access(typeof(BloodstreamSystem), Other = AccessPermissions.ReadExecute)] // FIXME Friends
         public Solution ChemicalSolution = default!;
 
         /// <summary>
