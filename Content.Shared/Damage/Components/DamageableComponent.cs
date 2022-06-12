@@ -16,7 +16,7 @@ namespace Content.Shared.Damage
     /// </remarks>
     [RegisterComponent]
     [NetworkedComponent()]
-    [Access(typeof(DamageableSystem), Other =AccessPermissions.ReadExecute)]
+    [Access(typeof(DamageableSystem), Other = AccessPermissions.ReadExecute)]
     public sealed class DamageableComponent : Component
     {
         /// <summary>
@@ -43,7 +43,7 @@ namespace Content.Shared.Damage
         /// <remarks>
         ///     If this data-field is specified, this allows damageable components to be initialized with non-zero damage.
         /// </remarks>
-        [ViewVariables]
+        [DataField("damage")]
         public DamageSpecifier Damage = new();
 
         /// <summary>
