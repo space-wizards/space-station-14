@@ -25635,13 +25635,13 @@ entities:
     parent: 30
     type: Transform
 - uid: 406
-  type: BaseAPC
+  type: APCBasic
   components:
   - pos: -26.5,14.5
     parent: 30
     type: Transform
 - uid: 407
-  type: BaseAPC
+  type: APCBasic
   components:
   - rot: -1.5707963267948966 rad
     pos: -6.5,13.5
@@ -25654,7 +25654,7 @@ entities:
     parent: 30
     type: Transform
 - uid: 409
-  type: BaseAPC
+  type: APCBasic
   components:
   - pos: -2.5,18.5
     parent: 30
@@ -25668,13 +25668,13 @@ entities:
     parent: 30
     type: Transform
 - uid: 411
-  type: BaseAPC
+  type: APCBasic
   components:
   - pos: -26.5,21.5
     parent: 30
     type: Transform
 - uid: 412
-  type: BaseAPC
+  type: APCBasic
   components:
   - pos: -30.5,11.5
     parent: 30
@@ -32939,7 +32939,7 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 1462
-  type: BaseAPC
+  type: APCBasic
   components:
   - rot: -1.5707963267948966 rad
     pos: -45.5,32.5
@@ -33465,20 +33465,20 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 1537
-  type: BaseAPC
+  type: APCBasic
   components:
   - rot: -1.5707963267948966 rad
     pos: -48.5,20.5
     parent: 30
     type: Transform
 - uid: 1538
-  type: BaseAPC
+  type: APCBasic
   components:
   - pos: -46.5,-0.5
     parent: 30
     type: Transform
 - uid: 1539
-  type: BaseAPC
+  type: APCBasic
   components:
   - pos: -37.5,16.5
     parent: 30
@@ -34251,7 +34251,7 @@ entities:
       ItemCabinet: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 1653
-  type: BaseAPC
+  type: APCBasic
   components:
   - rot: -1.5707963267948966 rad
     pos: -33.5,32.5
@@ -49140,7 +49140,7 @@ entities:
     - machine_board
     type: Construction
 - uid: 3519
-  type: BaseAPC
+  type: APCBasic
   components:
   - pos: -47.5,59.5
     parent: 30
@@ -49157,7 +49157,7 @@ entities:
   - isPlaceable: False
     type: PlaceableSurface
 - uid: 3521
-  type: BaseAPC
+  type: APCBasic
   components:
   - rot: -1.5707963267948966 rad
     pos: -45.5,49.5
@@ -49166,7 +49166,7 @@ entities:
   - startingCharge: 12000
     type: Battery
 - uid: 3522
-  type: BaseAPC
+  type: APCBasic
   components:
   - rot: 1.5707963267948966 rad
     pos: -36.5,53.5
@@ -49741,7 +49741,7 @@ entities:
     parent: 30
     type: Transform
 - uid: 3617
-  type: BaseAPC
+  type: APCBasic
   components:
   - pos: -50.5,11.5
     parent: 30
@@ -59864,7 +59864,7 @@ entities:
         ents: []
     type: ContainerContainer
 - uid: 5051
-  type: BaseAPC
+  type: APCBasic
   components:
   - rot: 1.5707963267948966 rad
     pos: -23.5,40.5
@@ -63166,7 +63166,7 @@ entities:
     parent: 30
     type: Transform
 - uid: 5561
-  type: BaseAPC
+  type: APCBasic
   components:
   - rot: 1.5707963267948966 rad
     pos: 8.5,42.5
@@ -65519,14 +65519,14 @@ entities:
       Toggle: []
     type: SignalReceiver
 - uid: 5861
-  type: BaseAPC
+  type: APCBasic
   components:
   - rot: 1.5707963267948966 rad
     pos: -13.5,45.5
     parent: 30
     type: Transform
 - uid: 5862
-  type: BaseAPC
+  type: APCBasic
   components:
   - pos: 4.5,35.5
     parent: 30
@@ -70726,7 +70726,7 @@ entities:
     parent: 30
     type: Transform
 - uid: 6605
-  type: BaseAPC
+  type: APCBasic
   components:
   - pos: 19.5,28.5
     parent: 30
@@ -75538,7 +75538,7 @@ entities:
     parent: 30
     type: Transform
 - uid: 7285
-  type: BaseAPC
+  type: APCBasic
   components:
   - pos: -27.5,-17.5
     parent: 30
@@ -78280,20 +78280,20 @@ entities:
   - color: '#0335FCFF'
     type: AtmosPipeColor
 - uid: 7610
-  type: BaseAPC
+  type: APCBasic
   components:
   - pos: -15.5,-3.5
     parent: 30
     type: Transform
 - uid: 7611
-  type: BaseAPC
+  type: APCBasic
   components:
   - rot: 1.5707963267948966 rad
     pos: -20.5,-20.5
     parent: 30
     type: Transform
 - uid: 7612
-  type: BaseAPC
+  type: APCBasic
   components:
   - pos: -35.5,-3.5
     parent: 30
@@ -78309,7 +78309,7 @@ entities:
     - machine_board
     type: Construction
 - uid: 7614
-  type: BaseAPC
+  type: APCBasic
   components:
   - rot: 3.141592653589793 rad
     pos: -0.5,-0.5
@@ -83525,7 +83525,7 @@ entities:
     parent: 30
     type: Transform
 - uid: 8363
-  type: BaseAPC
+  type: APCBasic
   components:
   - rot: 1.5707963267948966 rad
     pos: 10.5,-16.5
@@ -89137,7 +89137,7 @@ entities:
     parent: 30
     type: Transform
 - uid: 9130
-  type: BaseAPC
+  type: APCBasic
   components:
   - pos: 9.5,-30.5
     parent: 30
@@ -89145,7 +89145,7 @@ entities:
   - startingCharge: 12000
     type: Battery
 - uid: 9131
-  type: BaseAPC
+  type: APCBasic
   components:
   - rot: 3.141592653589793 rad
     pos: 21.5,-12.5
@@ -90154,7 +90154,7 @@ entities:
     parent: 30
     type: Transform
 - uid: 9272
-  type: BaseAPC
+  type: APCBasic
   components:
   - pos: 0.5,-31.5
     parent: 30
@@ -92182,7 +92182,7 @@ entities:
     parent: 30
     type: Transform
 - uid: 9573
-  type: BaseAPC
+  type: APCBasic
   components:
   - rot: 1.5707963267948966 rad
     pos: -20.5,-38.5
@@ -108743,13 +108743,13 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 11807
-  type: BaseAPC
+  type: APCBasic
   components:
   - pos: 22.5,-0.5
     parent: 30
     type: Transform
 - uid: 11808
-  type: BaseAPC
+  type: APCBasic
   components:
   - pos: 33.5,-0.5
     parent: 30
@@ -118700,19 +118700,19 @@ entities:
     parent: 30
     type: Transform
 - uid: 13096
-  type: BaseAPC
+  type: APCBasic
   components:
   - pos: 32.5,16.5
     parent: 30
     type: Transform
 - uid: 13097
-  type: BaseAPC
+  type: APCBasic
   components:
   - pos: 24.5,9.5
     parent: 30
     type: Transform
 - uid: 13098
-  type: BaseAPC
+  type: APCBasic
   components:
   - pos: 20.5,24.5
     parent: 30
@@ -121056,7 +121056,7 @@ entities:
     parent: 30
     type: Transform
 - uid: 13444
-  type: BaseAPC
+  type: APCBasic
   components:
   - pos: 15.5,55.5
     parent: 30
@@ -131437,7 +131437,7 @@ entities:
         uid: 11673
     type: SignalReceiver
 - uid: 14541
-  type: BaseAPC
+  type: APCBasic
   components:
   - pos: 48.5,20.5
     parent: 30
@@ -132565,7 +132565,7 @@ entities:
     parent: 30
     type: Transform
 - uid: 14729
-  type: BaseAPC
+  type: APCBasic
   components:
   - rot: 1.5707963267948966 rad
     pos: 32.5,44.5
@@ -153975,26 +153975,26 @@ entities:
     parent: 30
     type: Transform
 - uid: 17938
-  type: BaseAPC
+  type: APCBasic
   components:
   - pos: -59.5,-25.5
     parent: 30
     type: Transform
 - uid: 17939
-  type: BaseAPC
+  type: APCBasic
   components:
   - rot: -1.5707963267948966 rad
     pos: -43.5,-22.5
     parent: 30
     type: Transform
 - uid: 17940
-  type: BaseAPC
+  type: APCBasic
   components:
   - pos: -65.5,-47.5
     parent: 30
     type: Transform
 - uid: 17941
-  type: BaseAPC
+  type: APCBasic
   components:
   - pos: -76.5,-42.5
     parent: 30
@@ -156189,7 +156189,7 @@ entities:
     parent: 30
     type: Transform
 - uid: 18298
-  type: BaseAPC
+  type: APCBasic
   components:
   - pos: -79.5,-58.5
     parent: 30
@@ -168802,7 +168802,7 @@ entities:
     parent: 30
     type: Transform
 - uid: 20045
-  type: BaseAPC
+  type: APCBasic
   components:
   - pos: 0.5,85.5
     parent: 30

@@ -10,6 +10,8 @@
         - CartridgeCaselessRifle
     proto: CartridgeCaselessRifle
     capacity: 60
+  - type: Item
+    size: 5
   - type: ContainerContainer
     containers:
       ballistic-ammo: !type:Container

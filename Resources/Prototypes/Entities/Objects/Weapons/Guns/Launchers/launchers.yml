@@ -8,7 +8,7 @@
   - type: Sprite
     netsync: false
   - type: Item
-    size: 24
+    size: 60
 
 - type: entity
   name: china lake
@@ -22,7 +22,6 @@
       - state: icon
         map: ["enum.GunVisualLayers.Base"]
   - type: Item
-    size: 24
     sprite: Objects/Weapons/Guns/Launchers/china_lake.rsi
   - type: Gun
     fireRate: 1
@@ -55,7 +54,6 @@
       - state: mag-0
         map: ["enum.GunVisualLayers.Mag"]
   - type: Item
-    size: 24
     sprite: Objects/Weapons/Guns/Launchers/rocket.rsi
   - type: Gun
     fireRate: 0.5
@@ -89,7 +87,6 @@
       - state: mag-0
         map: ["enum.GunVisualLayers.Mag"]
   - type: Item
-    size: 24
     sprite: Objects/Weapons/Guns/Launchers/rocket.rsi
   - type: Gun
     fireRate: 6

@@ -67,9 +67,9 @@ public sealed class VocalSystem : EntitySystem
         if (!_blocker.CanSpeak(uid))
             return false;
 
-        // Currently this requires humanoid appearance & doesn't have any sort of fall-back or gender-neutral scream.
-        if (!TryComp(uid, out HumanoidAppearanceComponent? humanoid))
-            return false;
+        var sex = Sex.Male; //the default is male because requiring humanoid appearance for this is dogshit
+        if (TryComp(uid, out HumanoidAppearanceComponent? humanoid))
+            sex = humanoid.Sex;
 
         if (_random.Prob(component.WilhelmProbability))
         {
@@ -80,7 +80,7 @@ public sealed class VocalSystem : EntitySystem
         var scale = (float) _random.NextGaussian(1, VocalComponent.Variation);
         var pitchedParams = component.AudioParams.WithPitchScale(scale);
 
-        switch (humanoid.Sex)
+        switch (sex)
         {
             case Sex.Male:
                 SoundSystem.Play(Filter.Pvs(uid), component.MaleScream.GetSound(), uid, pitchedParams);

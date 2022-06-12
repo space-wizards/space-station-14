@@ -1,9 +1,10 @@
 using Content.Server.Chat;
 using Robust.Shared.Random;
-using Content.Server.Disease.Zombie.Components;
+using Content.Server.Chat.Managers;
 using Content.Server.Station.Systems;
 using Content.Shared.MobState.Components;
 using Content.Shared.Sound;
+using Content.Server.Zombies;
 
 namespace Content.Server.StationEvents.Events
 {
@@ -41,17 +42,20 @@ namespace Content.Server.StationEvents.Events
             _random.Shuffle(deadList);
 
             var toInfect = _random.Next(1, 3);
-
+            
+            var zombifysys = _entityManager.EntitySysManager.GetEntitySystem<ZombifyOnDeathSystem>();
+            
             // Now we give it to people in the list of dead entities earlier.
             var entSysMgr = IoCManager.Resolve<IEntitySystemManager>();
             var stationSystem = entSysMgr.GetEntitySystem<StationSystem>();
             var chatSystem = entSysMgr.GetEntitySystem<ChatSystem>();
+            
             foreach (var target in deadList)
             {
                 if (toInfect-- == 0)
                     break;
-
-                _entityManager.EnsureComponent<DiseaseZombieComponent>(target.Owner);
+                    
+                zombifysys.ZombifyEntity(target.Owner);
 
                 var station = stationSystem.GetOwningStation(target.Owner);
                 if(station == null) continue;
