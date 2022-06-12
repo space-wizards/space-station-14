@@ -1,9 +1,4 @@
 Entries:
-- author: DubiousDoggo
-  changes:
-  - {message: Fixed popup positioning on large UI scales, type: Fix}
-  id: 1180
-  time: '2022-03-08T07:53:02.0000000+00:00'
 - author: Rane
   changes:
   - {message: 'Added Uniform Printers. You can currently get them from the circuit
@@ -3003,3 +2998,9 @@ Entries:
       infinite wrappers from certain snacks., type: Fix}
   id: 1679
   time: '2022-06-12T01:06:52.0000000+00:00'
+- author: themias
+  changes:
+  - {message: Stun batons now use internal battery instead of a power cell; can be
+      inserted into a recharger again, type: Tweak}
+  id: 1680
+  time: '2022-06-12T01:20:03.0000000+00:00'
