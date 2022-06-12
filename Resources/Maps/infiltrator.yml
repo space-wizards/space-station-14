@@ -5911,7 +5911,7 @@ entities:
   - isPlaceable: False
     type: PlaceableSurface
   - containers:
-      EntityStorageComponent: !type:Container
+      entity_storage: !type:Container
         ents: []
     type: ContainerContainer
 - uid: 600
@@ -5923,7 +5923,7 @@ entities:
   - isPlaceable: False
     type: PlaceableSurface
   - containers:
-      EntityStorageComponent: !type:Container
+      entity_storage: !type:Container
         ents: []
     type: ContainerContainer
 - uid: 601
@@ -6750,7 +6750,7 @@ entities:
   - canCollide: False
     type: Physics
   - containers:
-      cellslot_cell_container: !type:ContainerSlot {}
+      cell_slot: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 692
   type: LockerSyndicatePersonal
@@ -6763,7 +6763,7 @@ entities:
   - isPlaceable: False
     type: PlaceableSurface
   - containers:
-      EntityStorageComponent: !type:Container
+      entity_storage: !type:Container
         ents: []
     type: ContainerContainer
 - uid: 693
@@ -6795,7 +6795,7 @@ entities:
   - isPlaceable: False
     type: PlaceableSurface
   - containers:
-      EntityStorageComponent: !type:Container
+      entity_storage: !type:Container
         ents:
         - 724
         - 752
@@ -6815,7 +6815,7 @@ entities:
   - isPlaceable: False
     type: PlaceableSurface
   - containers:
-      EntityStorageComponent: !type:Container
+      entity_storage: !type:Container
         ents:
         - 841
         - 718
@@ -6835,7 +6835,7 @@ entities:
   - isPlaceable: False
     type: PlaceableSurface
   - containers:
-      EntityStorageComponent: !type:Container
+      entity_storage: !type:Container
         ents:
         - 845
         - 842

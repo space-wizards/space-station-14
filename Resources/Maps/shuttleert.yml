@@ -8447,7 +8447,7 @@ entities:
   - isPlaceable: False
     type: PlaceableSurface
   - containers:
-      EntityStorageComponent: !type:Container
+      entity_storage: !type:Container
         ents: []
     type: ContainerContainer
 - uid: 865
@@ -8459,7 +8459,7 @@ entities:
   - isPlaceable: False
     type: PlaceableSurface
   - containers:
-      EntityStorageComponent: !type:Container
+      entity_storage: !type:Container
         ents: []
     type: ContainerContainer
 - uid: 866
@@ -8599,7 +8599,7 @@ entities:
   - isPlaceable: False
     type: PlaceableSurface
   - containers:
-      EntityStorageComponent: !type:Container
+      entity_storage: !type:Container
         ents: []
     type: ContainerContainer
 - uid: 883
@@ -8611,7 +8611,7 @@ entities:
   - isPlaceable: False
     type: PlaceableSurface
   - containers:
-      EntityStorageComponent: !type:Container
+      entity_storage: !type:Container
         ents: []
     type: ContainerContainer
 - uid: 884
@@ -8623,7 +8623,7 @@ entities:
   - isPlaceable: False
     type: PlaceableSurface
   - containers:
-      EntityStorageComponent: !type:Container
+      entity_storage: !type:Container
         ents: []
     type: ContainerContainer
 - uid: 885
@@ -8635,7 +8635,7 @@ entities:
   - isPlaceable: False
     type: PlaceableSurface
   - containers:
-      EntityStorageComponent: !type:Container
+      entity_storage: !type:Container
         ents: []
     type: ContainerContainer
 - uid: 886

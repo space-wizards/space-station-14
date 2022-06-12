@@ -190561,7 +190561,7 @@ entities:
   - canCollide: False
     type: Physics
   - containers:
-      cellslot_cell_container: !type:ContainerSlot {}
+      cell_slot: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 21241
   type: ClothingMaskBreath
@@ -190607,7 +190607,7 @@ entities:
   - canCollide: False
     type: Physics
   - containers:
-      cellslot_cell_container: !type:ContainerSlot {}
+      cell_slot: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 21246
   type: PoweredSmallLight
