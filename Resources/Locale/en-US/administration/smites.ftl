@@ -1,0 +1,11 @@
+admin-smite-chess-self = You feel exceptionally small.
+admin-smite-chess-others = {CAPITALIZE($name)} shrinks into the chessboard!
+admin-smite-set-alight-self = You burst into flames!
+admin-smite-set-alight-others = {CAPITALIZE($name)} bursts into flames!
+admin-smite-remove-blood-self = You feel lighter, and chilly.
+admin-smite-remove-blood-others = {CAPITALIZE($name)} leaks blood all over the floor!
+admin-smite-vomit-organs-self = You puke, and feel rather hollow!
+admin-smite-vomit-organs-others = {CAPITALIZE($name)} vomits up their organs!
+admin-smite-remove-hands-self = Your hands fall off!
+admin-smite-remove-hands-other = {CAPITALIZE($name)}'s hands fall off!
+admin-smite-turned-ash-other = {CAPITALISE($name)} turns into a pile of ash!

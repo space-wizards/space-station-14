@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using Robust.Client.Graphics;
 using Robust.Client.Input;
@@ -129,14 +129,10 @@ namespace Content.Client.Viewport
             _inputManager.ViewportKeyEvent(this, args);
         }
 
-
-        protected override void FrameUpdate(FrameEventArgs args)
-        {
-            EnsureViewportCreated();
-        }
-
         protected override void Draw(DrawingHandleScreen handle)
         {
+            EnsureViewportCreated();
+
             DebugTools.AssertNotNull(_viewport);
 
             _viewport!.Render();
@@ -280,14 +276,11 @@ namespace Content.Client.Viewport
             var drawBox = GetDrawBox();
             var scaleFactor = drawBox.Size / (Vector2) _viewport!.Size;
 
-            if (scaleFactor == (0, 0))
+            if (scaleFactor.X == 0 || scaleFactor.Y == 0)
                 // Basically a nonsense scenario, at least make sure to return something that can be inverted.
                 return Matrix3.Identity;
 
-            var scale = Matrix3.CreateScale(scaleFactor);
-            var translate = Matrix3.CreateTranslation(GlobalPixelPosition + drawBox.TopLeft);
-
-            return scale * translate;
+            return Matrix3.CreateTransform(GlobalPixelPosition + drawBox.TopLeft, 0, scaleFactor);
         }
 
         private void EnsureViewportCreated()

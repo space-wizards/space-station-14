@@ -261,8 +261,9 @@ namespace Content.Server.Shuttles.EntitySystems
 
         private void OnPowerChange(EntityUid uid, DockingComponent component, PowerChangedEvent args)
         {
+            var lifestage = MetaData(uid).EntityLifeStage;
             // This is because power can change during startup for <Reasons> and undock
-            if (MetaData(uid).EntityLifeStage < EntityLifeStage.MapInitialized) return;
+            if (lifestage is < EntityLifeStage.MapInitialized or >= EntityLifeStage.Terminating) return;
 
             if (args.Powered)
             {

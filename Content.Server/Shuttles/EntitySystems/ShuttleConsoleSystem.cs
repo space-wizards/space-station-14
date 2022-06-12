@@ -1,5 +1,6 @@
 using Content.Server.Popups;
 using Content.Server.Power.Components;
+using Content.Server.Power.EntitySystems;
 using Content.Server.Shuttles.Components;
 using Content.Shared.ActionBlocker;
 using Content.Shared.Alert;
@@ -51,7 +52,7 @@ namespace Content.Server.Shuttles.EntitySystems
             {
                 Text = Loc.GetString("shuttle-mode-toggle"),
                 Act = () => ToggleShuttleMode(args.User, component, shuttle),
-                Disabled = !xform.Anchored || EntityManager.TryGetComponent(uid, out ApcPowerReceiverComponent? receiver) && !receiver.Powered,
+                Disabled = !xform.Anchored || !this.IsPowered(uid, EntityManager),
             };
 
             args.Verbs.Add(verb);
@@ -60,7 +61,7 @@ namespace Content.Server.Shuttles.EntitySystems
         private void ToggleShuttleMode(EntityUid user, ShuttleConsoleComponent consoleComponent, ShuttleComponent shuttleComponent, TransformComponent? consoleXform = null)
         {
             // Re-validate
-            if (EntityManager.TryGetComponent(consoleComponent.Owner, out ApcPowerReceiverComponent? receiver) && !receiver.Powered) return;
+            if (!this.IsPowered(consoleComponent.Owner, EntityManager)) return;
 
             if (!Resolve(consoleComponent.Owner, ref consoleXform)) return;
 

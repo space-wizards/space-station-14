@@ -21,7 +21,7 @@ public sealed class FluidSpill : ContentIntegrationTest
     {
         foreach (var uid in mapGrid.GetAnchoredEntities(pos))
         {
-            if (entityManager.TryGetComponent(uid, out PuddleComponent puddleComponent))
+            if (entityManager.TryGetComponent(uid, out PuddleComponent? puddleComponent))
                 return puddleComponent;
         }
 

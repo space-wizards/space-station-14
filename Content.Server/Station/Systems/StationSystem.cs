@@ -1,4 +1,5 @@
 using System.Linq;
+using Content.Server.Chat;
 using Content.Server.Chat.Managers;
 using Content.Server.GameTicking;
 using Content.Server.Station.Components;
@@ -23,6 +24,7 @@ public sealed class StationSystem : EntitySystem
     [Dependency] private readonly ILogManager _logManager = default!;
     [Dependency] private readonly IMapManager _mapManager = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
+    [Dependency] private readonly ChatSystem _chatSystem = default!;
     [Dependency] private readonly GameTicker _gameTicker = default!;
 
     private ISawmill _sawmill = default!;
@@ -268,7 +270,7 @@ public sealed class StationSystem : EntitySystem
 
         if (loud)
         {
-            _chatManager.DispatchStationAnnouncement($"The station {oldName} has been renamed to {name}.");
+            _chatSystem.DispatchStationAnnouncement(station, $"The station {oldName} has been renamed to {name}.");
         }
 
         RaiseLocalEvent(station, new StationRenamedEvent(oldName, name));
@@ -302,6 +304,12 @@ public sealed class StationSystem : EntitySystem
     {
         if (!Resolve(entity, ref xform))
             throw new ArgumentException("Tried to use an abstract entity!", nameof(entity));
+
+        if (TryComp<StationDataComponent>(entity, out _))
+        {
+            // We are the station, just return ourselves.
+            return entity;
+        }
 
         if (TryComp<IMapGridComponent>(entity, out _))
         {

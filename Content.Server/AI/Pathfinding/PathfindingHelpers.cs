@@ -116,7 +116,7 @@ namespace Content.Server.AI.Pathfinding
             var accessSystem = EntitySystem.Get<AccessReaderSystem>();
             foreach (var reader in node.AccessReaders)
             {
-                if (!accessSystem.IsAllowed(reader, access))
+                if (!accessSystem.IsAllowed(access, reader))
                 {
                     return false;
                 }

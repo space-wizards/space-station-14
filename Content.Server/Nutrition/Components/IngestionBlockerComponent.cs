@@ -7,7 +7,7 @@ namespace Content.Server.Nutrition.EntitySystems;
 ///     In the event that more head-wear & mask functionality is added (like identity systems, or raising/lowering of
 ///     masks), then this component might become redundant.
 /// </remarks>
-[RegisterComponent, Friend(typeof(FoodSystem), typeof(DrinkSystem))]
+[RegisterComponent, Access(typeof(FoodSystem), typeof(DrinkSystem))]
 public sealed class IngestionBlockerComponent : Component
 {
     /// <summary>

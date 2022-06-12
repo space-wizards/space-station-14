@@ -80,6 +80,7 @@ public sealed class MindSystem : EntitySystem
             }
             else if (mind.GhostOnShutdown)
             {
+                Transform(uid).AttachToGridOrMap();
                 var spawnPosition = Transform(uid).Coordinates;
                 // Use a regular timer here because the entity has probably been deleted.
                 Timer.Spawn(0, () =>

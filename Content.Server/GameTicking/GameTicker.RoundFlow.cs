@@ -162,7 +162,7 @@ namespace Content.Server.GameTicking
                 return await _db.AddNewRound(server, playerIds);
             }).Result;
 
-            var startingEvent = new RoundStartingEvent();
+            var startingEvent = new RoundStartingEvent(RoundId);
             RaiseLocalEvent(startingEvent);
 
             List<IPlayerSession> readyPlayers;
@@ -327,7 +327,10 @@ namespace Content.Server.GameTicking
             // This ordering mechanism isn't great (no ordering of minds) but functions
             var listOfPlayerInfoFinal = listOfPlayerInfo.OrderBy(pi => pi.PlayerOOCName).ToArray();
             _playersInGame.Clear();
-            RaiseNetworkEvent(new RoundEndMessageEvent(gamemodeTitle, roundEndText, roundDuration, RoundId, listOfPlayerInfoFinal.Length, listOfPlayerInfoFinal, LobbySong));
+
+            RaiseNetworkEvent(new RoundEndMessageEvent(gamemodeTitle, roundEndText, roundDuration, RoundId,
+                listOfPlayerInfoFinal.Length, listOfPlayerInfoFinal, LobbySong,
+                new SoundCollectionSpecifier("RoundEnd").GetSound()));
         }
 
         public void RestartRound()
@@ -336,11 +339,9 @@ namespace Content.Server.GameTicking
             if (DummyTicker)
                 return;
 
-            if (_updateOnRoundEnd)
-            {
-                _baseServer.Shutdown(Loc.GetString("game-ticker-shutdown-server-update"));
+            // Handle restart for server update
+            if (_serverUpdates.RoundEnded())
                 return;
-            }
 
             _sawmill.Info("Restarting round!");
 
@@ -352,7 +353,6 @@ namespace Content.Server.GameTicking
             LobbySong = _robustRandom.Pick(_lobbyMusicCollection.PickFiles).ToString();
             RandomizeLobbyBackground();
             ResettingCleanup();
-            SoundSystem.Play(Filter.Broadcast(), new SoundCollectionSpecifier("RoundEnd").GetSound());
 
             if (!LobbyEnabled)
             {
@@ -477,7 +477,7 @@ namespace Content.Server.GameTicking
                 if (!proto.GamePresets.Contains(Preset.ID)) continue;
 
                 if (proto.Message != null)
-                    _chatManager.DispatchStationAnnouncement(Loc.GetString(proto.Message), playDefaultSound: false);
+                    _chatSystem.DispatchGlobalStationAnnouncement(Loc.GetString(proto.Message), playDefaultSound: true);
 
                 if (proto.Sound != null)
                     SoundSystem.Play(Filter.Broadcast(), proto.Sound.GetSound());

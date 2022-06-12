@@ -1,5 +1,6 @@
-﻿using Content.Server.Access.Systems;
+using Content.Server.Access.Systems;
 using Content.Server.Administration;
+using Content.Server.Administration.Systems;
 using Content.Server.Cloning;
 using Content.Server.Mind.Components;
 using Content.Server.PDA;
@@ -46,7 +47,7 @@ public sealed class RenameCommand : IConsoleCommand
 
         var entSysMan = IoCManager.Resolve<IEntitySystemManager>();
 
-        if (entMan.TryGetComponent(entityUid, out MindComponent mind) && mind.Mind != null)
+        if (entMan.TryGetComponent(entityUid, out MindComponent? mind) && mind.Mind != null)
         {
             // Mind
             mind.Mind.CharacterName = name;

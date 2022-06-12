@@ -165,7 +165,7 @@ namespace Content.Shared.Containers.ItemSlots
             if (args.Handled)
                 return;
 
-            if (!EntityManager.TryGetComponent(args.User, out SharedHandsComponent hands))
+            if (!EntityManager.TryGetComponent(args.User, out SharedHandsComponent? hands))
                 return;
 
             foreach (var slot in itemSlots.Slots.Values)
@@ -203,6 +203,8 @@ namespace Content.Shared.Containers.ItemSlots
             // ContainerSlot automatically raises a directed EntInsertedIntoContainerMessage
 
             PlaySound(uid, slot.InsertSound, slot.SoundOptions, excludeUserAudio ? user : null);
+            var ev = new ItemSlotChangedEvent();
+            RaiseLocalEvent(uid, ref ev);
         }
 
         /// <summary>
@@ -326,6 +328,8 @@ namespace Content.Shared.Containers.ItemSlots
             // ContainerSlot automatically raises a directed EntRemovedFromContainerMessage
 
             PlaySound(uid, slot.EjectSound, slot.SoundOptions, excludeUserAudio ? user : null);
+            var ev = new ItemSlotChangedEvent();
+            RaiseLocalEvent(uid, ref ev);
         }
 
         /// <summary>
@@ -336,13 +340,13 @@ namespace Content.Shared.Containers.ItemSlots
         {
             item = null;
 
-            /// This handles logic with the slot itself
+            // This handles logic with the slot itself
             if (!CanEject(slot))
                 return false;
 
             item = slot.Item;
 
-            /// This handles user logic
+            // This handles user logic
             if (user != null && item != null && !_actionBlockerSystem.CanPickup(user.Value, item.Value))
                 return false;
 
@@ -354,7 +358,7 @@ namespace Content.Shared.Containers.ItemSlots
         ///     Try to eject item from a slot.
         /// </summary>
         /// <returns>False if the id is not valid, the item slot is locked, or it has no item inserted</returns>
-        public bool TryEject(EntityUid uid, string id, EntityUid user,
+        public bool TryEject(EntityUid uid, string id, EntityUid? user,
             [NotNullWhen(true)] out EntityUid? item, ItemSlotsComponent? itemSlots = null, bool excludeUserAudio = false)
         {
             item = null;
@@ -427,6 +431,7 @@ namespace Content.Shared.Containers.ItemSlots
                     verb.Text = Loc.GetString(slot.EjectVerbText);
                 }
 
+                verb.Priority = slot.Priority;
                 args.Verbs.Add(verb);
             }
         }
@@ -458,6 +463,7 @@ namespace Content.Shared.Containers.ItemSlots
                 else
                     takeVerb.Text = Loc.GetString(slot.EjectVerbText);
 
+                takeVerb.Priority = slot.Priority;
                 args.Verbs.Add(takeVerb);
             }
 
@@ -496,6 +502,7 @@ namespace Content.Shared.Containers.ItemSlots
                     insertVerb.Text = verbSubject;
                 }
 
+                insertVerb.Priority = slot.Priority;
                 args.Verbs.Add(insertVerb);
             }
         }
@@ -586,4 +593,10 @@ namespace Content.Shared.Containers.ItemSlots
             args.State = new ItemSlotsComponentState(component.Slots);
         }
     }
+
+    /// <summary>
+    /// Raised directed on an entity when one of its item slots changes.
+    /// </summary>
+    [ByRefEvent]
+    public readonly struct ItemSlotChangedEvent {}
 }

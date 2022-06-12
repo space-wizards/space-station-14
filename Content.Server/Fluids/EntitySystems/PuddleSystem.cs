@@ -57,7 +57,7 @@ namespace Content.Server.Fluids.EntitySystems
 
             bool hasEvaporationComponent = EntityManager.TryGetComponent<EvaporationComponent>(uid, out var evaporationComponent);
             bool canEvaporate = (hasEvaporationComponent &&
-                                (evaporationComponent.LowerLimit == 0 || puddleComponent.CurrentVolume > evaporationComponent.LowerLimit));
+                                (evaporationComponent!.LowerLimit == 0 || puddleComponent.CurrentVolume > evaporationComponent.LowerLimit));
 
             // "Does this puddle's sprite need changing to the wet floor effect sprite?"
             bool changeToWetFloor = (puddleComponent.CurrentVolume <= puddleComponent.WetFloorEffectThreshold

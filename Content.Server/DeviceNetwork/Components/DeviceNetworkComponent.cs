@@ -5,28 +5,25 @@ using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototy
 namespace Content.Server.DeviceNetwork.Components
 {
     [RegisterComponent]
-    [Friend(typeof(DeviceNetworkSystem), typeof(DeviceNet))]
+    [Access(typeof(DeviceNetworkSystem), typeof(DeviceNet))]
     public sealed class DeviceNetworkComponent : Component
     {
-        /// <summary>
-        ///     Valid device network NetIDs. The netID is used to separate device networks that shouldn't interact with
-        ///     each other e.g. wireless and wired.
-        /// </summary>
-        [Serializable]
-        public enum ConnectionType
+        public enum DeviceNetIdDefaults
         {
             Private,
             Wired,
             Wireless,
-            Apc
+            Apc,
+            AtmosDevices,
+            Reserved = 100,
+            // Ids outside this enum may exist
+            // This exists to let yml use nice names instead of numbers
         }
-        // TODO allow devices to join more than one network?
-
-        // TODO if wireless/wired is determined by ConnectionType, what is the point of WirelessNetworkComponent & the
-        // other network-type-specific components? Shouldn't DeviceNetId determine conectivity checks?
 
         [DataField("deviceNetId")]
-        public ConnectionType DeviceNetId { get; set; } = ConnectionType.Private;
+        public DeviceNetIdDefaults NetIdEnum { get; set; }
+
+        public int DeviceNetId => (int) NetIdEnum;
 
         /// <summary>
         ///     The frequency that this device is listening on.
@@ -89,5 +86,13 @@ namespace Content.Server.DeviceNetwork.Components
         [ViewVariables(VVAccess.ReadWrite)]
         [DataField("autoConnect")]
         public bool AutoConnect = true;
+
+        /// <summary>
+        ///     Whether to send the broadcast recipients list to the sender so it can be filtered.
+        /// <see cref="DeviceListSystem"/>
+        /// </summary>
+        [ViewVariables(VVAccess.ReadWrite)]
+        [DataField("sendBroadcastAttemptEvent")]
+        public bool SendBroadcastAttemptEvent = false;
     }
 }

@@ -1,4 +1,4 @@
-﻿<Control xmlns="https://spacestation14.io"
+<Control xmlns="https://spacestation14.io"
          xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
          xmlns:maths="clr-namespace:Robust.Shared.Maths;assembly=Robust.Shared.Maths"
          xmlns:cc="clr-namespace:Content.Client.Administration.UI.CustomControls"
@@ -10,12 +10,14 @@
          xmlns:chatUi="clr-namespace:Content.Client.Chat.UI"
          xmlns:lobbyUi="clr-namespace:Content.Client.Lobby.UI"
          xmlns:info="clr-namespace:Content.Client.Info">
-    <Control>
-        <!-- Background -->
-        <TextureRect Access="Public" Name = "Background" Stretch="KeepAspectCovered"/>
-        <Control Margin="10 10 10 10" >
-            <!-- Left Top Panel -->
-                <PanelContainer StyleClasses="AngleRect" HorizontalAlignment="Left" Name = "LeftSideTop" VerticalExpand="True"  VerticalAlignment="Top" >
+    <!-- Background -->
+    <TextureRect Access="Public" Name = "Background" Stretch="KeepAspectCovered"/>
+    <BoxContainer Orientation="Horizontal" Margin="10 10 10 10" SeparationOverride="2">
+        <SplitContainer State="Auto" HorizontalExpand="True">
+            <!-- LHS Controls -->
+            <BoxContainer Orientation="Vertical" SeparationOverride="4" HorizontalExpand="True">
+                <!-- Left Top Panel -->
+                <PanelContainer StyleClasses="AngleRect" HorizontalAlignment="Left" Name = "LeftSideTop" VerticalAlignment="Top" >
                     <BoxContainer Orientation="Vertical" HorizontalAlignment="Center" MaxWidth="620">
                         <info:LinkBanner Name="LinkBanner" VerticalExpand="false" HorizontalAlignment="Center" Margin="3 3 3 3"/>
                         <hudUi:StripeBack>
@@ -28,45 +30,51 @@
                                        StyleClasses="LabelBig" HorizontalExpand="True" />
                                 <Button Name="ReadyButton" Access="Public" ToggleMode="True" Text="{Loc 'ui-lobby-ready-up-button'}"
                                         StyleClasses="ButtonBig" />
-                            </BoxContainer></hudUi:StripeBack>
+                            </BoxContainer>
+                        </hudUi:StripeBack>
                     </BoxContainer>
                 </PanelContainer>
-            <!-- Left Bot Panel -->
-            <BoxContainer Orientation="Vertical" HorizontalAlignment="Left" VerticalAlignment="Bottom" MaxWidth="620">
-                <info:DevInfoBanner Name="DevInfoBanner" VerticalExpand="false" Margin="3 3 3 3"/>
+                <!-- Voting Popups -->
+                <BoxContainer Orientation="Vertical" SeparationOverride="4" Name="VoteContainer" Access="Public" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                <!-- Vertical Padding-->
+                <Control VerticalExpand="True"/>
+                <!-- Left Bot Panel -->
+                <BoxContainer Orientation="Vertical" HorizontalAlignment="Left" VerticalAlignment="Bottom" MaxWidth="620">
+                    <info:DevInfoBanner Name="DevInfoBanner" VerticalExpand="false" Margin="3 3 3 3"/>
+                </BoxContainer>
             </BoxContainer>
-            <!-- RightPanel Panel -->
-            <PanelContainer Name="RightSide" StyleClasses="AngleRect" HorizontalAlignment= "Right" VerticalExpand="True" VerticalAlignment="Stretch">
-                <BoxContainer Orientation="Vertical">
-                <!-- Top row -->
-                <BoxContainer Orientation="Horizontal" MinSize="0 40" Name="HeaderContainer" Access="Public">
-                    <Label Margin="8 0 0 0" StyleClasses="LabelHeadingBigger" VAlign="Center" Text="{Loc 'ui-lobby-title'} " />
-                    <Label Name="ServerName" Access="Public" StyleClasses="LabelHeadingBigger" VAlign="Center" />
-                </BoxContainer>
-                <!-- Gold line -->
-                <ui:HLine Color="{x:Static style:StyleNano.NanoGold}" Thickness="2"/>
-                <ui:HSpacer Spacing="10"/>
-                <!-- Voting bar -->
-                <BoxContainer Orientation="Horizontal" MinSize="0 40" Name="VoteContainer" Access="Public" HorizontalAlignment="Right">
-                    <cc:CommandButton Name = "AHelpButton" Command="openahelp" Access="Public" Text = "{Loc 'ui-lobby-ahelp-button'}" StyleClasses="ButtonBig"/>
-                    <vote:VoteCallMenuButton Name="CallVoteButton" StyleClasses="ButtonBig" />
-                    <Button Name="OptionsButton" Access="Public" StyleClasses="ButtonBig" Text="{Loc 'ui-lobby-options-button'}" />
-                    <Button Name="LeaveButton" Access="Public" StyleClasses="ButtonBig" Text="{Loc 'ui-lobby-leave-button'}" />
-                </BoxContainer>
-                <ui:HSpacer Spacing="10"/>
-                <!-- Server info -->
-                <hudUi:NanoHeading Text="{Loc 'ui-lobby-server-info-block'}" />
-                <info:ServerInfo Name="ServerInfo" Access="Public" MinSize="0 30" VerticalExpand="false" Margin="3 3 3 3" MaxWidth="400"/>
-                <ui:HSpacer Spacing="5"/>
-                <lobbyUi:LobbyCharacterPreviewPanel Name="CharacterPreview" Access="Public"></lobbyUi:LobbyCharacterPreviewPanel>
-                <ui:HSpacer Spacing="5"/>
-                <BoxContainer MinHeight="10"/>
-                <!-- Gold line -->
-                <ui:HLine Color="{x:Static style:StyleNano.NanoGold}" Thickness="2" Access="Public"/>
-                <ui:HSpacer Spacing="10"/>
-                <chatUi:ChatBox Name="Chat" Access="Public" VerticalExpand="True" Margin="3 3 3 3" MinHeight="50"/>
+            <!-- Right Panel -->
+            <PanelContainer Name="RightSide" StyleClasses="AngleRect" VerticalExpand="True" VerticalAlignment="Stretch">
+                <BoxContainer Orientation="Vertical" HorizontalExpand="True">
+                    <!-- Top row -->
+                    <BoxContainer Orientation="Horizontal" MinSize="0 40" Name="HeaderContainer" Access="Public" SeparationOverride="4">
+                        <Label Margin="8 0 0 0" StyleClasses="LabelHeadingBigger" VAlign="Center" Text="{Loc 'ui-lobby-title'}" />
+                        <Label Name="ServerName" Access="Public" StyleClasses="LabelHeadingBigger" VAlign="Center" />
+                    </BoxContainer>
+                    <!-- Gold line -->
+                    <ui:HLine Color="{x:Static style:StyleNano.NanoGold}" Thickness="2"/>
+                    <ui:HSpacer Spacing="10"/>
+                    <!-- Voting & misc button bar -->
+                    <BoxContainer Orientation="Horizontal" MinSize="0 40" HorizontalAlignment="Right">
+                        <cc:CommandButton Name = "AHelpButton" Command="openahelp" Access="Public" Text = "{Loc 'ui-lobby-ahelp-button'}" StyleClasses="ButtonBig"/>
+                        <vote:VoteCallMenuButton Name="CallVoteButton" StyleClasses="ButtonBig" />
+                        <Button Name="OptionsButton" Access="Public" StyleClasses="ButtonBig" Text="{Loc 'ui-lobby-options-button'}" />
+                        <Button Name="LeaveButton" Access="Public" StyleClasses="ButtonBig" Text="{Loc 'ui-lobby-leave-button'}" />
+                    </BoxContainer>
+                    <ui:HSpacer Spacing="10"/>
+                    <!-- Server info -->
+                    <hudUi:NanoHeading Text="{Loc 'ui-lobby-server-info-block'}" />
+                    <info:ServerInfo Name="ServerInfo" Access="Public" MinSize="0 30" VerticalExpand="false" Margin="3 3 3 3" MaxWidth="400"  HorizontalAlignment="Left"/>
+                    <ui:HSpacer Spacing="5"/>
+                    <lobbyUi:LobbyCharacterPreviewPanel Name="CharacterPreview" Access="Public"></lobbyUi:LobbyCharacterPreviewPanel>
+                    <ui:HSpacer Spacing="5"/>
+                    <BoxContainer MinHeight="10"/>
+                    <!-- Gold line -->
+                    <ui:HLine Color="{x:Static style:StyleNano.NanoGold}" Thickness="2" Access="Public"/>
+                    <ui:HSpacer Spacing="10"/>
+                    <chatUi:ChatBox Name="Chat" Access="Public" VerticalExpand="True" Margin="3 3 3 3" MinHeight="50"/>
                 </BoxContainer>
             </PanelContainer>
-        </Control>
-    </Control>
+        </SplitContainer>
+    </BoxContainer>
 </Control>

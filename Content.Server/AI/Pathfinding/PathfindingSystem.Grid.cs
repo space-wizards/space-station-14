@@ -232,7 +232,7 @@ public sealed partial class PathfindingSystem
         var access = _accessReader.FindAccessTags(entity);
         foreach (var reader in node.AccessReaders)
         {
-            if (!_accessReader.IsAllowed(reader, access))
+            if (!_accessReader.IsAllowed(access, reader))
             {
                 return false;
             }

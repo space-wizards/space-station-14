@@ -49,6 +49,8 @@
       trackAllDamage: true
       damageOverlay:
         sprite: Structures/Windows/cracks.rsi
+  - type: StaticPrice
+    price: 0.75
 
 - type: entity
   parent: ReinforcedWindow
@@ -68,6 +70,8 @@
   - type: Occluder
     sizeX: 32
     sizeY: 32
+  - type: StaticPrice
+    price: 0.75
 
 - type: entity
   id: WindowReinforcedDirectional
@@ -107,3 +111,5 @@
             max: 2
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
+  - type: StaticPrice
+    price: 0.75
