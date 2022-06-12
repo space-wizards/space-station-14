@@ -1,9 +1,4 @@
 Entries:
-- author: lapatison
-  changes:
-  - {message: It's now possible to carry an acoustic guitar on your back., type: Add}
-  id: 1186
-  time: '2022-03-10T13:59:12.0000000+00:00'
 - author: metalgearsloth
   changes:
   - {message: Footstep sounds are now predicted and won't sound delayed., type: Tweak}
@@ -3002,3 +2997,8 @@ Entries:
       areas and salvage asteroids., type: Tweak}
   id: 1685
   time: '2022-06-12T02:58:35.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Most gun sizes have been increased., type: Tweak}
+  id: 1686
+  time: '2022-06-12T05:30:03.0000000+00:00'
