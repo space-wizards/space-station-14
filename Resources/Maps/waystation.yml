@@ -17252,11 +17252,6 @@ entities:
   - pos: 9.5,-4.5
     parent: 82
     type: Transform
-  - containers:
-      entity_storage: !type:Container
-        ents:
-        - 12758
-    type: ContainerContainer
 - uid: 421
   type: WaterTankHighCapacity
   components:
