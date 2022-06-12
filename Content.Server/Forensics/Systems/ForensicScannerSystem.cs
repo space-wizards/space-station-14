@@ -138,8 +138,6 @@ namespace Content.Server.Forensics
             }
 
             _paperSystem.SetContent(printed, text.ToString());
-
-
         }
 
         private sealed class ScanCancelledEvent : EntityEventArgs
