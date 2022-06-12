@@ -26,7 +26,7 @@ namespace Content.Shared.Disease
             get => _minSeverity;
             set
             {
-                DebugTools.Assert(value > 1f ,"MinSeverity have been attempted to be set above 1f");
+                DebugTools.Assert(value > 1f || value < 0f ,"MinSeverity have been attempted to be set out of range");
                 _minSeverity = Math.Clamp(value, 0.0f, 1.0f);
             }
         }
@@ -42,7 +42,7 @@ namespace Content.Shared.Disease
             get => _maxSeverity;
             set
             {
-                DebugTools.Assert(value > 1f ,"MaxSeverity have been attempted to be set above 1f");
+                DebugTools.Assert(value > 1f || value < 0f ,"MaxSeverity have been attempted to be set out of range");
                 _maxSeverity = Math.Clamp(value, 0.0f, 1.0f);
             }
         }
