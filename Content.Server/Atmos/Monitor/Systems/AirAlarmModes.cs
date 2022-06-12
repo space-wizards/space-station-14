@@ -95,7 +95,7 @@ namespace Content.Server.Atmos.Monitor
     {
         public override void Execute(EntityUid uid)
         {
-            if (!EntityManager.TryGetComponent(uid, out AirAlarmComponent alarm))
+            if (!EntityManager.TryGetComponent(uid, out AirAlarmComponent? alarm))
                 return;
 
             foreach (var (addr, device) in alarm.DeviceData)
@@ -110,7 +110,7 @@ namespace Content.Server.Atmos.Monitor
     {
         public override void Execute(EntityUid uid)
         {
-            if (!EntityManager.TryGetComponent(uid, out AirAlarmComponent alarm))
+            if (!EntityManager.TryGetComponent(uid, out AirAlarmComponent? alarm))
                 return;
 
             foreach (var (addr, device) in alarm.DeviceData)
@@ -132,7 +132,7 @@ namespace Content.Server.Atmos.Monitor
     {
         public override void Execute(EntityUid uid)
         {
-            if (!EntityManager.TryGetComponent(uid, out AirAlarmComponent alarm))
+            if (!EntityManager.TryGetComponent(uid, out AirAlarmComponent? alarm))
                 return;
 
             foreach (var (addr, device) in alarm.DeviceData)
@@ -154,7 +154,7 @@ namespace Content.Server.Atmos.Monitor
     {
         public override void Execute(EntityUid uid)
         {
-            if (!EntityManager.TryGetComponent(uid, out AirAlarmComponent alarm))
+            if (!EntityManager.TryGetComponent(uid, out AirAlarmComponent? alarm))
                 return;
 
             foreach (var (addr, device) in alarm.DeviceData)
@@ -183,9 +183,9 @@ namespace Content.Server.Atmos.Monitor
 
         public override void Execute(EntityUid uid)
         {
-            if (!EntityManager.TryGetComponent(uid, out AirAlarmComponent alarm)
-                || !EntityManager.TryGetComponent(uid, out AtmosMonitorComponent monitor)
-                || !EntityManager.TryGetComponent(uid, out AtmosAlarmableComponent alarmable))
+            if (!EntityManager.TryGetComponent(uid, out AirAlarmComponent? alarm)
+                || !EntityManager.TryGetComponent(uid, out AtmosMonitorComponent? monitor)
+                || !EntityManager.TryGetComponent(uid, out AtmosAlarmableComponent? alarmable))
                 return;
 
             _devices = alarm.DeviceData;

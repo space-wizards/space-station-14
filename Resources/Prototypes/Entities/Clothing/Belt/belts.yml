@@ -406,7 +406,7 @@
     capacity: 60
     whitelist:
       tags:
-        - ShotgunShell
+        - ShellShotgun
 
 - type: entity
   parent: ClothingBeltBase
@@ -467,7 +467,7 @@
     sprite: Clothing/Belt/militarywebbingmed.rsi
   - type: Storage
     capacity: 60
-    
+
 - type: entity
   parent: ClothingBeltBase
   id: ClothingBeltSuspenders

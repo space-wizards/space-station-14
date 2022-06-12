@@ -27,6 +27,7 @@
     shoes: ClothingShoesBootsWork
     id: PassengerPDA
     belt: ClothingBeltUtility
+    pocket1: AppraisalTool
   innerclothingskirt: ClothingUniformJumpskirtColorLightBrown
   satchel: ClothingBackpackSatchelEngineering
   duffelbag: ClothingBackpackSatchelEngineering
@@ -106,7 +107,7 @@
     back: ClothingBackpackDuffelSyndicateOperative
     mask: ClothingMaskGasSyndicate
   # eyes: Night Vision Goggles whenever they're made
-    eyes: ClothingEyesGlassesMeson 
+    eyes: ClothingEyesGlassesMeson
     ears: ClothingHeadsetAltSyndicate
     gloves: ClothingHandsGlovesCombat
     outerClothing: ClothingOuterHardsuitSyndieCommander
@@ -117,7 +118,7 @@
   innerclothingskirt: ClothingUniformJumpskirtOperative
   satchel: ClothingBackpackDuffelSyndicateOperative
   duffelbag: ClothingBackpackDuffelSyndicateOperative
-  
+
 - type: startingGear
   id: SyndicateOperativeMedicFull
   equipment:

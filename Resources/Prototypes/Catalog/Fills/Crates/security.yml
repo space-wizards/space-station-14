@@ -27,7 +27,7 @@
   components:
   - type: StorageFill
     contents:
-      - id: TaserGun
+      - id: WeaponTaser
         amount: 3
       - id: Stunbaton
         amount: 3
@@ -45,7 +45,7 @@
   components:
   - type: StorageFill
     contents:
-      - id: LaserGun
+      - id: WeaponLaserGun
         amount: 3
 
 - type: entity
@@ -59,7 +59,7 @@
         amount: 2
       - id: ClothingHeadHelmetRiot
         amount: 2
-      - id: ShotgunGladstone
+      - id: WeaponShotgunEnforcer
         amount: 2
       - id: BoxBeanbag
         amount: 2

@@ -8,7 +8,7 @@ namespace Content.Shared.Pinpointer
     /// </summary>
     [RegisterComponent]
     [NetworkedComponent]
-    [Friend(typeof(SharedPinpointerSystem))]
+    [Access(typeof(SharedPinpointerSystem))]
     public sealed class PinpointerComponent : Component
     {
         // TODO: Type serializer oh god

@@ -84,7 +84,7 @@ namespace Content.Server.Weapon.Melee
             if (args.Target is {Valid: true} target)
             {
                 // Raise event before doing damage so we can cancel damage if the event is handled
-                var hitEvent = new MeleeHitEvent(new List<EntityUid>() { target }, args.User);
+                var hitEvent = new MeleeHitEvent(new List<EntityUid>() { target }, args.User, comp.Damage);
                 RaiseLocalEvent(owner, hitEvent, false);
 
                 if (!hitEvent.Handled)
@@ -152,7 +152,7 @@ namespace Content.Server.Weapon.Melee
             }
 
             // Raise event before doing damage so we can cancel damage if handled
-            var hitEvent = new MeleeHitEvent(hitEntities, args.User);
+            var hitEvent = new MeleeHitEvent(hitEntities, args.User, comp.Damage);
             RaiseLocalEvent(owner, hitEvent, false);
             SendAnimation(comp.Arc, angle, args.User, owner, hitEntities);
 
@@ -353,6 +353,11 @@ namespace Content.Server.Weapon.Melee
     public sealed class MeleeHitEvent : HandledEntityEventArgs
     {
         /// <summary>
+        ///     The base amount of damage dealt by the melee hit.
+        /// </summary>
+        public readonly DamageSpecifier BaseDamage = new();
+
+        /// <summary>
         ///     Modifier sets to apply to the hit event when it's all said and done.
         ///     This should be modified by adding a new entry to the list.
         /// </summary>
@@ -382,10 +387,11 @@ namespace Content.Server.Weapon.Melee
         /// </summary>
         public EntityUid User { get; }
 
-        public MeleeHitEvent(List<EntityUid> hitEntities, EntityUid user)
+        public MeleeHitEvent(List<EntityUid> hitEntities, EntityUid user, DamageSpecifier baseDamage)
         {
             HitEntities = hitEntities;
             User = user;
+            BaseDamage = baseDamage;
         }
     }
 }

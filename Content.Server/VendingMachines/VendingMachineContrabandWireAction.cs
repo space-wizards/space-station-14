@@ -15,7 +15,7 @@ public sealed class VendingMachineContrabandWireAction : BaseToggleWireAction
     public override StatusLightData? GetStatusLightData(Wire wire)
     {
         var lightState = StatusLightState.Off;
-        if (IsPowered(wire.Owner) && EntityManager.TryGetComponent(wire.Owner, out VendingMachineComponent vending))
+        if (IsPowered(wire.Owner) && EntityManager.TryGetComponent(wire.Owner, out VendingMachineComponent? vending))
         {
             lightState = vending.Contraband
                 ? StatusLightState.BlinkingSlow
@@ -30,7 +30,7 @@ public sealed class VendingMachineContrabandWireAction : BaseToggleWireAction
 
     public override void ToggleValue(EntityUid owner, bool setting)
     {
-        if (EntityManager.TryGetComponent(owner, out VendingMachineComponent vending))
+        if (EntityManager.TryGetComponent(owner, out VendingMachineComponent? vending))
         {
             vending.Contraband = !setting;
         }
@@ -38,6 +38,6 @@ public sealed class VendingMachineContrabandWireAction : BaseToggleWireAction
 
     public override bool GetValue(EntityUid owner)
     {
-        return EntityManager.TryGetComponent(owner, out VendingMachineComponent vending) && !vending.Contraband;
+        return EntityManager.TryGetComponent(owner, out VendingMachineComponent? vending) && !vending.Contraband;
     }
 }

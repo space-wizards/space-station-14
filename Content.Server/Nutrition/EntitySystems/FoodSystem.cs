@@ -216,7 +216,7 @@ namespace Content.Server.Nutrition.EntitySystems
         private void DeleteAndSpawnTrash(FoodComponent component, EntityUid? user = null)
         {
             //We're empty. Become trash.
-            var position = EntityManager.GetComponent<TransformComponent>(component.Owner).Coordinates;
+            var position = Transform(component.Owner).MapPosition;
             var finisher = EntityManager.SpawnEntity(component.TrashPrototype, position);
 
             // If the user is holding the item
@@ -358,7 +358,7 @@ namespace Content.Server.Nutrition.EntitySystems
             if (args.Cancelled)
                 return;
 
-            IngestionBlockerComponent blocker;
+            IngestionBlockerComponent? blocker;
 
             if (_inventorySystem.TryGetSlotEntity(uid, "mask", out var maskUid) &&
                 EntityManager.TryGetComponent(maskUid, out blocker) &&
