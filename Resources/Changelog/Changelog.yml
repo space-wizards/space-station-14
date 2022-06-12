@@ -1,11 +1,4 @@
 Entries:
-- author: moonheart08
-  changes:
-  - {message: 'Admin ghosts now have the cargo shuttle console, communications console,
-      crew monitoring console, mass scanner console, and solar control console built
-      into their ghostly skull.', type: Add}
-  id: 1188
-  time: '2022-03-11T05:37:36.0000000+00:00'
 - author: Rane
   changes:
   - {message: Drones now have a whitelist for machine UIs they can open. Chem dispensers
@@ -3004,3 +2997,12 @@ Entries:
   - {message: Standard APC is now 5x bigger in power capacity., type: Tweak}
   id: 1687
   time: '2022-06-12T05:34:16.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Zombies now do reduced damage to other zombies., type: Tweak}
+  - {message: Dead and crit enemies now automatically zombify., type: Fix}
+  - {message: Mice who are zombified are now able to attack., type: Fix}
+  - {message: Mice can no longer be revived in cloning pods nor will they become humans
+      when cloned., type: Fix}
+  id: 1688
+  time: '2022-06-12T05:53:13.0000000+00:00'
