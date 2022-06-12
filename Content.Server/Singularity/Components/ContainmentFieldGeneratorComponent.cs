@@ -20,7 +20,6 @@ namespace Content.Server.Singularity.Components
             set => _powerBuffer = Math.Clamp(value, 0, 6);
         }
 
-        
         public Tuple<Direction, ContainmentFieldConnection>? Connection1;
         public Tuple<Direction, ContainmentFieldConnection>? Connection2;
 

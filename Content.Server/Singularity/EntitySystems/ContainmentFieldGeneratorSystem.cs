@@ -96,6 +96,7 @@ namespace Content.Server.Singularity.EntitySystems
                 pointLightComponent.Enabled = hasAnyConnection;
             }
         }
+        
         public void RemoveConnection(ContainmentFieldConnection? connection, ContainmentFieldGeneratorComponent component)
         {
             if (component.Connection1?.Item2 == connection)
