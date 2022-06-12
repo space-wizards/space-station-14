@@ -26,6 +26,7 @@ using Robust.Shared.Containers;
 using Robust.Shared.Map;
 using Robust.Shared.Player;
 using Robust.Shared.Random;
+using Robust.Shared.Timing;
 
 namespace Content.Server.Disposal.Unit.EntitySystems
 {
@@ -37,6 +38,7 @@ namespace Content.Server.Disposal.Unit.EntitySystems
         [Dependency] private readonly AtmosphereSystem _atmosSystem = default!;
         [Dependency] private readonly DoAfterSystem _doAfterSystem = default!;
         [Dependency] private readonly SharedHandsSystem _handsSystem = default!;
+        [Dependency] private readonly IGameTiming _gameTiming = default!;
 
         private readonly List<DisposalUnitComponent> _activeDisposals = new();
 
@@ -408,6 +410,13 @@ namespace Content.Server.Disposal.Unit.EntitySystems
                 }
             }
 
+            if(component.FlushStart != TimeSpan.Zero && _gameTiming.CurTime - component.FlushStart >= TimeSpan.FromSeconds(component.FlushTime))
+            {
+                //Flushing animation has completed, so update visuals to pressurizing
+                UpdateVisualState(component);
+                component.FlushStart = TimeSpan.Zero;
+            }
+
             Box2? disposalsBounds = null;
             var count = component.RecentlyEjected.Count;
 
@@ -573,7 +582,7 @@ namespace Content.Server.Disposal.Unit.EntitySystems
             {
                 appearance.SetData(SharedDisposalUnitComponent.Visuals.VisualState, SharedDisposalUnitComponent.VisualState.Flushing);
                 appearance.SetData(SharedDisposalUnitComponent.Visuals.Light, SharedDisposalUnitComponent.LightState.Off);
-                component.Owner.SpawnTimer(component.GetFlushTime(), () => UpdateVisualState(component)); //update visuals once done flushing
+                component.FlushStart = _gameTiming.CurTime;
                 return;
             }
 

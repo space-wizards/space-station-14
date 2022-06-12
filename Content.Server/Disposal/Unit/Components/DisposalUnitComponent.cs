@@ -67,11 +67,11 @@ namespace Content.Server.Disposal.Unit.Components
         public GasMixture Air { get; set; } = new(Atmospherics.CellVolume);
 
         [DataField("flushTime")]
-        private float FlushTime = 2.0f;
+        public float FlushTime = 2.0f;
 
-        public TimeSpan GetFlushTime()
-        {
-            return TimeSpan.FromSeconds(FlushTime);
-        }
+        /// <summary>
+        /// Moment the flush started to calculate end of animation
+        /// </summary>
+        public TimeSpan FlushStart = TimeSpan.Zero;
     }
 }
