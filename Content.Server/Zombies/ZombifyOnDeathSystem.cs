@@ -82,7 +82,8 @@ namespace Content.Server.Zombies
             var zombiecomp = EnsureComp<ZombifyOnDeathComponent>(target);
             if (TryComp<HumanoidAppearanceComponent>(target, out var huApComp))
             {
-                _sharedHuApp.UpdateAppearance(target, huApComp.Appearance.WithSkinColor(zombiecomp.SkinColor), huApComp);
+                var appearance = huApComp.Appearance;
+                _sharedHuApp.UpdateAppearance(target, appearance.WithSkinColor(zombiecomp.SkinColor), huApComp);
                 _sharedHuApp.ForceAppearanceUpdate(target, huApComp);
             }
 
