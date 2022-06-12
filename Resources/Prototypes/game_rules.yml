@@ -26,6 +26,9 @@
 
 - type: gameRule
   id: Pirates
+  config:
+    !type:GenericGameRuleConfiguration
+    id: Pirates
 
 - type: gameRule
   id: Suspicion

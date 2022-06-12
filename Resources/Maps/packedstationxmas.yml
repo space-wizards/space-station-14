@@ -19519,7 +19519,7 @@ entities:
       stash: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 362
-  type: APCBasic
+  type: BaseAPC
   components:
   - pos: 0.5,-3.5
     parent: 0
@@ -19534,7 +19534,7 @@ entities:
       stash: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 364
-  type: APCBasic
+  type: BaseAPC
   components:
   - pos: -0.5,-11.5
     parent: 0
@@ -19756,7 +19756,7 @@ entities:
         ents: []
     type: ContainerContainer
 - uid: 398
-  type: APCBasic
+  type: BaseAPC
   components:
   - pos: 16.5,-6.5
     parent: 0
@@ -20201,7 +20201,7 @@ entities:
     type: PlaceableSurface
 
 - uid: 461
-  type: APCBasic
+  type: BaseAPC
   components:
   - pos: -0.5,15.5
     parent: 0
@@ -20398,7 +20398,7 @@ entities:
     parent: 0
     type: Transform
 - uid: 488
-  type: APCBasic
+  type: BaseAPC
   components:
   - pos: 10.5,11.5
     parent: 0
@@ -21367,7 +21367,7 @@ entities:
         ents: []
     type: ContainerContainer
 - uid: 626
-  type: APCBasic
+  type: BaseAPC
   components:
   - pos: 19.5,-13.5
     parent: 0
@@ -21862,7 +21862,7 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 703
-  type: APCBasic
+  type: BaseAPC
   components:
   - pos: 12.5,-17.5
     parent: 0
@@ -22298,7 +22298,7 @@ entities:
     parent: 0
     type: Transform
 - uid: 773
-  type: APCBasic
+  type: BaseAPC
   components:
   - pos: 8.5,-26.5
     parent: 0
@@ -23718,7 +23718,7 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 969
-  type: APCBasic
+  type: BaseAPC
   components:
   - pos: 9.5,-35.5
     parent: 0
@@ -24333,7 +24333,7 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 1065
-  type: APCBasic
+  type: BaseAPC
   components:
   - pos: 26.5,-37.5
     parent: 0
@@ -24797,7 +24797,7 @@ entities:
         ents: []
     type: ContainerContainer
 - uid: 1133
-  type: APCBasic
+  type: BaseAPC
   components:
   - pos: 21.5,5.5
     parent: 0
@@ -26507,7 +26507,7 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 1394
-  type: APCBasic
+  type: BaseAPC
   components:
   - pos: 5.5,-35.5
     parent: 0
@@ -27542,7 +27542,7 @@ entities:
         ents: []
     type: ContainerContainer
 - uid: 1561
-  type: APCBasic
+  type: BaseAPC
   components:
   - pos: 37.485016,-2.5795918
     parent: 0
@@ -27770,7 +27770,7 @@ entities:
         ents: []
     type: ContainerContainer
 - uid: 1591
-  type: APCBasic
+  type: BaseAPC
   components:
   - pos: 29.5,-37.5
     parent: 0
@@ -28110,7 +28110,7 @@ entities:
         ents: []
     type: ContainerContainer
 - uid: 1636
-  type: APCBasic
+  type: BaseAPC
   components:
   - pos: 40.5,-11.5
     parent: 0
@@ -28456,7 +28456,7 @@ entities:
     parent: 0
     type: Transform
 - uid: 1681
-  type: APCBasic
+  type: BaseAPC
   components:
   - pos: 42.5,-11.5
     parent: 0
@@ -28716,7 +28716,7 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 1710
-  type: APCBasic
+  type: BaseAPC
   components:
   - pos: 39.5,-15.5
     parent: 0
@@ -29145,13 +29145,13 @@ entities:
         ents: []
     type: ContainerContainer
 - uid: 1770
-  type: APCBasic
+  type: BaseAPC
   components:
   - pos: 34.5,-15.5
     parent: 0
     type: Transform
 - uid: 1771
-  type: APCBasic
+  type: BaseAPC
   components:
   - pos: 41.5,-21.5
     parent: 0
@@ -29679,7 +29679,7 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 1837
-  type: APCBasic
+  type: BaseAPC
   components:
   - pos: 41.5,21.5
     parent: 0
@@ -30522,7 +30522,7 @@ entities:
       ItemCabinet: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 1970
-  type: APCBasic
+  type: BaseAPC
   components:
   - pos: 36.5,29.5
     parent: 0
@@ -33494,7 +33494,7 @@ entities:
     parent: 0
     type: Transform
 - uid: 2400
-  type: APCBasic
+  type: BaseAPC
   components:
   - pos: 37.5,25.5
     parent: 0
@@ -33689,7 +33689,7 @@ entities:
     type: PlaceableSurface
 
 - uid: 2426
-  type: APCBasic
+  type: BaseAPC
   components:
   - pos: 43.5,26.5
     parent: 0
@@ -34289,7 +34289,7 @@ entities:
     parent: 0
     type: Transform
 - uid: 2503
-  type: APCBasic
+  type: BaseAPC
   components:
   - pos: 20.5,34.5
     parent: 0
@@ -35920,7 +35920,7 @@ entities:
     parent: 0
     type: Transform
 - uid: 2743
-  type: APCBasic
+  type: BaseAPC
   components:
   - pos: 68.5,-15.5
     parent: 0
@@ -37212,7 +37212,7 @@ entities:
     type: PlaceableSurface
 
 - uid: 2924
-  type: APCBasic
+  type: BaseAPC
   components:
   - pos: 69.5,47.5
     parent: 0
@@ -40303,7 +40303,7 @@ entities:
     parent: 0
     type: Transform
 - uid: 3429
-  type: APCBasic
+  type: BaseAPC
   components:
   - pos: 0.5,-8.5
     parent: 0
@@ -44180,7 +44180,7 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 4042
-  type: APCBasic
+  type: BaseAPC
   components:
   - pos: 10.5,-4.5
     parent: 0
@@ -44458,7 +44458,7 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 4076
-  type: APCBasic
+  type: BaseAPC
   components:
   - pos: 22.5,-13.5
     parent: 0
@@ -44941,7 +44941,7 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 4130
-  type: APCBasic
+  type: BaseAPC
   components:
   - pos: 11.5,-15.5
     parent: 0
@@ -44987,7 +44987,7 @@ entities:
     parent: 0
     type: Transform
 - uid: 4136
-  type: APCBasic
+  type: BaseAPC
   components:
   - pos: -4.5,-2.5
     parent: 0
@@ -45009,7 +45009,7 @@ entities:
     parent: 0
     type: Transform
 - uid: 4139
-  type: APCBasic
+  type: BaseAPC
   components:
   - pos: 13.5,16.5
     parent: 0
@@ -45604,7 +45604,7 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 4209
-  type: APCBasic
+  type: BaseAPC
   components:
   - pos: 28.5,7.5
     parent: 0
@@ -47147,7 +47147,7 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 4348
-  type: APCBasic
+  type: BaseAPC
   components:
   - pos: 10.311251,18.586544
     parent: 0
@@ -48323,7 +48323,7 @@ entities:
     parent: 0
     type: Transform
 - uid: 4478
-  type: APCBasic
+  type: BaseAPC
   components:
   - pos: 3.5,-27.5
     parent: 0
@@ -49488,7 +49488,7 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 4610
-  type: APCBasic
+  type: BaseAPC
   components:
   - pos: 33.5,7.5
     parent: 0
@@ -50561,7 +50561,7 @@ entities:
       light_bulb: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 4726
-  type: APCBasic
+  type: BaseAPC
   components:
   - pos: 40.5,-1.5
     parent: 0
@@ -51614,7 +51614,7 @@ entities:
       light_bulb: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 4838
-  type: APCBasic
+  type: BaseAPC
   components:
   - pos: 16.5,23.5
     parent: 0
@@ -51708,7 +51708,7 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 4850
-  type: APCBasic
+  type: BaseAPC
   components:
   - pos: 16.5,25.5
     parent: 0
@@ -51722,7 +51722,7 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 4852
-  type: APCBasic
+  type: BaseAPC
   components:
   - pos: 13.5,35.5
     parent: 0
@@ -52240,7 +52240,7 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 4906
-  type: APCBasic
+  type: BaseAPC
   components:
   - pos: 15.5,34.5
     parent: 0
@@ -52260,7 +52260,7 @@ entities:
     parent: 0
     type: Transform
 - uid: 4909
-  type: APCBasic
+  type: BaseAPC
   components:
   - pos: 25.5,43.5
     parent: 0
@@ -52554,13 +52554,13 @@ entities:
       paper_label: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 4941
-  type: APCBasic
+  type: BaseAPC
   components:
   - pos: 20.5,40.5
     parent: 0
     type: Transform
 - uid: 4942
-  type: APCBasic
+  type: BaseAPC
   components:
   - pos: 43.5,2.5
     parent: 0
@@ -53340,7 +53340,7 @@ entities:
         ents: []
     type: ContainerContainer
 - uid: 5036
-  type: APCBasic
+  type: BaseAPC
   components:
   - pos: 52.5,-8.5
     parent: 0
@@ -53356,7 +53356,7 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 5038
-  type: APCBasic
+  type: BaseAPC
   components:
   - pos: 66.5,-0.5
     parent: 0
@@ -53987,7 +53987,7 @@ entities:
         ents: []
     type: ContainerContainer
 - uid: 5111
-  type: APCBasic
+  type: BaseAPC
   components:
   - pos: 75.5,-2.5
     parent: 0
@@ -54358,13 +54358,13 @@ entities:
       morgue_tray: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 5152
-  type: APCBasic
+  type: BaseAPC
   components:
   - pos: 75.5,-4.5
     parent: 0
     type: Transform
 - uid: 5153
-  type: APCBasic
+  type: BaseAPC
   components:
   - pos: 73.5,-7.5
     parent: 0
@@ -54376,7 +54376,7 @@ entities:
     supplyRampPosition: 1.6666667
     type: PowerNetworkBattery
 - uid: 5154
-  type: APCBasic
+  type: BaseAPC
   components:
   - pos: 58.5,-8.5
     parent: 0
@@ -54569,7 +54569,7 @@ entities:
         ents: []
     type: ContainerContainer
 - uid: 5178
-  type: APCBasic
+  type: BaseAPC
   components:
   - pos: 74.5,9.5
     parent: 0
@@ -54989,7 +54989,7 @@ entities:
   - enabled: False
     type: AmbientSound
 - uid: 5224
-  type: APCBasic
+  type: BaseAPC
   components:
   - pos: 64.5,11.5
     parent: 0
@@ -55337,7 +55337,7 @@ entities:
   - color: '#0000FFFF'
     type: AtmosPipeColor
 - uid: 5259
-  type: APCBasic
+  type: BaseAPC
   components:
   - pos: 56.5,11.5
     parent: 0
@@ -55627,19 +55627,19 @@ entities:
         ents: []
     type: ContainerContainer
 - uid: 5292
-  type: APCBasic
+  type: BaseAPC
   components:
   - pos: 53.5,21.5
     parent: 0
     type: Transform
 - uid: 5293
-  type: APCBasic
+  type: BaseAPC
   components:
   - pos: 51.5,22.5
     parent: 0
     type: Transform
 - uid: 5294
-  type: APCBasic
+  type: BaseAPC
   components:
   - pos: 33.5,44.5
     parent: 0
@@ -55884,7 +55884,7 @@ entities:
     type: PlaceableSurface
 
 - uid: 5322
-  type: APCBasic
+  type: BaseAPC
   components:
   - pos: 66.488266,17.465452
     parent: 0
@@ -56987,7 +56987,7 @@ entities:
   - enabled: False
     type: AmbientSound
 - uid: 5450
-  type: APCBasic
+  type: BaseAPC
   components:
   - pos: 2.5,-4.5
     parent: 0
@@ -58694,7 +58694,7 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 5671
-  type: APCBasic
+  type: BaseAPC
   components:
   - pos: 68.47836,41.729954
     parent: 0
@@ -59055,7 +59055,7 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 5712
-  type: APCBasic
+  type: BaseAPC
   components:
   - pos: 69.5,9.5
     parent: 0
@@ -61881,7 +61881,7 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 6028
-  type: APCBasic
+  type: BaseAPC
   components:
   - pos: 78.5,-14.5
     parent: 0
@@ -61992,7 +61992,7 @@ entities:
       light_bulb: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 6038
-  type: APCBasic
+  type: BaseAPC
   components:
   - pos: 6.5,-10.5
     parent: 0
@@ -62082,7 +62082,7 @@ entities:
     parent: 0
     type: Transform
 - uid: 6048
-  type: APCBasic
+  type: BaseAPC
   components:
   - pos: 28.5,-19.5
     parent: 0
@@ -62301,7 +62301,7 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 6070
-  type: APCBasic
+  type: BaseAPC
   components:
   - pos: 28.5,33.5
     parent: 0
@@ -62766,7 +62766,7 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 6118
-  type: APCBasic
+  type: BaseAPC
   components:
   - pos: 28.5,9.5
     parent: 0
@@ -62800,7 +62800,7 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 6122
-  type: APCBasic
+  type: BaseAPC
   components:
   - pos: 43.5,12.5
     parent: 0
@@ -63276,7 +63276,7 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 6183
-  type: APCBasic
+  type: BaseAPC
   components:
   - pos: 22.5,11.5
     parent: 0
@@ -63406,7 +63406,7 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 6197
-  type: APCBasic
+  type: BaseAPC
   components:
   - pos: 66.5,45.5
     parent: 0
@@ -64884,7 +64884,7 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 6367
-  type: APCBasic
+  type: BaseAPC
   components:
   - pos: 54.5,4.5
     parent: 0
@@ -65038,7 +65038,7 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 6383
-  type: APCBasic
+  type: BaseAPC
   components:
   - pos: 50.5,-14.5
     parent: 0
@@ -65710,7 +65710,7 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 6452
-  type: APCBasic
+  type: BaseAPC
   components:
   - pos: 65.5,23.5
     parent: 0
@@ -66622,7 +66622,7 @@ entities:
       light_bulb: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 6547
-  type: APCBasic
+  type: BaseAPC
   components:
   - pos: 39.5,-18.5
     parent: 0
@@ -68247,7 +68247,7 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 6722
-  type: APCBasic
+  type: BaseAPC
   components:
   - pos: 11.5,2.5
     parent: 0
@@ -68425,7 +68425,7 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 6743
-  type: APCBasic
+  type: BaseAPC
   components:
   - pos: 7.5,3.5
     parent: 0
@@ -69774,7 +69774,7 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 6899
-  type: APCBasic
+  type: BaseAPC
   components:
   - pos: 47.5,28.5
     parent: 0
@@ -70632,7 +70632,7 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 6986
-  type: APCBasic
+  type: BaseAPC
   components:
   - pos: 22.5,-22.5
     parent: 0
@@ -85304,7 +85304,7 @@ entities:
   - color: '#0000FFFF'
     type: AtmosPipeColor
 - uid: 8426
-  type: APCBasic
+  type: BaseAPC
   components:
   - pos: 38.500893,-33.65727
     parent: 0
@@ -87350,7 +87350,7 @@ entities:
       light_bulb: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 8623
-  type: APCBasic
+  type: BaseAPC
   components:
   - pos: 30.480644,38.38934
     parent: 0
@@ -90549,7 +90549,7 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 9058
-  type: APCBasic
+  type: BaseAPC
   components:
   - rot: -1.5707963267948966 rad
     pos: 110.5,-14.5
@@ -116110,7 +116110,7 @@ entities:
     parent: 0
     type: Transform
 - uid: 11447
-  type: APCBasic
+  type: BaseAPC
   components:
   - pos: 55.5,37.5
     parent: 0

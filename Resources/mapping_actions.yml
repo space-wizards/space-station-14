@@ -214,15 +214,15 @@
 - action: !type:InstantAction
     checkCanInteract: False
     icon:
-      entity: APCBasic
-    name: APCBasic
+      entity: BaseAPC
+    name: BaseAPC
     keywords: []
     clientExclusive: True
     autoPopulate: False
     temporary: True
     event: !type:StartPlacementActionEvent
       placementOption: SnapgridCenter
-      entityType: APCBasic
+      entityType: BaseAPC
   assignments:
   - 2: 3
 - action: !type:InstantAction
