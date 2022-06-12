@@ -2090,7 +2090,7 @@ entities:
   - fixtures: []
     type: Fixtures
 - uid: 210
-  type: SalternSMES
+  type: SMESBasic
   components:
   - pos: -5.5,-19.5
     parent: 73
@@ -2100,7 +2100,7 @@ entities:
     - machine_board
     type: Construction
 - uid: 211
-  type: SalternSMES
+  type: SMESBasic
   components:
   - pos: -4.5,-19.5
     parent: 73
@@ -2182,7 +2182,7 @@ entities:
   - fixtures: []
     type: Fixtures
 - uid: 219
-  type: SalternSubstation
+  type: SubstationBasic
   components:
   - pos: -3.5,-19.5
     parent: 73
@@ -2192,13 +2192,13 @@ entities:
     - machine_board
     type: Construction
 - uid: 220
-  type: SalternAPC
+  type: APCBasic
   components:
   - pos: -3.5,-18.5
     parent: 73
     type: Transform
 - uid: 221
-  type: SalternAPC
+  type: APCBasic
   components:
   - pos: 0.5,-6.5
     parent: 73

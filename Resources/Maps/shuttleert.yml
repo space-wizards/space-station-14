@@ -2134,7 +2134,7 @@ entities:
   - fixtures: []
     type: Fixtures
 - uid: 219
-  type: SalternSubstation
+  type: SubstationBasic
   components:
   - pos: -3.5,-19.5
     parent: 73
@@ -2150,7 +2150,7 @@ entities:
         ents: []
     type: ContainerContainer
 - uid: 220
-  type: SalternAPC
+  type: APCBasic
   components:
   - pos: -3.5,-18.5
     parent: 73
@@ -2352,7 +2352,7 @@ entities:
     parent: 73
     type: Transform
 - uid: 239
-  type: SalternAPC
+  type: APCBasic
   components:
   - pos: 0.5,-7.5
     parent: 73

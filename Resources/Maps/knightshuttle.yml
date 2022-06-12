@@ -1196,7 +1196,7 @@ entities:
     parent: 8
     type: Transform
 - uid: 24
-  type: SalternGenerator
+  type: GeneratorBasic
   components:
   - pos: 0.5,-3.5
     parent: 8
@@ -1299,7 +1299,7 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 35
-  type: SalternAPC
+  type: APCBasic
   components:
   - pos: 0.5,-4.5
     parent: 8
@@ -1430,7 +1430,7 @@ entities:
     parent: 8
     type: Transform
 - uid: 51
-  type: SalternGenerator
+  type: GeneratorBasic
   components:
   - pos: -0.5,-3.5
     parent: 8
@@ -1485,7 +1485,7 @@ entities:
     parent: 8
     type: Transform
 - uid: 57
-  type: SalternSubstation
+  type: SubstationBasic
   components:
   - pos: -1.5,-3.5
     parent: 8

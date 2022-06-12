@@ -731,7 +731,7 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 62
-  type: SalternAPC
+  type: APCBasic
   components:
   - pos: 1.5,0.5
     parent: 20
@@ -812,7 +812,7 @@ entities:
     parent: 20
     type: Transform
 - uid: 74
-  type: SalternSubstation
+  type: SubstationBasic
   components:
   - pos: 2.5,-0.5
     parent: 20

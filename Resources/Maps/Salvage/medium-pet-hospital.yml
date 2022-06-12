@@ -1673,7 +1673,7 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 145
-  type: SalternAPC
+  type: APCBasic
   components:
   - name: bear outpost APC
     type: MetaData

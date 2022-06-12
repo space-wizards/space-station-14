@@ -28822,7 +28822,7 @@ entities:
     parent: 106
     type: Transform
 - uid: 1250
-  type: SalternAPC
+  type: APCBasic
   components:
   - pos: -36.5,26.5
     parent: 106
@@ -30777,7 +30777,7 @@ entities:
     parent: 106
     type: Transform
 - uid: 1528
-  type: SalternAPC
+  type: APCBasic
   components:
   - rot: -1.5707963267948966 rad
     pos: -49.5,-27.5
@@ -49594,7 +49594,7 @@ entities:
   - fixtures: []
     type: Fixtures
 - uid: 3870
-  type: SalternAPC
+  type: APCBasic
   components:
   - rot: -1.5707963267948966 rad
     pos: 14.5,-12.5
@@ -65455,7 +65455,7 @@ entities:
   - fixtures: []
     type: Fixtures
 - uid: 5302
-  type: SalternAPC
+  type: APCBasic
   components:
   - rot: 1.5707963267948966 rad
     pos: -22.5,26.5
@@ -77705,7 +77705,7 @@ entities:
         ents: []
     type: ContainerContainer
 - uid: 6413
-  type: SalternAPC
+  type: APCBasic
   components:
   - rot: 1.5707963267948966 rad
     pos: 28.5,-30.5
@@ -80045,7 +80045,7 @@ entities:
   - fixtures: []
     type: Fixtures
 - uid: 6663
-  type: SalternAPC
+  type: APCBasic
   components:
   - pos: -8.5,22.5
     parent: 106
@@ -82691,7 +82691,7 @@ entities:
     parent: 106
     type: Transform
 - uid: 6898
-  type: SalternAPC
+  type: APCBasic
   components:
   - rot: 1.5707963267948966 rad
     pos: 43.5,-24.5
@@ -84154,7 +84154,7 @@ entities:
     parent: 106
     type: Transform
 - uid: 7045
-  type: SalternAPC
+  type: APCBasic
   components:
   - pos: 10.5,26.5
     parent: 106
@@ -85804,7 +85804,7 @@ entities:
   - fixtures: []
     type: Fixtures
 - uid: 7200
-  type: SalternAPC
+  type: APCBasic
   components:
   - rot: 1.5707963267948966 rad
     pos: 5.5,-15.5
@@ -86325,7 +86325,7 @@ entities:
   - fixtures: []
     type: Fixtures
 - uid: 7246
-  type: SalternAPC
+  type: APCBasic
   components:
   - pos: -6.5,-29.5
     parent: 106
@@ -86669,7 +86669,7 @@ entities:
   - fixtures: []
     type: Fixtures
 - uid: 7277
-  type: SalternAPC
+  type: APCBasic
   components:
   - pos: 11.5,-33.5
     parent: 106
@@ -103211,7 +103211,7 @@ entities:
   - fixtures: []
     type: Fixtures
 - uid: 8795
-  type: SalternAPC
+  type: APCBasic
   components:
   - pos: 4.5,4.5
     parent: 106
@@ -103735,7 +103735,7 @@ entities:
     parent: 106
     type: Transform
 - uid: 8844
-  type: SalternAPC
+  type: APCBasic
   components:
   - pos: 39.5,3.5
     parent: 106
@@ -112282,7 +112282,7 @@ entities:
       AMEController-fuelJarContainer: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 9644
-  type: SalternAPC
+  type: APCBasic
   components:
   - rot: 1.5707963267948966 rad
     pos: -64.5,-2.5
