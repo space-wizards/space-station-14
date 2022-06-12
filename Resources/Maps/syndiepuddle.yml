@@ -622,7 +622,7 @@ entities:
       Toggle: []
     type: SignalReceiver
 - uid: 53
-  type: APCBasic
+  type: BaseAPC
   components:
   - pos: -0.5,-3.5
     parent: 22

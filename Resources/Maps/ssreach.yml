@@ -6264,7 +6264,7 @@ entities:
     parent: 4
     type: Transform
 - uid: 456
-  type: APCBasic
+  type: BaseAPC
   components:
   - pos: -4.5,2.5
     parent: 4
@@ -6277,7 +6277,7 @@ entities:
     supplyRampPosition: 3464.4934
     type: PowerNetworkBattery
 - uid: 457
-  type: APCBasic
+  type: BaseAPC
   components:
   - pos: 4.5,-3.5
     parent: 4
@@ -6290,7 +6290,7 @@ entities:
     supplyRampPosition: 3464.4934
     type: PowerNetworkBattery
 - uid: 458
-  type: APCBasic
+  type: BaseAPC
   components:
   - pos: 13.5,-2.5
     parent: 4
@@ -6303,7 +6303,7 @@ entities:
     supplyRampPosition: 3464.4934
     type: PowerNetworkBattery
 - uid: 459
-  type: APCBasic
+  type: BaseAPC
   components:
   - pos: 25.5,-2.5
     parent: 4
@@ -6316,7 +6316,7 @@ entities:
     supplyRampPosition: 3464.4934
     type: PowerNetworkBattery
 - uid: 460
-  type: APCBasic
+  type: BaseAPC
   components:
   - pos: 27.5,2.5
     parent: 4
@@ -12077,7 +12077,7 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 1135
-  type: APCBasic
+  type: BaseAPC
   components:
   - pos: 4.5,-8.5
     parent: 4
@@ -13466,7 +13466,7 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 1293
-  type: APCBasic
+  type: BaseAPC
   components:
   - pos: 13.5,15.5
     parent: 4
@@ -14338,7 +14338,7 @@ entities:
     parent: 4
     type: Transform
 - uid: 1391
-  type: APCBasic
+  type: BaseAPC
   components:
   - pos: 14.5,-17.5
     parent: 4
@@ -20183,7 +20183,7 @@ entities:
     parent: 4
     type: Transform
 - uid: 1964
-  type: APCBasic
+  type: BaseAPC
   components:
   - pos: 4.5,11.5
     parent: 4
@@ -20975,7 +20975,7 @@ entities:
   - enabled: False
     type: AmbientSound
 - uid: 2061
-  type: APCBasic
+  type: BaseAPC
   components:
   - pos: 11.5,9.5
     parent: 4
@@ -21439,7 +21439,7 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 2114
-  type: APCBasic
+  type: BaseAPC
   components:
   - pos: -8.5,-2.5
     parent: 4
