@@ -1,4 +1,4 @@
-using Content.Shared.Administration;
+﻿using Content.Shared.Administration;
 using Content.Shared.Maps;
 using Robust.Shared.Console;
 using Robust.Shared.Map;
@@ -32,7 +32,7 @@ public sealed class VariantizeCommand : IConsoleCommand
             return;
         }
 
-        if (!entMan.TryGetComponent(euid, out IMapGridComponent gridComp))
+        if (!entMan.TryGetComponent(euid, out IMapGridComponent? gridComp))
         {
             shell.WriteError($"Euid '{euid}' does not exist or is not a grid.");
             return;
