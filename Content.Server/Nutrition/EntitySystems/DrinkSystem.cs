@@ -96,11 +96,8 @@ namespace Content.Server.Nutrition.EntitySystems
                         case int perc when perc > 33:
                             remainingString = HalfEmptyOrHalfFull(args);
                             break;
-                        case int perc when perc > 0:
-                            remainingString = "drink-component-on-examine-is-mostly-empty";
-                            break;
                         default:
-                            remainingString = "drink-component-on-examine-is-empty";
+                            remainingString = "drink-component-on-examine-is-mostly-empty";
                             break;
                     }
                     args.Message.AddMarkup($" - {Loc.GetString(remainingString)}");
