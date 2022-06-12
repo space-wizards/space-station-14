@@ -294,7 +294,7 @@ namespace Content.Client.AI
         private void DrawCachedRegions(DrawingHandleScreen screenHandle, Box2 viewport)
         {
             var transform = _entities.GetComponentOrNull<TransformComponent>(_playerManager.LocalPlayer?.ControlledEntity);
-            if (transform == null || !CachedRegions.TryGetValue(transform.GridEntityId, out var entityRegions))
+            if (transform == null || transform.GridUid == null || !CachedRegions.TryGetValue(transform.GridUid.Value, out var entityRegions))
             {
                 return;
             }
@@ -312,7 +312,7 @@ namespace Content.Client.AI
                         screenTile.X + 15.0f,
                         screenTile.Y + 15.0f);
 
-                    screenHandle.DrawRect(box, _cachedRegionColors[transform.GridEntityId][region]);
+                    screenHandle.DrawRect(box, _cachedRegionColors[transform.GridUid.Value][region]);
                 }
             }
         }
@@ -344,7 +344,8 @@ namespace Content.Client.AI
         {
             var attachedEntity = _playerManager.LocalPlayer?.ControlledEntity;
             if (!_entities.TryGetComponent(attachedEntity, out TransformComponent? transform) ||
-                !Regions.TryGetValue(transform.GridEntityId, out var entityRegions))
+                transform.GridUid == null ||
+                !Regions.TryGetValue(transform.GridUid.Value, out var entityRegions))
             {
                 return;
             }
@@ -364,7 +365,7 @@ namespace Content.Client.AI
                             screenTile.X + 15.0f,
                             screenTile.Y + 15.0f);
 
-                        screenHandle.DrawRect(box, _regionColors[_entities.GetComponent<TransformComponent>(attachedEntity.Value).GridEntityId][chunk][region]);
+                        screenHandle.DrawRect(box, _regionColors[transform.GridUid.Value][chunk][region]);
                     }
                 }
             }

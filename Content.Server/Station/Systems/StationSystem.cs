@@ -317,13 +317,13 @@ public sealed class StationSystem : EntitySystem
             return CompOrNull<StationMemberComponent>(entity)?.Station;
         }
 
-        if (xform.GridEntityId == EntityUid.Invalid)
+        if (xform.GridUid == EntityUid.Invalid)
         {
             Logger.Debug("A");
             return null;
         }
 
-        return CompOrNull<StationMemberComponent>(xform.GridEntityId)?.Station;
+        return CompOrNull<StationMemberComponent>(xform.GridUid)?.Station;
     }
 }
 
