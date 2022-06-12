@@ -1,4 +1,5 @@
 using JetBrains.Annotations;
+using Robust.Shared.Utility;
 
 namespace Content.Shared.Disease
 {
@@ -25,7 +26,7 @@ namespace Content.Shared.Disease
             get => _minSeverity;
             set
             {
-                if (value > 1f) throw new ArgumentOutOfRangeException();
+                DebugTools.Assert(value > 1f ,"MinSeverity have been attempted to be set above 1f");
                 _minSeverity = Math.Clamp(value, 0.0f, 1.0f);
             }
         }
@@ -41,7 +42,7 @@ namespace Content.Shared.Disease
             get => _maxSeverity;
             set
             {
-                if (value > 1f) throw new ArgumentOutOfRangeException();
+                DebugTools.Assert(value > 1f ,"MaxSeverity have been attempted to be set above 1f");
                 _maxSeverity = Math.Clamp(value, 0.0f, 1.0f);
             }
         }

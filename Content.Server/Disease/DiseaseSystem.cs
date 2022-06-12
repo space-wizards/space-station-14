@@ -109,9 +109,9 @@ namespace Content.Server.Disease
                         }
                         foreach (var effect in disease.Effects)
                         {
-                            if (_random.Prob(effect.Probability)
+                            if (disease.DiseaseSeverity <= effect.MaxSeverity
                                 && disease.DiseaseSeverity >= effect.MinSeverity
-                                && disease.DiseaseSeverity <= effect.MaxSeverity)
+                                && _random.Prob(effect.Probability))
                                 effect.Effect(args);
                         }
                     }
