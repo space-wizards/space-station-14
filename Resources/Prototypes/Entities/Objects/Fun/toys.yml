@@ -465,18 +465,18 @@
     size: 24
     sprite: Objects/Fun/toys.rsi
     HeldPrefix: foamcrossbow
-  - type: RangedWeapon
-  - type: RevolverBarrel
-    caliber: Rocket
-    currentSelector: Single
-    allSelectors:
-    - Single
+  - type: Gun
     fireRate: 0.5
-    capacity: 1
-    soundEmpty:
-      path: /Audio/Weapons/Guns/Empty/empty.ogg
+    selectedMode: SemiAuto
+    availableModes:
+      - SemiAuto
     soundGunshot:
       path: /Audio/Weapons/click.ogg
+  - type: BallisticAmmoProvider
+    whitelist:
+      tags:
+        - CartridgeRocket
+    capacity: 1
     soundInsert:
       path: /Audio/Weapons/drawbow2.ogg
 
@@ -500,30 +500,25 @@
     sprite: Objects/Fun/toys.rsi
     layers:
     - state: base
-      map: ["enum.RangedBarrelVisualLayers.Base"]
-    - state: bolt-closed
-      map: ["enum.RangedBarrelVisualLayers.Bolt"]
+      map: ["enum.GunVisualLayers.Base"]
   - type: Item
     size: 24
     sprite: Objects/Fun/toys.rsi
     state: base
-  - type: RangedWeapon
-  - type: BoltActionBarrel
-    currentSelector: Single
-    allSelectors:
-    - Single
-    caliber: Cap
-    capacity: 6
-    autoCycle: true
+  - type: Gun
+    selectedMode: SemiAuto
+    availableModes:
+      - SemiAuto
     soundGunshot:
       path: /Audio/Weapons/Guns/Gunshots/revolver.ogg
-    soundEmpty:
-      path: /Audio/Weapons/Guns/Empty/empty.ogg
+  - type: BallisticAmmoProvider
+    whitelist:
+      tags:
+        - CartridgeCap
+    capacity: 6
+    autoCycle: true
     soundInsert:
       path: /Audio/Weapons/Guns/MagIn/revolver_magin.ogg
-  - type: Appearance
-    visuals:
-    - type: BarrelBoltVisualizer
 
 - type: entity
   parent: BaseItem

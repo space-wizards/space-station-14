@@ -10,7 +10,8 @@
     - Hunger
     - Thirst
     - Idle
-    startingGear: PassengerGear
+  - type: Loadout
+    prototype: PassengerGear
   - type: AiFactionTag
     factions:
     - NanoTrasen

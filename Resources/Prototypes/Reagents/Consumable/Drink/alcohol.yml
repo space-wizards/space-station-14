@@ -912,6 +912,14 @@
   physicalDesc: reagent-physical-desc-strong-smelling
   color: "#004666"
   spritePath: silencerglass.rsi
+  metabolisms:
+    Drink:
+      effects:
+      - !type:GenericStatusEffect
+        key: Muted
+        component: Muted
+      - !type:SatiateThirst
+        factor: 2
 
 - type: reagent
   id: Singulo

@@ -6,7 +6,9 @@ using Content.Shared.Buckle.Components;
 using Content.Shared.Body.Components;
 using Content.Shared.Bed;
 using Content.Server.Power.Components;
+using Content.Server.Power.EntitySystems;
 using Content.Shared.Emag.Systems;
+using Content.Shared.MobState.Components;
 
 namespace Content.Server.Bed
 {
@@ -39,21 +41,24 @@ namespace Content.Server.Bed
         {
             base.Update(frameTime);
 
-            foreach (var healingComp in EntityQuery<HealOnBuckleHealingComponent>(true))
+            foreach (var (_, bedComponent, strapComponent) in EntityQuery<HealOnBuckleHealingComponent, HealOnBuckleComponent, StrapComponent>())
             {
-                var bed = healingComp.Owner;
-                var bedComponent = EntityManager.GetComponent<HealOnBuckleComponent>(bed);
-                var strapComponent = EntityManager.GetComponent<StrapComponent>(bed);
-
                 bedComponent.Accumulator += frameTime;
 
                 if (bedComponent.Accumulator < bedComponent.HealTime)
-                {
                     continue;
-                }
+
                 bedComponent.Accumulator -= bedComponent.HealTime;
-                foreach (EntityUid healedEntity in strapComponent.BuckledEntities)
+
+                if (strapComponent.BuckledEntities.Count == 0) continue;
+
+                var mobStateQuery = GetEntityQuery<MobStateComponent>();
+
+                foreach (var healedEntity in strapComponent.BuckledEntities)
                 {
+                    if (mobStateQuery.TryGetComponent(healedEntity, out var state) && state.IsDead())
+                        continue;
+
                     _damageableSystem.TryChangeDamage(healedEntity, bedComponent.Damage, true);
                 }
             }
@@ -74,7 +79,7 @@ namespace Content.Server.Bed
             if (!TryComp<SharedBodyComponent>(args.BuckledEntity, out var body))
                 return;
 
-            if (TryComp<ApcPowerReceiverComponent>(uid, out var power) && !power.Powered)
+            if (!this.IsPowered(uid, EntityManager))
                 return;
 
             var metabolicEvent = new ApplyMetabolicMultiplierEvent()
@@ -90,8 +95,8 @@ namespace Content.Server.Bed
 
         private void OnEmagged(EntityUid uid, StasisBedComponent component, GotEmaggedEvent args)
         {
-            ///Repeatable
-            ///Reset any metabolisms first so they receive the multiplier correctly
+            // Repeatable
+            // Reset any metabolisms first so they receive the multiplier correctly
             UpdateMetabolisms(uid, component, false);
             component.Multiplier = 1 / component.Multiplier;
             UpdateMetabolisms(uid, component, true);

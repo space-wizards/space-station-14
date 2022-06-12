@@ -13,15 +13,16 @@ namespace Content.Server.Nuke
     ///     To activate it, user needs to insert an authorization disk and enter a secret code.
     /// </summary>
     [RegisterComponent]
-    [Friend(typeof(NukeSystem))]
+    [Access(typeof(NukeSystem))]
     public sealed class NukeComponent : SharedNukeComponent
     {
         /// <summary>
         ///     Default bomb timer value in seconds.
+        ///     Must be shorter then the nuke alarm song.
         /// </summary>
         [DataField("timer")]
         [ViewVariables(VVAccess.ReadWrite)]
-        public int Timer = 180;
+        public int Timer = 120;
 
         /// <summary>
         ///     How long until the bomb can arm again after deactivation.

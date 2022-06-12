@@ -17,7 +17,7 @@ public sealed class PowerCellSystem : SharedPowerCellSystem
 {
     [Dependency] private readonly SolutionContainerSystem _solutionsSystem = default!;
     [Dependency] private readonly ExplosionSystem _explosionSystem = default!;
-    [Dependency] private readonly AdminLogSystem _logSystem = default!;
+    [Dependency] private readonly IAdminLogManager _adminLogger= default!;
     [Dependency] private readonly SharedContainerSystem _containerSystem = default!;
 
     public override void Initialize()
@@ -82,7 +82,7 @@ public sealed class PowerCellSystem : SharedPowerCellSystem
 
     private void Explode(EntityUid uid, BatteryComponent? battery = null)
     {
-        _logSystem.Add(LogType.Explosion, LogImpact.High, $"Sabotaged power cell {ToPrettyString(uid)} is exploding");
+        _adminLogger.Add(LogType.Explosion, LogImpact.High, $"Sabotaged power cell {ToPrettyString(uid)} is exploding");
 
         if (!Resolve(uid, ref battery))
             return;
@@ -112,7 +112,7 @@ public sealed class PowerCellSystem : SharedPowerCellSystem
 
         if (component.IsRigged)
         {
-            _logSystem.Add(LogType.Explosion, LogImpact.Medium, $"Power cell {ToPrettyString(uid)} has been rigged up to explode when used.");
+            _adminLogger.Add(LogType.Explosion, LogImpact.Medium, $"Power cell {ToPrettyString(uid)} has been rigged up to explode when used.");
         }
     }
 

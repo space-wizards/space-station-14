@@ -660,7 +660,8 @@ namespace Content.Server.AI.Steering
                     // So if 2 entities are moving towards each other and both detect a collision they'll both move in the same direction
                     // i.e. towards the right
                     if (EntityManager.TryGetComponent(physicsEntity, out IPhysBody? otherPhysics) &&
-                        Vector2.Dot(otherPhysics.LinearVelocity, direction) > 0)
+                        (!otherPhysics.Hard ||
+                        Vector2.Dot(otherPhysics.LinearVelocity, direction) > 0))
                     {
                         continue;
                     }
