@@ -10,10 +10,12 @@
     usesApcPower: true
   - type: ExtensionCableReceiver
   - type: DeviceNetwork
-    deviceNetId: Apc
+    deviceNetId: AtmosDevices
     receiveFrequencyId: AtmosMonitor
     transmitFrequencyId: AtmosMonitor
-  - type: ApcNetworkConnection
+    sendBroadcastAttemptEvent: true
+  - type: WiredNetworkConnection
+  - type: DeviceList
   - type: AtmosMonitor
     temperatureThreshold: stationTemperature
     pressureThreshold: stationPressure
