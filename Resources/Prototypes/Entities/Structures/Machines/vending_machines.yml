@@ -7,6 +7,7 @@
   components:
   - type: AmbientOnPowered
   - type: AmbientSound
+    enabled: false
     volume: -9
     range: 3
     sound:
@@ -1334,7 +1335,7 @@
     - type: WiresVisualizer
   - type: AccessReader
     access: [["Medical"]]
-    
+
 # Gas Tank Dispenser
 
 - type: entity
@@ -1349,7 +1350,7 @@
   - type: Sprite
     sprite: Structures/Machines/VendingMachines/tankdispenser.rsi #TODO add visualiser for remaining tanks as layers
     state: dispenser
-    
+
 - type: entity
   parent: VendingMachine
   id: VendingMachineTankDispenserEngineering

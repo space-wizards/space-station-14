@@ -9,6 +9,8 @@ public abstract class SharedPowerCellSystem : EntitySystem
 {
     [Dependency] private readonly ItemSlotsSystem _itemSlotsSystem = default!;
 
+    public const string CellSlotContainer = "cell_slot";
+
     public override void Initialize()
     {
         base.Initialize();
@@ -58,7 +60,7 @@ public abstract class SharedPowerCellSystem : EntitySystem
 
     private void OnCellSlotInit(EntityUid uid, PowerCellSlotComponent component, ComponentInit args)
     {
-        _itemSlotsSystem.AddItemSlot(uid, "cellslot_cell_container", component.CellSlot);
+        _itemSlotsSystem.AddItemSlot(uid, CellSlotContainer, component.CellSlot);
 
         if (string.IsNullOrWhiteSpace(component.CellSlot.Name) &&
             !string.IsNullOrWhiteSpace(component.SlotName))

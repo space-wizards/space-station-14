@@ -19,7 +19,7 @@ namespace Content.Server.MachineLinking.Components
     }
 
     [RegisterComponent]
-    [Friend(typeof(SignalLinkerSystem))]
+    [Access(typeof(SignalLinkerSystem))]
     public sealed class SignalTransmitterComponent : Component
     {
         /// <summary>
@@ -32,6 +32,7 @@ namespace Content.Server.MachineLinking.Components
         public float TransmissionRange = 30f;
 
         [DataField("outputs")]
+        [Access(typeof(SignalLinkerSystem), Other = AccessPermissions.ReadExecute)] // FIXME Friends
         public Dictionary<string, List<PortIdentifier>> Outputs = new();
     }
 }

@@ -49,15 +49,15 @@
   - type: Appearance
 
 - type: entity
-  name: clarissa
+  name: viper
   parent: BaseWeaponPistol
-  id: WeaponPistolClarissa
+  id: WeaponPistolViper
   description: A small, easily concealable, but somewhat underpowered gun.
   components:
   - type: Sprite
-    sprite: Objects/Weapons/Guns/Pistols/clarissa.rsi
+    sprite: Objects/Weapons/Guns/Pistols/viper.rsi
   - type: Item
-    sprite: Objects/Weapons/Guns/Pistols/clarissa.rsi
+    sprite: Objects/Weapons/Guns/Pistols/viper.rsi
   - type: ItemSlots
     slots:
       gun_magazine:
@@ -99,20 +99,20 @@
       - SemiAuto
 
 - type: entity
-  name: mandella
+  name: cobra
   parent: BaseWeaponPistol
-  id: WeaponPistolMandella
+  id: WeaponPistolCobra
   description: A rugged, robust operator handgun with inbuilt silencer.
   components:
   - type: Sprite
-    sprite: Objects/Weapons/Guns/Pistols/mandella.rsi
+    sprite: Objects/Weapons/Guns/Pistols/cobra.rsi
     layers:
     - state: base
       map: ["enum.GunVisualLayers.Base"]
     - state: mag-0
       map: ["enum.GunVisualLayers.Mag"]
   - type: Item
-    sprite: Objects/Weapons/Guns/Pistols/mandella.rsi
+    sprite: Objects/Weapons/Guns/Pistols/cobra.rsi
   - type: Gun
     soundGunshot:
       path: /Audio/Weapons/Guns/Gunshots/silenced.ogg
@@ -148,6 +148,8 @@
     layers:
     - state: base
       map: ["enum.GunVisualLayers.Base"]
+    - state: mag-0
+      map: ["enum.GunVisualLayers.Mag"]
   - type: Item
     sprite: Objects/Weapons/Guns/Pistols/mk58.rsi
   - type: Gun

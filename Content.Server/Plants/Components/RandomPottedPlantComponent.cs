@@ -3,7 +3,7 @@ using Content.Server.Plants.Systems;
 namespace Content.Server.Plants.Components
 {
     [RegisterComponent]
-    [Friend(typeof(RandomPottedPlantSystem))]
+    [Access(typeof(RandomPottedPlantSystem))]
     public sealed class RandomPottedPlantComponent : Component
     {
         [ViewVariables(VVAccess.ReadOnly)]
