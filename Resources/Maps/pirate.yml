@@ -2841,19 +2841,19 @@ entities:
     parent: 25
     type: Transform
 - uid: 261
-  type: BaseAPC
+  type: APCBasic
   components:
   - pos: -0.5,5.5
     parent: 25
     type: Transform
 - uid: 262
-  type: BaseAPC
+  type: APCBasic
   components:
   - pos: -9.5,0.5
     parent: 25
     type: Transform
 - uid: 263
-  type: BaseAPC
+  type: APCBasic
   components:
   - pos: 4.5,8.5
     parent: 25
@@ -3286,7 +3286,7 @@ entities:
     parent: 25
     type: Transform
 - uid: 331
-  type: BaseAPC
+  type: APCBasic
   components:
   - pos: 0.5,-0.5
     parent: 25

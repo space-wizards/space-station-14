@@ -1083,7 +1083,7 @@ entities:
     parent: 8
     type: Transform
 - uid: 35
-  type: BaseAPC
+  type: APCBasic
   components:
   - pos: 0.5,-4.5
     parent: 8
