@@ -1,11 +1,4 @@
 Entries:
-- author: ElectroJr
-  changes:
-  - {message: 'The client now tries to predict more interactions. This may lead to
-      some bugs, particularly double audio, pop-ups, and animations. Please report
-      any that come up.', type: Tweak}
-  id: 1183
-  time: '2022-03-09T07:12:17.0000000+00:00'
 - author: Veritius
   changes:
   - {message: clarify round stalling as against the rules, type: Add}
@@ -3002,3 +2995,9 @@ Entries:
   - {message: Waystation now has cameras., type: Add}
   id: 1682
   time: '2022-06-12T01:28:19.0000000+00:00'
+- author: ninruB
+  changes:
+  - {message: 'Added ore bags, a funky new bag for salvage specialists that can be
+      found in their lockers!', type: Add}
+  id: 1683
+  time: '2022-06-12T01:57:02.0000000+00:00'
