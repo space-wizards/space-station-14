@@ -40,13 +40,7 @@ namespace Content.Server.Forensics
 
         private void OnAfterInteract(EntityUid uid, ForensicPadComponent component, AfterInteractEvent args)
         {
-            if (component.CancelToken != null)
-            {
-                component.CancelToken.Cancel();
-                component.CancelToken = null;
-            }
-
-            if (!args.CanReach || args.Target == null)
+            if (component.CancelToken != null || !args.CanReach || args.Target == null)
                 return;
 
             if (HasComp<ForensicScannerComponent>(args.Target))

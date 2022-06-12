@@ -28,13 +28,13 @@ namespace Content.Client.Forensics
 
         protected override void ReceiveMessage(BoundUserInterfaceMessage message)
         {
-          if (_window == null)
-            return;
+            if (_window == null)
+                return;
 
-          if (message is not ForensicScannerUserMessage cast)
-            return;
+            if (message is not ForensicScannerUserMessage cast)
+                return;
 
-          _window.Populate(cast);
+            _window.Populate(cast);
         }
     }
 }

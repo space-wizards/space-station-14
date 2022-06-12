@@ -53,13 +53,7 @@ namespace Content.Server.Forensics
 
         private void OnAfterInteract(EntityUid uid, ForensicScannerComponent component, AfterInteractEvent args)
         {
-            if (component.CancelToken != null)
-            {
-                component.CancelToken.Cancel();
-                component.CancelToken = null;
-            }
-
-            if (args.Target == null || !args.CanReach)
+            if (component.CancelToken != null || args.Target == null || !args.CanReach)
                 return;
 
             component.CancelToken = new CancellationTokenSource();
