@@ -48,7 +48,7 @@ namespace Content.Server.Zombies
                     && !HasComp<ZombieComponent>(entity))
                 {
                     _zombify.ZombifyEntity(entity);
-                    args.BonusDamage = args.BaseDamage*-1;
+                    args.BonusDamage = -args.BaseDamage;
                 }
                 else if (mobState.IsAlive()) //heals when zombies bite live entities
                 {
