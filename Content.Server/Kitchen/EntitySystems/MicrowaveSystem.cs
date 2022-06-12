@@ -113,12 +113,9 @@ namespace Content.Server.Kitchen.EntitySystems
             }
 
             if (TryComp(args.Used, out ToolComponent? toolComp) && toolComp.Qualities.Contains(component.AnchoringQuality))
-            {
                 return;
-            }
 
             component.Storage.Insert(args.Used);
-
             component.DirtyUi();
         }
 
