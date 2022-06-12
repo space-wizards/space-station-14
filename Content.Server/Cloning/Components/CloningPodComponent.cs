@@ -150,7 +150,7 @@ namespace Content.Server.Cloning.Components
                     // TODO: Ideally client knows about this and plays it on its own
                     // Send them a sound to know it happened
                     if (CloneStartSound != null)
-                        SoundSystem.Play(CloneStartSound.GetSound(), Filter.SinglePlayer(client));
+                        SoundSystem.Play(Filter.SinglePlayer(client), CloneStartSound.GetSound());
 
                     var cloneMindReturn = _entities.AddComponent<BeingClonedComponent>(mob);
                     cloneMindReturn.Mind = mind;

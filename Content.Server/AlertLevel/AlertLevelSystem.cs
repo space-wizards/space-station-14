@@ -172,7 +172,7 @@ public sealed class AlertLevelSystem : EntitySystem
         {
             if (detail.Sound != null)
             {
-                SoundSystem.Play(detail.Sound.GetSound(), Filter.Broadcast());
+                SoundSystem.Play(Filter.Broadcast(), detail.Sound.GetSound());
             }
             else
             {

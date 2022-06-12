@@ -45,7 +45,7 @@ namespace Content.Client.Administration
             var localPlayer = _playerManager.LocalPlayer;
             if (localPlayer?.UserId != message.TrueSender)
             {
-                SoundSystem.Play("/Audio/Effects/adminhelp.ogg", Filter.Local());
+                SoundSystem.Play(Filter.Local(), "/Audio/Effects/adminhelp.ogg");
                 _clyde.RequestWindowAttention();
             }
 

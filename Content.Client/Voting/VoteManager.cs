@@ -117,7 +117,7 @@ namespace Content.Client.Voting
                 }
 
                 @new = true;
-                SoundSystem.Play("/Audio/Effects/voteding.ogg", Filter.Local());
+                SoundSystem.Play(Filter.Local(), "/Audio/Effects/voteding.ogg");
 
                 // New vote from the server.
                 var vote = new ActiveVote(voteId)

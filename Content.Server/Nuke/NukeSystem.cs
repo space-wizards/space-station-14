@@ -216,7 +216,7 @@ namespace Content.Server.Nuke
             // play alert sound if time is running out
             if (nuke.RemainingTime <= nuke.AlertSoundTime && !nuke.PlayedAlertSound)
             {
-                nuke.AlertAudioStream = SoundSystem.Play(nuke.AlertSound.GetSound(), Filter.Broadcast());
+                nuke.AlertAudioStream = SoundSystem.Play(Filter.Broadcast(), nuke.AlertSound.GetSound());
                 nuke.PlayedAlertSound = true;
             }
 
@@ -344,7 +344,7 @@ namespace Content.Server.Nuke
             _chatSystem.DispatchStationAnnouncement(uid, announcement, sender, false, Color.Red);
 
             // todo: move it to announcements system
-            SoundSystem.Play(component.ArmSound.GetSound(), Filter.Broadcast());
+            SoundSystem.Play(Filter.Broadcast(), component.ArmSound.GetSound());
 
             component.Status = NukeStatus.ARMED;
             UpdateUserInterface(uid, component);
@@ -373,7 +373,7 @@ namespace Content.Server.Nuke
             _chatSystem.DispatchStationAnnouncement(uid, announcement, sender, false);
 
             // todo: move it to announcements system
-            SoundSystem.Play(component.DisarmSound.GetSound(), Filter.Broadcast());
+            SoundSystem.Play(Filter.Broadcast(), component.DisarmSound.GetSound());
 
             // disable sound and reset it
             component.PlayedAlertSound = false;

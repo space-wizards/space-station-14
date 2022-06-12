@@ -480,7 +480,7 @@ namespace Content.Server.GameTicking
                     _chatSystem.DispatchGlobalStationAnnouncement(Loc.GetString(proto.Message), playDefaultSound: true);
 
                 if (proto.Sound != null)
-                    SoundSystem.Play(proto.Sound.GetSound(), Filter.Broadcast());
+                    SoundSystem.Play(Filter.Broadcast(), proto.Sound.GetSound());
 
                 // Only play one because A
                 break;

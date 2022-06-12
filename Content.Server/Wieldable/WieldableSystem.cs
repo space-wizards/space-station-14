@@ -177,7 +177,7 @@ namespace Content.Server.Wieldable
 
             if (component.WieldSound != null)
             {
-                SoundSystem.Play(component.WieldSound.GetSound(), Filter.Pvs(uid));
+                SoundSystem.Play(Filter.Pvs(uid), component.WieldSound.GetSound());
             }
 
             for (var i = 0; i < component.FreeHandsRequired; i++)
@@ -207,7 +207,7 @@ namespace Content.Server.Wieldable
             {
                 if (component.UnwieldSound != null)
                 {
-                    SoundSystem.Play(component.UnwieldSound.GetSound(), Filter.Pvs(uid));
+                    SoundSystem.Play(Filter.Pvs(uid), component.UnwieldSound.GetSound());
                 }
 
                 args.User.Value.PopupMessage(Loc.GetString("wieldable-component-failed-wield",
