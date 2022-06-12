@@ -30,7 +30,7 @@ public sealed class CrayonSystem : SharedCrayonSystem
         SubscribeLocalEvent<CrayonComponent, ComponentInit>(OnCrayonInit);
         SubscribeLocalEvent<CrayonComponent, CrayonSelectMessage>(OnCrayonBoundUI);
         SubscribeLocalEvent<CrayonComponent, CrayonColorMessage>(OnCrayonBoundUIColor);
-        SubscribeLocalEvent<CrayonComponent, UseInHandEvent>(OnCrayonUse);
+        SubscribeLocalEvent<CrayonComponent, UseInHandEvent>(OnCrayonUse, before: new []{ typeof(FoodSystem) });
         SubscribeLocalEvent<CrayonComponent, AfterInteractEvent>(OnCrayonAfterInteract, after: new []{ typeof(FoodSystem) });
         SubscribeLocalEvent<CrayonComponent, DroppedEvent>(OnCrayonDropped);
         SubscribeLocalEvent<CrayonComponent, ComponentGetState>(OnCrayonGetState);
