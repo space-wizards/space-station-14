@@ -132,7 +132,7 @@ public sealed class SpillableSystem : EntitySystem
         if (solution.TotalVolume == 0) return null;
 
 
-        if (!_mapManager.TryGetGrid(coordinates.GetGridId(EntityManager), out var mapGrid))
+        if (!_mapManager.TryGetGrid(coordinates.GetGridEntityId(EntityManager), out var mapGrid))
             return null; // Let's not spill to space.
 
         return SpillAt(mapGrid.GetTileRef(coordinates), solution, prototype, overflow, sound,
@@ -162,7 +162,7 @@ public sealed class SpillableSystem : EntitySystem
         // If space return early, let that spill go out into the void
         if (tileRef.Tile.IsEmpty) return null;
 
-        var gridId = tileRef.GridIndex;
+        var gridId = tileRef.GridUid;
         if (!_mapManager.TryGetGrid(gridId, out var mapGrid)) return null; // Let's not spill to invalid grids.
 
         if (!noTileReact)

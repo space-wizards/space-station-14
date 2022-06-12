@@ -15,7 +15,7 @@ namespace Content.Client.Atmos.EntitySystems
     internal sealed class AtmosDebugOverlaySystem : SharedAtmosDebugOverlaySystem
     {
 
-        private readonly Dictionary<GridId, AtmosDebugOverlayMessage> _tileData =
+        private readonly Dictionary<EntityUid, AtmosDebugOverlayMessage> _tileData =
             new();
 
         // Configuration set by debug commands and used by AtmosDebugOverlay {
@@ -77,12 +77,12 @@ namespace Content.Client.Atmos.EntitySystems
             _tileData.Clear();
         }
 
-        public bool HasData(GridId gridId)
+        public bool HasData(EntityUid gridId)
         {
             return _tileData.ContainsKey(gridId);
         }
 
-        public AtmosDebugOverlayData? GetData(GridId gridIndex, Vector2i indices)
+        public AtmosDebugOverlayData? GetData(EntityUid gridIndex, Vector2i indices)
         {
             if (!_tileData.TryGetValue(gridIndex, out var srcMsg))
                 return null;

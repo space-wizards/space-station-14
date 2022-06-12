@@ -33,14 +33,14 @@
       path: /Audio/Weapons/Guns/MagIn/shotgun_insert.ogg
 
 - type: entity
-  name: Bojevic
+  name: Bulldog
   # Don't parent to BaseWeaponShotgun because it differs significantly
   parent: BaseItem
-  id: WeaponShotgunBojevic
+  id: WeaponShotgunBulldog
   description: It's a magazine-fed shotgun designed for close quarters combat.
   components:
   - type: Sprite
-    sprite: Objects/Weapons/Guns/Shotguns/bojevic.rsi
+    sprite: Objects/Weapons/Guns/Shotguns/bulldog.rsi
     netsync: false
     layers:
     - state: base
@@ -48,7 +48,7 @@
     - state: mag-0
       map: ["enum.GunVisualLayers.Mag"]
   - type: Item
-    sprite: Objects/Weapons/Guns/Shotguns/bojevic.rsi
+    sprite: Objects/Weapons/Guns/Shotguns/bulldog.rsi
     size: 24
   - type: Gun
     fireRate: 2
@@ -97,15 +97,15 @@
     capacity: 2
 
 - type: entity
-  name: Gladstone
+  name: Enforcer
   parent: BaseWeaponShotgun
-  id: WeaponShotgunGladstone
+  id: WeaponShotgunEnforcer
   description: A next-generation Frozen Star shotgun.
   components:
   - type: Sprite
-    sprite: Objects/Weapons/Guns/Shotguns/gladstone.rsi
+    sprite: Objects/Weapons/Guns/Shotguns/enforcer.rsi
   - type: Item
-    sprite: Objects/Weapons/Guns/Shotguns/gladstone.rsi
+    sprite: Objects/Weapons/Guns/Shotguns/enforcer.rsi
   - type: BallisticAmmoProvider
 
 - type: entity

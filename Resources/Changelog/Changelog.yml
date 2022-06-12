@@ -1,51 +1,4 @@
 Entries:
-- author: Fishfish458
-  changes:
-  - {message: Health Analyzers have now been added to various medical containers and
-      the autolathe, type: Add}
-  id: 1178
-  time: '2022-03-08T03:45:52.0000000+00:00'
-- author: Rane
-  changes:
-  - {message: Musicians will now receive a special box on a certain holiday., type: Add}
-  id: 1179
-  time: '2022-03-08T06:34:10.0000000+00:00'
-- author: DubiousDoggo
-  changes:
-  - {message: Fixed popup positioning on large UI scales, type: Fix}
-  id: 1180
-  time: '2022-03-08T07:53:02.0000000+00:00'
-- author: Rane
-  changes:
-  - {message: 'Added Uniform Printers. You can currently get them from the circuit
-      imprinter, later they will be part of the HOP office.', type: Add}
-  - {message: Lathes now actually play their building animations., type: Fix}
-  id: 1181
-  time: '2022-03-08T23:58:50.0000000+00:00'
-- author: ElectroJr
-  changes:
-  - {message: You can no longer accidentally punch sub-floor entities when using a
-      T-Ray scanner, type: Fix}
-  id: 1182
-  time: '2022-03-09T06:40:07.0000000+00:00'
-- author: ElectroJr
-  changes:
-  - {message: 'The client now tries to predict more interactions. This may lead to
-      some bugs, particularly double audio, pop-ups, and animations. Please report
-      any that come up.', type: Tweak}
-  id: 1183
-  time: '2022-03-09T07:12:17.0000000+00:00'
-- author: Veritius
-  changes:
-  - {message: clarify round stalling as against the rules, type: Add}
-  id: 1184
-  time: '2022-03-09T13:45:53.0000000+00:00'
-- author: moony
-  changes:
-  - {message: Some tiles now have additional visual variants. These will start showing
-      up when maps are updated., type: Add}
-  id: 1185
-  time: '2022-03-09T19:59:44.0000000+00:00'
 - author: lapatison
   changes:
   - {message: It's now possible to carry an acoustic guitar on your back., type: Add}
@@ -3002,3 +2955,50 @@ Entries:
       station., type: Tweak}
   id: 1677
   time: '2022-06-11T14:25:38.0000000+00:00'
+- author: moony
+  changes:
+  - {message: 'Slowed down parallax significiantly. Space should feel much, much vaster
+      now.', type: Tweak}
+  id: 1678
+  time: '2022-06-11T20:59:31.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: You can no longer eat chocolate bars through their wrappers or spawn
+      infinite wrappers from certain snacks., type: Fix}
+  id: 1679
+  time: '2022-06-12T01:06:52.0000000+00:00'
+- author: themias
+  changes:
+  - {message: Stun batons now use internal battery instead of a power cell; can be
+      inserted into a recharger again, type: Tweak}
+  id: 1680
+  time: '2022-06-12T01:20:03.0000000+00:00'
+- author: Zumorica
+  changes:
+  - {message: Fixed round end sounds playing even if you have the "Lobby & Round-end
+      Music" option disabled in the game's settings., type: Fix}
+  id: 1681
+  time: '2022-06-12T01:23:29.0000000+00:00'
+- author: TimrodDX
+  changes:
+  - {message: Waystation now has cameras., type: Add}
+  id: 1682
+  time: '2022-06-12T01:28:19.0000000+00:00'
+- author: ninruB
+  changes:
+  - {message: 'Added ore bags, a funky new bag for salvage specialists that can be
+      found in their lockers!', type: Add}
+  id: 1683
+  time: '2022-06-12T01:57:02.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Items now correctly pass through plastic flaps. Cargo players rejoice!,
+    type: Fix}
+  id: 1684
+  time: '2022-06-12T02:40:15.0000000+00:00'
+- author: Peptide90
+  changes:
+  - {message: Asteroid walls now have reduced ore yield. Look out for designated mining
+      areas and salvage asteroids., type: Tweak}
+  id: 1685
+  time: '2022-06-12T02:58:35.0000000+00:00'

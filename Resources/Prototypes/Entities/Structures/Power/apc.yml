@@ -128,3 +128,4 @@
   - type: Battery
     maxCharge: 200000
     startingCharge: 200000
+    startingCharge: 200000
