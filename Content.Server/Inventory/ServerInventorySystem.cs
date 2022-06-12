@@ -44,7 +44,7 @@ namespace Content.Server.Inventory
             }
         }
 
-        public void SwapEntityInventories(EntityUid uid, EntityUid target)
+        public void TransferEntityInventories(EntityUid uid, EntityUid target)
         {
             if (TryGetContainerSlotEnumerator(uid, out var enumerator))
             {

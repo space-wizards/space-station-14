@@ -4,18 +4,16 @@ using Content.Server.Inventory;
 using Content.Server.Mind.Commands;
 using Content.Server.Mind.Components;
 using Content.Server.Polymorph.Components;
-using Content.Server.Popups;
 using Content.Shared.Actions;
 using Content.Shared.Actions.ActionTypes;
 using Content.Shared.CharacterAppearance.Components;
 using Content.Shared.CharacterAppearance.Systems;
 using Content.Shared.Damage;
 using Content.Shared.Hands.EntitySystems;
-using Content.Shared.Movement.Components;
 using Content.Shared.Polymorph;
+using Robust.Server.Containers;
 using Robust.Shared.Containers;
 using Robust.Shared.Map;
-using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
 
@@ -32,6 +30,7 @@ namespace Content.Server.Polymorph.Systems
         [Dependency] private readonly DamageableSystem _damageable = default!;
         [Dependency] private readonly IMapManager _mapManager = default!;
         [Dependency] private readonly SharedHumanoidAppearanceSystem _sharedHuApp = default!;
+        [Dependency] private readonly ContainerSystem _container = default!;
 
         public override void Initialize()
         {
@@ -104,6 +103,9 @@ namespace Content.Server.Polymorph.Systems
             var childXform = Transform(child);
             childXform.LocalRotation = targetXform.LocalRotation;
 
+            if (_container.TryGetContainingContainer(target, out var cont))
+                cont.Insert(child);
+
             //Transfers all damage from the original to the new one
             if (proto.TransferDamage &&
                 TryComp<DamageableComponent>(child, out var damageParent) &&
@@ -113,17 +115,16 @@ namespace Content.Server.Polymorph.Systems
                 _damageable.SetDamage(damageParent, damage);
             }
 
-            if (proto.TransferInventory)
+            if (proto.Inventory == PolymorphInventoryChange.Transfer)
             {
-                _inventory.SwapEntityInventories(target, child);
+                _inventory.TransferEntityInventories(target, child);
                 foreach (var hand in _sharedHands.EnumerateHeld(target))
                 {
                     hand.TryRemoveFromContainer();
-                    if (proto.TransferInventory)
-                        _sharedHands.TryPickupAnyHand(child, hand);
+                    _sharedHands.TryPickupAnyHand(child, hand);
                 }
             }
-            else if (proto.DropInventory)
+            else if (proto.Inventory == PolymorphInventoryChange.Drop)
             {
                 if(_inventory.TryGetContainerSlotEnumerator(target, out var enumerator))
                     while (enumerator.MoveNext(out var slot))

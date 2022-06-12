@@ -8,6 +8,8 @@ using Content.Shared.Actions.ActionTypes;
 using Content.Shared.Damage;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.MobState.Components;
+using Content.Shared.Polymorph;
+using Robust.Server.Containers;
 using Robust.Shared.Containers;
 using Robust.Shared.Player;
 
@@ -20,6 +22,7 @@ namespace Content.Server.Polymorph.Systems
         [Dependency] private readonly PopupSystem _popup = default!;
         [Dependency] private readonly ServerInventorySystem _inventory = default!;
         [Dependency] private readonly SharedHandsSystem _sharedHands = default!;
+        [Dependency] private readonly ContainerSystem _container = default!;
 
         public override void Initialize()
         {
@@ -55,6 +58,9 @@ namespace Content.Server.Polymorph.Systems
             parentXform.Coordinates = uidXform.Coordinates;
             parentXform.LocalRotation = uidXform.LocalRotation;
 
+            if (_container.TryGetContainingContainer(uid, out var cont))
+                cont.Insert(component.Parent);
+
             if (component.Prototype.TransferDamage &&
                 TryComp<DamageableComponent>(component.Parent, out var damageParent) &&
                 _damageable.GetScaledDamage(uid, component.Parent, out var damage) &&
@@ -63,17 +69,16 @@ namespace Content.Server.Polymorph.Systems
                 _damageable.SetDamage(damageParent, damage);
             }
 
-            if (proto.TransferInventory)
+            if (proto.Inventory == PolymorphInventoryChange.Transfer)
             {
-                _inventory.SwapEntityInventories(uid, component.Parent);
+                _inventory.TransferEntityInventories(uid, component.Parent);
                 foreach (var hand in _sharedHands.EnumerateHeld(component.Parent))
                 {
                     hand.TryRemoveFromContainer();
-                    if (proto.TransferInventory)
-                        _sharedHands.TryPickupAnyHand(component.Parent, hand);
+                    _sharedHands.TryPickupAnyHand(component.Parent, hand);
                 }
             }
-            else if (proto.DropInventory)
+            else if (proto.Inventory == PolymorphInventoryChange.Drop)
             {
                 if (_inventory.TryGetContainerSlotEnumerator(uid, out var enumerator))
                     while (enumerator.MoveNext(out var slot))

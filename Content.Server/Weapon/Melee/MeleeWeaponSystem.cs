@@ -353,6 +353,11 @@ namespace Content.Server.Weapon.Melee
     public sealed class MeleeHitEvent : HandledEntityEventArgs
     {
         /// <summary>
+        ///     The base amount of damage dealt by the melee hit.
+        /// </summary>
+        public readonly DamageSpecifier BaseDamage = new();
+
+        /// <summary>
         ///     Modifier sets to apply to the hit event when it's all said and done.
         ///     This should be modified by adding a new entry to the list.
         /// </summary>
@@ -365,11 +370,6 @@ namespace Content.Server.Weapon.Melee
         ///     This might be required as damage modifier sets cannot add a new damage type to a DamageSpecifier.
         /// </remarks>
         public DamageSpecifier BonusDamage = new();
-
-        /// <summary>
-        ///     The base amount of damage dealt by the melee hit.
-        /// </summary>
-        public DamageSpecifier BaseDamage = new();
 
         /// <summary>
         ///     A list containing every hit entity. Can be zero.

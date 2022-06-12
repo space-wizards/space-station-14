@@ -53,35 +53,28 @@ namespace Content.Shared.Polymorph
         public bool Forced = false;
 
         /// <summary>
-        /// Whether or not the entity transfers it's damage between forms.
+        /// Whether or not the entity transfers its damage between forms.
         /// </summary>
         [DataField("transferDamage", serverOnly: true)]
         public bool TransferDamage = true;
 
         /// <summary>
-        /// Whether or not the entity transfers it's name between forms.
+        /// Whether or not the entity transfers its name between forms.
         /// </summary>
         [DataField("transferName", serverOnly: true)]
         public bool TransferName = false;
 
         /// <summary>
-        /// Whether or not the entity transfers it's hair, skin color, hair color, etc.
+        /// Whether or not the entity transfers its hair, skin color, hair color, etc.
         /// </summary>
         [DataField("transferHumanoidAppearance", serverOnly: true)]
         public bool TransferHumanoidAppearance = false;
 
         /// <summary>
-        /// Whether or not the entity transfers it's inventory and equipment between forms.
+        /// Whether or not the entity transfers its inventory and equipment between forms.
         /// </summary>
-        [DataField("transferInventory", serverOnly: true)]
-        public bool TransferInventory = false;
-
-        /// <summary>
-        /// Whether or not the target will drop their inventory
-        /// when they are polymorphed (includes items in hands)
-        /// </summary>
-        [DataField("dropInventory", serverOnly: true)]
-        public bool DropInventory = false;
+        [DataField("inventory", serverOnly: true)]
+        public PolymorphInventoryChange Inventory = PolymorphInventoryChange.None;
 
         /// <summary>
         /// Whether or not the polymorph reverts when the entity goes into crit.
@@ -94,5 +87,12 @@ namespace Content.Shared.Polymorph
         /// </summary>
         [DataField("revertOnDeath", serverOnly: true)]
         public bool RevertOnDeath = true;
+    }
+
+    public enum PolymorphInventoryChange : byte
+    {
+        None,
+        Drop,
+        Transfer,
     }
 }
