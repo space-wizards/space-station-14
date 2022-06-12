@@ -1671,7 +1671,7 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 145
-  type: APCBasic
+  type: BaseAPC
   components:
   - name: bear outpost APC
     type: MetaData

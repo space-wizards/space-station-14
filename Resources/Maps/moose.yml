@@ -14864,7 +14864,7 @@ entities:
   - enabled: False
     type: AmbientSound
 - uid: 458
-  type: APCBasic
+  type: BaseAPC
   components:
   - pos: 2.5,9.5
     parent: 61
@@ -22832,7 +22832,7 @@ entities:
     parent: 61
     type: Transform
 - uid: 1300
-  type: APCBasic
+  type: BaseAPC
   components:
   - rot: 3.141592653589793 rad
     pos: 15.5,2.5
@@ -23937,7 +23937,7 @@ entities:
     parent: 61
     type: Transform
 - uid: 1440
-  type: APCBasic
+  type: BaseAPC
   components:
   - pos: 6.5,-3.5
     parent: 61
@@ -25575,7 +25575,7 @@ entities:
     parent: 61
     type: Transform
 - uid: 1652
-  type: APCBasic
+  type: BaseAPC
   components:
   - pos: 9.5,29.5
     parent: 61
@@ -28176,7 +28176,7 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 1936
-  type: APCBasic
+  type: BaseAPC
   components:
   - rot: 1.5707963267948966 rad
     pos: 25.5,-5.5
@@ -30803,7 +30803,7 @@ entities:
     parent: 61
     type: Transform
 - uid: 2273
-  type: APCBasic
+  type: BaseAPC
   components:
   - rot: 1.5707963267948966 rad
     pos: -6.5,-16.5
@@ -36950,7 +36950,7 @@ entities:
   - enabled: False
     type: AmbientSound
 - uid: 2891
-  type: APCBasic
+  type: BaseAPC
   components:
   - pos: 11.5,-11.5
     parent: 61
@@ -42013,14 +42013,14 @@ entities:
         ents: []
     type: ContainerContainer
 - uid: 3431
-  type: APCBasic
+  type: BaseAPC
   components:
   - rot: 1.5707963267948966 rad
     pos: -15.5,-21.5
     parent: 61
     type: Transform
 - uid: 3432
-  type: APCBasic
+  type: BaseAPC
   components:
   - rot: 3.141592653589793 rad
     pos: -24.5,-25.5
@@ -48700,7 +48700,7 @@ entities:
       Toggle: []
     type: SignalReceiver
 - uid: 4188
-  type: APCBasic
+  type: BaseAPC
   components:
   - pos: 11.5,-23.5
     parent: 61
@@ -50568,7 +50568,7 @@ entities:
     parent: 61
     type: Transform
 - uid: 4421
-  type: APCBasic
+  type: BaseAPC
   components:
   - pos: 24.5,-16.5
     parent: 61
@@ -58408,7 +58408,7 @@ entities:
     parent: 61
     type: Transform
 - uid: 5414
-  type: APCBasic
+  type: BaseAPC
   components:
   - rot: 3.141592653589793 rad
     pos: -26.5,-27.5
@@ -58743,7 +58743,7 @@ entities:
     parent: 61
     type: Transform
 - uid: 5467
-  type: APCBasic
+  type: BaseAPC
   components:
   - pos: -24.5,-54.5
     parent: 61
@@ -64981,7 +64981,7 @@ entities:
     parent: 61
     type: Transform
 - uid: 6289
-  type: APCBasic
+  type: BaseAPC
   components:
   - pos: -57.5,-7.5
     parent: 61
@@ -67938,7 +67938,7 @@ entities:
   - enabled: False
     type: AmbientSound
 - uid: 6621
-  type: APCBasic
+  type: BaseAPC
   components:
   - pos: 56.5,-0.5
     parent: 61
@@ -69153,7 +69153,7 @@ entities:
     parent: 61
     type: Transform
 - uid: 6777
-  type: APCBasic
+  type: BaseAPC
   components:
   - pos: 45.5,-7.5
     parent: 61
@@ -73293,7 +73293,7 @@ entities:
     parent: 61
     type: Transform
 - uid: 7283
-  type: APCBasic
+  type: BaseAPC
   components:
   - pos: -16.5,-0.5
     parent: 61
@@ -76550,7 +76550,7 @@ entities:
     parent: 61
     type: Transform
 - uid: 7747
-  type: APCBasic
+  type: BaseAPC
   components:
   - rot: 3.141592653589793 rad
     pos: -30.5,-3.5
@@ -82595,7 +82595,7 @@ entities:
   - enabled: False
     type: AmbientSound
 - uid: 8466
-  type: APCBasic
+  type: BaseAPC
   components:
   - pos: -36.5,-11.5
     parent: 61
@@ -89172,7 +89172,7 @@ entities:
       Toggle: []
     type: SignalReceiver
 - uid: 9329
-  type: APCBasic
+  type: BaseAPC
   components:
   - rot: -1.5707963267948966 rad
     pos: 50.5,2.5
