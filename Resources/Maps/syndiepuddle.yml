@@ -622,7 +622,7 @@ entities:
       Toggle: []
     type: SignalReceiver
 - uid: 53
-  type: SalternAPC
+  type: APCBasic
   components:
   - pos: -0.5,-3.5
     parent: 22
@@ -886,7 +886,7 @@ entities:
   - fixtures: []
     type: Fixtures
 - uid: 74
-  type: SalternSubstation
+  type: SubstationBasic
   components:
   - pos: -0.5,-5.5
     parent: 22
@@ -906,7 +906,7 @@ entities:
         ents: []
     type: ContainerContainer
 - uid: 75
-  type: SalternGenerator
+  type: GeneratorBasic
   components:
   - pos: -0.5,-6.5
     parent: 22

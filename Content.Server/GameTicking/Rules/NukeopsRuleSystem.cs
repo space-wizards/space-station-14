@@ -1,6 +1,7 @@
 ﻿using System.Linq;
 using Content.Server.CharacterAppearance.Components;
 using Content.Server.Chat.Managers;
+using Content.Server.GameTicking.Rules.Configurations;
 using Content.Server.Nuke;
 using Content.Server.Players;
 using Content.Server.Roles;
@@ -298,10 +299,10 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
     }
 
 
-    public override void Started()
+    public override void Started(GameRuleConfiguration _)
     {
         _opsWon = false;
     }
 
-    public override void Ended() { }
+    public override void Ended(GameRuleConfiguration _) { }
 }

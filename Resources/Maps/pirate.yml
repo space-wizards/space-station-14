@@ -3023,19 +3023,19 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 261
-  type: SalternAPC
+  type: APCBasic
   components:
   - pos: -0.5,5.5
     parent: 25
     type: Transform
 - uid: 262
-  type: SalternAPC
+  type: APCBasic
   components:
   - pos: -9.5,0.5
     parent: 25
     type: Transform
 - uid: 263
-  type: SalternAPC
+  type: APCBasic
   components:
   - pos: 4.5,8.5
     parent: 25
@@ -3708,7 +3708,7 @@ entities:
   - fixtures: []
     type: Fixtures
 - uid: 331
-  type: SalternAPC
+  type: APCBasic
   components:
   - pos: 0.5,-0.5
     parent: 25
@@ -5631,10 +5631,7 @@ entities:
     type: Transform
   - isPlaceable: False
     type: PlaceableSurface
-  - containers:
-      EntityStorageComponent: !type:Container
-        ents: []
-    type: ContainerContainer
+
 - uid: 520
   type: ClosetEmergencyFilledRandom
   components:
@@ -5643,10 +5640,7 @@ entities:
     type: Transform
   - isPlaceable: False
     type: PlaceableSurface
-  - containers:
-      EntityStorageComponent: !type:Container
-        ents: []
-    type: ContainerContainer
+
 - uid: 521
   type: OxygenCanister
   components:
@@ -5830,9 +5824,9 @@ entities:
     - EntityStorageComponent
     type: Construction
   - containers:
-      EntityStorageComponent: !type:Container
+      entity_storage: !type:Container
         ents: []
-      PaperLabel: !type:ContainerSlot {}
+      paper_label: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 545
   type: Table
@@ -5923,10 +5917,7 @@ entities:
     type: Lock
   - isPlaceable: False
     type: PlaceableSurface
-  - containers:
-      EntityStorageComponent: !type:Container
-        ents: []
-    type: ContainerContainer
+
 - uid: 557
   type: DrinkWhiskeyBottleFull
   components:
