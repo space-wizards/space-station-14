@@ -101,7 +101,7 @@
   - type: Battery
     maxCharge: 50000
     startingCharge: 50000
-    
+
 - type: entity
   parent: BaseAPC
   id: APCHighCapacity
@@ -110,7 +110,7 @@
   - type: Battery
     maxCharge: 100000
     startingCharge: 100000
-    
+
 - type: entity
   parent: BaseAPC
   id: APCSuperCapacity
@@ -119,7 +119,7 @@
   - type: Battery
     maxCharge: 150000
     startingCharge: 150000
-    
+
 - type: entity
   parent: BaseAPC
   id: APCHyperCapacity
@@ -127,5 +127,4 @@
   components:
   - type: Battery
     maxCharge: 200000
-    startingCharge: 200000
     startingCharge: 200000
