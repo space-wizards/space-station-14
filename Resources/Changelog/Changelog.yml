@@ -1,48 +1,6 @@
 Entries:
 - author: Rane
   changes:
-  - {message: Drones can now only pick up or drag a whitelist of items., type: Tweak}
-  - {message: Drones are now way easier to kill for a variety of reasons., type: Tweak}
-  - {message: "Drones can no longer interact with anything within 2\xBD tiles of a\
-      \ non-drone mob. The nerfs will continue until morale improves.", type: Tweak}
-  id: 1172
-  time: '2022-03-07T11:46:37.0000000+00:00'
-- author: moony
-  changes:
-  - {message: 'Player built shuttles should now be able to hold an atmosphere, assuming
-      they''re eight tiles or larger.', type: Add}
-  id: 1173
-  time: '2022-03-07T12:09:55.0000000+00:00'
-- author: Peptide90
-  changes:
-  - {message: 'Pillar 5.2! New arcade, small dorms, EVA storage and minor fixes. Engineering
-      now have EVA suits.', type: Add}
-  id: 1174
-  time: '2022-03-07T12:26:28.0000000+00:00'
-- author: HoofedEar
-  changes:
-  - {message: Things should no longer float through asteroid rocks., type: Fix}
-  id: 1175
-  time: '2022-03-08T01:01:36.0000000+00:00'
-- author: Macoron
-  changes:
-  - {message: Welder sprite now updates correctly when lit., type: Fix}
-  id: 1176
-  time: '2022-03-08T01:06:10.0000000+00:00'
-- author: moony
-  changes:
-  - {message: A number of unused/useless chems have been removed until they actually
-      get a usage., type: Remove}
-  id: 1177
-  time: '2022-03-08T02:51:35.0000000+00:00'
-- author: Fishfish458
-  changes:
-  - {message: Health Analyzers have now been added to various medical containers and
-      the autolathe, type: Add}
-  id: 1178
-  time: '2022-03-08T03:45:52.0000000+00:00'
-- author: Rane
-  changes:
   - {message: Musicians will now receive a special box on a certain holiday., type: Add}
   id: 1179
   time: '2022-03-08T06:34:10.0000000+00:00'
@@ -3005,3 +2963,42 @@ Entries:
       floor tiles, type: Fix}
   id: 1671
   time: '2022-06-08T09:25:48.0000000+00:00'
+- author: ElectroJr
+  changes:
+  - {message: Matches can once again be lit using match boxes., type: Fix}
+  id: 1672
+  time: '2022-06-09T02:39:29.0000000+00:00'
+- author: lapatison
+  changes:
+  - {message: changed color of opened airlock maint. panel, type: Add}
+  id: 1673
+  time: '2022-06-09T02:41:29.0000000+00:00'
+- author: juliangiebel
+  changes:
+  - {message: Added network configuration functionality to multitools, type: Add}
+  - {message: 'Air alarms can be tied to specific vents, scrubbers and firelocks',
+    type: Tweak}
+  id: 1674
+  time: '2022-06-10T01:28:24.0000000+00:00'
+- author: themias
+  changes:
+  - {message: Captain and HoP PDA pen slots now hold just pens, type: Fix}
+  id: 1675
+  time: '2022-06-10T18:53:56.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Nukies are fixed again., type: Fix}
+  id: 1676
+  time: '2022-06-11T14:18:58.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: A greater variety of miscellaneous trash can now be found around the
+      station., type: Tweak}
+  id: 1677
+  time: '2022-06-11T14:25:38.0000000+00:00'
+- author: moony
+  changes:
+  - {message: 'Slowed down parallax significiantly. Space should feel much, much vaster
+      now.', type: Tweak}
+  id: 1678
+  time: '2022-06-11T20:59:31.0000000+00:00'
