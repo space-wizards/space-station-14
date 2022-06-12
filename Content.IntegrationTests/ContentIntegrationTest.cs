@@ -22,7 +22,6 @@ using Robust.UnitTesting;
 
 namespace Content.IntegrationTests
 {
-    [Parallelizable(ParallelScope.All)]
     public abstract class ContentIntegrationTest : RobustIntegrationTest
     {
         private static readonly (string cvar, string value, bool)[] ServerTestCvars = {
@@ -40,6 +39,14 @@ namespace Content.IntegrationTests
 
             // Makes sure IGameMapManager actually listens.
             (CCVars.GameMapForced.Name, "true", true),
+            (CCVars.SysWinTickPeriod.Name, "0", true),
+            (CCVars.ContactMinimumThreads.Name, "1", true),
+            (CCVars.ContactMultithreadThreshold.Name, "999", true),
+            (CCVars.PositionConstraintsMinimumThread.Name, "1", true),
+            (CCVars.PositionConstraintsPerThread.Name, "999", true),
+            (CCVars.VelocityConstraintMinimumThreads.Name, "1", true),
+            (CCVars.VelocityConstraintsPerThread.Name, "999", true),
+            (CCVars.ThreadParallelCount.Name, "1", true),
         };
 
         private static void SetServerTestCvars(IntegrationOptions options)
