@@ -731,7 +731,7 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 62
-  type: BaseAPC
+  type: APCBasic
   components:
   - pos: 1.5,0.5
     parent: 20

@@ -28115,7 +28115,7 @@ entities:
     parent: 106
     type: Transform
 - uid: 1250
-  type: BaseAPC
+  type: APCBasic
   components:
   - pos: -36.5,26.5
     parent: 106
@@ -30027,7 +30027,7 @@ entities:
     parent: 106
     type: Transform
 - uid: 1528
-  type: BaseAPC
+  type: APCBasic
   components:
   - rot: -1.5707963267948966 rad
     pos: -49.5,-27.5
@@ -46415,7 +46415,7 @@ entities:
     parent: 106
     type: Transform
 - uid: 3870
-  type: BaseAPC
+  type: APCBasic
   components:
   - rot: -1.5707963267948966 rad
     pos: 14.5,-12.5
@@ -58487,7 +58487,7 @@ entities:
     parent: 106
     type: Transform
 - uid: 5302
-  type: BaseAPC
+  type: APCBasic
   components:
   - rot: 1.5707963267948966 rad
     pos: -22.5,26.5
@@ -67731,7 +67731,7 @@ entities:
     - machine_board
     type: Construction
 - uid: 6413
-  type: BaseAPC
+  type: APCBasic
   components:
   - rot: 1.5707963267948966 rad
     pos: 28.5,-30.5
@@ -69287,7 +69287,7 @@ entities:
     parent: 106
     type: Transform
 - uid: 6663
-  type: BaseAPC
+  type: APCBasic
   components:
   - pos: -8.5,22.5
     parent: 106
@@ -70701,7 +70701,7 @@ entities:
     parent: 106
     type: Transform
 - uid: 6898
-  type: BaseAPC
+  type: APCBasic
   components:
   - rot: 1.5707963267948966 rad
     pos: 43.5,-24.5
@@ -71800,7 +71800,7 @@ entities:
     parent: 106
     type: Transform
 - uid: 7045
-  type: BaseAPC
+  type: APCBasic
   components:
   - pos: 10.5,26.5
     parent: 106
@@ -72820,7 +72820,7 @@ entities:
     parent: 106
     type: Transform
 - uid: 7200
-  type: BaseAPC
+  type: APCBasic
   components:
   - rot: 1.5707963267948966 rad
     pos: 5.5,-15.5
@@ -73097,7 +73097,7 @@ entities:
     parent: 106
     type: Transform
 - uid: 7246
-  type: BaseAPC
+  type: APCBasic
   components:
   - pos: -6.5,-29.5
     parent: 106
@@ -73283,7 +73283,7 @@ entities:
     parent: 106
     type: Transform
 - uid: 7277
-  type: BaseAPC
+  type: APCBasic
   components:
   - pos: 11.5,-33.5
     parent: 106
@@ -82796,7 +82796,7 @@ entities:
     parent: 106
     type: Transform
 - uid: 8795
-  type: BaseAPC
+  type: APCBasic
   components:
   - pos: 4.5,4.5
     parent: 106
@@ -83094,7 +83094,7 @@ entities:
     parent: 106
     type: Transform
 - uid: 8844
-  type: BaseAPC
+  type: APCBasic
   components:
   - pos: 39.5,3.5
     parent: 106
@@ -89504,7 +89504,7 @@ entities:
       AMEController-fuelJarContainer: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 9644
-  type: BaseAPC
+  type: APCBasic
   components:
   - rot: 1.5707963267948966 rad
     pos: -64.5,-2.5
