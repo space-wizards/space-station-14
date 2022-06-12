@@ -268,7 +268,7 @@
       path: /Audio/Weapons/Guns/Gunshots/taser.ogg
   - type: ProjectileBatteryAmmoProvider
     proto: BulletTaser
-    fireCost: 100
+    fireCost: 50
   - type: Battery
     maxCharge: 100
     startingCharge: 100
