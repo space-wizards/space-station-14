@@ -215,7 +215,7 @@ public sealed class MagicSystem : EntitySystem
 
         transform.WorldPosition = args.Target.Position;
         transform.AttachToGridOrMap();
-        SoundSystem.Play(Filter.Pvs(args.Target), args.BlinkSound.GetSound());
+        SoundSystem.Play(args.BlinkSound.GetSound(), Filter.Pvs(args.Target));
         args.Handled = true;
     }
 
