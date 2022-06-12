@@ -189006,7 +189006,7 @@ entities:
     parent: 60
     type: Transform
 - uid: 21014
-  type: WeaponSubMachineGunDrozd
+  type: WeaponSubMachineGunVector
   components:
   - pos: -28.465193,2.6841984
     parent: 60
@@ -189014,7 +189014,7 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 21015
-  type: WeaponSubMachineGunDrozdRubber
+  type: WeaponSubMachineGunVectorRubber
   components:
   - pos: -28.449568,2.4185734
     parent: 60
@@ -189022,7 +189022,7 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 21016
-  type: WeaponRifleWintermute
+  type: WeaponRifleLecter
   components:
   - pos: -28.465193,1.9341984
     parent: 60
@@ -189082,7 +189082,7 @@ entities:
         ents: []
     type: ContainerContainer
 - uid: 21021
-  type: WeaponLaserRifleCog
+  type: WeaponLaserCarbine
   components:
   - pos: -28.418318,1.4810735
     parent: 60
@@ -189090,7 +189090,7 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 21022
-  type: WeaponLaserRifleCog
+  type: WeaponLaserCarbine
   components:
   - pos: -28.418318,1.2154485
     parent: 60

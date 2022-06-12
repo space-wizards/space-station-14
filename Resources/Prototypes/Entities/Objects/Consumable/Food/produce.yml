@@ -788,4 +788,4 @@
   - type: Produce
     seedId: gatfruit
   - type: Food
-    trash: WeaponRevolverPredator
+    trash: WeaponRevolverPython
