@@ -54,14 +54,10 @@ public partial class SharedGunSystem
 
         var oldIndex = component.CurrentIndex;
         component.CurrentIndex = state.CurrentIndex;
-
-        component.AmmoSlots = new EntityUid?[state.AmmoSlots.Length];
         component.Chambers = new bool?[state.Chambers.Length];
 
-        DebugTools.Assert(component.AmmoSlots.Length == component.Chambers.Length);
-
         // Need to copy across the state rather than the ref.
-        for (var i = 0; i < component.AmmoSlots.Length; i++)
+        for (var i = 0; i < component.AmmoSlots.Count; i++)
         {
             component.AmmoSlots[i] = state.AmmoSlots[i];
             component.Chambers[i] = state.Chambers[i];
@@ -298,7 +294,14 @@ public partial class SharedGunSystem
     private void OnRevolverInit(EntityUid uid, RevolverAmmoProviderComponent component, ComponentInit args)
     {
         component.AmmoContainer = Containers.EnsureContainer<Container>(uid, RevolverContainer);
-        component.AmmoSlots = new EntityUid?[component.Capacity];
+        component.AmmoSlots.EnsureCapacity(component.Capacity);
+        var remainder = component.Capacity - component.AmmoSlots.Count;
+
+        for (var i = 0; i < remainder; i++)
+        {
+            component.AmmoSlots.Add(null);
+        }
+
         component.Chambers = new bool?[component.Capacity];
 
         if (component.FillPrototype != null)
@@ -314,13 +317,15 @@ public partial class SharedGunSystem
                 component.Chambers[i] = true;
             }
         }
+
+        DebugTools.Assert(component.AmmoSlots.Count == component.Capacity);
     }
 
     [Serializable, NetSerializable]
     protected sealed class RevolverAmmoProviderComponentState : ComponentState
     {
         public int CurrentIndex;
-        public EntityUid?[] AmmoSlots = default!;
+        public List<EntityUid?> AmmoSlots = default!;
         public bool?[] Chambers = default!;
     }
 

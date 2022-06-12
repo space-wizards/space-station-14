@@ -24,7 +24,7 @@
   - type: ChamberMagazineAmmoProvider
   - type: ItemSlots
     slots:
-      gun-magazine:
+      gun_magazine:
         name: Magazine
         startingItem: MagazinePistol
         insertSound: /Audio/Weapons/Guns/MagIn/pistol_magin.ogg
@@ -32,7 +32,7 @@
         whitelist:
           tags:
             - MagazinePistol
-      gun-chamber:
+      gun_chamber:
         name: Chamber
         startingItem: CartridgePistol
         whitelist:
@@ -40,29 +40,28 @@
             - CartridgePistol
   - type: ContainerContainer
     containers:
-      gun-magazine: !type:ContainerSlot
-      gun-chamber: !type:ContainerSlot
+      gun_magazine: !type:ContainerSlot
+      gun_chamber: !type:ContainerSlot
+  - type: MagazineVisuals
+    magState: mag
+    steps: 1
+    zeroVisible: true
   - type: Appearance
-    visuals:
-    - type: MagVisualizer
-      magState: mag
-      steps: 1
-      zeroVisible: true
 
 - type: entity
-  name: clarissa
+  name: viper
   parent: BaseWeaponPistol
-  id: WeaponPistolClarissa
+  id: WeaponPistolViper
   description: A small, easily concealable, but somewhat underpowered gun.
   components:
   - type: Sprite
-    sprite: Objects/Weapons/Guns/Pistols/clarissa.rsi
+    sprite: Objects/Weapons/Guns/Pistols/viper.rsi
   - type: Item
     size: 10
-    sprite: Objects/Weapons/Guns/Pistols/clarissa.rsi
+    sprite: Objects/Weapons/Guns/Pistols/viper.rsi
   - type: ItemSlots
     slots:
-      gun-magazine:
+      gun_magazine:
         name: Magazine
         startingItem: MagazinePistol
         insertSound: /Audio/Weapons/Guns/MagIn/pistol_magin.ogg
@@ -71,7 +70,7 @@
           tags:
             - MagazinePistol
             - MagazinePistolHighCapacity
-      gun-chamber:
+      gun_chamber:
         name: Chamber
         startingItem: CartridgePistol
         whitelist:
@@ -79,8 +78,8 @@
             - CartridgePistol
   - type: ContainerContainer
     containers:
-      gun-magazine: !type:ContainerSlot
-      gun-chamber: !type:ContainerSlot
+      gun_magazine: !type:ContainerSlot
+      gun_chamber: !type:ContainerSlot
 
 - type: entity
   name: handmade pistol
@@ -102,13 +101,13 @@
       - SemiAuto
 
 - type: entity
-  name: mandella
+  name: cobra
   parent: BaseWeaponPistol
-  id: WeaponPistolMandella
+  id: WeaponPistolCobra
   description: A rugged, robust operator handgun with inbuilt silencer.
   components:
   - type: Sprite
-    sprite: Objects/Weapons/Guns/Pistols/mandella.rsi
+    sprite: Objects/Weapons/Guns/Pistols/cobra.rsi
     layers:
     - state: base
       map: ["enum.GunVisualLayers.Base"]
@@ -116,13 +115,13 @@
       map: ["enum.GunVisualLayers.Mag"]
   - type: Item
     size: 10
-    sprite: Objects/Weapons/Guns/Pistols/mandella.rsi
+    sprite: Objects/Weapons/Guns/Pistols/cobra.rsi
   - type: Gun
     soundGunshot:
       path: /Audio/Weapons/Guns/Gunshots/silenced.ogg
   - type: ItemSlots
     slots:
-      gun-magazine:
+      gun_magazine:
         name: Magazine
         startingItem: MagazinePistolCaselessRifle
         insertSound: /Audio/Weapons/Guns/MagIn/pistol_magin.ogg
@@ -130,7 +129,7 @@
         whitelist:
           tags:
             - MagazinePistolCaselessRifle
-      gun-chamber:
+      gun_chamber:
         name: Chamber
         startingItem: CartridgeCaselessRifle
         whitelist:
@@ -138,8 +137,8 @@
             - CartridgeCaselessRifle
   - type: ContainerContainer
     containers:
-      gun-magazine: !type:ContainerSlot
-      gun-chamber: !type:ContainerSlot
+      gun_magazine: !type:ContainerSlot
+      gun_chamber: !type:ContainerSlot
 
 - type: entity
   name: mk 58
@@ -152,6 +151,8 @@
     layers:
     - state: base
       map: ["enum.GunVisualLayers.Base"]
+    - state: mag-0
+      map: ["enum.GunVisualLayers.Mag"]
   - type: Item
     size: 10
     sprite: Objects/Weapons/Guns/Pistols/mk58.rsi

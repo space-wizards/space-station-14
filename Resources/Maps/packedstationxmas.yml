@@ -77154,18 +77154,13 @@ entities:
       light_bulb: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 7557
-  type: WeaponSubMachineGunDrozdRubber
+  type: WeaponSubMachineGunVectorRubber
   components:
   - pos: 38.61274,27.452318
     parent: 0
     type: Transform
   - canCollide: False
     type: Physics
-  - containers:
-      MagazineBarrel-chamber: !type:ContainerSlot {}
-      MagazineBarrel-magazine: !type:ContainerSlot
-        ent: 7558
-    type: ContainerContainer
 - uid: 7558
   type: MagazineMagnumSubMachineGunRubber
   components:
@@ -77178,18 +77173,13 @@ entities:
         ents: []
     type: ContainerContainer
 - uid: 7559
-  type: WeaponSubMachineGunDrozdRubber
+  type: WeaponSubMachineGunVectorRubber
   components:
   - pos: 38.597115,27.702318
     parent: 0
     type: Transform
   - canCollide: False
     type: Physics
-  - containers:
-      MagazineBarrel-chamber: !type:ContainerSlot {}
-      MagazineBarrel-magazine: !type:ContainerSlot
-        ent: 7560
-    type: ContainerContainer
 - uid: 7560
   type: MagazineMagnumSubMachineGunRubber
   components:
@@ -114133,11 +114123,6 @@ entities:
     type: Transform
   - canCollide: False
     type: Physics
-  - containers:
-      MagazineBarrel-chamber: !type:ContainerSlot {}
-      MagazineBarrel-magazine: !type:ContainerSlot
-        ent: 11180
-    type: ContainerContainer
 - uid: 11180
   type: MagazinePistolSubMachineGunTopMounted
   components:

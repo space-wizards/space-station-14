@@ -3,7 +3,7 @@ using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototy
 
 namespace Content.Server.Botany.Components
 {
-    [RegisterComponent, Friend(typeof(BotanySystem))]
+    [RegisterComponent, Access(typeof(BotanySystem))]
     public sealed class SeedComponent : Component
     {
         /// <summary>

@@ -78507,7 +78507,7 @@ entities:
       Toggle: []
     type: SignalReceiver
 - uid: 7531
-  type: WeaponSubMachineGunDrozdRubber
+  type: WeaponSubMachineGunVectorRubber
   components:
   - pos: 38.61274,27.452318
     parent: 2
@@ -78515,11 +78515,8 @@ entities:
   - canCollide: False
     type: Physics
   - containers:
-      MagazineBarrel-chamber: !type:ContainerSlot {}
-      MagazineBarrel-magazine: !type:ContainerSlot
-        ent: 7532
-      gun-chamber: !type:ContainerSlot {}
-      gun-magazine: !type:ContainerSlot
+      gun_chamber: !type:ContainerSlot {}
+      gun_magazine: !type:ContainerSlot
         ent: 11936
     type: ContainerContainer
 - uid: 7532
@@ -78530,7 +78527,7 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 7533
-  type: WeaponSubMachineGunDrozdRubber
+  type: WeaponSubMachineGunVectorRubber
   components:
   - pos: 38.597115,27.702318
     parent: 2
@@ -78538,11 +78535,8 @@ entities:
   - canCollide: False
     type: Physics
   - containers:
-      MagazineBarrel-chamber: !type:ContainerSlot {}
-      MagazineBarrel-magazine: !type:ContainerSlot
-        ent: 7534
-      gun-chamber: !type:ContainerSlot {}
-      gun-magazine: !type:ContainerSlot
+      gun_chamber: !type:ContainerSlot {}
+      gun_magazine: !type:ContainerSlot
         ent: 11937
     type: ContainerContainer
 - uid: 7534
@@ -95031,7 +95025,7 @@ entities:
   - color: '#0000FFFF'
     type: AtmosPipeColor
 - uid: 9191
-  type: WeaponLaserRifleCog
+  type: WeaponLaserCarbine
   components:
   - pos: 41.526512,27.667274
     parent: 2
@@ -119303,11 +119297,8 @@ entities:
   - canCollide: False
     type: Physics
   - containers:
-      MagazineBarrel-chamber: !type:ContainerSlot {}
-      MagazineBarrel-magazine: !type:ContainerSlot
-        ent: 11142
-      gun-chamber: !type:ContainerSlot {}
-      gun-magazine: !type:ContainerSlot
+      gun_chamber: !type:ContainerSlot {}
+      gun_magazine: !type:ContainerSlot
         ent: 11938
     type: ContainerContainer
 - uid: 11142
@@ -119418,7 +119409,7 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 11154
-  type: WeaponLaserRifleCog
+  type: WeaponLaserCarbine
   components:
   - pos: 41.526512,27.4329
     parent: 2
@@ -128044,7 +128035,7 @@ entities:
         ents: []
     type: ContainerContainer
 - uid: 12159
-  type: BoxSterile
+  type: BoxSterileMask
   components:
   - pos: 79.63914,-6.4771976
     parent: 2

@@ -8,8 +8,12 @@
   - type: Sprite
     netsync: false
   - type: Item
-    size: 24
+    size: 60
   - type: Gun
+    minAngle: 4
+    maxAngle: 16
+    angleIncrease: 0.5
+    angleDecay: 12
     fireRate: 8
     selectedMode: FullAuto
     availableModes:
@@ -19,17 +23,18 @@
     soundEmpty:
       path: /Audio/Weapons/Guns/Empty/lmg_empty.ogg
   - type: ChamberMagazineAmmoProvider
+  - type: AmmoCounter
   - type: ItemSlots
     slots:
-      gun-magazine:
+      gun_magazine:
         name: Magazine
-        startingItem: MagazineBoxLightRifle
+        startingItem: MagazineLightRifleBox
         insertSound: /Audio/Weapons/Guns/MagIn/batrifle_magin.ogg
         ejectSound: /Audio/Weapons/Guns/MagOut/batrifle_magout.ogg
         whitelist:
           tags:
-            - MagazineBoxLightRifle
-      gun-chamber:
+            - MagazineLightRifleBox
+      gun_chamber:
         name: Chamber
         startingItem: CartridgeLightRifle
         whitelist:
@@ -37,8 +42,8 @@
             - CartridgeLightRifle
   - type: ContainerContainer
     containers:
-      gun-magazine: !type:ContainerSlot
-      gun-chamber: !type:ContainerSlot
+      gun_magazine: !type:ContainerSlot
+      gun_chamber: !type:ContainerSlot
 
 - type: entity
   name: L6 SAW
@@ -54,11 +59,9 @@
     - state: mag-3
       map: ["enum.GunVisualLayers.Mag"]
   - type: Item
-    size: 24
     sprite: Objects/Weapons/Guns/LMGs/l6.rsi
+  - type: MagazineVisuals
+    magState: mag
+    steps: 4
+    zeroVisible: true
   - type: Appearance
-    visuals:
-    - type: MagVisualizer
-      magState: mag
-      steps: 4
-      zeroVisible: true

@@ -166,7 +166,7 @@ namespace Content.Shared.Containers.ItemSlots
             if (args.Handled)
                 return;
 
-            if (!EntityManager.TryGetComponent(args.User, out SharedHandsComponent hands))
+            if (!EntityManager.TryGetComponent(args.User, out SharedHandsComponent? hands))
                 return;
 
             foreach (var slot in itemSlots.Slots.Values)
@@ -432,6 +432,7 @@ namespace Content.Shared.Containers.ItemSlots
                     verb.Text = Loc.GetString(slot.EjectVerbText);
                 }
 
+                verb.Priority = slot.Priority;
                 args.Verbs.Add(verb);
             }
         }
@@ -463,6 +464,7 @@ namespace Content.Shared.Containers.ItemSlots
                 else
                     takeVerb.Text = Loc.GetString(slot.EjectVerbText);
 
+                takeVerb.Priority = slot.Priority;
                 args.Verbs.Add(takeVerb);
             }
 
@@ -501,6 +503,7 @@ namespace Content.Shared.Containers.ItemSlots
                     insertVerb.Text = verbSubject;
                 }
 
+                insertVerb.Priority = slot.Priority;
                 args.Verbs.Add(insertVerb);
             }
         }

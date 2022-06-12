@@ -16,12 +16,11 @@
   - type: Battery
     maxCharge: 1000
     startingCharge: 1000
+  - type: MagazineVisuals
+    magState: mag
+    steps: 5
+    zeroVisible: false
   - type: Appearance
-    visuals:
-    - type: MagVisualizer
-      magState: mag
-      steps: 5
-      zeroVisible: false
 
 - type: entity
   name: retro laser gun
@@ -43,12 +42,11 @@
   - type: HitscanBatteryAmmoProvider
     proto: RedLaser
     fireCost: 62.5
+  - type: MagazineVisuals
+    magState: mag
+    steps: 5
+    zeroVisible: true
   - type: Appearance
-    visuals:
-    - type: MagVisualizer
-      magState: mag
-      steps: 5
-      zeroVisible: true
 
 - type: entity
   name: makeshift laser gun
@@ -73,15 +71,18 @@
   - type: Battery
     maxCharge: 500
     startingCharge: 500
+  - type: Construction
+    graph: MakeshiftLaser
+    node: makeshiftLaser
 
 - type: entity
-  name: cog laser carbine
+  name: laser gun
   parent: BaseWeaponBattery
-  id: WeaponLaserRifleCog
+  id: WeaponLaserCarbine
   description: Favoured by Nanotrasen Security for being cheap and easy to use.
   components:
   - type: Sprite
-    sprite: Objects/Weapons/Guns/Battery/cog.rsi
+    sprite: Objects/Weapons/Guns/Battery/laser_gun.rsi
     layers:
     - state: base
       map: ["enum.GunVisualLayers.Base"]
@@ -90,7 +91,7 @@
       shader: unshaded
   - type: Item
     size: 24
-    sprite: Objects/Weapons/Guns/Battery/cog.rsi
+    sprite: Objects/Weapons/Guns/Battery/laser_gun.rsi
   - type: Gun
     selectedMode: SemiAuto
     availableModes:
@@ -100,9 +101,9 @@
     fireCost: 62.5
 
 - type: entity
-  name: PDW-10 pulse pistol
+  name: pulse pistol
   parent: BaseWeaponBattery
-  id: WeaponPulsePistolPdw
+  id: WeaponPulsePistol
   description: A state of the art energy pistol favoured as a sidearm by the NT-ERT operatives.
   components:
   - type: Sprite
@@ -130,9 +131,9 @@
     startingCharge: 2000
 
 - type: entity
-  name: DEAC-12 pulse carbine
+  name: pulse carbine
   parent: BaseWeaponBattery
-  id: WeaponPulseCarbineDeac
+  id: WeaponPulseCarbine
   description: A high tech energy carbine favoured by the NT-ERT operatives.
   components:
   - type: Sprite
@@ -162,10 +163,10 @@
     startingCharge: 5000
 
 - type: entity
-  name: destroyer pulse rifle
+  name: pulse rifle
   parent: BaseWeaponBattery
-  id: WeaponPulseRifleDestroyer
-  description: A weapon that fully lives up to its name.
+  id: WeaponPulseRifle
+  description: A weapon that is almost as infamous as its users.
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/Battery/pulse_rifle.rsi
@@ -237,12 +238,11 @@
   - type: HitscanBatteryAmmoProvider
     proto: XrayLaser
     fireCost: 100
+  - type: MagazineVisuals
+    magState: mag
+    steps: 5
+    zeroVisible: true
   - type: Appearance
-    visuals:
-    - type: MagVisualizer
-      magState: mag
-      steps: 5
-      zeroVisible: true
 
 - type: entity
   name: taser
@@ -277,12 +277,11 @@
   - type: Battery
     maxCharge: 100
     startingCharge: 100
+  - type: MagazineVisuals
+    magState: mag
+    steps: 5
+    zeroVisible: true
   - type: Appearance
-    visuals:
-    - type: MagVisualizer
-      magState: mag
-      steps: 5
-      zeroVisible: true
 
 - type: entity
   name: antique laser gun
@@ -307,9 +306,10 @@
   - type: HitscanBatteryAmmoProvider
     proto: RedMediumLaser
     fireCost: 100
+  - type: MagazineVisuals
+    magState: mag
+    steps: 5
+    zeroVisible: true
   - type: Appearance
-    visuals:
-    - type: MagVisualizer
-      magState: mag
-      steps: 5
-      zeroVisible: true
+  - type: StaticPrice
+    price: 750

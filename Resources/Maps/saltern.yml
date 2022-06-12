@@ -235,7 +235,7 @@ entities:
     parent: 852
     type: Transform
 - uid: 9
-  type: BoxLatex
+  type: BoxLatexGloves
   components:
   - pos: 21.584303,-4.310457
     parent: 852
@@ -541,7 +541,7 @@ entities:
         ents: []
     type: ContainerContainer
 - uid: 45
-  type: BoxSterile
+  type: BoxSterileMask
   components:
   - pos: 21.350922,-4.296852
     parent: 852
@@ -1199,7 +1199,7 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 128
-  type: WeaponSubMachineGunDrozdRubber
+  type: WeaponSubMachineGunVectorRubber
   components:
   - pos: -14.340517,21.391796
     parent: 852
@@ -18004,7 +18004,7 @@ entities:
     parent: 852
     type: Transform
 - uid: 975
-  type: WeaponLaserRifleCog
+  type: WeaponLaserCarbine
   components:
   - pos: -14.448555,19.788729
     parent: 852
@@ -19542,8 +19542,8 @@ entities:
     parent: 852
     type: Transform
   - containers:
-      gun-chamber: !type:ContainerSlot {}
-      gun-magazine: !type:ContainerSlot
+      gun_chamber: !type:ContainerSlot {}
+      gun_magazine: !type:ContainerSlot
         ent: 5157
     type: ContainerContainer
   - canCollide: False
@@ -46357,7 +46357,7 @@ entities:
       Toggle: []
     type: SignalReceiver
 - uid: 4233
-  type: WeaponSubMachineGunDrozdRubber
+  type: WeaponSubMachineGunVectorRubber
   components:
   - pos: -14.356142,21.563671
     parent: 852
@@ -53504,7 +53504,7 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 5148
-  type: WeaponRifleWintermute
+  type: WeaponRifleLecter
   components:
   - pos: -14.387392,20.923046
     parent: 852
@@ -74092,7 +74092,7 @@ entities:
         ents: []
     type: ContainerContainer
 - uid: 7116
-  type: BoxLatex
+  type: BoxLatexGloves
   components:
   - pos: 13.500268,-13.486635
     parent: 852

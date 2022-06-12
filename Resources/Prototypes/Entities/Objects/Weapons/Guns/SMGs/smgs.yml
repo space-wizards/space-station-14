@@ -11,6 +11,8 @@
     size: 24
   - type: AmmoCounter
   - type: Gun
+    minAngle: 2
+    maxAngle: 8
     fireRate: 8
     selectedMode: FullAuto
     availableModes:
@@ -21,7 +23,7 @@
   - type: ChamberMagazineAmmoProvider
   - type: ItemSlots
     slots:
-      gun-magazine:
+      gun_magazine:
         name: Magazine
         startingItem: MagazinePistolSubMachineGun
         insertSound: /Audio/Weapons/Guns/MagIn/smg_magin.ogg
@@ -29,7 +31,7 @@
         whitelist:
           tags:
             - MagazinePistolSubMachineGun
-      gun-chamber:
+      gun_chamber:
         name: Chamber
         startingItem: CartridgePistol
         whitelist:
@@ -37,8 +39,8 @@
             - CartridgePistol
   - type: ContainerContainer
     containers:
-      gun-magazine: !type:ContainerSlot
-      gun-chamber: !type:ContainerSlot
+      gun_magazine: !type:ContainerSlot
+      gun_chamber: !type:ContainerSlot
 
 - type: entity
   name: Atreides
@@ -58,12 +60,11 @@
     sprite: Objects/Weapons/Guns/SMGs/atreides.rsi
   - type: Gun
     fireRate: 10
+  - type: MagazineVisuals
+    magState: mag
+    steps: 1
+    zeroVisible: true
   - type: Appearance
-    visuals:
-    - type: MagVisualizer
-      magState: mag
-      steps: 1
-      zeroVisible: true
 
 - type: entity
   name: C-20r sub machine gun
@@ -84,21 +85,20 @@
   - type: Gun
   - type: ChamberMagazineAmmoProvider
     # autoEject: true # Do not set this until the PVS prediction issue is resolved
+  - type: MagazineVisuals
+    magState: mag
+    steps: 1
+    zeroVisible: true
   - type: Appearance
-    visuals:
-    - type: MagVisualizer
-      magState: mag
-      steps: 1
-      zeroVisible: true
 
 - type: entity
-  name: Drozd
+  name: Vector
   parent: BaseWeaponSubMachineGun
-  id: WeaponSubMachineGunDrozd
+  id: WeaponSubMachineGunVector
   description: An excellent fully automatic Heavy SMG.
   components:
   - type: Sprite
-    sprite: Objects/Weapons/Guns/SMGs/drozd.rsi
+    sprite: Objects/Weapons/Guns/SMGs/vector.rsi
     layers:
       - state: base
         map: ["enum.GunVisualLayers.Base"]
@@ -106,7 +106,7 @@
         map: ["enum.GunVisualLayers.Mag"]
   - type: Item
     size: 24
-    sprite: Objects/Weapons/Guns/SMGs/drozd.rsi
+    sprite: Objects/Weapons/Guns/SMGs/vector.rsi
   - type: Gun
     fireRate: 6
     selectedMode: FullAuto
@@ -114,7 +114,7 @@
     - FullAuto
   - type: ItemSlots
     slots:
-      gun-magazine:
+      gun_magazine:
         name: Magazine
         startingItem: MagazineMagnumSubMachineGun
         insertSound: /Audio/Weapons/Guns/MagIn/smg_magin.ogg
@@ -122,7 +122,7 @@
         whitelist:
           tags:
             - MagazineMagnumSubMachineGun
-      gun-chamber:
+      gun_chamber:
         name: Chamber
         startingItem: CartridgeMagnum
         whitelist:
@@ -130,14 +130,13 @@
             - CartridgeMagnum
   - type: ContainerContainer
     containers:
-      gun-magazine: !type:ContainerSlot
-      gun-chamber: !type:ContainerSlot
+      gun_magazine: !type:ContainerSlot
+      gun_chamber: !type:ContainerSlot
+  - type: MagazineVisuals
+    magState: mag
+    steps: 1
+    zeroVisible: true
   - type: Appearance
-    visuals:
-    - type: MagVisualizer
-      magState: mag
-      steps: 1
-      zeroVisible: true
 
 - type: entity
   name: WT550
@@ -166,23 +165,38 @@
     selectedMode: FullAuto
     availableModes:
     - FullAuto
+  - type: ItemSlots
+    slots:
+      gun_magazine:
+        name: Magazine
+        startingItem: MagazinePistolSubMachineGunTopMounted
+        insertSound: /Audio/Weapons/Guns/MagIn/smg_magin.ogg
+        ejectSound: /Audio/Weapons/Guns/MagOut/smg_magout.ogg
+        whitelist:
+          tags:
+            - MagazinePistolSubMachineGunTopMounted
+      gun_chamber:
+        name: Chamber
+        startingItem: CartridgePistol
+        whitelist:
+          tags:
+            - CartridgePistol
+  - type: MagazineVisuals
+    magState: mag
+    steps: 6
+    zeroVisible: true
   - type: Appearance
-    visuals:
-      - type: MagVisualizer
-        magState: mag
-        steps: 6
-        zeroVisible: true
 
 - type: entity
-  name: Drozd
-  parent: WeaponSubMachineGunDrozd
-  id: WeaponSubMachineGunDrozdRubber
+  name: Vector
+  parent: WeaponSubMachineGunVector
+  id: WeaponSubMachineGunVectorRubber
   description: An excellent fully automatic Heavy SMG.
   suffix: Non-Lethal
   components:
   - type: ItemSlots
     slots:
-      gun-magazine:
+      gun_magazine:
         name: Magazine
         startingItem: MagazineMagnumSubMachineGunRubber
         insertSound: /Audio/Weapons/Guns/MagIn/smg_magin.ogg
@@ -190,7 +204,7 @@
         whitelist:
           tags:
             - MagazineMagnumSubMachineGun
-      gun-chamber:
+      gun_chamber:
         name: Chamber
         startingItem: CartridgeMagnumRubber
         whitelist:
@@ -198,5 +212,5 @@
             - CartridgeMagnum
   - type: ContainerContainer
     containers:
-      gun-magazine: !type:ContainerSlot
-      gun-chamber: !type:ContainerSlot
+      gun_magazine: !type:ContainerSlot
+      gun_chamber: !type:ContainerSlot

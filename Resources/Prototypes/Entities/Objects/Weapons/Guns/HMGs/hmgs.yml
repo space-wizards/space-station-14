@@ -39,9 +39,8 @@
   - type: BallisticAmmoProvider
     proto: CartridgeMinigun
     capacity: 1000
+  - type: MagazineVisuals
+    magState: mag
+    steps: 4
+    zeroVisible: true
   - type: Appearance
-    visuals:
-    - type: MagVisualizer
-      magState: mag
-      steps: 4
-      zeroVisible: true
