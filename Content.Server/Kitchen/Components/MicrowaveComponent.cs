@@ -11,10 +11,12 @@ using Content.Shared.Kitchen.Components;
 using Content.Shared.Power;
 using Content.Shared.Sound;
 using Content.Shared.Tag;
+using Content.Shared.Tools;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.Containers;
 using Robust.Shared.Player;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
 namespace Content.Server.Kitchen.Components
 {
@@ -76,6 +78,9 @@ namespace Content.Server.Kitchen.Components
         public Container Storage = default!;
 
         [ViewVariables] private BoundUserInterface? UserInterface => Owner.GetUIOrNull(MicrowaveUiKey.Key);
+
+        [DataField("anchoringQuality", customTypeSerializer:typeof(PrototypeIdSerializer<ToolQualityPrototype>))]
+        public string AnchoringQuality = "Anchoring";
 
         protected override void Initialize()
         {

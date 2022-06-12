@@ -11,6 +11,7 @@ using Content.Shared.Interaction.Events;
 using Content.Shared.Body.Components;
 using Content.Shared.Body.Part;
 using Content.Shared.Popups;
+using Content.Shared.Tools.Components;
 
 namespace Content.Server.Kitchen.EntitySystems
 {
@@ -111,7 +112,13 @@ namespace Content.Server.Kitchen.EntitySystems
                 return;
             }
 
+            if (TryComp(args.Used, out ToolComponent? toolComp) && toolComp.Qualities.Contains(component.AnchoringQuality))
+            {
+                return;
+            }
+
             component.Storage.Insert(args.Used);
+
             component.DirtyUi();
         }
 
