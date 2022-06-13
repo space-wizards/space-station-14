@@ -136,7 +136,7 @@ namespace Content.Server.Lathe
             // Play a sound when inserting, if any
             if (component.InsertingSound != null)
             {
-                SoundSystem.Play(Filter.Pvs(component.Owner, entityManager: EntityManager), component.InsertingSound.GetSound(), component.Owner);
+                SoundSystem.Play(component.InsertingSound.GetSound(), Filter.Pvs(component.Owner, entityManager: EntityManager), component.Owner);
             }
 
             // We need the prototype to get the color
@@ -191,7 +191,7 @@ namespace Content.Server.Lathe
             component.UserInterface?.SendMessage(new LatheProducingRecipeMessage(recipe.ID));
             if (component.ProducingSound != null)
             {
-                SoundSystem.Play(Filter.Pvs(component.Owner), component.ProducingSound.GetSound(), component.Owner);
+                SoundSystem.Play(component.ProducingSound.GetSound(), Filter.Pvs(component.Owner), component.Owner);
             }
             UpdateRunningAppearance(component.Owner, true);
             ProducingAddQueue.Enqueue(component.Owner);

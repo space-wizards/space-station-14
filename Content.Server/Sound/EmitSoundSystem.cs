@@ -86,7 +86,7 @@ namespace Content.Server.Sound
         private void TryEmitSound(BaseEmitSoundComponent component)
         {
             var audioParams = component.AudioParams.WithPitchScale((float) _random.NextGaussian(1, component.PitchVariation));
-            SoundSystem.Play(Filter.Pvs(component.Owner, entityManager: EntityManager), component.Sound.GetSound(), component.Owner, audioParams);
+            SoundSystem.Play(component.Sound.GetSound(), Filter.Pvs(component.Owner, entityManager: EntityManager), component.Owner, audioParams);
         }
     }
 }

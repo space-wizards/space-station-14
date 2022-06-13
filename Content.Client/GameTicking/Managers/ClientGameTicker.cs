@@ -143,7 +143,7 @@ namespace Content.Client.GameTicking.Managers
             if (string.IsNullOrEmpty(RestartSound))
                 return;
 
-            SoundSystem.Play(Filter.Empty(), RestartSound);
+            SoundSystem.Play(RestartSound, Filter.Empty());
 
             // Cleanup the sound, we only want it to play when the round restarts after it ends normally.
             RestartSound = null;

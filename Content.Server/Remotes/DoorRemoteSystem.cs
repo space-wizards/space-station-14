@@ -82,7 +82,7 @@ namespace Content.Server.Remotes
                     }
                     else if (doorComponent.DenySound != null)
                     {
-                        SoundSystem.Play(Filter.Pvs(args.Target.Value, entityManager: EntityManager), doorComponent.DenySound.GetSound(), args.Target.Value);
+                        SoundSystem.Play(doorComponent.DenySound.GetSound(), Filter.Pvs(args.Target.Value, entityManager: EntityManager), args.Target.Value);
                     }
                 }
             }
