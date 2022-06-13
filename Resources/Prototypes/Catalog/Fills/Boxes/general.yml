@@ -296,3 +296,23 @@
     layers:
       - state: box_of_doom
       - state: writing
+
+- type: entity
+  name: Water cup box
+  parent: BoxCardboard
+  id: BoxWaterCup
+  description: A box of water cups for water coolers.
+  components:
+  - type: StorageFill
+    contents:
+      - id: DrinkWaterCup
+        amount: 12
+  - type: Sprite
+    layers:
+      - state: box
+      - state: writing
+  - type: Storage
+    capacity: 60
+    whitelist:
+      tags:
+      - PaperCup

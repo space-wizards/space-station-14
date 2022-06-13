@@ -221,10 +221,9 @@
     solutions:
       drink:
         maxVol: 20
-        reagents:
-        - ReagentId: Water
-          Quantity: 20
-  - type: Drink
   - type: Sprite
     sprite: Objects/Consumable/Drinks/water_cup.rsi
     state: icon-1
+  - type: Tag
+    tags:
+    - PaperCup

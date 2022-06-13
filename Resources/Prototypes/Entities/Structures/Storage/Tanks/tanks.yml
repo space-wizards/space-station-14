@@ -76,6 +76,56 @@
         reagents:
         - ReagentId: Water
           Quantity: 500
+  - type: ItemSlots
+    slots:
+      cup_slot_0:
+        name: Cup
+        startingItem: DrinkWaterCup
+        ejectOnInteract: true
+        insertOnInteract: false
+        whitelist:
+          tags:
+          - PaperCup
+      cup_slot_1:
+        name: Cup
+        startingItem: DrinkWaterCup
+        ejectOnInteract: true
+        insertOnInteract: false
+        whitelist:
+          tags:
+          - PaperCup
+      cup_slot_2:
+        name: Cup
+        startingItem: DrinkWaterCup
+        ejectOnInteract: true
+        insertOnInteract: false
+        whitelist:
+          tags:
+          - PaperCup
+      cup_slot_3:
+        name: Cup
+        startingItem: DrinkWaterCup
+        ejectOnInteract: true
+        insertOnInteract: false
+        whitelist:
+          tags:
+          - PaperCup
+      cup_slot_4:
+        name: Cup
+        startingItem: DrinkWaterCup
+        ejectOnInteract: true
+        insertOnInteract: false
+        whitelist:
+          tags:
+          - PaperCup
+      cup_slot_5:
+        name: Cup
+        startingItem: DrinkWaterCup
+        ejectOnInteract: true
+        insertOnInteract: false
+        whitelist:
+          tags:
+          - PaperCup
 
 - type: entity
   parent: StorageTank
