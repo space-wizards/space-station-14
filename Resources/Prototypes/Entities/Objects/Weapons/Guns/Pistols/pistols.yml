@@ -15,7 +15,7 @@
   - type: Item
     size: 10
   - type: Gun
-    fireRate: 8
+    fireRate: 6
     selectedMode: SemiAuto
     availableModes:
       - SemiAuto
@@ -114,6 +114,7 @@
   - type: Item
     sprite: Objects/Weapons/Guns/Pistols/cobra.rsi
   - type: Gun
+    fireRate: 4
     soundGunshot:
       path: /Audio/Weapons/Guns/Gunshots/silenced.ogg
   - type: ItemSlots
