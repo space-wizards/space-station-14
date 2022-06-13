@@ -25,14 +25,6 @@ namespace Content.Client.Ghost.Roles.UI
         {
             base.FrameUpdate(args);
             if (!RequestButton.Disabled) return;
-            if (_timer > 0.0)
-            {
-                _timer -= args.DeltaSeconds;
-            }
-            else
-            {
-                RequestButton.Disabled = false;
-            }
         }
     }
 }
