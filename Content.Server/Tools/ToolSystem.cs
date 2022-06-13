@@ -244,8 +244,8 @@ namespace Content.Server.Tools
                 return;
 
             // Pass tool.Owner to Filter.Pvs to avoid a TryGetEntity call.
-            SoundSystem.Play(Filter.Pvs(tool.Owner), sound.GetSound(), uid,
-                AudioHelpers.WithVariation(0.175f).WithVolume(-5f));
+            SoundSystem.Play(sound.GetSound(), Filter.Pvs(tool.Owner),
+                uid, AudioHelpers.WithVariation(0.175f).WithVolume(-5f));
         }
 
         public override void Update(float frameTime)

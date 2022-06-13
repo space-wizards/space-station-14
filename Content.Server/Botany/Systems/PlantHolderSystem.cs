@@ -170,8 +170,8 @@ namespace Content.Server.Botany.Systems
                 var solutionEntity = args.Used;
 
 
-                SoundSystem.Play(Filter.Pvs(args.Used), spray.SpraySound.GetSound(), args.Used,
-                AudioHelpers.WithVariation(0.125f));
+                SoundSystem.Play(spray.SpraySound.GetSound(), Filter.Pvs(args.Used),
+                args.Used, AudioHelpers.WithVariation(0.125f));
 
 
                 var split =_solutionSystem.Drain(solutionEntity, solution, amount);

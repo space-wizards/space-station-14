@@ -20,7 +20,7 @@ namespace Content.Client.NodeContainer
         private readonly IEntityManager _entityManager;
 
         private readonly Dictionary<(int, int), NodeRenderData> _nodeIndex = new();
-        private readonly Dictionary<GridId, Dictionary<Vector2i, List<(GroupData, NodeDatum)>>> _gridIndex = new ();
+        private readonly Dictionary<EntityUid, Dictionary<Vector2i, List<(GroupData, NodeDatum)>>> _gridIndex = new ();
 
         private readonly Font _font;
 
@@ -76,7 +76,7 @@ namespace Content.Client.NodeContainer
             var node = _system.NodeLookup[(groupId, nodeId)];
 
 
-            var gridId = _entityManager.GetComponent<TransformComponent>(node.Entity).GridID;
+            var gridId = _entityManager.GetComponent<TransformComponent>(node.Entity).GridEntityId;
             var grid = _mapManager.GetGrid(gridId);
             var gridTile = grid.TileIndicesFor(_entityManager.GetComponent<TransformComponent>(node.Entity).Coordinates);
 
@@ -112,12 +112,12 @@ namespace Content.Client.NodeContainer
 
             foreach (var grid in _mapManager.FindGridsIntersecting(map, worldAABB))
             {
-                foreach (var entity in _lookup.GetEntitiesIntersecting(grid.Index, worldAABB))
+                foreach (var entity in _lookup.GetEntitiesIntersecting(grid.GridEntityId, worldAABB))
                 {
                     if (!_system.Entities.TryGetValue(entity, out var nodeData))
                         continue;
 
-                    var gridDict = _gridIndex.GetOrNew(grid.Index);
+                    var gridDict = _gridIndex.GetOrNew(grid.GridEntityId);
                     var coords = xformQuery.GetComponent(entity).Coordinates;
 
                     // TODO: This probably shouldn't be capable of returning NaN...

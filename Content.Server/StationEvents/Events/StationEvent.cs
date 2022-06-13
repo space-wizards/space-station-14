@@ -147,7 +147,7 @@ namespace Content.Server.StationEvents.Events
 
             if (StartAudio != null)
             {
-                SoundSystem.Play(Filter.Broadcast(), StartAudio.GetSound(), AudioParams);
+                SoundSystem.Play(StartAudio.GetSound(), Filter.Broadcast(), AudioParams);
             }
 
             Announced = true;
@@ -170,7 +170,7 @@ namespace Content.Server.StationEvents.Events
 
             if (EndAudio != null)
             {
-                SoundSystem.Play(Filter.Broadcast(), EndAudio.GetSound(), AudioParams);
+                SoundSystem.Play(EndAudio.GetSound(), Filter.Broadcast(), AudioParams);
             }
 
             Started = false;
