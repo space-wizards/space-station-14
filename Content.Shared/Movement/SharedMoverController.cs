@@ -90,11 +90,11 @@ namespace Content.Shared.Movement
 
             var worldTotal = _relativeMovement ? parentRotation.RotateVec(total) : total;
 
-            if (transform.GridUid != EntityUid.Invalid)
+            if (transform.GridUid != null)
                 mover.LastGridAngle = parentRotation;
 
             if (worldTotal != Vector2.Zero)
-                transform.LocalRotation = transform.GridUid != EntityUid.Invalid
+                transform.LocalRotation = transform.GridUid != null
                     ? total.ToWorldAngle()
                     : worldTotal.ToWorldAngle();
 
