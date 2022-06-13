@@ -92,6 +92,8 @@
     - type: Construction
       graph: Firelock
       node: Firelock
+    - type: WallMount
+      arc: 360
 
 - type: entity
   id: FirelockGlass

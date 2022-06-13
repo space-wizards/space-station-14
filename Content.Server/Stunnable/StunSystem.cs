@@ -36,7 +36,7 @@ namespace Content.Server.Stunnable
             var target = args.Target;
 
             var knock = EntityManager.GetComponent<KnockedDownComponent>(uid);
-            SoundSystem.Play(Filter.Pvs(source), knock.StunAttemptSound.GetSound(), source, AudioHelpers.WithVariation(0.025f));
+            SoundSystem.Play(knock.StunAttemptSound.GetSound(), Filter.Pvs(source), source, AudioHelpers.WithVariation(0.025f));
 
             // TODO: Use PopupSystem
             source.PopupMessageOtherClients(Loc.GetString("stunned-component-disarm-success-others", ("source", Name(source)), ("target", Name(target))));

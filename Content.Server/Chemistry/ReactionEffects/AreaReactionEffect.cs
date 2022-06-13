@@ -114,7 +114,7 @@ namespace Content.Server.Chemistry.ReactionEffects
             areaEffectComponent.TryAddSolution(splitSolution);
             areaEffectComponent.Start(amount, _duration, _spreadDelay, _removeDelay);
 
-            SoundSystem.Play(Filter.Pvs(args.SolutionEntity), _sound.GetSound(), args.SolutionEntity, AudioHelpers.WithVariation(0.125f));
+            SoundSystem.Play(_sound.GetSound(), Filter.Pvs(args.SolutionEntity), args.SolutionEntity, AudioHelpers.WithVariation(0.125f));
         }
 
         protected abstract SolutionAreaEffectComponent? GetAreaEffectComponent(EntityUid entity);

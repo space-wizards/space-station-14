@@ -67,7 +67,7 @@ namespace Content.Server.CombatMode
 
             if (_random.Prob(component.DisarmFailChance))
             {
-                SoundSystem.Play(Filter.Pvs(args.Performer), component.DisarmFailSound.GetSound(), args.Performer, AudioHelpers.WithVariation(0.025f));
+                SoundSystem.Play(component.DisarmFailSound.GetSound(), Filter.Pvs(args.Performer), args.Performer, AudioHelpers.WithVariation(0.025f));
 
                 var targetName = Name(args.Target);
 
@@ -86,7 +86,7 @@ namespace Content.Server.CombatMode
             }
 
             _meleeWeaponSystem.SendAnimation("disarm", angle, args.Performer, args.Performer, new[] { args.Target });
-            SoundSystem.Play(filterAll, component.DisarmSuccessSound.GetSound(), args.Performer, AudioHelpers.WithVariation(0.025f));
+            SoundSystem.Play(component.DisarmSuccessSound.GetSound(), filterAll, args.Performer, AudioHelpers.WithVariation(0.025f));
             _adminLogger.Add(LogType.DisarmedAction, $"{ToPrettyString(args.Performer):user} used disarm on {ToPrettyString(args.Target):target}");
 
             var eventArgs = new DisarmedEvent() { Target = args.Target, Source = args.Performer, PushProbability = component.DisarmPushChance };
