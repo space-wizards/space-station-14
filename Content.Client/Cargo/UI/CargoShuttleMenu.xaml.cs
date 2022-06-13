@@ -13,6 +13,9 @@ namespace Content.Client.Cargo.UI
         private IPrototypeManager _protoManager;
         private SpriteSystem _spriteSystem;
 
+        public Action? ShuttleCallRequested;
+        public Action? ShuttleRecallRequested;
+
         public CargoShuttleMenu(IPrototypeManager protoManager, SpriteSystem spriteSystem)
         {
             RobustXamlLoader.Load(this);
@@ -47,10 +50,11 @@ namespace Content.Client.Cargo.UI
                          ("reason", order.Reason))}
                  };
 
+                 row.Approve.Visible = false;
+                 row.Cancel.Visible = false;
+
                  Orders.AddChild(row);
              }
          }
     }
-
-
 }

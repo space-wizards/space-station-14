@@ -24,12 +24,23 @@
         </BoxContainer>
         <Button Name="ShuttleCallButton"
                 Text="Call Shuttle"/>
+        <Button Name="ShuttleRecallButton"
+                Text="Recall Shuttle"
+                Visible="False"/>
         <Label Text="{Loc 'cargo-console-menu-orders-label'}" />
-        <BoxContainer Name="Orders"
-                      Orientation="Vertical"
-                      StyleClasses="transparentItemList"
-                      VerticalExpand="True">
-            <!-- Orders are added here by code -->
-        </BoxContainer>
+        <PanelContainer VerticalExpand="True"
+                        SizeFlagsStretchRatio="6">
+            <PanelContainer.PanelOverride>
+                <gfx:StyleBoxFlat BackgroundColor="#000000" />
+            </PanelContainer.PanelOverride>
+            <ScrollContainer VerticalExpand="True">
+                <BoxContainer Name="Orders"
+                              Orientation="Vertical"
+                              StyleClasses="transparentItemList"
+                              VerticalExpand="True">
+                </BoxContainer>
+            </ScrollContainer>
+        </PanelContainer>
+        <TextureButton VerticalExpand="True" />
     </BoxContainer>
 </userInterface:FancyWindow>
