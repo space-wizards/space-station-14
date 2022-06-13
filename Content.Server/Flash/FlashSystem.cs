@@ -201,6 +201,9 @@ namespace Content.Server.Flash
             // Forward the event to the glasses, if any.
             if(!args.Cancelled && _inventorySystem.TryGetSlotEntity(uid, "eyes", out var eyeSlotEntity, component))
                 RaiseLocalEvent(eyeSlotEntity.Value, args);
+            // Forward the event to the mask, if any.
+            if (!args.Cancelled && _inventorySystem.TryGetSlotEntity(uid, "mask", out var maskSlotEntity, component))
+                RaiseLocalEvent(maskSlotEntity.Value, args);
         }
 
         private void OnFlashImmunityFlashAttempt(EntityUid uid, FlashImmunityComponent component, FlashAttemptEvent args)
