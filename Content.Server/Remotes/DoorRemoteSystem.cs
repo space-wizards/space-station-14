@@ -24,7 +24,7 @@ namespace Content.Server.Remotes
             base.Initialize();
 
             SubscribeLocalEvent<DoorRemoteComponent, UseInHandEvent>(OnInHandActivation);
-            SubscribeLocalEvent<DoorRemoteComponent, AfterInteractEvent>(OnAfterInteract);
+            SubscribeLocalEvent<DoorRemoteComponent, BeforeRangedInteractEvent>(OnBeforeInteract);
         }
 
         public void OnInHandActivation(EntityUid user, DoorRemoteComponent component, UseInHandEvent args)
@@ -46,7 +46,7 @@ namespace Content.Server.Remotes
             }
         }
 
-        private void OnAfterInteract(EntityUid uid, DoorRemoteComponent component, AfterInteractEvent args)
+        private void OnBeforeInteract(EntityUid uid, DoorRemoteComponent component, BeforeRangedInteractEvent args)
         {
             if (!args.CanReach ||
                 args.Handled
