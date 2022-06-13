@@ -195,15 +195,16 @@ namespace Content.Server.Flash
 
         private void OnInventoryFlashAttempt(EntityUid uid, InventoryComponent component, FlashAttemptEvent args)
         {
-            // Forward the event to a worn helmet, if one is equipped.
-            if (_inventorySystem.TryGetSlotEntity(uid, "head", out var headSlotEntity, component))
-                RaiseLocalEvent(headSlotEntity.Value, args);
-            // Forward the event to the glasses, if any.
-            if(!args.Cancelled && _inventorySystem.TryGetSlotEntity(uid, "eyes", out var eyeSlotEntity, component))
-                RaiseLocalEvent(eyeSlotEntity.Value, args);
-            // Forward the event to the mask, if any.
-            if (!args.Cancelled && _inventorySystem.TryGetSlotEntity(uid, "mask", out var maskSlotEntity, component))
-                RaiseLocalEvent(maskSlotEntity.Value, args);
+            if(_inventorySystem.TryGetSlots(uid, out var slots))
+            {
+                foreach(var slot in slots)
+                {
+                    if (args.Cancelled)
+                        break;
+                    if (_inventorySystem.TryGetSlotEntity(uid, slot.Name, out var item))
+                        RaiseLocalEvent(item.Value, args);
+                }
+            }
         }
 
         private void OnFlashImmunityFlashAttempt(EntityUid uid, FlashImmunityComponent component, FlashAttemptEvent args)
