@@ -54,8 +54,8 @@
     - type: RandomSpawner
       rarePrototypes:
         - lanternextrabright
-        - PowerCellSmallSuper
-        - PowerCellSmallAutorecharge
+        - PowerCellHigh
+        - PowerCellMicroreactor
       rareChance: 0.08
       prototypes:
         - FlashlightLantern

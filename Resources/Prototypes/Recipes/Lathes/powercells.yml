@@ -1,16 +1,16 @@
 - type: latheRecipe
-  id: PowerCellSmallStandard
+  id: PowerCellSmall
   icon: Objects/Power/PowerCells/power_cell_small_st.rsi/s_st.png
-  result: PowerCellSmallStandardPrinted
+  result: PowerCellSmallPrinted
   completetime: 1
   materials:
     Steel: 100
     Plastic: 50
 
 - type: latheRecipe
-  id: PowerCellSmallHigh
+  id: PowerCellMedium
   icon: Objects/Power/PowerCells/power_cell_small_hi.rsi/s_hi.png
-  result: PowerCellSmallHighPrinted
+  result: PowerCellMediumPrinted
   completetime: 6
   materials:
     Steel: 300
@@ -19,9 +19,9 @@
     Gold: 10
 
 - type: latheRecipe
-  id: PowerCellSmallSuper
+  id: PowerCellHigh
   icon: Objects/Power/PowerCells/power_cell_small_sup.rsi/s_sup.png
-  result: PowerCellSmallSuperPrinted
+  result: PowerCellHighPrinted
   completetime: 10
   materials:
     Steel: 300
