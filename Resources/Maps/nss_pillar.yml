@@ -28403,7 +28403,7 @@ entities:
     parent: 130
     type: Transform
 - uid: 1171
-  type: ComputerSupplyRequest
+  type: ComputerSupplyOrdering
   components:
   - pos: -30.5,-7.5
     parent: 130
@@ -28412,9 +28412,6 @@ entities:
       board: !type:Container
         ents: []
     type: ContainerContainer
-  - outputs:
-      OrderSender: []
-    type: SignalTransmitter
 - uid: 1172
   type: Grille
   components:
@@ -59257,7 +59254,7 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 5637
-  type: CargoConsole
+  type: CargoOrderConsole
   components:
   - pos: -34.5,-17.5
     parent: 130

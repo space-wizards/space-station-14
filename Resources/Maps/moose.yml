@@ -44280,7 +44280,7 @@ entities:
     parent: 61
     type: Transform
 - uid: 4381
-  type: ComputerSupplyRequest
+  type: ComputerSupplyOrdering
   components:
   - pos: 22.5,-17.5
     parent: 61
@@ -44289,9 +44289,6 @@ entities:
       board: !type:Container
         ents: []
     type: ContainerContainer
-  - outputs:
-      OrderSender: []
-    type: SignalTransmitter
 - uid: 4382
   type: VendingMachineCargoDrobe
   components:
@@ -47619,7 +47616,7 @@ entities:
       OrderSender: []
     type: SignalTransmitter
 - uid: 4832
-  type: CargoConsole
+  type: CargoOrderConsole
   components:
   - pos: 25.5,-20.5
     parent: 61

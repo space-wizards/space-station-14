@@ -28897,7 +28897,7 @@ entities:
       OrderSender: []
     type: SignalTransmitter
 - uid: 2136
-  type: ComputerSupplyRequest
+  type: ComputerSupplyOrdering
   components:
   - pos: 20.5,23.5
     parent: 2
@@ -28906,9 +28906,6 @@ entities:
       board: !type:Container
         ents: []
     type: ContainerContainer
-  - outputs:
-      OrderSender: []
-    type: SignalTransmitter
 - uid: 2137
   type: CableHV
   components:
@@ -94282,7 +94279,7 @@ entities:
     parent: 2
     type: Transform
 - uid: 11095
-  type: CargoConsole
+  type: CargoOrderConsole
   components:
   - pos: 11.5,24.5
     parent: 2

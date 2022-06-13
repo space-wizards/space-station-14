@@ -1,5 +1,6 @@
-﻿<DefaultWindow xmlns="https://spacestation14.io"
+﻿<userInterface:FancyWindow xmlns="https://spacestation14.io"
             xmlns:gfx="clr-namespace:Robust.Client.Graphics;assembly=Robust.Client"
+            xmlns:userInterface="clr-namespace:Content.Client.UserInterface"
             SetSize="400 600"
             MinSize="400 600">
     <BoxContainer Orientation="Vertical">
@@ -10,10 +11,10 @@
                    Text="{Loc 'cargo-console-menu-account-name-none-text'}" />
         </BoxContainer>
         <BoxContainer Orientation="Horizontal">
-            <Label Text="{Loc 'cargo-console-menu-points-label'}"
+            <Label Text="{Loc 'cargo-console-menu-shuttle-name-label'}"
                    StyleClasses="LabelKeyText" />
-            <Label Name="PointsLabel"
-                   Text="0" />
+            <Label Name="ShuttleNameLabel"
+                   Text="{Loc 'cargo-console-menu-shuttle-name-none-text'}" />
         </BoxContainer>
         <BoxContainer Orientation="Horizontal">
             <Label Text="{Loc 'cargo-console-menu-shuttle-status-label'}"
@@ -21,20 +22,8 @@
             <Label Name="ShuttleStatusLabel"
                    Text="{Loc 'cargo-console-menu-shuttle-status-away-text'}" />
         </BoxContainer>
-        <BoxContainer Orientation="Horizontal">
-            <Label Text="{Loc 'cargo-console-menu-order-capacity-label'}"
-                   StyleClasses="LabelKeyText" />
-            <Label Name="ShuttleCapacityLabel"
-                   Text="0/20" />
-        </BoxContainer>
-        <BoxContainer Orientation="Horizontal">
-            <OptionButton Name="Categories"
-                          Prefix="{Loc 'cargo-console-menu-categories-label'}"
-                          HorizontalExpand="True" />
-            <LineEdit Name="SearchBar"
-                      PlaceHolder="{Loc 'cargo-console-menu-search-bar-placeholder'}"
-                      HorizontalExpand="True" />
-        </BoxContainer>
+        <Button Name="ShuttleCallButton"
+                Text="Call Shuttle"/>
         <ScrollContainer HorizontalExpand="True"
                          VerticalExpand="True"
                          SizeFlagsStretchRatio="6">
@@ -45,29 +34,5 @@
                 <!-- Products get added here by code -->
             </BoxContainer>
         </ScrollContainer>
-        <PanelContainer VerticalExpand="True"
-                        SizeFlagsStretchRatio="6">
-            <PanelContainer.PanelOverride>
-                <gfx:StyleBoxFlat BackgroundColor="#000000" />
-            </PanelContainer.PanelOverride>
-            <ScrollContainer VerticalExpand="True">
-                <BoxContainer Orientation="Vertical">
-                    <Label Text="{Loc 'cargo-console-menu-requests-label'}" />
-                    <BoxContainer Name="Requests"
-                                  Orientation="Vertical"
-                                  VerticalExpand="True">
-                        <!-- Requests are added here by code -->
-                    </BoxContainer>
-                    <Label Text="{Loc 'cargo-console-menu-orders-label'}" />
-                    <BoxContainer Name="Orders"
-                                  Orientation="Vertical"
-                                  StyleClasses="transparentItemList"
-                                  VerticalExpand="True">
-                        <!-- Orders are added here by code -->
-                    </BoxContainer>
-                </BoxContainer>
-            </ScrollContainer>
-        </PanelContainer>
-        <TextureButton VerticalExpand="True" />
     </BoxContainer>
-</DefaultWindow>
+</userInterface:FancyWindow>

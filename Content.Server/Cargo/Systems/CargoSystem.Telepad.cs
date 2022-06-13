@@ -14,15 +14,15 @@ public sealed partial class CargoSystem
 
     private void InitializeTelepad()
     {
-        SubscribeLocalEvent<CargoConsoleTelepadComponent, ComponentInit>(OnInit);
-        SubscribeLocalEvent<CargoConsoleTelepadComponent, PowerChangedEvent>(OnTelepadPowerChange);
+        SubscribeLocalEvent<CargoTelepadComponent, ComponentInit>(OnInit);
+        SubscribeLocalEvent<CargoTelepadComponent, PowerChangedEvent>(OnTelepadPowerChange);
         // Shouldn't need re-anchored event
-        SubscribeLocalEvent<CargoConsoleTelepadComponent, AnchorStateChangedEvent>(OnTelepadAnchorChange);
+        SubscribeLocalEvent<CargoTelepadComponent, AnchorStateChangedEvent>(OnTelepadAnchorChange);
     }
 
     private void UpdateTelepad(float frameTime)
     {
-        foreach (var comp in EntityManager.EntityQuery<CargoConsoleTelepadComponent>())
+        foreach (var comp in EntityManager.EntityQuery<CargoTelepadComponent>())
         {
             // Don't EntityQuery for it as it's not required.
             TryComp<AppearanceComponent>(comp.Owner, out var appearance);
@@ -56,12 +56,12 @@ public sealed partial class CargoSystem
         }
     }
 
-    private void OnInit(EntityUid uid, CargoConsoleTelepadComponent consoleTelepad, ComponentInit args)
+    private void OnInit(EntityUid uid, CargoTelepadComponent telepad, ComponentInit args)
     {
-        _linker.EnsureReceiverPorts(uid, consoleTelepad.ReceiverPort);
+        _linker.EnsureReceiverPorts(uid, telepad.ReceiverPort);
     }
 
-    private void SetEnabled(CargoConsoleTelepadComponent component, ApcPowerReceiverComponent? receiver = null,
+    private void SetEnabled(CargoTelepadComponent component, ApcPowerReceiverComponent? receiver = null,
         TransformComponent? xform = null)
     {
         // False due to AllCompsOneEntity test where they may not have the powerreceiver.
@@ -77,17 +77,17 @@ public sealed partial class CargoSystem
         appearance?.SetData(CargoTelepadVisuals.State, CargoTelepadState.Unpowered);
     }
 
-    private void OnTelepadPowerChange(EntityUid uid, CargoConsoleTelepadComponent component, PowerChangedEvent args)
+    private void OnTelepadPowerChange(EntityUid uid, CargoTelepadComponent component, PowerChangedEvent args)
     {
         SetEnabled(component);
     }
 
-    private void OnTelepadAnchorChange(EntityUid uid, CargoConsoleTelepadComponent component, ref AnchorStateChangedEvent args)
+    private void OnTelepadAnchorChange(EntityUid uid, CargoTelepadComponent component, ref AnchorStateChangedEvent args)
     {
         SetEnabled(component);
     }
 
-    public void QueueTeleport(CargoConsoleTelepadComponent component, CargoOrderData order)
+    public void QueueTeleport(CargoTelepadComponent component, CargoOrderData order)
     {
         for (var i = 0; i < order.Amount; i++)
         {
@@ -98,7 +98,7 @@ public sealed partial class CargoSystem
     /// <summary>
     ///     Spawn the product and a piece of paper. Attempt to attach the paper to the product.
     /// </summary>
-    private void SpawnProduct(CargoConsoleTelepadComponent component, CargoOrderData data)
+    private void SpawnProduct(CargoTelepadComponent component, CargoOrderData data)
     {
         // spawn the order
         if (!_protoMan.TryIndex(data.ProductId, out CargoProductPrototype? prototype))

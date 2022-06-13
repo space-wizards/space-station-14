@@ -32171,7 +32171,7 @@ entities:
     parent: 852
     type: Transform
 - uid: 3115
-  type: CargoConsole
+  type: CargoOrderConsole
   components:
   - pos: 20.5,10.5
     parent: 852

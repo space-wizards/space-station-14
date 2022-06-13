@@ -6,12 +6,6 @@ namespace Content.Shared.Cargo.Components
     public abstract class SharedCargoConsoleComponent : Component {}
 
     /// <summary>
-    ///    Sends away or requests shuttle
-    /// </summary>
-    [Serializable, NetSerializable]
-    public sealed class CargoConsoleShuttleMessage : BoundUserInterfaceMessage {}
-
-    /// <summary>
     ///     Add order to database.
     /// </summary>
     [Serializable, NetSerializable]
@@ -62,7 +56,9 @@ namespace Content.Shared.Cargo.Components
     [NetSerializable, Serializable]
     public enum CargoConsoleUiKey : byte
     {
-        Key
+        Orders,
+        Shuttle,
+        Telepad
     }
 
     [NetSerializable, Serializable]

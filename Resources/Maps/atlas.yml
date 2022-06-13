@@ -43132,14 +43132,11 @@ entities:
     parent: 30
     type: Transform
 - uid: 4712
-  type: ComputerSupplyRequest
+  type: ComputerSupplyOrdering
   components:
   - pos: -35.5,17.5
     parent: 30
     type: Transform
-  - outputs:
-      OrderSender: []
-    type: SignalTransmitter
   - containers:
       board: !type:Container
         ents: []
@@ -49808,14 +49805,11 @@ entities:
     parent: 30
     type: Transform
 - uid: 5603
-  type: ComputerSupplyRequest
+  type: ComputerSupplyOrdering
   components:
   - pos: -27.5,17.5
     parent: 30
     type: Transform
-  - outputs:
-      OrderSender: []
-    type: SignalTransmitter
   - containers:
       board: !type:Container
         ents: []

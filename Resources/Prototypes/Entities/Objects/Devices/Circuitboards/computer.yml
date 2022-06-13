@@ -68,7 +68,7 @@
   description: A computer printed circuit board for a supply request console
   components:
     - type: ComputerBoard
-      prototype: ComputerSupplyRequest
+      prototype: ComputerSupplyOrdering
 
 - type: entity
   parent: BaseComputerCircuitboard

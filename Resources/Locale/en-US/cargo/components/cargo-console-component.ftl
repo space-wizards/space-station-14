@@ -2,6 +2,8 @@
 cargo-console-menu-title = Cargo Request Console
 cargo-console-menu-account-name-label = Account Name:{" "}
 cargo-console-menu-account-name-none-text = None
+cargo-console-menu-account-name-label = Shuttle Name:{" "}
+cargo-console-menu-account-name-none-text = None
 cargo-console-menu-points-label = Points:{" "}
 cargo-console-menu-shuttle-status-label = Shuttle Status:{" "}
 cargo-console-menu-shuttle-status-away-text = Away

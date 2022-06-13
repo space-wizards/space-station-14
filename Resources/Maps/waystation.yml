@@ -18704,7 +18704,7 @@ entities:
     parent: 82
     type: Transform
 - uid: 592
-  type: CargoConsole
+  type: CargoOrderConsole
   components:
   - pos: 14.5,43.5
     parent: 82
@@ -33056,7 +33056,7 @@ entities:
     parent: 82
     type: Transform
 - uid: 2222
-  type: ComputerSupplyRequest
+  type: ComputerSupplyOrdering
   components:
   - pos: 16.5,33.5
     parent: 82
@@ -33065,9 +33065,6 @@ entities:
       board: !type:Container
         ents: []
     type: ContainerContainer
-  - outputs:
-      OrderSender: []
-    type: SignalTransmitter
 - uid: 2223
   type: WallSolid
   components:

@@ -44,23 +44,19 @@ namespace Content.Server.Cargo.Systems
 
         private void InitializeConsole()
         {
-            SubscribeLocalEvent<CargoConsoleComponent, CargoConsoleAddOrderMessage>(OnAddOrderMessage);
-            SubscribeLocalEvent<CargoConsoleComponent, CargoConsoleRemoveOrderMessage>(OnRemoveOrderMessage);
-            SubscribeLocalEvent<CargoConsoleComponent, CargoConsoleApproveOrderMessage>(OnApproveOrderMessage);
-            SubscribeLocalEvent<CargoConsoleComponent, CargoConsoleShuttleMessage>(OnShuttleMessage);
-            SubscribeLocalEvent<CargoConsoleComponent, ComponentInit>(OnInit);
+            SubscribeLocalEvent<CargoOrderConsoleComponent, CargoConsoleAddOrderMessage>(OnAddOrderMessage);
+            SubscribeLocalEvent<CargoOrderConsoleComponent, CargoConsoleRemoveOrderMessage>(OnRemoveOrderMessage);
+            SubscribeLocalEvent<CargoOrderConsoleComponent, CargoConsoleApproveOrderMessage>(OnApproveOrderMessage);
+            SubscribeLocalEvent<CargoOrderConsoleComponent, ComponentInit>(OnInit);
             SubscribeLocalEvent<RoundRestartCleanupEvent>(Reset);
             Reset();
         }
 
 
-        private void OnInit(EntityUid uid, CargoConsoleComponent console, ComponentInit args)
+        private void OnInit(EntityUid uid, CargoOrderConsoleComponent orderConsole, ComponentInit args)
         {
-            _linker.EnsureTransmitterPorts(uid, console.SenderPort);
-
             var station = Get<StationSystem>().GetOwningStation(uid);
-
-            UpdateUIState(console, station);
+            UpdateUIState(orderConsole, station);
         }
 
         private void Reset(RoundRestartCleanupEvent ev)
@@ -86,9 +82,9 @@ namespace Content.Server.Cargo.Systems
                     account.Balance += PointIncrease;
                 }
 
-                foreach (var comp in EntityQuery<CargoConsoleComponent>())
+                foreach (var comp in EntityQuery<CargoOrderConsoleComponent>())
                 {
-                    if (!_uiSystem.IsUiOpen(comp.Owner, CargoConsoleUiKey.Key)) continue;
+                    if (!_uiSystem.IsUiOpen(comp.Owner, CargoConsoleUiKey.Orders)) continue;
 
                     var station = _station.GetOwningStation(comp.Owner);
 
@@ -99,46 +95,7 @@ namespace Content.Server.Cargo.Systems
 
         #region Interface
 
-        private void OnShuttleMessage(EntityUid uid, CargoConsoleComponent component, CargoConsoleShuttleMessage args)
-        {
-            // TODO: Move this to CargoCOnsoleTelepadSystem or whatever.
-
-            // Jesus fucking christ Glass
-            //var approvedOrders = _cargoOrderDataManager.RemoveAndGetApprovedFrom(orders.Database);
-            //orders.Database.ClearOrderCapacity();
-
-            // TODO replace with shuttle code
-            EntityUid? cargoTelepad = null;
-
-            if (TryComp<SignalTransmitterComponent>(uid, out var transmitter) &&
-                transmitter.Outputs.TryGetValue(component.SenderPort, out var telepad) &&
-                telepad.Count > 0)
-            {
-                // use most recent link
-                var pad = telepad[^1].Uid;
-                if (HasComp<CargoConsoleTelepadComponent>(pad) &&
-                    TryComp<ApcPowerReceiverComponent?>(pad, out var powerReceiver) &&
-                    powerReceiver.Powered)
-                    cargoTelepad = pad;
-            }
-
-            /*
-            if (cargoTelepad != null)
-            {
-                if (TryComp<CargoConsoleTelepadComponent?>(cargoTelepad.Value, out var telepadComponent))
-                {
-                    var approvedOrders = _cargoConsoleSystem.RemoveAndGetApprovedOrders(orders.Database.Id);
-                    orders.Database.ClearOrderCapacity();
-                    foreach (var order in approvedOrders)
-                    {
-                        _cargoConsoleSystem.QueueTeleport(telepadComponent, order);
-                    }
-                }
-            }
-            */
-        }
-
-        private void OnApproveOrderMessage(EntityUid uid, CargoConsoleComponent component, CargoConsoleApproveOrderMessage args)
+        private void OnApproveOrderMessage(EntityUid uid, CargoOrderConsoleComponent component, CargoConsoleApproveOrderMessage args)
         {
             if (args.Session.AttachedEntity is not {Valid: true} player)
                 return;
@@ -205,7 +162,7 @@ namespace Content.Server.Cargo.Systems
             UpdateUIState(component, Get<StationSystem>().GetOwningStation(component.Owner));
         }
 
-        private void OnRemoveOrderMessage(EntityUid uid, CargoConsoleComponent component, CargoConsoleRemoveOrderMessage args)
+        private void OnRemoveOrderMessage(EntityUid uid, CargoOrderConsoleComponent component, CargoConsoleRemoveOrderMessage args)
         {
             var orderDatabase = GetOrderDatabase(component);
             if (orderDatabase == null) return;
@@ -213,7 +170,7 @@ namespace Content.Server.Cargo.Systems
             UpdateUIState(component, Get<StationSystem>().GetOwningStation(component.Owner));
         }
 
-        private void OnAddOrderMessage(EntityUid uid, CargoConsoleComponent component, CargoConsoleAddOrderMessage args)
+        private void OnAddOrderMessage(EntityUid uid, CargoOrderConsoleComponent component, CargoConsoleAddOrderMessage args)
         {
             if (args.Amount <= 0)
                 return;
@@ -236,7 +193,7 @@ namespace Content.Server.Cargo.Systems
 
         #endregion
 
-        private void UpdateUIState(CargoConsoleComponent component, EntityUid? station)
+        private void UpdateUIState(CargoOrderConsoleComponent component, EntityUid? station)
         {
             if (station == null ||
                 !TryComp<StationCargoOrderDatabaseComponent>(station, out var orderDatabase) ||
@@ -249,7 +206,7 @@ namespace Content.Server.Cargo.Systems
                 bankAccount.Balance,
                 orderDatabase.Orders.Values.ToList());
 
-            _uiSystem.GetUiOrNull(component.Owner, CargoConsoleUiKey.Key)?.SetState(state);
+            _uiSystem.GetUiOrNull(component.Owner, CargoConsoleUiKey.Orders)?.SetState(state);
         }
 
         private void ConsolePopup(ICommonSession session, string text)
@@ -257,7 +214,7 @@ namespace Content.Server.Cargo.Systems
             Get<PopupSystem>().PopupCursor(text, Filter.SinglePlayer(session));
         }
 
-        private void PlayDenySound(EntityUid uid, CargoConsoleComponent component)
+        private void PlayDenySound(EntityUid uid, CargoOrderConsoleComponent component)
         {
             SoundSystem.Play(component.ErrorSound.GetSound(), Filter.Pvs(uid, entityManager: EntityManager));
         }
@@ -314,7 +271,7 @@ namespace Content.Server.Cargo.Systems
 
         #region Station
 
-        private StationBankAccountComponent? GetBankAccount(CargoConsoleComponent component)
+        private StationBankAccountComponent? GetBankAccount(CargoOrderConsoleComponent component)
         {
             var station = Get<StationSystem>().GetOwningStation(component.Owner);
 
@@ -322,7 +279,7 @@ namespace Content.Server.Cargo.Systems
             return bankComponent;
         }
 
-        private StationCargoOrderDatabaseComponent? GetOrderDatabase(CargoConsoleComponent component)
+        private StationCargoOrderDatabaseComponent? GetOrderDatabase(CargoOrderConsoleComponent component)
         {
             var station = Get<StationSystem>().GetOwningStation(component.Owner);
 
