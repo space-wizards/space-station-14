@@ -11,12 +11,9 @@
                       Align="Center"
                       Orientation="Vertical">
             <PanelContainer StyleClasses="BorderedWindowPanel">
-                <ScrollContainer VerticalExpand="True">
-                    <BoxContainer Name="DockPorts"
-                                  Orientation="Vertical"
-                                  VerticalExpand="True">
-                    </BoxContainer>
-                </ScrollContainer>
+                <BoxContainer Name="DockPorts"
+                              Orientation="Vertical">
+                </BoxContainer>
             </PanelContainer>
         </BoxContainer>
         <PanelContainer>
