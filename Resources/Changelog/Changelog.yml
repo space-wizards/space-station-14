@@ -1,9 +1,4 @@
 Entries:
-- author: Todd
-  changes:
-  - {message: added 3 new lobby themes., type: Add}
-  id: 1190
-  time: '2022-03-12T18:44:30.0000000+00:00'
 - author: ElectroJr
   changes:
   - {message: Fixed a bug allowing some botany seeds to preserve their potency across
@@ -3004,3 +2999,9 @@ Entries:
   - {message: ERT shuttle updated to Dart V2., type: Tweak}
   id: 1689
   time: '2022-06-12T06:17:16.0000000+00:00'
+- author: themias
+  changes:
+  - {message: Fixed issue where firelocks on top of closed doors could not be pried
+      open, type: Fix}
+  id: 1690
+  time: '2022-06-13T03:24:32.0000000+00:00'
