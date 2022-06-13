@@ -47,8 +47,8 @@ namespace Content.Server.Storage.Components
                 locker.Insert(entity);
             }
 
-            SoundSystem.Play(Filter.Pvs(Owner), _cursedSound.GetSound(), Owner, AudioHelpers.WithVariation(0.125f));
-            SoundSystem.Play(Filter.Pvs(lockerEnt), _cursedLockerSound.GetSound(), lockerEnt, AudioHelpers.WithVariation(0.125f));
+            SoundSystem.Play(_cursedSound.GetSound(), Filter.Pvs(Owner), Owner, AudioHelpers.WithVariation(0.125f));
+            SoundSystem.Play(_cursedLockerSound.GetSound(), Filter.Pvs(lockerEnt), lockerEnt, AudioHelpers.WithVariation(0.125f));
         }
     }
 }
